@@ -56,6 +56,7 @@ if (%action_delay < map_clock) {
         %action_delay = calc(map_clock + 4);
         // attempt to firemaking each direction: west east south north
         // if player isnt standing on the log anymore, the fire is lit
+        anim(null, 0);
         ~push_player(obj_coord);
         // if fully blocked then just light the log and dont move
         ~firemaking_success(obj_coord, $log);
@@ -68,6 +69,7 @@ if (%action_delay < map_clock) {
     }
 }
 // mes("<tostring(map_clock)>: p_opobj(4)");
+%obj_clock = map_clock;
 p_opobj(4); // interact with obj again
 
 [label,light_logs_inv](int $slot)
@@ -104,7 +106,8 @@ if (%action_delay < map_clock) {
 } else if (%action_delay = map_clock) {
     if(stat_random(stat(firemaking), 64, 512) = true) { // firemaking roll
         %action_delay = calc(map_clock + 4);
-        ~push_player_from_inv(obj_coord);
+        anim(null, 0);
+        ~push_player_from_inv_obj(obj_coord);
         ~firemaking_success(obj_coord, $log); // if fully blocked then just light the log and dont move
         return;
     } else {
@@ -135,17 +138,11 @@ if (map_locaddunsafe($coord) = true) {
 }
 if (map_blocked($coord) = true) {
     return(false);
-}
-if (~inzone_coord_pair_table(bank_zones, $coord) = true) {
+
+if (~inzone_coord_pair_table(bank_zones, coord) = true) { // area based checks use coord! not $coord
     return(false);
-}
+}}
 return(true);
-
-
-[debugproc,pt]
-if (p_finduid(uid) = true) {
-    p_teleport(movecoord(coord, 1, 0, 0));
-}
 
 [proc,push_player](coord $origin_coord)
 if (~in_duel_arena($origin_coord) = true) {
@@ -160,12 +157,12 @@ if (lineofwalk(coord, movecoord(coord, 1, 0, 0)) = true & coord = $origin_coord)
     p_teleport(movecoord(coord, 1, 0, 0));
     p_delay(0);
 }
-if (lineofwalk(coord, movecoord(coord, 0, 0, 1)) = true & coord = $origin_coord) { // check south
-    p_teleport(movecoord(coord, 0, 0, 1));
+if (lineofwalk(coord, movecoord(coord, 0, 0, -1)) = true & coord = $origin_coord) { // check south
+    p_teleport(movecoord(coord, 0, 0, -1));
     p_delay(0);
 }
-if (lineofwalk(coord, movecoord(coord, 0, 0, -1)) = true & coord = $origin_coord) { // check north
-    p_teleport(movecoord(coord, 0, 0, -1));
+if (lineofwalk(coord, movecoord(coord, 0, 0, 1)) = true & coord = $origin_coord) { // check north
+    p_teleport(movecoord(coord, 0, 0, 1));
     p_delay(0);
 }
 
@@ -186,33 +183,143 @@ if (lineofwalk(coord, movecoord(coord, -1, 0, 0)) = true & coord = $origin_coord
         p_teleport(movecoord(coord, 1, 0, 0));
         p_delay(0);
     }
-    if (lineofwalk(coord, movecoord(coord, 0, 0, 1)) = true & coord = $origin_coord) { // check south
-        p_teleport(movecoord(coord, 0, 0, 1));
+    if (lineofwalk(coord, movecoord(coord, 0, 0, -1)) = true & coord = $origin_coord) { // check south
+        p_teleport(movecoord(coord, 0, 0, -1));
         p_delay(0);
     }
-    if (lineofwalk(coord, movecoord(coord, 0, 0, -1)) = true & coord = $origin_coord) { // check north
-        p_teleport(movecoord(coord, 0, 0, -1));
+    if (lineofwalk(coord, movecoord(coord, 0, 0, 1)) = true & coord = $origin_coord) { // check north
+        p_teleport(movecoord(coord, 0, 0, 1));
         p_delay(0);
     }
 } else if (lineofwalk(coord, movecoord(coord, 1, 0, 0)) = true & coord = $origin_coord) { // check east
     p_teleport(movecoord(coord, 1, 0, 0));
     p_delay(1);
-    if (lineofwalk(coord, movecoord(coord, 0, 0, 1)) = true & coord = $origin_coord) { // check south
+    if (lineofwalk(coord, movecoord(coord, 0, 0, -1)) = true & coord = $origin_coord) { // check south
+        p_teleport(movecoord(coord, 0, 0, -1));
+        p_delay(0);
+    }
+    if (lineofwalk(coord, movecoord(coord, 0, 0, 1)) = true & coord = $origin_coord) { // check north
         p_teleport(movecoord(coord, 0, 0, 1));
         p_delay(0);
     }
-    if (lineofwalk(coord, movecoord(coord, 0, 0, -1)) = true & coord = $origin_coord) { // check north
-        p_teleport(movecoord(coord, 0, 0, -1));
-        p_delay(0);
-    }
-} else if (lineofwalk(coord, movecoord(coord, 0, 0, 1)) = true & coord = $origin_coord) { // check south
-    p_teleport(movecoord(coord, 0, 0, 1));
-    p_delay(1);
-    if (lineofwalk(coord, movecoord(coord, 0, 0, -1)) = true & coord = $origin_coord) { // check north
-        p_teleport(movecoord(coord, 0, 0, -1));
-        p_delay(0);
-    }
-} else if (lineofwalk(coord, movecoord(coord, 0, 0, -1)) = true & coord = $origin_coord) { // check north
+} else if (lineofwalk(coord, movecoord(coord, 0, 0, -1)) = true & coord = $origin_coord) { // check south
     p_teleport(movecoord(coord, 0, 0, -1));
     p_delay(1);
+    if (lineofwalk(coord, movecoord(coord, 0, 0, 1)) = true & coord = $origin_coord) { // check north
+        p_teleport(movecoord(coord, 0, 0, 1));
+        p_delay(0);
+    }
+} else if (lineofwalk(coord, movecoord(coord, 0, 0, 1)) = true & coord = $origin_coord) { // check north
+    p_teleport(movecoord(coord, 0, 0, 1));
+    p_delay(1);
+}
+
+// todo: refactor when p_delay(0) = min 1t delay
+[proc,push_player_from_inv_obj](coord $origin_coord)
+if (~in_duel_arena($origin_coord) = true) {
+    // https://youtu.be/L3OwjH-iXQU
+    //  - could still fm in the duel arena. 
+    //  - It just didnt move the player at all
+    // https://oldschool.runescape.wiki/w/Update:RS2_-_more_fixes/changes
+    //  - "Fixed: You could select a duel with the no movement option and then plant flowers or light a fire so you weren't standing next to your opponent."
+    p_delay(1);
+    return;
+}
+if (lineofwalk(coord, movecoord(coord, -1, 0, 0)) = true & coord = $origin_coord) { // check west
+    p_teleport(movecoord(coord, -1, 0, 0));
+    if (%obj_clock = sub(map_clock, 1)) {
+        p_opobj(4);
+        p_delay(1);
+        p_clearpendingaction;
+        if (coord = $origin_coord) {
+            p_stopaction;
+        }
+    } else {
+        p_delay(1);
+    }
+    
+    if (lineofwalk(coord, movecoord(coord, 1, 0, 0)) = true & coord = $origin_coord) { // check east
+        p_teleport(movecoord(coord, 1, 0, 0));
+        p_delay(0);
+    }
+    if (lineofwalk(coord, movecoord(coord, 0, 0, -1)) = true & coord = $origin_coord) { // check south
+        p_teleport(movecoord(coord, 0, 0, -1));
+        p_delay(0);
+    }
+    if (lineofwalk(coord, movecoord(coord, 0, 0, 1)) = true & coord = $origin_coord) { // check north
+        p_teleport(movecoord(coord, 0, 0, 1));
+        p_delay(0);
+    }
+} else if (lineofwalk(coord, movecoord(coord, 1, 0, 0)) = true & coord = $origin_coord) { // check east
+    p_teleport(movecoord(coord, 1, 0, 0));
+    if (%obj_clock = sub(map_clock, 1)) {
+        p_opobj(4);
+        p_delay(1);
+        p_clearpendingaction;
+        if (coord = $origin_coord) {
+            p_stopaction;
+        }
+    } else {
+        p_delay(1);
+    }
+    
+    if (lineofwalk(coord, movecoord(coord, 0, 0, -1)) = true & coord = $origin_coord) { // check south
+        p_teleport(movecoord(coord, 0, 0, -1));
+        p_delay(0);
+    }
+    if (lineofwalk(coord, movecoord(coord, 0, 0, 1)) = true & coord = $origin_coord) { // check north
+        p_teleport(movecoord(coord, 0, 0, 1));
+        p_delay(0);
+    }
+} else if (lineofwalk(coord, movecoord(coord, 0, 0, -1)) = true & coord = $origin_coord) { // check south
+    p_teleport(movecoord(coord, 0, 0, -1));
+    if (%obj_clock = sub(map_clock, 1)) {
+        p_opobj(4);
+        p_delay(1);
+        p_clearpendingaction;
+        if (coord = $origin_coord) {
+            p_stopaction;
+        }
+    } else {
+        p_delay(1);
+    }
+    
+    if (lineofwalk(coord, movecoord(coord, 0, 0, 1)) = true & coord = $origin_coord) { // check north
+        p_teleport(movecoord(coord, 0, 0, 1));
+        p_delay(0);
+    }
+} else if (lineofwalk(coord, movecoord(coord, 0, 0, 1)) = true & coord = $origin_coord) { // check north
+    p_teleport(movecoord(coord, 0, 0, 1));
+    if (%obj_clock = sub(map_clock, 1)) {
+        p_opobj(4);
+        p_delay(1);
+        p_clearpendingaction;
+        if (coord = $origin_coord) {
+            p_stopaction;
+        }
+    } else {
+        p_delay(1);
+    }
+    
+}
+
+
+
+[debugproc,qt]
+mes("A script is now queued onto player.");
+queue(test, 5000);
+
+[debugproc,cqt]
+clearqueue(test);
+
+[debugproc,qt2]
+mes(tostring(getqueue(test)));;
+
+[queue,test]
+
+[debugproc,stunned]
+if (p_finduid(uid) = true) {
+    mes("Player is stunned for 10 ticks");
+    %stunned = add(map_clock, 10);
+    walktrigger(stunned);
 }
