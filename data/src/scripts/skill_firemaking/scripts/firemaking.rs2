@@ -104,6 +104,7 @@ if (%action_delay < map_clock) {
 } else if (%action_delay = map_clock) {
     if(stat_random(stat(firemaking), 64, 512) = true) { // firemaking roll
         %action_delay = calc(map_clock + 4);
+        anim(null, 0);
         ~push_player_from_inv(obj_coord);
         ~firemaking_success(obj_coord, $log); // if fully blocked then just light the log and dont move
         return;
@@ -160,12 +161,12 @@ if (lineofwalk(coord, movecoord(coord, 1, 0, 0)) = true & coord = $origin_coord)
     p_teleport(movecoord(coord, 1, 0, 0));
     p_delay(0);
 }
-if (lineofwalk(coord, movecoord(coord, 0, 0, 1)) = true & coord = $origin_coord) { // check south
-    p_teleport(movecoord(coord, 0, 0, 1));
+if (lineofwalk(coord, movecoord(coord, 0, 0, -1)) = true & coord = $origin_coord) { // check south
+    p_teleport(movecoord(coord, 0, 0, -1));
     p_delay(0);
 }
-if (lineofwalk(coord, movecoord(coord, 0, 0, -1)) = true & coord = $origin_coord) { // check north
-    p_teleport(movecoord(coord, 0, 0, -1));
+if (lineofwalk(coord, movecoord(coord, 0, 0, 1)) = true & coord = $origin_coord) { // check north
+    p_teleport(movecoord(coord, 0, 0, 1));
     p_delay(0);
 }
 
@@ -180,39 +181,72 @@ if (~in_duel_arena($origin_coord) = true) {
     return;
 }
 if (lineofwalk(coord, movecoord(coord, -1, 0, 0)) = true & coord = $origin_coord) { // check west
-    p_teleport(movecoord(coord, -1, 0, 0));
+    if (last_opobj = sub(map_clock, 1) & busy3 = ^false) {
+        p_teleport(coord);
+    } else {
+        p_teleport(movecoord(coord, -1, 0, 0));
+    }
     p_delay(1);
     if (lineofwalk(coord, movecoord(coord, 1, 0, 0)) = true & coord = $origin_coord) { // check east
         p_teleport(movecoord(coord, 1, 0, 0));
         p_delay(0);
     }
-    if (lineofwalk(coord, movecoord(coord, 0, 0, 1)) = true & coord = $origin_coord) { // check south
-        p_teleport(movecoord(coord, 0, 0, 1));
+    if (lineofwalk(coord, movecoord(coord, 0, 0, -1)) = true & coord = $origin_coord) { // check south
+        p_teleport(movecoord(coord, 0, 0, -1));
         p_delay(0);
     }
-    if (lineofwalk(coord, movecoord(coord, 0, 0, -1)) = true & coord = $origin_coord) { // check north
-        p_teleport(movecoord(coord, 0, 0, -1));
+    if (lineofwalk(coord, movecoord(coord, 0, 0, 1)) = true & coord = $origin_coord) { // check north
+        p_teleport(movecoord(coord, 0, 0, 1));
         p_delay(0);
     }
 } else if (lineofwalk(coord, movecoord(coord, 1, 0, 0)) = true & coord = $origin_coord) { // check east
-    p_teleport(movecoord(coord, 1, 0, 0));
+    if (last_opobj = sub(map_clock, 1) & busy3 = ^false) {
+        p_teleport(coord);
+    } else {
+        p_teleport(movecoord(coord, 1, 0, 0));
+    }
     p_delay(1);
     if (lineofwalk(coord, movecoord(coord, 0, 0, 1)) = true & coord = $origin_coord) { // check south
         p_teleport(movecoord(coord, 0, 0, 1));
         p_delay(0);
     }
-    if (lineofwalk(coord, movecoord(coord, 0, 0, -1)) = true & coord = $origin_coord) { // check north
-        p_teleport(movecoord(coord, 0, 0, -1));
+    if (lineofwalk(coord, movecoord(coord, 0, 0, 1)) = true & coord = $origin_coord) { // check north
+        p_teleport(movecoord(coord, 0, 0, 1));
         p_delay(0);
     }
-} else if (lineofwalk(coord, movecoord(coord, 0, 0, 1)) = true & coord = $origin_coord) { // check south
+} else if (lineofwalk(coord, movecoord(coord, 0, 0, -1)) = true & coord = $origin_coord) { // check south
+    if (last_opobj = sub(map_clock, 1) & busy3 = ^false) {
+        p_teleport(coord);
+    } else {
+        p_teleport(movecoord(coord, 0, 0, -1));
+    }
+    p_delay(1);
+    if (lineofwalk(coord, movecoord(coord, 0, 0, 1)) = true & coord = $origin_coord) { // check north
+        if (last_opobj = sub(map_clock, 1) & busy3 = ^false) {
+            p_teleport(coord);
+        } else {
+            p_teleport(movecoord(coord, 0, 0, 1));
+        }
+        p_delay(0);
+    }
+} else if (lineofwalk(coord, movecoord(coord, 0, 0, 1)) = true & coord = $origin_coord) { // check north
+    if (last_opobj = sub(map_clock, 1) & busy3 = ^false) {
+        p_teleport(coord);
+    }
     p_teleport(movecoord(coord, 0, 0, 1));
     p_delay(1);
-    if (lineofwalk(coord, movecoord(coord, 0, 0, -1)) = true & coord = $origin_coord) { // check north
-        p_teleport(movecoord(coord, 0, 0, -1));
-        p_delay(0);
-    }
-} else if (lineofwalk(coord, movecoord(coord, 0, 0, -1)) = true & coord = $origin_coord) { // check north
-    p_teleport(movecoord(coord, 0, 0, -1));
-    p_delay(1);
 }
+
+
+[debugproc,qt]
+queue(test, 5000);
+
+
+[debugproc,qt2]
+mes(tostring(getqueue(test)));
+
+[debugproc,qt3]
+clearqueue(test);
+
+
+[queue,test]

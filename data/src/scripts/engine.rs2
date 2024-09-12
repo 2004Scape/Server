@@ -234,6 +234,8 @@
 [command,runenergy]()(int)
 [command,weight]()(int)
 [command,last_coord]()(coord)
+[command,last_opobj]()(int) // hack for fm
+[command,busy3]()(int) // hack for fm
 
 // Npc ops (2500-2999)
 [command,npc_finduid](npc_uid $uid)(boolean)
