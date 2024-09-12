@@ -64,8 +64,7 @@ def_coord $cabbage_coord = map_findsquare(npc_coord, 1, 7, ^map_findsquare_lineo
 npc_anim(human_chaos_druid_cast_bind, 0);
 spotanim_npc(bind_casting, 92, 0);
 %npc_action_delay = calc(map_clock + 5);
-world_delay(2); // delay cabbage spawn by 2 ticks
-clearqueue(playerhit_n_retaliate); // todo figure out if this is actually what happens. Could be npc delay? could be p_stopaction?
+npc_delay(1); // in osrs, the player stops attacking him. Npc_delay is what causes this
 obj_add($cabbage_coord, cabbage, 1, 100);
 spotanim_map(small_smokepuff, $cabbage_coord, 124, 0);
 
