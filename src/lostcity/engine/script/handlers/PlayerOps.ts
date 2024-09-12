@@ -1053,7 +1053,14 @@ const PlayerOps: CommandHandlers = {
     }),
     [ScriptOpcode.LAST_OPOBJ]: checkedHandler(ActivePlayer, state => { // fm hack
         state.pushInt(state.activePlayer.lastOpObj);
-    })
+    }),
+    [ScriptOpcode.BUSY3]: state => { // fm hack
+        if (state.activePlayer.queue.head() === null) {
+            state.pushInt(0);
+            return;
+        }
+        state.pushInt(1);
+    },
 };
 
 /**

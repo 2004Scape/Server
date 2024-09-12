@@ -200,6 +200,7 @@ enum ScriptOpcode {
     WEIGHT,
     LAST_COORD,
     LAST_OPOBJ, // fm hack
+    BUSY3, // fm hack
 
     // Npc ops (2500-2999)
     NPC_ADD = 2500, // official

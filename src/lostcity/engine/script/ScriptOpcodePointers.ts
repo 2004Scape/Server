@@ -56,6 +56,10 @@ const ScriptOpcodePointers: {
         require: ['active_player'],
         require2: ['active_player2']
     },
+    [ScriptOpcode.BUSY3]: { // fm hack
+        require: ['active_player'],
+        require2: ['active_player2']
+    },
     [ScriptOpcode.CAM_LOOKAT]: {
         require: ['active_player'],
         require2: ['active_player2']
