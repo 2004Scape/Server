@@ -132,7 +132,7 @@ export default abstract class PathingEntity extends Entity {
      * Returns true if a step was taken and movement processed.
      */
     processMovement(): boolean {
-        if (!this.hasWaypoints() || this.moveSpeed === MoveSpeed.STATIONARY) {
+        if (!this.hasWaypoints() || this.moveSpeed === MoveSpeed.STATIONARY || this.moveSpeed === MoveSpeed.INSTANT) {
             return false;
         }
 
@@ -255,7 +255,7 @@ export default abstract class PathingEntity extends Entity {
 
     teleJump(x: number, z: number, level: number): void {
         this.teleport(x, z, level);
-        this.clearWaypoints();
+        this.moveSpeed = MoveSpeed.INSTANT;
         this.jump = true;
     }
 
@@ -274,9 +274,10 @@ export default abstract class PathingEntity extends Entity {
         this.refreshZonePresence(previousX, previousZ, previousLevel);
         this.lastStepX = this.x - 1;
         this.lastStepZ = this.z;
-
-        this.moveSpeed = MoveSpeed.INSTANT;
+        this.tele = true;
+        
         if (previousLevel != level) {
+            this.moveSpeed = MoveSpeed.INSTANT;
             this.jump = true;
         }
     }
@@ -301,7 +302,7 @@ export default abstract class PathingEntity extends Entity {
         // temp variables to convert movement operations
         let walkDir = this.walkDir;
         let runDir = this.runDir;
-        let tele = this.moveSpeed === MoveSpeed.INSTANT;
+        let tele = this.tele;
 
         // convert p_teleport() into walk or run
         const distanceMoved = CoordGrid.distanceTo(this, {
