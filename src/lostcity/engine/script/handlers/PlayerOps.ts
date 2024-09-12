@@ -859,6 +859,7 @@ const PlayerOps: CommandHandlers = {
             throw new Error(`Invalid opobj: ${type + 1}`);
         }
         state.activePlayer.stopAction();
+        state.activePlayer.lastOpObj = World.currentTick;
         state.activePlayer.setInteraction(Interaction.SCRIPT, state.activeObj, ServerTriggerType.APOBJ1 + type);
     }),
 
@@ -1050,6 +1051,9 @@ const PlayerOps: CommandHandlers = {
     [ScriptOpcode.LAST_COORD]: checkedHandler(ActivePlayer, state => {
         state.pushInt(CoordGrid.packCoord(state.activePlayer.level, state.activePlayer.lastStepX, state.activePlayer.lastStepZ));
     }),
+    [ScriptOpcode.LAST_OPOBJ]: checkedHandler(ActivePlayer, state => { // fm hack
+        state.pushInt(state.activePlayer.lastOpObj);
+    })
 };
 
 /**

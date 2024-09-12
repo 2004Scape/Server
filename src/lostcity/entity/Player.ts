@@ -337,6 +337,9 @@ export default class Player extends PathingEntity {
     lastMapZone: number = -1;
     lastZone: number = -1;
 
+    // fm hack
+    lastOpObj: number = 0;
+
     constructor(username: string, username37: bigint) {
         super(0, 3094, 3106, 1, 1, EntityLifeCycle.FOREVER, MoveRestrict.NORMAL, BlockWalk.NPC, MoveStrategy.SMART, Player.FACE_COORD, Player.FACE_ENTITY); // tutorial island.
         this.username = username;

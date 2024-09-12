@@ -199,6 +199,7 @@ enum ScriptOpcode {
     RUNENERGY,
     WEIGHT,
     LAST_COORD,
+    LAST_OPOBJ, // fm hack
 
     // Npc ops (2500-2999)
     NPC_ADD = 2500, // official
