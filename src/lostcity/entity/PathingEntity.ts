@@ -224,12 +224,6 @@ export default abstract class PathingEntity extends Entity {
         this.stepsTaken++;
         this.refreshZonePresence(previousX, previousZ, this.level);
 
-        if (this.waypointIndex !== -1) {
-            const coord: CoordGrid = CoordGrid.unpackCoord(this.waypoints[this.waypointIndex]);
-            if (coord.x === this.x && coord.z === this.z) {
-                this.waypointIndex--;
-            }
-        }
         return dir;
     }
 
@@ -271,6 +265,13 @@ export default abstract class PathingEntity extends Entity {
             level = 0;
         }
         level = Math.max(0, Math.min(level, 3));
+        
+        if (this.waypointIndex !== -1) {
+            const coord: CoordGrid = CoordGrid.unpackCoord(this.waypoints[this.waypointIndex]);
+            if (coord.x === this.x && coord.z === this.z) {
+                this.waypointIndex--;
+            }
+        }
 
         const previousX: number = this.x;
         const previousZ: number = this.z;
