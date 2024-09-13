@@ -124,10 +124,123 @@ if(testbit(%varp_117, 0) = true) {
 ~mesbox("Examining the door, you see that it has a very|strange lock. You're shocked to find that it seems to|be made out of bone!"); // double spaces where the linebreaks are here in OSRS
 
 [oploc1,loc_2217]
-~mesbox("It just looks like some bumpy ground.");
+switch_int(%zombiequeen_progress) {
+    case default :
+        loc_change(loc_2218, 50);
+        ~mesbox("You see a small fissure in the granite that you might just be able to crawl through. It's very dark beyond the fissure.");
+    case ^zombiequeen_started, ^zombiequeen_found_mound, ^zombiequeen_searched_mound : 
+        if(%zombiequeen_progress < ^zombiequeen_found_mound) %zombiequeen_progress = ^zombiequeen_found_mound;
+        ~mesbox("It looks as if something is buried here.");
+    case ^zombiequeen_not_started : ~mesbox("It just looks like some bumpy ground.");
+}
 
 [oploc2,loc_2217]
-~mesbox("It just looks like some bumpy ground.");
+switch_int(%zombiequeen_progress) {
+    case default :
+        loc_change(loc_2218, 50);
+        ~mesbox("You see a small fissure in the granite that you might just be able to crawl through. It's very dark beyond the fissure. Do you want to try to crawl through the fissure?");
+        @zombiequeen_enter_fissure;
+    case ^zombiequeen_started, ^zombiequeen_found_mound, ^zombiequeen_searched_mound : 
+        if(%zombiequeen_progress < ^zombiequeen_searched_mound) %zombiequeen_progress = ^zombiequeen_searched_mound;
+        ~mesbox("It looks as if something is buried here. You may need some tools to excavate further.");
+    case ^zombiequeen_not_started : ~mesbox("It just looks like some bumpy ground.");
+}
+
+[oploc1,loc_2218]
+if(%zombiequeen_progress < ^zombiequeen_dug_mound) {
+    mes("Some earth falls down and fills in the fissure.");
+    loc_change(loc_2218, 50);
+    return;
+}
+~mesbox("You see a small fissure in the granite that you might just be able to crawl through. Beyond the fissure is a long fall.");
+
+[oploc2,loc_2218]
+if(%zombiequeen_progress < ^zombiequeen_dug_mound) {
+    mes("Some earth falls down and fills in the fissure.");
+    loc_change(loc_2218, 50);
+    return;
+}
+~mesbox("You see a small fissure in the granite that you might just be able to crawl through. Beyond the fissure is a long fall. Do you want to try to crawl through the fissure?");
+@zombiequeen_enter_fissure;
+
+[label,zombiequeen_enter_fissure]
+def_int $op = ~p_choice2("Yes, I'll give it a go!", 1, "No thanks, I'm having second thoughts.", 2);
+if($op = 2) {
+    ~mesbox("You think better of attempting to squeeze into the fissure.");
+    say("It looks very dangerous, and dark... Scary!");
+    return;
+}
+if(%zombiequeen_progress = ^zombiequeen_dug_mound) {
+    ~mesbox("The fissure looks very dark, you're not sure what lies beyond.");
+    return;
+} else if(%zombie_progress = ^zombiequeen_lit_mound) {
+    ~mesbox("It looks like there is a steep drop just after the fissure. It may be dangerous to try to climb down without any sort of support.");
+    return;
+}
+
+[oplocu,loc_2217]
+if(last_useitem = spade) {
+    @zombiequeen_mound_dig;
+}
+~displaymessage(^dm_default);
+
+[label,zombiequeen_mound_dig]
+p_arrivedelay;
+p_stopaction;
+facesquare(loc_coord);
+switch_int(%zombiequeen_progress) {
+    case default :
+        loc_change(loc_2218, 50);
+        anim(human_dig, 0);
+        p_delay(1);
+        anim(seq_846, 0);
+        p_delay(1);
+        ~mesbox("You have already excavated this area. Your spade clangs against the granite.");
+    case ^zombiequeen_started, ^zombiequeen_found_mound, ^zombiequeen_searched_mound :
+        %zombiequeen_progress = ^zombiequeen_dug_mound;
+        mes("You start digging...");
+        anim(human_dig_long, 0);
+        p_delay(1);
+        mes("You dig a small hole and almost immediately hit granite.");
+        p_delay(1);
+        mes("You excavate the hole a bit more...");
+        p_delay(1);
+        mes("And see that there is a small fissure...");
+        p_delay(1);
+        loc_change(loc_2218, 50);
+        mes("You might just be able to crawl through it...");
+        p_delay(1);
+        anim(null, 0);
+    case ^zombiequeen_not_started : ~mesbox("You start digging...|But without knowing what you're digging for...|You decide to give up.");
+}
+
+[oplocu,loc_2218]
+if(%zombiequeen_progress < ^zombiequeen_dug_mound) {
+    mes("Some earth falls down and fills in the fissure.");
+    loc_change(loc_2218, 50);
+    return;
+}
+switch_obj(last_useitem) {
+    case rope: 
+        if(%zombiequeen_progress = ^zombiequeen_dug_mound) {
+            mes("It's too dark to clearly see where to fix that.");
+        }
+    case lit_candle, lit_black_candle, lit_torch: // not all light sources work so not using cat here so this won't cause a bug for 2005
+        if(%zombiequeen_progress > ^zombiequeen_lit_mound) {
+            mes("You have already seen inside the fissure.");
+            return;
+        }
+        def_obj $lightsource = last_useitem;
+        anim(human_pickupfloor, 0);
+        p_delay(0);
+        // guessed linebreaks, what osrs has doesn't work and dialogue is different to rsc
+        ~objboxb($lightsource, "You drop the <lowercase(oc_name($lightsource))> into the fissure and see|that there is quite a large drop after you get through|the hole. There is a good anchor point nearby onto which|you could tie a rope.");
+        %zombiequeen_progress = ^zombiequeen_lit_mound;
+        inv_del(inv, $lightsource, 1);
+        ~mesbox("The <lowercase(oc_name($lightsource))> burns out.");
+        ~mesbox("Some rope might help here.");
+    case default: ~displaymessage(^dm_default);
+}
 
 [oploc1,loc_2231]
 def_int $z_dist = -4;
@@ -238,10 +351,4 @@ switch_int(random(4)) {
     case 1: return (npc_503);
     case 2: return (npc_504);
     case 3: return (npc_505);
-}
-
-[oplocu,loc_2217]
-if(last_useitem = spade) {
-    ~mesbox("You start digging...|But without knowing what you're digging for...|You decide to give up.");
-    return;
 }

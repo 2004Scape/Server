@@ -1,0 +1,5 @@
+[opnpc1,captain_shanks]
+if(%zombiequeen_progress <= 16) {
+    ~chatnpc("<p,sad>Oh dear, this ship is in a terrible state. And I just can't get the items I need to repair it because Shilo village is overrun with zombies.");
+    return;
+}

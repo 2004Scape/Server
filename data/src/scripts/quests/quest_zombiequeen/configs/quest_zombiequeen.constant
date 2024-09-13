@@ -1,2 +1,6 @@
 ^zombiequeen_not_started = 0
 ^zombiequeen_started = 1
+^zombiequeen_found_mound = 2
+^zombiequeen_searched_mound = 3
+^zombiequeen_dug_mound = 4
+^zombiequeen_lit_mound = 5

@@ -80,7 +80,21 @@ switch_int(%junglepotion_progress) {
 
 [opnpc1,trufitus]
 if(%zombiequeen_progress > ^zombiequeen_not_started) {
-    ~chatnpc("<p,neutral>Hello Bwana, how goes your quest to find Ah Za Rhoon?");
+    switch_int(%zombiequeen_progress) {
+        case ^zombiequeen_dug_mound:
+            ~chatplayer("<p,neutral>Greetings...");
+            ~chatnpc("<p,neutral>Greetings Bwana, you have been away! The situation with Rashiliyia is worsening! I pray that you have some good news for me.");
+            ~chatplayer("<p,neutral>I think I have found the temple of Ah Za Rhoon.");
+            ~chatplayer("<p,neutral>I excavated a hole and found a fissure. Should I go through it?");
+            ~chatnpc("<p,neutral>Well, I would certainly investigate it..");
+            @multi2("What's a fissure?", trufitus_fissure, "Are fissures dangerous?", trufitus_fissuredanger);
+        case ^zombiequeen_searched_mound:
+            ~chatplayer("<p,neutral>Greetings...");
+            ~chatnpc("<p,neutral>Greetings Bwana, you have been away! The situation with Rashiliyia is worsening! I pray that you have some good news for me.");
+            ~chatplayer("<p,neutral>I think I found something, but I am not sure what it is.");
+            ~chatnpc("<p,neutral>Well, investigate it further, you may find something interesting!");
+        case ^zombiequeen_found_mound, ^zombiequeen_started: @trufitus_started_zombiequeen;
+    }
 } else {
     switch_int(%junglepotion_progress) {
         case ^junglepotion_not_started: @trufitus_pre_quest;
@@ -435,3 +449,39 @@ switch_int(~p_choice2("Yes, I will seriously look for Ah Za Rhoon and I'd apprec
 ~mesbox("Trufitus frowns at you but continues about...minions...");
 ~chatnpc("<p,neutral>Minions are the fiendish undead creatures that Rashiliyia controls. She has very few living worshippers, but they need to be dealt with at some point.");
 ~chatnpc("<p,neutral>Usually a strong creature of some sort will be guarding the bones and it is not to be tackled lightly.");
+
+[label,trufitus_floating]
+~chatplayer("<p,neutral>Do you think it was floating on water?");
+~chatnpc("<p,neutral>It's very doubtful. I suspect it was built to 'appear' as if it was floating on water. Perhaps on an island or between large bodies of water.");
+~chatnpc("<p,neutral>If you search for somewhere like this, you may find something worth investigating.");
+
+[label,trufitus_okthanks]
+~chatplayer("<p,neutral>Ok thanks for your help.");
+~chatnpc("<p,neutral>You're welcome Bwana, I only hope it helped.");
+
+[label,trufitus_started_zombiequeen]
+~chatnpc("<p,neutral>Hello Bwana, how goes your quest to find Ah Za Rhoon?");
+switch_int(~p_choice2("Well thanks...", 1, "Erm, I don't know where to look?", 2)) {
+    case 1:
+        ~chatplayer("<p,neutral>Well thanks...");
+        ~chatnpc("<p,neutral>Well that's very good news. Let me know if you find anything useful, I may be able to help out.");
+    case 2:
+        ~chatplayer("<p,neutral>Erm, I don't know where to look?");
+        ~chatnpc("<p,neutral>Hmm, that doesn't surprise me.  The only information I have refers to its name. Ah Za Rhoon, its name means  'Magnificence Floating on Water'.");
+        %zombiequeen_progress = ^zombiequeen_found_mound; // for whatever reason it sets progress up here lol
+        @multi2("Do you think it was floating on water?", trufitus_floating, "Ok thanks for your help.", trufitus_okthanks);
+}
+
+[label,trufitus_fissure]
+~chatplayer("<p,neutral>What's a fissure?");
+~chatnpc("<p,neutral>A fissure is a long, narrow crack, usually in rock. Just the kind of thing that adventurers love to find  and explore.");
+@multi2("Are fissures dangerous?", trufitus_fissuredanger, "Ok, thanks!", trufitus_okthanks2);
+
+[label,trufitus_fissuredanger]
+~chatplayer("<p,neutral>");
+~chatnpc("<p,neutral>It most likely is, but that isn't normally a barrier to most adventurers! And it may very well lead to something very interesting.");
+@multi2("What's a fissure?", trufitus_fissure, "Ok, thanks!", trufitus_okthanks2);
+
+[label,trufitus_okthanks2]
+~chatplayer("<p,neutral>Ok, thanks!");
+~chatnpc("<p,neutral>You're quite welcome Bwana.");

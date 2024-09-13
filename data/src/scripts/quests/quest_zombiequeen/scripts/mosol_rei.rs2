@@ -4,23 +4,27 @@ if(%junglepotion_progress < ^junglepotion_complete) {
     return;
 }
 switch_int(%zombiequeen_progress) {
+    case default: @mosol_belt;
     case ^zombiequeen_not_started :
         if(~obj_gettotal(wampum_belt) > 0) {
-            ~chatnpc("<p,neutral>Hey there Bwana, have you delivered that Wampum Belt to Trufitus yet?");
-            switch_int(~p_choice2("Yes, of course!", 1, "Not yet, I've been busy.", 2)) {
-                case 1:
-                    ~chatplayer("<p,neutral>Yes, of course!");
-                    ~chatnpc("<p,neutral>Well hopefully Trufitus will come up with some good ideas on how to resolve this problem with Rashiliyia. You should talk to him if you really want to help.");
-                case 2:
-                    ~chatplayer("<p,neutral>Not yet, I've been busy.");
-                    ~chatnpc("<p,neutral>If you can take it to him quickly, it would help me out a lot. If not, please can you give it back to me so that I can send a scout to deliver it.");
-            }
-            @multi2("Ok. Thanks for your help.", mosol_ok_thanks, "Why are the undead here?", mosol_whyundead);
+            @mosol_belt;
         }
         ~mesbox("Mosol seems to be looking around very cautiously. He jumps a little when you approach and talk to him.");
         ~chatnpc("<p,neutral>Run! Run for your life! Save yourself! I'll keep them back as long as I can...");
         @multi4("Why do I need to run?", mosol_whyrun, "Yeah... Ok, I'm running!", mosol_yeahok, "Who are you?", mosol_who, "Ok. Thanks for your help.", mosol_ok_thanks);
 }
+
+[label,mosol_belt]
+~chatnpc("<p,neutral>Hey there Bwana, have you delivered that Wampum Belt to Trufitus yet?");
+switch_int(~p_choice2("Yes, of course!", 1, "Not yet, I've been busy.", 2)) {
+    case 1 :
+        ~chatplayer("<p,neutral>Yes, of course!");
+        ~chatnpc("<p,neutral>Well hopefully Trufitus will come up with some good ideas on how to resolve this problem with Rashiliyia. You should talk to him if you really want to help.");
+    case 2 :
+        ~chatplayer("<p,neutral>Not yet, I've been busy.");
+        ~chatnpc("<p,neutral>If you can take it to him quickly, it would help me out a lot. If not, please can you give it back to me so that I can send a scout to deliver it.");
+}
+@multi2("Ok. Thanks for your help.", mosol_ok_thanks, "Why are the undead here?", mosol_whyundead);
 
 [label,mosol_whyrun]
 ~chatplayer("<p,happy>Why do I need to run?");
@@ -71,7 +75,7 @@ switch_int(%zombiequeen_progress) {
 
 [label,mosol_shaman]
 ~chatplayer("<p,neutral>I'll go to see the Shaman.");
-if(~obj_gettotal(wampum_belt) > 0) {
+if(~obj_gettotal(wampum_belt) > 0 | %zombiequeen_progress > ^zombiequeen_started) {
     ~chatnpc("<p,neutral>Well, if you go to see the Shaman, please give him that Wampum belt I gave to you, it will give him more details about our situation down here.");
 } else {
     ~chatnpc("<p,neutral>Well, that would be helpful Bwana. If you're sure you want to go, you can take a Wampum belt to him for me. It will give the Shaman, Trufitus the story of our problems down here. Are you sure you want to go?");
@@ -80,7 +84,7 @@ if(~obj_gettotal(wampum_belt) > 0) {
 
 [label,mosol_wampumbelt]
 ~chatplayer("<p,neutral>Yes, I'm sure and I'll take the Wampum belt to Trufitus.");
-if(~obj_gettotal(wampum_belt) > 0) {
+if(~obj_gettotal(wampum_belt) > 0 | %zombiequeen_progress > ^zombiequeen_started) {
     ~chatnpc("<p,neutral>That's great Bwana, if you give Trufitus the Wampum belt I gave you, it will give him more details of our current situation.");
     return;
 }
@@ -120,7 +124,8 @@ inv_add(inv, wampum_belt, 1);
 ~chatplayer("<p,happy>What danger is there around here?");
 ~chatnpc("<p,neutral>Can you not see Bwana? This whole area is infested with the living dead.");
 if_close;
-say("Arrggghhh, here are some now!");
+npc_say("Arrggghhh, here are some now!");
+mes("Mosol Rei: Arrggghhh, here are some now!");
 def_int $i = 0;
 def_int $count = ~random_range(1, 3);
 while($i < $count) {
