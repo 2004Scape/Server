@@ -5,13 +5,14 @@ import OpLocT from '#lostcity/network/incoming/model/OpLocT.js';
 import World from '#lostcity/engine/World.js';
 import Interaction from '#lostcity/entity/Interaction.js';
 import ServerTriggerType from '#lostcity/engine/script/ServerTriggerType.js';
+import UnsetMapFlag from '#lostcity/network/outgoing/model/UnsetMapFlag.js';
 
 export default class OpLocTHandler extends MessageHandler<OpLocT> {
     handle(message: OpLocT, player: NetworkPlayer): boolean {
         const { x, z, loc: locId, spellComponent: spellComId } = message;
 
         if (player.delayed()) {
-            player.unsetMapFlag();
+            player.write(new UnsetMapFlag());
             return false;
         }
 
