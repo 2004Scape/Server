@@ -852,10 +852,6 @@ export default class Player extends PathingEntity {
     processInteraction() {
         if (this.target === null || !this.canAccess()) {
             this.updateMovement(false);
-            const {x, z} = CoordGrid.unpackCoord(this.waypoints[this.waypointIndex]);
-            if (this.isLastOrNoWaypoint() && this.x === x && this.z === z) {
-                this.clearWaypoints();
-            }
             return;
         }
 
