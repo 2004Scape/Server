@@ -124,7 +124,7 @@ hint_stop();
 tut_flash(^tab_quest_journal);
 ~update_quests;
 if_settab(questlist, ^tab_quest_journal);
-~tutorialstep("", "Open the Quest journal||Click on the flashing icon next to your inventory.");
+~tutorialstep("", "Open the Quest journal.||Click on the flashing icon next to your inventory.");
 
 [proc,tutorial_step_quest_journal]
 ~set_hint_icon_quest_guide;
