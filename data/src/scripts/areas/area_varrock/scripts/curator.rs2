@@ -32,5 +32,5 @@ if($option = 1) {
     ~chatplayer("<p,quiz>Do you know where I could find any treasure?");
     ~chatnpc("<p,neutral>Look around you! This museum is full of treasures!");
     ~chatplayer("<p,sad>No, I meant treasures for ME.");
-    ~chatnpc("<p,neutral>Any treasures this museum knows about it goes to great lengths to acquire");
+    ~chatnpc("<p,neutral>Any treasures this museum knows about it goes to great lengths to acquire.");
 }
