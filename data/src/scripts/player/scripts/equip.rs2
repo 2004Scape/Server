@@ -264,7 +264,6 @@ while ($i < $size) {
         $rangedefence = calc($rangedefence + oc_param($obj, rangedefence));
         $strengthbonus = calc($strengthbonus + oc_param($obj, strengthbonus));
         $prayerbonus = calc($prayerbonus + oc_param($obj, prayerbonus));
-        $rangebonus = calc($rangebonus + oc_param($obj, rangebonus));
     }
     $i = calc($i + 1);
 }
