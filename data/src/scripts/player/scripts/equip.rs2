@@ -203,6 +203,12 @@ def_int $i = 0;
 while ($i < $size) {
     def_obj $obj = inv_getobj(worn, $i);
     if ($obj ! null) {
+        if ($i ! ^wearpos_quiver
+            | inv_getobj(worn, ^wearpos_rhand) = null
+            | (oc_category($obj) = arrows & oc_category(inv_getobj(worn, ^wearpos_rhand)) = weapon_bow)
+            | (oc_category($obj) = bolts & oc_category(inv_getobj(worn, ^wearpos_rhand)) = weapon_crossbow)) {
+            $rangebonus = calc($rangebonus + oc_param($obj, rangebonus));
+        }
         $stabattack = calc($stabattack + oc_param($obj, stabattack));
         $slashattack = calc($slashattack + oc_param($obj, slashattack));
         $crushattack = calc($crushattack + oc_param($obj, crushattack));
@@ -215,7 +221,6 @@ while ($i < $size) {
         $rangedefence = calc($rangedefence + oc_param($obj, rangedefence));
         $strengthbonus = calc($strengthbonus + oc_param($obj, strengthbonus));
         $prayerbonus = calc($prayerbonus + oc_param($obj, prayerbonus));
-        $rangebonus = calc($rangebonus + oc_param($obj, rangebonus));
     }
     $i = calc($i + 1);
 }
@@ -241,6 +246,12 @@ def_int $i = 0;
 while ($i < $size) {
     def_obj $obj = .inv_getobj(worn, $i);
     if ($obj ! null) {
+        if ($i ! ^wearpos_quiver
+            | .inv_getobj(worn, ^wearpos_rhand) = null
+            | (oc_category($obj) = arrows & oc_category(.inv_getobj(worn, ^wearpos_rhand)) = weapon_bow)
+            | (oc_category($obj) = bolts & oc_category(.inv_getobj(worn, ^wearpos_rhand)) = weapon_crossbow)) {
+            $rangebonus = calc($rangebonus + oc_param($obj, rangebonus));
+        }
         $stabattack = calc($stabattack + oc_param($obj, stabattack));
         $slashattack = calc($slashattack + oc_param($obj, slashattack));
         $crushattack = calc($crushattack + oc_param($obj, crushattack));
@@ -259,6 +270,38 @@ while ($i < $size) {
 }
 return($stabattack, $slashattack, $crushattack, $magicattack, $rangeattack, $stabdefence, $slashdefence, $crushdefence, $magicdefence, $rangedefence, $strengthbonus, $prayerbonus, $rangebonus);
 
+[debugproc,rb]
+def_int $stabattack;
+def_int $slashattack;
+def_int $crushattack;
+def_int $magicattack;
+def_int $rangeattack;
+def_int $stabdefence;
+def_int $slashdefence;
+def_int $crushdefence;
+def_int $magicdefence;
+def_int $rangedefence;
+def_int $strengthbonus;
+def_int $prayerbonus;
+def_int $attack_prayer;
+def_int $defence_prayer;
+def_int $strength_prayer;
+def_int $rangebonus;
+
+$stabattack,
+$slashattack,
+$crushattack,
+$magicattack,
+$rangeattack,
+$stabdefence,
+$slashdefence,
+$crushdefence,
+$magicdefence,
+$rangedefence,
+$strengthbonus,
+$prayerbonus,
+$rangebonus = ~equip_get_bonuses;
+mes(tostring($rangebonus));
 
 [proc,update_bonus_text](component $com, string $name, int $bonus)
 def_string $sign = "+";
