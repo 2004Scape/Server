@@ -910,15 +910,11 @@ export default class Player extends PathingEntity {
         if (opTrigger && this.target instanceof PathingEntity && this.inOperableDistance(this.target)) {
             const target = this.target;
             this.target = null;
+            this.clearWaypoints(); 
 
             this.executeScript(ScriptRunner.init(opTrigger, this, target), true);
-
-            if (this.target === null) {
-                this.unsetMapFlag();
-            }
-
             this.interacted = true;
-            this.clearWaypoints();
+
         } else if (apTrigger && this.inApproachDistance(this.apRange, this.target)) {
             const target = this.target;
             this.target = null;
@@ -929,13 +925,12 @@ export default class Player extends PathingEntity {
             if (this.apRangeCalled) {
                 this.target = target;
             } else {
-                this.clearWaypoints();
+                if (this.target === target) {
+                    this.clearWaypoints(); 
+                }
                 this.interacted = true;
             }
 
-            if (this.target === null) {
-                this.unsetMapFlag();
-            }
         } else if (this.target instanceof PathingEntity && this.inOperableDistance(this.target)) {
             if (Environment.NODE_DEBUG && !opTrigger && !apTrigger) {
                 let debugname = '_';
@@ -977,15 +972,11 @@ export default class Player extends PathingEntity {
 
                 const target = this.target;
                 this.target = null;
+                this.clearWaypoints(); 
 
                 this.executeScript(ScriptRunner.init(opTrigger, this, target), true);
-
-                if (this.target === null) {
-                    this.unsetMapFlag();
-                }
-
                 this.interacted = true;
-                this.clearWaypoints();
+
             } else if (apTrigger && this.inApproachDistance(this.apRange, this.target)) {
                 this.apRangeCalled = false;
 
@@ -998,13 +989,12 @@ export default class Player extends PathingEntity {
                 if (this.apRangeCalled) {
                     this.target = target;
                 } else {
-                    this.clearWaypoints();
+                    if (this.target === target) {
+                        this.clearWaypoints();
+                    }
                     this.interacted = true;
                 }
 
-                if (this.target === null) {
-                    this.unsetMapFlag();
-                }
             } else if ((this.target instanceof PathingEntity || !moved) && this.inOperableDistance(this.target)) {
                 if (!Environment.NODE_PRODUCTION && !opTrigger && !apTrigger) {
                     let debugname = '_';
