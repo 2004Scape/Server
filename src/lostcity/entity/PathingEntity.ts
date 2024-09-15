@@ -19,6 +19,7 @@ import LocType from '#lostcity/cache/config/LocType.js';
 import * as rsmod from '@2004scape/rsmod-pathfinder';
 import {CollisionFlag, CollisionType} from '@2004scape/rsmod-pathfinder';
 import Environment from '#lostcity/util/Environment.js';
+import Obj from './Obj.js';
 
 type TargetSubject = {
     type: number,
@@ -443,6 +444,8 @@ export default abstract class PathingEntity extends Entity {
             } else if (this.target instanceof Loc) {
                 const forceapproach = LocType.get(this.target.type).forceapproach;
                 this.queueWaypoints(rsmod.findPath(this.level, this.x, this.z, this.target.x, this.target.z, this.width, this.target.width, this.target.length, this.target.angle, this.target.shape, true, forceapproach));
+            } else if (this.target instanceof Obj && this.x === this.target.x && this.z === this.target.z) {
+                this.queueWaypoint(this.target.x, this.target.z); // work around because our findpath() returns 0, 0 if coord and target coord are the same
             } else {
                 this.queueWaypoints(rsmod.findPath(this.level, this.x, this.z, this.target.x, this.target.z));
             }
