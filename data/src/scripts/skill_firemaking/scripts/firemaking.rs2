@@ -135,7 +135,7 @@ if (map_locaddunsafe($coord) = true) {
 if (map_blocked($coord) = true) {
     return(false);
 }
-if (~inzone_coord_pair_table(bank_zones, $coord) = true) {
+if (~inzone_coord_pair_table(bank_zones, coord) = true) { // zone based checks use coord instead of loc_coord
     return(false);
 }
 return(true);
