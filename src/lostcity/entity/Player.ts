@@ -918,14 +918,19 @@ export default class Player extends PathingEntity {
         } else if (apTrigger && this.inApproachDistance(this.apRange, this.target)) {
             const target = this.target;
             this.target = null;
+            const wayPoints = this.waypoints;
+            const waypointIndex = this.waypointIndex;
+            this.clearWaypoints();
 
             this.executeScript(ScriptRunner.init(apTrigger, this, target), true);
 
             // if aprange was called then we did not interact.
             if (this.apRangeCalled) {
+                this.waypoints = wayPoints;
+                this.waypointIndex = waypointIndex;
                 this.target = target;
             } else {
-                if (this.target === target) {
+                if (this.target === target) { // if p_opnpc was called
                     this.clearWaypoints(); 
                 }
                 this.interacted = true;
@@ -982,14 +987,19 @@ export default class Player extends PathingEntity {
 
                 const target = this.target;
                 this.target = null;
+                const wayPoints = this.waypoints;
+                const waypointIndex = this.waypointIndex;
+                this.clearWaypoints();
 
                 this.executeScript(ScriptRunner.init(apTrigger, this, target), true);
 
                 // if aprange was called then we did not interact.
                 if (this.apRangeCalled) {
                     this.target = target;
+                    this.waypoints = wayPoints;
+                    this.waypointIndex = waypointIndex;
                 } else {
-                    if (this.target === target) {
+                    if (this.target === target) { // if p_opnpc was called
                         this.clearWaypoints();
                     }
                     this.interacted = true;
