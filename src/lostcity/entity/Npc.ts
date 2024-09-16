@@ -219,10 +219,12 @@ export default class Npc extends PathingEntity {
                     this.defaultMode();
                     return false; 
                 }
-            } else if (apTrigger && CoordGrid.distanceToSW(this.target, {x: this.startX, z: this.startZ}) > type.maxrange + type.attackrange) {
-                this.clearWaypoints();
-                this.defaultMode();
-                return false;   
+            } else if (apTrigger) {
+                if (CoordGrid.distanceToSW(this.target, {x: this.startX, z: this.startZ}) > type.maxrange + type.attackrange) {
+                    this.clearWaypoints();
+                    this.defaultMode();
+                    return false; 
+                }
             } else if (CoordGrid.distanceToSW(this.target, {x: this.startX, z: this.startZ}) > type.maxrange) {
                 this.clearWaypoints();
                 this.defaultMode();
