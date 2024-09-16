@@ -663,15 +663,15 @@ export default class Npc extends PathingEntity {
 
         const script: ScriptFile | null = this.getTrigger();
         if (script && opTrigger && this.inOperableDistance(this.target) && this.target instanceof PathingEntity) {
-            this.executeScript(ScriptRunner.init(script, this, this.target));
             this.interacted = true;
             this.clearWaypoints();
+            this.executeScript(ScriptRunner.init(script, this, this.target));
             return;
         }
         if (script && apTrigger && this.inApproachDistance(type.attackrange, this.target)) {
-            this.executeScript(ScriptRunner.init(script, this, this.target));
             this.interacted = true;
             this.clearWaypoints();
+            this.executeScript(ScriptRunner.init(script, this, this.target));
             return;
         }
         if (this.inOperableDistance(this.target) && this.target instanceof PathingEntity) {
@@ -693,13 +693,13 @@ export default class Npc extends PathingEntity {
         if (this.target && !this.interacted) {
             this.interacted = false;
             if (script && opTrigger && this.inOperableDistance(this.target) && (this.target instanceof PathingEntity || !moved)) {
-                this.executeScript(ScriptRunner.init(script, this, this.target));
                 this.interacted = true;
                 this.clearWaypoints();
+                this.executeScript(ScriptRunner.init(script, this, this.target));
             } else if (script && apTrigger && this.inApproachDistance(type.attackrange, this.target)) {
-                this.executeScript(ScriptRunner.init(script, this, this.target));
                 this.interacted = true;
                 this.clearWaypoints();
+                this.executeScript(ScriptRunner.init(script, this, this.target));
             } else if (this.inOperableDistance(this.target) && (this.target instanceof PathingEntity || !moved)) {
                 this.target = null;
                 this.interacted = true;
