@@ -141,10 +141,6 @@ if(npc_type = npc_374 & %damagetype <= ^crush_style & npc_range(coord) <= 1) {
 if (npc_hasop(2) = true) {
     return (true);
 }
-// this is a better way to do it but over the years osrs has had bugs where you could attack npcs that just had an op2 defined
-// if (compare(nc_op($npc, 2), "Attack") = ^true) {
-//     return (true);
-// }
 return (false);
 
 // this proc is primarily used for magic, due to the "You cant attack this npc." message
@@ -187,9 +183,12 @@ if (npc_category = kolodion & enum(int, npc, mage_arena_bosses, %magearena_progr
     }
     return(false);
 }
-
 if (npc_type = chompy_bird) {
     mes("Magic simply won't affect this beast!");
+    return(false);
+}
+if (%vampire_progress = ^vampire_complete & npc_type = count_draynor) {
+    mes("You've done enough vampire slaying.");
     return(false);
 }
 

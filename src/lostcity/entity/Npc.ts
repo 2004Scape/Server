@@ -71,6 +71,7 @@ export default class Npc extends PathingEntity {
     regenClock: number = 0;
     huntMode: number = -1;
     nextHuntTick: number = -1;
+    huntTarget: Entity | null = null;
     huntrange: number = 0;
 
     nextPatrolTick: number = -1;
@@ -257,6 +258,11 @@ export default class Npc extends PathingEntity {
             this.lastMovement = World.currentTick + 1;
         }
         return moved;
+    }
+
+    clearInteraction() {
+        super.clearInteraction();
+        this.huntTarget = null;
     }
 
     blockWalkFlag(): CollisionFlag {
@@ -851,7 +857,9 @@ export default class Npc extends PathingEntity {
         if (hunt.nobodyNear === HuntNobodyNear.PAUSEHUNT && !World.gameMap.getZoneGrid(this.level).isFlagged(CoordGrid.zone(this.x), CoordGrid.zone(this.z), 5)) {
             return;
         }
-        if (!hunt.findKeepHunting && this.target !== null) {
+        // in osrs, and in this 2005: https://youtu.be/8AFed6tyOp8?t=231
+        // once an npc finds a huntTarget, it will no longer hunt until it's interactions are cleared
+        if (!hunt.findKeepHunting && this.huntTarget !== null) {
             return;
         }
 
@@ -869,6 +877,7 @@ export default class Npc extends PathingEntity {
         // pick randomly from the hunted entities
         if (hunted.length > 0) {
             const entity: Entity = hunted[Math.floor(Math.random() * hunted.length)];
+            this.huntTarget = entity;
             this.setInteraction(Interaction.SCRIPT, entity, hunt.findNewMode);
         }
         this.nextHuntTick = World.currentTick + hunt.rate;
@@ -894,7 +903,8 @@ export default class Npc extends PathingEntity {
             if (this.target !== player && !World.gameMap.isMulti(CoordGrid.packCoord(player.level, player.x, player.z))) {
                 if (hunt.checkNotCombat !== -1 && (player.getVar(hunt.checkNotCombat) as number) + 8 > World.currentTick) {
                     continue;
-                } else if (hunt.checkNotCombatSelf !== -1 && (this.getVar(hunt.checkNotCombatSelf) as number) >= World.currentTick) {
+                }
+                if (hunt.checkNotCombatSelf !== -1 && (this.getVar(hunt.checkNotCombatSelf) as number) + 8 > World.currentTick) {
                     continue;
                 }
             }
