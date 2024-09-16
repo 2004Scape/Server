@@ -173,7 +173,7 @@ if($op = 2) {
 if(%zombiequeen_progress = ^zombiequeen_dug_mound) {
     ~mesbox("The fissure looks very dark, you're not sure what lies beyond.");
     return;
-} else if(%zombie_progress = ^zombiequeen_lit_mound) {
+} else if(%zombiequeen_progress = ^zombiequeen_lit_mound) {
     ~mesbox("It looks like there is a steep drop just after the fissure. It may be dangerous to try to climb down without any sort of support.");
     return;
 }
