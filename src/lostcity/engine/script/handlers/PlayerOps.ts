@@ -393,7 +393,6 @@ const PlayerOps: CommandHandlers = {
 
         const player = state.activePlayer;
         player.queueWaypoints(rsmod.findPath(player.level, player.x, player.z, coord.x, coord.z, player.width, player.width, player.length));
-        player.updateMovement(false); // try to walk immediately
     }),
 
     [ScriptOpcode.SAY]: checkedHandler(ActivePlayer, state => {

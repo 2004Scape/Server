@@ -963,16 +963,15 @@ export default class Player extends PathingEntity {
             this.interacted = true;
             this.clearWaypoints();
         }
-
-        const moved: boolean = this.updateMovement();
-        if (moved) {
-            // we need to keep the mask if the player had to move.
-            this.alreadyFacedEntity = false;
-        }
+        let moved = false;
 
         if (this.target && (!this.interacted || this.apRangeCalled)) {
             this.interacted = false;
-
+            moved = this.updateMovement();
+            if (moved) {
+                // we need to keep the mask if the player had to move.
+                this.alreadyFacedEntity = false;
+            }
             if (opTrigger && (this.target instanceof PathingEntity || !moved) && this.inOperableDistance(this.target)) {
 
                 const target = this.target;
