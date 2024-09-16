@@ -30,8 +30,10 @@ param=death_anim,dragon_death
 param=attack_sound,dragon_attack
 param=defend_sound,dragon_hit
 param=death_sound,dragon_death
-huntmode=aggressive_melee
+huntmode=elvarg_hunt
 // https://youtu.be/uETjjZFKWus?list=PLn23LiLYLb1aqrojPTi1_Np81LJku2Nd0&t=134
+// https://youtu.be/2TJp-tnFyxc?list=PLn23LiLYLb1aqrojPTi1_Np81LJku2Nd0&t=45
+attackrange=8
 maxrange=7
 huntrange=7
 

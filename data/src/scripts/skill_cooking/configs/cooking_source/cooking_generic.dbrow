@@ -68,10 +68,11 @@ data=levelrequired,1
 data=experience,300
 data=successchance,128,512
 data=successchance_cookomatic,138,532
-data=cookmessage_fire,You cook the meat on the fire...
-data=cookmessage_range,You cook the meat on the stove...
-data=successmessage,The meat is now nicely cooked.
-data=burnmessage,You accidentally burn the meat.
+// https://youtu.be/LWfcA_C2bJY?t=141
+data=cookmessage_fire,You cook the rat meat on the fire...
+data=cookmessage_range,You cook the rat meat on the stove...
+data=successmessage,The rat meat is now nicely cooked.
+data=burnmessage,You accidentally burn the rat meat.
 
 [cooking_generic_bear_meat]
 table=cooking_generic
@@ -82,10 +83,11 @@ data=levelrequired,1
 data=experience,300
 data=successchance,128,512
 data=successchance_cookomatic,138,532
-data=cookmessage_fire,You cook the meat on the fire...
-data=cookmessage_range,You cook the meat on the stove...
-data=successmessage,The meat is now nicely cooked.
-data=burnmessage,You accidentally burn the meat.
+// guess based on rat meat
+data=cookmessage_fire,You cook the bear meat on the fire...
+data=cookmessage_range,You cook the bear meat on the stove...
+data=successmessage,The bear meat is now nicely cooked.
+data=burnmessage,You accidentally burn the bear meat.
 
 [cooking_generic_chicken]
 table=cooking_generic

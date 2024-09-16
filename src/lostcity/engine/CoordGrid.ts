@@ -11,15 +11,15 @@ export const Direction = {
 // TODO (jkm) consider making this an enum
 type Direction = (typeof Direction)[keyof typeof Direction];
 
-export type Position = {level: number, x: number, z: number};
+export type CoordGrid = {level: number, x: number, z: number};
 
 // TODO (jkm) consider making this a class
-export const Position = {
+export const CoordGrid = {
     zone: (pos: number) => pos >> 3,
-    zoneCenter: (pos: number) => Position.zone(pos) - 6,
-    zoneOrigin: (pos: number) => Position.zoneCenter(pos) << 3,
+    zoneCenter: (pos: number) => CoordGrid.zone(pos) - 6,
+    zoneOrigin: (pos: number) => CoordGrid.zoneCenter(pos) << 3,
     mapsquare: (pos: number) => pos >> 6,
-    local: (pos: number, origin: number) => pos - (Position.zoneCenter(origin) << 3),
+    local: (pos: number, origin: number) => pos - (CoordGrid.zoneCenter(origin) << 3),
 
     face: (srcX: number, srcZ: number, dstX: number, dstZ: number) => {
         if (srcX == dstX) {
@@ -50,16 +50,16 @@ export const Position = {
     },
 
     moveX: (pos: number, dir: Direction) => {
-        return pos + Position.deltaX(dir);
+        return pos + CoordGrid.deltaX(dir);
     },
 
     moveZ: (pos: number, dir: Direction) => {
-        return pos + Position.deltaZ(dir);
+        return pos + CoordGrid.deltaZ(dir);
     },
 
     distanceTo(pos: { x: number; z: number; width: number; length: number }, other: { x: number; z: number; width: number; length: number }) {
-        const p1 = Position.closest(pos, other);
-        const p2 = Position.closest(other, pos);
+        const p1 = CoordGrid.closest(pos, other);
+        const p2 = CoordGrid.closest(other, pos);
         return Math.max(Math.abs(p1.x - p2.x), Math.abs(p1.z - p2.z));
     },
 
@@ -114,7 +114,7 @@ export const Position = {
         return 0;
     },
 
-    unpackCoord(coord: number): Position {
+    unpackCoord(coord: number): CoordGrid {
         const level: number = (coord >> 28) & 0x3;
         const x: number = (coord >> 14) & 0x3fff;
         const z: number = coord & 0x3fff;

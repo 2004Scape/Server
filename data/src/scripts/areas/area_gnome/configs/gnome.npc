@@ -278,7 +278,7 @@ head1=model_17_npc_head
 param=death_anim,midget_death
 param=death_sound,gnome_death
 
-[npc_166]
+[gnome_banker]
 name=Gnome banker
 desc=Banks gnomish things.
 vislevel=hide
@@ -408,7 +408,7 @@ members=yes
 param=death_anim,midget_death
 param=death_sound,gnome_death
 
-[npc_171]
+[brimstail]
 name=Brimstail
 desc=Small but powerful.
 walkanim=midget_walk
@@ -430,7 +430,7 @@ head1=model_18_npc_head
 param=death_anim,midget_death
 param=death_sound,gnome_death
 
-[npc_600]
+[hudo]
 name=Hudo
 desc=It's another jolly tree gnome.
 readyanim=midget_ready
@@ -460,7 +460,7 @@ param=shop_delta,10
 param=death_anim,midget_death
 param=death_sound,gnome_death
 
-[npc_601]
+[rometti]
 name=Rometti
 desc=It's a well dressed tree gnome.
 readyanim=midget_ready
@@ -516,7 +516,7 @@ param=shop_buy_multiplier,250
 param=shop_sell_multiplier,1000
 param=shop_delta,10
 
-[npc_603]
+[heckel_funch]
 name=Heckel Funch
 desc=It's another jolly tree gnome.
 readyanim=midget_ready

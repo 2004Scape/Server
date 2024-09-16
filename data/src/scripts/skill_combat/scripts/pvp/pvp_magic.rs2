@@ -228,7 +228,7 @@ sound_synth($sound, 0, 0);
 ~delete_spell_runes($spell_data);
 ~give_spell_xp($spell_data);
 
-if (%damagestyle = ^style_melee_defensive & oc_category(inv_getobj(worn, ^wearpos_rhand)) = weapon_staff) {
+if (%damagestyle = ^style_melee_defensive & inv_getobj(worn, ^wearpos_rhand) ! null & oc_category(inv_getobj(worn, ^wearpos_rhand)) = weapon_staff) {
     %damagestyle = ^style_magic_defensive; // casting a spell with defensive on gives mage + def xp
 } else {
     %damagestyle = ^style_magic_normal; // if this script is running they have to be using a spell, so assume magic style

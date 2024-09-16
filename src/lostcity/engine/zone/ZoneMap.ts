@@ -1,13 +1,13 @@
 import Zone from '#lostcity/engine/zone/Zone.js';
 import ZoneGrid from '#lostcity/engine/zone/ZoneGrid.js';
-import {Position} from '#lostcity/entity/Position.js';
+import {CoordGrid} from '#lostcity/engine/CoordGrid.js';
 
 export default class ZoneMap {
     static zoneIndex(x: number, z: number, level: number): number {
         return ((x >> 3) & 0x7ff) | (((z >> 3) & 0x7ff) << 11) | ((level & 0x3) << 22);
     }
 
-    static unpackIndex(index: number): Position {
+    static unpackIndex(index: number): CoordGrid {
         const x: number = (index & 0x7ff) << 3;
         const z: number = ((index >> 11) & 0x7ff) << 3;
         const level: number = index >> 22;

@@ -1,6 +1,6 @@
 import OutgoingMessage from '#lostcity/network/outgoing/OutgoingMessage.js';
 import ServerProtPriority from '#lostcity/network/outgoing/prot/ServerProtPriority.js';
-import {Position} from '#lostcity/entity/Position.js';
+import {CoordGrid} from '#lostcity/engine/CoordGrid.js';
 
 export default class RebuildNormal extends OutgoingMessage {
     priority = ServerProtPriority.HIGH;
@@ -20,9 +20,9 @@ export default class RebuildNormal extends OutgoingMessage {
         const result: Set<number> = new Set();
         // build area is 13x13 zones (8*13 = 104 tiles), so we need to load 6 zones in each direction
         for (let x: number = minX; x <= maxX; x++) {
-            const mx: number = Position.mapsquare(x << 3);
+            const mx: number = CoordGrid.mapsquare(x << 3);
             for (let z: number = minZ; z <= maxZ; z++) {
-                const mz: number = Position.mapsquare(z << 3);
+                const mz: number = CoordGrid.mapsquare(z << 3);
                 result.add(mx << 8 | mz);
             }
         }

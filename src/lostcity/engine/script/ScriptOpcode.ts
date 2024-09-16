@@ -94,6 +94,7 @@ enum ScriptOpcode {
     CLEARQUEUE, // official
     CLEARSOFTTIMER,
     CLEARTIMER,
+    GETTIMER,
     COORD, // official
     DAMAGE,
     DISPLAYNAME, // official, joke reply

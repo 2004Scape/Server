@@ -82,7 +82,6 @@ model8=model_181_idk
 head1=model_55_idk_head
 head2=model_37_npc_head
 head3=model_83_idk_head
-wanderrange=3
 
 [red_sheep]
 vislevel=hide

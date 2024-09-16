@@ -55,8 +55,8 @@ switch_int(~p_choice3("I am always looking for a quest.", 1, "No, I prefer just 
 ~chatplayer("<p,neutral>Romeo sent me. He says you can help.");
 ~chatnpc("<p,confused>Ah Romeo, yes. A fine lad, but a little bit confused.");
 ~chatplayer("<p,neutral>Juliet must be rescued from her father's control.");
-~chatnpc("<p,happy>I know just the thing. A potion to make her appear dead.");
+~chatnpc("<p,happy>I know just the thing. A potion to make her appear dead."); // https://web.archive.org/web/*/http://runeweb.net/images/site/guides/rs2/quests/romeojuliet/4.jpg
 ~chatnpc("<p,happy>Then Romeo can collect her from the crypt.");
-~chatnpc("<p,happy>Go to the Apothecary, tell him I sent you.");
+~chatnpc("<p,happy>Go to the Apothecary, tell him I sent you."); // https://web.archive.org/web/*/http://runeweb.net/images/site/guides/rs2/quests/romeojuliet/5.jpg
 ~chatnpc("<p,happy>You will need a Cadaver potion.");
 %romeojuliet_progress = ^romeojuliet_spoken_father;

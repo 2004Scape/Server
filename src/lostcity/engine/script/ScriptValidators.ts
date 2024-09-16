@@ -12,7 +12,7 @@ import CategoryType from '#lostcity/cache/config/CategoryType.js';
 import IdkType from '#lostcity/cache/config/IdkType.js';
 import HuntVis from '#lostcity/entity/hunt/HuntVis.js';
 import {LocAngle, LocShape} from '@2004scape/rsmod-pathfinder';
-import {Position} from '#lostcity/entity/Position.js';
+import {CoordGrid} from '#lostcity/engine/CoordGrid.js';
 import {ConfigType} from '#lostcity/cache/config/ConfigType.js';
 import SeqType from '#lostcity/cache/config/SeqType.js';
 import VarPlayerType from '#lostcity/cache/config/VarPlayerType.js';
@@ -89,10 +89,10 @@ class ScriptInputRangeValidator<T> implements ScriptValidator<number, T> {
     }
 }
 
-class ScriptInputCoordValidator extends ScriptInputRangeValidator<Position> {
-    validate(input: number): Position {
+class ScriptInputCoordValidator extends ScriptInputRangeValidator<CoordGrid> {
+    validate(input: number): CoordGrid {
         if (input >= this.min && input <= this.max) {
-            return Position.unpackCoord(input);
+            return CoordGrid.unpackCoord(input);
         }
         throw new Error(`An input for a ${this.name} was out of range. Range should be: ${this.min} to ${this.max}. Input was ${input}.`);
     }
@@ -105,7 +105,7 @@ export const LocTypeValid: ScriptValidator<number, LocType> = new ScriptInputCon
 export const LocAngleValid: ScriptValidator<number, LocAngle> = new ScriptInputRangeValidator(LocAngle.WEST, LocAngle.SOUTH, 'LocAngle');
 export const LocShapeValid: ScriptValidator<number, LocShape> = new ScriptInputRangeValidator(LocShape.WALL_STRAIGHT, LocShape.GROUND_DECOR, 'LocShape');
 export const DurationValid: ScriptValidator<number, number> = new ScriptInputRangeValidator(1, 2147483647, 'Duration');
-export const CoordValid: ScriptValidator<number, Position> = new ScriptInputCoordValidator(0, 2147483647, 'Coord');
+export const CoordValid: ScriptValidator<number, CoordGrid> = new ScriptInputCoordValidator(0, 2147483647, 'Coord');
 export const ParamTypeValid: ScriptValidator<number, ParamType> = new ScriptInputConfigTypeValidator(ParamType.get, (input: number) => input >= 0 && input < ParamType.count, 'Param');
 export const NpcTypeValid: ScriptValidator<number, NpcType> = new ScriptInputConfigTypeValidator(NpcType.get, (input: number) => input >= 0 && input < NpcType.count, 'Npc');
 export const NpcStatValid: ScriptValidator<number, NpcStat> = new ScriptInputRangeValidator(NpcStat.ATTACK, NpcStat.MAGIC, 'NpcStat');

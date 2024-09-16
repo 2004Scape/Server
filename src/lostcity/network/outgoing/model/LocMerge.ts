@@ -1,5 +1,5 @@
 import ZoneMessage from '#lostcity/network/outgoing/ZoneMessage.js';
-import {Position} from '#lostcity/entity/Position.js';
+import {CoordGrid} from '#lostcity/engine/CoordGrid.js';
 
 export default class LocMerge extends ZoneMessage {
     constructor(
@@ -16,6 +16,6 @@ export default class LocMerge extends ZoneMessage {
         readonly west: number,
         readonly north: number
     ) {
-        super(Position.packZoneCoord(srcX, srcZ));
+        super(CoordGrid.packZoneCoord(srcX, srcZ));
     }
 }

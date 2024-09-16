@@ -4,7 +4,7 @@ import Obj from '#lostcity/entity/Obj.js';
 import Player from '#lostcity/entity/Player.js';
 import PathingEntity from '#lostcity/entity/PathingEntity.js';
 import EntityLifeCycle from '#lostcity/entity/EntityLifeCycle.js';
-import {Position} from '#lostcity/entity/Position.js';
+import {CoordGrid} from '#lostcity/engine/CoordGrid.js';
 
 import World from '#lostcity/engine/World.js';
 import ZoneMap from '#lostcity/engine/zone/ZoneMap.js';
@@ -56,7 +56,7 @@ export default class Zone {
 
     constructor(index: number) {
         this.index = index;
-        const coord: Position = ZoneMap.unpackIndex(index);
+        const coord: CoordGrid = ZoneMap.unpackIndex(index);
         this.x = coord.x >> 3;
         this.z = coord.z >> 3;
         this.level = coord.level;
@@ -168,9 +168,9 @@ export default class Zone {
             }
             player.write(new UpdateZonePartialFollows(this.x, this.z, player.originX, player.originZ));
             if (obj.lifecycle === EntityLifeCycle.DESPAWN && obj.checkLifeCycle(currentTick)) {
-                player.write(new ObjAdd(Position.packZoneCoord(obj.x, obj.z), obj.type, obj.count));
+                player.write(new ObjAdd(CoordGrid.packZoneCoord(obj.x, obj.z), obj.type, obj.count));
             } else if (obj.lifecycle === EntityLifeCycle.RESPAWN && obj.checkLifeCycle(currentTick)) {
-                player.write(new ObjAdd(Position.packZoneCoord(obj.x, obj.z), obj.type, obj.count));
+                player.write(new ObjAdd(CoordGrid.packZoneCoord(obj.x, obj.z), obj.type, obj.count));
             }
         }
         for (const loc of this.getAllLocsUnsafe(true)) {
@@ -178,9 +178,9 @@ export default class Zone {
                 continue;
             }
             if (loc.lifecycle === EntityLifeCycle.DESPAWN && loc.checkLifeCycle(currentTick)) {
-                player.write(new LocAddChange(Position.packZoneCoord(loc.x, loc.z), loc.type, loc.shape, loc.angle));
+                player.write(new LocAddChange(CoordGrid.packZoneCoord(loc.x, loc.z), loc.type, loc.shape, loc.angle));
             } else if (loc.lifecycle === EntityLifeCycle.RESPAWN && !loc.checkLifeCycle(currentTick)) {
-                player.write(new LocDel(Position.packZoneCoord(loc.x, loc.z), loc.shape, loc.angle));
+                player.write(new LocDel(CoordGrid.packZoneCoord(loc.x, loc.z), loc.shape, loc.angle));
             }
         }
     }
@@ -224,14 +224,14 @@ export default class Zone {
     // ---- static locs/objs are added during world init ----
 
     addStaticLoc(loc: Loc): void {
-        const coord: number = Position.packZoneCoord(loc.x, loc.z);
+        const coord: number = CoordGrid.packZoneCoord(loc.x, loc.z);
         this.locs.addLast(coord, loc, true);
         this.totalLocs++;
         this.locs.sortStack(coord, true);
     }
 
     addStaticObj(obj: Obj): void {
-        const coord: number = Position.packZoneCoord(obj.x, obj.z);
+        const coord: number = CoordGrid.packZoneCoord(obj.x, obj.z);
         this.objs.addLast(coord, obj, true);
         this.totalObjs++;
         this.objs.sortStack(coord, true);
@@ -240,7 +240,7 @@ export default class Zone {
     // ---- locs ----
 
     addLoc(loc: Loc): void {
-        const coord: number = Position.packZoneCoord(loc.x, loc.z);
+        const coord: number = CoordGrid.packZoneCoord(loc.x, loc.z);
         if (loc.lifecycle === EntityLifeCycle.DESPAWN) {
             this.locs.addLast(coord, loc);
             this.totalLocs++;
@@ -252,7 +252,7 @@ export default class Zone {
     }
 
     removeLoc(loc: Loc): void {
-        const coord: number = Position.packZoneCoord(loc.x, loc.z);
+        const coord: number = CoordGrid.packZoneCoord(loc.x, loc.z);
         if (loc.lifecycle === EntityLifeCycle.DESPAWN) {
             this.locs.remove(coord, loc);
             this.totalLocs--;
@@ -267,7 +267,7 @@ export default class Zone {
     }
 
     getLoc(x: number, z: number, type: number): Loc | null {
-        for (const loc of this.getLocsSafe(Position.packZoneCoord(x, z))) {
+        for (const loc of this.getLocsSafe(CoordGrid.packZoneCoord(x, z))) {
             if (loc.type === type) {
                 return loc;
             }
@@ -280,13 +280,13 @@ export default class Zone {
     }
 
     animLoc(loc: Loc, seq: number): void {
-        this.queueEvent(loc, new ZoneEvent(ZoneEventType.ENCLOSED, -1, new LocAnim(Position.packZoneCoord(loc.x, loc.z), loc.shape, loc.angle, seq)));
+        this.queueEvent(loc, new ZoneEvent(ZoneEventType.ENCLOSED, -1, new LocAnim(CoordGrid.packZoneCoord(loc.x, loc.z), loc.shape, loc.angle, seq)));
     }
 
     // ---- objs ----
 
     addObj(obj: Obj, receiverId: number): void {
-        const coord: number = Position.packZoneCoord(obj.x, obj.z);
+        const coord: number = CoordGrid.packZoneCoord(obj.x, obj.z);
         if (obj.lifecycle === EntityLifeCycle.DESPAWN) {
             this.objs.addLast(coord, obj);
             this.totalObjs++;
@@ -306,7 +306,7 @@ export default class Zone {
         obj.reveal = -1;
         obj.lastChange = -1;
 
-        const coord: number = Position.packZoneCoord(obj.x, obj.z);
+        const coord: number = CoordGrid.packZoneCoord(obj.x, obj.z);
         this.objs.sortStack(coord);
 
         this.queueEvent(obj, new ZoneEvent(ZoneEventType.ENCLOSED, receiverId, new ObjReveal(coord, obj.type, obj.count, receiverId)));
@@ -316,14 +316,14 @@ export default class Zone {
         obj.count = newCount;
         obj.lastChange = World.currentTick;
 
-        const coord: number = Position.packZoneCoord(obj.x, obj.z);
+        const coord: number = CoordGrid.packZoneCoord(obj.x, obj.z);
         this.objs.sortStack(coord);
 
         this.queueEvent(obj, new ZoneEvent(ZoneEventType.FOLLOWS, receiverId, new ObjCount(coord, obj.type, oldCount, newCount)));
     }
 
     removeObj(obj: Obj): void {
-        const coord: number = Position.packZoneCoord(obj.x, obj.z);
+        const coord: number = CoordGrid.packZoneCoord(obj.x, obj.z);
         if (obj.lifecycle === EntityLifeCycle.DESPAWN) {
             this.objs.remove(coord, obj);
             this.totalObjs--;
@@ -342,7 +342,7 @@ export default class Zone {
     }
 
     getObj(x: number, z: number, type: number, receiverId: number): Obj | null {
-        for (const obj of this.getObjsSafe(Position.packZoneCoord(x, z))) {
+        for (const obj of this.getObjsSafe(CoordGrid.packZoneCoord(x, z))) {
             if (!((obj.receiverId !== -1 && obj.receiverId !== receiverId) || obj.type !== type)) {
                 return obj;
             }
@@ -353,7 +353,7 @@ export default class Zone {
     // ---- not tied to any entities ----
 
     animMap(x: number, z: number, spotanim: number, height: number, delay: number): void {
-        this.events.add(new ZoneEvent(ZoneEventType.ENCLOSED, -1, new MapAnim(Position.packZoneCoord(x, z), spotanim, height, delay)));
+        this.events.add(new ZoneEvent(ZoneEventType.ENCLOSED, -1, new MapAnim(CoordGrid.packZoneCoord(x, z), spotanim, height, delay)));
     }
 
     mapProjAnim(x: number, z: number, dstX: number, dstZ: number, target: number, spotanim: number, srcHeight: number, dstHeight: number, startDelay: number, endDelay: number, peak: number, arc: number): void {

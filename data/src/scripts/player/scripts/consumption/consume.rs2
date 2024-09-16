@@ -1,21 +1,25 @@
 // ************************* TRIGGERS **************************
 // normal food
-[opheld1,_category_5]@player_consume_item(consume_effect_stat, 2, 3);
-[opheld1,_category_58]@player_consume_item(consume_effect_stat, 2, 3);
-[opheld1,_category_59]@player_consume_item(consume_effect_stat, 2, 3);
-[opheld1,_category_86]@player_consume_item(consume_effect_stat, 2, 3);
+[opheld1,_category_5] @player_consume_item(consume_effect_stat, 2, 3);
+[opheld1,_category_58] @player_consume_item(consume_effect_stat, 2, 3);
+[opheld1,_category_59] @player_consume_item(consume_effect_stat, 2, 3);
+[opheld1,_category_86] @player_consume_item(consume_effect_stat, 2, 3);
 [opheld1,rotten_apples] ~displaymessage(^dm_default);
-[opheld1,_category_120]@player_consume_item(consume_effect_stat, 2, 3);
-[opheld1,_category_131]@player_consume_item(consume_effect_stat, 2, 3);
-[opheld1,vegetable_batta]@player_consume_item(consume_effect_stat, 2, 3);
+[opheld1,_category_120] @player_consume_item(consume_effect_stat, 2, 3);
+[opheld1,_category_131] @player_consume_item(consume_effect_stat, 2, 3);
+[opheld1,vegetable_batta] @player_consume_item(consume_effect_stat, 2, 3);
 [opheld1,pineapple]
 mes("You cant eat it whole; maybe you should cut it up.");
-[opheld1,_alcoholic_drinks]@player_consume_item(consume_effect_stat, 2, 3);
+[opheld1,_alcoholic_drinks] @player_consume_item(consume_effect_stat, 2, 3);
 
 // Kebabs
-[opheld1,kebab]@player_consume_item(consume_effect_kebab, 2, 3);
-[opheld1,dodgy_ugthanki_kebab]@player_consume_item(consume_effect_stat, 2, 3);
-[opheld1,ugthanki_kebab]@player_consume_item(consume_effect_stat_say, 2, 3);
+[opheld1,kebab] @player_consume_item(consume_effect_kebab, 2, 3);
+[opheld1,dodgy_ugthanki_kebab] @player_consume_item(consume_effect_stat, 2, 3);
+[opheld1,ugthanki_kebab] @player_consume_item(consume_effect_stat_say, 2, 3);
+
+// stews
+[opheld1,curry] @player_consume_item(consume_effect_stat2, 2, 3);
+[opheld1,stew] @player_consume_item(consume_effect_stat2, 2, 3);
 
 // gnome food
 // impossible to know how category_15 worked, i assume they work the same way as other gnome food
@@ -27,10 +31,10 @@ switch_obj(last_item) {
         mes("You empty the cocktail.");
     case default : @player_consume_item(consume_effect_stat, null, null); // odd gnome food, unfinished cocktails
 }
-[opheld1,_category_123]@player_consume_item(consume_effect_stat, null, null);
-[opheld1,_category_125]@player_consume_item(consume_effect_stat, null, null);
-[opheld1,_category_127]@player_consume_item(consume_effect_stat, null, null);
-[opheld1,_category_128]@player_consume_item(consume_effect_stat, null, null);
+[opheld1,_category_123] @player_consume_item(consume_effect_stat, null, null);
+[opheld1,_category_125] @player_consume_item(consume_effect_stat, null, null);
+[opheld1,_category_127] @player_consume_item(consume_effect_stat, null, null);
+[opheld1,_category_128] @player_consume_item(consume_effect_stat, null, null);
 
 // cock tails
 [opheld1,_category_83]

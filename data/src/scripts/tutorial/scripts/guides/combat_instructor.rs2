@@ -95,7 +95,7 @@ if (%tutorial_progress = ^combat_instructor_after_rat_kill_melee) {
 ~chatnpc("<p,neutral>Before going into combat with an opponent it is wise to put the mouse over them and see what combat level they are.");
 ~chatnpc("<p,neutral>Green coloured writing usually means it will be an easy fight for you, red means you will probably lose, yellow means they are around your level and orange means they are slightly stronger.");
 ~chatnpc("<p,neutral>Sometimes things will go your way, sometimes they won't. There is no such thing as a guaranteed win, but if the odds are  on your side, you stand the best chance of walking away victorious.");
-~chatnpc("<p,quiz>Now, was there something else you wanted to hear about again.");
+~chatnpc("<p,quiz>Now, was there something else you wanted to hear about again?");
 @combat_instructor_recap_questions;
 
 [label,combat_instructor_melee_combat_recap]
