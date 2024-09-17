@@ -4,11 +4,16 @@ import { NetworkPlayer } from '#lostcity/entity/NetworkPlayer.js';
 import { CoordGrid } from '#lostcity/engine/CoordGrid.js';
 import Environment from '#lostcity/util/Environment.js';
 import VarPlayerType from '#lostcity/cache/config/VarPlayerType.js';
+import UnsetMapFlag from '#lostcity/network/outgoing/model/UnsetMapFlag.js';
 
 export default class MoveClickHandler extends MessageHandler<MoveClick> {
     handle(message: MoveClick, player: NetworkPlayer): boolean {
+        if (player.delayed()) {
+            player.write(new UnsetMapFlag());
+            return false;
+        }
         const start = message.path[0];
-        if (player.delayed() || message.ctrlHeld < 0 || message.ctrlHeld > 1 || CoordGrid.distanceToSW(player, { x: start.x, z: start.z }) > 104) {
+        if (message.ctrlHeld < 0 || message.ctrlHeld > 1 || CoordGrid.distanceToSW(player, { x: start.x, z: start.z }) > 104) {
             player.unsetMapFlag();
             player.userPath = [];
             return false;

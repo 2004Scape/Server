@@ -219,10 +219,12 @@ export default class Npc extends PathingEntity {
                     this.defaultMode();
                     return false; 
                 }
-            } else if (apTrigger && CoordGrid.distanceToSW(this.target, {x: this.startX, z: this.startZ}) > type.maxrange + type.attackrange) {
-                this.clearWaypoints();
-                this.defaultMode();
-                return false;   
+            } else if (apTrigger) {
+                if (CoordGrid.distanceToSW(this.target, {x: this.startX, z: this.startZ}) > type.maxrange + type.attackrange) {
+                    this.clearWaypoints();
+                    this.defaultMode();
+                    return false; 
+                }
             } else if (CoordGrid.distanceToSW(this.target, {x: this.startX, z: this.startZ}) > type.maxrange) {
                 this.clearWaypoints();
                 this.defaultMode();
@@ -575,6 +577,7 @@ export default class Npc extends PathingEntity {
         }
 
         if (this.level !== this.target.level) {
+            this.clearWaypoints();
             this.defaultMode();
             return;
         }
@@ -582,6 +585,7 @@ export default class Npc extends PathingEntity {
         const type = NpcType.get(this.type);
 
         if (CoordGrid.distanceTo(this, this.target) > type.maxrange) {
+            this.clearWaypoints();
             this.defaultMode();
             return;
         }
@@ -605,11 +609,13 @@ export default class Npc extends PathingEntity {
         }
 
         if (this.level !== this.target.level) {
+            this.clearWaypoints();
             this.defaultMode();
             return;
         }
 
         if (CoordGrid.distanceTo(this, this.target) > 1) {
+            this.clearWaypoints();
             this.defaultMode();
             return;
         }
@@ -663,15 +669,15 @@ export default class Npc extends PathingEntity {
 
         const script: ScriptFile | null = this.getTrigger();
         if (script && opTrigger && this.inOperableDistance(this.target) && this.target instanceof PathingEntity) {
-            this.executeScript(ScriptRunner.init(script, this, this.target));
             this.interacted = true;
             this.clearWaypoints();
+            this.executeScript(ScriptRunner.init(script, this, this.target));
             return;
         }
         if (script && apTrigger && this.inApproachDistance(type.attackrange, this.target)) {
-            this.executeScript(ScriptRunner.init(script, this, this.target));
             this.interacted = true;
             this.clearWaypoints();
+            this.executeScript(ScriptRunner.init(script, this, this.target));
             return;
         }
         if (this.inOperableDistance(this.target) && this.target instanceof PathingEntity) {
@@ -693,13 +699,13 @@ export default class Npc extends PathingEntity {
         if (this.target && !this.interacted) {
             this.interacted = false;
             if (script && opTrigger && this.inOperableDistance(this.target) && (this.target instanceof PathingEntity || !moved)) {
-                this.executeScript(ScriptRunner.init(script, this, this.target));
                 this.interacted = true;
                 this.clearWaypoints();
+                this.executeScript(ScriptRunner.init(script, this, this.target));
             } else if (script && apTrigger && this.inApproachDistance(type.attackrange, this.target)) {
-                this.executeScript(ScriptRunner.init(script, this, this.target));
                 this.interacted = true;
                 this.clearWaypoints();
+                this.executeScript(ScriptRunner.init(script, this, this.target));
             } else if (this.inOperableDistance(this.target) && (this.target instanceof PathingEntity || !moved)) {
                 this.target = null;
                 this.interacted = true;

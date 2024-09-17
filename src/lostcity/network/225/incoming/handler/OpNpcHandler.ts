@@ -5,13 +5,14 @@ import Interaction from '#lostcity/entity/Interaction.js';
 import World from '#lostcity/engine/World.js';
 import { NetworkPlayer } from '#lostcity/entity/NetworkPlayer.js';
 import OpNpc from '#lostcity/network/incoming/model/OpNpc.js';
+import UnsetMapFlag from '#lostcity/network/outgoing/model/UnsetMapFlag.js';
 
 export default class OpNpcHandler extends MessageHandler<OpNpc> {
     handle(message: OpNpc, player: NetworkPlayer): boolean {
         const { nid } = message;
 
         if (player.delayed()) {
-            player.unsetMapFlag();
+            player.write(new UnsetMapFlag());
             return false;
         }
 
