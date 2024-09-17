@@ -575,6 +575,7 @@ export default class Npc extends PathingEntity {
         }
 
         if (this.level !== this.target.level) {
+            this.clearWaypoints();
             this.defaultMode();
             return;
         }
@@ -582,6 +583,7 @@ export default class Npc extends PathingEntity {
         const type = NpcType.get(this.type);
 
         if (CoordGrid.distanceTo(this, this.target) > type.maxrange) {
+            this.clearWaypoints();
             this.defaultMode();
             return;
         }
@@ -605,11 +607,13 @@ export default class Npc extends PathingEntity {
         }
 
         if (this.level !== this.target.level) {
+            this.clearWaypoints();
             this.defaultMode();
             return;
         }
 
         if (CoordGrid.distanceTo(this, this.target) > 1) {
+            this.clearWaypoints();
             this.defaultMode();
             return;
         }
