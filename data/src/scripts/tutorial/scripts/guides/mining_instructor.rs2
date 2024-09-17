@@ -105,6 +105,7 @@ switch_int(%tutorial_progress) {
 ~chatnpc("<p,neutral>It's a pretty straightfoward skill as I'm sure you discovered while making me that lovely bronze dagger.");
 ~chatnpc("<p,neutral>The higher Smithing level you reach, the better quality of metal you can work with. You start off on bronze and work your way up as your Smithing skills increase.");
 ~chatnpc("<p,quiz>Anything else, <displayname>?");
+@mining_instructor_recap;
 
 [label,mining_instructor_ready_to_move_on]
 ~chatplayer("<p,neutral>Nope, I'm ready to move on!");

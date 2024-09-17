@@ -1,6 +1,6 @@
 [ai_opplayer2,monk]
 if (%npc_action_delay > map_clock) return;
-def_int $heal = random(5); //guessing
+def_int $heal = random(4); // thanks to joe the toe!
 if ($heal = 0) {
     @monk_heal_self;
 } else {

@@ -36,7 +36,7 @@ p_teleport(loc_coord);
 // Runescape guide door
 [oploc1,loc_3014]
 if (%tutorial_progress < ^runescape_guide_interact_with_scenery) {
-    ~mesbox("You need to talk to the 'Runescape Guide' before you are allowed to proceed through this door.");
+    ~mesbox("You need to talk to the 'RuneScape Guide' before you are allowed to proceed through this door.");
     return;
 }
 

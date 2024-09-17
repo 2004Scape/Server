@@ -7,9 +7,6 @@ if(map_members = true) {
     } else if(loc_coord = 0_51_50_25_2 & inv_total(inv, trail_clue_easy_simple_exp006) = 1) {
         ~trail_clue_easy_loc_interact(trail_clue_easy_simple_exp006);
         return;
-    } else if(loc_coord = 0_51_54_45_47 & inv_total(inv, trail_clue_hard_map001) = 1) {
-        ~trail_clue_hard_loc_interact(trail_clue_hard_map001);
-        return;
     } else if(loc_coord = 0_50_53_28_41 & inv_total(inv, trail_clue_easy_simple_exp012) = 1) {
         ~trail_clue_easy_loc_interact(trail_clue_easy_simple_exp012);
         return;
