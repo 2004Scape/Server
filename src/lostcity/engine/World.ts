@@ -746,10 +746,25 @@ class World {
             if (!npc.updateLifeCycle(tick)) {
                 continue;
             }
-            if (npc.lifecycle === EntityLifeCycle.RESPAWN) {
-                this.addNpc(npc, -1);
-            } else if (npc.lifecycle === EntityLifeCycle.DESPAWN) {
-                this.removeNpc(npc, -1);
+            try {
+                if (npc.lifecycle === EntityLifeCycle.RESPAWN) {
+                    this.addNpc(npc, -1);
+                } else if (npc.lifecycle === EntityLifeCycle.DESPAWN) {
+                    this.removeNpc(npc, -1);
+                }
+            } catch (err) {
+                // there was an error adding or removing them, try again next tick...
+                // ex: server is full on npc IDs (did we have a leak somewhere?) and we don't want to re-use the last ID (syncing related)
+                if (npc.lifecycle === EntityLifeCycle.RESPAWN) {
+                    console.error('[World] An unhandled error happened while respawning a NPC');
+                } else if (npc.lifecycle === EntityLifeCycle.DESPAWN) {
+                    console.error('[World] An unhandled error happened while despawning a NPC');
+                }
+
+                console.error(`[World] NPC type:${npc.type} lifecycle:${npc.lifecycle} ID:${npc.nid}`);
+                console.error(err);
+
+                npc.setLifeCycle(this.currentTick + 1); // retry next tick
             }
         }
 
