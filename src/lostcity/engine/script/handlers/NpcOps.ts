@@ -483,7 +483,7 @@ const NpcOps: CommandHandlers = {
         if (state.activeNpc.lastMovement < World.currentTick - 1) {
             return;
         }
-        // If npc moved 2 ticks ago, delay for 1 tick, else delay for 2 ticks
+        // If npc moved 1 tick ago, delay for 1 tick. If npc moved this tick, delay for 2 ticks
         if (state.activeNpc.lastMovement === World.currentTick - 1) {
             state.activeNpc.delay = 1;
         } else {
