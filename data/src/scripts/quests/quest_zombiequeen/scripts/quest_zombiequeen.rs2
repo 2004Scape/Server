@@ -125,7 +125,10 @@ if(testbit(%varp_117, 0) = true) {
 
 [oploc1,loc_2217]
 switch_int(%zombiequeen_progress) {
-    case default :
+    case default:
+        loc_change(loc_2219, 50);
+        ~mesbox("You see a small fissure in the granite that you might just be able to crawl through. You can see that a rope is attached nearby.");
+    case ^zombiequeen_dug_mound, ^zombiequeen_lit_mound :
         loc_change(loc_2218, 50);
         ~mesbox("You see a small fissure in the granite that you might just be able to crawl through. It's very dark beyond the fissure.");
     case ^zombiequeen_started, ^zombiequeen_found_mound, ^zombiequeen_searched_mound : 
@@ -136,7 +139,11 @@ switch_int(%zombiequeen_progress) {
 
 [oploc2,loc_2217]
 switch_int(%zombiequeen_progress) {
-    case default :
+    case default:
+        loc_change(loc_2219, 50);
+        ~mesbox("You see a small fissure in the granite that you might just be able to crawl through. You can see that a rope is attached nearby. Do you want to try to crawl through the fissure?");
+        @zombiequeen_enter_fissure;        
+    case ^zombiequeen_dug_mound, ^zombiequeen_lit_mound :
         loc_change(loc_2218, 50);
         ~mesbox("You see a small fissure in the granite that you might just be able to crawl through. It's very dark beyond the fissure. Do you want to try to crawl through the fissure?");
         @zombiequeen_enter_fissure;
@@ -149,19 +156,27 @@ switch_int(%zombiequeen_progress) {
 [oploc1,loc_2218]
 if(%zombiequeen_progress < ^zombiequeen_dug_mound) {
     mes("Some earth falls down and fills in the fissure.");
-    loc_change(loc_2218, 50);
+    loc_change(loc_2217, 50);
     return;
+} else if(%zombiequeen_progress >= ^zombiequeen_roped_mound) {
+    loc_change(loc_2219, 50);
+    ~mesbox("You see a small fissure in the granite that you might just be able to crawl through. You can see that a rope is attached nearby.");
+} else {
+    ~mesbox("You see a small fissure in the granite that you might just be able to crawl through. Beyond the fissure is a long fall.");
 }
-~mesbox("You see a small fissure in the granite that you might just be able to crawl through. Beyond the fissure is a long fall.");
 
 [oploc2,loc_2218]
 if(%zombiequeen_progress < ^zombiequeen_dug_mound) {
     mes("Some earth falls down and fills in the fissure.");
     loc_change(loc_2218, 50);
-    return;
+} else if(%zombiequeen_progress >= ^zombiequeen_roped_mound) {
+    loc_change(loc_2219, 50);
+    ~mesbox("You see a small fissure in the granite that you might just be able to crawl through. You can see that a rope is attached nearby. Do you want to try to crawl through the fissure?");
+    @zombiequeen_enter_fissure;
+} else {
+    ~mesbox("You see a small fissure in the granite that you might just be able to crawl through. Beyond the fissure is a long fall. Do you want to try to crawl through the fissure?");
+    @zombiequeen_enter_fissure;
 }
-~mesbox("You see a small fissure in the granite that you might just be able to crawl through. Beyond the fissure is a long fall. Do you want to try to crawl through the fissure?");
-@zombiequeen_enter_fissure;
 
 [label,zombiequeen_enter_fissure]
 def_int $op = ~p_choice2("Yes, I'll give it a go!", 1, "No thanks, I'm having second thoughts.", 2);
@@ -173,10 +188,30 @@ if($op = 2) {
 if(%zombiequeen_progress = ^zombiequeen_dug_mound) {
     ~mesbox("The fissure looks very dark, you're not sure what lies beyond.");
     return;
-} else if(%zombiequeen_progress = ^zombiequeen_lit_mound) {
+}
+if(%zombiequeen_progress = ^zombiequeen_lit_mound) {
     ~mesbox("It looks like there is a steep drop just after the fissure. It may be dangerous to try to climb down without any sort of support.");
     return;
 }
+if_close;
+p_delay(1); // TOOD: 1t
+if(stat(agility) < 32) {
+    mes("You need a level 32 agility to attempt this.");
+    return;
+}
+bas_running(null); // disable running
+mes("You start to contort your body...");
+p_teleport(0_45_46_42_56);
+p_delay(0);
+mes("With some difficulty you manage to push yourself through the small crack in");
+mes("the rock.");
+anim(human_pickupfloor, 0);
+p_delay(0);
+~update_bas;
+if(%zombiequeen_progress = ^zombiequeen_roped_mound) %zombiequeen_progress = ^zombiequeen_entered_ah_za_rhoon;
+mes("You cleverly use the rope to slowly lower yourself to the floor.");
+stat_advance(agility, 30);
+p_teleport(0_45_146_18_57);
 
 [oplocu,loc_2217]
 if(last_useitem = spade) {
@@ -217,14 +252,25 @@ switch_int(%zombiequeen_progress) {
 [oplocu,loc_2218]
 if(%zombiequeen_progress < ^zombiequeen_dug_mound) {
     mes("Some earth falls down and fills in the fissure.");
-    loc_change(loc_2218, 50);
+    loc_change(loc_2217, 50);
     return;
 }
 switch_obj(last_useitem) {
     case rope: 
         if(%zombiequeen_progress = ^zombiequeen_dug_mound) {
             mes("It's too dark to clearly see where to fix that.");
+            return;
         }
+        if(%zombiequeen_progress >= ^zombiequeen_roped_mound) {
+            mes("There is already a rope attached!");
+            return;
+        }
+        anim(human_pickupfloor, 0);
+        p_delay(0);
+        inv_del(inv, rope, 1);
+        loc_change(loc_2219, 50);
+        %zombiequeen_progress = ^zombiequeen_roped_mound;
+        ~objboxt(rope, "You see where to attach the rope very clearly. You secure the rope well.");
     case lit_candle, lit_black_candle, lit_torch: // not all light sources work so not using cat here so this won't cause a bug for 2005
         if(%zombiequeen_progress > ^zombiequeen_lit_mound) {
             mes("You have already seen inside the fissure.");
@@ -241,6 +287,37 @@ switch_obj(last_useitem) {
         ~mesbox("Some rope might help here.");
     case default: ~displaymessage(^dm_default);
 }
+
+[oploc1,loc_2219]
+if(%zombiequeen_progress < ^zombiequeen_dug_mound) {
+    mes("Some earth falls down and fills in the fissure.");
+    loc_change(loc_2217, 50);
+} else if (%zombiequeen_progress < ^zombiequeen_roped_mound) {
+    loc_change(loc_2218, 50);
+    ~mesbox("You see a small fissure in the granite that you might just be able to crawl through. It's very dark beyond the fissure. Do you want to try to crawl through the fissure?");
+} else {
+    ~mesbox("You see a small fissure in the granite that you might just be able to crawl through. You can see that a rope is attached nearby.");
+}
+
+[oploc2,loc_2219]
+if(%zombiequeen_progress < ^zombiequeen_dug_mound) {
+    mes("Some earth falls down and fills in the fissure.");
+    loc_change(loc_2217, 50);
+} else if (%zombiequeen_progress < ^zombiequeen_roped_mound) {
+    loc_change(loc_2218, 50);
+    ~mesbox("You see a small fissure in the granite that you might just be able to crawl through. It's very dark beyond the fissure. Do you want to try to crawl through the fissure?");
+} else {
+    ~mesbox("You see a small fissure in the granite that you might just be able to crawl through. You can see that a rope is attached nearby. Do you want to try to crawl through the fissure?");
+    @zombiequeen_enter_fissure;
+}
+
+[oplocu,loc_2219]
+if(%zombiequeen_progress < ^zombiequeen_dug_mound) {
+    mes("Some earth falls down and fills in the fissure.");
+    loc_change(loc_2217, 50);
+    return;
+}
+~displaymessage(^dm_default);
 
 [oploc1,loc_2231]
 def_int $z_dist = -4;

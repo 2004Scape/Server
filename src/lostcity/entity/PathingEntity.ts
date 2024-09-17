@@ -313,10 +313,11 @@ export default abstract class PathingEntity extends Entity {
         if (tele && !this.jump && distanceMoved <= 2) {
             if (distanceMoved === 2) {
                 // run
-                const firstX = ((this.x + this.lastTickX) / 2) | 0;
-                const firstZ = ((this.z + this.lastTickZ) / 2) | 0;
-                walkDir = Position.face(this.lastTickX, this.lastTickZ, firstX, firstZ);
-                runDir = Position.face(firstX, firstZ, this.x, this.z);
+                walkDir = Position.face(this.lastTickX, this.lastTickZ, this.x, this.z);
+                const walkX = Position.moveX(this.lastTickX, walkDir);
+                const walkZ = Position.moveZ(this.lastTickZ, walkDir);
+                runDir = Position.face(walkX, walkZ, this.x, this.z);
+                this.moveSpeed = MoveSpeed.WALK;
             } else {
                 // walk
                 walkDir = Position.face(this.lastTickX, this.lastTickZ, this.x, this.z);

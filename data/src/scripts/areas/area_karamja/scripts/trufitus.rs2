@@ -81,7 +81,7 @@ switch_int(%junglepotion_progress) {
 [opnpc1,trufitus]
 if(%zombiequeen_progress > ^zombiequeen_not_started) {
     switch_int(%zombiequeen_progress) {
-        case ^zombiequeen_lit_mound:
+        case ^zombiequeen_lit_mound, ^zombiequeen_roped_mound:
             ~chatplayer("<p,neutral>Greetings...");
             ~chatnpc("<p,neutral>Greetings Bwana, you have been away! The situation with Rashiliyia is worsening! I pray that you have some good news for me.");
             ~chatplayer("<p,neutral>I think I have found the temple of Ah Za Rhoon. I excavated a hole and illuminated it, there is a fissure with a large drop.");
