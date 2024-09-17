@@ -3,7 +3,7 @@ import Obj from '#lostcity/entity/Obj.js';
 import ObjType from '#lostcity/cache/config/ObjType.js';
 import EntityLifeCycle from '#lostcity/entity/EntityLifeCycle.js';
 
-export default abstract class ZoneEntityList<T> extends Array<T[] | undefined> {
+export default abstract class ZoneEntityList<T> extends Array<T[]> {
     private readonly capacity: number;
     private readonly onFilled: (item: T) => void;
 

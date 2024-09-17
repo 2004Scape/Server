@@ -3,7 +3,7 @@ import Player from '#lostcity/entity/Player.js';
 import Entity from '#lostcity/entity/Entity.js';
 
 // inspired by https://github.com/rsmod/rsmod/blob/master/game/src/main/kotlin/org/rsmod/game/model/mob/list/MobList.kt
-abstract class EntityList<T extends Entity> extends Array<T | undefined> {
+abstract class EntityList<T extends Entity> extends Array<T> {
     // constructor
     private readonly free: Set<number>;
     protected readonly indexPadding: number;
