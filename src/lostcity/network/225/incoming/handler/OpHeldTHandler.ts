@@ -36,7 +36,6 @@ export default class OpHeldTHandler extends MessageHandler<OpHeldT> {
         }
 
         if (player.delayed()) {
-            player.unsetMapFlag();
             return false;
         }
 

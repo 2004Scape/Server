@@ -234,6 +234,7 @@
 [command,runenergy]()(int)
 [command,weight]()(int)
 [command,last_coord]()(coord)
+[command,p_clearpendingaction]
 
 // Npc ops (2500-2999)
 [command,npc_finduid](npc_uid $uid)(boolean)
