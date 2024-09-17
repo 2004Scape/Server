@@ -17,6 +17,19 @@ abstract class EntityList<T extends Entity> extends Array<T> {
         this.ids = new Int32Array(size).fill(-1);
         this.free = new Set<number>(Array.from({ length: size }, (_, index) => index));
         this.indexPadding = indexPadding;
+
+        this[Symbol.iterator] = function*(): IterableIterator<T> {
+            for (const index of this.ids) {
+                if (index === -1) {
+                    continue;
+                }
+                const entity: T | undefined = this[index];
+                if (typeof entity === 'undefined') {
+                    continue;
+                }
+                yield entity;
+            }
+        };
     }
 
     next(_: boolean = false, start: number = this.lastUsedIndex + 1): number {
@@ -32,19 +45,6 @@ abstract class EntityList<T extends Entity> extends Array<T> {
             }
         }
         throw new Error('[EntityList] no space for new entities');
-    }
-
-    *[Symbol.iterator](): IterableIterator<T> {
-        for (const index of this.ids) {
-            if (index === -1) {
-                continue;
-            }
-            const entity: T | undefined = this[index];
-            if (typeof entity === 'undefined') {
-                continue;
-            }
-            yield entity;
-        }
     }
 
     get count(): number {
