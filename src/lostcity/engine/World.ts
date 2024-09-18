@@ -823,7 +823,10 @@ class World {
                     player.pathToTarget();
                     continue;
                 }
-
+                
+                if (player.busy() || !player.opcalled) {
+                    player.moveClickRequest = true;
+                }
                 player.pathToMoveClick(player.userPath, !Environment.NODE_CLIENT_ROUTEFINDER);
             }
 

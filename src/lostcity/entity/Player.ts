@@ -281,6 +281,7 @@ export default class Player extends PathingEntity {
     allowDesign: boolean = false;
     afkEventReady: boolean = false;
     interactWalkTrigger: boolean = false;
+    moveClickRequest: boolean = false;
 
     highPriorityOut: Stack<OutgoingMessage> = new Stack();
     lowPriorityOut: Stack<OutgoingMessage> = new Stack();
@@ -530,9 +531,14 @@ export default class Player extends PathingEntity {
 
     // ----
 
+    clearWaypoints(): void {
+        this.moveClickRequest = false;
+        super.clearWaypoints();
+    }
+
     updateMovement(repathAllowed: boolean = true): boolean {
         // players cannot walk if they have a modal open *and* something in their queue, confirmed as far back as 2005
-        if (this.busy() && (this.queue.head() != null || this.engineQueue.head() != null)) {
+        if (this.moveClickRequest && this.busy() && (this.queue.head() != null || this.engineQueue.head() != null)) {
             this.recoverEnergy(false);
             return false;
         }
@@ -573,6 +579,9 @@ export default class Player extends PathingEntity {
         }
         if (moved) {
             this.lastMovement = World.currentTick + 1;
+        }
+        if (this.waypointIndex === -1) {
+            this.moveClickRequest = false;
         }
         return moved;
     }
