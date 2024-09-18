@@ -392,6 +392,7 @@ const PlayerOps: CommandHandlers = {
         const coord: CoordGrid = check(state.popInt(), CoordValid);
 
         const player = state.activePlayer;
+        player.moveClickRequest = false;
         player.queueWaypoints(rsmod.findPath(player.level, player.x, player.z, coord.x, coord.z, player.width, player.width, player.length));
     }),
 
