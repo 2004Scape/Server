@@ -228,7 +228,8 @@ data=stat,firemaking
 data=interface,levelup_firemaking
 data=title,levelup_firemaking:line1
 data=body,levelup_firemaking:line2
-data=message,"Congratulations, you just advanced a firemaking level."
+// fire making instead of firemaking. Late 2004: https://imgur.com/z8cEXOt
+data=message,"Congratulations, you just advanced a fire making level."
 data=level_prefix,Your firemaking level is now
 data=levelup_jingle,^advance_firemarking_jingle
 data=levelup_jingle_millis,^advance_firemarking_millis
