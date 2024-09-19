@@ -31,7 +31,12 @@ if ($choice = 2) {
 if (npc_find(^trawler_wreck_murphy, murphy_sunk, 2, 0) = true) {
     npc_settimer(1);
 }
-queue(trawler_player_sink, 0);
+if (~inzone_coord_pair_table(trawler_nonflood_zones, coord) = true) {
+    queue(trawler_player_sink_unflooded, 0);
+} else {
+    queue(trawler_player_sink_flooded, 0);
+}
+
 
 [ai_queue6,murphy_nonflood] @murphy_cry;
 [ai_queue6,murphy_flood] @murphy_cry;
