@@ -206,7 +206,6 @@ anim(human_smithing, 0);
 sound_synth(anvil_4, 0, 0);
 // delay player during whole smithing sesh
 // https://oldschool.runescape.wiki/w/Update:Dev_Blog:_Third_Old_School_RuneScape_Content_Poll
-p_delay(0);
 if (%tutorial_progress < ^tutorial_complete) {
     ~tut_smithing_anvil($count);
 } else {
@@ -215,8 +214,8 @@ if (%tutorial_progress < ^tutorial_complete) {
 //--------------------------
 
 //--------------------------
-// only 2 ticks on first smith? rest smiths are 5 ticks
-// https://youtu.be/vQixsBb7wPQ?t=80
+// items appear in the inventory after 2 ticks, then the player is delayed for 3 ticks after
+// https://youtu.be/vQixsBb7wPQ?t=95, level up interface takes 3 ticks to appear
 [proc,smithing_anvil](dbrow $data, int $count)
 p_delay(1);
 def_int $bar_amount = db_getfield($data,smithing:bar_amount,0);
@@ -232,17 +231,18 @@ def_struct $struct = oc_param($bar, smithing_anvil_struct);
 stat_advance(smithing, calc($bar_amount * struct_param($struct, xpperbar)));
 // display message
 mes("You hammer the <struct_param($struct, name)> and make <db_getfield($data,smithing:end_message,0)>.");
+p_delay(1);
 // end smithing if count is less than 1
 $count = calc($count - 1);
-if ($count < 1) {
-    return;
-}
 // check if player has enough bars
-if (inv_total(inv, $bar) < $bar_amount) {
+if (inv_total(inv, $bar) < $bar_amount & $count > 0) {
     ~mesbox("You don't have enough <lowercase(oc_name($bar))>s to make any more."); // https://youtu.be/Xud7h207rZc?t=286
     return;
 }
-p_delay(2);
+if ($count < 1) {
+    return;
+}
+p_delay(0);
 // play anim and sound
 anim(human_smithing, 0);
 sound_synth(anvil_4, 0, 0);
