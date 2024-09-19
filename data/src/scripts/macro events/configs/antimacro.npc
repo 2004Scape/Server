@@ -171,7 +171,9 @@ recol5d=12552
 recol6s=22164
 recol6d=20678
 model1=model_3011_npc
-// TODO
+// for debug purposes
+// attackrange=2
+// maxrange=2
 param=attack_anim,terrorbird_attack
 param=defend_anim,terrorbird_block
 param=death_anim,terrorbird_death

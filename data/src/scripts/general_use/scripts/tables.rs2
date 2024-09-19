@@ -1,4 +1,9 @@
 [oplocu,_usable_table]
+if (oc_tradeable(last_useitem) = false) {
+    mes("You cannot put that on a table."); // osrs
+    return;
+}
+
 anim(human_pickuptable, 0);
 sound_synth(put_down, 0, 0);
 
@@ -32,7 +37,7 @@ if ($x > 0) {
 } else if (calc($x + $width - 1) < 0) {
     $obj_coord = movecoord(coord, -1, 0, 0); // player is east of table
 }
-inv_dropslot(inv, $obj_coord, last_useslot, 1000);
+inv_dropslot(inv, $obj_coord, last_useslot, 900); // 1 min to be visible, 9 min to disappear
 
 [oplocu,_unusable_table]
 mes("The table appears to be in use.");

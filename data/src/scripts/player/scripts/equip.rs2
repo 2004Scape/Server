@@ -203,6 +203,12 @@ def_int $i = 0;
 while ($i < $size) {
     def_obj $obj = inv_getobj(worn, $i);
     if ($obj ! null) {
+        if ($i ! ^wearpos_quiver
+            | inv_getobj(worn, ^wearpos_rhand) = null
+            | (oc_category($obj) = arrows & oc_category(inv_getobj(worn, ^wearpos_rhand)) = weapon_bow)
+            | (oc_category($obj) = bolts & oc_category(inv_getobj(worn, ^wearpos_rhand)) = weapon_crossbow)) {
+            $rangebonus = calc($rangebonus + oc_param($obj, rangebonus));
+        }
         $stabattack = calc($stabattack + oc_param($obj, stabattack));
         $slashattack = calc($slashattack + oc_param($obj, slashattack));
         $crushattack = calc($crushattack + oc_param($obj, crushattack));
@@ -215,7 +221,6 @@ while ($i < $size) {
         $rangedefence = calc($rangedefence + oc_param($obj, rangedefence));
         $strengthbonus = calc($strengthbonus + oc_param($obj, strengthbonus));
         $prayerbonus = calc($prayerbonus + oc_param($obj, prayerbonus));
-        $rangebonus = calc($rangebonus + oc_param($obj, rangebonus));
     }
     $i = calc($i + 1);
 }
@@ -241,6 +246,12 @@ def_int $i = 0;
 while ($i < $size) {
     def_obj $obj = .inv_getobj(worn, $i);
     if ($obj ! null) {
+        if ($i ! ^wearpos_quiver
+            | .inv_getobj(worn, ^wearpos_rhand) = null
+            | (oc_category($obj) = arrows & oc_category(.inv_getobj(worn, ^wearpos_rhand)) = weapon_bow)
+            | (oc_category($obj) = bolts & oc_category(.inv_getobj(worn, ^wearpos_rhand)) = weapon_crossbow)) {
+            $rangebonus = calc($rangebonus + oc_param($obj, rangebonus));
+        }
         $stabattack = calc($stabattack + oc_param($obj, stabattack));
         $slashattack = calc($slashattack + oc_param($obj, slashattack));
         $crushattack = calc($crushattack + oc_param($obj, crushattack));
@@ -253,7 +264,6 @@ while ($i < $size) {
         $rangedefence = calc($rangedefence + oc_param($obj, rangedefence));
         $strengthbonus = calc($strengthbonus + oc_param($obj, strengthbonus));
         $prayerbonus = calc($prayerbonus + oc_param($obj, prayerbonus));
-        $rangebonus = calc($rangebonus + oc_param($obj, rangebonus));
     }
     $i = calc($i + 1);
 }

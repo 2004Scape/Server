@@ -19,6 +19,7 @@ import LocType from '#lostcity/cache/config/LocType.js';
 import * as rsmod from '@2004scape/rsmod-pathfinder';
 import {CollisionFlag, CollisionType} from '@2004scape/rsmod-pathfinder';
 import Environment from '#lostcity/util/Environment.js';
+import Obj from './Obj.js';
 
 type TargetSubject = {
     type: number,
@@ -132,7 +133,7 @@ export default abstract class PathingEntity extends Entity {
      * Returns true if a step was taken and movement processed.
      */
     processMovement(): boolean {
-        if (!this.hasWaypoints() || this.moveSpeed === MoveSpeed.STATIONARY) {
+        if (!this.hasWaypoints() || this.moveSpeed === MoveSpeed.STATIONARY || this.moveSpeed === MoveSpeed.INSTANT) {
             return false;
         }
 
@@ -223,6 +224,14 @@ export default abstract class PathingEntity extends Entity {
         this.orientationZ = CoordGrid.moveZ(this.z, dir) * 2 + 1;
         this.stepsTaken++;
         this.refreshZonePresence(previousX, previousZ, this.level);
+
+        if (this.waypointIndex !== -1) {
+            const coord: CoordGrid = CoordGrid.unpackCoord(this.waypoints[this.waypointIndex]);
+            if (coord.x === this.x && coord.z === this.z) {
+                this.waypointIndex--;
+            }
+        }
+
         return dir;
     }
 
@@ -255,7 +264,7 @@ export default abstract class PathingEntity extends Entity {
 
     teleJump(x: number, z: number, level: number): void {
         this.teleport(x, z, level);
-        this.clearWaypoints();
+        this.moveSpeed = MoveSpeed.INSTANT;
         this.jump = true;
     }
 
@@ -274,9 +283,10 @@ export default abstract class PathingEntity extends Entity {
         this.refreshZonePresence(previousX, previousZ, previousLevel);
         this.lastStepX = this.x - 1;
         this.lastStepZ = this.z;
-
-        this.moveSpeed = MoveSpeed.INSTANT;
+        this.tele = true;
+        
         if (previousLevel != level) {
+            this.moveSpeed = MoveSpeed.INSTANT;
             this.jump = true;
         }
     }
@@ -301,7 +311,7 @@ export default abstract class PathingEntity extends Entity {
         // temp variables to convert movement operations
         let walkDir = this.walkDir;
         let runDir = this.runDir;
-        let tele = this.moveSpeed === MoveSpeed.INSTANT;
+        let tele = this.tele;
 
         // convert p_teleport() into walk or run
         const distanceMoved = CoordGrid.distanceTo(this, {
@@ -434,6 +444,8 @@ export default abstract class PathingEntity extends Entity {
             } else if (this.target instanceof Loc) {
                 const forceapproach = LocType.get(this.target.type).forceapproach;
                 this.queueWaypoints(rsmod.findPath(this.level, this.x, this.z, this.target.x, this.target.z, this.width, this.target.width, this.target.length, this.target.angle, this.target.shape, true, forceapproach));
+            } else if (this.target instanceof Obj && this.x === this.target.x && this.z === this.target.z) {
+                this.queueWaypoint(this.target.x, this.target.z); // work around because our findpath() returns 0, 0 if coord and target coord are the same
             } else {
                 this.queueWaypoints(rsmod.findPath(this.level, this.x, this.z, this.target.x, this.target.z));
             }

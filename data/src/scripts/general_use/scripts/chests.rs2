@@ -25,16 +25,22 @@ if(map_members = true) {
 if(map_members = true) {
     if(loc_coord = 1_50_50_9_18 & inv_total(inv, trail_clue_easy_simple_exp001) = 1) {
         ~trail_clue_easy_loc_interact(trail_clue_easy_simple_exp001);
+        return;
     } else if(loc_coord = 1_51_49_37_33 & inv_total(inv, trail_clue_easy_simple_exp004) = 1) {
         ~trail_clue_easy_loc_interact(trail_clue_easy_simple_exp004);
+        return;
     } else if(loc_coord = 2_42_54_60_39 & inv_total(inv, trail_clue_easy_riddle_exp001) = 1) {
         ~trail_clue_easy_loc_interact(trail_clue_easy_riddle_exp001);
-    } else {
-        mes("You search the chest but find nothing.");
+        return;
     }
+}
+if (random(^findsomethingnice_chance) = 0) {
+    mes("You search the chest."); // guess
+    p_delay(2);
+    ~findsomethingnice;
     return;
 }
-mes("You search the chest but find nothing.");
+mes("You find nothing."); // guess
 
 [proc,open_chest](loc $other_chest)
 p_arrivedelay;

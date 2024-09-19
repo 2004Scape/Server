@@ -4,8 +4,10 @@ sound_synth(smokepuff, 0, 0);
 npc_anim(emote_bow, 20);
 npc_say("Greetings <displayname>!");
 %npc_attacking_uid = uid;
-npc_setmode(none);
-npc_queue(4, 0, 2);
+
+// to match genie in this video: https://www.youtube.com/watch?v=el-h9hbSH80&t=293s
+npc_queue(4, 0, 20);
+npc_setmode(playerfollow);
 
 [ai_queue4,macro_event_mysterious_old_man_general]
 // other videos:
@@ -19,17 +21,15 @@ if (finduid(%npc_attacking_uid) = true) {
         return;
     }
     if (last_int = 0) {
-        npc_setmode(playerfollow);
-    } else if (last_int = 1) {
         npc_anim(emote_wave, 20);
         npc_say("ehem... Hello <displayname>!");
-    } else if (last_int = 2) {
+    } else if (last_int = 1) {
         npc_anim(emote_think, 20);
         npc_say("Hello, are you there <displayname>!");
-    } else if (last_int = 3) {
+    } else if (last_int = 2) {
         npc_anim(emote_angry, 20);
         npc_say("It's really rude to ignore someone, <displayname>!");
-    } else if (last_int = 4) { // fail
+    } else if (last_int = 3) { // fail
         // https://youtu.be/Ai89wqupYqA?t=45
         ~macro_event_fail_teleport;
         ~macro_event_fail_note_inv; // not sure if this existed but Sudden and a couple others remember it being a thing

@@ -34,7 +34,7 @@ switch_int(%upass_progress) {
 [label,koftik_first_dialogue]
 // https://youtu.be/IUzRF8GrfSY?si=iJ9ytVtJONT4ok6q&t=65, https://youtu.be/ZxF473zUZfQ?si=nrGO9gJiP_CbpqJp&t=153
 ~chatplayer("<p,happy>Hello there, are you the King's scout?");
-~chatnpc("<p,happy>That I am, brave adventurer. King Lathas informed me that you need to cross these mountains.");
+~chatnpc("<p,happy>That I am, brave adventurer.|King Lathas informed me|that you need to cross these mountains."); // https://web.archive.org/web/20050421234903/http://www.trillionareguild.com/runescape/underground.php
 ~chatnpc("<p,neutral>I'm afraid you'll have to go through the ancient underground pass...");
 ~chatplayer("<p,happy>That's OK, I've travelled through many a cave in my time.");
 ~chatnpc("<p,shock>These caves are different... They're filled with the spirit of Zamorak!");
@@ -72,6 +72,7 @@ switch_int(%upass_progress) {
             ~chatnpc("<p,neutral>I found this cloth amongst the charred remains of some arrows.");
             ~chatplayer("<p,shock>Charred arrows? They must have been trying to burn something. Or someone!");
             inv_add(inv, damp_cloth, 1);
+            mes("Koftik gives you a damp cloth..."); // https://youtu.be/qGcENRGIcoI?si=k3ay_a8qM1TnQ_kT&t=25
         }
         ~chatplayer("<p,neutral>Interesting... we better keep our eyes open.");
         ~chatnpc("<p,neutral>I have also found the remains of a book...");
@@ -108,7 +109,7 @@ switch_int(%upass_progress) {
         ~chatplayer("<p,happy>Are you OK?");
         ~chatnpc("<p,neutral>The path of the righteous man is beset on all sides by the iniquities of the selfish and the tyranny of evil men.");
         ~chatplayer("<p,happy>Tyranny of the righteous? What?");
-        ~chatnpc("<p,neutral>So many paths to choose... Here we must all take our own path.");
+        ~chatnpc("<p,neutral>So many paths to choose...|Here we must all take our own path."); // https://web.archive.org/web/20050421234903/http://www.trillionareguild.com/runescape/underground.php
 }
 
 [opnpc1,npc_975]

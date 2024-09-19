@@ -157,7 +157,7 @@ param=whirlpool,memberfish_whirlpool
 param=fishing_movement_enum,fishing_movement_fishing_guild_enum
 //--- (Net/Harpoon) Fishing guild
 
-//--- (Net/Harpoon) Fisher kingdom
+//--- (Lure/Bait) Fisher kingdom
 [0_41_73_freshfish]
 vislevel=hide
 readyanim=fishingspot_ready
@@ -173,10 +173,10 @@ op5=hidden
 model1=model_loc_42_8
 moverestrict=nomove
 timer=250
-category=memberfish
-param=whirlpool,memberfish_whirlpool
+category=freshfish
+param=whirlpool,freshfish_whirlpool
 param=fishing_movement_enum,fishing_movement_fisher_realm_enum
-//--- (Net/Harpoon) Fisher kingdom
+//--- (Lure/Bait) Fisher kingdom
 
 //--- (Lure/Bait) Seer's village
 [0_42_55_freshfish]

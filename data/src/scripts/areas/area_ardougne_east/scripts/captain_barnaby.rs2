@@ -9,7 +9,8 @@ switch_int ($option) {
             return;
         }       
         inv_del(inv, coins, 30);
-        ~set_sail("Brimhaven", "You pay 30 coins and board the ship.", 1_43_50_23_34, ^sail_ardougne_to_brimhaven, 7);
+        mes("You pay the 30 coins..."); // https://imgur.com/myiOU5N may 2004
+        ~set_sail("Brimhaven", "and board the ship.", 1_43_50_23_34, ^sail_ardougne_to_brimhaven, 7);
         return;
     case 2:
         ~chatplayer("<p,neutral>No, thank you.");
