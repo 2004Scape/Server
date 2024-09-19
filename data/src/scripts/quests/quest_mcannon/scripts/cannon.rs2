@@ -169,6 +169,7 @@ if (last_useitem = cannon_furnace) {
     anim(human_pickupfloor, 0);
     inv_del(inv, cannon_furnace, 1);
     loc_add(%mcannon_coord, cannon, 0, centrepiece_straight, ^cannon_decay_length);
+    %mcannon_decay_clock = add(map_clock, ^cannon_decay_length);
     settimer(cannon_decay, ^cannon_decay_length);
     mes("You add the furnace.");
     // automatically starts spinning: https://youtu.be/TeQXQDaawO0?t=234
@@ -177,7 +178,6 @@ if (last_useitem = cannon_furnace) {
     if (modulo(%mcannon_clock, 8) ! 0) {  // if rotation isnt north, rotate back to north
         settimer(cannon_rotate, 1);
     }
-    %mcannon_clock = sub(map_clock, modulo(map_clock, 8));
 } else {
     ~displaymessage(^dm_default);
 }
@@ -193,6 +193,7 @@ mes("You pick up the cannon,"); // https://youtu.be/TeQXQDaawO0?t=518
 mes("It's really heavy.");
 sound_synth(pick, 0, 0);
 %mcannon_coord = null;
+%mcannon_decay_clock = null;
 cleartimer(cannon_rotate);
 cleartimer(cannon_decay);
 if (inv_freespace(inv) < 4) {
@@ -226,7 +227,6 @@ if (%mcannon_ammo < 1) {
     mes("Your cannon is out of ammo!"); // https://youtu.be/TeQXQDaawO0?t=239
     return;
 }
-%mcannon_clock = sub(map_clock, modulo(map_clock, 8));
 settimer(cannon_rotate, 1);
 
 [oplocu,cannon]
@@ -239,8 +239,8 @@ if (last_useitem = mcannonball) {
         mes("The cannon is already full of ammo."); // osrs
         return;
     }
-    def_int $count = sub(30, max(%mcannon_ammo, 0));
-    mes("You load the cannon with <tostring($count)> cannonballs."); // https://youtu.be/TeQXQDaawO0?t=239
+    def_int $count = min(sub(30, max(%mcannon_ammo, 0)), inv_total(inv, mcannonball));
+    mes("You load the cannon with <~pluralise($count, "cannonball")>."); // https://youtu.be/TeQXQDaawO0?t=239
     %mcannon_ammo = add(%mcannon_ammo, $count);
     inv_del(inv, mcannonball, $count);
 } else {
@@ -373,17 +373,17 @@ cleartimer(cannon_rotate);
 
 
 [proc,set_cannon_vars_logout]
-%mcannon_clock = sub(map_clock, %mcannon_clock);
+%mcannon_decay_clock = sub(%mcannon_decay_clock, map_clock);
 
 [proc,set_cannon_vars_login]
 if (loc_find(%mcannon_coord, cannon) = true) {
-    settimer(cannon_decay, sub(^cannon_decay_length, %mcannon_clock));
+    settimer(cannon_decay, sub(^cannon_decay_length, %mcannon_decay_clock));
 }
-%mcannon_clock = sub(map_clock, %mcannon_clock);
+%mcannon_decay_clock = add(%mcannon_decay_clock, map_clock);
 
-// [debugproc,mc]
-// if (%mcannon_coord ! null) {
-//     mes(tostring(coordx(%mcannon_coord)));
-// }
-// mes(tostring(%mcannon_clock));
-// mes(tostring(map_clock));
+[debugproc,mc]
+if (%mcannon_coord ! null) {
+    mes(tostring(coordx(%mcannon_coord)));
+}
+mes(tostring(%mcannon_decay_clock));
+mes(tostring(map_clock));
