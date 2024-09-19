@@ -75,7 +75,7 @@ inv_add(inv, ammo_mould, 1);
 @multi4(
     "Ok, I'll take a cannon please.", ill_take_a_cannon,
     "Can I look at the separate parts please?", separate_parts_please,
-    "Sorry, that's too much fo rme.", too_much_for_me,
+    "Sorry, that's too much for me.", too_much_for_me,
     "Have you any ammo or instructions to sell?", ammo_or_instructions
 );
 
