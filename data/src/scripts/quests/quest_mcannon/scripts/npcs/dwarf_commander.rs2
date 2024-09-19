@@ -166,7 +166,7 @@ p_delay(1);
 [label,mcannon_ok_then_just_for_you]
 ~chatplayer("<p,happy>Ok then, just for you!");
 ~chatnpc("<p,happy>You're a good adventurer, we were lucky to find you.|The base is located just South of the Ice Mountain.");
-~chatnpc("<p,neutral>You'll need to speak to Nulodion, Dwarf Cannon| Engineer. He's the Weapons Development Chief for the Black Guard, so if anyone knows how to fire that thing, it'll be him.");
+~chatnpc("<p,neutral>You'll need to speak to Nulodion, the Dwarf Cannon| Engineer. He's the Weapons Development Chief for the Black Guard, so if anyone knows how to fire that thing, it'll be him.");
 ~chatplayer("<p,neutral>Ok, I'll see what I can do.");
 if (%mcannon_progress = ^mcannon_has_repaired_cannon) {
     %mcannon_progress = ^mcannon_tasked_with_speaking_to_nulodion;
@@ -176,7 +176,7 @@ if (%mcannon_progress = ^mcannon_has_repaired_cannon) {
 ~chatplayer("<p,neutral>Hi again.");
 ~chatnpc("<p,happy>Hello traveller,|any word from the Cannon Engineer?");
 ~chatplayer("<p,neutral>Not yet.");
-~chatnpc("<p,neutral>The Black Guard camp is South of the Ice Mountain,|the quicker we got some ammo for this thing|the quicker those goblins will leave us be.");
+~chatnpc("<p,neutral>The Black Guard camp is South of the Ice Mountain,|the quicker we can get some ammo for this thing|the quicker those goblins will leave us be.");
 ~chatplayer("<p,neutral>I'll get to it.");
 
 [label,dwarf_commander_spoken_to_nulodion]
