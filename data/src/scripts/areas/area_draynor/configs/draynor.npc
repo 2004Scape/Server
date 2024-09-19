@@ -24,7 +24,7 @@ model8=model_194_npc
 head1=model_53_idk_head
 head2=model_85_idk_head
 head3=model_37_npc_head
-moverestrict=indoors
+// not indoors in 2004: https://imgur.com/FMObI45, https://imgur.com/GrNWMQR
 
 [leela]
 name=Leela

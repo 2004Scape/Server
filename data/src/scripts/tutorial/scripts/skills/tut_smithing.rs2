@@ -11,6 +11,7 @@ inv_add(inv, bronze_dagger, 1);
 ~tutorial_give_xp(smithing, 125);
 // display message
 mes("You hammer the bronze and make a dagger.");
+p_delay(1);
 // end smithing if count is less than 1
 $count = calc($count - 1);
 if ($count < 1) {
@@ -22,7 +23,7 @@ if (inv_total(inv, bronze_bar) < 1) {
     ~mesbox("You don't have enough bronze bars to make any more."); // https://youtu.be/Xud7h207rZc?t=286
     return;
 }
-p_delay(2);
+p_delay(0);
 // play anim and sound
 anim(human_smithing, 0);
 sound_synth(anvil_4, 0, 0);
