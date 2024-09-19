@@ -75,7 +75,7 @@ inv_add(inv, ammo_mould, 1);
 @multi4(
     "Ok, I'll take a cannon please.", ill_take_a_cannon,
     "Can I look at the separate parts please?", separate_parts_please,
-    "Sorry, that's too much fo rme.", too_much_for_me,
+    "Sorry, that's too much for me.", too_much_for_me,
     "Have you any ammo or instructions to sell?", ammo_or_instructions
 );
 
@@ -91,7 +91,7 @@ inv_add(inv, ammo_mould, 1);
 [label,lost_my_cannon]
 ~chatplayer("<p,sad>I've lost my cannon...");
 ~chatnpc("<p,neutral>That's unfortunate... but don't worry, I can sort you out.");
-if (%mcannon_coord ! null & loc_find(%mcannon_coord, cannon) = true) {
+if (%mcannon_coord = null | loc_find(%mcannon_coord, cannon) = true | %mcannon_decay_clock > map_clock) {
     ~chatnpc("<p,sad>Oh dear, I'm only allowed to replace cannons|that were stolen in action.|I'm sorry but you'll have to buy a new set.");
     return;
 }
