@@ -973,8 +973,9 @@ export default class Player extends PathingEntity {
             this.clearWaypoints();
         }
         let moved = false;
-
-        if (this.target && (!this.interacted || this.apRangeCalled)) {
+        if (this.interacted && !this.apRangeCalled) {
+            this.recoverEnergy(false);
+        } else if (this.target) {
             this.interacted = false;
             moved = this.updateMovement();
             if (moved) {
