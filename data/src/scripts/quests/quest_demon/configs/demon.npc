@@ -25,7 +25,7 @@ param=defend_sound,demon_hit
 param=death_sound,demon_death
 param=death_drop,ashes
 timer=100
-category=demon
+param=demon,^true
 
 [weakened_delrith]
 size=2
@@ -45,4 +45,4 @@ moverestrict=nomove
 timer=100
 param=death_anim,delrith_banish
 param=death_sound,demon_death
-category=demon
+param=demon,^true

@@ -206,5 +206,6 @@ param=attack_sound,black_demon_attack
 param=defend_sound,black_demon_hit
 param=death_sound,black_demon_death
 param=death_drop,ashes
-category=demon
+param=demon,^true
+category=black_demon
 timer=20

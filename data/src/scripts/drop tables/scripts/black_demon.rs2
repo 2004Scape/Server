@@ -1,4 +1,4 @@
-[ai_queue3,black_demon]
+[ai_queue3,_black_demon]
 gosub(npc_death);
 if (npc_findhero = false) {
     return;
