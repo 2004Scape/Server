@@ -309,6 +309,7 @@ param=defend_sound,black_demon_hit
 param=death_sound,black_demon_death
 param=death_drop,ashes
 category=kolodion
+//does not have to be in demon category. silverlight won't help you here.
 
 [battle_mage_zamorak]
 name=Battle mage
