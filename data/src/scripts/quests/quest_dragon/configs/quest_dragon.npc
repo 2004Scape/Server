@@ -208,7 +208,7 @@ param=death_sound,demon_death
 param=death_drop,ashes
 huntmode=cowardly
 huntrange=2
-param=demon,^true
+category=demon
 
 [melzar]
 name=Melzar the mad

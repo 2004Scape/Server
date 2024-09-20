@@ -659,7 +659,7 @@ param=defend_sound,demon_hit
 param=death_sound,demon_death
 param=death_drop,ashes
 huntmode=cowardly
-param=demon,^true
+category=demon
 
 [doomion]
 size=3
@@ -688,7 +688,7 @@ param=defend_sound,demon_hit
 param=death_sound,demon_death
 param=death_drop,ashes
 huntmode=cowardly
-param=demon,^true
+category=demon
 
 [holthion]
 size=3
@@ -717,7 +717,7 @@ param=defend_sound,demon_hit
 param=death_sound,demon_death
 param=death_drop,ashes
 huntmode=cowardly
-param=demon,^true
+category=demon
 
 [iban_disciple]
 walkanim=human_walk_f,human_walk_b,human_walk_l,human_walk_r

@@ -2119,7 +2119,7 @@ param=death_drop,ashes
 huntmode=cowardly
 // huntrange: https://youtu.be/bU8sQbojKH4?list=PLn23LiLYLb1aqrojPTi1_Np81LJku2Nd0&t=127
 huntrange=2
-param=demon,^true
+category=demon
 
 [greater_demon]
 size=3
@@ -2151,7 +2151,7 @@ param=death_sound,demon_death
 param=death_drop,ashes
 huntmode=cowardly
 huntrange=3
-param=demon,^true
+category=demon
 
 [black_demon]
 size=3
@@ -2187,8 +2187,7 @@ param=death_sound,black_demon_death
 param=death_drop,ashes
 huntmode=cowardly
 huntrange=3
-param=demon,^true
-category=black_demon
+category=demon
 
 [golem]
 name=Golem
@@ -6490,7 +6489,7 @@ param=death_sound,demon_death
 param=death_drop,ashes
 huntmode=cowardly
 huntrange=3
-param=demon,^true
+category=demon
 
 [imp]
 name=Imp
@@ -8367,7 +8366,7 @@ param=attack_sound,demon_attack
 param=defend_sound,demon_hit
 param=death_sound,demon_death
 param=death_drop,ashes
-param=demon,^true
+category=demon
 
 [npc_935]
 name=Viyeldi
