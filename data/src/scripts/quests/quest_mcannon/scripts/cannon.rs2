@@ -406,7 +406,7 @@ cleartimer(cannon_rotate);
 %mcannon_decay_clock = sub(%mcannon_decay_clock, map_clock);
 
 [proc,set_cannon_vars_login]
-if (loc_find(%mcannon_coord, cannon) = true) {
+if (%mcannon_coord ! null & loc_find(%mcannon_coord, cannon) = true) {
     settimer(cannon_decay, sub(^cannon_decay_length, %mcannon_decay_clock));
 }
 %mcannon_decay_clock = add(%mcannon_decay_clock, map_clock);
