@@ -29,7 +29,7 @@ switch_int(stat_base(crafting)) {
     case 46: ~objboxt(stafforb,"Members can now craft @dbl@Orbs@bla@.");
     case 50: ~objboxt(ruby_amulet,"You can now craft @dbl@Ruby Amulets@bla@.");
     case 54: ~objboxt(water_battlestaff,"Members can now craft @dbl@Water Battlestaves@bla@.");
-    case 55: ~doubleobjbox(dragonstone,dragonstone_ring,"Members can now cut @dbl@Dragonstones@bla@ and craft @dbl@Dragonstone Rings@bla@.");
+    case 55: ~doubleobjbox(dragonstone,dragonstone_ring,"Members can now cut @dbl@Dragonstones|@bla@and craft @dbl@Dragonstone Rings."); // https://imgur.com/m9Jq0hU
     case 56: ~objboxt(diamond_necklace,"You can now craft @dbl@Diamond Necklaces@bla@.");
     case 57: ~objboxt(dragonhide_vamb,"Members can now craft @dbl@Green Dragonhide Vambraces@bla@.");
     case 58: ~objboxt(earth_battlestaff,"Members can now craft @dbl@Earth Battlestaves@bla@.");

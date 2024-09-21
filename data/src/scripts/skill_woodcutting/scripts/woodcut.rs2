@@ -204,8 +204,10 @@ return(null);
 
 
 [label,woodcutting_axe_fail]
-mes("You need an axe to chop down this tree.");
-//mes("You do not have an axe which you have the woodcutting level to use.");
+// mes("You need an axe to chop down this tree."); // this message was added in 2005 when they fixed axe wc reqs
+// https://imgur.com/Cj7w6y9
+// https://imgur.com/fnmlJ7R
+mes("You do not have an axe which you have the woodcutting level to use.");
 
 
 [label,your_inventory_is_full](namedobj $product)

@@ -33,16 +33,10 @@ if (loc_find($flood_coord, game_trawler_hull) = true | loc_find($flood_coord, ga
 }
 
 [queue,trawler_player_flood]
-if (~inzone_coord_pair_table(trawler_nonflood_zones, coord) = false) {
-    return;
-}
 p_teleport(movecoord(coord, 128, 0, 0));
 p_walk(coord);
 
 [queue,trawler_player_unflood]
-if (~inzone_coord_pair_table(trawler_flood_zones, coord) = false) {
-    return;
-}
 p_teleport(movecoord(coord, -128, 0, 0));
 p_walk(coord);
 

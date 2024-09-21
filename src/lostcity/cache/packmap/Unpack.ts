@@ -3,7 +3,7 @@ import fs from 'fs';
 import BZip2 from '#jagex2/io/BZip2.js';
 import Packet from '#jagex2/io/Packet.js';
 
-const maps = fs.readdirSync('data/pack/client/maps');
+const maps = fs.readdirSync('dump/maps');
 
 function readLand(data: Packet) {
     // console.time('land');
@@ -143,10 +143,15 @@ maps.forEach(file => {
     console.log(`Unpacking map for ${mapX}_${mapZ}`);
 
     // console.time('read');
-    let data: Buffer | Uint8Array = fs.readFileSync(`data/pack/client/maps/${file}`);
+    let data: Buffer | Uint8Array = fs.readFileSync(`dump/maps/${file}`);
     // console.timeEnd('read');
     // console.time('decompress');
-    data = BZip2.decompress(data, 0, false, true);
+    try {
+        data = BZip2.decompress(data, 0, false, true);
+    } catch (err) {
+        console.error(err);
+        return;
+    }
     // console.timeEnd('decompress');
     const land = readLand(new Packet(data));
 
@@ -200,10 +205,15 @@ maps.forEach(file => {
     console.log(`Unpacking loc map for ${mapX}_${mapZ}`);
 
     // console.time('read');
-    let data: Buffer | Uint8Array = fs.readFileSync(`data/pack/client/maps/${file}`);
+    let data: Buffer | Uint8Array = fs.readFileSync(`dump/maps/${file}`);
     // console.timeEnd('read');
     // console.time('decompress');
-    data = BZip2.decompress(data, 0, false, true);
+    try {
+        data = BZip2.decompress(data, 0, false, true);
+    } catch (err) {
+        console.error(err);
+        return;
+    }
     // console.timeEnd('decompress');
     const locs = readLocs(new Packet(data));
 

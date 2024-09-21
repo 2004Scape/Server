@@ -137,7 +137,7 @@ export default class Packet extends Hashable {
         super();
 
         this.data = src;
-        this.#view = new DataView(this.data.buffer);
+        this.#view = new DataView(src.buffer, src.byteOffset, src.byteLength);
         this.pos = 0;
         this.bitPos = 0;
     }
