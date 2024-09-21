@@ -17,7 +17,7 @@ def_int $attent = getbit_range(%cat_growth, 5, 10); //attention    (0-40-45-50)
 def_int $growth = getbit_range(%cat_growth, 11,19); //growth       (0-120-320)
 def_int $vermin = getbit_range(%cat_growth, 20,26); //rats caught  (0-100)
 if($attent = 0) { 
-    $attent = 29; //default attent for a new kitten is supposed to be 28
+    $attent = 28; //default attent for a new kitten is supposed to be 28
 }
 if(oc_category(nc_param(npc_type, pet_item_id)) ! overgrown) {
     npc_say("Meow!"); //done every 90s, no random chance

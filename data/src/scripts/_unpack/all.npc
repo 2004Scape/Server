@@ -6513,7 +6513,6 @@ param=damagetype,^stab_style
 param=attack_anim,imp_attack
 param=defend_anim,imp_block
 param=death_anim,imp_death
-param=demonbane_vulnerable,yes
 param=attack_sound,imp_attack
 param=defend_sound,imp_hit
 param=death_sound,imp_death
