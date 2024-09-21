@@ -748,7 +748,7 @@ class World {
             }
             try {
                 if (npc.lifecycle === EntityLifeCycle.RESPAWN) {
-                    this.addNpc(npc, -1);
+                    this.addNpc(npc, -1, false);
                 } else if (npc.lifecycle === EntityLifeCycle.DESPAWN) {
                     this.removeNpc(npc, -1);
                 }
@@ -1318,8 +1318,11 @@ class World {
         }
     }
 
-    addNpc(npc: Npc, duration: number): void {
-        this.npcs.set(npc.nid, npc);
+    addNpc(npc: Npc, duration: number, setId: boolean = true): void {
+        if (setId) {
+            this.npcs.set(npc.nid, npc);
+        }
+
         npc.x = npc.startX;
         npc.z = npc.startZ;
 
