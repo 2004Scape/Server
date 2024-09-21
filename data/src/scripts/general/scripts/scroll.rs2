@@ -163,5 +163,20 @@ if_settext(scroll:com_12, ^string_empty);
 if_settext(scroll:com_13, ^string_empty);
 if_openmain(scroll);
 
+[label,scroll_zombiequeen_tattered]
+if_settext(scroll:com_2, ^string_empty);
+if_settext(scroll:com_3, "Bervirius, son of King Danthalas, was killed in battle. His");
+if_settext(scroll:com_4, "devout Mother Rashiliyia was so heartbroken that she swore");
+if_settext(scroll:com_5, "fealty to Zamorak if he would return her son to her. Bervirius");
+if_settext(scroll:com_6, "returned as an undead creature and terrorized the King and");
+if_settext(scroll:com_7, "Queen. Many guards died fighting the Undead Bervirius.");
+if_settext(scroll:com_8, "Eventually the undead Bervirius was set on fire and soon only");
+if_settext(scroll:com_9, "the bones remained.His remains were taken far to the South,");
+if_settext(scroll:com_10, "and then towards the setting sun to a tomb that is surrounded");
+if_settext(scroll:com_11, "by and level with the sea. The only remedy for containing the");
+if_settext(scroll:com_12, "spirits of witches and undead.");
+if_settext(scroll:com_13, ^string_empty);
+if_openmain(scroll);
+
 [if_close,scroll]
 clearsofttimer(server);

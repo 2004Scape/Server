@@ -81,6 +81,12 @@ switch_int(%junglepotion_progress) {
 [opnpc1,trufitus]
 if(%zombiequeen_progress > ^zombiequeen_not_started) {
     switch_int(%zombiequeen_progress) {
+        case ^zombiequeen_entered_ah_za_rhoon:
+            ~chatplayer("<p,neutral>Greetings...");
+            ~chatnpc("<p,neutral>Greetings Bwana, you have been away! The situation with Rashiliyia is worsening! I pray that you have some good news for me.");
+            ~chatplayer("<p,happy>I think I found the temple of Ah Za Rhoon.");
+            ~chatnpc("<p,happy>Well that sounds great Bwana. Tell me, what did you find?");    
+            @multi4("I have some items that I need help with.", trufitus_items, "I need help with Zadimus.", trufitus_zadimus, "I need help with Rashiliyia.", trufitus_helprash, "I need some help with the Temple of Ah Za Rhoon.", trufitus_helptemple);
         case ^zombiequeen_lit_mound, ^zombiequeen_roped_mound:
             ~chatplayer("<p,neutral>Greetings...");
             ~chatnpc("<p,neutral>Greetings Bwana, you have been away! The situation with Rashiliyia is worsening! I pray that you have some good news for me.");
@@ -490,3 +496,35 @@ switch_int(~p_choice2("Well thanks...", 1, "Erm, I don't know where to look?", 2
 [label,trufitus_okthanks2]
 ~chatplayer("<p,neutral>Ok, thanks!");
 ~chatnpc("<p,neutral>You're quite welcome Bwana.");
+
+[label,trufitus_items]
+~chatplayer("<p,neutral>I have some items that I need help with.");
+~chatnpc("<p,neutral>Well, just let me see the item and I'll help as much as I can.");
+~chatnpc("<p,neutral>Look for something that can identify the place. Leave no stone unturned.");
+~chatnpc("<p,neutral>Any scrolls or information about Rashiliyia's kin would be helpful.");
+~chatnpc("<p,neutral>There is a legend about Rashiliyia, look for it in the temple.");
+~chatnpc("<p,neutral>Look for something relating to Zadimus at the temple. He was the Priest who built the temple.");
+~chatnpc("<p,neutral>And best of luck!");
+@multi4("I have some items that I need help with.", trufitus_items, "I need help with Zadimus.", trufitus_zadimus, "I need help with Rashiliyia.", trufitus_helprash, "I need some help with the Temple of Ah Za Rhoon.", trufitus_helptemple);
+
+[label,trufitus_zadimus]
+~chatplayer("<p,neutral>I need help with Zadimus.");
+~chatnpc("<p,neutral>All I know is that Zadimus was a high priest of Zamorak. Rashiliyia loved him, but he did not return her affections.");
+~chatnpc("<p,neutral>When she became a more powerful sorceress she attacked Ah Za Rhoon, reducing it to rubble. What Zadimus' fate was, I do not know.");
+~chatnpc("<p,neutral>If you find anything relating to him at the temple of Ah Za Rhoon, please let me see it.");
+@multi4("I have some items that I need help with.", trufitus_items, "I need help with Zadimus.", trufitus_zadimus, "I need help with Rashiliyia.", trufitus_helprash, "I need some help with the Temple of Ah Za Rhoon.", trufitus_helptemple);
+
+[label,trufitus_helprash]
+~chatplayer("<p,neutral>I need help with Rashiliyia.");
+~chatnpc("<p,neutral>We need to find Rashiliyia's resting place and learn how to put her spirit to rest. You may find some clues to her resting place in Ah Za Rhoon or Bervirius' Tomb.");
+@multi4("I have some items that I need help with.", trufitus_items, "I need help with Zadimus.", trufitus_zadimus, "I need help with Rashiliyia.", trufitus_helprash, "I need some help with the Temple of Ah Za Rhoon.", trufitus_helptemple);
+
+[label,trufitus_helptemple]
+~chatplayer("<p,neutral>I need some help with the Temple of Ah Za Rhoon.");
+~chatnpc("<p,neutral>If you have found the temple, you should search it thoroughly and see if there are any clues about Rashiliyia.");
+~chatnpc("<p,neutral>Look for something that can identify the place. Leave no stone unturned.");
+~chatnpc("<p,neutral>Look for details of Rashiliyia's kin, these may be well hidden.");
+~chatnpc("<p,neutral>There is a legend about Rashiliyia, look for it in the temple.");
+~chatnpc("<p,neutral>Look for something relating to Zadimus at the temple. He was the Priest who built the temple.");
+~chatnpc("<p,neutral>And best of luck!");
+@multi4("I have some items that I need help with.", trufitus_items, "I need help with Zadimus.", trufitus_zadimus, "I need help with Rashiliyia.", trufitus_helprash, "I need some help with the Temple of Ah Za Rhoon.", trufitus_helptemple);
