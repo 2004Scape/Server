@@ -81,7 +81,10 @@ switch_int(%junglepotion_progress) {
 [opnpc1,trufitus]
 if(%zombiequeen_progress > ^zombiequeen_not_started) {
     switch_int(%zombiequeen_progress) {
-        case ^zombiequeen_entered_ah_za_rhoon:
+        case ^zombiequeen_entered_tomb_bervirius:
+            ~chatplayer("<p,neutral>Greetings...");
+            ~chatnpc("<p,neutral>Greetings Bwana, did you find Bervirius' Tomb?");
+        case ^zombiequeen_entered_ah_za_rhoon, ^zombiequeen_left_ah_za_rhoon:
             ~chatplayer("<p,neutral>Greetings...");
             ~chatnpc("<p,neutral>Greetings Bwana, you have been away! The situation with Rashiliyia is worsening! I pray that you have some good news for me.");
             ~chatplayer("<p,happy>I think I found the temple of Ah Za Rhoon.");

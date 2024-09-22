@@ -125,7 +125,7 @@ protect=no
 [bank_noted]
 transmit=yes
 
-[varp_117]
+[zq_map_mechanisms]
 scope=perm
 
 [varp_118]

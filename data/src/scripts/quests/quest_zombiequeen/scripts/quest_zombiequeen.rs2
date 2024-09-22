@@ -15,11 +15,11 @@ if(npc_find(coord, npc_500, 8, 0) = true) {
 }
 ~mesbox("It looks as if you can climb across the cart. Would you like to try?");
 switch_int(~p_choice2("Yes, I am very nimble and agile!", 1, "No, I am happy where I am thanks!", 2)) {
-    case 1:
+    case 1 :
         mes("You nimbly jump from one side of the cart...");
         mes("...to the other and climb down again.");
         p_telejump(movecoord(loc_coord, -1, 0, 1));
-    case 2:
+    case 2 :
         if_close;
         mes("You think better of clambering over the cart, you might get dirty.");
         p_delay(2);
@@ -35,7 +35,7 @@ if(coordx(coord) < coordx(loc_coord)) {
 }
 ~mesbox("The gate feels very cold to your touch! Are you sure you want to go through?");
 switch_int(~p_choice2("Yes, I am very nimble and agile!", 1, "No, actually, I have a bad feeling about this!", 2)) {
-    case 1:
+    case 1 :
         if_close;
         mes("The gates slowly begin to open...");
         p_delay(1); // 1t
@@ -43,7 +43,7 @@ switch_int(~p_choice2("Yes, I am very nimble and agile!", 1, "No, actually, I ha
         settimer(shilo_mist_timer, 16);
         ~shilo_metalgates_open;
         ~forcemove(0_44_46_54_9);
-    case 2:
+    case 2 :
         if_close;
         mes("You drag your quivering body away from the gates.");
         p_delay(2); // 2t
@@ -97,7 +97,7 @@ mes("...and reveal an ancient doorway set into the side of the hill!");
 if(loc_find(0_45_48_37_18, loc_2244) = true & .loc_find(0_45_48_36_18, loc_2245) = true) {
     loc_change(loc_2240, ^max_32bit_int);
     .loc_change(loc_2241, ^max_32bit_int);
-    %varp_117 = setbit(%varp_117, 0);
+    %zq_map_mechanisms = setbit(%zq_map_mechanisms, 2);
 }
 // for w/e reason it handles despawn with a player timer
 settimer(hide_rashiliyia_doors, 50);
@@ -106,15 +106,15 @@ settimer(hide_rashiliyia_doors, 50);
 if(loc_find(0_45_48_37_18, loc_2240) = true & .loc_find(0_45_48_36_18, loc_2241) = true) {
     loc_change(loc_2244, ^max_32bit_int);
     .loc_change(loc_2245, ^max_32bit_int);
-    %varp_117 = clearbit(%varp_117, 0);
+    %zq_map_mechanisms = clearbit(%zq_map_mechanisms, 2);
     if(distance(.loc_coord, coord) <= 2 | distance(loc_coord, coord) <= 2) mes("The trees spring back into place and hide the doors again.");
 }
 
 [proc,rashiliyia_door_logout]
-if(testbit(%varp_117, 0) = true) {
+if(testbit(%zq_map_mechanisms, 2) = true) {
     if(loc_find(0_45_48_37_18, loc_2240) = true) loc_change(loc_2244, ^max_32bit_int);
     if(loc_find(0_45_48_36_18, loc_2241) = true) loc_change(loc_2245, ^max_32bit_int);
-    %varp_117 = clearbit(%varp_117, 0);
+    %zq_map_mechanisms = clearbit(%zq_map_mechanisms, 2);
 }
 
 [oploc1,_rashiliyia_tomb_door]
@@ -125,7 +125,7 @@ if(testbit(%varp_117, 0) = true) {
 
 [oploc1,loc_2217]
 switch_int(%zombiequeen_progress) {
-    case default:
+    case default :
         loc_change(loc_2219, 50);
         ~mesbox("You see a small fissure in the granite that you might just be able to crawl through. You can see that a rope is attached nearby.");
     case ^zombiequeen_dug_mound, ^zombiequeen_lit_mound :
@@ -139,7 +139,7 @@ switch_int(%zombiequeen_progress) {
 
 [oploc2,loc_2217]
 switch_int(%zombiequeen_progress) {
-    case default:
+    case default :
         loc_change(loc_2219, 50);
         ~mesbox("You see a small fissure in the granite that you might just be able to crawl through. You can see that a rope is attached nearby. Do you want to try to crawl through the fissure?");
         @zombiequeen_enter_fissure;        
@@ -414,30 +414,62 @@ if(inzone(0_43_46_24_35, 0_43_46_29_35, coord) = true) {
 
 [oploc2,loc_2234]
 // stage check
+if(%zombiequeen_progress >= ^zombiequeen_left_ah_za_rhoon) {
+    ~mesbox("You investigate the rocks and find a dank, narrow crawl-way. Do you want to crawl into this dank, dark, narrow, possibly dangerous hole?");
+    switch_int(~p_choice2_header("Yes Please, I can think of nothing nicer!", 1, "No way could you get me to go in there!", 2, "Crawl into hole?")) {
+        case 1 :
+            if(stat(agility) < 32) {
+                mes("You need an Agility level of at least 32 to squeeze in there.");
+                return;
+            }
+            ~mesbox("You contort your body and prepare to squirm worm like into the hole.");
+            anim(human_pickupfloor, 5);
+            if(stat_random(stat(agility), 125, 250) = false) {
+                ~set_walkbas(human_drowning);
+                p_delay(0); // TODO: remove when delay is fixed
+                ~forcemove(loc_coord);
+                mes("You manage to get yourself stuck.");
+                p_delay(1);
+                mes("You have to wrench yourself free to get out.");
+                p_delay(2);
+                mes("You manage to pull yourself out, but are hurt in the process.");
+                ~update_bas;
+                p_teleport(movecoord(coord, 0, 0, -1));
+                p_delay(1);
+                mes("Maybe you'll have better luck next time?");
+                ~damage_self(~random_range(1,10));
+            }
+            ~mesbox("You struggle through the narrow crevice in the rocks.");
+            %zombiequeen_progress = ^zombiequeen_entered_tomb_bervirius;
+            p_teleport(0_43_146_8_45);
+        case 2 : mes("You decide that the surface is the place for you!");
+    }
+    return;
+}
 ~mesbox("You find nothing of significance. And it does look quite scary.");
 
 [oploc1,loc_2226]
 ~mesbox("This table might be useful with some adjustment.");
 
 [oploc2,loc_2226]
-if(testbit(%varp_117, 0) = true) {
+if(testbit(%zq_map_mechanisms, 0) = true) {
     ~mesbox("There isn't enough wood left in this table to make anything!");
     return;
 }
 ~mesbox("You may be able to turn this dilapidated table into something that could help you to get out of this place. What would you like to try and turn this table into?");
 switch_int(~p_choice3("A ladder", 1, "A crude raft", 2, "A pole vault", 3)) {
-    case 1:
+    case 1 :
         if(stat_random(stat(crafting), 125, 250) = true) {
             ~mesbox("Your experience in crafting tells you that there isn't enough wood to complete this task.");
             return;
         }
         ~mesbox("You happily start hacking away at the table but realise that you won't have enough wood to properly finish the item off!");
-        %varp_117 = setbit(%varp_117, 0); // TODO: is this set before or after this mesbox? sounds like after: https://x.com/rhysdog2/status/1519274918613233665
+        %zq_map_mechanisms = setbit(%zq_map_mechanisms, 0); // TODO: is this set before or after this mesbox? sounds like after: https://x.com/rhysdog2/status/1519274918613233665
         stat_advance(crafting, 5);
-    case 2:
+    case 2 :
         if(stat_random(stat(crafting), 125, 250) = false) {
             ~mesbox("You happily start hacking away at the table but realise that you won't have enough wood to properly finish the item off!"); // TODO: confirm 
-            %varp_117 = setbit(%varp_117, 0);
+            %zq_map_mechanisms = setbit(%zq_map_mechanisms, 0);
             return;
         }
         ~mesbox("You see that this table already looks very sea worthy it takes virtually no time at all to help fix it into a crude raft.");
@@ -447,7 +479,7 @@ switch_int(~p_choice3("A ladder", 1, "A crude raft", 2, "A pole vault", 3)) {
         cam_shake(4, 0, 20, 5);
         cam_shake(1, 0, 20, 4);
         stat_advance(crafting, 30);
-        %varp_117 = setbit(%varp_117, 0);
+        %zq_map_mechanisms = setbit(%zq_map_mechanisms, 0);
         p_teleport(0_45_146_17_29);
         p_delay(2); // 2t
         mes("You board the raft!");
@@ -516,7 +548,7 @@ switch_int(~p_choice3("A ladder", 1, "A crude raft", 2, "A pole vault", 3)) {
             return;
         }
         ~mesbox("You happily start hacking away at the table but realise that you won't have enough wood to properly finish the item off!");
-        %varp_117 = setbit(%varp_117, 0); // TODO: is this set before or after this mesbox? sounds like after: https://x.com/rhysdog2/status/1519274918613233665
+        %zq_map_mechanisms = setbit(%zq_map_mechanisms, 0); // TODO: is this set before or after this mesbox? sounds like after: https://x.com/rhysdog2/status/1519274918613233665
 }
 
 [oploc1,loc_2221]
@@ -582,8 +614,8 @@ if ($choice = 1) {
 [opheld1,tattered_scroll]
 ~mesbox("This looks like part of a scroll about someone called Bervirius. Would you like to read it?");
 switch_int(~p_choice2("Yes please.", 1, "No thanks.", 2)) {
-    case 1: @scroll_zombiequeen_tattered;
-    case 2: ~mesbox("You decide not to open the scroll. But instead place it carefully back in your inventory.");
+    case 1 : @scroll_zombiequeen_tattered;
+    case 2 : ~mesbox("You decide not to open the scroll. But instead place it carefully back in your inventory.");
 }
 
 [opheld5,tattered_scroll]
@@ -608,8 +640,8 @@ inv_add(inv, tattered_scroll, 1);
 [opheld1,crumpled_scroll]
 ~mesbox("This looks like part of a scroll about someone called Bervirius. Would you like to read it?");
 switch_int(~p_choice2("Yes please.", 1, "No thanks.", 2)) {
-    case 1: @scroll_zombiequeen_tattered;
-    case 2: ~mesbox("You decide not to open the scroll. But instead place it carefully back in your inventory.");
+    case 1 : @scroll_zombiequeen_tattered;
+    case 2 : ~mesbox("You decide not to open the scroll. But instead place it carefully back in your inventory.");
 }
 
 [opheld5,crumpled_scroll]
@@ -636,10 +668,10 @@ if(~obj_gettotal(zadimus_corpse) > 0) {
 }
 ~mesbox("You find a human corpse hanging in the noose. It looks as if the corpse can be removed easily. Would you like to remove the corpse from the noose?");
 switch_int(~p_choice2("I don't think so, it might animate and attack me!", 1, "Yes, I may find something else on the corpse.", 2)) {
-    case 1:
+    case 1 :
         ~mesbox("You move away from the corpse quietly and slowly... ...you have an eerie feeling about this!");
         say("** Gulp! **");
-    case 2: 
+    case 2 : 
         ~objboxt(zadimus_corpse, "You gently support the frame of the skeleton and lift the skull through the noose.");
         inv_add(inv, zadimus_corpse, 1);
         ~objboxt(zadimus_corpse, "You find an old sack and place the skeleton in it. Maybe Trufitus can give you some  tips on what to do with it.");
@@ -660,7 +692,7 @@ p_delay(3); // 3t TODO: adjust when delay fix
 [oploc2,loc_2225]
 ~mesbox("You see a huge waterfall blocking your path.  The path leads on through the cascading waterfall, but it looks quite dangerous. Would you like to try and follow the path?");
 switch_int(~p_choice2_header("Yes, I'll follow the path.", 1, "No, I'll look for another exit.", 2, "Follow the path?")) {
-    case 1:
+    case 1 :
         if_close;
         // this is probably just the whole block copy pasted for both sides on OSRS
         // the messages even have multiple differences lol, just going to bascially do the same thing
@@ -734,8 +766,7 @@ switch_int(~p_choice2_header("Yes, I'll follow the path.", 1, "No, I'll look for
             ~update_bas;
             p_teleport(movecoord(coord, 1, 0, 1));
         } 
-
-    case 2: 
+    case 2 : 
         ~mesbox("You decide to have another look around. And see if you can find a better way to get out.");
 }
 
@@ -743,14 +774,88 @@ switch_int(~p_choice2_header("Yes, I'll follow the path.", 1, "No, I'll look for
 [mapzoneexit,0_45_146] queue(exit_ah_za_rhoon, 0);
 
 [queue,exit_ah_za_rhoon]
-if(inzone(0_45_145_0_0, 0_45_146_63_63, coord) = false) {
-    if(%zombiequeen_progress = ^zombiequeen_entered_ah_za_rhoon) %zombiequeen_progress = ^zombiequeen_left_ah_za_rhoon;
+if(inzone(0_45_145_0_0, 0_45_146_63_63, coord) = true) {
+    return;
 }
+if(%zombiequeen_progress = ^zombiequeen_entered_ah_za_rhoon) %zombiequeen_progress = ^zombiequeen_left_ah_za_rhoon;
+
+[oploc1,loc_2235]
+~mesbox("The dolmen is intricately decorated with the symbol of two crossed palm trees. It might be the family crest? You can see that there are some items on the dolmen.");
+
+[oploc2,loc_2235]
+if(inv_total(inv, zqpommel) > 0 & inv_total(inv, zqcrystal) > 0) {
+    ~mesbox("The dolmen is intricately decorated with the symbol of two crossed palm trees. It might be the family crest? You can see an item on the dolmen.");
+} else if(inv_total(inv, zqpommel) > 0 | inv_total(inv, zqcrystal) > 0) {
+    ~mesbox("The dolmen is intricately decorated with the symbol of two crossed palm trees. It might be the family crest? You can see an item on the dolmen.");
+} else {
+    ~mesbox("The dolmen is intricately decorated with the symbol of two crossed palm trees. It might be the family crest? You can see that there are some items on the dolmen.");
+}
+if(inv_total(inv, zqpommel) = 0) {
+    inv_add(inv, zqpommel, 1);
+    ~objboxt(zqpommel, "You find a rusty sword with an ivory pommel. You<br>take the Ivory pommel and place it in your inventory.");
+}
+if(inv_total(inv, zqcrystal) = 0) {
+    inv_add(inv, zqcrystal, 1);
+    ~objboxt(zqcrystal, "You find a Crystal Sphere. You take the crystal and place it carefully in your inventory.");
+}
+if(inv_total(inv, bervirius_notes) = 0) {
+    if(testbit(%zq_map_mechanisms, 1) = false) {
+        if(inv_total(inv, papyrus) > 0 & inv_total(inv, charcoal) > 0) {
+            ~mesbox("Do you want to take some notes from this dolmen using your papyrus and charcoal?");
+            switch_int(~p_choice2("Yes, I'll make some notes.", 1, "No, I don't want to make any notes.", 2)) {
+                case 1 :
+                    inv_del(inv, papyrus, 1);
+                    ~objboxt(bervirius_notes, "You find some writing on the dolmen, you take some of your papyrus and using the charcoal copy the text as best you can and collect them together as a scroll.");
+                case 2 : ~mesbox("You decide not to take any notes from the dolmen.");
+            }
+            return;
+        }
+        ~mesbox("You find some writing on the dolmen. You'll need some papyrus and charcoal to make new notes from this dolmen.");
+    } else {
+        inv_add(inv, bervirius_notes, 1);
+        ~objboxt(bervirius_notes, "You find some writing on the dolmen, you grab some nearby scraps of delicate paper together and copy the text as best you can and collect them together as a scroll.");
+    }
+}
+
+[opheld5,zqpommel]
+inv_del(inv, zqpommel, 1);
+~objboxt(zqpommel, "You drop the sword pommel on the floor. It turns to dust as soon as it hits the ground.");
+
+[opheld5,zqcrystal]
+~objboxt(zqcrystal, "Are you sure you want to drop this crystal? It looks very delicate and it may break.");
+switch_int(~p_choice2_header("Yes I am sure.", 1, "No, I've reconsidered, I'll keep it!", 2, "Drop the Locating Crystal?")) {
+    case 1 :
+        inv_del(inv, papyrus, 1);
+        ~objboxt(bervirius_notes, "You find some writing on the dolmen, you take some of your papyrus and using the charcoal copy the text as best you can and collect them together as a scroll.");
+    case 2 : ~objboxt(zqcrystal, "You decide to keep the Locating Crystal tucked into your inventory safe and sound.");
+}
+
+[oploc1,loc_2236]
+p_arrivedelay;
+mes("You attempt to climb the granite rock.");
+~set_readyandwalk_bas(seq_738, seq_737, seq_737);
+~forcemove(movecoord(loc_coord, 1, 0, 0));
+if(stat_random(stat(agility), 125, 250) = false) {
+    mes("You fall!");
+    ~update_bas;
+    say("Arrggghhhhhh!");
+    // sound_synth stumble_loop loops = 10
+    ~agility_exactmove(null, 0, 0, coord, movecoord(coord, 2, 0, 0), 31, 50, ^exact_east, false);
+    ~damage_self(~random_range(1, 10)); // this range should be correct
+    return;
+}
+mes("You manage to climb back out again!");
+~forcemove(movecoord(coord, 2, 0, -1));
+~update_bas;
+p_teleport(0_43_46_12_32);
+p_delay(1);
+~forcemove(movecoord(coord, 1, 0, 0));
+
 
 [proc,random_undead_one](npc)
 switch_int(random(4)) {
-    case 0: return (npc_502);
-    case 1: return (npc_503);
-    case 2: return (npc_504);
-    case 3: return (npc_505);
+    case 0 : return (npc_502);
+    case 1 : return (npc_503);
+    case 2 : return (npc_504);
+    case 3 : return (npc_505);
 }

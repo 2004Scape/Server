@@ -218,7 +218,7 @@ model=model_2561_obj
 weight=1g
 members=yes
 
-[obj_623]
+[zqpommel]
 name=Sword pommel
 desc=An ivory sword pommel.
 model=model_2547_obj
@@ -231,7 +231,7 @@ cost=1
 weight=3oz
 members=yes
 
-[obj_624]
+[bervirius_notes]
 name=Bervirius notes
 desc=Notes taken from the tomb of Bervirius.
 cost=1
