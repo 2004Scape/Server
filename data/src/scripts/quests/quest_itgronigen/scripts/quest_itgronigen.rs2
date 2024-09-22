@@ -205,7 +205,6 @@ switch_int(~p_choice2("I can see a constellation.", 1, "What am I looking at?", 
         @constellation_reward($constellation_numb);
 }
 
-
 [label,constellation_reward](int $constellation_numb)
 ~chatnpc("<p,happy>The constellation you saw was...");
 switch_int($constellation_numb) {
