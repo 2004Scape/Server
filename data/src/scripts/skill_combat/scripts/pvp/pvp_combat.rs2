@@ -92,15 +92,27 @@ if (map_multi(.coord) = true) {
 }
 // if you have been attacked in the last 8 ticks, and the last person to attack you isnt your opponent
 // or an npc attacked you
-if (add(%lastcombat, 8) > map_clock & (%pk_predator1 ! .uid | %aggressive_npc ! null)) {
-    mes("I'm already under attack.");
-    return(false);
+if (add(%lastcombat, 8) > map_clock) {
+    if (%pk_predator1 ! .uid & %pk_predator1 ! null) {
+        mes("I'm already under attack.");
+        return(false);
+    }
+    if (npc_finduid(%aggressive_npc) = true) {
+        mes("I'm already under attack.");
+        return(false);
+    }
 }
 // if your opponent has been attacked in the last 8 ticks, and the opponents last attacker is not you
 // or an npc attacked them 
-if (add(.%lastcombat, 8) > map_clock & (.%pk_predator1 ! uid | .%aggressive_npc ! null)) {
-    mes("Someone else is already fighting your opponent.");
-    return(false);
+if (add(.%lastcombat, 8) > map_clock) {
+    if (.%pk_predator1 ! uid & .%pk_predator1 ! null) {
+        mes("Someone else is already fighting your opponent.");
+        return(false);
+    }
+    if (npc_finduid(.%aggressive_npc) = true) {
+        mes("Someone else is already fighting your opponent.");
+        return(false);
+    }
 }
 return(true);
 

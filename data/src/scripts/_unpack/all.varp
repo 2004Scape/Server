@@ -13,7 +13,8 @@ protect=no
 
 [varp_35]
 
-[varp_39]
+[lastcombat_pvp]
+protect=no
 
 [eat_delay]
 
