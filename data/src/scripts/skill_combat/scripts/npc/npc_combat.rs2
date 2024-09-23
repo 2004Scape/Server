@@ -265,7 +265,10 @@ if (map_multi(npc_coord) = false & %npc_attacking_uid ! uid & %npc_attacking_uid
 if (map_multi(npc_coord) = true) {
     return(true);
 }
-if (add(%lastcombat, 8) > map_clock & %aggressive_npc ! npc_uid) {
+if (add(%lastcombat_pvp, 8) > map_clock) {
+    return(false);
+}
+if (add(%lastcombat, 8) > map_clock & %aggressive_npc ! npc_uid & %aggressive_npc ! null) {
     return(false);
 }
 if (~inzone_coord_pair_table(gnomeball_zones, coord) = true) {
