@@ -7,15 +7,15 @@
 ^itgronigen_sent_telescope = 6
 ^itgronigen_claimed_wine = 8
 
-^sign_capricorn = 1
-^sign_virgo = 2
-^sign_libra = 3
-^sign_aquarius = 4
-^sign_scorpio = 5
-^sign_leo = 6
-^sign_aries = 7
-^sign_sagittarius = 8
-^sign_gemini = 9
-^sign_pisces = 10
-^sign_taurus = 11
-^sign_cancer = 12
+^sign_capricorn = 0
+^sign_virgo = 1
+^sign_libra = 2
+^sign_aquarius = 3
+^sign_scorpio = 4
+^sign_leo = 5
+^sign_aries = 6
+^sign_sagittarius = 7
+^sign_gemini = 8
+^sign_pisces = 9
+^sign_taurus = 10
+^sign_cancer = 11
