@@ -466,6 +466,7 @@ head1=model_53_idk_head
 head2=model_44_obj_wear
 // osrs
 maxrange=8
+attackrange=8
 respawnrate=30
 hitpoints=14
 attack=8
