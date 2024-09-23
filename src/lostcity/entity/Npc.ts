@@ -161,6 +161,7 @@ export default class Npc extends PathingEntity {
             this.faceZ = -1;
             this.orientationX = -1;
             this.orientationZ = -1;
+            this.playAnimation(-1, 0); // reset animation or last anim has a chance to appear on respawn
             for (let index = 0; index < this.baseLevels.length; index++) {
                 this.levels[index] = this.baseLevels[index];
             }

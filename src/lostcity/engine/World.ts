@@ -1318,8 +1318,8 @@ class World {
         }
     }
 
-    addNpc(npc: Npc, duration: number, setId: boolean = true): void {
-        if (setId) {
+    addNpc(npc: Npc, duration: number, firstSpawn: boolean = true): void {
+        if (firstSpawn) {
             this.npcs.set(npc.nid, npc);
         }
 
