@@ -69,6 +69,7 @@ import WorldStat from '#lostcity/engine/WorldStat.js';
 import { FriendsServerOpcodes } from '#lostcity/server/FriendsServer.js';
 import UpdateFriendList from '#lostcity/network/outgoing/model/UpdateFriendList.js';
 import UpdateIgnoreList from '#lostcity/network/outgoing/model/UpdateIgnoreList.js';
+import MessagePrivate from '#lostcity/network/outgoing/model/MessagePrivate.js';
 
 class World {
     private friendsThread: Worker | NodeWorker = createWorker(typeof self === 'undefined' ? './src/lostcity/server/FriendsThread.ts' : 'FriendsThread.js');
@@ -110,6 +111,7 @@ class World {
     tickRate: number = World.NORMAL_TICKRATE; // speeds up when we're processing server shutdown
     currentTick: number = 0;
     shutdownTick: number = -1;
+    pmCount: number = 1; // can't be 0 as clients will ignore the pm, their array is filled with 0 as default
 
     // packed data timestamps
     allLastModified: number = 0;
@@ -190,6 +192,21 @@ class World {
                 if (ignored.length > 0) {
                     player.write(new UpdateIgnoreList(ignored));
                 }
+            } else if (opcode == FriendsServerOpcodes.PRIVATE_MESSAGE) {
+                const fromPlayer = packet.g8();
+                const fromPlayerStaffLvl = packet.g1();
+                const pmId = packet.g4();
+
+                const target = packet.g8();
+                const player = this.getPlayerByUsername(fromBase37(target));
+                if (!player) {
+                    console.error(`FriendsThread: player ${fromBase37(target)} not found`);
+                    return;
+                }
+
+                const message = packet.gjstr();
+
+                player.write(new MessagePrivate(fromPlayer, pmId, fromPlayerStaffLvl, message));
             } else {
                 console.error('Unknown friends opcode: ' + opcode);
             }
@@ -1620,6 +1637,19 @@ class World {
         this.friendsThread.postMessage({
             type: 'player_logout',
             username: player.username,
+        });
+    }
+
+    sendPrivateMessage(player: Player, targetUsername37: bigint, message: string): void {
+        console.log(`[World] sendPrivateMessage => player: ${player.username}, target: ${targetUsername37} (${fromBase37(targetUsername37)}), message: '${message}'`);
+
+        this.friendsThread.postMessage({
+            type: 'private_message',
+            username: player.username,
+            staffLvl: player.staffModLevel,
+            pmId: (Environment.NODE_ID << 24) + (Math.random() * 0xFF << 16) + (this.pmCount++),
+            target: targetUsername37,
+            message: message
         });
     }
 

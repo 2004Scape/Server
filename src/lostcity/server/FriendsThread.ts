@@ -85,6 +85,11 @@ async function handleRequests(parentPort: ParentPort, msg: any, priv: forge.pki.
             await client.playerChatSetMode(username, chatModePrivate);
             break;
         }
+        case 'private_message': {
+            const { username, staffLvl, pmId, target, message } = msg;
+            await client.privateMessage(username, staffLvl, pmId, target, message);
+            break;
+        }
         default:
             console.error('Unknown message type: ' + msg.type);
             break;
