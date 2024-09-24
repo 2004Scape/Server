@@ -1443,8 +1443,9 @@ class World {
         }
         const zone: Zone = this.gameMap.getZone(obj.x, obj.z, obj.level);
         zone.addObj(obj, receiverId);
-        if (receiverId !== -1 && objType.tradeable && (objType.members && Environment.NODE_MEMBERS || !objType.members)) {
-            // objs always reveal 100 ticks after being dropped.
+        if (receiverId !== -1) {
+            // objs with a receiver always attempt to reveal 100 ticks after being dropped.
+            // items that can't be revealed (untradable, members obj in f2p) will be skipped in revealObj
             const reveal: number = this.currentTick + Obj.REVEAL;
             obj.setLifeCycle(reveal);
             this.trackZone(reveal, zone);
