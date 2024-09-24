@@ -638,10 +638,10 @@ inv_add(inv, tattered_scroll, 1);
 ~objboxt(tattered_scroll, "You find a tattered but very ornate scroll, which you place carefully in your inventory.");
 
 [opheld1,crumpled_scroll]
-~mesbox("This looks like part of a scroll about someone called Bervirius. Would you like to read it?");
+~mesbox("This looks like a scroll about Rashiliyia. Would you like to read it?");
 switch_int(~p_choice2("Yes please.", 1, "No thanks.", 2)) {
-    case 1 : @scroll_zombiequeen_tattered;
-    case 2 : ~mesbox("You decide not to open the scroll. But instead place it carefully back in your inventory.");
+    case 1 : @scroll_zombiequeen_crumpled;
+    case 2 : mes("You decide to leave the scroll well alone.");
 }
 
 [opheld5,crumpled_scroll]
@@ -783,24 +783,24 @@ if(%zombiequeen_progress = ^zombiequeen_entered_ah_za_rhoon) %zombiequeen_progre
 ~mesbox("The dolmen is intricately decorated with the symbol of two crossed palm trees. It might be the family crest? You can see that there are some items on the dolmen.");
 
 [oploc2,loc_2235]
-if(inv_total(inv, zqpommel) > 0 & inv_total(inv, zqcrystal) > 0) {
-    ~mesbox("The dolmen is intricately decorated with the symbol of two crossed palm trees. It might be the family crest? You can see an item on the dolmen.");
-} else if(inv_total(inv, zqpommel) > 0 | inv_total(inv, zqcrystal) > 0) {
+if(~obj_gettotal(zqpommel) > 0 & ~obj_gettotal(zqcrystal) > 0) {
+    ~mesbox("The dolmen is intricately decorated with the symbol of two crossed palm trees. It might be the family crest? You can see nothing on the dolmen.");
+} else if(~obj_gettotal(zqpommel) > 0 | ~obj_gettotal(zqcrystal) > 0) {
     ~mesbox("The dolmen is intricately decorated with the symbol of two crossed palm trees. It might be the family crest? You can see an item on the dolmen.");
 } else {
     ~mesbox("The dolmen is intricately decorated with the symbol of two crossed palm trees. It might be the family crest? You can see that there are some items on the dolmen.");
 }
-if(inv_total(inv, zqpommel) = 0) {
+if(~obj_gettotal(zqpommel) = 0) {
     inv_add(inv, zqpommel, 1);
-    ~objboxt(zqpommel, "You find a rusty sword with an ivory pommel. You<br>take the Ivory pommel and place it in your inventory.");
+    ~objboxt(zqpommel, "You find a rusty sword with an ivory pommel. You take the Ivory pommel and place it in your inventory.");
 }
-if(inv_total(inv, zqcrystal) = 0) {
+if(~obj_gettotal(zqcrystal) = 0) {
     inv_add(inv, zqcrystal, 1);
     ~objboxt(zqcrystal, "You find a Crystal Sphere. You take the crystal and place it carefully in your inventory.");
 }
-if(inv_total(inv, bervirius_notes) = 0) {
+if(~obj_gettotal(bervirius_notes) = 0) {
     if(testbit(%zq_map_mechanisms, 1) = false) {
-        if(inv_total(inv, papyrus) > 0 & inv_total(inv, charcoal) > 0) {
+        if(~obj_gettotal(papyrus) > 0 & ~obj_gettotal(charcoal) > 0) {
             ~mesbox("Do you want to take some notes from this dolmen using your papyrus and charcoal?");
             switch_int(~p_choice2("Yes, I'll make some notes.", 1, "No, I don't want to make any notes.", 2)) {
                 case 1 :
@@ -817,6 +817,14 @@ if(inv_total(inv, bervirius_notes) = 0) {
     }
 }
 
+[opheld1,bervirius_notes]
+~objboxt(bervirius_notes, "This scroll is a collection of writings. Some of them are just scraps of papyrus with what looks like random scribblings. Which would you like to read?");
+switch_int(~p_choice3("Tattered Yellow papyrus.", 1, "Decayed White papyrus.", 2, "Crusty Orange papyrus.", 3)) {
+    case 1 : @scroll_zombiequeen_yellow;
+    case 2 : @scroll_zombiequeen_white;
+    case 3 : @scroll_zombiequeen_orange;
+}
+
 [opheld5,zqpommel]
 inv_del(inv, zqpommel, 1);
 ~objboxt(zqpommel, "You drop the sword pommel on the floor. It turns to dust as soon as it hits the ground.");
@@ -825,10 +833,17 @@ inv_del(inv, zqpommel, 1);
 ~objboxt(zqcrystal, "Are you sure you want to drop this crystal? It looks very delicate and it may break.");
 switch_int(~p_choice2_header("Yes I am sure.", 1, "No, I've reconsidered, I'll keep it!", 2, "Drop the Locating Crystal?")) {
     case 1 :
-        inv_del(inv, papyrus, 1);
-        ~objboxt(bervirius_notes, "You find some writing on the dolmen, you take some of your papyrus and using the charcoal copy the text as best you can and collect them together as a scroll.");
+        inv_del(inv, zqcrystal, 1);
+        // NOT STONGQUEUE
+        if(stat(hitpoints) < 15) queue(damage_player, 0, calc((stat(hitpoints) * 50) / 100));
+        else queue(damage_player, 0, 10);
+        ~objboxt(zqcrystal, "As you drop the crystal, it hits a rock and explodes. You are lascerated by shards of glass.");
     case 2 : ~objboxt(zqcrystal, "You decide to keep the Locating Crystal tucked into your inventory safe and sound.");
 }
+
+[opheld5,bervirius_notes]
+inv_del(inv, bervirius_notes, 1);
+~objboxt(bervirius_notes, "As you drop the delicate scrolls onto the floor, they disintegrate immediately.");
 
 [oploc1,loc_2236]
 p_arrivedelay;
@@ -850,7 +865,6 @@ mes("You manage to climb back out again!");
 p_teleport(0_43_46_12_32);
 p_delay(1);
 ~forcemove(movecoord(coord, 1, 0, 0));
-
 
 [proc,random_undead_one](npc)
 switch_int(random(4)) {
