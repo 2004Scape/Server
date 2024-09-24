@@ -412,8 +412,14 @@ const ServerOps: CommandHandlers = {
         if (maxRadius < 10) {
             if (type === MapFindSqaureType.NONE) {
                 for (let i = 0; i < 50; i++) {
-                    const randomX = origin.x + (Math.floor(Math.random() * (maxRadius - minRadius + 1)) + minRadius) * (Math.random() < 0.5 ? 1 : -1);
-                    const randomZ = origin.z + (Math.floor(Math.random() * (maxRadius - minRadius + 1)) + minRadius) * (Math.random() < 0.5 ? 1 : -1);
+                    const distX = Math.floor(Math.random() * (2 * maxRadius + 1)) - maxRadius;
+                    const distZ = Math.floor(Math.random() * (2 * maxRadius + 1)) - maxRadius;
+                    const distanceSquared = distX * distX + distZ * distZ;
+                    if (distanceSquared < minRadius * minRadius || distanceSquared > maxRadius * maxRadius) {
+                        continue;
+                    }
+                    const randomX = origin.x + distX;
+                    const randomZ = origin.z + distZ;
                     if (freeWorld && !World.gameMap.isFreeToPlay(randomX, randomZ)) {
                         continue;
                     }
@@ -424,24 +430,36 @@ const ServerOps: CommandHandlers = {
                 }
             } else if (type === MapFindSqaureType.LINEOFWALK) {
                 for (let i = 0; i < 50; i++) {
-                    const randomX = origin.x + (Math.floor(Math.random() * (maxRadius - minRadius + 1)) + minRadius) * (Math.random() < 0.5 ? 1 : -1);
-                    const randomZ = origin.z + (Math.floor(Math.random() * (maxRadius - minRadius + 1)) + minRadius) * (Math.random() < 0.5 ? 1 : -1);
+                    const distX = Math.floor(Math.random() * (2 * maxRadius + 1)) - maxRadius;
+                    const distZ = Math.floor(Math.random() * (2 * maxRadius + 1)) - maxRadius;
+                    const distanceSquared = distX * distX + distZ * distZ;
+                    if (distanceSquared < minRadius * minRadius || distanceSquared > maxRadius * maxRadius) {
+                        continue;
+                    }
+                    const randomX = origin.x + distX;
+                    const randomZ = origin.z + distZ;
                     if (freeWorld && !World.gameMap.isFreeToPlay(randomX, randomZ)) {
                         continue;
                     }
-                    if (rsmod.hasLineOfWalk(origin.level, randomX, randomZ, origin.x, origin.z) && !rsmod.isFlagged(randomX, randomZ, origin.level, CollisionFlag.WALK_BLOCKED)) {
+                    if (rsmod.hasLineOfWalk(origin.level, randomX, randomZ, origin.x, origin.z, 1, 1, 1, 1) && !rsmod.isFlagged(randomX, randomZ, origin.level, CollisionFlag.WALK_BLOCKED)) {
                         state.pushInt(CoordGrid.packCoord(origin.level, randomX, randomZ));
                         return;
                     }
                 }
             } else if (type === MapFindSqaureType.LINEOFSIGHT) {
                 for (let i = 0; i < 50; i++) {
-                    const randomX = origin.x + (Math.floor(Math.random() * (maxRadius - minRadius + 1)) + minRadius) * (Math.random() < 0.5 ? 1 : -1);
-                    const randomZ = origin.z + (Math.floor(Math.random() * (maxRadius - minRadius + 1)) + minRadius) * (Math.random() < 0.5 ? 1 : -1);
+                    const distX = Math.floor(Math.random() * (2 * maxRadius + 1)) - maxRadius;
+                    const distZ = Math.floor(Math.random() * (2 * maxRadius + 1)) - maxRadius;
+                    const distanceSquared = distX * distX + distZ * distZ;
+                    if (distanceSquared < minRadius * minRadius || distanceSquared > maxRadius * maxRadius) {
+                        continue;
+                    }
+                    const randomX = origin.x + distX;
+                    const randomZ = origin.z + distZ;
                     if (freeWorld && !World.gameMap.isFreeToPlay(randomX, randomZ)) {
                         continue;
-                    }          
-                    if (rsmod.hasLineOfSight(origin.level, randomX, randomZ, origin.x, origin.z) && !rsmod.isFlagged(randomX, randomZ, origin.level, CollisionFlag.WALK_BLOCKED)) {
+                    }   
+                    if (rsmod.hasLineOfSight(origin.level, randomX, randomZ, origin.x, origin.z, 1, 1, 1, 1) && !rsmod.isFlagged(randomX, randomZ, origin.level, CollisionFlag.WALK_BLOCKED)) {
                         state.pushInt(CoordGrid.packCoord(origin.level, randomX, randomZ));
                         return;
                     }
@@ -451,7 +469,13 @@ const ServerOps: CommandHandlers = {
             // west bias (imps)
             if (type === MapFindSqaureType.NONE) {
                 for (let x = origin.x - maxRadius; x <= origin.x + maxRadius; x++) {
-                    const randomZ = origin.z + (Math.floor(Math.random() * (maxRadius - minRadius + 1)) + minRadius) * (Math.random() < 0.5 ? 1 : -1);
+                    const distX = x - origin.x;
+                    const distZ = Math.floor(Math.random() * (2 * maxRadius + 1)) - maxRadius;
+                    const distanceSquared = distX * distX + distZ * distZ;
+                    if (distanceSquared < minRadius * minRadius || distanceSquared > maxRadius * maxRadius) {
+                        continue;
+                    }
+                    const randomZ = origin.z + distZ;
                     if (freeWorld && !World.gameMap.isFreeToPlay(x, randomZ)) {
                         continue;
                     }
@@ -462,22 +486,34 @@ const ServerOps: CommandHandlers = {
                 }
             } else if (type === MapFindSqaureType.LINEOFWALK) {
                 for (let x = origin.x - maxRadius; x <= origin.x + maxRadius; x++) {
-                    const randomZ = origin.z + (Math.floor(Math.random() * (maxRadius - minRadius + 1)) + minRadius) * (Math.random() < 0.5 ? 1 : -1);
+                    const distX = x - origin.x;
+                    const distZ = Math.floor(Math.random() * (2 * maxRadius + 1)) - maxRadius;
+                    const distanceSquared = distX * distX + distZ * distZ;
+                    if (distanceSquared < minRadius * minRadius || distanceSquared > maxRadius * maxRadius) {
+                        continue;
+                    }
+                    const randomZ = origin.z + distZ;
                     if (freeWorld && !World.gameMap.isFreeToPlay(x, randomZ)) {
                         continue;
                     }
-                    if (rsmod.hasLineOfWalk(origin.level, x, randomZ, origin.x, origin.z) && !rsmod.isFlagged(x, randomZ, origin.level, CollisionFlag.WALK_BLOCKED) && !CoordGrid.isWithinDistanceSW({x: x, z: randomZ}, origin, minRadius)) {
+                    if (rsmod.hasLineOfWalk(origin.level, x, randomZ, origin.x, origin.z, 1, 1, 1, 1) && !rsmod.isFlagged(x, randomZ, origin.level, CollisionFlag.WALK_BLOCKED) && !CoordGrid.isWithinDistanceSW({x: x, z: randomZ}, origin, minRadius)) {
                         state.pushInt(CoordGrid.packCoord(origin.level, x, randomZ));
                         return;
                     }
                 }
             } else if (type === MapFindSqaureType.LINEOFSIGHT) {
                 for (let x = origin.x - maxRadius; x <= origin.x + maxRadius; x++) {
-                    const randomZ = origin.z + (Math.floor(Math.random() * (maxRadius - minRadius + 1)) + minRadius) * (Math.random() < 0.5 ? 1 : -1);
+                    const distX = x - origin.x;
+                    const distZ = Math.floor(Math.random() * (2 * maxRadius + 1)) - maxRadius;
+                    const distanceSquared = distX * distX + distZ * distZ;
+                    if (distanceSquared < minRadius * minRadius || distanceSquared > maxRadius * maxRadius) {
+                        continue;
+                    }
+                    const randomZ = origin.z + distZ;
                     if (freeWorld && !World.gameMap.isFreeToPlay(x, randomZ)) {
                         continue;
                     }
-                    if (rsmod.hasLineOfSight(origin.level, x, randomZ, origin.x, origin.z) && !rsmod.isFlagged(x, randomZ, origin.level, CollisionFlag.WALK_BLOCKED) && !CoordGrid.isWithinDistanceSW({x: x, z: randomZ}, origin, minRadius)) {
+                    if (rsmod.hasLineOfSight(origin.level, x, randomZ, origin.x, origin.z, 1, 1, 1, 1) && !rsmod.isFlagged(x, randomZ, origin.level, CollisionFlag.WALK_BLOCKED) && !CoordGrid.isWithinDistanceSW({x: x, z: randomZ}, origin, minRadius)) {
                         state.pushInt(CoordGrid.packCoord(origin.level, x, randomZ));
                         return;
                     }
