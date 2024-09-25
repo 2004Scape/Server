@@ -29,7 +29,9 @@ Our content language of choice is a recreation of RuneScript: this gives us the 
 1. Download this repo to your computer
 2. Install our list of [dependencies](#environment-dependencies)
 3. Open the folder you downloaded in a command prompt
-4. Run `npm start`
+4. Run `npm install`
+5. Run `npm run build`
+6. Run `npm start`
 
 Now open [http://localhost](http://localhost) in your browser and play!
 
