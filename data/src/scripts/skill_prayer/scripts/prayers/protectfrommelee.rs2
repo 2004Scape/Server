@@ -30,7 +30,7 @@ if (%prayer_protectfrommelee = ^true) {
     } else if (stat_base(prayer) < db_getfield($data, prayers:level, 0)){
         %prayer_protectfrommelee = ^false;
         sound_synth(prayer_off, 0, 0);
-        ~mesbox("You need a @dbl@Prayer@bla@ level of <tostring(db_getfield($data, prayers:level, 0))> to use @dbl@<db_getfield($data, prayers:name, 0)>@bla@."); 
+        ~mesbox("You need a @dbl@Prayer level of <tostring(db_getfield($data, prayers:level, 0))> to use <db_getfield($data, prayers:name, 0)>.");
     } else {
         %prayer_protectfrommelee = ^true;
         ~prayer_activate($data);
