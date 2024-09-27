@@ -550,6 +550,17 @@ while ($page < $pagetotal) {
     $page = calc($page + 1);
 }
 
+// imgur.com/WX3hzXI
+[proc,objboxsmall](obj $obj, string $string)
+split_init($string, 400, 4, q8);
+def_int $page = 0;
+def_int $pagetotal = split_pagecount;
+while ($page < $pagetotal) {
+    ~objbox_page($obj, 180, 0, divide(^objbox_height, 3), $page);
+    p_pausebutton;
+    $page = calc($page + 1);
+}
+
 // ----
 
 [proc,doubleobjbox_page](obj $obj_1, obj $obj_2, int $scale, int $page)

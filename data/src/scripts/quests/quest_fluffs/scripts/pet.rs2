@@ -78,7 +78,7 @@ if(oc_category(nc_param(npc_type, pet_item_id)) = kitten) {
 
 [opnpcu,_petcat]
 if (%npc_attacking_uid ! uid | %follower_uid ! npc_uid) {
-    mes("This is not your cat.");
+    mes("This is not your cat."); //imgur.com/acr5ER2
     return;
 }
 switch_obj(last_useitem) {
@@ -110,7 +110,7 @@ switch_obj(last_useitem) {
 
 [opnpc1,_petcat]
 if (%npc_attacking_uid ! uid | %follower_uid ! npc_uid) {
-    mes("This is not your cat."); //imgur.com/acr5ER2
+    mes("That isn't yours to take."); //youtu.be/WsvTr-1bZwM?t=175
     return;
 }
 if (inv_freespace(inv) = 0) {
