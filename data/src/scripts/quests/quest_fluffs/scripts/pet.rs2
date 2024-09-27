@@ -171,7 +171,7 @@ if (oc_category(nc_param(npc_type, pet_item_id)) = overgrown) {
 if (.npc_find(coord, rat, 10, 1) = true) {  
     def_int $chance = random(2); //50%
     def_int $vermin = getbit_range(%cat_growth, 20, 26);
-    say("Go on puss...kill that rat!");
+    say("Go on kitty...kill that rat!"); //imgur.com/4wTXnUT 26/07/2004
     p_delay(0);
     npc_say("Meeeeeoooowww!");
     p_delay(0);
@@ -196,7 +196,7 @@ if (.npc_find(coord, rat, 10, 1) = true) {
     }
     .npc_del;
     npc_say("MeeeoooooW!");
-    say("Hey well done puss, you got it!");
+    say("Hey well done kitty, you got it!"); //"kitty" guessed
     %cat_growth = setbit_range_toint(%cat_growth, min(100,max(calc($vermin + 1),-1)), 20, 26);
 } else {
     mes("There aren't any rats or mice around."); // 2004 https://youtu.be/HQEpeWAUMbI?t=21
