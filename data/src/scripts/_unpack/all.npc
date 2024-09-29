@@ -6789,7 +6789,7 @@ head1=model_67_idk_head
 head2=model_81_idk_head
 head3=model_41_obj_wear
 
-[npc_795]
+[ice_queen]
 name=Ice Queen
 desc=A cold hearted lady.
 walkanim=human_walk_f,human_walk_b,human_walk_l,human_walk_r
@@ -6829,6 +6829,7 @@ param=rangedefence,30
 param=damagetype,^crush_style
 param=defend_sound,ice_warrior_hit
 param=death_sound,female_death
+param=death_drop,ice_gloves
 
 [pirate_guard]
 name=Pirate Guard
