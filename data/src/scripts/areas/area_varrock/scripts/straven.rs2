@@ -4,7 +4,8 @@ if(%blackarmgang_progress >= ^blackarmgang_joined) {
 }
 switch_int (%phoenixgang_progress) {
     case ^phoenixgang_spoken_straven: @straven_mission;
-    case ^phoenixgang_joined, ^phoenixgang_complete: @straven_gangmember;
+    case ^phoenixgang_joined: @straven_gangmember;
+    case ^phoenixgang_complete: @straven_arrav_complete;
     case default:
         ~chatplayer("<p,quiz>What's through that door?");
         @straven_cant_enter;
@@ -114,3 +115,41 @@ if($option = 1) {
 
 [label,straven_blackarmdog]
 ~chatnpc("<p,neutral>You stay away from here!|Black Arm dog!");
+
+[label,straven_arrav_complete]
+if (%hero_progress > 0 & %hero_progress < ^hero_obtained_armband) {
+    if (inv_total(inv, petes_candlestick) >= 1) {
+        // https://youtu.be/2M-W0tUicdw?t=1203
+        ~chatplayer("<p,happy>I have retrieved a candlestick!");
+        ~chatnpc("<p,neutral>Hmmm. Not bad, not bad. Let's see it, make sure its genuine.");
+        ~mesbox("You hand Straven the candlestick.");
+        ~chatplayer("<p,neutral>So is this enough to get me a Master Theif armband?");
+        ~chatnpc("<p,neutral>Hmm...");
+        ~chatnpc("<p,neutral>I dunno...");
+        ~chatnpc("<p,neutral>Aww, go on then. I suppose I'm in a generous mood today.");
+        ~mesbox("Straven hands you a Master Theif armband.");
+        inv_del(inv, petes_candlestick, 1);
+        inv_add(inv, thieves_armband, 1);
+        %hero_progress = ^hero_obtained_armband;
+        return;
+    } else if (%hero_progress >= ^hero_gangmember_spoken) {
+        ~chatplayer("<p,quiz>What am I supposed to be doing again?");
+        ~chatnpc("<p,neutral>You told me you wanted to get a Master thief's armband! Now pay attention.");
+        ~chatnpc("<p,neutral>Some of the more aspiring thieves in our gang are working on right now is to steal some very valuable candlesticks from Scarface Pete - the pirate leader on Karamja.");
+    } else {
+        ~chatplayer("<p,quiz>How would I go about getting a Master Thief armband?");
+        ~chatnpc("<p,neutral>Ooh... tricky stuff. Took me YEARS to get that rank.");
+        ~chatnpc("<p,neutral>Well, what some of the more aspiring thieves in our gang are working on right now is to steal some very valuable candlesticks from Scarface Pete - the pirate leader on Karamja.");
+        %hero_progress = ^hero_gangmember_spoken;
+    }
+    ~chatnpc("<p,neutral>His security is excellent, and the target very valuable so that might be enough to get you the rank.");
+    ~chatnpc("<p,neutral>Go talk to our man Alfonse, the waiter in the Shrimp and Parrot.");
+    ~chatnpc("<p,neutral>Use the secret word 'gherkin' to show you're one of us.");
+    return;
+} else if (%hero_progress >= ^hero_obtained_armband & (inv_total(inv, thieves_armband) = 0) & (inv_total(bank, thieves_armband) = 0)) {
+    ~chatplayer("<p,sad>I'm afraid I've lost my Master Theif armband.");
+    ~chatnpc("<p,neutral>Lucky for you I have a spare. Don't lose it again!");
+    inv_add(inv, thieves_armband, 1);
+    return;
+}
+@straven_gangmember;

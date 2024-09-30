@@ -1,0 +1,64 @@
+[oploc1,brimhaven_restaurant_backdoor]
+if (%hero_progress >= ^hero_phoenix_talked_alfonse & %phoenixgang_progress >= ^phoenixgang_joined) {
+  ~open_and_close_door(loc_type, ~check_axis(coord, loc_coord, loc_angle), false);
+  return;
+}
+// https://youtu.be/rEzuCix51aM?t=1647 - blackarm member during quest, assumed it applies others than above conditions
+mes("This door seems to be locked.");
+
+[opnpc1,charlie_the_cook]
+~chatnpc("<p,angry>Hey! What are you doing back here?");
+switch_int(~p_choice3("I'm looking for a gherkin...", 1, "I'm a fellow member of the Phoenix gang.", 2, "Just exploring...", 3)) {
+  case 1:
+    ~chatplayer("<p,neutral>I'm looking for a gherkin...");
+    @charlie_phoenix_dialogue;
+  case 2:
+    ~chatplayer("<p,neutral>I'm a fellow member of the Phoenix gang.");
+    @charlie_phoenix_dialogue;
+  case 3:
+    ~chatplayer("<p,neutral>Just exploring...");
+    ~chatnpc("<p,angry>Well get out! This kitchen isn't for exploring! It's a private establishment! It's out of bounds to customers!");
+}
+
+[label,charlie_phoenix_dialogue]
+// OSRS - Same dialogue even after quest complete
+~chatnpc("<p,neutral>Aaaaaah... a fellow Phoenix! So, tell me compadre... what brings you to sunny Brimhaven?");
+switch_int(~p_choice2("Sun, sand and the fresh sea air!", 1, "I want to steal Scarface Pete's candlesticks.", 2)) {
+  case 1:
+    ~chatplayer("<p,happy>Sun, sand and the fresh sea air!");
+    ~chatnpc("<p,nuetral>Well, can't say I blame you compadre. I used to be a city boy myself, but have to admit it's a lot nicer living here nowadays. Brimhaven's certainly good for it.");
+  case 2:
+    ~chatplayer("<p,neutral>I want to steal Scarface Pete's candlesticks.");
+    ~chatnpc("<p,nuetral>Ah yes, of course. The candlesticks. Well, I have to be honest with you compadre, we haven't made much progress in that task ourselves so far. We can however offer");
+    ~chatnpc("<p,nuetral>a little assistance. The setting up of this restaurant was the start of things; we have a secret door out the back of here that leads through the back of Mr Olbors' garden.");
+    ~chatnpc("<p,nuetral>Now, at the other side of Mr Olbors' garden, is an old side entrance to Scarface Pete's mansion. It seems to have been blocked off from the rest of the mansion some years ago");
+    ~chatnpc("<p,nuetral>and we can't seem to find a way through. We're positive this is the key to entering the house undetected however, and I promise to let you know if we find anything there.");
+    ~chatplayer("<p,neutral>Mind if I check it out for myself?");
+    ~chatnpc("<p,nuetral>Not at all! The more minds we have working on the problem, the quicker we get that loot!");
+    if (%hero_progress < ^hero_phoenix_talked_charlie) {
+      %hero_progress = ^hero_phoenix_talked_charlie;
+    }
+}
+
+[oploc1,brimhaven_restaurant_walldoor]
+if (%hero_progress >= ^hero_phoenix_talked_charlie) {
+  ~open_and_close_door(loc_type, ~check_axis(coord, loc_coord, loc_angle), false);
+  return;
+}
+// TODO - need dialogue for pushing door before speaking to Charlie
+~displaymessage(^dm_default);
+
+[oploc1,brimhaven_mansion_backdoor]
+if (coord = loc_coord) {
+  ~open_and_close_door(loc_type, ~check_axis(coord, loc_coord, loc_angle), false);
+  return;
+}
+~mesbox("This door is locked.");
+~chatplayer("<p,neutral>This room isn't a lot of use on its own... Maybe I can get extra help from the inside somehow... I wonder if any of the other players have found a way in.");
+
+[oplocu,brimhaven_mansion_backdoor]
+if (last_useitem = miscellaneous_key) {
+  ~open_and_close_door(loc_type, ~check_axis(coord, loc_coord, loc_angle), false);
+  return;
+}
+~displaymessage(^dm_default);

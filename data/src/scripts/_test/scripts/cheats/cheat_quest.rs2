@@ -73,7 +73,7 @@ if (p_finduid(uid) = true) {
             case 27 : queue(grandtree_quest_complete, 0);
             case 28 : mes("Quest not implemented");
             case 29 : queue(hazeelcult_quest_complete, 0);
-            case 30 : mes("Quest not implemented");
+            case 30 : queue(hero_quest_complete, 0);
             case 31 : queue(grail_quest_complete, 0);
             case 32 : queue(junglepotion_quest_complete, 0);
             case 33 : mes("Quest not implemented");
@@ -158,7 +158,7 @@ if (p_finduid(uid) = true) {
                 %hazeelcult_side = 0;
                 %hazeelcult_side = 0;
                 %hazeelcult_progress = 0;
-            case 30 : mes("Quest not implemented");
+            case 30 : %hero_progress = 0;
             case 31 : %grail_progress = 0;
             case 32 : %junglepotion_progress = 0;
             case 33 : mes("Quest not implemented");

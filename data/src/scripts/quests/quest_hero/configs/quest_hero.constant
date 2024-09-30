@@ -1,0 +1,16 @@
+^hero_not_started = 0
+^hero_started = 1
+^hero_gangmember_spoken = 2
+^hero_phoenix_talked_alfonse = 3
+^hero_phoenix_talked_charlie = 4
+^hero_blackarm_door_unlocked = 3
+^hero_blackarm_id_papers_obtained = 4
+^hero_blackarm_id_papers_shown = 5
+^hero_blackarm_id_papers_given = 6
+^hero_obtained_armband = 7
+
+^grip_stage_first_talk = 1
+^grip_stage_asked_duties = 2
+^grip_stage_asked_treasure = 3
+
+^hero_required_questpoints = 55

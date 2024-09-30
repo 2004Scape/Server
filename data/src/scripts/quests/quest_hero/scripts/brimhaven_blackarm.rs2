@@ -1,0 +1,245 @@
+[oploc1,brimhaven_blackarm_door] 
+if (%hero_progress = ^hero_complete) {
+  ~open_and_close_door(loc_type, ~check_axis(coord, loc_coord, loc_angle), false); // OSRS - verified phoenix gang member can enter with heros complete
+  return;
+}
+if (%blackarmgang_progress = ^blackarmgang_complete) {
+  if (%hero_progress = ^hero_gangmember_spoken & npc_find(coord, grubor, 10, 0) = true) {
+    facesquare(npc_coord);
+    ~chatnpc("<p,quiz>Yes? What do you want?");
+    def_int $option = ~p_choice4("Rabbit's foot.", 1, "Four leaved clover.", 2, "Lucky horseshoe.", 3, "Black cat.", 4);
+    if ($option = 2) {
+      ~chatplayer("<p,neutral>Four leaved clover.");
+      ~chatnpc("<p,neutral>Oh you're one of the gang are you? Ok, hold up a second, I'll just let you in through here.");
+      %hero_progress = ^hero_blackarm_door_unlocked;
+      ~mesbox("You hear the door being unbarred from inside.");
+      return;
+    } else {
+      // TODO need real dialogue for invalid password
+      ~chatnpc("<p,neutral>I don't know what you are talking about."); 
+      return;
+    }
+  } else if (%hero_progress >= ^hero_blackarm_door_unlocked) { 
+    ~open_and_close_door(loc_type, ~check_axis(coord, loc_coord, loc_angle), false);
+    return;
+  }
+}
+// TODO - need real message for not reaching this step in heros yet (and for phoenix gang during quest)
+mes("The door is locked."); 
+
+[opnpc1,grubor]
+~chatplayer("<p,neutral>Hi.");
+~chatnpc("<p,neutral>Hi. I'm a little busy right now."); 
+
+[opnpc1,trobert]
+if (%hero_progress >= ^hero_complete) {
+  // TODO is the dialogue after heros quest different for blackarm gang?
+  ~mesbox("He doesn't seem interested in talking to you."); // OSRS (phoneix gang)
+  return;
+}
+if (%hero_progress >= ^hero_blackarm_id_papers_obtained) {
+  if (inv_total(inv, id_papers) >= 1) {
+    // TODO need real dialogue if talk again + already have ID papers
+    ~chatnpc("<p,neutral>How goes the mission?");
+    ~chatplayer("<p,neutral>Still working on it."); 
+  } else {
+    // TODO need real dialogue if talk again + lost ID papers
+    ~chatplayer("<p,neutral>I lost the I.D. papers you gave me."); 
+    ~chatnpc("<p,angry>Useless. Take this and don't mess up this time.");
+    inv_add(inv, id_papers, 1);
+  }
+  return;
+}
+~chatnpc("<p,neutral>Hi. Welcome to our Brimhaven headquarters. I'm Trobert and I'm in charge here."); 
+switch_int(~p_choice2("So can you help me get Scarface Pete's candlesticks?", 1, "Pleased to meet you", 2)) {
+  case 1:
+    ~chatplayer("<p,quiz>So can you help me get Scarface Pete's candlesticks?");
+    ~chatnpc("<p,neutral>Well, we have made some progress there. We know that one of the only keys to Pete's treasure room is carried by Grip, the head guard, so we thought it might be good to get close to him somehow.");
+    ~chatnpc("<p,neutral>Grip was taking on a new deputy called Hartigen, an Asgarnian Black Knight who was desserting the Black Knight Foretress and seeking new employment here on Brimhaven.");
+    ~chatnpc("<p,neutral>We managed to waylay him on the journey here, and steal his I.D. papers. Now all we need is to find somebody willing to impersonate him and take the deputy role to get that key for us.");
+    switch_int(~p_choice2("I volunteer to undertake that mission!", 1, "Well, good luck then.", 2)) {
+      case 1:
+        ~chatplayer("<p,neutral>I volunteer to undertake that mission!");
+        ~chatnpc("<p,neutral>Good good. Well, Here's the I.D. papers, take them and introduce yourself to the guards at Scarface Pete's mansion, we'll have that treasure in no time.");
+        inv_add(inv, id_papers, 1);
+        %hero_progress = ^hero_blackarm_id_papers_obtained;
+      case 2:
+        ~chatnpc("<p,neutral>Thanks."); // TODO - need real dialogue if option is chosen
+    }
+  case 2:
+    ~chatnpc("<p,neutral>Nice to meet you."); // TODO - need dialogue if option is chosen
+}
+
+[opnpc1,garv]
+~chatnpc("<p,neutral>Hello. What do you want?");
+if (%hero_progress = ^hero_blackarm_id_papers_obtained) {
+  @talk_garv(false);
+}
+switch_int(~p_choice2("Can I go in there?", 1, "I want for nothing!", 2)) {
+  case 1: 
+    ~chatplayer("<p,quiz>Can I go in there?");
+    if (%hero_progress < ^hero_blackarm_id_papers_obtained | %phoenixgang_progress >= ^phoenixgang_joined) {
+      // Not reached step in quest (https://youtu.be/rEzuCix51aM?t=1381), or member of phoenix gang (need to verify)
+      ~chatnpc("<p,neutral>No. In there is private");
+      return;
+    }
+  case 2:
+    ~chatplayer("<p,neutral>I want for nothing!");
+    ~chatnpc("<p,neutral>You're one of a very lucky few then.");
+}
+
+
+[oploc1,brimhaven_mansion_door]
+// TODO wiki says if phoenix gang it should say the "Oi! what do you think youre doing" https://oldschool.runescape.wiki/w/Transcript:Heroes%27_Quest#Talking_to_Straven 
+// In OSRS after quest complete and in phonex gang its just mes("You don't have any reason to go in there."); 
+if (%hero_progress < ^hero_blackarm_id_papers_obtained | %phoenixgang_progress >= ^phoenixgang_joined) {
+  // OSRS for phoenix gang after quest, need to verify if same for prior to quest start
+  mes("You don't have any reason to go in there."); 
+  return;
+}
+if (%hero_progress = ^hero_blackarm_id_papers_obtained & npc_find(coord, garv, 7, 0) = true) {
+  facesquare(npc_coord);
+  @talk_garv(true);
+  return;
+}
+// TODO - need to be wearing black armor to open door?
+~open_and_close_door(loc_type, ~check_axis(coord, loc_coord, loc_angle), false);
+
+[label,talk_garv](boolean $tried_open_door)
+if ($tried_open_door = true) {
+  ~chatnpc("<p,angry>Oi! Where do you think you're going pal?");
+}
+~chatplayer("<p,neutral>Hi. I'm Hertigen. I've come to work here.");
+if((inv_total(worn, black_platelegs) < 1) | (inv_total(worn, black_platebody) < 1) | (inv_total(worn, black_full_helm) < 1)) {
+  // https://youtu.be/rEzuCix51aM?t=1503 
+  ~chatnpc("<p,neutral>Hartigen the Black Knight? I don't think so. He doesn't dress like that"); 
+  return;
+}
+~chatnpc("<p,neutral>I assume you have your I.D. papers then?");
+if(inv_total(inv, id_papers) < 1) {
+  // TODO need real dialogue 
+  ~chatplayer("<p,neutral>Oh dear... I don't have that with me anymore..");
+  return;
+}
+~chatnpc("<p,neutral>You'd better come in then. Grip will want to talk to you.");
+%hero_progress = ^hero_blackarm_id_papers_shown;
+
+[opnpc1,grip]
+if(inv_total(inv, miscellaneous_key) > 0) {
+  // TODO - need real dialogue
+  ~chatnpc("<p,neutral>Did you figure out what the key is for?");
+  ~chatplayer("<p,neutral>Net yet.");
+  ~chatnpc("<p,neutral>Well, go figure it out.");
+  return;
+} 
+
+// https://youtu.be/rEzuCix51aM?t=1548
+// https://youtu.be/rEzuCix51aM?t=1582 - showing speaking again after giving ID papers
+if (%hero_progress < ^hero_blackarm_id_papers_given) {
+  ~chatplayer("<p,neutral>Hi there. I am Hertigen. reporting for duty as your new deputy sir!");
+  ~chatnpc("<p,neutral>Ah good, at last. You took your timee getting here! Now let me see...");
+  ~chatnpc("<p,neutral>I'll get your hours and duty roster sorted out in a while. Oh, and do you have your I.D. papers with you? Internal security is almost as important as external security for a guard.");
+  if(inv_total(inv, id_papers) < 1) {
+    // https://youtu.be/KRhwwgo8YHM?t=424 - OSRS talking to grip without ID paper
+    ~chatplayer("<p,neutral>Oh dear... I don't have that with me anymore..");
+    ~chatnpc("<p,neutral>Well that's no good! Go get them immediately, then report back for duty.");
+    return;
+  }
+  ~chatplayer("<p,neutral>Right here sir!");
+  inv_del(inv, id_papers, 1);
+  %hero_progress = ^hero_blackarm_id_papers_given;
+  ~mesbox("You hand the ID papers over to Grip.");
+}
+@grip_chat_options(^grip_stage_first_talk);
+
+[label,grip_chat_options](int $stage)
+def_int $option;
+switch_int($stage) {
+  case ^grip_stage_first_talk: 
+    $option = ~p_choice3("So can I guard the treasure room please?", 1, "So what do my duties involve?", 2, "Well, I'd better sort my new room out.", 3);
+  case ^grip_stage_asked_duties:
+    $option = ~p_choice3("So can I guard the treasure room please?", 1, "Well, I'd better sort my new room out.", 3, "Anything I can do now?", 4);
+  case ^grip_stage_asked_treasure:
+    $option = ~p_choice2("So what do my duties involve?", 2, "Well, I'd better sort my new room out.", 3);
+}
+switch_int($option) {
+  case 1:
+    ~chatplayer("<p,quiz>So can I guard the treasure room please?");
+    ~chatnpc("<p,neutral>Well, I might post you outside it sometimes. I prefer to be the only one inside however.");
+    ~chatnpc("<p,neutral>There's some pretty valuable artefacts in there! Those keys stay ONLY with the head guard and Scarface Pete.");
+    @grip_chat_options(^grip_stage_asked_treasure);
+    // https://youtu.be/1lx2X_PvEfY?t=735
+  case 2:
+    ~chatplayer("<p,quiz>So what do my duties involve?");
+    ~chatnpc("<p,neutral>You'll have various guard related duties on various shifts. I'll assign specific duties as the are required as and when they become necessary. Just so you know, if anything happens to me");
+    ~chatnpc("<p,neutral>you'll need to take over as head guard here. You'll find important keys to the treasure room and Pete's quarters inside my jacket - although I doubt anything bad's going to happen to");
+    ~chatnpc("<p,neutral>me anytime soon!");
+    ~mesbox("Grip laughs to himself at the thought.");
+    @grip_chat_options(^grip_stage_asked_duties);
+  case 3:
+    ~chatplayer("<p,neutral>Well, I'd better sort my new room out.");
+    ~chatnpc("<p,neutral>Yeah, I'll give you time to settle in. Better get a good nights sleep, I expect you to report for duty at oh five hundred hours tomorrow on the dot!");
+    // https://youtu.be/1lx2X_PvEfY?t=731
+  case 4:
+    ~chatplayer("<p,quiz>Anything I can do now?");
+    ~chatnpc("<p,neutral>Hmm. Well, you could find out what this key opens for me. Apparently it's for something in this building, but for the life of me I can't find what.");
+    inv_add(inv, miscellaneous_key, 1);
+    ~mesbox("Grip hands you a key.");
+}
+
+[opnpc2,grip]
+// https://youtu.be/rEzuCix51aM?t=1545
+~chatplayer("<p,neutral>I can't attack the head guard here! There are too many witnesses around to see me do it! I'd have the whole of Brimhaven after me! Besides, if he dies I want the promotion!");
+// TODO - I think theres a ~mesbox("<idk>") after the chatplayer, but I can't find the source anymore
+
+[oploc1,grips_cupboard_closed]
+@summon_grip(true);
+
+[oploc1,grips_cupboard_opened]
+@summon_grip(false);
+
+[label,summon_grip](boolean $open_cabinet)
+if ($open_cabinet = true) {
+  loc_change(grips_cupboard_opened, 100); // TODO - how long to keep open?
+}
+if (npc_find(coord, pirate_guard, 4, 0) = true) {
+  facesquare(npc_coord);
+  ~chatnpc("<p,neutral>I don't think Mr Grip will like you opening that. That's his private drinking cabinet.");
+  switch_int(~p_choice2("He won't notice me having a quick look.", 1, "Ok, I'll leave it.", 2)) {
+    case 1:
+      ~chatplayer("<p,neutral>He won't notice me having a quick look.");
+      if (npc_find(coord, grip, 12, 0) = true) {
+        npc_walk(0_43_49_25_62);
+        npc_say("Stay out of my drinks cabinet!");
+      }
+    case 2:
+      ~chatplayer("<p,neutral>Ok, I'll leave it.");
+  }
+}
+
+// opening chest room https://youtu.be/KRhwwgo8YHM?t=524 , https://youtu.be/jo9mc5vtrQ4?t=576 
+[oploc1,scarface_pete_trophy_room_door]
+if (coord = loc_coord) {
+  mes("The door locks shut behind you.");
+  ~open_and_close_door(loc_type, ~check_axis(coord, loc_coord, loc_angle), true);
+  return;
+}
+mes("The door is locked.");
+
+[oplocu,scarface_pete_trophy_room_door]
+if (last_useitem = grips_keyring) {
+  mes("Grip's key unlocks the door.");
+  ~open_and_close_door(loc_type, ~check_axis(coord, loc_coord, loc_angle), false);
+  return;
+}
+~displaymessage(^dm_default);
+
+[oploc1,scarface_pete_candlestick_chest]
+mes("You open the chest.");
+loc_change(scarface_pete_candlestick_chest_open, 100); // TODO - how long to keep open?
+
+[oploc1,scarface_pete_candlestick_chest_open]
+// TODO - any inventory check to see if already have candlesticks?
+~mesbox("You find two candlesticks in the chest. So that will be one for you, and one for the person who killed Grip for you.");
+inv_add(inv, petes_candlestick, 2);
+loc_change(scarface_pete_candlestick_chest, 100);

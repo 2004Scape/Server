@@ -23,7 +23,7 @@
 ^scorpcatcher_complete = 6
 ^dragon_complete = 10
 ^zanaris_complete = 6
-^hero_complete = 0
+^hero_complete = 8
 ^legends_complete = 0
 ^blackarmgang_complete = 4
 ^phoenixgang_complete = 10
@@ -54,6 +54,7 @@
 ^gobdip_questpoints = 5
 ^haunted_questpoints = 4
 ^hetty_questpoints = 1
+^hero_questpoints = 1
 ^hunt_questpoints = 2
 ^imp_questpoints = 1
 ^priest_questpoints = 1
