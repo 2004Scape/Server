@@ -13478,18 +13478,6 @@ forceapproach=east
 model=model_loc_3
 blockrange=no
 
-[loc_2638]
-name=Fountain of Heroes
-desc=A source of pure water.
-model=model_loc_153
-width=2
-length=2
-mapscene=8
-recol1s=7399
-recol1d=18849
-recol2s=15855
-recol2d=19937
-
 [loc_2639]
 model=model_loc_83
 width=2

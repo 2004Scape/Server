@@ -1,0 +1,11 @@
+[fountain_of_heroes]
+name=Fountain of Heroes
+desc=A source of pure water.
+model=model_loc_153
+width=2
+length=2
+mapscene=8
+recol1s=7399
+recol1d=18849
+recol2s=15855
+recol2d=19937
