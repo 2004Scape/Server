@@ -8,3 +8,10 @@
 ^zombiequeen_entered_ah_za_rhoon = 7
 ^zombiequeen_left_ah_za_rhoon = 8
 ^zombiequeen_entered_tomb_bervirius = 9
+^zombiequeen_unlocked_rashliyia_tomb = 10
+
+^zq_used_table_logs = 0
+^zq_deciphered_plaque = 1
+^zq_used_dolmen_paper = 2
+^zq_always_crystal = 3
+^zq_found_door = 4

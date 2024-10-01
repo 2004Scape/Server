@@ -602,8 +602,8 @@
 601=keep_key
 602=lens_mould
 603=lens
-604=obj_604
-605=obj_605
+604=bone_shard
+605=bone_key
 606=stoneplaque
 607=tattered_scroll
 608=crumpled_scroll
@@ -614,9 +614,9 @@
 613=zqcrystal_red
 614=zqcrystal_yellow
 615=zqcrystal_white
-616=obj_616
+616=zqbeadsofthedead
 617=coins_shilo
-618=obj_618
+618=zqbonebeads
 619=obj_619
 620=cert_obj_619
 621=obj_621

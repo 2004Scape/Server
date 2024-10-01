@@ -15,6 +15,11 @@ if(npc_findhero = true) {
         queue(queue_defeat_blackdemon, 0);
     }
 }
+// https://youtu.be/BLxnHE5hU7U?si=mnH0oxq2DbwyAy5y&t=116 
+// https://www.youtube.com/watch?v=mYBva3EhdvM&t=368s, https://youtu.be/iIf98JWB9JI?si=jLbFDg_ZrpzTHGB5&t=78
+if(.npc_find(npc_coord, glough, 7, 0) = true) {
+    .npc_del;
+}
 
 [queue,queue_defeat_blackdemon]
 %grandtree_progress = ^grandtree_defeated_black_demon;
