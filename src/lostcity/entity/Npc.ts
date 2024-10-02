@@ -181,56 +181,9 @@ export default class Npc extends PathingEntity {
 
     updateMovement(repathAllowed: boolean = true): boolean {
         const type = NpcType.get(this.type);
-        if (this.target && this.targetOp !== NpcMode.PLAYERFOLLOW && this.targetOp !== NpcMode.WANDER) {
-            const apTrigger: boolean =
-            (this.targetOp >= NpcMode.APNPC1 && this.targetOp <= NpcMode.APNPC5) ||
-            (this.targetOp >= NpcMode.APPLAYER1 && this.targetOp <= NpcMode.APPLAYER5) ||
-            (this.targetOp >= NpcMode.APLOC1 && this.targetOp <= NpcMode.APLOC5) ||
-            (this.targetOp >= NpcMode.APOBJ1 && this.targetOp <= NpcMode.APOBJ5);
-            const opTrigger: boolean = !apTrigger;
-
-            if (this.targetOp === NpcMode.PLAYERESCAPE) {
-                const distanceToEscape = CoordGrid.distanceTo(this, {
-                    x: this.startX,
-                    z: this.startZ,
-                    width: this.width,
-                    length: this.length
-                });
-                const targetDistanceFromStart = CoordGrid.distanceTo(this.target, {
-                    x: this.startX,
-                    z: this.startZ,
-                    width: this.target.width,
-                    length: this.target.length
-                });
-    
-                if (targetDistanceFromStart > type.maxrange && distanceToEscape > type.maxrange) {
-                    return false;
-                }
-            } else if (opTrigger) {
-                const distanceToX = Math.abs(this.target.x - this.startX);
-                const distanceToZ = Math.abs(this.target.z - this.startZ);
-                if (Math.max(distanceToX, distanceToZ) > type.maxrange + 1) {
-                    this.clearWaypoints();
-                    this.defaultMode();
-                    return false;
-                }
-                // remove corner
-                if (distanceToX === type.maxrange + 1 && distanceToZ === type.maxrange + 1) {
-                    this.clearWaypoints();
-                    this.defaultMode();
-                    return false; 
-                }
-            } else if (apTrigger) {
-                if (CoordGrid.distanceToSW(this.target, {x: this.startX, z: this.startZ}) > type.maxrange + type.attackrange) {
-                    this.clearWaypoints();
-                    this.defaultMode();
-                    return false; 
-                }
-            } else if (CoordGrid.distanceToSW(this.target, {x: this.startX, z: this.startZ}) > type.maxrange) {
-                this.clearWaypoints();
-                this.defaultMode();
-                return false;
-            }
+        if (!this.targetWithinMaxRange()) {
+            this.defaultMode();
+            return false;
         }
         if (type.moverestrict === MoveRestrict.NOMOVE) {
             return false;
@@ -266,6 +219,66 @@ export default class Npc extends PathingEntity {
     clearInteraction() {
         super.clearInteraction();
         this.huntTarget = null;
+    }
+
+    pathToTarget(): void {
+        if (!this.targetWithinMaxRange()) {
+            this.defaultMode();
+            return;
+        }
+        super.pathToTarget();
+    }
+
+    targetWithinMaxRange(): boolean {
+        if (!this.target) {
+            return true;
+        }
+        if (this.targetOp === NpcMode.PLAYERFOLLOW) {
+            return true;
+        }
+        const type = NpcType.get(this.type);
+
+        const apTrigger: boolean =
+        (this.targetOp >= NpcMode.APNPC1 && this.targetOp <= NpcMode.APNPC5) ||
+        (this.targetOp >= NpcMode.APPLAYER1 && this.targetOp <= NpcMode.APPLAYER5) ||
+        (this.targetOp >= NpcMode.APLOC1 && this.targetOp <= NpcMode.APLOC5) ||
+        (this.targetOp >= NpcMode.APOBJ1 && this.targetOp <= NpcMode.APOBJ5);
+        const opTrigger: boolean = !apTrigger;
+        if (opTrigger) {
+            const distanceToX = Math.abs(this.target.x - this.startX);
+            const distanceToZ = Math.abs(this.target.z - this.startZ);
+            if (Math.max(distanceToX, distanceToZ) > type.maxrange + 1) {
+                return false;
+            }
+            // remove corner
+            if (distanceToX === type.maxrange + 1 && distanceToZ === type.maxrange + 1) {
+                return false; 
+            }
+        } else if (apTrigger) {
+            if (CoordGrid.distanceToSW(this.target, {x: this.startX, z: this.startZ}) > type.maxrange + type.attackrange) {
+                return false; 
+            }
+        } else if (this.targetOp === NpcMode.PLAYERESCAPE) {
+            const distanceToEscape = CoordGrid.distanceTo(this, {
+                x: this.startX,
+                z: this.startZ,
+                width: this.width,
+                length: this.length
+            });
+            const targetDistanceFromStart = CoordGrid.distanceTo(this.target, {
+                x: this.startX,
+                z: this.startZ,
+                width: this.target.width,
+                length: this.target.length
+            });
+
+            if (targetDistanceFromStart > type.maxrange && distanceToEscape > type.maxrange) {
+                return false;
+            }
+        } else if (CoordGrid.distanceToSW(this.target, {x: this.startX, z: this.startZ}) > type.maxrange) {
+            return false;
+        }
+        return true;
     }
 
     blockWalkFlag(): CollisionFlag {
@@ -586,7 +599,6 @@ export default class Npc extends PathingEntity {
         const type = NpcType.get(this.type);
 
         if (CoordGrid.distanceTo(this, this.target) > type.maxrange) {
-            this.clearWaypoints();
             this.defaultMode();
             return;
         }
@@ -616,7 +628,6 @@ export default class Npc extends PathingEntity {
         }
 
         if (CoordGrid.distanceTo(this, this.target) > 1) {
-            this.clearWaypoints();
             this.defaultMode();
             return;
         }
