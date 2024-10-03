@@ -247,7 +247,8 @@ if (last_useitem = mcannonball) {
         return;
     }
     def_int $count = min(sub(30, max(%mcannon_ammo, 0)), inv_total(inv, mcannonball));
-    mes("You load the cannon with <~pluralise($count, "cannonball")>."); // https://youtu.be/TeQXQDaawO0?t=239
+    // with one cannon ball, it'd still be plural: https://youtu.be/5itKFWuomiM&t=132
+    mes("You load the cannon with <tostring($count)> cannonballs."); // https://youtu.be/TeQXQDaawO0?t=239
     %mcannon_ammo = add(%mcannon_ammo, $count);
     inv_del(inv, mcannonball, $count);
 } else {
