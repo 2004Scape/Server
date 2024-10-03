@@ -48,11 +48,6 @@ export default class ClientCheatHandler extends MessageHandler<ClientCheat> {
                 // todo: we're probably reloading twice now, just to get count?
                 const count = ScriptProvider.load('data/pack');
                 player.messageGame(`Reloaded ${count} scripts.`);
-            } else if (cmd === 'rebuild' && !Environment.NODE_PRODUCTION) {
-                player.messageGame('Rebuilding scripts...');
-                World.devThread!.postMessage({
-                    type: 'pack'
-                });
             } else if (cmd === 'serverdrop') {
                 player.terminate();
             } else if (cmd === 'bench') {

@@ -1,7 +1,4 @@
 import { Worker as NodeWorker } from 'worker_threads';
-import fs from 'fs';
-import Watcher from 'watcher';
-import path from 'path';
 import kleur from 'kleur';
 
 import Packet from '#jagex2/io/Packet.js';
@@ -55,7 +52,7 @@ import {PlayerTimerType} from '#lostcity/entity/EntityTimer.js';
 import ClientSocket from '#lostcity/server/ClientSocket.js';
 
 import Environment from '#lostcity/util/Environment.js';
-import {getLatestModified, getModified, shouldBuildFileAny} from '#lostcity/util/PackFile.js';
+import {getLatestModified, getModified} from '#lostcity/util/PackFile.js';
 import Zone from './zone/Zone.js';
 import LinkList from '#jagex2/datastruct/LinkList.js';
 import {createWorker} from '#lostcity/util/WorkerFactory.js';
@@ -119,11 +116,6 @@ class World {
 
     vars: Int32Array = new Int32Array(); // var shared
     varsString: string[] = [];
-
-    devWatcher: Watcher | null = null;
-    devThread: NodeWorker | null = null;
-    devRebuilding: boolean = false;
-    devMTime: Map<string, number> = new Map();
 
     constructor() {
         this.gameMap = new GameMap(Environment.NODE_MEMBERS);
@@ -470,19 +462,6 @@ class World {
         });
 
         if (typeof self === 'undefined') {
-            if (!Environment.NODE_PRODUCTION) {
-                this.startDevWatcher();
-
-                // console.time('checker');
-                // todo: this check takes me 300ms on startup! but it saves double building fresh setups
-                if (Environment.BUILD_STARTUP && (shouldBuildFileAny('data/pack/client', 'data/pack/client/lastbuild.pack') || shouldBuildFileAny('data/pack/server', 'data/pack/server/lastbuild.pack'))) {
-                    this.devThread!.postMessage({
-                        type: 'pack'
-                    });
-                }
-                // console.timeEnd('checker');
-            }
-
             if (Environment.WEB_PORT === 80) {
                 console.log(kleur.green().bold('World ready') + kleur.white().bold(': http://localhost'));
             } else {
@@ -495,84 +474,8 @@ class World {
         }
     }
 
-    startDevWatcher(): void {
-        this.devThread = createWorker('./src/lostcity/server/DevThread.ts') as NodeWorker;
-
-        this.devThread.on('message', msg => {
-            if (msg.type === 'done') {
-                this.devRebuilding = false;
-                this.reload();
-            }
-        });
-
-        this.devThread.on('exit', () => {
-            this.devRebuilding = false;
-            this.stopDevWatcher();
-
-            if (this.shutdownTick === -1) {
-                this.broadcastMes('Error while rebuilding - see console for more info.');
-                this.startDevWatcher();
-            }
-        });
-
-        this.devWatcher = new Watcher('./data/src', {
-            recursive: true
-        });
-
-        this.devWatcher.on('add', (targetPath: string) => {
-            if (targetPath.endsWith('.pack')) {
-                return;
-            }
-
-            const stat = fs.statSync(targetPath);
-            this.devMTime.set(targetPath, stat.mtimeMs);
-        });
-
-        this.devWatcher.on('change', (targetPath: string) => {
-            if (targetPath.endsWith('.pack')) {
-                return;
-            }
-
-            const stat = fs.statSync(targetPath);
-            const known = this.devMTime.get(targetPath);
-
-            if (known && known >= stat.mtimeMs) {
-                return;
-            }
-
-            this.devMTime.set(targetPath, stat.mtimeMs);
-            if (this.devRebuilding) {
-                return;
-            }
-
-            console.log('dev:', path.basename(targetPath), 'was edited');
-            this.devRebuilding = true;
-            this.broadcastMes('Rebuilding, please wait...');
-
-            if (!this.devThread) {
-                this.devThread = createWorker('./src/lostcity/server/DevThread.ts') as NodeWorker;
-            }
-
-            this.devThread.postMessage({
-                type: 'pack'
-            });
-        });
-    }
-
-    stopDevWatcher(): void {
-        if (this.devWatcher) {
-            this.devWatcher.close();
-        }
-
-        if (this.devThread) {
-            this.devThread.terminate();
-            this.devThread = null;
-        }
-    }
-
     rebootTimer(duration: number): void {
         this.shutdownTick = this.currentTick + duration;
-        this.stopDevWatcher();
 
         for (const player of this.players) {
             player.write(new UpdateRebootTimer(this.shutdownTick - this.currentTick));
