@@ -146,7 +146,9 @@ type=player_uid
 protect=no
 type=player_uid
 
-[varp_123]
+[pk_binder]
+protect=no
+type=player_uid
 
 [skill_anim]
 
