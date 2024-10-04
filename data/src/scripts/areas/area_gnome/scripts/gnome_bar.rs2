@@ -290,10 +290,15 @@ if (%gnome_bar_progress = 13) {
 // no bonus xp for gnome bar
 if (inv_total(inv, $cocktail1) >= $count1 & inv_total(inv, $cocktail2) >= $count2 & inv_total(inv, $cocktail3) >= $count3 & inv_total(inv, $cocktail4) >= $count4) {
     ~chatplayer("<p,neutral>Here you go, <$order>.");
-    inv_del(inv, $cocktail1, $count1);
-    inv_del(inv, $cocktail2, $count2);
-    inv_del(inv, $cocktail3, $count3);
-    inv_del(inv, $cocktail4, $count4);
+    if ($cocktail1 ! null) {
+        inv_del(inv, $cocktail1, $count1);
+    }
+    if ($cocktail2 ! null) {
+        inv_del(inv, $cocktail2, $count2);
+    }
+    if ($cocktail3 ! null) {
+        inv_del(inv, $cocktail3, $count3);
+    }
     %gnome_bar_progress = 13;
     ~mesbox("You give blurberry <$order>.");
     ~chatnpc(append("<p,neutral>", $order_succeed));
