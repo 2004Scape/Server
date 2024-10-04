@@ -1,9 +1,9 @@
 // *********************** TUTORIAL ************************
 [label,gnome_bar_start]
 ~chatplayer("<p,neutral>Hello.");
-~chatnpc("<p,happy>Well hello there <displayname()>. If you're looking for a cocktail|the barman will happily make you one.");
+~chatnpc("<p,happy>Well hello there <displayname()>.|If you're looking for a cocktail|the barman will happily make you one."); // line breaks are guessed
 ~chatplayer("<p,neutral>He looks pretty busy.");
-~chatnpc("<p,happy>I know, I just can't find any skilled staff.|I don't suppose you're looking for some part time work?|The pay isn't great but its a good way to meet people.");
+~chatnpc("<p,happy>I know, I just can't find any skilled staff.|I don't suppose you're looking for some part time work?|The pay isn't great but it's a good way to meet people.");
 def_int $choice = ~p_choice2("No thanks, I prefer to stay this side of the bar.", 1, "Ok then I'll give it a go.", 2);
 if ($choice = 1) {
     ~chatplayer("<p,neutral>No thanks, I prefer to stay this side of the bar.");
@@ -72,7 +72,7 @@ if (inv_total(inv, drunk_dragon) > 0) {
     inv_add(inv, coins, 1);
     ~mesbox("Blurberry gives you 1 gold coin.");
     ~chatplayer("<p,happy>Thanks.");
-    ~chatnpc("<p,neutral>Okay then now I need an SGG");
+    ~chatnpc("<p,neutral>Okay then now I need an SGG.");
     ~chatplayer("<p,confused>A what?");
     ~chatnpc("<p,neutral>A Short Green Guy, and don't bring me a gnome.|Here's all you need.");
     inv_del(inv, drunk_dragon, 1);
@@ -198,7 +198,7 @@ if (inv_total(inv, blurberry_special) < 1) {
 // }
 if (inv_total(inv, $premade_cocktail) > 0) {
     ~chatplayer("<p,happy>I think I've got one.");
-    ~chatnpc("<p,happy>No, I need you to make the <$name> yourself. I'm|afraid it doesn't really work if you try to sell the bar its|own drinks.");
+    ~chatnpc("<p,happy>No, I need you to make the <$name> yourself. I'm|afraid it doesn't really work if you try to sell the bar its|own drinks."); // osrs has no apostrophe for "its"
     return(false);
 }
 return(true);
