@@ -255,4 +255,17 @@ return($maxhit);
 [queue,pvp_freeze_player](int $duration)
 mes("You've been frozen!");
 %frozen = calc(map_clock + $duration + 1);
-walktrigger(frozen);
+walktrigger(pvp_frozen);
+
+
+[walktrigger,pvp_frozen]
+if (.finduid(%pk_predator1) = true) { // todo: check in osrs if this is a separate varp? %pk_predator1 can be reset before the freeze is over?
+    if (distance(coord, .coord) > 10) { // https://youtu.be/SC4KF1JWVl8&t=76
+        return;
+    }
+    if (map_clock < %frozen) {
+        mes("A magical force stops you from moving.");
+        p_walk(coord);
+        walktrigger(pvp_frozen);
+    }
+}
