@@ -1,0 +1,15 @@
+[opheld1,blamish_oil]
+~chatplayer("<p,neutral>You know... I'd really rather not.");
+
+[opheldu,blamish_oil]
+def_obj $used_on = inv_getobj(inv, last_slot);
+def_obj $used_with = inv_getobj(inv, last_useslot);
+if(($used_on = fishing_rod & $used_with = blamish_oil) | ($used_on = blamish_oil & $used_with = fishing_rod)) {
+  inv_del(inv, $used_on, 1);
+  inv_del(inv, $used_with, 1);
+  inv_add(inv, vial_empty, 1);
+  inv_add(inv, oily_fishing_rod, 1);
+  mes("You rub the oil into the fishing rod.");
+  return;
+}
+~displaymessage(^dm_default);

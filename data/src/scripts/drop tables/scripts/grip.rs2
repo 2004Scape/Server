@@ -1,0 +1,13 @@
+[ai_queue3,grip]
+gosub(npc_death);
+if (npc_findhero = false) {
+    return;
+} 
+
+if (p_finduid(uid) = true & %hero_progress = ^hero_phoenix_talked_charlie) {
+    // TODO  Wiki - is this true? - "Grip's Keyring is unique to the player you are doing the quest with" 
+    %hero_progress = ^hero_phoenix_killed_grip;
+}
+
+// Key appears for anyone
+obj_addall(npc_coord, npc_param(death_drop), 1, ^lootdrop_duration);

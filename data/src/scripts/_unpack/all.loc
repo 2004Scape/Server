@@ -13337,91 +13337,12 @@ active=yes
 op1=Climb-down
 mapscene=7
 
-[loc_2621]
-name=Door
-model=model_loc_3
-active=yes
-op1=Open
-retex1s=wall
-retex1d=door2
-recol2s=6342
-recol2d=11458
-
-[loc_2622]
-name=Door
-model=model_loc_3
-active=yes
-op1=Open
-retex1s=wall
-retex1d=door2
-recol2s=6342
-recol2d=11458
-
 [loc_2623]
 name=Door
 model=model_loc_37
 active=yes
 active=yes
 op1=Open
-
-[loc_2624]
-name=Door
-desc=The entrance to the Hero's Guild.
-model=model_loc_71
-active=yes
-op1=Open
-retex1s=wall
-retex1d=door2
-recol2s=6342
-recol2d=11458
-
-[loc_2625]
-name=Door
-desc=The entrance to the Hero's Guild.
-model=model_loc_71
-active=yes
-op1=Open
-mirror=yes
-retex1s=wall
-retex1d=door2
-recol2s=6342
-recol2d=11458
-
-[loc_2626]
-name=Door
-model=model_loc_3
-active=yes
-op1=Open
-retex1s=wall
-retex1d=door2
-recol2s=6342
-recol2d=11458
-
-[loc_2627]
-name=Door
-model=model_loc_3
-active=yes
-op1=Open
-retex1s=wall
-retex1d=door2
-recol2s=6342
-recol2d=11458
-
-[loc_2628]
-name=Door
-model=model_loc_3
-active=yes
-op1=Open
-retex1s=wall
-retex1d=door2
-recol2s=6342
-recol2d=11458
-
-[loc_2629]
-name=Wall
-desc=There is something unusual about this wall...
-model=model_loc_1512
-op1=Push
 
 [loc_2630]
 name=Fishing spot
@@ -13441,38 +13362,6 @@ model=model_loc_37
 active=yes
 active=yes
 op1=Open
-
-[loc_2632]
-name=Chest
-desc=I wonder what's inside?
-model=wooden_chest
-op1=Open
-forceapproach=north
-
-[loc_2633]
-name=Chest
-desc=It's open.
-model=model_loc_76
-op1=Search
-op2=Close
-forceapproach=north
-
-[loc_2635]
-name=Cupboard
-desc=I wonder what's inside?
-model=model_loc_368
-length=2
-op1=Open
-forceapproach=east
-
-[loc_2636]
-name=Cupboard
-desc=It's open.
-model=model_loc_371
-length=2
-op1=Search
-op2=Shut
-forceapproach=east
 
 [loc_2637]
 model=model_loc_3

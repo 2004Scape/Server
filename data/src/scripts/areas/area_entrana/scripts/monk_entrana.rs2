@@ -9,4 +9,10 @@ if ($heal = 0) {
 
 [opnpc1,monk_entrana]
 ~chatnpc("<p,neutral>Greetings traveller.");
+if (~hero_in_progress = true) {
+    ~chatplayer("<p,quiz>Hello, I am in search of an Entranan Firebird. Can you help me?");
+    ~chatnpc("<p,neutral>Oh ho! Another one! I don't think they exist, but you'd probably ask the head monk about it. If anyone would know, he would!");
+    ~chatplayer("<p,happy>Thanks!");
+    ~chatnpc("<p,quiz>Anything else you wanted to know?");
+}
 @multi2("Can you heal me? I'm injured.", monk_heal_player, "Isn't this place built a bit out the way?", isnt_this_place_built_a_bit_out_the_way);
