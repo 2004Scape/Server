@@ -153,3 +153,18 @@ category=category_86
 members=yes
 tradeable=yes
 param=brew_potion_struct,3dosepotionofzamorak
+
+[blamish_snail_slime]
+name=Blamish snail slime
+desc=Yuck.
+cost=5
+model=model_2705_obj
+recol1s=15855
+recol1d=28570
+2dyof=-2
+2dzoom=760
+2dyan=1920
+2dxan=124
+weight=25g
+members=yes
+param=brew_potion_struct,blamish_oil

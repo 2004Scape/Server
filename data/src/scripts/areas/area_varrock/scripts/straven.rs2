@@ -81,35 +81,89 @@ if(inv_total(inv, blackarmgang_scroll) > 0) {
 ~chatnpc("<p,neutral>You need to kill Jonny the Beard,|who should be in the Blue Moon Inn.");
 
 [label,straven_gangmember]
-~chatnpc("<p,neutral>Greetings fellow gang member.");
-if(inv_total(inv, weapon_store_key) = 0 & inv_total(bank, weapon_store_key) = 0) {
-    ~chatplayer("<p,sad>I'm afraid I've lost the key you gave me...");
-    ~chatnpc("<p,neutral>You really need to be more careful.|We don't want that key falling into the wrong hands.|Ah well...|Have this spare. Don't lose THIS one.");
-    inv_add(inv, weapon_store_key, 1);
-    ~objbox(weapon_store_key, "Straven hands you a key.");
-    return;
+if (%hero_progress >= ^hero_phoenix_obtained_armband & ~obj_gettotal(thieves_armband) < 1) {
+    @straven_gangmember_dialogues(1);
+} 
+else if (%hero_progress < ^hero_started | %hero_progress >= ^hero_phoenix_obtained_armband) {
+    ~chatnpc("<p,neutral>Greetings fellow gang member.");
+    if(inv_total(inv, weapon_store_key) = 0 & ~obj_gettotal(weapon_store_key) < 1) {
+        @straven_gangmember_dialogues(2);
+    } else {
+        @straven_gangmember_dialogues(~p_choice3("I've heard you've got some cool treasures in this place...", 3, "Any suggestions for where I can go thieving?", 4, "Where's the Black Arm Gang hideout?", 5));
+    }
 }
-def_int $option = ~p_choice2("I've heard you've got some cool treasures in this place...", 1, "I want nothing. I was just making sure you were them.", 2);
-if($option = 1) {
-    ~chatplayer("<p,neutral>I've heard you've got some cool treasures in this place...");
-    ~chatnpc("<p,happy>Oh yeah, we've all stolen some stuff in our time.|Those candlesticks down here, for example,|were quite a challenge to get out of the palace.");
-    ~chatplayer("<p,quiz>And the shield of Arrav? I heard you got that!");
-    ~chatnpc("<p,shock>Woah... that's a blast from the past!|We stole that years and years ago!|We don't even have all the shield anymore.");
-    ~chatnpc("<p,neutral>About five years ago|we had a massive fight in our gang|and the shield got broken in half during that fight.");
-    ~chatnpc("<p,neutral>Shortly after the fight|some gang members decided|they didn't want to be part of our gang anymore.|So they split off to form their own gang.");
-    ~chatnpc("<p,angry>The Black Arm Gang.");
-    ~chatnpc("<p,neutral>On their way out|they looted what treasures they could from us - |which included one of the halves of the shield.|We've been rivals with the Black Arms ever since.");
-} else if($option = 2) {
-    ~chatplayer("<p,quiz>Any suggestions for where I can go thieving?");
-    ~chatnpc("<p,neutral>You can always try the marketplace in Ardougne.|LOTS of opportunity there!");
-} else if($option = 3) {
-    ~chatplayer("<p,happy>Where's the Black Arm Gang hideout?|I wanna go sabotage 'em!");
-    ~chatnpc("<p,neutral>That would be a little tricky;|their security is pretty good.");
-    ~chatnpc("<p,neutral>Not as good as ours, obviously.");
-    ~chatnpc("<p,neutral>But still good.");
-    ~chatnpc("<p,neutral>If you really want to go there,|it's in the alleyway|to the west as you come in the south gate.");
-    ~chatnpc("<p,neutral>One of our operatives is often near the alley,|a red haired tramp.|He may be able to give you some ideas.");
-    ~chatplayer("<p,happy>Thanks for the help!");
+else if (%hero_progress > ^hero_started & inv_total(inv, petes_candlestick) >= 1) {
+    ~chatplayer("<p,happy>I have retrieved a candlestick!");
+    if (%hero_progress = ^hero_phoenix_killed_grip) {
+        @straven_gangmember_dialogues(6);
+    } else {
+        @straven_gangmember_dialogues(7);
+    }
+}
+else if (%hero_progress = ^hero_started) {
+    @straven_gangmember_dialogues(8);
+}
+@straven_gangmember_dialogues(9);
+
+[label,straven_gangmember_dialogues](int $option)
+switch_int($option) {
+    case 1: // Lost armband
+        ~chatplayer("<p,sad>I'm afraid I've lost my Master Theif armband.");
+        ~chatnpc("<p,neutral>Lucky for you I have a spare. Don't lose it again!");
+        inv_add(inv, thieves_armband, 1);
+    case 2: // Lost weapon store key
+        ~chatplayer("<p,sad>I'm afraid I've lost the key you gave me...");
+        ~chatnpc("<p,neutral>You really need to be more careful.|We don't want that key falling into the wrong hands.|Ah well...|Have this spare. Don't lose THIS one.");
+        inv_add(inv, weapon_store_key, 1);
+        ~objbox(weapon_store_key, "Straven hands you a key.");
+    case 3: // After arrav, or after heroes complete option 1
+        ~chatplayer("<p,neutral>I've heard you've got some cool treasures in this place...");
+        ~chatnpc("<p,happy>Oh yeah, we've all stolen some stuff in our time.|Those candlesticks down here, for example,|were quite a challenge to get out of the palace.");
+        ~chatplayer("<p,quiz>And the shield of Arrav? I heard you got that!");
+        ~chatnpc("<p,shock>Woah... that's a blast from the past!|We stole that years and years ago!|We don't even have all the shield anymore.");
+        ~chatnpc("<p,neutral>About five years ago|we had a massive fight in our gang|and the shield got broken in half during that fight.");
+        ~chatnpc("<p,neutral>Shortly after the fight|some gang members decided|they didn't want to be part of our gang anymore.|So they split off to form their own gang.");
+        ~chatnpc("<p,angry>The Black Arm Gang.");
+        ~chatnpc("<p,neutral>On their way out|they looted what treasures they could from us - |which included one of the halves of the shield.|We've been rivals with the Black Arms ever since.");
+    case 4: // After arrav, or after heroes complete option 2
+        ~chatplayer("<p,quiz>Any suggestions for where I can go thieving?");
+        ~chatnpc("<p,neutral>You can always try the marketplace in Ardougne.|LOTS of opportunity there!");
+    case 5: // After arrav, or after heroes complete option 3
+        ~chatplayer("<p,happy>Where's the Black Arm Gang hideout?|I wanna go sabotage 'em!");
+        ~chatnpc("<p,neutral>That would be a little tricky;|their security is pretty good.");
+        ~chatnpc("<p,neutral>Not as good as ours, obviously.");
+        ~chatnpc("<p,neutral>But still good.");
+        ~chatnpc("<p,neutral>If you really want to go there,|it's in the alleyway|to the west as you come in the south gate.");
+        ~chatnpc("<p,neutral>One of our operatives is often near the alley,|a red haired tramp.|He may be able to give you some ideas.");
+        ~chatplayer("<p,happy>Thanks for the help!");
+    case 6: // After heroes started, brought back valid candlestick
+        ~chatnpc("<p,neutral>Hmmm. Not bad, not bad. Let's see it, make sure it's|genuine.");
+        ~mesbox("You hand Straven the candlestick.");
+        ~chatplayer("<p,neutral>So is this enough to get me a Master Theif armband?");
+        ~chatnpc("<p,neutral>Hmm...");
+        ~chatnpc("<p,neutral>I dunno...");
+        ~chatnpc("<p,neutral>Aww, go on then. I suppose I'm in a generous mood|today.");
+        ~mesbox("Straven hands you a Master Theif armband.");
+        inv_del(inv, petes_candlestick, 1);
+        inv_add(inv, thieves_armband, 1);
+        %hero_progress = ^hero_phoenix_obtained_armband;
+    case 7: // After heroes started, brought back invalid candlestick [TODO: Need real dialgue for this one]
+        ~chatnpc("<p,angry>That's not real! Come back when you get the real one.");
+    case 8: // First chat after heroes started
+        ~chatplayer("<p,quiz>How would I go about getting a Master Thief armband?");
+        ~chatnpc("<p,neutral>Ooh... tricky stuff. Took me YEARS to get that rank.");
+        ~chatnpc("<p,neutral>Well, what some of the more aspiring thieves in our|gang are working on right now is to steal some very|valuable candlesticks from Scarface Pete - the pirate|leader on Karamja.");
+        ~chatnpc("<p,neutral>His security is excellent, and the target very valuable so|that might be enough to get you the rank.");
+        ~chatnpc("<p,neutral>Go talk to our man Alfonse, the waiter in the Shrimp|and Parrot.");
+        ~chatnpc("<p,neutral>Use the secret word 'gherkin' to show you're one of us.");
+        %hero_progress = ^hero_phoenix_gangmember_spoken;
+    case 9: // After heroes started, chatting before getting candlestick
+        ~chatplayer("<p,quiz>What am I supposed to be doing again?");
+        ~chatnpc("<p,neutral>You told me you wanted to get a Master thief's armband! Now pay attention.");
+        ~chatnpc("<p,neutral>Some of the more aspiring thieves in our gang are working on right now is to steal some very valuable candlesticks from Scarface Pete - the pirate leader on Karamja.");
+        ~chatnpc("<p,neutral>His security is excellent, and the target very valuable so|that might be enough to get you the rank.");
+        ~chatnpc("<p,neutral>Go talk to our man Alfonse, the waiter in the Shrimp|and Parrot.");
+        ~chatnpc("<p,neutral>Use the secret word 'gherkin' to show you're one of us.");
 }
 
 [label,straven_blackarmdog]

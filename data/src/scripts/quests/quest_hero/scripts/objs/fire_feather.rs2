@@ -1,0 +1,13 @@
+[opobj3,fire_feather]
+if (%hero_progress = ^hero_not_started) {
+  mes("It looks dangerously hot, and you have no reason to take it.");
+  return;
+}
+if (inv_total(worn, ice_gloves) = 0) {
+  queue(damage_player, 0, calc((stat(hitpoints) / 8) + 1)); // OSRS wiki says "about 1/8 of current hp damage"
+  p_delay(1);
+  mes("It is too hot to take. You need something cold to pick it up with.");
+  say("Ouch!");
+  return;
+} 
+@pickup_obj(obj_coord, obj_type, obj_count);
