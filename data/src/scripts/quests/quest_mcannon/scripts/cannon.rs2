@@ -196,6 +196,10 @@ if (~cannon_belongs_to_player = false) {
     mes("This is not your cannon."); // osrs
     return;
 }
+if (inv_freespace(inv) < 4) {
+    mes("You need 4 free inventory spaces to pick that up."); // osrs
+    return;
+}
 mes("You pick up the cannon,"); // https://youtu.be/TeQXQDaawO0?t=518
 mes("It's really heavy.");
 sound_synth(pick, 0, 0);
@@ -203,10 +207,6 @@ sound_synth(pick, 0, 0);
 %mcannon_decay_clock = null;
 cleartimer(cannon_rotate);
 cleartimer(cannon_decay);
-if (inv_freespace(inv) < 4) {
-    mes("You need 4 free inventory spaces to pick that up."); // osrs
-    return;
-}
 inv_add(inv, cannon_base, 1);
 inv_add(inv, cannon_stand, 1);
 inv_add(inv, cannon_barrels, 1);
@@ -247,7 +247,8 @@ if (last_useitem = mcannonball) {
         return;
     }
     def_int $count = min(sub(30, max(%mcannon_ammo, 0)), inv_total(inv, mcannonball));
-    mes("You load the cannon with <~pluralise($count, "cannonball")>."); // https://youtu.be/TeQXQDaawO0?t=239
+    // with one cannon ball, it'd still be plural: https://youtu.be/5itKFWuomiM&t=132
+    mes("You load the cannon with <tostring($count)> cannonballs."); // https://youtu.be/TeQXQDaawO0?t=239
     %mcannon_ammo = add(%mcannon_ammo, $count);
     inv_del(inv, mcannonball, $count);
 } else {

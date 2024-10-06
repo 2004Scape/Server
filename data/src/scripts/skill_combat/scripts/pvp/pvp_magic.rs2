@@ -179,6 +179,7 @@ if ($freeze_time > 0) {
     if (~.check_protect_prayer(^magic_style) = true) {
         $freeze_time = divide($freeze_time, 2); // 50% reduction https://oldschool.runescape.wiki/w/Update:RS2_bugfixes_-_part_4
     }
+    .%pk_binder = uid;
     .queue(pvp_freeze_player, 0, $freeze_time);
 }
 
@@ -255,4 +256,17 @@ return($maxhit);
 [queue,pvp_freeze_player](int $duration)
 mes("You've been frozen!");
 %frozen = calc(map_clock + $duration + 1);
-walktrigger(frozen);
+walktrigger(pvp_frozen);
+
+
+[walktrigger,pvp_frozen]
+if (.finduid(%pk_binder) = true) {
+    if (distance(coord, .coord) > 10) { // https://youtu.be/SC4KF1JWVl8&t=76
+        return;
+    }
+    if (map_clock < %frozen) {
+        mes("A magical force stops you from moving.");
+        p_walk(coord);
+        walktrigger(pvp_frozen);
+    }
+}

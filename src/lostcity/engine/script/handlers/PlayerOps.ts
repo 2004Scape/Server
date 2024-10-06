@@ -57,6 +57,9 @@ import {
     GenderValid,
     SkinColourValid
 } from '#lostcity/engine/script/ScriptValidators.js';
+import NpcType from '#lostcity/cache/config/NpcType.js';
+import LocType from '#lostcity/cache/config/LocType.js';
+import ObjType from '#lostcity/cache/config/ObjType.js';
 
 const PlayerOps: CommandHandlers = {
     [ScriptOpcode.FINDUID]: state => {
@@ -335,6 +338,10 @@ const PlayerOps: CommandHandlers = {
         if (type < 0 || type >= 5) {
             throw new Error(`Invalid oploc: ${type + 1}`);
         }
+        const locType: LocType = LocType.get(state.activeLoc.type);
+        if (!locType.op || !locType.op[type]) {
+            return;
+        }
         state.activePlayer.stopAction();
         state.activePlayer.setInteraction(Interaction.SCRIPT, state.activeLoc, ServerTriggerType.APLOC1 + type);
     }),
@@ -344,6 +351,10 @@ const PlayerOps: CommandHandlers = {
         const type = check(state.popInt(), NumberNotNull) - 1;
         if (type < 0 || type >= 5) {
             throw new Error(`Invalid opnpc: ${type + 1}`);
+        }
+        const npcType: NpcType = NpcType.get(state.activeNpc.type);
+        if (!npcType.op || !npcType.op[type]) {
+            return;
         }
         state.activePlayer.stopAction();
         state.activePlayer.setInteraction(Interaction.SCRIPT, state.activeNpc, ServerTriggerType.APNPC1 + type, {type: state.activeNpc.type, com: -1});
@@ -857,6 +868,10 @@ const PlayerOps: CommandHandlers = {
         const type = check(state.popInt(), NumberNotNull) - 1;
         if (type < 0 || type >= 5) {
             throw new Error(`Invalid opobj: ${type + 1}`);
+        }
+        const objType: ObjType = ObjType.get(state.activeObj.type);
+        if (!objType.op || !objType.op[type]) {
+            return;
         }
         state.activePlayer.stopAction();
         state.activePlayer.setInteraction(Interaction.SCRIPT, state.activeObj, ServerTriggerType.APOBJ1 + type);
