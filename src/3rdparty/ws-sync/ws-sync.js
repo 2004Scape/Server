@@ -61,7 +61,7 @@ export default class WsSyncReq {
     async fetchSync(dataToSend = {}, timeoutMs = 10000, expectedObjectStructure = null, callbackOnIncoming = null) {
         const uniqueId = this.waiterPrefix + '_' + this.uuidv4();
         if (uniqueId in this.waitedSyncCallbacks) {
-            throw new Error('WsSyncReq Fetch: uniqueId already exists - '+ uniqueId + '; Please use a unique id');
+            throw new Error('ws-sync fetch - uniqueId already exists: ' + uniqueId);
         }
 
         let expectedObj = null;
@@ -78,7 +78,7 @@ export default class WsSyncReq {
                 delete expectedObj.includeUniqueKey;
             }
         } else {
-            throw new Error('WsSyncReq Fetch: expectedObjectStructure argument must be "null" or an object');
+            throw new Error('ws-sync fetch - expectedObjectStructure argument must be "null" or an object');
         }
 
         this.waitedSyncCallbacks[uniqueId] = {
@@ -94,9 +94,9 @@ export default class WsSyncReq {
             while (true) {
                 if (!this.checkIfWsLive()) {
                     delete this.waitedSyncCallbacks[uniqueId];
-                    return { error : 'WsSyncReq connection lost: ' + uniqueId, result : null};
+                    return { error : 'ws-sync - connection lost: ' + uniqueId, result:null};
                 } else if ((Date.now() - start) > timeoutMs) {
-                    return { error : 'WsSyncReq exceeded timeout: ' + uniqueId, result : null};
+                    return { error : 'ws-sync - exceeded timeout: ' + uniqueId, result:null};
                 } else {
                     await this.sleep(this.loopPauseWaitIntervalMS);
                     if (uniqueId in this.waitedSyncCallbacks) {
@@ -105,28 +105,25 @@ export default class WsSyncReq {
                             delete this.waitedSyncCallbacks[uniqueId];
                             return { error: null, result: value['result'] };
                         }
-                    } 
-                    else {
-                        var msg = 'WsSyncReq unexpected exception, this should not be happen... the unique id does not exist: ' + uniqueId;
-                        return { error : msg, result : null };
+                    } else {
+                        var msg = 'ws-sync - unexpected exception, this should not be happen... the unique id does not exist: ' + uniqueId;
+                        return { error : msg, result:null };
                     }
                 }
             }
-        } 
-        else {
-            return { error : 'WsSyncReq failed to send request. Socket may be disconnected', result : null };
+        } else {
+            return { error : 'ws-sync - failed to send request. Socket may be disconnected', result:null };
         }
     }
 
-    receivedMessage(fullPayload)
-    {
+    receivedMessage(fullPayload) {
         let response = null;
         try {
             response = JSON.parse(fullPayload);
-        } 
-        catch(exc)  {
+        } catch(exc)  {
             throw new Error('ws-sync - could not parse JSON: ' + fullPayload + ' | ' + exc.toString() );
         }
+
         for (const [uniqId, kvpObject] of Object.entries(this.waitedSyncCallbacks)) {
             let found = true;
             let isIncomingForSameId = false;
@@ -151,9 +148,11 @@ export default class WsSyncReq {
                     }
                 }
             }
+
             if (found) {
                 this.waitedSyncCallbacks[uniqId]['result'] = response;
             } 
+
             if (!found || this.includeLastMatchForCallbacks){
                 // for incoming callback
                 // note, here the last cycle will be skiped, when `found` variable is true

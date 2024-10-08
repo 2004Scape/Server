@@ -25,8 +25,6 @@ export default class LoginServer {
                 const message = JSON.parse(buf.toString());
                 const { type, replyTo } = message;
 
-                console.log(message);
-
                 if (type === 1) {
                     // login
                     const { world, password, uid } = message;
@@ -41,7 +39,6 @@ export default class LoginServer {
                     const account = await db.selectFrom('account').where('username', '=', username).selectAll().executeTakeFirst();
 
                     if (!account || !(await bcrypt.compare(password.toLowerCase(), account.password))) {
-                        console.log('bad credentials', account?.password);
                         // invalid credentials (bad user or bad pass)
                         socket.send(JSON.stringify({
                             replyTo,

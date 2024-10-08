@@ -5,35 +5,57 @@ import Packet from '#jagex2/io/Packet.js';
 
 import Environment from '#lostcity/util/Environment.js';
 
-type LoginClientSocket = {
-    ws: WebSocket
-    wsr: WsSyncReq
-};
-
 export default class LoginClient {
-    async connect() {
-        return new Promise<LoginClientSocket>((res, rej) => {
-            const ws = new WebSocket(`ws://${Environment.LOGIN_HOST}:${Environment.LOGIN_PORT}`);
+    ws: WebSocket | null = null;
+    wsr: WsSyncReq | null = null;
 
-            ws.on('error', (err) => {
-                rej(err);
+    async connect() {
+        if (this.wsr && this.wsr.checkIfWsLive()) {
+            return;
+        }
+
+        return new Promise<void>((res, rej) => {
+            this.ws = new WebSocket(`ws://${Environment.LOGIN_HOST}:${Environment.LOGIN_PORT}`);
+
+            const timeout = setTimeout(() => {
+                this.ws = null;
+                this.wsr = null;
+                res();
+            }, 10000);
+
+            this.ws.once('close', () => {
+                clearTimeout(timeout);
+
+                this.ws = null;
+                this.wsr = null;
+                res();
             });
 
-            ws.once('open', () => {
-                const wsr = new WsSyncReq(ws);
-                res({ ws, wsr });
+            this.ws.once('error', (err) => {
+                clearTimeout(timeout);
+
+                this.ws = null;
+                this.wsr = null;
+                res();
+            });
+
+            this.ws.once('open', () => {
+                clearTimeout(timeout);
+
+                this.wsr = new WsSyncReq(this.ws);
+                res();
             });
         });
     }
 
     async load(username37: bigint, password: string, uid: number): Promise<{ reply: number; data: Packet | null }> {
-        const { ws, wsr } = await this.connect();
+        await this.connect();
 
-        if (!ws || !wsr) {
+        if (!this.ws || !this.wsr || !this.wsr.checkIfWsLive()) {
             return { reply: -1, data: null };
         }
 
-        const message = await wsr.fetchSync({
+        const message = await this.wsr.fetchSync({
             type: 1,
             world: Environment.NODE_ID,
             username37: username37.toString(),
@@ -41,10 +63,7 @@ export default class LoginClient {
             uid
         });
 
-        ws.close();
-
         if (message.error) {
-            console.error(message.error);
             return { reply: -1, data: null };
         }
 
@@ -63,23 +82,20 @@ export default class LoginClient {
     }
 
     async save(username37: bigint, save: Uint8Array) {
-        const { ws, wsr } = await this.connect();
+        await this.connect();
 
-        if (!ws || !wsr) {
+        if (!this.ws || !this.wsr || !this.wsr.checkIfWsLive()) {
             return -1;
         }
 
-        const message = await wsr.fetchSync({
+        const message = await this.wsr.fetchSync({
             type: 2,
             world: Environment.NODE_ID,
             username37: username37.toString(),
             save: Buffer.from(save).toString('base64')
         });
 
-        ws.close();
-
         if (message.error) {
-            console.error(message.error);
             return -1;
         }
 
@@ -87,36 +103,31 @@ export default class LoginClient {
     }
 
     async reset() {
-        const { ws, wsr } = await this.connect();
+        await this.connect();
 
-        if (!ws || !wsr) {
+        if (!this.ws || !this.wsr || !this.wsr.checkIfWsLive()) {
             return -1;
         }
 
-        ws.send(JSON.stringify({
+        this.ws.send(JSON.stringify({
             type: 3,
             world: Environment.NODE_ID
         }));
-
-        ws.close();
     }
 
     async count(world: number) {
-        const { ws, wsr } = await this.connect();
+        await this.connect();
 
-        if (!ws || !wsr) {
+        if (!this.ws || !this.wsr || !this.wsr.checkIfWsLive()) {
             return -1;
         }
 
-        const message = await wsr.fetchSync({
+        const message = await this.wsr.fetchSync({
             type: 4,
             world
         });
 
-        ws.close();
-
         if (message.error) {
-            console.error(message.error);
             return { reply: -1, data: null };
         }
 
@@ -126,18 +137,16 @@ export default class LoginClient {
     }
 
     async heartbeat(players: bigint[]) {
-        const { ws, wsr } = await this.connect();
+        await this.connect();
 
-        if (!ws || !wsr) {
+        if (!this.ws || !this.wsr || !this.wsr.checkIfWsLive()) {
             return;
         }
 
-        ws.send(JSON.stringify({
+        this.ws.send(JSON.stringify({
             type: 4,
             world: Environment.NODE_ID,
             players: players.map(u => u.toString())
         }));
-
-        ws.close();
     }
 }

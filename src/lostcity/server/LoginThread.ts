@@ -37,6 +37,8 @@ if (typeof self === 'undefined') {
     };
 }
 
+const login = new LoginClient();
+
 async function handleRequests(parentPort: any, msg: any, priv: forge.pki.rsa.PrivateKey) {
     switch (msg.type) {
         case 'reset': {
@@ -44,7 +46,6 @@ async function handleRequests(parentPort: any, msg: any, priv: forge.pki.rsa.Pri
                 return;
             }
 
-            const login = new LoginClient();
             await login.reset();
             break;
         }
@@ -53,7 +54,6 @@ async function handleRequests(parentPort: any, msg: any, priv: forge.pki.rsa.Pri
                 return;
             }
 
-            const login = new LoginClient();
             await login.heartbeat(msg.players);
             break;
         }
@@ -116,7 +116,6 @@ async function handleRequests(parentPort: any, msg: any, priv: forge.pki.rsa.Pri
                     return;
                 }
 
-                const login = new LoginClient();
                 const request = await login.load(toBase37(toSafeName(username)), password, uid);
 
                 if (request.reply === 1 && request.data) {
@@ -210,7 +209,6 @@ async function handleRequests(parentPort: any, msg: any, priv: forge.pki.rsa.Pri
             const { username, save } = msg;
 
             if (Environment.LOGIN_KEY) {
-                const login = new LoginClient();
                 const reply = await login.save(toBase37(username), save);
 
                 if (reply === 0) {
