@@ -6,8 +6,8 @@ import Packet from '#jagex2/io/Packet.js';
 import Environment from '#lostcity/util/Environment.js';
 
 export default class LoginClient {
-    ws: WebSocket | null = null;
-    wsr: WsSyncReq | null = null;
+    private ws: WebSocket | null = null;
+    private wsr: WsSyncReq | null = null;
 
     async connect() {
         if (this.wsr && this.wsr.checkIfWsLive()) {

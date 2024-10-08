@@ -3,9 +3,9 @@ import forge from 'node-forge';
 import { parentPort } from 'worker_threads';
 
 import Environment from '#lostcity/util/Environment.js';
-import { FriendsClient } from './FriendsServer.js';
+import { FriendClient } from './FriendServer.js';
 
-const client = new FriendsClient();
+const client = new FriendClient();
 
 if (typeof self === 'undefined') {
     if (!parentPort) throw new Error('This file must be run as a worker thread.');
@@ -20,7 +20,7 @@ if (typeof self === 'undefined') {
             console.error(err);
         }
     });
-    
+
     client.onMessage((opcode, data) => {
         parentPort!.postMessage({ opcode, data });
     });

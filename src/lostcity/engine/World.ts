@@ -66,13 +66,13 @@ import {preloadClient, preloadClientAsync} from '#lostcity/server/PreloadedPacks
 import {CoordGrid} from '#lostcity/engine/CoordGrid.js';
 import UpdateRebootTimer from '#lostcity/network/outgoing/model/UpdateRebootTimer.js';
 import WorldStat from '#lostcity/engine/WorldStat.js';
-import { FriendsServerOpcodes } from '#lostcity/server/FriendsServer.js';
+import { FriendsServerOpcodes } from '#lostcity/server/FriendServer.js';
 import UpdateFriendList from '#lostcity/network/outgoing/model/UpdateFriendList.js';
 import UpdateIgnoreList from '#lostcity/network/outgoing/model/UpdateIgnoreList.js';
 import MessagePrivate from '#lostcity/network/outgoing/model/MessagePrivate.js';
 
 class World {
-    private friendsThread: Worker | NodeWorker = createWorker(typeof self === 'undefined' ? './src/lostcity/server/FriendsThread.ts' : 'FriendsThread.js');
+    private friendsThread: Worker | NodeWorker = createWorker(typeof self === 'undefined' ? './src/lostcity/server/FriendThread.ts' : 'FriendThread.js');
 
     private static readonly PLAYERS: number = 2048;
     private static readonly NPCS: number = 8192;
@@ -151,67 +151,63 @@ class World {
         }
     }
 
-    onFriendsMessage({ opcode, data }: { opcode: FriendsServerOpcodes, data: Uint8Array }) {
-        const packet = new Packet(data);
-
+    onFriendsMessage({ opcode, data }: { opcode: FriendsServerOpcodes, data: any }) {
         try {
             if (opcode === FriendsServerOpcodes.UPDATE_FRIENDLIST) {
-                const username37 = packet.g8();
+                const username37 = BigInt(data.username37);
 
                 // TODO make getPlayerByUsername37?
                 const player = this.getPlayerByUsername(fromBase37(username37));
                 if (!player) {
-                    console.error(`FriendsThread: player ${fromBase37(username37)} not found`);
+                    console.error(`FriendThread: player ${fromBase37(username37)} not found`);
                     return;
                 }
 
-                // 10 bytes per friend
-                while (packet.available >= 10) {
-                    const world = packet.g2();
-                    const friendUsername37 = packet.g8();
-                    player.write(new UpdateFriendList(friendUsername37, world));
+                for (let i = 0; i < data.friends.length; i++) {
+                    const [world, friendUsername37] = data.friends[i];
+                    player.write(new UpdateFriendList(BigInt(friendUsername37), world));
                 }
             } else if (opcode === FriendsServerOpcodes.UPDATE_IGNORELIST) {
-                const username37 = packet.g8();
+                const username37 = BigInt(data.username37);
 
                 // TODO make getPlayerByUsername37?
                 const player = this.getPlayerByUsername(fromBase37(username37));
                 if (!player) {
-                    console.error(`FriendsThread: player ${fromBase37(username37)} not found`);
+                    console.error(`FriendThread: player ${fromBase37(username37)} not found`);
                     return;
                 }
 
-                const ignored: bigint[] = [];
-
-                while (packet.available >= 8) {
-                    const target37 = packet.g8();
-
-                    ignored.push(target37);
-                }
+                const ignored: bigint[] = data.ignored.map((i: string) => BigInt(i));
 
                 if (ignored.length > 0) {
                     player.write(new UpdateIgnoreList(ignored));
                 }
             } else if (opcode == FriendsServerOpcodes.PRIVATE_MESSAGE) {
-                const fromPlayer = packet.g8();
-                const fromPlayerStaffLvl = packet.g1();
-                const pmId = packet.g4();
+                // username37: username.toString(),
+                // targetUsername37: target.toString(),
+                // staffLvl,
+                // pmId,
+                // chat
 
-                const target = packet.g8();
+                const fromPlayer = BigInt(data.username37);
+                const fromPlayerStaffLvl = data.staffLvl;
+                const pmId = data.pmId;
+                const target = BigInt(data.targetUsername37);
+
                 const player = this.getPlayerByUsername(fromBase37(target));
                 if (!player) {
-                    console.error(`FriendsThread: player ${fromBase37(target)} not found`);
+                    console.error(`FriendThread: player ${fromBase37(target)} not found`);
                     return;
                 }
 
-                const message = packet.gjstr();
+                const chat = data.chat;
 
-                player.write(new MessagePrivate(fromPlayer, pmId, fromPlayerStaffLvl, message));
+                player.write(new MessagePrivate(fromPlayer, pmId, fromPlayerStaffLvl, chat));
             } else {
                 console.error('Unknown friends opcode: ' + opcode);
             }
-        } finally {
-            packet.release();
+        } catch (err) {
+            console.error(err);
         }
     }
 
@@ -1566,7 +1562,7 @@ class World {
     }
 
     addFriend(player: Player, targetUsername37: bigint) {
-        console.log(`[World] addFriend => player: ${player.username}, target: ${targetUsername37} (${fromBase37(targetUsername37)})`);
+        //console.log(`[World] addFriend => player: ${player.username}, target: ${targetUsername37} (${fromBase37(targetUsername37)})`);
         this.friendsThread.postMessage({
             type: 'player_friendslist_add',
             username: player.username,
@@ -1575,7 +1571,7 @@ class World {
     }
 
     removeFriend(player: Player, targetUsername37: bigint) {
-        console.log(`[World] removeFriend => player: ${player.username}, target: ${targetUsername37} (${fromBase37(targetUsername37)})`);
+        //console.log(`[World] removeFriend => player: ${player.username}, target: ${targetUsername37} (${fromBase37(targetUsername37)})`);
         this.friendsThread.postMessage({
             type: 'player_friendslist_remove',
             username: player.username,
@@ -1584,7 +1580,7 @@ class World {
     }
 
     addIgnore(player: Player, targetUsername37: bigint) {
-        console.log(`[World] addIgnore => player: ${player.username}, target: ${targetUsername37} (${fromBase37(targetUsername37)})`);
+        //console.log(`[World] addIgnore => player: ${player.username}, target: ${targetUsername37} (${fromBase37(targetUsername37)})`);
         this.friendsThread.postMessage({
             type: 'player_ignorelist_add',
             username: player.username,
@@ -1593,7 +1589,7 @@ class World {
     }
 
     removeIgnore(player: Player, targetUsername37: bigint) {
-        console.log(`[World] removeIgnore => player: ${player.username}, target: ${targetUsername37} (${fromBase37(targetUsername37)})`);
+        //console.log(`[World] removeIgnore => player: ${player.username}, target: ${targetUsername37} (${fromBase37(targetUsername37)})`);
         this.friendsThread.postMessage({
             type: 'player_ignorelist_remove',
             username: player.username,
@@ -1641,7 +1637,7 @@ class World {
     }
 
     sendPrivateMessage(player: Player, targetUsername37: bigint, message: string): void {
-        console.log(`[World] sendPrivateMessage => player: ${player.username}, target: ${targetUsername37} (${fromBase37(targetUsername37)}), message: '${message}'`);
+        //console.log(`[World] sendPrivateMessage => player: ${player.username}, target: ${targetUsername37} (${fromBase37(targetUsername37)}), message: '${message}'`);
 
         this.friendsThread.postMessage({
             type: 'private_message',
