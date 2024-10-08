@@ -59,7 +59,7 @@ import {getLatestModified, getModified, shouldBuildFileAny} from '#lostcity/util
 import Zone from './zone/Zone.js';
 import LinkList from '#jagex2/datastruct/LinkList.js';
 import {createWorker} from '#lostcity/util/WorkerFactory.js';
-import {LoginResponse} from '#lostcity/server/LoginServer.js';
+import LoginResponse from '#lostcity/server/LoginResponse.js';
 import ClientProt from '#lostcity/network/225/incoming/prot/ClientProt.js';
 import {makeCrcs, makeCrcsAsync} from '#lostcity/server/CrcTable.js';
 import {preloadClient, preloadClientAsync} from '#lostcity/server/PreloadedPacks.js';

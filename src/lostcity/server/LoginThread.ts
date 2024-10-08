@@ -7,7 +7,8 @@ import Packet from '#jagex2/io/Packet.js';
 
 import { toBase37, toSafeName } from '#jagex2/jstring/JString.js';
 
-import {LoginClient, LoginResponse} from '#lostcity/server/LoginServer.js';
+import LoginClient from '#lostcity/server/LoginClient.js';
+import LoginResponse from '#lostcity/server/LoginResponse.js';
 
 import Environment from '#lostcity/util/Environment.js';
 
@@ -128,7 +129,7 @@ async function handleRequests(parentPort: any, msg: any, priv: forge.pki.rsa.Pri
                         username: toSafeName(username),
                         save: request.data.data
                     });
-                } else if ((request.reply === 2 || request.reply === 3) && opcode === 16) {
+                } else if ((request.reply === 4 || request.reply === 5) && opcode === 16) {
                     // new connection + already logged in
                     parentPort.postMessage({
                         type: 'loginreply',
@@ -136,7 +137,7 @@ async function handleRequests(parentPort: any, msg: any, priv: forge.pki.rsa.Pri
                         socket
                     });
                     return;
-                } else if (request.reply === 3 && opcode === 18) {
+                } else if (request.reply === 5 && opcode === 18) {
                     // reconnection + already logged into another world (???)
                     parentPort.postMessage({
                         type: 'loginreply',
@@ -144,7 +145,7 @@ async function handleRequests(parentPort: any, msg: any, priv: forge.pki.rsa.Pri
                         socket
                     });
                     return;
-                } else if (request.reply === 4) {
+                } else if (request.reply === 2) {
                     parentPort.postMessage({
                         type: 'loginreply',
                         status: LoginResponse.SUCCESSFUL,
@@ -154,7 +155,7 @@ async function handleRequests(parentPort: any, msg: any, priv: forge.pki.rsa.Pri
                         username: toSafeName(username),
                         save: new Uint8Array()
                     });
-                } else if (request.reply === 5) {
+                } else if (request.reply === 3) {
                     // invalid credentials (bad user or bad pass)
                     parentPort.postMessage({
                         type: 'loginreply',

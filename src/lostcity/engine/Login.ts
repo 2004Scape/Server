@@ -10,7 +10,7 @@ import Player from '#lostcity/entity/Player.js';
 import ClientSocket from '#lostcity/server/ClientSocket.js';
 import { PlayerLoading } from '#lostcity/entity/PlayerLoading.js';
 import { createWorker } from '#lostcity/util/WorkerFactory.js';
-import {LoginResponse} from '#lostcity/server/LoginServer.js';
+import LoginResponse from '#lostcity/server/LoginResponse.js';
 import { CrcBuffer32 } from '#lostcity/server/CrcTable.js';
 import Environment from '#lostcity/util/Environment.js';
 
