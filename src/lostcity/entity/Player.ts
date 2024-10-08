@@ -575,6 +575,8 @@ export default class Player extends PathingEntity {
         this.recoverEnergy(moved);
         if (this.runenergy === 0) {
             this.setVar(VarPlayerType.PLAYER_RUN, 0);
+        }
+        if (this.runenergy < 100) {
             this.setVar(VarPlayerType.TEMP_RUN, 0);
         }
         if (moved) {
