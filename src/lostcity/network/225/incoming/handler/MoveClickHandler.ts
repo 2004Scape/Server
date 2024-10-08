@@ -40,7 +40,7 @@ export default class MoveClickHandler extends MessageHandler<MoveClick> {
             player.closeModal();
         }
 
-        if (player.runenergy < 100) {
+        if (player.runenergy < 100 && message.ctrlHeld === 1) {
             player.setVar(VarPlayerType.TEMP_RUN, 0);
         } else {
             player.setVar(VarPlayerType.TEMP_RUN, message.ctrlHeld);
