@@ -9,6 +9,7 @@ if ($npc = null) {
 }
 
 npc_add(coord, $npc, 500);
+%npc_attacking_uid = null;
 
 [debugproc,npc_hasop](npc $npc, int $op)
 if ($npc = null) {

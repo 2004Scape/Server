@@ -4,6 +4,19 @@ if(%junglepotion_progress < ^junglepotion_complete) {
     return;
 }
 switch_int(%zombiequeen_progress) {
+    case ^zombiequeen_complete, ^zombiequeen_complete_spoken_trufitus1, ^zombiequeen_complete_spoken_trufitus2:
+        ~chatplayer("<p,neutral>Greetings!");
+        ~chatnpc("<p,happy>Greetings Bwana! We've removed the threat of Rashiliyia and though there are still some random outbreaks of undead activity we are more than able to deal with it.");
+        // https://media.discordapp.net/attachments/1126857544523063367/1153310899134812311/shilo3.jpg?ex=670723b9&is=6705d239&hm=fe24aa60caa92a7d07b74fe2ca5fe155c7c65223d6e63f3e4240b50d17d4ace7&=&format=webp&width=567&height=523
+        ~chatnpc("<p,happy>You're welcome to enter the village now Bwana,|shall I show you the way?");
+        def_int $op = ~p_choice2_header("Yes, I'll give it a go!", 1, "I think I'll see it some other time.", 2, "You can now enter Shilo Village.");
+        if($op = 2) {
+            mes("You decide not to visit the village.");
+            return;
+        }
+        ~mesbox("Mosol leads you into the village.");
+        p_telejump(0_44_46_50_8);
+        mes("Mosol leaves you by the gate and walks back out into the jungle.");
     case default: @mosol_belt;
     case ^zombiequeen_not_started :
         if(~obj_gettotal(wampum_belt) > 0) {

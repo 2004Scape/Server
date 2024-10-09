@@ -128,8 +128,7 @@ transmit=yes
 [zq_map_mechanisms]
 scope=perm
 
-[varp_118]
-scope=perm
+[zq_rash_timer]
 
 [pk_predator1]
 protect=no

@@ -68,7 +68,7 @@ iop1=Read
 weight=20g
 members=yes
 
-[obj_609]
+[rashiliya_corpse]
 name=Rashiliya corpse
 desc=The remains of the Zombie Queen.
 model=model_2595_obj
@@ -195,7 +195,7 @@ param=rangedefence,1
 param=strengthbonus,1
 param=prayerbonus,1
 
-[coins_shilo]
+[zqcoins]
 cost=1
 name=Coins
 desc=Lovely money!

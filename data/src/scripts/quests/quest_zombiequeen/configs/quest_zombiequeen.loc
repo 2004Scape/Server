@@ -282,6 +282,7 @@ op1=Open
 op2=Search
 recol1s=2048
 recol1d=29562
+category=zqtombdoor
 
 [loc_2247]
 name=Tomb doors
@@ -294,6 +295,7 @@ recol1s=3072
 recol1d=29562
 recol2s=1024
 recol2d=29562
+category=zqtombdoor
 
 [loc_2248]
 name=Tomb doors
@@ -305,6 +307,7 @@ recol1s=2048
 recol1d=29562
 recol2s=1024
 recol2d=29562
+category=zqtombdoor
 
 [loc_2249]
 name=Tomb doors
@@ -318,6 +321,7 @@ recol2s=1024
 recol2d=29562
 recol3s=3072
 recol3d=29562
+category=zqtombdoor
 
 [loc_2250]
 name=Tomb doors
@@ -332,6 +336,7 @@ recol2s=1024
 recol2d=29562
 recol3s=2048
 recol3d=29562
+category=zqtombdoor
 
 [loc_2251]
 model=model_loc_2246

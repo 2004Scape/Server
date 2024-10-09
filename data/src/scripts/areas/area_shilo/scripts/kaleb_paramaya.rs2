@@ -1,0 +1,5 @@
+[oploc1,loc_2268]
+if(inv_total(inv, paramaya_ticket) = 0) {
+    ~chatnpc_specific(nc_name(kaleb_paramaya), kaleb_paramaya, "You can buy a ticket to the dormitory from me, and have a lovely night's rest.");
+    return;
+}

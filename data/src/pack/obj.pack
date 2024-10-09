@@ -607,7 +607,7 @@
 606=stoneplaque
 607=tattered_scroll
 608=crumpled_scroll
-609=obj_609
+609=rashiliya_corpse
 610=zadimus_corpse
 611=zqcrystal
 612=zqcrystal_blue
@@ -615,12 +615,12 @@
 614=zqcrystal_yellow
 615=zqcrystal_white
 616=zqbeadsofthedead
-617=coins_shilo
+617=zqcoins
 618=zqbonebeads
-619=obj_619
-620=cert_obj_619
-621=obj_621
-622=cert_obj_621
+619=paramaya_ticket
+620=cert_paramaya_ticket
+621=ship_ticket
+622=cert_ship_ticket
 623=zqpommel
 624=bervirius_notes
 625=wampum_belt
