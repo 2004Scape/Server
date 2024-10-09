@@ -1,24 +1,5 @@
 //todo: find some sources on wizard grayzag
 // this can be pics, videos, forum posts, recounts, anything.
-
-// auto retaliate
-[ai_queue1,wizard_grayzag] ~npc_default_retaliate_ap;
-
-
-[ai_applayer2,wizard_grayzag]
-if (map_clock < %npc_action_delay) {
-    return;
-}
-npc_setmode(opplayer2);
-// 1/10 chance and a 5 imp cap (completely guessed)
-// .npc_count_within_distance so it doesnt mess up activenpc pointer.
-if (random(10) = 0 & ~.npc_findcount(npc_coord, imp_grayzag, 10, 0) < 5) { // completely guessed
-    ~npc_spawn_imp_attack;
-    return;
-}
-
-
-
 [ai_opplayer2,wizard_grayzag]
 if (map_clock < %npc_action_delay) {
     return;
@@ -36,19 +17,15 @@ if (random(10) = 0 & ~.npc_findcount(npc_coord, imp_grayzag, 10, 0) < 5) {
 [proc,npc_spawn_imp_attack]
 if_close;
 def_coord $imp_coord = map_findsquare(npc_coord, 1, 7, ^map_findsquare_lineofwalk);
-if ($imp_coord = npc_coord) {
-    ~npc_spawn_imp_attack;
-    return;
-}
 npc_anim(human_castcurse, 0);
 spotanim_npc(curse_casting, 92, 0);
 %npc_action_delay = calc(map_clock + 5);
 npc_delay(1); // this also stops the player from attacking
-npc_add($imp_coord, imp_grayzag, 200); // complete guess!
 // new active npc
-npc_delay(1);
-npc_setmode(opplayer2);
 sound_synth(smokepuff, 0, 0);
 spotanim_map(small_smokepuff, $imp_coord, 124, 0);
+npc_add($imp_coord, imp_grayzag, 200); // complete guess!
+npc_delay(1);
+npc_setmode(opplayer2);
 // Used animations similar to what can be seen in this love story quest cutscene.
 // https://youtu.be/NxhfLCz-1mU?si=kCvJtt8_Ji6WiPB6&t=71
