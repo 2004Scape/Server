@@ -60,6 +60,10 @@ if (%hetty_progress = ^hetty_complete) {
     $questpoints = add($questpoints, ^hetty_questpoints);
 }
 
+if (%chompybird_progress = ^chompybird_complete) {
+    %questpoints = add($questpoints, ^chompybird_questpoints);
+}
+
 if (%priest_progress = ^priest_complete) {
     $questpoints = add($questpoints, ^priest_questpoints);
 }
@@ -227,6 +231,7 @@ if (%upass_progress = ^upass_complete) {
 ~send_quest_progress_colour(questlist:cook, %cook_progress, ^cook_complete);
 ~send_quest_progress_colour(questlist:romeojuliet, %romeojuliet_progress, ^romeojuliet_complete);
 ~send_quest_progress_colour(questlist:hetty, %hetty_progress, ^hetty_complete);
+~send_quest_progress_colour(questlist:chompybird, %chompybird_progress, ^chompybird_complete);
 ~send_quest_progress_colour(questlist:priest, %priest_progress, ^priest_complete);
 ~send_quest_progress_colour(questlist:squire, %squire_progress, ^squire_complete);
 ~send_quest_progress_colour(questlist:imp, %imp_progress, ^imp_complete);
