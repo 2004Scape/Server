@@ -841,6 +841,9 @@ class World {
                     player.moveClickRequest = true;
                 }
                 player.pathToMoveClick(player.userPath, !Environment.NODE_CLIENT_ROUTEFINDER);
+                if (!player.opcalled && player.hasWaypoints()) {
+                    player.processWalktrigger();
+                }
             }
 
             if (player.target instanceof Player && (player.targetOp === ServerTriggerType.APPLAYER3 || player.targetOp === ServerTriggerType.OPPLAYER3)) {

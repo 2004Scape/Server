@@ -280,7 +280,6 @@ export default class Player extends PathingEntity {
     }[] = [];
     allowDesign: boolean = false;
     afkEventReady: boolean = false;
-    interactWalkTrigger: boolean = false;
     moveClickRequest: boolean = false;
 
     highPriorityOut: Stack<OutgoingMessage> = new Stack();
@@ -548,16 +547,6 @@ export default class Player extends PathingEntity {
 
         if (repathAllowed && this.target instanceof PathingEntity && !this.interacted && this.walktrigger === -1) {
             this.pathToPathingTarget();
-        }
-
-        if (this.hasWaypoints() && this.walktrigger !== -1 && (!this.protect && !this.delayed())) {
-            const trigger = ScriptProvider.get(this.walktrigger);
-            this.walktrigger = -1;
-
-            if (trigger) {
-                const script = ScriptRunner.init(trigger, this);
-                this.runScript(script, true);
-            }
         }
         if (this.moveSpeed !== MoveSpeed.INSTANT) {
             this.moveSpeed = this.defaultMoveSpeed();
@@ -862,6 +851,19 @@ export default class Player extends PathingEntity {
 
         return ScriptProvider.getByTrigger(this.targetOp, typeId, categoryId) ?? null;
     }
+    // https://youtu.be/_NmFftkMm0I?si=xSgb8GCydgUXUayR&t=79
+    // to allow p_walk (sets player destination tile) during walktriggers
+    // we process walktriggers from regular movement in client input, 
+    // and for each interaction.
+    processWalktrigger() {
+        if (this.walktrigger !== -1 && (!this.protect && !this.delayed())) {
+            const trigger = ScriptProvider.get(this.walktrigger);
+            if (trigger) {
+                const script = ScriptRunner.init(trigger, this);
+                this.runScript(script, true);
+            }
+        }
+    }
 
     processInteraction() {
         if (this.target === null || !this.canAccess()) {
@@ -905,12 +907,18 @@ export default class Player extends PathingEntity {
             this.unsetMapFlag();
             return;
         }
+        if (this.targetOp && this.hasWaypoints()) {
+            this.processWalktrigger();
+        }
 
         if (this.targetOp === ServerTriggerType.APPLAYER3 || this.targetOp === ServerTriggerType.OPPLAYER3) {
             const moved: boolean = this.updateMovement(false);
             if (moved) {
                 // we need to keep the mask if the player had to move.
                 this.alreadyFacedEntity = false;
+            }
+            if (!moved && this.target instanceof Player && this.x !== this.target.lastStepX && this.z !== this.target.lastStepZ) {
+                this.clearInteraction();
             }
             return;
         }
@@ -982,6 +990,7 @@ export default class Player extends PathingEntity {
             this.recoverEnergy(false);
         } else if (this.target) {
             this.interacted = false;
+            this.processWalktrigger();
             moved = this.updateMovement();
             if (moved) {
                 // we need to keep the mask if the player had to move.
@@ -1041,18 +1050,6 @@ export default class Player extends PathingEntity {
                 this.messageGame('Nothing interesting happens.');
                 this.interacted = true;
                 this.clearWaypoints();
-            }
-        }
-
-        // https://youtu.be/_NmFftkMm0I?si=xSgb8GCydgUXUayR&t=79, only called when clicking to interact?
-        if (!this.interactWalkTrigger && this.walktrigger !== -1 && (!this.protect && !this.delayed())) {
-            const trigger = ScriptProvider.get(this.walktrigger);
-            this.walktrigger = -1;
-            if (trigger) {
-                const script = ScriptRunner.init(trigger, this);
-                this.interactWalkTrigger = true;
-                this.unsetMapFlag();
-                this.runScript(script, true);
             }
         }
 
