@@ -38,4 +38,23 @@ if (~inzone_coord_pair_table(party_room_zones, coord) = true) {
     mes("Party Pete won't be happy if you light a fire here.");
     return;
 }
+if (%action_delay < map_clock) {
+    p_stopaction;
+    anim(human_createfire, 0);
+    sound_synth(tinderbox_strike, 0, 0);
+    mes("You attempt to light the logs.");
+    %action_delay = calc(map_clock + 3);
+} else if (%action_delay = map_clock) {
+    if(stat_random(stat(firemaking), 64, 512) = true) { // firemaking roll
+        %action_delay = calc(map_clock + 4);
+        ~push_player_from_inv(obj_coord);
+        ~firemaking_success(obj_coord, $log); // if fully blocked then just light the log and dont move
+        return;
+    } else {
+        // if fails, then reattempt to light
+        anim(human_createfire, 0);
+        sound_synth(tinderbox_strike, 0, 0);
+        %action_delay = calc(map_clock + 4);
+    }
+}
 p_opobj(4);

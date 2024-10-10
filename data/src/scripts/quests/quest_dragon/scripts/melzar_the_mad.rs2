@@ -68,6 +68,7 @@ spotanim_npc(bind_casting, 92, 0);
 npc_delay(1); // in osrs, the player stops attacking him. Npc_delay is what causes this
 obj_add($cabbage_coord, cabbage, 1, 100);
 spotanim_map(small_smokepuff, $cabbage_coord, 124, 0);
+// doesnt set attack vars in osrs
 
 [proc,npc_zap_attack](int $maxhit, int $attackspeed)
 if_close;
@@ -86,6 +87,7 @@ if ($damage > 0 & getqueue(player_death) < 1) {
     queue(playerhit_n_retaliate, 0, npc_uid);
 }
 %npc_action_delay = add(map_clock, $attackspeed);
+~npc_set_attack_vars;
 
 [proc,melzar_say_random_message]
 def_int $random_say = random(20);
