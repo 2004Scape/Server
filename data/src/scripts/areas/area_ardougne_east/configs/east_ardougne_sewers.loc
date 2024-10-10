@@ -1,0 +1,20 @@
+[east_ardy_sewer_gate_north]
+name=Gate
+desc=A metal gate bars your way
+model=model_loc_52
+active=yes
+op1=Open
+op2=Pick Lock
+category=double_door_open_and_close_left
+param=next_loc_stage,east_ardy_sewer_gate_north
+
+[east_ardy_sewer_gate_south]
+name=Gate
+desc=A metal gate bars your way
+model=model_loc_52
+mirror=yes
+active=yes
+op1=Open
+op2=Pick Lock
+category=double_door_open_and_close_right
+param=next_loc_stage,east_ardy_sewer_gate_south

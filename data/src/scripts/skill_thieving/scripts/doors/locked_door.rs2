@@ -111,22 +111,12 @@ if ($entering = true) {
         }
     }
 
-    mes("You attempt to pick the lock.");
-
     def_int $current_level = stat(thieving);
     def_int $thieving_level = db_getfield($data, locked_door:level, 0);
 
-    if ($current_level < $thieving_level) {
-        ~mesbox("You need level <tostring($thieving_level)> Thieving to pick this lock.");
+    if (~attempt_picklock_door($current_level, $thieving_level) = false) {
         return;
     }
-
-    def_int $roll = random(100);
-    if ($roll < 50) { // Some arbitrary rng.
-        mes("You fail to pick the lock.");
-        return;
-    }
-    mes("You manage to pick the lock.");
 
     def_int $experience = db_getfield($data, locked_door:experience, 0);
     stat_advance(thieving, $experience);
@@ -140,3 +130,17 @@ mes("The door is already unlocked.");
 p_delay(0);
 mes("You go through the door.");
 ~open_and_close_door($replacement, ~check_axis_locactive(coord), true);
+
+[proc,attempt_picklock_door](int $current_level, int $thieving_level)(boolean)
+mes("You attempt to pick the lock.");
+if ($current_level < $thieving_level) {
+    ~mesbox("You need level <tostring($thieving_level)> Thieving to pick this lock.");
+    return(false);
+}
+def_int $roll = random(100);
+if ($roll < 50) { // Some arbitrary rng.
+    mes("You fail to pick the lock.");
+    return(false);
+}
+mes("You manage to pick the lock.");
+return(true);

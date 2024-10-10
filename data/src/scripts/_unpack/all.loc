@@ -13110,23 +13110,6 @@ retex1d=door
 recol2s=6342
 recol2d=11458
 
-[loc_2552]
-name=Gate
-desc=A metal gate bars your way
-model=model_loc_52
-active=yes
-op1=Open
-op2=Pick Lock
-
-[loc_2553]
-name=Gate
-desc=A metal gate bars your way
-model=model_loc_52
-mirror=yes
-active=yes
-op1=Open
-op2=Pick Lock
-
 [loc_2554]
 name=Door
 model=model_loc_3

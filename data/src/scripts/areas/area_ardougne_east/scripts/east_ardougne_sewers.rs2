@@ -1,0 +1,29 @@
+[oploc1,east_ardy_sewer_gate_north] ~open_east_ardy_sewer_gate(^left);
+[oploc1,east_ardy_sewer_gate_south] ~open_east_ardy_sewer_gate(^right);
+
+[oploc2,east_ardy_sewer_gate_north] ~picklock_east_ardy_sewer_gate(^left);
+[oploc2,east_ardy_sewer_gate_south] ~picklock_east_ardy_sewer_gate(^right);
+
+[proc,open_east_ardy_sewer_gate](int $side)
+def_boolean $entering = ~check_axis_locactive(coord);
+if ($entering = true) {
+  mes("The gate is locked.");
+} else {
+  ~open_and_close_double_door2(~check_axis_locactive(coord), $side, grate_open);
+  mes("You go through the gate.");
+}
+
+[proc,picklock_east_ardy_sewer_gate](int $side)
+def_int $required_level = 31;
+def_boolean $entering = ~check_axis_locactive(coord);
+if ($entering = true) {
+  if (~attempt_picklock_door(stat(thieving), $required_level) = true) {
+    ~open_and_close_double_door2($entering, $side, grate_open);
+  } 
+} else {
+  mes("The gate is already unlocked.");
+  p_delay(0);
+  mes("You go through the gate.");
+  ~open_and_close_double_door2($entering, $side, grate_open);
+}
+
