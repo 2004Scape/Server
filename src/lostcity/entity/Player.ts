@@ -909,16 +909,15 @@ export default class Player extends PathingEntity {
             return;
         }
         if (this.targetOp === ServerTriggerType.APPLAYER3 || this.targetOp === ServerTriggerType.OPPLAYER3) {
-            const walktrigger = this.walktrigger;
+            const walktrigger: number = this.walktrigger;
             if (this.hasWaypoints()) {
                 this.processWalktrigger();
             }    
-            const moved: boolean = this.updateMovement(false);
+            const moved: boolean = this.updateMovement(false);    
             if (moved) {
                 // we need to keep the mask if the player had to move.
                 this.alreadyFacedEntity = false;
-            }
-            if (!moved && walktrigger !== -1 && this.target instanceof Player && this.x !== this.target.lastStepX && this.z !== this.target.lastStepZ) {
+            } else if (walktrigger !== -1 && this.target instanceof Player && (this.x !== this.target.lastStepX || this.z !== this.target.lastStepZ)) {
                 this.clearInteraction();
                 this.unsetMapFlag();
             }
