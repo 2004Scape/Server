@@ -1,12 +1,11 @@
 [opnpc1,seravel]
 ~chatplayer("<p,neutral>Hello"); // typo from OSRS
 ~chatnpc("<p,neutral>Hello Bwana. Are you interested in buying a ticket for the 'Lady of the Waves'?");
-// https://media.discordapp.net/attachments/1126857544523063367/1153310898136551555/shilo8.jpg?ex=670723b9&is=6705d239&hm=bea51b39a0804aa5bb5e44a0ea700e554e5ccda3b45f2995549fa346b82a62da&=&format=webp&width=1117&height=513
+// https://web.archive.org/web/20050204071450im_/http://www.runehq.com//images/cityguides/shilo8.jpg
 ~chatnpc("<p,neutral>It's a ship that can take you to either Port Sarim or Khazard Port. The ship lies west of Shilo Village and south of Cairn Island. The tickets cost 25 Gold|Pieces. Would you like to purchase a ticket Bwana?");
 @multi2("Yes, that sounds great!", seravel_yes, "No thanks.", seravel_no);
 
 [label,seravel_yes]
-// https://media.discordapp.net/attachments/1126857544523063367/1153310898136551555/shilo8.jpg?ex=670723b9&is=6705d239&hm=bea51b39a0804aa5bb5e44a0ea700e554e5ccda3b45f2995549fa346b82a62da&=&format=webp&width=1117&height=513
 ~chatplayer("<p,neutral>Yes, that sounds great!");
 if(inv_total(inv, coins) < 25) {
     ~chatnpc("<p,neutral>Sorry Bwana, you don't have enough money. Come back when you have 25 coins.");

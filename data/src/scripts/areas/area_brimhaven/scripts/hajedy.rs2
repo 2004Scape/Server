@@ -10,7 +10,7 @@ if(%zombiequeen_progress >= ^zombiequeen_complete) {
     ~chatplayer("<p,neutral>Hello!");
     ~chatnpc("<p,neutral>Hello Bwana!");
     def_int $amount = ~calc_shilocart_cost();
-    // https://media.discordapp.net/attachments/1126857544523063367/1153310898929274900/shilo1.jpg?ex=670723b9&is=6705d239&hm=a7f39337beecb7c4d8ba5edd812dd1545e4638cd073c8fd14f0f868747c8b4f3&=&format=webp&width=566&height=518
+    // https://web.archive.org/web/20050204071450im_/http://www.runehq.com//images/cityguides/shilo1.jpg
     ~chatnpc("<p,neutral>I am offering a cart ride to Shilo Village|if you're interested?|It will cost <tostring($amount)> gold coins. Is that Ok?");
     switch_int(~p_choice2("Yes please, I'd like to go to Shilo Village.", 1, "No thanks.", 2)) {
         case 1 :

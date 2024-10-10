@@ -3,7 +3,7 @@
 ~chatplayer("<p,neutral>Hello!");
 ~chatnpc("<p,neutral>Hello Bwana!");
 def_int $amount = ~calc_shilocart_cost();
-// https://media.discordapp.net/attachments/1126857544523063367/1153310903584968784/shilo6.jpg?ex=670723ba&is=6705d23a&hm=53b71cf032c475c41850f77e032a1c188321859b6a3a2f8d3089b3fec293afc8&=&format=webp&width=566&height=523
+// https://web.archive.org/web/20050204071450im_/http://www.runehq.com//images/cityguides/shilo8.jpg
 ~chatnpc("<p,neutral>I am offering a cart ride to Brimhaven|if you're interested!|It will cost <tostring($amount)> gold coins. Is that Ok?");
 switch_int(~p_choice2("Yes please, I'd like to go to Brimhaven.", 1, "No thanks.", 2)) {
     case 1 :

@@ -31,8 +31,8 @@ if(%zombiequeen_progress >= ^zombiequeen_complete) {
     if(coordx(coord) < coordx(loc_coord)) {
         p_teleport(loc_coord);
         mes("You open the gates and make your way back out of the village.");
-    } else if(coordx(coord) >= coordx(loc_coord)) {
-        p_teleport(movecoord(loc_coord, 1, 0, 0));
+    } else {
+        p_teleport(movecoord(loc_coord, -1, 0, 0));
         mes("You open the gates and make your way through into the village.");
     }
     ~shilo_metalgates_open;
@@ -50,7 +50,7 @@ switch_int(~p_choice2("Yes, I am very nimble and agile!", 1, "No, actually, I ha
         mes("The gates slowly begin to open...");
         p_delay(1); // 1t
         mes("Suddenly some Zombies grab you and start dragging you inside!");
-        settimer(shilo_mist_timer, 16);
+        queue(shilo_mist_queue, 16);
         ~shilo_metalgates_open;
         ~forcemove(0_44_46_54_9);
     case 2 :
@@ -60,13 +60,11 @@ switch_int(~p_choice2("Yes, I am very nimble and agile!", 1, "No, actually, I ha
         mes("You look around, but you don't think anyone saw you.");
 }
 
-[timer,shilo_mist_timer]
+[queue,shilo_mist_queue]
 if(inzone(0_44_46_52_1, 0_44_46_58_15, coord) = false) {
-    cleartimer(shilo_mist_timer);
     return;
 }
 mes("A green thick mist rises from the ground and starts choking you.");
-cleartimer(shilo_mist_timer);
 // sound_synth swamp gas
 @shilo_greenmist(coord, 0);
 
@@ -100,28 +98,32 @@ while(loc_findnext = true) {
 
 [oploc1,_shilo_woodengate]
 if(%zombiequeen_progress >= ^zombiequeen_complete) {
-    if(coordx(coord) < coordx(loc_coord)) {
-        mes("You make your way out of Shilo Village.");
-        p_teleport(loc_coord);
-    } else {
-        mes("You make your way into Shilo Village.");
-        p_teleport(movecoord(loc_coord, -1, 0, 0));
-    }
+    def_coord $loc_coord = loc_coord;
     loc_findallzone(movecoord(coord, 1, 0, 0));
     while(loc_findnext = true) {
-        if(loc_category = varrock_gate) {
+        if(loc_category = shilo_woodengate) {
             def_coord $central_coord = loc_coord;
             def_int $orig_angle = loc_angle;
             def_loc $type = loc_type;
             loc_change(loc_83, 2);
-            if($type = loc_2260) {
-                loc_add(movecoord($central_coord, -1, 0, 0), loc_2263, 3, loc_shape, 2);
-                loc_add(movecoord($central_coord, -2, 0, 0), loc_2264, 3, loc_shape, 2); 
+            if($type = loc_2261) {
+                loc_add(movecoord($central_coord, 1, 0, 0), loc_2263, 1, loc_shape, 2);
+                loc_add(movecoord($central_coord, 2, 0, 0), loc_2264, 1, loc_shape, 2); 
             }
         }
     }
     sound_synth(door_open, 0, 0); // gate_open
-    p_delay(0);
+    if(coordx(coord) <= coordx($loc_coord)) {
+        mes("You make your way out of Shilo Village.");
+        if (coordz(coord) ! coordz($loc_coord)) {
+            p_teleport(movecoord(coord, 0, 0, calc(coordz($loc_coord) - coordz(coord))));
+            p_delay(0);
+        }
+        p_teleport(movecoord($loc_coord, 1, 0, 0));
+    } else {
+        mes("You make your way into Shilo Village.");
+        p_teleport($loc_coord);
+    }
     return;
 }
 mes("The gate won't open.");
@@ -750,12 +752,24 @@ switch_int(~p_choice3("A ladder", 1, "A crude raft", 2, "A pole vault", 3)) {
 }
 
 [oploc1,loc_2221]
+if(%zombiequeen_progress >= ^zombiequeen_complete) {
+    mes("You notice nothing significant about this stone.");
+    return;
+}
 ~mesbox("This stone seems to have strange markings on it.");
 
 [oploc2,loc_2221]
+if(%zombiequeen_progress >= ^zombiequeen_complete) {
+    mes("You notice nothing significant about this stone.");
+    return;
+}
 ~mesbox("This stone seems to have strange markings on it. Maybe Trufitus can decipher them? The stone is too heavy to carry but the letters stand proud on a plaque. Maybe you could seperate the plaque from the rock?");
 
 [oplocu,loc_2221]
+if(%zombiequeen_progress >= ^zombiequeen_complete) {
+    mes("You notice nothing significant about this.");
+    return;
+}
 if(last_useitem = spade | last_useitem = chisel | oc_category(last_useitem) = weapon_pickaxe) {
     if(~obj_gettotal(stoneplaque) > 0) {
         ~mesbox("It looks as if something has been cut from this stone.");
@@ -799,6 +813,10 @@ if ($choice = 1) {
 }
 
 [oploc2,loc_2222]
+if(%zombiequeen_progress >= ^zombiequeen_complete) {
+    mes("You notice nothing significant about this.");
+    return;
+}
 if(~obj_gettotal(tattered_scroll) > 0) {
     ~mesbox("You see nothing here but an empty bookcase behind some rocks.");
     return;
@@ -840,6 +858,10 @@ if ($choice = 1) {
 }
 
 [oploc2,loc_2223]
+if(%zombiequeen_progress >= ^zombiequeen_complete) {
+    mes("You notice nothing significant about this.");
+    return;
+}
 if(~obj_gettotal(crumpled_scroll) > 0) {
     mes("You find nothing in the sacks.");
     return;
@@ -868,10 +890,18 @@ if ($choice = 1) {
 }
 
 [oploc1,loc_2224]
+if(%zombiequeen_progress >= ^zombiequeen_complete) {
+    mes("You notice nothing significant about this.");
+    return;
+}
 ~mesbox("You take a look at the gallows. It's pretty eerie looking.");
 ~mesbox("A grisly sight meets your eyes. A human corpse hangs from the noose. His hands have been tied behind his back.");
 
 [oploc2,loc_2224]
+if(%zombiequeen_progress >= ^zombiequeen_complete) {
+    mes("You notice nothing significant about this.");
+    return;
+}
 mes("You search the gallows...");
 p_delay(2);
 if(~obj_gettotal(zadimus_corpse) > 0 | ~obj_gettotal(bone_shard) > 0 | ~obj_gettotal(bone_key) > 0) {
