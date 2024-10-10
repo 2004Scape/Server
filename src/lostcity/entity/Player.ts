@@ -574,8 +574,9 @@ export default class Player extends PathingEntity {
         if (moved) {
             this.lastMovement = World.currentTick + 1;
         }
-        if (this.waypointIndex === -1) {
+        if (!this.hasWaypoints()) {
             this.moveClickRequest = false;
+            this.unsetMapFlag();
         }
         return moved;
     }
@@ -1060,6 +1061,10 @@ export default class Player extends PathingEntity {
 
         if (this.interacted && !this.apRangeCalled && this.target === null) {
             this.clearInteraction();
+        }
+        
+        if (!this.hasWaypoints()) {
+            this.unsetMapFlag();
         }
     }
 
