@@ -106,7 +106,7 @@ model6=model_254_idk
 model7=model_185_obj_wear
 model8=model_321_npc
 
-[priest]
+[priest_east]
 vislevel=hide
 name=Priest
 desc=A holy man.
@@ -162,11 +162,10 @@ param=magicdefence,4
 param=rangedefence,16
 param=damagetype,^crush_style
 param=attack_anim,human_blunt_crush
-param=defend_anim,human_blunt_defend2
+param=defend_anim,human_blunt_defend1
 param=attack_sound,mace_crush
 // param=defend_sound,blade2_mail
 category=guard
-// osrs defend anim seq_403
 // osrs use attack sound warhammer_crush
 
 [brother_kojo]

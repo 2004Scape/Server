@@ -83,6 +83,10 @@ const ScriptOpcodePointers: {
         require: ['active_player'],
         require2: ['active_player2']
     },
+    [ScriptOpcode.GETTIMER]: {
+        require: ['active_player'],
+        require2: ['active_player2']
+    },
     [ScriptOpcode.COORD]: {
         require: ['active_player'],
         require2: ['active_player2']

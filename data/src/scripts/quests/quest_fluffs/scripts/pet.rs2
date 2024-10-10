@@ -17,7 +17,7 @@ def_int $attent = getbit_range(%cat_growth, 5, 10); //attention    (0-40-45-50)
 def_int $growth = getbit_range(%cat_growth, 11,19); //growth       (0-120-320)
 def_int $vermin = getbit_range(%cat_growth, 20,26); //rats caught  (0-100)
 if($attent = 0) { 
-    $attent = 28;
+    $attent = 28; //default attent for a new kitten is supposed to be 28
 }
 if(oc_category(nc_param(npc_type, pet_item_id)) ! overgrown) {
     npc_say("Meow!"); //done every 90s, no random chance
@@ -55,11 +55,7 @@ if(oc_category(nc_param(npc_type, pet_item_id)) = kitten) {
             ~chatplayer("<p,worried>I think it's really hungry!"); 
         case 20:
             mes("Your kitten has run away to look for food.");
-            %follower_obj = null;
-            %follower_uid = null;
-            %cat_growth = 0;
-            p_delay(0);
-            npc_del;
+            ~follower_death;
     }
 
     %cat_growth = setbit_range_toint(%cat_growth, calc($attent + 1), 5, 10);
@@ -72,11 +68,7 @@ if(oc_category(nc_param(npc_type, pet_item_id)) = kitten) {
             ~chatplayer("<p,neutral>I think it's feeling lonely."); //738
         case 50:
             mes("Your kitten got lonely and ran off.");
-            %follower_obj = null;
-            %follower_uid = null;
-            %cat_growth = 0;
-            p_delay(0);
-            npc_del;
+            ~follower_death;
     }
 }
 
@@ -86,7 +78,7 @@ if(oc_category(nc_param(npc_type, pet_item_id)) = kitten) {
 
 [opnpcu,_petcat]
 if (%npc_attacking_uid ! uid | %follower_uid ! npc_uid) {
-    mes("This is not your cat.");
+    mes("This is not your cat."); //imgur.com/acr5ER2
     return;
 }
 switch_obj(last_useitem) {
@@ -118,7 +110,7 @@ switch_obj(last_useitem) {
 
 [opnpc1,_petcat]
 if (%npc_attacking_uid ! uid | %follower_uid ! npc_uid) {
-    mes("This is not your cat."); //imgur.com/acr5ER2
+    mes("That isn't yours to take."); //youtu.be/WsvTr-1bZwM?t=175
     return;
 }
 if (inv_freespace(inv) = 0) {
@@ -162,14 +154,10 @@ if ($choice = 2) {
 if_close;
 say("Shoo cat!");
 npc_say("Meeeooow!");
-%follower_obj = null;
-%follower_uid = null;
-%cat_growth = 0;
-%npc_attacking_uid = uid;
 npc_setmode(playerescape);
 p_delay(4); //guessed delay
 mes("The cat has run away."); //after or before delay?
-npc_del;
+~follower_death;
 
 [opnpc5,_petcat]
 if (%npc_attacking_uid ! uid | %follower_uid ! npc_uid) {
@@ -183,7 +171,7 @@ if (oc_category(nc_param(npc_type, pet_item_id)) = overgrown) {
 if (.npc_find(coord, rat, 10, 1) = true) {  
     def_int $chance = random(2); //50%
     def_int $vermin = getbit_range(%cat_growth, 20, 26);
-    say("Go on puss...kill that rat!");
+    say("Go on kitty...kill that rat!"); //imgur.com/4wTXnUT 26/07/2004
     p_delay(0);
     npc_say("Meeeeeoooowww!");
     p_delay(0);
@@ -208,10 +196,10 @@ if (.npc_find(coord, rat, 10, 1) = true) {
     }
     .npc_del;
     npc_say("MeeeoooooW!");
-    say("Hey well done puss, you got it!");
+    say("Hey well done kitty, you got it!"); //"kitty" guessed
     %cat_growth = setbit_range_toint(%cat_growth, min(100,max(calc($vermin + 1),-1)), 20, 26);
 } else {
-    mes("There aren't any vermin around.");
+    mes("There aren't any rats or mice around."); // 2004 https://youtu.be/HQEpeWAUMbI?t=21
 }
 
 [proc,cat_drop]

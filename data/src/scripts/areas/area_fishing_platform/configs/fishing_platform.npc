@@ -21,7 +21,7 @@ model9=model_323_obj_wear
 head1=model_63_idk_head
 head2=model_82_idk_head
 head3=model_73_npc_head
-wanderrange=2
+moverestrict=indoors
 
 [kennith]
 vislevel=hide
@@ -112,7 +112,7 @@ head1=model_53_idk_head
 head2=model_81_idk_head
 wanderrange=2
 
-[npc_702]
+[fisherman_platform1]
 vislevel=hide
 walkanim=human_walk_f,human_walk_b,human_walk_l,human_walk_r
 readyanim=human_ready
@@ -135,7 +135,7 @@ head1=model_48_npc_head
 head2=model_82_idk_head
 category=fisherman_platform
 
-[npc_703]
+[fisherman_platform2]
 vislevel=hide
 walkanim=human_walk_f,human_walk_b,human_walk_l,human_walk_r
 readyanim=human_ready
@@ -158,7 +158,7 @@ head1=model_48_npc_head
 head2=model_82_idk_head
 category=fisherman_platform
 
-[npc_704]
+[fisherman_platform3]
 vislevel=hide
 walkanim=human_walk_f,human_walk_b,human_walk_l,human_walk_r
 readyanim=human_ready
@@ -181,7 +181,7 @@ head1=model_63_idk_head
 head2=model_82_idk_head
 category=fisherman_platform
 
-[npc_705]
+[fisherman_platform4]
 vislevel=hide
 name=Fisherman
 desc=Something fishy about him...
@@ -201,3 +201,13 @@ model7=model_181_idk
 model8=model_241_npc
 model9=model_323_obj_wear
 category=fisherman_platform
+
+[sea_slug]
+vislevel=hide
+name=Sea slug
+desc=A rather nasty looking crustacean.
+walkanim=seaslug_walk
+readyanim=seaslug_ready
+op1=Take
+model1=model_560_npc
+wanderrange=1

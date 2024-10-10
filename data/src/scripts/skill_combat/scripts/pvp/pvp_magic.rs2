@@ -179,6 +179,7 @@ if ($freeze_time > 0) {
     if (~.check_protect_prayer(^magic_style) = true) {
         $freeze_time = divide($freeze_time, 2); // 50% reduction https://oldschool.runescape.wiki/w/Update:RS2_bugfixes_-_part_4
     }
+    .%pk_binder = uid;
     .queue(pvp_freeze_player, 0, $freeze_time);
 }
 
@@ -193,7 +194,7 @@ if (~.check_protect_prayer(^magic_style) = true) {
 def_int $damage = randominc($maxhit); // tick eating existed! https://oldschool.runescape.wiki/w/Update:The_Wintertodt
 $damage = min($damage, .stat(hitpoints));
 if ($maxhit ! null) {
-    .queue(pvp_damage, calc($duration / 30 + 1), $damage); // delayed an extra tick in osrs
+    .queue(pvp_damage, calc($duration / 30 + 1), $damage); // delayed an extra tick: https://youtu.be/eEdE0mvglM4?t=62
     // didnt have a flinch anim until sept 20 2006: https://oldschool.runescape.wiki/w/Update:Slug_Menace
     ~give_combat_experience_pvp(%damagestyle, $damage, ~pvp_xp_multiplier(~.player_combat_level));
 }
@@ -228,7 +229,7 @@ sound_synth($sound, 0, 0);
 ~delete_spell_runes($spell_data);
 ~give_spell_xp($spell_data);
 
-if (%damagestyle = ^style_melee_defensive & oc_category(inv_getobj(worn, ^wearpos_rhand)) = weapon_staff) {
+if (%damagestyle = ^style_melee_defensive & inv_getobj(worn, ^wearpos_rhand) ! null & oc_category(inv_getobj(worn, ^wearpos_rhand)) = weapon_staff) {
     %damagestyle = ^style_magic_defensive; // casting a spell with defensive on gives mage + def xp
 } else {
     %damagestyle = ^style_magic_normal; // if this script is running they have to be using a spell, so assume magic style
@@ -255,4 +256,17 @@ return($maxhit);
 [queue,pvp_freeze_player](int $duration)
 mes("You've been frozen!");
 %frozen = calc(map_clock + $duration + 1);
-walktrigger(frozen);
+walktrigger(pvp_frozen);
+
+
+[walktrigger,pvp_frozen]
+if (.finduid(%pk_binder) = true) {
+    if (distance(coord, .coord) > 10) { // https://youtu.be/SC4KF1JWVl8&t=76
+        return;
+    }
+    if (map_clock < %frozen) {
+        mes("A magical force stops you from moving.");
+        p_walk(coord);
+        walktrigger(pvp_frozen);
+    }
+}

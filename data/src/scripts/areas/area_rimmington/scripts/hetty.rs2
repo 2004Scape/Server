@@ -26,7 +26,7 @@ switch_int(%hetty_progress) {
             return;
         } else {
             ~chatplayer("<p,sad>No, not yet."); // rsc
-            ~chatnpc("<p,sad>Well I can't make the potion without them! Remember... You need an eye of newt, a rat's tail, an onion, and a piece of burnt meat. Off you go dear!");
+            ~chatnpc("<p,sad>Well I can't make the potion without them! Remember...|You need an eye of newt, a rat's tail, an onion,|and a piece of burnt meat. Off you go dear!"); //imgur.com/Cbrp9kq
         }
     case ^hetty_objects_given: 
         ~chatnpc("<p,angry>Well are you going to drink the potion or not?");

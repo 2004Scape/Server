@@ -129,7 +129,7 @@ switch_int($choice) {
 
 [proc,survival_recap_fishing]
 ~chatplayer("<p,neutral>Tell me about Fishing again.");
-~chatnpc("<p,neutral>Ah, yes. Fishing! Fishing is undoubtedly one the more popular hobbies here in Runescape!");
+~chatnpc("<p,neutral>Ah, yes. Fishing! Fishing is undoubtedly one of the more popular hobbies here in RuneScape!");
 ~chatnpc("<p,neutral>Whenever you see sparkling waters, you can be sure there's probably some good fishing to be had there!");
 ~chatnpc("<p,neutral>Not only are fish absolutely delicious when cooked, there are always fighters willing to buy a well cooked fish when they're low on health.");
 ~chatnpc("<p,quiz>I would recommend everybody has a go at Fishing at least once in their lives! Was there anything else you wished to hear again?");

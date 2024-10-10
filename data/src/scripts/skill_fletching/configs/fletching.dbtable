@@ -7,6 +7,7 @@ column=longbow,namedobj,int,int
 
 [fletching_table]
 column=item,obj
+column=metal,string
 column=product,namedobj,int
 column=level,int
 column=experience,int

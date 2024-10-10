@@ -59,19 +59,20 @@ import {getLatestModified, getModified, shouldBuildFileAny} from '#lostcity/util
 import Zone from './zone/Zone.js';
 import LinkList from '#jagex2/datastruct/LinkList.js';
 import {createWorker} from '#lostcity/util/WorkerFactory.js';
-import {LoginResponse} from '#lostcity/server/LoginServer.js';
+import LoginResponse from '#lostcity/server/LoginResponse.js';
 import ClientProt from '#lostcity/network/225/incoming/prot/ClientProt.js';
 import {makeCrcs, makeCrcsAsync} from '#lostcity/server/CrcTable.js';
 import {preloadClient, preloadClientAsync} from '#lostcity/server/PreloadedPacks.js';
-import {Position} from '#lostcity/entity/Position.js';
+import {CoordGrid} from '#lostcity/engine/CoordGrid.js';
 import UpdateRebootTimer from '#lostcity/network/outgoing/model/UpdateRebootTimer.js';
 import WorldStat from '#lostcity/engine/WorldStat.js';
-import { FriendsServerOpcodes } from '#lostcity/server/FriendsServer.js';
+import { FriendsServerOpcodes } from '#lostcity/server/FriendServer.js';
 import UpdateFriendList from '#lostcity/network/outgoing/model/UpdateFriendList.js';
 import UpdateIgnoreList from '#lostcity/network/outgoing/model/UpdateIgnoreList.js';
+import MessagePrivate from '#lostcity/network/outgoing/model/MessagePrivate.js';
 
 class World {
-    private friendsThread: Worker | NodeWorker = createWorker(typeof self === 'undefined' ? './src/lostcity/server/FriendsThread.ts' : 'FriendsThread.js');
+    private friendsThread: Worker | NodeWorker = createWorker(typeof self === 'undefined' ? './src/lostcity/server/FriendThread.ts' : 'FriendThread.js');
 
     private static readonly PLAYERS: number = 2048;
     private static readonly NPCS: number = 8192;
@@ -110,6 +111,7 @@ class World {
     tickRate: number = World.NORMAL_TICKRATE; // speeds up when we're processing server shutdown
     currentTick: number = 0;
     shutdownTick: number = -1;
+    pmCount: number = 1; // can't be 0 as clients will ignore the pm, their array is filled with 0 as default
 
     // packed data timestamps
     allLastModified: number = 0;
@@ -149,52 +151,63 @@ class World {
         }
     }
 
-    onFriendsMessage({ opcode, data }: { opcode: FriendsServerOpcodes, data: Uint8Array }) {
-        const packet = new Packet(data);
-
+    onFriendsMessage({ opcode, data }: { opcode: FriendsServerOpcodes, data: any }) {
         try {
             if (opcode === FriendsServerOpcodes.UPDATE_FRIENDLIST) {
-                const username37 = packet.g8();
+                const username37 = BigInt(data.username37);
 
                 // TODO make getPlayerByUsername37?
                 const player = this.getPlayerByUsername(fromBase37(username37));
                 if (!player) {
-                    console.error(`FriendsThread: player ${fromBase37(username37)} not found`);
+                    console.error(`FriendThread: player ${fromBase37(username37)} not found`);
                     return;
                 }
 
-                // 10 bytes per friend
-                while (packet.available >= 10) {
-                    const world = packet.g2();
-                    const friendUsername37 = packet.g8();
-                    player.write(new UpdateFriendList(friendUsername37, world));
+                for (let i = 0; i < data.friends.length; i++) {
+                    const [world, friendUsername37] = data.friends[i];
+                    player.write(new UpdateFriendList(BigInt(friendUsername37), world));
                 }
             } else if (opcode === FriendsServerOpcodes.UPDATE_IGNORELIST) {
-                const username37 = packet.g8();
+                const username37 = BigInt(data.username37);
 
                 // TODO make getPlayerByUsername37?
                 const player = this.getPlayerByUsername(fromBase37(username37));
                 if (!player) {
-                    console.error(`FriendsThread: player ${fromBase37(username37)} not found`);
+                    console.error(`FriendThread: player ${fromBase37(username37)} not found`);
                     return;
                 }
 
-                const ignored: bigint[] = [];
-
-                while (packet.available >= 8) {
-                    const target37 = packet.g8();
-
-                    ignored.push(target37);
-                }
+                const ignored: bigint[] = data.ignored.map((i: string) => BigInt(i));
 
                 if (ignored.length > 0) {
                     player.write(new UpdateIgnoreList(ignored));
                 }
+            } else if (opcode == FriendsServerOpcodes.PRIVATE_MESSAGE) {
+                // username37: username.toString(),
+                // targetUsername37: target.toString(),
+                // staffLvl,
+                // pmId,
+                // chat
+
+                const fromPlayer = BigInt(data.username37);
+                const fromPlayerStaffLvl = data.staffLvl;
+                const pmId = data.pmId;
+                const target = BigInt(data.targetUsername37);
+
+                const player = this.getPlayerByUsername(fromBase37(target));
+                if (!player) {
+                    console.error(`FriendThread: player ${fromBase37(target)} not found`);
+                    return;
+                }
+
+                const chat = data.chat;
+
+                player.write(new MessagePrivate(fromPlayer, pmId, fromPlayerStaffLvl, chat));
             } else {
                 console.error('Unknown friends opcode: ' + opcode);
             }
-        } finally {
-            packet.release();
+        } catch (err) {
+            console.error(err);
         }
     }
 
@@ -563,118 +576,134 @@ class World {
     }
 
     async cycle(continueCycle: boolean = true): Promise<void> {
-        const start: number = Date.now();
+        try
+        {
+            const start: number = Date.now();
 
-        // world processing
-        // - world queue
-        // - calculate afk event readiness
-        // - npc spawn scripts
-        // - npc hunt
-        this.processWorld();
+            // world processing
+            // - world queue
+            // - calculate afk event readiness
+            // - npc spawn scripts
+            // - npc hunt
+            this.processWorld();
 
-        // client input
-        // - decode packets
-        // - process pathfinding/following
-        await this.processClientsIn();
+            // client input
+            // - decode packets
+            // - process pathfinding/following
+            await this.processClientsIn();
 
-        // npc processing (if npc is not busy)
-        // - resume suspended script
-        // - stat regen
-        // - timer
-        // - queue
-        // - movement
-        // - modes
-        this.processNpcs();
+            // npc processing (if npc is not busy)
+            // - resume suspended script
+            // - stat regen
+            // - timer
+            // - queue
+            // - movement
+            // - modes
+            this.processNpcs();
 
-        // player processing
-        // - resume suspended script
-        // - primary queue
-        // - weak queue
-        // - timers
-        // - soft timers
-        // - engine queue
-        // - interactions
-        // - movement
-        // - close interface if attempting to logout
-        await this.processPlayers();
+            // player processing
+            // - resume suspended script
+            // - primary queue
+            // - weak queue
+            // - timers
+            // - soft timers
+            // - engine queue
+            // - interactions
+            // - movement
+            // - close interface if attempting to logout
+            await this.processPlayers();
 
-        // player logout
-        await this.processLogouts();
+            // player logout
+            await this.processLogouts();
 
-        // player login, good spot for it (before packets so they immediately load but after processing so nothing hits them)
-        await this.processLogins();
+            // player login, good spot for it (before packets so they immediately load but after processing so nothing hits them)
+            await this.processLogins();
 
-        // process zones
-        // - build list of active zones around players
-        // - loc/obj despawn/respawn
-        // - compute shared buffer
-        this.processZones();
+            // process zones
+            // - build list of active zones around players
+            // - loc/obj despawn/respawn
+            // - compute shared buffer
+            this.processZones();
 
-        // process movement directions
-        // - convert player movements
-        // - convert npc movements
-        this.processMovementDirections();
+            // process movement directions
+            // - convert player movements
+            // - convert npc movements
+            this.processMovementDirections();
 
-        // client output
-        // - map update
-        // - player info
-        // - npc info
-        // - zone updates
-        // - inv changes
-        // - stat changes
-        // - afk zones changes
-        // - flush packets
-        await this.processClientsOut();
+            // client output
+            // - map update
+            // - player info
+            // - npc info
+            // - zone updates
+            // - inv changes
+            // - stat changes
+            // - afk zones changes
+            // - flush packets
+            await this.processClientsOut();
 
-        // cleanup
-        // - reset zones
-        // - reset players
-        // - reset npcs
-        // - reset invs
-        this.processCleanup();
+            // cleanup
+            // - reset zones
+            // - reset players
+            // - reset npcs
+            // - reset invs
+            this.processCleanup();
 
-        // ----
+            // ----
 
-        const tick: number = this.currentTick;
+            const tick: number = this.currentTick;
 
-        if (tick % World.LOGIN_PINGRATE === 0) {
-            this.heartbeat();
-        }
+            if (tick % World.LOGIN_PINGRATE === 0) {
+                this.heartbeat();
+            }
 
-        // server shutdown
-        if (this.shutdownTick > -1 && tick >= this.shutdownTick) {
-            await this.processShutdown();
-        }
+            // server shutdown
+            if (this.shutdownTick > -1 && tick >= this.shutdownTick) {
+                await this.processShutdown();
+            }
 
-        if (tick % World.PLAYER_SAVERATE === 0 && tick > 0) {
-            // auto-save players every 15 mins
-            this.savePlayers();
-        }
+            if (tick % World.PLAYER_SAVERATE === 0 && tick > 0) {
+                // auto-save players every 15 mins
+                this.savePlayers();
+            }
 
-        this.currentTick++;
-        this.cycleStats[WorldStat.CYCLE] = Date.now() - start;
+            this.currentTick++;
+            this.cycleStats[WorldStat.CYCLE] = Date.now() - start;
 
-        this.lastCycleStats[WorldStat.CYCLE] = this.cycleStats[WorldStat.CYCLE];
-        this.lastCycleStats[WorldStat.WORLD] = this.cycleStats[WorldStat.WORLD];
-        this.lastCycleStats[WorldStat.CLIENT_IN] = this.cycleStats[WorldStat.CLIENT_IN];
-        this.lastCycleStats[WorldStat.NPC] = this.cycleStats[WorldStat.NPC];
-        this.lastCycleStats[WorldStat.PLAYER] = this.cycleStats[WorldStat.PLAYER];
-        this.lastCycleStats[WorldStat.LOGOUT] = this.cycleStats[WorldStat.LOGOUT];
-        this.lastCycleStats[WorldStat.LOGIN] = this.cycleStats[WorldStat.LOGIN];
-        this.lastCycleStats[WorldStat.ZONE] = this.cycleStats[WorldStat.ZONE];
-        this.lastCycleStats[WorldStat.CLIENT_OUT] = this.cycleStats[WorldStat.CLIENT_OUT];
-        this.lastCycleStats[WorldStat.CLEANUP] = this.cycleStats[WorldStat.CLEANUP];
-        this.lastCycleStats[WorldStat.BANDWIDTH_IN] = this.cycleStats[WorldStat.BANDWIDTH_IN];
-        this.lastCycleStats[WorldStat.BANDWIDTH_OUT] = this.cycleStats[WorldStat.BANDWIDTH_OUT];
+            this.lastCycleStats[WorldStat.CYCLE] = this.cycleStats[WorldStat.CYCLE];
+            this.lastCycleStats[WorldStat.WORLD] = this.cycleStats[WorldStat.WORLD];
+            this.lastCycleStats[WorldStat.CLIENT_IN] = this.cycleStats[WorldStat.CLIENT_IN];
+            this.lastCycleStats[WorldStat.NPC] = this.cycleStats[WorldStat.NPC];
+            this.lastCycleStats[WorldStat.PLAYER] = this.cycleStats[WorldStat.PLAYER];
+            this.lastCycleStats[WorldStat.LOGOUT] = this.cycleStats[WorldStat.LOGOUT];
+            this.lastCycleStats[WorldStat.LOGIN] = this.cycleStats[WorldStat.LOGIN];
+            this.lastCycleStats[WorldStat.ZONE] = this.cycleStats[WorldStat.ZONE];
+            this.lastCycleStats[WorldStat.CLIENT_OUT] = this.cycleStats[WorldStat.CLIENT_OUT];
+            this.lastCycleStats[WorldStat.CLEANUP] = this.cycleStats[WorldStat.CLEANUP];
+            this.lastCycleStats[WorldStat.BANDWIDTH_IN] = this.cycleStats[WorldStat.BANDWIDTH_IN];
+            this.lastCycleStats[WorldStat.BANDWIDTH_OUT] = this.cycleStats[WorldStat.BANDWIDTH_OUT];
 
-        if (continueCycle) {
-            setTimeout(this.cycle.bind(this), this.tickRate - this.cycleStats[WorldStat.CYCLE]);
-        }
+            if (continueCycle) {
+                setTimeout(this.cycle.bind(this), this.tickRate - this.cycleStats[WorldStat.CYCLE]);
+            }
 
-        if (Environment.NODE_DEBUG_PROFILE) {
-            console.log(`tick ${this.currentTick} took ${this.cycleStats[WorldStat.CYCLE]}ms: ${this.getTotalPlayers()} players`);
-            console.log(`${this.cycleStats[WorldStat.WORLD]} ms world | ${this.cycleStats[WorldStat.CLIENT_IN]} ms client in | ${this.cycleStats[WorldStat.NPC]} ms npcs | ${this.cycleStats[WorldStat.PLAYER]} ms players | ${this.cycleStats[WorldStat.LOGOUT]} ms logout | ${this.cycleStats[WorldStat.LOGIN]} ms login | ${this.cycleStats[WorldStat.ZONE]} ms zones | ${this.cycleStats[WorldStat.CLIENT_OUT]} ms client out | ${this.cycleStats[WorldStat.CLEANUP]} ms cleanup`);
-            console.log('----');
+            if (Environment.NODE_DEBUG_PROFILE) {
+                console.log(`tick ${this.currentTick} took ${this.cycleStats[WorldStat.CYCLE]}ms: ${this.getTotalPlayers()} players`);
+                console.log(`${this.cycleStats[WorldStat.WORLD]} ms world | ${this.cycleStats[WorldStat.CLIENT_IN]} ms client in | ${this.cycleStats[WorldStat.NPC]} ms npcs | ${this.cycleStats[WorldStat.PLAYER]} ms players | ${this.cycleStats[WorldStat.LOGOUT]} ms logout | ${this.cycleStats[WorldStat.LOGIN]} ms login | ${this.cycleStats[WorldStat.ZONE]} ms zones | ${this.cycleStats[WorldStat.CLIENT_OUT]} ms client out | ${this.cycleStats[WorldStat.CLEANUP]} ms cleanup`);
+                console.log('----');
+            }
+        } catch (err) {
+            console.error('[World] eep eep cabbage! An unhandled error occurred during the cycle:', err);
+            console.error('[World] Removing all players...');
+
+            for (const player of this.players) {
+                await this.removePlayer(player);
+            }
+
+            // TODO inform Friends server that the world has gone offline
+
+            console.error('[World] All players removed.');
+            console.error('[World] Closing the server.');
+            process.exit(1);
         }
     }
 
@@ -730,10 +759,25 @@ class World {
             if (!npc.updateLifeCycle(tick)) {
                 continue;
             }
-            if (npc.lifecycle === EntityLifeCycle.RESPAWN) {
-                this.addNpc(npc, -1);
-            } else if (npc.lifecycle === EntityLifeCycle.DESPAWN) {
-                this.removeNpc(npc, -1);
+            try {
+                if (npc.lifecycle === EntityLifeCycle.RESPAWN) {
+                    this.addNpc(npc, -1, false);
+                } else if (npc.lifecycle === EntityLifeCycle.DESPAWN) {
+                    this.removeNpc(npc, -1);
+                }
+            } catch (err) {
+                // there was an error adding or removing them, try again next tick...
+                // ex: server is full on npc IDs (did we have a leak somewhere?) and we don't want to re-use the last ID (syncing related)
+                if (npc.lifecycle === EntityLifeCycle.RESPAWN) {
+                    console.error('[World] An unhandled error happened while respawning a NPC');
+                } else if (npc.lifecycle === EntityLifeCycle.DESPAWN) {
+                    console.error('[World] An unhandled error happened while despawning a NPC');
+                }
+
+                console.error(`[World] NPC type:${npc.type} lifecycle:${npc.lifecycle} ID:${npc.nid}`);
+                console.error(err);
+
+                npc.setLifeCycle(this.currentTick + 1); // retry next tick
             }
         }
 
@@ -792,12 +836,15 @@ class World {
                     player.pathToTarget();
                     continue;
                 }
-
+                
+                if (player.busy() || !player.opcalled) {
+                    player.moveClickRequest = true;
+                }
                 player.pathToMoveClick(player.userPath, !Environment.NODE_CLIENT_ROUTEFINDER);
             }
 
             if (player.target instanceof Player && (player.targetOp === ServerTriggerType.APPLAYER3 || player.targetOp === ServerTriggerType.OPPLAYER3)) {
-                if (Position.distanceToSW(player, player.target) <= 25) {
+                if (CoordGrid.distanceToSW(player, player.target) <= 25) {
                     player.pathToPathingTarget();
                 } else {
                     player.clearWaypoints();
@@ -1284,8 +1331,11 @@ class World {
         }
     }
 
-    addNpc(npc: Npc, duration: number): void {
-        this.npcs.set(npc.nid, npc);
+    addNpc(npc: Npc, duration: number, firstSpawn: boolean = true): void {
+        if (firstSpawn) {
+            this.npcs.set(npc.nid, npc);
+        }
+
         npc.x = npc.startX;
         npc.z = npc.startZ;
 
@@ -1406,8 +1456,9 @@ class World {
         }
         const zone: Zone = this.gameMap.getZone(obj.x, obj.z, obj.level);
         zone.addObj(obj, receiverId);
-        if (receiverId !== -1 && objType.tradeable && (objType.members && Environment.NODE_MEMBERS || !objType.members)) {
-            // objs always reveal 100 ticks after being dropped.
+        if (receiverId !== -1) {
+            // objs with a receiver always attempt to reveal 100 ticks after being dropped.
+            // items that can't be revealed (untradable, members obj in f2p) will be skipped in revealObj
             const reveal: number = this.currentTick + Obj.REVEAL;
             obj.setLifeCycle(reveal);
             this.trackZone(reveal, zone);
@@ -1511,7 +1562,7 @@ class World {
     }
 
     addFriend(player: Player, targetUsername37: bigint) {
-        console.log(`[World] addFriend => player: ${player.username}, target: ${targetUsername37} (${fromBase37(targetUsername37)})`);
+        //console.log(`[World] addFriend => player: ${player.username}, target: ${targetUsername37} (${fromBase37(targetUsername37)})`);
         this.friendsThread.postMessage({
             type: 'player_friendslist_add',
             username: player.username,
@@ -1520,7 +1571,7 @@ class World {
     }
 
     removeFriend(player: Player, targetUsername37: bigint) {
-        console.log(`[World] removeFriend => player: ${player.username}, target: ${targetUsername37} (${fromBase37(targetUsername37)})`);
+        //console.log(`[World] removeFriend => player: ${player.username}, target: ${targetUsername37} (${fromBase37(targetUsername37)})`);
         this.friendsThread.postMessage({
             type: 'player_friendslist_remove',
             username: player.username,
@@ -1529,7 +1580,7 @@ class World {
     }
 
     addIgnore(player: Player, targetUsername37: bigint) {
-        console.log(`[World] addIgnore => player: ${player.username}, target: ${targetUsername37} (${fromBase37(targetUsername37)})`);
+        //console.log(`[World] addIgnore => player: ${player.username}, target: ${targetUsername37} (${fromBase37(targetUsername37)})`);
         this.friendsThread.postMessage({
             type: 'player_ignorelist_add',
             username: player.username,
@@ -1538,7 +1589,7 @@ class World {
     }
 
     removeIgnore(player: Player, targetUsername37: bigint) {
-        console.log(`[World] removeIgnore => player: ${player.username}, target: ${targetUsername37} (${fromBase37(targetUsername37)})`);
+        //console.log(`[World] removeIgnore => player: ${player.username}, target: ${targetUsername37} (${fromBase37(targetUsername37)})`);
         this.friendsThread.postMessage({
             type: 'player_ignorelist_remove',
             username: player.username,
@@ -1582,6 +1633,19 @@ class World {
         this.friendsThread.postMessage({
             type: 'player_logout',
             username: player.username,
+        });
+    }
+
+    sendPrivateMessage(player: Player, targetUsername37: bigint, message: string): void {
+        //console.log(`[World] sendPrivateMessage => player: ${player.username}, target: ${targetUsername37} (${fromBase37(targetUsername37)}), message: '${message}'`);
+
+        this.friendsThread.postMessage({
+            type: 'private_message',
+            username: player.username,
+            staffLvl: player.staffModLevel,
+            pmId: (Environment.NODE_ID << 24) + (Math.random() * 0xFF << 16) + (this.pmCount++),
+            target: targetUsername37,
+            message: message
         });
     }
 

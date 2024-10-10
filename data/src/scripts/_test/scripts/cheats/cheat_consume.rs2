@@ -149,7 +149,7 @@ if (p_finduid(uid) = true) {
     inv_add(bank, sea_turtle, 100);
     inv_add(bank, edible_seaweed, 100);
     inv_add(bank, jangerberries, 100);
-    inv_add(bank, obj_1582, 100);
+    inv_add(bank, blamish_oil, 100);
     inv_add(bank, obj_712, 100);
     inv_add(bank, obj_739, 100);
     inv_add(bank, asgarnian_ale, 100);

@@ -3,43 +3,47 @@ huntall(^trawler_start_center_under, 8, 0);
 while (huntnext = true) {
     if_close;
     clearqueue(trawler_player_rip_net);
-    queue(trawler_player_sink, 0);
+    queue(trawler_player_sink_unflooded, 0);
 }
 huntall(^trawler_start_center, 8, 0);
 while (huntnext = true) {
     if_close;
     clearqueue(trawler_player_rip_net);
-    queue(trawler_player_sink, 0);
+    queue(trawler_player_sink_unflooded, 0);
 }
 huntall(^trawler_flood_center_under, 8, 0);
 while (huntnext = true) {
     if_close;
     clearqueue(trawler_player_rip_net);
-    queue(trawler_player_sink, 0);
+    queue(trawler_player_sink_flooded, 0);
 }
 huntall(^trawler_flood_center, 8, 0);
 while (huntnext = true) {
     if_close;
     clearqueue(trawler_player_rip_net);
-    queue(trawler_player_sink, 0);
+    queue(trawler_player_sink_flooded, 0);
 }
 if (npc_find(^trawler_wreck_murphy, murphy_sunk, 2, 0) = true) {
     npc_settimer(1);
 }
+// no area checks, the fix to this later was to make it strongqueued. https://youtu.be/RZwuEjlkVhY?t=148
+[queue,trawler_player_sink_flooded]
+if (coordy(coord) = 0) {
+    p_teleport(movecoord(coord, -64, 0, 0));
+} else {
+    p_teleport(map_findsquare(^trawler_wreck_center, 0, 4, ^map_findsquare_lineofwalk));
+}
+p_walk(coord);
+~bas_set_all(human_swim);
+p_animprotect(^true); // disable anims
+bas_running(null); // disable running
+cam_reset;
 
-[queue,trawler_player_sink]
-if (~inzone_coord_pair_table(trawler_flood_zones, coord) = true) {
-    if (coordy(coord) = 0) {
-        p_teleport(movecoord(coord, -64, 0, 0));
-    } else {
-        p_teleport(map_findsquare(^trawler_wreck_center, 0, 4, ^map_findsquare_lineofwalk));
-    }
-} else if (~inzone_coord_pair_table(trawler_nonflood_zones, coord) = true) {
-    if (coordy(coord) = 0) {
-        p_teleport(movecoord(coord, 64, 0, 0));
-    } else {
-        p_teleport(map_findsquare(^trawler_wreck_center, 0, 4, ^map_findsquare_lineofwalk));
-    }
+[queue,trawler_player_sink_unflooded]
+if (coordy(coord) = 0) {
+    p_teleport(movecoord(coord, 64, 0, 0));
+} else {
+    p_teleport(map_findsquare(^trawler_wreck_center, 0, 4, ^map_findsquare_lineofwalk));
 }
 p_walk(coord);
 ~bas_set_all(human_swim);

@@ -17,3 +17,5 @@
 *.base binary
 *.frame binary
 *.synth binary
+
+*.pack text eol=lf

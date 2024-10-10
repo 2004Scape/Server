@@ -30,6 +30,7 @@ if (%tradepartner ! null) {
 ~set_pk_skull_logout;
 ~set_antifire_logout;
 ~set_antipoison_logout;
+~set_cannon_vars_logout;
 ~follower_logout;
 ~rashiliyia_door_logout;
 

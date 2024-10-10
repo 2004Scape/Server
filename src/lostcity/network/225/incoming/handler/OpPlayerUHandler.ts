@@ -7,13 +7,14 @@ import { NetworkPlayer } from '#lostcity/entity/NetworkPlayer.js';
 import OpPlayerU from '#lostcity/network/incoming/model/OpPlayerU.js';
 import Component from '#lostcity/cache/config/Component.js';
 import Environment from '#lostcity/util/Environment.js';
+import UnsetMapFlag from '#lostcity/network/outgoing/model/UnsetMapFlag.js';
 
 export default class OpPlayerUHandler extends MessageHandler<OpPlayerU> {
     handle(message: OpPlayerU, player: NetworkPlayer): boolean {
         const { pid, useObj: item, useSlot: slot, useComponent: comId } = message;
 
         if (player.delayed()) {
-            player.unsetMapFlag();
+            player.write(new UnsetMapFlag());
             return false;
         }
 

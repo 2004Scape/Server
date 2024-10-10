@@ -26,7 +26,7 @@ category=shop_keeper
 param=owned_shop,auburys_rune_shop
 param=shop_sell_multiplier,1000
 param=shop_buy_multiplier,550
-param=shop_delta,20
+param=shop_delta,50
 param=shop_title,Aubury's Rune Shop.
 moverestrict=indoors
 

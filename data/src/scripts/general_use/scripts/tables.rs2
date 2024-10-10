@@ -1,15 +1,33 @@
 [oplocu,_usable_table]
+if (oc_tradeable(last_useitem) = false) {
+    mes("You cannot put that on a table."); // osrs
+    return;
+}
+
 anim(human_pickuptable, 0);
 sound_synth(put_down, 0, 0);
 
 def_coord $obj_coord = loc_coord;
 
-def_int $width = lc_width(loc_type);
-def_int $length = lc_length(loc_type);
-
 def_int $x = calc(coordx(loc_coord) - coordx(coord));
 def_int $z = calc(coordz(loc_coord) - coordz(coord));
-//mes("X: <tostring($x)>, Z: <tostring($z)>, Width: <tostring($width)>, Length: <tostring($length)>");
+
+def_int $width;
+def_int $length;
+
+def_int $angle = loc_angle;
+switch_int ($angle) {
+    case ^loc_west,^loc_east:
+        $width = lc_width(loc_type);
+        $length = lc_length(loc_type);
+    case ^loc_north,^loc_south:
+        // in this case we should swap width and length because of the loc angle
+        $width = lc_length(loc_type);
+        $length = lc_width(loc_type);
+}
+
+// mes("X: <tostring($x)>, Z: <tostring($z)>, Width: <tostring($width)>, Length: <tostring($length)>, Angle: <tostring($angle)>");
+
 if ($x > 0) {
     $obj_coord = movecoord(coord, 1, 0, 0); // player is west of table
 } else if ($z > 0) {
@@ -19,7 +37,7 @@ if ($x > 0) {
 } else if (calc($x + $width - 1) < 0) {
     $obj_coord = movecoord(coord, -1, 0, 0); // player is east of table
 }
-inv_dropslot(inv, $obj_coord, last_useslot, 1000);
+inv_dropslot(inv, $obj_coord, last_useslot, 900); // 1 min to be visible, 9 min to disappear
 
 [oplocu,_unusable_table]
 mes("The table appears to be in use.");

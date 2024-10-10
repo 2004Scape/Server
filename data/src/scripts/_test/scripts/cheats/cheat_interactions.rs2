@@ -1,0 +1,420 @@
+// [opnpc1,gnome_cheerleader]
+// p_walk(movecoord(coord, 2, 0, 0));
+// ~chatplayer("<p,neutral>Hello");
+
+// [apnpc2,savage_bird]
+// if (npc_range(coord) > 5) {
+//     p_aprange(5);
+//     return;
+// }
+// p_walk(movecoord(coord, 2, 0, 0));
+// ~chatplayer("<p,neutral>Hello");
+
+// [ai_opplayer2,savage_bird]
+// npc_walk(movecoord(npc_coord, 2, 0, 0));
+
+// [ai_applayer2,savage_bird]
+// npc_walk(movecoord(npc_coord, 2, 0, 0));
+
+[debugproc,itele]
+if (p_finduid(uid) = true) {
+    p_telejump(0_37_55_32_30);
+}
+
+[debugproc,itest](int $test)
+clearqueue(reset_itest);
+if (p_finduid(uid) = true) {
+    gosub(reset_itest);
+    switch_int ($test) {
+        case 1 : gosub(ap_to_op_switching);
+        case 2 : gosub(blocking_an_npc_and_then_unblocking);
+        case 3 : gosub(clicking_a_loc_then_clicking_away_before_reaching);
+        case 4 : gosub(clicking_a_loc_then_walking_far_away);
+        case 5 : gosub(clicking_a_loc_without_path_access);
+        case 6 : gosub(clicking_an_npc_then_clicking_away_before_reaching);
+        case 7 : gosub(clicking_an_obj_then_clicking_away_before_reaching);
+        case 8 : gosub(clicking_a_loc_then_an_npc_then_clicking_away_before_reaching);
+        case 9 : gosub(clicking_a_loc_then_an_obj_then_clicking_away_before_reaching);
+        case 10 : gosub(clicking_obj_on_the_table_in_lumbridge);
+        case 11 : gosub(firemaking_on_top_of_blockwalk_all_npc);
+        case 12, 13 : gosub(blockwalk_all_in_action);
+        case 14 : gosub(equipping_an_obj_while_in_combat);
+        case 15 : gosub(clicking_an_npc_while_underneath_it);
+        case 16 : gosub(magic_fire_bolt_while_underneath_the_npc);
+        case 17 : gosub(not_blocking_npcs_when_logged_in_without_moving);
+        case 18 : gosub(npc_modes_in_action);
+        case 19 : gosub(telegrab_on_top_of_an_obj);
+        case 20 : gosub(unequipping_an_obj_while_in_combat);
+        case 21 : gosub(walking_and_equipping_an_obj_continues_walking_while_targetting);
+        case 22 : gosub(walking_and_equipping_obj_continues_walk);
+        case 23 : gosub(walking_and_unequipping_an_obj_continues_walking_while_targeting);
+        case 24 : gosub(apnpct_on_draynor_tree_npc);
+        case 25 : gosub(pathing_to_a_loc_as_it_is_deleted_before_reaching);
+        case 26 : gosub(pathing_to_an_obj_as_it_is_deleted_before_reaching);
+        case 27 : gosub(pathing_to_an_npc_as_it_is_deleted_before_reaching);
+        case 28 : gosub(pathing_to_an_npc_as_it_does_changetype_command);
+        case 29 : gosub(repathing_to_an_npc_on_your_last_waypoint);
+        case 30 : gosub(not_repathing_to_an_npc_not_on_your_last_waypoint);
+        case 31 : gosub(npc_set_mode_to_opplayer);
+        case 32 : gosub(npc_set_mode_to_applayer);
+        case 33 : gosub(opnpc_to_p_walk);
+        case 34 : gosub(apnpc_to_p_walk);
+        case 35 : gosub(ai_opplayer_to_npc_walk);
+        case 36 : gosub(ai_applayer_to_npc_walk);
+    }
+} else {
+    mes("Command requires protected access.");
+}
+
+[proc,reset_itest]
+npc_findallany(0_37_55_32_30, 10, 0);
+while (npc_findnext = true) {
+    if (npc_type = cow_1 | npc_type = goblin_unarmed1) {
+        npc_del;
+    }
+}
+p_telejump(0_37_55_32_30);
+p_stopaction;
+inv_clear(inv);
+inv_clear(worn);
+
+[queue,reset_itest] gosub(reset_itest);
+
+[proc,ap_to_op_switching]
+mes("Test 1: AP to OP Switching");
+npc_add(movecoord(coord, 0, 0, 5), cow_1, 10);
+%npc_lastcombat = add(map_clock, 10);
+npc_setmode(none);
+queue(reset_itest, 10);
+p_delay(2);
+p_opnpc(2);
+
+[proc,blocking_an_npc_and_then_unblocking]
+mes("Test 2: Blocking an Npc and then unblocking");
+npc_add(movecoord(coord, -5, 0, -1), goblin_unarmed1, 10);
+npc_setmode(none);
+npc_walk(movecoord(npc_coord, 10, 0, 0));
+p_delay(2);
+p_walk(movecoord(coord, 0, 0, -1));
+p_delay(2);
+p_walk(movecoord(coord, 0, 0, 1));
+p_delay(5);
+~reset_itest;
+
+[proc,clicking_a_loc_then_clicking_away_before_reaching]
+mes("Test 3 (manual): Clicking a Loc then clicking away before reaching");
+loc_add(movecoord(coord, 0, 0, 5), loc_1276, 0, centrepiece_straight, 10);
+
+[proc,clicking_a_loc_then_walking_far_away]
+mes("Test 4 (manual): Clicking a Loc then walking far away");
+p_teleport(0_49_51_50_20);
+queue(reset_itest, 50);
+
+[proc,clicking_a_loc_without_path_access]
+mes("Test 5 (manual): Clicking a Loc without path access");
+p_teleport(0_50_50_17_54);
+queue(reset_itest, 15);
+
+[proc,clicking_an_npc_then_clicking_away_before_reaching]
+mes("Test 6 (manual): Clicking an Npc then clicking away before reaching");
+npc_add(movecoord(coord, 0, 0, 5), goblin_unarmed1, 10);
+npc_setmode(none);
+
+[proc,clicking_an_obj_then_clicking_away_before_reaching]
+mes("Test 7 (manual): Clicking an obj then clicking away before reaching");
+obj_addall(movecoord(coord, 0, 0, 5), rune_scimitar, 1, 10);
+
+[proc,clicking_a_loc_then_an_npc_then_clicking_away_before_reaching]
+mes("Test 8 (manual): Clicking a Loc then an Npc then clicking away before reaching");
+p_teleport(0_50_50_16_60);
+queue(reset_itest, 15);
+
+[proc,clicking_a_loc_then_an_obj_then_clicking_away_before_reaching]
+mes("Test 9 (manual): Clicking a Loc then an Obj then clicking away before reaching");
+p_teleport(0_50_50_16_60);
+queue(reset_itest, 15);
+
+[proc,clicking_obj_on_the_table_in_lumbridge]
+mes("Test 10 (manual): Clicking this Obj on the table in Lumbridge");
+p_teleport(0_50_50_10_9);
+queue(reset_itest, 10);
+
+[proc,firemaking_on_top_of_blockwalk_all_npc]
+mes("Test 11: Firemaking on top of a blockwalk=ALL Npc");
+p_teleport(0_49_52_5_32);
+inv_clear(inv);
+inv_add(inv, logs, 1);
+inv_add(inv, tinderbox, 1);
+queue(reset_itest, 10);
+@light_logs_inv(0);
+
+[proc,blockwalk_all_in_action]
+mes("Test 12 & 13 (manual): blockwalk=ALL in action");
+p_teleport(0_49_52_4_31);
+
+[proc,equipping_an_obj_while_in_combat]
+mes("Test 14 (manual): Equipping an Obj while in combat");
+p_teleport(0_50_50_43_25);
+facesquare(movecoord(coord, 1, 0, 0));
+
+inv_clear(inv);
+inv_clear(worn);
+
+inv_setslot(worn, ^wearpos_rhand, shortbow, 1);
+inv_setslot(worn, ^wearpos_quiver, bronze_arrow, 1);
+inv_delslot(worn, ^wearpos_lhand);
+~update_all(null);
+
+inv_add(inv, bronze_axe, 1);
+
+npc_add(0_50_50_40_24, man_brown, 20);
+npc_setmode(opplayer2);
+queue(reset_itest, 20);
+
+[proc,clicking_an_npc_while_underneath_it]
+mes("Test 15 (manual): Clicking an Npc while underneath it");
+p_teleport(0_51_50_2_29);
+queue(reset_itest, 10);
+
+[proc,magic_fire_bolt_while_underneath_the_npc]
+mes("Test 16 (manual): Magic Fire Bolt while underneath the Npc");
+npc_add(movecoord(coord, 0, 0, 1), goblin_unarmed1, 10);
+npc_setmode(none);
+
+inv_clear(inv);
+
+inv_add(inv, chaosrune, 1000);
+inv_add(inv, firerune, 1000);
+inv_add(inv, airrune, 1000);
+if_settabactive(^tab_magic);
+
+p_delay(1);
+p_teleport(movecoord(coord, 0, 0, 1));
+
+[proc,not_blocking_npcs_when_logged_in_without_moving]
+mes("Test 17 (manual): Not blocking Npcs when logged in without moving");
+npc_add(movecoord(coord, -5, 0, 0), goblin_unarmed1, 10);
+npc_setmode(none);
+npc_walk(movecoord(npc_coord, 10, 0, 0));
+
+queue(reset_itest, 12);
+p_delay(12);
+
+[proc,npc_modes_in_action]
+mes("Test 18 (manual): Npc Modes in action.");
+npc_add(movecoord(coord, 0, 0, 1), civilian_blonde, 30);
+npc_setmode(none);
+p_opnpc(1);
+world_delay(0);
+npc_walk(movecoord(npc_coord, 0, 0, 1));
+world_delay(0);
+
+[proc,telegrab_on_top_of_an_obj]
+mes("Test 19 (manual): Telegrab on top of an Obj");
+obj_addall(coord, garlic, 1, 100);
+inv_clear(inv);
+inv_add(inv, airrune, 5);
+inv_add(inv, lawrune, 1);
+if_settabactive(^tab_magic);
+
+[proc,unequipping_an_obj_while_in_combat]
+mes("Test 20 (manual): Unequipping an Obj while in combat");
+p_teleport(0_50_50_43_25);
+facesquare(movecoord(coord, 1, 0, 0));
+
+inv_clear(inv);
+inv_clear(worn);
+
+inv_setslot(worn, ^wearpos_rhand, shortbow, 1);
+inv_setslot(worn, ^wearpos_quiver, bronze_arrow, 100);
+inv_delslot(worn, ^wearpos_lhand);
+if_settabactive(^tab_wornitems);
+
+~update_all(null);
+
+npc_add(0_50_50_40_24, man_brown, 20);
+npc_setmode(opplayer2);
+queue(reset_itest, 20);
+
+[proc,walking_and_equipping_an_obj_continues_walking_while_targetting]
+mes("Test 21 (manual): Walking and equipping an Obj continues walking while targetting");
+npc_add(movecoord(coord, 0, 0, 7), goblin_unarmed1, 20);
+npc_setmode(none);
+
+inv_clear(inv);
+inv_add(inv, bronze_axe, 1);
+queue(reset_itest, 20);
+
+[proc,walking_and_equipping_obj_continues_walk]
+mes("Test 22 (manual): Walking and equipping an Obj continues walking");
+
+inv_clear(inv);
+inv_add(inv, bronze_axe, 1);
+if_settabactive(^tab_inventory);
+
+[proc,walking_and_unequipping_an_obj_continues_walking_while_targeting]
+mes("Test 23 (manual): Walking and unequipping an Obj continues walking while targetting");
+
+inv_clear(inv);
+inv_clear(worn);
+
+inv_setslot(worn, ^wearpos_rhand, bronze_axe, 1);
+if_settabactive(^tab_wornitems);
+
+~update_all(null);
+
+npc_add(movecoord(coord, 0, 0, 7), goblin_unarmed1, 20);
+npc_setmode(none);
+queue(reset_itest, 20);
+
+[proc,walking_and_unequipping_obj_continues_walk]
+mes("Test 23 (manual): Walking and unequipping an Obj continues walking");
+
+inv_clear(worn);
+inv_setslot(worn, ^wearpos_rhand, bronze_axe, 1);
+if_settabactive(^tab_wornitems);
+
+[proc,apnpct_on_draynor_tree_npc]
+mes("Test 24: apnpct on Draynor tree npc");
+npc_add(movecoord(coord, 0, 0, 5), nasty_tree, 10);
+inv_clear(inv);
+inv_add(inv, airrune, 1000);
+inv_add(inv, mindrune, 1000);
+p_opnpct(magic:wind_strike);
+
+[proc,pathing_to_a_loc_as_it_is_deleted_before_reaching]
+mes("Test 25: Pathing to a Loc as it is deleted before reaching");
+loc_add(movecoord(coord, 0, 0, 10), loc_1276, 0, centrepiece_straight, 5);
+p_oploc(1);
+
+[proc,pathing_to_an_obj_as_it_is_deleted_before_reaching]
+mes("Test 26: Pathing to an Obj as it is deleted before reaching");
+obj_addall(movecoord(coord, 0, 0, 10), bowl_empty, 1, 5);
+p_opobj(1);
+
+[proc,pathing_to_an_npc_as_it_is_deleted_before_reaching]
+mes("Test 27: Pathing to an Npc as it is deleted before reaching");
+npc_add(movecoord(coord, 0, 0, 10), goblin_unarmed1, 5);
+
+queue(reset_itest, 10);
+
+inv_clear(worn);
+~update_all(null);
+p_opnpc(2);
+
+
+[proc,pathing_to_an_npc_as_it_does_changetype_command]
+mes("Test 28: Pathing to an Npc as it does changetype command");
+npc_add(movecoord(coord, 0, 0, 10), goblin_unarmed1, 10);
+npc_setmode(none);
+
+queue(reset_itest, 10);
+
+inv_clear(worn);
+~update_all(null);
+p_opnpc(2);
+
+world_delay(4);
+npc_changetype(cow_1);
+
+
+[proc,repathing_to_an_npc_on_your_last_waypoint]
+mes("Test 29: Repathing to an Npc on your last waypoint");
+npc_add(movecoord(coord, 12, 0, 3), goblin_unarmed1, 20);
+npc_setmode(none);
+
+queue(reset_itest, 20);
+
+inv_clear(worn);
+~update_all(null);
+p_opnpc(2);
+
+world_delay(2);
+npc_tele(movecoord(npc_coord, -5, 0, -10));
+
+
+[proc,not_repathing_to_an_npc_not_on_your_last_waypoint]
+mes("Test 30: Not repathing to an Npc not on your last waypoint");
+p_telejump(0_50_50_39_7);
+if (loc_find(0_50_50_38_10, loc_1533) = true) {
+    def_coord $new_loc_coord = ~movecoord_loc_return(~door_open(loc_angle, loc_shape));
+    loc_del(500);
+    loc_add($new_loc_coord, loc_param(next_loc_stage), modulo(add(loc_angle, 1), 4), loc_shape, 500);
+}
+npc_add(movecoord(coord, 3, 0, 0), goblin_unarmed1, 20);
+npc_setmode(none);
+
+queue(reset_itest, 20);
+
+inv_clear(worn);
+~update_all(null);
+p_opnpc(2);
+
+world_delay(2);
+
+if (loc_find(0_50_50_37_10, loc_1534) = true) {
+    def_coord $new_loc_coord = ~movecoord_loc_return(~door_close(loc_angle, loc_shape));
+    loc_del(500);
+    loc_add($new_loc_coord, loc_param(next_loc_stage), modulo(add(loc_angle, 3), 4), loc_shape, 500);
+}
+
+world_delay(2);
+
+if (loc_find(0_50_50_38_10, loc_1533) = true) {
+    def_coord $new_loc_coord = ~movecoord_loc_return(~door_open(loc_angle, loc_shape));
+    loc_del(500);
+    loc_add($new_loc_coord, loc_param(next_loc_stage), modulo(add(loc_angle, 1), 4), loc_shape, 500);
+}
+
+[proc,npc_set_mode_to_opplayer]
+mes("Test 31: Npc_setmode to opplayer");
+npc_add(movecoord(coord, -5, 0, -1), goblin_unarmed1, 10);
+npc_setmode(opplayer2);
+
+queue(reset_itest, 10);
+
+world_delay(2);
+
+if (p_finduid(uid) = true) {
+    p_walk(movecoord(coord, 5, 0, 0));
+}
+
+[proc,npc_set_mode_to_applayer]
+mes("Test 32: Npc_setmode to applayer");
+npc_add(movecoord(coord, -5, 0, -1), dark_wizard_water, 15);
+~npc_retaliate(0);
+queue(reset_itest, 15);
+
+world_delay(2);
+
+if (p_finduid(uid) = true) {
+    p_walk(movecoord(coord, 5, 0, 0));
+}
+
+[proc,opnpc_to_p_walk]
+mes("Test 33: opnpc to p_walk");
+npc_add(movecoord(coord, -1, 0, -1), gnome_cheerleader, 10);
+npc_setmode(none);
+queue(reset_itest, 10);
+p_delay(1);
+p_opnpc(1);
+
+[proc,apnpc_to_p_walk]
+mes("Test 34: apnpc to p_walk");
+npc_add(movecoord(coord, -1, 0, -1), savage_bird, 10);
+npc_setmode(none);
+queue(reset_itest, 10);
+p_delay(1);
+p_opnpc(2);
+
+[proc,ai_opplayer_to_npc_walk]
+mes("Test 35: ai oppplayer to npc_walk");
+npc_add(movecoord(coord, -1, 0, -1), savage_bird, 10);
+npc_setmode(opplayer2);
+queue(reset_itest, 10);
+
+[proc,ai_applayer_to_npc_walk]
+mes("Test 36: ai appplayer to npc_walk");
+npc_add(movecoord(coord, -5, 0, -1), savage_bird, 10);
+npc_setmode(applayer2);
+queue(reset_itest, 10);

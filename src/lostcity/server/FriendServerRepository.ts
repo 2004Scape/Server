@@ -8,7 +8,7 @@ import { ChatModePrivate } from '#lostcity/util/ChatModes.js';
  * 
  * Responsible for database queries and caching.
  */
-export class FriendsServerRepository {
+export class FriendServerRepository {
     /**
      * playersByWorld[worldId][playerIndex] = username37 | null
      */
@@ -169,13 +169,13 @@ export class FriendsServerRepository {
         const index = this.playerFriends[username].indexOf(targetUsername37);
 
         if (index === -1) {
-            console.error(`[Friends]: ${username} tried to remove ${targetUsername} from their friend list, but they are not friends`);
+            // console.error(`[Friends]: ${username} tried to remove ${targetUsername} from their friend list, but they are not friends`);
             return;
         }
 
         this.playerFriends[username].splice(index, 1);
 
-        // I tried to do all this in 1 query but Kyesly wasn't happy
+        // I tried to do all this in 1 query but Kysely wasn't happy
         const accountId = await db
             .selectFrom('account')
             .select('id')
@@ -206,7 +206,7 @@ export class FriendsServerRepository {
         this.playerFriends[username] = this.playerFriends[username] ?? [];
 
         if (this.playerFriends[username].includes(targetUsername37)) {
-            console.error(`[Friends]: ${username} tried to add ${targetUsername} to their friend list, but they are already friends`);
+            // console.error(`[Friends]: ${username} tried to add ${targetUsername} to their friend list, but they are already friends`);
             return;
         }
 
@@ -228,7 +228,7 @@ export class FriendsServerRepository {
             .executeTakeFirst();
 
         if (!accountId || !friendAccountId) {
-            console.error(`[Friends]: ${username} tried to add ${targetUsername} to their friend list, but one of the accounts does not exist`);
+            // console.error(`[Friends]: ${username} tried to add ${targetUsername} to their friend list, but one of the accounts does not exist`);
             return;
         }
 
@@ -250,7 +250,7 @@ export class FriendsServerRepository {
         this.playerIgnores[username] = this.playerIgnores[username] ?? [];
 
         if (this.playerIgnores[username].includes(targetUsername37)) {
-            console.error(`[Friends]: ${username} tried to add ${targetUsername} to their ignore list, but they are already ignored`);
+            // console.error(`[Friends]: ${username} tried to add ${targetUsername} to their ignore list, but they are already ignored`);
             return;
         }
 
@@ -272,7 +272,7 @@ export class FriendsServerRepository {
             .executeTakeFirst();
 
         if (!accountId || !targetAccountId) {
-            console.error(`[Friends]: ${username} tried to add ${targetUsername} to their ignore list, but one of the accounts does not exist`);
+            // console.error(`[Friends]: ${username} tried to add ${targetUsername} to their ignore list, but one of the accounts does not exist`);
             return;
         }
 
@@ -295,7 +295,7 @@ export class FriendsServerRepository {
         const index = this.playerIgnores[username].indexOf(targetUsername37);
 
         if (index === -1) {
-            console.error(`[Friends]: ${username} tried to remove ${targetUsername} from their ignore list, but they are not ignored`);
+            // console.error(`[Friends]: ${username} tried to remove ${targetUsername} from their ignore list, but they are not ignored`);
             return;
         }
 

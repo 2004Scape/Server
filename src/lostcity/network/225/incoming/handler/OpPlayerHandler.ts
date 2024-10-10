@@ -4,13 +4,14 @@ import { NetworkPlayer } from '#lostcity/entity/NetworkPlayer.js';
 import World from '#lostcity/engine/World.js';
 import ServerTriggerType from '#lostcity/engine/script/ServerTriggerType.js';
 import Interaction from '#lostcity/entity/Interaction.js';
+import UnsetMapFlag from '#lostcity/network/outgoing/model/UnsetMapFlag.js';
 
 export default class OpPlayerHandler extends MessageHandler<OpPlayer> {
     handle(message: OpPlayer, player: NetworkPlayer): boolean {
         const { pid } = message;
 
         if (player.delayed()) {
-            player.unsetMapFlag();
+            player.write(new UnsetMapFlag());
             return false;
         }
 

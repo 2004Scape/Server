@@ -4,7 +4,8 @@
 [oploc1,_double_door_open_and_close_right]
 ~open_and_close_double_door(~check_axis_locactive(coord), ^right);
 
-
+// locs should have category=double_door_open_and_close_right or category=double_door_open_and_close_left
+// and should also have param=next_loc_stage,loc_type
 [proc,open_and_close_double_door](boolean $entering, int $side)
 def_int $x;
 def_int $z;

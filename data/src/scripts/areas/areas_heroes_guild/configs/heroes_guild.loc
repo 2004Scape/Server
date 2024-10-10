@@ -1,0 +1,38 @@
+[fountain_of_heroes]
+name=Fountain of Heroes
+desc=A source of pure water.
+model=model_loc_153
+width=2
+length=2
+mapscene=8
+recol1s=7399
+recol1d=18849
+recol2s=15855
+recol2d=19937
+
+[heroes_door_left]
+name=Door
+desc=The entrance to the Hero's Guild.
+model=model_loc_71
+active=yes
+op1=Open
+retex1s=wall
+retex1d=door2
+recol2s=6342
+recol2d=11458
+category=double_door_open_and_close_left
+param=next_loc_stage,heroes_door_left
+
+[heroes_door_right]
+name=Door
+desc=The entrance to the Hero's Guild.
+model=model_loc_71
+active=yes
+op1=Open
+mirror=yes
+retex1s=wall
+retex1d=door2
+recol2s=6342
+recol2d=11458
+category=double_door_open_and_close_right
+param=next_loc_stage,heroes_door_right

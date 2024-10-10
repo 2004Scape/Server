@@ -176,6 +176,10 @@ if (%hazeelcult_progress = ^hazeelcult_complete) {
     $questpoints = add($questpoints, ^hazeelcult_questpoints);
 }
 
+if (%hero_progress = ^hero_complete) {
+    $questpoints = add($questpoints, ^hero_questpoints);
+}
+
 if (%itgronigen_progress >= ^itgronigen_complete) { // varp is incremented for getting wine post quest
     $questpoints = add($questpoints, ^itgronigen_questpoints);
 }
@@ -260,6 +264,7 @@ if(%phoenixgang_progress > 0 & %blackarmgang_progress ! ^blackarmgang_complete) 
 ~send_quest_progress_colour(questlist:ball, %ball_progress, ^ball_complete);
 ~send_quest_progress_colour(questlist:murder, %murder_progress, ^murder_complete);
 ~send_quest_progress_colour(questlist:hazeelcult, %hazeelcult_progress, ^hazeelcult_complete);
+~send_quest_progress_colour(questlist:hero, %hero_progress, ^hero_complete);
 ~send_quest_progress_colour(questlist:itgronigen, %itgronigen_progress, ^itgronigen_complete);
 ~send_quest_progress_colour(questlist:arena, %arena_progress, ^arena_complete);
 ~send_quest_progress_colour(questlist:junglepotion, %junglepotion_progress, ^junglepotion_complete);

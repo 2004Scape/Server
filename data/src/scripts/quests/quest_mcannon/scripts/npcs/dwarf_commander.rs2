@@ -77,7 +77,7 @@ if (inv_total(inv, dwarf_remains) < 1) {
     ~chatplayer("<p,neutral>Ok then.");
 } else {
     ~chatnpc("<p,quiz>That's strange, Gilob never leaves his post.");
-    ~chatplayer("<p,sad>I may have some bad new for you commander.");
+    ~chatplayer("<p,sad>I may have some bad news for you commander.");
     ~mesbox("You show the Dwarf Commander the remains.");
     if (%mcannon_progress = ^mcannon_tasked_with_checking_guard_tower) {
         %mcannon_progress = ^mcannon_tasked_with_finding_goblin_cave;
@@ -150,7 +150,7 @@ mes("The Dwarf Commander pops into the shed to take a closer look.");
 p_delay(1);
 ~chatnpc("<p,happy>Well I don't believe it, it seems to be in working order.");
 ~chatplayer("<p,happy>Not bad for an adventurer, eh?");
-~chatnpc("<p,happy>Not bad at all, your effort is appreciated my friend.|Now, if I could only figure out what thing uses as ammo....");
+~chatnpc("<p,happy>Not bad at all, your effort is appreciated my friend.|Now, if I could only figure out what the thing uses as ammo....");
 ~chatnpc("<p,happy>The Black Guard forgot to send instructions.|I know I said that was the last favour... but...");
 ~chatplayer("<p,bored>What now?");
 ~chatnpc("<p,neutral>I can't leave this post, could you go to the Black Guard|base and find out what this thing actually shoots?");
@@ -166,7 +166,7 @@ p_delay(1);
 [label,mcannon_ok_then_just_for_you]
 ~chatplayer("<p,happy>Ok then, just for you!");
 ~chatnpc("<p,happy>You're a good adventurer, we were lucky to find you.|The base is located just South of the Ice Mountain.");
-~chatnpc("<p,neutral>You'll need to speak to the Nulodion, Dwarf Cannon| Engineer. He's the Weapons Development Chief for the Black Guard, so if anyone knows how to fire that thing, it'll be him.");
+~chatnpc("<p,neutral>You'll need to speak to Nulodion, the Dwarf Cannon| Engineer. He's the Weapons Development Chief for the Black Guard, so if anyone knows how to fire that thing, it'll be him.");
 ~chatplayer("<p,neutral>Ok, I'll see what I can do.");
 if (%mcannon_progress = ^mcannon_has_repaired_cannon) {
     %mcannon_progress = ^mcannon_tasked_with_speaking_to_nulodion;
@@ -176,7 +176,7 @@ if (%mcannon_progress = ^mcannon_has_repaired_cannon) {
 ~chatplayer("<p,neutral>Hi again.");
 ~chatnpc("<p,happy>Hello traveller,|any word from the Cannon Engineer?");
 ~chatplayer("<p,neutral>Not yet.");
-~chatnpc("<p,neutral>The Black Guard camp is South of the Ice Mountain,|the quicker we can some ammo for this thing|the quicker those goblins will leave us be.");
+~chatnpc("<p,neutral>The Black Guard camp is South of the Ice Mountain,|the quicker we can get some ammo for this thing|the quicker those goblins will leave us be.");
 ~chatplayer("<p,neutral>I'll get to it.");
 
 [label,dwarf_commander_spoken_to_nulodion]
@@ -190,13 +190,13 @@ if (inv_total(inv, ammo_mould) < 1 | inv_total(inv, nulodions_notes) < 1) {
 
 ~chatplayer("<p,neutral>He gave me these to give you...");
 mes("You hand the Dwarf Commander the mould and the notes.");
-~chatnpc("<p,happy>Aah, of course, we have to make the ammo!|This is great, now we will bee able to defend ourselves.|I don't know how to thank you.");
+~chatnpc("<p,happy>Aah, of course, we have to make the ammo!|This is great, now we will be able to defend ourselves.|I don't know how to thank you.");
 ~chatplayer("<p,neutral>You could give me a cannon...");
 ~chatnpc("<p,neutral>Hah! You'd be lucky, those things are worth a fortune.");
 ~chatnpc("<p,neutral>Hmmm, now I think about it the Cannon Engineer may be able to help.|He controls the production of the cannons.");
 ~chatnpc("<p,neutral>He won't be able to give you one,|but for the right price, I'm sure he'll sell one to you.");
 ~chatplayer("<p,neutral>Hmmm... sounds interesting.");
-~chatnpc("<p,neutral>Take care of your self traveller, and thanks again.");
+~chatnpc("<p,neutral>Take care of yourself traveller, and thanks again.");
 ~chatplayer("<p,neutral>You take care too.");
 inv_del(inv, ammo_mould, 1);
 inv_del(inv, nulodions_notes, 1);

@@ -10,7 +10,7 @@ import Player from '#lostcity/entity/Player.js';
 import NpcMode from '#lostcity/entity/NpcMode.js';
 import MoveRestrict from '#lostcity/entity/MoveRestrict.js';
 import MoveSpeed from '#lostcity/entity/MoveSpeed.js';
-import {Position} from '#lostcity/entity/Position.js';
+import {CoordGrid} from '#lostcity/engine/CoordGrid.js';
 import EntityLifeCycle from '#lostcity/entity/EntityLifeCycle.js';
 import MoveStrategy from '#lostcity/entity/MoveStrategy.js';
 
@@ -19,6 +19,7 @@ import LocType from '#lostcity/cache/config/LocType.js';
 import * as rsmod from '@2004scape/rsmod-pathfinder';
 import {CollisionFlag, CollisionType} from '@2004scape/rsmod-pathfinder';
 import Environment from '#lostcity/util/Environment.js';
+import Obj from './Obj.js';
 
 type TargetSubject = {
     type: number,
@@ -52,6 +53,9 @@ export default abstract class PathingEntity extends Entity {
     lastInt: number = -1; // resume_p_countdialog, ai_queue
     lastCrawl: boolean = false;
     lastMovement: number = 0;
+    lastCoordX: number = -1;
+    lastCoordZ: number = -1;
+    lastCoordLevel: number = -1;
 
     walktrigger: number = -1;
     walktriggerArg: number = 0; // used for npcs
@@ -111,6 +115,9 @@ export default abstract class PathingEntity extends Entity {
         this.entitymask = entitymask;
         this.lastStepX = x - 1;
         this.lastStepZ = z;
+        this.lastCoordX = x;
+        this.lastCoordZ = z;
+        this.lastCoordLevel = level;
     }
 
     /**
@@ -132,24 +139,28 @@ export default abstract class PathingEntity extends Entity {
      * Returns true if a step was taken and movement processed.
      */
     processMovement(): boolean {
-        if (!this.hasWaypoints() || this.moveSpeed === MoveSpeed.STATIONARY) {
+        if (!this.hasWaypoints() || this.moveSpeed === MoveSpeed.STATIONARY || this.moveSpeed === MoveSpeed.INSTANT) {
             return false;
         }
+        const previousX = this.x;
+        const previousZ = this.z;
+        const previousLevel = this.level;
 
         if (this.moveSpeed === MoveSpeed.CRAWL) {
             this.lastCrawl = !this.lastCrawl;
             if (this.lastCrawl && this.walkDir === -1) {
                 this.walkDir = this.validateAndAdvanceStep();
             }
-            return true;
-        }
-
-        // either walk or run speed here.
-        if (this.walkDir === -1) {
+        } else if (this.walkDir === -1) { // either walk or run speed here.
             this.walkDir = this.validateAndAdvanceStep();
             if (this.moveSpeed === MoveSpeed.RUN && this.walkDir !== -1 && this.runDir === -1) {
                 this.runDir = this.validateAndAdvanceStep();
             }
+        }
+        if (previousX !== this.x || previousZ !== this.z || previousLevel !== this.level) {
+            this.lastCoordX = previousX;
+            this.lastCoordZ = previousZ;
+            this.lastCoordLevel = previousLevel;
         }
         return true;
     }
@@ -182,7 +193,7 @@ export default abstract class PathingEntity extends Entity {
             this.lastStepZ = previousZ;
         }
 
-        if (Position.zone(previousX) !== Position.zone(this.x) || Position.zone(previousZ) !== Position.zone(this.z) || previousLevel != this.level) {
+        if (CoordGrid.zone(previousX) !== CoordGrid.zone(this.x) || CoordGrid.zone(previousZ) !== CoordGrid.zone(this.z) || previousLevel != this.level) {
             World.gameMap.getZone(previousX, previousZ, previousLevel).leave(this);
             World.gameMap.getZone(this.x, this.z, this.level).enter(this);
         }
@@ -217,12 +228,20 @@ export default abstract class PathingEntity extends Entity {
         }
         const previousX: number = this.x;
         const previousZ: number = this.z;
-        this.x = Position.moveX(this.x, dir);
-        this.z = Position.moveZ(this.z, dir);
-        this.orientationX = Position.moveX(this.x, dir) * 2 + 1;
-        this.orientationZ = Position.moveZ(this.z, dir) * 2 + 1;
+        this.x = CoordGrid.moveX(this.x, dir);
+        this.z = CoordGrid.moveZ(this.z, dir);
+        this.orientationX = CoordGrid.moveX(this.x, dir) * 2 + 1;
+        this.orientationZ = CoordGrid.moveZ(this.z, dir) * 2 + 1;
         this.stepsTaken++;
         this.refreshZonePresence(previousX, previousZ, this.level);
+
+        if (this.waypointIndex !== -1) {
+            const coord: CoordGrid = CoordGrid.unpackCoord(this.waypoints[this.waypointIndex]);
+            if (coord.x === this.x && coord.z === this.z) {
+                this.waypointIndex--;
+            }
+        }
+
         return dir;
     }
 
@@ -232,7 +251,7 @@ export default abstract class PathingEntity extends Entity {
      * @param z The z position of the step.
      */
     queueWaypoint(x: number, z: number): void {
-        this.waypoints[0] = Position.packCoord(0, x, z); // level doesn't matter here
+        this.waypoints[0] = CoordGrid.packCoord(0, x, z); // level doesn't matter here
         this.waypointIndex = 0;
     }
 
@@ -255,7 +274,7 @@ export default abstract class PathingEntity extends Entity {
 
     teleJump(x: number, z: number, level: number): void {
         this.teleport(x, z, level);
-        this.clearWaypoints();
+        this.moveSpeed = MoveSpeed.INSTANT;
         this.jump = true;
     }
 
@@ -274,9 +293,16 @@ export default abstract class PathingEntity extends Entity {
         this.refreshZonePresence(previousX, previousZ, previousLevel);
         this.lastStepX = this.x - 1;
         this.lastStepZ = this.z;
+        this.tele = true;
 
-        this.moveSpeed = MoveSpeed.INSTANT;
+        if (previousX !== x || previousZ !== z || previousLevel !== level) {
+            this.lastCoordX = previousX;
+            this.lastCoordZ = previousZ;
+            this.lastCoordLevel = previousLevel;
+        }
+
         if (previousLevel != level) {
+            this.moveSpeed = MoveSpeed.INSTANT;
             this.jump = true;
         }
     }
@@ -286,7 +312,7 @@ export default abstract class PathingEntity extends Entity {
      */
     validateDistanceWalked() {
         const distanceCheck =
-            Position.distanceTo(this, {
+            CoordGrid.distanceTo(this, {
                 x: this.lastTickX,
                 z: this.lastTickZ,
                 width: this.width,
@@ -301,10 +327,10 @@ export default abstract class PathingEntity extends Entity {
         // temp variables to convert movement operations
         let walkDir = this.walkDir;
         let runDir = this.runDir;
-        let tele = this.moveSpeed === MoveSpeed.INSTANT;
+        let tele = this.tele;
 
         // convert p_teleport() into walk or run
-        const distanceMoved = Position.distanceTo(this, {
+        const distanceMoved = CoordGrid.distanceTo(this, {
             x: this.lastTickX,
             z: this.lastTickZ,
             width: this.width,
@@ -313,14 +339,13 @@ export default abstract class PathingEntity extends Entity {
         if (tele && !this.jump && distanceMoved <= 2) {
             if (distanceMoved === 2) {
                 // run
-                walkDir = Position.face(this.lastTickX, this.lastTickZ, this.x, this.z);
-                const walkX = Position.moveX(this.lastTickX, walkDir);
-                const walkZ = Position.moveZ(this.lastTickZ, walkDir);
-                runDir = Position.face(walkX, walkZ, this.x, this.z);
-                this.moveSpeed = MoveSpeed.WALK;
+                walkDir = CoordGrid.face(this.lastTickX, this.lastTickZ, this.x, this.z);
+                const walkX = CoordGrid.moveX(this.lastTickX, walkDir);
+                const walkZ = CoordGrid.moveZ(this.lastTickZ, walkDir);
+                runDir = CoordGrid.face(walkX, walkZ, this.x, this.z);
             } else {
                 // walk
-                walkDir = Position.face(this.lastTickX, this.lastTickZ, this.x, this.z);
+                walkDir = CoordGrid.face(this.lastTickX, this.lastTickZ, this.x, this.z);
                 runDir = -1;
             }
 
@@ -373,24 +398,24 @@ export default abstract class PathingEntity extends Entity {
         if (target.level !== this.level) {
             return false;
         }
-        if (target instanceof PathingEntity && Position.intersects(this.x, this.z, this.width, this.length, target.x, target.z, target.width, target.length)) {
+        if (target instanceof PathingEntity && CoordGrid.intersects(this.x, this.z, this.width, this.length, target.x, target.z, target.width, target.length)) {
             // pathing entity has a -2 shape basically (not allow on same tile) for ap.
             // you are not within ap distance of pathing entity if you are underneath it.
             return false;
         }
-        return Position.distanceTo(this, target) <= range && rsmod.hasLineOfSight(this.level, this.x, this.z, target.x, target.z, this.width, this.length, target.width, target.length, CollisionFlag.PLAYER);
+        return CoordGrid.distanceTo(this, target) <= range && rsmod.hasLineOfSight(this.level, this.x, this.z, target.x, target.z, this.width, this.length, target.width, target.length, CollisionFlag.PLAYER);
     }
 
     pathToMoveClick(input: number[], needsfinding: boolean): void {
         if (this.moveStrategy === MoveStrategy.SMART) {
             if (needsfinding) {
-                const { x, z } = Position.unpackCoord(input[0]);
+                const { x, z } = CoordGrid.unpackCoord(input[0]);
                 this.queueWaypoints(rsmod.findPath(this.level, this.x, this.z, x, z));
             } else {
                 this.queueWaypoints(input);
             }
         } else {
-            const { x, z } = Position.unpackCoord(input[input.length - 1]);
+            const { x, z } = CoordGrid.unpackCoord(input[input.length - 1]);
             this.queueWaypoint(x, z);
         }
     }
@@ -435,6 +460,8 @@ export default abstract class PathingEntity extends Entity {
             } else if (this.target instanceof Loc) {
                 const forceapproach = LocType.get(this.target.type).forceapproach;
                 this.queueWaypoints(rsmod.findPath(this.level, this.x, this.z, this.target.x, this.target.z, this.width, this.target.width, this.target.length, this.target.angle, this.target.shape, true, forceapproach));
+            } else if (this.target instanceof Obj && this.x === this.target.x && this.z === this.target.z) {
+                this.queueWaypoint(this.target.x, this.target.z); // work around because our findpath() returns 0, 0 if coord and target coord are the same
             } else {
                 this.queueWaypoints(rsmod.findPath(this.level, this.x, this.z, this.target.x, this.target.z));
             }
@@ -595,10 +622,10 @@ export default abstract class PathingEntity extends Entity {
         const srcX: number = this.x;
         const srcZ: number = this.z;
 
-        const {x, z} = Position.unpackCoord(this.waypoints[this.waypointIndex]);
-        const dir: number = Position.face(srcX, srcZ, x, z);
-        const dx: number = Position.deltaX(dir);
-        const dz: number = Position.deltaZ(dir);
+        const {x, z} = CoordGrid.unpackCoord(this.waypoints[this.waypointIndex]);
+        const dir: number = CoordGrid.face(srcX, srcZ, x, z);
+        const dx: number = CoordGrid.deltaX(dir);
+        const dz: number = CoordGrid.deltaZ(dir);
 
         // check if moved off current pos.
         if (dx == 0 && dz == 0) {
@@ -632,12 +659,12 @@ export default abstract class PathingEntity extends Entity {
 
         // check another direction if can travel to chosen dest on current z-axis.
         if (dx != 0 && rsmod.canTravel(this.level, this.x, this.z, dx, 0, this.width, extraFlag, collisionStrategy)) {
-            return Position.face(srcX, srcZ, x, srcZ);
+            return CoordGrid.face(srcX, srcZ, x, srcZ);
         }
 
         // check another direction if can travel to chosen dest on current x-axis.
         if (dz != 0 && rsmod.canTravel(this.level, this.x, this.z, 0, dz, this.width, extraFlag, collisionStrategy)) {
-            return Position.face(srcX, srcZ, srcX, z);
+            return CoordGrid.face(srcX, srcZ, srcX, z);
         }
         // https://x.com/JagexAsh/status/1727609489954664502
         return null;

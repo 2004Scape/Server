@@ -3,9 +3,9 @@ import forge from 'node-forge';
 import { parentPort } from 'worker_threads';
 
 import Environment from '#lostcity/util/Environment.js';
-import { FriendsClient } from './FriendsServer.js';
+import { FriendClient } from './FriendServer.js';
 
-const client = new FriendsClient();
+const client = new FriendClient();
 
 if (typeof self === 'undefined') {
     if (!parentPort) throw new Error('This file must be run as a worker thread.');
@@ -20,7 +20,7 @@ if (typeof self === 'undefined') {
             console.error(err);
         }
     });
-    
+
     client.onMessage((opcode, data) => {
         parentPort!.postMessage({ opcode, data });
     });
@@ -83,6 +83,11 @@ async function handleRequests(parentPort: ParentPort, msg: any, priv: forge.pki.
         case 'player_chat_setmode': {
             const { username, chatModePrivate } = msg;
             await client.playerChatSetMode(username, chatModePrivate);
+            break;
+        }
+        case 'private_message': {
+            const { username, staffLvl, pmId, target, message } = msg;
+            await client.privateMessage(username, staffLvl, pmId, target, message);
             break;
         }
         default:
