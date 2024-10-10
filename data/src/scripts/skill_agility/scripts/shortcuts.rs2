@@ -61,6 +61,7 @@ mes("You attempt to walk across the slippery log.");
 if(stat_random(stat(agility), 90, 250) = false) {
     // slip and fall, exact move when falling but force walk afterwards
     mes("You lose your footing and fall into the water.");
+    ~set_walkbas(seq_766);
     anim(human_sidestep_fall, 0);
     facesquare(movecoord(coord, 0, 0, 2));
     p_delay(0);

@@ -526,6 +526,7 @@ switch_int(~p_choice2("Yes, I will seriously look for Ah Za Rhoon and I'd apprec
         ~chatplayer("<p,neutral>Yes, I will seriously look for Ah Za Rhoon and I'd appreciate your help.");
         ~chatnpc("<p,neutral>Ok then Bwana, good luck with your quest, and remember to stock up well with adventuring supplies before setting off. You never know how useful some fairly ordinary things might be when you're adventuring.");
         %zombiequeen_progress = ^zombiequeen_started;
+        ~send_quest_progress(questlist:zombiequeen, %zombiequeen_progress, ^zombiequeen_complete);
         inv_del(inv, wampum_belt, 1);
         ~chatnpc("<p,neutral>I'll hold on to this Wampum belt for you for the time being. I'll give it back to you when we have completed this quest.");
     case 2:

@@ -36,11 +36,13 @@ if (finduid(%npc_attacking_uid) = true) {
 [queue,defeat_nazastarool1]
 %zq_map_mechanisms = setbit(%zq_map_mechanisms, ^zq_defeated_nazastarool1);
 ~mesbox("You defeat Nazastarool and the corpse falls to the ground. The bones start to move again and soon they reform into a grisly giant skeleton.");
+if_close;
 @summon_nazastarool;
 
 [queue,defeat_nazastarool2]
 %zq_map_mechanisms = setbit(%zq_map_mechanisms, ^zq_defeated_nazastarool2);
 ~mesbox("You defeat Nazastarool and the skeleton falls to the ground. An ethereal form starts taking shape above the bones and you soon face the vengeful ghost of Nazastarool.");
+if_close;
 @summon_nazastarool;
 
 [queue,defeat_nazastarool3]
