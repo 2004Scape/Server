@@ -280,6 +280,7 @@ export default class Player extends PathingEntity {
     }[] = [];
     allowDesign: boolean = false;
     afkEventReady: boolean = false;
+    interactWalkTrigger: boolean = false;
     moveClickRequest: boolean = false;
 
     highPriorityOut: Stack<OutgoingMessage> = new Stack();
@@ -923,9 +924,9 @@ export default class Player extends PathingEntity {
             }
             return;
         }
-
-        if (this.targetOp && this.hasWaypoints()) {
+        if (!this.interactWalkTrigger || this.hasWaypoints()) {
             this.processWalktrigger();
+            this.interactWalkTrigger = true;
         }
 
         const opTrigger = this.getOpTrigger();
