@@ -1,12 +1,14 @@
 [opnpc1,trobert]
-if (%hero_progress >= ^hero_blackarm_id_papers_given | ~obj_gettotal(id_papers) >= 1) {
+def_int $id_papers_count = ~obj_gettotal(id_papers);
+if (%hero_progress >= ^hero_blackarm_id_papers_given | $id_papers_count > 0) {
   ~chatnpc("<p,quiz>How's it going?");
   ~chatplayer("<p,quiz>Fine, thanks.");
   return;
 }
-else if (%hero_progress >= ^hero_blackarm_id_papers_obtained) {
+else if (%hero_progress >= ^hero_blackarm_id_papers_obtained & $id_papers_count = 0) {
   ~chatplayer("<p,neutral>I have lost Hartigen's ID papers.");
   ~chatnpc("<p,neutral>Well, that was careless of you, wasn't it? Fortunately for you, he had a spare. Take this one, but please try to be more careful with this one.");
+  inv_add(inv, id_papers, 1);
   return;
 }
 ~chatnpc("<p,neutral>Hi. Welcome to our Brimhaven headquarters. I'm Trobert and I'm in charge here."); 
