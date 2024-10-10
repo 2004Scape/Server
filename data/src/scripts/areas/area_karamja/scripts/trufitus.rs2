@@ -790,7 +790,7 @@ switch_int(~p_choice2("Not really.", 1, "Yes, I found lots of things.", 2)) {
         ~chatnpc("<p,neutral>If you let me see them Bwana, perhaps I can offer you some extra information.");
 }
 
-[label,trufitus_buried] // TODO: confirm mesanims forgot to check this dialogue
+[label,trufitus_buried]
 ~chatplayer("<p,neutral>I have just buried Zadimus' corpse.");
 ~chatnpc("<p,neutral>Something seems different about you. You look like you have seen a ghost?");
 ~chatplayer("<p,neutral>It just so happens that I have!");

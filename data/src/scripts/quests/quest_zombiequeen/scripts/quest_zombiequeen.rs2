@@ -201,7 +201,6 @@ if(loc_find(0_45_48_37_18, loc_2240) = true) loc_change(loc_2238, ^max_32bit_int
 if(loc_find(0_45_48_36_18, loc_2241) = true) loc_change(loc_2239, ^max_32bit_int);
 mes("A shimmering light dances over the doors, before you can blink, the doors");
 mes("creak open.");
-// TODO: check progress
 queue(rash_queue, 6); // 6t, it is a queue
 
 [oploc1,loc_2242] @zq_open_tombexit;
