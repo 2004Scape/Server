@@ -1,9 +1,23 @@
 [opnpc1,alfonse_the_waiter]
 ~chatnpc("<p,neutral>Welcome to the Shrimp and Parrot.|Would you like to order, sir?");
-def_int $option = ~p_choice2("Yes please.", 1, "No thank you.", 2);
-if($option = 1) {
-    ~chatplayer("<p,neutral>Yes please.");
-    ~openshop_activenpc;
-} else if ($option = 2) {
-    ~chatplayer("<p,neutral>No thank you.");
+def_int $option;
+if (~hero_phoenix_in_progress = true) {
+    $option = ~p_choice3("Yes please.", 1, "No thank you.", 2, "Do you sell Gherkins?", 3);
+} else {
+    $option = ~p_choice2("Yes please.", 1, "No thank you.", 2);
+}
+
+switch_int($option) {
+    case 1:
+        ~chatplayer("<p,neutral>Yes please.");
+        ~openshop_activenpc;
+    case 2:
+        ~chatplayer("<p,neutral>No thank you.");
+    case 3:
+        ~chatplayer("<p,quiz>Do you sell Gherkins?");
+        ~chatnpc("<p,neutral>Hmmmm Gherkins eh? Ask Charlie the cook, round the|back. He may have some 'gherkins' for you!");
+        ~mesbox("Alfonse winks at you.");
+        if (%hero_progress = ^hero_phoenix_gangmember_spoken) {
+            %hero_progress = ^hero_phoenix_talked_alfonse;
+        }
 }

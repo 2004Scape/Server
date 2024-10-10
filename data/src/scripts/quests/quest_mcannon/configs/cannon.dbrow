@@ -1,0 +1,9 @@
+[dwarf_zones]
+table=coord_pair_table
+// osrs
+data=coord_pair,0_46_53_35_25,0_47_53_63_63
+data=coord_pair,0_47_54_0_0,0_47_54_63_63
+// dwarven mine
+data=coord_pair,0_46_153_0_12,0_47_153_63_63
+data=coord_pair,0_46_153_55_0,0_47_153_63_12
+data=coord_pair,0_47_152_0_0,0_47_153_63_63

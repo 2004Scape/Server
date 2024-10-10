@@ -466,6 +466,7 @@ head1=model_53_idk_head
 head2=model_44_obj_wear
 // osrs
 maxrange=8
+attackrange=8
 respawnrate=30
 hitpoints=14
 attack=8
@@ -692,6 +693,7 @@ param=slashdefence,3
 param=crushdefence,5
 param=damagetype,^slash_style
 param=attack_anim,human_baxe_slash
+param=defend_anim,human_baxe_defend2
 param=attack_sound,baxe_slash
 // osrs side woodcutting guild forester use defend seq_398
 
@@ -987,9 +989,9 @@ param=attackbonus,6
 param=strengthbonus,6
 param=damagetype,^crush_style
 param=attack_anim,human_blunt_crush
+param=defend_anim,human_blunt_defend1
 param=attack_sound,baxe_slash
 category=shipyard_worker
-// osrs defend seq_403
 // osrs attack sound warhammer_crush
 
 [shark_Shipyard]
@@ -2321,9 +2323,8 @@ readyanim=skeleton_ready
 op2=Attack
 vislevel=18
 model1=model_2944_npc
-// Todo: proof old wander/maxranges  / osrs wr3/mr5 / runescape classic wanderrange is 8    --checkthis--
-// wanderrange=
-// maxrange=
+wanderrange=3
+maxrange=5
 respawnrate=70
 hitpoints=29
 attack=15
@@ -2343,6 +2344,7 @@ param=death_sound,skeleton_death
 param=undead,^true
 huntmode=cowardly
 huntrange=1
+// Todo: proof old wander/maxranges early 2004 / rsc wander 8
 
 [skeleton2]
 name=Skeleton
@@ -3407,13 +3409,13 @@ param=magicdefence,10
 param=rangedefence,30
 param=damagetype,^crush_style
 param=attack_anim,earthwarrior_chop
-param=defend_anim,earthwarrior_def
+param=defend_anim,human_baxe_defend2
+// param=defend_anim,earthwarrior_def
 param=death_anim,earthwarrior_death
 param=attack_sound,mace_crush
 // param=defend_sound,blade5
 huntmode=cowardly
 huntrange=1
-// osrs defend anim seq_398
 // osrs sound attack warhammer_crush
 
 [ice_warrior]
@@ -3790,33 +3792,6 @@ param=attack_sound,terrorbird_attack
 param=defend_sound,terrorbird_hit
 param=death_sound,terrorbird_death
 
-[npc_139]
-name=Entrana Fire Bird
-desc=Probably not a chicken.
-walkanim=firebird_walk
-readyanim=firebird_ready
-op2=Attack
-vislevel=2
-model1=model_2861_npc
-wanderrange=15
-maxrange=17
-respawnrate=35
-hitpoints=5
-param=attackbonus,-26
-param=strengthbonus,-26
-param=stabdefence,-26
-param=slashdefence,-26
-param=crushdefence,-26
-param=magicdefence,-26
-param=rangedefence,-26
-param=damagetype,^stab_style
-param=attack_anim,firebird_attack
-param=defend_anim,firebird_block
-param=death_anim,firebird_death
-param=attack_sound,terrorbird_attack
-param=defend_sound,terrorbird_hit
-param=death_sound,terrorbird_death
-
 [npc_140]
 walkanim=souless_walk
 readyanim=souless_ready
@@ -4011,15 +3986,16 @@ param=crushdefence,20
 param=magicdefence,10
 param=rangedefence,30
 param=damagetype,^slash_style
-param=attack_anim,human_sword_transslash
-param=defend_anim,earthwarrior_def
+param=attack_anim,human_sword_slash
+param=defend_anim,human_sword_defend2
+// param=attack_anim,human_sword_transslash
+// param=defend_anim,earthwarrior_def
 param=death_anim,earthwarrior_death
 param=attack_sound,hacksword_slash
 param=defend_sound,ice_warrior_hit
 param=death_sound,ice_warrior_death
 huntmode=cowardly
 huntrange=1
-// osrs attack animation seq_390 and defend seq_388
 
 [npc_146]
 name=Gull
@@ -5008,10 +4984,9 @@ param=magicdefence,-4
 param=rangedefence,14
 param=damagetype,^crush_style
 param=attack_anim,human_blunt_crush
-param=defend_anim,human_blunt_defend2
+param=defend_anim,human_blunt_defend1
 param=attack_sound,mace_crush
 // param=defend_sound,steel_mail
-// osrs defend anim seq_403
 // osrs attack sound warhammer_crush
 huntmode=cowardly
 huntrange=1
@@ -6512,7 +6487,6 @@ param=damagetype,^stab_style
 param=attack_anim,imp_attack
 param=defend_anim,imp_block
 param=death_anim,imp_death
-param=demonbane_vulnerable,yes
 param=attack_sound,imp_attack
 param=defend_sound,imp_hit
 param=death_sound,imp_death
@@ -6614,91 +6588,7 @@ head1=model_67_idk_head
 head2=model_79_idk_head
 wanderrange=2
 
-[npc_788]
-vislevel=hide
-name=Garv
-desc=A diligent guard.
-walkanim=human_walk_f,human_walk_b,human_walk_l,human_walk_r
-readyanim=human_ready
-op1=Talk-to
-recol1s=14724
-recol1d=3171
-recol2s=2340
-recol2d=3171
-recol3s=15855
-recol3d=3171
-model1=model_219_obj_wear
-model2=model_294_obj_wear
-model3=model_151_idk
-model4=model_254_idk
-model5=model_185_obj_wear
-model6=model_179_obj_wear
-model7=model_246_idk
-model8=model_550_obj_wear
-head1=model_57_obj_wear
-wanderrange=1
-
-[npc_789]
-vislevel=hide
-name=Grubor
-desc=A rough looking thief.
-walkanim=human_walk_f,human_walk_b,human_walk_l,human_walk_r
-readyanim=human_ready
-op1=Talk-to
-recol1s=14724
-recol1d=15648
-recol2s=2340
-recol2d=3171
-recol3s=6273
-recol3d=15617
-recol4s=7328
-recol4d=29460
-recol5s=14801
-recol5d=24075
-recol6s=24075
-recol6d=20934
-model1=model_215_idk
-model2=model_250_idk
-model3=model_299_npc
-model4=model_159_npc
-model5=model_329_npc
-model6=model_263_npc
-model7=model_185_obj_wear
-model8=model_176_idk
-head1=model_53_idk_head
-head2=model_82_idk_head
-
-[npc_790]
-vislevel=hide
-name=Trobert
-desc=A well dressed thief.
-walkanim=human_walk_f,human_walk_b,human_walk_l,human_walk_r
-readyanim=human_ready
-op1=Talk-to
-recol1s=14724
-recol1d=3171
-recol2s=2340
-recol2d=32767
-recol3s=6273
-recol3d=3171
-recol4s=8386
-recol4d=20865
-recol5s=31649
-recol5d=28539
-model1=model_235_idk
-model2=model_246_idk
-model3=model_292_idk
-model4=model_254_idk
-model5=model_323_obj_wear
-model6=model_179_obj_wear
-model7=model_185_obj_wear
-model8=model_151_idk
-model9=model_290_obj_wear
-model10=model_518_obj_wear
-model11=model_326_idk
-head1=model_67_idk_head
-
-[npc_791]
+[seth]
 vislevel=hide
 name=Seth
 desc=Slightly fishy smelling.
@@ -6725,70 +6615,7 @@ model7=model_151_idk
 model8=model_176_idk
 head1=model_53_idk_head
 
-[grip]
-name=Grip
-desc=Looks like he's been in the wars...
-walkanim=human_walk_f,human_walk_b,human_walk_l,human_walk_r
-readyanim=human_ready
-op1=Talk-to
-op2=Attack
-vislevel=26
-recol1s=21279
-recol1d=15855
-recol2s=3168
-recol2d=8384
-recol3s=21004
-recol3d=24075
-model1=model_218_obj_wear
-model2=model_294_obj_wear
-model3=model_246_idk
-model4=model_165_npc
-model5=model_259_npc
-model6=model_550_obj_wear
-head1=model_56_obj_wear
-wanderrange=1
-respawnrate=50
-hitpoints=25
-attack=18
-strength=17
-defence=18
-param=attackbonus,5
-param=strengthbonus,7
-param=stabdefence,16
-param=slashdefence,27
-param=crushdefence,22
-param=damagetype,^slash_style
-param=attack_anim,human_baxe_slash
-param=defend_anim,human_baxe_defend2
-param=attack_sound,baxe_slash
-// TODO defend sounds
-
-[npc_794]
-vislevel=hide
-name=Charlie the cook
-desc=Distinctly cook-like.
-walkanim=human_walk_f,human_walk_b,human_walk_l,human_walk_r
-readyanim=human_ready
-op1=Talk-to
-recol1s=27482
-recol1d=31710
-recol2s=14724
-recol2d=16912
-recol3s=2340
-recol3d=29377
-model1=model_235_idk
-model2=model_199_obj_wear
-model3=model_302_npc
-model4=model_263_npc
-model5=model_176_idk
-model6=model_185_obj_wear
-model7=model_151_idk
-model8=model_249_idk
-head1=model_67_idk_head
-head2=model_81_idk_head
-head3=model_41_obj_wear
-
-[npc_795]
+[ice_queen]
 name=Ice Queen
 desc=A cold hearted lady.
 walkanim=human_walk_f,human_walk_b,human_walk_l,human_walk_r
@@ -6828,6 +6655,7 @@ param=rangedefence,30
 param=damagetype,^crush_style
 param=defend_sound,ice_warrior_hit
 param=death_sound,female_death
+param=death_drop,ice_gloves
 
 [pirate_guard]
 name=Pirate Guard
@@ -8325,7 +8153,7 @@ param=attackbonus,8
 param=strengthbonus,10
 param=damagetype,^stab_style
 param=attack_anim,human_spear_stab
-param=defend_anim,human_khazard_spear_defend
+param=defend_anim,human_spear_block
 param=attack_sound,staff_stab
 huntmode=cowardly
 huntrange=1

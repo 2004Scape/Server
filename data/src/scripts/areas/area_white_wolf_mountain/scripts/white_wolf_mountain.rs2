@@ -1,0 +1,42 @@
+[oploc1,ice_queen_lair_rockslide]
+mes("These rocks contain nothing interesting. They are just in the way.");
+
+[oploc2,ice_queen_lair_rockslide]
+~mine_ice_queen_lair_rockslide;
+
+[oplocu,ice_queen_lair_rockslide]
+if (oc_category(last_useitem) = weapon_pickaxe) {
+  p_oploc(2);
+  return;
+}
+~displaymessage(^dm_default);
+
+[proc,mine_ice_queen_lair_rockslide]
+def_obj $pickaxe = ~pickaxe_checker;
+if ($pickaxe = null) {
+  ~mesbox("You need a pickaxe to clear the rockslide. You do not have one that you have the Mining level to use.");
+  return;
+}
+if(stat(mining) < 50) {
+  mes("You need a Mining level of 50 to clear the rockslide.");
+  return;
+}
+anim(oc_param($pickaxe, mining_animation), 0);
+~mining_sound;
+def_coord $loc_coord = loc_coord;
+loc_change(loc_472, 2);
+p_delay(1);
+loc_change(loc_474, 2);
+p_delay(1);
+loc_del(3);
+loc_add($loc_coord, loc_475, loc_angle, loc_shape, 3); // replace rockslide with 2x2 invisible barrier
+loc_add(movecoord($loc_coord, 0, 0, 1), loc_475, loc_angle, loc_shape, 3);
+loc_add(movecoord($loc_coord, 1, 0, 1), loc_475, loc_angle, loc_shape, 3);
+loc_add(movecoord($loc_coord, 1, 0, 0), loc_475, loc_angle, loc_shape, 3);
+if (coordx(coord) > coordx($loc_coord)) {
+  ~forcemove(movecoord(coord, -2, 0, 0));
+  ~forcemove(movecoord(coord, -1, 0, 1));
+} else {
+  ~forcemove(movecoord(coord, 2, 0, 0));
+  ~forcemove(movecoord(coord, 1, 0, -1));
+}

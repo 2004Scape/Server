@@ -82,7 +82,10 @@ data=restore_message2,0
 [beer_consume_messages]
 table=consume_messages_table
 data=consumable,beer
-data=consume_message1,You drink the beer. You feel slightly reinvigorated...
+// double spaced after beer:
+// - https://imgur.com/0qrRHkH
+// - https://imgur.com/UW1e6Z7
+data=consume_message1,You drink the beer.  You feel slightly reinvigorated...
 data=consume_message2,...and slightly dizzy too.
 data=restore_message2,0
 

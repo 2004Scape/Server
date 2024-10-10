@@ -27,11 +27,11 @@
 ^advance_defense_2_jingle = advance defense2
 ^advance_defense_2_millis = 8000
 
-^advance_firemarking_jingle = advance firemarking
-^advance_firemarking_millis = 6550
+^advance_firemaking_jingle = advance firemarking
+^advance_firemaking_millis = 6550
 
-^advance_firemarking_2_jingle = advance firemarking2
-^advance_firemarking_2_millis = 8800
+^advance_firemaking_2_jingle = advance firemarking2
+^advance_firemaking_2_millis = 8800
 
 ^advance_fishing_jingle = advance fishing
 ^advance_fishing_millis = 9600

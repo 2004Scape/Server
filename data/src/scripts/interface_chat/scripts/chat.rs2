@@ -539,6 +539,16 @@ while ($page < $pagetotal) {
     $page = calc($page + 1);
 }
 
+[proc,objboxcustom](obj $obj, string $string, int $scale, int $x, int $y)
+split_init($string, 400, 4, q8);
+def_int $page = 0;
+def_int $pagetotal = split_pagecount;
+while ($page < $pagetotal) {
+    ~objbox_page($obj, $scale, $x, $y, $page);
+    p_pausebutton;
+    $page = calc($page + 1);
+}
+
 // no idea if this exists but broken arrow looks terrible without it
 [proc,objboxr](obj $obj, string $string)
 split_init($string, 400, 4, q8);
@@ -546,6 +556,17 @@ def_int $page = 0;
 def_int $pagetotal = split_pagecount;
 while ($page < $pagetotal) {
     ~objbox_page($obj, 250, ^objbox_width, 0, $page);
+    p_pausebutton;
+    $page = calc($page + 1);
+}
+
+// imgur.com/WX3hzXI
+[proc,objboxsmall](obj $obj, string $string)
+split_init($string, 400, 4, q8);
+def_int $page = 0;
+def_int $pagetotal = split_pagecount;
+while ($page < $pagetotal) {
+    ~objbox_page($obj, 180, 0, divide(^objbox_height, 3), $page);
     p_pausebutton;
     $page = calc($page + 1);
 }

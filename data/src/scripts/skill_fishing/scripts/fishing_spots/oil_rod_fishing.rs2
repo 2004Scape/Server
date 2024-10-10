@@ -29,7 +29,7 @@ if (npc_range(coord) > 1)
 
 [label,oil_rod_fishing_use_item]
 switch_obj (last_useitem) {
-    case obj_1585: @attempt_fish_lava_eel;
+    case oily_fishing_rod: @attempt_fish_lava_eel;
     case net: @burnup_fishing_equipment(net, "net");
     case net_big: @burnup_fishing_equipment(net_big, "net");
     case harpoon: @burnup_fishing_equipment(harpoon, "harpoon");
@@ -89,7 +89,7 @@ if (stat(fishing) < 53) {
     return(false);
 }
 // check if they have fishing equipment
-if (inv_total(inv, obj_1585) < 1) {
+if (inv_total(inv, oily_fishing_rod) < 1) {
     anim(null, 0);
     ~mesbox("You need a flame-proof fishing rod to bait these fish.");
     return(false);

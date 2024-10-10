@@ -7,7 +7,8 @@ import Packet from '#jagex2/io/Packet.js';
 
 import { toBase37, toSafeName } from '#jagex2/jstring/JString.js';
 
-import {LoginClient, LoginResponse} from '#lostcity/server/LoginServer.js';
+import LoginClient from '#lostcity/server/LoginClient.js';
+import LoginResponse from '#lostcity/server/LoginResponse.js';
 
 import Environment from '#lostcity/util/Environment.js';
 
@@ -36,6 +37,8 @@ if (typeof self === 'undefined') {
     };
 }
 
+const login = new LoginClient();
+
 async function handleRequests(parentPort: any, msg: any, priv: forge.pki.rsa.PrivateKey) {
     switch (msg.type) {
         case 'reset': {
@@ -43,7 +46,6 @@ async function handleRequests(parentPort: any, msg: any, priv: forge.pki.rsa.Pri
                 return;
             }
 
-            const login = new LoginClient();
             await login.reset();
             break;
         }
@@ -52,7 +54,6 @@ async function handleRequests(parentPort: any, msg: any, priv: forge.pki.rsa.Pri
                 return;
             }
 
-            const login = new LoginClient();
             await login.heartbeat(msg.players);
             break;
         }
@@ -115,7 +116,6 @@ async function handleRequests(parentPort: any, msg: any, priv: forge.pki.rsa.Pri
                     return;
                 }
 
-                const login = new LoginClient();
                 const request = await login.load(toBase37(toSafeName(username)), password, uid);
 
                 if (request.reply === 1 && request.data) {
@@ -128,7 +128,7 @@ async function handleRequests(parentPort: any, msg: any, priv: forge.pki.rsa.Pri
                         username: toSafeName(username),
                         save: request.data.data
                     });
-                } else if ((request.reply === 2 || request.reply === 3) && opcode === 16) {
+                } else if ((request.reply === 4 || request.reply === 5) && opcode === 16) {
                     // new connection + already logged in
                     parentPort.postMessage({
                         type: 'loginreply',
@@ -136,7 +136,7 @@ async function handleRequests(parentPort: any, msg: any, priv: forge.pki.rsa.Pri
                         socket
                     });
                     return;
-                } else if (request.reply === 3 && opcode === 18) {
+                } else if (request.reply === 5 && opcode === 18) {
                     // reconnection + already logged into another world (???)
                     parentPort.postMessage({
                         type: 'loginreply',
@@ -144,7 +144,7 @@ async function handleRequests(parentPort: any, msg: any, priv: forge.pki.rsa.Pri
                         socket
                     });
                     return;
-                } else if (request.reply === 4) {
+                } else if (request.reply === 2) {
                     parentPort.postMessage({
                         type: 'loginreply',
                         status: LoginResponse.SUCCESSFUL,
@@ -154,7 +154,7 @@ async function handleRequests(parentPort: any, msg: any, priv: forge.pki.rsa.Pri
                         username: toSafeName(username),
                         save: new Uint8Array()
                     });
-                } else if (request.reply === 5) {
+                } else if (request.reply === 3) {
                     // invalid credentials (bad user or bad pass)
                     parentPort.postMessage({
                         type: 'loginreply',
@@ -209,7 +209,6 @@ async function handleRequests(parentPort: any, msg: any, priv: forge.pki.rsa.Pri
             const { username, save } = msg;
 
             if (Environment.LOGIN_KEY) {
-                const login = new LoginClient();
                 const reply = await login.save(toBase37(username), save);
 
                 if (reply === 0) {

@@ -42,6 +42,9 @@ spotanim_map(firewave_impact, loc_coord, 92, 0);
 queue(damage_player, 0, 10);
 %macro_gas_counter = 0;
 
+mes("A spark from your pickaxe ignites the gas!"); // https://imgur.com/Rjj4JqR
+mes("The blast damages your pickaxe!");
+
 def_obj $pickaxe = ~pickaxe_checker;
 def_namedobj $pickaxe_broken = oc_param($pickaxe, broken);
 

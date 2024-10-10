@@ -29,6 +29,8 @@ import ZoneMessageEncoder from '#lostcity/network/outgoing/codec/ZoneMessageEnco
 import ZoneMessage from '#lostcity/network/outgoing/ZoneMessage.js';
 import ZoneEntityList, {LocList, ObjList} from '#lostcity/engine/zone/ZoneEntityList.js';
 import NonPathingEntity from '#lostcity/entity/NonPathingEntity.js';
+import ObjType from '#lostcity/cache/config/ObjType.js';
+import Environment from '#lostcity/util/Environment.js';
 
 export default class Zone {
     private static readonly SIZE: number = 8 * 8;
@@ -97,7 +99,7 @@ export default class Zone {
                     continue;
                 }
                 if (obj.lifecycle === EntityLifeCycle.DESPAWN) {
-                    if (obj.receiverId !== -1) {
+                    if (obj.reveal !== -1) {
                         World.revealObj(obj);
                     } else {
                         World.removeObj(obj, 0);
@@ -302,6 +304,11 @@ export default class Zone {
     }
 
     revealObj(obj: Obj, receiverId: number): void {
+        const objType: ObjType = ObjType.get(obj.type);
+        if(!(objType.tradeable && (objType.members && Environment.NODE_MEMBERS || !objType.members))) {
+            obj.reveal = -1;
+            return;
+        }
         obj.receiverId = -1;
         obj.reveal = -1;
         obj.lastChange = -1;

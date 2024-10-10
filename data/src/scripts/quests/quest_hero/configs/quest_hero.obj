@@ -1,0 +1,81 @@
+[grips_keyring]
+name=Grips' keyring
+desc=Some keys on a keyring.
+members=yes
+model=model_2372_obj
+recol1s=31393
+recol1d=22945
+2dxof=-3
+2dyof=5
+2dzoom=700
+2dyan=20
+2dxan=328
+weight=25g
+
+[id_papers]
+name=Id papers
+desc=Apparently my name is Hartigen.
+model=model_2600_obj
+members=yes
+2dxof=1
+2dyof=7
+2dzoom=1040
+2dyan=120
+2dxan=380
+weight=10g
+
+[miscellaneous_key]
+name=Miscellaneous key
+desc=I wonder what this unlocks?
+model=model_2372_obj
+recol1s=31393
+recol1d=22945
+2dxof=-3
+2dyof=5
+2dzoom=700
+2dyan=20
+2dxan=328
+weight=10g
+members=yes
+tradeable=yes
+
+[thieves_armband]
+name=Thieves' armband
+desc=This denotes a Master Thief.
+cost=2
+model=model_2820_obj
+2dxof=1
+2dyof=17
+2dzoom=450
+2dyan=1924
+2dxan=296
+weight=25g
+members=yes
+
+[petes_candlestick]
+name=Pete's candlestick
+desc=Scarface Pete's Candlestick.
+cost=5
+model=model_2505_obj
+2dyof=-3
+2dzoom=620
+2dyan=1628
+2dxan=184
+weight=500g
+members=yes
+tradeable=yes
+
+[fire_feather]
+name=Fire feather
+desc=Firebird feather.
+cost=2
+model=model_2476_obj
+recol1s=32767
+recol1d=31041
+2dxof=4
+2dyof=10
+2dzoom=700
+2dyan=692
+2dxan=428
+weight=2g
+members=yes

@@ -1,0 +1,15 @@
+[oploc1,heroes_door_left] @open_heroes_guild(^left);
+[oploc1,heroes_door_right] @open_heroes_guild(^right);
+
+[label,open_heroes_guild](int $side) {
+  if (%hero_progress >= ^hero_complete) {
+    ~open_and_close_double_door2(~check_axis_locactive(coord), $side, door_open);
+    return;
+  }
+  if (npc_find(coord, achietties, 10, 0) = true) {
+    facesquare(npc_coord);
+    @speak_achietties;
+    return;
+  }
+  mes("The door is locked."); // backup 
+}

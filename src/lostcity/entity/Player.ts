@@ -442,6 +442,9 @@ export default class Player extends PathingEntity {
 
         this.lastStepX = this.x - 1;
         this.lastStepZ = this.z;
+        this.lastCoordX = this.x;
+        this.lastCoordZ = this.z;
+        this.lastCoordLevel = this.level;
     }
 
     triggerMapzone(x: number, z: number) {
@@ -575,6 +578,8 @@ export default class Player extends PathingEntity {
         this.recoverEnergy(moved);
         if (this.runenergy === 0) {
             this.setVar(VarPlayerType.PLAYER_RUN, 0);
+        }
+        if (this.runenergy < 100) {
             this.setVar(VarPlayerType.TEMP_RUN, 0);
         }
         if (moved) {
@@ -973,8 +978,9 @@ export default class Player extends PathingEntity {
             this.clearWaypoints();
         }
         let moved = false;
-
-        if (this.target && (!this.interacted || this.apRangeCalled)) {
+        if (this.interacted && !this.apRangeCalled) {
+            this.recoverEnergy(false);
+        } else if (this.target) {
             this.interacted = false;
             moved = this.updateMovement();
             if (moved) {
