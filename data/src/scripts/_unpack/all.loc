@@ -12673,7 +12673,7 @@ retex1d=door
 recol2s=6342
 recol2d=11458
 
-[loc_2552]
+[east_ardy_sewer_gate_north]
 name=Gate
 desc=A metal gate bars your way
 model=model_loc_52
@@ -12681,7 +12681,7 @@ active=yes
 op1=Open
 op2=Pick Lock
 
-[loc_2553]
+[east_ardy_sewer_gate_south]
 name=Gate
 desc=A metal gate bars your way
 model=model_loc_52
