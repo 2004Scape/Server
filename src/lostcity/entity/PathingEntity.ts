@@ -421,7 +421,12 @@ export default abstract class PathingEntity extends Entity {
     }
 
     pathToPathingTarget(): void {
-        if (!this.target || !(this.target instanceof PathingEntity)) {
+        if (!this.target) {
+            return;
+        }
+        
+        if (!(this.target instanceof PathingEntity)) {
+            this.pathToTarget();
             return;
         }
 

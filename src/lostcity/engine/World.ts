@@ -832,14 +832,15 @@ class World {
                     player.mask |= Player.FACE_ENTITY;
                 }
 
-                if (player.opcalled && (player.userPath.length === 0 || !Environment.NODE_CLIENT_ROUTEFINDER)) {
-                    player.pathToTarget();
-                    continue;
-                }
-                
                 if (player.busy() || !player.opcalled) {
                     player.moveClickRequest = true;
                 }
+                
+                if (player.opcalled && (player.userPath.length === 0 || !Environment.NODE_CLIENT_ROUTEFINDER)) {
+                    player.pathToPathingTarget();
+                    continue;
+                }
+                
                 player.pathToMoveClick(player.userPath, !Environment.NODE_CLIENT_ROUTEFINDER);
             }
 
