@@ -1,0 +1,6 @@
+// no idea if this is the right approach, might need some refactoring.
+[proc,high_priority_walktrigger_exists]()(boolean)
+if (getwalktrigger() = duel_arena_no_move) {
+    return(true);
+}
+return(false);
