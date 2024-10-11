@@ -53,10 +53,6 @@ if (.finduid(%duelpartner) = true) {
 
     hint_player(.uid);
 
-    if (~duel_arena_movement_check = true) {
-        walktrigger(duel_arena_no_move);
-    }
-
     softtimer(duel_arena_start_3, 3); // todo: confirm these timings
 
     midi_jingle(^duel_start_jingle, ^duel_start_jingle_millis);
