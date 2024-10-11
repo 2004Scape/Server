@@ -65,9 +65,9 @@ if ($random < 32) {
     }
 } else if ($random < 62) {
     if (map_members = true) {
-        // TODO - Only go to mega-rare if player has completed Legends' Quest, else give a Talisman.
+        return (~megararetable);
     }
-} else if ($random < 65) {
+} else if($random < 65) {
     if (map_members = true) {
         if (coordz(coord) > 6400) {
             return (chaos_talisman, 1);
@@ -124,13 +124,7 @@ if ($random < 3) {
 
 // Name unconfirmed
 [proc,megararetable]()(namedobj, int)
-def_int $random = 0;
-
-if (inv_total(worn, ring_of_wealth) > 0) {
-    $random = random(15);
-} else {
-    $random = random(128);
-}
+def_int $random = random(128);
 
 if ($random < 8) {
     return (rune_spear, 1);
