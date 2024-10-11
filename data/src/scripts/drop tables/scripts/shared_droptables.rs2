@@ -65,15 +65,7 @@ if ($random < 32) {
     }
 } else if ($random < 62) {
     if (map_members = true) {
-        if(%legends_progress = ^legends_complete) {
-            return (~megararetable);
-        } else {
-        if (coordz(coord) > 6400) {
-            return (chaos_talisman, 1);
-        } else {
-            return (nature_talisman, 1);
-        }
-        }
+        return (~megararetable);
     }
 } else if($random < 65) {
     if (map_members = true) {
