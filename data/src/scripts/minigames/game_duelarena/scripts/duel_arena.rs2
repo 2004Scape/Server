@@ -116,6 +116,12 @@ if (.finduid(%duelpartner) = true & ~enough_duel_space = true) { // https://yout
         .inv_stoptransmit(duel_select_type:otherinv);
         .inv_stoptransmit(duel_side:inv);
 
+        walktrigger(duel_arena_no_move); // run every time to allow this bug: https://youtu.be/XeLm7FRoYIA
+        .walktrigger(duel_arena_no_move);
+
+        cam_reset;
+        .cam_reset;
+
         def_int $tempinvused = sub(inv_size(tempinv), inv_freespace(tempinv));
         if ($tempinvused < 1) {
             if_settext(duel_confirm:com_91, "Absolutely nothing!");
