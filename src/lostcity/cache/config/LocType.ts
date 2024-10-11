@@ -173,9 +173,6 @@ export default class LocType extends ConfigType {
             }
 
             this.op[code - 30] = dat.gjstr();
-            if (this.op[code - 30] === 'hidden') {
-                this.op[code - 30] = null;
-            }
         } else if (code === 40) {
             const count = dat.g1();
             this.recol_s = new Uint16Array(count);
