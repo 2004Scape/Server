@@ -49,8 +49,8 @@ export class FriendServer {
     private socketByWorld: Record<number, WebSocket> = {};
 
     constructor() {
-        this.server = new WebSocketServer({ port: Environment.FRIENDS_PORT, host: '0.0.0.0' }, () => {
-            console.log(`Friend server listening on port ${Environment.FRIENDS_PORT}`);
+        this.server = new WebSocketServer({ port: Environment.FRIEND_PORT, host: '0.0.0.0' }, () => {
+            console.log(`Friend server listening on port ${Environment.FRIEND_PORT}`);
         });
 
         this.server.on('connection', (socket: WebSocket) => {
@@ -390,15 +390,29 @@ export class FriendClient {
     private ws: WebSocket | null = null;
     private wsr: WsSyncReq | null = null;
 
+    nodeId: number = 0;
+
+    constructor(nodeId: number) {
+        this.nodeId = nodeId;
+    }
+
     async connect() {
         if (this.wsr && this.wsr.checkIfWsLive()) {
             return;
         }
 
         return new Promise<void>((res, rej) => {
-            this.ws = new WebSocket(`ws://${Environment.FRIENDS_HOST}:${Environment.FRIENDS_PORT}`);
+            this.ws = new WebSocket(`ws://${Environment.FRIEND_HOST}:${Environment.FRIEND_PORT}`,
+                {
+                    timeout: 5000
+                }
+            );
 
             const timeout = setTimeout(() => {
+                if (this.ws) {
+                    this.ws.terminate();
+                }
+
                 this.ws = null;
                 this.wsr = null;
                 res();
@@ -441,7 +455,7 @@ export class FriendClient {
         this.messageHandlers.push(fn);
     }
 
-    public async worldConnect(world: number) {
+    public async worldConnect() {
         await this.connect();
 
         if (!this.ws || !this.wsr || !this.wsr.checkIfWsLive()) {
@@ -450,7 +464,7 @@ export class FriendClient {
 
         this.ws.send(JSON.stringify({
             type: FriendsClientOpcodes.WORLD_CONNECT,
-            world
+            world: this.nodeId
         }));
     }
 
@@ -463,6 +477,7 @@ export class FriendClient {
 
         this.ws.send(JSON.stringify({
             type: FriendsClientOpcodes.PLAYER_LOGIN,
+            world: this.nodeId,
             username37: toBase37(username).toString(),
             privateChat
         }));
@@ -477,6 +492,7 @@ export class FriendClient {
 
         this.ws.send(JSON.stringify({
             type: FriendsClientOpcodes.PLAYER_LOGOUT,
+            world: this.nodeId,
             username37: toBase37(username).toString()
         }));
     }
@@ -490,6 +506,7 @@ export class FriendClient {
 
         this.ws.send(JSON.stringify({
             type: FriendsClientOpcodes.FRIENDLIST_ADD,
+            world: this.nodeId,
             username37: toBase37(username).toString(),
             targetUsername37: target.toString()
         }));
@@ -504,6 +521,7 @@ export class FriendClient {
 
         this.ws.send(JSON.stringify({
             type: FriendsClientOpcodes.FRIENDLIST_DEL,
+            world: this.nodeId,
             username37: toBase37(username).toString(),
             targetUsername37: target.toString()
         }));
@@ -518,6 +536,7 @@ export class FriendClient {
 
         this.ws.send(JSON.stringify({
             type: FriendsClientOpcodes.IGNORELIST_ADD,
+            world: this.nodeId,
             username37: toBase37(username).toString(),
             targetUsername37: target.toString()
         }));
@@ -532,6 +551,7 @@ export class FriendClient {
 
         this.ws.send(JSON.stringify({
             type: FriendsClientOpcodes.IGNORELIST_DEL,
+            world: this.nodeId,
             username37: toBase37(username).toString(),
             targetUsername37: target.toString()
         }));
@@ -546,6 +566,7 @@ export class FriendClient {
 
         this.ws.send(JSON.stringify({
             type: FriendsClientOpcodes.PLAYER_CHAT_SETMODE,
+            world: this.nodeId,
             username37: toBase37(username).toString(),
             privateChat: privateChatMode
         }));
@@ -560,6 +581,7 @@ export class FriendClient {
 
         this.ws.send(JSON.stringify({
             type: FriendsClientOpcodes.PRIVATE_MESSAGE,
+            world: this.nodeId,
             username37: toBase37(username).toString(),
             targetUsername37: target.toString(),
             staffLvl,

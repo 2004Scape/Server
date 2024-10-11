@@ -5,7 +5,7 @@ import { parentPort } from 'worker_threads';
 import Environment from '#lostcity/util/Environment.js';
 import { FriendClient } from './FriendServer.js';
 
-const client = new FriendClient();
+const client = new FriendClient(Environment.NODE_ID);
 
 if (typeof self === 'undefined') {
     if (!parentPort) throw new Error('This file must be run as a worker thread.');
@@ -47,7 +47,7 @@ type ParentPort = {
 async function handleRequests(parentPort: ParentPort, msg: any, priv: forge.pki.rsa.PrivateKey) {
     switch (msg.type) {
         case 'connect': {
-            await client.worldConnect(Environment.NODE_ID as number);
+            await client.worldConnect();
             break;
         }
         case 'player_login': {
