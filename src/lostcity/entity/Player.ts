@@ -860,6 +860,7 @@ export default class Player extends PathingEntity {
     processWalktrigger() {
         if (this.walktrigger !== -1 && (!this.protect && !this.delayed())) {
             const trigger = ScriptProvider.get(this.walktrigger);
+            this.walktrigger = -1;
             if (trigger) {
                 const script = ScriptRunner.init(trigger, this);
                 this.runScript(script, true);
