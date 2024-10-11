@@ -6,3 +6,5 @@
 ^sail_karamja_to_port_sarim = 6
 ^sail_ardougne_to_brimhaven = 7
 ^sail_brimhaven_to_ardougne = 8
+^sail_cairn_to_port_khazard = 10
+^sail_cairn_to_port_sarim = 13

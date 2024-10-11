@@ -1,4 +1,4 @@
-[obj_619]
+[paramaya_ticket]
 name=Paramaya ticket
 desc=Allows you to rest in the luxurious Paramayer Inn.
 cost=5
@@ -12,7 +12,7 @@ weight=4g
 members=yes
 tradeable=yes
 
-[obj_621]
+[ship_ticket]
 name=Ship ticket
 desc=Allows you passage on the 'Lady of the waves' ship.
 cost=5

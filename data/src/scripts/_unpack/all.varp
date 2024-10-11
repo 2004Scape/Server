@@ -126,13 +126,10 @@ protect=no
 [bank_noted]
 transmit=yes
 
-[pk_prey1]
-protect=no
-type=player_uid
+[zq_map_mechanisms]
+scope=perm
 
-[pk_prey2]
-protect=no
-type=player_uid
+[zq_rash_timer]
 
 [pk_predator1]
 protect=no
@@ -239,9 +236,13 @@ transmit=yes
 
 [varp_216]
 
-[varp_217]
+[pk_prey1]
+protect=no
+type=player_uid
 
-[varp_218]
+[pk_prey2]
+protect=no
+type=player_uid
 
 [varp_219]
 

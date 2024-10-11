@@ -3,9 +3,20 @@
 if (distance(coord, 0_46_52_55_55) <= 1) {
     @hunt_dig;
 }
+
+// zombiequeen (TODO: did this always exist? It almost certainly existed in 2007, checking https://youtu.be/w1I0GXAkLKw?si=avVq7fsXaho-wZvK&t=317, it does
+// facesquare(loc_coord), which wouldnt be needed if it was only triggerable from oplocu
+if(inzone(0_45_46_40_54, 0_45_46_43_55, coord) = true) {
+    if(loc_find(0_45_46_41_55, loc_2217) = true) {
+        @zombiequeen_mound_dig;
+    }
+}
+
 // Everything else
 p_arrivedelay;
+p_stopaction;
 anim(human_dig, 0);
+
 // Treasure Trails
 if(map_members = true & ~trail_hasclue_inv = true) {
     def_obj $clue = ~trail_getclue_inv;

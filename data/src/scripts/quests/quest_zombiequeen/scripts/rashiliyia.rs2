@@ -1,0 +1,60 @@
+[ai_queue10,npc_506]
+npc_delay(1);
+npc_say("Which non-kin dares enter my tomb?");
+npc_delay(2);
+npc_say("Let me squeeze the life from your mortal frame.");
+if(finduid(%npc_attacking_uid) = true) {
+    sound_synth(ghost_attack, 0, 0);
+}
+npc_anim(ghost_attack, 0);
+npc_delay(2);
+if(finduid(%npc_attacking_uid) = true) {
+    mes("You feel invisible hands starting to choke you...");
+    queue(damage_player, 0, ~random_range(1, 3));
+    say("* Gaaaa.... *");
+}
+npc_delay(1);
+npc_say("My minions will finish thee!");
+npc_delay(1);
+if(finduid(%npc_attacking_uid) = true) { // distance check?
+    sound_synth(ghost_attack, 0, 0);
+}
+npc_anim(ghost_attack, 0);
+npc_delay(1);
+if(finduid(%npc_attacking_uid) = true) { // distance check?
+    sound_synth(smokepuff, 0, 0);
+}
+spotanim_map(spotanim_184, npc_coord, 5, 0);
+npc_del;
+@rash_summon_minions(%npc_attacking_uid);
+
+[label,rash_summon_minions](player_uid $uid)
+world_delay(4); // 5t
+if(p_finduid($uid) = true & inzone(0_45_148_0_0, 0_45_148_63_63, coord) = true) {
+    if_close;
+    def_int $i = 0;
+    def_int $count = ~random_range(1, 3);
+    while($i < $count) {
+        def_coord $npc_coord = map_findsquare(coord, 1, 4, ^map_findsquare_lineofwalk);
+        npc_add($npc_coord, ~random_undead_one(), 500);
+        sound_synth(smokepuff, 0, 0);
+        spotanim_map(small_smokepuff, $npc_coord, 5, 0);
+        npc_setmode(opplayer2);
+        def_int $rand = random(5);
+        if($rand = 0) npc_say("You cannot escape me, prepare to die.");
+        else if($rand = 1) npc_say("Prepare to go to the other side!");
+        else if ($rand = 2) npc_say("Soon you will be undead!");
+        else if($rand = 3) npc_say("Rahhhhh! OOoohhhhhh!");
+        $i = add($i,1);
+        p_delay(0);
+    }
+}
+
+[opnpc1,npc_506]
+if(inzone(0_43_146_9_16, 0_43_146_19_28, npc_coord) = true) {
+    mes("Rashiliyia disappears as soon as you open your mouth.");
+    spotanim_map(spotanim_184, npc_coord, 5, 0);
+    npc_del;
+} else {
+    mes("Rashiliyia doesn't seem interested in talking to you.");
+}

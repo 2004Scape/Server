@@ -5947,7 +5947,11 @@ recol1d=22218
 model1=model_2944_npc
 wanderrange=3
 maxrange=20
-// TODO
+respawnrate=50
+hitpoints=47
+attack=55
+strength=55
+defence=55
 param=attack_anim,skeleton_attack
 param=defend_anim,skeleton_block
 param=death_anim,skeleton_death
@@ -5957,6 +5961,7 @@ param=death_sound,skeleton_death
 param=undead,^true
 huntmode=cowardly
 huntrange=1
+category=undead_one
 
 [npc_503]
 name=Undead One
@@ -5971,7 +5976,11 @@ model1=model_2944_npc
 model2=model_2946_npc
 wanderrange=3
 maxrange=20
-// TODO
+respawnrate=50
+hitpoints=47
+attack=63
+strength=63
+defence=63
 param=attack_anim,skeleton_attack
 param=defend_anim,skeleton_block
 param=death_anim,skeleton_death
@@ -5981,6 +5990,7 @@ param=death_sound,skeleton_death
 param=undead,^true
 huntmode=cowardly
 huntrange=1
+category=undead_one
 
 [npc_504]
 name=Undead One
@@ -6013,8 +6023,10 @@ param=attack_sound,zombie_attack
 param=defend_sound,zombie_hit
 param=death_sound,zombie_death
 param=undead,^true
+param=death_drop,null
 huntmode=cowardly
 huntrange=1
+category=undead_one
 
 [npc_505]
 name=Undead One
@@ -6052,8 +6064,10 @@ param=attack_sound,zombie_attack
 param=defend_sound,zombie_hit
 param=death_sound,zombie_death
 param=undead,^true
+param=death_drop,null
 huntmode=cowardly
 huntrange=1
+category=undead_one
 
 [npc_506]
 vislevel=hide

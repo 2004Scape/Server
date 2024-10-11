@@ -1,7 +1,94 @@
 // NOTE: rs classic dialogue is slightly different, so this may be the updated dialogue after more jungle vines, more wall fungus, and seqs with sounds were added: https://www.youtube.com/watch?v=qm8ZwROiW8s
 [opnpcu,trufitus]
-if(%junglepotion_progress = ^junglepotion_complete) {
+if(%junglepotion_progress >= ^junglepotion_complete) {
     switch_obj (last_useitem) {
+        case rashiliya_corpse:
+            ~mesbox("You show Trufitus the remains...");
+            ~chatplayer("<p,neutral>Could you have a look at this..");
+            ~chatnpc("<p,neutral>This is truly incredible bwana... So these are the remains of the dread Queen Rashiliyia?");
+            ~chatplayer("<p,neutral>Yes, I think so.");
+            @multi2("What should I do with them?", trufitus_whatcorpse, "Can you take them off my hands?", trufitus_takethem);
+        case bone_key:
+            ~chatplayer("<p,neutral>Have a look at this!");
+            ~chatnpc("<p,neutral>This is amazing Bwana, the level of detail is incredible. Where did you find it?");
+            @multi2("I made it from the bone shard that Zadimus gave me.", trufitus_bonezadimus, "Do you know what it opens?", trufitus_opens);
+        case zqbeadsofthedead:
+            if(%zombiequeen_progress >= ^zombiequeen_complete) @trufitus_postquest_item;
+            ~mesbox("You show Trufitus the 'Beads of the Dead'.");
+            ~chatplayer("<p,neutral>Take a look at this...");
+            ~chatnpc("<p,neutral>This is very impressive Bwana, I'm quite surprised at your ingenuity. This should be a good protection against Rashiliyia if you ever find her Tomb.");
+        case bervirius_notes:
+            if(%zombiequeen_progress >= ^zombiequeen_complete) @trufitus_postquest_item;
+            ~mesbox("You hand the notes over to Trufitus.");
+            ~chatnpc("<p,neutral>Hmm, these notes are quite extraordinary Bwana. They give location details of Rashiliyia's tomb, and some information on how to use the crystal.");
+            ~chatnpc("<p,neutral>The information is quite specific, North of Ah Za Rhoon!  That's a great place to start looking!");
+        case zqbonebeads:
+            ~mesbox("You show Trufitus the beads that you crafted.");
+            ~chatplayer("<p,neutral>Take a look at these.");
+            ~chatnpc("<p,neutral>Hmm, very interesting Bwana, your abilities are much more focused than I had initially thought. I presume these are to be part of the ward to protect you from Rashiliyia?");
+        case bone_shard:
+            ~mesbox("You show Trufitus the Bone Shard.");
+            ~chatplayer("<p,neutral>Could you have a look at this please?");
+            ~mesbox("Trufitus looks at the object for a moment.");
+            ~chatnpc("<p,neutral>It looks like a simple shard of bone. Why do you think it is significant?");
+            @multi2("It appeared when I buried Zadimus' corpse.", trufitus_zadimuscorp, "No reason really.", trufitus_noreason);
+        case zadimus_corpse:
+            ~mesbox("You show Trufitus the corpse.");
+            ~chatplayer("<p,neutral>What do you make of this?");
+            ~chatnpc("<p,neutral>! GASP ! That's incredible, where did you find it?");
+            ~chatplayer("<p,neutral>I found the corpse in a decomposing gallows. I get a very strange feeling every time I try to bury the body.");
+            ~chatnpc("<p,neutral>Hmmm, that sounds very strange. I sense a spirit in torment, you should try to bury the remains.");
+            switch_int(~p_choice2("Is there any sacred ground around here?", 1, "Can you dispose of this for me?", 2)) {
+                case 1: @trufitus_sacredground;
+                case 2:
+                    ~chatplayer("<p,neutral>Can you dispose of this for me?");
+                    ~mesbox("Trufitus pulls away from you...");
+                    ~chatnpc("<p,neutral>I dare not touch it. I am a spiritual man and the spirit of this being may possess me and turn me into a minion of Rashiliyia.");
+            }
+        case stoneplaque:
+            if(%zombiequeen_progress >= ^zombiequeen_complete) @trufitus_postquest_item;
+            ~mesbox("You hand over the Stone Plaque to Trufitus.");
+            ~chatplayer("<p,neutral>Can you decipher this please?");
+            ~chatnpc("<p,neutral>This is an ancient artefact!");
+            ~mesbox("Trufitus looks at the item in awe.");
+            ~chatnpc("<p,neutral>I can certainly try! Hmm, incredible, it seems very ancient and mentions something about Zadimus and Ah Za Rhoon. It says, 'Here lies the traitor Zadimus, let his spirit be forever tormented'.");
+            if(testbit(%zq_map_mechanisms, ^zq_deciphered_plaque) = false) %zq_map_mechanisms = setbit(%zq_map_mechanisms, ^zq_deciphered_plaque); // TODO: is this set here or before?
+            ~mesbox("Trufitus hands the Stone Plaque back.");
+        case zqcrystal:
+            if(%zombiequeen_progress >= ^zombiequeen_complete) @trufitus_postquest_item;
+            ~mesbox("You show Trufitus the Locating Crystal.");
+            ~chatnpc("<p,neutral>This is incredible Bwana.");
+            ~chatplayer("<p,neutral>It is?");
+            ~chatnpc("<p,neutral>Absolutely! This will help you to locate the entrance to Rashiliyia's tomb. Simply activate it when you think you are near, and it should glow different colours to show how near you are.");
+        case tattered_scroll:
+            if(%zombiequeen_progress >= ^zombiequeen_complete) @trufitus_postquest_item;
+            ~mesbox("You hand the tattered scroll to Trufitus.");
+            ~chatplayer("<p,neutral>What do you make of this?");
+            ~chatnpc("<p,neutral>Truly amazing Bwana, this scroll must be ancient. I'm not sure if I get more meaning from it than you though. Perhaps Bervirius' tomb is still accessible?");
+            ~mesbox("Trufitus hands the tattered scroll back to you.");
+        case crumpled_scroll:
+            if(%zombiequeen_progress >= ^zombiequeen_complete) @trufitus_postquest_item;
+            ~mesbox("You hand the crumpled scroll to Trufitus.");
+            ~chatplayer("<p,neutral>Have a look at this, tell me what you think.");
+            ~chatnpc("<p,neutral>I am speechless Bwana, this is truly ancient. Where did you find it?");
+            ~chatplayer("<p,neutral>In an underground building of some sort.");
+            ~chatnpc("<p,neutral>You must truly have found the temple of Ah Za Rhoon! The scroll gives some interesting details about Rashiliyia, some things I didn't know before.");
+            ~mesbox("Trufitus gives back the scroll.");
+            @multi2("Anything that can help?", trufitus_anything, "Ok, thanks!", trufitus_okthanks2);
+        case zqpommel:
+            ~mesbox("You show Trufitus the sword pommel.");
+            ~chatnpc("<p,neutral>It is a very nice item Bwana. It may be just what you need to gain access to Rashiliyia's tomb. While you were away, I did some research.");
+            ~chatnpc("<p,neutral>Rashiliyia would spare the lives of those who wore bronze necklaces. This pommel may have some significance to Bervirius. Perhaps you can craft something from it that can help?");
+            ~chatnpc("<p,neutral>My guess is that you will need some protection from Rashiliyia if you intend to enter her tomb!");
+            @multi2("How do I make a bronze necklace?", trufitus_bronzeneck, "What should I put on the necklace?", trufitus_putneck);
+        case wampum_belt: 
+            if(%zombiequeen_progress = ^zombiequeen_not_started) {
+                ~objbox(wampum_belt, "You show Trufitus the Wampum belt, he studies it for a long time.");
+                ~chatnpc("<p,neutral>Hello Bwana, this message from Mosol Rei bears bad news... Yes, things do look very bad indeed.");
+                @multi2("What do you know about Rashiliyia?", trufitus_rashiliyia, "Mosol Rei said something about a legend?", trufitus_legend);
+            } else {
+                ~chatnpc("<p,neutral>You've already given me one of these Bwana. I'm aware of the situation with Rashiliyia.");
+            }
         case snake_weed, ardrigal, sito_foil, volencia_moss, rogues_purse:
             def_obj $herb = last_useitem;
             ~chatnpc("<p,neutral>Many thanks for the herb Bwana. I'll add it to my collection.");
@@ -71,15 +158,70 @@ switch_int(%junglepotion_progress) {
 @trufitus_wrong_herb;
 
 [opnpc1,trufitus]
-switch_int(%junglepotion_progress) {
-    case ^junglepotion_not_started: @trufitus_pre_quest;
-    case ^junglepotion_get_snake_weed, ^junglepotion_found_snake_weed: @trufitus_give_herb(snake_weed, unidentified_snake_weed);
-    case ^junglepotion_get_ardrigal, ^junglepotion_found_ardrigal: @trufitus_give_herb(ardrigal, unidentified_ardrigal);
-    case ^junglepotion_get_sito_foil, ^junglepotion_found_sito_foil: @trufitus_give_herb(sito_foil, unidentified_sito_foil);
-    case ^junglepotion_get_volencia_moss, ^junglepotion_found_volencia_moss: @trufitus_give_herb(volencia_moss, unidentified_volencia_moss);
-    case ^junglepotion_get_rogues_purse, ^junglepotion_found_rogues_purse: @trufitus_give_herb(rogues_purse, unidentified_rogues_purse);
-    case ^junglepotion_found_all_herbs: @trufitus_finish_quest;
-    case ^junglepotion_complete: @trufitus_post_quest;
+if(%zombiequeen_progress > ^zombiequeen_not_started) {
+    switch_int(%zombiequeen_progress) {
+        case ^zombiequeen_complete_spoken_trufitus2:
+            ~chatplayer("<p,neutral>Hello Bwana!");
+            ~chatnpc("<p,neutral>Greetings! I hope things are going well for you now. I have no new information since last we spoke. Needless to say, that if something does come up I will certainly get in touch directly.");
+        case ^zombiequeen_complete_spoken_trufitus1:
+            ~chatplayer("<p,neutral>Hello!");
+            %zombiequeen_progress = ^zombiequeen_complete_spoken_trufitus2;
+            ~chatnpc("<p,neutral>Hello again Bwana! Well Done again for helping to defeat Rashiliyia. Hopefully things will return to normal around here now.");
+        case ^zombiequeen_complete:
+            ~chatplayer("<p,neutral>Greetings.");
+            %zombiequeen_progress = ^zombiequeen_complete_spoken_trufitus1;
+            ~chatnpc("<p,neutral>Hello Bwana. I conclude that you have been successful. Mosol sent word that the village is clearing of zombies. You have done us all a great deed!");
+        case ^zombiequeen_entered_with_beads, ^zombiequeen_unlocked_tombdoor, ^zombiequeen_retrieved_corpse:
+            ~chatplayer("<p,neutral>Hello.");
+            ~chatnpc("<p,neutral>Greetings again Bwana. I hope that you have managed to locate Rashiliyia's Tomb. Again, if you found anything interesting, please show it to me.");
+            def_int $op = ~p_choice2("What should I do now?", 1, "Thanks!", 2);
+            if($op = 2) @trufitus_thanks;
+            ~chatplayer("<p,neutral>What should I do now?");
+            ~mesbox("Trufitus scratches his head.");
+            ~chatnpc("<p,neutral>Well Bwana, if you have Rashiliyia's remains, you need to find a way to put her spirit to rest. Perhaps there was a clue with one of the artefacts that you have?");
+            ~chatnpc("<p,neutral>Why not have a look through the artefacts that you have found and see if there is some clue that might help? If you do not have her remains, you will need to find them.");
+        // nothing happens when talking at stage 10 
+        case ^zombiequeen_entered_tomb_bervirius :
+            ~chatplayer("<p,neutral>Greetings...");
+            ~chatnpc("<p,neutral>Greetings Bwana, did you find Bervirius' Tomb?");
+            @multi4("I think I found Bervirius' Tomb.", trufitus_bervtomb, "I have some items that I need help with.", trufitus_items, "I need some help with the Temple of Ah Za Rhoon.", trufitus_helptemple, "No, I didn't find a thing.", trufitus_didntfind);
+        case ^zombiequeen_entered_ah_za_rhoon, ^zombiequeen_left_ah_za_rhoon :
+            ~chatplayer("<p,neutral>Greetings...");
+            ~chatnpc("<p,neutral>Greetings Bwana, you have been away! The situation with Rashiliyia is worsening! I pray that you have some good news for me.");
+            ~chatplayer("<p,happy>I think I found the temple of Ah Za Rhoon.");
+            ~chatnpc("<p,happy>Well that sounds great Bwana. Tell me, what did you find?");    
+            @multi4("I have some items that I need help with.", trufitus_items, "I need help with Zadimus.", trufitus_zadimus, "I need help with Rashiliyia.", trufitus_helprash, "I need some help with the Temple of Ah Za Rhoon.", trufitus_helptemple);
+        case ^zombiequeen_lit_mound, ^zombiequeen_roped_mound :
+            ~chatplayer("<p,neutral>Greetings...");
+            ~chatnpc("<p,neutral>Greetings Bwana, you have been away! The situation with Rashiliyia is worsening! I pray that you have some good news for me.");
+            ~chatplayer("<p,neutral>I think I have found the temple of Ah Za Rhoon. I excavated a hole and illuminated it, there is a fissure with a large drop.");
+            ~chatnpc("<p,neutral>Trufitus|Perhaps you should explore it? If it's the temple of Ah Za Rhoon, it may be our only chance against Rashiliyia. I implore you to  investigate Bwana.");
+        case ^zombiequeen_dug_mound :
+            ~chatplayer("<p,neutral>Greetings...");
+            ~chatnpc("<p,neutral>Greetings Bwana, you have been away! The situation with Rashiliyia is worsening! I pray that you have some good news for me.");
+            ~chatplayer("<p,neutral>I think I have found the temple of Ah Za Rhoon.");
+            ~chatplayer("<p,neutral>I excavated a hole and found a fissure. Should I go through it?");
+            ~chatnpc("<p,neutral>Well, I would certainly investigate it..");
+            @multi2("What's a fissure?", trufitus_fissure, "Are fissures dangerous?", trufitus_fissuredanger);
+        case ^zombiequeen_searched_mound :
+            ~chatplayer("<p,neutral>Greetings...");
+            ~chatnpc("<p,neutral>Greetings Bwana, you have been away! The situation with Rashiliyia is worsening! I pray that you have some good news for me.");
+            ~chatplayer("<p,neutral>I think I found something, but I am not sure what it is.");
+            ~chatnpc("<p,neutral>Well, investigate it further, you may find something interesting!");
+        case ^zombiequeen_found_mound, ^zombiequeen_started : @trufitus_started_zombiequeen;
+    }
+} else {
+    switch_int(%junglepotion_progress) {
+        case ^junglepotion_not_started: @trufitus_pre_quest;
+        case ^junglepotion_get_snake_weed, ^junglepotion_found_snake_weed: @trufitus_give_herb(snake_weed, unidentified_snake_weed);
+        case ^junglepotion_get_ardrigal, ^junglepotion_found_ardrigal: @trufitus_give_herb(ardrigal, unidentified_ardrigal);
+        case ^junglepotion_get_sito_foil, ^junglepotion_found_sito_foil: @trufitus_give_herb(sito_foil, unidentified_sito_foil);
+        case ^junglepotion_get_volencia_moss, ^junglepotion_found_volencia_moss: @trufitus_give_herb(volencia_moss, unidentified_volencia_moss);
+        case ^junglepotion_get_rogues_purse, ^junglepotion_found_rogues_purse: @trufitus_give_herb(rogues_purse, unidentified_rogues_purse);
+        case ^junglepotion_found_all_herbs: @trufitus_finish_quest;
+        case ^junglepotion_complete: @trufitus_greatest_respects;
+        case ^junglepotion_complete_after_spoken: @trufitus_post_quest;
+    }
 }
 
 [label,trufitus_pre_quest]
@@ -274,9 +416,410 @@ switch_namedobj($herb) {
 ~mesbox("<npc_name> shows you some techniques in Herblore.|You gain some experience in Herblore.");
 queue(junglepotion_quest_complete, 0);
 
-[label,trufitus_post_quest]
+[label,trufitus_greatest_respects]
+// this dialogue repeats until talking to Timfraku (sept 2004+), in RSC it will go to trifitus_post_quest
 ~chatnpc("<p,neutral>My greatest respects Bwana,|I have communed with my gods and the future");
 ~chatnpc("<p,neutral>looks good for my people.|We are happy now that the gods are not angry with us.");
 ~chatnpc("<p,neutral>With some blessings we will be safe here.");
-// varp value = 13 is set after talking to trufitus to start tai bwo wannai trio (sept 2004)
-// ~chatnpc("<p,happy>You should deliver the good news to bwana Timfraku, chief of Tai Bwo Wannai. He lives in a raised hut not far from here.");
+%junglepotion_progress = ^junglepotion_complete_after_spoken;
+//~chatnpc("<p,happy>You should deliver the good news to bwana Timfraku, chief of Tai Bwo Wannai. He lives in a raised hut not far from here.");
+
+[label,trufitus_post_quest]
+if(inv_total(inv, wampum_belt) > 0) {
+    ~chatplayer("<p,neutral>Greetings.");
+    ~chatnpc("<p,neutral>Greetings Bwana!|You look like you have some serious news.");
+    ~chatplayer("<p,neutral>Well, I think I may have. I have just spoken to Mosol Rei and he says that Rashiliyia has returned...");
+    ~chatnpc("<p,neutral>Oh dear, it is more serious than I have imagined.");
+    @multi3("What do you know about Rashiliyia?", trufitus_rashiliyia, "What do you know about Mosol Rei?", trufitus_mosolrei, "Mosol gave me something to show you.", trufitus_mosolgave);
+}
+~chatnpc("<p,neutral>Greetings once again Bwana,");
+~chatnpc("<p,neutral>I have no more news since we last spoke.");
+
+[label,trufitus_rashiliyia]
+~chatplayer("<p,neutral>What do you know about Rashiliyia?");
+~chatnpc("<p,neutral>Hmmm, it's been a long time since I heard that name. Rashiliyia is the Queen of the Undead. And a more fearsome enemy you will be unlikely to find.");
+~chatnpc("<p,neutral>I fear that you bring me news that she has returned to plague us once again?  Alas I know of no weakness that she has.");
+@multi3("So there is nothing we can do?", trufitus_nothing, "Should I start to evacuate the island?", trufitus_evacuate, "Mosol Rei said something about a legend?", trufitus_legend);
+
+[label,trufitus_nothing]
+~chatplayer("<p,neutral>So there is nothing we can do?");
+~chatnpc("<p,neutral>Not that I can think of.");
+@multi2("Oh, ok!", trufitus_ohok, "Should I start to evacuate the Island?", trufitus_evacuate);
+
+[label,trufitus_ohok]
+~chatplayer("<p,neutral>Oh, ok!");
+~chatnpc("<p,neutral>Yes, it's a bit sad really, I liked that village.");
+~mesbox("Trufitus seems deeply touched...");
+~chatnpc("<p,neutral>Well, I hope you will excuse me, but I need to get back to my studies.");
+
+[label,trufitus_evacuate]
+~chatplayer("<p,neutral>Should I start to evacuate the island?");
+~chatnpc("<p,neutral>Yes, that may be a good idea. Many people could die! If only there was a way to defeat her!");
+@multi2("Mosol Rei said something about a legend?", trufitus_legend, "Will you pack your things now?", trufitus_pack);
+
+[label,trufitus_pack]
+~chatplayer("<p,neutral>Will you pack your things now?");
+~chatnpc("<p,neutral>I will wait and see what will happen. Maybe Rashiliyia does not have the power to strike too far from her resting place? But there are many things that I need to do now.");
+@multi2("Is her resting place important?", trufitus_restingplace, "Oh, ok!", trufitus_ohok);
+
+[label,trufitus_restingplace]
+~chatplayer("<p,neutral>Is her resting place important?");
+~chatnpc("<p,neutral>I believe it is! It might be that her physical remains are the focal point of her supernatural powers. It is said that many years ago, a group of adventurers once infiltrated her tomb to try to rid the world of Rashiliyia.");
+~chatnpc("<p,neutral>These adventurers reported seeing a wraith- like creature.");
+~chatnpc("<p,neutral>Although the adventurers disturbed Rashiliyia's bones, they were not able to properly sanctify them. And this is the most likely reason why she still plagues us today.");
+~chatnpc("<p,neutral>Of course, she only has to order one of her minions to move her bones and she can quite quickly and easily set up a new headquarters anywhere and continue to launch her plague of undead.");
+@multi3("What are minions?", trufitus_minions, "What are onions?", trufitus_onions, "Does she have any weaknesses?", trufitus_weakness);
+
+[label,trufitus_minions]
+~chatplayer("<p,neutral>What are minions?");
+~chatnpc("<p,neutral>Minions are the fiendish undead creatures that she controls. She has very few living worshippers, but they need to be dealt with at some point.");
+~chatnpc("<p,neutral>Usually a strong creature of some sort will be guarding her remains. And of course, she is a very powerful spell caster herself. Not to be tackled lightly.");
+@multi2("Thanks for the information!", trufitus_info, "Does she have any weaknesses?", trufitus_weakness);
+
+[label,trufitus_info]
+~chatplayer("<p,neutral>Thanks for the information!");
+~chatnpc("<p,neutral>What information?");
+~chatplayer("<p,neutral>About Ah Za Rhoon and where it is.");
+~mesbox("Trufitus looks at you blankly...");
+~chatnpc("<p,neutral>Hmmm, well, you are welcome bwana.");
+
+[label,trufitus_weakness]
+~chatplayer("<p,neutral>Does she have any weaknesses?");
+~chatnpc("<p,neutral>I am not sure, but the legend about her certainly is long. It's a pity that the temple of Ah Za Rhoon has crumbled as there may be some clues that could help us to defeat her.");
+~chatnpc("<p,neutral>I think the largest problem will be in locating her resting place.");
+@multi2("Why was it called Ah Za Rhoon?", trufitus_why_ah_za_rhoon, "Is her resting place important?", trufitus_restingplace);
+
+[label,trufitus_why_ah_za_rhoon]
+~chatplayer("<p,neutarl>Why was it called Ah Za Rhoon?");
+~chatnpc("<p,neutral>It is from an ancient language. The direct translation is... 'Magnificence floating on water'. But my research makes me believe that the temple was built on land.");
+~chatnpc("<p,neutral>And most likely between large bodies of water, for example large lakes. However, many people have searched for the temple, and have failed. I would hate to see you waste your time on a pointless search like that.");
+@multi4("Thanks for the information!", trufitus_info, "Do you know anything more about the temple?", trufitus_temple, "I am going to search for Ah Za Rhoon!", trufitus_searchfor, "It's a pity that I can't search for Ah Za Rhoon now.", trufitus_pity);
+
+[label,trufitus_pity]
+~chatplayer("<p,neutral>It's a pity that I can't search for Ah Za Rhoon now.");
+~chatnpc("<p,neutral>Well, I understand. Perhaps you can search for it another time? Come back when you think you're ready.  Excuse me now won't you while I return to my studies.");
+mes("Trufitus goes back to his studies."); // this is the only dialogue mentioning his studies that will send this mes
+
+[label,trufitus_temple]
+~chatplayer("<p,neutral>Do you know anything more about the temple?");
+~chatnpc("<p,neutral>Not much... I would say that is about it...");
+~chatnpc("<p,neutral>Even the great priest Zadimus who built the temple did not survive. Some say that Rashiliyia caused the temple to collapse.");
+~chatnpc("<p,neutral>She was angry at Zadimus for not returning her affections. She was a great sorceress even before they met.");
+@multi3("Tell me more.", trufitus_tellmemore, "Are there any traps there?", trufitus_traps, "Thanks for the information!", trufitus_info);
+
+[label,trufitus_tellmemore]
+~chatplayer("<p,neutral>Tell me more.");
+~chatnpc("<p,neutral>I don't know anymore. You're very demanding aren't you!");
+@multi4("Thanks for the information!", trufitus_info, "Do you know anything more about the temple?", trufitus_temple, "I am going to search for Ah Za Rhoon!", trufitus_searchfor, "It's a pity that I can't search for Ah Za Rhoon now.", trufitus_pity);
+
+[label,trufitus_traps]
+~chatplayer("<p,neutral>Are there any traps there?");
+~chatnpc("<p,neutral>How am I supposed to know? A lot of what I know is most probably wrong but some of it seems right to me. Excuse me but I must get back to my studies.");
+
+[label,trufitus_searchfor]
+~chatplayer("<p,neutral>I am going to search for Ah Za Rhoon!");
+~chatnpc("<p,quiz>What?! You must be crazy! That place has passed into myth and legend, it has been buried under rubble for years. It's most likely buried 20 men deep, and that's if you can actually find it.");
+~chatnpc("<p,neutral>Are you sure you're going to go and look for it? I may be able to do some research into this if you agree. Only I don't want to waste my time if you're not serious about this!");
+// https://youtu.be/WyLiVLF4VnA?si=tIKWSVB4AqwRbI5L&t=217, i'm pretty sure the period is just cut off here
+switch_int(~p_choice2("Yes, I will seriously look for Ah Za Rhoon and I'd appreciate your help.", 1, "Actually, now it comes to it, I'm having second thoughts.", 2)) {
+    case 1:
+        ~chatplayer("<p,neutral>Yes, I will seriously look for Ah Za Rhoon and I'd appreciate your help.");
+        ~chatnpc("<p,neutral>Ok then Bwana, good luck with your quest, and remember to stock up well with adventuring supplies before setting off. You never know how useful some fairly ordinary things might be when you're adventuring.");
+        %zombiequeen_progress = ^zombiequeen_started;
+        ~send_quest_progress(questlist:zombiequeen, %zombiequeen_progress, ^zombiequeen_complete);
+        inv_del(inv, wampum_belt, 1);
+        ~chatnpc("<p,neutral>I'll hold on to this Wampum belt for you for the time being. I'll give it back to you when we have completed this quest.");
+    case 2:
+        ~chatplayer("<p,neutral>Actually, now it comes to it, I'm having second thoughts.");
+        ~chatnpc("<p,neutral>Well, I understand. Perhaps you can search for it another time? Come back when you think you're ready.  Excuse me now won't you while I return to my studies.");
+}
+
+[label,trufitus_legend]
+~chatplayer("<p,neutral>Mosol Rei said something about a legend?");
+~chatnpc("<p,neutral>Ah, yes, there is a legend, but it is lost in the midst of antiquity...");
+~chatnpc("<p,neutral>The last place to hold any details regarding this mystery was in the temple of Ah Za Rhoon....and that has long since vanished... it crumbled into dust...");
+@multi2("Why was it called Ah Za Rhoon?", trufitus_why_ah_za_rhoon, "Do you know anything more about the temple?", trufitus_temple);
+
+[label,trufitus_mosolrei]
+~chatplayer("<p,neutral>What do you know about Mosol Rei?");
+~chatnpc("<p,neutral>I know he is a brave warrior, he lives in a village south of here.  Your journeys have taken you far!");
+@multi2("What do you know about Rashiliyia?", trufitus_rashiliyia, "Do you trust him?", trufitus_trust);
+
+[label,trufitus_trust]
+~chatplayer("<p,neutral>Do you trust him?");
+~chatnpc("<p,neutral>He is a little headstrong, but for the right reasons. I think he is generally to be trusted.");
+@multi2("What do you know about Rashiliyia?", trufitus_rashiliyia, "Mosol Rei said something about a legend?", trufitus_legend);
+
+[label,trufitus_mosolgave]
+~chatplayer("<p,neutral>Mosol gave me something to show you.");
+~chatnpc("<p,neutral>Oh yes, let me see it then.");
+~objbox(wampum_belt, "You show Trufitus the Wampum belt, he studies it for a long time.");
+~chatnpc("<p,neutral>Yes, things do look very bad indeed.");
+@multi2("What do you know about Rashiliyia?", trufitus_rashiliyia, "Mosol Rei said something about a legend?", trufitus_legend);
+
+[label,trufitus_onions]
+~chatplayer("<p,neutral>What are onions?");
+~mesbox("Trufitus looks at you blankly"); // no period
+~chatnpc("<p,neutral>Surely you mean Minions?");
+~chatplayer("<p,neutral>Yes of course, I mean Minions, what made you think I said Onions?");
+~mesbox("Trufitus frowns at you but continues about...minions...");
+~chatnpc("<p,neutral>Minions are the fiendish undead creatures that Rashiliyia controls. She has very few living worshippers, but they need to be dealt with at some point.");
+~chatnpc("<p,neutral>Usually a strong creature of some sort will be guarding the bones and it is not to be tackled lightly.");
+
+[label,trufitus_floating]
+~chatplayer("<p,neutral>Do you think it was floating on water?");
+~chatnpc("<p,neutral>It's very doubtful. I suspect it was built to 'appear' as if it was floating on water. Perhaps on an island or between large bodies of water.");
+~chatnpc("<p,neutral>If you search for somewhere like this, you may find something worth investigating.");
+
+[label,trufitus_okthanks]
+~chatplayer("<p,neutral>Ok thanks for your help.");
+~chatnpc("<p,neutral>You're welcome Bwana, I only hope it helped.");
+
+[label,trufitus_started_zombiequeen]
+~chatnpc("<p,neutral>Hello Bwana, how goes your quest to find Ah Za Rhoon?");
+switch_int(~p_choice2("Well thanks...", 1, "Erm, I don't know where to look?", 2)) {
+    case 1:
+        ~chatplayer("<p,neutral>Well thanks...");
+        ~chatnpc("<p,neutral>Well that's very good news. Let me know if you find anything useful, I may be able to help out.");
+    case 2:
+        ~chatplayer("<p,neutral>Erm, I don't know where to look?");
+        ~chatnpc("<p,neutral>Hmm, that doesn't surprise me.  The only information I have refers to its name. Ah Za Rhoon, its name means  'Magnificence Floating on Water'.");
+        %zombiequeen_progress = ^zombiequeen_found_mound; // for whatever reason it sets progress up here lol
+        @multi2("Do you think it was floating on water?", trufitus_floating, "Ok thanks for your help.", trufitus_okthanks);
+}
+
+[label,trufitus_fissure]
+~chatplayer("<p,neutral>What's a fissure?");
+~chatnpc("<p,neutral>A fissure is a long, narrow crack, usually in rock. Just the kind of thing that adventurers love to find  and explore.");
+@multi2("Are fissures dangerous?", trufitus_fissuredanger, "Ok, thanks!", trufitus_okthanks2);
+
+[label,trufitus_fissuredanger]
+~chatplayer("<p,neutral>");
+~chatnpc("<p,neutral>It most likely is, but that isn't normally a barrier to most adventurers! And it may very well lead to something very interesting.");
+@multi2("What's a fissure?", trufitus_fissure, "Ok, thanks!", trufitus_okthanks2);
+
+[label,trufitus_okthanks2]
+~chatplayer("<p,neutral>Ok, thanks!");
+~chatnpc("<p,neutral>You're quite welcome Bwana.");
+
+[label,trufitus_items]
+~chatplayer("<p,neutral>I have some items that I need help with.");
+~chatnpc("<p,neutral>Well, just let me see the item and I'll help as much as I can.");
+if(~obj_gettotal(stoneplaque) > 0) {
+    ~chatnpc("<p,neutral>We need to identify that the place you have found is indeed Ah Za Rhoon.");
+} else {
+    ~chatnpc("<p,neutral>Look for something that can identify the place. Leave no stone unturned.");
+}
+if(%zombiequeen_progress >= ^zombiequeen_entered_tomb_bervirius | ~obj_gettotal(tattered_scroll) > 0) {
+    ~chatnpc("<p,neutral>Any scrolls or information about Rashiliyia's kin would be helpful.");
+} else {
+    ~chatnpc("<p,neutral>Look for details of Rashiliyia's kin, these may be well hidden.");
+}
+if(~obj_gettotal(crumpled_scroll) > 0) {
+    ~chatnpc("<p,neutral>Have you got any items concerning Rashiliyia? If so, please show me them.");
+} else {
+    ~chatnpc("<p,neutral>There is a legend about Rashiliyia, look for it in the temple.");
+}
+if(~obj_gettotal(zadimus_corpse) > 0) {
+    ~chatnpc("<p,neutral>There must be something relating to Zadimus at the temple. Did you find anything? If so, let me see it.");
+} else {
+    ~chatnpc("<p,neutral>Look for something relating to Zadimus at the temple. He was the Priest who built the temple.");
+}
+~chatnpc("<p,neutral>And best of luck!");
+@trufitus_tombops;
+
+[label,trufitus_zadimus]
+~chatplayer("<p,neutral>I need help with Zadimus.");
+if(~obj_gettotal(zadimus_corpse) > 0) {
+    ~chatnpc("<p,neutral>Zadimus is a spirit yearning for freedom. Bury him in a sacred place to release his spirit.");
+    @multi5("Is there any sacred ground around here?", trufitus_sacredground, "I need help with Bervirius.", trufitus_bervirius, "I need help with Rashiliyia.", trufitus_helprash, "I need some help with the Temple of Ah Za Rhoon.", trufitus_helptemple, "Ok, thanks!", trufitus_okthanks2);
+}
+~chatnpc("<p,neutral>All I know is that Zadimus was a high priest of Zamorak. Rashiliyia loved him, but he did not return her affections.");
+~chatnpc("<p,neutral>When she became a more powerful sorceress she attacked Ah Za Rhoon, reducing it to rubble. What Zadimus' fate was, I do not know.");
+~chatnpc("<p,neutral>If you find anything relating to him at the temple of Ah Za Rhoon, please let me see it.");
+@trufitus_tombops2;
+
+[label,trufitus_helprash]
+~chatplayer("<p,neutral>I need help with Rashiliyia.");
+~chatnpc("<p,neutral>We need to find Rashiliyia's resting place and learn how to put her spirit to rest. You may find some clues to her resting place in Ah Za Rhoon or Bervirius' Tomb.");
+@trufitus_tombops;
+
+[label,trufitus_helptemple]
+~chatplayer("<p,neutral>I need some help with the Temple of Ah Za Rhoon.");
+~chatnpc("<p,neutral>If you have found the temple, you should search it thoroughly and see if there are any clues about Rashiliyia.");
+if(~obj_gettotal(stoneplaque) > 0) {
+    ~chatnpc("<p,neutral>We need to identify that the place you have found is indeed Ah Za Rhoon.");
+} else {
+    ~chatnpc("<p,neutral>Look for something that can identify the place. Leave no stone unturned.");
+}
+if(%zombiequeen_progress >= ^zombiequeen_entered_tomb_bervirius | ~obj_gettotal(tattered_scroll) > 0) {
+    ~chatnpc("<p,neutral>Any scrolls or information about Rashiliyia's kin would be helpful.");
+} else {
+    ~chatnpc("<p,neutral>Look for details of Rashiliyia's kin, these may be well hidden.");
+}
+if(~obj_gettotal(crumpled_scroll) > 0) {
+    ~chatnpc("<p,neutral>Have you got any items concerning Rashiliyia? If so, please show me them.");
+} else {
+    ~chatnpc("<p,neutral>There is a legend about Rashiliyia, look for it in the temple.");
+}
+if(~obj_gettotal(zadimus_corpse) > 0) {
+    ~chatnpc("<p,neutral>There must be something relating to Zadimus at the temple. Did you find anything? If so, let me see it.");
+} else {
+    ~chatnpc("<p,neutral>Look for something relating to Zadimus at the temple. He was the Priest who built the temple.");
+}
+~chatnpc("<p,happy>And best of luck!");
+@trufitus_tombops;
+
+[label,trufitus_bervtomb]
+~chatplayer("<p,neutral>I think I found Bervirius' Tomb.");
+~chatnpc("<p,neutral>Congratulations Bwana. Show me any items you have found though. I may be able to help.");
+@multi2("I actually need help with something else.", trufitus_somethingelse, "I didn't find anything in the tomb.", trufitus_didnttomb);
+
+[label,trufitus_somethingelse]
+~chatplayer("<p,neutral>I actually need help with something else.");
+~chatnpc("<p,neutral>What could I possibly help you with Bwana?");
+@multi5("I need help with Rashiliyia.", trufitus_helprash, "I need help with Zadimus.", trufitus_zadimus, "I have some items that I need help with.", trufitus_items, "I need help with Bervirius.", trufitus_bervirius, "Ok, thanks!", trufitus_okthanks2);
+
+[label,trufitus_didntfind]
+~chatplayer("<p,neutral>No, I didn't find a thing.");
+~chatnpc("<p,neutral>That is a shame Bwana. We really do need to act against Rashiliyia soon if we are ever to stand a chance of defeating her.");
+@multi3("Actually I did find the tomb, I was just joking.", trufitus_joking, "I actually need help with something else.", trufitus_somethingelse, "I didn't find anything in the tomb.", trufitus_didnttomb);
+
+[label,trufitus_joking]
+~chatplayer("<p,neutral>Actually I did find the tomb, I was just joking.");
+~chatnpc("<p,angry>Well, Bwana, this is no laughing matter. We need to take this very seriously and act now! If you have found any items at the tomb that you need help with please let me see them and I will help as much as I can.");
+@multi2("I didn't find anything in the tomb.", trufitus_didnttomb, "I actually need help with something else.", trufitus_somethingelse);
+
+[label,trufitus_didnttomb]
+~chatplayer("<p,neutral>I didn't find anything in the tomb.");
+~chatnpc("<p,neutral>Maybe you need to look around a little more. There must be some small detail at least that can help us.");
+switch_int(~p_choice2("I have some items that I need some help with.", 1, "I actually need help with something else.", 2)) {
+    case 1:
+        ~chatplayer("<p,neutral>I have some items that I need some help with.");
+        ~chatnpc("<p,neutral>Well, just show me the items and I'll help as much as I can.");
+        @multi2("I actually need help with something else.", trufitus_somethingelse, "Thanks!", trufitus_thanks);
+    case 2: @trufitus_somethingelse;
+}
+
+[label,trufitus_thanks]
+~chatplayer("<p,neutral>Thanks!");
+~chatnpc("<p,neutral>You're more than welcome Bwana! Good luck for the rest of your quest.");
+
+[label,trufitus_bronzeneck]
+~chatplayer("<p,neutral>How do I make a bronze necklace?");
+~chatnpc("<p,neutral>Well, Bwana, I would guess that you would need to get some bronze metal and work it into something that could be turned into a necklace?");
+@multi2("What should I put on the necklace?", trufitus_putneck, "Thanks!", trufitus_thanks);
+
+[label,trufitus_putneck]
+~chatplayer("<p,neutral>What should I put on the necklace?");
+~chatnpc("<p,neutral>Perhaps Zadimus' clue has the answer? Now, what was it that he said again? Something about kin and keys? That sword pommel belonged to Bervirius didn't it?");
+@multi2("How do I make a bronze necklace?", trufitus_bronzeneck, "Thanks!", trufitus_thanks);
+
+[label,trufitus_anything]
+~chatplayer("<p,neutral>Anything that can help?");
+~chatnpc("<p,neutral>Hmmm, well just that part about the wards...");
+~mesbox("Trufitus seems to drift off in thought.");
+~chatnpc("<p,neutral>It may be possible to make a ward like that... But what is the best thing to make it from? Perhaps something close to Bervirius, an item of some significance to him.");
+
+[label,trufitus_bervirius]
+~chatplayer("<p,neutral>I need help with Bervirius.");
+~chatnpc("<p,neutral>Bervirius is the son of Rashiliyia. His tomb may hold some clues as to how Rashiliyia may be defeated.");
+@trufitus_tombops;
+
+[label,trufitus_zadimuscorp]
+~chatplayer("<p,neutral>It appeared when I buried Zadimus' corpse.");
+~chatnpc("<p,neutral>Ah, interesting, so you think that Zadimus gave you the bone? What makes you say that?");
+@multi2("He said something after he gave it to me.", trufitus_said, "I'm not sure.", trufitus_notsure);
+
+[label,trufitus_said]
+~chatplayer("<p,neutral>He said something after he gave it to me.");
+~chatnpc("<p,neutral>What did he say?");
+
+[label,trufitus_spiritops]
+switch_int(~p_choice2("The spirit said something about keys and kin?", 1, "The spirit rambled on about some nonsense.", 2)) {
+    case 1:
+        ~chatplayer("<p,neutral>The spirit said something about keys and kin?");
+        ~chatnpc("<p,neutral>Hmmm, maybe it's a clue of some kind?");
+        ~chatnpc("<p,neutral>Rashiliyia's only kin was a son, 'Bervirius'. His remains were entombed on a small island which lies to the South West. I will do some research into this to see if I can find any other details.");
+        if(~zqhaspommel = false) {
+            ~chatnpc("<p,neutral>But I think we must take Zadimus' clue literally and get some item that belonged to Bervirius as it may be the only way to approach Rashiliyia. Perhaps something like this exists in his tomb?");
+        } else {
+            ~chatnpc("<p,neutral>I still think we need to take this clue quite literally. Perhaps you found something at Bervirius' Tomb that could help to protect you from Rashiliyia's attacks?");
+        }
+    case 2:
+        ~chatplayer("<p,neutral>The spirit rambled on about some nonsense.");
+        ~chatnpc("<p,neutral>Oh, so it most likely was not very important then.");
+}
+
+[label,trufitus_noreason]
+~chatplayer("<p,neutral>No reason really.");
+~chatnpc("<p,neutral>Well why are you showing it to me then?");
+@multi2("It appeared when I buried Zadimus' corpse.", trufitus_zadimuscorp, "I'm not sure.", trufitus_notsure);
+
+[label,trufitus_notsure]
+~chatplayer("<p,neutral>I'm not sure.");
+~chatnpc("<p,neutral>Oh, right. Come back and talk with me if you get an idea.");
+
+[label,trufitus_sacredground]
+~chatplayer("<p,neutral>Is there any sacred ground around here?");
+~chatnpc("<p,neutral>The ground in the centre of the village is very sacred to us. Maybe you could try there?");
+
+[label,trufitus_opens]
+~chatplayer("<p,neutral>Do you know what it opens?");
+~chatnpc("<p,neutral>You must already know what it opens to have carved it so pefectly. Perhaps in your travels you have come across some unique doors with a unique lock? I hope this helps with your quest.");
+
+[label,trufitus_bonezadimus]
+~chatplayer("<p,neutral>I made it from the bone shard that Zadimus gave me.");
+~chatnpc("<p,neutral>How very inventive Bwana. You must have seen the lock to have crafted it so well. Does the key work?");
+@multi2("Yes and I explored inside some sort of cavern.", trufitus_cavern, "I don't know, I haven't tried it yet.", trufitus_tried);
+
+[label,trufitus_tried]
+~chatplayer("<p,neutral>I don't know, I haven't tried it yet.");
+~chatnpc("<p,neutral>It may be an idea to try it and then scout out the area. If it relates to Rashiliyia, it might help us  to defeat her.");
+
+[label,trufitus_cavern]
+~chatplayer("<p,neutral>Yes and I explored inside some sort of cavern.");
+~chatnpc("<p,neutral>How interesting Bwana, did you find anything?");
+switch_int(~p_choice2("Not really.", 1, "Yes, I found lots of things.", 2)) {
+    case 1:
+        ~chatplayer("<p,neutral>Not really.");
+        ~chatnpc("<p,neutral>Maybe you should go back and try to find some more things.");
+        ~chatnpc("<p,neutral>Maybe there are more items to be found at Ah Za Rhoon?");
+    case 2:
+        ~chatplayer("<p,neutral>Yes, I found lots of things.");
+        ~chatnpc("<p,neutral>If you let me see them Bwana, perhaps I can offer you some extra information.");
+}
+
+[label,trufitus_buried]
+~chatplayer("<p,neutral>I have just buried Zadimus' corpse.");
+~chatnpc("<p,neutral>Something seems different about you. You look like you have seen a ghost?");
+~chatplayer("<p,neutral>It just so happens that I have!");
+~chatnpc("<p,neutral>Oh! So you managed to bury Zadimus's corpse?");
+~chatplayer("<p,neutral>Yes, it was pretty grisly!");
+@trufitus_spiritops;
+
+[label,trufitus_takethem]
+~chatplayer("<p,neutral>Can you take them off my hands?");
+~chatnpc("<p,neutral>I dare not take them, I may be taken over by the evil spirit of Rashiliyia!");
+@multi2("What should I do with them?", trufitus_whatcorpse, "Thanks!", trufitus_thanks);
+
+[label,trufitus_whatcorpse]
+~chatplayer("<p,neutral>What should I do with them?");
+~chatnpc("<p,neutral>Hmm, I'm not exactly sure... Perhaps there is a clue in one of the artefacts you have found?");
+@multi2("Can you take them off my hands?", trufitus_takethem, "Thanks!", trufitus_thanks);
+
+[label,trufitus_postquest_item]
+~chatplayer("<p,neutral>Have a look at this.");
+~chatnpc("<p,neutral>Hmmm, I'm not sure you will get much use out of this. Why not see if you can sell it in Shilo Village.");
+
+[label,trufitus_tombops]
+if(%zombiequeen_progress >= ^zombiequeen_entered_tomb_bervirius & ~obj_gettotal(bone_shard) > 0) @multi5("I have just buried Zadimus' corpse.", trufitus_buried, "I need help with Bervirius.", trufitus_bervirius, "I have some items that I need help with.", trufitus_items, "I need some help with the Temple of Ah Za Rhoon.", trufitus_helptemple, "I need help with Zadimus.", trufitus_zadimus);
+else if(%zombiequeen_progress >= ^zombiequeen_entered_tomb_bervirius) @multi5("I need help with Bervirius.", trufitus_bervirius, "I have some items that I need help with.", trufitus_items, "I need help with Zadimus.", trufitus_zadimus, "I need help with Rashiliyia.", trufitus_helprash, "I need some help with the Temple of Ah Za Rhoon.", trufitus_helptemple);
+else if(~obj_gettotal(bone_shard) > 0) @multi5("I have just buried Zadimus' corpse.", trufitus_buried, "I have some items that I need help with.", trufitus_items, "I need some help with the Temple of Ah Za Rhoon.", trufitus_helptemple, "I need help with Zadimus.", trufitus_zadimus, "I need help with Rashiliyia.", trufitus_helprash);
+else @multi4("I have some items that I need help with.", trufitus_items, "I need help with Zadimus.", trufitus_zadimus, "I need help with Rashiliyia.", trufitus_helprash, "I need some help with the Temple of Ah Za Rhoon.", trufitus_helptemple);
+
+[label,trufitus_tombops2]
+if(%zombiequeen_progress >= ^zombiequeen_entered_tomb_bervirius & ~obj_gettotal(bone_shard) > 0) @multi5("I have just buried Zadimus' corpse.", trufitus_buried, "I need help with Bervirius.", trufitus_bervirius, "I have some items that I need help with.", trufitus_items, "I need some help with the Temple of Ah Za Rhoon.", trufitus_helptemple, "I need help with Rashiliyia.", trufitus_helprash);
+else if(%zombiequeen_progress >= ^zombiequeen_entered_tomb_bervirius) @multi5("I need help with Bervirius.", trufitus_bervirius, "I have some items that I need help with.", trufitus_items, "I need help with Zadimus.", trufitus_zadimus, "I need help with Rashiliyia.", trufitus_helprash, "I need some help with the Temple of Ah Za Rhoon.", trufitus_helptemple);
+else if(~obj_gettotal(bone_shard) > 0) @multi5("I have just buried Zadimus' corpse.", trufitus_buried, "I have some items that I need help with.", trufitus_items, "I need some help with the Temple of Ah Za Rhoon.", trufitus_helptemple, "I need help with Zadimus.", trufitus_zadimus, "I need help with Rashiliyia.", trufitus_helprash);
+else @multi4("I have some items that I need help with.", trufitus_items, "I need help with Zadimus.", trufitus_zadimus, "I need help with Rashiliyia.", trufitus_helprash, "I need some help with the Temple of Ah Za Rhoon.", trufitus_helptemple);

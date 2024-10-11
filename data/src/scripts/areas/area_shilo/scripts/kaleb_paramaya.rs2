@@ -1,0 +1,41 @@
+[oploc1,loc_2268]
+if(inv_total(inv, paramaya_ticket) = 0) {
+    ~chatnpc_specific(nc_name(kaleb_paramaya), kaleb_paramaya, "You can buy a ticket to the dormitory from me. And have a lovely night's rest.");
+    return;
+}
+~mesbox("The barman takes your ticket and allows you up to the dormitory.");
+inv_del(inv, paramaya_ticket, 1);
+if_close;
+p_delay(1); // TODO: 1t, fix when delay bug
+@climb_ladder(movecoord(coord, 0, 1, 0), true);
+
+[oploc1,loc_2269]
+mes("You climb down the ladder.");
+@climb_ladder(1_44_46_45_51, false);
+
+[opnpc1,kaleb_paramaya]
+~chatplayer("<p,neutral>Hello.");
+~chatnpc("<p,neutral>Hello Bwana, What can I do for you today?");
+switch_int(~p_choice5("Can you tell me a bit about this this place?", 1, "Buy some wine: 1 Gold.", 2, "Buy some Beer: 2 Gold.", 3, "Buy a nights rest: 35 Gold", 4, "Buy a pack of 5 Dorm tickets: 175 Gold", 5)) {
+    case 1:
+        ~chatplayer("<p,neutral>Can you tell me a bit about this this place?");
+        ~chatnpc("<p,neutral>Of course Bwana, you look like a traveller!");
+        ~chatplayer("<p,neutral>Yes I am actually!");
+        // https://web.archive.org/web/20111216182419im_/http://www.runehq.com/images/cityguides/shilo10.jpg
+        ~chatnpc("<p,neutral>Well, I am a traveller myself, and I have set up this hostel for adventurers and travellers who are weary from their journey.");
+        ~chatnpc("<p,neutral>There is a dormitory upstairs if you are tired, it costs 35 gold pieces which covers the cost of laundry and cleaning.");
+    case 2: @paramaya_buy(1, jug_wine, 1, "You purchase a jug of wine.");
+    case 3: @paramaya_buy(2, beer, 1, "You purchase a frothy glass of beer.");
+    case 4: @paramaya_buy(35, paramaya_ticket, 1, "You purchase a ticket to access the dormitory.");
+    case 5: @paramaya_buy(175, paramaya_ticket, 5, "You purchase 5 tickets to access the dormitory.");
+}
+
+[label,paramaya_buy](int $cost, namedobj $obj, int $amt, string $purchase_text)
+~chatnpc("<p,neutral>Very good <text_gender("sir", "madam")>!");
+if(inv_total(inv, coins) < $cost) {
+    ~chatnpc("<p,neutral>Sorry Bwana, you don't have enough money.");
+    return;
+}
+mes($purchase_text);
+inv_del(inv, coins, $cost);
+inv_add(inv, $obj, $amt);

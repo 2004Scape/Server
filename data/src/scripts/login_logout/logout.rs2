@@ -32,6 +32,7 @@ if (%tradepartner ! null) {
 ~set_antipoison_logout;
 ~set_cannon_vars_logout;
 ~follower_logout;
+~rashiliyia_door_logout;
 
 return(true);
 

@@ -22,6 +22,8 @@ if(inv_total(inv, coins) < 3000) {
     return;
 }
 ~chatnpc("<p,happy>You of course agree that if by some accident you are turned into a frog you have no rights for compensation or refund.");
+%option1 = calc(gender + 1);
+%option2 = 0;
 if_openmain(makeover_mage);
 
 [label,makeover_mage_no]
@@ -45,7 +47,7 @@ if_openmain(makeover_mage);
 
 [if_button,makeover_mage:com_89]
 if (%option1 = 0 | %option2 = 0) {
-    mes("You must make a selection from both categories."); // guess based of thessalia
+    mes("You must make a selection from both categories."); // guess based off thessalia
     return;
 }
 

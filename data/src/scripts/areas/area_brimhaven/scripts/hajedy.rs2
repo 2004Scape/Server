@@ -5,5 +5,39 @@ if(inv_total(inv, trail_clue_medium_anagram_exp005) > 0) {
     ~progress_clue_medium(trail_clue_medium_anagram_exp005, "Hajedy has given you another clue scroll!");
     return;
 }
-// rsc linebreaks since all the other known shilo village dialogue has it
-~chatnpc("<p,sad>We used to run cart trips down to Shilo Village in south Karamja.|Since the troubles we had|we've had to stop them though,|too many people got killed.");
+// https://youtu.be/q7wrja-4s4A?si=rjWL42YDxEM1p2KW&t=286
+if(%zombiequeen_progress >= ^zombiequeen_complete) {
+    ~chatplayer("<p,neutral>Hello!");
+    ~chatnpc("<p,neutral>Hello Bwana!");
+    def_int $amount = ~calc_shilocart_cost();
+    // https://web.archive.org/web/20050204071450im_/http://www.runehq.com//images/cityguides/shilo1.jpg
+    ~chatnpc("<p,neutral>I am offering a cart ride to Shilo Village|if you're interested?|It will cost <tostring($amount)> gold coins. Is that Ok?");
+    switch_int(~p_choice2("Yes please, I'd like to go to Shilo Village.", 1, "No thanks.", 2)) {
+        case 1 :
+            ~chatplayer("<p,neutral>Yes please, I'd like to go to Shilo Village.");
+            if(inv_total(inv, coins) < $amount) {
+                ~chatnpc("<p,neutral>Sorry, but it looks as if you don't have enough money. Come and see me when you have enough for the ride.");
+                return;
+            }
+            ~chatnpc("<p,neutral>Great! Just hop into the cart then and we'll go!");
+            ~mesbox("You hop into the cart and the driver urges the horses on.|You take a taxing journey through the jungle to Shilo Village.");
+            inv_del(inv, coins, $amount);
+            ~mesbox("You pay the fare and hand <tostring($amount)> gold coins to Hajedy.");
+            p_teleport(0_44_46_18_7);
+            ~mesbox("You feel tired from the journey, but at least|you didn't have to walk all that distance.");
+        case 2 :
+            ~chatplayer("<p,neutral>No thanks.");
+            ~chatnpc("<p,neutral>Ok Bwana, let me know if you change your mind.");
+    }
+    return;
+}
+~chatnpc("<p,sad>We used to run cart trips down to Shilo Village in south Karamja. Since the troubles we had we've had to stop them though, too many people got killed.");
+
+[proc,calc_shilocart_cost](int)
+def_int $cost = calc((inv_total(inv, coins) * 5) / 100);
+if($cost < 10) {
+    $cost = 10;
+} else if($cost > 200) {
+    $cost = 200;
+}
+return ($cost);

@@ -115,8 +115,8 @@
 114=scorpius_given_symbol
 115=bank_noted
 116=zombiequeen_progress
-117=pk_prey1
-118=pk_prey2
+117=zq_map_mechanisms
+118=zq_rash_timer
 119=pk_predator1
 120=pk_predator2
 121=pk_predator3
@@ -215,8 +215,8 @@
 214=varp_214
 215=varp_215
 216=varp_216
-217=varp_217
-218=varp_218
+217=pk_prey1
+218=pk_prey2
 219=varp_219
 220=varp_220
 221=varp_221
