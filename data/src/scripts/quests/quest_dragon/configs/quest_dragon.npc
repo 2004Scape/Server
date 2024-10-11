@@ -238,6 +238,9 @@ magic=40
 param=damagetype,2
 param=attack_anim,human_unarmedkick
 param=attack_sound,unarmed_kick
+// osrs
+attackrange=8
+maxrange=8
 huntmode=aggressive_melee
 huntrange=1
 

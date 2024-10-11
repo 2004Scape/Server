@@ -64,7 +64,7 @@ if (%action_delay < map_clock) {
         // if fails, then reattempt to light
         anim(human_createfire, 0);
         sound_synth(tinderbox_strike, 0, 0);
-        %action_delay = calc(map_clock + 3);
+        %action_delay = calc(map_clock + 4);
     }
 }
 // mes("<tostring(map_clock)>: p_opobj(4)");
@@ -111,7 +111,7 @@ if (%action_delay < map_clock) {
         // if fails, then reattempt to light
         anim(human_createfire, 0);
         sound_synth(tinderbox_strike, 0, 0);
-        %action_delay = calc(map_clock + 3);
+        %action_delay = calc(map_clock + 4);
     }
 }
 p_opobj(4);
