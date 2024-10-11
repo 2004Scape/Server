@@ -64,7 +64,7 @@ if (%action_delay < map_clock) {
         // if fails, then reattempt to light
         anim(human_createfire, 0);
         sound_synth(tinderbox_strike, 0, 0);
-        %action_delay = calc(map_clock + 3);
+        %action_delay = calc(map_clock + 4);
     }
 }
 // mes("<tostring(map_clock)>: p_opobj(4)");
@@ -111,7 +111,7 @@ if (%action_delay < map_clock) {
         // if fails, then reattempt to light
         anim(human_createfire, 0);
         sound_synth(tinderbox_strike, 0, 0);
-        %action_delay = calc(map_clock + 3);
+        %action_delay = calc(map_clock + 4);
     }
 }
 p_opobj(4);
@@ -152,6 +152,10 @@ if (~in_duel_arena($origin_coord) = true) {
     p_delay(0);
     return;
 }
+if (coord ! $origin_coord) {
+    p_delay(0);
+    return;
+}
 if (lineofwalk(coord, movecoord(coord, -1, 0, 0)) = true & coord = $origin_coord) { // check west
     p_teleport(movecoord(coord, -1, 0, 0));
     p_delay(0);
@@ -177,6 +181,10 @@ if (~in_duel_arena($origin_coord) = true) {
     //  - It just didnt move the player at all
     // https://oldschool.runescape.wiki/w/Update:RS2_-_more_fixes/changes
     //  - "Fixed: You could select a duel with the no movement option and then plant flowers or light a fire so you weren't standing next to your opponent."
+    p_delay(1);
+    return;
+}
+if (coord ! $origin_coord) {
     p_delay(1);
     return;
 }

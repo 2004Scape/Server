@@ -4,6 +4,12 @@
 [oploc1,loc_2551]
 ~attempt_open_locked_door(loc_type, ~check_axis_locactive(coord));
 
+[oploc1,east_ardy_sewer_gate_north] 
+~attempt_open_locked_door(loc_type, ~check_axis_locactive(coord));
+
+[oploc1,east_ardy_sewer_gate_south] 
+~attempt_open_locked_door(loc_type, ~check_axis_locactive(coord));
+
 [oploc1,loc_2554]
 ~attempt_open_locked_door(loc_type, ~check_axis_locactive(coord));
 
@@ -26,6 +32,12 @@
 ~pick_locked_door(loc_type, loc_coord, ~check_axis_locactive(coord));
 
 [oploc2,loc_2551]
+~pick_locked_door(loc_type, loc_coord, ~check_axis_locactive(coord));
+
+[oploc2,east_ardy_sewer_gate_north] 
+~pick_locked_door(loc_type, loc_coord, ~check_axis_locactive(coord));
+
+[oploc2,east_ardy_sewer_gate_south] 
 ~pick_locked_door(loc_type, loc_coord, ~check_axis_locactive(coord));
 
 [oploc2,loc_2554]
@@ -85,9 +97,14 @@ if ($data = null) {
     return;
 }
 def_loc $replacement = db_getfield($data, locked_door:replacement, 0);
-
+def_boolean $gate = db_getfield($data, locked_door:gate, 0);
+def_boolean $mirror = db_getfield($data, locked_door:mirror, 0);
 mes("You go through the door.");
-~open_and_close_door($replacement, ~check_axis_locactive(coord), true);
+if ($gate = true) {
+    ~open_and_close_metal_gate($replacement, $entering, $mirror);
+} else {
+    ~open_and_close_door($replacement, $entering, true);
+}
 
 [proc,pick_locked_door](loc $loc, coord $loc_coord, boolean $entering)
 ~require_members_feature;
@@ -100,6 +117,8 @@ if ($data = null) {
 }
 
 def_loc $replacement = db_getfield($data, locked_door:replacement, 0);
+def_boolean $gate = db_getfield($data, locked_door:gate, 0);
+def_boolean $mirror = db_getfield($data, locked_door:mirror, 0);
 if ($entering = true) {
     if (db_getfieldcount($data, locked_door:tool) > 0) {
         def_namedobj $tool;
@@ -131,7 +150,11 @@ if ($entering = true) {
     def_int $experience = db_getfield($data, locked_door:experience, 0);
     stat_advance(thieving, $experience);
 
-    ~open_and_close_door($replacement, ~check_axis_locactive(coord), true);
+    if ($gate = true) {
+        ~open_and_close_metal_gate($replacement, $entering, $mirror);
+    } else {
+        ~open_and_close_door($replacement, $entering, true);
+    }
     p_delay(0);
     facesquare($loc_coord);
     return;
@@ -139,4 +162,8 @@ if ($entering = true) {
 mes("The door is already unlocked.");
 p_delay(0);
 mes("You go through the door.");
-~open_and_close_door($replacement, ~check_axis_locactive(coord), true);
+if ($gate = true) {
+    ~open_and_close_metal_gate($replacement, $entering, $mirror);
+} else {
+    ~open_and_close_door($replacement, $entering, true);
+}

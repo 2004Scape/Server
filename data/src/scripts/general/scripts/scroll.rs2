@@ -163,5 +163,104 @@ if_settext(scroll:com_12, ^string_empty);
 if_settext(scroll:com_13, ^string_empty);
 if_openmain(scroll);
 
+[label,scroll_zombiequeen_tattered]
+if_settext(scroll:com_2, ^string_empty);
+if_settext(scroll:com_3, "Bervirius, son of King Danthalas, was killed in battle. His");
+if_settext(scroll:com_4, "devout Mother Rashiliyia was so heartbroken that she swore");
+if_settext(scroll:com_5, "fealty to Zamorak if he would return her son to her. Bervirius");
+if_settext(scroll:com_6, "returned as an undead creature and terrorized the King and");
+if_settext(scroll:com_7, "Queen. Many guards died fighting the Undead Bervirius.");
+if_settext(scroll:com_8, "Eventually the undead Bervirius was set on fire and soon only");
+if_settext(scroll:com_9, "the bones remained.His remains were taken far to the South,");
+if_settext(scroll:com_10, "and then towards the setting sun to a tomb that is surrounded");
+if_settext(scroll:com_11, "by and level with the sea. The only remedy for containing the");
+if_settext(scroll:com_12, "spirits of witches and undead.");
+if_settext(scroll:com_13, ^string_empty);
+if_openmain(scroll);
+
+// if 222 in osrs, can't find any equivalence in this version
+[label,scroll_zombiequeen_crumpled]
+if_settext(scroll:com_2, ^string_empty);
+if_settext(scroll:com_3, ^string_empty);
+if_settext(scroll:com_4, "Rashiliyia's rage went unchecked. She killed");
+if_settext(scroll:com_5, "without mercy for revenge of her son's life. Like");
+if_settext(scroll:com_6, "a spectre through the night she entered houses");
+if_settext(scroll:com_7, "and one by one quietly strangled life from the");
+if_settext(scroll:com_8, "occupants. It is said that only a handful survived,");
+if_settext(scroll:com_9, "protected by necklace wards to keep the Witch");
+if_settext(scroll:com_10, "Queen at bay.");
+if_settext(scroll:com_11, ^string_empty);
+if_settext(scroll:com_12, ^string_empty);
+if_settext(scroll:com_13, ^string_empty);
+if_setcolour(scroll:com_4, ^black_rgb);
+if_setcolour(scroll:com_5, ^black_rgb);
+if_setcolour(scroll:com_6, ^black_rgb);
+if_setcolour(scroll:com_7, ^black_rgb);
+if_setcolour(scroll:com_8, ^black_rgb);
+if_setcolour(scroll:com_9, ^black_rgb);
+if_setcolour(scroll:com_10, ^black_rgb);
+if_openmain(scroll);
+
+// if 222 in osrs, can't find any equivalence in this version
+[label,scroll_zombiequeen_yellow]
+if_settext(scroll:com_2, ^string_empty);
+if_settext(scroll:com_3, ^string_empty);
+if_settext(scroll:com_4, ^string_empty);
+if_settext(scroll:com_5, "...and rest like your mother who is silent in the");
+if_settext(scroll:com_6, "peace of her tomb far to the North of Ah Za");
+if_settext(scroll:com_7, "Rhoon. Near the sea, and under the hills deep in");
+if_settext(scroll:com_8, "the underground to watch all of nature from the");
+if_settext(scroll:com_9, "darkness of her final resting place.");
+if_settext(scroll:com_10, ^string_empty);
+if_settext(scroll:com_11, ^string_empty);
+if_settext(scroll:com_12, ^string_empty);
+if_settext(scroll:com_13, ^string_empty);
+if_setcolour(scroll:com_5, ^black_rgb);
+if_setcolour(scroll:com_6, ^black_rgb);
+if_setcolour(scroll:com_7, ^black_rgb);
+if_setcolour(scroll:com_8, ^black_rgb);
+if_setcolour(scroll:com_9, ^black_rgb);
+if_openmain(scroll);
+
+
+// if 222 in osrs, can't find any equivalence in this version
+[label,scroll_zombiequeen_white]
+if_settext(scroll:com_2, ^string_empty);
+if_settext(scroll:com_3, ^string_empty);
+if_settext(scroll:com_4, ^string_empty);
+if_settext(scroll:com_5, ^string_empty);
+if_settext(scroll:com_6, "...Rashiliyia did so love objects of beauty. Her");
+if_settext(scroll:com_7, "tomb was adorned with crystals that glowed");
+if_settext(scroll:com_8, "brightly when near to each other.");
+if_settext(scroll:com_9, ^string_empty);
+if_settext(scroll:com_10, ^string_empty);
+if_settext(scroll:com_11, ^string_empty);
+if_settext(scroll:com_12, ^string_empty);
+if_settext(scroll:com_13, ^string_empty);
+if_setcolour(scroll:com_6, ^black_rgb);
+if_setcolour(scroll:com_7, ^black_rgb);
+if_setcolour(scroll:com_8, ^black_rgb);
+if_openmain(scroll);
+
+
+// if 222 in osrs, can't find any equivalence in this version
+[label,scroll_zombiequeen_orange]
+if_settext(scroll:com_2, ^string_empty);
+if_settext(scroll:com_3, ^string_empty);
+if_settext(scroll:com_4, ^string_empty);
+if_settext(scroll:com_5, ^string_empty);
+if_settext(scroll:com_6, "...the sphere is activated when power of a spiritual");
+if_settext(scroll:com_7, "nature is expended upon it, this can be very");
+if_settext(scroll:com_8, "draining on the body...");
+if_settext(scroll:com_9, ^string_empty);
+if_settext(scroll:com_10, ^string_empty);
+if_settext(scroll:com_11, ^string_empty);
+if_settext(scroll:com_12, ^string_empty);
+if_settext(scroll:com_13, ^string_empty);
+if_setcolour(scroll:com_6, ^black_rgb);
+if_setcolour(scroll:com_7, ^black_rgb);
+if_setcolour(scroll:com_8, ^black_rgb);
+if_openmain(scroll);
+
 [if_close,scroll]
 clearsofttimer(server);

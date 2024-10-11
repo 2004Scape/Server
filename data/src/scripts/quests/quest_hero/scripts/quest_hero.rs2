@@ -1,0 +1,41 @@
+[proc,has_hero_quest_requirements]()(boolean)
+if (%questpoints < ^hero_required_questpoints | %zanaris_progress < ^zanaris_complete | 
+    %dragon_progress < ^dragon_complete | %arthur_progress < ^arthur_complete |
+    (%blackarmgang_progress < ^blackarmgang_complete & %phoenixgang_progress < ^phoenixgang_complete)) {
+  return (false);
+}
+return (true);
+
+[proc,hero_in_progress]()(boolean)
+if (%hero_progress > ^hero_not_started & %hero_progress < ^hero_complete) {
+  return(true);
+}
+return(false);
+
+[proc,hero_phoenix_in_progress]()(boolean)
+if (%hero_progress > ^hero_started & %hero_progress < ^hero_phoenix_obtained_armband) {
+  return(true);
+}
+return(false);
+
+[proc,wearing_black_armour](boolean)
+if((inv_total(worn, black_platelegs) > 0) & (inv_total(worn, black_platebody) > 0) & (inv_total(worn, black_full_helm) > 0)) {
+    return (true);
+}
+return (false);
+
+[queue,hero_quest_complete]
+%hero_progress = ^hero_complete;
+stat_advance(attack, 30750);
+stat_advance(defence, 30750);
+stat_advance(strength, 30750);
+stat_advance(hitpoints, 30750);
+stat_advance(ranged, 20750);
+stat_advance(fishing, 27250);
+stat_advance(cooking, 28250);
+stat_advance(woodcutting, 15750);
+stat_advance(firemaking, 15750);
+stat_advance(smithing, 22750);
+stat_advance(mining, 25750);
+stat_advance(herblore, 13250);
+~send_quest_complete(questlist:hero, dragon_battleaxe, 250, ^hero_questpoints, "You have completed the Hero's Quest!");

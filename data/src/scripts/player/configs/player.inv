@@ -12,6 +12,7 @@ runweight=yes
 [reward]
 scope=temp
 size=9
+stackall=yes
 
 [tempinv]
 size=28

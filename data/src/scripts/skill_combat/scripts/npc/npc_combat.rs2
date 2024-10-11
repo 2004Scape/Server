@@ -124,6 +124,10 @@ if(npc_type = general_khazard & %arena_progress < ^arena_freed_servils) {
     return (false);
 }
 
+if (npc_type = grip) {
+    return(~grip_attack);
+}
+
 if(npc_type = lucien_edge) {
     return (~lucien_attack);
 } 
@@ -148,6 +152,9 @@ return (false);
 if (npc_type = wormbrain & (~quest_dragon_getting_map_parts = false | inv_total(inv, crandor_map_part2) > 0 | %dragon_goblin ! ^quest_dragon_knows_about_goblin)) {
     mes("The goblin is already in prison. You have no reason to attack him.");
     return (false);
+}
+if (npc_type = grip) {
+    return(~grip_attack);
 }
 if ((npc_type = zamorak_wizard | npc_type = grandtree_black_demon) & %npc_attacking_uid ! uid) {
     mes("It's not after you...");
@@ -265,7 +272,10 @@ if (map_multi(npc_coord) = false & %npc_attacking_uid ! uid & %npc_attacking_uid
 if (map_multi(npc_coord) = true) {
     return(true);
 }
-if (add(%lastcombat, 8) > map_clock & %aggressive_npc ! npc_uid) {
+if (add(%lastcombat_pvp, 8) > map_clock) {
+    return(false);
+}
+if (add(%lastcombat, 8) > map_clock & %aggressive_npc ! npc_uid & %aggressive_npc ! null) {
     return(false);
 }
 if (~inzone_coord_pair_table(gnomeball_zones, coord) = true) {

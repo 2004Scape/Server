@@ -12,6 +12,23 @@ data=replacement,loc_2055
 data=level,16
 data=experience,150
 
+[locked_door_east_ardy_sewer_gate_north]
+table=locked_door
+data=loc,east_ardy_sewer_gate_north
+data=replacement,east_ardy_sewer_gate_south
+data=level,31
+data=experience,250
+data=mirror,true
+data=gate,true
+
+[locked_door_east_ardy_sewer_gate_south]
+table=locked_door
+data=loc,east_ardy_sewer_gate_south
+data=replacement,east_ardy_sewer_gate_south
+data=level,31
+data=experience,250
+data=gate,true
+
 [locked_door_loc_2554]
 table=locked_door
 data=loc,loc_2554

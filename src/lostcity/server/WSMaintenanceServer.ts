@@ -6,7 +6,7 @@ import Packet from '#jagex2/io/Packet.js';
 import ClientSocket from '#lostcity/server/ClientSocket.js';
 
 import Environment from '#lostcity/util/Environment.js';
-import {LoginResponse} from '#lostcity/server/LoginServer.js';
+import LoginResponse from '#lostcity/server/LoginResponse.js';
 
 function getIp(req: IncomingMessage) {
     let forwardedFor = req.headers['x-forwarded-for'];

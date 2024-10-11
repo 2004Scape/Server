@@ -53,6 +53,9 @@ export default abstract class PathingEntity extends Entity {
     lastInt: number = -1; // resume_p_countdialog, ai_queue
     lastCrawl: boolean = false;
     lastMovement: number = 0;
+    lastCoordX: number = -1;
+    lastCoordZ: number = -1;
+    lastCoordLevel: number = -1;
 
     walktrigger: number = -1;
     walktriggerArg: number = 0; // used for npcs
@@ -112,6 +115,9 @@ export default abstract class PathingEntity extends Entity {
         this.entitymask = entitymask;
         this.lastStepX = x - 1;
         this.lastStepZ = z;
+        this.lastCoordX = x;
+        this.lastCoordZ = z;
+        this.lastCoordLevel = level;
     }
 
     /**
@@ -136,21 +142,25 @@ export default abstract class PathingEntity extends Entity {
         if (!this.hasWaypoints() || this.moveSpeed === MoveSpeed.STATIONARY || this.moveSpeed === MoveSpeed.INSTANT) {
             return false;
         }
+        const previousX = this.x;
+        const previousZ = this.z;
+        const previousLevel = this.level;
 
         if (this.moveSpeed === MoveSpeed.CRAWL) {
             this.lastCrawl = !this.lastCrawl;
             if (this.lastCrawl && this.walkDir === -1) {
                 this.walkDir = this.validateAndAdvanceStep();
             }
-            return true;
-        }
-
-        // either walk or run speed here.
-        if (this.walkDir === -1) {
+        } else if (this.walkDir === -1) { // either walk or run speed here.
             this.walkDir = this.validateAndAdvanceStep();
             if (this.moveSpeed === MoveSpeed.RUN && this.walkDir !== -1 && this.runDir === -1) {
                 this.runDir = this.validateAndAdvanceStep();
             }
+        }
+        if (previousX !== this.x || previousZ !== this.z || previousLevel !== this.level) {
+            this.lastCoordX = previousX;
+            this.lastCoordZ = previousZ;
+            this.lastCoordLevel = previousLevel;
         }
         return true;
     }
@@ -284,7 +294,13 @@ export default abstract class PathingEntity extends Entity {
         this.lastStepX = this.x - 1;
         this.lastStepZ = this.z;
         this.tele = true;
-        
+
+        if (previousX !== x || previousZ !== z || previousLevel !== level) {
+            this.lastCoordX = previousX;
+            this.lastCoordZ = previousZ;
+            this.lastCoordLevel = previousLevel;
+        }
+
         if (previousLevel != level) {
             this.moveSpeed = MoveSpeed.INSTANT;
             this.jump = true;
@@ -323,10 +339,10 @@ export default abstract class PathingEntity extends Entity {
         if (tele && !this.jump && distanceMoved <= 2) {
             if (distanceMoved === 2) {
                 // run
-                const firstX = ((this.x + this.lastTickX) / 2) | 0;
-                const firstZ = ((this.z + this.lastTickZ) / 2) | 0;
-                walkDir = CoordGrid.face(this.lastTickX, this.lastTickZ, firstX, firstZ);
-                runDir = CoordGrid.face(firstX, firstZ, this.x, this.z);
+                walkDir = CoordGrid.face(this.lastTickX, this.lastTickZ, this.x, this.z);
+                const walkX = CoordGrid.moveX(this.lastTickX, walkDir);
+                const walkZ = CoordGrid.moveZ(this.lastTickZ, walkDir);
+                runDir = CoordGrid.face(walkX, walkZ, this.x, this.z);
             } else {
                 // walk
                 walkDir = CoordGrid.face(this.lastTickX, this.lastTickZ, this.x, this.z);
@@ -405,7 +421,12 @@ export default abstract class PathingEntity extends Entity {
     }
 
     pathToPathingTarget(): void {
-        if (!this.target || !(this.target instanceof PathingEntity)) {
+        if (!this.target) {
+            return;
+        }
+        
+        if (!(this.target instanceof PathingEntity)) {
+            this.pathToTarget();
             return;
         }
 

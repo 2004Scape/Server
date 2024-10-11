@@ -1,0 +1,24 @@
+[opnpc1,vigroy]
+// changed a lot in both games so assuming this is probably nearly identical to hajedy's dialogue
+~chatplayer("<p,neutral>Hello!");
+~chatnpc("<p,neutral>Hello Bwana!");
+def_int $amount = ~calc_shilocart_cost();
+// https://web.archive.org/web/20050204071450im_/http://www.runehq.com//images/cityguides/shilo8.jpg
+~chatnpc("<p,neutral>I am offering a cart ride to Brimhaven|if you're interested!|It will cost <tostring($amount)> gold coins. Is that Ok?");
+switch_int(~p_choice2("Yes please, I'd like to go to Brimhaven.", 1, "No thanks.", 2)) {
+    case 1 :
+        ~chatplayer("<p,neutral>Yes please, I'd like to go to Brimhaven.");
+        if(inv_total(inv, coins) < $amount) {
+            ~chatnpc("<p,neutral>Sorry, but it looks as if you don't have enough money. Come and see me when you have enough for the ride.");
+            return;
+        }
+        ~chatnpc("<p,neutral>Great! Just hop into the cart then and we'll go!");
+        ~mesbox("You hop into the cart and the driver urges the horses on.|You take a taxing journey through the jungle to Brimhaven.");
+        inv_del(inv, coins, $amount);
+        ~mesbox("You pay the fare and hand <tostring($amount)> gold coins to Hajedy.");
+        p_teleport(0_43_50_24_14);
+        ~mesbox("You feel tired from the journey, but at least|you didn't have to walk all that distance.");
+    case 2 :
+        ~chatplayer("<p,neutral>No thanks.");
+        ~chatnpc("<p,neutral>Ok Bwana, let me know if you change your mind.");
+}

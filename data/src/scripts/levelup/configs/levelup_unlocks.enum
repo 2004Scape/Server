@@ -396,6 +396,8 @@ val=50
 val=53
 val=68
 val=76
+val=79
+val=81
 
 [levelup_unlocks_cooking]
 inputtype=autoint

@@ -60,6 +60,10 @@ if (%hetty_progress = ^hetty_complete) {
     $questpoints = add($questpoints, ^hetty_questpoints);
 }
 
+if (%chompybird_progress = ^chompybird_complete) {
+    %questpoints = add($questpoints, ^chompybird_questpoints);
+}
+
 if (%priest_progress = ^priest_complete) {
     $questpoints = add($questpoints, ^priest_questpoints);
 }
@@ -176,6 +180,10 @@ if (%hazeelcult_progress = ^hazeelcult_complete) {
     $questpoints = add($questpoints, ^hazeelcult_questpoints);
 }
 
+if (%hero_progress = ^hero_complete) {
+    $questpoints = add($questpoints, ^hero_questpoints);
+}
+
 if (%itgronigen_progress >= ^itgronigen_complete) { // varp is incremented for getting wine post quest
     $questpoints = add($questpoints, ^itgronigen_questpoints);
 }
@@ -216,6 +224,10 @@ if (%upass_progress = ^upass_complete) {
     $questpoints = add($questpoints, ^upass_questpoints);
 }
 
+if (%zombiequeen_progress >= ^zombiequeen_complete) {
+    $questpoints = add($questpoints, ^zombiequeen_questpoints);
+}
+
 %questpoints = $questpoints;
 
 ~send_quest_progress_colour(questlist:runemysteries, %runemysteries_progress, ^runemysteries_complete);
@@ -223,6 +235,7 @@ if (%upass_progress = ^upass_complete) {
 ~send_quest_progress_colour(questlist:cook, %cook_progress, ^cook_complete);
 ~send_quest_progress_colour(questlist:romeojuliet, %romeojuliet_progress, ^romeojuliet_complete);
 ~send_quest_progress_colour(questlist:hetty, %hetty_progress, ^hetty_complete);
+~send_quest_progress_colour(questlist:chompybird, %chompybird_progress, ^chompybird_complete);
 ~send_quest_progress_colour(questlist:priest, %priest_progress, ^priest_complete);
 ~send_quest_progress_colour(questlist:squire, %squire_progress, ^squire_complete);
 ~send_quest_progress_colour(questlist:imp, %imp_progress, ^imp_complete);
@@ -256,6 +269,7 @@ if(%phoenixgang_progress > 0 & %blackarmgang_progress ! ^blackarmgang_complete) 
 ~send_quest_progress_colour(questlist:ball, %ball_progress, ^ball_complete);
 ~send_quest_progress_colour(questlist:murder, %murder_progress, ^murder_complete);
 ~send_quest_progress_colour(questlist:hazeelcult, %hazeelcult_progress, ^hazeelcult_complete);
+~send_quest_progress_colour(questlist:hero, %hero_progress, ^hero_complete);
 ~send_quest_progress_colour(questlist:itgronigen, %itgronigen_progress, ^itgronigen_complete);
 ~send_quest_progress_colour(questlist:arena, %arena_progress, ^arena_complete);
 ~send_quest_progress_colour(questlist:junglepotion, %junglepotion_progress, ^junglepotion_complete);
@@ -270,6 +284,7 @@ if (testbit(%upass_map_mechanisms, ^upass_started_bit) = true & %upass_progress 
 } else {
     ~send_quest_progress_colour(questlist:upass, %upass_progress, ^upass_complete);
 }
+~send_quest_progress_colour(questlist:zombiequeen, %zombiequeen_progress, ^zombiequeen_complete);
 if_settab(questlist, ^tab_quest_journal);
 
 if (%drunkmonk_progress >= ^drunkmonk_spoken_to_omad) {

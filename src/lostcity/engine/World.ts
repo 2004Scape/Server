@@ -59,19 +59,20 @@ import {getLatestModified, getModified, shouldBuildFileAny} from '#lostcity/util
 import Zone from './zone/Zone.js';
 import LinkList from '#jagex2/datastruct/LinkList.js';
 import {createWorker} from '#lostcity/util/WorkerFactory.js';
-import {LoginResponse} from '#lostcity/server/LoginServer.js';
+import LoginResponse from '#lostcity/server/LoginResponse.js';
 import ClientProt from '#lostcity/network/225/incoming/prot/ClientProt.js';
 import {makeCrcs, makeCrcsAsync} from '#lostcity/server/CrcTable.js';
 import {preloadClient, preloadClientAsync} from '#lostcity/server/PreloadedPacks.js';
 import {CoordGrid} from '#lostcity/engine/CoordGrid.js';
 import UpdateRebootTimer from '#lostcity/network/outgoing/model/UpdateRebootTimer.js';
 import WorldStat from '#lostcity/engine/WorldStat.js';
-import { FriendsServerOpcodes } from '#lostcity/server/FriendsServer.js';
+import { FriendsServerOpcodes } from '#lostcity/server/FriendServer.js';
 import UpdateFriendList from '#lostcity/network/outgoing/model/UpdateFriendList.js';
 import UpdateIgnoreList from '#lostcity/network/outgoing/model/UpdateIgnoreList.js';
+import MessagePrivate from '#lostcity/network/outgoing/model/MessagePrivate.js';
 
 class World {
-    private friendsThread: Worker | NodeWorker = createWorker(typeof self === 'undefined' ? './src/lostcity/server/FriendsThread.ts' : 'FriendsThread.js');
+    private friendsThread: Worker | NodeWorker = createWorker(typeof self === 'undefined' ? './src/lostcity/server/FriendThread.ts' : 'FriendThread.js');
 
     private static readonly PLAYERS: number = 2048;
     private static readonly NPCS: number = 8192;
@@ -110,6 +111,7 @@ class World {
     tickRate: number = World.NORMAL_TICKRATE; // speeds up when we're processing server shutdown
     currentTick: number = 0;
     shutdownTick: number = -1;
+    pmCount: number = 1; // can't be 0 as clients will ignore the pm, their array is filled with 0 as default
 
     // packed data timestamps
     allLastModified: number = 0;
@@ -149,52 +151,63 @@ class World {
         }
     }
 
-    onFriendsMessage({ opcode, data }: { opcode: FriendsServerOpcodes, data: Uint8Array }) {
-        const packet = new Packet(data);
-
+    onFriendsMessage({ opcode, data }: { opcode: FriendsServerOpcodes, data: any }) {
         try {
             if (opcode === FriendsServerOpcodes.UPDATE_FRIENDLIST) {
-                const username37 = packet.g8();
+                const username37 = BigInt(data.username37);
 
                 // TODO make getPlayerByUsername37?
                 const player = this.getPlayerByUsername(fromBase37(username37));
                 if (!player) {
-                    console.error(`FriendsThread: player ${fromBase37(username37)} not found`);
+                    console.error(`FriendThread: player ${fromBase37(username37)} not found`);
                     return;
                 }
 
-                // 10 bytes per friend
-                while (packet.available >= 10) {
-                    const world = packet.g2();
-                    const friendUsername37 = packet.g8();
-                    player.write(new UpdateFriendList(friendUsername37, world));
+                for (let i = 0; i < data.friends.length; i++) {
+                    const [world, friendUsername37] = data.friends[i];
+                    player.write(new UpdateFriendList(BigInt(friendUsername37), world));
                 }
             } else if (opcode === FriendsServerOpcodes.UPDATE_IGNORELIST) {
-                const username37 = packet.g8();
+                const username37 = BigInt(data.username37);
 
                 // TODO make getPlayerByUsername37?
                 const player = this.getPlayerByUsername(fromBase37(username37));
                 if (!player) {
-                    console.error(`FriendsThread: player ${fromBase37(username37)} not found`);
+                    console.error(`FriendThread: player ${fromBase37(username37)} not found`);
                     return;
                 }
 
-                const ignored: bigint[] = [];
-
-                while (packet.available >= 8) {
-                    const target37 = packet.g8();
-
-                    ignored.push(target37);
-                }
+                const ignored: bigint[] = data.ignored.map((i: string) => BigInt(i));
 
                 if (ignored.length > 0) {
                     player.write(new UpdateIgnoreList(ignored));
                 }
+            } else if (opcode == FriendsServerOpcodes.PRIVATE_MESSAGE) {
+                // username37: username.toString(),
+                // targetUsername37: target.toString(),
+                // staffLvl,
+                // pmId,
+                // chat
+
+                const fromPlayer = BigInt(data.username37);
+                const fromPlayerStaffLvl = data.staffLvl;
+                const pmId = data.pmId;
+                const target = BigInt(data.targetUsername37);
+
+                const player = this.getPlayerByUsername(fromBase37(target));
+                if (!player) {
+                    console.error(`FriendThread: player ${fromBase37(target)} not found`);
+                    return;
+                }
+
+                const chat = data.chat;
+
+                player.write(new MessagePrivate(fromPlayer, pmId, fromPlayerStaffLvl, chat));
             } else {
                 console.error('Unknown friends opcode: ' + opcode);
             }
-        } finally {
-            packet.release();
+        } catch (err) {
+            console.error(err);
         }
     }
 
@@ -819,15 +832,19 @@ class World {
                     player.mask |= Player.FACE_ENTITY;
                 }
 
-                if (player.opcalled && (player.userPath.length === 0 || !Environment.NODE_CLIENT_ROUTEFINDER)) {
-                    player.pathToTarget();
-                    continue;
-                }
-                
                 if (player.busy() || !player.opcalled) {
                     player.moveClickRequest = true;
                 }
+                
+                if (player.opcalled && (player.userPath.length === 0 || !Environment.NODE_CLIENT_ROUTEFINDER)) {
+                    player.pathToPathingTarget();
+                    continue;
+                }
+                
                 player.pathToMoveClick(player.userPath, !Environment.NODE_CLIENT_ROUTEFINDER);
+                if (!player.opcalled && player.hasWaypoints()) {
+                    player.processWalktrigger();
+                }
             }
 
             if (player.target instanceof Player && (player.targetOp === ServerTriggerType.APPLAYER3 || player.targetOp === ServerTriggerType.OPPLAYER3)) {
@@ -1279,7 +1296,7 @@ class World {
         }
 
         for (const player of this.players) {
-            player.save().release();
+            Login.autosave(player);
         }
     }
 
@@ -1318,8 +1335,8 @@ class World {
         }
     }
 
-    addNpc(npc: Npc, duration: number, setId: boolean = true): void {
-        if (setId) {
+    addNpc(npc: Npc, duration: number, firstSpawn: boolean = true): void {
+        if (firstSpawn) {
             this.npcs.set(npc.nid, npc);
         }
 
@@ -1443,8 +1460,9 @@ class World {
         }
         const zone: Zone = this.gameMap.getZone(obj.x, obj.z, obj.level);
         zone.addObj(obj, receiverId);
-        if (receiverId !== -1 && objType.tradeable && (objType.members && Environment.NODE_MEMBERS || !objType.members)) {
-            // objs always reveal 100 ticks after being dropped.
+        if (receiverId !== -1) {
+            // objs with a receiver always attempt to reveal 100 ticks after being dropped.
+            // items that can't be revealed (untradable, members obj in f2p) will be skipped in revealObj
             const reveal: number = this.currentTick + Obj.REVEAL;
             obj.setLifeCycle(reveal);
             this.trackZone(reveal, zone);
@@ -1548,7 +1566,7 @@ class World {
     }
 
     addFriend(player: Player, targetUsername37: bigint) {
-        console.log(`[World] addFriend => player: ${player.username}, target: ${targetUsername37} (${fromBase37(targetUsername37)})`);
+        //console.log(`[World] addFriend => player: ${player.username}, target: ${targetUsername37} (${fromBase37(targetUsername37)})`);
         this.friendsThread.postMessage({
             type: 'player_friendslist_add',
             username: player.username,
@@ -1557,7 +1575,7 @@ class World {
     }
 
     removeFriend(player: Player, targetUsername37: bigint) {
-        console.log(`[World] removeFriend => player: ${player.username}, target: ${targetUsername37} (${fromBase37(targetUsername37)})`);
+        //console.log(`[World] removeFriend => player: ${player.username}, target: ${targetUsername37} (${fromBase37(targetUsername37)})`);
         this.friendsThread.postMessage({
             type: 'player_friendslist_remove',
             username: player.username,
@@ -1566,7 +1584,7 @@ class World {
     }
 
     addIgnore(player: Player, targetUsername37: bigint) {
-        console.log(`[World] addIgnore => player: ${player.username}, target: ${targetUsername37} (${fromBase37(targetUsername37)})`);
+        //console.log(`[World] addIgnore => player: ${player.username}, target: ${targetUsername37} (${fromBase37(targetUsername37)})`);
         this.friendsThread.postMessage({
             type: 'player_ignorelist_add',
             username: player.username,
@@ -1575,7 +1593,7 @@ class World {
     }
 
     removeIgnore(player: Player, targetUsername37: bigint) {
-        console.log(`[World] removeIgnore => player: ${player.username}, target: ${targetUsername37} (${fromBase37(targetUsername37)})`);
+        //console.log(`[World] removeIgnore => player: ${player.username}, target: ${targetUsername37} (${fromBase37(targetUsername37)})`);
         this.friendsThread.postMessage({
             type: 'player_ignorelist_remove',
             username: player.username,
@@ -1619,6 +1637,19 @@ class World {
         this.friendsThread.postMessage({
             type: 'player_logout',
             username: player.username,
+        });
+    }
+
+    sendPrivateMessage(player: Player, targetUsername37: bigint, message: string): void {
+        //console.log(`[World] sendPrivateMessage => player: ${player.username}, target: ${targetUsername37} (${fromBase37(targetUsername37)}), message: '${message}'`);
+
+        this.friendsThread.postMessage({
+            type: 'private_message',
+            username: player.username,
+            staffLvl: player.staffModLevel,
+            pmId: (Environment.NODE_ID << 24) + (Math.random() * 0xFF << 16) + (this.pmCount++),
+            target: targetUsername37,
+            message: message
         });
     }
 

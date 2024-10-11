@@ -1,0 +1,449 @@
+[loc_2216]
+name=Broken cart
+desc=This looks like it's being used to block entrance to the village.
+model=model_loc_306
+width=3
+length=3
+op1=Look-at
+op2=Search
+
+[loc_2217]
+name=Mound of earth
+desc=Something seems to be buried under this.
+model=model_loc_2217
+width=3
+length=3
+resizex=256
+resizez=256
+mapscene=11
+op1=Look-at
+op2=Search
+
+[loc_2218]
+name=Fissure
+desc=A narrow fissure in the ground.
+model=model_loc_2218
+width=3
+length=3
+resizex=192
+resizez=192
+hillskew=yes
+occlude=yes
+op1=Look-at
+op2=Search
+recol1s=15753
+recol1d=6273
+recol2s=15855
+recol2d=9377
+recol3s=11627
+recol3d=5217
+recol4s=14798
+recol4d=11520
+recol5s=7399
+recol5d=4194
+recol6s=8609
+recol6d=6273
+
+[loc_2219]
+name=Fissure
+desc=A narrow fissure in the ground.
+model=model_loc_492
+hillskew=yes
+width=3
+length=3
+resizex=192
+resizez=192
+occlude=yes
+op1=Look-at
+op2=Search
+recol1s=15753
+recol1d=6273
+recol2s=15855
+recol2d=9377
+recol3s=11627
+recol3d=5217
+recol4s=14798
+recol4d=11520
+recol5s=7399
+recol5d=4194
+recol6s=8609
+recol6d=6273
+
+[loc_2220]
+name=Cave in
+desc=A pile of rubble.
+model=model_loc_13
+length=2
+op2=Search
+
+[loc_2221]
+name=Strange looking stone
+desc=A stone with some carvings on it.
+model=model_loc_756
+active=yes
+op1=Look-at
+op2=Investigate
+
+[loc_2222]
+name=Loose rocks
+desc=A pile of loose rocks.
+model=model_loc_13
+length=2
+op2=Search
+
+[loc_2223]
+name=Old sacks
+desc=Probably nothing useful in these.
+model=model_loc_23
+op2=Search
+
+[loc_2224]
+name=Ancient gallows
+desc=A rotten and barely standing set of gallows.
+model=model_loc_2224
+width=2
+length=2
+op1=Look-at
+op2=Search
+
+[loc_2225]
+name=Waterfall rocks
+desc=Wet rocks, it looks like you might be able to climb them.
+model=model_loc_436
+hillskew=yes
+op1=Look-at
+op2=Search
+
+[loc_2226]
+name=Smashed table
+desc=This table has seen better days.
+model=model_loc_599
+op1=Look-at
+op2=Craft
+
+[loc_2227]
+name=Crude raft
+desc=A crudely constructed raft.
+model=model_loc_1987
+length=2
+op2=Disembark
+
+[loc_2228]
+model=model_loc_2228
+
+[loc_2229]
+name=Tribal Statue
+desc=A statue to mark Taie Bwo Wannai sacred grounds.
+model=model_loc_567
+width=2
+length=2
+op1=Investigate
+
+[loc_2230]
+name=Travel cart
+desc=A sturdy cart for travelling in.
+model=model_loc_307
+width=2
+length=3
+op1=Look-at
+op2=Board
+
+[loc_2231]
+name=Rocks
+desc=A rocky outcrop.
+model=model_loc_2231
+hillskew=yes
+op1=Climb
+ambient=25
+contrast=25
+
+[loc_2232]
+model=model_loc_2232
+hillskew=yes
+ambient=25
+contrast=25
+forcedecor=yes
+
+[loc_2233]
+model=model_loc_2233
+hillskew=yes
+ambient=25
+contrast=25
+forcedecor=yes
+
+[loc_2234]
+name=Well stacked rocks
+desc=Rocks that have been stacked at regular intervals.
+model=plainrock1
+op1=Investigate
+op2=Search
+hillskew=yes
+
+[loc_2235]
+name=Tomb dolmen
+desc=An ancient construct for supporting the bones of the deceased.
+model=model_loc_410
+width=2
+length=2
+op1=Inspect
+op2=Search
+
+[loc_2236]
+name=Climbing rocks
+desc=I can climb the rocky outcrop.
+model=model_loc_535
+forcedecor=yes
+active=yes
+hillskew=yes
+op1=Climb
+
+[loc_2237]
+name=Palm tree
+desc=An exotic looking tree.
+model=model_loc_1313
+width=3
+length=2
+op2=Search
+mapscene=5
+
+[loc_2238]
+name=Hillside entrance
+desc=Large doors set into the hillside.
+model=model_loc_2238
+width=2
+op1=Enter
+category=rashiliyia_tomb_door_opened
+
+[loc_2239]
+name=Hillside entrance
+desc=Large doors set into the hillside.
+model=model_loc_2238
+width=2
+mirror=yes
+op1=Enter
+category=rashiliyia_tomb_door_opened
+
+[loc_2240]
+name=Carved doors
+desc=These doors must have been hidden here for years.
+model=model_loc_2240
+width=2
+op1=Open
+op2=Search
+category=rashiliyia_tomb_door_closed
+
+[loc_2241]
+name=Carved doors
+desc=These doors must have been hidden here for years.
+model=model_loc_2240
+width=2
+mirror=yes
+op1=Open
+op2=Search
+category=rashiliyia_tomb_door_closed
+
+[loc_2242]
+name=Tomb exit
+desc=Perhaps you should give them a push.
+model=model_loc_2240_2
+width=2
+op1=Open
+op2=Search
+
+[loc_2243]
+name=Tomb exit
+desc=Perhaps you should give them a push.
+model=model_loc_2240_2
+width=2
+mirror=yes
+op1=Open
+op2=Search
+
+[loc_2244]
+name=Jungle plant
+desc=Commonly found in these parts.
+model=model_loc_1390
+width=2
+blockwalk=no
+
+[loc_2245]
+name=Jungle plant
+desc=A leafy fern.
+model=model_loc_1390
+width=2
+recol1s=5504
+recol1d=736
+
+[loc_2246]
+name=Tomb doors
+desc=Large carved tomb doors, they look terrifying.
+model=model_loc_2246
+op1=Open
+op2=Search
+recol1s=2048
+recol1d=29562
+category=zqtombdoor
+
+[loc_2247]
+name=Tomb doors
+desc=Large carved tomb doors, they look terrifying.
+model=model_loc_2246
+mirror=yes
+op1=Open
+op2=Search
+recol1s=3072
+recol1d=29562
+recol2s=1024
+recol2d=29562
+category=zqtombdoor
+
+[loc_2248]
+name=Tomb doors
+desc=Large carved tomb doors, they look terrifying.
+model=model_loc_2246
+op1=Open
+op2=Search
+recol1s=2048
+recol1d=29562
+recol2s=1024
+recol2d=29562
+category=zqtombdoor
+
+[loc_2249]
+name=Tomb doors
+desc=Large carved tomb doors, they look terrifying.
+model=model_loc_2246
+op1=Open
+op2=Search
+recol1s=2048
+recol1d=29562
+recol2s=1024
+recol2d=29562
+recol3s=3072
+recol3d=29562
+category=zqtombdoor
+
+[loc_2250]
+name=Tomb doors
+desc=Large carved tomb doors, they look terrifying.
+model=model_loc_2246
+mirror=yes
+op1=Open
+op2=Search
+recol1s=3072
+recol1d=29562
+recol2s=1024
+recol2d=29562
+recol3s=2048
+recol3d=29562
+category=zqtombdoor
+
+[loc_2251]
+model=model_loc_2246
+recol1s=2048
+recol1d=29562
+recol2s=1024
+recol2d=29562
+recol3s=3072
+recol3d=29562
+
+[loc_2252]
+model=model_loc_2246
+mirror=yes
+recol1s=3072
+recol1d=29562
+recol2s=1024
+recol2d=29562
+recol3s=2048
+recol3d=29562
+
+[loc_2253]
+name=Tomb exit
+desc=Perhaps you should give them a push.
+model=model_loc_2240
+length=2
+op1=Open
+op2=Search
+
+[loc_2254]
+name=Tomb exit
+desc=Perhaps you should give them a push.
+model=model_loc_2240
+length=2
+mirror=yes
+op1=Open
+op2=Search
+
+[loc_2255]
+name=Ancient metal gate
+model=model_loc_52
+op1=Open
+op2=Search
+
+[loc_2256]
+name=Ancient metal gate
+model=model_loc_52
+mirror=yes
+op1=Open
+op2=Search
+
+[loc_2257]
+name=Rocks
+desc=A rocky outcrop.
+model=plainrock1
+hillskew=yes
+op1=Climb
+
+[loc_2258]
+name=Tomb dolmen
+desc=An ancient construct for supporting the bones of the deceased.
+model=model_loc_410
+width=2
+length=2
+op1=Look-at
+op2=Search
+
+[loc_2259]
+name=Metal gate
+desc=The gate is closed.
+model=model_loc_52
+op1=Open
+blockrange=no
+category=shilo_metalgate
+
+[loc_2260]
+name=Metal gate
+desc=The gate is closed.
+model=model_loc_52
+op1=Open
+mirror=yes
+blockrange=no
+category=shilo_metalgate
+
+[loc_2261]
+name=Wooden gate
+desc=The gate is closed.
+model=model_loc_47
+active=yes
+op1=Open
+blockrange=no
+category=shilo_woodengate
+
+[loc_2262]
+name=Wooden gate
+desc=The gate is closed.
+model=model_loc_47
+mirror=yes
+active=yes
+op1=Open
+blockrange=no
+category=shilo_woodengate
+
+[loc_2263]
+model=model_loc_47
+blockrange=no
+
+[loc_2264]
+model=model_loc_47
+mirror=yes
+blockrange=no

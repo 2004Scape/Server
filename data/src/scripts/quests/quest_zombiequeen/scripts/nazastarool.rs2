@@ -1,0 +1,58 @@
+[ai_queue10,npc_507]
+npc_say("I am Nazastarool! Prepare to die!");
+if(p_finduid(%npc_aggressive_player) = true) ~npc_retaliate(0);
+
+[ai_queue10,npc_508]
+npc_say("Your death will be swift.");
+if(p_finduid(%npc_aggressive_player) = true) ~npc_retaliate(0);
+
+[ai_queue10,npc_509]
+npc_say("Soon you will serve Rashiliyia.");
+if(p_finduid(%npc_aggressive_player) = true) ~npc_retaliate(0);
+
+[ai_queue3,npc_507]
+gosub(npc_death);
+// don't need to deal damage, you just need to be the last player to attack
+// (that's why we're not checking heropoints here): https://www.youtube.com/watch?v=D_jR2BZy5_g
+if (finduid(%npc_attacking_uid) = true) {
+    if_close;
+    queue(defeat_nazastarool1, 0);
+}
+
+[ai_queue3,npc_508]
+gosub(npc_death);
+if (finduid(%npc_attacking_uid) = true) {
+    if_close;
+    queue(defeat_nazastarool2, 0);
+}
+
+[ai_queue3,npc_509]
+gosub(npc_death);
+if (finduid(%npc_attacking_uid) = true) {
+    if_close;
+    queue(defeat_nazastarool3, 0);
+}
+
+[queue,defeat_nazastarool1]
+%zq_map_mechanisms = setbit(%zq_map_mechanisms, ^zq_defeated_nazastarool1);
+~mesbox("You defeat Nazastarool and the corpse falls to the ground. The bones start to move again and soon they reform into a grisly giant skeleton.");
+if_close;
+@summon_nazastarool;
+
+[queue,defeat_nazastarool2]
+%zq_map_mechanisms = setbit(%zq_map_mechanisms, ^zq_defeated_nazastarool2);
+~mesbox("You defeat Nazastarool and the skeleton falls to the ground. An ethereal form starts taking shape above the bones and you soon face the vengeful ghost of Nazastarool.");
+if_close;
+@summon_nazastarool;
+
+[queue,defeat_nazastarool3]
+%zq_map_mechanisms = setbit(%zq_map_mechanisms, ^zq_defeated_nazastarool3);
+obj_add(0_45_148_13_15, rashiliya_corpse, 1, ^lootdrop_duration);
+queue(zq_corpseappear, 0);
+mes("You see something appear on the dolmen.");
+mes("Nazastarool: May you perish in the fires of Zamorak's furnace! Rashiliyia's");
+mes("Nazastarool: curse is upon you!");
+~mesbox("You hear a disembodied voice fading away into the distance,|'May you perish in the fires of Zamorak's furnace!|Rashiliyia's curse is upon you!'");
+
+[queue,zq_corpseappear]
+~mesbox("You see something appear on the dolmen.");

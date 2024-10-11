@@ -36,8 +36,8 @@ export default {
     LOGIN_KEY: tryParseString(process.env.LOGIN_KEY, ''),
 
     // friends server
-    FRIENDS_HOST: tryParseString(process.env.FRIENDS_HOST, 'localhost'),
-    FRIENDS_PORT: tryParseInt(process.env.FRIENDS_PORT, 45099),
+    FRIEND_HOST: tryParseString(process.env.FRIEND_HOST, 'localhost'),
+    FRIEND_PORT: tryParseInt(process.env.FRIEND_PORT, 45099),
 
     /// database
     DB_HOST: tryParseString(process.env.DB_HOST, 'localhost'),

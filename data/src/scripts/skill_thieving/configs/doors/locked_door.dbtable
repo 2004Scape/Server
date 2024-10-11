@@ -4,3 +4,5 @@ column=replacement,loc
 column=level,int
 column=experience,int
 column=tool,namedobj,string
+column=mirror,boolean
+column=gate,boolean
