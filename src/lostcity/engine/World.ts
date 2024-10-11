@@ -1293,7 +1293,7 @@ class World {
         }
 
         for (const player of this.players) {
-            player.save().release();
+            Login.autosave(player);
         }
     }
 

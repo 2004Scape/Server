@@ -98,6 +98,16 @@ class Login {
         save.release();
     }
 
+    autosave(player: Player) {
+        const save = player.save();
+        this.loginThread.postMessage({
+            type: 'autosave',
+            username: player.username,
+            save: save.data.subarray(0, save.pos)
+        });
+        save.release();
+    }
+
     private onMessage(msg: any) {
         switch (msg.type) {
             case 'loginreply': {

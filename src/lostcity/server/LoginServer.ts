@@ -146,6 +146,13 @@ export default class LoginServer {
                     for (let i = 0; i < players.length; i++) {
                         this.players[world].push(BigInt(players[i]));
                     }
+                } else if (type === 6) {
+                    // autosave - update the player without logging them out (we don't care about confirmation like logging out)
+                    const { world, save } = message;
+
+                    const username37 = BigInt(message.username37);
+                    const username = fromBase37(username37);
+                    await fsp.writeFile(`data/players/${username}.sav`, Buffer.from(save, 'base64'));
                 }
             });
 

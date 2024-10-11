@@ -225,6 +225,15 @@ async function handleRequests(parentPort: any, msg: any, priv: forge.pki.rsa.Pri
             }
             break;
         }
+        case 'autosave': {
+            if (!Environment.LOGIN_KEY) {
+                return;
+            }
+
+            const { username, save } = msg;
+
+            await login.autosave(toBase37(username), save);
+        } break;
         default:
             console.error('Unknown message type: ' + msg.type);
             break;

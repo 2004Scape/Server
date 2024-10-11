@@ -144,9 +144,24 @@ export default class LoginClient {
         }
 
         this.ws.send(JSON.stringify({
-            type: 4,
+            type: 5,
             world: Environment.NODE_ID,
             players: players.map(u => u.toString())
+        }));
+    }
+
+    async autosave(username37: bigint, save: Uint8Array) {
+        await this.connect();
+
+        if (!this.ws || !this.wsr || !this.wsr.checkIfWsLive()) {
+            return;
+        }
+
+        this.ws.send(JSON.stringify({
+            type: 6,
+            world: Environment.NODE_ID,
+            username37: username37.toString(),
+            save: Buffer.from(save).toString('base64')
         }));
     }
 }
