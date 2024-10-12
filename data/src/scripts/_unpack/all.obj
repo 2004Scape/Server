@@ -1548,45 +1548,6 @@ model=model_2417_obj
 weight=6g
 members=yes
 
-[obj_2389]
-model=model_2789_obj
-recol1s=15855
-recol1d=6722
-2dyof=-1
-2dzoom=550
-2dyan=1996
-2dxan=84
-weight=15g
-name=Vial
-desc=An infusion of water and jangerberries.
-members=yes
-
-[obj_2390]
-model=model_2789_obj
-recol1s=15855
-recol1d=352
-name=Vial
-desc=A mixture of jangerberries and guam leaves in a vial.
-2dyof=-1
-2dzoom=550
-2dyan=1996
-2dxan=84
-weight=25g
-members=yes
-
-[ground_bat_bones]
-name=Ground bat bones
-desc=Let's see it fly now!
-cost=20
-model=model_2742_obj
-2dyof=-1
-2dzoom=520
-2dyan=2008
-2dxan=136
-weight=100g
-members=yes
-tradeable=yes
-
 [nightshade]
 name=Nightshade
 desc=Deadly!

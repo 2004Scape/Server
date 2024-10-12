@@ -153,6 +153,8 @@ category=category_86
 members=yes
 tradeable=yes
 param=brew_potion_struct,3dosepotionofzamorak
+param=brew_potion_struct_secondary,vial_water_jangerberries
+param=brew_potion_struct_tertiary,mixture_guam_jangerberries
 
 [blamish_snail_slime]
 name=Blamish snail slime
@@ -168,3 +170,19 @@ recol1d=28570
 weight=25g
 members=yes
 param=brew_potion_struct,blamish_oil
+
+[ground_bat_bones]
+name=Ground bat bones
+desc=Let's see it fly now!
+cost=20
+model=model_2742_obj
+2dyof=-1
+2dzoom=520
+2dyan=2008
+2dxan=136
+weight=100g
+members=yes
+tradeable=yes
+param=brew_potion_struct,ogre_potion
+param=brew_potion_struct_secondary,bat_bones_explode
+param=brew_potion_struct_tertiary,bat_bones_explode2
