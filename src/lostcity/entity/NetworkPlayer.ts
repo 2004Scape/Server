@@ -118,12 +118,7 @@ export class NetworkPlayer extends Player {
             this.refreshModal = false;
         }
 
-        for (let message: OutgoingMessage | null = this.highPriorityOut.head(); message; message = this.highPriorityOut.next()) {
-            this.writeInner(message);
-            message.uncache();
-        }
-
-        for (let message: OutgoingMessage | null = this.lowPriorityOut.head(); message; message = this.lowPriorityOut.next()) {
+        for (let message: OutgoingMessage | null = this.buffer.head(); message; message = this.buffer.next()) {
             this.writeInner(message);
             message.uncache();
         }
@@ -384,4 +379,24 @@ export class NetworkPlayer extends Player {
 
 export function isNetworkPlayer(player: Player): player is NetworkPlayer {
     return (player as NetworkPlayer).client !== null && (player as NetworkPlayer).client !== undefined;
+}
+
+export function isBufferFull(player: Player): boolean {
+    if (!isNetworkPlayer(player)) {
+        return false;
+    }
+
+    let total = 0;
+
+    for (let message: OutgoingMessage | null = player.buffer.head(); message; message = player.buffer.next()) {
+        const encoder: MessageEncoder<OutgoingMessage> | undefined = ServerProtRepository.getEncoder(message);
+        if (!encoder) {
+            return true;
+        }
+
+        const prot: ServerProt = encoder.prot;
+        total += (1 + (prot.length === -1 ? 1 : prot.length === -2 ? 2 : 0)) + encoder.test(message);
+    }
+
+    return total >= 5000;
 }

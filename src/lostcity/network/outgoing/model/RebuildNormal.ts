@@ -3,7 +3,7 @@ import ServerProtPriority from '#lostcity/network/outgoing/prot/ServerProtPriori
 import {CoordGrid} from '#lostcity/engine/CoordGrid.js';
 
 export default class RebuildNormal extends OutgoingMessage {
-    priority = ServerProtPriority.HIGH;
+    priority = ServerProtPriority.IMMEDIATE;
 
     constructor(
         readonly zoneX: number,

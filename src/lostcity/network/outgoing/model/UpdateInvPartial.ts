@@ -3,7 +3,7 @@ import ServerProtPriority from '#lostcity/network/outgoing/prot/ServerProtPriori
 import {Inventory} from '#lostcity/engine/Inventory.js';
 
 export default class UpdateInvPartial extends OutgoingMessage {
-    priority = ServerProtPriority.HIGH;
+    priority = ServerProtPriority.IMMEDIATE;
 
     readonly slots: number[];
 

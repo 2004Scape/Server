@@ -67,6 +67,7 @@ import ParamType from '#lostcity/cache/config/ParamType.js';
 import BuildArea from '#lostcity/entity/BuildArea.js';
 import ChatFilterSettings from '#lostcity/network/outgoing/model/ChatFilterSettings.js';
 import { ChatModePrivate, ChatModePublic, ChatModeTradeDuel } from '#lostcity/util/ChatModes.js';
+import { isNetworkPlayer } from '#lostcity/entity/NetworkPlayer.js';
 
 const levelExperience = new Int32Array(99);
 
@@ -283,8 +284,8 @@ export default class Player extends PathingEntity {
     interactWalkTrigger: boolean = false;
     moveClickRequest: boolean = false;
 
-    highPriorityOut: Stack<OutgoingMessage> = new Stack();
-    lowPriorityOut: Stack<OutgoingMessage> = new Stack();
+    // not stored as a byte buffer so we can write and encrypt opcodes later
+    buffer: Stack<OutgoingMessage> = new Stack();
     lastResponse = -1;
 
     messageColor: number | null = null;
@@ -1830,10 +1831,12 @@ export default class Player extends PathingEntity {
     }
 
     write(message: OutgoingMessage) {
-        if (message.priority === ServerProtPriority.HIGH) {
-            this.highPriorityOut.push(message);
+        if (message.priority === ServerProtPriority.IMMEDIATE) {
+            if (isNetworkPlayer(this)) {
+                this.writeInner(message);
+            }
         } else {
-            this.lowPriorityOut.push(message);
+            this.buffer.push(message);
         }
     }
 
