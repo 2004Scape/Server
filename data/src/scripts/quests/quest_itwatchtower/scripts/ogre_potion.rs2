@@ -1,0 +1,14 @@
+[opheldu,ground_bat_bones]
+if(last_useitem = vial_water) {
+  @bat_bones_evaporate;
+  return;
+}
+if(~attempt_brew_potion(last_useslot, last_slot) = true) {
+  mes("You produce a strong potion.");
+}
+
+[label,bat_bones_evaporate]
+inv_del(inv, ground_bat_bones, 1);
+inv_del(inv, vial_water, 1);
+inv_add(inv, vial_empty, 1);
+~chatplayer("<p,sad>Oh dear, the mixture has evaporated.");

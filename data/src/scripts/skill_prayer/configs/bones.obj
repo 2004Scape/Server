@@ -42,6 +42,8 @@ weight=300g
 members=yes
 tradeable=yes
 param=bone_exp,45
+param=grindable_ingredient_refined,ground_bat_bones
+param=grindable_ingredient_message,You grind the bones to a powder.
 
 [big_bones]
 name=Big bones

@@ -199,6 +199,54 @@ param=brew_potion_exp,1750
 param=brew_potion_message,You mix the jangerberries into your potion.
 param=brew_potion_mixture,3dosepotionofzamorak
 
+[vial_water_jangerberries]
+param=brew_potion_ingredient,jangerberries
+param=brew_potion_solvent,vial_water
+param=brew_potion_level,14
+param=brew_potion_exp,100
+param=brew_potion_message,You mix the jangerberries into the water.
+param=brew_potion_mixture,vial_water_jangerberries
+
+[mixture_guam_jangerberries]
+param=brew_potion_ingredient,jangerberries
+param=brew_potion_solvent,unf_guam_potion
+param=brew_potion_level,14
+param=brew_potion_exp,100
+param=brew_potion_message,You mix the jangerberries into your potion.
+param=brew_potion_mixture,mixture_guam_jangerberries
+
+[ogre_potion]
+param=brew_potion_ingredient,ground_bat_bones
+param=brew_potion_solvent,mixture_guam_jangerberries
+param=brew_potion_level,14
+param=brew_potion_exp,100
+param=brew_potion_message,You mix the ground bones into the liquid.
+param=brew_potion_mixture,ogre_potion
+
+[bat_bones_explode]
+param=brew_potion_ingredient,ground_bat_bones
+param=brew_potion_solvent,vial_water_jangerberries
+param=brew_potion_level,14
+param=brew_potion_exp,0
+param=brew_potion_message,You mix the ground bones into the liquid.
+param=brew_potion_mixture,explodingvial
+
+[bat_bones_explode2]
+param=brew_potion_ingredient,ground_bat_bones
+param=brew_potion_solvent,unf_guam_potion
+param=brew_potion_level,14
+param=brew_potion_exp,0
+param=brew_potion_message,You mix the ground bones into the liquid.
+param=brew_potion_mixture,explodingvial
+
+[guam_leaf_explode]
+param=brew_potion_ingredient,guam_leaf
+param=brew_potion_solvent,vial_water_jangerberries
+param=brew_potion_level,14
+param=brew_potion_exp,0
+param=brew_potion_message,You mix the guam leaf into the liquid.
+param=brew_potion_mixture,explodingvial
+
 [blamish_oil]
 param=brew_potion_ingredient,blamish_snail_slime
 param=brew_potion_solvent,unf_harralander_potion

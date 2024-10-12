@@ -1,4 +1,8 @@
 [opheldu,vial_water]
+if(last_useitem = ground_bat_bones) {
+  @bat_bones_evaporate;
+  return;
+}
 ~attempt_brew_potion(last_useslot, last_slot);
 
 [opheldu,unf_guam_potion]
@@ -61,12 +65,15 @@
 [opheldu,jangerberries]
 ~attempt_brew_potion(last_useslot, last_slot);
 
-[proc,attempt_brew_potion](int $use_slot, int $last_slot)
+[opheldu,vial_water_jangerberries]
+~attempt_brew_potion(last_useslot, last_slot);
+
+[proc,attempt_brew_potion](int $use_slot, int $last_slot)(boolean)
 // Find the struct of the potion being made (if valid item combo)
 def_struct $struct = ~get_brew_struct(inv_getobj(inv, $last_slot), inv_getobj(inv, $use_slot));
 if ($struct = null) {
     ~displaymessage(^dm_default);
-    return;
+    return(false);
 }
 
 ~require_members_feature;
@@ -77,20 +84,25 @@ def_int $herb_level = struct_param($struct, brew_potion_level);
 if ($current_level < $herb_level) {
     // https://youtu.be/VthR9A85TQU?t=159
     mes("You need a Herblore level of at least <tostring($herb_level)> to make this potion.");
-    return;
+    return(false);
 }
 
 // Brew the potion
+def_namedobj $mixture = struct_param($struct, brew_potion_mixture);
+def_string $message = struct_param($struct, brew_potion_message);
 def_namedobj $ingredient = struct_param($struct, brew_potion_ingredient);
 def_namedobj $solvent = struct_param($struct, brew_potion_solvent);
-def_string $message = struct_param($struct, brew_potion_message);
-def_namedobj $mixture = struct_param($struct, brew_potion_mixture);
 def_int $experience = struct_param($struct, brew_potion_exp);
 if ($mixture = null) {
     ~displaymessage(^dm_default);
-    return;
+    return(false);
+}
+if ($mixture = explodingvial) {
+    ~potion_explosion($ingredient, $solvent, $message);
+    return(false);
 }
 ~brew_potion($struct, $ingredient, $solvent, $message, $mixture, $experience);
+return(true);
 
 [proc,get_brew_struct](obj $used_on, obj $used_with)(struct)
 // Figure out which item is the additive/secondary item
@@ -100,12 +112,21 @@ if ($struct = null) {
     $secondary = $used_on;
     $struct = oc_param($secondary, brew_potion_struct);
 }
+// Neither item has potion struct(s) defined
+if ($struct = null) {
+    return(null);
+}
 // Check if trying to make the first possible potion
 if (~is_valid_brewing_pair($used_on, $used_with, $struct) = true) {
     return($struct);
 }
 // Check if trying to make the second possible potion (if any)
 $struct = oc_param($secondary, brew_potion_struct_secondary);
+if (~is_valid_brewing_pair($used_on, $used_with, $struct) = true) {
+    return($struct);
+}
+// Check if trying to make the third possible potion (if any)
+$struct = oc_param($secondary, brew_potion_struct_tertiary);
 if (~is_valid_brewing_pair($used_on, $used_with, $struct) = true) {
     return($struct);
 }
