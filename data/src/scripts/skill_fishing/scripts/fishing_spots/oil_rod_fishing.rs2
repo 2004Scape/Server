@@ -1,6 +1,6 @@
 // i assume no fishing random events for these guys
 [opnpc1,npc_800] @attempt_fish_lava_eel;
-[opnpc2,npc_800] @fish_lava_eel;
+[opnpc3,npc_800] @fish_lava_eel;
 [opnpcu,npc_800] @oil_rod_fishing_use_item;
 
 [apnpc1,npc_800]
@@ -11,7 +11,7 @@ if (npc_range(coord) > 1)
 }
 @attempt_fish_lava_eel;
 
-[apnpc2,npc_800]
+[apnpc3,npc_800]
 if (npc_range(coord) > 1)
 {
   p_aprange(1);
@@ -59,7 +59,7 @@ if (%action_delay < map_clock) {
     return;
 } else if (%action_delay = calc(map_clock + 3)) {
     mes("You attempt to catch an eel.");
-    p_opnpc(2);
+    p_opnpc(3);
 } else {
     p_opnpc(1);
 }
@@ -79,7 +79,7 @@ if (%action_delay < map_clock) {
 if (%action_delay = map_clock) {
     ~fish_roll(raw_lava_eel, null, fishing_rod, fishing_bait);
 }
-p_opnpc(2);
+p_opnpc(3);
 
 [proc,oil_rod_fishing_check_requirements]()(boolean)
 // check level

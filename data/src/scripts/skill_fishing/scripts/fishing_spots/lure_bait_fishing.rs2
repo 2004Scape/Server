@@ -6,10 +6,10 @@
 @attempt_fish_pike;
 
 // hidden options
-[opnpc2,_freshfish]
+[opnpc4,_freshfish]
 //mes("<tostring(map_clock)>, <tostring(%action_delay)>");
 @fish_trout_salmon;
-[opnpc4,_freshfish] 
+[opnpc5,_freshfish] 
 //mes("<tostring(map_clock)>, <tostring(%action_delay)>");
 @fish_pike;
 
@@ -44,7 +44,7 @@ if (%skill_anim < map_clock) {
 }
 // separation of messages is correct: https://youtu.be/neAoU0yiGFY?t=16
 mes("You cast out your line...");
-p_opnpc(2);
+p_opnpc(4);
 // random events didnt prevent you from continuing to fish: https://youtu.be/M_AOjwLD9Og?list=PLn23LiLYLb1am4weMQzkWn5m9b3m9fXv9&t=199
 if (afk_event = ^true & npc_param(is_whirlpool) = ^false) {
     @macro_event_fishing(fly_fishing_rod);
@@ -83,9 +83,9 @@ if (%action_delay = map_clock) {
         ~fish_roll(raw_trout, null, fly_fishing_rod, feather);
     }
     anim(human_fish_onspot, 0);
-    p_opnpc(2);
+    p_opnpc(4);
 }
-p_opnpc(2);
+p_opnpc(4);
 
 
 // pike
@@ -109,7 +109,7 @@ if (%skill_anim < map_clock) {
     sound_synth(fishing_cast, 0, 39);
 }
 mes("You cast out your line...");
-p_opnpc(4);
+p_opnpc(5);
 if (afk_event = ^true & npc_param(is_whirlpool) = ^false) {
     @macro_event_fishing(fishing_rod);
 }
@@ -149,8 +149,8 @@ if (%action_delay = map_clock) {
         //mes("<tostring(map_clock)>: Dont recast.");
         %action_delay = calc(map_clock + 5);
         anim(human_fish_onspot, 0);
-        p_opnpc(4);
+        p_opnpc(5);
     }
 } else {
-    p_opnpc(4);
+    p_opnpc(5);
 }
