@@ -1277,7 +1277,7 @@ if(last_useitem = chisel) {
 ~mesbox("This looks quite valuable. As you go to throw the item away Zadimus' words come to you again. 'I am the key, but only kin may approach her.'");
 switch_int(~p_choice2_header("Yes, I'll drop it.", 1, "No, I'll keep the Bone Key.", 2, "Drop the Bone Key?")) {
     case 1 :
-        ~objboxt(bone_shard, "You decide to drop the Bone Key.");
+        ~objboxt(bone_key, "You decide to drop the Bone Key.");
         inv_del(inv, bone_key, 1);
         mes("The Bone Key crumbles into dust as soon as it hits the floor.");
     case 2 :
