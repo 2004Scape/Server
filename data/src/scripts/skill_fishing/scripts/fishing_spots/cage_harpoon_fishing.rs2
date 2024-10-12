@@ -4,9 +4,9 @@
 @attempt_fish_swordfish;
 
 // hidden ops
-[opnpc2,_rarefish]
-@fish_lobster;
 [opnpc4,_rarefish]
+@fish_lobster;
+[opnpc5,_rarefish]
 @fish_swordfish;
 
 [opnpcu,_rarefish]
@@ -48,7 +48,7 @@ if (%action_delay = calc(map_clock + 3)) {
     sound_synth(fishing_cast, 0, 20);
     // https://youtu.be/WGq6FZpnH7Y?t=70
     mes("You attempt to catch a Lobster.");
-    p_opnpc(2);
+    p_opnpc(4);
 }
 if (%action_delay = map_clock) { 
     ~fish_roll(raw_lobster, null, lobster_pot, null);
@@ -92,7 +92,7 @@ if (%skill_sound < map_clock) {
     %skill_sound = calc(map_clock + 2);
     sound_synth(fishing_cast, 0, 20);
 }
-p_opnpc(2);
+p_opnpc(4);
 
 //--- Tuna and swordfish
 [label,attempt_fish_swordfish]
@@ -122,7 +122,7 @@ if (%action_delay = calc(map_clock + 4)) {
     %skill_anim = calc(map_clock + 7);
     %skill_sound = calc(map_clock + 7);
     anim(human_harpoon, 0);
-    p_opnpc(4);
+    p_opnpc(5);
 } else
 if (%action_delay = map_clock) { 
     if (stat(fishing) >= 50) {
@@ -177,4 +177,4 @@ if (%skill_sound = calc(map_clock + 6)) {
 if (%skill_sound = calc(map_clock + 3)) {
     sound_synth(fishing_cast, 0, 10);
 }
-p_opnpc(4);
+p_opnpc(5);
