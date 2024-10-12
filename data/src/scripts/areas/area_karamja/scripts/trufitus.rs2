@@ -734,6 +734,7 @@ switch_int(~p_choice2("I have some items that I need some help with.", 1, "I act
 [label,trufitus_said]
 ~chatplayer("<p,neutral>He said something after he gave it to me.");
 ~chatnpc("<p,neutral>What did he say?");
+@trufitus_spiritops;
 
 [label,trufitus_spiritops]
 switch_int(~p_choice2("The spirit said something about keys and kin?", 1, "The spirit rambled on about some nonsense.", 2)) {
