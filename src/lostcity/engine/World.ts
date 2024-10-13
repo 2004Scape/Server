@@ -1,12 +1,9 @@
 import { Worker as NodeWorker } from 'worker_threads';
-import fs from 'fs';
-import Watcher from 'watcher';
-import path from 'path';
 import kleur from 'kleur';
 
 import Packet from '#jagex2/io/Packet.js';
 
-import {fromBase37, toBase37} from '#jagex2/jstring/JString.js';
+import { fromBase37, toBase37 } from '#jagex2/jstring/JString.js';
 
 import CategoryType from '#lostcity/cache/config/CategoryType.js';
 import DbRowType from '#lostcity/cache/config/DbRowType.js';
@@ -32,7 +29,7 @@ import WordEnc from '#lostcity/cache/wordenc/WordEnc.js';
 import SpotanimType from '#lostcity/cache/config/SpotanimType.js';
 
 import GameMap from '#lostcity/engine/GameMap.js';
-import {Inventory} from '#lostcity/engine/Inventory.js';
+import { Inventory } from '#lostcity/engine/Inventory.js';
 import Login from '#lostcity/engine/Login.js';
 
 import ScriptPointer from '#lostcity/engine/script/ScriptPointer.js';
@@ -47,23 +44,22 @@ import Npc from '#lostcity/entity/Npc.js';
 import Obj from '#lostcity/entity/Obj.js';
 import Player from '#lostcity/entity/Player.js';
 import EntityLifeCycle from '#lostcity/entity/EntityLifeCycle.js';
-import {NpcList, PlayerList} from '#lostcity/entity/EntityList.js';
-import {isNetworkPlayer} from '#lostcity/entity/NetworkPlayer.js';
-import {EntityQueueState} from '#lostcity/entity/EntityQueueRequest.js';
-import {PlayerTimerType} from '#lostcity/entity/EntityTimer.js';
+import { NpcList, PlayerList } from '#lostcity/entity/EntityList.js';
+import { isNetworkPlayer } from '#lostcity/entity/NetworkPlayer.js';
+import { EntityQueueState } from '#lostcity/entity/EntityQueueRequest.js';
+import { PlayerTimerType } from '#lostcity/entity/EntityTimer.js';
 
 import ClientSocket from '#lostcity/server/ClientSocket.js';
 
 import Environment from '#lostcity/util/Environment.js';
-import {getLatestModified, getModified, shouldBuildFileAny} from '#lostcity/util/PackFile.js';
 import Zone from './zone/Zone.js';
 import LinkList from '#jagex2/datastruct/LinkList.js';
-import {createWorker} from '#lostcity/util/WorkerFactory.js';
+import { createWorker } from '#lostcity/util/WorkerFactory.js';
 import LoginResponse from '#lostcity/server/LoginResponse.js';
 import ClientProt from '#lostcity/network/225/incoming/prot/ClientProt.js';
-import {makeCrcs, makeCrcsAsync} from '#lostcity/server/CrcTable.js';
-import {preloadClient, preloadClientAsync} from '#lostcity/server/PreloadedPacks.js';
-import {CoordGrid} from '#lostcity/engine/CoordGrid.js';
+import { makeCrcs, makeCrcsAsync } from '#lostcity/server/CrcTable.js';
+import { preloadClient, preloadClientAsync } from '#lostcity/server/PreloadedPacks.js';
+import { CoordGrid } from '#lostcity/engine/CoordGrid.js';
 import UpdateRebootTimer from '#lostcity/network/outgoing/model/UpdateRebootTimer.js';
 import WorldStat from '#lostcity/engine/WorldStat.js';
 import { FriendsServerOpcodes } from '#lostcity/server/FriendServer.js';
@@ -113,17 +109,8 @@ class World {
     shutdownTick: number = -1;
     pmCount: number = 1; // can't be 0 as clients will ignore the pm, their array is filled with 0 as default
 
-    // packed data timestamps
-    allLastModified: number = 0;
-    datLastModified: Map<string, number> = new Map();
-
     vars: Int32Array = new Int32Array(); // var shared
     varsString: string[] = [];
-
-    devWatcher: Watcher | null = null;
-    devThread: NodeWorker | null = null;
-    devRebuilding: boolean = false;
-    devMTime: Map<string, number> = new Map();
 
     constructor() {
         this.gameMap = new GameMap(Environment.NODE_MEMBERS);
@@ -213,146 +200,59 @@ class World {
 
     // ----
 
-    shouldReload(type: string, client: boolean = false): boolean {
-        if (typeof self !== 'undefined') {
-            return true;
-        }
-
-        const current = Math.max(getModified(`data/pack/server/${type}.dat`), client ? getModified('data/pack/client/config') : 0);
-
-        if (!this.datLastModified.has(type)) {
-            this.datLastModified.set(type, current);
-            return true;
-        }
-
-        const changed = this.datLastModified.get(type) !== current;
-        if (changed) {
-            this.datLastModified.set(type, current);
-        }
-        return changed;
-    }
-
     reload(): void {
-        let transmitted = false;
+        VarPlayerType.load('data/pack');
+        ParamType.load('data/pack');
+        ObjType.load('data/pack');
+        LocType.load('data/pack');
+        NpcType.load('data/pack');
+        IdkType.load('data/pack');
+        SeqFrame.load('data/pack');
+        SeqType.load('data/pack');
+        SpotanimType.load('data/pack');
+        CategoryType.load('data/pack');
+        EnumType.load('data/pack');
+        StructType.load('data/pack');
+        InvType.load('data/pack');
 
-        if (this.shouldReload('varp', true)) {
-            VarPlayerType.load('data/pack');
-            transmitted = true;
-        }
+        this.invs.clear();
+        for (let i = 0; i < InvType.count; i++) {
+            const inv = InvType.get(i);
 
-        if (this.shouldReload('param')) {
-            ParamType.load('data/pack');
-        }
-
-        if (this.shouldReload('obj', true)) {
-            ObjType.load('data/pack');
-            transmitted = true;
-        }
-
-        if (this.shouldReload('loc', true)) {
-            LocType.load('data/pack');
-            transmitted = true;
-        }
-
-        if (this.shouldReload('npc', true)) {
-            NpcType.load('data/pack');
-            transmitted = true;
-        }
-
-        if (this.shouldReload('idk', true)) {
-            IdkType.load('data/pack');
-            transmitted = true;
-        }
-
-        if (this.shouldReload('frame_del')) {
-            SeqFrame.load('data/pack');
-        }
-
-        if (this.shouldReload('seq', true)) {
-            SeqType.load('data/pack');
-            transmitted = true;
-        }
-
-        if (this.shouldReload('spotanim', true)) {
-            SpotanimType.load('data/pack');
-            transmitted = true;
-        }
-
-        if (this.shouldReload('category')) {
-            CategoryType.load('data/pack');
-        }
-
-        if (this.shouldReload('enum')) {
-            EnumType.load('data/pack');
-        }
-
-        if (this.shouldReload('struct')) {
-            StructType.load('data/pack');
-        }
-
-        if (this.shouldReload('inv')) {
-            InvType.load('data/pack');
-
-            this.invs.clear();
-            for (let i = 0; i < InvType.count; i++) {
-                const inv = InvType.get(i);
-    
-                if (inv && inv.scope === InvType.SCOPE_SHARED) {
-                    this.invs.add(Inventory.fromType(i));
-                }
+            if (inv && inv.scope === InvType.SCOPE_SHARED) {
+                this.invs.add(Inventory.fromType(i));
             }
         }
 
-        if (this.shouldReload('mesanim')) {
-            MesanimType.load('data/pack');
-        }
+        MesanimType.load('data/pack');
+        DbTableType.load('data/pack');
+        DbRowType.load('data/pack');
+        HuntType.load('data/pack');
+        VarNpcType.load('data/pack');
 
-        if (this.shouldReload('dbtable')) {
-            DbTableType.load('data/pack');
-        }
+        VarSharedType.load('data/pack');
 
-        if (this.shouldReload('dbrow')) {
-            DbRowType.load('data/pack');
-        }
+        if (this.vars.length !== VarSharedType.count) {
+            const old = this.vars;
+            this.vars = new Int32Array(VarSharedType.count);
+            for (let i = 0; i < VarSharedType.count && i < old.length; i++) {
+                this.vars[i] = old[i];
+            }
 
-        if (this.shouldReload('hunt')) {
-            HuntType.load('data/pack');
-        }
-
-        if (this.shouldReload('varn')) {
-            VarNpcType.load('data/pack');
-        }
-
-        if (this.shouldReload('vars')) {
-            VarSharedType.load('data/pack');
-
-            if (this.vars.length !== VarSharedType.count) {
-                const old = this.vars;
-                this.vars = new Int32Array(VarSharedType.count);
-                for (let i = 0; i < VarSharedType.count && i < old.length; i++) {
-                    this.vars[i] = old[i];
-                }
-
-                const oldString = this.varsString;
-                this.varsString = new Array(VarSharedType.count);
-                for (let i = 0; i < VarSharedType.count && i < old.length; i++) {
-                    this.varsString[i] = oldString[i];
-                }
+            const oldString = this.varsString;
+            this.varsString = new Array(VarSharedType.count);
+            for (let i = 0; i < VarSharedType.count && i < old.length; i++) {
+                this.varsString[i] = oldString[i];
             }
         }
 
-        if (this.shouldReload('interface')) {
-            Component.load('data/pack');
-            transmitted = true;
-        }
+        Component.load('data/pack');
 
-        if (this.shouldReload('script')) {
-            const count = ScriptProvider.load('data/pack');
-            if (count === -1) {
-                this.broadcastMes('There was an issue while reloading scripts.');
-            } else {
-                this.broadcastMes(`Reloaded ${count} scripts.`);
-            }
+        const count = ScriptProvider.load('data/pack');
+        if (count === -1) {
+            this.broadcastMes('There was an issue while reloading scripts.');
+        } else {
+            this.broadcastMes(`Reloaded ${count} scripts.`);
         }
 
         // todo: check if any jag files changed (transmitted) then reload crcs
@@ -364,8 +264,6 @@ class World {
 
         // todo: detect and reload static data (like maps)
         preloadClient();
-
-        this.allLastModified = getLatestModified('data/pack', '.dat');
     }
 
     async loadAsync(): Promise<void> {
@@ -466,19 +364,6 @@ class World {
         });
 
         if (typeof self === 'undefined') {
-            if (!Environment.NODE_PRODUCTION) {
-                this.startDevWatcher();
-
-                // console.time('checker');
-                // todo: this check takes me 300ms on startup! but it saves double building fresh setups
-                if (Environment.BUILD_STARTUP && (shouldBuildFileAny('data/pack/client', 'data/pack/client/lastbuild.pack') || shouldBuildFileAny('data/pack/server', 'data/pack/server/lastbuild.pack'))) {
-                    this.devThread!.postMessage({
-                        type: 'pack'
-                    });
-                }
-                // console.timeEnd('checker');
-            }
-
             if (Environment.WEB_PORT === 80) {
                 console.log(kleur.green().bold('World ready') + kleur.white().bold(': http://localhost'));
             } else {
@@ -491,84 +376,8 @@ class World {
         }
     }
 
-    startDevWatcher(): void {
-        this.devThread = createWorker('./src/lostcity/server/DevThread.ts') as NodeWorker;
-
-        this.devThread.on('message', msg => {
-            if (msg.type === 'done') {
-                this.devRebuilding = false;
-                this.reload();
-            }
-        });
-
-        this.devThread.on('exit', () => {
-            this.devRebuilding = false;
-            this.stopDevWatcher();
-
-            if (this.shutdownTick === -1) {
-                this.broadcastMes('Error while rebuilding - see console for more info.');
-                this.startDevWatcher();
-            }
-        });
-
-        this.devWatcher = new Watcher('./data/src', {
-            recursive: true
-        });
-
-        this.devWatcher.on('add', (targetPath: string) => {
-            if (targetPath.endsWith('.pack')) {
-                return;
-            }
-
-            const stat = fs.statSync(targetPath);
-            this.devMTime.set(targetPath, stat.mtimeMs);
-        });
-
-        this.devWatcher.on('change', (targetPath: string) => {
-            if (targetPath.endsWith('.pack')) {
-                return;
-            }
-
-            const stat = fs.statSync(targetPath);
-            const known = this.devMTime.get(targetPath);
-
-            if (known && known >= stat.mtimeMs) {
-                return;
-            }
-
-            this.devMTime.set(targetPath, stat.mtimeMs);
-            if (this.devRebuilding) {
-                return;
-            }
-
-            console.log('dev:', path.basename(targetPath), 'was edited');
-            this.devRebuilding = true;
-            this.broadcastMes('Rebuilding, please wait...');
-
-            if (!this.devThread) {
-                this.devThread = createWorker('./src/lostcity/server/DevThread.ts') as NodeWorker;
-            }
-
-            this.devThread.postMessage({
-                type: 'pack'
-            });
-        });
-    }
-
-    stopDevWatcher(): void {
-        if (this.devWatcher) {
-            this.devWatcher.close();
-        }
-
-        if (this.devThread) {
-            this.devThread.terminate();
-            this.devThread = null;
-        }
-    }
-
     rebootTimer(duration: number): void {
         this.shutdownTick = this.currentTick + duration;
-        this.stopDevWatcher();
 
         for (const player of this.players) {
             player.write(new UpdateRebootTimer(this.shutdownTick - this.currentTick));
@@ -576,8 +385,7 @@ class World {
     }
 
     async cycle(continueCycle: boolean = true): Promise<void> {
-        try
-        {
+        try {
             const start: number = Date.now();
 
             // world processing
@@ -835,12 +643,12 @@ class World {
                 if (player.busy() || !player.opcalled) {
                     player.moveClickRequest = true;
                 }
-                
+
                 if (player.opcalled && (player.userPath.length === 0 || !Environment.NODE_CLIENT_ROUTEFINDER)) {
                     player.pathToPathingTarget();
                     continue;
                 }
-                
+
                 player.pathToMoveClick(player.userPath, !Environment.NODE_CLIENT_ROUTEFINDER);
                 if (!player.opcalled && player.hasWaypoints()) {
                     player.processWalktrigger();
@@ -875,7 +683,7 @@ class World {
                 if (!npc.checkLifeCycle(this.currentTick)) {
                     continue;
                 }
-    
+
                 if (npc.delayed()) {
                     npc.delay--;
                 }

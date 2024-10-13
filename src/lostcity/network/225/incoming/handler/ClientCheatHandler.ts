@@ -50,9 +50,6 @@ export default class ClientCheatHandler extends MessageHandler<ClientCheat> {
                 player.messageGame(`Reloaded ${count} scripts.`);
             } else if (cmd === 'rebuild' && !Environment.NODE_PRODUCTION) {
                 player.messageGame('Rebuilding scripts...');
-                World.devThread!.postMessage({
-                    type: 'pack'
-                });
             } else if (cmd === 'serverdrop') {
                 player.terminate();
             } else if (cmd === 'bench') {
