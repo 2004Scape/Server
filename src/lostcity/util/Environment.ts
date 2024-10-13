@@ -2,6 +2,9 @@ import 'dotenv/config';
 import { tryParseArray, tryParseBoolean, tryParseInt, tryParseString } from './TryParse.js';
 
 export default {
+    // bundler/webrtc browser mode
+    STANDALONE_BUNDLE: tryParseBoolean(process.env.STANDALONE_BUNDLE, false),
+
     /// web server
     WEB_PORT: tryParseInt(process.env.WEB_PORT, process.platform === 'win32' ? 80 : 8888),
     WEB_CORS: tryParseBoolean(process.env.WEB_CORS, true),
@@ -19,10 +22,10 @@ export default {
     // automatic shutdown time for production mode on sigint
     NODE_KILLTIMER: tryParseInt(process.env.NODE_KILLTIMER, 50),
     NODE_ALLOW_CHEATS: tryParseBoolean(process.env.NODE_ALLOW_CHEATS, true),
-    // development mode!
+    // extra debug info e.g. missing triggers
     NODE_DEBUG: tryParseBoolean(process.env.NODE_DEBUG, true),
     // measuring script execution
-    NODE_DEBUG_PROFILE: tryParseBoolean(process.env.NODE_DEBUG_PROFILE, false),
+    NODE_DEBUG_PROFILER: tryParseBoolean(process.env.NODE_DEBUG_PROFILE, false),
     // *only* if no login server is running to authenticate accounts, this provides admin accs by username :)
     NODE_STAFF: tryParseArray(process.env.NODE_STAFF?.split(','), ['pazaz']), // todo: add staffmodlevel to database
     // no server routefinding until 2009

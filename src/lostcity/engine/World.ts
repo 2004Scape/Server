@@ -68,7 +68,7 @@ import UpdateIgnoreList from '#lostcity/network/outgoing/model/UpdateIgnoreList.
 import MessagePrivate from '#lostcity/network/outgoing/model/MessagePrivate.js';
 
 class World {
-    private friendsThread: Worker | NodeWorker = createWorker(typeof self === 'undefined' ? './src/lostcity/server/FriendThread.ts' : 'FriendThread.js');
+    private friendsThread: Worker | NodeWorker = createWorker(Environment.STANDALONE_BUNDLE ? 'FriendThread.js' : './src/lostcity/server/FriendThread.ts');
 
     private static readonly PLAYERS: number = 2048;
     private static readonly NPCS: number = 8192;
@@ -123,17 +123,17 @@ class World {
         this.lastCycleStats = new Array(12).fill(0);
         this.cycleStats = new Array(12).fill(0);
 
-        if (typeof self === 'undefined') {
-            if (this.friendsThread instanceof NodeWorker) {
-                this.friendsThread.on('message', msg => {
-                    this.onFriendsMessage(msg);
-                });
-            }
-        } else {
+        if (Environment.STANDALONE_BUNDLE) {
             if (this.friendsThread instanceof Worker) {
                 this.friendsThread.onmessage = msg => {
                     this.onFriendsMessage(msg.data);
                 };
+            }
+        } else {
+            if (this.friendsThread instanceof NodeWorker) {
+                this.friendsThread.on('message', msg => {
+                    this.onFriendsMessage(msg);
+                });
             }
         }
     }
@@ -336,7 +336,15 @@ class World {
     async start(skipMaps = false, startCycle = true): Promise<void> {
         console.log('Starting world...');
 
-        if (typeof self === 'undefined') {
+        if (Environment.STANDALONE_BUNDLE) {
+            console.time('World ready');
+            await this.loadAsync();
+
+            if (!skipMaps) {
+                await this.gameMap.initAsync();
+            }
+            console.timeEnd('World ready');
+        } else {
             FontType.load('data/pack');
             WordEnc.load('data/pack');
 
@@ -345,14 +353,6 @@ class World {
             if (!skipMaps) {
                 this.gameMap.init();
             }
-        } else {
-            console.time('World ready');
-            await this.loadAsync();
-
-            if (!skipMaps) {
-                await this.gameMap.initAsync();
-            }
-            console.timeEnd('World ready');
         }
 
         Login.loginThread.postMessage({
@@ -363,7 +363,7 @@ class World {
             type: 'connect'
         });
 
-        if (typeof self === 'undefined') {
+        if (!Environment.STANDALONE_BUNDLE) {
             if (Environment.WEB_PORT === 80) {
                 console.log(kleur.green().bold('World ready') + kleur.white().bold(': http://localhost'));
             } else {
@@ -494,7 +494,7 @@ class World {
                 setTimeout(this.cycle.bind(this), this.tickRate - this.cycleStats[WorldStat.CYCLE]);
             }
 
-            if (Environment.NODE_DEBUG_PROFILE) {
+            if (Environment.NODE_DEBUG_PROFILER) {
                 console.log(`tick ${this.currentTick} took ${this.cycleStats[WorldStat.CYCLE]}ms: ${this.getTotalPlayers()} players`);
                 console.log(`${this.cycleStats[WorldStat.WORLD]} ms world | ${this.cycleStats[WorldStat.CLIENT_IN]} ms client in | ${this.cycleStats[WorldStat.NPC]} ms npcs | ${this.cycleStats[WorldStat.PLAYER]} ms players | ${this.cycleStats[WorldStat.LOGOUT]} ms logout | ${this.cycleStats[WorldStat.LOGIN]} ms login | ${this.cycleStats[WorldStat.ZONE]} ms zones | ${this.cycleStats[WorldStat.CLIENT_OUT]} ms client out | ${this.cycleStats[WorldStat.CLEANUP]} ms cleanup`);
                 console.log('----');

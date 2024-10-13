@@ -6,6 +6,7 @@ import BigInteger = forge.jsbn.BigInteger;
 
 import LinkList from '#jagex2/datastruct/LinkList.js';
 import DoublyLinkable from '#jagex2/datastruct/DoublyLinkable.js';
+import Environment from '#lostcity/util/Environment.js';
 
 export default class Packet extends DoublyLinkable {
     private static readonly crctable: Int32Array = new Int32Array(256);
@@ -176,17 +177,17 @@ export default class Packet extends DoublyLinkable {
     }
 
     save(filePath: string, length: number = this.pos, start: number = 0): void {
-        if (typeof self === 'undefined') {
+        if (Environment.STANDALONE_BUNDLE) {
+            const blob = new Blob([this.data.subarray(start, start + length)], { type: 'application/octet-stream' });
+            const url = URL.createObjectURL(blob);
+            self.postMessage({ type: 'save', value: url, path: filePath });
+        } else {
             const dir: string = path.dirname(filePath);
             if (!fs.existsSync(dir)) {
                 fs.mkdirSync(dir, { recursive: true });
             }
 
             fs.writeFileSync(filePath, this.data.subarray(start, start + length));
-        } else {
-            const blob = new Blob([this.data.subarray(start, start + length)], { type: 'application/octet-stream' });
-            const url = URL.createObjectURL(blob);
-            self.postMessage({ type: 'save', value: url, path: filePath });
         }
     }
 

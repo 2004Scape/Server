@@ -42,13 +42,13 @@ export default class ClientCheatHandler extends MessageHandler<ClientCheat> {
 
         if (player.staffModLevel >= 3) {
             // developer commands
-            if (cmd === 'reload' && typeof self === 'undefined' && !Environment.NODE_PRODUCTION) {
+            if (cmd === 'reload' && !Environment.STANDALONE_BUNDLE && !Environment.NODE_PRODUCTION) {
                 World.reload();
-    
+
                 // todo: we're probably reloading twice now, just to get count?
                 const count = ScriptProvider.load('data/pack');
                 player.messageGame(`Reloaded ${count} scripts.`);
-            } else if (cmd === 'rebuild' && !Environment.NODE_PRODUCTION) {
+            } else if (cmd === 'rebuild' && !Environment.STANDALONE_BUNDLE && !Environment.NODE_PRODUCTION) {
                 player.messageGame('Rebuilding scripts...');
             } else if (cmd === 'serverdrop') {
                 player.terminate();
