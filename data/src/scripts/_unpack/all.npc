@@ -465,7 +465,6 @@ model8=model_202_obj_wear
 head1=model_53_idk_head
 head2=model_44_obj_wear
 // osrs
-maxrange=8
 attackrange=8
 respawnrate=30
 hitpoints=14
@@ -4522,7 +4521,6 @@ attack=8
 strength=8
 defence=12
 attackrange=8
-maxrange=8
 huntrange=3
 param=damagetype,^crush_style
 huntmode=ranged

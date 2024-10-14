@@ -541,16 +541,3 @@ data=stat_change,attack,0,5
 data=stat_change,strength,0,5
 data=stat_change,defence,0,5
 data=continue_by_autocast,false
-
-[magic_spell_chaos_druid]
-table=magic_spell_table
-data=spell,^chaos_druid_attack
-data=levelrequired,0
-data=anim,human_chaos_druid_cast_bind
-data=spotanim_origin,bind_casting
-data=spotanim_proj,bind_travel,45,0
-data=spotanim_target,bind_impact,124
-data=sound_success,bind_all
-data=stat_change,attack,0,-5
-data=freeze_time,6
-data=continue_by_autocast,false
