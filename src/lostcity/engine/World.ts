@@ -1,18 +1,25 @@
+// stdlib
 import { Worker as NodeWorker } from 'worker_threads';
+
+// deps
 import kleur from 'kleur';
 
-import Packet from '#jagex2/io/Packet.js';
+// jagex2
+import LinkList from '#jagex2/datastruct/LinkList.js';
 
 import { fromBase37, toBase37 } from '#jagex2/jstring/JString.js';
 
+import Packet from '#jagex2/io/Packet.js';
+
+// lostcity
 import CategoryType from '#lostcity/cache/config/CategoryType.js';
+import Component from '#lostcity/cache/config/Component.js';
 import DbRowType from '#lostcity/cache/config/DbRowType.js';
 import DbTableType from '#lostcity/cache/config/DbTableType.js';
 import EnumType from '#lostcity/cache/config/EnumType.js';
 import FontType from '#lostcity/cache/config/FontType.js';
 import HuntType from '#lostcity/cache/config/HuntType.js';
 import IdkType from '#lostcity/cache/config/IdkType.js';
-import Component from '#lostcity/cache/config/Component.js';
 import InvType from '#lostcity/cache/config/InvType.js';
 import LocType from '#lostcity/cache/config/LocType.js';
 import MesanimType from '#lostcity/cache/config/MesanimType.js';
@@ -21,22 +28,26 @@ import ObjType from '#lostcity/cache/config/ObjType.js';
 import ParamType from '#lostcity/cache/config/ParamType.js';
 import SeqFrame from '#lostcity/cache/config/SeqFrame.js';
 import SeqType from '#lostcity/cache/config/SeqType.js';
+import SpotanimType from '#lostcity/cache/config/SpotanimType.js';
 import StructType from '#lostcity/cache/config/StructType.js';
 import VarNpcType from '#lostcity/cache/config/VarNpcType.js';
 import VarPlayerType from '#lostcity/cache/config/VarPlayerType.js';
 import VarSharedType from '#lostcity/cache/config/VarSharedType.js';
 import WordEnc from '#lostcity/cache/wordenc/WordEnc.js';
-import SpotanimType from '#lostcity/cache/config/SpotanimType.js';
 
+import { CoordGrid } from '#lostcity/engine/CoordGrid.js';
 import GameMap from '#lostcity/engine/GameMap.js';
 import { Inventory } from '#lostcity/engine/Inventory.js';
 import Login from '#lostcity/engine/Login.js';
+import WorldStat from '#lostcity/engine/WorldStat.js';
 
 import ScriptPointer from '#lostcity/engine/script/ScriptPointer.js';
 import ScriptProvider from '#lostcity/engine/script/ScriptProvider.js';
 import ScriptRunner from '#lostcity/engine/script/ScriptRunner.js';
 import ScriptState from '#lostcity/engine/script/ScriptState.js';
 import ServerTriggerType from '#lostcity/engine/script/ServerTriggerType.js';
+
+import Zone from '#lostcity/engine/zone/Zone.js';
 
 import BlockWalk from '#lostcity/entity/BlockWalk.js';
 import Loc from '#lostcity/entity/Loc.js';
@@ -49,26 +60,25 @@ import { isNetworkPlayer } from '#lostcity/entity/NetworkPlayer.js';
 import { EntityQueueState } from '#lostcity/entity/EntityQueueRequest.js';
 import { PlayerTimerType } from '#lostcity/entity/EntityTimer.js';
 
-import ClientSocket from '#lostcity/server/ClientSocket.js';
-
-import Environment from '#lostcity/util/Environment.js';
-import Zone from './zone/Zone.js';
-import LinkList from '#jagex2/datastruct/LinkList.js';
-import { createWorker } from '#lostcity/util/WorkerFactory.js';
-import LoginResponse from '#lostcity/server/LoginResponse.js';
 import ClientProt from '#lostcity/network/225/incoming/prot/ClientProt.js';
-import { makeCrcs, makeCrcsAsync } from '#lostcity/server/CrcTable.js';
-import { preloadClient, preloadClientAsync } from '#lostcity/server/PreloadedPacks.js';
-import { CoordGrid } from '#lostcity/engine/CoordGrid.js';
+
 import UpdateRebootTimer from '#lostcity/network/outgoing/model/UpdateRebootTimer.js';
-import WorldStat from '#lostcity/engine/WorldStat.js';
-import { FriendsServerOpcodes } from '#lostcity/server/FriendServer.js';
 import UpdateFriendList from '#lostcity/network/outgoing/model/UpdateFriendList.js';
 import UpdateIgnoreList from '#lostcity/network/outgoing/model/UpdateIgnoreList.js';
 import MessagePrivate from '#lostcity/network/outgoing/model/MessagePrivate.js';
 
+import ClientSocket from '#lostcity/server/ClientSocket.js';
+import LoginResponse from '#lostcity/server/LoginResponse.js';
+import { makeCrcs, makeCrcsAsync } from '#lostcity/server/CrcTable.js';
+import { preloadClient, preloadClientAsync } from '#lostcity/server/PreloadedPacks.js';
+import { FriendsServerOpcodes } from '#lostcity/server/FriendServer.js';
+
+import Environment from '#lostcity/util/Environment.js';
+import { createWorker } from '#lostcity/util/WorkerFactory.js';
+
 class World {
-    private friendsThread: Worker | NodeWorker = createWorker(Environment.STANDALONE_BUNDLE ? 'FriendThread.js' : './src/lostcity/server/FriendThread.ts');
+    private friendThread: Worker | NodeWorker = createWorker(Environment.STANDALONE_BUNDLE ? 'FriendThread.js' : './src/lostcity/server/FriendThread.ts');
+    private devThread: Worker | NodeWorker | null = null;
 
     private static readonly PLAYERS: number = 2048;
     private static readonly NPCS: number = 8192;
@@ -124,17 +134,25 @@ class World {
         this.cycleStats = new Array(12).fill(0);
 
         if (Environment.STANDALONE_BUNDLE) {
-            if (this.friendsThread instanceof Worker) {
-                this.friendsThread.onmessage = msg => {
+            if (this.friendThread instanceof Worker) {
+                this.friendThread.onmessage = msg => {
                     this.onFriendsMessage(msg.data);
                 };
             }
         } else {
-            if (this.friendsThread instanceof NodeWorker) {
-                this.friendsThread.on('message', msg => {
+            if (this.friendThread instanceof NodeWorker) {
+                this.friendThread.on('message', msg => {
                     this.onFriendsMessage(msg);
                 });
             }
+        }
+    }
+
+    rebuild() {
+        if (this.devThread) {
+            this.devThread.postMessage({
+                type: 'world_rebuild'
+            });
         }
     }
 
@@ -255,11 +273,7 @@ class World {
             this.broadcastMes(`Reloaded ${count} scripts.`);
         }
 
-        // todo: check if any jag files changed (transmitted) then reload crcs
-        // if (transmitted) {
-        //     makeCrcs();
-        // }
-
+        // todo: check if any jag files changed (transmitted) then reload crcs, instead of always
         makeCrcs();
 
         // todo: detect and reload static data (like maps)
@@ -359,11 +373,19 @@ class World {
             type: 'reset'
         });
 
-        this.friendsThread.postMessage({
+        this.friendThread.postMessage({
             type: 'connect'
         });
 
         if (!Environment.STANDALONE_BUNDLE) {
+            if (!Environment.NODE_PRODUCTION) {
+                this.createDevThread();
+
+                if (Environment.BUILD_STARTUP) {
+                    this.rebuild();
+                }
+            }
+
             if (Environment.WEB_PORT === 80) {
                 console.log(kleur.green().bold('World ready') + kleur.white().bold(': http://localhost'));
             } else {
@@ -373,6 +395,33 @@ class World {
 
         if (startCycle) {
             await this.cycle();
+        }
+    }
+
+    private createDevThread() {
+        this.devThread = createWorker('./src/lostcity/server/DevThread.ts');
+
+        if (this.devThread instanceof NodeWorker) {
+            this.devThread.on('message', msg => {
+                if (msg.type === 'dev_reload') {
+                    this.reload();
+                } else if (msg.type === 'dev_failure') {
+                    if (msg.error) {
+                        console.error(msg.error);
+                    }
+
+                    this.broadcastMes('Error while rebuilding - see console for more info.');
+                }
+            });
+
+            // todo: catch all cases where it might exit instead of throwing an error, so we aren't
+            // re-initializing the file watchers after errors
+            this.devThread.on('exit', () => {
+                // todo: remove this mes after above the todo above is addressed
+                this.broadcastMes('Error while rebuilding - see console for more info.');
+
+                this.createDevThread();
+            });
         }
     }
 
@@ -1373,7 +1422,7 @@ class World {
 
     addFriend(player: Player, targetUsername37: bigint) {
         //console.log(`[World] addFriend => player: ${player.username}, target: ${targetUsername37} (${fromBase37(targetUsername37)})`);
-        this.friendsThread.postMessage({
+        this.friendThread.postMessage({
             type: 'player_friendslist_add',
             username: player.username,
             target: targetUsername37,
@@ -1382,7 +1431,7 @@ class World {
 
     removeFriend(player: Player, targetUsername37: bigint) {
         //console.log(`[World] removeFriend => player: ${player.username}, target: ${targetUsername37} (${fromBase37(targetUsername37)})`);
-        this.friendsThread.postMessage({
+        this.friendThread.postMessage({
             type: 'player_friendslist_remove',
             username: player.username,
             target: targetUsername37,
@@ -1391,7 +1440,7 @@ class World {
 
     addIgnore(player: Player, targetUsername37: bigint) {
         //console.log(`[World] addIgnore => player: ${player.username}, target: ${targetUsername37} (${fromBase37(targetUsername37)})`);
-        this.friendsThread.postMessage({
+        this.friendThread.postMessage({
             type: 'player_ignorelist_add',
             username: player.username,
             target: targetUsername37,
@@ -1400,7 +1449,7 @@ class World {
 
     removeIgnore(player: Player, targetUsername37: bigint) {
         //console.log(`[World] removeIgnore => player: ${player.username}, target: ${targetUsername37} (${fromBase37(targetUsername37)})`);
-        this.friendsThread.postMessage({
+        this.friendThread.postMessage({
             type: 'player_ignorelist_remove',
             username: player.username,
             target: targetUsername37,
@@ -1410,7 +1459,7 @@ class World {
     addPlayer(player: Player): void {
         this.newPlayers.add(player);
 
-        this.friendsThread.postMessage({
+        this.friendThread.postMessage({
             type: 'player_login',
             username: player.username,
             chatModePrivate: player.chatModes.privateChat,
@@ -1418,7 +1467,7 @@ class World {
     }
 
     sendPrivateChatModeToFriendsServer(player: Player): void {
-        this.friendsThread.postMessage({
+        this.friendThread.postMessage({
             type: 'player_chat_setmode',
             username: player.username,
             chatModePrivate: player.chatModes.privateChat,
@@ -1440,7 +1489,7 @@ class World {
 
         Login.logout(player);
 
-        this.friendsThread.postMessage({
+        this.friendThread.postMessage({
             type: 'player_logout',
             username: player.username,
         });
@@ -1449,7 +1498,7 @@ class World {
     sendPrivateMessage(player: Player, targetUsername37: bigint, message: string): void {
         //console.log(`[World] sendPrivateMessage => player: ${player.username}, target: ${targetUsername37} (${fromBase37(targetUsername37)}), message: '${message}'`);
 
-        this.friendsThread.postMessage({
+        this.friendThread.postMessage({
             type: 'private_message',
             username: player.username,
             staffLvl: player.staffModLevel,
