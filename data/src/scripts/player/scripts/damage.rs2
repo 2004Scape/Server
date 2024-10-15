@@ -2,6 +2,9 @@
 queue(damage_player, 0, $amount);
 
 [proc,damage_self](int $amount)
+if (stat(hitpoints) = 0) {
+    return;
+}
 if_close;
 if ($amount > 0) {
     damage(uid, 1, $amount);
