@@ -35,6 +35,9 @@ if (afk_event = ^true) {
 // - crafting at furnace. Confirmed: https://youtu.be/7pS6s5rvvEY
 [proc,macro_event_general_spawn](int $event)
 // double check area here, because stuff like bones and alching for example can spawn random events.
+if (~macro_event_general_active = true) {
+    return;
+}
 if (~macro_event_area(coord) = false) {
     return;
 }
@@ -180,15 +183,12 @@ npc_del;
 
 // check if other general macro events already exist
 [proc,macro_event_general_active]()(boolean)
-if (%macro_event < 1) {
-    return(false);
-}
-if (%macro_event < add(~macro_event_general_count, 1)){
+if (npc_finduid(%macro_event_uid) = true) {
     return(true);
 }
 
 [proc,macro_event_lost]()(boolean)
-if (finduid(%npc_attacking_uid) = true) {
+if (finduid(%npc_macro_event_target) = true) {
     if (%macro_event_uid ! npc_uid) {
         return(true);
     }
@@ -208,7 +208,7 @@ return(true);
 if (npc_getmode = opplayer2) {
     return(false);
 }
-if (finduid(%npc_attacking_uid) = true) {
+if (finduid(%npc_macro_event_target) = true) {
     if (npc_range(coord) < 3 & ~npc_can_attack_player = true) {
         npc_setmode(opplayer2);
         return(false);

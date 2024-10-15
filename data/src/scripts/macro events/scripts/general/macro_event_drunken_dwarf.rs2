@@ -3,14 +3,14 @@
 sound_synth(dwarf_whistle, 0, 0);
 npc_anim(dwarf_seq_105, 20);
 npc_say("'Ello der <displayname>! *hic*");
-%npc_attacking_uid = uid;
+%npc_macro_event_target = uid;
 npc_setmode(playerfollow);
 npc_queue(4, 0, 10);
 
 [ai_queue4,macro_event_drunken_dwarf]
 // warnings: https://youtu.be/Ww-PkAr4vt4?list=PLn23LiLYLb1Y3P9S9qZbijcJihiD416jT&t=96
 // todo: confirm these anims
-if (finduid(%npc_attacking_uid) = true) {
+if (finduid(%npc_macro_event_target) = true) {
     if (last_int = 0) {
         npc_anim(dwarf_seq_103, 20);
         sound_synth(dwarf_whistle, 0, 0);
@@ -45,7 +45,7 @@ npc_del;
 npc_del;
 
 [opnpc1,macro_event_drunken_dwarf]
-if (uid ! %npc_attacking_uid) {
+if (uid ! %npc_macro_event_target) {
     ~chatnpc("<p,drunk>You're not my matey!"); // osrs
     return;
 }
@@ -70,7 +70,7 @@ if (~macro_event_lost = true) { // https://youtu.be/PhAjUCWSoOI?list=PLn23LiLYLb
     npc_queue(5, 0, 0); // despawn
     return;
 }
-if (finduid(%npc_attacking_uid) = true) {
+if (finduid(%npc_macro_event_target) = true) {
     if (%macro_event_uid = npc_uid) {
         npc_setmode(playerfollow); // this is here because they used ~chatnpc back in the day, which sets the npc
     }

@@ -1,0 +1,4 @@
+[npc_macro_event_status]
+
+[npc_macro_event_target]
+type=player_uid

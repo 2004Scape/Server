@@ -10,8 +10,6 @@ type=player_uid
 
 [npc_stunned]
 
-[npc_macro_event_status]
-
 [npc_lastattack]
 
 [npc_poison]

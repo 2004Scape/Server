@@ -2,12 +2,12 @@
 npc_setmode(none);
 npc_anim(seq_348, 0);
 %npc_macro_event_status = ^triffid_growing;
-%npc_attacking_uid = uid;
+%npc_macro_event_target = uid;
 sound_synth(triffid_appear, 0, 0);
 %macro_event = ^no_macro_event;
 
 [opnpc1,macro_event_triffid_friendly]
-if (%npc_attacking_uid ! uid) {
+if (%npc_macro_event_target ! uid) {
     mes("It's not here for you."); // osrs
     return;
 }
@@ -34,7 +34,7 @@ if (%npc_macro_event_status = ^triffid_ready_to_attack) { // turn hostile
     npc_changetype(macro_event_triffid_hostile);
     npc_delay(1);
     npc_settimer(1);
-    if (finduid(%npc_attacking_uid) = true) {
+    if (finduid(%npc_macro_event_target) = true) {
         %aggressive_npc = npc_uid; // interupt the player if they're in combat https://youtu.be/tw66JWQzpD0?t=32
         npc_setmode(opplayer2);
     }
