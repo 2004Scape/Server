@@ -113,8 +113,7 @@ export function packDbRowConfigs(configs: Map<string, ConfigLine[]>): { client: 
         }
 
         if (data.length && !table) {
-            packStepError(debugname, 'No table defined in dbrow config');
-            process.exit(1);
+            throw packStepError(debugname, 'No table defined in dbrow config');
         }
 
         if (data.length) {
@@ -141,8 +140,7 @@ export function packDbRowConfigs(configs: Map<string, ConfigLine[]>): { client: 
                         const type = types[k];
                         const value = lookupParamValue(type, values[k]);
                         if (value === null) {
-                            packStepError(debugname, `Data invalid in row, double-check the reference exists: data=${fields[j].column},${values.join(',')}`);
-                            process.exit(1);
+                            throw packStepError(debugname, `Data invalid in row, double-check the reference exists: data=${fields[j].column},${values.join(',')}`);
                         }
 
                         if (type === ScriptVarType.STRING) {

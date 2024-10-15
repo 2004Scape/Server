@@ -44,8 +44,7 @@ export class PackFile {
 
             const parts = line.split('=');
             if (parts[1].length === 0) {
-                console.error(`Pack file has an empty name ${path}:${i + 1}`);
-                process.exit(1);
+                throw new Error(`Pack file has an empty name ${path}:${i + 1}`);
             }
 
             this.register(parseInt(parts[0]), parts[1]);
@@ -101,16 +100,14 @@ function validateFilesPack(pack: PackFile, path: string, ext: string): void {
         const name = files[i];
 
         if (!pack.names.has(name)) {
-            console.error(`${pack.type}: ${name} is missing an ID line, you may need to edit ${Environment.BUILD_SRC_DIR}/pack/${pack.type}.pack`);
-            process.exit(1);
+            throw new Error(`${pack.type}: ${name} is missing an ID line, you may need to edit ${Environment.BUILD_SRC_DIR}/pack/${pack.type}.pack`);
         }
     }
 
     if (Environment.BUILD_VERIFY_PACK) {
         for (const name of pack.names) {
             if (!fileNames.has(name)) {
-                console.error(`${pack.type}: ${name} was not found on your disk, you may need to edit ${Environment.BUILD_SRC_DIR}/pack/${pack.type}.pack`);
-                process.exit(1);
+                throw new Error(`${pack.type}: ${name} was not found on your disk, you may need to edit ${Environment.BUILD_SRC_DIR}/pack/${pack.type}.pack`);
             }
         }
     }
@@ -135,16 +132,14 @@ function validateImagePack(pack: PackFile, path: string, ext: string): void {
 
         const name = files[i];
         if (!pack.names.has(name)) {
-            console.error(`${pack.type}: ${name} is missing an ID line, you may need to edit ${Environment.BUILD_SRC_DIR}/pack/${pack.type}.pack`);
-            process.exit(1);
+            throw new Error(`${pack.type}: ${name} is missing an ID line, you may need to edit ${Environment.BUILD_SRC_DIR}/pack/${pack.type}.pack`);
         }
     }
 
     if (Environment.BUILD_VERIFY_PACK) {
         for (const name of pack.names) {
             if (!fileNames.has(name)) {
-                console.error(`${pack.type}: ${name} was not found on your disk, you may need to edit ${Environment.BUILD_SRC_DIR}/pack/${pack.type}.pack`);
-                process.exit(1);
+                throw new Error(`${pack.type}: ${name} was not found on your disk, you may need to edit ${Environment.BUILD_SRC_DIR}/pack/${pack.type}.pack`);
             }
         }
     }
@@ -183,15 +178,13 @@ function validateConfigPack(pack: PackFile, ext: string, regen: boolean = false,
         const name = names[i];
 
         if (!pack.names.has(name) && !name.startsWith('cert_')) {
-            console.error(`${pack.type}: ${name} is missing an ID line, you may need to edit ${Environment.BUILD_SRC_DIR}/pack/${pack.type}.pack`);
-            process.exit(1);
+            throw new Error(`${pack.type}: ${name} is missing an ID line, you may need to edit ${Environment.BUILD_SRC_DIR}/pack/${pack.type}.pack`);
         }
     }
 
     for (const name of pack.names) {
         if (!configNames.has(name) && !name.startsWith('cert_')) {
-            console.error(`${pack.type}: ${name} was not found in any ${ext} files, you may need to edit ${Environment.BUILD_SRC_DIR}/pack/${pack.type}.pack`);
-            process.exit(1);
+            throw new Error(`${pack.type}: ${name} was not found in any ${ext} files, you may need to edit ${Environment.BUILD_SRC_DIR}/pack/${pack.type}.pack`);
         }
     }
 
@@ -223,15 +216,13 @@ function validateInterfacePack(pack: PackFile) {
             const parent = basename(dirname(dirname(file)));
             const dir = basename(dirname(file));
             if (dir !== 'interfaces' && parent !== 'interfaces') {
-                console.error(`Interface file ${file} must be located inside an "interfaces" directory.`);
-                process.exit(1);
+                throw new Error(`Interface file ${file} must be located inside an "interfaces" directory.`);
             }
         }
 
         const inter = basename(file, '.if');
         if (!pack.names.has(inter)) {
-            console.error(`${Environment.BUILD_SRC_DIR}/pack/interface.pack is missing ID for interface ${inter} from ${file}`);
-            process.exit(1);
+            throw new Error(`${Environment.BUILD_SRC_DIR}/pack/interface.pack is missing ID for interface ${inter} from ${file}`);
         }
 
         for (let i = 0; i < lines.length; i++) {
@@ -242,8 +233,7 @@ function validateInterfacePack(pack: PackFile) {
                 const name = `${inter}:${com}`;
 
                 if (!pack.names.has(name)) {
-                    console.error(`${Environment.BUILD_SRC_DIR}/pack/interface.pack is missing ID for component ${name} from ${file}`);
-                    process.exit(1);
+                    throw new Error(`${Environment.BUILD_SRC_DIR}/pack/interface.pack is missing ID for component ${name} from ${file}`);
                 }
             }
         }
