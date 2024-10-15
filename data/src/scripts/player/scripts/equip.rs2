@@ -356,12 +356,7 @@ if ($colliders = true) {
 
             if ($other_count > 0 & $other_slot2 = $slot1 | $other_slot3 = $slot1) {
                 if ($move_item = true) {
-                    if ($swapped = true) {
-                        inv_moveitem(worn, inv, $other_obj, $other_count);
-                    } else {
-                        inv_movetoslot(worn, inv, $i, $slot);
-                        $swapped = true;
-                    }
+                    inv_moveitem(worn, inv, $other_obj, $other_count);
                 } else if (~equip_validate_and_move($other_obj, $other_count, null, null, $other_slot2, $other_slot3, $move_item, false, $swapped) = false) {
                     $success = false;
                 }
@@ -449,15 +444,11 @@ if ($secondary_count > 0 & oc_stackable($secondary_obj) = false) {
         // move obj from worn to inv
         // the obj must not be stackable here
         // the inv must have atleast 1 extra free space in the inventory to move it
-        if ($swapped = true) {
-            inv_moveitem(worn, inv, $secondary_obj, $secondary_count);
-        } else {
-            inv_movetoslot(worn, inv, $secondary_slot, $slot);
-            // for each of these extra wearpos slot checks
-            // we check for swapped on all 3 bcos gotta make sure the first item
-            // that is unequipped goes to the inv slot that was clicked to initiate the equipping
-            $swapped = true;
-        }
+        inv_moveitem(worn, inv, $secondary_obj, $secondary_count);
+        // for each of these extra wearpos slot checks
+        // we check for swapped on all 3 bcos gotta make sure the first item
+        // that is unequipped goes to the inv slot that was clicked to initiate the equipping
+        $swapped = true;
     }
 } else if ($secondary_count > 0 & oc_stackable($secondary_obj) = true) {
     // check for stackable overflow
