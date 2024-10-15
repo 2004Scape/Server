@@ -1,1 +1,29 @@
-//TODO - Implement chaos druid's strange combination "confuse and bind" spell
+[ai_applayer2,chaos_druid]
+if (%npc_action_delay > map_clock) {
+    return;
+}
+~chaos_druid_spell;
+if(random(4) ! 0) npc_setmode(opplayer2);
+
+[ai_opplayer2,chaos_druid]
+if (%npc_action_delay > map_clock) {
+    return;
+}
+// ~1/4 based off 100 attacks in osrs
+if(random(3) = 0) {
+    ~chaos_druid_spell;
+} else {
+    ~npc_default_attack;
+}
+
+[proc,chaos_druid_spell]
+def_dbrow $spell_data = ~get_spell_data(^bind);
+def_int $duration = ~npc_spell_cast($spell_data, 4);
+
+if (~npc_player_hit_roll(^magic_style) = true) {
+    ~npc_spell_success($spell_data, null, $duration);
+    if(~npc_debuff_allowed($spell_data) = true) ~npc_stat_change_effect(~get_spell_data(^weaken));
+} else {
+    ~npc_spell_fail($spell_data, $duration);
+}
+~npc_set_attack_vars;

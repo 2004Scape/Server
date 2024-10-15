@@ -144,7 +144,7 @@ while ($i < db_getfieldcount($spell_data, magic_spell_table:stat_change)) {
     } else {
         if ($constant < 0) $constant = multiply($constant, -1);
         if ($percent < 0) $percent = multiply($percent, -1);
-        mes("You feel weakened.");
+        if($i = 0) mes("You feel weakened."); // mes should only show once for spells that lower multiple stats
         stat_sub($stat, $constant, $percent);
     }
     $i = add($i, 1);

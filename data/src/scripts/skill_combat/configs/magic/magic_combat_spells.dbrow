@@ -524,3 +524,20 @@ data=sound_success,fire_wave_all
 data=sound_fail,fire_wave_fail
 data=continue_by_autocast,true
 data=maxhit,25
+
+[magic_spell_skeleton_mage]
+table=magic_spell_table
+data=spell,^skeleton_mage_attack
+data=levelrequired,0
+data=anim,human_castweaken
+// guess cause osrs has a newer spotanim
+data=spotanim_origin,weaken_casting
+data=spotanim_proj,earthblast_travel,43,31
+data=spotanim_target,curse_impact,124
+// OSRS cast is entangle -> hit is rot
+data=sound_success,undead_rot
+// wiki is wrong
+data=stat_change,attack,0,5
+data=stat_change,strength,0,5
+data=stat_change,defence,0,5
+data=continue_by_autocast,false
