@@ -1,0 +1,183 @@
+[queue,player_death]
+p_delay(1);
+p_stopaction;
+if_close;
+anim(human_death, 0);
+p_delay(3);
+
+~combat_clearqueue;
+clearqueue(player_death);
+
+midi_jingle(^death_jingle_2, ^death_jingle_2_millis);
+mes("Oh dear you are dead.");
+if (~in_duel_arena(coord) = true & .finduid(%duelpartner) = true & ~.in_duel_arena(.coord) = true) {
+    if_close;
+    .if_close;
+    %duelstatus = ^duelstatus_lost;
+    .%duelstatus = ^duelstatus_victory;
+    queue(duel_arena_finish, 0);
+    .queue(duel_arena_finish, 0);
+    // player2 can move freely whilst player 1 is in death anim: https://youtu.be/BBYbpuquiZw?t=412 (vid he equips dragon sword)
+    return;
+}
+def_obj $prev_wep = inv_getobj(worn, ^wearpos_rhand);
+if (findhero = true) {
+    ~pvp_death_lose_items;
+} else {
+    ~player_death_lose_items;
+}
+p_telejump(map_findsquare(0_50_50_21_18, 0, 2, ^map_findsquare_lineofwalk));
+buildappearance(worn);
+~deactivate_prayers;
+~follower_death;
+anim(null, 0);
+p_stopaction;
+
+~stat_reset_all;
+healenergy(10000);
+~clear_pk_skull;
+~clear_poison;
+~update_all($prev_wep);
+// todo: end poison timer ~player_end_poison
+
+
+[proc,player_death_lose_items]
+def_boolean $skulled = false;
+if (%pk_skull > 0) { $skulled = true; }
+def_boolean $protecting_item = false;
+if (%prayer_protectitems = ^true) { $protecting_item = true; }
+inv_clear(death);
+
+if($skulled = false) {
+    ~move_priciest_item_on_hero_to_death;
+    ~move_priciest_item_on_hero_to_death;
+    ~move_priciest_item_on_hero_to_death;
+}
+if($protecting_item = true) {
+    ~move_priciest_item_on_hero_to_death;
+}
+
+def_int $i = 0;
+def_int $size = inv_size(inv);
+while ($i < $size) {
+    if (inv_getnum(inv, $i) > 0) {
+        if (oc_category(inv_getobj(inv, $i)) = armour_godcape) {
+            mes(oc_param(inv_getobj(inv, $i), lose_cape_message));
+        }
+    }
+    $i = calc($i + 1);
+}
+
+$i = 0;
+$size = inv_size(worn);
+while ($i < $size) {
+    if (inv_getnum(worn, $i) > 0) {
+        if (oc_category(inv_getobj(worn, $i)) = armour_godcape) {
+            mes(oc_param(inv_getobj(worn, $i), lose_cape_message));
+        }
+    }
+    $i = calc($i + 1);
+}
+
+inv_dropall(inv, coord, 200);
+inv_dropall(worn, coord, 200);
+obj_addall(coord, bones, 1, 200);
+~moveallinv(death, inv);
+inv_clear(death);
+
+[proc,pvp_death_lose_items]
+~pvp_death_message(.uid);
+
+def_boolean $skulled = false;
+if (%pk_skull > 0) { $skulled = true; }
+def_boolean $protecting_item = false;
+if (%prayer_protectitems = ^true) { $protecting_item = true; }
+inv_clear(death);
+
+if($skulled = false) {
+    ~move_priciest_item_on_hero_to_death;
+    ~move_priciest_item_on_hero_to_death;
+    ~move_priciest_item_on_hero_to_death;
+}
+if($protecting_item = true) {
+    ~move_priciest_item_on_hero_to_death;
+}
+
+def_int $i = 0;
+def_int $size = inv_size(inv);
+while ($i < $size) {
+    if (inv_getnum(inv, $i) > 0) {
+        if (oc_category(inv_getobj(inv, $i)) = armour_godcape) {
+            mes(oc_param(inv_getobj(inv, $i), lose_cape_message));
+            inv_delslot(inv, $i);
+        } else {
+            both_dropslot(inv, coord, $i, 200);
+        }
+    }
+    $i = calc($i + 1);
+}
+
+$i = 0;
+$size = inv_size(worn);
+while ($i < $size) {
+    if (inv_getnum(worn, $i) > 0) {
+        if (oc_category(inv_getobj(worn, $i)) = armour_godcape) {
+            mes(oc_param(inv_getobj(worn, $i), lose_cape_message));
+            inv_delslot(worn, $i);
+        } else {
+            both_dropslot(worn, coord, $i, 200);
+        }
+    }
+    $i = calc($i + 1);
+}
+.obj_add(coord, bones, 1, 200);
+~moveallinv(death, inv);
+inv_clear(death);
+
+
+[proc,move_priciest_item_on_hero_to_death]
+def_obj $priciest_item;
+def_obj $currentitem;
+def_int $biggest_price = 0;
+def_int $size_inv = inv_size(inv);
+def_int $size_worn = inv_size(worn);
+def_boolean $is_worn = false;
+def_int $i = 0;
+while ($i < $size_inv) {
+    if (inv_getnum(inv, $i) > 0) {
+        $currentitem = inv_getobj(inv, $i);
+        if (oc_category($currentitem) ! armour_godcape) {
+            if (oc_cost($currentitem) > $biggest_price) {
+                $biggest_price = oc_cost($currentitem);
+                $priciest_item = $currentitem;
+            }
+        }
+    }
+    $i = calc($i + 1);
+}
+$i = 0;
+while ($i < $size_worn) {
+    if (inv_getnum(worn, $i) > 0) {
+        $currentitem = inv_getobj(worn, $i);
+        if (oc_category($currentitem) ! armour_godcape) {
+            if (oc_cost($currentitem) > $biggest_price) {
+                $is_worn = true;
+                $biggest_price = oc_cost($currentitem);
+                $priciest_item = $currentitem;
+            }
+        }
+    }
+    $i = calc($i + 1);
+}
+
+if($priciest_item = null ) {
+    return;
+}
+if($is_worn = true) {
+    inv_moveitem(worn,death,$priciest_item,1);
+} else {
+    inv_moveitem(inv,death,$priciest_item,1);
+}
+
+[debugproc,death]
+~damage_self(999);
