@@ -465,7 +465,6 @@ model8=model_202_obj_wear
 head1=model_53_idk_head
 head2=model_44_obj_wear
 // osrs
-maxrange=8
 attackrange=8
 respawnrate=30
 hitpoints=14
@@ -1594,7 +1593,7 @@ param=attack_sound,insect_attack
 param=defend_sound,insect_hit
 param=death_sound,insect_death
 param=death_drop,null
-huntmode=aggressive_melee
+huntmode=cowardly
 huntrange=1
 
 [deadly_red_spider]
@@ -4443,7 +4442,7 @@ param=attack_anim,human_sword_slash
 param=defend_anim,human_sword_defend2
 param=attack_sound,2H_slash
 // param=defend_sound,steel
-huntmode=aggressive_melee
+huntmode=cowardly
 huntrange=5
 
 [highwayman]
@@ -4521,8 +4520,10 @@ hitpoints=20
 attack=8
 strength=8
 defence=12
+attackrange=8
+huntrange=3
 param=damagetype,^crush_style
-huntmode=cowardly
+huntmode=ranged
 
 [npc_182]
 name=Pirate
@@ -4725,6 +4726,9 @@ param=damagetype,^stab_style
 param=attack_anim,human_sword_stab
 param=defend_anim,human_sword_defend2
 param=attack_sound,hacksword_stab
+// only spawns in wilderness, might be cowardly
+huntmode=aggressive_melee
+huntrange=3
 members=yes
 
 [rogue]

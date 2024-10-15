@@ -439,15 +439,16 @@ class World {
 
             // world processing
             // - world queue
-            // - calculate afk event readiness
             // - npc spawn scripts
             // - npc hunt
             this.processWorld();
 
-            // client input
-            // - decode packets
-            // - process pathfinding/following
-            await this.processClientsIn();
+            // player setup (todo better name)
+            // - calculate afk event readiness
+            // - resume active script
+            // - process packets
+            // - process pathfinding/following request
+            await this.processPlayerSetup();
 
             // npc processing (if npc is not busy)
             // - resume suspended script
@@ -459,7 +460,6 @@ class World {
             this.processNpcs();
 
             // player processing
-            // - resume suspended script
             // - primary queue
             // - weak queue
             // - timers
@@ -565,7 +565,6 @@ class World {
     }
 
     // - world queue
-    // - calculate afk event readiness
     // - npc spawn scripts
     // - npc hunt
     private processWorld(): void {
@@ -599,15 +598,6 @@ class World {
                 }
             } catch (err) {
                 console.error(err);
-            }
-        }
-
-        // - calculate afk event readiness
-        if (tick % World.AFK_EVENTRATE === 0) {
-            for (const player of this.players) {
-                // (normal) 1/12 chance every 5 minutes of setting an afk event state (even distrubution 60/5)
-                // (afk) double the chance?
-                player.afkEventReady = Math.random() < (player.zonesAfk() ? 0.1666 : 0.0833);
             }
         }
 
@@ -648,70 +638,76 @@ class World {
                 npc.huntAll();
             }
         }
+
         this.cycleStats[WorldStat.WORLD] = Date.now() - start;
     }
 
-    // - decode packets
-    // - process pathfinding/following
-    private async processClientsIn(): Promise<void> {
+    private async processPlayerSetup(): Promise<void> {
         const start: number = Date.now();
 
-        this.cycleStats[WorldStat.BANDWIDTH_IN] = 0; // reset bandwidth counter
+        this.cycleStats[WorldStat.BANDWIDTH_IN] = 0;
 
-        // - decode packets
         for (const player of this.players) {
-            if (!isNetworkPlayer(player)) {
-                continue;
-            }
-
             try {
-                player.decodeIn();
+                player.playtime++;
+
+                if (this.currentTick % World.AFK_EVENTRATE === 0) {
+                    // (normal) 1/12 chance every 5 minutes of setting an afk event state (even distrubution 60/5)
+                    // (afk) double the chance?
+                    player.afkEventReady = Math.random() < (player.zonesAfk() ? 0.1666 : 0.0833);
+                }
+
+                // active scripts resume here in early rs2
+                if (player.delayed()) {
+                    player.delay--;
+                }
+
+                if (player.activeScript && player.activeScript.execution === ScriptState.SUSPENDED && !player.delayed()) {
+                    player.executeScript(player.activeScript, true, true);
+                }
+
+                if (isNetworkPlayer(player) && player.decodeIn()) {
+                    if (player.userPath.length > 0 || player.opcalled) {
+                        if (player.delayed()) {
+                            player.unsetMapFlag();
+                            continue;
+                        }
+        
+                        if ((!player.target || player.target instanceof Loc || player.target instanceof Obj) && player.faceEntity !== -1) {
+                            player.faceEntity = -1;
+                            player.mask |= Player.FACE_ENTITY;
+                        }
+        
+                        if (player.busy() || !player.opcalled) {
+                            player.moveClickRequest = true;
+                        }
+        
+                        if (player.opcalled && (player.userPath.length === 0 || !Environment.NODE_CLIENT_ROUTEFINDER)) {
+                            player.pathToPathingTarget();
+                            continue;
+                        }
+        
+                        player.pathToMoveClick(player.userPath, !Environment.NODE_CLIENT_ROUTEFINDER);
+    
+                        if (!player.opcalled && player.hasWaypoints()) {
+                            player.processWalktrigger();
+                        }
+                    }
+        
+                    if (player.target instanceof Player && (player.targetOp === ServerTriggerType.APPLAYER3 || player.targetOp === ServerTriggerType.OPPLAYER3)) {
+                        if (CoordGrid.distanceToSW(player, player.target) <= 25) {
+                            player.pathToPathingTarget();
+                        } else {
+                            player.clearWaypoints();
+                        }
+                    }
+                }
             } catch (err) {
                 console.error(err);
                 await this.removePlayer(player);
             }
         }
 
-        // - process pathfinding/following
-        for (const player of this.players) {
-            if (!isNetworkPlayer(player)) {
-                continue;
-            }
-
-            if (player.userPath.length > 0 || player.opcalled) {
-                if (player.delayed()) {
-                    player.unsetMapFlag();
-                    continue;
-                }
-
-                if ((!player.target || player.target instanceof Loc || player.target instanceof Obj) && player.faceEntity !== -1) {
-                    player.faceEntity = -1;
-                    player.mask |= Player.FACE_ENTITY;
-                }
-
-                if (player.busy() || !player.opcalled) {
-                    player.moveClickRequest = true;
-                }
-
-                if (player.opcalled && (player.userPath.length === 0 || !Environment.NODE_CLIENT_ROUTEFINDER)) {
-                    player.pathToPathingTarget();
-                    continue;
-                }
-
-                player.pathToMoveClick(player.userPath, !Environment.NODE_CLIENT_ROUTEFINDER);
-                if (!player.opcalled && player.hasWaypoints()) {
-                    player.processWalktrigger();
-                }
-            }
-
-            if (player.target instanceof Player && (player.targetOp === ServerTriggerType.APPLAYER3 || player.targetOp === ServerTriggerType.OPPLAYER3)) {
-                if (CoordGrid.distanceToSW(player, player.target) <= 25) {
-                    player.pathToPathingTarget();
-                } else {
-                    player.clearWaypoints();
-                }
-            }
-        }
         this.cycleStats[WorldStat.CLIENT_IN] = Date.now() - start;
     }
 
@@ -770,7 +766,6 @@ class World {
         this.cycleStats[WorldStat.NPC] = Date.now() - start;
     }
 
-    // - resume suspended script
     // - primary queue
     // - weak queue
     // - timers
@@ -783,17 +778,6 @@ class World {
         const start: number = Date.now();
         for (const player of this.players) {
             try {
-                player.playtime++;
-
-                if (player.delayed()) {
-                    player.delay--;
-                }
-
-                // - resume suspended script
-                if (player.activeScript && player.activeScript.execution === ScriptState.SUSPENDED && !player.delayed()) {
-                    player.executeScript(player.activeScript, true, true);
-                }
-
                 // - primary queue
                 // - weak queue
                 player.processQueues();

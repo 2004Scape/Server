@@ -18,8 +18,19 @@ if (Environment.BUILD_STARTUP_UPDATE) {
 if (!fs.existsSync('data/pack/client/config')) {
     console.log('Packing cache for the first time, please wait until you see the world is ready.');
     console.log('----');
-    await packServer();
-    await packClient();
+
+    try {
+        await packServer();
+        await packClient();
+    } catch (err) {
+        // todo: delete incorrectly built files
+
+        if (err instanceof Error) {
+            console.log(err.message);
+        }
+    
+        process.exit(1);
+    }
 }
 
 fs.mkdirSync('data/players', { recursive: true });

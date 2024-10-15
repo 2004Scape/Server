@@ -22,28 +22,23 @@ import { CrcBuffer } from '#lostcity/server/CrcTable.js';
 
 export async function packServer() {
     if (!fs.existsSync('RuneScriptCompiler.jar')) {
-        console.log('The RuneScript compiler is missing and the build process cannot continue.');
-        process.exit(1);
+        throw new Error('The RuneScript compiler is missing and the build process cannot continue.');
     }
 
     console.time('Packing server cache (1/2)');
-    try {
-        revalidatePack();
-        packConfigs();
-        packServerInterface();
+    revalidatePack();
+    packConfigs();
+    packServerInterface();
 
-        packServerMap();
-        await packWorldmap();
+    packServerMap();
+    await packWorldmap();
 
-        generateServerSymbols();
-    } catch (err) {
-        console.error(err);
-    }
+    generateServerSymbols();
 
     try {
         child_process.execSync(`"${Environment.BUILD_JAVA_PATH}" -jar RuneScriptCompiler.jar`, { stdio: 'inherit' });
     } catch (err) {
-        process.exit(1);
+        throw new Error('Failed while compiling scripts');
     }
     console.timeEnd('Packing server cache (1/2)');
 

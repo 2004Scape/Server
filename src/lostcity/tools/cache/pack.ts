@@ -7,5 +7,13 @@ if (Environment.BUILD_STARTUP_UPDATE) {
     await updateCompiler();
 }
 
-await packServer();
-await packClient();
+try {
+    await packServer();
+    await packClient();
+} catch (err) {
+    if (err instanceof Error) {
+        console.log(err.message);
+    }
+
+    process.exit(1);
+}

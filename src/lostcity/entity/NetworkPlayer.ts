@@ -54,7 +54,7 @@ export class NetworkPlayer extends Player {
         this.opcalled = false;
 
         if (this.client === null) {
-            return;
+            return false;
         }
 
         let offset = 0;
@@ -86,6 +86,8 @@ export class NetworkPlayer extends Player {
         }
 
         this.client?.reset();
+
+        return true;
     }
 
     encodeOut() {

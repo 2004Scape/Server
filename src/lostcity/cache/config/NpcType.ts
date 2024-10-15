@@ -238,9 +238,7 @@ export default class NpcType extends ConfigType {
         } else if (code === 250) {
             this.debugname = dat.gjstr();
         } else {
-            console.error('Unrecognized npc config code: ' + code);
-            console.error('Try `npm run build` and report an issue if this still happens.');
-            process.exit(1);
+            throw new Error(`Unrecognized npc config code: ${code}`);
         }
     }
 }
