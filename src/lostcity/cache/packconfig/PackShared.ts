@@ -355,7 +355,10 @@ export function packConfigs() {
         const dat = Packet.alloc(1);
         dat.p2(CategoryPack.size);
         for (let i = 0; i < CategoryPack.size; i++) {
+            dat.p1(1);
             dat.pjstr(CategoryPack.getById(i));
+
+            dat.p1(0);
         }
         dat.save('data/pack/server/category.dat');
         dat.release();
