@@ -1,25 +1,3 @@
-[cave_monk]
-vislevel=hide
-name=Cave monk
-desc=Unsurprisingly monk like.
-walkanim=human_walk_f,human_walk_b,human_walk_l,human_walk_r
-readyanim=human_ready
-op1=Talk-to
-recol1s=2340
-recol1d=13539
-recol2s=14724
-recol2d=13539
-model1=model_223_idk
-model2=model_181_idk
-model3=model_246_idk
-model4=model_299_npc
-model5=model_170_idk
-model6=model_176_idk
-model7=model_260_npc
-head1=model_59_idk_head
-wanderrange=0
-moverestrict=nomove
-
 [high_priest]
 vislevel=hide
 name=High Priest
@@ -49,28 +27,35 @@ model7=model_284_obj_wear
 model8=model_246_idk
 head1=model_59_idk_head
 
-[monk_of_entrana_island]
-vislevel=hide
-name=Monk of Entrana
-desc=Holy looking.
+[monk_entrana]
+name=Monk
+desc=A holy man.
 walkanim=human_walk_f,human_walk_b,human_walk_l,human_walk_r
 readyanim=human_ready
 op1=Talk-to
+op2=Attack
+vislevel=5
 recol1s=2340
 recol1d=13539
 recol2s=14724
 recol2d=13539
-recol3s=6273
-recol3d=27240
-model1=model_223_idk
+model1=model_230_idk
 model2=model_181_idk
-model3=model_251_idk
+model3=model_246_idk
 model4=model_292_idk
 model5=model_170_idk
 model6=model_176_idk
 model7=model_260_npc
-head1=model_59_idk_head
-head2=model_83_idk_head
+head1=model_63_idk_head
+wanderrange=3
+maxrange=5
+respawnrate=25
+hitpoints=15
+attack=2
+strength=2
+defence=3
+param=retreat,7
+// osrs stats and Vislvl match 1:1
 
 [frincos]
 vislevel=hide
@@ -99,3 +84,48 @@ param=shop_buy_multiplier,700
 param=shop_delta,20
 param=shop_title,Frincos' Fabulous Herb Store.
 moverestrict=indoors
+
+[cave_monk]
+vislevel=hide
+name=Cave monk
+desc=Unsurprisingly monk like.
+walkanim=human_walk_f,human_walk_b,human_walk_l,human_walk_r
+readyanim=human_ready
+op1=Talk-to
+recol1s=2340
+recol1d=13539
+recol2s=14724
+recol2d=13539
+model1=model_223_idk
+model2=model_181_idk
+model3=model_246_idk
+model4=model_299_npc
+model5=model_170_idk
+model6=model_176_idk
+model7=model_260_npc
+head1=model_59_idk_head
+wanderrange=0
+moverestrict=nomove
+
+[monk_of_entrana_island]
+vislevel=hide
+name=Monk of Entrana
+desc=Holy looking.
+walkanim=human_walk_f,human_walk_b,human_walk_l,human_walk_r
+readyanim=human_ready
+op1=Talk-to
+recol1s=2340
+recol1d=13539
+recol2s=14724
+recol2d=13539
+recol3s=6273
+recol3d=27240
+model1=model_223_idk
+model2=model_181_idk
+model3=model_251_idk
+model4=model_292_idk
+model5=model_170_idk
+model6=model_176_idk
+model7=model_260_npc
+head1=model_59_idk_head
+head2=model_83_idk_head

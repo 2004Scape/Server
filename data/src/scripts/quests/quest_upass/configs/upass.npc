@@ -89,7 +89,7 @@ model8=model_326_idk
 head1=model_48_npc_head
 head2=model_81_idk_head
 
-[npc_977]
+[blessed_spider]
 walkanim=giantspider_walk
 readyanim=giantspider_ready
 name=Blessed spider
@@ -99,6 +99,7 @@ vislevel=31
 model1=model_2884_npc
 wanderrange=10
 maxrange=12
+// attackrange=
 respawnrate=300
 hitpoints=32
 attack=35
@@ -118,8 +119,9 @@ param=defend_sound,insect_hit
 param=death_sound,insect_death
 param=death_drop,null
 huntmode=cowardly
+//Stats match osrs version but our version Vislvl is different.
 
-[npc_978]
+[blessed_giant_rat]
 size=2
 walkanim=giantrat_walk
 readyanim=giantrat_ready
@@ -130,6 +132,7 @@ vislevel=9
 model1=model_2959_npc
 wanderrange=6
 maxrange=8
+// attackrange=
 respawnrate=300
 hitpoints=30
 attack=5
@@ -147,6 +150,7 @@ param=attack_sound,rat_attack
 param=defend_sound,rat_hit
 param=death_sound,rat_death
 huntmode=cowardly
+// osrs stats and Vislvl match 1:1
 
 [npc_979]
 vislevel=hide
@@ -371,6 +375,7 @@ param=attack_anim,human_sword_slash
 param=defend_anim,human_sword_defend2
 // TODO sounds
 // TODO sounds
+// Check the data with Monster examine. (data verification still in progress)
 
 [sir_carl]
 name=Sir Carl
@@ -414,6 +419,7 @@ param=attack_anim,human_sword_slash
 param=defend_anim,human_sword_defend2
 // TODO sounds
 // TODO sounds
+// Check the data with Monster examine. (data verification still in progress)
 
 [sir_harry]
 name=Sir Harry
@@ -457,6 +463,7 @@ param=attack_anim,human_sword_slash
 param=defend_anim,human_sword_defend2
 // TODO sounds
 // TODO sounds
+// Check the data with Monster examine. (data verification still in progress)
 
 [half_souless]
 size=2
@@ -631,6 +638,7 @@ param=defend_sound,insect_hit
 param=death_sound,insect_death
 param=death_drop,null
 huntmode=cowardly
+// Check the data with Monster examine. (data verification still in progress)
 
 [othainian]
 size=3
@@ -659,6 +667,7 @@ param=defend_sound,demon_hit
 param=death_sound,demon_death
 param=death_drop,ashes
 huntmode=cowardly
+// Check the data with Monster examine. (data verification still in progress)
 
 [doomion]
 size=3
@@ -687,6 +696,7 @@ param=defend_sound,demon_hit
 param=death_sound,demon_death
 param=death_drop,ashes
 huntmode=cowardly
+// Check the data with Monster examine. (data verification still in progress)
 
 [holthion]
 size=3
@@ -715,6 +725,7 @@ param=defend_sound,demon_hit
 param=death_sound,demon_death
 param=death_drop,ashes
 huntmode=cowardly
+// Check the data with Monster examine. (data verification still in progress)
 
 [iban_disciple]
 walkanim=human_walk_f,human_walk_b,human_walk_l,human_walk_r
@@ -746,6 +757,7 @@ attack=8
 strength=8
 defence=12
 param=damagetype,^crush_style
+// Check the data with Monster examine. (data verification still in progress)
 
 [lord_iban]
 vislevel=hide
@@ -808,6 +820,7 @@ param=attack_sound,insect_attack
 param=defend_sound,insect_hit
 param=death_sound,insect_death
 param=death_drop,null
+// osrs stats and Vislvl match 1:1
 
 [bat_upass]
 name=Giant bat

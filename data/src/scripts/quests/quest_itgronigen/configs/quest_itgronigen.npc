@@ -83,6 +83,7 @@ param=death_anim,goblin_death
 param=attack_sound,goblin_attack
 param=defend_sound,goblin_hit
 param=death_sound,goblin_death
+// osrs 1:1
 
 [observatory_professor_tower]
 vislevel=hide

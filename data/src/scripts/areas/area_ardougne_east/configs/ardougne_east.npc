@@ -16,26 +16,29 @@ model6=model_179_obj_wear
 model7=model_262_obj_wear
 model8=model_563_obj_wear
 wanderrange=10
-attackrange=10
 maxrange=12
+attackrange=10
 respawnrate=25
 hitpoints=50
-attack=0
-strength=0
-defence=40
+attack=20
+strength=20
+defence=20
 ranged=40
 param=attackrate,6
-param=attackbonus,34
-param=stabdefence,39
-param=slashdefence,50
-param=crushdefence,49
-param=magicdefence,18
-param=rangedefence,45
+param=attackbonus,19
+param=strengthbonus,8
+param=rangebonus,8
+param=stabdefence,18
+param=slashdefence,23
+param=crushdefence,27
+param=magicdefence,10
+param=rangedefence,19
 param=damagetype,^ranged_style
 param=attack_anim,human_bow
 param=rangeattack_sound,arrowlaunch2
 param=proj_launch,iron_arrow_launch
 param=proj_travel,iron_arrow_travel
+//Stats match osrs version but our version Vislvl is different.
 
 [zoo_keeper]
 name=Zoo keeper
@@ -160,13 +163,13 @@ param=slashdefence,14
 param=crushdefence,19
 param=magicdefence,4
 param=rangedefence,16
-param=damagetype,^crush_style
 param=attack_anim,human_blunt_crush
 param=defend_anim,human_blunt_defend1
 param=attack_sound,mace_crush
 // param=defend_sound,blade2_mail
 category=guard
 // osrs use attack sound warhammer_crush
+// osrs stats and Vislvl match 1:1
 
 [brother_kojo]
 vislevel=hide
@@ -231,7 +234,7 @@ model6=model_176_idk
 model7=model_260_npc
 head1=model_59_idk_head
 
-[ardougne_monk]
+[monk_ardougne]
 name=Monk
 desc=An Ardougne Monk.
 walkanim=human_walk_f,human_walk_b,human_walk_l,human_walk_r
@@ -256,8 +259,83 @@ hitpoints=5
 attack=2
 strength=2
 defence=3
-param=damagetype,^crush_style
 param=retreat,2
+// osrs stats and Vislvl match 1:1
+
+[thief_ardougne]
+name=Thief
+desc=A dastardly blanket thief.
+walkanim=human_walk_f,human_walk_b,human_walk_l,human_walk_r
+readyanim=human_ready
+op2=Attack
+vislevel=14
+recol1s=2340
+recol1d=9452
+model1=model_215_idk
+model2=model_246_idk
+model3=model_311_obj_wear
+model4=model_169_npc
+model5=model_179_obj_wear
+model6=model_254_idk
+model7=model_185_obj_wear
+model8=model_519_obj_wear
+respawnrate=25
+hitpoints=17
+attack=14
+strength=10
+defence=9
+magic=0
+ranged=2
+param=attackbonus,6
+param=strengthbonus,7
+param=stabdefence,8
+param=slashdefence,13
+param=crushdefence,14
+param=magicdefence,4
+param=rangedefence,9
+param=damagetype,^stab_style
+param=attack_anim,human_sword_stab
+param=defend_anim,human_sword_defend2
+param=attack_sound,stabsword_stab
+param=retreat,8
+// osrs stats and Vislvl match 1:1
+
+[head_thief]
+name=Head Thief
+desc=The head of the treacherous blanket stealing gang.
+walkanim=human_walk_f,human_walk_b,human_walk_l,human_walk_r
+readyanim=human_ready
+op2=Attack
+vislevel=26
+recol1s=2340
+recol1d=9452
+model1=model_215_idk
+model2=model_247_idk
+model3=model_311_obj_wear
+model4=model_169_npc
+model5=model_179_obj_wear
+model6=model_254_idk
+model7=model_185_obj_wear
+model8=model_518_obj_wear
+respawnrate=25
+hitpoints=37
+attack=24
+strength=18
+defence=16
+magic=0
+ranged=2
+param=attackrate,5
+param=strengthbonus,10
+param=stabdefence,8
+param=slashdefence,14
+param=crushdefence,15
+param=magicdefence,4
+param=rangedefence,9
+param=damagetype,^slash_style
+param=attack_anim,human_sword_slash
+param=defend_anim,human_sword_defend2
+param=attack_sound,stabsword_slash
+// osrs stats and Vislvl match 1:1
 
 [king_lathas]
 vislevel=hide
@@ -291,6 +369,37 @@ head1=model_63_idk_head
 head2=model_83_idk_head
 head3=model_2938_npc_head
 wanderrange=2
+
+[captain_barnaby]
+vislevel=hide
+name=Captain Barnaby
+desc=An old sailor.
+walkanim=human_walk_f,human_walk_b,human_walk_l,human_walk_r
+readyanim=human_ready
+op1=Talk-to
+recol1s=6273
+recol1d=29596
+recol2s=14724
+recol2d=274
+recol3s=2340
+recol3d=274
+recol4s=14801
+recol4d=20934
+recol5s=24075
+recol5d=20934
+recol6s=5120
+recol6d=31297
+model1=model_214_idk
+model2=model_250_idk
+model3=model_299_npc
+model4=model_159_npc
+model5=model_263_npc
+model6=model_176_idk
+model7=model_185_obj_wear
+model8=model_326_idk
+head1=model_52_idk_head
+head2=model_82_idk_head
+wanderrange=6
 
 [silver_merchant]
 vislevel=hide
@@ -402,8 +511,7 @@ param=shop_sell_multiplier,1000
 param=shop_buy_multiplier,800
 param=shop_delta,20
 param=shop_title,Ardougne Baker's Stall.
-wanderrange=0
-moverestrict=nomove
+wanderrange=2
 
 [spice_seller]
 vislevel=hide
@@ -500,113 +608,35 @@ head3=model_80_idk_head
 wanderrange=0
 moverestrict=nomove
 
-[rdpt_employee]
+[zenesha]
 vislevel=hide
-name=RPDT employee
-desc=Inefficient looking.
+name=Zenesha
+desc=Sells top quality plate mail armour.
 walkanim=human_walk_f,human_walk_b,human_walk_l,human_walk_r
 readyanim=human_ready
 op1=Talk-to
-recol1s=2340
-recol1d=5299
-recol2s=14724
-recol2d=19093
-recol3s=14801
-recol3d=24075
-recol4s=15648
-recol4d=5299
-model1=model_215_idk
-model2=model_292_idk
-model3=model_249_idk
-model4=model_151_idk
-model5=model_176_idk
-model6=model_271_idk
-model7=model_185_obj_wear
-model8=model_194_npc
-model9=model_327_idk
-head1=model_53_idk_head
-head2=model_81_idk_head
-head3=model_37_npc_head
-
-[wizard_cromperty]
-vislevel=hide
-name=Wizard Cromperty
-desc=The hat is a dead give away.
-walkanim=human_walk_f,human_walk_b,human_walk_l,human_walk_r
-readyanim=human_ready
-op1=Talk-to
+op3=Trade
 recol1s=14724
-recol1d=239
-recol2s=2340
-recol2d=239
-recol3s=6273
-recol3d=32767
-model1=model_215_idk
-model2=model_181_idk
-model3=model_246_idk
-model4=model_292_idk
-model5=model_170_idk
-model6=model_176_idk
-model7=model_265_obj_wear
-model8=model_202_obj_wear
-head1=model_53_idk_head
-head2=model_44_obj_wear
-wanderrange=7
+recol1d=26425
+recol2s=6273
+recol2d=27207
+model1=model_393_idk
+model2=model_468_obj_wear
+model3=model_352_npc
+model4=model_356_obj_wear
+model5=model_432_obj_wear
+model6=model_414_npc
+model7=model_361_obj_wear
+head1=model_115_idk_head
+head2=model_131_npc_head
 moverestrict=indoors
-
-[horacio]
-vislevel=hide
-name=Horacio
-desc=Could do with losing a few pounds.
-walkanim=human_walk_f,human_walk_b,human_walk_l,human_walk_r
-readyanim=human_ready
-op1=Talk-to
-recol1s=14801
-recol1d=24075
-model1=model_214_idk
-model2=model_185_obj_wear
-model3=model_250_idk
-model4=model_299_npc
-model5=model_159_npc
-model6=model_176_idk
-model7=model_271_idk
-model8=model_276_npc
-model9=model_329_npc
-model10=model_495_npc
-head1=model_52_idk_head
-head2=model_82_idk_head
-wanderrange=2
-
-[captain_barnaby]
-vislevel=hide
-name=Captain Barnaby
-desc=An old sailor.
-walkanim=human_walk_f,human_walk_b,human_walk_l,human_walk_r
-readyanim=human_ready
-op1=Talk-to
-recol1s=6273
-recol1d=29596
-recol2s=14724
-recol2d=274
-recol3s=2340
-recol3d=274
-recol4s=14801
-recol4d=20934
-recol5s=24075
-recol5d=20934
-recol6s=5120
-recol6d=31297
-model1=model_214_idk
-model2=model_250_idk
-model3=model_299_npc
-model4=model_159_npc
-model5=model_263_npc
-model6=model_176_idk
-model7=model_185_obj_wear
-model8=model_326_idk
-head1=model_52_idk_head
-head2=model_82_idk_head
-wanderrange=6
+param=death_sound,female_death
+category=shop_keeper
+param=owned_shop,zenesha_platemail
+param=shop_sell_multiplier,1000
+param=shop_buy_multiplier,600
+param=shop_delta,20
+param=shop_title,Zenesha's Plate Mail Body Shop.
 
 [aemad]
 vislevel=hide
@@ -683,53 +713,6 @@ param=shop_delta,20
 param=shop_title,Aemad's Adventuring Supplies.
 moverestrict=indoors
 
-[bartender_flyinghorse]
-vislevel=hide
-name=Bartender
-desc=I could get a beer from him.
-walkanim=human_walk_f,human_walk_b,human_walk_l,human_walk_r
-readyanim=human_ready
-op1=Talk-to
-model1=model_217_idk
-model2=model_250_idk
-model3=model_302_npc
-model4=model_159_npc
-model5=model_176_idk
-model6=model_254_idk
-model7=model_181_idk
-head1=model_55_idk_head
-head2=model_82_idk_head
-wanderrange=2
-
-[zenesha]
-vislevel=hide
-name=Zenesha
-desc=Sells top quality plate mail armour.
-walkanim=human_walk_f,human_walk_b,human_walk_l,human_walk_r
-readyanim=human_ready
-op1=Talk-to
-op3=Trade
-recol1s=14724
-recol1d=26425
-recol2s=6273
-recol2d=27207
-model1=model_393_idk
-model2=model_468_obj_wear
-model3=model_352_npc
-model4=model_356_obj_wear
-model5=model_432_obj_wear
-model6=model_414_npc
-model7=model_361_obj_wear
-head1=model_115_idk_head
-head2=model_131_npc_head
-category=shop_keeper
-param=owned_shop,zenesha_platemail
-param=shop_sell_multiplier,1000
-param=shop_buy_multiplier,600
-param=shop_delta,20
-param=shop_title,Zenesha's Plate Mail Body Shop.
-moverestrict=indoors
-
 [caroline]
 vislevel=hide
 walkanim=human_walk_f,human_walk_b,human_walk_l,human_walk_r
@@ -752,6 +735,7 @@ model6=model_358_idk
 model7=model_483_npc
 head1=model_114_idk_head
 wanderrange=2
+param=death_sound,female_death
 
 [holgart_ardougne]
 vislevel=hide
@@ -774,5 +758,100 @@ model7=model_181_idk
 model8=model_534_obj_wear
 model9=model_326_idk
 head1=model_58_npc_head
+head2=model_82_idk_head
+wanderrange=2
+
+[bartender_flyinghorse]
+vislevel=hide
+name=Bartender
+desc=I could get a beer from him.
+walkanim=human_walk_f,human_walk_b,human_walk_l,human_walk_r
+readyanim=human_ready
+op1=Talk-to
+model1=model_217_idk
+model2=model_250_idk
+model3=model_302_npc
+model4=model_159_npc
+model5=model_176_idk
+model6=model_254_idk
+model7=model_181_idk
+head1=model_55_idk_head
+head2=model_82_idk_head
+wanderrange=2
+
+[rdpt_employee]
+vislevel=hide
+name=RPDT employee
+desc=Inefficient looking.
+walkanim=human_walk_f,human_walk_b,human_walk_l,human_walk_r
+readyanim=human_ready
+op1=Talk-to
+recol1s=2340
+recol1d=5299
+recol2s=14724
+recol2d=19093
+recol3s=14801
+recol3d=24075
+recol4s=15648
+recol4d=5299
+model1=model_215_idk
+model2=model_292_idk
+model3=model_249_idk
+model4=model_151_idk
+model5=model_176_idk
+model6=model_271_idk
+model7=model_185_obj_wear
+model8=model_194_npc
+model9=model_327_idk
+head1=model_53_idk_head
+head2=model_81_idk_head
+head3=model_37_npc_head
+
+[wizard_cromperty]
+vislevel=hide
+name=Wizard Cromperty
+desc=The hat is a dead give away.
+walkanim=human_walk_f,human_walk_b,human_walk_l,human_walk_r
+readyanim=human_ready
+op1=Talk-to
+recol1s=14724
+recol1d=239
+recol2s=2340
+recol2d=239
+recol3s=6273
+recol3d=32767
+model1=model_215_idk
+model2=model_181_idk
+model3=model_246_idk
+model4=model_292_idk
+model5=model_170_idk
+model6=model_176_idk
+model7=model_265_obj_wear
+model8=model_202_obj_wear
+head1=model_53_idk_head
+head2=model_44_obj_wear
+wanderrange=7
+moverestrict=indoors
+
+[horacio]
+vislevel=hide
+name=Horacio
+desc=Could do with losing a few pounds.
+walkanim=human_walk_f,human_walk_b,human_walk_l,human_walk_r
+readyanim=human_ready
+op1=Talk-to
+recol1s=14801
+recol1d=24075
+model1=model_214_idk
+model2=model_185_obj_wear
+model3=model_250_idk
+model4=model_299_npc
+model5=model_159_npc
+model6=model_176_idk
+model7=model_271_idk
+model8=model_276_npc
+model9=model_329_npc
+model10=model_495_npc
+head1=model_52_idk_head
 head2=model_82_idk_head
 wanderrange=2

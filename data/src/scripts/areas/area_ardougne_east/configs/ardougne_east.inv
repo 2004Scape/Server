@@ -1,4 +1,5 @@
 [ardougne_spice]
+// https://classic.runescape.wiki/w/Spices_Stall
 scope=shared
 size=40
 restock=yes
@@ -7,6 +8,7 @@ allstock=no
 stock1=spice,1,100
 
 [ardougne_gem]
+// https://classic.runescape.wiki/w/Gems_Stall
 scope=shared
 size=40
 restock=yes
@@ -18,6 +20,8 @@ stock3=ruby,1,60000
 stock4=diamond,0,4000
 
 [ardougne_baker]
+// https://classic.runescape.wiki/w/Bakers_Stall
+// https://oldschool.runescape.wiki/w/Ardougne_Baker%27s_Stall. (Trivia)
 scope=shared
 size=40
 restock=yes
@@ -25,10 +29,11 @@ stackall=yes
 allstock=no
 stock1=bread,10,150
 stock2=cake,3,1000
-stock3=chocolate_slice,6,400
-stock4=chocolate_bar,9,250
+stock3=chocolate_slice,8,400
+stock4=chocolate_bar,7,250
 
 [furshop]
+// https://classic.runescape.wiki/w/Fur_Stall
 scope=shared
 size=40
 restock=yes
@@ -38,16 +43,18 @@ stock1=bear_fur,3,100
 stock2=grey_wolf_fur,3,100
 
 [ardougne_silver]
+// https://classic.runescape.wiki/w/Silver_Stall
 scope=shared
 size=40
 restock=yes
 stackall=yes
 allstock=no
-stock1=unstrung_symbol,100
+stock1=unstrung_symbol,2,100
 stock2=silver_ore,1,2000
 stock3=silver_bar,1,1000
 
 [zenesha_platemail]
+// https://classic.runescape.wiki/w/Zenesha%27s_Plate_Mail_Top_Shop
 scope=shared
 size=40
 restock=yes

@@ -13,6 +13,7 @@ stock6=coal,0,5000
 stock7=bronze_bar,0,4000
 stock8=iron_bar,0,4000
 stock9=gold_bar,0,3000
+// https://oldschool.runescape.wiki/w/Drogo_dwarf
 
 [nurmof_pickaxe]
 scope=shared
@@ -26,6 +27,7 @@ stock3=steel_pickaxe,4,200
 stock4=mithril_pickaxe,3,300
 stock5=adamant_pickaxe,2,500
 stock6=rune_pickaxe,1,700
+// https://storage.googleapis.com/tannerdino/images/nurmof1.jpg
 
 [generalshop5]
 scope=shared
@@ -36,7 +38,8 @@ allstock=yes
 stock1=pot_empty,3,100
 stock2=jug_empty,2,100
 stock3=shears,2,100
-stock4=bucket_empty,3,10
+stock4=bucket_empty,2,10
 stock5=tinderbox,2,100
 stock6=chisel,2,100
 stock7=hammer,5,100
+// https://classic.runescape.wiki/w/Dwarven_Mine_General_Store

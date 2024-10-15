@@ -8,6 +8,8 @@ stock1=swordfish,20,200
 stock2=apple_pie,5,200
 stock3=3dose1attack,3,100
 stock4=steel_arrow,500,100
+// https://storage.googleapis.com/tannerdino/images/rslegendguild8.gif
+// https://classic.runescape.wiki/w/Legends%27_Guild_General_Store
 
 [legends_guild_shop_of_useful_items]
 scope=shared
@@ -21,3 +23,5 @@ stock3=silverlight,4,100
 stock3=maze_key,3,300
 stock4=shield_right_half,1,500
 stock5=cape_of_legends,3,500
+// https://oldschool.runescape.wiki/w/Legends_Guild_Shop_of_Useful_Items.
+// https://classic.runescape.wiki/w/Legends%27_Guild_Shop

@@ -226,6 +226,7 @@ param=defend_anim,human_2h_sword_defend
 // param=attack_sound,
 // param=defend_sound,
 // osrs use attack seq_406
+// Check the data with Monster examine. (data verification still in progress)
 
 [khazard_barman]
 vislevel=hide
@@ -474,6 +475,7 @@ param=attack_sound,growl6
 param=defend_sound,growl5
 huntmode=aggressive_melee
 huntrange=2
+// // Check the data with Monster examine. (data verification still in progress)
 
 [khazard_ogre]
 name=Khazard Ogre
@@ -506,6 +508,7 @@ param=defend_sound,giant_hit
 param=death_sound,giant_death
 huntmode=aggressive_melee
 huntrange=2
+// Check the data with Monster examine. (data verification still in progress)
 
 [khazard_scorpion]
 name=Khazard Scorpion
@@ -542,3 +545,4 @@ param=death_sound,insect_death
 param=death_drop,null
 huntmode=aggressive_melee
 huntrange=2
+// Check the data with Monster examine. (data verification still in progress)

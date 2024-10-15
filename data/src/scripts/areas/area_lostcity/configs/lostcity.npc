@@ -1,14 +1,3 @@
-[fairy_queen]
-vislevel=hide
-name=Fairy Queen
-desc=Looks otherworldy...
-walkanim=fairy_walk
-readyanim=fairy_ready
-op1=Talk-to
-model1=model_2858_npc
-head1=model_12_npc_head
-param=death_anim,fairy_death
-
 [door_man]
 vislevel=hide
 name=Door man
@@ -39,6 +28,96 @@ head1=model_52_idk_head
 head2=model_84_idk_head
 wanderrange=2
 
+[fairy]
+vislevel=hide
+name=Fairy
+desc=A delicate creature from this strange realm.
+walkanim=fairy_walk
+readyanim=fairy_ready
+model1=model_2857_npc
+param=death_anim,fairy_death
+
+[otherworldly_being]
+walkanim=human_walk_f,human_walk_b,human_walk_l,human_walk_r
+readyanim=human_ready
+name=Otherworldly being
+desc=Is he invisible or just a set of floating clothing?
+op2=Attack
+vislevel=64
+recol1s=2340
+recol1d=4226
+recol2s=239
+recol2d=4226
+recol3s=14724
+recol3d=4226
+model1=model_292_idk
+model2=model_170_idk
+model3=model_260_npc
+model4=model_202_obj_wear
+wanderrange=3
+maxrange=5
+respawnrate=20
+hitpoints=66
+attack=56
+strength=56
+defence=46
+param=stabdefence,15
+param=slashdefence,10
+param=crushdefence,20
+param=magicdefence,-5
+param=rangedefence,15
+param=attack_sound,otherworld_attack
+param=defend_sound,otherworld_hit
+param=death_sound,otherworld_death
+param=death_drop,null
+// osrs stats and Vislvl match 1:1
+
+[fairy_shop_keeper]
+vislevel=hide
+name=Fairy shop keeper
+desc=Sells stuff.
+walkanim=fairy_walk
+readyanim=fairy_ready
+op1=Talk-to
+op3=Trade
+recol1s=17393
+recol1d=15727
+recol2s=30613
+recol2d=25953
+model1=model_2857_npc
+head1=model_13_npc_head
+category=shop_keeper
+param=owned_shop,generalshop9
+param=shop_sell_multiplier,1300
+param=shop_buy_multiplier,400
+param=shop_delta,30
+param=shop_title,Zanaris General Store
+wanderrange=2
+param=death_anim,fairy_death
+
+[fairy_shop_assistant]
+vislevel=hide
+name=Fairy shop assistant
+desc=Sells stuff.
+walkanim=fairy_walk
+readyanim=fairy_ready
+op1=Talk-to
+op3=Trade
+recol1s=17393
+recol1d=15727
+recol2s=30613
+recol2d=25953
+model1=model_2857_npc
+head1=model_13_npc_head
+category=shop_keeper
+param=owned_shop,generalshop9
+param=shop_sell_multiplier,1300
+param=shop_buy_multiplier,400
+param=shop_delta,30
+param=shop_title,Zanaris General Store
+wanderrange=2
+param=death_anim,fairy_death
+
 [jakut]
 vislevel=hide
 name=Jakut
@@ -59,6 +138,26 @@ param=shop_sell_multiplier,1000
 param=shop_buy_multiplier,600
 param=shop_delta,10
 param=shop_title,jakut
+wanderrange=2
+param=death_anim,fairy_death
+
+[lunderwin]
+vislevel=hide
+name=Lunderwin
+desc=Smells strangely of cabbage.
+walkanim=fairy_walk
+readyanim=fairy_ready
+op1=Talk-to
+recol1s=24075
+recol1d=19777
+recol2s=30613
+recol2d=6210
+recol3s=17393
+recol3d=26913
+recol4s=6144
+recol4d=27425
+model1=model_2857_npc
+head1=model_14_npc_head
 wanderrange=2
 param=death_anim,fairy_death
 
@@ -108,68 +207,13 @@ wanderrange=0
 moverestrict=nomove
 param=death_anim,fairy_death
 
-[lunderwin]
+[fairy_queen]
 vislevel=hide
-name=Lunderwin
-desc=Smells strangely of cabbage.
+name=Fairy Queen
+desc=Looks otherworldy...
 walkanim=fairy_walk
 readyanim=fairy_ready
 op1=Talk-to
-recol1s=24075
-recol1d=19777
-recol2s=30613
-recol2d=6210
-recol3s=17393
-recol3d=26913
-recol4s=6144
-recol4d=27425
-model1=model_2857_npc
-head1=model_14_npc_head
-wanderrange=2
-param=death_anim,fairy_death
-
-[fairy_shop_keeper]
-vislevel=hide
-name=Fairy shop keeper
-desc=Sells stuff.
-walkanim=fairy_walk
-readyanim=fairy_ready
-op1=Talk-to
-op3=Trade
-recol1s=17393
-recol1d=15727
-recol2s=30613
-recol2d=25953
-model1=model_2857_npc
-head1=model_13_npc_head
-category=shop_keeper
-param=owned_shop,generalshop9
-param=shop_sell_multiplier,1300
-param=shop_buy_multiplier,400
-param=shop_delta,30
-param=shop_title,Zanaris General Store
-wanderrange=2
-param=death_anim,fairy_death
-
-[fairy_shop_assistant]
-vislevel=hide
-name=Fairy shop assistant
-desc=Sells stuff.
-walkanim=fairy_walk
-readyanim=fairy_ready
-op1=Talk-to
-op3=Trade
-recol1s=17393
-recol1d=15727
-recol2s=30613
-recol2d=25953
-model1=model_2857_npc
-head1=model_13_npc_head
-category=shop_keeper
-param=owned_shop,generalshop9
-param=shop_sell_multiplier,1300
-param=shop_buy_multiplier,400
-param=shop_delta,30
-param=shop_title,Zanaris General Store
-wanderrange=2
+model1=model_2858_npc
+head1=model_12_npc_head
 param=death_anim,fairy_death

@@ -21,6 +21,9 @@ stock14=raw_salmon,0,2100
 stock15=raw_tuna,0,2300
 stock16=raw_lobster,0,2600
 stock17=raw_swordfish,0,2900
+// https://web.archive.org/web/20051217142945/http://www.runehq.com/RHQCityGuidesView.php?id=00259 2004
+// https://classic.runescape.wiki/w/Gerrant%27s_Fishing_Supplies
+// https://web.archive.org/web/20130122003100im_/http://www.runehq.com/image/cityguides/portsarim/fishshop.png
 
 [grum_gold]
 scope=shared
@@ -43,6 +46,7 @@ stock12=sapphire_amulet,0,2000
 stock13=emerald_amulet,0,3000
 stock14=ruby_amulet,0,4000
 stock15=diamond_amulet,0,5000
+// https://oldschool.runescape.wiki/w/Grum%27s_Gold_Exchange.
 
 [betty_magic]
 scope=shared
@@ -74,6 +78,7 @@ stock3=steel_battleaxe,2,500
 stock4=black_battleaxe,1,700
 stock5=mithril_battleaxe,1,1000
 stock6=adamant_battleaxe,1,15000
+// https://classic.runescape.wiki/w/Brian%27s_Great_Axes
 
 [food_store]
 scope=shared
@@ -92,3 +97,4 @@ stock8=chocolate_bar,1,100
 stock9=cheese,3,100
 stock10=tomato,3,100
 stock11=potato,1,100
+// https://oldschool.runescape.wiki/w/Food_Store#cite_note-cooked-1

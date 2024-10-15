@@ -38,6 +38,7 @@ param=damagetype,^stab_style
 param=attack_anim,human_spear_stab
 param=defend_anim,human_spear_def
 param=attack_sound,staff_stab
+// osrs stats and Vislvl match 1:1
 
 [black_knight_knight]
 vislevel=hide

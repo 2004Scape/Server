@@ -39,6 +39,7 @@ param=attack_sound,baxe_crush
 // param=defend_sound,brassclash2
 // osrs side this npc use somereason gnome sound datas (notice but npc is graphical updated)
 // sounds attack gnome_hit , defend brassclash2, death gnome_death
+// osrs stats and Vislvl match 1:1
 
 [dwarf_youngster]
 vislevel=hide

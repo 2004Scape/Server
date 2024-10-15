@@ -34,6 +34,7 @@ timer=1
 param=stabdefence,2
 param=slashdefence,1
 param=crushdefence,3
+// Check the data with Monster examine. (data verification still in progress)
 
 [harlow]
 vislevel=hide

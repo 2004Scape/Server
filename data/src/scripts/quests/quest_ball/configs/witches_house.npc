@@ -32,6 +32,7 @@ patrol4=0_45_54_24_7,0
 patrol5=0_45_54_32_7,0
 patrol6=0_45_54_41_7,0
 timer=1
+param=death_sound,female_death
 
 [witches_experiment_p1]
 name=Witches experiment
@@ -58,6 +59,7 @@ param=attack_sound,imp_attack
 param=defend_sound,imp_hit
 param=death_sound,imp_death
 category=witches_experiment
+// Check the data with Monster examine. (data verification still in progress)
 
 [witches_experiment_p2]
 name=Witches experiment second form
@@ -84,6 +86,7 @@ param=defend_sound,insect_hit
 param=death_sound,insect_death
 param=death_drop,null
 category=witches_experiment
+// Check the data with Monster examine. (data verification still in progress)
 
 [witches_experiment_p3]
 name=Witches experiment third form
@@ -113,6 +116,7 @@ param=attack_sound,bear_attack
 param=defend_sound,bear_hit
 param=death_sound,bear_death
 category=witches_experiment
+// Check the data with Monster examine. (data verification still in progress)
 
 [witches_experiment_p4]
 name=Witches experiment fourth form
@@ -142,6 +146,7 @@ param=death_anim,dog_death
 // param_death_sound,
 param=death_drop,null
 category=witches_experiment
+// Check the data with Monster examine. (data verification still in progress)
 
 [ball_mouse]
 vislevel=hide

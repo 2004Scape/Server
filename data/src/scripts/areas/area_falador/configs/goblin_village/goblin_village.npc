@@ -62,16 +62,22 @@ respawnrate=35
 hitpoints=12
 attack=3
 defence=4
+param=attackrate,6
 param=attackbonus,12
 param=strengthbonus,12
-param=attackrate,6
-param=damagetype,^crush_style
+param=damagetype,^stab_style
 param=attack_anim,goblin_attack_armed
 param=defend_anim,goblin_block
 param=death_anim,goblin_death
 param=attack_sound,goblin_attack
 param=defend_sound,goblin_hit
 param=death_sound,goblin_death
+// https://oldschool.runescape.wiki/w/Goblin_(historical)#Green_(original)
+// osrs damage type is crush.
+// Please note that the npc ID has been changed during the graphics update, so it is not the same as today.
+// Possibly changed goblin graphics in update 2005.
+// The original damage type is probably Stab. Guess
+// osrs stats and Vislvl match 1:1
 
 [goblin_armed_red]
 name=Goblin
@@ -95,13 +101,19 @@ respawnrate=35
 hitpoints=12
 attack=3
 defence=4
+param=attackrate,6
 param=attackbonus,12
 param=strengthbonus,12
-param=attackrate,6
-param=damagetype,^crush_style
+param=damagetype,^stab_style
 param=attack_anim,goblin_attack_armed
 param=defend_anim,goblin_block
 param=death_anim,goblin_death
 param=attack_sound,goblin_attack
 param=defend_sound,goblin_hit
 param=death_sound,goblin_death
+// https://oldschool.runescape.wiki/w/Goblin_(historical)#Red_(original)
+// osrs damage type is crush.
+// Please note that the npc ID has been changed during the graphics update, so it is not the same as today.
+// Possibly changed goblin graphics in update 2005.
+// The original damage type is probably Stab. Guess
+// osrs stats and Vislvl match 1:1

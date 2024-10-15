@@ -22,20 +22,20 @@ hitpoints=22
 attack=17
 strength=18
 defence=12
-param=attackrate,6
-param=attackbonus,8
-param=strengthbonus,10
+param=attackrate,5
+param=attackbonus,9
+param=strengthbonus,5
 param=stabdefence,33
 param=slashdefence,34
 param=crushdefence,29
 param=magicdefence,-7
-param=rangedefence,33
-param=damagetype,^crush_style
+param=rangedefence,-33
 param=attack_anim,human_blunt_crush
 param=defend_anim,human_blunt_defend2
 param=attack_sound,baxe_crush
 // osrs param=defend_sound,blade2
 // osrs attack sound warhammer_crush
+// osrs stats and Vislvl match 1:1
 
 [khazard_trooper_spear]
 name=Khazard trooper
@@ -58,21 +58,22 @@ wanderrange=8
 maxrange=10
 hitpoints=22
 attack=17
-strength=18
-defence=12
+strength=16
+defence=13
 param=attackrate,6
 param=attackbonus,8
 param=strengthbonus,10
-param=stabdefence,33
-param=slashdefence,34
-param=crushdefence,29
+param=stabdefence,25
+param=slashdefence,25
+param=crushdefence,22
 param=magicdefence,-7
-param=rangedefence,33
+param=rangedefence,-25
 param=damagetype,^stab_style
 param=attack_anim,human_spear_pound
 param=defend_anim,human_spear_block
 param=attack_sound,staff_stab
 // param=defend_sound,blade5
+// osrs stats and Vislvl match 1:1
 
 [khazard_warlord]
 name=Khazard warlord
@@ -106,12 +107,12 @@ hitpoints=170
 attack=75
 strength=78
 defence=80
-param=damagetype,^crush_style
 param=attack_anim,human_blunt_crush
 param=defend_anim,human_blunt_defend2
 param=attack_sound,baxe_crush
 // osrs param=defend_sound,blade2
 // osrs attack sound warhammer_crush
+// osrs stats and Vislvl match 1:1
 
 [khazard_commander]
 name=Khazard commander
@@ -133,8 +134,8 @@ model6=model_268_obj_wear
 model7=model_185_obj_wear
 model8=model_540_obj_wear
 model9=model_323_obj_wear
-wanderrange=2
-maxrange=4
+wanderrange=3
+maxrange=3
 respawnrate=150
 hitpoints=22
 attack=50
@@ -147,3 +148,4 @@ param=attack_sound,staff_stab
 // osrs param=defend_sound,blade2
 huntmode=cowardly
 huntrange=1
+// osrs stats and Vislvl match 1:1

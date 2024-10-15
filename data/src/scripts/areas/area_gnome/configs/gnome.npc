@@ -1,105 +1,204 @@
-[gnome_trainer]
-name=Gnome trainer
-desc=He can advise on training.
-vislevel=hide
+[gnome_green]
+name=Gnome
+desc=Like a mini man!
 walkanim=midget_walk
 readyanim=midget_ready
 op1=Talk-to
-recol1s=416
-recol1d=14661
+op2=Attack
+op3=Pickpocket
+vislevel=1
 model1=model_2909_npc
 model2=model_2890_npc
-model3=model_2922_npc
+model3=model_2915_npc
 head1=model_21_npc_head
-wanderrange=3
+attackrange=6
+respawnrate=60
+hitpoints=3
+param=attackbonus,-42
+param=strengthbonus,-42
+param=rangebonus,2
+param=stabdefence,-42
+param=slashdefence,-42
+param=crushdefence,-42
+param=magicdefence,-42
+param=rangedefence,-42
+param=damagetype,^ranged_style
+param=attack_anim,midget_attackbow
+param=defend_anim,midget_block
 param=death_anim,midget_death
+param=rangeattack_sound,arrowlaunch2
+param=defend_sound,gnome_hit
 param=death_sound,gnome_death
+param=proj_launch,iron_arrow_launch
+param=proj_travel,iron_arrow_travel
+param=proj_height,48
+// osrs stats and Vislvl match 1:1
 
-[blurberry]
-vislevel=hide
-name=Blurberry
-desc=He seems to run the cocktail bar.
+[gnome_brown]
+name=Gnome
+desc=Like a mini man!
 walkanim=midget_walk
 readyanim=midget_ready
 op1=Talk-to
-recol1s=416
-recol1d=202
-recol2s=11456
-recol2d=304
-recol3s=13728
-recol3d=3171
-model1=model_2909_npc
-model2=model_2900_npc
-model3=model_2917_npc
-head1=model_23_npc_head
-wanderrange=3
-param=death_anim,midget_death
-param=death_sound,gnome_death
-
-[gnome_barman]
-vislevel=hide
-name=Barman
-desc=He serves cocktails.
-walkanim=midget_walk
-readyanim=midget_ready
-op1=Talk-to
-op3=Trade
-model1=model_2909_npc
-model2=model_2900_npc
-model3=model_2915_npc
-head1=model_23_npc_head
-wanderrange=3
-category=shop_keeper
-param=owned_shop,blurberry_bar
-param=shop_title,Blurberry Bar
-param=shop_buy_multiplier,250
-param=shop_sell_multiplier,1000
-param=shop_delta,10
-param=death_anim,midget_death
-param=death_sound,gnome_death
-
-[aluft_gianne]
-name=Aluft Gianne
-desc=It's a tree gnome chef.
-walkanim=midget_walk
-readyanim=midget_ready
-op1=Talk-to
+op2=Attack
+op3=Pickpocket
 vislevel=1
+recol1s=352
+recol1d=14625
 model1=model_2909_npc
-model2=model_2889_npc
-model3=model_2917_npc
-head1=model_15_npc_head
-wanderrange=3
+model2=model_2890_npc
+model3=model_2915_npc
+head1=model_21_npc_head
+attackrange=6
+respawnrate=60
+hitpoints=3
+param=attackbonus,-42
+param=strengthbonus,-42
+param=rangebonus,2
+param=stabdefence,-42
+param=slashdefence,-42
+param=crushdefence,-42
+param=magicdefence,-42
+param=rangedefence,-42
+param=damagetype,^ranged_style
+param=attack_anim,midget_attackbow
+param=defend_anim,midget_block
 param=death_anim,midget_death
+param=rangeattack_sound,arrowlaunch2
+param=defend_sound,gnome_hit
 param=death_sound,gnome_death
+param=proj_launch,iron_arrow_launch
+param=proj_travel,iron_arrow_travel
+param=proj_height,48
+// osrs stats and Vislvl match 1:1
 
-[npc_851]
-name=Gnome Waiter
-desc=He can serve you gnome food.
+[gnome_black]
+name=Gnome
+desc=Like a mini man!
 walkanim=midget_walk
 readyanim=midget_ready
 op1=Talk-to
-op3=Trade
+op2=Attack
+op3=Pickpocket
 vislevel=1
-recol1s=416
-recol1d=6342
-recol2s=11456
-recol2d=9513
-recol3s=13728
-recol3d=3171
+recol1s=24075
+recol1d=13537
+recol2s=21961
+recol2d=13537
+recol3s=20904
+recol3d=13537
 model1=model_2909_npc
-model2=model_2900_npc
+model2=model_2890_npc
 model3=model_2915_npc
-head1=model_23_npc_head
-wanderrange=3
-category=shop_keeper
-param=owned_shop,giannes_restaurant
-param=shop_title,Gianne's Restaurant
-param=shop_buy_multiplier,250
-param=shop_sell_multiplier,1000
-param=shop_delta,10
+head1=model_21_npc_head
+attackrange=6
+respawnrate=60
+hitpoints=3
+param=attackbonus,-42
+param=strengthbonus,-42
+param=rangebonus,2
+param=stabdefence,-42
+param=slashdefence,-42
+param=crushdefence,-42
+param=magicdefence,-42
+param=rangedefence,-42
+param=damagetype,^ranged_style
+param=attack_anim,midget_attackbow
+param=defend_anim,midget_block
 param=death_anim,midget_death
+param=rangeattack_sound,arrowlaunch2
+param=defend_sound,gnome_hit
 param=death_sound,gnome_death
+param=proj_launch,iron_arrow_launch
+param=proj_travel,iron_arrow_travel
+param=proj_height,48
+// osrs stats and Vislvl match 1:1
+
+[terrorbird]
+name=Terrorbird
+desc=A giant raptor.
+size=2
+walkanim=terrorbird_walk
+readyanim=terrorbird_ready
+op2=Attack
+vislevel=28
+model1=model_3011_npc
+wanderrange=12
+maxrange=14
+respawnrate=30
+hitpoints=34
+attack=23
+strength=23
+defence=19
+param=damagetype,^stab_style
+param=attack_anim,terrorbird_attack
+param=defend_anim,terrorbird_block
+param=death_anim,terrorbird_death
+param=attack_sound,terrorbird_attack
+param=defend_sound,terrorbird_hit
+param=death_sound,terrorbird_death
+// osrs stats and Vislvl match 1:1
+
+[Mounted_terrorbird_gnome_unarmed]
+name=Mounted terrorbird gnome
+desc=These gnomes know how to get around!
+size=2
+walkanim=mounted_terrorbird_walk
+readyanim=mounted_terrorbird_ready
+op2=Attack
+vislevel=29
+model1=model_3012_npc
+wanderrange=12
+maxrange=14
+respawnrate=30
+hitpoints=36
+attack=25
+strength=25
+defence=25
+param=stabdefence,16
+param=slashdefence,16
+param=crushdefence,18
+param=magicdefence,15
+param=rangedefence,10
+param=damagetype,^stab_style
+param=attack_anim,mounted_terrorbird_attack
+param=defend_anim,mounted_terrorbird_defend
+param=death_anim,mounted_terrorbird_death
+param=attack_sound,terrorbird_attack
+param=defend_sound,terrorbird_hit
+param=death_sound,terrorbird_death
+// osrs stats and Vislvl match 1:1
+
+[Mounted_terrorbird_gnome_armed]
+name=Mounted terrorbird gnome
+desc=These gnomes know how to get around!
+size=2
+walkanim=mounted_terrorbird_walk
+readyanim=mounted_terrorbird_ready
+op2=Attack
+vislevel=46
+model1=model_3013_npc
+wanderrange=12
+maxrange=14
+respawnrate=30
+hitpoints=55
+attack=40
+strength=40
+defence=40
+param=rangebonus,2
+param=stabdefence,16
+param=slashdefence,16
+param=crushdefence,18
+param=magicdefence,15
+param=rangedefence,10
+param=damagetype,^stab_style
+param=attack_anim,mounted_terrorbird_gnome_hands_over_food
+param=defend_anim,mounted_terrorbird_defend
+param=death_anim,mounted_terrorbird_death
+param=attack_sound,terrorbird_attack
+param=defend_sound,terrorbird_hit
+param=death_sound,terrorbird_death
+//Stats match osrs version but our version Vislvl is different.
 
 [gnome_child_yellow]
 name=Gnome child
@@ -127,13 +226,13 @@ param=slashdefence,-42
 param=crushdefence,-42
 param=magicdefence,-42
 param=rangedefence,-42
-param=damagetype,^crush_style
 param=attack_anim,midget_attackunarmed
 param=defend_anim,midget_block
 param=death_anim,midget_death
 param=attack_sound,gnome_attack
 param=defend_sound,gnome_hit
 param=death_sound,gnome_death
+// osrs stats and Vislvl match 1:1
 
 [gnome_child_blue]
 name=Gnome child
@@ -161,13 +260,13 @@ param=slashdefence,-42
 param=crushdefence,-42
 param=magicdefence,-42
 param=rangedefence,-42
-param=damagetype,^crush_style
 param=attack_anim,midget_attackunarmed
 param=defend_anim,midget_block
 param=death_anim,midget_death
 param=attack_sound,gnome_attack
 param=defend_sound,gnome_hit
 param=death_sound,gnome_death
+// osrs stats and Vislvl match 1:1
 
 [gnome_child_green]
 name=Gnome child
@@ -193,12 +292,28 @@ param=slashdefence,-42
 param=crushdefence,-42
 param=magicdefence,-42
 param=rangedefence,-42
-param=damagetype,^crush_style
 param=attack_anim,midget_attackunarmed
 param=defend_anim,midget_block
 param=death_anim,midget_death
 param=attack_sound,gnome_attack
 param=defend_sound,gnome_hit
+param=death_sound,gnome_death
+// osrs stats and Vislvl match 1:1
+
+[gnome_trainer]
+name=Gnome trainer
+desc=He can advise on training.
+vislevel=hide
+walkanim=midget_walk
+readyanim=midget_ready
+op1=Talk-to
+recol1s=416
+recol1d=14661
+model1=model_2909_npc
+model2=model_2890_npc
+model3=model_2922_npc
+head1=model_21_npc_head
+param=death_anim,midget_death
 param=death_sound,gnome_death
 
 [gnome_guard_halberd]
@@ -230,6 +345,7 @@ param=attack_sound,scythe_slash
 param=defend_sound,gnome_hit
 param=death_sound,gnome_death
 // osrs attack_sound,gnome_attack & defend_sound,scythe_slash
+//Stats match osrs version but our version Vislvl is different.
 
 [gnome_guard_sword]
 name=Gnome guard
@@ -262,6 +378,7 @@ param=death_anim,midget_death
 param=attack_sound,hacksword_slash
 // param=attack_sound,brassclash
 param=death_sound,gnome_death
+//Stats match osrs version but our version Vislvl is different.
 
 [npc_165]
 name=Gnome shop keeper
@@ -277,6 +394,7 @@ model3=model_2917_npc
 head1=model_17_npc_head
 param=death_anim,midget_death
 param=death_sound,gnome_death
+// https://oldschool.runescape.wiki/w/Gnome_shop_keeper#Normal
 
 [gnome_banker]
 name=Gnome banker
@@ -293,9 +411,9 @@ model3=model_2915_npc
 head1=model_23_npc_head
 wanderrange=0
 moverestrict=nomove
-category=bank_teller
 param=death_anim,midget_death
 param=death_sound,gnome_death
+category=bank_teller
 
 [npc_167]
 name=Gnome baller
@@ -327,7 +445,7 @@ model1=model_2911_npc
 model2=model_2907_npc
 model3=model_2917_npc
 head1=model_21_npc_head
-attackrange=6
+attackrange=1
 respawnrate=50
 hitpoints=2
 param=attackbonus,-42
@@ -337,16 +455,17 @@ param=slashdefence,-42
 param=crushdefence,-42
 param=magicdefence,-42
 param=rangedefence,-42
+param=damagetype,^ranged_style
 param=attack_anim,midget_attackbow
 param=defend_anim,midget_block
 param=death_anim,midget_death
-param=damagetype,^ranged_style
 param=rangeattack_sound,arrowlaunch2
-param=proj_launch,iron_arrow_launch
-param=proj_height,48
-param=proj_travel,iron_arrow_travel
 param=defend_sound,gnome_hit
 param=death_sound,gnome_death
+param=proj_launch,iron_arrow_launch
+param=proj_travel,iron_arrow_travel
+param=proj_height,48
+// osrs stats and Vislvl match 1:1
 
 [gnome_woman_black]
 name=Gnome woman
@@ -371,7 +490,7 @@ model1=model_2911_npc
 model2=model_2907_npc
 model3=model_2917_npc
 head1=model_21_npc_head
-attackrange=6
+attackrange=1
 respawnrate=50
 hitpoints=2
 param=attackbonus,-42
@@ -381,16 +500,17 @@ param=slashdefence,-42
 param=crushdefence,-42
 param=magicdefence,-42
 param=rangedefence,-42
+param=damagetype,^ranged_style
 param=attack_anim,midget_attackbow
 param=defend_anim,midget_block
 param=death_anim,midget_death
-param=damagetype,^ranged_style
 param=rangeattack_sound,arrowlaunch2
-param=proj_launch,iron_arrow_launch
-param=proj_height,48
-param=proj_travel,iron_arrow_travel
 param=defend_sound,gnome_hit
 param=death_sound,gnome_death
+param=proj_launch,iron_arrow_launch
+param=proj_travel,iron_arrow_travel
+param=proj_height,48
+// osrs stats and Vislvl match 1:1
 
 [gnome_pilot]
 name=Gnome pilot
@@ -427,6 +547,245 @@ model1=model_2909_npc
 model2=model_2898_npc
 model3=model_2915_npc
 head1=model_18_npc_head
+param=death_anim,midget_death
+param=death_sound,gnome_death
+
+[king_bolren]
+vislevel=hide
+name=King Bolren
+desc=It's a gnome.  He looks important.
+walkanim=midget_walk
+readyanim=midget_ready
+op1=Talk-to
+recol1s=416
+recol1d=26149
+model1=model_2909_npc
+model2=model_2891_npc
+model3=model_2916_npc
+head1=model_20_npc_head
+wanderrange=2
+param=death_anim,midget_death
+param=death_sound,gnome_death
+
+[commander_montai]
+vislevel=hide
+name=Commander Montai
+desc=It's a tree gnome.
+walkanim=midget_walk
+readyanim=midget_ready
+op1=Talk-to
+resizeh=150
+resizev=150
+recol1s=10570
+recol1d=17441
+model1=model_2909_npc
+model2=model_2903_npc
+model3=model_2919_npc
+head1=model_22_npc_head
+timer=10
+param=death_anim,midget_death
+param=death_sound,gnome_death
+
+[bolkoy]
+vislevel=hide
+name=Bolkoy
+desc=It's a tree gnome.
+walkanim=midget_walk
+readyanim=midget_ready
+op1=Talk-to
+op3=Trade
+model1=model_2909_npc
+model2=model_2901_npc
+model3=model_2917_npc
+head1=model_17_npc_head
+category=shop_keeper
+param=owned_shop,bolkoys_village_shop
+param=shop_sell_multiplier,1300
+param=shop_buy_multiplier,400
+param=shop_delta,30
+param=shop_title,Bolkoy's Village Shop
+param=death_anim,midget_death
+param=death_sound,gnome_death
+
+[remsai]
+vislevel=hide
+name=Remsai
+desc=It's a tree gnome.
+walkanim=midget_walk
+readyanim=midget_ready
+op1=Talk-to
+recol1s=13728
+recol1d=2491
+recol2s=352
+recol2d=2491
+model1=model_2909_npc
+model2=model_2890_npc
+model3=model_2917_npc
+head1=model_21_npc_head
+param=death_anim,midget_death
+param=death_sound,gnome_death
+
+[elkoy_outmaze]
+vislevel=hide
+name=Elkoy
+desc=It's a tree gnome.
+walkanim=midget_walk
+readyanim=midget_ready
+op1=Talk-to
+recol1s=13728
+recol1d=5493
+recol2s=352
+recol2d=5493
+model1=model_2909_npc
+model2=model_2890_npc
+model3=model_2917_npc
+head1=model_21_npc_head
+wanderrange=3
+param=death_anim,midget_death
+param=death_sound,gnome_death
+
+[elkoy_maze]
+vislevel=hide
+name=Elkoy
+desc=It's a tree gnome.
+walkanim=midget_walk
+readyanim=midget_ready
+op1=Talk-to
+recol1s=13728
+recol1d=5493
+recol2s=352
+recol2d=5493
+model1=model_2909_npc
+model2=model_2890_npc
+model3=model_2917_npc
+head1=model_21_npc_head
+wanderrange=3
+param=death_anim,midget_death
+param=death_sound,gnome_death
+
+[gnome_troop_white]
+name=Gnome troop
+desc=It's a tree gnome trooper.
+walkanim=midget_walk
+readyanim=midget_ready
+op1=Talk-to
+op2=Attack
+vislevel=1
+model1=model_2914_npc
+model2=model_2903_npc
+model3=model_2919_npc
+head1=model_22_npc_head
+attackrange=6
+respawnrate=30
+hitpoints=3
+param=attackbonus,2
+param=strengthbonus,3
+param=rangebonus,2
+param=stabdefence,3
+param=slashdefence,4
+param=crushdefence,5
+param=magicdefence,2
+param=rangedefence,4
+param=damagetype,^ranged_style
+param=attack_anim,midget_attackbow
+param=defend_anim,midget_block
+param=death_anim,midget_death
+param=rangeattack_sound,arrowlaunch2
+param=defend_sound,gnome_hit
+param=death_sound,gnome_death
+param=proj_launch,iron_arrow_launch
+param=proj_travel,iron_arrow_travel
+param=proj_height,48
+category=gnome_troop
+// osrs stats and Vislvl match 1:1
+
+[gnome_troop_black]
+name=Gnome troop
+desc=It's a tree gnome trooper.
+walkanim=midget_walk
+readyanim=midget_ready
+op1=Talk-to
+op2=Attack
+vislevel=1
+recol1s=24075
+recol1d=13537
+recol2s=21961
+recol2d=13537
+recol3s=21961
+recol3d=13537
+recol4s=20904
+recol4d=13537
+model1=model_2914_npc
+model2=model_2903_npc
+model3=model_2919_npc
+head1=model_22_npc_head
+attackrange=6
+respawnrate=30
+hitpoints=3
+param=attackbonus,2
+param=strengthbonus,3
+param=rangebonus,2
+param=stabdefence,3
+param=slashdefence,4
+param=crushdefence,5
+param=magicdefence,2
+param=rangedefence,4
+param=damagetype,^ranged_style
+param=attack_anim,midget_attackbow
+param=defend_anim,midget_block
+param=death_anim,midget_death
+param=rangeattack_sound,arrowlaunch2
+param=defend_sound,gnome_hit
+param=death_sound,gnome_death
+param=proj_launch,iron_arrow_launch
+param=proj_travel,iron_arrow_travel
+param=proj_height,48
+category=gnome_troop
+// osrs stats and Vislvl match 1:1
+
+[npc_484]
+vislevel=hide
+name=Local Gnome
+desc=It's a young tree gnome.
+walkanim=midget_walk
+readyanim=midget_ready
+op1=Talk-to
+model1=model_2909_npc
+model2=model_2890_npc
+model3=model_2917_npc
+head1=model_21_npc_head
+wanderrange=0
+moverestrict=nomove
+param=death_anim,midget_death
+param=death_sound,gnome_death
+
+[local_gnome]
+vislevel=hide
+name=Local Gnome
+desc=It's a young tree gnome.
+walkanim=midget_walk
+readyanim=midget_ready
+op1=Talk-to
+model1=model_2909_npc
+model2=model_2890_npc
+model3=model_2917_npc
+head1=model_21_npc_head
+wanderrange=0
+moverestrict=nomove
+param=death_anim,midget_death
+param=death_sound,gnome_death
+
+[kalron]
+vislevel=hide
+name=Kalron
+desc=He looks lost.
+walkanim=midget_walk
+readyanim=midget_ready
+op1=Talk-to
+model1=model_2909_npc
+model2=model_2890_npc
+model3=model_2917_npc
+head1=model_21_npc_head
 param=death_anim,midget_death
 param=death_sound,gnome_death
 
@@ -545,239 +904,88 @@ param=shop_delta,10
 param=death_anim,midget_death
 param=death_sound,gnome_death
 
-[king_bolren]
+[blurberry]
 vislevel=hide
-name=King Bolren
-desc=It's a gnome.  He looks important.
+name=Blurberry
+desc=He seems to run the cocktail bar.
 walkanim=midget_walk
 readyanim=midget_ready
 op1=Talk-to
 recol1s=416
-recol1d=26149
+recol1d=202
+recol2s=11456
+recol2d=304
+recol3s=13728
+recol3d=3171
 model1=model_2909_npc
-model2=model_2891_npc
-model3=model_2916_npc
-head1=model_20_npc_head
-wanderrange=2
+model2=model_2900_npc
+model3=model_2917_npc
+head1=model_23_npc_head
+wanderrange=3
 param=death_anim,midget_death
 param=death_sound,gnome_death
 
-[commander_montai]
+[gnome_barman]
 vislevel=hide
-name=Commander Montai
-desc=It's a tree gnome.
-walkanim=midget_walk
-readyanim=midget_ready
-op1=Talk-to
-resizeh=150
-resizev=150
-recol1s=10570
-recol1d=17441
-model1=model_2909_npc
-model2=model_2903_npc
-model3=model_2919_npc
-head1=model_22_npc_head
-timer=10
-param=death_anim,midget_death
-param=death_sound,gnome_death
-
-[bolkoy]
-vislevel=hide
-name=Bolkoy
-desc=It's a tree gnome.
+name=Barman
+desc=He serves cocktails.
 walkanim=midget_walk
 readyanim=midget_ready
 op1=Talk-to
 op3=Trade
 model1=model_2909_npc
-model2=model_2901_npc
-model3=model_2917_npc
-head1=model_17_npc_head
+model2=model_2900_npc
+model3=model_2915_npc
+head1=model_23_npc_head
+wanderrange=3
 category=shop_keeper
-param=owned_shop,bolkoys_village_shop
-param=shop_sell_multiplier,1300
-param=shop_buy_multiplier,400
-param=shop_delta,30
-param=shop_title,Bolkoy's Village Shop
+param=owned_shop,blurberry_bar
+param=shop_title,Blurberry Bar
+param=shop_buy_multiplier,250
+param=shop_sell_multiplier,1000
+param=shop_delta,10
 param=death_anim,midget_death
 param=death_sound,gnome_death
 
-[remsai]
-vislevel=hide
-name=Remsai
-desc=It's a tree gnome.
+[aluft_gianne]
+name=Aluft Gianne
+desc=It's a tree gnome chef.
 walkanim=midget_walk
 readyanim=midget_ready
 op1=Talk-to
-recol1s=13728
-recol1d=2491
-recol2s=352
-recol2d=2491
+vislevel=1
 model1=model_2909_npc
-model2=model_2890_npc
+model2=model_2889_npc
 model3=model_2917_npc
-head1=model_21_npc_head
-param=death_anim,midget_death
-param=death_sound,gnome_death
-
-[elkoy_outmaze]
-vislevel=hide
-name=Elkoy
-desc=It's a tree gnome.
-walkanim=midget_walk
-readyanim=midget_ready
-op1=Talk-to
-recol1s=13728
-recol1d=5493
-recol2s=352
-recol2d=5493
-model1=model_2909_npc
-model2=model_2890_npc
-model3=model_2917_npc
-head1=model_21_npc_head
+head1=model_15_npc_head
 wanderrange=3
 param=death_anim,midget_death
 param=death_sound,gnome_death
 
-[elkoy_maze]
-vislevel=hide
-name=Elkoy
-desc=It's a tree gnome.
+[npc_851]
+name=Gnome Waiter
+desc=He can serve you gnome food.
 walkanim=midget_walk
 readyanim=midget_ready
 op1=Talk-to
-recol1s=13728
-recol1d=5493
-recol2s=352
-recol2d=5493
+op3=Trade
+vislevel=1
+recol1s=416
+recol1d=6342
+recol2s=11456
+recol2d=9513
+recol3s=13728
+recol3d=3171
 model1=model_2909_npc
-model2=model_2890_npc
-model3=model_2917_npc
-head1=model_21_npc_head
+model2=model_2900_npc
+model3=model_2915_npc
+head1=model_23_npc_head
 wanderrange=3
+category=shop_keeper
+param=owned_shop,giannes_restaurant
+param=shop_title,Gianne's Restaurant
+param=shop_buy_multiplier,250
+param=shop_sell_multiplier,1000
+param=shop_delta,10
 param=death_anim,midget_death
 param=death_sound,gnome_death
-
-[npc_484]
-vislevel=hide
-name=Local Gnome
-desc=It's a young tree gnome.
-walkanim=midget_walk
-readyanim=midget_ready
-op1=Talk-to
-model1=model_2909_npc
-model2=model_2890_npc
-model3=model_2917_npc
-head1=model_21_npc_head
-wanderrange=0
-moverestrict=nomove
-param=death_anim,midget_death
-param=death_sound,gnome_death
-
-[local_gnome]
-vislevel=hide
-name=Local Gnome
-desc=It's a young tree gnome.
-walkanim=midget_walk
-readyanim=midget_ready
-op1=Talk-to
-model1=model_2909_npc
-model2=model_2890_npc
-model3=model_2917_npc
-head1=model_21_npc_head
-wanderrange=0
-moverestrict=nomove
-param=death_anim,midget_death
-param=death_sound,gnome_death
-
-[kalron]
-vislevel=hide
-name=Kalron
-desc=He looks lost.
-walkanim=midget_walk
-readyanim=midget_ready
-op1=Talk-to
-model1=model_2909_npc
-model2=model_2890_npc
-model3=model_2917_npc
-head1=model_21_npc_head
-param=death_anim,midget_death
-param=death_sound,gnome_death
-
-[gnome_troop_white]
-name=Gnome troop
-desc=It's a tree gnome trooper.
-walkanim=midget_walk
-readyanim=midget_ready
-op1=Talk-to
-op2=Attack
-vislevel=1
-model1=model_2914_npc
-model2=model_2903_npc
-model3=model_2919_npc
-head1=model_22_npc_head
-attackrange=6
-respawnrate=30
-hitpoints=3
-param=attackbonus,2
-param=strengthbonus,3
-param=stabdefence,3
-param=slashdefence,4
-param=crushdefence,5
-param=magicdefence,2
-param=rangedefence,4
-param=attack_anim,midget_attackbow
-param=defend_anim,midget_block
-param=death_anim,midget_death
-param=damagetype,^ranged_style
-param=rangeattack_sound,arrowlaunch2
-param=proj_launch,iron_arrow_launch
-param=proj_height,48
-param=proj_travel,iron_arrow_travel
-param=defend_sound,gnome_hit
-param=death_sound,gnome_death
-category=gnome_troop
-// attack style is missing
-
-[gnome_troop_black]
-name=Gnome troop
-desc=It's a tree gnome trooper.
-walkanim=midget_walk
-readyanim=midget_ready
-op1=Talk-to
-op2=Attack
-vislevel=1
-recol1s=24075
-recol1d=13537
-recol2s=21961
-recol2d=13537
-recol3s=21961
-recol3d=13537
-recol4s=20904
-recol4d=13537
-model1=model_2914_npc
-model2=model_2903_npc
-model3=model_2919_npc
-head1=model_22_npc_head
-attackrange=6
-respawnrate=30
-hitpoints=3
-param=attackbonus,2
-param=strengthbonus,3
-param=stabdefence,3
-param=slashdefence,4
-param=crushdefence,5
-param=magicdefence,2
-param=rangedefence,4
-param=attack_anim,midget_attackbow
-param=defend_anim,midget_block
-param=death_anim,midget_death
-param=damagetype,^ranged_style
-param=rangeattack_sound,arrowlaunch2
-param=proj_launch,iron_arrow_launch
-param=proj_height,48
-param=proj_travel,iron_arrow_travel
-param=defend_sound,gnome_hit
-param=death_sound,gnome_death
-category=gnome_troop
-// attack style is missing

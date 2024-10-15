@@ -12,6 +12,7 @@ stock5=sapphire,1,15000
 stock6=emerald,0,1000
 stock7=ruby,0,2000
 stock8=diamond,0,4000
+// https://classic.runescape.wiki/w/Herquin%27s_Jewel_Shop
 
 [cassie_shields]
 scope=shared
@@ -27,6 +28,7 @@ stock5=iron_kiteshield,0,1500
 stock6=steel_sq_shield,0,1500
 stock7=steel_kiteshield,0,1500
 stock8=mithril_sq_shield,0,1500
+// https://classic.runescape.wiki/w/Cassie%27s_Shields
 
 [waynes_chains]
 scope=shared
@@ -40,6 +42,7 @@ stock3=steel_chainbody,1,2000
 stock4=black_chainbody,1,2500
 stock5=mithril_chainbody,1,3500
 stock6=adamant_chainbody,1,9000
+// https://classic.runescape.wiki/w/Wayne%27s_Chains
 
 [flynn_maces]
 scope=shared
@@ -52,6 +55,8 @@ stock2=iron_mace,4,200
 stock3=steel_mace,4,400
 stock4=mithril_mace,3,3000
 stock5=adamant_mace,2,12000
+// https://classic.runescape.wiki/w/Flynn%27s_mace_shop
+// https://storage.googleapis.com/tannerdino/images/rsfally2.gif
 
 [generalshop4]
 scope=shared
@@ -59,10 +64,11 @@ size=40
 restock=yes
 stackall=yes
 allstock=yes
-stock1=pot_empty,5,10
+stock1=pot_empty,3,10
 stock2=jug_empty,2,100
 stock3=shears,2,100
-stock4=bucket_empty,3,10
+stock4=bucket_empty,2,10
 stock7=tinderbox,2,100
 stock8=chisel,2,100
 stock9=hammer,5,100
+// https://classic.runescape.wiki/w/Falador_General_Store

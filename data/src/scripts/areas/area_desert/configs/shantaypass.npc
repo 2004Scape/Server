@@ -20,8 +20,6 @@ model4=model_353_idk
 model5=model_429_idk
 model6=model_361_obj_wear
 head1=model_113_idk_head
-wanderrange=2
-param=defend_sound,female_hit
 param=death_sound,female_death
 
 [shantay]

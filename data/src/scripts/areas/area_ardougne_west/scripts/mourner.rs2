@@ -33,7 +33,7 @@ mes("The mourner doesn't feel like talking.");
 [opnpc1,npc_719] // plague house mourners
 @mourner_talk_to_player;
 
-[opnpc1,npc_370] // mourner hq upstairs
+[opnpc1,mourner_boss] // mourner hq upstairs
 if(%biohazard_progress = ^biohazard_poisoned_stew & inv_total(worn, doctors_gown) > 0) {
     ~chatplayer("<p,neutral>Hello there.");
     ~chatnpc("<p,sad>You're here at last! I don't know what I've eaten but I feel like I'm on death's door."); 
@@ -65,7 +65,7 @@ mes("The mourner is sick.");
 p_delay(3);
 mes("He doesn't feel like talking.");
 
-[ai_queue3,npc_370]
+[ai_queue3,mourner_boss]
 gosub(npc_death);
 if(npc_findhero = true) {
     queue(defeat_biohazard_mourner, 0); // reg queue, doesn't if_close (OSRS)

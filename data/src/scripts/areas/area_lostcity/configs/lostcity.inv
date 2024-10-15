@@ -5,6 +5,8 @@ restock=yes
 stackall=yes
 allstock=no
 stock1=ruby_ring,5,500
+// http://web.archive.org/web/20060523095208im_/http://www.runehq.com/images/cityguides/irksolrubyrings.png
+// https://classic.runescape.wiki/w/Ruby_Ring_Shop
 
 [jakutshop]
 scope=shared
@@ -14,6 +16,7 @@ stackall=yes
 allstock=no
 stock1=dragon_longsword,2,500
 stock2=dragon_dagger,2,500
+// http://web.archive.org/web/20060523095020im_/http://www.runehq.com/images/cityguides/jakutsdragsale.png
 
 [generalshop9]
 scope=shared
@@ -21,10 +24,12 @@ size=40
 restock=yes
 stackall=yes
 allstock=yes
-stock1=pot_empty,5,10
+stock1=pot_empty,3,10
 stock2=jug_empty,2,100
 stock3=shears,2,100
-stock4=bucket_empty,3,10
+stock4=bucket_empty,2,10
 stock7=tinderbox,2,100
 stock8=chisel,2,100
 stock9=hammer,5,100
+// http://web.archive.org/web/20060523095122im_/http://www.runehq.com/images/cityguides/generalstore.png
+// https://classic.runescape.wiki/w/Zanaris_General_Store

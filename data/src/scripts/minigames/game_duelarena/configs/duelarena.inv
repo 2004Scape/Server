@@ -5,7 +5,7 @@ restock=yes
 stackall=yes
 allstock=no
 stock1=rotten_tomato,2000,10
-
+// https://storage.googleapis.com/tannerdino/images/rsduel6.gif
 
 [stakeinv]
 size=29

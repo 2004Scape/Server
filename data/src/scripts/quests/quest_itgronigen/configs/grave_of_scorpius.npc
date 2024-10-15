@@ -24,6 +24,7 @@ param=defend_sound,ghost_hit
 param=death_sound,ghost_death
 param=death_drop,null
 param=undead,^true
+// osrs 1:1
 
 [spirit_of_scorpius]
 vislevel=hide
@@ -59,7 +60,6 @@ strength=12
 defence=14
 param=slashdefence,3
 param=crushdefence,3
-param=damagetype,^crush_style
 param=attack_anim,smallscorpion_attack
 param=defend_anim,smallscorpion_block
 param=death_anim,smallscorpion_death
@@ -67,3 +67,4 @@ param=attack_sound,insect_attack
 param=defend_sound,insect_hit
 param=death_sound,insect_death
 param=death_drop,null
+// osrs 1:1

@@ -27,6 +27,7 @@ param=crushdefence,-21
 param=magicdefence,-21
 param=rangedefence,-21
 category=citizen
+// osrs stats and Vislvl match 1:1
 
 [man_blue]
 walkanim=human_walk_f,human_walk_b,human_walk_l,human_walk_r
@@ -57,6 +58,7 @@ param=crushdefence,-21
 param=magicdefence,-21
 param=rangedefence,-21
 category=citizen
+// osrs stats and Vislvl match 1:1
 
 [man_brown]
 walkanim=human_walk_f,human_walk_b,human_walk_l,human_walk_r
@@ -89,6 +91,7 @@ param=crushdefence,-21
 param=magicdefence,-21
 param=rangedefence,-21
 category=citizen
+// osrs stats and Vislvl match 1:1
 
 [woman_purple]
 walkanim=human_walk_f,human_walk_b,human_walk_l,human_walk_r
@@ -122,6 +125,7 @@ param=rangedefence,-21
 param=defend_sound,female_hit
 param=death_sound,female_death
 category=citizen
+// osrs stats and Vislvl match 1:1
 
 [woman_brown]
 walkanim=human_walk_f,human_walk_b,human_walk_l,human_walk_r
@@ -161,6 +165,7 @@ param=rangedefence,-21
 param=defend_sound,female_hit
 param=death_sound,female_death
 category=citizen
+// osrs stats and Vislvl match 1:1
 
 [woman_red]
 walkanim=human_walk_f,human_walk_b,human_walk_l,human_walk_r
@@ -202,6 +207,7 @@ param=rangedefence,-21
 param=defend_sound,female_hit
 param=death_sound,female_death
 category=citizen
+// osrs stats and Vislvl match 1:1
 
 [farmer]
 walkanim=human_walk_f,human_walk_b,human_walk_l,human_walk_r
@@ -240,6 +246,7 @@ param=defend_anim,human_farmersfork_defend
 param=attack_sound,staff_stab
 // osrs attack sound farmersfork_stab
 // runescape classic wander range is 15.
+// osrs stats and Vislvl match 1:1
 
 [thief]
 name=Thief
@@ -270,6 +277,7 @@ strength=13
 defence=12
 wanderrange=7
 param=retreat,8
+// osrs stats and Vislvl match 1:1
 
 [guard_sword]
 name=Guard
@@ -315,7 +323,8 @@ param=defend_anim,human_sword_defend2
 param=attack_sound,stabsword_stab
 // param=defend_sound,blade4
 category=guard
-// osrs att seq_386 and defend seq_387, 2024 defend seq_387
+// osrs att seq_386 and defend seq_387
+// osrs stats and Vislvl match 1:1
 
 [guard_crossbow]
 name=Guard
@@ -339,15 +348,15 @@ model5=model_176_idk
 model6=model_254_idk
 model7=model_185_obj_wear
 model8=model_508_obj_wear
-// Todo: proof + attackrange
 wanderrange=2
 maxrange=4
+attackrange=5
 respawnrate=50
 hitpoints=22
 attack=15
 strength=15
 defence=16
-ranged=16
+ranged=26
 param=attackrate,6
 param=attackbonus,6
 param=strengthbonus,10
@@ -359,9 +368,13 @@ param=magicdefence,-4
 param=rangedefence,15
 param=damagetype,^ranged_style
 param=attack_anim,human_crossbow
-param=attack_sound,crossbow
+param=rangeattack_sound,crossbow
+param=proj_launch,crossbowbolt_launch
+param=proj_travel,crossbowbolt_travel
 // param=defend_sound,blade4
 category=guard
+// osrs version havent rangeattack sound.
+// osrs stats and Vislvl match 1:1
 
 [tramp]
 walkanim=human_walk_f,human_walk_b,human_walk_l,human_walk_r
@@ -429,17 +442,19 @@ head3=model_75_npc_head
 respawnrate=25
 hitpoints=14
 attack=6
-strength=5
-defence=5
+strength=6
+defence=2
+param=attackrate,6
 param=attackbonus,8
 param=strengthbonus,10
 param=stabdefence,1
 param=slashdefence,1
-param=attackrate,6
+param=damagetype,^slash_style
 param=attack_anim,human_baxe_slash
 param=defend_anim,human_baxe_defend2
 param=attack_sound,baxe_slash
 category=barbarian
+// https://oldschool.runescape.wiki/w/Barbarian_(historical)
 
 [wizard]
 name=Wizard
@@ -464,8 +479,7 @@ model7=model_265_obj_wear
 model8=model_202_obj_wear
 head1=model_53_idk_head
 head2=model_44_obj_wear
-// osrs
-maxrange=8
+attackrange=8
 respawnrate=30
 hitpoints=14
 attack=8
@@ -473,6 +487,7 @@ strength=8
 defence=5
 magic=10
 param=magicdefence,3
+// osrs stats and Vislvl match 1:1
 
 [warrior_woman]
 name=Warrior woman
@@ -515,6 +530,7 @@ param=defend_anim,human_sword_defend2
 param=attack_sound,hacksword_stab
 // param=defend_sound,steel
 param=death_sound,female_death
+//Stats match osrs version but our version Vislvl is different.
 
 [barbarian_woman]
 name=Barbarian woman
@@ -540,17 +556,16 @@ model8=model_540_obj_wear
 model9=model_414_npc
 head1=model_113_idk_head
 head2=model_101_obj_wear
-// osrs In the varrock bar there is still an 8lv Barbarian woman on the osrs side whose movement distances are 5/7
 respawnrate=25
 hitpoints=14
 attack=6
 strength=5
 defence=5
+param=attackrate,6
 param=attackbonus,8
 param=strengthbonus,10
 param=stabdefence,1
 param=slashdefence,1
-param=attackrate,6
 param=damagetype,^stab_style
 param=attack_anim,human_spear_stab
 param=defend_anim,human_spear_def
@@ -558,6 +573,7 @@ param=attack_sound,staff_stab
 param=defend_sound,female_hit
 param=death_sound,female_death
 category=barbarian
+// data taken from this npc https://oldschool.runescape.wiki/w/Barbarian (wander 5 / maxrange 7).
 
 [paladin]
 name=Paladin
@@ -606,6 +622,7 @@ param=attack_anim,human_sword_slash
 param=defend_anim,human_sword_defend2
 param=attack_sound,hacksword_slash
 // param=defend_sound,blade3
+//Stats match osrs version but our version Vislvl is different.
 
 [hero]
 name=Hero
@@ -654,47 +671,7 @@ param=attack_anim,human_sword_slash
 param=defend_anim,human_blunt_defend1
 param=attack_sound,hacksword_slash
 // param=defend_sound,brassclash
-
-[forester]
-name=Forester
-desc=They love the forests.
-walkanim=human_walk_f,human_walk_b,human_walk_l,human_walk_r
-readyanim=human_ready
-op2=Attack
-vislevel=15
-recol1s=8386
-recol1d=7424
-recol2s=14724
-recol2d=6336
-recol3s=14801
-recol3d=24075
-recol4s=31649
-recol4d=4226
-model1=model_217_idk
-model2=model_247_idk
-model3=model_292_idk
-model4=model_151_idk
-model5=model_179_obj_wear
-model6=model_274_idk
-model7=model_181_idk
-model8=model_196_npc
-model9=model_326_idk
-model10=model_323_obj_wear
-model11=model_510_obj_wear
-respawnrate=50
-hitpoints=17
-attack=14
-strength=13
-defence=8
-param=attackrate,4
-param=stabdefence,4
-param=slashdefence,3
-param=crushdefence,5
-param=damagetype,^slash_style
-param=attack_anim,human_baxe_slash
-param=defend_anim,human_baxe_defend2
-param=attack_sound,baxe_slash
-// osrs side woodcutting guild forester use defend seq_398
+//Stats match osrs version but our version Vislvl is different.
 
 [knight_of_ardougne_1]
 name=Knight of Ardougne
@@ -740,6 +717,7 @@ param=attack_anim,human_sword_slash
 param=defend_anim,human_sword_defend2
 param=attack_sound,stabsword_slash
 // param=defend_sound,blade5
+// osrs stats and Vislvl match 1:1
 
 [man_cavalier]
 name=Man
@@ -775,6 +753,7 @@ param=crushdefence,-21
 param=magicdefence,-21
 param=rangedefence,-21
 category=citizen
+// osrs stats and Vislvl match 1:1
 
 [woman_east_ardougne]
 name=Woman
@@ -808,6 +787,7 @@ param=magicdefence,-21
 param=rangedefence,-21
 param=defend_sound,female_hit
 param=death_sound,female_death
+// osrs stats and Vislvl match 1:1
 
 [knight_of_ardougne_2]
 name=Knight of Ardougne
@@ -853,6 +833,7 @@ param=attack_anim,human_sword_slash
 param=defend_anim,human_sword_defend2
 param=attack_sound,hacksword_slash
 // param=defend_sound,blade5
+// https://oldschool.runescape.wiki/w/Knight_of_Ardougne_(unused) (data taken from normal knight of ardougne.)
 
 [watchman]
 name=Watchman
@@ -883,8 +864,8 @@ param=slashdefence,14
 param=crushdefence,19
 param=magicdefence,-4
 param=rangedefence,16
-param=damagetype,^crush_style
 // param=defend_sound,blade3_mail
+//Stats match osrs version but our version Vislvl is different.
 
 [soldier]
 name=Soldier
@@ -924,82 +905,7 @@ param=defend_anim,human_sword_defend2
 param=attack_sound,hacksword_slash
 // param=defend_sound,
 // osrs defend sound blade3_mail
-
-[shipyard_worker1]
-name=Shipyard worker
-desc=Builds ships for a living.
-walkanim=human_walk_f,human_walk_b,human_walk_l,human_walk_r
-readyanim=human_ready
-op1=Talk-to
-op2=Attack
-vislevel=6
-recol1s=2340
-recol1d=8420
-recol2s=6273
-recol2d=14594
-recol3s=14724
-recol3d=15855
-model1=model_215_idk
-model2=model_247_idk
-model3=model_305_obj_wear
-model4=model_151_idk
-model5=model_179_obj_wear
-model6=model_254_idk
-model7=model_185_obj_wear
-head1=model_53_idk_head
-head2=model_79_idk_head
-respawnrate=50
-hitpoints=10
-attack=10
-strength=10
-defence=10
-param=attackbonus,6
-param=strengthbonus,6
-param=damagetype,^crush_style
-category=shipyard_worker
-
-[shipyard_worker2]
-name=Shipyard worker
-desc=Builds ships for a living.
-walkanim=human_walk_f,human_walk_b,human_walk_l,human_walk_r
-readyanim=human_ready
-op1=Talk-to
-op2=Attack
-vislevel=6
-recol1s=2340
-recol1d=8420
-recol2s=14724
-recol2d=15855
-model1=model_230_idk
-model2=model_246_idk
-model3=model_305_obj_wear
-model4=model_173_npc
-model5=model_179_obj_wear
-model6=model_271_idk
-model7=model_185_obj_wear
-model8=model_491_obj_wear
-head1=model_63_idk_head
-respawnrate=50
-hitpoints=10
-attack=10
-strength=10
-defence=10
-param=attackbonus,6
-param=strengthbonus,6
-param=damagetype,^crush_style
-param=attack_anim,human_blunt_crush
-param=defend_anim,human_blunt_defend1
-param=attack_sound,baxe_slash
-category=shipyard_worker
-// osrs attack sound warhammer_crush
-
-[shark_Shipyard]
-name=Shark
-desc=Let's not go skinny dipping eh?
-walkanim=shark_walk
-vislevel=1
-model1=model_2848_npc
-moverestrict=blocked
+//Stats match osrs version but our version Vislvl is different.
 
 [chicken]
 name=Chicken
@@ -1027,6 +933,7 @@ param=defend_sound,chicken_hit
 param=death_sound,chicken_death
 param=retreat,1
 category=chicken
+// osrs stats and Vislvl match 1:1
 
 [sheep_sheared]
 vislevel=hide
@@ -1079,6 +986,7 @@ param=defend_sound,duck_hit
 param=death_sound,duck_death
 param=death_drop,null
 category=duck
+// re check wanderrange os ??  /maxrange is 40 confirmed.
 
 [duck]
 name=Duck
@@ -1116,6 +1024,7 @@ param=defend_sound,duck_hit
 param=death_sound,duck_death
 param=death_drop,null
 category=duck
+// re check wanderrange os ??  /maxrange is 40 confirmed.
 
 [duckling]
 name=Duckling
@@ -1158,6 +1067,7 @@ param=death_drop,null
 category=duckling
 huntmode=duck_hunt
 huntrange=2
+// osrs stats and Vislvl match 1:1
 
 [rat]
 name=Rat
@@ -1179,7 +1089,6 @@ param=slashdefence,-42
 param=crushdefence,-42
 param=magicdefence,-42
 param=rangedefence,-42
-param=damagetype,^crush_style
 param=attack_anim,rat_attack
 param=defend_anim,rat_block
 param=death_anim,rat_death
@@ -1187,6 +1096,7 @@ param=attack_sound,rat_attack
 param=defend_sound,rat_hit
 param=death_sound,rat_death
 param=death_drop,null
+// osrs stats and Vislvl match 1:1
 
 [oomlie_bird]
 name=Oomlie Bird
@@ -1220,6 +1130,7 @@ param=defend_sound,chicken_hit
 param=death_sound,chicken_death
 huntmode=cowardly
 huntrange=1
+//Stats match osrs version but our version Vislvl is different.
 
 [hellhound]
 size=2
@@ -1245,6 +1156,7 @@ param=attack_sound,growl6
 param=defend_sound,growl5
 huntmode=cowardly
 huntrange=2
+// osrs stats and Vislvl match 1:1
 
 [baby_dragon]
 size=2
@@ -1278,6 +1190,7 @@ param=death_sound,babydragon_death
 param=death_drop,babydragon_bones
 huntmode=cowardly
 huntrange=2
+// https://oldschool.runescape.wiki/w/Baby_dragon_(unused)
 
 [baby_blue_dragon]
 size=2
@@ -1312,6 +1225,7 @@ param=death_sound,babydragon_death
 param=death_drop,babydragon_bones
 huntmode=cowardly
 huntrange=2
+//Stats match osrs version but our version Vislvl is different.
 
 [red_dragon]
 size=4
@@ -1347,6 +1261,7 @@ param=death_sound,dragon_death
 param=death_drop,dragon_bones
 huntmode=cowardly
 huntrange=4
+//Stats match osrs version but our version Vislvl is different.
 
 [black_dragon]
 size=4
@@ -1383,6 +1298,7 @@ param=death_sound,dragon_death
 param=death_drop,dragon_bones
 huntmode=cowardly
 huntrange=4
+//Stats match osrs version but our version Vislvl is different.
 
 [blue_dragon]
 size=4
@@ -1418,6 +1334,8 @@ param=death_sound,dragon_death
 param=death_drop,dragon_bones
 huntmode=cowardly
 huntrange=4
+//Stats match osrs version but our version Vislvl is different.
+// mentioned 110hp  https://web.archive.org/web/20060828154137/http://www.trillionareguild.com/runescape/beastiary1.php
 
 [dryad]
 name=Dryad
@@ -1429,15 +1347,7 @@ model1=model_2856_npc
 param=attack_anim,dryhad_attack
 param=defend_anim,dryhad_block
 param=death_anim,dryhad_death
-
-[fairy]
-vislevel=hide
-name=Fairy
-desc=A delicate creature from this strange realm.
-walkanim=fairy_walk
-readyanim=fairy_ready
-model1=model_2857_npc
-param=death_anim,fairy_death
+// https://oldschool.runescape.wiki/w/Dryad_(unused)
 
 [shadow_spider]
 walkanim=giantspider_walk
@@ -1471,7 +1381,7 @@ param=death_sound,insect_death
 param=death_drop,null
 huntmode=cowardly
 huntrange=1
-// TODO spider prayer drain attack
+//Stats match osrs version but our version Vislvl is different.
 
 [giant_spider1]
 walkanim=giantspider_walk
@@ -1503,8 +1413,8 @@ param=defend_sound,insect_hit
 param=death_sound,insect_death
 param=death_drop,null
 huntmode=cowardly
-// osrs
 huntrange=1
+// osrs stats and Vislvl match 1:1
 
 [giant_spider2]
 walkanim=giantspider_walk
@@ -1532,8 +1442,8 @@ param=defend_sound,insect_hit
 param=death_sound,insect_death
 param=death_drop,null
 huntmode=cowardly
-// osrs
 huntrange=1
+// osrs stats and Vislvl match 1:1
 
 [spider]
 walkanim=spider_walk
@@ -1561,6 +1471,7 @@ param=attack_sound,insect_attack
 param=defend_sound,insect_hit
 param=death_sound,insect_death
 param=death_drop,null
+// osrs stats and Vislvl match 1:1
 
 [jungle_spider]
 walkanim=giantspider_walk
@@ -1595,6 +1506,7 @@ param=death_sound,insect_death
 param=death_drop,null
 huntmode=aggressive_melee
 huntrange=1
+//Stats match osrs version but our version Vislvl is different.
 
 [deadly_red_spider]
 walkanim=giantspider_walk
@@ -1628,6 +1540,7 @@ param=death_sound,insect_death
 param=death_drop,null
 huntmode=cowardly
 huntrange=1
+//Stats match osrs version but our version Vislvl is different.
 
 [ice_spider]
 walkanim=giantspider_walk
@@ -1660,6 +1573,7 @@ param=death_sound,insect_death
 param=death_drop,null
 huntmode=cowardly
 huntrange=1
+// osrs stats and Vislvl match 1:1
 
 [leprechaun]
 walkanim=midget_walk
@@ -1683,107 +1597,6 @@ param=attack_anim,midget_attackunarmed
 param=defend_anim,midget_block
 param=death_anim,midget_death
 param=attack_sound,gnome_attack
-param=defend_sound,gnome_hit
-param=death_sound,gnome_death
-
-[gnome_green]
-name=Gnome
-desc=Like a mini man!
-walkanim=midget_walk
-readyanim=midget_ready
-op1=Talk-to
-op2=Attack
-op3=Pickpocket
-vislevel=1
-model1=model_2909_npc
-model2=model_2890_npc
-model3=model_2915_npc
-head1=model_21_npc_head
-respawnrate=60
-hitpoints=3
-param=attackbonus,-42
-param=strengthbonus,-42
-param=rangebonus,2
-param=stabdefence,-42
-param=slashdefence,-42
-param=crushdefence,-42
-param=magicdefence,-42
-param=rangedefence,-42
-param=damagetype,^crush_style
-param=attack_anim,midget_attackbow
-param=defend_anim,midget_block
-param=death_anim,midget_death
-param=attack_sound,arrowlaunch2
-param=defend_sound,gnome_hit
-param=death_sound,gnome_death
-
-[gnome_brown]
-name=Gnome
-desc=Like a mini man!
-walkanim=midget_walk
-readyanim=midget_ready
-op1=Talk-to
-op2=Attack
-op3=Pickpocket
-vislevel=1
-recol1s=352
-recol1d=14625
-model1=model_2909_npc
-model2=model_2890_npc
-model3=model_2915_npc
-head1=model_21_npc_head
-respawnrate=60
-hitpoints=3
-param=attackbonus,-42
-param=strengthbonus,-42
-param=rangebonus,2
-param=stabdefence,-42
-param=slashdefence,-42
-param=crushdefence,-42
-param=magicdefence,-42
-param=rangedefence,-42
-param=damagetype,^crush_style
-param=attack_anim,midget_attackbow
-param=defend_anim,midget_block
-param=death_anim,midget_death
-param=attack_sound,arrowlaunch2
-param=defend_sound,gnome_hit
-param=death_sound,gnome_death
-
-[gnome_black]
-name=Gnome
-desc=Like a mini man!
-walkanim=midget_walk
-readyanim=midget_ready
-op1=Talk-to
-op2=Attack
-op3=Pickpocket
-vislevel=1
-recol1s=24075
-recol1d=13537
-recol2s=21961
-recol2d=13537
-recol3s=20904
-recol3d=13537
-model1=model_2909_npc
-model2=model_2890_npc
-model3=model_2915_npc
-head1=model_21_npc_head
-respawnrate=60
-hitpoints=3
-param=attackbonus,-42
-param=strengthbonus,-42
-param=rangebonus,2
-param=stabdefence,-42
-param=slashdefence,-42
-param=crushdefence,-42
-param=magicdefence,-42
-param=rangedefence,-42
-param=damagetype,^crush_style
-param=attack_anim,midget_attackbow
-param=defend_anim,midget_block
-param=death_anim,midget_death
-param=attack_sound,arrowlaunch2
 param=defend_sound,gnome_hit
 param=death_sound,gnome_death
 
@@ -1821,6 +1634,7 @@ param=defend_sound,mummy_hit
 param=death_sound,mummy_death
 huntmode=cowardly
 huntrange=1
+// https://oldschool.runescape.wiki/w/Mummy_(historical)
 
 [orc]
 name=Orc
@@ -1868,9 +1682,6 @@ hitpoints=22
 attack=8
 strength=9
 defence=10
-param=attackbonus,5
-param=attackrate,5
-param=damagetype,^slash_style
 param=attack_anim,zombie_attack
 param=defend_anim,zombie_block
 param=death_anim,zombie_death
@@ -1880,6 +1691,7 @@ param=death_sound,zombie_death
 param=undead,^true
 huntmode=cowardly
 huntrange=1
+// osrs stats and Vislvl match 1:1
 
 [zombie2]
 name=Zombie
@@ -1896,9 +1708,6 @@ hitpoints=24
 attack=13
 strength=13
 defence=18
-param=attackbonus,5
-param=attackrate,5
-param=damagetype,^slash_style
 param=attack_anim,zombie_attack
 param=defend_anim,zombie_block
 param=death_anim,zombie_death
@@ -1908,6 +1717,7 @@ param=death_sound,zombie_death
 param=undead,^true
 huntmode=cowardly
 huntrange=1
+// osrs stats and Vislvl match 1:1
 
 [zombie3]
 name=Zombie
@@ -1938,6 +1748,7 @@ param=death_sound,zombie_death
 param=undead,^true
 huntmode=cowardly
 huntrange=1
+// osrs stats and Vislvl match 1:1
 
 [zombie_entrana]
 name=Zombie
@@ -1950,15 +1761,18 @@ model1=model_2931_npc
 model2=model_2932_npc
 wanderrange=9
 maxrange=11
-// TODO find correct
 respawnrate=35
 hitpoints=30
 attack=19
 strength=21
-defence=16
+defence=21
 param=attackbonus,5
 param=strengthbonus,7
-param=attackrate,5
+param=stabdefence,10
+param=slashdefence,8
+param=crushdefence,12
+param=magicdefence,10
+param=rangedefence,10
 param=damagetype,^slash_style
 param=attack_anim,zombie_attack
 param=defend_anim,zombie_block
@@ -1969,6 +1783,7 @@ param=death_sound,zombie_death
 param=undead,^true
 huntmode=cowardly
 huntrange=1
+// osrs stats and Vislvl match 1:1
 
 [summoned_zombie]
 name=Summoned Zombie
@@ -1982,7 +1797,6 @@ hitpoints=22
 attack=8
 strength=9
 defence=10
-param=damagetype,^crush_style
 param=attack_anim,zombie_attack
 param=defend_anim,zombie_block
 param=death_anim,zombie_death
@@ -1992,6 +1806,7 @@ param=death_sound,zombie_death
 param=undead,^true
 huntmode=cowardly
 huntrange=1
+// osrs stats and Vislvl match 1:1
 
 [giant_bat]
 name=Giant bat
@@ -2025,6 +1840,7 @@ param=death_sound,bat_death
 param=death_drop,bat_bones
 huntmode=cowardly
 huntrange=2
+// osrs stats and Vislvl match 1:1
 
 [death_wing]
 name=Death wing
@@ -2058,8 +1874,11 @@ param=death_anim,bat_death
 param=attack_sound,bat_attack
 param=defend_sound,bat_hit
 param=death_sound,bat_death
+param=death_drop,null
 huntmode=aggressive_melee
 huntrange=2
+// osrs 2024 huntmode=cowardly
+// osrs stats and Vislvl match 1:1
 
 [cow_1]
 size=2
@@ -2081,7 +1900,6 @@ param=slashdefence,-21
 param=crushdefence,-21
 param=magicdefence,-21
 param=rangedefence,-21
-param=damagetype,^crush_style
 param=attack_anim,cow_attack
 param=defend_anim,cow_block
 param=death_anim,cow_death
@@ -2089,6 +1907,7 @@ param=attack_sound,cow_attack
 param=defend_sound,cow_hit
 param=death_sound,cow_death
 category=cow
+// osrs stats and Vislvl match 1:1
 
 [lesser_demon]
 size=2
@@ -2119,6 +1938,7 @@ param=death_drop,ashes
 huntmode=cowardly
 // huntrange: https://youtu.be/bU8sQbojKH4?list=PLn23LiLYLb1aqrojPTi1_Np81LJku2Nd0&t=127
 huntrange=2
+// osrs stats and Vislvl match 1:1
 
 [greater_demon]
 size=3
@@ -2150,6 +1970,7 @@ param=death_sound,demon_death
 param=death_drop,ashes
 huntmode=cowardly
 huntrange=3
+// osrs stats and Vislvl match 1:1
 
 [black_demon]
 size=3
@@ -2186,6 +2007,7 @@ param=death_drop,ashes
 category=black_demon
 huntmode=cowardly
 huntrange=3
+// osrs stats and Vislvl match 1:1
 
 [golem]
 name=Golem
@@ -2227,8 +2049,8 @@ param=death_anim,giantrat_death
 param=attack_sound,rat_attack
 param=defend_sound,rat_hit
 param=death_sound,rat_death
-// osrs
-// category=
+category=rat
+// osrs stats and Vislvl match 1:1
 
 [giant_rat2]
 size=2
@@ -2254,9 +2076,9 @@ param=attack_sound,rat_attack
 param=defend_sound,rat_hit
 param=death_sound,rat_death
 huntmode=cowardly
-// osrs
 huntrange=1
-// category=
+category=rat
+// osrs stats and Vislvl match 1:1
 
 [dungeon_rat]
 size=2
@@ -2284,9 +2106,9 @@ param=attack_sound,rat_attack
 param=defend_sound,rat_hit
 param=death_sound,rat_death
 huntmode=cowardly
-// osrs
 huntrange=2
-// category=
+category=rat
+//Stats match osrs version but our version Vislvl is different.
 
 [unicorn]
 size=2
@@ -2312,7 +2134,7 @@ param=attack_sound,horse_hit
 param=defend_sound,horse_hit
 param=retreat,6
 category=unicorn
-// osrs
+// osrs stats and Vislvl match 1:1
 
 [skeleton1]
 name=Skeleton
@@ -2322,8 +2144,6 @@ readyanim=skeleton_ready
 op2=Attack
 vislevel=18
 model1=model_2944_npc
-wanderrange=3
-maxrange=5
 respawnrate=70
 hitpoints=29
 attack=15
@@ -2333,7 +2153,6 @@ param=stabdefence,5
 param=slashdefence,5
 param=crushdefence,-5
 param=rangedefence,5
-param=damagetype,^crush_style
 param=attack_anim,skeleton_attack
 param=defend_anim,skeleton_block
 param=death_anim,skeleton_death
@@ -2343,7 +2162,9 @@ param=death_sound,skeleton_death
 param=undead,^true
 huntmode=cowardly
 huntrange=1
+category=skeletons
 // Todo: proof old wander/maxranges early 2004 / rsc wander 8
+// (data verification still in progress)
 
 [skeleton2]
 name=Skeleton
@@ -2373,7 +2194,9 @@ param=death_sound,skeleton_death
 param=undead,^true
 huntmode=cowardly
 huntrange=1
+category=skeletons
 // osrs
+// (data verification still in progress)
 
 [skeleton3]
 name=Skeleton
@@ -2398,7 +2221,7 @@ param=slashdefence,11
 param=crushdefence,-2
 param=magicdefence,1
 param=rangedefence,4
-param=damagetype,^crush_style
+param=damagetype,^slash_style
 param=attack_anim,skeleton_attack
 param=defend_anim,skeleton_block
 param=death_anim,skeleton_death
@@ -2409,7 +2232,9 @@ param=undead,^true
 huntmode=cowardly
 // huntrange: https://youtu.be/bU8sQbojKH4?list=PLn23LiLYLb1aqrojPTi1_Np81LJku2Nd0&t=127
 huntrange=1
+category=skeletons
 // osrs
+// (data verification still in progress)
 
 [skeleton4]
 name=Skeleton
@@ -2447,7 +2272,8 @@ param=undead,^true
 huntmode=cowardly
 // huntrange: https://youtu.be/bU8sQbojKH4?list=PLn23LiLYLb1aqrojPTi1_Np81LJku2Nd0&t=127
 huntrange=1
-// osrs
+category=skeletons
+// osrs stats and Vislvl match 1:1
 
 [skeleton_mage]
 name=Skeleton Mage
@@ -2474,12 +2300,12 @@ attack=14
 strength=14
 defence=14
 magic=18
-param=damagetype,^stab_style
 param=attack_sound,skeleton_attack
 param=defend_sound,skelly_hit
 param=death_sound,skeleton_death
 param=undead,^true
-// TODO magic attack + somekind curse
+category=skeletons
+//Stats match osrs version but our version Vislvl is different.
 
 [npc_95]
 name=Wolf
@@ -2507,6 +2333,8 @@ param=death_sound,wolf_death
 param=death_drop,wolf_bones
 huntmode=cowardly
 huntrange=2
+category=wolves
+// osrs stats and Vislvl match 1:1
 
 [npc_96]
 size=2
@@ -2538,6 +2366,8 @@ param=death_sound,wolf_death
 param=death_drop,wolf_bones
 huntmode=cowardly
 huntrange=2
+category=wolves
+// osrs stats and Vislvl match 1:1
 
 [npc_97]
 size=2
@@ -2569,6 +2399,8 @@ param=death_sound,wolf_death
 param=death_drop,wolf_bones
 huntmode=cowardly
 huntrange=2
+category=wolves
+// osrs stats and Vislvl match 1:1
 
 [npc_98]
 name=Dog
@@ -2603,6 +2435,7 @@ param=attack_sound,wolf_attack2
 param=defend_sound,wolf_hit
 huntmode=cowardly
 huntrange=1
+// osrs stats and Vislvl match 1:1 // TODO TSS check sound files again.
 
 [goblin_unarmed1]
 name=Goblin
@@ -2626,13 +2459,13 @@ param=slashdefence,-15
 param=crushdefence,-15
 param=magicdefence,-15
 param=rangedefence,-15
-param=damagetype,^crush_style
 param=attack_anim,goblin_attack_unarmed
 param=defend_anim,goblin_block
 param=death_anim,goblin_death
 param=attack_sound,goblin_attack
 param=defend_sound,goblin_hit
 param=death_sound,goblin_death
+// osrs stats and Vislvl match 1:1
 
 [goblin_armed]
 name=Goblin
@@ -2655,13 +2488,14 @@ defence=4
 param=attackbonus,12
 param=strengthbonus,12
 param=attackrate,6
-param=damagetype,^crush_style
+param=damagetype,^stab_style
 param=attack_anim,goblin_attack_armed
 param=defend_anim,goblin_block
 param=death_anim,goblin_death
 param=attack_sound,goblin_attack
 param=defend_sound,goblin_hit
 param=death_sound,goblin_death
+// osrs stats and Vislvl match 1:1
 
 [goblin_unarmed2]
 name=Goblin
@@ -2677,7 +2511,6 @@ model4=model_2956_npc
 wanderrange=15
 maxrange=17
 respawnrate=70
-respawnrate=70
 hitpoints=16
 attack=12
 strength=13
@@ -2687,13 +2520,13 @@ param=slashdefence,6
 param=crushdefence,8
 param=magicdefence,4
 param=rangedefence,4
-param=damagetype,^crush_style
 param=attack_anim,goblin_attack_unarmed
 param=defend_anim,goblin_block
 param=death_anim,goblin_death
 param=attack_sound,goblin_attack
 param=defend_sound,goblin_hit
 param=death_sound,goblin_death
+// osrs stats and Vislvl match 1:1
 
 [ghost]
 name=Ghost
@@ -2719,7 +2552,6 @@ param=slashdefence,5
 param=crushdefence,5
 param=magicdefence,-5
 param=rangedefence,5
-param=damagetype,^crush_style
 param=attack_anim,ghost_attack
 param=defend_anim,ghost_block
 param=death_anim,ghost_death
@@ -2730,6 +2562,7 @@ param=death_drop,null
 param=undead,^true
 huntmode=cowardly
 huntrange=1
+// osrs stats and Vislvl match 1:1
 
 [ghost_draynor_manor]
 name=Ghost
@@ -2753,7 +2586,6 @@ param=slashdefence,5
 param=crushdefence,5
 param=magicdefence,-5
 param=rangedefence,5
-param=damagetype,^crush_style
 param=attack_anim,ghost_attack
 param=defend_anim,ghost_block
 param=death_anim,ghost_death
@@ -2762,6 +2594,7 @@ param=defend_sound,ghost_hit
 param=death_sound,ghost_death
 param=death_drop,null
 param=undead,^true
+// osrs stats and Vislvl match 1:1
 
 [bear_brown]
 size=2
@@ -2788,8 +2621,8 @@ param=defend_sound,bear_hit
 param=death_sound,bear_death
 category=bear
 huntmode=cowardly
-// osrs
 huntrange=1
+// osrs stats and Vislvl match 1:1
 
 [bear_black]
 size=2
@@ -2819,8 +2652,9 @@ param=death_sound,bear_death
 category=bear
 huntmode=cowardly
 huntrange=1
+// osrs stats and Vislvl match 1:1
 
-[npc_107]
+[scorpion]
 size=2
 walkanim=scorpion_walk
 readyanim=scorpion_ready
@@ -2840,7 +2674,7 @@ param=stabdefence,5
 param=slashdefence,15
 param=crushdefence,15
 param=rangedefence,5
-param=damagetype,^slash_style
+param=damagetype,^stab_style
 param=attack_anim,scorpion_attack
 param=defend_anim,scorpion_parry
 param=death_anim,scorpion_death
@@ -2850,8 +2684,9 @@ param=death_sound,insect_death
 param=death_drop,null
 huntmode=cowardly
 huntrange=2
+// osrs stats and Vislvl match 1:1
 
-[npc_108]
+[poison_scorpion]
 size=2
 walkanim=scorpion_walk
 readyanim=scorpion_ready
@@ -2882,8 +2717,9 @@ param=death_drop,null
 param=poison_severity,15
 huntmode=cowardly
 huntrange=2
+// osrs stats and Vislvl match 1:1
 
-[npc_109]
+[pit_scorpion]
 name=Pit Scorpion
 desc=Tiny, annoying, stinging thing.
 walkanim=smallscorpion_walk
@@ -2910,6 +2746,7 @@ param=death_sound,insect_death
 param=death_drop,null
 huntmode=cowardly
 huntrange=1
+//Stats match osrs version but our version Vislvl is different.
 
 [fire_giant]
 size=2
@@ -2947,6 +2784,7 @@ param=death_sound,giant_death
 param=death_drop,big_bones
 huntmode=cowardly
 huntrange=2
+//Stats match osrs version but our version Vislvl is different.
 
 [ice_giant]
 size=2
@@ -2980,6 +2818,7 @@ param=death_sound,giant_death
 param=death_drop,big_bones
 huntmode=cowardly
 huntrange=2
+//Stats match osrs version but our version Vislvl is different.
 
 [moss_giant]
 size=2
@@ -3005,7 +2844,6 @@ defence=30
 param=attackrate,6
 param=attackbonus,33
 param=strengthbonus,31
-param=damagetype,^crush_style
 param=attack_anim,giant_attack
 param=defend_anim,giant_block
 param=death_anim,giant_death
@@ -3015,6 +2853,7 @@ param=death_sound,giant_death
 param=death_drop,big_bones
 huntmode=cowardly
 huntrange=2
+//Stats match osrs version but our version Vislvl is different.
 
 [jogre]
 size=2
@@ -3039,10 +2878,9 @@ hitpoints=60
 attack=43
 strength=43
 defence=43
+param=attackrate,6
 param=attackbonus,22
 param=strengthbonus,20
-param=attackrate,6
-param=damagetype,^crush_style
 param=attack_anim,giant_attack
 param=defend_anim,giant_block
 param=death_anim,giant_death
@@ -3052,8 +2890,9 @@ param=death_sound,giant_death
 param=death_drop,big_bones
 huntmode=cowardly
 huntrange=2
+//Stats match osrs version but our version Vislvl is different.
 
-[npc_114]
+[ogre]
 size=2
 walkanim=ogre_walk
 readyanim=ogre_ready
@@ -3070,10 +2909,9 @@ hitpoints=60
 attack=43
 strength=43
 defence=43
+param=attackrate,6
 param=attackbonus,22
 param=strengthbonus,20
-param=attackrate,6
-param=damagetype,^crush_style
 param=attack_anim,ogre_attack
 param=defend_anim,ogre_block
 param=death_anim,ogre_death
@@ -3083,8 +2921,9 @@ param=death_sound,giant_death
 param=death_drop,big_bones
 huntmode=cowardly
 huntrange=2
+//Stats match osrs version but our version Vislvl is different.
 
-[npc_115]
+[ogre_armed]
 size=2
 walkanim=ogre_walk
 readyanim=ogre_ready
@@ -3101,10 +2940,9 @@ hitpoints=60
 attack=43
 strength=43
 defence=43
+param=attackrate,6
 param=attackbonus,22
 param=strengthbonus,20
-param=attackrate,6
-param=damagetype,^crush_style
 param=attack_anim,ogre_attack
 param=defend_anim,ogre_block
 param=death_anim,ogre_death
@@ -3115,6 +2953,7 @@ param=death_drop,big_bones
 huntmode=cowardly
 huntrange=2
 // osrs attack_sound,giant_attack & defend_sound,mace_crush
+//Stats match osrs version but our version Vislvl is different.
 
 [cyclops]
 size=2
@@ -3126,14 +2965,13 @@ op2=Attack
 vislevel=56
 model1=model_2870_npc
 model2=model_2867_npc
-wanderrange=4
-maxrange=6
+wanderrange=3
+maxrange=5
 respawnrate=30
 hitpoints=55
 attack=47
 strength=50
 defence=46
-param=damagetype,^crush_style
 param=attack_anim,giant_attack
 param=defend_anim,giant_block
 param=death_anim,giant_death
@@ -3143,6 +2981,7 @@ param=death_sound,giant_death
 param=death_drop,big_bones
 huntmode=cowardly
 huntrange=2
+// osrs stats and Vislvl match 1:1
 
 [giant]
 size=2
@@ -3161,10 +3000,9 @@ hitpoints=35
 attack=18
 strength=22
 defence=26
+param=attackrate,6
 param=attackbonus,18
 param=strengthbonus,16
-param=attackrate,6
-param=damagetype,^crush_style
 param=attack_anim,giant_attack
 param=defend_anim,giant_block
 param=death_anim,giant_death
@@ -3174,6 +3012,7 @@ param=death_sound,giant_death
 param=death_drop,big_bones
 huntmode=cowardly
 huntrange=2
+// osrs stats and Vislvl match 1:1
 
 [npc_118]
 walkanim=dwarf_walk
@@ -3197,15 +3036,16 @@ hitpoints=16
 attack=8
 strength=8
 defence=6
+param=attackrate,5
 param=attackbonus,5
 param=strengthbonus,7
 param=magicdefence,5
-param=attackrate,5
-param=damagetype,^crush_style
+param=damagetype,^stab_style
 param=attack_anim,dwarf_attack
 param=defend_anim,dwarf_block
 param=death_anim,dwarf_death
 param=attack_sound,baxe_crush
+// osrs stats and Vislvl match 1:1
 
 [npc_119]
 walkanim=dwarf_walk
@@ -3240,15 +3080,15 @@ param=slashdefence,34
 param=crushdefence,25
 param=magicdefence,10
 param=rangedefence,35
-param=damagetype,^crush_style
 param=attack_anim,dwarf_attack
 param=defend_anim,dwarf_block
 param=death_anim,dwarf_death
 param=attack_sound,baxe_crush
-// param=defend_sound,brassclash2   possible used this before???
+// param=defend_sound,
 // TODO sounds osrs use these sounds warhammer_crush, dwarf_hit, dwarf_death
 huntmode=cowardly
 huntrange=1
+// osrs stats and Vislvl match 1:1
 
 [npc_120]
 walkanim=dwarf_walk
@@ -3270,16 +3110,16 @@ hitpoints=26
 attack=15
 strength=16
 defence=16
+param=attackrate,6
 param=attackbonus,11
 param=strengthbonus,9
 param=magicdefence,5
-param=attackrate,6
-param=damagetype,^crush_style
 param=attack_anim,dwarf_attack
 param=defend_anim,dwarf_block
 param=death_anim,dwarf_death
 param=attack_sound,baxe_crush
 // osrs souns use these sounds warhammer_crush, dwarf_hit, dwarf_death
+// osrs stats and Vislvl match 1:1
 
 [npc_121]
 walkanim=dwarf_walk
@@ -3325,7 +3165,6 @@ hitpoints=29
 attack=22
 strength=24
 defence=24
-param=damagetype,^crush_style
 param=attack_anim,hobgoblin_attack
 param=defend_anim,hobgoblin_block
 param=death_anim,hobgoblin_death
@@ -3334,6 +3173,7 @@ param=defend_sound,goblin_hit
 param=death_sound,goblin_death
 huntmode=cowardly
 huntrange=1
+// osrs stats and Vislvl match 1:1
 
 [hobgoblin_armed]
 walkanim=hobgoblin_walk
@@ -3350,11 +3190,11 @@ hitpoints=49
 attack=33
 strength=31
 defence=36
+param=attackrate,6
 param=attackbonus,8
 param=strengthbonus,10
 param=stabdefence,1
 param=slashdefence,1
-param=attackrate,6
 param=damagetype,^stab_style
 param=attack_anim,hobgoblin_spear_attack
 param=defend_anim,hobgoblin_block
@@ -3364,6 +3204,7 @@ param=defend_sound,goblin_hit
 param=death_sound,goblin_death
 huntmode=cowardly
 huntrange=1
+// osrs stats and Vislvl match 1:1
 
 [earth_warrior]
 hasalpha=yes
@@ -3406,16 +3247,15 @@ param=slashdefence,40
 param=crushdefence,20
 param=magicdefence,10
 param=rangedefence,30
-param=damagetype,^crush_style
 param=attack_anim,earthwarrior_chop
 param=defend_anim,human_baxe_defend2
-// param=defend_anim,earthwarrior_def
 param=death_anim,earthwarrior_death
 param=attack_sound,mace_crush
 // param=defend_sound,blade5
 huntmode=cowardly
 huntrange=1
 // osrs sound attack warhammer_crush
+//Stats match osrs version but our version Vislvl is different.
 
 [ice_warrior]
 hasalpha=yes
@@ -3465,41 +3305,7 @@ param=defend_sound,ice_warrior_hit
 param=death_sound,ice_warrior_death
 huntmode=cowardly
 huntrange=1
-
-[otherworldly_being]
-walkanim=human_walk_f,human_walk_b,human_walk_l,human_walk_r
-readyanim=human_ready
-name=Otherworldly being
-desc=Is he invisible or just a set of floating clothing?
-op2=Attack
-vislevel=64
-recol1s=2340
-recol1d=4226
-recol2s=239
-recol2d=4226
-recol3s=14724
-recol3d=4226
-model1=model_292_idk
-model2=model_170_idk
-model3=model_260_npc
-model4=model_202_obj_wear
-wanderrange=3
-maxrange=5
-respawnrate=20
-hitpoints=66
-attack=56
-strength=56
-defence=46
-param=stabdefence,15
-param=slashdefence,10
-param=crushdefence,20
-param=magicdefence,-5
-param=rangedefence,15
-param=damagetype,^slash_style
-param=attack_sound,otherworld_attack
-param=defend_sound,otherworld_hit
-param=death_sound,otherworld_death
-param=death_drop,null
+//Stats match osrs version but our version Vislvl is different.
 
 [magic_axe]
 walkanim=magicaxe_walk
@@ -3531,6 +3337,7 @@ param=defend_sound,sword_hit2
 param=death_drop,iron_battleaxe
 huntmode=cowardly
 huntrange=1
+// osrs stats and Vislvl match 1:1
 
 [snake]
 name=Snake
@@ -3554,6 +3361,7 @@ param=defend_sound,snake_hit
 param=death_sound,snake_death
 huntmode=cowardly
 huntrange=1
+// osrs stats and Vislvl match 1:1
 
 [npc_129]
 walkanim=skavid_walk
@@ -3579,9 +3387,14 @@ readyanim=yeti_ready
 op2=Attack
 vislevel=58
 model1=model_3001_npc
+hitpoints=55
+attack=48
+strength=60
+defence=39
 param=attack_anim,yeti_attack
 param=defend_anim,yeti_block
 param=death_anim,yeti_death
+// https://oldschool.runescape.wiki/w/Yeti
 
 [penguin]
 name=Penguin
@@ -3604,6 +3417,7 @@ param=death_anim,penguin_death
 param=attack_sound,penguin_attack
 param=defend_sound,penguin_hit
 param=death_sound,penguin_death
+// osrs stats and Vislvl match 1:1
 
 [monkey]
 name=Monkey
@@ -3620,13 +3434,13 @@ hitpoints=6
 attack=2
 strength=3
 defence=2
-param=damagetype,^crush_style
 param=attack_anim,monkey_attack
 param=defend_anim,monkey_block
 param=death_anim,monkey_death
 param=attack_sound,monkey_attack
 param=defend_sound,monkey_hit
 param=death_sound,monkey_death
+// osrs stats and Vislvl match 1:1
 
 [black_unicorn]
 size=2
@@ -3641,6 +3455,7 @@ recol1d=3172
 recol2s=27413
 recol2d=10570
 model1=model_2933_npc
+members=yes
 wanderrange=17
 maxrange=19
 respawnrate=90
@@ -3657,8 +3472,9 @@ param=defend_sound,horse_hit
 huntmode=cowardly
 huntrange=2
 category=unicorn
+// osrs stats and Vislvl match 1:1
 
-[npc_134]
+[poison_spider]
 walkanim=giantspider_walk
 readyanim=giantspider_ready
 name=Poison spider
@@ -3690,6 +3506,7 @@ param=death_drop,null
 param=poison_severity,27
 huntmode=cowardly
 huntrange=1
+// osrs stats and Vislvl match 1:1
 
 [mammoth]
 size=3
@@ -3708,90 +3525,9 @@ param=defend_sound,mammoth_hit
 param=death_sound,mammoth_death
 huntmode=cowardly
 huntrange=3
+// https://oldschool.runescape.wiki/w/Mammoth_(unused_NPC)
 
-[terrorbird]
-name=Terrorbird
-desc=A giant raptor.
-size=2
-walkanim=terrorbird_walk
-readyanim=terrorbird_ready
-op2=Attack
-vislevel=28
-model1=model_3011_npc
-wanderrange=12
-maxrange=14
-respawnrate=30
-hitpoints=34
-attack=23
-strength=23
-defence=19
-param=damagetype,^stab_style
-param=attack_anim,terrorbird_attack
-param=defend_anim,terrorbird_block
-param=death_anim,terrorbird_death
-param=attack_sound,terrorbird_attack
-param=defend_sound,terrorbird_hit
-param=death_sound,terrorbird_death
-
-[npc_137]
-name=Mounted terrorbird gnome
-desc=These gnomes know how to get around!
-size=2
-walkanim=mounted_terrorbird_walk
-readyanim=mounted_terrorbird_ready
-op2=Attack
-vislevel=29
-model1=model_3012_npc
-wanderrange=12
-maxrange=14
-respawnrate=30
-hitpoints=36
-attack=25
-strength=25
-defence=25
-param=stabdefence,16
-param=slashdefence,16
-param=crushdefence,18
-param=magicdefence,15
-param=rangedefence,10
-param=damagetype,^stab_style
-param=attack_anim,mounted_terrorbird_attack
-param=defend_anim,mounted_terrorbird_defend
-param=death_anim,mounted_terrorbird_death
-param=attack_sound,terrorbird_attack
-param=defend_sound,terrorbird_hit
-param=death_sound,terrorbird_death
-
-[npc_138]
-name=Mounted terrorbird gnome
-desc=These gnomes know how to get around!
-size=2
-walkanim=mounted_terrorbird_walk
-readyanim=mounted_terrorbird_ready
-op2=Attack
-vislevel=46
-model1=model_3013_npc
-wanderrange=12
-maxrange=14
-respawnrate=30
-hitpoints=55
-attack=40
-strength=40
-defence=40
-param=stabdefence,16
-param=slashdefence,16
-param=crushdefence,18
-param=magicdefence,15
-param=rangedefence,10
-param=damagetype,^stab_style
-param=attack_anim,mounted_terrorbird_gnome_hands_over_food
-param=defend_anim,mounted_terrorbird_defend
-param=death_anim,mounted_terrorbird_death
-param=attack_sound,terrorbird_attack
-param=defend_sound,terrorbird_hit
-param=death_sound,terrorbird_death
-
-[npc_139]
+[entrana_firebird]
 name=Entrana Fire Bird
 desc=Probably not a chicken.
 walkanim=firebird_walk
@@ -3803,7 +3539,7 @@ wanderrange=15
 maxrange=17
 respawnrate=35
 hitpoints=5
-param=attackbonus,-26
+param=attackbonus,-31
 param=strengthbonus,-26
 param=stabdefence,-26
 param=slashdefence,-26
@@ -3817,8 +3553,9 @@ param=death_anim,firebird_death
 param=attack_sound,terrorbird_attack
 param=defend_sound,terrorbird_hit
 param=death_sound,terrorbird_death
+// osrs stats and Vislvl match 1:1
 
-[npc_140]
+[souless]
 walkanim=souless_walk
 readyanim=souless_ready
 name=Souless
@@ -3844,7 +3581,7 @@ param=retreat,9
 huntmode=cowardly
 huntrange=1
 
-[npc_141]
+[big_wolf]
 size=2
 walkanim=dog_walk
 readyanim=dog_ready
@@ -3876,8 +3613,9 @@ param=death_sound,wolf_death
 param=death_drop,wolf_bones
 huntmode=cowardly
 huntrange=2
+//Stats match osrs version but our version Vislvl is different.
 
-[npc_142]
+[wolf_minion]
 size=2
 walkanim=dog_walk
 readyanim=dog_ready
@@ -3907,8 +3645,9 @@ param=death_sound,wolf_death
 param=death_drop,wolf_bones
 huntmode=cowardly
 huntrange=2
+// osrs stats and Vislvl match 1:1
 
-[npc_143]
+[jungle_wolf]
 name=Jungle Wolf
 desc=A rare jungle wolf - specific to the Kharazi jungle.
 size=2
@@ -3938,8 +3677,9 @@ param=death_sound,wolf_death
 param=death_drop,wolf_bones
 huntmode=cowardly
 huntrange=2
+// osrs stats and Vislvl match 1:1
 
-[npc_144]
+[king_scorpion]
 size=2
 walkanim=scorpion_walk
 readyanim=scorpion_ready
@@ -3971,6 +3711,7 @@ param=death_sound,insect_death
 param=death_drop,null
 huntmode=cowardly
 huntrange=2
+// osrs stats and Vislvl match 1:1
 
 [npc_145]
 hasalpha=yes
@@ -4014,14 +3755,13 @@ param=rangedefence,30
 param=damagetype,^slash_style
 param=attack_anim,human_sword_slash
 param=defend_anim,human_sword_defend2
-// param=attack_anim,human_sword_transslash
-// param=defend_anim,earthwarrior_def
 param=death_anim,earthwarrior_death
 param=attack_sound,hacksword_slash
 param=defend_sound,ice_warrior_hit
 param=death_sound,ice_warrior_death
 huntmode=cowardly
 huntrange=1
+//Stats match osrs version but our version Vislvl is different.
 
 [npc_146]
 name=Gull
@@ -4224,6 +3964,7 @@ defence=14
 magic=22
 param=magicdefence,3
 huntmode=ranged
+// osrs stats and Vislvl match 1:1
 
 [npc_173]
 name=Invrigar the Necromancer
@@ -4252,6 +3993,7 @@ strength=17
 defence=14
 magic=18
 param=magicdefence,3
+// osrs stats and Vislvl match 1:1
 
 [dark_wizard_water]
 name=Dark wizard
@@ -4284,10 +4026,10 @@ defence=5
 magic=6
 param=magicdefence,3
 huntmode=ranged
-// osrs
 huntrange=3
+// osrs stats and Vislvl match 1:1
 
-[npc_175]
+[mugger]
 walkanim=human_walk_f,human_walk_b,human_walk_l,human_walk_r
 readyanim=human_ready
 name=Mugger
@@ -4316,11 +4058,10 @@ attack=5
 strength=5
 defence=5
 param=strengthbonus,-21
-param=damagetype,^crush_style
 param=defend_anim,human_unarmedblock
 huntmode=cowardly
-// osrs
 huntrange=5
+//Stats match osrs version but our version Vislvl is different.
 
 [npc_176]
 name=Witch
@@ -4347,10 +4088,16 @@ model5=model_428_idk
 model6=model_361_obj_wear
 model7=model_377_obj_wear
 hitpoints=10
+attack=25
+strength=25
+defence=25
+magic=30
 param=attack_anim,human_unarmedkick
 param=attack_sound,unarmed_kick
 param=defend_sound,female_hit
 param=death_sound,female_death
+// our version vislvl doesn't match. data taken wikipedia.
+// https://oldschool.runescape.wiki/w/Witch_(monster)#Draynor_Manor
 
 [npc_177]
 name=Witch
@@ -4375,10 +4122,16 @@ model5=model_428_idk
 model6=model_361_obj_wear
 model7=model_377_obj_wear
 hitpoints=10
+attack=25
+strength=25
+defence=25
+magic=30
 param=attack_anim,human_unarmedkick
 param=attack_sound,unarmed_kick
 param=defend_sound,female_hit
 param=death_sound,female_death
+// our version vislvl doesn't match. data taken wikipedia.
+// https://oldschool.runescape.wiki/w/Witch_(monster)#Al_Kharid
 
 [black_knight]
 name=Black Knight
@@ -4411,6 +4164,7 @@ hitpoints=42
 attack=25
 strength=25
 defence=25
+param=attackrate,5
 param=attackbonus,18
 param=strengthbonus,16
 param=stabdefence,73
@@ -4418,12 +4172,12 @@ param=slashdefence,76
 param=crushdefence,70
 param=magicdefence,-11
 param=rangedefence,72
-param=attackrate,5
 param=damagetype,^slash_style
 param=attack_anim,human_sword_slash
 param=defend_anim,human_sword_defend2
 param=attack_sound,hacksword_slash
 // param=defend_sound,steel
+//Stats match osrs version but our version Vislvl is different.
 
 [black_knight_aggre]
 name=Black Knight
@@ -4456,6 +4210,7 @@ hitpoints=42
 attack=25
 strength=25
 defence=25
+param=attackrate,5
 param=attackbonus,18
 param=strengthbonus,16
 param=stabdefence,73
@@ -4463,7 +4218,6 @@ param=slashdefence,76
 param=crushdefence,70
 param=magicdefence,-11
 param=rangedefence,72
-param=attackrate,5
 param=damagetype,^slash_style
 param=attack_anim,human_sword_slash
 param=defend_anim,human_sword_defend2
@@ -4471,6 +4225,7 @@ param=attack_sound,2H_slash
 // param=defend_sound,steel
 huntmode=aggressive_melee
 huntrange=5
+//Stats match osrs version but our version Vislvl is different.
 
 [highwayman]
 walkanim=human_walk_f,human_walk_b,human_walk_l,human_walk_r
@@ -4521,6 +4276,7 @@ param=attack_sound,hacksword_slash
 // https://www.youtube.com/watch?v=ympIobOpG4M
 // year 2024 attack seq_386 defend seq_387 and same animations used 2007 + original osrs launch
 huntmode=ranged
+// osrs stats and Vislvl match 1:1
 
 [chaos_druid]
 walkanim=human_walk_f,human_walk_b,human_walk_l,human_walk_r
@@ -4547,8 +4303,9 @@ hitpoints=20
 attack=8
 strength=8
 defence=12
-param=damagetype,^crush_style
+magic=10
 huntmode=cowardly
+// osrs stats and Vislvl match 1:1
 
 [npc_182]
 name=Pirate
@@ -4587,6 +4344,7 @@ param=attack_sound,hacksword_slash
 huntmode=cowardly
 huntrange=1
 category=pirate
+//Stats match osrs version but our version Vislvl is different.
 
 [npc_183]
 name=Pirate
@@ -4632,6 +4390,7 @@ param=attack_sound,hacksword_slash
 huntmode=cowardly
 huntrange=1
 category=pirate
+//Stats match osrs version but our version Vislvl is different.
 
 [npc_184]
 name=Pirate
@@ -4676,6 +4435,7 @@ param=attack_sound,hacksword_slash
 category=pirate
 huntmode=cowardly
 huntrange=1
+//Stats match osrs version but our version Vislvl is different.
 
 [npc_185]
 name=Pirate
@@ -4717,6 +4477,7 @@ param=attack_sound,hacksword_slash
 category=pirate
 huntmode=cowardly
 huntrange=1
+//Stats match osrs version but our version Vislvl is different.
 
 [thug]
 name=Thug
@@ -4752,6 +4513,7 @@ param=attack_anim,human_sword_stab
 param=defend_anim,human_sword_defend2
 param=attack_sound,hacksword_stab
 members=yes
+// osrs stats and Vislvl match 1:1
 
 [rogue]
 name=Rogue
@@ -4791,6 +4553,7 @@ param=defend_anim,human_sword_defend2
 param=attack_sound,hacksword_stab
 huntmode=cowardly
 huntrange=1
+//Stats match osrs version but our version Vislvl is different.
 
 [monk_of_zamorak_22]
 walkanim=human_walk_f,human_walk_b,human_walk_l,human_walk_r
@@ -4813,17 +4576,16 @@ model5=model_176_idk
 model6=model_256_npc
 wanderrange=12
 maxrange=14
-// TODO find repspawn rate
 respawnrate=50
 hitpoints=20
 attack=18
 strength=18
 defence=22
 magic=25
-param=damagetype,^crush_style
 category=monk_of_zamorak
 huntmode=cowardly
 huntrange=1
+// osrs stats and Vislvl match 1:1
 
 [monk_of_zamorak_17]
 walkanim=human_walk_f,human_walk_b,human_walk_l,human_walk_r
@@ -4853,10 +4615,10 @@ attack=8
 strength=8
 defence=12
 magic=25
-param=damagetype,^crush_style
 category=monk_of_zamorak
 huntmode=cowardly
 huntrange=1
+// osrs stats and Vislvl match 1:1
 
 [monk_of_zamorak_45]
 walkanim=human_walk_f,human_walk_b,human_walk_l,human_walk_r
@@ -4885,10 +4647,10 @@ attack=38
 strength=38
 defence=42
 magic=40
-param=damagetype,^crush_style
 category=monk_of_zamorak
 huntmode=cowardly
 huntrange=1
+// osrs stats and Vislvl match 1:1
 
 [tribesman]
 name=Tribesman
@@ -4928,6 +4690,7 @@ param=poison_severity,55
 // huntmode is just a guess
 huntmode=cowardly
 huntrange=1
+// osrs stats and Vislvl match 1:1
 
 [dark_warrior]
 name=Dark warrior
@@ -4973,6 +4736,7 @@ param=attack_sound,hacksword_slash
 // param=defend_sound,steel
 huntmode=cowardly
 huntrange=1
+// osrs stats and Vislvl match 1:1 check TODO: check hunt range again
 
 [chaos_druid_warrior]
 name=Chaos druid warrior
@@ -5008,7 +4772,6 @@ param=slashdefence,17
 param=crushdefence,14
 param=magicdefence,-4
 param=rangedefence,14
-param=damagetype,^crush_style
 param=attack_anim,human_blunt_crush
 param=defend_anim,human_blunt_defend1
 param=attack_sound,mace_crush
@@ -5016,6 +4779,7 @@ param=attack_sound,mace_crush
 // osrs attack sound warhammer_crush
 huntmode=cowardly
 huntrange=1
+// osrs stats and Vislvl match 1:1
 
 [necromancer]
 walkanim=human_walk_f,human_walk_b,human_walk_l,human_walk_r
@@ -5043,92 +4807,7 @@ hitpoints=40
 attack=18
 strength=18
 defence=18
-
-[bandit]
-name=Bandit
-desc=A wilderness outlaw.
-walkanim=human_walk_f,human_walk_b,human_walk_l,human_walk_r
-readyanim=human_ready
-op2=Attack
-vislevel=21
-recol1s=2340
-recol1d=4226
-recol2s=14724
-recol2d=4234
-recol3s=8386
-recol3d=4226
-recol4s=31649
-recol4d=4226
-model1=model_215_idk
-model2=model_248_idk
-model3=model_292_idk
-model4=model_151_idk
-model5=model_176_idk
-model6=model_254_idk
-model7=model_185_obj_wear
-model8=model_243_obj_wear
-model9=model_323_obj_wear
-model10=model_518_obj_wear
-hitpoints=27
-attack=17
-strength=17
-defence=17
-param=attackbonus,11
-param=strengthbonus,12
-param=slashdefence,3
-param=crushdefence,2
-param=damagetype,^stab_style
-param=attack_anim,human_sword_stab
-param=defend_anim,human_sword_defend2
-param=attack_sound,stabsword_stab
-huntmode=cowardly
-// osrs
-huntrange=6
-
-[guard_bandit]
-name=Guard Bandit
-desc=Bandit Camp guard.
-walkanim=human_walk_f,human_walk_b,human_walk_l,human_walk_r
-readyanim=human_ready
-op2=Attack
-vislevel=21
-recol1s=2340
-recol1d=4226
-recol2s=14724
-recol2d=4234
-recol3s=8386
-recol3d=4226
-recol4s=31649
-recol4d=4226
-model1=model_215_idk
-model2=model_248_idk
-model3=model_292_idk
-model4=model_151_idk
-model5=model_176_idk
-model6=model_254_idk
-model7=model_185_obj_wear
-model8=model_243_obj_wear
-model9=model_323_obj_wear
-model10=model_518_obj_wear
-model11=model_517_obj_wear
-hitpoints=27
-attack=17
-strength=17
-defence=17
-param=attackbonus,11
-param=strengthbonus,12
-param=stabdefence,4
-param=slashdefence,8
-param=crushdefence,5
-param=magicdefence,1
-param=rangedefence,4
-param=damagetype,^stab_style
-param=attack_anim,human_sword_stab
-param=defend_anim,human_sword_defend2
-param=attack_sound,stabsword_stab
-huntmode=cowardly
-// osrs
-huntrange=6
+//Stats match osrs version but our version Vislvl is different.
 
 [npc_197]
 name=Barbarian guard
@@ -5158,12 +4837,25 @@ model6=model_274_idk
 model7=model_242_npc
 model8=model_185_obj_wear
 model9=model_550_obj_wear
-// damage style
+respawnrate=25
+hitpoints=14
+attack=6
+strength=6
+defence=2
+param=attackrate,6
+param=attackbonus,8
+param=strengthbonus,10
+param=stabdefence,1
+param=slashdefence,1
+param=damagetype,^slash_style
 param=attack_anim,human_baxe_slash
 param=defend_anim,human_baxe_defend2
 param=attack_sound,baxe_slash
 // param=defend_sound,swordclash2
-// possibly the same defend sound as gunthor the brave on barbarian.
+category=barbarian
+// guess.. used these npc data.
+// https://oldschool.runescape.wiki/w/Barbarian_(historical)
+// https://oldschool.runescape.wiki/w/Barbarian
 
 [gunthor_the_brave]
 name=Gunthor the brave
@@ -5212,95 +4904,7 @@ param=attack_anim,human_baxe_slash
 param=defend_anim,human_baxe_defend2
 param=attack_sound,baxe_slash
 // param=defend_sound,swordclash2
-
-[salarin_the_twisted]
-name=Salarin the twisted
-desc=Twisted by name, twisted by nature.
-walkanim=human_walk_f,human_walk_b,human_walk_l,human_walk_r
-readyanim=human_ready
-desc=A crazy evil druid
-op2=Attack
-vislevel=70
-recol1s=2340
-recol1d=19588
-recol2s=14724
-recol2d=19588
-recol3s=6273
-recol3d=22850
-model1=model_203_idk
-model2=model_181_idk
-model3=model_250_idk
-model4=model_292_idk
-model5=model_170_idk
-model6=model_176_idk
-model7=model_260_npc
-respawnrate=50
-hitpoints=70
-attack=58
-strength=58
-defence=62
-param=damagetype,^slash_style
-param=max_dealt,0
-
-[monk_entrana]
-name=Monk
-desc=A holy man.
-walkanim=human_walk_f,human_walk_b,human_walk_l,human_walk_r
-readyanim=human_ready
-op1=Talk-to
-op2=Attack
-vislevel=5
-recol1s=2340
-recol1d=13539
-recol2s=14724
-recol2d=13539
-model1=model_230_idk
-model2=model_181_idk
-model3=model_246_idk
-model4=model_292_idk
-model5=model_170_idk
-model6=model_176_idk
-model7=model_260_npc
-head1=model_63_idk_head
-wanderrange=3
-maxrange=5
-respawnrate=25
-hitpoints=15
-attack=2
-strength=2
-defence=3
-param=damagetype,^crush_style
-param=retreat,7
-
-[forester_mcgrubor]
-vislevel=hide
-name=Forester
-desc=He likes to cut down trees.
-walkanim=human_walk_f,human_walk_b,human_walk_l,human_walk_r
-readyanim=human_ready
-op1=Talk-to
-recol1s=8386
-recol1d=7424
-recol2s=14724
-recol2d=6336
-recol3s=14801
-recol3d=24075
-recol4s=31649
-recol4d=4226
-model1=model_217_idk
-model2=model_247_idk
-model3=model_292_idk
-model4=model_151_idk
-model5=model_179_obj_wear
-model6=model_274_idk
-model7=model_181_idk
-model8=model_196_npc
-model9=model_326_idk
-model10=model_323_obj_wear
-model11=model_510_obj_wear
-head1=model_55_idk_head
-head2=model_79_idk_head
-head3=model_39_npc_head
+// osrs stats and Vislvl match 1:1
 
 [thrantax_the_mighty]
 name=Thrantax The Mighty
@@ -5338,74 +4942,7 @@ param=defend_sound,ghost_hit
 param=death_sound,ghost_death
 param=death_drop,null
 param=undead,^true
-
-[npc_282]
-name=Thief
-desc=A dastardly blanket thief.
-walkanim=human_walk_f,human_walk_b,human_walk_l,human_walk_r
-readyanim=human_ready
-op2=Attack
-vislevel=14
-recol1s=2340
-recol1d=9452
-model1=model_215_idk
-model2=model_246_idk
-model3=model_311_obj_wear
-model4=model_169_npc
-model5=model_179_obj_wear
-model6=model_254_idk
-model7=model_185_obj_wear
-model8=model_519_obj_wear
-respawnrate=25
-hitpoints=17
-attack=14
-strength=10
-defence=9
-param=attackbonus,6
-param=strengthbonus,7
-param=stabdefence,8
-param=slashdefence,13
-param=crushdefence,14
-param=magicdefence,4
-param=rangedefence,9
-param=attack_anim,human_sword_stab
-param=defend_anim,human_sword_defend2
-param=attack_sound,stabsword_stab
-param=retreat,8
-
-[head_thief]
-name=Head Thief
-desc=The head of the treacherous blanket stealing gang.
-walkanim=human_walk_f,human_walk_b,human_walk_l,human_walk_r
-readyanim=human_ready
-op2=Attack
-vislevel=26
-recol1s=2340
-recol1d=9452
-model1=model_215_idk
-model2=model_247_idk
-model3=model_311_obj_wear
-model4=model_169_npc
-model5=model_179_obj_wear
-model6=model_254_idk
-model7=model_185_obj_wear
-model8=model_518_obj_wear
-respawnrate=25
-hitpoints=37
-attack=24
-strength=18
-defence=16
-param=attackrate,5
-param=strengthbonus,10
-param=stabdefence,8
-param=slashdefence,14
-param=crushdefence,15
-param=magicdefence,4
-param=rangedefence,9
-param=damagetype,^slash_style
-param=attack_anim,human_sword_slash
-param=defend_anim,human_sword_defend2
-param=attack_sound,stabsword_slash
+// Check the data with Monster examine. (data verification still in progress)
 
 [doric]
 vislevel=hide
@@ -5427,7 +4964,7 @@ head1=model_4_npc_head
 moverestrict=indoors
 param=death_anim,dwarf_death
 
-[npc_301]
+[twig]
 vislevel=hide
 name=Twig
 desc=Reminds me of playing pooh sticks.
@@ -5497,125 +5034,6 @@ model1=model_loc_42_8
 wanderrange=0
 moverestrict=nomove
 
-[npc_344]
-vislevel=hide
-name=Guard
-desc=He tries to keep order around here.
-walkanim=human_walk_f,human_walk_b,human_walk_l,human_walk_r
-readyanim=human_ready
-op1=Talk-to
-recol1s=15855
-recol1d=8420
-model1=model_208_npc
-model2=model_185_obj_wear
-model3=model_248_idk
-model4=model_311_obj_wear
-model5=model_151_idk
-model6=model_179_obj_wear
-model7=model_254_idk
-model8=model_276_npc
-model9=model_502_obj_wear
-model10=model_541_obj_wear
-head1=model_48_npc_head
-head2=model_80_idk_head
-wanderrange=1
-
-[npc_345]
-vislevel=hide
-name=Guard
-desc=He tries to keep order around here.
-walkanim=human_walk_f,human_walk_b,human_walk_l,human_walk_r
-readyanim=human_ready
-op1=Talk-to
-recol1s=15855
-recol1d=8420
-model1=model_208_npc
-model2=model_185_obj_wear
-model3=model_248_idk
-model4=model_311_obj_wear
-model5=model_151_idk
-model6=model_179_obj_wear
-model7=model_254_idk
-model8=model_276_npc
-model9=model_508_obj_wear
-head1=model_48_npc_head
-head2=model_80_idk_head
-wanderrange=1
-
-[npc_346]
-vislevel=hide
-name=Guard
-desc=He tries to keep order around here.
-walkanim=human_walk_f,human_walk_b,human_walk_l,human_walk_r
-readyanim=human_ready
-op1=Talk-to
-recol1s=15855
-recol1d=8420
-model1=model_208_npc
-model2=model_185_obj_wear
-model3=model_248_idk
-model4=model_311_obj_wear
-model5=model_151_idk
-model6=model_179_obj_wear
-model7=model_254_idk
-model8=model_276_npc
-model9=model_508_obj_wear
-head1=model_48_npc_head
-head2=model_80_idk_head
-
-[npc_359]
-vislevel=hide
-name=Man
-desc=One of RuneScapes' many citizens.
-walkanim=human_walk_f,human_walk_b,human_walk_l,human_walk_r
-readyanim=human_ready
-recol1s=14801
-recol1d=12547
-recol2s=2340
-recol2d=6208
-recol3s=14724
-recol3d=16808
-recol4s=24075
-recol4d=12547
-model1=model_230_idk
-model2=model_185_obj_wear
-model3=model_250_idk
-model4=model_299_npc
-model5=model_159_npc
-model6=model_179_obj_wear
-model7=model_275_idk
-head1=model_63_idk_head
-head2=model_82_idk_head
-
-[npc_361]
-name=Woman
-desc=One of RuneScapes' many citizens.
-walkanim=human_walk_f,human_walk_b,human_walk_l,human_walk_r
-readyanim=human_ready
-op1=Talk-to
-op2=Attack
-vislevel=12
-recol1s=14801
-recol1d=12547
-recol2s=2340
-recol2d=6208
-recol3s=24075
-recol3d=12547
-model1=model_404_npc
-model2=model_478_npc
-model3=model_351_idk
-model4=model_353_idk
-model5=model_437_idk
-model6=model_358_idk
-head1=model_121_npc_head
-respawnrate=50
-hitpoints=13
-attack=10
-strength=10
-defence=10
-param=defend_sound,female_hit
-param=death_sound,female_death
-
 [npc_365]
 name=Paladin
 desc=A military man.
@@ -5664,8 +5082,9 @@ param=attack_anim,human_sword_slash
 param=defend_anim,human_sword_defend2
 param=attack_sound,hacksword_slash
 // param=defend_sound,blade3
+// data taken normal paladin
 
-[npc_368]
+[Gate_guard_varrock]
 vislevel=hide
 name=Guard
 desc=He tries to keep order around here.
@@ -5692,37 +5111,6 @@ head1=model_66_npc_head
 head2=model_80_idk_head
 wanderrange=0
 moverestrict=nomove
-
-[npc_374]
-name=Ogre
-desc=Big, ugly, and smelly.
-size=2
-walkanim=ogre_walk
-readyanim=ogre_ready
-op2=Attack
-vislevel=53
-model1=model_2878_npc
-model2=model_2874_npc
-respawnrate=50
-hitpoints=60
-attack=54
-strength=54
-defence=54
-param=attackbonus,8
-param=strengthbonus,6
-param=stabdefence,19
-param=slashdefence,23
-param=crushdefence,24
-param=damagetype,^crush_style
-param=attack_anim,ogre_attack
-param=defend_anim,ogre_block
-param=death_anim,ogre_death
-param=attack_sound,giant_attack
-param=defend_sound,giant_hit
-param=death_sound,giant_death
-param=death_drop,big_bones
-huntmode=cowardly
-huntrange=2
 
 [npc_382]
 vislevel=hide
@@ -5814,6 +5202,7 @@ param=attack_sound,cow_attack
 param=defend_sound,cow_hit
 param=death_sound,cow_death
 category=cow
+// osrs stats and Vislvl match 1:1
 
 [npc_401]
 vislevel=hide
@@ -5872,54 +5261,6 @@ head1=model_107_npc_head
 wanderrange=3
 param=death_sound,female_death
 
-[suit_of_armour]
-name=Suit of armour
-desc=A dusty old suit of armour.
-walkanim=human_walk_f,human_walk_b,human_walk_l,human_walk_r
-op2=Attack
-vislevel=19
-recol1s=6273
-recol1d=15360
-recol2s=10570
-recol2d=15855
-recol3s=15855
-recol3d=10570
-recol4s=24075
-recol4d=0
-recol5s=14798
-recol5d=10570
-recol6s=7296
-recol6d=15360
-model1=model_218_obj_wear
-model2=model_313_npc
-model3=model_164_obj_wear
-model4=model_179_obj_wear
-model5=model_268_obj_wear
-model6=model_185_obj_wear
-model7=model_518_obj_wear
-model8=model_486_obj_wear
-model9=model_3330_obj_wear
-// TODO respawnrate?
-hitpoints=29
-attack=16
-strength=14
-defence=9
-param=attackrate,5
-param=attackbonus,8
-param=strengthbonus,10
-param=stabdefence,46
-param=slashdefence,50
-param=crushdefence,45
-param=magicdefence,-12
-param=rangedefence,45
-param=damagetype,^slash_style
-param=attack_anim,human_sword_slash
-param=defend_anim,human_sword_defend2
-param=attack_sound,stabsword_slash
-param=defend_sound,animated_hit
-param=death_sound,animated_death
-param=death_drop,null
-
 [npc_500]
 vislevel=hide
 name=Mosol Rei
@@ -5973,7 +5314,15 @@ recol1d=22218
 model1=model_2944_npc
 wanderrange=3
 maxrange=20
-// TODO
+// attackrange=
+// TODO: respawnrate
+hitpoints=47
+attack=63
+strength=63
+defence=63
+magic=0
+ranged=0
+param=damagetype,^slash_style
 param=attack_anim,skeleton_attack
 param=defend_anim,skeleton_block
 param=death_anim,skeleton_death
@@ -5983,6 +5332,7 @@ param=death_sound,skeleton_death
 param=undead,^true
 huntmode=cowardly
 huntrange=1
+//Stats match osrs version but our version Vislvl is different.
 
 [npc_503]
 name=Undead One
@@ -5997,7 +5347,22 @@ model1=model_2944_npc
 model2=model_2946_npc
 wanderrange=3
 maxrange=20
-// TODO
+// attackrange=
+// TODO: respawnrate
+hitpoints=47
+attack=55
+strength=55
+defence=55
+magic=0
+ranged=0
+param=attackbonus,7
+param=strengthbonus,5
+param=stabdefence,5
+param=slashdefence,5
+param=crushdefence,3
+param=magicdefence,1
+param=rangedefence,4
+param=damagetype,^slash_style
 param=attack_anim,skeleton_attack
 param=defend_anim,skeleton_block
 param=death_anim,skeleton_death
@@ -6007,6 +5372,7 @@ param=death_sound,skeleton_death
 param=undead,^true
 huntmode=cowardly
 huntrange=1
+//Stats match osrs version but our version Vislvl is different.
 
 [npc_504]
 name=Undead One
@@ -6026,11 +5392,14 @@ recol4d=24393
 recol5s=2081
 recol5d=9408
 model1=model_2931_npc
+//attackrange=
 respawnrate=50
 hitpoints=47
 attack=63
 strength=63
 defence=63
+magic=0
+ranged=0
 param=damagetype,^slash_style
 param=attack_anim,zombie_attack
 param=defend_anim,zombie_block
@@ -6040,7 +5409,9 @@ param=defend_sound,zombie_hit
 param=death_sound,zombie_death
 param=undead,^true
 huntmode=cowardly
+param=death_drop,null
 huntrange=1
+//Stats match osrs version but our version Vislvl is different.
 
 [npc_505]
 name=Undead One
@@ -6063,11 +5434,14 @@ model1=model_2931_npc
 model2=model_2932_npc
 wanderrange=3
 maxrange=20
+//attackrange=
 respawnrate=50
 hitpoints=59
 attack=65
 strength=65
 defence=65
+magic=0
+ranged=0
 param=attackbonus,4
 param=strengthbonus,5
 param=damagetype,^slash_style
@@ -6079,7 +5453,9 @@ param=defend_sound,zombie_hit
 param=death_sound,zombie_death
 param=undead,^true
 huntmode=cowardly
+param=death_drop,null
 huntrange=1
+//Stats match osrs version but our version Vislvl is different.
 
 [npc_506]
 vislevel=hide
@@ -6143,6 +5519,8 @@ param=attack_sound,zombie_attack
 param=defend_sound,zombie_hit
 param=death_sound,zombie_death
 param=undead,^true
+param=death_drop,null
+//check this
 
 [npc_508]
 name=Nazastarool
@@ -6178,6 +5556,8 @@ param=attack_sound,skeleton_attack
 param=defend_sound,skelly_hit
 param=death_sound,skeleton_death
 param=undead,^true
+param=death_drop,null
+//check this
 
 [npc_509]
 name=Nazastarool
@@ -6208,6 +5588,8 @@ param=defend_sound,ghost_hit
 param=death_sound,ghost_death
 param=death_drop,null
 param=undead,^true
+param=death_drop,null
+//check this
 
 [captain_shanks]
 vislevel=hide
@@ -6487,6 +5869,7 @@ param=death_sound,demon_death
 param=death_drop,ashes
 huntmode=cowardly
 huntrange=3
+//Stats match osrs version but our version Vislvl is different.
 
 [imp]
 name=Imp
@@ -6519,75 +5902,7 @@ param=death_sound,imp_death
 param=death_drop,ashes
 param=retreat,4
 // https://oldschool.runescape.wiki/w/Demon_(attribute)
-
-[npc_726]
-vislevel=hide
-name=Man
-desc=One of RuneScapes' many citizens.
-walkanim=human_walk_f,human_walk_b,human_walk_l,human_walk_r
-readyanim=human_ready
-op1=Talk-to
-recol1s=14801
-recol1d=24075
-recol2s=2340
-recol2d=6208
-model1=model_235_idk
-model2=model_185_obj_wear
-model3=model_250_idk
-model4=model_310_idk
-model5=model_173_npc
-model6=model_176_idk
-model7=model_275_idk
-head1=model_67_idk_head
-head2=model_82_idk_head
-
-[npc_727]
-vislevel=hide
-name=Man
-desc=One of RuneScapes' many citizens.
-walkanim=human_walk_f,human_walk_b,human_walk_l,human_walk_r
-readyanim=human_ready
-op1=Talk-to
-recol1s=14801
-recol1d=24075
-recol2s=2340
-recol2d=6208
-recol3s=14724
-recol3d=21000
-model1=model_235_idk
-model2=model_185_obj_wear
-model3=model_250_idk
-model4=model_310_idk
-model5=model_151_idk
-model6=model_179_obj_wear
-model7=model_275_idk
-head1=model_67_idk_head
-head2=model_82_idk_head
-
-[npc_730]
-vislevel=hide
-name=Man
-desc=One of RuneScapes' many citizens.
-walkanim=human_walk_f,human_walk_b,human_walk_l,human_walk_r
-readyanim=human_ready
-op1=Talk-to
-recol1s=14801
-recol1d=12547
-recol2s=2340
-recol2d=6208
-recol3s=14724
-recol3d=16808
-recol4s=24075
-recol4d=12547
-model1=model_214_idk
-model2=model_185_obj_wear
-model3=model_250_idk
-model4=model_310_idk
-model5=model_173_npc
-model6=model_179_obj_wear
-model7=model_275_idk
-head1=model_52_idk_head
-head2=model_82_idk_head
+// osrs (check wander)
 
 [bartender_dancingdonkey]
 vislevel=hide
@@ -6747,6 +6062,7 @@ model5=model_259_npc
 model6=model_550_obj_wear
 head1=model_56_obj_wear
 wanderrange=1
+// TODO: maxrange
 respawnrate=50
 hitpoints=25
 attack=18
@@ -6762,6 +6078,7 @@ param=attack_anim,human_baxe_slash
 param=defend_anim,human_baxe_defend2
 param=attack_sound,baxe_slash
 // TODO defend sounds
+// osrs stats match but not Vislvl.
 
 [npc_794]
 vislevel=hide
@@ -6825,50 +6142,9 @@ param=slashdefence,40
 param=crushdefence,20
 param=magicdefence,10
 param=rangedefence,30
-param=damagetype,^crush_style
 param=defend_sound,ice_warrior_hit
 param=death_sound,female_death
-
-[pirate_guard]
-name=Pirate Guard
-desc=A morally ambiguous guard.
-walkanim=human_walk_f,human_walk_b,human_walk_l,human_walk_r
-readyanim=human_ready
-op1=Talk-to
-op2=Attack
-vislevel=19
-recol1s=14724
-recol1d=3171
-recol2s=2340
-recol2d=3171
-recol3s=15855
-recol3d=3171
-model1=model_219_obj_wear
-model2=model_294_obj_wear
-model3=model_151_idk
-model4=model_254_idk
-model5=model_185_obj_wear
-model6=model_179_obj_wear
-model7=model_246_idk
-model8=model_518_obj_wear
-head1=model_57_obj_wear
-wanderrange=1
-maxrange=3
-respawnrate=50
-hitpoints=25
-attack=18
-strength=16
-defence=10
-param=attackbonus,20
-param=strengthbonus,16
-param=stabdefence,30
-param=slashdefence,39
-param=crushdefence,30
-param=damagetype,^slash_style
-param=attack_anim,human_sword_slash
-param=defend_anim,human_sword_defend2
-param=attack_sound,stabsword_slash
-// param=defend_sound,big_bar_mail
+//Stats match osrs version but our version Vislvl is different.
 
 [donovan]
 vislevel=hide
@@ -7394,13 +6670,14 @@ hitpoints=16
 attack=7
 strength=7
 defence=7
-param=damagetype,^crush_style
-param=attack_anim,human_blunt_crush
+magic=0
+ranged=0
 param=defend_anim,human_unarmedblock
 param=attack_sound,baxe_crush
 huntmode=aggressive_melee
 huntrange=1
 // Unknown reason osrs side this npc use unarmed attacks --attack seq_422 defend seq_424--
+//Stats match osrs version but our version Vislvl is different.
 
 [npc_828]
 name=Mercenary
@@ -7436,7 +6713,8 @@ respawnrate=50
 hitpoints=60
 attack=32
 strength=32
-defence=39
+defence=32
+ranged=0
 param=attackbonus,9
 param=strengthbonus,14
 param=stabdefence,17
@@ -7448,6 +6726,11 @@ param=damagetype,^slash_style
 param=attack_anim,human_sword_slash
 param=defend_anim,human_sword_defend2
 param=attack_sound,hacksword_slash
+// https://oldschool.runescape.wiki/w/Rowdy_Guard
+// https://oldschool.runescape.wiki/w/Mercenary
+// after rework all guards and mercenarys have identical stats data. (osrs ver damage type is crush)
+// defence bonus stats taken osrs version Guard. Damagestyle is guess. (notice npc is not same.)
+// late 2004 version Vislvl is 45 like that we have on osrs side currently.
 
 [npc_829]
 name=Mercenary
@@ -7483,7 +6766,8 @@ respawnrate=50
 hitpoints=60
 attack=32
 strength=32
-defence=39
+defence=32
+ranged=0
 param=attackbonus,9
 param=strengthbonus,14
 param=stabdefence,17
@@ -7495,6 +6779,11 @@ param=damagetype,^slash_style
 param=attack_anim,human_sword_slash
 param=defend_anim,human_sword_defend2
 param=attack_sound,hacksword_slash
+// https://oldschool.runescape.wiki/w/Rowdy_Guard
+// https://oldschool.runescape.wiki/w/Mercenary
+// after rework all guards and mercenarys use identical stats data. (osrs ver damage type is crush)
+// defence bonus stats taken osrs version Guard. Damagestyle is guess. (notice npc is not same.)
+// late 2004 version Vislvl is 45 like that we have on osrs side currently.
 
 [npc_830]
 name=Mercenary Captain
@@ -7536,6 +6825,8 @@ hitpoints=80
 attack=32
 strength=29
 defence=32
+ranged=0
+magic=0
 param=attackbonus,9
 param=strengthbonus,14
 param=stabdefence,17
@@ -7547,6 +6838,7 @@ param=damagetype,^slash_style
 param=attack_anim,human_sword_slash
 param=defend_anim,human_sword_defend2
 param=attack_sound,hacksword_slash
+//Stats match osrs version but our version Vislvl is different.
 
 [npc_831]
 name=Captain Siad
@@ -7632,10 +6924,27 @@ model9=model_517_obj_wear
 head1=model_57_obj_wear
 wanderrange=3
 maxrange=3
-// TODO stats data
+hitpoints=60
+attack=32
+strength=32
+defence=32
+ranged=0
+param=attackbonus,9
+param=strengthbonus,14
+param=stabdefence,17
+param=slashdefence,15
+param=crushdefence,19
+param=magicdefence,-3
+param=rangedefence,19
+param=damagetype,^slash_style
 param=attack_anim,human_sword_slash
 param=defend_anim,human_sword_defend2
 param=attack_sound,hacksword_slash
+// https://oldschool.runescape.wiki/w/Rowdy_Guard
+// https://oldschool.runescape.wiki/w/Guard_(Desert_Mining_Camp)#Brown_hair
+// after rework all guards and mercenarys use identical stats data. (osrs ver damage type is crush)
+// defence bonus stats taken osrs version Guard. Damagestyle is guess. (notice npc is not same.)
+// our Vislvl not match wikipedia data.
 
 [npc_852]
 name=Ogre chieftain
@@ -7661,7 +6970,6 @@ param=strengthbonus,7
 param=stabdefence,10
 param=slashdefence,21
 param=crushdefence,16
-param=damagetype,^crush_style
 param=attack_anim,ogre_attack
 param=defend_anim,ogre_block
 param=death_anim,ogre_death
@@ -7671,6 +6979,7 @@ param=death_sound,giant_death
 param=death_drop,big_bones
 huntmode=cowardly
 huntrange=2
+//Stats match osrs version but our version Vislvl is different.
 
 [npc_853]
 vislevel=hide
@@ -7741,7 +7050,6 @@ param=strengthbonus,6
 param=stabdefence,15
 param=slashdefence,27
 param=crushdefence,21
-param=damagetype,^crush_style
 param=attack_anim,ogre_attack
 param=defend_anim,ogre_block
 param=death_anim,ogre_death
@@ -7749,6 +7057,7 @@ param=attack_sound,mace_crush
 // param=defend_sound,blade3_mail
 param=death_sound,giant_death
 param=death_drop,big_bones
+//Stats match osrs version but our version Vislvl is different.
 
 [npc_857]
 name=Ogre guard
@@ -7761,7 +7070,6 @@ vislevel=74
 model1=model_2880_npc
 model2=model_2874_npc
 head1=model_141_npc_head
-param=damagetype,^crush_style
 param=attack_anim,ogre_attack
 param=defend_anim,ogre_block
 param=death_anim,ogre_death
@@ -7769,6 +7077,7 @@ param=attack_sound,mace_crush
 param=defend_sound,giant_hit
 param=death_sound,giant_death
 param=death_drop,big_bones
+//857-862 use same data + vislvl not match.
 
 [npc_858]
 name=Ogre guard
@@ -7781,7 +7090,6 @@ vislevel=74
 model1=model_2880_npc
 model2=model_2874_npc
 head1=model_141_npc_head
-param=damagetype,^crush_style
 param=attack_anim,ogre_attack
 param=defend_anim,ogre_block
 param=death_anim,ogre_death
@@ -7789,6 +7097,7 @@ param=attack_sound,mace_crush
 param=defend_sound,giant_hit
 param=death_sound,giant_death
 param=death_drop,big_bones
+//857-862 use same data + vislvl not match.
 
 [npc_859]
 name=Ogre guard
@@ -7801,7 +7110,6 @@ vislevel=74
 model1=model_2880_npc
 model2=model_2874_npc
 head1=model_141_npc_head
-param=damagetype,^crush_style
 param=attack_anim,ogre_attack
 param=defend_anim,ogre_block
 param=death_anim,ogre_death
@@ -7809,6 +7117,7 @@ param=attack_sound,mace_crush
 param=defend_sound,giant_hit
 param=death_sound,giant_death
 param=death_drop,big_bones
+//857-862 use same data + vislvl not match.
 
 [npc_860]
 name=Ogre guard
@@ -7821,7 +7130,6 @@ vislevel=74
 model1=model_2880_npc
 model2=model_2874_npc
 head1=model_141_npc_head
-param=damagetype,^crush_style
 param=attack_anim,ogre_attack
 param=defend_anim,ogre_block
 param=death_anim,ogre_death
@@ -7829,6 +7137,7 @@ param=attack_sound,mace_crush
 param=defend_sound,giant_hit
 param=death_sound,giant_death
 param=death_drop,big_bones
+//857-862 use same data + vislvl not match.
 
 [npc_861]
 name=Ogre guard
@@ -7841,7 +7150,6 @@ vislevel=74
 model1=model_2880_npc
 model2=model_2874_npc
 head1=model_141_npc_head
-param=damagetype,^crush_style
 param=attack_anim,ogre_attack
 param=defend_anim,ogre_block
 param=death_anim,ogre_death
@@ -7849,6 +7157,7 @@ param=attack_sound,mace_crush
 param=defend_sound,giant_hit
 param=death_sound,giant_death
 param=death_drop,big_bones
+//857-862 use same data + vislvl not match.
 
 [npc_862]
 name=City guard
@@ -7872,7 +7181,6 @@ param=strengthbonus,13
 param=stabdefence,13
 param=slashdefence,24
 param=crushdefence,19
-param=damagetype,^crush_style
 param=attack_anim,ogre_attack
 param=defend_anim,ogre_block
 param=death_anim,ogre_death
@@ -7880,6 +7188,7 @@ param=attack_sound,mace_crush
 param=defend_sound,giant_hit
 param=death_sound,giant_death
 param=death_drop,big_bones
+//Stats match osrs version but our version Vislvl is different.
 
 [npc_863]
 vislevel=hide
@@ -7998,7 +7307,6 @@ param=strengthbonus,13
 param=stabdefence,13
 param=slashdefence,24
 param=crushdefence,19
-param=damagetype,^crush_style
 param=attack_anim,ogre_attack
 param=defend_anim,ogre_block
 param=death_anim,ogre_death
@@ -8006,6 +7314,7 @@ param=attack_sound,mace_stab
 // param=defend_sound,blade3_mail
 param=death_sound,giant_death
 param=death_drop,big_bones
+//Stats match osrs version but our version Vislvl is different.
 
 [npc_871]
 name=Ogre shaman
@@ -8019,7 +7328,7 @@ vislevel=113
 model1=model_2879_npc
 model2=model_2877_npc
 head1=model_141_npc_head
-// TODO
+// https://oldschool.runescape.wiki/w/Ogre_shaman (Trivia)
 respawnrate=51
 param=attack_anim,ogre_attack
 param=magicattack_anim,ogre_attack
@@ -8028,7 +7337,7 @@ param=death_anim,ogre_death
 param=attack_sound,giant_attack
 param=defend_sound,giant_hit
 param=death_sound,giant_death
-param=death_drop,big_bones
+// param=death_drop,big_bones
 
 [npc_872]
 vislevel=hide
@@ -8073,7 +7382,6 @@ model2=model_2874_npc
 head1=model_141_npc_head
 wanderrange=2
 maxrange=4
-param=damagetype,^crush_style
 param=attack_anim,ogre_attack
 param=defend_anim,ogre_block
 param=death_anim,ogre_death
@@ -8081,7 +7389,7 @@ param=attack_sound,giant_attack
 param=defend_sound,giant_hit
 param=death_sound,giant_death
 param=death_drop,big_bones
-// TODO
+//--
 
 [npc_874]
 name=Ogre merchant
@@ -8099,7 +7407,6 @@ model2=model_2874_npc
 head1=model_141_npc_head
 wanderrange=2
 maxrange=4
-param=damagetype,^crush_style
 param=attack_anim,ogre_attack
 param=defend_anim,ogre_block
 param=death_anim,ogre_death
@@ -8107,7 +7414,7 @@ param=attack_sound,giant_attack
 param=defend_sound,giant_hit
 param=death_sound,giant_death
 param=death_drop,big_bones
-// TODO
+//--
 
 [npc_875]
 name=Ogre trader
@@ -8133,7 +7440,7 @@ param=attack_sound,giant_attack
 param=defend_sound,giant_hit
 param=death_sound,giant_death
 param=death_drop,big_bones
-// TODO
+//--
 
 [npc_876]
 name=Ogre trader
@@ -8151,7 +7458,6 @@ model2=model_2874_npc
 head1=model_141_npc_head
 wanderrange=3
 maxrange=5
-param=damagetype,^crush_style
 param=attack_anim,ogre_attack
 param=defend_anim,ogre_block
 param=death_anim,ogre_death
@@ -8159,7 +7465,7 @@ param=attack_sound,giant_attack
 param=defend_sound,giant_hit
 param=death_sound,giant_death
 param=death_drop,big_bones
-// TODO
+//--
 
 [npc_928]
 vislevel=hide
@@ -8221,7 +7527,7 @@ head1=model_52_idk_head
 head2=model_82_idk_head
 wanderrange=1
 maxrange=30
-// TODO respawnrate?
+respawnrate=50
 hitpoints=65
 attack=57
 strength=61
@@ -8230,11 +7536,11 @@ magic=65
 ranged=0
 param=attackbonus,7
 param=strengthbonus,3
-param=rangebonus,7
 param=attack_anim,human_staff_pound
 param=defend_anim,human_staff_def
 param=attack_sound,staff_hit
 // osrs attack sound staff_double
+// TODO: check respawn time.
 
 [npc_930]
 name=Ungadulu
@@ -8268,7 +7574,7 @@ model7=model_181_idk
 model8=model_534_obj_wear
 head1=model_52_idk_head
 head2=model_82_idk_head
-// TODO respawnrate?
+respawnrate=50
 hitpoints=150
 attack=147
 strength=147
@@ -8283,6 +7589,7 @@ param=attack_sound,staff_hit
 // osrs attack sound staff_double
 // sound and animation data taken normal version ungadulu
 // wander distance attack distance missing.
+// TODO: check respawn time.
 
 [jungle_savage]
 name=Jungle Savage
@@ -8329,6 +7636,7 @@ param=defend_anim,human_spear_block
 param=attack_sound,staff_stab
 huntmode=cowardly
 huntrange=1
+//Stats match osrs version but our version Vislvl is different.
 
 [nezikchened]
 name=Nezikchened
@@ -8362,6 +7670,7 @@ param=attack_sound,demon_attack
 param=defend_sound,demon_hit
 param=death_sound,demon_death
 param=death_drop,ashes
+//check this
 
 [npc_935]
 name=Viyeldi
@@ -8392,6 +7701,7 @@ defence=70
 magic=0
 ranged=0
 param=attackbonus,7
+//check this
 
 [npc_936]
 name=San Tojalon
@@ -8428,12 +7738,15 @@ param=slashdefence,22
 param=crushdefence,20
 param=magicdefence,-1
 param=rangedefence,20
+param=damagetype,^stab_style
 param=attack_anim,skeleton_trans_attack
 param=defend_anim,skeleton_trans_block
 param=death_anim,skeleton_trans_death
 param=attack_sound,skeleton_attack
 param=defend_sound,skelly_hit
 param=death_sound,skeleton_death
+param=death_drop,null
+// osrs stats and Vislvl match 1:1
 
 [npc_937]
 name=Irvig Senay
@@ -8470,12 +7783,15 @@ param=slashdefence,31
 param=crushdefence,29
 param=magicdefence,-1
 param=rangedefence,29
+param=damagetype,^slash_style
 param=attack_anim,skeleton_trans_attack
 param=defend_anim,skeleton_trans_block
 param=death_anim,skeleton_trans_death
 param=attack_sound,skeleton_attack
 param=defend_sound,skelly_hit
 param=death_sound,skeleton_death
+param=death_drop,null
+// osrs stats and Vislvl match 1:1
 
 [npc_938]
 name=Ranalph Devere
@@ -8513,12 +7829,15 @@ param=stabdefence,38
 param=slashdefence,40
 param=crushdefence,36
 param=rangedefence,38
+param=damagetype,^slash_style
 param=attack_anim,skeleton_trans_attack
 param=defend_anim,skeleton_trans_block
 param=death_anim,skeleton_trans_death
 param=attack_sound,skeleton_attack
 param=defend_sound,skelly_hit
 param=death_sound,skeleton_death
+param=death_drop,null
+//Stats match osrs version but our version Vislvl is different.
 
 [npc_939]
 name=Boulder
@@ -8547,6 +7866,9 @@ model2=model_2964_npc
 model3=model_2965_npc
 head1=model_10_npc_head
 param=undead,^true
+param=death_anim,ghost_death
+param=death_sound,ghost_death
+param=death_drop,null
 
 [green_dragon]
 size=4
@@ -8584,6 +7906,10 @@ param=death_sound,dragon_death
 param=death_drop,dragon_bones
 huntmode=cowardly
 huntrange=4
+// stats match osrs 1:1 but defence stats don't.
+// but the defense mode matches according to this site 1:1
+// http://web.archive.org/web/20190722072117/https://oldschool.runescape.wiki/w/Green_dragon
+// re check this
 
 [cow_3]
 size=2
@@ -8619,6 +7945,7 @@ param=attack_sound,cow_attack
 param=defend_sound,cow_hit
 param=death_sound,cow_death
 category=cow
+// osrs stats and Vislvl match 1:1
 
 [zamorak_wizard]
 name=Zamorak Wizard
@@ -8656,6 +7983,7 @@ defence=24
 magic=80
 timer=20
 param=magicdefence,3
+//check this
 
 [poison_spider_observatory]
 walkanim=giantspider_walk
@@ -8688,3 +8016,4 @@ param=death_drop,null
 // Tested this npc in osrs, doesnt seem to poison? Seems like the chests have a chance to poison
 huntmode=cowardly
 huntrange=1
+//check this

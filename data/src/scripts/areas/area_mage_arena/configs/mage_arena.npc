@@ -339,12 +339,23 @@ model7=model_260_npc
 model8=model_323_obj_wear
 model9=model_185_obj_wear
 model10=model_544_obj_wear
-attackrange=10
+maxrange=10
+attackrange=5
 respawnrate=150
 hitpoints=120
 magic=50
+param=defend_anim,human_staff_def
 category=battle_mage
-// osrs defend seq_415
+huntmode=ranged
+huntrange=3
+// osrs stats and Vislvl match 1:1
+// https://oldschool.runescape.wiki/w/Battle_mage
+// But the npc should always attack in that situation if you don't have the right type of Mage Arena god cape on your character.
+// --example mentioned below--
+// if you have a Zamorak cape on.
+// Battle mage Guthix attacks.
+// Battle mage Zamorak does not attack.
+// Battle mage Saradomin attacks.
 
 [battle_mage_saradomin]
 name=Battle mage
@@ -374,12 +385,25 @@ model6=model_265_obj_wear
 model7=model_323_obj_wear
 model8=model_185_obj_wear
 model9=model_554_obj_wear
-attackrange=10
+maxrange=10
+attackrange=5
 respawnrate=150
 hitpoints=120
 magic=50
+param=defend_anim,human_staff_def
 category=battle_mage
-// osrs defend seq_415
+huntmode=ranged
+huntrange=3
+// osrs stats and Vislvl match 1:1
+// https://oldschool.runescape.wiki/w/Battle_mage
+// On the osrs side 2024 the npc becomes mystical passive towards the player if you are in the area for 10min.
+// (possibly changed on the osrs side at some point?)
+// But the npc should always attack in that situation if you don't have the right type of Mage Arena god cape on your character.
+// --example mentioned below--
+// if you have a Saradomin cape on.
+// Battle mage Guthix attacks.
+// Battle mage Zamorak attacks.
+// Battle mage Saradomin does not attack.
 
 [battle_mage_guthix]
 name=Battle mage
@@ -395,14 +419,27 @@ recol2d=416
 model1=model_2909_npc
 model2=model_2898_npc
 model3=model_2920_npc
-attackrange=10
+maxrange=10
+attackrange=5
 respawnrate=150
 hitpoints=120
 magic=50
+param=magicattack_anim,midget_chanting
+param=defend_anim,midget_block
 param=death_anim,midget_death
 param=attack_sound,gnome_attack
 param=defend_sound,gnome_hit
 param=death_sound,gnome_death
-param=magicattack_anim,midget_chanting
-param=defend_anim,midget_block
 category=battle_mage
+huntmode=ranged
+huntrange=3
+// osrs stats and Vislvl match 1:1
+// https://oldschool.runescape.wiki/w/Battle_mage
+// On the osrs side 2024 the npc becomes mystical passive towards the player if you are in the area for 10min.
+// (possibly changed on the osrs side at some point?)
+// But the npc should always attack in that situation if you don't have the right type of Mage Arena god cape on your character.
+// --example mentioned below--
+// if you have a Guthix cape on.
+// Battle mage Guthix does not attack.
+// Battle mage Zamorak attacks.
+// Battle mage Saradomin attacks.

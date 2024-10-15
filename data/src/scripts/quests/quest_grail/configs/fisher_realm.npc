@@ -311,3 +311,4 @@ param=death_anim,giant_death
 // param=defend_sound,blade5
 // this npc uses human_unarmedpunch and human_death sound for attack and death animations.
 // although npc are classified as Giant based on appearance/animations.
+// Check the data with Monster examine. (data verification still in progress)

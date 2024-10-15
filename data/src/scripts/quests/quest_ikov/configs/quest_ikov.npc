@@ -41,6 +41,7 @@ param=attack_anim,human_sword_stab
 param=defend_anim,human_sword_defend2
 param=attack_sound,hacksword_stab
 // I used Thug npc sound and animation data with this npc
+// Check the data with Monster examine. (data verification still in progress)
 
 [lucien_ardougne]
 name=Lucien
@@ -121,6 +122,7 @@ param=defend_anim,human_sword_defend2
 param=attack_sound,stabsword_slash
 category=guardian_of_armadyl
 // TODO param=defend_sound,steel2
+//Stats match osrs version but our version Vislvl is different.
 
 [guardian_of_armadyl_female]
 name=Guardian of Armadyl
@@ -173,6 +175,7 @@ param=attack_sound,stabsword_slash
 // param=defend_sound,steel2
 param=death_sound,female_death
 category=guardian_of_armadyl
+//Stats match osrs version but our version Vislvl is different.
 
 [winelda]
 name=Winelda
@@ -251,3 +254,4 @@ param=rangedefence,35
 param=attack_sound,giant_attack
 param=defend_sound,giant_hit
 param=death_sound,giant_death
+// Check the data with Monster examine. (data verification still in progress)

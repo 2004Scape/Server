@@ -182,13 +182,11 @@ model4=model_292_idk
 model5=model_170_idk
 model6=model_176_idk
 model7=model_260_npc
-// osrs
-maxrange=8
 attackrange=8
-wanderrange=5
 respawnrate=25
 hitpoints=30
 attack=28
 strength=28
 defence=32
 magic=25
+// wander/max/stats now matches osrs 1:1

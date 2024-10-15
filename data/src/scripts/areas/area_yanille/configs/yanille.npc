@@ -1,3 +1,116 @@
+[sigbert_the_adventurer]
+vislevel=hide
+name=Sigbert the Adventurer
+desc=A bold knight famed for his travels.
+walkanim=human_walk_f,human_walk_b,human_walk_l,human_walk_r
+readyanim=human_staffready
+op1=Talk-to
+recol1s=14724
+recol1d=8386
+recol2s=25313
+recol2d=15855
+recol3s=31649
+recol3d=10570
+recol4s=25313
+recol4d=10570
+recol5s=15360
+recol5d=15
+model1=model_313_npc
+model2=model_208_npc
+model3=model_167_idk
+model4=model_268_obj_wear
+model5=model_185_obj_wear
+model6=model_179_obj_wear
+model7=model_250_idk
+model8=model_323_obj_wear
+model9=model_553_npc
+model10=model_3330_obj_wear
+head1=model_48_npc_head
+head2=model_82_idk_head
+
+[salarin_the_twisted]
+name=Salarin the twisted
+desc=Twisted by name, twisted by nature.
+walkanim=human_walk_f,human_walk_b,human_walk_l,human_walk_r
+readyanim=human_ready
+desc=A crazy evil druid
+op2=Attack
+vislevel=70
+recol1s=2340
+recol1d=19588
+recol2s=14724
+recol2d=19588
+recol3s=6273
+recol3d=22850
+model1=model_203_idk
+model2=model_181_idk
+model3=model_250_idk
+model4=model_292_idk
+model5=model_170_idk
+model6=model_176_idk
+model7=model_260_npc
+respawnrate=50
+hitpoints=70
+attack=58
+strength=58
+defence=62
+param=max_dealt,0
+// osrs stats and Vislvl match 1:1
+
+[frenita]
+vislevel=hide
+name=Frenita
+desc=A recipe for success...in cooking.
+walkanim=human_walk_f,human_walk_b,human_walk_l,human_walk_r
+readyanim=human_ready
+op1=Talk-to
+op3=Trade
+recol1s=14801
+recol1d=24075
+recol2s=6273
+recol2d=32767
+recol3s=14724
+recol3d=17582
+recol4s=2340
+recol4d=24257
+recol5s=7298
+recol5d=17582
+recol6s=8354
+recol6d=24329
+model1=model_378_idk
+model2=model_465_npc
+model3=model_346_idk
+model4=model_353_idk
+model5=model_428_idk
+model6=model_358_idk
+head1=model_103_idk_head
+head2=model_137_npc_head
+moverestrict=indoors
+category=shop_keeper
+param=owned_shop,frenitas_cookery_shop
+param=shop_sell_multiplier,1000
+param=shop_buy_multiplier,550
+param=shop_delta,10
+param=shop_title,Frenita's Cookery Shop.
+param=death_sound,female_death
+
+[bartender_dragoninn]
+vislevel=hide
+name=Bartender
+desc=I could get a beer from him.
+walkanim=human_walk_f,human_walk_b,human_walk_l,human_walk_r
+readyanim=human_ready
+op1=Talk-to
+model1=model_215_idk
+model2=model_246_idk
+model3=model_305_obj_wear
+model4=model_159_npc
+model5=model_176_idk
+model6=model_254_idk
+model7=model_181_idk
+head1=model_53_idk_head
+wanderrange=2
+
 [tower_guard]
 name=Tower guard
 desc=Tries to keep the peace.
@@ -37,6 +150,7 @@ param=attack_anim,human_sword_stab
 param=defend_anim,human_sword_defend2
 param=attack_sound,stabsword_stab
 // param=defend_sound,big_bar_mail
+// // osrs stats match but not Vislvl.
 
 [colonel_radick]
 name=Colonel Radick
@@ -82,88 +196,4 @@ param=attack_anim,human_baxe_slash
 param=defend_anim,human_baxe_defend1
 param=attack_sound,baxe_slash
 // param=defend_sound,blade2
-// TODO defend sound, npc hit speeds do not match the osrs version
-
-[sigbert_the_adventurer]
-vislevel=hide
-name=Sigbert the Adventurer
-desc=A bold knight famed for his travels.
-walkanim=human_walk_f,human_walk_b,human_walk_l,human_walk_r
-readyanim=human_staffready
-op1=Talk-to
-recol1s=14724
-recol1d=8386
-recol2s=25313
-recol2d=15855
-recol3s=31649
-recol3d=10570
-recol4s=25313
-recol4d=10570
-recol5s=15360
-recol5d=15
-model1=model_313_npc
-model2=model_208_npc
-model3=model_167_idk
-model4=model_268_obj_wear
-model5=model_185_obj_wear
-model6=model_179_obj_wear
-model7=model_250_idk
-model8=model_323_obj_wear
-model9=model_553_npc
-model10=model_3330_obj_wear
-head1=model_48_npc_head
-head2=model_82_idk_head
-
-[bartender_dragoninn]
-vislevel=hide
-name=Bartender
-desc=I could get a beer from him.
-walkanim=human_walk_f,human_walk_b,human_walk_l,human_walk_r
-readyanim=human_ready
-op1=Talk-to
-model1=model_215_idk
-model2=model_246_idk
-model3=model_305_obj_wear
-model4=model_159_npc
-model5=model_176_idk
-model6=model_254_idk
-model7=model_181_idk
-head1=model_53_idk_head
-wanderrange=2
-
-[frenita]
-vislevel=hide
-name=Frenita
-desc=A recipe for success...in cooking.
-walkanim=human_walk_f,human_walk_b,human_walk_l,human_walk_r
-readyanim=human_ready
-op1=Talk-to
-op3=Trade
-recol1s=14801
-recol1d=24075
-recol2s=6273
-recol2d=32767
-recol3s=14724
-recol3d=17582
-recol4s=2340
-recol4d=24257
-recol5s=7298
-recol5d=17582
-recol6s=8354
-recol6d=24329
-model1=model_378_idk
-model2=model_465_npc
-model3=model_346_idk
-model4=model_353_idk
-model5=model_428_idk
-model6=model_358_idk
-head1=model_103_idk_head
-head2=model_137_npc_head
-moverestrict=indoors
-category=shop_keeper
-param=owned_shop,frenitas_cookery_shop
-param=shop_sell_multiplier,1000
-param=shop_buy_multiplier,550
-param=shop_delta,10
-param=shop_title,Frenita's Cookery Shop.
-param=death_sound,female_death
+// // osrs stats match but not Vislvl.

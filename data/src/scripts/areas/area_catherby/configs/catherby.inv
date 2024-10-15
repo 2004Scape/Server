@@ -65,9 +65,11 @@ stackall=yes
 allstock=yes
 stock1=bucket_empty,10,50
 stock2=bronze_pickaxe,2,100
+stock3=bowl_empty,2,100
+stock4=cake_tin,2,100
 stock5=tinderbox,2,100
 stock6=chisel,2,100
 stock7=hammer,5,100
 stock8=rope,2,300
 stock9=pot_empty,2,100
-stock10=knife,2,100
+// https://web.archive.org/web/20050209223727/http://www.runehq.com/images/cityguides/catherby12.jpg

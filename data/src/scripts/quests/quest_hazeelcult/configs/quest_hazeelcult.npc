@@ -197,6 +197,7 @@ param=defend_anim,human_sword_defend2
 // TODO: param=attack_sound,
 // https://www.youtube.com/watch?v=ZYPB823IyRk&t=395s
 // https://www.youtube.com/watch?v=Tm1r7zi4oUY
+// Check the data with Monster examine. (data verification still in progress)
 
 [hazeel]
 vislevel=296
@@ -273,6 +274,7 @@ param=defend_anim,human_stafforb_def
 param=attack_sound,staff_hit
 // TODO get real animation ids and sound osrs
 // https://www.youtube.com/watch?v=R5MdMtqvxaM&t=418s
+// // Check the data with Monster examine. (data verification still in progress)
 
 [hazeel_cultist]
 name=Hazeel Cultist
@@ -313,3 +315,4 @@ param=defend_anim,human_staff_def
 param=attack_sound,staff_hit
 // TODO try to get information about the wanderrange/maxrange.
 // https://www.youtube.com/watch?v=tYXi3dBooB4
+// // Check the data with Monster examine. (data verification still in progress)

@@ -1,45 +1,30 @@
-[bartender_port_sarim]
+[redbeard_frank]
 vislevel=hide
-name=Bartender
-desc=I could get a beer from him.
+name=Redbeard Frank
+desc=A pirate.
 walkanim=human_walk_f,human_walk_b,human_walk_l,human_walk_r
 readyanim=human_ready
 op1=Talk-to
-recol1s=2340
-recol1d=14594
-recol2s=32735
-recol2d=15492
+recol1s=6273
+recol1d=22914
+recol2s=14724
+recol2d=4226
 recol3s=14801
 recol3d=24075
-recol4s=13728
-recol4d=15588
-model1=model_217_idk
-model2=model_246_idk
-model3=model_305_obj_wear
-model4=model_151_idk
+recol4s=2340
+recol4d=4234
+model1=model_215_idk
+model2=model_251_idk
+model3=model_299_npc
+model4=model_159_npc
 model5=model_176_idk
-model6=model_259_npc
-head1=model_55_idk_head
-wanderrange=3
-
-[thurgo]
-vislevel=hide
-name=Thurgo
-desc=Dwarvish.
-walkanim=dwarf_walk
-readyanim=dwarf_ready
-op1=Talk-to
-recol1s=15426
-recol1d=8354
-recol2s=24075
-recol2d=18790
-model1=model_2971_npc
-model2=model_2981_npc
-model3=model_2979_npc
-model4=model_2983_npc
-model5=model_2985_npc
-head1=model_1_npc_head
-param=death_anim,dwarf_death
+model6=model_254_idk
+model7=model_181_idk
+model8=model_236_obj_wear
+model9=model_533_obj_wear
+head1=model_53_idk_head
+head2=model_83_idk_head
+head3=model_68_obj_wear
 
 [captain_tobias]
 vislevel=hide
@@ -123,33 +108,36 @@ head1=model_55_idk_head
 head2=model_37_npc_head
 category=sailor
 
-[redbeard_frank]
+[grum]
 vislevel=hide
-name=Redbeard Frank
-desc=A pirate.
+name=Grum
+desc=Loves his gold!
 walkanim=human_walk_f,human_walk_b,human_walk_l,human_walk_r
 readyanim=human_ready
 op1=Talk-to
-recol1s=6273
-recol1d=22914
+op3=Trade
+recol1s=14801
+recol1d=24075
 recol2s=14724
-recol2d=4226
-recol3s=14801
-recol3d=24075
-recol4s=2340
-recol4d=4234
+recol2d=12307
+recol3s=2340
+recol3d=6306
+recol4s=6273
+recol4d=17969
 model1=model_215_idk
-model2=model_251_idk
-model3=model_299_npc
-model4=model_159_npc
-model5=model_176_idk
-model6=model_254_idk
-model7=model_181_idk
-model8=model_236_obj_wear
-model9=model_533_obj_wear
+model2=model_257_npc
+model3=model_247_idk
+model4=model_292_idk
+model5=model_151_idk
+model6=model_176_idk
 head1=model_53_idk_head
-head2=model_83_idk_head
-head3=model_68_obj_wear
+head2=model_79_idk_head
+category=shop_keeper
+param=owned_shop,grum_gold
+param=shop_sell_multiplier,1000
+param=shop_buy_multiplier,700
+param=shop_delta,20
+param=shop_title,Grum's Gold Exchange.
 
 [wydin]
 vislevel=hide
@@ -182,75 +170,6 @@ param=shop_buy_multiplier,700
 param=shop_delta,10
 param=shop_title,Food Store
 moverestrict=indoors
-
-[betty]
-vislevel=hide
-name=Betty
-desc=She seems like a nice sort of person.
-walkanim=human_walk_f,human_walk_b,human_walk_l,human_walk_r
-readyanim=human_ready
-op1=Talk-to
-op3=Trade
-recol1s=14801
-recol1d=24075
-recol2s=6273
-recol2d=0
-recol3s=14724
-recol3d=0
-recol4s=2340
-recol4d=0
-recol5s=8384
-recol5d=32767
-recol6s=7298
-recol6d=0
-model1=model_378_idk
-model2=model_469_idk
-model3=model_332_idk
-model4=model_353_idk
-model5=model_428_idk
-model6=model_361_obj_wear
-model7=model_482_npc
-model8=model_446_obj_wear
-head1=model_103_idk_head
-category=shop_keeper
-param=owned_shop,betty_magic
-param=shop_sell_multiplier,1000
-param=shop_buy_multiplier,600
-param=shop_delta,50
-param=shop_title,Betty's Magic Emporium.
-moverestrict=indoors
-param=death_sound,female_death
-
-[grum]
-vislevel=hide
-name=Grum
-desc=Loves his gold!
-walkanim=human_walk_f,human_walk_b,human_walk_l,human_walk_r
-readyanim=human_ready
-op1=Talk-to
-op3=Trade
-recol1s=14801
-recol1d=24075
-recol2s=14724
-recol2d=12307
-recol3s=2340
-recol3d=6306
-recol4s=6273
-recol4d=17969
-model1=model_215_idk
-model2=model_257_npc
-model3=model_247_idk
-model4=model_292_idk
-model5=model_151_idk
-model6=model_176_idk
-head1=model_53_idk_head
-head2=model_79_idk_head
-category=shop_keeper
-param=owned_shop,grum_gold
-param=shop_sell_multiplier,1000
-param=shop_buy_multiplier,700
-param=shop_delta,20
-param=shop_title,Grum's Gold Exchange.
 
 [gerrant]
 vislevel=hide
@@ -318,6 +237,63 @@ param=shop_delta,10
 param=shop_title,Brian's Battleaxe Bazaar.
 moverestrict=indoors
 
+[betty]
+vislevel=hide
+name=Betty
+desc=She seems like a nice sort of person.
+walkanim=human_walk_f,human_walk_b,human_walk_l,human_walk_r
+readyanim=human_ready
+op1=Talk-to
+op3=Trade
+recol1s=14801
+recol1d=24075
+recol2s=6273
+recol2d=0
+recol3s=14724
+recol3d=0
+recol4s=2340
+recol4d=0
+recol5s=8384
+recol5d=32767
+recol6s=7298
+recol6d=0
+model1=model_378_idk
+model2=model_469_idk
+model3=model_332_idk
+model4=model_353_idk
+model5=model_428_idk
+model6=model_361_obj_wear
+model7=model_482_npc
+model8=model_446_obj_wear
+head1=model_103_idk_head
+category=shop_keeper
+param=owned_shop,betty_magic
+param=shop_sell_multiplier,1000
+param=shop_buy_multiplier,600
+param=shop_delta,50
+param=shop_title,Betty's Magic Emporium.
+moverestrict=indoors
+param=death_sound,female_death
+
+[thurgo]
+vislevel=hide
+name=Thurgo
+desc=Dwarvish.
+walkanim=dwarf_walk
+readyanim=dwarf_ready
+op1=Talk-to
+recol1s=15426
+recol1d=8354
+recol2s=24075
+recol2d=18790
+model1=model_2971_npc
+model2=model_2981_npc
+model3=model_2979_npc
+model4=model_2983_npc
+model5=model_2985_npc
+head1=model_1_npc_head
+param=death_anim,dwarf_death
+
 [monk_of_entrana_sarim]
 vislevel=hide
 name=Monk of Entrana
@@ -341,30 +317,29 @@ model7=model_260_npc
 head1=model_59_idk_head
 head2=model_83_idk_head
 
-[wormbrain]
-name=Wormbrain
-desc=A badly behaved goblin.
-walkanim=goblin_walk
-readyanim=goblin_ready
+[bartender_port_sarim]
+vislevel=hide
+name=Bartender
+desc=I could get a beer from him.
+walkanim=human_walk_f,human_walk_b,human_walk_l,human_walk_r
+readyanim=human_ready
 op1=Talk-to
-op2=Attack
-vislevel=2
-model1=model_2951_npc
-model2=model_2953_npc
-model3=model_2955_npc
-model4=model_2956_npc
-head1=model_144_npc_head
-wanderrange=2
-maxrange=4
-// TODO respawnrate
-hitpoints=5
-param=damagetype,2
-param=attack_anim,goblin_attack_unarmed
-param=defend_anim,goblin_block
-param=death_anim,goblin_death
-param=attack_sound,goblin_attack
-param=defend_sound,goblin_hit
-param=death_sound,goblin_death
+recol1s=2340
+recol1d=14594
+recol2s=32735
+recol2d=15492
+recol3s=14801
+recol3d=24075
+recol4s=13728
+recol4d=15588
+model1=model_217_idk
+model2=model_246_idk
+model3=model_305_obj_wear
+model4=model_151_idk
+model5=model_176_idk
+model6=model_259_npc
+head1=model_55_idk_head
+wanderrange=3
 
 [klarense]
 vislevel=hide
@@ -394,3 +369,28 @@ model8=model_194_npc
 head1=model_53_idk_head
 head2=model_85_idk_head
 head3=model_37_npc_head
+
+[wormbrain]
+name=Wormbrain
+desc=A badly behaved goblin.
+walkanim=goblin_walk
+readyanim=goblin_ready
+op1=Talk-to
+op2=Attack
+vislevel=2
+model1=model_2951_npc
+model2=model_2953_npc
+model3=model_2955_npc
+model4=model_2956_npc
+head1=model_144_npc_head
+wanderrange=2
+maxrange=4
+// TODO respawnrate
+hitpoints=5
+param=attack_anim,goblin_attack_unarmed
+param=defend_anim,goblin_block
+param=death_anim,goblin_death
+param=attack_sound,goblin_attack
+param=defend_sound,goblin_hit
+param=death_sound,goblin_death
+// osrs stats and Vislvl match 1:1

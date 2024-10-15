@@ -1,3 +1,84 @@
+[shipyard_worker1]
+name=Shipyard worker
+desc=Builds ships for a living.
+walkanim=human_walk_f,human_walk_b,human_walk_l,human_walk_r
+readyanim=human_ready
+op1=Talk-to
+op2=Attack
+vislevel=6
+recol1s=2340
+recol1d=8420
+recol2s=6273
+recol2d=14594
+recol3s=14724
+recol3d=15855
+model1=model_215_idk
+model2=model_247_idk
+model3=model_305_obj_wear
+model4=model_151_idk
+model5=model_179_obj_wear
+model6=model_254_idk
+model7=model_185_obj_wear
+head1=model_53_idk_head
+head2=model_79_idk_head
+respawnrate=50
+hitpoints=10
+attack=10
+strength=10
+defence=10
+magic=0
+ranged=0
+param=attackbonus,6
+param=strengthbonus,6
+category=shipyard_worker
+//Stats match osrs version but our version Vislvl is different.
+
+[shipyard_worker2]
+name=Shipyard worker
+desc=Builds ships for a living.
+walkanim=human_walk_f,human_walk_b,human_walk_l,human_walk_r
+readyanim=human_ready
+op1=Talk-to
+op2=Attack
+vislevel=6
+recol1s=2340
+recol1d=8420
+recol2s=14724
+recol2d=15855
+model1=model_230_idk
+model2=model_246_idk
+model3=model_305_obj_wear
+model4=model_173_npc
+model5=model_179_obj_wear
+model6=model_271_idk
+model7=model_185_obj_wear
+model8=model_491_obj_wear
+head1=model_63_idk_head
+respawnrate=50
+hitpoints=10
+attack=10
+strength=10
+defence=10
+magic=0
+ranged=0
+param=attackrate,6
+param=attackbonus,6
+param=strengthbonus,6
+param=attack_anim,human_blunt_crush
+param=defend_anim,human_blunt_defend1
+param=attack_sound,baxe_slash
+category=shipyard_worker
+// osrs attack sound warhammer_crush
+//Stats match osrs version but our version Vislvl is different.
+
+[shark_Shipyard]
+name=Shark
+desc=Let's not go skinny dipping eh?
+walkanim=shark_walk
+vislevel=1
+model1=model_2848_npc
+moverestrict=blocked
+
 [hazelmere]
 name=Hazelmere
 desc=An ancient looking gnome.
@@ -121,11 +202,12 @@ hitpoints=20
 attack=20
 strength=20
 defence=20
+magic=0
+ranged=0
 param=slashdefence,1
 param=crushdefence,1
-param=damagetype,^crush_style
 // trivia npc sounds - https://oldschool.runescape.wiki/w/Foreman
-// osrs
+//Stats match osrs version but our version Vislvl is different.
 
 [grandtree_shipyard_worker]
 name=Shipyard worker
@@ -208,3 +290,4 @@ param=death_sound,black_demon_death
 param=death_drop,ashes
 category=black_demon
 timer=20
+// Check the data with Monster examine. (data verification still in progress)

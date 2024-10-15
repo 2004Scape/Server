@@ -11,6 +11,7 @@ stock4=bucket_empty,3,10
 stock7=tinderbox,2,100
 stock8=chisel,2,100
 stock9=hammer,5,100
+// https://classic.runescape.wiki/w/Rimmington_General_Store
 
 [rommiks_crafty_supplies]
 scope=shared
@@ -25,3 +26,4 @@ stock4=amulet_mould,2,100
 stock5=needle,3,100
 stock6=thread,100,5
 stock7=holy_mould,3,100
+// https://classic.runescape.wiki/w/Rommik%27s_Crafting_Equipment_Shop

@@ -133,7 +133,7 @@ if(npc_type = fire_warrior_of_lesarkus & (inv_total(worn, ice_arrow) = 0 | %dama
     return (false);
 }
 
-if(npc_type = npc_374 & %damagetype <= ^crush_style & npc_range(coord) <= 1) {
+if(npc_type = ogre_combat_camp & %damagetype <= ^crush_style & npc_range(coord) <= 1) {
     mes("These ogres are for ranged combat only.");
     return (false);
 }

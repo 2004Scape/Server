@@ -104,6 +104,7 @@ model9=model_490_obj_wear
 head1=model_63_idk_head
 head2=model_30_npc_head
 head3=model_80_idk_head
+// wander / maxrange is guess
 wanderrange=0
 maxrange=4
 respawnrate=50
@@ -117,3 +118,6 @@ param=damagetype,^slash_style
 param=attack_anim,human_sword_slash
 param=defend_anim,human_sword_defend2
 param=attack_sound,hacksword_slash
+//Stats match osrs version but our version Vislvl is different.
+// stats taken from this npc
+// https://oldschool.runescape.wiki/w/Bedabin_Nomad_Fighter

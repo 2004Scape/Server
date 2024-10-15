@@ -4,13 +4,14 @@ size=40
 restock=yes
 stackall=yes
 allstock=yes
-stock1=pot_empty,5,10
+stock1=pot_empty,3,10
 stock2=jug_empty,2,100
 stock3=shears,2,100
-stock4=bucket_empty,3,10
+stock4=bucket_empty,2,10
 stock7=tinderbox,2,100
 stock8=chisel,2,100
 stock9=hammer,5,100
+// https://classic.runescape.wiki/w/Edgeville_General_Store
 
 [oziach_shop]
 scope=shared
