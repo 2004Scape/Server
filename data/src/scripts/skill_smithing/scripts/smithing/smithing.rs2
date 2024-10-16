@@ -231,7 +231,7 @@ def_struct $struct = oc_param($bar, smithing_anvil_struct);
 stat_advance(smithing, calc($bar_amount * struct_param($struct, xpperbar)));
 // display message
 mes("You hammer the <struct_param($struct, name)> and make <db_getfield($data,smithing:end_message,0)>.");
-p_delay(1);
+p_delay(2);
 // end smithing if count is less than 1
 $count = calc($count - 1);
 // check if player has enough bars
@@ -242,7 +242,6 @@ if (inv_total(inv, $bar) < $bar_amount & $count > 0) {
 if ($count < 1) {
     return;
 }
-p_delay(0);
 // play anim and sound
 anim(human_smithing, 0);
 sound_synth(anvil_4, 0, 0);

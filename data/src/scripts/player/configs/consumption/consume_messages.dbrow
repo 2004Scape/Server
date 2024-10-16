@@ -528,7 +528,7 @@ data=consume_message1,You eat the remaining pizza.
 [half_meat_pizza_consume_messages]
 table=consume_messages_table
 data=consumable,obj_2295
-data=consume_message1,You eat half of the meat pizza.
+data=consume_message1,You eat the remaining meat pizza.
 data=restore_message2,0
 
 [half_anchovy_pizza_consume_messages]

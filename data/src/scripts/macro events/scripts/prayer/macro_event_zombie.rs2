@@ -10,7 +10,7 @@ if ($zombie_coord = null) {
 
 npc_add($zombie_coord, $zombie, 1000); // guess
 npc_say("Brainsssss...");
-%npc_attacking_uid = uid;
+%npc_macro_event_target = uid;
 spotanim_map(zamorak_flame, $zombie_coord, 0, 0);
 if (finduid(uid) = false) {
     return;

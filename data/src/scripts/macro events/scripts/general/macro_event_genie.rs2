@@ -2,7 +2,7 @@
 spotanim_map(small_smokepuff, npc_coord, 124, 0);
 sound_synth(genie_appear, 0, 0);
 npc_say("Greetings <text_gender("master", "mistress")> <displayname>!");
-%npc_attacking_uid = uid;
+%npc_macro_event_target = uid;
 // npc_setmode(none); <-- this is current osrs implementation
 // npc_queue(4, 0, 2); <-- (and sets mode to playerfollow in ai_queue4)
 
@@ -11,7 +11,7 @@ npc_queue(4, 0, 20);
 npc_setmode(playerfollow);
 
 [ai_queue4,macro_event_genie]
-if (finduid(%npc_attacking_uid) = true) {
+if (finduid(%npc_macro_event_target) = true) {
     if (%macro_event_uid ! npc_uid) {
         npc_queue(5, 0, 2); // just incase
         return;
@@ -55,8 +55,8 @@ npc_delay(2);
 ~macro_event_disappear;
 
 [opnpc1,macro_event_genie]
-if (uid ! %npc_attacking_uid) {
-    if (.finduid(%npc_attacking_uid) = true) {
+if (uid ! %npc_macro_event_target) {
+    if (.finduid(%npc_macro_event_target) = true) {
         ~chatnpc("<p,sad>Sorry, I'm trying to talk to <.text_gender("Master", "Mistress")> <.displayname>, but <.text_gender("he", "she")> seems to be ignoring me."); // osrs
     }
     return;
@@ -79,7 +79,7 @@ if (~macro_event_lost = true) {
     npc_queue(5, 0, 0);
     return;
 }
-if (finduid(%npc_attacking_uid) = true) {
+if (finduid(%npc_macro_event_target) = true) {
     if (%macro_event_uid = npc_uid) {
         npc_setmode(playerfollow); // this is here because they used ~chatnpc back in the day, which sets the npc
     }
