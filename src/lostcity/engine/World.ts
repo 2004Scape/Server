@@ -74,6 +74,7 @@ import { preloadClient, preloadClientAsync } from '#lostcity/server/PreloadedPac
 import { FriendsServerOpcodes } from '#lostcity/server/FriendServer.js';
 
 import Environment from '#lostcity/util/Environment.js';
+import { printInfo } from '#lostcity/util/Logger.js';
 import { createWorker } from '#lostcity/util/WorkerFactory.js';
 
 class World {
@@ -348,16 +349,14 @@ class World {
     }
 
     async start(skipMaps = false, startCycle = true): Promise<void> {
-        console.log('Starting world...');
+        printInfo('Starting world');
 
         if (Environment.STANDALONE_BUNDLE) {
-            console.time('World ready');
             await this.loadAsync();
 
             if (!skipMaps) {
                 await this.gameMap.initAsync();
             }
-            console.timeEnd('World ready');
         } else {
             FontType.load('data/pack');
             WordEnc.load('data/pack');
@@ -387,9 +386,9 @@ class World {
             }
 
             if (Environment.WEB_PORT === 80) {
-                console.log(kleur.green().bold('World ready') + kleur.white().bold(': http://localhost'));
+                printInfo(kleur.green().bold('World ready') + kleur.white().bold(': http://localhost'));
             } else {
-                console.log(kleur.green().bold('World ready') + kleur.white().bold(': http://localhost:' + Environment.WEB_PORT));
+                printInfo(kleur.green().bold('World ready') + kleur.white().bold(': http://localhost:' + Environment.WEB_PORT));
             }
         }
 

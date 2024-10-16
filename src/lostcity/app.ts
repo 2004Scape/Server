@@ -4,11 +4,13 @@ import { startWeb } from '#lostcity/web.js';
 
 import World from '#lostcity/engine/World.js';
 
+import { packClient, packServer } from '#lostcity/cache/packall.js';
+
 import TcpServer from '#lostcity/server/TcpServer.js';
 import WSServer from '#lostcity/server/WSServer.js';
 
 import Environment from '#lostcity/util/Environment.js';
-import { packClient, packServer } from './cache/packall.js';
+import { printError, printInfo } from '#lostcity/util/Logger.js';
 import { updateCompiler } from '#lostcity/util/RuneScriptCompiler.js';
 
 if (Environment.BUILD_STARTUP_UPDATE) {
@@ -16,8 +18,7 @@ if (Environment.BUILD_STARTUP_UPDATE) {
 }
 
 if (!fs.existsSync('data/pack/client/config')) {
-    console.log('Packing cache for the first time, please wait until you see the world is ready.');
-    console.log('----');
+    printInfo('Packing cache for the first time, please wait until you see the world is ready.');
 
     try {
         await packServer();
@@ -26,7 +27,7 @@ if (!fs.existsSync('data/pack/client/config')) {
         // todo: delete incorrectly built files
 
         if (err instanceof Error) {
-            console.log(err.message);
+            printError(err.message);
         }
     
         process.exit(1);

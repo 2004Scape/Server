@@ -1,12 +1,17 @@
 import fs from 'fs';
 
+import { LocAngle, LocLayer } from '@2004scape/rsmod-pathfinder';
+import * as rsmod from '@2004scape/rsmod-pathfinder';
+
 import Packet from '#jagex2/io/Packet.js';
 
 import NpcType from '#lostcity/cache/config/NpcType.js';
 import ObjType from '#lostcity/cache/config/ObjType.js';
 import LocType from '#lostcity/cache/config/LocType.js';
 
+import { CoordGrid } from '#lostcity/engine/CoordGrid.js';
 import World from '#lostcity/engine/World.js';
+
 import Zone from '#lostcity/engine/zone/Zone.js';
 import ZoneGrid from '#lostcity/engine/zone/ZoneGrid.js';
 import ZoneMap from '#lostcity/engine/zone/ZoneMap.js';
@@ -15,10 +20,8 @@ import Npc from '#lostcity/entity/Npc.js';
 import Obj from '#lostcity/entity/Obj.js';
 import EntityLifeCycle from '#lostcity/entity/EntityLifeCycle.js';
 import Loc from '#lostcity/entity/Loc.js';
-import { CoordGrid } from '#lostcity/engine/CoordGrid.js';
 
-import { LocAngle, LocLayer } from '@2004scape/rsmod-pathfinder';
-import * as rsmod from '@2004scape/rsmod-pathfinder';
+import { printDebug } from '#lostcity/util/Logger.js';
 
 export default class GameMap {
     private static readonly OPEN: number = 0x0;
@@ -47,7 +50,7 @@ export default class GameMap {
     }
 
     init(): void {
-        console.time('Loading game map');
+        printDebug('Loading game map');
 
         this.loadCsvMap(this.multimap, fs.readFileSync('data/src/maps/multiway.csv', 'ascii').replace(/\r/g, '').split('\n'));
         this.loadCsvMap(this.freemap, fs.readFileSync('data/src/maps/free2play.csv', 'ascii').replace(/\r/g, '').split('\n'));
@@ -66,11 +69,9 @@ export default class GameMap {
             this.loadGround(lands, Packet.load(`${path}m${mx}_${mz}`), mapsquareX, mapsquareZ);
             this.loadLocations(lands, Packet.load(`${path}l${mx}_${mz}`), mapsquareX, mapsquareZ);
         }
-        console.timeEnd('Loading game map');
     }
 
     async initAsync(): Promise<void> {
-        console.time('Loading game map');
         const path: string = 'data/pack/server/maps/';
         // eslint-disable-next-line @typescript-eslint/ban-ts-comment
         // @ts-ignore
@@ -94,7 +95,6 @@ export default class GameMap {
             this.loadLocations(lands, locData, mapsquareX, mapsquareZ);
         });
         await Promise.all(maps);
-        console.timeEnd('Loading game map');
     }
 
     /**
