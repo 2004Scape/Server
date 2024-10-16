@@ -5,6 +5,7 @@ import ScriptVarType from '#lostcity/cache/config/ScriptVarType.js';
 import { ParamValue, ConfigValue, ConfigLine, packStepError, PackedData, isConfigBoolean, getConfigBoolean } from '#lostcity/cache/packconfig/PackShared.js';
 import { lookupParamValue } from '#lostcity/cache/packconfig/ParamConfig.js';
 import ColorConversion from '#lostcity/util/ColorConversion.js';
+import { printWarning } from '#lostcity/util/Logger.js';
 import { CategoryPack, ModelPack, ObjPack, SeqPack } from '#lostcity/util/PackFile.js';
 
 export function parseObjConfig(key: string, value: string): ConfigValue | null | undefined {
@@ -198,7 +199,7 @@ export function packObjConfigs(configs: Map<string, ConfigLine[]>): { client: Pa
 
     const template_for_cert = ObjPack.getByName('template_for_cert');
     if (template_for_cert === -1) {
-        console.log('warning: template_for_cert does not exist, cannot auto-generate certificates');
+        printWarning('template_for_cert does not exist, cannot auto-generate certificates');
     }
 
     for (let i = 0; i < ObjPack.size; i++) {

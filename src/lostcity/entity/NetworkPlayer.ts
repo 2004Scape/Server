@@ -36,6 +36,7 @@ import PlayerInfo from '#lostcity/network/outgoing/model/PlayerInfo.js';
 import NpcInfo from '#lostcity/network/outgoing/model/NpcInfo.js';
 import WorldStat from '#lostcity/engine/WorldStat.js';
 import SetMultiway from '#lostcity/network/outgoing/model/SetMultiway.js';
+import { printError } from '#lostcity/util/Logger.js';
 
 export class NetworkPlayer extends Player {
     client: ClientSocket | null = null;
@@ -135,7 +136,7 @@ export class NetworkPlayer extends Player {
         }
         const encoder: MessageEncoder<OutgoingMessage> | undefined = ServerProtRepository.getEncoder(message);
         if (!encoder) {
-            console.error('No encoder for message', message);
+            printError('No encoder for message ' + message);
             return;
         }
         const prot: ServerProt = encoder.prot;

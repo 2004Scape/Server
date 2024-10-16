@@ -9,9 +9,6 @@ export function packClientWordenc() {
         return;
     }
 
-    //console.log('Packing wordenc.jag');
-    //console.time('wordenc.jag');
-
     /* order:
     'badenc.txt', 'fragmentsenc.txt', 'tldlist.txt', 'domainenc.txt'
     */
@@ -105,5 +102,4 @@ export function packClientWordenc() {
     fragmentsencout.release();
     tldlistout.release();
     domainencout.release();
-    //console.timeEnd('wordenc.jag');
 }

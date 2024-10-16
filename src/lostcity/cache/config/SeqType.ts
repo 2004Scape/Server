@@ -12,7 +12,6 @@ export default class SeqType extends ConfigType {
 
     static load(dir: string) {
         if (!fs.existsSync(`${dir}/server/seq.dat`)) {
-            console.log('Warning: No seq.dat found.');
             return;
         }
 
@@ -24,7 +23,6 @@ export default class SeqType extends ConfigType {
     static async loadAsync(dir: string) {
         const file = await fetch(`${dir}/server/seq.dat`);
         if (!file.ok) {
-            console.log('Warning: No seq.dat found.');
             return;
         }
 

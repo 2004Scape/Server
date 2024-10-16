@@ -11,7 +11,6 @@ export default class CategoryType extends ConfigType {
 
     static load(dir: string) {
         if (!fs.existsSync(`${dir}/server/category.dat`)) {
-            console.log('Warning: No category.dat found.');
             return;
         }
 
@@ -22,7 +21,6 @@ export default class CategoryType extends ConfigType {
     static async loadAsync(dir: string) {
         const file = await fetch(`${dir}/server/category.dat`);
         if (!file.ok) {
-            console.log('Warning: No category.dat found.');
             return;
         }
 

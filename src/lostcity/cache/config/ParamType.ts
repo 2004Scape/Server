@@ -11,7 +11,6 @@ export default class ParamType extends ConfigType {
 
     static load(dir: string) {
         if (!fs.existsSync(`${dir}/server/param.dat`)) {
-            console.log('Warning: No param.dat found.');
             return;
         }
 
@@ -22,7 +21,6 @@ export default class ParamType extends ConfigType {
     static async loadAsync(dir: string) {
         const file = await fetch(`${dir}/server/param.dat`);
         if (!file.ok) {
-            console.log('Warning: No param.dat found.');
             return;
         }
 

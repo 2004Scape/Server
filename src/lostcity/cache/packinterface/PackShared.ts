@@ -1,4 +1,5 @@
 import Packet from '#jagex2/io/Packet.js';
+import { printError } from '#lostcity/util/Logger.js';
 import { loadDir, loadOrder } from '#lostcity/util/NameMap.js';
 import { InterfacePack, ModelPack, ObjPack, SeqPack, VarpPack } from '#lostcity/util/PackFile.js';
 
@@ -158,8 +159,6 @@ type Component = {
 };
 
 export function packInterface(server: boolean) {
-    // console.time('Packing .if');
-
     const component: Record<number, Component> = {};
 
     const interfaceOrder = loadOrder('data/src/pack/interface.order');
@@ -359,12 +358,12 @@ export function packInterface(server: boolean) {
                         case 'inv_count': {
                             const comLink = InterfacePack.getByName(parts[1]);
                             if (comLink === -1) {
-                                console.log(`ERROR: ${com.root} invalid lookup ${parts[1]}`);
+                                printError(`${com.root} invalid lookup ${parts[1]}`);
                             }
 
                             const objLink = ObjPack.getByName(parts[2]);
                             if (objLink === -1) {
-                                console.log(`ERROR: ${com.root} invalid lookup ${parts[2]}`);
+                                printError(`${com.root} invalid lookup ${parts[2]}`);
                             }
 
                             data.p2(comLink);
@@ -374,7 +373,7 @@ export function packInterface(server: boolean) {
                         case 'pushvar': {
                             const varpLink = VarpPack.getByName(parts[1]);
                             if (varpLink === -1) {
-                                console.log(`ERROR: ${com.root} invalid lookup ${parts[1]}`);
+                                printError(`${com.root} invalid lookup ${parts[1]}`);
                             }
 
                             data.p2(varpLink);
@@ -386,12 +385,12 @@ export function packInterface(server: boolean) {
                         case 'inv_contains': {
                             const comLink = InterfacePack.getByName(parts[1]);
                             if (comLink === -1) {
-                                console.log(`ERROR: ${com.root} invalid lookup ${parts[1]}`);
+                                printError(`${com.root} invalid lookup ${parts[1]}`);
                             }
 
                             const objLink = ObjPack.getByName(parts[2]);
                             if (objLink === -1) {
-                                console.log(`ERROR: ${com.root} invalid lookup ${parts[2]}`);
+                                printError(`${com.root} invalid lookup ${parts[2]}`);
                             }
 
                             data.p2(comLink);
@@ -401,7 +400,7 @@ export function packInterface(server: boolean) {
                         case 'testbit': {
                             const varpLink = VarpPack.getByName(parts[1]);
                             if (varpLink === -1) {
-                                console.log(`ERROR: ${com.root} invalid lookup ${parts[1]}`);
+                                printError(`${com.root} invalid lookup ${parts[1]}`);
                             }
 
                             data.p2(varpLink);
@@ -591,7 +590,6 @@ export function packInterface(server: boolean) {
             data.pjstr((src.option as string) ?? '');
         }
     }
-    // console.timeEnd('Packing .if');
 
     return data;
 }

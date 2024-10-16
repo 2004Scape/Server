@@ -1,5 +1,6 @@
 import fs from 'fs';
 import { loadPack } from '#lostcity/util/NameMap.js';
+import { printError } from '#lostcity/util/Logger.js';
 
 const models = loadPack('data/src/pack/model.pack');
 
@@ -120,7 +121,7 @@ for (let i = 0; i < locs.length; i++) {
                 target += '_v';
                 break;
             default:
-                console.error(type);
+                printError(type);
                 process.exit(1);
         }
 

@@ -928,10 +928,7 @@ export default class Player extends PathingEntity {
 
         const opTrigger = this.getOpTrigger();
         const apTrigger = this.getApTrigger();
-    
-        // console.log('operable', opTrigger != null, 'trigger exists', this.inOperableDistance(this.target), 'in range');
-        // console.log('approachable', apTrigger != null, 'trigger exists', this.inApproachDistance(this.apRange, this.target), 'in range');
-    
+
         if (opTrigger && this.target instanceof PathingEntity && this.inOperableDistance(this.target)) {
             const target = this.target;
             this.target = null;
@@ -1757,11 +1754,11 @@ export default class Player extends PathingEntity {
     // ----
 
     runScript(script: ScriptState, protect: boolean = false, force: boolean = false) {
-        // console.log('Executing', script.script.info.scriptName);
+        // printDebug('Executing', script.script.info.scriptName);
 
         if (!force && protect && (this.protect || this.delayed())) {
             // can't get protected access, bye-bye
-            // console.log('No protected access:', script.script.info.scriptName, protect, this.protect);
+            // printDebug('No protected access:', script.script.info.scriptName, protect, this.protect);
             return -1;
         }
 
@@ -1790,11 +1787,11 @@ export default class Player extends PathingEntity {
     }
 
     executeScript(script: ScriptState, protect: boolean = false, force: boolean = false) {
-        // console.log('Executing', script.script.info.scriptName);
+        // printDebug('Executing', script.script.info.scriptName);
 
         const state = this.runScript(script, protect, force);
         if (state === -1) {
-            // console.log('Script did not run', script.script.info.scriptName, protect, this.protect);
+            // printDebug('Script did not run', script.script.info.scriptName, protect, this.protect);
             return;
         }
 

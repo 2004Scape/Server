@@ -26,6 +26,7 @@ import Obj from '#lostcity/entity/Obj.js';
 import Npc from '#lostcity/entity/Npc.js';
 import Player from '#lostcity/entity/Player.js';
 import Environment from '#lostcity/util/Environment.js';
+import { printWarning } from '#lostcity/util/Logger.js';
 
 export type CommandHandler = (state: ScriptState) => void;
 export type CommandHandlers = {
@@ -151,7 +152,7 @@ export default class ScriptRunner {
                 if (state.self instanceof Player) {
                     state.self.wrappedMessageGame(message);
                 } else {
-                    console.warn(message);
+                    printWarning(message);
                 }
             }
         } catch (err: any) {
@@ -171,8 +172,6 @@ export default class ScriptRunner {
                     err.message = '.' + err.message;
                 }
             }
-
-            // console.error(err);
 
             if (state.self instanceof Player) {
                 state.self.wrappedMessageGame(`script error: ${err.message}`);
@@ -230,7 +229,6 @@ export default class ScriptRunner {
 
     static executeInner(state: ScriptState, opcode: number) {
         const handler = ScriptRunner.HANDLERS[opcode];
-        // console.log('Executing', ScriptOpcode[opcode]);
         if (!handler) {
             throw new Error(`Unknown opcode ${opcode}`);
         }

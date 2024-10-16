@@ -966,7 +966,6 @@ const PlayerOps: CommandHandlers = {
         if(state.activePlayer.gender === 1) {
             type -= 7;
         }
-        // console.log(type);
         let colorSlot = -1;
         if (type === 0 || type === 1) {
             colorSlot = 0;

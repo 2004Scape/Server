@@ -74,7 +74,7 @@ import { preloadClient, preloadClientAsync } from '#lostcity/server/PreloadedPac
 import { FriendsServerOpcodes } from '#lostcity/server/FriendServer.js';
 
 import Environment from '#lostcity/util/Environment.js';
-import { printInfo } from '#lostcity/util/Logger.js';
+import { printDebug, printError, printInfo } from '#lostcity/util/Logger.js';
 import { createWorker } from '#lostcity/util/WorkerFactory.js';
 
 class World {
@@ -165,7 +165,7 @@ class World {
                 // TODO make getPlayerByUsername37?
                 const player = this.getPlayerByUsername(fromBase37(username37));
                 if (!player) {
-                    console.error(`FriendThread: player ${fromBase37(username37)} not found`);
+                    printError(`FriendThread: player ${fromBase37(username37)} not found`);
                     return;
                 }
 
@@ -179,7 +179,7 @@ class World {
                 // TODO make getPlayerByUsername37?
                 const player = this.getPlayerByUsername(fromBase37(username37));
                 if (!player) {
-                    console.error(`FriendThread: player ${fromBase37(username37)} not found`);
+                    printError(`FriendThread: player ${fromBase37(username37)} not found`);
                     return;
                 }
 
@@ -202,7 +202,7 @@ class World {
 
                 const player = this.getPlayerByUsername(fromBase37(target));
                 if (!player) {
-                    console.error(`FriendThread: player ${fromBase37(target)} not found`);
+                    printError(`FriendThread: player ${fromBase37(target)} not found`);
                     return;
                 }
 
@@ -210,10 +210,10 @@ class World {
 
                 player.write(new MessagePrivate(fromPlayer, pmId, fromPlayerStaffLvl, chat));
             } else {
-                console.error('Unknown friends opcode: ' + opcode);
+                printError('Unknown friend message: ' + opcode);
             }
         } catch (err) {
-            console.error(err);
+            console.log(err);
         }
     }
 
@@ -282,7 +282,6 @@ class World {
     }
 
     async loadAsync(): Promise<void> {
-        console.time('Loading packs');
         const count = (await Promise.all([
             NpcType.loadAsync('data/pack'),
             ObjType.loadAsync('data/pack'),
@@ -339,12 +338,15 @@ class World {
         } else {
             this.broadcastMes(`Reloaded ${count} scripts.`);
         }
-        console.timeEnd('Loading packs');
     }
 
     broadcastMes(message: string): void {
         for (const player of this.players) {
-            player.messageGame(message);
+            if (message.includes('\n')) {
+                message.split('\n').forEach(wrap => player.wrappedMessageGame(wrap));
+            } else {
+                player.wrappedMessageGame(message);
+            }
         }
     }
 
@@ -407,9 +409,10 @@ class World {
                 } else if (msg.type === 'dev_failure') {
                     if (msg.error) {
                         console.error(msg.error);
-                    }
 
-                    this.broadcastMes('Error while rebuilding - see console for more info.');
+                        this.broadcastMes(msg.error.replaceAll('data/src/scripts/', ''));
+                        this.broadcastMes('Check the console for more information.');
+                    }
                 }
             });
 
@@ -543,13 +546,16 @@ class World {
             }
 
             if (Environment.NODE_DEBUG_PROFILER) {
-                console.log(`tick ${this.currentTick} took ${this.cycleStats[WorldStat.CYCLE]}ms: ${this.getTotalPlayers()} players`);
-                console.log(`${this.cycleStats[WorldStat.WORLD]} ms world | ${this.cycleStats[WorldStat.CLIENT_IN]} ms client in | ${this.cycleStats[WorldStat.NPC]} ms npcs | ${this.cycleStats[WorldStat.PLAYER]} ms players | ${this.cycleStats[WorldStat.LOGOUT]} ms logout | ${this.cycleStats[WorldStat.LOGIN]} ms login | ${this.cycleStats[WorldStat.ZONE]} ms zones | ${this.cycleStats[WorldStat.CLIENT_OUT]} ms client out | ${this.cycleStats[WorldStat.CLEANUP]} ms cleanup`);
-                console.log('----');
+                printDebug(`tick ${this.currentTick} took ${this.cycleStats[WorldStat.CYCLE]}ms: ${this.getTotalPlayers()} players`);
+                printDebug(`${this.cycleStats[WorldStat.WORLD]} ms world | ${this.cycleStats[WorldStat.CLIENT_IN]} ms client in | ${this.cycleStats[WorldStat.NPC]} ms npcs | ${this.cycleStats[WorldStat.PLAYER]} ms players | ${this.cycleStats[WorldStat.LOGOUT]} ms logout | ${this.cycleStats[WorldStat.LOGIN]} ms login | ${this.cycleStats[WorldStat.ZONE]} ms zones | ${this.cycleStats[WorldStat.CLIENT_OUT]} ms client out | ${this.cycleStats[WorldStat.CLEANUP]} ms cleanup`);
+                printDebug('----');
             }
         } catch (err) {
-            console.error('[World] eep eep cabbage! An unhandled error occurred during the cycle:', err);
-            console.error('[World] Removing all players...');
+            if (err instanceof Error) {
+                printError('eep eep cabbage! An unhandled error occurred during the cycle: ' + err.message);
+            }
+
+            printError('Removing all players...');
 
             for (const player of this.players) {
                 await this.removePlayer(player);
@@ -557,8 +563,8 @@ class World {
 
             // TODO inform Friends server that the world has gone offline
 
-            console.error('[World] All players removed.');
-            console.error('[World] Closing the server.');
+            printError('All players removed.');
+            printError('Closing the server.');
             process.exit(1);
         }
     }
@@ -615,12 +621,12 @@ class World {
                 // there was an error adding or removing them, try again next tick...
                 // ex: server is full on npc IDs (did we have a leak somewhere?) and we don't want to re-use the last ID (syncing related)
                 if (npc.lifecycle === EntityLifeCycle.RESPAWN) {
-                    console.error('[World] An unhandled error happened while respawning a NPC');
+                    printError('[World] An unhandled error occurred while respawning a NPC');
                 } else if (npc.lifecycle === EntityLifeCycle.DESPAWN) {
-                    console.error('[World] An unhandled error happened while despawning a NPC');
+                    printError('[World] An unhandled error occurred while despawning a NPC');
                 }
 
-                console.error(`[World] NPC type:${npc.type} lifecycle:${npc.lifecycle} ID:${npc.nid}`);
+                printError(`[World] NPC type:${npc.type} lifecycle:${npc.lifecycle} ID:${npc.nid}`);
                 console.error(err);
 
                 npc.setLifeCycle(this.currentTick + 1); // retry next tick
@@ -836,7 +842,7 @@ class World {
             if (player.queue.head() === null) {
                 const script = ScriptProvider.getByTriggerSpecific(ServerTriggerType.LOGOUT, -1, -1);
                 if (!script) {
-                    console.error('LOGOUT TRIGGER IS BROKEN!');
+                    printError('LOGOUT TRIGGER IS BROKEN!');
                     continue;
                 }
 
@@ -1102,7 +1108,7 @@ class World {
             this.npcs.reset();
 
             if (duration > 2) {
-                console.log('Super fast shutdown initiated...');
+                printInfo('Super fast shutdown initiated...');
 
                 // we've already attempted to shutdown, now we speed things up
                 if (this.tickRate > World.SHUTDOWN_TICKRATE) {
@@ -1242,7 +1248,7 @@ class World {
     }
 
     addLoc(loc: Loc, duration: number): void {
-        // console.log(`[World] addLoc => name: ${LocType.get(loc.type).name}, duration: ${duration}`);
+        // printDebug(`[World] addLoc => name: ${LocType.get(loc.type).name}, duration: ${duration}`);
         const type: LocType = LocType.get(loc.type);
         if (type.blockwalk) {
             this.gameMap.changeLocCollision(loc.shape, loc.angle, type.blockrange, type.length, type.width, type.active, loc.x, loc.z, loc.level, true);
@@ -1256,21 +1262,21 @@ class World {
     }
 
     mergeLoc(loc: Loc, player: Player, startCycle: number, endCycle: number, south: number, east: number, north: number, west: number): void {
-        // console.log(`[World] mergeLoc => name: ${LocType.get(loc.type).name}`);
+        // printDebug(`[World] mergeLoc => name: ${LocType.get(loc.type).name}`);
         const zone: Zone = this.gameMap.getZone(loc.x, loc.z, loc.level);
         zone.mergeLoc(loc, player, startCycle, endCycle, south, east, north, west);
         this.trackZone(this.currentTick, zone);
     }
 
     animLoc(loc: Loc, seq: number): void {
-        // console.log(`[World] animLoc => name: ${LocType.get(loc.type).name}, seq: ${seq}`);
+        // printDebug(`[World] animLoc => name: ${LocType.get(loc.type).name}, seq: ${seq}`);
         const zone: Zone = this.gameMap.getZone(loc.x, loc.z, loc.level);
         zone.animLoc(loc, seq);
         this.trackZone(this.currentTick, zone);
     }
 
     removeLoc(loc: Loc, duration: number): void {
-        // console.log(`[World] removeLoc => name: ${LocType.get(loc.type).name}, duration: ${duration}`);
+        // printDebug(`[World] removeLoc => name: ${LocType.get(loc.type).name}, duration: ${duration}`);
         const type: LocType = LocType.get(loc.type);
         if (type.blockwalk) {
             this.gameMap.changeLocCollision(loc.shape, loc.angle, type.blockrange, type.length, type.width, type.active, loc.x, loc.z, loc.level, false);
@@ -1284,7 +1290,7 @@ class World {
     }
 
     addObj(obj: Obj, receiverId: number, duration: number): void {
-        // console.log(`[World] addObj => name: ${ObjType.get(obj.type).name}, receiverId: ${receiverId}, duration: ${duration}`);
+        // printDebug(`[World] addObj => name: ${ObjType.get(obj.type).name}, receiverId: ${receiverId}, duration: ${duration}`);
         const objType: ObjType = ObjType.get(obj.type);
         // check if we need to changeobj first.
         const existing = this.getObj(obj.x, obj.z, obj.level, obj.type, receiverId);
@@ -1315,7 +1321,7 @@ class World {
     }
 
     revealObj(obj: Obj): void {
-        // console.log(`[World] revealObj => name: ${ObjType.get(obj.type).name}`);
+        // printDebug(`[World] revealObj => name: ${ObjType.get(obj.type).name}`);
         const duration: number = obj.reveal;
         const change: number = obj.lastChange;
         const zone: Zone = this.gameMap.getZone(obj.x, obj.z, obj.level);
@@ -1329,14 +1335,14 @@ class World {
     }
 
     changeObj(obj: Obj, receiverId: number, newCount: number): void {
-        // console.log(`[World] changeObj => name: ${ObjType.get(obj.type).name}, receiverId: ${receiverId}, newCount: ${newCount}`);
+        // printDebug(`[World] changeObj => name: ${ObjType.get(obj.type).name}, receiverId: ${receiverId}, newCount: ${newCount}`);
         const zone: Zone = this.gameMap.getZone(obj.x, obj.z, obj.level);
         zone.changeObj(obj, receiverId, obj.count, newCount);
         this.trackZone(this.currentTick, zone);
     }
 
     removeObj(obj: Obj, duration: number): void {
-        // console.log(`[World] removeObj => name: ${ObjType.get(obj.type).name}, duration: ${duration}`);
+        // printDebug(`[World] removeObj => name: ${ObjType.get(obj.type).name}, duration: ${duration}`);
         const zone: Zone = this.gameMap.getZone(obj.x, obj.z, obj.level);
         zone.removeObj(obj);
         obj.setLifeCycle(this.currentTick + duration);
@@ -1404,7 +1410,7 @@ class World {
     }
 
     addFriend(player: Player, targetUsername37: bigint) {
-        //console.log(`[World] addFriend => player: ${player.username}, target: ${targetUsername37} (${fromBase37(targetUsername37)})`);
+        //printDebug(`[World] addFriend => player: ${player.username}, target: ${targetUsername37} (${fromBase37(targetUsername37)})`);
         this.friendThread.postMessage({
             type: 'player_friendslist_add',
             username: player.username,
@@ -1413,7 +1419,7 @@ class World {
     }
 
     removeFriend(player: Player, targetUsername37: bigint) {
-        //console.log(`[World] removeFriend => player: ${player.username}, target: ${targetUsername37} (${fromBase37(targetUsername37)})`);
+        //printDebug(`[World] removeFriend => player: ${player.username}, target: ${targetUsername37} (${fromBase37(targetUsername37)})`);
         this.friendThread.postMessage({
             type: 'player_friendslist_remove',
             username: player.username,
@@ -1422,7 +1428,7 @@ class World {
     }
 
     addIgnore(player: Player, targetUsername37: bigint) {
-        //console.log(`[World] addIgnore => player: ${player.username}, target: ${targetUsername37} (${fromBase37(targetUsername37)})`);
+        //printDebug(`[World] addIgnore => player: ${player.username}, target: ${targetUsername37} (${fromBase37(targetUsername37)})`);
         this.friendThread.postMessage({
             type: 'player_ignorelist_add',
             username: player.username,
@@ -1431,7 +1437,7 @@ class World {
     }
 
     removeIgnore(player: Player, targetUsername37: bigint) {
-        //console.log(`[World] removeIgnore => player: ${player.username}, target: ${targetUsername37} (${fromBase37(targetUsername37)})`);
+        //printDebug(`[World] removeIgnore => player: ${player.username}, target: ${targetUsername37} (${fromBase37(targetUsername37)})`);
         this.friendThread.postMessage({
             type: 'player_ignorelist_remove',
             username: player.username,
@@ -1479,7 +1485,7 @@ class World {
     }
 
     sendPrivateMessage(player: Player, targetUsername37: bigint, message: string): void {
-        //console.log(`[World] sendPrivateMessage => player: ${player.username}, target: ${targetUsername37} (${fromBase37(targetUsername37)}), message: '${message}'`);
+        //printDebug(`[World] sendPrivateMessage => player: ${player.username}, target: ${targetUsername37} (${fromBase37(targetUsername37)}), message: '${message}'`);
 
         this.friendThread.postMessage({
             type: 'private_message',

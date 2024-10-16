@@ -48,9 +48,7 @@ export default class Packet extends DoublyLinkable {
     }
 
     static checkcrc(src: Uint8Array, offset: number, length: number, expected: number = 0): boolean {
-        const checksum: number = Packet.getcrc(src, offset, length);
-        // console.log(checksum, expected);
-        return checksum == expected;
+        return Packet.getcrc(src, offset, length) == expected;
     }
 
     static alloc(type: number): Packet {

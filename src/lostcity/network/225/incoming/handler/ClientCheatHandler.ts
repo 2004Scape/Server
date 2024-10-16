@@ -23,6 +23,7 @@ import PlayerStat from '#lostcity/entity/PlayerStat.js';
 import MoveStrategy from '#lostcity/entity/MoveStrategy.js';
 import { PlayerLoading } from '#lostcity/entity/PlayerLoading.js';
 import Packet from '#jagex2/io/Packet.js';
+import { printInfo } from '#lostcity/util/Logger.js';
 
 export default class ClientCheatHandler extends MessageHandler<ClientCheat> {
     handle(message: ClientCheat, player: Player): boolean {
@@ -60,7 +61,7 @@ export default class ClientCheatHandler extends MessageHandler<ClientCheat> {
                     findPath(player.level, player.x, player.z, player.x, player.z + 10);
                 }
                 const end = Date.now();
-                console.log(`took = ${end - start} ms`);
+                printInfo(`pf benchmark took = ${end - start} ms`);
             } else if (cmd === 'bots') {
                 player.messageGame('Adding bots');
                 for (let i = 0; i < 1999; i++) {

@@ -21,7 +21,7 @@ import Obj from '#lostcity/entity/Obj.js';
 import EntityLifeCycle from '#lostcity/entity/EntityLifeCycle.js';
 import Loc from '#lostcity/entity/Loc.js';
 
-import { printDebug } from '#lostcity/util/Logger.js';
+import { printDebug, printWarning } from '#lostcity/util/Logger.js';
 
 export default class GameMap {
     private static readonly OPEN: number = 0x0;
@@ -364,7 +364,7 @@ export default class GameMap {
                 const [toLevel, toMx, toMz, toLx, toLz] = to.split('_').map(Number);
 
                 if (fromLx % 8 !== 0 || fromLz % 8 !== 0 || toLx % 8 !== 7 || toLz % 8 !== 7 || fromMx > toMx || fromMz > toMz || (fromMx <= toMx && fromMz <= toMz && (fromLx > toLx || fromLz > toLz))) {
-                    console.warn('Free to play map not aligned to a zone', csv[i]);
+                    printWarning('Free to play map not aligned to a zone ' + csv[i]);
                 }
 
                 const startX: number  = (fromMx << 6) + fromLx;

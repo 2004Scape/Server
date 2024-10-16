@@ -12,7 +12,6 @@ export default class LocType extends ConfigType {
 
     static load(dir: string) {
         if (!fs.existsSync(`${dir}/server/loc.dat`)) {
-            console.log('Warning: No loc.dat found.');
             return;
         }
 
@@ -25,7 +24,6 @@ export default class LocType extends ConfigType {
     static async loadAsync(dir: string) {
         const file = await fetch(`${dir}/server/loc.dat`);
         if (!file.ok) {
-            console.log('Warning: No loc.dat found.');
             return;
         }
 

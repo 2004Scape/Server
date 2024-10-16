@@ -53,7 +53,6 @@ export default class FileStream {
 
         const size: number = idxHeader.g3();
         let sector: number = idxHeader.g3();
-        // console.log(`read: index=${index} file=${file} size=${size} sector=${sector}`);
 
         if (size > 2000000) {
             return null;
@@ -136,7 +135,6 @@ export default class FileStream {
         idxHeader.p3(data.length);
         idxHeader.p3(sector);
         idx.pdata(idxHeader);
-        // console.log(`write: index=${index} file=${file} size=${data.length} sector=${sector}`);
 
         let written: number = 0;
         for (let part: number = 0; written < data.length; part++) {

@@ -25,7 +25,6 @@ export async function packServer() {
         throw new Error('The RuneScript compiler is missing and the build process cannot continue.');
     }
 
-    console.time('Packing server cache (1/2)');
     revalidatePack();
     packConfigs();
     packServerInterface();
@@ -38,15 +37,13 @@ export async function packServer() {
     try {
         child_process.execSync(`"${Environment.BUILD_JAVA_PATH}" -jar RuneScriptCompiler.jar`, { stdio: 'inherit' });
     } catch (err) {
-        throw new Error('Failed while compiling scripts');
+        throw new Error('Failed to compile scripts.');
     }
-    console.timeEnd('Packing server cache (1/2)');
 
     fs.writeFileSync('data/pack/server/lastbuild.pack', '');
 }
 
 export async function packClient() {
-    console.time('Packing client cache (2/2)');
     await packClientTitle();
     packConfigs();
     packClientInterface();
@@ -58,7 +55,6 @@ export async function packClient() {
     
     packClientMap();
     packClientMusic();
-    console.timeEnd('Packing client cache (2/2)');
 
     fs.writeFileSync('data/pack/client/crc', CrcBuffer.data);
     fs.writeFileSync('data/pack/client/lastbuild.pack', '');

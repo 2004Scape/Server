@@ -12,6 +12,8 @@ let processNextTimeout: Timer | null = null;
 let active = false;
 
 async function processChangedFiles() {
+    console.log('DevThread: Packing cache');
+
     active = true;
 
     // in case another event happens during build we can queue it up for the next change event

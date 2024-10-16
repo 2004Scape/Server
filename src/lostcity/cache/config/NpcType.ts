@@ -17,7 +17,6 @@ export default class NpcType extends ConfigType {
 
     static load(dir: string) {
         if (!fs.existsSync(`${dir}/server/npc.dat`)) {
-            console.log('Warning: No npc.dat found.');
             return;
         }
         const server = Packet.load(`${dir}/server/npc.dat`);
@@ -29,7 +28,6 @@ export default class NpcType extends ConfigType {
     static async loadAsync(dir: string) {
         const file = await fetch(`${dir}/server/npc.dat`);
         if (!file.ok) {
-            console.log('Warning: No npc.dat found.');
             return;
         }
 

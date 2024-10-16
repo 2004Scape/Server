@@ -37,7 +37,6 @@ export default class WordEnc {
 
     static async load(dir: string): Promise<void> {
         if (!fs.existsSync(`${dir}/client/wordenc`)) {
-            console.log('Warning: No wordenc found.');
             return;
         }
 
@@ -48,7 +47,6 @@ export default class WordEnc {
     static async loadAsync(dir: string): Promise<void> {
         const file = await fetch(`${dir}/client/wordenc`);
         if (!file.ok) {
-            console.log('Warning: No wordenc.dat found.');
             return;
         }
 
@@ -59,25 +57,21 @@ export default class WordEnc {
     static readAll(wordenc: Jagfile): void {
         const fragmentsenc = wordenc.read('fragmentsenc.txt');
         if (!fragmentsenc) {
-            console.log('Warning: No fragmentsenc found.');
             return;
         }
 
         const badenc = wordenc.read('badenc.txt');
         if (!badenc) {
-            console.log('Warning: No badenc found.');
             return;
         }
 
         const domainenc = wordenc.read('domainenc.txt');
         if (!domainenc) {
-            console.log('Warning: No domainenc found.');
             return;
         }
 
         const tldlist = wordenc.read('tldlist.txt');
         if (!tldlist) {
-            console.log('Warning: No tldlist found.');
             return;
         }
 

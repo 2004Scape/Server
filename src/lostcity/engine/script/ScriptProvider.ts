@@ -4,6 +4,7 @@ import ScriptFile from '#lostcity/engine/script/ScriptFile.js';
 import ServerTriggerType from '#lostcity/engine/script/ServerTriggerType.js';
 
 import {TargetOp} from '#lostcity/entity/PathingEntity.js';
+import { printFatalError, printWarning } from '#lostcity/util/Logger.js';
 
 // maintains a list of scripts (id <-> name)
 export default class ScriptProvider {
@@ -46,8 +47,7 @@ export default class ScriptProvider {
 
     static parse(dat: Packet, idx: Packet): number {
         if (!dat.data.length || !idx.data.length) {
-            console.log('\nFatal: No script.dat or script.idx found. Please run the server:build script.');
-            process.exit(1);
+            printFatalError('No server cache found. Please build the cache first.');
         }
 
         const entries = dat.g2();
@@ -55,8 +55,7 @@ export default class ScriptProvider {
 
         const version = dat.g4();
         if (version !== ScriptProvider.COMPILER_VERSION) {
-            console.error('\nFatal: Scripts were compiled with an older RuneScript compiler. Please update it, try `npm run build` and then restart the server.');
-            process.exit(1);
+            printFatalError('\nFatal: Scripts were compiled with an older RuneScript compiler. Please update it, try `npm run build` and then restart the server.');
         }
 
         const scripts = new Array<ScriptFile>(entries);
@@ -85,7 +84,7 @@ export default class ScriptProvider {
                 loaded++;
             } catch (err) {
                 console.error(err);
-                console.error(`Warning: Failed to load script ${id}, something may have been partially written`);
+                printWarning(`Warning: Failed to load script ${id}, something may have been partially written`);
                 return -1;
             }
         }
