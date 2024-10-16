@@ -38,13 +38,13 @@ p_delay(0);
 ~chatplayer("<p,confused>Er...Glough sent me?");
 ~chatnpc("<p,quiz>By the way how is Glough? Still with his wife?");
 switch_int(~p_choice3("Yes, they're getting on great.", 1, "Always arguing as usual!", 2, "Sadly his wife is no longer with us!", 3)) {
-    case 1:
+    case 1 :
         ~chatplayer("<p,happy>Yes, they're getting on great.");
         @foreman_wrongans1;
-    case 2:
+    case 2 :
         ~chatplayer("<p,happy>Always arguing as usual!");
         @foreman_wrongans1;
-    case 3:
+    case 3 :
         ~chatplayer("<p,sad>Sadly his wife is no longer with us!");
         @foreman_rightans1;
 }
@@ -57,13 +57,13 @@ switch_int(~p_choice3("Yes, they're getting on great.", 1, "Always arguing as us
 ~chatnpc("<p,happy>Right answer. I have to watch for imposters.");
 ~chatnpc("<p,quiz>What's Glough's favourite dish?");
 switch_int(~p_choice3("He loves tangled toads legs.", 1, "He loves worm holes.", 2, "He loves choc bombs.", 3)) {
-    case 1:
+    case 1 :
         ~chatplayer("<p,neutral>He loves tangled toads legs.");
         @foreman_wrongans2;
-    case 2:
+    case 2 :
         ~chatplayer("<p,neutral>He loves worm holes.");
         @foreman_rightans2;
-    case 3:
+    case 3 :
         ~chatplayer("<p,neutral>He loves choc bombs.");
         @foreman_wrongans2;
 }
@@ -75,13 +75,13 @@ switch_int(~p_choice3("He loves tangled toads legs.", 1, "He loves worm holes.",
 [label,foreman_rightans2]
 ~chatnpc("<p,neutral>OK. Just one more. What's the name of his new girlfriend?");
 switch_int(~p_choice3("Anita.", 1, "Alia.", 2, "Elena.", 3)) {
-    case 1:
+    case 1 :
         ~chatplayer("<p,neutral>Anita.");
         @foreman_rightans3;
-    case 2:
+    case 2 :
         ~chatplayer("<p,neutral>Alia.");
         @foreman_wrongans3;
-    case 3:
+    case 3 :
         ~chatplayer("<p,neutral>Elena.");
         @foreman_wrongans3;
 }

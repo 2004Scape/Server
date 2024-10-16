@@ -1,6 +1,6 @@
 [opnpc1,alomone]
 switch_int(%hazeelcult_progress) {
-    case ^hazeelcult_clivet_decision:
+    case ^hazeelcult_clivet_decision :
         if(%hazeelcult_side = ^hazeelcult_goodside) {
             ~chatnpc("<p,angry>How did YOU get in here?");
             ~chatplayer("<p,sad>I've come for the Carnillean family armour. Hand it over, or face the consequences.");
@@ -12,7 +12,7 @@ switch_int(%hazeelcult_progress) {
             ~chatplayer("<p,neutral>Hello.");
             ~chatnpc("<p,angry>Can't you see I'm busy???");
         }
-    case ^hazeelcult_poured_poison:
+    case ^hazeelcult_poured_poison :
         ~chatplayer("<p,neutral>Hi there.");
         ~chatnpc("<p,neutral>Well well well... So we have a new recruit. Clivet told me of your desire to join us in our glorious task to resurrect the mighty Hazeel from his slumber.");
         ~chatnpc("<p,neutral>To accomplish this, we require the ancient words of summoning which will restore his shattered body, so that he can bring vengeance upon his enemies.");
@@ -21,7 +21,7 @@ switch_int(%hazeelcult_progress) {
         ~chatnpc("<p,neutral>in their Butler Jones, a faithful follower to Hazeel. His loyalty to Hazeel is beyond questioning, yet he has been unsuccessful in locating the scroll containing the spell so far.");
         ~chatnpc("<p,neutral>Go back to the mansion, and assist us in finding this enchantment, so that together we can restore Hazeel to his true power and glory!");
         %hazeelcult_progress = ^hazeelcult_finished_side_task;
-    case ^hazeelcult_finished_side_task:
+    case ^hazeelcult_finished_side_task :
         ~chatplayer("<p,neutral>Hello Alomone.");
         if(%hazeelcult_side = ^hazeelcult_goodside) {
             ~chatnpc("<p,angry>Out of my way idiot! We are preparing matters your puny mind could not hope to understand!");
@@ -29,7 +29,7 @@ switch_int(%hazeelcult_progress) {
             ~chatnpc("<p,neutral>Hazeel has waited long enough to return! It is IMPERATIVE you find that spell!");
             ~chatplayer("<p,neutral>Yeah yeah yeah, I'm on it, I'm ON it.");
         }
-    case ^hazeelcult_given_armour_or_scroll:
+    case ^hazeelcult_given_armour_or_scroll :
         ~chatplayer("<p,neutral>Hi.");
         if(%hazeelcult_side = ^hazeelcult_goodside) {
             ~chatnpc("<p,angry>I have no time to waste with the likes of you do-gooder.");
@@ -40,7 +40,7 @@ switch_int(%hazeelcult_progress) {
                 ~chatnpc("<p,neutral>You must find it and bring it to me! Without it we cannot resurrect Hazeel and our efforts to do so will fail!");
                 return;
             }
-            // TODO: confirm queue usage, and opnpc1 on hazeel, this cutscene has been completely changed unfortunately
+            // todo: confirm queue usage, and opnpc1 on hazeel, this cutscene has been completely changed unfortunately
             // https://www.youtube.com/watch?v=NqgES3kGOHI
             ~chatplayer("<p,neutral>Yep. Got it right here.");
             ~chatnpc("<p,happy>FINALLY! Quickly, give it to me and I will begin the ritual!");
@@ -72,7 +72,7 @@ switch_int(%hazeelcult_progress) {
             ~chatnpc("<p,neutral>to join my fellow mahjarrat and regain my strength and powers. I shall return when I am ready to fight my enemies and much blood shall flow across these lands!");
             ~mesbox("The cultists let out a mighty cheer"); // intentional missing period
         }
-    case ^hazeelcult_complete:
+    case ^hazeelcult_complete :
         ~chatplayer("<p,neutral>Hello again.");
         if(%hazeelcult_side = ^hazeelcult_goodside) {
             ~chatnpc("<p,angry>You have crossed my path too many times intruder. Leave or face my wrath.");
@@ -81,7 +81,7 @@ switch_int(%hazeelcult_progress) {
             ~chatnpc("<p,happy>Now Lord Hazeel is returned unto us we await his strength to return so that we may smite our enemies!");
             ~chatplayer("<p,neutral>Hey, good for you.");
         }
-    case default:
+    case default :
         ~chatplayer("<p,neutral>Hello.");
         ~chatnpc("<p,angry>What? An intruder? Kill him!");
         ~npc_retaliate(0);

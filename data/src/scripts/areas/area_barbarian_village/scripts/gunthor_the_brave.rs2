@@ -1,23 +1,23 @@
 [opnpc1,gunthor_the_brave]
 switch_int(random(6)) {
-    case 0:
+    case 0 :
     ~chatnpc("<p,happy>Ah, you've come for a fight!");
 
-    case 1:
+    case 1 :
     ~chatnpc("<p,quiz>What do you want?");
     ~chatplayer("<p,quiz>What are you offering?");
     ~chatnpc("<p,angry>A fight!");
 
-    case 2:
+    case 2 :
     ~chatnpc("<p,happy>You look funny!");
 
-    case 3:
+    case 3 :
     ~chatnpc("<p,quiz>Wanna fight?");
 
-    case 4:
+    case 4 :
     ~chatnpc("<p,angry>Grrr!");
 
-    case 5:
+    case 5 :
     ~chatnpc("<p,angry>Go away!");
 }
 

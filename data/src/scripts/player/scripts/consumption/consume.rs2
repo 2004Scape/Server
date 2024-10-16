@@ -25,7 +25,7 @@ mes("You cant eat it whole; maybe you should cut it up.");
 // impossible to know how category_15 worked, i assume they work the same way as other gnome food
 [opheld1,_category_15]
 switch_obj(last_item) {
-    case odd_cocktail1, odd_cocktail2, odd_cocktail3, odd_cocktail4 : 
+    case odd_cocktail1, odd_cocktail2, odd_cocktail3, odd_cocktail4 :
         inv_delslot(inv, last_slot);
         inv_add(inv, oc_param(last_item, next_obj_stage), 1);
         mes("You empty the cocktail.");
@@ -78,12 +78,12 @@ if (oc_param(last_item, next_obj_stage) = null) {
 p_stopaction; // https://oldschool.runescape.wiki/w/Update:Patch_Notes_(19_September_2013)
 switch_obj(last_item) {
     // anti dragon
-    case 1dose1antidragon, 2dose1antidragon, 3dose1antidragon, 4dose1antidragon: 
+    case 1dose1antidragon, 2dose1antidragon, 3dose1antidragon, 4dose1antidragon :
         @player_consume_item(consume_effect_antidragon, null, null);
     // anti posions
-    case 1doseantipoison, 2doseantipoison, 3doseantipoison, 4doseantipoison: 
+    case 1doseantipoison, 2doseantipoison, 3doseantipoison, 4doseantipoison :
         @player_consume_item(consume_effect_antipoison, null, null);
-    case 1dose2antipoison, 2dose2antipoison, 3dose2antipoison, 4dose2antipoison: 
+    case 1dose2antipoison, 2dose2antipoison, 3dose2antipoison, 4dose2antipoison :
         @player_consume_item(consume_effect_super_antipoison, null, null);
     case default : @player_consume_item(consume_effect_stat, null, null);
 }

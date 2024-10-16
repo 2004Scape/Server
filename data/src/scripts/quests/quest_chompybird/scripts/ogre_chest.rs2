@@ -10,14 +10,14 @@ anim(human_pickuptable, 0);
 p_delay(0);
 
 if (p_finduid(uid) = true) {
-    // TODO confirm chance
+    // todo confirm chance
     if (random(3) = 0) {
         mes("You strain to lift the huge rock off the chest...");
 
         p_delay(1);
         
         if (p_finduid(uid) = true) {
-            // TODO confirm message/reduction in 2004
+            // todo confirm message/reduction in 2004
             mes("... but it's just too heavy for you.");
             mes("The experience has left you feeling temporarily weakened.");
             say("Arrgghhhhh!");

@@ -5,17 +5,17 @@ if(map_members = false) { // From RS3
     return;
 }
 switch_int (%zanaris_progress) {
-    case ^zanaris_not_started:
+    case ^zanaris_not_started :
         ~chatplayer("<p,quiz>Why are you guys hanging around here?");
         ~chatnpc("<p,angry>(ahem)...'Guys'?");
         ~chatplayer("<p,neutral>Uh... yeah, sorry about that.|Why are you all standing around out here?");
         ~chatnpc("<p,neutral>Well, that's really none of your business.");
         return;
-    case ^zanaris_started:
+    case ^zanaris_started :
         ~chatplayer("<p,quiz>So I hear theres a leprechaun around here who can show me the way to Zanaris?");
         ~chatnpc("<p,shock>...W-what? How did you..?");
         ~chatnpc("<p,angry>No. You're wrong. Now go away.");
-    case default:
+    case default :
         ~chatplayer("<p,quiz>So you didn't find the entrance to Zanaris yet, huh?");
         ~chatnpc("<p,angry>Don't tell me a novice like YOU has found it!");
         ~chatplayer("<p,neutral>Yep. Found it REALLY easily too.");

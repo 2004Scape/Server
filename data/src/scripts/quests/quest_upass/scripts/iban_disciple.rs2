@@ -3,16 +3,16 @@
 if(inv_total(worn, zamorak_monk_bottom) > 0 & inv_total(worn, zamorak_monk_top) > 0) { 
     // question marks here are all correct 
     switch_int(random(5)) {
-        case 0:
+        case 0 :
             ~chatnpc("<p,neutral>Hail the great one, my lord Iban. I die for you again and again.");
             ~chatplayer("<p,confused>Is that possible ?");
             ~chatnpc("<p,neutral>Under Iban anything is possible. Death is only the beginning.");
-        case 1:
+        case 1 :
             ~chatnpc("<p,neutral>Iban is our father, our guide. Soon he will rule all life.");
-        case 2:
+        case 2 :
             ~chatnpc("<p,neutral>Som Molica Aniul Demonte.");
             ~chatplayer("<p,confused>Pardon ?");
-        case 3:
+        case 3 :
             ~chatnpc("<p,neutral>Succumb to the might of Iban, the ruler of this world.");
     }
     return;

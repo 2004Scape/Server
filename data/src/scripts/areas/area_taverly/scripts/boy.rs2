@@ -1,30 +1,30 @@
 [opnpc1,boy]
 switch_int(%ball_progress) {
-    case ^ball_not_started:
+    case ^ball_not_started :
         ~chatplayer("<p,happy>Hello young man.");
         ~mesbox("The boy sobs.");
         switch_int(~p_choice2("What's the matter?", 1, "Well if you're not going to answer, I'll go.", 2)) {
-            case 1:
+            case 1 :
                 ~chatplayer("<p,quiz>What's the matter?");
                 ~chatnpc("<p,sad>I've kicked my ball over that hedge, into that garden!|The old lady who lives there is scary...|She's locked the ball in her wooden shed!|Can you get my ball back for me please?");
                 switch_int(~p_choice2("Ok, I'll see what I can do.", 1, "Get it back yourself.", 2)) {
-                    case 1:
+                    case 1 :
                         %ball_progress = ^ball_started;
                         ~send_quest_progress(questlist:ball, %ball_progress, ^ball_complete);
                         ~chatplayer("<p,neutral>Ok, I'll see what I can do.");
                         ~chatnpc("<p,happy>Thanks <text_gender("mister", "lady")>!");
-                    case 2:
+                    case 2 :
                         ~chatplayer("<p,angry>Get it back yourself.");
                         ~chatnpc("<p,angry>You're a meany!");
                         ~mesbox("The boy starts crying again.");
                 }
-            case 2:
+            case 2 :
                 ~chatplayer("<p,angry>Well if you're not going to answer, I'll go.");
                 ~mesbox("The boy sniffs slightly.");
         }
-    case ^ball_complete:
+    case ^ball_complete :
         ~chatnpc("<p,happy>Thank you for getting my ball back!");
-    case default:
+    case default :
         if(inv_total(inv, boy_ball) > 0) {
             ~chatplayer("<p,neutral>Hi, I have got your ball back. It was MUCH harder than I thought it would be.");
             ~mesbox("You give the ball back.");

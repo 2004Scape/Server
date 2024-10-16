@@ -59,9 +59,9 @@ queue(playerhit_n_retaliate, calc($duration / 30), npc_uid); // this should be a
 [proc,npc_drop_ammo](namedobj $ammo, int $delay)
 def_int $roll = 14;
 switch_namedobj ($ammo) {
-    case steel_arrow: $roll = 12;
-    case mithril_arrow: $roll = 10;
-    case adamant_arrow: $roll = 8;
+    case steel_arrow : $roll = 12;
+    case mithril_arrow : $roll = 10;
+    case adamant_arrow : $roll = 8;
 }
 if (random(100) < $roll) {
     world_delay(calc($delay / 30 - 2));

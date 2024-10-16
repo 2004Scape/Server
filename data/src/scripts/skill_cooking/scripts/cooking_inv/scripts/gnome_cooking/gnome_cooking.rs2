@@ -1,7 +1,7 @@
 [opheldu,gianne_dough]
 switch_obj(last_useitem) {
-    case crunchy_tray, gnomebowl_mould, batta_tin: @make_raw_gnome(last_useitem);
-    case default: ~displaymessage(^dm_default);
+    case crunchy_tray, gnomebowl_mould, batta_tin : @make_raw_gnome(last_useitem);
+    case default : ~displaymessage(^dm_default);
 };
 
 [label,make_raw_gnome](obj $tin)
@@ -20,16 +20,16 @@ if ($tin = gnomebowl_mould) {
 
 [opheldu,_category_15]
 switch_int(oc_param(last_item, gnome_cooking_type)) {
-    case ^gnome_cocktail: @finish_cocktail(last_item, last_useitem);
-    case ^gnome_bowl, ^gnome_batta, ^gnome_crunchies: @finish_gnome_food(last_useitem, last_item);
-    case default: ~displaymessage(^dm_default);
+    case ^gnome_cocktail : @finish_cocktail(last_item, last_useitem);
+    case ^gnome_bowl, ^gnome_batta, ^gnome_crunchies : @finish_gnome_food(last_useitem, last_item);
+    case default : ~displaymessage(^dm_default);
 }
 
 
 [opheldu,gnome_spice]
 switch_int(oc_param(last_useitem, gnome_cooking_type)) {
-    case ^gnome_cocktail: @finish_cocktail(last_useitem, last_item);
-    case ^gnome_bowl, ^gnome_batta, ^gnome_crunchies: @finish_gnome_food(last_useitem, last_item);
+    case ^gnome_cocktail : @finish_cocktail(last_useitem, last_item);
+    case ^gnome_bowl, ^gnome_batta, ^gnome_crunchies : @finish_gnome_food(last_useitem, last_item);
 }
 switch_obj(last_useitem) {
     case king_worm : @opheldu_make_gnome_food(spicy_worm, "You add the gnome spice to the king worm.");
@@ -69,10 +69,10 @@ if (oc_param($next_gnome_food, gnome_cooking_type) = null) {
 def_string $name;
 def_string $message;
 switch_int(oc_param($next_gnome_food, gnome_cooking_type)) {
-    case ^gnome_batta: $name = "gnome batta.";
-    case ^gnome_crunchies: $name = "gnome crunchies.";
-    case ^gnome_bowl: $name = "gnome bowl.";
-    case default: $name = "gnome dish.";
+    case ^gnome_batta : $name = "gnome batta.";
+    case ^gnome_crunchies : $name = "gnome crunchies.";
+    case ^gnome_bowl : $name = "gnome bowl.";
+    case default : $name = "gnome dish.";
 }
 if ($ingredient = pot_of_cream) {
     $message = "You pour thick cream over the <$name>.";
@@ -104,9 +104,9 @@ while ($i < calc(db_getfieldcount($data, gnome_food_cooking:step) + 1)) {
         // if none of the ingredients and gnome food match then return fail gnome food
         // if its not gnome cooking related then nothing interesting happens.
         switch_obj($ingredient) {
-            case pot_of_cream, chocolate_dust, gnome_spice, equa_leaves, lime_chunks, orange_chunks, pineapple_chunks : 
+            case pot_of_cream, chocolate_dust, gnome_spice, equa_leaves, lime_chunks, orange_chunks, pineapple_chunks :
                 $end_fail_gnome_food = $fail_gnome_food;
-            case default: return(null);
+            case default : return(null);
         }
     }
     $i = calc($i + 1);

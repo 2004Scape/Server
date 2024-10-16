@@ -132,7 +132,7 @@ if (stat_random(stat(crafting), 180, 800) = true) {
 // [weakqueue,finish_firing_pottery](struct $struct)
 // def_namedobj $product = struct_param($struct, product);
 // //anim(human_furnace, 0);
-// //TODO success chances
+// //todo success chances
 
 // // delete unfired item
 // inv_del(inv, struct_param($struct, namedobj), 1);

@@ -1,8 +1,8 @@
 [opnpc1,veronica]
 switch_int (%haunted_progress) {
-    case ^haunted_not_started: @haunted_start;
-    case ^haunted_started, ^haunted_spoken_to_oddenstein: @veronica_sweetheart;
-    case ^haunted_complete: @veronica_postquest;
+    case ^haunted_not_started : @haunted_start;
+    case ^haunted_started, ^haunted_spoken_to_oddenstein : @veronica_sweetheart;
+    case ^haunted_complete : @veronica_postquest;
 }
 
 [label,haunted_start]

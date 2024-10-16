@@ -61,18 +61,18 @@ if (npc_find(coord, makeover_mage, 5, 0) = false) {
     return;
 }
 switch_int(random(4)) {
-    case 0:
+    case 0 :
         ~chatnpc("<p,shock>Whew! That was lucky!");
         ~chatplayer("<p,neutral>What was?");
         ~chatnpc("<p,happy>Nothing! It's all fine! You seem alive anyway!");
-    case 1:
+    case 1 :
         ~chatnpc("<p,shock>Woah!");
         ~chatplayer("<p,quiz>What?");
         ~chatnpc("<p,shock>You still look human!");
-    case 2:
+    case 2 :
         ~chatnpc("<p,quiz>Hmm... you didn't feel any unexpected growths anywhere around your head just then did you?");
         ~chatplayer("<p,quiz>Uh... no...?");
         ~chatnpc("<p,happy>Good, good! I was worried for a second there!");
-    case 3: ~chatnpc("<p,happy>Two arms... two legs... one head... it seems that spell finally worked okay!");
+    case 3 : ~chatnpc("<p,happy>Two arms... two legs... one head... it seems that spell finally worked okay!");
 }
 ~chatplayer("<p,confused>Uh... Thanks, I guess.");

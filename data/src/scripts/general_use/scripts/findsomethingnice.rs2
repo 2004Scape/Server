@@ -7,7 +7,7 @@ if (map_members = true) {
     $random = random(11);
 }
 switch_int ($random) {
-    case 0 : 
+    case 0 :
         inv_add(inv, leather_gloves, 1);
         ~objboxt(leather_gloves, "You've found some gloves!"); // https://imgur.com/ivawRMt
     case 1 :
@@ -16,7 +16,7 @@ switch_int ($random) {
     case 2 :
         inv_add(inv, pot_empty,  1);
         ~objboxb(pot_empty, "You've found a pot."); // guess
-    case 3 : 
+    case 3 :
         // https://web.archive.org/web/20061026043451/http://www.global-rs.com/atlas/city/falador/
         // "This is a house with a range, which we learned before, is better for cooking on then fires, 
         // and two treasure chests upstairs which may contain a few spare gp or gloves or boots."

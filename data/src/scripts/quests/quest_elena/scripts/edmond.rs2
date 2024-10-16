@@ -1,13 +1,12 @@
 [opnpc1,edmond]
 switch_int(%elena_progress) {
-    case ^quest_elena_not_started: {
+    case ^quest_elena_not_started :
         ~chatplayer("<p,happy>Hello old man.");
         ~mesbox("The man looks upset.");
         ~chatplayer("<p,quiz>What's wrong?");
         ~chatnpc("<p,sad>I've got to find my daughter. I pray that she is still alive...");
         @multi2("What's happened to her?", edmond_what_happened_to_elena, "Well, good luck finding her.", edmond_goodluck_finding_elena);
-    }
-    case ^quest_elena_started: {
+    case ^quest_elena_started :
         ~chatplayer("<p,happy>Hello Edmond.");
         ~chatnpc("<p,quiz>Have you got the <lowercase(oc_name(dwellberry))>?");
         if (inv_total(inv, dwellberry) = 0) {
@@ -17,36 +16,30 @@ switch_int(%elena_progress) {
             ~chatplayer("<p,happy>Yes, I have some here.");
             ~chatnpc("<p,neutral>Take them to my wife <nc_name(alrena)>.");
         }
-    }
-    case ^quest_elena_gasmask, ^quest_elena_mud_patch1, ^quest_elena_mud_patch2, ^quest_elena_mud_patch3, ^quest_elena_mud_patch4: {
+    case ^quest_elena_gasmask, ^quest_elena_mud_patch1, ^quest_elena_mud_patch2, ^quest_elena_mud_patch3, ^quest_elena_mud_patch4 :
         ~chatplayer("<p,happy>Hi <nc_name(edmond)>, I've got the gas mask now.");
         ~chatnpc("<p,neutral>Good stuff, now for the digging. Beneath are the Ardougne sewers. There you'll find access to West Ardougne.");
         if(%elena_progress = ^quest_elena_gasmask) ~quest_elena_set_progress(^quest_elena_started_mud_patch);
         ~chatnpc("<p,neutral>The problem is the soil is rock hard. You'll need to pour on some buckets of water to soften it up. I'll keep an eye out for the mourners.");
-    }
-    case ^quest_elena_opened_tunnel: {
+    case ^quest_elena_opened_tunnel :
         ~chatplayer("<p,confused><nc_name(edmond)>, I can't get through to West Ardougne! There's an iron grill blocking my way. I can't pull it off alone.");
         ~chatnpc("<p,neutral>If you get some rope you could tie to the grill, then we could both pull it from here.");
-    }
-    case ^quest_elena_tied_rope: {
+    case ^quest_elena_tied_rope :
         ~chatplayer("<p,neutral>I've tied the other end of this rope to the grill.");
         ~mesbox("<nc_name(edmond)> gets a good grip on the rope. Together you tug the rope. You hear a clunk as you both fly backwards...");
         ~chatnpc("<p,neutral>That's done the job.");
         ~chatnpc("<p,neutral>Remember to always wear the gasmask,|otherwise you'll die over there for certain...|Please bring my Elena back safe and sound.");
         ~quest_elena_set_progress(^quest_elena_opened_pipe);
-    }
-    case ^quest_elena_opened_pipe, ^quest_elena_shown_picture, ^quest_elena_returned_book, ^quest_elena_spoken_martha_ted, ^quest_elena_spoke_to_milli, ^quest_elena_spoke_to_plague_house, ^quest_elena_spoke_to_clerk, ^quest_elena_spoke_to_bravek, ^quest_elena_spoke_cured_bravek: {
+    case ^quest_elena_opened_pipe, ^quest_elena_shown_picture, ^quest_elena_returned_book, ^quest_elena_spoken_martha_ted, ^quest_elena_spoke_to_milli, ^quest_elena_spoke_to_plague_house, ^quest_elena_spoke_to_clerk, ^quest_elena_spoke_to_bravek, ^quest_elena_spoke_cured_bravek :
         ~chatplayer("<p,neutral>Hello.");
         ~chatnpc("<p,quiz>Have you found <nc_name(elena)> yet?");
         ~chatplayer("<p,sad>Not yet, it's a big city over there.");
         ~chatnpc("<p,sad>I hope it's not too late.");
-    }
-    case ^quest_elena_freed_elena: {
+    case ^quest_elena_freed_elena :
         ~chatnpc("<p,happy>Thank you, thank you! <nc_name(elena)> beat you back by minutes. Now I said I'd give you a reward. What can I give you as a reward I wonder? Here take this magic scroll, I have little use for it but it may help you.");
         ~chatnpc("<p,happy>Now I'd recommend you go and see Elena. She'll want to thank you herself. She lives in the house opposite ours.");
         queue(quest_elena_complete, 0);
-    }
-    case ^elena_complete, ^elena_complete_read_scroll: {
+    case ^elena_complete, ^elena_complete_read_scroll :
         ~chatplayer("<p,happy>Hello there.");
         ~chatnpc("<p,happy>Ah hello. Thank you again for rescuing my daughter.");
         if(inv_total(inv, elena_teleport_scroll) = 0 & %elena_progress = ^elena_complete) {
@@ -63,7 +56,6 @@ switch_int(%elena_progress) {
             } 
         }
         ~chatplayer("<p,happy>No problem.");
-    }
 }
 
 [label,edmond_what_happened_to_elena]

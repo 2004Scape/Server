@@ -150,7 +150,7 @@ switch_obj ($last_item)
         inv_transmit(runite3, smithing:column3);
         inv_transmit(runite4, smithing:column4);
         inv_transmit(runite5, smithing:column5);
-    case default : 
+    case default :
         ~displaymessage(^dm_default);
         return;
 }
@@ -166,7 +166,7 @@ if ($data = null) {
     ~displaymessage(^dm_default);
     return;
 }
-// TODO: check if they have tourist trap completed for dart tips
+// todo: check if they have tourist trap completed for dart tips
 // IT CHECKS FOR DARTS FIRST BTW (before members check)
 // switch_obj(db_getfield($data,smithing:product,0))
 // {

@@ -8,12 +8,12 @@ if (~hero_phoenix_in_progress = true) {
 }
 
 switch_int($option) {
-    case 1:
+    case 1 :
         ~chatplayer("<p,neutral>Yes please.");
         ~openshop_activenpc;
-    case 2:
+    case 2 :
         ~chatplayer("<p,neutral>No thank you.");
-    case 3:
+    case 3 :
         ~chatplayer("<p,quiz>Do you sell Gherkins?");
         ~chatnpc("<p,neutral>Hmmmm Gherkins eh? Ask Charlie the cook, round the|back. He may have some 'gherkins' for you!");
         ~mesbox("Alfonse winks at you.");

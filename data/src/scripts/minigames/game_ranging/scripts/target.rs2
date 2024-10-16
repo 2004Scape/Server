@@ -49,28 +49,28 @@ if (%target1 = 0) {
     mes("You've fired all your arrows, maybe you should talk to the Judge.");
 }
 
-[proc,get_targetstr](string)
+[proc,get_targetstr]()(string)
 switch_int(%target3) {
-    case 11: return ("Missed!");
-    case 9,10: return ("Hit Black!");
-    case 5,6,7,8: return ("Hit Blue!");
-    case 2,3,4: return ("Hit Red!");
-    case 1: return ("Hit Yellow!");
-    case 0: return ("Bulls-Eye!");
+    case 11 : return ("Missed!");
+    case 9,10 : return ("Hit Black!");
+    case 5,6,7,8 : return ("Hit Blue!");
+    case 2,3,4 : return ("Hit Red!");
+    case 1 : return ("Hit Yellow!");
+    case 0 : return ("Bulls-Eye!");
 }
 
-[proc,get_targetpts](int)
+[proc,get_targetpts]()(int)
 switch_int(%target3) {
-    case 11: return (0);
-    case 9,10: return (10);
-    case 5,6,7,8: return (20);
-    case 2,3,4: return (30);
-    case 1: return (50);
-    case 0: return (100);
+    case 11 : return (0);
+    case 9,10 : return (10);
+    case 5,6,7,8 : return (20);
+    case 2,3,4 : return (30);
+    case 1 : return (50);
+    case 0 : return (100);
 }
 
 // def rolls source: https://discord.com/channels/177206626514632704/269673599554551808/1070094764797595729 (wiki)
-[proc,roll_rangeguild_target](int)
+[proc,roll_rangeguild_target]()(int)
 def_int $value = 11;
 def_int $att_roll = random(%com_rangeattack);
 if(randominc($att_roll) > randominc(1000)) $value = (calc(random(1) + 9)); 

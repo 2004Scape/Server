@@ -7,7 +7,7 @@
 // https://web.archive.org/web/20050204071450im_/http://www.runehq.com//images/cityguides/shilo7.jpg
 ~chatnpc("<p,neutral>Sorry but the blacksmiths is closed.|But I can let you use the furnace at the cost|of 20 gold pieces.");
 switch_int(~p_choice2("Use Furnace - 20 Gold", 1, "No thanks!", 2)) {
-    case 1:
+    case 1 :
         if(inv_total(inv, coins) < 20) {
             ~chatnpc("<p,neutral>Sorry Bwana, it seems that you are short of funds."); // RSC
             return;
@@ -29,7 +29,7 @@ switch_int(~p_choice2("Use Furnace - 20 Gold", 1, "No thanks!", 2)) {
             sound_synth(door_open, 0, 0);
         }
         p_teleport(movecoord(coord, 0, 0, 1));
-    case 2:
+    case 2 :
         ~chatplayer("<p,neutral>No thanks!");
         ~chatnpc("<p,neutral>Very well Bwana, have a nice day.");
 }

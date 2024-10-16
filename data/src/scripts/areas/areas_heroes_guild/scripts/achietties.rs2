@@ -46,16 +46,16 @@ if (~has_hero_quest_requirements = true) {
 
 [label,achietties_help_dialogue]
 switch_int(~p_choice4("Any hints on getting the thieves armband?", 1, "Any hints on getting the feather?", 2, "Any hints on getting the eel?", 3, "I'll start looking for all those things then.", 4)) {
-  case 1: 
+  case 1 :
     ~chatplayer("<p,quiz>Any hints on getting the thieves armband?");
     ~chatnpc("<p,neutral>I'm sure you have the relevant contacts to find out about that.");
-  case 2: 
+  case 2 :
     ~chatplayer("<p,quiz>Any hints on getting the feather?");
     ~chatnpc("<p,neutral>Not really - other than Entranan firebirds tend to live on Entrana.");
-  case 3: 
+  case 3 :
     ~chatplayer("<p,quiz>Any hints on getting the eel?");
     ~chatnpc("<p,neutral>Maybe go and find someone who knows a lot about fishing?");
-  case 4: 
+  case 4 :
     ~chatplayer("<p,neutral>I'll start looking for all those things then.");
     ~chatnpc("<p,neutral>Good luck with that.");
 }

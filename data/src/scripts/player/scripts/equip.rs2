@@ -32,7 +32,7 @@ if (p_finduid(uid) = true) {
         return;
     }
 
-    // TODO: this needs a better home...
+    // todo: this needs a better home...
     if (%tutorial_progress < ^tutorial_complete) {
      if (%tutorial_progress = ^combat_instructor_unequipping_items) {
             def_obj $weapon = inv_getobj(worn, ^wearpos_rhand);
@@ -285,7 +285,7 @@ if ($bonus < 0) {
 .if_settext($com, "<$name>: <$sign><tostring($bonus)>");
 
 [proc,update_weight]
-// TODO
+// todo
 
 // proc used for validating proper inv spacing and obj swapping.
 // checks for 3 possible wearpos of chosen item and validates colliding wearpos of currently equipped items

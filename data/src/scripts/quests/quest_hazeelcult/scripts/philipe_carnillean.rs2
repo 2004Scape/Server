@@ -1,21 +1,21 @@
 [opnpc1,philipe_carnillean]
 switch_int(%hazeelcult_progress) {
-    case ^hazeelcult_not_started: @philipe_toys;
-    case ^hazeelcult_started, ^hazeelcult_spoken_clivet, ^hazeelcult_clivet_decision: @philipe_carnillean_breakin;
-    case ^hazeelcult_poured_poison:
+    case ^hazeelcult_not_started : @philipe_toys;
+    case ^hazeelcult_started, ^hazeelcult_spoken_clivet, ^hazeelcult_clivet_decision : @philipe_carnillean_breakin;
+    case ^hazeelcult_poured_poison :
         ~chatplayer("<p,neutral>Hello youngster.");
         ~mesbox("The boy looks very upset.");
         ~chatnpc("<p,sad>Someone killed scruffy. I liked scruffy. He never told me off.");
         ~chatplayer("<p,neutral>Yeah. It's a real shame.");
         ~chatnpc("<p,sad>I want my mommy.");
-    case ^hazeelcult_finished_side_task:
+    case ^hazeelcult_finished_side_task :
         if(%hazeelcult_side = ^hazeelcult_goodside) {
             ~chatplayer("<p,neutral>Hello youngster.");
             @philipe_carnillean_breakin;
         } else {
             @philipe_carnillean_breakin;
         }
-    case ^hazeelcult_given_armour_or_scroll:
+    case ^hazeelcult_given_armour_or_scroll :
         ~chatplayer("<p,neutral>Hello youngster.");
         if(%hazeelcult_side = ^hazeelcult_goodside) {
             @philipe_jones;
@@ -27,7 +27,7 @@ switch_int(%hazeelcult_progress) {
             ~chatnpc("<p,angry>Then I don't like you!");
             ~chatplayer("<p,neutral>Gee. I guess I'll just have to live with that then.");
         }
-    case ^hazeelcult_complete:
+    case ^hazeelcult_complete :
         if(%hazeelcult_side = ^hazeelcult_goodside) {
             ~chatplayer("<p,neutral>Hello youngster.");
             @philipe_jones;

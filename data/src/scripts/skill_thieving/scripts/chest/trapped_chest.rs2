@@ -70,7 +70,7 @@ mes("This chest is locked");
 sound_synth(locked, 0, 0);
 
 [proc,attempt_locked_chest]
-//TODO: is gas random event possible?
+//todo: is gas random event possible?
 db_find(trapped_chest:loc, loc_type);
 def_dbrow $data = db_findnext;
 def_int $thieving_level = db_getfield($data, trapped_chest:level, 0);

@@ -5,10 +5,10 @@
     
     npc_add($spawn_coord, chompy_bird, 100);
     %quest_chompybird_baiter = $baiter_uid;
-    // TODO anim?
+    // todo anim?
     npc_say("Sqwirk!");
 
-    // TODO confirm behaviour, looks like it wanders first then hunts?
+    // todo confirm behaviour, looks like it wanders first then hunts?
     npc_sethuntmode(chompybird);
 }
 
@@ -28,7 +28,7 @@ npc_delay(3);
 npc_say("Gobble!");
 npc_delay(2);
 
-// TODO consider some check that the toad actually still exists?
+// todo consider some check that the toad actually still exists?
 //      might not be necessary though
 
 if (p_finduid(%quest_chompybird_baiter) = true) {
@@ -85,7 +85,7 @@ def_obj $rhand = inv_getobj(worn, ^wearpos_rhand);
 
 if ($rhand = null)
 {
-    // TODO confirm for 2004
+    // todo confirm for 2004
     mes("You'll need a weapon to try and attack this beast.");
     return;
 }
@@ -103,7 +103,7 @@ if ($rhand_cat = weapon_slash
     | $rhand_cat = weapon_staff
     | $rhand_cat = weapon_scythe)
 {
-    // TODO confirm for 2004
+    // todo confirm for 2004
     mes("The Chompy Bird is too quick for your melee weapon.");
     return;
 }
@@ -116,7 +116,7 @@ if (
         | $rhand_cat = weapon_thrown
         | $rhand_cat = weapon_javelin))
 {
-    // TODO confirm for 2004
+    // todo confirm for 2004
     mes("Your ranged weapon isn't powerful enough to hurt the Chompy bird.");
     return;
 }
@@ -124,13 +124,13 @@ if (
 
 def_obj $ammo = inv_getobj(worn, ^wearpos_quiver);
 if ($ammo = null) {
-    // TODO confirm for 2004
+    // todo confirm for 2004
     mes("There is no ammo left in your quiver.");
     return;
 }
 
 if ($ammo ! ogre_arrow) {
-    // TODO confirm for 2004
+    // todo confirm for 2004
     mes("You can't use that ammo with your bow.");
     return;
 }
@@ -208,11 +208,11 @@ if(npc_findhero = true) {
     queue(chompybird_kill, 0);
 }
 
-// TODO confirm duration
+// todo confirm duration
 npc_add(npc_coord, chompy_bird_corpse, 100);
 
 [queue,chompybird_kill]
 if (%chompybird_progress = ^chompybird_rantz_gave_player_bow) {
     %chompybird_progress = ^chompybird_player_killed_chompy;
 }
-// TODO add chompy bird killcount
+// todo add chompy bird killcount

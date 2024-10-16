@@ -18,7 +18,7 @@ if (%hero_progress > ^hero_started & %hero_progress < ^hero_phoenix_obtained_arm
 }
 return(false);
 
-[proc,wearing_black_armour](boolean)
+[proc,wearing_black_armour]()(boolean)
 if((inv_total(worn, black_platelegs) > 0) & (inv_total(worn, black_platebody) > 0) & (inv_total(worn, black_full_helm) > 0)) {
     return (true);
 }

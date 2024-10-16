@@ -5,11 +5,11 @@ npc_del;
 
 [opnpc1,merlin_workshop]
 switch_int (%grail_progress) {
-    case ^grail_complete: 
+    case ^grail_complete :
         ~chatnpc("<p,happy>Congratulations, brave knight, on aiding Camelot in so many ways! If we ever require help again, I will make sure to call upon you!");
         ~chatplayer("<p,happy>Thanks!");
-    case ^grail_given_whistle: ~chatnpc("<p,happy>My magic powers tell me that you have discovered the Grail! Take it to Arthur immediately!");
-    case default:
+    case ^grail_given_whistle : ~chatnpc("<p,happy>My magic powers tell me that you have discovered the Grail! Take it to Arthur immediately!");
+    case default :
         ~chatplayer("<p,neutral>Hello. King Arthur has sent me on a quest for the Holy Grail. He thought you could offer some assistance.");
         ~chatnpc("<p,happy>Ah yes... the Holy Grail...");
         ~chatnpc("<p,happy>That is a powerful artefact indeed.|Returning it here would help Camelot a lot.");
@@ -22,9 +22,9 @@ switch_int (%grail_progress) {
         ~chatnpc("<p,happy>I suppose you could also try speaking to Sir Galahad?");
         ~chatnpc("<p,happy>He returned from the quest many years after everyone else. He seems to know something about it, but he can only speak about those experiences cryptically.");
         switch_int(~p_choice2("Thank you for the advice.", 1, "Where can I find Sir Galahad?", 2)) {
-            case 1:
+            case 1 :
                 ~chatplayer("<p,neutral>Thank you for the advice.");
-            case 2:
+            case 2 :
                 ~chatplayer("<p,quiz>Where can I find Sir Galahad?");
                 ~chatnpc("<p,happy>Galahad now lives a life of religious contemplation. He lives somewhere west of McGrubor's Wood I think.");
         }

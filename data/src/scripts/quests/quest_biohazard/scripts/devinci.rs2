@@ -76,8 +76,8 @@ if(testbit(%bioerrand, ^devinci_correct) = true) {
     %bioerrand = clearbit(%bioerrand, ^devinci_given);
     %bioerrand = clearbit(%bioerrand, ^devinci_wrong);
     switch_int(~p_choice2("I'm getting a bad feeling about this.", 1, "Just give me the stuff now please.", 2)) {
-        case 1: ~chatplayer("<p,sad>I'm getting a bad feeling about this.");
-        case 2: ~chatplayer("<p,neutral>Just give me the stuff now please.");
+        case 1 : ~chatplayer("<p,sad>I'm getting a bad feeling about this.");
+        case 2 : ~chatplayer("<p,neutral>Just give me the stuff now please.");
     }
     ~chatplayer("<p,quiz>You do still have it don't you?");
     ~chatnpc("<p,happy>Absolutely.|It's just not stored in a vial anymore.");

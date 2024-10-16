@@ -95,9 +95,9 @@ if (~in_duel_arena(coord) = true) {
 }
 def_int $delay = 30;
 switch_category(oc_category($rhand)) {
-    case weapon_bow, weapon_crossbow: 
+    case weapon_bow, weapon_crossbow :
         $delay = ~player_projectile(coord, .coord, .uid, oc_param($ammo, proj_travel), 40, 36, 32, 15, 0, 11, 5);
-    case weapon_thrown, weapon_javelin: 
+    case weapon_thrown, weapon_javelin :
         $delay = ~player_projectile(coord, .coord, .uid, oc_param($ammo, proj_travel), 40, 36, 32, 15, 0, 11, 5);
 }
 return($delay);

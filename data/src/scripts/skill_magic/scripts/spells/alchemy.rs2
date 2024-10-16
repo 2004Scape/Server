@@ -76,18 +76,18 @@ switch_obj($item) {
             mes("You do not have enough Nature Runes to cast this spell.");
             return(false);
         }
-    case firerune : 
+    case firerune :
         if (sub(inv_total(inv, firerune), $rune_count2) < 1) {
             mes("You do not have enough Fire Runes to cast this spell.");
             return(false);
         }
-    case obj_1842 : 
+    case obj_1842 :
         mes("unimplemented");
         return(false);
-    case coins : 
+    case coins :
         mes("Coins are already made of gold.");
         return(false);
-    case default : 
+    case default :
         if (oc_param($item, no_alchemy) = ^true) {
             mes("You cannot use alchemy on that item.");
             return(false);

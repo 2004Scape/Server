@@ -57,7 +57,7 @@ mes("You've been frozen!");
 %frozen = calc(map_clock + $duration + 1);
 walktrigger(frozen);
 
-[proc,npc_combat_spell_checks](boolean)
+[proc,npc_combat_spell_checks]()(boolean)
 if (stat(hitpoints) = 0) { // no idea if this should exist
     return(false);
 }

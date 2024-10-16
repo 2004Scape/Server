@@ -23,7 +23,7 @@ if(oc_category(nc_param(npc_type, pet_item_id)) ! overgrown) {
     npc_say("Meow!"); //done every 90s, no random chance
     %cat_growth = setbit_range_toint(%cat_growth, min(320,max(calc($growth + 1),-1)), 11, 19);
     switch_int (getbit_range(%cat_growth, 11, 19)) {
-        case 120:
+        case 120 :
             if(oc_category(nc_param(npc_type, pet_item_id)) = kitten) {
                 npc_changetype(nc_param(npc_type, cat_next_id));
                 %follower_obj = nc_param(npc_type, pet_item_id);
@@ -32,7 +32,7 @@ if(oc_category(nc_param(npc_type, pet_item_id)) ! overgrown) {
                 npc_settimer(150); //reset timer -- bug where timer would go insanely fast upon growing up
                 ~mesbox("Your kitten has grown into a healthy cat,|that can hunt for itself."); //imgur.com/ni0BBTb
             }
-        case 320:
+        case 320 :
             if(oc_category(nc_param(npc_type, pet_item_id)) = cat) {
                 npc_changetype(nc_param(npc_type, cat_next_id));
                 %follower_obj = nc_param(npc_type, pet_item_id);
@@ -47,26 +47,26 @@ if(oc_category(nc_param(npc_type, pet_item_id)) ! overgrown) {
 if(oc_category(nc_param(npc_type, pet_item_id)) = kitten) {
     %cat_growth = setbit_range_toint(%cat_growth, calc($hunger + 1), 0, 4);
     switch_int (getbit_range(%cat_growth, 0, 4)) {
-        case 16:
+        case 16 :
             npc_say("Miaow!");
             ~chatplayer("<p,worried>I think it's hungry!"); //youtu.be/1vY_uGOq6qM //mes added later
-        case 18: 
+        case 18 :
             npc_say("Meeeooowww!");
             ~chatplayer("<p,worried>I think it's really hungry!"); 
-        case 20:
+        case 20 :
             mes("Your kitten has run away to look for food.");
             ~follower_death;
     }
 
     %cat_growth = setbit_range_toint(%cat_growth, calc($attent + 1), 5, 10);
     switch_int (getbit_range(%cat_growth, 5, 10)) {
-        case 40:
+        case 40 :
             npc_say("Purr...");
             ~chatplayer("<p,neutral>I think it wants some attention.");
-        case 45:
+        case 45 :
             npc_say("Meeeooowww...");
             ~chatplayer("<p,neutral>I think it's feeling lonely."); //738
-        case 50:
+        case 50 :
             mes("Your kitten got lonely and ran off.");
             ~follower_death;
     }
@@ -82,14 +82,14 @@ if (%npc_attacking_uid ! uid | %follower_uid ! npc_uid) {
     return;
 }
 switch_obj(last_useitem) {
-    case ball_of_wool: //timing and p_delay is guessed off videos
+    case ball_of_wool : //timing and p_delay is guessed off videos
         %cat_growth = setbit_range_toint(%cat_growth, 6, 5, 10); //51 minutes without warning (6 to 40)
         anim(human_pickupfloor, 0);
         npc_anim(cat_rollingover, 40); 
         npc_say("Purr!");
         p_delay(2);
         ~chatplayer("<p,happy>That kitten loves to play with that ball of wool.|I think it is its favourite."); //guessed linebreak
-    case bucket_milk: //https://youtu.be/1vY_uGOq6qM&t=97s
+    case bucket_milk : //https://youtu.be/1vY_uGOq6qM&t=97s
         %cat_growth = setbit_range_toint(%cat_growth, 0, 0, 4);
         inv_del(inv, last_useitem, 1);
         inv_add(inv, bucket_empty, 1);
@@ -97,7 +97,7 @@ switch_obj(last_useitem) {
         p_delay(0);
         mes("The kitten laps up the milk.");
         npc_say("Purpurr");
-    case raw_shrimps, raw_anchovies, raw_sardine, raw_trout, trout, raw_salmon, salmon, raw_tuna, tuna:
+    case raw_shrimps, raw_anchovies, raw_sardine, raw_trout, trout, raw_salmon, salmon, raw_tuna, tuna :
         %cat_growth = setbit_range_toint(%cat_growth, 0, 0, 4);
         def_string $fishname = lowercase(oc_name(last_useitem));
         inv_del(inv, last_useitem, 1);
@@ -105,7 +105,7 @@ switch_obj(last_useitem) {
         p_delay(0);
         mes("The kitten gobbles up the <$fishname>."); //youtu.be/suusfGcvi1w?t=195
         npc_say("Purr!");
-    case default: ~displaymessage(^dm_default);
+    case default : ~displaymessage(^dm_default);
 }
 
 [opnpc1,_petcat]
@@ -114,7 +114,7 @@ if (%npc_attacking_uid ! uid | %follower_uid ! npc_uid) {
     return;
 }
 if (inv_freespace(inv) = 0) {
-    mes("You don't have enough inventory space to pick up your cat."); //TODO: verify the message for this
+    mes("You don't have enough inventory space to pick up your cat."); //todo: verify the message for this
     return;
 }
 p_delay(0);
@@ -203,7 +203,7 @@ if (.npc_find(coord, rat, 10, 1) = true) {
 }
 
 [proc,cat_drop]
-~require_members_do_that; //TODO: verify if there is a specific message for trying to drop in f2p
+~require_members_do_that; //todo: verify if there is a specific message for trying to drop in f2p
 if (npc_finduid(%follower_uid) = true) {
     mes("You already have a follower."); //osrs
     return;

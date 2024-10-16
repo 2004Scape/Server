@@ -2,15 +2,15 @@
 ~chatplayer("<p,happy>Good day to you.");
 ~chatnpc("<p,happy>And to you. Can I help you?");
 switch_int(~p_choice3("What do you do here?", 1, "I'd like to see what you sell.", 2, "I've seen enough, thanks.", 3)) {
-    case 1:
+    case 1 :
         ~chatplayer("<p,happy>What do you do here?");
         ~chatnpc("<p,neutral>I am a supplier of leather armours and accessories. Ask and I will tell you what I know.");
         @multi3("Tell me about your armours.", armour_salesman_armours, "Tell me about your accessories.", armour_salesman_accessories, "I've seen enough, thanks.", armour_salesman_enough);
-    case 2:
+    case 2 :
         ~chatplayer("<p,happy>I'd like to see what you sell.");
         ~chatnpc("<p,happy>Indeed, cast your eyes on my wares, adventurer.");
         ~openshop_activenpc;
-    case 3:
+    case 3 :
         ~chatplayer("<p,neutral>I've seen enough, thanks.");
         ~chatnpc("<p,neutral>Very good, adventurer.");
 }

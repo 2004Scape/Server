@@ -11,19 +11,19 @@
 def_int $choice = ~p_choice4("What is this place?", 0, "How do I challenge someone to a duel?", 1, "What kind of options are there?", 2, "This place looks really old, where did it come from?", 3);
 
 switch_int ($choice) {
-    case 0:
+    case 0 :
     ~chatplayer("<p,neutral>What is this place?");
     ~chatnpc("<p,neutral>The Duel Arena has six duel arenas where you can fight other players in a controlled environment. We have our own dedicated hospital where we guarantee to put you back together, even if you lose.");
     ~chatnpc("<p,neutral>Inbetween the arenas are walkways where you can watch the fights and challenge other players.");
     ~chatplayer("<p,neutral>Sounds great. Thanks!");
     ~chatnpc("<p,neutral>See you in the arenas!");
 
-    case 1:
+    case 1 :
     ~chatplayer("<p,neutral>How do I challenge someone to a duel?");
     ~chatnpc("<p,neutral>When you go to the arena you'll go up an access ramp to the walkways that overlook the duel arenas.|From the walkway you can watch the duels and challenge other players.");
     ~chatnpc("<p,neutral>You'll know you're in the right place as you'll have a 'Challenge' option when you right-click a player.");
 
-    case 2:
+    case 2 :
     ~chatplayer("<p,neutral>What kind of options are there?");
     ~chatnpc("<p,neutral>You and your opponent can offer items as a stake. If you win, you recieve what your opponent staked, but, if you lose, your oppenent will get whatever items you staked.");
     ~chatnpc("<p,neutral>You can choose to use rules to spice things up a bit. For instance if you both agree to use the 'No Magic' rule then neither player can use magic to attack the other player. The fight will be restricted to ranging and");
@@ -31,7 +31,7 @@ switch_int ($choice) {
     ~chatnpc("<p,neutral>The rules are fairly self-evident with lots of different combinations for you to try out!");
     ~chatplayer("<p,neutral>Cool! Thanks!");
 
-    case 3:
+    case 3 :
     ~chatplayer("<p,neutral>This place looks really old, where did it come from?");
     ~chatnpc("<p,neutral>The archaeologists that are excavating the area east of Varrock have been working on this site as well. From these cliffs they uncovered this huge building. The experts think it may date back to the second age!");
     ~chatnpc("<p,neutral>Now that the archaeologists have moved out, a group of warriors, headed by myself, have bought the land and converted it to a set of duel arenas. The best fighters around the world come here to fight!");

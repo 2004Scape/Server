@@ -14,10 +14,10 @@ if (.finduid(%duelpartner) = true) {
     if (testbit(%duel_settings, ^no_movement) = true & .p_finduid(.uid) = true) {
         while (map_blocked($random_coord2) = true | $random_coord2 = $random_coord1 | lineofwalk($random_coord1, $random_coord2) = false & $i < 50){
             switch_int (random(4)) {
-                case 0: $random_coord2 = movecoord($random_coord1, 1, 0, 0);
-                case 1: $random_coord2 = movecoord($random_coord1, -1, 0, 0);
-                case 2: $random_coord2 = movecoord($random_coord1, 0, 0, 1);
-                case 3: $random_coord2 = movecoord($random_coord1, 0, 0, -1);
+                case 0 : $random_coord2 = movecoord($random_coord1, 1, 0, 0);
+                case 1 : $random_coord2 = movecoord($random_coord1, -1, 0, 0);
+                case 2 : $random_coord2 = movecoord($random_coord1, 0, 0, 1);
+                case 3 : $random_coord2 = movecoord($random_coord1, 0, 0, -1);
             }
             $i = calc($i + 1);
         }

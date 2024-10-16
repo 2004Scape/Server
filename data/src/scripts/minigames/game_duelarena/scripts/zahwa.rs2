@@ -3,15 +3,15 @@
 def_int $random = random(8);
 
 switch_int ($random) {
-    case 0:
+    case 0 :
     ~chatplayer("<p,happy>Hi!");
     ~chatnpc("<p,neutral>Hi!");
 
-    case 1:
+    case 1 :
     ~chatplayer("<p,happy>Hi!");
     ~chatnpc("<p,sad>Ughhhh....");
 
-    case 2:
+    case 2 :
     ~chatplayer("<p,neutral>Hi!");
     ~chatnpc("<p,neutral>I could've 'ad 'im!");
     ~chatplayer("<p,neutral>Er...");
@@ -21,23 +21,23 @@ switch_int ($random) {
     ~chatplayer("<p,neutral>Uh huh.");
     ~chatnpc("<p,neutral>Leave me alone!");
 
-    case 3:
+    case 3 :
     ~chatplayer("<p,neutral>Are you alright?");
     ~chatnpc("<p,neutral>NURSE!");
 
-    case 4:
+    case 4 :
     ~chatplayer("<p,neutral>Are you alright?");
     ~chatnpc("<p,neutral>Do I look alright?!");
 
-    case 5:
+    case 5 :
     ~chatplayer("<p,neutral>Are you alright?");
     ~chatnpc("<p,neutral>Yeh. The nurses here are...wonderful!");
 
-    case 6:
+    case 6 :
     ~chatplayer("<p,neutral>Are you alright?");
     ~chatnpc("<p,neutral>It's just a flesh wound!");
 
-    case 7:
+    case 7 :
     ~chatplayer("<p,confused>Are you alright?");
     ~chatnpc("<p,sad>Can't....go....on!");
     ~chatnpc("<p,sad>Leave me behind!");

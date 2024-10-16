@@ -13,7 +13,7 @@ if (p_finduid(uid) = true) {
     if (~check_spell_requirements($spell_data)= false) {
         return;
     }
-    // TODO: 
+    // todo: 
     // - check for additional reqs, BEFORE deleting runes
     if (~pre_tele_checks(coord) = false) {
         return;
@@ -60,7 +60,7 @@ p_delay(3);
 [proc,p_telejump_safe](coord $coord)
 p_telejump($coord);
 anim(null, 0);
-// TODO: ensure this proc is used for other teleports too
+// todo: ensure this proc is used for other teleports too
 def_int $rum = inv_total(inv, karamja_rum);
 if ($rum > 0) {
     inv_del(inv, karamja_rum, $rum);

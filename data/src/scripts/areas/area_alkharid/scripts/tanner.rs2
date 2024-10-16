@@ -13,7 +13,7 @@ if($total > 0) {
     }
     switch_int(~p_choice2_header("Yes please.", 1, "No thanks.", 2, "What would you like to say?")) {
         case 1 : @tan_leather_choices;
-        case 2 : 
+        case 2 :
             ~chatplayer("<p,bored>No thanks.");
             ~chatnpc("<p,neutral>Very well, <text_gender("sir", "madam")>, as you wish.");
             return;
@@ -53,7 +53,7 @@ if ($total_dragon_hides < 1) {
 switch_int($choice) {
     case 1 : ~tan_leather(cow_hide, leather, 1);
     case 2 : ~tan_leather(cow_hide, hardleather, 3);
-    case 3 : 
+    case 3 :
         ~tan_leather(dragonhide_green, dragon_leather, 20);
         ~tan_leather(dragonhide_blue, dragon_leather_blue, 20);
         ~tan_leather(dragonhide_red, dragon_leather_red, 20);
@@ -64,7 +64,7 @@ switch_int($choice) {
             mes("The tanner tans <tostring($total_dragon_hides)> dragonhides for you.");
         }
         return;
-    case 4 : 
+    case 4 :
         return;
 }
 if ($total_cow_hides = 1) {

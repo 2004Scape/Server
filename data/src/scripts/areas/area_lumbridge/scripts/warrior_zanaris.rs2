@@ -5,22 +5,22 @@ if(map_members = false) { // from RS3
     return;
 }
 switch_int (%zanaris_progress) {
-    case ^zanaris_not_started:
+    case ^zanaris_not_started :
         ~chatnpc("<p,neutral>Hello there traveller.");
         @multi2("What are you camped here for?", warrior_camped_out, "Do you know any good adventures I can go on?", warrior_adventures);
         return;
-    case ^zanaris_started:
+    case ^zanaris_started :
         ~chatplayer("<p,quiz>So let me get this straight: I need to search the trees around here for a leprechaun; and then when I find him, he will tell me where this 'Zanaris' is?");
         // https://web.archive.org/web/20050520195439im_/http://www.runeweb.net/fireball/Lost%20City%20Images/LostCity1.PNG
         ~chatnpc("<p,confused>What? How did you know that?|Uh... I mean, no, no you're very wrong.|Very wrong, and not right at all, and I|definitely didn't tell you about that at all.");
         return;
-    case ^zanaris_complete:
+    case ^zanaris_complete :
         ~chatplayer("<p,happy>Hey, thanks for all the information. It REALLY helped me out in finding the lost city of Zanaris and all.");
         ~chatnpc("<p,sad>Oh please don't say that anymore! If the rest of my party knew I'd helped you they'd probably throw me out and make me walk home by myself!");
         ~chatnpc("<p,quiz>So anyway, what have you found out? Where is the fabled Zanaris? Is it all the legends say it is?");
         ~chatplayer("<p,happy>You know.... I think I'll keep that to myself.");
         return;
-    case default:
+    case default :
         ~chatplayer("<p,quiz>Have you found anything yet?");
         ~chatnpc("<p,happy>We're still searching for Zanaris...GAH! I mean we're not doing anything here at all.");
         ~chatplayer("<p,sad>I haven't found it yet either.");

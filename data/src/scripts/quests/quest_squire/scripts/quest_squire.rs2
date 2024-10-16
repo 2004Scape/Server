@@ -204,7 +204,7 @@ if(inv_total(inv, blurite_ore) >= 1 & inv_total(inv, iron_bar) >= 2) {
 }
 ~chatnpc("<p,shifty>Better go get some then, huh?");
 
-[proc,vyvin_distracted](boolean)
+[proc,vyvin_distracted]()(boolean)
 // check if Vyvin is nearby, if hes standing near of the player
 // they wont be able to search the cupboard
 if (npc_find(coord, sir_vyvin, 1, 0) = true) {

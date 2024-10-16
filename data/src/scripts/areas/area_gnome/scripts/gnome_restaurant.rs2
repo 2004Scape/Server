@@ -278,7 +278,7 @@ if ($choice = 1) {
 def_int $rand = randominc(9);
 %gnome_restaurant_progress = calc(7 + $rand);
 switch_int($rand) {
-    case 1 : 
+    case 1 :
         ~chatnpc("<p,neutral>Can you make me two worm batta's, a toad batta, and a vegetable batta please?");
         ~chatplayer("<p,neutral>Ok then.");
     case 2 :
@@ -293,13 +293,13 @@ switch_int($rand) {
     case 5 :
         ~chatnpc("<p,quiz>Excellent, I need two vegetable batta's and a worm hole.");
         ~chatplayer("<p,neutral>No problem.");
-    case 6 : 
+    case 6 :
         ~chatnpc("<p,neutral>can you make me a a veg ball, a tangled toad's legs, and a worm hole please?");
         ~chatplayer("<p,neutral>Ok then.");
     case 7 :
         ~chatnpc("<p,neutral>I need a cheese and tomato batta, a veg ball, and two portions of worm crunchies please.");
         ~chatplayer("<p,neutral>Ok, I'll do my best.");
-    case 8 : 
+    case 8 :
         ~chatnpc("<p,neutral>Can you make a two portions of spicy crunchies, a fruit batta, a chocolate bomb, and a veg ball please chef.");
         ~chatplayer("<p,neutral>I'll try.");
     case default :

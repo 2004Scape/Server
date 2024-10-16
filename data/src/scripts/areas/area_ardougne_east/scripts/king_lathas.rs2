@@ -9,7 +9,7 @@ if(%biohazard_progress = ^biohazard_reported_elena) {
     ~chatplayer("<p,quiz>When is it ever good to lie to people like that?");
     ~chatnpc("<p,sad>When it protects them from a far greater danger, a fear too big to fathom.");
     switch_int(~p_choice2("I don't understand...", 1, "Well I've wasted enough of my time here.", 2)) {
-        case 1:
+        case 1 :
             ~chatplayer("<p,confused>I don't understand...");
             ~chatnpc("<p,sad>Their King, Tyras, journeyed out to the West on a voyage of discovery. But he was captured by the Dark Lord.");
             ~chatnpc("<p,sad>The Dark Lord agreed to spare his life, but only on one condition... That he would drink from the Chalice of Eternity.");
@@ -27,26 +27,26 @@ if(%biohazard_progress = ^biohazard_reported_elena) {
             ~chatplayer("<p,quiz>Ok. There's just one thing I don't understand, how do you know so much about King Tyras?");
             ~chatnpc("<p,sad>How could I not do? He was my brother.");
             queue(quest_biohazard_complete, 0);
-        case 2:
+        case 2 :
             ~chatplayer("<p,angry>I've wasted enough of my time here.");
             ~chatnpc("<p,neutral>No time is ever wasted, thanks for all you've done.");
     }
 } else if(%biohazard_progress = ^biohazard_complete) {
     switch_int(%upass_progress) {
-        case ^upass_complete:
+        case ^upass_complete :
             ~chatplayer("<p,happy>Hello King Lathas.");
             // magi isn't a typo lol
             ~chatnpc("<p,happy>Well hello there traveller. The magi are still resurrecting the Well of Voyage, but I'll have word sent to you as soon as it's ready.");
             ~chatplayer("<p,happy>Ok then, take care.");
             ~chatnpc("<p,happy>You too.");
-        case ^upass_defeated_iban:
+        case ^upass_defeated_iban :
             ~chatnpc("<p,quiz>The traveller returns, any news?");
             ~chatplayer("<p,happy>Indeed, the quest is complete, Lathas. I have defeated Iban and his undead minions.");
             ~chatnpc("<p,happy>Once our mages have re-summoned the well, I will send a band of troops led by yourself to head into west RuneScape and stop Tyras.");
             ~chatplayer("<p,neutral>I will be ready and waiting.");
             ~chatnpc("<p,happy>Your loyalty is appreciated, traveller.");
             queue(upass_quest_complete, 0);
-        case ^upass_not_started:
+        case ^upass_not_started :
             if(testbit(%upass_map_mechanisms, ^upass_started_bit) = true) {
                 @lathas_managing;
             }
@@ -54,7 +54,7 @@ if(%biohazard_progress = ^biohazard_reported_elena) {
             ~chatnpc("<p,happy>Adventurer, thank Saradomin for your arrival!");
             ~chatplayer("<p,quiz>Have your scouts found a way through the mountains?");
             if(stat_base(ranged) < 25) {
-                // TODO: did this exist originally?
+                // todo: did this exist originally?
                 ~chatnpc("<p,neutral>I appreciate your enthusiasm adventurer. However, I fear you are not yet ready for the challenges ahead. Return to me when you are and we will discuss our next steps.");
                 return;
             }
@@ -69,7 +69,7 @@ if(%biohazard_progress = ^biohazard_reported_elena) {
             ~chatnpc("<p,neutral>We must find a way through these caverns if we are to stop my brother Tyras.");
             ~chatplayer("<p,neutral>I'll do my best Lathas.");
             ~chatnpc("<p,neutral>A warning traveller, the underground pass is lethal. We lost many men exploring those caverns. Go prepared with food and armour or you won't last long.");
-        case default: @lathas_managing;
+        case default : @lathas_managing;
             
     }
 } else {

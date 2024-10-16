@@ -120,7 +120,7 @@ if ($adj_slots > 0) {
 }
 return ($down_slot);
 
-[proc,trail_puzzle_complete](boolean)
+[proc,trail_puzzle_complete]()(boolean)
 if (inv_getobj(trail_puzzle_inv, 0) = obj_2749 &
         inv_getobj(trail_puzzle_inv, 1) = obj_2750 &
         inv_getobj(trail_puzzle_inv, 2) = obj_2751 &

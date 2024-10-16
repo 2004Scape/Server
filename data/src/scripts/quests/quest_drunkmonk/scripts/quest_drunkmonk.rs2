@@ -4,7 +4,7 @@ if(distance(^blanket_ladder_coord, coord) <= 2 & ~drunkmonk_ladder_active = fals
     loc_add(^blanket_ladder_coord, loc_1765, 1, centrepiece_straight, 200);
 }
 
-[proc,drunkmonk_ladder_active](boolean)
+[proc,drunkmonk_ladder_active]()(boolean)
 if(loc_find(^blanket_ladder_coord, loc_1765) = true) {
     return(true);
 }
@@ -40,7 +40,7 @@ p_delay(2);
 ~monk_dance("You go!", $omad_uid, 2);
 queue(drunkmonk_complete, 0);
 
-[proc,random_monk_uid](npc_uid)
+[proc,random_monk_uid]()(npc_uid)
 npc_findallzone(coord);
 while (npc_findnext = true) {
     if (npc_type = ardougne_monk) {
@@ -75,7 +75,7 @@ while($count < ^balloons_per_drop) {
 }
 p_delay(0);
 
-[proc,drunkmonk_balloon_coord](coord)
+[proc,drunkmonk_balloon_coord]()(coord)
 if(random(3) > 0) {
     return (movecoord(0_40_50_43_7, random(8), 0, random(5)));
 } else {

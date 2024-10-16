@@ -5,24 +5,24 @@
 def_int $option = ~p_choice4("What do you do?", 1, "What is this place?", 2, "I'd like to access my bank, please.", 3, "Do you watch any matches?", 4);
 
 switch_int ($option) {
-    case 1:
+    case 1 :
     ~chatplayer("<p,neutral>What do you do?");
     ~chatnpc("<p,neutral>You can store your stuff here if you want. You can dump anything you don't want to carry whilst you're fighting duels and then pick it up again on the way out.");
     ~chatnpc("<p,neutral>To be honest I'm wasted here.");
     ~chatnpc("<p,neutral>I should be winning duels in the arena! I'm the best warrior in Al Kharid!");
     ~chatplayer("<p,neutral>Easy, tiger!");
 
-    case 2:
+    case 2 :
     ~chatplayer("<p,neutral>What is this place?");
     ~chatnpc("<p,neutral>Isn't it obvious?");
     ~chatnpc("<p,neutral>This is the Duel Arena...duh!");
 
-    case 3:
+    case 3 :
     ~chatplayer("<p,neutral>I'd like to access my bank, please.");
     ~chatnpc("<p,neutral>Sure.");
     @openbank;
 
-    case 4:
+    case 4 :
     ~chatplayer("<p,neutral>Do you watch any matches?");
     ~chatnpc("<p,neutral>When I can.");
     ~chatnpc("<p,neutral>Most aren't any good so I throw rotten fruit at them!");

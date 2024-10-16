@@ -1,12 +1,12 @@
 [opheldu,damp_cloth]
 switch_obj(last_useitem) {
-    case bronze_arrow: @make_clotharrow(bronze_arrow);
-    case iron_arrow: @make_clotharrow(iron_arrow);
-    case steel_arrow: @make_clotharrow(steel_arrow);
-    case mithril_arrow: @make_clotharrow(mithril_arrow);
-    case adamant_arrow: @make_clotharrow(adamant_arrow);
-    case rune_arrow: @make_clotharrow(rune_arrow);
-    case default: ~displaymessage(^dm_default);
+    case bronze_arrow : @make_clotharrow(bronze_arrow);
+    case iron_arrow : @make_clotharrow(iron_arrow);
+    case steel_arrow : @make_clotharrow(steel_arrow);
+    case mithril_arrow : @make_clotharrow(mithril_arrow);
+    case adamant_arrow : @make_clotharrow(adamant_arrow);
+    case rune_arrow : @make_clotharrow(rune_arrow);
+    case default : ~displaymessage(^dm_default);
 }
 
 [label,make_clotharrow](namedobj $arrow_type)

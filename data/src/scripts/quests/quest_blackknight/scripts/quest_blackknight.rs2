@@ -53,7 +53,7 @@ if ($option = 1) {
 } else if ($option = 2) {
    ~chatplayer("<p,neutral>Oh sorry.");
    ~chatnpc("<p,angry>Don't let it happen again.");
-   // TODO: Set all black knights in the banquet hall to attack player and yell "Die intruder!"
+   // todo: Set all black knights in the banquet hall to attack player and yell "Die intruder!"
 } else if ($option = 3) {
     ~chatplayer("<p,neutral>So who does it belong to?");
     ~chatnpc("<p,angry>This fortress belongs to the order of Black Knights known as the Kinshra.");
@@ -89,7 +89,7 @@ if ($option = 1) {
 } else {
    ~chatplayer("<p,neutral>I don't care. I'm going in anyway.");
    ~open_and_close_door(loc_param(next_loc_stage), $is_inside, false);
-   // TODO: Set all black knights in the banquet hall to attack player and yell "Die intruder!"
+   // todo: Set all black knights in the banquet hall to attack player and yell "Die intruder!"
    def_boolean $has_spoken = false;
    $has_spoken =  ~set_black_knight_aggro(0_47_54_13_59, $has_spoken);
    ~set_black_knight_aggro(0_47_54_21_59, $has_spoken);

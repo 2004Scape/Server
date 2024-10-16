@@ -86,7 +86,7 @@ while(npc_findnext = true) {
 npc_add(^ball_mouse_coord, ball_mouse, 50);
 ~mesbox("A mouse runs out of <$pref> hole.");
 
-// TODO: figure out what oploc1 interaction on this loc and opnpc1 on the mouse is supposed to do here
+// todo: figure out what oploc1 interaction on this loc and opnpc1 on the mouse is supposed to do here
 [oplocu,loc_2870]
 if(last_useitem = cheese) {
     @ball_cheese("the");

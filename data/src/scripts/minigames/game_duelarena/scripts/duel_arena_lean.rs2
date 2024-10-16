@@ -62,30 +62,30 @@ cam_lookat(movecoord(0_52_50_32_41, 0, 0, -1), 1155, 0, 100);
 [proc,handle_duel_camera](coord $closest_camera_coord, int $closest_camera_index)
 def_int $camera_type = enum(int, int, duel_arena_camera_types, $closest_camera_index);
 switch_int ($camera_type) {
-    case ^north_camera:
+    case ^north_camera :
         cam_moveto(movecoord($closest_camera_coord, 0, 0, 8), 1926, 0, 100);
         cam_lookat(movecoord($closest_camera_coord, 0, 0, 3), 1276, 0, 100);
-    case ^south_camera:
+    case ^south_camera :
         cam_moveto(movecoord($closest_camera_coord, 0, 0, -8), 1926, 0, 100);
         cam_lookat(movecoord($closest_camera_coord, 0, 0, -3), 1276, 0, 100);
-    case ^east_camera: // todo
+    case ^east_camera : // todo
         cam_moveto(movecoord($closest_camera_coord, 8, 0, 0), 1926, 0, 100);
         cam_lookat(movecoord($closest_camera_coord, 3, 0, 0), 1276, 0, 100);
-    case ^west_camera: // todo
+    case ^west_camera : // todo
         cam_moveto(movecoord($closest_camera_coord, -8, 0, 0), 1926, 0, 100);
         cam_lookat(movecoord($closest_camera_coord, -3, 0, 0), 1276, 0, 100);
-    case ^north_east_camera:
+    case ^north_east_camera :
         cam_moveto(movecoord($closest_camera_coord, 6, 0, 2), 1980, 0, 100);
         cam_lookat(movecoord($closest_camera_coord, 0, 0, -1), 1155, 0, 100);
-    case ^north_west_camera:
+    case ^north_west_camera :
         cam_moveto(movecoord($closest_camera_coord, -6, 0, 2), 1980, 0, 100);
         cam_lookat(movecoord($closest_camera_coord, 0, 0, -1), 1155, 0, 100);
-    case ^south_east_camera:
+    case ^south_east_camera :
         cam_moveto(movecoord($closest_camera_coord, 6, 0, -2), 1980, 0, 100);
         cam_lookat(movecoord($closest_camera_coord, 0, 0, 1), 1155, 0, 100);
-    case ^south_west_camera:
+    case ^south_west_camera :
         cam_moveto(movecoord($closest_camera_coord, -6, 0, -2), 1980, 0, 100);
         cam_lookat(movecoord($closest_camera_coord, 0, 0, 1), 1155, 0, 100);
-    case default:
+    case default :
         error("Invalid camera type.");
 }

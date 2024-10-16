@@ -15,19 +15,19 @@ p_teleport(0_41_46_6_53);
 
 [label,use_bellows_on_swamp_bubbles]
 switch_obj(last_useitem) {
-    case ogre_bellows_0:
+    case ogre_bellows_0 :
         ~ogre_bellows_suck(ogre_bellows_0);
-    case ogre_bellows_1:
+    case ogre_bellows_1 :
         ~ogre_bellows_suck(ogre_bellows_1);
-    case ogre_bellows_2:
+    case ogre_bellows_2 :
         ~ogre_bellows_suck(ogre_bellows_2);
-    case default:
-        // TODO can you fill bellows (2) and (1)?
+    case default :
+        // todo can you fill bellows (2) and (1)?
         mes("Nothing interesting happens.");
 }
 
 [proc,ogre_bellows_suck](obj $bellows)
-// TODO TBC anim and sound
+// todo TBC anim and sound
 anim(human_firecooking, 0);
 sound_synth(ogre_bellows_suck, 0, 0);
 p_delay(1);
@@ -42,5 +42,5 @@ inv_add(inv, ogre_bellows_3, 1);
 stat_advance(fletching, 262);
 stat_advance(cooking, 1470);
 stat_advance(ranged, 735);
-// TODO is ogre bow given separately here?
+// todo is ogre bow given separately here?
 ~send_quest_complete(questlist:chompybird, ogre_bow, 250, ^chompybird_questpoints, "You have completed the 'Chompy Bird' Quest!");

@@ -8,9 +8,9 @@ if(testbit(%barcrawl_progress, ^karamjaspirits_index) = false & inv_total(inv, b
     $option = ~p_choice2("Yes please.", 1, "No, thank you.", 2);
 }
 switch_int ($option) {
-    case 1: p_opnpc(3);
-    case 2: ~chatplayer("<p,neutral>No, thank you.");
-    case 3: @karamjaspirits_barcrawl;
+    case 1 : p_opnpc(3);
+    case 2 : ~chatplayer("<p,neutral>No, thank you.");
+    case 3 : @karamjaspirits_barcrawl;
 }
 
 [opnpcu,zambo]

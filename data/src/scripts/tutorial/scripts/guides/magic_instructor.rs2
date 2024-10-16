@@ -1,13 +1,13 @@
 [opnpc1,magic_instructor]
 
 switch_int(%tutorial_progress) {
-    case ^tutorial_exit_chapel: @magic_instructor_start;
-    case ^tutorial_open_magic_tab: @magic_instructor_open_tab;
-    case ^tutorial_opened_magic_tab: @magic_instructor_opened_tab;
-    case ^tutorial_cast_wind_strike: @magic_instructor_cast_wind_strike;
-    case ^tutorial_unsuccessful_wind_strike: @magic_instructor_cast_wind_strike;
-    case ^tutorial_successful_wind_strike: @magic_instructor_successfully_cast_wind_strike;
-    case default: @magic_instructor_successfully_cast_wind_strike;
+    case ^tutorial_exit_chapel : @magic_instructor_start;
+    case ^tutorial_open_magic_tab : @magic_instructor_open_tab;
+    case ^tutorial_opened_magic_tab : @magic_instructor_opened_tab;
+    case ^tutorial_cast_wind_strike : @magic_instructor_cast_wind_strike;
+    case ^tutorial_unsuccessful_wind_strike : @magic_instructor_cast_wind_strike;
+    case ^tutorial_successful_wind_strike : @magic_instructor_successfully_cast_wind_strike;
+    case default : @magic_instructor_successfully_cast_wind_strike;
 }
 
 [label,magic_instructor_start]

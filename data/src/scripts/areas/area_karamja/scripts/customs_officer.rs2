@@ -61,9 +61,9 @@ if (inv_total(inv, karamja_rum) > 0) {
 [label,customs_pass_search]
 def_int $option = ~p_choice2("Ok.", 1, "Oh, I'll not bother then.", 2);
 switch_int ($option) {
-    case 1:
+    case 1 :
         @customs_pay;
-    case 2:
+    case 2 :
         ~chatplayer("<p,neutral>Oh, I'll not bother then.");
 }
 

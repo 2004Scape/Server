@@ -1,11 +1,11 @@
 [opnpc1,father_lawrence]
 switch_int (%romeojuliet_progress) {
-    case ^romeojuliet_not_started: @father_lawrence_prequest;
-    case ^romeojuliet_passed_message: @father_lawrence_help;
-    case ^romeojuliet_spoken_father: 
+    case ^romeojuliet_not_started : @father_lawrence_prequest;
+    case ^romeojuliet_passed_message : @father_lawrence_help;
+    case ^romeojuliet_spoken_father :
         ~chatnpc("<p,quiz>Ah, have you found the Apothecary yet?");
         ~chatnpc("<p,neutral>Remember, Cadaver potion, for Father Lawrence.");
-    case ^romeojuliet_spoken_apothecary:
+    case ^romeojuliet_spoken_apothecary :
         ~chatnpc("<p,quiz>Did you find the Apothecary?");
         if(inv_total(inv, cadaver) > 0) {
             ~chatplayer("<p,happy>I've got the Cadaver potion.");
@@ -20,7 +20,7 @@ switch_int (%romeojuliet_progress) {
             ~chatnpc("<p,neutral>Well, take care. They are poisonous to the touch.");
             ~chatnpc("<p,neutral>You will need gloves.");
         }
-    case default:
+    case default :
         ~chatnpc("<p,happy>Oh to be a father in the times of whiskey.");
         ~chatnpc("<p,happy>I sing and I drink and I wake up in gutters.");
         def_int $option = random(2);
@@ -35,15 +35,15 @@ switch_int (%romeojuliet_progress) {
 [label,father_lawrence_prequest]
 ~chatnpc("<p,neutral>Hello adventurer, do you seek a quest?");
 switch_int(~p_choice3("I am always looking for a quest.", 1, "No, I prefer just to kill things.", 2, "Can you recommend a good bar?", 3)) {
-    case 1:
+    case 1 :
         ~chatplayer("<p,happy>I am always looking for a quest.");
         ~chatnpc("<p,neutral>Well, I see poor Romeo wandering around the square. I think he may need help.");
         ~chatnpc("<p,sad>I was helping him and Juliet to meet,|but it became impossible.");
         ~chatnpc("<p,happy>I am sure he can use some help.");
-    case 2:
+    case 2 :
         ~chatplayer("<p,happy>No, I prefer just to kill things.");
         ~chatnpc("<p,happy>That's a fine career in these lands.|There is more that needs killing every day.");
-    case 3:
+    case 3 :
         ~chatplayer("<p,neutral>Can you recommend a good bar?");
         ~chatnpc("<p,angry>Drinking will be the death of you.");
         ~chatnpc("<p,neutral>But the Blue Moon in the city is cheap enough.");

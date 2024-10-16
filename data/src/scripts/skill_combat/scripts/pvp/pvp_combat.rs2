@@ -133,24 +133,24 @@ return(min(1125, add(1000, divide(multiply(divide($combat_level, 20), 1000), 40)
 
 [proc,give_combat_experience_pvp](int $damagestyle, int $base, int $multiplier)
 switch_int($damagestyle) {
-    case ^style_melee_accurate : 
+    case ^style_melee_accurate :
         stat_advance(attack, scale($multiplier, 1000, scale(400, 100, $base)));
-    case ^style_melee_aggressive : 
+    case ^style_melee_aggressive :
         stat_advance(strength, scale($multiplier, 1000, scale(400, 100, $base)));
-    case ^style_melee_defensive : 
+    case ^style_melee_defensive :
         stat_advance(defence, scale($multiplier, 1000, scale(400, 100, $base)));
-    case ^style_melee_controlled : 
+    case ^style_melee_controlled :
         stat_advance(attack, scale($multiplier, 1000, scale(133, 100, $base)));
         stat_advance(strength, scale($multiplier, 1000, scale(133, 100, $base)));
         stat_advance(defence, scale($multiplier, 1000, scale(133, 100, $base)));
-    case ^style_ranged_accurate, ^style_ranged_rapid : 
+    case ^style_ranged_accurate, ^style_ranged_rapid :
         stat_advance(ranged, scale($multiplier, 1000, scale(400, 100, $base)));
-    case ^style_ranged_longrange : 
+    case ^style_ranged_longrange :
         stat_advance(ranged, scale($multiplier, 1000, scale(200, 100, $base)));
         stat_advance(defence, scale($multiplier, 1000, scale(200, 100, $base)));
     case ^style_magic_normal :
         stat_advance(magic, scale($multiplier, 1000, scale(200, 100, $base)));
-    case ^style_magic_defensive : 
+    case ^style_magic_defensive :
         stat_advance(magic, scale($multiplier, 1000, scale(133, 100, $base)));
         stat_advance(defence, scale($multiplier, 1000, scale(100, 100, $base)));
     case default : return;

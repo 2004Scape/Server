@@ -9,13 +9,13 @@
 
 [opheld1,_trail_casket_hard] ~progress_clue_hard(last_item, "You've found another clue scroll!");
 
-[proc,trail_clue_hard_complete](boolean)
+[proc,trail_clue_hard_complete]()(boolean)
 if(~get_trail_progress >= ^trail_hard_maxsteps | (add(~get_trail_progress, 2) >= ^trail_hard_maxsteps & random(2) = 0)) {
     return (true);
 }
 return(false);
 
-[proc,trail_clue_hard_getrandom](namedobj)
+[proc,trail_clue_hard_getrandom]()(namedobj)
 return(enum(int, namedobj, trail_hard_enum, random(enum_getoutputcount(trail_hard_enum))));
 
 [proc,give_trail_puzzle](namedobj $puzzle, string $text)

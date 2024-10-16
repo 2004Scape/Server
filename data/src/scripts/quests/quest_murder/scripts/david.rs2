@@ -1,7 +1,7 @@
 [opnpc1,david]
 switch_int(%murder_progress) { 
-    case ^murder_not_started: mes("He is ignoring you.");
-    case ^murder_started:
+    case ^murder_not_started : mes("He is ignoring you.");
+    case ^murder_started :
         ~chatplayer("<p,neutral>I'm here to help the guards with their investigation.");
         ~chatnpc("<p,neutral>And? Make this quick, I have better things to do|than be interrogated by halfwits all day.");
         def_int $option;
@@ -15,14 +15,14 @@ switch_int(%murder_progress) {
             $option = ~p_choice2("Who do you think is responsible?", 1, "Where were you when the murder happened?", 2);
         }
         switch_int($option) {
-            case 1:
+            case 1 :
                 ~chatplayer("<p,neutral>Who do you think is responsible?");
                 ~chatnpc("<p,neutral>I don't really know or care.|Frankly, the old man deserved to die.");
                 ~chatnpc("<p,neutral>There was a suspicious red headed man who came|to the house the other day selling poison now I|think about it. Last I saw he was headed towards|the tavern in the Seers village.");
-            case 2:
+            case 2 :
                 ~chatplayer("<p,neutral>Where were you when the murder happened?");
                 ~chatnpc("<p,angry>That is none of your business.|Are we finished now, or are you just going|to stand there irritating me with your|idiotic questions all day?");
-            case 3:
+            case 3 :
                 ~chatplayer("<p,confused>Do you recognise this thread?");
                 ~mesbox("You show him the thread you found on the study window");
                 if(inv_total(inv, murder_green_thread) > 0) {
@@ -31,13 +31,13 @@ switch_int(%murder_progress) {
                     return;
                 }
                 ~chatnpc("<p,confused>No. Can I go yet? Your face irritates me.");
-            case 4:
+            case 4 :
                 ~chatplayer("<p,neutral>Why'd you buy poison the other day?");
                 ~chatnpc("<p,angry>There was a nest of spiders upstairs between the two servants' quarters. Obviously I had to kill them before our pathetic servants whined at my father some more.");
                 ~chatnpc("<p,confused>Honestly, it's like they expect to be treated like royalty! If I had my way I would fire the whole workshy lot of them!");
-                if(%murder_murderer_id = ^murderer_david & %murder_poisonproof_progress = ^poisonproof_spoken_salesman) { // TODO: figure out exactly when these would get set for each murderer
+                if(%murder_murderer_id = ^murderer_david & %murder_poisonproof_progress = ^poisonproof_spoken_salesman) { // todo: figure out exactly when these would get set for each murderer
                     %murder_poisonproof_progress = ^poisonproof_spoken_murderer;
                 }
         }
-    case ^murder_complete: ~chatnpc("<p,neutral>Apparently you aren't as stupid as you look.");
+    case ^murder_complete : ~chatnpc("<p,neutral>Apparently you aren't as stupid as you look.");
 }

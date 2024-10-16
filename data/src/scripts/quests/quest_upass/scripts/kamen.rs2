@@ -8,7 +8,7 @@ p_delay(1);
 ~chatnpc("<p,neutral>Too much of this home brew my friend. We make it from plant roots, but it blows your head off.");
 ~chatnpc("<p,shifty>You don't wanna put it near any naked flames. Want some?");
 switch_int(~p_choice2("Okay then.", 1, "No thanks.", 2)) {
-    case 1:
+    case 1 :
         ~chatplayer("<p,happy>Okay then.");
         ~chatnpc("<p,happy>Here you go... Hic!");
         if_close;
@@ -25,7 +25,7 @@ switch_int(~p_choice2("Okay then.", 1, "No thanks.", 2)) {
         p_delay(0);
         ~damage_self(~random_range(3, 5));
         ~chatnpc("<p,happy>Ha ha! I warned you - it's strong stuff.|Have a good meal; it may sober you up a bit.");
-    case 2:
+    case 2 :
         ~chatplayer("<p,neutral>No thanks.");
         ~chatnpc("<p,happy>Your losh... Hic!");
         ~chatnpc("<p,happy>Well maybe a good meal? I could part with some food for a few coins.");

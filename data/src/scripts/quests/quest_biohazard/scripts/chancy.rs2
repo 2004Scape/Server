@@ -1,5 +1,5 @@
 [opnpc1,chancy1]
-if(map_members = false) { // TODO: rs3, and OSRS wiki mentions this dialogue in old versions as well could be wrong since he isn't visibly playing w/cards before Sept 200^chancy_given, try to confirm for before that
+if(map_members = false) { // todo: rs3, and OSRS wiki mentions this dialogue in old versions as well could be wrong since he isn't visibly playing w/cards before Sept 200^chancy_given, try to confirm for before that
     ~chatplayer("<p,happy>Hello! Playing solitaire?");
     ~chatnpc("<p,angry>Hush - I'm trying to perfect the art of dealing off the bottom of the deck. Whatever you want, come back later on a members' world and I'll speak to you then.");
     return;
@@ -82,10 +82,10 @@ if(testbit(%bioerrand, ^chancy_correct) = true) {
     ~chatplayer("<p,angry>You sold my vial and gambled with the money?!");
     ~chatnpc("<p,shifty>Actually yes... but praise be to Saradoming because I won! So all's well that ends well right?");
     switch_int(~p_choice2("No! Nothing could be further from the truth!", 1, "You have no idea what you have just done!", 2)) {
-        case 1: 
+        case 1 :
             ~chatplayer("<p,angry>No! Nothing could be further from the truth!");
             ~chatnpc("<p,neutral>Well, there's no pleasing some people.");
-        case 2: 
+        case 2 :
             ~chatplayer("<p,angry>You have no idea what you have just done!");
             ~chatnpc("<p,neutral>Ignorance is bliss I'm afraid.");
     }

@@ -120,7 +120,7 @@ switch_int($step) {
     case 8 : %gnome_bowl_ingredient9 = $item;
     case 9 : %gnome_bowl_ingredient10 = $item;
     case 10 : %gnome_bowl_ingredient11 = $item;
-    case default : 
+    case default :
         mes("The bowl already has enough ingredients.");
         return;
 }

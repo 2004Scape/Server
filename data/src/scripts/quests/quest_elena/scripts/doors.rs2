@@ -1,6 +1,6 @@
 [oploc1,loc_2537] @rehnissons_enter_house;
 [oploc1,loc_2534] @west_ardougne_plague_house_doors;
-[oploc1,loc_2535] mes("This door is locked."); // TODO probs not right but yolo in 225 seems only 1 door is the correct one.
+[oploc1,loc_2535] mes("This door is locked."); // todo probs not right but yolo in 225 seems only 1 door is the correct one.
 
 [label,west_ardougne_plague_house_doors]
 if (~check_axis(coord, loc_coord, loc_angle) = false) {
@@ -8,14 +8,13 @@ if (~check_axis(coord, loc_coord, loc_angle) = false) {
     return;
 }
 switch_int(%elena_progress) {
-    case ^quest_elena_spoke_to_milli: {
+    case ^quest_elena_spoke_to_milli :
         ~mesbox("The door won't open.|You notice a black cross on the door.");
         if (npc_find(coord, npc_719, 14, 0) = true) {
             ~chatnpcrange("<p,neutral>I'd stand away from there. That black cross means that house has been touched by the plague.");
             @multi3("But I think a kidnap victim is in here.", plague_house_but_i_think_a_kidnap_victim_is_in_here, "I fear not a mere plague.", plague_house_i_fear_not_a_mere_plague, "Thanks for the warning.", plague_house_thanks_for_the_warning);
         }
-    }
-    case ^quest_elena_spoke_cured_bravek: {
+    case ^quest_elena_spoke_cured_bravek :
         if (inv_total(inv, elena_warrant) > 0 & npc_find(coord, npc_719, 14, 0) = true) {
             ~chatnpcrange("<p,neutral>I'd stand away from there. That black cross means that house has been touched by the plague.");
             ~chatplayer("<p,neutral>I have a warrant from <nc_name(bravek)> to enter here.");
@@ -25,14 +24,12 @@ switch_int(%elena_progress) {
             ~mesbox("The door won't open.|You notice a black cross on the door.");
             ~chatnpcrange("<p,neutral>I'd stand away from there. That black cross means that house has been touched by the plague.");
         }
-    }
-    case ^quest_elena_freed_elena, ^elena_complete, ^elena_complete_read_scroll: ~open_and_close_door(loc_param(next_loc_stage), ~check_axis(coord, loc_coord, loc_angle), false);
-    case default: {
+    case ^quest_elena_freed_elena, ^elena_complete, ^elena_complete_read_scroll : ~open_and_close_door(loc_param(next_loc_stage), ~check_axis(coord, loc_coord, loc_angle), false);
+    case default :
         ~mesbox("The door won't open.|You notice a black cross on the door.");
         if (npc_find(coord, npc_719, 14, 0) = true) {
             ~chatnpcrange("<p,neutral>I'd stand away from there. That black cross means that house has been touched by the plague.");
         }
-    }
 }
 
 [label,plague_house_but_i_think_a_kidnap_victim_is_in_here]
@@ -41,7 +38,7 @@ switch_int(%elena_progress) {
 @multi2("Good point.", plague_house_good_point, "I want to check anyway.", plague_house_i_want_to_check_anyway);
 
 [label,plague_house_good_point]
-// TODO unconfirmed details of this dialogue -jordan
+// todo unconfirmed details of this dialogue -jordan
 ~chatplayer("<p,neutral>Good point.");
 
 [label,plague_house_i_want_to_check_anyway]
@@ -73,7 +70,7 @@ if (npc_find(coord, ted_rehnison, 7, 0) = false) {
 }
 ~chatnpc("<p,angry>Go away. We don't want any.");
 switch_int(%elena_progress) {
-    case ^quest_elena_shown_picture: {
+    case ^quest_elena_shown_picture :
         if (inv_total(inv, elena_book) > 0) {
             ~chatplayer("<p,neutral>I'm a friend of <nc_name(jethick)>'s, I have come to return a book he borrowed.");
             ~chatnpc("<p,neutral>Oh... Why didn't you say, come in then.");
@@ -84,6 +81,5 @@ switch_int(%elena_progress) {
             ~objbox(elena_book, "You hand the book to Ted as you enter.");
             ~chatnpc("<p,happy>Thanks, I've been missing that.");
         }
-    }
 }
 

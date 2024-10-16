@@ -1,11 +1,11 @@
 [opnpc1,clivet]
 switch_int(%hazeelcult_progress) {
-    case ^hazeelcult_not_started:
+    case ^hazeelcult_not_started :
         ~chatplayer("<p,neutral>Hello there.");
         ~chatnpc("<p,shifty>What do you want adventurer?");
         ~chatplayer("<p,neutral>Just passing by.");
         ~chatnpc("<p,neutral>You have no business here. Leave.... now.");
-    case ^hazeelcult_started:
+    case ^hazeelcult_started :
         ~chatplayer("<p,quiz>Do you know the Carnilleans?");
         ~chatnpc("<p,angry>You mind your business, I'll mind mine.");
         ~chatplayer("<p,angry>Look, I KNOW you're hiding something. I've heard theres a cult hideout down here.");
@@ -17,11 +17,11 @@ switch_int(%hazeelcult_progress) {
         ~chatnpc("<p,angry>And none of it is honourable.");
         %hazeelcult_progress = ^hazeelcult_spoken_clivet;
         @multi2("What do you mean?", clivet_what_do_you_mean, "I've heard enough of your rubbish.", clivet_rubbish);
-    case ^hazeelcult_spoken_clivet:
+    case ^hazeelcult_spoken_clivet :
         ~chatplayer("<p,neutral>Hello.");
         ~chatnpc("<p,neutral>So. You've returned. Now do you want to know the truth about the 'honourable' Carnilleans?");
         @multi2("What do you mean?", clivet_what_do_you_mean, "I've heard enough of your rubbish.", clivet_rubbish);  
-    case ^hazeelcult_clivet_decision:
+    case ^hazeelcult_clivet_decision :
         ~chatplayer("<p,neutral>Hello there.");
         if(%hazeelcult_side = ^hazeelcult_goodside) {
             // guessing mesanims here
@@ -36,7 +36,7 @@ switch_int(%hazeelcult_progress) {
                 ~chatnpc("<p,angry>Useless. Take this and don't mess up this time. Lord Hazeel is depending on you.");
             }
         }
-    case ^hazeelcult_poured_poison:
+    case ^hazeelcult_poured_poison :
         ~chatplayer("<p,neutral>Hello.");
         ~chatplayer("<p,neutral>I poured the poison into the Carnillean's meal as requested. It didn't quite go to plan however.");
         ~chatnpc("<p,neutral>Yes, we heard all about it from one of our sources. Hazeel has eyes everywhere! You have now proved your loyalty and will be rewarded when Hazeel is revived!");
@@ -52,7 +52,7 @@ switch_int(%hazeelcult_progress) {
         ~chatnpc("<p,neutral>Each sewer valve must be correctly set before the water level is such that you may enter. The secret of the correct settings is contained in these amulets which honour him.");
         ~chatnpc("<p,neutral>Starting from left to right, follow the design of the amulet to locate each sewer valve, and then turn each so as to follow the amulet design.");
         ~chatnpc("<p,neutral>When you solve the sequence you may enter our hideout where our leader, Alomone, awaits you.");
-    case ^hazeelcult_finished_side_task:
+    case ^hazeelcult_finished_side_task :
         if(%hazeelcult_side = ^hazeelcult_goodside) {
             ~chatplayer("<p,neutral>Hello again.");
             ~chatnpc("<p,angry>You again! You meddle in our affairs too much! When Lord Hazeel returns to this realm he will lay a mighty vengeance upon you!");
@@ -60,7 +60,7 @@ switch_int(%hazeelcult_progress) {
             ~chatplayer("<p,neutral>Hello.");
             ~chatnpc("<p,neutral>Hello once more adventurer. All we need is Hazeels' magical scroll to bring him forth once more to this world.");
         }
-    case ^hazeelcult_given_armour_or_scroll:
+    case ^hazeelcult_given_armour_or_scroll :
         if(%hazeelcult_side = ^hazeelcult_goodside) {
             ~chatplayer("<p,neutral>Hello again.");
             ~chatnpc("<p,angry>You again. Mark my words meddler; when Lord Hazeel returns you will be punished most severely for your interference in our schemes.");
@@ -76,7 +76,7 @@ switch_int(%hazeelcult_progress) {
             ~chatnpc("<p,happy>At last! The pieces are all in place for the glorious resurrection of Lord Hazeel! Now is the starting point for a new page in history, and our chance for vengeance!");
             ~chatnpc("<p,happy>Quickly now! Take the scroll to Alomone so that we may begin the ritual... and when Lord Hazeel returns I promise you that you shall be well rewarded!");
         }
-    case ^hazeelcult_complete:
+    case ^hazeelcult_complete :
         ~chatplayer("<p,neutral>Hello.");
         if(%hazeelcult_side = ^hazeelcult_goodside) {
             ~chatnpc("<p,angry>You may have won this battle meddler, but the war rages on. Go bother some goblins or something for when Hazeel returns your destruction is assured.");
@@ -98,18 +98,18 @@ switch_int(%hazeelcult_progress) {
 ~chatnpc("<p,neutral>Well then friend, perhaps I can offer you a different job then? Sooner or later Our master WILL return to this land; those faithful to him will be well rewarded.");
 ~chatnpc("<p,neutral>Join our cult and assist us in his restoration, and you will be well rewarded; try and prevent his return and suffer the wrath of Zamorak and the Mahjarrat.");
 switch_int(~p_choice2("You're crazy, I'd never help you.", 1, "So what would I have to do?", 2)) {
-    case 1:
+    case 1 :
         ~chatplayer("<p,angry>You're crazy, I'd never help you.");
         @clivet_fool;
-    case 2:
+    case 2 :
         ~chatplayer("<p,quiz>So what would I have to do?");
         ~chatnpc("<p,neutral>You must prove your loyalty to our cause. Killing one of the Carnillean household should be sufficient proof of your dedication to resurrecting our master Lord Hazeel.");
         ~chatnpc("<p,quiz>So what say you adventurer? Join our side against the Carnillean thieves?");
         switch_int(~p_choice2("No. I won't do it.", 1, "Ok, count me in.", 2)) {
-            case 1:
+            case 1 :
                 ~chatplayer("<p,angry>No. I won't do it.");
                 @clivet_fool;
-            case 2:
+            case 2 :
                 ~chatplayer("<p,neutral>Ok, count me in.");
                 ~chatnpc("<p,neutral>Excellent. It takes a rare character to see through the cursed Carnillean lies. I can tell you are a <text_gender("man", "lady")> of exactly the right character to join the followers of Hazeel.");
                 ~chatnpc("<p,neutral>Here. Take this poison. Pour it into their food, and once the deed is done, return here and speak to me once more.");

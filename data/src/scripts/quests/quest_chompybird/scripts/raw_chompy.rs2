@@ -1,7 +1,7 @@
 [opheldu,raw_chompy]
 switch_obj (last_useitem)
 {
-    case cabbage, tomato, potato, equa_leaves, doogle_leaves:
+    case cabbage, tomato, potato, equa_leaves, doogle_leaves :
         @quest_chompybird_add_ingredients_to_chompy_message;
     case default : ~displaymessage(^dm_default);
 };
@@ -12,17 +12,17 @@ switch_obj (last_useitem)
 ~mesbox("You can only add ingredients when you're cooking a chompy bird. Ensure you have the seasonings you want to use in your inventory when cooking the chompy bird and you will use them automatically when cooking.");
 
 [oplocu,ogre_spitroast]
-// TODO what else can be cooked here?
+// todo what else can be cooked here?
 if (last_useitem ! raw_chompy)
 {
     ~displaymessage(^dm_default);
     return;
 }
 
-// TODO allow cooking after quest
+// todo allow cooking after quest
 if (%chompybird_progress < ^chompybird_told_to_cook_chompy)
 {
-    // TODO this has a few different messages in different quest states on OSRS
+    // todo this has a few different messages in different quest states on OSRS
     ~displaymessage(^dm_default);
     return;
 }
@@ -35,7 +35,7 @@ if (%chompybird_progress = ^chompybird_told_to_cook_chompy)
 
 if (%chompybird_progress = ^chompybird_chompy_cooked)
 {
-    // TODO what if the player no longer has the original chompy? Does it still auto-hand in?
+    // todo what if the player no longer has the original chompy? Does it still auto-hand in?
     if (npc_find(loc_coord, chompybird_rantz, 16, 0) = true)
     {
         @hand_chompy_to_rantz;
@@ -48,7 +48,7 @@ if (%chompybird_progress = ^chompybird_chompy_cooked)
     return;
 }
 
-// TODO handle non-quest cooking
+// todo handle non-quest cooking
 ~displaymessage(^dm_default);
 
 [label,cook_chompy_quest]
@@ -57,7 +57,7 @@ def_int $fycie_ingredient = getbit_range(%chompybird_kills, ^chompybird_varbit_f
 
 if ($bugs_ingredient = 0 | $fycie_ingredient = 0)
 {
-    // TODO confirm behaviour
+    // todo confirm behaviour
     mes("You should ask Bugs and Fycie for their favourite ingredients first!");
     return;
 }
@@ -136,7 +136,7 @@ if ($has_rantz_ingredient = false | $has_bugs_ingredient = false | $has_fycie_in
     return;
 }
 
-// TODO in OSRS this takes some time, and the spit is animated
+// todo in OSRS this takes some time, and the spit is animated
 %chompybird_progress = ^chompybird_chompy_cooked;
 mes("You carefully place the chompy bird on the spit-roast.");
 inv_del(inv, raw_chompy, 1);

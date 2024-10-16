@@ -225,20 +225,20 @@ return($defence_roll);
 
 [proc,npc_attack_roll_specific](int $damagetype)(int)
 switch_int ($damagetype) {
-    case ^stab_style, ^slash_style, ^crush_style: return(~npc_melee_attack_roll);
-    case ^ranged_style: return(~npc_ranged_attack_roll);
-    case ^magic_style: return(~npc_magic_attack_roll);
+    case ^stab_style, ^slash_style, ^crush_style : return(~npc_melee_attack_roll);
+    case ^ranged_style : return(~npc_ranged_attack_roll);
+    case ^magic_style : return(~npc_magic_attack_roll);
 }
 return(0);
 
 // get the npc bonus depending on the attacking style
 [proc,npc_combat_defencebonus](int $style)(int)
 switch_int ($style) {
-    case ^stab_style: return(npc_param(stabdefence));
-    case ^slash_style: return(npc_param(slashdefence));
-    case ^crush_style: return(npc_param(crushdefence));
-    case ^ranged_style: return(npc_param(rangedefence));
-    case ^magic_style: return(npc_param(magicdefence));
+    case ^stab_style : return(npc_param(stabdefence));
+    case ^slash_style : return(npc_param(slashdefence));
+    case ^crush_style : return(npc_param(crushdefence));
+    case ^ranged_style : return(npc_param(rangedefence));
+    case ^magic_style : return(npc_param(magicdefence));
 }
 error("style of <tostring($style)> not defined in switch for npc_combat_defencebonus");
 

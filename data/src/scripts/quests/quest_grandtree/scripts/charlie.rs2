@@ -1,12 +1,12 @@
 [apnpc1,grandtree_charlie]
 // no range 
 switch_int(%grandtree_progress) {
-    case ^grandtree_found_invasion_plans:
+    case ^grandtree_found_invasion_plans :
         ~chatplayer("<p,angry>You were right! I searched Glough's chest and found some invasion plans!");
         ~chatnpc("<p,angry>Go to the King and tell him! Finally you have proof. Surely King Narnode will belive you now and set me free!");
         ~chatplayer("<p,happy>Hold tight Charlie!");
         ~chatnpc("<p,neutral>I'm not going anywhere!");
-    case ^grandtree_obtained_lumber_order:
+    case ^grandtree_obtained_lumber_order :
         ~chatplayer("<p,quiz>How are you doing Charlie?");
         ~chatnpc("<p,neutral>I've been better.");
         ~chatplayer("<p,angry>Glough has some plan to rule RuneScape!");
@@ -18,10 +18,10 @@ switch_int(%grandtree_progress) {
         %grandtree_progress = ^grandtree_clue_charlie;
         ~chatnpc("<p,neutral>Just west of the toad swamp.");
         ~chatplayer("<p,neutral>OK, I'll see what I can find.");
-    case ^grandtree_released_prison:
+    case ^grandtree_released_prison :
         ~chatplayer("<p,sad>I can't figure this out Charlie!");
         ~chatnpc("<p,neutral>Go and see the foreman in the Karamja jungle, there's a shipyard there, you might find some clues. Don't forget the password is Ka-Lu-Min; if they realise that you're not working for Glough there'll be trouble!");
-    case ^grandtree_found_journal:
+    case ^grandtree_found_journal :
         if(coord = ^grandtree_jail_coord) {
             p_delay(3);
             ~chatnpc("<p,sad>So they got you as well?");
@@ -30,12 +30,12 @@ switch_int(%grandtree_progress) {
             ~chatplayer("<p,angry>I think Glough is trying to cover something up!");
         }
         @charlie_shouldnt_tell;
-    case ^grandtree_spoken_prisoner:
+    case ^grandtree_spoken_prisoner :
         ~chatplayer("<p,neutral>Hello Charlie.");
         ~chatnpc("<p,neutral>Hello adventurer. Have you figured out what's going on?");
         ~chatplayer("<p,neutral>No idea.");
         ~chatnpc("<p,neutral>To get to the bottom of this you'll need to search Glough's home.");
-    case ^grandtree_found_prisoner:
+    case ^grandtree_found_prisoner :
         // https://youtu.be/LFvLBRCxFwk?si=2LxhRmfBnwuNBFf_&t=543
         ~chatplayer("<p,neutral>Tell me. Why would you want to kill the Grand Tree?");
         ~chatnpc("<p,shock>What do you mean?!");
@@ -51,7 +51,7 @@ switch_int(%grandtree_progress) {
         ~chatnpc("<p,neutral>I don't know what he's up to. If you want to find out you'd better search his home.");
         ~chatplayer("<p,neutral>OK. Thanks Charlie.");
         ~chatnpc("<p,neutral>Good luck!");
-    case default:
+    case default :
         mes("The prisoner is in no mood to talk.");
 }
 
@@ -69,7 +69,7 @@ if_close;
 npc_add(movecoord(^grandtree_jail_coord, 3, 0, 0), king_narnode, 200);
 p_delay(0); 
 npc_walk(movecoord(coord, 1, 0, 0));
-p_delay(3); // TODO: +1 until delay is fixed
+p_delay(3); // todo: +1 until delay is fixed
 ~chatnpc("<p,sad>Traveller please accept my apologies!|Glough had no right to arrest you!|I just think he's scared of humans.|Let me get you out of there.");
 if_close;
 // can't use door proc here since it opens incorrectly (notice the lock side)
@@ -79,5 +79,5 @@ if(loc_find(movecoord(coord, 1, 0, 0), loc_3367) = true) {
     sound_synth(locked, 0, 0);
 } 
 p_teleport(movecoord(coord, 1, 0, 0));
-p_delay(3); // 3t, TODO: +1 until delay is fixed
+p_delay(3); // 3t, todo: +1 until delay is fixed
 @narnode_trust_glough;

@@ -93,7 +93,7 @@ switch_int($step) {
     case 2 : %gnome_crunchies_ingredient3 = $item;
     case 3 : %gnome_crunchies_ingredient4 = $item;
     case 4 : %gnome_crunchies_ingredient5 = $item;
-    case default : 
+    case default :
         mes("The crunchies already have enough ingredients.");
         return;
 }

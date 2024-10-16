@@ -147,7 +147,7 @@ mes("You try to disarm the trap...");
 anim(human_pickpocket, 0);
 sound_synth(lockeddoor, 0, 0);
 p_delay(2); // 2 ticks
-// TODO: check these numbers
+// todo: check these numbers
 if(stat_random(stat(thieving), 110, 320) = false) {
     mes("...and fail, activating the trap!");
     loc_anim(seq_459);
@@ -214,7 +214,7 @@ mes("You try to disarm the trap...");
 anim(human_pickpocket, 0);
 sound_synth(lockeddoor, 0, 0);
 p_delay(2); // 2 ticks
-// TODO: check these numbers
+// todo: check these numbers
 if(stat_random(stat(thieving), 110, 320) = false) {
     mes("...and fail, activating the trap!");
     @upass_orboflight_trap;
@@ -303,7 +303,7 @@ p_delay(0);
 p_walk($start);
 p_delay(2);
 if(%upass_area2_pipe_used >= map_clock) {
-    mes("The pipe is being used"); // TODO: confirm, using the same as gnome course
+    mes("The pipe is being used"); // todo: confirm, using the same as gnome course
     return;
 }
 %upass_area2_pipe_used = calc(map_clock + 6);
@@ -339,7 +339,7 @@ if(stat_random(stat(agility), 90, 300) = false) {
     ~damage_self(calc(((stat(hitpoints) * 25) / 100) + 4));
     if(testbit(%upass_map_mechanisms, ^upass_koftik_gone_insane) = false) {
         p_delay(0);
-        // TODO: figure out how long this should be, only works this way on RS3
+        // todo: figure out how long this should be, only works this way on RS3
         npc_add(map_findsquare(coord, 1, 2, ^map_findsquare_lineofwalk), npc_975, 200);
         @koftik_isthatyou;
     }

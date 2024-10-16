@@ -62,7 +62,7 @@ if (p_finduid(uid) = true) {
             case 19 : queue(quest_biohazard_complete, 0);
             case 20 : queue(cog_complete, 0);
             case 21 : mes("Quest not implemented");
-            case 22 : 
+            case 22 :
                 if (npc_find(0_45_54_45_30, kaqemeex, 7, 0) = true) {
                     queue(druid_quest_complete, 0, npc_uid);
                 }
@@ -87,7 +87,7 @@ if (p_finduid(uid) = true) {
             case 41 : queue(seaslug_quest_complete, 0);
             case 42 : queue(sheepherder_complete, 0);
             case 43 : mes("Quest not implemented");
-            case 44 : 
+            case 44 :
                 def_int $choice3 = ~p_choice2("Armadyl.", 0, "Lucien.", 1);
                 if ($choice3 = 0) {
                     if (npc_find(0_40_51_13_57, lucien_ardougne, 7, 0) = true) {
@@ -111,7 +111,7 @@ if (p_finduid(uid) = true) {
             case 1 : %cook_progress = 0;
             case 2 : %demon_progress = 0;
             case 3 : %doric_progress = 0;
-            case 4 : 
+            case 4 :
                 %dragon_goblin = 0;
                 %dragon_ned_hired = 0;
                 %dragon_oracle = 0;
@@ -119,7 +119,7 @@ if (p_finduid(uid) = true) {
                 %dragon_wall = 0;
                 %dragon_progress = 0;
                 %dragon_planks = 0;
-            case 5 : 
+            case 5 :
                 %haunted_lever = 0;
                 %haunted_manor_fountain_poisoned = 0;
                 %haunted_progress = 0;
@@ -129,7 +129,7 @@ if (p_finduid(uid) = true) {
             case 9 :
                 %hunt_progress = 0;
                 %hunt_store_employed = 0;
-            case 10 : 
+            case 10 :
                 %prince_keystatus = 0;
                 %prince_progress = 0;
             case 11 : %priest_progress = 0;
@@ -146,7 +146,7 @@ if (p_finduid(uid) = true) {
             case 20 : %cog_progress = 0;
             case 21 : mes("Quest not implemented");
             case 22 : %druid_progress = 0;
-            case 23 : 
+            case 23 :
                 %mcannon_railings = 0;
                 %mcannon_progress = 0;
             case 24 : mes("Quest not implemented");
@@ -154,7 +154,7 @@ if (p_finduid(uid) = true) {
             case 26 : %fishingcompo_progress = 0;
             case 27 : %grandtree_progress = 0;
             case 28 : mes("Quest not implemented");
-            case 29 : 
+            case 29 :
                 %hazeelcult_side = 0;
                 %hazeelcult_side = 0;
                 %hazeelcult_progress = 0;
@@ -165,14 +165,14 @@ if (p_finduid(uid) = true) {
             case 34 : %zanaris_progress = 0;
             case 35 : %arthur_progress = 0;
             case 36 : %drunkmonk_progress = 0;
-            case 37 : 
+            case 37 :
                 %murder_murderer_id = 0;
                 %murder_poisonproof_progress = 0;
                 %murder_progress = 0;
                 %murder_evidence = 0;
             case 38 : mes("Quest not implemented");
             case 39 : %elena_progress = 0;
-            case 40 : 
+            case 40 :
                 %scorpcatcher_progress = 0;
                 %scorpius_given_symbol = 0;
             case 41 :
@@ -190,11 +190,11 @@ if (p_finduid(uid) = true) {
             case 45 : mes("Quest not implemented");
             case 46 : %tree_progress = 0;
             case 47 : %totem_progress = 0;
-            case 48 : 
+            case 48 :
                 %upass_progress = 0;
                 %upass_map_mechanisms = 0;
             case 49 : mes("Quest not implemented");
-            case 50 : 
+            case 50 :
                 %waterfall_golrie_and_puzzle = 0;
                 %waterfall_progress = 0;
             case 51 : %ball_progress = 0;

@@ -16,7 +16,7 @@ if(inv_total(inv, broken_iban_staff) > 0) {
     ~chatplayer("<p,neutral>How much?");
     ~chatnpc("<p,neutral>200,000 gold pieces. Not a penny less.");
     switch_int(~p_choice2("Okay then.", 1, "No chance. that's ridiculous!", 2)) {
-        case 1:
+        case 1 :
             if(inv_total(inv, coins) < 200000) {
                 ~chatplayer("<p,sad>Oops! I'm a bit short."); // guessed mesanim
                 return;
@@ -30,7 +30,7 @@ if(inv_total(inv, broken_iban_staff) > 0) {
             ~objbox(iban_staff, "The mage fixes the staff and returns it to you.");
             ~chatplayer("<p,happy>Thanks. I appreciate that.");
             ~chatnpc("<p,neutral>You be careful with that thing!");
-        case 2:
+        case 2 :
             ~chatnpc("<p,bored>...Fine by me.");
     }
 }

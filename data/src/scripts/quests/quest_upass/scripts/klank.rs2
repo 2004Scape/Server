@@ -1,21 +1,21 @@
 [opnpc1,klank]
 switch_int(%upass_progress) {
-    case ^upass_confronted_iban, ^upass_defeated_iban, ^upass_complete:
+    case ^upass_confronted_iban, ^upass_defeated_iban, ^upass_complete :
         ~chatplayer("<p,happy>Hello Klank.");
         ~chatnpc("<p,happy>Hello again adventurer, so you're still around?");
         ~chatplayer("<p,happy>Still here!");
         switch_int(~p_choice2("Have you anymore gauntlets?", 1, "Take care Klank.", 2)) {
-            case 1:
+            case 1 :
                 ~chatplayer("<p,neutral>Have you any more gauntlets?");
                 ~chatnpc("<p,neutral>Well..yes, but they're not cheap to make. I'll have to sell you a pair...");
                 ~chatplayer("<p,neutral>How much?");
                 ~chatnpc("<p,neutral>5000 coins.");
                 @multi2("5000, you must be joking!", klank_nogauntlets, "Okay then, I'll take a pair.", klank_buygauntlets);
-            case 2:
+            case 2 :
                 ~chatplayer("<p,happy>Take care Klank.");
                 ~chatnpc("<p,happy>You too adventurer...");
         }
-    case ^upass_found_doll:
+    case ^upass_found_doll :
         ~chatplayer("<p,happy>Hi Klank.");
         ~chatnpc("<p,shock>Traveller, I hear you plan to destroy Iban?");
         ~chatplayer("<p,happy>That's right.");
@@ -37,14 +37,14 @@ switch_int(%upass_progress) {
         ~chatplayer("<p,confused>Who?.. Iban's followers?");
         ~chatnpc("<p,neutral>They're not followers, they're slaves, they're the Soulless...");
         switch_int(~p_choice2("What happened to them?", 1, "No wonder their breath was so bad!", 2)) {
-            case 1:
+            case 1 :
                 ~chatplayer("<p,neutral>What happened to them?");
                 ~chatnpc("<p,neutral>They were normal once, adventurers, treasure hunters. But men are weak, they couldn't ignore the voices.");
                 ~chatnpc("<p,sad>Now they all seem to think with one conscience... As if they're being controlled by one being...");
                 ~chatplayer("<p,confused>Iban?");
                 ~chatnpc("<p,neutral>Maybe... maybe Zamorak himself. Those who try and fight it Iban locks in cages, until their minds are too weak to resist.");
                 ~chatnpc("<p,sad>Eventually they all fall to his control...");
-            case 2:
+            case 2 :
                 ~chatplayer("<p,shock>No wonder their breath was so bad!");
                 ~chatnpc("<p,angry>You think this is funny... Eh?");
                 ~chatplayer("<p,bored>Not really, just trying to lighten up the conversation.");

@@ -40,10 +40,10 @@ if($option = 1) {
 ~chatplayer("<p,neutral>Do you deliver to the fort just down the coast?");
 ~chatnpc("<p,happy>Yes, I do have orders to deliver there from time to time. I think I may have some bits and pieces for them when I leave here next actually.");
 switch_int(~p_choice2("Can you drop me off on the way down please?", 1, "Aren't you worried about supplying evil knights?", 2)) {
-    case 1:
+    case 1 :
         ~chatplayer("<p,neutral>Can you drop me off on the way down please?");
         ~chatnpc("<p,happy>I don't think Sir Mordred would like that.|He wants as few outsiders visiting as possible.|I wouldn't want to lose his business.");
-    case 2:
+    case 2 :
         ~chatplayer("<p,neutral>Aren't you worried about supplying evil knights?");
         ~chatnpc("<p,happy>Hey, you gotta take business where you can find it these days! Besides, if I didn't supply them, someone else would.");
 }

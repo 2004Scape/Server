@@ -1,26 +1,23 @@
 [opnpc1,npc_718] // mourner at quest start location
 switch_int(%elena_progress) {
-    case ^quest_elena_not_started: {
+    case ^quest_elena_not_started :
         ~chatplayer("<p,happy>Hello there.");
         ~chatnpc("<p,quiz>Do you have a problem traveller?");
         ~chatplayer("<p,happy>No, I just wondered why you're wearing that outfit... Is it fancy dress?");
         ~chatnpc("<p,shock>No! It's for protection.");
         ~chatplayer("<p,quiz>Protection from what?");
         ~chatnpc("<p,neutral>The plague of course...");
-    }
-    case ^quest_elena_started: {
+    case ^quest_elena_started :
         ~chatplayer("<p,happy>Hello.");
         ~chatnpc("<p,angry>What do you want?");
         @multi2("Who are you?", mourner_who_are_you, "Nothing, just being polite.", mourner_nothing_just_being_polite);
-    }
-    case ^quest_elena_gasmask: {
+    case ^quest_elena_gasmask :
         ~chatplayer("<p,happy>Hello.");
         ~chatnpc("<p,quiz>Are you ok?");
         ~chatplayer("<p,happy>Yes, I'm fine thanks.");
         ~chatnpc("<p,quiz>Have you experienced any plague symptoms?");
         @multi3("What are the symptoms?", mourner_who_are_you, "No, I feel fine.", mourner_no_i_feel_fine, "No, but can you tell me where the plague came from?", mourner_no_but_can_you_tell_me_where_the_plague_came_from);
-    }
-    case ^quest_elena_started_mud_patch, ^quest_elena_mud_patch1, ^quest_elena_mud_patch2, ^quest_elena_mud_patch3, ^quest_elena_mud_patch4: {
+    case ^quest_elena_started_mud_patch, ^quest_elena_mud_patch1, ^quest_elena_mud_patch2, ^quest_elena_mud_patch3, ^quest_elena_mud_patch4 :
         ~chatplayer("<p,happy>Hello.");
         ~chatnpc("<p,quiz>What are you up to with old man <nc_name(edmond)>?");
         ~chatplayer("<p,confused>Nothing, we've just been chatting.");
@@ -29,8 +26,7 @@ switch_int(%elena_progress) {
         ~chatnpc("<p,quiz>We know about everything that goes on in Ardougne. We have to if we are to contain the plague.");
         ~chatplayer("<p,confused>Have you see his daughter recently?");
         ~chatnpc("<p,neutral>I imagine she's caught the plague. Either way she won't be allowed out of West Ardougne, the risk is too great.");
-    }
-    case ^quest_elena_opened_tunnel: {
+    case ^quest_elena_opened_tunnel :
         ~chatplayer("<p,happy>Hello there.");
         ~chatnpc("<p,quiz>Been digging have we?");
         ~chatplayer("<p,confused>What do you mean?");
@@ -38,23 +34,20 @@ switch_int(%elena_progress) {
         ~chatplayer("<p,shifty>Oh that...");
         ~chatnpc("<p,quiz>Funny, you don't look like the gardening type.");
         ~chatplayer("<p,happy>Oh no, I love gardening! It's my favorite pastime.");
-    }
-    case ^quest_elena_tied_rope: {
+    case ^quest_elena_tied_rope :
         ~chatplayer("<p,happy>Hello there.");
         ~chatnpc("<p,quiz>What are you up to?");
         ~chatplayer("<p,confused>What do you mean?");
         ~chatnpc("<p,quiz>You and that <nc_name(edmond)> fella, you're looking very suspicious.");
         ~chatplayer("<p,shifty>We're just gardening. Have you heard any news about West Ardougne?");
         ~chatnpc("<p,angry>Just the usual, everyone's sick or dying. I'm furious at King Tyras for bringing this plague to our lands.");
-    }
-    case default: {
+    case default :
         ~chatplayer("<p,happy>Hello.");
         ~chatnpc("<p,quiz>What are you up to?");
         ~chatplayer("<p,neutral>Nothing.");
         ~chatnpc("<p,quiz>I don't trust you.");
         ~chatplayer("<p,neutral>You don't have to.");
         ~chatnpc("<p,angry>If I find you attempting to cross the wall I'll make sure you never return.");
-    }
 }
 
 [label,mourner_who_are_you]

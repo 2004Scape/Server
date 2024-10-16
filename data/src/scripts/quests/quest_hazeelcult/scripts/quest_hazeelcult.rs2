@@ -39,7 +39,7 @@ if($valves_value = 0) {
     ~mesbox("The raft washes up the sewer, past the islands until it reaches the end of the sewer passage.");
 }
 
-[proc,count_correct_valves](int)
+[proc,count_correct_valves]()(int)
 def_int $i = 0;
 def_int $counter = 0;
 while($i < 5) {
@@ -155,7 +155,7 @@ if(inv_total(inv, hazeelcult_key) > 0) {
 ~mesbox("You search the crate. Under various food package you find an old rusty key.");
 inv_add(inv, hazeelcult_key, 1);
 
-// TODO: confirm this interface, earliest image we have is of the early 2005 quest interface
+// todo: confirm this interface, earliest image we have is of the early 2005 quest interface
 [queue,hazeelcult_fake_complete]
 inv_add(inv, coins, 5);
 %hazeelcult_progress = ^hazeelcult_given_armour_or_scroll;
