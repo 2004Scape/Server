@@ -83,7 +83,7 @@ while ($i < db_getfieldcount($effect_data, consume_table:stat_heal)) {
 ~consume_effect_messages($consumable, $hitpoints, $say);
 db_find(consume_messages_table:consumable, $consumable);
 def_dbrow $message_data = db_findnext;
-if (db_getfieldcount($message_data, consume_messages_table:end_delay) > 0) {
+if ($message_data ! null & db_getfieldcount($message_data, consume_messages_table:end_delay) > 0) {
     p_delay(db_getfield($message_data, consume_messages_table:end_delay, 0));
 }
 
