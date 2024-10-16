@@ -139,7 +139,7 @@ if(testbit(%upass_map_mechanisms, ^upass_koftik_gone_insane) = true) {
 ~chatplayer("<p,happy>At last! I've had enough of caves.");
 if_close;
 mes("Koftik leads you back up through the winding caverns...");
-p_delay(3); // 3t
+p_delay(2);
 p_teleport(0_38_151_49_53);
 mes("...and back to the cave entrance.");
 
