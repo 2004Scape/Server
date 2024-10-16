@@ -4,30 +4,30 @@ if(%upass_progress = ^upass_not_started & testbit(%upass_map_mechanisms, ^upass_
     @koftik_first_dialogue;
 }
 switch_int(%upass_progress) {
-    case ^upass_complete: 
+    case ^upass_complete :
         ~chatplayer("<p,quiz>Hello Koftik.");
         ~chatnpc("<p,happy>Hello Adventurer, how's things?");
         ~chatplayer("<p,happy>Not bad, yourself?");
         ~chatnpc("<p,neutral>I'm good... just keeping an eye out.");
-    case ^upass_defeated_iban:
+    case ^upass_defeated_iban :
         ~chatplayer("<p,happy>Thanks for getting me out Koftik.");
         ~chatnpc("<p,happy>Always a pleasure squire. Have you informed the king about Iban?");
         switch_int(~p_choice2("No, not yet.", 1, "Yes, I've told him.", 2)) {
-        case 1:
+        case 1 :
             ~chatplayer("<p,neutral>No, not yet.");
             ~chatnpc("<p,neutral>Traveller, this is no time to linger. The King must know that Iban is dead. This is a truly historical moment for Ardougne.");
-        case 2:
+        case 2 :
             ~chatplayer("<p,happy>Yes, I've told him.");
             ~chatnpc("<p,happy>Good to hear, the sooner we find King Tyras the better.");
         }
-    case ^upass_passed_bridge, ^upass_entered_second_area, ^upass_killed_unicorn:
+    case ^upass_passed_bridge, ^upass_entered_second_area, ^upass_killed_unicorn :
         ~chatplayer("<p,neutral>Hello Koftik.");
         ~chatnpc("<p,shock>It scares me in there, ... The voices, don't you hear them?"); // intentional
         ~chatplayer("<p,neutral>You'll be okay Koftik...");
-    case ^upass_spoken_koftik:
-        // TODO: confirm mesanim
+    case ^upass_spoken_koftik :
+        // todo: confirm mesanim
         ~chatnpc("<p,neutral>I know it's scary in there, but you'll have to go in alone. I'll catch up as soon as I can.");
-    case default:
+    case default :
         mes("Koftik doesn't seem interested in talking.");
 }
 
@@ -42,10 +42,10 @@ switch_int(%upass_progress) {
 ~chatnpc("<p,neutral>Not so many travellers come down here these days, ...but there are some who are still foolhardy enough."); // intentional comma
 %upass_progress = ^upass_spoken_koftik;
 switch_int(~p_choice2("I'll take my chances.", 1, "Tell me more...", 2)) {
-    case 1:
+    case 1 :
         ~chatplayer("<p,bored>I'll take my chances.");
         ~chatnpc("<p,neutral>Okay traveller, I'll catch up with you by the bridge.");
-    case 2:
+    case 2 :
         ~chatplayer("<p,neutral>Tell me more...");
         ~chatnpc("<p,neutral>I remember seeing one such warrior. Going by the name of Randas... ..he stood tall and proud like an Elven King...");
         ~chatnpc("<p,neutral>...That same pride made him vulnerable to Zamorak's calls. Randas' worthy desire to be a great and mighty warrior also made him corruptible to Zamorak's promises of glory.");
@@ -57,7 +57,7 @@ switch_int(~p_choice2("I'll take my chances.", 1, "Tell me more...", 2)) {
 // before the bridge in area 1
 [opnpc1,npc_973]
 switch_int(%upass_progress) {
-    case ^upass_defeated_iban:
+    case ^upass_defeated_iban :
         ~chatplayer("<p,happy>Thanks for getting me out Koftik.");
         ~chatnpc("<p,happy>Always a pleasure squire.");
         if(inv_total(inv, damp_cloth) = 0) {
@@ -65,7 +65,7 @@ switch_int(%upass_progress) {
             inv_add(inv, damp_cloth, 1);
             ~objbox(damp_cloth, "Koftik gives you a damp cloth.");
         }
-    case ^upass_spoken_koftik:
+    case ^upass_spoken_koftik :
         ~chatplayer("<p,quiz>Koftik, how can we cross the bridge?");
         ~chatnpc("<p,confused>I'm not sure, seems as if others were here before us though...");
         if(inv_total(inv, damp_cloth) = 0) {
@@ -77,15 +77,15 @@ switch_int(%upass_progress) {
         ~chatplayer("<p,neutral>Interesting... we better keep our eyes open.");
         ~chatnpc("<p,neutral>I have also found the remains of a book...");
         switch_int(~p_choice2("Not to worry, probably just litter.", 1, "What does it say?", 2)) {
-            case 1:
+            case 1 :
                 ~chatplayer("<p,neutral>Not to worry, probably just litter.");
                 ~chatnpc("<p,confused>Well.. maybe?");
-            case 2:
+            case 2 :
                 ~chatplayer("<p,neutral>What does it say?");
                 ~chatnpc("<p,neutral>It seems to be written by the adventurer Randas. It reads...");
                 @open_randas_diary;
         }
-    case default: 
+    case default :
         // rs3, objbox for the cloth but I think that was added later (since the main dialogue also has objbox in rs3, but not in release OSRS)
         ~chatplayer("<p,happy>Hi Koftik.");
         if(inv_total(inv, damp_cloth) = 0) {
@@ -98,12 +98,12 @@ switch_int(%upass_progress) {
 // before the bridge in area 1
 [opnpc1,npc_974]
 switch_int(%upass_progress) {
-    case ^upass_defeated_iban, ^upass_complete: 
+    case ^upass_defeated_iban, ^upass_complete :
         ~chatplayer("<p,quiz>Hello Koftik.");
         ~chatnpc("<p,happy>Hello, how's things?");
         ~chatplayer("<p,happy>Not bad, yourself?");
         ~chatnpc("<p,neutral>I'm good... just keeping an eye out.");
-    case default:
+    case default :
         ~chatplayer("<p,quiz>Hello Koftik.");
         ~chatnpc("<p,neutral>Do you hear them? The voices tell me things.");
         ~chatplayer("<p,happy>Are you OK?");
@@ -122,7 +122,7 @@ if(%upass_progress >= ^upass_defeated_iban) {
     return;
 }
 if(testbit(%upass_map_mechanisms, ^upass_koftik_gone_insane) = true) {
-    // TODO: check mesanim I closed dialogue on rs3, it's happy on OSRS but dialogue is a bit different
+    // todo: check mesanim I closed dialogue on rs3, it's happy on OSRS but dialogue is a bit different
     ~chatnpc("<p,happy>Nice job killing those Paladins. You're much closer to his side now. Perhaps you could kill those dwarfs to the south...");
     return;
 }

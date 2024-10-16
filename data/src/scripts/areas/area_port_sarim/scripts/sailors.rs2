@@ -8,12 +8,12 @@ if (%dragon_progress >= ^quest_dragon_spoken_to_oziach & %dragon_progress < ^dra
     $option = ~p_choice2("Yes please.", 1, "No, thank you.", 2);
 }
 switch_int ($option) {
-    case 1:
+    case 1 :
         ~chatplayer("<p,happy>Yes please.");
         @sailor_yes; 
-    case 2:
+    case 2 :
         ~chatplayer("<p,neutral>No, thank you.");
-    case 3:
+    case 3 :
         ~chatplayer("<p,neutral>I'd rather go to Crandor Isle.");
         ~chatnpc("<p,shock>No I need to stay alive, I have|a wife and family to support.");
 }

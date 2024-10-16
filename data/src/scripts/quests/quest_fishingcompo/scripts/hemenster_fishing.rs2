@@ -19,7 +19,7 @@ if(npc_find(coord, joshua, 5, 0) = true) {
     @joshua_dialogue;
 }
 
-[proc,get_hemenster_bait](namedobj)
+[proc,get_hemenster_bait]()(namedobj)
 if(inv_total(inv, red_vine_worm) > 0) {
     return (red_vine_worm);
 } 
@@ -152,7 +152,7 @@ if (%action_delay = map_clock) {
 }
 p_opnpc(2);
 
-[proc,in_hemenster_comp](boolean)
+[proc,in_hemenster_comp]()(boolean)
 if (%hemenster_comp_stage = ^hemenster_comp_not_entered) { // Havn't entered the competition yet
     if(npc_find(coord, bonzo, 12, 0) = true) {
         ~chatnpc("<p,happy>Hey, you need to pay to enter the competition first! Only 5 gp entrance fee!");

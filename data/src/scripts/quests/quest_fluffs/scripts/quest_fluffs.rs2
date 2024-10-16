@@ -1,15 +1,15 @@
 //most linebreaks in the quest are guessed (added for 2004 flair) based off rsc dialogue breaks
 [label,fluffs_boy_dialogue]
 switch_int (%fluffs_progress) {
-    case ^fluffs_not_started:
+    case ^fluffs_not_started :
         ~chatplayer("<p,neutral>Hello youngster!");
         ~chatnpc("<p,neutral>I don't talk to strange old people.");
-    case ^fluffs_started:
+    case ^fluffs_started :
         @fluffs_boy;
-    case ^fluffs_paid_boy:
+    case ^fluffs_paid_boy :
         ~chatplayer("<p,neutral>Where did you say you saw Fluffs?");
         ~chatnpc("<p,neutral>Weren't you listening? I saw the flea bag|in the old lumber mill just north east of here.|Just walk past the Jolly Boar Inn|and you should find it.");
-    case default: 
+    case default :
         ~chatplayer("<p,happy>Hello again.");
         ~chatnpc("<p,angry>You think you're tough do you?");
         ~chatplayer("<p,shock>Pardon?");
@@ -27,11 +27,11 @@ switch_int (%fluffs_progress) {
 ~chatnpc("<p,neutral>If I told you that, it wouldn't be a secret.");
 def_int $option = ~p_choice3("Tell me sonny, or I will hurt you.", 1, "What will make you tell me?", 2, "Well never mind, it's Fluffs' loss.", 3);
 switch_int ($option) {
-    case 1:
+    case 1 :
         ~chatplayer("<p,angry>Tell me sonny, or I will hurt you.");
         ~chatnpc("<p,worried>W..wh..what?! Y..you wouldn't!|A young lad like me!|I'd have you behind bars before nightfall!");
         ~mesbox("You decide it's best not to hurt the boy.");
-    case 2:
+    case 2 :
         ~chatplayer("<p,quiz>What will make you tell me?");
         ~chatnpc("<p,neutral>Well...now you ask, I am a bit short on cash.");
         ~chatplayer("<p,bored>How much?");
@@ -39,7 +39,7 @@ switch_int ($option) {
         ~chatplayer("<p,angry>100 coins!|Why should I pay you?");
         ~chatnpc("<p,neutral>You shouldn't,|but I won't help otherwise.|I never liked that cat anyway,|so what do you say?");
         @fluffs_pay;
-    case 3:
+    case 3 :
         ~chatplayer("<p,neutral>Well, never mind, it's Fluffs' loss.");
         ~chatnpc("<p,neutral>I'm sure my mum will get over it.");
 }
@@ -47,10 +47,10 @@ switch_int ($option) {
 [label,fluffs_pay]
 def_int $option = ~p_choice2("I'm not paying you a penny.", 1, "Okay then, I'll pay.", 2); //imgur.com/PU4c51N
 switch_int ($option) {
-    case 1:
+    case 1 :
         ~chatplayer("<p,happy>I'm not paying you a penny.");
         ~chatnpc("<p,neutral>Okay then, I'll find another way to make money.");
-    case 2:
+    case 2 :
         ~chatplayer("<p,neutral>Okay then, I'll pay.");
         if (inv_total(inv, coins) < 100) {
             ~chatplayer("<p,neutral>But I'll have to get some money first.");
@@ -112,11 +112,11 @@ if(%fluffs_progress >= ^fluffs_rescued) {
 }
 ~fluffs_attack;
 switch_int(%fluffs_progress) {
-    case ^fluffs_gave_milk:
+    case ^fluffs_gave_milk :
         ~mesbox("Maybe the cat is hungry?");
-    case ^fluffs_gave_sardine:
+    case ^fluffs_gave_sardine :
         ~mesbox("In the distance you can hear kittens mewing..."); //imgur.com/EPtymln
-    case default:
+    case default :
         ~mesbox("Maybe the cat is thirsty?"); 
 }
 
@@ -149,12 +149,12 @@ if (%fluffs_progress = ^fluffs_paid_boy & last_useitem = bucket_milk) {
     npc_say("Mew!");
     %fluffs_progress = ^fluffs_gave_sardine;
     switch_int (random(6)) {
-        case 0: %fluffs_crate = 0_51_54_41_44;
-        case 1: %fluffs_crate = 0_51_54_46_43;
-        case 2: %fluffs_crate = 0_51_54_43_51;
-        case 3: %fluffs_crate = 0_51_54_39_50;
-        case 4: %fluffs_crate = 0_51_54_34_58;
-        case 5: %fluffs_crate = 0_51_54_47_55;
+        case 0 : %fluffs_crate = 0_51_54_41_44;
+        case 1 : %fluffs_crate = 0_51_54_46_43;
+        case 2 : %fluffs_crate = 0_51_54_43_51;
+        case 3 : %fluffs_crate = 0_51_54_39_50;
+        case 4 : %fluffs_crate = 0_51_54_34_58;
+        case 5 : %fluffs_crate = 0_51_54_47_55;
     }
 } else if (%fluffs_progress = ^fluffs_gave_sardine & last_useitem = fluffs_kitten) {
     inv_del(inv, fluffs_kitten, 1);
@@ -175,7 +175,7 @@ if (%fluffs_progress = ^fluffs_paid_boy & last_useitem = bucket_milk) {
     npc_del;
     .npc_del;
     ~mesbox("Fluffs has run off home with her offspring.");
-} else if (oc_category(last_useitem) = category_57 | oc_category(last_useitem) = category_58) { //TODO: test more. works with raw sardine & salmon, cooked trout
+} else if (oc_category(last_useitem) = category_57 | oc_category(last_useitem) = category_58) { //todo: test more. works with raw sardine & salmon, cooked trout
     def_string $fishname = lowercase(oc_name(last_useitem));
     anim(human_pickupfloor, 0);
     p_delay(0);

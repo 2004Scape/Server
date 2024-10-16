@@ -8,7 +8,7 @@ if(%druid_progress = ^druid_not_started) {
     ~chatplayer("<p,happy>Ok, thanks.");
 } else if(%druid_progress = ^druid_given_ingredients) {
     @druid_completion;
-} else if(%druid_progress = ^druid_complete) { // TODO - dialogue from RSC, haven't been able to find any dialogue from RS2, before release of skillcapes.
+} else if(%druid_progress = ^druid_complete) { // todo - dialogue from RSC, haven't been able to find any dialogue from RS2, before release of skillcapes.
     ~chatnpc("<p,neutral>Hello again. How is the Herblore going?");
     def_int $option = ~p_choice3("Very well, thank you.", 1, "I need more practice at it.", 2, "Can you explain the fundamentals again?", 3);
     if($option = 1) {

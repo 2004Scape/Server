@@ -27,7 +27,7 @@ anim(human_pickupfloor, 0);
 inv_add(inv, ~flowers_obj(loc_type), 1);
 loc_del(1);
 
-[proc,random_flowers](loc)
+[proc,random_flowers]()(loc)
 def_int $rand = random(1001);
 if($rand < 150) {
     return (loc_2986);
@@ -51,14 +51,14 @@ if($rand < 150) {
 
 [proc,flowers_obj](loc $flowers_loc)(namedobj)
 switch_loc($flowers_loc) {
-    case loc_2980: return (assorted_flowers);
-    case loc_2981: return (red_flowers);
-    case loc_2982: return (blue_flowers);
-    case loc_2983: return (yellow_flowers);
-    case loc_2984: return (purple_flowers);
-    case loc_2985: return (orange_flowers);
-    case loc_2986: return (mixed_flowers);
-    case loc_2987: return (white_flowers);
-    case loc_2988: return (black_flowers);
-    case default: return (mixed_flowers);
+    case loc_2980 : return (assorted_flowers);
+    case loc_2981 : return (red_flowers);
+    case loc_2982 : return (blue_flowers);
+    case loc_2983 : return (yellow_flowers);
+    case loc_2984 : return (purple_flowers);
+    case loc_2985 : return (orange_flowers);
+    case loc_2986 : return (mixed_flowers);
+    case loc_2987 : return (white_flowers);
+    case loc_2988 : return (black_flowers);
+    case default : return (mixed_flowers);
 }

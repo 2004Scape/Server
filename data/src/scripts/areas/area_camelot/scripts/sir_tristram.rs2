@@ -7,23 +7,23 @@ if(%grail_progress > ^grail_not_started & %grail_progress < ^grail_complete) {
     return;
 } 
 switch_int (%arthur_progress) {
-    case ^arthur_not_started:
+    case ^arthur_not_started :
         ~chatplayer("<p,neutral>I'm looking for adventure!|More specifically, some sort of quest.");
         ~chatnpc("<p,confused>...Then hail Arthur, King of Britons, like I just said.");
         ~chatplayer("<p,neutral>Oh. Ok.");
         ~chatplayer("<p,neutral>I thought you just had a weird way of saying hello is all.");
-    case ^arthur_started:
+    case ^arthur_started :
         ~chatplayer("<p,quiz>Do you know much about breaking magical crystals?");
         ~chatnpc("<p,neutral>Funnily enough...");
         ~chatnpc("<p,neutral>Absolutely nothing.");
         ~chatplayer("<p,neutral>Ok. Goodbye.");
-    case ^arthur_spoken_gawain, ^arthur_spoken_lancelot:
+    case ^arthur_spoken_gawain, ^arthur_spoken_lancelot :
         ~chatplayer("<p,quiz>I need to get into Mordred's Fort...");
         ~chatnpc("<p,neutral>Good luck with that!");
-    case ^arthur_spoken_morgan_lefaye, ^arthur_excalibur_bound, ^arthur_freed_merlin:
+    case ^arthur_spoken_morgan_lefaye, ^arthur_excalibur_bound, ^arthur_freed_merlin :
         ~chatplayer("<p,quiz>I need to find Excalibur...");
         ~chatnpc("<p,happy>Good luck with that!");
-    case ^arthur_complete:
+    case ^arthur_complete :
         ~chatnpc("<p,happy>Thanks for freeing Merlin.");
         ~chatplayer("<p,neutral>No problem. It was easy.");
 }

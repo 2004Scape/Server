@@ -18,7 +18,7 @@ if(map_members = true) {
 p_arrivedelay;
 anim(human_openchest,0);
 p_delay(0);
-// TODO - Sound
+// todo - Sound
 loc_change(loc_param(drawer_other), 300);
 
 [oplocu,_drawer]
@@ -69,5 +69,5 @@ mes("The drawers are empty.");
 p_arrivedelay;
 anim(human_closechest,0);
 p_delay(0);
-// TODO - Sound
+// todo - Sound
 loc_change(loc_param(drawer_other), 300);

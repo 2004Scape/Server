@@ -34,9 +34,9 @@ if (inv_total(inv, glarials_pebble) < 1) { // no bank check again
 
 [label,waterfall_golrie_door_dialogue]
 switch_int(%waterfall_progress) {
-    case ^waterfall_not_started, ^waterfall_started, ^waterfall_spoken_to_hudon: 
+    case ^waterfall_not_started, ^waterfall_started, ^waterfall_spoken_to_hudon :
         ~chatnpc("<p,neutral>What are you doing down here?|Leave before you get yourself into trouble.");
-    case ^waterfall_opened_book_on_baxtorian:
+    case ^waterfall_opened_book_on_baxtorian :
         ~chatplayer("<p,neutral>Hello, are you okay?");
         ~chatnpc("<p,neutral>Oh, don't worry, I'm totally fine. I locked myself in here for protection, but I've left the key somewhere.");
         ~chatplayer("<p,confused>Okay... I'll have a look for a key.");

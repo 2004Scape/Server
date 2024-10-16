@@ -319,7 +319,7 @@ switch_int(%zombiequeen_progress) {
     case ^zombiequeen_dug_mound, ^zombiequeen_lit_mound :
         loc_change(loc_2218, 50);
         ~mesbox("You see a small fissure in the granite that you might just be able to crawl through. It's very dark beyond the fissure.");
-    case ^zombiequeen_started, ^zombiequeen_found_mound, ^zombiequeen_searched_mound : 
+    case ^zombiequeen_started, ^zombiequeen_found_mound, ^zombiequeen_searched_mound :
         if(%zombiequeen_progress < ^zombiequeen_found_mound) %zombiequeen_progress = ^zombiequeen_found_mound;
         ~mesbox("It looks as if something is buried here.");
     case ^zombiequeen_not_started : ~mesbox("It just looks like some bumpy ground.");
@@ -336,7 +336,7 @@ switch_int(%zombiequeen_progress) {
         loc_change(loc_2218, 50);
         ~mesbox("You see a small fissure in the granite that you might just be able to crawl through. It's very dark beyond the fissure. Do you want to try to crawl through the fissure?");
         @zombiequeen_enter_fissure;
-    case ^zombiequeen_started, ^zombiequeen_found_mound, ^zombiequeen_searched_mound : 
+    case ^zombiequeen_started, ^zombiequeen_found_mound, ^zombiequeen_searched_mound :
         if(%zombiequeen_progress < ^zombiequeen_searched_mound) %zombiequeen_progress = ^zombiequeen_searched_mound;
         ~mesbox("It looks as if something is buried here. You may need some tools to excavate further.");
     case ^zombiequeen_not_started : ~mesbox("It just looks like some bumpy ground.");
@@ -450,7 +450,7 @@ if(%zombiequeen_progress < ^zombiequeen_dug_mound) {
     return;
 }
 switch_obj($use_obj) {
-    case rope: 
+    case rope :
         if(%zombiequeen_progress = ^zombiequeen_dug_mound) {
             mes("It's too dark to clearly see where to fix that.");
             return;
@@ -465,7 +465,7 @@ switch_obj($use_obj) {
         loc_change(loc_2219, 50);
         %zombiequeen_progress = ^zombiequeen_roped_mound;
         ~objboxt(rope, "You see where to attach the rope very clearly. You secure the rope well.");
-    case lit_candle, lit_black_candle, lit_torch: // not all light sources work so not using cat here so this won't cause a bug for 2005
+    case lit_candle, lit_black_candle, lit_torch : // not all light sources work so not using cat here so this won't cause a bug for 2005
         if(%zombiequeen_progress > ^zombiequeen_lit_mound) {
             mes("You have already seen inside the fissure.");
             return;
@@ -478,7 +478,7 @@ switch_obj($use_obj) {
         inv_del(inv, $use_obj, 1);
         ~mesbox("The <lowercase(oc_name($use_obj))> burns out.");
         ~mesbox("Some rope might help here.");
-    case default: ~displaymessage(^dm_default);
+    case default : ~displaymessage(^dm_default);
 }
 
 [oploc1,loc_2219]
@@ -622,7 +622,7 @@ if(testbit(%zq_map_mechanisms, ^zq_read_tattered_scroll) = true) {
             anim(human_pickupfloor, 5);
             if(stat_random(stat(agility), 125, 250) = false) {
                 ~set_walkbas(human_drowning);
-                p_delay(0); // TODO: remove when delay is fixed
+                p_delay(0); // todo: remove when delay is fixed
                 ~forcemove(loc_coord);
                 mes("You manage to get yourself stuck.");
                 p_delay(1);
@@ -634,7 +634,7 @@ if(testbit(%zq_map_mechanisms, ^zq_read_tattered_scroll) = true) {
                 p_delay(1);
                 mes("Maybe you'll have better luck next time?");
                 ~damage_self(3);
-                ~damage_self(0); // TODO: recheck this one, looks fixed though
+                ~damage_self(0); // todo: recheck this one, looks fixed though
                 return;
             }
             ~mesbox("You struggle through the narrow crevice in the rocks.");
@@ -668,7 +668,7 @@ switch_int(~p_choice3("A ladder", 1, "A crude raft", 2, "A pole vault", 3)) {
     case 2 :
         if(stat_random(stat(crafting), 125, 250) = false) {
             %zq_map_mechanisms = setbit(%zq_map_mechanisms, ^zq_used_table_logs);
-            ~mesbox("You happily start hacking away at the table but realise that you won't have enough wood to properly finish the item off!"); // TODO: confirm this fails the same way
+            ~mesbox("You happily start hacking away at the table but realise that you won't have enough wood to properly finish the item off!"); // todo: confirm this fails the same way
             return;
         }
         ~mesbox("You see that this table already looks very sea worthy it takes virtually no time at all to help fix it into a crude raft.");
@@ -741,7 +741,7 @@ switch_int(~p_choice3("A ladder", 1, "A crude raft", 2, "A pole vault", 3)) {
         loc_del(1);
         loc_add(0_45_46_53_7, loc_1988, 1, centrepiece_straight, 10);
         ~forcemove(movecoord(coord, 0, 0, 1));
-    case 3:
+    case 3 :
         if(stat_random(stat(crafting), 125, 250) = true) {
             ~mesbox("Your experience in crafting tells you that there isn't enough wood to complete this task.");
             return;
@@ -871,7 +871,7 @@ inv_add(inv, crumpled_scroll, 1);
 [opheld1,crumpled_scroll]
 ~mesbox("This looks like a scroll about Rashiliyia. Would you like to read it?");
 switch_int(~p_choice2("Yes please.", 1, "No thanks.", 2)) {
-    case 1 : 
+    case 1 :
         if(testbit(%zq_map_mechanisms, ^zq_read_crumpled_scroll) = false) %zq_map_mechanisms = setbit(%zq_map_mechanisms, ^zq_read_crumpled_scroll);
         @scroll_zombiequeen_crumpled;
     case 2 : mes("You decide to leave the scroll well alone.");
@@ -912,7 +912,7 @@ switch_int(~p_choice2("I don't think so, it might animate and attack me!", 1, "Y
     case 1 :
         ~mesbox("You move away from the corpse quietly and slowly... ...you have an eerie feeling about this!");
         say("** Gulp! **");
-    case 2 : 
+    case 2 :
         ~objboxt(zadimus_corpse, "You gently support the frame of the skeleton and lift the skull through the noose.");
         inv_add(inv, zadimus_corpse, 1);
         ~objboxt(zadimus_corpse, "You find an old sack and place the skeleton in it. Maybe Trufitus can give you some  tips on what to do with it.");
@@ -924,7 +924,7 @@ switch_int(~p_choice2("I don't think so, it might animate and attack me!", 1, "Y
 
 [label,bury_zadimus_corpse]
 mes("You feel an unearthly compunction to bury this corpse!");
-p_delay(2); // 2t TODO: adjust when delay fix
+p_delay(2); // 2t todo: adjust when delay fix
 if(inzone(0_43_48_42_15, 0_43_48_46_18, coord) = true) {
     def_coord $spawn_coord = map_findsquare(coord, 1, 1, ^map_findsquare_lineofwalk);
     facesquare($spawn_coord);
@@ -937,7 +937,7 @@ if(inzone(0_43_48_42_15, 0_43_48_46_18, coord) = true) {
     ~mesbox("You hear an unearthly moaning sound as you see an apparition materialise right in front of you.");
     if_close;
     spotanim_map(small_smokepuff, $spawn_coord, 5, 0);
-    p_delay(1); // 1t TODO: adjust when delay fixed
+    p_delay(1); // 1t todo: adjust when delay fixed
     npc_add($spawn_coord, npc_501, 30);
     ~chatnpc("<p,neutral>You have released me from my torture, and now I shall aid you. You seek to dispell the one who tortured and killed me. Remember this... 'I am the key, but only kin may approach her.'");
     inv_del(inv, zadimus_corpse, 1);
@@ -958,7 +958,7 @@ switch_int(~p_choice2_header("Yes, I'll follow the path.", 1, "No, I'll look for
         if_close;
         // this is probably just the whole block copy pasted for both sides on OSRS
         // the messages even have multiple differences lol, just going to bascially do the same thing
-        p_delay(0); // TODO: delay issue (remove when fixed)
+        p_delay(0); // todo: delay issue (remove when fixed)
         mes("You start carefully edging along the slippery path...");
         if(coordz(coord) < 9351) {
             anim(human_ledge_on_left, 0);
@@ -1028,7 +1028,7 @@ switch_int(~p_choice2_header("Yes, I'll follow the path.", 1, "No, I'll look for
             ~update_bas;
             p_teleport(movecoord(coord, 1, 0, 1));
         } 
-    case 2 : 
+    case 2 :
         ~mesbox("You decide to have another look around. And see if you can find a better way to get out.");
 }
 
@@ -1120,7 +1120,7 @@ if(last_useitem = rashiliya_corpse) {
 }
 ~displaymessage(^dm_default);
 
-[proc,zqhaspommel](boolean)
+[proc,zqhaspommel]()(boolean)
 if(~obj_gettotal(zqpommel) > 0 | ~obj_gettotal(zqbonebeads) > 0 | inv_total(inv, zqbeadsofthedead) > 0 | inv_total(bank, zqbeadsofthedead) > 0) { // no gear check for beads of the dead, probably just inv + bank for all
     return (true);
 }
@@ -1358,7 +1358,7 @@ if((loc_find(0_45_148_12_8, loc_2246) = true | loc_find(0_45_148_12_8, loc_2248)
             loc_change(loc_2249, 50);
             .loc_change(loc_2247, 50);
             ~mesbox("The door is ornately carved with depictions of skeletal warriors. You notice that some of the skeletal warriors depictions are not complete.Instead, there are recesses where some of the bones should be. There are one recess.");
-        case 3:
+        case 3 :
             loc_change(loc_2249, 50);
             .loc_change(loc_2250, 50);
             ~mesbox("The door is ornately carved with depictions of skeletal warriors. All the skeletons are complete. It looks as if you walk through this door.");
@@ -1374,7 +1374,7 @@ if($last_obj = bones) {
         if(loc_find(0_45_148_12_8, loc_2246) = false) mes("The doors seem busy at the moment.");
         if(loc_find(0_45_148_13_8, loc_2247) = false) mes("The doors seem busy at the moment.");
     } else switch_int(~get_zqtombdoorstate) {
-        case 0:
+        case 0 :
             anim(human_pickuptable, 0);
             p_delay(1); // 1t
             mes("You carefully place a bone in the door...");
@@ -1385,7 +1385,7 @@ if($last_obj = bones) {
             }
             ~set_zqtombdoorstate(1);
             ~objbox(bones, "You place the bone into the skeletal door and it fits. There are two recesses left now.");
-        case 1:
+        case 1 :
             anim(human_pickuptable, 0);
             p_delay(1); // 1t
             mes("You carefully place another bone in the door...");
@@ -1396,7 +1396,7 @@ if($last_obj = bones) {
             }
             ~set_zqtombdoorstate(2);
             ~objbox(bones, "You place the bone into the skeletal door and it fits. There is just one recess left now.");
-        case 2:
+        case 2 :
             anim(human_pickuptable, 0);
             p_delay(1); // 1t
             mes("You carefully place another bone in the door...");
@@ -1420,7 +1420,7 @@ if($last_obj = bones) {
 %zq_map_mechanisms = setbit_range_toint(%zq_map_mechanisms, $val, 7, 8);
 
 // 2 bits
-[proc,get_zqtombdoorstate](int)
+[proc,get_zqtombdoorstate]()(int)
 return (getbit_range(%zq_map_mechanisms, 7, 8));
 
 [oploc1,loc_2257]
@@ -1485,7 +1485,7 @@ if(%zombiequeen_progress >= ^zombiequeen_complete) {
     ~objboxt(rashiliya_corpse, "You search the dolmen... And find the mumified remains of a human female.");
     if(inv_freespace(inv) > 0) { 
         if(%zombiequeen_progress = ^zombiequeen_unlocked_tombdoor) %zombiequeen_progress = ^zombiequeen_retrieved_corpse;
-        %zq_map_mechanisms = clearbit_range(%zq_map_mechanisms, 9, 11); // TODO: this might happen when checking dolmen with progress >= 14 and no rash corpse on player instead, functionally this is the same though
+        %zq_map_mechanisms = clearbit_range(%zq_map_mechanisms, 9, 11); // todo: this might happen when checking dolmen with progress >= 14 and no rash corpse on player instead, functionally this is the same though
     }
     inv_add(inv, rashiliya_corpse, 1);
     ~objboxt(rashiliya_corpse, "You carefully place the remains in your inventory.");
@@ -1522,7 +1522,7 @@ if(testbit(%zq_map_mechanisms, ^zq_defeated_nazastarool1) = false) {
     npc_say("Who dares disturb Rashiliyia's rest?");
     npc_setmode(playerface);
     %npc_aggressive_player = uid;
-    npc_delay(2); // 2t, TODO: delay fix
+    npc_delay(2); // 2t, todo: delay fix
     npc_say("I am Nazastarool! Prepare to die!");
     if(p_finduid(%npc_aggressive_player) = true) ~npc_retaliate(0);
 } else if(testbit(%zq_map_mechanisms, ^zq_defeated_nazastarool2) = false) {
@@ -1531,7 +1531,7 @@ if(testbit(%zq_map_mechanisms, ^zq_defeated_nazastarool1) = false) {
     npc_say("Quake in fear, for I am reborn!");
     npc_setmode(playerface);
     %npc_aggressive_player = uid;
-    npc_delay(2); // 2t, TODO: delay fix
+    npc_delay(2); // 2t, todo: delay fix
     npc_say("Your death will be swift.");
     if(p_finduid(%npc_aggressive_player) = true) ~npc_retaliate(0);
 } else if(testbit(%zq_map_mechanisms, ^zq_defeated_nazastarool3) = false) {
@@ -1539,7 +1539,7 @@ if(testbit(%zq_map_mechanisms, ^zq_defeated_nazastarool1) = false) {
     npc_add($spawn_coord, npc_509, 500); // 500t osrs
     npc_say("Nazastarool returns with vengeance!");
     npc_setmode(playerface);
-    npc_delay(2); // 2t, TODO: delay fix
+    npc_delay(2); // 2t, todo: delay fix
     %npc_aggressive_player = uid;
     npc_say("Soon you will serve Rashiliyia.");
     if(p_finduid(%npc_aggressive_player) = true) ~npc_retaliate(0);
@@ -1592,7 +1592,7 @@ switch_int(~p_choice2("Yes, I am sure.", 1, "No, I'll keep hold of the remains."
 [queue,cr_queue]
 cam_reset;
 
-[proc,random_undead_one](npc)
+[proc,random_undead_one]()(npc)
 switch_int(random(4)) {
     case 0 : return (npc_502);
     case 1 : return (npc_503);
@@ -1603,5 +1603,5 @@ switch_int(random(4)) {
 [queue,zombiequeen_quest_complete]
 %zombiequeen_progress = ^zombiequeen_complete;
 stat_advance(crafting, 38750);
-// TODO: find image for proof on sizing
+// todo: find image for proof on sizing
 ~send_quest_complete(questlist:zombiequeen, zqbeadsofthedead, 250, ^zombiequeen_questpoints, "You have completed the\\nShilo Village Quest!");

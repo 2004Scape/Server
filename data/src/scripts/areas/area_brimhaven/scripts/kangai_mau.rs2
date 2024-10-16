@@ -1,8 +1,8 @@
 [opnpc1,kangai_mau]
 switch_int (%totem_progress) {
-    case 0: @kangai_mau_prequest;
-    case 1,2,3,4: @kangai_mau_totem_back;
-    case 5:
+    case 0 : @kangai_mau_prequest;
+    case 1,2,3,4 : @kangai_mau_totem_back;
+    case 5 :
 }
 
 [label,kangai_mau_prequest]

@@ -13,7 +13,7 @@ if ($event_coord = null) {
 
 npc_add($event_coord, $event, 1000);
 npc_say("<displayname>, you are under arrest!");
-%npc_attacking_uid = uid;
+%npc_macro_event_target = uid;
 if (finduid(uid) = false) {
     return;
 }

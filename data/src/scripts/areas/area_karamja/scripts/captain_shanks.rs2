@@ -8,7 +8,7 @@ if(inv_total(inv, ship_ticket) = 0) {
     def_int $price = ~random_range(26, 45);
     ~chatnpc("<p,happy>I see you don't have a ticket for the ship, my colleague normally only sells them in Shilo village. But I could sell<br>you one for a small additional charge. Shall we say <tostring($price)> gold pieces"); // no period
     switch_int(~p_choice2_header("Yes, I'll buy a ticket for the ship.", 1, "No thanks, not just at the moment.", 2, "Buy a ticket for <tostring($price)> gold pieces.")) {
-        case 1:
+        case 1 :
             ~chatplayer("<p,happy>Yes, I'll buy a ticket for the ship.");
             if(inv_total(inv, coins) < $price) {
                 ~chatnpc("<p,sad>Sorry me old shipmate, but you seem to be  financially challenged at the moment. Come back when your coffers are full!");
@@ -19,7 +19,7 @@ if(inv_total(inv, ship_ticket) = 0) {
             inv_add(inv, ship_ticket, 1);
             ~chatnpc("<p,happy>Ok, now you have your ticket, do you want to sail anywhere?");
             @multi3_header("Khazard Port please.", shanks_khazard, "Port Sarim please.", shanks_sarim, "Nowhere just at the moment thanks.", shanks_nowhere, "Captain Shanks asks, 'Do you want to sail anywhere?'");
-        case 2:
+        case 2 :
             ~chatplayer("<p,happy>No thanks, not just at the moment.");
             ~chatnpc("<p,happy>Very well me old shipmate,  come back if you change your mind now.");
     }

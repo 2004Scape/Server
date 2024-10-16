@@ -127,6 +127,6 @@ inv_add(inv, ugthanki_kebab, 1);
 inv_add(inv, bowl_empty, 1);
 //display message
 mes("You make a delicious ugthanki kebab.");
-// gives 120 xp each, the case in rsc too. https://web.archive.org/web/20040905213850/http://www.runehq.com/CookingSkillGuide.php
+// gives 120 xp each, the case in rsc too. https://web.archive.org/web/20040905213850/http ://www.runehq.com/CookingSkillGuide.php
 //stat_advance(crafting, 400);
 stat_advance(cooking, 1200);

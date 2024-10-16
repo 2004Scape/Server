@@ -4,7 +4,7 @@
 
 [label,dwarf_at_entrance]
 switch_int(~p_choice2("What have you got in the guild?", 0, "No thanks, I'm fine.", 2)) {
-    case 0:
+    case 0 :
     ~chatplayer("<p,quiz>What have you got in the guild?");
     ~chatnpc("<p,happy>Ooh, it's WONDERFUL! There are lots of coal rocks, and even a few mithril rocks in the guild, all exclusively for people with atleast level 60 mining.");
     ~chatnpc("<p,happy>There's no better mining site anywhere near here.");
@@ -17,6 +17,6 @@ switch_int(~p_choice2("What have you got in the guild?", 0, "No thanks, I'm fine
     }
     @dwarf_at_entrance;
 
-    case 2:
+    case 2 :
     ~chatplayer("<p,bored>No thanks, I'm fine.");
 }

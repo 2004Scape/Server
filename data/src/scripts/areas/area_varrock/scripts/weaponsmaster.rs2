@@ -3,10 +3,10 @@
 if(%phoenixgang_progress >= ^phoenixgang_joined) {
     ~chatnpc("<p,happy>Hello fellow Phoenix!|What are you after?");
     switch_int (~p_choice2("I'm after a weapon or two.", 1, "I'm looking for treasure.", 2)) {
-        case 1:
+        case 1 :
             ~chatplayer("<p,neutral>I'm after a weapon or two.");
             ~chatnpc("<p,neutral>No problem. Feel free to look around.");
-        case 2:
+        case 2 :
             ~chatplayer("<p,neutral>I'm looking for treasure.");
             ~chatnpc("<p,happy>We've not got any up here.|Go mug someone somewhere|if you want some treasure."); 
     }   

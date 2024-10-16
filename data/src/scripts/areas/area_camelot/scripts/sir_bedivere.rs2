@@ -7,22 +7,22 @@ if(%grail_progress > ^grail_not_started & %grail_progress < ^grail_complete) {
     return;
 } 
 switch_int (%arthur_progress) {
-    case ^arthur_not_started:
+    case ^arthur_not_started :
         ~chatplayer("<p,neutral>I'm really just looking for a quest...");
         ~chatnpc("<p,neutral>Fortune favours us both then adventurer.|I suggest you go and speak to King Arthur.");
-    case ^arthur_started:
+    case ^arthur_started :
         ~chatplayer("<p,quiz>Merlin's in a crystal. Little help?");
         ~chatnpc("<p,sad>That is what we were hoping for from you, adventurer!");
         ~chatplayer("<p,confused>Hmmm. Well, ok, thanks anyway.");
-    case ^arthur_spoken_gawain, ^arthur_spoken_lancelot:
+    case ^arthur_spoken_gawain, ^arthur_spoken_lancelot :
         ~chatplayer("<p,quiz>I don't suppose you have any idea how to break into Mordred's fort do you?");
         ~chatnpc("<p,sad>I am afraid not. Would that we could! Mordred and his cronies have been thorns in our side for far too long already!");
         ~chatplayer("<p,neutral>Ok. Thanks. See you later!");
         ~chatnpc("<p,neutral>Take care adventurer, Mordred is an evil and powerful foe.");
-    case ^arthur_spoken_morgan_lefaye, ^arthur_excalibur_bound, ^arthur_freed_merlin:
+    case ^arthur_spoken_morgan_lefaye, ^arthur_excalibur_bound, ^arthur_freed_merlin :
         ~chatplayer("<p,quiz>Know anything about Excalibur?");
         ~chatnpc("<p,confused>Um... it's a really good sword?");
         ~chatplayer("<p,quiz>Know where I can find it?");
         ~chatnpc("<p,neutral>Nope, sorry.");
-    case ^arthur_complete: ~chatnpc("<p,happy>All Knights of the Round thank you for your assistance in this trying time for us.");
+    case ^arthur_complete : ~chatnpc("<p,happy>All Knights of the Round thank you for your assistance in this trying time for us.");
 }

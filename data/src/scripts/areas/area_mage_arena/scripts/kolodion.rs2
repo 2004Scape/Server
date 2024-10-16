@@ -146,7 +146,7 @@ while (npc_huntnext = true) {
     }
 }
 switch_int (%magearena_progress) {
-    case ^mage_arena_started:
+    case ^mage_arena_started :
         // looks like the smoke appears 1t sooner than osrs (no 34 client tick delay as well)
         // https://youtu.be/Tte53ezNIP4?list=PLn23LiLYLb1Y4vxMPWXM-CVEvOUfuAP_o&t=23
         p_delay(3);
@@ -157,7 +157,7 @@ switch_int (%magearena_progress) {
         p_delay(1);
         npc_say("You must prove yourself... now!");
         npc_setmode(applayer2);
-    case ^mage_arena_ogre:
+    case ^mage_arena_ogre :
         p_delay(1);
         sound_synth(smokepuff, 0, 0);
         ~spawn_mage_arena_boss($spawn_coord, $boss, 5);
@@ -166,7 +166,7 @@ switch_int (%magearena_progress) {
         npc_setmode(applayer2);
         p_delay(0);
         npc_say("Let us continue with our battle");
-    case ^mage_arena_arachnid:
+    case ^mage_arena_arachnid :
         // exact move
         p_delay(2);
         ~mage_arena_exactmove(movecoord($spawn_coord, 1, 0, 1));
@@ -177,7 +177,7 @@ switch_int (%magearena_progress) {
         npc_setmode(applayer2);
         p_delay(0);
         npc_say("Let us continue with our battle");
-    case ^mage_arena_ethereal:
+    case ^mage_arena_ethereal :
         p_delay(2);
         spotanim_npc(smokepuff_large, 124, 10);
         p_delay(0);
@@ -187,7 +187,7 @@ switch_int (%magearena_progress) {
         npc_setmode(applayer2);
         p_delay(0);
         npc_say("Let us continue with our battle");
-    case ^mage_arena_demon:
+    case ^mage_arena_demon :
         p_delay(1);
         $spawn_coord = movecoord($spawn_coord, 1, 0, 1);
         ~mage_arena_exactmove($spawn_coord);

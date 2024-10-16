@@ -87,7 +87,7 @@ if(lineofsight(coord, $sack_coord) = true & distance(coord, $sack_coord) <= 1) {
     mes("The feather points to somewhere nearby.");
     return;
 }
-// TODO: This probably needs to be re-looked at? (not 100% sure if this is correct)
+// todo: This probably needs to be re-looked at? (not 100% sure if this is correct)
 if(abs($delta_x) > 5 & abs($delta_z) > 5) {
     if ($delta_x < 0 & $delta_z < 0) {
         mes("The feather points to the southwest.");

@@ -18,7 +18,7 @@ mes("This crate is securely fastened shut.");
 
 [oplocu,loc_2708]
 switch_obj(last_useitem) {
-    case address_label: 
+    case address_label :
         if(%totem_progress >= ^totem_crate_marked) {
             mes("You have already replaced the delivery address label.");
             return;
@@ -28,7 +28,7 @@ switch_obj(last_useitem) {
         %totem_progress = ^totem_crate_marked;
         ~chatplayer("<p,happy>Now I just need someone to deliver it for me.");
         return;
-    case default: ~displaymessage(^dm_default);
+    case default : ~displaymessage(^dm_default);
 }
 
 // for the %handlemort_traps_disabled varp, bit 0 holds the lock completion state (0/1), bits 1-20 store the current lock values (a-z -> 1-25)
@@ -46,7 +46,7 @@ if(testbit(%handelmort_traps_disabled, 0) = false) {
 } 
 
 // OSRS seems to have a bug with this lock puzzle where the shown letter and the stored varp value 
-// can desync somehow, TODO: figure out how to recreate that
+// can desync somehow, todo: figure out how to recreate that
 [if_button,tribal_door2:com_47] @tribal_door_combo(1, -1);
 [if_button,tribal_door2:com_49] @tribal_door_combo(2, -1);
 [if_button,tribal_door2:com_51] @tribal_door_combo(3, -1);
@@ -81,10 +81,10 @@ def_int $current_stage = ~get_tribal_door_lock($lock_index);
 def_int $stage = ~calc_tribaldoor_value($current_stage, $change);
 %handelmort_traps_disabled = setbit_range_toint(%handelmort_traps_disabled, $stage, calc(5 * $lock_index - 4), calc(5 * $lock_index));
 switch_int($lock_index) {
-    case 1: if_settext(tribal_door2:com_43, enum(int, string, alphabet, $stage));
-    case 2: if_settext(tribal_door2:com_44, enum(int, string, alphabet, $stage));
-    case 3: if_settext(tribal_door2:com_45, enum(int, string, alphabet, $stage));
-    case 4: if_settext(tribal_door2:com_46, enum(int, string, alphabet, $stage));
+    case 1 : if_settext(tribal_door2:com_43, enum(int, string, alphabet, $stage));
+    case 2 : if_settext(tribal_door2:com_44, enum(int, string, alphabet, $stage));
+    case 3 : if_settext(tribal_door2:com_45, enum(int, string, alphabet, $stage));
+    case 4 : if_settext(tribal_door2:com_46, enum(int, string, alphabet, $stage));
 }
 
 [oploc1,loc_2705]
@@ -109,7 +109,7 @@ if(testbit(%handelmort_traps_disabled, 21) = true) {
 }
 mes("As you climb the stairs you hear a click...");
 sound_synth(locked, 0, 0);
-// TODO: screen fade to blackout
+// todo: screen fade to blackout
 p_delay(2);
 mes("You have fallen through a trap!");
 p_telejump(^totem_stairs_fail_coord);

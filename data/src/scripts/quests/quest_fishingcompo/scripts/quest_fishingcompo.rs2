@@ -14,8 +14,8 @@ if(%fishingcompo_progress = ^fishingcompo_complete) {
     return;
 } else if(npc_find(coord, mountain_dwarf, 5, 0) = true) {
     switch_int (%fishingcompo_progress) {
-        case ^fishingcompo_not_started: @mountain_dwarf_stairs;
-        case default: @mountain_dwarf_won;
+        case ^fishingcompo_not_started : @mountain_dwarf_stairs;
+        case default : @mountain_dwarf_won;
     }
 }
 
@@ -72,8 +72,8 @@ p_delay(0);
 // I think it probably works very similarly to RSC: https://web.archive.org/web/20130324085821im_/http://www.runeweb.net/fireball/Fishing%20Contest%20Images/FishingContest4.JPG
 [oplocu,loc_41]
 switch_obj (last_useitem) {
-    case garlic: @stash_garlic;
-    case default: ~displaymessage(^dm_default);
+    case garlic : @stash_garlic;
+    case default : ~displaymessage(^dm_default);
 }
 
 // option doesn't exist in RSC, but based off the 2005 image, I think it probably always sends nothing interesting happens

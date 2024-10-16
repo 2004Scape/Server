@@ -3,29 +3,29 @@
 ~chatplayer("<p,happy>Hello!");
 
 switch_int(random(11)) {
-    case 0: 
+    case 0 :
     ~chatnpc("<p,neutral>Hello!");
-    case 1: 
+    case 1 :
     ~mesbox("The barbarian grunts.");
-    case 2: 
+    case 2 :
     ~chatnpc("<p,happy>Good day, my dear fellow.");
-    case 3: 
+    case 3 :
     ~chatnpc("<p,angry>Ugh!");
-    case 4: 
+    case 4 :
     ~mesbox("The barbarian ignores you.");
-    case 5: 
+    case 5 :
     ~chatnpc("<p,angry>Grr!");
-    case 6:
+    case 6 :
     ~chatnpc("<p,angry>Wanna fight?");
     npc_setmode(opplayer2);
-    case 7:
+    case 7 :
     ~chatnpc("<p,angry>I'm a little busy right now.|We're getting ready for our next barbarian raid!");
-    case 8:
+    case 8 :
     ~chatnpc("<p,angry>Go away!|This is our village!");
-    case 9:
+    case 9 :
     ~chatnpc("<p,quiz>Who are you?");
     ~chatplayer("<p,happy>I'm a bold adventurer!");
     ~chatnpc("<p,quiz>You don't look very strong...");
-    case 10:
+    case 10 :
     ~chatnpc("<p,quiz>Beer?");
 }

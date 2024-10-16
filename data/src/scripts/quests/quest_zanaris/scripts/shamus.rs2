@@ -1,12 +1,12 @@
 [opnpc1,shamus]
 ~chatnpc("<p,angry>Ay yer big elephant! Yer've caught me, to be sure! What would an elephant like yer be wanting wid ol' Shamus then?");
 switch_int(%zanaris_progress) {
-    case ^zanaris_not_started:
+    case ^zanaris_not_started :
         ~chatplayer("<p,confused>I'm not sure.");
         ~chatnpc("<p,neutral>Well you'll have to be catchin' me again when yer are, elephant!");
         @remove_shamus;
         return;
-    case ^zanaris_started:
+    case ^zanaris_started :
         ~chatplayer("<p,neutral>I want to find Zanaris.");
         ~chatnpc("<p,neutral>Zanaris is it now? Well well well... Yer'll be needing to be going to that funny little shed out there in the swamp, so you will.");
         ~chatplayer("<p,confused>...but... I thought... Zanaris was a city...?");
@@ -22,7 +22,7 @@ switch_int(%zanaris_progress) {
             @shamus_dramenwood_staff;
         }
         return;
-    case default:
+    case default :
         def_int $option = ~p_choice2("I'm not sure.", 1, "How do I get to Zanaris again?", 2);
         if($option = 1) {
             ~chatplayer("<p,confused>I'm not sure.");

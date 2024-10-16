@@ -16,7 +16,7 @@ return(calc($effective_stat * ($bonus + 64)));
 if ($weapon = null | (map_members = false & oc_members($weapon) = true)) {
     return(weapon_unarmed_table);
 }
-// TODO: allow outputtype=dbrow
+// todo: allow outputtype=dbrow
 // return(enum(category, dbrow, combat_style_enum, oc_category($weapon)));
 switch_category(oc_category($weapon)) {
     case weapon_2h_sword : return(weapon_2h_sword_table);
@@ -63,9 +63,9 @@ switch_int($damagestyle) {
 // unarmed
 if ($weapon = null | (map_members = false & oc_members($weapon) = true) | oc_category($weapon) = null) {
     switch_int ($attackstyle) {
-        case 0: return(human_unarmedpunch, unarmed_punch);
-        case 1: return(human_unarmedkick, unarmed_kick);
-        case 2: return(human_unarmedpunch, unarmed_punch);
+        case 0 : return(human_unarmedpunch, unarmed_punch);
+        case 1 : return(human_unarmedkick, unarmed_kick);
+        case 2 : return(human_unarmedpunch, unarmed_punch);
     }
 }
 // manually handle scythe defensive
@@ -89,24 +89,24 @@ def_int $base = multiply($damage, 10);
 // not sure if this is the only npc that has this mechanic (not 100% sure if this existed in 2004 either)
 if(npc_type = black_knight_titan) { 
     switch_int($damagestyle) {
-        case ^style_melee_accurate : 
+        case ^style_melee_accurate :
             stat_advance(attack, $base);
-        case ^style_melee_aggressive : 
+        case ^style_melee_aggressive :
             stat_advance(strength, $base);
-        case ^style_melee_defensive : 
+        case ^style_melee_defensive :
             stat_advance(defence, $base);
-        case ^style_melee_controlled : 
+        case ^style_melee_controlled :
             stat_advance(attack, $base);
             stat_advance(strength, $base);
             stat_advance(defence, $base);
-        case ^style_ranged_accurate, ^style_ranged_rapid : 
+        case ^style_ranged_accurate, ^style_ranged_rapid :
             stat_advance(ranged, $base);
-        case ^style_ranged_longrange : 
+        case ^style_ranged_longrange :
             stat_advance(ranged, $base);
             stat_advance(defence, $base);
         case ^style_magic_normal :
             stat_advance(magic, $base);
-        case ^style_magic_defensive : 
+        case ^style_magic_defensive :
             stat_advance(magic, $base);
             stat_advance(defence, $base);
         case default : return;

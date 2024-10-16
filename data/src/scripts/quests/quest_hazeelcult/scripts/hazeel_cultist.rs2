@@ -1,15 +1,15 @@
 [opnpc1,hazeel_cultist]
 switch_int(%hazeelcult_progress) {
-    case ^hazeelcult_poured_poison:
+    case ^hazeelcult_poured_poison :
         // guessed mesanims
         ~chatplayer("<p,neutral>Hiya.");
         ~chatnpc("<p,neutral>Hello. Oh, are you new?");
         ~chatplayer("<p,neutral>That's right.");
         ~chatnpc("<p,neutral>Well, it's always good to have a new recruit. Soon we shall retrive Hazeels' scroll and the ritual to revive him can begin!");
-    case ^hazeelcult_not_started, ^hazeelcult_started, ^hazeelcult_spoken_clivet:
+    case ^hazeelcult_not_started, ^hazeelcult_started, ^hazeelcult_spoken_clivet :
         ~chatplayer("<p,neutral>Hi.");
         ~chatnpc("<p,confused>What? Who are you and why did you come here? It doesn't matter, leave now adventurer. While you still can.");
-    case ^hazeelcult_clivet_decision:
+    case ^hazeelcult_clivet_decision :
         ~chatplayer("<p,neutral>Hello there.");
         if(%hazeelcult_side = ^hazeelcult_goodside) {
             ~chatnpc("<p,confused>What? How did you get in here? Who are you and why do you come here? It doesn't matter, you will not live long enough to tell anyone of our hideout!");
@@ -17,21 +17,21 @@ switch_int(%hazeelcult_progress) {
         } else {
             ~chatnpc("<p,angry>Leave me alone, can't you see I'm busy? We have a lot to do preparing for the imminent return of Lord Hazeel"); // no period
         }
-    case ^hazeelcult_poured_poison, ^hazeelcult_finished_side_task:
+    case ^hazeelcult_poured_poison, ^hazeelcult_finished_side_task :
         if(%hazeelcult_side = ^hazeelcult_goodside) {
             @hazeel_cultist_goodsidequest;
         } else {
             ~chatplayer("<p,neutral>Hello there.");
             ~chatnpc("<p,neutral>Well hello! Until we have retrieved the scroll of Hazeel we cannot resurrect our master. You must find it and bring it to us.");
         }
-    case ^hazeelcult_given_armour_or_scroll:
+    case ^hazeelcult_given_armour_or_scroll :
         if(%hazeelcult_side = ^hazeelcult_goodside) {
             @hazeel_cultist_goodsidequest;
         } else {
             ~chatplayer("<p,neutral>Hello.");
             ~chatnpc("<p,neutral>Welcome back adventurer! Since you have brought us the scroll of Hazeel we can now perform the resurrection ceremony! Soon our master will return!");
         }
-    case ^hazeelcult_complete:
+    case ^hazeelcult_complete :
         ~chatplayer("<p,neutral>Hello.");
         if(%hazeelcult_side = ^hazeelcult_goodside) {
             ~chatnpc("<p,angry>It's the meddler! The one who blew Jones' cover! I don't know why you came to this place but it is here that you will die.");

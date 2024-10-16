@@ -74,8 +74,8 @@ switch_obj(last_useitem) {
 if_close;
 //p_stopaction;
 switch_int(oc_param(last_useitem, gnome_cooking_type)) {
-    case ^gnome_cocktail: @finish_cocktail(last_useitem, last_item);
-    case ^gnome_bowl, ^gnome_batta, ^gnome_crunchies: @finish_gnome_food(last_useitem, last_item);
+    case ^gnome_cocktail : @finish_cocktail(last_useitem, last_item);
+    case ^gnome_bowl, ^gnome_batta, ^gnome_crunchies : @finish_gnome_food(last_useitem, last_item);
 }
 switch_obj(last_useitem) {
     case toad_legs : @opheldu_make_gnome_food(equa_toad_legs, "You add the equa leaves to the toad legs.");
@@ -167,7 +167,7 @@ switch_obj($item) {
     case lemon, orange, pineapple, lime, dwellberry : $message = "You squeeze the juice from the <$item_name>";
     case vodka, gin, brandy, whisky, bucket_milk : $message = "You pour the <$item_name>";
     case equa_leaves : $message = "You sprinkle the equa leaves";
-    case default : 
+    case default :
         ~displaymessage(^dm_default);
         return;
 }
@@ -180,7 +180,7 @@ switch_int($step) {
     case 4 : %gnome_drink_ingredient5 = $item;
     case 5 : %gnome_drink_ingredient6 = $item;
     case 6 : %gnome_drink_ingredient7 = $item;
-    case default : 
+    case default :
         mes("The cocktail shaker is too full to fit anymore ingredients.");
         return;
 }
@@ -221,9 +221,9 @@ if ($count > 1) {
 switch_obj ($ingredient) {
     case lemon, orange, pineapple, lime, dwellberry, equa_leaves, bucket_milk :
         return("<tostring($count)> <lowercase($ingredient_name)>", $count);
-    case vodka, gin, brandy, whisky : 
+    case vodka, gin, brandy, whisky :
         return("<tostring($count)> <lowercase($ingredient_name_shot)>", $count);
-    case default : 
+    case default :
         return("", $count);
 }
 

@@ -13,22 +13,22 @@ else if (%hero_progress >= ^hero_blackarm_id_papers_obtained & $id_papers_count 
 }
 ~chatnpc("<p,neutral>Hi. Welcome to our Brimhaven headquarters. I'm Trobert and I'm in charge here."); 
 switch_int(~p_choice2("So can you help me get Scarface Pete's candlesticks?", 1, "Pleased to meet you", 2)) {
-  case 1:
+  case 1 :
     ~chatplayer("<p,quiz>So can you help me get Scarface Pete's candlesticks?");
     ~chatnpc("<p,neutral>Well, we have made some progress there. We know that one of the only keys to Pete's treasure room is carried by Grip, the head guard, so we thought it might be good to get close to him somehow.");
     ~chatnpc("<p,neutral>Grip was taking on a new deputy called Hartigen, an Asgarnian Black Knight who was desserting the Black Knight Foretress and seeking new employment here on Brimhaven.");
     ~chatnpc("<p,neutral>We managed to waylay him on the journey here, and steal his I.D. papers. Now all we need is to find somebody willing to impersonate him and take the deputy role to get that key for us.");
     switch_int(~p_choice2("I volunteer to undertake that mission!", 1, "Well, good luck then.", 2)) {
-      case 1:
+      case 1 :
         ~chatplayer("<p,neutral>I volunteer to undertake that mission!");
         inv_add(inv, id_papers, 1);
         %hero_progress = ^hero_blackarm_id_papers_obtained;
         ~chatnpc("<p,neutral>Good good. Well, Here's the I.D. papers, take them and introduce yourself to the guards at Scarface Pete's mansion, we'll have that treasure in no time.");
-      case 2:
+      case 2 :
         ~chatplayer("<p,neutral>Well, good luck then."); 
         ~chatnpc("<p,neutral>Someone will show up eventually."); // Needs check - this is from RS3 wiki transcript
     }
-  case 2:
+  case 2 :
     ~chatplayer("<p,neutral>Pleased to meet you."); 
     ~chatnpc("<p,neutral>Likewise."); // https://youtu.be/76ng3xj3mwo?t=1745
 }

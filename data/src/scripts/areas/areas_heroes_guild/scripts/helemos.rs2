@@ -4,12 +4,12 @@
 def_int $choice = ~p_choice2("So do you sell anything here?", 1, "So what can I do here?", 2);
 
 switch_int ($choice) {
-    case 1:
+    case 1 :
     ~chatplayer("<p,quiz>So do you sell anything good here?");
     ~chatnpc("<p,happy>Why yes! We DO run an exclusive shop for our members!");
     ~openshop_activenpc;
 
-    case 2:
+    case 2 :
     ~chatplayer("<p,quiz>So what can I do here?");
     ~chatnpc("<p,neutral>Look around... there are all sorts of things to keep our guild members entertained!");
 }

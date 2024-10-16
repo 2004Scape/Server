@@ -31,7 +31,7 @@ if(gender = ^gender_male) {
 
 [label,hairdresser_b1_s2]
 ~chatplayer("<p,happy>I'd like a shave please.");
-// TODO: complete guess based off the haircut dialogue, confirm for 2004
+// todo: complete guess based off the haircut dialogue, confirm for 2004
 ~chatnpc("<p,happy>Certainly sir. I shave facial hair at the bargain rate of only 1000 gold coins. I'll even throw in a free recolour!");
 if(inv_total(inv, coins) < 1000) { // chisel dialogue, confirm for 2004
     ~chatplayer("<p,sad>I don't have 1000 gold coins on me...");

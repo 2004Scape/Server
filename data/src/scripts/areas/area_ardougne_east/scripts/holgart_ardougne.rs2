@@ -1,11 +1,11 @@
 [opnpc1,holgart_ardougne]
 switch_int (%seaslug_progress) {
-    case ^seaslug_not_started: @holgart_prequest;
-    case ^seaslug_started: @holgart_wantboat;
-    case ^seaslug_spoken_holgart: @holgart_paste;
-    case ^seaslug_sailed_kent: @holgart_back_kent;
-    case ^seaslug_complete: @holgart_fancy;
-    case default: @holgart_strangethings;
+    case ^seaslug_not_started : @holgart_prequest;
+    case ^seaslug_started : @holgart_wantboat;
+    case ^seaslug_spoken_holgart : @holgart_paste;
+    case ^seaslug_sailed_kent : @holgart_back_kent;
+    case ^seaslug_complete : @holgart_fancy;
+    case default : @holgart_strangethings;
 }
 
 [label,holgart_prequest]
@@ -47,10 +47,10 @@ inv_del(inv, swamp_paste, 1);
 ~mesbox("Holgart smears the paste over the under side of his boat.");
 ~chatnpc("<p,happy>That's the job done, now we can go.|Jump aboard!");
 switch_int(~p_choice2("I'll come back later.", 1, "Okay, lets do it.", 2)) {
-    case 1:
+    case 1 :
         ~chatplayer("<p,neutral>I'll come back later.");
         ~chatnpc("<p,neutral>Okay then.|I'll wait here for you.");
-    case 2:
+    case 2 :
         ~chatplayer("<p,happy>Okay, lets do it.");
         ~board_ardougne_to_fishing_platform;
 }
@@ -59,11 +59,11 @@ switch_int(~p_choice2("I'll come back later.", 1, "Okay, lets do it.", 2)) {
 ~chatplayer("<p,happy>Hello Holgart.");
 ~chatnpc("<p,neutral>Hello again land lover.|There's some strange goings on,|on that platform, I tell you.");
 switch_int(~p_choice2("Will you take me there?", 1, "I'm keeping away from there.", 2)) {
-    case 1:
+    case 1 :
         ~chatplayer("<p,quiz>Will you take me there?");
         ~chatnpc("<p,neutral>Of course m'hearty. If that's what you want.");
         ~board_ardougne_to_fishing_platform;
-    case 2:
+    case 2 :
         ~chatplayer("<p,neutral>I'm keeping away from there.");
         ~chatnpc("<p,neutral>Fair enough m'hearty.");
 }
@@ -79,10 +79,10 @@ switch_int(~p_choice2("Will you take me there?", 1, "I'm keeping away from there
 ~chatplayer("<p,confused>Pardon?");
 ~chatnpc("<p,neutral>Fancy going out to sea?");
 switch_int(~p_choice2("I'll come back later.", 1, "Okay, let's do it.", 2)) {
-    case 1:
+    case 1 :
         ~chatplayer("<p,quiz>I'll come back later.");
         ~chatnpc("<p,neutral>Okay then. I'll wait here for you.");
-    case 2:
+    case 2 :
         ~chatplayer("<p,happy>Okay, let's do it.");
         ~chatnpc("<p,neutral>Hold on tight!");
         ~board_ardougne_to_fishing_platform;

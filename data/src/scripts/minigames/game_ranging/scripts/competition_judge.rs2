@@ -4,15 +4,15 @@ if(%target1 = 11) {
 } else if(%target1 >= 1 & %target1 < 11) {
     ~chatnpc("<p,happy>Hello again, do you need reminding of the rules?");
     switch_int(~p_choice3("Yes please.", 1, "No thanks, I've got it.", 2, "How am I doing so far?", 3)) {
-        case 1:
+        case 1 :
             ~chatplayer("<p,neutral>Yes please.");
             ~chatnpc("<p,happy>The rules are very simple:");
             ~chatnpc("<p,neutral>You're given 10 shots at the targets, for each hit you will receive points. At the end you'll be awarded 1 ticket for every 10 points.");
             ~chatnpc("<p,neutral>The tickets can be exchanged for goods from our stores. Good luck!");
-        case 2:
+        case 2 :
             ~chatplayer("<p,neutral>No thanks, I've got it.");
             ~chatnpc("<p,happy>Glad to hear it, good luck!");
-        case 3:
+        case 3 :
             def_string $encourage = "";
             // based on pts/round, wiki info is inaccurate
             def_int $denom = calc(%target1 - 1);

@@ -10,7 +10,7 @@ if ($event_coord = null) {
 
 npc_add($event_coord, $event, 1000); // guess
 npc_say("Rrrraaarrrrggghhhh, flee human!"); // https://youtu.be/vL0-EwN076w?list=PLn23LiLYLb1bQ7Hwp77KoNBjKvpZQTfJT&t=135
-%npc_attacking_uid = uid;
+%npc_macro_event_target = uid;
 if (finduid(uid) = false) {
     return;
 }

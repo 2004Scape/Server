@@ -40,17 +40,17 @@ if(%biohazard_progress = ^biohazard_poisoned_stew & inv_total(worn, doctors_gown
     ~chatplayer("<p,neutral>Hmm... interesting, sounds like food poisoning.");
     ~chatnpc("<p,sad>Yes, I'd figured that out already. What can you give me to help.");
     switch_int(~p_choice3("Just hold your breath and count to ten.", 1, "The best I can do is pray for you.", 2, "There's nothing I can do, it's fatal.", 3)) {
-        case 1:
+        case 1 :
             ~chatplayer("<p,neutral>Just hold your breath and count to ten.");
             ~chatnpc("<p,confused>What? How will that help? What kind of doctor are you?");
             ~chatplayer("<p,shifty>Erm... I'm new, I just started.");
             ~chatnpc("<p,angry>You're no doctor!");
             ~npc_retaliate(0);
-        case 2:
+        case 2 :
             ~chatplayer("<p,neutral>The best I can do is pray for you.");
             ~chatnpc("<p,angry>Pray for me? You're no doctor... You're an imposter!");
             ~npc_retaliate(0);
-        case 3:
+        case 3 :
             ~chatplayer("<p,neutral>There's nothing I can do, it's fatal.");
             ~chatnpc("<p,shock>No, I'm too young to die! I've never even had a girlfriend.");
             ~chatplayer("<p,neutral>That's life for you.");
@@ -111,11 +111,10 @@ if (~inzone_coord_pair_table(ardougne_west, coord) = true) {
 [label,head_mourner_talk_to_player]
 ~chatnpc("<p,neutral>How did you get into West Ardougne? Ah well you'll have to stay, can't risk you spreading the plague outside.");
 switch_int(%elena_progress) {
-    case ^quest_elena_spoke_to_plague_house, ^quest_elena_spoke_to_clerk, ^quest_elena_spoke_to_bravek, ^quest_elena_spoke_cured_bravek: {
+    case ^quest_elena_spoke_to_plague_house, ^quest_elena_spoke_to_clerk, ^quest_elena_spoke_to_bravek, ^quest_elena_spoke_cured_bravek :
         @multi4("I need clearance to enter a plague house.", head_mourner_i_need_clearance, "So what's a mourner?", mourner_so_whats_a_mourner, "I haven't got the plague though...", mourner_i_havent_got_the_plague_though, "I'm looking for a woman named <nc_name(elena)>.", mourner_im_looking_for_a_woman);
-    }
-    case ^quest_elena_freed_elena, ^elena_complete, ^elena_complete_read_scroll: @multi2("So what's a mourner?", mourner_so_whats_a_mourner, "I haven't got the plague though...", mourner_i_havent_got_the_plague_though);
-    case default: @multi3("So what's a mourner?", mourner_so_whats_a_mourner, "I haven't got the plague though...", mourner_i_havent_got_the_plague_though, "I'm looking for a woman named <nc_name(elena)>.", mourner_im_looking_for_a_woman);
+    case ^quest_elena_freed_elena, ^elena_complete, ^elena_complete_read_scroll : @multi2("So what's a mourner?", mourner_so_whats_a_mourner, "I haven't got the plague though...", mourner_i_havent_got_the_plague_though);
+    case default : @multi3("So what's a mourner?", mourner_so_whats_a_mourner, "I haven't got the plague though...", mourner_i_havent_got_the_plague_though, "I'm looking for a woman named <nc_name(elena)>.", mourner_im_looking_for_a_woman);
 }
 
 [label,head_mourner_i_need_clearance]

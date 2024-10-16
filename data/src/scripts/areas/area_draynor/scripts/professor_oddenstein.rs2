@@ -1,8 +1,8 @@
 [opnpc1,professor_oddenstein]
 switch_int(%haunted_progress) {
-    case ^haunted_not_started, ^haunted_complete: @oddenstein_nonquest;
-    case ^haunted_started: @oddenstein_looking;
-    case ^haunted_spoken_to_oddenstein: @oddenstein_items;
+    case ^haunted_not_started, ^haunted_complete : @oddenstein_nonquest;
+    case ^haunted_started : @oddenstein_looking;
+    case ^haunted_spoken_to_oddenstein : @oddenstein_items;
 }
 
 [label,oddenstein_nonquest]

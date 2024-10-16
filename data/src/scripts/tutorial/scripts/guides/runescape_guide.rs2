@@ -1,10 +1,10 @@
 [opnpc1,runescape_guide]
 
 switch_int(%tutorial_progress) {
-    case ^runescape_guide_designed_character: @runescape_guide_welcome;
-//    case 2: @runescape_guide_spanner;
-    case ^runescape_guide_interact_with_scenery: @runescape_guide_return;
-    case default: @runescape_guide_return;
+    case ^runescape_guide_designed_character : @runescape_guide_welcome;
+//    case 2 : @runescape_guide_spanner;
+    case ^runescape_guide_interact_with_scenery : @runescape_guide_return;
+    case default : @runescape_guide_return;
 }
 
 [label,runescape_guide_welcome]

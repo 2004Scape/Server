@@ -14,10 +14,10 @@ if(%gobdip_progress = 0 & (testbit(%barcrawl_progress, ^rustyanchor_index) = fal
     $option = ~p_choice2("Could I buy a beer please?", 1, "Have you heard any more rumours in here?", 4);
 }
 switch_int ($option) {
-    case 1: @bartender_port_sarim_beer;
-    case 2: @goblin_diplomacy_start;
-    case 3: @rustyanchor_barcrawl;
-    case 4: 
+    case 1 : @bartender_port_sarim_beer;
+    case 2 : @goblin_diplomacy_start;
+    case 3 : @rustyanchor_barcrawl;
+    case 4 :
         ~chatplayer("<p,neutral>Have you heard any more rumours in here?");
         ~chatnpc("<p,neutral>No, it hasn't been very busy lately.");
 }

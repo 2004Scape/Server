@@ -1,30 +1,30 @@
 [opheld4,bloated_toad]
 // release all
-// TODO spawns toad(s?) on the ground
+// todo spawns toad(s?) on the ground
 inv_del(inv, bloated_toad, inv_size(inv));
 mes("You release the toads and see them hop off into the distance.");
 
 [opheld5,bloated_toad]
 // release
-// TODO spawn toad on the ground
+// todo spawn toad on the ground
 inv_delslot(inv, last_slot);
 mes("You release the toad and see it hop off into the distance.");
 
 [opheld1,bloated_toad]
 if (%chompybird_progress < ^chompybird_shown_toad) {
-    // TODO confirm line breaks, currently overruns
+    // todo confirm line breaks, currently overruns
     ~objbox(bloated_toad,"You're not sure where Rantz told you to place the bloated toad. You decide to wait and ask him where to place it.");
     return;
 }
 
-// TODO tbc which quest states show this message
-// TODO tbc distance
+// todo tbc which quest states show this message
+// todo tbc distance
 if (distance(coord, 0_41_46_12_21) > 5) {
     mes("This is too far away for Rantz to shoot the chompy bird.");
     return;
 }
 
-// TODO tbc any npc? or just toads
+// todo tbc any npc? or just toads
 npc_findallany(coord, 0, 0);
 if (npc_findnext = true) {
     mes("There is a bloated toad already placed at this location.");
@@ -111,7 +111,7 @@ if ($should_spawn_chompy = true) {
 }
 
 [proc,toad_explode]()
-// TODO in OSRS this isn't sent with a height
+// todo in OSRS this isn't sent with a height
 spotanim_map(chompy_toad_exploding, npc_coord, 0, 30);
 
 huntall(npc_coord, 1, 1);
@@ -127,7 +127,7 @@ while (.huntnext = true) {
 [ai_queue5,bloated_toad]
 npc_delay(3);
 
-// TODO do we need to check that the Chompy is still there and eating the toad?
+// todo do we need to check that the Chompy is still there and eating the toad?
 //      should test on OSRS to confirm
 
 npc_say("!!Croak!!");

@@ -1,11 +1,11 @@
 [opnpc1,fire_warrior_of_lesarkus]
 ~chatnpc("<p,angry>Who dares to enter the Temple of Ikov!");
 switch_int (~p_choice2("A mighty hero!", 1, "A humble pilgrim.", 2)) {
-    case 1:
+    case 1 :
         ~chatplayer("<p,angry>A mighty hero!");
         ~chatnpc("<p,angry>Pathetic fool! Prepare to die!");
         ~npc_retaliate(0);
-    case 2:
+    case 2 :
         ~chatplayer("<p,confused>A humble pilgrim.");
         ~chatnpc("<p,happy>I haven't seen a pilgrim for thousands of years!");
         ~chatnpc("<p,angry>Temple is closed!");

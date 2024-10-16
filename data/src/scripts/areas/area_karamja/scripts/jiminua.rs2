@@ -4,10 +4,10 @@
 def_int $option = ~p_choice2("Yes please. What are you selling?", 1, "No thanks.", 2);
 
 switch_int ($option) {
-    case 1:
+    case 1 :
     ~chatplayer("<p,happy>Yes please. What are you selling?");
     ~openshop_activenpc;
 
-    case 2:
+    case 2 :
     ~chatplayer("<p,neutral>No thanks.");
 }

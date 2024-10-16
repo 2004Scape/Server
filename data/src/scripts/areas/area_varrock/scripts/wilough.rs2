@@ -18,7 +18,7 @@ if(map_members = true & inv_total(inv, trail_clue_hard_riddle_exp016) > 0) {
             ~progress_clue_hard(trail_clue_hard_riddle_exp016, "Wilough has given you another clue scroll!");
             return;
         } 
-        ~chatnpc("<p,neutral>That not right!"); // TODO: check mesanim
+        ~chatnpc("<p,neutral>That not right!"); // todo: check mesanim
         return;
     }
     ~chatnpc("<p,happy>My brother reckons I can't solve this puzzle. I can't have him laughing at me! Do me a favour and solve it for me.");

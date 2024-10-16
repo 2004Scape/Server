@@ -10,26 +10,26 @@ if(%grail_progress > ^grail_not_started & %grail_progress < ^grail_complete) {
     return;
 }
 switch_int(%arthur_progress) {
-    case ^arthur_not_started:
+    case ^arthur_not_started :
         ~chatplayer("<p,neutral>Morning. Know where an adventurer has to go to find a quest around here?");
         ~chatnpc("<p,neutral>An adventurer eh? There is no service finer than serving the bountiful King Arthur, and I happen to know there's an important quest to fulfill.");
-    case ^arthur_started:
+    case ^arthur_started :
         ~chatplayer("<p,quiz>Any ideas on getting Merlin out of that crystal?");
         ~chatnpc("<p,sad>Unfortunately not, Sirrah.");
         ~chatnpc("<p,sad>'Tis a magick most powerful and foul.");
         ~chatnpc("<p,sad>The only person I know of who would possibly have been of help is Merlin...");
         ~chatplayer("<p,neutral>Yeah, that's not actually too helpful.");
         ~chatnpc("<p,sad>I am well aware of that, adventurer.");
-    case ^arthur_spoken_gawain, ^arthur_spoken_lancelot:
+    case ^arthur_spoken_gawain, ^arthur_spoken_lancelot :
         ~chatplayer("<p,quiz>Any ideas on getting into Mordred's fort?");
         ~chatnpc("<p,angry>Mordred... So you think he may be involved with the curse upon Merlin?");
         ~chatplayer("<p,quiz>Good a guess as any right?");
         ~chatnpc("<p,sad>I think that you may be onto something there. Unfortunately his fortress is impregnable!");
         ~chatplayer("<p,neutral>...I'll figure something out.");
-    case ^arthur_spoken_morgan_lefaye, ^arthur_excalibur_bound, ^arthur_freed_merlin:
+    case ^arthur_spoken_morgan_lefaye, ^arthur_excalibur_bound, ^arthur_freed_merlin :
         ~chatnpc("<p,quiz>Any ideas on finding Excalibur?");
         ~chatnpc("<p,happy>Unfortunately not, Sirrah.");
-    case ^arthur_complete:
+    case ^arthur_complete :
         ~chatnpc("<p,happy>Sir Knight! Many thanks for your assistance in restoring Merlin to his former freedom!");
         ~chatplayer("<p,neutral>Hey, no problem.");     
 }

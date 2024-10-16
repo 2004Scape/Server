@@ -5,7 +5,7 @@ if (npc_findhero = false) {
 } 
 
 if (p_finduid(uid) = true & %hero_progress = ^hero_phoenix_talked_charlie) {
-    // TODO  Wiki - is this true? - "Grip's Keyring is unique to the player you are doing the quest with" 
+    // todo  Wiki - is this true? - "Grip's Keyring is unique to the player you are doing the quest with" 
     %hero_progress = ^hero_phoenix_killed_grip;
 }
 

@@ -24,11 +24,11 @@ if(~has_sextant_clue = true) {
 }
 
 switch_int(~get_cog_progress) {
-    case ^quest_cog_not_started: @cog_start_quest;
-    case ^quest_cog_tasked_with_placing_cogs: @brother_kojo_before_placing_cogs;
-    case ^quest_cog_three_remaining_cogs: @brother_kojo_placed_one_cog;
-    case ^quest_cog_two_remaining_cogs: @brother_kojo_placed_two_cogs;
-    case ^quest_cog_one_remaining_cog: @brother_kojo_placed_three_cogs;
-    case ^quest_cog_no_remaining_cogs: @brother_kojo_placed_all_cogs;
-    case ^quest_cog_complete: @brother_kojo_post_clock_tower;
+    case ^quest_cog_not_started : @cog_start_quest;
+    case ^quest_cog_tasked_with_placing_cogs : @brother_kojo_before_placing_cogs;
+    case ^quest_cog_three_remaining_cogs : @brother_kojo_placed_one_cog;
+    case ^quest_cog_two_remaining_cogs : @brother_kojo_placed_two_cogs;
+    case ^quest_cog_one_remaining_cog : @brother_kojo_placed_three_cogs;
+    case ^quest_cog_no_remaining_cogs : @brother_kojo_placed_all_cogs;
+    case ^quest_cog_complete : @brother_kojo_post_clock_tower;
 }

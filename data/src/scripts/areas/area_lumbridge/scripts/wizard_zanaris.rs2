@@ -7,16 +7,16 @@ if(map_members = false) { // RS3
     return;
 }
 switch_int (%zanaris_progress) {
-    case ^zanaris_not_started:
+    case ^zanaris_not_started :
         ~chatplayer("<p,quiz>Why are all of you standing around here?");
         ~chatnpc("<p,happy>Hahaha you dare talk to a mighty wizard such as myself? I bet you can't even cast windstrike yet amateur!");
         ~chatplayer("<p,neutral>...You're an idiot.");
         return;
-    case ^zanaris_started:
+    case ^zanaris_started :
         ~chatplayer("<p,quiz>Found that leprechaun yet?");
         ~chatnpc("<p,happy>Hahaha go away amateur!|You're not worthy of joining our great group!");
         ~chatplayer("<p,neutral>...right.");
-    case default:
+    case default :
         ~chatnpc("<p,happy>Hahaha you're such an amateur!");
         ~chatnpc("<p,happy>Go away and play with some cabbage amateur!");
         ~chatplayer("<p,neutral>...right.");

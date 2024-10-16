@@ -59,8 +59,8 @@ inv_setslot(inv, $use_slot, oc_param($used_with, changesto), 1); //new empty sou
 
 [oplocu,_watersource]
 switch_obj (last_useitem) {
-    case bucket_empty, jug_empty, vial_empty, bowl_empty: @fill_container_water(last_useitem);
-    case default: ~displaymessage(^dm_default);
+    case bucket_empty, jug_empty, vial_empty, bowl_empty : @fill_container_water(last_useitem);
+    case default : ~displaymessage(^dm_default);
 }
 
 [label,fill_container_water](obj $container)

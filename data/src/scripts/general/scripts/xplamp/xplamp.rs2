@@ -24,28 +24,28 @@ if_openmain(xplamp);
 
 [if_button,xplamp:confirm]
 switch_int (%xplamp) {
-    case ^xplamp_none:
+    case ^xplamp_none :
         mes("You need to choose which skill you wish to be advanced.");
         return;
-    case ^xplamp_attack: @xplamp_confirm(attack);
-    case ^xplamp_strength: @xplamp_confirm(strength);
-    case ^xplamp_ranged: @xplamp_confirm(ranged);
-    case ^xplamp_magic: @xplamp_confirm(magic);
-    case ^xplamp_defence: @xplamp_confirm(defence);
-    case ^xplamp_hitpoints: @xplamp_confirm(hitpoints);
-    case ^xplamp_prayer: @xplamp_confirm(prayer);
-    case ^xplamp_agility: @xplamp_confirm(agility);
-    case ^xplamp_herblore: @xplamp_confirm(herblore);
-    case ^xplamp_thieving: @xplamp_confirm(thieving);
-    case ^xplamp_crafting: @xplamp_confirm(crafting);
-    case ^xplamp_runecraft: @xplamp_confirm(runecraft);
-    case ^xplamp_mining: @xplamp_confirm(mining);
-    case ^xplamp_smithing: @xplamp_confirm(smithing);
-    case ^xplamp_fishing: @xplamp_confirm(fishing);
-    case ^xplamp_cooking: @xplamp_confirm(cooking);
-    case ^xplamp_firemaking: @xplamp_confirm(firemaking);
-    case ^xplamp_woodcutting: @xplamp_confirm(woodcutting);
-    case ^xplamp_fletching: @xplamp_confirm(fletching);
+    case ^xplamp_attack : @xplamp_confirm(attack);
+    case ^xplamp_strength : @xplamp_confirm(strength);
+    case ^xplamp_ranged : @xplamp_confirm(ranged);
+    case ^xplamp_magic : @xplamp_confirm(magic);
+    case ^xplamp_defence : @xplamp_confirm(defence);
+    case ^xplamp_hitpoints : @xplamp_confirm(hitpoints);
+    case ^xplamp_prayer : @xplamp_confirm(prayer);
+    case ^xplamp_agility : @xplamp_confirm(agility);
+    case ^xplamp_herblore : @xplamp_confirm(herblore);
+    case ^xplamp_thieving : @xplamp_confirm(thieving);
+    case ^xplamp_crafting : @xplamp_confirm(crafting);
+    case ^xplamp_runecraft : @xplamp_confirm(runecraft);
+    case ^xplamp_mining : @xplamp_confirm(mining);
+    case ^xplamp_smithing : @xplamp_confirm(smithing);
+    case ^xplamp_fishing : @xplamp_confirm(fishing);
+    case ^xplamp_cooking : @xplamp_confirm(cooking);
+    case ^xplamp_firemaking : @xplamp_confirm(firemaking);
+    case ^xplamp_woodcutting : @xplamp_confirm(woodcutting);
+    case ^xplamp_fletching : @xplamp_confirm(fletching);
 }
 error("case not found for xplamp varp: <tostring(%xplamp)>");
 
@@ -56,37 +56,37 @@ if (map_members = false & ~stat_members($stat) = ^true) {
     return;
 }
 switch_stat ($stat) {
-    case attack: @xplamp_select_stat(^xplamp_attack);
-    case strength: @xplamp_select_stat(^xplamp_strength);
-    case ranged: @xplamp_select_stat(^xplamp_ranged);
-    case magic: @xplamp_select_stat(^xplamp_magic);
-    case defence: @xplamp_select_stat(^xplamp_defence);
-    case hitpoints: @xplamp_select_stat(^xplamp_hitpoints);
-    case prayer: @xplamp_select_stat(^xplamp_prayer);
-    case agility: @xplamp_select_stat(^xplamp_agility);
-    case herblore: @xplamp_select_stat(^xplamp_herblore);
-    case thieving: @xplamp_select_stat(^xplamp_thieving);
-    case crafting: @xplamp_select_stat(^xplamp_crafting);
-    case runecraft: @xplamp_select_stat(^xplamp_runecraft);
-    case mining: @xplamp_select_stat(^xplamp_mining);
-    case smithing: @xplamp_select_stat(^xplamp_smithing);
-    case fishing: @xplamp_select_stat(^xplamp_fishing);
-    case cooking: @xplamp_select_stat(^xplamp_cooking);
-    case firemaking: @xplamp_select_stat(^xplamp_firemaking);
-    case woodcutting: @xplamp_select_stat(^xplamp_woodcutting);
-    case fletching: @xplamp_select_stat(^xplamp_fletching);
+    case attack : @xplamp_select_stat(^xplamp_attack);
+    case strength : @xplamp_select_stat(^xplamp_strength);
+    case ranged : @xplamp_select_stat(^xplamp_ranged);
+    case magic : @xplamp_select_stat(^xplamp_magic);
+    case defence : @xplamp_select_stat(^xplamp_defence);
+    case hitpoints : @xplamp_select_stat(^xplamp_hitpoints);
+    case prayer : @xplamp_select_stat(^xplamp_prayer);
+    case agility : @xplamp_select_stat(^xplamp_agility);
+    case herblore : @xplamp_select_stat(^xplamp_herblore);
+    case thieving : @xplamp_select_stat(^xplamp_thieving);
+    case crafting : @xplamp_select_stat(^xplamp_crafting);
+    case runecraft : @xplamp_select_stat(^xplamp_runecraft);
+    case mining : @xplamp_select_stat(^xplamp_mining);
+    case smithing : @xplamp_select_stat(^xplamp_smithing);
+    case fishing : @xplamp_select_stat(^xplamp_fishing);
+    case cooking : @xplamp_select_stat(^xplamp_cooking);
+    case firemaking : @xplamp_select_stat(^xplamp_firemaking);
+    case woodcutting : @xplamp_select_stat(^xplamp_woodcutting);
+    case fletching : @xplamp_select_stat(^xplamp_fletching);
 }
 error("case not found for stat: <enum(stat, string, stat_names, $stat)>");
 
 [label,xplamp_select_stat](int $selection)
 switch_int ($selection) {
-    case ^xplamp_herblore:
+    case ^xplamp_herblore :
         if (%druid_progress ! ^druid_complete) {
             %xplamp = ^xplamp_none;
             mes("You need to complete the Druidic Ritual quest to choose that option.");
             return;
         }
-    case ^xplamp_runecraft:
+    case ^xplamp_runecraft :
         if (%runemysteries_progress ! ^runemysteries_complete) {
             %xplamp = ^xplamp_none;
             mes("You need to complete the Rune Mysteries quest to choose that option.");

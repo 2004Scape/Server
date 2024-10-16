@@ -131,7 +131,7 @@ p_teleport(movecoord(coord, 0, 0, 1));
 p_delay(1);
 @manor_bookcase_door(movecoord(coord, 2, 0, 0));
 
-// TODO: This is borked for opening the doors now. Using the lever is fine.
+// todo: This is borked for opening the doors now. Using the lever is fine.
 // Gotta think through how to make this work with find all zone.
 [label,manor_bookcase_door](coord $dest)
 def_coord $start_coord = coord;

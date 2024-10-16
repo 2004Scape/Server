@@ -9,13 +9,13 @@
 ~chatplayer("<p,neutral>Hi!");
 def_int $random = random(13);
 switch_int ($random) {
-    case 0:
+    case 0 :
         ~chatnpc("<p,happy>Ooh. This is exciting!");
         ~chatplayer("<p,happy>Yup!");
-    case 1:
+    case 1 :
         ~chatnpc("<p,neutral>I wouldn't want to be the poor guy that has to clean up after the duels.");
         ~chatplayer("<p,neutral>Me neither.");
-    case 2:
+    case 2 :
     //https://youtu.be/jUEwHgmSVsw?list=PLn23LiLYLb1Zo7wVV7wY2Zj1VV4zz6LBK
         ~chatnpc("<p,neutral>My son just won his first duel!");
         ~chatplayer("<p,neutral>Congratulations!");
@@ -23,37 +23,37 @@ switch_int ($random) {
         ~chatplayer("<p,neutral>That's gotta hurt!");
         ~chatnpc("<p,neutral>He's only 10 as well!");
         ~chatplayer("<p,neutral>You gotta start 'em young!");
-    case 3:
+    case 3 :
         ~chatnpc("<p,neutral>Hmph.");
-    case 4:
+    case 4 :
         ~chatnpc("<p,happy>My favourite fighter is Mubariz!");
         ~chatplayer("<p,neutral>The guy at the information kiosk?");
         ~chatnpc("<p,happy>Yeah! He rocks!");
         ~chatplayer("<p,neutral>Takes all sorts, I guess.");
-    case 5:
+    case 5 :
         ~chatnpc("<p,happy>Hi! I'm here to watch the duels!");
         ~chatplayer("<p,happy>Me too!");
-    case 6:
+    case 6 :
         ~chatnpc("<p,happy>Did you know they think this place dates back to the second age?!");
         ~chatplayer("<p,neutral>Really?");
         ~chatnpc("<p,happy>Yeah. The guy at the information kiosk was telling me.");
-    case 7:
+    case 7 :
         ~chatnpc("<p,angry>Can't you see I'm watching the duels?");
         ~chatplayer("<p,neutral>I'm sorry!");
-    case 8:
+    case 8 :
         ~chatnpc("<p,happy>Well. This beats doing the shopping!");
-    case 9:
+    case 9 :
         ~chatnpc("<p,happy>Hi!");
-    case 10:
+    case 10 :
         ~chatnpc("<p,happy>Knock knock!");
         ~chatplayer("<p,neutral>Who's there?");
         ~chatnpc("<p,happy>Boo.");
         ~chatplayer("<p,neutral>Boo who?");
         ~chatnpc("<p,happy>Don't cry, it's just me!");
-    case 11:
+    case 11 :
         ~chatnpc("<p,happy>Why did the skeleton burp?");
         ~chatplayer("<p,neutral>I don't know?");
         ~chatnpc("<p,happy>'Cause it didn't have the guts to fart!");
-    case default:
+    case default :
         ~chatnpc("<p,laugh>Waaaaassssssuuuuupp?!.");
 }

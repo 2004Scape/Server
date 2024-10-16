@@ -3,10 +3,10 @@ if(%grandtree_progress = ^grandtree_obtained_lumber_order) {
     if(coordz(npc_coord) > 3400) {
         ~chatnpc("<p,neutral>Now, to get this lot to the Grand Tree!");
         switch_int(~p_choice2("Can I help?", 1, "I'd better get going!", 2)) {
-            case 1:
+            case 1 :
                 ~chatplayer("<p,happy>Can I help?");
                 ~chatnpc("<p,happy>No, you're OK, traveller.|I can manage from here."); // OSRS linebreak
-            case 2:
+            case 2 :
                 ~chatplayer("<p,neutral>I'd better get going!");
         }
         return;
@@ -27,10 +27,10 @@ if(%grandtree_progress = ^grandtree_obtained_lumber_order) {
             return;
         }
         switch_int(~p_choice2("No chance!", 1, "OK then, I'll pay.", 2)) {
-            case 1:
+            case 1 :
                 ~chatplayer("<p,neutral>No chance!");
                 return;
-            case 2:
+            case 2 :
                 ~chatplayer("<p,neutral>OK then, I'll pay.");
                 ~chatnpc("<p,neutral>Alright, jump in the back of the cart. It's a food delivery, we should be fine.");
                 ~objbox(coins_250, "You give Femi 1000 coins"); // no period
@@ -49,7 +49,7 @@ mes("The little gnome is too busy to talk.");
 if_close;
 bas_running(null);
 p_walk(0_38_52_29_51); // respects clipping from my testing
-p_delay(5); // 5t, delay seems to be fixed (TODO: -1 once delay is corrected)
+p_delay(5); // 5t, delay seems to be fixed (todo: -1 once delay is corrected)
 facesquare(movecoord(coord, 1, 0, 0));
 anim(human_reachforladdertop, 0);
 p_delay(0);
@@ -73,11 +73,11 @@ if(loc_find(0_38_52_28_52, loc_83) = true) {
 ~chatplayer("<p,happy>Hi!");
 ~chatnpc("<p,quiz>Could you help me lift these boxes?|They are really heavy!");
 switch_int(~p_choice2("Sorry, I'm a bit busy.", 1, "OK then.", 2)) {
-    case 1:
+    case 1 :
         %femi_help = 1;
         ~chatplayer("<p,neutral>Sorry, I'm a bit busy.");
         ~chatnpc("<p,sad>Oh, OK, I'll do it myself.");
-    case 2:
+    case 2 :
         ~chatplayer("<p,happy>OK then.");
         ~chatnpc("<p,happy>Thanks traveller!");
         if_close;

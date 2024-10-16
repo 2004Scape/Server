@@ -89,7 +89,7 @@ if (last_useitem ! glarials_pebble) {
     ~displaymessage(^dm_default);
     return;
 }
-// TODO: Check inv_totalcat for each category we need
+// todo: Check inv_totalcat for each category we need
 // Can't bring in jewelry, armour, runes, arrows, bows, or any type of logs?
 mes("You place the pebble in the gravestone's small indent.");
 mes("It fits perfectly.");
@@ -138,8 +138,8 @@ if (inv_total(inv, glarials_amulet) > 0) { // no bank or worn check
 // waterfall_raft
 [oploc1,loc_1987]
 switch_int (%waterfall_progress) {
-    case ^waterfall_not_started: ~mesbox("You're not sure if the raft is safe to use.|Best to leave it alone.");
-    case default: 
+    case ^waterfall_not_started : ~mesbox("You're not sure if the raft is safe to use.|Best to leave it alone.");
+    case default :
         // https://youtu.be/HQEpeWAUMbI?t=113
         mes("You board the small raft");
         p_delay(2);
@@ -280,8 +280,8 @@ p_teleport(^waterfall_fail_coord);
 mes("You search the books...");
 p_delay(2);
 switch_int (%waterfall_progress) {
-    case ^waterfall_not_started, ^waterfall_started: mes("You find nothing of interest.");
-    case default:
+    case ^waterfall_not_started, ^waterfall_started : mes("You find nothing of interest.");
+    case default :
         if (inv_total(inv, book_on_baxtorian) > 0) { // no bank check
             mes("but find nothing of interest.");
         } else {
@@ -296,8 +296,8 @@ switch_int (%waterfall_progress) {
 mes("You search the crate");
 p_delay(2);
 switch_int (%waterfall_progress) {
-    case ^waterfall_not_started, ^waterfall_started, ^waterfall_spoken_to_hudon: mes("You find nothing of interest.");
-    case default:
+    case ^waterfall_not_started, ^waterfall_started, ^waterfall_spoken_to_hudon : mes("You find nothing of interest.");
+    case default :
         if (inv_total(inv, golrie_key) > 0) { // no bank check
             mes("but find nothing");
         } else {

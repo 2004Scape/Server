@@ -1,7 +1,7 @@
 [opheldu,steel_studs]
 switch_obj (last_useitem)
 {
-    case leather_chaps : 
+    case leather_chaps :
         ~require_members_feature;
         @craft_studded(studded_chaps);
     case leather_body :

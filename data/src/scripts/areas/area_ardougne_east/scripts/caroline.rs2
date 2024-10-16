@@ -1,9 +1,9 @@
 [opnpc1,caroline]
 switch_int(%seaslug_progress) {
-    case ^seaslug_not_started: @caroline_help;
-    case ^seaslug_saved_kennith: @caroline_savedkennith;
-    case ^seaslug_complete: @caroline_postquest;
-    case default: @caroline_anynews;
+    case ^seaslug_not_started : @caroline_help;
+    case ^seaslug_saved_kennith : @caroline_savedkennith;
+    case ^seaslug_complete : @caroline_postquest;
+    case default : @caroline_anynews;
 }
 
 [label,caroline_help]
@@ -16,14 +16,14 @@ switch_int(%seaslug_progress) {
 ~chatnpc("<p,confused>Maybe, but no-one's heard from the other fishermen on the platform. Their families are becoming quite concerned.");
 ~chatnpc("<p,quiz>Is there any chance you could visit the platform and find out what's going on?");
 switch_int(~p_choice2("I suppose so, how do I get there?", 1, "I'm sorry, I'm too busy.", 2)) {
-    case 1:
+    case 1 :
         ~chatplayer("<p,neutral>I suppose so, how do I get there?");
         ~chatnpc("<p,neutral>That's very good of you traveller.|My friend Holgart will take you there.");
         ~chatplayer("<p,neutral>Ok, I'll go and see if they're ok.");
         %seaslug_progress = ^seaslug_started;
         ~send_quest_progress(questlist:seaslug, %seaslug_progress, ^seaslug_complete);
         ~chatnpc("<p,neutral>I'll reward you for your time.|It'll give me peace of mind|to know Kennith and my husband, Kent, are safe.");
-    case 2:
+    case 2 :
         ~chatplayer("<p,neutral>I'm sorry, I'm too busy.");
         ~chatnpc("<p,sad>That's a shame.");
         ~chatplayer("<p,neutral>Bye.");

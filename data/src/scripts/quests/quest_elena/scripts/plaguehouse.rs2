@@ -1,14 +1,13 @@
 [oploc1,loc_2530]
 switch_int(%elena_progress) {
-    case ^quest_elena_spoke_cured_bravek: {
+    case ^quest_elena_spoke_cured_bravek :
         if (inv_total(inv, elena_key) > 0) {
             mes("The barrel is empty.");
         } else {
             inv_add(inv, elena_key, 1);
             ~objboxt(elena_key, "You find a small key in the barrel.");
         }
-    }
-    case default: mes("The barrel is empty.");
+    case default : mes("The barrel is empty.");
 }
 
 [oploc1,loc_2522]
@@ -21,7 +20,7 @@ p_telejump(0_39_51_40_7);
 
 [oplocu,loc_2526]
 switch_obj(last_useitem) {
-    case elena_key: ~open_and_close_door(loc_param(next_loc_stage), ~check_axis(coord, loc_coord, loc_angle), false);
+    case elena_key : ~open_and_close_door(loc_param(next_loc_stage), ~check_axis(coord, loc_coord, loc_angle), false);
 }
 
 [oploc1,loc_2526] // elena door
@@ -30,8 +29,8 @@ if (~check_axis(coord, loc_coord, loc_angle) = false) {
     return;
 }
 switch_int(%elena_progress) {
-    case ^quest_elena_freed_elena, ^elena_complete, ^elena_complete_read_scroll: ~open_and_close_door(loc_param(next_loc_stage), ~check_axis(coord, loc_coord, loc_angle), false);
-    case default: {
+    case ^quest_elena_freed_elena, ^elena_complete, ^elena_complete_read_scroll : ~open_and_close_door(loc_param(next_loc_stage), ~check_axis(coord, loc_coord, loc_angle), false);
+    case default :
         if (inv_total(inv, elena_key) > 0) {
             ~mesbox("You unlock the door.");
             if_close; // if you see this well just know this is kinda retarded but kk -jordan
@@ -45,7 +44,6 @@ switch_int(%elena_progress) {
                 @multi2("Have you caught the plague?", elena_improsoned_have_you_caught_the_plague, "Okay, I'll look for it.", elena_improsioned_ok_ill_look_for_it);
             }
         }
-    }
 }
 
 [label,elena_improsoned_have_you_caught_the_plague]

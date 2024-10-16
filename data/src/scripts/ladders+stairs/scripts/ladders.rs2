@@ -2,20 +2,20 @@
 [oploc1,loc_245]
 p_arrivedelay;
 switch_int (loc_angle) {
-	case 0: p_teleport(movecoord(coord, 0, 1, 2));
-	case 1: p_teleport(movecoord(coord, 2, 1, 0));
-	case 2: p_teleport(movecoord(coord, 0, 1, -2));
-	case 3: p_teleport(movecoord(coord, -2, 1, 0));
+	case 0 : p_teleport(movecoord(coord, 0, 1, 2));
+	case 1 : p_teleport(movecoord(coord, 2, 1, 0));
+	case 2 : p_teleport(movecoord(coord, 0, 1, -2));
+	case 3 : p_teleport(movecoord(coord, -2, 1, 0));
 }
 
 // Ship ladder (climb down)
 [oploc1,loc_246]
 p_arrivedelay;
 switch_int (loc_angle) {
-	case 0: p_teleport(movecoord(coord, 0, -1, 2));
-	case 1: p_teleport(movecoord(coord, 2, -1, 0));
-	case 2: p_teleport(movecoord(coord, 0, -1, -2));
-	case 3: p_teleport(movecoord(coord, -2, -1, 0));
+	case 0 : p_teleport(movecoord(coord, 0, -1, 2));
+	case 1 : p_teleport(movecoord(coord, 2, -1, 0));
+	case 2 : p_teleport(movecoord(coord, 0, -1, -2));
+	case 3 : p_teleport(movecoord(coord, -2, -1, 0));
 }
 
 // Climb Up
@@ -42,15 +42,15 @@ if ($coord = 0_48_49_32_26) {
 [oploc1,loc_1746]
 p_arrivedelay;
 switch_coord (loc_coord) {
-    case 2_47_54_17_57: @climb_ladder(1_47_54_17_58, false); // black knights fortress ladder
-    case default: @climb_ladder(movecoord(coord(), 0, -1, 0), false);   
+    case 2_47_54_17_57 : @climb_ladder(1_47_54_17_58, false); // black knights fortress ladder
+    case default : @climb_ladder(movecoord(coord(), 0, -1, 0), false);   
 }
 
 [oploc1,loc_1747]
 p_arrivedelay;
 switch_coord (loc_coord) {
-    case 0_40_53_10_49: @ladder_to_dwarf_remains; // Ladder to Dwarf Guard Tower
-    case default: @climb_ladder(movecoord(coord(), 0, 1, 0), true);
+    case 0_40_53_10_49 : @ladder_to_dwarf_remains; // Ladder to Dwarf Guard Tower
+    case default : @climb_ladder(movecoord(coord(), 0, 1, 0), true);
 }
 
 [oploc1,loc_1748]

@@ -140,13 +140,13 @@ if(coordz(coord) < coordz(loc_coord)) {
 [oploc1,loc_2210]
 p_delay(2); // delays for 3t before doing anything, might be a rework thing
 switch_int(%itgronigen_progress) {
-    case ^itgronigen_complete, ^itgronigen_claimed_wine: @observatory_telescope;
-    case ^itgronigen_sent_telescope:
+    case ^itgronigen_complete, ^itgronigen_claimed_wine : @observatory_telescope;
+    case ^itgronigen_sent_telescope :
         if (npc_find(coord, observatory_professor_tower, 7, 0) = true) {
             ~chatnpc("<p,happy>Well done, well done!!|Let's see what the stars have in store for us today.");
             @observatory_telescope;
         }
-    case default: mes("It seems the telescope is not operational at the moment.");
+    case default : mes("It seems the telescope is not operational at the moment.");
 }
 
 [oploc1,loc_2212]
@@ -195,11 +195,11 @@ if (npc_find(coord, observatory_professor_tower, 7, 0) = false) {
     return;
 }
 switch_int(~p_choice2("I can see a constellation.", 1, "What am I looking at?", 2)) {
-    case 1:
+    case 1 :
         ~chatplayer("<p,happy>I can see a constellation.");
         ~chatnpc("<p,happy>Yes, with this device|the heavens are opened to us...");
         @constellation_reward($constellation_numb);
-    case 2:
+    case 2 :
         ~chatplayer("<p,quiz>What am I looking at?");
         ~chatnpc("<p,happy>This is the revealed sky.");
         @constellation_reward($constellation_numb);
@@ -208,41 +208,41 @@ switch_int(~p_choice2("I can see a constellation.", 1, "What am I looking at?", 
 [label,constellation_reward](int $constellation_numb)
 ~chatnpc("<p,happy>The constellation you saw was...");
 switch_int($constellation_numb) {
-    case ^sign_capricorn: 
+    case ^sign_capricorn :
         ~chatnpc("<p,happy>Capricorn the goat.|You are granted an increase in strength.");
         stat_advance(strength, 8750);
-    case ^sign_virgo: 
+    case ^sign_virgo :
         ~chatnpc("<p,happy>Virgo the virtuous.|The strong and peaceful nature of Virgo boosts your defence.");
         stat_advance(defence, 8750);
-    case ^sign_libra: 
+    case ^sign_libra :
         // https://web.archive.org/web/20050521225136/http://www.runeweb.net/index.php?page=rs2-quest-observator mentions it in text
         ~chatnpc("<p,happy>Libra the scales.|The scales of justice award you with law runes.");
         inv_add(inv, lawrune, 3);
-    case ^sign_aquarius: 
+    case ^sign_aquarius :
         ~chatnpc("<p,happy>Aquarius the water-bearer.|The Gods of water award you with water runes.");
         inv_add(inv, waterrune, 25);
-    case ^sign_scorpio: 
+    case ^sign_scorpio :
         ~chatnpc("<p,happy>Scorpio the scorpion.|The scorpion gives you poison from it's sting.");
         inv_add(inv, weapon_poison, 1);
-    case ^sign_leo: 
+    case ^sign_leo :
         ~chatnpc("<p,happy>Leo the lion.|The power of the lion has increased your hitpoints.");
         stat_advance(hitpoints, 8750);
-    case ^sign_aries: 
+    case ^sign_aries :
         ~chatnpc("<p,happy>Aries the ram.|The ram's strength improves your attack abilites.");
         stat_advance(attack, 8750);
-    case ^sign_sagittarius: 
+    case ^sign_sagittarius :
         ~chatnpc("<p,happy>Sagittarius the Centaur.|The Gods award you a maple longbow.");
         inv_add(inv, maple_longbow, 1);
-    case ^sign_gemini: 
+    case ^sign_gemini :
         ~chatnpc("<p,happy>Gemini the twins.|The double nature of Gemini awards you a two-handed weapon.");
         inv_add(inv, black_2h_sword, 1);
-    case ^sign_pisces:
+    case ^sign_pisces :
         ~chatnpc("<p,happy>Pisces the fish.|The gods rain food from the sea on you.");
         inv_add(inv, tuna, 3);
-    case ^sign_taurus: 
+    case ^sign_taurus :
         ~chatnpc("<p,happy>Taurus the bull.|You are given the strength of a bull.");
         inv_add(inv, 1dose2strength, 1);
-    case ^sign_cancer:
+    case ^sign_cancer :
         ~chatnpc("<p,happy>Cancer the crab.|The armoured crab gives you an amulet of defence.");
         inv_add(inv, amulet_of_defence, 1);
 }

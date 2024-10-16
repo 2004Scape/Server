@@ -11,7 +11,7 @@ if(coordz(coord) < coordz($start_pos)) {
 }
 p_delay(0);
 if(stat_random(stat(agility), 200, 260) = false) {
-    // TODO: actual rates (same for every other fail on this course)
+    // todo: actual rates (same for every other fail on this course)
     ~agility_instant_fail(0_39_155_54_29, calc(((stat(hitpoints) * 15) / 100) + 1), "You slip and fall to the pit below.");
     p_teleport(movecoord(coord, 1, 0, -1));
     return;
@@ -117,7 +117,7 @@ if(coordz(coord) <= coordz(loc_coord)) {
 }
 ~forcewalk2($start_coord);
 if(%barb_obstacle_pipe_used >= map_clock) {
-    mes("The pipe is being used"); // TODO: confirm, using the same as gnome course
+    mes("The pipe is being used"); // todo: confirm, using the same as gnome course
     return;
 }
 %barb_obstacle_pipe_used = calc(map_clock + 4);

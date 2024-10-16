@@ -7,12 +7,12 @@ if(%arthur_progress >= ^arthur_spoken_morgan_lefaye & ~obj_gettotal(excalibur) =
     $option = ~p_choice2("Who are you?", 1, "Good day.", 2);
 }
 switch_int($option) {
-    case 1:
+    case 1 :
         ~chatplayer("<p,neutral>Who are you?");
         ~chatnpc("<p,neutral>I am the Lady of the Lake.");
-    case 2:
+    case 2 :
         ~chatplayer("<p,neutral>Good day.");
-    case 3:
+    case 3 :
         ~chatplayer("<p,confused>I seek the sword Excalibur.");
         ~chatnpc("<p,neutral>Aye, I have that artefact in my possession.");
         ~chatnpc("<p,neutral>'Tis very valuable, and not an artefact to be given away lightly.");

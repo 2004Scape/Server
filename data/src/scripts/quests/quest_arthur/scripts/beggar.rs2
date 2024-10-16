@@ -2,14 +2,14 @@
 if(testbit(%excalibur_components_progress, ^excalibur_spoken_beggar) = true) {
     ~chatnpc("<p,quiz>Have you got any bread for me yet?");
     switch_int (~p_choice2("Yes, here you go.", 1, "No, I still have none.", 2)) {
-        case 1:
+        case 1 :
             ~chatplayer("<p,neutral>Yes, here you go.");
             if(inv_total(inv, bread) = 0) {
                 ~chatplayer("<p,neutral>Actually, I'm wrong. I still don't have any bread. Sorry.");
                 return;
             }
             @give_beggar_bread;
-        case 2: ~chatplayer("<p,neutral>Sorry, no, I still have none.");
+        case 2 : ~chatplayer("<p,neutral>Sorry, no, I still have none.");
     }
 } else {
     ~mesbox("The beggar isn't interested in talking.");
@@ -19,7 +19,7 @@ if(testbit(%excalibur_components_progress, ^excalibur_spoken_beggar) = true) {
 ~chatnpc("<p,sad>Please kind <text_gender("sir", "lady")>... my family and I are starving...");
 ~chatnpc("<p,sad>Could you find it in your heart to spare me a simple loaf of bread?");
 switch_int (~p_choice2("Yes certainly.", 1, "No I don't have any bread with me.", 2)) {
-     case 1:
+     case 1 :
         ~chatplayer("<p,neutral>Yes, certainly.");
         if(inv_total(inv, bread) = 0) {
             ~chatplayer("<p,sad>... except I don't have any bread on me at the moment...");
@@ -27,7 +27,7 @@ switch_int (~p_choice2("Yes certainly.", 1, "No I don't have any bread with me."
             return;
         } 
         @give_beggar_bread;
-    case 2: 
+    case 2 :
         ~chatplayer("<p,neutral>No, I don't have any bread with me.");
         @ignore_beggar;
 }

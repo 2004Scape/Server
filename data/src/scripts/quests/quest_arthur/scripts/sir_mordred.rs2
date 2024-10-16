@@ -25,7 +25,7 @@ if(npc_find(coord, morgan_le_faye, 6, 0) = false) {
 }
 ~chatnpc("<p,sad>STOP! Please... spare my son.");
 switch_int(~p_choice3("Tell me how to untrap Merlin and I might.", 1, "No. He deserves to die.", 2, "Ok then.", 3)) {
-    case 1:
+    case 1 :
         ~chatplayer("<p,sad>Tell me how to untrap Merlin and I might.");
         ~chatnpc("<p,neutral>You have guessed correctly that I'm responsible for that.");
         ~chatnpc("<p,neutral>I suppose I can live with that fool Merlin being loose for the sake of my son.");
@@ -39,7 +39,7 @@ switch_int(~p_choice3("Tell me how to untrap Merlin and I might.", 1, "No. He de
             %arthur_progress = ^arthur_spoken_morgan_lefaye;
         }
         @multi3("So where can I find Excalibur?", lefaye_excalibur, "OK I will go do all that.", lefaye_ok, "What are the magic words?", lefaye_magic_words);
-    case 2:
+    case 2 :
         ~chatplayer("<p,sad>No. He deserves to die.");
         if_close;
         if(npc_find(coord, sir_mordred, 6, 0) = true) { 
@@ -51,7 +51,7 @@ switch_int(~p_choice3("Tell me how to untrap Merlin and I might.", 1, "No. He de
             spotanim_map(small_smokepuff, npc_coord, 124, 0);
             npc_del;
         }
-    case 3:
+    case 3 :
         ~chatplayer("<p,neutral>OK then.");
         spotanim_map(small_smokepuff, npc_coord, 124, 0);
         npc_del;

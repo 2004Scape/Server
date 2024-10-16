@@ -1,6 +1,6 @@
 [opnpc1,lucien_ardougne]
 switch_int (%ikov_progress) {
-    case ^ikov_completed_armadyl:
+    case ^ikov_completed_armadyl :
         ~chatplayer("<p,angry>I thought I killed you?!");
         ~chatnpc("<p,madlaugh>Ha! Ha! Ha!");
         ~chatnpc("<p,angry>You can not kill me human!");
@@ -15,7 +15,7 @@ switch_int (%ikov_progress) {
         // https://youtu.be/sCl0GprumNE?si=pzg_lmiunV4RJNxn&t=27
         ~chatnpc("<p,neutral>I seek a hero to go on an important mission!");
         @multi2("I'm a mighty hero!", lucien_mightyhero, "Yep, lots of heros about these days.", lucien_heros);
-    case default:
+    case default :
         ~chatnpc("<p,angry>I told you not to meet me here again!");
         @lucien_mission;
 }

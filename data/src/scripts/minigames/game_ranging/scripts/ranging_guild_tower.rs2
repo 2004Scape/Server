@@ -98,7 +98,7 @@ if(npc_find(npc_coord, tower_archer_south, 2, 0) = false) {
 ~chatnpc("<p,happy>Hi. We are in charge of this practice area.");
 ~chatplayer("<p,confused>This is a practice area?");
 ~chatnpc("<p,happy>Surrounding us are four towers. Each tower contains trained archers of a different level. You'll notice it's quite a distance, so you'll need a longbow.");
-// TODO: confirm mesanims on all but the last one
+// todo: confirm mesanims on all but the last one
 if(stat_base(ranged) < 50) {
     ~chatnpc("<p,happy>As you're not very skilled, so I advise you to practise on the north tower. That'll provide the best challenge for you.");
 } else if(stat_base(ranged) < 60) {

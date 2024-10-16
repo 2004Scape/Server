@@ -43,19 +43,19 @@ if (stat_random(stat(woodcutting), 30, 252) = true) {
         while ($count < inv_size(inv)) {
 
             switch_obj (inv_getobj(inv, $count)) {
-                case water_skin0:
+                case water_skin0 :
                 inv_setslot(inv, $count, water_skin1, 1);
                 $count = 100;
 
-                case water_skin1:
+                case water_skin1 :
                 inv_setslot(inv, $count, water_skin2, 1);
                 $count = 100;
 
-                case water_skin2:
+                case water_skin2 :
                 inv_setslot(inv, $count, water_skin3, 1);
                 $count = 100;
 
-                case water_skin3:
+                case water_skin3 :
                 inv_setslot(inv, $count, water_skin4, 1);
                 $count = 100;
             }

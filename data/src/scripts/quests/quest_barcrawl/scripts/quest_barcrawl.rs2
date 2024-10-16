@@ -9,7 +9,7 @@ if(~visited_all_bars = true) {
 @scroll_barcrawl_card;
 
 
-[proc,visited_all_bars](boolean)
+[proc,visited_all_bars]()(boolean)
 if(getbit_range(%barcrawl_progress, 3, 12) = calc(pow(2,10) - 1)) {
     return (true);
 }

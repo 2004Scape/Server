@@ -1,20 +1,20 @@
 [opnpc1,brother_omad]
 switch_int (%drunkmonk_progress) {
-    case ^drunkmonk_not_started: @omad_whats_wrong;
-    case ^drunkmonk_spoken_to_omad: @omad_have_blanket;
-    case ^drunkmonk_retrieved_blanket: @omad_organize_party;
-    case ^drunkmonk_looking_cedric,^drunkmonk_finding_water: @omad_need_wine;
-    case ^drunkmonk_given_water,^drunkmonk_fixing_cart: @omad_hello_again;
-    case ^drunkmonk_fixed_cart: @omad_party;
-    case ^drunkmonk_complete: @omad_postparty;
+    case ^drunkmonk_not_started : @omad_whats_wrong;
+    case ^drunkmonk_spoken_to_omad : @omad_have_blanket;
+    case ^drunkmonk_retrieved_blanket : @omad_organize_party;
+    case ^drunkmonk_looking_cedric,^drunkmonk_finding_water : @omad_need_wine;
+    case ^drunkmonk_given_water,^drunkmonk_fixing_cart : @omad_hello_again;
+    case ^drunkmonk_fixed_cart : @omad_party;
+    case ^drunkmonk_complete : @omad_postparty;
 }
 
 [label,omad_whats_wrong]
 ~chatplayer("<p,quiz>Hello there, What's wrong?");
 ~chatnpc("<p,sad>*yawn*...oh, hello...*yawn* I'm sorry! I'm just so tired! I haven't slept in a week!");
 switch_int (~p_choice2("Why can't you sleep, what's wrong?", 1, "Sorry! I'm too busy to hear your problems!", 2)) {
-    case 1: @omad_why;
-    case 2: ~chatplayer("<p,angry>Sorry! I'm too busy to hear your problems!");
+    case 1 : @omad_why;
+    case 2 : ~chatplayer("<p,angry>Sorry! I'm too busy to hear your problems!");
 }
 
 [label,omad_why]
@@ -24,8 +24,8 @@ switch_int (~p_choice2("Why can't you sleep, what's wrong?", 1, "Sorry! I'm too 
 ~chatnpc("<p,sad>He was fine, up until last week! Thieves broke in! They stole his favourite sleeping blanket!");
 ~chatnpc("<p,sad>Now he won't rest until it's returned... ...and that means neither can I!");
 switch_int (~p_choice2("Can I help at all?", 1, "I'm sorry to hear that! I hope you find his blanket.", 2)) {
-    case 1: @omad_help;
-    case 2: ~chatplayer("<p,neutral>I'm sorry to hear that! I hope you find his blanket.");
+    case 1 : @omad_help;
+    case 2 : ~chatplayer("<p,neutral>I'm sorry to hear that! I hope you find his blanket.");
 }
 
 [label,omad_help]

@@ -3,7 +3,7 @@
 ~chatnpc("<p,angry>Don't distract me while I'm on duty!|This mine has to be protected!");
 ~chatplayer("<p,quiz>What's going to attack a mine?");
 ~chatnpc("<p,angry>Goblins! They wander everywhere, attacking anyone they think is small enough to be an easy victim. We need more cannons to fight them off properly.");
-if(%mcannon_progress = ^mcannon_complete) { // TODO: confirm this is the correct stage this dialogue starts
+if(%mcannon_progress = ^mcannon_complete) { // todo: confirm this is the correct stage this dialogue starts
     ~chatplayer("<p,happy>Well, I've done my bit to help with that.");
     ~chatnpc("<p,neutral>Yes, I heard. Now please let me get on with my guard duties.");
     return;

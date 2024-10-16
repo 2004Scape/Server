@@ -1,13 +1,13 @@
 [opnpc1,brother_brace]
 switch_int(%tutorial_progress) {
-    case ^tutorial_exit_financial_advisors_room: @brother_brace_intro;
-    case ^brother_brace_open_prayer_tab: @brother_brace_open_indicated_menu_prayer;
-    case ^brother_brace_opened_prayer_tab: @brother_brace_this_is_your_prayer_list;
-    case ^brother_brace_after_prayer_tab: @brother_brace_open_indicated_menu_prayer;
-    case ^brother_brace_open_friends_tab: @brother_brace_open_indicated_menu_prayer;
-    case ^brother_brace_open_friends_tab: @brother_brace_open_indicated_menu_prayer;
-    case ^brother_brace_after_friends_tab: @brother_brace_friends_and_ignore_tabs;
-    case default: @brother_brace_recap;
+    case ^tutorial_exit_financial_advisors_room : @brother_brace_intro;
+    case ^brother_brace_open_prayer_tab : @brother_brace_open_indicated_menu_prayer;
+    case ^brother_brace_opened_prayer_tab : @brother_brace_this_is_your_prayer_list;
+    case ^brother_brace_after_prayer_tab : @brother_brace_open_indicated_menu_prayer;
+    case ^brother_brace_open_friends_tab : @brother_brace_open_indicated_menu_prayer;
+    case ^brother_brace_open_friends_tab : @brother_brace_open_indicated_menu_prayer;
+    case ^brother_brace_after_friends_tab : @brother_brace_friends_and_ignore_tabs;
+    case default : @brother_brace_recap;
 }
 
 [label,brother_brace_intro]

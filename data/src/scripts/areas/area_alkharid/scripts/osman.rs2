@@ -1,11 +1,11 @@
 [opnpc1,osman]
 switch_int (%prince_progress) {
-    case ^prince_not_started: @osman_prequest;
-    case ^prince_started: @osman_instructions;
-    case ^prince_spoken_osman: @osman_items;
-    case ^prince_prep_finished,^prince_prep_finished,^prince_guard_drunk,^prince_tied_keli: ~chatnpc("<p,shifty>I hear from Leela that you are well on the way with the rescue. I am always kept informed, you know.");
-    case ^prince_saved: ~chatnpc("<p,shifty>The prince is safe and on his way home with Leela.|You can pick up your payment from the chancellor.");
-    case ^prince_complete: ~chatnpc("<p,shifty>Well done, A great rescue.|I will remember you if I have anything dangerous to do.");
+    case ^prince_not_started : @osman_prequest;
+    case ^prince_started : @osman_instructions;
+    case ^prince_spoken_osman : @osman_items;
+    case ^prince_prep_finished,^prince_prep_finished,^prince_guard_drunk,^prince_tied_keli : ~chatnpc("<p,shifty>I hear from Leela that you are well on the way with the rescue. I am always kept informed, you know.");
+    case ^prince_saved : ~chatnpc("<p,shifty>The prince is safe and on his way home with Leela.|You can pick up your payment from the chancellor.");
+    case ^prince_complete : ~chatnpc("<p,shifty>Well done, A great rescue.|I will remember you if I have anything dangerous to do.");
 }
 
 [label,osman_prequest]

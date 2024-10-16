@@ -7,7 +7,7 @@ if(testbit(%barcrawl_progress, ^jollyboar_index) = false & inv_total(inv, barcra
     $option = ~p_choice3("I'll have a beer please.", 1, "Any hints where I can go adventuring?", 2, "Heard any good gossip?", 3);
 }
 switch_int ($option) {
-    case 1:
+    case 1 :
         ~chatplayer("<p,happy>I'll have a pint of beer please.");
         ~chatnpc("<p,happy>Ok, that'll be two coins please.");
         if (inv_total(inv, coins) < 2) {
@@ -17,18 +17,18 @@ switch_int ($option) {
             inv_add(inv, beer, 1);
             mes("You buy a pint of beer.");
         }
-    case 2:
+    case 2 :
         ~chatplayer("<p,happy>Any hints on where I can go adventuring?");
         ~chatnpc("<p,quiz>Ooh, now. Let me see...");
         ~chatnpc("<p,quiz>Well there is the Varrock sewers. There are tales of untold horrors coming out at night and stealing babies from houses.");
         ~chatplayer("<p,happy>Sounds perfect! Where's the entrance?");
         ~chatnpc("<p,quiz>It's just to the east of the palace.");
-    case 3:
+    case 3 :
         ~chatplayer("<p,happy>Heard any gossip?");
         ~chatnpc("<p,confused>I'm not that well up on the gossip out here. I've heard that the bartender in the Blue Moon Inn has gone a little crazy, he keeps claiming he is part of something called an online game.");
         ~chatnpc("<p,confused>What that means, I don't know. That's probably old news by now though.");
-    case 4: @jollyboar_barcrawl;
-    case default: ~displaymessage(^dm_default);
+    case 4 : @jollyboar_barcrawl;
+    case default : ~displaymessage(^dm_default);
 }
 
 [opnpcu,bartender_jollyboar]
@@ -88,15 +88,15 @@ if($option = 1) {
     ~chatplayer("<p,quiz>Can you recommend where an adventurer might make his fortune?");
     ~chatnpc("<p,shifty>Ooh I don't know if I should be giving away information, makes the computer game too easy.");
     switch_int(~p_choice3("Oh ah well...", 1, "Computer game? What are you talking about?", 2, "Just a small clue?", 3)) {
-        case 1:
+        case 1 :
             ~chatplayer("<p,confused>Oh ah well...");
-        case 2:
+        case 2 :
             ~chatplayer("<p,confused>Computer game?|What are you talking about?");
             ~chatnpc("<p,shifty>This world around us...|is a computer game... called RuneScape.");
             ~chatplayer("<p,confused>Nope, still don't understand what you are talking about. What's a computer?");
             ~chatnpc("<p,shifty>It's a sort of magic box thing,|which can do all sorts of stuff.");
             ~chatplayer("<p,angry>I give up.|You're obviously completely mad!");
-        case 3:
+        case 3 :
             ~chatplayer("<p,quiz>Just a small clue?");
             ~chatnpc("<p,shifty>Go and talk to the bartender at the Jolly Boar Inn,|he doesn't seem to mind giving away clues.");
     }

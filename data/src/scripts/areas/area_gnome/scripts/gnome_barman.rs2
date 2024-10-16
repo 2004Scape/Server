@@ -17,7 +17,7 @@ if (inv_totalcat(inv, category_83) > 0) {
     }
 }
 switch_int($choice) {
-    case 1 : 
+    case 1 :
         ~chatplayer("<p,quiz>What do you have.");
         ~chatnpc("<p,happy>Here, take a look at our menu.");
         ~openshop_activenpc;

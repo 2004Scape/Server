@@ -125,7 +125,7 @@ switch_int($step) {
     case 3 : %gnome_batta_ingredient4 = $item;
     case 4 : %gnome_batta_ingredient5 = $item;
     case 5 : %gnome_batta_ingredient6 = $item;
-    case default : 
+    case default :
         mes("The gnome batta already has enough ingredients.");
         return;
 }
