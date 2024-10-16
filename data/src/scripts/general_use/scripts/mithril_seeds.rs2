@@ -13,7 +13,7 @@ mes("You open the small mithril case.");
 mes("You drop a seed by your feet.");
 inv_del(inv, mithril_seeds, 1);
 loc_add(coord, ~random_flowers, 0, centrepiece_straight, 500);
-~push_player_from_inv(coord);
+~push_player(coord);
 facesquare(loc_coord);
 def_int $option = ~p_choice2("Pick the flowers.", 1, "Leave the flowers.", 2);
 if($option = 2) {
