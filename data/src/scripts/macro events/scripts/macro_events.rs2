@@ -150,7 +150,7 @@ while ($i < inv_size(inv)) {
     }
     $i = calc($i + 1);
 }
-
+def_obj $prev = inv_getobj(worn, ^wearpos_rhand);
 $i = 0;
 while ($i < inv_size(worn)) {
     def_obj $obj = inv_getobj(worn, $i);
@@ -161,7 +161,7 @@ while ($i < inv_size(worn)) {
     }
     $i = calc($i + 1);
 }
-~update_bas;
+~update_all($prev);
 
 
 // called when the npc needs to be poofed away
