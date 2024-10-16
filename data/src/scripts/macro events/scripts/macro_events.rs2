@@ -100,9 +100,6 @@ return(enum_getoutputcount(general_macro_events_free));
 
 // teleports the player to a random location, using the coords in configs/macro_events_teleports.enum
 [proc,macro_event_fail_teleport]
-if (p_finduid(uid) = false) {
-    return;
-}
 def_coord $teleport_coord;
 if (map_members = true) {
     $teleport_coord = enum(int, coord, macro_event_fail_teleports_members, random(enum_getoutputcount(macro_event_fail_teleports_members)));
@@ -125,9 +122,6 @@ sound_synth(smokepuff2, 0, 0);
 
 
 [proc,macro_event_fail_scatter_inv]
-if (p_finduid(uid) = false) {
-    return;
-}
 %macro_event = ^no_macro_event;
 npc_say("No one ignores me!");
 npc_anim(human_castteleport, 0);
@@ -139,8 +133,8 @@ while ($i < inv_size(inv)) {
     def_coord $coord = map_findsquare(coord, 0, 5, ^map_findsquare_lineofwalk); // 11x11 for now. todo: confirm how scattering works
     if (inv_getobj(inv, $i) ! null) {
         inv_dropslot(inv, $coord, $i, 200);
+        spotanim_map(small_smokepuff, $coord, 124, 0);
     }
-    spotanim_map(small_smokepuff, $coord, 124, 0);
     $i = calc($i + 1);
 }
 
