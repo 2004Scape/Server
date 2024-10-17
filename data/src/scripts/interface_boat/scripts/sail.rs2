@@ -1,7 +1,7 @@
 [proc,set_sail](string $place_name, string $start_mes, coord $destination, int $map_route, int $delay)
 %boat_takeoff = $map_route;
 
-// TODO: should com_0 be set to "You sail to <$place_name>."?
+// todo: should com_0 be set to "You sail to <$place_name>."?
 if_openmain(ship_journey);
 midi_jingle(^sailing_journey_jingle, ^sailing_journey_jingle_millis);
 
@@ -31,6 +31,6 @@ def_string $arrival_mes = "The ship arrives at <$place_name>.";
 if(p_finduid(uid) = false) return;
 %boat_takeoff = $var;
 
-// TODO: should com_0 be set to "You sail to <$place_name>."?
+// todo: should com_0 be set to "You sail to <$place_name>."?
 if_openmain(ship_journey);
 midi_jingle(^sailing_journey_jingle, ^sailing_journey_jingle_millis);

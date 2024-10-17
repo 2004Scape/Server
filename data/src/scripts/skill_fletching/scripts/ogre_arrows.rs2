@@ -1,18 +1,18 @@
 [opheldu,wolf_bones]
 switch_obj(last_useitem) {
-    case chisel: @make_wolf_bone_tips;
+    case chisel : @make_wolf_bone_tips;
     case default : ~displaymessage(^dm_default);
 }
 
 [opheldu,obj_2864]
 switch_obj(last_useitem) {
-    case feather: @make_ogre_headless_arrows;
+    case feather : @make_ogre_headless_arrows;
     case default : ~displaymessage(^dm_default);
 }
 
 [opheldu,obj_2865]
 switch_obj(last_useitem) {
-    case wolfbone_arrowheads: @make_ogre_arrows;
+    case wolfbone_arrowheads : @make_ogre_arrows;
     case default : ~displaymessage(^dm_default);
 }
 
@@ -116,7 +116,7 @@ inv_del(inv, wolfbone_arrowheads, $arrow_count);
 
 inv_add(inv, ogre_arrow, $arrow_count);
 
-// TODO tbc exact mechanism
+// todo tbc exact mechanism
 if (%chompybird_progress ! ^chompybird_not_started) {
     setbit(%chompybird_kills, ^chompybird_varbit_made_arrows);
 }

@@ -1,8 +1,8 @@
 [opnpc1,poison_salesman]
 switch_int(%murder_progress) {
-    case ^murder_not_started:
+    case ^murder_not_started :
         ~chatnpc("<p,sad>I'm afraid I'm all sold out of poison at the moment. People know a bargain when they see it!");
-    case ^murder_started:
+    case ^murder_started :
         ~chatplayer("<p,neutral>I'm investigating the murder at the Sinclair house.");
         ~chatnpc("<p,neutral>There was a murder at the Sinclair House??? That's terrible! And I was only there the other day too! They bought the last of my Patented Multi Purpose Poison!");
         def_int $choice;
@@ -12,7 +12,7 @@ switch_int(%murder_progress) {
             $choice = ~p_choice3("Patented Multi Purpose Poison?", 1, "Who did you sell Poison to at the house?", 2, "Can I buy some Poison?", 3);
         }
         switch_int($choice) {
-            case 1:
+            case 1 :
                 ~chatplayer("<p,neutral>Patented Multi Purpose Poison?");
                 ~chatnpc("<p,neutral>Aaaaah... a miracle of modern apothecaries!");
                 ~chatnpc("<p,happy>This exclusive concoction has been tested on all known forms of life and been proven to kill them all in varying dilutions from cockroaches to king dragons!");
@@ -24,20 +24,20 @@ switch_int(%murder_progress) {
                 ~chatnpc("<p,neutral>Can I help you with anything else?");
                 ~chatnpc("<p,neutral>Perhaps I can take your name and add it to our mailing list of poison users? We will only send you information related to the use of poison and other Peter Potter Products!");
                 ~chatplayer("<p,confused>Uh... no, it's ok. Really.");
-            case 2:
+            case 2 :
                 ~chatplayer("<p,neutral>Who did you sell Poison to at the house?");
                 ~chatnpc("<p,happy>Well, Peter Potter's Patented Multi Purpose Poison is a product of such obvious quality that I am glad to say I managed to sell a bottle to each of the Sinclairs!");
                 ~chatnpc("<p,happy>Anna, Bob, Carol, David, Elizabeth and Frank all bought a bottle! In fact they bought the last of my supplies!");
                 %murder_poisonproof_progress = ^poisonproof_spoken_salesman;
                 ~chatnpc("<p,happy>Maybe I can take your name and address and I will personally come and visit you when stocks return?");
                 ~chatplayer("<p,confused>Uh... no, it's ok.");
-            case 3:
+            case 3 :
                 ~chatplayer("<p,neutral>Can I buy some Poison?");
                 ~chatnpc("<p,neutral>I'm afraid I am totally out of stock at the moment after my successful trip to the Sinclairs' House the other day.");
                 ~chatnpc("<p,happy>But don't worry! Our factories are working overtime to produce Peter Potter's Patented Multi Purpose Poison!");
                 ~chatnpc("<p,happy>Possibly the finest multi purpose poison and cleaner yet available to the general market.");
                 ~chatnpc("<p,happy>And its unique fragrance makes it the number one choice for cleaners and exterminators the whole country over!");
-            case 4:
+            case 4 :
                 ~chatplayer("<p,neutral>I have this pot I found at the murder scene...");
                 ~mesbox("You show the poison salesman the pot you found at the murder scene with the unusual smell.");
                 ~chatnpc("<p,confused>Hmmm... yes, that smells exactly like my Patented Multi Purpose Poison, but I don't see how it could be. It quite clearly says on the label of all bottles");
@@ -45,5 +45,5 @@ switch_int(%murder_progress) {
                 ~chatplayer("<p,confused>Perhaps someone else put it in his wine?");
                 ~chatnpc("<p,confused>Yes... I suppose that could have happened...");
         }
-    case ^murder_complete: ~chatnpc("<p,neutral>I hear you're pretty smart to have solved the Sinclair Murder!");
+    case ^murder_complete : ~chatnpc("<p,neutral>I hear you're pretty smart to have solved the Sinclair Murder!");
 }

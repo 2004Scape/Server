@@ -6,38 +6,38 @@ if (oc_param(last_useitem, weapon_poisoned) ! null) {
 
 [opheldu,_weapon_stab]
 switch_obj(last_useitem) {
-    case weapon_poison: @make_weapon_poisoned(last_slot, last_useslot);
-    case default: ~displaymessage(^dm_default);
+    case weapon_poison : @make_weapon_poisoned(last_slot, last_useslot);
+    case default : ~displaymessage(^dm_default);
 }
 
 [opheldu,_weapon_spear]
 switch_obj(last_useitem) {
-    case weapon_poison: @make_weapon_poisoned(last_slot, last_useslot);
-    case default: ~displaymessage(^dm_default);
+    case weapon_poison : @make_weapon_poisoned(last_slot, last_useslot);
+    case default : ~displaymessage(^dm_default);
 }
 
 [opheldu,_weapon_javelin]
 switch_obj(last_useitem) {
-    case weapon_poison: @make_weapon_poisoned(last_slot, last_useslot);
-    case default: ~displaymessage(^dm_default);
+    case weapon_poison : @make_weapon_poisoned(last_slot, last_useslot);
+    case default : ~displaymessage(^dm_default);
 }
 
 [opheldu,_weapon_thrown]
 switch_obj(last_useitem) {
-    case weapon_poison: @make_weapon_poisoned(last_slot, last_useslot);
-    case default: ~displaymessage(^dm_default);
+    case weapon_poison : @make_weapon_poisoned(last_slot, last_useslot);
+    case default : ~displaymessage(^dm_default);
 }
 
 [opheldu,_bolts]
 switch_obj(last_useitem) {
-    case weapon_poison: @make_weapon_poisoned(last_slot, last_useslot);
-    case default: ~displaymessage(^dm_default);
+    case weapon_poison : @make_weapon_poisoned(last_slot, last_useslot);
+    case default : ~displaymessage(^dm_default);
 }
 
 [opheldu,_arrows]
 switch_obj(last_useitem) {
-    case weapon_poison: @make_weapon_poisoned(last_slot, last_useslot);
-    case default: ~displaymessage(^dm_default);
+    case weapon_poison : @make_weapon_poisoned(last_slot, last_useslot);
+    case default : ~displaymessage(^dm_default);
 }
 
 [label,make_weapon_poisoned](int $weapon_slot, int $poison_slot)

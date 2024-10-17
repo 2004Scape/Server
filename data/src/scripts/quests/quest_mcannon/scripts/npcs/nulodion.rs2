@@ -7,9 +7,9 @@ if (%mcannon_progress < ^mcannon_complete) {
 
 [opnpc1,nulodion]
 switch_int(%mcannon_progress) {
-    case ^mcannon_tasked_with_speaking_to_nulodion: @mcannon_speak_with_nulodion_first_time;
-    case ^mcannon_return_to_dwarf_commander_with_notes: @mcannon_speak_with_nulodion_should_return_to_dwarf_commander;
-    case ^mcannon_complete: @nulodion_post_quest;
+    case ^mcannon_tasked_with_speaking_to_nulodion : @mcannon_speak_with_nulodion_first_time;
+    case ^mcannon_return_to_dwarf_commander_with_notes : @mcannon_speak_with_nulodion_should_return_to_dwarf_commander;
+    case ^mcannon_complete : @nulodion_post_quest;
 }
 
 [label,mcannon_speak_with_nulodion_first_time]

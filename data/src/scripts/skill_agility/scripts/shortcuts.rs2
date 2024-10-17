@@ -2,7 +2,7 @@
 ~require_members_feature;
 if(loc_coord ! 0_45_52_55_27) {
     // these walls are reused in the barb course for some reason (not the wall you climb)
-    // TODO: figure out what would happen if you interact with those ones
+    // todo: figure out what would happen if you interact with those ones
     return;
 }
 if(stat(agility) < 5) {
@@ -82,18 +82,18 @@ if(stat_random(stat(agility), 90, 250) = false) {
 mes("You make it across the log without any problems.");
 ~agility_force_move(40, human_walk_logbalance, movecoord(coord, $z_dist, 0, 0));
 
-[proc,get_island_rope_var](int)
+[proc,get_island_rope_var]()(int)
 switch_coord (loc_param(start_coord)) {
-    case 0_42_50_21_9: return (%brimnorth_ropeswing_used);
-    case 0_42_50_17_5: return (%brimsouth_ropeswing_used);
-    case 0_39_48_15_19: return (%ogre_ropeswing_used);
+    case 0_42_50_21_9 : return (%brimnorth_ropeswing_used);
+    case 0_42_50_17_5 : return (%brimsouth_ropeswing_used);
+    case 0_39_48_15_19 : return (%ogre_ropeswing_used);
 }
 
 [proc,set_island_rope_var](int $value)
 switch_coord (loc_param(start_coord)) {
-    case 0_42_50_21_9: %brimnorth_ropeswing_used = $value;
-    case 0_42_50_17_5: %brimsouth_ropeswing_used = $value;
-    case 0_39_48_15_19: %ogre_ropeswing_used = $value;
+    case 0_42_50_21_9 : %brimnorth_ropeswing_used = $value;
+    case 0_42_50_17_5 : %brimsouth_ropeswing_used = $value;
+    case 0_39_48_15_19 : %ogre_ropeswing_used = $value;
 }
 
 [oploc1,_island_rope_swing]

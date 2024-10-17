@@ -10,6 +10,7 @@ import { LocShape } from '@2004scape/rsmod-pathfinder';
 import { shouldBuildFile, shouldBuildFileAny } from '#lostcity/util/PackFile.js';
 import NpcType from '#lostcity/cache/config/NpcType.js';
 import { CoordGrid } from '#lostcity/engine/CoordGrid.js';
+import { printWarning } from '#lostcity/util/Logger.js';
 
 function packWater(underlay: Packet, overlay: Packet, mx: number, mz: number) {
     underlay.p1(mx);
@@ -78,7 +79,7 @@ export async function packWorldmap() {
             const [toLevel, toMx, toMz, toLx, toLz] = to.split('_').map(x => parseInt(x));
 
             if (fromLx % 8 !== 0 || fromLz % 8 !== 0 || toLx % 8 !== 7 || toLz % 8 !== 7 || fromMx > toMx || fromMz > toMz || (fromMx <= toMx && fromMz <= toMz && (fromLx > toLx || fromLz > toLz))) {
-                console.warn('Multiway map not aligned to a zone', multiway[i]);
+                printWarning('Multiway map not aligned to a zone ' + multiway[i]);
             }
 
             const startX = (fromMx << 6) + fromLx;
@@ -89,7 +90,7 @@ export async function packWorldmap() {
             for (let x = startX; x <= endX; x++) {
                 for (let z = startZ; z <= endZ; z++) {
                     if (multimap.has(CoordGrid.packCoord(fromLevel, x, z))) {
-                        console.warn('Overlapping multiway map', multiway[i]);
+                        printWarning('Overlapping multiway map ' + multiway[i]);
                     }
                     multimap.add(CoordGrid.packCoord(fromLevel, x, z));
                 }
@@ -119,7 +120,7 @@ export async function packWorldmap() {
             const [toLevel, toMx, toMz, toLx, toLz] = to.split('_').map(x => parseInt(x));
 
             if (fromLx % 8 !== 0 || fromLz % 8 !== 0 || toLx % 8 !== 7 || toLz % 8 !== 7 || fromMx > toMx || fromMz > toMz || (fromMx <= toMx && fromMz <= toMz && (fromLx > toLx || fromLz > toLz))) {
-                console.warn('Free map not aligned to a zone', free2play[i]);
+                printWarning('Free map not aligned to a zone ' + free2play[i]);
             }
 
             const startX = (fromMx << 6) + fromLx;
@@ -130,7 +131,7 @@ export async function packWorldmap() {
             for (let x = startX; x <= endX; x++) {
                 for (let z = startZ; z <= endZ; z++) {
                     if (freemap.has(CoordGrid.packCoord(fromLevel, x, z))) {
-                        console.warn('Overlapping free map', free2play[i]);
+                        printWarning('Overlapping free map ' + free2play[i]);
                     }
                     freemap.add(CoordGrid.packCoord(fromLevel, x, z));
                 }
@@ -650,13 +651,6 @@ export async function packWorldmap() {
     ];
 
     for (let i = 0; i < FloType.configs.length; i++) {
-        const type = FloType.get(i);
-        // if (type.texture !== -1) {
-        //     console.log('[0x' + (ref.g4() >>> 0).toString(16).padStart(8, '0') + ', 0x' + (ref.g4() >>> 0).toString(16).padStart(8, '0') + `], // debugname=${type.debugname} overlay=${type.overlay} occlude=${type.occlude} rgb=0x${(type.rgb >>> 0).toString(16).padStart(6, '0')} texture=${TexturePack.getById(type.texture)}`);
-        // } else {
-        //     console.log('[0x' + (ref.g4() >>> 0).toString(16).padStart(8, '0') + ', 0x' + (ref.g4() >>> 0).toString(16).padStart(8, '0') + `], // debugname=${type.debugname} overlay=${type.overlay} occlude=${type.occlude} rgb=0x${(type.rgb >>> 0).toString(16).padStart(6, '0')}`);
-        // }
-
         floorcol.p4(refColors[i][0]);
         floorcol.p4(refColors[i][1]);
     }

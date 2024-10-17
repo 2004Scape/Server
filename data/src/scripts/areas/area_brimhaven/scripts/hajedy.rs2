@@ -33,7 +33,7 @@ if(%zombiequeen_progress >= ^zombiequeen_complete) {
 }
 ~chatnpc("<p,sad>We used to run cart trips down to Shilo Village in south Karamja. Since the troubles we had we've had to stop them though, too many people got killed.");
 
-[proc,calc_shilocart_cost](int)
+[proc,calc_shilocart_cost]()(int)
 def_int $cost = calc((inv_total(inv, coins) * 5) / 100);
 if($cost < 10) {
     $cost = 10;

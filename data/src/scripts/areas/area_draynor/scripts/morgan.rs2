@@ -2,10 +2,10 @@
 
 [opnpc1,morgan]
 switch_int (%vampire_progress) {
-    case ^quest_vampire_not_started: @morgan_before_vampire_slayer;
-    case ^quest_vampire_started, ^quest_vampire_spoke_to_harlow: @morgan_during_vampire_slayer;
-    case ^vampire_complete: @morgan_after_vampire_slayer;
-    case default: ~displaymessage(^dm_default);
+    case ^quest_vampire_not_started : @morgan_before_vampire_slayer;
+    case ^quest_vampire_started, ^quest_vampire_spoke_to_harlow : @morgan_during_vampire_slayer;
+    case ^vampire_complete : @morgan_after_vampire_slayer;
+    case default : ~displaymessage(^dm_default);
 }
 
 [label,morgan_before_vampire_slayer]
@@ -14,10 +14,10 @@ switch_int (%vampire_progress) {
 ~chatnpc("<p,shock>Our little village has been dreadfully ravaged by an evil vampire! He lives in the basement of the manor to the north, we need someone to get rid of him once and for all!");
 
 switch_int (~p_choice3("No, vampires are scary!", 1, "Ok, I'm up for an adventure.", 2, "Have you got any tips on killing the vampire?", 3)) {
-    case 1: @morgan_decline_vampire_slayer;
-    case 2: ~chatplayer("<p,quiz>Okay, I'm up for an adventure.");
-    case 3: ~chatplayer("<p,quiz>Have you got any tips on killing the vampire?");
-    case default: ~displaymessage(^dm_default);
+    case 1 : @morgan_decline_vampire_slayer;
+    case 2 : ~chatplayer("<p,quiz>Okay, I'm up for an adventure.");
+    case 3 : ~chatplayer("<p,quiz>Have you got any tips on killing the vampire?");
+    case default : ~displaymessage(^dm_default);
 }
 
 ~chatnpc("<p,neutral>I think first you should seek help. I have a friend who is a retired vampire hunter, his name is Dr. Harlow. He may be able to give you some tips. He can normally be found in the Jolly Boar Inn in Varrock, he's a bit of");

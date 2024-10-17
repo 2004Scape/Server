@@ -1,9 +1,9 @@
 [opnpc1,doctor_orbon]
 switch_int(%sheepherder_progress) {
-    case ^sheepherder_not_started: @doctor_orbon_before_sheep_herder;
-    case ^sheepherder_tasked_with_talking_to_dr_orbon: @doctor_orbon_looking_for_protective_clothing;
-    case ^sheepherder_tasked_with_disposing_of_sheep: @doctor_orbon_post_clothing_purchase;
-    case ^sheepherder_complete: @doctor_orbon_after_sheep_herder;
+    case ^sheepherder_not_started : @doctor_orbon_before_sheep_herder;
+    case ^sheepherder_tasked_with_talking_to_dr_orbon : @doctor_orbon_looking_for_protective_clothing;
+    case ^sheepherder_tasked_with_disposing_of_sheep : @doctor_orbon_post_clothing_purchase;
+    case ^sheepherder_complete : @doctor_orbon_after_sheep_herder;
 }
 
 [label,doctor_orbon_before_sheep_herder]

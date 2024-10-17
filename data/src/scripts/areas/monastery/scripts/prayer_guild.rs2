@@ -25,7 +25,7 @@ if ($choice = 2) {
     return;
 }
 ~chatplayer("<p,neutral>Well can I join your order?");
-if (stat_base(prayer) < 31) { // TODO: confirm this isn't boostable
+if (stat_base(prayer) < 31) { // todo: confirm this isn't boostable
     ~chatnpc("<p,neutral>No. I am sorry, but I feel you are not devout enough.");
     return;
 }

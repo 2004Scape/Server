@@ -1,6 +1,6 @@
 [opnpc1,hetty]
 switch_int(%hetty_progress) {
-    case ^hetty_not_started:
+    case ^hetty_not_started :
         ~chatnpc("<p,neutral>What could you want with an old woman like me?");
         def_int $option = ~p_choice2("I am in search of a quest.", 1, "I've heard that you are a witch.", 2);
         if($option = 1) {
@@ -10,7 +10,7 @@ switch_int(%hetty_progress) {
             ~chatnpc("<p,sad>Yes it does seem to be getting fairly common knowledge.");
             ~chatnpc("<p,sad>I fear I may get a visit from the witch hunters of Falador before long.");
         }
-    case ^hetty_started:
+    case ^hetty_started :
         ~chatnpc("<p,happy>So have you found the things for the potion?");
         if(inv_total(inv, burnt_meat) > 0 & inv_total(inv, rats_tail) > 0 & inv_total(inv, eye_of_newt) > 0 & inv_total(inv, onion) > 0) {
             ~chatplayer("<p,happy>Yes I have everything!");
@@ -28,9 +28,9 @@ switch_int(%hetty_progress) {
             ~chatplayer("<p,sad>No, not yet."); // rsc
             ~chatnpc("<p,sad>Well I can't make the potion without them! Remember...|You need an eye of newt, a rat's tail, an onion,|and a piece of burnt meat. Off you go dear!"); //imgur.com/Cbrp9kq
         }
-    case ^hetty_objects_given: 
+    case ^hetty_objects_given :
         ~chatnpc("<p,angry>Well are you going to drink the potion or not?");
-    case ^hetty_complete:
+    case ^hetty_complete :
         ~chatnpc("<p,happy>How's your magic coming along?");
         ~chatplayer("<p,happy>I'm practicing and slowly getting better.");
         ~chatnpc("<p,happy>Good, good.");   

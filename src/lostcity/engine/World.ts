@@ -1,21 +1,25 @@
+// stdlib
 import { Worker as NodeWorker } from 'worker_threads';
-import fs from 'fs';
-import Watcher from 'watcher';
-import path from 'path';
+
+// deps
 import kleur from 'kleur';
+
+// jagex2
+import LinkList from '#jagex2/datastruct/LinkList.js';
+
+import { fromBase37, toBase37 } from '#jagex2/jstring/JString.js';
 
 import Packet from '#jagex2/io/Packet.js';
 
-import {fromBase37, toBase37} from '#jagex2/jstring/JString.js';
-
+// lostcity
 import CategoryType from '#lostcity/cache/config/CategoryType.js';
+import Component from '#lostcity/cache/config/Component.js';
 import DbRowType from '#lostcity/cache/config/DbRowType.js';
 import DbTableType from '#lostcity/cache/config/DbTableType.js';
 import EnumType from '#lostcity/cache/config/EnumType.js';
 import FontType from '#lostcity/cache/config/FontType.js';
 import HuntType from '#lostcity/cache/config/HuntType.js';
 import IdkType from '#lostcity/cache/config/IdkType.js';
-import Component from '#lostcity/cache/config/Component.js';
 import InvType from '#lostcity/cache/config/InvType.js';
 import LocType from '#lostcity/cache/config/LocType.js';
 import MesanimType from '#lostcity/cache/config/MesanimType.js';
@@ -24,16 +28,18 @@ import ObjType from '#lostcity/cache/config/ObjType.js';
 import ParamType from '#lostcity/cache/config/ParamType.js';
 import SeqFrame from '#lostcity/cache/config/SeqFrame.js';
 import SeqType from '#lostcity/cache/config/SeqType.js';
+import SpotanimType from '#lostcity/cache/config/SpotanimType.js';
 import StructType from '#lostcity/cache/config/StructType.js';
 import VarNpcType from '#lostcity/cache/config/VarNpcType.js';
 import VarPlayerType from '#lostcity/cache/config/VarPlayerType.js';
 import VarSharedType from '#lostcity/cache/config/VarSharedType.js';
 import WordEnc from '#lostcity/cache/wordenc/WordEnc.js';
-import SpotanimType from '#lostcity/cache/config/SpotanimType.js';
 
+import { CoordGrid } from '#lostcity/engine/CoordGrid.js';
 import GameMap from '#lostcity/engine/GameMap.js';
-import {Inventory} from '#lostcity/engine/Inventory.js';
+import { Inventory } from '#lostcity/engine/Inventory.js';
 import Login from '#lostcity/engine/Login.js';
+import WorldStat from '#lostcity/engine/WorldStat.js';
 
 import ScriptPointer from '#lostcity/engine/script/ScriptPointer.js';
 import ScriptProvider from '#lostcity/engine/script/ScriptProvider.js';
@@ -41,38 +47,39 @@ import ScriptRunner from '#lostcity/engine/script/ScriptRunner.js';
 import ScriptState from '#lostcity/engine/script/ScriptState.js';
 import ServerTriggerType from '#lostcity/engine/script/ServerTriggerType.js';
 
+import Zone from '#lostcity/engine/zone/Zone.js';
+
 import BlockWalk from '#lostcity/entity/BlockWalk.js';
 import Loc from '#lostcity/entity/Loc.js';
 import Npc from '#lostcity/entity/Npc.js';
 import Obj from '#lostcity/entity/Obj.js';
 import Player from '#lostcity/entity/Player.js';
 import EntityLifeCycle from '#lostcity/entity/EntityLifeCycle.js';
-import {NpcList, PlayerList} from '#lostcity/entity/EntityList.js';
-import {isNetworkPlayer} from '#lostcity/entity/NetworkPlayer.js';
-import {EntityQueueState} from '#lostcity/entity/EntityQueueRequest.js';
-import {PlayerTimerType} from '#lostcity/entity/EntityTimer.js';
+import { NpcList, PlayerList } from '#lostcity/entity/EntityList.js';
+import { isNetworkPlayer } from '#lostcity/entity/NetworkPlayer.js';
+import { EntityQueueState } from '#lostcity/entity/EntityQueueRequest.js';
+import { PlayerTimerType } from '#lostcity/entity/EntityTimer.js';
 
-import ClientSocket from '#lostcity/server/ClientSocket.js';
-
-import Environment from '#lostcity/util/Environment.js';
-import {getLatestModified, getModified, shouldBuildFileAny} from '#lostcity/util/PackFile.js';
-import Zone from './zone/Zone.js';
-import LinkList from '#jagex2/datastruct/LinkList.js';
-import {createWorker} from '#lostcity/util/WorkerFactory.js';
-import LoginResponse from '#lostcity/server/LoginResponse.js';
 import ClientProt from '#lostcity/network/225/incoming/prot/ClientProt.js';
-import {makeCrcs, makeCrcsAsync} from '#lostcity/server/CrcTable.js';
-import {preloadClient, preloadClientAsync} from '#lostcity/server/PreloadedPacks.js';
-import {CoordGrid} from '#lostcity/engine/CoordGrid.js';
+
 import UpdateRebootTimer from '#lostcity/network/outgoing/model/UpdateRebootTimer.js';
-import WorldStat from '#lostcity/engine/WorldStat.js';
-import { FriendsServerOpcodes } from '#lostcity/server/FriendServer.js';
 import UpdateFriendList from '#lostcity/network/outgoing/model/UpdateFriendList.js';
 import UpdateIgnoreList from '#lostcity/network/outgoing/model/UpdateIgnoreList.js';
 import MessagePrivate from '#lostcity/network/outgoing/model/MessagePrivate.js';
 
+import ClientSocket from '#lostcity/server/ClientSocket.js';
+import LoginResponse from '#lostcity/server/LoginResponse.js';
+import { makeCrcs, makeCrcsAsync } from '#lostcity/server/CrcTable.js';
+import { preloadClient, preloadClientAsync } from '#lostcity/server/PreloadedPacks.js';
+import { FriendsServerOpcodes } from '#lostcity/server/FriendServer.js';
+
+import Environment from '#lostcity/util/Environment.js';
+import { printDebug, printError, printInfo } from '#lostcity/util/Logger.js';
+import { createWorker } from '#lostcity/util/WorkerFactory.js';
+
 class World {
-    private friendsThread: Worker | NodeWorker = createWorker(typeof self === 'undefined' ? './src/lostcity/server/FriendThread.ts' : 'FriendThread.js');
+    private friendThread: Worker | NodeWorker = createWorker(Environment.STANDALONE_BUNDLE ? 'FriendThread.js' : './src/lostcity/server/FriendThread.ts');
+    private devThread: Worker | NodeWorker | null = null;
 
     private static readonly PLAYERS: number = 2048;
     private static readonly NPCS: number = 8192;
@@ -113,17 +120,8 @@ class World {
     shutdownTick: number = -1;
     pmCount: number = 1; // can't be 0 as clients will ignore the pm, their array is filled with 0 as default
 
-    // packed data timestamps
-    allLastModified: number = 0;
-    datLastModified: Map<string, number> = new Map();
-
     vars: Int32Array = new Int32Array(); // var shared
     varsString: string[] = [];
-
-    devWatcher: Watcher | null = null;
-    devThread: NodeWorker | null = null;
-    devRebuilding: boolean = false;
-    devMTime: Map<string, number> = new Map();
 
     constructor() {
         this.gameMap = new GameMap(Environment.NODE_MEMBERS);
@@ -136,18 +134,26 @@ class World {
         this.lastCycleStats = new Array(12).fill(0);
         this.cycleStats = new Array(12).fill(0);
 
-        if (typeof self === 'undefined') {
-            if (this.friendsThread instanceof NodeWorker) {
-                this.friendsThread.on('message', msg => {
-                    this.onFriendsMessage(msg);
-                });
-            }
-        } else {
-            if (this.friendsThread instanceof Worker) {
-                this.friendsThread.onmessage = msg => {
+        if (Environment.STANDALONE_BUNDLE) {
+            if (this.friendThread instanceof Worker) {
+                this.friendThread.onmessage = msg => {
                     this.onFriendsMessage(msg.data);
                 };
             }
+        } else {
+            if (this.friendThread instanceof NodeWorker) {
+                this.friendThread.on('message', msg => {
+                    this.onFriendsMessage(msg);
+                });
+            }
+        }
+    }
+
+    rebuild() {
+        if (this.devThread) {
+            this.devThread.postMessage({
+                type: 'world_rebuild'
+            });
         }
     }
 
@@ -159,7 +165,7 @@ class World {
                 // TODO make getPlayerByUsername37?
                 const player = this.getPlayerByUsername(fromBase37(username37));
                 if (!player) {
-                    console.error(`FriendThread: player ${fromBase37(username37)} not found`);
+                    printError(`FriendThread: player ${fromBase37(username37)} not found`);
                     return;
                 }
 
@@ -173,7 +179,7 @@ class World {
                 // TODO make getPlayerByUsername37?
                 const player = this.getPlayerByUsername(fromBase37(username37));
                 if (!player) {
-                    console.error(`FriendThread: player ${fromBase37(username37)} not found`);
+                    printError(`FriendThread: player ${fromBase37(username37)} not found`);
                     return;
                 }
 
@@ -196,7 +202,7 @@ class World {
 
                 const player = this.getPlayerByUsername(fromBase37(target));
                 if (!player) {
-                    console.error(`FriendThread: player ${fromBase37(target)} not found`);
+                    printError(`FriendThread: player ${fromBase37(target)} not found`);
                     return;
                 }
 
@@ -204,172 +210,78 @@ class World {
 
                 player.write(new MessagePrivate(fromPlayer, pmId, fromPlayerStaffLvl, chat));
             } else {
-                console.error('Unknown friends opcode: ' + opcode);
+                printError('Unknown friend message: ' + opcode);
             }
         } catch (err) {
-            console.error(err);
+            console.log(err);
         }
     }
 
     // ----
 
-    shouldReload(type: string, client: boolean = false): boolean {
-        if (typeof self !== 'undefined') {
-            return true;
-        }
-
-        const current = Math.max(getModified(`data/pack/server/${type}.dat`), client ? getModified('data/pack/client/config') : 0);
-
-        if (!this.datLastModified.has(type)) {
-            this.datLastModified.set(type, current);
-            return true;
-        }
-
-        const changed = this.datLastModified.get(type) !== current;
-        if (changed) {
-            this.datLastModified.set(type, current);
-        }
-        return changed;
-    }
-
     reload(): void {
-        let transmitted = false;
+        VarPlayerType.load('data/pack');
+        ParamType.load('data/pack');
+        ObjType.load('data/pack');
+        LocType.load('data/pack');
+        NpcType.load('data/pack');
+        IdkType.load('data/pack');
+        SeqFrame.load('data/pack');
+        SeqType.load('data/pack');
+        SpotanimType.load('data/pack');
+        CategoryType.load('data/pack');
+        EnumType.load('data/pack');
+        StructType.load('data/pack');
+        InvType.load('data/pack');
 
-        if (this.shouldReload('varp', true)) {
-            VarPlayerType.load('data/pack');
-            transmitted = true;
-        }
+        this.invs.clear();
+        for (let i = 0; i < InvType.count; i++) {
+            const inv = InvType.get(i);
 
-        if (this.shouldReload('param')) {
-            ParamType.load('data/pack');
-        }
-
-        if (this.shouldReload('obj', true)) {
-            ObjType.load('data/pack');
-            transmitted = true;
-        }
-
-        if (this.shouldReload('loc', true)) {
-            LocType.load('data/pack');
-            transmitted = true;
-        }
-
-        if (this.shouldReload('npc', true)) {
-            NpcType.load('data/pack');
-            transmitted = true;
-        }
-
-        if (this.shouldReload('idk', true)) {
-            IdkType.load('data/pack');
-            transmitted = true;
-        }
-
-        if (this.shouldReload('frame_del')) {
-            SeqFrame.load('data/pack');
-        }
-
-        if (this.shouldReload('seq', true)) {
-            SeqType.load('data/pack');
-            transmitted = true;
-        }
-
-        if (this.shouldReload('spotanim', true)) {
-            SpotanimType.load('data/pack');
-            transmitted = true;
-        }
-
-        if (this.shouldReload('category')) {
-            CategoryType.load('data/pack');
-        }
-
-        if (this.shouldReload('enum')) {
-            EnumType.load('data/pack');
-        }
-
-        if (this.shouldReload('struct')) {
-            StructType.load('data/pack');
-        }
-
-        if (this.shouldReload('inv')) {
-            InvType.load('data/pack');
-
-            this.invs.clear();
-            for (let i = 0; i < InvType.count; i++) {
-                const inv = InvType.get(i);
-    
-                if (inv && inv.scope === InvType.SCOPE_SHARED) {
-                    this.invs.add(Inventory.fromType(i));
-                }
+            if (inv && inv.scope === InvType.SCOPE_SHARED) {
+                this.invs.add(Inventory.fromType(i));
             }
         }
 
-        if (this.shouldReload('mesanim')) {
-            MesanimType.load('data/pack');
-        }
+        MesanimType.load('data/pack');
+        DbTableType.load('data/pack');
+        DbRowType.load('data/pack');
+        HuntType.load('data/pack');
+        VarNpcType.load('data/pack');
 
-        if (this.shouldReload('dbtable')) {
-            DbTableType.load('data/pack');
-        }
+        VarSharedType.load('data/pack');
 
-        if (this.shouldReload('dbrow')) {
-            DbRowType.load('data/pack');
-        }
+        if (this.vars.length !== VarSharedType.count) {
+            const old = this.vars;
+            this.vars = new Int32Array(VarSharedType.count);
+            for (let i = 0; i < VarSharedType.count && i < old.length; i++) {
+                this.vars[i] = old[i];
+            }
 
-        if (this.shouldReload('hunt')) {
-            HuntType.load('data/pack');
-        }
-
-        if (this.shouldReload('varn')) {
-            VarNpcType.load('data/pack');
-        }
-
-        if (this.shouldReload('vars')) {
-            VarSharedType.load('data/pack');
-
-            if (this.vars.length !== VarSharedType.count) {
-                const old = this.vars;
-                this.vars = new Int32Array(VarSharedType.count);
-                for (let i = 0; i < VarSharedType.count && i < old.length; i++) {
-                    this.vars[i] = old[i];
-                }
-
-                const oldString = this.varsString;
-                this.varsString = new Array(VarSharedType.count);
-                for (let i = 0; i < VarSharedType.count && i < old.length; i++) {
-                    this.varsString[i] = oldString[i];
-                }
+            const oldString = this.varsString;
+            this.varsString = new Array(VarSharedType.count);
+            for (let i = 0; i < VarSharedType.count && i < old.length; i++) {
+                this.varsString[i] = oldString[i];
             }
         }
 
-        if (this.shouldReload('interface')) {
-            Component.load('data/pack');
-            transmitted = true;
+        Component.load('data/pack');
+
+        const count = ScriptProvider.load('data/pack');
+        if (count === -1) {
+            this.broadcastMes('There was an issue while reloading scripts.');
+        } else {
+            this.broadcastMes(`Reloaded ${count} scripts.`);
         }
 
-        if (this.shouldReload('script')) {
-            const count = ScriptProvider.load('data/pack');
-            if (count === -1) {
-                this.broadcastMes('There was an issue while reloading scripts.');
-            } else {
-                this.broadcastMes(`Reloaded ${count} scripts.`);
-            }
-        }
-
-        // todo: check if any jag files changed (transmitted) then reload crcs
-        // if (transmitted) {
-        //     makeCrcs();
-        // }
-
+        // todo: check if any jag files changed (transmitted) then reload crcs, instead of always
         makeCrcs();
 
         // todo: detect and reload static data (like maps)
         preloadClient();
-
-        this.allLastModified = getLatestModified('data/pack', '.dat');
     }
 
     async loadAsync(): Promise<void> {
-        console.time('Loading packs');
         const count = (await Promise.all([
             NpcType.loadAsync('data/pack'),
             ObjType.loadAsync('data/pack'),
@@ -426,19 +338,28 @@ class World {
         } else {
             this.broadcastMes(`Reloaded ${count} scripts.`);
         }
-        console.timeEnd('Loading packs');
     }
 
     broadcastMes(message: string): void {
         for (const player of this.players) {
-            player.messageGame(message);
+            if (message.includes('\n')) {
+                message.split('\n').forEach(wrap => player.wrappedMessageGame(wrap));
+            } else {
+                player.wrappedMessageGame(message);
+            }
         }
     }
 
     async start(skipMaps = false, startCycle = true): Promise<void> {
-        console.log('Starting world...');
+        printInfo('Starting world');
 
-        if (typeof self === 'undefined') {
+        if (Environment.STANDALONE_BUNDLE) {
+            await this.loadAsync();
+
+            if (!skipMaps) {
+                await this.gameMap.initAsync();
+            }
+        } else {
             FontType.load('data/pack');
             WordEnc.load('data/pack');
 
@@ -447,42 +368,29 @@ class World {
             if (!skipMaps) {
                 this.gameMap.init();
             }
-        } else {
-            console.time('World ready');
-            await this.loadAsync();
-
-            if (!skipMaps) {
-                await this.gameMap.initAsync();
-            }
-            console.timeEnd('World ready');
         }
 
         Login.loginThread.postMessage({
             type: 'reset'
         });
 
-        this.friendsThread.postMessage({
+        this.friendThread.postMessage({
             type: 'connect'
         });
 
-        if (typeof self === 'undefined') {
+        if (!Environment.STANDALONE_BUNDLE) {
             if (!Environment.NODE_PRODUCTION) {
-                this.startDevWatcher();
+                this.createDevThread();
 
-                // console.time('checker');
-                // todo: this check takes me 300ms on startup! but it saves double building fresh setups
-                if (Environment.BUILD_STARTUP && (shouldBuildFileAny('data/pack/client', 'data/pack/client/lastbuild.pack') || shouldBuildFileAny('data/pack/server', 'data/pack/server/lastbuild.pack'))) {
-                    this.devThread!.postMessage({
-                        type: 'pack'
-                    });
+                if (Environment.BUILD_STARTUP) {
+                    this.rebuild();
                 }
-                // console.timeEnd('checker');
             }
 
             if (Environment.WEB_PORT === 80) {
-                console.log(kleur.green().bold('World ready') + kleur.white().bold(': http://localhost'));
+                printInfo(kleur.green().bold('World ready') + kleur.white().bold(': http://localhost'));
             } else {
-                console.log(kleur.green().bold('World ready') + kleur.white().bold(': http://localhost:' + Environment.WEB_PORT));
+                printInfo(kleur.green().bold('World ready') + kleur.white().bold(': http://localhost:' + Environment.WEB_PORT));
             }
         }
 
@@ -491,84 +399,36 @@ class World {
         }
     }
 
-    startDevWatcher(): void {
-        this.devThread = createWorker('./src/lostcity/server/DevThread.ts') as NodeWorker;
+    private createDevThread() {
+        this.devThread = createWorker('./src/lostcity/server/DevThread.ts');
 
-        this.devThread.on('message', msg => {
-            if (msg.type === 'done') {
-                this.devRebuilding = false;
-                this.reload();
-            }
-        });
+        if (this.devThread instanceof NodeWorker) {
+            this.devThread.on('message', msg => {
+                if (msg.type === 'dev_reload') {
+                    this.reload();
+                } else if (msg.type === 'dev_failure') {
+                    if (msg.error) {
+                        console.error(msg.error);
 
-        this.devThread.on('exit', () => {
-            this.devRebuilding = false;
-            this.stopDevWatcher();
-
-            if (this.shutdownTick === -1) {
-                this.broadcastMes('Error while rebuilding - see console for more info.');
-                this.startDevWatcher();
-            }
-        });
-
-        this.devWatcher = new Watcher('./data/src', {
-            recursive: true
-        });
-
-        this.devWatcher.on('add', (targetPath: string) => {
-            if (targetPath.endsWith('.pack')) {
-                return;
-            }
-
-            const stat = fs.statSync(targetPath);
-            this.devMTime.set(targetPath, stat.mtimeMs);
-        });
-
-        this.devWatcher.on('change', (targetPath: string) => {
-            if (targetPath.endsWith('.pack')) {
-                return;
-            }
-
-            const stat = fs.statSync(targetPath);
-            const known = this.devMTime.get(targetPath);
-
-            if (known && known >= stat.mtimeMs) {
-                return;
-            }
-
-            this.devMTime.set(targetPath, stat.mtimeMs);
-            if (this.devRebuilding) {
-                return;
-            }
-
-            console.log('dev:', path.basename(targetPath), 'was edited');
-            this.devRebuilding = true;
-            this.broadcastMes('Rebuilding, please wait...');
-
-            if (!this.devThread) {
-                this.devThread = createWorker('./src/lostcity/server/DevThread.ts') as NodeWorker;
-            }
-
-            this.devThread.postMessage({
-                type: 'pack'
+                        this.broadcastMes(msg.error.replaceAll('data/src/scripts/', ''));
+                        this.broadcastMes('Check the console for more information.');
+                    }
+                }
             });
-        });
-    }
 
-    stopDevWatcher(): void {
-        if (this.devWatcher) {
-            this.devWatcher.close();
-        }
+            // todo: catch all cases where it might exit instead of throwing an error, so we aren't
+            // re-initializing the file watchers after errors
+            this.devThread.on('exit', () => {
+                // todo: remove this mes after above the todo above is addressed
+                this.broadcastMes('Error while rebuilding - see console for more info.');
 
-        if (this.devThread) {
-            this.devThread.terminate();
-            this.devThread = null;
+                this.createDevThread();
+            });
         }
     }
 
     rebootTimer(duration: number): void {
         this.shutdownTick = this.currentTick + duration;
-        this.stopDevWatcher();
 
         for (const player of this.players) {
             player.write(new UpdateRebootTimer(this.shutdownTick - this.currentTick));
@@ -576,21 +436,21 @@ class World {
     }
 
     async cycle(continueCycle: boolean = true): Promise<void> {
-        try
-        {
+        try {
             const start: number = Date.now();
 
             // world processing
             // - world queue
-            // - calculate afk event readiness
             // - npc spawn scripts
             // - npc hunt
             this.processWorld();
 
-            // client input
-            // - decode packets
-            // - process pathfinding/following
-            await this.processClientsIn();
+            // player setup (todo better name)
+            // - calculate afk event readiness
+            // - resume active script
+            // - process packets
+            // - process pathfinding/following request
+            await this.processPlayerSetup();
 
             // npc processing (if npc is not busy)
             // - resume suspended script
@@ -602,7 +462,6 @@ class World {
             this.processNpcs();
 
             // player processing
-            // - resume suspended script
             // - primary queue
             // - weak queue
             // - timers
@@ -686,14 +545,17 @@ class World {
                 setTimeout(this.cycle.bind(this), this.tickRate - this.cycleStats[WorldStat.CYCLE]);
             }
 
-            if (Environment.NODE_DEBUG_PROFILE) {
-                console.log(`tick ${this.currentTick} took ${this.cycleStats[WorldStat.CYCLE]}ms: ${this.getTotalPlayers()} players`);
-                console.log(`${this.cycleStats[WorldStat.WORLD]} ms world | ${this.cycleStats[WorldStat.CLIENT_IN]} ms client in | ${this.cycleStats[WorldStat.NPC]} ms npcs | ${this.cycleStats[WorldStat.PLAYER]} ms players | ${this.cycleStats[WorldStat.LOGOUT]} ms logout | ${this.cycleStats[WorldStat.LOGIN]} ms login | ${this.cycleStats[WorldStat.ZONE]} ms zones | ${this.cycleStats[WorldStat.CLIENT_OUT]} ms client out | ${this.cycleStats[WorldStat.CLEANUP]} ms cleanup`);
-                console.log('----');
+            if (Environment.NODE_DEBUG_PROFILER) {
+                printDebug(`tick ${this.currentTick} took ${this.cycleStats[WorldStat.CYCLE]}ms: ${this.getTotalPlayers()} players`);
+                printDebug(`${this.cycleStats[WorldStat.WORLD]} ms world | ${this.cycleStats[WorldStat.CLIENT_IN]} ms client in | ${this.cycleStats[WorldStat.NPC]} ms npcs | ${this.cycleStats[WorldStat.PLAYER]} ms players | ${this.cycleStats[WorldStat.LOGOUT]} ms logout | ${this.cycleStats[WorldStat.LOGIN]} ms login | ${this.cycleStats[WorldStat.ZONE]} ms zones | ${this.cycleStats[WorldStat.CLIENT_OUT]} ms client out | ${this.cycleStats[WorldStat.CLEANUP]} ms cleanup`);
+                printDebug('----');
             }
         } catch (err) {
-            console.error('[World] eep eep cabbage! An unhandled error occurred during the cycle:', err);
-            console.error('[World] Removing all players...');
+            if (err instanceof Error) {
+                printError('eep eep cabbage! An unhandled error occurred during the cycle: ' + err.message);
+            }
+
+            printError('Removing all players...');
 
             for (const player of this.players) {
                 await this.removePlayer(player);
@@ -701,14 +563,13 @@ class World {
 
             // TODO inform Friends server that the world has gone offline
 
-            console.error('[World] All players removed.');
-            console.error('[World] Closing the server.');
+            printError('All players removed.');
+            printError('Closing the server.');
             process.exit(1);
         }
     }
 
     // - world queue
-    // - calculate afk event readiness
     // - npc spawn scripts
     // - npc hunt
     private processWorld(): void {
@@ -745,15 +606,6 @@ class World {
             }
         }
 
-        // - calculate afk event readiness
-        if (tick % World.AFK_EVENTRATE === 0) {
-            for (const player of this.players) {
-                // (normal) 1/12 chance every 5 minutes of setting an afk event state (even distrubution 60/5)
-                // (afk) double the chance?
-                player.afkEventReady = Math.random() < (player.zonesAfk() ? 0.1666 : 0.0833);
-            }
-        }
-
         // - npc spawn scripts
         for (const npc of this.npcs) {
             if (!npc.updateLifeCycle(tick)) {
@@ -769,12 +621,12 @@ class World {
                 // there was an error adding or removing them, try again next tick...
                 // ex: server is full on npc IDs (did we have a leak somewhere?) and we don't want to re-use the last ID (syncing related)
                 if (npc.lifecycle === EntityLifeCycle.RESPAWN) {
-                    console.error('[World] An unhandled error happened while respawning a NPC');
+                    printError('[World] An unhandled error occurred while respawning a NPC');
                 } else if (npc.lifecycle === EntityLifeCycle.DESPAWN) {
-                    console.error('[World] An unhandled error happened while despawning a NPC');
+                    printError('[World] An unhandled error occurred while despawning a NPC');
                 }
 
-                console.error(`[World] NPC type:${npc.type} lifecycle:${npc.lifecycle} ID:${npc.nid}`);
+                printError(`[World] NPC type:${npc.type} lifecycle:${npc.lifecycle} ID:${npc.nid}`);
                 console.error(err);
 
                 npc.setLifeCycle(this.currentTick + 1); // retry next tick
@@ -791,70 +643,76 @@ class World {
                 npc.huntAll();
             }
         }
+
         this.cycleStats[WorldStat.WORLD] = Date.now() - start;
     }
 
-    // - decode packets
-    // - process pathfinding/following
-    private async processClientsIn(): Promise<void> {
+    private async processPlayerSetup(): Promise<void> {
         const start: number = Date.now();
 
-        this.cycleStats[WorldStat.BANDWIDTH_IN] = 0; // reset bandwidth counter
+        this.cycleStats[WorldStat.BANDWIDTH_IN] = 0;
 
-        // - decode packets
         for (const player of this.players) {
-            if (!isNetworkPlayer(player)) {
-                continue;
-            }
-
             try {
-                player.decodeIn();
+                player.playtime++;
+
+                if (this.currentTick % World.AFK_EVENTRATE === 0) {
+                    // (normal) 1/12 chance every 5 minutes of setting an afk event state (even distrubution 60/5)
+                    // (afk) double the chance?
+                    player.afkEventReady = Math.random() < (player.zonesAfk() ? 0.1666 : 0.0833);
+                }
+
+                // active scripts resume here in early rs2
+                if (player.delayed()) {
+                    player.delay--;
+                }
+
+                if (player.activeScript && player.activeScript.execution === ScriptState.SUSPENDED && !player.delayed()) {
+                    player.executeScript(player.activeScript, true, true);
+                }
+
+                if (isNetworkPlayer(player) && player.decodeIn()) {
+                    if (player.userPath.length > 0 || player.opcalled) {
+                        if (player.delayed()) {
+                            player.unsetMapFlag();
+                            continue;
+                        }
+        
+                        if ((!player.target || player.target instanceof Loc || player.target instanceof Obj) && player.faceEntity !== -1) {
+                            player.faceEntity = -1;
+                            player.mask |= Player.FACE_ENTITY;
+                        }
+        
+                        if (player.busy() || !player.opcalled) {
+                            player.moveClickRequest = true;
+                        }
+        
+                        if (player.opcalled && (player.userPath.length === 0 || !Environment.NODE_CLIENT_ROUTEFINDER)) {
+                            player.pathToPathingTarget();
+                            continue;
+                        }
+        
+                        player.pathToMoveClick(player.userPath, !Environment.NODE_CLIENT_ROUTEFINDER);
+    
+                        if (!player.opcalled && player.hasWaypoints()) {
+                            player.processWalktrigger();
+                        }
+                    }
+        
+                    if (player.target instanceof Player && (player.targetOp === ServerTriggerType.APPLAYER3 || player.targetOp === ServerTriggerType.OPPLAYER3)) {
+                        if (CoordGrid.distanceToSW(player, player.target) <= 25) {
+                            player.pathToPathingTarget();
+                        } else {
+                            player.clearWaypoints();
+                        }
+                    }
+                }
             } catch (err) {
                 console.error(err);
                 await this.removePlayer(player);
             }
         }
 
-        // - process pathfinding/following
-        for (const player of this.players) {
-            if (!isNetworkPlayer(player)) {
-                continue;
-            }
-
-            if (player.userPath.length > 0 || player.opcalled) {
-                if (player.delayed()) {
-                    player.unsetMapFlag();
-                    continue;
-                }
-
-                if ((!player.target || player.target instanceof Loc || player.target instanceof Obj) && player.faceEntity !== -1) {
-                    player.faceEntity = -1;
-                    player.mask |= Player.FACE_ENTITY;
-                }
-
-                if (player.busy() || !player.opcalled) {
-                    player.moveClickRequest = true;
-                }
-                
-                if (player.opcalled && (player.userPath.length === 0 || !Environment.NODE_CLIENT_ROUTEFINDER)) {
-                    player.pathToPathingTarget();
-                    continue;
-                }
-                
-                player.pathToMoveClick(player.userPath, !Environment.NODE_CLIENT_ROUTEFINDER);
-                if (!player.opcalled && player.hasWaypoints()) {
-                    player.processWalktrigger();
-                }
-            }
-
-            if (player.target instanceof Player && (player.targetOp === ServerTriggerType.APPLAYER3 || player.targetOp === ServerTriggerType.OPPLAYER3)) {
-                if (CoordGrid.distanceToSW(player, player.target) <= 25) {
-                    player.pathToPathingTarget();
-                } else {
-                    player.clearWaypoints();
-                }
-            }
-        }
         this.cycleStats[WorldStat.CLIENT_IN] = Date.now() - start;
     }
 
@@ -875,7 +733,7 @@ class World {
                 if (!npc.checkLifeCycle(this.currentTick)) {
                     continue;
                 }
-    
+
                 if (npc.delayed()) {
                     npc.delay--;
                 }
@@ -913,7 +771,6 @@ class World {
         this.cycleStats[WorldStat.NPC] = Date.now() - start;
     }
 
-    // - resume suspended script
     // - primary queue
     // - weak queue
     // - timers
@@ -926,17 +783,6 @@ class World {
         const start: number = Date.now();
         for (const player of this.players) {
             try {
-                player.playtime++;
-
-                if (player.delayed()) {
-                    player.delay--;
-                }
-
-                // - resume suspended script
-                if (player.activeScript && player.activeScript.execution === ScriptState.SUSPENDED && !player.delayed()) {
-                    player.executeScript(player.activeScript, true, true);
-                }
-
                 // - primary queue
                 // - weak queue
                 player.processQueues();
@@ -996,7 +842,7 @@ class World {
             if (player.queue.head() === null) {
                 const script = ScriptProvider.getByTriggerSpecific(ServerTriggerType.LOGOUT, -1, -1);
                 if (!script) {
-                    console.error('LOGOUT TRIGGER IS BROKEN!');
+                    printError('LOGOUT TRIGGER IS BROKEN!');
                     continue;
                 }
 
@@ -1119,8 +965,6 @@ class World {
 
         for (const player of this.players) {
             if (!isNetworkPlayer(player)) {
-                player.highPriorityOut.clear();
-                player.lowPriorityOut.clear();
                 continue;
             }
 
@@ -1264,7 +1108,7 @@ class World {
             this.npcs.reset();
 
             if (duration > 2) {
-                console.log('Super fast shutdown initiated...');
+                printInfo('Super fast shutdown initiated...');
 
                 // we've already attempted to shutdown, now we speed things up
                 if (this.tickRate > World.SHUTDOWN_TICKRATE) {
@@ -1404,7 +1248,7 @@ class World {
     }
 
     addLoc(loc: Loc, duration: number): void {
-        // console.log(`[World] addLoc => name: ${LocType.get(loc.type).name}, duration: ${duration}`);
+        // printDebug(`[World] addLoc => name: ${LocType.get(loc.type).name}, duration: ${duration}`);
         const type: LocType = LocType.get(loc.type);
         if (type.blockwalk) {
             this.gameMap.changeLocCollision(loc.shape, loc.angle, type.blockrange, type.length, type.width, type.active, loc.x, loc.z, loc.level, true);
@@ -1418,21 +1262,21 @@ class World {
     }
 
     mergeLoc(loc: Loc, player: Player, startCycle: number, endCycle: number, south: number, east: number, north: number, west: number): void {
-        // console.log(`[World] mergeLoc => name: ${LocType.get(loc.type).name}`);
+        // printDebug(`[World] mergeLoc => name: ${LocType.get(loc.type).name}`);
         const zone: Zone = this.gameMap.getZone(loc.x, loc.z, loc.level);
         zone.mergeLoc(loc, player, startCycle, endCycle, south, east, north, west);
         this.trackZone(this.currentTick, zone);
     }
 
     animLoc(loc: Loc, seq: number): void {
-        // console.log(`[World] animLoc => name: ${LocType.get(loc.type).name}, seq: ${seq}`);
+        // printDebug(`[World] animLoc => name: ${LocType.get(loc.type).name}, seq: ${seq}`);
         const zone: Zone = this.gameMap.getZone(loc.x, loc.z, loc.level);
         zone.animLoc(loc, seq);
         this.trackZone(this.currentTick, zone);
     }
 
     removeLoc(loc: Loc, duration: number): void {
-        // console.log(`[World] removeLoc => name: ${LocType.get(loc.type).name}, duration: ${duration}`);
+        // printDebug(`[World] removeLoc => name: ${LocType.get(loc.type).name}, duration: ${duration}`);
         const type: LocType = LocType.get(loc.type);
         if (type.blockwalk) {
             this.gameMap.changeLocCollision(loc.shape, loc.angle, type.blockrange, type.length, type.width, type.active, loc.x, loc.z, loc.level, false);
@@ -1446,7 +1290,7 @@ class World {
     }
 
     addObj(obj: Obj, receiverId: number, duration: number): void {
-        // console.log(`[World] addObj => name: ${ObjType.get(obj.type).name}, receiverId: ${receiverId}, duration: ${duration}`);
+        // printDebug(`[World] addObj => name: ${ObjType.get(obj.type).name}, receiverId: ${receiverId}, duration: ${duration}`);
         const objType: ObjType = ObjType.get(obj.type);
         // check if we need to changeobj first.
         const existing = this.getObj(obj.x, obj.z, obj.level, obj.type, receiverId);
@@ -1477,7 +1321,7 @@ class World {
     }
 
     revealObj(obj: Obj): void {
-        // console.log(`[World] revealObj => name: ${ObjType.get(obj.type).name}`);
+        // printDebug(`[World] revealObj => name: ${ObjType.get(obj.type).name}`);
         const duration: number = obj.reveal;
         const change: number = obj.lastChange;
         const zone: Zone = this.gameMap.getZone(obj.x, obj.z, obj.level);
@@ -1491,14 +1335,14 @@ class World {
     }
 
     changeObj(obj: Obj, receiverId: number, newCount: number): void {
-        // console.log(`[World] changeObj => name: ${ObjType.get(obj.type).name}, receiverId: ${receiverId}, newCount: ${newCount}`);
+        // printDebug(`[World] changeObj => name: ${ObjType.get(obj.type).name}, receiverId: ${receiverId}, newCount: ${newCount}`);
         const zone: Zone = this.gameMap.getZone(obj.x, obj.z, obj.level);
         zone.changeObj(obj, receiverId, obj.count, newCount);
         this.trackZone(this.currentTick, zone);
     }
 
     removeObj(obj: Obj, duration: number): void {
-        // console.log(`[World] removeObj => name: ${ObjType.get(obj.type).name}, duration: ${duration}`);
+        // printDebug(`[World] removeObj => name: ${ObjType.get(obj.type).name}, duration: ${duration}`);
         const zone: Zone = this.gameMap.getZone(obj.x, obj.z, obj.level);
         zone.removeObj(obj);
         obj.setLifeCycle(this.currentTick + duration);
@@ -1566,8 +1410,8 @@ class World {
     }
 
     addFriend(player: Player, targetUsername37: bigint) {
-        //console.log(`[World] addFriend => player: ${player.username}, target: ${targetUsername37} (${fromBase37(targetUsername37)})`);
-        this.friendsThread.postMessage({
+        //printDebug(`[World] addFriend => player: ${player.username}, target: ${targetUsername37} (${fromBase37(targetUsername37)})`);
+        this.friendThread.postMessage({
             type: 'player_friendslist_add',
             username: player.username,
             target: targetUsername37,
@@ -1575,8 +1419,8 @@ class World {
     }
 
     removeFriend(player: Player, targetUsername37: bigint) {
-        //console.log(`[World] removeFriend => player: ${player.username}, target: ${targetUsername37} (${fromBase37(targetUsername37)})`);
-        this.friendsThread.postMessage({
+        //printDebug(`[World] removeFriend => player: ${player.username}, target: ${targetUsername37} (${fromBase37(targetUsername37)})`);
+        this.friendThread.postMessage({
             type: 'player_friendslist_remove',
             username: player.username,
             target: targetUsername37,
@@ -1584,8 +1428,8 @@ class World {
     }
 
     addIgnore(player: Player, targetUsername37: bigint) {
-        //console.log(`[World] addIgnore => player: ${player.username}, target: ${targetUsername37} (${fromBase37(targetUsername37)})`);
-        this.friendsThread.postMessage({
+        //printDebug(`[World] addIgnore => player: ${player.username}, target: ${targetUsername37} (${fromBase37(targetUsername37)})`);
+        this.friendThread.postMessage({
             type: 'player_ignorelist_add',
             username: player.username,
             target: targetUsername37,
@@ -1593,8 +1437,8 @@ class World {
     }
 
     removeIgnore(player: Player, targetUsername37: bigint) {
-        //console.log(`[World] removeIgnore => player: ${player.username}, target: ${targetUsername37} (${fromBase37(targetUsername37)})`);
-        this.friendsThread.postMessage({
+        //printDebug(`[World] removeIgnore => player: ${player.username}, target: ${targetUsername37} (${fromBase37(targetUsername37)})`);
+        this.friendThread.postMessage({
             type: 'player_ignorelist_remove',
             username: player.username,
             target: targetUsername37,
@@ -1604,7 +1448,7 @@ class World {
     addPlayer(player: Player): void {
         this.newPlayers.add(player);
 
-        this.friendsThread.postMessage({
+        this.friendThread.postMessage({
             type: 'player_login',
             username: player.username,
             chatModePrivate: player.chatModes.privateChat,
@@ -1612,7 +1456,7 @@ class World {
     }
 
     sendPrivateChatModeToFriendsServer(player: Player): void {
-        this.friendsThread.postMessage({
+        this.friendThread.postMessage({
             type: 'player_chat_setmode',
             username: player.username,
             chatModePrivate: player.chatModes.privateChat,
@@ -1634,16 +1478,16 @@ class World {
 
         Login.logout(player);
 
-        this.friendsThread.postMessage({
+        this.friendThread.postMessage({
             type: 'player_logout',
             username: player.username,
         });
     }
 
     sendPrivateMessage(player: Player, targetUsername37: bigint, message: string): void {
-        //console.log(`[World] sendPrivateMessage => player: ${player.username}, target: ${targetUsername37} (${fromBase37(targetUsername37)}), message: '${message}'`);
+        //printDebug(`[World] sendPrivateMessage => player: ${player.username}, target: ${targetUsername37} (${fromBase37(targetUsername37)}), message: '${message}'`);
 
-        this.friendsThread.postMessage({
+        this.friendThread.postMessage({
             type: 'private_message',
             username: player.username,
             staffLvl: player.staffModLevel,

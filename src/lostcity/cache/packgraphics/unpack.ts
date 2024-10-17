@@ -3,6 +3,7 @@ import fs from 'fs';
 import Jagfile from '#jagex2/io/Jagfile.js';
 import Packet from '#jagex2/io/Packet.js';
 import Model from '#lostcity/cache/graphics/Model.js';
+import { printWarning } from '#lostcity/util/Logger.js';
 
 const models = Jagfile.load('data/client/models');
 
@@ -20,9 +21,8 @@ const models = Jagfile.load('data/client/models');
         pack += `${i}=model_${i}\n`;
 
         const model = Model.get(i);
-
         if (!model) {
-            console.log('missing model', i);
+            printWarning('missing model: ' + i);
             continue;
         }
 

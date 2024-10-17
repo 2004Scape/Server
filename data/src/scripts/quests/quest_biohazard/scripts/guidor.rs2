@@ -4,28 +4,28 @@ if(map_members = false) {
     return;
 }
 switch_int(%biohazard_progress) {
-    case ^biohazard_found_secret, ^biohazard_reported_elena, ^biohazard_complete:
+    case ^biohazard_found_secret, ^biohazard_reported_elena, ^biohazard_complete :
         ~chatplayer("<p,happy>Hello again Guidor.");
         ~chatnpc("<p,neutral>Well, hello traveller.|I still can't understand why they would lie about the plague.");
         ~chatplayer("<p,neutral>It's strange, anyway how are you doing?");
         ~chatnpc("<p,neutral>I'm hanging in there.");
         ~chatplayer("<p,neutral>Good for you.");
-    case ^biohazard_spoken_chemist:
+    case ^biohazard_spoken_chemist :
         // https://web.archive.org/web/20060111205550im_/http://www.runeweb.net/fireball/Biohazard%20Images/biohazard16.PNG
         ~chatplayer("<p,neutral>Hello, you must be Guidor.|I understand that you are unwell.");
         ~chatnpc("<p,angry>Is my wife asking priests to visit me now? I'm a man of science for god's sake.");
         ~chatnpc("<p,neutral>Ever since she heard rumors of a plague carrier travelling from Ardougne she's kept me under house arrest.");
         ~chatnpc("<p,sad>Of course she means well, and I am quite frail now... So what brings you here?");
         switch_int(~p_choice2("I've come to ask your assistance in stopping a plague.", 1, "I was just going to bless your room and I've done that now.", 2)) {
-            case 1:
+            case 1 :
                 ~chatplayer("<p,neutral>Well it's funny you should ask actually... I've come to ask your assistance in stopping a plague that could kill thousands.");
                 ~chatnpc("<p,shock>So you're the plague carrier!");
                 switch_int(~p_choice2("No! Well, yes...", 1, "I've been sent by your old pupil Elena.", 2)) {
-                    case 1: ~chatplayer("<p,neutral>No! Well, yes... but not exactly. It's contained in a sealed unit from Elena.");
-                    case 2: ~chatplayer("<p,neutral>I've been sent by your old pupil Elena, she's trying to halt the virus.");
+                    case 1 : ~chatplayer("<p,neutral>No! Well, yes... but not exactly. It's contained in a sealed unit from Elena.");
+                    case 2 : ~chatplayer("<p,neutral>I've been sent by your old pupil Elena, she's trying to halt the virus.");
                 }
                 @guidor_elena;
-            case 2:
+            case 2 :
                 ~chatplayer("<p,neutral>Oh, nothing, I was just going to bless your room and I've done that now. Goodbye.");
         }
 }
@@ -59,10 +59,10 @@ inv_del(inv, touch_paper, 1);
 %biohazard_progress = ^biohazard_found_secret;
 ~chatnpc("<p,neutral>Now I'll just apply these to the sample and... I don't get it... the touch paper has remained the same.");
 switch_int(~p_choice2("That's why Elena wanted you to do it.", 1, "So what does that mean exactly?", 2)) {
-    case 1: 
+    case 1 :
         ~chatplayer("<p,neutral>That's why Elena wanted you to do it, because she wasn't sure what was happening.");
         ~chatnpc("<p,neutral>Well that's just it, nothing has happened.");
-    case 2: 
+    case 2 :
         ~chatplayer("<p,quiz>So what does that mean exactly?");
 }
 ~chatnpc("<p,neutral>I don't know what this sample is, but it certainly isn't toxic.");

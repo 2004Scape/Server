@@ -61,6 +61,9 @@ def_int $rune_count3;
 $rune1, $rune_count1, $rune2, $rune_count2, $rune3, $rune_count3 = db_getfield($spell_data, magic_spell_table:runesrequired, 0);
 // check if wielding staff and look for staff in db
 def_obj $staff = inv_getobj(worn, ^wearpos_rhand);
+if (map_members = false & oc_members($staff) = true) {
+    return($rune1, $rune_count1, $rune2, $rune_count2, $rune3, $rune_count3);
+}
 db_find(magic_staff_table:staff, $staff);
 def_dbrow $staff_data = db_findnext;
 def_namedobj $staff_rune = null;

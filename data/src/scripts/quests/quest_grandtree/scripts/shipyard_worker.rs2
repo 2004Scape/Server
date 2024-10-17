@@ -1,60 +1,60 @@
 [opnpc1,_shipyard_worker]
 ~chatplayer("<p,neutral>Hello.");
 switch_int(random(15)) {
-    case 0:
+    case 0 :
         ~chatplayer("<p,neutral>You look busy!");
         ~chatnpc("<p,sad>We need double the men to get|this order out on time!");
-    case 1:
+    case 1 :
         ~chatnpc("<p,neutral>What do you want?");
         ~chatplayer("<p,angry>Is that any way to talk to your new superior?");
         ~chatnpc("<p,shock>Oh, I'm sorry, I didn't realise!");
-    case 2:
+    case 2 :
         ~chatplayer("<p,neutral>Quite an impressive set up!");
         ~chatnpc("<p,neutral>It needs to be.|There's no other way to build a fleet of this size!");
-    case 3:
+    case 3 :
         ~chatnpc("<p,angry>Ouch!");
         ~chatplayer("<p,confused>What's wrong?!");
         ~chatnpc("<p,sad>I cut my finger!");
         ~chatnpc("<p,sad>Do you have a bandage?");
         ~chatplayer("<p,sad>I'm afraid not.");
         ~chatnpc("<p,neutral>That's ok, I'll use my shirt.");
-    case 4:
+    case 4 :
         ~chatnpc("<p,neutral>Hello there. I haven't seen you before?");
         ~chatplayer("<p,happy>I'm new!");
         ~chatnpc("<p,neutral>Well it's hard work, but the pay is good.");
-    case 5:
+    case 5 :
         ~chatplayer("<p,neutral>Looks like hard work?");
         ~chatnpc("<p,neutral>I like to keep busy.");
-    case 6:
+    case 6 :
         ~chatplayer("<p,happy>Quite a few ships you're building!");
         ~chatnpc("<p,happy>This is just the start!|The completed fleet will be awesome!");
-    case 7:
+    case 7 :
         ~chatnpc("<p,happy>Hello matey!");
         ~chatplayer("<p,neutral>How are you?");
         ~chatnpc("<p,sad>Tired!");
         ~chatplayer("<p,neutral>You shouldn't work so hard!");
-    case 8:
+    case 8 :
         ~chatplayer("<p,neutral>What are you building?");
         ~chatnpc("<p,laugh>Are you serious?");
         ~chatplayer("<p,laugh>Of course not!|You're obviously building a boat.");
-    case 9:
+    case 9 :
         ~chatplayer("<p,neutral>How are you?");
         ~chatnpc("<p,angry>Too busy to waste time gossiping!");
         ~chatplayer("<p,shock>Touchy!");
-    case 10:
+    case 10 :
         ~chatnpc("<p,angry>I've had enough of this!");
         ~chatplayer("<p,shock>What?");
         ~chatnpc("<p,angry>Breaking my back for pennies! It's just not on!");
-    case 11:
+    case 11 :
         ~chatnpc("<p,neutral>Hello there,|are you too lazy to work as well?");
         ~chatplayer("<p,confused>Something like that.");
         ~chatnpc("<p,happy>I'm just sun bathing!");
-    case 12:
+    case 12 :
         ~chatnpc("<p,neutral>No time to talk|we've a fleet to build!");
-    case 13:
+    case 13 :
         ~chatnpc("<p,neutral>Can I help you?");
         ~chatplayer("<p,neutral>I'm just looking around.");
-    case 14:
+    case 14 :
         ~chatplayer("<p,neutral>So where are you sailing?");
         ~chatnpc("<p,neutral>What do you mean?");
         ~chatplayer("<p,laugh>Don't worry, just kidding!");
@@ -67,24 +67,24 @@ switch_int(random(15)) {
 ~chatplayer("<p,confused>I'm trying to open the gate!");
 ~chatnpc("<p,neutral>I can see that! Why?");
 switch_int(~p_choice3("I'm from the Ministry of Health and Safety.", 1, "Glough sent me.", 2, "I'm just looking around.", 3)) {
-    case 1:
+    case 1 :
         ~chatplayer("<p,neutral>I'm from the Ministry of Health and Safety.");
         ~chatnpc("<p,neutral>Never 'erd of 'em.");
         ~chatplayer("<p,angry>You will respect my authority!");
         ~chatnpc("<p,angry>Get out of here before I give you a beating!");
-    case 2:
+    case 2 :
         ~chatplayer("<p,neutral>Glough sent me.");
         ~chatnpc("<p,confused>Hmm...really? What for?");
         ~chatplayer("<p,angry>You're wasting my time! Take me to your superior!");
         ~chatnpc("<p,neutral>OK. Password.");
         def_int $choice = ~p_choice3("Ka.", 1, "Ko.", 2, "Ke.", 3);
         switch_int($choice) {
-            case 1: ~chatplayer("<p,neutral>Ka.");
-            case 2: ~chatplayer("<p,neutral>Ko.");
-            case 3: ~chatplayer("<p,neutral>Ke.");
+            case 1 : ~chatplayer("<p,neutral>Ka.");
+            case 2 : ~chatplayer("<p,neutral>Ko.");
+            case 3 : ~chatplayer("<p,neutral>Ke.");
         }
         @shipyard_password_2($choice);
-    case 3:
+    case 3 :
         ~chatplayer("<p,neutral>I'm just looking around.");
         ~chatnpc("<p,angry>This ain't a museum!|Leave now!");
         ~chatplayer("<p,angry>I'll leave when I choose!");
@@ -113,18 +113,18 @@ switch_int(~p_choice3("I'm from the Ministry of Health and Safety.", 1, "Glough 
 [label,shipyard_password_2](int $first_val)
 def_int $choice = ~p_choice3("Lo.", 1, "Lu.", 2, "Le.", 3);
 switch_int($choice) {
-    case 1: ~chatplayer("<p,neutral>Lo.");
-    case 2: ~chatplayer("<p,neutral>Lu.");
-    case 3: ~chatplayer("<p,neutral>Le.");
+    case 1 : ~chatplayer("<p,neutral>Lo.");
+    case 2 : ~chatplayer("<p,neutral>Lu.");
+    case 3 : ~chatplayer("<p,neutral>Le.");
 }
 @shipyard_password_3($first_val, $choice);
 
 [label,shipyard_password_3](int $first_val, int $second_val)
 def_int $choice = ~p_choice3("Mon.", 1, "Min.", 2, "Men.", 3);
 switch_int($choice) {
-    case 1: ~chatplayer("<p,neutral>Mon.");
-    case 2: ~chatplayer("<p,neutral>Min.");
-    case 3: ~chatplayer("<p,neutral>Men.");
+    case 1 : ~chatplayer("<p,neutral>Mon.");
+    case 2 : ~chatplayer("<p,neutral>Min.");
+    case 3 : ~chatplayer("<p,neutral>Men.");
 }
 @shipyard_password_check($first_val, $second_val, $choice);
 
@@ -132,7 +132,7 @@ switch_int($choice) {
 if($first_val = 1 & $second_val = 2 & $third_val = 2) {
     ~chatnpc("<p,neutral>Sorry to have kept you.");
     if_close;
-    p_delay(4); // 4t TODO: -1 after delay change
+    p_delay(4); // 4t todo: -1 after delay change
     @open_shipyard_gate;
 }
 ~chatnpc("<p,angry>You have no idea!");

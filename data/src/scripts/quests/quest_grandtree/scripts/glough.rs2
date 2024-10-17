@@ -1,26 +1,26 @@
 [opnpc1,glough]
 switch_int(%grandtree_progress) {
     // https://youtu.be/LFvLBRCxFwk?si=IKRtVRjysWWM9U4u&t=482, fixed at some point?
-    case ^grandtree_spoken_glough, ^grandtree_unlocked_trapdoor, ^grandtree_defeated_black_demon, ^grandtree_searching_daconia, ^grandtree_complete:
+    case ^grandtree_spoken_glough, ^grandtree_unlocked_trapdoor, ^grandtree_defeated_black_demon, ^grandtree_searching_daconia, ^grandtree_complete :
         // when underground during the fight, he will say this as well (before the cutscene update a few months after OSRS launch), if you interrupt the dialogue you have to go back down
         // https://youtu.be/OHlL7GZW2hw?si=ulwwb-_NUDHsVb9e&t=920
         ~chatplayer("<p,quiz>Hello?");
         ~chatnpc("<p,angry>I warn you now, human: stay out of my affairs!");
         ~chatplayer("<p,angry>I've stopped you before, Glough, and I'll stop you again!");
-    case ^grandtree_clue_charlie:
+    case ^grandtree_clue_charlie :
         ~chatplayer("<p,angry>I'm going to stop you, Glough!");
         ~chatnpc("<p,angry>You're becoming quite annoying traveller!");
         ~mesbox("Glough is searching his pockets.");
         ~chatnpc("<p,angry>Where are that darn key?"); // no typos here 
         ~chatnpc("<p,angry>Leave human, before I have you put in the cage!");
-    case ^grandtree_obtained_lumber_order:
+    case ^grandtree_obtained_lumber_order :
         ~chatplayer("<p,angry>I know what you're up to Glough!");
         ~chatnpc("<p,angry>You have no idea human!");
         ~chatplayer("<p,angry>You may be able to make a fleet but the tree gnomes will never follow you into battle against humans.");
         ~chatnpc("<p,angry>So, you know more than I thought! The gnomes fear humanity more than any other race. I just need to give them a push in the right direction. There's nothing you can do traveller! Leave before it's too late!");
         ~chatplayer("<p,angry>King Narnode won't allow it!");
         ~chatnpc("<p,angry>The King's a fool and a coward! He'll bow to me! You'll soon be back in that cage!");
-    case ^grandtree_found_journal:
+    case ^grandtree_found_journal :
         ~chatplayer("<p,angry>Glough! I don't know what you're up to but I know you paid Charlie to get those rocks!");
         ~chatnpc("<p,angry>You're a fool human! You have no idea what's going on.");
         // https://web.archive.org/web/20060911005925im_/http://www.runeweb.net/fireball/Grand%20Tree%20Images/GrandTree7.PNG
@@ -56,7 +56,7 @@ switch_int(%grandtree_progress) {
             ~chatplayer("<p,angry>It's Glough! He's trying to cover something up.");
             @charlie_shouldnt_tell;
         }
-    case ^grandtree_relayed_message_narnode:
+    case ^grandtree_relayed_message_narnode :
         ~chatplayer("<p,neutral>Hello.");
         ~mesbox("The gnome is munching on a worm hole.");
         // https://web.archive.org/web/20041114213711/http://img67.exs.cx/img67/3498/glough1.jpg
@@ -69,7 +69,7 @@ switch_int(%grandtree_progress) {
         ~chatplayer("<p,shock>Never!");
         %grandtree_progress = ^grandtree_spoken_glough;
         ~chatnpc("<p,angry>Your type can't be trusted!|I'll take care of this! Go back to the King.");
-    case default:
+    case default :
         ~chatplayer("<p,happy>Hello there!");
         ~chatnpc("<p,angry>You shouldn't be here human!");
         ~chatplayer("<p,sad>What do you mean?");

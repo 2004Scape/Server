@@ -1,7 +1,7 @@
 //most linebreaks in the quest are guessed (added for 2004 flair) based off rsc dialogue breaks
 [opnpc1,gertrude]
 switch_int (%fluffs_progress) {
-    case ^fluffs_not_started:
+    case ^fluffs_not_started :
         ~chatplayer("<p,happy>Hello, are you okay?");
         ~chatnpc("<p,angry>Do I look ok?|Those kids drive me crazy.");
         ~chatnpc("<p,sad>I'm sorry. It's just that I've lost her.");
@@ -10,21 +10,21 @@ switch_int (%fluffs_progress) {
         ~chatplayer("<p,quiz>Who's Fluffs?");
         ~chatnpc("<p,sad>My beloved feline friend Fluffs.|She's been purring by my side for almost a decade.|Please, could you go search for her|while I look over the kids?");
         @fluffs_start;
-    case ^fluffs_started:
+    case ^fluffs_started :
         ~chatplayer("<p,neutral>Hello Gertrude.");
         ~chatnpc("<p,sad>Have you seen my poor Fluffs?");
         ~chatplayer("<p,neutral>I'm afraid not.");
         ~chatnpc("<p,sad>What about Shilop?");
         ~chatplayer("<p,neutral>No sign of him either.");
         ~chatnpc("<p,confused>Hmmm...strange,|he should be at the market.");
-    case ^fluffs_paid_boy:
+    case ^fluffs_paid_boy :
         ~chatplayer("<p,neutral>Hello Gertrude.");
         ~chatnpc("<p,neutral>Hello again, did you manage to find Shilop?|I can't keep an eye on him for the life of me.");
         ~chatplayer("<p,neutral>He does seem quite a handful.");
         ~chatnpc("<p,neutral>You have no idea!|Did he help at all?");
         ~chatplayer("<p,neutral>I think so,|I'm just going to look now.");
         ~chatnpc("<p,neutral>Thanks again, adventurer.");
-    case ^fluffs_gave_milk:
+    case ^fluffs_gave_milk :
         ~chatplayer("<p,happy>Hello again.");
         ~chatnpc("<p,neutral>Hello. How's it going?|Any luck?");
         ~chatplayer("<p,happy>Yes, I've found Fluffs!");
@@ -33,12 +33,12 @@ switch_int (%fluffs_progress) {
         ~chatnpc("<p,sad>Oh dear, oh dear! Maybe she's just hungry.|She loves doogle sardines but I'm all out.");
         ~chatplayer("<p,quiz>Doogle sardines?");
         ~chatnpc("<p,neutral>Yes, raw sardines seasoned with doogle leaves.|Unfortunately I've used all my doogle leaves,|but you may find some in the woods out back.");
-    case ^fluffs_gave_sardine:
+    case ^fluffs_gave_sardine :
         ~chatplayer("<p,neutral>Hi!");
         ~chatnpc("<p,neutral>Hey traveller, did Fluffs eat the sardines?");
         ~chatplayer("<p,neutral>Yeah, she loved them, but she still won't leave.");
         ~chatnpc("<p,confused>Well that is strange, there must be a reason.");
-    case ^fluffs_rescued:
+    case ^fluffs_rescued :
         ~chatplayer("<p,neutral>Hello Gertrude.|Fluffs ran off with her kitten.");
         ~chatnpc("<p,happy>You're back! Thank you! Thank you!|Fluffs just came back!|I think she was just upset|as she couldn't find her kitten."); //imgur.com/lAhzO4q
         ~mesbox("Gertrude gives you a hug.");
@@ -59,7 +59,7 @@ switch_int (%fluffs_progress) {
         %fluffs_progress = ^fluffs_complete;
         %questpoints = calc(%questpoints + ^fluffs_questpoints);
         queue(fluffs_complete, 0);
-    case ^fluffs_complete:
+    case ^fluffs_complete :
         if (getbit_range(%cat_growth, 20, 26) = 100 & inv_total(inv, cat_training_medal) = 0) {
             ~chatplayer("<p,happy>Hello again Gertrude!");
             ~chatnpc("<p,neutral>Well, hello adventurer! How are you?");
@@ -86,7 +86,7 @@ switch_int (%fluffs_progress) {
             ~chatnpc("<p,neutral>Indeed I have.|They are 100 coins each, do you want one?");
             def_int $option = ~p_choice2("Yes please.", 1, "No thanks.", 2);
             switch_int ($option) {
-                case 1:
+                case 1 :
                     if (inv_total(inv, coins) < 100) {
                     ~chatplayer("<p,neutral>Oops, looks like I'm a bit short.|I'll have to come back later.");
                     return;
@@ -97,7 +97,7 @@ switch_int (%fluffs_progress) {
                     inv_del(inv, coins, 100);
                     ~gertrude_give_cat;
                     ~mesbox("Gertrude gives you another kitten.");
-                case 2:
+                case 2 :
                     ~chatplayer("No thanks.");
             }
         }
@@ -125,12 +125,12 @@ if($option = 1) {
 if (inv_totalcat(inv, kitten) = 0 | inv_totalcat(bank, kitten) = 0 | inv_totalcat(inv, cat) = 0 | inv_totalcat(bank, cat) = 0 | npc_finduid(%follower_uid) = false | %follower_obj ! null & oc_category(%follower_obj) ! kitten | %follower_obj ! null & oc_category(%follower_obj) ! cat) {
     def_npc $cat;
     switch_int (random(6)) {
-        case 0: $cat = follower_kitten_greyblack;
-        case 1: $cat = follower_kitten_white;
-        case 2: $cat = follower_kitten_brown;
-        case 3: $cat = follower_kitten_black;
-        case 4: $cat = follower_kitten_greybrown;
-        case 5: $cat = follower_kitten_greyblue;
+        case 0 : $cat = follower_kitten_greyblack;
+        case 1 : $cat = follower_kitten_white;
+        case 2 : $cat = follower_kitten_brown;
+        case 3 : $cat = follower_kitten_black;
+        case 4 : $cat = follower_kitten_greybrown;
+        case 5 : $cat = follower_kitten_greyblue;
     }
     npc_add(coord, $cat, ^max_32bit_int);
     %follower_obj = nc_param($cat, pet_item_id);

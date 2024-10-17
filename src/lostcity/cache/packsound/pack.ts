@@ -10,9 +10,6 @@ export function packClientSound() {
         return;
     }
 
-    //console.log('Packing sounds.jag');
-    //console.time('sounds.jag');
-
     const order = loadOrder('data/src/pack/sound.order');
 
     const jag = new Jagfile();
@@ -31,5 +28,4 @@ export function packClientSound() {
     jag.write('sounds.dat', out);
     jag.save('data/pack/client/sounds', true);
     out.release();
-    //console.timeEnd('sounds.jag');
 }

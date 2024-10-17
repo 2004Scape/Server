@@ -11,7 +11,6 @@ export default class SpotanimType extends ConfigType {
 
     static load(dir: string) {
         if (!fs.existsSync(`${dir}/server/spotanim.dat`)) {
-            console.log('Warning: No spotanim.dat found.');
             return;
         }
 
@@ -23,7 +22,6 @@ export default class SpotanimType extends ConfigType {
     static async loadAsync(dir: string) {
         const file = await fetch(`${dir}/server/spotanim.dat`);
         if (!file.ok) {
-            console.log('Warning: No spotanim.dat found.');
             return;
         }
 

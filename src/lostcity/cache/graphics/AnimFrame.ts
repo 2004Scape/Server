@@ -2,6 +2,7 @@ import Jagfile from '#jagex2/io/Jagfile.js';
 import Packet from '#jagex2/io/Packet.js';
 
 import AnimBase from '#lostcity/cache/graphics/AnimBase.js';
+import { printError } from '#lostcity/util/Logger.js';
 
 export default class AnimFrame {
     static instances: AnimFrame[] = [];
@@ -27,7 +28,7 @@ export default class AnimFrame {
         }
 
         if (!AnimBase.instances.length) {
-            console.error('error: Animation bases must be loaded first');
+            printError('error: Animation bases must be loaded first');
             return;
         }
 

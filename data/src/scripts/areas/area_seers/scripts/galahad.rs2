@@ -38,18 +38,18 @@ if(%grail_progress = ^grail_spoken_crone & inv_total(inv, holy_table_napkin) = 0
     $choice = ~p_choice2("Are you any relation to Sir Galahad?", 1, "Do you get lonely out here on your own?", 2);
 }
 switch_int($choice) {
-    case 1:
+    case 1 :
         ~chatplayer("<p,quiz>Are you any relation to Sir Galahad?");
         ~chatnpc("<p,neutral>I AM Sir Galahad.");
         ~chatnpc("<p,neutral>Although I've retired as a Knight, and now live as a solitary monk. Also, I prefer to be known as brother rather than sir now. Half a moment, your cup of tea is ready.");
-    case 2:
+    case 2 :
         ~chatplayer("<p,neutral>Do you get lonely out here on your own?");
         ~chatnpc("<p,neutral>Sometimes I do, yes. Still not many people to share my solidarity with, as most of the religious men around here are worshippers of Saradomin. Half a moment, your cup of tea is ready.");
-    case 3:
+    case 3 :
         ~chatplayer("<p,neutral>I'm on a quest to find the Holy Grail!");
         ~chatnpc("<p,neutral>Ah... the Grail... yes... that did fill me with wonder! Oh, that I could have stayed forever! The spear, the food, the people...");
         @multi4("So how can I find it?", galahad_how, "What are you talking about?", galahad_what, "Why did you leave?", galahad_why_leave, "Why didn't you bring the Grail with you?", galahad_why_grail);
-    case 4:
+    case 4 :
         ~chatplayer("<p,neutral>I seek an item from the realm of the Fisher King.");
         ~chatnpc("<p,neutral>Funny you should mention that, but when I left there I took this small cloth from the table as a keepsake.");
         @galahad_borrow_cloth;

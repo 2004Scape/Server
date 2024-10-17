@@ -5,9 +5,9 @@
 // click use axe on tree
 [oplocu,_tree]
 switch_obj(last_useitem) {
-    case bronze_axe, iron_axe, steel_axe, black_axe, mithril_axe, adamant_axe, rune_axe : 
+    case bronze_axe, iron_axe, steel_axe, black_axe, mithril_axe, adamant_axe, rune_axe :
         p_oploc(1); // gets delayed by a tick >:(
-    case raw_herring, herring : 
+    case raw_herring, herring :
         mes("This is not the mightiest tree in the forest.");
         return;
     case default : ~displaymessage(^dm_default);
@@ -120,7 +120,7 @@ if (%action_delay = map_clock) {
         stat_advance(woodcutting, db_getfield($data, woodcutting_trees:productexp, 0));
         inv_add(inv, $product, 1);
         if (randominc($deplete_chance) = $deplete_chance) {
-            //TODO: depletion sound?
+            //todo: depletion sound?
             $respawnrate = ~scale_by_playercount($respawnrate);
             loc_change(loc_param(next_loc_stage), $respawnrate);
             // set skill anim so it doesnt continue after depletion
@@ -156,7 +156,7 @@ p_oploc(3);
 [proc,woodcutting_axe_checker]()(namedobj)
 def_int $level = stat(woodcutting);
 def_obj $obj1 = inv_getobj(worn, ^wearpos_rhand);
-// no wc req in 2004, this is also the case in rsc. Heres a guide from 2004 that says so:
+// no wc req in 2004, this is also the case in rsc. Heres a guide from 2004 that says so :
 // https://web.archive.org/web/20040622013913/http://runehq.com/viewguidedb.php?id=00330
 // if (($obj1 = rune_axe | inv_total(inv, rune_axe) > 0) & $level > 40) {
 //     return (rune_axe);

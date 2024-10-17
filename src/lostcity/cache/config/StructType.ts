@@ -11,7 +11,6 @@ export default class StructType extends ConfigType implements ParamHolder {
 
     static load(dir: string) {
         if (!fs.existsSync(`${dir}/server/struct.dat`)) {
-            console.log('Warning: No struct.dat found.');
             return;
         }
 
@@ -22,7 +21,6 @@ export default class StructType extends ConfigType implements ParamHolder {
     static async loadAsync(dir: string) {
         const file = await fetch(`${dir}/server/struct.dat`);
         if (!file.ok) {
-            console.log('Warning: No struct.dat found.');
             return;
         }
 

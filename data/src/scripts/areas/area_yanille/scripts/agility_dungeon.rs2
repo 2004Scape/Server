@@ -15,7 +15,7 @@ if(loc_coord = $end_pipe_coord) {
 }
 ~forcewalk2($start);
 if(%yanille_obstacle_pipe_used >= map_clock) {
-    mes("The pipe is being used"); // TODO: confirm, using the same as gnome course
+    mes("The pipe is being used"); // todo: confirm, using the same as gnome course
     return;
 }
 %yanille_obstacle_pipe_used = calc(map_clock + 4);

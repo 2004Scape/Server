@@ -2,17 +2,17 @@
 if_close;
 if (p_finduid(uid) = true) {
     switch_int(~p_choice4("Join Phoenix", 1, "Join Blackarm", 2, "Tele Phoenix", 3, "Tele Blackarm", 4)) {
-        case 1:
+        case 1 :
             %phoenixgang_progress = ^phoenixgang_complete;
             %blackarmgang_progress = ^blackarmgang_not_started;
             mes("Joined Phoneix gang");
-        case 2:
+        case 2 :
             %phoenixgang_progress = ^phoenixgang_not_started;
             %blackarmgang_progress = ^blackarmgang_complete;
             mes("Joined Blackarm gang");
-        case 3:
+        case 3 :
             p_telejump(0_50_152_46_54);
-        case 4:
+        case 4 :
             p_telejump(0_49_52_49_58);
     }
 } else {
@@ -23,12 +23,12 @@ if (p_finduid(uid) = true) {
 if_close;
 if (p_finduid(uid) = true) {
   switch_int(~p_choice4_header("Start Heros Quest", 1, "Teleports", 2, "Get Items", 3, "Complete Heros Quest", 4, "Hero progress: <tostring(%hero_progress)>")) {
-    case 1:
+    case 1 :
       switch_int(~p_choice2_header("Phoenix", 1, "Blackarm", 2, "Choose a gang")) {
-        case 1:
+        case 1 :
           %blackarmgang_progress = ^blackarmgang_not_started;
           %phoenixgang_progress = ^phoenixgang_complete;
-        case 2:
+        case 2 :
           %blackarmgang_progress = ^blackarmgang_complete;
           %phoenixgang_progress = ^phoenixgang_not_started;
           inv_add(inv, black_platebody, 1);
@@ -49,7 +49,7 @@ if (p_finduid(uid) = true) {
       %arthur_progress = ^arthur_complete;
       p_telejump(0_45_54_24_53);
       mes("Use ::hero further to teleport to quest locations or get required items.");
-    case 2:
+    case 2 :
       def_int $choice = -1;
       def_int $gang_teles;
       if (%phoenixgang_progress >= ^phoenixgang_complete) {
@@ -59,41 +59,41 @@ if (p_finduid(uid) = true) {
       }
       while ($choice < 0) {
         switch_int($choice) {
-          case -1:
+          case -1 :
             $choice = ~p_choice5_header("Hero Guild", 1, "Firebird", 2, "Gerrant (oily fishing rod)", 3, "Lava Eels", 4, "Next.", $gang_teles, "Teleports Page 1");
-          case -2:
+          case -2 :
             $choice = ~p_choice4_header("Blackarm Gang HQ", 5, "Brimhaven HQ", 8, "Brimhaven Mansion", 9, "Prev.", -1, "Teleports Page 2");
-          case -3:
+          case -3 :
             $choice = ~p_choice3_header("Phoenix Gang HQ", 6, "Brimhaven Restaurant", 7, "Prev.", -1, "Teleports Page 2");
         }
       }
       switch_int($choice) {
-        case 1: p_telejump(0_45_54_24_53);
-        case 2: p_telejump(0_44_52_28_55);
-        case 3: p_telejump(0_47_50_5_25);
-        case 4: p_telejump(0_45_152_12_40);
-        case 5: p_telejump(0_49_52_49_58);
-        case 6: p_telejump(0_50_152_46_54);
-        case 7: p_telejump(0_43_49_41_51);
-        case 8: p_telejump(0_43_49_58_34);
-        case 9: p_telejump(0_43_49_21_51);
+        case 1 : p_telejump(0_45_54_24_53);
+        case 2 : p_telejump(0_44_52_28_55);
+        case 3 : p_telejump(0_47_50_5_25);
+        case 4 : p_telejump(0_45_152_12_40);
+        case 5 : p_telejump(0_49_52_49_58);
+        case 6 : p_telejump(0_50_152_46_54);
+        case 7 : p_telejump(0_43_49_41_51);
+        case 8 : p_telejump(0_43_49_58_34);
+        case 9 : p_telejump(0_43_49_21_51);
       }
-    case 3:
+    case 3 :
       switch_int(~p_choice3_header("Black armor", 1, "Oily fishing rod stuff", 2, "Ice gloves", 3, "Choose item set")) {
-        case 1:
+        case 1 :
           inv_add(inv, black_platebody, 1);
           inv_add(inv, black_platelegs, 1);
           inv_add(inv, black_full_helm, 1);
-        case 2:
+        case 2 :
           inv_add(inv, unf_harralander_potion, 1);
           inv_add(inv, fishing_rod, 1);
           inv_add(inv, fishing_bait, 1);
           inv_add(inv, tinderbox, 1);
           inv_add(inv, logs, 1);
-        case 3:
+        case 3 :
           inv_add(inv, ice_gloves, 1);
       }
-    case 4:
+    case 4 :
       queue(hero_quest_complete, 0);
   }
 } else {

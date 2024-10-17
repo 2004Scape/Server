@@ -6,8 +6,6 @@ export const PRELOADED = new Map<string, Uint8Array>();
 export const PRELOADED_CRC = new Map<string, number>();
 
 export function preloadClient() {
-    //console.log('Preloading client data');
-    //console.time('Preloaded client data');
     const allMaps = fs.readdirSync('data/pack/client/maps');
     for (let i = 0; i < allMaps.length; i++) {
         const name = allMaps[i];
@@ -41,13 +39,9 @@ export function preloadClient() {
         PRELOADED.set(name, jingle);
         PRELOADED_CRC.set(name, crc);
     }
-    //console.timeEnd('Preloaded client data');
 }
 
 export async function preloadClientAsync() {
-    //console.log('Preloading client data');
-    //console.time('Preloaded client data');
-
     const fetchAll = async (type: string, name: string) => {
         let data = new Uint8Array(await (await fetch(`data/pack/client/${type}/${name}`)).arrayBuffer());
         if (type === 'jingles') {
@@ -69,5 +63,4 @@ export async function preloadClientAsync() {
         ...jingles.map((name: string) => fetchAll('jingles', name))
     ];
     await Promise.all(allPacks);
-    //console.timeEnd('Preloaded client data');
 }

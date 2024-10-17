@@ -1,20 +1,20 @@
 [queue,prayer_activate](int $prayer)
 switch_int($prayer) {
-    case ^prayer_thickskin: @activate_prayer_thickskin;
-    case ^prayer_strengthburst: @activate_prayer_strengthburst;
-    case ^prayer_clarity: @activate_prayer_clarity;
-    case ^prayer_rockskin: @activate_prayer_rockskin;
-    case ^prayer_superhumanstrength: @activate_prayer_superhumanstrength;
-    case ^prayer_improvedreflexes: @activate_prayer_improvedreflexes;
-    case ^prayer_rapidrestore: @activate_prayer_rapidrestore;
-    case ^prayer_rapidheal: @activate_prayer_rapidheal;
-    case ^prayer_protectitems: @activate_prayer_protectitems;
-    case ^prayer_steelskin: @activate_prayer_steelskin;
-    case ^prayer_ultimatestrength: @activate_prayer_ultimatestrength;
-    case ^prayer_incrediblereflexes: @activate_prayer_incrediblereflexes;
-    case ^prayer_protectfrommagic: @activate_prayer_protectfrommagic;
-    case ^prayer_protectfrommissiles: @activate_prayer_protectfrommissiles;
-    case ^prayer_protectfrommelee: @activate_prayer_protectfrommelee;
+    case ^prayer_thickskin : @activate_prayer_thickskin;
+    case ^prayer_strengthburst : @activate_prayer_strengthburst;
+    case ^prayer_clarity : @activate_prayer_clarity;
+    case ^prayer_rockskin : @activate_prayer_rockskin;
+    case ^prayer_superhumanstrength : @activate_prayer_superhumanstrength;
+    case ^prayer_improvedreflexes : @activate_prayer_improvedreflexes;
+    case ^prayer_rapidrestore : @activate_prayer_rapidrestore;
+    case ^prayer_rapidheal : @activate_prayer_rapidheal;
+    case ^prayer_protectitems : @activate_prayer_protectitems;
+    case ^prayer_steelskin : @activate_prayer_steelskin;
+    case ^prayer_ultimatestrength : @activate_prayer_ultimatestrength;
+    case ^prayer_incrediblereflexes : @activate_prayer_incrediblereflexes;
+    case ^prayer_protectfrommagic : @activate_prayer_protectfrommagic;
+    case ^prayer_protectfrommissiles : @activate_prayer_protectfrommissiles;
+    case ^prayer_protectfrommelee : @activate_prayer_protectfrommelee;
 }
 
 [proc,get_prayer_data](int $prayer)(dbrow)
@@ -148,7 +148,7 @@ return (false);
 [proc,prayer_deactivate](int $prayer)
 def_int $drain = enum(int, int, prayer_drain_effects, $prayer);
 switch_int($prayer) {
-    case ^prayer_thickskin : 
+    case ^prayer_thickskin :
         if (%prayer_thickskin = ^true) %prayer_drain_effect = sub(%prayer_drain_effect, $drain);
         %prayer_thickskin = ^false;
     case ^prayer_strengthburst :

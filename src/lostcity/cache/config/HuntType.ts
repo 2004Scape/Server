@@ -17,7 +17,6 @@ export default class HuntType extends ConfigType {
 
     static load(dir: string) {
         if (!fs.existsSync(`${dir}/server/hunt.dat`)) {
-            console.log('Warning: No hunt.dat found.');
             return;
         }
         const dat = Packet.load(`${dir}/server/hunt.dat`);
@@ -27,7 +26,6 @@ export default class HuntType extends ConfigType {
     static async loadAsync(dir: string) {
         const file = await fetch(`${dir}/server/hunt.dat`);
         if (!file.ok) {
-            console.log('Warning: No hunt.dat found.');
             return;
         }
 

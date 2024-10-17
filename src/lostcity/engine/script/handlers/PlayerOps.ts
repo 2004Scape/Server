@@ -12,7 +12,7 @@ import ServerTriggerType from '#lostcity/engine/script/ServerTriggerType.js';
 
 import { PlayerQueueType, ScriptArgument } from '#lostcity/entity/EntityQueueRequest.js';
 import { PlayerTimerType } from '#lostcity/entity/EntityTimer.js';
-import { isNetworkPlayer } from '#lostcity/entity/NetworkPlayer.js';
+import { isBufferFull, isNetworkPlayer } from '#lostcity/entity/NetworkPlayer.js';
 import { CoordGrid } from '#lostcity/engine/CoordGrid.js';
 import CameraInfo from '#lostcity/entity/CameraInfo.js';
 import Interaction from '#lostcity/entity/Interaction.js';
@@ -147,8 +147,9 @@ const PlayerOps: CommandHandlers = {
     }),
 
     // https://x.com/JagexAsh/status/1694990340669747261
+    // soft-limit for developers to be better aware of the bandwidth used and mitigate the impact on the player experience
     [ScriptOpcode.BUFFER_FULL]: checkedHandler(ActivePlayer, state => {
-        throw new Error('unimplemented');
+        state.pushInt(isBufferFull(state.activePlayer) ? 1 : 0);
     }),
 
     [ScriptOpcode.BUILDAPPEARANCE]: checkedHandler(ActivePlayer, state => {
@@ -965,7 +966,6 @@ const PlayerOps: CommandHandlers = {
         if(state.activePlayer.gender === 1) {
             type -= 7;
         }
-        // console.log(type);
         let colorSlot = -1;
         if (type === 0 || type === 1) {
             colorSlot = 0;

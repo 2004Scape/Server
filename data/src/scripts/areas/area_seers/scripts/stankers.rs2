@@ -1,11 +1,11 @@
 [opnpc1,stankers]
 ~chatnpc("<p,happy>Hello bold adventurer.");
 switch_int(~p_choice2("Are these your trucks?", 1, "Hello Mr. Stankers.", 2)) {
-    case 1:
+    case 1 :
         ~chatplayer("<p,neutral>Are these your trucks?");
         ~chatnpc("<p,happy>Yes, I use them to transport coal over the river.|I will let other people use them too,|I'm a nice person like that...");
         ~chatnpc("<p,happy>Just put coal in a truck and I'll move it down to my depot over the river.");
-    case 2:
+    case 2 :
         ~chatplayer("<p,happy>Hello Mr. Stankers.");
         ~chatnpc("<p,neutral>Would you like a poison chalice?");
         @multi3("Yes please.", stankers_yes, "What's a poison chalice?", stankers_what, "No thank you.", stankers_no);

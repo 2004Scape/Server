@@ -1,11 +1,11 @@
 [opnpc1,sir_percival]
 switch_int(%grail_progress) {
-    case ^grail_finding_percival: @percival_found;
-    case ^grail_given_whistle: ~chatnpc("<p,neutral>I said I will see you there then!");
-    case ^grail_complete:
+    case ^grail_finding_percival : @percival_found;
+    case ^grail_given_whistle : ~chatnpc("<p,neutral>I said I will see you there then!");
+    case ^grail_complete :
         ~chatplayer("<p,quiz>Aren't you supposed to be at the Grail Castle?");
         ~chatnpc("<p,confused>Huh? I think you're confusing me with somebody else...");
-    case default:
+    case default :
         ~chatplayer("<p,neutral>Hello.");
         ~chatnpc("<p,neutral>Hello yourself.");
 }

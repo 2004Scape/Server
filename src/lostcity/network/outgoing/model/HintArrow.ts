@@ -2,7 +2,7 @@ import OutgoingMessage from '#lostcity/network/outgoing/OutgoingMessage.js';
 import ServerProtPriority from '#lostcity/network/outgoing/prot/ServerProtPriority.js';
 
 export default class HintArrow extends OutgoingMessage {
-    priority = ServerProtPriority.LOW; // todo: is HINT_ARROW low or high priority?
+    priority = ServerProtPriority.BUFFERED; // todo: what should priority be?
 
     constructor(
         readonly type: number,

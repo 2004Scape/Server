@@ -10,7 +10,7 @@ if(%grandtree_progress = ^grandtree_released_prison & coordz(coord) > coordz(loc
     ~chatnpc_specific(nc_name(gnome_guard_halberd), gnome_guard_halberd, "<p,neutral>Maybe, but that's the orders, I'm sorry.");
     return;
 }
-if(%grandtree_progress = ^grandtree_obtained_lumber_order & coordz(coord) < coordz(loc_coord)) { // TODO: is this before or after helping femi?
+if(%grandtree_progress = ^grandtree_obtained_lumber_order & coordz(coord) < coordz(loc_coord)) { // todo: is this before or after helping femi?
     ~chatnpc_specific(nc_name(gnome_guard_halberd), gnome_guard_halberd, "<p,neutral>I'm afraid that we have orders not to let you in.");
     ~chatplayer("<p,angry>Orders from who?");
     ~chatnpc_specific(nc_name(gnome_guard_halberd), gnome_guard_halberd, "<p,neutral>The head tree guardian, he say's you're a spy!");

@@ -1,9 +1,9 @@
 [opnpc1,quest_guide]
 switch_int(%tutorial_progress) {
-    case ^quest_guide_start: @quest_guide_start;
+    case ^quest_guide_start : @quest_guide_start;
     case ^quest_guide_open_menu : @quest_guide_menu_not_opened;
-    case ^quest_guide_opened_menu: @quest_guide_journal_info;
-    case default: @quest_guide_recap;
+    case ^quest_guide_opened_menu : @quest_guide_journal_info;
+    case default : @quest_guide_recap;
 }
 
 [label,quest_guide_start]

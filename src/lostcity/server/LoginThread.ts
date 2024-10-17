@@ -12,7 +12,17 @@ import LoginResponse from '#lostcity/server/LoginResponse.js';
 
 import Environment from '#lostcity/util/Environment.js';
 
-if (typeof self === 'undefined') {
+if (Environment.STANDALONE_BUNDLE) {
+    const priv = forge.pki.privateKeyFromPem(await (await fetch('data/config/private.pem')).text());
+
+    self.onmessage = async msg => {
+        try {
+            await handleRequests(self, msg.data, priv);
+        } catch (err) {
+            console.error(err);
+        }
+    };
+} else {
     if (!parentPort) throw new Error('This file must be run as a worker thread.');
 
     const priv = forge.pki.privateKeyFromPem(fs.readFileSync('data/config/private.pem', 'ascii'));
@@ -25,16 +35,6 @@ if (typeof self === 'undefined') {
             console.error(err);
         }
     });
-} else {
-    const priv = forge.pki.privateKeyFromPem(await (await fetch('data/config/private.pem')).text());
-
-    self.onmessage = async msg => {
-        try {
-            await handleRequests(self, msg.data, priv);
-        } catch (err) {
-            console.error(err);
-        }
-    };
 }
 
 const login = new LoginClient();
@@ -182,14 +182,14 @@ async function handleRequests(parentPort: any, msg: any, priv: forge.pki.rsa.Pri
                 let save = new Uint8Array();
                 const safeName = toSafeName(username);
 
-                if (typeof self === 'undefined') {
-                    if (fs.existsSync(`data/players/${safeName}.sav`)) {
-                        save = await fsp.readFile(`data/players/${safeName}.sav`);
-                    }
-                } else {
+                if (Environment.STANDALONE_BUNDLE) {
                     const saveFile = await fetch(`data/players/${safeName}.sav`);
                     if (saveFile.ok) {
                         save = new Uint8Array(await saveFile.arrayBuffer());
+                    }
+                } else {
+                    if (fs.existsSync(`data/players/${safeName}.sav`)) {
+                        save = await fsp.readFile(`data/players/${safeName}.sav`);
                     }
                 }
 

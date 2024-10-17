@@ -66,10 +66,10 @@ if ($random < 34) {
     inv_add(inv, adamant_sq_shield, 1);
 } else if ($random < 111) {
     switch_int (gender) {
-        case ^gender_male:
+        case ^gender_male :
         inv_add(inv, rune_platelegs, 1);        
         
-        case ^gender_female:
+        case ^gender_female :
         inv_add(inv, rune_plateskirt, 1);
     }
 }

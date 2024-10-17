@@ -25,7 +25,6 @@ export default class Component {
 
     static load(dir: string): void {
         if (!fs.existsSync(`${dir}/server/interface.dat`)) {
-            console.log('Warning: No interface.dat found.');
             return;
         }
 
@@ -36,7 +35,6 @@ export default class Component {
     static async loadAsync(dir: string): Promise<void> {
         const file = await fetch(`${dir}/server/interface.dat`);
         if (!file.ok) {
-            console.log('Warning: No interface.dat found.');
             return;
         }
 

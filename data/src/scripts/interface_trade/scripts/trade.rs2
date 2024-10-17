@@ -38,6 +38,9 @@ mes("Sending trade offer...");
 %tradepartner = .uid;
 
 if (.%tradepartner = uid) {
+    if (.p_finduid(.uid) = true) {
+        .p_stopaction;
+    }
     if_settext(trademain:status, "");
     if_settext(trademain:otherplayer, "Trading With: <.displayname>");
     inv_clear(tempinv);

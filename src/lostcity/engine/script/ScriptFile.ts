@@ -3,6 +3,7 @@ import path from 'path';
 import Packet from '#jagex2/io/Packet.js';
 
 import ScriptOpcode from '#lostcity/engine/script/ScriptOpcode.js';
+import Environment from '#lostcity/util/Environment.js';
 
 export interface ScriptInfo {
     scriptName: string;
@@ -136,10 +137,10 @@ export default class ScriptFile {
     }
 
     get fileName() {
-        if (typeof self === 'undefined') {
-            return path.basename(this.info.sourceFilePath);
-        } else {
+        if (Environment.STANDALONE_BUNDLE) {
             return this.info.sourceFilePath.split('/').pop()?.split('\\').pop();
+        } else {
+            return path.basename(this.info.sourceFilePath);
         }
     }
 

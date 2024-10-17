@@ -25,7 +25,7 @@ if ($data = null) {
 }
 def_namedobj $product;
 def_int $max_count;
-// TODO: Tourist trap requirement.
+// todo: Tourist trap requirement.
 $product, $max_count = db_getfield($data, fletching_table:product, 0);
 def_int $level = db_getfield($data, fletching_table:level, 0);
 if (stat(fletching) < $level) {

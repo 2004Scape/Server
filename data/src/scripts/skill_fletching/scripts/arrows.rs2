@@ -14,7 +14,7 @@ switch_obj(last_useitem) {
 
 [opheldu,headless_arrow]
 switch_obj(last_useitem) {
-    case default : 
+    case default :
         if (oc_category(last_useitem) = category_968) {
             @make_arrows(last_useitem);
         } else {

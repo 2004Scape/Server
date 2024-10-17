@@ -48,6 +48,9 @@ mes("Sending duel offer...");
 %duelpartner = .uid;
 
 if (.%duelpartner = uid) {
+    if (.p_finduid(.uid) = true) {
+        .p_stopaction;
+    }
     %duel_settings = 0;
     if_settext(duel_select_type:status, "");
     if_settext(duel_select_type:otherplayer, "Dueling with: <.displayname>");

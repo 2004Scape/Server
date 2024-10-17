@@ -9,9 +9,6 @@ export async function packClientMedia() {
         return;
     }
 
-    //console.log('Packing media.jag');
-    //console.time('media.jag');
-
     const jagOrder = [
         'combatboxes.dat',
         'staticons.dat',
@@ -155,5 +152,4 @@ export async function packClientMedia() {
     for (const packet of Object.values(files)) {
         packet.release();
     }
-    //console.timeEnd('media.jag');
 }

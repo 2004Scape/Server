@@ -3,7 +3,7 @@ import ServerProtPriority from '#lostcity/network/outgoing/prot/ServerProtPriori
 import { ChatModePrivate, ChatModePublic, ChatModeTradeDuel } from '#lostcity/util/ChatModes.js';
 
 export default class ChatFilterSettings extends OutgoingMessage {
-    priority = ServerProtPriority.HIGH;
+    priority = ServerProtPriority.IMMEDIATE;
 
     constructor(
         readonly publicChat: ChatModePublic,

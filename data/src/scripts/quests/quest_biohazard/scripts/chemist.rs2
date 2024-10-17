@@ -4,7 +4,7 @@ if(map_members = false) { // rs3
     return;
 }
 switch_int(%biohazard_progress) {
-    case ^biohazard_spoken_chemist, ^biohazard_found_secret:
+    case ^biohazard_spoken_chemist, ^biohazard_found_secret :
         ~chatplayer("<p,happy>Hello again.");
         ~chatnpc("<p,quiz>Oh hello, do you need more touch paper?");
         if(~obj_gettotal(touch_paper) = 0) {
@@ -17,16 +17,16 @@ switch_int(%biohazard_progress) {
         ~chatplayer("<p,happy>No, I just wanted to say hello.");
         ~chatnpc("<p,confused>Oh.. ok then... hello.");
         ~chatplayer("<p,happy>Hi.");
-    case ^biohazard_given_distillator:
+    case ^biohazard_given_distillator :
         ~chatnpc("<p,neutral>Sorry, I'm afraid we're just closing now. You'll have to come back another time.");
         if(inv_total(inv, plague_sample) = 0) {
             return;
         }
         switch_int(~p_choice2("This can't wait, I'm carrying a plague sample.", 1, "It's ok, I'm Elena's friend.", 2)) {
-            case 1:
+            case 1 :
                 ~chatplayer("<p,neutral>This can't wait, I'm carrying a plague sample that desperately needs analysis.");
                 @chemist_takeplaguesample;
-            case 2:
+            case 2 :
                 ~chatplayer("<p,neutral>It's ok, I'm Elena's friend.");
                 ~chatnpc("<p,neutral>Oh, well that's different then. Must be pretty important to come all this way.");
                 ~chatnpc("<p,quiz>How's everyone doing there anyway? Wasn't there some plague scare?");

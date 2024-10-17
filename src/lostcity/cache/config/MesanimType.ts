@@ -10,7 +10,6 @@ export default class MesanimType extends ConfigType {
 
     static load(dir: string) {
         if (!fs.existsSync(`${dir}/server/mesanim.dat`)) {
-            console.log('Warning: No mesanim.dat found.');
             return;
         }
         const dat = Packet.load(`${dir}/server/mesanim.dat`);
@@ -20,7 +19,6 @@ export default class MesanimType extends ConfigType {
     static async loadAsync(dir: string) {
         const file = await fetch(`${dir}/server/mesanim.dat`);
         if (!file.ok) {
-            console.log('Warning: No mesanim.dat found.');
             return;
         }
 

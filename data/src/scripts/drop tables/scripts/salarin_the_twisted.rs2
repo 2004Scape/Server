@@ -1,5 +1,5 @@
 [ai_queue2,salarin_the_twisted]
-// TODO: seems to be approx 1/6 based off my testing, but try to confirm 
+// todo: seems to be approx 1/6 based off my testing, but try to confirm 
 if(random(6) = 0 & last_int = 0) {
     npc_say("Your pitiful attacks cannot hurt me!");
 }

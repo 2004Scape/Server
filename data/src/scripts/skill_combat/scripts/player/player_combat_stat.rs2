@@ -93,8 +93,8 @@ def_int $ranged_strength = ~combat_stat($effective_ranged, $rangebonus);
 
 // maximum hit with all bonuses applied
 switch_int(%damagetype) {
-    case ^stab_style, ^slash_style, ^crush_style: %com_maxhit = ~combat_maxhit($melee_strength);
-    case ^ranged_style: %com_maxhit = ~combat_maxhit($ranged_strength);
+    case ^stab_style, ^slash_style, ^crush_style : %com_maxhit = ~combat_maxhit($melee_strength);
+    case ^ranged_style : %com_maxhit = ~combat_maxhit($ranged_strength);
 }
 
 // weapon related varps
@@ -196,8 +196,8 @@ def_int $ranged_strength = ~combat_stat($effective_ranged, $rangebonus);
 
 // maximum hit with all bonuses applied
 switch_int(.%damagetype) {
-    case ^stab_style, ^slash_style, ^crush_style: .%com_maxhit = ~combat_maxhit($melee_strength);
-    case ^ranged_style: .%com_maxhit = ~combat_maxhit($ranged_strength);
+    case ^stab_style, ^slash_style, ^crush_style : .%com_maxhit = ~combat_maxhit($melee_strength);
+    case ^ranged_style : .%com_maxhit = ~combat_maxhit($ranged_strength);
 }
 
 // weapon related varps

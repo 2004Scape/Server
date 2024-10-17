@@ -2,8 +2,8 @@
 [opnpc3,_memberfish] @attempt_fish_shark;
 
 // hidden ops
-[opnpc2,_memberfish] @fish_mackerel;
-[opnpc4,_memberfish] @fish_shark;
+[opnpc4,_memberfish] @fish_mackerel;
+[opnpc5,_memberfish] @fish_shark;
 
 [label,attempt_fish_shark]
 // check level 
@@ -32,7 +32,7 @@ if (%action_delay = calc(map_clock + 4)) {
     %skill_anim = calc(map_clock + 7);
     %skill_sound = calc(map_clock + 7);
     anim(human_harpoon, 0);
-    p_opnpc(4);
+    p_opnpc(5);
 } else if (%action_delay = map_clock) { 
     ~fish_roll(raw_shark, null, harpoon, null);
     anim(human_harpoon, 0);
@@ -80,7 +80,7 @@ if (%skill_sound = calc(map_clock + 6)) {
 if (%skill_sound = calc(map_clock + 3)) {
     sound_synth(fishing_cast, 0, 10);
 }
-p_opnpc(4);
+p_opnpc(5);
 
 
 [label,attempt_fish_mackerel]
@@ -111,7 +111,7 @@ if (%action_delay = calc(map_clock + 3)) {
     anim(human_largenet, 0);
     sound_synth(fishing_cast, 0, 15);
     %skill_anim = calc(map_clock + 5);
-    p_opnpc(2);
+    p_opnpc(4);
 } else if (%action_delay = map_clock) { 
     ~fish_roll_big_net;
 }
@@ -153,7 +153,7 @@ if (%skill_anim < map_clock) {
 if (%skill_anim = calc(map_clock + 2)) {
     sound_synth(fishing_cast, 0, 15);
 }
-p_opnpc(2);
+p_opnpc(4);
 
 [proc,fish_roll_big_net]
 if (npc_param(is_whirlpool) = ^true) {

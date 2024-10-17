@@ -2,6 +2,7 @@ import fs from 'fs';
 
 import Jagfile from '#jagex2/io/Jagfile.js';
 import { loadPack } from '#lostcity/util/NameMap.js';
+import { printWarning } from '#lostcity/util/Logger.js';
 
 const pack = loadPack('data/src/pack/interface.pack');
 const objPack = loadPack('data/src/pack/obj.pack');
@@ -331,7 +332,7 @@ function convert(com: Component, x = 0, y = 0, lastCom = -1) {
 
     if (com.id === com.rootLayer) {
         if (!com.childId) {
-            console.error('Warning: no children for root layer', com.id);
+            printWarning('no children for root layer ' + com.id);
             return '';
         }
 

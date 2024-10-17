@@ -3,9 +3,9 @@
 
 [label,outpost_guard_talk]
 switch_int(%barcrawl_progress) {
-    case 0: @outpost_guard_start;
-    case 2: ~chatnpc("<p,happy>'Ello friend.");
-    case default: @outpost_guard_progress;
+    case 0 : @outpost_guard_start;
+    case 2 : ~chatnpc("<p,happy>'Ello friend.");
+    case default : @outpost_guard_progress;
 }
 
 [label,outpost_guard_start]

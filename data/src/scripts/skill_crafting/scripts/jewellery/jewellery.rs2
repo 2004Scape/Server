@@ -271,8 +271,8 @@ if (afk_event = ^true) {
     return;
 }
 switch_int ($choice) {
-    case 1: $product = unstrung_symbol;
-    case 2: $product = unstrung_emblem;
+    case 1 : $product = unstrung_symbol;
+    case 2 : $product = unstrung_emblem;
 }
 
 def_struct $struct = oc_param($product, crafting_jewelry_struct);

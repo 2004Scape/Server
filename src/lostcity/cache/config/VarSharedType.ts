@@ -3,6 +3,7 @@ import fs from 'fs';
 import Packet from '#jagex2/io/Packet.js';
 import { ConfigType } from '#lostcity/cache/config/ConfigType.js';
 import ScriptVarType from '#lostcity/cache/config/ScriptVarType.js';
+import { printError } from '#lostcity/util/Logger.js';
 
 export default class VarSharedType extends ConfigType {
     private static configNames = new Map<string, number>();
@@ -10,7 +11,6 @@ export default class VarSharedType extends ConfigType {
 
     static load(dir: string) {
         if (!fs.existsSync(`${dir}/server/vars.dat`)) {
-            console.log('Warning: No vars.dat found.');
             return;
         }
 
@@ -21,7 +21,6 @@ export default class VarSharedType extends ConfigType {
     static async loadAsync(dir: string) {
         const file = await fetch(`${dir}/server/vars.dat`);
         if (!file.ok) {
-            console.log('Warning: No vars.dat found.');
             return;
         }
 
@@ -81,7 +80,7 @@ export default class VarSharedType extends ConfigType {
                 this.debugname = dat.gjstr();
                 break;
             default:
-                console.error(`Unrecognized vars config code: ${code}`);
+                printError(`Unrecognized vars config code: ${code}`);
                 break;
         }
     }

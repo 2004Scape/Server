@@ -24,7 +24,7 @@ p_delay(2);
 %glider_takeoff = -1;
 if_close;
 
-[proc,calc_gliderstart](coord)
+[proc,calc_gliderstart]()(coord)
 if(inzone(movecoord(^ta_quir_priw, -8, 0, -8), movecoord(^ta_quir_priw, 8, 0, 8), coord) = true) {
     return (^ta_quir_priw);
 } else if(inzone(movecoord(^gandius, -8, 0, -8), movecoord(^gandius, 8, 0, 8), coord) = true) {
@@ -69,7 +69,7 @@ if(%grandtree_progress = ^grandtree_released_prison & inzone(3_38_54_31_43, 3_38
     ~chatnpc("<p,neutral>So where to?");
     switch_int(~p_choice2("Take me to Karamja please!", 1, "Not anywhere for now!", 2)) {
         // https://youtu.be/LFvLBRCxFwk?si=LoGnAkbVhdKeQtU0&t=689
-        case 1:
+        case 1 :
             ~chatplayer("<p,happy>Take me to Karamja please!");
             ~chatnpc("<p,happy>OK! You're the boss!|Hold on tight, it'll be a rough ride!");
             if_close;
@@ -85,7 +85,7 @@ if(%grandtree_progress = ^grandtree_released_prison & inzone(3_38_54_31_43, 3_38
             ~chatnpc("<p,neutral>I think I saw some buildings on the coast east of here while we were crashing. I'd have a look there.");
             ~chatnpc("<p,neutral>Take care adventurer!");
             ~chatplayer("<p,neutral>Take care little man.");
-        case 2:
+        case 2 :
             ~chatplayer("<p,neutral>Not anywhere for now!");
             ~chatnpc("<p,neutral>OK. I'll be here for when you're ready.");
     }

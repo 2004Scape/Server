@@ -1,9 +1,9 @@
 [opnpc1,councillor_halgrive]
 switch_int(%sheepherder_progress) {
-    case ^sheepherder_not_started: @halgrive_before_sheep_herder;
-    case ^sheepherder_tasked_with_talking_to_dr_orbon: @halgrive_before_obtaining_plague_gear;
-    case ^sheepherder_tasked_with_disposing_of_sheep: @halgrive_before_incinerating_sheep;
-    case ^sheepherder_complete: @halgrive_after_sheep_herder;
+    case ^sheepherder_not_started : @halgrive_before_sheep_herder;
+    case ^sheepherder_tasked_with_talking_to_dr_orbon : @halgrive_before_obtaining_plague_gear;
+    case ^sheepherder_tasked_with_disposing_of_sheep : @halgrive_before_incinerating_sheep;
+    case ^sheepherder_complete : @halgrive_after_sheep_herder;
 }
 
 [label,halgrive_before_sheep_herder]

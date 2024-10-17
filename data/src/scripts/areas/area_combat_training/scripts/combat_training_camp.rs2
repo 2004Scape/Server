@@ -4,15 +4,12 @@
 ~chatnpc("<p,neutral>So, are you looking to buy weapons?|King Lathas keeps us very well stocked.");
 def_int $option = ~p_choice2("What do you have?", 0, "No thanks.", 1);
 switch_int ($option) {
-    case 0: {
+    case 0 :
         ~chatplayer("<p,quiz>What do you have?");
         ~chatnpc("<p,happy>Take a look.");
         ~openshop_activenpc;
-    }
-
-    case 1: {
+    case 1 :
         ~chatplayer("<p,neutral>No thanks.");
-    }
 }
 
 // Mace Guard

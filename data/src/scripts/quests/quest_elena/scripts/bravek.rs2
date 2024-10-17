@@ -1,14 +1,14 @@
 [opnpc1,bravek]
 switch_int(%elena_progress) {
-    case ^quest_elena_spoke_to_clerk: @bravek_my_head_hurts;
-    case ^quest_elena_spoke_to_bravek: @bravek_give_hangover_cure;
-    case ^quest_elena_spoke_cured_bravek: @bravek_thanks_again_for_the_hangover_cure;
-    case ^quest_elena_freed_elena, ^elena_complete, ^elena_complete_read_scroll: @bravek_thanks_again_for_the_hangover_cure;
+    case ^quest_elena_spoke_to_clerk : @bravek_my_head_hurts;
+    case ^quest_elena_spoke_to_bravek : @bravek_give_hangover_cure;
+    case ^quest_elena_spoke_cured_bravek : @bravek_thanks_again_for_the_hangover_cure;
+    case ^quest_elena_freed_elena, ^elena_complete, ^elena_complete_read_scroll : @bravek_thanks_again_for_the_hangover_cure;
 }
 
 [opnpcu,bravek]
 switch_obj(last_useitem) {
-    case hangover_cure: @bravek_give_hangover_cure;
+    case hangover_cure : @bravek_give_hangover_cure;
 }
 
 [label,bravek_my_head_hurts]
@@ -23,7 +23,7 @@ switch_obj(last_useitem) {
 [label,bravek_thanks_again_for_the_hangover_cure]
 ~chatnpc("<p,happy>Thanks again for the hangover cure.");
 switch_int(%elena_progress) {
-    case ^quest_elena_spoke_cured_bravek: {
+    case ^quest_elena_spoke_cured_bravek :
         if (inv_total(inv, elena_warrant) > 0) {
             ~chatplayer("<p,happy>Not a problem, happy to help out.");
             ~chatnpc("<p,happy>I'm just having a little drop of whisky, then I'll feel really good.");
@@ -32,11 +32,9 @@ switch_int(%elena_progress) {
             ~chatplayer("<p,shock>I need to rescue <nc_name(elena)>. She's now a kidnap victim! She's being held in a plague house, I need permission to enter.");
             @bravek_well_the_mourners_deal_with_that_sort_of_thing;
         }
-    }
-    case default: {
+    case default :
         ~chatplayer("<p,happy>Not a problem, happy to help out.");
         ~chatnpc("<p,happy>I'm just having a little drop of whisky, then I'll feel really good.");
-    }
 }
 
 [label,bravek_okay_goodbye]

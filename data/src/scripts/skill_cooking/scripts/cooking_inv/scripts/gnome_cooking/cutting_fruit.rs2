@@ -2,8 +2,8 @@
 switch_obj(last_useitem) {
     case lemon, orange, lime, pineapple : @slice_or_dice_interface(last_useitem);
     case achey_logs : @make_ogre_shafts;
-    case dramenbranch: @cut_dramenstaff;
-    case default : 
+    case dramenbranch : @cut_dramenstaff;
+    case default :
         if (oc_category(last_useitem) = category_22) {
             @fletch_log(last_useitem);
         } else {

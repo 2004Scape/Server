@@ -2,18 +2,18 @@
 def_int $x = 0;
 def_int $z = 0;
 switch_int($angle) {
-    case ^loc_west: $z = -1;
-    case ^loc_north: $x = -1;
-    case ^loc_east: $z = 1;
-    case ^loc_south: $x = 1;
+    case ^loc_west : $z = -1;
+    case ^loc_north : $x = -1;
+    case ^loc_east : $z = 1;
+    case ^loc_south : $x = 1;
 }
 
 if($outer = true) {
     switch_int($angle) {
-        case ^loc_west: return (calc($x + 1), $z);
-        case ^loc_north: return ($x, calc($z - 1));
-        case ^loc_east: return (calc($x - 1), $z);
-        case ^loc_south: return ($x, calc($z + 1));
+        case ^loc_west : return (calc($x + 1), $z);
+        case ^loc_north : return ($x, calc($z - 1));
+        case ^loc_east : return (calc($x - 1), $z);
+        case ^loc_south : return ($x, calc($z + 1));
     }   
 }
 return($x, $z);
@@ -22,10 +22,10 @@ return($x, $z);
 def_int $x = 0;
 def_int $z = 0;
 switch_int($angle) {
-    case ^loc_west: $x = -1;
-    case ^loc_north: $z = 1;
-    case ^loc_east: $x = 1;
-    case ^loc_south: $z = -1;
+    case ^loc_west : $x = -1;
+    case ^loc_north : $z = 1;
+    case ^loc_east : $x = 1;
+    case ^loc_south : $z = -1;
 }
 return(calc($x * $mod), calc($z * $mod));
 
@@ -35,10 +35,10 @@ if($outer = true) {
     $dir = -1;
 }
 switch_int($angle) {
-    case ^loc_west: return (movecoord($main_coord, 0, 0, calc($dir * 1)));
-    case ^loc_north: return (movecoord($main_coord, calc($dir * 1), 0, 0));
-    case ^loc_east: return (movecoord($main_coord, 0, 0, calc($dir * -1)));
-    case ^loc_south: return (movecoord($main_coord, calc($dir * -1), 0, 0));
+    case ^loc_west : return (movecoord($main_coord, 0, 0, calc($dir * 1)));
+    case ^loc_north : return (movecoord($main_coord, calc($dir * 1), 0, 0));
+    case ^loc_east : return (movecoord($main_coord, 0, 0, calc($dir * -1)));
+    case ^loc_south : return (movecoord($main_coord, calc($dir * -1), 0, 0));
 }   
 return ($main_coord);
 
@@ -47,7 +47,7 @@ def_int $orig_angle = loc_angle;
 def_coord $orig_coord = loc_coord;
 def_coord $main_open = ~movecoord_loc_return(~gate_set_close($orig_angle, 1));
 def_coord $outer_open = ~movecoord_loc_return(~gate_set_close($orig_angle, 2));
-//TODO: Figure out if these use door_open/close, the gate sounds werent added until ~2005?
+//todo: Figure out if these use door_open/close, the gate sounds werent added until ~2005?
 sound_synth(door_open, 0, 0); 
 loc_del(500);
 loc_add($main_open, loc_param(next_loc_stage), modulo(add(loc_angle, 3), 4), wall_straight, 500);

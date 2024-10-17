@@ -3,6 +3,7 @@ import kleur from 'kleur';
 
 import Jagfile from '#jagex2/io/Jagfile.js';
 import Packet from '#jagex2/io/Packet.js';
+import { printError } from '#lostcity/util/Logger.js';
 
 // O(sqrt(n))
 function isPrime(num: number) {
@@ -145,7 +146,7 @@ export default class Pix {
         }
 
         if (sheetWidth * sheetHeight != count) {
-            console.error(kleur.red('error:'), kleur.white('wrong spritesheet size! you may have to manually define its dimensions:'), kleur.red(sheetWidth + ' x ' + sheetHeight + ' != ' + count));
+            printError('wrong spritesheet size! you may have to manually define its dimensions: ' + kleur.red(sheetWidth + ' x ' + sheetHeight + ' != ' + count));
             return null;
         }
 

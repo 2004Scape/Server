@@ -1,13 +1,13 @@
 [oploc1,brimhaven_mansion_door]
 if (%hero_progress >= ^hero_blackarm_mansion_unlocked & %blackarmgang_progress >= ^blackarmgang_complete) {
-  // TODO - check if wearing black armor?
+  // todo - check if wearing black armor?
   ~open_and_close_door(loc_type, ~check_axis(coord, loc_coord, loc_angle), false);
   return;
 }
 @attempt_open_brimhaven_mansion_door;
 
 [oploc1,grips_cupboard_closed]
-loc_change(grips_cupboard_opened, 500); // TODO - how long to keep open?
+loc_change(grips_cupboard_opened, 500); // todo - how long to keep open?
 @summon_grip;
 
 [oploc1,grips_cupboard_opened]
@@ -18,14 +18,14 @@ if (npc_find(coord, pirate_guard, 4, 0) = true) {
   facesquare(npc_coord);
   ~chatnpc("<p,neutral>I don't think Mr Grip will like you opening that. That's his private drinking cabinet.");
   switch_int(~p_choice2("He won't notice me having a quick look.", 1, "Ok, I'll leave it.", 2)) {
-    case 1:
+    case 1 :
       ~chatplayer("<p,neutral>He won't notice me having a quick look.");
       if (npc_find(coord, grip, 12, 0) = true) {
         npc_walk(0_43_49_25_62);
         npc_say("Stay out of my drinks cabinet!");
         npc_queue(10, 0, 1);
       }
-    case 2:
+    case 2 :
       ~chatplayer("<p,neutral>Ok, I'll leave it.");
   }
 }
@@ -57,7 +57,7 @@ mes("The door is locked.");
 [oplocu,scarface_pete_trophy_room_door]
 if (last_useitem = grips_keyring) {
   if (%hero_progress < ^hero_blackarm_id_papers_given) {
-    // TODO - need dialogue if you try opening door without progressing correctly
+    // todo - need dialogue if you try opening door without progressing correctly
     mes("The key doesn't fit.");
   } else {
     mes("Grip's key unlocks the door.");
@@ -69,7 +69,7 @@ if (last_useitem = grips_keyring) {
 
 [oploc1,scarface_pete_candlestick_chest]
 mes("You open the chest.");
-loc_change(scarface_pete_candlestick_chest_open, 500); // TODO - how long to keep open?
+loc_change(scarface_pete_candlestick_chest_open, 500); // todo - how long to keep open?
 
 [oploc1,scarface_pete_candlestick_chest_open]
 if (~obj_gettotal(petes_candlestick) > 0) {

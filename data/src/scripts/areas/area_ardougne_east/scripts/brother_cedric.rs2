@@ -1,12 +1,12 @@
 [opnpc1,brother_cedric]
 switch_int (%drunkmonk_progress) {
-    case ^drunkmonk_looking_cedric: @cedric_okay;
-    case ^drunkmonk_finding_water: @cedric_need_water;
-    case ^drunkmonk_given_water: @cedric_fix_cart;
-    case ^drunkmonk_fixing_cart: @cedric_get_wood;
-    case ^drunkmonk_fixed_cart: @cedric_almost_done;
-    case ^drunkmonk_complete: ~chatnpc("<p,happy>Brother Omad sends you his thanks! He won't be in a fit state to thank you in person.");
-    case default: @cedric_default;
+    case ^drunkmonk_looking_cedric : @cedric_okay;
+    case ^drunkmonk_finding_water : @cedric_need_water;
+    case ^drunkmonk_given_water : @cedric_fix_cart;
+    case ^drunkmonk_fixing_cart : @cedric_get_wood;
+    case ^drunkmonk_fixed_cart : @cedric_almost_done;
+    case ^drunkmonk_complete : ~chatnpc("<p,happy>Brother Omad sends you his thanks! He won't be in a fit state to thank you in person.");
+    case default : @cedric_default;
 }
 
 [label,cedric_default]

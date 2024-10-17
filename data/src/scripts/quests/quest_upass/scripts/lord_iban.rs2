@@ -2,14 +2,14 @@
 npc_facesquare(movecoord(npc_coord, 8, 0, 0));
 npc_anim(ibansboltcasting, 0);
 switch_int(random(8)) {
-    case 0: npc_say("Begone from my temple!");
-    case 1: npc_say("Fool!");
-    case 2: npc_say("I'll swallow your soul!");
-    case 3: npc_say("You belong in the slave pits!");
-    case 4: npc_say("You will die, frail mortal.");
-    case 5: npc_say("You dare to defy me?!?");
-    case 6: npc_say("Who dares desecrate my temple!");
-    case 7: npc_say("I am the great Iban, I cannot die!");
+    case 0 : npc_say("Begone from my temple!");
+    case 1 : npc_say("Fool!");
+    case 2 : npc_say("I'll swallow your soul!");
+    case 3 : npc_say("You belong in the slave pits!");
+    case 4 : npc_say("You will die, frail mortal.");
+    case 5 : npc_say("You dare to defy me?!?");
+    case 6 : npc_say("Who dares desecrate my temple!");
+    case 7 : npc_say("I am the great Iban, I cannot die!");
 }
 def_int $i = 0;
 def_int $j = 0;

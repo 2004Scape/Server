@@ -11,7 +11,6 @@ export default class IdkType extends ConfigType {
 
     static load(dir: string) {
         if (!fs.existsSync(`${dir}/server/idk.dat`)) {
-            console.log('Warning: No idk.dat found.');
             return;
         }
 
@@ -23,7 +22,6 @@ export default class IdkType extends ConfigType {
     static async loadAsync(dir: string) {
         const file = await fetch(`${dir}/server/idk.dat`);
         if (!file.ok) {
-            console.log('Warning: No idk.dat found.');
             return;
         }
 

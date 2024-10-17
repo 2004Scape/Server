@@ -1,0 +1,9 @@
+[proc,combat_clearqueue]
+clearqueue(playerhit_n_retaliate);
+clearqueue(damage_player);
+clearqueue(pvp_damage);
+
+[proc,.combat_clearqueue]
+.clearqueue(playerhit_n_retaliate);
+.clearqueue(damage_player);
+.clearqueue(pvp_damage);

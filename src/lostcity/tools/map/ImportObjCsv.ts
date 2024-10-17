@@ -2,6 +2,7 @@ import fs from 'fs';
 import { basename } from 'path';
 
 import { loadDir } from '#lostcity/util/Parse.js';
+import { printFatalError, printInfo } from '#lostcity/util/Logger.js';
 
 let allObjs: {
     id: number;
@@ -16,8 +17,7 @@ let allObjs: {
 
 const args = process.argv.slice(2);
 if (args.length !== 1) {
-    console.log('Usage: ImportObjCsv.js <obj_csv_file>');
-    process.exit(1);
+    printFatalError('Usage: ImportObjCsv.js <obj_csv_file>');
 }
 
 const objList = fs
@@ -91,6 +91,6 @@ loadDir('data/src/maps', (lines: string[], file: string) => {
 });
 
 if (allObjs.length > 0) {
-    console.log(`Leftover objs: ${allObjs.length}`);
+    printInfo(`${allObjs.length} leftover objs:`);
     console.log(allObjs);
 }

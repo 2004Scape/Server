@@ -18,7 +18,6 @@ export default class InvType extends ConfigType {
 
     static load(dir: string) {
         if (!fs.existsSync(`${dir}/server/inv.dat`)) {
-            console.log('Warning: No inv.dat found.');
             return;
         }
 
@@ -29,7 +28,6 @@ export default class InvType extends ConfigType {
     static async loadAsync(dir: string) {
         const file = await fetch(`${dir}/server/inv.dat`);
         if (!file.ok) {
-            console.log('Warning: No inv.dat found.');
             return;
         }
 

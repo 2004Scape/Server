@@ -178,89 +178,89 @@ if (%tutorial_progress = 2) {
 switch_int(%tutorial_progress) {
     // Runescape Guide's House
     case ^runescape_guide_start,
-        ^runescape_guide_designed_character: ~tutorial_step_getting_started;
+        ^runescape_guide_designed_character : ~tutorial_step_getting_started;
     // Not Relelvant until October 2006
-    case 2: ~tutorial_step_player_controls_spanner;
-    case 3: ~tutorial_step_player_controls_left_click;
-    case ^runescape_guide_interact_with_scenery: ~tutorial_step_interact_with_scenery;
-    case ^runescape_guide_interacted_with_door: ~tutorial_step_moving_around;
+    case 2 : ~tutorial_step_player_controls_spanner;
+    case 3 : ~tutorial_step_player_controls_left_click;
+    case ^runescape_guide_interact_with_scenery : ~tutorial_step_interact_with_scenery;
+    case ^runescape_guide_interacted_with_door : ~tutorial_step_moving_around;
 
     // Survival Tutor
-    case ^survival_guide_open_inventory: ~tutorial_step_view_inventory;
-    case ^survival_guide_cut_tree: ~tutorial_step_cut_tree;
-    case ^survival_guide_build_fire: ~tutorial_step_build_fire;
-    case ^survival_guide_open_skill_menu: ~tutorial_step_you_gained_experience;
-    case ^survival_guide_opened_skill_menu: ~tutorial_step_view_stats;
-    case ^survival_guide_fish_shrimps: ~tutorial_step_catch_shrimp;
-    case ^survival_guide_cook_shrimps: ~tutorial_step_cook_shrimp;
-    case ^survival_guide_burnt_shrimps: ~tutorial_step_burn_shrimp;
-    case ^survival_guide_complete: ~tutorial_step_survival_recap;
+    case ^survival_guide_open_inventory : ~tutorial_step_view_inventory;
+    case ^survival_guide_cut_tree : ~tutorial_step_cut_tree;
+    case ^survival_guide_build_fire : ~tutorial_step_build_fire;
+    case ^survival_guide_open_skill_menu : ~tutorial_step_you_gained_experience;
+    case ^survival_guide_opened_skill_menu : ~tutorial_step_view_stats;
+    case ^survival_guide_fish_shrimps : ~tutorial_step_catch_shrimp;
+    case ^survival_guide_cook_shrimps : ~tutorial_step_cook_shrimp;
+    case ^survival_guide_burnt_shrimps : ~tutorial_step_burn_shrimp;
+    case ^survival_guide_complete : ~tutorial_step_survival_recap;
 
     // Master Chef
     case ^tutorial_opened_gate_to_chef : ~tutorial_step_go_to_chef;
-    case ^chef_start: ~tutorial_step_talk_to_chef;
-    case ^chef_make_dough: ~tutorial_step_make_dough;
-    case ^chef_mixed_dough: ~tutorial_step_cooking_dough;
-    case ^chef_baked_bread: ~tutorial_step_click_music_player;
-    case ^chef_opened_music_tab: ~tutorial_step_music_player;
-    case ^chef_completed: ~tutorial_step_click_run_icon;
-    case ^tutorial_open_player_controls: ~tutorial_step_enable_run;
+    case ^chef_start : ~tutorial_step_talk_to_chef;
+    case ^chef_make_dough : ~tutorial_step_make_dough;
+    case ^chef_mixed_dough : ~tutorial_step_cooking_dough;
+    case ^chef_baked_bread : ~tutorial_step_click_music_player;
+    case ^chef_opened_music_tab : ~tutorial_step_music_player;
+    case ^chef_completed : ~tutorial_step_click_run_icon;
+    case ^tutorial_open_player_controls : ~tutorial_step_enable_run;
 
     // Quest Guide
-    case ^tutorial_has_toggled_on_run: ~tutorial_step_enter_quest_guide_house;
+    case ^tutorial_has_toggled_on_run : ~tutorial_step_enter_quest_guide_house;
     case ^quest_guide_start : ~tutorial_step_talk_to_quest_guide;
-    case ^quest_guide_open_menu: ~tutorial_step_open_quest_journal;
-    case ^quest_guide_opened_menu: ~tutorial_step_quest_journal;
-    case ^quest_guide_finished: ~tutorial_step_enter_mine;
+    case ^quest_guide_open_menu : ~tutorial_step_open_quest_journal;
+    case ^quest_guide_opened_menu : ~tutorial_step_quest_journal;
+    case ^quest_guide_finished : ~tutorial_step_enter_mine;
 
     // Mining Instructor
-    case ^mining_instructor_start: ~tutorial_step_talk_to_mining_instructor;
+    case ^mining_instructor_start : ~tutorial_step_talk_to_mining_instructor;
     case ^mining_instructor_begin_prospecting,
         ^mining_instructor_prospected_copper_first,
         ^mining_instructor_prospected_tin_first,
         ^mining_instructor_prospected_tin_second,
-        ^mining_instructor_prospected_copper_second: ~tutorial_step_prospect_rocks;
+        ^mining_instructor_prospected_copper_second : ~tutorial_step_prospect_rocks;
     // rework all these steps to go up to 310?
     case ^mining_instructor_mining_start,
         ^mining_instructor_minted_copper_first,
-        ^mining_instructor_mined_tin_first: ~tutorial_step_mining;
-    case ^mining_instructor_before_smelt_bronze_bar: ~tutorial_step_smelting;
-    case ^mining_instructor_after_smelt_bronze_bar: ~tutorial_step_bronze_bar;
-    case ^mining_instructor_smith_a_dagger: ~tutorial_step_smithing_a_dagger;
-    case ^mining_instructor_finished: ~tutorial_step_mining_instructor_finished;
-    case ^combat_instructor_start: ~tutorial_step_combat;
-    case ^combat_instructor_wielding_weapons: ~tutorial_step_wielding_weapons;
-    case ^combat_instructor_worn_inventory: ~tutorial_step_worn_inventory;
-    case ^combat_instructor_dagger_equipped: ~tutorial_step_dagger_equipped;
-    case ^combat_instructor_unequipping_items: ~tutorial_step_unequipping_items;
-    case ^combat_instructor_open_combat_interface: ~tutorial_step_open_combat_interface;
-    case ^combat_instructor_opened_combat_interface: ~tutorial_step_opened_combat_interface;
-    case ^combat_instructor_before_attacking_melee: ~tutorial_step_attacking_melee;
-    case ^combat_instructor_during_attacking_melee: ~tutorial_step_sit_back_and_watch_melee;
-    case ^combat_instructor_after_rat_kill_melee: ~tutorial_step_first_kill_melee;
-    case ^combat_instructor_before_attacking_ranged: ~tutorial_step_rat_ranging;
-    case ^combat_instructor_after_attacking_ranged: ~tutorial_step_combat_moving_on;
+        ^mining_instructor_mined_tin_first : ~tutorial_step_mining;
+    case ^mining_instructor_before_smelt_bronze_bar : ~tutorial_step_smelting;
+    case ^mining_instructor_after_smelt_bronze_bar : ~tutorial_step_bronze_bar;
+    case ^mining_instructor_smith_a_dagger : ~tutorial_step_smithing_a_dagger;
+    case ^mining_instructor_finished : ~tutorial_step_mining_instructor_finished;
+    case ^combat_instructor_start : ~tutorial_step_combat;
+    case ^combat_instructor_wielding_weapons : ~tutorial_step_wielding_weapons;
+    case ^combat_instructor_worn_inventory : ~tutorial_step_worn_inventory;
+    case ^combat_instructor_dagger_equipped : ~tutorial_step_dagger_equipped;
+    case ^combat_instructor_unequipping_items : ~tutorial_step_unequipping_items;
+    case ^combat_instructor_open_combat_interface : ~tutorial_step_open_combat_interface;
+    case ^combat_instructor_opened_combat_interface : ~tutorial_step_opened_combat_interface;
+    case ^combat_instructor_before_attacking_melee : ~tutorial_step_attacking_melee;
+    case ^combat_instructor_during_attacking_melee : ~tutorial_step_sit_back_and_watch_melee;
+    case ^combat_instructor_after_rat_kill_melee : ~tutorial_step_first_kill_melee;
+    case ^combat_instructor_before_attacking_ranged : ~tutorial_step_rat_ranging;
+    case ^combat_instructor_after_attacking_ranged : ~tutorial_step_combat_moving_on;
 
-    case ^tutorial_open_banking: ~tutorial_step_banking;
-    case ^tutorial_opened_bank: ~tutorial_step_this_is_your_bank_box;
-    case ^tutorial_opened_financial_advisor_door: ~tutorial_step_financial_advisor;
-    case ^financial_advisor_talked_to: ~tutorial_financial_advisor_continue_through_door;
-    case ^tutorial_exit_financial_advisors_room: ~tutorial_to_the_chapel;
+    case ^tutorial_open_banking : ~tutorial_step_banking;
+    case ^tutorial_opened_bank : ~tutorial_step_this_is_your_bank_box;
+    case ^tutorial_opened_financial_advisor_door : ~tutorial_step_financial_advisor;
+    case ^financial_advisor_talked_to : ~tutorial_financial_advisor_continue_through_door;
+    case ^tutorial_exit_financial_advisors_room : ~tutorial_to_the_chapel;
 
-    case ^brother_brace_open_prayer_tab: ~tutorial_your_prayer_menu;
-    case ^brother_brace_opened_prayer_tab: ~tutorial_your_prayer_menu_post_click;
-    case ^brother_brace_after_prayer_tab: ~tutorial_friends_tab;
-    case ^brother_brace_open_friends_tab: ~tutorial_ignore_tab;
-    case ^brother_brace_after_friends_tab: ~tutorial_your_ignore_list;
-    case ^brother_brace_finish: ~tutorial_your_final_instructor;
+    case ^brother_brace_open_prayer_tab : ~tutorial_your_prayer_menu;
+    case ^brother_brace_opened_prayer_tab : ~tutorial_your_prayer_menu_post_click;
+    case ^brother_brace_after_prayer_tab : ~tutorial_friends_tab;
+    case ^brother_brace_open_friends_tab : ~tutorial_ignore_tab;
+    case ^brother_brace_after_friends_tab : ~tutorial_your_ignore_list;
+    case ^brother_brace_finish : ~tutorial_your_final_instructor;
 
-    case ^tutorial_exit_chapel: ~tutorial_your_final_instructor_2;
-    case ^tutorial_open_magic_tab: ~tutorial_open_your_final_menu;
-    case ^tutorial_cast_wind_strike: ~tutorial_cast_wind_strike;
-    case ^tutorial_unsuccessful_wind_strike: ~tutorial_cast_wind_strike_splash;
-    case ^tutorial_successful_wind_strike: ~tutorial_cast_wind_strike_success;
-    case ^magic_instructor_finished: ~tutorial_cast_wind_strike_success;
-    case default: ~tutorialstep("Oops! Unhandled Tutorial Step.", "Please contact a server admin for assistance.||tutorial_progress value <tostring(%tutorial_progress)>");
+    case ^tutorial_exit_chapel : ~tutorial_your_final_instructor_2;
+    case ^tutorial_open_magic_tab : ~tutorial_open_your_final_menu;
+    case ^tutorial_cast_wind_strike : ~tutorial_cast_wind_strike;
+    case ^tutorial_unsuccessful_wind_strike : ~tutorial_cast_wind_strike_splash;
+    case ^tutorial_successful_wind_strike : ~tutorial_cast_wind_strike_success;
+    case ^magic_instructor_finished : ~tutorial_cast_wind_strike_success;
+    case default : ~tutorialstep("Oops! Unhandled Tutorial Step.", "Please contact a server admin for assistance.||tutorial_progress value <tostring(%tutorial_progress)>");
 }
 
 [label,tutorial_island_equip](int $slot)

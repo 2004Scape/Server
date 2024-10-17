@@ -2,9 +2,9 @@
 //Woodcutting level up unlock messages
 switch_int(stat_base(woodcutting)) {
     // axe requirements were not a thing originally, added mid-2005 maybe?
-    case 15: ~objboxsmall(oak_logs,"You can now cut down @dbl@Oak Trees.");
-    case 30: ~objboxsmall(willow_logs,"You can now cut down @dbl@Willow Trees.");
-    case 45: ~objboxsmall(maple_logs,"You can now cut down @dbl@Maple Trees.");
-    case 60: ~objboxsmall(yew_logs,"You can now cut down @dbl@Yew Trees.");
-    case 75: ~objboxsmall(magic_logs,"You can now cut down @dbl@Magic Trees.");
+    case 15 : ~objboxsmall(oak_logs,"You can now cut down @dbl@Oak Trees.");
+    case 30 : ~objboxsmall(willow_logs,"You can now cut down @dbl@Willow Trees.");
+    case 45 : ~objboxsmall(maple_logs,"You can now cut down @dbl@Maple Trees.");
+    case 60 : ~objboxsmall(yew_logs,"You can now cut down @dbl@Yew Trees.");
+    case 75 : ~objboxsmall(magic_logs,"You can now cut down @dbl@Magic Trees.");
 }

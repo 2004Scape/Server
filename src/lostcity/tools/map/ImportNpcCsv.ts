@@ -2,6 +2,7 @@ import fs from 'fs';
 import { basename } from 'path';
 
 import { loadDir } from '#lostcity/util/Parse.js';
+import { printError, printFatalError, printInfo } from '#lostcity/util/Logger.js';
 
 let allNpcs: {
     id: number;
@@ -15,8 +16,7 @@ let allNpcs: {
 
 const args = process.argv.slice(2);
 if (args.length !== 1) {
-    console.log('Usage: ImportNpcCsv.js <npc_csv_file>');
-    process.exit(1);
+    printFatalError('Usage: ImportNpcCsv.js <npc_csv_file>');
 }
 
 const npcList = fs
@@ -45,7 +45,7 @@ npcList.forEach((line, index) => {
     const localZ = absZ % 64;
 
     if (Number.isNaN(parseInt(id))) {
-        console.log(`Invalid id: ${id}`, csv);
+        printError(`Invalid id: ${id} (${csv})`);
     }
 
     allNpcs.push({
@@ -105,6 +105,6 @@ loadDir('data/src/maps', (lines: string[], file: string) => {
 });
 
 if (allNpcs.length > 0) {
-    console.log(`Leftover NPCs: ${allNpcs.length}`);
+    printInfo(`${allNpcs.length} leftover NPCs:`);
     console.log(allNpcs);
 }

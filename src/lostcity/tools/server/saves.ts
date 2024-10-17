@@ -3,6 +3,7 @@ import fs from 'fs';
 import InvType from '#lostcity/cache/config/InvType.js';
 
 import { PlayerLoading } from '#lostcity/entity/PlayerLoading.js';
+import { printError } from '#lostcity/util/Logger.js';
 
 InvType.load('data/pack');
 
@@ -15,7 +16,7 @@ for (let i = 0; i < saves.length; i++) {
         const player = PlayerLoading.loadFromFile(username);
         sorted.push(player);
     } catch (e) {
-        console.log('Failed to load', username);
+        printError('Failed to load ' + username);
     }
 }
 sorted.sort((a, b) => b.playtime - a.playtime);

@@ -11,7 +11,6 @@ export default class FloType extends ConfigType {
 
     static load(dir: string) {
         if (!fs.existsSync(`${dir}/server/flo.dat`)) {
-            console.log('Warning: No flo.dat found.');
             return;
         }
 
@@ -23,7 +22,6 @@ export default class FloType extends ConfigType {
     static async loadAsync(dir: string) {
         const file = await fetch(`${dir}/server/flo.dat`);
         if (!file.ok) {
-            console.log('Warning: No flo.dat found.');
             return;
         }
 

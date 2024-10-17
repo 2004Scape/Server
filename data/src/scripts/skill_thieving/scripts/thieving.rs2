@@ -44,7 +44,7 @@ if (npc_param(attack_sound) ! null) {
 }
 sound_synth(stunned, 0, 0);
 p_delay(0);
-// TODO Update this when combat is actually coded.
+// todo Update this when combat is actually coded.
 ~damage_self($damage);
 npc_setmode(null);
 

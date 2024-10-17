@@ -16,9 +16,9 @@ if (%magearena_progress <= ^mage_arena_complete) {
     // check staff type
     def_namedobj $staff = saradominstaff;
     switch_int(%magearena_progress) {
-        case ^mage_arena_saradomin: $staff = saradominstaff;
-        case ^mage_arena_zamorak: $staff = zamorakstaff;
-        case ^mage_arena_guthix: $staff = guthixstaff;
+        case ^mage_arena_saradomin : $staff = saradominstaff;
+        case ^mage_arena_zamorak : $staff = zamorakstaff;
+        case ^mage_arena_guthix : $staff = guthixstaff;
     }
     inv_add(inv, $staff, 1); // drops on ground on full inv
     ~objboxt($staff, "The guardian hands you an ornate magic staff.");

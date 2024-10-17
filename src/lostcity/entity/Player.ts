@@ -41,7 +41,7 @@ import ScriptPointer from '#lostcity/engine/script/ScriptPointer.js';
 import Environment from '#lostcity/util/Environment.js';
 
 import LinkList from '#jagex2/datastruct/LinkList.js';
-import Stack from '#jagex2/datastruct/Stack.js';
+import DoublyLinkList from '#jagex2/datastruct/DoublyLinkList.js';
 
 import {CollisionFlag} from '@2004scape/rsmod-pathfinder';
 import {PRELOADED, PRELOADED_CRC} from '#lostcity/server/PreloadedPacks.js';
@@ -67,6 +67,7 @@ import ParamType from '#lostcity/cache/config/ParamType.js';
 import BuildArea from '#lostcity/entity/BuildArea.js';
 import ChatFilterSettings from '#lostcity/network/outgoing/model/ChatFilterSettings.js';
 import { ChatModePrivate, ChatModePublic, ChatModeTradeDuel } from '#lostcity/util/ChatModes.js';
+import { isNetworkPlayer } from '#lostcity/entity/NetworkPlayer.js';
 
 const levelExperience = new Int32Array(99);
 
@@ -225,13 +226,21 @@ export default class Player extends PathingEntity {
     username: string;
     username37: bigint;
     displayName: string;
-    body: number[];
-    colors: number[];
-    gender: number;
+    body: number[] = [
+        0, // hair
+        10, // beard
+        18, // body
+        26, // arms
+        33, // gloves
+        36, // legs
+        42 // boots
+    ];
+    colors: number[] = [0, 0, 0, 0, 0];
+    gender: number = 0;
     runenergy: number = 10000;
     lastRunEnergy: number = -1;
-    runweight: number;
-    playtime: number;
+    runweight: number = 0;
+    playtime: number = 0;
     stats: Int32Array = new Int32Array(21);
     levels: Uint8Array = new Uint8Array(21);
     vars: Int32Array;
@@ -283,8 +292,8 @@ export default class Player extends PathingEntity {
     interactWalkTrigger: boolean = false;
     moveClickRequest: boolean = false;
 
-    highPriorityOut: Stack<OutgoingMessage> = new Stack();
-    lowPriorityOut: Stack<OutgoingMessage> = new Stack();
+    // not stored as a byte buffer so we can write and encrypt opcodes later
+    buffer: DoublyLinkList<OutgoingMessage> = new DoublyLinkList();
     lastResponse = -1;
 
     messageColor: number | null = null;
@@ -340,25 +349,12 @@ export default class Player extends PathingEntity {
 
     constructor(username: string, username37: bigint) {
         super(0, 3094, 3106, 1, 1, EntityLifeCycle.FOREVER, MoveRestrict.NORMAL, BlockWalk.NPC, MoveStrategy.SMART, Player.FACE_COORD, Player.FACE_ENTITY); // tutorial island.
+
         this.username = username;
         this.username37 = username37;
         this.displayName = toDisplayName(username);
         this.vars = new Int32Array(VarPlayerType.count);
         this.varsString = new Array(VarPlayerType.count);
-        this.body = [
-            0, // hair
-            10, // beard
-            18, // body
-            26, // arms
-            33, // gloves
-            36, // legs
-            42 // boots
-        ];
-        this.colors = [0, 0, 0, 0, 0];
-        this.gender = 0;
-        this.runenergy = 10000;
-        this.runweight = 0;
-        this.playtime = 0;
         this.lastStats.fill(-1);
         this.lastLevels.fill(-1);
     }
@@ -932,10 +928,7 @@ export default class Player extends PathingEntity {
 
         const opTrigger = this.getOpTrigger();
         const apTrigger = this.getApTrigger();
-    
-        // console.log('operable', opTrigger != null, 'trigger exists', this.inOperableDistance(this.target), 'in range');
-        // console.log('approachable', apTrigger != null, 'trigger exists', this.inApproachDistance(this.apRange, this.target), 'in range');
-    
+
         if (opTrigger && this.target instanceof PathingEntity && this.inOperableDistance(this.target)) {
             const target = this.target;
             this.target = null;
@@ -1761,11 +1754,11 @@ export default class Player extends PathingEntity {
     // ----
 
     runScript(script: ScriptState, protect: boolean = false, force: boolean = false) {
-        // console.log('Executing', script.script.info.scriptName);
+        // printDebug('Executing', script.script.info.scriptName);
 
         if (!force && protect && (this.protect || this.delayed())) {
             // can't get protected access, bye-bye
-            // console.log('No protected access:', script.script.info.scriptName, protect, this.protect);
+            // printDebug('No protected access:', script.script.info.scriptName, protect, this.protect);
             return -1;
         }
 
@@ -1794,11 +1787,11 @@ export default class Player extends PathingEntity {
     }
 
     executeScript(script: ScriptState, protect: boolean = false, force: boolean = false) {
-        // console.log('Executing', script.script.info.scriptName);
+        // printDebug('Executing', script.script.info.scriptName);
 
         const state = this.runScript(script, protect, force);
         if (state === -1) {
-            // console.log('Script did not run', script.script.info.scriptName, protect, this.protect);
+            // printDebug('Script did not run', script.script.info.scriptName, protect, this.protect);
             return;
         }
 
@@ -1830,16 +1823,19 @@ export default class Player extends PathingEntity {
     }
 
     write(message: OutgoingMessage) {
-        if (message.priority === ServerProtPriority.HIGH) {
-            this.highPriorityOut.push(message);
+        if (!isNetworkPlayer(this)) {
+            return;
+        }
+
+        if (message.priority === ServerProtPriority.IMMEDIATE) {
+            this.writeInner(message);
         } else {
-            this.lowPriorityOut.push(message);
+            this.buffer.push(message);
         }
     }
 
     unsetMapFlag() {
         this.clearWaypoints();
-        // in OSRS, SET_MAP_FLAG is high priority
         this.write(new UnsetMapFlag());
     }
 
@@ -1860,7 +1856,6 @@ export default class Player extends PathingEntity {
     }
 
     lastLoginInfo(lastLoginIp: number, daysSinceLogin: number, daysSinceRecoveryChange: number, unreadMessageCount: number) {
-        // this is like an interface packet so assume low priority
         this.write(new LastLoginInfo(lastLoginIp, daysSinceLogin, daysSinceRecoveryChange, unreadMessageCount));
         this.modalState |= 16;
     }

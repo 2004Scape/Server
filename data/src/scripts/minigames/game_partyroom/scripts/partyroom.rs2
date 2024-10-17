@@ -64,7 +64,7 @@ switch_int (last_int) {
     case 5 : npc_say("We're Knights of the Party Room");
     case 6 : npc_say("Do you like our helmet plumes?");
     case 7 : npc_say("Everyone's happy now we can move");
-    case 8 : 
+    case 8 :
         $delay = 3; // 2t
         npc_say("Like a party animal in the groove");
     case 9 :
@@ -91,19 +91,19 @@ while (npc_findnext = true) {
     }
 }
 
-[proc,random_balloon](loc)
+[proc,random_balloon]()(loc)
 switch_int (random(7)) {
-    case 0: return (loc_115);
-    case 1: return (loc_116);
-    case 2: return (loc_117);
-    case 3: return (loc_118);
-    case 4: return (loc_119);
-    case 5: return (loc_120);
-    case 6: return (loc_121);
-    case default: return (loc_115);
+    case 0 : return (loc_115);
+    case 1 : return (loc_116);
+    case 2 : return (loc_117);
+    case 3 : return (loc_118);
+    case 4 : return (loc_119);
+    case 5 : return (loc_120);
+    case 6 : return (loc_121);
+    case default : return (loc_115);
 }
 
-[proc,random_partyroom_balloon_coord](coord)
+[proc,random_partyroom_balloon_coord]()(coord)
 def_coord $coord1;
 def_coord $coord2;
 $coord1, $coord2 = db_getfield(party_room_zones, coord_pair_table:coord_pair, 0);
@@ -133,7 +133,7 @@ p_delay(0);
 anim(seq_794, 0);
 p_delay(0);
 loc_change(loc_param(next_loc_stage), 5);
-// TODO: chance was fixed before Jul 2004, was changed to scale off of chest freespace afterwards (this chance is just a guess unfortunately)
+// todo: chance was fixed before Jul 2004, was changed to scale off of chest freespace afterwards (this chance is just a guess unfortunately)
 if (~inzone_coord_pair_table(party_room_zones, loc_coord) = true & random(4) = 0) {
     def_int $rand_slot = random(calc(inv_size(partyroominv) - inv_freespace(partyroominv)));
     def_obj $obj = inv_getobj(partyroominv, $rand_slot);

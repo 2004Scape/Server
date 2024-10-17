@@ -5,11 +5,11 @@ if (last_useitem ! beer_glass) {
 }
 
 switch_coord(loc_coord) {
-    case 0_48_53_9_44: @beer_barrel_beatdown;
-    case 0_48_53_5_53: @beer_barrel_beatdown;
-    case 0_48_53_4_53: @beer_barrel_beatdown;
+    case 0_48_53_9_44 : @beer_barrel_beatdown;
+    case 0_48_53_5_53 : @beer_barrel_beatdown;
+    case 0_48_53_4_53 : @beer_barrel_beatdown;
 
-    case default: @fill_beer_glass;
+    case default : @fill_beer_glass;
 }
 
 [oplocu,loc_885]

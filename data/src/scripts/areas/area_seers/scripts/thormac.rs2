@@ -1,8 +1,8 @@
 [opnpc1,thormac]
 switch_int (%scorpcatcher_progress) {
-    case ^scorpcatcher_not_started: @thormac_assistance;
-    case ^scorpcatcher_complete: @thormac_thankyou;
-    case default: @thormac_how_goes;
+    case ^scorpcatcher_not_started : @thormac_assistance;
+    case ^scorpcatcher_complete : @thormac_thankyou;
+    case default : @thormac_how_goes;
 }
 
 [label,thormac_assistance]
@@ -17,13 +17,13 @@ switch_int (%scorpcatcher_progress) {
 //}
 ~chatnpc("<p,neutral>Hello I am Thormac the sorcerer.|I don't suppose you could be of assistance to me?");
 switch_int(~p_choice2("What do you need assistance with?", 1, "I'm a little busy.", 2)) {
-    case 1:
+    case 1 :
         ~chatplayer("<p,quiz>What do you need assistance with?");
         ~chatnpc("<p,sad>I've lost my pet scorpions.|They're lesser Kharid scorpions, a very rare breed.");
         ~chatnpc("<p,sad>I left their cage door open,|now I don't know where they've gone.");
         ~chatnpc("<p,neutral>There's three of them, and they're quick little beasties. They're all over RuneScape.");
         @multi3("So how would I go about catching them then?", thormac_how_catch, "What's in it for me?", thormac_for_me, "I'm not interested then.", thormac_not_interest);
-    case 2: ~chatplayer("<p,neutral>I'm a little busy.");
+    case 2 : ~chatplayer("<p,neutral>I'm a little busy.");
 }
 
 [label,thormac_how_catch]
@@ -104,11 +104,11 @@ if($option = 1) {
     ~chatplayer("<p,quiz>You said you'd enchant my battlestaff for me.");
     ~chatnpc("<p,neutral>Yes, it'll cost you 40,000 coins for the materials needed though. Which sort of staff did you want enchanting?");
     switch_int (~p_choice5("Fire battlestaff.", 1, "Water battlestaff.", 2, "Air battlestaff.", 3, "Earth battlestaff.", 4, "I won't bother yet actually.", 5)) {
-        case 1: @thormac_makestaff("Fire battlestaff", fire_battlestaff, mystic_fire_staff);
-        case 2: @thormac_makestaff("Water battlestaff",  water_battlestaff, mystic_water_staff);
-        case 3: @thormac_makestaff("Air battlestaff", air_battlestaff, mystic_air_staff);
-        case 4: @thormac_makestaff("Earth battlestaff", earth_battlestaff, mystic_earth_staff);
-        case 5: ~chatplayer("<p,neutral>I won't bother yet actually.");
+        case 1 : @thormac_makestaff("Fire battlestaff", fire_battlestaff, mystic_fire_staff);
+        case 2 : @thormac_makestaff("Water battlestaff",  water_battlestaff, mystic_water_staff);
+        case 3 : @thormac_makestaff("Air battlestaff", air_battlestaff, mystic_air_staff);
+        case 4 : @thormac_makestaff("Earth battlestaff", earth_battlestaff, mystic_earth_staff);
+        case 5 : ~chatplayer("<p,neutral>I won't bother yet actually.");
     }
 }
 

@@ -4,11 +4,10 @@ if (%elena_progress >= ^quest_elena_returned_book) {
     return;
 }
 switch_int(%elena_progress) {
-    case ^quest_elena_opened_pipe, ^quest_elena_shown_picture: {
+    case ^quest_elena_opened_pipe, ^quest_elena_shown_picture :
         ~chatnpc("<p,neutral>Hello, I don't recognise you. We don't get many newcomers around here.");
         @multi2("I'm looking for a woman from East Ardougne.", jethick_im_looking_for_a_woman, "So who's in charge here?", jethick_whos_in_charge_here);
-    }
-    case default: ~chatnpc("<p,neutral>Hello, I don't recognise you. We don't get many newcomers around here.");
+    case default : ~chatnpc("<p,neutral>Hello, I don't recognise you. We don't get many newcomers around here.");
 }
 
 [label,jethick_im_looking_for_a_woman]

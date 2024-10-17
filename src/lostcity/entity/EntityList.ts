@@ -34,7 +34,7 @@ abstract class EntityList<T extends Entity> extends Array<T | undefined> {
         throw new Error('[EntityList] no space for new entities');
     }
 
-    *[Symbol.iterator](): IterableIterator<T> {
+    *[Symbol.iterator](): ArrayIterator<T> {
         for (const index of this.ids) {
             if (index === -1) {
                 continue;
@@ -64,7 +64,7 @@ abstract class EntityList<T extends Entity> extends Array<T | undefined> {
         if (!this.free.size) {
             throw new Error('[EntityList] cannot find available entities slot.');
         }
-        const index = this.free.values().next().value;
+        const index = this.free.values().next().value!;
         this.free.delete(index);
         this.ids[id] = index;
         this[index] = entity;

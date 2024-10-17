@@ -12,10 +12,10 @@ if(testbit(%barcrawl_progress, ^dragoninn_index) = false & inv_total(inv, barcra
 }
 
 switch_int($option) {
-    case 1:
+    case 1 :
         ~chatplayer("<p,neutral>I'll give it a miss I think.");
         ~chatnpc("<p,happy>Come back when you're a little thirstier.");
-    case 2:
+    case 2 :
         ~chatplayer("<p,happy>I'll try the Dragon Bitter.");
         ~chatnpc("<p,happy>Ok, that'll be two coins.");
         if (inv_total(inv, coins) < 2) {
@@ -25,7 +25,7 @@ switch_int($option) {
             inv_add(inv, dragon_bitter, 1);
             mes("You buy a pint of Dragon Bitter.");
         }
-    case 3:
+    case 3 :
         ~chatplayer("<p,quiz>Can I have some Greenman's Ale?");
         ~chatnpc("<p,happy>Ok, that'll be ten coins.");
         if (inv_total(inv, coins) < 10) {
@@ -35,7 +35,7 @@ switch_int($option) {
             inv_add(inv, greenmans_ale, 1);
             mes("You buy a pint of Greenman's Ale.");
         }
-    case 4: @dragoninn_barcrawl;
+    case 4 : @dragoninn_barcrawl;
 }
 
 [opnpcu,bartender_dragoninn]

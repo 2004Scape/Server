@@ -3,7 +3,7 @@
 ~chatnpc("<p,neutral>Say I 100 gold coins each fair price to be giving yes?");
 if(inv_total(inv, cabbage) > 0) {
     switch_int(~p_choice2("Yes, I will sell you all my cabbages.", 1, "No, I will keep my cabbbages.", 2)) {
-        case 1:
+        case 1 :
             ~chatplayer("<p,neutral>Yes, I'll sell you all my cabbages.");
             if_close;
             while(inv_total(inv, cabbage) > 0) {
@@ -14,7 +14,7 @@ if(inv_total(inv, cabbage) > 0) {
                 inv_add(inv, coins, 100);
             }
             ~chatnpc("<p,neutral>Business good doing with you! Please, again come, buying always.");
-        case 2: ~chatplayer("<p,neutral>No, I will keep my cabbbages.");
+        case 2 : ~chatplayer("<p,neutral>No, I will keep my cabbbages.");
     }
     return;
 }

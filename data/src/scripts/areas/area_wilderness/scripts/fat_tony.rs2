@@ -24,10 +24,10 @@ if($option = 1) {
 ~chatplayer("<p,quiz>Can I have some pizza too?");
 ~chatnpc("<p,neutral>Well this pizza is really meant to be for the bandits.|I guess I could sell you some pizza bases though");
 switch_int(~p_choice2("Yes, Okay.", 1, "Oh if I have to pay I don't want any.", 2)) {
-    case 1: 
+    case 1 :
         ~chatplayer("<p,neutral>Yes, Okay.");
         ~openshop_activenpc;
-    case 2: ~chatplayer("<p,neutral>Oh if I have to pay I don't want any.");
+    case 2 : ~chatplayer("<p,neutral>Oh if I have to pay I don't want any.");
 }
 
 [label,fat_tony_leave]

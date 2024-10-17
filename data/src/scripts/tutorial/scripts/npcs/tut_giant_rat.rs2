@@ -26,7 +26,6 @@ if (~npc_can_attack_player = false) {
     return;
 }
 anim(%com_defendanim, 0);
-
 npc_anim(npc_param(attack_anim), 0);
 %npc_action_delay = add(map_clock, npc_param(attackrate));
 if (npc_param(attack_sound) ! null) {
@@ -39,18 +38,13 @@ def_int $maxhit = ~npc_melee_maxhit;
 def_int $damage = 0;
 
 if_close; // close the player interface when taking a hit.
-// not sure if this is correct
-if (getqueue(player_death) < 1) {
-    if (stat(hitpoints) = 1) {
-        $damage = 0;
-    } else {
-        $damage = 1;
-    }
-
-    queue(drunken_dwarf_player_defend_anim, 1);
-    queue(damage_player, 1, $damage);
-    queue(playerhit_n_retaliate, 1, npc_uid); // this should be a queue* command
+if (stat(hitpoints) = 1) {
+    $damage = 0;
+} else if (randominc($attack_roll) > randominc($defence_roll)) {
+    $damage = randominc($maxhit);
 }
+queue(damage_player, 1, $damage);
+queue(playerhit_n_retaliate, 1, npc_uid); // this should be a queue* command
 ~npc_set_attack_vars;
 
 [opnpc2,tut_giant_rat]

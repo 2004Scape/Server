@@ -3,8 +3,8 @@ if(inv_total(inv, trail_clue_medium_anagram_exp001) > 0) {
     @trail_hazelmere;
 }
 switch_int(%grandtree_progress) {
-    case ^grandtree_spoken_hazelmere: @hazelmere_write_scroll;
-    case ^grandtree_started:
+    case ^grandtree_spoken_hazelmere : @hazelmere_write_scroll;
+    case ^grandtree_started :
         ~mesbox("The mage starts to speak but all you hear is:");
         ~chatnpc("<p,happy>Blah. Blah, blah, blah, blah...blah!");
         if(inv_total(inv, bark_sample) = 0) {
@@ -16,7 +16,7 @@ switch_int(%grandtree_progress) {
         inv_del(inv, bark_sample, 1);
         %grandtree_progress = ^grandtree_spoken_hazelmere;
         @hazelmere_write_scroll;
-    case default:
+    case default :
         ~mesbox("The mage starts to speak but all you hear is:");
         ~chatnpc("<p,happy>Blah. Blah, blah, blah, blah...blah!");
     

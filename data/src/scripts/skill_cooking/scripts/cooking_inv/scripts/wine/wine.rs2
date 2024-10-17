@@ -3,7 +3,7 @@ switch_obj (last_useitem) {
     case jug_of_water : @make_wine;
     case default : ~displaymessage(^dm_default);
 };
-//TODO: Finish wines, jug of bad wine, proper queue clearing
+//todo: Finish wines, jug of bad wine, proper queue clearing
 [label,make_wine]
 if (stat(cooking) < 35) {
     ~mesbox("You need a Cooking level of 35 to make Unfermented wine.");

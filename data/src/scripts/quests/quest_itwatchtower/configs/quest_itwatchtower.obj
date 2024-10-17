@@ -1,4 +1,4 @@
-[obj_2393]
+[tobans_gold]
 name=Gold
 desc=It's a stolen bar of gold.
 cost=300
@@ -13,7 +13,40 @@ recol1d=19937
 weight=4lb
 members=yes
 
-[obj_2394]
+[explodingvial]
+model=model_552_obj_wear
+manwear=model_538_obj_wear,0
+womanwear=model_538_obj_wear,6
+weight=25g
+dummyitem=graphic_only
+
+[vial_water_jangerberries]
+model=model_2789_obj
+recol1s=15855
+recol1d=6722
+2dyof=-1
+2dzoom=550
+2dyan=1996
+2dxan=84
+weight=15g
+name=Vial
+desc=An infusion of water and jangerberries.
+members=yes
+
+[mixture_guam_jangerberries]
+model=model_2789_obj
+recol1s=15855
+recol1d=352
+name=Vial
+desc=A mixture of jangerberries and guam leaves in a vial.
+2dyof=-1
+2dzoom=550
+2dyan=1996
+2dxan=84
+weight=25g
+members=yes
+
+[ogre_potion]
 name=Potion
 desc=A strange brew.
 cost=120

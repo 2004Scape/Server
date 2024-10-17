@@ -1,7 +1,7 @@
 [opobjt,magic:telekinetic_grab] @magic_spell_telegrab;
 [apobjt,magic:telekinetic_grab] @magic_spell_telegrab;
 
-// TODO: telegrabbing
+// todo: telegrabbing
 [label,magic_spell_telegrab]
 // look for spell in db
 def_dbrow $spell_data = ~get_spell_data(^telekinetic_grab);

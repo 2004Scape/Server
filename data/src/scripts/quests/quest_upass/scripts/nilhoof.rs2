@@ -11,20 +11,20 @@ switch_int(%upass_progress) {
         ~chatnpc("<p,neutral>If I knew, I would have slain him already. Seek out the Witch, his guide, his only confidante. Only she knows how to rid us of Iban.");
         ~chatnpc("<p,neutral>She lives on the platforms above, we dare not go there. Here, take some food to aid your journey.");
         if_close;
-        // TODO: should this be nilhoof or niloof?
+        // todo: should this be nilhoof or niloof?
         mes("<nc_name(nilhoof)> gives you some food...");
         inv_add(inv, meat_pie, 2);
         inv_add(inv, meat_pizza, 1);
         p_delay(3); // 3 ticks
         %upass_progress = ^upass_spoken_nilhoof;
         ~chatplayer("<p,happy>Thanks <nc_name(nilhoof)>, take care.");
-    case ^upass_spoken_nilhoof:
+    case ^upass_spoken_nilhoof :
         ~chatplayer("<p,happy>Hello <nc_name(nilhoof)>.");
         ~chatnpc("<p,happy>So you still live, not many survive down here.");
         ~chatplayer("<p,neutral>As I can see.");
         ~chatnpc("<p,neutral>Don't stay too long traveller. Iban's calls will soon penetrate your delicate human mind.");
         ~chatnpc("<p,neutral>You'll also become one of his minions... You must go above and find the witch Kardia. She holds the secret to Iban's destruction.");
-    case ^upass_found_doll:
+    case ^upass_found_doll :
         ~chatplayer("<p,happy><nc_name(nilhoof)>, I found the Witch's house.");
         ~chatnpc("<p,neutral>And...?");
         if(inv_total(inv, doll_of_iban) > 0) {
@@ -40,7 +40,7 @@ switch_int(%upass_progress) {
             ~chatnpc("<p,confused>I found this old book... I'm not sure if it's of any use to you traveller.");
             inv_add(inv, history_of_iban, 1);
         }
-    case ^upass_confronted_iban:
+    case ^upass_confronted_iban :
         ~chatplayer("<p,happy>Hi <nc_name(nilhoof)>.");
         ~chatnpc("<p,happy>Traveller, thank the stars you're still around! ...I thought your time had come.");
         ~chatplayer("<p,happy>I've still a few years in me yet.");
@@ -59,5 +59,5 @@ switch_int(%upass_progress) {
             ~chatnpc("<p,neutral>Good luck to you, you'll need it. May the strength of the Elders be with you...");
             ~chatplayer("<p,neutral>Take care <nc_name(nilhoof)>.");
         }
-    case ^upass_defeated_iban, ^upass_complete: mes("The Dwarf seems to be busy...");
+    case ^upass_defeated_iban, ^upass_complete : mes("The Dwarf seems to be busy...");
 }

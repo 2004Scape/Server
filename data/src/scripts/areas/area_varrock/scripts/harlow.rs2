@@ -1,17 +1,17 @@
 [opnpc1,harlow]
 ~chatnpc("<p,confused>Buy me a drrink pleassh...");
 switch_int (%vampire_progress) {
-    case ^quest_vampire_started: @harlow_during_vampire_slayer;
-    case ^quest_vampire_spoke_to_harlow: @harlow_during_vampire_slayer_buy_beer;
-    case default: ~chatplayer("<p,quiz>I think you've had enough.");
+    case ^quest_vampire_started : @harlow_during_vampire_slayer;
+    case ^quest_vampire_spoke_to_harlow : @harlow_during_vampire_slayer_buy_beer;
+    case default : ~chatplayer("<p,quiz>I think you've had enough.");
 }
 
 [label,harlow_during_vampire_slayer]
 // https://web.archive.org/web/*/http://zybez.com/img/qimg/vampireslayer/3_harlow.jpg No period after help?
 switch_int (~p_choice2("No, you've had enough.", 1, "Morgan needs your help", 2)) {
-    case 1: @harlow_decline_drink;
-    case 2: ~chatplayer("<p,shock>Morgan needs your help");
-    case default: ~displaymessage(^dm_default);
+    case 1 : @harlow_decline_drink;
+    case 2 : ~chatplayer("<p,shock>Morgan needs your help");
+    case default : ~displaymessage(^dm_default);
 }
 
 ~chatnpc("<p,confused>Morgan you shhay..?");
@@ -25,9 +25,9 @@ switch_int (~p_choice2("No, you've had enough.", 1, "Morgan needs your help", 2)
 // https://web.archive.org/web/*/http://zybez.com/img/qimg/vampireslayer/3_harlow.jpg
 if (inv_total(inv, stake) > 0) {
     switch_int (~p_choice2("No, you've had enough.", 1, "Ok mate.", 2)) {
-        case 1: @harlow_decline_drink;
-        case 2: ~chatplayer("<p,happy>Ok mate.");
-        case default: ~displaymessage(^dm_default);
+        case 1 : @harlow_decline_drink;
+        case 2 : ~chatplayer("<p,happy>Ok mate.");
+        case default : ~displaymessage(^dm_default);
     }
 }
 

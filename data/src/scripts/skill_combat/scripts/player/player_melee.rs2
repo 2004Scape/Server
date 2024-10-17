@@ -4,7 +4,7 @@ p_stopaction;
 // npc_setmode(opplayer2);
 // facesquare(npc_coord);
 
-// TODO this is for flinching players (pvp etc)
+// todo this is for flinching players (pvp etc)
 //if (autoretaliateenabled && action_clock < gameClock()) action_clock = gameClock() + (weaponSpeed / 2)
 
 if (~npc_is_attackable() = false) {
