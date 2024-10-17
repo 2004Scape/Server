@@ -46,15 +46,15 @@ switch_int(%grandtree_progress) {
         ~chatplayer("<p,angry>Glough has a store of Daconia rocks further up the passage! He's been accessing the roots from a secret passage at his home.");
         ~chatnpc("<p,angry>Never! Not Glough! He's a good gnome at heart!");
         if_close;
-        p_delay(1); // 1t todo: -1 after delay change like the rest in this dialogue
+        p_delay(0); // 1t
         ~chatnpc("<p,angry>Guard!");
         if_close;
-        p_delay(7); // 7t
+        p_delay(6); // 7t
         if(.npc_find(coord, gnome_guard_halberd, 8, 0) = true) { // not sure about the dist
             ~.chatnpc("<p,neutral>Sire!");
             ~chatnpc("<p,neutral>Go and check out that passage!");
             if_close;
-            p_delay(5); // 5t
+            p_delay(4); // 5t
             ~.chatnpc("<p,angry>We found Glough hiding under a horde of Daconia rocks!");
             ~chatplayer("<p,laugh>That's what I've been trying to tell you!|Glough's been fooling you!");
             ~chatnpc("<p,sad>I..I don't know what to say!|How could I have been so blind?!");
@@ -205,7 +205,7 @@ switch_int(%grandtree_progress) {
                 def_int $npc_dist = ~total_distance(npc_coord, ^narnode_trapdoor_coord);
                 npc_walk(^narnode_trapdoor_coord);
                 if($npc_dist > 0) {
-                    p_delay(calc($npc_dist + 1)); // todo: + 1 until delay change is fix
+                    p_delay($npc_dist);
                 }
                 npc_facesquare(movecoord(^narnode_trapdoor_coord, -1, 0, -1));
                 if(loc_find(movecoord(^narnode_trapdoor_coord, -1, 0, -1), loc_2446) = true) {
@@ -224,7 +224,7 @@ switch_int(%grandtree_progress) {
                     $npc_dist = ~total_distance(npc_coord, movecoord(coord, 1, 0, 0));
                     npc_walk(movecoord(coord, 1, 0, 0));
                     if($npc_dist > 0) {
-                        p_delay(calc($npc_dist + 1));
+                        p_delay($npc_dist);
                     }
                     npc_setmode(playerface);
                     @king_narnode_foundations;
@@ -243,7 +243,7 @@ def_coord $up_coord = movecoord(^narnode_trapdoor_coord, 0, 0, 6400);
 def_int $npc_dist = ~total_distance(npc_coord, $up_coord);
 npc_walk($up_coord);
 if($npc_dist > 0) {
-    p_delay(calc($npc_dist + 1)); // todo: + 1 until delay change is fix
+    p_delay($npc_dist);
 }
 npc_facesquare(movecoord($up_coord, -1, 0, -1));
 p_delay(0);

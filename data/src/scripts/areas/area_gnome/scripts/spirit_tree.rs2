@@ -68,5 +68,4 @@ if(map_members = false) {
 }
 ~mesbox("You place your hands on the dry tough bark of the spirit tree,|and feel a surge of energy run through your veins.");
 if_close;
-p_delay(0); // todo: REMOVE THIS ONCE DELAY IS FIXED
 @climb_ladder($dest, true);
