@@ -76,7 +76,10 @@ if ($struct = null) {
     return(false);
 }
 
-~require_members_feature;
+if (map_members = false) {
+    mes(^mes_members_herblore);
+    return(false);
+}
 
 // If the player current level is below the required level.
 def_int $current_level = stat(herblore);

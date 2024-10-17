@@ -23,7 +23,10 @@ switch_obj(last_useitem) {
 }
 
 [label,make_headless_arrows]
-~require_members_fletching;
+if (map_members = false) {
+    mes(^mes_members_fletching); // guess
+    return;
+}
 def_int $feather_count = min(inv_total(inv, feather), 15);
 def_int $shaft_count = min(inv_total(inv, arrow_shaft), 15);
 def_int $arrow_count = min($feather_count, $shaft_count);
@@ -41,7 +44,10 @@ inv_add(inv, headless_arrow, $arrow_count);
 
 
 [label,make_arrows](obj $arrow_tips)
-~require_members_fletching;
+if (map_members = false) {
+    mes(^mes_members_fletching); // guess
+    return;
+}
 def_dbrow $data = ~get_fletching_data($arrow_tips);
 if ($data = null) {
     ~displaymessage(^dm_default);

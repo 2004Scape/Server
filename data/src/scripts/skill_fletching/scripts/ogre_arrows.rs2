@@ -17,7 +17,10 @@ switch_obj(last_useitem) {
 }
 
 [label,make_ogre_shafts]
-~require_members_fletching;
+if (map_members = false) {
+    mes(^mes_members_fletching); // guess
+    return;
+}
 if (%chompybird_progress < 1) {
     // osrs
     mes("You're not sure what you would make with these logs.");
@@ -38,7 +41,10 @@ stat_advance(fletching, multiply($shaft_count, 18));
 
 
 [label,make_wolf_bone_tips]
-~require_members_do_that;
+if (map_members = false) {
+    mes(^mes_members_fletching); // guess
+    return;
+}
 if (%chompybird_progress < 1) {
     // complete guess
     mes("You're not sure what you would make with these bones.");
@@ -63,7 +69,10 @@ stat_advance(crafting, multiply($tip_count, 25));
 
 
 [label,make_ogre_headless_arrows]
-~require_members_fletching;
+if (map_members = false) {
+    mes(^mes_members_fletching); // guess
+    return;
+}
 if (%chompybird_progress < 1) {
     // complete guess, i need to check this
     mes("You're not sure what you would make with these arrow shafts.");
@@ -91,7 +100,10 @@ stat_advance(fletching, multiply($arrow_count, 15));
 
 
 [label,make_ogre_arrows]
-~require_members_fletching;
+if (map_members = false) {
+    mes(^mes_members_fletching); // guess
+    return;
+}
 if (%chompybird_progress = ^chompybird_not_started) {
     // complete guess, i need to check this
     mes("You're not sure what you would make with these flighted arrows.");

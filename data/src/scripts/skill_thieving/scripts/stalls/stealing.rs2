@@ -1,27 +1,30 @@
 [oploc2,tea_stall_stealing] // Tea stall
-~attempt_steal_from_stall(loc_type, loc_coord, loc_angle, loc_shape);
+@attempt_steal_from_stall(loc_type, loc_coord, loc_angle, loc_shape);
 
 [oploc2,silk_stall_stealing] // Silk stall
-~attempt_steal_from_stall(loc_type, loc_coord, loc_angle, loc_shape);
+@attempt_steal_from_stall(loc_type, loc_coord, loc_angle, loc_shape);
 
 [oploc2,bakers_stall_stealing] // Baker's stall
-~attempt_steal_from_stall(loc_type, loc_coord, loc_angle, loc_shape);
+@attempt_steal_from_stall(loc_type, loc_coord, loc_angle, loc_shape);
 
 [oploc2,gem_stall_stealing] // Gem stall
-~attempt_steal_from_stall(loc_type, loc_coord, loc_angle, loc_shape);
+@attempt_steal_from_stall(loc_type, loc_coord, loc_angle, loc_shape);
 
 [oploc2,fur_stall_stealing] // Fur stall
-~attempt_steal_from_stall(loc_type, loc_coord, loc_angle, loc_shape);
+@attempt_steal_from_stall(loc_type, loc_coord, loc_angle, loc_shape);
 
 [oploc2,spice_stall_stealing] // Spice stall
-~attempt_steal_from_stall(loc_type, loc_coord, loc_angle, loc_shape);
+@attempt_steal_from_stall(loc_type, loc_coord, loc_angle, loc_shape);
 
 [oploc2,silver_stall_stealing] // Silver stall
-~attempt_steal_from_stall(loc_type, loc_coord, loc_angle, loc_shape);
+@attempt_steal_from_stall(loc_type, loc_coord, loc_angle, loc_shape);
 
-[proc,attempt_steal_from_stall](loc $loc, coord $loc_coord, int $loc_angle, locshape $loc_shape)
+[label,attempt_steal_from_stall](loc $loc, coord $loc_coord, int $loc_angle, locshape $loc_shape)
 p_arrivedelay;
-~require_members_feature;
+if (map_members = false) {
+    mes(^mes_members_thieving);
+    return;
+}
 
 db_find(stealing:loc, $loc);
 def_dbrow $data = db_findnext;
