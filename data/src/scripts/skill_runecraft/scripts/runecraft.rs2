@@ -31,7 +31,10 @@ if ($data = null | db_getfield($data, runecraft_table:talisman, 0) ! last_useite
     return;
 }
 if (db_getfield($data, runecraft_table:members, 0) = ^true) {
-    ~require_members_do_that;
+    if (map_members = false) {
+        mes(^mes_members_do_that); // guess
+        return;
+    }
 }
 anim(human_pickupfloor, 0);
 sound_synth(teleport_all, 0, 0);
@@ -50,7 +53,10 @@ if ($data = null) {
 def_int $levelreq = db_getfield($data, runecraft_table:level, 0);
 def_namedobj $rune = db_getfield($data, runecraft_table:rune, 0);
 if (oc_members($rune) = true) {
-    ~require_members_do_that;
+    if (map_members = false) {
+        mes(^mes_members_do_that); // guess
+        return;
+    }
 }
 def_int $level = stat(runecraft);
 if ($level < $levelreq) {

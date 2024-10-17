@@ -64,8 +64,7 @@ switch_obj(last_useitem) {
 [proc,get_gnome_bowl_product]()(namedobj)
 def_int $null_count = calc(~get_bowl_ingredient_count(null) + ~get_bowl_ingredient_count(dwarf_remains));
 if ($null_count = 11) {
-    ~mesbox("You can't cook that.");
-    @exit;
+    return(null);
 }
 // if only 1 ingredient then return odd bowl
 if ($null_count > 9) {

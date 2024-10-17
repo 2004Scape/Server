@@ -3,6 +3,10 @@ mes("This looks like a large pile of sand.");
 
 [oplocu,loc_2977]
 if (last_useitem = bucket_empty) {
+    if (map_members = false) {
+        mes(^mes_members_feature);
+        return;
+    }
     ~shilo_sandscoop;
     loc_change(loc_2978, 100);
     return;
@@ -14,6 +18,10 @@ mes("This looks like a medium pile of sand.");
 
 [oplocu,loc_2978]
 if (last_useitem = bucket_empty) {
+    if (map_members = false) {
+        mes(^mes_members_feature);
+        return;
+    }
     ~shilo_sandscoop;
     loc_change(loc_2979, 100);
     return;
@@ -25,6 +33,10 @@ mes("This looks like a small pile of sand.");
 
 [oplocu,loc_2979]
 if (last_useitem = bucket_empty) {
+    if (map_members = false) {
+        mes(^mes_members_feature);
+        return;
+    }
     ~shilo_sandscoop;
     loc_del(100);
     return;
@@ -32,7 +44,6 @@ if (last_useitem = bucket_empty) {
 ~displaymessage(^dm_default);
 
 [proc,shilo_sandscoop]
-~require_members_feature;
 anim(human_fillbucket_sandpit, 0);
 inv_del(inv, bucket_empty, 1);
 inv_add(inv, bucket_sand, 1);

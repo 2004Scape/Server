@@ -17,11 +17,17 @@ p_arrivedelay;
 
 // gates https://web.archive.org/web/20060428031722/http://www.runecrypt.com:80/index.php?pid=202
 [oploc1,loc_3197]
-~require_members_gate;
+if (map_members = false) {
+    mes(^mes_members_gate);
+    return;
+}
 ~open_gate;
 
 [oploc1,loc_3198]
-~require_members_gate;
+if (map_members = false) {
+    mes(^mes_members_gate);
+    return;
+}
 def_coord $orig_coord = loc_coord;
 loc_findallzone(~get_pair_coord($orig_coord, loc_angle, true));
 while (loc_findnext = true) {

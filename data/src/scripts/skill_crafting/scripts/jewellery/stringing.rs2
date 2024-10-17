@@ -3,7 +3,10 @@ switch_obj (last_useitem)
 {
     case unstrung_gold_amulet, unstrung_sapphire_amulet, unstrung_emerald_amulet, unstrung_ruby_amulet, unstrung_diamond_amulet, unstrung_symbol : @string_amulet(last_useslot);
     case unstrung_emblem, unstrung_dragonstone_amulet :
-        ~require_members_feature;
+        if (map_members = false) {
+            mes(^mes_members_feature);
+            return;
+        }
         @string_amulet(last_useslot);
 }
 ~displaymessage(^dm_default);
@@ -26,7 +29,10 @@ if (last_useitem = ball_of_wool) @string_amulet(last_slot);
 
 [opheldu,unstrung_dragonstone_amulet]
 if (last_useitem = ball_of_wool) {
-    ~require_members_feature;
+    if (map_members = false) {
+        mes(^mes_members_feature);
+        return;
+    }
     @string_amulet(last_slot);
 }
 ~displaymessage(^dm_default);
@@ -37,7 +43,10 @@ if (last_useitem = ball_of_wool) @string_amulet(last_slot);
 
 [opheldu,unstrung_emblem]
 if (last_useitem = ball_of_wool) {
-    ~require_members_feature;
+    if (map_members = false) {
+        mes(^mes_members_feature);
+        return;
+    }
     @string_amulet(last_slot);
 }
 ~displaymessage(^dm_default);

@@ -81,7 +81,10 @@ if(last_useitem = lockpick) {
 
 
 [proc,attempt_open_locked_door](loc $loc, boolean $entering)
-~require_members_feature;
+if (map_members = false) {
+    mes(^mes_members_thieving);
+    return;
+}
 
 // check if player is outside
 if ($entering = true) {
@@ -107,7 +110,10 @@ if ($gate = true) {
 }
 
 [proc,pick_locked_door](loc $loc, coord $loc_coord, boolean $entering)
-~require_members_feature;
+if (map_members = false) {
+    mes(^mes_members_thieving);
+    return;
+}
 
 db_find(locked_door:loc, $loc);
 def_dbrow $data = db_findnext;

@@ -80,19 +80,21 @@ inv_moveitem_uncert($inv, bank, $obj, sub($amount, $overflow));
 
 [proc,bank_check_nobreak](obj $obj)(boolean)
 if (~bank_find_obj_unbankable($obj) = true) {
-    @a_magical_force_prevents_you_from_banking_this_item;
+    mes("A magical force prevents you from banking this item!"); // osrs
+    return(true);
 }
 
 if (map_members = false) {
     // check for f2p bank limits.
     if ((inv_total(bank, oc_uncert($obj)) = 0) & (sub(inv_size(bank), inv_freespace(bank)) >= ^bank_free_slots)) {
-        @you_need_to_subscribe_for_a_members_account_if_you_want_to_store_any_more_items_in_the_bank;
+        // https://youtu.be/yv-H5-IoRLs?t=9 (2006)
+        // https://web.archive.org/web/20041126073829/http://img39.imageshack.us/img39/3412/firemaking.jpg (2004)
+        mes("You need to subscribe for a members account if you want to");
+        mes("store any more items in the bank.");
+        return(true);
     }
 }
 return(false);
-
-[label,a_magical_force_prevents_you_from_banking_this_item]
-mes("A magical force prevents you from banking this item!"); // osrs
 
 // reorganize the bank like when you open the bank.
 // this is because a player can move objs around in the bank

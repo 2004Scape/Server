@@ -182,7 +182,10 @@ if_openmain(crafting_jewelry);
 def_obj $jewelry_obj = inv_getobj($crafting_inv, $last);
 // check if mems objs are selected
 if ($jewelry_obj = obj_1691 | $jewelry_obj = obj_1672 | $jewelry_obj = obj_1653) {
-    ~require_members_feature;
+    if (map_members = false) {
+        mes(^mes_members_feature);
+        return;
+    }
 }
 // mes(oc_debugname($jewelry_obj));
 def_struct $struct = oc_param($jewelry_obj, crafting_jewelry_struct);

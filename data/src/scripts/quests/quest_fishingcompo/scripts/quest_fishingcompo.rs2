@@ -88,10 +88,10 @@ inv_del(inv, garlic, 1);
 if(%hemenster_comp_stage = ^hemenster_comp_paidfee) {
     // This uses a new stage on OSRS (probably for quest journal?)
     %fishingcompo_progress = ^fishingcompo_garlic_comp;
-    @move_hemenster_pipe;
+    ~move_hemenster_pipe;
 }
 
-[label,move_hemenster_pipe]
+[proc,move_hemenster_pipe]
 if(npc_find(coord, sinister_stranger, 8, 0) = true) {
     ~chatnpc("<p,angry>Arrgh! WHAT is that GHASTLY smell???|I think I will move over here instead...");
     npc_tele(0_41_53_7_43); // telejumps in classic

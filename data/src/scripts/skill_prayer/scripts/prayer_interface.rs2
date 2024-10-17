@@ -33,7 +33,7 @@ if (stat(prayer) < 1) {
 }
 if (db_getfield($data, prayers:members, 0) = ^true & map_members = false) {
     // in osrs it includes the prayer name in the message
-    mes("You need to be on a members' server to use this Prayer.");
+    mes(^mes_members_prayer);
     return(false);
 }
 if (~duel_arena_prayer_check = false) {

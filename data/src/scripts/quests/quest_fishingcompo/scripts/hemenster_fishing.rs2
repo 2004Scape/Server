@@ -48,7 +48,7 @@ anim(null, 0);
 if (%hemenster_comp_stage = ^hemenster_comp_all_fish_caught) { // 3 fish caught 
     if(npc_find(coord, bonzo, 12, 0) = true) {
         ~chatnpc("<p,happy>Okay folks, time's up!|Let's see who caught the biggest fish!");
-        @bonzo_handover_catch;
+        ~bonzo_handover_catch;
     }
 }
 
@@ -109,13 +109,13 @@ if (%hemenster_comp_stage = ^hemenster_comp_not_entered) { // Havn't entered the
     return (false);
 } else if (%hemenster_comp_stage >= ^hemenster_comp_paidfee & %fishingcompo_progress = ^fishingcompo_started) { // Entered comp but hasnt been assigned spot
     if(npc_find(coord, bonzo, 12, 0) = true) {
-        @bonzo_set_places;
+        ~bonzo_set_places;
     }
     return (false);
 }else if (%hemenster_comp_stage = ^hemenster_comp_all_fish_caught) { // 3 fish caught 
     if(npc_find(coord, bonzo, 12, 0) = true) {
         ~chatnpc("<p,happy>Okay folks, time's up!|Let's see who caught the biggest fish!");
-        @bonzo_handover_catch;
+        ~bonzo_handover_catch;
     }
     return (false);
 }

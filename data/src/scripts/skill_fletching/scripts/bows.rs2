@@ -16,7 +16,10 @@ switch_obj(last_useitem) {
 }
 
 [label,string_bow](obj $unstrung_bow)
-~require_members_fletching;
+if (map_members = false) {
+    mes(^mes_members_fletching); // guess
+    return;
+}
 def_dbrow $data = ~get_fletching_data($unstrung_bow);
 if ($data = null) {
     ~displaymessage(^dm_default);

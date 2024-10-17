@@ -9,13 +9,12 @@ switch_obj(last_useitem) {
 };
 
 [oploc1,loc_2409]
-~require_members_feature;
+if (map_members = false) {
+    mes(^mes_members_do_that);
+    return;
+}
 def_namedobj $axe = ~woodcutting_axe_checker();
 if ($axe = null) {
-    // mes("You need an axe to chop down this tree."); // this message was added in 2005 when they fixed axe wc reqs
-    // https://imgur.com/Cj7w6y9
-    // https://imgur.com/fnmlJ7R
-    mes("You do not have an axe that you have the Woodcutting level to use.");
     return;
 }
 def_coord $shamus_spawnpoint = 0_49_50_3_11;
@@ -33,8 +32,6 @@ if(%zanaris_progress < ^zanaris_spoken_shamus) {
 }
 def_namedobj $axe = ~woodcutting_axe_checker();
 if ($axe = null) {
-    // mes("You need an axe to chop down this tree.");
-    mes("You do not have an axe that you have the Woodcutting level to use.");
     return;
 }
 if(stat(woodcutting) < 36) {

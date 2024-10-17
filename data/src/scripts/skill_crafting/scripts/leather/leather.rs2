@@ -50,19 +50,6 @@ if (last_useitem = needle) {
 }
 ~displaymessage(^dm_default);
 
-[proc,check_craft_leather_reqs](dbrow $product_data)
-// check members
-if (db_getfield($product_data, craft_leather_table:members, 0) = true) {
-    ~require_members_feature;
-}
-// check level
-def_int $level = db_getfield($product_data, craft_leather_table:levelrequired, 0);
-if (stat(crafting) < $level) {
-    ~mesbox("You need a Crafting level of <tostring($level)> to make <db_getfield($product_data, craft_leather_table:name, 0)>.");
-    @exit;
-}
-// additional reqs go here
-
 //--- all leather
 [label,craft_leather](namedobj $product)
 //p_stopaction;
@@ -73,8 +60,18 @@ if ($product_data = null) {
     ~displaymessage(^dm_default);
     return;
 }
-~check_craft_leather_reqs($product_data);
-
+if (db_getfield($product_data, craft_leather_table:members, 0) = true) {
+    if (map_members = false) {
+        mes(^mes_members_feature);
+        return;
+    }
+}
+// check level
+def_int $level = db_getfield($product_data, craft_leather_table:levelrequired, 0);
+if (stat(crafting) < $level) {
+    ~mesbox("You need a Crafting level of <tostring($level)> to make <db_getfield($product_data, craft_leather_table:name, 0)>.");
+    return;
+}
 def_namedobj $leather;
 def_int $leather_count;
 $leather, $leather_count = db_getfield($product_data, craft_leather_table:leather, 0);
@@ -110,7 +107,10 @@ if_openmain(leather_crafting);
 
 //--- dragonhide interface
 [label,craft_dhide_interface](int $last)
-~require_members_feature;
+if (map_members = false) {
+    mes(^mes_members_feature);
+    return;
+}
 if (inv_total(inv, thread) < 1) {
     ~objbox(thread, "You need some thread to make anything out of leather.");
     return;

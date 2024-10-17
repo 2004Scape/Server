@@ -31,7 +31,8 @@ p_delay(3);
 sound_synth(tinderbox_strike, 0, 0);
 p_delay(2);
 anim(null, 0);
-@tut_firemaking_move_and_delay($log);
+~push_player(obj_coord);
+~tut_firemaking_success(obj_coord, $log);
 
 [label,tut_light_logs_inv](int $slot)
 def_obj $log = inv_getobj(inv, $slot);
@@ -65,36 +66,10 @@ p_delay(3);
 sound_synth(tinderbox_strike, 0, 0);
 p_delay(2);
 anim(null, 0);
-@tut_firemaking_move_and_delay($log);
+~push_player(obj_coord);
+~tut_firemaking_success(obj_coord, $log);
 
-[label,tut_firemaking_move_and_delay](obj $log)
-def_coord $fire_coord = obj_coord;
-~tut_firemaking_move($fire_coord, movecoord(coord, 0, 0, 1), $log,
-    ~tut_firemaking_move($fire_coord, movecoord(coord, 0, 0, -1), $log,
-        ~tut_firemaking_move($fire_coord, movecoord(coord, 1, 0, 0), $log,
-            ~tut_firemaking_move($fire_coord, movecoord(coord, -1, 0, 0), $log, true
-            )
-        )
-    )
-);
-p_delay(0);
-@tut_firemaking_success($fire_coord, $log);
-
-[proc,tut_firemaking_move](coord $fire_coord, coord $move_coord, obj $log, boolean $first_from_opheld)(boolean)
-// firemaking length: https://archive.is/zF5hb
-// if player isnt standing on the log anymore, the fire is lit
-if (lineofwalk(coord, $move_coord) = true) {
-    p_teleport($move_coord);
-    if ($first_from_opheld = true) {
-        $first_from_opheld = false;
-    }
-}
-if (coord ! $fire_coord) {
-    @tut_firemaking_success($fire_coord, $log);
-}
-return ($first_from_opheld);
-
-[label,tut_firemaking_success](coord $fire_coord, obj $log)
+[proc,tut_firemaking_success](coord $fire_coord, obj $log)
 obj_del();
 ~tutorial_give_xp(firemaking, 400);
 sound_synth(fire_lit, 0, 0);

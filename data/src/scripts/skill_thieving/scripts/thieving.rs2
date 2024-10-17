@@ -87,7 +87,10 @@ loc_change(market_stall, $respawn_ticks);
 
 [label,activate_trapped_chest]
 p_arrivedelay;
-~require_members_feature;
+if (map_members = false) {
+    mes(^mes_members_thieving);
+    return;
+}
 
 mes("You have activated a trap on the chest.");
 anim(human_picklock_chest, 0);

@@ -2,7 +2,8 @@
 if(%fishingcompo_progress = ^fishingcompo_started) {
     if(%hemenster_comp_stage = ^hemenster_comp_paidfee) {
         ~chatplayer("<p,neutral>I'll enter the competition please.");
-        @bonzo_set_places;
+        ~bonzo_set_places;
+        return;
     }
     @bonzo_waiting_entry;
 } 
@@ -29,15 +30,16 @@ if($option = 1) {
     %hemenster_comp_stage = ^hemenster_comp_paidfee;
     ~objbox(coins_250, "You pay Bonzo 5 coins.");
     ~chatnpc("<p,happy>Ok, we've got all the fishermen!|It's time to roll!");
-    @bonzo_set_places;
+    ~bonzo_set_places;
 } else if($option = 2) {
     ~chatplayer("<p,neutral>No thanks, I'll just watch the fun.");
 }
 
-[label,bonzo_set_places]
+[proc,bonzo_set_places]
 ~chatnpc("<p,neutral>Ok, nearly everyone is in their place already.|You fish in the spot by the willow tree,|and the Sinister Stranger, you fish by the pipes.");
 if(%hemenster_pipe_stashed = true) {
-    @move_hemenster_pipe;
+    ~move_hemenster_pipe;
+    return;
 }
 %fishingcompo_progress = ^fishingcompo_in_comp;
 ~mesbox("Your fishing competition spot is beside the willow tree.");
@@ -49,9 +51,9 @@ if(%hemenster_comp_stage = ^hemenster_comp_paidfee) { // fee paid, no fish caugh
     return;
 }
 ~chatplayer("<p,happy>I caught some fish! Here...");
-@bonzo_handover_catch;
+~bonzo_handover_catch;
 
-[label,bonzo_handover_catch]
+[proc,bonzo_handover_catch]
 ~mesbox("You hand over your catch.");
 if(inv_total(inv, raw_giant_carp) > 0) {
     inv_del(inv, raw_sardine, 3);

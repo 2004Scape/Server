@@ -15,7 +15,10 @@ switch_obj(last_useitem) {
 }
 
 [label,make_bolt_tips](obj $item)
-~require_members_fletching;
+if (map_members = false) {
+    mes(^mes_members_fletching); // guess
+    return;
+}
 def_dbrow $data = ~get_fletching_data($item);
 if ($data = null) {
     ~displaymessage(^dm_default);
@@ -44,7 +47,10 @@ mes("You use your chisel to fletch small bolt tips.");
 
 
 [label,make_bolts](obj $bolt_tips)
-~require_members_fletching;
+if (map_members = false) {
+    mes(^mes_members_fletching); // guess
+    return;
+}
 def_dbrow $data = ~get_fletching_data($bolt_tips);
 if ($data = null) {
     ~displaymessage(^dm_default);

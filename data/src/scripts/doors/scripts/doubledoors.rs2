@@ -12,11 +12,17 @@
 
 // for members
 [oploc1,loc_1596]
-~require_members_gate;
+if (map_members = false) {
+    mes(^mes_members_gate);
+    return;
+}
 ~open_double_doors_left(500, door_right_closed, loc_param(open_sound));
 
 [oploc1,loc_1597]
-~require_members_gate;
+if (map_members = false) {
+    mes(^mes_members_gate);
+    return;
+}
 ~open_double_doors_right(500, door_left_closed, loc_param(open_sound));
 
 [proc,open_double_doors_left](int $duration, category $category, synth $sound)

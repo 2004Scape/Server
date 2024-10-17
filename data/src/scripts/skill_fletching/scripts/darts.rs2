@@ -17,7 +17,10 @@ switch_obj(last_useitem) {
 }
 
 [label,make_darts](obj $dart_tips)
-~require_members_fletching;
+if (map_members = false) {
+    mes(^mes_members_fletching); // guess
+    return;
+}
 def_dbrow $data = ~get_fletching_data($dart_tips);
 if ($data = null) {
     ~displaymessage(^dm_default);

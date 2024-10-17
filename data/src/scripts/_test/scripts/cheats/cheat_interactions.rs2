@@ -146,7 +146,6 @@ inv_clear(inv);
 inv_add(inv, logs, 1);
 inv_add(inv, tinderbox, 1);
 queue(reset_itest, 10);
-@light_logs_inv(0);
 
 [proc,blockwalk_all_in_action]
 mes("Test 12 & 13 (manual): blockwalk=ALL in action");

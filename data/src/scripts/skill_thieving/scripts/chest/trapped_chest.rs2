@@ -17,31 +17,34 @@
 @activate_trapped_chest;
 
 [oploc2,chest_10_coins]
-~attempt_trapped_chest(loc_type, loc_coord, loc_angle, loc_shape);
+@attempt_trapped_chest(loc_type, loc_coord, loc_angle, loc_shape);
 
 [oploc2,chest_nature_rune]
-~attempt_trapped_chest(loc_type, loc_coord, loc_angle, loc_shape);
+@attempt_trapped_chest(loc_type, loc_coord, loc_angle, loc_shape);
 
 [oploc2,chest_50_coins]
-~attempt_trapped_chest(loc_type, loc_coord, loc_angle, loc_shape);
+@attempt_trapped_chest(loc_type, loc_coord, loc_angle, loc_shape);
 
 [oploc2,chest_steel_arrowtips]
 ~attempt_locked_chest;
 
 [oploc2,chest_blood_runes]
-~attempt_trapped_chest(loc_type, loc_coord, loc_angle, loc_shape);
+@attempt_trapped_chest(loc_type, loc_coord, loc_angle, loc_shape);
 
 [oploc2,chest_ardougne_castle]
-~attempt_trapped_chest(loc_type, loc_coord, loc_angle, loc_shape);
+@attempt_trapped_chest(loc_type, loc_coord, loc_angle, loc_shape);
 
 [oplocu,chest_steel_arrowtips]
 if (last_useitem = lockpick) {
     ~attempt_locked_chest;
 }
 
-[proc,attempt_trapped_chest](loc $loc, coord $loc_coord, int $loc_angle, locshape $loc_shape)
+[label,attempt_trapped_chest](loc $loc, coord $loc_coord, int $loc_angle, locshape $loc_shape)
 p_arrivedelay;
-~require_members_feature;
+if (map_members = false) {
+    mes(^mes_members_thieving);
+    return;
+}
 
 db_find(trapped_chest:loc, $loc);
 def_dbrow $data = db_findnext;

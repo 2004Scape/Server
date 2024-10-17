@@ -7,7 +7,10 @@ switch_obj(last_useitem) {
 }
 
 [label,fletch_log](obj $log)
-~require_members_fletching;
+if (map_members = false) {
+    mes(^mes_members_fletching); // guess
+    return;
+}
 db_find(fletch_bow_table:log, $log);
 def_dbrow $data = db_findnext;
 if ($data = null) {
