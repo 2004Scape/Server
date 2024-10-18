@@ -5,11 +5,11 @@ if (p_finduid(uid) = true) {
         mes("This spell can only be learnt in the Mage Arena.");
         return;
     }
-
-    if (%charge_god_spell > 300) {
-        mes("You can't recast that yet, your current Charge is too strong.");
-        return;
-    }
+    // this was added sometime in 2005 https://www.youtube.com/watch?v=CqzZ_Qsw7RE
+    // if (%charge_god_spell > 300) {
+    //     mes("You can't recast that yet, your current Charge is too strong.");
+    //     return;
+    // }
 
     def_dbrow $spell_data = ~get_spell_data(^charge);
     if (~check_spell_requirements($spell_data) = false) {
@@ -25,7 +25,6 @@ if (p_finduid(uid) = true) {
     ~delete_spell_runes($spell_data);
     ~give_spell_xp($spell_data);
 }
-
 
 [timer,charge]
 %charge_god_spell = sub(%charge_god_spell, 1);
