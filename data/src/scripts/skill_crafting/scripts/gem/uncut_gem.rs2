@@ -11,7 +11,10 @@ switch_obj (last_useitem)
 //--- Label to craft a gem
 [label,crafting_gem](obj $uncut_gem)
 if (oc_members($uncut_gem) = true) {
-    ~require_members_feature;
+    if (map_members = false) {
+        mes(^mes_members_feature);
+        return;
+    }
 }
 db_find(gem_cutting_table:uncut_gem, $uncut_gem);
 def_dbrow $data = db_findnext;

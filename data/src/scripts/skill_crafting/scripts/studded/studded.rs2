@@ -2,24 +2,36 @@
 switch_obj (last_useitem)
 {
     case leather_chaps :
-        ~require_members_feature;
+        if (map_members = false) {
+            mes(^mes_members_feature);
+            return;
+        }
         @craft_studded(studded_chaps);
     case leather_body :
-        ~require_members_feature;
+        if (map_members = false) {
+            mes(^mes_members_feature);
+            return;
+        }
         @craft_studded(studded_body);
     case default : ~displaymessage(^dm_default);
 };
 
 [opheldu,leather_chaps]
 if (last_useitem = steel_studs) {
-    ~require_members_feature;
+    if (map_members = false) {
+        mes(^mes_members_feature);
+        return;
+    }
     @craft_studded(studded_chaps);
 }
 ~displaymessage(^dm_default);
 
 [opheldu,leather_body]
 if (last_useitem = steel_studs) {
-    ~require_members_feature;
+    if (map_members = false) {
+        mes(^mes_members_feature);
+        return;
+    }
     @craft_studded(studded_body);
 }
 ~displaymessage(^dm_default);

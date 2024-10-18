@@ -25,18 +25,23 @@ if ($data = null) {
 // check if f2p. Not sure if this is a thing. just to be safe i guess
 def_namedobj $product = db_getfield($data, woodcutting_trees:product, 0);
 if (oc_members($product) = true) {
-    ~require_members_feature;
+    if (map_members = false) {
+        mes(^mes_members_feature);
+        return;
+    }
 }
 // check level first
 def_int $level = db_getfield($data, woodcutting_trees:levelrequired, 0);
 if (stat(woodcutting) < $level) {
     anim(null, 0);
-    @woodcutting_level_failmessage($level);
+    mes("You need a Woodcutting level of <tostring($level)> to chop down this tree.");
+    return;
 }
 // check inv space 2nd
 if (inv_freespace(inv) < 1) {
     anim(null, 0);
-    @your_inventory_is_full($product);
+    mes("Your inventory is too full to hold any more <lowercase(oc_name($product))>.");
+    return;
 }
 if (afk_event = ^true) {
     @macro_randomwoodcutting;
@@ -53,7 +58,7 @@ if (%action_delay < map_clock) {
     // axe message is here after the skill clock is set
     def_namedobj $axe = ~woodcutting_axe_checker();
     if ($axe = null) {
-        @woodcutting_axe_fail;
+        return;
     }
     anim(struct_param(oc_param($axe, woodcutting_struct), skill_anim), 0);
     sound_synth(woodchop_4,0,10);
@@ -67,7 +72,7 @@ if (%action_delay < map_clock) {
 // check if player has axe and level, ifso return best axe
 def_namedobj $axe = ~woodcutting_axe_checker();
 if ($axe = null) {
-    @woodcutting_axe_fail;
+    return;
 }
 // find tree in db
 db_find(woodcutting_trees:tree, loc_type);
@@ -80,13 +85,15 @@ if ($data = null) {
 def_int $level = db_getfield($data, woodcutting_trees:levelrequired, 0);
 if (stat(woodcutting) < $level) {
     anim(null, 0);
-    @woodcutting_level_failmessage($level);
+    mes("You need a Woodcutting level of <tostring($level)> to chop down this tree.");
+    return;
 }
 // check inv space
 def_namedobj $product = db_getfield($data, woodcutting_trees:product, 0);
 if (inv_freespace(inv) < 1) {
     anim(null, 0);
-    @your_inventory_is_full($product);
+    mes("Your inventory is too full to hold any more <lowercase(oc_name($product))>.");
+    return;
 }
 // play animation every 4 ticks
 // make sure this is before the skill clock check, else theres a few cases where the skill anim
@@ -200,23 +207,11 @@ if (($obj1 = iron_axe | inv_total(inv, iron_axe) > 0)) {
 if (($obj1 = bronze_axe | inv_total(inv, bronze_axe) > 0)) {
     return (bronze_axe);
 }
-return(null);
-
-
-[label,woodcutting_axe_fail]
 // mes("You need an axe to chop down this tree."); // this message was added in 2005 when they fixed axe wc reqs
 // https://imgur.com/Cj7w6y9
 // https://imgur.com/fnmlJ7R
 mes("You do not have an axe which you have the woodcutting level to use.");
-
-
-[label,your_inventory_is_full](namedobj $product)
-mes("Your inventory is too full to hold any more <lowercase(oc_name($product))>.");
-
-
-[label,woodcutting_level_failmessage](int $level)
-mes("You need a Woodcutting level of <tostring($level)> to chop down this tree.");
-
+return(null);
 
 [proc,woodcutting_successchance](dbrow $data, namedobj $axe)(int, int)
 def_int $count = calc(db_getfieldcount($data, woodcutting_trees:successchance) - 1);

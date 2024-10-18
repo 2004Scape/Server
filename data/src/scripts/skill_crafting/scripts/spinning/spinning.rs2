@@ -3,7 +3,10 @@ switch_obj (last_useitem)
 {
     case wool : @craft_spinning(last_useitem);
     case flax :
-        ~require_members_feature; 
+        if (map_members = false) {
+            mes(^mes_members_feature);
+            return;
+        }
         @craft_spinning(last_useitem);
     case ball_of_wool : ~objbox(ball_of_wool, "You have already spun this wool.");
     case bow_string : ~objbox(bow_string, "You have already spun this bow string.");

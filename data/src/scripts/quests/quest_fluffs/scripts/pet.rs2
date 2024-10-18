@@ -203,7 +203,10 @@ if (.npc_find(coord, rat, 10, 1) = true) {
 }
 
 [proc,cat_drop]
-~require_members_do_that; //todo: verify if there is a specific message for trying to drop in f2p
+if (map_members = false) {
+    mes(^mes_members_do_that); //todo: verify if there is a specific message for trying to drop in f2p
+    return;
+}
 if (npc_finduid(%follower_uid) = true) {
     mes("You already have a follower."); //osrs
     return;

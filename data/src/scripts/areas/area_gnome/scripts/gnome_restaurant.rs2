@@ -66,7 +66,9 @@ if (inv_total(inv, batta_tin) < 1) {
         return;
     }
 } else {
-    ~gnome_restaurant_food_check(premade_cheese_tom_batta, "batta");
+    if (~gnome_restaurant_food_check(premade_cheese_tom_batta, "batta") = false) {
+        return;
+    }
 }
 if (inv_total(inv, cheese_tom_batta) < 1) {
     ~chatplayer("<p,confused>Erm, I've not quite finished it yet.");
@@ -103,7 +105,9 @@ if (inv_total(inv, gnomebowl_mould) < 1) {
         return;
     }
 } else {
-    ~gnome_restaurant_food_check(premade_chocolate_bomb, "gnomebowl");
+    if (~gnome_restaurant_food_check(premade_chocolate_bomb, "gnomebowl") = false) {
+        return;
+    }
 }
 if (inv_total(inv, chocolate_bomb) < 1) {
     ~chatplayer("<p,neutral>I haven't made it yet.");
@@ -140,7 +144,9 @@ if (inv_total(inv, batta_tin) < 1) {
         return;
     }
 } else {
-    ~gnome_restaurant_food_check(premade_toad_batta, "batta");
+    if (~gnome_restaurant_food_check(premade_toad_batta, "batta") = false) {
+        return;
+    }
 }
 if (inv_total(inv, toad_batta) < 1) {
     ~chatplayer("<p,neutral>I'm not done yet.");
@@ -178,7 +184,9 @@ if (inv_total(inv, gnomebowl_mould) < 1) {
         return;
     }
 } else {
-    ~gnome_restaurant_food_check(premade_worm_hole, "gnomebowl");
+    if (~gnome_restaurant_food_check(premade_worm_hole, "gnomebowl") = false) {
+        return;
+    }
 }
 
 if (inv_total(inv, worm_hole) < 1) {
@@ -215,7 +223,9 @@ if (inv_total(inv, crunchy_tray) < 1) {
         return;
     }
 } else {
-    ~gnome_restaurant_food_check(premade_toad_crunchies, "crunchies");
+    if (~gnome_restaurant_food_check(premade_toad_crunchies, "crunchies") = false) {
+        return;
+    }
 }
 
 if (inv_total(inv, toad_crunchies) < 1) {
@@ -224,12 +234,13 @@ if (inv_total(inv, toad_crunchies) < 1) {
     return;
 }
 
-[proc,gnome_restaurant_food_check](obj $food, string $food_name)
+[proc,gnome_restaurant_food_check](obj $food, string $food_name)(boolean)
 if (inv_total(inv, $food) > 0) {
     ~chatplayer("<p,neutral>I think I've got one.");
     ~chatnpc("<p,neutral>That looks identical to the <$food_name> I cooked not five|minutes ago. You'll have to prove to me that you can|make one yourself.");
-    @exit;
+    return(false);
 }
+return(true);
 // ***************** END OF TUTORIAL *************************
 
 [label,gnome_restaurant_job_start]
