@@ -74,7 +74,7 @@ if (testbit(%attackstyle_magic, 0) = true & %attackstyle_magic = 3 & %autocast_s
 // not high enough level
 def_int $combat_level_diff = abs(sub(~player_combat_level, ~.player_combat_level));
 def_int $wilderness_level = min(~wilderness_level(coord), ~wilderness_level(.coord));
-if ($wilderness_level = 0) {
+if ($wilderness_level < 1) {
     mes("You can't attack players who aren't in the Wilderness.");
     return(false);
 }

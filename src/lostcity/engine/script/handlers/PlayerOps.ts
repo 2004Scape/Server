@@ -1061,10 +1061,6 @@ const PlayerOps: CommandHandlers = {
     [ScriptOpcode.WEIGHT]: checkedHandler(ProtectedActivePlayer, state => {
         state.pushInt(state.activePlayer.runweight);
     }),
-
-    [ScriptOpcode.LAST_COORD]: checkedHandler(ActivePlayer, state => {
-        state.pushInt(CoordGrid.packCoord(state.activePlayer.lastCoordLevel, state.activePlayer.lastCoordX, state.activePlayer.lastCoordZ));
-    }),
 };
 
 /**
