@@ -360,7 +360,7 @@ if (~player_in_combat_check = false) { // https://youtu.be/TeQXQDaawO0?t=247
 }
 // map_projanim	id=53, starttime=0, endtime=40, angle=2, progress=11, startheight=36, endheight=35
 // (coord $coord, npc_uid $uid, spotanim $spotanim, int $startheight, int $endheight, int $delay, int $angle, int $length, int $offset, int $step)(int)
-def_int $duration = ~npc_projectile(movecoord(%mcannon_coord, 1, 0, 1), npc_uid, spotanim_53, 36, 35, 0, 2, 40, 0, 13);
+def_int $duration = ~npc_projectile(movecoord(%mcannon_coord, 1, 0, 1), npc_uid, spotanim_53, 36, 35, 0, 2, 35, 0, 5);
 %mcannon_ammo = sub(%mcannon_ammo, 1);
 sound_synth(mcannon_fire, 0, 0);
 def_int $damage = 0;
