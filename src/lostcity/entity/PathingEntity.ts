@@ -53,9 +53,6 @@ export default abstract class PathingEntity extends Entity {
     lastInt: number = -1; // resume_p_countdialog, ai_queue
     lastCrawl: boolean = false;
     lastMovement: number = 0;
-    lastCoordX: number = -1;
-    lastCoordZ: number = -1;
-    lastCoordLevel: number = -1;
 
     walktrigger: number = -1;
     walktriggerArg: number = 0; // used for npcs
@@ -115,9 +112,6 @@ export default abstract class PathingEntity extends Entity {
         this.entitymask = entitymask;
         this.lastStepX = x - 1;
         this.lastStepZ = z;
-        this.lastCoordX = x;
-        this.lastCoordZ = z;
-        this.lastCoordLevel = level;
     }
 
     /**
@@ -142,10 +136,6 @@ export default abstract class PathingEntity extends Entity {
         if (!this.hasWaypoints() || this.moveSpeed === MoveSpeed.STATIONARY || this.moveSpeed === MoveSpeed.INSTANT) {
             return false;
         }
-        const previousX = this.x;
-        const previousZ = this.z;
-        const previousLevel = this.level;
-
         if (this.moveSpeed === MoveSpeed.CRAWL) {
             this.lastCrawl = !this.lastCrawl;
             if (this.lastCrawl && this.walkDir === -1) {
@@ -156,11 +146,6 @@ export default abstract class PathingEntity extends Entity {
             if (this.moveSpeed === MoveSpeed.RUN && this.walkDir !== -1 && this.runDir === -1) {
                 this.runDir = this.validateAndAdvanceStep();
             }
-        }
-        if (previousX !== this.x || previousZ !== this.z || previousLevel !== this.level) {
-            this.lastCoordX = previousX;
-            this.lastCoordZ = previousZ;
-            this.lastCoordLevel = previousLevel;
         }
         return true;
     }
@@ -294,12 +279,6 @@ export default abstract class PathingEntity extends Entity {
         this.lastStepX = this.x - 1;
         this.lastStepZ = this.z;
         this.tele = true;
-
-        if (previousX !== x || previousZ !== z || previousLevel !== level) {
-            this.lastCoordX = previousX;
-            this.lastCoordZ = previousZ;
-            this.lastCoordLevel = previousLevel;
-        }
 
         if (previousLevel != level) {
             this.moveSpeed = MoveSpeed.INSTANT;
