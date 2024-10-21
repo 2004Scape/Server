@@ -1,0 +1,12 @@
+[opnpc1,brimstail]
+~chatnpc("<p,neutral>Hello adventurer, what can I do for you?");
+if(%runemysteries_progress = ^runemysteries_complete) {
+    def_int $option = ~p_choice2("Can you teleport me to the Rune Essence?", 1, "Nothing for now, thanks!", 2);
+    if ($option = 1) {
+        ~chatplayer("<p,quiz>Can you teleport me to the Rune Essence?");
+        ~chatnpc("<p,neutral>Okay. Hold onto your hat!");
+        @teleport_to_essence_mine(^essence_mine_to_brimstail); 
+    }
+}
+~chatplayer("<p,neutral>Nothing for now, thanks!");
+~chatnpc("<p,neutral>Ok. Just remember that a friend of a wizard is a friend of mine!");

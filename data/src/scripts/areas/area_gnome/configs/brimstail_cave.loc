@@ -1,0 +1,18 @@
+[brimstail_cave_entrance]
+name=Hollowed rock
+desc=The entrance to the cave.
+model=model_loc_194
+width=4
+length=4
+active=yes
+op1=Enter
+forceapproach=west
+
+[brimstail_ladder]
+name=Ladder
+desc=I can climb this.
+model=model_loc_11
+active=yes
+op1=Climb-up
+mapscene=7
+forceapproach=south
