@@ -46,6 +46,15 @@ param=proj_travel,crossbowbolt_travel
 param=poison_severity,20
 tradeable=yes
 
+//RANGED STRENGTH FOR UNUSUAL BOLTS:
+//The ranged strength stats for non-standard bolts before the 2006 crossbow rework are not known precisely.
+//Modern bolts all give a +18/+9 bonus over the previous tier / half-tier, and there is some evidence that this schema pre-exists the rework
+//For example, karil's bolt racks (2005) at +55 - i.e. exactly 2.5 tiers above basic bolts at +10. Likewise, the non-standard introduction of blurite in 2006 to fill in a 'missing' tier between bronze and iron.
+//Strength values have therefore been set according to this +9/+18 schema, matching fansite comparisons @ https://web.archive.org/web/20041204070450/https://www.lunagang.nl/
+//CONFIRM if evidence surfaces - should be nontheless be accurate +/- one max hit
+
+//LEVEL REQUIREMENTS presumably did not exist. osrs/post-crossbow-update puts them at 26
+
 [opal_bolt]
 stackable=yes
 cost=60
@@ -66,8 +75,7 @@ iop2=Wield
 wearpos=quiver
 weight=18g
 category=bolts
-param=rangebonus,22
-//UNKNOWN, setting to same rangebonus as mithril arrow as according to guesses in https://web.archive.org/web/20041204070450/https://www.lunagang.nl/ , used to be 14 as according to osrs. TODO CONFIRM
+param=rangebonus,28
 param=levelrequire,1
 param=proj_launch,crossbowbolt_launch
 param=proj_travel,crossbowbolt_travel
@@ -93,10 +101,8 @@ iop2=Wield
 wearpos=quiver
 weight=18g
 category=bolts
-param=rangebonus,16
-//UNKNOWN, set to same rangebonus as steel arrowas according to guesses in https://web.archive.org/web/20041204070450/https://www.lunagang.nl/ , used to be 48 as according to osrs . TODO CONFIRM
+param=rangebonus,19
 param=levelrequire,1
-//Level requirements are guessed to be nonexistent. osrs/post-crossbow-update puts them at 26
 param=proj_launch,crossbowbolt_launch
 param=proj_travel,crossbowbolt_travel
 tradeable=yes
@@ -117,8 +123,7 @@ iop2=Wield
 wearpos=quiver
 weight=18g
 category=bolts
-param=rangebonus,40
-//UNKNOWN, setting to rangebonus between adamant and rune arrows (31+49/2=40) as according to guesses in https://web.archive.org/web/20041204070450/https://www.lunagang.nl/ , used to be 12 as according to osrs. TODO CONFIRM
+param=rangebonus,46
 param=levelrequire,1
 param=proj_launch,crossbowbolt_launch
 param=proj_travel,crossbowbolt_travel
