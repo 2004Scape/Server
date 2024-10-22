@@ -1,0 +1,13 @@
+[sextant_disabled_zones]
+table=coord_pair_table
+// Fisher realm
+data=coord_pair,0_41_73_0_0,0_43_73_63_63
+data=coord_pair,1_41_73_0_0,1_43_73_63_63
+data=coord_pair,2_41_73_0_0,2_43_73_63_63
+// Watchtower instance, you can't go down from the 2nd level 
+data=coord_pair,2_45_73_0_0,2_45_73_63_63
+// runecraft altars (not the mine), also the cosmic realm which doesn't exist in 2004
+// TODO: might also include the ship area from dragon slayer but need to confirm
+data=coord_pair,0_32_75_0_0,0_44_75_63_63
+// Viyeldi caves (legends quest)
+data=coord_pair,0_37_73_0_0,0_37_73_63_63

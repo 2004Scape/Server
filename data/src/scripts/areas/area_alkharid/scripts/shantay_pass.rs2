@@ -42,6 +42,7 @@ p_delay(0);
 facesquare(movecoord(coord, 0, 0, -3));
 p_delay(0);
 mes("You go through the gate.");
+~start_desertheat_timer;
 p_telejump(movecoord(coord, 0, 0, -3));
 
 
@@ -65,6 +66,7 @@ if (%shantay_jail_progress = ^put_in_shantay_jail & npc_find(coord, shantay, 12,
 if (coordz(coord) <= coordz(loc_coord)) {
     p_delay(0);
     p_telejump(movecoord(coord, 0, 0, 3));
+    cleartimer(desert_heat);
     return;
 }
 if (npc_find(coord, shantay_pass_guard, 5, 0) = false) {
@@ -96,6 +98,7 @@ if_close;
 facesquare(movecoord(coord, 0, 0, -3));
 p_delay(0);
 mes("You go through the gate.");
+~start_desertheat_timer;
 p_telejump(movecoord(coord, 0, 0, -3));
 
 
