@@ -141,6 +141,7 @@ model=model_2479_obj
 iop1=Open
 weight=2kg
 members=yes
+respawnrate=90
 param=no_alchemy,1
 
 [pigeon_cage_empty]

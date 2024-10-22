@@ -51,6 +51,7 @@ model=model_2409_obj
 2dxan=392
 weight=500g
 category=category_59
+respawnrate=200
 tradeable=yes
 
 [burnt_pitta_bread]

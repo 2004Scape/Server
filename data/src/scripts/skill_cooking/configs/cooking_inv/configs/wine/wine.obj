@@ -30,6 +30,7 @@ recol1d=17451
 cost=1
 weight=250g
 tradeable=yes
+respawnrate=80
 
 [jug_wine]
 cost=1

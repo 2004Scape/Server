@@ -36,6 +36,7 @@ manwear=model_281_obj_wear,0
 womanwear=model_445_obj_wear,0
 weight=10g
 tradeable=yes
+respawnrate=500
 
 [emerald_necklace]
 cost=1425

@@ -802,6 +802,7 @@ recol1d=5251
 2dyan=188
 2dxan=316
 weight=3oz
+// todo: osrs has a respawnrate of 0. Not sure if its authentic, probably not?
 
 [dry_sticks]
 name=Dry sticks

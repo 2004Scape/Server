@@ -31,6 +31,7 @@ recol1d=8456
 weight=4lb
 category=category_151
 tradeable=yes
+respawnrate=500
 param=smelting_struct,smelting_iron_bar
 param=smithing_anvil_struct,smithing_iron_bar
 
@@ -84,6 +85,7 @@ recol1d=31393
 weight=4lb
 category=category_151
 tradeable=yes
+respawnrate=1500
 param=smelting_struct,smelting_gold_bar
 
 [mithril_bar]

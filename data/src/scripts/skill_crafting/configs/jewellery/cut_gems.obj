@@ -85,6 +85,7 @@ manwear=model_516_obj_wear,0
 womanwear=model_516_obj_wear,6
 weight=2g
 tradeable=yes
+respawnrate=1000
 
 [opal]
 cost=100

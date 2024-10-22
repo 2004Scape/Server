@@ -16,6 +16,7 @@ womanwear=model_510_obj_wear,6
 category=weapon_axe
 weight=3lb
 tradeable=yes
+respawnrate=500
 param=woodcutting_struct,woodcutting_iron_axe
 param=stabattack,-2
 param=slashattack,5

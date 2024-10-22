@@ -9,6 +9,7 @@ weight=1lb
 2dyan=92
 2dxan=308
 tradeable=yes
+respawnrate=200
 
 [unholy_mould]
 name=Unholy mould
@@ -34,6 +35,7 @@ model=model_2368_obj
 2dxan=340
 weight=1lb
 tradeable=yes
+respawnrate=200
 
 [necklace_mould]
 name=Necklace mould
@@ -46,6 +48,7 @@ weight=1lb
 2dyan=84
 2dxan=316
 tradeable=yes
+respawnrate=200
 
 [holy_mould]
 name=Holy mould
@@ -58,3 +61,4 @@ model=model_2448_obj
 2dxan=320
 weight=1lb
 tradeable=yes
+respawnrate=200
