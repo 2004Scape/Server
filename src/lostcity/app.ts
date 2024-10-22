@@ -17,15 +17,13 @@ if (Environment.BUILD_STARTUP_UPDATE) {
     await updateCompiler();
 }
 
-if (!fs.existsSync('data/pack/client/config')) {
-    printInfo('Packing cache for the first time, please wait until you see the world is ready.');
+if (!fs.existsSync('data/pack/client/config') || !fs.existsSync('data/pack/server/script.dat')) {
+    printInfo('Packing cache, please wait until you see the world is ready.');
 
     try {
         await packServer();
         await packClient();
     } catch (err) {
-        // todo: delete incorrectly built files
-
         if (err instanceof Error) {
             printError(err.message);
         }
