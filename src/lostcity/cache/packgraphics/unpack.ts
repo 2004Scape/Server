@@ -1,4 +1,5 @@
 import fs from 'fs';
+import Packet from '#jagex2/io/Packet.js';
 
 import Jagfile from '#jagex2/io/Jagfile.js';
 import Model from '#lostcity/cache/graphics/Model.js';
