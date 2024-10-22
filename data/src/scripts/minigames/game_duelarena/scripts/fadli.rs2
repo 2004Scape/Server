@@ -28,7 +28,10 @@ switch_int ($option) {
     ~chatnpc("<p,neutral>Most aren't any good so I throw rotten fruit at them!");
     ~chatplayer("<p,neutral>Heh. Can I buy some?");
     ~chatnpc("<p,neutral>Sure.");
-    ~require_members_store_owner; // complete guess, this could be earlier in the dialogue
+    if (map_members = false) {
+        mes(^mes_members_store_owner); // complete guess, this could be earlier in the dialogue
+        return;
+    }
     ~openshop_activenpc;
 }
 
@@ -36,5 +39,8 @@ switch_int ($option) {
 @openbank;
 
 [opnpc4,fadli]
-~require_members_store_owner;
+if (map_members = false) {
+    mes(^mes_members_store_owner);
+    return;
+}
 ~openshop_activenpc;

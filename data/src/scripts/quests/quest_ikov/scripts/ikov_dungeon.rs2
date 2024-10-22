@@ -44,7 +44,9 @@ if(inzone(^ikovbridge_zone_lower, ^ikovbridge_zone_upper, coord) = true) {
 if(inzone(^ikovbridge_zone_lower, ^ikovbridge_zone_upper, coord) = false) {
     return;
 }
-if(coordx(last_coord) <= coordx(movecoord(^ikovbridge_zone_lower, 1, 0, 0))) {
+// todo: refactor this without last_coord
+def_coord $last_coord = coord;
+if(coordx($last_coord) <= coordx(movecoord(^ikovbridge_zone_lower, 1, 0, 0))) {
     ~forcemove(movecoord(^ikovbridge_zone_lower, 1, 0, abs(calc(coordz(^ikovbridge_zone_lower) - coordz(coord)))));
     if(weight >= 0) {
         @ikov_bridgefail;

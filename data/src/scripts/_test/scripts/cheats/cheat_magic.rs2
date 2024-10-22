@@ -17,7 +17,10 @@ inv_add(inv, soulrune, 1000);
 [debugproc,magicbank]
 if_close;
 if (p_finduid(uid) = true) {
-    ~require_members_feature;
+    if (map_members = false) {
+        mes(^mes_members_feature);
+        return;
+    }
     def_int $choice = ~p_choice2_header("Yes.", 1, "No.", 2, "This clears your bank. Continue?");
     if ($choice = 2) {
         return;

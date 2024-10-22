@@ -18,7 +18,7 @@ if($start_pos ! ^ta_quir_priw & $dest ! ^ta_quir_priw) {
     return;
 }
 %glider_takeoff = ~calc_glidervar($start_pos, $dest);
-p_delay(1); // 1t before teleport, 3t before if_close
+p_delay(0); // 1t before teleport, 3t before if_close
 p_teleport(map_findsquare($dest, 0, 1, ^map_findsquare_lineofwalk));
 p_delay(2);
 %glider_takeoff = -1;
@@ -74,7 +74,7 @@ if(%grandtree_progress = ^grandtree_released_prison & inzone(3_38_54_31_43, 3_38
             ~chatnpc("<p,happy>OK! You're the boss!|Hold on tight, it'll be a rough ride!");
             if_close;
             p_teleport(0_45_47_37_50);
-            p_delay(3);
+            p_delay(4);
             // https://youtu.be/-jfueZpRhzU?si=yYCGWkah1TccT9cL&t=621
             ~chatnpc("<p,sad>Sorry about that.");
             ~chatnpc("<p,angry>That turbulence over the Karamja Volcano was a bit unexpected, and the area round here isn't well suited for emergency landing. Still! we're still alive that's the main thing. Are you OK?");

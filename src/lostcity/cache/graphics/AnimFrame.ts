@@ -28,7 +28,7 @@ export default class AnimFrame {
         }
 
         if (!AnimBase.instances.length) {
-            printError('error: Animation bases must be loaded first');
+            printError('Animation bases must be loaded first');
             return;
         }
 

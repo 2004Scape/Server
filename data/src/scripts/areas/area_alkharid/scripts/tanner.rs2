@@ -40,57 +40,111 @@ switch_obj(last_useitem) {
 
 // https://web.archive.org/web/20040804232357/http://runehq.com/viewcityguide.php?id=00390
 [label,tan_leather_choices]
-def_int $total_dragon_hides = calc(inv_total(inv, dragonhide_green) + inv_total(inv, dragonhide_blue) + inv_total(inv, dragonhide_red) + inv_total(inv, dragonhide_black));
-def_int $total_cow_hides = inv_total(inv, cow_hide);
-def_int $choice;
-if ($total_dragon_hides < 1) {
-    $choice = ~p_choice3_header("Soft leather", 1, "Hard leather", 2, "Cancel", 4, "What kind of leather do you wish to make?");
-} else if (inv_total(inv, cow_hide) < 1) {
-    $choice = ~p_choice2_header("Dragon hide", 3, "Cancel", 4, "What kind of leather do you wish to make?");
-} else {
-    $choice = ~p_choice4_header("Soft leather", 1, "Hard leather", 2, "Dragon hide", 3, "Cancel", 4, "What kind of leather do you wish to make?");
-}
+// https://web.archive.org/web/20110920233323im_/http://runehq.com/images/cityguides/canifistanner.jpg
+def_int $choice = ~p_choice4_header("Soft leather", 1, "Hard leather", 2, "Dragon hide", 3, "Cancel", 4, "What kind of leather do you wish to make?");
 switch_int($choice) {
-    case 1 : ~tan_leather(cow_hide, leather, 1);
-    case 2 : ~tan_leather(cow_hide, hardleather, 3);
-    case 3 :
-        ~tan_leather(dragonhide_green, dragon_leather, 20);
-        ~tan_leather(dragonhide_blue, dragon_leather_blue, 20);
-        ~tan_leather(dragonhide_red, dragon_leather_red, 20);
-        ~tan_leather(dragonhide_black, dragon_leather_black, 20);
-        if ($total_dragon_hides = 1) {
-            mes("The tanner tans your dragonhide.");
-        } else {
-            mes("The tanner tans <tostring($total_dragon_hides)> dragonhides for you.");
-        }
-        return;
-    case 4 :
-        return;
-}
-if ($total_cow_hides = 1) {
-    mes("The tanner tans your cowhide.");
-} else {
-    mes("The tanner tans <tostring($total_cow_hides)> cowhides for you.");
+    case 1 : @tan_soft_leather;
+    case 2 : @tan_hard_leather;
+    case 3 : @tan_dragonhide;
 }
 
 
-[proc,tan_leather](namedobj $hide, namedobj $leather, int $cost)
-if (oc_members($hide) = true | oc_members($leather) = true) {
-    ~require_members_feature;
-}
-def_int $coins_total = inv_total(inv, coins);
-if ($coins_total < $cost) {
-    ~chatnpc("<p,happy>You don't have enough coins to tan these hides.");
-    @exit;
-}
-def_int $hides_total = calc(inv_total(inv, $hide));
-$hides_total = min(calc($coins_total / $cost), $hides_total); 
-if ($hides_total < 1) {
+[label,tan_soft_leather]
+def_int $total_hides = inv_total(inv, cow_hide);
+if ($total_hides < 1) {
+    mes("You don't have any cowhides to tan."); // osrs
     return;
 }
-inv_del(inv, $hide, $hides_total);
-inv_del(inv, coins, calc($hides_total * $cost));
-inv_add(inv, $leather, $hides_total);
+def_int $coins = inv_total(inv, coins);
+if ($coins < ^tanner_soft_leather_cost) {
+    mes("You haven't got enough coins to pay for soft leather."); // osrs
+    return;
+}
+def_int $hides_to_be_tanned = min(divide($coins, ^tanner_soft_leather_cost), $total_hides);
+~tan_leather(cow_hide, leather, ^tanner_soft_leather_cost);
+if ($hides_to_be_tanned = 1) {
+    mes("The tanner tans your cowhide."); // osrs
+} else {
+    mes("The tanner tans <tostring($hides_to_be_tanned)> cowhides for you.");
+}
+if (inv_total(inv, coins) < ^tanner_soft_leather_cost & $total_hides > $hides_to_be_tanned) {
+    mes("You haven't got enough coins to pay for more soft leather."); // https://youtu.be/Ta4z2QML0jc?t=37
+}
+
+[label,tan_hard_leather]
+def_int $total_hides = inv_total(inv, cow_hide);
+if ($total_hides < 1) {
+    mes("You don't have any cowhide to tan."); // osrs
+    return;
+}
+def_int $coins = inv_total(inv, coins);
+if ($coins < ^tanner_hard_leather_cost) {
+    mes("You haven't got enough coins to pay for hard leather."); // osrs
+    return;
+}
+def_int $hides_to_be_tanned = min(divide($coins, ^tanner_hard_leather_cost), $total_hides);
+~tan_leather(cow_hide, hardleather, ^tanner_hard_leather_cost);
+if ($hides_to_be_tanned = 1) {
+    mes("The tanner tans your cowhide."); // osrs
+} else {
+    mes("The tanner tans <tostring($hides_to_be_tanned)> cowhide for you.");
+}
+if (inv_total(inv, coins) < ^tanner_hard_leather_cost & $total_hides > $hides_to_be_tanned) {
+    mes("You haven't got enough coins to pay for more hard leather.");
+}
+
+[label,tan_dragonhide]
+def_int $total_dragon_hides = calc(inv_total(inv, dragonhide_green) + inv_total(inv, dragonhide_blue) + inv_total(inv, dragonhide_red) + inv_total(inv, dragonhide_black));
+if ($total_dragon_hides < 1) {
+    mes("You don't have any dragonhides to tan."); // guess
+    return;
+}
+if (inv_total(inv, coins) < ^tanner_dragonhide_cost) {
+    mes("You haven't got enough coins to pay for dragon leather."); // osrs
+    return;
+}
+if (map_members = false) {
+    mes("You need to be on a members' server to do that."); // guess
+    return;
+}
+def_int $hides_to_be_tanned = min(divide(inv_total(inv, coins), ^tanner_dragonhide_cost), $total_dragon_hides);
+def_string $hides_to_be_tanned_message = "The tanner tans <tostring($hides_to_be_tanned)> dragonhides for you."; // osrs
+if ($hides_to_be_tanned = 1) {
+    $hides_to_be_tanned_message = "The tanner tans your dragonhide."; // osrs
+}
+~tan_leather(dragonhide_green, dragon_leather, ^tanner_dragonhide_cost);
+if (inv_total(inv, coins) < ^tanner_dragonhide_cost & $total_dragon_hides > $hides_to_be_tanned) {
+    mes($hides_to_be_tanned_message);
+    mes("You haven't got enough coins to pay for more dragon leather."); // guess based on https://youtu.be/Ta4z2QML0jc?t=37
+    return;
+}
+~tan_leather(dragonhide_blue, dragon_leather_blue, ^tanner_dragonhide_cost);
+if (inv_total(inv, coins) < ^tanner_dragonhide_cost & $total_dragon_hides > $hides_to_be_tanned) {
+    mes($hides_to_be_tanned_message);
+    mes("You haven't got enough coins to pay for more dragon leather.");
+    return;
+}
+~tan_leather(dragonhide_red, dragon_leather_red, ^tanner_dragonhide_cost);
+if (inv_total(inv, coins) < ^tanner_dragonhide_cost & $total_dragon_hides > $hides_to_be_tanned) {
+    mes($hides_to_be_tanned_message);
+    mes("You haven't got enough coins to pay for more dragon leather.");
+    return;
+}
+~tan_leather(dragonhide_black, dragon_leather_black, ^tanner_dragonhide_cost);
+if (inv_total(inv, coins) < ^tanner_dragonhide_cost & $total_dragon_hides > $hides_to_be_tanned) {
+    mes($hides_to_be_tanned_message);
+    mes("You haven't got enough coins to pay for more dragon leather.");
+    return;
+}
+mes($hides_to_be_tanned_message);
+
+[proc,tan_leather](namedobj $hide, namedobj $leather, int $cost)
+def_int $total_hides = min(divide(inv_total(inv, coins), $cost), inv_total(inv, $hide));
+if ($total_hides > 0) {
+    inv_del(inv, $hide, $total_hides);
+    inv_del(inv, coins, multiply($total_hides, $cost));
+    inv_add(inv, $leather, $total_hides);
+}
 
 [label,trail_tanner]
 // https://www.youtube.com/watch?v=M8lX77a6Mt8, https://www.youtube.com/watch?v=CFDUdiUYzJY

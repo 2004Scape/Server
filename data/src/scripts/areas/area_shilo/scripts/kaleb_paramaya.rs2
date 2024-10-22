@@ -6,7 +6,7 @@ if(inv_total(inv, paramaya_ticket) = 0) {
 ~mesbox("The barman takes your ticket and allows you up to the dormitory.");
 inv_del(inv, paramaya_ticket, 1);
 if_close;
-p_delay(1); // todo: 1t, fix when delay bug
+p_delay(0);
 @climb_ladder(movecoord(coord, 0, 1, 0), true);
 
 [oploc1,loc_2269]

@@ -622,7 +622,6 @@ if(testbit(%zq_map_mechanisms, ^zq_read_tattered_scroll) = true) {
             anim(human_pickupfloor, 5);
             if(stat_random(stat(agility), 125, 250) = false) {
                 ~set_walkbas(human_drowning);
-                p_delay(0); // todo: remove when delay is fixed
                 ~forcemove(loc_coord);
                 mes("You manage to get yourself stuck.");
                 p_delay(1);
@@ -958,7 +957,6 @@ switch_int(~p_choice2_header("Yes, I'll follow the path.", 1, "No, I'll look for
         if_close;
         // this is probably just the whole block copy pasted for both sides on OSRS
         // the messages even have multiple differences lol, just going to bascially do the same thing
-        p_delay(0); // todo: delay issue (remove when fixed)
         mes("You start carefully edging along the slippery path...");
         if(coordz(coord) < 9351) {
             anim(human_ledge_on_left, 0);
@@ -1522,7 +1520,7 @@ if(testbit(%zq_map_mechanisms, ^zq_defeated_nazastarool1) = false) {
     npc_say("Who dares disturb Rashiliyia's rest?");
     npc_setmode(playerface);
     %npc_aggressive_player = uid;
-    npc_delay(2); // 2t, todo: delay fix
+    npc_delay(1);
     npc_say("I am Nazastarool! Prepare to die!");
     if(p_finduid(%npc_aggressive_player) = true) ~npc_retaliate(0);
 } else if(testbit(%zq_map_mechanisms, ^zq_defeated_nazastarool2) = false) {
@@ -1531,7 +1529,7 @@ if(testbit(%zq_map_mechanisms, ^zq_defeated_nazastarool1) = false) {
     npc_say("Quake in fear, for I am reborn!");
     npc_setmode(playerface);
     %npc_aggressive_player = uid;
-    npc_delay(2); // 2t, todo: delay fix
+    npc_delay(1);
     npc_say("Your death will be swift.");
     if(p_finduid(%npc_aggressive_player) = true) ~npc_retaliate(0);
 } else if(testbit(%zq_map_mechanisms, ^zq_defeated_nazastarool3) = false) {
@@ -1539,7 +1537,7 @@ if(testbit(%zq_map_mechanisms, ^zq_defeated_nazastarool1) = false) {
     npc_add($spawn_coord, npc_509, 500); // 500t osrs
     npc_say("Nazastarool returns with vengeance!");
     npc_setmode(playerface);
-    npc_delay(2); // 2t, todo: delay fix
+    npc_delay(1); 
     %npc_aggressive_player = uid;
     npc_say("Soon you will serve Rashiliyia.");
     if(p_finduid(%npc_aggressive_player) = true) ~npc_retaliate(0);

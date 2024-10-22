@@ -352,7 +352,7 @@ export function unpackConfig(jag: Jagfile | null, name: string, decoder: (dat: P
         fs.appendFileSync(srcOut, src.join('\n') + '\n');
     }
 
-    printInfo(count, name + ' configs unpacked');
+    printInfo(count + ' ' + name + ' configs unpacked');
 }
 
 

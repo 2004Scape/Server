@@ -1,7 +1,5 @@
 [opnpc1,hamid]
 
-// todo - Treasure Trails
-
 ~chatplayer("<p,neutral>Hi!");
 ~chatnpc("<p,neutral>Hello traveller. How can I be of assistance?");
 

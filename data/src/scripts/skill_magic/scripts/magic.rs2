@@ -131,7 +131,7 @@ while ($i <= db_getfieldcount($data, magic_spell_table:specificobj_reqmessage)) 
     $db_obj, $string = db_getfield($data, magic_spell_table:specificobj_reqmessage, $i);
     if ($db_obj = $obj) {
         mes($string);
-        @exit;
+        return;
     }
     $i = calc($i + 1);
 }

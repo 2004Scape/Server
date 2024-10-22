@@ -146,8 +146,8 @@ if_close;
 mes("You try to disarm the trap...");
 anim(human_pickpocket, 0);
 sound_synth(lockeddoor, 0, 0);
-p_delay(2); // 2 ticks
-// todo: check these numbers
+p_delay(1); // 2 ticks
+// TODO: check these numbers
 if(stat_random(stat(thieving), 110, 320) = false) {
     mes("...and fail, activating the trap!");
     loc_anim(seq_459);
@@ -213,8 +213,8 @@ if_close;
 mes("You try to disarm the trap...");
 anim(human_pickpocket, 0);
 sound_synth(lockeddoor, 0, 0);
-p_delay(2); // 2 ticks
-// todo: check these numbers
+p_delay(1); // 2 ticks
+// TODO: check these numbers
 if(stat_random(stat(thieving), 110, 320) = false) {
     mes("...and fail, activating the trap!");
     @upass_orboflight_trap;

@@ -1,0 +1,12 @@
+^mes_members_feature = "You need to be on a members' server to use this feature."
+^mes_members_store_owner = "Sorry, but you need to be on a members' server to talk to this store owner."
+^mes_members_skill = "You need to be on a members' server to gain experience in that skill."
+^mes_members_agility = "You need to be on a members' world to gain experience in Agility."
+^mes_members_herblore = "You need to be on a members' world to gain experience in Herblore."
+^mes_members_thieving = "You need to be on a members' world to gain experience in Thieving."
+^mes_members_fletching = "You need to be on a members' world to gain experience in Fletching."
+^mes_members_prayer = "You need to be on a members' server to use this Prayer."
+^mes_members_gate = "You need to be on a members server to use this gate."
+
+// this exists in osrs mesbox, not sure if it actually exists though. for trying to enter chaos altar on f2p worlds
+^mes_members_do_that = "You must be on a members' world to do that."

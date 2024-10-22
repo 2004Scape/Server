@@ -67,6 +67,6 @@ if_close;
 inv_del(inv, coins, 5000);
 inv_add(inv, klanks_gauntlets, 1);
 mes("You give Klank 5000 coins...");
-p_delay(4); // 4t
+p_delay(3); // 4t
 ~chatnpc("<p,happy>There you go... I hope they help.");
 ~chatplayer("<p,happy>I'll see you around Klank.");

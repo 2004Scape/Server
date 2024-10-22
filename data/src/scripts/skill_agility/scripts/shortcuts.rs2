@@ -1,5 +1,8 @@
 [oploc1,loc_1947]
-~require_members_feature;
+if (map_members = false) {
+    mes(^mes_members_feature);
+    return;
+}
 if(loc_coord ! 0_45_52_55_27) {
     // these walls are reused in the barb course for some reason (not the wall you climb)
     // todo: figure out what would happen if you interact with those ones

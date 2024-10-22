@@ -40,7 +40,7 @@ switch_int(%grandtree_progress) {
         ~chatnpc("<p,angry>Come with me!");
         if_close;
         $dest = 1_38_54_45_7;
-        p_delay(5); // 5t https://youtu.be/7HhbbrxwvtA?si=Xgps1UVy6LUDOPEp&t=395
+        p_delay(4);
         ~forcewalk($dest);
         p_delay(0);
         // https://youtu.be/LFvLBRCxFwk?si=58l2TkJcT5ifq4_W&t=616 face
@@ -100,7 +100,7 @@ if_close;
 def_coord $demon_spawn = 0_38_154_47_11;
 npc_walk(0_38_154_58_6);
 npc_facesquare($demon_spawn);
-p_delay(3);
+p_delay(2);
 cam_shake(0, 6, 6, 2); // OSRS shake
 // these two are guessed
 cam_moveto(0_38_154_44_13, 2000, 100, 232);

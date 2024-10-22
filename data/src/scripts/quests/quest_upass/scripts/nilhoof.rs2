@@ -15,7 +15,7 @@ switch_int(%upass_progress) {
         mes("<nc_name(nilhoof)> gives you some food...");
         inv_add(inv, meat_pie, 2);
         inv_add(inv, meat_pizza, 1);
-        p_delay(3); // 3 ticks
+        p_delay(2); // 3 ticks
         %upass_progress = ^upass_spoken_nilhoof;
         ~chatplayer("<p,happy>Thanks <nc_name(nilhoof)>, take care.");
     case ^upass_spoken_nilhoof :

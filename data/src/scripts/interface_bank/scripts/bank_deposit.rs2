@@ -20,7 +20,6 @@ def_int $number = inv_total(inv, $item);
 if ($requested_number < $number) $number = $requested_number;
 // Is it actually bankable?
 if (~bank_check_nobreak($item) = true) {
-    // the current bank checks are jumps.
     // custom handling here if needed.
     return;
 }

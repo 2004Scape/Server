@@ -2,6 +2,7 @@ import fs from 'fs';
 import Jimp from 'jimp';
 
 import Packet from '#jagex2/io/Packet.js';
+import { printError } from './Logger.js';
 
 export function generatePixelOrder(img: Jimp) {
     let rowMajorScore = 0;
@@ -208,7 +209,7 @@ export async function convertImage(index: Packet, srcPath: string, safeName: str
 
     if (colors.length > 255) {
         // TODO: automatic color quantization based on variable limit?
-        console.error('error: too many colors', colors.length);
+        printError('too many colors: ' + colors.length + ' while only 255 are allowed');
         return;
     }
 

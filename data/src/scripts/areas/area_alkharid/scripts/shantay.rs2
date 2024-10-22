@@ -9,7 +9,10 @@ if (%shantay_jail_progress = ^not_talked_to_shantay) {
 @multi4("What is this place?", shantay_what_is_this_place, "Can I see what you have to sell please?", shantay_can_i_see_what_you_have_to_sell_please, "I must be going.", shantay_i_must_be_going, "I want to buy a shantay pass for 5 gold coins.", shantay_buy_shantay_pass);
 
 [opnpc3,shantay]
-~require_members_feature; // guess
+if (map_members = false) {
+    mes(^mes_members_store_owner); // guess
+    return;
+}
 ~openshop_activenpc;
 
 [label,shantay_what_is_this_place]
@@ -106,7 +109,10 @@ facesquare(movecoord(coord, -1, 0, 0));
 [label,shantay_can_i_see_what_you_have_to_sell_please]
 ~chatplayer("<p,neutral>Can I see what you have to sell please?");
 ~chatnpc("<p,neutral>Absolutely Effendi!");
-~require_members_feature; // guess
+if (map_members = false) {
+    mes(^mes_members_store_owner); // guess
+    return;
+}
 ~openshop_activenpc;
 
 [label,shantay_i_must_be_going]
@@ -116,7 +122,7 @@ facesquare(movecoord(coord, -1, 0, 0));
 [label,shantay_buy_shantay_pass]
 if (map_members = false) {
     ~chatnpc("<p,neutral>Sorry effendi, I can't offer this service right now.");
-    ~require_members_feature; // guess
+    return;
 }
 ~chatplayer("<p,neutral>I want to buy a shantay pass for 5 gold coins.");
 if (inv_total(inv, coins) < 5) {
