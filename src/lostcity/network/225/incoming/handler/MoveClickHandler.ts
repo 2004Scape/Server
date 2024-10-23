@@ -30,6 +30,10 @@ export default class MoveClickHandler extends MessageHandler<MoveClick> {
                     player.userPath[i] = CoordGrid.packCoord(player.level, message.path[i].x, message.path[i].z);
                 }
             }
+            player.queueWaypoints(player.userPath);
+            if (!message.opClick && player.hasWaypoints()) {
+                player.processWalktrigger();
+            }
         } else {
             const dest = message.path[message.path.length - 1];
             player.userPath = [CoordGrid.packCoord(player.level, dest.x, dest.z)];

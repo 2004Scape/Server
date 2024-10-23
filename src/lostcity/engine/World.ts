@@ -691,11 +691,12 @@ class World {
                             player.pathToPathingTarget();
                             continue;
                         }
-        
-                        player.pathToMoveClick(player.userPath, !Environment.NODE_CLIENT_ROUTEFINDER);
-    
-                        if (!player.opcalled && player.hasWaypoints()) {
-                            player.processWalktrigger();
+                        if (!Environment.NODE_CLIENT_ROUTEFINDER) {
+                            player.pathToMoveClick(player.userPath, !Environment.NODE_CLIENT_ROUTEFINDER);
+
+                            if (!player.opcalled && player.hasWaypoints()) {
+                                player.processWalktrigger();
+                            }
                         }
                     }
         
