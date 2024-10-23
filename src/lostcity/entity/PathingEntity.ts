@@ -1,5 +1,6 @@
 import World from '#lostcity/engine/World.js';
 import ServerTriggerType from '#lostcity/engine/script/ServerTriggerType.js';
+import {CoordGrid} from '#lostcity/engine/CoordGrid.js';
 
 import BlockWalk from '#lostcity/entity/BlockWalk.js';
 import Entity from '#lostcity/entity/Entity.js';
@@ -10,7 +11,6 @@ import Player from '#lostcity/entity/Player.js';
 import NpcMode from '#lostcity/entity/NpcMode.js';
 import MoveRestrict from '#lostcity/entity/MoveRestrict.js';
 import MoveSpeed from '#lostcity/entity/MoveSpeed.js';
-import {CoordGrid} from '#lostcity/engine/CoordGrid.js';
 import EntityLifeCycle from '#lostcity/entity/EntityLifeCycle.js';
 import MoveStrategy from '#lostcity/entity/MoveStrategy.js';
 import Obj from '#lostcity/entity/Obj.js';
@@ -23,10 +23,14 @@ import {CollisionFlag, CollisionType} from '@2004scape/rsmod-pathfinder';
 
 import {
     canTravel,
+    changeNpcCollision,
+    changePlayerCollision,
     findNaivePath,
     findPath,
     findPathToEntity,
-    findPathToLoc, isApproached, isMapBlocked,
+    findPathToLoc,
+    isApproached,
+    isMapBlocked,
     reachedEntity,
     reachedLoc,
     reachedObj
@@ -175,14 +179,14 @@ export default abstract class PathingEntity extends Entity {
             // players and npcs both can change this collision
             switch (this.blockWalk) {
                 case BlockWalk.NPC:
-                    World.gameMap.changeNpcCollision(this.width, previousX, previousZ, previousLevel, false);
-                    World.gameMap.changeNpcCollision(this.width, this.x, this.z, this.level, true);
+                    changeNpcCollision(this.width, previousX, previousZ, previousLevel, false);
+                    changeNpcCollision(this.width, this.x, this.z, this.level, true);
                     break;
                 case BlockWalk.ALL:
-                    World.gameMap.changeNpcCollision(this.width, previousX, previousZ, previousLevel, false);
-                    World.gameMap.changeNpcCollision(this.width, this.x, this.z, this.level, true);
-                    World.gameMap.changePlayerCollision(this.width, previousX, previousZ, previousLevel, false);
-                    World.gameMap.changePlayerCollision(this.width, this.x, this.z, this.level, true);
+                    changeNpcCollision(this.width, previousX, previousZ, previousLevel, false);
+                    changeNpcCollision(this.width, this.x, this.z, this.level, true);
+                    changePlayerCollision(this.width, previousX, previousZ, previousLevel, false);
+                    changePlayerCollision(this.width, this.x, this.z, this.level, true);
                     break;
             }
             this.lastStepX = previousX;

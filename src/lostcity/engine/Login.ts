@@ -4,6 +4,7 @@ import Isaac from '#jagex2/io/Isaac.js';
 import Packet from '#jagex2/io/Packet.js';
 
 import World from '#lostcity/engine/World.js';
+import {changeNpcCollision} from '#lostcity/engine/GameMap.js';
 
 import Player from '#lostcity/entity/Player.js';
 
@@ -176,7 +177,7 @@ class Login {
                 if (player) {
                     World.gameMap.getZone(player.x, player.z, player.level).leave(player);
                     World.players.remove(player.pid);
-                    World.gameMap.changeNpcCollision(player.width, player.x, player.z, player.level, false);
+                    changeNpcCollision(player.width, player.x, player.z, player.level, false);
                     player.pid = -1;
                     player.terminate();
 
