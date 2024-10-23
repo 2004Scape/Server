@@ -11,6 +11,18 @@ if_settext(scroll:com_10, ^string_empty);
 if_settext(scroll:com_11, ^string_empty);
 if_settext(scroll:com_12, ^string_empty);
 if_settext(scroll:com_13, ^string_empty);
+if_setcolour(scroll:com_2, ^yellow_rgb);
+if_setcolour(scroll:com_3, ^yellow_rgb);
+if_setcolour(scroll:com_4, ^yellow_rgb);
+if_setcolour(scroll:com_5, ^yellow_rgb);
+if_setcolour(scroll:com_6, ^yellow_rgb);
+if_setcolour(scroll:com_7, ^yellow_rgb);
+if_setcolour(scroll:com_8, ^yellow_rgb);
+if_setcolour(scroll:com_9, ^yellow_rgb);
+if_setcolour(scroll:com_10, ^yellow_rgb);
+if_setcolour(scroll:com_11, ^yellow_rgb);
+if_setcolour(scroll:com_12, ^yellow_rgb);
+if_setcolour(scroll:com_13, ^yellow_rgb);
 if_openmain(scroll);
 
 [label,scroll_elena_hangover_cure_recipe]
@@ -27,14 +39,21 @@ if_settext(scroll:com_7, "Tlen qrind sorne lcoculate");
 if_settext(scroll:com_8, "vnith a pestal and rnortar");
 if_settext(scroll:com_9, "ald the grourd dlocolate to tho milt");
 if_settext(scroll:com_10, "fnales add 5cme snape gras5");
+if_settext(scroll:com_11, ^string_empty);
+if_settext(scroll:com_12, ^string_empty);
+if_settext(scroll:com_13, ^string_empty);
+if_setcolour(scroll:com_2, ^yellow_rgb);
+if_setcolour(scroll:com_3, ^yellow_rgb);
+if_setcolour(scroll:com_4, ^yellow_rgb);
+if_setcolour(scroll:com_5, ^yellow_rgb);
 if_setcolour(scroll:com_6, ^black_rgb);
 if_setcolour(scroll:com_7, ^black_rgb);
 if_setcolour(scroll:com_8, ^black_rgb);
 if_setcolour(scroll:com_9, ^black_rgb);
 if_setcolour(scroll:com_10, ^black_rgb);
-if_settext(scroll:com_11, ^string_empty);
-if_settext(scroll:com_12, ^string_empty);
-if_settext(scroll:com_13, ^string_empty);
+if_setcolour(scroll:com_11, ^yellow_rgb);
+if_setcolour(scroll:com_12, ^yellow_rgb);
+if_setcolour(scroll:com_13, ^yellow_rgb);
 if_openmain(scroll);
 
 [label,scroll_barcrawl_card]
@@ -99,6 +118,7 @@ if(testbit(%barcrawl_progress, ^rustyanchor_index) = true) {
 } else {
     if_settext(scroll:com_13, "@red@Rusty Anchor Inn - Not Completed...");
 }
+if_setcolour(scroll:com_3, ^yellow_rgb);
 if_openmain(scroll);
 
 [label,scroll_hazelmere]
@@ -114,6 +134,18 @@ if_settext(scroll:com_10, ^string_empty);
 if_settext(scroll:com_11, ^string_empty);
 if_settext(scroll:com_12, ^string_empty);
 if_settext(scroll:com_13, ^string_empty);
+if_setcolour(scroll:com_2, ^yellow_rgb);
+if_setcolour(scroll:com_3, ^yellow_rgb);
+if_setcolour(scroll:com_4, ^yellow_rgb);
+if_setcolour(scroll:com_5, ^yellow_rgb);
+if_setcolour(scroll:com_6, ^yellow_rgb);
+if_setcolour(scroll:com_7, ^yellow_rgb);
+if_setcolour(scroll:com_8, ^yellow_rgb);
+if_setcolour(scroll:com_9, ^yellow_rgb);
+if_setcolour(scroll:com_10, ^yellow_rgb);
+if_setcolour(scroll:com_11, ^yellow_rgb);
+if_setcolour(scroll:com_12, ^yellow_rgb);
+if_setcolour(scroll:com_13, ^yellow_rgb);
 if_openmain(scroll);
 
 [label,scroll_lumber_order]
@@ -129,6 +161,18 @@ if_settext(scroll:com_10, ^string_empty);
 if_settext(scroll:com_11, ^string_empty);
 if_settext(scroll:com_12, ^string_empty);
 if_settext(scroll:com_13, ^string_empty);
+if_setcolour(scroll:com_2, ^yellow_rgb);
+if_setcolour(scroll:com_3, ^yellow_rgb);
+if_setcolour(scroll:com_4, ^yellow_rgb);
+if_setcolour(scroll:com_5, ^yellow_rgb);
+if_setcolour(scroll:com_6, ^yellow_rgb);
+if_setcolour(scroll:com_7, ^yellow_rgb);
+if_setcolour(scroll:com_8, ^yellow_rgb);
+if_setcolour(scroll:com_9, ^yellow_rgb);
+if_setcolour(scroll:com_10, ^yellow_rgb);
+if_setcolour(scroll:com_11, ^yellow_rgb);
+if_setcolour(scroll:com_12, ^yellow_rgb);
+if_setcolour(scroll:com_13, ^yellow_rgb);
 if_openmain(scroll);
 
 [label,scroll_invasion_plans]
@@ -145,6 +189,18 @@ if_settext(scroll:com_10, "Sails north to attack Kandarin from south, reinforced
 if_settext(scroll:com_11, "by gnome foot soldiers leaving gnome stronghold.");
 if_settext(scroll:com_12, ^string_empty);
 if_settext(scroll:com_13, "@red@Take no prisoners!");
+if_setcolour(scroll:com_2, ^yellow_rgb);
+if_setcolour(scroll:com_3, ^yellow_rgb);
+if_setcolour(scroll:com_4, ^yellow_rgb);
+if_setcolour(scroll:com_5, ^yellow_rgb);
+if_setcolour(scroll:com_6, ^yellow_rgb);
+if_setcolour(scroll:com_7, ^yellow_rgb);
+if_setcolour(scroll:com_8, ^yellow_rgb);
+if_setcolour(scroll:com_9, ^yellow_rgb);
+if_setcolour(scroll:com_10, ^yellow_rgb);
+if_setcolour(scroll:com_11, ^yellow_rgb);
+if_setcolour(scroll:com_12, ^yellow_rgb);
+if_setcolour(scroll:com_13, ^yellow_rgb);
 if_openmain(scroll);
 
 [label,upass_well_inscription]
@@ -161,6 +217,18 @@ if_settext(scroll:com_10, "dies in my flames.....");
 if_settext(scroll:com_11, ^string_empty);
 if_settext(scroll:com_12, ^string_empty);
 if_settext(scroll:com_13, ^string_empty);
+if_setcolour(scroll:com_2, ^yellow_rgb);
+if_setcolour(scroll:com_3, ^yellow_rgb);
+if_setcolour(scroll:com_4, ^yellow_rgb);
+if_setcolour(scroll:com_5, ^yellow_rgb);
+if_setcolour(scroll:com_6, ^yellow_rgb);
+if_setcolour(scroll:com_7, ^yellow_rgb);
+if_setcolour(scroll:com_8, ^yellow_rgb);
+if_setcolour(scroll:com_9, ^yellow_rgb);
+if_setcolour(scroll:com_10, ^yellow_rgb);
+if_setcolour(scroll:com_11, ^yellow_rgb);
+if_setcolour(scroll:com_12, ^yellow_rgb);
+if_setcolour(scroll:com_13, ^yellow_rgb);
 if_openmain(scroll);
 
 [label,scroll_zombiequeen_tattered]
@@ -176,6 +244,18 @@ if_settext(scroll:com_10, "and then towards the setting sun to a tomb that is su
 if_settext(scroll:com_11, "by and level with the sea. The only remedy for containing the");
 if_settext(scroll:com_12, "spirits of witches and undead.");
 if_settext(scroll:com_13, ^string_empty);
+if_setcolour(scroll:com_2, ^yellow_rgb);
+if_setcolour(scroll:com_3, ^yellow_rgb);
+if_setcolour(scroll:com_4, ^yellow_rgb);
+if_setcolour(scroll:com_5, ^yellow_rgb);
+if_setcolour(scroll:com_6, ^yellow_rgb);
+if_setcolour(scroll:com_7, ^yellow_rgb);
+if_setcolour(scroll:com_8, ^yellow_rgb);
+if_setcolour(scroll:com_9, ^yellow_rgb);
+if_setcolour(scroll:com_10, ^yellow_rgb);
+if_setcolour(scroll:com_11, ^yellow_rgb);
+if_setcolour(scroll:com_12, ^yellow_rgb);
+if_setcolour(scroll:com_13, ^yellow_rgb);
 if_openmain(scroll);
 
 // if 222 in osrs, can't find any equivalence in this version
@@ -192,6 +272,8 @@ if_settext(scroll:com_10, "Queen at bay.");
 if_settext(scroll:com_11, ^string_empty);
 if_settext(scroll:com_12, ^string_empty);
 if_settext(scroll:com_13, ^string_empty);
+if_setcolour(scroll:com_2, ^yellow_rgb);
+if_setcolour(scroll:com_3, ^yellow_rgb);
 if_setcolour(scroll:com_4, ^black_rgb);
 if_setcolour(scroll:com_5, ^black_rgb);
 if_setcolour(scroll:com_6, ^black_rgb);
@@ -199,6 +281,9 @@ if_setcolour(scroll:com_7, ^black_rgb);
 if_setcolour(scroll:com_8, ^black_rgb);
 if_setcolour(scroll:com_9, ^black_rgb);
 if_setcolour(scroll:com_10, ^black_rgb);
+if_setcolour(scroll:com_11, ^yellow_rgb);
+if_setcolour(scroll:com_12, ^yellow_rgb);
+if_setcolour(scroll:com_13, ^yellow_rgb);
 if_openmain(scroll);
 
 // if 222 in osrs, can't find any equivalence in this version
@@ -215,11 +300,18 @@ if_settext(scroll:com_10, ^string_empty);
 if_settext(scroll:com_11, ^string_empty);
 if_settext(scroll:com_12, ^string_empty);
 if_settext(scroll:com_13, ^string_empty);
+if_setcolour(scroll:com_2, ^yellow_rgb);
+if_setcolour(scroll:com_3, ^yellow_rgb);
+if_setcolour(scroll:com_4, ^yellow_rgb);
 if_setcolour(scroll:com_5, ^black_rgb);
 if_setcolour(scroll:com_6, ^black_rgb);
 if_setcolour(scroll:com_7, ^black_rgb);
 if_setcolour(scroll:com_8, ^black_rgb);
 if_setcolour(scroll:com_9, ^black_rgb);
+if_setcolour(scroll:com_10, ^yellow_rgb);
+if_setcolour(scroll:com_11, ^yellow_rgb);
+if_setcolour(scroll:com_12, ^yellow_rgb);
+if_setcolour(scroll:com_13, ^yellow_rgb);
 if_openmain(scroll);
 
 
@@ -237,9 +329,18 @@ if_settext(scroll:com_10, ^string_empty);
 if_settext(scroll:com_11, ^string_empty);
 if_settext(scroll:com_12, ^string_empty);
 if_settext(scroll:com_13, ^string_empty);
+if_setcolour(scroll:com_2, ^yellow_rgb);
+if_setcolour(scroll:com_3, ^yellow_rgb);
+if_setcolour(scroll:com_4, ^yellow_rgb);
+if_setcolour(scroll:com_5, ^yellow_rgb);
 if_setcolour(scroll:com_6, ^black_rgb);
 if_setcolour(scroll:com_7, ^black_rgb);
 if_setcolour(scroll:com_8, ^black_rgb);
+if_setcolour(scroll:com_9, ^yellow_rgb);
+if_setcolour(scroll:com_10, ^yellow_rgb);
+if_setcolour(scroll:com_11, ^yellow_rgb);
+if_setcolour(scroll:com_12, ^yellow_rgb);
+if_setcolour(scroll:com_13, ^yellow_rgb);
 if_openmain(scroll);
 
 
@@ -257,9 +358,18 @@ if_settext(scroll:com_10, ^string_empty);
 if_settext(scroll:com_11, ^string_empty);
 if_settext(scroll:com_12, ^string_empty);
 if_settext(scroll:com_13, ^string_empty);
+if_setcolour(scroll:com_2, ^yellow_rgb);
+if_setcolour(scroll:com_3, ^yellow_rgb);
+if_setcolour(scroll:com_4, ^yellow_rgb);
+if_setcolour(scroll:com_5, ^yellow_rgb);
 if_setcolour(scroll:com_6, ^black_rgb);
 if_setcolour(scroll:com_7, ^black_rgb);
 if_setcolour(scroll:com_8, ^black_rgb);
+if_setcolour(scroll:com_9, ^yellow_rgb);
+if_setcolour(scroll:com_10, ^yellow_rgb);
+if_setcolour(scroll:com_11, ^yellow_rgb);
+if_setcolour(scroll:com_12, ^yellow_rgb);
+if_setcolour(scroll:com_13, ^yellow_rgb);
 if_openmain(scroll);
 
 [if_close,scroll]
