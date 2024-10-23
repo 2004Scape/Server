@@ -30,7 +30,7 @@ export default class MoveClickHandler extends MessageHandler<MoveClick> {
                     player.userPath[i] = CoordGrid.packCoord(player.level, message.path[i].x, message.path[i].z);
                 }
             }
-            player.queueWaypoints(player.userPath);
+            player.pathToMoveClick(player.userPath, !Environment.NODE_CLIENT_ROUTEFINDER);
             if (!message.opClick && player.hasWaypoints()) {
                 player.processWalktrigger();
             }
