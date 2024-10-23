@@ -80,13 +80,14 @@ if (~npc_can_attack_player = false) {
     npc_setmode(null);
     return;
 }
-// 1/3 chance to switch to op, if player is within melee range
-if (random(3) = 0 & npc_range(coord) < 2) {
-    npc_setmode(opplayer2);
-    ~kbd_random_attack;
-} else {
+// kbd can attack from a distance but can also be safespoted
+// - https://imgur.com/9ervTTQ
+// - https://imgur.com/otGvibL
+if (npc_range(coord) > 1) {
     ~kbd_dragonfire_far;
 }
+npc_sethuntmode(aggressive_melee);
+npc_setmode(opplayer2);
 
 
 [ai_opplayer2,king_black_dragon]
@@ -99,6 +100,7 @@ if (~npc_can_attack_player = false) {
     return;
 }
 ~kbd_random_attack;
+npc_sethuntmode(king_black_dragon);
 
 
 [proc,kbd_random_attack]
