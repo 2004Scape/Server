@@ -1,5 +1,8 @@
 import IdkType from '#lostcity/cache/config/IdkType.js';
 import SpotanimType from '#lostcity/cache/config/SpotanimType.js';
+import NpcType from '#lostcity/cache/config/NpcType.js';
+import LocType from '#lostcity/cache/config/LocType.js';
+import ObjType from '#lostcity/cache/config/ObjType.js';
 
 import World from '#lostcity/engine/World.js';
 
@@ -39,7 +42,7 @@ import IfSetPosition from '#lostcity/network/outgoing/model/IfSetPosition.js';
 
 import ColorConversion from '#lostcity/util/ColorConversion.js';
 
-import * as rsmod from '@2004scape/rsmod-pathfinder';
+import {findPath} from '#lostcity/engine/GameMap.js';
 
 import {
     check,
@@ -57,9 +60,6 @@ import {
     GenderValid,
     SkinColourValid
 } from '#lostcity/engine/script/ScriptValidators.js';
-import NpcType from '#lostcity/cache/config/NpcType.js';
-import LocType from '#lostcity/cache/config/LocType.js';
-import ObjType from '#lostcity/cache/config/ObjType.js';
 
 const PlayerOps: CommandHandlers = {
     [ScriptOpcode.FINDUID]: state => {
@@ -405,7 +405,7 @@ const PlayerOps: CommandHandlers = {
 
         const player = state.activePlayer;
         player.moveClickRequest = false;
-        player.queueWaypoints(rsmod.findPath(player.level, player.x, player.z, coord.x, coord.z, player.width, player.width, player.length));
+        player.queueWaypoints(findPath(player.level, player.x, player.z, coord.x, coord.z));
     }),
 
     [ScriptOpcode.SAY]: checkedHandler(ActivePlayer, state => {

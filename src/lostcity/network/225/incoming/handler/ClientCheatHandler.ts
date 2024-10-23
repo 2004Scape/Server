@@ -13,7 +13,6 @@ import Component from '#lostcity/cache/config/Component.js';
 import SeqType from '#lostcity/cache/config/SeqType.js';
 import SpotanimType from '#lostcity/cache/config/SpotanimType.js';
 import ScriptProvider from '#lostcity/engine/script/ScriptProvider.js';
-import { CollisionFlag, findPath, isFlagged } from '@2004scape/rsmod-pathfinder';
 import NullClientSocket from '#lostcity/server/NullClientSocket.js';
 import { tryParseInt } from '#lostcity/util/TryParse.js';
 import ScriptVarType from '#lostcity/cache/config/ScriptVarType.js';
@@ -24,6 +23,7 @@ import MoveStrategy from '#lostcity/entity/MoveStrategy.js';
 import { PlayerLoading } from '#lostcity/entity/PlayerLoading.js';
 import Packet from '#jagex2/io/Packet.js';
 import { printInfo } from '#lostcity/util/Logger.js';
+import {findPath, isMapBlocked} from '#lostcity/engine/GameMap.js';
 
 export default class ClientCheatHandler extends MessageHandler<ClientCheat> {
     handle(message: ClientCheat, player: Player): boolean {
@@ -84,7 +84,7 @@ export default class ClientCheatHandler extends MessageHandler<ClientCheat> {
                         const z = Math.floor(Math.random() * 64) + 3200;
     
                         player.teleJump(x + Math.floor(Math.random() * 64) - 32, z + Math.floor(Math.random() * 64) - 32, 0);
-                    } while (isFlagged(player.x, player.z, player.level, CollisionFlag.WALK_BLOCKED));
+                    } while (isMapBlocked(player.x, player.z, player.level));
                 }
             } else if (cmd === 'moveall') {
                 player.messageGame('Moving all players');

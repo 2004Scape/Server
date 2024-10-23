@@ -21,8 +21,15 @@ import HuntVis from '#lostcity/entity/hunt/HuntVis.js';
 
 import Environment from '#lostcity/util/Environment.js';
 
-import * as rsmod from '@2004scape/rsmod-pathfinder';
-import {CollisionFlag, LocLayer, LocAngle} from '@2004scape/rsmod-pathfinder';
+import {LocLayer, LocAngle} from '@2004scape/rsmod-pathfinder';
+
+import {
+    isIndoors,
+    isLineOfSight,
+    isLineOfWalk,
+    isMapBlocked,
+    layerForLocShape
+} from '#lostcity/engine/GameMap.js';
 
 import {
     check,
@@ -152,7 +159,7 @@ const ServerOps: CommandHandlers = {
             return;
         }
 
-        state.pushInt(rsmod.hasLineOfWalk(from.level, from.x, from.z, to.x, to.z, 1, 1, 1, 1) ? 1 : 0);
+        state.pushInt(isLineOfWalk(from.level, from.x, from.z, to.x, to.z) ? 1 : 0);
     },
 
     // https://x.com/JagexAsh/status/1110604592138670083
@@ -273,13 +280,13 @@ const ServerOps: CommandHandlers = {
     [ScriptOpcode.MAP_BLOCKED]: state => {
         const coord: CoordGrid = check(state.popInt(), CoordValid);
 
-        state.pushInt(rsmod.isFlagged(coord.x, coord.z, coord.level, CollisionFlag.WALK_BLOCKED) ? 1 : 0);
+        state.pushInt(isMapBlocked(coord.x, coord.z, coord.level) ? 1 : 0);
     },
 
     [ScriptOpcode.MAP_INDOORS]: state => {
         const coord: CoordGrid = check(state.popInt(), CoordValid);
 
-        state.pushInt(rsmod.isFlagged(coord.x, coord.z, coord.level, CollisionFlag.ROOF) ? 1 : 0);
+        state.pushInt(isIndoors(coord.x, coord.z, coord.level) ? 1 : 0);
     },
 
     [ScriptOpcode.LINEOFSIGHT]: state => {
@@ -293,7 +300,7 @@ const ServerOps: CommandHandlers = {
             return;
         }
 
-        state.pushInt(rsmod.hasLineOfSight(from.level, from.x, from.z, to.x, to.z, 1, 1, 1, 1) ? 1 : 0);
+        state.pushInt(isLineOfSight(from.level, from.x, from.z, to.x, to.z) ? 1 : 0);
     },
 
     // https://x.com/JagexAsh/status/1730321158858276938
@@ -354,7 +361,7 @@ const ServerOps: CommandHandlers = {
                 continue;
             }
 
-            const layer = rsmod.locShapeLayer(loc.shape);
+            const layer = layerForLocShape(loc.shape);
 
             if (!loc.checkLifeCycle(World.currentTick) && layer === LocLayer.WALL) {
                 continue;
@@ -423,7 +430,7 @@ const ServerOps: CommandHandlers = {
                     if (freeWorld && !World.gameMap.isFreeToPlay(randomX, randomZ)) {
                         continue;
                     }
-                    if (!rsmod.isFlagged(randomX, randomZ, origin.level, CollisionFlag.WALK_BLOCKED)) {
+                    if (!isMapBlocked(randomX, randomZ, origin.level)) {
                         state.pushInt(CoordGrid.packCoord(origin.level, randomX, randomZ));
                         return;
                     }
@@ -441,7 +448,7 @@ const ServerOps: CommandHandlers = {
                     if (freeWorld && !World.gameMap.isFreeToPlay(randomX, randomZ)) {
                         continue;
                     }
-                    if (rsmod.hasLineOfWalk(origin.level, randomX, randomZ, origin.x, origin.z, 1, 1, 1, 1) && !rsmod.isFlagged(randomX, randomZ, origin.level, CollisionFlag.WALK_BLOCKED)) {
+                    if (isLineOfWalk(origin.level, randomX, randomZ, origin.x, origin.z) && !isMapBlocked(randomX, randomZ, origin.level)) {
                         state.pushInt(CoordGrid.packCoord(origin.level, randomX, randomZ));
                         return;
                     }
@@ -459,7 +466,7 @@ const ServerOps: CommandHandlers = {
                     if (freeWorld && !World.gameMap.isFreeToPlay(randomX, randomZ)) {
                         continue;
                     }   
-                    if (rsmod.hasLineOfSight(origin.level, randomX, randomZ, origin.x, origin.z, 1, 1, 1, 1) && !rsmod.isFlagged(randomX, randomZ, origin.level, CollisionFlag.WALK_BLOCKED)) {
+                    if (isLineOfSight(origin.level, randomX, randomZ, origin.x, origin.z) && !isMapBlocked(randomX, randomZ, origin.level)) {
                         state.pushInt(CoordGrid.packCoord(origin.level, randomX, randomZ));
                         return;
                     }
@@ -479,7 +486,7 @@ const ServerOps: CommandHandlers = {
                     if (freeWorld && !World.gameMap.isFreeToPlay(x, randomZ)) {
                         continue;
                     }
-                    if (!rsmod.isFlagged(x, randomZ, origin.level, CollisionFlag.WALK_BLOCKED) && !CoordGrid.isWithinDistanceSW({x: x, z: randomZ}, origin, minRadius)) {
+                    if (!isMapBlocked(x, randomZ, origin.level) && !CoordGrid.isWithinDistanceSW({x: x, z: randomZ}, origin, minRadius)) {
                         state.pushInt(CoordGrid.packCoord(origin.level, x, randomZ));
                         return;
                     }
@@ -496,7 +503,7 @@ const ServerOps: CommandHandlers = {
                     if (freeWorld && !World.gameMap.isFreeToPlay(x, randomZ)) {
                         continue;
                     }
-                    if (rsmod.hasLineOfWalk(origin.level, x, randomZ, origin.x, origin.z, 1, 1, 1, 1) && !rsmod.isFlagged(x, randomZ, origin.level, CollisionFlag.WALK_BLOCKED) && !CoordGrid.isWithinDistanceSW({x: x, z: randomZ}, origin, minRadius)) {
+                    if (isLineOfWalk(origin.level, x, randomZ, origin.x, origin.z) && !isMapBlocked(x, randomZ, origin.level) && !CoordGrid.isWithinDistanceSW({x: x, z: randomZ}, origin, minRadius)) {
                         state.pushInt(CoordGrid.packCoord(origin.level, x, randomZ));
                         return;
                     }
@@ -513,7 +520,7 @@ const ServerOps: CommandHandlers = {
                     if (freeWorld && !World.gameMap.isFreeToPlay(x, randomZ)) {
                         continue;
                     }
-                    if (rsmod.hasLineOfSight(origin.level, x, randomZ, origin.x, origin.z, 1, 1, 1, 1) && !rsmod.isFlagged(x, randomZ, origin.level, CollisionFlag.WALK_BLOCKED) && !CoordGrid.isWithinDistanceSW({x: x, z: randomZ}, origin, minRadius)) {
+                    if (isLineOfSight(origin.level, x, randomZ, origin.x, origin.z) && !isMapBlocked(x, randomZ, origin.level) && !CoordGrid.isWithinDistanceSW({x: x, z: randomZ}, origin, minRadius)) {
                         state.pushInt(CoordGrid.packCoord(origin.level, x, randomZ));
                         return;
                     }

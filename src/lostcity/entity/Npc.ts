@@ -1,7 +1,11 @@
 import NpcType from '#lostcity/cache/config/NpcType.js';
 import VarNpcType from '#lostcity/cache/config/VarNpcType.js';
+import HuntType from '#lostcity/cache/config/HuntType.js';
+import ScriptVarType from '#lostcity/cache/config/ScriptVarType.js';
+import SeqType from '#lostcity/cache/config/SeqType.js';
 
 import World from '#lostcity/engine/World.js';
+import {Direction, CoordGrid} from '#lostcity/engine/CoordGrid.js';
 
 import ScriptFile from '#lostcity/engine/script/ScriptFile.js';
 import ScriptPointer from '#lostcity/engine/script/ScriptPointer.js';
@@ -9,6 +13,7 @@ import ScriptProvider from '#lostcity/engine/script/ScriptProvider.js';
 import ScriptRunner from '#lostcity/engine/script/ScriptRunner.js';
 import ScriptState from '#lostcity/engine/script/ScriptState.js';
 import ServerTriggerType from '#lostcity/engine/script/ServerTriggerType.js';
+import {HuntIterator} from '#lostcity/engine/script/ScriptIterators.js';
 
 import BlockWalk from '#lostcity/entity/BlockWalk.js';
 import {EntityQueueRequest, NpcQueueType} from '#lostcity/entity/EntityQueueRequest.js';
@@ -18,26 +23,20 @@ import NpcMode from '#lostcity/entity/NpcMode.js';
 import Obj from '#lostcity/entity/Obj.js';
 import PathingEntity from '#lostcity/entity/PathingEntity.js';
 import Player from '#lostcity/entity/Player.js';
-import {Direction, CoordGrid} from '#lostcity/engine/CoordGrid.js';
 import MoveStrategy from '#lostcity/entity/MoveStrategy.js';
-import HuntType from '#lostcity/cache/config/HuntType.js';
 import HuntModeType from '#lostcity/entity/hunt/HuntModeType.js';
 import HuntCheckNotTooStrong from '#lostcity/entity/hunt/HuntCheckNotTooStrong.js';
-
-import LinkList from '#jagex2/datastruct/LinkList.js';
-
-import ScriptVarType from '#lostcity/cache/config/ScriptVarType.js';
-import {HuntIterator} from '#lostcity/engine/script/ScriptIterators.js';
 import MoveSpeed from '#lostcity/entity/MoveSpeed.js';
 import Entity from '#lostcity/entity/Entity.js';
 import Interaction from '#lostcity/entity/Interaction.js';
 import EntityLifeCycle from '#lostcity/entity/EntityLifeCycle.js';
 import NpcStat from '#lostcity/entity/NpcStat.js';
-
-import * as rsmod from '@2004scape/rsmod-pathfinder';
-import {CollisionFlag} from '@2004scape/rsmod-pathfinder';
 import HuntNobodyNear from '#lostcity/entity/hunt/HuntNobodyNear.js';
-import SeqType from '#lostcity/cache/config/SeqType.js';
+
+import LinkList from '#jagex2/datastruct/LinkList.js';
+
+import {CollisionFlag} from '@2004scape/rsmod-pathfinder';
+import {isFlagged} from '#lostcity/engine/GameMap.js';
 
 export default class Npc extends PathingEntity {
     static readonly ANIM = 0x2;
@@ -527,7 +526,7 @@ export default class Npc extends PathingEntity {
         const mx: number = CoordGrid.moveX(this.x, direction);
         const mz: number = CoordGrid.moveZ(this.z, direction);
 
-        if (rsmod.isFlagged(mx, mz, this.level, flags)) {
+        if (isFlagged(mx, mz, this.level, flags)) {
             this.defaultMode();
             return;
         }

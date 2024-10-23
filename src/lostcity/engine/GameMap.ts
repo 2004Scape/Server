@@ -1,6 +1,6 @@
 import fs from 'fs';
 
-import { LocAngle, LocLayer } from '@2004scape/rsmod-pathfinder';
+import {CollisionFlag, CollisionType, LocAngle, LocLayer} from '@2004scape/rsmod-pathfinder';
 import * as rsmod from '@2004scape/rsmod-pathfinder';
 
 import Packet from '#jagex2/io/Packet.js';
@@ -403,4 +403,145 @@ export default class GameMap {
     private bordersFreeToPlay(x: number, z: number): boolean {
         return this.isFreeToPlay(x + 1, z) || this.isFreeToPlay(x - 1, z) || this.isFreeToPlay(x, z + 1) || this.isFreeToPlay(x, z - 1);
     }
+}
+
+export function findPath(level: number, srcX: number, srcZ: number, destX: number, destZ: number): Uint32Array {
+    return rsmod.findPath(
+        level,
+        srcX,
+        srcZ,
+        destX,
+        destZ,
+        1,
+        1,
+        1,
+        0,
+        -1,
+        true,
+        0,
+        25,
+        CollisionType.NORMAL
+    );
+}
+
+export function findPathToEntity(level: number, srcX: number, srcZ: number, destX: number, destZ: number, srcSize: number, destWidth: number, destHeight: number): Uint32Array {
+    return rsmod.findPath(
+        level,
+        srcX,
+        srcZ,
+        destX,
+        destZ,
+        srcSize,
+        destWidth,
+        destHeight,
+        0,
+        -2,
+        true,
+        0,
+        25,
+        CollisionType.NORMAL
+    );
+}
+
+export function findPathToLoc(level: number, srcX: number, srcZ: number, destX: number, destZ: number, srcSize: number, destWidth: number, destHeight: number, angle: number, shape: number, blockAccessFlags: number): Uint32Array {
+    return rsmod.findPath(
+        level,
+        srcX,
+        srcZ,
+        destX,
+        destZ,
+        srcSize,
+        destWidth,
+        destHeight,
+        angle,
+        shape,
+        true,
+        blockAccessFlags,
+        25,
+        CollisionType.NORMAL
+    );
+}
+
+export function findNaivePath(level: number, srcX: number, srcZ: number, destX: number, destZ: number, srcWidth: number, srcHeight: number, destWidth: number, destHeight: number, extraFlag: number, collision: CollisionType): Uint32Array {
+    return rsmod.findNaivePath(level, srcX, srcZ, destX, destZ, srcWidth, srcHeight, destWidth, destHeight, extraFlag, collision);
+}
+
+export function reachedEntity(level: number, srcX: number, srcZ: number, destX: number, destZ: number, destWidth: number, destHeight: number, srcSize: number): boolean {
+    return rsmod.reached(
+        level,
+        srcX,
+        srcZ,
+        destX,
+        destZ,
+        destWidth,
+        destHeight,
+        srcSize,
+        0,
+        -2,
+        0
+    );
+}
+
+export function reachedLoc(level: number, srcX: number, srcZ: number, destX: number, destZ: number, destWidth: number, destHeight: number, srcSize: number, angle: number, shape: number, blockAccessFlags: number): boolean {
+    return rsmod.reached(
+        level,
+        srcX,
+        srcZ,
+        destX,
+        destZ,
+        destWidth,
+        destHeight,
+        srcSize,
+        angle,
+        shape,
+        blockAccessFlags
+    );
+}
+
+export function reachedObj(level: number, srcX: number, srcZ: number, destX: number, destZ: number, destWidth: number, destHeight: number, srcSize: number): boolean {
+    return rsmod.reached(
+        level,
+        srcX,
+        srcZ,
+        destX,
+        destZ,
+        destWidth,
+        destHeight,
+        srcSize,
+        0,
+        -1,
+        0
+    );
+}
+
+export function canTravel(level: number, x: number, z: number, offsetX: number, offsetZ: number, size: number, extraFlag: number, collision: CollisionType): boolean {
+    return rsmod.canTravel(level, x, z, offsetX, offsetZ, size, extraFlag, collision);
+}
+
+export function isMapBlocked(x: number, z: number, level: number): boolean {
+    return isFlagged(x, z, level, CollisionFlag.WALK_BLOCKED);
+}
+
+export function isIndoors(x: number, z: number, level: number): boolean {
+    return isFlagged(x, z, level, CollisionFlag.ROOF);
+}
+
+export function isFlagged(x: number, z: number, level: number, masks: CollisionFlag): boolean {
+    return rsmod.isFlagged(x, z, level, masks);
+}
+
+export function isLineOfWalk(level: number, srcX: number, srcZ: number, destX: number, destZ: number): boolean {
+    return rsmod.hasLineOfWalk(level, srcX, srcZ, destX, destZ, 1, 1, 1, 1, 0);
+}
+
+export function isLineOfSight(level: number, srcX: number, srcZ: number, destX: number, destZ: number): boolean {
+    return rsmod.hasLineOfSight(level, srcX, srcZ, destX, destZ, 1, 1, 1, 1, 0);
+}
+
+export function isApproached(level: number, srcX: number, srcZ: number, destX: number, destZ: number, srcWidth: number, srcHeight: number, destWidth: number, destHeight: number): boolean {
+    return rsmod.hasLineOfSight(level, srcX, srcZ, destX, destZ, srcWidth, srcHeight, destWidth, destHeight, CollisionFlag.PLAYER);
+}
+
+export function layerForLocShape(shape: number): LocLayer {
+    return rsmod.locShapeLayer(shape);
 }
