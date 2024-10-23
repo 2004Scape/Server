@@ -42,6 +42,7 @@ womanwear=model_541_obj_wear,6
 category=armour_shield
 weight=8lb
 tradeable=yes
+respawnrate=10
 param=rangeattack,-2
 param=magicattack,-6
 param=stabdefence,5

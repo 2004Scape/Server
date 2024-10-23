@@ -56,6 +56,7 @@ iop1=Bury
 weight=800g
 category=bones
 tradeable=yes
+respawnrate=50
 param=bone_exp,150
 
 [babydragon_bones]

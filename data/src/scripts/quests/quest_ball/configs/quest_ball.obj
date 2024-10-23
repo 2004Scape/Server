@@ -21,6 +21,7 @@ recol1d=23056
 2dyan=152
 2dxan=256
 weight=18oz
+respawnrate=30
 
 [ball_doorkey]
 name=Door key
@@ -35,6 +36,7 @@ recol1d=22945
 2dyan=20
 2dxan=328
 weight=10g
+respawnrate=95
 
 [magnet]
 name=Magnet

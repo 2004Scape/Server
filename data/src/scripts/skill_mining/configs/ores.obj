@@ -113,6 +113,7 @@ recol2d=31393
 weight=5lb
 category=category_91
 tradeable=yes
+respawnrate=500
 param=smeltsto,gold_bar
 
 [perfect_gold_ore]

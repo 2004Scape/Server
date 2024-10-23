@@ -16,6 +16,7 @@ wearpos=ring
 weight=4g
 category=category_656
 tradeable=yes
+respawnrate=500
 param=crafting_jewelry_struct,gold_ring
 
 [sapphire_ring]
@@ -74,6 +75,7 @@ wearpos=ring
 weight=6g
 category=category_656
 tradeable=yes
+respawnrate=500
 
 [diamond_ring]
 name=Diamond ring

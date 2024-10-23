@@ -59,6 +59,7 @@ model=model_2440_obj
 2dxan=484
 weight=7g
 tradeable=yes
+respawnrate=30
 param=brew_potion_struct,3doseprayerrestore
 param=brew_potion_struct_secondary,3dosefisherspotion
 // guessed name
@@ -96,6 +97,7 @@ weight=7g
 name=White berries
 desc=Sour berries, used in potions.
 tradeable=yes
+respawnrate=10
 param=brew_potion_struct,3dose1defense
 param=brew_potion_struct_secondary,3dose2defense
 // guessed name
@@ -131,6 +133,7 @@ recol1d=25765
 2dxan=260
 weight=3oz
 tradeable=yes
+respawnrate=50
 param=brew_potion_struct,3doserangerspotion
 // guessed name
 
@@ -152,6 +155,7 @@ weight=7g
 category=category_86
 members=yes
 tradeable=yes
+respawnrate=30
 param=brew_potion_struct,3dosepotionofzamorak
 param=brew_potion_struct_secondary,vial_water_jangerberries
 param=brew_potion_struct_tertiary,mixture_guam_jangerberries

@@ -61,6 +61,7 @@ recol1d=23
 2dxan=368
 weight=3g
 tradeable=yes
+respawnrate=500
 
 [uncut_opal]
 cost=20

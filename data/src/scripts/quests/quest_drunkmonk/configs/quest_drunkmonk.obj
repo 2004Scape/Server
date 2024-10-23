@@ -8,3 +8,4 @@ model=model_2725_obj
 members=yes
 cost=5
 weight=2lb
+respawnrate=50

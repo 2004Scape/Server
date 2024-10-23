@@ -36,6 +36,7 @@ recol1d=13472
 weight=5oz
 category=category_5
 tradeable=yes
+respawnrate=200
 param=pizza_topping_struct,meat_topping
 param=uncooked_pie_struct,uncooked_meat_pie
 
@@ -57,6 +58,7 @@ recol2d=20774
 weight=10oz
 category=category_5
 tradeable=yes
+respawnrate=200
 param=pizza_topping_struct,meat_topping
 param=uncooked_pie_struct,uncooked_meat_pie
 

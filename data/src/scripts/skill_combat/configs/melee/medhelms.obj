@@ -20,6 +20,7 @@ womanhead=model_117_obj_wear
 category=armour_helmet
 weight=4lb
 tradeable=yes
+respawnrate=500
 param=magicattack,-3
 param=rangeattack,-1
 param=stabdefence,4

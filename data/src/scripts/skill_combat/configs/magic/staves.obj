@@ -117,6 +117,7 @@ womanwear2=model_567_obj_wear
 category=weapon_staff
 weight=5lb
 tradeable=yes
+respawnrate=2000
 param=stabattack,1
 param=slashattack,-1
 param=crushattack,9
