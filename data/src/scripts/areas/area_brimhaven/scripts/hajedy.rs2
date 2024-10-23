@@ -31,7 +31,7 @@ def_int $amount = ~calc_shilocart_cost();
 ~chatnpc("<p,neutral>I am offering a cart ride to Shilo Village|if you're interested?|It will cost <tostring($amount)> gold coins. Is that Ok?");
 switch_int(~p_choice2("Yes please, I'd like to go to Shilo Village.", 1, "No thanks.", 2)) {
     case 1 :
-             ~chatplayer("<p,neutral>Yes please, I'd like to go to Shilo Village.");
+            ~chatplayer("<p,neutral>Yes please, I'd like to go to Shilo Village.");
             if(inv_total(inv, coins) < $amount) {
                 ~chatnpc("<p,neutral>Sorry, but it looks as if you don't have enough money. Come and see me when you have enough for the ride.");
                 return;
