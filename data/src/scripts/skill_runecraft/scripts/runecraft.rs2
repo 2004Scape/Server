@@ -77,14 +77,11 @@ spotanim_pl(runecrafting, 96, 0);
 
 def_int $rune_count_per_ess = calc($level / db_getfield($data, runecraft_table:multiplier, 0) + 1);
 def_int $craft_count = calc($total_ess * $rune_count_per_ess);
-// EDIT: hard to tell but i think inv_add handles the max int check for us
-// // check if we can hold the minimum amount
-// def_int $free_space = calc(^max_32bit_int - inv_total(inv, $rune));
-// def_int $craft_count = min($free_space, calc($total_ess * $rune_count_per_ess));
-// if($rune_count_per_ess > $free_space) {
-//     mes("Your inventory is too full to hold any more <oc_name($rune)>s.");
-//     return;
-// }
+
+if(sub(^max_32bit_int, inv_total(inv, $rune)) < $craft_count) {
+    mes("You do not have enough inventory space to craft your essence into <lowercase(oc_name($rune))>s."); // osrs
+    return;
+}
 
 // if $craft_count uses free_space as the value, it may not round exactly to $rune_count_per_ess
 $total_ess = calc($craft_count / $rune_count_per_ess);
