@@ -55,6 +55,3 @@ if (last_useitem = axe_handle) {
 } else {
     ~displaymessage(^dm_default);
 }
-
-[debugproc,ct]
-inv_changeslot(inv, bucket_empty, bucket_water, 1);
