@@ -3648,6 +3648,7 @@ hitpoints=29
 attack=21
 strength=23
 defence=23
+members=yes
 param=damagetype,^stab_style
 param=attack_anim,unicorn_attack
 param=defend_anim,unicorn_block
