@@ -206,8 +206,3 @@ if (p_finduid(uid) = true) {
 } else {
     @please_finish;
 }
-
-[debugproc,test]
-if(p_finduid(uid) = false) return;
-p_teleport(movecoord(coord, 1, 0, 0));
-mes("<~coord_tostring(coord)>");
