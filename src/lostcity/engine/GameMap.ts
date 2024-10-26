@@ -447,7 +447,7 @@ export function isIndoors(x: number, z: number, level: number): boolean {
     return isFlagged(x, z, level, CollisionFlag.ROOF);
 }
 
-export function isFlagged(x: number, z: number, level: number, masks: CollisionFlag): boolean {
+export function isFlagged(x: number, z: number, level: number, masks: number): boolean {
     return rsmod.isFlagged(x, z, level, masks);
 }
 
