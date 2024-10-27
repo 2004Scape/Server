@@ -6,3 +6,4 @@ column=experience,int
 column=tool,namedobj,string
 column=mirror,boolean
 column=gate,boolean
+column=lock_inversed,boolean
