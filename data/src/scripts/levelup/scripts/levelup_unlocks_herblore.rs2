@@ -15,7 +15,7 @@ switch_int(stat_base(herblore)) {
     case 48 : ~objboxb(3dose2antipoison,"You can now make @dbl@Super Antipoison Potions@bla@. You can now identify @dbl@Avantoe@bla@.");
     case 50 : ~objboxb(3dosefisherspotion,"You can now make @dbl@Fishing Potions@bla@.");
     case 54 : ~objboxt(kwuarm,"You can now identify @dbl@Kwuarm@bla@.");
-    case 56 : ~objboxb(3dose2strength,"You can now make @dbl@Super Strength Potions@bla@.");
+    case 55 : ~objboxb(3dose2strength,"You can now make @dbl@Super Strength Potions@bla@.");
     case 60 : ~objboxb(weapon_poison,"You can now make @dbl@Weapon Poisons@bla@.");
     case 65 : ~objboxt(cadantine,"You can now identify @dbl@Cadantine@bla@.");
     case 66 : ~objboxb(3dose2defense,"You can now make @dbl@Super Defence Potions@bla@.");
