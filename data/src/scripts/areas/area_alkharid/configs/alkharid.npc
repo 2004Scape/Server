@@ -394,7 +394,7 @@ model4=model_151_idk
 model5=model_176_idk
 model6=model_254_idk
 model7=model_181_idk
-respawnrate=25
+respawnrate=50
 hitpoints=7
 category=citizen
 
@@ -452,7 +452,7 @@ model7=model_254_idk
 model8=model_181_idk
 model9=model_541_obj_wear
 model10=model_191_npc
-respawnrate=25
+respawnrate=50
 hitpoints=19
 attack=7
 strength=5
