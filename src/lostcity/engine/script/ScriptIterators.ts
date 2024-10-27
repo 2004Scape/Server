@@ -3,8 +3,8 @@ import LocType from '#lostcity/cache/config/LocType.js';
 import NpcType from '#lostcity/cache/config/NpcType.js';
 
 import World from '#lostcity/engine/World.js';
-
 import {CoordGrid} from '#lostcity/engine/CoordGrid.js';
+
 import Loc from '#lostcity/entity/Loc.js';
 import HuntVis from '#lostcity/entity/hunt/HuntVis.js';
 import Npc from '#lostcity/entity/Npc.js';
@@ -12,7 +12,7 @@ import HuntModeType from '#lostcity/entity/hunt/HuntModeType.js';
 import NpcIteratorType from '#lostcity/entity/NpcIteratorType.js';
 import Entity from '#lostcity/entity/Entity.js';
 
-import * as rsmod from '@2004scape/rsmod-pathfinder';
+import {isLineOfSight, isLineOfWalk} from '#lostcity/engine/GameMap.js';
 
 abstract class ScriptIterator<T extends Entity> implements IterableIterator<T> {
     private readonly iterator: IterableIterator<T>;
@@ -94,10 +94,10 @@ export class HuntIterator extends ScriptIterator<Entity> {
                         if (CoordGrid.distanceToSW({ x: this.x, z: this.z }, player) > this.distance) {
                             continue;
                         }
-                        if (this.checkVis === HuntVis.LINEOFSIGHT && !rsmod.hasLineOfSight(this.level, this.x, this.z, player.x, player.z, 1, 1, 1, 1)) {
+                        if (this.checkVis === HuntVis.LINEOFSIGHT && !isLineOfSight(this.level, this.x, this.z, player.x, player.z)) {
                             continue;
                         }
-                        if (this.checkVis === HuntVis.LINEOFWALK && !rsmod.hasLineOfWalk(this.level, this.x, this.z, player.x, player.z, 1, 1, 1, 1)) {
+                        if (this.checkVis === HuntVis.LINEOFWALK && !isLineOfWalk(this.level, this.x, this.z, player.x, player.z)) {
                             continue;
                         }
                         yield player;
@@ -117,10 +117,10 @@ export class HuntIterator extends ScriptIterator<Entity> {
                         if (CoordGrid.distanceToSW({ x: this.x, z: this.z }, npc) > this.distance) {
                             continue;
                         }
-                        if (this.checkVis === HuntVis.LINEOFSIGHT && !rsmod.hasLineOfSight(this.level, this.x, this.z, npc.x, npc.z, 1, 1, 1, 1)) {
+                        if (this.checkVis === HuntVis.LINEOFSIGHT && !isLineOfSight(this.level, this.x, this.z, npc.x, npc.z)) {
                             continue;
                         }
-                        if (this.checkVis === HuntVis.LINEOFWALK && !rsmod.hasLineOfWalk(this.level, this.x, this.z, npc.x, npc.z, 1, 1, 1, 1)) {
+                        if (this.checkVis === HuntVis.LINEOFWALK && !isLineOfWalk(this.level, this.x, this.z, npc.x, npc.z)) {
                             continue;
                         }
                         yield npc;
@@ -141,10 +141,10 @@ export class HuntIterator extends ScriptIterator<Entity> {
                         if (CoordGrid.distanceToSW({ x: this.x, z: this.z }, obj) > this.distance) {
                             continue;
                         }
-                        if (this.checkVis === HuntVis.LINEOFSIGHT && !rsmod.hasLineOfSight(this.level, this.x, this.z, obj.x, obj.z, 1, 1, 1, 1)) {
+                        if (this.checkVis === HuntVis.LINEOFSIGHT && !isLineOfSight(this.level, this.x, this.z, obj.x, obj.z)) {
                             continue;
                         }
-                        if (this.checkVis === HuntVis.LINEOFWALK && !rsmod.hasLineOfWalk(this.level, this.x, this.z, obj.x, obj.z, 1, 1, 1, 1)) {
+                        if (this.checkVis === HuntVis.LINEOFWALK && !isLineOfWalk(this.level, this.x, this.z, obj.x, obj.z)) {
                             continue;
                         }
                         yield obj;
@@ -164,10 +164,10 @@ export class HuntIterator extends ScriptIterator<Entity> {
                         if (CoordGrid.distanceToSW({ x: this.x, z: this.z }, loc) > this.distance) {
                             continue;
                         }
-                        if (this.checkVis === HuntVis.LINEOFSIGHT && !rsmod.hasLineOfSight(this.level, this.x, this.z, loc.x, loc.z, 1, 1, 1, 1)) {
+                        if (this.checkVis === HuntVis.LINEOFSIGHT && !isLineOfSight(this.level, this.x, this.z, loc.x, loc.z)) {
                             continue;
                         }
-                        if (this.checkVis === HuntVis.LINEOFWALK && !rsmod.hasLineOfWalk(this.level, this.x, this.z, loc.x, loc.z, 1, 1, 1, 1)) {
+                        if (this.checkVis === HuntVis.LINEOFWALK && !isLineOfWalk(this.level, this.x, this.z, loc.x, loc.z)) {
                             continue;
                         }
                         yield loc;
@@ -238,10 +238,10 @@ export class NpcHuntAllCommandIterator extends ScriptIterator<Entity> {
                     if (CoordGrid.distanceToSW({ x: this.x, z: this.z }, npc) > this.distance) {
                         continue;
                     }
-                    if (this.checkVis === HuntVis.LINEOFSIGHT && !rsmod.hasLineOfSight(this.level, this.x, this.z, npc.x, npc.z, 1, 1, 1, 1)) {
+                    if (this.checkVis === HuntVis.LINEOFSIGHT && !isLineOfSight(this.level, this.x, this.z, npc.x, npc.z)) {
                         continue;
                     }
-                    if (this.checkVis === HuntVis.LINEOFWALK && !rsmod.hasLineOfWalk(this.level, this.x, this.z, npc.x, npc.z, 1, 1, 1, 1)) {
+                    if (this.checkVis === HuntVis.LINEOFWALK && !isLineOfWalk(this.level, this.x, this.z, npc.x, npc.z)) {
                         continue;
                     }
                     yield npc;
@@ -302,10 +302,10 @@ export class NpcIterator extends ScriptIterator<Npc> {
                         if (CoordGrid.distanceToSW({ x: this.x, z: this.z }, npc) > this.distance) {
                             continue;
                         }
-                        if (this.checkVis === HuntVis.LINEOFSIGHT && !rsmod.hasLineOfSight(this.level, this.x, this.z, npc.x, npc.z, 1, 1, 1, 1)) {
+                        if (this.checkVis === HuntVis.LINEOFSIGHT && !isLineOfSight(this.level, this.x, this.z, npc.x, npc.z)) {
                             continue;
                         }
-                        if (this.checkVis === HuntVis.LINEOFWALK && !rsmod.hasLineOfWalk(this.level, this.x, this.z, npc.x, npc.z, 1, 1, 1, 1)) {
+                        if (this.checkVis === HuntVis.LINEOFWALK && !isLineOfWalk(this.level, this.x, this.z, npc.x, npc.z)) {
                             continue;
                         }
                         if (this.npcType && NpcType.get(npc.type) !== this.npcType) {
