@@ -88,7 +88,31 @@ const InvOps: CommandHandlers = {
     // inv write
     [ScriptOpcode.INV_CHANGESLOT]: checkedHandler(ActivePlayer, state => {
         const [inv, find, replace, replaceCount] = state.popInts(4);
-        throw new Error('unimplemented');
+
+        const invType: InvType = check(inv, InvTypeValid);
+
+        if (!state.pointerGet(ProtectedActivePlayer[state.intOperand]) && invType.protect && invType.scope !== InvType.SCOPE_SHARED) {
+            throw new Error(`$inv requires protected access: ${invType.debugname}`);
+        }
+
+        const findObj : ObjType = check(find, ObjTypeValid);
+        const replaceObj : ObjType = check(replace, ObjTypeValid);
+        const fromInv = state.activePlayer.getInventory(inv);
+
+        if (!fromInv) {
+            throw new Error('inv is null');
+        }
+
+        for (let slot = 0; slot < fromInv.capacity; slot++) {
+            const obj = fromInv.get(slot);
+            if(!obj) {
+                continue;
+            }
+            if(obj.id === findObj.id) {
+                state.activePlayer.invSet(invType.id, replaceObj.id, replaceCount, slot);
+                return;
+            }
+        }
     }),
 
     // inv write
