@@ -1208,6 +1208,7 @@ class World {
 
     removeNpc(npc: Npc, duration: number): void {
         const zone = this.gameMap.getZone(npc.x, npc.z, npc.level);
+        const adjustedDuration = this.scaleByPlayerCount(duration);
         zone.leave(npc);
 
         switch (npc.blockWalk) {
@@ -1223,7 +1224,7 @@ class World {
         if (npc.lifecycle === EntityLifeCycle.DESPAWN) {
             this.npcs.remove(npc.nid);
         } else if (npc.lifecycle === EntityLifeCycle.RESPAWN) {
-            npc.setLifeCycle(this.currentTick + duration);
+            npc.setLifeCycle(this.currentTick + adjustedDuration);
         }
     }
 
@@ -1348,9 +1349,10 @@ class World {
     removeObj(obj: Obj, duration: number): void {
         // printDebug(`[World] removeObj => name: ${ObjType.get(obj.type).name}, duration: ${duration}`);
         const zone: Zone = this.gameMap.getZone(obj.x, obj.z, obj.level);
+        const adjustedDuration = this.scaleByPlayerCount(duration);
         zone.removeObj(obj);
-        obj.setLifeCycle(this.currentTick + duration);
-        this.trackZone(this.currentTick + duration, zone);
+        obj.setLifeCycle(this.currentTick + adjustedDuration);
+        this.trackZone(this.currentTick + adjustedDuration, zone);
         this.trackZone(this.currentTick, zone);
     }
 
@@ -1575,6 +1577,13 @@ class World {
         }
         return this.players.next();
     }
+
+    scaleByPlayerCount(rate : number): number {
+        // not sure if it caps at 2k player count or not
+        const playerCount = Math.min(this.getTotalPlayers(), 2000);
+        return (((4000 - playerCount) * rate) / 4000) | 0; // assuming scale works the same way as the runescript one
+    }
+
 }
 
 export default new World();

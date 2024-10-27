@@ -22,7 +22,7 @@ head3=model_32_obj_wear
 wanderrange=1
 maxrange=19
 // 10
-respawnrate=25
+respawnrate=50
 hitpoints=50
 attack=20
 strength=20
