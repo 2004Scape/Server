@@ -1235,6 +1235,10 @@ class World {
         return this.gameMap.getZone(x, z, level).getObj(x, z, objId, receiverId);
     }
 
+    getObjOfReceiver(x: number, z: number, level: number, objId: number, receiverId: number): Obj | null {
+        return this.gameMap.getZone(x, z, level).getObjOfReceiver(x, z, objId, receiverId);
+    }
+
     trackZone(tick: number, zone: Zone): void {
         let zones: Set<Zone>;
         const active: Set<Zone> | undefined = this.zonesTracking.get(tick);
@@ -1293,11 +1297,11 @@ class World {
         // printDebug(`[World] addObj => name: ${ObjType.get(obj.type).name}, receiverId: ${receiverId}, duration: ${duration}`);
         const objType: ObjType = ObjType.get(obj.type);
         // check if we need to changeobj first.
-        const existing = this.getObj(obj.x, obj.z, obj.level, obj.type, receiverId);
+        const existing = this.getObjOfReceiver(obj.x, obj.z, obj.level, obj.type, receiverId);
         if (existing && existing.lifecycle === EntityLifeCycle.DESPAWN && obj.lifecycle === EntityLifeCycle.DESPAWN) {
             const nextCount = obj.count + existing.count;
             if (objType.stackable && nextCount <= Inventory.STACK_LIMIT) {
-                // if an obj of the same type exists and is stackable, then we merge them.
+                // if an obj of the same type exists and is stackable and have the same receiver, then we merge them.
                 this.changeObj(existing, receiverId, nextCount);
                 return;
             }
