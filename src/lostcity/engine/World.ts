@@ -1347,7 +1347,7 @@ class World {
         const zone: Zone = this.gameMap.getZone(obj.x, obj.z, obj.level);
         const adjustedDuration = this.scaleByPlayerCount(duration);
         zone.removeObj(obj);
-        obj.setLifeCycle(this.currentTick + duration);
+        obj.setLifeCycle(this.currentTick + adjustedDuration);
         this.trackZone(this.currentTick + adjustedDuration, zone);
         this.trackZone(this.currentTick, zone);
     }
@@ -1577,7 +1577,7 @@ class World {
     scaleByPlayerCount(rate : number): number {
         // not sure if it caps at 2k player count or not
         const playerCount = Math.min(this.getTotalPlayers(), 2000);
-        return Math.trunc((((4000 - playerCount) * rate) / 4000)); // assuming scale works the same way as the runescript one
+        return (((4000 - playerCount) * rate) / 4000) | 0; // assuming scale works the same way as the runescript one
     }
 
 }
