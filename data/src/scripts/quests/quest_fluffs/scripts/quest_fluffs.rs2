@@ -234,6 +234,8 @@ p_delay(4);
 ~mesbox("The kitten has run off!");
 
 [queue,fluffs_complete] //imgur.com/6ePHvef
+%fluffs_progress = ^fluffs_complete;
+%questpoints = calc(%questpoints + ^fluffs_questpoints);
 // Random quest complete jingle.
 def_int $random = random(128);
 if ($random < 32) {
