@@ -92,6 +92,8 @@ if (.finduid(%tradepartner) = true) {
             .if_close;
             return;
         }
+        ~inv_remove_leading_empty_slots(tempinv);
+        ~.inv_remove_leading_empty_slots(tempinv);
 
         def_int $tempinvused = sub(inv_size(tempinv), inv_freespace(tempinv));
         if ($tempinvused < 1) {
@@ -178,6 +180,24 @@ while ($slot < $size) {
 }
 return(true);
 
+[proc,inv_remove_leading_empty_slots](inv $inv)
+def_int $slot = 0;
+while ($slot < inv_size($inv)) {
+    if (inv_getobj($inv, $slot) ! null) {
+        inv_movefromslot($inv, $inv, $slot);
+    }
+    $slot = add($slot, 1);
+}
+
+[proc,.inv_remove_leading_empty_slots](inv $inv)
+def_int $slot = 0;
+while ($slot < .inv_size($inv)) {
+    if (.inv_getobj($inv, $slot) ! null) {
+        .inv_movefromslot($inv, $inv, $slot);
+    }
+    $slot = add($slot, 1);
+}
+
 [if_close,trademain]
 inv_stoptransmit(trademain:inv);
 inv_stoptransmit(trademain:otherinv);
@@ -223,17 +243,13 @@ inv_stoptransmit(tradeconfirm:inv2);
 inv_stoptransmit(tradeconfirm:otherinv1);
 inv_stoptransmit(tradeconfirm:otherinv2);
 
-if (%tradestatus ! 3) {
-    ~moveallinv(tempinv, inv);
-
-    if (.finduid(%tradepartner) = true) {
-        .%tradepartner = null;
-        .if_close;
-        .mes("Other player declined trade."); // osrs
-    }
-
-    %tradepartner = null;
+~moveallinv(tempinv, inv);
+if (.finduid(%tradepartner) = true) {
+    .%tradepartner = null;
+    .if_close;
+    .mes("Other player declined trade."); // osrs
 }
+%tradepartner = null;
 
 // ----
 
