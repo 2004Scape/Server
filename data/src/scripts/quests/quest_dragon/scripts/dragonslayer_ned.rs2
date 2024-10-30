@@ -53,7 +53,7 @@ if ((%dragon_progress = ^quest_dragon_ned_given_map | %dragon_progress = ^quest_
     }
     if ($choice = 2) {
         ~chatplayer("<p,quiz>So are you enjoying this exotic island vacation?");
-        ~chatnpc("<p,neutral>Well it would have been better if I'd brought my sun|lotion. Oh, and the skeletons which won't let me leave|the ship probably arent helping either.");
+        ~chatnpc("<p,neutral>Well it would have been better if I'd brought my sun|lotion. Oh, and the skeletons which won't let me leave|the ship probably aren't helping either.");
         return;
     }
 }
