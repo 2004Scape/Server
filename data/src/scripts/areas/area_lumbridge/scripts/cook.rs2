@@ -37,4 +37,4 @@ if(inv_total(inv, trail_clue_medium_challenge_exp002) > 0) {
 }
 ~chatnpc("<p,confused>I've always wondered how many cannons the castle has. Could you find out for me?");
 inv_add(inv, trail_clue_medium_challenge_exp002, 1);
-~objboxt(trail_clue_medium_challenge_exp002, "The cook has given you a challenge scroll!");
+~objbox(trail_clue_medium_challenge_exp002, "The cook has given you a challenge scroll!", 250, 0, 0);

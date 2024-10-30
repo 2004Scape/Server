@@ -5,7 +5,7 @@ switch_int(%elena_progress) {
             mes("The barrel is empty.");
         } else {
             inv_add(inv, elena_key, 1);
-            ~objboxt(elena_key, "You find a small key in the barrel.");
+            ~objbox(elena_key, "You find a small key in the barrel.", 250, 0, 0);
         }
     case default : mes("The barrel is empty.");
 }

@@ -71,7 +71,7 @@ while ($slot < inv_size(inv)) {
 return (false);
 
 [proc,trail_casket_obtained](namedobj $casket)
-~objbox($casket, "You've found a casket!");
+~objbox($casket, "You've found a casket!", 250, 0, divide(^objbox_height, 2));
 
 [proc,trail_complete]
 ~clear_trail_progress;

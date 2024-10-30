@@ -13,7 +13,7 @@ if(~has_sextant_clue = true) {
         ~chatnpc("<p,neutral>Aye.");
         inv_add(inv, trail_sextant, 1);
         %trail_clue = setbit_range_toint(%trail_clue, ^trail_chart_spoken_murphy, 5, 8);
-        ~objboxt(trail_sextant, "Murphy has given you his old sextant.");
+        ~objbox(trail_sextant, "Murphy has given you his old sextant.", 250, 0, 0);
         ~chatplayer("<p,confused>Don't you still need it?");
         ~chatnpc("<p,happy>I can tell from the taste of the sea spray where I am, m'hearty!");
         ~chatplayer("<p,happy>Wow!");
@@ -23,7 +23,7 @@ if(~has_sextant_clue = true) {
         ~chatplayer("<p,neutral>I've lost that sextant you gave me.");
         ~chatnpc("<p,happy>You're in luck, matey! I found a sextant in my net the last time I went out!");
         inv_add(inv, trail_sextant, 1);
-        ~objboxt(trail_sextant, "Murphy has given you a sextant.");
+        ~objbox(trail_sextant, "Murphy has given you a sextant.", 250, 0, 0);
         return;
     }
 }

@@ -30,7 +30,7 @@ if (stat(crafting) < $level) {
     if (string_length($level_fail_name) < 1) {
         $level_fail_name = "<lowercase(oc_name($cut_gem))>s";
     }
-    ~objbox($uncut_gem, "You need a Crafting level of <tostring($level)> to cut <$level_fail_name>.");
+    ~objbox($uncut_gem, "You need a Crafting level of <tostring($level)> to cut <$level_fail_name>.", 250, 0, divide(^objbox_height, 2));
     return;
 }
 anim(db_getfield($data, gem_cutting_table:skill_anim, 0), 0);

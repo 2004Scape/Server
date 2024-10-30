@@ -14,7 +14,7 @@ switch_int(%grandtree_progress) {
         if(inv_total(inv, daconia_rock) > 0) {
             ~chatplayer("<p,quiz>Is this it?");
             ~chatnpc("<p,happy>Yes! Excellent, well done!");
-            ~objbox(daconia_rock, "You give the King the Daconia rock.");
+            ~objbox(daconia_rock, "You give the King the Daconia rock.", 250, 0, divide(^objbox_height, 2));
             ~chatnpc("<p,happy>It's incredible, the tree's health is improving already! I don't know what to say, we owe you so much!");
             ~chatnpc("<p,sad>To think Glough had me fooled all along!");
             ~chatplayer("<p,happy>All that matters now is that humans and gnomes can live together in peace!");
@@ -77,7 +77,7 @@ switch_int(%grandtree_progress) {
         if(~obj_gettotal(twigs_t) = 0 | ~obj_gettotal(twigs_u) = 0 | ~obj_gettotal(twigs_z) = 0 | ~obj_gettotal(twigs_o) = 0) {
             ~chatplayer("<p,neutral>I've lost those twigs you gave me.");
             ~chatnpc("<p,neutral>Here take these, I don't see how it will help though.");
-            ~objboxt(twigs_t, "The King has given you some twigs lashed together.");
+            ~objbox(twigs_t, "The King has given you some twigs lashed together.", 250, 0, 0);
             inv_del(inv, twigs_t, ^max_32bit_int);
             inv_del(inv, twigs_u, ^max_32bit_int);
             inv_del(inv, twigs_z, ^max_32bit_int);
@@ -93,14 +93,14 @@ switch_int(%grandtree_progress) {
         ~chatnpc("<p,neutral>Look, if you're right about Glough I would have him arrested but there's no reason for me to think he's lying.");
         if(inv_total(inv, invasion_plans) > 0) {
             ~chatplayer("<p,neutral>Look, I found this at Glough's home!");
-            ~objboxt(invasion_plans, "You give the King the invasion plans.");
+            ~objbox(invasion_plans, "You give the King the invasion plans.", 250, 0, 0);
             ~chatnpc("<p,shock>If these are to be believed then this is terrible!");
             ~chatnpc("<p,neutral>But it's not proof, any one could have made these. Traveller, I understand your concern, I had guards search Glough's house but they found nothing suspicious, just these odd twigs.");
             if(inv_freespace(inv) < 4) {
                 ~chatnpc("<p,neutral>Hmm. Looks like you can't carry anymore. Put 4 things down and come back to me.");
                 return;
             }
-            ~objboxt(twigs_t, "The King has given you some twigs lashed together.");
+            ~objbox(twigs_t, "The King has given you some twigs lashed together.", 250, 0, 0);
             ~chatnpc("<p,neutral>On the other hand, if Glough's right about the humans we will need an army of gnomes to protect ourselves. So I've decided to allow Glough to raise a mighty gnome army.");
             ~chatnpc("<p,angry>The Grand Tree's still slowly dying, if it is human sabotage we must respond!");
             %grandtree_progress = ^grandtree_given_twigs;
@@ -283,9 +283,9 @@ switch_int(~p_choice2("I'm sorry, I don't want to get involved.", 1, "I'd be hap
             ~chatnpc("<p,neutral>Hmm. Looks like you can't carry anymore. Put a couple of things down and come back to me.");
             return;
         }
-        ~objboxt(bark_sample, "The king has given you a sample of bark.");
+        ~objbox(bark_sample, "The king has given you a sample of bark.", 250, 0, 0);
         ~chatnpc("<p,neutral>The mage only talks in the old tongue, you'll need this.");
-        ~objbox(translation_book, "The king has given you a translation book.");
+        ~objbox(translation_book, "The king has given you a translation book.", 250, 0, divide(^objbox_height, 2));
         ~chatplayer("<p,quiz>What is it?");
         ~chatnpc("<p,neutral>It's a translation book, you'll need it to translate what Hazelmere says. Do that carefully! His words are our only hope! You'll find his dwellings high upon a towering hill, on an island east of Yanille.");
         %grandtree_progress = ^grandtree_started;
@@ -299,13 +299,13 @@ switch_int(~p_choice2("I'm sorry, I don't want to get involved.", 1, "I'd be hap
 if(inv_total(inv, bark_sample) = 0) {
     ~chatplayer("<p,neutral>I've lost the bark sample.");
     ~chatnpc("<p,neutral>Here's another sample, hang on to it this time!");
-    ~objboxt(bark_sample, "The king gives you another bark sample.");
+    ~objbox(bark_sample, "The king gives you another bark sample.", 250, 0, 0);
     inv_add(inv, bark_sample, 1);
 }
 if(inv_total(inv, translation_book) = 0) {
     ~chatplayer("<p,neutral>I've lost the translation book.");
     ~chatnpc("<p,neutral>Don't worry, I have more.");
-    ~objbox(translation_book, "The king gives you another translation book.");
+    ~objbox(translation_book, "The king gives you another translation book.", 250, 0, divide(^objbox_height, 2));
     inv_add(inv, translation_book, 1);
 }
 

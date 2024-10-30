@@ -157,7 +157,7 @@ if (~quest_dragon_getting_map_parts = false | ~obj_gettotal(crandor_map_part1) >
 } else {
     // objbox looks soooo bad for our version, no way they used it
     // edit: confirmed it uses mesbox! https://youtu.be/tmPf68hogzw?t=471
-    // ~objbox(crandor_map_part1, "You find a map piece in the chest.");
+    // ~objbox(crandor_map_part1, "You find a map piece in the chest.", 250, 0, divide(^objbox_height, 2));
     ~mesbox("You find a map piece in the chest.");
     inv_add(inv, crandor_map_part1, 1);
 }

@@ -19,7 +19,7 @@ if ($choice = 2) {
         ~chatnpc("<p,angry>Well, come back when you do have some money!");
         return;
     }
-    ~objbox(silk, "You buy some silk for 3 gp.");
+    ~objbox(silk, "You buy some silk for 3 gp.", 250, 0, divide(^objbox_height, 2));
     inv_del(inv, coins, 3);
     inv_add(inv, silk, 1);
     return;
@@ -43,6 +43,6 @@ if (inv_total(inv, coins) < 2) {
     ~chatnpc("<p,angry>Well, come back when you do have some money!");
     return;
 }
-~objbox(silk, "You buy some silk for 2 gp.");
+~objbox(silk, "You buy some silk for 2 gp.", 250, 0, divide(^objbox_height, 2));
 inv_del(inv, coins, 2);
 inv_add(inv, silk, 1);

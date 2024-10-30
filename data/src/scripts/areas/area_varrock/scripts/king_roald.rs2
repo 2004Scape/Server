@@ -19,11 +19,11 @@ if(inv_total(inv, arravcert_scroll) > 0) {
         ~mesbox("Why don't you give this certificate|to the person who helped you get the shield?");
         return;
     }
-    ~objbox(arravcert_scroll, "You show the certificate to the king.");
+    ~objbox(arravcert_scroll, "You show the certificate to the king.", 250, 0, divide(^objbox_height, 2));
     ~chatnpc("<p,happy>My goodness! This claim is for the reward offered by my father many years ago!");
     ~chatnpc("<p,happy>I never thought I'd see anyone claim this reward!");
     ~chatnpc("<p,happy>I see you are claiming half the reward,|so I will give you half of the bounty.|That comes to exactly 600 gold coins!");
-    ~objbox(coins_250, "You hand over a certificate.|The king gives you 600 gold coins.");
+    ~objbox(coins_250, "You hand over a certificate.|The king gives you 600 gold coins.", 250, 0, divide(^objbox_height, 2));
     queue(blackarmgang_quest_complete, 0);
     return;
 }

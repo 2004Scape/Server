@@ -5,7 +5,7 @@ if(%ikov_progress = ^ikov_helping_armadyl) {
         ~chatplayer("<p,sad>Not yet, I've lost the pendant you gave me!");
         ~chatnpc("<p,sad>Hurry friend! Time is against us!");
         inv_add(inv, armadyl_pendant, 1);
-        ~objboxt(armadyl_pendant, "The guardian has given you a pendant.");
+        ~objbox(armadyl_pendant, "The guardian has given you a pendant.", 250, 0, 0);
         return;
     }
     ~chatplayer("<p,neutral>Not yet.");
@@ -116,7 +116,7 @@ switch_int(~p_choice3("Ok! I'll help!", 1, "No! I shall not turn against my empl
         ~chatplayer("<p,happy>Yes!");
         ~chatnpc("<p,sad>He must be gaining in power again. If you can defeat him he will be banished from this plane for a while. You will need this pendant to attack him.");
         inv_add(inv, armadyl_pendant, 1);
-        ~objboxt(armadyl_pendant, "The guardian has given you a pendant.");
+        ~objbox(armadyl_pendant, "The guardian has given you a pendant.", 250, 0, 0);
     case 2 :
         ~chatplayer("<p,angry>No! I shall not turn against my employer!");
         ~chatnpc("<p,angry>Fool! You will die for your sins!");

@@ -13,11 +13,11 @@ switch_obj(last_useitem) {
 [label,elena_dig_mud_patch]
 anim(human_dig, 0);
 if (%biohazard_progress >= ^biohazard_started) {
-    ~objboxt(spade, "The ground's been filled in and packed hard.");
+    ~objbox(spade, "The ground's been filled in and packed hard.", 250, 0, 0);
     return;
 }
 if (%elena_progress < ^quest_elena_mud_patch4) {
-    ~objboxt(spade, "You dig the soil...|The ground is rather hard.");
+    ~objbox(spade, "You dig the soil...|The ground is rather hard.", 250, 0, 0);
     return;
 }
 p_delay(1);

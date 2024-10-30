@@ -73,7 +73,7 @@ if(inv_total(inv, blackarmgang_scroll) > 0) {
     %phoenixgang_progress = 9;
     inv_del(inv, blackarmgang_scroll, 1);
     inv_add(inv, weapon_store_key, 1);
-    ~objbox(weapon_store_key, "Straven hands you a key.");
+    ~objbox(weapon_store_key, "Straven hands you a key.", 250, 0, divide(^objbox_height, 2));
     ~chatnpc("<p,neutral>This key will give you access to our weapons supply depot round the front of this building.");
     return;
 }
@@ -115,7 +115,7 @@ switch_int($option) {
         ~chatplayer("<p,sad>I'm afraid I've lost the key you gave me...");
         ~chatnpc("<p,neutral>You really need to be more careful.|We don't want that key falling into the wrong hands.|Ah well...|Have this spare. Don't lose THIS one.");
         inv_add(inv, weapon_store_key, 1);
-        ~objbox(weapon_store_key, "Straven hands you a key.");
+        ~objbox(weapon_store_key, "Straven hands you a key.", 250, 0, divide(^objbox_height, 2));
     case 3 : // After arrav, or after heroes complete option 1
         ~chatplayer("<p,neutral>I've heard you've got some cool treasures in this place...");
         ~chatnpc("<p,happy>Oh yeah, we've all stolen some stuff in our time.|Those candlesticks down here, for example,|were quite a challenge to get out of the palace.");

@@ -65,4 +65,4 @@ if(inv_total(inv, trail_clue_medium_challenge_exp005) > 0) {
 ~chatplayer("<p,neutral>OK...");
 ~chatnpc("<p,neutral>Can you answer this for me please.");
 inv_add(inv, trail_clue_medium_challenge_exp005, 1);
-~objboxt(trail_clue_medium_challenge_exp005, "The Oracle has given you a challenge scroll!");
+~objbox(trail_clue_medium_challenge_exp005, "The Oracle has given you a challenge scroll!", 250, 0, 0);

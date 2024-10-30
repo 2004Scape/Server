@@ -91,7 +91,7 @@ if(inv_freespace(inv) = 0) { // todo: check mesanims on this
 }
 %itgronigen_progress = ^itgronigen_given_mould;
 inv_add(inv, molten_glass, 1);
-~objboxt(molten_glass, "The professor gives you back the molten glass.");
+~objbox(molten_glass, "The professor gives you back the molten glass.", 250, 0, 0);
 
 [label,professor_lens]
 ~chatnpc("<p,quiz>Is the lens finished?");
@@ -240,7 +240,7 @@ switch_int(~get_chart_progress) {
         ~chatnpc("<p,neutral>You then need this chart to work out your position. Your position is recorded in terms of latitude and longitude. Latitude is your position above the equator and longitude is your position relative to here.");
         inv_add(inv, trail_chart, 1);
         %trail_clue = setbit_range_toint(%trail_clue, ^trail_chart_complete, 5, 8);
-        ~objbox(trail_chart, "The professor has given you a navigation chart.");
+        ~objbox(trail_chart, "The professor has given you a navigation chart.", 250, 0, divide(^objbox_height, 2));
         ~chatnpc("<p,neutral>So, if you have your sextant, watch and chart with you, then you can work out exactly where you are!");
     case ^trail_chart_complete :
         ~chatnpc("<p,happy>Welcome back! How can I help you today?");
@@ -263,7 +263,7 @@ switch_int(~get_chart_progress) {
 ~chatplayer("<p,sad>I've lost my navigation chart.");
 ~chatnpc("<p,neutral>That's not a problem, I've got lots of copies.");
 inv_add(inv, trail_chart, 1);
-~objbox(trail_chart, "The professor has given you a navigation chart.");
+~objbox(trail_chart, "The professor has given you a navigation chart.", 250, 0, divide(^objbox_height, 2));
 
 [opnpc1,observatory_professor_tower]
 // mostly 1-1 with RSC (with fixes) because this dialogue doesn't exist post-rework

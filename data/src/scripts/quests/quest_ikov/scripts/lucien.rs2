@@ -8,7 +8,7 @@ switch_int (%ikov_progress) {
             ~chatplayer("<p,sad>I've lost the pendant you gave me.");
             ~chatnpc("<p,angry>Have another, it will remind you of my power!");
             inv_add(inv, pendant_of_lucien, 1);
-            ~objboxt(pendant_of_lucien, "Lucien has given you another pendant!");
+            ~objbox(pendant_of_lucien, "Lucien has given you another pendant!", 250, 0, 0);
             return;
         }
     case ^ikov_not_started :
@@ -36,7 +36,7 @@ if(%ikov_progress = ^ikov_paid_winelda & inv_total(inv, staff_of_armadyl) > 0) {
     def_int $choice = ~p_choice2("Yes! Here it is.", 1, "No, not yet.", 2);
     if($choice = 1) {
         ~chatplayer("<p,happy>Yes! Here it is.");
-        ~objboxt(staff_of_armadyl, "You give Lucien the Staff of Armadyl.");
+        ~objbox(staff_of_armadyl, "You give Lucien the Staff of Armadyl.", 250, 0, 0);
         ~chatnpc("<p,angry>Muhahahhahahaha!");
         ~chatnpc("<p,angry>I can feel the power of the staff running through me! I will be more powerful and they shall bow down to me!");
         ~chatnpc("<p,happy>I suppose you want your reward? I shall grant you much power!");
@@ -67,7 +67,7 @@ if(%ikov_progress = ^ikov_paid_winelda & inv_total(inv, staff_of_armadyl) > 0) {
 %ikov_progress = ^ikov_started;
 ~send_quest_progress(questlist:ikov, %ikov_progress, ^ikov_completed_armadyl);
 inv_add(inv, pendant_of_lucien, 1);
-~objboxt(pendant_of_lucien, "Lucien has given you a pendant!");
+~objbox(pendant_of_lucien, "Lucien has given you a pendant!", 250, 0, 0);
 ~chatnpc("<p,sad>I cannot stay here much longer.");
 ~chatnpc("<p,neutral>I will be in the forest north of Varrock.|I have a small holding up there.");
 
@@ -91,7 +91,7 @@ if(~obj_gettotal(pendant_of_lucien) = 0) {
     ~chatplayer("<p,sad>I've lost the pendant you gave me.");
     ~chatnpc("<p,angry>Imbecile!");
     inv_add(inv, pendant_of_lucien, 1);
-    ~objboxt(pendant_of_lucien, "Lucien has given you another pendant!");
+    ~objbox(pendant_of_lucien, "Lucien has given you another pendant!", 250, 0, 0);
     return;
 }
 if(%ikov_progress <= ^ikov_helping_armadyl) { // guessing...

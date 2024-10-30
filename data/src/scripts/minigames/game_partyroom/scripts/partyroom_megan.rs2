@@ -10,7 +10,7 @@ switch_int(~p_choice3("One beer please Megan!", 1, "Can you dance, Megan?", 2, "
         }
         inv_del(inv, coins, 2);
         inv_add(inv, beer, 1);
-        ~objboxb(beer, "Megan has given you a beer.");
+        ~objbox(beer, "Megan has given you a beer.", 250, 0, ^objbox_height);
     case 2 :
         ~chatplayer("<p,confused>Can you dance, Megan?");
         ~chatnpc("<p,happy>Can I dance?!");

@@ -32,7 +32,7 @@ if (inv_total(inv, shantay_disclaimer) < 1) {
     }
 }
 ~chatnpc("<p,neutral>Can I see your Shantay Desert Pass please.");
-~objboxt(shantay_pass, "You hand over a Shantay Pass.");
+~objbox(shantay_pass, "You hand over a Shantay Pass.", 250, 0, 0);
 ~chatplayer("<p,neutral>Sure, here you go!");
 inv_del(inv, shantay_pass, 1);
 if (inv_total(inv, shantay_disclaimer) < 1) {
@@ -93,7 +93,7 @@ if (inv_total(inv, shantay_disclaimer) < 1) {
     }
 }
 ~chatnpc("<p,neutral>Can I see your Shantay Desert Pass please.");
-~objboxt(shantay_pass, "You hand over a Shantay Pass.");
+~objbox(shantay_pass, "You hand over a Shantay Pass.", 250, 0, 0);
 ~chatplayer("<p,neutral>Sure, here you go!");
 inv_del(inv, shantay_pass, 1);
 if (inv_total(inv, shantay_disclaimer) < 1) {

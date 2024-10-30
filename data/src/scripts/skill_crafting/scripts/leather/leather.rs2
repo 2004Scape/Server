@@ -80,7 +80,7 @@ if (inv_total(inv, $leather) < $leather_count) {
     return;
 }
 if (inv_total(inv, thread) < 1) {
-    ~objbox(thread, "You need some thread to make anything out of leather.");
+    ~objbox(thread, "You need some thread to make anything out of leather.", 250, 0, divide(^objbox_height, 2));
     return;
 }
 // delete thread after 5 uses are met
@@ -99,7 +99,7 @@ mes("You make <db_getfield($product_data, craft_leather_table:name, 0)>.");
 
 [label,craft_leather_interface]
 if (inv_total(inv, thread) < 1) {
-    ~objbox(thread, "You need some thread to make anything out of leather.");
+    ~objbox(thread, "You need some thread to make anything out of leather.", 250, 0, divide(^objbox_height, 2));
     return;
 }
 if_setobject(leather_crafting:com_100, leather_cowl, 180);
@@ -112,7 +112,7 @@ if (map_members = false) {
     return;
 }
 if (inv_total(inv, thread) < 1) {
-    ~objbox(thread, "You need some thread to make anything out of leather.");
+    ~objbox(thread, "You need some thread to make anything out of leather.", 250, 0, divide(^objbox_height, 2));
     return;
 }
 def_obj $leather = inv_getobj(inv, $last);

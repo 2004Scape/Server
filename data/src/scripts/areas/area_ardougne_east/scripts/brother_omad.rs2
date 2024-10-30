@@ -43,7 +43,7 @@ settimer(blanket_ladder, 1);
 ~chatnpc("<p,sad>Please tell me you have the blanket.");
 if(inv_total(inv, childs_blanket) >= 1) {
     ~chatplayer("<p,happy>Yes! I've recovered it from the clutches of the evil thieves!");
-    ~objbox(childs_blanket, "You hand the monk the childs blanket.");
+    ~objbox(childs_blanket, "You hand the monk the childs blanket.", 250, 0, divide(^objbox_height, 2));
     ~chatnpc("<p,happy>Really, that's excellent, well done! Maybe now I will be able to get some rest.");
     ~chatnpc("<p,neutral>*yawn*..I'm off to bed! Farewell brave traveller!");
     inv_del(inv, childs_blanket, 1);
@@ -109,7 +109,7 @@ if(%drunkmonk_progress = ^drunkmonk_looking_cedric) {
 ~chatplayer("<p,happy>Hi Omad, Brother Cedric is on his way!");
 ~chatnpc("<p,happy>Good! Good! Now we can party!");
 ~chatnpc("<p,happy>I have little to repay you with but please! Take these Rune Stones.");
-~objboxt(lawrune, "Brother Omad gives you 8 Law Runes.");
+~objbox(lawrune, "Brother Omad gives you 8 Law Runes.", 250, 0, 0);
 ~chatplayer("<p,happy>Thanks Brother Omad!");
 ~chatnpc("<p,happy>OK, let's party!");
 @drunkmonk_party;

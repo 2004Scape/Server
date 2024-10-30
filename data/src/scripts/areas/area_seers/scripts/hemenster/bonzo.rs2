@@ -28,7 +28,7 @@ if($option = 1) {
     }
     inv_del(inv, coins, 5);
     %hemenster_comp_stage = ^hemenster_comp_paidfee;
-    ~objbox(coins_250, "You pay Bonzo 5 coins.");
+    ~objbox(coins_250, "You pay Bonzo 5 coins.", 250, 0, divide(^objbox_height, 2));
     ~chatnpc("<p,happy>Ok, we've got all the fishermen!|It's time to roll!");
     ~bonzo_set_places;
 } else if($option = 2) {
@@ -61,7 +61,7 @@ if(inv_total(inv, raw_giant_carp) > 0) {
     %fishingcompo_progress = ^fishingcompo_won_comp;
     inv_add(inv, fishing_trophy, 1);
     ~chatnpc("<p,happy>We have a new winner!|The heroic-looking person who was fishing by the pipes|has caught the biggest carp|I've seen since Grandpa Jack used to compete!");
-    ~objboxb(fishing_trophy, "You are given the Hemenster fishing trophy!");
+    ~objbox(fishing_trophy, "You are given the Hemenster fishing trophy!", 250, 0, ^objbox_height);
 } else {
     inv_del(inv, raw_sardine, 3);
     %fishingcompo_progress = ^fishingcompo_started;

@@ -16,7 +16,7 @@ inv_add(inv, wool, 1);
 npc_changetype(sheep_sheared);
 mes("You get some wool.");
 npc_say("Baa!");
-~objbox(wool, "You get some wool.");
+~objbox(wool, "You get some wool.", 250, 0, divide(^objbox_height, 2));
 
 [opnpcu,sheep_sheared]
 if(last_useitem = shears) {

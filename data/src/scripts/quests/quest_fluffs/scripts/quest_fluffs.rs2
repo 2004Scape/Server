@@ -59,7 +59,7 @@ switch_int ($option) {
         }
         inv_del(inv, coins, 100);
         %fluffs_progress = ^fluffs_paid_boy;
-        ~objbox(coins_25, "You give the lad 100 coins."); //imgur.com/jhDCIvP
+        ~objbox(coins_25, "You give the lad 100 coins.", 250, 0, divide(^objbox_height, 2)); //imgur.com/jhDCIvP
         ~chatplayer("<p,neutral>There you go, now where did you see Fluffs ?"); //intentional
         ~chatnpc("<p,neutral>I play at an abandoned lumber mill to the north east.|Just beyond the Jolly Boar Inn.|I saw Fluffs running around in there.");
         ~chatplayer("<p,neutral>Anything else?");
