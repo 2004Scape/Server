@@ -34,7 +34,7 @@ if(map_members = true) {
         return;
     }
 }
-if (random(^findsomethingnice_chance) = 0) {
+if (random(^findsomethingnice_chance) = 0 & ~in_tutorial_island(coord) = false) {
     mes("You search the chest."); // guess
     p_delay(2);
     ~findsomethingnice;
