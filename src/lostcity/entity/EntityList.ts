@@ -76,6 +76,7 @@ abstract class EntityList<T extends Entity> extends Array<T | undefined> {
         if (index !== -1) {
             this.ids[id] = -1;
             this.free.add(index);
+            delete this[index];
         }
     }
 
