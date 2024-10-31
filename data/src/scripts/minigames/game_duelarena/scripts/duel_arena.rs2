@@ -125,6 +125,9 @@ if (.finduid(%duelpartner) = true & ~enough_duel_space = true) { // https://yout
         cam_reset;
         .cam_reset;
 
+        ~inv_remove_leading_empty_slots(tempinv);
+        ~.inv_remove_leading_empty_slots(tempinv);
+
         def_int $tempinvused = sub(inv_size(tempinv), inv_freespace(tempinv));
         if ($tempinvused < 1) {
             if_settext(duel_confirm:com_91, "Absolutely nothing!");
