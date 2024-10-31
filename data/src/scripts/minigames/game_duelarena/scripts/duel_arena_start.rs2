@@ -54,6 +54,7 @@ if (.finduid(%duelpartner) = true) {
     hint_player(.uid);
 
     softtimer(duel_arena_start_3, 3); // todo: confirm these timings
+    softtimer(duel_arena_time_limit, 6000); // 60 minute time limit https://runescape.wiki/w/Update:Assist_System
 
     midi_jingle(^duel_start_jingle, ^duel_start_jingle_millis);
 }
@@ -152,6 +153,18 @@ if (~duel_arena_movement_check = true & ~in_duel_arena(coord) = true) {
     walktrigger(duel_arena_no_move);
 }
 
+[softtimer,duel_arena_time_limit]
+if (~in_duel_arena(coord) = false) {
+    clearsofttimer(duel_arena_time_limit);
+    return;
+}
+%duelstatus = 0;
+%duelpartner = null;
+if_close;
+queue(duel_arena_time_limit, 0);
 
-[queue,duel_arena_full]
-~mesbox("All arenas of this type are full! Select another type of arena, try|again in a few minutes or try a different server."); // https://youtu.be/TcrIr9O92sw?t=89
+
+[queue,duel_arena_time_limit]
+~duel_give_stake_back;
+~duel_reset_all;
+~mesbox("Time is up, there was no winner!"); // complete guess
