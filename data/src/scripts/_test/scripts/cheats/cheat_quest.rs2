@@ -3,10 +3,6 @@
 
 
 [label,debug_quests]
-if (busy = true) {
-    mes("Please finish what you're doing.");
-    return;
-}
 if_close;
 if (p_finduid(uid) = true) {
     def_int $int1 = 0;
@@ -27,7 +23,7 @@ if (p_finduid(uid) = true) {
         $string2 = enum(int, string, quest_names_enum, $int2);
         $int3 = add($int2, 1);
         $string3 = enum(int, string, quest_names_enum, $int3);
-        $choice = ~p_choice5_header("Prev.", -1, "<tostring($int1)>. <$string1>", $int1, "<tostring($int2)>. <$string2>", $int2, "<tostring($int3)>. <$string3>", $int3, "Next.", -2, "Page Number: <tostring($page)>/<tostring($max_pages)>");
+        $choice = ~p_choice5_header("Prev.", -1, "<tostring($int1)>. <$string1>", $int1, "<tostring($int2)>. <$string2>", $int2, "<tostring($int3)>. <$string3>", $int3, "Next.", -2, "Choose a quest: (Page <tostring($page)>/<tostring($max_pages)>)");
         if ($choice = -1 & $page ! 0) {
             $page = sub($page, 1);
         } else if ($choice = -2 & $page ! $max_pages) {
@@ -55,7 +51,12 @@ if (p_finduid(uid) = true) {
             case 12 : queue(romeo_and_juliet_complete, 0);
             case 13 : queue(rune_mysteries_complete, 0);
             case 14 : queue(sheep_complete, 0);
-            case 15 : queue(blackarmgang_quest_complete, 0);
+            case 15 : 
+                switch_int(~p_choice2_header("Phoenix", 0, "Blackarm", 1, "Choose a gang")) {
+                    case 0 : %phoenixgang_progress = ^phoenixgang_joined;
+                    case 1 : %phoenixgang_progress = ^phoenixgang_not_started;
+                }
+                queue(blackarmgang_quest_complete, 0);
             case 16 : queue(quest_vampire_complete, 0);
             case 17 : queue(hetty_quest_complete, 0);
             case 18 : queue(quest_chompybird_complete, 0);
@@ -70,10 +71,10 @@ if (p_finduid(uid) = true) {
             case 24 : mes("Quest not implemented");
             case 25 : queue(arena_quest_complete, 0);
             case 26 : queue(fishingcompo_quest_complete, 0);
-            case 27 : queue(grandtree_quest_complete, 0);
-            case 28 : mes("Quest not implemented");
+            case 27 : queue(fluffs_complete, 0);
+            case 28 : queue(grandtree_quest_complete, 0);
             case 29 : queue(hazeelcult_quest_complete, 0);
-            case 30 : mes("Quest not implemented");
+            case 30 : queue(hero_quest_complete, 0);
             case 31 : queue(grail_quest_complete, 0);
             case 32 : queue(junglepotion_quest_complete, 0);
             case 33 : mes("Quest not implemented");
@@ -81,12 +82,12 @@ if (p_finduid(uid) = true) {
             case 35 : queue(arthur_quest_complete, 0);
             case 36 : queue(drunkmonk_complete, 0);
             case 37 : queue(murder_quest_complete, 0);
-            case 38 : mes("Quest not implemented");
+            case 38 : queue(itgronigen_quest_complete, 0);
             case 39 : queue(quest_elena_complete, 0);
             case 40 : queue(scorpcatcher_quest_complete, 0);
             case 41 : queue(seaslug_quest_complete, 0);
             case 42 : queue(sheepherder_complete, 0);
-            case 43 : mes("Quest not implemented");
+            case 43 : queue(zombiequeen_quest_complete, 0);
             case 44 :
                 def_int $choice3 = ~p_choice2("Armadyl.", 0, "Lucien.", 1);
                 if ($choice3 = 0) {
@@ -152,13 +153,18 @@ if (p_finduid(uid) = true) {
             case 24 : mes("Quest not implemented");
             case 25 : %arena_progress = 0;
             case 26 : %fishingcompo_progress = 0;
-            case 27 : %grandtree_progress = 0;
-            case 28 : mes("Quest not implemented");
+            case 27 : 
+                %fluffs_progress = 0;
+                %cat_growth = 0;
+                %fluffs_crate = null;
+                %follower_obj = null;
+                %follower_uid = null;
+            case 28 : %grandtree_progress = 0;
             case 29 :
                 %hazeelcult_side = 0;
                 %hazeelcult_side = 0;
                 %hazeelcult_progress = 0;
-            case 30 : mes("Quest not implemented");
+            case 30 : %hero_progress = 0;
             case 31 : %grail_progress = 0;
             case 32 : %junglepotion_progress = 0;
             case 33 : mes("Quest not implemented");
@@ -170,7 +176,10 @@ if (p_finduid(uid) = true) {
                 %murder_poisonproof_progress = 0;
                 %murder_progress = 0;
                 %murder_evidence = 0;
-            case 38 : mes("Quest not implemented");
+            case 38 : 
+                %itgronigen_progress = 0;
+                %keepdoor_unlocked = 0;
+                %scorpius_given_symbol = 0;
             case 39 : %elena_progress = 0;
             case 40 :
                 %scorpcatcher_progress = 0;
@@ -180,7 +189,7 @@ if (p_finduid(uid) = true) {
             case 42 :
                 %sheepherder_disposal = 0;
                 %sheepherder_progress = 0;
-            case 43 : mes("Quest not implemented");
+            case 43 : %zombiequeen_progress = 0;
             case 44 :
                 %ikov_lever = 0;
                 %ikov_icearrowchest_coord = 0_0_0_0_0;
