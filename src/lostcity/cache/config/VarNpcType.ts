@@ -4,6 +4,7 @@ import Packet from '#jagex2/io/Packet.js';
 
 import { ConfigType } from '#lostcity/cache/config/ConfigType.js';
 import ScriptVarType from '#lostcity/cache/config/ScriptVarType.js';
+import { printError } from '#lostcity/util/Logger.js';
 
 export default class VarNpcType extends ConfigType {
     private static configNames = new Map<string, number>();
@@ -12,7 +13,6 @@ export default class VarNpcType extends ConfigType {
 
     static load(dir: string) {
         if (!fs.existsSync(`${dir}/server/varn.dat`)) {
-            console.log('Warning: No varn.dat found.');
             return;
         }
 
@@ -23,7 +23,6 @@ export default class VarNpcType extends ConfigType {
     static async loadAsync(dir: string) {
         const file = await fetch(`${dir}/server/varn.dat`);
         if (!file.ok) {
-            console.log('Warning: No varn.dat found.');
             return;
         }
 
@@ -80,7 +79,7 @@ export default class VarNpcType extends ConfigType {
         } else if (code === 250) {
             this.debugname = dat.gjstr();
         } else {
-            console.error(`Unrecognized varn config code: ${code}`);
+            printError(`Unrecognized varn config code: ${code}`);
         }
     }
 }

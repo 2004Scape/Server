@@ -1,6 +1,7 @@
 import fs from 'fs';
 
 import Packet from '#jagex2/io/Packet.js';
+import Environment from '#lostcity/util/Environment.js';
 
 export const CrcBuffer: Packet = new Packet(new Uint8Array(4 * 9));
 export let CrcTable: number[] = [];
@@ -72,7 +73,7 @@ export async function makeCrcsAsync() {
     CrcBuffer32 = Packet.getcrc(CrcBuffer.data, 0, CrcBuffer.data.length);
 }
 
-if (typeof self === 'undefined') {
+if (!Environment.STANDALONE_BUNDLE) {
     if (fs.existsSync('data/pack/client/')) {
         makeCrcs();
     }

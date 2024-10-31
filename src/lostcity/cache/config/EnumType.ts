@@ -11,7 +11,6 @@ export default class EnumType extends ConfigType {
 
     static load(dir: string) {
         if (!fs.existsSync(`${dir}/server/enum.dat`)) {
-            console.log('Warning: No enum.dat found.');
             return;
         }
 
@@ -22,7 +21,6 @@ export default class EnumType extends ConfigType {
     static async loadAsync(dir: string) {
         const file = await fetch(`${dir}/server/enum.dat`);
         if (!file.ok) {
-            console.log('Warning: No enum.dat found.');
             return;
         }
 

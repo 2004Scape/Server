@@ -1,6 +1,6 @@
 [opnpc1,bailey]
 switch_int(%seaslug_progress) {
-    case ^seaslug_boat_repaired, ^seaslug_spoken_kennith, ^seaslug_sailed_kent:
+    case ^seaslug_boat_repaired, ^seaslug_spoken_kennith, ^seaslug_sailed_kent :
         ~chatplayer("<p,happy>Hello.");
         ~chatnpc("<p,worried>Well hello there.|What are you doing here?");
         ~chatplayer("<p,neutral>I'm trying to find out what happened|to a boy named Kennith.");
@@ -12,7 +12,7 @@ switch_int(%seaslug_progress) {
         ~chatnpc("<p,shifty>The fishermen spend all day pulling in hauls of fish,|only to throw back the fish and keep those nasty sea slugs.");
         ~chatnpc("<p,shifty>What am I supposed to do with those?|I haven't figured out how to kill one yet,|if I put them near the stove they squirm|and jump away.");
         ~chatplayer("<p,confused>I doubt they would taste too good.");
-    case ^seaslug_spoken_kent:
+    case ^seaslug_spoken_kent :
         ~chatplayer("<p,happy>Hello.");
         ~chatnpc("<p,shock>Oh, thank the gods it's you.|They've all gone mad I tell you,|one of the fishermen tried to|throw me into the sea!");
         ~chatplayer("<p,neutral>They're all being controlled by the sea slugs.");
@@ -28,7 +28,7 @@ switch_int(%seaslug_progress) {
             return;
         }
         ~chatplayer("<p,confused>I'd better find a way to light this torch, and soon.");
-    case ^seaslug_lit_torch, ^seaslug_kennith_need_escape, ^seaslug_panel_opened: 
+    case ^seaslug_lit_torch, ^seaslug_kennith_need_escape, ^seaslug_panel_opened :
         if(inv_total(inv, lit_torch) > 0) {
             ~chatplayer("<p,happy>I've managed to light the torch.");
             ~chatnpc("<p,neutral>Well done traveller,|you'd better get Kennith out of here soon.");
@@ -40,14 +40,14 @@ switch_int(%seaslug_progress) {
             ~chatnpc("<p,neutral>That was silly, fortunately I have another.|Here, take it.");
             inv_add(inv, unlit_torch, 1);
         }
-    case ^seaslug_saved_kennith:
+    case ^seaslug_saved_kennith :
         ~chatplayer("<p,happy>Hello Bailey.");
         ~chatnpc("<p,happy>Hello again.|I saw you managed to get Kennith off the platform.|Well done. He wasn't safe around those slugs.");
         ~chatplayer("<p,quiz>Are you going to come back with us?");
         ~chatnpc("<p,sad>No, these fishermen are my friends,|I'm sure they can be saved.|I'm going to stay and try to get rid of all these slugs.");
         ~chatplayer("<p,neutral>You're braver than most.|Take care of yourself Bailey.");
         ~chatnpc("<p,neutral>You too traveller.");
-    case ^seaslug_complete:
+    case ^seaslug_complete :
         ~chatplayer("<p,happy>Hello Bailey.");
         ~chatnpc("<p,happy>Well hello again traveller.|What brings you back out here?");
         ~chatplayer("<p,neutral>Just looking around.");

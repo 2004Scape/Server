@@ -4,7 +4,7 @@ if(%junglepotion_progress < ^junglepotion_complete) {
     return;
 }
 switch_int(%zombiequeen_progress) {
-    case ^zombiequeen_complete, ^zombiequeen_complete_spoken_trufitus1, ^zombiequeen_complete_spoken_trufitus2:
+    case ^zombiequeen_complete, ^zombiequeen_complete_spoken_trufitus1, ^zombiequeen_complete_spoken_trufitus2 :
         ~chatplayer("<p,neutral>Greetings!");
         ~chatnpc("<p,happy>Greetings Bwana! We've removed the threat of Rashiliyia and though there are still some random outbreaks of undead activity we are more than able to deal with it.");
         // https://web.archive.org/web/20050204071450im_/http://www.runehq.com//images/cityguides/shilo3.jpg
@@ -17,7 +17,7 @@ switch_int(%zombiequeen_progress) {
         ~mesbox("Mosol leads you into the village.");
         p_telejump(0_44_46_50_8);
         mes("Mosol leaves you by the gate and walks back out into the jungle.");
-    case default: @mosol_belt;
+    case default : @mosol_belt;
     case ^zombiequeen_not_started :
         if(~obj_gettotal(wampum_belt) > 0) {
             @mosol_belt;

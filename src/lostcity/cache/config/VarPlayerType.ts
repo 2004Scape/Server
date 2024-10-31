@@ -5,6 +5,7 @@ import Packet from '#jagex2/io/Packet.js';
 import { ConfigType } from '#lostcity/cache/config/ConfigType.js';
 import ScriptVarType from '#lostcity/cache/config/ScriptVarType.js';
 import Jagfile from '#jagex2/io/Jagfile.js';
+import { printError } from '#lostcity/util/Logger.js';
 
 export default class VarPlayerType extends ConfigType {
     private static configNames = new Map<string, number>();
@@ -20,7 +21,6 @@ export default class VarPlayerType extends ConfigType {
 
     static load(dir: string) {
         if (!fs.existsSync(`${dir}/server/varp.dat`)) {
-            console.log('Warning: No varp.dat found.');
             return;
         }
 
@@ -32,7 +32,6 @@ export default class VarPlayerType extends ConfigType {
     static async loadAsync(dir: string) {
         const file = await fetch(`${dir}/server/varp.dat`);
         if (!file.ok) {
-            console.log('Warning: No varp.dat found.');
             return;
         }
 
@@ -111,7 +110,7 @@ export default class VarPlayerType extends ConfigType {
         } else if (code === 250) {
             this.debugname = dat.gjstr();
         } else {
-            console.error(`Unrecognized varp config code: ${code}`);
+            printError(`Unrecognized varp config code: ${code}`);
         }
     }
 }

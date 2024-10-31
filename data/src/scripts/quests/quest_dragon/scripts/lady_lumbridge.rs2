@@ -7,11 +7,11 @@ if (%dragon_progress < ^quest_dragon_bought_ship | %dragon_progress >= ^dragon_c
 }
 mes("You board the ship.");
 switch_int (loc_angle) {
-    case ^loc_west,^loc_east:
+    case ^loc_west,^loc_east :
         p_teleport(movecoord(coord, -1, 0, 0));
         p_delay(0); // https://youtu.be/kCMB4I_aJJM?t=106 vid looks like the delay is quicker than osrs
         p_telejump(movecoord(coord, -2, 1, 0));
-    case ^loc_north,^loc_south:
+    case ^loc_north,^loc_south :
         p_teleport(movecoord(coord, 0, 0, 1));
         p_delay(0);
         p_telejump(movecoord(coord, 0, 1, 2));
@@ -20,11 +20,11 @@ switch_int (loc_angle) {
 [oploc1,dragonslayer_gangplank_disembark]
 mes("You disembark the ship.");
 switch_int (loc_angle) {
-    case ^loc_west,^loc_east:
+    case ^loc_west,^loc_east :
         p_teleport(movecoord(coord, 1, 0, 0));
         p_delay(0);
         p_telejump(movecoord(coord, 2, -1, 0));
-    case ^loc_north,^loc_south:
+    case ^loc_north,^loc_south :
         p_teleport(movecoord(coord, 0, 0, -1));
         p_delay(0);
         p_telejump(movecoord(coord, 0, -1, -2));

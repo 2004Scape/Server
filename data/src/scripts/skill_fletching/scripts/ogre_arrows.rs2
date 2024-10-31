@@ -1,23 +1,26 @@
 [opheldu,wolf_bones]
 switch_obj(last_useitem) {
-    case chisel: @make_wolf_bone_tips;
+    case chisel : @make_wolf_bone_tips;
     case default : ~displaymessage(^dm_default);
 }
 
 [opheldu,obj_2864]
 switch_obj(last_useitem) {
-    case feather: @make_ogre_headless_arrows;
+    case feather : @make_ogre_headless_arrows;
     case default : ~displaymessage(^dm_default);
 }
 
 [opheldu,obj_2865]
 switch_obj(last_useitem) {
-    case wolfbone_arrowheads: @make_ogre_arrows;
+    case wolfbone_arrowheads : @make_ogre_arrows;
     case default : ~displaymessage(^dm_default);
 }
 
 [label,make_ogre_shafts]
-~require_members_fletching;
+if (map_members = false) {
+    mes(^mes_members_fletching); // guess
+    return;
+}
 if (%chompybird_progress < 1) {
     // osrs
     mes("You're not sure what you would make with these logs.");
@@ -38,7 +41,10 @@ stat_advance(fletching, multiply($shaft_count, 18));
 
 
 [label,make_wolf_bone_tips]
-~require_members_do_that;
+if (map_members = false) {
+    mes(^mes_members_fletching); // guess
+    return;
+}
 if (%chompybird_progress < 1) {
     // complete guess
     mes("You're not sure what you would make with these bones.");
@@ -63,7 +69,10 @@ stat_advance(crafting, multiply($tip_count, 25));
 
 
 [label,make_ogre_headless_arrows]
-~require_members_fletching;
+if (map_members = false) {
+    mes(^mes_members_fletching); // guess
+    return;
+}
 if (%chompybird_progress < 1) {
     // complete guess, i need to check this
     mes("You're not sure what you would make with these arrow shafts.");
@@ -91,7 +100,10 @@ stat_advance(fletching, multiply($arrow_count, 15));
 
 
 [label,make_ogre_arrows]
-~require_members_fletching;
+if (map_members = false) {
+    mes(^mes_members_fletching); // guess
+    return;
+}
 if (%chompybird_progress = ^chompybird_not_started) {
     // complete guess, i need to check this
     mes("You're not sure what you would make with these flighted arrows.");
@@ -116,7 +128,7 @@ inv_del(inv, wolfbone_arrowheads, $arrow_count);
 
 inv_add(inv, ogre_arrow, $arrow_count);
 
-// TODO tbc exact mechanism
+// todo tbc exact mechanism
 if (%chompybird_progress ! ^chompybird_not_started) {
     setbit(%chompybird_kills, ^chompybird_varbit_made_arrows);
 }

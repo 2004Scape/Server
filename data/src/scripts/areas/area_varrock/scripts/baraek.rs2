@@ -22,7 +22,7 @@ if(%phoenixgang_progress = 3) { // you wont get options for selling both furs wh
 ~chatplayer("<p,quiz>Can you sell me some furs?");
 ~chatnpc("<p,neutral>Yeah, sure. They're 20 gold coins each.");
 switch_int(~p_choice2("Yeah, Okay, here you go.", 1, "20 gold coins? That's an outrage!", 2)) {
-    case 1:
+    case 1 :
         ~chatplayer("<p,neutral>Yeah, OK, here you go.");
         if(inv_total(inv, coins) < 20) {
             ~chatplayer("<p,sad>Oh dear, I don't have enough money!");
@@ -45,7 +45,7 @@ switch_int(~p_choice2("Yeah, Okay, here you go.", 1, "20 gold coins? That's an o
         }
         inv_add(inv, bear_fur, 1);
         ~objbox(bear_fur, "Baraek sells you a fur.");
-    case 2:
+    case 2 :
         ~chatplayer("<p,angry>20 gold coins? That's an outrage!");
         ~chatnpc("<p,sad>Well, I can't go any cheaper than that mate.|I have a family to feed.");
 }
@@ -102,7 +102,7 @@ if($option = 1) {
 ~chatnpc("<p,neutral>But I don't want to get into trouble for revealing their hideout.");
 ~chatnpc("<p,neutral>Of course, if I was, say|20 gold coins richer I may happen to be|more inclined to take that sort of risk...");
 switch_int(~p_choice3("Okay. Have 20 gold coins.", 1, "No. I don't like things like bribery.", 2, "Yes. I'd like to be 20 gold coins richer too.", 3)) {
-    case 1:
+    case 1 :
         ~chatplayer("<p,neutral>Okay. Have 20 gold coins.");
         if(inv_total(inv, coins) < 20) {
             ~chatplayer("<p,neutral>Uh....oops. My mistake. I don't have 20 coins. Silly me.");
@@ -113,10 +113,10 @@ switch_int(~p_choice3("Okay. Have 20 gold coins.", 1, "No. I don't like things l
         ~chatnpc("<p,neutral>Ok, to get to the gang hideout, enter Varrock through the south gate. Then, if you take the first turning east, somewhere along there is an alleyway to the south. The door at the end of there is the entrance to the Phoenix");
         ~chatnpc("<p,neutral>Gang. They're operating there under the name of the VTAM Corporation. Be careful. The Phoenixes ain't the types to be messed about.");
         ~chatplayer("<p,happy>Thanks!");
-    case 2:
+    case 2 :
         ~chatplayer("<p,angry>No. I don't like things like bribery.");
         ~chatnpc("<p,happy>Heh. If you wanna deal with the Phoenix Gang|they're involved in much worse than a bit of bribery.");
-    case 3:
+    case 3 :
         ~chatplayer("<p,happy>Yes. I'd like to be 20 gold coins richer too.");
 
 }

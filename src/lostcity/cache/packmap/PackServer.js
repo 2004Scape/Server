@@ -119,11 +119,8 @@ export function packServerMap() {
         return;
     }
 
-    //console.log('Packing server maps');
-
     fs.mkdirSync('data/pack/server/maps', { recursive: true });
 
-    // console.time('Packing maps');
     queue.forEach(({ file, x, z }) => {
         let data = fs
             .readFileSync(`data/src/maps/${file}`, 'ascii')
@@ -441,5 +438,4 @@ export function packServerMap() {
             out.release();
         }
     });
-    // console.timeEnd('Packing maps');
 }

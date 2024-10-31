@@ -170,6 +170,7 @@ model=model_2437_obj
 2dxan=144
 weight=20g
 tradeable=yes
+respawnrate=25
 
 [chocolate_bar]
 iop1=Eat

@@ -13,6 +13,7 @@ model=model_2364_obj
 2dxan=376
 weight=7g
 tradeable=yes
+respawnrate=200
 // guessed name
 
 [unidentified_marrentill]

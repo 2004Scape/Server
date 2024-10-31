@@ -10,7 +10,7 @@ if ($zombie_coord = null) {
 
 npc_add($zombie_coord, $zombie, 1000); // guess
 npc_say("Brainsssss...");
-%npc_attacking_uid = uid;
+%npc_macro_event_target = uid;
 spotanim_map(zamorak_flame, $zombie_coord, 0, 0);
 if (finduid(uid) = false) {
     return;
@@ -90,3 +90,10 @@ if ($random < 36) { // 36/256
 } else {
     obj_add(npc_coord, ~randomjewel, ^lootdrop_duration);
 }
+
+[opnpc2,_macro_event_zombie]
+if (%npc_macro_event_target ! uid) {
+    mes("It's not here for you."); // from strange plant
+    return;
+}
+@player_combat_start;

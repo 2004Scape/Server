@@ -4,6 +4,9 @@
 [opheldu,blue_dragon_scale]
 ~attempt_grind_ingredient(last_useslot, last_slot);
 
+[opheldu,bat_bones]
+~attempt_grind_ingredient(last_useslot, last_slot);
+
 [proc,attempt_grind_ingredient](int $use_slot, int $last_slot)
 def_obj $used_on = inv_getobj(inv, $last_slot);
 def_obj $used_with = inv_getobj(inv, $use_slot);
@@ -19,7 +22,10 @@ if ($refined = null) {
     return;
 }
 
-~require_members_feature;
+if (map_members = false) {
+    mes(^mes_members_herblore);
+    return;
+}
 
 def_string $message = oc_param($used_on, grindable_ingredient_message);
 ~grind_ingredient($used_on, $refined, $message, $last_slot);

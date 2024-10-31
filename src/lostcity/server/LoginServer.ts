@@ -9,6 +9,7 @@ import { fromBase37 } from '#jagex2/jstring/JString.js';
 import { db } from '#lostcity/db/query.js';
 
 import Environment from '#lostcity/util/Environment.js';
+import { printInfo } from '#lostcity/util/Logger.js';
 
 // todo: replace magic numbers with enums
 export default class LoginServer {
@@ -17,7 +18,7 @@ export default class LoginServer {
 
     constructor() {
         this.server = new WebSocketServer({ port: Environment.LOGIN_PORT, host: '0.0.0.0' }, () => {
-            console.log(`Login server listening on port ${Environment.LOGIN_PORT}`);
+            printInfo(`Login server listening on port ${Environment.LOGIN_PORT}`);
         });
 
         this.server.on('connection', (socket: WebSocket) => {

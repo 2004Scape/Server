@@ -1,24 +1,24 @@
 [opnpc1,general_khazard]
 switch_int(%arena_progress) {
-    case ^arena_defeated_genkhazard, ^arena_complete_defeated_genkhazard:
+    case ^arena_defeated_genkhazard, ^arena_complete_defeated_genkhazard :
         ~chatplayer("<p,shock>I thought I was rid of you!");
-        // TODO: not sure if he attacks you here or not
+        // todo: not sure if he attacks you here or not
         ~chatnpc("<p,genkhazard>You might not believe it young one, but you can't kill that which is already dead.");
-    case ^arena_freed_servils:
+    case ^arena_freed_servils :
         ~chatplayer("<p,neutral>Hello.");
         ~chatnpc("<p,genkhazard>You killed my pet, and yet still you dare to speak to me?");
         if_close;
         ~npc_retaliate(0);
         npc_say("You shall die for your insolence.");
-    case ^arena_sent_jail, ^arena_defeated_scorpion:
+    case ^arena_sent_jail, ^arena_defeated_scorpion :
         // https://youtu.be/etS0gMlcxx8?si=xx4Hvgt28HsL6JCi&t=344
         ~chatplayer("<p,neutral>Hello.");
         ~chatnpc("<p,genkhazard>How dare you speak to me, you are a slave of this arena now.");
-    case ^arena_defeated_ogre:
+    case ^arena_defeated_ogre :
         ~chatplayer("<p,neutral>I have come to demand the release of Sir Servil and his son.");
         ~chatnpc("<p,genkhazard>Why would I give them up, those two men are my property now.");
         @general_khazard_belong_nobody;
-    case default:
+    case default :
         if(~wearing_khazard_armour = true) {
             ~chatplayer("<p,quiz>General Khazard?");
             ~chatnpc("<p,genkhazard>What do you want guard? I'm a busy man.");

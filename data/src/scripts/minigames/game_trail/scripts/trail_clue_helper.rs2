@@ -1,4 +1,4 @@
-[proc,trail_hasclue_all](boolean)
+[proc,trail_hasclue_all]()(boolean)
 if (~trail_hasclue_inv = true) {
     return (true);
 }
@@ -8,14 +8,14 @@ if(inv_totalcat(bank, trail_clue_easy) > 0| inv_totalcat(bank, trail_clue_medium
 }
 return(false);
 
-[proc,trail_hasclue_inv](boolean)
+[proc,trail_hasclue_inv]()(boolean)
 if (inv_totalcat(inv, trail_clue_easy) > 0| inv_totalcat(inv, trail_clue_medium) > 0| inv_totalcat(inv, trail_clue_hard) > 0 | 
     inv_totalcat(inv, trail_casket_easy) > 0 | inv_totalcat(inv, trail_casket_medium) > 0 | inv_totalcat(inv, trail_casket_hard) > 0) {
         return (true);
 }
 return(false);
 
-[proc,trail_getclue_inv](obj)
+[proc,trail_getclue_inv]()(obj)
 def_int $slot = 0;
 while ($slot < inv_size(inv)) {
     def_obj $slotobj = inv_getobj(inv, $slot);
@@ -46,18 +46,18 @@ if(testbit(%trail_clue, 4) = true) {
 // although it doesn't use 292 (trail_clue))
 // https://web.archive.org/web/20051214060247/http://www.tip.it/runescape/?page=treasure_trails.htm and runehq forums mention you can get the items back directly by talking
 // to the npc once you've claimed the items before meaning it likely used varp
-[proc,get_trail_progress](int)
+[proc,get_trail_progress]()(int)
 return (getbit_range(%trail_clue, 0, 3));
 
 // clears the trail progess, including the bit used for tracking the zamorak wizard
-[proc,clear_trail_progress](int)
+[proc,clear_trail_progress]
 %trail_clue = clearbit_range(%trail_clue, 0, 4);
 
 // 4 bits
-[proc,get_chart_progress](int)
+[proc,get_chart_progress]()(int)
 return (getbit_range(%trail_clue, 5, 8));
 
-[proc,has_sextant_clue](boolean)
+[proc,has_sextant_clue]()(boolean)
 def_int $slot = 0;
 while ($slot < inv_size(inv)) {
     def_obj $slotobj = inv_getobj(inv, $slot);
@@ -68,6 +68,7 @@ while ($slot < inv_size(inv)) {
     }
     $slot = calc($slot + 1);
 }
+return (false);
 
 [proc,trail_casket_obtained](namedobj $casket)
 ~objbox($casket, "You've found a casket!");

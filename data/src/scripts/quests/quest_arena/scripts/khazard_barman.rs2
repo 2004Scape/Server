@@ -9,7 +9,7 @@ if(%arena_progress >= ^arena_spoken_drunkguard) {
     $option = ~p_choice2("I'll have a beer please.", 1, "Got any news?", 2);
 }
 switch_int($option) {
-    case 1:
+    case 1 :
         ~chatplayer("<p,happy>I'll have a beer please.");
         // chisel, wiki (historic) has it in the wrong order
         if(inv_total(inv, coins) < 2) { 
@@ -20,12 +20,12 @@ switch_int($option) {
         inv_del(inv, coins, 2);
         inv_add(inv, beer, 1);
         ~chatnpc("<p,happy>There you go, that's two gold coins.");
-    case 2:
+    case 2 :
         // https://youtu.be/Oltfw1gvWjQ?si=LixZCKfHSm-zyTs7&t=238
         ~chatplayer("<p,quiz>Got any news?");
         ~chatnpc("<p,happy>If you want to see the action around here you should visit the famous Khazard fight arena. I've seen some grand battles in my time. Ogres, goblins, even dragons have fought there.");
         ~chatnpc("<p,sad>Although you have to feel sorry for some of the slaves sent in there.");
-    case 3:
+    case 3 :
         // https://youtu.be/Oltfw1gvWjQ?si=Khm5ce54r4JF8Ynx&t=225
         ~chatplayer("<p,happy>I'd like a Khali brew please.");
         if(inv_total(inv, coins) < 2) { 

@@ -1,0 +1,139 @@
+
+[proc,start_desertheat_timer]
+// calculated each time the timer resets
+if(~inzone_coord_pair_table(desert_zones, coord) = false | %desert = ^true) { // don't start another timer if already in desert
+    return;
+}
+%desert = ^true;
+~calculate_desertheat_timer;
+
+[proc,calculate_desertheat_timer]
+cleartimer(desert_heat);
+def_int $time = 150;
+def_obj $head = inv_getobj(worn, ^wearpos_head);
+def_obj $body = inv_getobj(worn, ^wearpos_torso);
+def_obj $legs = inv_getobj(worn, ^wearpos_legs);
+def_obj $feet = inv_getobj(worn, ^wearpos_feet);
+def_obj $rhand = inv_getobj(worn, ^wearpos_rhand);
+def_obj $hands = inv_getobj(worn, ^wearpos_hands);
+
+if ($head ! null) {
+    if(oc_category($head) = armour_helmet) $time = calc($time - 10);
+}
+
+if ($body ! null) {
+    if($body = desert_shirt) {
+        $time = calc($time + 20);
+    } else if($body = obj_1844) {
+        $time = calc($time + 10);
+    } else if(oc_category($body) = armour_body) {
+        $time = calc($time - 40);
+    }
+}
+
+if ($legs ! null) {
+    if($legs = desert_robe) {
+        $time = calc($time + 20);
+    } else if($legs = obj_1845) {
+        $time = calc($time + 10);
+    } else if(oc_category($legs) = armour_legs) {
+        $time = calc($time - 30);
+    }
+}
+
+if ($feet ! null) {
+    if($feet = desert_boots) {
+        $time = calc($time + 10);
+    } else if($feet = obj_1846) {
+        $time = calc($time + 5);
+    }// else if(oc_category($feet) = armour_feet) {
+     //   $time = calc($time - 10);
+    //} no feet armour in 225?
+}
+
+if ($rhand ! null) {
+    if(oc_category($rhand) = armour_shield) $time = calc($time - 10);
+}
+
+if ($hands ! null) {
+    if(oc_category($hands) = armour_hands) $time = calc($time - 10);
+}
+
+settimer(desert_heat, $time);
+
+[proc,clear_desertheat_timer]
+if(~inzone_coord_pair_table(desert_zones, coord) = false) {
+    %desert = ^false;
+    cleartimer(desert_heat);
+    return;
+}
+
+[timer,desert_heat]
+if(~inzone_coord_pair_table(desert_zones, coord) = false) { // shouldnt ever happen but failsafe
+    %desert = ^false;
+    cleartimer(desert_heat);
+    return;
+}
+if(~inzone_coord_pair_table(desertheat_disabled_zones, coord) = true) { // todo: did this exist originally? maybe april 2005 change
+    ~calculate_desertheat_timer;
+    return;
+}
+if(inv_total(inv, jug_of_water) > 0) {
+    mes("The water in your jug evaporates in the desert heat.");
+    inv_changeslot(inv, jug_of_water, jug_empty, 1); // 1 at a time
+}
+
+if(inv_total(inv, bowl_water) > 0) {
+    mes("The water in your bowl evaporates in the desert heat.");
+    inv_changeslot(inv, bowl_water, bowl_empty, 1); // 1 at a time
+}
+
+if(inv_total(inv, bucket_water) > 0) {
+    mes("The water in your bucket evaporates in the desert heat.");
+    inv_changeslot(inv, bucket_water, bucket_empty, 1); // 1 at a time
+}
+
+def_boolean $drank = false;
+if(inv_total(inv, water_skin1) > 0) {
+    inv_changeslot(inv, water_skin1, water_skin0, 1);
+    $drank = true;
+} else if(inv_total(inv, water_skin2) > 0) {
+    inv_changeslot(inv, water_skin2, water_skin1, 1);
+    $drank = true;
+} else if(inv_total(inv, water_skin3) > 0) {
+    inv_changeslot(inv, water_skin3, water_skin2, 1);
+    $drank = true;
+} else if(inv_total(inv, water_skin4) > 0) {
+    inv_changeslot(inv, water_skin4, water_skin3, 1);
+    $drank = true;
+}
+if($drank = true) {
+    mes("You take a drink of water.");
+    anim(human_eat, 0);
+    sound_synth(liquid, 0, 0);
+    ~calculate_desertheat_timer;
+    return;
+}
+if(inv_total(inv, water_skin0) > 0) {
+    mes("Perhaps you should fill up one of your empty waterskins."); // this is always plural
+} else {
+    mes("You should get a waterskin for any travelling in the desert.");
+}
+mes("You start dying of thirst while you're in the desert.");
+queue(damage_player, 0, ~random_range(1, 10));
+~calculate_desertheat_timer;
+
+[mapzoneexit,0_49_46] ~clear_desertheat_timer;
+[mapzoneexit,0_49_47] ~clear_desertheat_timer;
+
+[mapzoneexit,0_50_46] ~clear_desertheat_timer;
+[mapzoneexit,0_50_47] ~clear_desertheat_timer;
+[mapzoneexit,0_50_48] ~clear_desertheat_timer;
+
+[mapzoneexit,0_51_46] ~clear_desertheat_timer;
+[mapzoneexit,0_51_47] ~clear_desertheat_timer;
+[mapzoneexit,0_51_48] ~clear_desertheat_timer;
+
+[mapzoneexit,0_52_46] ~clear_desertheat_timer;
+[mapzoneexit,0_52_47] ~clear_desertheat_timer;
+[mapzoneexit,0_52_48] ~clear_desertheat_timer;

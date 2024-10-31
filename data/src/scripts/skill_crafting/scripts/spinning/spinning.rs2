@@ -2,8 +2,11 @@
 switch_obj (last_useitem) 
 {
     case wool : @craft_spinning(last_useitem);
-    case flax : 
-        ~require_members_feature; 
+    case flax :
+        if (map_members = false) {
+            mes(^mes_members_feature);
+            return;
+        }
         @craft_spinning(last_useitem);
     case ball_of_wool : ~objbox(ball_of_wool, "You have already spun this wool.");
     case bow_string : ~objbox(bow_string, "You have already spun this bow string.");
@@ -36,8 +39,8 @@ p_delay(3);
 
 /**
 //May have not used weakqueue for this back then https://youtu.be/eQEYx8hwA_I?t=410
-// TODO flax spinning must have been queue because of 2 diff messages: https://youtu.be/HQEpeWAUMbI?t=51
-// TODO one for in queue and one out of queue. -jordan
+// todo flax spinning must have been queue because of 2 diff messages: https://youtu.be/HQEpeWAUMbI?t=51
+// todo one for in queue and one out of queue. -jordan
 [weakqueue,crafting_spinning](struct $struct)
 // delete item
 inv_del(inv, struct_param($struct, ingredient), 1);

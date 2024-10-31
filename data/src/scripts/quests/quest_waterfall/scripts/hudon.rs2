@@ -6,11 +6,11 @@
 
 [label,hudon_dialogue]
 switch_int (%waterfall_progress) {
-    case ^waterfall_not_started:
+    case ^waterfall_not_started :
         ~chatplayer("<p,neutral>Hello there.");
         ~chatnpc("<p,neutral>What do you want?");
         ~chatplayer("<p,neutral>Nothing, just passing by.");
-    case ^waterfall_started:
+    case ^waterfall_started :
         ~chatplayer("<p,neutral>Hello son, are you okay?");
         ~chatnpc("<p,neutral>Don't play nice with me,|I know you're looking for the treasure too.");
         ~chatplayer("<p,neutral>Your mum sent me to find you.");
@@ -21,15 +21,15 @@ switch_int (%waterfall_progress) {
         %waterfall_progress = ^waterfall_spoken_to_hudon;
         ~chatnpc("<p,neutral>I'm fine alone.");
         ~chatplayer("<p,neutral>Ok, I'll leave you to it.");
-    case ^waterfall_spoken_to_hudon: 
+    case ^waterfall_spoken_to_hudon :
         ~chatplayer("<p,neutral>So you're still here.");
         ~chatnpc("<p,neutral>I'll find that treasure soon,|just you wait and see.");
-    case ^waterfall_opened_book_on_baxtorian:
+    case ^waterfall_opened_book_on_baxtorian :
         ~chatplayer("<p,neutral>Hello Hudon.");
         ~chatnpc("<p,neutral>Oh it's you,|trying to find my treasure again are you?");
         ~chatplayer("<p,neutral>I didn't know it belonged to you.");
         ~chatnpc("<p,neutral>It will do when I find it.|I just need to get into this blasted waterfall|I've been washed downstream three times already.");
-    case ^waterfall_entered_glarial_tomb:
+    case ^waterfall_entered_glarial_tomb :
         ~chatplayer("<p,neutral>Hello again.");
         ~chatnpc("<p,neutral>Not you still, why don't you give up?");
         ~chatplayer("<p,neutral>And miss all the fun!");
@@ -39,11 +39,11 @@ switch_int (%waterfall_progress) {
         ~chatplayer("<p,neutral>Well, I wouldn't count on it.");
         ~chatnpc("<p,neutral>That's not fair.");
         ~chatplayer("<p,neutral>Neither is life kid.");
-    case ^waterfall_entered_waterfall, ^waterfall_entered_puzzle_room, ^waterfall_placed_amulet:
+    case ^waterfall_entered_waterfall, ^waterfall_entered_puzzle_room, ^waterfall_placed_amulet :
         ~chatplayer("<p,neutral>How are you doing, Hudon?");
         ~chatnpc("<p,neutral>No luck yet I'm afraid.");
         ~chatplayer("<p,neutral>Me neither. but I don't give up easily.");
-    case ^waterfall_complete:
+    case ^waterfall_complete :
         ~chatplayer("<p,neutral>Hello again.");
         ~chatnpc("<p,neutral>You stole my treasure. I saw you!");
         ~chatplayer("<p,neutral>I'll make sure it goes to a good cause.");

@@ -1,17 +1,17 @@
 [opnpc1,carnillean_guard]
 switch_int(%hazeelcult_progress) {
-    case ^hazeelcult_not_started:
+    case ^hazeelcult_not_started :
         ~chatplayer("<p,neutral>Hello.");
         ~chatnpc("<p,neutral>Hello there. I haven't seen you around here before. If you've come to admire the Carnillean family home I must warn you not to cause any trouble.");
         ~chatnpc("<p,neutral>Due to recent criminal activities against such prominent Ardougnians, I have been sent here on special guard duty to ensure the Carnilleans' security.");
         ~chatnpc("<p,neutral>Anyone caught interfering with the person or possessions of any Carnilleans will be taken to jail so quickly that their feet won't even touch the floor!");
         ~chatplayer("<p,confused>Well, I wasn't actually planning on doing anything like that...");
         ~chatnpc("<p,neutral>Glad to hear it. Let's keep it that way, hmmm?");
-    case ^hazeelcult_poured_poison:
+    case ^hazeelcult_poured_poison :
         ~chatplayer("<p,neutral>Hello there.");
         ~chatnpc("<p,neutral>Hello. The sarge is furious with me! Apparently those loony cultists have been back somehow without me noticing! I got a right roasting earlier...");
         ~chatnpc("<p,neutral>I don't exactly know what they got up to in the house... but that's besides the point. Sir Ceril was extremely upset, and I don't blame him.");
-    case ^hazeelcult_started, ^hazeelcult_spoken_clivet, ^hazeelcult_clivet_decision, ^hazeelcult_finished_side_task:
+    case ^hazeelcult_started, ^hazeelcult_spoken_clivet, ^hazeelcult_clivet_decision, ^hazeelcult_finished_side_task :
         if(%hazeelcult_progress = ^hazeelcult_finished_side_task & %hazeelcult_side = ^hazeelcult_evilside) {
             ~chatplayer("<p,neutral>Hello.");
             ~chatnpc("<p,neutral>Hello again adventurer. Still hanging around here eh? Let me know if you spot any of those loony cultists sniffing around.");
@@ -19,7 +19,7 @@ switch_int(%hazeelcult_progress) {
         }
         ~chatplayer("<p,neutral>Hello.");
         ~chatnpc("<p,neutral>Hello. I hear tell you're after that loony cult who broke in the other night. It always gladdens me when civilians assist the law like this.");
-    case ^hazeelcult_given_armour_or_scroll:
+    case ^hazeelcult_given_armour_or_scroll :
         ~chatplayer("<p,neutral>Hello guard.");
         if(%hazeelcult_side = ^hazeelcult_evilside) {
             ~chatnpc("<p,neutral>Hello adventurer. I hope you find the cult soon we have a horrible suspicion that there's been another burglary.");
@@ -33,7 +33,7 @@ switch_int(%hazeelcult_progress) {
             ~chatnpc("<p,neutral>You've already proven to me that you're a law-abiding citizen. Besides, I always found it suspicious that Jones would just show up here on the doorstep the very day after the old butler died in such suspicious");
             ~chatnpc("<p,neutral>circumstances. Good luck in clearing your name. You have my support.");
         }
-    case ^hazeelcult_complete:
+    case ^hazeelcult_complete :
         ~chatplayer("<p,neutral>Hello.");
         if(%hazeelcult_side = ^hazeelcult_evilside) {
             ~chatnpc("<p,angry>You again? Didn't I make it clear you're not welcome around here? Clear off before you make me get rough with you!");

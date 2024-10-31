@@ -12,7 +12,7 @@ if(%runemysteries_progress = ^runemysteries_not_started) {
         ~chatplayer("<p,sad>...I lost the package you gave me.");
         ~chatnpc("<p,shock>You WHAT?");
         ~chatnpc("<p,neutral>Tch, that was really very careless of you. Luckily as head wizard I have great powers, and will be able to teleport it back here without too much effort.");
-        // TODO: wiki mentions an animation and graphic "that looks like a teleport" here, try to figure out what it's supposed to look like (removed in the 2021-2022 rework)
+        // todo: wiki mentions an animation and graphic "that looks like a teleport" here, try to figure out what it's supposed to look like (removed in the 2021-2022 rework)
         ~chatnpc("<p,neutral>Ok, I have retrieved it. Luckily it doesn't appear to have been damaged. Now please take it to Aubury, and try not to lose it again.");
         inv_add(inv, research_package, 1);
     } else {

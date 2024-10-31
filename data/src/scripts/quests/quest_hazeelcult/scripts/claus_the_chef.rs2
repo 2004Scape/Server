@@ -1,6 +1,6 @@
 [opnpc1,claus_the_chef]
 switch_int(%hazeelcult_progress) {
-    case ^hazeelcult_complete:
+    case ^hazeelcult_complete :
         ~chatplayer("<p,neutral>Hiya.");
         if(%hazeelcult_side = ^hazeelcult_goodside) {
             ~chatnpc("<p,happy>Well hello there adventurer! Are we fit and well?");
@@ -11,7 +11,7 @@ switch_int(%hazeelcult_progress) {
             ~chatplayer("<p,neutral>Ok ok, keep your hair on.");
             ~chatnpc("<p,angry>Is THAT supposed to be FUNNY? OUT! Before I call the Guard!");
         }
-    case ^hazeelcult_finished_side_task, ^hazeelcult_given_armour_or_scroll:
+    case ^hazeelcult_finished_side_task, ^hazeelcult_given_armour_or_scroll :
         if(%hazeelcult_progress = ^hazeelcult_finished_side_task & %hazeelcult_side = ^hazeelcult_evilside) {
             ~chatplayer("<p,neutral>Hello Claus.");
             ~chatnpc("<p,confused>I... just CAN'T understand it! How? HOW could someone poison my delicious food without me even noticing??? I... I just don't understand!");
@@ -28,16 +28,16 @@ switch_int(%hazeelcult_progress) {
             ~chatplayer("<p,neutral>Not bad, thanks.");
             ~chatnpc("<p,neutral>Good good.");
         }
-    case ^hazeelcult_poured_poison:
+    case ^hazeelcult_poured_poison :
         ~chatnpc("<p,neutral>Hello there. Caught any of those weird thieves yet?");
         ~chatplayer("<p,neutral>Nope. Afraid not.");
         ~chatnpc("<p,neutral>Well, keep at it!");
-    case ^hazeelcult_clivet_decision:
+    case ^hazeelcult_clivet_decision :
         ~chatplayer("<p,neutral>Hiya.");
         ~chatnpc("<p,quiz>You're that adventurer the family asked to help get those weird cultists who keep breaking in, right?");
         ~chatplayer("<p,neutral>That's me.");
         ~chatnpc("<p,neutral>Good luck with that!");
-    case default:
+    case default :
         ~chatplayer("<p,neutral>Hello there.");
         ~chatnpc("<p,neutral>Sorry! Can't stop to chat! You would be AMAZED at how many meals this family gets through daily!");
 }

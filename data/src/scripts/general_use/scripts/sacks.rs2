@@ -3,7 +3,7 @@
 // https://web.archive.org/web/20050510163434/http://www.runehq.com/cachecities/viewcityguide00273.php
 
 // todo figure out if u can actually find swords and broken staves from these
-if (random(^findsomethingnice_chance) = 0) {
+if (random(^findsomethingnice_chance) = 0 & ~in_tutorial_island(coord) = false) {
     mes("You search the sacks."); // guess
     p_delay(2);
     ~findsomethingnice;

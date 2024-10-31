@@ -36,6 +36,7 @@ import PlayerInfo from '#lostcity/network/outgoing/model/PlayerInfo.js';
 import NpcInfo from '#lostcity/network/outgoing/model/NpcInfo.js';
 import WorldStat from '#lostcity/engine/WorldStat.js';
 import SetMultiway from '#lostcity/network/outgoing/model/SetMultiway.js';
+import { printError } from '#lostcity/util/Logger.js';
 
 export class NetworkPlayer extends Player {
     client: ClientSocket | null = null;
@@ -54,7 +55,7 @@ export class NetworkPlayer extends Player {
         this.opcalled = false;
 
         if (this.client === null) {
-            return;
+            return false;
         }
 
         let offset = 0;
@@ -86,6 +87,8 @@ export class NetworkPlayer extends Player {
         }
 
         this.client?.reset();
+
+        return true;
     }
 
     encodeOut() {
@@ -118,14 +121,9 @@ export class NetworkPlayer extends Player {
             this.refreshModal = false;
         }
 
-        for (let message: OutgoingMessage | null = this.highPriorityOut.head(); message; message = this.highPriorityOut.next()) {
+        for (let message: OutgoingMessage | null = this.buffer.head(); message; message = this.buffer.next()) {
             this.writeInner(message);
-            message.uncache();
-        }
-
-        for (let message: OutgoingMessage | null = this.lowPriorityOut.head(); message; message = this.lowPriorityOut.next()) {
-            this.writeInner(message);
-            message.uncache();
+            message.unlink2();
         }
 
         this.client.flush();
@@ -138,7 +136,7 @@ export class NetworkPlayer extends Player {
         }
         const encoder: MessageEncoder<OutgoingMessage> | undefined = ServerProtRepository.getEncoder(message);
         if (!encoder) {
-            console.error('No encoder for message', message);
+            printError('No encoder for message ' + message);
             return;
         }
         const prot: ServerProt = encoder.prot;
@@ -384,4 +382,24 @@ export class NetworkPlayer extends Player {
 
 export function isNetworkPlayer(player: Player): player is NetworkPlayer {
     return (player as NetworkPlayer).client !== null && (player as NetworkPlayer).client !== undefined;
+}
+
+export function isBufferFull(player: Player): boolean {
+    if (!isNetworkPlayer(player)) {
+        return false;
+    }
+
+    let total = 0;
+
+    for (let message: OutgoingMessage | null = player.buffer.head(); message; message = player.buffer.next()) {
+        const encoder: MessageEncoder<OutgoingMessage> | undefined = ServerProtRepository.getEncoder(message);
+        if (!encoder) {
+            return true;
+        }
+
+        const prot: ServerProt = encoder.prot;
+        total += (1 + (prot.length === -1 ? 1 : prot.length === -2 ? 2 : 0)) + encoder.test(message);
+    }
+
+    return total >= 5000;
 }

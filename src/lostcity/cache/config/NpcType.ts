@@ -17,7 +17,6 @@ export default class NpcType extends ConfigType {
 
     static load(dir: string) {
         if (!fs.existsSync(`${dir}/server/npc.dat`)) {
-            console.log('Warning: No npc.dat found.');
             return;
         }
         const server = Packet.load(`${dir}/server/npc.dat`);
@@ -29,7 +28,6 @@ export default class NpcType extends ConfigType {
     static async loadAsync(dir: string) {
         const file = await fetch(`${dir}/server/npc.dat`);
         if (!file.ok) {
-            console.log('Warning: No npc.dat found.');
             return;
         }
 
@@ -238,9 +236,7 @@ export default class NpcType extends ConfigType {
         } else if (code === 250) {
             this.debugname = dat.gjstr();
         } else {
-            console.error('Unrecognized npc config code: ' + code);
-            console.error('Try `npm run build` and report an issue if this still happens.');
-            process.exit(1);
+            throw new Error(`Unrecognized npc config code: ${code}`);
         }
     }
 }

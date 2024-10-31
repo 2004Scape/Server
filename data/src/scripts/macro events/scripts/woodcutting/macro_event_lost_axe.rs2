@@ -1,7 +1,7 @@
 [proc,macro_event_lost_axe_spawn]
 def_obj $axe = ~woodcutting_axe_checker;
 if ($axe = null) {
-    @woodcutting_axe_fail;
+    return;
 }
 
 def_namedobj $axe_head = oc_param($axe, axe_head);

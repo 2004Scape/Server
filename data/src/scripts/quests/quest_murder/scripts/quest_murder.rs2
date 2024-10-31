@@ -247,12 +247,12 @@ if(testbit(%murder_evidence, ^murder_found_thread) = true) {
 mes("You take the thread.");
 inv_add(inv, ~get_murder_thread, 1);
 
-[proc,get_murder_thread](namedobj)
+[proc,get_murder_thread]()(namedobj)
 switch_int(%murder_murderer_id) {
-    case ^murderer_anna, ^murderer_david: return (murder_green_thread);
-    case ^murderer_bob, ^murderer_carol: return (murder_red_thread);
-    case ^murderer_elizabeth, ^murderer_frank: return (murder_blue_thread);
-    case default: return (murder_green_thread); // fallback but this should never happen
+    case ^murderer_anna, ^murderer_david : return (murder_green_thread);
+    case ^murderer_bob, ^murderer_carol : return (murder_red_thread);
+    case ^murderer_elizabeth, ^murderer_frank : return (murder_blue_thread);
+    case default : return (murder_green_thread); // fallback but this should never happen
 }
 
 [opobj3,criminals_dagger]
@@ -345,14 +345,14 @@ inv_del(inv, $checked_print, 1);
 [opobj3,murder_green_thread]
 ~mesbox("Some green thread. Not enough to be worth taking.");
 
-[proc,murder_get_murderer_name](string)
+[proc,murder_get_murderer_name]()(string)
 switch_int(%murder_murderer_id) {
-    case 2: return ("Bob");
-    case 3: return ("Carol");
-    case 4: return ("David");
-    case 5: return ("Elizabeth");
-    case 6: return ("Frank");
-    case default: return ("Anna");
+    case 2 : return ("Bob");
+    case 3 : return ("Carol");
+    case 4 : return ("David");
+    case 5 : return ("Elizabeth");
+    case 6 : return ("Frank");
+    case default : return ("Anna");
 }
 
 [proc,murder_clear_evidence]

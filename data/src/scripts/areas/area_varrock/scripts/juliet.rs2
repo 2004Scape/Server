@@ -1,15 +1,15 @@
 [opnpc1,juliet]
 switch_int (%romeojuliet_progress) {
-    case ^romeojuliet_not_started: @juliet_start;
-    case ^romeojuliet_spoken_romeo: @juliet_from_romeo;
-    case ^romeojuliet_spoken_juliet: @juliet_deliver_letter;
-    case ^romeojuliet_passed_message: @juliet_message_passed;
-    case ^romeojuliet_spoken_father: @juliet_found_father;
-    case ^romeojuliet_spoken_apothecary: @juliet_potion_made;
-    case ^romeojuliet_juliet_crypt:
+    case ^romeojuliet_not_started : @juliet_start;
+    case ^romeojuliet_spoken_romeo : @juliet_from_romeo;
+    case ^romeojuliet_spoken_juliet : @juliet_deliver_letter;
+    case ^romeojuliet_passed_message : @juliet_message_passed;
+    case ^romeojuliet_spoken_father : @juliet_found_father;
+    case ^romeojuliet_spoken_apothecary : @juliet_potion_made;
+    case ^romeojuliet_juliet_crypt :
         ~chatnpc("<p,quiz>Have you seen Romeo?|He will reward you for your help.");
         ~chatnpc("<p,happy>He is the wealth in this story.|I am just the glamour.");
-    case ^romeojuliet_complete: @juliet_postquest;
+    case ^romeojuliet_complete : @juliet_postquest;
 }
 
 [label,juliet_start]

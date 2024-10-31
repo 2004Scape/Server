@@ -23,7 +23,7 @@ p_stopaction;
 anim($anim, 20); // the anim delay lets the client finish running visually
 // was mes super early rs2? not sure when it was changed. https://storage.googleapis.com/tannerdino/images/Old%20Runescape%202004%20screenshots%20(%20From%20June%20to%20August%202004%20)%20(13).jpeg
 switch_int (random(3)) {
-    case 0: mes("Come-on Dobbin, we can win the race!"); // extra hyphen here
-    case 1: mes("Hi-ho Silver, and away!");
-    case default: mes("Neaahhhyyy! Giddy-up horsey!");
+    case 0 : mes("Come-on Dobbin, we can win the race!"); // extra hyphen here
+    case 1 : mes("Hi-ho Silver, and away!");
+    case default : mes("Neaahhhyyy! Giddy-up horsey!");
 }

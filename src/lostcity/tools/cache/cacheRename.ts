@@ -1,12 +1,12 @@
 import fs from 'fs';
 
 import { fromBase37 } from '#jagex2/jstring/JString.js';
+import { printFatalError } from '#lostcity/util/Logger.js';
 
 const args = process.argv.slice(2);
 
 if (args.length < 1) {
-    console.log('Usage: node cacheRename.js <path>');
-    process.exit(1);
+    printFatalError('Usage: node cacheRename.js <path>');
 }
 
 fs.readdirSync(args[0]).forEach(f => {

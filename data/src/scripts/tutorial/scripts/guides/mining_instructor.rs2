@@ -1,20 +1,20 @@
 [opnpc1,mining_instructor]
 switch_int(%tutorial_progress) {
-    case ^mining_instructor_start: @mining_instructor_start;
+    case ^mining_instructor_start : @mining_instructor_start;
     case
         ^mining_instructor_begin_prospecting,
         ^mining_instructor_prospected_copper_first,
-        ^mining_instructor_prospected_tin_first: @mining_instructor_during_prospecting;
+        ^mining_instructor_prospected_tin_first : @mining_instructor_during_prospecting;
     case
         ^mining_instructor_prospected_tin_second,
-        ^mining_instructor_prospected_copper_second: @mining_instructor_after_prospecting;
+        ^mining_instructor_prospected_copper_second : @mining_instructor_after_prospecting;
     case ^mining_instructor_mining_start,
         ^mining_instructor_minted_copper_first,
-        ^mining_instructor_mined_tin_first: @mining_instructor_during_mining;
-    case ^mining_instructor_before_smelt_bronze_bar: @mining_instructor_before_smelting;
-    case ^mining_instructor_after_smelt_bronze_bar: @mining_instructor_after_smelting;
-    case ^mining_instructor_smith_a_dagger: @mining_instructor_smith_a_dagger;
-    case default: @mining_instructor_recap;
+        ^mining_instructor_mined_tin_first : @mining_instructor_during_mining;
+    case ^mining_instructor_before_smelt_bronze_bar : @mining_instructor_before_smelting;
+    case ^mining_instructor_after_smelt_bronze_bar : @mining_instructor_after_smelting;
+    case ^mining_instructor_smith_a_dagger : @mining_instructor_smith_a_dagger;
+    case default : @mining_instructor_recap;
 }
 
 [label,mining_instructor_start]

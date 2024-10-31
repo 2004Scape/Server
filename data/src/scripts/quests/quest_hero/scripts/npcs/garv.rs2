@@ -4,14 +4,14 @@ if (~unlock_brimhaven_mansion = true) {
 }
 ~chatnpc("<p,neutral>Hello. What do you want?");
 switch_int(~p_choice2("Can I go in there?", 1, "I want for nothing!", 2)) {
-  case 1: 
+  case 1 :
     ~chatplayer("<p,quiz>Can I go in there?");
     if (%hero_progress >= ^hero_blackarm_mansion_unlocked & %blackarmgang_progress >= ^blackarmgang_complete) {
-      ~chatnpc("<p,neutral>Sure."); // TODO need dialogue if you talk to Garv after unlocking the door
+      ~chatnpc("<p,neutral>Sure."); // todo need dialogue if you talk to Garv after unlocking the door
     } else {
       ~chatnpc("<p,neutral>No. In there is private");
     }
-  case 2:
+  case 2 :
     ~chatplayer("<p,neutral>I want for nothing!");
     ~chatnpc("<p,neutral>You're one of a very lucky few then.");
 }

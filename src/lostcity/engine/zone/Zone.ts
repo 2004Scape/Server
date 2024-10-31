@@ -357,6 +357,15 @@ export default class Zone {
         return null;
     }
 
+    getObjOfReceiver(x: number, z: number, type: number, receiverId: number): Obj | null {
+        for (const obj of this.getObjsSafe(CoordGrid.packZoneCoord(x, z))) {
+            if (!((obj.receiverId !== receiverId) || obj.type !== type)) {
+                return obj;
+            }
+        }
+        return null;
+    }
+
     // ---- not tied to any entities ----
 
     animMap(x: number, z: number, spotanim: number, height: number, delay: number): void {
@@ -413,7 +422,8 @@ export default class Zone {
      */
     *getObjsSafe(coord: number): IterableIterator<Obj> {
         for (const obj of this.objs.stack(coord)) {
-            if (obj.checkLifeCycle(World.currentTick)) {
+            // lifecycle is set after reveal, this is so objects aren't unavailble the tick they are revealed
+            if (obj.checkLifeCycle(World.currentTick) || obj.reveal !== -1) {
                 yield obj;
             }
         }

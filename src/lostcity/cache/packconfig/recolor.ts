@@ -39,7 +39,7 @@ function modelHasTexture(modelId: number, textureId: number): boolean {
     }
 
     for (let i = 0; i < model.faceCount; i++) {
-        if ((model.faceInfo[i] & 0x3) > 1 && model.faceColor[i] === textureId) {
+        if (model.faceInfo && (model.faceInfo[i] & 0x3) > 1 && model.faceColor[i] === textureId) {
             return true;
         }
     }

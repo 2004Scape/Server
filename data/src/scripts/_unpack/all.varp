@@ -108,8 +108,6 @@ scope=perm
 [multiway]
 type=boolean
 
-[varp_105]
-
 [newcomers_pos]
 transmit=yes
 
@@ -211,7 +209,7 @@ scope=perm
 
 [varp_191]
 
-[varp_196]
+[desert]
 
 [varp_198]
 

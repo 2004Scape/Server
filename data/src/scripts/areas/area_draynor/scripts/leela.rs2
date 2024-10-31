@@ -1,12 +1,12 @@
 [opnpc1,leela]
 switch_int (%prince_progress) {
-    case ^prince_not_started, ^prince_started:
+    case ^prince_not_started, ^prince_started :
         ~chatplayer("<p,happy>What are you waiting here for?");
         ~chatnpc("<p,neutral>That is no concern of yours, adventurer.");
-    case ^prince_spoken_osman, ^prince_prep_finished: @leela_help;
-    case ^prince_guard_drunk: ~chatnpc("<p,neutral>Great! The guard is now harmless. Now you just need to use the rope on Keli to remove her. Then you can go in and give everything to the prince.");
-    case ^prince_tied_keli: ~chatnpc("<p,neutral>You should carry on, get in and rescue the prince. Keli is sharp, she won't stay tied up long."); // from chisel
-    case ^prince_saved, ^prince_complete: ~chatnpc("<p,happy>Thank you, Al-Kharid will forever owe you for your help.|I think that if there is ever anything that needs to be done,|you will be someone they can rely on.");;
+    case ^prince_spoken_osman, ^prince_prep_finished : @leela_help;
+    case ^prince_guard_drunk : ~chatnpc("<p,neutral>Great! The guard is now harmless. Now you just need to use the rope on Keli to remove her. Then you can go in and give everything to the prince.");
+    case ^prince_tied_keli : ~chatnpc("<p,neutral>You should carry on, get in and rescue the prince. Keli is sharp, she won't stay tied up long."); // from chisel
+    case ^prince_saved, ^prince_complete : ~chatnpc("<p,happy>Thank you, Al-Kharid will forever owe you for your help.|I think that if there is ever anything that needs to be done,|you will be someone they can rely on.");;
 }
 
 [label,leela_help]
@@ -35,16 +35,16 @@ if(%prince_progress = ^prince_spoken_osman & inv_total(inv, bronze_key) >= 1 & i
 } else if(%prince_progress = ^prince_prep_finished) { // mesanims guessed cause no video + not on osrs, dialogue from chisel
     ~chatnpc("<p,neutral>Ok now, you have all the basic equipment.|What are your plans to stop the guard interfering?");
     switch_int(~p_choice4("I haven't spoken to him yet.", 1, "I was going to attack him.", 2, "I hoped to get him drunk.", 3, "Maybe I could bribe him to leave.", 4)) {
-        case 1:
+        case 1 :
             ~chatplayer("<p,neutral>I haven't spoken to him yet.");
             ~chatnpc("<p,neutral>Well, speaking to him may find a weakness he has.|See if there's something that could stop him bothering us.");
-        case 2:
+        case 2 :
             ~chatplayer("<p,neutral>I was going to attack him.");
             ~chatnpc("<p,bored>I don't think you should. If you do the rest of the gang and Keli would attack you. The door guard should be removed first, to make it easy.");
-        case 3:
+        case 3 :
             ~chatplayer("<p,neutral>I hoped to get him drunk.");
             ~chatnpc("<p,neutral>Well, that's possible. These guards do like a drink.|I would think it will take at least 3 beers to do it well.|You would probably have to do it all at the same time too.|The effects of the local beer wear off quickly.");
-        case 4:
+        case 4 :
             ~chatplayer("<p,neutral>Maybe I could bribe him to leave.");
             ~chatnpc("<p,shifty>You could try. I don't think the emir will pay anything towards it. And we did bribe one of their guards once.");
             ~chatnpc("<p,shifty>Keli killed him in front of the other guards, as a deterrent. It would probably take a lot of gold.");

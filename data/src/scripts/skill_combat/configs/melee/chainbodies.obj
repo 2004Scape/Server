@@ -39,6 +39,7 @@ womanwear=model_464_obj_wear,0
 category=armour_body
 weight=15lb
 tradeable=yes
+respawnrate=700
 param=magicattack,-15
 param=stabdefence,7
 param=slashdefence,11

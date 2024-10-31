@@ -1,7 +1,7 @@
 [opnpc1,murder_bob]
 switch_int(%murder_progress) { 
-    case ^murder_not_started: mes("He is ignoring you.");
-    case ^murder_started:
+    case ^murder_not_started : mes("He is ignoring you.");
+    case ^murder_started :
         ~chatplayer("<p,neutral>I'm here to help the guards with their investigation.");
         ~chatnpc("<p,neutral>I suppose I had better talk to you then.");
         def_int $option;
@@ -15,15 +15,15 @@ switch_int(%murder_progress) {
             $option = ~p_choice2("Who do you think is responsible?", 1, "Where were you when the murder happened?", 2);
         }
         switch_int($option) {
-            case 1:
+            case 1 :
                 ~chatplayer("<p,neutral>Who do you think is responsible?");
                 ~chatnpc("<p,neutral>I don't really care as long as no one thinks it's me. Maybe it was that strange poison seller who headed towards the seers village.");
-            case 2:
+            case 2 :
                 ~chatplayer("<p,neutral>Where were you when the murder happened?");
                 ~chatnpc("<p,neutral>I was walking by myself in the garden.");
                 ~chatplayer("<p,neutral>And can anyone vouch for that?");
                 ~chatnpc("<p,neutral>No. But I was.");
-            case 3:
+            case 3 :
                 ~chatplayer("<p,confused>Do you recognise this thread?");
                 ~mesbox("You show him the thread you discovered.");
                 if(inv_total(inv, murder_red_thread) > 0) {
@@ -32,13 +32,13 @@ switch_int(%murder_progress) {
                     return;
                 }
                 ~chatnpc("<p,confused>It's some thread. great clue. No, really.");
-            case 4:
+            case 4 :
                 ~chatplayer("<p,neutral>Why'd you buy poison the other day?");
                 ~chatnpc("<p,confused>What's it to you anyway?");
                 ~chatnpc("<p,angry>If you absolutely must know, we had a problem with the beehive in the garden, and as all of our servants are so pathetically useless, I decided I would deal with it myself. So I did.");
-                if(%murder_murderer_id = ^murderer_bob & %murder_poisonproof_progress = ^poisonproof_spoken_salesman) { // TODO: figure out exactly when these would get set for each murderer
+                if(%murder_murderer_id = ^murderer_bob & %murder_poisonproof_progress = ^poisonproof_spoken_salesman) { // todo: figure out exactly when these would get set for each murderer
                     %murder_poisonproof_progress = ^poisonproof_spoken_murderer;
                 }
         }
-    case ^murder_complete: ~chatnpc("<p,neutral>Apparently you aren't as stupid as you look.");
+    case ^murder_complete : ~chatnpc("<p,neutral>Apparently you aren't as stupid as you look.");
 }

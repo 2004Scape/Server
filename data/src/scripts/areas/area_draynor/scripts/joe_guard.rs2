@@ -1,9 +1,9 @@
 [opnpc1,joe_guard]
 switch_int (%prince_progress) {
-    case ^prince_prep_finished: @joe_distract;
-    case ^prince_guard_drunk, ^prince_tied_keli: @joe_drunk;
-    case ^prince_saved, ^prince_complete: @joe_postquest;
-    case default: @joe_prequest;
+    case ^prince_prep_finished : @joe_distract;
+    case ^prince_guard_drunk, ^prince_tied_keli : @joe_drunk;
+    case ^prince_saved, ^prince_complete : @joe_postquest;
+    case default : @joe_prequest;
 }
 
 [opnpcu,joe_guard]

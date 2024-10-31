@@ -3,6 +3,7 @@ import { loadOrder, listFiles } from '#lostcity/util/NameMap.js';
 import Jagfile from '#jagex2/io/Jagfile.js';
 import { AnimPack, BasePack, ModelPack, shouldBuildFile, shouldBuildFileAny } from '#lostcity/util/PackFile.js';
 import path from 'path';
+import { printError } from '#lostcity/util/Logger.js';
 
 export function packClientModel() {
     if (!shouldBuildFile('src/lostcity/cache/packgraphics/pack.ts', 'data/pack/client/models') &&
@@ -24,9 +25,6 @@ export function packClientModel() {
     'ob_face4.dat',    'ob_face5.dat',
     'ob_axis.dat'
     */
-
-    //console.log('Packing models.jag');
-    //console.time('models.jag');
 
     const modelOrder = loadOrder('data/src/pack/model.order');
     const animOrder = loadOrder('data/src/pack/anim.order');
@@ -57,7 +55,7 @@ export function packClientModel() {
 
             const file = files.find(file => path.basename(file) === `${name}.base`);
             if (!file) {
-                console.log('missing base file', id, name);
+                printError('missing base file ' + id + ' ' + name);
                 continue;
             }
 
@@ -110,7 +108,7 @@ export function packClientModel() {
 
             const file = files.find(file => path.basename(file) === `${name}.frame`);
             if (!file) {
-                console.log('missing frame file', id, name);
+                printError('missing frame file ' + id + ' ' + name);
                 continue;
             }
 
@@ -175,7 +173,7 @@ export function packClientModel() {
 
             const file = files.find(file => path.basename(file) === `${name}.ob2`);
             if (!file) {
-                console.log('missing ob2 file', id, name);
+                printError('missing ob2 file ' + id + ' ' + name);
                 continue;
             }
 
@@ -337,5 +335,4 @@ export function packClientModel() {
     ob_face4.release();
     ob_face5.release();
     ob_axis.release();
-    //console.timeEnd('models.jag');
 }

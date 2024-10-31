@@ -1,7 +1,7 @@
 [opnpc1,anna]
 switch_int(%murder_progress) { 
-    case ^murder_not_started: mes("She is ignoring you.");
-    case ^murder_started:
+    case ^murder_not_started : mes("She is ignoring you.");
+    case ^murder_started :
         ~chatplayer("<p,neutral>I'm here to help the guards with their investigation.");
         ~chatnpc("<p,neutral>Oh really? What do you want to know then?");
         def_int $option;
@@ -15,15 +15,15 @@ switch_int(%murder_progress) {
             $option = ~p_choice2("Who do you think is responsible?", 1, "Where were you when the murder happened?", 2);
         }
         switch_int($option) {
-            case 1:
+            case 1 :
                 ~chatplayer("<p,neutral>Who do you think is responsible?");
                 ~chatnpc("<p,neutral>It was clearly an intruder.");
                 ~chatplayer("<p,confused>Well, I don't think it was.");
                 ~chatnpc("<p,angry>It was one of our lazy servants then.");
-            case 2:
+            case 2 :
                 ~chatplayer("<p,neutral>Where were you when the murder happened?");
                 ~chatnpc("<p,neutral>In the library. No one else was there so|you'll just have to take my word for it.");
-            case 3:
+            case 3 :
                 ~chatplayer("<p,confused>Do you recognise this thread?");
                 ~mesbox("You show Anna the thread from the study.");
                 if(inv_total(inv, murder_green_thread) > 0) {
@@ -31,12 +31,12 @@ switch_int(%murder_progress) {
                     return;
                 }
                 ~chatnpc("<p,neutral>Not really, no. Thread is fairly common.");
-            case 4:
+            case 4 :
                 ~chatplayer("<p,neutral>Why'd you buy poison the other day?");
                 ~chatnpc("<p,angry>That useless Gardener Stanford has let his compost heap fester. It's an eyesore to the garden! So I bought some poison from a travelling salesman so that I could kill off some of the wildlife living in it.");
                 if(%murder_murderer_id = ^murderer_anna & %murder_poisonproof_progress = ^poisonproof_spoken_salesman) { 
                     %murder_poisonproof_progress = ^poisonproof_spoken_murderer;
                 }
         }
-    case ^murder_complete: ~chatnpc("<p,neutral>Apparently you aren't as stupid as you look.");
+    case ^murder_complete : ~chatnpc("<p,neutral>Apparently you aren't as stupid as you look.");
 }

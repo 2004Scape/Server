@@ -6,7 +6,7 @@ walkanim=smallscorpion_walk
 readyanim=smallscorpion_ready
 op1=Pick-up
 model1=model_2968_npc
-respawnrate=50
+respawnrate=100
 param=death_anim,scorpion_death
 param=death_sound,insect_death
 
@@ -18,7 +18,7 @@ walkanim=smallscorpion_walk
 readyanim=smallscorpion_ready
 op1=Pick-up
 model1=model_2968_npc
-respawnrate=50
+respawnrate=100
 param=death_anim,scorpion_death
 param=death_sound,insect_death
 
@@ -30,6 +30,6 @@ walkanim=smallscorpion_walk
 readyanim=smallscorpion_ready
 op1=Pick-up
 model1=model_2968_npc
-respawnrate=50
+respawnrate=100
 param=death_anim,scorpion_death
 param=death_sound,insect_death

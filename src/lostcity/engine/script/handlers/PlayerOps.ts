@@ -1,5 +1,8 @@
 import IdkType from '#lostcity/cache/config/IdkType.js';
 import SpotanimType from '#lostcity/cache/config/SpotanimType.js';
+import NpcType from '#lostcity/cache/config/NpcType.js';
+import LocType from '#lostcity/cache/config/LocType.js';
+import ObjType from '#lostcity/cache/config/ObjType.js';
 
 import World from '#lostcity/engine/World.js';
 
@@ -12,7 +15,7 @@ import ServerTriggerType from '#lostcity/engine/script/ServerTriggerType.js';
 
 import { PlayerQueueType, ScriptArgument } from '#lostcity/entity/EntityQueueRequest.js';
 import { PlayerTimerType } from '#lostcity/entity/EntityTimer.js';
-import { isNetworkPlayer } from '#lostcity/entity/NetworkPlayer.js';
+import { isBufferFull, isNetworkPlayer } from '#lostcity/entity/NetworkPlayer.js';
 import { CoordGrid } from '#lostcity/engine/CoordGrid.js';
 import CameraInfo from '#lostcity/entity/CameraInfo.js';
 import Interaction from '#lostcity/entity/Interaction.js';
@@ -39,7 +42,7 @@ import IfSetPosition from '#lostcity/network/outgoing/model/IfSetPosition.js';
 
 import ColorConversion from '#lostcity/util/ColorConversion.js';
 
-import * as rsmod from '@2004scape/rsmod-pathfinder';
+import {findPath} from '#lostcity/engine/GameMap.js';
 
 import {
     check,
@@ -57,9 +60,6 @@ import {
     GenderValid,
     SkinColourValid
 } from '#lostcity/engine/script/ScriptValidators.js';
-import NpcType from '#lostcity/cache/config/NpcType.js';
-import LocType from '#lostcity/cache/config/LocType.js';
-import ObjType from '#lostcity/cache/config/ObjType.js';
 
 const PlayerOps: CommandHandlers = {
     [ScriptOpcode.FINDUID]: state => {
@@ -147,8 +147,9 @@ const PlayerOps: CommandHandlers = {
     }),
 
     // https://x.com/JagexAsh/status/1694990340669747261
+    // soft-limit for developers to be better aware of the bandwidth used and mitigate the impact on the player experience
     [ScriptOpcode.BUFFER_FULL]: checkedHandler(ActivePlayer, state => {
-        throw new Error('unimplemented');
+        state.pushInt(isBufferFull(state.activePlayer) ? 1 : 0);
     }),
 
     [ScriptOpcode.BUILDAPPEARANCE]: checkedHandler(ActivePlayer, state => {
@@ -404,7 +405,7 @@ const PlayerOps: CommandHandlers = {
 
         const player = state.activePlayer;
         player.moveClickRequest = false;
-        player.queueWaypoints(rsmod.findPath(player.level, player.x, player.z, coord.x, coord.z, player.width, player.width, player.length));
+        player.queueWaypoints(findPath(player.level, player.x, player.z, coord.x, coord.z));
     }),
 
     [ScriptOpcode.SAY]: checkedHandler(ActivePlayer, state => {
@@ -965,7 +966,6 @@ const PlayerOps: CommandHandlers = {
         if(state.activePlayer.gender === 1) {
             type -= 7;
         }
-        // console.log(type);
         let colorSlot = -1;
         if (type === 0 || type === 1) {
             colorSlot = 0;
@@ -1060,10 +1060,6 @@ const PlayerOps: CommandHandlers = {
 
     [ScriptOpcode.WEIGHT]: checkedHandler(ProtectedActivePlayer, state => {
         state.pushInt(state.activePlayer.runweight);
-    }),
-
-    [ScriptOpcode.LAST_COORD]: checkedHandler(ActivePlayer, state => {
-        state.pushInt(CoordGrid.packCoord(state.activePlayer.lastCoordLevel, state.activePlayer.lastCoordX, state.activePlayer.lastCoordZ));
     }),
 };
 

@@ -15,6 +15,7 @@ womanwear=model_508_obj_wear,6
 category=weapon_crossbow
 weight=8kg
 tradeable=yes
+respawnrate=500
 param=rangeattack,6
 param=levelrequire,1
 param=attackrate,6

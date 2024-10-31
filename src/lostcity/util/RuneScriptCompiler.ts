@@ -5,7 +5,11 @@ import axios from 'axios';
 
 import ScriptProvider from '#lostcity/engine/script/ScriptProvider.js';
 
+import { printDebug } from '#lostcity/util/Logger.js';
+
 export async function updateCompiler(): Promise<boolean> {
+    printDebug('Checking for compiler update');
+
     let needsUpdate = false;
 
     try {
@@ -25,6 +29,8 @@ export async function updateCompiler(): Promise<boolean> {
         }
 
         if (needsUpdate) {
+            printDebug('Updating compiler');
+
             const req = await axios.get('https://github.com/2004scape/RuneScriptCompiler/releases/download/' + ScriptProvider.COMPILER_VERSION + '/RuneScriptCompiler.jar', {
                 responseType: 'arraybuffer'
             });
@@ -35,5 +41,6 @@ export async function updateCompiler(): Promise<boolean> {
         return false;
     }
 
+    printDebug('Compiler is up to date');
     return true;
 }

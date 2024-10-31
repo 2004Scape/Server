@@ -1,5 +1,3 @@
-import fs from 'fs';
-import forge from 'node-forge';
 import { parentPort } from 'worker_threads';
 
 import Environment from '#lostcity/util/Environment.js';
@@ -7,29 +5,10 @@ import { FriendClient } from './FriendServer.js';
 
 const client = new FriendClient(Environment.NODE_ID);
 
-if (typeof self === 'undefined') {
-    if (!parentPort) throw new Error('This file must be run as a worker thread.');
-
-    const priv = forge.pki.privateKeyFromPem(fs.readFileSync('data/config/private.pem', 'ascii'));
-
-    parentPort.on('message', async msg => {
-        try {
-            if (!parentPort) throw new Error('This file must be run as a worker thread.');
-            await handleRequests(parentPort, msg, priv);
-        } catch (err) {
-            console.error(err);
-        }
-    });
-
-    client.onMessage((opcode, data) => {
-        parentPort!.postMessage({ opcode, data });
-    });
-} else {
-    const priv = forge.pki.privateKeyFromPem(await (await fetch('data/config/private.pem')).text());
-
+if (Environment.STANDALONE_BUNDLE) {
     self.onmessage = async msg => {
         try {
-            await handleRequests(self, msg.data, priv);
+            await handleRequests(self, msg.data);
         } catch (err) {
             console.error(err);
         }
@@ -38,13 +17,28 @@ if (typeof self === 'undefined') {
     client.onMessage((opcode, data) => {
         self.postMessage({ opcode, data });
     });
+} else {
+    if (!parentPort) throw new Error('This file must be run as a worker thread.');
+
+    parentPort.on('message', async msg => {
+        try {
+            if (!parentPort) throw new Error('This file must be run as a worker thread.');
+            await handleRequests(parentPort, msg);
+        } catch (err) {
+            console.error(err);
+        }
+    });
+
+    client.onMessage((opcode, data) => {
+        parentPort!.postMessage({ opcode, data });
+    });
 }
 
 type ParentPort = {
     postMessage: (msg: any) => void;
 };
 
-async function handleRequests(parentPort: ParentPort, msg: any, priv: forge.pki.rsa.PrivateKey) {
+async function handleRequests(parentPort: ParentPort, msg: any) {
     switch (msg.type) {
         case 'connect': {
             await client.worldConnect();

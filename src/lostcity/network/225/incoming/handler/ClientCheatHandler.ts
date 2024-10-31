@@ -13,7 +13,6 @@ import Component from '#lostcity/cache/config/Component.js';
 import SeqType from '#lostcity/cache/config/SeqType.js';
 import SpotanimType from '#lostcity/cache/config/SpotanimType.js';
 import ScriptProvider from '#lostcity/engine/script/ScriptProvider.js';
-import { CollisionFlag, findPath, isFlagged } from '@2004scape/rsmod-pathfinder';
 import NullClientSocket from '#lostcity/server/NullClientSocket.js';
 import { tryParseInt } from '#lostcity/util/TryParse.js';
 import ScriptVarType from '#lostcity/cache/config/ScriptVarType.js';
@@ -23,6 +22,8 @@ import PlayerStat from '#lostcity/entity/PlayerStat.js';
 import MoveStrategy from '#lostcity/entity/MoveStrategy.js';
 import { PlayerLoading } from '#lostcity/entity/PlayerLoading.js';
 import Packet from '#jagex2/io/Packet.js';
+import { printInfo } from '#lostcity/util/Logger.js';
+import {findPath, isMapBlocked} from '#lostcity/engine/GameMap.js';
 
 export default class ClientCheatHandler extends MessageHandler<ClientCheat> {
     handle(message: ClientCheat, player: Player): boolean {
@@ -42,17 +43,16 @@ export default class ClientCheatHandler extends MessageHandler<ClientCheat> {
 
         if (player.staffModLevel >= 3) {
             // developer commands
-            if (cmd === 'reload' && typeof self === 'undefined' && !Environment.NODE_PRODUCTION) {
+            if (cmd === 'reload' && !Environment.STANDALONE_BUNDLE && !Environment.NODE_PRODUCTION) {
                 World.reload();
-    
+
                 // todo: we're probably reloading twice now, just to get count?
                 const count = ScriptProvider.load('data/pack');
                 player.messageGame(`Reloaded ${count} scripts.`);
-            } else if (cmd === 'rebuild' && !Environment.NODE_PRODUCTION) {
+            } else if (cmd === 'rebuild' && !Environment.STANDALONE_BUNDLE && !Environment.NODE_PRODUCTION) {
                 player.messageGame('Rebuilding scripts...');
-                World.devThread!.postMessage({
-                    type: 'pack'
-                });
+
+                World.rebuild();
             } else if (cmd === 'serverdrop') {
                 player.terminate();
             } else if (cmd === 'bench') {
@@ -61,7 +61,7 @@ export default class ClientCheatHandler extends MessageHandler<ClientCheat> {
                     findPath(player.level, player.x, player.z, player.x, player.z + 10);
                 }
                 const end = Date.now();
-                console.log(`took = ${end - start} ms`);
+                printInfo(`pf benchmark took = ${end - start} ms`);
             } else if (cmd === 'bots') {
                 player.messageGame('Adding bots');
                 for (let i = 0; i < 1999; i++) {
@@ -84,7 +84,7 @@ export default class ClientCheatHandler extends MessageHandler<ClientCheat> {
                         const z = Math.floor(Math.random() * 64) + 3200;
     
                         player.teleJump(x + Math.floor(Math.random() * 64) - 32, z + Math.floor(Math.random() * 64) - 32, 0);
-                    } while (isFlagged(player.x, player.z, player.level, CollisionFlag.WALK_BLOCKED));
+                    } while (isMapBlocked(player.x, player.z, player.level));
                 }
             } else if (cmd === 'moveall') {
                 player.messageGame('Moving all players');

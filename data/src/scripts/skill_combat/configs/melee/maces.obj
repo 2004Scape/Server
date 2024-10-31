@@ -16,6 +16,7 @@ recol1d=8456
 category=weapon_spiked
 weight=4lb
 tradeable=yes
+respawnrate=500
 param=stabattack,4
 param=slashattack,-2
 param=crushattack,9

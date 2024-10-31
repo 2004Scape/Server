@@ -71,7 +71,7 @@ if (~playercount_coord_pair_table(trawler_wreck_zones) < 1) {
     return;
 }
 switch_int (random(5)) {
-    case 0 : 
+    case 0 :
         npc_say("You'll need all your strength!");
         npc_delay(1);
         npc_say("To make it back to shore."); // confirmed

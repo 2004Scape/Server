@@ -2,11 +2,11 @@ import fs from 'fs';
 
 import BZip2 from '#jagex2/io/BZip2.js';
 import Packet from '#jagex2/io/Packet.js';
+import { printInfo } from '#lostcity/util/Logger.js';
 
 const maps = fs.readdirSync('dump/maps');
 
 function readLand(data: Packet) {
-    // console.time('land');
     const heightmap: number[][][] = [];
     const overlayIds: number[][][] = [];
     const overlayShape: number[][][] = [];
@@ -63,7 +63,6 @@ function readLand(data: Packet) {
         }
     }
 
-    // console.timeEnd('land');
     return {
         heightmap,
         overlayIds,
@@ -140,22 +139,17 @@ maps.forEach(file => {
     const parts = file.split('_');
     const mapX = parts[0].slice(1);
     const mapZ = parts[1];
-    console.log(`Unpacking map for ${mapX}_${mapZ}`);
+    printInfo(`Unpacking map for ${mapX}_${mapZ}`);
 
-    // console.time('read');
     let data: Buffer | Uint8Array = fs.readFileSync(`dump/maps/${file}`);
-    // console.timeEnd('read');
-    // console.time('decompress');
     try {
         data = BZip2.decompress(data, 0, false, true);
     } catch (err) {
         console.error(err);
         return;
     }
-    // console.timeEnd('decompress');
     const land = readLand(new Packet(data));
 
-    // console.time('write');
     let section = '';
     for (let level = 0; level < 4; level++) {
         for (let x = 0; x < 64; x++) {
@@ -191,7 +185,6 @@ maps.forEach(file => {
         }
     }
     fs.writeFileSync(`data/src/maps/m${mapX}_${mapZ}.jm2`, '==== MAP ====\n' + section);
-    // console.timeEnd('write');
 });
 
 maps.forEach(file => {
@@ -202,19 +195,15 @@ maps.forEach(file => {
     const parts = file.split('_');
     const mapX = parts[0].slice(1);
     const mapZ = parts[1];
-    console.log(`Unpacking loc map for ${mapX}_${mapZ}`);
+    printInfo(`Unpacking loc map for ${mapX}_${mapZ}`);
 
-    // console.time('read');
     let data: Buffer | Uint8Array = fs.readFileSync(`dump/maps/${file}`);
-    // console.timeEnd('read');
-    // console.time('decompress');
     try {
         data = BZip2.decompress(data, 0, false, true);
     } catch (err) {
         console.error(err);
         return;
     }
-    // console.timeEnd('decompress');
     const locs = readLocs(new Packet(data));
 
     let section = '';

@@ -49,6 +49,6 @@ if (%demon_progress < 2) {
     inv_del(inv, bucket_water, 1);
     inv_add(inv, bucket_empty, 1);
     // Tele to 3227 9898 0
-    // TODO: this should be instanced per player
+    // todo: this should be instanced per player
     obj_add(0_50_154_25_41, demon_prysin_key, 1, 300); // Guessing Duration is ticks?
 }

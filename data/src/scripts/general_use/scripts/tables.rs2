@@ -17,10 +17,10 @@ def_int $length;
 
 def_int $angle = loc_angle;
 switch_int ($angle) {
-    case ^loc_west,^loc_east:
+    case ^loc_west,^loc_east :
         $width = lc_width(loc_type);
         $length = lc_length(loc_type);
-    case ^loc_north,^loc_south:
+    case ^loc_north,^loc_south :
         // in this case we should swap width and length because of the loc angle
         $width = lc_length(loc_type);
         $length = lc_width(loc_type);

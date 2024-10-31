@@ -1,16 +1,16 @@
 [timer,iban_say]
 switch_int(random(8)) {
-    case 0: mes("I see you adventurer... you can't hide.");
-    case 1: mes("Make them all pay!");
-    case 2: mes("Iban will save you... He'll save us all.");
-    case 3: mes("Kill, maim... murder.");
-    case 4: mes("Death is only the beginning.");
-    case 5: mes("Blood, pain and hate.");
-    case 6: mes("I'll swallow your soul.");
-    case 7: mes("The power of the gods could be yours.");
-    case 8: mes("Hear me...");
-    case 9: mes("I will release you...");
-    case 10: mes("Join us!");
+    case 0 : mes("I see you adventurer... you can't hide.");
+    case 1 : mes("Make them all pay!");
+    case 2 : mes("Iban will save you... He'll save us all.");
+    case 3 : mes("Kill, maim... murder.");
+    case 4 : mes("Death is only the beginning.");
+    case 5 : mes("Blood, pain and hate.");
+    case 6 : mes("I'll swallow your soul.");
+    case 7 : mes("The power of the gods could be yours.");
+    case 8 : mes("Hear me...");
+    case 9 : mes("I will release you...");
+    case 10 : mes("Join us!");
 }
 cleartimer(iban_say);
 
@@ -138,12 +138,12 @@ p_delay(1);
 
 [oplocu,loc_3264]
 switch_obj(last_useitem) {
-    case obj_1481, obj_1482, obj_1483, obj_1484:
+    case obj_1481, obj_1482, obj_1483, obj_1484 :
         mes("You place the orb in the well...");
         p_delay(2);
         mes("A mystical force blasts the orb back out.");
         ~damage_self(3);
-    case default: ~displaymessage(^dm_default);
+    case default : ~displaymessage(^dm_default);
 }
 
 [oploc1,loc_3307]
@@ -214,7 +214,7 @@ if(last_useitem = spade) {
     mes("You dig into the pile of mud...");
     mes("...and find it's a filled in tunnel!");
     p_delay(1);
-    loc_change(loc_3218, 2); // TODO: check this timing
+    loc_change(loc_3218, 2); // todo: check this timing
     mes("You push your way through the tunnel.");
     p_delay(0);
     p_teleport(0_37_150_24_46);
@@ -333,7 +333,7 @@ mes("It reads...");
 p_delay(1);
 @upass_well_inscription;
 
-[proc,upass_unicorn_door_unlocked](boolean)
+[proc,upass_unicorn_door_unlocked]()(boolean)
 if(testbit(%upass_map_mechanisms, ^upass_thrown_jerro_badge) = true & testbit(%upass_map_mechanisms, ^upass_thrown_carl_badge) = true 
         & testbit(%upass_map_mechanisms, ^upass_thrown_harry_badge) = true 
         & testbit(%upass_map_mechanisms, ^upass_thrown_unicorn_horn) = true) {
@@ -344,36 +344,36 @@ return (false);
 [oplocu,loc_3305]
 // no howl sound: https://youtu.be/n_ip_vEDbCA?si=lCRUSgavmsiM68TL&t=824
 switch_obj(last_useitem) {
-    case upass_unicorn_horn:
+    case upass_unicorn_horn :
         mes("You throw the unicorn horn into the flames...");
         p_delay(1);
         inv_del(inv, upass_unicorn_horn, 1);
         %upass_map_mechanisms = setbit(%upass_map_mechanisms, ^upass_thrown_unicorn_horn);
         mes("You hear a howl in the distance.");
-    case upass_jerro_badge:
+    case upass_jerro_badge :
         mes("You throw the coat of arms into the flames...");
         p_delay(1);
         inv_del(inv, upass_jerro_badge, 1);
         %upass_map_mechanisms = setbit(%upass_map_mechanisms, ^upass_thrown_jerro_badge);
         mes("You hear a howl in the distance.");
-    case upass_carl_badge:
+    case upass_carl_badge :
         mes("You throw the coat of arms into the flames...");
         p_delay(1);
         inv_del(inv, upass_carl_badge, 1);
         %upass_map_mechanisms = setbit(%upass_map_mechanisms, ^upass_thrown_carl_badge);
         mes("You hear a howl in the distance.");
-    case upass_harry_badge:
+    case upass_harry_badge :
         mes("You throw the coat of arms into the flames...");
         p_delay(1);
         inv_del(inv, upass_harry_badge, 1);
         %upass_map_mechanisms = setbit(%upass_map_mechanisms, ^upass_thrown_harry_badge);
         mes("You hear a howl in the distance.");
-    case iban_staff:
+    case iban_staff :
         mes("You hold the staff above the well...");
         p_delay(1);
         %iban_staff_charges = 120;
         mes("...And feel the power of Zamorak flow through you.");
-    case default:
+    case default :
         ~displaymessage(^dm_default);
         return;
 }
@@ -405,7 +405,7 @@ if(loc_coord = 1_33_71_38_1) p_teleport(0_36_153_32_2);
 else p_teleport(0_36_154_1_59);
 if(testbit(%upass_map_mechanisms, ^upass_koftik_gone_insane) = false) {
     p_delay(0);
-    // TODO: figure out how long this should be, only works this way on RS3
+    // todo: figure out how long this should be, only works this way on RS3
     npc_add(map_findsquare(coord, 1, 2, ^map_findsquare_lineofwalk), npc_975, 200);
     @koftik_isthatyou;
 }
@@ -474,7 +474,7 @@ if(last_useitem = dwarf_brew) {
     loc_add(0_36_153_55_11, loc_3357, 1, wall_l, 10);
     p_delay(2);
     mes("You search through the remains.");
-    // TODO: should there even be a doll check? OSRS and rs3 both have this thing completely changed
+    // todo: should there even be a doll check? OSRS and rs3 both have this thing completely changed
     if(inv_total(inv, ibans_ashes) = 0 & testbit(%upass_map_mechanisms, ^upass_ashes_on_doll) = false) {
         mes("You find the ashes of Iban's corpse.");
         inv_add(inv, ibans_ashes, 1);
@@ -540,21 +540,21 @@ mes("But it's magically sealed.");
 
 [opheldu,doll_of_iban]
 switch_obj (last_useitem) {
-    case ibans_dove:
+    case ibans_dove :
         p_delay(1);
         mes("You crumble the dove's skeleton into dust...");
         p_delay(1);
         inv_del(inv, ibans_dove, 1);
         %upass_map_mechanisms = setbit(%upass_map_mechanisms, ^upass_dove_on_doll);
         mes("...and rub it into the doll.");
-    case ibans_shadow:
+    case ibans_shadow :
         p_delay(1);
         mes("You pour the strange liquid over the doll...");
         p_delay(1);
         inv_del(inv, ibans_shadow, 1);
         %upass_map_mechanisms = setbit(%upass_map_mechanisms, ^upass_shadow_on_doll);
         mes("...It seeps into the cloth.");
-    case ibans_ashes:
+    case ibans_ashes :
         // https://youtu.be/ZxF473zUZfQ?si=KGkFgkQCiAMmgCv3&t=2789
         p_delay(7); // 8t
         inv_del(inv, ibans_ashes, 1);
@@ -627,7 +627,7 @@ mes("The doll is made from old wood and cloth.");
 [oplocu,loc_3359]
 // no nothing interesting happens
 if(last_useitem = doll_of_iban) {
-    // check if doll is complete, TODO: how does this work if iban is currently dead
+    // check if doll is complete, todo: how does this work if iban is currently dead
     if(getbit_range(%upass_map_mechanisms, ^upass_blood_on_doll, ^upass_shadow_on_doll) = calc(pow(2,4) - 1)
         & %upass_progress = ^upass_confronted_iban
         & npc_findexact(1_33_72_21_39, lord_iban) = true) {
@@ -777,5 +777,5 @@ if_openmain(stone);
 %upass_progress = ^upass_complete;
 stat_advance(agility, 30000);
 stat_advance(attack, 30000);
-// TODO: can't find an image of this so might need to confirm obj zoom + text breaking
+// todo: can't find an image of this so might need to confirm obj zoom + text breaking
 ~send_quest_complete(questlist:upass, doll_of_iban, 250, ^upass_questpoints, "You have completed the\\n'Underground Pass Quest'!");

@@ -4,7 +4,7 @@ if (distance(coord, 0_46_52_55_55) <= 1) {
     @hunt_dig;
 }
 
-// zombiequeen (TODO: did this always exist? It almost certainly existed in 2007, checking https://youtu.be/w1I0GXAkLKw?si=avVq7fsXaho-wZvK&t=317, it does
+// zombiequeen (todo: did this always exist? It almost certainly existed in 2007, checking https://youtu.be/w1I0GXAkLKw?si=avVq7fsXaho-wZvK&t=317, it does
 // facesquare(loc_coord), which wouldnt be needed if it was only triggerable from oplocu
 if(inzone(0_45_46_40_54, 0_45_46_43_55, coord) = true) {
     if(loc_find(0_45_46_41_55, loc_2217) = true) {
@@ -25,7 +25,7 @@ if(map_members = true & ~trail_hasclue_inv = true) {
         def_boolean $sextant_clue = oc_param($clue, trail_sextant);
         def_coord $trail_coord = oc_param($clue, trail_coord);
         // for coord clues, https://www.youtube.com/watch?v=rcNbwik5-Ig looking at wiki and this 2013 video you can be 1 tile off and it will still work
-        // TODO: try and confirm this behaviour for 2004, this pre dec-2006 video also has this behaviour https://www.youtube.com/watch?v=yH6YaavzuMc
+        // todo: try and confirm this behaviour for 2004, this pre dec-2006 video also has this behaviour https://www.youtube.com/watch?v=yH6YaavzuMc
         // also https://www.youtube.com/watch?v=QhdRJd-g438 for maps
         if($sextant_clue = true & (inv_total(inv, trail_watch) = 0 | inv_total(inv, trail_chart) = 0 | inv_total(inv, trail_sextant) = 0)) {
             ~displaymessage(^dm_default);

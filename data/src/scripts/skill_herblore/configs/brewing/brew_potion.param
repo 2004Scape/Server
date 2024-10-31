@@ -29,3 +29,7 @@ default=null
 [brew_potion_struct_secondary]
 type=struct
 default=null
+
+[brew_potion_struct_tertiary]
+type=struct
+default=null

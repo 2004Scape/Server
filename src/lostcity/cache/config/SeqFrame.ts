@@ -8,7 +8,6 @@ export default class SeqFrame {
 
     static load(dir: string) {
         if (!fs.existsSync(`${dir}/server/frame_del.dat`)) {
-            console.log('Warning: No frame_del.dat found.');
             return;
         }
 
@@ -19,7 +18,6 @@ export default class SeqFrame {
     static async loadAsync(dir: string) {
         const file = await fetch(`${dir}/server/frame_del.dat`);
         if (!file.ok) {
-            console.log('Warning: No frame_del.dat found.');
             return;
         }
 

@@ -8,6 +8,7 @@ const esbuildExternals = ['node:fs/promises', 'path', 'net', 'crypto', 'fs'];
 const externals = ['kleur', 'buffer', 'module', 'watcher', 'worker_threads', 'dotenv/config', 'bcrypt', '#lostcity/db/query.js', '#lostcity/util/PackFile.js'];
 const defines = {
     'process.platform': JSON.stringify('webworker'),
+    'process.env.STANDALONE_BUNDLE': 'true',
     'process.env.WEB_PORT': 'undefined',
     'process.env.WEB_CORS': 'undefined',
     'process.env.NODE_ID': 'undefined',

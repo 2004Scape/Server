@@ -1,8 +1,8 @@
 [opnpc1,sir_amik_varze]
 switch_int (%blackknight_progress) {
-    case 0: @black_knights_fortress_sir_amik_prequest;
-    case 1,2,3: @black_knights_fortress_sir_amik_in_progress;
-    case 4: @black_knights_fortress_sir_amik_postquest;
+    case 0 : @black_knights_fortress_sir_amik_prequest;
+    case 1,2,3 : @black_knights_fortress_sir_amik_in_progress;
+    case 4 : @black_knights_fortress_sir_amik_postquest;
 }
 
 [label,black_knights_fortress_sir_amik_prequest]

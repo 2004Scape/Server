@@ -18,6 +18,21 @@ anim(human_herbing_vial, 0);
 sound_synth(grind, 0, 0);
 stat_advance(herblore, $experience);
 
+/** Potion explosion */
+[proc,potion_explosion](namedobj $ingredient, namedobj $solvent, string $message)
+mes($message);
+mes("You mixed the ingredients incorrectly and the mixure exploded.");
+inv_del(inv, $ingredient, 1);
+inv_del(inv, $solvent, 1);
+inv_add(inv, vial_empty, 1);
+anim(explodingvial, 0);
+sound_synth(explosion, 0, 0);
+def_int $damage = 5;
+if (stat(hitpoints) <= 8) {
+    $damage = calc(stat(hitpoints) / 2);
+}
+queue(damage_player, 0, $damage);
+
 /** Grind a herblore ingredient. */
 [proc,grind_ingredient](obj $grindable, namedobj $refined, string $message, int $slot)
 inv_setslot(inv, $slot, $refined, 1);

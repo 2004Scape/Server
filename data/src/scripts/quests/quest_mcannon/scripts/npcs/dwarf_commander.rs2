@@ -1,17 +1,17 @@
 [opnpc1,dwarf_commander]
 switch_int(%mcannon_progress) {
-    case ^mcannon_not_started: @dwarf_commander_start_quest;
-    case ^mcannon_tasked_with_fixing_railings: @dwarf_commander_how_goes_fixing_those_fences;
-    case ^mcannon_tasked_with_checking_guard_tower: @dwarf_commander_how_goes_finding_the_guard;
-    case ^mcannon_tasked_with_finding_goblin_cave: @dwarf_commander_how_goes_finding_the_goblin_cave;
-    case ^mcannon_tasked_with_finding_gilobs_son: @dwarf_commander_how_goes_finding_gilobs_son;
-    case ^mcannon_return_to_dwarf_commander: @dwarf_commander_found_gilobs_son;
+    case ^mcannon_not_started : @dwarf_commander_start_quest;
+    case ^mcannon_tasked_with_fixing_railings : @dwarf_commander_how_goes_fixing_those_fences;
+    case ^mcannon_tasked_with_checking_guard_tower : @dwarf_commander_how_goes_finding_the_guard;
+    case ^mcannon_tasked_with_finding_goblin_cave : @dwarf_commander_how_goes_finding_the_goblin_cave;
+    case ^mcannon_tasked_with_finding_gilobs_son : @dwarf_commander_how_goes_finding_gilobs_son;
+    case ^mcannon_return_to_dwarf_commander : @dwarf_commander_found_gilobs_son;
     case ^mcannon_tasked_with_fixing_cannon,
-        ^mcannon_inspected_cannon_first_time: @dwarf_commander_still_fixing_cannon;
-    case ^mcannon_has_repaired_cannon: @dwarf_commander_repaired_cannon;
-    case ^mcannon_tasked_with_speaking_to_nulodion: @dwarf_commander_havent_spoken_to_nulodion;
-    case ^mcannon_return_to_dwarf_commander_with_notes: @dwarf_commander_spoken_to_nulodion;
-    case ^mcannon_complete: @dwarf_commander_post_quest;
+        ^mcannon_inspected_cannon_first_time : @dwarf_commander_still_fixing_cannon;
+    case ^mcannon_has_repaired_cannon : @dwarf_commander_repaired_cannon;
+    case ^mcannon_tasked_with_speaking_to_nulodion : @dwarf_commander_havent_spoken_to_nulodion;
+    case ^mcannon_return_to_dwarf_commander_with_notes : @dwarf_commander_spoken_to_nulodion;
+    case ^mcannon_complete : @dwarf_commander_post_quest;
 }
 
 [label,dwarf_commander_start_quest]

@@ -56,11 +56,11 @@ if(inv_freespace(inv) = 0) {
 	return;
 }
 switch_namedobj($unid) {
-	case unidentified_rogues_purse: if (%junglepotion_progress = ^junglepotion_get_rogues_purse) %junglepotion_progress = ^junglepotion_found_rogues_purse;
-	case unidentified_volencia_moss: if (%junglepotion_progress = ^junglepotion_get_volencia_moss) %junglepotion_progress = ^junglepotion_found_volencia_moss;
-	case unidentified_sito_foil: if (%junglepotion_progress = ^junglepotion_get_sito_foil) %junglepotion_progress = ^junglepotion_found_sito_foil;
-	case unidentified_ardrigal: if (%junglepotion_progress = ^junglepotion_get_ardrigal) %junglepotion_progress = ^junglepotion_found_ardrigal;
-	case unidentified_snake_weed: if (%junglepotion_progress = ^junglepotion_get_snake_weed) %junglepotion_progress = ^junglepotion_found_snake_weed;
+	case unidentified_rogues_purse : if (%junglepotion_progress = ^junglepotion_get_rogues_purse) %junglepotion_progress = ^junglepotion_found_rogues_purse;
+	case unidentified_volencia_moss : if (%junglepotion_progress = ^junglepotion_get_volencia_moss) %junglepotion_progress = ^junglepotion_found_volencia_moss;
+	case unidentified_sito_foil : if (%junglepotion_progress = ^junglepotion_get_sito_foil) %junglepotion_progress = ^junglepotion_found_sito_foil;
+	case unidentified_ardrigal : if (%junglepotion_progress = ^junglepotion_get_ardrigal) %junglepotion_progress = ^junglepotion_found_ardrigal;
+	case unidentified_snake_weed : if (%junglepotion_progress = ^junglepotion_get_snake_weed) %junglepotion_progress = ^junglepotion_found_snake_weed;
 }
 inv_add(inv, $unid, 1);
 if ($loc ! null) {

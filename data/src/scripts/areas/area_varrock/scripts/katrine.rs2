@@ -6,9 +6,9 @@ if(%phoenixgang_progress >= ^phoenixgang_joined) {
     return;
 }
 switch_int(%blackarmgang_progress) {
-    case ^blackarmgang_spoken_katrine: @katrine_got_yet;
-    case ^blackarmgang_joined, ^blackarmgang_complete: @katrine_blackarmmember;
-    case default: @katrine_standard;
+    case ^blackarmgang_spoken_katrine : @katrine_got_yet;
+    case ^blackarmgang_joined, ^blackarmgang_complete : @katrine_blackarmmember;
+    case default : @katrine_standard;
 }
 
 [label,katrine_standard]
@@ -21,13 +21,13 @@ if(%blackarmgang_progress = ^blackarmgang_started) {
     $option = ~p_choice2("What sort of business?", 1, "I'm looking for fame and riches.", 2);
 }
 switch_int($option) {
-    case 1:
+    case 1 :
         ~chatplayer("<p,quiz>What sort of business?");
         ~chatnpc("<p,neutral>A small, family business.|We give financial advice to other companies.");
-    case 2:
+    case 2 :
         ~chatplayer("<p,neutral>I'm looking for fame and riches.");
         ~chatnpc("<p,shock>And you expect to find it up the back streets of Varrock?");
-    case 3:
+    case 3 :
         ~chatplayer("<p,quiz>I've heard you're the Black Arm Gang.");
         ~chatnpc("<p,angry>Who told you that?");
         $option = ~p_choice3("I'd rather not reveal my sources.", 1, "It was the tramp outside.", 2, "Everyone knows - it's no great secret.", 3);
@@ -55,10 +55,10 @@ switch_int($option) {
 ~chatnpc("<p,neutral>Normally we recruit for our gang|by watching local thugs and thieves in action.|People don't normally waltz in here|saying 'hello, can I play'.");
 ~chatnpc("<p,neutral>How can I be sure you can be trusted?");
 switch_int (~p_choice2("Well, you can give me a try can't you?", 1, "Well, people tell me I have an honest face.", 2)) {
-    case 1:
+    case 1 :
         ~chatplayer("<p,neutral>Well, you can give me a try can't you?");
         ~chatnpc("<p,neutral>I'm not so sure.");
-    case 2:
+    case 2 :
         ~chatplayer("<p,happy>Well, people tell me I have an honest face!");
         ~chatnpc("<p,neutral>... How unusual. Someone honest wanting to join a gang of thieves. Excuse me if I remain unconvinced."); 
 }
@@ -67,11 +67,11 @@ switch_int (~p_choice2("Well, you can give me a try can't you?", 1, "Well, peopl
 ~chatnpc("<p,neutral>We're fresh out of crossbows,|so if you could steal a couple of crossbows for us|it would be very much appreciated.");
 ~chatnpc("<p,neutral>Then I'll be happy to call you a Black Arm.");
 switch_int (~p_choice2("Ok, no problem.", 1, "Sounds a little tricky. Got anything easier?", 2)) {
-    case 1:
+    case 1 :
         ~chatplayer("<p,happy>Ok, no problem.");
         %blackarmgang_progress = 2;
         ~chatnpc("<p,neutral>Great! You'll find the Phoenix gang's weapon stash just next to a temple, due east of here.");
-    case 2:
+    case 2 :
         ~chatplayer("<p,confused>Sounds a little tricky...");
         ~chatplayer("<p,quiz>Got anything easier?");
         ~chatnpc("<p,angry>If you're not up to a little bit of danger|I don't think you've got anything to offer our gang."); 
@@ -109,15 +109,15 @@ if(inv_total(inv,phoenix_crossbow) >= 2) {
 ~chatplayer("<p,neutral>Hey.");
 ~chatnpc("<p,neutral>Hey.");
 switch_int (~determine_katrine_option) {
-    case 1: // default opt 1
+    case 1 : // default opt 1
         ~chatplayer("<p,quiz>Who are all those people in there?");
         ~chatnpc("<p,neutral>They're just various rogues and thieves.");
         ~chatplayer("<p,quiz>They don't say a lot...");
         ~chatnpc("<p,neutral>Nope.");
-    case 2: // default opt 2
+    case 2 : // default opt 2
         ~chatplayer("<p,neutral>Teach me to be a top class criminal.");
         ~chatnpc("<p,neutral>Teach yourself.");  
-    case 3: // Heroes in progress chat option
+    case 3 : // Heroes in progress chat option
         ~chatplayer("<p,quiz>Is there any way I can get the rank of master thief?");
         ~chatnpc("<p,neutral>Master thief? Ain't we the ambitious one!"); 
         ~chatnpc("<p,neutral>Well, you're gonna have to do something pretty amazing."); 
@@ -131,7 +131,7 @@ switch_int (~determine_katrine_option) {
         if (%hero_progress = ^hero_started) {
             %hero_progress = ^hero_blackarm_gangmember_spoken;
         }
-    case 4: // Showing candlestick
+    case 4 : // Showing candlestick
         ~chatplayer("<p,neutral>I have a candlestick now!");
         ~chatnpc("<p,shock>Wow.... is... it REALLY it?");
         ~chatnpc("<p,shock>This really is a FINE bit of thievery.");
@@ -141,10 +141,10 @@ switch_int (~determine_katrine_option) {
         inv_add(inv, thieves_armband, 1);
         %hero_progress = ^hero_blackarm_obtained_armband;
         ~mesbox("Katrine gives you a master theif armband.");
-    case 5: // Showing candlestick (did not progress quest correctly)
+    case 5 : // Showing candlestick (did not progress quest correctly)
         ~chatplayer("<p,neutral>I have a candlestick now!");
         ~chatnpc("<p,angry>Good for you. I'll give a master thief's armband to the one who retrieved that. I know it wasn't you.");
-    case 6: // Lost armband
+    case 6 : // Lost armband
         ~chatplayer("<p,sad>I have lost my master thief's armband...");
         ~chatnpc("<p,neutral>Lucky I 'ave a spare ain't it? Don't lose it again.");
         inv_add(inv, thieves_armband, 1);
@@ -169,6 +169,6 @@ else if (%hero_progress >= ^hero_blackarm_gangmember_spoken & inv_total(inv, pet
 else if (%hero_progress = ^hero_started) {
     return(~p_choice2("Who are all those people in there?", 1, "Is there any way I can get the rank of master thief?", 3));
 }
-// TODO? find out if there are dialogue options if you have already asked about becoming a master thief but not yet turned in the candlestick
+// todo? find out if there are dialogue options if you have already asked about becoming a master thief but not yet turned in the candlestick
 // (Defaulting to same dialogue as above for now)
 return(~p_choice2("Who are all those people in there?", 1, "Is there any way I can get the rank of master thief?", 3));

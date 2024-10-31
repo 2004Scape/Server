@@ -1,17 +1,17 @@
 [opnpc1,combat_instructor]
 switch_int(%tutorial_progress) {
-    case ^combat_instructor_start: @combat_instructor_start;
+    case ^combat_instructor_start : @combat_instructor_start;
     // Todo: Dialogue when not clicking worn items slot
-    case ^combat_instructor_wielding_weapons: @combat_instructor_lets_teach_you_wield;
-    case ^combat_instructor_worn_inventory: @combat_instructor_lets_teach_you_wield;
-    case ^combat_instructor_dagger_equipped: @combat_instructor_dagger_equipped;
-    case ^combat_instructor_unequipping_items: @combat_instructor_equipping_sword_and_shield;
-    case ^combat_instructor_open_combat_interface: @combat_instructor_check_combat_interface;
+    case ^combat_instructor_wielding_weapons : @combat_instructor_lets_teach_you_wield;
+    case ^combat_instructor_worn_inventory : @combat_instructor_lets_teach_you_wield;
+    case ^combat_instructor_dagger_equipped : @combat_instructor_dagger_equipped;
+    case ^combat_instructor_unequipping_items : @combat_instructor_equipping_sword_and_shield;
+    case ^combat_instructor_open_combat_interface : @combat_instructor_check_combat_interface;
     case ^combat_instructor_opened_combat_interface,
-        ^combat_instructor_during_attacking_melee: @combat_instructor_time_for_combat;
-    case ^combat_instructor_after_rat_kill_melee: @combat_instructor_killed_giant_rat_melee;
-    case ^combat_instructor_before_attacking_ranged: @combat_instructor_during_giant_rat_ranged;
-    case default: @combat_instructor_recap;
+        ^combat_instructor_during_attacking_melee : @combat_instructor_time_for_combat;
+    case ^combat_instructor_after_rat_kill_melee : @combat_instructor_killed_giant_rat_melee;
+    case ^combat_instructor_before_attacking_ranged : @combat_instructor_during_giant_rat_ranged;
+    case default : @combat_instructor_recap;
 }
 
 [label,combat_instructor_start]

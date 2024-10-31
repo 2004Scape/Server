@@ -5,7 +5,7 @@
 def_int $choice = ~p_choice3("Can you heal me?", 0, "Do you see a lot of injured fighters?", 1, "Do you come here often?", 2);
 
 switch_int ($choice) {
-    case 0:
+    case 0 :
     ~chatplayer("<p,neutral>Can you heal me?");
 
     if (stat(hitpoints) >= stat_base(hitpoints)) {
@@ -19,13 +19,13 @@ switch_int ($choice) {
         stat_heal(hitpoints, 12, 0);
     }
 
-    case 1:
+    case 1 :
     ~chatplayer("<p,neutral>Do you see a lot of injured fighters?");
     ~chatnpc("<p,neutral>Yes I do. Thankfully we can cope with almost anything.|Jaraah really is a wonderful surgeon, his methods are a little unorthodox but he gets the job done.");
     ~chatnpc("<p,neutral>I shouldn't tell you this but his nickname is 'The Butcher'.");
     ~chatplayer("<p,neutral>That's reassuring.");
 
-    case 2:
+    case 2 :
     ~chatplayer("<p,neutral>Do you come here often?");
     ~chatnpc("<p,neutral>I work here, so yes!");
     ~chatnpc("<p,neutral>You're silly!");

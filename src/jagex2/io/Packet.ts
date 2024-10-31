@@ -1,13 +1,16 @@
 import fs from 'fs';
 import path from 'path';
+import zlib from 'zlib';
+
 import forge from 'node-forge';
 import PrivateKey = forge.pki.rsa.PrivateKey;
 import BigInteger = forge.jsbn.BigInteger;
 
 import LinkList from '#jagex2/datastruct/LinkList.js';
-import Hashable from '#jagex2/datastruct/Hashable.js';
+import DoublyLinkable from '#jagex2/datastruct/DoublyLinkable.js';
+import Environment from '#lostcity/util/Environment.js';
 
-export default class Packet extends Hashable {
+export default class Packet extends DoublyLinkable {
     private static readonly crctable: Int32Array = new Int32Array(256);
     private static readonly bitmask: Uint32Array = new Uint32Array(33);
 
@@ -47,9 +50,7 @@ export default class Packet extends Hashable {
     }
 
     static checkcrc(src: Uint8Array, offset: number, length: number, expected: number = 0): boolean {
-        const checksum: number = Packet.getcrc(src, offset, length);
-        // console.log(checksum, expected);
-        return checksum == expected;
+        return Packet.getcrc(src, offset, length) == expected;
     }
 
     static alloc(type: number): Packet {
@@ -176,18 +177,29 @@ export default class Packet extends Hashable {
     }
 
     save(filePath: string, length: number = this.pos, start: number = 0): void {
-        if (typeof self === 'undefined') {
+        if (Environment.STANDALONE_BUNDLE) {
+            const blob = new Blob([this.data.subarray(start, start + length)], { type: 'application/octet-stream' });
+            const url = URL.createObjectURL(blob);
+            self.postMessage({ type: 'save', value: url, path: filePath });
+        } else {
             const dir: string = path.dirname(filePath);
             if (!fs.existsSync(dir)) {
                 fs.mkdirSync(dir, { recursive: true });
             }
 
             fs.writeFileSync(filePath, this.data.subarray(start, start + length));
-        } else {
-            const blob = new Blob([this.data.subarray(start, start + length)], { type: 'application/octet-stream' });
-            const url = URL.createObjectURL(blob);
-            self.postMessage({ type: 'save', value: url, path: filePath });
         }
+    }
+
+    saveGz(filePath: string, length: number = this.pos, start: number = 0): void {
+        const dir: string = path.dirname(filePath);
+        if (!fs.existsSync(dir)) {
+            fs.mkdirSync(dir, { recursive: true });
+        }
+
+        const compressed = zlib.gzipSync(this.data.subarray(start, start + length));
+        compressed[9] = 0;
+        fs.writeFileSync(filePath, compressed);
     }
 
     p1(value: number): void {

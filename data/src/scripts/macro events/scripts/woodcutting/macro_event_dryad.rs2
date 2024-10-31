@@ -9,7 +9,7 @@ if ($event_coord = null) {
 
 npc_add($event_coord, $event, 1000);
 npc_say("Leave these woods and never return!");
-%npc_attacking_uid = uid;
+%npc_macro_event_target = uid;
 if (finduid(uid) = false) {
     return;
 }
@@ -58,3 +58,10 @@ if ($random < 20) {
 } else {
     obj_add(npc_coord, ~randomjewel, ^lootdrop_duration);
 }
+
+[opnpc2,_macro_event_dryad]
+if (%npc_macro_event_target ! uid) {
+    mes("It's not here for you."); // from strange plant
+    return;
+}
+@player_combat_start;

@@ -4,7 +4,7 @@ import BuildArea from '#lostcity/entity/BuildArea.js';
 
 // this is slightly unsafe.
 export default class PlayerInfo extends OutgoingMessage {
-    priority = ServerProtPriority.HIGH;
+    priority = ServerProtPriority.IMMEDIATE;
 
     accumulator: number = 0;
 

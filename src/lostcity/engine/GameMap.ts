@@ -1,12 +1,17 @@
 import fs from 'fs';
 
+import {CollisionFlag, CollisionType, LocAngle, LocLayer} from '@2004scape/rsmod-pathfinder';
+import * as rsmod from '@2004scape/rsmod-pathfinder';
+
 import Packet from '#jagex2/io/Packet.js';
 
 import NpcType from '#lostcity/cache/config/NpcType.js';
 import ObjType from '#lostcity/cache/config/ObjType.js';
 import LocType from '#lostcity/cache/config/LocType.js';
 
+import { CoordGrid } from '#lostcity/engine/CoordGrid.js';
 import World from '#lostcity/engine/World.js';
+
 import Zone from '#lostcity/engine/zone/Zone.js';
 import ZoneGrid from '#lostcity/engine/zone/ZoneGrid.js';
 import ZoneMap from '#lostcity/engine/zone/ZoneMap.js';
@@ -15,10 +20,8 @@ import Npc from '#lostcity/entity/Npc.js';
 import Obj from '#lostcity/entity/Obj.js';
 import EntityLifeCycle from '#lostcity/entity/EntityLifeCycle.js';
 import Loc from '#lostcity/entity/Loc.js';
-import { CoordGrid } from '#lostcity/engine/CoordGrid.js';
 
-import { LocAngle, LocLayer } from '@2004scape/rsmod-pathfinder';
-import * as rsmod from '@2004scape/rsmod-pathfinder';
+import { printDebug, printWarning } from '#lostcity/util/Logger.js';
 
 export default class GameMap {
     private static readonly OPEN: number = 0x0;
@@ -47,7 +50,7 @@ export default class GameMap {
     }
 
     init(): void {
-        console.time('Loading game map');
+        printDebug('Loading game map');
 
         this.loadCsvMap(this.multimap, fs.readFileSync('data/src/maps/multiway.csv', 'ascii').replace(/\r/g, '').split('\n'));
         this.loadCsvMap(this.freemap, fs.readFileSync('data/src/maps/free2play.csv', 'ascii').replace(/\r/g, '').split('\n'));
@@ -66,11 +69,9 @@ export default class GameMap {
             this.loadGround(lands, Packet.load(`${path}m${mx}_${mz}`), mapsquareX, mapsquareZ);
             this.loadLocations(lands, Packet.load(`${path}l${mx}_${mz}`), mapsquareX, mapsquareZ);
         }
-        console.timeEnd('Loading game map');
     }
 
     async initAsync(): Promise<void> {
-        console.time('Loading game map');
         const path: string = 'data/pack/server/maps/';
         // eslint-disable-next-line @typescript-eslint/ban-ts-comment
         // @ts-ignore
@@ -94,83 +95,6 @@ export default class GameMap {
             this.loadLocations(lands, locData, mapsquareX, mapsquareZ);
         });
         await Promise.all(maps);
-        console.timeEnd('Loading game map');
-    }
-
-    /**
-     * Change collision at a specified Position for lands/floors.
-     * @param x The x pos.
-     * @param z The z pos.
-     * @param level The level pos.
-     * @param add True if adding this collision. False if removing.
-     */
-    changeLandCollision(x: number, z: number, level: number, add: boolean): void {
-        rsmod.changeFloor(x, z, level, add);
-    }
-
-    /**
-     * Change collision at a specified Position for locs.
-     * @param shape The shape of the loc to change.
-     * @param angle The angle of the loc to change.
-     * @param blockrange If this loc blocks range.
-     * @param length The length of this loc.
-     * @param width The width of this loc.
-     * @param active If this loc is active.
-     * @param x The x pos.
-     * @param z The z pos.
-     * @param level The level pos.
-     * @param add True if adding this collision. False if removing.
-     */
-    changeLocCollision(shape: number, angle: number, blockrange: boolean, length: number, width: number, active: number, x: number, z: number, level: number, add: boolean): void {
-        const locLayer: LocLayer = rsmod.locShapeLayer(shape);
-        if (locLayer === LocLayer.WALL) {
-            rsmod.changeWall(x, z, level, angle, shape, blockrange, false, add);
-        } else if (locLayer === LocLayer.GROUND) {
-            if (angle === LocAngle.NORTH || angle === LocAngle.SOUTH) {
-                rsmod.changeLoc(x, z, level, length, width, blockrange, false, add);
-            } else {
-                rsmod.changeLoc(x, z, level, width, length, blockrange, false, add);
-            }
-        } else if (locLayer === LocLayer.GROUND_DECOR) {
-            if (active === 1) {
-                rsmod.changeFloor(x, z, level, add);
-            }
-        }
-    }
-
-    /**
-     * Change collision at a specified Position for npcs.
-     * @param size The size square of this npc. (1x1, 2x2, etc).
-     * @param x The x pos.
-     * @param z The z pos.
-     * @param level The level pos.
-     * @param add True if adding this collision. False if removing.
-     */
-    changeNpcCollision(size: number, x: number, z: number, level: number, add: boolean): void {
-        rsmod.changeNpc(x, z, level, size, add);
-    }
-
-    /**
-     * Change collision at a specified Position for players.
-     * @param size The size square of this npc. (1x1, 2x2, etc).
-     * @param x The x pos.
-     * @param z The z pos.
-     * @param level The level pos.
-     * @param add True if adding this collision. False if removing.
-     */
-    changePlayerCollision(size: number, x: number, z: number, level: number, add: boolean): void {
-        rsmod.changePlayer(x, z, level, size, add);
-    }
-
-    /**
-     * Change collision at a specified Position for roofs.
-     * @param x The x pos.
-     * @param z The z pos.
-     * @param level The level pos.
-     * @param add True if adding this collision. False if removing.
-     */
-    changeRoofCollision(x: number, z: number, level: number, add: boolean): void {
-        rsmod.changeRoof(x, z, level, add);
     }
 
     isMulti(coord: number): boolean {
@@ -287,7 +211,7 @@ export default class GameMap {
                     const land: number = lands[this.packCoord(x, z, level)];
 
                     if ((land & GameMap.ROOF) !== GameMap.OPEN) {
-                        this.changeRoofCollision(absoluteX, absoluteZ, level, true);
+                        changeRoofCollision(absoluteX, absoluteZ, level, true);
                     }
 
                     if ((land & GameMap.BLOCKED) !== GameMap.BLOCKED) {
@@ -300,7 +224,7 @@ export default class GameMap {
                         continue;
                     }
 
-                    this.changeLandCollision(absoluteX, absoluteZ, actualLevel, true);
+                    changeLandCollision(absoluteX, absoluteZ, actualLevel, true);
                 }
             }
         }
@@ -343,7 +267,7 @@ export default class GameMap {
                 this.getZone(absoluteX, absoluteZ, actualLevel).addStaticLoc(new Loc(actualLevel, absoluteX, absoluteZ, width, length, EntityLifeCycle.RESPAWN, locId, shape, angle));
 
                 if (type.blockwalk) {
-                    this.changeLocCollision(shape, angle, type.blockrange, length, width, type.active, absoluteX, absoluteZ, actualLevel, true);
+                    changeLocCollision(shape, angle, type.blockrange, length, width, type.active, absoluteX, absoluteZ, actualLevel, true);
                 }
             }
             locIdOffset = packet.gsmart();
@@ -364,7 +288,7 @@ export default class GameMap {
                 const [toLevel, toMx, toMz, toLx, toLz] = to.split('_').map(Number);
 
                 if (fromLx % 8 !== 0 || fromLz % 8 !== 0 || toLx % 8 !== 7 || toLz % 8 !== 7 || fromMx > toMx || fromMz > toMz || (fromMx <= toMx && fromMz <= toMz && (fromLx > toLx || fromLz > toLz))) {
-                    console.warn('Free to play map not aligned to a zone', csv[i]);
+                    printWarning('Free to play map not aligned to a zone ' + csv[i]);
                 }
 
                 const startX: number  = (fromMx << 6) + fromLx;
@@ -403,4 +327,142 @@ export default class GameMap {
     private bordersFreeToPlay(x: number, z: number): boolean {
         return this.isFreeToPlay(x + 1, z) || this.isFreeToPlay(x - 1, z) || this.isFreeToPlay(x, z + 1) || this.isFreeToPlay(x, z - 1);
     }
+}
+
+// ---- rsmod wasm exports.
+
+/**
+ * Change collision at a specified Position for lands/floors.
+ * @param x The x pos.
+ * @param z The z pos.
+ * @param level The level pos.
+ * @param add True if adding this collision. False if removing.
+ */
+export function changeLandCollision(x: number, z: number, level: number, add: boolean): void {
+    rsmod.changeFloor(x, z, level, add);
+}
+
+/**
+ * Change collision at a specified Position for locs.
+ * @param shape The shape of the loc to change.
+ * @param angle The angle of the loc to change.
+ * @param blockrange If this loc blocks range.
+ * @param length The length of this loc.
+ * @param width The width of this loc.
+ * @param active If this loc is active.
+ * @param x The x pos.
+ * @param z The z pos.
+ * @param level The level pos.
+ * @param add True if adding this collision. False if removing.
+ */
+export function changeLocCollision(shape: number, angle: number, blockrange: boolean, length: number, width: number, active: number, x: number, z: number, level: number, add: boolean): void {
+    const locLayer: LocLayer = rsmod.locShapeLayer(shape);
+    if (locLayer === LocLayer.WALL) {
+        rsmod.changeWall(x, z, level, angle, shape, blockrange, false, add);
+    } else if (locLayer === LocLayer.GROUND) {
+        if (angle === LocAngle.NORTH || angle === LocAngle.SOUTH) {
+            rsmod.changeLoc(x, z, level, length, width, blockrange, false, add);
+        } else {
+            rsmod.changeLoc(x, z, level, width, length, blockrange, false, add);
+        }
+    } else if (locLayer === LocLayer.GROUND_DECOR) {
+        if (active === 1) {
+            rsmod.changeFloor(x, z, level, add);
+        }
+    }
+}
+
+/**
+ * Change collision at a specified Position for npcs.
+ * @param size The size square of this npc. (1x1, 2x2, etc).
+ * @param x The x pos.
+ * @param z The z pos.
+ * @param level The level pos.
+ * @param add True if adding this collision. False if removing.
+ */
+export function changeNpcCollision(size: number, x: number, z: number, level: number, add: boolean): void {
+    rsmod.changeNpc(x, z, level, size, add);
+}
+
+/**
+ * Change collision at a specified Position for players.
+ * @param size The size square of this npc. (1x1, 2x2, etc).
+ * @param x The x pos.
+ * @param z The z pos.
+ * @param level The level pos.
+ * @param add True if adding this collision. False if removing.
+ */
+export function changePlayerCollision(size: number, x: number, z: number, level: number, add: boolean): void {
+    rsmod.changePlayer(x, z, level, size, add);
+}
+
+/**
+ * Change collision at a specified Position for roofs.
+ * @param x The x pos.
+ * @param z The z pos.
+ * @param level The level pos.
+ * @param add True if adding this collision. False if removing.
+ */
+export function changeRoofCollision(x: number, z: number, level: number, add: boolean): void {
+    rsmod.changeRoof(x, z, level, add);
+}
+
+export function findPath(level: number, srcX: number, srcZ: number, destX: number, destZ: number): Uint32Array {
+    return rsmod.findPath(level, srcX, srcZ, destX, destZ, 1, 1, 1, 0, -1, true, 0, 25, CollisionType.NORMAL);
+}
+
+export function findPathToEntity(level: number, srcX: number, srcZ: number, destX: number, destZ: number, srcSize: number, destWidth: number, destHeight: number): Uint32Array {
+    return rsmod.findPath(level, srcX, srcZ, destX, destZ, srcSize, destWidth, destHeight, 0, -2, true, 0, 25, CollisionType.NORMAL);
+}
+
+export function findPathToLoc(level: number, srcX: number, srcZ: number, destX: number, destZ: number, srcSize: number, destWidth: number, destHeight: number, angle: number, shape: number, blockAccessFlags: number): Uint32Array {
+    return rsmod.findPath(level, srcX, srcZ, destX, destZ, srcSize, destWidth, destHeight, angle, shape, true, blockAccessFlags, 25, CollisionType.NORMAL);
+}
+
+export function findNaivePath(level: number, srcX: number, srcZ: number, destX: number, destZ: number, srcWidth: number, srcHeight: number, destWidth: number, destHeight: number, extraFlag: number, collision: CollisionType): Uint32Array {
+    return rsmod.findNaivePath(level, srcX, srcZ, destX, destZ, srcWidth, srcHeight, destWidth, destHeight, extraFlag, collision);
+}
+
+export function reachedEntity(level: number, srcX: number, srcZ: number, destX: number, destZ: number, destWidth: number, destHeight: number, srcSize: number): boolean {
+    return rsmod.reached(level, srcX, srcZ, destX, destZ, destWidth, destHeight, srcSize, 0, -2, 0);
+}
+
+export function reachedLoc(level: number, srcX: number, srcZ: number, destX: number, destZ: number, destWidth: number, destHeight: number, srcSize: number, angle: number, shape: number, blockAccessFlags: number): boolean {
+    return rsmod.reached(level, srcX, srcZ, destX, destZ, destWidth, destHeight, srcSize, angle, shape, blockAccessFlags);
+}
+
+export function reachedObj(level: number, srcX: number, srcZ: number, destX: number, destZ: number, destWidth: number, destHeight: number, srcSize: number): boolean {
+    return rsmod.reached(level, srcX, srcZ, destX, destZ, destWidth, destHeight, srcSize, 0, -1, 0);
+}
+
+export function canTravel(level: number, x: number, z: number, offsetX: number, offsetZ: number, size: number, extraFlag: number, collision: CollisionType): boolean {
+    return rsmod.canTravel(level, x, z, offsetX, offsetZ, size, extraFlag, collision);
+}
+
+export function isMapBlocked(x: number, z: number, level: number): boolean {
+    return isFlagged(x, z, level, CollisionFlag.WALK_BLOCKED);
+}
+
+export function isIndoors(x: number, z: number, level: number): boolean {
+    return isFlagged(x, z, level, CollisionFlag.ROOF);
+}
+
+export function isFlagged(x: number, z: number, level: number, masks: number): boolean {
+    return rsmod.isFlagged(x, z, level, masks);
+}
+
+export function isLineOfWalk(level: number, srcX: number, srcZ: number, destX: number, destZ: number): boolean {
+    return rsmod.hasLineOfWalk(level, srcX, srcZ, destX, destZ, 1, 1, 1, 1, 0);
+}
+
+export function isLineOfSight(level: number, srcX: number, srcZ: number, destX: number, destZ: number): boolean {
+    return rsmod.hasLineOfSight(level, srcX, srcZ, destX, destZ, 1, 1, 1, 1, 0);
+}
+
+export function isApproached(level: number, srcX: number, srcZ: number, destX: number, destZ: number, srcWidth: number, srcHeight: number, destWidth: number, destHeight: number): boolean {
+    return rsmod.hasLineOfSight(level, srcX, srcZ, destX, destZ, srcWidth, srcHeight, destWidth, destHeight, CollisionFlag.PLAYER);
+}
+
+export function layerForLocShape(shape: number): LocLayer {
+    return rsmod.locShapeLayer(shape);
 }

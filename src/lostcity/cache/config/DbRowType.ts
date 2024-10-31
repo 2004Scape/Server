@@ -12,7 +12,6 @@ export default class DbRowType extends ConfigType {
 
     static load(dir: string) {
         if (!fs.existsSync(`${dir}/server/dbrow.dat`)) {
-            console.log('Warning: No dbrow.dat found.');
             return;
         }
         const dat = Packet.load(`${dir}/server/dbrow.dat`);
@@ -22,7 +21,6 @@ export default class DbRowType extends ConfigType {
     static async loadAsync(dir: string) {
         const file = await fetch(`${dir}/server/dbrow.dat`);
         if (!file.ok) {
-            console.log('Warning: No dbrow.dat found.');
             return;
         }
 

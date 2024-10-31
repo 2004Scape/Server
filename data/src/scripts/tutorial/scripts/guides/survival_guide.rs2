@@ -1,14 +1,14 @@
 [opnpc1,survival_expert]
 switch_int(%tutorial_progress) {
-    case ^runescape_guide_interacted_with_door: @survival_guide_start;
-    case ^survival_guide_open_inventory: @survival_guide_look_at_menu;
-    case ^survival_guide_cut_tree, ^survival_guide_build_fire: @survival_guide_fire;
-    case ^survival_guide_open_skill_menu: @survival_guide_look_at_menu;
-    case ^survival_guide_opened_skill_menu: @survival_guide_fishing;
+    case ^runescape_guide_interacted_with_door : @survival_guide_start;
+    case ^survival_guide_open_inventory : @survival_guide_look_at_menu;
+    case ^survival_guide_cut_tree, ^survival_guide_build_fire : @survival_guide_fire;
+    case ^survival_guide_open_skill_menu : @survival_guide_look_at_menu;
+    case ^survival_guide_opened_skill_menu : @survival_guide_fishing;
     case ^survival_guide_fish_shrimps,
         ^survival_guide_cook_shrimps,
-        ^survival_guide_burnt_shrimps: @survival_guide_fishing_after_burning;
-    case default: @survival_guide_recap;
+        ^survival_guide_burnt_shrimps : @survival_guide_fishing_after_burning;
+    case default : @survival_guide_recap;
 }
 
 [label,survival_guide_start]
@@ -86,30 +86,30 @@ inv_add(inv, net, 1);
 
 [proc,survival_guide_recap_response](int $choice)
 switch_int ($choice) {
-    case 1:
+    case 1 :
         ~survival_recap_woodcutting;
         ~survival_recap_questions($choice);
-    case 2:
+    case 2 :
         ~survival_recap_firemaking;
         ~survival_recap_questions($choice);
-    case 3:
+    case 3 :
         ~survival_recap_fishing;
         ~survival_recap_questions($choice);
-    case 4:
+    case 4 :
         ~survival_recap_cooking;
         ~survival_recap_questions($choice);
-    case 5:
+    case 5 :
         ~survival_recap_skills;
         ~survival_recap_questions($choice);
 }
 
 [proc,survival_recap_questions](int $choice)
 switch_int($choice) {
-    case 1: ~survival_guide_recap_response(~p_choice5_header("Firemaking.", 2, "Fishing.", 3, "Cooking.", 4, "My stats.", 5, "Nothing, thanks.", 6, "What would you like to hear more about?"));
-    case 2: ~survival_guide_recap_response(~p_choice5_header("Woodcutting", 1, "Fishing.", 3, "Cooking.", 4, "My stats.", 5, "Nothing, thanks.", 6, "What would you like to hear more about?"));
-    case 3: ~survival_guide_recap_response(~p_choice5_header("Woodcutting", 1, "Firemaking.", 2, "Cooking.", 4, "My stats.", 5, "Nothing, thanks.", 6, "What would you like to hear more about?"));
-    case 4: ~survival_guide_recap_response(~p_choice5_header("Woodcutting.", 1, "Firemaking.", 2, "Cooking.", 4, "My stats.", 5, "Nothing, thanks.", 6, "What would you like to hear more about?"));
-    case 5: ~survival_guide_recap_response(~p_choice5_header("Woodcutting.", 1, "Firemaking.", 2, "Fishing.", 3, "Cooking.", 4, "Nothing, thanks.", 6, "What would you like to hear more about?"));
+    case 1 : ~survival_guide_recap_response(~p_choice5_header("Firemaking.", 2, "Fishing.", 3, "Cooking.", 4, "My stats.", 5, "Nothing, thanks.", 6, "What would you like to hear more about?"));
+    case 2 : ~survival_guide_recap_response(~p_choice5_header("Woodcutting", 1, "Fishing.", 3, "Cooking.", 4, "My stats.", 5, "Nothing, thanks.", 6, "What would you like to hear more about?"));
+    case 3 : ~survival_guide_recap_response(~p_choice5_header("Woodcutting", 1, "Firemaking.", 2, "Cooking.", 4, "My stats.", 5, "Nothing, thanks.", 6, "What would you like to hear more about?"));
+    case 4 : ~survival_guide_recap_response(~p_choice5_header("Woodcutting.", 1, "Firemaking.", 2, "Cooking.", 4, "My stats.", 5, "Nothing, thanks.", 6, "What would you like to hear more about?"));
+    case 5 : ~survival_guide_recap_response(~p_choice5_header("Woodcutting.", 1, "Firemaking.", 2, "Fishing.", 3, "Cooking.", 4, "Nothing, thanks.", 6, "What would you like to hear more about?"));
 }
 
 [proc,survival_recap_skills]

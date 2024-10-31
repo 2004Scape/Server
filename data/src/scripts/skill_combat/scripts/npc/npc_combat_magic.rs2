@@ -57,7 +57,7 @@ mes("You've been frozen!");
 %frozen = calc(map_clock + $duration + 1);
 walktrigger(frozen);
 
-[proc,npc_combat_spell_checks](boolean)
+[proc,npc_combat_spell_checks]()(boolean)
 if (stat(hitpoints) = 0) { // no idea if this should exist
     return(false);
 }
@@ -116,19 +116,15 @@ sound_synth(db_getfield($spell_data, magic_spell_table:sound_success, 0), 0, 0);
 def_int $damage = randominc($maxhit);
 if ($maxhit ! null) {
     // npc vs player spells have no 1t extra damage delay. Whereas player vs npc spells do (osrs)
-    if (getqueue(player_death) < 1) {
-        queue(damage_player, calc($duration / 30), $damage);
-        if (npc_param(poison_severity) > 0 & $damage > 0) {
-            queue(poison_player, 0, npc_param(poison_severity));
-        }
+    queue(damage_player, calc($duration / 30), $damage);
+    if (npc_param(poison_severity) > 0 & $damage > 0) {
+        queue(poison_player, 0, npc_param(poison_severity));
     }
     // player anim for flinching doesnt exist, even in osrs
     // anim(~combat_defend_anim(inv_getobj(worn, ^wearpos_rhand)), $duration);
 }
 spotanim_pl(db_getfield($spell_data, magic_spell_table:spotanim_target, 0), $duration);
-if (getqueue(player_death) < 1) {
-    queue(playerhit_n_retaliate, calc($duration / 30), npc_uid);
-}
+queue(playerhit_n_retaliate, calc($duration / 30), npc_uid);
 
 [proc,npc_stat_change_effect](dbrow $spell_data)
 def_stat $stat;
@@ -144,7 +140,7 @@ while ($i < db_getfieldcount($spell_data, magic_spell_table:stat_change)) {
     } else {
         if ($constant < 0) $constant = multiply($constant, -1);
         if ($percent < 0) $percent = multiply($percent, -1);
-        mes("You feel weakened.");
+        if($i = 0) mes("You feel weakened."); // mes should only show once for spells that lower multiple stats
         stat_sub($stat, $constant, $percent);
     }
     $i = add($i, 1);

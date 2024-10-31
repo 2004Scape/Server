@@ -4,7 +4,7 @@ if(oc_category(last_useitem) = murder_proofobj) {
 }
 switch_obj (last_useitem) {
     case cake_tin : @make_uncooked_cake;
-    case swamp_tar: @make_swamp_paste;
+    case swamp_tar : @make_swamp_paste;
     case default :
         if (oc_param(last_useitem, is_water_source) = ^true) {
             @dough_interface(last_useitem);
@@ -23,10 +23,10 @@ def_string $end_string = "some";
 switch_int (~p_choice3_header("Bread dough.", 1, "Pastry dough.", 2, "Pizza dough.", 3, "What sort of dough do you wish to make?")) {
     case 1 : $choice = bread_dough;
     case 2 : $choice = pastry_dough;
-    case 3 : 
+    case 3 :
         $choice = pizza_base;
         $end_string = "a"; // only pizza adds an article
-    case default : 
+    case default :
         ~displaymessage(^dm_default);
         return;
 }

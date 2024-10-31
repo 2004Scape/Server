@@ -1,12 +1,12 @@
 [opnpc1,ceril_carnillean]
 switch_int(%hazeelcult_progress) {
-    case ^hazeelcult_not_started:
+    case ^hazeelcult_not_started :
         // OSRS changed this dialogue quite a bit in 2023 (of course), using wiki/RSC + the linked video as reference
         ~chatplayer("<p,neutral>Hello there.");
         ~chatnpc("<p,angry>Blooming, thieving, weirdo cultists! Why don't they leave me alone? String 'em all up, that's what I say!");
         // https://youtu.be/R5MdMtqvxaM?si=OepNhbR7fcTPaijN&t=19
         switch_int(~p_choice3("What's wrong?", 1, "You probably deserve it.", 2, "You seem uptight, I'll leave you alone.", 3)) {
-            case 1:
+            case 1 :
                 ~chatplayer("<p,quiz>What's wrong?");
                 ~chatnpc("<p,angry>It's those blooming cultists from the forest! Those freaks keep breaking into my house!");
                 ~chatplayer("<p,quiz>Have they taken much?");
@@ -15,10 +15,10 @@ switch_int(%hazeelcult_progress) {
                 ~chatnpc("<p,angry>Why, I am Sir Ceril Carnillean! We really are quite a famous bloodline... who've played a vital role in the politics of Ardougne for many generations.");
                 ~chatnpc("<p,angry>Perhaps you would be able to assist me in returning the stolen armour? For a modest cash reward of course!");
                 switch_int(~p_choice2("No thanks. I've got other plans.", 1, "Yes, of course, I'd be happy to help.", 2)) {
-                    case 1:
+                    case 1 :
                         ~chatplayer("<p,neutral>No thanks. I've got other plans.");
                         ~chatnpc("<p,angry>Well no wonder I'm the one with the big house and you're the one on the streets.");
-                    case 2:
+                    case 2 :
                         ~chatplayer("<p,neutral>Yes, of course, I'd be happy to help.");
                         ~chatnpc("<p,neutral>That's very noble of you sirrah! I caught a glimpse of the thieves leaving but due to... uh.. yeah, my cold I was unable to give chase.");
                         ~chatnpc("<p,neutral>They're some kind of crazy cult who dress all in black, and hang out near the cave entrance in the forest south of here.");
@@ -30,18 +30,18 @@ switch_int(%hazeelcult_progress) {
                         ~chatnpc("<p,neutral>No, it's ok. A replacement arrived the next day. He's been great - cooks an excellent broth!");
                         ~chatplayer("<p,neutral>Ok. I'll see what I can do.");
                 }
-            case 2:
+            case 2 :
                 ~chatplayer("<p,neutral>You probably deserve it.");
                 ~chatnpc("<p,angry>And who are YOU to judge ME? Hmmm. You look like a peasant anyway. I'm wasting my time talking to you.");
-            case 3:
+            case 3 :
                 ~chatplayer("<p,neutral>You seem uptight. I'll leave you alone.");
                 ~chatnpc("<p,neutral>Yes, I doubt you could help anyway.");
         }
-    case ^hazeelcult_started, ^hazeelcult_spoken_clivet:
+    case ^hazeelcult_started, ^hazeelcult_spoken_clivet :
         ~chatplayer("<p,neutral>Hello Ceril.");
         ~chatnpc("<p,angry>That's SIR Ceril to you, you impudent scamp. Show a bit of respect to your betters. And shouldn't you be recovering my armour?");
         ~chatplayer("<p,neutral>Yeah yeah, I'm on it, I'm ON it.");
-    case ^hazeelcult_clivet_decision:
+    case ^hazeelcult_clivet_decision :
         if(%hazeelcult_side = ^hazeelcult_goodside) {
             ~chatnpc("<p,quiz>Have you had any luck yet?");
             ~chatplayer("<p,neutral>Hello Ceril. Yes, I found their hideout.");
@@ -56,7 +56,7 @@ switch_int(%hazeelcult_progress) {
             ~chatnpc("<p,angry>That's SIR Ceril you blooming scoundrel! Show respect when addressing someone of my rank! It's strange you haven't recovered it yet though as Jones seemed quite sure of their location.");
             ~chatplayer("<p,neutral>Yeah, well, just unlucky I guess.");
         }
-    case ^hazeelcult_poured_poison:
+    case ^hazeelcult_poured_poison :
         ~chatplayer("<p,neutral>Hello again.");
         ~chatnpc("<p,sad>Oh.. the inhumanity... the cruelty.. the misery... the pain... my son is a good boy, really, but how could he give his dinner to Scruffy without having the servants test it for poison first? How? How could he be so");
         ~chatnpc("<p,sad>thoughtless and careless? He knows we are all under threat!");
@@ -66,7 +66,7 @@ switch_int(%hazeelcult_progress) {
         ~chatplayer("<p,angry>That's not right.");
         ~chatnpc("<p,angry>I agree! I hope whichever evildoer is responsible gets the full weight of the law brought upon them!");
         ~chatplayer("<p,confused>Uh.... yeah... me too.");
-    case ^hazeelcult_finished_side_task:
+    case ^hazeelcult_finished_side_task :
         // https://youtu.be/R5MdMtqvxaM?si=yhrFdqvFO4ucwsjr&t=334 and https://youtu.be/R5MdMtqvxaM?si=fQgsP_0Ax9CI19U9&t=394
         if(%hazeelcult_side = ^hazeelcult_goodside) {
             if(inv_total(inv, carnillean_armour) = 0 & inv_total(worn, carnillean_armour) = 0) {
@@ -83,7 +83,7 @@ switch_int(%hazeelcult_progress) {
             ~mesbox("Sir Ceril breaks down into tears.");
             ~chatplayer("<p,angry>Loosen up already. It was only a DOG.");
         }
-    case ^hazeelcult_given_armour_or_scroll:
+    case ^hazeelcult_given_armour_or_scroll :
         if(%hazeelcult_side = ^hazeelcult_goodside) {
             ~chatplayer("<p,angry>You owe me money.");
             ~chatnpc("<p,angry>I owe you nothing you scoundrel! Now get out or I'll have Jones throw you out!");
@@ -94,7 +94,7 @@ switch_int(%hazeelcult_progress) {
             ~chatnpc("<p,confused>Well, either I'm going crazy, or theres been an intruder in Jones' room upstairs!");
             ~chatplayer("<p,neutral>Oh, heh, ok then.");
         }
-    case ^hazeelcult_complete:
+    case ^hazeelcult_complete :
         ~chatplayer("<p,neutral>Hello Ceril.");
         if(%hazeelcult_side = ^hazeelcult_goodside) {
             ~chatnpc("<p,neutral>Well hello again adventurer! It's good to see you again! If it wasn't for your quick thinking the treacherous Jones would have poisoned my family and me by now! We are in your debt.");

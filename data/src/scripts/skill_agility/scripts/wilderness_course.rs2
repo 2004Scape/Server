@@ -9,7 +9,7 @@ mes("You go through the gate and try to edge over the ridge...");
 p_teleport(0_46_61_54_13);
 p_delay(0);
 ~agility_force_move(0, human_walk_logbalance, movecoord(coord, 0, 0, 6));
-// TODO: actual rate
+// todo: actual rate
 if(stat_random(stat(agility), 180, 245) = false) {
     @fail_ridge;
 }
@@ -24,7 +24,7 @@ mes("You go through the gate and try to edge over the ridge...");
 p_teleport(0_46_61_54_25);
 p_delay(0);
 ~agility_force_move(0, human_walk_logbalance, movecoord(coord, 0, 0, -6));
-// TODO: actual rate
+// todo: actual rate
 if(stat_random(stat(agility), 180, 245) = false) {
     @fail_ridge;
 }
@@ -46,9 +46,9 @@ if(coord ! movecoord(loc_coord, 0, 0, -1)) {
     p_delay(0);
     p_walk(movecoord(loc_coord, 0, 0, -1));
 }
-// TODO: set var here and clear after the first exact move
+// todo: set var here and clear after the first exact move
 if(%wilderness_obstacle_pipe_used >= map_clock) {
-    mes("The pipe is being used"); // TODO: confirm, using the same as gnome course
+    mes("The pipe is being used"); // todo: confirm, using the same as gnome course
     return;
 }
 %wilderness_obstacle_pipe_used = calc(map_clock + 4); 
@@ -73,7 +73,7 @@ p_delay(0);
 p_teleport($start_pos);
 p_delay($delay);
 if(stat_random(stat(agility), 175, 245) = false) {
-    // TODO: find actual rates, this is 82% at 52, 96% at 99
+    // todo: find actual rates, this is 82% at 52, 96% at 99
     ~agility_instant_fail(0_46_161_60_53, calc(((stat(hitpoints) * 15) / 100) + 1), "You slip and fall to the pit below.");
     return;
 }
@@ -94,7 +94,7 @@ mes("You carefully start crossing the stepping stones...");
 ~agility_exactmove(human_jump_stones, 0, 1, loc_coord, movecoord(loc_coord, -1, 0, 0), 15, 30, ^exact_west, false);
 ~agility_exactmove(human_jump_stones, 0, 1, movecoord(loc_coord, -1, 0, 0), movecoord(loc_coord, -2, 0, 0), 15, 30, ^exact_west, false);
 if(stat_random(stat(agility), 185, 240) = false) {
-    // TODO: find actual rates, this is 83% at 52, 94% at 99
+    // todo: find actual rates, this is 83% at 52, 94% at 99
     ~agility_delay_fail(movecoord(coord, 0, 0, 2), movecoord(loc_coord, 1, 0, 3), calc(((stat(hitpoints) * 216) / 1000) + 1), "...You lose your footing and fall into the lava.");
     sound_synth(sizzle, 0, 0);
     return;
@@ -112,7 +112,7 @@ p_delay(0);
 mes("You walk carefully across the slippery log...");
 ~agility_force_move(0, human_walk_logbalance, movecoord(coord, -4, 0, 0));
 if(stat_random(stat(agility), 170, 250) = false) {
-    // TODO: find actual rates, this is 82% at 52, 98% at 99
+    // todo: find actual rates, this is 82% at 52, 98% at 99
     ~agility_delay_fail(movecoord(coord, 0, 0, 2), 0_46_161_54_42, calc(((stat(hitpoints) * 15) / 100) + 1), "You slip and fall onto the spikes below.");
     p_teleport(movecoord(coord, 0, 0, -1));
     return;
@@ -131,7 +131,7 @@ p_delay(1);
 p_telejump(movecoord(coord, 2, 0, 0));
 mes("You lose your footing and fall into the wolf pit.");
 
-// TODO: These double gate doors are broken
+// todo: These double gate doors are broken
 [proc,open_course_gates]
 loc_findallzone(coord);
 while(loc_findnext = true) {

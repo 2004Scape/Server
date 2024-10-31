@@ -96,8 +96,8 @@ if_setposition(trail_sextant:com_2, 0, ~unpack_negative_8bit(~get_sextant_sun));
 if_setanim(trail_sextant:com_10, enum(int, seq, sextant_seq_enum, ~get_sextant_needle));
 
 // very basic algo to ensure that the randomized position of the needle is "opposite" that of the sun
-// used to prevent a scenario where getting the sun in the middle is impossible (TODO: probably needs to be adjusted)
-[proc,rand_sextant_needle_pos](int)
+// used to prevent a scenario where getting the sun in the middle is impossible (todo: probably needs to be adjusted)
+[proc,rand_sextant_needle_pos]()(int)
 def_int $sun_pos = ~unpack_negative_8bit(~get_sextant_sun);
 def_int $frame_pos = ~get_sextant_frame;
 if($sun_pos < -40) {
@@ -118,22 +118,22 @@ return (calc($val - 128));
 
 // the sextant's needle value can go 2 "over" seq_1006, it will still default to seq_1006 in these cases, meaning if you move the needle twice
 // to the right after seq_1006, you will need to move it 3 times back for seq_1005, this is the behaviour in OSRS
-[proc,get_sextant_needle_max](int)
+[proc,get_sextant_needle_max]()(int)
 return (calc(~get_sextant_needle_min + 45));
 
-[proc,get_sextant_needle_min](int)
+[proc,get_sextant_needle_min]()(int)
 return (calc(15 + ~get_sextant_frame));
 
-[proc,get_sextant_horizon](int)
+[proc,get_sextant_horizon]()(int)
 return (getbit_range(%temp, 0, 7));
 
-[proc,get_sextant_sun](int)
+[proc,get_sextant_sun]()(int)
 return (getbit_range(%temp, 8, 15));
 
-[proc,get_sextant_frame](int)
+[proc,get_sextant_frame]()(int)
 return (getbit_range(%temp, 16, 23));
 
-[proc,get_sextant_needle](int)
+[proc,get_sextant_needle]()(int)
 return (getbit_range(%temp, 24, 31));
 
 [label,output_sextant_coords]

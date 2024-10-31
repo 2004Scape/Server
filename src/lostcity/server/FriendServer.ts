@@ -7,6 +7,7 @@ import { FriendServerRepository } from '#lostcity/server/FriendServerRepository.
 
 import Environment from '#lostcity/util/Environment.js';
 import { ChatModePrivate } from '#lostcity/util/ChatModes.js';
+import { printInfo } from '#lostcity/util/Logger.js';
 
 /**
  * client -> server opcodes for friends server
@@ -50,7 +51,7 @@ export class FriendServer {
 
     constructor() {
         this.server = new WebSocketServer({ port: Environment.FRIEND_PORT, host: '0.0.0.0' }, () => {
-            console.log(`Friend server listening on port ${Environment.FRIEND_PORT}`);
+            printInfo(`Friend server listening on port ${Environment.FRIEND_PORT}`);
         });
 
         this.server.on('connection', (socket: WebSocket) => {
@@ -80,7 +81,7 @@ export class FriendServer {
 
                         this.repository.initializeWorld(world, WORLD_PLAYER_LIMIT);
 
-                        // console.log(`[Friends]: World ${world} connected`);
+                        // printDebug(`[Friends]: World ${world} connected`);
                     } else if (type === FriendsClientOpcodes.PLAYER_LOGIN) {
                         if (world === null) {
                             world = message.world as number;
@@ -114,7 +115,7 @@ export class FriendServer {
                             return;
                         }
 
-                        // console.log(`[Friends]: Player ${fromBase37(username37)} (${privateChat}) logged in to world ${world}`);
+                        // printDebug(`[Friends]: Player ${fromBase37(username37)} (${privateChat}) logged in to world ${world}`);
 
                         // notify the player who just logged in about their friends
                         // we can use `socket` here because we know the player is connected to this world
@@ -142,7 +143,7 @@ export class FriendServer {
                         const username37 = BigInt(message.username37);
                         const username = fromBase37(username37);
 
-                        // console.log(`[Friends]: Player ${username} logged out of world ${world}`);
+                        // printDebug(`[Friends]: Player ${username} logged out of world ${world}`);
 
                         // remove player from previous world, if any
                         this.repository.unregister(username37);
@@ -173,7 +174,7 @@ export class FriendServer {
                             privateChat = ChatModePrivate.ON;
                         }
 
-                        // console.log(`[Friends]: Player ${username} set chat mode to ${privateChat}`);
+                        // printDebug(`[Friends]: Player ${username} set chat mode to ${privateChat}`);
 
                         this.repository.setChatMode(username37, privateChat);
                         await this.broadcastWorldToFollowers(username37);

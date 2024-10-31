@@ -1,15 +1,15 @@
 [opnpc1,romeo]
 switch_int (%romeojuliet_progress) {
-    case ^romeojuliet_not_started: @romeojuliet_start;
-    case ^romeojuliet_spoken_romeo: ~chatnpc("<p,sad>Please find my Juliet, I am so, so sad.");
-    case ^romeojuliet_spoken_juliet: @romeo_messagefrom;
-    case ^romeojuliet_passed_message: 
+    case ^romeojuliet_not_started : @romeojuliet_start;
+    case ^romeojuliet_spoken_romeo : ~chatnpc("<p,sad>Please find my Juliet, I am so, so sad.");
+    case ^romeojuliet_spoken_juliet : @romeo_messagefrom;
+    case ^romeojuliet_passed_message :
         ~chatnpc("<p,sad>Please friend, how goes our quest?");
         ~chatnpc("<p,sad>Father Lawrence must be told. Only he can help.");
-    case ^romeojuliet_spoken_father: @romeo_father;
-    case ^romeojuliet_spoken_apothecary: @romeo_potion;
-    case ^romeojuliet_juliet_crypt: @romeo_allset;
-    case ^romeojuliet_complete:
+    case ^romeojuliet_spoken_father : @romeo_father;
+    case ^romeojuliet_spoken_apothecary : @romeo_potion;
+    case ^romeojuliet_juliet_crypt : @romeo_allset;
+    case ^romeojuliet_complete :
         ~chatnpc("<p,sad>I heard Juliet had died. Terrible business.");
         ~chatnpc("<p,happy>Her cousin and I are getting on well though.|Thanks for your help!");
 }
@@ -19,17 +19,17 @@ switch_int (%romeojuliet_progress) {
 ~chatnpc("<p,sad>Kind friend, have you seen Juliet?");
 ~chatnpc("<p,sad>She's disappeared and I can't find her anywhere.");
 switch_int(~p_choice3("Yes, I have seen her.", 1, "No, but that's girls for you.", 2, "Can I help find her for you?", 3)) {
-    case 1:
+    case 1 :
         ~chatplayer("<p,happy>Yes, I have seen her.");
         ~chatplayer("<p,shifty>I think it was her... Blonde? A bit stressed?");
         ~chatnpc("<p,happy>Yes, that sounds like her.|Please tell her I long to be with her.");
         @multi2("Yes, I will tell her.", romeo_tell_her, "Sorry, I am too busy. Maybe later?", romeo_busy);
-    case 2:
+    case 2 :
         ~chatplayer("<p,happy>No, but that's girls for you.");
         ~chatnpc("<p,sad>Not my dear Juliet, she is different.");
         ~chatnpc("<p,quiz>Could you find her for me?|Please tell her I long to be with her.");
         @multi2("Yes, I will tell her how you feel.", romeo_tell_her, "I can't, it sounds like work to me.", romeo_work);
-    case 3:
+    case 3 :
         ~chatplayer("<p,happy>Can I help find her for you?");
         ~chatnpc("<p,happy>Oh would you? That would be wonderful!");
         ~chatnpc("<p,happy>Please tell her I long to be with her.");

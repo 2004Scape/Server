@@ -26,6 +26,7 @@ import Obj from '#lostcity/entity/Obj.js';
 import Npc from '#lostcity/entity/Npc.js';
 import Player from '#lostcity/entity/Player.js';
 import Environment from '#lostcity/util/Environment.js';
+import { printWarning } from '#lostcity/util/Logger.js';
 
 export type CommandHandler = (state: ScriptState) => void;
 export type CommandHandlers = {
@@ -146,12 +147,12 @@ export default class ScriptRunner {
                 ScriptRunner.executeInner(state, state.script.opcodes[++state.pc]);
             }
             const time: number = ((performance.now() * 1000) - start) | 0;
-            if (Environment.NODE_DEBUG_PROFILE && time > 1000) {
+            if (Environment.NODE_DEBUG_PROFILER && time > 1000) {
                 const message: string = `Warning [cpu time]: Script: ${state.script.info.scriptName}, time: ${time}us, opcount: ${state.opcount}`;
                 if (state.self instanceof Player) {
                     state.self.wrappedMessageGame(message);
                 } else {
-                    console.warn(message);
+                    printWarning(message);
                 }
             }
         } catch (err: any) {
@@ -171,8 +172,6 @@ export default class ScriptRunner {
                     err.message = '.' + err.message;
                 }
             }
-
-            // console.error(err);
 
             if (state.self instanceof Player) {
                 state.self.wrappedMessageGame(`script error: ${err.message}`);
@@ -230,7 +229,6 @@ export default class ScriptRunner {
 
     static executeInner(state: ScriptState, opcode: number) {
         const handler = ScriptRunner.HANDLERS[opcode];
-        // console.log('Executing', ScriptOpcode[opcode]);
         if (!handler) {
             throw new Error(`Unknown opcode ${opcode}`);
         }

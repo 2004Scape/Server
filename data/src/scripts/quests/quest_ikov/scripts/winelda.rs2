@@ -1,6 +1,6 @@
 [opnpc1,winelda]
 switch_int (%ikov_progress) {
-    case ^ikov_spoken_winelda:
+    case ^ikov_spoken_winelda :
         if(inv_total(inv, limpwurt_root) >= 20) {
             ~chatplayer("<p,happy>I've got you the limpwurt roots!");
             ~chatnpc("<p,happy>Good! Good! My potion is nearly ready! Bubble, bubble, toil and trouble!");
@@ -22,18 +22,18 @@ switch_int (%ikov_progress) {
         ~chatnpc("<p,happy>Hehe! We see you're in a pickle!");
         ~chatnpc("<p,neutral>Wants to be getting over the nasty lava do we?");
         switch_int(~p_choice3("Nah, not bothered!", 1, "Yes we do!", 2, "Yes I do!", 3)) {
-            case 1:
+            case 1 :
                 ~chatplayer("<p,neutral>Nah, not bothered!");
                 ~chatnpc("<p,happy>Hehe! Ye'll come back! They always come back!");
-            case 2:
+            case 2 :
                 ~chatplayer("<p,neutral>Yes we do!");
                 ~chatnpc("<p,sad>Mocking us are we? Clever one aren't we?");
                 @winelda_explain;
-            case 3:
+            case 3 :
                 ~chatplayer("<p,neutral>Yes I do!");
                 @winelda_explain;
         }
-    case default:
+    case default :
         ~chatplayer("<p,neutral>Hi again. Could you do the honours again please?");
         ~chatnpc("<p,happy>Certainly! We helps those that helps poor Winelda!");
         @winelda_teleport;

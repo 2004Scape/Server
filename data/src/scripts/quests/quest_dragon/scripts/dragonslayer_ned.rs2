@@ -44,15 +44,16 @@ if ((%dragon_progress = ^quest_dragon_ned_given_map | %dragon_progress = ^quest_
     // https://youtu.be/uETjjZFKWus?list=PLn23LiLYLb1aqrojPTi1_Np81LJku2Nd0&t=10
     // boat just crashed on crandor:
     def_int $choice = ~p_choice2("Is the ship ready to sail back?", 1, "So are you enjoying this exotic island vacation?", 2);
-    // MISSING DIALOGUE:
+    // https://storage.googleapis.com/tannerdino/images/crandorned2.png
+    // same as rsc
     if ($choice = 1) {
         ~chatplayer("<p,quiz>Is the ship ready to sail back?");
-        ~chatnpc("<p,sad>I'm afraid not. It looks like we're stranded."); // complete guess
+        ~chatnpc("<p,neutral>Well when we arrived, the ship took a nasty jar from those rocks.|We may be stranded.");
         return;
     }
     if ($choice = 2) {
         ~chatplayer("<p,quiz>So are you enjoying this exotic island vacation?");
-        ~chatnpc("<p,sad>Not really. I'm afraid we're stranded here."); // complete guess
+        ~chatnpc("<p,neutral>Well it would have been better if I'd brought my sun|lotion. Oh, and the skeletons which won't let me leave|the ship probably aren't helping either.");
         return;
     }
 }

@@ -14,7 +14,6 @@ export default class ObjType extends ConfigType {
 
     static load(dir: string) {
         if (!fs.existsSync(`${dir}/server/obj.dat`)) {
-            console.log('Warning: No obj.dat found.');
             return;
         }
 
@@ -26,7 +25,6 @@ export default class ObjType extends ConfigType {
     static async loadAsync(dir: string) {
         const file = await fetch(`${dir}/server/obj.dat`);
         if (!file.ok) {
-            console.log('Warning: No obj.dat found.');
             return;
         }
 

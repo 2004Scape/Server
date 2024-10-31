@@ -44,6 +44,7 @@ womanwear=model_432_obj_wear,0
 category=armour_legs
 weight=20lb
 tradeable=yes
+respawnrate=2000
 param=magicattack,-21
 param=rangeattack,-7
 param=stabdefence,17

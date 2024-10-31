@@ -11,7 +11,7 @@ if(%scorpius_given_symbol = 1) {
     $option = ~p_choice2("I seek your wisdom.", 1, "I have come to kill you.", 4);
 }
 switch_int($option) {
-    case 1:
+    case 1 :
         ~chatplayer("<p,neutral>I seek your wisdom.");
         ~chatnpc("<p,neutral>Indeed, I feel you have beheld the far places in the heavens.");
         ~chatnpc("<p,neutral>My Lord instructs me to help you.");
@@ -19,7 +19,7 @@ switch_int($option) {
         %scorpius_given_symbol = 1;
         inv_add(inv, unholy_mould, 1);
         mes("The ghost gives you a casting mould.");
-    case 2:
+    case 2 :
         ~chatplayer("<p,neutral>I have come to seek a blessing.");
         if(inv_total(inv, unpowered_symbol) > 0) {
             ~chatnpc("<p,happy>I see you have the unholy symbol of our Lord.|I will bless it for you.");
@@ -37,7 +37,7 @@ switch_int($option) {
         } else {
             ~chatnpc("<p,angry>No blessings will be given to those|who have no symbol of our Lord's love.");
         }
-    case 3:
+    case 3 :
         ~chatplayer("<p,neutral>I need another mould for the unholy symbol.");
         if(inv_total(inv, unholy_mould) > 0) {
             ~chatnpc("<p,neutral>One you already have, another is not needed.");
@@ -47,7 +47,7 @@ switch_int($option) {
         ~chatnpc("<p,neutral>To lose an object is easy to replace.|To lose the affections of our Lord is impossible to forgive.");
         inv_add(inv, unholy_mould, 1);
         mes("The ghost hands you another mould.");
-    case 4:
+    case 4 :
         ~chatplayer("<p,angry>I have come to kill you.");
         ~chatnpc("<p,neutral>The might of mortals, to me, is as the dust to the sea.");
 }

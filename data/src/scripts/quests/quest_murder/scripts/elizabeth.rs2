@@ -1,7 +1,7 @@
 [opnpc1,elizabeth]
 switch_int(%murder_progress) { 
-    case ^murder_not_started: mes("She is ignoring you.");
-    case ^murder_started:
+    case ^murder_not_started : mes("She is ignoring you.");
+    case ^murder_started :
         ~chatplayer("<p,neutral>I'm here to help the guards with their investigation.");
         ~chatnpc("<p,neutral>What's so important you need to bother me with then?");
         def_int $option;
@@ -15,15 +15,15 @@ switch_int(%murder_progress) {
             $option = ~p_choice2("Who do you think is responsible?", 1, "Where were you when the murder happened?", 2);
         }
         switch_int($option) {
-            case 1:
+            case 1 :
                 ~chatplayer("<p,neutral>Who do you think is responsible?");
                 ~chatnpc("<p,neutral>Could have been anyone. The old man was an idiot. He's been asking for it for years.");
-            case 2:
+            case 2 :
                 ~chatplayer("<p,neutral>Where were you when the murder happened?");
                 ~chatnpc("<p,neutral>I was out.");
                 ~chatplayer("<p,neutral>Care to be any more specific?");
                 ~chatnpc("<p,angry>Not really. I don't have to justify myself to the likes of you, you know. I know the King personally you know. Now are we finished here?");
-            case 3:
+            case 3 :
                 ~chatplayer("<p,confused>Do you recognise this thread?");
                 ~mesbox("You show her the thread from the study window.");
                 if(inv_total(inv, murder_blue_thread) > 0) {
@@ -33,14 +33,14 @@ switch_int(%murder_progress) {
                     return;
                 }
                 ~chatnpc("<p,confused>It's some thread. You're not very good at this whole investigation thing are you?");
-            case 4:
+            case 4 :
                 ~chatplayer("<p,neutral>Why'd you buy poison the other day?");
                 ~chatnpc("<p,neutral>There was a nest of mosquitos under the fountain|in the garden, which I killed with poison the other day.|You can see for yourself if you're capable|of managing that, which I somehow doubt.");
                 ~chatplayer("<p,angry>I hate mosquitos!");
                 ~chatnpc("<p,neutral>Doesn't everyone?");
-                if(%murder_murderer_id = ^murderer_elizabeth & %murder_poisonproof_progress = ^poisonproof_spoken_salesman) { // TODO: figure out exactly when these would get set for each murderer
+                if(%murder_murderer_id = ^murderer_elizabeth & %murder_poisonproof_progress = ^poisonproof_spoken_salesman) { // todo: figure out exactly when these would get set for each murderer
                     %murder_poisonproof_progress = ^poisonproof_spoken_murderer;
                 }
         }
-    case ^murder_complete: ~chatnpc("<p,neutral>Apparently you aren't as stupid as you look.");
+    case ^murder_complete : ~chatnpc("<p,neutral>Apparently you aren't as stupid as you look.");
 }

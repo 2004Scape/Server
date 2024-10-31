@@ -1,9 +1,9 @@
 [opnpc1,chompybird_fycie]
 switch_int(%chompybird_progress) {
-    case ^chompybird_not_started:
+    case ^chompybird_not_started :
         ~chatnpc("<p,neutral>You's better talk to Dad, We not talk to wierdly|'umans.");
-    case ^chompybird_started:
-        // TODO is this the right check? source: https://oldschool.runescape.wiki/w/Transcript:Big_Chompy_Bird_Hunting#Talking_to_Fycie_after_buying_her_feathers
+    case ^chompybird_started :
+        // todo is this the right check? source: https://oldschool.runescape.wiki/w/Transcript:Big_Chompy_Bird_Hunting#Talking_to_Fycie_after_buying_her_feathers
         if (inv_total(inv, feather) >= 25) {
             ~chatnpc("<p,neutral>I's sorry creature, I don't got no more flufsies! But I got lots of bright pretties! Hope you's get da stabbers for Dad soonly!");
             return;
@@ -19,7 +19,7 @@ switch_int(%chompybird_progress) {
         ~chatnpc("<p,neutral>Mee's wants lots of bright pretties, this many!|@blu@~ Fycie quickly opens and closes her hands in front ~|@blu@~ of you to indicate a number of bright pretties. ~|@blu@~ It looks like she wants 50 gold coins.~");
 
         switch_int(~p_choice2("Ok, I'll give you 50 bright pretties.", 1, "Er, sorry, I can't give you that many...", 2)) {
-            case 1:
+            case 1 :
                 ~chatplayer("<p,sad>Ok, I'll give you 50 bright pretties.");
 
                 if (inv_total(inv, coins) < 50) {
@@ -28,7 +28,7 @@ switch_int(%chompybird_progress) {
                 }
 
                 if (inv_freespace(inv) = 0 & inv_total(inv, feather) = 0) {
-                    // TODO what to do?
+                    // todo what to do?
                     return;
                 }
 
@@ -37,15 +37,15 @@ switch_int(%chompybird_progress) {
                 inv_del(inv, coins, 50);
                 inv_add(inv, feather, 25);
                 ~chatnpc("<p,happy>Ok, dat's a good 'un, I got da bright pretties and you got da flufsies!");
-            case 2:
+            case 2 :
                 ~chatplayer("<p,neutral>Er, sorry, I can't give you that many...");
                 ~chatnpc("<p,angry>Well, you not have da flufsies den!");
         }
 
-    case ^chompybird_shown_toad:
+    case ^chompybird_shown_toad :
         ~chatnpc("<p,neutral>You's better talk to Dad, him chasey sneaky chompy.");
 
-    case ^chompybird_told_to_cook_chompy:
+    case ^chompybird_told_to_cook_chompy :
         def_int $flavour = getbit_range(%chompybird_kills, ^chompybird_varbit_fycie_flavour_start, ^chompybird_varbit_fycie_flavour_end);
 
         if ($flavour = 0) {
@@ -60,11 +60,11 @@ switch_int(%chompybird_progress) {
 
         ~chatnpc("<p,neutal>Dad say's you's roastling da chompy for us! Slurp!|Me's wants <$chompy_flavour> wiv mine! Yummy, can't wait|to eats it.");
         
-    case ^chompybird_chompy_cooked:
-        // TODO mesanim TBC
+    case ^chompybird_chompy_cooked :
+        // todo mesanim TBC
         ~chatnpc("<p,neutral>Go talk to Dad, him chasey sneaky chompy.");
 
-    case default:
-        // TODO TBC other states
+    case default :
+        // todo TBC other states
         return;
 }

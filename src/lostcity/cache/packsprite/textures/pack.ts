@@ -11,9 +11,6 @@ export async function packClientTexture() {
         return;
     }
 
-    //console.log('Packing textures.jag');
-    //console.time('textures.jag');
-
     const order = [
         '0.dat',
         '1.dat',
@@ -109,5 +106,4 @@ export async function packClientTexture() {
     for (const packet of Object.values(files)) {
         packet.release();
     }
-    //console.timeEnd('textures.jag');
 }

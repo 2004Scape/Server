@@ -12,12 +12,12 @@ if (~hero_in_progress = true) {
     $option = ~p_choice2("Let's see what you've got then.", 1, "Sorry, I'm not interested.", 2);
 }
 switch_int($option) {
-    case 1: 
+    case 1 :
         ~chatplayer("<p,neutral>Let's see what you've got then.");
         ~openshop_activenpc;
-    case 2: 
+    case 2 :
         ~chatplayer("<p,neutral>Sorry, I'm not interested.");
-    case 3: 
+    case 3 :
         ~chatplayer("<p,neutral>I want to find out how to catch a lava eel.");
         ~chatnpc("<p,neutral>Lava eels eh? That's a tricky one that is, you'll need a|lava-proof fishing line. The method for making this would|be to take an ordinary fishing rod, and then cover it|with the fire-proof Blamish Oil.");
         if(inv_total(inv, blamish_snail_slime) = 0) {

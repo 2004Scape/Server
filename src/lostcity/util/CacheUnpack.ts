@@ -6,6 +6,7 @@ import Jagfile from '#jagex2/io/Jagfile.js';
 import Packet from '#jagex2/io/Packet.js';
 
 import { countPix, pixSize, unpackPix } from '#lostcity/util/PixUnpack.js';
+import { printError, printInfo } from './Logger.js';
 
 export function readJag(cache: FileStream, id: number): Jagfile | null {
     const raw = cache.read(0, id);
@@ -337,7 +338,7 @@ export function unpackConfig(jag: Jagfile | null, name: string, decoder: (dat: P
 
             const out = decoder(dat, code);
             if (out === null) {
-                console.log('Unrecognized ' + name + ' config code: ' + code);
+                printError('Unrecognized ' + name + ' config code: ' + code);
                 process.exit(1);
             }
 
@@ -351,7 +352,7 @@ export function unpackConfig(jag: Jagfile | null, name: string, decoder: (dat: P
         fs.appendFileSync(srcOut, src.join('\n') + '\n');
     }
 
-    console.log(count, name + ' configs unpacked');
+    printInfo(count + ' ' + name + ' configs unpacked');
 }
 
 

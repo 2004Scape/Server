@@ -3,7 +3,7 @@ spotanim_map(small_smokepuff, npc_coord, 124, 0);
 sound_synth(smokepuff, 0, 0);
 npc_anim(emote_bow, 20);
 npc_say("Greetings <displayname>!");
-%npc_attacking_uid = uid;
+%npc_macro_event_target = uid;
 
 // to match genie in this video: https://www.youtube.com/watch?v=el-h9hbSH80&t=293s
 npc_queue(4, 0, 20);
@@ -15,7 +15,7 @@ npc_setmode(playerfollow);
 
 // warnings https://youtu.be/Ai89wqupYqA
 // https://youtu.be/HpmsgVshwxg?t=267
-if (finduid(%npc_attacking_uid) = true) {
+if (finduid(%npc_macro_event_target) = true) {
     if (%macro_event_uid ! npc_uid) {
         npc_queue(5, 0, 2); // just incase
         return;
@@ -30,14 +30,19 @@ if (finduid(%npc_attacking_uid) = true) {
         npc_anim(emote_angry, 20);
         npc_say("It's really rude to ignore someone, <displayname>!");
     } else if (last_int = 3) { // fail
-        // https://youtu.be/Ai89wqupYqA?t=45
-        ~macro_event_fail_teleport;
-        ~macro_event_fail_note_inv; // not sure if this existed but Sudden and a couple others remember it being a thing
+        queue(mysterious_old_man_fail, 0);
         return;
     }
     npc_queue(4, add(last_int, 1), 20);
 }
 
+
+[queue,mysterious_old_man_fail]
+if (npc_finduid(%macro_event_uid) = true) {
+    // https://youtu.be/Ai89wqupYqA?t=45
+    ~macro_event_fail_teleport;
+    ~macro_event_fail_note_inv; // not sure if this existed but Sudden and a couple others remember it being a thing
+}
 
 [ai_queue5,macro_event_mysterious_old_man_general] // despawn
 npc_anim(emote_cry, 20);
@@ -51,9 +56,9 @@ npc_delay(2);
 ~macro_event_disappear;
 
 [opnpc1,macro_event_mysterious_old_man_general]
-if (uid ! %npc_attacking_uid) {
+if (uid ! %npc_macro_event_target) {
     // https://youtu.be/U_TRFGTfIY0?t=276
-    if (.finduid(%npc_attacking_uid) = true) {
+    if (.finduid(%npc_macro_event_target) = true) {
         ~chatnpc("<p,neutral>Sorry, but I'm trying to talk to <.displayname>. However he appears to be ignoring me...");
     }
     return;
@@ -107,7 +112,7 @@ if (~macro_event_lost = true) {
     npc_queue(5, 0, 0);
     return;
 }
-if (finduid(%npc_attacking_uid) = true) {
+if (finduid(%npc_macro_event_target) = true) {
     if (%macro_event_uid = npc_uid) {
         npc_setmode(playerfollow); // this is here because they used ~chatnpc back in the day, which sets the npc
     }

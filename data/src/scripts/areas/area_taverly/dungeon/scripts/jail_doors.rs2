@@ -14,8 +14,8 @@ if(last_useitem = dusty_key) {
 
 [oploc1,loc_37] // Might be used somewhere else?
 switch_coord(loc_coord) {
-    case 0_40_150_35_57: @clock_tower_first_door_for_rat_cage;
-    case default: mes("This door doesn't seem to open from here...");
+    case 0_40_150_35_57 : @clock_tower_first_door_for_rat_cage;
+    case default : mes("This door doesn't seem to open from here...");
 }
 
 [label,unlock_taverly_jaildoor](boolean $key_used)

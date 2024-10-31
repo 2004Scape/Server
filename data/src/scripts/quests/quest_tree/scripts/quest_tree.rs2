@@ -1,8 +1,8 @@
 [oploc2,loc_2181]
 switch_int(%tree_progress) {
-    case ^tree_not_started, ^tree_started, ^tree_spoken_montai, ^tree_given_logs_montai:
+    case ^tree_not_started, ^tree_started, ^tree_spoken_montai, ^tree_given_logs_montai :
         ~mesbox("The ballista is damaged. It cannot be used until the gnomes have finished their repairs.");    
-    case ^tree_finding_trackers:
+    case ^tree_finding_trackers :
         // Works different when compared to OSRS/2007, have to enter in coordinates given by the gnomes manually,
         // also don't actually have to talk to the gnomes based of what RSC has (maybe this is why it was changed)
         // My guess is that it was probably changed at the same time as the tracker gnome name changes (between July and Sept 2005)
@@ -25,7 +25,7 @@ switch_int(%tree_progress) {
             return;
         }
         ~mesbox("...straight over the Khazard stronghold, into the valleys beyond. You've missed the target.");
-    case default: 
+    case default :
         ~mesbox("The Khazard stronghold has already been breached.");
 }
 
@@ -54,7 +54,7 @@ if(%tree_progress >= ^tree_ballista_fired) {
     ~agility_exactmove(human_walk_crumbledwall, 30, 2, $start, movecoord($start, 0, 0, 2), 30, 100, ^exact_north, true);
     p_teleport(movecoord(coord, 0, 0, 1));
     if(%tree_progress = ^tree_ballista_fired & npc_find(coord, khazard_commander, 4, 0) = true) {
-        // TODO: OSRS respawns the NPC if dead, but it also doesn't have this cutscene (prob cause of the delays + aggo npc)
+        // todo: OSRS respawns the NPC if dead, but it also doesn't have this cutscene (prob cause of the delays + aggo npc)
         p_delay(1);
         npc_say("What? How did you manage to get in here.");
         p_delay(2);

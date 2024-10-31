@@ -113,26 +113,26 @@ npc_setmode(null);
 
 [opnpcu,green_sheep]
 switch_obj(last_useitem) {
-    case cattle_prod: @cattle_prod_use_message;
-    case poisoned_feed: @poison_sheep(npc_type);
+    case cattle_prod : @cattle_prod_use_message;
+    case poisoned_feed : @poison_sheep(npc_type);
 }
 
 [opnpcu,red_sheep]
 switch_obj(last_useitem) {
-    case cattle_prod: @cattle_prod_use_message;
-    case poisoned_feed: @poison_sheep(npc_type);
+    case cattle_prod : @cattle_prod_use_message;
+    case poisoned_feed : @poison_sheep(npc_type);
 }
 
 [opnpcu,blue_sheep]
 switch_obj(last_useitem) {
-    case cattle_prod: @cattle_prod_use_message;
-    case poisoned_feed: @poison_sheep(npc_type);
+    case cattle_prod : @cattle_prod_use_message;
+    case poisoned_feed : @poison_sheep(npc_type);
 }
 
 [opnpcu,yellow_sheep]
 switch_obj(last_useitem) {
-    case cattle_prod: @cattle_prod_use_message;
-    case poisoned_feed: @poison_sheep(npc_type);
+    case cattle_prod : @cattle_prod_use_message;
+    case poisoned_feed : @poison_sheep(npc_type);
 }
 
 [label,poison_sheep](npc $npc)
