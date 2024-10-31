@@ -56,8 +56,6 @@ switch_int (%fluffs_progress) {
         inv_add(inv, chocolate_cake, 1);
         inv_add(inv, stew, 1);
         p_delay(4);
-        %fluffs_progress = ^fluffs_complete;
-        %questpoints = calc(%questpoints + ^fluffs_questpoints);
         queue(fluffs_complete, 0);
     case ^fluffs_complete :
         if (getbit_range(%cat_growth, 20, 26) = 100 & inv_total(inv, cat_training_medal) = 0) {

@@ -44,3 +44,10 @@ if ($random < 64) {
 } else {
     obj_add(npc_coord, obj_548, 1, ^lootdrop_duration);
 }
+
+[opnpc2,_macro_event_shade]
+if (%npc_macro_event_target ! uid) {
+    mes("It's not here for you."); // from strange plant
+    return;
+}
+@player_combat_start;

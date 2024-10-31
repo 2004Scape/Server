@@ -13,7 +13,7 @@ if (random(21) = 0) {
 
 [oploc2,loc_389]
 p_arrivedelay;
-if (random(^findsomethingnice_chance) = 0) { // complete guess
+if (random(^findsomethingnice_chance) = 0 & ~in_tutorial_island(coord) = false) { // complete guess
     mes("You search the wardrobe."); // guess
     p_delay(2);
     ~findsomethingnice;

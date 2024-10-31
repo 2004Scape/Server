@@ -30,6 +30,7 @@ if (finduid(%npc_macro_event_target) = true) {
         // todo: figure out the message that goes here
         %aggressive_npc = npc_uid; // interupt the player if they're in combat https://youtu.be/tw66JWQzpD0?t=32
         npc_setmode(opplayer2);
+        %npc_macro_event_status = ^drunken_dwarf_angry;
         return;
     }
     npc_queue(4, add(last_int, 1), 10);
@@ -62,12 +63,16 @@ npc_queue(6, 0, 0); // say good bye
 ~chatnpc("<p,drunk>I 'new it were you matey! 'Ere, have some ob the good stuff!"); // osrs
 
 [ai_timer,macro_event_drunken_dwarf]
-if (~npc_out_of_combat = false) {
+if (%npc_macro_event_status = ^drunken_dwarf_angry) {
+    if (~macro_event_lost_hostile = true) {
+        // https://youtu.be/PhAjUCWSoOI?list=PLn23LiLYLb1bQ7Hwp77KoNBjKvpZQTfJT&t=79
+        // https://youtu.be/PhAjUCWSoOI?list=PLn23LiLYLb1bQ7Hwp77KoNBjKvpZQTfJT&t=81
+        npc_queue(5, 0, 0); // despawn
+    }
     return;
 }
-if (~macro_event_lost = true) { // https://youtu.be/PhAjUCWSoOI?list=PLn23LiLYLb1bQ7Hwp77KoNBjKvpZQTfJT&t=79
-    // https://youtu.be/PhAjUCWSoOI?list=PLn23LiLYLb1bQ7Hwp77KoNBjKvpZQTfJT&t=81
-    npc_queue(5, 0, 0); // despawn
+if (~macro_event_lost = true) {
+    npc_queue(5, 0, 0);
     return;
 }
 if (finduid(%npc_macro_event_target) = true) {
