@@ -8,7 +8,7 @@ if(%elena_progress ! ^elena_complete) {
     return;
 }
 // https://youtu.be/lw1AzW2OoT0?si=JAeu3X1AvUCdTpgq&t=1020 (linebreak from rsc)
-~objboxt(elena_teleport_scroll, "You memorise what is written on the scroll.");
+~objbox(elena_teleport_scroll, "You memorise what is written on the scroll.", 250, 0, 0);
 %elena_progress = ^elena_complete_read_scroll;
 // sound wom_bless
 inv_del(inv, elena_teleport_scroll, 1);

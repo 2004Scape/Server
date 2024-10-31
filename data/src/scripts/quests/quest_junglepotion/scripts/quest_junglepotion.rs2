@@ -52,7 +52,7 @@ p_telejump(0_44_48_7_48);
 [proc,junglepotion_pick_herb](string $str, namedobj $unid, loc $loc)
 mes("You search the <$str>...");
 if(inv_freespace(inv) = 0) {
-	~objbox($unid, "You find a herb, but you have no place to store it in your inventory.");
+	~objbox($unid, "You find a herb, but you have no place to store it in your inventory.", 250, 0, divide(^objbox_height, 2));
 	return;
 }
 switch_namedobj($unid) {
@@ -66,7 +66,7 @@ inv_add(inv, $unid, 1);
 if ($loc ! null) {
 	loc_change($loc, 100);
 }
-~objbox($unid, "You find a herb.");
+~objbox($unid, "You find a herb.", 250, 0, divide(^objbox_height, 2));
 
 [queue,junglepotion_quest_complete]
 %junglepotion_progress = ^junglepotion_complete;

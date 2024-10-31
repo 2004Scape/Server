@@ -36,7 +36,7 @@ switch_int(~p_choice2("Yeah, Okay, here you go.", 1, "20 gold coins? That's an o
                     return;
                 }
                 inv_add(inv, bear_fur, 1);
-                ~objboxt(bear_fur, "Baraek sells you a fur.");
+                ~objbox(bear_fur, "Baraek sells you a fur.", 250, 0, 0);
             } else if($option = 2) {
                 ~chatplayer("<p,neutral>No thanks, I'll leave it.");
                 ~chatnpc("<p,neutral>It's your loss mate.");
@@ -44,7 +44,7 @@ switch_int(~p_choice2("Yeah, Okay, here you go.", 1, "20 gold coins? That's an o
             return;
         }
         inv_add(inv, bear_fur, 1);
-        ~objbox(bear_fur, "Baraek sells you a fur.");
+        ~objbox(bear_fur, "Baraek sells you a fur.", 250, 0, divide(^objbox_height, 2));
     case 2 :
         ~chatplayer("<p,angry>20 gold coins? That's an outrage!");
         ~chatnpc("<p,sad>Well, I can't go any cheaper than that mate.|I have a family to feed.");
@@ -57,7 +57,7 @@ switch_int(~p_choice2("Yeah, Okay, here you go.", 1, "20 gold coins? That's an o
 [label,baraek_buy_fur]
 ~chatplayer("<p,quiz>Would you like to buy my fur?");
 ~chatnpc("<p,neutral>Let's have a look at it.");
-~objboxt(bear_fur, "You hand Baraek your fur to look at.");
+~objbox(bear_fur, "You hand Baraek your fur to look at.", 250, 0, 0);
 if_close;
 p_delay(3);
 ~chatnpc("<p,neutral>It's not in the best condition. I guess I could give you 12 coins for each one.");

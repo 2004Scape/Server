@@ -79,12 +79,12 @@ anim(null, $respawnrate);
 hint_stop();
 inv_add(inv, tutorial_logs, 1);
 ~tutorial_step_build_fire;
-~objboxt(tutorial_logs, "You get some logs.");
+~objbox(tutorial_logs, "You get some logs.", 250, 0, 0);
 
 [label,give_logs]
 inv_add(inv, tutorial_logs, 1);
 ~set_tutorial_progress;
-~objboxt(tutorial_logs, "You get some logs.");
+~objbox(tutorial_logs, "You get some logs.", 250, 0, 0);
 
 [oploc1,loc_3037]
 if (%tutorial_progress < ^survival_guide_cut_tree) {

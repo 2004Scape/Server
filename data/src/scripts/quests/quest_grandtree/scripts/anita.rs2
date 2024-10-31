@@ -14,7 +14,7 @@ if((%grandtree_progress = ^grandtree_clue_charlie | %grandtree_progress = ^grand
         ~chatnpc("<p,sad>You can't carry anymore. Come back when you have some space.");
         return;
     }
-    ~objboxt(gloughs_key, "Anita gives you a key.");
+    ~objbox(gloughs_key, "Anita gives you a key.", 250, 0, 0);
     inv_add(inv, gloughs_key, 1);
     ~chatnpc("<p,neutral>Thanks a lot.");
     ~chatplayer("<p,shifty>No...thank you!");

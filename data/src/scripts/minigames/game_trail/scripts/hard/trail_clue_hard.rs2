@@ -21,7 +21,7 @@ return(enum(int, namedobj, trail_hard_enum, random(enum_getoutputcount(trail_har
 [proc,give_trail_puzzle](namedobj $puzzle, string $text)
 inv_clear(trail_puzzle_inv);
 inv_add(inv, $puzzle, 1);
-~objboxt($puzzle, $text);
+~objbox($puzzle, $text, 250, 0, 0);
 
 [proc,progress_clue_hard](obj $current_clue, string $text)
 ~trail_clue_progress;
@@ -31,7 +31,7 @@ if(~trail_clue_hard_complete = true) {
 } else {
     def_namedobj $new_clue = ~trail_clue_hard_getrandom;
     inv_add(inv, $new_clue, 1);
-    ~objboxt($new_clue, $text);
+    ~objbox($new_clue, $text, 250, 0, 0);
 }
 
 [proc,trail_clue_hard_loc_interact](namedobj $clue)
@@ -41,5 +41,5 @@ if(~trail_clue_hard_complete = true) {
     ~trail_clue_hard_reward;
 } else {
     inv_add(inv, ~trail_clue_hard_getrandom, 1);
-    ~objboxt(trail_clue_hard_map001, "You've found another clue scroll!");
+    ~objbox(trail_clue_hard_map001, "You've found another clue scroll!", 250, 0, 0);
 }

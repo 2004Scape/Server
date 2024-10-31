@@ -108,7 +108,7 @@ if(inv_freespace(inv) = 0) {
 }
 if(%grandtree_progress = ^grandtree_released_prison) %grandtree_progress = ^grandtree_obtained_lumber_order;
 inv_add(inv, lumber_order, 1);
-~objboxt(lumber_order, "The foreman has given you the lumber order.");
+~objbox(lumber_order, "The foreman has given you the lumber order.", 250, 0, 0);
 ~chatplayer("<p,neutral>OK. I'll head off and give this order to Glough.");
 
 [label,foreman_attack]

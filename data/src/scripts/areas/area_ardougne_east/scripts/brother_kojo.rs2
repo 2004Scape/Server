@@ -11,14 +11,14 @@ if(~has_sextant_clue = true) {
         ~chatnpc("<p,happy>You can have this one! It's the display model.");
         inv_add(inv, trail_watch, 1);
         %trail_clue = setbit_range_toint(%trail_clue, ^trail_chart_spoken_kojo, 5, 8);
-        ~objbox(trail_watch, "Brother Kojo has given you a watch.");
+        ~objbox(trail_watch, "Brother Kojo has given you a watch.", 250, 0, divide(^objbox_height, 2));
         return;
     } else if(~get_chart_progress >= ^trail_chart_spoken_kojo & ~obj_gettotal(trail_watch) = 0) {
         // https://youtu.be/SN8Q0F7f6sg?si=B36aNd8DgnBRNn7X&t=212
         ~chatplayer("<p,neutral>I've lost that watch you gave me.");
         ~chatnpc("<p,happy>No problem, I have loads of them!");
         inv_add(inv, trail_watch, 1);
-        ~objboxt(trail_watch, "Brother Kojo has given you a watch.");
+        ~objbox(trail_watch, "Brother Kojo has given you a watch.", 250, 0, 0);
         return;
     }
 }

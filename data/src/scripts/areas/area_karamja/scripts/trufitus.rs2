@@ -83,7 +83,7 @@ if(%junglepotion_progress >= ^junglepotion_complete) {
             @multi2("How do I make a bronze necklace?", trufitus_bronzeneck, "What should I put on the necklace?", trufitus_putneck);
         case wampum_belt :
             if(%zombiequeen_progress = ^zombiequeen_not_started) {
-                ~objbox(wampum_belt, "You show Trufitus the Wampum belt, he studies it for a long time.");
+                ~objbox(wampum_belt, "You show Trufitus the Wampum belt, he studies it for a long time.", 250, 0, divide(^objbox_height, 2));
                 ~chatnpc("<p,neutral>Hello Bwana, this message from Mosol Rei bears bad news... Yes, things do look very bad indeed.");
                 @multi2("What do you know about Rashiliyia?", trufitus_rashiliyia, "Mosol Rei said something about a legend?", trufitus_legend);
             } else {
@@ -358,33 +358,33 @@ case ^junglepotion_get_snake_weed, ^junglepotion_get_ardrigal, ^junglepotion_get
 case ^junglepotion_found_snake_weed :
     %junglepotion_progress = ^junglepotion_get_ardrigal;
     inv_del(inv, $herb, 1);
-    ~objbox($herb, "You give the Snake Weed to <npc_name>.");
+    ~objbox($herb, "You give the Snake Weed to <npc_name>.", 250, 0, divide(^objbox_height, 2));
     ~chatnpc("<p,neutral>Great, you have the Snake Weed!|Many thanks. Ok, the next herb is called <oc_name(ardrigal)>.|It is related to the palm and grows|to the east in its brother's shady profusion.");
     ~chatnpc("<p,neutral>To the east you will find a small peninsula, it is just after the cliffs come down to meet the sands, here is where you should search for it.");
 case ^junglepotion_found_ardrigal :
     %junglepotion_progress = ^junglepotion_get_sito_foil;
     inv_del(inv, $herb, 1);
-    ~objbox($herb, "You give the Ardrigal to <npc_name>.");
+    ~objbox($herb, "You give the Ardrigal to <npc_name>.", 250, 0, divide(^objbox_height, 2));
     ~chatnpc("<p,neutral>Great, you have the Ardrigal! Many thanks.");
     ~chatnpc("<p,neutral>You are doing well Bwana. The next|herb is called Sito Foil, and it grows best|where the ground has been blackened|by the living flame.");
 case ^junglepotion_found_sito_foil :
     %junglepotion_progress = ^junglepotion_get_volencia_moss;
     inv_del(inv, $herb, 1);
-    ~objbox($herb, "You give the Sito Foil to <npc_name>.");
+    ~objbox($herb, "You give the Sito Foil to <npc_name>.", 250, 0, divide(^objbox_height, 2));
     ~chatnpc("<p,neutral>Well done Bwana, just two more herbs to collect.");
     ~chatnpc("<p,neutral>The next herb is called Volencia Moss.|It clings to rocks for its existence.|It is difficult to see, so you must search for it well.");
     ~chatnpc("<p,neutral>It prefers rocks of high metal content and a frequently disturbed environment. There is some, I believe to the south east of this village.");
 case ^junglepotion_found_volencia_moss :
     %junglepotion_progress = ^junglepotion_get_rogues_purse;
     inv_del(inv, $herb, 1);
-    ~objbox($herb, "You give the Volencia Moss to <npc_name>.");
+    ~objbox($herb, "You give the Volencia Moss to <npc_name>.", 250, 0, divide(^objbox_height, 2));
     ~chatnpc("<p,neutral>Ah Volencia Moss, beautiful. One final herb and the potion will be complete. This is the most difficult to find as it inhabits the darkness of the underground. It is called Rogues Purse, and is only to be found in");
     ~chatnpc("<p,neutral>caverns in the northern part of this island. A secret entrance to the caverns is set into the northern cliffs of this land. Take care Bwana as it may be dangerous.");
 case ^junglepotion_found_rogues_purse :
     // https://youtu.be/9LG-opZVpfY?si=fQ-DSP4VpQUVWiSb&t=835
     %junglepotion_progress = ^junglepotion_found_all_herbs;
     inv_del(inv, $herb, 1);
-    ~objbox($herb, "You give the Rogues Purse to <npc_name>.");
+    ~objbox($herb, "You give the Rogues Purse to <npc_name>.", 250, 0, divide(^objbox_height, 2));
     ~chatnpc("<p,neutral>Most excellent Bwana!|You have returned all the herbs to me|and, I can finish the preparations|for the potion, and at last divine with the gods.");
     ~chatnpc("<p,neutral>Many blessings on you!|I must now prepare,|please excuse me while I make|the arrangements.");
     @trufitus_finish_quest;
@@ -553,7 +553,7 @@ switch_int(~p_choice2("Yes, I will seriously look for Ah Za Rhoon and I'd apprec
 [label,trufitus_mosolgave]
 ~chatplayer("<p,neutral>Mosol gave me something to show you.");
 ~chatnpc("<p,neutral>Oh yes, let me see it then.");
-~objbox(wampum_belt, "You show Trufitus the Wampum belt, he studies it for a long time.");
+~objbox(wampum_belt, "You show Trufitus the Wampum belt, he studies it for a long time.", 250, 0, divide(^objbox_height, 2));
 ~chatnpc("<p,neutral>Yes, things do look very bad indeed.");
 @multi2("What do you know about Rashiliyia?", trufitus_rashiliyia, "Mosol Rei said something about a legend?", trufitus_legend);
 

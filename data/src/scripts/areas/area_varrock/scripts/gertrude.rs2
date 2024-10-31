@@ -69,7 +69,7 @@ switch_int (%fluffs_progress) {
             }
             ~chatnpc("<p,neutral>Here, I have a little present for you...");
             inv_add(inv, cat_training_medal, 1);
-            ~objbox(cat_training_medal, "Gertrude gives you a small medal.");
+            ~objbox(cat_training_medal, "Gertrude gives you a small medal.", 250, 0, divide(^objbox_height, 2));
             ~chatplayer("<p,neutral>Hey thanks Gertrude.");
             return;
         } //this is guessed off RSC. assuming her post-quest dialogue was changed later on.

@@ -28,4 +28,4 @@ if(inv_total(inv, trail_clue_medium_challenge_exp004) > 0) {
 }
 ~chatnpc("<p,confused>I've got a little problem for you to solve.");
 inv_add(inv, trail_clue_medium_challenge_exp004, 1);
-~objboxt(trail_clue_medium_challenge_exp004, "The salesman has given you a challenge scroll!");
+~objbox(trail_clue_medium_challenge_exp004, "The salesman has given you a challenge scroll!", 250, 0, 0);

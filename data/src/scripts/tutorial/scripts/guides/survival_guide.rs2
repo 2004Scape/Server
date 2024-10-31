@@ -35,15 +35,15 @@ if (~tutorial_has_obj_on_person(bronze_axe) = false & inv_total(inv, tinderbox) 
     ~doubleobjbox(tinderbox, bronze_axe, "The Survival Guide gives you a |@blu@Tinderbox@bla@ |and a |@blu@Bronze Hatchet!");
 } else if (~tutorial_has_obj_on_person(bronze_axe) = false) {
     inv_add(inv, bronze_axe, 1);
-    ~objboxt(bronze_axe, "The Survival Guide gives you a |@blu@Bronze Hatchet!");
+    ~objbox(bronze_axe, "The Survival Guide gives you a |@blu@Bronze Hatchet!", 250, 0, 0);
 }else if (inv_total(inv, tinderbox) < 1) {
     inv_add(inv, tinderbox, 1);
-    ~objboxt(tinderbox, "The Survival Guide gives you a |@blu@Tinderbox!");
+    ~objbox(tinderbox, "The Survival Guide gives you a |@blu@Tinderbox!", 250, 0, 0);
 }
 
 if (%tutorial_progress > ^survival_guide_open_skill_menu & inv_total(inv, net) < 1) {
     inv_add(inv, net, 1);
-    ~objbox(net, "The Survival Guide gives you a |@blu@Net!");
+    ~objbox(net, "The Survival Guide gives you a |@blu@Net!", 250, 0, divide(^objbox_height, 2));
 }
 
 // Used later for OSRS so we'll leave it.
@@ -71,7 +71,7 @@ while (npc_findnext = true) {
 inv_add(inv, net, 1);
 %tutorial_progress = ^survival_guide_fish_shrimps;
 ~tutorial_step_catch_shrimp;
-~objbox(net, "The Survival Guide gives you a |@blu@Net!");
+~objbox(net, "The Survival Guide gives you a |@blu@Net!", 250, 0, divide(^objbox_height, 2));
 ~survival_guide_replace_items;
 
 // https://youtu.be/TSx2-jjPeIs?t=31

@@ -509,64 +509,12 @@ if ($lines = 0) {
 }
 if_openchat($interface);
 
-[proc,objbox](obj $obj, string $string)
+[proc,objbox](obj $obj, string $string, int $scale, int $x, int $y)
 split_init($string, 380, 4, q8);
-def_int $page = 0;
-def_int $pagetotal = split_pagecount;
-while ($page < $pagetotal) {
-    ~objbox_page($obj, 250, 0, divide(^objbox_height, 2), $page);
-    p_pausebutton;
-    $page = calc($page + 1);
-}
-
-[proc,objboxt](obj $obj, string $string)
-split_init($string, 380, 4, q8);
-def_int $page = 0;
-def_int $pagetotal = split_pagecount;
-while ($page < $pagetotal) {
-    ~objbox_page($obj, 250, 0, 0, $page);
-    p_pausebutton;
-    $page = calc($page + 1);
-}
-
-[proc,objboxb](obj $obj, string $string)
-split_init($string, 380, 4, q8);
-def_int $page = 0;
-def_int $pagetotal = split_pagecount;
-while ($page < $pagetotal) {
-    ~objbox_page($obj, 250, 0, ^objbox_height, $page);
-    p_pausebutton;
-    $page = calc($page + 1);
-}
-
-[proc,objboxcustom](obj $obj, string $string, int $scale, int $x, int $y)
-split_init($string, 400, 4, q8);
 def_int $page = 0;
 def_int $pagetotal = split_pagecount;
 while ($page < $pagetotal) {
     ~objbox_page($obj, $scale, $x, $y, $page);
-    p_pausebutton;
-    $page = calc($page + 1);
-}
-
-// no idea if this exists but broken arrow looks terrible without it
-[proc,objboxr](obj $obj, string $string)
-split_init($string, 400, 4, q8);
-def_int $page = 0;
-def_int $pagetotal = split_pagecount;
-while ($page < $pagetotal) {
-    ~objbox_page($obj, 250, ^objbox_width, 0, $page);
-    p_pausebutton;
-    $page = calc($page + 1);
-}
-
-// imgur.com/WX3hzXI
-[proc,objboxsmall](obj $obj, string $string)
-split_init($string, 400, 4, q8);
-def_int $page = 0;
-def_int $pagetotal = split_pagecount;
-while ($page < $pagetotal) {
-    ~objbox_page($obj, 180, 0, divide(^objbox_height, 3), $page);
     p_pausebutton;
     $page = calc($page + 1);
 }
@@ -735,5 +683,5 @@ switch_component (last_com) {
 
 [debugproc,objbox](obj $obj)
 if (p_finduid(uid) = true) {
-    ~objboxr($obj, "You've found <~add_article(oc_name($obj))>!");
+    ~objbox($obj, "You've found <~add_article(oc_name($obj))>!", 250, ^objbox_width, 0);
 }

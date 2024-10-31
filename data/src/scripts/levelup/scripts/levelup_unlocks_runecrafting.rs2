@@ -1,45 +1,45 @@
 [label,levelup_runecraft]
 //Runecraft level up unlock messages
 switch_int(stat_base(runecraft)) {
-    case 2 : ~objboxt(mindrune,"You can now craft @dbl@Mind Runes@bla@.");
-    case 5 : ~objboxt(waterrune,"You can now craft @dbl@Water Runes@bla@.");
-    case 9 : ~objboxt(earthrune,"You can now craft @dbl@Earth Runes@bla@.");
-    // case 11 : ~objboxt(airrune,"You can now receive 2 @dbl@Air Runes@bla@.");
-    case 14 : ~objboxt(firerune,"You can now craft @dbl@Fire Runes@bla@.");
-    // case 19 : ~objboxt(waterrune,"You can now receive 2 @dbl@Water Runes@bla@.");
-    case 20 : ~objboxt(bodyrune,"You can now craft @dbl@Body Runes@bla@.");
-    // case 22 : ~objboxt(airrune,"You can now receive 3 @dbl@Air Runes@bla@.");
-    // case 26 : ~objboxt(earthrune,"You can now receive 2 @dbl@Earth Runes@bla@.");
-    case 27 : ~objboxt(cosmicrune,"You can now craft @dbl@Cosmic Runes@bla@.");
-    // case 28 : ~objboxt(mindrune,"You can now receive 3 @dbl@Mind Runes@bla@.");
-    // case 33 : ~objboxt(airrune,"You can now receive 4 @dbl@Air Runes@bla@.");
-    case 35 : ~objboxt(chaosrune,"You can now craft @dbl@Chaos Runes@bla@.");
-    // case 38 : ~objboxt(waterrune,"You can now receive 3 @dbl@Water Runes@bla@.");
-    // case 42 : ~objboxt(mindrune,"You can now receive 4 @dbl@Mind Runes@bla@.");
-    case 44 : ~objboxt(naturerune,"You can now craft @dbl@Nature Runes@bla@."); // confirmed
-    // case 46 : ~objboxt(bodyrune,"You can now receive 2 @dbl@Body Runes@bla@.");
-    // case 52 : ~objboxt(earthrune,"You can now receive 3 @dbl@Earth Runes@bla@.");
+    case 2 : ~objbox(mindrune,"You can now craft @dbl@Mind Runes@bla@.", 250, 0, 0);
+    case 5 : ~objbox(waterrune,"You can now craft @dbl@Water Runes@bla@.", 250, 0, 0);
+    case 9 : ~objbox(earthrune,"You can now craft @dbl@Earth Runes@bla@.", 250, 0, 0);
+    // case 11 : ~objbox(airrune,"You can now receive 2 @dbl@Air Runes@bla@.", 250, 0, 0);
+    case 14 : ~objbox(firerune,"You can now craft @dbl@Fire Runes@bla@.", 250, 0, 0);
+    // case 19 : ~objbox(waterrune,"You can now receive 2 @dbl@Water Runes@bla@.", 250, 0, 0);
+    case 20 : ~objbox(bodyrune,"You can now craft @dbl@Body Runes@bla@.", 250, 0, 0);
+    // case 22 : ~objbox(airrune,"You can now receive 3 @dbl@Air Runes@bla@.", 250, 0, 0);
+    // case 26 : ~objbox(earthrune,"You can now receive 2 @dbl@Earth Runes@bla@.", 250, 0, 0);
+    case 27 : ~objbox(cosmicrune,"You can now craft @dbl@Cosmic Runes@bla@.", 250, 0, 0);
+    // case 28 : ~objbox(mindrune,"You can now receive 3 @dbl@Mind Runes@bla@.", 250, 0, 0);
+    // case 33 : ~objbox(airrune,"You can now receive 4 @dbl@Air Runes@bla@.", 250, 0, 0);
+    case 35 : ~objbox(chaosrune,"You can now craft @dbl@Chaos Runes@bla@.", 250, 0, 0);
+    // case 38 : ~objbox(waterrune,"You can now receive 3 @dbl@Water Runes@bla@.", 250, 0, 0);
+    // case 42 : ~objbox(mindrune,"You can now receive 4 @dbl@Mind Runes@bla@.", 250, 0, 0);
+    case 44 : ~objbox(naturerune,"You can now craft @dbl@Nature Runes@bla@.", 250, 0, 0); // confirmed
+    // case 46 : ~objbox(bodyrune,"You can now receive 2 @dbl@Body Runes@bla@.", 250, 0, 0);
+    // case 52 : ~objbox(earthrune,"You can now receive 3 @dbl@Earth Runes@bla@.", 250, 0, 0);
     // https://oldschool.runescape.wiki/w/Law_Altar
     // 08/24/2004
-    // case 54 : ~objboxt(lawrune,"You can now craft @dbl@Law Runes@bla@.");
-    // case 55 : ~objboxt(airrune,"You can now receive 4 @dbl@Air Runes@bla@.");
-    // case 56 : ~objboxt(mindrune,"You can now receive 5 @dbl@Mind Runes@bla@.");
-    // case 57 : ~objboxt(waterrune,"You can now receive 4 @dbl@Water Runes@bla@.");
-    // case 59 : ~objboxt(cosmicrune,"You can now receive 2 @dbl@Cosmic Runes@bla@.");
+    // case 54 : ~objbox(lawrune,"You can now craft @dbl@Law Runes@bla@.", 250, 0, 0);
+    // case 55 : ~objbox(airrune,"You can now receive 4 @dbl@Air Runes@bla@.", 250, 0, 0);
+    // case 56 : ~objbox(mindrune,"You can now receive 5 @dbl@Mind Runes@bla@.", 250, 0, 0);
+    // case 57 : ~objbox(waterrune,"You can now receive 4 @dbl@Water Runes@bla@.", 250, 0, 0);
+    // case 59 : ~objbox(cosmicrune,"You can now receive 2 @dbl@Cosmic Runes@bla@.", 250, 0, 0);
     // https://oldschool.runescape.wiki/w/Death_Altar
     // 10/17/2005
-    // case 65 : ~objboxt(deathrune,"You can now craft @dbl@Death Runes@bla@.");
-    // case 66 : ~objboxt(airrune,"You can now receive 7 @dbl@Air Runes@bla@.");
+    // case 65 : ~objbox(deathrune,"You can now craft @dbl@Death Runes@bla@.", 250, 0, 0);
+    // case 66 : ~objbox(airrune,"You can now receive 7 @dbl@Air Runes@bla@.", 250, 0, 0);
     // case 70 : ~doubleobjbox(mindrune,firerune,"You can now receive 6 @dbl@Mind Runes@bla@|and you can now receive 3 @dbl@Fire Runes@bla@.");
-    // case 74 : ~objboxt(chaosrune,"You can now receive 2 @dbl@Chaos Runes@bla@.");
-    // case 76 : ~objboxt(waterrune,"You can now receive 5 @dbl@Water Runes@bla@.");
-    // case 77 : ~objboxt(airrune,"You can now receive 8 @dbl@Air Runes@bla@.");
-    // case 78 : ~objboxt(earthrune,"You can now receive 4 @dbl@Earth Runes@bla@.");
-    // case 84 : ~objboxt(mindrune,"You can now receive 7 @dbl@Mind Runes@bla@.");
-    // case 88 : ~objboxt(airrune,"You can now receive 9 @dbl@Air Runes@bla@.");
-    // case 91 : ~objboxt(naturerune,"You can now receive 2 @dbl@Nature Runes@bla@.");
-    // case 92 : ~objboxt(bodyrune,"You can now receive 3 @dbl@Body Runes@bla@.");
+    // case 74 : ~objbox(chaosrune,"You can now receive 2 @dbl@Chaos Runes@bla@.", 250, 0, 0);
+    // case 76 : ~objbox(waterrune,"You can now receive 5 @dbl@Water Runes@bla@.", 250, 0, 0);
+    // case 77 : ~objbox(airrune,"You can now receive 8 @dbl@Air Runes@bla@.", 250, 0, 0);
+    // case 78 : ~objbox(earthrune,"You can now receive 4 @dbl@Earth Runes@bla@.", 250, 0, 0);
+    // case 84 : ~objbox(mindrune,"You can now receive 7 @dbl@Mind Runes@bla@.", 250, 0, 0);
+    // case 88 : ~objbox(airrune,"You can now receive 9 @dbl@Air Runes@bla@.", 250, 0, 0);
+    // case 91 : ~objbox(naturerune,"You can now receive 2 @dbl@Nature Runes@bla@.", 250, 0, 0);
+    // case 92 : ~objbox(bodyrune,"You can now receive 3 @dbl@Body Runes@bla@.", 250, 0, 0);
     // case 95 : ~doubleobjbox(waterrune,lawrune,"You can now receive 6 @dbl@Water Runes@bla@|and you can now receive 2 @dbl@Law Runes@bla@.");
-    // case 98 : ~objboxt(mindrune,"You can now receive 8 @dbl@Mind Runes@bla@.");
-    // case 99 : ~objboxt(airrune,"You can now receive 10 @dbl@Air Runes@bla@.");
+    // case 98 : ~objbox(mindrune,"You can now receive 8 @dbl@Mind Runes@bla@.", 250, 0, 0);
+    // case 99 : ~objbox(airrune,"You can now receive 10 @dbl@Air Runes@bla@.", 250, 0, 0);
 }

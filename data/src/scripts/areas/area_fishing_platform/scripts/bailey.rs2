@@ -21,7 +21,7 @@ switch_int(%seaslug_progress) {
         ~chatnpc("<p,neutral>The sea slugs are scared of heat,|I figured that out when I tried to cook them.");
         if(inv_total(inv, unlit_torch) = 0) {
             ~chatnpc("<p,neutral>Here.");
-            ~objbox(unlit_torch, "Bailey gives you a torch.");
+            ~objbox(unlit_torch, "Bailey gives you a torch.", 250, 0, divide(^objbox_height, 2));
             inv_add(inv, unlit_torch, 1);
             ~chatnpc("<p,neutral>I doubt the fishermen will come near you if you can get this torch lit.");
             ~chatnpc("<p,confused>The only problem is all the wood and flint are damp...|I can't light a thing!");

@@ -171,4 +171,4 @@ else if ($fycie_ingredient = 2)
 
 mes("Eventually the chompy is cooked.");
 inv_add(inv, seasoned_chompy, 1);
-~objbox(seasoned_chompy, "You use the <$rantz_ingredient_name>, <$bugs_ingredient_name> and the <$fycie_ingredient_name>|with the chompy bird to make a seasoned chompy.");
+~objbox(seasoned_chompy, "You use the <$rantz_ingredient_name>, <$bugs_ingredient_name> and the <$fycie_ingredient_name>|with the chompy bird to make a seasoned chompy.", 250, 0, divide(^objbox_height, 2));

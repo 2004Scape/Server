@@ -6,7 +6,7 @@ switch_int(%chompybird_progress) {
         ~chatplayer("<p,confused>Stabbers?");
         ~chatnpc("<p,neutral>For da stabbie chucker, I's wanna hunt da chompy! Da chompy is der bestest yummies for Rantz, Fycie and Bugs! Creature knows what Rantz wants... flyin' to stabbie da chompy!");
         
-        ~objbox(ogre_bow,"The ogre shows you a huge but crude bow and then starts to nod energetically in an effort to help you understand.");
+        ~objbox(ogre_bow,"The ogre shows you a huge but crude bow and then starts to nod energetically in an effort to help you understand.", 250, 0, divide(^objbox_height, 2));
 
         ~chatplayer("<p,quiz>I think I understand. You want me to make some arrows for you?");
         ~chatnpc("<p,neutral>Yeah, is what Rantz sayed, make da stabbers for da stabby chucker!");
@@ -73,7 +73,7 @@ switch_int(%chompybird_progress) {
 
                         inv_add(inv, ogre_bow, 1);
                         %chompybird_progress = ^chompybird_rantz_gave_player_bow;
-                        ~objbox(ogre_bow,"Rantz hands over an ogre bow. It's huge! You can|barely drawn back the string!");
+                        ~objbox(ogre_bow,"Rantz hands over an ogre bow. It's huge! You can|barely drawn back the string!", 250, 0, divide(^objbox_height, 2));
                     case 2 :
                         ~chatplayer("<p,angry>Oh suit yourself, you'll just have to go hungry.");
                         ~chatnpc("<p,angry>Or I eat you instead!");
@@ -106,7 +106,7 @@ switch_int(%chompybird_progress) {
 }
 
 [label,rantz_show_chompy]
-~objbox(raw_chompy,"You show Rantz the freshly plucked chompy carcass.");
+~objbox(raw_chompy,"You show Rantz the freshly plucked chompy carcass.", 250, 0, divide(^objbox_height, 2));
 
 ~chatnpc("<p,angry>Dat's a great chompy, you musta got a lucky shot wiv|da stabbie chucker.");
 %chompybird_progress = ^chompybird_told_to_cook_chompy;
@@ -148,7 +148,7 @@ switch_obj(last_useitem) {
         }
 
         if (%chompybird_progress = ^chompybird_told_to_cook_chompy) {
-            ~objbox(raw_chompy,"You show Rantz the freshly plucked chompy carcass.");
+            ~objbox(raw_chompy,"You show Rantz the freshly plucked chompy carcass.", 250, 0, divide(^objbox_height, 2));
             @rantz_tell_chompy_flavour;
             return;
         }
@@ -174,7 +174,7 @@ switch_obj(last_useitem) {
         }
 
         // singular "Arrow" is correct on OSRS
-        ~objbox(ogre_arrow_5,"You show Rantz the ogre arrow.");
+        ~objbox(ogre_arrow_5,"You show Rantz the ogre arrow.", 250, 0, divide(^objbox_height, 2));
 
         if (%chompybird_progress = ^chompybird_given_arrows) {
             ~chatnpc("<p,neutral>Creature already given Rantz stabbers, Dey's worser at flying dan a dead dog.");
@@ -201,7 +201,7 @@ switch_obj(last_useitem) {
         }
 
         if (%chompybird_progress = ^chompybird_shown_toad) {
-            ~objbox(bloated_toad,"You show the bloated toad to Rantz.");
+            ~objbox(bloated_toad,"You show the bloated toad to Rantz.", 250, 0, divide(^objbox_height, 2));
             ~chatnpc("<p,neutral>Hey creature got da fatsy toady Is you's gonna stick da chompy?");
             return;
         }
@@ -262,7 +262,7 @@ if (testbit(%chompybird_kills, ^chompybird_varbit_made_arrows) = true) {
 [label,give_rantz_arrows]
 inv_del(inv, ogre_arrow, 6);
 %chompybird_progress = ^chompybird_given_arrows;
-~objbox(ogre_arrow_5,"Rantz takes six ogre arrows off you.");
+~objbox(ogre_arrow_5,"Rantz takes six ogre arrows off you.", 250, 0, divide(^objbox_height, 2));
 
 ~chatnpc("<p,happy>Ahh, der creature has dem... goodly, goodly. Now us can stick der chompy bird...");
 ~chatnpc("<p,sad>But da chompy not coming without da fatsy toadies... Godda get der fatsy toadies to get da chompys. Den we put it over de're and sneaky, sneaky stick da chompy.");
@@ -313,7 +313,7 @@ if (p_finduid(uid) = true) {
 }
 
 [label,show_toad]
-~objbox(bloated_toad,"You show the bloated toad to Rantz. He nods with approval.");
+~objbox(bloated_toad,"You show the bloated toad to Rantz. He nods with approval.", 250, 0, divide(^objbox_height, 2));
 
 ~chatnpc("<p,neutral>Dat's a good fatsy toady, now we's need to put it for da chompy to come.");
 %chompybird_progress = ^chompybird_shown_toad;
@@ -326,7 +326,7 @@ if (p_finduid(uid) = true) {
 ~chatplayer("<p,neutral>Yes, here you go, here's your cooked chompy bird.");
 inv_del(inv, seasoned_chompy, 1);
 queue(quest_chompybird_complete, 0);
-~objbox(seasoned_chompy, "You hand over the cooked chompy bird to Rantz.");
+~objbox(seasoned_chompy, "You hand over the cooked chompy bird to Rantz.", 250, 0, divide(^objbox_height, 2));
 
 ~chatnpc("<p,neutral>Hey hey! We got da delicious chompy bird - yay!|This looks really tasty as well!");
 ~chatnpc("<p,neutral>Tank's very much for da chompy...|Fycie an Bugs like very much da chompy yumms!|@dbl@~ The family of ogres sit down together and enjoy|@dbl@your well cooked chompy bird. ~");

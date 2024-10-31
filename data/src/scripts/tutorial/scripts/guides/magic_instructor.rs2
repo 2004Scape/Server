@@ -45,10 +45,10 @@ if (inv_total(inv, airrune) < 25 & inv_total(inv, mindrune) < 25) {
     inv_add(inv, airrune, ~magic_instructor_runes_to_give(airrune));
     inv_add(inv, mindrune, ~magic_instructor_runes_to_give(mindrune));
 }else if (inv_total(inv, airrune) < 25) {
-    ~objboxt(airrune, "Terrova gives you some |@blu@Air runes!");
+    ~objbox(airrune, "Terrova gives you some |@blu@Air runes!", 250, 0, 0);
     inv_add(inv, airrune, ~magic_instructor_runes_to_give(airrune));
 }else if (inv_total(inv, mindrune) < 25) {
-    ~objboxt(mindrune, "Terrova gives you some |@blu@Mind runes!");
+    ~objbox(mindrune, "Terrova gives you some |@blu@Mind runes!", 250, 0, 0);
     inv_add(inv, mindrune, ~magic_instructor_runes_to_give(mindrune));
 }
 
