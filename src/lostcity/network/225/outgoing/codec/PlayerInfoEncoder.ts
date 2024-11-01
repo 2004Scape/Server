@@ -154,7 +154,7 @@ export default class PlayerInfoEncoder extends MessageEncoder<PlayerInfo> {
 
     private writeNewPlayers(buf: Packet, message: PlayerInfo): void {
         const buildArea: BuildArea = message.buildArea;
-        for (const other of buildArea.getNearbyPlayers(message.uid, message.x, message.z, message.originX, message.originZ)) {
+        for (const other of buildArea.getNearbyPlayers(message.uid, message.level, message.x, message.z, message.originX, message.originZ)) {
             const extendedInfoSize: number = this.calculateExtendedInfo(other, message, false, true);
             const extendedInfo: boolean = extendedInfoSize > 0;
 

@@ -106,6 +106,7 @@ class World {
     readonly newPlayers: Set<Player>; // players joining at the end of this tick
     readonly players: PlayerList;
     readonly npcs: NpcList;
+    readonly playerGrid: Map<number, Player[]>; // store player coords for player_info for fast lookup
 
     // zones
     readonly zonesTracking: Map<number, Set<Zone>>;
@@ -129,6 +130,7 @@ class World {
         this.newPlayers = new Set();
         this.players = new PlayerList(World.PLAYERS - 1);
         this.npcs = new NpcList(World.NPCS - 1);
+        this.playerGrid = new Map();
         this.zonesTracking = new Map();
         this.queue = new LinkList();
         this.lastCycleStats = new Array(12).fill(0);
@@ -943,10 +945,14 @@ class World {
         // TODO: benchmark this?
         for (const player of this.players) {
             player.convertMovementDir();
-        }
 
-        for (const npc of this.npcs) {
-            npc.convertMovementDir();
+            const coord = CoordGrid.packCoord(player.level, player.x, player.z);
+            let players: Player[] | undefined = this.playerGrid.get(coord);
+            if (typeof players === 'undefined') {
+                players = [];
+                this.playerGrid.set(coord, players);
+            }
+            players.push(player);
         }
     }
 
@@ -1072,6 +1078,9 @@ class World {
                 }
             }
         }
+
+        this.playerGrid.clear();
+
         this.cycleStats[WorldStat.CLEANUP] = Date.now() - start;
     }
 
