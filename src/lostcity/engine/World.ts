@@ -954,6 +954,10 @@ class World {
             }
             players.push(player);
         }
+
+        for (const npc of this.npcs) {
+            npc.convertMovementDir();
+        }
     }
 
     // - map update
