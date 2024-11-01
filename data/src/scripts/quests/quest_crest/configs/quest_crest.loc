@@ -1,0 +1,129 @@
+
+[witchaven_north_lever_down]
+name=Lever
+desc=This lever is down.
+model=model_loc_33
+active=yes
+op1=Pull
+
+[witchaven_north_lever_up]
+name=Lever
+desc=This lever is up.
+model=model_loc_34
+active=yes
+op1=Pull
+
+[witchaven_south_lever_down]
+name=Lever
+desc=This lever is down.
+model=model_loc_33
+active=yes
+op1=Pull
+
+[witchaven_south_lever_up]
+name=Lever
+desc=This lever is up.
+model=model_loc_34
+active=yes
+op1=Pull
+
+[witchaven_north_room_lever_down]
+name=Lever
+desc=This lever is down.
+model=model_loc_33
+active=yes
+op1=Pull
+
+[witchaven_north_room_lever_up]
+name=Lever
+desc=This lever is up.
+model=model_loc_34
+active=yes
+op1=Pull
+
+[witchaven_south_west_door]
+name=Door
+desc=This door is closed by an unknown mechanism.
+model=model_loc_3
+active=yes
+op1=Open
+retex1s=wall
+retex1d=door2
+recol2s=6342
+recol2d=11458
+
+[witchaven_door_open]
+name=Door
+desc=This door is closed by an unknown mechanism.
+model=model_loc_3
+active=yes
+op1=Open
+retex1s=wall
+retex1d=door2
+recol2s=6342
+recol2d=11458
+
+[witchaven_south_east_door]
+name=Door
+desc=This door is closed by an unknown mechanism.
+model=model_loc_3
+active=yes
+op1=Open
+retex1s=wall
+retex1d=door2
+recol2s=6342
+recol2d=11458
+
+[witchaven_goldmine_door]
+name=Door
+desc=This door is closed by an unknown mechanism.
+model=model_loc_3
+active=yes
+op1=Open
+retex1s=wall
+retex1d=door2
+recol2s=6342
+recol2d=11458
+
+[witchaven_north_door]
+name=Door
+desc=This door is closed by an unknown mechanism.
+model=model_loc_3
+active=yes
+op1=Open
+retex1s=wall
+retex1d=door2
+recol2s=6342
+recol2d=11458
+
+// These gates were added in rev 194, and removed somewhere between 299 and 306.
+// Can't find any footage of how they operated, but are no opened versions available,
+// so assuming they close automatically after the player passes through.
+[edgeville_dungeon_chronozon_gate_west]
+name=Gate
+desc=This gate is closed shut.
+model=model_loc_52
+active=yes
+op1=Open
+retex1s=wall
+retex1d=door2
+recol2s=6342
+recol2d=11458
+category=double_door_open_and_close_left
+param=next_loc_stage,loc_1562
+param=open_sound,grate_open
+
+[edgeville_dungeon_chronozon_gate_east]
+name=Gate
+desc=This gate is closed shut.
+model=model_loc_52
+active=yes
+op1=Open
+mirror=yes
+retex1s=wall
+retex1d=door2
+recol2s=6342
+recol2d=11458
+category=double_door_open_and_close_right
+param=next_loc_stage,loc_1563
+param=open_sound,grate_open

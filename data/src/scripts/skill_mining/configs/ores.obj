@@ -133,6 +133,7 @@ recol2d=31393
 weight=5lb
 category=category_91
 members=yes
+param=smeltsto,perfect_gold_bar
 
 [mithril_ore]
 cost=162

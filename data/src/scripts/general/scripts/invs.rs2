@@ -23,3 +23,8 @@ while ($i < enum_getoutputcount($slots)) {
     $i = add($i, 1);
 }
 return(true);
+
+[proc,del_all_if_exists](inv $inv, namedobj $obj)
+if (inv_total($inv, $obj) > 0) {
+    inv_del($inv, $obj, inv_total($inv, $obj));
+}

@@ -142,7 +142,7 @@ tradeable=yes
 param=smelting_struct,smelting_runite_bar
 param=smithing_anvil_struct,smithing_runite_bar
 
-[obj_2365]
+[perfect_gold_bar]
 name='perfect' gold bar
 desc=It's a bar of 'perfect' gold.
 cost=300
@@ -157,3 +157,4 @@ recol1d=31393
 weight=4lb
 category=category_151
 members=yes
+param=smelting_struct,smelting_perfect_gold_bar
