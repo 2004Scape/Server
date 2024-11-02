@@ -72,7 +72,7 @@ export default class HuntType extends ConfigType {
         return this.configs.length;
     }
 
-    checkHuntOperator(value: number, operator: string, checkValue: number): boolean {
+    public checkHuntOperator(value: number, operator: string, checkValue: number): boolean {
         switch (operator) {
             case '>': return value > checkValue;
             case '<': return value < checkValue;
@@ -100,8 +100,8 @@ export default class HuntType extends ConfigType {
     checkLoc: number = -1;
     checkInv: number = -1;
     checkObjParam: number = -1;
-    checkInvMinQuantity: number = -1;
-    checkInvMaxQuantity: number = -1;
+    checkInvOperator: string = '';
+    checkInvVal: number = -1;
     checkVarName: string = '';
     checkVarOperator: string = '';
     checkVarVal: number = -1;
@@ -140,13 +140,13 @@ export default class HuntType extends ConfigType {
         } else if (code === 16) {
             this.checkInv = dat.g2();
             this.checkObj = dat.g2();
-            this.checkInvMinQuantity = dat.g4();
-            this.checkInvMaxQuantity = dat.g4();
+            this.checkInvOperator = dat.gjstr();
+            this.checkInvVal = dat.g4();
         } else if (code === 17) {
             this.checkInv = dat.g2();
             this.checkObjParam = dat.g2();
-            this.checkInvMinQuantity = dat.g4();
-            this.checkInvMaxQuantity = dat.g4();
+            this.checkInvOperator = dat.gjstr();
+            this.checkInvVal = dat.g4();
         } else if (code === 18) {
             this.checkVarName = dat.gjstr();
             this.checkVarOperator = dat.gjstr();

@@ -175,8 +175,8 @@ export type ParamValue = {
     value: string | number | boolean;
 };
 export type LocModelShape = { model: number; shape: number };
-export type HuntCheckInv = { inv: number; obj: number; min: number; max: number; };
-export type HuntCheckInvParam = { inv: number; param: number; min: number; max: number; };
+export type HuntCheckInv = { inv: number; obj: number; operator: string; val: number; };
+export type HuntCheckInvParam = { inv: number; param: number; operator: string; val: number; };
 export type HuntCheckVar = { varName: string; operator: string; val: number; }
 export type ConfigValue = string | number | boolean | number[] | LocModelShape[] | ParamValue | HuntCheckInv | HuntCheckInvParam | HuntCheckVar;
 export type ConfigLine = { key: string; value: ConfigValue };

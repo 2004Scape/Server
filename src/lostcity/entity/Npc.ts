@@ -913,13 +913,12 @@ export default class Npc extends PathingEntity {
         const type: NpcType = NpcType.get(this.type);
         const players: Entity[] = [];
         const hunted: HuntIterator = new HuntIterator(World.currentTick, this.level, this.x, this.z, this.huntrange, hunt.checkVis, -1, -1, HuntModeType.PLAYER);
-        const varCheck = VarPlayerType.getId(hunt.checkVarName);
 
         for (const player of hunted) {
             if (!(player instanceof Player)) {
                 throw new Error('[Npc] huntAll must be of type Player here.');
             }
-            if (varCheck && !hunt.checkHuntOperator(player.getVar(varCheck) as number, hunt.checkVarOperator, hunt.checkVarVal)) {
+            if (hunt.checkVarName && !hunt.checkHuntOperator(player.getVar(VarPlayerType.getId(hunt.checkVarName)) as number, hunt.checkVarOperator, hunt.checkVarVal)) {
                 continue;
             }
 
@@ -946,7 +945,7 @@ export default class Npc extends PathingEntity {
                 } else if (hunt.checkObjParam !== -1) {
                     quantity = player.invTotalParam(hunt.checkInv, hunt.checkObjParam);
                 }
-                if (quantity < hunt.checkInvMinQuantity || quantity > hunt.checkInvMaxQuantity) {
+                if (!hunt.checkHuntOperator(quantity, hunt.checkInvOperator, hunt.checkInvVal)) {
                     continue;
                 }
             }
