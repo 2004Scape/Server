@@ -122,4 +122,6 @@ while (npc_findnext = true) {
 }
 
 [queue,seaslug_quest_complete]
+stat_advance(fishing, 71750);
+inv_add(inv, oyster_perl, 1);
 ~send_quest_complete(questlist:seaslug, sea_slug, 250, ^seaslug_questpoints, "You have completed the\\nSea Slug Quest!");
