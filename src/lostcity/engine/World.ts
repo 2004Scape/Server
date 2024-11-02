@@ -672,6 +672,7 @@ class World {
                 }
 
                 if (isNetworkPlayer(player) && player.decodeIn()) {
+                    const followingPlayer = (player.targetOp === ServerTriggerType.APPLAYER3 || player.targetOp === ServerTriggerType.OPPLAYER3);
                     if (player.userPath.length > 0 || player.opcalled) {
                         if (player.delayed()) {
                             player.unsetMapFlag();
@@ -687,8 +688,8 @@ class World {
                             player.moveClickRequest = true;
                         }
         
-                        if (player.opcalled && (player.userPath.length === 0 || !Environment.NODE_CLIENT_ROUTEFINDER)) {
-                            player.pathToPathingTarget();
+                        if (!followingPlayer && player.opcalled && (player.userPath.length === 0 || !Environment.NODE_CLIENT_ROUTEFINDER)) {
+                            player.pathToTarget();
                             continue;
                         }
         
@@ -699,7 +700,7 @@ class World {
                         }
                     }
         
-                    if (player.target instanceof Player && (player.targetOp === ServerTriggerType.APPLAYER3 || player.targetOp === ServerTriggerType.OPPLAYER3)) {
+                    if (player.target instanceof Player && followingPlayer) {
                         if (CoordGrid.distanceToSW(player, player.target) <= 25) {
                             player.pathToPathingTarget();
                         } else {
