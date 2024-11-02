@@ -1,5 +1,5 @@
 [opnpc1,chamber_guardian]
-if (%magearena_progress <= ^mage_arena_complete) {
+if (%magearena <= ^mage_arena_complete) {
     ~chatplayer("<p,happy>Hello my friend, Kolodion sent me down.");
     ~chatnpc("<p,angry>Sssshhh... the gods are talking. I can hear their|whispers.");
     ~chatnpc("<p,quiz>Can you hear them adventurer, they're calling you.");
@@ -7,7 +7,7 @@ if (%magearena_progress <= ^mage_arena_complete) {
     ~chatnpc("<p,shifty>Go chant at the statue of the god you most wish to|represent in this world, you will be rewarded.");
     ~chatnpc("<p,shifty>Once you are done, come back to me. I shall supply|you with a mage staff ready for battle.");
     return;
-} else if (%magearena_progress > ^mage_arena_prayed_at_statue & %magearena_progress < ^mage_arena_staff_given) {
+} else if (%magearena > ^mage_arena_prayed_at_statue & %magearena < ^mage_arena_staff_given) {
     // after praying at the statue:
     ~chatplayer("<p,neutral>Hi.");
     ~chatnpc("<p,quiz>Hello adventurer, have you made your choice?");
@@ -15,14 +15,14 @@ if (%magearena_progress <= ^mage_arena_complete) {
     ~chatnpc("<p,neutral>Good, good, I hope you have chosen well. I will now|present you with a magic staff. This, along with the|cape awarded to you by your chosen god, are all the|weapons and armour you will need here.");
     // check staff type
     def_namedobj $staff = saradominstaff;
-    switch_int(%magearena_progress) {
+    switch_int(%magearena) {
         case ^mage_arena_saradomin : $staff = saradominstaff;
         case ^mage_arena_zamorak : $staff = zamorakstaff;
         case ^mage_arena_guthix : $staff = guthixstaff;
     }
     inv_add(inv, $staff, 1); // drops on ground on full inv
     ~objbox($staff, "The guardian hands you an ornate magic staff.", 250, 0, 0);
-    %magearena_progress = ^mage_arena_staff_given;
+    %magearena = ^mage_arena_staff_given;
     return;
 }
 
@@ -43,7 +43,7 @@ if ($choice = 1) {
 }
 
 [opnpc3,chamber_guardian]
-if (%magearena_progress < ^mage_arena_staff_given) {
+if (%magearena < ^mage_arena_staff_given) {
     mes("The guardian is deep in concentration.");
     return;
 }
