@@ -188,3 +188,8 @@ npc_setmode(null);
 %npc_action_delay = add(map_clock, $action_delay);
 %npc_aggressive_player = uid;
 %npc_lastcombat = add(map_clock, 8);
+
+[debugproc,ma]
+if (p_finduid(uid) = true) {
+    p_teleport(0_48_61_20_30);
+}
