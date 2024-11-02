@@ -22,7 +22,7 @@ weight=2oz
 members=yes
 tradeable=no
 
-[obj_671]
+[rock_sample_1]
 model=model_2393_obj
 2dxof=8
 2dyof=-15
@@ -35,7 +35,7 @@ desc=A carefully kept safe rock sample.
 members=yes
 tradeable=no
 
-[obj_672]
+[rock_sample_2]
 model=model_2394_obj
 name=Rock sample 2
 desc=A carefully kept safe rock sample.
@@ -47,7 +47,7 @@ weight=3oz
 members=yes
 tradeable=no
 
-[obj_673]
+[rock_sample_3]
 model=model_2396_obj
 name=Rock sample 3
 desc=A carefully kept safe rock sample.
@@ -60,7 +60,7 @@ weight=3oz
 members=yes
 tradeable=no
 
-[obj_674]
+[cracked_rock_sample]
 model=model_2393_obj
 2dxof=8
 2dyof=-37
@@ -99,7 +99,7 @@ weight=2oz
 members=yes
 tradeable=no
 
-[obj_677]
+[panning_tray_empty]
 name=Panning tray
 desc=An empty tray for panning.
 model=model_2577_obj
@@ -112,7 +112,7 @@ members=yes
 iop2=Search
 tradeable=no
 
-[obj_678]
+[panning_tray_gold]
 name=Panning tray
 desc=This tray contains gold.
 model=model_2513_obj
@@ -125,7 +125,7 @@ members=yes
 iop2=Search
 tradeable=no
 
-[obj_679]
+[panning_tray_mud]
 name=Panning tray
 desc=This tray contains mud.
 model=model_2452_obj
@@ -138,7 +138,7 @@ members=yes
 iop2=Search
 tradeable=no
 
-[obj_680]
+[nuggets]
 name=Nuggets
 desc=Pure, lovely gold!
 model=model_2812_obj
@@ -164,7 +164,7 @@ weight=3oz
 members=yes
 tradeable=no
 
-[obj_682]
+[unstamped_letter]
 model=model_2600_obj
 name=Unstamped letter
 desc=A scroll waiting to be stamped.
@@ -177,7 +177,7 @@ weight=20g
 members=yes
 tradeable=no
 
-[obj_683]
+[stamped_letter]
 model=model_2675_obj
 name=Stamped letter
 desc=A stamped scroll of recommendation.
@@ -190,7 +190,7 @@ weight=20g
 members=yes
 tradeable=no
 
-[obj_684]
+[belt_buckle]
 model=model_2516_obj
 name=Belt buckle
 desc=Used to hold up trousers!
@@ -282,7 +282,7 @@ category=category_15
 members=yes
 tradeable=no
 
-[obj_691]
+[level_1_certificate]
 model=model_2600_obj
 name=Level 1 certificate
 desc=The owner has passed earth sciences level 1 exam.
@@ -295,7 +295,7 @@ weight=20g
 members=yes
 tradeable=no
 
-[obj_692]
+[level_2_certificate]
 model=model_2600_obj
 name=Level 2 certificate
 desc=The owner has passed earth sciences level 2 exam.
@@ -308,7 +308,7 @@ weight=20g
 members=yes
 tradeable=no
 
-[obj_693]
+[level_3_certificate]
 model=model_2600_obj
 name=Level 3 certificate
 desc=The owner has passed earth sciences level 3 exam.
@@ -321,7 +321,7 @@ weight=20g
 members=yes
 tradeable=no
 
-[obj_694]
+[ceramic_remains]
 name=Ceramic remains
 desc=Smashing!
 model=model_2493_obj
@@ -349,7 +349,7 @@ weight=1g
 members=yes
 tradeable=no
 
-[obj_696]
+[invitation_letter]
 model=model_2600_obj
 name=Invitation letter
 desc=A letter inviting me to use the private digshafts.
@@ -378,7 +378,7 @@ weight=17lb
 members=yes
 tradeable=no
 
-[obj_698]
+[broken_armour]
 name=Broken armour
 desc=No use to me...
 model=model_loc_826_0
@@ -393,7 +393,7 @@ weight=17lb
 members=yes
 tradeable=no
 
-[obj_699]
+[stone_tablet]
 name=Stone tablet
 desc=An old stone slab with writing on it.
 model=model_2627_obj
@@ -406,7 +406,7 @@ iop2=Read
 weight=800g
 tradeable=no
 
-[obj_700]
+[chemical_powder]
 name=Chemical powder
 desc=An acrid chemical.
 model=model_2742_obj
@@ -420,7 +420,7 @@ members=yes
 weight=1oz
 tradeable=no
 
-[obj_701]
+[ammonium_nitrate]
 name=Ammonium nitrate
 desc=An acrid chemical.
 model=model_2742_obj
@@ -434,7 +434,7 @@ members=yes
 weight=15g
 tradeable=no
 
-[obj_702]
+[unidentified_liquid]
 name=Unidentified liquid
 desc=A strong chemical.
 model=model_2789_obj
@@ -448,7 +448,7 @@ weight=25g
 members=yes
 tradeable=no
 
-[obj_703]
+[nitroglycerin]
 name=Nitroglycerin
 desc=A strong chemical.
 model=model_2789_obj
@@ -462,7 +462,7 @@ weight=25g
 members=yes
 tradeable=no
 
-[obj_704]
+[ground_charcoal]
 name=Ground charcoal
 desc=Charcoal, crushed to small pieces!
 model=model_2742_obj
@@ -476,7 +476,7 @@ members=yes
 weight=8g
 tradeable=no
 
-[obj_705]
+[mixed_chemicals1]
 name=Mixed chemicals
 desc=A mixture of strong chemicals.
 model=model_2789_obj
@@ -490,7 +490,7 @@ weight=30g
 members=yes
 tradeable=no
 
-[obj_706]
+[mixed_chemicals2]
 name=Mixed chemicals
 desc=A mixture of strong chemicals.
 model=model_2789_obj
@@ -504,7 +504,7 @@ weight=35g
 members=yes
 tradeable=no
 
-[obj_707]
+[chemical_compound]
 name=Chemical compound
 desc=A mixture of strong chemicals.
 model=model_2789_obj
@@ -531,7 +531,7 @@ weight=10g
 members=yes
 tradeable=no
 
-[obj_709]
+[digsite_chest_key]
 name=Chest key
 desc=This fits a chest.
 model=model_2372_obj
@@ -544,7 +544,7 @@ weight=10g
 members=yes
 tradeable=no
 
-[obj_710]
+[digsite_vase]
 name=Vase
 desc=A vessel for holding plants.
 model=model_2704_obj
@@ -558,7 +558,7 @@ weight=500g
 members=yes
 tradeable=no
 
-[obj_711]
+[book_on_chemicals]
 name=Book on chemicals
 desc=It's about chemicals, judging from its' cover.
 model=model_2543_obj

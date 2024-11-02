@@ -1,0 +1,145 @@
+[opnpc1,digsite_workman]
+
+switch_int (~itexam_progress) {
+    case default : @digsite_workman_default;
+    case ^itexam_complete : @digsite_workman_quest_complete;
+}
+
+[label,digsite_workman_default]
+~chatnpc("<p,happy>Why hello there! What can I do you for?");
+def_int $choice = ~p_choice3("What do you do here?", 1, "I'm not sure...", 2, "Can I dig around here?", 3);
+
+if ($choice = 1) {
+    ~chatplayer("<p,neutral>What do you do here?");
+    ~chatnpc("<p,neutral>I am involved in various stages of the dig, from the initial investigation to the installation of the mine shafts.");
+    ~chatplayer("<p,neutral>Oh, okay, thanks.");
+} else if ($choice = 2) {
+    ~chatplayer("<p,quiz>I'm not sure...");
+    ~chatnpc("<p,bored>Well, let me know when you are.");
+} else {
+    ~chatplayer("<p,neutral>Can I dig around here?");
+    ~chatnpc("<p,neutral>You can only use a site you have the appropriate exam level for.");
+
+    $choice = ~p_choice2("Appropriate exam level?", 1, "I am already skilled in digging.", 2);
+
+    if ($choice = 1) {
+        ~chatplayer("<p,quiz>Appropriate exam level?");
+        ~chatnpc("<p,bored>Yea, only people who have passed level 1 certificate can dig in a level 1 site and so on and so forth.");
+        ~chatplayer("<p,neutral>Ah, yes; I understand.");
+    } else {
+        ~chatplayer("<p,happy>I am already skilled in digging.");
+        ~chatnpc("<p,neutral>Well that's nice for you. But regulations say you can't dig around here without a certificate.");
+        ~chatplayer("<p,sad>Oh right.");
+        ~chatnpc("<p,neutral>The examiner up at the education centre can help you there.");
+        ~chatplayer("<p,happy>Thanks; I'll talk to her.");
+    }
+}
+
+// Each workman variant has a different dialogue, in our version of the quest we do not have variants so i just picked one from osrs since i cannot find what the original did
+[label,digsite_workman_quest_complete]
+~chatplayer("<p,happy>Hello!");
+~chatnpc("<p,neutral>Oh wow! You're the archaeologist who found that altar in the mines aren't you!");
+~chatplayer("<p,neutral>Um, yes.");
+~chatnpc("<p,happy>So glad to meet you! Well done!");
+
+[opnpc3,digsite_workman]
+if(%stunned > map_clock) {
+    return;
+}
+
+if (%action_delay > map_clock) {
+    p_opnpc(3);
+    return;
+}
+
+mes("You attempt to pick the workman's pocket...");
+p_delay(2);
+
+// From osrs (used the quest speedrunning worlds)
+if (stat(thieving) < 25) {
+    mes("You need to be at level 25 Thieving to pick the workman's pocket.");
+    return;
+}
+
+// TODO: we need to investigate this success rate a bit, for now this is the warrior woman success rate
+if(stat_random(stat(thieving), 100, 240) = false) {
+    npc_say("What do you think you're doing?");
+    mes("You fail to pick the workman's pocket.");
+    npc_setmode(playerface);
+    p_delay(0);
+    spotanim_pl(stunned_thieving, 124, 0);
+    anim(%com_defendanim, 0);
+    ~damage_self(1);
+    %action_delay = calc(map_clock + 13);
+    %stunned = calc(map_clock + 13);
+    walktrigger(stunned);
+} else {
+    anim(human_pickpocket, 0);
+    sound_synth(pick, 0, 0);
+    stat_advance(thieving, 104);
+
+    def_int $rand = random(11);
+
+    if ($rand < 3) {
+        if (~itexam_progress = ^itexam_first_exam & inv_total(inv, rock_sample_1) = 0) {
+            inv_add(inv, rock_sample_1, 1);
+            ~objbox(rock_sample_1, "You steal a rock sample.", 250, 0, divide(^objbox_height, 2));
+        } else {
+            inv_add(inv, coins, 10);
+            mes("You steal some money.");
+        }
+    } else if ($rand < 4) {
+        inv_add(inv, spade, 1);
+        mes("You steal a spade.");
+    } else if ($rand < 5) {
+        inv_add(inv, leather_gloves, 1);
+        mes("You steal a pair of leather gloves.");
+    } else if ($rand < 6) {
+        inv_add(inv, bucket_empty, 1);
+        mes("You steal a bucket.");
+    } else if ($rand < 7) {
+        inv_add(inv, rope, 1);
+        mes("You steal some rope.");
+    } else if ($rand < 10) {
+        inv_add(inv, specimen_brush, 1);
+        mes("You find a specimen brush.");
+    } else {
+        inv_add(inv, coins, 10);
+        mes("You steal some money.");
+    }
+}
+
+[opnpcu,digsite_workman]
+if (last_useitem = invitation_letter) {
+    inv_del(inv, invitation_letter, 1);
+    ~itexam_set_progress(^itexam_mineshaft_permit);
+    ~chatplayer("<p,happy>Here, have a look at this...");
+    ~chatnpc("<p,bored>I give permission... blah de blah... etc. Okay, that's all in order; you may use the mineshaft now. I'll hang onto this scroll, shall I?");
+} else {
+    ~displaymessage(^dm_default);
+}
+
+
+[label,digsite_workman_intervene]
+if (npc_find(coord, digsite_workman, 10, 0) = true) {
+    ~chatnpcnoturn("<p,angry>Oi! What do you think you're doing? There's fragile specimens around here!");
+} else {
+    mes("There needs to be a workman present when you dig.");
+}
+
+[label,digsite_workman_intervene_winch]
+if (npc_find(coord, digsite_workman, 10, 0) = true) {
+    ~chatnpcnoturn("<p,neutral>Sorry, this area is private. The only way you'll get to use these is by impressing the archaeological expert up at the centre.");
+    ~chatnpcnoturn("<p,bored>Find something worthwhile and he might let you use the winches. Until then, get lost!");
+} else {
+    mes("There is a sign on the winch.");
+    p_delay(0);
+    mes("Private area - invitation only.");
+}
+
+[label,digsite_workman_intervene_site](int $exam_level)
+if (npc_find(coord, digsite_workman, 10, 0) = true) {
+    ~chatnpcnoturn("<p,confused>Sorry, you haven't passed the level <tostring($exam_level)>  Earth Sciences exam; I can't let you dig here.");
+} else {
+    mes("You haven't passed the level <tostring($exam_level)> Earth Sciences exam; You can't dig here.");
+}
