@@ -37,6 +37,7 @@ import LinkList from '#jagex2/datastruct/LinkList.js';
 
 import {CollisionFlag} from '@2004scape/rsmod-pathfinder';
 import {isFlagged} from '#lostcity/engine/GameMap.js';
+import VarPlayerType from '#lostcity/cache/config/VarPlayerType.js';
 
 export default class Npc extends PathingEntity {
     static readonly ANIM = 0x2;
@@ -912,10 +913,14 @@ export default class Npc extends PathingEntity {
         const type: NpcType = NpcType.get(this.type);
         const players: Entity[] = [];
         const hunted: HuntIterator = new HuntIterator(World.currentTick, this.level, this.x, this.z, this.huntrange, hunt.checkVis, -1, -1, HuntModeType.PLAYER);
+        const varCheck = VarPlayerType.getId(hunt.checkVarName);
 
         for (const player of hunted) {
             if (!(player instanceof Player)) {
                 throw new Error('[Npc] huntAll must be of type Player here.');
+            }
+            if (varCheck && !hunt.checkHuntOperator(player.getVar(varCheck) as number, hunt.checkVarOperator, hunt.checkVarVal)) {
+                continue;
             }
 
             if (hunt.checkAfk && player.zonesAfk()) {

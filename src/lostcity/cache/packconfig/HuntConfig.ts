@@ -4,7 +4,8 @@ import {
     PackedData,
     isConfigBoolean,
     getConfigBoolean,
-    HuntCheckInv, HuntCheckInvParam
+    HuntCheckInv, HuntCheckInvParam,
+    HuntCheckVar
 } from '#lostcity/cache/packconfig/PackShared.js';
 
 import {Inventory} from '#lostcity/engine/Inventory.js';
@@ -392,6 +393,24 @@ export function parseHuntConfig(key: string, value: string): ConfigValue | null 
             return null;
         }
         return {inv, param, min, max};
+    } else if (key === 'extracheck_var') {
+        const parts: string[] = value.split(',');
+    
+        if (parts.length !== 2) {
+            return null;
+        }
+    
+        if (!parts[0].startsWith('%')) {
+            return null;
+        }
+        const conditionWithVal = parts[1];
+        const operator = conditionWithVal.charAt(0);
+        if (!['=', '>', '<', '!'].includes(operator)) {
+            return null;
+        }
+        const varName = parts[0].slice(1);
+        const val = parseInt(conditionWithVal.slice(1));
+        return {varName, operator, val};
     } else {
         return undefined;
     }
@@ -510,7 +529,15 @@ export function packHuntConfigs(configs: Map<string, ConfigLine[]>): { client: P
                 } else {
                     throw new Error(`Hunt config: [${debugname}] unable to pack line!!!.\nInvalid property value: ${key}=${value}`);
                 }
-            }
+            } else if (key === 'extracheck_var') {
+                if (value !== null) {
+                    const checkVar: HuntCheckVar = value as HuntCheckVar;
+                    server.p1(18);
+                    server.pjstr(checkVar.varName);
+                    server.pjstr(checkVar.operator);
+                    server.p4(checkVar.val);
+                }
+            } 
         }
 
         server.p1(250);

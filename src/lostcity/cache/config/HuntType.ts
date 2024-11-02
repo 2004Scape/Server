@@ -72,6 +72,16 @@ export default class HuntType extends ConfigType {
         return this.configs.length;
     }
 
+    checkHuntOperator(value: number, operator: string, checkValue: number): boolean {
+        switch (operator) {
+            case '>': return value > checkValue;
+            case '<': return value < checkValue;
+            case '=': return value === checkValue;
+            case '!': return value !== checkValue;
+        } 
+        return false;
+    }
+
     // ----
     type: HuntModeType = HuntModeType.OFF;
     checkVis: HuntVis = HuntVis.OFF;
@@ -92,6 +102,9 @@ export default class HuntType extends ConfigType {
     checkObjParam: number = -1;
     checkInvMinQuantity: number = -1;
     checkInvMaxQuantity: number = -1;
+    checkVarName: string = '';
+    checkVarOperator: string = '';
+    checkVarVal: number = -1;
 
     decode(code: number, dat: Packet): void {
         if (code === 1) {
@@ -134,6 +147,10 @@ export default class HuntType extends ConfigType {
             this.checkObjParam = dat.g2();
             this.checkInvMinQuantity = dat.g4();
             this.checkInvMaxQuantity = dat.g4();
+        } else if (code === 18) {
+            this.checkVarName = dat.gjstr();
+            this.checkVarOperator = dat.gjstr();
+            this.checkVarVal = dat.g4();
         } else if (code === 250) {
             this.debugname = dat.gjstr();
         } else {
