@@ -72,8 +72,8 @@ export default class HuntType extends ConfigType {
         return this.configs.length;
     }
 
-    public checkHuntOperator(value: number, operator: string, checkValue: number): boolean {
-        switch (operator) {
+    public checkHuntCondition(value: number, condition: string, checkValue: number): boolean {
+        switch (condition) {
             case '>': return value > checkValue;
             case '<': return value < checkValue;
             case '=': return value === checkValue;
@@ -100,11 +100,9 @@ export default class HuntType extends ConfigType {
     checkLoc: number = -1;
     checkInv: number = -1;
     checkObjParam: number = -1;
-    checkInvOperator: string = '';
+    checkInvCondition: string = '';
     checkInvVal: number = -1;
-    checkVarName: string = '';
-    checkVarOperator: string = '';
-    checkVarVal: number = -1;
+    checkVars: { varId: number; condition: string; val: number }[] = [];
 
     decode(code: number, dat: Packet): void {
         if (code === 1) {
@@ -140,17 +138,15 @@ export default class HuntType extends ConfigType {
         } else if (code === 16) {
             this.checkInv = dat.g2();
             this.checkObj = dat.g2();
-            this.checkInvOperator = dat.gjstr();
+            this.checkInvCondition = dat.gjstr();
             this.checkInvVal = dat.g4();
         } else if (code === 17) {
             this.checkInv = dat.g2();
             this.checkObjParam = dat.g2();
-            this.checkInvOperator = dat.gjstr();
+            this.checkInvCondition = dat.gjstr();
             this.checkInvVal = dat.g4();
-        } else if (code === 18) {
-            this.checkVarName = dat.gjstr();
-            this.checkVarOperator = dat.gjstr();
-            this.checkVarVal = dat.g4();
+        } else if (code > 17 && code < 21) {
+            this.checkVars.push({varId: dat.g2(), condition: dat.gjstr(), val: dat.g4()});
         } else if (code === 250) {
             this.debugname = dat.gjstr();
         } else {

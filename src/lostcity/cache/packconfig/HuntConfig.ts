@@ -336,15 +336,15 @@ export function parseHuntConfig(key: string, value: string): ConfigValue | null 
             return null;
         }
         const conditionWithVal = parts[2];
-        const operator = conditionWithVal.charAt(0);
-        if (!['=', '>', '<', '!'].includes(operator)) {
+        const condition = conditionWithVal.charAt(0);
+        if (!['=', '>', '<', '!'].includes(condition)) {
             return null;
         }
         const val = parseInt(conditionWithVal.slice(1));
         if (isNaN(val)) {
             return null;
         }
-        return {inv, obj, operator, val};
+        return {inv, obj, condition, val};
     } else if (key === 'check_invparam') {
         // check_inv=inv,param,min,max
         const parts: string[] = value.split(',');
@@ -362,15 +362,15 @@ export function parseHuntConfig(key: string, value: string): ConfigValue | null 
             return null;
         }
         const conditionWithVal = parts[2];
-        const operator = conditionWithVal.charAt(0);
-        if (!['=', '>', '<', '!'].includes(operator)) {
+        const condition = conditionWithVal.charAt(0);
+        if (!['=', '>', '<', '!'].includes(condition)) {
             return null;
         }
         const val = parseInt(conditionWithVal.slice(1));
         if (isNaN(val)) {
             return null;
         }
-        return {inv, param, operator, val};
+        return {inv, param, condition, val};
     } else if (key === 'extracheck_var') {
         const parts: string[] = value.split(',');
     
@@ -382,16 +382,19 @@ export function parseHuntConfig(key: string, value: string): ConfigValue | null 
             return null;
         }
         const conditionWithVal = parts[1];
-        const operator = conditionWithVal.charAt(0);
-        if (!['=', '>', '<', '!'].includes(operator)) {
+        const condition = conditionWithVal.charAt(0);
+        if (!['=', '>', '<', '!'].includes(condition)) {
             return null;
         }
-        const varName = parts[0].slice(1);
+        const varp = VarpPack.getByName(parts[0].slice(1));
+        if (varp === -1) {
+            return null;
+        }
         const val = parseInt(conditionWithVal.slice(1));
         if (isNaN(val)) {
             return null;
         }
-        return {varName, operator, val};
+        return {varp, condition, val};
     } else {
         return undefined;
     }
@@ -404,7 +407,7 @@ export function packHuntConfigs(configs: Map<string, ConfigLine[]>): { client: P
     for (let i = 0; i < HuntPack.size; i++) {
         const debugname = HuntPack.getById(i);
         const config = configs.get(debugname)!;
-
+        let extracheckVarsCount = 0;
         for (let j = 0; j < config.length; j++) {
             const { key, value } = config[j];
 
@@ -494,7 +497,7 @@ export function packHuntConfigs(configs: Map<string, ConfigLine[]>): { client: P
                     server.p1(16);
                     server.p2(checkInv.inv);
                     server.p2(checkInv.obj);
-                    server.pjstr(checkInv.operator);
+                    server.pjstr(checkInv.condition);
                     server.p4(checkInv.val);
                 } else {
                     throw new Error(`Hunt config: [${debugname}] unable to pack line!!!.\nInvalid property value: ${key}=${value}`);
@@ -505,18 +508,23 @@ export function packHuntConfigs(configs: Map<string, ConfigLine[]>): { client: P
                     server.p1(17);
                     server.p2(checkInv.inv);
                     server.p2(checkInv.param);
-                    server.pjstr(checkInv.operator);
+                    server.pjstr(checkInv.condition);
                     server.p4(checkInv.val);
                 } else {
                     throw new Error(`Hunt config: [${debugname}] unable to pack line!!!.\nInvalid property value: ${key}=${value}`);
                 }
-            } else if (key === 'extracheck_var') {
-                if (value !== null) {
+            } else if (key === 'extracheck_var') { // 18-20
+                if (extracheckVarsCount > 2) {
+                    throw new Error(`Hunt config: [${debugname}] unable to pack line!!!.\nLimit of 3 extracheck_var properties exceeded.`);
+                } else if (value !== null  && config.filter(x => x.key === 'type' && (x.value === HuntModeType.PLAYER)).length > 0) {
                     const checkVar: HuntCheckVar = value as HuntCheckVar;
-                    server.p1(18);
-                    server.pjstr(checkVar.varName);
-                    server.pjstr(checkVar.operator);
+                    server.p1(18 + extracheckVarsCount);
+                    server.p2(checkVar.varp);
+                    server.pjstr(checkVar.condition);
                     server.p4(checkVar.val);
+                    extracheckVarsCount += 1;
+                } else {
+                    throw new Error(`Hunt config: [${debugname}] unable to pack line!!!.\nInvalid property value: ${key}=${value}`);
                 }
             } 
         }

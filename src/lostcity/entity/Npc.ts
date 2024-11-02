@@ -37,7 +37,6 @@ import LinkList from '#jagex2/datastruct/LinkList.js';
 
 import {CollisionFlag} from '@2004scape/rsmod-pathfinder';
 import {isFlagged} from '#lostcity/engine/GameMap.js';
-import VarPlayerType from '#lostcity/cache/config/VarPlayerType.js';
 
 export default class Npc extends PathingEntity {
     static readonly ANIM = 0x2;
@@ -918,7 +917,7 @@ export default class Npc extends PathingEntity {
             if (!(player instanceof Player)) {
                 throw new Error('[Npc] huntAll must be of type Player here.');
             }
-            if (hunt.checkVarName && !hunt.checkHuntOperator(player.getVar(VarPlayerType.getId(hunt.checkVarName)) as number, hunt.checkVarOperator, hunt.checkVarVal)) {
+            if (hunt.checkNotBusy && player.busy()) {
                 continue;
             }
 
@@ -937,7 +936,12 @@ export default class Npc extends PathingEntity {
                     continue;
                 }
             }
-
+            if (hunt.checkVars && !hunt.checkVars.every(checkVar => {
+                return checkVar.varId === -1 || hunt.checkHuntCondition(player.getVar(checkVar.varId) as number, checkVar.condition, checkVar.val);
+            })) {
+                continue;
+            }
+            
             if (hunt.checkInv !== -1) {
                 let quantity: number = 0;
                 if (hunt.checkObj !== -1) {
@@ -945,13 +949,9 @@ export default class Npc extends PathingEntity {
                 } else if (hunt.checkObjParam !== -1) {
                     quantity = player.invTotalParam(hunt.checkInv, hunt.checkObjParam);
                 }
-                if (!hunt.checkHuntOperator(quantity, hunt.checkInvOperator, hunt.checkInvVal)) {
+                if (!hunt.checkHuntCondition(quantity, hunt.checkInvCondition, hunt.checkInvVal)) {
                     continue;
                 }
-            }
-
-            if (hunt.checkNotBusy && player.busy()) {
-                continue;
             }
             players.push(player);
         }
