@@ -927,6 +927,7 @@ class World {
     private processZones(): void {
         const start: number = Date.now();
         const tick: number = this.currentTick;
+        // - loc/obj despawn/respawn
         this.zonesTracking.get(tick)?.forEach(zone => zone.tick(tick));
         // - build list of active zones around players
         // - compute shared buffer
