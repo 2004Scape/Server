@@ -1,9 +1,7 @@
-import ZoneMap from '#lostcity/engine/zone/ZoneMap.js';
 import {CoordGrid} from '#lostcity/engine/CoordGrid.js';
 import Player from '#lostcity/entity/Player.js';
 import World from '#lostcity/engine/World.js';
 import Npc from '#lostcity/entity/Npc.js';
-import Entity from '#lostcity/entity/Entity.js';
 
 export type ExtendedInfo = {
     id: number,
@@ -75,64 +73,70 @@ export default class BuildArea {
         this.appearances.set(pid, tick);
     }
 
-    *getNearbyPlayers(uid: number, x: number, z: number, originX: number, originZ: number): IterableIterator<Player> {
-        players: for (const zoneIndex of this.proximitySort(x, z, this.activeZones)) {
-            for (const other of this.getNearby(World.gameMap.getZoneIndex(zoneIndex).getAllPlayersSafe(), x, z, originX, originZ, this.viewDistance)) {
-                if (this.players.size >= BuildArea.PREFERRED_PLAYERS) {
-                    break players;
-                }
-                if (this.players.has(other.uid)) {
-                    continue;
-                }
-                if (other.uid === uid) {
-                    continue;
-                }
-                yield other;
-            }
-        }
-    }
-
-    *getNearbyNpcs(x: number, z: number, originX: number, originZ: number): IterableIterator<Npc> {
-        npcs: for (const zoneIndex of this.proximitySort(x, z, this.activeZones)) {
-            for (const npc of this.getNearby(World.gameMap.getZoneIndex(zoneIndex).getAllNpcsSafe(), x, z, originX, originZ, 15)) {
-                if (this.npcs.size >= BuildArea.PREFERRED_NPCS) {
-                    break npcs;
-                }
-                if (this.npcs.has(npc.nid)) {
-                    continue;
-                }
-                yield npc;
-            }
-        }
-    }
-
-    private *getNearby<T extends Entity>(entities: IterableIterator<T>, x: number, z: number, originX: number, originZ: number, distance: number): IterableIterator<T> {
+    *getNearbyPlayers(uid: number, level: number, x: number, z: number, originX: number, originZ: number): IterableIterator<Player> {
         const absLeftX: number = originX - 48;
         const absRightX: number = originX + 48;
         const absTopZ: number = originZ + 48;
         const absBottomZ: number = originZ - 48;
 
-        for (const entity of entities) {
-            if (entity.x <= absLeftX || entity.x >= absRightX || entity.z >= absTopZ || entity.z <= absBottomZ) {
-                continue;
+        const radius = this.viewDistance * 2;
+        const min = -radius >> 1;
+        const max = radius >> 1;
+        const length = radius ** 2;
+
+        let dx = 0;
+        let dz = 0;
+        let ldx = 0;
+        let ldz = -1;
+
+        for (let index = 1; index <= length; index++) {
+            if (min < dx && dx <= max && min < dz && dz <= max) {
+                const players = World.playerGrid.get(CoordGrid.packCoord(level, x + dx, z + dz));
+                if (typeof players !== 'undefined') {
+                    for (const player of players) {
+                        if (this.players.size >= BuildArea.PREFERRED_PLAYERS) {
+                            return;
+                        }
+                        if (
+                            player.uid !== uid &&
+                            CoordGrid.isWithinDistanceSW({ x: x + dx, z: z + dz }, player, this.viewDistance) &&
+                            !this.players.has(player.uid) &&
+                            player.level === level &&
+                            !(player.x <= absLeftX || player.x >= absRightX || player.z >= absTopZ || player.z <= absBottomZ)
+                        ) {
+                            yield player;
+                        }
+                    }
+                }
             }
-            if (!CoordGrid.isWithinDistanceSW({x, z}, entity, distance)) {
-                continue;
+
+            if (dx === dz || (dx < 0 && dx === -dz) || (dx > 0 && dx === 1 - dz)) {
+                const tmp = ldx;
+                ldx = -ldz;
+                ldz = tmp;
             }
-            yield entity;
+
+            dx += ldx;
+            dz += ldz;
         }
     }
 
-    private proximitySort(zoneX: number, zoneZ: number, zones: Set<number>): number[] {
-        return Array.from(zones.values())
-            .map(zoneIndex => this.zoneToDistance(zoneIndex, zoneX, zoneZ))
-            .sort((a, b) => a.distance - b.distance)
-            .map(({zoneIndex}) => zoneIndex);
-    }
+    *getNearbyNpcs(level: number, x: number, z: number, originX: number, originZ: number): IterableIterator<Npc> {
+        const absLeftX: number = originX - 48;
+        const absRightX: number = originX + 48;
+        const absTopZ: number = originZ + 48;
+        const absBottomZ: number = originZ - 48;
 
-    private zoneToDistance(zoneIndex: number, zoneX: number, zoneZ: number): {distance: number, zoneIndex: number} {
-        const pos: CoordGrid = ZoneMap.unpackIndex(zoneIndex);
-        const distance: number = Math.abs(pos.x - zoneX) + Math.abs(pos.z - zoneZ);
-        return {zoneIndex, distance};
+        npcs: for (const zoneIndex of this.activeZones) {
+            for (const npc of World.gameMap.getZoneIndex(zoneIndex).getAllNpcsSafe()) {
+                if (this.npcs.size >= BuildArea.PREFERRED_NPCS) {
+                    break npcs;
+                }
+                if (!CoordGrid.isWithinDistanceSW({ x, z }, npc, 15) || this.npcs.has(npc.nid) || npc.level !== level || npc.x <= absLeftX || npc.x >= absRightX || npc.z >= absTopZ || npc.z <= absBottomZ) {
+                    continue;
+                }
+                yield npc;
+            }
+        }
     }
 }

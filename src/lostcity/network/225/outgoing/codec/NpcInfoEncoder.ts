@@ -112,7 +112,7 @@ export default class NpcInfoEncoder extends MessageEncoder<NpcInfo> {
 
     private writeNewNpcs(buf: Packet, message: NpcInfo): void {
         const buildArea: BuildArea = message.buildArea;
-        for (const npc of buildArea.getNearbyNpcs(message.x, message.z, message.originX, message.originZ)) {
+        for (const npc of buildArea.getNearbyNpcs(message.level, message.x, message.z, message.originX, message.originZ)) {
             const extendedInfoSize: number = this.calculateExtendedInfo(npc, true);
             const extendedInfo: boolean = extendedInfoSize > 0;
 
