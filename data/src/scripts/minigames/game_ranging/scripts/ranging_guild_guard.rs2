@@ -1,0 +1,7 @@
+[opnpc1,ranging_guild_guard]
+~chatplayer("<p,happy>Hello there.");
+~chatnpc("<p,neutral>Greetings, traveller. Enjoy your time at the Ranging Guild.");
+
+[ai_queue1,ranging_guild_guard] ~npc_default_retaliate_ap;
+[ai_opplayer2,ranging_guild_guard] npc_setmode(applayer2);
+[ai_applayer2,ranging_guild_guard] ~npc_rangeattack;

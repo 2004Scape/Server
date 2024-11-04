@@ -4,6 +4,26 @@
 [opnpc1,gnome_woman_white] @talk_to_gnome_woman;
 [opnpc1,gnome_woman_black] @talk_to_gnome_woman;
 
+[ai_queue1,gnome_green] ~npc_default_retaliate_ap;
+[ai_opplayer2,gnome_green] npc_setmode(applayer2);
+[ai_applayer2,gnome_green] ~npc_rangeattack;
+
+[ai_queue1,gnome_brown] ~npc_default_retaliate_ap;
+[ai_opplayer2,gnome_brown] npc_setmode(applayer2);
+[ai_applayer2,gnome_brown] ~npc_rangeattack;
+
+[ai_queue1,gnome_black] ~npc_default_retaliate_ap;
+[ai_opplayer2,gnome_black] npc_setmode(applayer2);
+[ai_applayer2,gnome_black] ~npc_rangeattack;
+
+[ai_queue1,gnome_woman_white] ~npc_default_retaliate_ap;
+[ai_opplayer2,gnome_woman_white] npc_setmode(applayer2);
+[ai_applayer2,gnome_woman_white] ~npc_rangeattack;
+
+[ai_queue1,gnome_woman_black] ~npc_default_retaliate_ap;
+[ai_opplayer2,gnome_woman_black] npc_setmode(applayer2);
+[ai_applayer2,gnome_woman_black] ~npc_rangeattack;
+
 [label,talk_to_gnome]
 def_int $rand = random(5);
 ~chatplayer("<p,neutral>Hello.");
