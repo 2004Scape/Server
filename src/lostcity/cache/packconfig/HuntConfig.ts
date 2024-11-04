@@ -4,10 +4,9 @@ import {
     PackedData,
     isConfigBoolean,
     getConfigBoolean,
-    HuntCheckInv, HuntCheckInvParam
+    HuntCheckInv, HuntCheckInvParam,
+    HuntCheckVar
 } from '#lostcity/cache/packconfig/PackShared.js';
-
-import {Inventory} from '#lostcity/engine/Inventory.js';
 
 import HuntModeType from '#lostcity/entity/hunt/HuntModeType.js';
 import HuntVis from '#lostcity/entity/hunt/HuntVis.js';
@@ -325,42 +324,31 @@ export function parseHuntConfig(key: string, value: string): ConfigValue | null 
     } else if (key === 'check_inv') {
         // check_inv=inv,obj,min,max
         const parts: string[] = value.split(',');
-        if (parts.length !== 4) {
+        if (parts.length !== 3) {
             return null;
         }
-
         const inv = InvPack.getByName(parts[0]);
         if (inv === -1) {
             return null;
         }
-
         const obj = ObjPack.getByName(parts[1]);
         if (obj === -1) {
             return null;
         }
-
-        if (!/^-?[0-9]+$/.test(parts[2])) {
+        const conditionWithVal = parts[2];
+        const condition = conditionWithVal.charAt(0);
+        if (!['=', '>', '<', '!'].includes(condition)) {
             return null;
         }
-        const min = parseInt(parts[2]);
-
-        if (!/^-?[0-9]+$/.test(parts[3])) {
+        const val = parseInt(conditionWithVal.slice(1));
+        if (isNaN(val)) {
             return null;
         }
-        const max = parseInt(parts[3]);
-
-        if (min < 0 || min > Inventory.STACK_LIMIT || min > max) {
-            return null;
-        }
-
-        if (max < 0 || max > Inventory.STACK_LIMIT || max < min) {
-            return null;
-        }
-        return {inv, obj, min, max};
+        return {inv, obj, condition, val};
     } else if (key === 'check_invparam') {
         // check_inv=inv,param,min,max
         const parts: string[] = value.split(',');
-        if (parts.length !== 4) {
+        if (parts.length !== 3) {
             return null;
         }
 
@@ -373,25 +361,40 @@ export function parseHuntConfig(key: string, value: string): ConfigValue | null 
         if (param === -1) {
             return null;
         }
-
-        if (!/^-?[0-9]+$/.test(parts[2])) {
+        const conditionWithVal = parts[2];
+        const condition = conditionWithVal.charAt(0);
+        if (!['=', '>', '<', '!'].includes(condition)) {
             return null;
         }
-        const min = parseInt(parts[2]);
-
-        if (!/^-?[0-9]+$/.test(parts[3])) {
+        const val = parseInt(conditionWithVal.slice(1));
+        if (isNaN(val)) {
             return null;
         }
-        const max = parseInt(parts[3]);
-
-        if (min < 0 || min > Inventory.STACK_LIMIT || min > max) {
+        return {inv, param, condition, val};
+    } else if (key === 'extracheck_var') {
+        const parts: string[] = value.split(',');
+    
+        if (parts.length !== 2) {
             return null;
         }
-
-        if (max < 0 || max > Inventory.STACK_LIMIT || max < min) {
+    
+        if (!parts[0].startsWith('%')) {
             return null;
         }
-        return {inv, param, min, max};
+        const conditionWithVal = parts[1];
+        const condition = conditionWithVal.charAt(0);
+        if (!['=', '>', '<', '!'].includes(condition)) {
+            return null;
+        }
+        const varp = VarpPack.getByName(parts[0].slice(1));
+        if (varp === -1) {
+            return null;
+        }
+        const val = parseInt(conditionWithVal.slice(1));
+        if (isNaN(val)) {
+            return null;
+        }
+        return {varp, condition, val};
     } else {
         return undefined;
     }
@@ -404,7 +407,7 @@ export function packHuntConfigs(configs: Map<string, ConfigLine[]>): { client: P
     for (let i = 0; i < HuntPack.size; i++) {
         const debugname = HuntPack.getById(i);
         const config = configs.get(debugname)!;
-
+        let extracheckVarsCount = 0;
         for (let j = 0; j < config.length; j++) {
             const { key, value } = config[j];
 
@@ -494,8 +497,8 @@ export function packHuntConfigs(configs: Map<string, ConfigLine[]>): { client: P
                     server.p1(16);
                     server.p2(checkInv.inv);
                     server.p2(checkInv.obj);
-                    server.p4(checkInv.min);
-                    server.p4(checkInv.max);
+                    server.pjstr(checkInv.condition);
+                    server.p4(checkInv.val);
                 } else {
                     throw new Error(`Hunt config: [${debugname}] unable to pack line!!!.\nInvalid property value: ${key}=${value}`);
                 }
@@ -505,12 +508,25 @@ export function packHuntConfigs(configs: Map<string, ConfigLine[]>): { client: P
                     server.p1(17);
                     server.p2(checkInv.inv);
                     server.p2(checkInv.param);
-                    server.p4(checkInv.min);
-                    server.p4(checkInv.max);
+                    server.pjstr(checkInv.condition);
+                    server.p4(checkInv.val);
                 } else {
                     throw new Error(`Hunt config: [${debugname}] unable to pack line!!!.\nInvalid property value: ${key}=${value}`);
                 }
-            }
+            } else if (key === 'extracheck_var') { // 18-20
+                if (extracheckVarsCount > 2) {
+                    throw new Error(`Hunt config: [${debugname}] unable to pack line!!!.\nLimit of 3 extracheck_var properties exceeded.`);
+                } else if (value !== null  && config.filter(x => x.key === 'type' && (x.value === HuntModeType.PLAYER)).length > 0) {
+                    const checkVar: HuntCheckVar = value as HuntCheckVar;
+                    server.p1(18 + extracheckVarsCount);
+                    server.p2(checkVar.varp);
+                    server.pjstr(checkVar.condition);
+                    server.p4(checkVar.val);
+                    extracheckVarsCount += 1;
+                } else {
+                    throw new Error(`Hunt config: [${debugname}] unable to pack line!!!.\nInvalid property value: ${key}=${value}`);
+                }
+            } 
         }
 
         server.p1(250);

@@ -350,7 +350,7 @@ transmit=yes
 [option3]
 transmit=yes
 
-[magearena_progress]
+[magearena]
 protect=no
 scope=perm
 

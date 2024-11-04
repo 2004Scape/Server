@@ -43,7 +43,7 @@ if ($x > 0) {
     $dir = ^exact_west;
 }
 
-if (%magearena_progress >= ^mage_arena_complete) {
+if (%magearena >= ^mage_arena_complete) {
     ~mesbox("You step into the pool of sparkling water. You feel energy rush through your veins.");
     if_close;
 }
@@ -55,7 +55,7 @@ facesquare($inside_edge);
 mes("You step into the pool.");
 p_delay(0);
 
-if (%magearena_progress < ^mage_arena_complete) {
+if (%magearena < ^mage_arena_complete) {
     anim(human_walk_f, 0);
     p_locmerge(0, 60, movecoord(loc_coord, -1, 0, -1), movecoord(loc_coord, 3, 0, 3));
     p_exactmove($inside_edge, $outside_edge, 20, 40, $dir);
@@ -81,7 +81,7 @@ anim(null, 0);
 [oploc1,loc_2880]
 // if north of the loc
 if (coordz(coord) > coordz(loc_coord)) {
-    if (%magearena_progress < ^mage_arena_complete) {
+    if (%magearena < ^mage_arena_complete) {
         ~mesbox("You cannot enter without the permission of Kolodion."); // rsc, might be mes
         return;
     }
@@ -136,7 +136,7 @@ if ((inv_totalcat(inv, armour_hands) > 0 | inv_totalcat(worn, armour_hands) > 0)
 return (true);
 
 [proc,mage_arena_in_progress]()(boolean)
-if (%magearena_progress < ^mage_arena_complete & %magearena_progress > ^mage_arena_started) {
+if (%magearena < ^mage_arena_complete & %magearena > ^mage_arena_started) {
     return (true);
 }
 return (false);
@@ -188,3 +188,8 @@ npc_setmode(null);
 %npc_action_delay = add(map_clock, $action_delay);
 %npc_aggressive_player = uid;
 %npc_lastcombat = add(map_clock, 8);
+
+[debugproc,ma]
+if (p_finduid(uid) = true) {
+    p_teleport(0_48_61_20_30);
+}

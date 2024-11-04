@@ -1,7 +1,7 @@
 [if_button,magic:charge]
 if_close;
 if (p_finduid(uid) = true) {
-    if (%magearena_progress < ^mage_arena_staff_given) {
+    if (%magearena < ^mage_arena_staff_given) {
         mes("This spell can only be learnt in the Mage Arena.");
         return;
     }

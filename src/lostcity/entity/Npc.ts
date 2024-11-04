@@ -864,7 +864,8 @@ export default class Npc extends PathingEntity {
         if (this.nextHuntTick > World.currentTick) {
             return;
         }
-        if (NpcType.get(this.type).huntrange < 1) {
+        const npcType = NpcType.get(this.type);
+        if (npcType.huntrange < 1) {
             return;
         }
         const hunt: HuntType = HuntType.get(this.huntMode);
@@ -895,7 +896,14 @@ export default class Npc extends PathingEntity {
         if (hunted.length > 0) {
             const entity: Entity = hunted[Math.floor(Math.random() * hunted.length)];
             this.huntTarget = entity;
-            this.setInteraction(Interaction.SCRIPT, entity, hunt.findNewMode);
+            if (NpcMode.QUEUE1 <= hunt.findNewMode && hunt.findNewMode <= NpcMode.QUEUE20) {
+                const script = ScriptProvider.getByTrigger(ServerTriggerType.AI_QUEUE1 + (hunt.findNewMode - NpcMode.QUEUE1), npcType.id, npcType.category);
+                if (script) {
+                    this.enqueueScript(script, 0, 0);
+                }
+            } else {
+                this.setInteraction(Interaction.SCRIPT, entity, hunt.findNewMode);
+            }
         }
         this.nextHuntTick = World.currentTick + hunt.rate;
     }
@@ -908,6 +916,9 @@ export default class Npc extends PathingEntity {
         for (const player of hunted) {
             if (!(player instanceof Player)) {
                 throw new Error('[Npc] huntAll must be of type Player here.');
+            }
+            if (hunt.checkNotBusy && player.busy()) {
+                continue;
             }
 
             if (hunt.checkAfk && player.zonesAfk()) {
@@ -925,7 +936,12 @@ export default class Npc extends PathingEntity {
                     continue;
                 }
             }
-
+            if (hunt.checkVars && !hunt.checkVars.every(checkVar => {
+                return checkVar.varId === -1 || hunt.checkHuntCondition(player.getVar(checkVar.varId) as number, checkVar.condition, checkVar.val);
+            })) {
+                continue;
+            }
+            
             if (hunt.checkInv !== -1) {
                 let quantity: number = 0;
                 if (hunt.checkObj !== -1) {
@@ -933,13 +949,9 @@ export default class Npc extends PathingEntity {
                 } else if (hunt.checkObjParam !== -1) {
                     quantity = player.invTotalParam(hunt.checkInv, hunt.checkObjParam);
                 }
-                if (quantity < hunt.checkInvMinQuantity || quantity > hunt.checkInvMaxQuantity) {
+                if (!hunt.checkHuntCondition(quantity, hunt.checkInvCondition, hunt.checkInvVal)) {
                     continue;
                 }
-            }
-
-            if (hunt.checkNotBusy && player.busy()) {
-                continue;
             }
             players.push(player);
         }

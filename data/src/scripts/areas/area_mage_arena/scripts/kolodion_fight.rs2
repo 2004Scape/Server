@@ -27,7 +27,7 @@ if (npc_findhero = false) {
     gosub(npc_death);
     return;
 }
-%magearena_progress = 2;
+%magearena = 2;
 npc_setmode(none);
 npc_anim(human_castteleport, 30);
 npc_delay(2);
@@ -50,7 +50,7 @@ if (npc_findhero = false) {
     gosub(npc_death);
     return;
 }
-%magearena_progress = 3;
+%magearena = 3;
 npc_setmode(none);
 npc_anim(giant_teleport_reverse, 30);
 npc_delay(2);
@@ -73,7 +73,7 @@ if (npc_findhero = false) {
     gosub(npc_death);
     return;
 }
-%magearena_progress = 4;
+%magearena = 4;
 npc_setmode(none);
 npc_anim(giantspider_teleport_reverse, 30);
 npc_delay(2);
@@ -96,7 +96,7 @@ if (npc_findhero = false) {
     gosub(npc_death);
     return;
 }
-%magearena_progress = 5;
+%magearena = 5;
 npc_setmode(none);
 npc_anim(human_castteleport, 30);
 npc_delay(2);
@@ -121,7 +121,7 @@ if (npc_findhero = false) {
 }
 queue(finish_mage_arena, 0);
 npc_delay(0);
-%magearena_progress = ^mage_arena_complete;
+%magearena = ^mage_arena_complete;
 npc_delay(1);
 npc_setmode(none);
 npc_anim(delrith_banish, 30);
