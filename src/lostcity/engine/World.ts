@@ -548,8 +548,8 @@ class World {
             }
 
             if (Environment.NODE_DEBUG_PROFILER) {
-                printDebug(`tick ${this.currentTick} took ${this.cycleStats[WorldStat.CYCLE]}ms: ${this.getTotalPlayers()} players`);
-                printDebug(`${this.cycleStats[WorldStat.WORLD]} ms world | ${this.cycleStats[WorldStat.CLIENT_IN]} ms client in | ${this.cycleStats[WorldStat.NPC]} ms npcs | ${this.cycleStats[WorldStat.PLAYER]} ms players | ${this.cycleStats[WorldStat.LOGOUT]} ms logout | ${this.cycleStats[WorldStat.LOGIN]} ms login | ${this.cycleStats[WorldStat.ZONE]} ms zones | ${this.cycleStats[WorldStat.CLIENT_OUT]} ms client out | ${this.cycleStats[WorldStat.CLEANUP]} ms cleanup`);
+                printDebug(`| [tick ${this.currentTick}; ${this.cycleStats[WorldStat.CYCLE]}/${this.tickRate}ms] | ${this.getTotalPlayers()} players | ${this.getTotalNpcs()} npcs | ${this.gameMap.getTotalZones()} zones | ${this.gameMap.getTotalLocs()} locs | ${this.gameMap.getTotalObjs()} objs |`);
+                printDebug(`| ${this.cycleStats[WorldStat.WORLD]}ms world | ${this.cycleStats[WorldStat.CLIENT_IN]}ms client in | ${this.cycleStats[WorldStat.NPC]}ms npcs | ${this.cycleStats[WorldStat.PLAYER]}ms players | ${this.cycleStats[WorldStat.LOGOUT]}ms logout | ${this.cycleStats[WorldStat.LOGIN]}ms login | ${this.cycleStats[WorldStat.ZONE]}ms zones | ${this.cycleStats[WorldStat.CLIENT_OUT]}ms client out | ${this.cycleStats[WorldStat.CLEANUP]}ms cleanup |`);
                 printDebug('----');
             }
         } catch (err) {
@@ -927,13 +927,8 @@ class World {
     private processZones(): void {
         const start: number = Date.now();
         const tick: number = this.currentTick;
-        const zones: Set<Zone> | undefined = this.zonesTracking.get(tick);
-        if (typeof zones !== 'undefined') {
-            // - loc/obj despawn/respawn
-            for (const zone of zones) {
-                zone.tick(tick);
-            }
-        }
+        // - loc/obj despawn/respawn
+        this.zonesTracking.get(tick)?.forEach(zone => zone.tick(tick));
         // - build list of active zones around players
         // - compute shared buffer
         this.computeSharedEvents();
@@ -947,13 +942,13 @@ class World {
         for (const player of this.players) {
             player.convertMovementDir();
 
+            const grid = this.playerGrid;
             const coord = CoordGrid.packCoord(player.level, player.x, player.z);
-            let players: Player[] | undefined = this.playerGrid.get(coord);
-            if (typeof players === 'undefined') {
-                players = [];
-                this.playerGrid.set(coord, players);
-            }
+            const players = grid.get(coord) ?? [];
             players.push(player);
+            if (!grid.has(coord)) {
+                grid.set(coord, players);
+            }
         }
 
         for (const npc of this.npcs) {
@@ -1011,16 +1006,10 @@ class World {
     // - reset invs
     private processCleanup(): void {
         const start: number = Date.now();
-
         const tick: number = this.currentTick;
 
         // - reset zones
-        const zones: Set<Zone> | undefined = this.zonesTracking.get(tick);
-        if (typeof zones !== 'undefined') {
-            for (const zone of zones) {
-                zone.reset();
-            }
-        }
+        this.zonesTracking.get(tick)?.forEach(zone => zone.reset());
         this.zonesTracking.delete(tick);
 
         // - reset players
@@ -1188,9 +1177,7 @@ class World {
                 zones.add(zone);
             }
         }
-        for (const zoneIndex of zones) {
-            this.gameMap.getZoneIndex(zoneIndex).computeShared();
-        }
+        zones.forEach(zoneIndex => this.gameMap.getZoneIndex(zoneIndex).computeShared());
     }
 
     addNpc(npc: Npc, duration: number, firstSpawn: boolean = true): void {
@@ -1255,15 +1242,11 @@ class World {
     }
 
     trackZone(tick: number, zone: Zone): void {
-        let zones: Set<Zone>;
-        const active: Set<Zone> | undefined = this.zonesTracking.get(tick);
-        if (!active) {
-            zones = new Set();
-        } else {
-            zones = active;
+        const tracking: Map<number, Set<Zone>> = this.zonesTracking;
+        const zones: Set<Zone> = (tracking.get(tick) ?? new Set()).add(zone);
+        if (!tracking.has(tick)) {
+            tracking.set(tick, zones);
         }
-        zones.add(zone);
-        this.zonesTracking.set(tick, zones);
     }
 
     addLoc(loc: Loc, duration: number): void {
