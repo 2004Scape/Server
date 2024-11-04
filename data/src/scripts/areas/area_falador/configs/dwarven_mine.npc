@@ -99,4 +99,9 @@ model4=model_2983_npc
 model5=model_2985_npc
 model6=model_2990_npc
 head1=model_1_npc_head
+hitpoints=16
+attack=8
+strength=8
+defence=7
 param=death_anim,dwarf_death
+// https://raw.githubusercontent.com/Joshua-F/osrs-dumps/refs/heads/master/config/dump.npc npc_4985

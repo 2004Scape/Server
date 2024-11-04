@@ -11,7 +11,6 @@ model1=model_2909_npc
 model2=model_2890_npc
 model3=model_2922_npc
 head1=model_21_npc_head
-wanderrange=3
 param=death_anim,midget_death
 param=death_sound,gnome_death
 
@@ -134,6 +133,7 @@ param=death_anim,midget_death
 param=attack_sound,gnome_attack
 param=defend_sound,gnome_hit
 param=death_sound,gnome_death
+// osrs stats and Vislvl match 1:1
 
 [gnome_child_blue]
 name=Gnome child
@@ -168,6 +168,7 @@ param=death_anim,midget_death
 param=attack_sound,gnome_attack
 param=defend_sound,gnome_hit
 param=death_sound,gnome_death
+// osrs stats and Vislvl match 1:1
 
 [gnome_child_green]
 name=Gnome child
@@ -200,6 +201,7 @@ param=death_anim,midget_death
 param=attack_sound,gnome_attack
 param=defend_sound,gnome_hit
 param=death_sound,gnome_death
+// osrs stats and Vislvl match 1:1
 
 [gnome_guard_halberd]
 name=Gnome guard
@@ -230,6 +232,7 @@ param=attack_sound,scythe_slash
 param=defend_sound,gnome_hit
 param=death_sound,gnome_death
 // osrs attack_sound,gnome_attack & defend_sound,scythe_slash
+// Stats match osrs version but our version Vislvl is different.
 
 [gnome_guard_sword]
 name=Gnome guard
@@ -262,6 +265,7 @@ param=death_anim,midget_death
 param=attack_sound,hacksword_slash
 // param=attack_sound,brassclash
 param=death_sound,gnome_death
+// Stats match osrs version but our version Vislvl is different.
 
 [npc_165]
 name=Gnome shop keeper
@@ -327,7 +331,7 @@ model1=model_2911_npc
 model2=model_2907_npc
 model3=model_2917_npc
 head1=model_21_npc_head
-attackrange=6
+attackrange=1
 respawnrate=100
 hitpoints=2
 param=attackbonus,-42
@@ -337,16 +341,17 @@ param=slashdefence,-42
 param=crushdefence,-42
 param=magicdefence,-42
 param=rangedefence,-42
+param=damagetype,^ranged_style
 param=attack_anim,midget_attackbow
 param=defend_anim,midget_block
 param=death_anim,midget_death
-param=damagetype,^ranged_style
 param=rangeattack_sound,arrowlaunch2
-param=proj_launch,iron_arrow_launch
-param=proj_height,48
-param=proj_travel,iron_arrow_travel
 param=defend_sound,gnome_hit
 param=death_sound,gnome_death
+param=proj_launch,iron_arrow_launch
+param=proj_travel,iron_arrow_travel
+param=proj_height,48
+// osrs stats and Vislvl match 1:1
 
 [gnome_woman_black]
 name=Gnome woman
@@ -371,7 +376,7 @@ model1=model_2911_npc
 model2=model_2907_npc
 model3=model_2917_npc
 head1=model_21_npc_head
-attackrange=6
+attackrange=1
 respawnrate=100
 hitpoints=2
 param=attackbonus,-42
@@ -381,16 +386,17 @@ param=slashdefence,-42
 param=crushdefence,-42
 param=magicdefence,-42
 param=rangedefence,-42
+param=damagetype,^ranged_style
 param=attack_anim,midget_attackbow
 param=defend_anim,midget_block
 param=death_anim,midget_death
-param=damagetype,^ranged_style
 param=rangeattack_sound,arrowlaunch2
-param=proj_launch,iron_arrow_launch
-param=proj_height,48
-param=proj_travel,iron_arrow_travel
 param=defend_sound,gnome_hit
 param=death_sound,gnome_death
+param=proj_launch,iron_arrow_launch
+param=proj_travel,iron_arrow_travel
+param=proj_height,48
+// osrs stats and Vislvl match 1:1
 
 [gnome_pilot]
 name=Gnome pilot
@@ -671,8 +677,13 @@ model3=model_2917_npc
 head1=model_21_npc_head
 wanderrange=0
 moverestrict=nomove
+hitpoints=3
+attack=3
+strength=3
+defence=3
 param=death_anim,midget_death
 param=death_sound,gnome_death
+// https://raw.githubusercontent.com/Joshua-F/osrs-dumps/refs/heads/master/config/dump.npc npc_4978
 
 [local_gnome]
 vislevel=hide
@@ -687,8 +698,13 @@ model3=model_2917_npc
 head1=model_21_npc_head
 wanderrange=0
 moverestrict=nomove
+hitpoints=3
+attack=3
+strength=3
+defence=3
 param=death_anim,midget_death
 param=death_sound,gnome_death
+// https://raw.githubusercontent.com/Joshua-F/osrs-dumps/refs/heads/master/config/dump.npc npc_4979
 
 [kalron]
 vislevel=hide
@@ -701,8 +717,13 @@ model1=model_2909_npc
 model2=model_2890_npc
 model3=model_2917_npc
 head1=model_21_npc_head
+hitpoints=3
+attack=3
+strength=3
+defence=3
 param=death_anim,midget_death
 param=death_sound,gnome_death
+// https://raw.githubusercontent.com/Joshua-F/osrs-dumps/refs/heads/master/config/dump.npc npc_4980
 
 [gnome_troop_white]
 name=Gnome troop
@@ -721,23 +742,24 @@ respawnrate=60
 hitpoints=3
 param=attackbonus,2
 param=strengthbonus,3
+param=rangebonus,2
 param=stabdefence,3
 param=slashdefence,4
 param=crushdefence,5
 param=magicdefence,2
 param=rangedefence,4
+param=damagetype,^ranged_style
 param=attack_anim,midget_attackbow
 param=defend_anim,midget_block
 param=death_anim,midget_death
-param=damagetype,^ranged_style
 param=rangeattack_sound,arrowlaunch2
-param=proj_launch,iron_arrow_launch
-param=proj_height,48
-param=proj_travel,iron_arrow_travel
 param=defend_sound,gnome_hit
 param=death_sound,gnome_death
+param=proj_launch,iron_arrow_launch
+param=proj_travel,iron_arrow_travel
+param=proj_height,48
 category=gnome_troop
-// attack style is missing
+// osrs stats and Vislvl match 1:1
 
 [gnome_troop_black]
 name=Gnome troop
@@ -764,20 +786,21 @@ respawnrate=60
 hitpoints=3
 param=attackbonus,2
 param=strengthbonus,3
+param=rangebonus,2
 param=stabdefence,3
 param=slashdefence,4
 param=crushdefence,5
 param=magicdefence,2
 param=rangedefence,4
+param=damagetype,^ranged_style
 param=attack_anim,midget_attackbow
 param=defend_anim,midget_block
 param=death_anim,midget_death
-param=damagetype,^ranged_style
 param=rangeattack_sound,arrowlaunch2
-param=proj_launch,iron_arrow_launch
-param=proj_height,48
-param=proj_travel,iron_arrow_travel
 param=defend_sound,gnome_hit
 param=death_sound,gnome_death
+param=proj_launch,iron_arrow_launch
+param=proj_travel,iron_arrow_travel
+param=proj_height,48
 category=gnome_troop
-// attack style is missing
+// osrs stats and Vislvl match 1:1

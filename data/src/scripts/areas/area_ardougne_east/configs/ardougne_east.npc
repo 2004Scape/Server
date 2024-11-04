@@ -20,22 +20,25 @@ attackrange=10
 maxrange=12
 respawnrate=50
 hitpoints=50
-attack=0
-strength=0
-defence=40
+attack=20
+strength=20
+defence=20
 ranged=40
 param=attackrate,6
-param=attackbonus,34
-param=stabdefence,39
-param=slashdefence,50
-param=crushdefence,49
-param=magicdefence,18
-param=rangedefence,45
+param=attackbonus,19
+param=strengthbonus,8
+param=rangebonus,8
+param=stabdefence,18
+param=slashdefence,23
+param=crushdefence,27
+param=magicdefence,10
+param=rangedefence,19
 param=damagetype,^ranged_style
 param=attack_anim,human_bow
 param=rangeattack_sound,arrowlaunch2
 param=proj_launch,iron_arrow_launch
 param=proj_travel,iron_arrow_travel
+// Stats match osrs version but our version Vislvl is different.
 
 [zoo_keeper]
 name=Zoo keeper
@@ -65,6 +68,12 @@ model10=model_495_npc
 head1=model_53_idk_head
 head2=model_82_idk_head
 head3=model_37_npc_head
+hitpoints=20
+attack=10
+strength=10
+defence=10
+ranged=0
+// https://raw.githubusercontent.com/Joshua-F/osrs-dumps/refs/heads/master/config/dump.npc npc_3302
 
 [chuck]
 name=Chuck
@@ -167,6 +176,7 @@ param=attack_sound,mace_crush
 // param=defend_sound,blade2_mail
 category=guard
 // osrs use attack sound warhammer_crush
+// osrs stats and Vislvl match 1:1
 
 [brother_kojo]
 vislevel=hide
@@ -258,6 +268,7 @@ strength=2
 defence=3
 param=damagetype,^crush_style
 param=retreat,2
+// osrs stats and Vislvl match 1:1
 
 [king_lathas]
 vislevel=hide
@@ -402,8 +413,7 @@ param=shop_sell_multiplier,1000
 param=shop_buy_multiplier,800
 param=shop_delta,20
 param=shop_title,Ardougne Baker's Stall.
-wanderrange=0
-moverestrict=nomove
+wanderrange=2
 
 [spice_seller]
 vislevel=hide
@@ -722,13 +732,14 @@ model6=model_414_npc
 model7=model_361_obj_wear
 head1=model_115_idk_head
 head2=model_131_npc_head
+moverestrict=indoors
+param=death_sound,female_death
 category=shop_keeper
 param=owned_shop,zenesha_platemail
 param=shop_sell_multiplier,1000
 param=shop_buy_multiplier,600
 param=shop_delta,20
 param=shop_title,Zenesha's Plate Mail Body Shop.
-moverestrict=indoors
 
 [caroline]
 vislevel=hide
@@ -752,6 +763,7 @@ model6=model_358_idk
 model7=model_483_npc
 head1=model_114_idk_head
 wanderrange=2
+param=death_sound,female_death
 
 [holgart_ardougne]
 vislevel=hide
