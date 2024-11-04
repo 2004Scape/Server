@@ -1,6 +1,6 @@
 [ai_queue3,crest_chronozon]
 if (npc_findhero = true){
-    if (getbit_range(%crest_spells_levers_gauntlets, ^crest_wind_blast_used, ^crest_fire_blast_used) = calc(pow(2,4) - 1)) {
+    if (getbit_range(%crest_spells_levers_gauntlets, ^crest_wind_blast_used, ^crest_fire_blast_used) = ^crest_all_spells_cast) {
         gosub(npc_death);
         if (%crest_progress = ^crest_cured_johnathon) {
             obj_add(npc_coord, crest_part_3, 1, ^lootdrop_duration);

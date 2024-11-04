@@ -12,23 +12,18 @@ else {
 }
 
 [opnpcu,crest_johnathon]
-if (%crest_progress ! ^crest_spoken_johnathon) {
-    mes(^dm_default);
-    return;
+if (oc_param(last_useitem, cures_poison) = true) {
+    if (%crest_progress >= ^crest_cured_johnathon) {
+        ~chatnpc("<p,neutral>I'm feeling alright now, thanks.");
+        return;
+    }
+    else if (%crest_progress = ^crest_spoken_johnathon) {   
+        inv_del(inv, last_useitem, 1);
+        %crest_progress = ^crest_cured_johnathon;
+        @crest_johnathon_cured;
+    }
 }
-if (last_useitem = 1doseantipoison |
-    last_useitem = 2doseantipoison |
-    last_useitem = 3doseantipoison |
-    last_useitem = 4doseantipoison |
-    last_useitem = 1dose2antipoison |
-    last_useitem = 2dose2antipoison |
-    last_useitem = 3dose2antipoison |
-    last_useitem = 4dose2antipoison) {
-    
-    inv_del(inv, last_useitem, 1);
-    %crest_progress = ^crest_cured_johnathon;
-    @crest_johnathon_cured;
-}
+~displaymessage(^dm_default);
 
 [label,crest_johnathon_intro]
 ~chatplayer("<p,neutral>Greetings. Would you happen to be Johnathon Fitzharmon?");

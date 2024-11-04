@@ -9,6 +9,7 @@ members=yes
 weight=3oz
 iop1=Eat
 tradeable=yes
+param=cures_poison,yes
 
 [pickaxe_handle]
 name=Pickaxe handle
