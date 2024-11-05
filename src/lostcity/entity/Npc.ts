@@ -273,22 +273,22 @@ export default class Npc extends PathingEntity {
     }
 
     blockWalkFlag(): CollisionFlag {
-        switch (this.moveRestrict) {
-            case MoveRestrict.NORMAL:
-                return CollisionFlag.NPC;
-            case MoveRestrict.BLOCKED:
-                return CollisionFlag.OPEN;
-            case MoveRestrict.BLOCKED_NORMAL:
-                return CollisionFlag.NPC;
-            case MoveRestrict.INDOORS:
-                return CollisionFlag.NPC;
-            case MoveRestrict.OUTDOORS:
-                return CollisionFlag.NPC;
-            case MoveRestrict.NOMOVE:
-                return CollisionFlag.NULL;
-            case MoveRestrict.PASSTHRU:
-                return CollisionFlag.OPEN;
+        if (this.moveRestrict === MoveRestrict.NORMAL) {
+            return CollisionFlag.NPC;
+        } else if (this.moveRestrict === MoveRestrict.BLOCKED) {
+            return CollisionFlag.OPEN;
+        } else if (this.moveRestrict === MoveRestrict.BLOCKED_NORMAL) {
+            return CollisionFlag.NPC;
+        } else if (this.moveRestrict === MoveRestrict.INDOORS) {
+            return CollisionFlag.NPC;
+        } else if (this.moveRestrict === MoveRestrict.OUTDOORS) {
+            return CollisionFlag.NPC;
+        } else if (this.moveRestrict === MoveRestrict.NOMOVE) {
+            return CollisionFlag.NULL;
+        } else if (this.moveRestrict === MoveRestrict.PASSTHRU) {
+            return CollisionFlag.OPEN;
         }
+        return CollisionFlag.NULL;
     }
 
     defaultMoveSpeed(): MoveSpeed {
