@@ -402,6 +402,10 @@ export default abstract class PathingEntity extends Entity {
 
     pathToMoveClick(input: number[], needsfinding: boolean): void {
         if (this.moveStrategy === MoveStrategy.SMART) {
+            if (this.target && this.target instanceof PathingEntity && Environment.NODE_CLIENT_ROUTEFINDER && CoordGrid.intersects(this.x, this.z, this.width, this.length, this.target.x, this.target.z, this.target.width, this.target.length)) {
+                this.queueWaypoints(findNaivePath(this.level, this.x, this.z, this.target.x, this.target.z, this.width, this.length, this.target.width, this.target.length, 0, CollisionType.NORMAL));
+                return;
+            }
             if (needsfinding) {
                 const { x, z } = CoordGrid.unpackCoord(input[0]);
                 this.queueWaypoints(findPath(this.level, this.x, this.z, x, z));
