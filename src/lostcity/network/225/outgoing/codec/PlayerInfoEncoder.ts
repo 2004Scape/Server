@@ -207,16 +207,19 @@ export default class PlayerInfoEncoder extends MessageEncoder<PlayerInfo> {
             masks &= ~InfoProt.PLAYER_APPEARANCE.id;
         }
 
-        if (other.faceEntity !== -1 && renderer.cacheFaceEntity(pid, new PlayerInfoFaceEntity(other.faceEntity)) === 0) {
+        if (other.faceEntity !== -1 && !renderer.hasEntity(pid)) {
+            renderer.cacheEntity(pid, new PlayerInfoFaceEntity(other.faceEntity));
             masks |= InfoProt.PLAYER_FACE_ENTITY.id;
         }
 
-        if (other.orientationX !== -1) {
-            renderer.cacheFaceCoord(pid, new PlayerInfoFaceCoord(other.orientationX, other.orientationZ));
-        } else if (other.faceX !== -1) {
-            renderer.cacheFaceCoord(pid, new PlayerInfoFaceCoord(other.faceX, other.faceZ));
-        } else {
-            renderer.cacheFaceCoord(pid, new PlayerInfoFaceCoord(other.x * 2 + 1, (other.z - 1) * 2 + 1));
+        if (!renderer.hasCoord(pid)) {
+            if (other.orientationX !== -1) {
+                renderer.cacheCoord(pid, new PlayerInfoFaceCoord(other.orientationX, other.orientationZ));
+            } else if (other.faceX !== -1) {
+                renderer.cacheCoord(pid, new PlayerInfoFaceCoord(other.faceX, other.faceZ));
+            } else {
+                renderer.cacheCoord(pid, new PlayerInfoFaceCoord(other.x * 2 + 1, (other.z - 1) * 2 + 1));
+            }
         }
 
         masks |= InfoProt.PLAYER_FACE_COORD.id;
@@ -233,7 +236,7 @@ export default class PlayerInfoEncoder extends MessageEncoder<PlayerInfo> {
             renderer.writeAnim(buf, pid);
         }
         if (masks & InfoProt.PLAYER_FACE_ENTITY.id) {
-            renderer.writeFaceEntity(buf, pid);
+            renderer.writeEntity(buf, pid);
         }
         if (masks & InfoProt.PLAYER_SAY.id) {
             renderer.writeSay(buf, pid);
@@ -242,7 +245,7 @@ export default class PlayerInfoEncoder extends MessageEncoder<PlayerInfo> {
             renderer.writeDamage(buf, pid);
         }
         if (masks & InfoProt.PLAYER_FACE_COORD.id) {
-            renderer.writeFaceCoord(buf, pid);
+            renderer.writeCoord(buf, pid);
         }
         if (!self && masks & InfoProt.PLAYER_CHAT.id) {
             renderer.writeChat(buf, pid);

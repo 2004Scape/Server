@@ -53,15 +53,19 @@ export default abstract class Renderer<T extends Entity> {
         this.writeBlock(buf, this.anims, id);
     }
 
-    cacheFaceEntity(id: number, message: InfoMessage): number {
+    cacheEntity(id: number, message: InfoMessage): number {
         if (this.entities.has(id)) {
             return 0;
         }
         return this.encodeInfo(this.entities, id, message);
     }
 
-    writeFaceEntity(buf: Packet, id: number): void {
+    writeEntity(buf: Packet, id: number): void {
         this.writeBlock(buf, this.entities, id);
+    }
+
+    hasEntity(id: number): boolean {
+        return this.entities.has(id);
     }
 
     cacheSay(id: number, message: InfoMessage): number {
@@ -86,15 +90,19 @@ export default abstract class Renderer<T extends Entity> {
         this.writeBlock(buf, this.damages, id);
     }
 
-    cacheFaceCoord(id: number, message: InfoMessage): number {
+    cacheCoord(id: number, message: InfoMessage): number {
         if (this.coords.has(id)) {
             return 0;
         }
         return this.encodeInfo(this.coords, id, message);
     }
 
-    writeFaceCoord(buf: Packet, id: number): void {
+    writeCoord(buf: Packet, id: number): void {
         this.writeBlock(buf, this.coords, id);
+    }
+
+    hasCoord(id: number): boolean {
+        return this.coords.has(id);
     }
 
     cacheSpotanim(id: number, message: InfoMessage): number {

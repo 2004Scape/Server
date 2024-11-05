@@ -55,7 +55,7 @@ export default class PlayerRenderer extends Renderer<Player>  {
                 player.alreadyFacedEntity = true;
             }
 
-            highs += lows += this.cacheFaceEntity(pid, new PlayerInfoFaceEntity(entity));
+            highs += lows += this.cacheEntity(pid, new PlayerInfoFaceEntity(entity));
         }
 
         // ---- 3
@@ -70,7 +70,7 @@ export default class PlayerRenderer extends Renderer<Player>  {
 
         // ---- 5
         if (masks & InfoProt.PLAYER_FACE_COORD.id) {
-            highs += lows += this.cacheFaceCoord(pid, new PlayerInfoFaceCoord(player.faceX, player.faceZ));
+            highs += lows += this.cacheCoord(pid, new PlayerInfoFaceCoord(player.faceX, player.faceZ));
         }
 
         // ---- 6

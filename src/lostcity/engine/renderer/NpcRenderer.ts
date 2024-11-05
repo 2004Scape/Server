@@ -44,7 +44,7 @@ export default class NpcRenderer extends Renderer<Npc> {
                 npc.alreadyFacedEntity = true;
             }
 
-            highs += lows += this.cacheFaceEntity(nid, new NpcInfoFaceEntity(entity));
+            highs += lows += this.cacheEntity(nid, new NpcInfoFaceEntity(entity));
         }
 
         // ---- 2
@@ -69,7 +69,7 @@ export default class NpcRenderer extends Renderer<Npc> {
 
         // ---- 6
         if (masks & InfoProt.NPC_FACE_COORD.id) {
-            highs += lows += this.cacheFaceCoord(nid, new NpcInfoFaceCoord(npc.faceX, npc.faceZ));
+            highs += lows += this.cacheCoord(nid, new NpcInfoFaceCoord(npc.faceX, npc.faceZ));
         }
 
         if (highs > 0) {

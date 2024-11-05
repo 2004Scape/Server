@@ -157,16 +157,19 @@ export default class NpcInfoEncoder extends MessageEncoder<NpcInfo> {
         const nid: number = other.nid;
         let masks: number = other.masks;
 
-        if (other.faceEntity !== -1 && renderer.cacheFaceEntity(nid, new NpcInfoFaceEntity(other.faceEntity)) === 0) {
+        if (other.faceEntity !== -1 && !renderer.hasEntity(nid)) {
+            renderer.cacheEntity(nid, new NpcInfoFaceEntity(other.faceEntity));
             masks |= InfoProt.NPC_FACE_ENTITY.id;
         }
 
-        if (other.orientationX !== -1) {
-            renderer.cacheFaceCoord(nid, new NpcInfoFaceCoord(other.orientationX, other.orientationZ));
-        } else if (other.faceX !== -1) {
-            renderer.cacheFaceCoord(nid, new NpcInfoFaceCoord(other.faceX, other.faceZ));
-        } else {
-            renderer.cacheFaceCoord(nid, new NpcInfoFaceCoord(other.x * 2 + 1, (other.z - 1) * 2 + 1));
+        if (!renderer.hasCoord(nid)) {
+            if (other.orientationX !== -1) {
+                renderer.cacheCoord(nid, new NpcInfoFaceCoord(other.orientationX, other.orientationZ));
+            } else if (other.faceX !== -1) {
+                renderer.cacheCoord(nid, new NpcInfoFaceCoord(other.faceX, other.faceZ));
+            } else {
+                renderer.cacheCoord(nid, new NpcInfoFaceCoord(other.x * 2 + 1, (other.z - 1) * 2 + 1));
+            }
         }
 
         masks |= InfoProt.NPC_FACE_COORD.id;
@@ -180,7 +183,7 @@ export default class NpcInfoEncoder extends MessageEncoder<NpcInfo> {
             renderer.writeAnim(buf, nid);
         }
         if (masks & InfoProt.NPC_FACE_ENTITY.id) {
-            renderer.writeFaceEntity(buf, nid);
+            renderer.writeEntity(buf, nid);
         }
         if (masks & InfoProt.NPC_SAY.id) {
             renderer.writeSay(buf, nid);
@@ -195,7 +198,7 @@ export default class NpcInfoEncoder extends MessageEncoder<NpcInfo> {
             renderer.writeSpotanim(buf, nid);
         }
         if (masks & InfoProt.NPC_FACE_COORD.id) {
-            renderer.writeFaceCoord(buf, nid);
+            renderer.writeCoord(buf, nid);
         }
     }
 
