@@ -37,16 +37,9 @@ import LinkList from '#jagex2/datastruct/LinkList.js';
 
 import {CollisionFlag} from '@2004scape/rsmod-pathfinder';
 import {isFlagged} from '#lostcity/engine/GameMap.js';
+import InfoProt from '#lostcity/network/225/outgoing/prot/InfoProt.js';
 
 export default class Npc extends PathingEntity {
-    static readonly ANIM = 0x2;
-    static readonly FACE_ENTITY = 0x4;
-    static readonly SAY = 0x8;
-    static readonly DAMAGE = 0x10;
-    static readonly CHANGE_TYPE = 0x20;
-    static readonly SPOTANIM = 0x40;
-    static readonly FACE_COORD = 0x80;
-
     // constructor properties
     nid: number;
     type: number;
@@ -83,7 +76,7 @@ export default class Npc extends PathingEntity {
     }[] = new Array(16); // be sure to reset when stats are recovered/reset
 
     constructor(level: number, x: number, z: number, width: number, length: number, lifecycle: EntityLifeCycle, nid: number, type: number, moveRestrict: MoveRestrict, blockWalk: BlockWalk) {
-        super(level, x, z, width, length, lifecycle, moveRestrict, blockWalk, MoveStrategy.NAIVE, Npc.FACE_COORD, Npc.FACE_ENTITY);
+        super(level, x, z, width, length, lifecycle, moveRestrict, blockWalk, MoveStrategy.NAIVE, InfoProt.NPC_FACE_COORD.id, InfoProt.NPC_FACE_ENTITY.id);
         this.nid = nid;
         this.type = type;
         this.uid = (type << 16) | nid;
@@ -179,12 +172,11 @@ export default class Npc extends PathingEntity {
     }
 
     updateMovement(repathAllowed: boolean = true): boolean {
-        const type = NpcType.get(this.type);
         if (!this.targetWithinMaxRange()) {
             this.defaultMode();
             return false;
         }
-        if (type.moverestrict === MoveRestrict.NOMOVE) {
+        if (this.moveRestrict === MoveRestrict.NOMOVE) {
             return false;
         }
         if (repathAllowed && this.target instanceof PathingEntity && !this.interacted && this.walktrigger === -1) {
@@ -281,22 +273,22 @@ export default class Npc extends PathingEntity {
     }
 
     blockWalkFlag(): CollisionFlag {
-        if (this.moveRestrict === MoveRestrict.NORMAL) {
-            return CollisionFlag.NPC;
-        } else if (this.moveRestrict === MoveRestrict.BLOCKED) {
-            return CollisionFlag.OPEN;
-        } else if (this.moveRestrict === MoveRestrict.BLOCKED_NORMAL) {
-            return CollisionFlag.NPC;
-        } else if (this.moveRestrict === MoveRestrict.INDOORS) {
-            return CollisionFlag.NPC;
-        } else if (this.moveRestrict === MoveRestrict.OUTDOORS) {
-            return CollisionFlag.NPC;
-        } else if (this.moveRestrict === MoveRestrict.NOMOVE) {
-            return CollisionFlag.NULL;
-        } else if (this.moveRestrict === MoveRestrict.PASSTHRU) {
-            return CollisionFlag.OPEN;
+        switch (this.moveRestrict) {
+            case MoveRestrict.NORMAL:
+                return CollisionFlag.NPC;
+            case MoveRestrict.BLOCKED:
+                return CollisionFlag.OPEN;
+            case MoveRestrict.BLOCKED_NORMAL:
+                return CollisionFlag.NPC;
+            case MoveRestrict.INDOORS:
+                return CollisionFlag.NPC;
+            case MoveRestrict.OUTDOORS:
+                return CollisionFlag.NPC;
+            case MoveRestrict.NOMOVE:
+                return CollisionFlag.NULL;
+            case MoveRestrict.PASSTHRU:
+                return CollisionFlag.OPEN;
         }
-        return CollisionFlag.NULL;
     }
 
     defaultMoveSpeed(): MoveSpeed {
@@ -438,7 +430,7 @@ export default class Npc extends PathingEntity {
         this.updateMovement(false);
         this.targetOp = NpcMode.NONE;
         this.faceEntity = -1;
-        this.mask |= Npc.FACE_ENTITY;
+        this.masks |= InfoProt.NPC_FACE_ENTITY.id;
     }
 
     defaultMode(): void {
@@ -447,12 +439,12 @@ export default class Npc extends PathingEntity {
         const type: NpcType = NpcType.get(this.type);
         this.targetOp = type.defaultmode;
         this.faceEntity = -1;
-        this.mask |= Npc.FACE_ENTITY;
+        this.masks |= InfoProt.NPC_FACE_ENTITY.id;
     }
 
     wanderMode(): void {
         const type = NpcType.get(this.type);
-        if (type.moverestrict !== MoveRestrict.NOMOVE && Math.random() < 0.125) {
+        if (this.moveRestrict !== MoveRestrict.NOMOVE && Math.random() < 0.125) {
             // 1/8 chance to move every tick (even if they already have a destination)
             this.randomWalk(type.wanderrange);
         }
@@ -980,7 +972,7 @@ export default class Npc extends PathingEntity {
         if (anim == -1 || this.animId == -1 || SeqType.get(anim).priority > SeqType.get(this.animId).priority || SeqType.get(this.animId).priority === 0) {
             this.animId = anim;
             this.animDelay = delay;
-            this.mask |= Npc.ANIM;
+            this.masks |= InfoProt.NPC_ANIM.id;
         }
     }
 
@@ -988,7 +980,7 @@ export default class Npc extends PathingEntity {
         this.graphicId = spotanim;
         this.graphicHeight = height;
         this.graphicDelay = delay;
-        this.mask |= Npc.SPOTANIM;
+        this.masks |= InfoProt.NPC_SPOTANIM.id;
     }
 
     applyDamage(damage: number, type: number) {
@@ -1003,7 +995,7 @@ export default class Npc extends PathingEntity {
             this.levels[NpcStat.HITPOINTS] = current - damage;
         }
 
-        this.mask |= Npc.DAMAGE;
+        this.masks |= InfoProt.NPC_DAMAGE.id;
     }
 
     say(text: string) {
@@ -1012,7 +1004,7 @@ export default class Npc extends PathingEntity {
         }
 
         this.chat = text;
-        this.mask |= Npc.SAY;
+        this.masks |= InfoProt.NPC_SAY.id;
     }
 
     faceSquare(x: number, z: number) {
@@ -1020,12 +1012,12 @@ export default class Npc extends PathingEntity {
         this.faceZ = z * 2 + 1;
         this.orientationX = this.faceX;
         this.orientationZ = this.faceZ;
-        this.mask |= Npc.FACE_COORD;
+        this.masks |= InfoProt.NPC_FACE_COORD.id;
     }
 
     changeType(type: number) {
         this.type = type;
-        this.mask |= Npc.CHANGE_TYPE;
+        this.masks |= InfoProt.NPC_CHANGE_TYPE.id;
         this.uid = (type << 16) | this.nid;
 
         const npcType: NpcType = NpcType.get(type);

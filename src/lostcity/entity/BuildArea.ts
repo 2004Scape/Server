@@ -3,11 +3,6 @@ import Player from '#lostcity/entity/Player.js';
 import World from '#lostcity/engine/World.js';
 import Npc from '#lostcity/entity/Npc.js';
 
-export type ExtendedInfo = {
-    id: number,
-    added: boolean
-}
-
 export default class BuildArea {
     public static readonly INTERVAL: number = 10;
     public static readonly PREFERRED_PLAYERS: number = 250;
@@ -15,12 +10,15 @@ export default class BuildArea {
     public static readonly PREFERRED_VIEW_DISTANCE: number = 15;
 
     // constructor
-    readonly npcs: Set<number>; // observed npcs
-    readonly players: Set<number>; // observed players
+    readonly npcs: Set<Npc>; // observed npcs
+    readonly players: Set<Player>; // observed players
     readonly loadedZones: Set<number>;
     readonly activeZones: Set<number>;
-    readonly extendedInfo: Set<ExtendedInfo>;
-    readonly appearances: Map<number, number>;
+    readonly highPlayers: Set<Player>; // cleared after player_info
+    readonly lowPlayers: Set<Player>; // cleared after player_info
+    readonly highNpcs: Set<Npc>; // cleared after npc_info
+    readonly lowNpcs: Set<Npc>; // cleared after npc_info
+    readonly appearances: Map<number, number>; // cached appearance ticks
 
     // runtime
     forceViewDistance: boolean = false;
@@ -33,7 +31,10 @@ export default class BuildArea {
         this.players = new Set();
         this.loadedZones = new Set();
         this.activeZones = new Set();
-        this.extendedInfo = new Set();
+        this.highPlayers = new Set();
+        this.lowPlayers = new Set();
+        this.highNpcs = new Set();
+        this.lowNpcs = new Set();
         this.appearances = new Map();
     }
 
@@ -57,10 +58,6 @@ export default class BuildArea {
         }
     }
 
-    clearExtended(): void {
-        this.extendedInfo.clear();
-    }
-
     hasAppearance(pid: number, tick: number): boolean {
         const appearance: number | undefined = this.appearances.get(pid);
         if (typeof appearance === 'undefined') {
@@ -73,7 +70,17 @@ export default class BuildArea {
         this.appearances.set(pid, tick);
     }
 
-    *getNearbyPlayers(uid: number, level: number, x: number, z: number, originX: number, originZ: number): IterableIterator<Player> {
+    clearPlayerInfo(): void {
+        this.highPlayers.clear();
+        this.lowPlayers.clear();
+    }
+
+    clearNpcInfo(): void {
+        this.highNpcs.clear();
+        this.lowNpcs.clear();
+    }
+
+    *getNearbyPlayers(pid: number, level: number, x: number, z: number, originX: number, originZ: number): IterableIterator<Player> {
         const absLeftX: number = originX - 48;
         const absRightX: number = originX + 48;
         const absTopZ: number = originZ + 48;
@@ -98,9 +105,10 @@ export default class BuildArea {
                             return;
                         }
                         if (
-                            player.uid !== uid &&
+                            player.pid !== -1 &&
+                            player.pid !== pid &&
                             CoordGrid.isWithinDistanceSW({ x: x + dx, z: z + dz }, player, this.viewDistance) &&
-                            !this.players.has(player.uid) &&
+                            !this.players.has(player) &&
                             player.level === level &&
                             !(player.x <= absLeftX || player.x >= absRightX || player.z >= absTopZ || player.z <= absBottomZ)
                         ) {
@@ -127,12 +135,12 @@ export default class BuildArea {
         const absTopZ: number = originZ + 48;
         const absBottomZ: number = originZ - 48;
 
-        npcs: for (const zoneIndex of this.activeZones) {
+        for (const zoneIndex of this.activeZones) {
             for (const npc of World.gameMap.getZoneIndex(zoneIndex).getAllNpcsSafe()) {
                 if (this.npcs.size >= BuildArea.PREFERRED_NPCS) {
-                    break npcs;
+                    return;
                 }
-                if (!CoordGrid.isWithinDistanceSW({ x, z }, npc, 15) || this.npcs.has(npc.nid) || npc.level !== level || npc.x <= absLeftX || npc.x >= absRightX || npc.z >= absTopZ || npc.z <= absBottomZ) {
+                if (!CoordGrid.isWithinDistanceSW({ x, z }, npc, BuildArea.PREFERRED_VIEW_DISTANCE) || npc.nid === -1 || this.npcs.has(npc) || npc.level !== level || npc.x <= absLeftX || npc.x >= absRightX || npc.z >= absTopZ || npc.z <= absBottomZ) {
                     continue;
                 }
                 yield npc;

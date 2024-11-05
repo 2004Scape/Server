@@ -13,3 +13,17 @@ if (string_length($example2) > 0) {
 
 [label,please_finish]
 mes("Please finish what you are doing first.");
+
+[proc,fib](int $n)(int)
+def_int $a = 0;
+def_int $b = 1;
+def_int $c;
+
+def_int $count = 2;
+while ($count <= $n) {
+    $c = calc($a + $b);
+    $a = $b;
+    $b = $c;
+    $count = calc($count + 1);
+}
+return($c);

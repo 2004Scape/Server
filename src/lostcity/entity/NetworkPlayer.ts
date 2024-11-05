@@ -37,6 +37,8 @@ import NpcInfo from '#lostcity/network/outgoing/model/NpcInfo.js';
 import WorldStat from '#lostcity/engine/WorldStat.js';
 import SetMultiway from '#lostcity/network/outgoing/model/SetMultiway.js';
 import { printError } from '#lostcity/util/Logger.js';
+import NpcRenderer from '#lostcity/engine/renderer/NpcRenderer.js';
+import PlayerRenderer from '#lostcity/engine/renderer/PlayerRenderer.js';
 
 export class NetworkPlayer extends Player {
     client: ClientSocket | null = null;
@@ -274,12 +276,26 @@ export class NetworkPlayer extends Player {
         }
     }
 
-    updatePlayers() {
-        this.write(new PlayerInfo(this.buildArea, this.level, this.x, this.z, this.originX, this.originZ, this.uid, this.mask, this.tele, this.jump, this.walkDir, this.runDir, Math.abs(this.lastTickX - this.x), Math.abs(this.lastTickZ - this.z), this.lastLevel !== this.level));
+    updatePlayers(renderer: PlayerRenderer) {
+        this.write(new PlayerInfo(
+            World.currentTick,
+            renderer,
+            this,
+            Math.abs(this.lastTickX - this.x),
+            Math.abs(this.lastTickZ - this.z),
+            this.lastLevel !== this.level
+        ));
     }
 
-    updateNpcs() {
-        this.write(new NpcInfo(this.buildArea, this.level, this.x, this.z, this.originX, this.originZ, Math.abs(this.lastTickX - this.x), Math.abs(this.lastTickZ - this.z), this.lastLevel !== this.level));
+    updateNpcs(renderer: NpcRenderer) {
+        this.write(new NpcInfo(
+            World.currentTick,
+            renderer,
+            this,
+            Math.abs(this.lastTickX - this.x),
+            Math.abs(this.lastTickZ - this.z),
+            this.lastLevel !== this.level)
+        );
     }
 
     updateZones() {

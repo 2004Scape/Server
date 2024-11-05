@@ -68,6 +68,7 @@ import BuildArea from '#lostcity/entity/BuildArea.js';
 import ChatFilterSettings from '#lostcity/network/outgoing/model/ChatFilterSettings.js';
 import { ChatModePrivate, ChatModePublic, ChatModeTradeDuel } from '#lostcity/util/ChatModes.js';
 import { isNetworkPlayer } from '#lostcity/entity/NetworkPlayer.js';
+import InfoProt from '#lostcity/network/225/outgoing/prot/InfoProt.js';
 
 const levelExperience = new Int32Array(99);
 
@@ -94,18 +95,7 @@ export function getExpByLevel(level: number) {
 }
 
 export default class Player extends PathingEntity {
-    static readonly APPEARANCE = 0x1;
-    static readonly ANIM = 0x2;
-    static readonly FACE_ENTITY = 0x4;
-    static readonly SAY = 0x8;
-    static readonly DAMAGE = 0x10;
-    static readonly FACE_COORD = 0x20;
-    static readonly CHAT = 0x40;
-    static readonly BIG_UPDATE = 0x80;
-    static readonly SPOTANIM = 0x100;
-    static readonly EXACT_MOVE = 0x200;
-
-    static SKILLS = [
+    static readonly SKILLS = [
         'attack',
         'defence',
         'strength',
@@ -129,7 +119,7 @@ export default class Player extends PathingEntity {
         'runecraft'
     ];
 
-    static DESIGN_BODY_COLORS: number[][] = [
+    static readonly DESIGN_BODY_COLORS: number[][] = [
         [6798, 107, 10283, 16, 4797, 7744, 5799, 4634, 33697, 22433, 2983, 54193],
         [8741, 12, 64030, 43162, 7735, 8404, 1701, 38430, 24094, 10153, 56621, 4783, 1341, 16578, 35003, 25239],
         [25238, 8742, 12, 64030, 43162, 7735, 8404, 1701, 38430, 24094, 10153, 56621, 4783, 1341, 16578, 35003],
@@ -348,8 +338,7 @@ export default class Player extends PathingEntity {
     lastZone: number = -1;
 
     constructor(username: string, username37: bigint) {
-        super(0, 3094, 3106, 1, 1, EntityLifeCycle.FOREVER, MoveRestrict.NORMAL, BlockWalk.NPC, MoveStrategy.SMART, Player.FACE_COORD, Player.FACE_ENTITY); // tutorial island.
-
+        super(0, 3094, 3106, 1, 1, EntityLifeCycle.FOREVER, MoveRestrict.NORMAL, BlockWalk.NPC, MoveStrategy.SMART, InfoProt.PLAYER_FACE_COORD.id, InfoProt.PLAYER_FACE_ENTITY.id); // tutorial island.
         this.username = username;
         this.username37 = username37;
         this.displayName = toDisplayName(username);
@@ -1167,7 +1156,7 @@ export default class Player extends PathingEntity {
         stream.p8(this.username37);
         stream.p1(this.combatLevel);
 
-        this.mask |= Player.APPEARANCE;
+        this.masks |= InfoProt.PLAYER_APPEARANCE.id;
 
         this.appearance = new Uint8Array(stream.pos);
         stream.pos = 0;
@@ -1571,7 +1560,7 @@ export default class Player extends PathingEntity {
         if (anim == -1 || this.animId == -1 || SeqType.get(anim).priority > SeqType.get(this.animId).priority || SeqType.get(this.animId).priority === 0) {
             this.animId = anim;
             this.animDelay = delay;
-            this.mask |= Player.ANIM;
+            this.masks |= InfoProt.PLAYER_ANIM.id;
         }
     }
 
@@ -1579,7 +1568,7 @@ export default class Player extends PathingEntity {
         this.graphicId = spotanim;
         this.graphicHeight = height;
         this.graphicDelay = delay;
-        this.mask |= Player.SPOTANIM;
+        this.masks |= InfoProt.PLAYER_SPOTANIM.id;
     }
 
     applyDamage(damage: number, type: number) {
@@ -1594,12 +1583,12 @@ export default class Player extends PathingEntity {
             this.levels[PlayerStat.HITPOINTS] = current - damage;
         }
 
-        this.mask |= Player.DAMAGE;
+        this.masks |= InfoProt.PLAYER_DAMAGE.id;
     }
 
     say(message: string) {
         this.chat = message;
-        this.mask |= Player.SAY;
+        this.masks |= InfoProt.PLAYER_SAY.id;
     }
 
     faceSquare(x: number, z: number) {
@@ -1607,7 +1596,7 @@ export default class Player extends PathingEntity {
         this.faceZ = z * 2 + 1;
         this.orientationX = this.faceX;
         this.orientationZ = this.faceZ;
-        this.mask |= Player.FACE_COORD;
+        this.masks |= InfoProt.PLAYER_FACE_COORD.id;
     }
 
     playSong(name: string) {
@@ -1689,7 +1678,7 @@ export default class Player extends PathingEntity {
         this.exactMoveStart = startCycle;
         this.exactMoveEnd = endCycle;
         this.exactMoveDirection = direction;
-        this.mask |= Player.EXACT_MOVE;
+        this.masks |= InfoProt.PLAYER_EXACT_MOVE.id;
 
         // todo: interpolate over time? instant teleport? verify with true tile on osrs
         this.x = endX;

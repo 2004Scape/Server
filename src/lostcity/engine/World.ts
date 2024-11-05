@@ -46,8 +46,11 @@ import ScriptProvider from '#lostcity/engine/script/ScriptProvider.js';
 import ScriptRunner from '#lostcity/engine/script/ScriptRunner.js';
 import ScriptState from '#lostcity/engine/script/ScriptState.js';
 import ServerTriggerType from '#lostcity/engine/script/ServerTriggerType.js';
-
 import Zone from '#lostcity/engine/zone/Zone.js';
+import PlayerRenderer from '#lostcity/engine/renderer/PlayerRenderer.js';
+import NpcRenderer from '#lostcity/engine/renderer/NpcRenderer.js';
+
+import InfoProt from '#lostcity/network/225/outgoing/prot/InfoProt.js';
 
 import BlockWalk from '#lostcity/entity/BlockWalk.js';
 import Loc from '#lostcity/entity/Loc.js';
@@ -112,6 +115,9 @@ class World {
     readonly zonesTracking: Map<number, Set<Zone>>;
     readonly queue: LinkList<EntityQueueState>;
 
+    readonly playerRenderer: PlayerRenderer;
+    readonly npcRenderer: NpcRenderer;
+
     // debug data
     readonly lastCycleStats: number[];
     readonly cycleStats: number[];
@@ -133,6 +139,8 @@ class World {
         this.playerGrid = new Map();
         this.zonesTracking = new Map();
         this.queue = new LinkList();
+        this.playerRenderer = new PlayerRenderer();
+        this.npcRenderer = new NpcRenderer();
         this.lastCycleStats = new Array(12).fill(0);
         this.cycleStats = new Array(12).fill(0);
 
@@ -683,7 +691,7 @@ class World {
         
                         if ((!player.target || player.target instanceof Loc || player.target instanceof Obj) && player.faceEntity !== -1) {
                             player.faceEntity = -1;
-                            player.mask |= Player.FACE_ENTITY;
+                            player.masks |= InfoProt.PLAYER_FACE_ENTITY.id;
                         }
         
                         if (player.busy() || !player.opcalled) {
@@ -799,7 +807,7 @@ class World {
                 // - movement
                 player.processInteraction();
 
-                if ((player.mask & Player.EXACT_MOVE) == 0) {
+                if ((player.masks & InfoProt.PLAYER_EXACT_MOVE.id) == 0) {
                     player.validateDistanceWalked();
                 }
 
@@ -949,10 +957,13 @@ class World {
             if (!grid.has(coord)) {
                 grid.set(coord, players);
             }
+
+            this.playerRenderer.computeInfo(player);
         }
 
         for (const npc of this.npcs) {
             npc.convertMovementDir();
+            this.npcRenderer.computeInfo(npc);
         }
     }
 
@@ -978,9 +989,9 @@ class World {
                 // - map update
                 player.updateMap();
                 // - player info
-                player.updatePlayers();
+                player.updatePlayers(this.playerRenderer);
                 // - npc info
-                player.updateNpcs();
+                player.updateNpcs(this.npcRenderer);
                 // - zone updates
                 player.updateZones();
                 // - inv changes
@@ -1013,6 +1024,7 @@ class World {
         this.zonesTracking.delete(tick);
 
         // - reset players
+        this.playerRenderer.removeTemporary();
         for (const player of this.players) {
             player.resetEntity(false);
 
@@ -1027,6 +1039,7 @@ class World {
         }
 
         // - reset npcs
+        this.npcRenderer.removeTemporary();
         for (const npc of this.npcs) {
             if (!npc.checkLifeCycle(tick)) {
                 continue;
@@ -1224,9 +1237,12 @@ class World {
 
         if (npc.lifecycle === EntityLifeCycle.DESPAWN) {
             this.npcs.remove(npc.nid);
+            npc.nid = -1;
+            npc.uid = -1;
         } else if (npc.lifecycle === EntityLifeCycle.RESPAWN) {
             npc.setLifeCycle(this.currentTick + adjustedDuration);
         }
+        this.npcRenderer.removePermanent(npc.nid);
     }
 
     getLoc(x: number, z: number, level: number, locId: number): Loc | null {
@@ -1478,6 +1494,8 @@ class World {
             player.client!.close();
             player.client = null;
         }
+
+        this.playerRenderer.removePermanent(player.pid);
 
         Login.logout(player);
 

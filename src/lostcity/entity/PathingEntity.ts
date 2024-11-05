@@ -84,7 +84,7 @@ export default abstract class PathingEntity extends Entity {
     apRangeCalled: boolean = false;
     alreadyFacedEntity: boolean = false;
 
-    mask: number = 0;
+    masks: number = 0;
     exactStartX: number = -1;
     exactStartZ: number = -1;
     exactEndX: number = -1;
@@ -513,13 +513,13 @@ export default abstract class PathingEntity extends Entity {
             const pid: number = target.pid + 32768;
             if (this.faceEntity !== pid) {
                 this.faceEntity = pid;
-                this.mask |= this.entitymask;
+                this.masks |= this.entitymask;
             }
         } else if (target instanceof Npc) {
             const nid: number = target.nid;
             if (this.faceEntity !== nid) {
                 this.faceEntity = nid;
-                this.mask |= this.entitymask;
+                this.masks |= this.entitymask;
             }
         } else {
             // direction when the player is first observed (updates on movement)
@@ -532,7 +532,7 @@ export default abstract class PathingEntity extends Entity {
 
             if (interaction === Interaction.ENGINE) {
                 // mask updates will be sent every time from the packet handler
-                this.mask |= this.coordmask;
+                this.masks |= this.coordmask;
             }
         }
 
@@ -584,7 +584,7 @@ export default abstract class PathingEntity extends Entity {
         this.interacted = false;
         this.apRangeCalled = false;
 
-        this.mask = 0;
+        this.masks = 0;
         this.exactStartX = -1;
         this.exactStartZ = -1;
         this.exactEndX = -1;
@@ -604,7 +604,7 @@ export default abstract class PathingEntity extends Entity {
         this.graphicDelay = -1;
 
         if (this.alreadyFacedEntity && !this.target && this.faceEntity !== -1) {
-            this.mask |= this.entitymask;
+            this.masks |= this.entitymask;
             this.faceEntity = -1;
             this.alreadyFacedEntity = false;
         }
