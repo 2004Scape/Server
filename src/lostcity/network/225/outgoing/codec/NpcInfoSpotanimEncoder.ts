@@ -8,7 +8,6 @@ export default class NpcInfoSpotanimEncoder extends InfoMessageEncoder<NpcInfoSp
 
     encode(buf: Packet, message: NpcInfoSpotanim): void {
         buf.p2(message.spotanim);
-        buf.p2(message.height);
-        buf.p2(message.delay);
+        buf.p4((message.height << 16) | message.delay);
     }
 }
