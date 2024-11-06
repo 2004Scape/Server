@@ -27,6 +27,7 @@ export default class PlayerRenderer extends Renderer<Player>  {
             [InfoProt.PLAYER_FACE_COORD, new Map()],
             [InfoProt.PLAYER_CHAT, new Map()],
             [InfoProt.PLAYER_SPOTANIM, new Map()],
+            // exact move does not get cached, that is built on demand.
         ]));
     }
 
