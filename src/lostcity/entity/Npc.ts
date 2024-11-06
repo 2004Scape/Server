@@ -172,11 +172,12 @@ export default class Npc extends PathingEntity {
     }
 
     updateMovement(repathAllowed: boolean = true): boolean {
+        const type = NpcType.get(this.type);
         if (!this.targetWithinMaxRange()) {
             this.defaultMode();
             return false;
         }
-        if (this.moveRestrict === MoveRestrict.NOMOVE) {
+        if (type.moverestrict === MoveRestrict.NOMOVE) {
             return false;
         }
         if (repathAllowed && this.target instanceof PathingEntity && !this.interacted && this.walktrigger === -1) {
@@ -444,7 +445,7 @@ export default class Npc extends PathingEntity {
 
     wanderMode(): void {
         const type = NpcType.get(this.type);
-        if (this.moveRestrict !== MoveRestrict.NOMOVE && Math.random() < 0.125) {
+        if (type.moverestrict !== MoveRestrict.NOMOVE && Math.random() < 0.125) {
             // 1/8 chance to move every tick (even if they already have a destination)
             this.randomWalk(type.wanderrange);
         }
