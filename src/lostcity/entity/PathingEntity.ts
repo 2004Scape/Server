@@ -82,7 +82,6 @@ export default abstract class PathingEntity extends Entity {
     targetZ: number = -1;
     apRange: number = 10;
     apRangeCalled: boolean = false;
-    alreadyFacedEntity: boolean = false;
 
     masks: number = 0;
     exactStartX: number = -1;
@@ -549,7 +548,6 @@ export default abstract class PathingEntity extends Entity {
         this.targetZ = -1;
         this.apRange = 10;
         this.apRangeCalled = false;
-        this.alreadyFacedEntity = true;
     }
 
     protected getCollisionStrategy(): CollisionType | null {
@@ -603,10 +601,9 @@ export default abstract class PathingEntity extends Entity {
         this.graphicHeight = -1;
         this.graphicDelay = -1;
 
-        if (this.alreadyFacedEntity && !this.target && this.faceEntity !== -1) {
+        if (!this.target && this.faceEntity !== -1) {
             this.masks |= this.entitymask;
             this.faceEntity = -1;
-            this.alreadyFacedEntity = false;
         }
     }
 

@@ -6,4 +6,8 @@ export default abstract class InfoMessage extends OutgoingMessage {
     protected constructor() {
         super();
     }
+
+    get persists(): boolean {
+        return false;
+    }
 }

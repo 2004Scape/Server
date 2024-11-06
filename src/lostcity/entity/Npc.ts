@@ -696,7 +696,6 @@ export default class Npc extends PathingEntity {
                 this.defaultMode();
                 return;
             }
-            this.alreadyFacedEntity = false;
         }
 
         if (this.target && !this.interacted) {

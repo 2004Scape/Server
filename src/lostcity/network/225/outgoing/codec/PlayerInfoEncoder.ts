@@ -79,10 +79,9 @@ export default class PlayerInfoEncoder extends MessageEncoder<PlayerInfo> {
     private writePlayers(buf: Packet, message: PlayerInfo, bytes: number): number {
         const {currentTick, renderer, player } = message;
         const buildArea: BuildArea = player.buildArea;
-        const players: Set<Player> = buildArea.players;
         // update other players (255 max - 8 bits)
-        buf.pBit(8, players.size);
-        for (const other of players) {
+        buf.pBit(8, buildArea.players.size);
+        for (const other of buildArea.players) {
             const pid: number = other.pid;
             if (pid === -1 || other.tele || other.level !== player.level || !CoordGrid.isWithinDistanceSW(player, other, buildArea.viewDistance) || !other.checkLifeCycle(currentTick)) {
                 // if the player was teleported, they need to be removed and re-added
@@ -93,9 +92,9 @@ export default class PlayerInfoEncoder extends MessageEncoder<PlayerInfo> {
             const extend: boolean = length > 0;
             const { walkDir, runDir } = other;
             if (runDir !== -1) {
-                this.run(buf, buildArea, other, walkDir, runDir, this.willFit(bytes, buf, PlayerInfoEncoder.BITS_RUN, length));
+                this.run(buf, buildArea, other, walkDir, runDir, extend && this.willFit(bytes, buf, PlayerInfoEncoder.BITS_RUN, length));
             } else if (walkDir !== -1) {
-                this.walk(buf, buildArea, other, walkDir, this.willFit(bytes, buf, PlayerInfoEncoder.BITS_WALK, length));
+                this.walk(buf, buildArea, other, walkDir, extend && this.willFit(bytes, buf, PlayerInfoEncoder.BITS_WALK, length));
             } else if (extend && this.willFit(bytes, buf, PlayerInfoEncoder.BITS_EXTENDED, length)) {
                 this.extend(buf, buildArea, other);
             } else {
@@ -207,18 +206,18 @@ export default class PlayerInfoEncoder extends MessageEncoder<PlayerInfo> {
             masks &= ~InfoProt.PLAYER_APPEARANCE.id;
         }
 
-        if (other.faceEntity !== -1 && !renderer.hasEntity(pid)) {
-            renderer.cacheEntity(pid, new PlayerInfoFaceEntity(other.faceEntity));
+        if (other.faceEntity !== -1 && !renderer.has(pid, InfoProt.PLAYER_FACE_ENTITY)) {
+            renderer.cache(pid, new PlayerInfoFaceEntity(other.faceEntity), InfoProt.PLAYER_FACE_ENTITY);
             masks |= InfoProt.PLAYER_FACE_ENTITY.id;
         }
 
-        if (!renderer.hasCoord(pid)) {
+        if (!renderer.has(pid, InfoProt.PLAYER_FACE_COORD)) {
             if (other.orientationX !== -1) {
-                renderer.cacheCoord(pid, new PlayerInfoFaceCoord(other.orientationX, other.orientationZ));
+                renderer.cache(pid, new PlayerInfoFaceCoord(other.orientationX, other.orientationZ), InfoProt.PLAYER_FACE_COORD);
             } else if (other.faceX !== -1) {
-                renderer.cacheCoord(pid, new PlayerInfoFaceCoord(other.faceX, other.faceZ));
+                renderer.cache(pid, new PlayerInfoFaceCoord(other.faceX, other.faceZ), InfoProt.PLAYER_FACE_COORD);
             } else {
-                renderer.cacheCoord(pid, new PlayerInfoFaceCoord(other.x * 2 + 1, (other.z - 1) * 2 + 1));
+                renderer.cache(pid, new PlayerInfoFaceCoord(other.x * 2 + 1, (other.z - 1) * 2 + 1), InfoProt.PLAYER_FACE_COORD);
             }
         }
 
@@ -230,28 +229,28 @@ export default class PlayerInfoEncoder extends MessageEncoder<PlayerInfo> {
     private writeBlocks(buf: Packet, renderer: PlayerRenderer, player: Player, other: Player, pid: number, masks: number, self: boolean): void {
         renderer.write2(buf, masks, InfoProt.PLAYER_BIG_UPDATE.id);
         if (masks & InfoProt.PLAYER_APPEARANCE.id) {
-            renderer.writeAppearance(buf, pid);
+            renderer.write(buf, pid, InfoProt.PLAYER_APPEARANCE);
         }
         if (masks & InfoProt.PLAYER_ANIM.id) {
-            renderer.writeAnim(buf, pid);
+            renderer.write(buf, pid, InfoProt.PLAYER_ANIM);
         }
         if (masks & InfoProt.PLAYER_FACE_ENTITY.id) {
-            renderer.writeEntity(buf, pid);
+            renderer.write(buf, pid, InfoProt.PLAYER_FACE_ENTITY);
         }
         if (masks & InfoProt.PLAYER_SAY.id) {
-            renderer.writeSay(buf, pid);
+            renderer.write(buf, pid, InfoProt.PLAYER_SAY);
         }
         if (masks & InfoProt.PLAYER_DAMAGE.id) {
-            renderer.writeDamage(buf, pid);
+            renderer.write(buf, pid, InfoProt.PLAYER_DAMAGE);
         }
         if (masks & InfoProt.PLAYER_FACE_COORD.id) {
-            renderer.writeCoord(buf, pid);
+            renderer.write(buf, pid, InfoProt.PLAYER_FACE_COORD);
         }
         if (!self && masks & InfoProt.PLAYER_CHAT.id) {
-            renderer.writeChat(buf, pid);
+            renderer.write(buf, pid, InfoProt.PLAYER_CHAT);
         }
         if (masks & InfoProt.PLAYER_SPOTANIM.id) {
-            renderer.writeSpotanim(buf, pid);
+            renderer.write(buf, pid, InfoProt.PLAYER_SPOTANIM);
         }
         if (masks & InfoProt.PLAYER_EXACT_MOVE.id) {
             const x: number = CoordGrid.zoneOrigin(player.originX);

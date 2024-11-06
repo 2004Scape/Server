@@ -9,6 +9,6 @@ export default class PlayerInfoSpotanimEncoder extends InfoMessageEncoder<Player
     encode(buf: Packet, message: PlayerInfoSpotanim): void {
         buf.p2(message.spotanim);
         buf.p2(message.height);
-        buf.p1(message.delay);
+        buf.p2(message.delay);
     }
 }

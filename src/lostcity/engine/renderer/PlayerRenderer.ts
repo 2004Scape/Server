@@ -17,13 +17,17 @@ import InfoMessageEncoder from '#lostcity/network/outgoing/codec/InfoMessageEnco
 import ServerProtRepository from '#lostcity/network/225/outgoing/prot/ServerProtRepository.js';
 
 export default class PlayerRenderer extends Renderer<Player>  {
-    private readonly appearances: Map<number, Uint8Array>;
-    private readonly chats: Map<number, Uint8Array>;
-
     constructor() {
-        super();
-        this.appearances = new Map();
-        this.chats = new Map();
+        super(new Map([
+            [InfoProt.PLAYER_APPEARANCE, new Map()],
+            [InfoProt.PLAYER_ANIM, new Map()],
+            [InfoProt.PLAYER_FACE_ENTITY, new Map()],
+            [InfoProt.PLAYER_SAY, new Map()],
+            [InfoProt.PLAYER_DAMAGE, new Map()],
+            [InfoProt.PLAYER_FACE_COORD, new Map()],
+            [InfoProt.PLAYER_CHAT, new Map()],
+            [InfoProt.PLAYER_SPOTANIM, new Map()],
+        ]));
     }
 
     computeInfo(player: Player): void {
@@ -37,53 +41,30 @@ export default class PlayerRenderer extends Renderer<Player>  {
         let lows: number = 0;
         let highs: number = 0;
 
-        // ---- 0
         if (masks & InfoProt.PLAYER_APPEARANCE.id && player.appearance) {
-            highs += lows += this.cacheAppearance(pid, new PlayerInfoAppearance(player.appearance));
+            highs += lows += this.cache(pid, new PlayerInfoAppearance(player.appearance), InfoProt.PLAYER_APPEARANCE);
         }
-
-        // ---- 1
         if (masks & InfoProt.PLAYER_ANIM.id) {
-            highs += this.cacheAnim(pid, new PlayerInfoAnim(player.animId, player.animDelay));
+            highs += this.cache(pid, new PlayerInfoAnim(player.animId, player.animDelay), InfoProt.PLAYER_ANIM);
         }
-
-        // ---- 2
         if (masks & InfoProt.PLAYER_FACE_ENTITY.id) {
-            // todo: get rid of alreadyFacedEntity (this is bad but idc)
-            const entity: number = player.faceEntity;
-            if (entity !== -1) {
-                player.alreadyFacedEntity = true;
-            }
-
-            highs += lows += this.cacheEntity(pid, new PlayerInfoFaceEntity(entity));
+            highs += lows += this.cache(pid, new PlayerInfoFaceEntity(player.faceEntity), InfoProt.PLAYER_FACE_ENTITY);
         }
-
-        // ---- 3
         if (masks & InfoProt.PLAYER_SAY.id && player.chat) {
-            highs += this.cacheSay(pid, new PlayerInfoSay(player.chat));
+            highs += this.cache(pid, new PlayerInfoSay(player.chat), InfoProt.PLAYER_SAY);
         }
-
-        // ---- 4
         if (masks & InfoProt.PLAYER_DAMAGE.id) {
-            highs += this.cacheDamage(pid, new PlayerInfoDamage(player.damageTaken, player.damageType, player.levels[PlayerStat.HITPOINTS], player.baseLevels[PlayerStat.HITPOINTS]));
+            highs += this.cache(pid, new PlayerInfoDamage(player.damageTaken, player.damageType, player.levels[PlayerStat.HITPOINTS], player.baseLevels[PlayerStat.HITPOINTS]), InfoProt.PLAYER_DAMAGE);
         }
-
-        // ---- 5
         if (masks & InfoProt.PLAYER_FACE_COORD.id) {
-            highs += lows += this.cacheCoord(pid, new PlayerInfoFaceCoord(player.faceX, player.faceZ));
+            highs += lows += this.cache(pid, new PlayerInfoFaceCoord(player.faceX, player.faceZ), InfoProt.PLAYER_FACE_COORD);
         }
-
-        // ---- 6
         if (masks & InfoProt.PLAYER_CHAT.id && player.messageColor !== null && player.messageEffect !== null && player.messageType !== null && player.message) {
-            highs += this.cacheChat(pid, new PlayerInfoChat(player.messageColor, player.messageEffect, player.messageType, player.message));
+            highs += this.cache(pid, new PlayerInfoChat(player.messageColor, player.messageEffect, player.messageType, player.message), InfoProt.PLAYER_CHAT);
         }
-
-        // ---- 7
         if (masks & InfoProt.PLAYER_SPOTANIM.id) {
-            highs += this.cacheSpotanim(pid, new PlayerInfoSpotanim(player.graphicId, player.graphicHeight, player.graphicDelay));
+            highs += this.cache(pid, new PlayerInfoSpotanim(player.graphicId, player.graphicHeight, player.graphicDelay), InfoProt.PLAYER_SPOTANIM);
         }
-
-        // ---- 8
         if (masks & InfoProt.PLAYER_EXACT_MOVE.id) {
             highs += InfoProt.PLAYER_EXACT_MOVE.length;
         }
@@ -91,32 +72,11 @@ export default class PlayerRenderer extends Renderer<Player>  {
         if (highs > 0) {
             this.highs.set(pid, highs + this.header(masks));
         }
-
         if (lows > 0) {
-            this.lows.set(pid, this.header(InfoProt.PLAYER_APPEARANCE.id + InfoProt.PLAYER_FACE_ENTITY.id + InfoProt.PLAYER_FACE_COORD.id) + InfoProt.PLAYER_FACE_ENTITY.length + InfoProt.PLAYER_FACE_COORD.length + (this.appearances.get(pid)?.length ?? 0));
+            const header: number = this.header(InfoProt.PLAYER_APPEARANCE.id + InfoProt.PLAYER_FACE_ENTITY.id + InfoProt.PLAYER_FACE_COORD.id);
+            const appearance: number = this.caches.get(InfoProt.PLAYER_APPEARANCE)?.get(pid)?.length ?? 0;
+            this.lows.set(pid, header + InfoProt.PLAYER_FACE_ENTITY.length + InfoProt.PLAYER_FACE_COORD.length + appearance);
         }
-    }
-
-    cacheAppearance(id: number, message: InfoMessage): number {
-        if (this.appearances.has(id)) {
-            return 0;
-        }
-        return this.encodeInfo(this.appearances, id, message);
-    }
-
-    writeAppearance(buf: Packet, id: number): void {
-        this.writeBlock(buf, this.appearances, id);
-    }
-
-    cacheChat(id: number, message: InfoMessage): number {
-        if (this.chats.has(id)) {
-            return 0;
-        }
-        return this.encodeInfo(this.chats, id, message);
-    }
-
-    writeChat(buf: Packet, id: number): void {
-        this.writeBlock(buf, this.chats, id);
     }
 
     writeExactmove(buf: Packet, startX: number, startZ: number, endX: number, endZ: number, start: number, end: number, direction: number): void {
@@ -130,12 +90,17 @@ export default class PlayerRenderer extends Renderer<Player>  {
 
     removeTemporary() {
         super.removeTemporary();
-        this.chats.clear();
+        this.caches.get(InfoProt.PLAYER_ANIM)?.clear();
+        this.caches.get(InfoProt.PLAYER_FACE_ENTITY)?.clear();
+        this.caches.get(InfoProt.PLAYER_SAY)?.clear();
+        this.caches.get(InfoProt.PLAYER_DAMAGE)?.clear();
+        this.caches.get(InfoProt.PLAYER_FACE_COORD)?.clear();
+        this.caches.get(InfoProt.PLAYER_SPOTANIM)?.clear();
+        this.caches.get(InfoProt.PLAYER_CHAT)?.clear();
     }
 
     removePermanent(pid: number) {
         super.removePermanent(pid);
-        this.appearances.delete(pid);
-        this.chats.delete(pid);
+        this.caches.get(InfoProt.PLAYER_APPEARANCE)?.delete(pid);
     }
 }

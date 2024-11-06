@@ -1,6 +1,5 @@
 import InfoProt from '#lostcity/network/225/outgoing/prot/InfoProt.js';
 import Renderer from '#lostcity/engine/renderer/Renderer.js';
-import PlayerStat from '#lostcity/entity/PlayerStat.js';
 import Npc from '#lostcity/entity/Npc.js';
 import NpcInfoAnim from '#lostcity/network/outgoing/model/NpcInfoAnim.js';
 import NpcInfoFaceEntity from '#lostcity/network/outgoing/model/NpcInfoFaceEntity.js';
@@ -9,15 +8,21 @@ import NpcInfoDamage from '#lostcity/network/outgoing/model/NpcInfoDamage.js';
 import NpcInfoChangeType from '#lostcity/network/outgoing/model/NpcInfoChangeType.js';
 import NpcInfoSpotanim from '#lostcity/network/outgoing/model/NpcInfoSpotanim.js';
 import NpcInfoFaceCoord from '#lostcity/network/outgoing/model/NpcInfoFaceCoord.js';
-import InfoMessage from '#lostcity/network/outgoing/InfoMessage.js';
-import Packet from '#jagex2/io/Packet.js';
+import NpcStat from '#lostcity/entity/NpcStat.js';
 
 export default class NpcRenderer extends Renderer<Npc> {
-    private readonly changes: Map<number, Uint8Array>;
-
     constructor() {
-        super();
-        this.changes = new Map();
+        super(
+            new Map([
+                [InfoProt.NPC_ANIM, new Map()],
+                [InfoProt.NPC_FACE_ENTITY, new Map()],
+                [InfoProt.NPC_SAY, new Map()],
+                [InfoProt.NPC_DAMAGE, new Map()],
+                [InfoProt.NPC_CHANGE_TYPE, new Map()],
+                [InfoProt.NPC_SPOTANIM, new Map()],
+                [InfoProt.NPC_FACE_COORD, new Map()]
+            ])
+        );
     }
 
     computeInfo(npc: Npc): void {
@@ -31,45 +36,26 @@ export default class NpcRenderer extends Renderer<Npc> {
         let lows: number = 0;
         let highs: number = 0;
 
-        // ---- 0
         if (masks & InfoProt.NPC_ANIM.id) {
-            highs += this.cacheAnim(nid, new NpcInfoAnim(npc.animId, npc.animDelay));
+            highs += this.cache(nid, new NpcInfoAnim(npc.animId, npc.animDelay), InfoProt.NPC_ANIM);
         }
-
-        // ---- 1
         if (masks & InfoProt.NPC_FACE_ENTITY.id) {
-            // todo: get rid of alreadyFacedEntity (this is bad but idc)
-            const entity: number = npc.faceEntity;
-            if (entity !== -1) {
-                npc.alreadyFacedEntity = true;
-            }
-
-            highs += lows += this.cacheEntity(nid, new NpcInfoFaceEntity(entity));
+            highs += lows += this.cache(nid, new NpcInfoFaceEntity(npc.faceEntity), InfoProt.NPC_FACE_ENTITY);
         }
-
-        // ---- 2
         if (masks & InfoProt.NPC_SAY.id && npc.chat) {
-            highs += this.cacheSay(nid, new NpcInfoSay(npc.chat));
+            highs += this.cache(nid, new NpcInfoSay(npc.chat), InfoProt.NPC_SAY);
         }
-
-        // ---- 3
         if (masks & InfoProt.NPC_DAMAGE.id) {
-            highs += this.cacheDamage(nid, new NpcInfoDamage(npc.damageTaken, npc.damageType, npc.levels[PlayerStat.HITPOINTS], npc.baseLevels[PlayerStat.HITPOINTS]));
+            highs += this.cache(nid, new NpcInfoDamage(npc.damageTaken, npc.damageType, npc.levels[NpcStat.HITPOINTS], npc.baseLevels[NpcStat.HITPOINTS]), InfoProt.NPC_DAMAGE);
         }
-
-        // ---- 4
         if (masks & InfoProt.NPC_CHANGE_TYPE.id) {
-            highs += this.cacheChange(nid, new NpcInfoChangeType(npc.type));
+            highs += this.cache(nid, new NpcInfoChangeType(npc.type), InfoProt.NPC_CHANGE_TYPE);
         }
-
-        // ---- 5
         if (masks & InfoProt.NPC_SPOTANIM.id) {
-            highs += this.cacheSpotanim(nid, new NpcInfoSpotanim(npc.graphicId, npc.graphicHeight, npc.graphicDelay));
+            highs += this.cache(nid, new NpcInfoSpotanim(npc.graphicId, npc.graphicHeight, npc.graphicDelay), InfoProt.NPC_SPOTANIM);
         }
-
-        // ---- 6
         if (masks & InfoProt.NPC_FACE_COORD.id) {
-            highs += lows += this.cacheCoord(nid, new NpcInfoFaceCoord(npc.faceX, npc.faceZ));
+            highs += lows += this.cache(nid, new NpcInfoFaceCoord(npc.faceX, npc.faceZ), InfoProt.NPC_FACE_COORD);
         }
 
         if (highs > 0) {
@@ -77,28 +63,19 @@ export default class NpcRenderer extends Renderer<Npc> {
         }
 
         if (lows > 0) {
-            this.lows.set(nid, this.header(InfoProt.NPC_FACE_ENTITY.id + InfoProt.NPC_FACE_COORD.id) + InfoProt.NPC_FACE_ENTITY.length + InfoProt.NPC_FACE_COORD.length);
+            const header: number = this.header(InfoProt.NPC_FACE_ENTITY.id + InfoProt.NPC_FACE_COORD.id);
+            this.lows.set(nid, header + InfoProt.NPC_FACE_ENTITY.length + InfoProt.NPC_FACE_COORD.length);
         }
-    }
-
-    cacheChange(id: number, message: InfoMessage): number {
-        if (this.changes.has(id)) {
-            return 0;
-        }
-        return this.encodeInfo(this.changes, id, message);
-    }
-
-    writeChange(buf: Packet, id: number): void {
-        this.writeBlock(buf, this.changes, id);
     }
 
     removeTemporary() {
         super.removeTemporary();
-        this.changes.clear();
-    }
-
-    removePermanent(uid: number) {
-        super.removePermanent(uid);
-        this.changes.delete(uid);
+        this.caches.get(InfoProt.NPC_ANIM)?.clear();
+        this.caches.get(InfoProt.NPC_FACE_ENTITY)?.clear();
+        this.caches.get(InfoProt.NPC_SAY)?.clear();
+        this.caches.get(InfoProt.NPC_DAMAGE)?.clear();
+        this.caches.get(InfoProt.NPC_CHANGE_TYPE)?.clear();
+        this.caches.get(InfoProt.NPC_SPOTANIM)?.clear();
+        this.caches.get(InfoProt.NPC_FACE_COORD)?.clear();
     }
 }
