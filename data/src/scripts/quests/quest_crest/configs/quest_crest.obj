@@ -1,4 +1,4 @@
-[obj_773]
+[perfect_ring]
 name='perfect' ring
 desc=A perfect ruby ring.
 cost=2025
@@ -16,7 +16,7 @@ wearpos=ring
 weight=7g
 members=yes
 
-[obj_774]
+[perfect_necklace]
 cost=2175
 name='perfect' necklace
 desc=A perfect ruby necklace.
@@ -89,7 +89,7 @@ param=slashdefence,9
 param=crushdefence,7
 param=strengthbonus,2
 
-[obj_777]
+[gauntlets_of_chaos]
 category=category_16
 name=Chaos gauntlets
 desc=These gauntlets empower spell casters.
@@ -115,7 +115,7 @@ param=slashdefence,9
 param=crushdefence,7
 param=strengthbonus,2
 
-[obj_778]
+[steel_gauntlets]
 category=category_16
 name=Steel gauntlets
 desc=My reward for assisting the Fitzharmon family.
@@ -141,7 +141,7 @@ param=slashdefence,9
 param=crushdefence,7
 param=strengthbonus,2
 
-[obj_779]
+[crest_part_1]
 model=model_2688_obj
 name=Crest part
 desc=A fragment of the Fitzharmon family crest.
@@ -151,7 +151,7 @@ members=yes
 2dxan=356
 weight=4lb
 
-[obj_780]
+[crest_part_2]
 model=model_2691_obj
 name=Crest part
 desc=A fragment of the Fitzharmon family crest.
@@ -161,7 +161,10 @@ members=yes
 2dxan=356
 weight=3lb
 
-[obj_781]
+// This piece is visually identical to part 2.
+// 20 July 2004 - The model for Johnathon's part was corrected; previously it used the same model as Caleb's part.
+// https://oldschool.runescape.wiki/w/Crest_part#Changes
+[crest_part_3]
 model=model_2691_obj
 name=Crest part
 desc=A fragment of the Fitzharmon family crest.
@@ -171,7 +174,7 @@ members=yes
 2dxan=356
 weight=3lb
 
-[obj_782]
+[family_crest]
 model=model_2369_obj
 name=Family crest
 desc=The Fitzharmon family crest.

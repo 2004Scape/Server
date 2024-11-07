@@ -1,3 +1,7 @@
 [next_obj_stage]
 type=namedobj
 default=null
+
+[cures_poison]
+type=boolean
+default=no

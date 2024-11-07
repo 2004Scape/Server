@@ -228,6 +228,10 @@ if (%zombiequeen_progress >= ^zombiequeen_complete) {
     $questpoints = add($questpoints, ^zombiequeen_questpoints);
 }
 
+if (%crest_progress = ^crest_complete) {
+    $questpoints = add($questpoints, ^crest_questpoints);
+}
+
 %questpoints = $questpoints;
 
 ~send_quest_progress_colour(questlist:runemysteries, %runemysteries_progress, ^runemysteries_complete);
@@ -285,6 +289,7 @@ if (testbit(%upass_map_mechanisms, ^upass_started_bit) = true & %upass_progress 
     ~send_quest_progress_colour(questlist:upass, %upass_progress, ^upass_complete);
 }
 ~send_quest_progress_colour(questlist:zombiequeen, %zombiequeen_progress, ^zombiequeen_complete);
+~send_quest_progress_colour(questlist:crest, %crest_progress, ^crest_complete);
 if_settab(questlist, ^tab_quest_journal);
 
 if (%drunkmonk_progress >= ^drunkmonk_spoken_to_omad) {

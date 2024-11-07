@@ -97,5 +97,12 @@ param=bar_count,1
 param=ingredient_secondary,coal
 param=ingredient_secondary_count,8
 
-//perfect gold bar
-[obj_2365]
+[smelting_perfect_gold_bar]
+param=levelfailure,You need a Smithing level of 40 to smelt a gold bar.
+param=processmessage,You place a lump of gold in the furnace.
+param=productmessage,You retrieve a bar of gold from the furnace.
+param=product,perfect_gold_bar
+param=levelrequired,40
+param=productexp,225
+param=ingredient,perfect_gold_ore
+param=bar_count,1
