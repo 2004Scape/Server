@@ -135,15 +135,25 @@ export default class BuildArea {
         const absTopZ: number = originZ + 48;
         const absBottomZ: number = originZ - 48;
 
-        for (const zoneIndex of this.activeZones) {
-            for (const npc of World.gameMap.getZoneIndex(zoneIndex).getAllNpcsSafe()) {
-                if (this.npcs.size >= BuildArea.PREFERRED_NPCS) {
-                    return;
+        const centerX = CoordGrid.zone(x);
+        const centerZ = CoordGrid.zone(z);
+
+        const minx = centerX - 2;
+        const minz = centerZ - 2;
+        const maxx = centerX + 2;
+        const maxz = centerZ + 2;
+
+        for (let cx = minx; cx <= maxx; cx++) {
+            for (let cz = minz; cz <= maxz; cz++) {
+                for (const npc of World.gameMap.getZone(cx << 3, cz << 3, level).getAllNpcsSafe()) {
+                    if (this.npcs.size >= BuildArea.PREFERRED_NPCS) {
+                        return;
+                    }
+                    if (!CoordGrid.isWithinDistanceSW({ x, z }, npc, BuildArea.PREFERRED_VIEW_DISTANCE) || npc.nid === -1 || this.npcs.has(npc) || npc.level !== level || npc.x <= absLeftX || npc.x >= absRightX || npc.z >= absTopZ || npc.z <= absBottomZ) {
+                        continue;
+                    }
+                    yield npc;
                 }
-                if (!CoordGrid.isWithinDistanceSW({ x, z }, npc, BuildArea.PREFERRED_VIEW_DISTANCE) || npc.nid === -1 || this.npcs.has(npc) || npc.level !== level || npc.x <= absLeftX || npc.x >= absRightX || npc.z >= absTopZ || npc.z <= absBottomZ) {
-                    continue;
-                }
-                yield npc;
             }
         }
     }
