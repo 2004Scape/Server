@@ -14,6 +14,7 @@ recol2d=21151
 2dxan=308
 cost=1
 weight=500g
+tradeable=no
 
 [druid_enchanted_rat]
 name=Enchanted rat
@@ -31,6 +32,7 @@ recol2d=21151
 2dxan=308
 cost=1
 weight=200g
+tradeable=no
 
 [druid_enchanted_bear]
 name=Enchanted bear
@@ -48,6 +50,7 @@ recol2d=21151
 2dxan=308
 cost=1
 weight=500g
+tradeable=no
 
 [druid_enchanted_chicken]
 name=Enchanted chicken
@@ -64,3 +67,4 @@ recol2d=20095
 2dxan=88
 cost=1
 weight=300g
+tradeable=no

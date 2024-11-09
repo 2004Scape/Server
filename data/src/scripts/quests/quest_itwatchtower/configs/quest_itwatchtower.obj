@@ -12,6 +12,7 @@ recol1d=19937
 2dxan=196
 weight=4lb
 members=yes
+tradeable=no
 
 [explodingvial]
 model=model_552_obj_wear
@@ -32,6 +33,7 @@ weight=15g
 name=Vial
 desc=An infusion of water and jangerberries.
 members=yes
+tradeable=no
 
 [mixture_guam_jangerberries]
 model=model_2789_obj
@@ -45,6 +47,7 @@ desc=A mixture of jangerberries and guam leaves in a vial.
 2dxan=84
 weight=25g
 members=yes
+tradeable=no
 
 [ogre_potion]
 name=Potion
@@ -59,6 +62,7 @@ recol1d=23492
 2dxan=84
 weight=25g
 members=yes
+tradeable=no
 
 [magic_ogre_potion]
 name=Magic ogre potion
@@ -73,6 +77,7 @@ recol1d=17399
 2dxan=84
 weight=25g
 members=yes
+tradeable=no
 
 [spell_scroll]
 name=Spell scroll
@@ -87,6 +92,7 @@ model=model_2600_obj
 iop1=Read
 weight=10g
 members=yes
+tradeable=no
 
 [shaman_robe]
 name=Shaman robe
@@ -102,3 +108,4 @@ model=model_2786_obj
 iop1=Search
 weight=4lb
 members=yes
+tradeable=no

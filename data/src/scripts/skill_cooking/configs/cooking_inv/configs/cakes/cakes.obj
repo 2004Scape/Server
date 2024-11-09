@@ -10,7 +10,6 @@ model=model_2531_obj
 2dxan=164
 weight=300g
 category=category_130
-tradeable=yes
 param=next_obj_stage,obj_1893
 
 [obj_1893]
@@ -29,7 +28,6 @@ recol2d=21921
 2dxan=180
 weight=200g
 category=category_130
-tradeable=yes
 param=next_obj_stage,obj_1895
 
 [obj_1895]
@@ -49,7 +47,6 @@ recol2d=21921
 2dxan=160
 weight=100g
 category=category_130
-tradeable=yes
 
 [chocolate_cake]
 iop1=Eat
@@ -69,7 +66,6 @@ recol3d=10432
 2dxan=164
 weight=300g
 category=category_130
-tradeable=yes
 param=next_obj_stage,obj_1899
 
 [obj_1899]
@@ -90,7 +86,6 @@ recol3d=10432
 cost=50
 weight=200g
 category=category_130
-tradeable=yes
 param=next_obj_stage,chocolate_slice
 
 [chocolate_slice]
@@ -112,7 +107,6 @@ recol3d=10432
 cost=30
 weight=100g
 category=category_130
-tradeable=yes
 
 //guess
 [burnt_cake]
@@ -129,7 +123,6 @@ recol2d=7399
 2dxan=164
 cost=1
 weight=150g
-tradeable=yes
 
 [pot_of_flour]
 name=Pot of flour
@@ -142,7 +135,6 @@ model=model_2406_obj
 2dxan=112
 cost=10
 weight=3lb
-tradeable=yes
 
 [bucket_milk]
 name=Bucket of milk
@@ -169,7 +161,6 @@ model=model_2437_obj
 2dyan=68
 2dxan=144
 weight=20g
-tradeable=yes
 respawnrate=25
 
 [chocolate_bar]
@@ -185,7 +176,6 @@ weight=150g
 category=category_59
 name=Chocolate bar
 desc=Mmmmmmm chocolate.
-tradeable=yes
 param=grindable_ingredient_refined,chocolate_dust
 param=grindable_ingredient_message,You grind the chocolate to dust.
 param=cocktail_message,You crumble the chocolate into the drink.
@@ -200,7 +190,6 @@ model=model_2756_obj
 2dyan=116
 2dxan=220
 weight=6oz
-tradeable=yes
 
 [cake_tin]
 name=Cake tin
@@ -211,4 +200,3 @@ model=model_2596_obj
 2dxan=172
 cost=10
 weight=100g
-tradeable=yes

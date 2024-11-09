@@ -221,14 +221,18 @@ export function packObjConfigs(configs: Map<string, ConfigLine[]>): { client: Pa
 
             // if no name we fill with the debug name
             let hasName = false;
+            let hasModel = false;
             for (let j = 0; j < config.length; j++) {
-                if (config[j].key === 'name') {
+                const key = config[j].key;
+
+                if (key === 'name') {
                     hasName = true;
-                    break;
+                } else if (key === 'model') {
+                    hasModel = true;
                 }
             }
 
-            if (!hasName && config.length > 0) {
+            if (!hasName && hasModel) {
                 const name = debugname.charAt(0).toUpperCase() + debugname.slice(1).replace(/_/g, ' ');
                 config.push({ key: 'name', value: name });
             }
@@ -295,6 +299,10 @@ export function packObjConfigs(configs: Map<string, ConfigLine[]>): { client: Pa
             } else if (key === 'wearpos2') {
                 server.p1(14);
                 server.p1(value as number);
+            } else if (key === 'tradeable') {
+                if (value === false) {
+                    server.p1(15);
+                }
             } else if (key === 'members') {
                 if (value === true) {
                     client.p1(16);
@@ -369,10 +377,6 @@ export function packObjConfigs(configs: Map<string, ConfigLine[]>): { client: Pa
                 client.p1(100 + index);
                 client.p2(values[0]);
                 client.p2(values[1]);
-            } else if (key === 'tradeable') {
-                if (value === true) {
-                    server.p1(200);
-                }
             } else if (key === 'respawnrate') {
                 server.p1(201);
                 server.p2(value as number);

@@ -12,7 +12,6 @@ cost=20
 weight=7g
 name=Unicorn horn
 desc=This horn has restorative properties.
-tradeable=yes
 param=grindable_ingredient_refined,unicorn_horn_dust
 param=grindable_ingredient_message,You grind the unicorn horn to dust.
 // jagex name
@@ -28,7 +27,6 @@ model=model_2761_obj
 2dyan=148
 2dxan=212
 weight=10g
-tradeable=yes
 respawnrate=30
 param=grindable_ingredient_refined,dragon_scale_dust
 param=grindable_ingredient_message,You grind down the blue dragon scale.

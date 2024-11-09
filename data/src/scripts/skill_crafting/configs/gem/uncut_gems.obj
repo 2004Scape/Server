@@ -12,7 +12,6 @@ recol1d=32767
 2dzan=1860
 2dxan=368
 weight=3g
-tradeable=yes
 
 [uncut_ruby]
 cost=100
@@ -28,7 +27,6 @@ recol1d=16417
 2dzan=1860
 2dxan=368
 weight=3g
-tradeable=yes
 
 [uncut_emerald]
 cost=50
@@ -44,7 +42,6 @@ recol1d=672
 2dzan=1860
 2dxan=368
 weight=3g
-tradeable=yes
 
 [uncut_sapphire]
 cost=25
@@ -60,7 +57,6 @@ recol1d=23
 2dzan=1860
 2dxan=368
 weight=3g
-tradeable=yes
 respawnrate=500
 
 [uncut_opal]
@@ -78,7 +74,6 @@ recol1d=29587
 2dxan=368
 weight=3g
 members=yes
-tradeable=yes
 
 [uncut_jade]
 cost=30
@@ -95,7 +90,6 @@ recol1d=22512
 2dxan=368
 weight=3g
 members=yes
-tradeable=yes
 
 [uncut_red_topaz]
 cost=40
@@ -112,7 +106,6 @@ recol1d=30765
 2dxan=368
 weight=3g
 members=yes
-tradeable=yes
 
 [uncut_dragonstone]
 cost=1000
@@ -129,4 +122,3 @@ recol1d=12307
 2dxan=368
 weight=3g
 members=yes
-tradeable=yes

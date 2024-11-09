@@ -15,6 +15,7 @@ iop2=Wear
 wearpos=ring
 weight=7g
 members=yes
+tradeable=no
 
 [perfect_necklace]
 cost=2175
@@ -34,6 +35,7 @@ manwear=model_281_obj_wear,0
 womanwear=model_445_obj_wear,0
 weight=10g
 members=yes
+tradeable=no
 
 [gauntlets_of_cooking]
 category=category_16
@@ -62,6 +64,7 @@ param=stabdefence,8
 param=slashdefence,9
 param=crushdefence,7
 param=strengthbonus,2
+tradeable=no
 
 [gauntlets_of_goldsmithing]
 category=category_16
@@ -88,6 +91,7 @@ param=stabdefence,8
 param=slashdefence,9
 param=crushdefence,7
 param=strengthbonus,2
+tradeable=no
 
 [gauntlets_of_chaos]
 category=category_16
@@ -114,6 +118,7 @@ param=stabdefence,8
 param=slashdefence,9
 param=crushdefence,7
 param=strengthbonus,2
+tradeable=no
 
 [steel_gauntlets]
 category=category_16
@@ -140,6 +145,7 @@ param=stabdefence,8
 param=slashdefence,9
 param=crushdefence,7
 param=strengthbonus,2
+tradeable=no
 
 [crest_part_1]
 model=model_2688_obj
@@ -150,6 +156,7 @@ members=yes
 2dyan=148
 2dxan=356
 weight=4lb
+tradeable=no
 
 [crest_part_2]
 model=model_2691_obj
@@ -160,6 +167,7 @@ members=yes
 2dyan=148
 2dxan=356
 weight=3lb
+tradeable=no
 
 // This piece is visually identical to part 2.
 // 20 July 2004 - The model for Johnathon's part was corrected; previously it used the same model as Caleb's part.
@@ -173,6 +181,7 @@ members=yes
 2dyan=148
 2dxan=356
 weight=3lb
+tradeable=no
 
 [family_crest]
 model=model_2369_obj
@@ -183,3 +192,4 @@ members=yes
 2dyan=148
 2dxan=356
 weight=10lb
+tradeable=no

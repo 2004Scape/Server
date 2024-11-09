@@ -12,7 +12,6 @@ womanwear=model_543_obj_wear,6
 iop1=Bail-with
 weight=1kg
 members=yes
-tradeable=yes
 
 [bailing_bucket_full]
 name=Bailing bucket
@@ -28,4 +27,3 @@ womanwear=model_543_obj_wear,6
 iop1=Empty
 weight=5kg
 members=yes
-tradeable=yes

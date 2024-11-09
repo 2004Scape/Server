@@ -13,7 +13,6 @@ members=yes
 2dyan=1588
 2dxan=376
 weight=7g
-tradeable=yes
 
 [seasoned_sardine]
 name=Seasoned sardine
@@ -32,7 +31,6 @@ members=yes
 2dzan=1964
 2dxan=320
 weight=120g
-tradeable=yes
 
 [cat_training_medal]
 cost=350
@@ -49,7 +47,6 @@ wearpos=front
 manwear=model_289_obj_wear,0
 womanwear=model_453_obj_wear,0
 weight=10g
-tradeable=yes
 
 [fluffs_kitten]
 name=Fluffs' kitten
@@ -65,6 +62,7 @@ weight=750g
 category=category_81
 members=yes
 op1=Use
+tradeable=no
 
 [kitten_greyblack]
 name=Pet kitten
@@ -80,6 +78,7 @@ members=yes
 weight=750g
 category=kitten
 param=follower_id,follower_kitten_greyblack
+tradeable=no
 //https://chisel.weirdgloop.org/structs_rs3/index.html?type=items&id=1555
 
 [kitten_white]
@@ -104,6 +103,7 @@ members=yes
 weight=750g
 category=kitten
 param=follower_id,follower_kitten_white
+tradeable=no
 
 [kitten_brown]
 name=Pet kitten
@@ -125,6 +125,7 @@ members=yes
 weight=750g
 category=kitten
 param=follower_id,follower_kitten_brown
+tradeable=no
 
 [kitten_black]
 name=Pet kitten
@@ -146,6 +147,7 @@ members=yes
 weight=750g
 category=kitten
 param=follower_id,follower_kitten_black
+tradeable=no
 
 [kitten_greybrown]
 name=Pet kitten
@@ -167,6 +169,7 @@ members=yes
 weight=750g
 category=kitten
 param=follower_id,follower_kitten_greybrown
+tradeable=no
 
 [kitten_greyblue]
 name=Pet kitten
@@ -188,6 +191,7 @@ members=yes
 weight=750g
 category=kitten
 param=follower_id,follower_kitten_greyblue
+tradeable=no
 
 [cat_greyblack]
 name=Pet cat
@@ -203,6 +207,7 @@ members=yes
 weight=1500g
 category=cat
 param=follower_id,follower_cat_greyblack
+tradeable=no
 
 [cat_white]
 name=Pet cat
@@ -226,6 +231,7 @@ members=yes
 weight=1500g
 category=cat
 param=follower_id,follower_cat_white
+tradeable=no
 
 [cat_brown]
 name=Pet cat
@@ -247,6 +253,7 @@ members=yes
 weight=1500g
 category=cat
 param=follower_id,follower_cat_brown
+tradeable=no
 
 [cat_black]
 name=Pet cat
@@ -268,6 +275,7 @@ members=yes
 weight=1500g
 category=cat
 param=follower_id,follower_cat_black
+tradeable=no
 
 [cat_greybrown]
 name=Pet cat
@@ -289,6 +297,7 @@ members=yes
 weight=1500g
 category=cat
 param=follower_id,follower_cat_greybrown
+tradeable=no
 
 [cat_greyblue]
 name=Pet cat
@@ -310,6 +319,7 @@ members=yes
 weight=1500g
 category=cat
 param=follower_id,follower_cat_greyblue
+tradeable=no
 
 [overgrown_greyblack]
 name=Pet cat
@@ -325,6 +335,7 @@ members=yes
 weight=2500g
 category=overgrown
 param=follower_id,follower_overgrown_greyblack
+tradeable=no
 
 [overgrown_white]
 name=Pet cat
@@ -348,6 +359,7 @@ members=yes
 weight=2500g
 category=overgrown
 param=follower_id,follower_overgrown_white
+tradeable=no
 
 [overgrown_brown]
 name=Pet cat
@@ -369,6 +381,7 @@ members=yes
 weight=2500g
 category=overgrown
 param=follower_id,follower_overgrown_brown
+tradeable=no
 
 [overgrown_black]
 name=Pet cat
@@ -390,6 +403,7 @@ members=yes
 weight=2500g
 category=overgrown
 param=follower_id,follower_overgrown_black
+tradeable=no
 
 [overgrown_greybrown]
 name=Pet cat
@@ -411,6 +425,7 @@ members=yes
 weight=2500g
 category=overgrown
 param=follower_id,follower_overgrown_greybrown
+tradeable=no
 
 [overgrown_greyblue]
 name=Pet cat
@@ -432,3 +447,4 @@ members=yes
 weight=2500g
 category=overgrown
 param=follower_id,follower_overgrown_greyblue
+tradeable=no
