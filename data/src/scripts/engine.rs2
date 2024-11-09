@@ -87,192 +87,312 @@
 [command,map_multi](coord $coord)(boolean)
 
 // Player ops (2000-2499)
+// Get access to $player if they are in the world
 [command,finduid](player_uid $player)(boolean)
 [command,.finduid](player_uid $player)(boolean)
+// Get protected access to $player if they are in the world and accessible
 [command,p_finduid](player_uid $player)(boolean)
 [command,.p_finduid](player_uid $player)(boolean)
+// Strong-queue a script on a player (do not use in early 2004)
 [command,strongqueue](queue $queue, int $delay)
+// Weak-queue a script on a player (do not use in early 2004)
 [command,weakqueue](queue $queue, int $delay)
+// Play an animation on a player
 [command,anim](seq $anim, int $delay)
 [command,.anim](seq $anim, int $delay)
+// Returns true if the player's packet buffer is full for this cycle
 [command,buffer_full]()(int)
+// Refresh the player's appearance
 [command,buildappearance](inv $inv)
 [command,.buildappearance](inv $inv)
+// Move the camera
 [command,cam_moveto](coord $sourceCoord, int $sourceHeight, int $moveSpeed, int $moveMultiplier)
+// Make the camera look at a coord
 [command,cam_lookat](coord $destCoord, int $destHeight, int $rotationSpeed, int $rotationMultiplier)
+// Shake the camera
 [command,cam_shake](int $type, int $jitter, int $amplitude, int $frequency)
+// Reset the camera back to the player
 [command,cam_reset]
 [command,.cam_reset]
+// Get the player's coord
 [command,coord]()(coord)
 [command,.coord]()(coord)
+// Get the player's formatted display name
 [command,displayname]()(string)
 [command,.displayname]()(string)
+// Make the player face a coord
 [command,facesquare](coord $coord)
 [command,.facesquare](coord $coord)
+// Restore the player's run energy
 [command,healenergy](int $amount)
 [command,.healenergy](int $amount)
+// Close open interfaces
 [command,if_close]
 [command,.if_close]
+// Get the last component that was clicked
 [command,last_com]()(component)
+// Get the last int (number) that was input
 [command,last_int]()(int)
+// Get the last item that was selected
 [command,last_item]()(obj) // unconfirmed, inferred from useitem and useslot
+// Get the last item's slot
 [command,last_slot]()(int)
+// Get the last used item (useitem on item)
 [command,last_useitem]()(obj)
+// Get the last used item's slot
 [command,last_useslot]()(int)
+// Send a message to the chatbox
 [command,mes](string $text)
 [command,.mes](string $text)
+// Get the player's internally stored name - lowercased, underscores
 [command,name]()(string)
+// Requires protected access - set 
 [command,p_aprange](int $range)
+// Requires protected access - if the player moved this cycle, wait a tick before continuing
 [command,p_arrivedelay]
+// Requires protected access - open a number input dialog
 [command,p_countdialog]
+// Requires protected access - delay this script/the player for $delay cycles
 [command,p_delay](int $delay)
 [command,.p_delay](int $delay)
+// Requires protected access - run the opheld $op trigger for the item at $slot in $inv
 [command,p_opheld](int $op, int $inv, int $slot)
+// Requires protected access - set the player's interaction to oploc $op on the active_loc
 [command,p_oploc](int $op)
+// Requires protected access - set the player's interaction to opnpc $op on the active_npc
 [command,p_opnpc](int $op)
+// Requires protected access - cast a spell on the active_npc
 [command,p_opnpct](component $spell)
+// Requires protected access - open a "Click here to continue" dialog
 [command,p_pausebutton]
 [command,.p_pausebutton]
+// Requires protected access - clear the current interaction and walk queue
 [command,p_stopaction]
 [command,.p_stopaction]
+// Requires protected access - teleport the player to $coord, forcing a visual teleport
 [command,p_telejump](coord $coord)
 [command,.p_telejump](coord $coord)
+// Requires protected access - walk the player to $dest
 [command,p_walk](coord $dest)
 [command,.p_walk](coord $dest)
+// Make the player say $text overhead
 [command,say](string $text)
 [command,.say](string $text)
+// Play a $sound
 [command,sound_synth](synth $sound, int $loops, int $delay)
 [command,.sound_synth](synth $sound, int $loops, int $delay)
+// Get the permissions level the player has
 [command,staffmodlevel]()(int)
 [command,.staffmodlevel]()(int)
+// Get the current level of $stat (different than base)
 [command,stat](stat $stat)(int)
 [command,.stat](stat $stat)(int)
+// Get the base level of $stat
 [command,stat_base](stat $stat)(int)
 [command,.stat_base](stat $stat)(int)
+// Boost $stat
 [command,stat_add](stat $stat, int $constant, int $percent)
 [command,.stat_add](stat $stat, int $constant, int $percent)
+// Drain $stat
 [command,stat_sub](stat $stat, int $constant, int $percent)
 [command,.stat_sub](stat $stat, int $constant, int $percent)
+// Heal $stat back to base
 [command,stat_heal](stat $stat, int $constant, int $percent)
 [command,.stat_heal](stat $stat, int $constant, int $percent)
+// Get the player's UID to use in finduid/p_finduid later
 [command,uid]()(player_uid)
 [command,.uid]()(player_uid)
+// Requires protected access - request the player to log out
 [command,p_logout]
+// Set a component's colour
 [command,if_setcolour](component $component, int $colour)
+// Open a modal in the chat box
 [command,if_openchat](interface $interface)
 [command,.if_openchat](interface $interface)
+// Open two modals, one in the main viewport and one on the side tab
 [command,if_openmain_side](interface $interface1, interface $interface2)
 [command,.if_openmain_side](interface $interface1, interface $interface2)
+// Hide a component
 [command,if_sethide](component $component, boolean $hide)
 [command,.if_sethide](component $component, boolean $hide)
+// Set a component's model to an object
 [command,if_setobject](component $component, obj $obj, int $scale)
 [command,.if_setobject](component $component, obj $obj, int $scale)
+// Set a component's model
 [command,if_setmodel](component $component, int $model)
+// Recolor a component's model
 [command,if_setrecol](component $component, int $src, int $dest)
+// Open the tutorial modal mode ("sticky" interface)
 [command,tut_open](interface $interface)
+// Close the tutorial modal mode (back to normal gameplay)
 [command,tut_close]
+// Flash a side tab icon
 [command,tut_flash](int $tab)
+// Set a component's model animation
 [command,if_setanim](component $component,seq $anim)
+// Set a side tab to a specific interface
 [command,if_settab](interface $interface, int $tab)
 [command,.if_settab](interface $interface, int $tab)
+// Change the player's open side tab
 [command,if_settabactive](int $tab)
 [command,.if_settabactive](int $tab)
+// Open a modal in the main viewport
 [command,if_openmain](interface $interface)
 [command,.if_openmain](interface $interface)
 // later
 // [command,if_openoverlay](interface $interface)
 // [command,.if_openoverlay](interface $interface)
+// Open a modal in the side tab
 [command,if_openside](interface $interface)
+// Set a component's model to the local player's chat head
 [command,if_setplayerhead](component $component)
+// Set a component's text
 [command,if_settext](component $component, string $text)
 [command,.if_settext](component $component, string $text)
+// Set a component's model to an npc's chat head
 [command,if_setnpchead](component $component, npc $npc)
+// Reposition a component
 [command,if_setposition](component $component, int $x, int $y);
+// Give xp in a stat
 [command,stat_advance](stat $stat, int $exp)
+// Hurt a player
 [command,damage](player_uid $uid, int $type, int $amount)
 [command,.damage](player_uid $uid, int $type, int $amount)
+// internal- set which buttons can re-trigger the suspended script
 [command,if_setresumebuttons](component $component1, component $component2, component $component3, component $component4, component $component5)
+// Choose a text string based on the player's gender
 [command,text_gender](string $male_text, string $female_text)(string)
 [command,.text_gender](string $male_text, string $female_text)(string)
+// Play a song
 [command,midi_song](string $song)
+// Play a jingle (advancing levels, completing quests, ...)
 [command,midi_jingle](string $jingle, int $length)
 [command,.midi_jingle](string $jingle, int $length)
+// Show the hint arrow at $coord
 [command,hint_coord](int $offset, coord $coord, int $height)
+// Start a softtimer on the active_player
 [command,softtimer]/*(softtimer $timer, int $interval, ...)*/
 [command,.softtimer]/*(softtimer $timer, int $interval, ...)*/
+// Clear a softtimer from the active_player
 [command,clearsofttimer](softtimer $timer)
 [command,.clearsofttimer](softtimer $timer)
+// Start a timer on the active_player
 [command,settimer]/*(timer $timer, int $interval, ...)*/
 [command,.settimer]/*(timer $timer, int $interval, ...)*/
+// Clear a timer from the active_player
 [command,cleartimer](timer $timer)
 [command,.cleartimer](timer $timer)
-[command,gettimer](timer $timer)(int)// guess
+// Return ^true if the active_player has $timer running
+[command,gettimer](timer $timer)(int) // confirmed
+// Play a spotanim on the active_player
 [command,spotanim_pl](spotanim $spotanim, int $height, int $delay)
 [command,.spotanim_pl](spotanim $spotanim, int $height, int $delay)
+// Clear the hint arrow
 [command,hint_stop]
 [command,.hint_stop]
+// Requires protected access - move the player from $startCoord to $endCoord with a finer ability to control speed
 [command,p_exactmove](coord $startCoord, coord $endCoord, int $startCycle, int $endCycle, int $direction)
+// Queue a script on a player
 [command,queue](queue $queue, int $delay) // , $arg)
 [command,.queue](queue $queue, int $delay) // , $arg)
+// Returns true if the player has an open modal or is delayed
 [command,busy]()(boolean)
 [command,.busy]()(boolean)
+// Returns true if the player has an interaction or waypoints to walk to
 [command,busy2]()(boolean)
 [command,.busy2]()(boolean)
+// Get the number of queued scripts that are specifically $queue
 [command,getqueue](queue $queue)(int)
 [command,.getqueue](queue $queue)(int)
+// Requires protected access - merge the player's visual model with a loc so render priorities are correct
 [command,p_locmerge](int $startCycle, int $endCycle, coord $southEast, coord $northWest);
+// Show the welcome screen
 [command,last_login_info]
+// Requires protected access - teleport the player to $coord, short distances (1-2 tiles) will visually walk/run
 [command,p_teleport](coord $coord)
 [command,.p_teleport](coord $coord)
+// Set the player's base ready animation
 [command,bas_readyanim](seq $seq)
-[command,bas_turnonspot](seq $seq)
-[command,bas_walk_f](seq $seq)
-[command,bas_walk_b](seq $seq)
-[command,bas_walk_l](seq $seq)
-[command,bas_walk_r](seq $seq)
-[command,bas_running](seq $seq)
 [command,.bas_readyanim](seq $seq)
+// Set the player's base turn-on-spot animation
+[command,bas_turnonspot](seq $seq)
 [command,.bas_turnonspot](seq $seq)
+// Set the player's base walking forward animation
+[command,bas_walk_f](seq $seq)
 [command,.bas_walk_f](seq $seq)
+// Set the player's base walking backwards animation
+[command,bas_walk_b](seq $seq)
 [command,.bas_walk_b](seq $seq)
+// Set the player's base turn-left animation
+[command,bas_walk_l](seq $seq)
 [command,.bas_walk_l](seq $seq)
+// Set the player's base turn-right animation
+[command,bas_walk_r](seq $seq)
 [command,.bas_walk_r](seq $seq)
+// Set the player's base running animation
+[command,bas_running](seq $seq)
 [command,.bas_running](seq $seq)
+// Get the player's current gender (0 = male, 1 = female)
 [command,gender]()(int)
 [command,.gender]()(int)
+// Show the hint arrow on $npc
 [command,hint_npc](npc_uid $npc)
+// Show the hint arrow on $player
 [command,hint_player](player_uid $player)
 [command,.hint_player](player_uid $player)
+// Get the currently set headicons
 [command,headicons_get]()(int)
 [command,.headicons_get]()(int)
+// Set the player's headicons
 [command,headicons_set](int $icons)
 [command,.headicons_set](int $icons)
+// Requires protected access - set the player's interaction to opobj $op on the active_player
 [command,p_opobj](int $op)
+// Requires protected access - set the player's interaction to opplayer $op on the active_player
 [command,p_opplayer](int $op)
 [command,.p_opplayer](int $op)
+// Requires protected access - cast a spell on the active_player
 [command,p_opplayert](component $spell)
+// Find all players around $coord (limited to the nearest 8x8 zone area)
 [command,player_findallzone](coord $coord)
+// Use the next result from player_findallzone
 [command,player_findnext]()(boolean)
+// Allow the player to redesign their appearance (the packet is sent to the server)
 [command,allowdesign](boolean $allow)
+// Used in inv_buttond, similar to last_useslot, this is the other item in scope
 [command,last_targetslot]()(int)
+// Set the player's walktrigger
 [command,walktrigger](walktrigger $trigger)
 [command,.walktrigger](walktrigger $trigger)
+// Get the player's current walktrigger
 [command,getwalktrigger]()(walktrigger)
 [command,.getwalktrigger]()(walktrigger)
+// Clear the player's script queue
 [command,clearqueue](queue $queue)
 [command,.clearqueue](queue $queue)
+// Returns ^true if the player is ready for another AFK event
 [command,afk_event]()(int)
+// Get the player's low memory mode
 [command,lowmemory]()(boolean)
+// Set the player's identity kit
 [command,setidkit](idkit $kit, int $color)
+// Set the active_player to the hero that's done the most damage to the current active_player
 [command,findhero]()(boolean)
 [command,.findhero]()(boolean)
+// Track damage to the active_player from .active_player
 [command,both_heropoints](int $damage)
+// Set the player's gender
 [command,setgender](int $gender)
+// Set the player's skin
 [command,setskincolour](int $skin_colour)
+// Requires protected access - allow or deny animations to be played
 [command,p_animprotect](int $toggle)
 [command,.p_animprotect](int $toggle)
+// Get the player's curernt run energy
 [command,runenergy]()(int)
+// Get the player's current run weight
 [command,weight]()(int)
+// Requires protected access - clear the current interaction, but leave the walk queue intact
 [command,p_clearpendingaction]
 
 // Npc ops (2500-2999)
