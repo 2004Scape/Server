@@ -303,6 +303,9 @@ export function packLocConfigs(configs: Map<string, ConfigLine[]>): { client: Pa
             } else if (key === 'mapfunction') {
                 client.p1(60);
                 client.p2(value as number);
+            } else if (key === 'category') {
+                server.p1(61);
+                server.p2(value as number);
             } else if (key === 'mirror') {
                 if (value === true) {
                     client.p1(62);
@@ -339,9 +342,6 @@ export function packLocConfigs(configs: Map<string, ConfigLine[]>): { client: Pa
                 if (value === true) {
                     client.p1(73);
                 }
-            } else if (key === 'category') {
-                server.p1(200);
-                server.p2(value as number);
             }
         }
 
