@@ -559,7 +559,7 @@ export default class Player extends PathingEntity {
         }
         if (!this.hasWaypoints()) {
             this.moveClickRequest = false;
-            this.unsetMapFlag();
+            // this.unsetMapFlag(); // should be handled client-sided
         }
         return moved;
     }
