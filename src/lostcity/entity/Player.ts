@@ -130,7 +130,7 @@ export default class Player extends PathingEntity {
     save() {
         const sav = Packet.alloc(1);
         sav.p2(0x2004); // magic
-        sav.p2(4); // version
+        sav.p2(5); // version
 
         sav.p2(this.x);
         sav.p2(this.z);
@@ -171,6 +171,7 @@ export default class Player extends PathingEntity {
             }
 
             sav.p2(typeId);
+            sav.p2(inventory.capacity);
             for (let slot = 0; slot < inventory.capacity; slot++) {
                 const obj = inventory.get(slot);
                 if (!obj) {
