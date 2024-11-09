@@ -435,6 +435,8 @@ enum ScriptOpcode {
     MAP_LASTCLEANUP,
     MAP_LASTBANDWIDTHIN,
     MAP_LASTBANDWIDTHOUT,
+    TIMESPENT, // custom: used to profile script execution (record start time)
+    GETTIMESPENT, // custom: used to profile script execution (current duration)
 }
 
 export default ScriptOpcode;

@@ -60,7 +60,23 @@ const DebugOps: CommandHandlers = {
 
     [ScriptOpcode.MAP_LASTBANDWIDTHOUT]: state => {
         state.pushInt(World.lastCycleStats[WorldStat.BANDWIDTH_OUT]);
-    }
+    },
+
+    [ScriptOpcode.TIMESPENT]: state => {
+        state.timespent = performance.now();
+    },
+
+    [ScriptOpcode.GETTIMESPENT]: state => {
+        const elapsed = performance.now() - state.timespent;
+
+        if (state.popInt() === 1) {
+            // microseconds
+            state.pushInt(elapsed * 1000);
+        } else {
+            // milliseconds
+            state.pushInt(elapsed);
+        }
+    },
 };
 
 export default DebugOps;

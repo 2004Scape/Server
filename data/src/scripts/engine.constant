@@ -23,3 +23,7 @@
 ^loc_south = 3
 
 ^string_empty =
+
+// for gettimespent
+^millis = 0
+^micros = 1

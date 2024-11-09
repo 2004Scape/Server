@@ -514,6 +514,8 @@
 [command,map_lastcleanup]()(int)
 [command,map_lastbandwidthin]()(int)
 [command,map_lastbandwidthout]()(int)
+[command,timespent]
+[command,gettimespent](int $unit)(int)
 
 // [command,inv_setvar](inv $inv, int $slot, obj $obj, int $value)
 // [command,inv_getvar](inv $inv, int $slot, obj $obj)(int)
