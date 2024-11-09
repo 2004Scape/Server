@@ -1,49 +1,89 @@
 // Core language ops (0-99)
+// Call a proc and return to this point after. You cannot pass any arguments to it.
 [command,gosub](proc $proc)
+// Jump to a label and continue the script there. You cannot pass any arguments it.
 [command,jump](label $label)
 
 // Server ops (1000-1999)
+// Get the world's current cycle count
 [command,map_clock]()(int)
+// Returns true if the world is configured as a members world
 [command,map_members]()(boolean)
+// Get the number of players in a given area
 [command,map_playercount](coord $coord1, coord $coord2)(int)
+// Search (hunt) for players in a given area
 [command,huntall](coord $source, int $distance, int $checkvis)
+// Use the next result from huntall
 [command,huntnext]()(boolean)
 [command,.huntnext]()(boolean)
+// Search (hunt) for npcs in a given area
 [command,npc_huntall](coord $source, int $distance, int $checkvis)
+// Use the next result from npc_huntall
 [command,npc_huntnext]()(boolean)
 [command,.npc_huntnext]()(boolean)
+// Returns true if $pos is in the area between $from and $to
 [command,inzone](coord $from, coord $to, coord $pos)(boolean)
-[command,.inzone](coord $from, coord $to, coord $pos)(boolean)
+[command,.inzone](coord $from, coord $to, coord $pos)(boolean) // todo: replace all instances of this with inzone, should not have secondary
+// Returns true if $from has an unbroken line-of-walk to $to
 [command,lineofwalk](coord $from, coord $to)(boolean)
+// Roll a skill success check
 [command,stat_random](int $level, int $low, int $high)(boolean)
+// Play a spotanim on a tile
 [command,spotanim_map](spotanim $anim, coord $coord, int $height, int $delay)
+// [command,map_anim](coord $coord, spotanim $spotanim, int $height, int $delay) // this is the name for the packet
+// Get the distance between two coords
 [command,distance](coord $coord1, coord $coord2)(int)
+// Move a coord across each axis
 [command,movecoord](coord $coord, int $x, int $y, int $z)(coord)
+// Get how long a seq takes to play on the client
 [command,seqlength](seq $seq)(int)
+// Initialize the split text system
 [command,split_init](string $text, int $width, int $lines, fontmetrics $font)
+// Get how many pages split_init has calculated
 [command,split_pagecount]()(int)
+// Get the split text on a given $page and $line
 [command,split_get](int $page, int $line)(string)
+// Get the number of lines in a given $page
 [command,split_linecount](int $page)(int)
+// Get the anim for a given $page
 [command,split_getanim](int $page)(seq)
+// Get a param on a struct
 [command,struct_param]/*(struct $struct, param $param)(dynamic)*/
+// Get the x axis of a coord
 [command,coordx](coord $coord)(int)
+// Get the y axis (level) of a coord
 [command,coordy](coord $coord)(int)
+// Get the z axis (NOT level) of a coord
 [command,coordz](coord $coord)(int)
+// Get how many players are currently in the world
 [command,playercount]()(int)
+// Returns true if the map tile at $coord is blocked
 [command,map_blocked](coord $coord)(boolean)
+// Returns true if the map tile at $coord is indoors
 [command,map_indoors](coord $coord)(boolean)
+// Returns true if $from has an unbroken line-of-walk to $to
 [command,lineofsight](coord $from, coord $to)(boolean)
+// Delay this script for $delay ticks on the world, not tied to any player/npc
 [command,world_delay](int $delay)
-[command,map_anim](coord $coord, spotanim $spotanim, int $height, int $delay)
+// Cast a projectile targeting a player
 [command,projanim_pl](coord $from, player_uid $to, spotanim $spotanim, int $fromHeight, int $toHeight, int $delay, int $duration, int $peak, int $arc)
+// Cast a projectile targeting an npc
 [command,projanim_npc](coord $from, npc_uid $to, spotanim $spotanim, int $fromHeight, int $toHeight, int $delay, int $duration, int $peak, int $arc)
+// Cast a projectile targeting a coord
 [command,projanim_map](coord $from, coord $to, spotanim $spotanim, int $fromHeight, int $toHeight, int $delay, int $duration, int $peak, int $arc)
+// Returns true if it's unsafe to spawn a loc on this tile
 [command,map_locaddunsafe](coord $coord)(boolean)
-[command,npccount]()(int)
-[command,zonecount]()(int)
-[command,loccount]()(int)
-[command,objcount]()(int)
+// Get the number of npcs in the world
+[command,npccount]()(int) // todo: move this to debug ops
+// Get the number of zones in the world
+[command,zonecount]()(int) // todo: move this to debug ops
+// Get the number of objects in the world
+[command,loccount]()(int) // todo: move this to debug ops
+// Get the number of locs in the world
+[command,objcount]()(int) // todo: move this to debug ops
+// Get a random coord centered on $coord within $minradius and $maxradius, using ^map_findsquare_ constants for $type
 [command,map_findsquare](coord $coord, int $minradius, int $maxradius, int $type)(coord)
+// Returns true if the map tile at $coord is multi-way combat area
 [command,map_multi](coord $coord)(boolean)
 
 // Player ops (2000-2499)
