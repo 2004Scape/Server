@@ -4,12 +4,12 @@ import { Worker as NodeWorker } from 'worker_threads';
 // deps
 import kleur from 'kleur';
 
-// jagex2
-import LinkList from '#jagex2/datastruct/LinkList.js';
+// jagex
+import LinkList from '#jagex/datastruct/LinkList.js';
 
-import { fromBase37, toBase37 } from '#jagex2/jstring/JString.js';
+import { fromBase37, toBase37 } from '#jagex/jstring/JString.js';
 
-import Packet from '#jagex2/io/Packet.js';
+import Packet from '#jagex/io/Packet.js';
 
 // lostcity
 import CategoryType from '#lostcity/cache/config/CategoryType.js';

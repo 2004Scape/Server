@@ -1,7 +1,7 @@
 import 'dotenv/config';
 
-import Packet from '#jagex2/io/Packet.js';
-import {fromBase37, toDisplayName} from '#jagex2/jstring/JString.js';
+import Packet from '#jagex/io/Packet.js';
+import {fromBase37, toDisplayName} from '#jagex/jstring/JString.js';
 
 import FontType from '#lostcity/cache/config/FontType.js';
 import Component from '#lostcity/cache/config/Component.js';
@@ -40,8 +40,8 @@ import ScriptPointer from '#lostcity/engine/script/ScriptPointer.js';
 
 import Environment from '#lostcity/util/Environment.js';
 
-import LinkList from '#jagex2/datastruct/LinkList.js';
-import DoublyLinkList from '#jagex2/datastruct/DoublyLinkList.js';
+import LinkList from '#jagex/datastruct/LinkList.js';
+import DoublyLinkList from '#jagex/datastruct/DoublyLinkList.js';
 
 import {CollisionFlag} from '@2004scape/rsmod-pathfinder';
 import {PRELOADED, PRELOADED_CRC} from '#lostcity/server/PreloadedPacks.js';

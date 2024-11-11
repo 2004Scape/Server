@@ -3,9 +3,9 @@ import fsp from 'fs/promises';
 import forge from 'node-forge';
 import { parentPort } from 'worker_threads';
 
-import Packet from '#jagex2/io/Packet.js';
+import Packet from '#jagex/io/Packet.js';
 
-import { toBase37, toSafeName } from '#jagex2/jstring/JString.js';
+import { toBase37, toSafeName } from '#jagex/jstring/JString.js';
 
 import LoginClient from '#lostcity/server/LoginClient.js';
 import LoginResponse from '#lostcity/server/LoginResponse.js';

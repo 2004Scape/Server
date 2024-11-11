@@ -1,7 +1,7 @@
 import { Worker as NodeWorker } from 'worker_threads';
 
-import Isaac from '#jagex2/io/Isaac.js';
-import Packet from '#jagex2/io/Packet.js';
+import Isaac from '#jagex/io/Isaac.js';
+import Packet from '#jagex/io/Packet.js';
 
 import World from '#lostcity/engine/World.js';
 import {changeNpcCollision} from '#lostcity/engine/GameMap.js';

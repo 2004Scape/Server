@@ -1,5 +1,5 @@
 import MessageEncoder from '#lostcity/network/outgoing/codec/MessageEncoder.js';
-import Packet from '#jagex2/io/Packet.js';
+import Packet from '#jagex/io/Packet.js';
 import ServerProt from '#lostcity/network/225/outgoing/prot/ServerProt.js';
 import RebuildNormal from '#lostcity/network/outgoing/model/RebuildNormal.js';
 import {PRELOADED_CRC} from '#lostcity/server/PreloadedPacks.js';

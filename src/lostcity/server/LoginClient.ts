@@ -1,7 +1,7 @@
 import { WebSocket } from 'ws';
 import WsSyncReq from '#3rdparty/ws-sync/ws-sync.js';
 
-import Packet from '#jagex2/io/Packet.js';
+import Packet from '#jagex/io/Packet.js';
 
 import Environment from '#lostcity/util/Environment.js';
 

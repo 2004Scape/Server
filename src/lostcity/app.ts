@@ -4,7 +4,7 @@ import { startWeb } from '#lostcity/web.js';
 
 import World from '#lostcity/engine/World.js';
 
-import { packClient, packServer } from '#lostcity/cache/packall.js';
+import { packClient, packServer } from '#lostcity/pack/packall.js';
 
 import TcpServer from '#lostcity/server/TcpServer.js';
 import WSServer from '#lostcity/server/WSServer.js';

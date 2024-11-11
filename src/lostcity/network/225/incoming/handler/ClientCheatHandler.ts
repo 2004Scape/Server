@@ -21,7 +21,7 @@ import ScriptRunner from '#lostcity/engine/script/ScriptRunner.js';
 import PlayerStat from '#lostcity/entity/PlayerStat.js';
 import MoveStrategy from '#lostcity/entity/MoveStrategy.js';
 import { PlayerLoading } from '#lostcity/entity/PlayerLoading.js';
-import Packet from '#jagex2/io/Packet.js';
+import Packet from '#jagex/io/Packet.js';
 import { printInfo } from '#lostcity/util/Logger.js';
 import {findPath, isMapBlocked} from '#lostcity/engine/GameMap.js';
 

@@ -1,10 +1,10 @@
 import fs from 'fs';
 
-import Packet from '#jagex2/io/Packet.js';
+import Packet from '#jagex/io/Packet.js';
 
 import { ConfigType } from '#lostcity/cache/config/ConfigType.js';
 import ScriptVarType from '#lostcity/cache/config/ScriptVarType.js';
-import Jagfile from '#jagex2/io/Jagfile.js';
+import Jagfile from '#jagex/io/Jagfile.js';
 import { printError } from '#lostcity/util/Logger.js';
 
 export default class VarPlayerType extends ConfigType {

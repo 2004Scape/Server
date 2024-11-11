@@ -1,7 +1,7 @@
 import 'dotenv/config';
 import fs from 'fs';
 
-import Packet from '#jagex2/io/Packet.js';
+import Packet from '#jagex/io/Packet.js';
 
 import ServerProt from '#lostcity/network/225/outgoing/prot/ServerProt.js';
 

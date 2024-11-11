@@ -1,7 +1,7 @@
 import fs from 'fs';
 import { Bitmap, Jimp } from 'jimp';
 
-import Packet from '#jagex2/io/Packet.js';
+import Packet from '#jagex/io/Packet.js';
 
 export function generatePixelOrder(img: { bitmap: Bitmap }) {
     let rowMajorScore = 0;

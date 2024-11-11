@@ -2,7 +2,7 @@ import Entity from '#lostcity/entity/Entity.js';
 import InfoMessage from '#lostcity/network/outgoing/InfoMessage.js';
 import InfoMessageEncoder from '#lostcity/network/outgoing/codec/InfoMessageEncoder.js';
 import ServerProtRepository from '#lostcity/network/225/outgoing/prot/ServerProtRepository.js';
-import Packet from '#jagex2/io/Packet.js';
+import Packet from '#jagex/io/Packet.js';
 import InfoProt from '#lostcity/network/225/outgoing/prot/InfoProt.js';
 
 export default abstract class Renderer<T extends Entity> {

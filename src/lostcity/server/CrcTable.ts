@@ -1,6 +1,6 @@
 import fs from 'fs';
 
-import Packet from '#jagex2/io/Packet.js';
+import Packet from '#jagex/io/Packet.js';
 import Environment from '#lostcity/util/Environment.js';
 
 export const CrcBuffer: Packet = new Packet(new Uint8Array(4 * 9));

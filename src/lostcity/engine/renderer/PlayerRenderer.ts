@@ -11,7 +11,7 @@ import Renderer from '#lostcity/engine/renderer/Renderer.js';
 import PlayerInfoDamage from '#lostcity/network/outgoing/model/PlayerInfoDamage.js';
 import PlayerStat from '#lostcity/entity/PlayerStat.js';
 import InfoMessage from '#lostcity/network/outgoing/InfoMessage.js';
-import Packet from '#jagex2/io/Packet.js';
+import Packet from '#jagex/io/Packet.js';
 import PlayerInfoExactMove from '#lostcity/network/outgoing/model/PlayerInfoExactMove.js';
 import InfoMessageEncoder from '#lostcity/network/outgoing/codec/InfoMessageEncoder.js';
 import ServerProtRepository from '#lostcity/network/225/outgoing/prot/ServerProtRepository.js';

@@ -33,7 +33,7 @@ import EntityLifeCycle from '#lostcity/entity/EntityLifeCycle.js';
 import NpcStat from '#lostcity/entity/NpcStat.js';
 import HuntNobodyNear from '#lostcity/entity/hunt/HuntNobodyNear.js';
 
-import LinkList from '#jagex2/datastruct/LinkList.js';
+import LinkList from '#jagex/datastruct/LinkList.js';
 
 import {CollisionFlag} from '@2004scape/rsmod-pathfinder';
 import {isFlagged} from '#lostcity/engine/GameMap.js';
