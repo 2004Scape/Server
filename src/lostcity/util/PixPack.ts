@@ -1,10 +1,10 @@
 import fs from 'fs';
-import Jimp from 'jimp';
+import { Bitmap, Jimp } from 'jimp';
 
 import Packet from '#jagex2/io/Packet.js';
 import { printError } from './Logger.js';
 
-export function generatePixelOrder(img: Jimp) {
+export function generatePixelOrder(img: { bitmap: Bitmap }) {
     let rowMajorScore = 0;
     let columnMajorScore = 0;
 
@@ -31,7 +31,7 @@ export function generatePixelOrder(img: Jimp) {
     return columnMajorScore < rowMajorScore ? 0 : 1;
 }
 
-export function writeImage(img: Jimp, data: Packet, index: Packet, colors: number[], meta: Sprite | null = null) {
+export function writeImage(img: { bitmap: Bitmap }, data: Packet, index: Packet, colors: number[], meta: Sprite | null = null) {
     let left = 0;
     let top = 0;
     let right = img.bitmap.width;
@@ -221,7 +221,12 @@ export async function convertImage(index: Packet, srcPath: string, safeName: str
     if (sprites.length > 1) {
         for (let y = 0; y < img.bitmap.height / tileY; y++) {
             for (let x = 0; x < img.bitmap.width / tileX; x++) {
-                const tile = img.clone().crop(x * tileX, y * tileY, tileX, tileY);
+                const tile = img.clone().crop({
+                    x: x * tileX,
+                    y: y * tileY,
+                    w: tileX,
+                    h: tileY
+                });
                 writeImage(tile, data, index, colors, sprites[x + y * (img.bitmap.width / tileX)]);
             }
         }

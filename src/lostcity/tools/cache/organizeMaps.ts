@@ -1,7 +1,9 @@
-import Packet from '#jagex2/io/Packet.js';
-import { fromBase37 } from '#jagex2/jstring/JString.js';
 import fs from 'fs';
 import path from 'path';
+
+import Packet from '#jagex2/io/Packet.js';
+
+import { fromBase37 } from '#jagex2/jstring/JString.js';
 
 const args = process.argv.splice(2);
 
@@ -10,22 +12,26 @@ if (!args.length) {
 }
 
 const searchDir = args[0];
-const outDir = path.join('dump', 'maps');
 
-if (!fs.existsSync(outDir)) {
-    fs.mkdirSync(outDir, { recursive: true });
-}
-
-class MapEntry {
-    constructor(readonly filePath: string, readonly name: string, readonly ctime: number, readonly size: number, readonly checksum: number) {
-    }
-}
+type MapEntry = {
+    filePath: string,
+    name: string,
+    ctime: number,
+    size: number,
+    checksum: number
+};
 
 const dirs = fs.readdirSync(searchDir);
 const allFiles: MapEntry[] = [];
+const betaFiles: MapEntry[] = [];
 
 for (const dir of dirs) {
-    const files = fs.readdirSync(path.join(searchDir, dir));
+    const dirPath = path.join(searchDir, dir);
+    if (!fs.statSync(dirPath).isDirectory()) {
+        continue;
+    }
+
+    const files = fs.readdirSync(dirPath);
 
     for (const file of files) {
         const name = fromBase37(BigInt(file));
@@ -61,58 +67,82 @@ for (const dir of dirs) {
             }
 
             const checksum = Packet.getcrc(data.data, 0, data.length);
-            allFiles.push(new MapEntry(filePath, name, stats.birthtimeMs, stats.size, checksum));
+
+            if (fs.statSync(filePath).birthtime >= new Date('2004-02-01T00:00:00')) {
+                allFiles.push({
+                    filePath,
+                    name,
+                    ctime: stats.birthtimeMs,
+                    size: stats.size,
+                    checksum
+                });
+            } else {
+                // these beta files use a different set of IDs so they're "incompatible" as-is, or in some cases, only existed for a short while
+                betaFiles.push({
+                    filePath,
+                    name,
+                    ctime: stats.birthtimeMs,
+                    size: stats.size,
+                    checksum
+                });
+            }
         }
     }
 }
 
-allFiles.sort((a, b) => a.name.localeCompare(b.name));
-const processed = new Set();
+function sortFiles(files: MapEntry[], outPath: string) {
+    files.sort((a, b) => a.name.localeCompare(b.name));
+    fs.mkdirSync(outPath, { recursive: true });
 
-for (const map of allFiles) {
-    if (processed.has(map.name)) {
-        continue;
-    }
-
-    // only run once on this name
-    processed.add(map.name);
-
-    // get all of the map entries that match this one
-    let revisions = allFiles.filter(x => x.name === map.name);
-
-    // order by date
-    revisions.sort((a, b) => a.ctime - b.ctime);
-
-    // remove duplicates
-    revisions = revisions.filter((value, index, self) =>
-        index === self.findIndex((t) => (
-            t.name === value.name && t.checksum === value.checksum
-        ))
-    );
-
-    // copy to dump folder
-    if (revisions.length <= 1) {
-        for (const revision of revisions) {
-            fs.copyFileSync(revision.filePath, path.join('dump', 'maps', revision.name));
-            fs.utimesSync(path.join(outDir, revision.name), revision.ctime / 1000, revision.ctime / 1000);
+    const processed = new Set();
+    for (const map of files) {
+        if (processed.has(map.name)) {
+            continue;
         }
-    } else {
-        for (let i = 0; i < revisions.length; i++) {
-            const revision = revisions[i];
 
-            if (i === revisions.length - 1) {
-                fs.copyFileSync(revision.filePath, path.join('dump', 'maps', revision.name));
-                fs.utimesSync(path.join(outDir, revision.name), revision.ctime / 1000, revision.ctime / 1000);
-                continue;
+        // only run once on this name
+        processed.add(map.name);
+
+        // get all of the map entries that match this one
+        let revisions = files.filter(x => x.name === map.name);
+
+        // order by date
+        revisions.sort((a, b) => a.ctime - b.ctime);
+
+        // remove duplicates
+        revisions = revisions.filter((value, index, self) =>
+            index === self.findIndex((t) => (
+                t.name === value.name && t.checksum === value.checksum
+            ))
+        );
+
+        // copy to dump folder
+        if (revisions.length <= 1) {
+            for (const revision of revisions) {
+                fs.copyFileSync(revision.filePath, path.join(outPath, revision.name));
+                fs.utimesSync(path.join(outPath, revision.name), revision.ctime / 1000, revision.ctime / 1000);
             }
+        } else {
+            for (let i = 0; i < revisions.length; i++) {
+                const revision = revisions[i];
 
-            const outFolder = path.join('dump', 'maps', 'v' + (i + 1));
-            if (!fs.existsSync(outFolder)) {
-                fs.mkdirSync(outFolder);
+                if (i === revisions.length - 1) {
+                    fs.copyFileSync(revision.filePath, path.join(outPath, revision.name));
+                    fs.utimesSync(path.join(outPath, revision.name), revision.ctime / 1000, revision.ctime / 1000);
+                    continue;
+                }
+
+                const outFolder = path.join(outPath, 'v' + (i + 1));
+                if (!fs.existsSync(outFolder)) {
+                    fs.mkdirSync(outFolder, { recursive: true });
+                }
+
+                fs.copyFileSync(revision.filePath, path.join(outFolder, revision.name));
+                fs.utimesSync(path.join(outFolder, revision.name), revision.ctime / 1000, revision.ctime / 1000);
             }
-
-            fs.copyFileSync(revision.filePath, path.join(outFolder, revision.name));
-            fs.utimesSync(path.join(outFolder, revision.name), revision.ctime / 1000, revision.ctime / 1000);
         }
     }
 }
+
+sortFiles(allFiles, path.join('dump', 'maps'));
+// sortFiles(betaFiles, path.join('dump', 'maps', 'beta'));
