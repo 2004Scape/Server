@@ -12,6 +12,7 @@ recol1d=6240
 2dyan=76
 2dxan=264
 weight=15g
+tradeable=no
 
 [translation_book]
 name=Translation book
@@ -32,6 +33,7 @@ recol3d=7329
 2dxan=244
 iop1=Read
 weight=18oz
+tradeable=no
 
 [gloughs_journal]
 name=Glough's journal
@@ -50,6 +52,7 @@ recol2d=27635
 2dxan=276
 iop1=Read
 weight=18oz
+tradeable=no
 
 [hazelmeres_scroll]
 name=Hazelmere's scroll
@@ -64,6 +67,7 @@ model=model_2600_obj
 2dxan=380
 iop1=Read
 weight=20g
+tradeable=no
 
 [lumber_order]
 name=Lumber order
@@ -78,6 +82,7 @@ model=model_2600_obj
 2dxan=380
 iop1=Read
 weight=20g
+tradeable=no
 
 [gloughs_key]
 name=Glough's key
@@ -90,6 +95,7 @@ model=model_2372_obj
 2dyan=20
 2dxan=328
 weight=10g
+tradeable=no
 
 [twigs_t]
 name=Twigs
@@ -102,6 +108,7 @@ members=yes
 2dyan=88
 2dxan=440
 weight=20g
+tradeable=no
 
 [twigs_u]
 name=Twigs
@@ -114,6 +121,7 @@ members=yes
 2dyan=2036
 2dxan=364
 weight=20g
+tradeable=no
 
 [twigs_z]
 name=Twigs
@@ -124,6 +132,7 @@ members=yes
 2dyan=48
 2dxan=420
 weight=20g
+tradeable=no
 
 [twigs_o]
 name=Twigs
@@ -135,6 +144,7 @@ members=yes
 2dzoom=1500
 2dxan=452
 weight=20g
+tradeable=no
 
 [daconia_rock]
 model=model_2394_obj
@@ -148,6 +158,7 @@ desc=An ancient rock with strange magical properties.
 2dxan=144
 weight=2lb
 members=yes
+tradeable=no
 
 [invasion_plans]
 name=Invasion plans
@@ -162,3 +173,4 @@ model=model_2600_obj
 2dxan=380
 iop1=Read
 weight=20g
+tradeable=no

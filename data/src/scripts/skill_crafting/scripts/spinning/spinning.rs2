@@ -8,8 +8,8 @@ switch_obj (last_useitem)
             return;
         }
         @craft_spinning(last_useitem);
-    case ball_of_wool : ~objbox(ball_of_wool, "You have already spun this wool.");
-    case bow_string : ~objbox(bow_string, "You have already spun this bow string.");
+    case ball_of_wool : ~objbox(ball_of_wool, "You have already spun this wool.", 250, 0, divide(^objbox_height, 2));
+    case bow_string : ~objbox(bow_string, "You have already spun this bow string.", 250, 0, divide(^objbox_height, 2));
     case default : ~displaymessage(^dm_default);
 };
 

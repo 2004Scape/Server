@@ -15,6 +15,7 @@ recol2d=17441
 iop1=Read
 iop2=Complete
 weight=20g
+tradeable=no
 
 [obj_715]
 name=Radimus notes
@@ -32,6 +33,7 @@ recol2d=512
 2dxan=380
 iop1=Read
 weight=20g
+tradeable=no
 
 [bullroarer]
 name=Bull roarer
@@ -43,6 +45,7 @@ members=yes
 2dxan=176
 iop1=Swing
 weight=20g
+tradeable=no
 
 [obj_717]
 name=Scrawled note
@@ -68,6 +71,7 @@ womanwear=model_532_obj_wear,6
 2dxan=248
 iop1=Read
 weight=20g
+tradeable=no
 
 [obj_718]
 name=A scribbled note
@@ -93,6 +97,7 @@ womanwear=model_532_obj_wear,6
 2dxan=248
 iop1=Read
 weight=20g
+tradeable=no
 
 [obj_719]
 name=Scrumpled note
@@ -118,6 +123,7 @@ womanwear=model_532_obj_wear,6
 2dxan=248
 iop1=Read
 weight=20g
+tradeable=no
 
 [obj_720]
 name=Sketch
@@ -136,6 +142,7 @@ recol2d=17441
 2dxan=380
 iop1=Look
 weight=20g
+tradeable=no
 
 [obj_721]
 name=Gold bowl
@@ -151,6 +158,7 @@ recol2d=31528
 2dyan=1856
 2dxan=204
 weight=800g
+tradeable=no
 
 [obj_722]
 name=Blessed gold bowl
@@ -166,6 +174,7 @@ recol2d=31528
 2dyan=1856
 2dxan=204
 weight=800g
+tradeable=no
 
 [obj_723]
 name=Golden bowl
@@ -180,6 +189,7 @@ recol1d=31528
 2dxan=204
 iop1=Empty
 weight=1kg
+tradeable=no
 
 [obj_724]
 name=Golden bowl
@@ -194,6 +204,7 @@ recol1d=31528
 2dxan=204
 iop1=Empty
 weight=1kg
+tradeable=no
 
 [obj_725]
 name=Golden bowl
@@ -208,6 +219,7 @@ recol1d=31528
 2dxan=204
 iop1=Empty
 weight=1kg
+tradeable=no
 
 [obj_726]
 name=Golden bowl
@@ -222,6 +234,7 @@ recol1d=31528
 2dxan=204
 iop1=Empty
 weight=1kg
+tradeable=no
 
 [obj_727]
 cost=2
@@ -237,7 +250,6 @@ womanwear=model_515_obj_wear,0
 2dyan=940
 2dxan=212
 weight=12g
-tradeable=yes
 
 [obj_729]
 name=Shamans tome
@@ -253,6 +265,7 @@ recol2d=13889
 members=yes
 iop1=Read
 weight=18oz
+tradeable=no
 
 [obj_730]
 name=Book of binding
@@ -275,6 +288,7 @@ recol5d=9151
 members=yes
 iop1=Read
 weight=18oz
+tradeable=no
 
 [obj_731]
 name=Enchanted vial
@@ -288,6 +302,7 @@ members=yes
 manwear=model_561_obj_wear,0
 womanwear=model_561_obj_wear,6
 weight=10g
+tradeable=no
 
 [holy_water]
 name=Holy water
@@ -316,6 +331,7 @@ param=defend_anim,human_unarmedblock
 param=proj_launch,holy_water_launch
 param=proj_travel,holy_water_travel
 param=rangeattack_sound,thrown
+tradeable=no
 
 [obj_733]
 name=Smashed glass
@@ -329,7 +345,6 @@ model=model_2676_obj
 2dyan=32
 2dxan=412
 weight=2g
-tradeable=yes
 
 [obj_735]
 name=Yommi tree seeds
@@ -346,6 +361,7 @@ members=yes
 stackable=yes
 op1=Look
 weight=1g
+tradeable=no
 
 [obj_736]
 name=Yommi tree seeds
@@ -362,6 +378,7 @@ members=yes
 stackable=yes
 op1=Look
 weight=1g
+tradeable=no
 
 [obj_737]
 name=Snakeweed mixture
@@ -375,6 +392,7 @@ recol1d=14273
 2dxan=84
 weight=25g
 members=yes
+tradeable=no
 
 [obj_738]
 name=Ardrigal mixture
@@ -388,6 +406,7 @@ members=yes
 2dyan=1996
 2dxan=84
 weight=25g
+tradeable=no
 
 [obj_739]
 name=Bravery potion
@@ -402,6 +421,7 @@ members=yes
 2dxan=84
 iop1=Drink
 weight=25g
+tradeable=no
 
 [obj_740]
 name=Blue hat
@@ -423,6 +443,7 @@ womanhead=model_102_obj_wear
 weight=1lb
 param=magicattack,3
 param=magicdefence,3
+tradeable=no
 
 [obj_741]
 name=Chunk of crystal
@@ -433,6 +454,7 @@ members=yes
 2dyof=1
 2dzoom=660
 weight=50g
+tradeable=no
 
 [obj_742]
 name=Hunk of crystal
@@ -443,6 +465,7 @@ members=yes
 2dyof=1
 2dzoom=660
 weight=50g
+tradeable=no
 
 [obj_743]
 name=Lump of crystal
@@ -454,6 +477,7 @@ members=yes
 2dzoom=510
 2dyan=60
 weight=50g
+tradeable=no
 
 [obj_744]
 name=Heart crystal
@@ -465,6 +489,7 @@ members=yes
 2dzoom=660
 weight=150g
 iop1=Look-at
+tradeable=no
 
 [obj_745]
 name=Heart crystal
@@ -476,6 +501,7 @@ members=yes
 2dzoom=660
 weight=150g
 iop1=Look-at
+tradeable=no
 
 [obj_746]
 model=model_2614_obj
@@ -503,6 +529,7 @@ param=slashattack_anim,human_sword_slash
 param=defend_anim,human_sword_defend2
 param=stab_sound,stabsword_stab
 param=slash_sound,stabsword_slash
+tradeable=no
 
 [obj_747]
 model=model_2733_obj
@@ -529,6 +556,7 @@ param=slashattack_anim,human_sword_slash
 param=defend_anim,human_sword_defend2
 param=stab_sound,stabsword_stab
 param=slash_sound,stabsword_slash
+tradeable=no
 
 [obj_748]
 name=Holy force
@@ -541,6 +569,7 @@ members=yes
 2dxan=272
 iop1=Cast Spell
 weight=20g
+tradeable=no
 
 [obj_749]
 name=Yommi totem
@@ -553,6 +582,7 @@ model=model_loc_870_8
 2dyan=132
 2dzan=1780
 weight=3kg
+tradeable=no
 
 [obj_750]
 name=Gilded totem
@@ -573,3 +603,4 @@ recol4d=31554
 2dzan=1780
 weight=3kg
 members=yes
+tradeable=no

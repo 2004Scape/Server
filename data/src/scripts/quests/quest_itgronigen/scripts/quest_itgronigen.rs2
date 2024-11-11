@@ -170,7 +170,7 @@ if(inv_total(inv, lens) > 0) {
 inv_del(inv, molten_glass, 1);
 inv_add(inv, lens, 1);
 // https://web.archive.org/web/20050521225136im_/http://www.runeweb.net/fireball/Observatory%20Images/lensmake.gif
-~objboxt(lens, "It has produced a small convex glass disc.");
+~objbox(lens, "It has produced a small convex glass disc.", 250, 0, 0);
 
 [label,observatory_telescope]
 mes("You look through the telescope.");

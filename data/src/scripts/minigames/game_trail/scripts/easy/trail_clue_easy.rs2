@@ -18,7 +18,7 @@ if(~trail_clue_easy_complete = true) {
 } else {
     def_namedobj $new_clue = ~trail_clue_easy_getrandom;
     inv_add(inv, $new_clue, 1);
-    ~objboxt($new_clue, $text);
+    ~objbox($new_clue, $text, 250, 0, 0);
 }
 
 // https://i.imgur.com/cohYEuj.jpeg

@@ -9,7 +9,6 @@ model=model_2431_obj
 2dxan=136
 weight=200g
 members=yes
-tradeable=yes
 
 [dwellberry]
 name=Dwellberries
@@ -25,7 +24,6 @@ model=model_2808_obj
 2dxan=180
 category=category_120
 weight=14g
-tradeable=yes
 param=singular_name,dwellberry
 param=batta_message,You add the dwell berries to the gnome batta.
 
@@ -42,7 +40,6 @@ model=model_2743_obj
 2dxan=664
 category=category_120
 weight=14g
-tradeable=yes
 param=singular_name,equa leaf
 param=plural_name,equa leaves
 param=cocktail_message,You sprinkle the leaves over the drink.
@@ -63,7 +60,6 @@ model=model_2636_obj
 2dxan=128
 category=category_120
 weight=200g
-tradeable=yes
 param=cocktail_message,You pour the thick cream into the drink.
 
 [swamp_toad]
@@ -79,7 +75,6 @@ model=model_2622_obj
 2dyan=128
 2dxan=352
 weight=500g
-tradeable=yes
 
 //guess
 [toad_legs]
@@ -96,7 +91,6 @@ model=model_2668_obj
 2dxan=340
 weight=150g
 category=category_128
-tradeable=yes
 param=plural_name,toad's legs
 
 [equa_toad_legs]
@@ -113,7 +107,6 @@ model=model_2668_obj
 2dxan=340
 weight=150g
 category=category_15
-tradeable=yes
 
 [spicy_toad_legs]
 iop1=Eat
@@ -129,7 +122,6 @@ model=model_2668_obj
 2dxan=340
 weight=150g
 category=category_15
-tradeable=yes
 
 [seasoned_toad_legs]
 iop1=Eat
@@ -145,7 +137,6 @@ model=model_2668_obj
 2dxan=340
 weight=150g
 category=category_15
-tradeable=yes
 param=singular_name,toad's legs
 param=plural_name,toad's legs
 param=batta_message,You add the seasoned toad's legs to the gnome batta.
@@ -164,7 +155,6 @@ model=model_2519_obj
 2dxan=404
 weight=100g
 category=category_15
-tradeable=yes
 param=batta_message,You add the spicy king worm to the gnome batta.
 
 [king_worm]
@@ -181,8 +171,6 @@ model=model_2519_obj
 2dxan=404
 weight=120g
 category=category_128
-tradeable=yes
-
 
 [batta_tin]
 name=Batta tin
@@ -196,6 +184,7 @@ model=model_2659_obj
 2dxan=236
 weight=100g
 param=gnome_cooking_struct,batta_tin
+tradeable=no
 
 [crunchy_tray]
 name=Crunchy tray
@@ -209,6 +198,7 @@ model=model_2612_obj
 2dxan=252
 weight=100g
 param=gnome_cooking_struct,crunchy_tray
+tradeable=no
 
 [gnomebowl_mould]
 name=Gnomebowl mould
@@ -221,6 +211,7 @@ model=model_2814_obj
 2dxan=192
 weight=150g
 param=gnome_cooking_struct,gnomebowl_mould
+tradeable=no
 
 [gianne_cook_book]
 name=Gianne's cook book
@@ -233,7 +224,6 @@ model=model_2794_obj
 2dyan=152
 2dxan=256
 weight=18oz
-tradeable=yes
 
 [gnome_spice]
 name=Gnome spice
@@ -246,7 +236,6 @@ model=model_2431_obj
 cost=2
 weight=150g
 members=yes
-tradeable=yes
 param=singular_name,spice dash
 param=plural_name,spice dashes
 param=crunchies_message,You sprinkle the spice into the dough.
@@ -266,4 +255,3 @@ recol1d=23146
 cost=2
 weight=500g
 members=yes
-tradeable=yes

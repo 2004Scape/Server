@@ -35,7 +35,7 @@ if(coordx(coord) <= coordx(loc_coord)) {
 }
 ~chatnpc_specific("Morris", morris, "<p,neutral>Competition pass please.");
 if(inv_total(inv, fishing_pass) > 0) {
-    ~objboxt(fishing_pass, "You show Morris your pass.");
+    ~objbox(fishing_pass, "You show Morris your pass.", 250, 0, 0);
     ~chatnpc_specific("Morris", morris, "<p,happy>Move on through.");
     if_close;
     p_teleport(loc_coord);

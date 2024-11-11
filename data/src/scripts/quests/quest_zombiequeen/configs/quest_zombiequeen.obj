@@ -10,6 +10,7 @@ model=model_2654_obj
 members=yes
 iop1=Inspect
 weight=10g
+tradeable=no
 
 [bone_key]
 name=Bone key
@@ -24,6 +25,7 @@ recol1d=32767
 2dxan=328
 members=yes
 weight=10g
+tradeable=no
 
 [stoneplaque]
 name=Stone-plaque
@@ -37,6 +39,7 @@ model=model_2510_obj
 iop1=Read
 weight=800g
 members=yes
+tradeable=no
 
 [tattered_scroll]
 name=Tattered scroll
@@ -52,6 +55,7 @@ recol1d=29398
 iop1=Read
 weight=20g
 members=yes
+tradeable=no
 
 [crumpled_scroll]
 name=Crumpled scroll
@@ -67,6 +71,7 @@ recol1d=16015
 iop1=Read
 weight=20g
 members=yes
+tradeable=no
 
 [rashiliya_corpse]
 name=Rashiliya corpse
@@ -79,6 +84,7 @@ model=model_2595_obj
 2dxan=320
 weight=300g
 members=yes
+tradeable=no
 
 [zadimus_corpse]
 name=Zadimus corpse
@@ -92,6 +98,7 @@ model=model_2595_obj
 iop1=Bury
 weight=500g
 members=yes
+tradeable=no
 
 [zqcrystal]
 name=Locating crystal
@@ -105,6 +112,7 @@ model=model_2744_obj
 members=yes
 iop1=Activate
 weight=2lb
+tradeable=no
 
 [zqcrystal_blue]
 name=Locating crystal
@@ -119,6 +127,7 @@ recol1d=8443
 2dxan=120
 weight=2lb
 members=yes
+tradeable=no
 
 [zqcrystal_red]
 name=Locating crystal
@@ -134,6 +143,7 @@ recol1d=26889
 2dxan=120
 weight=2lb
 members=yes
+tradeable=no
 
 [zqcrystal_yellow]
 name=Locating crystal
@@ -149,6 +159,7 @@ recol1d=27594
 2dxan=120
 weight=2lb
 members=yes
+tradeable=no
 
 [zqcrystal_white]
 name=Locating crystal
@@ -164,6 +175,7 @@ recol1d=32767
 2dxan=120
 weight=2lb
 members=yes
+tradeable=no
 
 [zqbeadsofthedead]
 name=Beads of the dead
@@ -194,6 +206,7 @@ param=magicdefence,1
 param=rangedefence,1
 param=strengthbonus,1
 param=prayerbonus,1
+tradeable=no
 
 [zqcoins]
 cost=1
@@ -206,6 +219,7 @@ model=model_2667_obj
 2dxan=184
 weight=2g
 members=yes
+tradeable=no
 
 [zqbonebeads]
 name=Bone beads
@@ -217,6 +231,7 @@ model=model_2561_obj
 2dxan=304
 weight=1g
 members=yes
+tradeable=no
 
 [zqpommel]
 name=Sword pommel
@@ -230,6 +245,7 @@ cost=1
 2dxan=604
 weight=3oz
 members=yes
+tradeable=no
 
 [bervirius_notes]
 name=Bervirius notes
@@ -246,6 +262,7 @@ recol1d=16919
 iop1=Read
 weight=20g
 members=yes
+tradeable=no
 
 [wampum_belt]
 name=Wampum belt
@@ -257,3 +274,4 @@ model=model_3155_obj
 2dxan=436
 weight=1lb
 members=yes
+tradeable=no

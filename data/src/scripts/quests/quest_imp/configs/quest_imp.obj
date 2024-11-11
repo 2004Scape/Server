@@ -9,7 +9,6 @@ recol1d=30753
 2dyan=68
 2dxan=68
 weight=3g
-tradeable=yes
 
 [imp_yellow_bead]
 cost=4
@@ -22,7 +21,6 @@ recol1d=31649
 2dyan=68
 2dxan=68
 weight=3g
-tradeable=yes
 
 [imp_black_bead]
 cost=4
@@ -35,7 +33,6 @@ recol1d=0
 2dyan=68
 2dxan=68
 weight=3g
-tradeable=yes
 
 [imp_white_bead]
 cost=4
@@ -46,4 +43,3 @@ model=model_2456_obj
 2dyan=68
 2dxan=68
 weight=3g
-tradeable=yes

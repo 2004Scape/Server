@@ -8,3 +8,4 @@ model=model_2680_obj
 weight=3oz
 name=Stake
 desc=A very pointy stick.
+tradeable=no

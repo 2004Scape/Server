@@ -45,7 +45,7 @@ if(inv_total(inv, upass_witches_cat) > 0) {
 ~chatnpc("<p,happy>Hmmm, not bad, not bad at all. Looks like it's a lively one.");
 ~chatplayer("<p,confused>Erm...kind of...");
 ~chatnpc("<p,neutral>I don't have much in the way of money. I do have these!");
-~objbox(deathrune, "The peasant shows you a sack of Death Runes.");
+~objbox(deathrune, "The peasant shows you a sack of Death Runes.", 250, 0, divide(^objbox_height, 2));
 ~chatnpc("<p,happy>The dwarves bring them from the mine for us. Tell you what, I'll give you 100 Death Runes for the cat.");
 @multi2("Nope, I'm not parting for that.", civilian_im_not_parting_for_that, "Ok then, you've got a deal.", civilian_ok_then_youve_got_a_deal);
 
@@ -70,7 +70,7 @@ return(false);
 if(oc_category(last_useitem) = cat | oc_category(last_useitem) = overgrown) {
     inv_del(inv, last_useitem, 1);
     inv_add(inv, deathrune, 100);
-    ~objboxt(deathrune, "You hand over the cat.|You are given 100 Death Runes.");
+    ~objbox(deathrune, "You hand over the cat.|You are given 100 Death Runes.", 250, 0, 0);
     ~chatnpc("<p,happy>Great, thanks for that!");
     ~chatplayer("<p,happy>That's ok, take care.");
     return;

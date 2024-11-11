@@ -72,6 +72,16 @@ export default class HuntType extends ConfigType {
         return this.configs.length;
     }
 
+    public checkHuntCondition(value: number, condition: string, checkValue: number): boolean {
+        switch (condition) {
+            case '>': return value > checkValue;
+            case '<': return value < checkValue;
+            case '=': return value === checkValue;
+            case '!': return value !== checkValue;
+        } 
+        return false;
+    }
+
     // ----
     type: HuntModeType = HuntModeType.OFF;
     checkVis: HuntVis = HuntVis.OFF;
@@ -90,8 +100,9 @@ export default class HuntType extends ConfigType {
     checkLoc: number = -1;
     checkInv: number = -1;
     checkObjParam: number = -1;
-    checkInvMinQuantity: number = -1;
-    checkInvMaxQuantity: number = -1;
+    checkInvCondition: string = '';
+    checkInvVal: number = -1;
+    checkVars: { varId: number; condition: string; val: number }[] = [];
 
     decode(code: number, dat: Packet): void {
         if (code === 1) {
@@ -127,13 +138,15 @@ export default class HuntType extends ConfigType {
         } else if (code === 16) {
             this.checkInv = dat.g2();
             this.checkObj = dat.g2();
-            this.checkInvMinQuantity = dat.g4();
-            this.checkInvMaxQuantity = dat.g4();
+            this.checkInvCondition = dat.gjstr();
+            this.checkInvVal = dat.g4();
         } else if (code === 17) {
             this.checkInv = dat.g2();
             this.checkObjParam = dat.g2();
-            this.checkInvMinQuantity = dat.g4();
-            this.checkInvMaxQuantity = dat.g4();
+            this.checkInvCondition = dat.gjstr();
+            this.checkInvVal = dat.g4();
+        } else if (code > 17 && code < 21) {
+            this.checkVars.push({varId: dat.g2(), condition: dat.gjstr(), val: dat.g4()});
         } else if (code === 250) {
             this.debugname = dat.gjstr();
         } else {

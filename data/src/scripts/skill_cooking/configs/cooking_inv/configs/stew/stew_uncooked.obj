@@ -10,7 +10,6 @@ recol1d=19974
 2dyan=1856
 2dxan=204
 weight=1500g
-tradeable=yes
 category=cooking_generic
 
 //guess
@@ -26,5 +25,4 @@ recol1d=31201
 2dxan=204
 weight=1500g
 members=yes
-tradeable=yes
 category=cooking_generic

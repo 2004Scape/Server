@@ -183,6 +183,7 @@ hitpoints=32
 attack=19
 strength=23
 defence=21
+param=attackrate,5
 param=attackbonus,9
 param=strengthbonus,5
 param=stabdefence,8
@@ -190,7 +191,6 @@ param=slashdefence,9
 param=crushdefence,10
 param=magicdefence,4
 param=rangedefence,9
-param=attackrate,5
 param=damagetype,^crush_style
 param=attack_anim,human_blunt_crush
 param=defend_anim,human_blunt_defend1
@@ -202,6 +202,7 @@ param=attack_sound,mace_crush
 huntmode=aggressive_melee
 // osrs
 huntrange=5
+// osrs stats and Vislvl match 1:1
 
 [traiborn]
 vislevel=107

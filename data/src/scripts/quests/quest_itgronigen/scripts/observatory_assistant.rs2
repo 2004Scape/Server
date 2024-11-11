@@ -7,7 +7,7 @@ switch_int(%itgronigen_progress) {
 		~chatnpc("<p,happy>You've made my life much easier!|Have a drink on me!");
         inv_add(inv, jug_wine, 1);
         %itgronigen_progress = ^itgronigen_claimed_wine;
-        ~objboxb(jug_wine, "The assistant gives you some wine.");
+        ~objbox(jug_wine, "The assistant gives you some wine.", 250, 0, ^objbox_height);
         ~chatplayer("<p,happy>Thanks very much.");
     case ^itgronigen_sent_telescope :
         // guides don't mention you can claim the wine before finishing the quest so 

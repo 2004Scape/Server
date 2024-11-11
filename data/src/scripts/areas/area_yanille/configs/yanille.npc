@@ -37,6 +37,7 @@ param=attack_anim,human_sword_stab
 param=defend_anim,human_sword_defend2
 param=attack_sound,stabsword_stab
 // param=defend_sound,big_bar_mail
+// Stats match osrs version but our version Vislvl is different.
 
 [colonel_radick]
 name=Colonel Radick
@@ -82,7 +83,7 @@ param=attack_anim,human_baxe_slash
 param=defend_anim,human_baxe_defend1
 param=attack_sound,baxe_slash
 // param=defend_sound,blade2
-// TODO defend sound, npc hit speeds do not match the osrs version
+// Stats match osrs version but our version Vislvl is different.
 
 [sigbert_the_adventurer]
 vislevel=hide

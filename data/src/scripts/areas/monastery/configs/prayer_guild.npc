@@ -23,6 +23,11 @@ model9=model_284_obj_wear
 head1=model_59_idk_head
 head2=model_80_idk_head
 wanderrange=3
+hitpoints=15
+attack=2
+strength=2
+defence=3
+// https://raw.githubusercontent.com/Joshua-F/osrs-dumps/refs/heads/master/config/dump.npc npc_2577
 
 [brother_jered]
 vislevel=hide
@@ -48,6 +53,11 @@ model8=model_280_obj_wear
 model9=model_284_obj_wear
 head1=model_59_idk_head
 wanderrange=3
+hitpoints=15
+attack=2
+strength=2
+defence=3
+// https://raw.githubusercontent.com/Joshua-F/osrs-dumps/refs/heads/master/config/dump.npc npc_2578
 
 [monk]
 name=Monk
@@ -78,3 +88,4 @@ strength=2
 defence=3
 param=damagetype,^crush_style
 param=retreat,7
+// osrs stats and Vislvl match 1:1

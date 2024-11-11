@@ -1,8 +1,8 @@
 [label,levelup_fishing]
 //Fishing level up unlock messages
 switch_int(stat_base(fishing)) {
-    case 5 : ~objboxt(raw_sardine,"You can now try fishing for @dbl@Sardines.");
-    case 10 : ~objboxt(raw_herring,"You can now try fishing for @dbl@Herring.");
+    case 5 : ~objbox(raw_sardine,"You can now try fishing for @dbl@Sardines.", 250, 0, 0);
+    case 10 : ~objbox(raw_herring,"You can now try fishing for @dbl@Herring.", 250, 0, 0);
     case 15 : ~doubleobjbox(raw_anchovies,net,"You can now try to net @dbl@Anchovies.");
     case 16 : ~doubleobjbox(raw_mackerel,casket,"You can now try fishing for @dbl@Mackerel@bla@,|@dbl@Oysters@bla@ and @bdl@Caskets@bla@ with a large net.");
     case 20 : ~doubleobjbox(raw_trout,fly_fishing_rod,"You can now try fishing for @dbl@Trout.");

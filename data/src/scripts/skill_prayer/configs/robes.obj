@@ -14,7 +14,6 @@ wearpos=legs
 manwear=model_265_obj_wear,0
 womanwear=model_428_idk,0
 weight=2lb
-tradeable=yes
 param=prayerbonus,4
 
 [obj_540]
@@ -36,7 +35,6 @@ womanwear=model_348_idk,0
 manwear2=model_292_idk
 womanwear2=model_456_idk
 weight=2lb
-tradeable=yes
 param=prayerbonus,4
 
 [obj_542]
@@ -54,7 +52,6 @@ wearpos=legs
 manwear=model_265_obj_wear,0
 womanwear=model_428_idk,0
 weight=2lb
-tradeable=yes
 param=prayerbonus,6
 
 [obj_544]
@@ -75,7 +72,6 @@ womanwear=model_348_idk,0
 manwear2=model_292_idk
 womanwear2=model_456_idk
 weight=2lb
-tradeable=yes
 param=prayerbonus,5
 
 [obj_546]
@@ -96,7 +92,6 @@ womanwear=model_348_idk,0
 manwear2=model_292_idk
 womanwear2=model_456_idk
 weight=2lb
-tradeable=yes
 param=prayerbonus,5
 
 [obj_548]
@@ -114,5 +109,4 @@ wearpos=legs
 manwear=model_265_obj_wear,0
 womanwear=model_428_idk,0
 weight=2lb
-tradeable=yes
 param=prayerbonus,4

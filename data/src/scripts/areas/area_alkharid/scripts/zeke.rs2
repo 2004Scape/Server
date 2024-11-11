@@ -4,7 +4,13 @@ if(map_members = true & inv_total(inv, trail_clue_easy_simple_exp007) = 1) {
     @trail_zeke;
 }
 ~chatnpc("<p,happy>A thousand greetings, sir.");
-def_int $option = ~p_choice2("Do you want to trade?", 1, "Nice cloak.", 2);
+def_int $option = 0;
+if (%crest_progress = ^crest_caleb_where) {
+    $option = ~p_choice3("Do you want to trade?", 1, "Nice cloak.", 2, "I'm in search of a man named Avan Fitzharmon.", 3);
+}
+else {
+    $option = ~p_choice2("Do you want to trade?", 1, "Nice cloak.", 2);
+}
 if($option = 1) {
     ~chatplayer("<p,quiz>Do you want to trade?");
     ~chatnpc("<p,happy>Yes, certainly. I deal in scimitars.");
@@ -12,6 +18,10 @@ if($option = 1) {
 } else if($option = 2) {
     ~chatplayer("<p,neutral>Nice cloak.");
     ~chatnpc("<p,neutral>Thank you.");
+}
+else if ($option = 3) {
+    ~chatplayer("<p,neutral>I'm in search of a man named Avan Fitzharmon.");
+    ~chatnpc("<p,neutral>Can't say as I've seen him... I'm sure if he's been to Al Kharid recently someone around here will have though.");
 }
 
 [label,trail_zeke]

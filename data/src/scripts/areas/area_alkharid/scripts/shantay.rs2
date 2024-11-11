@@ -131,4 +131,4 @@ if (inv_total(inv, coins) < 5) {
 }
 inv_add(inv, shantay_pass, 1);
 inv_del(inv, coins, 5);
-~objbox(shantay_pass, "You purchase a Shantay Pass.");
+~objbox(shantay_pass, "You purchase a Shantay Pass.", 250, 0, divide(^objbox_height, 2));

@@ -24,6 +24,11 @@ model8=model_202_obj_wear
 head1=model_53_idk_head
 head2=model_44_obj_wear
 head3=model_81_idk_head
+hitpoints=3
+attack=20
+strength=10
+defence=15
+// https://raw.githubusercontent.com/Joshua-F/osrs-dumps/refs/heads/master/config/dump.npc npc_7746
 
 [wizard_grayzag]
 name=Wizard Grayzag

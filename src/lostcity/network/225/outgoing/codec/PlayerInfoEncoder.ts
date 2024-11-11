@@ -2,15 +2,17 @@ import MessageEncoder from '#lostcity/network/outgoing/codec/MessageEncoder.js';
 import Packet from '#jagex2/io/Packet.js';
 import ServerProt from '#lostcity/network/225/outgoing/prot/ServerProt.js';
 import PlayerInfo from '#lostcity/network/outgoing/model/PlayerInfo.js';
-import World from '#lostcity/engine/World.js';
 import { CoordGrid } from '#lostcity/engine/CoordGrid.js';
+import BuildArea from '#lostcity/entity/BuildArea.js';
+import Renderer from '#lostcity/engine/renderer/Renderer.js';
 import Player from '#lostcity/entity/Player.js';
-import PlayerStat from '#lostcity/entity/PlayerStat.js';
-import BuildArea, { ExtendedInfo } from '#lostcity/entity/BuildArea.js';
+import InfoProt from '#lostcity/network/225/outgoing/prot/InfoProt.js';
+import PlayerInfoFaceEntity from '#lostcity/network/outgoing/model/PlayerInfoFaceEntity.js';
+import PlayerInfoFaceCoord from '#lostcity/network/outgoing/model/PlayerInfoFaceCoord.js';
+import PlayerRenderer from '#lostcity/engine/renderer/PlayerRenderer.js';
 
 export default class PlayerInfoEncoder extends MessageEncoder<PlayerInfo> {
     private static readonly BITS_NEW: number = 11 + 5 + 5 + 1 + 1;
-    private static readonly BITS_IDLE: number = 1;
     private static readonly BITS_RUN: number = 1 + 2 + 3 + 3 + 1;
     private static readonly BITS_WALK: number = 1 + 2 + 3 + 1;
     private static readonly BITS_EXTENDED: number = 1 + 2;
@@ -19,7 +21,8 @@ export default class PlayerInfoEncoder extends MessageEncoder<PlayerInfo> {
     prot = ServerProt.PLAYER_INFO;
 
     encode(buf: Packet, message: PlayerInfo): void {
-        const buildArea: BuildArea = message.buildArea;
+        const player = message.player;
+        const buildArea: BuildArea = player.buildArea;
 
         if (message.changedLevel || message.deltaX > buildArea.viewDistance || message.deltaZ > buildArea.viewDistance) {
             // optimization to avoid sending 3 bits * observed players when everything has to be removed anyways
@@ -30,335 +33,243 @@ export default class PlayerInfoEncoder extends MessageEncoder<PlayerInfo> {
             buildArea.resize();
         }
 
-        this.writeLocalPlayer(buf, message);
-        this.writePlayers(buf, message);
-        this.writeNewPlayers(buf, message);
-
-        const extended: Set<ExtendedInfo> = buildArea.extendedInfo;
-        if (extended.size > 0) {
-            for (const info of extended) {
-                const other: Player | null = World.getPlayerByUid(info.id);
-                if (!other) {
-                    // safeguard against a potential crash point
-                    // things WILL act weird if this happens
-                    buf.p1(0);
-                    continue;
-                }
-
-                this.writeExtendedInfo(other, message, buf, info.id === message.uid, info.added);
-            }
+        buf.bits();
+        let bytes: number = 0;
+        bytes = this.writeLocalPlayer(buf, message, bytes);
+        bytes = this.writePlayers(buf, message, bytes);
+        this.writeNewPlayers(buf, message, bytes);
+        if (buildArea.highPlayers.size > 0 || buildArea.lowPlayers.size > 0) {
+            buf.pBit(11, 2047);
         }
+        buf.bytes();
 
-        buildArea.clearExtended();
+        const renderer: PlayerRenderer = message.renderer;
+        for (const high of buildArea.highPlayers) {
+            this.highdefinition(buf, renderer, player, high, high.pid === player.pid);
+        }
+        for (const low of buildArea.lowPlayers) {
+            this.lowdefinition(buf, renderer, player, low);
+        }
+        buildArea.clearPlayerInfo();
     }
 
     test(_: PlayerInfo): number {
         return PlayerInfoEncoder.BYTES_LIMIT;
     }
 
-    willFit(message: PlayerInfo, buf: Packet, bitsToAdd: number, bytesToAdd: number): boolean {
-        // 7 aligns to the next byte
-        return ((buf.bitPos + bitsToAdd + 7) >>> 3) + (message.accumulator + bytesToAdd) <= PlayerInfoEncoder.BYTES_LIMIT;
-    }
-
-    private writeLocalPlayer(buf: Packet, message: PlayerInfo): void {
-        const { buildArea, uid, level, x, z, tele, jump, walkDir, runDir } = message;
-        const player: Player | null = World.getPlayerByUid(uid);
-        if (!player) {
-            return;
-        }
-
-        const extendedInfoSize: number = this.calculateExtendedInfo(player, message, true, false);
-        const extendedInfo: boolean = extendedInfoSize > 0;
-
-        buf.bits();
-        buf.pBit(1, tele || runDir !== -1 || walkDir !== -1 || extendedInfo ? 1 : 0);
+    private writeLocalPlayer(buf: Packet, message: PlayerInfo, bytes: number): number {
+        const { buildArea, pid, tele, runDir, walkDir } = message.player;
+        const length: number = message.renderer.highdefinitions(pid);
+        const extend: boolean = length > 0;
         if (tele) {
-            buf.pBit(2, 3);
-            buf.pBit(2, level);
-            buf.pBit(7, CoordGrid.local(x, player.originX));
-            buf.pBit(7, CoordGrid.local(z, player.originZ));
-            buf.pBit(1, jump ? 1 : 0);
-            buf.pBit(1, extendedInfo ? 1 : 0);
+            const { x, z, level, originX, originZ, jump } = message.player;
+            this.teleport(buf, buildArea, message.player, CoordGrid.local(x, originX), level, CoordGrid.local(z, originZ), jump, extend);
         } else if (runDir !== -1) {
-            buf.pBit(2, 2);
-            buf.pBit(3, walkDir);
-            buf.pBit(3, runDir);
-            buf.pBit(1, extendedInfo ? 1 : 0);
+            this.run(buf, buildArea, message.player, walkDir, runDir, extend);
         } else if (walkDir !== -1) {
-            buf.pBit(2, 1);
-            buf.pBit(3, walkDir);
-            buf.pBit(1, extendedInfo ? 1 : 0);
-        } else if (extendedInfo) {
-            buf.pBit(2, 0);
+            this.walk(buf, buildArea, message.player, walkDir, extend);
+        } else if (extend) {
+            this.extend(buf, buildArea, message.player);
+        } else {
+            this.idle(buf);
         }
-
-        if (extendedInfo) {
-            buildArea.extendedInfo.add({ id: uid, added: false });
-            message.accumulator += extendedInfoSize;
-        }
+        return bytes + length;
     }
 
-    private writePlayers(buf: Packet, message: PlayerInfo): void {
-        const buildArea: BuildArea = message.buildArea;
+    private writePlayers(buf: Packet, message: PlayerInfo, bytes: number): number {
+        const {currentTick, renderer, player } = message;
+        const buildArea: BuildArea = player.buildArea;
         // update other players (255 max - 8 bits)
         buf.pBit(8, buildArea.players.size);
-
-        for (const uid of buildArea.players) {
-            const other: Player | null = World.getPlayerByUid(uid);
-            if (!other || other.tele || other.level !== message.level || !CoordGrid.isWithinDistanceSW(message, other, buildArea.viewDistance) || !other.checkLifeCycle(World.currentTick)) {
+        for (const other of buildArea.players) {
+            const pid: number = other.pid;
+            if (pid === -1 || other.tele || other.level !== player.level || !CoordGrid.isWithinDistanceSW(player, other, buildArea.viewDistance) || !other.checkLifeCycle(currentTick)) {
                 // if the player was teleported, they need to be removed and re-added
-                buf.pBit(1, 1);
-                buf.pBit(2, 3);
-                buildArea.players.delete(uid);
+                this.remove(buf, buildArea, other);
                 continue;
             }
-
-            const extendedInfoSize: number = this.calculateExtendedInfo(other, message, false, false);
-            let extendedInfo: boolean = extendedInfoSize > 0;
-
+            const length: number = renderer.highdefinitions(pid);
+            const extend: boolean = length > 0;
             const { walkDir, runDir } = other;
-            let bits: number = PlayerInfoEncoder.BITS_IDLE;
             if (runDir !== -1) {
-                bits = PlayerInfoEncoder.BITS_RUN;
+                this.run(buf, buildArea, other, walkDir, runDir, extend && this.willFit(bytes, buf, PlayerInfoEncoder.BITS_RUN, length));
             } else if (walkDir !== -1) {
-                bits = PlayerInfoEncoder.BITS_WALK;
-            } else if (extendedInfo) {
-                bits = PlayerInfoEncoder.BITS_EXTENDED;
+                this.walk(buf, buildArea, other, walkDir, extend && this.willFit(bytes, buf, PlayerInfoEncoder.BITS_WALK, length));
+            } else if (extend && this.willFit(bytes, buf, PlayerInfoEncoder.BITS_EXTENDED, length)) {
+                this.extend(buf, buildArea, other);
+            } else {
+                this.idle(buf);
             }
-
-            if (!this.willFit(message, buf, bits, extendedInfoSize)) {
-                extendedInfo = false;
-            }
-
-            buf.pBit(1, runDir !== -1 || walkDir !== -1 || extendedInfo ? 1 : 0);
-            if (runDir !== -1) {
-                buf.pBit(2, 2);
-                buf.pBit(3, walkDir);
-                buf.pBit(3, runDir);
-                buf.pBit(1, extendedInfo ? 1 : 0);
-            } else if (walkDir !== -1) {
-                buf.pBit(2, 1);
-                buf.pBit(3, walkDir);
-                buf.pBit(1, extendedInfo ? 1 : 0);
-            } else if (extendedInfo) {
-                buf.pBit(2, 0);
-            }
-
-            if (extendedInfo) {
-                buildArea.extendedInfo.add({ id: uid, added: false });
-                message.accumulator += extendedInfoSize;
-            }
+            bytes += length;
         }
+        return bytes;
     }
 
-    private writeNewPlayers(buf: Packet, message: PlayerInfo): void {
-        const buildArea: BuildArea = message.buildArea;
-        for (const other of buildArea.getNearbyPlayers(message.uid, message.x, message.z, message.originX, message.originZ)) {
-            const extendedInfoSize: number = this.calculateExtendedInfo(other, message, false, true);
-            const extendedInfo: boolean = extendedInfoSize > 0;
-
+    private writeNewPlayers(buf: Packet, message: PlayerInfo, bytes: number): void {
+        const renderer: Renderer<Player> = message.renderer;
+        const {buildArea, pid, level, x, z, originX, originZ} = message.player;
+        for (const other of buildArea.getNearbyPlayers(pid, level, x, z, originX, originZ)) {
+            const pid: number = other.pid;
+            const length: number = renderer.lowdefinitions(pid) + renderer.highdefinitions(pid);
             // bits to add player + extended info size + bits to break loop (11)
-            if (!this.willFit(message, buf, PlayerInfoEncoder.BITS_NEW + 11, extendedInfoSize)) {
+            if (!this.willFit(bytes, buf, PlayerInfoEncoder.BITS_NEW + 11, length)) {
                 // more players get added next tick
                 break;
             }
-
-            buf.pBit(11, other.pid);
-            buf.pBit(5, other.x - message.x);
-            buf.pBit(5, other.z - message.z);
-            buf.pBit(1, other.jump ? 1 : 0);
-            buf.pBit(1, extendedInfo ? 1 : 0);
-
-            if (extendedInfo) {
-                buildArea.extendedInfo.add({ id: other.uid, added: true });
-                message.accumulator += extendedInfoSize;
-            }
-
-            buildArea.players.add(other.uid);
+            this.add(buf, buildArea, other, pid, other.x - x, other.z - z, other.jump);
+            bytes += length;
         }
-
-        if (buildArea.extendedInfo.size > 0) {
-            buf.pBit(11, 2047);
-        }
-
-        buf.bytes();
     }
 
-    private writeExtendedInfo(player: Player, message: PlayerInfo, buf: Packet, self: boolean = false, newlyObserved: boolean = false): void {
-        let mask: number = player.mask;
+    private add(buf: Packet, buildArea: BuildArea, player: Player, pid: number, x: number, z: number, jump: boolean): void {
+        buf.pBit(11, pid);
+        buf.pBit(5, x);
+        buf.pBit(5, z);
+        buf.pBit(1, jump ? 1 : 0);
+        buf.pBit(1, 1); // extend
+        buildArea.lowPlayers.add(player);
+        buildArea.players.add(player);
+    }
 
-        if (newlyObserved) {
-            if (player.orientationX !== -1 || player.faceX !== -1) {
-                mask |= Player.FACE_COORD;
-            }
+    private remove(buf: Packet, buildArea: BuildArea, player: Player): void {
+        buf.pBit(1, 1);
+        buf.pBit(2, 3);
+        buildArea.players.delete(player);
+    }
 
-            if (player.faceEntity !== -1) {
-                mask |= Player.FACE_ENTITY;
-            }
-        }
-
-        if (self && (mask & Player.CHAT) != 0) {
-            // don't echo back local chat
-            mask &= ~Player.CHAT;
-        }
-
-        if (message.buildArea.hasAppearance(player.uid, player.lastAppearance) || !player.appearance) {
-            mask &= ~Player.APPEARANCE;
+    private teleport(buf: Packet, buildArea: BuildArea, player: Player, x: number, y: number, z: number, jump: boolean, extend: boolean): void {
+        buf.pBit(1, 1);
+        buf.pBit(2, 3);
+        buf.pBit(2, y);
+        buf.pBit(7, x);
+        buf.pBit(7, z);
+        buf.pBit(1, jump ? 1 : 0);
+        if (extend) {
+            buf.pBit(1, 1);
+            buildArea.highPlayers.add(player);
         } else {
-            mask |= Player.APPEARANCE;
+            buf.pBit(1, 0);
+        }
+    }
+
+    private run(buf: Packet, buildArea: BuildArea, player: Player, walkDir: number, runDir: number, extend: boolean): void {
+        buf.pBit(1, 1);
+        buf.pBit(2, 2);
+        buf.pBit(3, walkDir);
+        buf.pBit(3, runDir);
+        if (extend) {
+            buf.pBit(1, 1);
+            buildArea.highPlayers.add(player);
+        } else {
+            buf.pBit(1, 0);
+        }
+    }
+
+    private walk(buf: Packet, buildArea: BuildArea, player: Player, walkDir: number, extend: boolean): void {
+        buf.pBit(1, 1);
+        buf.pBit(2, 1);
+        buf.pBit(3, walkDir);
+        if (extend) {
+            buf.pBit(1, 1);
+            buildArea.highPlayers.add(player);
+        } else {
+            buf.pBit(1, 0);
+        }
+    }
+
+    private extend(buf: Packet, buildArea: BuildArea, player: Player): void {
+        buf.pBit(1, 1);
+        buf.pBit(2, 0);
+        buildArea.highPlayers.add(player);
+    }
+
+    private idle(buf: Packet): void {
+        buf.pBit(1, 0);
+    }
+
+    private highdefinition(buf: Packet, renderer: PlayerRenderer, player: Player, other: Player, self: boolean): void {
+        let masks: number = other.masks;
+        if (self) {
+            masks &= ~InfoProt.PLAYER_CHAT.id;
+        }
+        this.writeBlocks(buf, renderer, player, other, other.pid, masks, self);
+    }
+
+    private lowdefinition(buf: Packet, renderer: PlayerRenderer, player: Player, other: Player): void {
+        const pid: number = other.pid;
+        let masks: number = other.masks;
+
+        if (!player.buildArea.hasAppearance(pid, other.lastAppearance)) {
+            player.buildArea.saveAppearance(pid, other.lastAppearance);
+            masks |= InfoProt.PLAYER_APPEARANCE.id;
+        } else {
+            masks &= ~InfoProt.PLAYER_APPEARANCE.id;
         }
 
-        if (mask > 0xff) {
-            mask |= Player.BIG_UPDATE;
+        if (other.faceEntity !== -1 && !renderer.has(pid, InfoProt.PLAYER_FACE_ENTITY)) {
+            renderer.cache(pid, new PlayerInfoFaceEntity(other.faceEntity), InfoProt.PLAYER_FACE_ENTITY);
+            masks |= InfoProt.PLAYER_FACE_ENTITY.id;
         }
 
-        buf.p1(mask & 0xff);
-        if (mask & Player.BIG_UPDATE) {
-            buf.p1(mask >> 8);
-        }
-
-        if (mask & Player.APPEARANCE) {
-            buf.p1(player.appearance!.length);
-            buf.pdata(player.appearance!, 0, player.appearance!.length);
-            message.buildArea.saveAppearance(player.uid, player.lastAppearance);
-        }
-
-        if (mask & Player.ANIM) {
-            buf.p2(player.animId);
-            buf.p1(player.animDelay);
-        }
-
-        if (mask & Player.FACE_ENTITY) {
-            // todo: get rid of alreadyFacedEntity
-            if (player.faceEntity !== -1) {
-                player.alreadyFacedEntity = true;
-            }
-
-            buf.p2(player.faceEntity);
-        }
-
-        if (mask & Player.SAY) {
-            buf.pjstr(player.chat ?? '');
-        }
-
-        if (mask & Player.DAMAGE) {
-            buf.p1(player.damageTaken);
-            buf.p1(player.damageType);
-            buf.p1(player.levels[PlayerStat.HITPOINTS]);
-            buf.p1(player.baseLevels[PlayerStat.HITPOINTS]);
-        }
-
-        if (mask & Player.FACE_COORD) {
-            if (newlyObserved && player.orientationX !== -1) {
-                buf.p2(player.orientationX);
-                buf.p2(player.orientationZ);
+        if (!renderer.has(pid, InfoProt.PLAYER_FACE_COORD)) {
+            if (other.orientationX !== -1) {
+                renderer.cache(pid, new PlayerInfoFaceCoord(other.orientationX, other.orientationZ), InfoProt.PLAYER_FACE_COORD);
+            } else if (other.faceX !== -1) {
+                renderer.cache(pid, new PlayerInfoFaceCoord(other.faceX, other.faceZ), InfoProt.PLAYER_FACE_COORD);
             } else {
-                buf.p2(player.faceX);
-                buf.p2(player.faceZ);
+                renderer.cache(pid, new PlayerInfoFaceCoord(other.x * 2 + 1, (other.z - 1) * 2 + 1), InfoProt.PLAYER_FACE_COORD);
             }
         }
 
-        if (mask & Player.CHAT) {
-            buf.p1(player.messageColor!);
-            buf.p1(player.messageEffect!);
-            buf.p1(player.messageType!);
+        masks |= InfoProt.PLAYER_FACE_COORD.id;
 
-            buf.p1(player.message!.length);
-            buf.pdata(player.message!, 0, player.message!.length);
+        this.writeBlocks(buf, renderer, player, other, pid, masks, false);
+    }
+
+    private writeBlocks(buf: Packet, renderer: PlayerRenderer, player: Player, other: Player, pid: number, masks: number, self: boolean): void {
+        renderer.write2(buf, masks, InfoProt.PLAYER_BIG_UPDATE.id);
+        if (masks & InfoProt.PLAYER_APPEARANCE.id) {
+            renderer.write(buf, pid, InfoProt.PLAYER_APPEARANCE);
         }
-
-        if (mask & Player.SPOTANIM) {
-            buf.p2(player.graphicId);
-            buf.p2(player.graphicHeight);
-            buf.p2(player.graphicDelay);
+        if (masks & InfoProt.PLAYER_ANIM.id) {
+            renderer.write(buf, pid, InfoProt.PLAYER_ANIM);
         }
-
-        if (mask & Player.EXACT_MOVE) {
-            buf.p1(player.exactStartX - CoordGrid.zoneOrigin(message.originX));
-            buf.p1(player.exactStartZ - CoordGrid.zoneOrigin(message.originZ));
-            buf.p1(player.exactEndX - CoordGrid.zoneOrigin(message.originX));
-            buf.p1(player.exactEndZ - CoordGrid.zoneOrigin(message.originZ));
-            buf.p2(player.exactMoveStart);
-            buf.p2(player.exactMoveEnd);
-            buf.p1(player.exactMoveDirection);
+        if (masks & InfoProt.PLAYER_FACE_ENTITY.id) {
+            renderer.write(buf, pid, InfoProt.PLAYER_FACE_ENTITY);
+        }
+        if (masks & InfoProt.PLAYER_SAY.id) {
+            renderer.write(buf, pid, InfoProt.PLAYER_SAY);
+        }
+        if (masks & InfoProt.PLAYER_DAMAGE.id) {
+            renderer.write(buf, pid, InfoProt.PLAYER_DAMAGE);
+        }
+        if (masks & InfoProt.PLAYER_FACE_COORD.id) {
+            renderer.write(buf, pid, InfoProt.PLAYER_FACE_COORD);
+        }
+        if (!self && masks & InfoProt.PLAYER_CHAT.id) {
+            renderer.write(buf, pid, InfoProt.PLAYER_CHAT);
+        }
+        if (masks & InfoProt.PLAYER_SPOTANIM.id) {
+            renderer.write(buf, pid, InfoProt.PLAYER_SPOTANIM);
+        }
+        if (masks & InfoProt.PLAYER_EXACT_MOVE.id) {
+            const x: number = CoordGrid.zoneOrigin(player.originX);
+            const z: number = CoordGrid.zoneOrigin(player.originZ);
+            renderer.writeExactmove(
+                buf,
+                other.exactStartX - x,
+                other.exactStartZ - z,
+                other.exactEndX - x,
+                other.exactEndZ - z,
+                other.exactMoveStart,
+                other.exactMoveEnd,
+                other.exactMoveDirection
+            );
         }
     }
 
-    private calculateExtendedInfo(player: Player, message: PlayerInfo, self: boolean = false, newlyObserved: boolean = false): number {
-        let length: number = 0;
-        let mask: number = player.mask;
-
-        if (newlyObserved) {
-            if (player.orientationX !== -1 || player.faceX !== -1) {
-                mask |= Player.FACE_COORD;
-            }
-
-            if (player.faceEntity !== -1) {
-                mask |= Player.FACE_ENTITY;
-            }
-        }
-
-        if (self && (mask & Player.CHAT) != 0) {
-            // don't echo back local chat
-            mask &= ~Player.CHAT;
-        }
-
-        if (message.buildArea.hasAppearance(player.uid, player.lastAppearance) || !player.appearance) {
-            mask &= ~Player.APPEARANCE;
-        } else {
-            mask |= Player.APPEARANCE;
-        }
-
-        if (mask > 0xff) {
-            mask |= Player.BIG_UPDATE;
-        }
-
-        if (mask === 0) {
-            return 0;
-        }
-
-        length += 1;
-        if (mask & Player.BIG_UPDATE) {
-            length += 1;
-        }
-
-        if (mask & Player.APPEARANCE) {
-            length += 1 + player.appearance!.length;
-        }
-
-        if (mask & Player.ANIM) {
-            length += 3;
-        }
-
-        if (mask & Player.FACE_ENTITY) {
-            length += 2;
-        }
-
-        if (mask & Player.SAY) {
-            length += 1 + player.chat!.length;
-        }
-
-        if (mask & Player.DAMAGE) {
-            length += 4;
-        }
-
-        if (mask & Player.FACE_COORD) {
-            length += 4;
-        }
-
-        if (mask & Player.CHAT) {
-            length += 4 + player.message!.length;
-        }
-
-        if (mask & Player.SPOTANIM) {
-            length += 6;
-        }
-
-        if (mask & Player.EXACT_MOVE) {
-            length += 9;
-        }
-
-        return length;
+    private willFit(bytes: number, buf: Packet, bitsToAdd: number, bytesToAdd: number): boolean {
+        // 7 aligns to the next byte
+        return ((buf.bitPos + bitsToAdd + 7) >>> 3) + (bytes + bytesToAdd) <= PlayerInfoEncoder.BYTES_LIMIT;
     }
 }

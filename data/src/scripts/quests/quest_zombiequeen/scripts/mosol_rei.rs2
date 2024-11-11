@@ -103,7 +103,7 @@ if(~obj_gettotal(wampum_belt) > 0 | %zombiequeen_progress > ^zombiequeen_started
 }
 ~chatnpc("<p,neutral>I would be very grateful if you did. Here take this...");
 inv_add(inv, wampum_belt, 1);
-~objbox(wampum_belt, "Mosol gives you a Wampum belt.");
+~objbox(wampum_belt, "Mosol gives you a Wampum belt.", 250, 0, divide(^objbox_height, 2));
 ~chatnpc("<p,neutral>Please can you give it to Trufitus. He may be able to give you extra details on the legend surrounding Rashiliyia. Good luck!");
 
 [label,mosol_secondthoughts]

@@ -11,6 +11,7 @@ desc=An expensive colourless liquid.
 2dxan=84
 weight=30g
 param=no_alchemy,1
+tradeable=no
 
 [liquid_honey]
 cost=0
@@ -26,6 +27,7 @@ desc=This isn't worth much.
 2dxan=84
 weight=30g
 param=no_alchemy,1
+tradeable=no
 
 [sulphuric_broline]
 cost=1
@@ -41,6 +43,7 @@ desc=It's highly poisonous.
 2dxan=84
 weight=30g
 param=no_alchemy,1
+tradeable=no
 
 [plague_sample]
 name=Plague sample
@@ -54,6 +57,7 @@ model=model_2788_obj
 weight=50g
 members=yes
 param=no_alchemy,1
+tradeable=no
 
 [touch_paper]
 name=Touch paper
@@ -68,6 +72,7 @@ model=model_2781_obj
 weight=10g
 members=yes
 param=no_alchemy,1
+tradeable=no
 
 [distillator]
 members=yes
@@ -82,6 +87,7 @@ model=model_2613_obj
 2dxan=304
 weight=20g
 param=no_alchemy,1
+tradeable=no
 
 [obj_421]
 name=Lathas' amulet
@@ -99,6 +105,7 @@ wearpos=front
 manwear=model_282_obj_wear,0
 womanwear=model_446_obj_wear,0
 weight=10g
+tradeable=no
 
 [bird_feed]
 name=Bird feed
@@ -113,6 +120,7 @@ model=model_2678_obj
 weight=50g
 members=yes
 param=no_alchemy,1
+tradeable=no
 
 [biohazard_key]
 name=Key
@@ -127,6 +135,7 @@ model=model_2372_obj
 weight=10g
 members=yes
 param=no_alchemy,1
+tradeable=no
 
 [pigeon_cage]
 cost=1
@@ -142,6 +151,7 @@ iop1=Open
 weight=2kg
 members=yes
 param=no_alchemy,1
+tradeable=no
 
 [pigeon_cage_empty]
 cost=1
@@ -154,6 +164,7 @@ model=model_2663_obj
 weight=500g
 members=yes
 param=no_alchemy,1
+tradeable=no
 
 [priest_gown_top]
 name=Priest gown
@@ -173,7 +184,6 @@ manwear2=model_170_idk
 womanwear=model_456_idk,0
 womanwear2=model_348_idk
 weight=4lb
-tradeable=yes
 param=prayerbonus,3
 
 [priest_gown_bottom]
@@ -191,7 +201,6 @@ wearpos=legs
 manwear=model_265_obj_wear,0
 womanwear=model_428_idk,0
 weight=4lb
-tradeable=yes
 param=prayerbonus,3
 
 [doctors_gown]
@@ -213,3 +222,4 @@ womanwear=model_456_idk,0
 womanwear2=model_332_idk
 weight=4lb
 members=yes
+tradeable=no

@@ -10,6 +10,7 @@ model=model_3440_obj
 2dyan=36
 2dxan=112
 weight=18oz
+tradeable=no
 
 [ogre_bellows_3]
 name=Ogre bellows (3)
@@ -23,6 +24,7 @@ recol1d=6628
 2dyan=36
 2dxan=112
 weight=18oz
+tradeable=no
 
 [ogre_bellows_2]
 name=Ogre bellows (2)
@@ -36,6 +38,7 @@ recol1d=10726
 2dyan=36
 2dxan=112
 weight=18oz
+tradeable=no
 
 [ogre_bellows_1]
 name=Ogre bellows (1)
@@ -49,6 +52,7 @@ recol1d=14824
 2dyan=36
 2dxan=112
 weight=18oz
+tradeable=no
 
 [bloated_toad]
 name=Bloated toad
@@ -64,6 +68,7 @@ weight=750g
 iop1=Drop
 iop4=Release All
 iop5=Release
+tradeable=no
 
 [raw_chompy]
 name=Raw chompy
@@ -78,7 +83,6 @@ recol1d=19014
 2dyan=1748
 2dxan=88
 weight=10kg
-tradeable=yes
 
 [cooked_chompy]
 name=Cooked chompy
@@ -95,7 +99,6 @@ recol1d=14690
 weight=10kg
 iop1=Eat
 category=category_5
-tradeable=yes
 
 [ruined_chompy]
 name=Ruined chompy
@@ -109,7 +112,6 @@ recol1d=6273
 2dyan=1748
 2dxan=88
 weight=10kg
-tradeable=yes
 
 [seasoned_chompy]
 name=Seasoned chompy
@@ -124,8 +126,9 @@ recol1d=17697
 2dyan=1748
 2dxan=88
 weight=10kg
+tradeable=no
 
 [chompy_bird_obj]
 model=model_3445_obj
-tradeable=yes
-dummyitem=graphic_only
+// there's a cert, so it must be tradeable and therefore not a dummyitem?
+//dummyitem=graphic_only

@@ -25,7 +25,7 @@ export default {
     // extra debug info e.g. missing triggers
     NODE_DEBUG: tryParseBoolean(process.env.NODE_DEBUG, true),
     // measuring script execution
-    NODE_DEBUG_PROFILER: tryParseBoolean(process.env.NODE_DEBUG_PROFILE, false),
+    NODE_DEBUG_PROFILE: tryParseBoolean(process.env.NODE_DEBUG_PROFILE, false),
     // *only* if no login server is running to authenticate accounts, this provides admin accs by username :)
     NODE_STAFF: tryParseArray(process.env.NODE_STAFF?.split(','), ['pazaz']), // todo: add staffmodlevel to database
     // no server routefinding until 2009

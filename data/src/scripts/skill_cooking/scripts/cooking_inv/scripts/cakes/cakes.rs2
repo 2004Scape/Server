@@ -132,11 +132,11 @@ def_obj $chocolate = inv_getobj(inv, $last);
 inv_del(inv, $chocolate, 1);
 inv_del(inv, bucket_milk, 1);
 inv_add(inv, chocolaty_milk, 1);
-~objbox(chocolaty_milk, "You mix the chocolate into the bucket.");
+~objbox(chocolaty_milk, "You mix the chocolate into the bucket.", 250, 0, divide(^objbox_height, 2));
 
 [label,make_hangover_cure](int $last)
 def_obj $snape_grass = inv_getobj(inv, $last);
 inv_del(inv, $snape_grass, 1);
 inv_del(inv, chocolaty_milk, 1);
 inv_add(inv, hangover_cure, 1);
-~objbox(hangover_cure, "You mix the snape grass into the bucket.");
+~objbox(hangover_cure, "You mix the snape grass into the bucket.", 250, 0, divide(^objbox_height, 2));

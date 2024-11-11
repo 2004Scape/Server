@@ -464,7 +464,7 @@ switch_obj($use_obj) {
         inv_del(inv, rope, 1);
         loc_change(loc_2219, 50);
         %zombiequeen_progress = ^zombiequeen_roped_mound;
-        ~objboxt(rope, "You see where to attach the rope very clearly. You secure the rope well.");
+        ~objbox(rope, "You see where to attach the rope very clearly. You secure the rope well.", 250, 0, 0);
     case lit_candle, lit_black_candle, lit_torch : // not all light sources work so not using cat here so this won't cause a bug for 2005
         if(%zombiequeen_progress > ^zombiequeen_lit_mound) {
             mes("You have already seen inside the fissure.");
@@ -473,7 +473,7 @@ switch_obj($use_obj) {
         anim(human_pickupfloor, 0);
         p_delay(0);
         // guessed linebreaks, what osrs has doesn't work and dialogue is different to rsc
-        ~objboxb($use_obj, "You drop the <lowercase(oc_name($use_obj))> into the fissure and see|that there is quite a large drop after you get through|the hole. There is a good anchor point nearby onto which|you could tie a rope.");
+        ~objbox($use_obj, "You drop the <lowercase(oc_name($use_obj))> into the fissure and see|that there is quite a large drop after you get through|the hole. There is a good anchor point nearby onto which|you could tie a rope.", 250, 0, ^objbox_height);
         %zombiequeen_progress = ^zombiequeen_lit_mound;
         inv_del(inv, $use_obj, 1);
         ~mesbox("The <lowercase(oc_name($use_obj))> burns out.");
@@ -776,7 +776,7 @@ if(last_useitem = spade | last_useitem = chisel | oc_category(last_useitem) = we
     anim(human_pickupfloor, 0);
     p_delay(0);
     inv_add(inv, stoneplaque, 1);
-    ~objboxt(stoneplaque, "You cleanly cut the plaque of letters away from the rock. You place it carefully into your inventory.");
+    ~objbox(stoneplaque, "You cleanly cut the plaque of letters away from the rock. You place it carefully into your inventory.", 250, 0, 0);
     return;
 }
 ~displaymessage(^dm_default);
@@ -830,7 +830,7 @@ if ($choice = 1) {
     }
     inv_add(inv, tattered_scroll, 1);
     stat_advance(agility, 15);
-    ~objboxt(tattered_scroll, "You carefully manage to remove enough rocks to see a book shelf. You gingerly remove a delicate scroll from the shelf and place it in your inventory.");
+    ~objbox(tattered_scroll, "You carefully manage to remove enough rocks to see a book shelf. You gingerly remove a delicate scroll from the shelf and place it in your inventory.", 250, 0, 0);
 } else if ($choice = 2) {
     ~mesbox("You decide to leave the rocks well alone. The ceiling does look a little unsafe.");
 }
@@ -865,7 +865,7 @@ if(~obj_gettotal(crumpled_scroll) > 0) {
     return;
 }
 inv_add(inv, crumpled_scroll, 1);
-~objboxt(crumpled_scroll, "You find a tattered but very ornate scroll, which you place carefully in your inventory.");
+~objbox(crumpled_scroll, "You find a tattered but very ornate scroll, which you place carefully in your inventory.", 250, 0, 0);
 
 [opheld1,crumpled_scroll]
 ~mesbox("This looks like a scroll about Rashiliyia. Would you like to read it?");
@@ -912,9 +912,9 @@ switch_int(~p_choice2("I don't think so, it might animate and attack me!", 1, "Y
         ~mesbox("You move away from the corpse quietly and slowly... ...you have an eerie feeling about this!");
         say("** Gulp! **");
     case 2 :
-        ~objboxt(zadimus_corpse, "You gently support the frame of the skeleton and lift the skull through the noose.");
+        ~objbox(zadimus_corpse, "You gently support the frame of the skeleton and lift the skull through the noose.", 250, 0, 0);
         inv_add(inv, zadimus_corpse, 1);
-        ~objboxt(zadimus_corpse, "You find an old sack and place the skeleton in it. Maybe Trufitus can give you some  tips on what to do with it.");
+        ~objbox(zadimus_corpse, "You find an old sack and place the skeleton in it. Maybe Trufitus can give you some  tips on what to do with it.", 250, 0, 0);
         ~mesbox("You sense that there is a spirit that needs to be put to rest.");
 }
 
@@ -942,7 +942,7 @@ if(inzone(0_43_48_42_15, 0_43_48_46_18, coord) = true) {
     inv_del(inv, zadimus_corpse, 1);
     inv_add(inv, bone_shard, 1);
     npc_del;
-    ~objboxt(bone_shard, "The apparition disappears into the ground where you  buried the corpse. You see the ground in front of you  shake as a shard of bone forces its way to the surface. You take the bone shard and place it in your inventory.");
+    ~objbox(bone_shard, "The apparition disappears into the ground where you  buried the corpse. You see the ground in front of you  shake as a shard of bone forces its way to the surface. You take the bone shard and place it in your inventory.", 250, 0, 0);
     return;
 }
 ~mesbox("You hear a ghostly wailing sound coming from the corpse and a whispering voice says,'Let me rest in a sacred place and assist you I will'");
@@ -1066,11 +1066,11 @@ if(~zqhaspommel = true & ~obj_gettotal(zqcrystal) > 0) {
 }
 if(~zqhaspommel = false) {
     inv_add(inv, zqpommel, 1);
-    ~objboxt(zqpommel, "You find a rusty sword with an ivory pommel. You take the Ivory pommel and place it in your inventory.");
+    ~objbox(zqpommel, "You find a rusty sword with an ivory pommel. You take the Ivory pommel and place it in your inventory.", 250, 0, 0);
 }
 if(~obj_gettotal(zqcrystal) = 0) {
     inv_add(inv, zqcrystal, 1);
-    ~objboxt(zqcrystal, "You find a Crystal Sphere. You take the crystal and place it carefully in your inventory.");
+    ~objbox(zqcrystal, "You find a Crystal Sphere. You take the crystal and place it carefully in your inventory.", 250, 0, 0);
 }
 if(~obj_gettotal(bervirius_notes) = 0) {
     if(testbit(%zq_map_mechanisms, ^zq_used_dolmen_paper) = true) {
@@ -1080,7 +1080,7 @@ if(~obj_gettotal(bervirius_notes) = 0) {
                 case 1 :
                     inv_del(inv, papyrus, 1);
                     inv_add(inv, bervirius_notes, 1);
-                    ~objboxt(bervirius_notes, "You find some writing on the dolmen, you take some of your papyrus and using the charcoal copy the text as best you can and collect them together as a scroll.");
+                    ~objbox(bervirius_notes, "You find some writing on the dolmen, you take some of your papyrus and using the charcoal copy the text as best you can and collect them together as a scroll.", 250, 0, 0);
                 case 2 : ~mesbox("You decide not to take any notes from the dolmen.");
             }
             return;
@@ -1089,7 +1089,7 @@ if(~obj_gettotal(bervirius_notes) = 0) {
     } else {
         inv_add(inv, bervirius_notes, 1);
         %zq_map_mechanisms = setbit(%zq_map_mechanisms, ^zq_used_dolmen_paper);
-        ~objboxt(bervirius_notes, "You find some writing on the dolmen, you grab some nearby scraps of delicate paper together and copy the text as best you can and collect them together as a scroll.");
+        ~objbox(bervirius_notes, "You find some writing on the dolmen, you grab some nearby scraps of delicate paper together and copy the text as best you can and collect them together as a scroll.", 250, 0, 0);
     }
 }
 
@@ -1097,7 +1097,7 @@ if(~obj_gettotal(bervirius_notes) = 0) {
 if(last_useitem = rashiliya_corpse) {
     // can't find any way to get a 2nd corpse, not sure what the interaction is if the quest is already complete
     if(%zombiequeen_progress = ^zombiequeen_retrieved_corpse) {
-        ~objboxt(rashiliya_corpse, "You carefully place Rashiliyia's remains on the dolmen.|You feel a strange vibration in the air.");
+        ~objbox(rashiliya_corpse, "You carefully place Rashiliyia's remains on the dolmen.|You feel a strange vibration in the air.", 250, 0, 0);
         if_close;
         if(npc_find(coord, npc_506, 7, 0) = false) {
             def_coord $spawn_coord = map_findsquare(coord, 1, 1, ^map_findsquare_lineofwalk);
@@ -1125,7 +1125,7 @@ if(~obj_gettotal(zqpommel) > 0 | ~obj_gettotal(zqbonebeads) > 0 | inv_total(inv,
 return (false);
 
 [opheld1,bervirius_notes]
-~objboxt(bervirius_notes, "This scroll is a collection of writings. Some of them are just scraps of papyrus with what looks like random scribblings. Which would you like to read?");
+~objbox(bervirius_notes, "This scroll is a collection of writings. Some of them are just scraps of papyrus with what looks like random scribblings. Which would you like to read?", 250, 0, 0);
 switch_int(~p_choice3("Tattered Yellow papyrus.", 1, "Decayed White papyrus.", 2, "Crusty Orange papyrus.", 3)) {
     case 1 : @scroll_zombiequeen_yellow;
     case 2 : @scroll_zombiequeen_white;
@@ -1137,58 +1137,58 @@ switch_int(~p_choice3("Tattered Yellow papyrus.", 1, "Decayed White papyrus.", 2
 
 [opheld5,zqpommel]
 inv_del(inv, zqpommel, 1);
-~objboxt(zqpommel, "You drop the sword pommel on the floor. It turns to dust as soon as it hits the ground.");
+~objbox(zqpommel, "You drop the sword pommel on the floor. It turns to dust as soon as it hits the ground.", 250, 0, 0);
 
 [opheld5,zqcrystal]
-~objboxt(zqcrystal, "Are you sure you want to drop this crystal?|It looks very delicate and it may break.");
+~objbox(zqcrystal, "Are you sure you want to drop this crystal?|It looks very delicate and it may break.", 250, 0, 0);
 switch_int(~p_choice2_header("Yes I am sure.", 1, "No, I've reconsidered, I'll keep it!", 2, "Drop the Locating Crystal?")) {
     case 1 :
         inv_del(inv, zqcrystal, 1);
         // NOT STONGQUEUE
         if(stat(hitpoints) < 15) queue(damage_player, 0, calc((stat(hitpoints) * 50) / 100));
         else queue(damage_player, 0, 10);
-        ~objboxt(zqcrystal, "As you drop the crystal, it hits a rock and explodes. You are lascerated by shards of glass.");
-    case 2 : ~objboxt(zqcrystal, "You decide to keep the Locating Crystal tucked into your inventory safe and sound.");
+        ~objbox(zqcrystal, "As you drop the crystal, it hits a rock and explodes. You are lascerated by shards of glass.", 250, 0, 0);
+    case 2 : ~objbox(zqcrystal, "You decide to keep the Locating Crystal tucked into your inventory safe and sound.", 250, 0, 0);
 }
 
 [opheld5,bervirius_notes]
 inv_del(inv, bervirius_notes, 1);
-~objboxt(bervirius_notes, "As you drop the delicate scrolls onto the floor, they disintegrate immediately.");
+~objbox(bervirius_notes, "As you drop the delicate scrolls onto the floor, they disintegrate immediately.", 250, 0, 0);
 
 [opheld5,bone_shard]
 ~mesbox("You remember the words that Zadimus said when he appeared in front of you. @blu@'I am the key, but only kin may approach her.' Are @blu@you sure you want to drop this?");
 switch_int(~p_choice2_header("Yes, I'll drop it.", 1, "No, I'll keep the Bone Shard.", 2, "Drop the Bone Shard?")) {
     case 1 :
-        ~objboxt(bone_shard, "You decide to drop the Bone Shard.");
+        ~objbox(bone_shard, "You decide to drop the Bone Shard.", 250, 0, 0);
         inv_del(inv, bone_shard, 1);
         mes("The Bone Shard crumbles into dust as soon as it hits the floor.");
     case 2 :
-        ~objboxt(bone_shard, "You decide to keep the Bone Shard.");
+        ~objbox(bone_shard, "You decide to keep the Bone Shard.", 250, 0, 0);
 }
 
 [opheld5,zqbonebeads]
 inv_del(inv, zqbonebeads, 1);
-~objboxt(zqbonebeads, "As the beads hit the floor, they disintegrate into puffs of white powder.");
+~objbox(zqbonebeads, "As the beads hit the floor, they disintegrate into puffs of white powder.", 250, 0, 0);
 
 [opheld5,zqbeadsofthedead]
 // RSC, changed to destroy nov 2006
-~objboxt(zqbeadsofthedead, "Are you sure you want to drop the Beads of the Dead?|It looks very rare and unique.");
+~objbox(zqbeadsofthedead, "Are you sure you want to drop the Beads of the Dead?|It looks very rare and unique.", 250, 0, 0);
 switch_int(~p_choice2_header("Yes, I'm sure.", 1, "Nope, I've had second thoughts.", 2, "Drop the Beads of the Dead?")) {
     case 1 :
         inv_del(inv, zqbeadsofthedead, 1);
-        ~objboxt(zqbeadsofthedead, "As the necklace hits the floor, it disintigrates|into a puff of white powder.|and you start to wonder if it ever really existed?");
-    case 2 : ~objboxt(zqbeadsofthedead, "You decide not to drop the Beads of the Dead.");
+        ~objbox(zqbeadsofthedead, "As the necklace hits the floor, it disintigrates|into a puff of white powder.|and you start to wonder if it ever really existed?", 250, 0, 0);
+    case 2 : ~objbox(zqbeadsofthedead, "You decide not to drop the Beads of the Dead.", 250, 0, 0);
 }
 
 [opheld1,zqcrystal]
 if(stat(prayer) < 10) {
-    ~objboxt(zqcrystal, "You feel the crystal trying to draw upon your spiritual energy, but you have no spiritual energy at the moment. You need a Prayer level of at least 10 for it to work.");
+    ~objbox(zqcrystal, "You feel the crystal trying to draw upon your spiritual energy, but you have no spiritual energy at the moment. You need a Prayer level of at least 10 for it to work.", 250, 0, 0);
     return;
 }
 if(testbit(%zq_map_mechanisms, ^zq_always_crystal) = true) {
     @zqcrystal_activate;
 }
-~objboxt(zqcrystal, "You feel the crystal trying to draw upon your spiritual energy. Do you want to let it?");
+~objbox(zqcrystal, "You feel the crystal trying to draw upon your spiritual energy. Do you want to let it?", 250, 0, 0);
 def_int $op;
 $op = ~p_choice3("Yes, just this once.", 1, "Yes, always let it draw from my spiritual energy.", 2, "No, it sounds a bit dangerous.", 3);
 if($op = 3) {
@@ -1204,15 +1204,15 @@ if ($op = 2) {
 def_coord $central_coord = 0_45_48_36_20;
 stat_sub(prayer, 0, ~random_range(2,4));
 if(distance(coord, $central_coord) < 10) {
-    ~objboxt(zqcrystal_white, "The crystal blazes brilliantly.");
+    ~objbox(zqcrystal_white, "The crystal blazes brilliantly.", 250, 0, 0);
 } else if(distance(coord, $central_coord) < 50) {
-    ~objboxt(zqcrystal_yellow, "@yel@The crystal is very bright.");
+    ~objbox(zqcrystal_yellow, "@yel@The crystal is very bright.", 250, 0, 0);
 } else if(distance(coord, $central_coord) < 100) {
-    ~objboxt(zqcrystal_red, "@red@The crystal glows brightly.");
+    ~objbox(zqcrystal_red, "@red@The crystal glows brightly.", 250, 0, 0);
 } else if(distance(coord, $central_coord) < 200) {
-    ~objboxt(zqcrystal_blue, "@blu@The crystal glows faintly.");
+    ~objbox(zqcrystal_blue, "@blu@The crystal glows faintly.", 250, 0, 0);
 } else if(distance(coord, $central_coord) > 200) { // https://x.com/JagexAsh/status/1225346134366982144
-    ~objboxt(zqcrystal, "There is nothing different about the crystal. You're most likely not close enough for it to be active.");
+    ~objbox(zqcrystal, "There is nothing different about the crystal. You're most likely not close enough for it to be active.", 250, 0, 0);
 }
 
 [opheldu,zqpommel]
@@ -1222,7 +1222,7 @@ if(last_useitem = chisel) {
 ~displaymessage(^dm_default);
 
 [label,craft_ivorybeads]
-~objboxt(zqpommel, "You prepare the ivory pommel and the chisel to start crafting...");
+~objbox(zqpommel, "You prepare the ivory pommel and the chisel to start crafting...", 250, 0, 0);
 if(stat(crafting) < 15) {
     ~mesbox("You need a Crafting level of at least 15 to complete this task.");
     return;
@@ -1230,7 +1230,7 @@ if(stat(crafting) < 15) {
 inv_del(inv, zqpommel, 1);
 inv_add(inv, zqbonebeads, 1);
 stat_advance(crafting, 40);
-~objboxt(zqbonebeads, "You successfully craft some of the ivory into beads.|They may look good as part of a necklace.");
+~objbox(zqbonebeads, "You successfully craft some of the ivory into beads.|They may look good as part of a necklace.", 250, 0, 0);
 
 [opheldu,zqbonebeads]
 if(last_useitem = bronze_wire) {
@@ -1247,7 +1247,7 @@ if(last_useitem = bronze_wire) {
     inv_del(inv, bronze_wire, 1);
     inv_add(inv, zqbeadsofthedead, 1);
     stat_advance(crafting, 30);
-    ~objboxt(zqbeadsofthedead, "You successfully craft the beads and bronze wire into a necklace which you name, 'Beads of the Dead'");
+    ~objbox(zqbeadsofthedead, "You successfully craft the beads and bronze wire into a necklace which you name, 'Beads of the Dead'", 250, 0, 0);
     return;
 }
 ~displaymessage(^dm_default);
@@ -1275,11 +1275,11 @@ if(last_useitem = chisel) {
 ~mesbox("This looks quite valuable. As you go to throw the item away Zadimus' words come to you again. 'I am the key, but only kin may approach her.'");
 switch_int(~p_choice2_header("Yes, I'll drop it.", 1, "No, I'll keep the Bone Key.", 2, "Drop the Bone Key?")) {
     case 1 :
-        ~objboxt(bone_key, "You decide to drop the Bone Key.");
+        ~objbox(bone_key, "You decide to drop the Bone Key.", 250, 0, 0);
         inv_del(inv, bone_key, 1);
         mes("The Bone Key crumbles into dust as soon as it hits the floor.");
     case 2 :
-        ~objboxt(bone_key, "You decide to keep the Bone Key.");
+        ~objbox(bone_key, "You decide to keep the Bone Key.", 250, 0, 0);
 }
 
 [oploc1,loc_2236]
@@ -1382,7 +1382,7 @@ if($last_obj = bones) {
                 .loc_change(loc_2247, 50);
             }
             ~set_zqtombdoorstate(1);
-            ~objbox(bones, "You place the bone into the skeletal door and it fits. There are two recesses left now.");
+            ~objbox(bones, "You place the bone into the skeletal door and it fits. There are two recesses left now.", 250, 0, divide(^objbox_height, 2));
         case 1 :
             anim(human_pickuptable, 0);
             p_delay(1); // 1t
@@ -1393,7 +1393,7 @@ if($last_obj = bones) {
                 .loc_change(loc_2247, 50);
             }
             ~set_zqtombdoorstate(2);
-            ~objbox(bones, "You place the bone into the skeletal door and it fits. There is just one recess left now.");
+            ~objbox(bones, "You place the bone into the skeletal door and it fits. There is just one recess left now.", 250, 0, divide(^objbox_height, 2));
         case 2 :
             anim(human_pickuptable, 0);
             p_delay(1); // 1t
@@ -1405,7 +1405,7 @@ if($last_obj = bones) {
             }
             ~set_zqtombdoorstate(3);
             %zombiequeen_progress = ^zombiequeen_unlocked_tombdoor;
-            ~objbox(bones, "You place the bone into the last recess on the skeletal door and it fits. All the recesses are filled...");
+            ~objbox(bones, "You place the bone into the last recess on the skeletal door and it fits. All the recesses are filled...", 250, 0, divide(^objbox_height, 2));
             mes("You fit the last bone into the recess.");
             ~mesbox("The door seems to change slightly. Two depictions of skeletal warriors turn their heads towards you. They are alive! The Skeletons wrench themselves free of the door. Stepping out of the door, with grinning teeth they push the huge doors open.");
             @zq_enter_rashtomb;
@@ -1480,13 +1480,13 @@ if(%zombiequeen_progress >= ^zombiequeen_complete) {
 } else if(~obj_gettotal(rashiliya_corpse) > 0) {
     mes("You find nothing new on the dolmen.");
 } else if(testbit(%zq_map_mechanisms, ^zq_defeated_nazastarool3) = true) { // the rash corpse checks only check if you defeated the 3rd form
-    ~objboxt(rashiliya_corpse, "You search the dolmen... And find the mumified remains of a human female.");
+    ~objbox(rashiliya_corpse, "You search the dolmen... And find the mumified remains of a human female.", 250, 0, 0);
     if(inv_freespace(inv) > 0) { 
         if(%zombiequeen_progress = ^zombiequeen_unlocked_tombdoor) %zombiequeen_progress = ^zombiequeen_retrieved_corpse;
         %zq_map_mechanisms = clearbit_range(%zq_map_mechanisms, 9, 11); // todo: this might happen when checking dolmen with progress >= 14 and no rash corpse on player instead, functionally this is the same though
     }
     inv_add(inv, rashiliya_corpse, 1);
-    ~objboxt(rashiliya_corpse, "You carefully place the remains in your inventory.");
+    ~objbox(rashiliya_corpse, "You carefully place the remains in your inventory.", 250, 0, 0);
 } else @zq_showdown_nazastarool;
 
 
@@ -1560,10 +1560,10 @@ sound_synth(pick2, 0, 0);
 p_delay(1);
 if(%zombiequeen_progress = ^zombiequeen_unlocked_tombdoor) %zombiequeen_progress = ^zombiequeen_retrieved_corpse;
 %zq_map_mechanisms = clearbit_range(%zq_map_mechanisms, 9, 11);
-~objboxt(rashiliya_corpse, "You take the mummified remains of a human female.|You feel certain that these are Rashiliyia's remains.|You|carefully place the remains in your inventory.");
+~objbox(rashiliya_corpse, "You take the mummified remains of a human female.|You feel certain that these are Rashiliyia's remains.|You|carefully place the remains in your inventory.", 250, 0, 0);
 
 [opheld5,rashiliya_corpse]
-~objboxt(rashiliya_corpse, "The remains of Rashiliyia look quite delicate. You sense|that a spirit needs to be put to rest.|Are you sure that you want to drop the remains?");
+~objbox(rashiliya_corpse, "The remains of Rashiliyia look quite delicate. You sense|that a spirit needs to be put to rest.|Are you sure that you want to drop the remains?", 250, 0, 0);
 switch_int(~p_choice2("Yes, I am sure.", 1, "No, I'll keep hold of the remains.", 2)) {
     case 1 :
         if_close;

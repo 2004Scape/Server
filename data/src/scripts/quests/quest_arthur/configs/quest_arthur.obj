@@ -12,6 +12,7 @@ recol1d=2114
 2dxan=168
 weight=1oz
 category=light_source_lit
+tradeable=no
 
 [lit_candle]
 name=Lit candle
@@ -24,7 +25,6 @@ model=model_2575_obj
 2dyan=1864
 2dxan=168
 weight=1oz
-tradeable=yes
 category=light_source_lit
 
 [excalibur]
@@ -57,6 +57,7 @@ param=stabattack_anim,human_sword_stab
 param=defend_anim,human_sword_defend2
 param=slash_sound,hacksword_slash
 param=stab_sound,hacksword_stab
+tradeable=no
 
 [candle]
 name=Candle
@@ -69,7 +70,6 @@ model=model_2467_obj
 2dyan=1864
 2dxan=168
 weight=1oz
-tradeable=yes
 category=light_source_unlit
 param=product,lit_candle
 
@@ -88,3 +88,4 @@ recol1d=2114
 weight=1oz
 category=light_source_unlit
 param=product,lit_black_candle
+tradeable=no

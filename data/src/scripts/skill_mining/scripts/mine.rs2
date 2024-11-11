@@ -110,7 +110,6 @@ if (%action_delay < map_clock) {
 ~mining_sound;
 p_oploc(3);
 
-
 [label,get_ore_normal]
 db_find(mining_table:rock, loc_type);
 def_dbrow $data = db_findnext;
@@ -141,7 +140,13 @@ if (random($chance) = ^true) {
     // stop mining, give ore and xp. Sudden says its sound_230
     sound_synth(sound_230, 0, 0);
     anim(null, 0);
-    inv_add(inv, db_getfield($data, mining_table:rock_output, 0), 1);
+    // The 'perfect' gold rocks in Family Crest are the same ID as regular gold rocks, so check to 
+    // give out the right ore if we're in that location. Only gold rocks are in this room.
+    def_namedobj $output = db_getfield($data, mining_table:rock_output, 0);
+    if(inzone(^crest_perfect_mine_lower_bound, ^crest_perfect_mine_upper_bound, coord) = true) {
+        $output = perfect_gold_ore;
+    }
+    inv_add(inv, $output, 1);
     stat_advance(mining, db_getfield($data, mining_table:rock_exp, 0));
     mes("You manage to mine some <db_getfield($data, mining_table:ore_name, 0)>.");
     return;
@@ -239,7 +244,6 @@ if (stat_random(stat(mining), $low, $high) = true) {
 }
 ~mining_sound;
 p_oploc(3);
-
 
 [proc,mining_gem_table]()(namedobj)
 def_int $rand = random(128);

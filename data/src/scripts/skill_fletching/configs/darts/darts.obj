@@ -13,7 +13,6 @@ stackable=yes
 2dyan=308
 2dxan=344
 weight=8g
-tradeable=yes
 
 [iron_dart_tip]
 category=category_969
@@ -30,7 +29,6 @@ stackable=yes
 2dyan=308
 2dxan=344
 weight=8g
-tradeable=yes
 
 [steel_dart_tip]
 category=category_969
@@ -47,7 +45,6 @@ stackable=yes
 2dyan=308
 2dxan=344
 weight=8g
-tradeable=yes
 
 [mithril_dart_tip]
 category=category_969
@@ -64,7 +61,6 @@ stackable=yes
 2dyan=308
 2dxan=344
 weight=6g
-tradeable=yes
 
 [adamant_dart_tip]
 category=category_969
@@ -81,7 +77,6 @@ stackable=yes
 2dyan=308
 2dxan=344
 weight=10g
-tradeable=yes
 
 [rune_dart_tip]
 category=category_969
@@ -98,4 +93,3 @@ stackable=yes
 2dyan=308
 2dxan=344
 weight=8g
-tradeable=yes

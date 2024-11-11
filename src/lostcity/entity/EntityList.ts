@@ -48,11 +48,7 @@ abstract class EntityList<T extends Entity> extends Array<T | undefined> {
     }
 
     get count(): number {
-        let count: number = 0;
-        for (const _ of this[Symbol.iterator]()) {
-            count++;
-        }
-        return count;
+        return Math.max(this.length - this.free.size, 0);
     }
 
     get(id: number): T | undefined {

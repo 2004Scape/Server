@@ -12,6 +12,7 @@ desc=Some rocks.
 model=model_2394_obj
 weight=1g
 members=yes
+tradeable=no
 
 [obj_1481]
 name=Orb of light
@@ -25,6 +26,7 @@ weight=1lb
 members=yes
 param=no_alchemy,1
 param=orb_bit,^upass_orb1_bit
+tradeable=no
 
 [obj_1482]
 name=Orb of light
@@ -38,6 +40,7 @@ weight=1lb
 members=yes
 param=no_alchemy,1
 param=orb_bit,^upass_orb2_bit
+tradeable=no
 
 [obj_1483]
 name=Orb of light
@@ -51,6 +54,7 @@ weight=1lb
 members=yes
 param=no_alchemy,1
 param=orb_bit,^upass_orb3_bit
+tradeable=no
 
 [obj_1484]
 name=Orb of light
@@ -64,6 +68,7 @@ weight=1lb
 members=yes
 param=no_alchemy,1
 param=orb_bit,^upass_orb4_bit
+tradeable=no
 
 [damp_cloth]
 name=Damp cloth
@@ -77,6 +82,7 @@ recol1d=8388
 2dxan=368
 weight=12g
 members=yes
+tradeable=no
 
 [piece_of_railing]
 name=Piece of railing
@@ -90,6 +96,7 @@ model=model_2826_obj
 2dxan=240
 weight=2kg
 members=yes
+tradeable=no
 
 [upass_unicorn_horn]
 name=Unicorn horn
@@ -103,6 +110,7 @@ model=model_2495_obj
 members=yes
 cost=20
 weight=7g
+tradeable=no
 
 [upass_jerro_badge]
 name=Paladin's badge
@@ -116,6 +124,7 @@ model=model_2759_obj
 2dxan=444
 weight=12g
 members=yes
+tradeable=no
 
 [upass_carl_badge]
 name=Paladin's badge
@@ -131,6 +140,7 @@ recol1d=5474
 2dxan=444
 weight=12g
 members=yes
+tradeable=no
 
 [upass_harry_badge]
 name=Paladin's badge
@@ -146,6 +156,7 @@ recol1d=15556
 2dxan=444
 weight=12g
 members=yes
+tradeable=no
 
 [upass_witches_cat]
 name=Witches cat
@@ -161,6 +172,7 @@ recol1d=4228
 2dxan=32
 weight=1200g
 members=yes
+tradeable=no
 
 [doll_of_iban]
 name=Doll of iban
@@ -175,6 +187,7 @@ iop1=Search
 2dyan=1736
 2dxan=364
 weight=300g
+tradeable=no
 
 [old_journal]
 name=Old journal
@@ -192,6 +205,7 @@ recol2d=23186
 weight=8oz
 members=yes
 iop1=Read
+tradeable=no
 
 [history_of_iban]
 name=History of iban
@@ -205,6 +219,7 @@ model=model_2794_obj
 weight=8oz
 members=yes
 iop1=Read
+tradeable=no
 
 [klanks_gauntlets]
 name=Klank's gauntlets
@@ -232,6 +247,7 @@ param=stabdefence,8
 param=slashdefence,9
 param=crushdefence,7
 param=strengthbonus,2
+tradeable=no
 
 [ibans_dove]
 name=Iban's dove
@@ -244,6 +260,7 @@ model=model_2793_obj
 2dxan=472
 weight=100g
 members=yes
+tradeable=no
 
 [amulet_of_othanian]
 name=Amulet of othanian
@@ -261,6 +278,7 @@ recol2d=10240
 2dxan=424
 weight=10g
 members=yes
+tradeable=no
 
 [amulet_of_doomion]
 name=Amulet of doomion
@@ -278,6 +296,7 @@ recol2d=10240
 2dxan=424
 weight=10g
 members=yes
+tradeable=no
 
 [amulet_of_holthion]
 name=Amulet of holthion
@@ -295,6 +314,7 @@ recol2d=10240
 2dxan=424
 weight=10g
 members=yes
+tradeable=no
 
 [ibans_shadow]
 name=Iban's shadow
@@ -305,6 +325,7 @@ model=model_2811_obj
 2dxan=92
 weight=25g
 members=yes
+tradeable=no
 
 [dwarf_brew]
 cost=2
@@ -319,6 +340,7 @@ recol1d=23073
 weight=150g
 name=Dwarf brew
 desc=Smells stronger than most spirits.
+tradeable=no
 
 [ibans_ashes]
 name=Iban's ashes
@@ -333,3 +355,4 @@ recol1d=7399
 2dxan=264
 weight=2oz
 members=yes
+tradeable=no

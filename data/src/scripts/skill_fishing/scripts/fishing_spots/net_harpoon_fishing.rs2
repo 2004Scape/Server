@@ -247,27 +247,27 @@ def_int $random = random(128);
 if ($random < 60) { // 10/128 coins for each
     // 20, 40, 80, 160, 320, 640
     inv_add(inv, coins, multiply(pow(2, add(random(6), 1)), 10)); // 2 ^ (random(6) + 1) * 10
-    ~objbox(coins_250, "You open the casket. Inside you find some coins.");
+    ~objbox(coins_250, "You open the casket. Inside you find some coins.", 250, 0, divide(^objbox_height, 2));
 } else if ($random < 92) { // 32/128 uncut sapphire
     inv_add(inv, uncut_sapphire, 1);
-    ~objbox(uncut_sapphire, "You open the casket. Inside you find an uncut|sapphire.");
+    ~objbox(uncut_sapphire, "You open the casket. Inside you find an uncut|sapphire.", 250, 0, divide(^objbox_height, 2));
 } else if ($random < 108) { // 16/128 uncut emerald
     inv_add(inv, uncut_emerald, 1);
-    ~objbox(uncut_emerald, "You open the casket. Inside you find an uncut|emerald.");
+    ~objbox(uncut_emerald, "You open the casket. Inside you find an uncut|emerald.", 250, 0, divide(^objbox_height, 2));
 } else if ($random < 116) { // 8/128 uncut ruby
     inv_add(inv, uncut_ruby, 1);
-    ~objbox(uncut_ruby, "You open the casket. Inside you find an uncut ruby.");
+    ~objbox(uncut_ruby, "You open the casket. Inside you find an uncut ruby.", 250, 0, divide(^objbox_height, 2));
 } else if ($random < 124) { // 8/128 cosmic talisman
     inv_add(inv, cosmic_talisman, 1);
-    ~objboxt(cosmic_talisman, "You open the casket. Inside you find a cosmic talisman.");
+    ~objbox(cosmic_talisman, "You open the casket. Inside you find a cosmic talisman.", 250, 0, 0);
 } else if ($random < 126) { // 2/128 uncut diamond
     inv_add(inv, uncut_diamond, 1);
-    ~objbox(uncut_diamond, "You open the casket. Inside you find an uncut|diamond.");
+    ~objbox(uncut_diamond, "You open the casket. Inside you find an uncut|diamond.", 250, 0, divide(^objbox_height, 2));
 } else if ($random < 127) { // 1/128 tooth half key
     inv_add(inv, half_key1, 1);
-    ~objboxt(half_key1, "You open the casket. Inside you find half a key.");
+    ~objbox(half_key1, "You open the casket. Inside you find half a key.", 250, 0, 0);
 } else if ($random < 128) { // 1/128 loop half of key
     inv_add(inv, half_key2, 1);
-    ~objboxt(half_key2, "You open the casket. Inside you find half a key.");
+    ~objbox(half_key2, "You open the casket. Inside you find half a key.", 250, 0, 0);
 }
 sound_synth(found_gem, 0, 0); // https://youtu.be/fWox14AFvEM 

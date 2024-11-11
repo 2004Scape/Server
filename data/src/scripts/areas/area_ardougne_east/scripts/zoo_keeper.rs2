@@ -29,4 +29,4 @@ if(inv_total(inv, trail_clue_medium_challenge_exp003) > 0) {
 ~chatplayer("<p,neutral>Sure.");
 ~chatnpc("<p,neutral>I need to know how many animals we have now.");
 inv_add(inv, trail_clue_medium_challenge_exp003, 1);
-~objboxt(trail_clue_medium_challenge_exp003, "The zoo keeper has given you a challenge scroll!");
+~objbox(trail_clue_medium_challenge_exp003, "The zoo keeper has given you a challenge scroll!", 250, 0, 0);

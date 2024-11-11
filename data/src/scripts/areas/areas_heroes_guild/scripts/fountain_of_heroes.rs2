@@ -5,7 +5,7 @@ if (last_useitem = amulet_of_glory | last_useitem = amulet_of_glory_1 | last_use
   anim(human_pickupfloor, 0);
   p_delay(1);
   inv_setslot(inv, $slot, amulet_of_glory_4, 1); // assuming setslot 
-  ~objboxcustom(amulet_of_glory, "You feel a power emanating from the fountain as it recharges your amulet. You can now rub the amulet to teleport and wear it to get more gems whilst mining.", 200, 0, -20);
+  ~objbox(amulet_of_glory, "You feel a power emanating from the fountain as it recharges your amulet. You can now rub the amulet to teleport and wear it to get more gems whilst mining.", 200, 0, -20);
   return;
 }
 ~displaymessage(^dm_default); 

@@ -32,6 +32,7 @@ param=rangebonus,16
 param=levelrequire,40
 param=proj_launch,ice_arrow_launch
 param=proj_travel,ice_arrow_travel
+tradeable=no
 
 [ice_arrow_4]
 stackable=yes
@@ -124,6 +125,7 @@ model=model_2615_obj
 2dyan=1704
 2dxan=264
 weight=2oz
+tradeable=no
 
 [staff_of_armadyl]
 name=Staff of armadyl
@@ -139,6 +141,7 @@ recol1d=21933
 2dyan=1400
 2dxan=148
 weight=4lb
+tradeable=no
 
 [shiny_key]
 name=Shiny key
@@ -152,6 +155,7 @@ model=model_2372_obj
 2dyan=20
 2dxan=328
 weight=10g
+tradeable=no
 
 [pendant_of_lucien]
 name=Pendant of lucien
@@ -171,6 +175,7 @@ cost=12
 2dxan=224
 iop2=Wear
 weight=10g
+tradeable=no
 
 [armadyl_pendant]
 name=Armadyl pendant
@@ -190,6 +195,7 @@ womanwear=model_446_obj_wear,0
 2dxan=224
 iop2=Wear
 weight=10g
+tradeable=no
 
 [boots_of_lightness_inv]
 wearpos=feet
@@ -212,6 +218,7 @@ weight=12oz
 param=stabdefence,1
 param=slashdefence,1
 param=crushdefence,1
+tradeable=no
 
 [boots_of_lightness_worn]
 wearpos=feet
@@ -234,3 +241,4 @@ weight=-10lb
 param=stabdefence,1
 param=slashdefence,1
 param=crushdefence,1
+tradeable=no

@@ -12,7 +12,6 @@ recol1d=25765
 2dxan=260
 cost=1
 weight=1500g
-tradeable=yes
 category=alcoholic_drinks
 param=next_obj_stage,jug_empty
 
@@ -29,7 +28,6 @@ recol1d=17451
 2dxan=404
 cost=1
 weight=250g
-tradeable=yes
 respawnrate=80
 
 [jug_wine]
@@ -46,7 +44,6 @@ recol1d=25765
 2dyan=84
 2dxan=260
 weight=1500g
-tradeable=yes
 category=alcoholic_drinks
 param=next_obj_stage,jug_empty
 
@@ -65,7 +62,6 @@ recol1d=25765
 2dxan=260
 iop1=Drink
 weight=1kg
-tradeable=yes
 category=alcoholic_drinks
 param=next_obj_stage,jug_empty
 
@@ -82,4 +78,3 @@ recol1d=25765
 2dyan=84
 2dxan=260
 weight=1500g
-tradeable=yes

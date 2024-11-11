@@ -43,7 +43,7 @@ if(%biohazard_progress = ^biohazard_spoken_jerico & last_useitem = bird_feed) {
 
 [oploc1,loc_2057]
 // https://youtu.be/_ZNalEQB70o?si=aEyFbzV255lYgoNI&t=208
-~objbox(bird_feed, "The cupboard is full of birdfeed.");
+~objbox(bird_feed, "The cupboard is full of birdfeed.", 250, 0, divide(^objbox_height, 2));
 if(%biohazard_progress < ^biohazard_spoken_jerico) {
     ~chatplayer("<p,neutral>I guess pigeons really love this stuff.");
     return;

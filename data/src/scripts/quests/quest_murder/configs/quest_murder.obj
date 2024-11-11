@@ -19,6 +19,7 @@ category=murder_proofobj
 param=product,murder_flournecklace
 param=game_message,You sprinkle the flour on Anna's necklace.
 param=game_message2,The necklace is now coated with a thin layer of flour.
+tradeable=no
 
 [murder_flournecklace]
 name=Silver necklace
@@ -42,6 +43,7 @@ param=product,annas_print
 param=changesto,murder_necklace
 param=game_message,You use the flypaper on the flour covered necklace.
 param=game_message2,You have a clean impression of Anna's finger prints.
+tradeable=no
 
 [murder_cup]
 name=Silver cup
@@ -58,6 +60,7 @@ category=murder_proofobj
 param=product,murder_flourcup
 param=game_message,You sprinkle the flour on Bob's cup.
 param=game_message2,The cup is now coated with a thin layer of flour.
+tradeable=no
 
 [murder_flourcup]
 name=Silver cup
@@ -77,6 +80,7 @@ param=product,bobs_print
 param=changesto,murder_cup
 param=game_message,You use the flypaper on the flour covered cup.
 param=game_message2,You have a clean impression of Bob's finger prints.
+tradeable=no
 
 [murder_bottle]
 name=Silver bottle
@@ -94,6 +98,7 @@ category=murder_proofobj
 param=product,murder_flourbottle
 param=game_message,You sprinkle the flour on Carol's bottle.
 param=game_message2,The bottle is now coated with a thin layer of flour.
+tradeable=no
 
 [murder_flourbottle]
 name=Silver bottle
@@ -111,6 +116,7 @@ param=product,carols_print
 param=changesto,murder_bottle
 param=game_message,You use the flypaper on the flour covered bottle.
 param=game_message2,You have a clean impression of Carol's finger prints.
+tradeable=no
 
 [murder_book]
 name=Silver book
@@ -127,6 +133,7 @@ category=murder_proofobj
 param=product,murder_flourbook
 param=game_message,You sprinkle the flour on David's book.
 param=game_message2,The Book is now coated with a thin layer of flour.
+tradeable=no
 
 [murder_flourbook]
 name=Silver book
@@ -144,6 +151,7 @@ param=product,davids_print
 param=changesto,murder_book
 param=game_message,You use the flypaper on the flour covered book.
 param=game_message2,You have a clean impression of David's finger prints.
+tradeable=no
 
 [murder_needle]
 name=Silver needle
@@ -162,6 +170,7 @@ category=murder_proofobj
 param=product,murder_flourneedle
 param=game_message,You sprinkle the flour on Elizabeth's needle.
 param=game_message2,The Needle is now coated with a thin layer of flour.
+tradeable=no
 
 [murder_flourneedle]
 name=Silver needle
@@ -181,6 +190,7 @@ param=product,elizabeths_print
 param=changesto,murder_needle
 param=game_message,You use the flypaper on the flour covered needle.
 param=game_message2,You have a clean impression of Elizabeth's finger prints.
+tradeable=no
 
 [murder_pot]
 name=Silver pot
@@ -199,6 +209,7 @@ category=murder_proofobj
 param=product,murder_flourpot
 param=game_message,You sprinkle the flour on Frank's pot.
 param=game_message2,The Pot is now coated with a thin layer of flour.
+tradeable=no
 
 [murder_flourpot]
 name=Silver pot
@@ -218,6 +229,7 @@ param=product,franks_print
 param=changesto,murder_pot
 param=game_message,You use the flypaper on the flour covered pot.
 param=game_message2,You have a clean impression of Frank's finger prints.
+tradeable=no
 
 [murder_red_thread]
 name=Criminals' thread
@@ -232,6 +244,7 @@ recol1d=30753
 2dyan=1872
 2dxan=148
 weight=2g
+tradeable=no
 
 [murder_green_thread]
 name=Criminals' thread
@@ -246,6 +259,7 @@ recol1d=992
 2dyan=1872
 2dxan=148
 weight=2g
+tradeable=no
 
 [murder_blue_thread]
 name=Criminals' thread
@@ -260,6 +274,7 @@ recol1d=31
 2dyan=1872
 2dxan=148
 weight=2g
+tradeable=no
 
 [flypaper]
 name=Flypaper
@@ -272,6 +287,7 @@ model=model_2350_obj
 2dxan=320
 members=yes
 weight=10g
+tradeable=no
 
 [pungent_pot]
 name=Pungent pot
@@ -286,6 +302,7 @@ recol1d=18529
 2dyan=8
 2dxan=112
 weight=2lb
+tradeable=no
 
 [criminals_dagger]
 name=Criminals' dagger
@@ -303,6 +320,7 @@ category=murder_proofobj
 param=product,murder_flourdagger
 param=game_message,You sprinkle a small amount of flour on the murderweapon.
 param=game_message2,The murderweapon is now coated with a thin layer of flour.
+tradeable=no
 
 [murder_flourdagger]
 name=Criminals' dagger
@@ -321,6 +339,7 @@ param=product,unknown_print
 param=changesto,criminals_dagger
 param=game_message,You use the flypaper on the floury dagger.
 param=game_message2,You have a clean impression of the murderer's finger prints.
+tradeable=no
 
 [killers_print]
 name=Killers' print
@@ -333,6 +352,7 @@ desc=The fingerprints of the murderer.
 members=yes
 model=model_2416_obj
 weight=10g
+tradeable=no
 
 [annas_print]
 name=Annas' print
@@ -347,6 +367,7 @@ model=model_2416_obj
 weight=10g
 category=murder_printobj
 param=murder_id_value,1
+tradeable=no
 
 [bobs_print]
 name=Bobs' print
@@ -361,6 +382,7 @@ model=model_2416_obj
 weight=10g
 category=murder_printobj
 param=murder_id_value,2
+tradeable=no
 
 [carols_print]
 name=Carols' print
@@ -375,6 +397,7 @@ model=model_2416_obj
 weight=10g
 category=murder_printobj
 param=murder_id_value,3
+tradeable=no
 
 [davids_print]
 name=Davids' print
@@ -389,6 +412,7 @@ model=model_2416_obj
 weight=10g
 category=murder_printobj
 param=murder_id_value,4
+tradeable=no
 
 [elizabeths_print]
 name=Elizabeths' print
@@ -403,6 +427,7 @@ model=model_2416_obj
 weight=10g
 category=murder_printobj
 param=murder_id_value,5
+tradeable=no
 
 [franks_print]
 name=Franks' print
@@ -417,6 +442,7 @@ model=model_2416_obj
 weight=10g
 category=murder_printobj
 param=murder_id_value,6
+tradeable=no
 
 [unknown_print]
 name=Unknown print
@@ -429,3 +455,4 @@ model=model_2416_obj
 2dyan=84
 2dxan=320
 weight=10g
+tradeable=no

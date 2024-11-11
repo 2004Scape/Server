@@ -63,7 +63,7 @@ switch_int(%upass_progress) {
         if(inv_total(inv, damp_cloth) = 0) {
             ~chatnpc("<p,neutral>I found this cloth amongst the charred remains of some arrows, perhaps you need it?");
             inv_add(inv, damp_cloth, 1);
-            ~objbox(damp_cloth, "Koftik gives you a damp cloth.");
+            ~objbox(damp_cloth, "Koftik gives you a damp cloth.", 250, 0, divide(^objbox_height, 2));
         }
     case ^upass_spoken_koftik :
         ~chatplayer("<p,quiz>Koftik, how can we cross the bridge?");
@@ -91,7 +91,7 @@ switch_int(%upass_progress) {
         if(inv_total(inv, damp_cloth) = 0) {
             ~chatnpc("<p,neutral>Hi - I found this cloth amongst the charred remains of some arrows, perhaps you need it?");
             inv_add(inv, damp_cloth, 1);
-            ~objbox(damp_cloth, "Koftik gives you a damp cloth.");
+            ~objbox(damp_cloth, "Koftik gives you a damp cloth.", 250, 0, divide(^objbox_height, 2));
         }
 }
 
