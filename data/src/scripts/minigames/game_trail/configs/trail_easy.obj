@@ -12,6 +12,7 @@ iop1=Read
 category=trail_clue_easy
 param=trail_coord,0_49_52_41_32
 param=trail_casket,trail_casket_easy_map001
+tradeable=no
 
 [trail_clue_easy_map002]
 name=Clue scroll
@@ -27,6 +28,7 @@ iop1=Read
 category=trail_clue_easy
 param=trail_coord,0_51_52_26_46
 param=trail_casket,trail_casket_easy_map002
+tradeable=no
 
 [trail_clue_easy_map003]
 name=Clue scroll
@@ -42,6 +44,7 @@ iop1=Read
 category=trail_clue_easy
 param=trail_coord,0_47_53_35_6
 param=trail_casket,trail_casket_easy_map003
+tradeable=no
 
 [trail_clue_easy_simple_exp001]
 name=Clue scroll
@@ -56,6 +59,7 @@ model=model_3374_obj
 iop1=Read
 category=trail_clue_easy
 param=trail_desc,Search the chest in the|Duke of Lumbridge's bedroom.
+tradeable=no
 
 [trail_clue_easy_simple_exp002]
 name=Clue scroll
@@ -70,6 +74,7 @@ model=model_3374_obj
 iop1=Read
 category=trail_clue_easy
 param=trail_desc,Search the crate in the left-|hand tower of Lumbridge Castle.
+tradeable=no
 
 [trail_clue_easy_simple_exp003]
 name=Clue scroll
@@ -84,6 +89,7 @@ model=model_3374_obj
 iop1=Read
 category=trail_clue_easy
 param=trail_desc,Search the boxes in the goblin|house near Lumbridge.
+tradeable=no
 
 [trail_clue_easy_simple_exp004]
 name=Clue scroll
@@ -98,6 +104,7 @@ model=model_3374_obj
 iop1=Read
 category=trail_clue_easy
 param=trail_desc,Search the chests upstairs in|Al Kharid Palace.
+tradeable=no
 
 [trail_clue_easy_simple_exp005]
 name=Clue scroll
@@ -112,6 +119,7 @@ model=model_3374_obj
 iop1=Read
 category=trail_clue_easy
 param=trail_desc,Speak to Hans to|solve the clue.
+tradeable=no
 
 [trail_clue_easy_simple_exp006]
 name=Clue scroll
@@ -126,6 +134,7 @@ model=model_3374_obj
 iop1=Read
 category=trail_clue_easy
 param=trail_desc,Search the crates in the|most north-western house in Al Kharid.
+tradeable=no
 
 [trail_clue_easy_simple_exp007]
 name=Clue scroll
@@ -140,6 +149,7 @@ model=model_3374_obj
 iop1=Read
 category=trail_clue_easy
 param=trail_desc,Talk to Zeke in Al Kharid.
+tradeable=no
 
 [trail_clue_easy_simple_exp008]
 name=Clue scroll
@@ -154,6 +164,7 @@ model=model_3374_obj
 iop1=Read
 category=trail_clue_easy
 param=trail_desc,Speak to the tanner|in Al Kharid.
+tradeable=no
 
 [trail_clue_easy_simple_exp009]
 name=Clue scroll
@@ -168,6 +179,7 @@ model=model_3374_obj
 iop1=Read
 category=trail_clue_easy
 param=trail_desc,Search the boxes in|the house near the|south entrance to Varrock.
+tradeable=no
 
 [trail_clue_easy_simple_exp010]
 name=Clue scroll
@@ -182,6 +194,7 @@ model=model_3374_obj
 iop1=Read
 category=trail_clue_easy
 param=trail_desc,Speak to the bartender of the|Blue Moon Inn in Varrock.
+tradeable=no
 
 [trail_clue_easy_simple_exp011]
 name=Clue scroll
@@ -196,6 +209,7 @@ model=model_3374_obj
 iop1=Read
 category=trail_clue_easy
 param=trail_desc,Search the drawers, upstairs|in the bank to|the East of Varrock.
+tradeable=no
 
 [trail_clue_easy_simple_exp012]
 name=Clue scroll
@@ -210,6 +224,7 @@ model=model_3374_obj
 iop1=Read
 category=trail_clue_easy
 param=trail_desc,Search the crates|in Horvik's armoury.
+tradeable=no
 
 [trail_clue_easy_simple_exp013]
 name=Clue scroll
@@ -224,6 +239,7 @@ model=model_3374_obj
 iop1=Read
 category=trail_clue_easy
 param=trail_desc,Search the drawers in|one of Gertrude's bedrooms.
+tradeable=no
 
 [trail_clue_easy_simple_exp014]
 name=Clue scroll
@@ -238,6 +254,7 @@ model=model_3374_obj
 iop1=Read
 category=trail_clue_easy
 param=trail_desc,Search the boxes in the|Barbarian Village helmet shop.
+tradeable=no
 
 [trail_clue_easy_simple_exp015]
 name=Clue scroll
@@ -252,6 +269,7 @@ model=model_3374_obj
 iop1=Read
 category=trail_clue_easy
 param=trail_desc,Search the drawers upstairs|in Falador's shield shop.
+tradeable=no
 
 [trail_clue_easy_simple_exp016]
 name=Clue scroll
@@ -266,6 +284,7 @@ model=model_3374_obj
 iop1=Read
 category=trail_clue_easy
 param=trail_desc,Search the boxes of|Falador's general store.
+tradeable=no
 
 [trail_clue_easy_simple_exp017]
 name=Clue scroll
@@ -280,6 +299,7 @@ model=model_3374_obj
 iop1=Read
 category=trail_clue_easy
 param=trail_desc,Talk to the Squire in the|White Knights' castle in Falador.
+tradeable=no
 
 [trail_clue_easy_simple_exp018]
 name=Clue scroll
@@ -294,6 +314,7 @@ model=model_3374_obj
 iop1=Read
 category=trail_clue_easy
 param=trail_desc,Search the drawers in|Falador's chain mail shop.
+tradeable=no
 
 [trail_clue_easy_simple_exp019]
 name=Clue scroll
@@ -308,6 +329,7 @@ model=model_3374_obj
 iop1=Read
 category=trail_clue_easy
 param=trail_desc,Search the crates in the|Port Sarim Fishing shop.
+tradeable=no
 
 [trail_clue_easy_simple_exp020]
 name=Clue scroll
@@ -322,6 +344,7 @@ model=model_3374_obj
 iop1=Read
 category=trail_clue_easy
 param=trail_desc,Talk to the bartender of the|Rusty Anchor in Port Sarim.
+tradeable=no
 
 [trail_clue_easy_simple_exp021]
 name=Clue scroll
@@ -336,6 +359,7 @@ model=model_3374_obj
 iop1=Read
 category=trail_clue_easy
 param=trail_desc,Speak to Ned in|Draynor Village.
+tradeable=no
 
 [trail_clue_easy_simple_exp022]
 name=Clue scroll
@@ -350,6 +374,7 @@ model=model_3374_obj
 iop1=Read
 category=trail_clue_easy
 param=trail_desc,Speak to Doric, who|lives north of Falador.
+tradeable=no
 
 [trail_clue_easy_simple_exp023]
 name=Clue scroll
@@ -364,6 +389,7 @@ model=model_3374_obj
 iop1=Read
 category=trail_clue_easy
 param=trail_desc,Speak to Gaius in Taverley.
+tradeable=no
 
 [trail_clue_easy_simple_exp024]
 name=Clue scroll
@@ -378,6 +404,7 @@ model=model_3374_obj
 iop1=Read
 category=trail_clue_easy
 param=trail_desc,Search the drawers in|Catherby's Archery shop.
+tradeable=no
 
 [trail_clue_easy_simple_exp025]
 name=Clue scroll
@@ -392,6 +419,7 @@ model=model_3374_obj
 iop1=Read
 category=trail_clue_easy
 param=trail_desc,Speak to Arhein in Catherby.
+tradeable=no
 
 [trail_clue_easy_simple_exp026]
 name=Clue scroll
@@ -406,6 +434,7 @@ model=model_3374_obj
 iop1=Read
 category=trail_clue_easy
 param=trail_desc,Speak to Sir Kay|in Camelot Castle.
+tradeable=no
 
 [trail_clue_easy_riddle_exp001]
 name=Clue scroll
@@ -420,6 +449,7 @@ model=model_3374_obj
 iop1=Read
 category=trail_clue_easy
 param=trail_desc,Search the chest in the left-|hand tower of Camelot Castle.
+tradeable=no
 
 [trail_clue_easy_riddle_exp002]
 name=Clue scroll
@@ -434,6 +464,7 @@ model=model_3374_obj
 iop1=Read
 category=trail_clue_easy
 param=trail_desc,Search the crates in the|guard house of the northern|gate of East Ardougne.
+tradeable=no
 
 [trail_clue_easy_riddle_exp003]
 name=Clue scroll
@@ -448,6 +479,7 @@ model=model_3374_obj
 iop1=Read
 category=trail_clue_easy
 param=trail_desc,Search the boxes just|outside the Armour shop|in East Ardougne.
+tradeable=no
 
 [trail_clue_easy_riddle_exp004]
 name=Clue scroll
@@ -462,6 +494,7 @@ model=model_3374_obj
 iop1=Read
 category=trail_clue_easy
 param=trail_desc,Search the crates in East|Ardougne's general store.
+tradeable=no
 
 [trail_clue_easy_riddle_exp005]
 name=Clue scroll
@@ -476,6 +509,7 @@ model=model_3374_obj
 iop1=Read
 category=trail_clue_easy
 param=trail_desc,Search the crates in the shed|just north of East Ardougne.
+tradeable=no
 
 [trail_clue_easy_riddle_exp006]
 name=Clue scroll
@@ -490,6 +524,7 @@ model=model_3374_obj
 iop1=Read
 category=trail_clue_easy
 param=trail_desc,Search the drawers|above Varrock's shops.
+tradeable=no
 
 [trail_clue_easy_riddle_exp007]
 name=Clue scroll
@@ -504,6 +539,7 @@ model=model_3374_obj
 iop1=Read
 category=trail_clue_easy
 param=trail_desc,Search the crates near|a cart in Varrock.
+tradeable=no
 
 [trail_clue_easy_riddle_exp008]
 name=Clue scroll
@@ -518,6 +554,7 @@ model=model_3374_obj
 iop1=Read
 category=trail_clue_easy
 param=trail_desc,Search the drawers found upstairs|in East Ardougne's houses.
+tradeable=no
 
 [trail_clue_easy_riddle_exp009]
 name=Clue scroll
@@ -532,6 +569,7 @@ model=model_3374_obj
 iop1=Read
 category=trail_clue_easy
 param=trail_desc,A crate found in the|tower of a church is|your next location.
+tradeable=no
 
 [trail_clue_easy_riddle_exp010]
 name=Clue scroll
@@ -546,3 +584,4 @@ model=model_3374_obj
 iop1=Read
 category=trail_clue_easy
 param=trail_desc,Look in the ground floor|crates of houses in Falador.
+tradeable=no

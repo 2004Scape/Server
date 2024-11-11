@@ -11,6 +11,7 @@ weight=3lb
 2dxan=280
 op4=Light
 weight=3lb
+tradeable=no
 
 [tutorial_raw_shrimps]
 name=Raw shrimps
@@ -25,7 +26,6 @@ recol2d=30319
 2dxan=272
 cost=5
 weight=120g
-tradeable=yes
 
 [tutorial_pot_of_flour]
 name=Pot of flour
@@ -38,4 +38,3 @@ model=model_2406_obj
 2dxan=112
 cost=10
 weight=3lb
-tradeable=yes

@@ -9,7 +9,6 @@ members=yes
 2dyan=1836
 2dxan=124
 weight=1oz
-tradeable=yes
 
 [bucket_wax]
 name=Bucket of wax
@@ -24,4 +23,3 @@ members=yes
 2dyan=1688
 2dxan=204
 weight=2500g
-tradeable=yes

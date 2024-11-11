@@ -16,7 +16,6 @@ iop1=Eat
 weight=250g
 category=category_128
 members=yes
-tradeable=yes
 
 [premade_toad_batta]
 name=Toad batta
@@ -34,7 +33,6 @@ members=yes
 cost=120
 weight=250g
 category=category_128
-tradeable=yes
 
 [premade_cheese_tom_batta]
 name=Cheese+tom batta
@@ -52,7 +50,6 @@ members=yes
 cost=120
 weight=250g
 category=category_128
-tradeable=yes
 
 [premade_fruit_batta]
 name=Fruit batta
@@ -70,7 +67,6 @@ members=yes
 cost=120
 weight=250g
 category=category_128
-tradeable=yes
 
 [premade_vegetable_batta]
 name=Vegetable batta
@@ -90,7 +86,6 @@ members=yes
 cost=120
 weight=250g
 category=category_128
-tradeable=yes
 
 [odd_batta]
 name=Odd batta
@@ -113,7 +108,6 @@ category=category_124
 weight=250g
 iop1=Eat
 category=category_15
-tradeable=yes
 
 [burnt_batta]
 name=Burnt batta
@@ -129,7 +123,6 @@ recol1d=5285
 2dyan=136
 2dxan=236
 weight=200g
-tradeable=yes
 
 [half_baked_batta]
 iop1=Inspect
@@ -146,6 +139,7 @@ recol1d=18820
 2dyan=136
 2dxan=236
 weight=250g
+tradeable=no
 
 [raw_batta]
 name=Raw batta
@@ -159,6 +153,7 @@ model=model_2447_obj
 2dyan=136
 2dxan=236
 weight=250g
+tradeable=no
 
 [unfinished_worm_batta1]
 name=Unfinished batta
@@ -178,7 +173,6 @@ iop1=Eat
 weight=250g
 category=category_15
 members=yes
-tradeable=yes
 param=gnome_cooking_type,3
 
 [worm_batta]
@@ -198,7 +192,6 @@ recol2d=30385
 weight=250g
 iop1=Eat
 members=yes
-tradeable=yes
 
 [toad_batta]
 category=category_125
@@ -216,7 +209,6 @@ recol1d=224
 iop1=Eat
 weight=250g
 members=yes
-tradeable=yes
 
 [unfinished_cheese_tom_batta1]
 name=Unfinished batta
@@ -234,7 +226,6 @@ iop1=Eat
 weight=250g
 category=category_15
 members=yes
-tradeable=yes
 param=gnome_cooking_type,3
 
 [cheese_tom_batta]
@@ -253,7 +244,6 @@ recol1d=31649
 iop1=Eat
 weight=250g
 members=yes
-tradeable=yes
 
 [unfinished_fruit_batta1]
 name=Unfinished batta
@@ -273,7 +263,6 @@ iop1=Eat
 weight=250g
 category=category_15
 members=yes
-tradeable=yes
 param=gnome_cooking_type,3
 
 [unfinished_fruit_batta2]
@@ -294,7 +283,6 @@ iop1=Eat
 weight=250g
 category=category_15
 members=yes
-tradeable=yes
 param=gnome_cooking_type,3
 
 [unfinished_fruit_batta3]
@@ -315,7 +303,6 @@ iop1=Eat
 weight=250g
 category=category_15
 members=yes
-tradeable=yes
 param=gnome_cooking_type,3
 
 [unfinished_fruit_batta4]
@@ -336,7 +323,6 @@ iop1=Eat
 weight=250g
 category=category_15
 members=yes
-tradeable=yes
 param=gnome_cooking_type,3
 
 [unfinished_fruit_batta5]
@@ -357,7 +343,6 @@ iop1=Eat
 weight=250g
 category=category_15
 members=yes
-tradeable=yes
 param=gnome_cooking_type,3
 
 [unfinished_fruit_batta6]
@@ -378,7 +363,6 @@ recol2d=31393
 weight=250g
 iop1=Eat
 category=category_15
-tradeable=yes
 param=gnome_cooking_type,3
 
 [unfinished_fruit_batta7]
@@ -399,7 +383,6 @@ iop1=Eat
 weight=250g
 category=category_15
 members=yes
-tradeable=yes
 param=gnome_cooking_type,3
 
 [unfinished_fruit_batta8]
@@ -418,7 +401,6 @@ iop1=Eat
 weight=250g
 category=category_15
 members=yes
-tradeable=yes
 param=gnome_cooking_type,3
 
 [fruit_batta]
@@ -437,7 +419,6 @@ recol1d=31201
 iop1=Eat
 weight=250g
 members=yes
-tradeable=yes
 
 [unfinished_vegetable_batta1]
 name=Unfinished batta
@@ -457,7 +438,6 @@ iop1=Eat
 weight=250g
 category=category_15
 members=yes
-tradeable=yes
 param=gnome_cooking_type,3
 
 [vegetable_batta]
@@ -477,4 +457,3 @@ recol2d=27567
 iop1=Eat
 weight=250g
 members=yes
-tradeable=yes

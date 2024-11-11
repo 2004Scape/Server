@@ -5,6 +5,8 @@ import Packet from '#jagex2/io/Packet.js';
 import { ConfigType } from '#lostcity/cache/config/ConfigType.js';
 import { ParamHelper, ParamMap } from '#lostcity/cache/config/ParamHelper.js';
 import Jagfile from '#jagex2/io/Jagfile.js';
+import { printFatalError } from '#lostcity/util/Logger.js';
+import kleur from 'kleur';
 
 export default class LocType extends ConfigType {
     static configNames: Map<string, number> = new Map();
@@ -182,6 +184,8 @@ export default class LocType extends ConfigType {
             }
         } else if (code === 60) {
             this.mapfunction = dat.g2();
+        } else if (code === 61) {
+            this.category = dat.g2();
         } else if (code === 62) {
             this.mirror = true;
         } else if (code === 64) {
@@ -204,14 +208,12 @@ export default class LocType extends ConfigType {
             this.zoff = dat.g2s();
         } else if (code === 73) {
             this.forcedecor = true;
-        } else if (code === 200) {
-            this.category = dat.g2();
         } else if (code === 249) {
             this.params = ParamHelper.decodeParams(dat);
         } else if (code === 250) {
             this.debugname = dat.gjstr();
         } else {
-            throw new Error(`Unrecognized loc config code: ${code}`);
+            printFatalError(`Unrecognized loc config code: ${code}\nThis error comes from the packed data being out of sync, try running ` + kleur.green().bold('npm run build') + ', then restarting this.');
         }
     }
 }

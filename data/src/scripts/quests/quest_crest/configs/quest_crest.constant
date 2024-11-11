@@ -1,0 +1,28 @@
+^crest_not_started = 0
+^crest_spoken_dimintheis = 1
+^crest_spoken_caleb = 2
+^crest_caleb_piece = 3
+^crest_caleb_where = 4
+^crest_spoken_gem_trader = 5
+^crest_spoken_avan = 6
+^crest_spoken_boot = 7
+^crest_avan_piece = 8
+^crest_spoken_johnathon = 9
+^crest_cured_johnathon = 10
+^crest_complete = 11
+
+^crest_wind_blast_used = 0
+^crest_water_blast_used = 1
+^crest_earth_blast_used = 2
+^crest_fire_blast_used = 3
+^crest_north_room_lever = 4
+^crest_north_lever = 5
+^crest_south_lever = 6
+^crest_cooking_gauntlets_chosen = 7
+^crest_goldsmithing_gauntlets_chosen = 8
+^crest_chaos_gauntlets_chosen = 9
+
+^crest_all_spells_cast = 15
+
+^crest_perfect_mine_lower_bound = 0_42_151_48_20
+^crest_perfect_mine_upper_bound = 0_42_151_52_29

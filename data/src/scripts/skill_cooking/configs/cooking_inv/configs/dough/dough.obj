@@ -10,7 +10,6 @@ recol1d=29595
 2dxan=248
 weight=120g
 members=yes
-tradeable=yes
 
 [bread_dough]
 name=Bread dough
@@ -23,7 +22,6 @@ model=model_2756_obj
 2dxan=264
 cost=4
 weight=600g
-tradeable=yes
 
 [pitta_bread]
 name=Pitta bread
@@ -37,7 +35,6 @@ recol1d=30547
 2dxan=248
 weight=100g
 members=yes
-tradeable=yes
 
 [bread]
 cost=12
@@ -52,7 +49,6 @@ model=model_2409_obj
 weight=500g
 category=category_59
 respawnrate=200
-tradeable=yes
 
 [burnt_pitta_bread]
 name=Burnt pitta bread
@@ -66,7 +62,6 @@ recol1d=5285
 2dxan=248
 weight=80g
 members=yes
-tradeable=yes
 
 [burnt_bread]
 name=Burnt bread
@@ -82,4 +77,3 @@ recol2d=5285
 2dxan=392
 cost=1
 weight=350g
-tradeable=yes

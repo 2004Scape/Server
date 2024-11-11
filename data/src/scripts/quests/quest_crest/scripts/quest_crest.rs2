@@ -1,0 +1,123 @@
+// RSC https://www.youtube.com/watch?v=BqHt6DrmIiY
+// RS 2006 (fight + finish) https://www.youtube.com/watch?v=AKFPNpw2ROQ
+// RS 2008 (full) https://www.youtube.com/watch?v=RFff1NoOGDo
+
+[queue,crest_complete]
+%crest_progress = ^crest_complete;
+inv_add(inv, steel_gauntlets, 1);
+~send_quest_complete(questlist:crest, steel_gauntlets, 250, ^squire_questpoints, "You have completed the\\nFamily Crest Quest!");
+
+[oploc1,witchaven_north_room_lever_down]
+~crest_toggle_lever(coord, witchaven_north_room_lever_up, ^crest_north_room_lever, true);
+
+[oploc1,witchaven_north_room_lever_up]
+~crest_toggle_lever(coord, witchaven_north_room_lever_down, ^crest_north_room_lever, false);
+
+[oploc1,witchaven_north_lever_down]
+~crest_toggle_lever(coord, witchaven_north_lever_up, ^crest_north_lever, true);
+
+[oploc1,witchaven_north_lever_up]
+~crest_toggle_lever(coord, witchaven_north_lever_down, ^crest_north_lever, false);
+
+[oploc1,witchaven_south_lever_down]
+~crest_toggle_lever(coord, witchaven_south_lever_up, ^crest_south_lever, true);
+
+[oploc1,witchaven_south_lever_up]
+~crest_toggle_lever(coord, witchaven_south_lever_down, ^crest_south_lever, false);
+
+[proc,crest_toggle_lever](coord $coord, loc $new_loc, int $lever, boolean $up) {
+    facesquare(movecoord($coord, 0, 1, 0));
+    anim(human_leverdown, 0);
+    sound_synth(lever, 0, 0);
+    // Tested on OSRS, levers revert to original state after 5 mins
+    loc_change($new_loc, 300);
+    if ($up = true) {
+        %crest_spells_levers_gauntlets = setbit(%crest_spells_levers_gauntlets, $lever);
+        mes("The lever is now up.");
+    }
+    else {
+        %crest_spells_levers_gauntlets = clearbit(%crest_spells_levers_gauntlets, $lever);
+        mes("The lever is now down.");
+    }
+}
+
+// Opens if north lever is down and south lever is up
+[oploc1,witchaven_north_door]
+if (testbit(%crest_spells_levers_gauntlets, ^crest_north_lever) = false &
+    testbit(%crest_spells_levers_gauntlets, ^crest_south_lever) = true) {
+    ~open_and_close_door(witchaven_door_open, ~check_axis(coord, loc_coord, loc_angle), false);
+} 
+else {
+    mes("This door is locked.");
+}
+
+// Opens if north lever is up and south lever is up
+[oploc1,witchaven_south_west_door]
+if (testbit(%crest_spells_levers_gauntlets, ^crest_north_lever) = true &
+    testbit(%crest_spells_levers_gauntlets, ^crest_south_lever) = true) {
+    ~open_and_close_door(witchaven_door_open, ~check_axis(coord, loc_coord, loc_angle), false);
+}
+else {
+    mes("This door is locked.");
+}
+
+// Opens if north lever is up and south lever is down
+[oploc1,witchaven_south_east_door]
+if (testbit(%crest_spells_levers_gauntlets, ^crest_north_lever) = true &
+    testbit(%crest_spells_levers_gauntlets, ^crest_south_lever) = false) {
+    ~open_and_close_door(witchaven_door_open, ~check_axis(coord, loc_coord, loc_angle), false);
+}
+else {
+    mes("This door is locked.");
+}
+
+// Opens if north lever is up, south lever is down, and the north room lever is up
+[oploc1,witchaven_goldmine_door]
+if (testbit(%crest_spells_levers_gauntlets, ^crest_north_lever) = true &
+    testbit(%crest_spells_levers_gauntlets, ^crest_south_lever) = false &
+    testbit(%crest_spells_levers_gauntlets, ^crest_north_room_lever) = true) {
+    ~open_and_close_door(witchaven_door_open, ~check_axis(coord, loc_coord, loc_angle), false);
+}
+else {
+    mes("This door is locked.");
+}
+
+[opheldu,crest_part_1]
+if (last_useitem = crest_part_2 | last_useitem = crest_part_3) {
+    @combine_crest_parts;
+} else {
+    ~displaymessage(^dm_default);
+}
+
+[opheldu,crest_part_2]
+if (last_useitem = crest_part_1 | last_useitem = crest_part_3) {
+    @combine_crest_parts;
+} else {
+    ~displaymessage(^dm_default);
+}
+
+[opheldu,crest_part_3]
+if (last_useitem = crest_part_1 | last_useitem = crest_part_2) {
+    @combine_crest_parts;
+} else {
+    ~displaymessage(^dm_default);
+}
+
+[label,combine_crest_parts]
+if (inv_total(inv, crest_part_1) > 0 & inv_total(inv, crest_part_2) > 0 & inv_total(inv, crest_part_3) > 0) {
+    inv_del(inv, crest_part_1, 1);
+    inv_del(inv, crest_part_2, 1);
+    inv_del(inv, crest_part_3, 1);
+    inv_add(inv, family_crest, 1);
+    mes("You have restored the Family Crest.");
+} else {
+    mes("You still need one more piece of the crest.");
+}
+
+[opheld5,steel_gauntlets] @drop_gauntlets;
+[opheld5,gauntlets_of_cooking] @drop_gauntlets;
+[opheld5,gauntlets_of_goldsmithing] @drop_gauntlets;
+[opheld5,gauntlets_of_chaos] @drop_gauntlets;
+
+[label,drop_gauntlets]
+inv_delslot(inv, last_slot);

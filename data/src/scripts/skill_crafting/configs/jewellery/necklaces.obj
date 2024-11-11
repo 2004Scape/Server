@@ -15,7 +15,6 @@ wearpos=front
 manwear=model_281_obj_wear,0
 womanwear=model_445_obj_wear,0
 weight=7g
-tradeable=yes
 param=crafting_jewelry_struct,gold_necklace
 
 [sapphire_necklace]
@@ -35,7 +34,6 @@ wearpos=front
 manwear=model_281_obj_wear,0
 womanwear=model_445_obj_wear,0
 weight=10g
-tradeable=yes
 respawnrate=500
 
 [emerald_necklace]
@@ -55,7 +53,6 @@ wearpos=front
 manwear=model_281_obj_wear,0
 womanwear=model_445_obj_wear,0
 weight=10g
-tradeable=yes
 
 [ruby_necklace]
 cost=2175
@@ -74,7 +71,6 @@ wearpos=front
 manwear=model_281_obj_wear,0
 womanwear=model_445_obj_wear,0
 weight=10g
-tradeable=yes
 
 [diamond_necklace]
 cost=3675
@@ -93,7 +89,6 @@ wearpos=front
 manwear=model_281_obj_wear,0
 womanwear=model_445_obj_wear,0
 weight=10g
-tradeable=yes
 
 [dragonstone_necklace]
 cost=18375
@@ -113,7 +108,6 @@ wearpos=front
 manwear=model_281_obj_wear,0
 womanwear=model_445_obj_wear,0
 weight=10g
-tradeable=yes
 
 [black_necklace]
 model=model_2506_obj
@@ -126,7 +120,6 @@ recol2d=4228
 2dzoom=620
 2dyan=68
 2dxan=424
-tradeable=yes
 dummyitem=inv_only
 
 [obj_1668]

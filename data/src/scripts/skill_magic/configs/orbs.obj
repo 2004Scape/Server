@@ -13,7 +13,6 @@ members=yes
 name=Unpowered orb
 desc=I'd prefer it if it was powered.
 cost=100
-tradeable=yes
 param=crafting_glass_struct,stafforb
 
 [fire_orb]
@@ -30,7 +29,6 @@ name=Fire orb
 desc=A magic glowing orb.
 cost=300
 weight=1lb
-tradeable=yes
 category=craft_orb
 param=crafting_staff_struct,fire_orb
 
@@ -48,7 +46,6 @@ name=Water orb
 desc=A magic glowing orb.
 cost=300
 weight=1lb
-tradeable=yes
 category=craft_orb
 param=crafting_staff_struct,water_orb
 
@@ -64,7 +61,6 @@ name=Air orb
 desc=A magic glowing orb.
 cost=300
 weight=1lb
-tradeable=yes
 category=craft_orb
 param=crafting_staff_struct,air_orb
 
@@ -82,6 +78,5 @@ name=Earth orb
 desc=A magic glowing orb.
 cost=300
 weight=1lb
-tradeable=yes
 category=craft_orb
 param=crafting_staff_struct,earth_orb

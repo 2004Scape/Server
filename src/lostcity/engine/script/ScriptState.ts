@@ -120,6 +120,11 @@ export default class ScriptState {
     dbRow: number = -1;
     dbRowQuery: number[] = [];
 
+    /**
+     * Used for debug commands
+     */
+    timespent: number = 0;
+
     huntIterator: IterableIterator<Entity> | null = null;
     npcIterator: IterableIterator<Npc> | null = null;
     locIterator: IterableIterator<Loc> | null = null;

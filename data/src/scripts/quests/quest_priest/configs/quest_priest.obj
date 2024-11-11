@@ -15,6 +15,7 @@ wearpos=front
 manwear=model_280_obj_wear,0
 womanwear=model_444_obj_wear,0
 weight=10g
+tradeable=no
 
 [ghost_skull]
 name=Skull
@@ -28,3 +29,4 @@ model=model_2388_obj
 2dxan=160
 weight=80g
 param=no_alchemy,1
+tradeable=no

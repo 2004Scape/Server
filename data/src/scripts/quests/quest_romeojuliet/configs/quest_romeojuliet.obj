@@ -10,7 +10,6 @@ recol1d=30967
 2dyan=668
 2dxan=404
 weight=7g
-tradeable=yes
 
 [juliet_message]
 name=Message
@@ -23,6 +22,7 @@ model=model_2600_obj
 2dyan=120
 2dxan=380
 weight=20g
+tradeable=no
 
 [cadaver]
 name=Cadaver
@@ -35,3 +35,4 @@ recol1d=30967
 2dyan=1996
 2dxan=84
 weight=25g
+tradeable=no

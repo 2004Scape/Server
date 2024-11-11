@@ -14,7 +14,6 @@ recol1d=19191
 weight=2oz
 category=category_69
 members=yes
-tradeable=yes
 // guessed name
 
 [unf_marrentill_potion]
@@ -31,7 +30,6 @@ recol1d=23158
 weight=2oz
 category=category_69
 members=yes
-tradeable=yes
 // guessed name
 
 [unf_tarromin_potion]
@@ -48,7 +46,6 @@ recol1d=23251
 weight=2oz
 category=category_69
 members=yes
-tradeable=yes
 // guessed name
 
 [unf_harralander_potion]
@@ -65,7 +62,6 @@ recol1d=23155
 weight=2oz
 category=category_69
 members=yes
-tradeable=yes
 // guessed name
 
 [unf_ranarr_potion]
@@ -82,7 +78,6 @@ recol1d=19186
 weight=2oz
 category=category_69
 members=yes
-tradeable=yes
 // guessed name
 
 [unf_irit_potion]
@@ -99,7 +94,6 @@ recol1d=21147
 weight=2oz
 category=category_69
 members=yes
-tradeable=yes
 // guessed name
 
 [unf_avantoe_potion]
@@ -116,7 +110,6 @@ recol1d=20083
 weight=2oz
 category=category_69
 members=yes
-tradeable=yes
 // guessed name
 
 [unf_kwuarm_potion]
@@ -133,7 +126,6 @@ recol1d=23254
 weight=2oz
 category=category_69
 members=yes
-tradeable=yes
 // guessed name
 
 [unf_cadantine_potion]
@@ -150,7 +142,6 @@ recol1d=26324
 weight=2oz
 category=category_69
 members=yes
-tradeable=yes
 // guessed name
 
 [unf_dwarf_weed_potion]
@@ -167,7 +158,6 @@ recol1d=20186
 weight=2oz
 category=category_69
 members=yes
-tradeable=yes
 // guessed name
 
 [unf_torstol_potion]
@@ -184,7 +174,6 @@ recol1d=29427
 weight=2oz
 category=category_69
 members=yes
-tradeable=yes
 // guessed name
 
 [unf_lantadyme_potion]
@@ -201,4 +190,3 @@ recol1d=26324
 weight=2oz
 category=category_69
 members=yes
-tradeable=yes

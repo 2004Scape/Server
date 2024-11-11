@@ -42,7 +42,7 @@ export default class OpNpcUHandler extends MessageHandler<OpNpcU> {
             return false;
         }
 
-        if (!player.buildArea.npcs.has(npc.nid)) {
+        if (!player.buildArea.npcs.has(npc)) {
             player.unsetMapFlag();
             return false;
         }

@@ -13,6 +13,7 @@ stackable=yes
 2dxan=340
 2dxan=404
 weight=10g
+tradeable=no
 
 [fishing_trophy]
 name=Fishing trophy
@@ -24,6 +25,7 @@ members=yes
 2dyan=124
 2dxan=104
 weight=3oz
+tradeable=no
 
 [fishing_pass]
 name=Fishing pass
@@ -36,3 +38,4 @@ members=yes
 2dyan=120
 2dxan=380
 weight=6g
+tradeable=no

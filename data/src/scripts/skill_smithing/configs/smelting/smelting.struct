@@ -1,6 +1,7 @@
 [smelting_bronze_bar]
 param=levelfailure,You need a Smithing level of 1 to smelt a bronze bar.
 param=processfailure,You need at least 1 Copper ore and 1 Tin ore to smelt a bronze bar.
+param=processfailure_superheat,You need one copper ore and one tin ore to make bronze.
 param=processmessage,You smelt the copper and tin together in the furnace.
 param=productmessage,You retrieve a bar of bronze.
 param=product,bronze_bar
@@ -96,5 +97,12 @@ param=bar_count,1
 param=ingredient_secondary,coal
 param=ingredient_secondary_count,8
 
-//perfect gold bar
-[obj_2365]
+[smelting_perfect_gold_bar]
+param=levelfailure,You need a Smithing level of 40 to smelt a gold bar.
+param=processmessage,You place a lump of gold in the furnace.
+param=productmessage,You retrieve a bar of gold from the furnace.
+param=product,perfect_gold_bar
+param=levelrequired,40
+param=productexp,225
+param=ingredient,perfect_gold_ore
+param=bar_count,1

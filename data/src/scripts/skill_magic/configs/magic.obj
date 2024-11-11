@@ -16,7 +16,6 @@ womanwear=model_348_idk,0
 manwear2=model_292_idk
 womanwear2=model_456_idk
 weight=2lb
-tradeable=yes
 param=magicattack,3
 param=magicdefence,3
 
@@ -37,7 +36,6 @@ womanwear=model_377_obj_wear,0
 manhead=model_44_obj_wear
 womanhead=model_102_obj_wear
 weight=1lb
-tradeable=yes
 param=magicattack,2
 param=magicdefence,2
 
@@ -59,7 +57,6 @@ womanwear=model_348_idk,0
 manwear2=model_292_idk
 womanwear2=model_456_idk
 weight=2lb
-tradeable=yes
 param=magicattack,3
 param=magicdefence,3
 
@@ -82,6 +79,5 @@ womanwear=model_377_obj_wear,0
 manhead=model_44_obj_wear
 womanhead=model_102_obj_wear
 weight=1lb
-tradeable=yes
 param=magicattack,2
 param=magicdefence,2

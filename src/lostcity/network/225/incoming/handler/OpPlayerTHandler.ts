@@ -28,7 +28,7 @@ export default class OpPlayerTHandler extends MessageHandler<OpPlayerT> {
             return false;
         }
 
-        if (!player.buildArea.players.has(other.uid)) {
+        if (!player.buildArea.players.has(other)) {
             player.unsetMapFlag();
             return false;
         }

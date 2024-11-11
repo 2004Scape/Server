@@ -12,7 +12,6 @@ model=model_2364_obj
 2dyan=1588
 2dxan=376
 weight=7g
-tradeable=yes
 respawnrate=200
 // guessed name
 
@@ -28,7 +27,6 @@ model=model_2364_obj
 2dyan=1588
 2dxan=376
 weight=7g
-tradeable=yes
 // guessed name
 
 [unidentified_tarromin]
@@ -43,7 +41,6 @@ model=model_2364_obj
 2dyan=1588
 2dxan=376
 weight=7g
-tradeable=yes
 // guessed name
 
 [unidentified_harralander]
@@ -58,7 +55,6 @@ model=model_2364_obj
 2dyan=1588
 2dxan=376
 weight=7g
-tradeable=yes
 // guessed name
 
 [unidentified_ranarr_weed]
@@ -72,7 +68,6 @@ model=model_2364_obj
 2dyan=1588
 2dxan=376
 weight=7g
-tradeable=yes
 // guessed name
 
 [unidentified_irit_leaf]
@@ -86,7 +81,6 @@ model=model_2364_obj
 2dyan=1588
 2dxan=376
 weight=7g
-tradeable=yes
 // guessed name
 
 [unidentified_avantoe]
@@ -100,7 +94,6 @@ model=model_2364_obj
 2dyan=1588
 2dxan=376
 weight=7g
-tradeable=yes
 // guessed name
 
 [unidentified_kwuarm]
@@ -114,7 +107,6 @@ model=model_2364_obj
 2dyan=1588
 2dxan=376
 weight=7g
-tradeable=yes
 // guessed name
 
 [unidentified_cadantine]
@@ -128,7 +120,6 @@ model=model_2364_obj
 2dyan=1588
 2dxan=376
 weight=7g
-tradeable=yes
 // guessed name
 
 [unidentified_dwarf_weed]
@@ -142,7 +133,6 @@ model=model_2364_obj
 2dyan=1588
 2dxan=376
 weight=7g
-tradeable=yes
 // guessed name
 
 [unidentified_torstol]
@@ -156,7 +146,6 @@ model=model_2364_obj
 2dyan=1588
 2dxan=376
 weight=7g
-tradeable=yes
 // guessed name
 
 [unidentified_snake_weed]
@@ -176,6 +165,7 @@ members=yes
 2dxan=484
 iop1=Identify
 weight=7g
+tradeable=no
 // guessed name
 
 [unidentified_ardrigal]
@@ -195,6 +185,7 @@ members=yes
 2dxan=376
 weight=7g
 iop1=Identify
+tradeable=no
 // guessed name
 
 [unidentified_sito_foil]
@@ -209,6 +200,7 @@ members=yes
 2dxan=376
 iop1=Identify
 weight=7g
+tradeable=no
 // guessed name
 
 [unidentified_volencia_moss]
@@ -223,6 +215,7 @@ members=yes
 2dxan=376
 iop1=Identify
 weight=7g
+tradeable=no
 // guessed name
 
 [unidentified_rogues_purse]
@@ -237,6 +230,7 @@ members=yes
 2dxan=376
 iop1=Identify
 weight=7g
+tradeable=no
 // guessed name
 
 [unidentified_lantadyme]
@@ -251,4 +245,3 @@ model=model_2364_obj
 2dyan=1588
 2dxan=376
 weight=7g
-tradeable=yes

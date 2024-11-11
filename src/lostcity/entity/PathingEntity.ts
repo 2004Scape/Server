@@ -82,9 +82,8 @@ export default abstract class PathingEntity extends Entity {
     targetZ: number = -1;
     apRange: number = 10;
     apRangeCalled: boolean = false;
-    alreadyFacedEntity: boolean = false;
 
-    mask: number = 0;
+    masks: number = 0;
     exactStartX: number = -1;
     exactStartZ: number = -1;
     exactEndX: number = -1;
@@ -402,6 +401,10 @@ export default abstract class PathingEntity extends Entity {
 
     pathToMoveClick(input: number[], needsfinding: boolean): void {
         if (this.moveStrategy === MoveStrategy.SMART) {
+            if (this.target && this.target instanceof PathingEntity && Environment.NODE_CLIENT_ROUTEFINDER && CoordGrid.intersects(this.x, this.z, this.width, this.length, this.target.x, this.target.z, this.target.width, this.target.length)) {
+                this.queueWaypoints(findNaivePath(this.level, this.x, this.z, this.target.x, this.target.z, this.width, this.length, this.target.width, this.target.length, 0, CollisionType.NORMAL));
+                return;
+            }
             if (needsfinding) {
                 const { x, z } = CoordGrid.unpackCoord(input[0]);
                 this.queueWaypoints(findPath(this.level, this.x, this.z, x, z));
@@ -455,7 +458,11 @@ export default abstract class PathingEntity extends Entity {
 
         if (this.moveStrategy === MoveStrategy.SMART) {
             if (this.target instanceof PathingEntity) {
-                this.queueWaypoints(findPathToEntity(this.level, this.x, this.z, this.target.x, this.target.z, this.width, this.target.width, this.target.length));
+                if (Environment.NODE_CLIENT_ROUTEFINDER && CoordGrid.intersects(this.x, this.z, this.width, this.length, this.target.x, this.target.z, this.target.width, this.target.length)) {
+                    this.queueWaypoints(findNaivePath(this.level, this.x, this.z, this.target.x, this.target.z, this.width, this.length, this.target.width, this.target.length, 0, CollisionType.NORMAL));
+                } else {
+                    this.queueWaypoints(findPathToEntity(this.level, this.x, this.z, this.target.x, this.target.z, this.width, this.target.width, this.target.length));
+                }
             } else if (this.target instanceof Loc) {
                 const forceapproach = LocType.get(this.target.type).forceapproach;
                 this.queueWaypoints(findPathToLoc(this.level, this.x, this.z, this.target.x, this.target.z, this.width, this.target.width, this.target.length, this.target.angle, this.target.shape, forceapproach));
@@ -513,13 +520,13 @@ export default abstract class PathingEntity extends Entity {
             const pid: number = target.pid + 32768;
             if (this.faceEntity !== pid) {
                 this.faceEntity = pid;
-                this.mask |= this.entitymask;
+                this.masks |= this.entitymask;
             }
         } else if (target instanceof Npc) {
             const nid: number = target.nid;
             if (this.faceEntity !== nid) {
                 this.faceEntity = nid;
-                this.mask |= this.entitymask;
+                this.masks |= this.entitymask;
             }
         } else {
             // direction when the player is first observed (updates on movement)
@@ -532,7 +539,7 @@ export default abstract class PathingEntity extends Entity {
 
             if (interaction === Interaction.ENGINE) {
                 // mask updates will be sent every time from the packet handler
-                this.mask |= this.coordmask;
+                this.masks |= this.coordmask;
             }
         }
 
@@ -549,7 +556,6 @@ export default abstract class PathingEntity extends Entity {
         this.targetZ = -1;
         this.apRange = 10;
         this.apRangeCalled = false;
-        this.alreadyFacedEntity = true;
     }
 
     protected getCollisionStrategy(): CollisionType | null {
@@ -584,7 +590,7 @@ export default abstract class PathingEntity extends Entity {
         this.interacted = false;
         this.apRangeCalled = false;
 
-        this.mask = 0;
+        this.masks = 0;
         this.exactStartX = -1;
         this.exactStartZ = -1;
         this.exactEndX = -1;
@@ -603,10 +609,9 @@ export default abstract class PathingEntity extends Entity {
         this.graphicHeight = -1;
         this.graphicDelay = -1;
 
-        if (this.alreadyFacedEntity && !this.target && this.faceEntity !== -1) {
-            this.mask |= this.entitymask;
+        if (!this.target && this.faceEntity !== -1) {
+            this.masks |= this.entitymask;
             this.faceEntity = -1;
-            this.alreadyFacedEntity = false;
         }
     }
 

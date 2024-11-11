@@ -11,6 +11,7 @@ recol1d=22945
 2dyan=20
 2dxan=328
 weight=25g
+tradeable=no
 
 [id_papers]
 name=Id papers
@@ -23,6 +24,7 @@ members=yes
 2dyan=120
 2dxan=380
 weight=10g
+tradeable=no
 
 [miscellaneous_key]
 name=Miscellaneous key
@@ -37,7 +39,6 @@ recol1d=22945
 2dxan=328
 weight=10g
 members=yes
-tradeable=yes
 
 [thieves_armband]
 name=Thieves' armband
@@ -51,6 +52,7 @@ model=model_2820_obj
 2dxan=296
 weight=25g
 members=yes
+tradeable=no
 
 [petes_candlestick]
 name=Pete's candlestick
@@ -63,7 +65,6 @@ model=model_2505_obj
 2dxan=184
 weight=500g
 members=yes
-tradeable=yes
 
 [fire_feather]
 name=Fire feather
@@ -79,3 +80,4 @@ recol1d=31041
 2dxan=428
 weight=2g
 members=yes
+tradeable=no
