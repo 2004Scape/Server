@@ -12,7 +12,7 @@ bench.add('bitTest', (): void => {
     }
 });
 
-await bench.warmup();
+bench.warmup = true;
 await bench.run();
 
 console.table(bench.table());

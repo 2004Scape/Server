@@ -54,7 +54,7 @@ export default class Jagfile {
             this.data = new Uint8Array(src.data);
             this.unpacked = false;
         } else {
-            this.data = BZip2.decompress(src.data, unpackedSize, true);
+            this.data = BZip2.decompress(src.data.subarray(6), unpackedSize, true);
             src = new Packet(this.data);
             this.unpacked = true;
         }
@@ -212,18 +212,23 @@ export default class Jagfile {
         const jag: Packet = Packet.alloc(5);
         jag.p3(buf.pos);
         if (compressWhole) {
-            buf = new Packet(BZip2.compress(buf.data, false, true));
+            const sub = buf.data.subarray(0, buf.pos);
+
+            const compressed = new Packet(BZip2.compress(sub, false, true));
+            compressed.pos = compressed.data.length;
+
+            buf.release();
+            buf = compressed;
         }
-        if (compressWhole) {
-            jag.p3(buf.data.length);
-            jag.pdata(buf.data, 0, buf.data.length);
-        } else {
-            jag.p3(buf.pos);
-            jag.pdata(buf.data, 0, buf.pos);
+
+        jag.p3(buf.pos);
+        jag.pdata(buf.data, 0, buf.pos);
+
+        if (!compressWhole) {
+            buf.release();
         }
 
         jag.save(path);
-        buf.release();
         jag.release();
     }
 
