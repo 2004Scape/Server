@@ -10,6 +10,7 @@ weight=150g
 name=Scorpion cage
 desc=It's empty!
 category=scorpcage
+tradeable=no
 
 [scorpion_cage_first]
 members=yes
@@ -23,6 +24,7 @@ weight=175g
 name=Scorpion cage
 desc=There is 1 scorpion inside.
 category=scorpcage
+tradeable=no
 
 [scorpion_cage_first_second]
 members=yes
@@ -36,6 +38,7 @@ weight=200g
 name=Scorpion cage
 desc=There are 2 scorpions inside.
 category=scorpcage
+tradeable=no
 
 [scorpion_cage_first_third]
 cost=10
@@ -49,6 +52,7 @@ weight=200g
 name=Scorpion cage
 desc=There are 2 scorpions inside.
 category=scorpcage
+tradeable=no
 
 [scorpion_cage_second]
 cost=10
@@ -62,6 +66,7 @@ weight=175g
 name=Scorpion cage
 desc=There is 1 scorpion inside.
 category=scorpcage
+tradeable=no
 
 [scorpion_cage_second_third]
 name=Scorpion cage
@@ -75,6 +80,7 @@ model=model_2703_obj
 2dxan=156
 weight=200g
 category=scorpcage
+tradeable=no
 
 [scorpion_cage_third]
 cost=10
@@ -88,6 +94,7 @@ weight=175g
 name=Scorpion cage
 desc=There is 1 scorpion inside.
 category=scorpcage
+tradeable=no
 
 [scorpion_cage_all]
 members=yes
@@ -101,3 +108,4 @@ weight=225g
 name=Scorpion cage
 desc=There are 3 scorpions inside.
 category=scorpcage
+tradeable=no

@@ -10,7 +10,6 @@ model=model_2830_obj
 2dyan=1888
 2dxan=104
 weight=1kg
-tradeable=yes
 category=alcoholic_drinks
 
 [whisky]
@@ -25,7 +24,6 @@ model=model_2660_obj
 2dyan=1888
 2dxan=104
 weight=1kg
-tradeable=yes
 category=alcoholic_drinks
 
 [gin]
@@ -42,7 +40,6 @@ recol1d=352
 2dyan=1888
 2dxan=104
 weight=1kg
-tradeable=yes
 category=alcoholic_drinks
 
 [brandy]
@@ -56,7 +53,6 @@ model=model_2836_obj
 2dyan=1808
 2dxan=76
 weight=1kg
-tradeable=yes
 category=alcoholic_drinks
 
 [cocktail_guide]
@@ -72,7 +68,6 @@ recol1d=7427
 2dyan=152
 2dxan=256
 weight=18oz
-tradeable=yes
 
 [cocktail_shaker]
 name=Cocktail shaker
@@ -86,6 +81,7 @@ model=model_2771_obj
 2dxan=92
 iop1=Inspect
 weight=150g
+tradeable=no
 
 [cocktail_glass]
 name=Cocktail glass
@@ -98,7 +94,6 @@ model=model_2655_obj
 cost=1
 weight=100g
 members=yes
-tradeable=yes
 
 [premade_blurberry_special]
 name=Blurberry special
@@ -115,7 +110,6 @@ recol1d=31297
 2dxan=104
 category=category_83
 weight=450g
-tradeable=yes
 param=next_obj_stage,cocktail_glass
 
 [premade_chocolate_saturday]
@@ -133,7 +127,6 @@ recol1d=16705
 2dxan=104
 category=category_83
 weight=450g
-tradeable=yes
 param=next_obj_stage,cocktail_glass
 
 [premade_drunk_dragon]
@@ -149,7 +142,6 @@ model=model_2661_obj
 2dxan=104
 category=category_83
 weight=450g
-tradeable=yes
 param=next_obj_stage,cocktail_glass
 
 [premade_fruit_blast]
@@ -171,7 +163,6 @@ recol3d=31553
 2dxan=104
 category=category_83
 weight=450g
-tradeable=yes
 param=next_obj_stage,cocktail_glass
 
 [premade_pineapple_punch]
@@ -193,7 +184,6 @@ recol3d=31201
 2dxan=104
 category=category_83
 weight=450g
-tradeable=yes
 param=next_obj_stage,cocktail_glass
 
 [premade_short_green_guy]
@@ -211,7 +201,6 @@ recol1d=17353
 2dxan=104
 category=category_83
 weight=450g
-tradeable=yes
 param=next_obj_stage,cocktail_glass
 
 [premade_wizard_blizzard]
@@ -229,7 +218,6 @@ recol1d=26517
 2dxan=104
 category=category_83
 weight=450g
-tradeable=yes
 param=next_obj_stage,cocktail_glass
 
 [unfinished_pineapple_punch1]
@@ -247,7 +235,6 @@ recol1d=31589
 2dxan=104
 weight=400g
 category=category_15
-tradeable=yes
 param=next_obj_stage,cocktail_glass
 param=gnome_cooking_type,0
 
@@ -266,7 +253,6 @@ recol1d=31589
 2dxan=104
 weight=400g
 category=category_15
-tradeable=yes
 param=next_obj_stage,cocktail_glass
 param=gnome_cooking_type,0
 
@@ -285,7 +271,6 @@ recol1d=31589
 2dxan=104
 weight=400g
 category=category_15
-tradeable=yes
 param=next_obj_stage,cocktail_glass
 param=gnome_cooking_type,0
 
@@ -308,7 +293,6 @@ recol3d=31201
 2dxan=104
 category=category_83
 weight=500g
-tradeable=yes
 param=next_obj_stage,cocktail_glass
 
 [unfinished_wizard_blizzard1]
@@ -326,7 +310,6 @@ recol1d=26517
 2dxan=104
 weight=400g
 category=category_15
-tradeable=yes
 param=next_obj_stage,cocktail_glass
 param=gnome_cooking_type,0
 
@@ -345,7 +328,6 @@ recol1d=26517
 2dxan=104
 weight=400g
 category=category_15
-tradeable=yes
 param=next_obj_stage,cocktail_glass
 param=gnome_cooking_type,0
 
@@ -364,7 +346,6 @@ recol1d=26517
 2dxan=104
 category=category_83
 weight=500g
-tradeable=yes
 param=next_obj_stage,cocktail_glass
 
 [unfinished_blurberry_special1]
@@ -382,7 +363,6 @@ recol1d=31297
 2dxan=104
 weight=400g
 category=category_15
-tradeable=yes
 param=next_obj_stage,cocktail_glass
 param=gnome_cooking_type,0
 
@@ -401,7 +381,6 @@ recol1d=31297
 2dxan=104
 weight=400g
 category=category_15
-tradeable=yes
 param=next_obj_stage,cocktail_glass
 param=gnome_cooking_type,0
 
@@ -420,7 +399,6 @@ recol1d=31297
 2dxan=104
 weight=400g
 category=category_15
-tradeable=yes
 param=next_obj_stage,cocktail_glass
 param=gnome_cooking_type,0
 
@@ -439,7 +417,6 @@ recol1d=31297
 2dxan=104
 weight=400g
 category=category_15
-tradeable=yes
 param=next_obj_stage,cocktail_glass
 param=gnome_cooking_type,0
 
@@ -458,7 +435,6 @@ recol1d=31297
 2dxan=104
 category=category_83
 weight=500g
-tradeable=yes
 param=next_obj_stage,cocktail_glass
 
 [unfinished_chocolate_saturday1]
@@ -476,7 +452,6 @@ recol1d=25199
 2dxan=104
 weight=400g
 category=category_15
-tradeable=yes
 param=next_obj_stage,cocktail_glass
 param=gnome_cooking_type,0
 
@@ -495,7 +470,6 @@ recol1d=16705
 2dxan=104
 weight=400g
 category=category_15
-tradeable=yes
 param=next_obj_stage,cocktail_glass
 param=gnome_cooking_type,0
 
@@ -514,7 +488,6 @@ recol1d=16705
 2dxan=104
 weight=400g
 category=category_15
-tradeable=yes
 param=next_obj_stage,cocktail_glass
 param=gnome_cooking_type,0
 
@@ -533,7 +506,6 @@ recol1d=16705
 2dxan=104
 weight=400g
 category=category_15
-tradeable=yes
 param=next_obj_stage,cocktail_glass
 param=gnome_cooking_type,0
 
@@ -552,7 +524,6 @@ recol1d=16705
 2dxan=104
 category=category_83
 weight=500g
-tradeable=yes
 param=next_obj_stage,cocktail_glass
 
 [unfinished_short_green_guy1]
@@ -570,7 +541,6 @@ recol1d=17353
 2dxan=104
 weight=400g
 category=category_15
-tradeable=yes
 param=next_obj_stage,cocktail_glass
 param=gnome_cooking_type,0
 
@@ -589,7 +559,6 @@ recol1d=17353
 2dxan=104
 weight=400g
 category=category_15
-tradeable=yes
 param=next_obj_stage,cocktail_glass
 param=gnome_cooking_type,0
 
@@ -608,7 +577,6 @@ recol1d=17353
 2dxan=104
 category=category_83
 weight=500g
-tradeable=yes
 param=next_obj_stage,cocktail_glass
 
 [unfinished_fruit_blast1]
@@ -626,7 +594,6 @@ recol1d=31393
 2dxan=104
 weight=400g
 category=category_15
-tradeable=yes
 param=next_obj_stage,cocktail_glass
 param=gnome_cooking_type,0
 
@@ -649,7 +616,6 @@ recol3d=31553
 2dxan=104
 category=category_83
 weight=500g
-tradeable=yes
 param=next_obj_stage,cocktail_glass
 
 [unfinished_drunk_dragon1]
@@ -665,7 +631,6 @@ model=model_2532_obj
 2dxan=104
 weight=400g
 category=category_15
-tradeable=yes
 param=next_obj_stage,cocktail_glass
 param=gnome_cooking_type,0
 
@@ -684,7 +649,6 @@ recol1d=473
 2dxan=104
 weight=400g
 category=category_15
-tradeable=yes
 param=next_obj_stage,cocktail_glass
 param=gnome_cooking_type,0
 
@@ -701,7 +665,6 @@ model=model_2661_obj
 2dxan=104
 weight=400g
 category=category_15
-tradeable=yes
 param=next_obj_stage,cocktail_glass
 param=gnome_cooking_type,0
 
@@ -718,7 +681,6 @@ model=model_2661_obj
 2dxan=104
 category=category_83
 weight=500g
-tradeable=yes
 param=next_obj_stage,cocktail_glass
 
 [odd_cocktail1]
@@ -737,7 +699,6 @@ recol1d=16912
 2dxan=104
 weight=400g
 category=category_15
-tradeable=yes
 param=next_obj_stage,cocktail_glass
 
 [odd_cocktail2]
@@ -756,7 +717,6 @@ recol1d=16912
 2dxan=104
 weight=400g
 category=category_15
-tradeable=yes
 param=next_obj_stage,cocktail_glass
 
 [odd_cocktail3]
@@ -775,7 +735,6 @@ recol1d=16912
 2dxan=104
 weight=400g
 category=category_15
-tradeable=yes
 param=next_obj_stage,cocktail_glass
 
 [odd_cocktail4]
@@ -798,7 +757,6 @@ recol3d=15855
 2dxan=104
 weight=400g
 category=category_15
-tradeable=yes
 param=next_obj_stage,cocktail_glass
 
 [lemon]
@@ -813,7 +771,6 @@ model=model_2501_obj
 2dxan=700
 category=category_120
 weight=100g
-tradeable=yes
 
 [lemon_chunks]
 name=Lemon chunks
@@ -832,7 +789,6 @@ recol1d=31660
 2dxan=244
 category=category_120
 weight=80g
-tradeable=yes
 param=cocktail_message,You add the diced lemon to the drink.
 
 [lemon_slices]
@@ -851,7 +807,6 @@ recol2d=31637
 2dxan=284
 category=category_120
 weight=80g
-tradeable=yes
 param=cocktail_message,You add a lemon slice to the drink.
 
 [orange]
@@ -866,7 +821,6 @@ model=model_2640_obj
 2dxan=308
 category=category_120
 weight=110g
-tradeable=yes
 
 [orange_chunks]
 name=Orange chunks
@@ -883,7 +837,6 @@ model=model_2573_obj
 2dxan=244
 category=category_120
 weight=90g
-tradeable=yes
 param=cocktail_message,You add the diced orange to the drink.
 
 [orange_slices]
@@ -900,7 +853,6 @@ recol1d=31435
 2dxan=284
 category=category_120
 weight=90g
-tradeable=yes
 param=cocktail_message,You add an orange slice to the dirnk.
 
 [pineapple]
@@ -916,7 +868,6 @@ model=model_2736_obj
 2dxan=228
 category=category_120
 weight=150g
-tradeable=yes
 
 [pineapple_chunks]
 name=Pineapple chunks
@@ -935,7 +886,6 @@ recol1d=31429
 2dxan=244
 category=category_120
 weight=120g
-tradeable=yes
 param=pizza_topping_struct,pineapple_topping
 
 [pineapple_ring]
@@ -951,7 +901,6 @@ model=model_2653_obj
 2dxan=248
 category=category_120
 weight=30g
-tradeable=yes
 param=pizza_topping_struct,pineapple_topping
 
 [lime]
@@ -966,7 +915,6 @@ model=model_2816_obj
 2dxan=596
 category=category_120
 weight=100g
-tradeable=yes
 
 [lime_chunks]
 name=Lime chunks
@@ -985,7 +933,6 @@ recol1d=23539
 2dxan=244
 category=category_120
 weight=80g
-tradeable=yes
 
 [lime_slices]
 name=Lime slices
@@ -1003,5 +950,4 @@ recol2d=544
 2dxan=284
 category=category_120
 weight=80g
-tradeable=yes
 param=cocktail_message,You add a lime slice to the drink.

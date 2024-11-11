@@ -9,7 +9,6 @@ cost=20
 manwear=model_531_obj_wear,0
 womanwear=model_531_obj_wear,6
 weight=9oz
-tradeable=yes
 param=fish_equipment_struct,fish_equipment_lobster_pot
 
 [net]
@@ -25,7 +24,6 @@ cost=5
 manwear=model_551_obj_wear,0
 womanwear=model_551_obj_wear,6
 weight=10lb
-tradeable=yes
 param=fish_equipment_struct,fish_equipment_net
 
 [net_big]
@@ -42,7 +40,6 @@ members=yes
 manwear=model_489_obj_wear,0
 womanwear=model_489_obj_wear,6
 weight=18lb
-tradeable=yes
 param=fish_equipment_struct,fish_equipment_big_net
 
 [fishing_rod]
@@ -58,7 +55,6 @@ cost=5
 manwear=model_562_obj_wear,0
 womanwear=model_562_obj_wear,6
 weight=3lb
-tradeable=yes
 param=fish_equipment_struct,fish_equipment_fishing_rod
 
 [fly_fishing_rod]
@@ -74,7 +70,6 @@ cost=5
 manwear=model_562_obj_wear,0
 womanwear=model_562_obj_wear,6
 weight=3lb
-tradeable=yes
 param=fish_equipment_struct,fish_equipment_fly_fishing_rod
 
 [harpoon]
@@ -90,7 +85,6 @@ cost=5
 manwear=model_503_obj_wear,0
 womanwear=model_503_obj_wear,6
 weight=3lb
-tradeable=yes
 param=fish_equipment_struct,fish_equipment_harpoon
 
 [fishing_bait]
@@ -105,7 +99,6 @@ model=model_2436_obj
 stackable=yes
 cost=3
 weight=2g
-tradeable=yes
 
 [feather]
 name=Feather
@@ -120,7 +113,6 @@ stackable=yes
 cost=2
 weight=2g
 category=category_532
-tradeable=yes
 
 [shrimps]
 name=Shrimps
@@ -133,7 +125,6 @@ cost=5
 iop1=Eat
 weight=100g
 category=category_58
-tradeable=yes
 
 [raw_shrimps]
 name=Raw shrimps
@@ -149,7 +140,6 @@ recol2d=30319
 cost=5
 weight=120g
 category=category_57
-tradeable=yes
 param=fishing_struct,fishing_struct_shrimps
 
 [anchovies]
@@ -167,7 +157,6 @@ cost=15
 iop1=Eat
 weight=100g
 category=category_58
-tradeable=yes
 param=pizza_topping_struct,anchovy_topping
 
 [raw_anchovies]
@@ -184,7 +173,6 @@ recol2d=17971
 cost=15
 weight=120g
 category=category_57
-tradeable=yes
 param=fishing_struct,fishing_struct_anchovies
 
 [burnt_shrimp_anchovies]
@@ -201,7 +189,6 @@ recol2d=7399
 cost=1
 weight=80g
 category=category_116
-tradeable=yes
 
 [sardine]
 name=Sardine
@@ -221,7 +208,6 @@ cost=10
 iop1=Eat
 weight=120g
 category=category_58
-tradeable=yes
 
 [raw_sardine]
 name=Raw sardine
@@ -240,7 +226,6 @@ recol2d=18417
 cost=10
 weight=140g
 category=category_57
-tradeable=yes
 param=fishing_struct,fishing_struct_sardine
 
 [salmon]
@@ -259,7 +244,6 @@ cost=50
 iop1=Eat
 weight=500g
 category=category_58
-tradeable=yes
 
 [raw_salmon]
 name=Raw salmon
@@ -276,7 +260,6 @@ recol2d=29331
 cost=50
 weight=550g
 category=category_57
-tradeable=yes
 param=fishing_struct,fishing_struct_salmon
 
 [trout]
@@ -295,7 +278,6 @@ cost=20
 iop1=Eat
 weight=400g
 category=category_58
-tradeable=yes
 
 [raw_trout]
 name=Raw trout
@@ -312,7 +294,6 @@ recol2d=32767
 cost=20
 weight=450g
 category=category_57
-tradeable=yes
 param=fishing_struct,fishing_struct_trout
 
 [giant_carp]
@@ -332,6 +313,7 @@ iop1=Eat
 weight=500g
 category=category_58
 members=yes
+tradeable=no
 
 [raw_giant_carp]
 name=Raw giant carp
@@ -349,6 +331,7 @@ cost=50
 weight=550g
 category=category_57
 members=yes
+tradeable=no
 
 [cod]
 name=Cod
@@ -367,7 +350,6 @@ iop1=Eat
 weight=400g
 category=category_58
 members=yes
-tradeable=yes
 
 [raw_cod]
 name=Raw cod
@@ -385,7 +367,6 @@ cost=25
 weight=450g
 category=category_57
 members=yes
-tradeable=yes
 
 [burnt_salmon_trout_carp_cod_pike]
 name=Burnt fish
@@ -402,7 +383,6 @@ recol2d=10570
 cost=1
 weight=350g
 category=category_116
-tradeable=yes
 
 [raw_herring]
 name=Raw herring
@@ -420,7 +400,6 @@ recol2d=32767
 cost=15
 weight=550g
 category=category_57
-tradeable=yes
 param=fishing_struct,fishing_struct_herring
 
 [herring]
@@ -440,7 +419,6 @@ cost=15
 iop1=Eat
 weight=500g
 category=category_58
-tradeable=yes
 
 [raw_pike]
 name=Raw pike
@@ -457,7 +435,6 @@ recol2d=22517
 cost=25
 weight=550g
 category=category_57
-tradeable=yes
 param=fishing_struct,fishing_struct_pike
 
 [pike]
@@ -476,7 +453,6 @@ cost=25
 weight=500g
 category=category_58
 iop1=Eat
-tradeable=yes
 
 [raw_mackerel]
 name=Raw mackerel
@@ -495,7 +471,6 @@ cost=17
 weight=350g
 category=category_57
 members=yes
-tradeable=yes
 
 [mackerel]
 name=Mackerel
@@ -515,7 +490,6 @@ iop1=Eat
 weight=300g
 category=category_58
 members=yes
-tradeable=yes
 
 [burnt_mackerel]
 name=Burnt fish
@@ -533,7 +507,6 @@ recol2d=10570
 cost=1
 weight=300g
 category=category_116
-tradeable=yes
 
 [raw_tuna]
 name=Raw tuna
@@ -550,7 +523,6 @@ recol2d=32767
 cost=100
 weight=450g
 category=category_57
-tradeable=yes
 param=fishing_struct,fishing_struct_tuna
 
 [tuna]
@@ -569,7 +541,6 @@ cost=100
 iop1=Eat
 weight=400g
 category=category_58
-tradeable=yes
 
 [raw_bass]
 name=Raw bass
@@ -587,7 +558,6 @@ cost=120
 weight=400g
 category=category_57
 members=yes
-tradeable=yes
 
 [bass]
 name=Bass
@@ -606,7 +576,6 @@ iop1=Eat
 weight=350g
 category=category_58
 members=yes
-tradeable=yes
 
 [burnt_tuna_bass]
 name=Burnt fish
@@ -623,7 +592,6 @@ recol2d=10570
 cost=1
 weight=300g
 category=category_116
-tradeable=yes
 
 [burnt_sardine]
 name=Burnt fish
@@ -642,7 +610,6 @@ model=model_2357_obj
 2dxan=320
 weight=300g
 category=category_116
-tradeable=yes
 
 [raw_swordfish]
 name=Raw swordfish
@@ -659,7 +626,6 @@ recol2d=29437
 cost=200
 weight=500g
 category=category_57
-tradeable=yes
 param=fishing_struct,fishing_struct_swordfish
 
 [swordfish]
@@ -678,7 +644,6 @@ cost=200
 iop1=Eat
 weight=450g
 category=category_58
-tradeable=yes
 
 [burnt_swordfish]
 name=Burnt swordfish
@@ -695,7 +660,6 @@ recol2d=10570
 cost=1
 weight=400g
 category=category_116
-tradeable=yes
 
 [raw_lobster]
 name=Raw lobster
@@ -711,7 +675,6 @@ recol1d=15554
 cost=150
 weight=400g
 category=category_57
-tradeable=yes
 param=fishing_struct,fishing_struct_lobster
 
 [lobster]
@@ -727,7 +690,6 @@ cost=150
 iop1=Eat
 weight=350g
 category=category_58
-tradeable=yes
 
 [burnt_lobster]
 name=Burnt lobster
@@ -743,7 +705,6 @@ recol1d=7399
 cost=1
 weight=300g
 category=category_116
-tradeable=yes
 
 [raw_shark]
 name=Raw shark
@@ -760,7 +721,6 @@ cost=300
 weight=700g
 category=category_57
 members=yes
-tradeable=yes
 param=fishing_struct,fishing_struct_shark
 
 [shark]
@@ -781,7 +741,6 @@ iop1=Eat
 weight=650g
 category=category_58
 members=yes
-tradeable=yes
 
 [burnt_shark]
 name=Burnt shark
@@ -800,7 +759,6 @@ cost=1
 weight=600g
 category=category_116
 members=yes
-tradeable=yes
 
 [raw_manta_ray]
 name=Raw manta ray
@@ -818,7 +776,6 @@ cost=500
 weight=450g
 category=category_57
 members=yes
-tradeable=yes
 param=fishing_struct,fishing_struct_manta_ray
 
 [manta_ray]
@@ -838,7 +795,6 @@ iop1=Eat
 weight=400g
 category=category_58
 members=yes
-tradeable=yes
 
 [burnt_manta_ray]
 name=Burnt manta ray
@@ -856,7 +812,6 @@ cost=1
 weight=350g
 category=category_116
 members=yes
-tradeable=yes
 
 [raw_sea_turtle]
 name=Raw sea turtle
@@ -870,7 +825,6 @@ members=yes
 2dxan=236
 weight=400g
 category=category_57
-tradeable=yes
 param=fishing_struct,fishing_struct_sea_turtle
 
 [sea_turtle]
@@ -890,7 +844,6 @@ iop1=Eat
 weight=350g
 category=category_58
 members=yes
-tradeable=yes
 
 [burnt_sea_turtle]
 name=Burnt sea turtle
@@ -908,7 +861,6 @@ members=yes
 2dxan=236
 weight=320g
 category=category_116
-tradeable=yes
 
 [seaweed]
 name=Seaweed
@@ -922,7 +874,6 @@ model=model_2370_obj
 cost=2
 weight=200g
 members=yes
-tradeable=yes
 category=cooking_generic
 
 [edible_seaweed]
@@ -939,7 +890,6 @@ iop1=Eat
 weight=250g
 category=category_59
 members=yes
-tradeable=yes
 
 [casket]
 name=Casket
@@ -954,7 +904,6 @@ cost=50
 iop1=Open
 weight=5kg
 members=yes
-tradeable=yes
 
 [oyster]
 name=Oyster
@@ -969,7 +918,6 @@ cost=200
 iop1=Open
 weight=100g
 members=yes
-tradeable=yes
 
 [empty_oyster]
 name=Empty oyster
@@ -983,7 +931,6 @@ model=model_2593_obj
 cost=5
 weight=80g
 members=yes
-tradeable=yes
 
 [oyster_perl]
 name=Oyster pearl
@@ -997,7 +944,6 @@ model=model_2721_obj
 cost=112
 weight=2g
 members=yes
-tradeable=yes
 
 [oyster_perls]
 name=Oyster pearls
@@ -1011,4 +957,3 @@ model=model_2377_obj
 cost=1400
 weight=4g
 members=yes
-tradeable=yes

@@ -144,6 +144,40 @@ import ZoneMessage from '#lostcity/network/outgoing/ZoneMessage.js';
 import ZoneMessageEncoder from '#lostcity/network/outgoing/codec/ZoneMessageEncoder.js';
 import UpdateRebootTimer from '#lostcity/network/outgoing/model/UpdateRebootTimer.js';
 import UpdateRebootTimerEncoder from '#lostcity/network/225/outgoing/codec/UpdateRebootTimerEncoder.js';
+import PlayerInfoExactMove from '#lostcity/network/outgoing/model/PlayerInfoExactMove.js';
+import PlayerInfoExactMoveEncoder from '#lostcity/network/225/outgoing/codec/PlayerInfoExactMoveEncoder.js';
+import PlayerInfoAnim from '#lostcity/network/outgoing/model/PlayerInfoAnim.js';
+import PlayerInfoAnimEncoder from '#lostcity/network/225/outgoing/codec/PlayerInfoAnimEncoder.js';
+import PlayerInfoAppearance from '#lostcity/network/outgoing/model/PlayerInfoAppearance.js';
+import PlayerInfoAppearanceEncoder from '#lostcity/network/225/outgoing/codec/PlayerInfoAppearanceEncoder.js';
+import PlayerInfoChat from '#lostcity/network/outgoing/model/PlayerInfoChat.js';
+import PlayerInfoChatEncoder from '#lostcity/network/225/outgoing/codec/PlayerInfoChatEncoder.js';
+import PlayerInfoDamage from '#lostcity/network/outgoing/model/PlayerInfoDamage.js';
+import PlayerInfoDamageEncoder from '#lostcity/network/225/outgoing/codec/PlayerInfoDamageEncoder.js';
+import PlayerInfoFaceCoord from '#lostcity/network/outgoing/model/PlayerInfoFaceCoord.js';
+import PlayerInfoFaceCoordEncoder from '#lostcity/network/225/outgoing/codec/PlayerInfoFaceCoordEncoder.js';
+import PlayerInfoFaceEntity from '#lostcity/network/outgoing/model/PlayerInfoFaceEntity.js';
+import PlayerInfoFaceEntityEncoder from '#lostcity/network/225/outgoing/codec/PlayerInfoFaceEntityEncoder.js';
+import PlayerInfoSay from '#lostcity/network/outgoing/model/PlayerInfoSay.js';
+import PlayerInfoSayEncoder from '#lostcity/network/225/outgoing/codec/PlayerInfoSayEncoder.js';
+import PlayerInfoSpotanim from '#lostcity/network/outgoing/model/PlayerInfoSpotanim.js';
+import PlayerInfoSpotanimEncoder from '#lostcity/network/225/outgoing/codec/PlayerInfoSpotanimEncoder.js';
+import InfoMessage from '#lostcity/network/outgoing/InfoMessage.js';
+import InfoMessageEncoder from '#lostcity/network/outgoing/codec/InfoMessageEncoder.js';
+import NpcInfoAnim from '#lostcity/network/outgoing/model/NpcInfoAnim.js';
+import NpcInfoAnimEncoder from '#lostcity/network/225/outgoing/codec/NpcInfoAnimEncoder.js';
+import NpcInfoChangeType from '#lostcity/network/outgoing/model/NpcInfoChangeType.js';
+import NpcInfoChangeTypeEncoder from '#lostcity/network/225/outgoing/codec/NpcInfoChangeTypeEncoder.js';
+import NpcInfoDamage from '#lostcity/network/outgoing/model/NpcInfoDamage.js';
+import NpcInfoDamageEncoder from '#lostcity/network/225/outgoing/codec/NpcInfoDamageEncoder.js';
+import NpcInfoFaceCoord from '#lostcity/network/outgoing/model/NpcInfoFaceCoord.js';
+import NpcInfoFaceCoordEncoder from '#lostcity/network/225/outgoing/codec/NpcInfoFaceCoordEncoder.js';
+import NpcInfoFaceEntity from '#lostcity/network/outgoing/model/NpcInfoFaceEntity.js';
+import NpcInfoFaceEntityEncoder from '#lostcity/network/225/outgoing/codec/NpcInfoFaceEntityEncoder.js';
+import NpcInfoSay from '#lostcity/network/outgoing/model/NpcInfoSay.js';
+import NpcInfoSayEncoder from '#lostcity/network/225/outgoing/codec/NpcInfoSayEncoder.js';
+import NpcInfoSpotanim from '#lostcity/network/outgoing/model/NpcInfoSpotanim.js';
+import NpcInfoSpotanimEncoder from '#lostcity/network/225/outgoing/codec/NpcInfoSpotanimEncoder.js';
 
 /* eslint-disable @typescript-eslint/no-explicit-any */
 type GenericOutgoingMessage<T extends OutgoingMessage> = new (...args: any[]) => T;
@@ -230,6 +264,24 @@ class ServerProtRepository {
         this.bind(UpdateZonePartialFollows, new UpdateZonePartialFollowsEncoder());
         this.bind(VarpLarge, new VarpLargeEncoder());
         this.bind(VarpSmall, new VarpSmallEncoder());
+        // ---- player_info
+        this.bind(PlayerInfoAnim, new PlayerInfoAnimEncoder());
+        this.bind(PlayerInfoAppearance, new PlayerInfoAppearanceEncoder());
+        this.bind(PlayerInfoChat, new PlayerInfoChatEncoder());
+        this.bind(PlayerInfoDamage, new PlayerInfoDamageEncoder());
+        this.bind(PlayerInfoFaceCoord, new PlayerInfoFaceCoordEncoder());
+        this.bind(PlayerInfoFaceEntity, new PlayerInfoFaceEntityEncoder());
+        this.bind(PlayerInfoSay, new PlayerInfoSayEncoder());
+        this.bind(PlayerInfoSpotanim, new PlayerInfoSpotanimEncoder());
+        this.bind(PlayerInfoExactMove, new PlayerInfoExactMoveEncoder());
+        // ---- npc_info
+        this.bind(NpcInfoAnim, new NpcInfoAnimEncoder());
+        this.bind(NpcInfoChangeType, new NpcInfoChangeTypeEncoder());
+        this.bind(NpcInfoDamage, new NpcInfoDamageEncoder());
+        this.bind(NpcInfoFaceCoord, new NpcInfoFaceCoordEncoder());
+        this.bind(NpcInfoFaceEntity, new NpcInfoFaceEntityEncoder());
+        this.bind(NpcInfoSay, new NpcInfoSayEncoder());
+        this.bind(NpcInfoSpotanim, new NpcInfoSpotanimEncoder());
     }
 
     getEncoder<T extends OutgoingMessage>(message: T): MessageEncoder<T> | undefined {
@@ -238,6 +290,10 @@ class ServerProtRepository {
 
     getZoneEncoder<T extends ZoneMessage>(message: T): ZoneMessageEncoder<T> | undefined {
         return this.encoders.get(message.constructor as GenericOutgoingMessage<T>) as ZoneMessageEncoder<T> | undefined;
+    }
+
+    getInfoEncoder<T extends InfoMessage>(message: T): InfoMessageEncoder<T> | undefined {
+        return this.encoders.get(message.constructor as GenericOutgoingMessage<T>) as InfoMessageEncoder<T> | undefined;
     }
 }
 

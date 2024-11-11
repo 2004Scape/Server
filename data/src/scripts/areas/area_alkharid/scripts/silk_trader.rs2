@@ -1,9 +1,21 @@
 // dialogue taken from osrs
 [opnpc1,silk_trader]
 ~chatnpc("<p,neutral>Do you want to buy any fine silks?");
-def_int $choice = ~p_choice2("How much are they?", 1, "No. Silk doesn't suit me.", 2);
+def_int $choice = 0;
+if (%crest_progress = ^crest_caleb_where) {
+    $choice = ~p_choice3("How much are they?", 1, "No. Silk doesn't suit me.", 2, "I'm in search of a man named Avan Fitzharmon.", 3);    
+}
+else {
+    $choice = ~p_choice2("How much are they?", 1, "No. Silk doesn't suit me.", 2);
+}
+
 if ($choice = 2) {
     ~chatplayer("<p,neutral>No. Silk doesn't suit me.");
+    return;
+}
+if ($choice = 3) {
+    ~chatplayer("<p,neutral>I'm in search of a man named Avan Fitzharmon.");
+    ~chatnpc("<p,neutral>Can't say as I've seen him... I'm sure if he's been to Al Kharid recently someone around here will have though.");
     return;
 }
 

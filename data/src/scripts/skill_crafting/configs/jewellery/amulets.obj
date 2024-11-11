@@ -11,7 +11,6 @@ recol1d=22241
 2dyan=100
 2dxan=304
 weight=4g
-tradeable=yes
 param=crafting_jewelry_struct,unstrung_gold_amulet
 
 [unstrung_sapphire_amulet]
@@ -27,7 +26,6 @@ recol1d=23
 2dyan=100
 2dxan=304
 weight=4g
-tradeable=yes
 param=crafting_jewelry_struct,unstrung_sapphire_amulet
 
 [unstrung_emerald_amulet]
@@ -43,7 +41,6 @@ recol1d=672
 2dyan=100
 2dxan=304
 weight=4g
-tradeable=yes
 param=crafting_jewelry_struct,unstrung_emerald_amulet
 
 [unstrung_ruby_amulet]
@@ -59,7 +56,6 @@ recol1d=30753
 2dyan=100
 2dxan=304
 weight=4g
-tradeable=yes
 param=crafting_jewelry_struct,unstrung_ruby_amulet
 
 [unstrung_diamond_amulet]
@@ -73,7 +69,6 @@ model=model_2550_obj
 2dyan=100
 2dxan=304
 weight=4g
-tradeable=yes
 param=crafting_jewelry_struct,unstrung_diamond_amulet
 
 [unstrung_dragonstone_amulet]
@@ -90,7 +85,6 @@ recol1d=12307
 2dxan=304
 weight=4g
 members=yes
-tradeable=yes
 param=crafting_jewelry_struct,unstrung_dragonstone_amulet
 
 [black_amulet]
@@ -104,7 +98,6 @@ recol2d=4228
 2dzoom=370
 2dyan=100
 2dxan=304
-tradeable=yes
 dummyitem=inv_only
 
 [obj_1687]
@@ -158,7 +151,6 @@ wearpos=front
 manwear=model_290_obj_wear,0
 womanwear=model_454_obj_wear,0
 weight=7g
-tradeable=yes
 
 [sapphire_amulet]
 cost=900
@@ -182,7 +174,6 @@ manwear=model_290_obj_wear,0
 womanwear=model_454_obj_wear,0
 weight=7g
 category=category_621
-tradeable=yes
 
 [emerald_amulet]
 cost=1275
@@ -205,7 +196,6 @@ wearpos=front
 manwear=model_290_obj_wear,0
 womanwear=model_454_obj_wear,0
 weight=7g
-tradeable=yes
 
 [ruby_amulet]
 cost=2025
@@ -228,7 +218,6 @@ wearpos=front
 manwear=model_290_obj_wear,0
 womanwear=model_454_obj_wear,0
 weight=7g
-tradeable=yes
 
 [diamond_amulet]
 cost=3525
@@ -249,7 +238,6 @@ wearpos=front
 manwear=model_290_obj_wear,0
 womanwear=model_454_obj_wear,0
 weight=7g
-tradeable=yes
 
 [dragonstone_amulet]
 cost=17625
@@ -273,4 +261,3 @@ wearpos=front
 manwear=model_290_obj_wear,0
 womanwear=model_454_obj_wear,0
 weight=7g
-tradeable=yes

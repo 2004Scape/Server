@@ -109,7 +109,7 @@ if (npc_type = wormbrain & (~quest_dragon_getting_map_parts = false | inv_total(
     // }
     return (false);
 }
-if (npc_category = battle_mage & %magearena_progress < ^mage_arena_complete) {
+if (npc_category = battle_mage & %magearena < ^mage_arena_complete) {
     mes("You are not ready to fight the battle mages.");
     return(false);
 }
@@ -160,7 +160,7 @@ if ((npc_type = zamorak_wizard | npc_type = grandtree_black_demon) & %npc_attack
     mes("It's not after you...");
     return(false);
 }
-if (npc_category = battle_mage & %magearena_progress < ^mage_arena_complete) {
+if (npc_category = battle_mage & %magearena < ^mage_arena_complete) {
     mes("You are not ready to fight the battle mages.");
     return(false);
 }
@@ -175,18 +175,18 @@ if(npc_type = fire_warrior_of_lesarkus) { // can't attack with magic
     ~chatnpc("<p,angry>Your puny weapons do nothing against me human! Come back when you can give me a real fight!");
     return (false);
 }
-if (npc_category = kolodion & enum(int, npc, mage_arena_bosses, %magearena_progress) ! npc_type) {
-    if (%magearena_progress > ^mage_arena_complete) {
+if (npc_category = kolodion & enum(int, npc, mage_arena_bosses, %magearena) ! npc_type) {
+    if (%magearena > ^mage_arena_complete) {
         mes("You have already proven yourself against Kolodion.");
         return(false);
     }
-    if (enum(npc, int, mage_arena_stages, npc_type) < %magearena_progress) {
-        mes("You have already killed Kolodion in his <enum(int, string, mage_arena_boss_names, sub(%magearena_progress, 1))> form.");
+    if (enum(npc, int, mage_arena_stages, npc_type) < %magearena) {
+        mes("You have already killed Kolodion in his <enum(int, string, mage_arena_boss_names, sub(%magearena, 1))> form.");
     }
     if (npc_type = kolodion_arachnid_form | npc_type = kolodion_demon_form) {
-        mes("You must now defeat him as <~add_article(enum(int, string, mage_arena_boss_names, %magearena_progress))>.");
+        mes("You must now defeat him as <~add_article(enum(int, string, mage_arena_boss_names, %magearena))>.");
     } else {
-        mes("You must currently fight Kolodion in his <enum(int, string, mage_arena_boss_names, %magearena_progress)> form.");
+        mes("You must currently fight Kolodion in his <enum(int, string, mage_arena_boss_names, %magearena)> form.");
     }
     return(false);
 }

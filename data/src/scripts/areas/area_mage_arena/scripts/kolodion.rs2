@@ -1,5 +1,5 @@
 [opnpc1,kolodion]
-if (%magearena_progress < ^mage_arena_started) {
+if (%magearena < ^mage_arena_started) {
     ~chatplayer("<p,neutral>Hello there. What is this place?");
     // https://web.archive.org/web/20050306051554/http://runevillage.com/rs2specialMageArena.php
     // "You must have level 60 Magic or higher, (Wizard’s Mind Bomb doesn't work in the Arena)"
@@ -14,9 +14,9 @@ if (%magearena_progress < ^mage_arena_started) {
 }
 if (~mage_arena_in_progress = true) {
     @kolodion_return;
-} else if (%magearena_progress = ^mage_arena_started) {
+} else if (%magearena = ^mage_arena_started) {
     @kolodion_lets_fight;
-} else if (%magearena_progress = ^mage_arena_complete) {
+} else if (%magearena = ^mage_arena_complete) {
     ~chatplayer("<p,neutral>Hello, Kolodion.");
     ~chatnpc("<p,shifty>Hello, young mage. You're a tough one.");
     @kolodion_what_now;
@@ -102,7 +102,7 @@ if (~can_enter_mage_arena = false) {
 }
 ~chatplayer("<p,happy>You don't need to worry about that.");
 ~chatnpc("<p,neutral>Not just any magician can enter - only the most|powerful and most feared. Before you can use the|power of this arena, you must prove yourself against|me.");
-%magearena_progress = 1;
+%magearena = 1;
 
 @kolodion_teleport;
 
@@ -138,14 +138,14 @@ def_coord $spawn_coord = movecoord(^mage_arena_start_coord, sub(coordx(npc_coord
 p_delay(3);
 p_teleport(^mage_arena_start_coord);
 anim(null, 0);
-def_npc $boss = enum(int, npc, mage_arena_bosses, %magearena_progress);
+def_npc $boss = enum(int, npc, mage_arena_bosses, %magearena);
 npc_huntall(^mage_arena_start_coord, 20, 0);
 while (npc_huntnext = true) {
     if (npc_type = $boss & add(%npc_lastcombat, 8) <= map_clock) {
         npc_del;
     }
 }
-switch_int (%magearena_progress) {
+switch_int (%magearena) {
     case ^mage_arena_started :
         // looks like the smoke appears 1t sooner than osrs (no 34 client tick delay as well)
         // https://youtu.be/Tte53ezNIP4?list=PLn23LiLYLb1Y4vxMPWXM-CVEvOUfuAP_o&t=23

@@ -10,6 +10,7 @@ members=yes
 2dxan=380
 weight=10g
 param=no_alchemy,1
+tradeable=no
 
 [hazeelcult_key]
 name=Key
@@ -23,6 +24,7 @@ model=model_2372_obj
 2dxan=328
 weight=10g
 param=no_alchemy,1
+tradeable=no
 
 [carnillean_armour]
 name=Carnillean armour
@@ -51,6 +53,7 @@ category=armour_body
 param=stabdefence,20
 param=slashdefence,14
 param=crushdefence,8
+tradeable=no
 
 [mark_of_hazeel]
 name=Mark of hazeel
@@ -67,3 +70,4 @@ wearpos=front
 manwear=model_286_obj_wear,0
 womanwear=model_450_obj_wear,0
 weight=12g
+tradeable=no

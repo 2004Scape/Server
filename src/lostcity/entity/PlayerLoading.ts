@@ -13,6 +13,7 @@ import Player, { getExpByLevel, getLevelByExp } from '#lostcity/entity/Player.js
 import PlayerStat from '#lostcity/entity/PlayerStat.js';
 
 import Environment from '#lostcity/util/Environment.js';
+import InvType from '#lostcity/cache/config/InvType.js';
 
 export class PlayerLoading {
     /**
@@ -68,7 +69,7 @@ export class PlayerLoading {
         }
 
         const version = sav.g2();
-        if (version > 4) {
+        if (version > 5) {
             throw new Error('Unsupported player save format');
         }
 
@@ -114,24 +115,27 @@ export class PlayerLoading {
         const invCount = sav.g1();
         for (let i = 0; i < invCount; i++) {
             const type = sav.g2();
+            const size = version >= 5 ? sav.g2() : InvType.get(type).size;
+
+            const objs = [];
+            for (let slot = 0; slot < size; slot++) {
+                const id = sav.g2() - 1;
+                if (id === -1) {
+                    continue;
+                }
+
+                let count = sav.g1();
+                if (count === 255) {
+                    count = sav.g4();
+                }
+
+                objs.push({ slot, id, count });
+            }
 
             const inv = player.getInventory(type);
             if (inv) {
-                for (let j = 0; j < inv.capacity; j++) {
-                    const id = sav.g2();
-                    if (id === 0) {
-                        continue;
-                    }
-
-                    let count = sav.g1();
-                    if (count === 255) {
-                        count = sav.g4();
-                    }
-
-                    inv.set(j, {
-                        id: id - 1,
-                        count
-                    });
+                for (const obj of objs) {
+                    inv.set(obj.slot, { id: obj.id, count: obj.count });
                 }
             }
         }

@@ -11,7 +11,6 @@ model=model_2520_obj
 2dyan=256
 2dxan=364
 weight=7g
-tradeable=yes
 param=brew_potion_struct,3dose1attack
 param=brew_potion_struct_secondary,3dose2attack
 // jagex name
@@ -26,7 +25,6 @@ model=model_2343_obj
 2dyan=12
 2dxan=252
 weight=7g
-tradeable=yes
 param=brew_potion_struct,3dose1restore
 // jagex name
 
@@ -41,7 +39,6 @@ model=model_2629_obj
 2dyan=380
 2dxan=456
 weight=7g
-tradeable=yes
 param=brew_potion_struct,3dose1strength
 param=brew_potion_struct_secondary,3dose2strength
 // jagex name
@@ -58,7 +55,6 @@ model=model_2440_obj
 2dyan=48
 2dxan=484
 weight=7g
-tradeable=yes
 respawnrate=30
 param=brew_potion_struct,3doseprayerrestore
 param=brew_potion_struct_secondary,3dosefisherspotion
@@ -77,7 +73,6 @@ recol1d=24135
 members=yes
 cost=20
 weight=7g
-tradeable=yes
 param=brew_potion_struct,3doseantipoison
 param=brew_potion_struct_secondary,3dose2antipoison
 // guessed name
@@ -96,7 +91,6 @@ cost=10
 weight=7g
 name=White berries
 desc=Sour berries, used in potions.
-tradeable=yes
 respawnrate=10
 param=brew_potion_struct,3dose1defense
 param=brew_potion_struct_secondary,3dose2defense
@@ -115,7 +109,6 @@ desc=Finely ground scale of Dragon.
 cost=52
 weight=7g
 members=yes
-tradeable=yes
 param=brew_potion_struct,weapon_poison
 param=brew_potion_struct_secondary,3dose1antidragon
 // jagex name
@@ -132,7 +125,6 @@ recol1d=25765
 2dyan=84
 2dxan=260
 weight=3oz
-tradeable=yes
 respawnrate=50
 param=brew_potion_struct,3doserangerspotion
 // guessed name
@@ -154,7 +146,6 @@ recol2d=12640
 weight=7g
 category=category_86
 members=yes
-tradeable=yes
 respawnrate=30
 param=brew_potion_struct,3dosepotionofzamorak
 param=brew_potion_struct_secondary,vial_water_jangerberries
@@ -174,6 +165,7 @@ recol1d=28570
 weight=25g
 members=yes
 param=brew_potion_struct,blamish_oil
+tradeable=no
 
 [ground_bat_bones]
 name=Ground bat bones
@@ -186,7 +178,6 @@ model=model_2742_obj
 2dxan=136
 weight=100g
 members=yes
-tradeable=yes
 param=brew_potion_struct,ogre_potion
 param=brew_potion_struct_secondary,bat_bones_explode
 param=brew_potion_struct_tertiary,bat_bones_explode2

@@ -175,9 +175,10 @@ export type ParamValue = {
     value: string | number | boolean;
 };
 export type LocModelShape = { model: number; shape: number };
-export type HuntCheckInv = { inv: number; obj: number; min: number; max: number; };
-export type HuntCheckInvParam = { inv: number; param: number; min: number; max: number; };
-export type ConfigValue = string | number | boolean | number[] | LocModelShape[] | ParamValue | HuntCheckInv | HuntCheckInvParam;
+export type HuntCheckInv = { inv: number; obj: number; condition: string; val: number; };
+export type HuntCheckInvParam = { inv: number; param: number; condition: string; val: number; };
+export type HuntCheckVar = { varp: number; condition: string; val: number; }
+export type ConfigValue = string | number | boolean | number[] | LocModelShape[] | ParamValue | HuntCheckInv | HuntCheckInvParam | HuntCheckVar;
 export type ConfigLine = { key: string; value: ConfigValue };
 
 // we're using null for invalid values, undefined for invalid keys

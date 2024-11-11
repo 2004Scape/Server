@@ -9,6 +9,7 @@ model=model_2595_obj
 2dxan=320
 weight=16kg
 members=yes
+tradeable=no
 
 [tool_kit]
 name=Tool kit
@@ -21,6 +22,7 @@ model=model_2679_obj
 2dxan=432
 weight=1lb
 members=yes
+tradeable=no
 
 [mcannonball]
 name=Cannonball
@@ -35,7 +37,6 @@ weight=8lb
 category=category_1176
 members=yes
 cost=5
-tradeable=yes
 
 [nulodions_notes]
 name=Nulodion's notes.
@@ -48,6 +49,7 @@ model=model_2600_obj
 iop1=Read
 weight=1oz
 members=yes
+tradeable=no
 
 [ammo_mould]
 name=Ammo mould
@@ -60,6 +62,7 @@ model=model_2706_obj
 cost=5
 weight=10lb
 members=yes
+tradeable=no
 
 [instruction_manual]
 name=Instruction manual
@@ -72,6 +75,7 @@ iop1=Read
 cost=10
 weight=18oz
 members=yes
+tradeable=no
 
 [cannon_base]
 name=Cannon base
@@ -87,7 +91,6 @@ iop1=Set-up
 weight=10kg
 category=cannon_parts
 members=yes
-tradeable=yes
 
 [cannon_stand]
 name=Cannon stand
@@ -101,7 +104,6 @@ cost=187500
 weight=2lb
 category=cannon_parts
 members=yes
-tradeable=yes
 
 [cannon_barrels]
 name=Cannon barrels
@@ -114,7 +116,6 @@ cost=187500
 weight=15kg
 category=cannon_parts
 members=yes
-tradeable=yes
 
 [cannon_furnace]
 name=Cannon furnace
@@ -129,7 +130,6 @@ cost=187500
 weight=5kg
 category=cannon_parts
 members=yes
-tradeable=yes
 
 [mcannon_railing]
 name=Railing
@@ -142,3 +142,4 @@ weight=2kg
 2dyan=280
 2dxan=236
 members=yes
+tradeable=no

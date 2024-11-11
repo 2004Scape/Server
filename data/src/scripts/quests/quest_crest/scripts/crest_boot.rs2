@@ -1,0 +1,29 @@
+[opnpc1,crest_boot]
+~chatnpc("<p,neutral>Hello tall person.");
+if (%crest_progress = ^crest_spoken_avan) {
+    @multi3(
+        "Hello. I'm in search of very high quality gold.", crest_boot_gold,
+        "Hello short person.", crest_boot_hello,
+        "Why are you called boot?", crest_boot_why
+    );
+}
+else {
+    @multi2(
+        "Hello short person.", crest_boot_hello,
+        "Why are you called boot?", crest_boot_why
+    );
+}
+
+[label,crest_boot_gold]
+~chatplayer("<p,neutral>Hello. I'm in search of very high quality gold.");
+~chatnpc("<p,quiz>High quality gold eh? Hmmm... Well, the very best quality gold that I know of, is just East of the large city Ardougne, underground somewhere.");
+%crest_progress = ^crest_spoken_boot;
+~chatnpc("<p,neutral>I don't believe it's exactly easy to get to though...");
+
+[label,crest_boot_hello]
+~chatplayer("<p,neutral>Hello short person.");
+
+[label,crest_boot_why]
+~chatplayer("<p,quiz>Why are you called Boot?");
+~chatnpc("<p,neutral>I'm called Boot, because when I was very young, I used to sleep, in a large boot.");
+~chatplayer("<p,neutral>Yeah, great, I didn't want your life story.");

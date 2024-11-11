@@ -12,7 +12,6 @@ members=yes
 cost=85
 weight=250g
 category=category_128
-tradeable=yes
 
 [premade_choc_chip_crunchies]
 name=Chocchip crunchies
@@ -26,7 +25,6 @@ members=yes
 cost=85
 weight=250g
 category=category_128
-tradeable=yes
 
 [premade_spicy_crunchies]
 name=Spicy crunchies
@@ -42,7 +40,6 @@ members=yes
 cost=85
 weight=250g
 category=category_128
-tradeable=yes
 
 [premade_toad_crunchies]
 name=Toad crunchies
@@ -58,7 +55,6 @@ members=yes
 cost=85
 weight=250g
 category=category_128
-tradeable=yes
 
 [odd_crunchies]
 iop1=Eat
@@ -75,7 +71,6 @@ recol1d=12576
 2dxan=220
 weight=300g
 category=category_15
-tradeable=yes
 
 [burnt_crunchies]
 name=Burnt crunchies
@@ -89,7 +84,6 @@ recol1d=5285
 2dzoom=650
 2dxan=220
 weight=250g
-tradeable=yes
 
 [half_baked_crunchies]
 iop1=Inspect
@@ -106,6 +100,7 @@ recol1d=18820
 2dyan=1664
 2dxan=252
 weight=350g
+tradeable=no
 
 [raw_crunchies]
 name=Raw crunchies
@@ -119,6 +114,7 @@ model=model_2723_obj
 2dyan=1664
 2dxan=252
 weight=400g
+tradeable=no
 
 [unfinished_worm_crunchies1]
 name=Unfinished crunchy
@@ -133,7 +129,6 @@ weight=300g
 category=category_15
 iop1=Eat
 members=yes
-tradeable=yes
 param=gnome_cooking_type,2
 
 [worm_crunchies]
@@ -150,7 +145,6 @@ recol1d=29459
 iop1=Eat
 weight=250g
 members=yes
-tradeable=yes
 
 [unfinished_choc_chip_crunchies1]
 name=Unfinished crunchy
@@ -164,7 +158,6 @@ iop1=Eat
 weight=300g
 category=category_15
 members=yes
-tradeable=yes
 param=gnome_cooking_type,2
 
 [choc_chip_crunchies]
@@ -180,7 +173,6 @@ weight=250g
 iop1=Eat
 weight=250g
 members=yes
-tradeable=yes
 
 [unfinished_spicy_crunchies1]
 name=Unfinished crunchy
@@ -196,7 +188,6 @@ iop1=Eat
 weight=300g
 category=category_15
 members=yes
-tradeable=yes
 param=gnome_cooking_type,2
 
 [spicy_crunchies]
@@ -213,7 +204,6 @@ recol1d=31105
 iop1=Eat
 weight=250g
 members=yes
-tradeable=yes
 
 [unfinished_toad_crunchies1]
 name=Unfinished crunchy
@@ -229,7 +219,6 @@ iop1=Eat
 weight=300g
 category=category_15
 members=yes
-tradeable=yes
 param=gnome_cooking_type,2
 
 [toad_crunchies]
@@ -246,4 +235,3 @@ recol1d=512
 members=yes
 iop1=Eat
 weight=250g
-tradeable=yes

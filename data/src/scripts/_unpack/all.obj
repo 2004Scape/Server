@@ -9,7 +9,6 @@ model=model_2559_obj
 2dyan=1260
 2dxan=444
 weight=1lb
-tradeable=yes
 
 [bear_fur]
 name=Fur
@@ -22,7 +21,6 @@ model=model_2631_obj
 2dxan=388
 cost=10
 weight=3kg
-tradeable=yes
 
 [silk]
 name=Silk
@@ -35,7 +33,6 @@ recol1d=22870
 2dzoom=1360
 2dxan=368
 weight=1kg
-tradeable=yes
 
 [spade]
 name=Spade
@@ -51,7 +48,6 @@ womanwear=model_496_obj_wear,0
 2dxan=332
 weight=4lb
 iop1=Dig
-tradeable=yes
 
 [rope]
 name=Rope
@@ -66,7 +62,6 @@ recol1d=7296
 2dyan=1976
 2dxan=188
 weight=3lb
-tradeable=yes
 
 [flier]
 name=Flier
@@ -79,7 +74,6 @@ model=model_2600_obj
 2dyan=120
 2dxan=380
 weight=15g
-tradeable=yes
 
 [grey_wolf_fur]
 model=model_2631_obj
@@ -94,7 +88,6 @@ desc=This would make warm clothing.
 cost=50
 weight=3kg
 members=yes
-tradeable=yes
 
 [plank]
 model=model_2694_obj
@@ -105,7 +98,6 @@ desc=A plank of wood!
 2dxan=356
 weight=800g
 category=category_475
-tradeable=yes
 
 [christmas_cracker]
 name=Christmas cracker
@@ -117,7 +109,6 @@ model=model_2637_obj
 2dyan=1728
 2dxan=272
 weight=200g
-tradeable=yes
 
 [obj_964]
 name=Skull
@@ -132,7 +123,6 @@ recol1d=28433
 2dzan=1996
 2dxan=160
 weight=80g
-tradeable=yes
 
 [obj_966]
 name=Tile
@@ -144,7 +134,6 @@ model=model_2617_obj
 2dyan=100
 2dxan=340
 weight=70g
-tradeable=yes
 
 [obj_968]
 name=Rock
@@ -156,7 +145,6 @@ model=model_2571_obj
 2dyan=20
 2dxan=204
 weight=1kg
-tradeable=yes
 
 [papyrus]
 name=Papyrus
@@ -170,7 +158,6 @@ womanwear=model_532_obj_wear,6
 2dxan=248
 weight=20g
 members=yes
-tradeable=yes
 
 [obj_972]
 name=Papyrus
@@ -182,6 +169,7 @@ womanwear=model_532_obj_wear,6
 2dxan=248
 weight=20g
 members=yes
+tradeable=no
 
 [charcoal]
 name=Charcoal
@@ -195,7 +183,6 @@ womanwear=model_494_obj_wear,6
 2dyan=220
 2dxan=288
 weight=5g
-tradeable=yes
 
 [machete]
 name=Machete
@@ -216,7 +203,6 @@ manwear=model_566_obj_wear,0
 womanwear=model_566_obj_wear,6
 category=weapon_slash
 weight=3lb
-tradeable=yes
 param=slashattack,6
 param=crushattack,-2
 param=strengthbonus,5
@@ -240,7 +226,6 @@ recol3d=12448
 2dyan=36
 2dxan=116
 weight=1g
-tradeable=yes
 
 // jagex name
 [highwayman_mask]
@@ -249,7 +234,6 @@ model=model_2500_obj
 2dzoom=290
 2dyan=224
 2dxan=488
-tradeable=yes
 
 [disk_of_returning]
 name=Disk of returning
@@ -262,7 +246,6 @@ model=model_2724_obj
 2dzan=260
 2dxan=460
 weight=1lb
-tradeable=yes
 
 [brass_key]
 name=Brass key
@@ -276,7 +259,6 @@ recol1d=22945
 2dyan=20
 2dxan=328
 weight=10g
-tradeable=yes
 
 [half_key1]
 name=Half of a key
@@ -289,7 +271,6 @@ model=model_2414_obj
 2dyan=8
 2dxan=296
 weight=5g
-tradeable=yes
 
 [half_key2]
 name=Half of a key
@@ -302,7 +283,6 @@ model=model_2415_obj
 2dyan=1980
 2dxan=292
 weight=5g
-tradeable=yes
 
 [crystal_key]
 name=Crystal key
@@ -317,7 +297,6 @@ recol1d=14800
 2dyan=20
 2dxan=328
 weight=10g
-tradeable=yes
 
 [muddy_key]
 name=Muddy key
@@ -331,7 +310,6 @@ recol1d=15621
 2dyan=20
 2dxan=328
 weight=10g
-tradeable=yes
 
 [sinister_key]
 name=Sinister key
@@ -346,7 +324,6 @@ recol1d=4226
 2dyan=20
 2dxan=328
 weight=10g
-tradeable=yes
 
 [coins]
 name=Coins
@@ -367,7 +344,6 @@ count6=coins_100,100
 count7=coins_250,250
 count8=coins_1000,1000
 count9=coins_10000,10000
-tradeable=yes
 
 [coins_2]
 model=model_2485_obj
@@ -467,7 +443,6 @@ wearpos=torso
 manwear=model_305_obj_wear,0
 womanwear=model_467_obj_wear,0
 weight=1lb
-tradeable=yes
 
 [brass_necklace]
 cost=30
@@ -486,7 +461,6 @@ wearpos=front
 manwear=model_281_obj_wear,0
 womanwear=model_445_obj_wear,0
 weight=10g
-tradeable=yes
 
 [blue_skirt]
 cost=2
@@ -503,7 +477,6 @@ wearpos=legs
 manwear=model_265_obj_wear,0
 womanwear=model_428_idk,0
 weight=2lb
-tradeable=yes
 
 [pink_skirt]
 cost=2
@@ -520,7 +493,6 @@ wearpos=legs
 manwear=model_265_obj_wear,0
 womanwear=model_428_idk,0
 weight=2lb
-tradeable=yes
 
 [black_skirt]
 cost=2
@@ -537,7 +509,6 @@ wearpos=legs
 manwear=model_265_obj_wear,0
 womanwear=model_428_idk,0
 weight=2lb
-tradeable=yes
 
 [eyepatch]
 name=Eye patch
@@ -555,7 +526,6 @@ manhead=model_68_obj_wear
 womanhead=model_126_obj_wear
 weight=6g
 members=yes
-tradeable=yes
 
 [zamorak_monk_bottom]
 name=Robe of zamorak
@@ -573,7 +543,6 @@ manwear=model_265_obj_wear,0
 womanwear=model_428_idk,0
 weight=2lb
 members=yes
-tradeable=yes
 param=zamorakitem,1
 param=magicattack,2
 param=magicdefence,3
@@ -598,7 +567,6 @@ manwear2=model_292_idk
 womanwear2=model_456_idk
 weight=2lb
 members=yes
-tradeable=yes
 param=zamorakitem,1
 param=magicattack,2
 param=magicdefence,3
@@ -624,6 +592,7 @@ param=slashdefence,7
 param=crushdefence,7
 param=magicdefence,7
 param=rangedefence,7
+tradeable=no
 
 [iban_staff]
 members=yes
@@ -660,6 +629,7 @@ param=attackrate,5
 param=crushattack_anim,human_trans_axe_chop
 param=defend_anim,human_ibanstaff_2h_defend
 // osrs use attack seq_401 and defend seq_403 + the weapon was already 1 handed in 2006
+tradeable=no
 
 [broken_iban_staff]
 name=Broken iban staff
@@ -672,6 +642,7 @@ model=model_2835_obj
 members=yes
 cost=20
 weight=4lb
+tradeable=no
 
 [obj_1411]
 name=Farmers fork
@@ -682,7 +653,6 @@ model=model_2411_obj
 2dyan=904
 2dxan=812
 weight=5lb
-tradeable=yes
 
 [obj_1413]
 name=Halberd
@@ -693,7 +663,6 @@ model=model_2791_obj
 2dyan=400
 2dxan=224
 weight=10lb
-tradeable=yes
 
 [obj_1415]
 name=Warhammer
@@ -704,7 +673,6 @@ model=model_2731_obj
 2dyan=456
 2dxan=344
 weight=4lb
-tradeable=yes
 
 [obj_1417]
 name=Javelin
@@ -715,7 +683,6 @@ model=model_2763_obj
 2dyan=1964
 2dxan=268
 weight=3lb
-tradeable=yes
 
 [scythe]
 name=Scythe
@@ -746,6 +713,7 @@ param=stabattack_anim,human_scythe_sweep
 param=defend_anim,human_scythe_block
 param=slash_sound,scythe_slash
 param=crush_sound,scythe_slash
+tradeable=no
 
 [archery_ticket]
 name=Archery ticket
@@ -760,7 +728,6 @@ cost=25
 members=yes
 stackable=yes
 weight=5g
-tradeable=yes
 
 [obj_1465]
 name=Weapon poison
@@ -775,6 +742,7 @@ recol1d=15871
 2dxan=84
 weight=20g
 members=yes
+tradeable=no
 
 [sea_slug]
 cost=4
@@ -788,6 +756,7 @@ model=model_2658_obj
 2dyan=140
 2dxan=272
 weight=8oz
+tradeable=no
 
 [damp_sticks]
 name=Damp sticks
@@ -803,6 +772,7 @@ recol1d=5251
 2dxan=316
 weight=3oz
 // todo: osrs has a respawnrate of 0. Not sure if its authentic, probably not?
+tradeable=no
 
 [dry_sticks]
 name=Dry sticks
@@ -818,6 +788,7 @@ recol1d=5251
 2dxan=316
 iop1=Rub-together
 weight=2oz
+tradeable=no
 
 [seaslug_broken_glass]
 members=yes
@@ -831,6 +802,7 @@ model=model_2676_obj
 2dxan=412
 cost=0
 weight=2oz
+tradeable=no
 
 [amulet_accuracy]
 name=Amulet of accuracy
@@ -851,7 +823,6 @@ wearpos=front
 manwear=model_280_obj_wear,0
 womanwear=model_444_obj_wear,0
 weight=10g
-tradeable=yes
 param=stabattack,4
 param=slashattack,4
 param=crushattack,4
@@ -870,7 +841,6 @@ members=yes
 cost=20
 weight=10g
 category=category_715
-tradeable=yes
 
 [garlic]
 name=Garlic
@@ -881,7 +851,6 @@ model=model_loc_3366_8
 2dyan=116
 2dxan=116
 weight=1oz
-tradeable=yes
 
 [ice_gloves]
 name=Ice gloves
@@ -906,6 +875,7 @@ members=yes
 param=slashdefence,3
 param=crushdefence,4
 param=rangedefence,2
+tradeable=no
 
 [oily_fishing_rod]
 name=Oily fishing rod
@@ -919,8 +889,10 @@ model=model_2828_obj
 2dxan=328
 weight=3lb
 members=yes
+tradeable=no
 
 [obj_1589]
+tradeable=no
 
 [dusty_key]
 name=Dusty key
@@ -935,6 +907,7 @@ recol1d=22945
 2dyan=20
 2dxan=328
 weight=10g
+tradeable=no
 
 [jail_key]
 name=Jail key
@@ -949,6 +922,7 @@ recol1d=22945
 2dyan=20
 2dxan=328
 weight=10g
+tradeable=no
 
 [water_skin4]
 name=Waterskin(4)
@@ -963,7 +937,6 @@ model=model_2699_obj
 2dyan=156
 2dxan=52
 members=yes
-tradeable=yes
 
 [water_skin3]
 name=Waterskin(3)
@@ -978,7 +951,6 @@ members=yes
 2dzoom=780
 2dyan=156
 2dxan=52
-tradeable=yes
 
 [water_skin2]
 name=Waterskin(2)
@@ -993,7 +965,6 @@ members=yes
 2dzoom=780
 2dyan=156
 2dxan=52
-tradeable=yes
 
 [water_skin1]
 name=Waterskin(1)
@@ -1008,7 +979,6 @@ members=yes
 2dzoom=780
 2dyan=156
 2dxan=52
-tradeable=yes
 
 [water_skin0]
 name=Waterskin(0)
@@ -1022,7 +992,6 @@ model=model_2699_obj
 2dzoom=780
 2dyan=156
 2dxan=52
-tradeable=yes
 
 [desert_shirt]
 name=Desert shirt
@@ -1043,7 +1012,6 @@ womanwear=model_456_idk,0
 womanwear2=model_348_idk
 iop2=Wear
 weight=2lb
-tradeable=yes
 
 [desert_robe]
 name=Desert robe
@@ -1061,7 +1029,6 @@ iop2=Wear
 weight=2lb
 manwear=model_265_obj_wear,0
 womanwear=model_428_idk,0
-tradeable=yes
 
 [desert_boots]
 name=Desert boots
@@ -1084,7 +1051,6 @@ weight=8oz
 members=yes
 manwear=model_185_obj_wear,0
 womanwear=model_361_obj_wear,0
-tradeable=yes
 
 [obj_1839]
 name=Metal key
@@ -1101,6 +1067,7 @@ recol1d=21071
 2dyan=20
 2dxan=328
 members=yes
+tradeable=no
 
 [obj_1840]
 name=Cell door key
@@ -1116,6 +1083,7 @@ recol1d=15819
 2dyan=20
 2dxan=328
 members=yes
+tradeable=no
 
 [obj_1841]
 name=Barrel
@@ -1128,6 +1096,7 @@ cost=1
 2dyan=76
 2dxan=136
 members=yes
+tradeable=no
 
 [obj_1842]
 name=Ana in a barrel
@@ -1142,6 +1111,7 @@ model=model_2821_obj
 members=yes
 iop1=Look
 weight=32kg
+tradeable=no
 
 [obj_1843]
 name=Wrought iron key
@@ -1157,6 +1127,7 @@ recol1d=10432
 2dzoom=700
 2dyan=20
 2dxan=328
+tradeable=no
 
 [obj_1844]
 name=Slaves' shirt
@@ -1177,6 +1148,7 @@ manwear2=model_170_idk
 womanwear=model_456_idk,0
 womanwear2=model_348_idk
 members=yes
+tradeable=no
 
 [obj_1845]
 name=Slave robe
@@ -1194,6 +1166,7 @@ wearpos=legs
 members=yes
 manwear=model_265_obj_wear,0
 womanwear=model_428_idk,0
+tradeable=no
 
 [obj_1846]
 name=Slave boots
@@ -1214,6 +1187,7 @@ category=category_118
 members=yes
 manwear=model_185_obj_wear,0
 womanwear=model_361_obj_wear,0
+tradeable=no
 
 [obj_1847]
 name=Scrumpled paper
@@ -1230,6 +1204,7 @@ recol1d=24319
 members=yes
 iop1=Read
 weight=10g
+tradeable=no
 
 [shantay_disclaimer]
 name=Shantay disclaimer
@@ -1246,6 +1221,7 @@ members=yes
 2dxan=472
 iop1=Read
 weight=10g
+tradeable=no
 
 [obj_1849]
 name=Prototype dart
@@ -1264,6 +1240,7 @@ recol1d=8354
 2dzoom=720
 2dyan=336
 2dxan=396
+tradeable=no
 
 [obj_1850]
 name=Technical plans
@@ -1278,6 +1255,7 @@ model=model_2809_obj
 2dxan=472
 iop1=Read
 weight=15g
+tradeable=no
 
 [obj_1851]
 name=Tenti pineapple
@@ -1292,6 +1270,7 @@ members=yes
 2dzoom=1740
 2dyan=48
 2dxan=228
+tradeable=no
 
 [obj_1852]
 name=Bedobin key
@@ -1307,6 +1286,7 @@ members=yes
 2dzoom=700
 2dyan=20
 2dxan=328
+tradeable=no
 
 [obj_1853]
 name=Prototype dart tip
@@ -1320,6 +1300,7 @@ model=model_2518_obj
 2dxan=344
 members=yes
 stackable=yes
+tradeable=no
 
 [shantay_pass]
 name=Shantay pass
@@ -1336,7 +1317,6 @@ recol1d=13840
 2dxan=320
 members=yes
 stackable=yes
-tradeable=yes
 
 [obj_1855]
 name=Rock
@@ -1351,6 +1331,7 @@ recol1d=7400
 2dyan=1904
 2dxan=120
 members=yes
+tradeable=no
 
 [ogre_relic]
 name=Ogre relic
@@ -1361,6 +1342,7 @@ model=model_2698_obj
 2dyan=1668
 2dxan=104
 weight=3kg
+tradeable=no
 
 [relic_part_1]
 name=Relic part 1
@@ -1373,6 +1355,7 @@ members=yes
 2dxan=128
 weight=1kg
 category=category_1399
+tradeable=no
 
 [relic_part_2]
 name=Relic part 2
@@ -1383,6 +1366,7 @@ members=yes
 2dyan=1696
 weight=1kg
 category=category_1399
+tradeable=no
 
 [relic_part_3]
 name=Relic part 3
@@ -1393,6 +1377,7 @@ members=yes
 2dyan=108
 weight=1kg
 category=category_1399
+tradeable=no
 
 [skavid_map]
 name=Skavid map
@@ -1405,6 +1390,7 @@ model=model_2383_obj
 2dxan=312
 weight=10g
 members=yes
+tradeable=no
 
 [ogre_tooth]
 name=Ogre tooth
@@ -1417,6 +1403,7 @@ model=model_2522_obj
 2dxan=292
 weight=10g
 members=yes
+tradeable=no
 
 [obj_2378]
 name=Toban key
@@ -1428,6 +1415,7 @@ model=model_2372_obj
 2dxan=328
 weight=10g
 members=yes
+tradeable=no
 
 [rock_cake]
 name=Rock cake
@@ -1440,6 +1428,7 @@ weight=25g
 members=yes
 iop2=Eat
 category=category_734
+tradeable=no
 
 [obj_2380]
 name=Crystal
@@ -1454,6 +1443,7 @@ code9=yes
 2dxan=216
 weight=2lb
 members=yes
+tradeable=no
 
 [obj_2381]
 name=Crystal
@@ -1468,6 +1458,7 @@ code9=yes
 2dxan=216
 weight=2lb
 members=yes
+tradeable=no
 
 [obj_2382]
 name=Crystal
@@ -1482,6 +1473,7 @@ code9=yes
 2dxan=216
 weight=2lb
 members=yes
+tradeable=no
 
 [obj_2383]
 name=Crystal
@@ -1496,6 +1488,7 @@ code9=yes
 2dxan=216
 weight=2lb
 members=yes
+tradeable=no
 
 [obj_2384]
 name=Finger nails
@@ -1507,6 +1500,7 @@ model=model_1787_obj
 2dxan=348
 weight=2g
 members=yes
+tradeable=no
 
 [obj_2385]
 name=Old robe
@@ -1517,6 +1511,7 @@ model=model_2786_obj
 2dxan=536
 weight=4lb
 members=yes
+tradeable=no
 
 [obj_2386]
 name=Unusual armour
@@ -1527,6 +1522,7 @@ model=model_2574_obj
 2dxan=608
 weight=8lb
 members=yes
+tradeable=no
 
 [obj_2387]
 name=Damaged dagger
@@ -1538,6 +1534,7 @@ model=model_2672_obj
 2dxan=472
 weight=1lb
 members=yes
+tradeable=no
 
 [tattered_eye_patch]
 name=Tattered eye patch
@@ -1548,6 +1545,7 @@ model=model_2417_obj
 2dxan=296
 weight=6g
 members=yes
+tradeable=no
 
 [nightshade]
 name=Nightshade
@@ -1563,18 +1561,25 @@ iop2=Eat
 weight=15g
 members=yes
 category=category_1748
+tradeable=no
 
 [obj_2420]
+tradeable=no
 
 [obj_2422]
+tradeable=no
 
 [obj_2425]
+tradeable=no
 
 [obj_2480]
+tradeable=no
 
 [obj_2512]
+tradeable=no
 
 [obj_2513]
+tradeable=no
 
 [rotten_tomato]
 model=model_2632_obj
@@ -1591,7 +1596,6 @@ desc=Pretty smelly.
 cost=1
 weight=80g
 members=yes
-tradeable=yes
 
 [toy_horsey_brown]
 cost=100
@@ -1607,7 +1611,6 @@ womanwear=model_3333_obj_wear,6
 2dxan=40
 weight=50g
 iop1=Play-with
-tradeable=yes
 
 [toy_horsey_white]
 cost=100
@@ -1627,7 +1630,6 @@ womanwear=model_3333_obj_wear,6
 2dxan=40
 weight=50g
 iop1=Play-with
-tradeable=yes
 
 [toy_horsey_black]
 cost=100
@@ -1647,7 +1649,6 @@ womanwear=model_3333_obj_wear,6
 2dxan=40
 weight=50g
 iop1=Play-with
-tradeable=yes
 
 [toy_horsey_grey]
 cost=100
@@ -1667,7 +1668,6 @@ womanwear=model_3333_obj_wear,6
 2dxan=40
 weight=50g
 iop1=Play-with
-tradeable=yes
 
 [obj_2529]
 name=Orb of light
@@ -1676,6 +1676,7 @@ cost=1
 model=model_loc_771_0
 members=yes
 respawnrate=50
+tradeable=no
 
 [obj_2530]
 name=Bones
@@ -1687,4 +1688,3 @@ model=model_2674_obj
 2dxan=400
 iop1=Bury
 weight=500g
-tradeable=yes

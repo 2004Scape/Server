@@ -10,6 +10,7 @@ cost=40
 2dxan=608
 weight=8lb
 category=category_528
+tradeable=no
 
 [goblin_mail_blue]
 name=Blue goblin mail
@@ -23,6 +24,7 @@ cost=40
 2dxan=608
 weight=8lb
 category=category_528
+tradeable=no
 
 [goblin_mail]
 name=Goblin mail
@@ -34,4 +36,3 @@ cost=40
 2dxan=608
 weight=8lb
 category=category_528
-tradeable=yes

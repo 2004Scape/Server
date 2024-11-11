@@ -9,7 +9,6 @@ model=model_2674_obj
 iop1=Bury
 weight=500g
 category=bones
-tradeable=yes
 param=bone_exp,45
 
 [burnt_bones]
@@ -25,7 +24,6 @@ recol1d=7399
 iop1=Bury
 weight=500g
 category=bones
-tradeable=yes
 param=bone_exp,45
 
 [bat_bones]
@@ -40,7 +38,6 @@ iop1=Bury
 category=bones
 weight=300g
 members=yes
-tradeable=yes
 param=bone_exp,45
 param=grindable_ingredient_refined,ground_bat_bones
 param=grindable_ingredient_message,You grind the bones to a powder.
@@ -55,7 +52,6 @@ model=model_222_obj
 iop1=Bury
 weight=800g
 category=bones
-tradeable=yes
 respawnrate=50
 param=bone_exp,150
 
@@ -70,7 +66,6 @@ model=model_222_obj
 iop1=Bury
 weight=800g
 category=bones
-tradeable=yes
 param=bone_exp,300
 
 [dragon_bones]
@@ -84,7 +79,6 @@ iop1=Bury
 weight=1500g
 category=bones
 members=yes
-tradeable=yes
 param=bone_exp,720
 
 [wolf_bones]
@@ -102,5 +96,4 @@ members=yes
 2dxan=400
 iop1=Bury
 category=bones
-tradeable=yes
 param=bone_exp,45

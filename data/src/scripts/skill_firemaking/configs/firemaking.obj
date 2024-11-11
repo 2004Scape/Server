@@ -12,7 +12,6 @@ womanwear=model_488_obj_wear,0
 2dyan=1968
 2dxan=196
 weight=35g
-tradeable=yes
 
 [ashes]
 name=Ashes
@@ -26,7 +25,6 @@ recol1d=28539
 2dyan=1892
 2dxan=264
 weight=2oz
-tradeable=yes
 
 [lit_torch]
 cost=4
@@ -39,7 +37,6 @@ model=model_2671_obj
 2dxan=124
 weight=500g
 members=yes
-tradeable=yes
 category=light_source_lit
 
 [unlit_torch]
@@ -52,7 +49,6 @@ model=model_2554_obj
 2dxan=1632
 weight=500g
 members=yes
-tradeable=yes
 category=light_source_unlit
 param=product,lit_torch
 
@@ -80,8 +76,10 @@ param=proj_launch,unlit_arrow_launch
 param=proj_travel,unlit_arrow_travel
 param=next_obj_stage,lit_arrows
 param=unlit_arrow,^true
+tradeable=no
 
 [obj_599]
+tradeable=no
 
 [logs]
 name=Logs
@@ -96,7 +94,6 @@ weight=2kg
 2dxan=280
 op4=Light
 category=category_22
-tradeable=yes
 param=levelrequire,1
 param=productexp,400
 
@@ -116,7 +113,6 @@ recol1d=15651
 op4=Light
 weight=2kg
 category=category_22
-tradeable=yes
 param=levelrequire,75
 param=productexp,3038
 
@@ -135,7 +131,6 @@ recol1d=15717
 op4=Light
 weight=2kg
 category=category_22
-tradeable=yes
 param=levelrequire,60
 param=productexp,2025
 
@@ -154,7 +149,6 @@ recol1d=14560
 op4=Light
 weight=2kg
 category=category_22
-tradeable=yes
 param=levelrequire,45
 param=productexp,1350
 
@@ -173,7 +167,6 @@ recol1d=16643
 op4=Light
 weight=2kg
 category=category_22
-tradeable=yes
 param=levelrequire,30
 param=productexp,900
 
@@ -192,6 +185,5 @@ recol1d=14659
 op4=Light
 weight=2kg
 category=category_22
-tradeable=yes
 param=levelrequire,15
 param=productexp,600

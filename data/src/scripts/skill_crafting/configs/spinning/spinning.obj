@@ -10,7 +10,6 @@ model=model_2690_obj
 2dzan=1840
 2dxan=428
 weight=1lb
-tradeable=yes
 param=crafting_spinning_struct,flax
 
 [wool]
@@ -22,5 +21,4 @@ model=model_2779_obj
 2dyan=160
 2dxan=332
 weight=3g
-tradeable=yes
 param=crafting_spinning_struct,wool

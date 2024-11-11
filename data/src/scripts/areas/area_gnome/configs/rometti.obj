@@ -16,7 +16,6 @@ cost=200
 2dxan=152
 weight=12oz
 members=yes
-tradeable=yes
 param=slashdefence,1
 param=crushdefence,1
 
@@ -38,7 +37,6 @@ cost=200
 2dxan=152
 weight=12oz
 members=yes
-tradeable=yes
 param=slashdefence,1
 param=crushdefence,1
 
@@ -60,7 +58,6 @@ cost=200
 2dxan=152
 weight=12oz
 members=yes
-tradeable=yes
 param=slashdefence,1
 param=crushdefence,1
 
@@ -82,7 +79,6 @@ cost=200
 2dxan=152
 weight=12oz
 members=yes
-tradeable=yes
 param=slashdefence,1
 param=crushdefence,1
 
@@ -104,7 +100,6 @@ cost=200
 2dxan=152
 weight=12oz
 members=yes
-tradeable=yes
 param=slashdefence,1
 param=crushdefence,1
 
@@ -127,7 +122,6 @@ cost=180
 2dxan=536
 weight=2lb
 members=yes
-tradeable=yes
 param=slashdefence,2
 param=crushdefence,2
 
@@ -150,7 +144,6 @@ cost=180
 2dxan=536
 weight=2lb
 members=yes
-tradeable=yes
 param=slashdefence,2
 param=crushdefence,2
 
@@ -173,7 +166,6 @@ cost=180
 2dxan=536
 weight=2lb
 members=yes
-tradeable=yes
 param=slashdefence,2
 param=crushdefence,2
 
@@ -196,7 +188,6 @@ cost=180
 2dxan=536
 weight=2lb
 members=yes
-tradeable=yes
 param=slashdefence,2
 param=crushdefence,2
 
@@ -219,7 +210,6 @@ cost=180
 2dxan=536
 weight=2lb
 members=yes
-tradeable=yes
 param=slashdefence,2
 param=crushdefence,2
 
@@ -239,7 +229,6 @@ cost=180
 2dxan=572
 weight=2lb
 members=yes
-tradeable=yes
 param=slashdefence,2
 param=crushdefence,2
 
@@ -259,7 +248,6 @@ cost=180
 2dxan=572
 weight=2lb
 members=yes
-tradeable=yes
 param=slashdefence,2
 param=crushdefence,2
 
@@ -279,7 +267,6 @@ cost=180
 2dxan=572
 weight=2lb
 members=yes
-tradeable=yes
 param=slashdefence,2
 param=crushdefence,2
 
@@ -299,7 +286,6 @@ cost=180
 2dxan=572
 weight=2lb
 members=yes
-tradeable=yes
 param=slashdefence,2
 param=crushdefence,2
 
@@ -319,7 +305,6 @@ cost=180
 2dxan=572
 weight=2lb
 members=yes
-tradeable=yes
 param=slashdefence,2
 param=crushdefence,2
 
@@ -343,7 +328,6 @@ iop2=Wear
 2dxan=152
 weight=1lb
 members=yes
-tradeable=yes
 param=magicattack,3
 param=magicdefence,3
 
@@ -367,7 +351,6 @@ iop2=Wear
 2dxan=152
 weight=1lb
 members=yes
-tradeable=yes
 param=magicattack,3
 param=magicdefence,3
 
@@ -391,7 +374,6 @@ iop2=Wear
 2dxan=152
 weight=1lb
 members=yes
-tradeable=yes
 param=magicattack,3
 param=magicdefence,3
 
@@ -415,7 +397,6 @@ iop2=Wear
 2dxan=152
 weight=1lb
 members=yes
-tradeable=yes
 param=magicattack,3
 param=magicdefence,3
 
@@ -439,6 +420,5 @@ iop2=Wear
 2dxan=152
 weight=1lb
 members=yes
-tradeable=yes
 param=magicattack,3
 param=magicdefence,3

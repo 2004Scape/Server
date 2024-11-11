@@ -1,0 +1,10 @@
+[battle_mage_hunt]
+type=player
+check_vis=lineofsight
+check_nottoostrong=off
+check_notcombat=%lastcombat
+check_notcombat_self=%npc_lastcombat
+extracheck_var=%magearena,>5
+check_notbusy=off
+find_keephunting=off
+find_newmode=applayer2

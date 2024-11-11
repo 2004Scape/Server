@@ -10,7 +10,6 @@ model=model_2560_obj
 2dxan=320
 weight=4g
 members=yes
-tradeable=yes
 
 [ship_ticket]
 name=Ship ticket
@@ -24,4 +23,3 @@ model=model_2560_obj
 2dxan=320
 weight=4g
 members=yes
-tradeable=yes

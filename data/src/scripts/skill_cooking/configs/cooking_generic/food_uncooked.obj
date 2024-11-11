@@ -11,7 +11,6 @@ model=model_2760_obj
 2dxan=308
 weight=800g
 members=yes
-tradeable=yes
 category=cooking_generic
 
 [raw_beef]
@@ -25,7 +24,6 @@ model=model_2760_obj
 2dxan=308
 cost=1
 weight=12oz
-tradeable=yes
 category=cooking_generic
 
 //guess
@@ -40,7 +38,6 @@ model=model_2760_obj
 2dxan=308
 cost=1
 weight=5oz
-tradeable=yes
 category=cooking_generic
 
 //guess
@@ -55,7 +52,6 @@ model=model_2760_obj
 2dxan=308
 cost=1
 weight=15oz
-tradeable=yes
 category=cooking_generic
 
 [raw_chicken]
@@ -70,7 +66,6 @@ recol1d=22098
 2dxan=88
 cost=1
 weight=6oz
-tradeable=yes
 category=cooking_generic
 
 //guess
@@ -92,3 +87,4 @@ recol2d=31041
 weight=8oz
 category=cooking_generic
 param=fishing_struct,fishing_struct_lava_eel
+tradeable=no

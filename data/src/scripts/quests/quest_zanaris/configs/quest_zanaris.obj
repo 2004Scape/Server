@@ -10,6 +10,7 @@ members=yes
 2dyan=152
 2dxan=268
 weight=5lb
+tradeable=no
 
 [dramenstaff]
 name=Dramen staff
@@ -41,3 +42,4 @@ param=ready_baseanim,human_staffready
 param=crushattack_anim,human_staff_pound
 param=defend_anim,human_staff_def
 param=crush_sound,staff_hit
+tradeable=no

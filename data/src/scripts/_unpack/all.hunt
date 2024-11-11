@@ -467,7 +467,7 @@ find_newmode=queue20
 
 [example2]
 type=player
-check_inv=worn,dragon_longsword,1,1
+check_inv=worn,dragon_longsword,=1
 check_vis=lineofsight
 check_nottoostrong=off
 check_notcombat=%lastcombat
@@ -476,7 +476,7 @@ find_newmode=queue20
 
 [example3]
 type=player
-check_invparam=worn,zamorakitem,1,2147483647
+check_invparam=worn,zamorakitem,>0
 check_vis=lineofsight
 check_nottoostrong=off
 check_notcombat=%lastcombat
@@ -497,7 +497,7 @@ find_newmode=queue20
 
 [example6]
 type=player
-check_inv=worn,dragon_longsword,0,0
+check_inv=worn,dragon_longsword,=0
 check_vis=lineofsight
 check_nottoostrong=off
 check_notcombat=%lastcombat

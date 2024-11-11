@@ -11,7 +11,6 @@ recol1d=22098
 members=yes
 cost=10
 weight=225g
-tradeable=yes
 category=cooking_generic
 
 [palm_leaf]
@@ -26,7 +25,6 @@ model=model_2651_obj
 2dxan=292
 weight=100g
 members=yes
-tradeable=yes
 
 //guess
 [burnt_wrapped_oomlie]
@@ -49,7 +47,6 @@ recol4d=8456
 cost=1
 weight=275g
 members=yes
-tradeable=yes
 
 [burnt_oomlie]
 name=Burnt oomlie
@@ -64,7 +61,6 @@ recol1d=5285
 2dyan=1748
 2dxan=88
 weight=4oz
-tradeable=yes
 
 //guess
 [cooked_wrapped_oomlie]
@@ -89,7 +85,6 @@ members=yes
 cost=35
 weight=300g
 category=category_59
-tradeable=yes
 
 //guess
 [wrapped_oomlie]
@@ -104,5 +99,4 @@ model=model_2687_obj
 cost=16
 weight=325g
 members=yes
-tradeable=yes
 category=cooking_generic

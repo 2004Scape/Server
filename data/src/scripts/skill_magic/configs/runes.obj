@@ -8,7 +8,6 @@ model=model_2399_obj
 2dzoom=740
 2dxan=516
 weight=2g
-tradeable=yes
 category=category_149
 respawnrate=200
 
@@ -22,7 +21,6 @@ model=model_2652_obj
 2dzoom=740
 2dxan=516
 weight=2g
-tradeable=yes
 category=category_149
 
 [airrune]
@@ -35,7 +33,6 @@ model=model_2405_obj
 2dzoom=740
 2dxan=516
 weight=2g
-tradeable=yes
 category=category_149
 
 [earthrune]
@@ -48,7 +45,6 @@ model=model_2737_obj
 2dzoom=740
 2dxan=516
 weight=2g
-tradeable=yes
 category=category_149
 
 [mindrune]
@@ -61,7 +57,6 @@ model=model_2481_obj
 2dzoom=740
 2dxan=516
 weight=2g
-tradeable=yes
 category=category_149
 
 [bodyrune]
@@ -74,7 +69,6 @@ model=model_2340_obj
 2dzoom=740
 2dxan=516
 weight=2g
-tradeable=yes
 category=category_149
 
 [deathrune]
@@ -87,7 +81,6 @@ model=model_2645_obj
 2dzoom=740
 2dxan=516
 weight=2g
-tradeable=yes
 respawnrate=200
 category=category_149
 
@@ -101,7 +94,6 @@ model=model_2734_obj
 2dzoom=740
 2dxan=516
 weight=2g
-tradeable=yes
 respawnrate=200
 category=category_149
 
@@ -115,7 +107,6 @@ model=model_2707_obj
 2dzoom=740
 2dxan=516
 weight=2g
-tradeable=yes
 respawnrate=200
 category=category_149
 
@@ -129,7 +120,6 @@ model=model_2382_obj
 2dzoom=740
 2dxan=516
 weight=2g
-tradeable=yes
 category=category_149
 
 [cosmicrune]
@@ -142,7 +132,6 @@ model=model_2735_obj
 2dzoom=740
 2dxan=516
 weight=2g
-tradeable=yes
 respawnrate=200
 category=category_149
 
@@ -157,7 +146,6 @@ model=model_2665_obj
 2dxan=516
 members=yes
 weight=2g
-tradeable=yes
 respawnrate=200
 category=category_149
 
@@ -172,5 +160,4 @@ model=model_2434_obj
 2dxan=516
 members=yes
 weight=2g
-tradeable=yes
 category=category_149

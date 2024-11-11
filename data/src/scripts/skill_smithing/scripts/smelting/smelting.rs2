@@ -1,7 +1,7 @@
 [oplocu,_smithing_furnace]
 switch_obj (last_useitem)
 {
-    case gold_bar : @craft_gold_interface;
+    case gold_bar, perfect_gold_bar : @craft_gold_interface;
     case silver_bar : @craft_silver;
     case steel_bar : @smelt_cannonballs;
     case bucket_sand, soda_ash : @smelt_glass;
@@ -76,7 +76,17 @@ if ($bar = iron_bar) {
     }
 }
 
-stat_advance(smithing, struct_param($struct, productexp));
+// If player is wearing gold smith gauntlets, 2.5x xp. The multiplier was 1.5x in RSC,
+// earliest mention of 2.5x (56.2) xp is in May 2005:
+// https://web.archive.org/web/20080130035157/https://www.rscommunity.de/index.php?option=content&task=view&id=233
+// No mentioned updates to Family Crest or the gauntlets in that period. 
+// Maybe it got changed when it was ported to RS2 in Dec 2003?
+def_int $xp = struct_param($struct, productexp);
+if ($bar = gold_bar & inv_total(worn, gauntlets_of_goldsmithing) > 0) {
+    $xp = scale(5, 2, $xp); // 2.5x
+}
+
+stat_advance(smithing, $xp);
 
 // add bar
 inv_add(inv, $bar, 1);
