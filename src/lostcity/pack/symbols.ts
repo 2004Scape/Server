@@ -22,11 +22,15 @@ export function generateServerSymbols() {
             }
 
             const parts = src[i].split('=');
-            let name = parts[0].trim();
-            const value = parts[1].trim();
 
+            let name = parts[0].trim();
             if (name.startsWith('^')) {
                 name = name.substring(1);
+            }
+
+            let value = parts[1].trim();
+            if (value.startsWith('"') && value.endsWith('"')) {
+                value = value.substring(1, value.length - 1);
             }
 
             constants[name] = value;
