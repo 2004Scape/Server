@@ -62,9 +62,9 @@ respawnrate=70
 hitpoints=12
 attack=3
 defence=4
+param=attackrate,6
 param=attackbonus,12
 param=strengthbonus,12
-param=attackrate,6
 param=damagetype,^crush_style
 param=attack_anim,goblin_attack_armed
 param=defend_anim,goblin_block
@@ -72,6 +72,9 @@ param=death_anim,goblin_death
 param=attack_sound,goblin_attack
 param=defend_sound,goblin_hit
 param=death_sound,goblin_death
+// https://oldschool.runescape.wiki/w/Goblin_(historical)#Green_(original)
+// https://raw.githubusercontent.com/Joshua-F/osrs-dumps/refs/heads/master/config/dump.npc npc_677
+// osrs stats and Vislvl match 1:1
 
 [goblin_armed_red]
 name=Goblin
@@ -95,9 +98,9 @@ respawnrate=70
 hitpoints=12
 attack=3
 defence=4
+param=attackrate,6
 param=attackbonus,12
 param=strengthbonus,12
-param=attackrate,6
 param=damagetype,^crush_style
 param=attack_anim,goblin_attack_armed
 param=defend_anim,goblin_block
@@ -105,3 +108,6 @@ param=death_anim,goblin_death
 param=attack_sound,goblin_attack
 param=defend_sound,goblin_hit
 param=death_sound,goblin_death
+// https://oldschool.runescape.wiki/w/Goblin_(historical)#Green_(original)
+// https://raw.githubusercontent.com/Joshua-F/osrs-dumps/refs/heads/master/config/dump.npc npc_678
+// osrs stats and Vislvl match 1:1

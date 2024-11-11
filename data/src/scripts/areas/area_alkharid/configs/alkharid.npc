@@ -223,7 +223,6 @@ param=shop_buy_multiplier,400
 param=shop_delta,30
 param=shop_title,Al-Kharid General Store
 moverestrict=indoors
-param=defend_sound,female_hit
 param=death_sound,female_death
 
 [gem_trader]
@@ -331,7 +330,6 @@ param=shop_buy_multiplier,650
 param=shop_delta,10
 param=shop_title,Ranael's Super Skirt Store.
 moverestrict=indoors
-param=defend_sound,female_hit
 param=death_sound,female_death
 
 [dommik]
@@ -396,7 +394,9 @@ model6=model_254_idk
 model7=model_181_idk
 respawnrate=50
 hitpoints=7
+param=damagetype,^crush_style
 category=citizen
+// osrs stats and Vislvl match 1:1
 
 [silk_trader]
 vislevel=hide
@@ -458,7 +458,7 @@ attack=7
 strength=5
 defence=4
 param=attackbonus,10
-param=strengthbonus,10
+param=strengthbonus,9
 param=stabdefence,12
 param=slashdefence,15
 param=crushdefence,10
@@ -469,3 +469,4 @@ param=attack_anim,human_sword_slash
 param=defend_anim,human_sword_defend2
 param=attack_sound,hacksword_slash
 // param=defend_sound,brassclash2
+// osrs stats and Vislvl match 1:1

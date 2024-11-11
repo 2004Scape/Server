@@ -26,7 +26,7 @@ param=crushattack_anim,human_blunt_crush
 // param=defend_anim,human_blunt_defend1
 param=defend_anim,human_blunt_defend2
 param=crush_sound,baxe_crush
-// osrs attack seq_403.
+// osrs defend seq_403.
 
 [bronze_warhammer]
 cost=47
@@ -56,7 +56,7 @@ param=crushattack_anim,human_blunt_crush
 // param=defend_anim,human_blunt_defend1
 param=defend_anim,human_blunt_defend2
 param=crush_sound,baxe_crush
-// osrs attack seq_403.
+// osrs defend seq_403.
 
 [steel_warhammer]
 cost=640
@@ -85,7 +85,7 @@ param=crushattack_anim,human_blunt_crush
 // param=defend_anim,human_blunt_defend1
 param=defend_anim,human_blunt_defend2
 param=crush_sound,baxe_crush
-// osrs attack seq_403.
+// osrs defend seq_403.
 
 [black_warhammer]
 cost=640
@@ -116,7 +116,7 @@ param=crushattack_anim,human_blunt_crush
 // param=defend_anim,human_blunt_defend1
 param=defend_anim,human_blunt_defend2
 param=crush_sound,baxe_crush
-// osrs attack seq_403.
+// osrs defend seq_403.
 
 [mithril_warhammer]
 cost=1660
@@ -147,7 +147,7 @@ param=crushattack_anim,human_blunt_crush
 // param=defend_anim,human_blunt_defend1
 param=defend_anim,human_blunt_defend2
 param=crush_sound,baxe_crush
-// osrs attack seq_403.
+// osrs defend seq_403.
 
 [adamant_warhammer]
 cost=4120
@@ -178,7 +178,7 @@ param=crushattack_anim,human_blunt_crush
 // param=defend_anim,human_blunt_defend1
 param=defend_anim,human_blunt_defend2
 param=crush_sound,baxe_crush
-// osrs attack seq_403.
+// osrs defend seq_403.
 
 [rune_warhammer]
 cost=41500
@@ -208,4 +208,4 @@ param=crushattack_anim,human_blunt_crush
 // param=defend_anim,human_blunt_defend1
 param=defend_anim,human_blunt_defend2
 param=crush_sound,baxe_crush
-// osrs attack seq_403.
+// osrs defend seq_403.

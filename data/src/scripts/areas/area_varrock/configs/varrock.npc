@@ -109,8 +109,7 @@ model4=model_353_idk
 model5=model_431_idk
 model6=model_358_idk
 head1=model_103_idk_head
-wanderrange=2
-param=defend_sound,female_hit
+moverestrict=indoors
 param=death_sound,female_death
 
 [sir_prysin]
@@ -131,7 +130,7 @@ model4=model_176_idk
 model5=model_254_idk
 model6=model_185_obj_wear
 head1=model_56_obj_wear
-wanderrange=4
+moverestrict=indoors
 
 [captain_rovin]
 vislevel=52
@@ -162,7 +161,7 @@ model8=model_519_obj_wear
 model9=model_323_obj_wear
 head1=model_63_idk_head
 head2=model_79_idk_head
-wanderrange=4
+moverestrict=indoors
 
 [shop_keeper_varrock_generalshop]
 vislevel=hide
@@ -291,7 +290,6 @@ param=shop_buy_multiplier,550
 param=shop_delta,10
 param=shop_title,Thessalia Fine Clothes.
 moverestrict=indoors
-param=defend_sound,female_hit
 param=death_sound,female_death
 
 [horvik]
@@ -542,7 +540,6 @@ model7=model_483_npc
 model8=model_533_obj_wear
 head1=model_115_idk_head
 head2=model_131_npc_head
-param=defend_sound,female_hit
 param=death_sound,female_death
 
 [curator]
@@ -622,6 +619,7 @@ hitpoints=20
 attack=21
 strength=21
 defence=21
+param=attackrate,5
 param=attackbonus,8
 param=strengthbonus,10
 param=stabdefence,21
@@ -629,14 +627,12 @@ param=slashdefence,23
 param=crushdefence,21
 param=magicdefence,-6
 param=rangedefence,20
-param=attackrate,5
 param=damagetype,^crush_style
-param=attack_anim,human_sword_stab
-param=defend_anim,human_sword_defend2
 param=attack_sound,stabsword_slash
 // param=defend,sound,blade3
-// osrs uses these seqs attack seq_422 defend seq_425
-// for some strange reason the attack animations are missing
+// osrs weaponsmater uses the unarmed punch animation even though
+// he has a sword in his hand. and yet the sound of the punch is stabsword_slash. (and damage type is crush)
+// Stats match osrs version but our version Vislvl is different.
 
 [straven]
 name=Straven
@@ -660,8 +656,15 @@ model7=model_181_idk
 model8=model_322_idk
 head1=model_53_idk_head
 wanderrange=1
+// maxrange=
+// TODO respawnrate=
 hitpoints=20
-// TODO
+attack=21
+strength=21
+defence=21
+param=damagetype,^crush_style
+// TODO param stats
+// guess stats taken from weaponmaster.
 
 [jonny_the_beard]
 name=Jonny the beard
@@ -691,6 +694,7 @@ maxrange=6
 respawnrate=74
 hitpoints=8
 param=damagetype,^crush_style
+// Stats match osrs version but our version Vislvl is different.
 
 [king_roald]
 vislevel=hide
@@ -740,7 +744,6 @@ model4=model_353_idk
 model5=model_428_idk
 model6=model_358_idk
 head1=model_118_idk_head
-param=defend_sound,female_hit
 param=death_sound,female_death
 
 [apothecary]

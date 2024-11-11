@@ -1036,6 +1036,12 @@ recol3d=8352
 recol4s=2240
 recol4d=8352
 model1=model_2887_npc
+param=attack_anim,imp_attack
+param=defend_anim,imp_block
+param=death_anim,imp_death
+param=attack_sound,imp_attack
+param=defend_sound,imp_hit
+param=death_sound,imp_death
 // TODO
 
 [macro_event_dryad1]
@@ -1069,7 +1075,9 @@ param=damagetype,^crush_style
 param=attack_anim,dryhad_attack
 param=defend_anim,dryhad_block
 param=death_anim,dryhad_death
-// TODO sounds
+param=attack_sound,null
+param=defend_sound,null
+param=death_sound,null
 param=combat_xp_multiplier,25
 
 [macro_event_dryad2]
@@ -1102,7 +1110,9 @@ param=damagetype,^crush_style
 param=attack_anim,dryhad_attack
 param=defend_anim,dryhad_block
 param=death_anim,dryhad_death
-// TODO sounds
+param=attack_sound,null
+param=defend_sound,null
+param=death_sound,null
 param=combat_xp_multiplier,25
 
 [macro_event_dryad3]
@@ -1135,7 +1145,9 @@ param=damagetype,^crush_style
 param=attack_anim,dryhad_attack
 param=defend_anim,dryhad_block
 param=death_anim,dryhad_death
-// TODO sounds
+param=attack_sound,null
+param=defend_sound,null
+param=death_sound,null
 param=combat_xp_multiplier,25
 
 [macro_event_dryad4]
@@ -1168,7 +1180,9 @@ param=damagetype,^crush_style
 param=attack_anim,dryhad_attack
 param=defend_anim,dryhad_block
 param=death_anim,dryhad_death
-// TODO sounds
+param=attack_sound,null
+param=defend_sound,null
+param=death_sound,null
 param=combat_xp_multiplier,25
 
 [macro_event_dryad5]
@@ -1201,7 +1215,9 @@ param=damagetype,^crush_style
 param=attack_anim,dryhad_attack
 param=defend_anim,dryhad_block
 param=death_anim,dryhad_death
-// TODO sounds
+param=attack_sound,null
+param=defend_sound,null
+param=death_sound,null
 param=combat_xp_multiplier,25
 
 [macro_event_dryad6]
@@ -1234,7 +1250,9 @@ param=damagetype,^crush_style
 param=attack_anim,dryhad_attack
 param=defend_anim,dryhad_block
 param=death_anim,dryhad_death
-// TODO sounds
+param=attack_sound,null
+param=defend_sound,null
+param=death_sound,null
 param=combat_xp_multiplier,25
 
 [macro_event_ent_tree1]
@@ -1441,6 +1459,7 @@ param=death_anim,dwarf_death
 param=attackrate,4
 param=attack_sound,thrown
 // stats are completely guessed
+// TODO sounds
 
 [macro_event_big_fish]
 name=Big fish
@@ -1479,10 +1498,10 @@ defence=9
 timer=10
 param=damagetype,^crush_style
 param=attack_anim,troll_attack
-param=attack_sound,null
 param=defend_anim,troll_block
-param=defend_sound,null
 param=death_anim,troll_death
+param=attack_sound,null
+param=defend_sound,null
 param=death_sound,null
 param=combat_xp_multiplier,25
 category=macro_event_river_troll
@@ -1511,10 +1530,10 @@ defence=22
 timer=10
 param=damagetype,^crush_style
 param=attack_anim,troll_attack
-param=attack_sound,null
 param=defend_anim,troll_block
-param=defend_sound,null
 param=death_anim,troll_death
+param=attack_sound,null
+param=defend_sound,null
 param=death_sound,null
 param=combat_xp_multiplier,25
 category=macro_event_river_troll
@@ -1543,10 +1562,10 @@ defence=38
 timer=10
 param=damagetype,^crush_style
 param=attack_anim,troll_attack
-param=attack_sound,null
 param=defend_anim,troll_block
-param=defend_sound,null
 param=death_anim,troll_death
+param=attack_sound,null
+param=defend_sound,null
 param=death_sound,null
 param=combat_xp_multiplier,25
 category=macro_event_river_troll
@@ -1575,10 +1594,10 @@ defence=65
 timer=10
 param=damagetype,^crush_style
 param=attack_anim,troll_attack
-param=attack_sound,null
 param=defend_anim,troll_block
-param=defend_sound,null
 param=death_anim,troll_death
+param=attack_sound,null
+param=defend_sound,null
 param=death_sound,null
 param=combat_xp_multiplier,25
 category=macro_event_river_troll
@@ -1607,10 +1626,10 @@ defence=100
 timer=10
 param=damagetype,^crush_style
 param=attack_anim,troll_attack
-param=attack_sound,null
 param=defend_anim,troll_block
-param=defend_sound,null
 param=death_anim,troll_death
+param=attack_sound,null
+param=defend_sound,null
 param=death_sound,null
 param=combat_xp_multiplier,25
 category=macro_event_river_troll
@@ -1639,10 +1658,10 @@ defence=130
 timer=10
 param=damagetype,^crush_style
 param=attack_anim,troll_attack
-param=attack_sound,null
 param=defend_anim,troll_block
-param=defend_sound,null
 param=death_anim,troll_death
+param=attack_sound,null
+param=defend_sound,null
 param=death_sound,null
 param=combat_xp_multiplier,25
 category=macro_event_river_troll

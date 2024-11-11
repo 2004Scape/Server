@@ -28,6 +28,7 @@ param=crushdefence,1
 param=damagetype,^crush_style
 param=defend_sound,female_hit
 param=death_sound,female_death
+// osrs stats and Vislvl match 1:1
 
 [npc_353]
 name=Woman
@@ -57,6 +58,7 @@ param=crushdefence,1
 param=damagetype,^crush_style
 param=defend_sound,female_hit
 param=death_sound,female_death
+// osrs stats and Vislvl match 1:1
 
 [npc_354]
 name=Woman
@@ -82,9 +84,13 @@ head1=model_103_idk_head
 respawnrate=100
 hitpoints=10
 attack=2
+param=stabdefence,1
+param=slashdefence,1
+param=crushdefence,1
 param=damagetype,^crush_style
 param=defend_sound,female_hit
 param=death_sound,female_death
+// osrs stats and Vislvl match 1:1
 
 [npc_360]
 name=Woman
@@ -116,6 +122,38 @@ param=crushdefence,1
 param=damagetype,^crush_style
 param=defend_sound,female_hit
 param=death_sound,female_death
+// osrs stats and Vislvl match 1:1
+
+[npc_361]
+name=Woman
+desc=One of RuneScapes' many citizens.
+walkanim=human_walk_f,human_walk_b,human_walk_l,human_walk_r
+readyanim=human_ready
+op1=Talk-to
+op2=Attack
+vislevel=12
+recol1s=14801
+recol1d=12547
+recol2s=2340
+recol2d=6208
+recol3s=24075
+recol3d=12547
+model1=model_404_npc
+model2=model_478_npc
+model3=model_351_idk
+model4=model_353_idk
+model5=model_437_idk
+model6=model_358_idk
+head1=model_121_npc_head
+respawnrate=100
+hitpoints=13
+attack=10
+strength=10
+defence=10
+param=damagetype,^crush_style
+param=defend_sound,female_hit
+param=death_sound,female_death
+// osrs stats and Vislvl match 1:1
 
 [npc_362]
 name=Woman
@@ -142,6 +180,7 @@ attack=2
 param=damagetype,^crush_style
 param=defend_sound,female_hit
 param=death_sound,female_death
+// osrs stats and Vislvl match 1:1
 
 [npc_363]
 name=Woman
@@ -170,3 +209,4 @@ defence=10
 param=damagetype,^crush_style
 param=defend_sound,female_hit
 param=death_sound,female_death
+// osrs stats and Vislvl match 1:1

@@ -24,7 +24,12 @@ model10=model_518_obj_wear
 head1=model_115_idk_head
 head2=model_136_npc_head
 head3=model_101_obj_wear
+hitpoints=42
+attack=35
+strength=38
+defence=40
 param=death_sound,female_death
+// https://raw.githubusercontent.com/Joshua-F/osrs-dumps/refs/heads/master/config/dump.npc npc_4923
 
 [helemos]
 vislevel=hide
@@ -61,5 +66,4 @@ param=shop_sell_multiplier,1000
 param=shop_buy_multiplier,550
 param=shop_delta,30
 param=shop_title,Happy Heroes' Hemporium.
-// we have 3 different pictures of the store in question with 3 different store names and 2 different product quantities.
 // Happy Heroes Hemporium. / Happy Heroes' Hemporium. / Happy Heroes' H'emporium.

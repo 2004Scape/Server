@@ -35,10 +35,10 @@ param=damagetype,^stab_style
 param=attack_anim,dwarf_attack
 param=defend_anim,dwarf_block
 param=death_anim,dwarf_death
-param=attack_sound,baxe_crush
+param=attack_sound,gnome_hit
 // param=defend_sound,brassclash2
+param=death_sound,gnome_death
 // osrs side this npc use somereason gnome sound datas (notice but npc is graphical updated)
-// sounds attack gnome_hit , defend brassclash2, death gnome_death
 
 [dwarf_youngster]
 vislevel=hide
@@ -58,6 +58,8 @@ model4=model_2983_npc
 model5=model_2985_npc
 head1=model_5_npc_head
 param=death_anim,dwarf_death
+hitpoints=6
+// https://raw.githubusercontent.com/Joshua-F/osrs-dumps/refs/heads/master/config/dump.npc npc_5190
 
 [dwarf_commander]
 vislevel=hide
@@ -75,6 +77,8 @@ model4=model_2983_npc
 model5=model_2985_npc
 head1=model_0_npc_head
 param=death_anim,dwarf_death
+hitpoints=16
+// https://raw.githubusercontent.com/Joshua-F/osrs-dumps/refs/heads/master/config/dump.npc npc_5191
 
 [nulodion]
 vislevel=hide

@@ -173,10 +173,16 @@ model9=model_290_obj_wear
 head1=model_48_npc_head
 head2=model_82_idk_head
 head3=model_68_obj_wear
-// TODO
-hitpoints=3
 attackrange=3
+// TODO respawnrate? recheck attackrange
+hitpoints=3
+attack=15
+defence=20
+strength=10
+magic=15
+param=death_drop,null
 category=kolodion
+// https://raw.githubusercontent.com/Joshua-F/osrs-dumps/refs/heads/master/config/dump.npc npc_1605
 
 [kolodion_ogre_form]
 vislevel=hide
@@ -199,9 +205,13 @@ recol6s=15649
 recol6d=5283
 model1=model_2863_npc
 model2=model_2871_npc
-// TODO
-hitpoints=65
 attackrange=5
+// TODO respawnrate?
+hitpoints=65
+attack=55
+strength=70
+defence=72
+magic=50
 param=attack_anim,giant_attack
 param=magicattack_anim,giant_casting
 param=defend_anim,giant_block
@@ -210,7 +220,9 @@ param=spawn_anim,giant_teleport
 param=attack_sound,giant_attack
 param=defend_sound,giant_hit
 param=death_sound,giant_death
+param=death_drop,null
 category=kolodion
+// https://raw.githubusercontent.com/Joshua-F/osrs-dumps/refs/heads/master/config/dump.npc npc_1606
 
 [kolodion_arachnid_form]
 vislevel=hide
@@ -225,9 +237,13 @@ op2=Attack
 recol1s=31393
 recol1d=12690
 model1=model_2884_npc
-// TODO
-hitpoints=65
 attackrange=5
+// TODO respawnrate?
+hitpoints=78
+attack=69
+strength=78
+defence=47
+magic=70
 param=attack_anim,giantspider_attack
 param=defend_anim,giantspider_block
 param=death_anim,giantspider_death
@@ -238,6 +254,7 @@ param=defend_sound,insect_hit
 param=death_sound,insect_death
 param=death_drop,null
 category=kolodion
+// https://raw.githubusercontent.com/Joshua-F/osrs-dumps/refs/heads/master/config/dump.npc npc_1607
 
 [kolodion_ethereal_form]
 vislevel=hide
@@ -271,9 +288,16 @@ model7=model_181_idk
 param=defend_anim,earthwarrior_def
 param=death_anim,earthwarrior_death
 param=spawn_anim,human_castteleport_reverse
-hitpoints=78
+// TODO respawnrate?
 attackrange=5
+hitpoints=78
+attack=28
+strength=23
+defence=58
+magic=30
+param=death_drop,null
 category=kolodion
+// https://raw.githubusercontent.com/Joshua-F/osrs-dumps/refs/heads/master/config/dump.npc npc_1608
 
 [kolodion_demon_form]
 size=3
@@ -291,13 +315,13 @@ recol2d=1057
 recol3s=0
 recol3d=16417
 model1=model_2942_npc
-// TODO respawnrate?
+attackrange=5
+// TODO respawnrate? confirm demonbae effect?..
 hitpoints=107
 attack=85
 strength=98
 defence=105
 magic=80
-attackrange=5
 param=attack_anim,demon_attack
 param=magicattack_anim,demon_casting
 param=defend_anim,demon_block
@@ -307,8 +331,9 @@ param=demonbane_vulnerable,yes
 param=attack_sound,black_demon_attack
 param=defend_sound,black_demon_hit
 param=death_sound,black_demon_death
-param=death_drop,ashes
+param=death_drop,null
 category=kolodion
+// https://raw.githubusercontent.com/Joshua-F/osrs-dumps/refs/heads/master/config/dump.npc npc_1609
 
 [battle_mage_zamorak]
 name=Battle mage
@@ -349,8 +374,9 @@ maxrange=10
 respawnrate=300
 hitpoints=120
 magic=50
+param=defend_anim,human_staff_def
 category=battle_mage
-// osrs defend seq_415
+// osrs stats and Vislvl match 1:1
 
 [battle_mage_saradomin]
 name=Battle mage
@@ -387,8 +413,9 @@ maxrange=10
 respawnrate=300
 hitpoints=120
 magic=50
+param=defend_anim,human_staff_def
 category=battle_mage
-// osrs defend seq_415
+// osrs stats and Vislvl match 1:1
 
 [battle_mage_guthix]
 name=Battle mage
@@ -418,3 +445,4 @@ param=death_sound,gnome_death
 param=magicattack_anim,midget_chanting
 param=defend_anim,midget_block
 category=battle_mage
+// osrs stats and Vislvl match 1:1
