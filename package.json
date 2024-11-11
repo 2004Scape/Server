@@ -42,6 +42,7 @@
   },
   "dependencies": {
     "@jimp/js-png": "^1.6.0",
+    "@jimp/plugin-quantize": "^1.6.0",
     "axios": "^1.7.7",
     "bcrypt": "^5.1.1",
     "dotenv": "^16.4.5",

@@ -2,7 +2,6 @@ import fs from 'fs';
 import { Bitmap, Jimp } from 'jimp';
 
 import Packet from '#jagex2/io/Packet.js';
-import { printError } from './Logger.js';
 
 export function generatePixelOrder(img: { bitmap: Bitmap }) {
     let rowMajorScore = 0;
@@ -49,14 +48,11 @@ export function writeImage(img: { bitmap: Bitmap }, data: Packet, index: Packet,
     index.p2(right); // actual width
     index.p2(bottom); // actual height
 
-    // console.log('\t', left, top, '-', right, bottom, '-', img.bitmap.width, img.bitmap.height);
-
     let pixelOrder = generatePixelOrder(img);
     if (meta) {
         pixelOrder = meta.pixelOrder;
     }
     index.p1(pixelOrder);
-    // console.log('\t', pixelOrder ? 'row' : 'column');
 
     if (pixelOrder === 0) {
         for (let j = 0; j < img.bitmap.width * img.bitmap.height; j++) {
@@ -75,11 +71,6 @@ export function writeImage(img: { bitmap: Bitmap }, data: Packet, index: Packet,
 
             const index = colors.indexOf(rgb);
             if (index === -1) {
-                console.error(
-                    'color not found in palette',
-                    rgb.toString(16),
-                    colors.map(x => x.toString(16))
-                );
                 break;
             }
 
@@ -101,7 +92,6 @@ export function writeImage(img: { bitmap: Bitmap }, data: Packet, index: Packet,
 
                 const index = colors.indexOf(rgb);
                 if (index === -1) {
-                    console.error('color not found in palette', rgb);
                     break;
                 }
 
@@ -118,6 +108,28 @@ type Sprite = {
     h: number;
     pixelOrder: 0 | 1;
 };
+
+function generatePalette(img: { bitmap: Bitmap }) {
+    const colors = [0xff00ff];
+
+    for (let j = 0; j < img.bitmap.width * img.bitmap.height; j++) {
+        const pos = j * 4;
+
+        const red = img.bitmap.data[pos + 0];
+        const green = img.bitmap.data[pos + 1];
+        const blue = img.bitmap.data[pos + 2];
+        const rgb = ((red << 16) | (green << 8) | blue) >>> 0;
+        if (rgb === 0xff00ff) {
+            continue;
+        }
+
+        if (colors.indexOf(rgb) === -1) {
+            colors.push(rgb);
+        }
+    }
+
+    return colors;
+}
 
 export async function convertImage(index: Packet, srcPath: string, safeName: string) {
     const data = Packet.alloc(4);
@@ -168,49 +180,19 @@ export async function convertImage(index: Packet, srcPath: string, safeName: str
     index.p2(tileX);
     index.p2(tileY);
 
-    const colors = [0xff00ff]; // reserved for transparency
+    let colors: number[] = [];
     if (fs.existsSync(`${srcPath}/meta/${safeName}.pal.png`)) {
-        // read color palette from file to preserve order
-        const pal = await Jimp.read(`${srcPath}/meta/${safeName}.pal.png`);
-
-        for (let j = 0; j < pal.bitmap.width * pal.bitmap.height; j++) {
-            const pos = j * 4;
-
-            const red = pal.bitmap.data[pos + 0];
-            const green = pal.bitmap.data[pos + 1];
-            const blue = pal.bitmap.data[pos + 2];
-            const rgb = ((red << 16) | (green << 8) | blue) >>> 0;
-            if (rgb === 0xff00ff) {
-                continue;
-            }
-
-            colors[j] = rgb;
-        }
+        // workaround to preserve CRC integrity (not required)
+        colors = generatePalette(await Jimp.read(`${srcPath}/meta/${safeName}.pal.png`));
     } else {
-        // generate color palette by counting unique colors
-
-        // console.log('generating color palette', safeName);
-        for (let j = 0; j < img.bitmap.width * img.bitmap.height; j++) {
-            const pos = j * 4;
-
-            const red = img.bitmap.data[pos + 0];
-            const green = img.bitmap.data[pos + 1];
-            const blue = img.bitmap.data[pos + 2];
-            const rgb = ((red << 16) | (green << 8) | blue) >>> 0;
-            if (rgb === 0xff00ff) {
-                continue;
-            }
-
-            if (colors.indexOf(rgb) === -1) {
-                colors.push(rgb);
-            }
-        }
+        // todo: we're not producing the color palette in the same way, so this breaks CRC checks.
+        //   however, the end result after decoding is the same
+        colors = generatePalette(img);
     }
 
     if (colors.length > 255) {
-        // TODO: automatic color quantization based on variable limit?
-        printError('too many colors: ' + colors.length + ' while only 255 are allowed');
-        return;
+        img.quantize({ colors: 255 });
+        colors = generatePalette(img);
     }
 
     index.p1(colors.length);
