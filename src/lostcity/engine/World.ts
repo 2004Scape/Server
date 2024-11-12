@@ -617,44 +617,19 @@ class World {
             }
         }
 
-        // - npc spawn scripts
-        for (const npc of this.npcs) {
-            if (!npc.updateLifeCycle(tick)) {
-                continue;
-            }
-            try {
-                if (npc.lifecycle === EntityLifeCycle.RESPAWN) {
-                    this.addNpc(npc, -1, false);
-                } else if (npc.lifecycle === EntityLifeCycle.DESPAWN) {
-                    this.removeNpc(npc, -1);
-                }
-            } catch (err) {
-                // there was an error adding or removing them, try again next tick...
-                // ex: server is full on npc IDs (did we have a leak somewhere?) and we don't want to re-use the last ID (syncing related)
-                if (npc.lifecycle === EntityLifeCycle.RESPAWN) {
-                    printError('[World] An unhandled error occurred while respawning a NPC');
-                } else if (npc.lifecycle === EntityLifeCycle.DESPAWN) {
-                    printError('[World] An unhandled error occurred while despawning a NPC');
-                }
-
-                printError(`[World] NPC type:${npc.type} lifecycle:${npc.lifecycle} ID:${npc.nid}`);
-                console.error(err);
-
-                npc.setLifeCycle(this.currentTick + 1); // retry next tick
-            }
-        }
-
         // - npc ai_spawn scripts
         // - npc hunt players if not busy
         for (const npc of this.npcs) {
-            if (!npc.updateLifeCycle(tick)) {
+            if (!npc.checkLifeCycle(tick)) {
                 continue;
             }
-
-            const type = NpcType.get(npc.type);
-            const script = ScriptProvider.getByTrigger(ServerTriggerType.AI_SPAWN, type.id, type.category);
-            if (script) {
-                npc.executeScript(ScriptRunner.init(script, npc));
+            // check if spawned last tick
+            if (npc.lastLifecycleTick === tick - 1 && npc.lifecycle !== EntityLifeCycle.FOREVER) {
+                const type = NpcType.get(npc.type);
+                const script = ScriptProvider.getByTrigger(ServerTriggerType.AI_SPAWN, type.id, type.category);
+                if (script) {
+                    npc.executeScript(ScriptRunner.init(script, npc));
+                }
             }
             if (npc.delayed()) {
                 continue;
@@ -755,21 +730,44 @@ class World {
                 if (npc.timerInterval !== 0) {
                     npc.timerClock++;
                 }
-                if (!npc.checkLifeCycle(this.currentTick)) {
-                    continue;
+                if (npc.checkLifeCycle(this.currentTick)) {
+                    if (npc.delayed()) {
+                        npc.delay--;
+                    }
+                    if (!npc.delayed()) {
+                        // - resume suspended script
+                        if (npc.activeScript && npc.activeScript.execution === ScriptState.NPC_SUSPENDED) {
+                            npc.executeScript(npc.activeScript);
+                        }
+                    }
+                }
+                
+                // - respawn
+                if (npc.updateLifeCycle(this.currentTick)) {
+                    try {
+                        if (npc.lifecycle === EntityLifeCycle.RESPAWN) {
+                            this.addNpc(npc, -1, false);
+                        } else if (npc.lifecycle === EntityLifeCycle.DESPAWN) {
+                            this.removeNpc(npc, -1);
+                        }
+                    } catch (err) {
+                        // there was an error adding or removing them, try again next tick...
+                        // ex: server is full on npc IDs (did we have a leak somewhere?) and we don't want to re-use the last ID (syncing related)
+                        if (npc.lifecycle === EntityLifeCycle.RESPAWN) {
+                            printError('[World] An unhandled error occurred while respawning a NPC');
+                        } else if (npc.lifecycle === EntityLifeCycle.DESPAWN) {
+                            printError('[World] An unhandled error occurred while despawning a NPC');
+                        }
+        
+                        printError(`[World] NPC type:${npc.type} lifecycle:${npc.lifecycle} ID:${npc.nid}`);
+                        console.error(err);
+        
+                        npc.setLifeCycle(this.currentTick + 1); // retry next tick
+                    }
                 }
 
                 if (npc.delayed()) {
-                    npc.delay--;
-                }
-
-                if (npc.delayed()) {
                     continue;
-                }
-
-                // - resume suspended script
-                if (npc.activeScript && npc.activeScript.execution === ScriptState.NPC_SUSPENDED) {
-                    npc.executeScript(npc.activeScript);
                 }
 
                 if (!npc.checkLifeCycle(this.currentTick)) {
