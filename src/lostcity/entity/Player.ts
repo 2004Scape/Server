@@ -1520,6 +1520,7 @@ export default class Player extends PathingEntity {
                 // replenish 1 of the stat upon levelup.
                 this.levels[stat] += 1;
             }
+            this.changeStat(stat);
             const script = ScriptProvider.getByTriggerSpecific(ServerTriggerType.ADVANCESTAT, stat, -1);
 
             if (script) {
@@ -1530,6 +1531,13 @@ export default class Player extends PathingEntity {
         if (this.combatLevel != this.getCombatLevel()) {
             this.combatLevel = this.getCombatLevel();
             this.generateAppearance(InvType.WORN);
+        }
+    }
+
+    changeStat(stat: number) {
+        const script = ScriptProvider.getByTrigger(ServerTriggerType.CHANGESTAT, stat, -1);
+        if (script) {
+            this.enqueueScript(script, PlayerQueueType.ENGINE);
         }
     }
 
