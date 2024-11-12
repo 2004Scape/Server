@@ -159,6 +159,8 @@ export default class Npc extends PathingEntity {
             }
             this.resetHeroPoints();
             this.queue.clear();
+            this.vars = new Int32Array(VarNpcType.count);
+            this.varsString = new Array(VarNpcType.count);
             this.defaultMode();
 
             const npcType: NpcType = NpcType.get(this.type);
