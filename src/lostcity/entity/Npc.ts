@@ -52,7 +52,7 @@ export default class Npc extends PathingEntity {
 
     // runtime variables
     readonly vars: Int32Array;
-    readonly varsString: string[];
+    readonly varsString: (string | undefined)[];
 
     // script variables
     activeScript: ScriptState | null = null;
@@ -160,7 +160,7 @@ export default class Npc extends PathingEntity {
             this.resetHeroPoints();
             this.queue.clear();
             this.vars.fill(0);
-            this.varsString.fill('');
+            this.varsString.fill(undefined);
             this.defaultMode();
 
             const npcType: NpcType = NpcType.get(this.type);
