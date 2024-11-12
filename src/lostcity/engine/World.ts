@@ -79,6 +79,7 @@ import { FriendsServerOpcodes } from '#lostcity/server/FriendServer.js';
 import Environment from '#lostcity/util/Environment.js';
 import { printDebug, printError, printInfo } from '#lostcity/util/Logger.js';
 import { createWorker } from '#lostcity/util/WorkerFactory.js';
+import HuntModeType from '#lostcity/entity/hunt/HuntModeType.js';
 
 class World {
     private friendThread: Worker | NodeWorker = createWorker(Environment.STANDALONE_BUNDLE ? 'FriendThread.js' : './src/lostcity/server/FriendThread.ts');
@@ -643,15 +644,28 @@ class World {
             }
         }
 
-        // - npc hunt
+        // - npc ai_spawn scripts
+        // - npc hunt players if not busy
         for (const npc of this.npcs) {
-            if (!npc.checkLifeCycle(tick) || npc.delayed()) {
+            if (!npc.updateLifeCycle(tick)) {
                 continue;
             }
 
-            if (npc.huntMode !== -1) {
-                npc.huntAll();
+            const type = NpcType.get(npc.type);
+            const script = ScriptProvider.getByTrigger(ServerTriggerType.AI_SPAWN, type.id, type.category);
+            if (script) {
+                npc.executeScript(ScriptRunner.init(script, npc));
             }
+            if (npc.delayed()) {
+                continue;
+            }
+            if (npc.huntMode !== -1) {
+                const hunt = HuntType.get(npc.huntMode);
+                if (hunt && hunt.type === HuntModeType.PLAYER) {
+                    npc.huntAll();
+                }
+            }
+            
         }
 
         this.cycleStats[WorldStat.WORLD] = Date.now() - start;
@@ -763,6 +777,13 @@ class World {
                     continue;
                 }
 
+                // - hunt npc/obj/loc
+                if (npc.huntMode !== -1) {
+                    const hunt = HuntType.get(npc.huntMode);
+                    if (hunt && hunt.type !== HuntModeType.PLAYER) {
+                        npc.huntAll();
+                    }
+                }
                 // - stat regen
                 npc.processRegen();
                 // - timer
