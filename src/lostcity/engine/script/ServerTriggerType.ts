@@ -157,7 +157,8 @@ enum ServerTriggerType {
     MAPZONEEXIT = 162,
     ZONE = 163,
     ZONEEXIT = 164,
-    CHANGESTAT = 165
+    CHANGESTAT = 165,
+    AI_SPAWN = 166
 }
 
 namespace ServerTriggerType {

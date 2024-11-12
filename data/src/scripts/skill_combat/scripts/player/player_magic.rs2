@@ -239,7 +239,7 @@ if ($maxhit ! null) {
     if (npc_param(defend_sound) ! null) {
         sound_synth(npc_param(defend_sound), 0, $duration); // delay 1 client tick for the hit queue
     }
-    ~give_combat_experience(%damagestyle, $damage, npc_param(combat_xp_multiplier));
+    ~give_combat_experience(%damagestyle, $damage, %npc_combat_xp_multiplier);
 }
 // spell visual
 spotanim_npc(db_getfield($spell_data, magic_spell_table:spotanim_target, 0), $duration);

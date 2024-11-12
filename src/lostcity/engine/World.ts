@@ -79,6 +79,7 @@ import { FriendsServerOpcodes } from '#lostcity/server/FriendServer.js';
 import Environment from '#lostcity/util/Environment.js';
 import { printDebug, printError, printInfo } from '#lostcity/util/Logger.js';
 import { createWorker } from '#lostcity/util/WorkerFactory.js';
+import HuntModeType from '#lostcity/entity/hunt/HuntModeType.js';
 
 class World {
     private friendThread: Worker | NodeWorker = createWorker(Environment.STANDALONE_BUNDLE ? 'FriendThread.js' : './src/lostcity/server/FriendThread.ts');
@@ -616,42 +617,30 @@ class World {
             }
         }
 
-        // - npc spawn scripts
+        // - npc ai_spawn scripts
+        // - npc hunt players if not busy
         for (const npc of this.npcs) {
-            if (!npc.updateLifeCycle(tick)) {
+            if (!npc.checkLifeCycle(tick)) {
                 continue;
             }
-            try {
-                if (npc.lifecycle === EntityLifeCycle.RESPAWN) {
-                    this.addNpc(npc, -1, false);
-                } else if (npc.lifecycle === EntityLifeCycle.DESPAWN) {
-                    this.removeNpc(npc, -1);
+            // check if spawned last tick
+            if (npc.lastLifecycleTick === tick - 1 && npc.lifecycle !== EntityLifeCycle.FOREVER) {
+                const type = NpcType.get(npc.type);
+                const script = ScriptProvider.getByTrigger(ServerTriggerType.AI_SPAWN, type.id, type.category);
+                if (script) {
+                    npc.executeScript(ScriptRunner.init(script, npc));
                 }
-            } catch (err) {
-                // there was an error adding or removing them, try again next tick...
-                // ex: server is full on npc IDs (did we have a leak somewhere?) and we don't want to re-use the last ID (syncing related)
-                if (npc.lifecycle === EntityLifeCycle.RESPAWN) {
-                    printError('[World] An unhandled error occurred while respawning a NPC');
-                } else if (npc.lifecycle === EntityLifeCycle.DESPAWN) {
-                    printError('[World] An unhandled error occurred while despawning a NPC');
-                }
-
-                printError(`[World] NPC type:${npc.type} lifecycle:${npc.lifecycle} ID:${npc.nid}`);
-                console.error(err);
-
-                npc.setLifeCycle(this.currentTick + 1); // retry next tick
             }
-        }
-
-        // - npc hunt
-        for (const npc of this.npcs) {
-            if (!npc.checkLifeCycle(tick) || npc.delayed()) {
+            if (npc.delayed()) {
                 continue;
             }
-
             if (npc.huntMode !== -1) {
-                npc.huntAll();
+                const hunt = HuntType.get(npc.huntMode);
+                if (hunt && hunt.type === HuntModeType.PLAYER) {
+                    npc.huntAll();
+                }
             }
+            
         }
 
         this.cycleStats[WorldStat.WORLD] = Date.now() - start;
@@ -741,21 +730,44 @@ class World {
                 if (npc.timerInterval !== 0) {
                     npc.timerClock++;
                 }
-                if (!npc.checkLifeCycle(this.currentTick)) {
-                    continue;
+                if (npc.checkLifeCycle(this.currentTick)) {
+                    if (npc.delayed()) {
+                        npc.delay--;
+                    }
+                    if (!npc.delayed()) {
+                        // - resume suspended script
+                        if (npc.activeScript && npc.activeScript.execution === ScriptState.NPC_SUSPENDED) {
+                            npc.executeScript(npc.activeScript);
+                        }
+                    }
+                }
+                
+                // - respawn
+                if (npc.updateLifeCycle(this.currentTick)) {
+                    try {
+                        if (npc.lifecycle === EntityLifeCycle.RESPAWN) {
+                            this.addNpc(npc, -1, false);
+                        } else if (npc.lifecycle === EntityLifeCycle.DESPAWN) {
+                            this.removeNpc(npc, -1);
+                        }
+                    } catch (err) {
+                        // there was an error adding or removing them, try again next tick...
+                        // ex: server is full on npc IDs (did we have a leak somewhere?) and we don't want to re-use the last ID (syncing related)
+                        if (npc.lifecycle === EntityLifeCycle.RESPAWN) {
+                            printError('[World] An unhandled error occurred while respawning a NPC');
+                        } else if (npc.lifecycle === EntityLifeCycle.DESPAWN) {
+                            printError('[World] An unhandled error occurred while despawning a NPC');
+                        }
+        
+                        printError(`[World] NPC type:${npc.type} lifecycle:${npc.lifecycle} ID:${npc.nid}`);
+                        console.error(err);
+        
+                        npc.setLifeCycle(this.currentTick + 1); // retry next tick
+                    }
                 }
 
                 if (npc.delayed()) {
-                    npc.delay--;
-                }
-
-                if (npc.delayed()) {
                     continue;
-                }
-
-                // - resume suspended script
-                if (npc.activeScript && npc.activeScript.execution === ScriptState.NPC_SUSPENDED) {
-                    npc.executeScript(npc.activeScript);
                 }
 
                 if (!npc.checkLifeCycle(this.currentTick)) {
@@ -763,6 +775,13 @@ class World {
                     continue;
                 }
 
+                // - hunt npc/obj/loc
+                if (npc.huntMode !== -1) {
+                    const hunt = HuntType.get(npc.huntMode);
+                    if (hunt && hunt.type !== HuntModeType.PLAYER) {
+                        npc.huntAll();
+                    }
+                }
                 // - stat regen
                 npc.processRegen();
                 // - timer
