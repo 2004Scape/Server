@@ -1235,6 +1235,8 @@ class World {
                 break;
         }
 
+        this.npcRenderer.removePermanent(npc.nid);
+
         if (npc.lifecycle === EntityLifeCycle.DESPAWN) {
             this.npcs.remove(npc.nid);
             npc.nid = -1;
@@ -1242,7 +1244,6 @@ class World {
         } else if (npc.lifecycle === EntityLifeCycle.RESPAWN) {
             npc.setLifeCycle(this.currentTick + adjustedDuration);
         }
-        this.npcRenderer.removePermanent(npc.nid);
     }
 
     getLoc(x: number, z: number, level: number, locId: number): Loc | null {
