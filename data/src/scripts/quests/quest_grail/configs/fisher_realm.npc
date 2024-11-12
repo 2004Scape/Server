@@ -296,6 +296,7 @@ hitpoints=142
 attack=91
 strength=100
 defence=91
+param=attackrate,7
 param=attackbonus,27
 param=strengthbonus,22
 param=stabdefence,18
@@ -303,7 +304,6 @@ param=slashdefence,27
 param=crushdefence,18
 param=magicdefence,1000
 param=rangedefence,1000
-param=attackrate,7
 param=damagetype,^crush_style
 param=attack_anim,giant_attack
 param=defend_anim,giant_block
@@ -311,3 +311,4 @@ param=death_anim,giant_death
 // param=defend_sound,blade5
 // this npc uses human_unarmedpunch and human_death sound for attack and death animations.
 // although npc are classified as Giant based on appearance/animations.
+// Stats match osrs version but our version Vislvl is different.

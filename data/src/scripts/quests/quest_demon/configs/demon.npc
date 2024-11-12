@@ -11,11 +11,11 @@ wanderrange=2
 maxrange=4
 // TODO respawnrate?
 hitpoints=7
-attack=11
-strength=10
-defence=5
-// TODO attackstyle
+attack=32
+strength=25
+defence=27
 param=attackrate,6
+// TODO attackstyle
 param=attack_anim,demon_attack
 param=defend_anim,demon_block
 param=death_anim,demon_death
@@ -25,6 +25,8 @@ param=defend_sound,demon_hit
 param=death_sound,demon_death
 param=death_drop,ashes
 timer=100
+// TODO monster examine spell
+// osrs stats and Vislvl match 1:1
 
 [weakened_delrith]
 size=2

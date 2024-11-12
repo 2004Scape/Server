@@ -1,10 +1,10 @@
-[opnpc1,npc_979]
+[opnpc1,slave1_upass]
 mes("The man seems to be in a weak state of mind.");
 p_delay(2);
 ~chatplayer("<p,neutral>Hello.");
 ~chatnpc("<p,sad>Eating me... they keep eating me! Eating me from the inside! Please stop them! I can feel them wriggling around inside me right now... please stop them!");
 
-[opnpc1,npc_980]
+[opnpc1,slave2_upass]
 mes("The man seems to be in a weak state of mind.");
 p_delay(2);
 ~chatplayer("<p,neutral>Hi.");
@@ -13,7 +13,7 @@ p_delay(2);
 ~chatnpc("<p,neutral>Blood is important. We must offer it to Zamorak every day as proof of our devotion. I just hope I don't run out!");
 mes("The prisoner has clearly been here too long.");
 
-[opnpc1,npc_981]
+[opnpc1,slave3_upass]
 mes("The man seems to be in a weak state of mind.");
 p_delay(2);
 ~chatplayer("<p,confused>Hello, are you okay?");
@@ -23,7 +23,7 @@ p_delay(2);
 ~chatplayer("<p,angry>Actually I do.");
 ~chatnpc("<p,happy>You're welcome to have some with me of course...");
 
-[opnpc1,npc_982]
+[opnpc1,slave4_upass]
 mes("The man seems to be in a weak state of mind.");
 p_delay(2);
 ~chatplayer("<p,neutral>Hello there.");
@@ -33,7 +33,7 @@ p_delay(2);
 ~chatplayer("<p,confused>Sorry, I don't under..");
 ~chatnpc("<p,angry>Mwaarrr fnnntchh. Gbpp dng sktd delp? GBPP DNG SKTD DELP!");
 
-[opnpc1,npc_983]
+[opnpc1,slave5_upass]
 mes("The man seems to be in a weak state of mind.");
 p_delay(2);
 ~chatplayer("<p,neutral>Hello...");
@@ -41,14 +41,14 @@ p_delay(2);
 ~chatplayer("<p,shock>You're ill!");
 ~chatnpc("<p,neutral>What's that? You've never smelt it before? Well, let's just say that it's an acquired taste...");
 
-[opnpc1,npc_984]
+[opnpc1,slave6_upass]
 mes("The man seems to be in a weak state of mind.");
 p_delay(2);
 ~chatplayer("<p,happy>Hello.");
 ~chatnpc("<p,shock>Danger, everywhere danger! But not from man nor beast! This is the danger that is inside you.");
 ~chatnpc("<p,neutral>Bring it out, nurture it, cherish it. Stroke it like you would stroke a wounded bird... then strangle it before it takes hold of your very being. Don't say I didn't warn you.");
 
-[opnpc1,npc_985]
+[opnpc1,slave7_upass]
 mes("The man seems to be in a weak state of mind.");
 p_delay(2);
 ~chatplayer("<p,neutral>Hello.");
