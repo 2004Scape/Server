@@ -29,14 +29,15 @@ strength=18
 defence=20
 param=attackbonus,10
 param=strengthbonus,14
-param=stabdefence,44
-param=slashdefence,38
-param=crushdefence,30
+param=stabdefence,35
+param=slashdefence,29
+param=crushdefence,21
 param=damagetype,^slash_style
 param=attack_anim,human_baxe_slash
 param=defend_anim,human_baxe_defend2
 param=attack_sound,baxe_slash
 // param=defend_sound,blade3_mail
+// Stats match osrs version but our version Vislvl is different.
 
 [khazard_guard_drunk]
 name=Khazard Guard
@@ -69,14 +70,15 @@ strength=18
 defence=20
 param=attackbonus,10
 param=strengthbonus,14
-param=stabdefence,44
-param=slashdefence,38
-param=crushdefence,30
+param=stabdefence,35
+param=slashdefence,29
+param=crushdefence,21
 param=damagetype,^slash_style
 param=attack_anim,human_baxe_slash
 param=defend_anim,human_baxe_defend2
 param=attack_sound,baxe_slash
 // param=defend_sound,blade3_mail
+// Stats match osrs version but our version Vislvl is different.
 
 [khazard_guard_chest]
 name=Khazard Guard
@@ -108,14 +110,15 @@ strength=18
 defence=20
 param=attackbonus,10
 param=strengthbonus,14
-param=stabdefence,44
-param=slashdefence,38
-param=crushdefence,30
+param=stabdefence,35
+param=slashdefence,29
+param=crushdefence,21
 param=damagetype,^slash_style
 param=attack_anim,human_baxe_slash
 param=defend_anim,human_baxe_defend2
 param=attack_sound,baxe_slash
 // param=defend_sound,blade3_mail
+// Stats match osrs version but our version Vislvl is different.
 
 [khazard_guard_standard]
 name=Khazard Guard
@@ -148,14 +151,15 @@ strength=18
 defence=20
 param=attackbonus,10
 param=strengthbonus,14
-param=stabdefence,44
-param=slashdefence,38
-param=crushdefence,30
+param=stabdefence,35
+param=slashdefence,29
+param=crushdefence,21
 param=damagetype,^slash_style
 param=attack_anim,human_baxe_slash
 param=defend_anim,human_baxe_defend2
 param=attack_sound,baxe_slash
 // param=defend_sound,blade3_mail
+// Stats match osrs version but our version Vislvl is different.
 
 [khazard_guard_cutscene]
 name=Khazard Guard
@@ -185,9 +189,9 @@ strength=18
 defence=20
 param=attackbonus,10
 param=strengthbonus,14
-param=stabdefence,44
-param=slashdefence,38
-param=crushdefence,30
+param=stabdefence,35
+param=slashdefence,29
+param=crushdefence,21
 param=damagetype,^slash_style
 param=attack_anim,human_baxe_slash
 param=defend_anim,human_baxe_defend2
@@ -226,6 +230,10 @@ param=defend_anim,human_2h_sword_defend
 // param=attack_sound,
 // param=defend_sound,
 // osrs use attack seq_406
+// TODO monster examine spell
+// TODO param stats
+// TODO sounds + maxranges
+// Stats match osrs version but our version Vislvl is different.
 
 [khazard_barman]
 vislevel=hide
@@ -426,6 +434,8 @@ model7=model_181_idk
 head1=model_63_idk_head
 head2=model_82_idk_head
 wanderrange=7
+hitpoints=20
+// https://raw.githubusercontent.com/Joshua-F/osrs-dumps/refs/heads/master/config/dump.npc npc_12035
 
 [local]
 vislevel=hide
@@ -458,8 +468,8 @@ desc=Nice doggy.
 op2=Attack
 vislevel=132
 model1=model_2997_npc
-// wanderrange=TODO
 // Guess, based off old videos they will likely hunt through the whole arena: https://youtu.be/qRUXxpnYUp4?si=o4ePw20m2vZrLNBG&t=416
+// wanderrange=TODO
 maxrange=25
 respawnrate=100
 hitpoints=116
@@ -474,6 +484,9 @@ param=attack_sound,growl6
 param=defend_sound,growl5
 huntmode=aggressive_melee
 huntrange=2
+// TODO monster examine spell
+// TODO param stats
+// Stats match osrs version but our version Vislvl is different.
 
 [khazard_ogre]
 name=Khazard Ogre
@@ -506,6 +519,9 @@ param=defend_sound,giant_hit
 param=death_sound,giant_death
 huntmode=aggressive_melee
 huntrange=2
+// TODO monster examine spell
+// TODO param stats
+// Stats match osrs version but our version Vislvl is different.
 
 [khazard_scorpion]
 name=Khazard Scorpion
@@ -542,3 +558,6 @@ param=death_sound,insect_death
 param=death_drop,null
 huntmode=aggressive_melee
 huntrange=2
+// TODO monster examine spell
+// TODO param stats
+// osrs stats and Vislvl match 1:1

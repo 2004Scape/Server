@@ -197,6 +197,7 @@ param=defend_anim,human_sword_defend2
 // TODO: param=attack_sound,
 // https://www.youtube.com/watch?v=ZYPB823IyRk&t=395s
 // https://www.youtube.com/watch?v=Tm1r7zi4oUY
+// TODO monster examine spell
 
 [hazeel]
 vislevel=296
@@ -272,6 +273,7 @@ param=attack_anim,human_stafforb_pound
 param=defend_anim,human_stafforb_def
 param=attack_sound,staff_hit
 // TODO get real animation ids and sound osrs
+// TODO monster examine spell
 // https://www.youtube.com/watch?v=R5MdMtqvxaM&t=418s
 
 [hazeel_cultist]
@@ -311,5 +313,6 @@ param=crushdefence,8
 param=attack_anim,human_staff_pound
 param=defend_anim,human_staff_def
 param=attack_sound,staff_hit
-// TODO try to get information about the wanderrange/maxrange.
+// TODO try to get information about the wanderrange/maxrange
+// TODO monster examine spell
 // https://www.youtube.com/watch?v=tYXi3dBooB4

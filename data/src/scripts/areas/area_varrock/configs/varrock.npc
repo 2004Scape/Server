@@ -631,7 +631,6 @@ param=damagetype,^crush_style
 param=attack_sound,stabsword_slash
 // param=defend,sound,blade3
 // osrs weaponsmater uses the unarmed punch animation even though
-// he has a sword in his hand. and yet the sound of the punch is stabsword_slash. (and damage type is crush)
 // Stats match osrs version but our version Vislvl is different.
 
 [straven]

@@ -183,6 +183,7 @@ magic=15
 param=death_drop,null
 category=kolodion
 // https://raw.githubusercontent.com/Joshua-F/osrs-dumps/refs/heads/master/config/dump.npc npc_1605
+// TODO monster examine spell
 
 [kolodion_ogre_form]
 vislevel=hide
@@ -223,6 +224,7 @@ param=death_sound,giant_death
 param=death_drop,null
 category=kolodion
 // https://raw.githubusercontent.com/Joshua-F/osrs-dumps/refs/heads/master/config/dump.npc npc_1606
+// TODO monster examine spell
 
 [kolodion_arachnid_form]
 vislevel=hide
@@ -255,6 +257,7 @@ param=death_sound,insect_death
 param=death_drop,null
 category=kolodion
 // https://raw.githubusercontent.com/Joshua-F/osrs-dumps/refs/heads/master/config/dump.npc npc_1607
+// TODO monster examine spell
 
 [kolodion_ethereal_form]
 vislevel=hide
@@ -298,6 +301,7 @@ magic=30
 param=death_drop,null
 category=kolodion
 // https://raw.githubusercontent.com/Joshua-F/osrs-dumps/refs/heads/master/config/dump.npc npc_1608
+// TODO monster examine spell
 
 [kolodion_demon_form]
 size=3
@@ -334,6 +338,7 @@ param=death_sound,black_demon_death
 param=death_drop,null
 category=kolodion
 // https://raw.githubusercontent.com/Joshua-F/osrs-dumps/refs/heads/master/config/dump.npc npc_1609
+// TODO monster examine spell
 
 [battle_mage_zamorak]
 name=Battle mage
