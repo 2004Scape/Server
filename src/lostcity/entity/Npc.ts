@@ -47,6 +47,7 @@ export default class Npc extends PathingEntity {
     origType: number;
     startX: number;
     startZ: number;
+    startLevel: number;
     levels: Uint8Array = new Uint8Array(6);
     baseLevels: Uint8Array = new Uint8Array(6);
 
@@ -70,6 +71,8 @@ export default class Npc extends PathingEntity {
     nextPatrolPoint : number = 0;
     delayedPatrol : boolean = false;
 
+    lastWanderTick: number = 0;
+
     heroPoints: {
         uid: number;
         points: number;
@@ -82,6 +85,7 @@ export default class Npc extends PathingEntity {
         this.uid = (type << 16) | nid;
         this.startX = this.x;
         this.startZ = this.z;
+        this.startLevel = this.level;
         this.origType = type;
 
         const npcType = NpcType.get(type);
@@ -99,6 +103,7 @@ export default class Npc extends PathingEntity {
         this.targetOp = npcType.defaultmode;
         this.huntMode = npcType.huntmode;
         this.huntrange = npcType.huntrange;
+        this.lastWanderTick = World.currentTick;
     }
 
     resetHeroPoints() {
@@ -441,6 +446,7 @@ export default class Npc extends PathingEntity {
         this.updateMovement(false);
         const type: NpcType = NpcType.get(this.type);
         this.targetOp = type.defaultmode;
+        this.lastWanderTick = World.currentTick; // osrs
         this.faceEntity = -1;
         this.masks |= InfoProt.NPC_FACE_ENTITY.id;
     }
@@ -450,6 +456,14 @@ export default class Npc extends PathingEntity {
         if (type.moverestrict !== MoveRestrict.NOMOVE && Math.random() < 0.125) {
             // 1/8 chance to move every tick (even if they already have a destination)
             this.randomWalk(type.wanderrange);
+            const moved = this.updateMovement(false);
+            if (moved) {
+                this.lastWanderTick = World.currentTick;
+            } else if (World.currentTick > this.lastWanderTick + 500) {
+                this.teleport(this.startX, this.startZ, this.startLevel);
+                this.lastWanderTick = World.currentTick;
+            }
+            return;
         }
         this.updateMovement(false);
     }
