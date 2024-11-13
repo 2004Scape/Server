@@ -13,50 +13,6 @@ import ScriptState from '#lostcity/engine/script/ScriptState.js';
 import {check, VarNpcValid, VarPlayerValid, VarSharedValid} from '#lostcity/engine/script/ScriptValidators.js';
 import {ProtectedActivePlayer} from '#lostcity/engine/script/ScriptPointer.js';
 
-function gosub(state: ScriptState, id: number) {
-    if (state.fp >= 50) {
-        throw new Error('stack overflow');
-    }
-
-    // set up the gosub frame
-    state.frames[state.fp++] = {
-        script: state.script,
-        pc: state.pc,
-        intLocals: state.intLocals,
-        stringLocals: state.stringLocals
-    };
-
-    // lookup script and set it up
-    const script = ScriptProvider.get(id);
-    if (!script) {
-        throw new Error(`unable to find proc ${script}`);
-    }
-    setupNewScript(state, script);
-}
-
-function jump(state: ScriptState, id: number) {
-    const label = ScriptProvider.get(id);
-    if (!label) {
-        throw new Error(`unable to find label ${id}`);
-    }
-
-    state.debugFrames[state.debugFp++] = {
-        script: state.script,
-        pc: state.pc
-    };
-
-    setupNewScript(state, label);
-    state.fp = 0;
-    state.frames = [];
-}
-
-function setupNewScript(state: ScriptState, script: ScriptFile) {
-    state.script = script;
-    state.pc = -1;
-    state.intLocals = state.popInts(script.intArgCount);
-    state.stringLocals = state.popStrings(script.stringArgCount);
-}
-
 const CoreOps: CommandHandlers = {
     [ScriptOpcode.PUSH_CONSTANT_INT]: state => {
         state.pushInt(state.intOperand);
@@ -241,12 +197,7 @@ const CoreOps: CommandHandlers = {
             state.execution = ScriptState.FINISHED;
             return;
         }
-
-        const frame = state.frames[--state.fp];
-        state.pc = frame.pc;
-        state.script = frame.script;
-        state.intLocals = frame.intLocals;
-        state.stringLocals = frame.stringLocals;
+        state.popFrame();
     },
 
     [ScriptOpcode.JOIN_STRING]: state => {
@@ -261,19 +212,41 @@ const CoreOps: CommandHandlers = {
     },
 
     [ScriptOpcode.GOSUB]: state => {
-        gosub(state, state.popInt());
+        if (state.fp >= 50) {
+            throw new Error('stack overflow');
+        }
+        const proc: ScriptFile | undefined = ScriptProvider.get(state.popInt());
+        if (!proc) {
+            throw new Error(`unable to find proc ${proc}`);
+        }
+        state.gosubFrame(proc);
     },
 
     [ScriptOpcode.GOSUB_WITH_PARAMS]: state => {
-        gosub(state, state.intOperand);
+        if (state.fp >= 50) {
+            throw new Error('stack overflow');
+        }
+        const proc: ScriptFile | undefined = ScriptProvider.get(state.intOperand);
+        if (!proc) {
+            throw new Error(`unable to find proc ${proc}`);
+        }
+        state.gosubFrame(proc);
     },
 
     [ScriptOpcode.JUMP]: state => {
-        jump(state, state.popInt());
+        const label: ScriptFile | undefined = ScriptProvider.get(state.popInt());
+        if (!label) {
+            throw new Error(`unable to find proc ${label}`);
+        }
+        state.gotoFrame(label);
     },
 
     [ScriptOpcode.JUMP_WITH_PARAMS]: state => {
-        jump(state, state.intOperand);
+        const label: ScriptFile | undefined = ScriptProvider.get(state.intOperand);
+        if (!label) {
+            throw new Error(`unable to find proc ${label}`);
+        }
+        state.gotoFrame(label);
     },
 
     [ScriptOpcode.DEFINE_ARRAY]: state => {
