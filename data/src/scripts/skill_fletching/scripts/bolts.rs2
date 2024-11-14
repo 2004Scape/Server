@@ -59,7 +59,7 @@ if ($data = null) {
 def_int $level = db_getfield($data, fletching_table:level, 0);
 if (stat(fletching) < $level) {
     // osrs
-    ~doubleobjbox(bolt, $bolt_tips, "You need a Fletching level of <tostring($level)> to make that kind of bolt.");
+    ~doubleobjbox(bolt, $bolt_tips, "You need a Fletching level of <tostring($level)> to make that kind of bolt.", 150);
     return;
 }
 // bolts are made through smithing, they can be upgraded with fletching

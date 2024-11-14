@@ -13,7 +13,7 @@ switch_int(%chompybird_progress) {
         ~chatplayer("<p,happy>That's right... I'm making some 'stabbers' for Rantz.");
         ~chatnpc("<p,neutral>Dat's great...Dad want's to hunt da chompy... Da chompy is our bestest yumms! Yous needies da scratchers for makin' dem huh? I's wants some bright pretties for em!");
 
-        ~doubleobjbox(chisel, knife, "Bugs shows you a chisel and a knife.");
+        ~doubleobjbox(chisel, knife, "Bugs shows you a chisel and a knife.", 150);
 
         ~chatplayer("<p,neutral>How many 'bright pretties' do you want?");
         ~chatnpc("<p,neutral>Bugs wants lots of bright pretties, this many!|@blu@~ Bugs quickly opens and closes his hands in front ~|@blu@~ of you to indicate a number of bright pretties. ~|@blu@~ It looks like he wants 10 gold coins.~");
@@ -32,7 +32,7 @@ switch_int(%chompybird_progress) {
                     return;
                 }
 
-                ~doubleobjbox(chisel, coins, "You offer the 10 coins for the tools.");
+                ~doubleobjbox(chisel, coins, "You offer the 10 coins for the tools.", 150);
 
                 inv_del(inv, coins, 10);
                 inv_add(inv, chisel, 1);

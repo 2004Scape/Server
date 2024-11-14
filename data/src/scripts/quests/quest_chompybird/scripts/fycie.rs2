@@ -32,7 +32,7 @@ switch_int(%chompybird_progress) {
                     return;
                 }
 
-                ~doubleobjbox(feather, coins, "You offer the 50 coins for the 25 flufsies.");
+                ~doubleobjbox(feather, coins, "You offer the 50 coins for the 25 flufsies.", 150);
 
                 inv_del(inv, coins, 50);
                 inv_add(inv, feather, 25);
