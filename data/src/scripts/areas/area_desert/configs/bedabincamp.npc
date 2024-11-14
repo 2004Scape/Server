@@ -1,4 +1,4 @@
-[npc_832]
+[al_shabim]
 vislevel=hide
 name=Al Shabim.
 desc=He's the leader of the Bedabin tribe.
@@ -33,7 +33,7 @@ head2=model_30_npc_head
 head3=model_85_idk_head
 wanderrange=3
 
-[npc_833]
+[bedabin_nomad]
 vislevel=hide
 name=Bedabin Nomad
 desc=A bedabin nomad, they live in the harshest extremes in the desert.
@@ -72,7 +72,7 @@ param=shop_delta,30
 param=shop_title,Bedabin Village Bartering
 category=shop_keeper
 
-[npc_834]
+[bedabin_nomad_guard]
 name=Bedabin Nomad Guard
 desc=A bedabin nomad guard - it looks like he's protecting an area.
 walkanim=human_walk_f,human_walk_b,human_walk_l,human_walk_r

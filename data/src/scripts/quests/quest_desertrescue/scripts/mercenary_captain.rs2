@@ -1,0 +1,76 @@
+[opnpc1,npc_830]
+if(%desertrescue_progress <= ^desertrescue_not_started) {
+    ~chatnpc("<p,angry>Move along now... we've had enough of your sort!");
+} else {
+    ~mesbox("You approach the Mercenary Captain.");
+    if(%desertrescue_progress = ^desertrescue_started) %desertrescue_progress = ^desertrescue_approached_captain;
+    @multi3("Wow! A real captain!", mercenary_capt_realcapt, "You there!", mercenary_capt_you, "Hey ugly!", mercenary_capt_ugly);
+}
+
+[label,mercenary_capt_ugly]
+~chatplayer("<p,happy>Hey ugly!");
+~chatnpc("<p,angry>I will not tolerate such insults.. Guards, kill <text_gender("him", "her")!");
+~mesbox("The captain marches away in disgust leaving his guards to tackle you.");
+@mercenary_capt_randompunish;
+
+[label,mercenary_capt_randompunish]
+if(npc_find(coord, npc_828, 7, 0) = true) {
+    switch_int(random(5)) {
+        case 0:
+            ~mesbox("A guard approaches you and pretends to start hitting you.");
+            if_close;
+            p_delay(2);
+        case 1:
+            if_close;
+            mes("An angry guard approaches you and whips out his sword.");
+            p_delay(2);
+            mes("Okay, that does it!");
+            p_delay(2);
+            mes("You're in serious trouble now!");
+            p_delay(2);
+            mes("Okay men, we need to teach this person a thing or two");
+            p_delay(2);
+            mes("about desert survival techniques.");
+            p_delay(2);
+            mes("The guards grab you and rough you up a bit.");
+            p_delay(2);
+            mes("You're grabbed and manhandled onto a cart.");
+            p_delay(2);
+            mes("Sometime later you're dumped in the middle of the desert.");
+            switch_int(random(2)) {
+                case 0 : p_teleport(0_50_48_38_19);
+                case 1 : p_teleport(0_50_48_9_47);
+            }
+            p_delay(0);
+            // seq doesn't exist (probably rework)
+            if(inv_total(inv, water_skin1) > 0 | inv_total(inv, water_skin2) > 0 | inv_total(inv, water_skin3) > 0 | inv_total(inv, water_skin4) > 0) {
+                mes("Guard: You won't be needing that water anymore!");
+                mes("The guards throw your water away.");
+                inv_del(inv, water_skin1, ^max_32bit_int);
+                inv_del(inv, water_skin2, ^max_32bit_int);
+                inv_del(inv, water_skin3, ^max_32bit_int);
+                inv_del(inv, water_skin4, ^max_32bit_int);
+                if(inv_total(inv, water_skin0) = 0) inv_add(inv, water_skin0, 1);
+            }
+            mes("The guards move off leaving you stranded in the desert.");
+            ~mesbox("The guards move off leaving you stranded in the desert.");
+    }
+}
+
+[opnpc3,npc_830]
+~mesbox("You watch the Mercenary Captain for some time.|He has a large metal key attached to his belt.|You notice that he usually gets his men to do his dirty work.");
+
+[proc,mercenary_capt_attack](boolean $npct)(boolean)
+if($npct = true) { 
+    p_delay(0); 
+}
+~mesbox("This mercenary Captain looks very fierce.|Are you sure you want to attack him?");
+def_int $op = ~p_choice2("Yes, I can take him on!", 1, "Er, no thanks, I've had second thoughts about it.", 2);
+if($op = 2) {
+    ~mesbox("You decide not to fight the Mercenary Captain.");
+    return (false);
+}
+npc_say("Kill that intruder guards!");
+npc_setmode(playerescape);
+if(npc_find(coord, npc_828, 7, 0) = true) ~mercenary_attack;
+return (false);

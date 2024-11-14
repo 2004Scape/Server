@@ -1,0 +1,18 @@
+[opnpc1,bedabin_nomad]
+~chatnpc("<p,neutral>Hello Effendi! How can I help you?");
+def_int $op = ~p_choice4("What is this place?", 1, "Where is the Shantay Pass?", 2, "What do you have to sell?", 3, "Okay, thanks", null);
+while($op ! null) {
+    if($op = 1) {
+        ~chatplayer("<p,neutral>What is this place?");
+        ~chatnpc("<p,neutral>This is the camp of the Bedabin. Talk to our leader, Al Shabim, he'll be happy to chat. We can sell you very reasonably priced water...");
+        $op = ~p_choice4("What is this place?", 1, "Where is the Shantay Pass?", 2, "What do you have to sell?", 3, "Okay, thanks", null);
+    } else if($op = 2) {
+        ~chatplayer("<p,neutral>Where is the Shantay Pass?");
+        ~chatnpc("<p,neutral>It is North East of here effendi, across the trackless desert. It will be a thirsty trip, can I interest you in a drink?");
+        $op = ~p_choice4("What is this place?", 1, "Where is the Shantay Pass?", 2, "What do you have to sell?", 3, "Okay, thanks", null);
+    } else {
+        ~openshop_activenpc;
+        return;
+    }
+}
+~chatplayer("<p,neutral>Okay, thanks"); // intentional

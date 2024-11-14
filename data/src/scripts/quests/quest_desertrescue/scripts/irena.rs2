@@ -1,0 +1,49 @@
+[opnpc1,irena]
+if(%desertresuce_progress = ^desertrescue_not_started) {
+        ~mesbox("Irena seems to be very upset and cries as you approach her.");
+        ~chatnpc("<p,sad>Boo hoo! Oh dear, my only daughter....");
+        switch_int(~p_choice2("What's the matter?", 1, "Cheer up, it might never happen.", 2)) {
+            case 1:
+                ~chatplayer("<p,neutral>What's the matter?");
+                ~chatnpc("<p,sad>Oh dear... my daughter, Ana, has gone missing in the desert. I fear that she is lost, or perhaps... *sob* even worse.");
+            case 2:
+                ~chatplayer("<p,neutral>Cheer up, it might never happen.");
+                ~chatnpc("<p,sad>It may already have happened you thoughtless oaf! My daughter, Ana, could be dead or dying in the desert!");
+        }
+        // OSRS removed the 2nd and 3rd option so the mesanims there are guessed (dialogue from chisel)
+        @multi3("When did she go into the desert?", irena_whendesert, "What did she go into the desert for?", irena_whatdesert, "Is there a reward if I get her back?", irena_reward);
+} else if(%desertrescue_progress < ^desertrescue_complete) {
+    ~chatnpc("<p,sad>Please bring my daughter back to me. She is most likely lost in the Desert somewhere. I miss her so much... Wahhhhh! *Sob*");
+}
+
+[label,irena_whendesert]
+~chatplayer("<p,neutral>When did she go into the desert?");
+~chatnpc("<p,sad>*Sob* she went in there just a few days ago, *Sob* she said she would be back yesterday.");
+~chatnpc("<p,sad>*Sob* And she's not...");
+
+[label,irena_whatdesert]
+~chatplayer("<p,neutral>What did she go into the desert for?");
+~mesbox("Irena's bottom lip trembles a little.");
+~chatnpc("<p,sad>She was just travelling, a tourist you might say. *Sob* She said she would be safe and now she could be. *Whhhhhaaaaa*");
+~mesbox("Irena cries her heart out in front of you.")
+@multi3("When did she go into the desert?", irena_whendesert, "Is there a reward if I get her back?", irena_reward, "I'll look for your daughter.", irena_look);
+
+[label,irena_reward]
+~chatplayer("<p,neutral>Is there a reward if I get her back?");
+~chatnpc("<p,sad>Well, yes, you'll have my gratitude young <text_gender("man", "lady").");
+~chatnpc("<p,sad>And I'm sure that Ana will also be very pleased! And I may see if I can get a small reward together... But I cannot promise anything. So does that mean that you'll look for her then?");
+@multi2("Okay Irena, calm down. I'll get your daughter back for you.", irena_daughter, "No, sorry, I'm just too busy!", irena_toobusy);
+
+[label,irena_look]
+~chatplayer("<p,neutral>I'll look for your daughter.");
+~chatnpc("<p,sad>That would be very good of you. You would have the gratitude of a very loving mother. Are you sure you want to take on that responsibility?");
+@multi2("Okay Irena, calm down. I'll get your daughter back for you.", irena_daughter, "No, sorry, I'm just too busy!", irena_toobusy);
+
+[label,irena_daughter]
+~chatplayer("<p,shifty>Okay Irena, calm down. I'll get your daughter back for you.");
+~chatnpc("<p,happy>That would be great! That's really very nice of you! She was wearing a red silk scarf when she left.");
+%desertrescue_progress = ^desertrescue_started;
+
+[label,irena_toobusy]
+~chatplayer("<p,neutral>No, sorry, I'm just too busy!");
+~chatnpc("<p,sad>Oh really, is there no way I can persuade you to help me?");

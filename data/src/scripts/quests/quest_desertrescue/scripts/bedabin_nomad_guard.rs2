@@ -1,0 +1,7 @@
+[opnpc1,bedabin_nomad_guard]
+~chatnpc("<p,angry>Sorry, but you can't use the tent without permission. Orders of Al Shabim.");
+
+[oploc1,loc_2700]
+if(npc_find(coord, bedabin_nomad_guard, 5, 0) = true) { // you can kill these in 225, changed in Oct 2004 so need to confirm original behaviour
+    ~chatnpc("<p,confused>Sorry, this is a private tent, no one is allowed in. Orders of Al Shabim...");
+}

@@ -1,0 +1,24 @@
+[oploc2,loc_2673] @search_desertcamp_gate;
+[oploc2,loc_2674] @search_desertcamp_gate;
+
+[oploc1,loc_2673] @open_desertcamp_gate;
+[oploc1,loc_2674] @open_desertcamp_gate;
+
+[label,search_desertcamp_gate]
+// RSC
+mes("You search the gate.");
+p_delay(2);
+mes("Inside the compound you can see that there are lots of slaves mining away.");
+p_delay(2);
+mes("They all seem to be dressed in dirty disgusting desert rags.");
+p_delay(2);
+mes("And equiped only with a mining pick.");
+p_delay(2);
+mes("Each slave is chained to a rock where they seemingly mine all day long.");
+p_delay(2);
+mes("Guards patrol the area extensively.");
+p_delay(2);
+mes("But you might be able to sneak past them if you try to blend in.");
+
+[label,open_desertcamp_gate]
+mes("This gate needs a key in order to be opened.");

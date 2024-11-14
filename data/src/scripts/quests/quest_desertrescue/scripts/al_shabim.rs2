@@ -1,0 +1,24 @@
+[opnpc1,al_shabim]
+~chatnpc("<p,neutral>Hello Effendi!");
+~chatnpc("<p,neutral>I am Al Shabim, greetings on behalf of the Bedabin nomads.");
+@multi2("Who are you?", shabim_who, "What is this place?", shabim_whatplace);
+
+[label,shabim_who]
+~chatplayer("<p,quiz>Who are you?");
+~chatnpc("<p,happy>I am Al Shabim Effendi! I am the leader of the Bedabin peoples!");
+@multi3("Okay thanks!", shabim_ok, "What is there to do around here?", shabim_whatdo, "What is this place?", shabim_whatplace);
+
+[label,shabim_whatplace]
+~chatplayer("<p,neutral>What is this place?");
+~chatnpc("<p,neutral>This is the home of the Bedabin. We're a peaceful tribe of desert dwellers. Some idiots call us 'Tenti's', a childish name borne of ignorance.");
+~chatnpc("<p,neutral>We're renowned for surviving in the harshest desert climate. We also grow the 'Bedabin ambrosia.'... A pineapple of such delicious sumptiousness that it defies description.");
+~chatnpc("<p,neutral>Take a look around our camp if you like!");
+@multi2("Okay thanks!", shabim_ok, "What is there to do around here?", shabim_whatdo);
+
+[label,shabim_whatdo]
+~chatplayer("<p,neutral>What is there to do around here?");
+~chatnpc("<p,confused>Well, we are all very busy most of the time, tending to the pineapples. They are grown in a secret location, to stop thieves from raiding our most precious prize.");
+
+[label,shabim_ok]
+~chatplayer("<p,neutral>Okay Thanks!");
+~chatnpc("<p,happy>Good day Effendi!");
