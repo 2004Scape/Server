@@ -483,7 +483,7 @@ export default abstract class PathingEntity extends Entity {
                 // nomove moverestrict returns as null = no walking allowed.
                 return;
             }
-            if (this.width > 1) {
+            if (this.width > 1 && !CoordGrid.intersects(this.x, this.z, this.width, this.length, this.target.x, this.target.z, this.target.width, this.target.length)) {
                 // west/east
                 let dir = CoordGrid.face(this.x, 0, this.target.x, 0);
                 const distanceToTarget = CoordGrid.distanceTo({x: this.x, z: this.z, width: this.width, length: this.length}, {x: this.target.x, z: this.target.z, width: this.target.width, length: this.target.length});
