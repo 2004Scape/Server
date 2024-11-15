@@ -44,6 +44,8 @@ export default class OpHeldTHandler extends MessageHandler<OpHeldT> {
 
         player.clearInteraction();
         player.closeModal();
+        player.faceEntity = -1;
+        player.masks |= player.entitymask;
 
         const script = ScriptProvider.getByTrigger(ServerTriggerType.OPHELDT, spellComId, -1);
         if (script) {
