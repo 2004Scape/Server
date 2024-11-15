@@ -41,6 +41,8 @@ export default class OpHeldHandler extends MessageHandler<OpHeld> {
 
         player.clearInteraction();
         player.closeModal();
+        player.faceEntity = -1;
+        player.masks |= player.entitymask;
 
         let trigger: ServerTriggerType;
         if (message.op === 1) {

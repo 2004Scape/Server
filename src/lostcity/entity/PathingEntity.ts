@@ -49,7 +49,7 @@ export default abstract class PathingEntity extends Entity {
     readonly blockWalk: BlockWalk;
     moveStrategy: MoveStrategy;
     private readonly coordmask: number;
-    private readonly entitymask: number;
+    readonly entitymask: number;
 
     // runtime properties
     moveSpeed: MoveSpeed = MoveSpeed.INSTANT;
