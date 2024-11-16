@@ -95,6 +95,9 @@ param=defend_sound,chompy_bird_hit
 param=death_sound,chompy_bird_death
 // TODO tbc + missing datas
 wanderrange=3
+// Hunt range is a guess
+// If removed, chompy won't hunt for toads during quest
+huntrange=10
 // osrs stats and Vislvl match 1:1
 
 [chompy_bird_corpse]
