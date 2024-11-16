@@ -27,11 +27,7 @@ switch_int(%chompybird_progress) {
                     return;
                 }
 
-                if (inv_freespace(inv) = 0 & inv_total(inv, feather) = 0) {
-                    // todo what to do?
-                    return;
-                }
-
+                // No inv space check - OSRS drops the feathers on the floor
                 ~doubleobjbox(feather, coins, "You offer the 50 coins for the 25 flufsies.", 150);
 
                 inv_del(inv, coins, 50);
@@ -42,8 +38,9 @@ switch_int(%chompybird_progress) {
                 ~chatnpc("<p,angry>Well, you not have da flufsies den!");
         }
 
-    case ^chompybird_shown_toad :
-        ~chatnpc("<p,neutral>You's better talk to Dad, him chasey sneaky chompy.");
+    case ^chompybird_kids_play_with_toad, ^chompybird_removed_rock_from_chest :
+        ~chatplayer("<p,quiz>Rantz said that you play with the 'fatsy toadies', what are they?");
+        ~chatnpc("<p,neutral>Oh we sometimes is using blower on da toadies but Dad don't let us get in da locksy bocksy no more. He, he, big chuklees when make da toadies fat on da swampy gas.");      
 
     case ^chompybird_told_to_cook_chompy :
         def_int $flavour = getbit_range(%chompybird_kills, ^chompybird_varbit_fycie_flavour_start, ^chompybird_varbit_fycie_flavour_end);
@@ -59,12 +56,10 @@ switch_int(%chompybird_progress) {
         }
 
         ~chatnpc("<p,neutal>Dad say's you's roastling da chompy for us! Slurp!|Me's wants <$chompy_flavour> wiv mine! Yummy, can't wait|to eats it.");
-        
-    case ^chompybird_chompy_cooked :
-        // todo mesanim TBC
-        ~chatnpc("<p,neutral>Go talk to Dad, him chasey sneaky chompy.");
+
+    case ^chompybird_complete :
+        ~chatnpc("<p,neutral>Thanks for da chompy, it was deloverly!");
 
     case default :
-        // todo TBC other states
-        return;
+        ~chatnpc("<p,neutral>You's better talk to Dad, him chasey sneaky chompy.");
 }
