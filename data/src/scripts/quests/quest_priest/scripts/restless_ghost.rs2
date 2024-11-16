@@ -86,7 +86,7 @@ switch_int ($option) {
                         ~chatplayer("<p,neutral>My brother had EXACTLY the same problem.");
                         ~chatnpc("<p,neutral>Woo Wooooo!");
                         ~chatnpc("<p,neutral>Wooooo Woo woo woo!");
-                        switch_int (~p_choice2("Goodbye. Thanks for the chat.", 1, "ou'll have to give me the recipe some time...", 2)) {
+                        switch_int (~p_choice2("Goodbye. Thanks for the chat.", 1, "You'll have to give me the recipe some time...", 2)) {
                             case 1 : @priest_ghost_goodbye;
                             case 2 :
                                 ~chatplayer("<p,neutral>You'll have to give me the recipe some time...");

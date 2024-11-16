@@ -53,9 +53,11 @@ param=attack_anim,demon_attack
 param=defend_anim,demon_block
 param=death_anim,demon_death
 param=demonbane_vulnerable,yes
-param=attack_sound,demon_attack
-param=defend_sound,demon_hit
-param=death_sound,demon_death
+param=attack_sound,black_demon_attack
+param=defend_sound,black_demon_hit
+param=death_sound,black_demon_death
 param=death_drop,ashes
+param=combat_xp_multiplier,25
 huntmode=cowardly
 huntrange=3
+// Stats match osrs version but our version Vislvl is different.

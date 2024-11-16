@@ -1,6 +1,6 @@
 import fs from 'fs';
 
-import Packet from '#jagex2/io/Packet.js';
+import Packet from '#jagex/io/Packet.js';
 
 import { ConfigType } from '#lostcity/cache/config/ConfigType.js';
 import { ParamHelper, ParamHolder, ParamMap } from '#lostcity/cache/config/ParamHelper.js';

@@ -2,7 +2,7 @@ import fs from 'fs';
 import path from 'path';
 import { parentPort } from 'worker_threads';
 
-import { packClient, packServer } from '#lostcity/cache/packall.js';
+import { packClient, packServer } from '#lostcity/pack/packall.js';
 
 // todo: this file queue is so the rebuild/reload process can utilize the additional context
 let processNextQueue: Set<string> = new Set();

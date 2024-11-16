@@ -1,0 +1,49 @@
+[opnpc1,digsite_workman_cave]
+switch_int (~itexam_progress) {
+    case ^itexam_complete : @digsite_workman_cave_quest_complete;
+    case default : @digsite_workman_cave_default;
+}
+
+[label,digsite_workman_cave_default]
+~chatplayer("<p,happy>Hello.");
+~chatnpc("<p,confused>Well, well... I have a visitor. What are you doing here?");
+
+if (~itexam_testbit(^itexam_bit_searched_bricks) = true) {
+    @multi4("I have been invited to research here.", digsite_workman_cave_invited_to_research, "I am not sure really.", digsite_workman_cave_not_sure, "I'm here to get rich, rich, rich!", digsite_workman_cave_not_rich_rich, "How could I move a large pile of rocks?", digsite_workman_cave_move_pile_of_rocks);
+} else {
+    @multi3("I have been invited to research here.", digsite_workman_cave_invited_to_research, "I am not sure really.", digsite_workman_cave_not_sure, "I'm here to get rich, rich, rich!", digsite_workman_cave_not_rich_rich);
+}
+
+[label,digsite_workman_cave_invited_to_research]
+~chatplayer("<p,happy>I have been invited to research here.");
+~chatnpc("<p,happy>Indeed, you must be someone special to be allowed down here.");
+
+def_int $choice = ~p_choice2("Do you know where to find a specimen jar?", 1, "I have things to do...", 2);
+
+if ($choice = 1) {
+    ~chatplayer("<p,neutral>Do you know where to find a specimen jar?");
+    ~chatnpc("<p,quiz>Hmmm, let me think... Nope, can't help you there I'm afraid.");
+} else {
+    ~chatplayer("<p,neutral>I have things to do...");
+    ~chatnpc("<p,happy>Of course, don't let me keep you.");
+}
+
+[label,digsite_workman_cave_not_sure]
+~chatplayer("<p,confused>I am not sure really.");
+~chatnpc("<p,happy>A miner without a clue - how funny!");
+
+[label,digsite_workman_cave_not_rich_rich]
+~chatplayer("<p,happy>I'm here to get rich, rich, rich!");
+~chatnpc("<p,happy>Oh, well, don't forget that wealth and riches aren't everything.");
+
+[label,digsite_workman_cave_move_pile_of_rocks]
+~chatplayer("<p,quiz>How do you move a large pile of rocks?");
+~chatnpc("<p,neutral>There used to be this chap that worked in the other shaft. He was working on an explosive chemical mixture to be used for clearing blocked areas underground.");
+~chatnpc("<p,confused>He left in a hurry one day; something in the shaft scared him to death, but he didn't say what.");
+~chatplayer("<p,quiz>Oh?");
+~chatnpc("<p,shifty>Rumour has it he'd been writing a book on his chemical mixture. I'm not sure what goes in it but I'm sure you'll find the stuff he was using scattered around the digsite. He left so quickly he didn't take anything with him. In fact, I still have a chest key he gave me to look after; perhaps it's more useful to you.");
+inv_add(inv, digsite_chest_key, 1);
+~objbox(digsite_chest_key, "Doug hands you a key.", 250, 0, divide(^objbox_height, 2));
+
+[label,digsite_workman_cave_quest_complete]
+~chatnpc("<p,neutral>Well, hello again. Congratulations on your finds");

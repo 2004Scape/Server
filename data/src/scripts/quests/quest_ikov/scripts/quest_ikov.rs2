@@ -67,6 +67,7 @@ if (npc_finduid($npc) = true) {
 
 [queue,ikov_lucien_quest_complete]
 %ikov_progress = ^ikov_completed_lucien;
+inv_del(inv, staff_of_armadyl, 1);
 stat_advance(ranged, 105000);
 stat_advance(fletching, 80000);
 ~send_quest_complete(questlist:ikov, yew_longbow, 250, ^ikov_questpoints, "You have completed the\\nTemple of Ikov Quest for Lucien!");

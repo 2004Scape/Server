@@ -11,7 +11,6 @@ switch_int(%chompybird_progress) {
         ~chatplayer("<p,quiz>I think I understand. You want me to make some arrows for you?");
         ~chatnpc("<p,neutral>Yeah, is what Rantz sayed, make da stabbers for da stabby chucker!");
 
-        // todo this dialogue isn't in OSRS, try to find an old video
         switch_int(~p_choice2("OK, I'll make you some 'stabbers'.", 1, "Er, make you're own 'stabbers'!", 2)) {
             case 1 :
                 ~chatplayer("<p,neutral>OK, I'll make you some 'stabbers'.");
@@ -19,13 +18,12 @@ switch_int(%chompybird_progress) {
                 %chompybird_progress = ^chompybird_started;
                 ~send_quest_progress(questlist:chompybird, %chompybird_progress, ^chompybird_complete);
             case 2 :
-                // todo text and mesanims TBC
                 ~chatplayer("<p,neutral>Er, make you're own 'stabbers'!");
                 ~chatnpc("<p,angry>When I make 'stabbers', I pretend you chompy and practice on you!");
         }
     case ^chompybird_started :
         @return_to_rantz;
-    case ^chompybird_given_arrows :
+    case ^chompybird_given_arrows, ^chompybird_kids_play_with_toad, ^chompybird_removed_rock_from_chest :
         ~chatnpc("<p,quiz>Hey you creature, you still here?");
         ~chatnpc("<p,neutral>Da chompy still not coming! We need da fatsy toady to get da chompy, do you got it? Do you got da fatsy toady? Then we can sneaky, sneaky stick da chompy.");
         
@@ -39,15 +37,15 @@ switch_int(%chompybird_progress) {
         }
     case ^chompybird_shown_toad :
         @where_to_put_toadies;
-    case ^chompybird_dropped_toad :
+    // Maybe chompy_ate_toad has a separate set of dialogue, but in normal circumstances the stage
+    // advances to rantz_tried_to_shoot_chompy too quickly to tell.
+    case ^chompybird_dropped_toad, ^chompybird_chompy_ate_toad :
         // todo mesanim TBC
         ~chatplayer("<p,neutral>There you go, I've placed the bait.");
         ~chatnpc("<p,neutral>Goodz, me now waits for da chompy! It shouldn't be long now. Sneaky... sneaky...");
         ~chatplayer("<p,neutral>Yes, I know... stick da chompy!");
         ~chatnpc("<p,neutral>Hey, you's creature, is da fatsy toady still dere? Go get more fatsy toadies if dey all gone!");
         ~chatplayer("<p,neutral>What? I have to get more bait if there's none there? Does this Chompy Bird even exist I wonder?");
-    case ^chompybird_chompy_ate_toad :
-        mes("[debug] currently unimplemented");
     case ^chompybird_rantz_tried_to_shoot_chompy :
         ~chatplayer("<p,neutral>Hey there, you keep missing the chompy bird.");
         ~chatnpc("<p,angry>I knows, I keeps missing... because your stabbers are|worserer at flying than a dead dog.");
@@ -86,7 +84,9 @@ switch_int(%chompybird_progress) {
         ~chatnpc("<p,angry>Well hurry up and get some, we is hungry!");
     case ^chompybird_player_killed_chompy :
         if (inv_total(inv, raw_chompy) = 0) {
-            mes("[debug] todo currently unimplemented");
+            ~chatnpc("<p,neutral>Hey You! Got da chompy yet?");
+            ~chatplayer("<p,neutral>Not yet!");
+            ~chatnpc("<p,angry>Well hurry up and get some, we is hungry!");
         } else {
             // todo mesanim TBC
             ~chatnpc("<p,neutral>Hey You! Got da chompy yet?");
@@ -99,8 +99,8 @@ switch_int(%chompybird_progress) {
         // todo what if the player no longer has the seasoned chompy? Does it still auto-hand in?
         @hand_chompy_to_rantz;
     case ^chompybird_complete :
-        // todo message tbc
-        ~chatnpc("<p,neutral>Tank's very much for da chompy...|Fycie an Bugs like very much da chompy yumms!");
+        ~chatnpc("<p,neutral>Hey deyr, t'anks for da chompy, it was scrumbly!");
+        // No chompy bird hats yet
 
     // todo dialog to buy ogre bow back from Rantz
 }
@@ -183,8 +183,8 @@ switch_obj(last_useitem) {
 
         ~chatnpc("<p,neutral>Hey you creature..you made da stabbers|Dat's good creature!");
         
-        if (%chompybird_progress = ^chompybird_started) {
-        // todo mesanim TBC
+        if (%chompybird_progress = ^chompybird_started & testbit(%chompybird_kills, ^chompybird_varbit_made_arrows) = false) {
+            // todo mesanim TBC
             ~chatnpc("<p,neutral>Hey, deese stabbers no good... did you make dem you's self? You go make dem stabbers for me creature! Don't get old ones or from other creatures.");
 
             @no_arrows_choice;
@@ -245,19 +245,16 @@ switch_int(~p_choice2("How do I make the 'stabbers' again?", 1, "Ok, I'll make t
 [label,attempt_give_rantz_arrows]
 ~chatplayer("<p,angry>Well, yes actually, as you asked so nicely. Here you go! Here's your 'stabbers'.");
 
-if (inv_total(inv, ogre_arrow) < 6) {
-    // todo mesanim tbc
+// This check runs first, then quantity
+if (testbit(%chompybird_kills, ^chompybird_varbit_made_arrows) = false) {
+    ~chatnpc("<p,angry>Hey, 'dee'se stabbers no good! Did you make dem you's self? YOU go make dem arrows for ME creature!");
+}
+else if (inv_total(inv, ogre_arrow) < 6) {
     ~chatnpc("<p,neutral>Dat's not enough, me's an good shot, but need some for practice. Bring more than fingers on hand...");
-    return;
 }
-
-if (testbit(%chompybird_kills, ^chompybird_varbit_made_arrows) = true) {
-    // todo mesanim tbc
-    ~chatnpc("<p,neutral>Hey, 'dee'se stabbers no good! Did you make dem you's self? YOU go make dem arrows for ME creature!");
-    return;
+else {
+    @give_rantz_arrows;
 }
-
-@give_rantz_arrows;
 
 [label,give_rantz_arrows]
 inv_del(inv, ogre_arrow, 6);
@@ -274,7 +271,9 @@ switch_int(~p_choice5("How do we make the chompys come?", 1, "What are 'fatsy to
     case 1 :
         ~chatplayer("<p,neutral>How do we make the chompys come?");
         ~chatnpc("<p,neutral>Chompys love da fatsy toadies. Toadies get big on der swamp gas and der chompys are licking der lips for em as me is licking lips for da chompy. Da chompys don't like da smaller toadies from nearby swampy.");
-        %chompybird_progress = ^chompybird_kids_play_with_toad;
+        if (%chompybird_progress < ^chompybird_kids_play_with_toad) {
+            %chompybird_progress = ^chompybird_kids_play_with_toad;
+        }
         ~chatnpc("<p,happy>Dey's fussie eaters just like Rantz. Fycie an' Bugs play with toadies and blower dey's all times making fatsy toadies.");
         @toadies_questions;
     case 2 :
@@ -341,21 +340,18 @@ while (.npc_findnext = true) {
         if (p_finduid(.%quest_chompybird_baiter) = true) {
             // we only run this logic for players in the right quest state
             if (%chompybird_progress = ^chompybird_chompy_ate_toad) {
-                // todo fix the delays in this section
-
                 // todo send mesbox if player is close?
                 //      not sure which one was in 04
                 mes("Rantz: Hey, dere's da chompy, I's gonna shoot it.");
                 npc_facesquare(.npc_coord);
 
-                // npc_delay(1);
+                npc_delay(1);
                 
                 npc_anim(ogre_attackbow, 0);
                 spotanim_npc(ogre_arrow_launch, 50, 0);
                 def_int $duration = ~npc_projectile(npc_coord, .npc_uid, ogre_arrow_travel, 40, 36, 41, 15, 5, 11, 5);
-                // def_int $delay = add(sub(divide($duration, 30), 1), 2);
-
-                // npc_delay($delay);
+                def_int $delay = add(sub(divide($duration, 30), 1), 2);
+                npc_delay($delay);
 
                 if (p_finduid(.%quest_chompybird_baiter) = true) {
                     %chompybird_progress = ^chompybird_rantz_tried_to_shoot_chompy;
@@ -364,6 +360,7 @@ while (.npc_findnext = true) {
                     mes("Rantz keeps missing the chompy bird...");
                     mes("Rantz: Grrr...de'ese arrows are rubbish.");
                 }
+                return;
             }
         }
     }

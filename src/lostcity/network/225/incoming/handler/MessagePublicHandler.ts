@@ -1,8 +1,8 @@
 import MessageHandler from '#lostcity/network/incoming/handler/MessageHandler.js';
 import Player from '#lostcity/entity/Player.js';
 import MessagePublic from '#lostcity/network/incoming/model/MessagePublic.js';
-import Packet from '#jagex2/io/Packet.js';
-import WordPack from '#jagex2/wordenc/WordPack.js';
+import Packet from '#jagex/io/Packet.js';
+import WordPack from '#jagex/wordenc/WordPack.js';
 import WordEnc from '#lostcity/cache/wordenc/WordEnc.js';
 import InfoProt from '#lostcity/network/225/outgoing/prot/InfoProt.js';
 

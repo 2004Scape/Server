@@ -1,10 +1,10 @@
 import fs from 'fs';
 
-import Packet from '#jagex2/io/Packet.js';
+import Packet from '#jagex/io/Packet.js';
 
 import { ConfigType } from '#lostcity/cache/config/ConfigType.js';
 import { ParamHelper, ParamMap } from '#lostcity/cache/config/ParamHelper.js';
-import Jagfile from '#jagex2/io/Jagfile.js';
+import Jagfile from '#jagex/io/Jagfile.js';
 import { printFatalError } from '#lostcity/util/Logger.js';
 import kleur from 'kleur';
 

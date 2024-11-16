@@ -1,4 +1,4 @@
-import Packet from '#jagex2/io/Packet.js';
+import Packet from '#jagex/io/Packet.js';
 import ZoneProt from '#lostcity/network/225/outgoing/prot/ZoneProt.js';
 import ObjAdd from '#lostcity/network/outgoing/model/ObjAdd.js';
 import ZoneMessageEncoder from '#lostcity/network/outgoing/codec/ZoneMessageEncoder.js';

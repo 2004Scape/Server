@@ -1,6 +1,6 @@
 import fs from 'fs';
 
-import Packet from '#jagex2/io/Packet.js';
+import Packet from '#jagex/io/Packet.js';
 
 import { ConfigType } from '#lostcity/cache/config/ConfigType.js';
 import { ParamHelper, ParamMap } from '#lostcity/cache/config/ParamHelper.js';
@@ -8,7 +8,7 @@ import { ParamHelper, ParamMap } from '#lostcity/cache/config/ParamHelper.js';
 import BlockWalk from '#lostcity/entity/BlockWalk.js';
 import MoveRestrict from '#lostcity/entity/MoveRestrict.js';
 import NpcMode from '#lostcity/entity/NpcMode.js';
-import Jagfile from '#jagex2/io/Jagfile.js';
+import Jagfile from '#jagex/io/Jagfile.js';
 import NpcStat from '#lostcity/entity/NpcStat.js';
 
 export default class NpcType extends ConfigType {

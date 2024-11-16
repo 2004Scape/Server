@@ -3,7 +3,7 @@ import { CommandHandlers } from '#lostcity/engine/script/ScriptRunner.js';
 
 import { bitcount, clearBitRange, MASK, setBitRange } from '#lostcity/util/Numbers.js';
 
-import Trig from '#jagex2/Trig.js';
+import Trig from '#jagex/Trig.js';
 
 const NumberOps: CommandHandlers = {
     [ScriptOpcode.ADD]: state => {

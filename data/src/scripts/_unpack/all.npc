@@ -1735,12 +1735,10 @@ model1=model_2909_npc
 model2=model_2896_npc
 model3=model_2915_npc
 respawnrate=100
-hitpoints=7
-attack=11
-strength=12
-defence=14
-param=slashdefence,3
-param=crushdefence,3
+hitpoints=16
+attack=10
+strength=10
+defence=7
 param=damagetype,^crush_style
 param=attack_anim,midget_attackunarmed
 param=defend_anim,midget_block
@@ -1748,123 +1746,9 @@ param=death_anim,midget_death
 param=attack_sound,gnome_attack
 param=defend_sound,gnome_hit
 param=death_sound,gnome_death
-// TODO: where is the data taken from?
-
-[gnome_green]
-name=Gnome
-desc=Like a mini man!
-walkanim=midget_walk
-readyanim=midget_ready
-op1=Talk-to
-op2=Attack
-op3=Pickpocket
-vislevel=1
-model1=model_2909_npc
-model2=model_2890_npc
-model3=model_2915_npc
-head1=model_21_npc_head
-attackrange=6
-respawnrate=120
-hitpoints=3
-param=attackbonus,-42
-param=strengthbonus,-42
-param=rangebonus,2
-param=stabdefence,-42
-param=slashdefence,-42
-param=crushdefence,-42
-param=magicdefence,-42
-param=rangedefence,-42
-param=damagetype,^ranged_style
-param=attack_anim,midget_attackbow
-param=defend_anim,midget_block
-param=death_anim,midget_death
-param=rangeattack_sound,arrowlaunch2
-param=defend_sound,gnome_hit
-param=death_sound,gnome_death
-param=proj_launch,iron_arrow_launch
-param=proj_travel,iron_arrow_travel
-param=proj_height,48
-// osrs stats and Vislvl match 1:1
-
-[gnome_brown]
-name=Gnome
-desc=Like a mini man!
-walkanim=midget_walk
-readyanim=midget_ready
-op1=Talk-to
-op2=Attack
-op3=Pickpocket
-vislevel=1
-recol1s=352
-recol1d=14625
-model1=model_2909_npc
-model2=model_2890_npc
-model3=model_2915_npc
-head1=model_21_npc_head
-attackrange=6
-respawnrate=120
-hitpoints=3
-param=attackbonus,-42
-param=strengthbonus,-42
-param=rangebonus,2
-param=stabdefence,-42
-param=slashdefence,-42
-param=crushdefence,-42
-param=magicdefence,-42
-param=rangedefence,-42
-param=damagetype,^ranged_style
-param=attack_anim,midget_attackbow
-param=defend_anim,midget_block
-param=death_anim,midget_death
-param=rangeattack_sound,arrowlaunch2
-param=defend_sound,gnome_hit
-param=death_sound,gnome_death
-param=proj_launch,iron_arrow_launch
-param=proj_travel,iron_arrow_travel
-param=proj_height,48
-// osrs stats and Vislvl match 1:1
-
-[gnome_black]
-name=Gnome
-desc=Like a mini man!
-walkanim=midget_walk
-readyanim=midget_ready
-op1=Talk-to
-op2=Attack
-op3=Pickpocket
-vislevel=1
-recol1s=24075
-recol1d=13537
-recol2s=21961
-recol2d=13537
-recol3s=20904
-recol3d=13537
-model1=model_2909_npc
-model2=model_2890_npc
-model3=model_2915_npc
-head1=model_21_npc_head
-attackrange=6
-respawnrate=120
-hitpoints=3
-param=attackbonus,-42
-param=strengthbonus,-42
-param=rangebonus,2
-param=stabdefence,-42
-param=slashdefence,-42
-param=crushdefence,-42
-param=magicdefence,-42
-param=rangedefence,-42
-param=damagetype,^ranged_style
-param=attack_anim,midget_attackbow
-param=defend_anim,midget_block
-param=death_anim,midget_death
-param=rangeattack_sound,arrowlaunch2
-param=defend_sound,gnome_hit
-param=death_sound,gnome_death
-param=proj_launch,iron_arrow_launch
-param=proj_travel,iron_arrow_travel
-param=proj_height,48
-// osrs stats and Vislvl match 1:1
+// stats taken Lost city leprechaun shamus. stats match to Vislvl
+// https://raw.githubusercontent.com/Joshua-F/osrs-dumps/refs/heads/master/config/dump.npc npc_1162
+// where these data is taken from?  hitpoints=7, attack=11, strength=12, defence=14, param=slashdefence,3, param=crushdefence,3
 
 [lizardman]
 name=Lizard man
@@ -3882,92 +3766,6 @@ param=death_sound,mammoth_death
 huntmode=cowardly
 huntrange=3
 
-[terrorbird]
-name=Terrorbird
-desc=A giant raptor.
-size=2
-walkanim=terrorbird_walk
-readyanim=terrorbird_ready
-op2=Attack
-vislevel=28
-model1=model_3011_npc
-wanderrange=12
-maxrange=14
-respawnrate=60
-hitpoints=34
-attack=23
-strength=23
-defence=19
-param=damagetype,^stab_style
-param=attack_anim,terrorbird_attack
-param=defend_anim,terrorbird_block
-param=death_anim,terrorbird_death
-param=attack_sound,terrorbird_attack
-param=defend_sound,terrorbird_hit
-param=death_sound,terrorbird_death
-// osrs stats and Vislvl match 1:1
-
-[npc_137]
-name=Mounted terrorbird gnome
-desc=These gnomes know how to get around!
-size=2
-walkanim=mounted_terrorbird_walk
-readyanim=mounted_terrorbird_ready
-op2=Attack
-vislevel=29
-model1=model_3012_npc
-wanderrange=12
-maxrange=14
-respawnrate=60
-hitpoints=36
-attack=25
-strength=25
-defence=25
-param=stabdefence,16
-param=slashdefence,16
-param=crushdefence,18
-param=magicdefence,15
-param=rangedefence,10
-param=damagetype,^stab_style
-param=attack_anim,mounted_terrorbird_attack
-param=defend_anim,mounted_terrorbird_defend
-param=death_anim,mounted_terrorbird_death
-param=attack_sound,terrorbird_attack
-param=defend_sound,terrorbird_hit
-param=death_sound,terrorbird_death
-// Stats match osrs version but our version Vislvl is different.
-
-[npc_138]
-name=Mounted terrorbird gnome
-desc=These gnomes know how to get around!
-size=2
-walkanim=mounted_terrorbird_walk
-readyanim=mounted_terrorbird_ready
-op2=Attack
-vislevel=46
-model1=model_3013_npc
-wanderrange=12
-maxrange=14
-respawnrate=60
-hitpoints=55
-attack=40
-strength=40
-defence=40
-param=rangebonus,2
-param=stabdefence,16
-param=slashdefence,16
-param=crushdefence,18
-param=magicdefence,15
-param=rangedefence,10
-param=damagetype,^stab_style
-param=attack_anim,mounted_terrorbird_gnome_hands_over_food
-param=defend_anim,mounted_terrorbird_defend
-param=death_anim,mounted_terrorbird_death
-param=attack_sound,terrorbird_attack
-param=defend_sound,terrorbird_hit
-param=death_sound,terrorbird_death
-// Stats match osrs version but our version Vislvl is different.
-
 [npc_140]
 walkanim=souless_walk
 readyanim=souless_ready
@@ -4499,7 +4297,7 @@ huntmode=ranged
 huntrange=3
 // osrs stats and Vislvl match 1:1
 
-[npc_175]
+[mugger]
 walkanim=human_walk_f,human_walk_b,human_walk_l,human_walk_r
 readyanim=human_ready
 name=Mugger
@@ -5222,50 +5020,6 @@ huntmode=cowardly
 huntrange=1
 // osrs stats and Vislvl match 1:1
 
-[chaos_druid_warrior]
-name=Chaos druid warrior
-desc=A crazy evil druid.
-walkanim=human_walk_f,human_walk_b,human_walk_l,human_walk_r
-readyanim=human_ready
-op2=Attack
-vislevel=37
-recol1s=14724
-recol1d=19588
-recol2s=2340
-recol2d=19588
-recol3s=6273
-recol3d=21140
-model1=model_206_idk
-model2=model_181_idk
-model3=model_246_idk
-model4=model_294_obj_wear
-model5=model_170_idk
-model6=model_176_idk
-model7=model_260_npc
-model8=model_502_obj_wear
-respawnrate=100
-hitpoints=40
-attack=32
-strength=34
-defence=25
-param=attackrate,5
-param=attackbonus,9
-param=strengthbonus,5
-param=stabdefence,13
-param=slashdefence,17
-param=crushdefence,14
-param=magicdefence,-4
-param=rangedefence,14
-param=damagetype,^crush_style
-param=attack_anim,human_blunt_crush
-param=defend_anim,human_blunt_defend1
-param=attack_sound,mace_crush
-// param=defend_sound,steel_mail
-// osrs attack sound warhammer_crush
-huntmode=cowardly
-huntrange=1
-// osrs stats and Vislvl match 1:1
-
 [necromancer]
 walkanim=human_walk_f,human_walk_b,human_walk_l,human_walk_r
 readyanim=human_ready
@@ -5475,36 +5229,6 @@ param=attack_sound,baxe_slash
 // param=defend_sound,swordclash2
 // osrs stats and Vislvl match 1:1
 
-[salarin_the_twisted]
-name=Salarin the twisted
-desc=Twisted by name, twisted by nature.
-walkanim=human_walk_f,human_walk_b,human_walk_l,human_walk_r
-readyanim=human_ready
-desc=A crazy evil druid
-op2=Attack
-vislevel=70
-recol1s=2340
-recol1d=19588
-recol2s=14724
-recol2d=19588
-recol3s=6273
-recol3d=22850
-model1=model_203_idk
-model2=model_181_idk
-model3=model_250_idk
-model4=model_292_idk
-model5=model_170_idk
-model6=model_176_idk
-model7=model_260_npc
-respawnrate=100
-hitpoints=70
-attack=58
-strength=58
-defence=62
-param=damagetype,^crush_style
-param=max_dealt,0
-// osrs stats and Vislvl match 1:1
-
 [monk_entrana]
 name=Monk
 desc=A holy man.
@@ -5602,7 +5326,7 @@ param=defend_sound,ghost_hit
 param=death_sound,ghost_death
 param=death_drop,null
 param=undead,^true
-// TODO need monster examine stats infos.
+// TODO monster examine spell
 
 [npc_282]
 name=Thief
@@ -5769,72 +5493,6 @@ model1=model_loc_42_8
 wanderrange=0
 moverestrict=nomove
 
-[npc_344]
-vislevel=hide
-name=Guard
-desc=He tries to keep order around here.
-walkanim=human_walk_f,human_walk_b,human_walk_l,human_walk_r
-readyanim=human_ready
-op1=Talk-to
-recol1s=15855
-recol1d=8420
-model1=model_208_npc
-model2=model_185_obj_wear
-model3=model_248_idk
-model4=model_311_obj_wear
-model5=model_151_idk
-model6=model_179_obj_wear
-model7=model_254_idk
-model8=model_276_npc
-model9=model_502_obj_wear
-model10=model_541_obj_wear
-head1=model_48_npc_head
-head2=model_80_idk_head
-wanderrange=1
-
-[npc_345]
-vislevel=hide
-name=Guard
-desc=He tries to keep order around here.
-walkanim=human_walk_f,human_walk_b,human_walk_l,human_walk_r
-readyanim=human_ready
-op1=Talk-to
-recol1s=15855
-recol1d=8420
-model1=model_208_npc
-model2=model_185_obj_wear
-model3=model_248_idk
-model4=model_311_obj_wear
-model5=model_151_idk
-model6=model_179_obj_wear
-model7=model_254_idk
-model8=model_276_npc
-model9=model_508_obj_wear
-head1=model_48_npc_head
-head2=model_80_idk_head
-wanderrange=1
-
-[npc_346]
-vislevel=hide
-name=Guard
-desc=He tries to keep order around here.
-walkanim=human_walk_f,human_walk_b,human_walk_l,human_walk_r
-readyanim=human_ready
-op1=Talk-to
-recol1s=15855
-recol1d=8420
-model1=model_208_npc
-model2=model_185_obj_wear
-model3=model_248_idk
-model4=model_311_obj_wear
-model5=model_151_idk
-model6=model_179_obj_wear
-model7=model_254_idk
-model8=model_276_npc
-model9=model_508_obj_wear
-head1=model_48_npc_head
-head2=model_80_idk_head
-
 [npc_365]
 name=Paladin
 desc=A military man.
@@ -5914,38 +5572,6 @@ head1=model_66_npc_head
 head2=model_80_idk_head
 wanderrange=0
 moverestrict=nomove
-
-[npc_374]
-name=Ogre
-desc=Big, ugly, and smelly.
-size=2
-walkanim=ogre_walk
-readyanim=ogre_ready
-op2=Attack
-vislevel=53
-model1=model_2878_npc
-model2=model_2874_npc
-respawnrate=100
-hitpoints=60
-attack=54
-strength=54
-defence=54
-param=attackbonus,8
-param=strengthbonus,6
-param=stabdefence,19
-param=slashdefence,23
-param=crushdefence,24
-param=damagetype,^crush_style
-param=attack_anim,ogre_attack
-param=defend_anim,ogre_block
-param=death_anim,ogre_death
-param=attack_sound,giant_attack
-param=defend_sound,giant_hit
-param=death_sound,giant_death
-param=death_drop,big_bones
-huntmode=cowardly
-huntrange=2
-// Stats match osrs version but our version Vislvl is different.
 
 [npc_382]
 vislevel=hide
@@ -6145,335 +5771,6 @@ param=death_sound,animated_death
 param=death_drop,null
 // osrs stats and Vislvl match 1:1
 
-[npc_500]
-vislevel=hide
-name=Mosol Rei
-desc=Slightly under dressed.
-walkanim=human_walk_f,human_walk_b,human_walk_l,human_walk_r
-readyanim=human_staffready
-op1=Talk-to
-recol1s=14801
-recol1d=20804
-recol2s=24075
-recol2d=20804
-recol3s=24075
-recol3d=20804
-model1=model_206_idk
-model2=model_249_idk
-model3=model_315_npc
-model4=model_173_npc
-model5=model_176_idk
-model6=model_279_npc
-model7=model_181_idk
-model8=model_553_npc
-head1=model_46_idk_head
-head2=model_81_idk_head
-
-[npc_501]
-vislevel=hide
-name=Zadimus' spirit.
-desc=The animated spirit of a soul not at rest.
-hasalpha=yes
-walkanim=ghost_walk
-readyanim=ghost_ready
-hasalpha=yes
-op1=Talk-to
-model1=model_2962_npc
-model2=model_2964_npc
-model3=model_2965_npc
-head1=model_27_npc_head
-param=undead,^true
-param=death_anim,ghost_death
-param=death_sound,ghost_death
-
-[npc_502]
-name=Undead One
-desc=It rattles when it walks.
-walkanim=skeleton_walk
-readyanim=skeleton_ready
-op2=Attack
-vislevel=55
-recol1s=29562
-recol1d=22218
-model1=model_2944_npc
-wanderrange=3
-maxrange=20
-respawnrate=100
-hitpoints=47
-attack=63
-strength=63
-defence=63
-magic=0
-ranged=0
-param=damagetype,^slash_style
-param=attack_anim,skeleton_attack
-param=defend_anim,skeleton_block
-param=death_anim,skeleton_death
-param=attack_sound,skeleton_attack
-param=defend_sound,skelly_hit
-param=death_sound,skeleton_death
-param=undead,^true
-huntmode=cowardly
-huntrange=1
-category=undead_one
-// Stats match osrs version but our version Vislvl is different.
-
-[npc_503]
-name=Undead One
-desc=A minion of Rashiliyia.
-walkanim=skeleton_walk
-readyanim=skeleton_ready
-op2=Attack
-vislevel=47
-recol1s=29562
-recol1d=26515
-model1=model_2944_npc
-model2=model_2946_npc
-wanderrange=3
-maxrange=20
-respawnrate=100
-hitpoints=47
-attack=55
-strength=55
-defence=55
-magic=0
-ranged=0
-param=attackbonus,7
-param=strengthbonus,5
-param=stabdefence,5
-param=slashdefence,5
-param=crushdefence,3
-param=magicdefence,1
-param=rangedefence,4
-param=damagetype,^slash_style
-param=attack_anim,skeleton_attack
-param=defend_anim,skeleton_block
-param=death_anim,skeleton_death
-param=attack_sound,skeleton_attack
-param=defend_sound,skelly_hit
-param=death_sound,skeleton_death
-param=undead,^true
-huntmode=cowardly
-huntrange=1
-category=undead_one
-// Stats match osrs version but our version Vislvl is different.
-
-[npc_504]
-name=Undead One
-desc=The animated dead, one of Rashiliyias' minions.
-walkanim=zombie_walk
-readyanim=zombie_ready
-op2=Attack
-vislevel=50
-recol1s=4526
-recol1d=12777
-recol2s=4322
-recol2d=8417
-recol3s=10240
-recol3d=7142
-recol4s=28538
-recol4d=24393
-recol5s=2081
-recol5d=9408
-model1=model_2931_npc
-respawnrate=100
-hitpoints=47
-attack=63
-strength=63
-defence=63
-magic=0
-ranged=0
-param=damagetype,^slash_style
-param=attack_anim,zombie_attack
-param=defend_anim,zombie_block
-param=death_anim,zombie_death
-param=attack_sound,zombie_attack
-param=defend_sound,zombie_hit
-param=death_sound,zombie_death
-param=undead,^true
-param=death_drop,null
-huntmode=cowardly
-huntrange=1
-category=undead_one
-// Stats match osrs version but our version Vislvl is different.
-
-[npc_505]
-name=Undead One
-desc=The animated dead, one of Rashiliyias' minions.
-walkanim=zombie_walk
-readyanim=zombie_ready
-op2=Attack
-vislevel=62
-recol1s=4526
-recol1d=11690
-recol2s=4322
-recol2d=8417
-recol3s=10240
-recol3d=26545
-recol4s=28538
-recol4d=24393
-recol5s=2081
-recol5d=9408
-model1=model_2931_npc
-model2=model_2932_npc
-wanderrange=3
-maxrange=20
-respawnrate=100
-hitpoints=59
-attack=65
-strength=65
-defence=65
-magic=0
-ranged=0
-param=attackbonus,4
-param=strengthbonus,5
-param=damagetype,^slash_style
-param=attack_anim,zombie_attack
-param=defend_anim,zombie_block
-param=death_anim,zombie_death
-param=attack_sound,zombie_attack
-param=defend_sound,zombie_hit
-param=death_sound,zombie_death
-param=undead,^true
-param=death_drop,null
-huntmode=cowardly
-huntrange=1
-category=undead_one
-// Stats match osrs version but our version Vislvl is different.
-
-[npc_506]
-vislevel=hide
-name=Rashiliyia
-desc=The animated spirit of Rashiliyia the Zombie Queen.
-walkanim=ghost_walk
-readyanim=ghost_ready
-hasalpha=yes
-op1=Talk-to
-recol1s=6144
-recol1d=3363
-recol2s=15855
-recol2d=14724
-recol3s=24075
-recol3d=15979
-recol4s=6273
-recol4d=20104
-recol5s=20870
-recol5d=8712
-recol6s=12352
-recol6d=3363
-model1=model_2960_npc
-model2=model_2963_npc
-model3=model_2965_npc
-head1=model_113_idk_head
-param=undead,^true
-param=death_anim,ghost_death
-param=death_sound,ghost_death
-
-[npc_507]
-name=Nazastarool
-desc=A giant zombie of huge strength and devastating power.
-walkanim=zombie_walk
-readyanim=zombie_ready
-resizev=190
-resizeh=190
-op2=Attack
-vislevel=86
-recol1s=4526
-recol1d=11690
-recol2s=4322
-recol2d=8417
-recol3s=10240
-recol3d=26545
-recol4s=28538
-recol4d=24393
-recol5s=2081
-recol5d=9408
-model1=model_2931_npc
-hitpoints=70
-attack=85
-strength=80
-defence=80
-magic=0
-ranged=0
-param=damagetype,^slash_style
-param=attack_anim,zombie_attack
-param=defend_anim,zombie_block
-param=death_anim,zombie_death
-param=attack_sound,zombie_attack
-param=defend_sound,zombie_hit
-param=death_sound,zombie_death
-param=undead,^true
-param=death_drop,null
-// Stats match osrs version but our version Vislvl is different.
-
-[npc_508]
-name=Nazastarool
-desc=A giant skeleton of huge strength and devastating power.
-walkanim=skeleton_walk
-readyanim=skeleton_ready
-resizev=190
-resizeh=190
-op2=Attack
-vislevel=65
-recol1s=29562
-recol1d=26515
-model1=model_2944_npc
-model2=model_2946_npc
-hitpoints=70
-attack=58
-strength=54
-defence=58
-magic=0
-ranged=0
-param=attackbonus,15
-param=strengthbonus,15
-param=stabdefence,5
-param=slashdefence,5
-param=crushdefence,5
-param=magicdefence,5
-param=rangedefence,5
-param=damagetype,^slash_style
-param=attack_anim,skeleton_attack
-param=defend_anim,skeleton_block
-param=death_anim,skeleton_death
-param=attack_sound,skeleton_attack
-param=defend_sound,skelly_hit
-param=death_sound,skeleton_death
-param=undead,^true
-param=death_drop,null
-// Stats match osrs version but our version Vislvl is different.
-
-[npc_509]
-name=Nazastarool
-desc=A giant ghost of huge strength and devastating power.
-hasalpha=yes
-walkanim=ghost_walk
-readyanim=ghost_ready
-resizev=190
-resizeh=190
-op2=Attack
-vislevel=88
-model1=model_2961_npc
-model2=model_2964_npc
-model3=model_2965_npc
-head1=model_10_npc_head
-hitpoints=80
-attack=85
-strength=80
-defence=80
-magic=0
-ranged=0
-param=damagetype,^slash_style
-param=attack_anim,ghost_attack
-param=defend_anim,ghost_block
-param=death_anim,ghost_death
-param=attack_sound,ghost_attack
-param=defend_sound,ghost_hit
-param=death_sound,ghost_death
-param=undead,^true
-param=death_drop,null
-// Stats match osrs version but our version Vislvl is different.
-
 [captain_shanks]
 vislevel=hide
 name=Captain Shanks
@@ -6502,194 +5799,6 @@ model8=model_194_npc
 head1=model_52_idk_head
 head2=model_81_idk_head
 head3=model_37_npc_head
-
-[digsite_workman]
-vislevel=hide
-name=Digsite workman
-desc=This person is working on the site.
-walkanim=human_walk_f,human_walk_b,human_walk_l,human_walk_r
-readyanim=human_ready
-op1=Talk-to
-op3=Steal-from
-recol1s=14801
-recol1d=8320
-recol2s=32735
-recol2d=8320
-model1=model_235_idk
-model2=model_246_idk
-model3=model_302_npc
-model4=model_173_npc
-model5=model_179_obj_wear
-model6=model_274_idk
-model7=model_181_idk
-model8=model_185_obj_wear
-head1=model_67_idk_head
-
-[digsite_workman_cave]
-vislevel=hide
-name=Digsite workman
-desc=This person is working on the site.
-walkanim=human_walk_f,human_walk_b,human_walk_l,human_walk_r
-readyanim=human_ready
-op1=Talk-to
-op3=Steal-from
-recol1s=14801
-recol1d=8320
-recol2s=32735
-recol2d=8320
-model1=model_235_idk
-model2=model_246_idk
-model3=model_302_npc
-model4=model_173_npc
-model5=model_179_obj_wear
-model6=model_274_idk
-model7=model_181_idk
-model8=model_185_obj_wear
-head1=model_67_idk_head
-
-[student1]
-vislevel=hide
-name=Student
-desc=A student busily digging.
-walkanim=human_walk_f,human_walk_b,human_walk_l,human_walk_r
-readyanim=human_ready
-op1=Talk-to
-recol1s=14724
-recol1d=5636
-recol2s=2340
-recol2d=23171
-model1=model_217_idk
-model2=model_249_idk
-model3=model_292_idk
-model4=model_324_idk
-model5=model_151_idk
-model6=model_179_obj_wear
-model7=model_254_idk
-model8=model_185_obj_wear
-head1=model_55_idk_head
-head2=model_81_idk_head
-
-[student2]
-vislevel=hide
-name=Student
-desc=A student busily digging.
-walkanim=human_walk_f,human_walk_b,human_walk_l,human_walk_r
-readyanim=human_ready
-op1=Talk-to
-recol1s=24075
-recol1d=14594
-recol2s=14724
-recol2d=23937
-recol3s=2340
-recol3d=3171
-recol4s=24329
-recol4d=3171
-model1=model_215_idk
-model2=model_246_idk
-model3=model_292_idk
-model4=model_322_idk
-model5=model_163_idk
-model6=model_179_obj_wear
-model7=model_257_npc
-model8=model_276_npc
-head1=model_53_idk_head
-
-[student3]
-vislevel=hide
-name=Student
-desc=A student busily digging.
-walkanim=human_walk_f,human_walk_b,human_walk_l,human_walk_r
-readyanim=human_ready
-op1=Talk-to
-recol1s=6273
-recol1d=24205
-recol2s=14724
-recol2d=20952
-recol3s=2340
-recol3d=7400
-model1=model_390_idk
-model2=model_456_idk
-model3=model_447_obj_wear
-model4=model_332_idk
-model5=model_356_obj_wear
-model6=model_429_idk
-model7=model_185_obj_wear
-head1=model_113_idk_head
-param=death_sound,female_death
-
-[examiner]
-vislevel=hide
-name=Examiner
-desc=Upon examining the examiner you examine it is indeed an examiner!
-walkanim=human_walk_f,human_walk_b,human_walk_l,human_walk_r
-readyanim=human_ready
-op1=Talk-to
-recol1s=6273
-recol1d=21921
-recol2s=14724
-recol2d=7311
-recol3s=2340
-recol3d=3171
-model1=model_378_idk
-model2=model_418_npc
-model3=model_470_idk
-model4=model_421_idk
-model5=model_358_idk
-model6=model_348_idk
-model7=model_353_idk
-head1=model_103_idk_head
-head2=model_137_npc_head
-param=death_sound,female_death
-
-[archaeological_expert]
-vislevel=hide
-name=Archaeological expert
-desc=An expert on archaeology.
-walkanim=human_walk_f,human_walk_b,human_walk_l,human_walk_r
-readyanim=human_ready
-op1=Talk-to
-recol1s=2340
-recol1d=22627
-recol2s=14801
-recol2d=11457
-recol3s=14724
-recol3d=16912
-recol4s=24075
-recol4d=11457
-model1=model_217_idk
-model2=model_250_idk
-model3=model_299_npc
-model4=model_327_idk
-model5=model_159_npc
-model6=model_254_idk
-model7=model_179_obj_wear
-model8=model_185_obj_wear
-head1=model_55_idk_head
-head2=model_82_idk_head
-
-[panning_guide]
-vislevel=hide
-name=Panning guide
-desc=A specialist in panning for gold.
-walkanim=human_walk_f,human_walk_b,human_walk_l,human_walk_r
-readyanim=human_ready
-op1=Talk-to
-recol1s=7298
-recol1d=3171
-recol2s=2340
-recol2d=11459
-recol3s=14724
-recol3d=14596
-model1=model_215_idk
-model2=model_246_idk
-model3=model_292_idk
-model4=model_170_idk
-model5=model_179_obj_wear
-model6=model_254_idk
-model7=model_276_npc
-model8=model_185_obj_wear
-model9=model_326_idk
-head1=model_53_idk_head
 
 [imp]
 name=Imp
@@ -8115,7 +7224,7 @@ param=death_anim,ogre_death
 param=attack_sound,giant_attack
 param=defend_sound,giant_hit
 param=death_sound,giant_death
-// TODO need Monster examine infos.
+// TODO monster examine spell
 // https://raw.githubusercontent.com/Joshua-F/osrs-dumps/refs/heads/master/config/dump.npc npc_4386 - 4396
 
 [npc_872]
@@ -8165,9 +7274,7 @@ hitpoints=60
 attack=62
 strength=60
 defence=63
-param=attackrate,6
-param=attackbonus,22
-param=strengthbonus,20
+// TODO attackrate some trader can attack player.
 param=damagetype,^crush_style
 param=attack_anim,ogre_attack
 param=defend_anim,ogre_block
@@ -8199,9 +7306,7 @@ hitpoints=60
 attack=62
 strength=60
 defence=63
-param=attackrate,6
-param=attackbonus,22
-param=strengthbonus,20
+// TODO attackrate some trader can attack player.
 param=damagetype,^crush_style
 param=attack_anim,ogre_attack
 param=defend_anim,ogre_block
@@ -8233,9 +7338,7 @@ hitpoints=60
 attack=62
 strength=60
 defence=63
-param=attackrate,6
-param=attackbonus,22
-param=strengthbonus,20
+// TODO attackrate some trader can attack player.
 param=damagetype,^crush_style
 param=attack_anim,ogre_attack
 param=defend_anim,ogre_block
@@ -8267,9 +7370,7 @@ hitpoints=60
 attack=62
 strength=60
 defence=63
-param=attackrate,6
-param=attackbonus,22
-param=strengthbonus,20
+// TODO attackrate some trader can attack player.
 param=damagetype,^crush_style
 param=attack_anim,ogre_attack
 param=defend_anim,ogre_block
@@ -8851,4 +7952,4 @@ param=death_drop,null
 // Tested this npc in osrs, doesnt seem to poison? Seems like the chests have a chance to poison
 huntmode=cowardly
 huntrange=1
-// TODO monster examine spell.
+// TODO monster examine spell

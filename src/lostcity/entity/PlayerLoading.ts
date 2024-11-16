@@ -1,8 +1,8 @@
 import 'dotenv/config';
 import fs from 'fs';
 
-import Packet from '#jagex2/io/Packet.js';
-import { fromBase37, toBase37 } from '#jagex2/jstring/JString.js';
+import Packet from '#jagex/io/Packet.js';
+import { fromBase37, toBase37 } from '#jagex/jstring/JString.js';
 
 import ClientSocket from '#lostcity/server/ClientSocket.js';
 

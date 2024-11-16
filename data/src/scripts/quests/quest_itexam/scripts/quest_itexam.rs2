@@ -1,0 +1,41 @@
+// References:
+// https://www.youtube.com/watch?v=TrSlu4__Rt4
+// https://www.youtube.com/watch?v=gqY4Azhtghg
+// https://chisel.weirdgloop.org/varbs/display?varplayer=131
+
+// workaround procs because varps 132-138 are likely being misused
+// varps 132-134 are likely the student errand varps
+// varp 135 is a multi bitflag for various quest states that is referenced by post qip (quest improvement project) varbits
+// (see https://chisel.weirdgloop.org/varbs/display?varplayer=135)
+[proc,itexam_reset_student_errands]
+~itexam_set_errand_progress(^itexam_errand_student1, 0);
+~itexam_set_errand_progress(^itexam_errand_student2, 0);
+~itexam_set_errand_progress(^itexam_errand_student3, 0);
+
+[proc,itexam_progress]()(int)
+return (getbit_range(%itexam_progress, 0, 3));
+
+[proc,itexam_set_progress](int $progress);
+%itexam_progress = setbit_range_toint(%itexam_progress, $progress, 0, 3);
+
+[proc,itexam_errand_progress](int $errand)(int)
+// we're reserving 2 bits for each errand, 0 = not started, 1 = in progress, 2 = complete
+def_int $bit_start = calc(^itexam_errands_offset + $errand * 2);
+return (getbit_range(%itexam_progress, $bit_start, calc($bit_start + 1)));
+
+[proc,itexam_set_errand_progress](int $errand, int $progress)
+def_int $bit_start = calc(^itexam_errands_offset + $errand * 2);
+%itexam_progress = setbit_range_toint(%itexam_progress, $progress, $bit_start, calc($bit_start + 1));
+
+[proc,itexam_testbit](int $bit)(boolean)
+return (testbit(%itexam_progress, calc(^itexam_bits_offset + $bit)));
+
+[proc,itexam_setbit](int $bit)
+%itexam_progress = setbit(%itexam_progress, calc(^itexam_bits_offset + $bit));
+
+[queue,itexam_complete]
+~itexam_set_progress(^itexam_complete);
+stat_advance(mining, 153000);
+stat_advance(herblore, 20000);
+inv_add(inv, gold_bar, 2);
+~send_quest_complete(questlist:itexam, trowel, 200, ^itexam_questpoints, "You have finished the Digsite Quest!");

@@ -1,4 +1,4 @@
-import Jagfile from '#jagex2/io/Jagfile.js';
+import Jagfile from '#jagex/io/Jagfile.js';
 
 export default class FontType {
     static CHAR_LOOKUP: number[] = [];

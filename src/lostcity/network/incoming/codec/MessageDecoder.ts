@@ -1,4 +1,4 @@
-import Packet from '#jagex2/io/Packet.js';
+import Packet from '#jagex/io/Packet.js';
 import IncomingMessage from '#lostcity/network/incoming/IncomingMessage.js';
 import ClientProt from '#lostcity/network/225/incoming/prot/ClientProt.js';
 

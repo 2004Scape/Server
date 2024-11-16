@@ -62,7 +62,7 @@ if (p_finduid(uid) = true) {
             case 18 : queue(quest_chompybird_complete, 0);
             case 19 : queue(quest_biohazard_complete, 0);
             case 20 : queue(cog_complete, 0);
-            case 21 : mes("Quest not implemented");
+            case 21 : queue(itexam_complete, 0);
             case 22 :
                 if (npc_find(0_45_54_45_30, kaqemeex, 7, 0) = true) {
                     queue(druid_quest_complete, 0, npc_uid);
@@ -148,7 +148,7 @@ if (p_finduid(uid) = true) {
                 %chompybird_progress = 0;
             case 19 : %biohazard_progress = 0;
             case 20 : %cog_progress = 0;
-            case 21 : mes("Quest not implemented");
+            case 21 : %itexam_progress = 0;
             case 22 : %druid_progress = 0;
             case 23 :
                 %mcannon_railings = 0;

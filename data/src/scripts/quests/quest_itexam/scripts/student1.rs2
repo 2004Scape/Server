@@ -1,0 +1,85 @@
+[opnpc1,student1]
+// https://youtu.be/TrSlu4__Rt4?t=438
+def_int $itexam_progress = ~itexam_progress;
+switch_int ($itexam_progress) {
+    case ^itexam_first_exam : @itexam_student1_errand;
+    case ^itexam_second_exam : @itexam_student1_second_exam_tips;
+    case ^itexam_third_exam : @itexam_student1_third_exam_tips;
+    case default : @student1_pre_quest;
+}
+
+[opnpcu,student1]
+def_obj $item = last_useitem;
+
+if ($item = cracked_rock_sample) {
+    ~chatplayer("<p,quiz>Is this yours?");
+    ~chatnpc("<p,sad>This? Oh no....");
+} else if ($item = rock_sample_1) {
+    @itexam_student1_deliver_sample;
+} else {
+    ~displaymessage(^dm_default);
+}
+
+[label,student1_pre_quest]
+~chatplayer("<p,happy>Hello there.");
+~chatnpc("<p,happy>Oh, hi. I'm studying hard for an exam.");
+~chatplayer("<p,neutral>What exam is that?");
+~chatnpc("<p,neutral>It's the Earth Sciences exam.");
+~chatplayer("<p,confused>Interesting....");
+
+[label,itexam_student1_errand]
+def_int $errand_state = ~itexam_errand_progress(^itexam_errand_student1);
+
+if ($errand_state = 0) {
+    ~chatplayer("<p,happy>Hello there.");
+    ~chatplayer("<p,neutral>Can you help me with the Earth Sciences exams at all?");
+    ~chatnpc("<p,neutral>Well... Maybe I will if you help me with something.");
+    ~chatplayer("<p,neutral>What's that?");
+    ~chatnpc("<p,sad>I have lost my rock sample.");
+    ~chatplayer("<p,neutral>What does it look like?");
+    ~chatnpc("<p,confused>Err... Like a rock!");
+    ~chatplayer("<p,confused>Well, that's not too helpful, there are lots of those around here; can you remember where you last had it?");
+    ~chatnpc("<p,sad>It was around here for sure. Maybe someone picked it up?");
+    ~chatplayer("<p,happy>Okay, I'll have a look for you.");
+    ~itexam_set_errand_progress(^itexam_errand_student1, 1);
+} else if ($errand_state = 1) {
+    if (inv_total(inv, rock_sample_1) > 0) {
+        ~chatplayer("<p,happy>Hello there.");
+        @itexam_student1_deliver_sample;
+    } else {
+        ~chatplayer("<p,happy>How's the study going?");
+        ~chatnpc("<p,neutral>Very well thanks. Have you found my rock sample yet?");
+        ~chatplayer("<p,happy>No sorry, not yet.");
+        ~chatnpc("<p,neutral>Oh well, I am sure it's been picked up. Couldn't you try looking through some pockets?");
+    }
+} else {
+    ~chatnpc("<p,neutral>How's it going?");
+    ~chatplayer("<p,happy>I need more help with the exam.");
+    ~chatnpc("<p,happy>Well ok, this is what I have learned since I last spoke to you...");
+    ~chatnpc("<p,neutral>The study of Earth Sciences is: The study of the earth, its contents and history.");
+    ~chatplayer("<p,happy>Okay, I'll remember that.");
+}
+
+[label,itexam_student1_deliver_sample]
+~chatplayer("<p,happy>Is this your rock sample?");
+inv_del(inv, rock_sample_1, ^max_32bit_int);
+~itexam_set_errand_progress(^itexam_errand_student1, 2);
+~chatnpc("<p,happy>Oh wow! You've found it! Thank you so much. I'll be glad to tell you what I know about the exam.");
+~chatnpc("<p,neutral>The study of Earth Sciences is: The study of the earth, its contents and history.");
+~chatplayer("<p,happy>Okay, I'll remember that.");
+
+[label,itexam_student1_second_exam_tips]
+~chatnpc("<p,neutral>How's it going?");
+~chatplayer("<p,happy>I need more help with the exam.");
+~chatnpc("<p,happy>Well ok, this is what I have learned since I last spoke to you...");
+~itexam_set_errand_progress(^itexam_errand_student1, 2);
+~chatnpc("<p,neutral>Correct rock pick usage: Always handle with care; strike the rock cleanly on its cleaving point.");
+~chatplayer("<p,happy>Okay, I'll remember that.");
+
+[label,itexam_student1_third_exam_tips]
+~chatnpc("<p,neutral>How's it going?");
+~chatplayer("<p,happy>I need more help with the exam.");
+~chatnpc("<p,happy>Well ok, this is what I have learned since I last spoke to you...");
+~itexam_set_errand_progress(^itexam_errand_student1, 2);
+~chatnpc("<p,neutral>Specimen brush use: Brush carefully and slowly using short strokes.");
+~chatplayer("<p,happy>Okay, I'll remember that. Thanks for all your help.");
