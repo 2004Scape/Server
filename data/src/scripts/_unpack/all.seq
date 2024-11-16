@@ -1817,7 +1817,7 @@ frame8=anim_3856
 frame9=anim_3864
 delay9=20000
 
-[imp_seq_173]
+[brownimp_grab]
 frame1=anim_3844
 frame2=anim_3852
 frame3=anim_3859
@@ -1827,14 +1827,14 @@ frame6=anim_3878
 frame7=anim_3838
 frame8=anim_3845
 
-[imp_seq_174]
+[brownimp_appear]
 frame1=anim_3839
 frame2=anim_3846
 frame3=anim_3853
 frame4=anim_3861
 frame5=anim_3868
 
-[imp_seq_175]
+[brownimp_disappear]
 frame1=anim_3851
 frame2=anim_3858
 frame3=anim_3865
