@@ -3348,7 +3348,7 @@ length=2
 [loc_650]
 model=model_loc_650
 
-[loc_651]
+[digsite_buried_skeleton]
 name=Buried skeleton
 desc=Dead and half buried.
 model=model_loc_651
@@ -11926,33 +11926,33 @@ model=model_loc_2349
 width=2
 length=2
 
-[loc_2350]
+[digsite_winch]
 name=Winch
 desc=Used to move earth to, and from, the dig shaft.
 model=model_loc_2350
 op1=Operate
 length=2
 
-[loc_2351]
+[digsite_private_dig_winch]
 name=Winch
 desc=Used to move earth to, and from, the dig shaft.
 model=model_loc_2350
 op1=Operate
 length=2
 
-[loc_2352]
+[digsite_private_dig_exit_rope]
 name=Rope
 desc=This leads back up the dig shaft.
 model=model_loc_1762
 op1=Climb-up
 
-[loc_2353]
+[digsite_blocked_altar_exit_rope]
 name=Rope
 desc=This leads back up the dig shaft.
 model=model_loc_1762
 op1=Climb-up
 
-[loc_2354]
+[digsite_sacks_empty]
 name=Sacks
 desc=Yep, they're sacks!
 model=model_loc_23
@@ -11964,32 +11964,32 @@ desc=Yep, they're sacks!
 model=model_loc_23
 op1=Search
 
-[loc_2356]
+[digsite_sacks_specimen_jars]
 name=Sacks
 desc=Yep, they're sacks!
 model=model_loc_23
 op1=Search
 
-[loc_2357]
+[digsite_bush_empty]
 name=Bush
 desc=A leafy bush.
 model=model_loc_1124
 op1=Search
 
-[loc_2358]
+[digsite_bush_rock_sample]
 name=Bush
 desc=A leafy bush.
 model=model_loc_1124
 op1=Search
 
-[loc_2359]
+[digsite_sealed_barrel]
 name=Barrel
 desc=A sealed barrel with a warning sign on it.
 model=model_loc_2359
 op1=Open
 op2=Search
 
-[loc_2360]
+[digsite_chest_open]
 name=Chest
 desc=I wonder what's inside...
 model=model_loc_76
@@ -11997,20 +11997,20 @@ op1=Search
 op2=Close
 forceapproach=north
 
-[loc_2361]
+[digsite_chest]
 name=Chest
 desc=A sturdy chest to keep things in.
 model=wooden_chest
 op1=Open
 forceapproach=north
 
-[loc_2362]
+[digsite_blocked_altar_brick]
 name=Brick
 desc=A large stone block.
 model=model_loc_2343
 op1=Search
 
-[loc_2363]
+[digsite_panning_point]
 name=Panning point
 desc=A place where you can pan for gold.
 model=model_loc_42
@@ -12026,31 +12026,31 @@ name=Crate
 desc=A wooden container.
 model=model_loc_63
 
-[loc_2366]
+[digsite_signpost_training_site]
 name=Signpost
 desc=A signpost!
 model=model_loc_1034
 op1=Read
 
-[loc_2367]
+[digsite_signpost_level_1_site]
 name=Signpost
 desc=A signpost!
 model=model_loc_1034
 op1=Read
 
-[loc_2368]
+[digsite_signpost_level_2_site]
 name=Signpost
 desc=A signpost!
 model=model_loc_1034
 op1=Read
 
-[loc_2369]
+[digsite_signpost_level_3_site]
 name=Signpost
 desc=A signpost!
 model=model_loc_1034
 op1=Read
 
-[loc_2370]
+[digsite_signpost_private_site]
 name=Signpost
 desc=A signpost!
 model=model_loc_1034
@@ -12062,21 +12062,21 @@ desc=A signpost!
 model=model_loc_1033
 op1=Read
 
-[loc_2372]
+[exam_centre_bookcase_chemicals]
 name=Bookcase
 desc=Shelves filled with interesting books.
 model=model_loc_380
 length=2
 op1=Search
 
-[loc_2373]
+[exam_centre_cupboard_rock_pick]
 name=Cupboard
 desc=A cupboard.
 model=model_loc_367
 op1=Open
 forceapproach=east
 
-[loc_2374]
+[exam_centre_cupboard_rock_pick_open]
 name=Cupboard
 desc=A cupboard.
 model=model_loc_370
@@ -12084,7 +12084,7 @@ op1=Search
 op2=Close
 forceapproach=east
 
-[loc_2375]
+[specimen_tray]
 name=Specimen tray
 desc=Used to keep specimens on.
 model=model_loc_2375
@@ -12099,6 +12099,7 @@ model=model_loc_184
 hillskew=yes
 active=yes
 blockwalk=no
+category=digsite_soil
 
 [loc_2377]
 name=Soil
@@ -12107,6 +12108,7 @@ model=model_loc_185
 hillskew=yes
 active=yes
 blockwalk=no
+category=digsite_soil
 
 [loc_2378]
 name=Soil
@@ -12115,6 +12117,7 @@ model=model_loc_186
 hillskew=yes
 active=yes
 blockwalk=no
+category=digsite_soil
 
 [loc_2379]
 name=Campsite bed

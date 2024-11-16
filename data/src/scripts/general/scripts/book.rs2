@@ -12,6 +12,7 @@ switch_obj (%open_book) {
     case history_of_iban : @book_flip_page(^book_direction_backward, 0, 2, ibanhistory);
     case ibans_shadow : @book_flip_page(^book_direction_backward, 0, 1, ibanshadow);
     case ibans_dove : @book_flip_page(^book_direction_backward, 0, 2, ibanconscience);
+    case book_on_chemicals : @book_flip_page(^book_direction_backward, 0, 1, book_on_chemicals);
 }
 p_delay(0);
 
@@ -29,6 +30,7 @@ switch_obj (%open_book) {
     case history_of_iban : @book_flip_page(^book_direction_forward, 0, 2, ibanhistory);
     case ibans_shadow : @book_flip_page(^book_direction_forward, 0, 1, ibanshadow);
     case ibans_dove : @book_flip_page(^book_direction_forward, 0, 2, ibanconscience);
+    case book_on_chemicals : @book_flip_page(^book_direction_forward, 0, 1, book_on_chemicals);
 }
 p_delay(0);
 

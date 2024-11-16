@@ -1,5 +1,32 @@
 [opnpc1,curator]
 ~chatnpc("<p,neutral>Welcome to the museum of Varrock.");
+if (inv_total(inv, unstamped_letter) > 0) {
+    ~chatplayer("<p,neutral>I have been given this letter by an examiner at the Dig Site. Can you stamp this for me?");
+    ~chatnpc("<p,neutral>What we have here? A letter of recommendation indeed...");
+    // TODO: I'm not sure if this variance was available in the original 2004 port or not (likely not based on the rsc video)
+    if (%phoenixgang_progress = ^phoenixgang_complete | %blackarmgang_progress = ^blackarmgang_complete) {
+        ~chatnpc("<p,neutral>The letter here says your name is <displayname>. Well, <displayname>, I wouldn't normally do this for just anyone, but as you did such a great service with the Shielf of Arrav I don't see why not. Run this letter back to the Examiner to begin your adventure into the world of Earth Sciences. Enjoy your studies, Student!");
+    } else if (%romeojuliet_progress = ^romeojuliet_spoken_father) {
+        ~chatnpc("<p,neutral>The letter here says your name is <displayname>. Well, <displayname>, I wouldn't normally do this for just anyone, but I heard what you did for Romeo and Juliet so I don't see why not. Run this letter back to the Examiner to begin your adventure into the world of Earth Sciences. Enjoy your studies, Student!");
+    } else {
+        ~chatnpc("<p,neutral>The letter here says your name is <displayname>. Well, <displayname>, I wouldn't normally do this for just anyone, but in this instance I don't see why not. Run this letter back to the Examiner to begin your adventure into the world of Earth Sciences. Enjoy your studies, Student!");
+    }
+    // osrs sets varbit 2552 (varp 135, bit 9) to 1 signifying we've already stamped once, if we bring another letter to stamp the curator will instead say
+    // player: I have another letter here; could you stamp it for me again?
+    // curator <confused>: You've already given me one of those! But... ok, give it here...
+    // player: Thanks!
+
+    // another fun fact is that osrs clears this varbit after quest completion, meaning we can go back to the curator and get the initial dialogue again
+
+    // there's also this if we loose all the stamped letters and are still in the %itexam_progress = ^itexam_stamping quest stage
+    // player <sad>: I seem to have lost the letter of recommendation that you stamped for me.
+    // curator: Yes, I saw you drop it as you walked off last time. Here it is.
+    // player: Thanks!
+    inv_del(inv, unstamped_letter, 1);
+    inv_add(inv, stamped_letter, 1);
+    ~chatnpc("<p,neutral>There you go, good luck student... Be sure to come back and show me your certificates. I would like to see how you get on.");
+    ~chatplayer("<p,neutral>Ok, I will. Thanks, see you later.");
+}
 if(%phoenixgang_progress = ^phoenixgang_joined | %blackarmgang_progress = ^blackarmgang_joined) {
     if(inv_total(inv, arravshield1) > 0 & inv_total(inv, arravshield2) > 0) { // mostly 1-1 with RSC
         ~chatplayer("<p,quiz>I have retrieved the shield of Arrav|and I would like to claim my reward.");
