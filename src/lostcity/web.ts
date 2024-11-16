@@ -8,6 +8,7 @@ import { CrcBuffer } from '#lostcity/server/CrcTable.js';
 
 import Environment from '#lostcity/util/Environment.js';
 import { tryParseInt } from '#lostcity/util/TryParse.js';
+import { register } from 'prom-client';
 
 const MIME_TYPES = new Map<string, string>();
 MIME_TYPES.set('.js', 'application/javascript');
@@ -153,6 +154,23 @@ const web = http.createServer(async (req, res) => {
     }
 });
 
+const managementWeb = http.createServer(async (req, res) => {
+    const url = new URL(req.url ?? '', `http://${req.headers.host}`);
+
+    if (url.pathname === '/prometheus') {
+        res.setHeader('Content-Type', register.contentType);
+        res.writeHead(200);
+        res.end(await register.metrics());
+    } else {
+        res.writeHead(404);
+        res.end();
+    }
+});
+
 export function startWeb() {
     web.listen(Environment.WEB_PORT, '0.0.0.0');
+}
+
+export function startManagementWeb() {
+    managementWeb.listen(Environment.WEB_MANAGEMENT_PORT, '0.0.0.0');
 }

@@ -80,6 +80,7 @@ import Environment from '#lostcity/util/Environment.js';
 import { printDebug, printError, printInfo } from '#lostcity/util/Logger.js';
 import { createWorker } from '#lostcity/util/WorkerFactory.js';
 import HuntModeType from '#lostcity/entity/hunt/HuntModeType.js';
+import { bandwithInCounter, bandwithOutCounter, clientInCycleHistogram, clientOutCycleHistogram, cycleHistogram, cycleWorldHistogram, loginCycleHistogram, logoutCycleHistogram, npcCycleHistogram, playerCycleHistogram, zoneCycleHistogram } from '#lostcity/prometheus.js';
 
 class World {
     private friendThread: Worker | NodeWorker = createWorker(Environment.STANDALONE_BUNDLE ? 'FriendThread.js' : './src/lostcity/server/FriendThread.ts');
@@ -551,6 +552,19 @@ class World {
             this.lastCycleStats[WorldStat.CLEANUP] = this.cycleStats[WorldStat.CLEANUP];
             this.lastCycleStats[WorldStat.BANDWIDTH_IN] = this.cycleStats[WorldStat.BANDWIDTH_IN];
             this.lastCycleStats[WorldStat.BANDWIDTH_OUT] = this.cycleStats[WorldStat.BANDWIDTH_OUT];
+
+            // push stats to prometheus
+            cycleHistogram.observe(this.cycleStats[WorldStat.CYCLE]);
+            cycleWorldHistogram.observe(this.cycleStats[WorldStat.WORLD]);
+            clientInCycleHistogram.observe(this.cycleStats[WorldStat.CLIENT_IN]);
+            clientOutCycleHistogram.observe(this.cycleStats[WorldStat.CLIENT_OUT]);
+            npcCycleHistogram.observe(this.cycleStats[WorldStat.NPC]);
+            playerCycleHistogram.observe(this.cycleStats[WorldStat.PLAYER]);
+            zoneCycleHistogram.observe(this.cycleStats[WorldStat.ZONE]);
+            loginCycleHistogram.observe(this.cycleStats[WorldStat.LOGIN]);
+            logoutCycleHistogram.observe(this.cycleStats[WorldStat.LOGOUT]);
+            bandwithInCounter.inc(this.cycleStats[WorldStat.BANDWIDTH_IN]);
+            bandwithOutCounter.inc(this.cycleStats[WorldStat.BANDWIDTH_OUT]);
 
             if (continueCycle) {
                 setTimeout(this.cycle.bind(this), this.tickRate - this.cycleStats[WorldStat.CYCLE]);
