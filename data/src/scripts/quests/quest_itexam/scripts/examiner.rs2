@@ -400,7 +400,7 @@ def_int $q3choice;
 ~chatnpc("<p,neutral>Attention, this is the final part of the Earth Sciences exam: Earth Sciences level 3 - Advanced.");
 ~chatnpc("<p,neutral>Question 1 - Sample preparation. Can you tell me how we prepare samples?");
 
-if (~itexam_errand_progress(^itexam_errand_student1) = 2) {
+if (~itexam_errand_progress(^itexam_errand_student3) = 2) {
     $q1choice = ~p_choice3("Samples cleaned, and carried only in specimen jars.", 1, "Sample types catalogued and carried by hand only.", 2, "Samples to be spread thickly with mashed banana.", 3);
 
     if ($q1choice = 1) {
@@ -425,7 +425,7 @@ if (~itexam_errand_progress(^itexam_errand_student1) = 2) {
 ~chatnpc("<p,neutral>Okay, next question...");
 ~chatnpc("<p,neutral>Earth Sciences level 3, question 2 - Specimen brush use. What is the proper way to use a specimen brush?");
 
-if (~itexam_errand_progress(^itexam_errand_student2) = 2) {
+if (~itexam_errand_progress(^itexam_errand_student1) = 2) {
     $q2choice = ~p_choice3("Brush carefully and slowly using short strokes.", 1, "Dipped in glue and stuck to a sheep's back.", 2, "Brush quickly and with force.", 3);
 
     if ($q2choice = 1) {
@@ -450,7 +450,7 @@ if (~itexam_errand_progress(^itexam_errand_student2) = 2) {
 ~chatnpc("<p,neutral>Okay, next question...");
 ~chatnpc("<p,neutral>Earth Sciences level 3, question 3 - Advanced techniques. Can you describe the technique for handling bones?");
 
-if (~itexam_errand_progress(^itexam_errand_student3) = 2) {
+if (~itexam_errand_progress(^itexam_errand_student2) = 2) {
     $q3choice = ~p_choice3("Feed to hungry dogs.", 1, "Bones to be ground and tested for mineral content.", 2, "Handle bones very carefully and keep them away from other samples.", 3);
 
     if ($q3choice = 1) {
@@ -500,7 +500,7 @@ if ($correct_answer_count = 3) {
     ~chatnpc("<p,neutral>Perhaps you should use your newfound skills to find an artefact on the digsite that will impress the archaeological expert.");
     // TODO: open certificate modal? likely didn't exist in 2004
 } else if ($correct_answer_count = 2) {
-    ~chatnpc("<p,neutral>You got 2 questions correct. A little more study and<br>you will pass it.");
+    ~chatnpc("<p,neutral>You got 2 questions correct. A little more study and you will pass it.");
     ~chatplayer("<p,neutral>I'm nearly there...");
 } else if ($correct_answer_count = 1) {
     ~chatnpc("<p,neutral>You got 1 question correct. Try harder!");
