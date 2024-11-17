@@ -630,6 +630,7 @@ param=attack_sound,insect_attack
 param=defend_sound,insect_hit
 param=death_sound,insect_death
 param=death_drop,null
+huntrange=5
 huntmode=cowardly
 
 [othainian]
@@ -658,6 +659,7 @@ param=attack_sound,demon_attack
 param=defend_sound,demon_hit
 param=death_sound,demon_death
 param=death_drop,ashes
+huntrange=3
 huntmode=cowardly
 
 [doomion]
@@ -686,6 +688,7 @@ param=attack_sound,demon_attack
 param=defend_sound,demon_hit
 param=death_sound,demon_death
 param=death_drop,ashes
+huntrange=3
 huntmode=cowardly
 
 [holthion]
@@ -714,6 +717,7 @@ param=attack_sound,demon_attack
 param=defend_sound,demon_hit
 param=death_sound,demon_death
 param=death_drop,ashes
+huntrange=3
 huntmode=cowardly
 
 [iban_disciple]
