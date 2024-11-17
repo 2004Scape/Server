@@ -35,14 +35,16 @@ switch_int(~p_choice2("Yeah, Okay, here you go.", 1, "20 gold coins? That's an o
                     ~chatnpc("<p,sad>Well, I can't go any cheaper than that mate.|I have a family to feed.");
                     return;
                 }
+                inv_del(inv, coins, 18);
                 inv_add(inv, bear_fur, 1);
-                ~objbox(bear_fur, "Baraek sells you a fur.", 250, 0, 0);
+                ~objbox(bear_fur, "Baraek sells you a fur.", 250, 0, divide(^objbox_height, 2));
             } else if($option = 2) {
                 ~chatplayer("<p,neutral>No thanks, I'll leave it.");
                 ~chatnpc("<p,neutral>It's your loss mate.");
             }
             return;
         }
+        inv_del(inv, coins, 20);
         inv_add(inv, bear_fur, 1);
         ~objbox(bear_fur, "Baraek sells you a fur.", 250, 0, divide(^objbox_height, 2));
     case 2 :
