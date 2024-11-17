@@ -1020,7 +1020,7 @@ param=attack_sound,mace_crush
 param=damagetype,^crush_style
 param=combat_xp_multiplier,25
 
-[npc_437]
+[brownimp]
 name=Brownie
 walkanim=imp_walk
 readyanim=imp_ready

@@ -1,6 +1,6 @@
 import fs from 'fs';
 
-import { startWeb } from '#lostcity/web.js';
+import { startManagementWeb, startWeb } from '#lostcity/web.js';
 
 import World from '#lostcity/engine/World.js';
 
@@ -12,6 +12,7 @@ import WSServer from '#lostcity/server/WSServer.js';
 import Environment from '#lostcity/util/Environment.js';
 import { printError, printInfo } from '#lostcity/util/Logger.js';
 import { updateCompiler } from '#lostcity/util/RuneScriptCompiler.js';
+import { collectDefaultMetrics, register } from 'prom-client';
 
 if (Environment.BUILD_STARTUP_UPDATE) {
     await updateCompiler();
@@ -37,6 +38,10 @@ fs.mkdirSync('data/players', { recursive: true });
 await World.start();
 
 startWeb();
+startManagementWeb();
+
+register.setDefaultLabels({nodeId: Environment.NODE_ID});
+collectDefaultMetrics({register});
 
 const tcpServer = new TcpServer();
 tcpServer.start();

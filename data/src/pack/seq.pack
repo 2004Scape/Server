@@ -171,9 +171,9 @@
 170=imp_block
 171=imp_ready
 172=imp_death
-173=imp_seq_173
-174=imp_seq_174
-175=imp_seq_175
+173=brownimp_grab
+174=brownimp_appear
+175=brownimp_disappear
 176=lizardman_walk
 177=lizardman_attack
 178=lizardman_block
