@@ -8,30 +8,29 @@
     "#lostcity/*": "./src/lostcity/*"
   },
   "scripts": {
-    "build": "npm run ts-loader src/lostcity/scripts/cache/pack.ts",
+    "build": "tsx src/lostcity/scripts/cache/pack.ts",
     "bundle": "npm run bundle:esbuild",
     "bundle:bun": "bun bundle.js",
-    "bundle:esbuild": "npm run ts-loader bundle.js",
+    "bundle:esbuild": "tsx bundle.js",
     "clean": "npm run client:clean && npm run server:clean",
     "client": "java -cp 225.2004-05-18.jar client 10 0 highmem members",
-    "client:clean": "npm run ts-loader src/lostcity/scripts/cache/cleanClient.ts",
+    "client:clean": "tsx src/lostcity/scripts/cache/cleanClient.ts",
     "db:migrate": "prisma migrate deploy",
     "db:reset": "prisma migrate reset --force",
     "db:schema": "prisma migrate dev",
-    "dev": "nodemon src/lostcity/app.ts",
-    "friend": "npm run ts-loader src/lostcity/friend.ts",
+    "dev": "tsx watch --include \"src/*\" src/lostcity/app.ts",
+    "friend": "tsx src/lostcity/friend.ts",
     "lint": "eslint src --ext .ts --ext .js",
     "lint:staged": "eslint --ext .ts --ext .js",
-    "login": "npm run ts-loader src/lostcity/login.ts",
-    "maintenance": "npm run ts-loader src/lostcity/maintenance.ts",
+    "login": "tsx src/lostcity/login.ts",
+    "maintenance": "tsx src/lostcity/maintenance.ts",
     "precommit": "prettier . --write && eslint . --ext .ts --ext .js --fix",
     "prepare": "husky",
-    "quickstart": "npm run ts-loader src/lostcity/app.ts",
-    "server:clean": "npm run ts-loader src/lostcity/scripts/cache/cleanServer.ts",
-    "start": "npm i && npm run ts-loader src/lostcity/app.ts",
+    "quickstart": "tsx src/lostcity/app.ts",
+    "server:clean": "tsx src/lostcity/scripts/cache/cleanServer.ts",
+    "start": "npm i && tsx src/lostcity/app.ts",
     "test": "vitest run ./src",
-    "todo": "leasot src/ --skip-unsupported --exit-nicely",
-    "ts-loader": "node --import @swc-node/register/esm-register --enable-source-maps --no-warnings"
+    "todo": "leasot src/ --skip-unsupported --exit-nicely"
   },
   "lint-staged": {
     "package.json": "sort-package-json",
@@ -60,9 +59,6 @@
     "@commitlint/cli": "^19.5.0",
     "@commitlint/config-conventional": "^19.5.0",
     "@commitlint/types": "^19.5.0",
-    "@swc-node/register": "1.10.9",
-    "@swc/core": "1.9.2",
-    "@swc/helpers": "^0.5.15",
     "@types/bcrypt": "^5.0.2",
     "@types/bun": "^1.1.13",
     "@types/ejs": "^3.1.5",
@@ -78,16 +74,16 @@
     "husky": "^9.1.6",
     "leasot": "^14.4.0",
     "lint-staged": "^15.2.10",
-    "nodemon": "^3.1.7",
     "prettier": "3.3.3",
     "prisma": "^5.22.0",
     "prisma-kysely": "^1.8.0",
     "sort-package-json": "^2.10.1",
     "tinybench": "^3.0.3",
+    "tsx": "^4.19.2",
     "typescript": "^5.6.3",
     "vitest": "^2.1.4"
   },
   "prisma": {
-    "seed": "npm run ts-loader src/lostcity/db/seed.ts"
+    "seed": "tsx src/lostcity/db/seed.ts"
   }
 }

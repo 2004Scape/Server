@@ -83,7 +83,7 @@ import HuntModeType from '#lostcity/entity/hunt/HuntModeType.js';
 import { trackCycleBandwidthInBytes, trackCycleBandwidthOutBytes, trackCycleClientInTime, trackCycleClientOutTime, trackCycleLoginTime, trackCycleLogoutTime, trackCycleNpcTime, trackCyclePlayerTime, trackCycleTime, trackCycleWorldTime, trackCycleZoneTime, trackNpcCount, trackPlayerCount } from '#lostcity/prometheus.js';
 
 class World {
-    private friendThread: Worker | NodeWorker = createWorker(Environment.STANDALONE_BUNDLE ? 'FriendThread.js' : './src/lostcity/server/FriendThread.ts');
+    private friendThread: Worker | NodeWorker = createWorker(Environment.STANDALONE_BUNDLE ? 'FriendThread.js' : './lostcity/server/FriendThread.ts');
     private devThread: Worker | NodeWorker | null = null;
 
     private static readonly PLAYERS: number = 2048;
@@ -412,7 +412,7 @@ class World {
     }
 
     private createDevThread() {
-        this.devThread = createWorker('./src/lostcity/server/DevThread.ts');
+        this.devThread = createWorker('./lostcity/server/DevThread.ts');
 
         if (this.devThread instanceof NodeWorker) {
             this.devThread.on('message', msg => {
