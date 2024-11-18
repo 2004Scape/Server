@@ -85,21 +85,15 @@ export default class LoginClient {
         await this.connect();
 
         if (!this.ws || !this.wsr || !this.wsr.checkIfWsLive()) {
-            return -1;
+            return;
         }
 
-        const message = await this.wsr.fetchSync({
+        await this.wsr.fetchSync({
             type: 2,
             world: Environment.NODE_ID,
             username37: username37.toString(),
             save: Buffer.from(save).toString('base64')
         });
-
-        if (message.error) {
-            return -1;
-        }
-
-        return 0;
     }
 
     async reset() {
