@@ -555,8 +555,8 @@ class World {
 
             // push stats to prometheus
             // todo: lock this behind a feature flag? most users may never use this feature
-            trackPlayerCount.observe(this.getTotalPlayers());
-            trackNpcCount.observe(this.getTotalNpcs());
+            trackPlayerCount.set(this.getTotalPlayers());
+            trackNpcCount.set(this.getTotalNpcs());
 
             trackCycleTime.observe(this.cycleStats[WorldStat.CYCLE]);
             trackCycleWorldTime.observe(this.cycleStats[WorldStat.WORLD]);
