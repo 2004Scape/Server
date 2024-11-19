@@ -39,7 +39,7 @@ class Login {
         }
     }
 
-    async readIn(socket: ClientSocket, data: Packet) {
+    readIn(socket: ClientSocket, data: Packet) {
         const opcode = data.g1();
 
         // todo: reconnect (opcode 18)

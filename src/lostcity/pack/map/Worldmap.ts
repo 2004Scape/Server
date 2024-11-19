@@ -662,16 +662,16 @@ export async function packWorldmap() {
     const index = Packet.alloc(1);
 
     const mapscene = await convertImage(index, 'data/src/sprites', 'mapscene');
-    jag.write('mapscene.dat', mapscene!);
+    jag.write('mapscene.dat', mapscene);
 
     const mapfunction = await convertImage(index, 'data/src/sprites', 'mapfunction');
-    jag.write('mapfunction.dat', mapfunction!);
+    jag.write('mapfunction.dat', mapfunction);
 
     const b12 = await convertImage(index, 'data/src/fonts', 'b12');
-    jag.write('b12.dat', b12!);
+    jag.write('b12.dat', b12);
 
     const mapdots = await convertImage(index, 'data/src/sprites', 'mapdots');
-    jag.write('mapdots.dat', mapdots!);
+    jag.write('mapdots.dat', mapdots);
 
     jag.write('index.dat', index);
 

@@ -30,14 +30,14 @@ export default class TcpServer {
             seed.p4(Math.floor(Math.random() * 0xffffffff));
             socket.send(seed.data);
 
-            s.on('data', async (data: Buffer) => {
+            s.on('data', (data: Buffer) => {
                 const packet = new Packet(new Uint8Array(data));
 
                 try {
                     if (socket.state === 1) {
-                        await World.readIn(socket, packet);
+                        World.readIn(socket, packet);
                     } else {
-                        await Login.readIn(socket, packet);
+                        Login.readIn(socket, packet);
                     }
                 } catch (err) {
                     socket.close();
@@ -63,7 +63,7 @@ export default class TcpServer {
             });
         });
 
-        this.tcp.listen(Environment.NODE_PORT as number, '0.0.0.0', () => {
+        this.tcp.listen(Environment.NODE_PORT, '0.0.0.0', () => {
         });
     }
 }

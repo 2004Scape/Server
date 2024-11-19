@@ -410,7 +410,7 @@ export function packObjConfigs(configs: Map<string, ConfigLine[]>): { client: Pa
 
             server.p1(params.length);
             for (let k = 0; k < params.length; k++) {
-                const paramData = params[k] as ParamValue;
+                const paramData = params[k];
                 server.p3(paramData.id);
                 server.pbool(paramData.type === ScriptVarType.STRING);
 

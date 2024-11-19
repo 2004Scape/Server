@@ -407,7 +407,7 @@ class World {
         }
 
         if (startCycle) {
-            await this.cycle();
+            this.cycle();
         }
     }
 
@@ -447,7 +447,7 @@ class World {
         }
     }
 
-    async cycle(continueCycle: boolean = true): Promise<void> {
+    cycle(continueCycle: boolean = true): void {
         try {
             const start: number = Date.now();
 
@@ -462,7 +462,7 @@ class World {
             // - resume active script
             // - process packets
             // - process pathfinding/following request
-            await this.processPlayerSetup();
+            this.processPlayerSetup();
 
             // npc processing (if npc is not busy)
             // - resume suspended script
@@ -482,13 +482,13 @@ class World {
             // - interactions
             // - movement
             // - close interface if attempting to logout
-            await this.processPlayers();
+            this.processPlayers();
 
             // player logout
-            await this.processLogouts();
+            this.processLogouts();
 
             // player login, good spot for it (before packets so they immediately load but after processing so nothing hits them)
-            await this.processLogins();
+            this.processLogins();
 
             // process zones
             // - build list of active zones around players
@@ -512,7 +512,7 @@ class World {
             // - stat changes
             // - afk zones changes
             // - flush packets
-            await this.processClientsOut();
+            this.processClientsOut();
 
             // cleanup
             // - reset zones
@@ -531,7 +531,7 @@ class World {
 
             // server shutdown
             if (this.shutdownTick > -1 && tick >= this.shutdownTick) {
-                await this.processShutdown();
+                this.processShutdown();
             }
 
             if (tick % World.PLAYER_SAVERATE === 0 && tick > 0) {
@@ -593,7 +593,7 @@ class World {
             printError('Removing all players...');
 
             for (const player of this.players) {
-                await this.removePlayer(player);
+                this.removePlayer(player);
             }
 
             // TODO inform Friends server that the world has gone offline
@@ -670,7 +670,7 @@ class World {
         this.cycleStats[WorldStat.WORLD] = Date.now() - start;
     }
 
-    private async processPlayerSetup(): Promise<void> {
+    private processPlayerSetup(): void {
         const start: number = Date.now();
 
         this.cycleStats[WorldStat.BANDWIDTH_IN] = 0;
@@ -733,7 +733,7 @@ class World {
                 }
             } catch (err) {
                 console.error(err);
-                await this.removePlayer(player);
+                this.removePlayer(player);
             }
         }
 
@@ -833,7 +833,7 @@ class World {
     // - interactions
     // - movement
     // - close interface if attempting to logout
-    private async processPlayers(): Promise<void> {
+    private processPlayers(): void {
         const start: number = Date.now();
         for (const player of this.players) {
             try {
@@ -868,13 +868,13 @@ class World {
                 }
             } catch (err) {
                 console.error(err);
-                await this.removePlayer(player);
+                this.removePlayer(player);
             }
         }
         this.cycleStats[WorldStat.PLAYER] = Date.now() - start;
     }
 
-    private async processLogouts(): Promise<void> {
+    private processLogouts(): void {
         const start: number = Date.now();
         for (const player of this.players) {
             if (Environment.NODE_SOCKET_TIMEOUT && this.currentTick - player.lastResponse >= World.TIMEOUT_LOGOUT_TICKS) {
@@ -910,7 +910,7 @@ class World {
                 }
 
                 if (player.logoutRequested) {
-                    await this.removePlayer(player);
+                    this.removePlayer(player);
                 }
             } else {
                 player.messageGame('[DEBUG]: Waiting for queue to empty before logging out.');
@@ -919,7 +919,7 @@ class World {
         this.cycleStats[WorldStat.LOGOUT] = Date.now() - start;
     }
 
-    private async processLogins(): Promise<void> {
+    private processLogins(): void {
         const start: number = Date.now();
         player: for (const player of this.newPlayers) {
             for (const other of this.players) {
@@ -1020,7 +1020,7 @@ class World {
     // - stat changes
     // - afk zones changes
     // - flush packets
-    private async processClientsOut(): Promise<void> {
+    private processClientsOut(): void {
         const start: number = Date.now();
 
         this.cycleStats[WorldStat.BANDWIDTH_OUT] = 0; // reset bandwidth counter
@@ -1050,7 +1050,7 @@ class World {
                 player.encodeOut();
             } catch (err) {
                 console.error(err);
-                await this.removePlayer(player);
+                this.removePlayer(player);
             }
         }
         this.cycleStats[WorldStat.CLIENT_OUT] = Date.now() - start;
@@ -1148,7 +1148,7 @@ class World {
         });
     }
 
-    private async processShutdown(): Promise<void> {
+    private processShutdown(): void {
         const duration: number = this.currentTick - this.shutdownTick; // how long have we been trying to shutdown
         const online: number = this.getTotalPlayers();
 
@@ -1179,7 +1179,7 @@ class World {
                 // if we've exceeded 24000 ticks then we *really* need to shut down now
                 if (duration > World.SHUTDOWN_TICKS) {
                     for (const player of this.players) {
-                        await this.removePlayer(player);
+                        this.removePlayer(player);
                     }
 
                     this.tickRate = World.NORMAL_TICKRATE;
@@ -1429,7 +1429,7 @@ class World {
 
     // ----
 
-    async readIn(socket: ClientSocket, stream: Packet): Promise<void> {
+    readIn(socket: ClientSocket, stream: Packet): void {
         while (stream.available > 0) {
             const start = stream.pos;
             let opcode = stream.g1();
@@ -1528,7 +1528,7 @@ class World {
         });
     }
 
-    async removePlayer(player: Player): Promise<void> {
+    removePlayer(player: Player): void {
         if (player.pid === -1) {
             return;
         }

@@ -1471,7 +1471,7 @@ export default class Player extends PathingEntity {
         const varp = VarPlayerType.get(id);
 
         if (varp.type === ScriptVarType.STRING && typeof value === 'string') {
-            this.varsString[varp.id] = value as string;
+            this.varsString[varp.id] = value;
         } else if (typeof value === 'number') {
             this.vars[varp.id] = value;
 

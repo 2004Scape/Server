@@ -116,20 +116,20 @@ export function packDbRowConfigs(configs: Map<string, ConfigLine[]>): { client: 
             throw packStepError(debugname, 'No table defined in dbrow config');
         }
 
-        if (data.length) {
+        if (data.length && table) {
             server.p1(3);
 
-            server.p1(table!.types.length);
-            for (let i = 0; i < table!.types.length; i++) {
+            server.p1(table.types.length);
+            for (let i = 0; i < table.types.length; i++) {
                 server.p1(i);
 
-                const types = table!.types[i];
+                const types = table.types[i];
                 server.p1(types.length);
                 for (let j = 0; j < types.length; j++) {
                     server.p1(types[j]);
                 }
 
-                const columnName = table!.columnNames[i];
+                const columnName = table.columnNames[i];
                 const fields = data.filter(d => d.column === columnName);
 
                 server.p1(fields.length);

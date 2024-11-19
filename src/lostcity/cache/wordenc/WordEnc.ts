@@ -35,7 +35,7 @@ export default class WordEnc {
 
     private static whitelist = ['cook', "cook's", 'cooks', 'seeks', 'sheet'];
 
-    static async load(dir: string): Promise<void> {
+    static load(dir: string): void {
         if (!fs.existsSync(`${dir}/client/wordenc`)) {
             return;
         }
