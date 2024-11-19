@@ -496,10 +496,12 @@ class World {
             // - compute shared buffer
             this.processZones();
 
-            // process movement directions
+            // process player & npc update info
             // - convert player movements
+            // - compute player info
             // - convert npc movements
-            this.processMovementDirections();
+            // - compute npc info
+            this.processInfo();
 
             // client output
             // - map update
@@ -537,8 +539,9 @@ class World {
                 this.savePlayers();
             }
 
-            this.currentTick++;
             this.cycleStats[WorldStat.CYCLE] = Date.now() - start;
+
+            // ----
 
             this.lastCycleStats[WorldStat.CYCLE] = this.cycleStats[WorldStat.CYCLE];
             this.lastCycleStats[WorldStat.WORLD] = this.cycleStats[WorldStat.WORLD];
@@ -571,14 +574,16 @@ class World {
             trackCycleBandwidthInBytes.inc(this.cycleStats[WorldStat.BANDWIDTH_IN]);
             trackCycleBandwidthOutBytes.inc(this.cycleStats[WorldStat.BANDWIDTH_OUT]);
 
-            if (continueCycle) {
-                setTimeout(this.cycle.bind(this), this.tickRate - this.cycleStats[WorldStat.CYCLE]);
-            }
-
             if (Environment.NODE_DEBUG_PROFILE) {
                 printDebug(`| [tick ${this.currentTick}; ${this.cycleStats[WorldStat.CYCLE]}/${this.tickRate}ms] | ${this.getTotalPlayers()} players | ${this.getTotalNpcs()} npcs | ${this.gameMap.getTotalZones()} zones | ${this.gameMap.getTotalLocs()} locs | ${this.gameMap.getTotalObjs()} objs |`);
                 printDebug(`| ${this.cycleStats[WorldStat.WORLD]}ms world | ${this.cycleStats[WorldStat.CLIENT_IN]}ms client in | ${this.cycleStats[WorldStat.NPC]}ms npcs | ${this.cycleStats[WorldStat.PLAYER]}ms players | ${this.cycleStats[WorldStat.LOGOUT]}ms logout | ${this.cycleStats[WorldStat.LOGIN]}ms login | ${this.cycleStats[WorldStat.ZONE]}ms zones | ${this.cycleStats[WorldStat.CLIENT_OUT]}ms client out | ${this.cycleStats[WorldStat.CLEANUP]}ms cleanup |`);
                 printDebug('----');
+            }
+
+            this.currentTick++;
+
+            if (continueCycle) {
+                setTimeout(this.cycle.bind(this), this.tickRate - this.cycleStats[WorldStat.CYCLE]);
             }
         } catch (err) {
             if (err instanceof Error) {
@@ -982,8 +987,10 @@ class World {
     }
 
     // - convert player movements
+    // - compute player info
     // - convert npc movements
-    private processMovementDirections(): void {
+    // - compute npc info
+    private processInfo(): void {
         // TODO: benchmark this?
         for (const player of this.players) {
             player.convertMovementDir();
@@ -1535,6 +1542,12 @@ class World {
         }
 
         this.playerRenderer.removePermanent(player.pid);
+        this.gameMap.getZone(player.x, player.z, player.level).leave(player);
+        this.players.remove(player.pid);
+        changeNpcCollision(player.width, player.x, player.z, player.level, false);
+        player.pid = -1;
+        player.uid = -1;
+        player.terminate();
 
         Login.logout(player);
 

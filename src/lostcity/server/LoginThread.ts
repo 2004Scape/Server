@@ -206,25 +206,14 @@ async function handleRequests(parentPort: any, msg: any, priv: forge.pki.rsa.Pri
             break;
         }
         case 'logout': {
+            if (!Environment.LOGIN_KEY) {
+                return;
+            }
+
             const { username, save } = msg;
 
-            if (Environment.LOGIN_KEY) {
-                const reply = await login.save(toBase37(username), save);
-
-                if (reply === 0) {
-                    parentPort.postMessage({
-                        type: 'logoutreply',
-                        username
-                    });
-                }
-            } else {
-                parentPort.postMessage({
-                    type: 'logoutreply',
-                    username
-                });
-            }
-            break;
-        }
+            await login.save(toBase37(username), save);
+        } break;
         case 'autosave': {
             if (!Environment.LOGIN_KEY) {
                 return;
