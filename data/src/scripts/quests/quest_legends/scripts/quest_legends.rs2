@@ -1,0 +1,214 @@
+[oploc1,_jungle_tree] @chop_jungle(^jungle_type_tree);
+[oploc1,_jungle_bush] @chop_jungle(^jungle_type_bush);
+
+[oploc1,legends_rocks_1] @legends_search_rocks;
+[oploc1,legends_mossy_rock_1] @legends_search_rocks;
+[oploc1,legends_mossy_rock_2] @legends_search_rocks;
+
+[oploc1,legends_cave_entrance_1] @legends_cave_entrance;
+[oploc1,legends_cave_entrance_2] @legends_cave_entrance;
+
+[oploc1,legends_fire_wall_1] @legends_fire_wall;
+[oploc1,legends_fire_wall_2] @legends_fire_wall;
+
+[oploc2,legends_radimus_cupboard_open]
+// No quest progress check here
+if (inv_total(inv, machete) > 0 | inv_total(worn, machete) > 0) {
+    ~mesbox("You don't think Radimus Erkle would be too pleased if he caught|you rifling through his cupboards without permission.");
+}
+else {
+    // No inv space check
+    inv_add(inv, machete, 1);
+    ~objbox(machete, "You find a machete in the cupboard.", 180, 0, 0);
+    mes("You find a machete.");
+}
+
+[oploc3,legends_radimus_cupboard_open]
+@close_cupboard(true);
+
+[label,legends_fire_wall]
+mes("You approach the supernatural flames.");
+p_delay(2);
+mes("They give off an incredibly intense heat.");
+// guess
+if (random(9) < 3) {
+    mes("You get too close and the intense heat burns you!");
+    // rs3/rsc
+    say("Owwwww!");
+    ~damage_self(4);
+}
+else {
+    say("Whew!");
+    mes("The heat is intense and just before you burn yourself you pull yourself away");
+    mes("from the flames.");
+}
+
+[label,legends_search_rocks]
+if (%legends_progress < ^legends_found_entrance) {
+    mes("You search the rocks but you see nothing significant...");
+}
+if (%legends_progress = ^legends_accepted_rescue_ungadulu) {
+    p_delay(2);
+    mes("...at first.");
+    %legends_progress = ^legends_found_entrance;
+}
+if (%legends_progress >= ^legends_found_entrance) {
+    // "though" instead of "through" is correct
+    ~mesbox("You see that there is a small crevice that you may be able to crawl|though. Would you like to try to crawl through, it looks quite an|enclosed area?");
+    def_int $choice = ~p_choice2_header("Yes, I'll crawl through, I'm very athletic.", 1, 
+                                        "No, I'm pretty scared of enclosed areas.", 2, 
+                                        "Crawl into hole?");
+    if_close;
+    if ($choice = 1) {
+        if (stat(agility) < 50) {
+            // rsc
+            ~mesbox("You need an agility of 50 to even attempt this.");
+            return;
+        }
+        mes("You try to crawl through...");
+        p_delay(1);
+        mes("You contort your body to fit the crevice.");
+        p_delay(1);
+        // guess
+        if (stat_random(stat(agility), 125, 250) = false) {
+            mes("You get cramped in the tiny space and start to suffocate.");
+            p_delay(2);
+            mes("You wriggle and wriggle but you cannot get out...");
+            p_delay(2);
+            mes("Eventually you manage to break free.");
+            p_delay(2);
+            mes("But you scrape yourself very badly as you force your way out.");
+            p_delay(2);
+            mes("And you're totally exhausted from the ordeal.");
+            p_delay(2);
+            ~damage_self(5);
+        }
+        else {
+            // "adroitely" is authentic, fixed in current OSRS
+            mes("You adroitely squeeze serpent like into the crevice.");
+            p_delay(2);
+            p_teleport(0_43_145_21_61);
+            mes("You find a small narrow tunnel that goes for some distance.");
+            p_delay(2);
+            mes("After some time, you find a small cave opening... and walk through.");
+            p_delay(3);
+        }
+    }
+    else {
+        ~mesbox("You decide against forcing yourself into the tiny crevice.");
+    }
+}
+
+[label,legends_cave_entrance]
+mes("You crawl back out from the cavern...");
+p_delay(3);
+p_teleport(0_43_45_29_54);
+
+[opheld1,sketch]
+~mesbox("This is a crudely drawn picture of some kind of vessel, it looks vaguely bowl shaped - this is what Gujuo was referring to when he said that you needed to make a vessel made from the metal of the sun.");
+
+[label,chop_jungle](int $type)
+// todo: 
+// - time to cut varies, may need to use normal tree logic here
+if (inv_total(inv, radimus_notes) = 0 & inv_total(inv, radimus_notes_complete) = 0 & %legends_progress < ^legends_complete) {
+    ~mesbox("You'll get lost in this jungle without a map. You decide not to go any further.");
+    return;
+}
+def_namedobj $axe = ~woodcutting_axe_checker(false);
+if ($axe = null) {
+    // OSRS message
+    ~mesbox("You'll need an axe to get through this rough jungle. You don't think it would be a good idea to continue without one you've got the level to use.");
+    return;
+}
+if (inv_total(inv, machete) = 0 & inv_total(worn, machete) = 0) {
+    // Says bush even for tree
+    mes("You need a machete to cut your way through this dense jungle bush.");
+    return;
+}
+if ($type = ^jungle_type_tree) {
+    anim(struct_param(oc_param($axe, woodcutting_struct), skill_anim), 0);
+    // No sound for jungle trees
+}
+else {
+    anim(human_machette_chop, 32);
+    sound_synth(woodchop_4, 0, 0);
+    sound_synth(woodchop_4, 0, 32);
+    sound_synth(woodchop_4, 0, 64);
+}
+
+if ($type = ^jungle_type_tree) {
+    mes("You swing your axe at the tree.");
+}
+else {
+    mes("You swing your machete at the jungle plant.");
+}
+p_delay(1);
+loc_change(loc_param(next_loc_stage), 4);
+// Not guaranteed to get logs. Can roll multiple logs before tree falls
+// If no inv space, just don't give logs (or xp)
+if (inv_freespace(inv) > 0 & random(2) = 0) {
+    mes("You get some wood.");
+    stat_advance(woodcutting, 100);
+    inv_add(inv, logs, 1);
+}
+def_coord $dest = coord;
+// If you chop jungle that you're standing on, you don't move forward
+// todo: test that this always gives the blocked off message, as it seems to on OSRS
+if (coord ! loc_coord) {
+    $dest = ~movecoord_indirection(coord, ~coord_direction(coord, loc_coord), 2);
+}
+
+// todo: test on OSRS
+if (map_blocked($dest) = true & ~jungle_at_dest($dest) = false) {
+    mes("This way is blocked off, no chance to get through here!");
+}
+else {
+    if ($type = ^jungle_type_tree) {
+        mes("You hack your way through the tree.");
+    }
+    else {
+        mes("You hack your way through the jungle bush.");
+    }
+    // Same message even when leaving the jungle
+    mes("You move deeper into the jungle.");
+    ~forcemove($dest);
+}
+
+[proc,jungle_at_dest](coord $dest)(boolean)
+if (loc_find($dest, jungle_bush_1) = true | loc_find($dest, jungle_bush_2) = true | 
+    loc_find($dest, jungle_tree_1) = true | loc_find($dest, jungle_tree_2) = true | 
+    loc_find($dest, jungle_tree_3) = true) {
+        return (true);
+}
+return (false);
+
+[queue,legends_quest_complete]
+%legends_progress = ^legends_complete;
+// todo: older ref image?
+// https://storage.googleapis.com/tannerdino/images/legendscomplt.png
+~send_quest_complete(questlist:legends, gilded_totem, 180, ^legends_questpoints, "You have completed the\\nLegends Guild Quest!");
+
+// Debug
+[debugproc,lf]
+// legends fire
+if (p_finduid(uid) = true) {
+    p_telejump(0_43_145_32_51);
+}
+
+[debugproc,lb]
+// legends beach
+if (p_finduid(uid) = true) {
+    p_telejump(0_43_45_26_11);
+}
+
+[debugproc,lg]
+// legends guild
+if (p_finduid(uid) = true) {
+    p_telejump(0_42_52_40_38);
+}
+
+[debugproc,jf]
+// jungle forester
+if (p_finduid(uid) = true) {
+    p_telejump(^legends_gujuo_guide_coord);
+}

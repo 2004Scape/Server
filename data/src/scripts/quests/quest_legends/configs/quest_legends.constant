@@ -1,0 +1,61 @@
+// todo: confirm these
+^legends_not_started = 0
+^legends_started = 1
+^legends_mapped_jungle = 2
+^legends_got_bullroarer = 3
+^legends_swung_bullroarer = 4
+^legends_accepted_rescue_ungadulu = 5
+^legends_found_entrance = 6
+^legends_spoke_ungadulu = 7
+^legends_asked_gujuo_holy_water = 8
+^legends_filled_bowl = 10
+^legends_defeated_nezikchened_fire = 11
+^legends_talk_ungadulu = 12
+^legends_talk_gujuo_3 = 13
+^legends_water_pool_2 = 14
+^legends_talk_gujuo_4 = 15
+// check if this is set when entering dungeon or taking hat
+^legends_enter_lower_dungeon = 16
+^legends_crystal_pieces_smelted = 17
+^legends_heart_in_recess = 18
+^legends_pushed_boulder = 19
+// guess
+^legends_nezikchened_dialogue_completed = 20
+^legends_defeated_nezikchened_water = 22
+^legends_sacred_water_collected = 25
+^legends_seeds_planted = 30
+^legends_spawned_nezikchened_final = 32
+^legends_defeated_nezikchened_final = 35
+^legends_replaced_totem = 40
+^legends_got_gilded_totem = 45
+^legends_returned_to_radimus = 50
+^legends_radimus_training_1 = 55
+^legends_radimus_training_2 = 60
+^legends_radimus_training_3 = 65
+^legends_radimus_training_4 = 70
+
+^legends_jungle_west_mapped = 0
+^legends_jungle_middle_mapped = 1
+^legends_jungle_east_mapped = 2
+^legends_entered_cavern = 3
+// not sure on this one
+^legends_asked_who = 4
+
+
+^legends_soul_rune_used = 3
+^legends_mind_rune_used = 4
+^legends_earth_rune_used = 5
+^legends_law_rune_1_used = 6
+^legends_law_rune_2_used = 7
+// todo: check if gem puzzle progress is stored. wiki seems to suggest not
+
+^legends_required_questpoints = 107
+
+^jungle_type_tree = 0
+^jungle_type_bush = 1
+
+^legends_guild_gate_west_coord = 0_42_52_40_21
+^legends_guild_gate_east_coord = 0_42_52_41_21
+^legends_guild_gate_dest_in_coord = 0_42_52_40_22
+^legends_guild_gate_dest_out_coord = 0_42_52_41_20
+^legends_gujuo_guide_coord = 0_44_45_49_61
