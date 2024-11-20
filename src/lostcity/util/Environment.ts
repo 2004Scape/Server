@@ -1,5 +1,6 @@
 import 'dotenv/config';
 import { tryParseArray, tryParseBoolean, tryParseInt, tryParseString } from './TryParse.js';
+import WalkTriggerSetting from './WalkTriggerSetting.js';
 
 export default {
     // bundler/webrtc browser mode
@@ -35,6 +36,9 @@ export default {
     NODE_CLIENT_ROUTEFINDER: tryParseBoolean(process.env.NODE_CLIENT_ROUTEFINDER, true),
     // controllable for bot testing
     NODE_SOCKET_TIMEOUT: tryParseBoolean(process.env.NODE_SOCKET_TIMEOUT, true),
+    // yellow-x walktriggers in osrs went from: in packet handler -> in player setup -> player movement
+    // 0 = processed in packet handler. 1 = processed in player setup (client input). 2 = processed in player movement
+    NODE_WALKTRIGGER_SETTING: tryParseInt(process.env.NODE_WALKTRIGGER_SETTING, WalkTriggerSetting.PLAYERPACKET),
 
     /// login server
     LOGIN_HOST: tryParseString(process.env.LOGIN_HOST, 'localhost'),

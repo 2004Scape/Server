@@ -81,6 +81,7 @@ import { printDebug, printError, printInfo } from '#lostcity/util/Logger.js';
 import { createWorker } from '#lostcity/util/WorkerFactory.js';
 import HuntModeType from '#lostcity/entity/hunt/HuntModeType.js';
 import { trackCycleBandwidthInBytes, trackCycleBandwidthOutBytes, trackCycleClientInTime, trackCycleClientOutTime, trackCycleLoginTime, trackCycleLogoutTime, trackCycleNpcTime, trackCyclePlayerTime, trackCycleTime, trackCycleWorldTime, trackCycleZoneTime, trackNpcCount, trackPlayerCount } from '#lostcity/prometheus.js';
+import WalkTriggerSetting from '#lostcity/util/WalkTriggerSetting.js';
 
 class World {
     private friendThread: Worker | NodeWorker = createWorker(Environment.STANDALONE_BUNDLE ? 'FriendThread.js' : './lostcity/server/FriendThread.ts');
@@ -715,11 +716,12 @@ class World {
                             player.pathToTarget();
                             continue;
                         }
-        
-                        player.pathToMoveClick(player.userPath, !Environment.NODE_CLIENT_ROUTEFINDER);
-    
-                        if (!player.opcalled && player.hasWaypoints()) {
-                            player.processWalktrigger();
+                        if (Environment.NODE_WALKTRIGGER_SETTING === WalkTriggerSetting.PLAYERSETUP) {
+                            player.pathToMoveClick(player.userPath, !Environment.NODE_CLIENT_ROUTEFINDER);
+                            
+                            if (!player.opcalled && player.hasWaypoints()) {
+                                player.processWalktrigger();
+                            }
                         }
                     }
         

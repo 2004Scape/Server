@@ -69,6 +69,7 @@ import ChatFilterSettings from '#lostcity/network/outgoing/model/ChatFilterSetti
 import { ChatModePrivate, ChatModePublic, ChatModeTradeDuel } from '#lostcity/util/ChatModes.js';
 import { isNetworkPlayer } from '#lostcity/entity/NetworkPlayer.js';
 import InfoProt from '#lostcity/network/225/outgoing/prot/InfoProt.js';
+import WalkTriggerSetting from '#lostcity/util/WalkTriggerSetting.js';
 
 const levelExperience = new Int32Array(99);
 
@@ -529,6 +530,9 @@ export default class Player extends PathingEntity {
             return false;
         }
 
+        if (Environment.NODE_WALKTRIGGER_SETTING === WalkTriggerSetting.PLAYERMOVEMENT && !this.target && this.hasWaypoints()) {
+            this.processWalktrigger();
+        }
         if (repathAllowed && this.target instanceof PathingEntity && !this.interacted && this.walktrigger === -1) {
             this.pathToPathingTarget();
         }
