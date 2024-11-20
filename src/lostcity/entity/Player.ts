@@ -519,7 +519,6 @@ export default class Player extends PathingEntity {
     // ----
 
     clearWaypoints(): void {
-        this.moveClickRequest = false;
         super.clearWaypoints();
     }
 
@@ -561,10 +560,6 @@ export default class Player extends PathingEntity {
         }
         if (moved) {
             this.lastMovement = World.currentTick + 1;
-        }
-        if (!this.hasWaypoints()) {
-            this.moveClickRequest = false;
-            // this.unsetMapFlag(); // should be handled client-sided
         }
         return moved;
     }

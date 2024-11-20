@@ -708,7 +708,9 @@ class World {
                             player.masks |= InfoProt.PLAYER_FACE_ENTITY.id;
                         }
         
-                        if (player.busy() || !player.opcalled) {
+                        if (!player.busy() && player.opcalled) {
+                            player.moveClickRequest = false;
+                        } else {
                             player.moveClickRequest = true;
                         }
         
@@ -953,6 +955,7 @@ class World {
             player.pid = pid;
             player.uid = ((Number(player.username37 & 0x1fffffn) << 11) | player.pid) >>> 0;
             player.tele = true;
+            player.moveClickRequest = false;
 
             this.gameMap.getZone(player.x, player.z, player.level).enter(player);
             player.onLogin(); // todo: check response from login script?
