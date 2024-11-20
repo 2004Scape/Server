@@ -31,6 +31,7 @@ export default class OpHeldUHandler extends MessageHandler<OpHeldU> {
 
             const inv = player.getInventoryFromListener(listener);
             if (!inv || !inv.validSlot(slot) || !inv.hasAt(slot, item)) {
+                player.moveClickRequest = false; // removed early osrs
                 return false;
             }
         }
@@ -43,6 +44,7 @@ export default class OpHeldUHandler extends MessageHandler<OpHeldU> {
 
             const inv = player.getInventoryFromListener(listener);
             if (!inv || !inv.validSlot(useSlot) || !inv.hasAt(useSlot, useItem)) {
+                player.moveClickRequest = false; // removed early osrs
                 return false;
             }
         }
