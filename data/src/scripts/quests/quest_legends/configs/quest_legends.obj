@@ -1,4 +1,4 @@
-[obj_714]
+[radimus_notes]
 name=Radimus notes
 desc=Notes given to you by Radimus Erkle, it includes a partially completed map.
 members=yes
@@ -17,7 +17,7 @@ iop2=Complete
 weight=20g
 tradeable=no
 
-[obj_715]
+[radimus_notes_complete]
 name=Radimus notes
 desc=Notes given to you by Radimus Erkle, it includes a partially completed map.
 members=yes
@@ -125,7 +125,7 @@ iop1=Read
 weight=20g
 tradeable=no
 
-[obj_720]
+[sketch]
 name=Sketch
 desc=A rough sketch of a bowl shaped vessel given to you by Gujuo.
 cost=10

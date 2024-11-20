@@ -1,0 +1,292 @@
+[opnpc1,gujuo]
+~chatplayer("<p,neutral>Hello there.");
+@gujuo_start;
+
+[ai_opplayer2,gujuo]
+mes("Gujuo approaches...");
+npc_setmode(none);
+@gujuo_start;
+
+[label,gujuo_start]
+if (p_finduid(uid) = false) {
+    return;
+}
+if (%legends_progress = ^legends_got_bullroarer | %legends_progress = ^legends_swung_bullroarer) {
+    ~chatnpc("<p,neutral>Greetings Bwana... Why do you make such strange sounds and disturb the peace of the jungle?");
+    @multi2("I was hoping to attract the attention of a native.", gujuo_attract,
+            "Sorry, it was a mistake?", gujuo_sorry);
+}
+else if (%legends_progress >= ^legends_accepted_rescue_ungadulu) {
+    ~chatnpc("<p,neutral>How goes your quest to release Ungadulu Bwana?");
+    switch_int(%legends_progress) {
+        case ^legends_accepted_rescue_ungadulu :
+            @multi2("I can't find the caves...", gujuo_cant_find,
+                    "Ok thanks for your help.", gujuo_thanks);
+        case ^legends_found_entrance :
+            if (testbit(%legends_map_runes, ^legends_entered_cavern) = true) {
+                @multi2("Ungadulu is trapped in some magical flames!", gujuo_ungadulu_trapped,
+                        "I'm not sure what to do.", gujuo_idk);
+            }
+            else {
+                @multi2("I've found the caves, but I don't know what to do.", gujuo_found_but_idk,
+                        "Ok thanks for your help.", gujuo_thanks);
+            }
+        case ^legends_spoke_ungadulu :
+            @multi5("Ungadulu looks a little strange.", gujuo_ungadulu_strange,
+                    "I'm not sure what to do.", gujuo_idk,
+                    "I need some pure water to douse some magic flames.", gujuo_pure_water,
+                    "Ungadulu called me a 'Vacu'", gujuo_vacu,
+                    "Ok thanks for your help.", gujuo_thanks);
+    }
+}
+
+[label,gujuo_ungadulu_trapped]
+~chatplayer("<p,neutral>I can't find the caves...");
+~chatnpc("<p,neutral>Well, maybe you can get his attention somehow? Did you examine the nature of the magical flames? From where did they come do you think?");
+@multi2("Sorry for bothering you.", gujuo_sorry,
+        "I'm not sure what to do.", gujuo_idk);
+
+[label,gujuo_cant_find]
+~chatplayer("<p,neutral>I can't find the caves...");
+~chatnpc("<p,neutral>Well, they were still there the last time I checked... Go as far to the west in the Kharazi Jungle as you can, until you reach the sea, then walk eastwards with the barrier rocks to the north.");
+~chatnpc("<p,neutral>Walk past the covered pass and you'll find some rocks on slightly elevated ground. You'll find the caves there.");
+@gujuo_leave;
+
+[label,gujuo_found_but_idk]
+~chatplayer("<p,neutral>I've found the caves, but I don't know what to do.");
+~chatnpc("<p,neutral>Search the caves and try to talk to Ungadulu, there may be some clues to be had by searching all the items in the cave...");
+@gujuo_leave;
+
+[label,gujuo_ungadulu_strange]
+~chatplayer("<p,neutral>Ungadulu looks a little strange.");
+~chatnpc("<p,neutral>Be wary Bwana. There are many unknown spirits that reside in these dark areas. You may be tricked by an unknown force..");
+@multi5("Ok, thanks... Goodbye.", gujuo_water_thanks,
+        "What kind of unknown force?", gujuo_force,
+        "Sorry for bothering you.", gujuo_sorry,
+        "I'm not sure what to do.", gujuo_idk,
+        "I need some pure water to douse some magic flames.", gujuo_pure_water);
+        // todo: vacu option?
+
+[label,gujuo_force]
+~chatplayer("<p,neutral>What kind of unknown force?");
+~chatnpc("<p,neutral>Strange spirits that our forefathers summoned for visions. They haunt the underworld and caves that exist in this area. Take not anything as it might first appear.");
+@multi4("Sorry for bothering you.", gujuo_sorry,
+        "I'm not sure what to do.", gujuo_idk,
+        "How did they summon the spirits?", gujuo_spirits,
+        "Ok, thanks... Goodbye.", gujuo_water_thanks);
+
+[label,gujuo_spirits]
+~chatplayer("<p,neutral>How did they summon the spirits?");
+~chatnpc("<p,neutral>I am unlearned in such matters. But I am told of sacred patterns that are scored on the ground to bind the spirit and confine it... But that is all I know.");
+@multi4("Ungadulu looks a little strange.", gujuo_ungadulu_strange,
+        "Sorry for bothering you.", gujuo_sorry,
+        "I'm not sure what to do.", gujuo_idk,
+        "Ok, thanks... Goodbye.", gujuo_water_thanks);
+
+[label,gujuo_idk]
+~chatplayer("<p,neutral>I'm not sure what to do.");
+if (%legends_progress >= ^legends_spoke_ungadulu) {
+    ~chatnpc("<p,neutral>I am at a loss as well Bwana. At this time Ungadulu is the only one who might know of a solution for this puzzle and at this time, he is part of that same puzzle");
+}
+else {
+    ~chatnpc("<p,neutral>Perhaps you should investigate the caves further? Have you been able to speak to Ungadulu yet? He may have some information to give you that could help?");
+}
+@multi3("Ok, thanks... Goodbye.", gujuo_water_thanks,
+        "Sorry for bothering you.", gujuo_sorry,
+        "Ungadulu looks a little strange.", gujuo_ungadulu_strange);
+
+[label,gujuo_pure_water]
+~chatplayer("<p,neutral>I need some pure water to douse some magic flames.");
+// need to test both scenarios here on osrs
+if (testbit(%legends_map_runes, ^legends_asked_who) = true) {
+    ~chatnpc("<p,neutral>This sounds very strange Bwana... but maybe I can help. There is a pool of water that is sacred to us. It is located in the middle of the Kharazi Jungle.");
+    ~chatnpc("<p,neutral>The water contains special properties but it can only be contained in a blessed vessel made from metal of the sun. The water is difficult to get to, but I am sure you will manage to claim some.");
+    @multi5("Sorry for bothering you.", gujuo_sorry,
+            "I'm not sure what to do.", gujuo_idk,
+            "Ok, thanks... Goodbye.", gujuo_water_thanks,
+            "Metal of the sun, what is that?", gujuo_metal,
+            "What kind of a vessel?", gujuo_vessel);
+}
+else {
+    ~chatnpc("<p,neutral>Well there is a pool of water that is very sacred to us. But I am unsure why he would need that to douse flames. Perhaps the poor Shaman has lost his mind in the darkness of the caves?");
+    @multi5("Ok, thanks... Goodbye.", gujuo_water_thanks,
+            "Sorry for bothering you.", gujuo_sorry,
+            "I'm not sure what to do.", gujuo_idk,
+            "Can we still get the people together?", gujuo_still_people,
+            "Where is the pool of sacred water?", gujuo_pool_where);
+}
+
+[label,gujuo_water_thanks]
+~chatplayer("<p,neutral>Ok, thanks... Goodbye.");
+~chatnpc("<p,neutral>Farewell Bwana, good luck.");
+npc_del;
+mes("Gujuo disappears into the Kharazi Jungle as swiftly as he appeared...");
+
+[label,gujuo_vacu]
+~chatplayer("<p,neutral>Ungadulu called me 'Vacu', what does that mean?");
+~chatnpc("<p,neutral>It seems that Ungadulu has started to lose his senses. In our native and ancient history, the 'Vacu' were the servants of the evil spirits from the underworld.");
+~chatnpc("<p,neutral>The 'Vacu' were priests who summoned the spirits of our ancestors. But the priests were enslaved by the evil spirits of the underworld. It is but a myth, perhaps a story told to scare badly behaved children.");
+@multi4("Ok, thanks... Goodbye.", gujuo_water_thanks,
+        "Ungadulu looks a little strange.", gujuo_ungadulu_strange,
+        "Sorry for bothering you.", gujuo_sorry,
+        "I'm not sure what to do.", gujuo_idk);
+
+[label,gujuo_still_people]
+~chatplayer("<p,neutral>Can we still get the people together?");
+~chatnpc("<p,neutral>I am sorry Bwana, my people are scattered throughout the Kharazi Jungle. Without the totem pole to allay their fears, I believe it is impossible to collect them together as a group.");
+@multi4("Ungadulu looks a little strange.", gujuo_ungadulu_strange,
+        "Sorry for bothering you.", gujuo_sorry,
+        "I'm not sure what to do.", gujuo_idk,
+        "Ok, thanks... Goodbye.", gujuo_water_thanks);
+    
+[label,gujuo_pool_where]
+~chatplayer("<p,neutral>Where is the pool of sacred water?");
+~chatnpc("<p,neutral>The pool of sacred water is very precious to us, it is located in the middle of the Kharazi Jungle.");
+~chatnpc("<p,neutral>The water contains special properties which can only be retained if the water is contained in a blessed vessel made from metal of the sun.");
+@multi5("Sorry for bothering you.", gujuo_sorry,
+        "I'm not sure what to do.", gujuo_idk,
+        "Ok, thanks... Goodbye.", gujuo_water_thanks,
+        "Metal of the sun, what is that?", gujuo_metal,
+        "What kind of a vessel?", gujuo_vessel);
+
+[label,gujuo_vessel]
+~chatplayer("<p,neutral>What kind of a vessel?");
+~chatnpc("<p,neutral>A vessel made of sun metal, but it can be of any shape. However, it must be blessed.");
+if (inv_total(inv, sketch) = 0) {
+    ~chatnpc("<p,neutral>Here, have this as an example... I pray that it will help you.");
+    inv_add(inv, sketch, 1);
+}
+else {
+    ~chatnpc("<p,neutral>Similar to the picture I have already given you.");
+}
+@multi2("How do I bless the vessel?", gujuo_bless,
+        "Ok thanks for your help.", gujuo_thanks);
+
+
+[label,gujuo_metal]
+~chatplayer("<p,neutral>Metal of the sun, what is that?");
+~chatnpc("<p,neutral>It is a bright and precious metal that is much sought after, though uncommonly found. It is the same glorious colour as the sun and it never loses its wondrous lustre. A blessed vessel made of this metal");
+~chatnpc("<p,neutral>protects the purity of the water.");
+@multi3("Where can I find this metal?", gujuo_metal_where,
+        "What kind of a vessel?", gujuo_vessel,
+        "Ok thanks for your help.", gujuo_thanks);
+
+[label,gujuo_metal_where]
+~chatplayer("<p,neutral>Where can I find this metal?");
+~chatnpc("<p,neutral>It is found in some rocks and must be extracted. It has a magical ability over some people, it possesses them. They fall within its power and seek to gain more and more of this precious metal for themselves.");
+~chatnpc("<p,neutral>A blessed vessel made of this metal protects the purity of the water.");
+@multi3("Metal of the sun, what is that?", gujuo_metal,
+        "What kind of a vessel?", gujuo_vessel,
+        "Ok thanks for your help.", gujuo_thanks);
+
+[label,gujuo_bless]
+~chatplayer("<p,neutral>How do I bless the vessel?");
+~chatnpc("<p,neutral>When you have made the vessel, bring it to me. I will help but you need to ensure that you are devout and have faith. Your ability in prayer will be thoroughly tested.");
+@multi2("What kind of a vessel?", gujuo_vessel,
+        "Ok thanks for your help.", gujuo_thanks);
+
+[label,gujuo_attract]
+~chatplayer("<p,neutral>I was hoping to attract the attention of a native.");
+~chatnpc("<p,neutral>Well, it had the desired effect... I am Gujuo, proud member of the Kharazi tribe. What did you want to talk about Bwana?");
+@multi2("I want to develop friendly relations with your people.", gujuo_friendly,
+        "I'm lost, can you show me the way out?", gujuo_lost);
+
+[label,gujuo_sorry]
+~chatplayer("<p,neutral>Sorry, it was a mistake?");
+~chatnpc("<p,neutral>Very good Bwana... however, it begs the question... What are you doing in the Kharazi Jungle?");
+@multi2("I want to develop friendly relations with your people.", gujuo_friendly,
+        "I'm lost, can you show me the way out?", gujuo_lost);
+
+[label,gujuo_friendly]
+~chatplayer("<p,neutral>I want to develop friendly relations with your people.");
+~mesbox("Gujuo smiles and shakes your hand warmly.");
+~chatnpc("<p,neutral>Very good Bwana... this is indeed a very pleasant gesture. However, my people are very distributed throughout the Kharazi Jungle.");
+@multi2("Can you get your people together?", gujuo_together,
+        "I'm lost, can you show me the way out?", gujuo_lost);
+
+[label,gujuo_lost]
+~chatplayer("<p,neutral>I'm lost, can you show me the way out?");
+~chatnpc("<p,neutral>Yes Bwana. I can take you to the edge of the Kharazi Jungle. Would you like me to take you?");
+@multi2("Yes please...", gujuo_accept_guide,
+        "No thanks...", gujuo_decline_guide);
+
+[label,gujuo_accept_guide]
+// Capitalisation correct
+~chatplayer("<p,neutral>Yes Please...");
+~chatnpc("<p,neutral>Follow me...");
+~mesbox("Gujuo takes you out of the jungle...");
+p_teleport(^legends_gujuo_guide_coord);
+npc_del;
+
+[label,gujuo_decline_guide]
+~chatplayer("<p,neutral>No thanks...");
+~chatnpc("<p,neutral>As you wish... Again, Bwana, What is it that brings you to the Kharazi Jungle?");
+@multi2("I want to develop friendly relations with your people.", gujuo_friendly,
+        "I'm lost, can you show me the way out?", gujuo_lost);
+
+[label,gujuo_together]
+~chatplayer("<p,neutral>Can you get your people together?");
+~chatnpc("<p,neutral>All of my people normally congregate around a totem pole. But ours has been polluted by an evil spirit. It has been transformed, and now our people are afraid to approach it.");
+~chatnpc("<p,neutral>We tried to drive the evil spirit out of the totem pole, but it does not seem to work.");
+@multi2("What can we do instead then?", gujuo_what,
+        "I'm lost, can you show me the way out?", gujuo_lost);
+
+[label,gujuo_what]
+~chatplayer("<p,neutral>What can we do instead then?");
+~chatnpc("<p,neutral>We could try to make a new totem pole. However, we need to make it from the trunk of the sacred Yommi tree.");
+@multi2("How do we make the totem pole?", gujuo_totem_how,
+        "I'm lost, can you show me the way out?", gujuo_lost);
+
+[label,gujuo_totem_how]
+~chatplayer("<p,neutral>How do we make a totem pole?");
+~chatnpc("<p,neutral>First we need to plant a sacred Yommi tree. It is a magical tree of great power, however, our Shaman 'Ungadulu' is the only person with the seeds for this tree.");
+// osrs mesanim
+~chatnpc("<p,sad>And I fear that it is impossible to get some seeds. He is being held against his will in some caves in the north western part of the Kharazi Jungle.");
+@multi2("I will release Ungadulu...", gujuo_release_ungadulu,
+        "Oh well, sorry to hear about that.", gujuo_sorry_ungadulu);
+
+[label,gujuo_release_ungadulu]
+~chatplayer("<p,neutral>I will release Ungadulu...");
+~chatnpc("<p,neutral>You make me very happy Bwana! In the north western part of the Kharazi Jungle area, near some great cliffs, you will find three rocks that form a roughly triangular shape.");
+~chatnpc("<p,neutral>They are flanked by the palm which also forms the divine geometry. The stones are the entrance, search them well. That's where you'll find Ungadulu. If you can free him he will entrust you with some sacred");
+~chatnpc("<p,neutral>Yommi tree seeds.");
+%legends_progress = ^legends_accepted_rescue_ungadulu;
+@gujuo_leave;
+
+[label,gujuo_sorry_ungadulu]
+~chatplayer("<p,neutral>Oh well, sorry to hear about that.");
+~mesbox("Gujuo's expression of sadness deepens...");
+~chatnpc("<p,sad>Yes Bwana, perhaps we will become friends sometime in the future... But not today... Ungadulu has problably lost his mind anyway... It is most likely a lost cause...");
+@multi3("I will release Ungadulu...", gujuo_release_ungadulu,
+        "Ok thanks for your help.", gujuo_thanks,
+        "What's in it for me if I release Ungadulu?", gujuo_whatsforme);
+
+[label,gujuo_thanks]
+~chatplayer("<p,neutral>Ok thanks for your help.");
+// No caps on bwana here
+~chatnpc("<p,neutral>You are more than welcome bwana...");
+@gujuo_leave;
+
+[label,gujuo_leave]
+switch_int(random(6)) {
+    case 0 : 
+        ~chatnpc("<p,neutral>I must go and hunt now Bwana...");
+    case 1 : 
+        ~chatnpc("<p,neutral>I am tired Bwana, I must go and rest...");
+    case 2 : 
+        ~chatnpc("<p,neutral>The mosquitos bite me bwana! I must go for a swim...");
+    case 3 : 
+        ~chatnpc("<p,neutral>I must visit my people now...");
+    case 4 : 
+        ~chatnpc("<p,neutral>I have work to do Bwana, I may see you again...");
+    case 5 : 
+        ~chatnpc("<p,neutral>I have to collect herbs now Bwana...");
+}
+npc_del;
+mes("Gujuo disappears into the Kharazi Jungle as swiftly as he appeared...");
+
+[label,gujuo_whatsforme]
+~chatplayer("<p,neutral>What's in it for me if I release Ungadulu?");
+~chatnpc("<p,neutral>We would be very grateful and would be pleased to develop friendly relations with you. Do this thing for us all, my people would be very happy.");
+@multi2("I will release Ungadulu...", gujuo_release_ungadulu,
+        "I'm lost, can you show me the way out?", gujuo_lost);

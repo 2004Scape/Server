@@ -205,6 +205,10 @@ export default class Npc extends PathingEntity {
         this.huntTarget = null;
     }
 
+    clearPatrol() {
+        this.nextPatrolTick = -1;
+    }
+
     pathToTarget(): void {
         if (!this.targetWithinMaxRange()) {
             this.defaultMode();
@@ -491,7 +495,7 @@ export default class Npc extends PathingEntity {
             // requeue waypoints in cases where an npc was interacting and the interaction has been cleared
             this.queueWaypoint(dest.x, dest.z);
         }
-        if (!(this.x === dest.x && this.z === dest.z) && World.currentTick >= this.nextPatrolTick) {
+        if (!(this.x === dest.x && this.z === dest.z) && this.nextPatrolTick > -1 && World.currentTick >= this.nextPatrolTick) {
             this.teleport(dest.x, dest.z, dest.level);
         }
         if (this.x === dest.x && this.z === dest.z && !this.delayedPatrol) {

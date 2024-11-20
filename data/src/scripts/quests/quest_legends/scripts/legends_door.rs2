@@ -1,0 +1,11 @@
+[oploc1,legends_guild_door_1] @open_legends_door(^left);
+[oploc1,legends_guild_door_2] @open_legends_door(^right);
+
+[label,open_legends_door](int $side)
+if (%legends_progress = ^legends_complete) {
+    ~open_and_close_double_door2(~check_axis(coord, loc_coord, loc_angle), $side, door_open);
+}
+else {
+    // RSC / RS3
+    ~mesbox("You need to complete the Legends Guild Quest before you can enter the Legends Guild.");
+}

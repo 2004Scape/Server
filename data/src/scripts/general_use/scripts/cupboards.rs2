@@ -60,7 +60,7 @@ if ($message = true) {
 
 [proc,cupboards_use_message]()(boolean)
 switch_loc (loc_type) {
-    case loc_2612, loc_2613, loc_2524, loc_2525 : return(true);
+    case loc_2612, loc_2613, loc_2524, loc_2525, legends_radimus_cupboard_closed : return(true);
     case default : return(false);
 }
 

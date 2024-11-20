@@ -13,7 +13,7 @@ if (map_members = false) {
     mes(^mes_members_do_that);
     return;
 }
-def_namedobj $axe = ~woodcutting_axe_checker();
+def_namedobj $axe = ~woodcutting_axe_checker(true);
 if ($axe = null) {
     return;
 }
@@ -30,7 +30,7 @@ if(%zanaris_progress < ^zanaris_spoken_shamus) {
     ~mesbox("The tree seems to have a ominous aura to it.|You do not feel like chopping it down.");
     return;
 }
-def_namedobj $axe = ~woodcutting_axe_checker();
+def_namedobj $axe = ~woodcutting_axe_checker(true);
 if ($axe = null) {
     return;
 }

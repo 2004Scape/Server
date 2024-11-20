@@ -53,7 +53,7 @@ huntrange=1
 // osrs stats and Vislvl match 1:1
 // https://raw.githubusercontent.com/Joshua-F/osrs-dumps/refs/heads/master/config/dump.npc npc_2853
 
-[npc_398]
+[legends_guard_west]
 vislevel=hide
 name=Legends Guard
 desc=A Legends Guild Guard, he protects the entrance to the Legends Guild.
@@ -85,8 +85,17 @@ head1=model_57_obj_wear
 head2=model_85_idk_head
 param=damagetype,^stab_style
 // https://raw.githubusercontent.com/Joshua-F/osrs-dumps/refs/heads/master/config/dump.npc npc_3951
+category=legends_guard
+// These guards randomly switch between wandering and patrolling.
+// The timer, random chance, and wander range are guesses
+// ref. https://youtu.be/Na7_bVfAosM?t=7
+timer=25
+wanderrange=3
+defaultmode=wander
+patrol1=0_42_52_38_21,6
+patrol2=0_42_52_43_21,6
 
-[npc_399]
+[legends_guard_east]
 vislevel=hide
 name=Legends Guard
 desc=A Legends Guild Guard, he protects the entrance to the Legends Guild.
@@ -118,6 +127,13 @@ head1=model_57_obj_wear
 head2=model_85_idk_head
 param=damagetype,^stab_style
 // https://raw.githubusercontent.com/Joshua-F/osrs-dumps/refs/heads/master/config/dump.npc npc_3952
+category=legends_guard
+timer=25
+// Guess
+wanderrange=3
+defaultmode=wander
+patrol1=0_42_52_38_20,6
+patrol2=0_42_52_43_20,6
 
 [radimus_erkle]
 vislevel=hide

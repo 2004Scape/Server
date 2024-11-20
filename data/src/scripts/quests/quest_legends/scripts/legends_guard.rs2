@@ -1,0 +1,203 @@
+[opnpc1,_legends_guard] @talk_legends_guard;
+[ai_timer,legends_guard_west] @legends_guard_patrol;
+[ai_timer,legends_guard_east] @legends_guard_patrol;
+
+[label,legends_guard_patrol]
+switch_int(random(2)) {
+    case 0 : npc_setmode(wander);
+    case 1 : npc_setmode(patrol);
+}
+
+[label,talk_legends_guard]
+mes("You approach a nearby guard...");
+p_delay(1);
+@legends_guard_start;
+
+[label,legends_guard_start]
+if (%legends_progress = ^legends_complete) {
+    // In OSRS, these first two chatnpcs don't have a pause button and continue automatically after a delay.
+    // We don't have a good way of doing this afaik (can hide the text on "click here to continue" but it can
+    // still be clicked to trigger "Please wait"), so this behaviour is a guess.
+    npc_say("! ! ! Attention ! ! !");
+    ~chatnpc("<p,neutral>! ! ! Attention ! ! !");
+    npc_say("Legends Guild Member Approaching!");
+    ~chatnpc("<p,neutral>Legends Guild Member Approaching!");
+    ~chatnpc("<p,neutral>Welcome <text_gender("Sir", "Madam")>! I hope you enjoy your time in the Legends' Guild.");
+}
+else if (%legends_progress = ^legends_not_started) {
+    ~chatnpc("<p,neutral>Yes <text_gender("sir", "ma'am")>, how can I help you?");
+    @multi4("What is this place?", legends_guard_what,
+            "How do I get in here?", legends_guard_how,
+            "Can I speak to someone in charge?", legends_guard_charge,
+            "It's ok thanks.", legends_guard_thanks_1);
+}
+else {
+    mes("A guard nods at you as you walk past.");
+    npc_say("I hope the quest is going well <text_gender("Sir", "Madam")>!");
+}
+
+[label,legends_guard_what]
+~chatplayer("<p,quiz>What is this place?");
+~chatnpc("<p,neutral>This is the Legends Guild, <text_gender("sir", "ma'am")>!");
+~chatnpc("<p,neutral>Legendary Gielinor citizens are invited on a quest in order to become members of the guild.");
+@multi2("Can I go on the quest?", legends_guard_eligible,
+        "What kind of quest is it?", legends_guard_quest_info);
+
+[label,legends_guard_eligible]
+~chatplayer("<p,quiz>Can I go on the quest?");
+~mesbox("The guard gets out a scroll of paper and starts looking through it.");
+if (%crest_progress >= ^crest_complete & %hero_progress >= ^hero_complete & 
+    %zombiequeen_progress >= ^zombiequeen_complete & %upass_progress >= ^upass_complete & 
+    %waterfall_progress >= ^waterfall_complete) {
+    if (%questpoints >= ^legends_required_questpoints) {
+        ~chatnpc("<p,neutral>Well, it looks as if you are eligible for the quest. Grand Vizier Erkle will give you the details about the quest. You can go and talk to him about it if you like?");
+            @multi3("Who is Grand Vizier Erkle?", legends_guard_who,
+                    "Yes, I'd like to talk to Grand Vizier Erkle.", legends_guard_enter,
+                    "Some other time perhaps.", legends_guard_decline);
+    }
+    else {
+        def_int $qp_needed = calc(^legends_required_questpoints - %questpoints);
+        ~chatnpc("<p,neutral>Well, you've completed the required quests. However, you also need to have 107 Quest points. Sorry to disappoint you, but you need <tostring($qp_needed)> more quest points. They don't call it the Legends Guild for nothing you know!");
+    }
+}
+else {
+    if (%questpoints >= ^legends_required_questpoints) {
+        ~chatnpc("<p,sad>I'm very sorry but you need to complete more quests before you can go on this quest.");
+    }
+    else {
+        def_int $qp_needed = calc(^legends_required_questpoints - %questpoints);
+        ~chatnpc("<p,sad>I'm very sorry but you need to complete more quests before you can go on this quest. Additionally you need to gain <tostring($qp_needed)> more quest points. They don't call it the Legends Guild for nothing you know!");
+    }
+    @multi2("Which quests do I need to complete?", legends_guard_missing_quests,
+            "Ok thanks.", legends_guard_thanks_2);
+}
+
+[label,legends_guard_who]
+~chatplayer("<p,neutral>Who is Grand Vizier Erkle?");
+~chatnpc("<p,neutral>He is the head of the Legends Guild. His full name is Radimus Erkle. Would you like to talk to him about the quest?");
+@multi2("Yes, I'd like to talk to Grand Vizier Erkle.", legends_guard_enter,
+        "Some other time perhaps.", legends_guard_decline);
+
+[debugproc,le]
+if (p_finduid(uid) = true) {
+    @legends_guard_open_gate;
+}
+
+[label,legends_guard_open_gate]
+if_close;
+if (loc_find(^legends_guild_gate_west_coord, legends_gate_west) = true) {
+    def_coord $inside_dest = ^legends_guild_gate_dest_in_coord;
+    if (coord ! loc_coord & coord ! ^legends_guild_gate_east_coord) {
+        // If you're not right next to the gate: sends you two steps away, then opens gate
+        // and triggers walk to left inside tile on same tick. Always starts on right outside
+        // tile and finishes on left inside tile.
+        def_coord $player_coord = coord;
+        // Can visually run here, so p_walk
+        p_walk(^legends_guild_gate_dest_out_coord);
+        p_delay(max(distance($player_coord, ^legends_guild_gate_dest_out_coord), 1));
+    }
+    else {
+        // If you are right next to it, you just go in straight away and don't cross sides.
+        $inside_dest = movecoord(coord, 0, 0, 1);
+    }
+    sound_synth(grate_open, 0, 0);
+    ~open_double_doors_left(2, double_door_open_and_close_right, null);
+    // Cannot visually run here, so forcewalk
+    ~forcewalk($inside_dest);
+}
+
+[label,legends_guard_enter]
+~chatplayer("<p,neutral>Yes, I'd like to talk to Grand Vizier Erkle.");
+~chatnpc("<p,neutral>Ok, very well... You need to go into the building on the left, he's in his study.");
+~mesbox("The guard unlocks the gate and pushes it open for you.");
+// Capitalisation authentic
+~chatnpc("<p,neutral>Good Luck!");
+@legends_guard_open_gate;
+
+
+[label,legends_guard_decline]
+~chatplayer("<p,neutral>Some other time perhaps?");
+// Dialogue ends here without reply in OSRS
+
+[label,legends_guard_missing_quests]
+~chatplayer("<p,neutral>Which quests do I need to complete?");
+def_int $incomplete_count = 0;
+def_string $quest_name = "";
+def_string $incomplete_quests = "";
+if (%hero_progress < ^hero_complete) {
+    $quest_name = "Heroes' Quest, ";
+    $incomplete_count = add($incomplete_count, 1);
+    $incomplete_quests = append($incomplete_quests, $quest_name);
+}
+if (%crest_progress < ^crest_complete) {
+    $quest_name = "Family Crest, ";
+    $incomplete_count = add($incomplete_count, 1);
+    $incomplete_quests = append($incomplete_quests, $quest_name);
+}
+if (%zombiequeen_progress < ^zombiequeen_complete) {
+    $quest_name = "Shilo Village, ";
+    $incomplete_count = add($incomplete_count, 1);
+    $incomplete_quests = append($incomplete_quests, $quest_name);
+}
+if (%upass_progress < ^upass_complete) {
+    $quest_name = "Underground Pass, ";
+    $incomplete_count = add($incomplete_count, 1);
+    $incomplete_quests = append($incomplete_quests, $quest_name);
+}
+if (%waterfall_progress < ^waterfall_complete) {
+    $quest_name = "Waterfall Quest, ";
+    $incomplete_count = add($incomplete_count, 1);
+    $incomplete_quests = append($incomplete_quests, $quest_name);
+}
+if ($incomplete_count = 1) {
+    $incomplete_quests = ~string_removeright($incomplete_quests, 2);
+    ~chatnpc("<p,neutral>Just one: <$incomplete_quests>.");
+}
+else {
+    $incomplete_quests = ~string_removeright($incomplete_quests, add(string_length($quest_name), 2));
+    $incomplete_quests = append($incomplete_quests, append(" and ", ~string_removeright($quest_name, 2)));
+    ~chatnpc("<p,neutral>Well, you'll need to complete the following quests: <$incomplete_quests>.");
+}
+if (%questpoints < ^legends_required_questpoints) {
+    ~chatnpc("<p,neutral>You also need a total of 107 quest points.");
+}
+else {
+    ~chatnpc("<p,neutral>You already have enough quest points.");
+}
+~chatnpc("<p,neutral>They don't call it the Legends Guild for nothing you know! Best of luck if you intend to become a member!");
+
+[label,legends_guard_quest_info]
+~chatplayer("<p,quiz>What kind of quest is it?");
+~chatnpc("<p,neutral>Well, to be honest <text_gender("sir", "ma'am")>, I'm not really sure. You'll need to talk to Grand Vizier Erkle to find that out.");
+@multi2("Can I go on the quest?", legends_guard_eligible,
+        "Thanks for your help.", legends_guard_thanks_3);
+
+[label,legends_guard_how]
+~chatplayer("<p,quiz>How do I get in here?");
+~chatnpc("<p,neutral>Well <text_gender("sir", "ma'am")>, you'll need to be a legendary citizen of Gielinor.");
+~chatnpc("<p,neutral>If you want to use the Legends Hall, you'll be invited to complete a quest. Once you have completed that quest, you'll be a fully fledged member of the Guild.");
+@multi3("What is this place?", legends_guard_what,
+        "Can I speak to someone in charge?", legends_guard_charge,
+        "Can I go on the quest?", legends_guard_eligible);
+
+[label,legends_guard_charge]
+~chatplayer("<p,neutral>Can I speak to someone in charge?");
+~chatnpc("<p,neutral>Well <text_gender("sir", "ma'am")>, Radimus Erkle is the Grand Vizier of the Legends Guild. He's a very busy man. And he'll only talk to those people eligible for the quest.");
+@multi2("Can I go on the quest?", legends_guard_eligible,
+        "What kind of quest is it?", legends_guard_quest_info);
+
+[label,legends_guard_thanks_1]
+~chatplayer("<p,neutral>It's ok thanks.");
+~chatnpc("<p,neutral>Very well <text_gender("sir", "ma'am")>!");
+
+[label,legends_guard_thanks_2]
+~chatplayer("<p,neutral>Ok, thanks.");
+~chatnpc("<p,neutral>That's no problem... Best of luck if you intend to become a member!");
+
+[label,legends_guard_thanks_3]
+~chatplayer("<p,neutral>Thanks for your help.");
+~chatnpc("<p,neutral>You're welcome...");
+// This is the only dialogue option that triggers this message.
+// Capital G is OSRS authentic
+mes("The Guard marches off on patrol again.");
+
