@@ -72,7 +72,7 @@ enum ScriptOpcode {
     ZONECOUNT,
     LOCCOUNT,
     OBJCOUNT,
-    MAP_MULTI,
+    MAP_MULTIWAY, // official
 
     // Player ops (2000-2499)
     ALLOWDESIGN = 2000,

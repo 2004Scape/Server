@@ -83,8 +83,8 @@
 [command,objcount]()(int) // todo: move this to debug ops
 // Get a random coord centered on $coord within $minradius and $maxradius, using ^map_findsquare_ constants for $type
 [command,map_findsquare](coord $coord, int $minradius, int $maxradius, int $type)(coord)
-// Returns true if the map tile at $coord is multi-way combat area
-[command,map_multi](coord $coord)(boolean)
+// Returns true if the map tile at $coord is in a multi-way combat area
+[command,map_multiway](coord $coord)(boolean)
 
 // Player ops (2000-2499)
 // Get access to $player if they are in the world
