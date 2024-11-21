@@ -18,18 +18,18 @@ export default class OpPlayerTHandler extends MessageHandler<OpPlayerT> {
 
         const spellCom = Component.get(spellComId);
         if (typeof spellCom === 'undefined' || !player.isComponentVisible(spellCom)) {
-            player.unsetMapFlag();
+            player.write(new UnsetMapFlag());
             return false;
         }
 
         const other = World.getPlayer(pid);
         if (!other) {
-            player.unsetMapFlag();
+            player.write(new UnsetMapFlag());
             return false;
         }
 
         if (!player.buildArea.players.has(other)) {
-            player.unsetMapFlag();
+            player.write(new UnsetMapFlag());
             return false;
         }
 
