@@ -14,6 +14,7 @@ import ScriptRunner from '#lostcity/engine/script/ScriptRunner.js';
 import ScriptState from '#lostcity/engine/script/ScriptState.js';
 import ServerTriggerType from '#lostcity/engine/script/ServerTriggerType.js';
 import {HuntIterator} from '#lostcity/engine/script/ScriptIterators.js';
+import {isFlagged} from '#lostcity/engine/GameMap.js';
 
 import BlockWalk from '#lostcity/entity/BlockWalk.js';
 import {EntityQueueRequest, NpcQueueType} from '#lostcity/entity/EntityQueueRequest.js';
@@ -32,11 +33,12 @@ import Interaction from '#lostcity/entity/Interaction.js';
 import EntityLifeCycle from '#lostcity/entity/EntityLifeCycle.js';
 import NpcStat from '#lostcity/entity/NpcStat.js';
 import HuntNobodyNear from '#lostcity/entity/hunt/HuntNobodyNear.js';
+import HeroPoints from '#lostcity/entity/HeroPoints.js';
 
 import LinkList from '#jagex/datastruct/LinkList.js';
 
 import {CollisionFlag} from '@2004scape/rsmod-pathfinder';
-import {isFlagged} from '#lostcity/engine/GameMap.js';
+
 import InfoProt from '#lostcity/network/225/outgoing/prot/InfoProt.js';
 
 export default class Npc extends PathingEntity {
@@ -57,7 +59,6 @@ export default class Npc extends PathingEntity {
 
     // script variables
     activeScript: ScriptState | null = null;
-    delay: number = 0;
     queue: LinkList<EntityQueueRequest> = new LinkList();
     timerInterval: number = 0;
     timerClock: number = 0;
@@ -73,10 +74,7 @@ export default class Npc extends PathingEntity {
 
     lastWanderTick: number = 0;
 
-    heroPoints: {
-        uid: number;
-        points: number;
-    }[] = new Array(16); // be sure to reset when stats are recovered/reset
+    heroPoints: HeroPoints = new HeroPoints(16); // be sure to reset when stats are recovered/reset
 
     constructor(level: number, x: number, z: number, width: number, length: number, lifecycle: EntityLifeCycle, nid: number, type: number, moveRestrict: MoveRestrict, blockWalk: BlockWalk) {
         super(level, x, z, width, length, lifecycle, moveRestrict, blockWalk, MoveStrategy.NAIVE, InfoProt.NPC_FACE_COORD.id, InfoProt.NPC_FACE_ENTITY.id);
@@ -106,35 +104,6 @@ export default class Npc extends PathingEntity {
         this.lastWanderTick = World.currentTick;
     }
 
-    resetHeroPoints() {
-        this.heroPoints = new Array(16);
-        this.heroPoints.fill({ uid: -1, points: 0 });
-    }
-
-    addHero(uid: number, points: number) {
-        // check if hero already exists, then add points
-        const index = this.heroPoints.findIndex(hero => hero && hero.uid === uid);
-        if (index !== -1) {
-            this.heroPoints[index].points += points;
-            return;
-        }
-
-        // otherwise, add a new uid. if all 16 spaces are taken do we replace the lowest?
-        const emptyIndex = this.heroPoints.findIndex(hero => hero && hero.uid === -1);
-        if (emptyIndex !== -1) {
-            this.heroPoints[emptyIndex] = { uid, points };
-            return;
-        }
-    }
-
-    findHero(): number {
-        // quicksort heroes by points
-        this.heroPoints.sort((a, b) => {
-            return b.points - a.points;
-        });
-        return this.heroPoints[0]?.uid ?? -1;
-    }
-
     getVar(id: number) {
         const varn = VarNpcType.get(id);
         return varn.type === ScriptVarType.STRING ? this.varsString[varn.id] : this.vars[varn.id];
@@ -162,7 +131,7 @@ export default class Npc extends PathingEntity {
             for (let index = 0; index < this.baseLevels.length; index++) {
                 this.levels[index] = this.baseLevels[index];
             }
-            this.resetHeroPoints();
+            this.heroPoints.clear();
             this.queue.clear();
             this.vars.fill(0);
             this.varsString.fill(undefined);
@@ -305,10 +274,6 @@ export default class Npc extends PathingEntity {
 
     // ----
 
-    delayed() {
-        return this.delay > 0;
-    }
-
     setTimer(interval: number) {
         if (interval !== -1) {
             this.timerInterval = interval;
@@ -317,10 +282,6 @@ export default class Npc extends PathingEntity {
     }
 
     executeScript(script: ScriptState) {
-        if (!script) {
-            return;
-        }
-
         const state = ScriptRunner.execute(script);
         if (state !== ScriptState.FINISHED && state !== ScriptState.ABORTED) {
             if (state === ScriptState.WORLD_SUSPENDED) {

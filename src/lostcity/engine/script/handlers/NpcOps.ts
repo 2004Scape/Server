@@ -129,7 +129,7 @@ const NpcOps: CommandHandlers = {
     },
 
     [ScriptOpcode.NPC_FINDHERO]: checkedHandler(ActiveNpc, state => {
-        const uid = state.activeNpc.findHero();
+        const uid = state.activeNpc.heroPoints.findHero();
         if (uid === -1) {
             state.pushInt(0);
             return;
@@ -267,7 +267,7 @@ const NpcOps: CommandHandlers = {
 
         // reset hero points if hp current == base
         if (stat === 0 && npc.levels[stat] === npc.baseLevels[stat]) {
-            npc.resetHeroPoints();
+            npc.heroPoints.clear();
         }
     }),
 
@@ -414,7 +414,7 @@ const NpcOps: CommandHandlers = {
 
     // https://x.com/JagexAsh/status/1704492467226091853
     [ScriptOpcode.NPC_HEROPOINTS]: checkedHandler([ScriptPointer.ActivePlayer, ...ActiveNpc], state => {
-        state.activeNpc.addHero(state.activePlayer.uid, check(state.popInt(), NumberNotNull));
+        state.activeNpc.heroPoints.addHero(state.activePlayer.uid, check(state.popInt(), NumberNotNull));
     }),
 
     // https://x.com/JagexAsh/status/1780932943038345562
@@ -440,7 +440,7 @@ const NpcOps: CommandHandlers = {
         npc.levels[stat] = Math.min(added, 255);
 
         if (stat === 0 && npc.levels[stat] >= npc.baseLevels[stat]) {
-            npc.resetHeroPoints();
+            npc.heroPoints.clear();
         }
     }),
 
