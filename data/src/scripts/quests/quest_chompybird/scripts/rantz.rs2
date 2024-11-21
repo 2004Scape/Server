@@ -111,9 +111,9 @@ switch_int(%chompybird_progress) {
 ~chatnpc("<p,angry>Dat's a great chompy, you musta got a lucky shot wiv|da stabbie chucker.");
 %chompybird_progress = ^chompybird_told_to_cook_chompy;
 if (random(1) = 0) {
-    setbit(%chompybird_kills, ^chompybird_varbit_rantz_flavour);
+    %chompybird_kills = setbit(%chompybird_kills, ^chompybird_varbit_rantz_flavour);
 } else {
-    clearbit(%chompybird_kills, ^chompybird_varbit_rantz_flavour);
+    %chompybird_kills = clearbit(%chompybird_kills, ^chompybird_varbit_rantz_flavour);
 }
 
 @rantz_tell_chompy_flavour;

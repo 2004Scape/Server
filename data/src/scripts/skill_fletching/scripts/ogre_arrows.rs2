@@ -130,7 +130,7 @@ inv_add(inv, ogre_arrow, $arrow_count);
 
 // todo tbc exact mechanism
 if (%chompybird_progress ! ^chompybird_not_started) {
-    setbit(%chompybird_kills, ^chompybird_varbit_made_arrows);
+    %chompybird_kills = setbit(%chompybird_kills, ^chompybird_varbit_made_arrows);
 }
 
 stat_advance(fletching, multiply($arrow_count, 10));
