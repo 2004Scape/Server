@@ -89,21 +89,21 @@ queue(crest_complete, 0);
 [label,crest_dimintheis_gauntlets]
 ~chatnpc("<p,neutral>You have my eternal gratitude adventurer, for all you have done in saving my family's honour. Perhaps some day my sons will overcome their differences.");
 if (testbit(%crest_spells_levers_gauntlets, ^crest_cooking_gauntlets_chosen) = true) {
-    if (inv_total(bank, gauntlets_of_cooking) = 0 & inv_total(inv, gauntlets_of_cooking) = 0) {
+    if (~obj_gettotal(gauntlets_of_cooking) = 0) {
         @crest_dimintheis_offer_gauntlets(gauntlets_of_cooking);
     }
 }
 else if (testbit(%crest_spells_levers_gauntlets, ^crest_goldsmithing_gauntlets_chosen) = true) {
-    if (inv_total(bank, gauntlets_of_goldsmithing) = 0 & inv_total(inv, gauntlets_of_goldsmithing) = 0) {
+    if (~obj_gettotal(gauntlets_of_goldsmithing) = 0) {
         @crest_dimintheis_offer_gauntlets(gauntlets_of_goldsmithing);
     }
 }
 else if (testbit(%crest_spells_levers_gauntlets, ^crest_chaos_gauntlets_chosen) = true) {
-    if (inv_total(bank, gauntlets_of_chaos) = 0 & inv_total(inv, gauntlets_of_chaos) = 0) {
+    if (~obj_gettotal(gauntlets_of_chaos) = 0) {
         @crest_dimintheis_offer_gauntlets(gauntlets_of_chaos);
     }
 }
-else if (inv_total(bank, steel_gauntlets) = 0 & inv_total(inv, steel_gauntlets) = 0) {
+else if (~obj_gettotal(steel_gauntlets) = 0) {
     @crest_dimintheis_offer_gauntlets(steel_gauntlets);
 }
 
