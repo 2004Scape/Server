@@ -18,7 +18,7 @@ export default class OpObjTHandler extends MessageHandler<OpObjT> {
 
         const spellCom = Component.get(spellComId);
         if (typeof spellCom === 'undefined' || !player.isComponentVisible(spellCom)) {
-            player.unsetMapFlag();
+            player.write(new UnsetMapFlag());
             return false;
         }
 
@@ -27,19 +27,20 @@ export default class OpObjTHandler extends MessageHandler<OpObjT> {
         const absTopZ = player.originZ + 52;
         const absBottomZ = player.originZ - 52;
         if (x < absLeftX || x > absRightX || z < absBottomZ || z > absTopZ) {
-            player.unsetMapFlag();
+            player.write(new UnsetMapFlag());
             return false;
         }
 
         const obj = World.getObj(x, z, player.level, objId, player.pid);
         if (!obj) {
-            player.unsetMapFlag();
+            player.write(new UnsetMapFlag());
             return false;
         }
 
         player.clearPendingAction();
         player.setInteraction(Interaction.ENGINE, obj, ServerTriggerType.APOBJT, { type: obj.type, com: spellComId });
         player.opcalled = true;
+        player.opucalled = true;
         return true;
     }
 }

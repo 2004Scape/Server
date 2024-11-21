@@ -63,6 +63,7 @@ export default class OpLocUHandler extends MessageHandler<OpLocU> {
 
         player.setInteraction(Interaction.ENGINE, loc, ServerTriggerType.APLOCU);
         player.opcalled = true;
+        player.opucalled = true;
         return true;
     }
 }

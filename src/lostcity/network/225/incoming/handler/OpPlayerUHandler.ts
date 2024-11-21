@@ -58,6 +58,7 @@ export default class OpPlayerUHandler extends MessageHandler<OpPlayerU> {
 
         player.setInteraction(Interaction.ENGINE, other, ServerTriggerType.APPLAYERU, { type: item, com: -1 });
         player.opcalled = true;
+        player.opucalled = true;
         return true;
     }
 }

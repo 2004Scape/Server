@@ -63,6 +63,7 @@ export default class OpObjUHandler extends MessageHandler<OpObjU> {
 
         player.setInteraction(Interaction.ENGINE, obj, ServerTriggerType.APOBJU);
         player.opcalled = true;
+        player.opucalled = true;
         return true;
     }
 }
