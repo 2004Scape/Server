@@ -1,16 +1,7 @@
-import { Counter, Histogram } from 'prom-client';
+import { Counter, Gauge, Histogram } from 'prom-client';
 
-export const trackPlayerCount = new Histogram({
-    name: 'lostcity_active_players',
-    help: 'Active player count.',
-    buckets: [5, 10, 25, 50, 100, 250, 500, 750, 1000, 1500, 2000]
-});
-
-export const trackNpcCount = new Histogram({
-    name: 'lostcity_active_npcs',
-    help: 'Active NPC count.',
-    buckets: [1000, 2000, 3000, 4000, 5000, 6000, 7000, 8000]
-});
+export const trackPlayerCount = new Gauge({ name: 'lostcity_active_players', help: 'Active player count.' });
+export const trackNpcCount = new Gauge({ name: 'lostcity_active_npcs', help: 'Active NPC count.' });
 
 export const trackCycleTime = new Histogram({
     name: 'lostcity_cycle_ms',
