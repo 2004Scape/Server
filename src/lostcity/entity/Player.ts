@@ -518,10 +518,6 @@ export default class Player extends PathingEntity {
 
     // ----
 
-    clearWaypoints(): void {
-        super.clearWaypoints();
-    }
-
     updateMovement(repathAllowed: boolean = true): boolean {
         // players cannot walk if they have a modal open *and* something in their queue, confirmed as far back as 2005
         if (this.moveClickRequest && this.busy() && (this.queue.head() != null || this.engineQueue.head() != null || this.walktrigger !== -1)) {
