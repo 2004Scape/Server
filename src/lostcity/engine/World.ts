@@ -718,10 +718,10 @@ class World {
                             player.pathToTarget();
                             continue;
                         }
-                        if (Environment.NODE_WALKTRIGGER_SETTING === WalkTriggerSetting.PLAYERSETUP) {
+                        if (Environment.NODE_WALKTRIGGER_SETTING !== WalkTriggerSetting.PLAYERPACKET) {
                             player.pathToMoveClick(player.userPath, !Environment.NODE_CLIENT_ROUTEFINDER);
                             
-                            if (!player.opcalled && player.hasWaypoints()) {
+                            if (Environment.NODE_WALKTRIGGER_SETTING === WalkTriggerSetting.PLAYERSETUP && !player.opcalled && player.hasWaypoints()) {
                                 player.processWalktrigger();
                             }
                         }
