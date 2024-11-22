@@ -425,6 +425,14 @@ class World {
                         this.broadcastMes(msg.error.replaceAll('data/src/scripts/', ''));
                         this.broadcastMes('Check the console for more information.');
                     }
+                } else if (msg.type === 'dev_progress') {
+                    if (msg.broadcast) {
+                        console.log(msg.broadcast);
+
+                        this.broadcastMes(msg.broadcast);
+                    } else if (msg.text) {
+                        console.log(msg.text);
+                    }
                 }
             });
 

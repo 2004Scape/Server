@@ -192,7 +192,7 @@ export function packInterface(server: boolean) {
                 comName = line.substring(1, line.length - 1);
                 comId = InterfacePack.getByName(`${ifName}:${comName}`);
                 if (comId === -1 || typeof component[comId] === 'undefined') {
-                    throw new Error(`Missing component ID ${ifName}:${comName} in data/src/pack/interface.pack`);
+                    throw new Error(`Missing component ID ${ifName}:${comName} in data/src/pack/interface.order`);
                 }
 
                 component[comId].root = ifName;

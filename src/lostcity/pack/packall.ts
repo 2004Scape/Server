@@ -1,5 +1,6 @@
 import fs from 'fs';
 import child_process from 'child_process';
+import { parentPort } from 'worker_threads';
 
 import { packServerInterface } from '#lostcity/pack/interface/PackServer.js';
 import { packServerMap } from '#lostcity/pack/map/PackServer.js';
@@ -25,6 +26,13 @@ export async function packServer() {
         throw new Error('The RuneScript compiler is missing and the build process cannot continue.');
     }
 
+    if (parentPort) {
+        parentPort.postMessage({
+            type: 'dev_progress',
+            broadcast: 'Packing server cache (1/2)'
+        });
+    }
+
     revalidatePack();
     packConfigs();
     packServerInterface();
@@ -34,16 +42,37 @@ export async function packServer() {
 
     generateServerSymbols();
 
+    if (parentPort) {
+        parentPort.postMessage({
+            type: 'dev_progress',
+            text: 'Compiling server scripts'
+        });
+    }
+
     try {
         child_process.execSync(`"${Environment.BUILD_JAVA_PATH}" -jar RuneScriptCompiler.jar`, { stdio: 'inherit' });
     } catch (err) {
         throw new Error('Failed to compile scripts.');
     }
 
+    if (parentPort) {
+        parentPort.postMessage({
+            type: 'dev_progress',
+            text: 'Packed server cache (1/2)'
+        });
+    }
+
     fs.writeFileSync('data/pack/server/lastbuild.pack', '');
 }
 
 export async function packClient() {
+    if (parentPort) {
+        parentPort.postMessage({
+            type: 'dev_progress',
+            broadcast: 'Packing client cache (2/2)'
+        });
+    }
+
     await packClientTitle();
     packConfigs();
     packClientInterface();
@@ -55,6 +84,13 @@ export async function packClient() {
     
     packClientMap();
     packClientMusic();
+
+    if (parentPort) {
+        parentPort.postMessage({
+            type: 'dev_progress',
+            text: 'Packed client cache (2/2)'
+        });
+    }
 
     fs.writeFileSync('data/pack/client/crc', CrcBuffer.data);
     fs.writeFileSync('data/pack/client/lastbuild.pack', '');
