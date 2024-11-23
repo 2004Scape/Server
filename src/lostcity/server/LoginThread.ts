@@ -189,7 +189,7 @@ async function handleRequests(parentPort: any, msg: any, priv: forge.pki.rsa.Pri
                     }
                 } else {
                     if (fs.existsSync(`data/players/${safeName}.sav`)) {
-                        save = await fsp.readFile(`data/players/${safeName}.sav`);
+                        save = Uint8Array.from(await fsp.readFile(`data/players/${safeName}.sav`));
                     }
                 }
 
