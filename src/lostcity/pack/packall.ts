@@ -34,7 +34,7 @@ export async function packServer() {
     }
 
     revalidatePack();
-    packConfigs();
+    await packConfigs();
     packServerInterface();
 
     packServerMap();
@@ -74,7 +74,6 @@ export async function packClient() {
     }
 
     await packClientTitle();
-    packConfigs();
     packClientInterface();
     await packClientMedia();
     packClientModel();

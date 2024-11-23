@@ -1,4 +1,5 @@
 import fs from 'fs';
+import readline from 'readline';
 
 import Packet from '#jagex/io/Packet.js';
 
@@ -91,74 +92,29 @@ export class PackedData {
 }
 
 export const CONSTANTS = new Map<string, string>();
-loadDir('data/src/scripts', '.constant', src => {
-    for (let i = 0; i < src.length; i++) {
-        if (!src[i] || src[i].startsWith('//')) {
-            continue;
-        }
 
-        const parts = src[i].split('=');
-        let name = parts[0].trim();
-        const value = parts[1].trim();
-
-        if (name.startsWith('^')) {
-            name = name.substring(1);
-        }
-
-        if (CONSTANTS.has(name)) {
-            throw new Error(`Duplicate constant found: ${name}`);
-        }
-
-        CONSTANTS.set(name, value);
-    }
-});
-
-// var domains are global, so we need to check for conflicts
-
-for (let id = 0; id < VarpPack.size; id++) {
-    const name = VarpPack.getById(id);
-
-    if (VarnPack.getByName(name) !== -1) {
-        throw new Error(`Varp and varn name conflict: ${name}\nPick a different name for one of them!`);
-    }
-
-    if (VarsPack.getByName(name) !== -1) {
-        throw new Error(`Varp and vars name conflict: ${name}\nPick a different name for one of them!`);
-    }
-}
-
-for (let id = 0; id < VarnPack.size; id++) {
-    const name = VarnPack.getById(id);
-
-    if (VarsPack.getByName(name) !== -1) {
-        throw new Error(`Varn and vars name conflict: ${name}\nPick a different name for one of them!`);
-    }
-}
-
-export function findFiles(path: string, extension: string, results: string[] = []): string[] {
+export function readDirTree(dirTree: Set<string>, path: string) {
     const files = fs.readdirSync(path);
 
-    for (let i = 0; i < files.length; i++) {
-        if (fs.statSync(path + '/' + files[i]).isDirectory()) {
-            findFiles(path + '/' + files[i], extension, results);
+    for (const file of files) {
+        if (fs.statSync(path + '/' + file).isDirectory()) {
+            readDirTree(dirTree, path + '/' + file);
         } else {
-            if (files[i].endsWith(extension)) {
-                results.push(path + '/' + files[i]);
-            }
+            dirTree.add(path + '/' + file);
+        }
+    }
+}
+
+export function findFiles(dirTree: Set<string>, extension: string) {
+    const results = new Set<string>();
+
+    for (const entry of dirTree) {
+        if (entry.endsWith(extension)) {
+            results.add(entry);
         }
     }
 
     return results;
-}
-
-export function readFiles(files: string[]): Map<string, string> {
-    const contents = new Map<string, string>(); // key: file, value: content
-
-    for (let i = 0; i < files.length; i++) {
-        contents.set(files[i], fs.readFileSync(files[i], 'utf8').replace(/\r/g, ''));
-    }
-
-    return contents;
 }
 
 export function parseStepError(file: string, lineNumber: number, message: string) {
@@ -187,18 +143,22 @@ export type ConfigDatIdx = { client: PackedData, server: PackedData };
 export type ConfigPackCallback = (configs: Map<string, ConfigLine[]>) => ConfigDatIdx;
 export type ConfigSaveCallback = (dat: Packet, idx: Packet) => void;
 
-export function readConfigs(extension: string, requiredProperties: string[], parse: ConfigParseCallback, pack: ConfigPackCallback, saveClient: ConfigSaveCallback, saveServer: ConfigSaveCallback, srcDir: string = 'data/src/scripts') {
-    const files = readFiles(findFiles(srcDir, extension));
+export async function readConfigs(dirTree: Set<string>, extension: string, requiredProperties: string[], parse: ConfigParseCallback, pack: ConfigPackCallback, saveClient: ConfigSaveCallback, saveServer: ConfigSaveCallback) {
+    const files = findFiles(dirTree, extension);
 
     const configs = new Map<string, ConfigLine[]>();
-    files.forEach((value, file) => {
-        const lines = value.split('\n');
+    for (const file of files) {
+        const reader = readline.createInterface({
+            input: fs.createReadStream(file)
+        });
 
         let debugname: string | null = null;
         let config: ConfigLine[] = [];
 
-        for (let lineNumber = 0; lineNumber < lines.length; lineNumber++) {
-            const line = lines[lineNumber];
+        let lineNumber = 0;
+        for await (const line of reader) {
+            lineNumber++;
+
             if (line.length === 0 || line.startsWith('//')) {
                 continue;
             }
@@ -289,29 +249,78 @@ export function readConfigs(extension: string, requiredProperties: string[], par
 
             configs.set(debugname, config);
         }
-    });
+    }
 
     const { client, server } = pack(configs);
     saveClient(client.dat, client.idx);
     saveServer(server.dat, server.idx);
 }
 
-// We have to pack params for other configs to parse correctly
-if (shouldBuild('data/src/scripts', '.param', 'data/pack/server/param.dat')) {
-    readConfigs('.param', ['type'], parseParamConfig, packParamConfigs, () => {}, (dat: Packet, idx: Packet) => {
-        dat.save('data/pack/server/param.dat');
-        idx.save('data/pack/server/param.idx');
-        dat.release();
-        idx.release();
+function noOp() { }
+
+export async function packConfigs() {
+    CONSTANTS.clear();
+
+    loadDir('data/src/scripts', '.constant', src => {
+        for (let i = 0; i < src.length; i++) {
+            if (!src[i] || src[i].startsWith('//')) {
+                continue;
+            }
+
+            const parts = src[i].split('=');
+            let name = parts[0].trim();
+            const value = parts[1].trim();
+
+            if (name.startsWith('^')) {
+                name = name.substring(1);
+            }
+
+            if (CONSTANTS.has(name)) {
+                throw new Error(`Duplicate constant found: ${name}`);
+            }
+
+            CONSTANTS.set(name, value);
+        }
     });
-}
 
-// Now that they're up to date, load them for us to use elsewhere during this process
-ParamType.load('data/pack');
+    // var domains are global, so we need to check for conflicts
 
-function noOp() {}
+    for (let id = 0; id < VarpPack.size; id++) {
+        const name = VarpPack.getById(id);
 
-export function packConfigs() {
+        if (VarnPack.getByName(name) !== -1) {
+            throw new Error(`Varp and varn name conflict: ${name}\nPick a different name for one of them!`);
+        }
+
+        if (VarsPack.getByName(name) !== -1) {
+            throw new Error(`Varp and vars name conflict: ${name}\nPick a different name for one of them!`);
+        }
+    }
+
+    for (let id = 0; id < VarnPack.size; id++) {
+        const name = VarnPack.getById(id);
+
+        if (VarsPack.getByName(name) !== -1) {
+            throw new Error(`Varn and vars name conflict: ${name}\nPick a different name for one of them!`);
+        }
+    }
+
+    const dirTree = new Set<string>();
+    readDirTree(dirTree, 'data/src/scripts');
+
+    // We have to pack params for other configs to parse correctly
+    if (shouldBuild('data/src/scripts', '.param', 'data/pack/server/param.dat')) {
+        await readConfigs(dirTree, '.param', ['type'], parseParamConfig, packParamConfigs, () => { }, (dat: Packet, idx: Packet) => {
+            dat.save('data/pack/server/param.dat');
+            idx.save('data/pack/server/param.idx');
+            dat.release();
+            idx.release();
+        });
+    }
+
+    // Now that they're up to date, load them for us to use elsewhere during this process
+    ParamType.load('data/pack');
+
     const jag = new Jagfile();
 
     /* client order:
@@ -398,7 +407,7 @@ export function packConfigs() {
         shouldBuild('data/src/scripts', '.dbtable', 'data/pack/server/dbtable.dat') ||
         shouldBuild('src/lostcity/cache/packconfig', '.ts', 'data/pack/server/dbtable.dat')
     ) {
-        readConfigs('.dbtable', [], parseDbTableConfig, packDbTableConfigs, noOp, (dat: Packet, idx: Packet) => {
+        await readConfigs(dirTree, '.dbtable', [], parseDbTableConfig, packDbTableConfigs, noOp, (dat: Packet, idx: Packet) => {
             dat.save('data/pack/server/dbtable.dat');
             idx.save('data/pack/server/dbtable.idx');
             dat.release();
@@ -415,7 +424,7 @@ export function packConfigs() {
         shouldBuild('data/src/scripts', '.dbtable', 'data/pack/server/dbtable.dat') ||
         shouldBuild('src/lostcity/cache/packconfig', '.ts', 'data/pack/server/dbtable.dat')
     ) {
-        readConfigs('.dbrow', [], parseDbRowConfig, packDbRowConfigs, noOp, (dat: Packet, idx: Packet) => {
+        await readConfigs(dirTree, '.dbrow', [], parseDbRowConfig, packDbRowConfigs, noOp, (dat: Packet, idx: Packet) => {
             dat.save('data/pack/server/dbrow.dat');
             idx.save('data/pack/server/dbrow.idx');
             dat.release();
@@ -427,7 +436,7 @@ export function packConfigs() {
         shouldBuild('data/src/scripts', '.enum', 'data/pack/server/enum.dat') ||
         shouldBuild('src/lostcity/cache/packconfig', '.ts', 'data/pack/server/enum.dat')
     ) {
-        readConfigs('.enum', [], parseEnumConfig, packEnumConfigs, noOp, (dat: Packet, idx: Packet) => {
+        await readConfigs(dirTree, '.enum', [], parseEnumConfig, packEnumConfigs, noOp, (dat: Packet, idx: Packet) => {
             dat.save('data/pack/server/enum.dat');
             idx.save('data/pack/server/enum.idx');
             dat.release();
@@ -439,7 +448,7 @@ export function packConfigs() {
         shouldBuild('data/src/scripts', '.inv', 'data/pack/server/inv.dat') ||
         shouldBuild('src/lostcity/cache/packconfig', '.ts', 'data/pack/server/inv.dat')
     ) {
-        readConfigs('.inv', [], parseInvConfig, packInvConfigs, noOp, (dat: Packet, idx: Packet) => {
+        await readConfigs(dirTree, '.inv', [], parseInvConfig, packInvConfigs, noOp, (dat: Packet, idx: Packet) => {
             dat.save('data/pack/server/inv.dat');
             idx.save('data/pack/server/inv.idx');
             dat.release();
@@ -451,7 +460,7 @@ export function packConfigs() {
         shouldBuild('data/src/scripts', '.mesanim', 'data/pack/server/mesanim.dat') ||
         shouldBuild('src/lostcity/cache/packconfig', '.ts', 'data/pack/server/mesanim.dat')
     ) {
-        readConfigs('.mesanim', [], parseMesAnimConfig, packMesAnimConfigs, noOp, (dat: Packet, idx: Packet) => {
+        await readConfigs(dirTree, '.mesanim', [], parseMesAnimConfig, packMesAnimConfigs, noOp, (dat: Packet, idx: Packet) => {
             dat.save('data/pack/server/mesanim.dat');
             idx.save('data/pack/server/mesanim.idx');
             dat.release();
@@ -463,7 +472,7 @@ export function packConfigs() {
         shouldBuild('data/src/scripts', '.struct', 'data/pack/server/struct.dat') ||
         shouldBuild('src/lostcity/cache/packconfig', '.ts', 'data/pack/server/struct.dat')
     ) {
-        readConfigs('.struct', [], parseStructConfig, packStructConfigs, noOp, (dat: Packet, idx: Packet) => {
+        await readConfigs(dirTree, '.struct', [], parseStructConfig, packStructConfigs, noOp, (dat: Packet, idx: Packet) => {
             dat.save('data/pack/server/struct.dat');
             idx.save('data/pack/server/struct.idx');
             dat.release();
@@ -477,7 +486,7 @@ export function packConfigs() {
         shouldBuild('data/src/scripts', '.seq', 'data/pack/server/seq.dat') ||
         shouldBuild('src/lostcity/cache/packconfig', '.ts', 'data/pack/server/seq.dat')
     ) {
-        readConfigs('.seq', [], parseSeqConfig, packSeqConfigs, (dat: Packet, idx: Packet) => {
+        await readConfigs(dirTree, '.seq', [], parseSeqConfig, packSeqConfigs, (dat: Packet, idx: Packet) => {
             if (Environment.BUILD_VERIFY && (!Packet.checkcrc(dat.data, 0, dat.pos, 1638136604) || !Packet.checkcrc(idx.data, 0, idx.pos, 969051566))) {
                 throw new Error('.seq CRC check failed! Custom data detected.');
             }
@@ -496,7 +505,7 @@ export function packConfigs() {
         shouldBuild('data/src/scripts', '.loc', 'data/pack/server/loc.dat') ||
         shouldBuild('src/lostcity/cache/packconfig', '.ts', 'data/pack/server/loc.dat')
     ) {
-        readConfigs('.loc', [], parseLocConfig, packLocConfigs, (dat: Packet, idx: Packet) => {
+        await readConfigs(dirTree, '.loc', [], parseLocConfig, packLocConfigs, (dat: Packet, idx: Packet) => {
             if (Environment.BUILD_VERIFY && (!Packet.checkcrc(dat.data, 0, dat.pos, 891497087) || !Packet.checkcrc(idx.data, 0, idx.pos, -941401128))) {
                 throw new Error('.loc CRC check failed! Custom data detected.');
             }
@@ -515,7 +524,7 @@ export function packConfigs() {
         shouldBuild('data/src/scripts', '.flo', 'data/pack/server/flo.dat') ||
         shouldBuild('src/lostcity/cache/packconfig', '.ts', 'data/pack/server/flo.dat')
     ) {
-        readConfigs('.flo', [], parseFloConfig, packFloConfigs, (dat: Packet, idx: Packet) => {
+        await readConfigs(dirTree, '.flo', [], parseFloConfig, packFloConfigs, (dat: Packet, idx: Packet) => {
             if (Environment.BUILD_VERIFY && (!Packet.checkcrc(dat.data, 0, dat.pos, 1976597026) || !Packet.checkcrc(idx.data, 0, idx.pos, 561308705))) {
                 throw new Error('.flo CRC check failed! Custom data detected.');
             }
@@ -534,7 +543,7 @@ export function packConfigs() {
         shouldBuild('data/src/scripts', '.spotanim', 'data/pack/server/spotanim.dat') ||
         shouldBuild('src/lostcity/cache/packconfig', '.ts', 'data/pack/server/spotanim.dat')
     ) {
-        readConfigs('.spotanim', [], parseSpotAnimConfig, packSpotAnimConfigs, (dat: Packet, idx: Packet) => {
+        await readConfigs(dirTree, '.spotanim', [], parseSpotAnimConfig, packSpotAnimConfigs, (dat: Packet, idx: Packet) => {
             if (Environment.BUILD_VERIFY && (!Packet.checkcrc(dat.data, 0, dat.pos, -1279835623) || !Packet.checkcrc(idx.data, 0, idx.pos, -1696140322))) {
                 throw new Error('.spotanim CRC check failed! Custom data detected.');
             }
@@ -553,7 +562,7 @@ export function packConfigs() {
         shouldBuild('data/src/scripts', '.npc', 'data/pack/server/npc.dat') ||
         shouldBuild('src/lostcity/cache/packconfig', '.ts', 'data/pack/server/npc.dat')
     ) {
-        readConfigs('.npc', [], parseNpcConfig, packNpcConfigs, (dat: Packet, idx: Packet) => {
+        await readConfigs(dirTree, '.npc', [], parseNpcConfig, packNpcConfigs, (dat: Packet, idx: Packet) => {
             if (Environment.BUILD_VERIFY && (!Packet.checkcrc(dat.data, 0, dat.pos, -2140681882) || !Packet.checkcrc(idx.data, 0, idx.pos, -1986014643))) {
                 throw new Error('.npc CRC check failed! Custom data detected.');
             }
@@ -572,7 +581,7 @@ export function packConfigs() {
         shouldBuild('data/src/scripts', '.obj', 'data/pack/server/obj.dat') ||
         shouldBuild('src/lostcity/cache/packconfig', '.ts', 'data/pack/server/obj.dat')
     ) {
-        readConfigs('.obj', [], parseObjConfig, packObjConfigs, (dat: Packet, idx: Packet) => {
+        await readConfigs(dirTree, '.obj', [], parseObjConfig, packObjConfigs, (dat: Packet, idx: Packet) => {
             if (Environment.BUILD_VERIFY && (!Packet.checkcrc(dat.data, 0, dat.pos, -840233510) || !Packet.checkcrc(idx.data, 0, idx.pos, 669212954))) {
                 throw new Error('.obj CRC check failed! Custom data detected.');
             }
@@ -591,7 +600,7 @@ export function packConfigs() {
         shouldBuild('data/src/scripts', '.idk', 'data/pack/server/idk.dat') ||
         shouldBuild('src/lostcity/cache/packconfig', '.ts', 'data/pack/server/idk.dat')
     ) {
-        readConfigs('.idk', [], parseIdkConfig, packIdkConfigs, (dat: Packet, idx: Packet) => {
+        await readConfigs(dirTree, '.idk', [], parseIdkConfig, packIdkConfigs, (dat: Packet, idx: Packet) => {
             if (Environment.BUILD_VERIFY && (!Packet.checkcrc(dat.data, 0, dat.pos, -359342366) || !Packet.checkcrc(idx.data, 0, idx.pos, 667216411))) {
                 throw new Error('.idk CRC check failed! Custom data detected.');
             }
@@ -610,7 +619,7 @@ export function packConfigs() {
         shouldBuild('data/src/scripts', '.varp', 'data/pack/server/varp.dat') ||
         shouldBuild('src/lostcity/cache/packconfig', '.ts', 'data/pack/server/varp.dat')
     ) {
-        readConfigs('.varp', [], parseVarpConfig, packVarpConfigs, (dat: Packet, idx: Packet) => {
+        await readConfigs(dirTree, '.varp', [], parseVarpConfig, packVarpConfigs, (dat: Packet, idx: Packet) => {
             if (Environment.BUILD_VERIFY && (!Packet.checkcrc(dat.data, 0, dat.pos, 705633567) || !Packet.checkcrc(idx.data, 0, idx.pos, -1843167599))) {
                 throw new Error('.varp CRC check failed! Custom data detected.');
             }
@@ -629,7 +638,7 @@ export function packConfigs() {
         shouldBuild('data/src/scripts', '.hunt', 'data/pack/server/hunt.dat') ||
         shouldBuild('src/lostcity/cache/packconfig', '.ts', 'data/pack/server/hunt.dat')
     ) {
-        readConfigs('.hunt', [], parseHuntConfig, packHuntConfigs, noOp, (dat: Packet, idx: Packet) => {
+        await readConfigs(dirTree, '.hunt', [], parseHuntConfig, packHuntConfigs, noOp, (dat: Packet, idx: Packet) => {
             dat.save('data/pack/server/hunt.dat');
             idx.save('data/pack/server/hunt.idx');
             dat.release();
@@ -641,7 +650,7 @@ export function packConfigs() {
         shouldBuild('data/src/scripts', '.varn', 'data/pack/server/varn.dat') ||
         shouldBuild('src/lostcity/cache/packconfig', '.ts', 'data/pack/server/varn.dat')
     ) {
-        readConfigs('.varn', [], parseVarnConfig, packVarnConfigs, noOp, (dat: Packet, idx: Packet) => {
+        await readConfigs(dirTree, '.varn', [], parseVarnConfig, packVarnConfigs, noOp, (dat: Packet, idx: Packet) => {
             dat.save('data/pack/server/varn.dat');
             idx.save('data/pack/server/varn.idx');
             dat.release();
@@ -653,7 +662,7 @@ export function packConfigs() {
         shouldBuild('data/src/scripts', '.vars', 'data/pack/server/vars.dat') ||
         shouldBuild('src/lostcity/cache/packconfig', '.ts', 'data/pack/server/vars.dat')
     ) {
-        readConfigs('.vars', [], parseVarsConfig, packVarsConfigs, noOp, (dat: Packet, idx: Packet) => {
+        await readConfigs(dirTree, '.vars', [], parseVarsConfig, packVarsConfigs, noOp, (dat: Packet, idx: Packet) => {
             dat.save('data/pack/server/vars.dat');
             idx.save('data/pack/server/vars.idx');
             dat.release();
