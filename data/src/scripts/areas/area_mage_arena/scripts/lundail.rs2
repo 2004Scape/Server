@@ -10,7 +10,7 @@ if ($choice = 1) {
 }
 
 ~chatplayer("<p,quiz>What's that big old building above us?");
-~chatnpc("<p,happy>That, my friend, is the mage battle arena. Top mages come from all over Gielinor to compete in the arena.");
+~chatnpc("<p,happy>That, my friend, is the mage battle arena. Top mages come from all over RuneScape to compete in the arena.");
 ~chatplayer("<p,neutral>Wow.");
 ~chatnpc("<p,confused>Few return, most get fried, hence the smell.");
 ~chatplayer("<p,confused>Hmmm.. I did notice.");
