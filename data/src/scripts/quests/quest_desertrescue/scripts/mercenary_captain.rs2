@@ -7,20 +7,24 @@ if(%desertrescue_progress <= ^desertrescue_not_started) {
     @multi3("Wow! A real captain!", mercenary_capt_realcapt, "You there!", mercenary_capt_you, "Hey ugly!", mercenary_capt_ugly);
 }
 
+[label,mercenary_capt_realcapt]
+
+[label,mercenary_capt_you]
+
 [label,mercenary_capt_ugly]
 ~chatplayer("<p,happy>Hey ugly!");
-~chatnpc("<p,angry>I will not tolerate such insults.. Guards, kill <text_gender("him", "her")!");
+~chatnpc("<p,angry>I will not tolerate such insults.. Guards, kill <text_gender("him", "her")>!");
 ~mesbox("The captain marches away in disgust leaving his guards to tackle you.");
 @mercenary_capt_randompunish;
 
 [label,mercenary_capt_randompunish]
 if(npc_find(coord, npc_828, 7, 0) = true) {
     switch_int(random(5)) {
-        case 0:
+        case 0 :
             ~mesbox("A guard approaches you and pretends to start hitting you.");
             if_close;
             p_delay(2);
-        case 1:
+        case 1 :
             if_close;
             mes("An angry guard approaches you and whips out his sword.");
             p_delay(2);

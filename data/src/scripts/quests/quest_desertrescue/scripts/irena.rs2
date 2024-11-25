@@ -1,12 +1,12 @@
 [opnpc1,irena]
-if(%desertresuce_progress = ^desertrescue_not_started) {
+if(%desertrescue_progress = ^desertrescue_not_started) {
         ~mesbox("Irena seems to be very upset and cries as you approach her.");
         ~chatnpc("<p,sad>Boo hoo! Oh dear, my only daughter....");
         switch_int(~p_choice2("What's the matter?", 1, "Cheer up, it might never happen.", 2)) {
-            case 1:
+            case 1 :
                 ~chatplayer("<p,neutral>What's the matter?");
                 ~chatnpc("<p,sad>Oh dear... my daughter, Ana, has gone missing in the desert. I fear that she is lost, or perhaps... *sob* even worse.");
-            case 2:
+            case 2 :
                 ~chatplayer("<p,neutral>Cheer up, it might never happen.");
                 ~chatnpc("<p,sad>It may already have happened you thoughtless oaf! My daughter, Ana, could be dead or dying in the desert!");
         }
@@ -25,12 +25,12 @@ if(%desertresuce_progress = ^desertrescue_not_started) {
 ~chatplayer("<p,neutral>What did she go into the desert for?");
 ~mesbox("Irena's bottom lip trembles a little.");
 ~chatnpc("<p,sad>She was just travelling, a tourist you might say. *Sob* She said she would be safe and now she could be. *Whhhhhaaaaa*");
-~mesbox("Irena cries her heart out in front of you.")
+~mesbox("Irena cries her heart out in front of you.");
 @multi3("When did she go into the desert?", irena_whendesert, "Is there a reward if I get her back?", irena_reward, "I'll look for your daughter.", irena_look);
 
 [label,irena_reward]
 ~chatplayer("<p,neutral>Is there a reward if I get her back?");
-~chatnpc("<p,sad>Well, yes, you'll have my gratitude young <text_gender("man", "lady").");
+~chatnpc("<p,sad>Well, yes, you'll have my gratitude young <text_gender("man", "lady")>.");
 ~chatnpc("<p,sad>And I'm sure that Ana will also be very pleased! And I may see if I can get a small reward together... But I cannot promise anything. So does that mean that you'll look for her then?");
 @multi2("Okay Irena, calm down. I'll get your daughter back for you.", irena_daughter, "No, sorry, I'm just too busy!", irena_toobusy);
 
