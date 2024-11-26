@@ -229,7 +229,7 @@
 // Flash a side tab icon
 [command,tut_flash](int $tab)
 // Set a component's model animation
-[command,if_setanim](component $component,seq $anim)
+[command,if_setanim](component $component, seq $anim)
 // Set a side tab to a specific interface
 [command,if_settab](interface $interface, int $tab)
 [command,.if_settab](interface $interface, int $tab)
@@ -767,7 +767,7 @@
 [command,setbit](int $value, int $bit)(int)
 // Return true if a bit is set
 [command,testbit](int $value, int $bit)(boolean)
-// Get the remainder of $n1 / $2
+// Get the remainder of $n1 / $n2
 [command,modulo](int $n1, int $n2)(int)
 // Raise $n1 to the power of $n2
 [command,pow](int $n1, int $n2)(int)
