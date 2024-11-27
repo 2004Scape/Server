@@ -573,12 +573,13 @@ export default class Npc extends PathingEntity {
             this.defaultMode();
             return;
         }
-        if (player.level !== this.level || !CoordGrid.isWithinDistanceSW(this, player, 15)) {
-            this.teleport(player.x, player.z, player.level);
-        }
 
         this.pathToTarget();
         this.updateMovement();
+
+        if (player.level !== this.level || !CoordGrid.isWithinDistanceSW(this, player, 15)) {
+            this.teleport(player.x, player.z, player.level);
+        }
 
         this.startX = this.x;
         this.startZ = this.z;
