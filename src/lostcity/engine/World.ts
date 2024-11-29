@@ -81,6 +81,7 @@ import { printDebug, printError, printInfo } from '#lostcity/util/Logger.js';
 import { createWorker } from '#lostcity/util/WorkerFactory.js';
 import HuntModeType from '#lostcity/entity/hunt/HuntModeType.js';
 import { trackCycleBandwidthInBytes, trackCycleBandwidthOutBytes, trackCycleClientInTime, trackCycleClientOutTime, trackCycleLoginTime, trackCycleLogoutTime, trackCycleNpcTime, trackCyclePlayerTime, trackCycleTime, trackCycleWorldTime, trackCycleZoneTime, trackNpcCount, trackPlayerCount } from '#lostcity/prometheus.js';
+import WalkTriggerSetting from '#lostcity/util/WalkTriggerSetting.js';
 
 class World {
     private friendThread: Worker | NodeWorker = createWorker(Environment.STANDALONE_BUNDLE ? 'FriendThread.js' : './lostcity/server/FriendThread.ts');
@@ -715,7 +716,9 @@ class World {
                             player.masks |= InfoProt.PLAYER_FACE_ENTITY.id;
                         }
         
-                        if (player.busy() || !player.opcalled) {
+                        if ((!player.busy() && player.opcalled) || player.opucalled) { // opu in osrs doesnt have a busy check
+                            player.moveClickRequest = false;
+                        } else {
                             player.moveClickRequest = true;
                         }
         
@@ -723,11 +726,12 @@ class World {
                             player.pathToTarget();
                             continue;
                         }
-        
-                        player.pathToMoveClick(player.userPath, !Environment.NODE_CLIENT_ROUTEFINDER);
-    
-                        if (!player.opcalled && player.hasWaypoints()) {
-                            player.processWalktrigger();
+                        if (Environment.NODE_WALKTRIGGER_SETTING !== WalkTriggerSetting.PLAYERPACKET) {
+                            player.pathToMoveClick(player.userPath, !Environment.NODE_CLIENT_ROUTEFINDER);
+                            
+                            if (Environment.NODE_WALKTRIGGER_SETTING === WalkTriggerSetting.PLAYERSETUP && !player.opcalled && player.hasWaypoints()) {
+                                player.processWalktrigger();
+                            }
                         }
                     }
         
@@ -959,6 +963,7 @@ class World {
             player.pid = pid;
             player.uid = ((Number(player.username37 & 0x1fffffn) << 11) | player.pid) >>> 0;
             player.tele = true;
+            player.moveClickRequest = false;
 
             this.gameMap.getZone(player.x, player.z, player.level).enter(player);
             player.onLogin(); // todo: check response from login script?

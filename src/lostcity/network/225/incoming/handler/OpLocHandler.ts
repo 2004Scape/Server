@@ -21,18 +21,19 @@ export default class OpLocHandler extends MessageHandler<OpLoc> {
         const absTopZ = player.originZ + 52;
         const absBottomZ = player.originZ - 52;
         if (x < absLeftX || x > absRightX || z < absBottomZ || z > absTopZ) {
+            player.write(new UnsetMapFlag());
             return false;
         }
 
         const loc = World.getLoc(x, z, player.level, locId);
         if (!loc) {
-            player.unsetMapFlag();
+            player.write(new UnsetMapFlag());
             return false;
         }
 
         const locType = LocType.get(loc.type);
         if (!locType.op || !locType.op[message.op - 1]) {
-            player.unsetMapFlag();
+            player.write(new UnsetMapFlag());
             return false;
         }
 

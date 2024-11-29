@@ -18,7 +18,7 @@ export default class OpLocTHandler extends MessageHandler<OpLocT> {
 
         const spellCom = Component.get(spellComId);
         if (typeof spellCom === 'undefined' || !player.isComponentVisible(spellCom)) {
-            player.unsetMapFlag();
+            player.write(new UnsetMapFlag());
             return false;
         }
 
@@ -27,13 +27,13 @@ export default class OpLocTHandler extends MessageHandler<OpLocT> {
         const absTopZ = player.originZ + 52;
         const absBottomZ = player.originZ - 52;
         if (x < absLeftX || x > absRightX || z < absBottomZ || z > absTopZ) {
-            player.unsetMapFlag();
+            player.write(new UnsetMapFlag());
             return false;
         }
 
         const loc = World.getLoc(x, z, player.level, locId);
         if (!loc) {
-            player.unsetMapFlag();
+            player.moveClickRequest = false;
             return false;
         }
 

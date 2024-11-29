@@ -20,7 +20,7 @@ export default class OpObjUHandler extends MessageHandler<OpObjU> {
 
         const com = Component.get(comId);
         if (typeof com === 'undefined' || !player.isComponentVisible(com)) {
-            player.unsetMapFlag();
+            player.write(new UnsetMapFlag());
             return false;
         }
 
@@ -29,32 +29,32 @@ export default class OpObjUHandler extends MessageHandler<OpObjU> {
         const absTopZ = player.originZ + 52;
         const absBottomZ = player.originZ - 52;
         if (x < absLeftX || x > absRightX || z < absBottomZ || z > absTopZ) {
-            player.unsetMapFlag();
+            player.write(new UnsetMapFlag());
             return false;
         }
 
         const listener = player.invListeners.find(l => l.com === comId);
         if (!listener) {
-            player.unsetMapFlag();
+            player.write(new UnsetMapFlag());
             return false;
         }
 
         const inv = player.getInventoryFromListener(listener);
         if (!inv || !inv.validSlot(slot) || !inv.hasAt(slot, item)) {
-            player.unsetMapFlag();
+            player.write(new UnsetMapFlag());
             return false;
         }
 
         const obj = World.getObj(x, z, player.level, objId, player.pid);
         if (!obj) {
-            player.unsetMapFlag();
+            player.write(new UnsetMapFlag());
             return false;
         }
 
         player.clearPendingAction();
         if (ObjType.get(item).members && !Environment.NODE_MEMBERS) {
             player.messageGame("To use this item please login to a members' server.");
-            player.unsetMapFlag();
+            player.write(new UnsetMapFlag());
             return false;
         }
 
@@ -63,6 +63,7 @@ export default class OpObjUHandler extends MessageHandler<OpObjU> {
 
         player.setInteraction(Interaction.ENGINE, obj, ServerTriggerType.APOBJU);
         player.opcalled = true;
+        player.opucalled = true;
         return true;
     }
 }

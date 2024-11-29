@@ -12,29 +12,29 @@ import Environment from '#lostcity/util/Environment.js';
 export default class OpHeldUHandler extends MessageHandler<OpHeldU> {
     handle(message: OpHeldU, player: Player): boolean {
         const { obj: item, slot, component: comId, useObj: useItem, useSlot, useComponent: useComId } = message;
+        if (player.delayed()) {
+            return false;
+        }
 
         const com = Component.get(comId);
         if (typeof com === 'undefined' || !player.isComponentVisible(com)) {
-            player.unsetMapFlag();
             return false;
         }
 
         const useCom = Component.get(comId);
         if (typeof useCom === 'undefined' || !player.isComponentVisible(useCom)) {
-            player.unsetMapFlag();
             return false;
         }
 
         {
             const listener = player.invListeners.find(l => l.com === comId);
             if (!listener) {
-                player.unsetMapFlag();
                 return false;
             }
 
             const inv = player.getInventoryFromListener(listener);
             if (!inv || !inv.validSlot(slot) || !inv.hasAt(slot, item)) {
-                player.unsetMapFlag();
+                player.moveClickRequest = false; // removed early osrs
                 return false;
             }
         }
@@ -42,19 +42,14 @@ export default class OpHeldUHandler extends MessageHandler<OpHeldU> {
         {
             const listener = player.invListeners.find(l => l.com === useComId);
             if (!listener) {
-                player.unsetMapFlag();
                 return false;
             }
 
             const inv = player.getInventoryFromListener(listener);
             if (!inv || !inv.validSlot(useSlot) || !inv.hasAt(useSlot, useItem)) {
-                player.unsetMapFlag();
+                player.moveClickRequest = false; // removed early osrs
                 return false;
             }
-        }
-
-        if (player.delayed()) {
-            return false;
         }
 
         player.lastItem = item;
@@ -72,7 +67,6 @@ export default class OpHeldUHandler extends MessageHandler<OpHeldU> {
 
         if ((objType.members || useObjType.members) && !Environment.NODE_MEMBERS) {
             player.messageGame("To use this item please login to a members' server.");
-            player.unsetMapFlag();
             return false;
         }
 

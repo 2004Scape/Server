@@ -20,37 +20,37 @@ export default class OpNpcUHandler extends MessageHandler<OpNpcU> {
 
         const com = Component.get(comId);
         if (typeof com === 'undefined' || !player.isComponentVisible(com)) {
-            player.unsetMapFlag();
+            player.write(new UnsetMapFlag());
             return false;
         }
 
         const listener = player.invListeners.find(l => l.com === comId);
         if (!listener) {
-            player.unsetMapFlag();
+            player.write(new UnsetMapFlag());
             return false;
         }
 
         const inv = player.getInventoryFromListener(listener);
         if (!inv || !inv.validSlot(slot) || !inv.hasAt(slot, item)) {
-            player.unsetMapFlag();
+            player.write(new UnsetMapFlag());
             return false;
         }
 
         const npc = World.getNpc(nid);
         if (!npc || npc.delayed()) {
-            player.unsetMapFlag();
+            player.write(new UnsetMapFlag());
             return false;
         }
 
         if (!player.buildArea.npcs.has(npc)) {
-            player.unsetMapFlag();
+            player.write(new UnsetMapFlag());
             return false;
         }
 
         player.clearPendingAction();
         if (ObjType.get(item).members && !Environment.NODE_MEMBERS) {
             player.messageGame("To use this item please login to a members' server.");
-            player.unsetMapFlag();
+            player.write(new UnsetMapFlag());
             return false;
         }
 
@@ -59,6 +59,7 @@ export default class OpNpcUHandler extends MessageHandler<OpNpcU> {
 
         player.setInteraction(Interaction.ENGINE, npc, ServerTriggerType.APNPCU, { type: npc.type, com: -1 });
         player.opcalled = true;
+        player.opucalled = true;
         return true;
     }
 }

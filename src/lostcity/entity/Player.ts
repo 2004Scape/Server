@@ -69,6 +69,7 @@ import ChatFilterSettings from '#lostcity/network/outgoing/model/ChatFilterSetti
 import { ChatModePrivate, ChatModePublic, ChatModeTradeDuel } from '#lostcity/util/ChatModes.js';
 import { isNetworkPlayer } from '#lostcity/entity/NetworkPlayer.js';
 import InfoProt from '#lostcity/network/225/outgoing/prot/InfoProt.js';
+import WalkTriggerSetting from '#lostcity/util/WalkTriggerSetting.js';
 
 const levelExperience = new Int32Array(99);
 
@@ -517,11 +518,6 @@ export default class Player extends PathingEntity {
 
     // ----
 
-    clearWaypoints(): void {
-        this.moveClickRequest = false;
-        super.clearWaypoints();
-    }
-
     updateMovement(repathAllowed: boolean = true): boolean {
         // players cannot walk if they have a modal open *and* something in their queue, confirmed as far back as 2005
         if (this.moveClickRequest && this.busy() && (this.queue.head() != null || this.engineQueue.head() != null || this.walktrigger !== -1)) {
@@ -529,6 +525,9 @@ export default class Player extends PathingEntity {
             return false;
         }
 
+        if (Environment.NODE_WALKTRIGGER_SETTING === WalkTriggerSetting.PLAYERMOVEMENT && !this.target && this.hasWaypoints()) {
+            this.processWalktrigger();
+        }
         if (repathAllowed && this.target instanceof PathingEntity && !this.interacted && this.walktrigger === -1) {
             this.pathToPathingTarget();
         }
@@ -557,10 +556,6 @@ export default class Player extends PathingEntity {
         }
         if (moved) {
             this.lastMovement = World.currentTick + 1;
-        }
-        if (!this.hasWaypoints()) {
-            this.moveClickRequest = false;
-            // this.unsetMapFlag(); // should be handled client-sided
         }
         return moved;
     }

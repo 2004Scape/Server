@@ -5,6 +5,7 @@ import { CoordGrid } from '#lostcity/engine/CoordGrid.js';
 import Environment from '#lostcity/util/Environment.js';
 import VarPlayerType from '#lostcity/cache/config/VarPlayerType.js';
 import UnsetMapFlag from '#lostcity/network/outgoing/model/UnsetMapFlag.js';
+import WalkTriggerSetting from '#lostcity/util/WalkTriggerSetting.js';
 
 export default class MoveClickHandler extends MessageHandler<MoveClick> {
     handle(message: MoveClick, player: NetworkPlayer): boolean {
@@ -34,6 +35,9 @@ export default class MoveClickHandler extends MessageHandler<MoveClick> {
             const dest = message.path[message.path.length - 1];
             player.userPath = [CoordGrid.packCoord(player.level, dest.x, dest.z)];
         }
+        if (Environment.NODE_WALKTRIGGER_SETTING === WalkTriggerSetting.PLAYERPACKET) {
+            player.pathToMoveClick(player.userPath, !Environment.NODE_CLIENT_ROUTEFINDER);
+        }
         player.interactWalkTrigger = false;
         if (!message.opClick) {
             player.clearInteraction();
@@ -42,6 +46,9 @@ export default class MoveClickHandler extends MessageHandler<MoveClick> {
                 player.setVar(VarPlayerType.TEMP_RUN, 0);
             } else {
                 player.setVar(VarPlayerType.TEMP_RUN, message.ctrlHeld);
+            }
+            if (Environment.NODE_WALKTRIGGER_SETTING === WalkTriggerSetting.PLAYERPACKET && player.hasWaypoints()) {
+                player.processWalktrigger();
             }
         }
         return true;

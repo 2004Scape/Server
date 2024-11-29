@@ -18,18 +18,18 @@ export default class OpNpcHandler extends MessageHandler<OpNpc> {
 
         const npc = World.getNpc(nid);
         if (!npc || npc.delayed()) {
-            player.unsetMapFlag();
+            player.write(new UnsetMapFlag());
             return false;
         }
 
         if (!player.buildArea.npcs.has(npc)) {
-            player.unsetMapFlag();
+            player.write(new UnsetMapFlag());
             return false;
         }
 
         const npcType = NpcType.get(npc.type);
         if (!npcType.op || !npcType.op[message.op - 1]) {
-            player.unsetMapFlag();
+            player.write(new UnsetMapFlag());
             return false;
         }
 

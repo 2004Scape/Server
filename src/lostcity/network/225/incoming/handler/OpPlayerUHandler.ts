@@ -20,37 +20,37 @@ export default class OpPlayerUHandler extends MessageHandler<OpPlayerU> {
 
         const com = Component.get(comId);
         if (typeof com === 'undefined' || !player.isComponentVisible(com)) {
-            player.unsetMapFlag();
+            player.write(new UnsetMapFlag());
             return false;
         }
 
         const listener = player.invListeners.find(l => l.com === comId);
         if (!listener) {
-            player.unsetMapFlag();
+            player.write(new UnsetMapFlag());
             return false;
         }
 
         const inv = player.getInventoryFromListener(listener);
         if (!inv || !inv.validSlot(slot) || !inv.hasAt(slot, item)) {
-            player.unsetMapFlag();
+            player.write(new UnsetMapFlag());
             return false;
         }
 
         const other = World.getPlayer(pid);
         if (!other) {
-            player.unsetMapFlag();
+            player.write(new UnsetMapFlag());
             return false;
         }
 
         if (!player.buildArea.players.has(other)) {
-            player.unsetMapFlag();
+            player.write(new UnsetMapFlag());
             return false;
         }
 
         player.clearPendingAction();
         if (ObjType.get(item).members && !Environment.NODE_MEMBERS) {
             player.messageGame("To use this item please login to a members' server.");
-            player.unsetMapFlag();
+            player.write(new UnsetMapFlag());
             return false;
         }
 
@@ -58,6 +58,7 @@ export default class OpPlayerUHandler extends MessageHandler<OpPlayerU> {
 
         player.setInteraction(Interaction.ENGINE, other, ServerTriggerType.APPLAYERU, { type: item, com: -1 });
         player.opcalled = true;
+        player.opucalled = true;
         return true;
     }
 }

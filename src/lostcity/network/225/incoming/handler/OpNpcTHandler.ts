@@ -18,24 +18,25 @@ export default class OpNpcTHandler extends MessageHandler<OpNpcT> {
 
         const spellCom = Component.get(spellComId);
         if (typeof spellCom === 'undefined' || !player.isComponentVisible(spellCom)) {
-            player.unsetMapFlag();
+            player.write(new UnsetMapFlag());
             return false;
         }
 
         const npc = World.getNpc(nid);
         if (!npc || npc.delayed()) {
-            player.unsetMapFlag();
+            player.write(new UnsetMapFlag());
             return false;
         }
 
         if (!player.buildArea.npcs.has(npc)) {
-            player.unsetMapFlag();
+            player.write(new UnsetMapFlag());
             return false;
         }
 
         player.clearPendingAction();
         player.setInteraction(Interaction.ENGINE, npc, ServerTriggerType.APNPCT, { type: npc.type, com: spellComId });
         player.opcalled = true;
+        player.opucalled = true;
         return true;
     }
 }
