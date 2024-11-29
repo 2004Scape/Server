@@ -774,7 +774,6 @@ param=slashdefence,-21
 param=crushdefence,-21
 param=magicdefence,-21
 param=rangedefence,-21
-category=citizen
 
 [woman_east_ardougne]
 name=Woman
