@@ -18,23 +18,43 @@ if(%desertrescue_progress <= ^desertrescue_not_started) {
 @mercenary_capt_randompunish;
 
 [label,mercenary_capt_randompunish]
+def_int $cur_stage = getbit_range(%desertrescue_map_mechanisms, 0, 2);
+def_int $next_stage = calc($cur_stage + 1);
+if($next_stage > 3) $next_stage = 0;
+%desertrescue_map_mechanisms = setbit_range_toint(%desertrescue_map_mechanisms, $next_stage, 0, 2);
 if(npc_find(coord, npc_828, 7, 0) = true) {
-    switch_int(random(5)) {
+    switch_int($cur_stage) {
         case 0 :
             ~mesbox("A guard approaches you and pretends to start hitting you.");
             if_close;
             p_delay(2);
+            ~chatnpc("<p,neutral>Take that you infidel!");
+            ~mesbox("The guard leans closer to you and says in a low voice.");
+            ~chatnpc("<p,neutral>We're sick of having to kill every lunatic that comes along and insults the captain, it makes such a mess. Thankfully, he's a bit decrepit so he doesn't notice so please, buzz off and don't come here again.");
         case 1 :
+            ~mesbox("The guard approaches you again and gives you a sharp kick.");
+            ~damage_self(1);
+            say("Ow!");
+            ~chatnpc("<p,neutral>Take that you mad child of a dog!"); // can't get past this in osrs cause damage closes if, RSC dialogue
+            ~mesbox("The guard leans closer to you and says in a low voice.");
+            ~chatnpc("<p,neutral>What are you doing here again?|Didn't I tell you to get out of here!|Now get lost, properly this time!|Or we may be forced to see his orders through properly.");
+        case 2 : 
+            ~chatnpc("<p,neutral>Prepare to die effendi!");
+            ~mesbox("The guard leans close and whispers");
+            ~chatnpc("<p,neutral>Are you mad effendi? This is your last chance! Leave now and never come back or I'll introduce you to my friend.");
+            ~objbox(bronze_scimitar, "The guard half draws his fearsome looking scimitar.", 250, 0, 0);
+            ~chatnpc("<p,happy>And we'll be pleased to clean the mess up after you've been dispatched.");
+        case 3 :
             if_close;
             mes("An angry guard approaches you and whips out his sword.");
             p_delay(2);
-            mes("Okay, that does it!");
+            npc_say("Okay, that does it!");
             p_delay(2);
-            mes("You're in serious trouble now!");
+            npc_say("You're in serious trouble now!");
             p_delay(2);
-            mes("Okay men, we need to teach this person a thing or two");
+            npc_say("Okay men, we need to teach this person a thing or two");
             p_delay(2);
-            mes("about desert survival techniques.");
+            npc_say("about desert survival techniques.");
             p_delay(2);
             mes("The guards grab you and rough you up a bit.");
             p_delay(2);
