@@ -803,7 +803,6 @@ param=crushdefence,-21
 param=magicdefence,-21
 param=rangedefence,-21
 param=damagetype,^crush_style
-// TODO: check dialogues category=citizen
 // osrs stats and Vislvl match 1:1
 
 [woman_east_ardougne]
