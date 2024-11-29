@@ -96,6 +96,7 @@ model6=model_323_obj_wear
 model7=model_555_npc
 head1=model_51_obj_wear
 param=attack_anim,human_staff_spike
+param=defend_anim,human_staff_def
 param=attack_sound,staff_stab
 // stats based off: https://oldschool.runescape.wiki/w/Mourner?oldid=9768605#Lv_18, 70t respawn on rs3
 respawnrate=140
@@ -178,6 +179,7 @@ defence=10
 param=stabdefence,3
 param=slashdefence,2
 param=crushdefence,4
+// https://raw.githubusercontent.com/Joshua-F/osrs-dumps/refs/heads/master/config/dump.npc npc_9230 (Biohazard boss)
 
 [npc_371]
 name=Mourner

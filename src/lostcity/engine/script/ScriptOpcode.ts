@@ -72,7 +72,7 @@ enum ScriptOpcode {
     ZONECOUNT,
     LOCCOUNT,
     OBJCOUNT,
-    MAP_MULTI,
+    MAP_MULTIWAY, // official
 
     // Player ops (2000-2499)
     ALLOWDESIGN = 2000,
@@ -435,6 +435,8 @@ enum ScriptOpcode {
     MAP_LASTCLEANUP,
     MAP_LASTBANDWIDTHIN,
     MAP_LASTBANDWIDTHOUT,
+    TIMESPENT, // custom: used to profile script execution (record start time)
+    GETTIMESPENT, // custom: used to profile script execution (current duration)
 }
 
 export default ScriptOpcode;

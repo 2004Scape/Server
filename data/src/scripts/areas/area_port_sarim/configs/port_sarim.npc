@@ -20,7 +20,6 @@ model4=model_151_idk
 model5=model_176_idk
 model6=model_259_npc
 head1=model_55_idk_head
-wanderrange=3
 
 [thurgo]
 vislevel=hide
@@ -358,13 +357,14 @@ wanderrange=2
 maxrange=4
 // TODO respawnrate
 hitpoints=5
-param=damagetype,2
+param=damagetype,^crush_style
 param=attack_anim,goblin_attack_unarmed
 param=defend_anim,goblin_block
 param=death_anim,goblin_death
 param=attack_sound,goblin_attack
 param=defend_sound,goblin_hit
 param=death_sound,goblin_death
+// osrs stats and Vislvl match 1:1
 
 [klarense]
 vislevel=hide

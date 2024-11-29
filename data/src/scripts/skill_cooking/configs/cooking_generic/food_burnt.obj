@@ -11,7 +11,6 @@ recol1d=5285
 2dyan=1748
 2dxan=88
 weight=4oz
-tradeable=yes
 
 //guess
 [burnt_meat]
@@ -29,4 +28,3 @@ recol2d=7399
 2dxan=308
 cost=1
 weight=8oz
-tradeable=yes

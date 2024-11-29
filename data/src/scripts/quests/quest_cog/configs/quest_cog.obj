@@ -7,6 +7,7 @@ members=yes
 2dxan=292
 weight=1kg
 category=cog
+tradeable=no
 
 [black_cog]
 name=Cog
@@ -19,6 +20,7 @@ members=yes
 2dxan=292
 weight=1kg
 category=cog
+tradeable=no
 
 [blue_cog]
 name=Cog
@@ -31,6 +33,7 @@ members=yes
 2dxan=292
 weight=1kg
 category=cog
+tradeable=no
 
 [red_cog]
 name=Cog
@@ -43,6 +46,7 @@ members=yes
 2dxan=292
 weight=1kg
 category=cog
+tradeable=no
 
 [rat_poison]
 name=Rat poison
@@ -53,3 +57,4 @@ members=yes
 2dyan=1828
 2dxan=68
 weight=5oz
+tradeable=no

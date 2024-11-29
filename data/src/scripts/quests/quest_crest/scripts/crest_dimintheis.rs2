@@ -1,0 +1,135 @@
+[opnpc1,crest_dimintheis]
+if (%crest_progress = ^crest_complete) {
+    @crest_dimintheis_gauntlets;
+}
+else if (%crest_progress = ^crest_spoken_dimintheis) {
+    ~chatplayer("<p,quiz>Where did you say I could find your son Caleb again?");
+    ~chatnpc("<p,neutral>The only thing I have heard of my son Caleb is that he is trying to earn his fortune as a great chef in the lands beyond White Wolf Mountain.");
+}
+else if (%crest_progress > ^crest_spoken_caleb) {
+    if (inv_total(inv, family_crest) >= 1) {
+        @crest_dimintheis_complete;
+    }
+    else {
+        ~chatnpc("<p,neutral>Have you any news on my crest yet?");
+        ~chatplayer("<p,neutral>I'm still looking for it.");
+    }
+}
+else {
+    ~chatnpc("<p,neutral>Hello. My name is Dimintheis, of the noble family Fitzharmon.");
+    @multi3("Why would a nobleman live in a dump like this?", crest_dimintheis_dump, "You're rich then? Can I have some money?", crest_dimintheis_rich, "Hi, I am a bold adventurer.", crest_dimintheis_adventurer);
+}
+
+[label,crest_dimintheis_dump]
+~chatplayer("<p,quiz>Why would a nobleman live in a dump like this?");
+~chatnpc("<p,sad>The King has taken my estate from me until such time as I can show my family crest to him.");
+@multi2("Why would he do that?", crest_dimintheis_why, "So where is this crest?", crest_dimintheis_where);
+
+[label,crest_dimintheis_why]
+~chatplayer("<p,quiz>Why would he do that?");
+@crest_dimintheis_lore;
+
+[label,crest_dimintheis_lore]
+~chatnpc("<p,neutral>Well, there is a long standing rule of chivalry amongst the Varrockian aristocracy, where each noble family is in possession of a unique crest, which signifies the honour and lineage of the family. More than this");
+~chatnpc("<p,neutral>however, it also represents the lawful rights of each family to prove their ownership of their wealth and lands. If the family crest is lost, then the family's estate is handed over to the current monarch until the crest is");
+~chatnpc("<p,neutral>restored.");
+~chatnpc("<p,neutral>This dates back to the times when there was much in- fighting amongst the noble families and their clans, and was introduced as a way of reducing the bloodshed that was devestating the ranks of the ruling classes at that");
+~chatnpc("<p,neutral>time. When you captured a rival family's clan, you also captured their lands and wealth.");
+@crest_dimintheis_where;
+
+[label,crest_dimintheis_where]
+~chatplayer("<p,neutral>So where is this crest?");
+~chatnpc("<p,sad>Well, my three sons took it with them many years ago when they rode out to fight in the war against the undead necromancer and his army in the battle to save Varrock.");
+~chatnpc("<p,neutral>For many years I had assumed them all dead, as I had heard no word from them, but recently I heard word that my son Caleb is alive and well, and trying to earn his fortune as a great chef in the lands beyond White");
+~chatnpc("<p,neutral>Wolf Mountain, although I know not where.");
+@multi2("Ok, I will help you.", crest_dimintheis_accept, "I'm not interested in that adventure right now.", crest_dimintheis_decline);
+
+[label,crest_dimintheis_accept]
+%crest_progress = ^crest_spoken_dimintheis;
+~send_quest_progress(questlist:crest, %crest_progress, ^crest_complete);
+~chatplayer("<p,neutral>Ok, I will help you.");
+~chatnpc("<p,neutral>I thank you greatly adventurer! Also... if you find Caleb... please... let him know his father still loves him....");
+
+[label,crest_dimintheis_decline]
+~chatplayer("<p,neutral>I'm not interested in that adventure right now.");
+~chatnpc("<p,sad>I realise it was a lot to ask of a stranger.");
+
+[label,crest_dimintheis_rich]
+~chatplayer("<p,quiz>You're rich then? Can I have some money?");
+~chatnpc("<p,angry>Gah! Lousy Beggar! Your sort is what's ruining this great land! Why don't you just go and get a job if you need the money so badly?");
+
+[label,crest_dimintheis_adventurer]
+~chatplayer("<p,neutral>Hi, I am a bold adventurer.");
+~chatnpc("<p,neutral>An adventurer hmmm? How lucky. I may have an adventure for you. I desperately need my family crest returning to me. It is of utmost importance.");
+@multi3("Why are you so desperate for it?", crest_dimintheis_desperate, "So where is this crest?", crest_dimintheis_where, "I'm not interested in that adventure right now.", crest_dimintheis_decline);
+
+[label,crest_dimintheis_desperate]
+~chatplayer("<p,quiz>Why are you so desperate for it?");
+@crest_dimintheis_lore;
+
+[label,crest_dimintheis_complete]
+~chatplayer("<p,neutral>I have retrieved your crest.");
+~chatnpc("<p,happy>Adventurer... I can only thank you for your kindness, although the words are insufficient to express the gratitude I feel!");
+~chatnpc("<p,happy>You are truly a hero in every sense, and perhaps your efforts can begin to patch the wounds that have torn this family apart...");
+~chatnpc("<p,neutral>I know not how I can adequately reward you for your efforts... although I do have these mystical gauntlets, a family heirloom that through some power unknown to me, have always returned to the head of the family");
+~chatnpc("<p,neutral>whenever lost, or if the owner has died. I will pledge these to you, and if you should lose them return to me, and they will be here.");
+~chatnpc("<p,neutral>They can also be granted extra powers. Take them to one of my sons, they should be able to imbue them with a skill for you.");
+// Takes all crests and pieces from bank and inventory (based on OSRS wiki and Youtube comments on guide video)
+// https://oldschool.runescape.wiki/w/Family_crest_(item)
+~del_all_if_exists(inv, family_crest);
+~del_all_if_exists(bank, family_crest);
+~del_all_if_exists(inv, crest_part_1);
+~del_all_if_exists(bank, crest_part_1);
+~del_all_if_exists(inv, crest_part_2);
+~del_all_if_exists(bank, crest_part_2);
+~del_all_if_exists(inv, crest_part_3);
+~del_all_if_exists(bank, crest_part_3);
+queue(crest_complete, 0);
+
+[label,crest_dimintheis_gauntlets]
+~chatnpc("<p,neutral>You have my eternal gratitude adventurer, for all you have done in saving my family's honour. Perhaps some day my sons will overcome their differences.");
+if (testbit(%crest_spells_levers_gauntlets, ^crest_cooking_gauntlets_chosen) = true) {
+    if (~obj_gettotal(gauntlets_of_cooking) = 0) {
+        @crest_dimintheis_offer_gauntlets(gauntlets_of_cooking);
+    }
+}
+else if (testbit(%crest_spells_levers_gauntlets, ^crest_goldsmithing_gauntlets_chosen) = true) {
+    if (~obj_gettotal(gauntlets_of_goldsmithing) = 0) {
+        @crest_dimintheis_offer_gauntlets(gauntlets_of_goldsmithing);
+    }
+}
+else if (testbit(%crest_spells_levers_gauntlets, ^crest_chaos_gauntlets_chosen) = true) {
+    if (~obj_gettotal(gauntlets_of_chaos) = 0) {
+        @crest_dimintheis_offer_gauntlets(gauntlets_of_chaos);
+    }
+}
+else if (~obj_gettotal(steel_gauntlets) = 0) {
+    @crest_dimintheis_offer_gauntlets(steel_gauntlets);
+}
+
+[label,crest_dimintheis_offer_gauntlets](namedobj $gauntlets)
+def_string $gauntlets_name = "steel gauntlets";
+switch_obj($gauntlets) {
+    case gauntlets_of_cooking :
+        $gauntlets_name = "cooking gauntlets";
+    case gauntlets_of_goldsmithing :
+        $gauntlets_name = "goldsmithing gauntlets";
+    case gauntlets_of_chaos :
+        $gauntlets_name = "chaos gauntlets";
+}
+if(inv_freespace(inv) = 0) {
+    ~chatnpc("<p,neutral>Your <$gauntlets_name> returned to me through their magic power recently. Clear some space and you can have them back."); 
+}
+else {
+    ~chatnpc("<p,neutral>Your <$gauntlets_name> returned to me through their magic power recently. Would you like them back?");
+    def_int $op = ~p_choice2("Yes please.", 1, "Not right now.", 2);
+    if ($op = 1) {
+        ~chatplayer("<p,neutral>Yes please.");
+        inv_add(inv, $gauntlets, 1);
+        ~chatnpc("<p,neutral>Here you go.");
+    }
+    else {
+        ~chatplayer("<p,neutral>Not right now.");
+        ~chatnpc("<p,neutral>Well, come back if you change your mind any time. I owe you for your trouble.");
+    }
+}

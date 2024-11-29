@@ -16,7 +16,6 @@ members=yes
 stackable=yes
 cost=1
 weight=4g
-tradeable=yes
 
 [iron_arrowheads]
 category=category_968
@@ -36,7 +35,6 @@ members=yes
 stackable=yes
 cost=2
 weight=4g
-tradeable=yes
 
 [steel_arrowheads]
 category=category_968
@@ -52,7 +50,6 @@ members=yes
 stackable=yes
 cost=6
 weight=4g
-tradeable=yes
 
 [mithril_arrowheads]
 category=category_968
@@ -72,7 +69,6 @@ members=yes
 stackable=yes
 cost=16
 weight=3g
-tradeable=yes
 
 [adamant_arrowheads]
 category=category_968
@@ -92,7 +88,6 @@ members=yes
 stackable=yes
 cost=40
 weight=5g
-tradeable=yes
 
 [rune_arrowheads]
 category=category_968
@@ -112,7 +107,6 @@ members=yes
 stackable=yes
 cost=200
 weight=4g
-tradeable=yes
 
 [arrow_shaft]
 name=Arrow shaft
@@ -127,7 +121,6 @@ model=model_2616_obj
 2dyan=100
 2dxan=216
 weight=10g
-tradeable=yes
 
 [headless_arrow]
 name=Headless arrow
@@ -142,7 +135,6 @@ model=model_2764_obj
 2dyan=100
 2dxan=216
 weight=12g
-tradeable=yes
 
 [obj_2864]
 name=Ogre arrow shaft
@@ -159,4 +151,3 @@ recol1d=11556
 2dyan=100
 2dxan=216
 weight=10g
-tradeable=yes

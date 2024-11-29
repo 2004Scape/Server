@@ -57,3 +57,4 @@ param=attack_sound,skeleton_attack
 param=defend_sound,skelly_hit
 param=death_sound,skeleton_death
 param=undead,^true
+// TODO monster examine spell

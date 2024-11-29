@@ -7,6 +7,7 @@ model=model_2389_obj
 2dyan=1988
 2dxan=268
 weight=10g
+tradeable=no
 
 [wig_grey]
 model=model_2783_obj
@@ -20,6 +21,7 @@ recol1d=23252
 weight=10g
 name=Wig
 desc=A grey woollen wig.
+tradeable=no
 
 [wig_blonde]
 model=model_2783_obj
@@ -31,6 +33,7 @@ model=model_2783_obj
 weight=1lb
 name=Wig
 desc=A wig that has been dyed slightly blonde.
+tradeable=no
 
 [paste]
 name=Paste
@@ -44,6 +47,7 @@ recol1d=30385
 2dyan=1920
 2dxan=124
 weight=15g
+tradeable=no
 
 [bronze_key]
 name=Bronze key
@@ -57,3 +61,4 @@ recol1d=8354
 2dyan=20
 2dxan=328
 weight=10g
+tradeable=no

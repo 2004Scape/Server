@@ -20,8 +20,8 @@ head1=model_63_idk_head
 head2=model_85_idk_head
 head3=model_32_obj_wear
 wanderrange=1
-maxrange=19
-// 10
+maxrange=20
+attackrange=10
 respawnrate=50
 hitpoints=50
 attack=20
@@ -42,7 +42,8 @@ param=attack_anim,human_bow
 param=rangeattack_sound,arrowlaunch2
 param=proj_launch,iron_arrow_launch
 param=proj_travel,iron_arrow_travel
-// TODO
+// Stats match osrs version but our version Vislvl is different.
+// attack and maxrange is still wip.
 
 [ranging_guild_doorman]
 vislevel=hide
@@ -65,6 +66,11 @@ head1=model_63_idk_head
 head2=model_85_idk_head
 head3=model_32_obj_wear
 wanderrange=1
+hitpoints=50
+attack=20
+strength=20
+defence=40
+// https://raw.githubusercontent.com/Joshua-F/osrs-dumps/refs/heads/master/config/dump.npc npc_6057
 
 [leatherworker]
 vislevel=hide
@@ -288,17 +294,17 @@ model6=model_262_obj_wear
 model7=model_185_obj_wear
 model8=model_563_obj_wear
 wanderrange=1
+maxrange=11
+attackrange=11
 hitpoints=30
 attack=10
 strength=10
 defence=10
 ranged=20
-maxrange=11
-attackrange=11
 param=attackrate,6
 param=rangebonus,16
-param=magicdefence,34
-param=rangedefence,66
+param=magicdefence,6
+param=rangedefence,12
 param=damagetype,^ranged_style
 param=attack_anim,human_bow
 param=rangeattack_sound,arrowlaunch2
@@ -308,6 +314,7 @@ param=npc_ammo,iron_arrow
 huntmode=aggressive_ranged
 // https://oldschool.runescape.wiki/w/Tower_Archer
 huntrange=11
+// Stats match osrs version but our version Vislvl is different.
 
 [tower_archer_east]
 name=Tower Archer
@@ -329,13 +336,13 @@ model6=model_262_obj_wear
 model7=model_185_obj_wear
 model8=model_563_obj_wear
 wanderrange=1
+maxrange=11
+attackrange=11
 hitpoints=50
 attack=10
 strength=10
 defence=10
 ranged=40
-maxrange=11
-attackrange=11
 param=attackrate,6
 param=rangebonus,22
 param=magicdefence,24
@@ -349,6 +356,7 @@ param=npc_ammo,steel_arrow
 huntmode=aggressive_ranged
 // https://oldschool.runescape.wiki/w/Tower_Archer
 huntrange=11
+// Stats match osrs version but our version Vislvl is different.
 
 [tower_archer_south]
 name=Tower Archer
@@ -370,13 +378,13 @@ model6=model_277_obj_wear
 model7=model_185_obj_wear
 model8=model_563_obj_wear
 wanderrange=1
+maxrange=11
+attackrange=11
 hitpoints=70
 attack=10
 strength=10
 defence=10
 ranged=60
-maxrange=11
-attackrange=11
 param=attackrate,6
 param=rangebonus,31
 param=magicdefence,20
@@ -390,6 +398,7 @@ param=npc_ammo,mithril_arrow
 huntmode=aggressive_ranged
 // https://oldschool.runescape.wiki/w/Tower_Archer
 huntrange=11
+// Stats match osrs version but our version Vislvl is different.
 
 [tower_archer_west]
 name=Tower Archer
@@ -411,13 +420,13 @@ model6=model_258_obj_wear
 model7=model_185_obj_wear
 model8=model_563_obj_wear
 wanderrange=1
+maxrange=11
+attackrange=11
 hitpoints=90
 attack=10
 strength=10
 defence=10
 ranged=80
-maxrange=11
-attackrange=11
 param=attackrate,6
 param=rangebonus,49
 param=magicdefence,34
@@ -431,6 +440,7 @@ param=npc_ammo,adamant_arrow
 huntmode=aggressive_ranged
 // https://oldschool.runescape.wiki/w/Tower_Archer
 huntrange=11
+// Stats match osrs version but our version Vislvl is different.
 
 [tribal_weapon_salesman]
 vislevel=hide

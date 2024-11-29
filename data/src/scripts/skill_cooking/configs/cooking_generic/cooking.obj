@@ -14,7 +14,6 @@ recol2d=24995
 2dyan=1904
 2dxan=140
 weight=550g
-tradeable=yes
 category=alcoholic_drinks
 param=next_obj_stage,beer_glass
 
@@ -34,7 +33,6 @@ recol2d=17974
 2dyan=1904
 2dxan=140
 weight=550g
-tradeable=yes
 category=alcoholic_drinks
 param=next_obj_stage,beer_glass
 
@@ -55,7 +53,6 @@ recol2d=24995
 2dyan=1904
 2dxan=140
 weight=550g
-tradeable=yes
 category=alcoholic_drinks
 param=next_obj_stage,beer_glass
 
@@ -76,7 +73,6 @@ recol2d=19748
 2dyan=1904
 2dxan=140
 weight=550g
-tradeable=yes
 category=alcoholic_drinks
 param=next_obj_stage,beer_glass
 
@@ -96,7 +92,6 @@ recol2d=8456
 2dyan=1904
 2dxan=140
 weight=550g
-tradeable=yes
 category=alcoholic_drinks
 param=next_obj_stage,beer_glass
 
@@ -117,7 +112,6 @@ recol2d=11819
 2dyan=1904
 2dxan=140
 weight=550g
-tradeable=yes
 category=alcoholic_drinks
 param=next_obj_stage,beer_glass
 
@@ -133,7 +127,6 @@ model=model_2491_obj
 2dyan=1904
 2dxan=140
 weight=550g
-tradeable=yes
 category=alcoholic_drinks
 param=next_obj_stage,beer_glass
 
@@ -148,7 +141,6 @@ model=model_2548_obj
 2dyan=1904
 2dxan=140
 weight=50g
-tradeable=yes
 param=crafting_glass_struct,beer_glass
 
 [swamp_tar]
@@ -165,7 +157,6 @@ members=yes
 stackable=yes
 weight=1lb
 category=category_135
-tradeable=yes
 
 [raw_swamp_paste]
 name=Raw swamp paste
@@ -182,7 +173,6 @@ recol1d=7399
 members=yes
 stackable=yes
 weight=18oz
-tradeable=yes
 
 [swamp_paste]
 name=Swamp paste
@@ -197,7 +187,6 @@ model=model_2386_obj
 members=yes
 stackable=yes
 weight=18oz
-tradeable=yes
 
 [chefshat]
 name=Chef's hat
@@ -217,7 +206,6 @@ manhead=model_41_obj_wear
 womanhead=model_99_obj_wear
 iop2=Wear
 weight=2lb
-tradeable=yes
 
 [pumpkin]
 name=Pumpkin
@@ -232,7 +220,6 @@ model=model_2591_obj
 2dxan=132
 weight=500g
 category=category_131
-tradeable=yes
 
 [easter_egg]
 name=Easter egg
@@ -245,7 +232,6 @@ model=model_2534_obj
 2dxan=2044
 weight=3oz
 category=category_59
-tradeable=yes
 
 // Typo of `bannana` in model name is Jagex consistent.
 [banana]
@@ -261,7 +247,6 @@ model=inv_bannana
 2dxan=280
 weight=1oz
 category=category_86
-tradeable=yes
 
 [cabbage]
 name=Cabbage
@@ -275,7 +260,6 @@ iop1=Eat
 cost=1
 weight=1lb
 category=category_131
-tradeable=yes
 param=batta_message,You add the Cabbage to the gnome batta.
 
 [cabbage_draynor]
@@ -290,7 +274,6 @@ iop1=Eat
 cost=1
 weight=350g
 category=category_59
-tradeable=yes
 
 [spinach_roll]
 iop1=Eat
@@ -303,7 +286,6 @@ model=model_2829_obj
 cost=1
 weight=100g
 category=category_59
-tradeable=yes
 
 [kebab]
 name=Kebab
@@ -319,7 +301,6 @@ model=model_2822_obj
 2dxan=1876
 weight=250g
 category=category_59
-tradeable=yes
 
 [chocolaty_milk]
 iop1=Drink
@@ -337,6 +318,7 @@ category=category_59
 name=Chocolaty milk
 desc=Milk with chocolate in it.
 param=next_obj_stage,bucket_empty
+tradeable=no
 
 [cup_of_tea]
 name=Cup of tea
@@ -351,7 +333,6 @@ model=model_2468_obj
 2dxan=156
 weight=150g
 members=yes
-tradeable=yes
 param=next_obj_stage,cup_empty
 
 [cup_empty]
@@ -372,7 +353,6 @@ recol3d=27482
 2dxan=156
 weight=50g
 members=yes
-tradeable=yes
 
 [rotten_apples]
 name=Rotten apples
@@ -390,6 +370,7 @@ members=yes
 cost=1
 weight=120g
 category=category_86
+tradeable=no
 
 [onion]
 name=Onion
@@ -403,7 +384,6 @@ recol1d=24108
 2dxan=116
 weight=150g
 category=category_131
-tradeable=yes
 param=ugthanki_kebab_struct,onion_kebab
 
 [chocolate_dust]
@@ -420,7 +400,6 @@ weight=150g
 category=category_59
 name=Chocolate dust
 desc=It's ground up chocolate.
-tradeable=yes
 param=cocktail_message,You sprinkle the chocolate dust over the drink.
 
 [pot_empty]
@@ -434,7 +413,6 @@ model=model_2345_obj
 2dxan=112
 cost=1
 weight=1lb
-tradeable=yes
 
 [obj_1946]
 name=Flour
@@ -448,6 +426,7 @@ recol1d=28539
 2dyan=1892
 2dxan=264
 weight=500g
+tradeable=no
 
 [grain]
 name=Grain
@@ -460,4 +439,3 @@ model=model_2398_obj
 2dyan=88
 2dxan=292
 weight=600g
-tradeable=yes

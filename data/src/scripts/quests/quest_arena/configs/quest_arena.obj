@@ -25,6 +25,7 @@ category=armour_helmet
 param=stabdefence,4
 param=slashdefence,5
 param=crushdefence,3
+tradeable=no
 
 [khazard_armour]
 members=yes
@@ -51,6 +52,7 @@ category=armour_body
 param=stabdefence,9
 param=slashdefence,11
 param=crushdefence,10
+tradeable=no
 
 [khazard_cell_keys]
 members=yes
@@ -64,6 +66,7 @@ model=model_2424_obj
 2dxan=508
 weight=10g
 param=no_alchemy,1
+tradeable=no
 
 [khali_brew]
 members=yes
@@ -78,3 +81,4 @@ recol1d=384
 2dyan=1888
 2dxan=104
 weight=4oz
+tradeable=no

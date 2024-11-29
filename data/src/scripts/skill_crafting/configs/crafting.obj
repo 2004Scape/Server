@@ -21,7 +21,6 @@ manwear2=model_284_obj_wear
 womanwear=model_444_obj_wear,0
 womanwear2=model_448_obj_wear
 weight=7g
-tradeable=yes
 
 [blessedstar]
 name=Holy symbol
@@ -46,7 +45,6 @@ manwear2=model_284_obj_wear
 womanwear=model_444_obj_wear,0
 womanwear2=model_448_obj_wear
 weight=7g
-tradeable=yes
 param=stabdefence,2
 param=slashdefence,2
 param=crushdefence,2
@@ -79,7 +77,6 @@ womanwear=model_444_obj_wear,0
 womanwear2=model_450_obj_wear
 iop2=Wear
 weight=7g
-tradeable=yes
 
 [unholy_symbol]
 name=Unholy symbol
@@ -112,6 +109,7 @@ param=crushattack,2
 param=magicattack,2
 param=rangeattack,2
 param=prayerbonus,8
+tradeable=no
 
 
 [needle]
@@ -125,7 +123,6 @@ model=model_2770_obj
 2dyan=868
 2dxan=368
 weight=1g
-tradeable=yes
 
 [thread]
 name=Thread
@@ -138,7 +135,6 @@ model=model_2831_obj
 2dyan=1644
 2dxan=248
 weight=3g
-tradeable=yes
 
 [shears]
 name=Shears
@@ -151,7 +147,6 @@ womanwear=model_525_obj_wear,6
 2dyan=136
 2dxan=300
 weight=4oz
-tradeable=yes
 
 [cow_hide]
 name=Cow hide
@@ -163,7 +158,6 @@ model=model_2338_obj
 2dyan=116
 2dxan=440
 weight=6lb
-tradeable=yes
 
 [chisel]
 name=Chisel
@@ -175,7 +169,6 @@ model=model_2489_obj
 2dyan=1928
 2dxan=404
 weight=1lb
-tradeable=yes
 
 [brown_apron]
 name=Brown apron
@@ -196,7 +189,6 @@ wearpos=torso
 manwear=model_305_obj_wear,0
 womanwear=model_467_obj_wear,0
 weight=1lb
-tradeable=yes
 
 [ball_of_wool]
 name=Ball of wool
@@ -209,7 +201,6 @@ model=model_2795_obj
 2dyan=448
 2dxan=152
 weight=12g
-tradeable=yes
 
 [bow_string]
 members=yes
@@ -223,7 +214,6 @@ model=model_2552_obj
 2dyan=1872
 2dxan=148
 weight=14g
-tradeable=yes
 
 [woad_leaf]
 name=Woad leaf
@@ -241,7 +231,6 @@ recol2d=531
 2dxan=344
 weight=10g
 stackable=yes
-tradeable=yes
 
 [bronze_wire]
 name=Bronze wire
@@ -254,7 +243,6 @@ model=model_2715_obj
 2dxan=332
 weight=5g
 members=yes
-tradeable=yes
 
 [dragonhide_black]
 name=Dragonhide
@@ -271,7 +259,6 @@ recol2d=12684
 2dxan=440
 weight=7lb
 members=yes
-tradeable=yes
 
 [dragonhide_red]
 name=Dragonhide
@@ -288,7 +275,6 @@ recol2d=12288
 2dxan=440
 weight=7lb
 members=yes
-tradeable=yes
 
 [dragonhide_blue]
 name=Dragonhide
@@ -305,7 +291,6 @@ recol2d=93
 2dxan=440
 weight=7lb
 members=yes
-tradeable=yes
 
 [dragonhide_green]
 name=Dragonhide
@@ -318,4 +303,3 @@ model=model_2356_obj
 2dxan=440
 weight=7lb
 members=yes
-tradeable=yes

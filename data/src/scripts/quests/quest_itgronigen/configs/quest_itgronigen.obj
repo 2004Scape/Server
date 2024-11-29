@@ -8,6 +8,7 @@ members=yes
 2dzoom=840
 2dyan=152
 2dxan=256
+tradeable=no
 
 [keep_key]
 name=Keep key
@@ -20,6 +21,7 @@ model=model_2372_obj
 2dxan=328
 weight=10g
 members=yes
+tradeable=no
 
 [lens_mould]
 name=Lens mould
@@ -31,6 +33,7 @@ model=model_2773_obj
 2dxan=196
 weight=1kg
 members=yes
+tradeable=no
 
 [lens]
 name=Lens
@@ -43,3 +46,4 @@ weight=3g
 2dyan=84
 2dxan=388
 members=yes
+tradeable=no

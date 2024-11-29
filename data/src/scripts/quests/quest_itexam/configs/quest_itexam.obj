@@ -7,6 +7,7 @@ model=model_2371_obj
 2dxan=96
 weight=2oz
 members=yes
+tradeable=no
 
 [specimen_brush]
 name=Specimen brush
@@ -19,8 +20,9 @@ model=model_2385_obj
 2dxan=272
 weight=2oz
 members=yes
+tradeable=no
 
-[obj_671]
+[rock_sample_1]
 model=model_2393_obj
 2dxof=8
 2dyof=-15
@@ -31,8 +33,9 @@ weight=3oz
 name=Rock sample 1
 desc=A carefully kept safe rock sample.
 members=yes
+tradeable=no
 
-[obj_672]
+[rock_sample_2]
 model=model_2394_obj
 name=Rock sample 2
 desc=A carefully kept safe rock sample.
@@ -42,8 +45,9 @@ desc=A carefully kept safe rock sample.
 2dxan=144
 weight=3oz
 members=yes
+tradeable=no
 
-[obj_673]
+[rock_sample_3]
 model=model_2396_obj
 name=Rock sample 3
 desc=A carefully kept safe rock sample.
@@ -54,8 +58,9 @@ desc=A carefully kept safe rock sample.
 2dxan=104
 weight=3oz
 members=yes
+tradeable=no
 
-[obj_674]
+[cracked_rock_sample]
 model=model_2393_obj
 2dxof=8
 2dyof=-37
@@ -66,6 +71,7 @@ weight=3oz
 name=Rock sample
 desc=A rough shaped piece of rock.
 members=yes
+tradeable=no
 
 [rock_pick]
 name=Rock pick
@@ -78,6 +84,7 @@ model=model_2792_obj
 2dxan=476
 weight=2oz
 members=yes
+tradeable=no
 
 [trowel]
 name=Trowel
@@ -90,8 +97,9 @@ model=model_2630_obj
 2dxan=312
 weight=2oz
 members=yes
+tradeable=no
 
-[obj_677]
+[panning_tray_empty]
 name=Panning tray
 desc=An empty tray for panning.
 model=model_2577_obj
@@ -102,8 +110,9 @@ model=model_2577_obj
 weight=3oz
 members=yes
 iop2=Search
+tradeable=no
 
-[obj_678]
+[panning_tray_gold]
 name=Panning tray
 desc=This tray contains gold.
 model=model_2513_obj
@@ -114,8 +123,9 @@ model=model_2513_obj
 weight=5oz
 members=yes
 iop2=Search
+tradeable=no
 
-[obj_679]
+[panning_tray_mud]
 name=Panning tray
 desc=This tray contains mud.
 model=model_2452_obj
@@ -126,8 +136,9 @@ model=model_2452_obj
 weight=6oz
 members=yes
 iop2=Search
+tradeable=no
 
-[obj_680]
+[nuggets]
 name=Nuggets
 desc=Pure, lovely gold!
 model=model_2812_obj
@@ -138,6 +149,7 @@ model=model_2812_obj
 weight=4oz
 members=yes
 stackable=yes
+tradeable=no
 
 [talisman_of_zaros]
 name=Talisman of zaros
@@ -150,8 +162,9 @@ model=model_2449_obj
 2dxan=324
 weight=3oz
 members=yes
+tradeable=no
 
-[obj_682]
+[unstamped_letter]
 model=model_2600_obj
 name=Unstamped letter
 desc=A scroll waiting to be stamped.
@@ -162,8 +175,9 @@ desc=A scroll waiting to be stamped.
 2dxan=380
 weight=20g
 members=yes
+tradeable=no
 
-[obj_683]
+[stamped_letter]
 model=model_2675_obj
 name=Stamped letter
 desc=A stamped scroll of recommendation.
@@ -174,8 +188,9 @@ desc=A stamped scroll of recommendation.
 2dxan=380
 weight=20g
 members=yes
+tradeable=no
 
-[obj_684]
+[belt_buckle]
 model=model_2516_obj
 name=Belt buckle
 desc=Used to hold up trousers!
@@ -187,6 +202,7 @@ desc=Used to hold up trousers!
 2dxan=524
 weight=1kg
 members=yes
+tradeable=no
 
 [old_boot]
 name=Old boot
@@ -199,6 +215,7 @@ model=model_2683_obj
 2dxan=168
 weight=2oz
 members=yes
+tradeable=no
 
 [rusty_sword]
 name=Rusty sword
@@ -210,6 +227,7 @@ model=model_2608_obj
 2dxan=652
 weight=5lb
 members=yes
+tradeable=no
 
 [broken_arrow]
 name=Broken arrow
@@ -222,6 +240,7 @@ model=model_2512_obj
 2dxan=168
 weight=15g
 members=yes
+tradeable=no
 
 [buttons]
 name=Buttons
@@ -234,6 +253,7 @@ model=model_2549_obj
 2dxan=236
 weight=1g
 members=yes
+tradeable=no
 
 [broken_staff]
 model=model_2459_obj
@@ -246,6 +266,7 @@ desc=I pity the poor person beaten with this!
 2dxan=192
 weight=4lb
 members=yes
+tradeable=no
 
 [broken_glass]
 name=Broken glass
@@ -259,8 +280,9 @@ model=model_2676_obj
 weight=20g
 category=category_15
 members=yes
+tradeable=no
 
-[obj_691]
+[level_1_certificate]
 model=model_2600_obj
 name=Level 1 certificate
 desc=The owner has passed earth sciences level 1 exam.
@@ -271,8 +293,9 @@ desc=The owner has passed earth sciences level 1 exam.
 2dxan=380
 weight=20g
 members=yes
+tradeable=no
 
-[obj_692]
+[level_2_certificate]
 model=model_2600_obj
 name=Level 2 certificate
 desc=The owner has passed earth sciences level 2 exam.
@@ -283,8 +306,9 @@ desc=The owner has passed earth sciences level 2 exam.
 2dxan=380
 weight=20g
 members=yes
+tradeable=no
 
-[obj_693]
+[level_3_certificate]
 model=model_2600_obj
 name=Level 3 certificate
 desc=The owner has passed earth sciences level 3 exam.
@@ -295,8 +319,9 @@ desc=The owner has passed earth sciences level 3 exam.
 2dxan=380
 weight=20g
 members=yes
+tradeable=no
 
-[obj_694]
+[ceramic_remains]
 name=Ceramic remains
 desc=Smashing!
 model=model_2493_obj
@@ -309,6 +334,7 @@ recol2d=5248
 2dxan=168
 weight=2oz
 members=yes
+tradeable=no
 
 [old_tooth]
 name=Old tooth
@@ -321,8 +347,9 @@ model=model_2522_obj
 2dxan=292
 weight=1g
 members=yes
+tradeable=no
 
-[obj_696]
+[invitation_letter]
 model=model_2600_obj
 name=Invitation letter
 desc=A letter inviting me to use the private digshafts.
@@ -334,6 +361,7 @@ desc=A letter inviting me to use the private digshafts.
 members=yes
 iop2=Read
 weight=20g
+tradeable=no
 
 [damaged_armour]
 name=Damaged armour
@@ -348,8 +376,9 @@ recol1d=8420
 2dxan=292
 weight=17lb
 members=yes
+tradeable=no
 
-[obj_698]
+[broken_armour]
 name=Broken armour
 desc=No use to me...
 model=model_loc_826_0
@@ -362,8 +391,9 @@ recol1d=8420
 2dxan=496
 weight=17lb
 members=yes
+tradeable=no
 
-[obj_699]
+[stone_tablet]
 name=Stone tablet
 desc=An old stone slab with writing on it.
 model=model_2627_obj
@@ -374,8 +404,9 @@ model=model_2627_obj
 members=yes
 iop2=Read
 weight=800g
+tradeable=no
 
-[obj_700]
+[chemical_powder]
 name=Chemical powder
 desc=An acrid chemical.
 model=model_2742_obj
@@ -387,8 +418,9 @@ members=yes
 2dyan=2008
 2dxan=136
 weight=1oz
+tradeable=no
 
-[obj_701]
+[ammonium_nitrate]
 name=Ammonium nitrate
 desc=An acrid chemical.
 model=model_2742_obj
@@ -400,8 +432,9 @@ members=yes
 2dyan=1892
 2dxan=264
 weight=15g
+tradeable=no
 
-[obj_702]
+[unidentified_liquid]
 name=Unidentified liquid
 desc=A strong chemical.
 model=model_2789_obj
@@ -413,8 +446,9 @@ recol1d=31201
 2dxan=84
 weight=25g
 members=yes
+tradeable=no
 
-[obj_703]
+[nitroglycerin]
 name=Nitroglycerin
 desc=A strong chemical.
 model=model_2789_obj
@@ -426,8 +460,9 @@ recol1d=31201
 2dxan=84
 weight=25g
 members=yes
+tradeable=no
 
-[obj_704]
+[ground_charcoal]
 name=Ground charcoal
 desc=Charcoal, crushed to small pieces!
 model=model_2742_obj
@@ -439,8 +474,9 @@ members=yes
 2dyan=1892
 2dxan=264
 weight=8g
+tradeable=no
 
-[obj_705]
+[mixed_chemicals1]
 name=Mixed chemicals
 desc=A mixture of strong chemicals.
 model=model_2789_obj
@@ -452,8 +488,9 @@ recol1d=20929
 2dxan=84
 weight=30g
 members=yes
+tradeable=no
 
-[obj_706]
+[mixed_chemicals2]
 name=Mixed chemicals
 desc=A mixture of strong chemicals.
 model=model_2789_obj
@@ -465,8 +502,9 @@ recol1d=16577
 2dxan=84
 weight=35g
 members=yes
+tradeable=no
 
-[obj_707]
+[chemical_compound]
 name=Chemical compound
 desc=A mixture of strong chemicals.
 model=model_2789_obj
@@ -478,6 +516,7 @@ recol1d=3171
 2dxan=84
 weight=35g
 members=yes
+tradeable=no
 
 [arcenia_root]
 name=Arcenia root
@@ -490,8 +529,9 @@ model=model_2629_obj
 2dxan=456
 weight=10g
 members=yes
+tradeable=no
 
-[obj_709]
+[digsite_chest_key]
 name=Chest key
 desc=This fits a chest.
 model=model_2372_obj
@@ -502,8 +542,9 @@ model=model_2372_obj
 2dxan=328
 weight=10g
 members=yes
+tradeable=no
 
-[obj_710]
+[digsite_vase]
 name=Vase
 desc=A vessel for holding plants.
 model=model_2704_obj
@@ -515,8 +556,9 @@ recol1d=13605
 2dxan=68
 weight=500g
 members=yes
+tradeable=no
 
-[obj_711]
+[book_on_chemicals]
 name=Book on chemicals
 desc=It's about chemicals, judging from its' cover.
 model=model_2543_obj
@@ -534,6 +576,7 @@ recol3d=3268
 members=yes
 iop2=Read
 weight=18oz
+tradeable=no
 
 [obj_712]
 name=Cup of tea
@@ -547,5 +590,7 @@ model=model_2468_obj
 2dxan=156
 weight=150g
 members=yes
+tradeable=no
 
 [obj_713]
+tradeable=no

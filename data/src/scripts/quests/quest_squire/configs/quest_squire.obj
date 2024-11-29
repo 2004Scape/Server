@@ -7,6 +7,7 @@ model=model_2425_obj
 2dyan=80
 2dxan=288
 weight=3lb
+tradeable=no
 
 [blurite_sword]
 name=Blurite sword
@@ -37,6 +38,7 @@ param=stabattack_anim,human_sword_stab
 param=defend_anim,human_sword_defend2
 param=slash_sound,hacksword_slash
 param=stab_sound,hacksword_stab
+tradeable=no
 
 [blurite_ore]
 cost=3
@@ -52,3 +54,4 @@ recol1d=15871
 2dxan=368
 weight=5lb
 category=category_91
+tradeable=no

@@ -9,7 +9,7 @@
     "baseUrl": ".",
     "paths": {
       "#3rdparty/*": ["src/3rdparty/*"],
-      "#jagex2/*": ["src/jagex2/*"],
+      "#jagex/*": ["src/jagex/*"],
       "#lostcity/*": ["src/lostcity/*"]
     },
     "types": ["node", "bun-types", "vitest/globals"],

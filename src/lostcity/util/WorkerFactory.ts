@@ -1,11 +1,19 @@
-import { Worker as NodeWorker } from 'worker_threads';
+import { Worker as NodeWorker, WorkerOptions } from 'worker_threads';
 
 import Environment from '#lostcity/util/Environment.js';
 
-export function createWorker(fileName: string): Worker | NodeWorker {
+class TsWorker extends NodeWorker {
+    constructor(filename: string | URL, options: WorkerOptions = {}) {
+        options.workerData ??= {};
+        options.workerData.__ts_worker_filename = filename.toString();
+        super(new URL('../../worker.mjs', import.meta.url), options);
+    }
+}
+
+export function createWorker(filename: string): Worker | NodeWorker {
     if (Environment.STANDALONE_BUNDLE) {
-        return new Worker(fileName, {type: 'module'});
+        return new Worker(filename, {type: 'module'});
     } else {
-        return new NodeWorker(fileName);
+        return new TsWorker(filename);
     }
 }

@@ -16,6 +16,7 @@ hitpoints=20
 attack=23
 strength=20
 defence=23
+param=damagetype,^crush_style
 param=attack_anim,ghost_attack
 param=defend_anim,ghost_block
 param=death_anim,ghost_death
@@ -24,6 +25,7 @@ param=defend_sound,ghost_hit
 param=death_sound,ghost_death
 param=death_drop,null
 param=undead,^true
+// osrs stats and Vislvl match 1:1
 
 [spirit_of_scorpius]
 vislevel=hide
@@ -67,3 +69,4 @@ param=attack_sound,insect_attack
 param=defend_sound,insect_hit
 param=death_sound,insect_death
 param=death_drop,null
+// osrs stats and Vislvl match 1:1

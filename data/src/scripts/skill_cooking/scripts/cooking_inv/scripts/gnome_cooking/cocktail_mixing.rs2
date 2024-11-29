@@ -84,6 +84,7 @@ switch_obj(last_useitem) {
     case half_baked_gnomebowl : @add_bowl_ingredient(last_item);
     case half_baked_batta : @add_cocktail_ingredient(last_item);
     case half_baked_crunchies : @add_crunchies_ingredient(last_item);
+    case raw_chompy : @quest_chompybird_add_ingredients_to_chompy_message;
     case default : ~displaymessage(^dm_default);
 }
 

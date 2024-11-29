@@ -15,7 +15,6 @@ recol2d=19489
 2dxan=272
 weight=400g
 category=category_132
-tradeable=yes
 
 [meat_pizza]
 iop1=Eat
@@ -35,7 +34,6 @@ recol3d=19489
 2dxan=260
 weight=900g
 category=category_132
-tradeable=yes
 param=next_obj_stage,obj_2295
 
 [obj_2295]
@@ -57,7 +55,6 @@ recol3d=19489
 2dxan=272
 weight=450g
 category=category_132
-tradeable=yes
 
 [anchovy_pizza]
 iop1=Eat
@@ -77,7 +74,6 @@ recol3d=19489
 2dxan=260
 weight=900g
 category=category_132
-tradeable=yes
 param=next_obj_stage,obj_2299
 
 [obj_2299]
@@ -99,7 +95,6 @@ recol3d=19489
 2dxan=272
 weight=450g
 category=category_132
-tradeable=yes
 
 [pineapple_pizza]
 iop1=Eat
@@ -120,7 +115,6 @@ recol3d=19489
 weight=900g
 category=category_132
 members=yes
-tradeable=yes
 param=next_obj_stage,obj_2303
 
 [obj_2303]
@@ -143,7 +137,6 @@ recol3d=19489
 weight=450g
 category=category_132
 members=yes
-tradeable=yes
 
 [plain_pizza]
 iop1=Eat
@@ -161,7 +154,6 @@ recol2d=19489
 cost=40
 weight=800g
 category=category_132
-tradeable=yes
 param=next_obj_stage,obj_2291
 
 [burnt_pizza]
@@ -180,7 +172,6 @@ recol3d=3171
 2dyan=176
 2dxan=260
 weight=700g
-tradeable=yes
 
 [tomato]
 name=Tomato
@@ -195,7 +186,6 @@ model=model_2632_obj
 weight=80g
 category=category_86
 category=category_131
-tradeable=yes
 param=ugthanki_kebab_struct,tomato_kebab
 
 [cheese]
@@ -209,7 +199,6 @@ model=model_2365_obj
 2dxan=116
 weight=200g
 category=category_59
-tradeable=yes
 param=singular_name,cheese portion
 param=batta_message,You crumble cheese over the gnome batta.
 
@@ -225,7 +214,6 @@ recol1d=29492
 2dyan=176
 2dxan=260
 weight=100g
-tradeable=yes
 
 [incomplete_pizza]
 name=Incomplete pizza
@@ -241,4 +229,3 @@ recol2d=19489
 2dyan=176
 2dxan=260
 weight=600g
-tradeable=yes

@@ -1,7 +1,4 @@
 export default class ServerProt {
-    static readonly all: ServerProt[] = [];
-    static readonly byId: ServerProt[] = [];
-
     // interfaces
     static readonly IF_OPENCHAT = new ServerProt(14, 2);
     static readonly IF_OPENMAIN_SIDE = new ServerProt(28, 4);
@@ -89,10 +86,7 @@ export default class ServerProt {
     static readonly UPDATE_ZONE_FULL_FOLLOWS = new ServerProt(135, 2); // NXT naming
     static readonly UPDATE_ZONE_PARTIAL_ENCLOSED = new ServerProt(162, -2); // NXT naming
 
-    constructor(readonly id: number, readonly length: number) {
-        ServerProt.all.push(this); // no known index
-        ServerProt.byId[id] = this;
-    }
+    constructor(readonly id: number, readonly length: number) {}
 }
 
 // for type safety in CameraInfo

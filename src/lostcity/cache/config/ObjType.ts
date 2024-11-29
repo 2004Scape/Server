@@ -1,12 +1,14 @@
 import fs from 'fs';
 
-import Packet from '#jagex2/io/Packet.js';
+import Packet from '#jagex/io/Packet.js';
 
 import { ConfigType } from '#lostcity/cache/config/ConfigType.js';
 import { ParamHelper, ParamMap } from '#lostcity/cache/config/ParamHelper.js';
 import ParamType from '#lostcity/cache/config/ParamType.js';
-import Jagfile from '#jagex2/io/Jagfile.js';
+import Jagfile from '#jagex/io/Jagfile.js';
 import Environment from '#lostcity/util/Environment.js';
+import { printFatalError } from '#lostcity/util/Logger.js';
+import kleur from 'kleur';
 
 export default class ObjType extends ConfigType {
     static configNames: Map<string, number> = new Map();
@@ -58,6 +60,10 @@ export default class ObjType extends ConfigType {
 
             if (config.certtemplate != -1) {
                 config.toCertificate();
+            }
+
+            if (config.dummyitem !== 0) {
+                config.tradeable = false;
             }
 
             if (!Environment.NODE_MEMBERS && config.members) {
@@ -173,7 +179,7 @@ export default class ObjType extends ConfigType {
     weight = 0; // in grams
     category = -1;
     dummyitem = 0;
-    tradeable = false;
+    tradeable = true;
     respawnrate = 100; // default to 1-minute
     params: ParamMap = new Map();
 
@@ -206,6 +212,8 @@ export default class ObjType extends ConfigType {
             this.wearpos = dat.g1();
         } else if (code === 14) {
             this.wearpos2 = dat.g1();
+        } else if (code === 15) {
+            this.tradeable = false;
         } else if (code === 16) {
             this.members = true;
         } else if (code === 23) {
@@ -270,8 +278,6 @@ export default class ObjType extends ConfigType {
             }
             this.countobj[code - 100] = dat.g2();
             this.countco[code - 100] = dat.g2();
-        } else if (code === 200) {
-            this.tradeable = true;
         } else if (code === 201) {
             this.respawnrate = dat.g2();
         } else if (code === 249) {
@@ -279,7 +285,7 @@ export default class ObjType extends ConfigType {
         } else if (code === 250) {
             this.debugname = dat.gjstr();
         } else {
-            throw new Error(`Unrecognized obj config code: ${code}`);
+            printFatalError(`Unrecognized obj config code: ${code}\nThis error comes from the packed data being out of sync, try running ` + kleur.green().bold('npm run build') + ', then restarting this.');
         }
     }
 

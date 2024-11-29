@@ -18,6 +18,11 @@ if (last_useitem ! raw_chompy)
     ~displaymessage(^dm_default);
     return;
 }
+if (stat(cooking) < 30) {
+    // Guess
+    ~mesbox("You need a Cooking level of 30 to cook chompy birds.");
+    return;
+}
 
 // todo allow cooking after quest
 if (%chompybird_progress < ^chompybird_told_to_cook_chompy)
@@ -29,10 +34,9 @@ if (%chompybird_progress < ^chompybird_told_to_cook_chompy)
 
 if (%chompybird_progress = ^chompybird_told_to_cook_chompy)
 {
-    @cook_chompy_quest;
+    @cook_chompy_quest(loc_coord);
     return;
 }
-
 if (%chompybird_progress = ^chompybird_chompy_cooked)
 {
     // todo what if the player no longer has the original chompy? Does it still auto-hand in?
@@ -51,7 +55,7 @@ if (%chompybird_progress = ^chompybird_chompy_cooked)
 // todo handle non-quest cooking
 ~displaymessage(^dm_default);
 
-[label,cook_chompy_quest]
+[label,cook_chompy_quest](coord $loc_coord)
 def_int $bugs_ingredient = getbit_range(%chompybird_kills, ^chompybird_varbit_bugs_flavour_start, ^chompybird_varbit_bugs_flavour_end);
 def_int $fycie_ingredient = getbit_range(%chompybird_kills, ^chompybird_varbit_fycie_flavour_start, ^chompybird_varbit_fycie_flavour_end);
 
@@ -136,12 +140,46 @@ if ($has_rantz_ingredient = false | $has_bugs_ingredient = false | $has_fycie_in
     return;
 }
 
-// todo in OSRS this takes some time, and the spit is animated
-%chompybird_progress = ^chompybird_chompy_cooked;
-mes("You carefully place the chompy bird on the spit-roast.");
-inv_del(inv, raw_chompy, 1);
+if (loc_find($loc_coord, ogre_spitroast) = true) {
+    %chompybird_progress = ^chompybird_chompy_cooked;
+    
+    mes("You carefully place the chompy bird on the spit-roast.");
+    inv_del(inv, raw_chompy, 1);
+    loc_change(ogre_spitroast_raw_chompy, 4);
+    loc_anim(spit_anim);
+    anim(human_cooking, 0);
+    sound_synth(spit_roast, 0, 0);
+    p_delay(2);
+    
+    def_boolean $passes_roll = stat_random(stat(cooking), 200, 255);
+    if ($passes_roll = true) {
+        mes("You add the other ingredients and cook the food.");
+        ~delete_chompy_ingredients($rantz_ingredient, $bugs_ingredient, $fycie_ingredient);
+        loc_change(ogre_spitroast_cooked_chompy, 4);
+        loc_anim(spit_anim);
+        anim(human_cooking, 0);
+        p_delay(2);
+        anim(human_pickuptable, 0);
+        mes("Eventually the chompy is cooked.");
+        inv_add(inv, seasoned_chompy, 1);
+        stat_advance(cooking, 142);
+        p_delay(1);
+        ~objbox(seasoned_chompy, "You use the <$rantz_ingredient_name>, <$bugs_ingredient_name> and the <$fycie_ingredient_name>|with the chompy bird to make a seasoned chompy.", 250, 0, divide(^objbox_height, 2));
+    }
+    else {
+        mes("You accidentally burn the chompy.");
+        ~delete_chompy_ingredients($rantz_ingredient, $bugs_ingredient, $fycie_ingredient);
+        loc_change(ogre_spitroast_burnt_chompy, 4);
+        loc_anim(spit_anim);
+        anim(human_cooking, 0);
+        p_delay(2);
+        anim(human_pickuptable, 0);
+        inv_add(inv, ruined_chompy, 1);
+        p_delay(1);
+    }
+}
 
-mes("You add the other ingredients and cook the food.");
+[proc,delete_chompy_ingredients](int $rantz_ingredient, int $bugs_ingredient, int $fycie_ingredient)
 if ($rantz_ingredient = 0)
 {
     inv_del(inv, potato, 1);
@@ -168,7 +206,3 @@ else if ($fycie_ingredient = 2)
 {
     inv_del(inv, doogle_leaves, 1);
 }
-
-mes("Eventually the chompy is cooked.");
-inv_add(inv, seasoned_chompy, 1);
-~objbox(seasoned_chompy, "You use the <$rantz_ingredient_name>, <$bugs_ingredient_name> and the <$fycie_ingredient_name>|with the chompy bird to make a seasoned chompy.", 250, 0, divide(^objbox_height, 2));

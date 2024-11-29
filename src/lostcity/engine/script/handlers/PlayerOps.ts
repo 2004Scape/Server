@@ -448,6 +448,9 @@ const PlayerOps: CommandHandlers = {
         if (stat === 3 && player.levels[3] >= player.baseLevels[3]) {
             player.resetHeroPoints();
         }
+        if (added !== current) {
+            player.changeStat(stat);
+        }
     }),
 
     [ScriptOpcode.STAT_SUB]: checkedHandler(ActivePlayer, state => {
@@ -461,6 +464,9 @@ const PlayerOps: CommandHandlers = {
         const current = player.levels[stat];
         const subbed = current - (constant + (current * percent) / 100);
         player.levels[stat] = Math.max(subbed, 0);
+        if (subbed !== current) {
+            player.changeStat(stat);
+        }
     }),
 
     [ScriptOpcode.SPOTANIM_PL]: checkedHandler(ActivePlayer, state => {
@@ -486,6 +492,10 @@ const PlayerOps: CommandHandlers = {
 
         if (stat === 3 && player.levels[3] >= player.baseLevels[3]) {
             player.resetHeroPoints();
+        }
+
+        if (healed !== current) {
+            player.changeStat(stat);
         }
     }),
 

@@ -1,16 +1,19 @@
 import MessageEncoder from '#lostcity/network/outgoing/codec/MessageEncoder.js';
-import Packet from '#jagex2/io/Packet.js';
+import Packet from '#jagex/io/Packet.js';
 import ServerProt from '#lostcity/network/225/outgoing/prot/ServerProt.js';
 import NpcInfo from '#lostcity/network/outgoing/model/NpcInfo.js';
-import World from '#lostcity/engine/World.js';
 import { CoordGrid } from '#lostcity/engine/CoordGrid.js';
-import NpcStat from '#lostcity/entity/NpcStat.js';
 import Npc from '#lostcity/entity/Npc.js';
-import BuildArea, { ExtendedInfo } from '#lostcity/entity/BuildArea.js';
+import BuildArea from '#lostcity/entity/BuildArea.js';
+import Renderer from '#lostcity/engine/renderer/Renderer.js';
+import Player from '#lostcity/entity/Player.js';
+import NpcInfoFaceEntity from '#lostcity/network/outgoing/model/NpcInfoFaceEntity.js';
+import InfoProt from '#lostcity/network/225/outgoing/prot/InfoProt.js';
+import NpcInfoFaceCoord from '#lostcity/network/outgoing/model/NpcInfoFaceCoord.js';
+import NpcRenderer from '#lostcity/engine/renderer/NpcRenderer.js';
 
 export default class NpcInfoEncoder extends MessageEncoder<NpcInfo> {
     private static readonly BITS_NEW: number = 13 + 11 + 5 + 5 + 1;
-    private static readonly BITS_IDLE: number = 1;
     private static readonly BITS_RUN: number = 1 + 2 + 3 + 3 + 1;
     private static readonly BITS_WALK: number = 1 + 2 + 3 + 1;
     private static readonly BITS_EXTENDED: number = 1 + 2;
@@ -19,239 +22,188 @@ export default class NpcInfoEncoder extends MessageEncoder<NpcInfo> {
     prot = ServerProt.NPC_INFO;
 
     encode(buf: Packet, message: NpcInfo): void {
-        const buildArea: BuildArea = message.buildArea;
+        const player = message.player;
+        const buildArea: BuildArea = player.buildArea;
 
         if (message.changedLevel || message.deltaX > buildArea.viewDistance || message.deltaZ > buildArea.viewDistance) {
             // optimization to avoid sending 3 bits * observed npcs when everything has to be removed anyways
             buildArea.npcs.clear();
         }
 
-        this.writeNpcs(buf, message);
-        this.writeNewNpcs(buf, message);
-
-        const extended: Set<ExtendedInfo> = buildArea.extendedInfo;
-        if (extended.size > 0) {
-            for (const info of extended) {
-                const npc: Npc | undefined = World.getNpc(info.id);
-                if (!npc) {
-                    // safeguard against a potential crash point
-                    // things WILL act weird if this happens
-                    buf.p1(0);
-                    continue;
-                }
-
-                this.writeExtendedInfo(npc, buf, info.added);
-            }
+        buf.bits();
+        let bytes: number = 0;
+        bytes = this.writeNpcs(buf, message, bytes);
+        this.writeNewNpcs(buf, message, bytes);
+        if (buildArea.highNpcs.size > 0 || buildArea.lowNpcs.size > 0) {
+            buf.pBit(13, 8191);
         }
+        buf.bytes();
 
-        buildArea.clearExtended();
+        const renderer: NpcRenderer = message.renderer;
+        for (const high of buildArea.highNpcs) {
+            this.highdefinition(buf, renderer, player, high, false);
+        }
+        for (const low of buildArea.lowNpcs) {
+            this.lowdefinition(buf, renderer, player, low);
+        }
+        buildArea.clearNpcInfo();
     }
 
     test(_: NpcInfo): number {
         return NpcInfoEncoder.BYTES_LIMIT;
     }
 
-    willFit(message: NpcInfo, buf: Packet, bitsToAdd: number, bytesToAdd: number): boolean {
-        // 7 aligns to the next byte
-        return ((buf.bitPos + bitsToAdd + 7) >>> 3) + (message.accumulator + bytesToAdd) <= NpcInfoEncoder.BYTES_LIMIT;
-    }
-
-    private writeNpcs(buf: Packet, message: NpcInfo): void {
-        const buildArea: BuildArea = message.buildArea;
+    private writeNpcs(buf: Packet, message: NpcInfo, bytes: number): number {
+        const {currentTick, renderer, player } = message;
+        const buildArea: BuildArea = player.buildArea;
         // update existing npcs (255 max - 8 bits)
-        buf.bits();
         buf.pBit(8, buildArea.npcs.size);
-
-        for (const nid of buildArea.npcs) {
-            const npc: Npc | undefined = World.getNpc(nid);
-            if (!npc || npc.tele || npc.level !== message.level || !CoordGrid.isWithinDistanceSW(message, npc, 15) || !npc.checkLifeCycle(World.currentTick)) {
+        for (const npc of buildArea.npcs) {
+            const nid: number = npc.nid;
+            if (nid === -1 || npc.tele || npc.level !== player.level || !CoordGrid.isWithinDistanceSW(player, npc, 15) || !npc.checkLifeCycle(currentTick)) {
                 // if the npc was teleported, it needs to be removed and re-added
-                buf.pBit(1, 1);
-                buf.pBit(2, 3);
-                buildArea.npcs.delete(nid);
+                this.remove(buf, buildArea, npc);
                 continue;
             }
-
-            const extendedInfoSize: number = this.calculateExtendedInfo(npc, false);
-            let extendedInfo: boolean = extendedInfoSize > 0;
-
+            const length: number = renderer.highdefinitions(nid);
+            const extend: boolean = length > 0;
             const { walkDir, runDir } = npc;
-            let bits: number = NpcInfoEncoder.BITS_IDLE;
             if (runDir !== -1) {
-                bits = NpcInfoEncoder.BITS_RUN;
+                this.run(buf, buildArea, npc, walkDir, runDir, extend && this.willFit(bytes, buf, NpcInfoEncoder.BITS_RUN, length));
             } else if (walkDir !== -1) {
-                bits = NpcInfoEncoder.BITS_WALK;
-            } else if (extendedInfo) {
-                bits = NpcInfoEncoder.BITS_EXTENDED;
+                this.walk(buf, buildArea, npc, walkDir, extend && this.willFit(bytes, buf, NpcInfoEncoder.BITS_WALK, length));
+            } else if (extend && this.willFit(bytes, buf, NpcInfoEncoder.BITS_EXTENDED, length)) {
+                this.extend(buf, buildArea, npc);
+            } else {
+                this.idle(buf);
             }
-
-            if (!this.willFit(message, buf, bits, extendedInfoSize)) {
-                extendedInfo = false;
-            }
-
-            buf.pBit(1, runDir !== -1 || walkDir !== -1 || extendedInfo ? 1 : 0);
-            if (runDir !== -1) {
-                buf.pBit(2, 2);
-                buf.pBit(3, walkDir);
-                buf.pBit(3, runDir);
-                buf.pBit(1, extendedInfo ? 1 : 0);
-            } else if (walkDir !== -1) {
-                buf.pBit(2, 1);
-                buf.pBit(3, walkDir);
-                buf.pBit(1, extendedInfo ? 1 : 0);
-            } else if (extendedInfo) {
-                buf.pBit(2, 0);
-            }
-
-            if (extendedInfo) {
-                buildArea.extendedInfo.add({ id: nid, added: false });
-                message.accumulator += extendedInfoSize;
-            }
+            bytes += length;
         }
+        return bytes;
     }
 
-    private writeNewNpcs(buf: Packet, message: NpcInfo): void {
-        const buildArea: BuildArea = message.buildArea;
-        for (const npc of buildArea.getNearbyNpcs(message.x, message.z, message.originX, message.originZ)) {
-            const extendedInfoSize: number = this.calculateExtendedInfo(npc, true);
-            const extendedInfo: boolean = extendedInfoSize > 0;
-
+    private writeNewNpcs(buf: Packet, message: NpcInfo, bytes: number): void {
+        const renderer: Renderer<Npc> = message.renderer;
+        const {buildArea, level, x, z, originX, originZ} = message.player;
+        for (const npc of buildArea.getNearbyNpcs(level, x, z, originX, originZ)) {
+            const nid: number = npc.nid;
+            const length: number = renderer.lowdefinitions(nid) + renderer.highdefinitions(nid);
             // bits to add npc + extended info size + bits to break loop (13)
-            if (!this.willFit(message, buf, NpcInfoEncoder.BITS_NEW + 13, extendedInfoSize)) {
+            if (!this.willFit(bytes, buf, NpcInfoEncoder.BITS_NEW + 13, length)) {
                 // more npcs get added next tick
                 break;
             }
-
-            buf.pBit(13, npc.nid);
-            buf.pBit(11, npc.type);
-            buf.pBit(5, npc.x - message.x);
-            buf.pBit(5, npc.z - message.z);
-            buf.pBit(1, extendedInfo ? 1 : 0);
-
-            if (extendedInfo) {
-                buildArea.extendedInfo.add({ id: npc.nid, added: true });
-                message.accumulator += extendedInfoSize;
-            }
-
-            buildArea.npcs.add(npc.nid);
+            this.add(buf, buildArea, npc, nid, npc.x - x, npc.z - z, npc.type);
+            bytes += length;
         }
-
-        if (buildArea.extendedInfo.size > 0) {
-            buf.pBit(13, 8191);
-        }
-
-        buf.bytes();
     }
 
-    private writeExtendedInfo(npc: Npc, buf: Packet, newlyObserved: boolean): void {
-        let mask: number = npc.mask;
+    private add(buf: Packet, buildArea: BuildArea, npc: Npc, nid: number, x: number, z: number, type: number): void {
+        buf.pBit(13, nid);
+        buf.pBit(11, type);
+        buf.pBit(5, x);
+        buf.pBit(5, z);
+        buf.pBit(1, 1); // extend
+        buildArea.lowNpcs.add(npc);
+        buildArea.npcs.add(npc);
+    }
 
-        if (newlyObserved) {
-            if (npc.orientationX !== -1 || npc.faceX !== -1) {
-                mask |= Npc.FACE_COORD;
-            }
+    private remove(buf: Packet, buildArea: BuildArea, npc: Npc): void {
+        buf.pBit(1, 1);
+        buf.pBit(2, 3);
+        buildArea.npcs.delete(npc);
+    }
 
-            if (npc.faceEntity !== -1) {
-                mask |= Npc.FACE_ENTITY;
-            }
+    private run(buf: Packet, buildArea: BuildArea, npc: Npc, walkDir: number, runDir: number, extend: boolean): void {
+        buf.pBit(1, 1);
+        buf.pBit(2, 2);
+        buf.pBit(3, walkDir);
+        buf.pBit(3, runDir);
+        if (extend) {
+            buf.pBit(1, 1);
+            buildArea.highNpcs.add(npc);
+        } else {
+            buf.pBit(1, 0);
+        }
+    }
+
+    private walk(buf: Packet, buildArea: BuildArea, npc: Npc, walkDir: number, extend: boolean): void {
+        buf.pBit(1, 1);
+        buf.pBit(2, 1);
+        buf.pBit(3, walkDir);
+        if (extend) {
+            buf.pBit(1, 1);
+            buildArea.highNpcs.add(npc);
+        } else {
+            buf.pBit(1, 0);
+        }
+    }
+
+    private extend(buf: Packet, buildArea: BuildArea, npc: Npc): void {
+        buf.pBit(1, 1);
+        buf.pBit(2, 0);
+        buildArea.highNpcs.add(npc);
+    }
+
+    private idle(buf: Packet): void {
+        buf.pBit(1, 0);
+    }
+
+    private highdefinition(buf: Packet, renderer: NpcRenderer, _: Player, other: Npc, __: boolean): void {
+        this.writeBlocks(buf, renderer, other.nid, other.masks);
+    }
+
+    private lowdefinition(buf: Packet, renderer: NpcRenderer, _: Player, other: Npc): void {
+        const nid: number = other.nid;
+        let masks: number = other.masks;
+
+        if (other.faceEntity !== -1 && !renderer.has(nid, InfoProt.NPC_FACE_ENTITY)) {
+            renderer.cache(nid, new NpcInfoFaceEntity(other.faceEntity), InfoProt.NPC_FACE_ENTITY);
+            masks |= InfoProt.NPC_FACE_ENTITY.id;
         }
 
-        buf.p1(mask);
-
-        if (mask & Npc.ANIM) {
-            buf.p2(npc.animId);
-            buf.p1(npc.animDelay);
-        }
-
-        if (mask & Npc.FACE_ENTITY) {
-            // todo: get rid of alreadyFacedEntity
-            if (npc.faceEntity !== -1) {
-                npc.alreadyFacedEntity = true;
-            }
-
-            buf.p2(npc.faceEntity);
-        }
-
-        if (mask & Npc.SAY) {
-            buf.pjstr(npc.chat ?? '');
-        }
-
-        if (mask & Npc.DAMAGE) {
-            buf.p1(npc.damageTaken);
-            buf.p1(npc.damageType);
-            buf.p1(npc.levels[NpcStat.HITPOINTS]);
-            buf.p1(npc.baseLevels[NpcStat.HITPOINTS]);
-        }
-
-        if (mask & Npc.CHANGE_TYPE) {
-            buf.p2(npc.type);
-        }
-
-        if (mask & Npc.SPOTANIM) {
-            buf.p2(npc.graphicId);
-            buf.p2(npc.graphicHeight);
-            buf.p2(npc.graphicDelay);
-        }
-
-        if (mask & Npc.FACE_COORD) {
-            if (newlyObserved && npc.orientationX != -1) {
-                buf.p2(npc.orientationX);
-                buf.p2(npc.orientationZ);
+        if (!renderer.has(nid, InfoProt.NPC_FACE_COORD)) {
+            if (other.orientationX !== -1) {
+                renderer.cache(nid, new NpcInfoFaceCoord(other.orientationX, other.orientationZ), InfoProt.NPC_FACE_COORD);
+            } else if (other.faceX !== -1) {
+                renderer.cache(nid, new NpcInfoFaceCoord(other.faceX, other.faceZ), InfoProt.NPC_FACE_COORD);
             } else {
-                buf.p2(npc.faceX);
-                buf.p2(npc.faceZ);
+                renderer.cache(nid, new NpcInfoFaceCoord(other.x * 2 + 1, (other.z - 1) * 2 + 1), InfoProt.NPC_FACE_COORD);
             }
+        }
+
+        masks |= InfoProt.NPC_FACE_COORD.id;
+
+        this.writeBlocks(buf, renderer, nid, masks);
+    }
+
+    private writeBlocks(buf: Packet, renderer: NpcRenderer, nid: number, masks: number): void {
+        renderer.write1(buf, masks);
+        if (masks & InfoProt.NPC_ANIM.id) {
+            renderer.write(buf, nid, InfoProt.NPC_ANIM);
+        }
+        if (masks & InfoProt.NPC_FACE_ENTITY.id) {
+            renderer.write(buf, nid, InfoProt.NPC_FACE_ENTITY);
+        }
+        if (masks & InfoProt.NPC_SAY.id) {
+            renderer.write(buf, nid, InfoProt.NPC_SAY);
+        }
+        if (masks & InfoProt.NPC_DAMAGE.id) {
+            renderer.write(buf, nid, InfoProt.NPC_DAMAGE);
+        }
+        if (masks & InfoProt.NPC_CHANGE_TYPE.id) {
+            renderer.write(buf, nid, InfoProt.NPC_CHANGE_TYPE);
+        }
+        if (masks & InfoProt.NPC_SPOTANIM.id) {
+            renderer.write(buf, nid, InfoProt.NPC_SPOTANIM);
+        }
+        if (masks & InfoProt.NPC_FACE_COORD.id) {
+            renderer.write(buf, nid, InfoProt.NPC_FACE_COORD);
         }
     }
 
-    private calculateExtendedInfo(npc: Npc, newlyObserved: boolean): number {
-        let length: number = 0;
-        let mask: number = npc.mask;
-
-        if (newlyObserved) {
-            if (npc.orientationX !== -1 || npc.faceX !== -1) {
-                mask |= Npc.FACE_COORD;
-            }
-
-            if (npc.faceEntity !== -1) {
-                mask |= Npc.FACE_ENTITY;
-            }
-        }
-
-        if (mask === 0) {
-            return 0;
-        }
-
-        length += 1;
-
-        if (mask & Npc.ANIM) {
-            length += 3;
-        }
-
-        if (mask & Npc.FACE_ENTITY) {
-            length += 2;
-        }
-
-        if (mask & Npc.SAY) {
-            length += 1 + npc.chat!.length;
-        }
-
-        if (mask & Npc.DAMAGE) {
-            length += 4;
-        }
-
-        if (mask & Npc.CHANGE_TYPE) {
-            length += 2;
-        }
-
-        if (mask & Npc.SPOTANIM) {
-            length += 6;
-        }
-
-        if (mask & Npc.FACE_COORD) {
-            length += 4;
-        }
-
-        return length;
+    private willFit(bytes: number, buf: Packet, bitsToAdd: number, bytesToAdd: number): boolean {
+        // 7 aligns to the next byte
+        return ((buf.bitPos + bitsToAdd + 7) >>> 3) + (bytes + bytesToAdd) <= NpcInfoEncoder.BYTES_LIMIT;
     }
 }

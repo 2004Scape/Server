@@ -27,6 +27,8 @@ hitpoints=34
 attack=20
 strength=21
 defence=22
+magic=0
+ranged=0
 param=damagetype,^slash_style
 param=attack_anim,dog_attack
 param=defend_anim,dog_block
@@ -37,6 +39,7 @@ param=death_sound,wolf_death
 param=death_drop,wolf_bones
 huntmode=cowardly
 huntrange=1
+// osrs stats and Vislvl match 1:1
 
 [npc_840]
 name=Ugthanki
@@ -56,6 +59,8 @@ hitpoints=45
 attack=35
 strength=35
 defence=35
+magic=0
+ranged=0
 param=damagetype,^stab_style
 param=attack_anim,camel_attack
 param=defend_anim,camel_block
@@ -66,3 +71,4 @@ param=death_sound,cow_death
 param=retreat,5
 huntmode=cowardly
 huntrange=2
+// osrs stats and Vislvl match 1:1

@@ -57,7 +57,9 @@ param=death_anim,skavid_death
 param=attack_sound,imp_attack
 param=defend_sound,imp_hit
 param=death_sound,imp_death
+param=death_drop,null
 category=witches_experiment
+// osrs stats and Vislvl match 1:1
 
 [witches_experiment_p2]
 name=Witches experiment second form
@@ -84,6 +86,7 @@ param=defend_sound,insect_hit
 param=death_sound,insect_death
 param=death_drop,null
 category=witches_experiment
+// osrs stats and Vislvl match 1:1
 
 [witches_experiment_p3]
 name=Witches experiment third form
@@ -112,7 +115,9 @@ param=death_anim,bear_death
 param=attack_sound,bear_attack
 param=defend_sound,bear_hit
 param=death_sound,bear_death
+param=death_drop,null
 category=witches_experiment
+// osrs stats and Vislvl match 1:1
 
 [witches_experiment_p4]
 name=Witches experiment fourth form
@@ -137,11 +142,12 @@ param=damagetype,^stab_style
 param=attack_anim,dog_attack
 param=defend_anim,dog_block
 param=death_anim,dog_death
-// param_attack_sound,
-// param_defend_sound,
-// param_death_sound,
+param=attack_sound,wolf_attack2
+param=defend_sound,wolf_hit
+param=death_sound,wolf_death
 param=death_drop,null
 category=witches_experiment
+// osrs stats and Vislvl match 1:1
 
 [ball_mouse]
 vislevel=hide

@@ -8,6 +8,7 @@ cost=30
 weight=2lb
 name=Karamjan rum
 desc=A very strong spirit brewed in Karamja.
+tradeable=no
 
 [hunt_chest_key]
 model=model_2372_obj
@@ -20,6 +21,7 @@ cost=1
 weight=10g
 name=Chest key
 desc=A key to One eyed Hector's chest.
+tradeable=no
 
 [pirate_message]
 model=model_2600_obj
@@ -33,3 +35,4 @@ cost=1
 weight=20g
 name=Pirate message
 desc=Pirates don't have the best handwriting...
+tradeable=no

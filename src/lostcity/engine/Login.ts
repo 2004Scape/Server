@@ -1,10 +1,9 @@
 import { Worker as NodeWorker } from 'worker_threads';
 
-import Isaac from '#jagex2/io/Isaac.js';
-import Packet from '#jagex2/io/Packet.js';
+import Isaac from '#jagex/io/Isaac.js';
+import Packet from '#jagex/io/Packet.js';
 
 import World from '#lostcity/engine/World.js';
-import {changeNpcCollision} from '#lostcity/engine/GameMap.js';
 
 import Player from '#lostcity/entity/Player.js';
 
@@ -16,7 +15,7 @@ import { CrcBuffer32 } from '#lostcity/server/CrcTable.js';
 import Environment from '#lostcity/util/Environment.js';
 
 class Login {
-    loginThread: Worker | NodeWorker = createWorker(Environment.STANDALONE_BUNDLE ? 'LoginThread.js' : './src/lostcity/server/LoginThread.ts');
+    loginThread: Worker | NodeWorker = createWorker(Environment.STANDALONE_BUNDLE ? 'LoginThread.js' : './lostcity/server/LoginThread.ts');
     loginRequests: Map<string, ClientSocket> = new Map();
     logoutRequests: Set<bigint> = new Set();
 
@@ -40,7 +39,7 @@ class Login {
         }
     }
 
-    async readIn(socket: ClientSocket, data: Packet) {
+    readIn(socket: ClientSocket, data: Packet) {
         const opcode = data.g1();
 
         // todo: reconnect (opcode 18)
@@ -97,6 +96,8 @@ class Login {
             save: save.data.subarray(0, save.pos)
         });
         save.release();
+
+        this.logoutRequests.delete(player.username37);
     }
 
     autosave(player: Player) {
@@ -168,21 +169,6 @@ class Login {
                 player.lowMemory = (info & 0x1) !== 0;
                 player.webClient = client.isWebSocket();
                 World.addPlayer(player);
-                break;
-            }
-            case 'logoutreply': {
-                const { username } = msg;
-
-                const player = World.getPlayerByUsername(username);
-                if (player) {
-                    World.gameMap.getZone(player.x, player.z, player.level).leave(player);
-                    World.players.remove(player.pid);
-                    changeNpcCollision(player.width, player.x, player.z, player.level, false);
-                    player.pid = -1;
-                    player.terminate();
-
-                    this.logoutRequests.delete(player.username37);
-                }
                 break;
             }
             default:

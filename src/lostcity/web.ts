@@ -8,6 +8,7 @@ import { CrcBuffer } from '#lostcity/server/CrcTable.js';
 
 import Environment from '#lostcity/util/Environment.js';
 import { tryParseInt } from '#lostcity/util/TryParse.js';
+import { register } from 'prom-client';
 
 const MIME_TYPES = new Map<string, string>();
 MIME_TYPES.set('.js', 'application/javascript');
@@ -32,7 +33,17 @@ const web = http.createServer(async (req, res) => {
 
         const url = new URL(req.url ?? '', `http://${req.headers.host}`);
 
-        if (url.pathname.startsWith('/crc')) {
+        if (url.pathname.endsWith('.mid')) {
+            // todo: packing process should spit out files with crc included in the name
+            //   but the server needs to be aware of the crc so it can send the proper length
+            //   so that's been pushed off til later...
+
+            // strip _crc from filename, but keep extension
+            const filename = url.pathname.substring(1, url.pathname.lastIndexOf('_')) + '.mid';
+            res.setHeader('Content-Type', 'application/octet-stream');
+            res.writeHead(200);
+            res.end(await fsp.readFile('data/pack/client/songs/' + filename));
+        } else if (url.pathname.startsWith('/crc')) {
             res.setHeader('Content-Type', 'application/octet-stream');
             res.writeHead(200);
             res.end(CrcBuffer.data);
@@ -134,26 +145,32 @@ const web = http.createServer(async (req, res) => {
             res.setHeader('Content-Type', MIME_TYPES.get(extname(url.pathname ?? '')) ?? 'text/plain');
             res.writeHead(200);
             res.end(await fsp.readFile('public' + url.pathname));
-        } else if (url.pathname.endsWith('.mid')) {
-            // todo: packing process should spit out files with crc included in the name
-            //   but the server needs to be aware of the crc so it can send the proper length
-            //   so that's been pushed off til later...
-
-            // strip _crc from filename, but keep extension
-            const filename = url.pathname.substring(1, url.pathname.lastIndexOf('_')) + '.mid';
-            res.setHeader('Content-Type', 'application/octet-stream');
-            res.writeHead(200);
-            res.end(await fsp.readFile('data/pack/client/songs/' + filename));
         } else {
             res.writeHead(404);
             res.end();
         }
     } catch (err) {
-        res.writeHead(500);
+        res.end();
+    }
+});
+
+const managementWeb = http.createServer(async (req, res) => {
+    const url = new URL(req.url ?? '', `http://${req.headers.host}`);
+
+    if (url.pathname === '/prometheus') {
+        res.setHeader('Content-Type', register.contentType);
+        res.writeHead(200);
+        res.end(await register.metrics());
+    } else {
+        res.writeHead(404);
         res.end();
     }
 });
 
 export function startWeb() {
     web.listen(Environment.WEB_PORT, '0.0.0.0');
+}
+
+export function startManagementWeb() {
+    managementWeb.listen(Environment.WEB_MANAGEMENT_PORT, '0.0.0.0');
 }

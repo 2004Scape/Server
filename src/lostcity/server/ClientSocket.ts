@@ -2,8 +2,8 @@ import { randomUUID } from 'crypto';
 import { Socket } from 'net';
 import { WebSocket } from 'ws';
 
-import Isaac from '#jagex2/io/Isaac.js';
-import Packet from '#jagex2/io/Packet.js';
+import Isaac from '#jagex/io/Isaac.js';
+import Packet from '#jagex/io/Packet.js';
 
 import { NetworkPlayer } from '#lostcity/entity/NetworkPlayer.js';
 

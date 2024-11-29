@@ -10,6 +10,7 @@ model=model_2443_obj
 2dyan=1932
 2dxan=440
 weight=1oz
+tradeable=no
 
 [magic_whistle]
 name=Magic whistle
@@ -23,6 +24,7 @@ model=model_2433_obj
 2dxan=152
 iop1=Blow
 weight=5g
+tradeable=no
 
 [grail_bell]
 name=Grail bell
@@ -38,6 +40,7 @@ recol1d=26425
 2dxan=1132
 iop1=Ring
 weight=1oz
+tradeable=no
 
 [magic_gold_feather]
 name=Magic gold feather
@@ -54,6 +57,7 @@ recol1d=25353
 2dxan=428
 iop1=Blow-on
 weight=5g
+tradeable=no
 
 [holy_grail]
 name=Holy grail
@@ -65,3 +69,4 @@ model=model_2623_obj
 2dyan=2044
 2dxan=116
 weight=3oz
+tradeable=no

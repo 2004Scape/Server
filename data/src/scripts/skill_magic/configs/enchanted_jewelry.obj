@@ -16,7 +16,6 @@ iop2=Wear
 wearpos=ring
 weight=6g
 category=category_656
-tradeable=yes
 
 [ring_of_duel_8]
 name=Ring of dueling(8)
@@ -37,7 +36,6 @@ wearpos=ring
 weight=6g
 iop4=Rub
 category=category_136
-tradeable=yes
 param=next_obj_stage,ring_of_duel_7
 param=charges,8
 
@@ -60,7 +58,6 @@ wearpos=ring
 weight=6g
 iop4=Rub
 category=category_136
-tradeable=yes
 param=next_obj_stage,ring_of_duel_6
 param=charges,7
 
@@ -83,7 +80,6 @@ wearpos=ring
 weight=6g
 iop4=Rub
 category=category_136
-tradeable=yes
 param=next_obj_stage,ring_of_duel_5
 param=charges,6
 
@@ -106,7 +102,6 @@ wearpos=ring
 weight=6g
 iop4=Rub
 category=category_136
-tradeable=yes
 param=next_obj_stage,ring_of_duel_4
 param=charges,5
 
@@ -129,7 +124,6 @@ wearpos=ring
 weight=6g
 iop4=Rub
 category=category_136
-tradeable=yes
 param=next_obj_stage,ring_of_duel_3
 param=charges,4
 
@@ -152,7 +146,6 @@ wearpos=ring
 weight=6g
 iop4=Rub
 category=category_136
-tradeable=yes
 param=next_obj_stage,ring_of_duel_2
 param=charges,3
 
@@ -175,7 +168,6 @@ wearpos=ring
 weight=6g
 iop4=Rub
 category=category_136
-tradeable=yes
 param=next_obj_stage,ring_of_duel_1
 param=charges,2
 
@@ -198,7 +190,6 @@ wearpos=ring
 weight=6g
 iop4=Rub
 category=category_136
-tradeable=yes
 param=charges,1
 
 //guess
@@ -220,7 +211,6 @@ iop2=Wear
 wearpos=ring
 weight=6g
 category=category_656
-tradeable=yes
 
 [ring_of_life]
 name=Ring of life
@@ -238,7 +228,6 @@ iop2=Wear
 wearpos=ring
 weight=6g
 category=category_656
-tradeable=yes
 
 [ring_of_wealth]
 name=Ring of wealth
@@ -259,7 +248,6 @@ iop2=Wear
 wearpos=ring
 weight=6g
 category=category_656
-tradeable=yes
 
 [amulet_of_glory]
 cost=17625
@@ -284,7 +272,6 @@ wearpos=front
 manwear=model_290_obj_wear,0
 womanwear=model_454_obj_wear,0
 weight=10g
-tradeable=yes
 param=stabattack,10
 param=slashattack,10
 param=crushattack,10
@@ -322,7 +309,6 @@ manwear=model_290_obj_wear,0
 womanwear=model_454_obj_wear,0
 weight=10g
 category=category_557
-tradeable=yes
 param=stabattack,10
 param=slashattack,10
 param=crushattack,10
@@ -361,7 +347,6 @@ manwear=model_290_obj_wear,0
 womanwear=model_454_obj_wear,0
 weight=10g
 category=category_557
-tradeable=yes
 param=stabattack,10
 param=slashattack,10
 param=crushattack,10
@@ -400,7 +385,6 @@ manwear=model_290_obj_wear,0
 womanwear=model_454_obj_wear,0
 weight=10g
 category=category_557
-tradeable=yes
 param=stabattack,10
 param=slashattack,10
 param=crushattack,10
@@ -439,7 +423,6 @@ manwear=model_290_obj_wear,0
 womanwear=model_454_obj_wear,0
 weight=10g
 category=category_557
-tradeable=yes
 param=stabattack,10
 param=slashattack,10
 param=crushattack,10
@@ -475,7 +458,6 @@ wearpos=front
 manwear=model_290_obj_wear,0
 womanwear=model_454_obj_wear,0
 weight=10g
-tradeable=yes
 param=strengthbonus,10
 
 [amulet_of_magic]
@@ -499,7 +481,6 @@ wearpos=front
 manwear=model_290_obj_wear,0
 womanwear=model_454_obj_wear,0
 weight=10g
-tradeable=yes
 param=magicattack,10
 
 [amulet_of_defence]
@@ -523,7 +504,6 @@ wearpos=front
 manwear=model_290_obj_wear,0
 womanwear=model_454_obj_wear,0
 weight=10g
-tradeable=yes
 param=stabdefence,7
 param=slashdefence,7
 param=crushdefence,7
@@ -549,7 +529,6 @@ wearpos=front
 manwear=model_290_obj_wear,0
 womanwear=model_454_obj_wear,0
 weight=10g
-tradeable=yes
 param=stabattack,6
 param=slashattack,6
 param=crushattack,6

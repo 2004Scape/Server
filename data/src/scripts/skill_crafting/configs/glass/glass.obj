@@ -11,7 +11,6 @@ weight=2lb
 members=yes
 name=Molten glass
 desc=Hot glass ready to be blown into useful objects.
-tradeable=yes
 
 [soda_ash]
 name=Soda ash
@@ -26,7 +25,6 @@ recol1d=28539
 2dyan=1892
 2dxan=264
 weight=2oz
-tradeable=yes
 
 [bucket_sand]
 members=yes
@@ -41,7 +39,6 @@ recol1d=24205
 2dyan=1688
 2dxan=204
 weight=2500g
-tradeable=yes
 
 [glassblowing_pipe]
 name=Glassblowing pipe
@@ -56,4 +53,3 @@ womanwear=model_515_obj_wear,0
 2dyan=132
 2dxan=228
 weight=2oz
-tradeable=yes

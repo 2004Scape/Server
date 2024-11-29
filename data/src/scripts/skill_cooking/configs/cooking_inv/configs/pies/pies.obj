@@ -16,7 +16,6 @@ recol3d=20971
 2dxan=192
 weight=450g
 category=category_129
-tradeable=yes
 param=next_obj_stage,half_an_apple_pie
 
 [redberry_pie]
@@ -37,7 +36,6 @@ recol3d=20971
 2dxan=192
 weight=450g
 category=category_129
-tradeable=yes
 param=next_obj_stage,obj_2333
 
 [meat_pie]
@@ -58,7 +56,6 @@ recol3d=20971
 2dxan=192
 weight=450g
 category=category_129
-tradeable=yes
 param=next_obj_stage,obj_2331
 
 [obj_2331]
@@ -85,7 +82,6 @@ recol6d=9315
 2dxan=192
 weight=225g
 category=category_129
-tradeable=yes
 param=next_obj_stage,piedish
 
 [obj_2333]
@@ -112,7 +108,6 @@ recol6d=18564
 2dxan=192
 weight=225g
 category=category_129
-tradeable=yes
 param=next_obj_stage,piedish
 
 [half_an_apple_pie]
@@ -139,7 +134,6 @@ recol6d=22384
 2dxan=192
 weight=225g
 category=category_129
-tradeable=yes
 param=next_obj_stage,piedish
 
 [burnt_pie]
@@ -159,7 +153,6 @@ recol3d=20971
 2dxan=192
 cost=1
 weight=350g
-tradeable=yes
 
 [redberry]
 cost=3
@@ -172,7 +165,6 @@ model=model_2358_obj
 2dyan=668
 2dxan=404
 weight=7g
-tradeable=yes
 param=uncooked_pie_struct,uncooked_redberry_pie
 
 [pie_shell]
@@ -191,7 +183,6 @@ recol3d=20971
 2dxan=192
 cost=4
 weight=250g
-tradeable=yes
 
 [cooking_apple]
 name=Cooking apple
@@ -202,7 +193,6 @@ model=model_2404_obj
 2dxan=212
 cost=1
 weight=3oz
-tradeable=yes
 param=uncooked_pie_struct,uncooked_apple_pie
 
 [piedish]
@@ -221,4 +211,3 @@ recol3d=20971
 2dxan=192
 cost=3
 weight=100g
-tradeable=yes

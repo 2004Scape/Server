@@ -1,10 +1,10 @@
-import Packet from '#jagex2/io/Packet.js';
+import Packet from '#jagex/io/Packet.js';
 
 import fs from 'fs';
 
 import WordEnc from '#lostcity/cache/wordenc/WordEnc.js';
-import WordPack from '#jagex2/wordenc/WordPack.js';
-import { packClientWordenc } from '#lostcity/cache/packchat/pack.js';
+import WordPack from '#jagex/wordenc/WordPack.js';
+import { packClientWordenc } from '#lostcity/pack/chat/pack.js';
 
 /**
  * TODO: Remove race condition in how files are written to data/pack/client/wordenc

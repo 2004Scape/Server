@@ -11,3 +11,4 @@ name=A magic scroll
 desc=Maybe I should read it...
 iop1=Read
 weight=20g
+tradeable=no

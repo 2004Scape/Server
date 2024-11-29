@@ -1,4 +1,4 @@
-import Packet from '#jagex2/io/Packet.js';
+import Packet from '#jagex/io/Packet.js';
 
 import ClientSocket from '#lostcity/server/ClientSocket.js';
 
@@ -11,7 +11,7 @@ export default class WorkerServer {
     constructor() {}
 
     start() {
-        self.onmessage = async (e: MessageEvent) => {
+        self.onmessage = (e: MessageEvent) => {
             const packet = new Packet(new Uint8Array(e.data.data));
             const socket = this.sockets.get(e.data.id);
 
@@ -30,9 +30,9 @@ export default class WorkerServer {
                     if (socket) {
                         try {
                             if (socket.state === 1) {
-                                await World.readIn(socket, packet);
+                                World.readIn(socket, packet);
                             } else {
-                                await Login.readIn(socket, packet);
+                                Login.readIn(socket, packet);
                             }
                         } catch (err) {
                             console.log('error', err);

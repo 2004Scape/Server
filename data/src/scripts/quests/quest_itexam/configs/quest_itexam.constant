@@ -1,0 +1,28 @@
+^itexam_questpoints = 2
+
+^itexam_stamping = 1
+^itexam_first_exam = 2
+^itexam_second_exam = 3
+^itexam_third_exam = 4
+^itexam_impress_archeological_expert = 5
+^itexam_mineshaft_permit = 6
+^itexam_poured_compound_on_bricks = 7
+^itexam_removed_blockage = 8
+^itexam_complete = 9
+
+^itexam_errands_offset = 4
+
+^itexam_errand_student1 = 0
+^itexam_errand_student2 = 1
+^itexam_errand_student3 = 2
+
+^itexam_bits_offset = 12
+
+^itexam_bit_panning_guide_tea_given = 1
+^itexam_bit_winch_rope_attached = 2
+^itexam_bit_private_winch_rope_attached = 3
+^itexam_bit_barrel_open = 4
+^itexam_bit_stone_tablet_taken = 5
+^itexam_bit_searched_bricks = 6
+^itexam_bit_shown_ancient_symbol = 7
+^itexam_bit_stamped_letter = 9

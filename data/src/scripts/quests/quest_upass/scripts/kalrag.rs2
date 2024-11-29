@@ -8,7 +8,7 @@ if (npc_findhero = true) {
 [queue,defeat_kalrag]
 npc_huntall(coord, 5, 0);
 while (npc_huntnext = true) {
-    if (npc_type = npc_977) {
+    if (npc_type = blessed_spider) {
         npc_setmode(opplayer2);
     }
 }
@@ -32,7 +32,7 @@ if(%upass_progress = ^upass_found_doll) {
 }
 
 // Could you originally attack multiple spiders?
-[ai_opplayer2,npc_977] ~blessedspider_attack;
+[ai_opplayer2,blessed_spider] ~blessedspider_attack;
 
 [proc,blessedspider_attack]
 if (stat(hitpoints) = 0) {

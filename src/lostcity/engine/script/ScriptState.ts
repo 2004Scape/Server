@@ -27,14 +27,14 @@ export interface JumpStackFrame {
 }
 
 export default class ScriptState {
-    static ABORTED = -1;
-    static RUNNING = 0;
-    static FINISHED = 1;
-    static SUSPENDED = 2; // suspended to move to player
-    static PAUSEBUTTON = 3;
-    static COUNTDIALOG = 4;
-    static NPC_SUSPENDED = 5; // suspended to move to npc
-    static WORLD_SUSPENDED = 6; // suspended to move to world
+    static readonly ABORTED = -1;
+    static readonly RUNNING = 0;
+    static readonly FINISHED = 1;
+    static readonly SUSPENDED = 2; // suspended to move to player
+    static readonly PAUSEBUTTON = 3;
+    static readonly COUNTDIALOG = 4;
+    static readonly NPC_SUSPENDED = 5; // suspended to move to npc
+    static readonly WORLD_SUSPENDED = 6; // suspended to move to world
 
     // interpreter
     script: ScriptFile;
@@ -119,6 +119,11 @@ export default class ScriptState {
     dbColumn: number = -1;
     dbRow: number = -1;
     dbRowQuery: number[] = [];
+
+    /**
+     * Used for debug commands
+     */
+    timespent: number = 0;
 
     huntIterator: IterableIterator<Entity> | null = null;
     npcIterator: IterableIterator<Npc> | null = null;
@@ -335,11 +340,58 @@ export default class ScriptState {
         return strings;
     }
 
-    pushString(value: string) {
+    pushString(value: string): void {
         this.stringStack[this.ssp++] = value;
     }
 
-    reset() {
+    popFrame(): void {
+        const frame = this.frames[--this.fp];
+        this.pc = frame.pc;
+        this.script = frame.script;
+        this.intLocals = frame.intLocals;
+        this.stringLocals = frame.stringLocals;
+    }
+
+    gosubFrame(proc: ScriptFile): void {
+        this.frames[this.fp++] = {
+            script: this.script,
+            pc: this.pc,
+            intLocals: this.intLocals,
+            stringLocals: this.stringLocals
+        };
+        this.setupNewScript(proc);
+    }
+
+    gotoFrame(label: ScriptFile): void {
+        this.debugFrames[this.debugFp++] = {
+            script: this.script,
+            pc: this.pc
+        };
+        this.fp = 0;
+        this.frames.length = 0;
+        this.setupNewScript(label);
+    }
+
+    setupNewScript(script: ScriptFile): void {
+        const intLocals: number[] = new Array(script.intLocalCount).fill(0);
+        const intArgCount: number = script.intArgCount;
+        for (let index: number = 0; index < intArgCount; index++) {
+            intLocals[intArgCount - index - 1] = this.popInt();
+        }
+
+        const stringLocals: string[] = new Array(script.stringLocalCount);
+        const stringArgCount: number = script.stringArgCount;
+        for (let index: number = 0; index < stringArgCount; index++) {
+            stringLocals[stringArgCount - index - 1] = this.popString();
+        }
+
+        this.pc = -1;
+        this.script = script;
+        this.intLocals = intLocals;
+        this.stringLocals = stringLocals;
+    }
+
+    reset(): void {
         this.pc = -1;
         this.frames = [];
         this.fp = 0;

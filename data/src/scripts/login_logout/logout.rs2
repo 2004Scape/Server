@@ -3,18 +3,7 @@ if (busy = true) {
     return(false);
 }
 
-if (~in_duel_arena(coord) = true) {
-    mes("You can't log out during a duel."); //https://youtu.be/xLE8au7T50Q?t=227
-    return(false);
-}
-
-if (~inzone_coord_pair_table(gnomeball_zones, coord) = true) {
-    mes("You can't log out on a gnomeball pitch."); // osrs
-    return(false);
-}
-
 if (map_clock > 17 & add(%lastcombat, 17) > map_clock) {
-    mes("You can't logout until 10 seconds after the end of combat."); // todo: confirm this message for 2004
     return(false);
 }
 
@@ -33,11 +22,26 @@ if (%tradepartner ! null) {
 ~set_cannon_vars_logout;
 ~follower_logout;
 ~rashiliyia_door_logout;
+~duel_arena_logout;
 
 return(true);
 
 [if_button,logout:try_logout]
 if_close;
 if (p_finduid(uid) = true) {
+    if (~in_duel_arena(coord) = true) {
+        mes("You can't log out during a duel."); //https://youtu.be/xLE8au7T50Q?t=227
+        return;
+    }
+
+    if (~inzone_coord_pair_table(gnomeball_zones, coord) = true) {
+        mes("You can't log out on a gnomeball pitch."); // osrs
+        return;
+    }
+
+    if (map_clock > 17 & add(%lastcombat, 17) > map_clock) {
+        mes("You can't logout until 10 seconds after the end of combat."); // todo: confirm this message for 2004
+        return;
+    }
     p_logout;
 }

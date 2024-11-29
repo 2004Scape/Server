@@ -10,7 +10,6 @@ recol1d=14800
 2dyan=1856
 2dxan=204
 weight=1kg
-tradeable=yes
 
 //guess
 [incomplete_stew_meat]
@@ -24,7 +23,6 @@ recol1d=14800
 2dyan=1856
 2dxan=204
 weight=1200g
-tradeable=yes
 
 //guess
 [burnt_stew]
@@ -39,7 +37,6 @@ recol1d=4228
 2dxan=204
 iop1=Empty Bowl
 weight=1300g
-tradeable=yes
 
 //guess
 [burnt_curry]
@@ -55,7 +52,6 @@ recol1d=4228
 members=yes
 iop1=Empty Bowl
 weight=1300g
-tradeable=yes
 
 [potato]
 name=Potato
@@ -69,7 +65,6 @@ model=model_2766_obj
 2dxan=156
 weight=500g
 category=category_131
-tradeable=yes
 
 //guess
 [stew]
@@ -85,7 +80,6 @@ recol1d=11488
 2dxan=204
 weight=1500g
 category=category_59
-tradeable=yes
 param=next_obj_stage,bowl_empty
 
 //guess
@@ -103,5 +97,4 @@ recol1d=22881
 weight=1500g
 category=category_59
 members=yes
-tradeable=yes
 param=next_obj_stage,bowl_empty

@@ -8,7 +8,6 @@ weight=1lb
 2dzoom=630
 2dyan=92
 2dxan=308
-tradeable=yes
 respawnrate=200
 
 [unholy_mould]
@@ -22,6 +21,7 @@ model=model_2673_obj
 2dxan=320
 weight=1lb
 members=yes
+tradeable=no
 
 [amulet_mould]
 name=Amulet mould
@@ -34,7 +34,6 @@ model=model_2368_obj
 2dyan=96
 2dxan=340
 weight=1lb
-tradeable=yes
 respawnrate=200
 
 [necklace_mould]
@@ -47,7 +46,6 @@ weight=1lb
 2dzoom=640
 2dyan=84
 2dxan=316
-tradeable=yes
 respawnrate=200
 
 [holy_mould]
@@ -60,5 +58,4 @@ model=model_2448_obj
 2dyan=96
 2dxan=320
 weight=1lb
-tradeable=yes
 respawnrate=200

@@ -1,6 +1,6 @@
 import fs from 'fs';
 
-import Packet from '#jagex2/io/Packet.js';
+import Packet from '#jagex/io/Packet.js';
 
 export const PRELOADED = new Map<string, Uint8Array>();
 export const PRELOADED_CRC = new Map<string, number>();

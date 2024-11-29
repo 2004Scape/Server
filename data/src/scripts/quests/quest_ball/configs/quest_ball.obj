@@ -8,6 +8,7 @@ model=model_2755_obj
 2dxan=300
 weight=150g
 members=yes
+tradeable=no
 
 [ball_diary]
 name=Diary
@@ -22,6 +23,7 @@ recol1d=23056
 2dxan=256
 weight=18oz
 respawnrate=30
+tradeable=no
 
 [ball_doorkey]
 name=Door key
@@ -37,6 +39,7 @@ recol1d=22945
 2dxan=328
 weight=10g
 respawnrate=95
+tradeable=no
 
 [magnet]
 name=Magnet
@@ -50,6 +53,7 @@ model=model_2798_obj
 2dxan=440
 weight=20g
 members=yes
+tradeable=no
 
 [ball_shedkey]
 name=Key
@@ -64,3 +68,4 @@ recol1d=16912
 2dyan=20
 2dxan=328
 weight=10g
+tradeable=no

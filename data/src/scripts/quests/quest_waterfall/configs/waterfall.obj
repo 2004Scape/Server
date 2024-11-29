@@ -11,6 +11,7 @@ recol1d=7456
 members=yes
 iop1=Read
 weight=18oz
+tradeable=no
 
 [golrie_key]
 name=A key
@@ -23,6 +24,7 @@ model=model_2372_obj
 2dxan=328
 weight=10g
 members=yes
+tradeable=no
 
 [glarials_pebble]
 name=Glarials pebble
@@ -33,6 +35,7 @@ model=model_2701_obj
 2dxan=236
 weight=10g
 members=yes
+tradeable=no
 
 [glarials_amulet]
 name=Glarials amulet
@@ -51,6 +54,7 @@ manwear=model_283_obj_wear,0
 womanwear=model_447_obj_wear,0
 weight=10g
 members=yes
+tradeable=no
 
 [glarials_urn_full]
 name=Glarials urn
@@ -62,6 +66,7 @@ model=model_2704_obj
 2dxan=68
 weight=5oz
 members=yes
+tradeable=no
 
 [glarials_urn_empty]
 name=Glarials urn
@@ -73,6 +78,7 @@ model=model_2704_obj
 2dxan=68
 weight=3oz
 members=yes
+tradeable=no
 
 [waterfall_key]
 name=A key
@@ -85,6 +91,7 @@ model=model_2372_obj
 2dxan=328
 weight=10g
 members=yes
+tradeable=no
 
 [mithril_seeds]
 name=Mithril seeds
@@ -102,4 +109,3 @@ members=yes
 stackable=yes
 iop1=Plant
 weight=1oz
-tradeable=yes

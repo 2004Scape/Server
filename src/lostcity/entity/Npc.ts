@@ -33,20 +33,13 @@ import EntityLifeCycle from '#lostcity/entity/EntityLifeCycle.js';
 import NpcStat from '#lostcity/entity/NpcStat.js';
 import HuntNobodyNear from '#lostcity/entity/hunt/HuntNobodyNear.js';
 
-import LinkList from '#jagex2/datastruct/LinkList.js';
+import LinkList from '#jagex/datastruct/LinkList.js';
 
 import {CollisionFlag} from '@2004scape/rsmod-pathfinder';
 import {isFlagged} from '#lostcity/engine/GameMap.js';
+import InfoProt from '#lostcity/network/225/outgoing/prot/InfoProt.js';
 
 export default class Npc extends PathingEntity {
-    static readonly ANIM = 0x2;
-    static readonly FACE_ENTITY = 0x4;
-    static readonly SAY = 0x8;
-    static readonly DAMAGE = 0x10;
-    static readonly CHANGE_TYPE = 0x20;
-    static readonly SPOTANIM = 0x40;
-    static readonly FACE_COORD = 0x80;
-
     // constructor properties
     nid: number;
     type: number;
@@ -54,12 +47,13 @@ export default class Npc extends PathingEntity {
     origType: number;
     startX: number;
     startZ: number;
+    startLevel: number;
     levels: Uint8Array = new Uint8Array(6);
     baseLevels: Uint8Array = new Uint8Array(6);
 
     // runtime variables
-    vars: Int32Array;
-    varsString: string[];
+    readonly vars: Int32Array;
+    readonly varsString: (string | undefined)[];
 
     // script variables
     activeScript: ScriptState | null = null;
@@ -77,18 +71,21 @@ export default class Npc extends PathingEntity {
     nextPatrolPoint : number = 0;
     delayedPatrol : boolean = false;
 
+    lastWanderTick: number = 0;
+
     heroPoints: {
         uid: number;
         points: number;
     }[] = new Array(16); // be sure to reset when stats are recovered/reset
 
     constructor(level: number, x: number, z: number, width: number, length: number, lifecycle: EntityLifeCycle, nid: number, type: number, moveRestrict: MoveRestrict, blockWalk: BlockWalk) {
-        super(level, x, z, width, length, lifecycle, moveRestrict, blockWalk, MoveStrategy.NAIVE, Npc.FACE_COORD, Npc.FACE_ENTITY);
+        super(level, x, z, width, length, lifecycle, moveRestrict, blockWalk, MoveStrategy.NAIVE, InfoProt.NPC_FACE_COORD.id, InfoProt.NPC_FACE_ENTITY.id);
         this.nid = nid;
         this.type = type;
         this.uid = (type << 16) | nid;
         this.startX = this.x;
         this.startZ = this.z;
+        this.startLevel = this.level;
         this.origType = type;
 
         const npcType = NpcType.get(type);
@@ -106,6 +103,7 @@ export default class Npc extends PathingEntity {
         this.targetOp = npcType.defaultmode;
         this.huntMode = npcType.huntmode;
         this.huntrange = npcType.huntrange;
+        this.lastWanderTick = World.currentTick;
     }
 
     resetHeroPoints() {
@@ -166,6 +164,8 @@ export default class Npc extends PathingEntity {
             }
             this.resetHeroPoints();
             this.queue.clear();
+            this.vars.fill(0);
+            this.varsString.fill(undefined);
             this.defaultMode();
 
             const npcType: NpcType = NpcType.get(this.type);
@@ -438,7 +438,7 @@ export default class Npc extends PathingEntity {
         this.updateMovement(false);
         this.targetOp = NpcMode.NONE;
         this.faceEntity = -1;
-        this.mask |= Npc.FACE_ENTITY;
+        this.masks |= InfoProt.NPC_FACE_ENTITY.id;
     }
 
     defaultMode(): void {
@@ -446,8 +446,9 @@ export default class Npc extends PathingEntity {
         this.updateMovement(false);
         const type: NpcType = NpcType.get(this.type);
         this.targetOp = type.defaultmode;
+        this.lastWanderTick = World.currentTick; // osrs
         this.faceEntity = -1;
-        this.mask |= Npc.FACE_ENTITY;
+        this.masks |= InfoProt.NPC_FACE_ENTITY.id;
     }
 
     wanderMode(): void {
@@ -455,6 +456,14 @@ export default class Npc extends PathingEntity {
         if (type.moverestrict !== MoveRestrict.NOMOVE && Math.random() < 0.125) {
             // 1/8 chance to move every tick (even if they already have a destination)
             this.randomWalk(type.wanderrange);
+            const moved = this.updateMovement(false);
+            if (moved) {
+                this.lastWanderTick = World.currentTick;
+            } else if (World.currentTick > this.lastWanderTick + 500) {
+                this.teleport(this.startX, this.startZ, this.startLevel);
+                this.lastWanderTick = World.currentTick;
+            }
+            return;
         }
         this.updateMovement(false);
     }
@@ -704,7 +713,6 @@ export default class Npc extends PathingEntity {
                 this.defaultMode();
                 return;
             }
-            this.alreadyFacedEntity = false;
         }
 
         if (this.target && !this.interacted) {
@@ -864,7 +872,7 @@ export default class Npc extends PathingEntity {
         if (this.nextHuntTick > World.currentTick) {
             return;
         }
-        if (NpcType.get(this.type).huntrange < 1) {
+        if (this.huntrange < 1) {
             return;
         }
         const hunt: HuntType = HuntType.get(this.huntMode);
@@ -895,7 +903,15 @@ export default class Npc extends PathingEntity {
         if (hunted.length > 0) {
             const entity: Entity = hunted[Math.floor(Math.random() * hunted.length)];
             this.huntTarget = entity;
-            this.setInteraction(Interaction.SCRIPT, entity, hunt.findNewMode);
+            if (NpcMode.QUEUE1 <= hunt.findNewMode && hunt.findNewMode <= NpcMode.QUEUE20) {
+                const npcType = NpcType.get(this.type);
+                const script = ScriptProvider.getByTrigger(ServerTriggerType.AI_QUEUE1 + (hunt.findNewMode - NpcMode.QUEUE1), npcType.id, npcType.category);
+                if (script) {
+                    this.enqueueScript(script, 0, 0);
+                }
+            } else {
+                this.setInteraction(Interaction.SCRIPT, entity, hunt.findNewMode);
+            }
         }
         this.nextHuntTick = World.currentTick + hunt.rate;
     }
@@ -908,6 +924,9 @@ export default class Npc extends PathingEntity {
         for (const player of hunted) {
             if (!(player instanceof Player)) {
                 throw new Error('[Npc] huntAll must be of type Player here.');
+            }
+            if (hunt.checkNotBusy && player.busy()) {
+                continue;
             }
 
             if (hunt.checkAfk && player.zonesAfk()) {
@@ -925,7 +944,12 @@ export default class Npc extends PathingEntity {
                     continue;
                 }
             }
-
+            if (hunt.checkVars && !hunt.checkVars.every(checkVar => {
+                return checkVar.varId === -1 || hunt.checkHuntCondition(player.getVar(checkVar.varId) as number, checkVar.condition, checkVar.val);
+            })) {
+                continue;
+            }
+            
             if (hunt.checkInv !== -1) {
                 let quantity: number = 0;
                 if (hunt.checkObj !== -1) {
@@ -933,13 +957,9 @@ export default class Npc extends PathingEntity {
                 } else if (hunt.checkObjParam !== -1) {
                     quantity = player.invTotalParam(hunt.checkInv, hunt.checkObjParam);
                 }
-                if (quantity < hunt.checkInvMinQuantity || quantity > hunt.checkInvMaxQuantity) {
+                if (!hunt.checkHuntCondition(quantity, hunt.checkInvCondition, hunt.checkInvVal)) {
                     continue;
                 }
-            }
-
-            if (hunt.checkNotBusy && player.busy()) {
-                continue;
             }
             players.push(player);
         }
@@ -968,7 +988,7 @@ export default class Npc extends PathingEntity {
         if (anim == -1 || this.animId == -1 || SeqType.get(anim).priority > SeqType.get(this.animId).priority || SeqType.get(this.animId).priority === 0) {
             this.animId = anim;
             this.animDelay = delay;
-            this.mask |= Npc.ANIM;
+            this.masks |= InfoProt.NPC_ANIM.id;
         }
     }
 
@@ -976,7 +996,7 @@ export default class Npc extends PathingEntity {
         this.graphicId = spotanim;
         this.graphicHeight = height;
         this.graphicDelay = delay;
-        this.mask |= Npc.SPOTANIM;
+        this.masks |= InfoProt.NPC_SPOTANIM.id;
     }
 
     applyDamage(damage: number, type: number) {
@@ -991,7 +1011,7 @@ export default class Npc extends PathingEntity {
             this.levels[NpcStat.HITPOINTS] = current - damage;
         }
 
-        this.mask |= Npc.DAMAGE;
+        this.masks |= InfoProt.NPC_DAMAGE.id;
     }
 
     say(text: string) {
@@ -1000,7 +1020,7 @@ export default class Npc extends PathingEntity {
         }
 
         this.chat = text;
-        this.mask |= Npc.SAY;
+        this.masks |= InfoProt.NPC_SAY.id;
     }
 
     faceSquare(x: number, z: number) {
@@ -1008,12 +1028,12 @@ export default class Npc extends PathingEntity {
         this.faceZ = z * 2 + 1;
         this.orientationX = this.faceX;
         this.orientationZ = this.faceZ;
-        this.mask |= Npc.FACE_COORD;
+        this.masks |= InfoProt.NPC_FACE_COORD.id;
     }
 
     changeType(type: number) {
         this.type = type;
-        this.mask |= Npc.CHANGE_TYPE;
+        this.masks |= InfoProt.NPC_CHANGE_TYPE.id;
         this.uid = (type << 16) | this.nid;
 
         const npcType: NpcType = NpcType.get(type);

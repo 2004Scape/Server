@@ -563,12 +563,12 @@ if ($lines = 0) {
 }
 if_openchat($interface);
 
-[proc,doubleobjbox](obj $obj_1, obj $obj_2, string $string)
+[proc,doubleobjbox](obj $obj_1, obj $obj_2, string $string, int $scale)
 split_init($string, 350, 4, q8);
 def_int $page = 0;
 def_int $pagetotal = split_pagecount;
 while ($page < $pagetotal) {
-    ~doubleobjbox_page($obj_1, $obj_2, 150, $page);
+    ~doubleobjbox_page($obj_1, $obj_2, $scale, $page);
     p_pausebutton;
     $page = calc($page + 1);
 }

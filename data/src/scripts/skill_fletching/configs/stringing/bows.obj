@@ -12,7 +12,6 @@ recol1d=21985
 2dyan=1004
 2dxan=460
 weight=47oz
-tradeable=yes
 category=unstrung_bow
 
 [obj_50]
@@ -29,7 +28,6 @@ recol1d=21985
 2dyan=124
 2dxan=508
 weight=35oz
-tradeable=yes
 category=unstrung_bow
 
 [obj_54]
@@ -46,7 +44,6 @@ recol1d=23009
 2dyan=124
 2dxan=508
 weight=35oz
-tradeable=yes
 category=unstrung_bow
 
 [obj_56]
@@ -63,7 +60,6 @@ recol1d=23009
 2dyan=1004
 2dxan=460
 weight=47oz
-tradeable=yes
 category=unstrung_bow
 
 [obj_58]
@@ -80,7 +76,6 @@ recol1d=20004
 2dyan=1004
 2dxan=460
 weight=47oz
-tradeable=yes
 category=unstrung_bow
 [obj_60]
 cost=100
@@ -96,7 +91,6 @@ recol1d=20004
 2dyan=124
 2dxan=508
 weight=35oz
-tradeable=yes
 category=unstrung_bow
 
 [obj_62]
@@ -113,7 +107,6 @@ recol1d=21040
 2dyan=1004
 2dxan=460
 weight=47oz
-tradeable=yes
 category=unstrung_bow
 
 [obj_64]
@@ -130,7 +123,6 @@ recol1d=21040
 2dyan=124
 2dxan=508
 weight=35oz
-tradeable=yes
 category=unstrung_bow
 
 [obj_66]
@@ -147,7 +139,6 @@ recol1d=23073
 2dyan=1004
 2dxan=460
 weight=47oz
-tradeable=yes
 category=unstrung_bow
 
 [obj_68]
@@ -164,7 +155,6 @@ recol1d=23073
 2dyan=124
 2dxan=508
 weight=35oz
-tradeable=yes
 category=unstrung_bow
 
 [obj_70]
@@ -181,7 +171,6 @@ recol1d=1451
 2dyan=1004
 2dxan=460
 weight=47oz
-tradeable=yes
 category=unstrung_bow
 
 [obj_72]
@@ -198,5 +187,4 @@ recol1d=1451
 2dyan=124
 2dxan=508
 weight=35oz
-tradeable=yes
 category=unstrung_bow

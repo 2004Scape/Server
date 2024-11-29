@@ -17,7 +17,6 @@ param=rangebonus,10
 param=levelrequire,1
 param=proj_launch,crossbowbolt_launch
 param=proj_travel,crossbowbolt_travel
-tradeable=yes
 param=weapon_poisoned,bolt_p
 param=weapon_poisoned_message,You poison some bolts.
 
@@ -44,7 +43,6 @@ param=levelrequire,1
 param=proj_launch,crossbowbolt_launch
 param=proj_travel,crossbowbolt_travel
 param=poison_severity,20
-tradeable=yes
 
 //RANGED STRENGTH FOR UNUSUAL BOLTS:
 //The ranged strength stats for non-standard bolts before the 2006 crossbow rework are not known precisely.
@@ -79,7 +77,6 @@ param=rangebonus,28
 param=levelrequire,1
 param=proj_launch,crossbowbolt_launch
 param=proj_travel,crossbowbolt_travel
-tradeable=yes
 
 [pearl_bolt]
 stackable=yes
@@ -105,7 +102,6 @@ param=rangebonus,19
 param=levelrequire,1
 param=proj_launch,crossbowbolt_launch
 param=proj_travel,crossbowbolt_travel
-tradeable=yes
 
 [barbed_bolt]
 stackable=yes
@@ -127,4 +123,3 @@ param=rangebonus,46
 param=levelrequire,1
 param=proj_launch,crossbowbolt_launch
 param=proj_travel,crossbowbolt_travel
-tradeable=yes
