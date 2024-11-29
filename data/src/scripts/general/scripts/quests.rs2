@@ -228,6 +228,10 @@ if (%zombiequeen_progress >= ^zombiequeen_complete) {
     $questpoints = add($questpoints, ^zombiequeen_questpoints);
 }
 
+if (%crest_progress = ^crest_complete) {
+    $questpoints = add($questpoints, ^crest_questpoints);
+}
+
 %questpoints = $questpoints;
 
 ~send_quest_progress_colour(questlist:runemysteries, %runemysteries_progress, ^runemysteries_complete);
@@ -268,6 +272,7 @@ if(%phoenixgang_progress > 0 & %blackarmgang_progress ! ^blackarmgang_complete) 
 ~send_quest_progress_colour(questlist:grail, %grail_progress, ^grail_complete);
 ~send_quest_progress_colour(questlist:ball, %ball_progress, ^ball_complete);
 ~send_quest_progress_colour(questlist:murder, %murder_progress, ^murder_complete);
+~send_quest_progress_colour(questlist:itexam, ~itexam_progress, ^itexam_complete);
 ~send_quest_progress_colour(questlist:hazeelcult, %hazeelcult_progress, ^hazeelcult_complete);
 ~send_quest_progress_colour(questlist:hero, %hero_progress, ^hero_complete);
 ~send_quest_progress_colour(questlist:itgronigen, %itgronigen_progress, ^itgronigen_complete);
@@ -285,6 +290,7 @@ if (testbit(%upass_map_mechanisms, ^upass_started_bit) = true & %upass_progress 
     ~send_quest_progress_colour(questlist:upass, %upass_progress, ^upass_complete);
 }
 ~send_quest_progress_colour(questlist:zombiequeen, %zombiequeen_progress, ^zombiequeen_complete);
+~send_quest_progress_colour(questlist:crest, %crest_progress, ^crest_complete);
 if_settab(questlist, ^tab_quest_journal);
 
 if (%drunkmonk_progress >= ^drunkmonk_spoken_to_omad) {

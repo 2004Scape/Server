@@ -225,21 +225,40 @@ p_delay(2);
 
 [proc,crafting_gold](namedobj $product, namedobj $gem, int $productexp, int $count)
 
-inv_del(inv, gold_bar, 1);
+def_obj $bar = gold_bar;
+if (inv_total(inv, perfect_gold_bar) >= 1) {
+    // Tested on OSRS: if normal gold bar and perfect gold bar are both in inventory, the perfect gold bar gets used first,
+    // even if the normal gold bar was explicitly used on the furnace. If you select normal ruby ring with normal gold bar 
+    // and you have a perfect bar in your inv, a perfect ring will be made instead (and only one, even if you have more 
+    // gold bars and selected make x).
+    $bar = perfect_gold_bar;
+    if ($product = ruby_necklace) {
+        $product = perfect_necklace;
+    }
+    else if ($product = ruby_ring) {
+        $product = perfect_ring;
+    }
+}
+inv_del(inv, $bar, 1);
+
 if ($gem ! null) {
     inv_del(inv, $gem, 1);
 }
 inv_add(inv, $product, 1);
+
 stat_advance(crafting, $productexp);
 
-mes("You make <~add_article(lowercase(oc_name($product)))>.");
+if ($bar = gold_bar) {
+    // No message for perfect gold items https://youtu.be/e8btuenT4nE?t=729
+    mes("You make <~add_article(lowercase(oc_name($product)))>.");
+}
 $count = calc($count - 1);
 if ($count < 1) {
     return;
 }
 
 // check if player has enough gold bars or gems
-if (inv_total(inv, gold_bar) < 1) {
+if (inv_total(inv, $bar) < 1) {
     ~mesbox("You don't have enough gold bars to make any more.");
     return;
 }

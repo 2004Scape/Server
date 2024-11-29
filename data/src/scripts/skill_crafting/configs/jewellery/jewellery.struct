@@ -123,6 +123,18 @@ param=levelrequired,17
 param=productexp,500
 param=name,Unholy Symbol of Zamorak
 
+[perfect_ring]
+param=product,perfect_ring
+param=gem,ruby
+param=levelrequired,34
+param=productexp,700
+
+[perfect_necklace]
+param=product,perfect_necklace
+param=gem,ruby
+param=levelrequired,40
+param=productexp,750
+
 
 
 

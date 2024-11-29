@@ -23,7 +23,7 @@ export function loadFile(path: string): string[] {
 
 // fully-featured! strips out comments
 export function loadFileFull(path: string) {
-    const text = readTextNormalize(path)!.split('\n');
+    const text = readTextNormalize(path).split('\n');
     const lines = [];
 
     let multiCommentStart = 0;

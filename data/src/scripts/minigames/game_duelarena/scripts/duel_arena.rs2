@@ -125,6 +125,9 @@ if (.finduid(%duelpartner) = true & ~enough_duel_space = true) { // https://yout
         cam_reset;
         .cam_reset;
 
+        ~inv_remove_leading_empty_slots(tempinv);
+        ~.inv_remove_leading_empty_slots(tempinv);
+
         def_int $tempinvused = sub(inv_size(tempinv), inv_freespace(tempinv));
         if ($tempinvused < 1) {
             if_settext(duel_confirm:com_91, "Absolutely nothing!");
@@ -399,6 +402,26 @@ if (~.inzone_coord_pair_table(duel_arena_fight_zones, $coord) = true | ~.inzone_
 return(false);
 
 [proc,duel_arena_login]
-if (~in_duel_arena(coord) = true) {
-    p_telejump(~duel_arena_finish_coord(coord));
+if (~in_duel_arena(coord) = false) {
+    return;
 }
+~duel_reset_all;
+
+[proc,duel_arena_logout]
+if (~in_duel_arena(coord) = false) {
+    return;
+}
+if (.finduid(%duelpartner) = true) {
+    .%duelstatus = 0;
+    .%duelpartner = null;
+    .if_close;
+    .queue(duel_arena_disconnect, 0);
+}
+%duelstatus = 0;
+%duelpartner = null;
+~duel_give_stake_back;
+
+[queue,duel_arena_disconnect]
+~duel_give_stake_back;
+~duel_reset_all;
+~mesbox("Your opponent timed out, there was no winner!"); // https://youtu.be/LZzhIWbSKpY?t=127

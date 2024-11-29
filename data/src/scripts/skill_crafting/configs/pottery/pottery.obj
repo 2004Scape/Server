@@ -9,7 +9,6 @@ model=model_2610_obj
 2dxan=220
 weight=2lb
 cost=2
-tradeable=yes
 param=crafting_pottery_struct,soft_clay
 
 [unfired_pot]
@@ -25,7 +24,6 @@ recol1d=11488
 2dxan=112
 cost=1
 weight=24oz
-tradeable=yes
 param=crafting_pottery_struct,unfired_pot
 
 [unfired_piedish]
@@ -44,7 +42,6 @@ recol3d=11488
 2dyan=104
 2dxan=192
 weight=24oz
-tradeable=yes
 param=crafting_pottery_struct,unfired_piedish
 
 [unfired_bowl]
@@ -60,5 +57,4 @@ recol2d=11488
 2dyan=1856
 2dxan=204
 weight=24oz
-tradeable=yes
 param=crafting_pottery_struct,unfired_bowl

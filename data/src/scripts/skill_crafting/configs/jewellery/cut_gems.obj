@@ -18,7 +18,6 @@ recol3d=24311
 manwear=model_516_obj_wear,0
 womanwear=model_516_obj_wear,6
 weight=2g
-tradeable=yes
 
 [ruby]
 cost=1000
@@ -36,7 +35,6 @@ recol1d=16417
 manwear=model_516_obj_wear,0
 womanwear=model_516_obj_wear,6
 weight=2g
-tradeable=yes
 
 [emerald]
 cost=500
@@ -60,7 +58,6 @@ recol4d=12266
 manwear=model_516_obj_wear,0
 womanwear=model_516_obj_wear,6
 weight=2g
-tradeable=yes
 
 [sapphire]
 cost=250
@@ -84,7 +81,6 @@ recol4d=10655
 manwear=model_516_obj_wear,0
 womanwear=model_516_obj_wear,6
 weight=2g
-tradeable=yes
 respawnrate=1000
 
 [opal]
@@ -110,7 +106,6 @@ members=yes
 manwear=model_516_obj_wear,0
 womanwear=model_516_obj_wear,6
 weight=2g
-tradeable=yes
 
 [jade]
 cost=150
@@ -135,7 +130,6 @@ members=yes
 manwear=model_516_obj_wear,0
 womanwear=model_516_obj_wear,6
 weight=2g
-tradeable=yes
 
 [red_topaz]
 cost=200
@@ -160,7 +154,6 @@ members=yes
 manwear=model_516_obj_wear,0
 womanwear=model_516_obj_wear,6
 weight=2g
-tradeable=yes
 
 [dragonstone]
 cost=10000
@@ -185,7 +178,6 @@ members=yes
 manwear=model_516_obj_wear,0
 womanwear=model_516_obj_wear,6
 weight=2g
-tradeable=yes
 
 [crushed_gemstone]
 name=Crushed gemstone
@@ -200,4 +192,3 @@ recol1d=32767
 2dzoom=1210
 2dyan=1892
 2dxan=264
-tradeable=yes

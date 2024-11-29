@@ -1,0 +1,65 @@
+[opnpc1,panning_guide]
+~chatplayer("<p,happy>Hello, who are you?");
+
+if (~itexam_testbit(^itexam_bit_panning_guide_tea_given) = false) {
+    ~chatnpc("<p,happy>Hello, I am the panning guide. I teach students how to pan in these waters. They're not permitted to do so until after they've had training and, of course, they must be invited to pan here too.");
+    @panning_guide_tea_errand;
+} else {
+    ~chatnpc("<p,happy>Hello, I am the panning guide. I'm here to teach you how to pan for gold.");
+    ~chatplayer("<p,happy>Excellent!");
+    ~chatnpc("<p,neutral>Let me explain how panning works. First you need a panning tray. Use the tray in the panning points in the water and then search your tray.");
+    ~chatnpc("<p,neutral>If you find any gold, take it to the archaeological expert up in the museum storage facility. He will calculate its value for you.");
+    @panning_guide_tell_me_more;
+}
+
+[label,panning_guide_tea_errand]
+~chatplayer("<p,neutral>So how do I become invited then?");
+~chatnpc("<p,neutral>I'm not supposed to let people pan here unless they have permission from the authorities first. Mind you, I could let you have a go if you're willing to do me a favour.");
+~chatplayer("<p,quiz>What's that?");
+~chatnpc("<p,neutral>Well, to be honest, what I would really like is... a nice cup of tea!");
+
+if (inv_total(inv, cup_of_tea) > 0) {
+    ~chatplayer("<p,happy>I've some here that you can have.");
+    inv_del(inv, cup_of_tea, 1);
+    ~chatnpc("<p,happy>Ah! Lovely! You can't beat a good cuppa... You're free to pan all you want.");
+    ~itexam_setbit(^itexam_bit_panning_guide_tea_given);
+} else {
+    ~chatplayer("<p,shock>Tea?!");
+    ~chatnpc("<p,happy>Absolutely, I'm parched!");
+    ~chatnpc("<p,happy>If you could bring me one of those, I would be more than willing to let you pan here. I usually get some from Varrock but I'm busy at the moment.");
+}
+
+[label,panning_guide_intervene]
+~chatnpcnoturn("<p,angry>Hey! You can't pan yet!");
+~chatplayer("<p,confused>Why not?");
+~chatnpcnoturn("<p,neutral>We do not allow the uninvited to pan here.");
+
+def_int $choice = ~p_choice2("OK, forget it.", 1, "So how do I become invited then?", 2);
+
+if ($choice = 1) {
+    ~chatplayer("<p,sad>Okay, forget it.");
+    ~chatnpc("<p,happy>You can of course use this place when you know what you are doing...");
+    @panning_guide_tell_me_more;
+} else {
+    @panning_guide_tea_errand;
+}
+
+[label,panning_guide_tell_me_more]
+def_int $choice = ~p_choice2("Can you tell me more about the tools an archaeologist uses?", 1, "Thank you!", 2);
+
+if ($choice = 1) {
+    ~chatplayer("<p,quiz>Can you tell me more about the tools an archaeologist uses?");
+    ~chatnpc("<p,happy>Of course! Let's see now... Rock picks are for splitting rocks or scraping away soil; you can get one from a cupboard in the Education Centre.");
+    ~chatplayer("<p,quiz>What about sample jars?");
+    ~chatnpc("<p,happy>I think you'll find them scattered about pretty much everywhere, but I know you can get one from a cupboard somewhere in the Education Centre, just like the rock pick!");
+    ~chatplayer("<p,quiz>Okay, what about a specimen brush?");
+    ~chatnpc("<p,sad>We have a bit of a shortage of those at the moment. You could try borrowing one from a workman on the site... but I don't think they'd give it willingly.");
+    ~chatplayer("<p,shifty>Sounds like I'll need to be sneaky to get one of those, then... Okay - trowel?");
+    ~chatnpc("<p,happy>Ahh... that you must earn by passing your exams! The examiner holds those.");
+    ~chatplayer("<p,quiz>Anything else?");
+    ~chatnpc("<p,happy>If you need something identified or are not sure about something, give it to Terry; he's the archaeological expert in the next room.");
+    ~chatplayer("<p,neutral>Ahh, ok thanks.");
+
+} else {
+    ~chatplayer("<p,neutral>Thank you!");
+}

@@ -33,8 +33,9 @@ hitpoints=67
 attack=36
 strength=33
 defence=36
-param=attackrate,4
-param=attackbonus,43
+magic=0
+ranged=0
+param=attackbonus,20
 param=strengthbonus,26
 param=stabdefence,43
 param=slashdefence,31
@@ -44,12 +45,12 @@ param=rangedefence,38
 param=damagetype,^slash_style
 param=attack_anim,human_trans_axe_chop
 param=defend_anim,human_trans_axe_def
-// param=defend_anim,earthwarrior_def
 param=death_anim,earthwarrior_death
 param=attack_sound,baxe_slash
 // param=defend_sound,steel
 huntmode=cowardly
 huntrange=1
+// osrs stats and Vislvl match 1:1
 
 [npc_398]
 vislevel=hide
@@ -179,10 +180,10 @@ wanderrange=3
 param=death_sound,female_death
 category=shop_keeper
 param=owned_shop,legends_guild_general_store
-// param=shop_sell_multiplier,
-// param=shop_buy_multiplier,
-// param=shop_delta,
-param=shop_title,Legends' Guild General Store.
+param=shop_sell_multiplier,1550
+param=shop_buy_multiplier,550
+param=shop_delta,10
+param=shop_title,Legends Guild General Store.
 
 [siegfried_erkle]
 vislevel=hide
@@ -216,7 +217,7 @@ head2=model_82_idk_head
 wanderrange=3
 category=shop_keeper
 param=owned_shop,legends_guild_shop_of_useful_items
-// param=shop_sell_multiplier,
-// param=shop_buy_multiplier,
-// param=shop_delta,
-param=shop_title,Legends' Guild Shop of Useful Items.
+param=shop_sell_multiplier,1500
+param=shop_buy_multiplier,500
+param=shop_delta,20
+param=shop_title,Legends Guild Shop of Useful Items.

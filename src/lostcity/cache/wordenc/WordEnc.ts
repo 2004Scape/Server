@@ -1,12 +1,12 @@
 import fs from 'fs';
 
-import Jagfile from '#jagex2/io/Jagfile.js';
+import Jagfile from '#jagex/io/Jagfile.js';
 
 import WordEncFragments from '#lostcity/cache/wordenc/WordEncFragments.js';
 import WordEncBadWords from '#lostcity/cache/wordenc/WordEncBadWords.js';
 import WordEncDomains from '#lostcity/cache/wordenc/WordEncDomains.js';
 import WordEncTlds from '#lostcity/cache/wordenc/WordEncTlds.js';
-import Packet from '#jagex2/io/Packet.js';
+import Packet from '#jagex/io/Packet.js';
 
 export default class WordEnc {
     static PERIOD = new Uint16Array(
@@ -35,7 +35,7 @@ export default class WordEnc {
 
     private static whitelist = ['cook', "cook's", 'cooks', 'seeks', 'sheet'];
 
-    static async load(dir: string): Promise<void> {
+    static load(dir: string): void {
         if (!fs.existsSync(`${dir}/client/wordenc`)) {
             return;
         }

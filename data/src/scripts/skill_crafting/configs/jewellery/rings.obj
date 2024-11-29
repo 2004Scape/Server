@@ -15,7 +15,6 @@ iop2=Wear
 wearpos=ring
 weight=4g
 category=category_656
-tradeable=yes
 respawnrate=500
 param=crafting_jewelry_struct,gold_ring
 
@@ -36,7 +35,6 @@ iop2=Wear
 wearpos=ring
 weight=6g
 category=category_656
-tradeable=yes
 
 [emerald_ring]
 name=Emerald ring
@@ -55,7 +53,6 @@ iop2=Wear
 wearpos=ring
 weight=6g
 category=category_656
-tradeable=yes
 
 [ruby_ring]
 name=Ruby ring
@@ -74,7 +71,6 @@ iop2=Wear
 wearpos=ring
 weight=6g
 category=category_656
-tradeable=yes
 respawnrate=500
 
 [diamond_ring]
@@ -92,7 +88,6 @@ iop2=Wear
 wearpos=ring
 weight=6g
 category=category_656
-tradeable=yes
 
 [dragonstone_ring]
 name=Dragonstone ring
@@ -112,7 +107,6 @@ iop2=Wear
 wearpos=ring
 weight=6g
 category=category_656
-tradeable=yes
 
 [black_ring]
 model=model_2677_obj
@@ -126,7 +120,6 @@ recol2d=4228
 2dyan=180
 2dzan=2024
 2dxan=268
-tradeable=yes
 dummyitem=inv_only
 
 [obj_1649]

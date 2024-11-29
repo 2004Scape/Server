@@ -23,7 +23,6 @@ count4=bronze_arrow_5,5
 category=arrows
 param=rangebonus,7
 param=levelrequire,1
-tradeable=yes
 param=proj_launch,bronze_arrow_launch
 param=proj_travel,bronze_arrow_travel
 param=weapon_poisoned,bronze_arrow_p
@@ -56,7 +55,6 @@ count4=bronze_arrow_p_5,5
 category=arrows
 param=rangebonus,7
 param=levelrequire,1
-tradeable=yes
 param=proj_launch,bronze_arrow_launch
 param=proj_travel,bronze_arrow_travel
 param=poison_severity,20
@@ -86,7 +84,6 @@ count4=iron_arrow_5,5
 category=arrows
 param=rangebonus,10
 param=levelrequire,1
-tradeable=yes
 param=proj_launch,iron_arrow_launch
 param=proj_travel,iron_arrow_travel
 param=weapon_poisoned,iron_arrow_p
@@ -119,7 +116,6 @@ count4=iron_arrow_p_5,5
 category=arrows
 param=rangebonus,10
 param=levelrequire,1
-tradeable=yes
 param=proj_launch,iron_arrow_launch
 param=proj_travel,iron_arrow_travel
 param=poison_severity,20
@@ -145,7 +141,6 @@ count4=steel_arrow_5,5
 category=arrows
 param=rangebonus,16
 param=levelrequire,5
-tradeable=yes
 param=proj_launch,steel_arrow_launch
 param=proj_travel,steel_arrow_travel
 param=weapon_poisoned,steel_arrow_p
@@ -176,7 +171,6 @@ count4=steel_arrow_p_5,5
 category=arrows
 param=rangebonus,16
 param=levelrequire,5
-tradeable=yes
 param=proj_launch,steel_arrow_launch
 param=proj_travel,steel_arrow_travel
 param=poison_severity,20
@@ -207,7 +201,6 @@ count4=mithril_arrow_5,5
 category=arrows
 param=rangebonus,22
 param=levelrequire,20
-tradeable=yes
 param=proj_launch,mithril_arrow_launch
 param=proj_travel,mithril_arrow_travel
 param=weapon_poisoned,mithril_arrow_p
@@ -240,7 +233,6 @@ count4=mithril_arrow_p_5,5
 category=arrows
 param=rangebonus,22
 param=levelrequire,20
-tradeable=yes
 param=proj_launch,mithril_arrow_launch
 param=proj_travel,mithril_arrow_travel
 param=poison_severity,20
@@ -271,7 +263,6 @@ count4=adamant_arrow_5,5
 category=arrows
 param=rangebonus,31
 param=levelrequire,30
-tradeable=yes
 param=proj_launch,adamant_arrow_launch
 param=proj_travel,adamant_arrow_travel
 param=weapon_poisoned,adamant_arrow_p
@@ -304,7 +295,6 @@ count4=adamant_arrow_p_5,5
 category=arrows
 param=rangebonus,31
 param=levelrequire,30
-tradeable=yes
 param=proj_launch,adamant_arrow_launch
 param=proj_travel,adamant_arrow_travel
 param=poison_severity,20
@@ -335,7 +325,6 @@ count4=rune_arrow_5,5
 category=arrows
 param=rangebonus,49
 param=levelrequire,40
-tradeable=yes
 param=proj_launch,rune_arrow_launch
 param=proj_travel,rune_arrow_travel
 param=weapon_poisoned,rune_arrow_p
@@ -368,7 +357,6 @@ count4=rune_arrow_p_5,5
 category=arrows
 param=rangebonus,49
 param=levelrequire,40
-tradeable=yes
 param=proj_launch,rune_arrow_launch
 param=proj_travel,rune_arrow_travel
 param=poison_severity,20
@@ -1046,7 +1034,6 @@ param=levelrequire,1
 param=proj_launch,fire_arrow_launch
 param=proj_travel,fire_arrow_travel
 param=lit_arrow,^true
-tradeable=yes
 
 [iron_fire_arrows_unlit]
 name=Iron fire arrows
@@ -1072,7 +1059,6 @@ param=proj_launch,fire_arrow_launch
 param=proj_travel,fire_arrow_travel
 param=unlit_arrow,^true
 param=next_obj_stage,iron_fire_arrows
-tradeable=yes
 
 [iron_fire_arrows]
 name=Iron fire arrows
@@ -1099,7 +1085,6 @@ param=levelrequire,1
 param=proj_launch,fire_arrow_launch
 param=proj_travel,fire_arrow_travel
 param=lit_arrow,^true
-tradeable=yes
 
 [steel_fire_arrows_unlit]
 name=Steel fire arrows
@@ -1125,7 +1110,6 @@ param=proj_launch,fire_arrow_launch
 param=proj_travel,fire_arrow_travel
 param=next_obj_stage,steel_fire_arrows
 param=unlit_arrow,^true
-tradeable=yes
 
 [steel_fire_arrows]
 name=Steel fire arrows
@@ -1152,7 +1136,6 @@ param=levelrequire,5
 param=proj_launch,fire_arrow_launch
 param=proj_travel,fire_arrow_travel
 param=lit_arrow,^true
-tradeable=yes
 
 [mithril_fire_arrows_unlit]
 name=Mithril fire arrows
@@ -1178,7 +1161,6 @@ param=proj_launch,fire_arrow_launch
 param=proj_travel,fire_arrow_travel
 param=next_obj_stage,mithril_fire_arrows
 param=unlit_arrow,^true
-tradeable=yes
 
 [mithril_fire_arrows]
 name=Mithril fire arrows
@@ -1205,7 +1187,6 @@ param=levelrequire,20
 param=proj_launch,fire_arrow_launch
 param=proj_travel,fire_arrow_travel
 param=lit_arrow,^true
-tradeable=yes
 
 [adamant_fire_arrows_unlit]
 name=Adamnt fire arrows
@@ -1231,7 +1212,6 @@ param=proj_launch,fire_arrow_launch
 param=proj_travel,fire_arrow_travel
 param=next_obj_stage,adamant_fire_arrows
 param=unlit_arrow,^true
-tradeable=yes
 
 [adamant_fire_arrows]
 name=Adamnt fire arrows
@@ -1258,7 +1238,6 @@ param=levelrequire,30
 param=proj_launch,fire_arrow_launch
 param=proj_travel,fire_arrow_travel
 param=lit_arrow,^true
-tradeable=yes
 
 [rune_fire_arrows_unlit]
 name=Rune fire arrows
@@ -1284,7 +1263,6 @@ param=proj_launch,fire_arrow_launch
 param=proj_travel,fire_arrow_travel
 param=next_obj_stage,rune_fire_arrows
 param=unlit_arrow,^true
-tradeable=yes
 
 [rune_fire_arrows]
 name=Rune fire arrows
@@ -1311,7 +1289,6 @@ param=levelrequire,40
 param=proj_launch,fire_arrow_launch
 param=proj_travel,fire_arrow_travel
 param=lit_arrow,^true
-tradeable=yes
 
 [unlitarrow_2]
 stackable=yes

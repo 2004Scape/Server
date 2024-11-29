@@ -1,0 +1,546 @@
+[opnpc1,examiner]
+def_int $progress = ~itexam_progress;
+
+switch_int ($progress) {
+    case 0 : @itexam_examiner_quest_start;
+    case ^itexam_stamping : @itexam_examiner_deliver_stamped_letter;
+    case ^itexam_first_exam : @itexam_examiner_take_first_exam;
+    case ^itexam_second_exam : @itexam_examiner_take_second_exam;
+    case ^itexam_third_exam : @itexam_examiner_take_third_exam;
+    case ^itexam_complete : @itexam_examiner_after_quest;
+    case default : @itexam_examiner_go_digging;
+}
+
+////////////////////////////////////////////////
+// QUEST START
+////////////////////////////////////////////////
+
+[label,itexam_examiner_quest_start]
+~chatplayer("<p,neutral>Hello.");
+~chatnpc("<p,neutral>Ah hello there! I am the resident lecturer on antiquities and artefacts. I also set the Earth Sciences exams.");
+~chatplayer("<p,neutral>Earth Sciences?");
+~chatnpc("<p,neutral>That is right dear, the world of RuneScape holds many wonders beneath its surface. Students come to me to take exams so that they may join in on the archeological dig going on just north of here.");
+~chatplayer("<p,neutral>So if they don't pass the exams they can't dig at all?");
+~chatnpc("<p,neutral>That's right! We have to make sure that students know enough to be able to dig safely and not damage the artefacts.");
+
+def_int $choice = ~p_choice2("Can I take an exam?", 1, "Interesting...", 2);
+
+if ($choice = 1) {
+    ~chatplayer("<p,neutral>Can I take an exam?");
+    inv_add(inv, unstamped_letter, 1);
+    ~itexam_set_progress(^itexam_stamping);
+    ~send_quest_progress(questlist:itexam, ~itexam_progress, ^itexam_complete);
+    ~chatnpc("<p,neutral>You can if you get this letter stamped by the Curator of Varrock's museum.");
+    ~chatplayer("<p,neutral>Why's that then?");
+    ~chatnpc("<p,neutral>Because he is a very knowledgable man and employs our archeological expert. I'm sure he knows a lot about your exploits and can judge whenever you'd make a good archeologist or not.");
+    ~chatnpc("<p,neutral>Besides, the museum contributes funds to the dig.");
+} else {
+    ~chatplayer("<p,neutral>Interesting...");
+    ~chatnpc("<p,neutral>You could gain much with an understanding of the world below.");
+}
+
+////////////////////////////////////////////////
+// DELIVER STAMP
+////////////////////////////////////////////////
+
+[label,itexam_examiner_deliver_stamped_letter]
+~chatplayer("<p,neutral>Hello.");
+~chatnpc("<p,neutral>Hello again.");
+
+if (inv_total(inv, stamped_letter) > 0) {
+    ~chatplayer("<p,neutral>Here is the stamped letter you asked for.");
+    ~chatnpc("<p,neutral>Good, good. We will begin the exam...");
+    inv_del(inv, stamped_letter, ^max_32bit_int);
+    ~itexam_set_progress(^itexam_first_exam);
+    @itexam_examiner_first_exam;
+} else {
+    if (inv_total(bank, stamped_letter) > 0) {
+        ~mesbox("Perhaps you should fetch the Letter of Recommendation from your bank before talking to the examiner.");
+        return;
+    }
+    ~chatnpc("<p,neutral>I am still waiting for your letter of recommendation.");
+    def_int $choice = ~p_choice2("I have lost the letter you gave me.", 1, "Alright I'll try and get it.", 2);
+
+    if ($choice = 1) {
+        ~chatplayer("<p,sad>I have lost the letter you gave me.");
+        if (inv_total(inv, unstamped_letter) > 0) {
+            ~chatnpc("<p,neutral>Oh now come on. You have it with you!");
+        } else if (inv_total(bank, unstamped_letter) > 0) {
+            ~chatnpc("<p,neutral>You already have the letter in your bank.");
+        } else {
+            inv_add(inv, unstamped_letter, 1);
+            ~chatnpc("<p,sad>That was foolish. Take this one and don't lose it!");
+        }
+    } else {
+        ~chatplayer("<p,neutral>Alright I'll try and get it.");
+        ~chatnpc("<p,neutral>I am sure you won't get any problems. Speak to the Curator of Varrock's museum.");
+    }
+}
+
+////////////////////////////////////////////////
+// TAKE FIRST EXAM
+////////////////////////////////////////////////
+
+[label,itexam_examiner_take_first_exam]
+~chatplayer("<p,neutral>Hello.");
+~chatnpc("<p,neutral>Hello again. Are you ready for another shot at the exam?");
+def_int $choice = ~p_choice2("Yes, I certainly am.", 1, "No, not at the moment.", 2);
+
+if ($choice = 1) {
+    ~chatplayer("<p,neutral>Yes, I certainly am.");
+    @itexam_examiner_first_exam;
+} else {
+    ~chatplayer("<p,neutral>No, not at the moment.");
+    ~chatnpc("<p,neutral>Okay, take your time if you wish.");
+}
+
+////////////////////////////////////////////////
+// TAKE SECOND EXAM
+////////////////////////////////////////////////
+
+[label,itexam_examiner_take_second_exam]
+~chatplayer("<p,neutral>Hello.");
+~chatnpc("<p,neutral>Hi there!");
+def_int $choice = ~p_choice4("I am ready for the next exam.", 1, "I am stuck on a question.", 2, "Sorry, I didn't mean to disturb you.", 3, "I have lost my trowel.", 4);
+
+if ($choice = 1) {
+    ~chatplayer("<p,neutral>I am ready for the next exam.");
+    @itexam_examiner_second_exam;
+} else if ($choice = 2) {
+    ~chatplayer("<p,confused>I am stuck on a question.");
+    ~chatnpc("<p,bored>Well, well, have you not been doing any studies? I am not giving you the answers, talk to the other students and remember the answers.");
+} else if ($choice = 3) {
+    ~chatplayer("<p,neutral>Sorry, I didn't mean to disturb you.");
+    ~chatnpc("<p,neutral>Oh, no problem at all.");
+} else {
+    @itexam_examiner_lost_trowel;
+}
+
+////////////////////////////////////////////////
+// TAKE THIRD EXAM
+////////////////////////////////////////////////
+
+[label,itexam_examiner_take_third_exam]
+~chatplayer("<p,neutral>Hello.");
+~chatnpc("<p,neutral>Hi there!");
+def_int $choice = ~p_choice4("I am ready for the last exam...", 1, "I am stuck on a question.", 2, "Sorry, I didn't mean to disturb you.", 3, "I have lost my trowel.", 4);
+
+if ($choice = 1) {
+    ~chatplayer("<p,neutral>I am ready for the last exam...");
+    @itexam_examiner_third_exam;
+} else if ($choice = 2) {
+    ~chatplayer("<p,confused>I am stuck on a question.");
+    ~chatnpc("<p,bored>Well, well, have you not been doing any studies? I am not giving you the answers, talk to the other students and remember the answers.");
+} else if ($choice = 3) {
+    ~chatplayer("<p,neutral>Sorry, I didn't mean to disturb you.");
+    ~chatnpc("<p,neutral>Oh, no problem at all.");
+} else {
+    ~chatplayer("<p,sad>I have lost my trowel.");
+    // TODO: There's probably a bank check here too
+    if (inv_total(inv, trowel) > 0) {
+        ~chatnpc("<p,angry>Really? Look in your backpack and make sure first.");
+    } else {
+        ~chatnpc("<p,neutral>Deary me... That was a good one as well. It's a good job I have another. Here you go...");
+        inv_add(inv, trowel, 1);
+    }
+}
+
+////////////////////////////////////////////////
+// FIRST EXAM
+////////////////////////////////////////////////
+
+[label,itexam_examiner_first_exam]
+def_int $q1choice;
+def_int $q2choice;
+def_int $q3choice;
+
+~chatnpc("<p,neutral>Okay, we will start with the first exam: Earth Sciences level 1 - Beginner.");
+~chatnpc("<p,neutral>Question 1 - Earth Sciences overview. Can you tell me what Earth Science is?");
+
+if (~itexam_errand_progress(^itexam_errand_student1) = 2) {
+    $q1choice = ~p_choice3("The study of the earth, its contents, and history.", 1, "The study of planets and the history of the worlds.", 2, "The combination of archaeology and vegetarianism.", 3);
+
+    if ($q1choice = 1) {
+        ~chatplayer("<p,neutral>The study of the earth, its contents, and history.");
+    } else if ($q1choice = 2) {
+        ~chatplayer("<p,neutral>The study of planets and the history of the worlds.");
+    } else {
+        ~chatplayer("<p,neutral>The combination of archaeology and vegetarianism.");
+    }
+} else {
+    $q1choice = ~p_choice3("The study of gardening, planting and fruiting vegetation.", 1, "The study of planets and the history of the worlds.", 2, "The combination of archaeology and vegetarianism.", 3);
+
+    if ($q1choice = 1) {
+        ~chatplayer("<p,neutral>The study of gardening, planting and fruiting vegetation.");
+    } else if ($q1choice = 2) {
+        ~chatplayer("<p,neutral>The study of planets and the history of the worlds.");
+    } else {
+        ~chatplayer("<p,neutral>The combination of archaeology and vegetarianism.");
+    }
+}
+
+~chatnpc("<p,neutral>Okay, next question...");
+~chatnpc("<p,neutral>Earth Sciences level 1, question 2 - Eligibility. Can you tell me which people are allowed to use the digsite?");
+
+if (~itexam_errand_progress(^itexam_errand_student2) = 2) {
+    $q2choice = ~p_choice3("Professors, students and workmen only.", 1, "Local residents, contractors and small pink fish.", 2, "All that have passed the appropriate Earth Sciences exam.", 3);
+
+    if ($q2choice = 1) {
+        ~chatplayer("<p,neutral>Professors, students and workmen only.");
+    } else if ($q2choice = 2) {
+        ~chatplayer("<p,neutral>Local residents, contractors and small pink fish.");
+    } else {
+        ~chatplayer("<p,neutral>All that have passed the appropriate Earth Sciences exam.");
+    }
+} else {
+    $q2choice = ~p_choice3("Magic users, miners and their escorts.", 1, "Professors, students and workmen only.", 2, "Local residents, contractors and small pink fish.", 3);
+    
+    if ($q2choice = 1) {
+        ~chatplayer("<p,neutral>Magic users, miners and their escorts.");
+    } else if ($q2choice = 2) {
+        ~chatplayer("<p,neutral>Professors, students and workmen only.");
+    } else {
+        ~chatplayer("<p,neutral>Local residents, contractors and small pink fish.");
+    }
+}
+
+~chatnpc("<p,neutral>Okay, next question...");
+~chatnpc("<p,neutral>Earth Sciences level 1, question 3 - Health and safety. Can you tell me the proper safety points when working on a digsite?");
+
+if (~itexam_errand_progress(^itexam_errand_student3) = 2) {
+    $q3choice = ~p_choice3("Rubber chickens to be worn on the head at all times.", 1, "Gloves and boots to be worn at all times; proper tools must be used.", 2, "Protective clothing to be worn; tools kept away from site.", 3);
+
+    if ($q3choice = 1) {
+        ~chatplayer("<p,neutral>Rubber chickens to be worn on the head at all times.");
+    } else if ($q3choice = 2) {
+        ~chatplayer("<p,neutral>Gloves and boots to be worn at all times; proper tools must be used.");
+    } else {
+        ~chatplayer("<p,neutral>Protective clothing to be worn; tools kept away from site.");
+    }
+} else {
+    $q3choice = ~p_choice3("Heat-resistant clothing to be worn at all times.", 1, "Rubber chickens to be worn on the head at all times.", 2, "Protective clothing to be worn; tools kept away from site.", 3);
+    
+    if ($q3choice = 1) {
+        ~chatplayer("<p,neutral>Heat-resistant clothing to be worn at all times.");
+    } else if ($q3choice = 2) {
+        ~chatplayer("<p,neutral>Rubber chickens to be worn on the head at all times.");
+    } else {
+        ~chatplayer("<p,neutral>Protective clothing to be worn; tools kept away from site.");
+    }
+}
+~chatnpc("<p,neutral>That concludes the exam for Earth Sciences level 1.");
+~chatnpc("<p,neutral>Let's see how you did...");
+
+def_int $correct_answer_count = 0;
+
+if (~itexam_errand_progress(^itexam_errand_student1) = 2 & $q1choice = 1) {
+    $correct_answer_count = calc($correct_answer_count + 1);
+}
+
+if (~itexam_errand_progress(^itexam_errand_student2) = 2 & $q2choice = 3) {
+    $correct_answer_count = calc($correct_answer_count + 1);
+}
+
+if (~itexam_errand_progress(^itexam_errand_student3) = 2 & $q3choice = 2) {
+    $correct_answer_count = calc($correct_answer_count + 1);
+}
+
+if ($correct_answer_count = 3) {
+    ~itexam_set_progress(^itexam_second_exam);
+    ~itexam_reset_student_errands;
+    inv_add(inv, trowel, 1);
+    inv_add(inv, level_1_certificate, 1);
+    ~chatnpc("<p,neutral>You got all the questions correct. Well done!");
+    ~chatplayer("<p,neutral>Hey! Excellent!");
+    ~chatnpc("<p,neutral>You have now passed the Earth Sciences level 1 general exam. Here is your certificate to prove it. You also get a decent trowel to dig with. Of course, you'll want to get studying for your next exam now!");
+    // TODO: open certificate modal? likely didn't exist in 2004
+} else if ($correct_answer_count = 2) {
+    ~chatnpc("<p,neutral>You got 2 questions correct. Not bad, just a little more revision needed.");
+    ~chatplayer("<p,neutral>Oh well...");
+} else if ($correct_answer_count = 1) {
+    ~chatnpc("<p,neutral>You got 1 question correct. Better luck next time.");
+    ~chatplayer("<p,bored>Oh bother!");
+    ~chatnpc("<p,neutral>Do some more research. I'm sure other students could help you out.");
+} else {
+    ~chatnpc("<p,angry>Deary me! This is appalling, none correct at all! I suggest you go and study properly.");
+    ~chatplayer("<p,sad>Oh dear...");
+    ~chatnpc("<p,neutral>Why don't you use the resources here? There are the researchers, and you could even ask other students who are also studying for these exams.");
+}
+
+////////////////////////////////////////////////
+// SECOND EXAM
+////////////////////////////////////////////////
+
+[label,itexam_examiner_second_exam]
+def_int $q1choice;
+def_int $q2choice;
+def_int $q3choice;
+
+~chatnpc("<p,neutral>Okay, this is the next part of the Earth Sciences exam: Earth Sciences level 2 - Intermediate.");
+~chatnpc("<p,neutral>Question 1 - Sample transportation. Can you tell me how we transport samples?");
+
+if (~itexam_errand_progress(^itexam_errand_student1) = 2) {
+    $q1choice = ~p_choice3("Samples ground and suspended in an acid solution.", 1, "Samples to be given to the melon-collecting monkey.", 2, "Samples taken in rough form; kept only in sealed containers.", 3);
+
+    if ($q1choice = 1) {
+        ~chatplayer("<p,neutral>Samples ground and suspended in an acid solution.");
+    } else if ($q1choice = 2) {
+        ~chatplayer("<p,neutral>Samples to be given to the melon-collecting monkey.");
+    } else {
+        ~chatplayer("<p,neutral>Samples taken in rough form; kept only in sealed containers.");
+    }
+} else {
+    $q1choice = ~p_choice3("Samples cut and cleaned before transportation.", 1, "Samples ground and suspended in an acid solution.", 2, "Samples to be given to the melon-collecting monkey.", 3);
+
+    if ($q1choice = 1) {
+        ~chatplayer("<p,neutral>Samples cut and cleaned before transportation.");
+    } else if ($q1choice = 2) {
+        ~chatplayer("<p,neutral>Samples ground and suspended in an acid solution.");
+    } else {
+        ~chatplayer("<p,neutral>Samples to be given to the melon-collecting monkey.");
+    }
+}
+
+~chatnpc("<p,neutral>Okay, next question...");
+~chatnpc("<p,neutral>Earth Sciences level 2, question 2 - Handling of finds. What is the proper way to handle finds?");
+
+if (~itexam_errand_progress(^itexam_errand_student2) = 2) {
+    $q2choice = ~p_choice3("Finds must be carefully handled, and gloves worn.", 1, "Finds to be given to the site workmen.", 2, "Drop them on the floor and jump on them.", 3);
+    
+    if ($q2choice = 1) {
+        ~chatplayer("<p,neutral>Finds must be carefully handled, and gloves worn.");
+    } else if ($q2choice = 2) {
+        ~chatplayer("<p,neutral>Finds to be given to the site workmen.");
+    } else {
+        ~chatplayer("<p,neutral>Drop them on the floor and jump on them.");
+    }
+} else {
+    $q2choice = ~p_choice3("Finds must not be handled by anyone.", 1, "Finds to be given to the site workmen.", 2, "Drop them on the floor and jump on them.", 3);
+    
+    if ($q2choice = 1) {
+        ~chatplayer("<p,neutral>Finds must not be handled by anyone.");
+    } else if ($q2choice = 2) {
+        ~chatplayer("<p,neutral>Finds to be given to the site workmen.");
+    } else {
+        ~chatplayer("<p,neutral>Drop them on the floor and jump on them.");
+    }
+}
+
+~chatnpc("<p,neutral>Okay, next question...");
+~chatnpc("<p,neutral>Earth Sciences level 2, question 3 - Rock pick usage. Can you tell me the proper use for a rock pick?");
+
+if (~itexam_errand_progress(^itexam_errand_student3) = 2) {
+    $q3choice = ~p_choice3("Rock pick must be used flat and with a strong force.", 1, "Always handle with care; strike cleanly on its cleaving point.", 2, "Rock picks are to be used to milk cows on a rainy morning.", 3);
+    
+    if ($q3choice = 1) {
+        ~chatplayer("<p,neutral>Rock pick must be used flat and with a strong force.");
+    } else if ($q3choice = 2) {
+        ~chatplayer("<p,neutral>Always handle with care; strike cleanly on its cleaving point.");
+    } else {
+        ~chatplayer("<p,neutral>Rock picks are to be used to milk cows on a rainy morning.");
+    }
+} else {
+    $q3choice = ~p_choice3("Strike rock repeatedly until powdered.", 1, "Rock pick must be used flat and with a strong force.", 2, "Rock picks are to be used to milk cows on a rainy morning.", 3);
+    
+    if ($q3choice = 1) {
+        ~chatplayer("<p,neutral>Strike rock repeatedly until powdered.");
+    } else if ($q3choice = 2) {
+        ~chatplayer("<p,neutral>Rock pick must be used flat and with a strong force.");
+    } else {
+        ~chatplayer("<p,neutral>Rock picks are to be used to milk cows on a rainy morning.");
+    }
+}
+~chatnpc("<p,neutral>Okay, that covers the level 2 Earth Sciences exam.");
+~chatnpc("<p,neutral>Let me add up your total..");
+
+def_int $correct_answer_count = 0;
+
+if (~itexam_errand_progress(^itexam_errand_student1) = 2 & $q1choice = 3) {
+    $correct_answer_count = calc($correct_answer_count + 1);
+}
+
+if (~itexam_errand_progress(^itexam_errand_student2) = 2 & $q2choice = 1) {
+    $correct_answer_count = calc($correct_answer_count + 1);
+}
+
+if (~itexam_errand_progress(^itexam_errand_student3) = 2 & $q3choice = 2) {
+    $correct_answer_count = calc($correct_answer_count + 1);
+}
+
+if ($correct_answer_count = 3) {
+    ~itexam_set_progress(^itexam_third_exam);
+    ~itexam_reset_student_errands;
+    inv_add(inv, level_2_certificate, 1);
+    ~chatnpc("<p,neutral>You got all the questions correct, well done!");
+    ~chatplayer("<p,neutral> Great, I'm getting good at this.");
+    ~chatnpc("<p,neutral>You have now passed the Earth Sciences level 2 intermediate exam. Here is your certificate. Of course, you'll want to get studying for your next exam now!");
+    // TODO: open certificate modal? likely didn't exist in 2004
+} else if ($correct_answer_count = 2) {
+    ~chatnpc("<p,neutral>You got 2 questions correct. Not too bad, but you can do better...");
+    ~chatplayer("<p,neutral>Nearly got it.");
+} else if ($correct_answer_count = 1) {
+    ~chatnpc("<p,neutral>You got 1 question correct. At least it's a start.");
+    ~chatplayer("<p,bored>Oh well...");
+    ~chatnpc("<p,neutral>Get out and explore the digsite, talk to people and learn!");
+} else {
+    ~chatnpc("<p,angry>No, no, no! This will not do. They are all wrong; start again!");
+    ~chatplayer("<p,sad>Oh no!");
+    ~chatnpc("<p,neutral>More studying for you my <text_gender("boy", "girl")>.");
+}
+
+////////////////////////////////////////////////
+// THIRD EXAM
+////////////////////////////////////////////////
+
+[label,itexam_examiner_third_exam]
+def_int $q1choice;
+def_int $q2choice;
+def_int $q3choice;
+
+~chatnpc("<p,neutral>Attention, this is the final part of the Earth Sciences exam: Earth Sciences level 3 - Advanced.");
+~chatnpc("<p,neutral>Question 1 - Sample preparation. Can you tell me how we prepare samples?");
+
+if (~itexam_errand_progress(^itexam_errand_student3) = 2) {
+    $q1choice = ~p_choice3("Samples cleaned, and carried only in specimen jars.", 1, "Sample types catalogued and carried by hand only.", 2, "Samples to be spread thickly with mashed banana.", 3);
+
+    if ($q1choice = 1) {
+        ~chatplayer("<p,neutral>Samples cleaned, and carried only in specimen jars.");
+    } else if ($q1choice = 2) {
+        ~chatplayer("<p,neutral>Sample types catalogued and carried by hand only.");
+    } else {
+        ~chatplayer("<p,neutral>Samples to be spread thickly with mashed banana.");
+    }
+} else {
+    $q1choice = ~p_choice3("Samples may be mixed together safely.", 1, "Sample types catalogued and carried by hand only.", 2, "Samples to be spread thickly with mashed banana.", 3);
+
+    if ($q1choice = 1) {
+        ~chatplayer("<p,neutral>Samples may be mixed together safely.");
+    } else if ($q1choice = 2) {
+        ~chatplayer("<p,neutral>Sample types catalogued and carried by hand only.");
+    } else {
+        ~chatplayer("<p,neutral>Samples to be spread thickly with mashed banana.");
+    }
+}
+
+~chatnpc("<p,neutral>Okay, next question...");
+~chatnpc("<p,neutral>Earth Sciences level 3, question 2 - Specimen brush use. What is the proper way to use a specimen brush?");
+
+if (~itexam_errand_progress(^itexam_errand_student1) = 2) {
+    $q2choice = ~p_choice3("Brush carefully and slowly using short strokes.", 1, "Dipped in glue and stuck to a sheep's back.", 2, "Brush quickly and with force.", 3);
+
+    if ($q2choice = 1) {
+        ~chatplayer("<p,neutral>Brush carefully and slowly using short strokes.");
+    } else if ($q2choice = 2) {
+        ~chatplayer("<p,neutral>Dipped in glue and stuck to a sheep's back.");
+    } else {
+        ~chatplayer("<p,neutral>Brush quickly and with force.");
+    }
+} else {
+    $q2choice = ~p_choice3("Brush quickly using a wet brush.", 1, "Dipped in glue and stuck to a sheep's back.", 2, "Brush quickly and with force.", 3);
+
+    if ($q2choice = 1) {
+        ~chatplayer("<p,neutral>Brush quickly using a wet brush.");
+    } else if ($q2choice = 2) {
+        ~chatplayer("<p,neutral>Dipped in glue and stuck to a sheep's back.");
+    } else {
+        ~chatplayer("<p,neutral>Brush quickly and with force.");
+    }
+}
+
+~chatnpc("<p,neutral>Okay, next question...");
+~chatnpc("<p,neutral>Earth Sciences level 3, question 3 - Advanced techniques. Can you describe the technique for handling bones?");
+
+if (~itexam_errand_progress(^itexam_errand_student2) = 2) {
+    $q3choice = ~p_choice3("Feed to hungry dogs.", 1, "Bones to be ground and tested for mineral content.", 2, "Handle bones very carefully and keep them away from other samples.", 3);
+
+    if ($q3choice = 1) {
+        ~chatplayer("<p,neutral>Feed to hungry dogs.");
+    } else if ($q3choice = 2) {
+        ~chatplayer("<p,neutral>Bones to be ground and tested for mineral content.");
+    } else {
+        ~chatplayer("<p,neutral>Handle bones very carefully and keep them away from other samples.");
+    }
+} else {
+    $q3choice = ~p_choice3("Bones must not be taken from the digsite.", 1, "Feed to hungry dogs.", 2, "Samples to be given to the melon-collecting monkey.", 3);
+
+    if ($q3choice = 1) {
+        ~chatplayer("<p,neutral>Bones must not be taken from the digsite.");
+    } else if ($q3choice = 2) {
+        ~chatplayer("<p,neutral>Feed to hungry dogs.");
+    } else {
+        ~chatplayer("<p,neutral>Bones to be ground and tested for mineral content.");
+    }
+}
+
+~chatnpc("<p,neutral>Okay, that concludes the level 3 Earth Sciences exam.");
+~chatnpc("<p,neutral>Let me add up the results...");
+
+def_int $correct_answer_count = 0;
+
+if (~itexam_errand_progress(^itexam_errand_student1) = 2 & $q1choice = 1) {
+    $correct_answer_count = calc($correct_answer_count + 1);
+}
+
+if (~itexam_errand_progress(^itexam_errand_student2) = 2 & $q2choice = 1) {
+    $correct_answer_count = calc($correct_answer_count + 1);
+}
+
+if (~itexam_errand_progress(^itexam_errand_student3) = 2 & $q3choice = 3) {
+    $correct_answer_count = calc($correct_answer_count + 1);
+}
+
+if ($correct_answer_count = 3) {
+    ~itexam_set_progress(^itexam_impress_archeological_expert);
+    ~itexam_reset_student_errands;
+    inv_add(inv, level_3_certificate, 1);
+    ~chatnpc("<p,neutral>You got all the questions correct, well done!");
+    ~chatplayer("<p,neutral>Hooray!");
+    ~chatnpc("<p,neutral>Congratulations! You have now passed the Earth Sciences level 3 exam. Here is your level 3 certificate.");
+    ~chatplayer("<p,neutral>I can dig wherever I want now!");
+    ~chatnpc("<p,neutral>Perhaps you should use your newfound skills to find an artefact on the digsite that will impress the archaeological expert.");
+    // TODO: open certificate modal? likely didn't exist in 2004
+} else if ($correct_answer_count = 2) {
+    ~chatnpc("<p,neutral>You got 2 questions correct. A little more study and you will pass it.");
+    ~chatplayer("<p,neutral>I'm nearly there...");
+} else if ($correct_answer_count = 1) {
+    ~chatnpc("<p,neutral>You got 1 question correct. Try harder!");
+    ~chatplayer("<p,bored>Oh bother!");
+} else {
+    ~chatnpc("<p,angry>I cannot believe this! Absolutely none right at all. I doubt you did any research before you took this exam...");
+    ~chatplayer("<p,sad>Ah... Yes... Erm.... I think I had better go and revise first!");
+}
+
+////////////////////////////////////////////////
+// DIGGING STAGE
+////////////////////////////////////////////////
+
+[label,itexam_examiner_go_digging]
+~chatnpc("<p,happy>Well, what are you doing here? Get digging!");
+if (inv_total(inv, trowel) = 0) {
+    @itexam_examiner_lost_trowel;
+}
+
+////////////////////////////////////////////////
+// AFTER QUEST
+////////////////////////////////////////////////
+
+[label,itexam_examiner_after_quest]
+~chatnpc("<p,happy>Hello there! My colleague tells me you helped to uncover a hidden altar to the god Zaros.");
+~chatnpc("<p,happy>A great scholar and archaeologist indeed! Good health and prosperity to you. ");
+
+def_int $choice = ~p_choice2("Thanks.", 1, "I have lost my trowel.", 2);
+
+if ($choice = 1) {
+    ~chatplayer("<p,neutral>Thanks.");
+} else {
+    @itexam_examiner_lost_trowel;
+}
+
+[label,itexam_examiner_lost_trowel]
+~chatplayer("<p,sad>I have lost my trowel.");
+if (inv_total(inv, trowel) > 0) {
+    ~chatnpc("<p,angry>Really? Look in your backpack and make sure first.");
+} else {
+    ~chatnpc("<p,neutral>Deary me... That was a good one as well. It's a good job I have another. Here you go...");
+    inv_add(inv, trowel, 1);
+}

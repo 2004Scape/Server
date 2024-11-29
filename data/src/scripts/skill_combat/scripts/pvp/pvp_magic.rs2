@@ -254,6 +254,10 @@ return($duration);
 
 [proc,magic_spell_maxhit](dbrow $spell_data)(int)
 def_int $maxhit = db_getfield($spell_data, magic_spell_table:maxhit, 0);
+def_int $spell = db_getfield($spell_data, magic_spell_table:spell, 0);
+if (inv_total(worn, gauntlets_of_chaos) > 0 & $spell >= ^wind_bolt & $spell <= ^fire_bolt) {
+    $maxhit = add($maxhit, 3);
+}
 return($maxhit);
 
 [queue,pvp_freeze_player](int $duration)

@@ -182,12 +182,12 @@ model4=model_292_idk
 model5=model_170_idk
 model6=model_176_idk
 model7=model_260_npc
-// osrs
 attackrange=8
-wanderrange=5
 respawnrate=50
 hitpoints=30
 attack=28
 strength=28
 defence=32
 magic=25
+// osrs stats and Vislvl match 1:1
+// TODO: recheck attackrange

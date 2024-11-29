@@ -62,13 +62,16 @@ if (p_finduid(uid) = true) {
             case 18 : queue(quest_chompybird_complete, 0);
             case 19 : queue(quest_biohazard_complete, 0);
             case 20 : queue(cog_complete, 0);
-            case 21 : mes("Quest not implemented");
+            case 21 : queue(itexam_complete, 0);
             case 22 :
                 if (npc_find(0_45_54_45_30, kaqemeex, 7, 0) = true) {
                     queue(druid_quest_complete, 0, npc_uid);
                 }
             case 23 : queue(mcannon_complete, 0);
-            case 24 : mes("Quest not implemented");
+            case 24 : 
+                queue(crest_complete, 0);
+                // Complete all blast spells and levers, gauntlet choice unselected
+                %crest_spells_levers_gauntlets = calc(pow(2, ^crest_south_lever) - 1);
             case 25 : queue(arena_quest_complete, 0);
             case 26 : queue(fishingcompo_quest_complete, 0);
             case 27 : queue(fluffs_complete, 0);
@@ -145,12 +148,14 @@ if (p_finduid(uid) = true) {
                 %chompybird_progress = 0;
             case 19 : %biohazard_progress = 0;
             case 20 : %cog_progress = 0;
-            case 21 : mes("Quest not implemented");
+            case 21 : %itexam_progress = 0;
             case 22 : %druid_progress = 0;
             case 23 :
                 %mcannon_railings = 0;
                 %mcannon_progress = 0;
-            case 24 : mes("Quest not implemented");
+            case 24 : 
+                %crest_progress = 0;
+                %crest_spells_levers_gauntlets = 0;
             case 25 : %arena_progress = 0;
             case 26 : %fishingcompo_progress = 0;
             case 27 : 

@@ -30,10 +30,12 @@ hitpoints=35
 attack=30
 strength=25
 defence=30
-timer=1
 param=stabdefence,2
 param=slashdefence,1
 param=crushdefence,3
+param=damagetype,^crush_style
+timer=1
+// Stats match osrs version but our version Vislvl is different.
 
 [harlow]
 vislevel=hide

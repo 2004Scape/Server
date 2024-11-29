@@ -60,7 +60,7 @@ if ($product = $obj2) {
 }
 if (stat(fletching) < $level) {
     // osrs has a level 1 fail message for arrow shafts but i doubt 2004 used it
-    ~doubleobjbox($log, $product, "You need a Fletching level of at least <tostring($level)> to make <~add_article(lowercase(oc_name($product)))>.");
+    ~doubleobjbox($log, $product, "You need a Fletching level of at least <tostring($level)> to make <~add_article(lowercase(oc_name($product)))>.", 150);
     return;
 }
 // make one bow at a time

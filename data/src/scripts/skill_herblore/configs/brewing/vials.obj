@@ -12,7 +12,6 @@ recol1d=16956
 2dxan=84
 weight=20g
 cost=2
-tradeable=yes
 param=changesto,vial_empty
 // jagex name
 
@@ -28,6 +27,5 @@ manwear=model_561_obj_wear,0
 womanwear=model_561_obj_wear,6
 weight=15g
 cost=2
-tradeable=yes
 param=crafting_glass_struct,vial_empty
 param=changesto,vial_water

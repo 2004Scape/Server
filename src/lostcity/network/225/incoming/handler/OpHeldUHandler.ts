@@ -67,6 +67,8 @@ export default class OpHeldUHandler extends MessageHandler<OpHeldU> {
 
         player.clearInteraction();
         player.closeModal();
+        player.faceEntity = -1;
+        player.masks |= player.entitymask;
 
         if ((objType.members || useObjType.members) && !Environment.NODE_MEMBERS) {
             player.messageGame("To use this item please login to a members' server.");

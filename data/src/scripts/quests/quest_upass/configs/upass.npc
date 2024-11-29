@@ -89,7 +89,7 @@ model8=model_326_idk
 head1=model_48_npc_head
 head2=model_81_idk_head
 
-[npc_977]
+[blessed_spider]
 walkanim=giantspider_walk
 readyanim=giantspider_ready
 name=Blessed spider
@@ -118,8 +118,10 @@ param=defend_sound,insect_hit
 param=death_sound,insect_death
 param=death_drop,null
 huntmode=cowardly
+// Stats match osrs version but our version Vislvl is different.
+// wander and maxrange data taken rs3.
 
-[npc_978]
+[blessed_giant_rat]
 size=2
 walkanim=giantrat_walk
 readyanim=giantrat_ready
@@ -147,8 +149,9 @@ param=attack_sound,rat_attack
 param=defend_sound,rat_hit
 param=death_sound,rat_death
 huntmode=cowardly
+// osrs stats and Vislvl match 1:1
 
-[npc_979]
+[slave1_upass]
 vislevel=hide
 walkanim=human_walk_f,human_walk_b,human_walk_l,human_walk_r
 readyanim=human_ready
@@ -170,7 +173,7 @@ model6=model_181_idk
 model7=model_176_idk
 head1=model_63_idk_head
 
-[npc_980]
+[slave2_upass]
 vislevel=hide
 walkanim=human_walk_f,human_walk_b,human_walk_l,human_walk_r
 readyanim=human_ready
@@ -192,7 +195,7 @@ model6=model_181_idk
 model7=model_176_idk
 head1=model_52_idk_head
 
-[npc_981]
+[slave3_upass]
 vislevel=hide
 walkanim=human_walk_f,human_walk_b,human_walk_l,human_walk_r
 readyanim=human_ready
@@ -214,7 +217,7 @@ model6=model_181_idk
 model7=model_176_idk
 head1=model_49_idk_head
 
-[npc_982]
+[slave4_upass]
 vislevel=hide
 walkanim=human_walk_f,human_walk_b,human_walk_l,human_walk_r
 readyanim=human_ready
@@ -236,7 +239,7 @@ model6=model_181_idk
 model7=model_176_idk
 head1=model_47_npc_head
 
-[npc_983]
+[slave5_upass]
 vislevel=hide
 walkanim=human_walk_f,human_walk_b,human_walk_l,human_walk_r
 readyanim=human_ready
@@ -260,7 +263,7 @@ model6=model_181_idk
 model7=model_176_idk
 head1=model_45_idk_head
 
-[npc_984]
+[slave6_upass]
 vislevel=hide
 walkanim=human_walk_f,human_walk_b,human_walk_l,human_walk_r
 readyanim=human_ready
@@ -282,7 +285,7 @@ model6=model_181_idk
 model7=model_176_idk
 head1=model_48_npc_head
 
-[npc_985]
+[slave7_upass]
 vislevel=hide
 walkanim=human_walk_f,human_walk_b,human_walk_l,human_walk_r
 readyanim=human_ready
@@ -326,6 +329,11 @@ desc=The animal is caged here.
 vislevel=15
 model1=model_2933_npc
 wanderrange=1
+hitpoints=19
+attack=11
+strength=13
+defence=13
+// https://raw.githubusercontent.com/Joshua-F/osrs-dumps/refs/heads/master/config/dump.npc npc_9209
 
 [sir_jerro]
 name=Sir Jerro
@@ -371,6 +379,7 @@ param=attack_anim,human_sword_slash
 param=defend_anim,human_sword_defend2
 // TODO sounds
 // TODO sounds
+// TODO monster examine spell
 
 [sir_carl]
 name=Sir Carl
@@ -414,6 +423,7 @@ param=attack_anim,human_sword_slash
 param=defend_anim,human_sword_defend2
 // TODO sounds
 // TODO sounds
+// TODO monster examine spell
 
 [sir_harry]
 name=Sir Harry
@@ -457,6 +467,7 @@ param=attack_anim,human_sword_slash
 param=defend_anim,human_sword_defend2
 // TODO sounds
 // TODO sounds
+// TODO monster examine spell
 
 [half_souless]
 size=2
@@ -630,7 +641,9 @@ param=attack_sound,insect_attack
 param=defend_sound,insect_hit
 param=death_sound,insect_death
 param=death_drop,null
+huntrange=5
 huntmode=cowardly
+// TODO monster examine spell
 
 [othainian]
 size=3
@@ -658,7 +671,9 @@ param=attack_sound,demon_attack
 param=defend_sound,demon_hit
 param=death_sound,demon_death
 param=death_drop,ashes
+huntrange=3
 huntmode=cowardly
+// TODO monster examine spell
 
 [doomion]
 size=3
@@ -686,7 +701,9 @@ param=attack_sound,demon_attack
 param=defend_sound,demon_hit
 param=death_sound,demon_death
 param=death_drop,ashes
+huntrange=3
 huntmode=cowardly
+// TODO monster examine spell
 
 [holthion]
 size=3
@@ -714,7 +731,9 @@ param=attack_sound,demon_attack
 param=defend_sound,demon_hit
 param=death_sound,demon_death
 param=death_drop,ashes
+huntrange=3
 huntmode=cowardly
+// TODO monster examine spell
 
 [iban_disciple]
 walkanim=human_walk_f,human_walk_b,human_walk_l,human_walk_r
@@ -746,6 +765,7 @@ attack=8
 strength=8
 defence=12
 param=damagetype,^crush_style
+// TODO monster examine spell
 
 [lord_iban]
 vislevel=hide
@@ -775,10 +795,15 @@ model6=model_286_obj_wear
 model7=model_251_idk
 model8=model_265_obj_wear
 head1=model_83_idk_head
-respawnrate=100
 wanderrange=0
-timer=10
 moverestrict=nomove
+respawnrate=100
+hitpoints=87
+attack=76
+strength=78
+defence=77
+timer=10
+// https://raw.githubusercontent.com/Joshua-F/osrs-dumps/refs/heads/master/config/dump.npc npc_8998
 
 [spider_upass]
 walkanim=spider_walk
@@ -808,6 +833,7 @@ param=attack_sound,insect_attack
 param=defend_sound,insect_hit
 param=death_sound,insect_death
 param=death_drop,null
+// osrs stats and Vislvl match 1:1
 
 [bat_upass]
 name=Giant bat

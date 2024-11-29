@@ -10,3 +10,4 @@ model=model_2675_obj
 weight=10g
 name=Warrant
 desc=A search warrant for a house in Ardougne.
+tradeable=no

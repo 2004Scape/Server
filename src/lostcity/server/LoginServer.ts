@@ -4,7 +4,7 @@ import fsp from 'fs/promises';
 import bcrypt from 'bcrypt';
 import { WebSocket, WebSocketServer } from 'ws';
 
-import { fromBase37 } from '#jagex2/jstring/JString.js';
+import { fromBase37 } from '#jagex/jstring/JString.js';
 
 import { db } from '#lostcity/db/query.js';
 

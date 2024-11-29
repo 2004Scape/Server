@@ -8,7 +8,6 @@ model=model_2480_obj
 2dyan=92
 2dxan=352
 weight=4g
-tradeable=yes
 param=crafting_jewelry_struct,unstrung_symbol
 
 [unstrung_emblem]
@@ -25,5 +24,4 @@ recol1d=24311
 2dxan=336
 weight=4g
 members=yes
-tradeable=yes
 param=crafting_jewelry_struct,unstrung_emblem

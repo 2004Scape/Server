@@ -1,5 +1,5 @@
-import Jagfile from '#jagex2/io/Jagfile.js';
-import Packet from '#jagex2/io/Packet.js';
+import Jagfile from '#jagex/io/Jagfile.js';
+import Packet from '#jagex/io/Packet.js';
 
 import AnimBase from '#lostcity/cache/graphics/AnimBase.js';
 import { printError } from '#lostcity/util/Logger.js';

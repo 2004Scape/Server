@@ -1,7 +1,7 @@
 import { WebSocketServer, WebSocket } from 'ws';
 import { IncomingMessage } from 'http';
 
-import Packet from '#jagex2/io/Packet.js';
+import Packet from '#jagex/io/Packet.js';
 
 import Login from '#lostcity/engine/Login.js';
 import World from '#lostcity/engine/World.js';
@@ -29,7 +29,7 @@ export default class WSServer {
     wss: WebSocketServer | null = null;
 
     start() {
-        const port = (Environment.NODE_PORT as number) + 1;
+        const port = Environment.NODE_PORT + 1;
 
         this.wss = new WebSocketServer({ port, host: '0.0.0.0' }, () => {
         });
@@ -44,14 +44,14 @@ export default class WSServer {
             seed.p4(Math.floor(Math.random() * 0xffffffff));
             socket.send(seed.data);
 
-            ws.on('message', async (data: Buffer) => {
+            ws.on('message', (data: Buffer) => {
                 const packet = new Packet(new Uint8Array(data));
 
                 try {
                     if (socket.state === 1) {
-                        await World.readIn(socket, packet);
+                        World.readIn(socket, packet);
                     } else {
-                        await Login.readIn(socket, packet);
+                        Login.readIn(socket, packet);
                     }
                 } catch (err) {
                     socket.close();

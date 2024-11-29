@@ -10,3 +10,4 @@ model=model_2372_obj
 weight=10g
 name=A small key
 desc=Quite a small key.
+tradeable=no

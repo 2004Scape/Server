@@ -9,6 +9,9 @@ export default {
     WEB_PORT: tryParseInt(process.env.WEB_PORT, process.platform === 'win32' ? 80 : 8888),
     WEB_CORS: tryParseBoolean(process.env.WEB_CORS, true),
 
+    // management server
+    WEB_MANAGEMENT_PORT: tryParseInt(process.env.WEB_MANAGEMENT_PORT, 8898),
+
     /// game server
     // world id - offset by 9, so 1 = 10, 2 = 11, etc
     NODE_ID: tryParseInt(process.env.NODE_ID, 10),
@@ -25,7 +28,7 @@ export default {
     // extra debug info e.g. missing triggers
     NODE_DEBUG: tryParseBoolean(process.env.NODE_DEBUG, true),
     // measuring script execution
-    NODE_DEBUG_PROFILER: tryParseBoolean(process.env.NODE_DEBUG_PROFILE, false),
+    NODE_DEBUG_PROFILE: tryParseBoolean(process.env.NODE_DEBUG_PROFILE, false),
     // *only* if no login server is running to authenticate accounts, this provides admin accs by username :)
     NODE_STAFF: tryParseArray(process.env.NODE_STAFF?.split(','), ['pazaz']), // todo: add staffmodlevel to database
     // no server routefinding until 2009

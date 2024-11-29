@@ -1,0 +1,42 @@
+[ai_queue3,crest_chronozon]
+if (finduid(%npc_attacking_uid) = true) {
+    if (getbit_range(%crest_spells_levers_gauntlets, ^crest_wind_blast_used, ^crest_fire_blast_used) = ^crest_all_spells_cast) {
+        gosub(npc_death);
+        if (npc_findhero = true){
+            if (%crest_progress = ^crest_cured_johnathon) {
+                obj_add(npc_coord, crest_part_3, 1, ^lootdrop_duration);
+            }
+            obj_add(npc_coord, npc_param(death_drop), 1, ^lootdrop_duration);
+        }
+    }
+    else {
+        @crest_chronozon_regenerate;
+    }
+}
+else {
+    npc_statheal(hitpoints, npc_basestat(hitpoints), 0);
+}
+
+
+[proc,crest_chronozon_spell](int $spell) 
+switch_int ($spell) {
+    case ^wind_blast : 
+        ~crest_chronozon_weaken(^crest_wind_blast_used);
+    case ^water_blast :
+        ~crest_chronozon_weaken(^crest_water_blast_used);
+    case ^earth_blast :
+        ~crest_chronozon_weaken(^crest_earth_blast_used);
+    case ^fire_blast :
+        ~crest_chronozon_weaken(^crest_fire_blast_used);
+}
+
+[proc,crest_chronozon_weaken](int $used)
+%crest_spells_levers_gauntlets = setbit(%crest_spells_levers_gauntlets, $used);
+// Message is shown multiple times for repeated casts of the same spell
+// https://youtu.be/AKFPNpw2ROQ?t=76
+mes("Chronozon weakens...");
+
+[label,crest_chronozon_regenerate]
+npc_statheal(hitpoints, npc_basestat(hitpoints), 0);
+npc_setmode(opplayer2);
+mes("Chronozon regenerates...");

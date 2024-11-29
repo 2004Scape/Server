@@ -1,6 +1,6 @@
 import path from 'path';
 
-import Packet from '#jagex2/io/Packet.js';
+import Packet from '#jagex/io/Packet.js';
 
 import ScriptOpcode from '#lostcity/engine/script/ScriptOpcode.js';
 import Environment from '#lostcity/util/Environment.js';

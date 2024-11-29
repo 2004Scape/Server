@@ -10,7 +10,6 @@ recol1d=8416
 2dyan=116
 2dxan=440
 weight=5lb
-tradeable=yes
 
 [hardleather]
 name=Hard leather
@@ -24,7 +23,6 @@ recol1d=5250
 2dyan=116
 2dxan=440
 weight=7lb
-tradeable=yes
 
 
 //green
@@ -41,7 +39,6 @@ recol1d=256
 2dxan=440
 weight=7lb
 members=yes
-tradeable=yes
 
 //blue
 [dragon_leather_blue]
@@ -57,7 +54,6 @@ recol1d=11
 2dxan=440
 weight=7lb
 members=yes
-tradeable=yes
 
 //red
 [dragon_leather_red]
@@ -73,7 +69,6 @@ recol1d=8192
 2dxan=440
 weight=7lb
 members=yes
-tradeable=yes
 
 //black
 [dragon_leather_black]
@@ -89,4 +84,3 @@ recol1d=3171
 2dxan=440
 weight=7lb
 members=yes
-tradeable=yes

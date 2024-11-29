@@ -3,9 +3,9 @@ import fsp from 'fs/promises';
 import forge from 'node-forge';
 import { parentPort } from 'worker_threads';
 
-import Packet from '#jagex2/io/Packet.js';
+import Packet from '#jagex/io/Packet.js';
 
-import { toBase37, toSafeName } from '#jagex2/jstring/JString.js';
+import { toBase37, toSafeName } from '#jagex/jstring/JString.js';
 
 import LoginClient from '#lostcity/server/LoginClient.js';
 import LoginResponse from '#lostcity/server/LoginResponse.js';
@@ -189,7 +189,7 @@ async function handleRequests(parentPort: any, msg: any, priv: forge.pki.rsa.Pri
                     }
                 } else {
                     if (fs.existsSync(`data/players/${safeName}.sav`)) {
-                        save = await fsp.readFile(`data/players/${safeName}.sav`);
+                        save = Uint8Array.from(await fsp.readFile(`data/players/${safeName}.sav`));
                     }
                 }
 
@@ -206,25 +206,14 @@ async function handleRequests(parentPort: any, msg: any, priv: forge.pki.rsa.Pri
             break;
         }
         case 'logout': {
+            if (!Environment.LOGIN_KEY) {
+                return;
+            }
+
             const { username, save } = msg;
 
-            if (Environment.LOGIN_KEY) {
-                const reply = await login.save(toBase37(username), save);
-
-                if (reply === 0) {
-                    parentPort.postMessage({
-                        type: 'logoutreply',
-                        username
-                    });
-                }
-            } else {
-                parentPort.postMessage({
-                    type: 'logoutreply',
-                    username
-                });
-            }
-            break;
-        }
+            await login.save(toBase37(username), save);
+        } break;
         case 'autosave': {
             if (!Environment.LOGIN_KEY) {
                 return;

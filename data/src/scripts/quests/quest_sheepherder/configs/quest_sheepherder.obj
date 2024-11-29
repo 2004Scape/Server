@@ -25,6 +25,7 @@ param=slashattack_anim,human_sword_slash
 param=defend_anim,human_sword_defend2
 param=stab_sound,stabsword_stab
 param=slash_sound,stabsword_slash
+tradeable=no
 
 [poisoned_feed]
 name=Feed
@@ -37,6 +38,7 @@ members=yes
 2dyan=1936
 2dxan=120
 weight=5lb
+tradeable=no
 
 [red_sheep_bones]
 name=Bones
@@ -48,6 +50,7 @@ model=model_2674_obj
 2dyan=368
 2dxan=400
 weight=3lb
+tradeable=no
 
 [green_sheep_bones]
 name=Bones
@@ -59,6 +62,7 @@ model=model_2674_obj
 2dyan=368
 2dxan=400
 weight=3lb
+tradeable=no
 
 [blue_sheep_bones]
 name=Bones
@@ -70,6 +74,7 @@ model=model_2674_obj
 2dyan=368
 2dxan=400
 weight=3lb
+tradeable=no
 
 [yellow_sheep_bones]
 name=Bones
@@ -81,6 +86,7 @@ model=model_2674_obj
 2dyan=368
 2dxan=400
 weight=3lb
+tradeable=no
 
 [plague_jacket]
 name=Plague jacket
@@ -102,6 +108,7 @@ manwear2=model_150_obj_wear
 womanwear=model_459_obj_wear,0
 womanwear2=model_331_obj_wear
 weight=6lb
+tradeable=no
 
 [plague_trousers]
 name=Plague trousers
@@ -120,3 +127,4 @@ wearpos2=feet
 manwear=model_273_obj_wear,0
 womanwear=model_436_obj_wear,0
 weight=5lb
+tradeable=no

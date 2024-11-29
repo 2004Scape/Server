@@ -49,12 +49,14 @@ model7=model_176_idk
 model8=model_320_idk
 head1=model_67_idk_head
 head2=model_79_idk_head
+hitpoints=7
 category=shop_keeper
 param=owned_shop,shrimp_and_parrot
 param=shop_sell_multiplier,1300
 param=shop_buy_multiplier,750
 param=shop_delta,30
 param=shop_title,The Shrimp and Parrot
+// https://raw.githubusercontent.com/Joshua-F/osrs-dumps/refs/heads/master/config/dump.npc npc_4920
 
 [bartender_brimhaven]
 vislevel=hide

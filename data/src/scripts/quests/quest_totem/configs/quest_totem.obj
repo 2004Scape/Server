@@ -10,6 +10,7 @@ members=yes
 2dyan=108
 2dxan=188
 weight=3kg
+tradeable=no
 
 [address_label]
 name=Address label
@@ -23,6 +24,7 @@ members=yes
 2dyan=1116
 2dxan=244
 weight=10g
+tradeable=no
 
 [guide_book]
 name=Guide book
@@ -36,3 +38,4 @@ recol1d=6342
 2dyan=152
 2dxan=256
 weight=16lb
+tradeable=no

@@ -4,12 +4,12 @@ import { Worker as NodeWorker } from 'worker_threads';
 // deps
 import kleur from 'kleur';
 
-// jagex2
-import LinkList from '#jagex2/datastruct/LinkList.js';
+// jagex
+import LinkList from '#jagex/datastruct/LinkList.js';
 
-import { fromBase37, toBase37 } from '#jagex2/jstring/JString.js';
+import { fromBase37, toBase37 } from '#jagex/jstring/JString.js';
 
-import Packet from '#jagex2/io/Packet.js';
+import Packet from '#jagex/io/Packet.js';
 
 // lostcity
 import CategoryType from '#lostcity/cache/config/CategoryType.js';
@@ -46,8 +46,11 @@ import ScriptProvider from '#lostcity/engine/script/ScriptProvider.js';
 import ScriptRunner from '#lostcity/engine/script/ScriptRunner.js';
 import ScriptState from '#lostcity/engine/script/ScriptState.js';
 import ServerTriggerType from '#lostcity/engine/script/ServerTriggerType.js';
-
 import Zone from '#lostcity/engine/zone/Zone.js';
+import PlayerRenderer from '#lostcity/engine/renderer/PlayerRenderer.js';
+import NpcRenderer from '#lostcity/engine/renderer/NpcRenderer.js';
+
+import InfoProt from '#lostcity/network/225/outgoing/prot/InfoProt.js';
 
 import BlockWalk from '#lostcity/entity/BlockWalk.js';
 import Loc from '#lostcity/entity/Loc.js';
@@ -76,9 +79,11 @@ import { FriendsServerOpcodes } from '#lostcity/server/FriendServer.js';
 import Environment from '#lostcity/util/Environment.js';
 import { printDebug, printError, printInfo } from '#lostcity/util/Logger.js';
 import { createWorker } from '#lostcity/util/WorkerFactory.js';
+import HuntModeType from '#lostcity/entity/hunt/HuntModeType.js';
+import { trackCycleBandwidthInBytes, trackCycleBandwidthOutBytes, trackCycleClientInTime, trackCycleClientOutTime, trackCycleLoginTime, trackCycleLogoutTime, trackCycleNpcTime, trackCyclePlayerTime, trackCycleTime, trackCycleWorldTime, trackCycleZoneTime, trackNpcCount, trackPlayerCount } from '#lostcity/prometheus.js';
 
 class World {
-    private friendThread: Worker | NodeWorker = createWorker(Environment.STANDALONE_BUNDLE ? 'FriendThread.js' : './src/lostcity/server/FriendThread.ts');
+    private friendThread: Worker | NodeWorker = createWorker(Environment.STANDALONE_BUNDLE ? 'FriendThread.js' : './lostcity/server/FriendThread.ts');
     private devThread: Worker | NodeWorker | null = null;
 
     private static readonly PLAYERS: number = 2048;
@@ -106,10 +111,14 @@ class World {
     readonly newPlayers: Set<Player>; // players joining at the end of this tick
     readonly players: PlayerList;
     readonly npcs: NpcList;
+    readonly playerGrid: Map<number, Player[]>; // store player coords for player_info for fast lookup
 
     // zones
     readonly zonesTracking: Map<number, Set<Zone>>;
     readonly queue: LinkList<EntityQueueState>;
+
+    readonly playerRenderer: PlayerRenderer;
+    readonly npcRenderer: NpcRenderer;
 
     // debug data
     readonly lastCycleStats: number[];
@@ -129,8 +138,11 @@ class World {
         this.newPlayers = new Set();
         this.players = new PlayerList(World.PLAYERS - 1);
         this.npcs = new NpcList(World.NPCS - 1);
+        this.playerGrid = new Map();
         this.zonesTracking = new Map();
         this.queue = new LinkList();
+        this.playerRenderer = new PlayerRenderer();
+        this.npcRenderer = new NpcRenderer();
         this.lastCycleStats = new Array(12).fill(0);
         this.cycleStats = new Array(12).fill(0);
 
@@ -395,12 +407,12 @@ class World {
         }
 
         if (startCycle) {
-            await this.cycle();
+            this.cycle();
         }
     }
 
     private createDevThread() {
-        this.devThread = createWorker('./src/lostcity/server/DevThread.ts');
+        this.devThread = createWorker('./lostcity/server/DevThread.ts');
 
         if (this.devThread instanceof NodeWorker) {
             this.devThread.on('message', msg => {
@@ -412,6 +424,14 @@ class World {
 
                         this.broadcastMes(msg.error.replaceAll('data/src/scripts/', ''));
                         this.broadcastMes('Check the console for more information.');
+                    }
+                } else if (msg.type === 'dev_progress') {
+                    if (msg.broadcast) {
+                        console.log(msg.broadcast);
+
+                        this.broadcastMes(msg.broadcast);
+                    } else if (msg.text) {
+                        console.log(msg.text);
                     }
                 }
             });
@@ -435,7 +455,7 @@ class World {
         }
     }
 
-    async cycle(continueCycle: boolean = true): Promise<void> {
+    cycle(continueCycle: boolean = true): void {
         try {
             const start: number = Date.now();
 
@@ -450,7 +470,7 @@ class World {
             // - resume active script
             // - process packets
             // - process pathfinding/following request
-            await this.processPlayerSetup();
+            this.processPlayerSetup();
 
             // npc processing (if npc is not busy)
             // - resume suspended script
@@ -470,13 +490,13 @@ class World {
             // - interactions
             // - movement
             // - close interface if attempting to logout
-            await this.processPlayers();
+            this.processPlayers();
 
             // player logout
-            await this.processLogouts();
+            this.processLogouts();
 
             // player login, good spot for it (before packets so they immediately load but after processing so nothing hits them)
-            await this.processLogins();
+            this.processLogins();
 
             // process zones
             // - build list of active zones around players
@@ -484,10 +504,12 @@ class World {
             // - compute shared buffer
             this.processZones();
 
-            // process movement directions
+            // process player & npc update info
             // - convert player movements
+            // - compute player info
             // - convert npc movements
-            this.processMovementDirections();
+            // - compute npc info
+            this.processInfo();
 
             // client output
             // - map update
@@ -498,7 +520,7 @@ class World {
             // - stat changes
             // - afk zones changes
             // - flush packets
-            await this.processClientsOut();
+            this.processClientsOut();
 
             // cleanup
             // - reset zones
@@ -517,7 +539,7 @@ class World {
 
             // server shutdown
             if (this.shutdownTick > -1 && tick >= this.shutdownTick) {
-                await this.processShutdown();
+                this.processShutdown();
             }
 
             if (tick % World.PLAYER_SAVERATE === 0 && tick > 0) {
@@ -525,8 +547,9 @@ class World {
                 this.savePlayers();
             }
 
-            this.currentTick++;
             this.cycleStats[WorldStat.CYCLE] = Date.now() - start;
+
+            // ----
 
             this.lastCycleStats[WorldStat.CYCLE] = this.cycleStats[WorldStat.CYCLE];
             this.lastCycleStats[WorldStat.WORLD] = this.cycleStats[WorldStat.WORLD];
@@ -541,14 +564,34 @@ class World {
             this.lastCycleStats[WorldStat.BANDWIDTH_IN] = this.cycleStats[WorldStat.BANDWIDTH_IN];
             this.lastCycleStats[WorldStat.BANDWIDTH_OUT] = this.cycleStats[WorldStat.BANDWIDTH_OUT];
 
-            if (continueCycle) {
-                setTimeout(this.cycle.bind(this), this.tickRate - this.cycleStats[WorldStat.CYCLE]);
+            // push stats to prometheus
+            // todo: lock this behind a feature flag? most users may never use this feature
+            trackPlayerCount.set(this.getTotalPlayers());
+            trackNpcCount.set(this.getTotalNpcs());
+
+            trackCycleTime.observe(this.cycleStats[WorldStat.CYCLE]);
+            trackCycleWorldTime.observe(this.cycleStats[WorldStat.WORLD]);
+            trackCycleClientInTime.observe(this.cycleStats[WorldStat.CLIENT_IN]);
+            trackCycleClientOutTime.observe(this.cycleStats[WorldStat.CLIENT_OUT]);
+            trackCycleNpcTime.observe(this.cycleStats[WorldStat.NPC]);
+            trackCyclePlayerTime.observe(this.cycleStats[WorldStat.PLAYER]);
+            trackCycleZoneTime.observe(this.cycleStats[WorldStat.ZONE]);
+            trackCycleLoginTime.observe(this.cycleStats[WorldStat.LOGIN]);
+            trackCycleLogoutTime.observe(this.cycleStats[WorldStat.LOGOUT]);
+
+            trackCycleBandwidthInBytes.inc(this.cycleStats[WorldStat.BANDWIDTH_IN]);
+            trackCycleBandwidthOutBytes.inc(this.cycleStats[WorldStat.BANDWIDTH_OUT]);
+
+            if (Environment.NODE_DEBUG_PROFILE) {
+                printDebug(`| [tick ${this.currentTick}; ${this.cycleStats[WorldStat.CYCLE]}/${this.tickRate}ms] | ${this.getTotalPlayers()} players | ${this.getTotalNpcs()} npcs | ${this.gameMap.getTotalZones()} zones | ${this.gameMap.getTotalLocs()} locs | ${this.gameMap.getTotalObjs()} objs |`);
+                printDebug(`| ${this.cycleStats[WorldStat.WORLD]}ms world | ${this.cycleStats[WorldStat.CLIENT_IN]}ms client in | ${this.cycleStats[WorldStat.NPC]}ms npcs | ${this.cycleStats[WorldStat.PLAYER]}ms players | ${this.cycleStats[WorldStat.LOGOUT]}ms logout | ${this.cycleStats[WorldStat.LOGIN]}ms login | ${this.cycleStats[WorldStat.ZONE]}ms zones | ${this.cycleStats[WorldStat.CLIENT_OUT]}ms client out | ${this.cycleStats[WorldStat.CLEANUP]}ms cleanup |`);
+                printDebug('----');
             }
 
-            if (Environment.NODE_DEBUG_PROFILER) {
-                printDebug(`tick ${this.currentTick} took ${this.cycleStats[WorldStat.CYCLE]}ms: ${this.getTotalPlayers()} players`);
-                printDebug(`${this.cycleStats[WorldStat.WORLD]} ms world | ${this.cycleStats[WorldStat.CLIENT_IN]} ms client in | ${this.cycleStats[WorldStat.NPC]} ms npcs | ${this.cycleStats[WorldStat.PLAYER]} ms players | ${this.cycleStats[WorldStat.LOGOUT]} ms logout | ${this.cycleStats[WorldStat.LOGIN]} ms login | ${this.cycleStats[WorldStat.ZONE]} ms zones | ${this.cycleStats[WorldStat.CLIENT_OUT]} ms client out | ${this.cycleStats[WorldStat.CLEANUP]} ms cleanup`);
-                printDebug('----');
+            this.currentTick++;
+
+            if (continueCycle) {
+                setTimeout(this.cycle.bind(this), this.tickRate - this.cycleStats[WorldStat.CYCLE]);
             }
         } catch (err) {
             if (err instanceof Error) {
@@ -558,7 +601,7 @@ class World {
             printError('Removing all players...');
 
             for (const player of this.players) {
-                await this.removePlayer(player);
+                this.removePlayer(player);
             }
 
             // TODO inform Friends server that the world has gone offline
@@ -606,48 +649,36 @@ class World {
             }
         }
 
-        // - npc spawn scripts
+        // - npc ai_spawn scripts
+        // - npc hunt players if not busy
         for (const npc of this.npcs) {
-            if (!npc.updateLifeCycle(tick)) {
+            if (!npc.checkLifeCycle(tick)) {
                 continue;
             }
-            try {
-                if (npc.lifecycle === EntityLifeCycle.RESPAWN) {
-                    this.addNpc(npc, -1, false);
-                } else if (npc.lifecycle === EntityLifeCycle.DESPAWN) {
-                    this.removeNpc(npc, -1);
+            // check if spawned last tick
+            if (npc.lastLifecycleTick === tick - 1 && npc.lifecycle !== EntityLifeCycle.FOREVER) {
+                const type = NpcType.get(npc.type);
+                const script = ScriptProvider.getByTrigger(ServerTriggerType.AI_SPAWN, type.id, type.category);
+                if (script) {
+                    npc.executeScript(ScriptRunner.init(script, npc));
                 }
-            } catch (err) {
-                // there was an error adding or removing them, try again next tick...
-                // ex: server is full on npc IDs (did we have a leak somewhere?) and we don't want to re-use the last ID (syncing related)
-                if (npc.lifecycle === EntityLifeCycle.RESPAWN) {
-                    printError('[World] An unhandled error occurred while respawning a NPC');
-                } else if (npc.lifecycle === EntityLifeCycle.DESPAWN) {
-                    printError('[World] An unhandled error occurred while despawning a NPC');
-                }
-
-                printError(`[World] NPC type:${npc.type} lifecycle:${npc.lifecycle} ID:${npc.nid}`);
-                console.error(err);
-
-                npc.setLifeCycle(this.currentTick + 1); // retry next tick
             }
-        }
-
-        // - npc hunt
-        for (const npc of this.npcs) {
-            if (!npc.checkLifeCycle(tick) || npc.delayed()) {
+            if (npc.delayed()) {
                 continue;
             }
-
             if (npc.huntMode !== -1) {
-                npc.huntAll();
+                const hunt = HuntType.get(npc.huntMode);
+                if (hunt && hunt.type === HuntModeType.PLAYER) {
+                    npc.huntAll();
+                }
             }
+            
         }
 
         this.cycleStats[WorldStat.WORLD] = Date.now() - start;
     }
 
-    private async processPlayerSetup(): Promise<void> {
+    private processPlayerSetup(): void {
         const start: number = Date.now();
 
         this.cycleStats[WorldStat.BANDWIDTH_IN] = 0;
@@ -672,6 +703,7 @@ class World {
                 }
 
                 if (isNetworkPlayer(player) && player.decodeIn()) {
+                    const followingPlayer = (player.targetOp === ServerTriggerType.APPLAYER3 || player.targetOp === ServerTriggerType.OPPLAYER3);
                     if (player.userPath.length > 0 || player.opcalled) {
                         if (player.delayed()) {
                             player.unsetMapFlag();
@@ -680,15 +712,15 @@ class World {
         
                         if ((!player.target || player.target instanceof Loc || player.target instanceof Obj) && player.faceEntity !== -1) {
                             player.faceEntity = -1;
-                            player.mask |= Player.FACE_ENTITY;
+                            player.masks |= InfoProt.PLAYER_FACE_ENTITY.id;
                         }
         
                         if (player.busy() || !player.opcalled) {
                             player.moveClickRequest = true;
                         }
         
-                        if (player.opcalled && (player.userPath.length === 0 || !Environment.NODE_CLIENT_ROUTEFINDER)) {
-                            player.pathToPathingTarget();
+                        if (!followingPlayer && player.opcalled && (player.userPath.length === 0 || !Environment.NODE_CLIENT_ROUTEFINDER)) {
+                            player.pathToTarget();
                             continue;
                         }
         
@@ -699,7 +731,7 @@ class World {
                         }
                     }
         
-                    if (player.target instanceof Player && (player.targetOp === ServerTriggerType.APPLAYER3 || player.targetOp === ServerTriggerType.OPPLAYER3)) {
+                    if (player.target instanceof Player && followingPlayer) {
                         if (CoordGrid.distanceToSW(player, player.target) <= 25) {
                             player.pathToPathingTarget();
                         } else {
@@ -709,7 +741,7 @@ class World {
                 }
             } catch (err) {
                 console.error(err);
-                await this.removePlayer(player);
+                this.removePlayer(player);
             }
         }
 
@@ -730,21 +762,44 @@ class World {
                 if (npc.timerInterval !== 0) {
                     npc.timerClock++;
                 }
-                if (!npc.checkLifeCycle(this.currentTick)) {
-                    continue;
+                if (npc.checkLifeCycle(this.currentTick)) {
+                    if (npc.delayed()) {
+                        npc.delay--;
+                    }
+                    if (!npc.delayed()) {
+                        // - resume suspended script
+                        if (npc.activeScript && npc.activeScript.execution === ScriptState.NPC_SUSPENDED) {
+                            npc.executeScript(npc.activeScript);
+                        }
+                    }
+                }
+                
+                // - respawn
+                if (npc.updateLifeCycle(this.currentTick)) {
+                    try {
+                        if (npc.lifecycle === EntityLifeCycle.RESPAWN) {
+                            this.addNpc(npc, -1, false);
+                        } else if (npc.lifecycle === EntityLifeCycle.DESPAWN) {
+                            this.removeNpc(npc, -1);
+                        }
+                    } catch (err) {
+                        // there was an error adding or removing them, try again next tick...
+                        // ex: server is full on npc IDs (did we have a leak somewhere?) and we don't want to re-use the last ID (syncing related)
+                        if (npc.lifecycle === EntityLifeCycle.RESPAWN) {
+                            printError('[World] An unhandled error occurred while respawning a NPC');
+                        } else if (npc.lifecycle === EntityLifeCycle.DESPAWN) {
+                            printError('[World] An unhandled error occurred while despawning a NPC');
+                        }
+        
+                        printError(`[World] NPC type:${npc.type} lifecycle:${npc.lifecycle} ID:${npc.nid}`);
+                        console.error(err);
+        
+                        npc.setLifeCycle(this.currentTick + 1); // retry next tick
+                    }
                 }
 
                 if (npc.delayed()) {
-                    npc.delay--;
-                }
-
-                if (npc.delayed()) {
                     continue;
-                }
-
-                // - resume suspended script
-                if (npc.activeScript && npc.activeScript.execution === ScriptState.NPC_SUSPENDED) {
-                    npc.executeScript(npc.activeScript);
                 }
 
                 if (!npc.checkLifeCycle(this.currentTick)) {
@@ -752,6 +807,13 @@ class World {
                     continue;
                 }
 
+                // - hunt npc/obj/loc
+                if (npc.huntMode !== -1) {
+                    const hunt = HuntType.get(npc.huntMode);
+                    if (hunt && hunt.type !== HuntModeType.PLAYER) {
+                        npc.huntAll();
+                    }
+                }
                 // - stat regen
                 npc.processRegen();
                 // - timer
@@ -779,7 +841,7 @@ class World {
     // - interactions
     // - movement
     // - close interface if attempting to logout
-    private async processPlayers(): Promise<void> {
+    private processPlayers(): void {
         const start: number = Date.now();
         for (const player of this.players) {
             try {
@@ -796,7 +858,7 @@ class World {
                 // - movement
                 player.processInteraction();
 
-                if ((player.mask & Player.EXACT_MOVE) == 0) {
+                if ((player.masks & InfoProt.PLAYER_EXACT_MOVE.id) == 0) {
                     player.validateDistanceWalked();
                 }
 
@@ -814,13 +876,13 @@ class World {
                 }
             } catch (err) {
                 console.error(err);
-                await this.removePlayer(player);
+                this.removePlayer(player);
             }
         }
         this.cycleStats[WorldStat.PLAYER] = Date.now() - start;
     }
 
-    private async processLogouts(): Promise<void> {
+    private processLogouts(): void {
         const start: number = Date.now();
         for (const player of this.players) {
             if (Environment.NODE_SOCKET_TIMEOUT && this.currentTick - player.lastResponse >= World.TIMEOUT_LOGOUT_TICKS) {
@@ -856,7 +918,7 @@ class World {
                 }
 
                 if (player.logoutRequested) {
-                    await this.removePlayer(player);
+                    this.removePlayer(player);
                 }
             } else {
                 player.messageGame('[DEBUG]: Waiting for queue to empty before logging out.');
@@ -865,7 +927,7 @@ class World {
         this.cycleStats[WorldStat.LOGOUT] = Date.now() - start;
     }
 
-    private async processLogins(): Promise<void> {
+    private processLogins(): void {
         const start: number = Date.now();
         player: for (const player of this.newPlayers) {
             for (const other of this.players) {
@@ -924,13 +986,8 @@ class World {
     private processZones(): void {
         const start: number = Date.now();
         const tick: number = this.currentTick;
-        const zones: Set<Zone> | undefined = this.zonesTracking.get(tick);
-        if (typeof zones !== 'undefined') {
-            // - loc/obj despawn/respawn
-            for (const zone of zones) {
-                zone.tick(tick);
-            }
-        }
+        // - loc/obj despawn/respawn
+        this.zonesTracking.get(tick)?.forEach(zone => zone.tick(tick));
         // - build list of active zones around players
         // - compute shared buffer
         this.computeSharedEvents();
@@ -938,15 +995,28 @@ class World {
     }
 
     // - convert player movements
+    // - compute player info
     // - convert npc movements
-    private processMovementDirections(): void {
+    // - compute npc info
+    private processInfo(): void {
         // TODO: benchmark this?
         for (const player of this.players) {
             player.convertMovementDir();
+
+            const grid = this.playerGrid;
+            const coord = CoordGrid.packCoord(player.level, player.x, player.z);
+            const players = grid.get(coord) ?? [];
+            players.push(player);
+            if (!grid.has(coord)) {
+                grid.set(coord, players);
+            }
+
+            this.playerRenderer.computeInfo(player);
         }
 
         for (const npc of this.npcs) {
             npc.convertMovementDir();
+            this.npcRenderer.computeInfo(npc);
         }
     }
 
@@ -958,7 +1028,7 @@ class World {
     // - stat changes
     // - afk zones changes
     // - flush packets
-    private async processClientsOut(): Promise<void> {
+    private processClientsOut(): void {
         const start: number = Date.now();
 
         this.cycleStats[WorldStat.BANDWIDTH_OUT] = 0; // reset bandwidth counter
@@ -972,9 +1042,9 @@ class World {
                 // - map update
                 player.updateMap();
                 // - player info
-                player.updatePlayers();
+                player.updatePlayers(this.playerRenderer);
                 // - npc info
-                player.updateNpcs();
+                player.updateNpcs(this.npcRenderer);
                 // - zone updates
                 player.updateZones();
                 // - inv changes
@@ -988,7 +1058,7 @@ class World {
                 player.encodeOut();
             } catch (err) {
                 console.error(err);
-                await this.removePlayer(player);
+                this.removePlayer(player);
             }
         }
         this.cycleStats[WorldStat.CLIENT_OUT] = Date.now() - start;
@@ -1000,19 +1070,14 @@ class World {
     // - reset invs
     private processCleanup(): void {
         const start: number = Date.now();
-
         const tick: number = this.currentTick;
 
         // - reset zones
-        const zones: Set<Zone> | undefined = this.zonesTracking.get(tick);
-        if (typeof zones !== 'undefined') {
-            for (const zone of zones) {
-                zone.reset();
-            }
-        }
+        this.zonesTracking.get(tick)?.forEach(zone => zone.reset());
         this.zonesTracking.delete(tick);
 
         // - reset players
+        this.playerRenderer.removeTemporary();
         for (const player of this.players) {
             player.resetEntity(false);
 
@@ -1027,6 +1092,7 @@ class World {
         }
 
         // - reset npcs
+        this.npcRenderer.removeTemporary();
         for (const npc of this.npcs) {
             if (!npc.checkLifeCycle(tick)) {
                 continue;
@@ -1072,6 +1138,9 @@ class World {
                 }
             }
         }
+
+        this.playerGrid.clear();
+
         this.cycleStats[WorldStat.CLEANUP] = Date.now() - start;
     }
 
@@ -1087,7 +1156,7 @@ class World {
         });
     }
 
-    private async processShutdown(): Promise<void> {
+    private processShutdown(): void {
         const duration: number = this.currentTick - this.shutdownTick; // how long have we been trying to shutdown
         const online: number = this.getTotalPlayers();
 
@@ -1118,7 +1187,7 @@ class World {
                 // if we've exceeded 24000 ticks then we *really* need to shut down now
                 if (duration > World.SHUTDOWN_TICKS) {
                     for (const player of this.players) {
-                        await this.removePlayer(player);
+                        this.removePlayer(player);
                     }
 
                     this.tickRate = World.NORMAL_TICKRATE;
@@ -1174,9 +1243,7 @@ class World {
                 zones.add(zone);
             }
         }
-        for (const zoneIndex of zones) {
-            this.gameMap.getZoneIndex(zoneIndex).computeShared();
-        }
+        zones.forEach(zoneIndex => this.gameMap.getZoneIndex(zoneIndex).computeShared());
     }
 
     addNpc(npc: Npc, duration: number, firstSpawn: boolean = true): void {
@@ -1221,8 +1288,12 @@ class World {
                 break;
         }
 
+        this.npcRenderer.removePermanent(npc.nid);
+
         if (npc.lifecycle === EntityLifeCycle.DESPAWN) {
             this.npcs.remove(npc.nid);
+            npc.nid = -1;
+            npc.uid = -1;
         } else if (npc.lifecycle === EntityLifeCycle.RESPAWN) {
             npc.setLifeCycle(this.currentTick + adjustedDuration);
         }
@@ -1241,15 +1312,11 @@ class World {
     }
 
     trackZone(tick: number, zone: Zone): void {
-        let zones: Set<Zone>;
-        const active: Set<Zone> | undefined = this.zonesTracking.get(tick);
-        if (!active) {
-            zones = new Set();
-        } else {
-            zones = active;
+        const tracking: Map<number, Set<Zone>> = this.zonesTracking;
+        const zones: Set<Zone> = (tracking.get(tick) ?? new Set()).add(zone);
+        if (!tracking.has(tick)) {
+            tracking.set(tick, zones);
         }
-        zones.add(zone);
-        this.zonesTracking.set(tick, zones);
     }
 
     addLoc(loc: Loc, duration: number): void {
@@ -1370,7 +1437,7 @@ class World {
 
     // ----
 
-    async readIn(socket: ClientSocket, stream: Packet): Promise<void> {
+    readIn(socket: ClientSocket, stream: Packet): void {
         while (stream.available > 0) {
             const start = stream.pos;
             let opcode = stream.g1();
@@ -1469,7 +1536,7 @@ class World {
         });
     }
 
-    async removePlayer(player: Player): Promise<void> {
+    removePlayer(player: Player): void {
         if (player.pid === -1) {
             return;
         }
@@ -1481,6 +1548,14 @@ class World {
             player.client!.close();
             player.client = null;
         }
+
+        this.playerRenderer.removePermanent(player.pid);
+        this.gameMap.getZone(player.x, player.z, player.level).leave(player);
+        this.players.remove(player.pid);
+        changeNpcCollision(player.width, player.x, player.z, player.level, false);
+        player.pid = -1;
+        player.uid = -1;
+        player.terminate();
 
         Login.logout(player);
 

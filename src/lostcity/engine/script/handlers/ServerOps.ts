@@ -531,7 +531,7 @@ const ServerOps: CommandHandlers = {
         state.pushInt(coord);
     },
 
-    [ScriptOpcode.MAP_MULTI]: state => {
+    [ScriptOpcode.MAP_MULTIWAY]: state => {
         const coord = state.popInt();
 
         state.pushInt(World.gameMap.isMulti(coord) ? 1 : 0);

@@ -43,6 +43,7 @@ param=defend_sound,sound_218
 // Despite the slash attack style they still use the crush anim today
 // osrs attack anim seq_406 and defend anim seq_410.
 // osrs use sounds attack - 2H_crush & defend - blade3
+// osrs stats and Vislvl match 1:1
 
 [wyson]
 name=Wyson the gardener
@@ -65,15 +66,16 @@ model8=model_185_obj_wear
 model9=model_495_npc
 head1=model_63_idk_head
 respawnrate=50
-hitpoints=5
+hitpoints=7
 attack=2
-strength=3
-defence=2
+defence=5
 param=damagetype,^stab_style
 param=attack_anim,human_farmersfork_stab
 param=defend_anim,human_farmersfork_defend
 param=attack_sound,staff_stab
 // osrs attack sound farmersfork_stab
+// stats taken 3lv Gardener (Falador) Vislvl match.
+// Also Hitpoints match RSC version.
 
 [shop_keeper_falador]
 vislevel=hide

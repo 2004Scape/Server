@@ -2,6 +2,13 @@
 // https://youtu.be/YT_tGdVMjGs?t=259
 // todo: confirm for other bookcase loc's
 p_arrivedelay;
+//mes(~coord_tostring(loc_coord));
+switch_coord (loc_coord) {
+    case 0_52_52_38_4, 0_52_52_36_4, 0_52_52_36_6, 0_52_52_38_7, 0_52_52_36_7, 0_52_52_39_8 : @exam_centre_bookcase; // exam centre bookcases
+    case default : @search_bookcase;
+}
+
+[label,search_bookcase]
 mes("You search the bookcase...");
 p_delay(1);
 def_int $rand = random(4);

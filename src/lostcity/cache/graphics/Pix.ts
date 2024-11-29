@@ -1,8 +1,8 @@
-import Jimp from 'jimp';
+import { Jimp } from 'jimp';
 import kleur from 'kleur';
 
-import Jagfile from '#jagex2/io/Jagfile.js';
-import Packet from '#jagex2/io/Packet.js';
+import Jagfile from '#jagex/io/Jagfile.js';
+import Packet from '#jagex/io/Packet.js';
 import { printError } from '#lostcity/util/Logger.js';
 
 // O(sqrt(n))
@@ -95,7 +95,7 @@ export default class Pix {
         return new Pix(pixels, palette, width, height, cropLeft, cropTop, cropRight, cropBottom, pixelOrder);
     }
 
-    static unpackJagToPng(jag: Jagfile, name: string, sheetWidth: number = 0, sheetHeight: number = 0, preferHorizontal: boolean = true): Jimp | null {
+    static unpackJagToPng(jag: Jagfile, name: string, sheetWidth: number = 0, sheetHeight: number = 0, preferHorizontal: boolean = true) {
         const all = [];
 
         for (let i = 0; i < 1000; i++) {
@@ -152,7 +152,11 @@ export default class Pix {
 
         const cellWidth = all[0].width;
         const cellHeight = all[0].height;
-        const sheet = new Jimp(sheetWidth * cellWidth, sheetHeight * cellHeight, 0xff00ffff).colorType(2);
+        const sheet = new Jimp({
+            width: sheetWidth * cellWidth,
+            height: sheetHeight * cellHeight,
+            color: 0xff00ffff
+        });
 
         for (let index = 0; index < count; index++) {
             const pix = all[index];
@@ -161,7 +165,15 @@ export default class Pix {
             const x = index % sheetWidth;
             const y = Math.floor(index / sheetWidth);
 
-            sheet.blit(img, x * cellWidth, y * cellHeight, 0, 0, cellWidth, cellHeight);
+            sheet.blit({
+                src: img,
+                x: x * cellWidth,
+                y: y * cellHeight,
+                srcX: 0,
+                srcY: 0,
+                srcW: cellWidth,
+                srcH: cellHeight
+            });
         }
 
         return sheet;
@@ -201,8 +213,12 @@ export default class Pix {
         }
     }
 
-    packPng(): Jimp {
-        const img = new Jimp(this.width, this.height, 0xff00ffff).colorType(2);
+    packPng() {
+        const img = new Jimp({
+            width: this.width,
+            height: this.height,
+            color: 0xff00ffff
+        });
 
         // if we could perform a memcpy this would be <0.05ms instead of 1-2ms
         if (this.pixelOrder === 0) {

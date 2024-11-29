@@ -1,5 +1,5 @@
 [opnpc1,kolodion]
-if (%magearena_progress < ^mage_arena_started) {
+if (%magearena < ^mage_arena_started) {
     ~chatplayer("<p,neutral>Hello there. What is this place?");
     // https://web.archive.org/web/20050306051554/http://runevillage.com/rs2specialMageArena.php
     // "You must have level 60 Magic or higher, (Wizard’s Mind Bomb doesn't work in the Arena)"
@@ -9,14 +9,14 @@ if (%magearena_progress < ^mage_arena_started) {
         ~chatnpc("<p,angry>Hah! A wizard of your level? Don't be absurd.");
         return;
     }
-    ~chatnpc("<p,shifty>I am the great Kolodion, master of battle magic, and|this is my battle arena. Top wizards travel from all over|Gielinor to fight here.");
+    ~chatnpc("<p,shifty>I am the great Kolodion, master of battle magic, and|this is my battle arena. Top wizards travel from all over|RuneScape to fight here.");
     @multi3("Can I fight here?", kolodion_can_i_fight_here, "What's the point of that?", kolodion_whats_the_point, "That's barbaric!", kolodion_barbaric);
 }
 if (~mage_arena_in_progress = true) {
     @kolodion_return;
-} else if (%magearena_progress = ^mage_arena_started) {
+} else if (%magearena = ^mage_arena_started) {
     @kolodion_lets_fight;
-} else if (%magearena_progress = ^mage_arena_complete) {
+} else if (%magearena = ^mage_arena_complete) {
     ~chatplayer("<p,neutral>Hello, Kolodion.");
     ~chatnpc("<p,shifty>Hello, young mage. You're a tough one.");
     @kolodion_what_now;
@@ -33,7 +33,7 @@ if ($choice = 1) {
     return;
 } else if ($choice = 2) {
     ~chatplayer("<p,quiz>How can I use my new spells outside of the arena?");
-    ~chatnpc("<p,shifty>Experience, my friend, experience. Once you've used|the spell enough times in the arena, you'll be able to use|them in the rest of Gielinor.");
+    ~chatnpc("<p,shifty>Experience, my friend, experience. Once you've used|the spell enough times in the arena, you'll be able to use|them in the rest of RuneScape.");
     ~chatplayer("<p,happy>Good stuff.");
     ~chatnpc("<p,happy>Not so good for the citizens; they won't stand a chance.");
     ~chatplayer("<p,quiz>How am I doing so far?");
@@ -84,10 +84,10 @@ if ($choice = 1) {
 
 [label,kolodion_yes_indeedy]
 ~chatplayer("<p,happy>Yes indeedy.");
-~chatnpc("<p,happy>Good, good. You have a healthy sense of competition.");
-~chatnpc("<p,neutral>Remember, traveller - in my arena, hand-to-hand|combat is useless. Your strength will diminish as you|enter the arena, but the spells you can learn are|amongst the most powerful in all of Gielinor.");
+~chatnpc("<p,happy>Good, good, you have a healthy sense of competition.");
+~chatnpc("<p,neutral>Remember traveller, in my arena hand to hand combat|is useless. Your strength will diminish as you enter the|arena, but the spells you can learn are amongst the most powerful in RuneScape.");
 ~chatnpc("<p,neutral>Before I can accept you in, we must duel.|You may not take armour or weapons into the arena."); // second sentence is rsc
-@multi2("Okay, let's fight.", kolodion_lets_fight, "No thanks.", exit);
+@multi2("Ok, let's fight.", kolodion_lets_fight, "No thanks.", exit);
 
 [label,kolodion_no_i_dont]
 ~chatplayer("<p,angry>No I don't.");
@@ -101,8 +101,8 @@ if (~can_enter_mage_arena = false) {
     return;
 }
 ~chatplayer("<p,happy>You don't need to worry about that.");
-~chatnpc("<p,neutral>Not just any magician can enter - only the most|powerful and most feared. Before you can use the|power of this arena, you must prove yourself against|me.");
-%magearena_progress = 1;
+~chatnpc("<p,neutral>Not just any magician can enter, only the most|powerful, the most feared. Before you can use the|power of this arena, you must prove yourself against|me.");
+%magearena = 1;
 
 @kolodion_teleport;
 
@@ -138,14 +138,14 @@ def_coord $spawn_coord = movecoord(^mage_arena_start_coord, sub(coordx(npc_coord
 p_delay(3);
 p_teleport(^mage_arena_start_coord);
 anim(null, 0);
-def_npc $boss = enum(int, npc, mage_arena_bosses, %magearena_progress);
+def_npc $boss = enum(int, npc, mage_arena_bosses, %magearena);
 npc_huntall(^mage_arena_start_coord, 20, 0);
 while (npc_huntnext = true) {
     if (npc_type = $boss & add(%npc_lastcombat, 8) <= map_clock) {
         npc_del;
     }
 }
-switch_int (%magearena_progress) {
+switch_int (%magearena) {
     case ^mage_arena_started :
         // looks like the smoke appears 1t sooner than osrs (no 34 client tick delay as well)
         // https://youtu.be/Tte53ezNIP4?list=PLn23LiLYLb1Y4vxMPWXM-CVEvOUfuAP_o&t=23
