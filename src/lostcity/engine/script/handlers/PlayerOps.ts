@@ -445,7 +445,7 @@ const PlayerOps: CommandHandlers = {
         const added = current + (constant + (current * percent) / 100);
         player.levels[stat] = Math.min(added, 255);
         if (stat === 3 && player.levels[3] >= player.baseLevels[3]) {
-            player.resetHeroPoints();
+            player.heroPoints.clear();
         }
         if (added !== current) {
             player.changeStat(stat);
@@ -490,7 +490,7 @@ const PlayerOps: CommandHandlers = {
         player.levels[stat] = Math.max(Math.min(healed, base), current);
 
         if (stat === 3 && player.levels[3] >= player.baseLevels[3]) {
-            player.resetHeroPoints();
+            player.heroPoints.clear();
         }
 
         if (healed !== current) {
@@ -1026,7 +1026,7 @@ const PlayerOps: CommandHandlers = {
 
     // https://x.com/JagexAsh/status/1799020087086903511
     [ScriptOpcode.FINDHERO]: checkedHandler(ActivePlayer, state => {
-        const uid = state.activePlayer.findHero();
+        const uid = state.activePlayer.heroPoints.findHero();
         if (uid === -1) {
             state.pushInt(0);
             return;
@@ -1054,7 +1054,7 @@ const PlayerOps: CommandHandlers = {
             throw new Error('player is null');
         }
 
-        toPlayer.addHero(fromPlayer.uid, damage);
+        toPlayer.heroPoints.addHero(fromPlayer.uid, damage);
     }),
 
     // https://x.com/JagexAsh/status/1806246992797921391

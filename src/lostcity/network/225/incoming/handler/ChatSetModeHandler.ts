@@ -5,9 +5,9 @@ import World from '#lostcity/engine/World.js';
 
 export default class ChatSetModeHandler extends MessageHandler<ChatSetMode> {
     handle(_message: ChatSetMode, player: Player): boolean {
-        player.chatModes.publicChat = _message.publicChat;
-        player.chatModes.privateChat = _message.privateChat;
-        player.chatModes.tradeDuel = _message.tradeDuel;
+        player.publicChat = _message.publicChat;
+        player.privateChat = _message.privateChat;
+        player.tradeDuel = _message.tradeDuel;
 
         World.sendPrivateChatModeToFriendsServer(player);
 

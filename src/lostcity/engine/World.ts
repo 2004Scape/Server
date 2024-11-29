@@ -1529,7 +1529,7 @@ class World {
         this.friendThread.postMessage({
             type: 'player_login',
             username: player.username,
-            chatModePrivate: player.chatModes.privateChat,
+            chatModePrivate: player.privateChat,
         });
     }
 
@@ -1537,7 +1537,7 @@ class World {
         this.friendThread.postMessage({
             type: 'player_chat_setmode',
             username: player.username,
-            chatModePrivate: player.chatModes.privateChat,
+            chatModePrivate: player.privateChat,
         });
     }
 

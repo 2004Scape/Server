@@ -12,6 +12,8 @@ import ObjType from '#lostcity/cache/config/ObjType.js';
 import ScriptVarType from '#lostcity/cache/config/ScriptVarType.js';
 import SeqType from '#lostcity/cache/config/SeqType.js';
 import VarPlayerType from '#lostcity/cache/config/VarPlayerType.js';
+import ParamType from '#lostcity/cache/config/ParamType.js';
+import {ParamHelper} from '#lostcity/cache/config/ParamHelper.js';
 
 import BlockWalk from '#lostcity/entity/BlockWalk.js';
 import {EntityTimer, PlayerTimerType} from '#lostcity/entity/EntityTimer.js';
@@ -27,6 +29,9 @@ import MoveSpeed from '#lostcity/entity/MoveSpeed.js';
 import EntityLifeCycle from '#lostcity/entity/EntityLifeCycle.js';
 import PlayerStat from '#lostcity/entity/PlayerStat.js';
 import MoveStrategy from '#lostcity/entity/MoveStrategy.js';
+import BuildArea from '#lostcity/entity/BuildArea.js';
+import HeroPoints from '#lostcity/entity/HeroPoints.js';
+import {isNetworkPlayer} from '#lostcity/entity/NetworkPlayer.js';
 
 import {Inventory} from '#lostcity/engine/Inventory.js';
 import World from '#lostcity/engine/World.js';
@@ -38,13 +43,13 @@ import ScriptState from '#lostcity/engine/script/ScriptState.js';
 import ServerTriggerType from '#lostcity/engine/script/ServerTriggerType.js';
 import ScriptPointer from '#lostcity/engine/script/ScriptPointer.js';
 
-import Environment from '#lostcity/util/Environment.js';
-
 import LinkList from '#jagex/datastruct/LinkList.js';
 import DoublyLinkList from '#jagex/datastruct/DoublyLinkList.js';
 
 import {CollisionFlag} from '@2004scape/rsmod-pathfinder';
+
 import {PRELOADED, PRELOADED_CRC} from '#lostcity/server/PreloadedPacks.js';
+
 import OutgoingMessage from '#lostcity/network/outgoing/OutgoingMessage.js';
 import IfClose from '#lostcity/network/outgoing/model/IfClose.js';
 import UpdateUid192 from '#lostcity/network/outgoing/model/UpdateUid192.js';
@@ -62,14 +67,12 @@ import HintArrow from '#lostcity/network/outgoing/model/HintArrow.js';
 import LastLoginInfo from '#lostcity/network/outgoing/model/LastLoginInfo.js';
 import MessageGame from '#lostcity/network/outgoing/model/MessageGame.js';
 import ServerProtPriority from '#lostcity/network/outgoing/prot/ServerProtPriority.js';
-import { ParamHelper } from '#lostcity/cache/config/ParamHelper.js';
-import ParamType from '#lostcity/cache/config/ParamType.js';
-import BuildArea from '#lostcity/entity/BuildArea.js';
 import ChatFilterSettings from '#lostcity/network/outgoing/model/ChatFilterSettings.js';
-import { ChatModePrivate, ChatModePublic, ChatModeTradeDuel } from '#lostcity/util/ChatModes.js';
-import { isNetworkPlayer } from '#lostcity/entity/NetworkPlayer.js';
 import InfoProt from '#lostcity/network/225/outgoing/prot/InfoProt.js';
 import WalkTriggerSetting from '#lostcity/util/WalkTriggerSetting.js';
+
+import Environment from '#lostcity/util/Environment.js';
+import { ChatModePrivate, ChatModePublic, ChatModeTradeDuel } from '#lostcity/util/ChatModes.js';
 
 const levelExperience = new Int32Array(99);
 
@@ -198,14 +201,7 @@ export default class Player extends PathingEntity {
             sav.p4(this.afkZones[index]);
         }
         sav.p2(this.lastAfkZone);
-
-        const chatModePacked
-            = (
-                (this.chatModes.publicChat << 4)
-                | (this.chatModes.privateChat << 2)
-                | this.chatModes.tradeDuel
-            );
-        sav.p1(chatModePacked);
+        sav.p1((this.publicChat << 4) | (this.privateChat << 2) | this.tradeDuel);
 
         sav.p4(Packet.getcrc(sav.data, 0, sav.pos));
         const safeName = fromBase37(this.username37);
@@ -239,15 +235,9 @@ export default class Player extends PathingEntity {
     varsString: string[];
     invs: Map<number, Inventory> = new Map<number, Inventory>();
 
-    chatModes: {
-        publicChat: ChatModePublic;
-        privateChat: ChatModePrivate;
-        tradeDuel: ChatModeTradeDuel;
-    } = {
-            publicChat: ChatModePublic.ON,
-            privateChat: ChatModePrivate.ON,
-            tradeDuel: ChatModeTradeDuel.ON,
-        };
+    publicChat: ChatModePublic = ChatModePublic.ON;
+    privateChat: ChatModePrivate = ChatModePrivate.ON;
+    tradeDuel: ChatModeTradeDuel = ChatModeTradeDuel.ON;
 
     // runtime variables
     pid: number = -1;
@@ -296,7 +286,6 @@ export default class Player extends PathingEntity {
     // ---
 
     // script variables
-    delay = 0;
     queue: LinkList<EntityQueueRequest> = new LinkList();
     weakQueue: LinkList<EntityQueueRequest> = new LinkList();
     engineQueue: LinkList<EntityQueueRequest> = new LinkList();
@@ -327,10 +316,7 @@ export default class Player extends PathingEntity {
 
     staffModLevel: number = 0;
 
-    heroPoints: {
-        uid: number;
-        points: number;
-    }[] = new Array(16); // be sure to reset when stats are recovered/reset
+    heroPoints: HeroPoints = new HeroPoints(16); // be sure to reset when stats are recovered/reset
 
     afkZones: Int32Array = new Int32Array(2);
     lastAfkZone: number = 0;
@@ -348,35 +334,6 @@ export default class Player extends PathingEntity {
         this.varsString = new Array(VarPlayerType.count);
         this.lastStats.fill(-1);
         this.lastLevels.fill(-1);
-    }
-
-    resetHeroPoints() {
-        this.heroPoints = new Array(16);
-        this.heroPoints.fill({ uid: -1, points: 0 });
-    }
-
-    addHero(uid: number, points: number) {
-        // check if hero already exists, then add points
-        const index = this.heroPoints.findIndex(hero => hero && hero.uid === uid);
-        if (index !== -1) {
-            this.heroPoints[index].points += points;
-            return;
-        }
-
-        // otherwise, add a new uid. if all 16 spaces are taken do we replace the lowest?
-        const emptyIndex = this.heroPoints.findIndex(hero => hero && hero.uid === -1);
-        if (emptyIndex !== -1) {
-            this.heroPoints[emptyIndex] = { uid, points };
-            return;
-        }
-    }
-
-    findHero(): number {
-        // quicksort heroes by points
-        this.heroPoints.sort((a, b) => {
-            return b.points - a.points;
-        });
-        return this.heroPoints[0]?.uid ?? -1;
     }
 
     resetEntity(respawn: boolean) {
@@ -405,8 +362,6 @@ export default class Player extends PathingEntity {
         this.write(new UpdateUid192(this.pid));
         this.unsetMapFlag();
         this.write(new ResetAnims());
-        this.resetHeroPoints();
-
         this.write(new ResetClientVarCache());
         for (let varp = 0; varp < this.vars.length; varp++) {
             const type = VarPlayerType.get(varp);
@@ -415,12 +370,7 @@ export default class Player extends PathingEntity {
                 this.writeVarp(varp, value);
             }
         }
-
-        this.write(
-            new ChatFilterSettings(
-                this.chatModes.publicChat,
-                this.chatModes.privateChat,
-                this.chatModes.tradeDuel));
+        this.write(new ChatFilterSettings(this.publicChat, this.privateChat, this.tradeDuel));
 
         const loginTrigger = ScriptProvider.getByTriggerSpecific(ServerTriggerType.LOGIN, -1, -1);
         if (loginTrigger) {
@@ -641,10 +591,6 @@ export default class Player extends PathingEntity {
 
         this.modalState = 0;
         this.refreshModalClose = true;
-    }
-
-    delayed() {
-        return this.delay > 0;
     }
 
     containsModalInterface() {

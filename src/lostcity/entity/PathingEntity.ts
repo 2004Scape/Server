@@ -573,6 +573,10 @@ export default abstract class PathingEntity extends Entity {
         this.apRangeCalled = false;
     }
 
+    delayed() {
+        return this.delay > 0;
+    }
+
     protected getCollisionStrategy(): CollisionType | null {
         if (this.moveRestrict === MoveRestrict.NORMAL) {
             return CollisionType.NORMAL;
