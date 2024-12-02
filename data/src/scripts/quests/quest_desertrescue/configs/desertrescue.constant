@@ -1,3 +1,9 @@
 ^desertrescue_not_started = 0
 ^desertrescue_started = 1
 ^desertrescue_approached_captain = 3
+^desertrescue_killed_capt = 4
+
+
+// bits positions (first 5 bits for guard interactions)
+^desertrescue_find_al_shabim = 5
+^desertrescue_spoke_al_shabim = 6

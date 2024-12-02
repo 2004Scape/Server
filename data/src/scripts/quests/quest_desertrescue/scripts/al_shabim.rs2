@@ -1,6 +1,9 @@
 [opnpc1,al_shabim]
 ~chatnpc("<p,neutral>Hello Effendi!");
 ~chatnpc("<p,neutral>I am Al Shabim, greetings on behalf of the Bedabin nomads.");
+if(%desertrescue_progress >= ^desertrescue_started & testbit(%desertrescue_map_mechanisms, ^desertrescue_find_al_shabim) = true) {
+    @multi3("Who are you?", shabim_who, "I am looking for Al Zaba Bhasim.", shabim_looking, "What is this place?", shabim_whatplace);
+}
 @multi2("Who are you?", shabim_who, "What is this place?", shabim_whatplace);
 
 [label,shabim_who]
@@ -14,6 +17,12 @@
 ~chatnpc("<p,neutral>We're renowned for surviving in the harshest desert climate. We also grow the 'Bedabin ambrosia.'... A pineapple of such delicious sumptiousness that it defies description.");
 ~chatnpc("<p,neutral>Take a look around our camp if you like!");
 @multi2("Okay thanks!", shabim_ok, "What is there to do around here?", shabim_whatdo);
+
+[label,shabim_looking]
+~chatplayer("<p,neutral>I am looking for Al Zaba Bhasim.");
+~chatnpc("<p,angry>Huh! You have been talking to the guards at the mining camp. Or worse, that cowardly mercenary captain. Al Zaba Bhasim does not exist, he is a figment of their imagination!");
+~chatnpc("<p,neutral>Go back and tell this captain that if he wants to find this man he should search for him personally. See how much of his own time he would like to waste.");
+%desertrescue_map_mechanisms = setbit(%desertrescue_map_mechanisms, ^desertrescue_spoke_al_shabim);
 
 [label,shabim_whatdo]
 ~chatplayer("<p,neutral>What is there to do around here?");
