@@ -28,6 +28,18 @@ head3=model_34_npc_head
 wanderrange=0
 moverestrict=nomove
 timer=4
+hitpoints=22
+attack=18
+strength=18
+defence=17
+// param=attackbonus,
+param=strengthbonus,5
+param=stabdefence,5
+param=slashdefence,7
+param=crushdefence,7
+// param=rangedefence,
+param=damagetype,^crush_style
+// https://raw.githubusercontent.com/Joshua-F/osrs-dumps/refs/heads/master/config/dump.npc npc_4287
 
 [border_guard_alkharid]
 name=Border Guard
@@ -59,3 +71,15 @@ head3=model_34_npc_head
 wanderrange=0
 moverestrict=nomove
 timer=4
+hitpoints=22
+attack=18
+strength=18
+defence=17
+// param=attackbonus,
+param=strengthbonus,5
+param=stabdefence,5
+param=slashdefence,7
+param=crushdefence,7
+// param=rangedefence,
+param=damagetype,^crush_style
+// https://raw.githubusercontent.com/Joshua-F/osrs-dumps/refs/heads/master/config/dump.npc npc_npc_4288

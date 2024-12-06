@@ -136,8 +136,6 @@ head1=model_103_idk_head
 head2=model_137_npc_head
 param=death_sound,female_death
 
-
-
 [archaeological_expert]
 vislevel=hide
 name=Archaeological expert

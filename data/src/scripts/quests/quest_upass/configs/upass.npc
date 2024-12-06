@@ -120,6 +120,7 @@ param=death_drop,null
 huntmode=cowardly
 // Stats match osrs version but our version Vislvl is different.
 // wander and maxrange data taken rs3.
+// https://raw.githubusercontent.com/Joshua-F/osrs-dumps/refs/heads/master/config/dump.npc npc_4533
 
 [blessed_giant_rat]
 size=2
@@ -150,6 +151,7 @@ param=defend_sound,rat_hit
 param=death_sound,rat_death
 huntmode=cowardly
 // osrs stats and Vislvl match 1:1
+// https://raw.githubusercontent.com/Joshua-F/osrs-dumps/refs/heads/master/config/dump.npc npc_4534
 
 [slave1_upass]
 vislevel=hide
@@ -332,7 +334,8 @@ wanderrange=1
 hitpoints=19
 attack=11
 strength=13
-defence=13
+defence=1
+param=damagetype,^stab_style
 // https://raw.githubusercontent.com/Joshua-F/osrs-dumps/refs/heads/master/config/dump.npc npc_9209
 
 [sir_jerro]
@@ -380,6 +383,7 @@ param=defend_anim,human_sword_defend2
 // TODO sounds
 // TODO sounds
 // TODO monster examine spell
+// https://raw.githubusercontent.com/Joshua-F/osrs-dumps/refs/heads/master/config/dump.npc npc_8987
 
 [sir_carl]
 name=Sir Carl
@@ -424,6 +428,7 @@ param=defend_anim,human_sword_defend2
 // TODO sounds
 // TODO sounds
 // TODO monster examine spell
+// https://raw.githubusercontent.com/Joshua-F/osrs-dumps/refs/heads/master/config/dump.npc npc_8988
 
 [sir_harry]
 name=Sir Harry
@@ -468,6 +473,7 @@ param=defend_anim,human_sword_defend2
 // TODO sounds
 // TODO sounds
 // TODO monster examine spell
+// https://raw.githubusercontent.com/Joshua-F/osrs-dumps/refs/heads/master/config/dump.npc npc_8989
 
 [half_souless]
 size=2
@@ -644,6 +650,7 @@ param=death_drop,null
 huntrange=5
 huntmode=cowardly
 // TODO monster examine spell
+// https://raw.githubusercontent.com/Joshua-F/osrs-dumps/refs/heads/master/config/dump.npc npc_8993
 
 [othainian]
 size=3
@@ -674,6 +681,7 @@ param=death_drop,ashes
 huntrange=3
 huntmode=cowardly
 // TODO monster examine spell
+// https://raw.githubusercontent.com/Joshua-F/osrs-dumps/refs/heads/master/config/dump.npc npc_8994
 
 [doomion]
 size=3
@@ -704,6 +712,7 @@ param=death_drop,ashes
 huntrange=3
 huntmode=cowardly
 // TODO monster examine spell
+// https://raw.githubusercontent.com/Joshua-F/osrs-dumps/refs/heads/master/config/dump.npc npc_8995
 
 [holthion]
 size=3
@@ -734,6 +743,7 @@ param=death_drop,ashes
 huntrange=3
 huntmode=cowardly
 // TODO monster examine spell
+// https://raw.githubusercontent.com/Joshua-F/osrs-dumps/refs/heads/master/config/dump.npc npc_8996
 
 [iban_disciple]
 walkanim=human_walk_f,human_walk_b,human_walk_l,human_walk_r
@@ -766,6 +776,7 @@ strength=8
 defence=12
 param=damagetype,^crush_style
 // TODO monster examine spell
+// https://raw.githubusercontent.com/Joshua-F/osrs-dumps/refs/heads/master/config/dump.npc npc_8997
 
 [lord_iban]
 vislevel=hide
@@ -834,6 +845,7 @@ param=defend_sound,insect_hit
 param=death_sound,insect_death
 param=death_drop,null
 // osrs stats and Vislvl match 1:1
+// https://raw.githubusercontent.com/Joshua-F/osrs-dumps/refs/heads/master/config/dump.npc npc_4561
 
 [bat_upass]
 name=Giant bat

@@ -38,6 +38,7 @@ maxrange=7
 huntrange=7
 // all the stats information matches otherwise osrs but we only have 120hp
 // instead of 80 hp. and osrs Vislvl is also 83 while we have 86 again.
+// https://raw.githubusercontent.com/Joshua-F/osrs-dumps/refs/heads/master/config/dump.npc npc_817
 
 [dragonslayer_ned]
 vislevel=hide
@@ -94,6 +95,7 @@ param=death_sound,rat_death
 huntmode=cowardly
 huntrange=1
 // stats and information taken from normal 6lv Giant rat  // Vislvl match 1:1
+// https://raw.githubusercontent.com/Joshua-F/osrs-dumps/refs/heads/master/config/dump.npc npc_3969 (3lv)
 
 [melzar_maze_ghost]
 name=Ghost
@@ -130,6 +132,7 @@ param=death_drop,null
 huntmode=cowardly
 huntrange=1
 // osrs stats and Vislvl match 1:1
+// https://raw.githubusercontent.com/Joshua-F/osrs-dumps/refs/heads/master/config/dump.npc npc_3975
 
 [melzar_maze_skeleton]
 name=Skeleton
@@ -164,6 +167,7 @@ param=death_sound,skeleton_death
 huntmode=cowardly
 huntrange=1
 // stats and information taken from a normal 25lv skeleton // Vislvl match 1:1
+// https://raw.githubusercontent.com/Joshua-F/osrs-dumps/refs/heads/master/config/dump.npc npc_3972 (22lv)
 
 [melzar_maze_zombie]
 name=Zombie
@@ -199,6 +203,7 @@ huntmode=cowardly
 huntrange=1
 // https://web.archive.org/web/20051105211000/http://www.tip.it/runescape/index.php?rs2monster_id=151
 // stats taken zombie_entrana // Vislvl match 1:1
+// https://raw.githubusercontent.com/Joshua-F/osrs-dumps/refs/heads/master/config/dump.npc npc_3980 (24lv)
 
 [melzar_maze_lesser_demon]
 size=2
@@ -229,6 +234,7 @@ param=death_drop,ashes
 huntmode=cowardly
 huntrange=2
 // osrs stats and Vislvl match 1:1
+// https://raw.githubusercontent.com/Joshua-F/osrs-dumps/refs/heads/master/config/dump.npc npc_3982
 
 [melzar]
 name=Melzar the mad
@@ -264,6 +270,7 @@ param=attack_sound,unarmed_kick
 huntmode=aggressive_melee
 huntrange=1
 // osrs stats and Vislvl match 1:1
+// https://raw.githubusercontent.com/Joshua-F/osrs-dumps/refs/heads/master/config/dump.npc npc_823
 
 [cabin_boy_jenkins]
 vislevel=hide

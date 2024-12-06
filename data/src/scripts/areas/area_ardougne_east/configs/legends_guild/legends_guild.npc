@@ -51,6 +51,7 @@ param=attack_sound,baxe_slash
 huntmode=cowardly
 huntrange=1
 // osrs stats and Vislvl match 1:1
+// https://raw.githubusercontent.com/Joshua-F/osrs-dumps/refs/heads/master/config/dump.npc npc_2853
 
 [npc_398]
 vislevel=hide
@@ -82,6 +83,8 @@ model8=model_540_obj_wear
 model9=model_317_npc
 head1=model_57_obj_wear
 head2=model_85_idk_head
+param=damagetype,^stab_style
+// https://raw.githubusercontent.com/Joshua-F/osrs-dumps/refs/heads/master/config/dump.npc npc_3951
 
 [npc_399]
 vislevel=hide
@@ -113,6 +116,8 @@ model8=model_540_obj_wear
 model9=model_317_npc
 head1=model_57_obj_wear
 head2=model_85_idk_head
+param=damagetype,^stab_style
+// https://raw.githubusercontent.com/Joshua-F/osrs-dumps/refs/heads/master/config/dump.npc npc_3952
 
 [radimus_erkle]
 vislevel=hide
@@ -144,7 +149,9 @@ model8=model_317_npc
 head1=model_53_idk_head
 head2=model_82_idk_head
 wanderrange=3
+param=damagetype,^stab_style
 moverestrict=indoors
+// https://raw.githubusercontent.com/Joshua-F/osrs-dumps/refs/heads/master/config/dump.npc npc_3953
 
 [fionella]
 vislevel=hide
@@ -177,6 +184,7 @@ model8=model_376_obj_wear
 head1=model_113_idk_head
 head2=model_101_obj_wear
 wanderrange=3
+param=damagetype,^crush_style
 param=death_sound,female_death
 category=shop_keeper
 param=owned_shop,legends_guild_general_store
@@ -184,6 +192,7 @@ param=shop_sell_multiplier,1550
 param=shop_buy_multiplier,550
 param=shop_delta,10
 param=shop_title,Legends Guild General Store.
+// https://raw.githubusercontent.com/Joshua-F/osrs-dumps/refs/heads/master/config/dump.npc npc_3960
 
 [siegfried_erkle]
 vislevel=hide
@@ -215,9 +224,11 @@ model8=model_185_obj_wear
 head1=model_63_idk_head
 head2=model_82_idk_head
 wanderrange=3
+param=damagetype,^crush_style
 category=shop_keeper
 param=owned_shop,legends_guild_shop_of_useful_items
 param=shop_sell_multiplier,1500
 param=shop_buy_multiplier,500
 param=shop_delta,20
 param=shop_title,Legends Guild Shop of Useful Items.
+// https://raw.githubusercontent.com/Joshua-F/osrs-dumps/refs/heads/master/config/dump.npc npc_3961

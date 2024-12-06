@@ -99,6 +99,8 @@ wanderrange=3
 param=death_anim,sheep_death
 timer=25
 category=diseased_sheep
+// param=death_drop,red_sheep_bones
+// https://raw.githubusercontent.com/Joshua-F/osrs-dumps/refs/heads/master/config/dump.npc npc_3986
 
 [green_sheep]
 vislevel=hide
@@ -116,6 +118,8 @@ wanderrange=3
 param=death_anim,sheep_death
 timer=25
 category=diseased_sheep
+// param=death_drop,green_sheep_bones
+// https://raw.githubusercontent.com/Joshua-F/osrs-dumps/refs/heads/master/config/dump.npc npc_3987
 
 [blue_sheep]
 vislevel=hide
@@ -133,6 +137,8 @@ wanderrange=3
 param=death_anim,sheep_death
 timer=25
 category=diseased_sheep
+// param=death_drop,blue_sheep_bones
+// https://raw.githubusercontent.com/Joshua-F/osrs-dumps/refs/heads/master/config/dump.npc npc_3988
 
 [yellow_sheep]
 vislevel=hide
@@ -150,3 +156,5 @@ wanderrange=3
 param=death_anim,sheep_death
 timer=25
 category=diseased_sheep
+// param=death_drop,yellow_sheep_bones
+// https://raw.githubusercontent.com/Joshua-F/osrs-dumps/refs/heads/master/config/dump.npc npc_3989

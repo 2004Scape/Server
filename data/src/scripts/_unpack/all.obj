@@ -1677,14 +1677,3 @@ model=model_loc_771_0
 members=yes
 respawnrate=50
 tradeable=no
-
-[obj_2530]
-name=Bones
-desc=Bones are for burying!
-model=model_2674_obj
-2dxof=2
-2dzoom=1410
-2dyan=368
-2dxan=400
-iop1=Bury
-weight=500g

@@ -182,6 +182,7 @@ strength=10
 magic=15
 param=death_drop,null
 category=kolodion
+// osrs stats match 1:1
 // https://raw.githubusercontent.com/Joshua-F/osrs-dumps/refs/heads/master/config/dump.npc npc_1605
 // TODO monster examine spell
 
@@ -223,6 +224,7 @@ param=defend_sound,giant_hit
 param=death_sound,giant_death
 param=death_drop,null
 category=kolodion
+// osrs stats match 1:1
 // https://raw.githubusercontent.com/Joshua-F/osrs-dumps/refs/heads/master/config/dump.npc npc_1606
 // TODO monster examine spell
 
@@ -256,6 +258,7 @@ param=defend_sound,insect_hit
 param=death_sound,insect_death
 param=death_drop,null
 category=kolodion
+// osrs stats match 1:1
 // https://raw.githubusercontent.com/Joshua-F/osrs-dumps/refs/heads/master/config/dump.npc npc_1607
 // TODO monster examine spell
 
@@ -300,6 +303,7 @@ defence=58
 magic=30
 param=death_drop,null
 category=kolodion
+// osrs stats match 1:1
 // https://raw.githubusercontent.com/Joshua-F/osrs-dumps/refs/heads/master/config/dump.npc npc_1608
 // TODO monster examine spell
 
@@ -326,6 +330,7 @@ attack=85
 strength=98
 defence=105
 magic=80
+// param=damagetype,^slash_style
 param=attack_anim,demon_attack
 param=magicattack_anim,demon_casting
 param=defend_anim,demon_block
@@ -337,6 +342,7 @@ param=defend_sound,black_demon_hit
 param=death_sound,black_demon_death
 param=death_drop,null
 category=kolodion
+// osrs stats match 1:1
 // https://raw.githubusercontent.com/Joshua-F/osrs-dumps/refs/heads/master/config/dump.npc npc_1609
 // TODO monster examine spell
 
@@ -382,6 +388,7 @@ magic=50
 param=defend_anim,human_staff_def
 category=battle_mage
 // osrs stats and Vislvl match 1:1
+// https://raw.githubusercontent.com/Joshua-F/osrs-dumps/refs/heads/master/config/dump.npc npc_1610
 
 [battle_mage_saradomin]
 name=Battle mage
@@ -421,6 +428,7 @@ magic=50
 param=defend_anim,human_staff_def
 category=battle_mage
 // osrs stats and Vislvl match 1:1
+// https://raw.githubusercontent.com/Joshua-F/osrs-dumps/refs/heads/master/config/dump.npc npc_1611
 
 [battle_mage_guthix]
 name=Battle mage
@@ -451,3 +459,4 @@ param=magicattack_anim,midget_chanting
 param=defend_anim,midget_block
 category=battle_mage
 // osrs stats and Vislvl match 1:1
+// https://raw.githubusercontent.com/Joshua-F/osrs-dumps/refs/heads/master/config/dump.npc npc_1612
