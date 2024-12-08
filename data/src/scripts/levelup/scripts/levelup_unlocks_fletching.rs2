@@ -1,21 +1,21 @@
 [label,levelup_fletching]
 //Fletching level up unlock messages
 switch_int(stat_base(fletching)) {
-    case 5 : ~objbox(shortbow,"You can now make @dbl@Shortbows@bla@.", 250, 0, 0);
-    case 10 : ~objbox(longbow,"You can now make @dbl@Longbows@bla@.", 250, 0, 0);
-    case 15 : ~objbox(iron_arrow_5,"You can now make @dbl@Iron Arrows@bla@.", 250, 0, 0);
-    case 20 : ~objbox(oak_shortbow,"You can now make @dbl@Oak Shortbows@bla@.", 250, 0, 0);
-    case 25 : ~objbox(oak_longbow,"You can now make @dbl@Oak Longbows@bla@.", 250, 0, 0);
-    case 30 : ~objbox(steel_arrow_5,"You can now make @dbl@Steel Arrows@bla@.", 250, 0, 0);
-    case 35 : ~objbox(willow_shortbow,"You can now make @dbl@Willow Shortbows@bla@.", 250, 0, 0);
-    case 40 : ~objbox(willow_longbow,"You can now make @dbl@Willow Longbows@bla@.", 250, 0, 0);
-    case 45 : ~objbox(mithril_arrow_5,"You can now make @dbl@Mithril Arrows@bla@.", 250, 0, 0);
-    case 50 : ~objbox(maple_shortbow,"You can now make @dbl@Maple Shortbows@bla@.", 250, 0, 0);
-    case 55 : ~objbox(maple_longbow,"You can now make @dbl@Maple Longbows@bla@.", 250, 0, 0);
-    case 60 : ~objbox(adamant_arrow_5,"You can now make @dbl@Adamant Arrows@bla@.", 250, 0, 0);
-    case 65 : ~objbox(yew_shortbow,"You can now make @dbl@Yew Shortbows@bla@.", 250, 0, 0);
-    case 75 : ~objbox(rune_arrow_5,"You can now make @dbl@Rune Arrows@bla@.", 250, 0, 0);
-    case 70 : ~objbox(yew_longbow,"You can now make @dbl@Yew Longbows@bla@.", 250, 0, 0);
-    case 80 : ~objbox(magic_shortbow,"You can now make @dbl@Magic Shortbows@bla@.", 250, 0, 0);
-    case 85 : ~objbox(magic_longbow,"You can now make @dbl@Magic Longbows@bla@.", 250, 0, 0);
+    case 5 : ~objbox(shortbow,"You can now make @dbl@Shortbows.", 250, 0, 0);
+    case 10 : ~objbox(longbow,"You can now make @dbl@Longbows.", 250, 0, 0);
+    case 15 : ~objbox(iron_arrow_5,"You can now make @dbl@Iron Arrows.", 250, 0, 0);
+    case 20 : ~objbox(oak_shortbow,"You can now make @dbl@Oak Shortbows.", 250, 0, 0);
+    case 25 : ~objbox(oak_longbow,"You can now make @dbl@Oak Longbows.", 250, 0, 0);
+    case 30 : ~objbox(steel_arrow_5,"You can now make @dbl@Steel Arrows.", 250, 0, 0);
+    case 35 : ~objbox(willow_shortbow,"You can now make @dbl@Willow Shortbows.", 250, 0, 0);
+    case 40 : ~objbox(willow_longbow,"You can now make @dbl@Willow Longbows.", 250, 0, 0);
+    case 45 : ~objbox(mithril_arrow_5,"You can now make @dbl@Mithril Arrows.", 250, 0, 0);
+    case 50 : ~objbox(maple_shortbow,"You can now make @dbl@Maple Shortbows.", 250, 0, 0);
+    case 55 : ~objbox(maple_longbow,"You can now make @dbl@Maple Longbows.", 250, 0, 0);
+    case 60 : ~objbox(adamant_arrow_5,"You can now make @dbl@Adamant Arrows.", 250, 0, 0);
+    case 65 : ~objbox(yew_shortbow,"You can now make @dbl@Yew Shortbows.", 250, 0, 0);
+    case 75 : ~objbox(rune_arrow_5,"You can now make @dbl@Rune Arrows.", 250, 0, 0);
+    case 70 : ~objbox(yew_longbow,"You can now make @dbl@Yew Longbows.", 250, 0, 0); //imgur.com/3Er8U3m
+    case 80 : ~objbox(magic_shortbow,"You can now make @dbl@Magic Shortbows.", 250, 0, 0);
+    case 85 : ~objbox(magic_longbow,"You can now make @dbl@Magic Longbows.", 250, 0, 0);
 }

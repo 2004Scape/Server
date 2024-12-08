@@ -208,7 +208,7 @@ if (inv_total(inv, toad_crunchies) > 0) {
     ~chatnpc("<p,quiz>If you ever want to make some money or want to improve your cooking skills, just come and see me. I'll tell you what meals I need, and if you can, you make them.");
     ~chatplayer("<p,confused>What about ingredients?");
     ~chatnpc("<p,happy>Well you know where to find toads and worms. You can buy the rest from Hudo Glenfad the grocer.");
-    ~chatnpc("<p,happy>I'll always pay you much more for the meal than you paid for the ingredients, and it's a great way to improve you cooking skills.");
+    ~chatnpc("<p,happy>I'll always pay you much more for the meal than you paid for the ingredients, and it's a great way to improve your cooking skills.");
     // Doesnt seem like he gives gianne dough in this rev
     // https://web.archive.org/web/20051210095941/http://runescape.salmoneus.net/gnome_food.html
     return;
@@ -268,7 +268,7 @@ if ($container_total < 3) {
             $cooking_utensil2 = "gnomebowl mould";
         }
     }
-    $choice = ~p_choice3("Sorry Alufy, I'm too busy.", 1, "I would be glad to help.", 2, "I'm afraid I've lost the <$cooking_utensil> you gave me.", 3);
+    $choice = ~p_choice3("Sorry Aluft, I'm too busy.", 1, "I would be glad to help.", 2, "I'm afraid I've lost the <$cooking_utensil> you gave me.", 3);
     if ($choice = 3) {
         ~chatplayer("<p,sad>I'm afraid I've lost the <$cooking_utensil2> you gave me.");
         if ($crunchy_tray_total < 1) inv_add(inv, crunchy_tray, 1);
@@ -278,10 +278,10 @@ if ($container_total < 3) {
         return;
     }
 } else {
-    $choice = ~p_choice2("Sorry Alufy, I'm too busy.", 1, "I would be glad to help.", 2);
+    $choice = ~p_choice2("Sorry Aluft, I'm too busy.", 1, "I would be glad to help.", 2);
 }
 if ($choice = 1) {
-    ~chatplayer("<p,neutral>Sorry Alufy, I'm too busy.");
+    ~chatplayer("<p,neutral>Sorry Aluft, I'm too busy.");
     ~chatnpc("<p,happy>No worries, let me know when you're free.");
     return;
 }
