@@ -18,7 +18,7 @@ if($option = 1) {
 }
 
 [label,mountain_dwarf_stairs]
-~chatnpc("<p,angry>Hoi there! halt!");
+~chatnpc("<p,angry>Hoi there! Halt!"); //imgur.com/hTWOobo
 ~chatnpc("<p,angry>You can't come in here!");
 @multi3("Why not?", mountain_dwarf_why, "Oh, sorry, I hadn't realised it was private.", mountain_dwarf_private, "I'm bigger than you. Let me by!", mountain_dwarf_bigger);
 

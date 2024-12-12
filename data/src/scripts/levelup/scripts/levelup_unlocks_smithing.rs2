@@ -54,12 +54,12 @@ switch_int(stat_base(smithing)) {
     case 58 : ~objbox(mithril_sq_shield,"You can now make @dbl@Mithril Square Shields@bla@.", 250, 0, 0);
     case 59 : ~objbox(mithril_warhammer,"You can now make @dbl@Mithril Warhammers@bla@.", 250, 0, 0);
     case 60 : ~objbox(mithril_battleaxe,"You can now make @dbl@Mithril Battleaxes@bla@.", 250, 0, 0);
-    case 61 : ~objbox(mithril_chainbody,"You can now make @dbl@Mithril Chainmail Bodies@bla@.", 250, 0, 0);
-    case 62 : ~objbox(mithril_kiteshield,"You can now make @dbl@Mithril Kite Shields@bla@.", 250, 0, 0);
-    case 64 : ~objbox(mithril_2h_sword,"You can now make @dbl@Mithril Two Handed Swords@bla@.", 250, 0, 0);
+    case 61 : ~objbox(mithril_chainbody,"You can now make @dbl@Mithril Chainmail Bodies.", 250, 0, 0); //imgur.com/J7orCyb
+    case 62 : ~objbox(mithril_kiteshield,"You can now make @dbl@Mithril Kite Shields.", 250, 0, 0); //imgur.com/2mwJUWO
+    case 64 : ~objbox(mithril_2h_sword,"You can now make @dbl@Mithril Two Handed Swords.", 250, 0, 0); //imgur.com/qMcRqiu
     case 66 : ~doubleobjbox(mithril_platelegs,mithril_plateskirt,"You can now make @dbl@Mithril Plate Legs@bla@ and @dbl@Mithril plate skirts@bla@.", 150);
     case 68 : ~objbox(mithril_platebody,"You can now make @dbl@Mithril Plate Bodies@bla@.", 250, 0, 0);
-    case 70 : ~objbox(adamant_dagger,"You can now make @dbl@Adamant Daggers@bla@.", 250, 0, 0);
+    case 70 : ~objbox(adamant_dagger,"You can now make @dbl@Adamant Daggers.", 250, 0, 0); //imgur.com/sXJ4fUC
     case 71 : ~objbox(adamant_axe,"You can now make @dbl@Adamant Axes@bla@.", 250, 0, 0);
     case 72 : ~objbox(adamant_mace,"You can now make @dbl@Adamant Maces@bla@.", 250, 0, divide(^objbox_height, 2));
     case 73 : ~objbox(adamant_med_helm,"You can now make @dbl@Adamant Medium Helms@bla@.", 250, 0, divide(^objbox_height, 2));
