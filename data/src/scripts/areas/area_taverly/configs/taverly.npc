@@ -189,5 +189,7 @@ attack=28
 strength=28
 defence=32
 magic=25
+param=damagetype,^crush_style
 // osrs stats and Vislvl match 1:1
 // TODO: recheck attackrange
+// https://raw.githubusercontent.com/Joshua-F/osrs-dumps/refs/heads/master/config/dump.npc npc_3258

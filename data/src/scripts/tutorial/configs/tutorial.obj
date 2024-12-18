@@ -38,3 +38,14 @@ model=model_2406_obj
 2dxan=112
 cost=10
 weight=3lb
+
+[tutorial_bones]
+name=Bones
+desc=Bones are for burying!
+model=model_2674_obj
+2dxof=2
+2dzoom=1410
+2dyan=368
+2dxan=400
+iop1=Bury
+weight=500g

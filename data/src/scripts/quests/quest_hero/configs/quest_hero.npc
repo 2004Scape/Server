@@ -31,6 +31,7 @@ hitpoints=12
 attack=5
 strength=8
 defence=6
+param=damagetype,^crush_style
 // https://raw.githubusercontent.com/Joshua-F/osrs-dumps/refs/heads/master/config/dump.npc npc_4916
 
 [trobert]
@@ -66,6 +67,7 @@ hitpoints=13
 attack=4
 strength=3
 defence=5
+param=damagetype,^slash_style
 // https://raw.githubusercontent.com/Joshua-F/osrs-dumps/refs/heads/master/config/dump.npc npc_4917
 
 [entrana_firebird]
@@ -95,6 +97,7 @@ param=attack_sound,terrorbird_attack
 param=defend_sound,terrorbird_hit
 param=death_sound,terrorbird_death
 // osrs stats and Vislvl match 1:1
+// https://raw.githubusercontent.com/Joshua-F/osrs-dumps/refs/heads/master/config/dump.npc npc_4927
 
 [garv]
 vislevel=hide
@@ -123,11 +126,7 @@ hitpoints=104
 attack=95
 defence=91
 strength=94
-param=damagetype,^slash_style
-param=attack_anim,human_baxe_slash
-param=defend_anim,human_baxe_defend2
-param=attack_sound,baxe_slash
-// param=defend_sound,
+param=damagetype,^crush_style
 // https://raw.githubusercontent.com/Joshua-F/osrs-dumps/refs/heads/master/config/dump.npc npc_4915
 
 [grip]
@@ -169,6 +168,7 @@ param=attack_sound,baxe_slash
 // param=defend_sound,
 param=death_drop,grips_keyring
 // Stats match osrs version but our version Vislvl is different.
+// https://raw.githubusercontent.com/Joshua-F/osrs-dumps/refs/heads/master/config/dump.npc npc_4919
 
 [charlie_the_cook]
 vislevel=hide
@@ -198,5 +198,6 @@ hitpoints=3
 attack=10
 strength=10
 defence=10
+param=damagetype,^crush_style
 // https://raw.githubusercontent.com/Joshua-F/osrs-dumps/refs/heads/master/config/dump.npc npc_4921
 

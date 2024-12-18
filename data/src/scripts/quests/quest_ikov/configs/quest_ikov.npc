@@ -36,6 +36,8 @@ param=strengthbonus,4
 param=stabdefence,6
 param=slashdefence,8
 param=crushdefence,7
+param=magicdefence,-1
+param=rangedefence,4
 param=damagetype,^stab_style
 param=attack_anim,human_sword_stab
 param=defend_anim,human_sword_defend2
@@ -43,6 +45,8 @@ param=attack_sound,hacksword_stab
 // I used Thug npc sound and animation data with this npc
 // TODO monster examine spell
 // if these stats are correct then they match 1:1 with Vislvl
+// https://oldschool.runescape.wiki/w/Lucien#Attackable_(disguised)
+// https://raw.githubusercontent.com/Joshua-F/osrs-dumps/refs/heads/master/config/dump.npc npc_13607
 
 [lucien_ardougne]
 name=Lucien
@@ -121,9 +125,10 @@ param=damagetype,^slash_style
 param=attack_anim,human_sword_slash
 param=defend_anim,human_sword_defend2
 param=attack_sound,stabsword_slash
-category=guardian_of_armadyl
 // TODO param=defend_sound,steel2
+category=guardian_of_armadyl
 // Stats match osrs version but our version Vislvl is different.
+// https://raw.githubusercontent.com/Joshua-F/osrs-dumps/refs/heads/master/config/dump.npc npc_3445
 
 [guardian_of_armadyl_female]
 name=Guardian of Armadyl
@@ -177,6 +182,7 @@ param=attack_sound,stabsword_slash
 param=death_sound,female_death
 category=guardian_of_armadyl
 // Stats match osrs version but our version Vislvl is different.
+// https://raw.githubusercontent.com/Joshua-F/osrs-dumps/refs/heads/master/config/dump.npc npc_3446
 
 [winelda]
 name=Winelda

@@ -62,6 +62,7 @@ attack=37
 strength=37
 defence=34
 magic=40
+param=damagetype,^crush_style
 param=attack_anim,human_unarmedkick
 param=attack_sound,unarmed_kick
 

@@ -44,6 +44,7 @@ param=defend_sound,sound_218
 // osrs attack anim seq_406 and defend anim seq_410.
 // osrs use sounds attack - 2H_crush & defend - blade3
 // osrs stats and Vislvl match 1:1
+// https://raw.githubusercontent.com/Joshua-F/osrs-dumps/refs/heads/master/config/dump.npc npc_1798
 
 [wyson]
 name=Wyson the gardener
@@ -76,6 +77,7 @@ param=attack_sound,staff_stab
 // osrs attack sound farmersfork_stab
 // stats taken 3lv Gardener (Falador) Vislvl match.
 // Also Hitpoints match RSC version.
+// https://raw.githubusercontent.com/Joshua-F/osrs-dumps/refs/heads/master/config/dump.npc npc_3276
 
 [shop_keeper_falador]
 vislevel=hide

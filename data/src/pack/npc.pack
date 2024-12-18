@@ -138,7 +138,7 @@
 137=npc_137
 138=npc_138
 139=entrana_firebird
-140=npc_140
+140=souless
 141=npc_141
 142=npc_142
 143=npc_143
@@ -174,8 +174,8 @@
 173=npc_173
 174=dark_wizard_water
 175=mugger
-176=npc_176
-177=npc_177
+176=witch_draynor
+177=witch_alkharid
 178=black_knight
 179=black_knight_aggre
 180=highwayman
@@ -460,7 +460,7 @@
 459=priest_skeleton
 460=wizard_frumscone
 461=magic_store_owner
-462=wizard_disentor
+462=wizard_distentor
 463=murphy
 464=murphy_nonflood
 465=murphy_flood
@@ -849,7 +849,7 @@
 848=blurberry
 849=gnome_barman
 850=aluft_gianne
-851=npc_851
+851=gnome_waiter
 852=npc_852
 853=npc_853
 854=npc_854

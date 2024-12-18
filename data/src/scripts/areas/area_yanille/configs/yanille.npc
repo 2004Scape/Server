@@ -38,6 +38,7 @@ param=defend_anim,human_sword_defend2
 param=attack_sound,stabsword_stab
 // param=defend_sound,big_bar_mail
 // Stats match osrs version but our version Vislvl is different.
+// https://raw.githubusercontent.com/Joshua-F/osrs-dumps/refs/heads/master/config/dump.npc npc_4405
 
 [colonel_radick]
 name=Colonel Radick
@@ -84,6 +85,7 @@ param=defend_anim,human_baxe_defend1
 param=attack_sound,baxe_slash
 // param=defend_sound,blade2
 // Stats match osrs version but our version Vislvl is different.
+// https://raw.githubusercontent.com/Joshua-F/osrs-dumps/refs/heads/master/config/dump.npc npc_4406
 
 [sigbert_the_adventurer]
 vislevel=hide
@@ -212,6 +214,7 @@ param=attack_sound,mace_crush
 huntmode=cowardly
 huntrange=1
 // osrs stats and Vislvl match 1:1
+// https://raw.githubusercontent.com/Joshua-F/osrs-dumps/refs/heads/master/config/dump.npc npc_532
 
 [salarin_the_twisted]
 name=Salarin the twisted
@@ -242,3 +245,4 @@ defence=62
 param=damagetype,^crush_style
 param=max_dealt,0
 // osrs stats and Vislvl match 1:1
+// https://raw.githubusercontent.com/Joshua-F/osrs-dumps/refs/heads/master/config/dump.npc npc_304
