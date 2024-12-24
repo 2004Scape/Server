@@ -63,15 +63,12 @@ import { isClientConnected } from '#lostcity/entity/NetworkPlayer.js';
 import { EntityQueueState } from '#lostcity/entity/EntityQueueRequest.js';
 import { PlayerTimerType } from '#lostcity/entity/EntityTimer.js';
 
-import ClientProt from '#lostcity/network/225/incoming/prot/ClientProt.js';
-
 import UpdateRebootTimer from '#lostcity/network/outgoing/model/UpdateRebootTimer.js';
 import UpdateFriendList from '#lostcity/network/outgoing/model/UpdateFriendList.js';
 import UpdateIgnoreList from '#lostcity/network/outgoing/model/UpdateIgnoreList.js';
 import MessagePrivate from '#lostcity/network/outgoing/model/MessagePrivate.js';
 
 import ClientSocket from '#lostcity/server/ClientSocket.js';
-import LoginResponse from '#lostcity/server/LoginResponse.js';
 import { makeCrcs, makeCrcsAsync } from '#lostcity/server/CrcTable.js';
 import { preloadClient, preloadClientAsync } from '#lostcity/server/PreloadedPacks.js';
 import { FriendsServerOpcodes } from '#lostcity/server/FriendServer.js';
@@ -933,55 +930,6 @@ class World {
 
     private processLogins(): void {
         const start: number = Date.now();
-        player: for (const player of this.newPlayers) {
-            for (const other of this.players) {
-                if (player.username !== other.username) {
-                    continue;
-                }
-                if (isClientConnected(player)) {
-                    player.client.send(LoginResponse.LOGGED_IN);
-                    player.client.close();
-                }
-                continue player;
-            }
-
-            let pid: number;
-            try {
-                // if it throws then there was no available pid. otherwise guaranteed to not be -1.
-                pid = this.getNextPid(isClientConnected(player) ? player.client : null);
-            } catch (e) {
-                // world full
-                if (isClientConnected(player)) {
-                    player.client.send(LoginResponse.WORLD_FULL);
-                    player.client.close();
-                }
-                continue;
-            }
-
-            // insert player into first available slot
-            this.players.set(pid, player);
-            player.pid = pid;
-            player.uid = ((Number(player.username37 & 0x1fffffn) << 11) | player.pid) >>> 0;
-            player.tele = true;
-            player.moveClickRequest = false;
-
-            this.gameMap.getZone(player.x, player.z, player.level).enter(player);
-            player.onLogin(); // todo: check response from login script?
-
-            if (this.shutdownTick > -1) {
-                player.write(new UpdateRebootTimer(this.shutdownTick - this.currentTick));
-            }
-
-            if (isClientConnected(player)) {
-                player.client.state = 1;
-                if (player.staffModLevel >= 2) {
-                    player.client.send(LoginResponse.STAFF_MOD_LEVEL);
-                } else {
-                    player.client.send(LoginResponse.SUCCESSFUL);
-                }
-            }
-        }
-        this.newPlayers.clear();
         this.cycleStats[WorldStat.LOGIN] = Date.now() - start;
     }
 

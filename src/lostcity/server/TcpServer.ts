@@ -5,6 +5,7 @@ import Packet from '#jagex/io/Packet.js';
 import Environment from '#lostcity/util/Environment.js';
 import NullClientSocket from '#lostcity/server/NullClientSocket.js';
 import TcpClientSocket from '#lostcity/server/TcpClientSocket.js';
+import Login from '#lostcity/engine/Login.js';
 
 export default class TcpServer {
     tcp: net.Server;
@@ -19,6 +20,7 @@ export default class TcpServer {
             s.setNoDelay(true);
 
             const socket = new TcpClientSocket(s, s.remoteAddress ?? 'unknown');
+            Login.clients.set(socket.uuid, socket);
 
             // todo: connection negotiation feature flag
             const seed = new Packet(new Uint8Array(8));

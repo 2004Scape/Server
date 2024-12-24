@@ -7,18 +7,18 @@ export default class WorkerClientSocket extends ClientSocket {
         super();
 
         this.worker = worker;
-        this.uniqueId = uniqueId;
+        this.uuid = uniqueId;
     }
 
     send(src: Uint8Array): void {
-        this.worker.postMessage({ type: 'data', data: src, id: this.uniqueId });
+        this.worker.postMessage({ type: 'data', data: src, id: this.uuid });
     }
 
     close(): void {
-        this.worker.postMessage({ type: 'close', id: this.uniqueId });
+        this.worker.postMessage({ type: 'close', id: this.uuid });
     }
 
     terminate(): void {
-        this.worker.postMessage({ type: 'close', id: this.uniqueId });
+        this.worker.postMessage({ type: 'close', id: this.uuid });
     }
 }

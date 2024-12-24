@@ -6,6 +6,7 @@ import Packet from '#jagex/io/Packet.js';
 import Environment from '#lostcity/util/Environment.js';
 import NullClientSocket from '#lostcity/server/NullClientSocket.js';
 import WSClientSocket from '#lostcity/server/WSClientSocket.js';
+import Login from '#lostcity/engine/Login.js';
 
 function getIp(req: IncomingMessage) {
     let forwardedFor = req.headers['x-forwarded-for'];
@@ -33,6 +34,7 @@ export default class WSServer {
 
         this.wss.on('connection', (ws: WebSocket, req) => {
             const socket = new WSClientSocket(ws, getIp(req) ?? 'unknown');
+            Login.clients.set(socket.uuid, socket);
 
             // todo: connection negotation feature flag
             const seed = new Packet(new Uint8Array(8));

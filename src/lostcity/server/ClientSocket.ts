@@ -6,7 +6,7 @@ import Packet from '#jagex/io/Packet.js';
 import { NetworkPlayer } from '#lostcity/entity/NetworkPlayer.js';
 
 export default abstract class ClientSocket {
-    uniqueId = randomUUID();
+    uuid = randomUUID();
     remoteAddress = 'unknown';
     totalBytesRead = 0;
     totalBytesWritten = 0;
@@ -18,6 +18,9 @@ export default abstract class ClientSocket {
 
     in = Packet.alloc(65535); // node won't let us read from the socket as a stream so we buffer it ourselves
     out = Packet.alloc(1);
+
+    opcode = -1; // current opcode being read
+    waiting = 0; // bytes to wait for (if any)
 
     buffer(data: Buffer) {
         this.in.pdata(data, 0, data.length);

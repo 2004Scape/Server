@@ -1,4 +1,5 @@
 import Packet from '#jagex/io/Packet.js';
+import Login from '#lostcity/engine/Login.js';
 
 import ClientSocket from '#lostcity/server/ClientSocket.js';
 
@@ -16,14 +17,16 @@ export default class WorkerServer {
 
             switch (e.data.type) {
                 case 'connection': {
-                    this.sockets.set(e.data.id, new WorkerClientSocket(self, e.data.id));
+                    const socket = new WorkerClientSocket(self, e.data.id);
+                    this.sockets.set(e.data.id, socket);
+                    Login.clients.set(e.data.id, socket);
 
                     // todo: connection negotation feature flag
                     const seed = new Packet(new Uint8Array(8));
                     seed.p4(Math.floor(Math.random() * 0xffffffff));
                     seed.p4(Math.floor(Math.random() * 0xffffffff));
-
-                    this.sockets.get(e.data.id)?.send(seed.data);
+                    socket.send(seed.data);
+                    socket.state = 0;
                     break;
                 }
                 case 'data': {

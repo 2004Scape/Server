@@ -13,6 +13,7 @@ import Environment from '#lostcity/util/Environment.js';
 import { printError, printInfo } from '#lostcity/util/Logger.js';
 import { updateCompiler } from '#lostcity/util/RuneScriptCompiler.js';
 import { collectDefaultMetrics, register } from 'prom-client';
+import Login from '#lostcity/engine/Login.js';
 
 if (Environment.BUILD_STARTUP_UPDATE) {
     await updateCompiler();
@@ -35,6 +36,7 @@ if (!fs.existsSync('data/pack/client/config') || !fs.existsSync('data/pack/serve
 
 fs.mkdirSync('data/players', { recursive: true });
 
+Login.cycle();
 await World.start();
 
 startWeb();
