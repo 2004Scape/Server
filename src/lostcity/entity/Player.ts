@@ -31,7 +31,7 @@ import PlayerStat from '#lostcity/entity/PlayerStat.js';
 import MoveStrategy from '#lostcity/entity/MoveStrategy.js';
 import BuildArea from '#lostcity/entity/BuildArea.js';
 import HeroPoints from '#lostcity/entity/HeroPoints.js';
-import {isNetworkPlayer} from '#lostcity/entity/NetworkPlayer.js';
+import {isClientConnected} from '#lostcity/entity/NetworkPlayer.js';
 
 import {Inventory} from '#lostcity/engine/Inventory.js';
 import World from '#lostcity/engine/World.js';
@@ -1752,7 +1752,7 @@ export default class Player extends PathingEntity {
     }
 
     write(message: OutgoingMessage) {
-        if (!isNetworkPlayer(this)) {
+        if (!isClientConnected(this)) {
             return;
         }
 

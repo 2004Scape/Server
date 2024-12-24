@@ -8,6 +8,7 @@ import Login from '#lostcity/engine/Login.js';
 import World from '#lostcity/engine/World.js';
 
 import Environment from '#lostcity/util/Environment.js';
+import NullClientSocket from '#lostcity/server/NullClientSocket.js';
 
 export default class TcpServer {
     tcp: Server;
@@ -46,7 +47,7 @@ export default class TcpServer {
 
             s.on('close', () => {
                 if (socket.player) {
-                    socket.player.client = null;
+                    socket.player.client = new NullClientSocket();
                 }
             });
 

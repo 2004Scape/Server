@@ -9,6 +9,7 @@ import World from '#lostcity/engine/World.js';
 import ClientSocket from '#lostcity/server/ClientSocket.js';
 
 import Environment from '#lostcity/util/Environment.js';
+import NullClientSocket from '#lostcity/server/NullClientSocket.js';
 
 function getIp(req: IncomingMessage) {
     let forwardedFor = req.headers['x-forwarded-for'];
@@ -60,7 +61,7 @@ export default class WSServer {
 
             ws.on('close', () => {
                 if (socket.player) {
-                    socket.player.client = null;
+                    socket.player.client = new NullClientSocket();
                 }
             });
 

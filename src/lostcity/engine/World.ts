@@ -59,7 +59,7 @@ import Obj from '#lostcity/entity/Obj.js';
 import Player from '#lostcity/entity/Player.js';
 import EntityLifeCycle from '#lostcity/entity/EntityLifeCycle.js';
 import { NpcList, PlayerList } from '#lostcity/entity/EntityList.js';
-import { isNetworkPlayer } from '#lostcity/entity/NetworkPlayer.js';
+import { isClientConnected } from '#lostcity/entity/NetworkPlayer.js';
 import { EntityQueueState } from '#lostcity/entity/EntityQueueRequest.js';
 import { PlayerTimerType } from '#lostcity/entity/EntityTimer.js';
 
@@ -703,7 +703,7 @@ class World {
                     player.executeScript(player.activeScript, true, true);
                 }
 
-                if (isNetworkPlayer(player) && player.decodeIn()) {
+                if (isClientConnected(player) && player.decodeIn()) {
                     const followingPlayer = (player.targetOp === ServerTriggerType.APPLAYER3 || player.targetOp === ServerTriggerType.OPPLAYER3);
                     if (player.userPath.length > 0 || player.opcalled) {
                         if (player.delayed()) {
@@ -938,7 +938,7 @@ class World {
                 if (player.username !== other.username) {
                     continue;
                 }
-                if (isNetworkPlayer(player) && player.client) {
+                if (isClientConnected(player)) {
                     player.client.send(LoginResponse.LOGGED_IN);
                     player.client.close();
                 }
@@ -948,12 +948,12 @@ class World {
             let pid: number;
             try {
                 // if it throws then there was no available pid. otherwise guaranteed to not be -1.
-                pid = this.getNextPid(isNetworkPlayer(player) ? player.client : null);
+                pid = this.getNextPid(isClientConnected(player) ? player.client : null);
             } catch (e) {
                 // world full
-                if (isNetworkPlayer(player)) {
-                    player.client?.send(LoginResponse.WORLD_FULL);
-                    player.client?.close();
+                if (isClientConnected(player)) {
+                    player.client.send(LoginResponse.WORLD_FULL);
+                    player.client.close();
                 }
                 continue;
             }
@@ -972,7 +972,7 @@ class World {
                 player.write(new UpdateRebootTimer(this.shutdownTick - this.currentTick));
             }
 
-            if (isNetworkPlayer(player) && player.client) {
+            if (isClientConnected(player)) {
                 player.client.state = 1;
                 if (player.staffModLevel >= 2) {
                     player.client.send(LoginResponse.STAFF_MOD_LEVEL);
@@ -1039,7 +1039,7 @@ class World {
         this.cycleStats[WorldStat.BANDWIDTH_OUT] = 0; // reset bandwidth counter
 
         for (const player of this.players) {
-            if (!isNetworkPlayer(player)) {
+            if (!isClientConnected(player)) {
                 continue;
             }
 
@@ -1169,11 +1169,11 @@ class World {
             for (const player of this.players) {
                 player.logoutRequested = true;
 
-                if (isNetworkPlayer(player)) {
+                if (isClientConnected(player)) {
                     player.logout(); // visually log out
 
                     // if it's been more than a few ticks and the client just won't leave us alone, close the socket
-                    if (player.client && duration > 2) {
+                    if (duration > 2) {
                         player.client.close();
                     }
                 }
@@ -1241,7 +1241,7 @@ class World {
     computeSharedEvents(): void {
         const zones: Set<number> = new Set();
         for (const player of this.players) {
-            if (!isNetworkPlayer(player)) {
+            if (!isClientConnected(player)) {
                 continue;
             }
             for (const zone of player.buildArea.loadedZones) {
@@ -1547,11 +1547,10 @@ class World {
         }
 
         player.playerLog('Logging out');
-        if (isNetworkPlayer(player)) {
+        if (isClientConnected(player)) {
             // visually disconnect the client
             player.logout();
-            player.client!.close();
-            player.client = null;
+            player.client.close();
         }
 
         this.playerRenderer.removePermanent(player.pid);

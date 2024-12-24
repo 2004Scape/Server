@@ -39,9 +39,10 @@ import SetMultiway from '#lostcity/network/outgoing/model/SetMultiway.js';
 import { printError } from '#lostcity/util/Logger.js';
 import NpcRenderer from '#lostcity/engine/renderer/NpcRenderer.js';
 import PlayerRenderer from '#lostcity/engine/renderer/PlayerRenderer.js';
+import NullClientSocket from '#lostcity/server/NullClientSocket.js';
 
 export class NetworkPlayer extends Player {
-    client: ClientSocket | null = null;
+    client: ClientSocket;
     userPath: number[] = [];
     opcalled: boolean = false;
     opucalled: boolean = false;
@@ -58,7 +59,7 @@ export class NetworkPlayer extends Player {
         this.opcalled = false;
         this.opucalled = false;
 
-        if (this.client === null) {
+        if (!isClientConnected(this)) {
             return false;
         }
 
@@ -90,13 +91,13 @@ export class NetworkPlayer extends Player {
             World.cycleStats[WorldStat.BANDWIDTH_IN] += this.client.inOffset;
         }
 
-        this.client?.reset();
+        this.client.reset();
 
         return true;
     }
 
     encodeOut() {
-        if (!this.client) {
+        if (!isClientConnected(this)) {
             return;
         }
 
@@ -171,12 +172,11 @@ export class NetworkPlayer extends Player {
 
     override logout() {
         this.writeInner(new Logout());
-        this.client?.flush();
+        this.client.flush();
     }
 
     override terminate() {
-        this.client?.terminate();
-        this.client = null;
+        this.client.terminate();
     }
 
     override playerLog(message: string, ...args: string[]): void {
@@ -186,9 +186,9 @@ export class NetworkPlayer extends Player {
         }
 
         if (args.length > 0) {
-            fs.appendFileSync(`data/players/${this.username}.log`, `[${new Date().toISOString().split('T')[0]} ${this.client?.remoteAddress}]: ${message} ${args.join(' ')}\n`);
+            fs.appendFileSync(`data/players/${this.username}.log`, `[${new Date().toISOString().split('T')[0]} ${this.client.remoteAddress}]: ${message} ${args.join(' ')}\n`);
         } else {
-            fs.appendFileSync(`data/players/${this.username}.log`, `[${new Date().toISOString().split('T')[0]} ${this.client?.remoteAddress}]: ${message}\n`);
+            fs.appendFileSync(`data/players/${this.username}.log`, `[${new Date().toISOString().split('T')[0]} ${this.client.remoteAddress}]: ${message}\n`);
         }
     }
 
@@ -398,12 +398,12 @@ export class NetworkPlayer extends Player {
     }
 }
 
-export function isNetworkPlayer(player: Player): player is NetworkPlayer {
-    return (player as NetworkPlayer).client !== null && (player as NetworkPlayer).client !== undefined;
+export function isClientConnected(player: Player): player is NetworkPlayer {
+    return player instanceof NetworkPlayer && !(player.client instanceof NullClientSocket);
 }
 
 export function isBufferFull(player: Player): boolean {
-    if (!isNetworkPlayer(player)) {
+    if (!isClientConnected(player)) {
         return false;
     }
 

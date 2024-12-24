@@ -15,7 +15,7 @@ import ServerTriggerType from '#lostcity/engine/script/ServerTriggerType.js';
 
 import { PlayerQueueType, ScriptArgument } from '#lostcity/entity/EntityQueueRequest.js';
 import { PlayerTimerType } from '#lostcity/entity/EntityTimer.js';
-import { isBufferFull, isNetworkPlayer } from '#lostcity/entity/NetworkPlayer.js';
+import { isBufferFull, isClientConnected } from '#lostcity/entity/NetworkPlayer.js';
 import { CoordGrid } from '#lostcity/engine/CoordGrid.js';
 import CameraInfo from '#lostcity/entity/CameraInfo.js';
 import Interaction from '#lostcity/entity/Interaction.js';
@@ -796,7 +796,7 @@ const PlayerOps: CommandHandlers = {
 
     [ScriptOpcode.LAST_LOGIN_INFO]: state => {
         const player = state.activePlayer;
-        if (!isNetworkPlayer(player) || player.client === null) {
+        if (!isClientConnected(player)) {
             return;
         }
 

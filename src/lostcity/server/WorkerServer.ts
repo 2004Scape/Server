@@ -4,6 +4,7 @@ import ClientSocket from '#lostcity/server/ClientSocket.js';
 
 import Login from '#lostcity/engine/Login.js';
 import World from '#lostcity/engine/World.js';
+import NullClientSocket from '#lostcity/server/NullClientSocket.js';
 
 export default class WorkerServer {
     sockets: Map<string, ClientSocket> = new Map();
@@ -45,7 +46,7 @@ export default class WorkerServer {
                 case 'close': {
                     if (socket) {
                         if (socket.player) {
-                            socket.player.client = null;
+                            socket.player.client = new NullClientSocket();
                         }
                         this.sockets.delete(e.data.id);
                     }
