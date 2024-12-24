@@ -7,7 +7,7 @@ export default {
     STANDALONE_BUNDLE: tryParseBoolean(process.env.STANDALONE_BUNDLE, false),
 
     /// web server
-    WEB_PORT: tryParseInt(process.env.WEB_PORT, process.platform === 'win32' ? 80 : 8888),
+    WEB_PORT: tryParseInt(process.env.WEB_PORT, process.platform === 'win32' || process.platform === 'darwin' ? 80 : 8888),
     WEB_CORS: tryParseBoolean(process.env.WEB_CORS, true),
 
     // management server
