@@ -3,19 +3,15 @@ import { IncomingMessage } from 'http';
 
 import Packet from '#jagex/io/Packet.js';
 
-import Login from '#lostcity/engine/Login.js';
-import World from '#lostcity/engine/World.js';
-
-import ClientSocket from '#lostcity/server/ClientSocket.js';
-
 import Environment from '#lostcity/util/Environment.js';
 import NullClientSocket from '#lostcity/server/NullClientSocket.js';
+import WSClientSocket from '#lostcity/server/WSClientSocket.js';
 
 function getIp(req: IncomingMessage) {
     let forwardedFor = req.headers['x-forwarded-for'];
 
     if (!forwardedFor) {
-        return req.connection.remoteAddress;
+        return req.socket.remoteAddress;
     }
 
     if (Array.isArray(forwardedFor)) {
@@ -36,37 +32,31 @@ export default class WSServer {
         });
 
         this.wss.on('connection', (ws: WebSocket, req) => {
-            const ip: string = getIp(req) ?? 'unknown';
+            const socket = new WSClientSocket(ws, getIp(req) ?? 'unknown');
 
-            const socket = new ClientSocket(ws, ip, ClientSocket.WEBSOCKET);
-
-            const seed = new Packet(new Uint8Array(4 + 4));
+            // todo: connection negotation feature flag
+            const seed = new Packet(new Uint8Array(8));
             seed.p4(Math.floor(Math.random() * 0xffffffff));
             seed.p4(Math.floor(Math.random() * 0xffffffff));
             socket.send(seed.data);
+            socket.state = 0;
 
             ws.on('message', (data: Buffer) => {
-                const packet = new Packet(new Uint8Array(data));
-
-                try {
-                    if (socket.state === 1) {
-                        World.readIn(socket, packet);
-                    } else {
-                        Login.readIn(socket, packet);
-                    }
-                } catch (err) {
-                    socket.close();
+                if (socket.state !== -1) {
+                    socket.buffer(data);
                 }
             });
 
             ws.on('close', () => {
+                socket.state = -1;
+
                 if (socket.player) {
                     socket.player.client = new NullClientSocket();
                 }
             });
 
             ws.on('error', () => {
-                socket.terminate();
+                ws.terminate();
             });
         });
     }

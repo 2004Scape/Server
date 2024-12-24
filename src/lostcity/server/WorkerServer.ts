@@ -2,9 +2,8 @@ import Packet from '#jagex/io/Packet.js';
 
 import ClientSocket from '#lostcity/server/ClientSocket.js';
 
-import Login from '#lostcity/engine/Login.js';
-import World from '#lostcity/engine/World.js';
 import NullClientSocket from '#lostcity/server/NullClientSocket.js';
+import WorkerClientSocket from '#lostcity/server/WorkerClientSocket.js';
 
 export default class WorkerServer {
     sockets: Map<string, ClientSocket> = new Map();
@@ -13,14 +12,14 @@ export default class WorkerServer {
 
     start() {
         self.onmessage = (e: MessageEvent) => {
-            const packet = new Packet(new Uint8Array(e.data.data));
             const socket = this.sockets.get(e.data.id);
 
             switch (e.data.type) {
                 case 'connection': {
-                    this.sockets.set(e.data.id, new ClientSocket(self, '127.0.0.1', -1, -1, e.data.id));
+                    this.sockets.set(e.data.id, new WorkerClientSocket(self, e.data.id));
 
-                    const seed = new Packet(new Uint8Array(4 + 4));
+                    // todo: connection negotation feature flag
+                    const seed = new Packet(new Uint8Array(8));
                     seed.p4(Math.floor(Math.random() * 0xffffffff));
                     seed.p4(Math.floor(Math.random() * 0xffffffff));
 
@@ -29,17 +28,7 @@ export default class WorkerServer {
                 }
                 case 'data': {
                     if (socket) {
-                        try {
-                            if (socket.state === 1) {
-                                World.readIn(socket, packet);
-                            } else {
-                                Login.readIn(socket, packet);
-                            }
-                        } catch (err) {
-                            console.log('error', err);
-                            socket.close();
-                            this.sockets.delete(e.data.id);
-                        }
+                        socket.buffer(e.data.data);
                     }
                     break;
                 }

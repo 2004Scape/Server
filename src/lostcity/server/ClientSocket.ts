@@ -1,119 +1,48 @@
 import { randomUUID } from 'crypto';
-import { Socket } from 'net';
-import { WebSocket } from 'ws';
 
 import Isaac from '#jagex/io/Isaac.js';
 import Packet from '#jagex/io/Packet.js';
 
 import { NetworkPlayer } from '#lostcity/entity/NetworkPlayer.js';
 
-export default class ClientSocket {
-    static TCP = 0;
-    static WEBSOCKET = 1;
-
-    socket: Socket | WebSocket | DedicatedWorkerGlobalScope | null = null;
-    type = -1;
-    state = -1;
-    remoteAddress: string;
+export default abstract class ClientSocket {
+    uniqueId = randomUUID();
+    remoteAddress = 'unknown';
     totalBytesRead = 0;
     totalBytesWritten = 0;
-    uniqueId: string;
 
+    state = -1;
+    player: NetworkPlayer | null = null;
     encryptor: Isaac | null = null;
     decryptor: Isaac | null = null;
 
-    // we only want to receive 5KB per tick to mitigate bad actors
-    in = new Uint8Array(5000);
-    inOffset = 0;
+    in = Packet.alloc(65535); // node won't let us read from the socket as a stream so we buffer it ourselves
+    out = Packet.alloc(1);
 
-    // we limit the amount of packets we receive per opcode (no more than 10) to mitigate bad actors
-    inCount = new Uint8Array(256);
-
-    // packets are flushed in up to 5KB chunks
-    // out = new Uint8Array(5000);
-    // outOffset = 0;
-    out: Packet = new Packet(new Uint8Array(5000));
-
-    player: NetworkPlayer | null = null;
-
-    constructor(socket: Socket | WebSocket | DedicatedWorkerGlobalScope | null, remoteAddress: string, type = ClientSocket.TCP, state = -1, uniqueId: string = randomUUID()) {
-        this.socket = socket;
-        this.remoteAddress = remoteAddress;
-        this.type = type;
-        this.state = state;
-        this.uniqueId = uniqueId;
+    buffer(data: Buffer) {
+        this.in.pdata(data, 0, data.length);
     }
 
-    isTCP() {
-        return this.type === ClientSocket.TCP;
+    get available() {
+        return this.in.pos;
     }
 
-    isWebSocket() {
-        return this.type === ClientSocket.WEBSOCKET;
-    }
-
-    send(data: Uint8Array) {
-        if (!this.socket) {
-            return;
+    read(dest: Uint8Array, offset: number, length: number) {
+        if (this.available < length) {
+            return false;
         }
 
-        this.totalBytesWritten += data.length;
-        if (this.isTCP()) {
-            (this.socket as Socket).write(data);
-        } else if (this.isWebSocket()) {
-            (this.socket as WebSocket).send(data);
-        } else if (typeof self !== 'undefined') {
-            (this.socket as DedicatedWorkerGlobalScope).postMessage({ type: 'data', data: data, id: this.uniqueId });
-        }
+        // copy data to dest
+        dest.set(this.in.data.subarray(0, length), offset);
+        this.in.pos -= length;
+
+        // shift buffer to the next read
+        this.in.data.set(this.in.data.subarray(length), 0);
+
+        return true;
     }
 
-    // close the connection gracefully
-    close() {
-        if (!this.socket) {
-            return;
-        }
-
-        setTimeout(() => {
-            if (this.isTCP()) {
-                (this.socket as Socket).end();
-            } else if (this.isWebSocket()) {
-                (this.socket as WebSocket).close();
-            } else if (typeof self !== 'undefined') {
-                (this.socket as DedicatedWorkerGlobalScope).postMessage({ type: 'close', id: this.uniqueId });
-            }
-        }, 100);
-    }
-
-    // terminate the connection immediately
-    terminate() {
-        if (!this.socket) {
-            return;
-        }
-
-        if (this.isTCP()) {
-            (this.socket as Socket).destroy();
-        } else if (this.isWebSocket()) {
-            (this.socket as WebSocket).terminate();
-        } else if (typeof self !== 'undefined') {
-            (this.socket as DedicatedWorkerGlobalScope).postMessage({ type: 'close', id: this.uniqueId });
-        }
-    }
-
-    reset() {
-        this.inOffset = 0;
-        this.inCount.fill(0);
-    }
-
-    writeImmediate(data: Uint8Array) {
-        this.send(data);
-    }
-
-    flush() {
-        const out = this.out;
-        if (out.pos === 0) {
-            return;
-        }
-        this.send(out.data.subarray(0, out.pos));
-        out.pos = 0;
-    }
+    abstract send(src: Uint8Array): void;
+    abstract close(): void;
+    abstract terminate(): void;
 }

@@ -1,14 +1,13 @@
-import net, { Server } from 'net';
+import net from 'net';
 
 import Packet from '#jagex/io/Packet.js';
-
-import ClientSocket from '#lostcity/server/ClientSocket.js';
 
 import Environment from '#lostcity/util/Environment.js';
 import LoginResponse from '#lostcity/server/LoginResponse.js';
 
+// todo: move into TcpServer
 export default class TcpServer {
-    tcp: Server;
+    tcp: net.Server;
 
     constructor() {
         this.tcp = net.createServer();
@@ -19,33 +18,26 @@ export default class TcpServer {
             s.setTimeout(60000);
             s.setNoDelay(true);
 
-            const ip: string = s.remoteAddress ?? 'unknown';
-
-            const socket = new ClientSocket(s, ip, ClientSocket.TCP);
-
             const seed = new Packet(new Uint8Array(4 + 4));
             seed.p4(Math.floor(Math.random() * 0xffffffff));
             seed.p4(Math.floor(Math.random() * 0xffffffff));
-            socket.send(seed.data);
+            s.write(seed.data);
 
             s.on('data', (_data: Buffer) => {
-                socket.send(LoginResponse.SERVER_UPDATING);
-                socket.close();
-            });
-
-            s.on('close', () => {
+                s.write(LoginResponse.SERVER_UPDATING);
+                s.end();
             });
 
             s.on('end', () => {
-                socket.terminate();
+                s.destroy();
             });
 
-            s.on('error', (/* err */) => {
-                socket.terminate();
+            s.on('error', () => {
+                s.destroy();
             });
 
             s.on('timeout', () => {
-                socket.terminate();
+                s.destroy();
             });
         });
 

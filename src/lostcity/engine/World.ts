@@ -383,9 +383,9 @@ class World {
             }
         }
 
-        Login.loginThread.postMessage({
-            type: 'reset'
-        });
+        // Login.loginThread.postMessage({
+        //     type: 'reset'
+        // });
 
         this.friendThread.postMessage({
             type: 'connect'
@@ -1155,10 +1155,10 @@ class World {
             players.push(player.username37);
         }
 
-        Login.loginThread.postMessage({
-            type: 'heartbeat',
-            players
-        });
+        // Login.loginThread.postMessage({
+        //     type: 'heartbeat',
+        //     players
+        // });
     }
 
     private processShutdown(): void {
@@ -1213,9 +1213,9 @@ class World {
             return;
         }
 
-        for (const player of this.players) {
-            Login.autosave(player);
-        }
+        // for (const player of this.players) {
+        //     Login.autosave(player);
+        // }
     }
 
     enqueueScript(script: ScriptState, delay: number = 0): void {
@@ -1442,51 +1442,6 @@ class World {
 
     // ----
 
-    readIn(socket: ClientSocket, stream: Packet): void {
-        while (stream.available > 0) {
-            const start = stream.pos;
-            let opcode = stream.g1();
-
-            if (socket.decryptor) {
-                opcode = (opcode - socket.decryptor.nextInt()) & 0xff;
-                stream.data[start] = opcode;
-            }
-
-            if (typeof ClientProt.byId[opcode] === 'undefined') {
-                socket.state = -1;
-                socket.close();
-                return;
-            }
-
-            let length = ClientProt.byId[opcode].length;
-            if (length === -1) {
-                length = stream.g1();
-            } else if (length === -2) {
-                length = stream.g2();
-            }
-
-            if (stream.available < length) {
-                break;
-            }
-
-            stream.pos += length;
-
-            socket.inCount[opcode]++;
-            if (socket.inCount[opcode] > 5) {
-                continue;
-            }
-
-            const data = new Uint8Array(stream.pos - start);
-            const pos = stream.pos;
-            stream.pos = start;
-            stream.gdata(data, 0, data.length);
-            stream.pos = pos;
-
-            socket.in.set(data, socket.inOffset);
-            socket.inOffset += stream.pos - start;
-        }
-    }
-
     addFriend(player: Player, targetUsername37: bigint) {
         //printDebug(`[World] addFriend => player: ${player.username}, target: ${targetUsername37} (${fromBase37(targetUsername37)})`);
         this.friendThread.postMessage({
@@ -1561,7 +1516,7 @@ class World {
         player.uid = -1;
         player.terminate();
 
-        Login.logout(player);
+        // Login.logout(player);
 
         this.friendThread.postMessage({
             type: 'player_logout',

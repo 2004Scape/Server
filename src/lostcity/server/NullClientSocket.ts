@@ -1,40 +1,27 @@
-import ClientSocket from './ClientSocket.js';
+import ClientSocket from '#lostcity/server/ClientSocket.js';
 
 export default class NullClientSocket extends ClientSocket {
-    constructor() {
-        super(null, '');
+    send(_src: Uint8Array): void {
+        // no-op
     }
 
-    isTCP() {
-        return this.type === ClientSocket.TCP;
+    read(_dest: Uint8Array, _offset: number, _length: number): boolean {
+        return false;
     }
 
-    isWebSocket() {
-        return this.type === ClientSocket.WEBSOCKET;
+    buffer(_data: Buffer): void {
+        // no-op
     }
 
-    send(data: Uint8Array) {
-        if (!this.socket) {
-            return;
-        }
+    get available(): number {
+        return 0;
     }
 
-    // close the connection gracefully
-    close() {
-        if (!this.socket) {
-            return;
-        }
+    close(): void {
+        // no-op
     }
 
-    // terminate the connection immediately
-    terminate() {
-        if (!this.socket) {
-            return;
-        }
-    }
-
-    reset() {
-        this.inOffset = 0;
-        this.inCount.fill(0);
+    terminate(): void {
+        // no-op
     }
 }

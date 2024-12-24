@@ -1,17 +1,13 @@
-import net, { Server } from 'net';
+import net from 'net';
 
 import Packet from '#jagex/io/Packet.js';
 
-import ClientSocket from '#lostcity/server/ClientSocket.js';
-
-import Login from '#lostcity/engine/Login.js';
-import World from '#lostcity/engine/World.js';
-
 import Environment from '#lostcity/util/Environment.js';
 import NullClientSocket from '#lostcity/server/NullClientSocket.js';
+import TcpClientSocket from '#lostcity/server/TcpClientSocket.js';
 
 export default class TcpServer {
-    tcp: Server;
+    tcp: net.Server;
 
     constructor() {
         this.tcp = net.createServer();
@@ -22,45 +18,35 @@ export default class TcpServer {
             s.setTimeout(60000);
             s.setNoDelay(true);
 
-            const ip: string = s.remoteAddress ?? 'unknown';
+            const socket = new TcpClientSocket(s, s.remoteAddress ?? 'unknown');
 
-            const socket = new ClientSocket(s, ip, ClientSocket.TCP);
-
-            const seed = new Packet(new Uint8Array(4 + 4));
+            // todo: connection negotiation feature flag
+            const seed = new Packet(new Uint8Array(8));
             seed.p4(Math.floor(Math.random() * 0xffffffff));
             seed.p4(Math.floor(Math.random() * 0xffffffff));
             socket.send(seed.data);
+            socket.state = 0;
 
             s.on('data', (data: Buffer) => {
-                const packet = new Packet(new Uint8Array(data));
-
-                try {
-                    if (socket.state === 1) {
-                        World.readIn(socket, packet);
-                    } else {
-                        Login.readIn(socket, packet);
-                    }
-                } catch (err) {
-                    socket.close();
+                if (socket.state !== -1) {
+                    socket.buffer(data);
                 }
             });
 
             s.on('close', () => {
+                socket.state = -1;
+
                 if (socket.player) {
                     socket.player.client = new NullClientSocket();
                 }
             });
 
-            s.on('end', () => {
-                socket.terminate();
-            });
-
-            s.on('error', (/* err */) => {
-                socket.terminate();
+            s.on('error', () => {
+                s.destroy();
             });
 
             s.on('timeout', () => {
-                socket.terminate();
+                s.destroy();
             });
         });
 
