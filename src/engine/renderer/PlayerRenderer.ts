@@ -1,20 +1,20 @@
 import Player from '#/engine/entity/Player.js';
-import InfoProt from '#/network/225/outgoing/prot/InfoProt.js';
-import PlayerInfoAppearance from '#/network/outgoing/model/PlayerInfoAppearance.js';
-import PlayerInfoAnim from '#/network/outgoing/model/PlayerInfoAnim.js';
-import PlayerInfoFaceEntity from '#/network/outgoing/model/PlayerInfoFaceEntity.js';
-import PlayerInfoSay from '#/network/outgoing/model/PlayerInfoSay.js';
-import PlayerInfoFaceCoord from '#/network/outgoing/model/PlayerInfoFaceCoord.js';
-import PlayerInfoChat from '#/network/outgoing/model/PlayerInfoChat.js';
-import PlayerInfoSpotanim from '#/network/outgoing/model/PlayerInfoSpotanim.js';
+import InfoProt from '#/network/rs225/server/prot/InfoProt.js';
+import PlayerInfoAppearance from '#/network/server/model/PlayerInfoAppearance.js';
+import PlayerInfoAnim from '#/network/server/model/PlayerInfoAnim.js';
+import PlayerInfoFaceEntity from '#/network/server/model/PlayerInfoFaceEntity.js';
+import PlayerInfoSay from '#/network/server/model/PlayerInfoSay.js';
+import PlayerInfoFaceCoord from '#/network/server/model/PlayerInfoFaceCoord.js';
+import PlayerInfoChat from '#/network/server/model/PlayerInfoChat.js';
+import PlayerInfoSpotanim from '#/network/server/model/PlayerInfoSpotanim.js';
 import Renderer from '#/engine/renderer/Renderer.js';
-import PlayerInfoDamage from '#/network/outgoing/model/PlayerInfoDamage.js';
+import PlayerInfoDamage from '#/network/server/model/PlayerInfoDamage.js';
 import PlayerStat from '#/engine/entity/PlayerStat.js';
-import InfoMessage from '#/network/outgoing/InfoMessage.js';
+import InfoMessage from '#/network/server/InfoMessage.js';
 import Packet from '#/io/Packet.js';
-import PlayerInfoExactMove from '#/network/outgoing/model/PlayerInfoExactMove.js';
-import InfoMessageEncoder from '#/network/outgoing/codec/InfoMessageEncoder.js';
-import ServerProtRepository from '#/network/225/outgoing/prot/ServerProtRepository.js';
+import PlayerInfoExactMove from '#/network/server/model/PlayerInfoExactMove.js';
+import InfoMessageEncoder from '#/network/server/codec/InfoMessageEncoder.js';
+import ServerProtRepository from '#/network/rs225/server/prot/ServerProtRepository.js';
 
 export default class PlayerRenderer extends Renderer<Player>  {
     constructor() {

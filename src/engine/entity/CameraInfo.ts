@@ -1,5 +1,5 @@
 import Linkable from '#/util/Linkable.js';
-import { CameraProt } from '#/network/225/outgoing/prot/ServerProt.js';
+import { CameraProt } from '#/network/rs225/server/prot/ServerProt.js';
 
 export default class CameraInfo extends Linkable {
 

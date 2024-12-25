@@ -1,13 +1,13 @@
-import InfoProt from '#/network/225/outgoing/prot/InfoProt.js';
+import InfoProt from '#/network/rs225/server/prot/InfoProt.js';
 import Renderer from '#/engine/renderer/Renderer.js';
 import Npc from '#/engine/entity/Npc.js';
-import NpcInfoAnim from '#/network/outgoing/model/NpcInfoAnim.js';
-import NpcInfoFaceEntity from '#/network/outgoing/model/NpcInfoFaceEntity.js';
-import NpcInfoSay from '#/network/outgoing/model/NpcInfoSay.js';
-import NpcInfoDamage from '#/network/outgoing/model/NpcInfoDamage.js';
-import NpcInfoChangeType from '#/network/outgoing/model/NpcInfoChangeType.js';
-import NpcInfoSpotanim from '#/network/outgoing/model/NpcInfoSpotanim.js';
-import NpcInfoFaceCoord from '#/network/outgoing/model/NpcInfoFaceCoord.js';
+import NpcInfoAnim from '#/network/server/model/NpcInfoAnim.js';
+import NpcInfoFaceEntity from '#/network/server/model/NpcInfoFaceEntity.js';
+import NpcInfoSay from '#/network/server/model/NpcInfoSay.js';
+import NpcInfoDamage from '#/network/server/model/NpcInfoDamage.js';
+import NpcInfoChangeType from '#/network/server/model/NpcInfoChangeType.js';
+import NpcInfoSpotanim from '#/network/server/model/NpcInfoSpotanim.js';
+import NpcInfoFaceCoord from '#/network/server/model/NpcInfoFaceCoord.js';
 import NpcStat from '#/engine/entity/NpcStat.js';
 
 export default class NpcRenderer extends Renderer<Npc> {

@@ -47,7 +47,7 @@ import Zone from '#/engine/zone/Zone.js';
 import PlayerRenderer from '#/engine/renderer/PlayerRenderer.js';
 import NpcRenderer from '#/engine/renderer/NpcRenderer.js';
 
-import InfoProt from '#/network/225/outgoing/prot/InfoProt.js';
+import InfoProt from '#/network/rs225/server/prot/InfoProt.js';
 
 import BlockWalk from '#/engine/entity/BlockWalk.js';
 import Loc from '#/engine/entity/Loc.js';
@@ -60,10 +60,10 @@ import { isClientConnected } from '#/engine/entity/NetworkPlayer.js';
 import { EntityQueueState } from '#/engine/entity/EntityQueueRequest.js';
 import { PlayerTimerType } from '#/engine/entity/EntityTimer.js';
 
-import UpdateRebootTimer from '#/network/outgoing/model/UpdateRebootTimer.js';
-import UpdateFriendList from '#/network/outgoing/model/UpdateFriendList.js';
-import UpdateIgnoreList from '#/network/outgoing/model/UpdateIgnoreList.js';
-import MessagePrivate from '#/network/outgoing/model/MessagePrivate.js';
+import UpdateRebootTimer from '#/network/server/model/UpdateRebootTimer.js';
+import UpdateFriendList from '#/network/server/model/UpdateFriendList.js';
+import UpdateIgnoreList from '#/network/server/model/UpdateIgnoreList.js';
+import MessagePrivate from '#/network/server/model/MessagePrivate.js';
 
 import ClientSocket from '#/server/ClientSocket.js';
 import { makeCrcs, makeCrcsAsync } from '#/cache/CrcTable.js';

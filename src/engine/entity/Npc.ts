@@ -39,7 +39,7 @@ import LinkList from '#/util/LinkList.js';
 
 import {CollisionFlag} from '@2004scape/rsmod-pathfinder';
 
-import InfoProt from '#/network/225/outgoing/prot/InfoProt.js';
+import InfoProt from '#/network/rs225/server/prot/InfoProt.js';
 
 export default class Npc extends PathingEntity {
     // constructor properties
