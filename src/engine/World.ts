@@ -1419,7 +1419,8 @@ class World {
         player.uid = -1;
         player.terminate();
 
-        // todo: record logout
+        // todo: flush save to login server
+        player.save();
 
         this.friendThread.postMessage({
             type: 'player_logout',
