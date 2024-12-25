@@ -15,7 +15,7 @@
     "db:migrate": "prisma migrate deploy",
     "db:reset": "prisma migrate reset --force",
     "db:schema": "prisma migrate dev",
-    "dev": "tsx watch --include \"src/*\" src/app.ts",
+    "dev": "tsx watch --clear-screen=false --include \"src/*\" src/app.ts",
     "lint": "eslint src",
     "lint:staged": "eslint",
     "precommit": "prettier . --write && eslint src --fix",

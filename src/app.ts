@@ -49,8 +49,10 @@ tcpServer.start();
 const wsServer = new WSServer();
 wsServer.start();
 
+// unfortunately, tsx watch is not giving us a way to gracefully shut down in our dev mode:
+// https://github.com/privatenumber/tsx/issues/494
 let exiting = false;
-process.on('SIGINT', function () {
+function safeExit() {
     if (exiting) {
         return;
     }
@@ -62,4 +64,7 @@ process.on('SIGINT', function () {
     } else {
         World.rebootTimer(0);
     }
-});
+}
+
+process.on('SIGINT', safeExit);
+process.on('SIGTERM', safeExit);
