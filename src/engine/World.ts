@@ -83,7 +83,7 @@ class World {
     private devThread: Worker | NodeWorker | null = null;
 
     private static readonly PLAYERS: number = 2048;
-    private static readonly NPCS: number = 8192;
+    private static readonly NPCS: number = 8192; // todo: move to environment option
 
     private static readonly NORMAL_TICKRATE: number = 600;
     private static readonly SHUTDOWN_TICKRATE: number = 1;
