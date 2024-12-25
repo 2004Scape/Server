@@ -1,8 +1,6 @@
 import 'dotenv/config';
 import fs from 'fs';
 
-import Packet from '#jagex/io/Packet.js';
-
 import ServerProt from '#lostcity/network/225/outgoing/prot/ServerProt.js';
 
 import World from '#lostcity/engine/World.js';
@@ -10,8 +8,6 @@ import World from '#lostcity/engine/World.js';
 import Player from '#lostcity/entity/Player.js';
 import ClientSocket from '#lostcity/server/ClientSocket.js';
 
-import ClientProtRepository from '#lostcity/network/225/incoming/prot/ClientProtRepository.js';
-import ClientProt from '#lostcity/network/225/incoming/prot/ClientProt.js';
 import { CoordGrid } from '../engine/CoordGrid.js';
 import ZoneMap from '#lostcity/engine/zone/ZoneMap.js';
 import Zone from '#lostcity/engine/zone/Zone.js';

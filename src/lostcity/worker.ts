@@ -1,5 +1,5 @@
 import World from '#lostcity/engine/World.js';
-import WorkerServer from '#lostcity/server/WorkerServer.js';
+import WorkerServer from '#lostcity/server/worker/WorkerServer.js';
 
 await World.start();
 

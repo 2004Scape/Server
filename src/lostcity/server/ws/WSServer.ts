@@ -5,7 +5,7 @@ import Packet from '#jagex/io/Packet.js';
 
 import Environment from '#lostcity/util/Environment.js';
 import NullClientSocket from '#lostcity/server/NullClientSocket.js';
-import WSClientSocket from '#lostcity/server/WSClientSocket.js';
+import WSClientSocket from '#lostcity/server/ws/WSClientSocket.js';
 import Login from '#lostcity/engine/Login.js';
 
 function getIp(req: IncomingMessage) {

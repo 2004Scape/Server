@@ -9,8 +9,6 @@ import LinkList from '#jagex/datastruct/LinkList.js';
 
 import { fromBase37, toBase37 } from '#jagex/jstring/JString.js';
 
-import Packet from '#jagex/io/Packet.js';
-
 // lostcity
 import CategoryType from '#lostcity/cache/config/CategoryType.js';
 import Component from '#lostcity/cache/config/Component.js';
@@ -38,7 +36,6 @@ import WordEnc from '#lostcity/cache/wordenc/WordEnc.js';
 import { CoordGrid } from '#lostcity/engine/CoordGrid.js';
 import GameMap, {changeLocCollision, changeNpcCollision, changePlayerCollision} from '#lostcity/engine/GameMap.js';
 import { Inventory } from '#lostcity/engine/Inventory.js';
-import Login from '#lostcity/engine/Login.js';
 import WorldStat from '#lostcity/engine/WorldStat.js';
 
 import ScriptPointer from '#lostcity/engine/script/ScriptPointer.js';
@@ -69,19 +66,20 @@ import UpdateIgnoreList from '#lostcity/network/outgoing/model/UpdateIgnoreList.
 import MessagePrivate from '#lostcity/network/outgoing/model/MessagePrivate.js';
 
 import ClientSocket from '#lostcity/server/ClientSocket.js';
-import { makeCrcs, makeCrcsAsync } from '#lostcity/server/CrcTable.js';
-import { preloadClient, preloadClientAsync } from '#lostcity/server/PreloadedPacks.js';
-import { FriendsServerOpcodes } from '#lostcity/server/FriendServer.js';
+import { makeCrcs, makeCrcsAsync } from '#lostcity/cache/CrcTable.js';
+import { preloadClient, preloadClientAsync } from '#lostcity/cache/PreloadedPacks.js';
+import { FriendsServerOpcodes } from '#lostcity/server/friend/FriendServer.js';
 
 import Environment from '#lostcity/util/Environment.js';
 import { printDebug, printError, printInfo } from '#lostcity/util/Logger.js';
 import { createWorker } from '#lostcity/util/WorkerFactory.js';
 import HuntModeType from '#lostcity/entity/hunt/HuntModeType.js';
-import { trackCycleBandwidthInBytes, trackCycleBandwidthOutBytes, trackCycleClientInTime, trackCycleClientOutTime, trackCycleLoginTime, trackCycleLogoutTime, trackCycleNpcTime, trackCyclePlayerTime, trackCycleTime, trackCycleWorldTime, trackCycleZoneTime, trackNpcCount, trackPlayerCount } from '#lostcity/prometheus.js';
+import { trackCycleBandwidthInBytes, trackCycleBandwidthOutBytes, trackCycleClientInTime, trackCycleClientOutTime, trackCycleLoginTime, trackCycleLogoutTime, trackCycleNpcTime, trackCyclePlayerTime, trackCycleTime, trackCycleWorldTime, trackCycleZoneTime, trackNpcCount, trackPlayerCount } from '#lostcity/server/Metrics.js';
 import WalkTriggerSetting from '#lostcity/util/WalkTriggerSetting.js';
 
 class World {
-    private friendThread: Worker | NodeWorker = createWorker(Environment.STANDALONE_BUNDLE ? 'FriendThread.js' : './lostcity/server/FriendThread.ts');
+    private loginThread = createWorker(Environment.STANDALONE_BUNDLE ? 'LoginThread.js' : './lostcity/server/LoginThread.ts');
+    private friendThread = createWorker(Environment.STANDALONE_BUNDLE ? 'FriendThread.js' : './lostcity/server/FriendThread.ts');
     private devThread: Worker | NodeWorker | null = null;
 
     private static readonly PLAYERS: number = 2048;
@@ -158,76 +156,6 @@ class World {
             }
         }
     }
-
-    rebuild() {
-        if (this.devThread) {
-            this.devThread.postMessage({
-                type: 'world_rebuild'
-            });
-        }
-    }
-
-    onFriendsMessage({ opcode, data }: { opcode: FriendsServerOpcodes, data: any }) {
-        try {
-            if (opcode === FriendsServerOpcodes.UPDATE_FRIENDLIST) {
-                const username37 = BigInt(data.username37);
-
-                // TODO make getPlayerByUsername37?
-                const player = this.getPlayerByUsername(fromBase37(username37));
-                if (!player) {
-                    printError(`FriendThread: player ${fromBase37(username37)} not found`);
-                    return;
-                }
-
-                for (let i = 0; i < data.friends.length; i++) {
-                    const [world, friendUsername37] = data.friends[i];
-                    player.write(new UpdateFriendList(BigInt(friendUsername37), world));
-                }
-            } else if (opcode === FriendsServerOpcodes.UPDATE_IGNORELIST) {
-                const username37 = BigInt(data.username37);
-
-                // TODO make getPlayerByUsername37?
-                const player = this.getPlayerByUsername(fromBase37(username37));
-                if (!player) {
-                    printError(`FriendThread: player ${fromBase37(username37)} not found`);
-                    return;
-                }
-
-                const ignored: bigint[] = data.ignored.map((i: string) => BigInt(i));
-
-                if (ignored.length > 0) {
-                    player.write(new UpdateIgnoreList(ignored));
-                }
-            } else if (opcode == FriendsServerOpcodes.PRIVATE_MESSAGE) {
-                // username37: username.toString(),
-                // targetUsername37: target.toString(),
-                // staffLvl,
-                // pmId,
-                // chat
-
-                const fromPlayer = BigInt(data.username37);
-                const fromPlayerStaffLvl = data.staffLvl;
-                const pmId = data.pmId;
-                const target = BigInt(data.targetUsername37);
-
-                const player = this.getPlayerByUsername(fromBase37(target));
-                if (!player) {
-                    printError(`FriendThread: player ${fromBase37(target)} not found`);
-                    return;
-                }
-
-                const chat = data.chat;
-
-                player.write(new MessagePrivate(fromPlayer, pmId, fromPlayerStaffLvl, chat));
-            } else {
-                printError('Unknown friend message: ' + opcode);
-            }
-        } catch (err) {
-            console.log(err);
-        }
-    }
-
-    // ----
 
     reload(): void {
         VarPlayerType.load('data/pack');
@@ -350,16 +278,6 @@ class World {
         }
     }
 
-    broadcastMes(message: string): void {
-        for (const player of this.players) {
-            if (message.includes('\n')) {
-                message.split('\n').forEach(wrap => player.wrappedMessageGame(wrap));
-            } else {
-                player.wrappedMessageGame(message);
-            }
-        }
-    }
-
     async start(skipMaps = false, startCycle = true): Promise<void> {
         printInfo('Starting world');
 
@@ -380,9 +298,9 @@ class World {
             }
         }
 
-        // Login.loginThread.postMessage({
-        //     type: 'reset'
-        // });
+        this.loginThread.postMessage({
+            type: 'reset'
+        });
 
         this.friendThread.postMessage({
             type: 'connect'
@@ -409,49 +327,7 @@ class World {
         }
     }
 
-    private createDevThread() {
-        this.devThread = createWorker('./lostcity/server/DevThread.ts');
-
-        if (this.devThread instanceof NodeWorker) {
-            this.devThread.on('message', msg => {
-                if (msg.type === 'dev_reload') {
-                    this.reload();
-                } else if (msg.type === 'dev_failure') {
-                    if (msg.error) {
-                        console.error(msg.error);
-
-                        this.broadcastMes(msg.error.replaceAll('data/src/scripts/', ''));
-                        this.broadcastMes('Check the console for more information.');
-                    }
-                } else if (msg.type === 'dev_progress') {
-                    if (msg.broadcast) {
-                        console.log(msg.broadcast);
-
-                        this.broadcastMes(msg.broadcast);
-                    } else if (msg.text) {
-                        console.log(msg.text);
-                    }
-                }
-            });
-
-            // todo: catch all cases where it might exit instead of throwing an error, so we aren't
-            // re-initializing the file watchers after errors
-            this.devThread.on('exit', () => {
-                // todo: remove this mes after above the todo above is addressed
-                this.broadcastMes('Error while rebuilding - see console for more info.');
-
-                this.createDevThread();
-            });
-        }
-    }
-
-    rebootTimer(duration: number): void {
-        this.shutdownTick = this.currentTick + duration;
-
-        for (const player of this.players) {
-            player.write(new UpdateRebootTimer(this.shutdownTick - this.currentTick));
-        }
-    }
+    // ----
 
     cycle(continueCycle: boolean = true): void {
         try {
@@ -1103,10 +979,10 @@ class World {
             players.push(player.username37);
         }
 
-        // Login.loginThread.postMessage({
-        //     type: 'heartbeat',
-        //     players
-        // });
+        this.loginThread.postMessage({
+            type: 'heartbeat',
+            players
+        });
     }
 
     private processShutdown(): void {
@@ -1161,9 +1037,9 @@ class World {
             return;
         }
 
-        // for (const player of this.players) {
-        //     Login.autosave(player);
-        // }
+        for (const player of this.players) {
+            player.save();
+        }
     }
 
     enqueueScript(script: ScriptState, delay: number = 0): void {
@@ -1464,7 +1340,7 @@ class World {
         player.uid = -1;
         player.terminate();
 
-        // Login.logout(player);
+        // todo: record logout
 
         this.friendThread.postMessage({
             type: 'player_logout',
@@ -1566,6 +1442,127 @@ class World {
         return (((4000 - playerCount) * rate) / 4000) | 0; // assuming scale works the same way as the runescript one
     }
 
+    private createDevThread() {
+        this.devThread = createWorker('./lostcity/server/DevThread.ts');
+
+        if (this.devThread instanceof NodeWorker) {
+            this.devThread.on('message', msg => {
+                if (msg.type === 'dev_reload') {
+                    this.reload();
+                } else if (msg.type === 'dev_failure') {
+                    if (msg.error) {
+                        console.error(msg.error);
+
+                        this.broadcastMes(msg.error.replaceAll('data/src/scripts/', ''));
+                        this.broadcastMes('Check the console for more information.');
+                    }
+                } else if (msg.type === 'dev_progress') {
+                    if (msg.broadcast) {
+                        console.log(msg.broadcast);
+
+                        this.broadcastMes(msg.broadcast);
+                    } else if (msg.text) {
+                        console.log(msg.text);
+                    }
+                }
+            });
+
+            // todo: catch all cases where it might exit instead of throwing an error, so we aren't
+            // re-initializing the file watchers after errors
+            this.devThread.on('exit', () => {
+                // todo: remove this mes after above the todo above is addressed
+                this.broadcastMes('Error while rebuilding - see console for more info.');
+
+                this.createDevThread();
+            });
+        }
+    }
+
+    rebootTimer(duration: number): void {
+        this.shutdownTick = this.currentTick + duration;
+
+        for (const player of this.players) {
+            player.write(new UpdateRebootTimer(this.shutdownTick - this.currentTick));
+        }
+    }
+
+    broadcastMes(message: string): void {
+        for (const player of this.players) {
+            if (message.includes('\n')) {
+                message.split('\n').forEach(wrap => player.wrappedMessageGame(wrap));
+            } else {
+                player.wrappedMessageGame(message);
+            }
+        }
+    }
+
+    rebuild() {
+        if (this.devThread) {
+            this.devThread.postMessage({
+                type: 'world_rebuild'
+            });
+        }
+    }
+
+    onFriendsMessage({ opcode, data }: { opcode: FriendsServerOpcodes, data: any }) {
+        try {
+            if (opcode === FriendsServerOpcodes.UPDATE_FRIENDLIST) {
+                const username37 = BigInt(data.username37);
+
+                // TODO make getPlayerByUsername37?
+                const player = this.getPlayerByUsername(fromBase37(username37));
+                if (!player) {
+                    printError(`FriendThread: player ${fromBase37(username37)} not found`);
+                    return;
+                }
+
+                for (let i = 0; i < data.friends.length; i++) {
+                    const [world, friendUsername37] = data.friends[i];
+                    player.write(new UpdateFriendList(BigInt(friendUsername37), world));
+                }
+            } else if (opcode === FriendsServerOpcodes.UPDATE_IGNORELIST) {
+                const username37 = BigInt(data.username37);
+
+                // TODO make getPlayerByUsername37?
+                const player = this.getPlayerByUsername(fromBase37(username37));
+                if (!player) {
+                    printError(`FriendThread: player ${fromBase37(username37)} not found`);
+                    return;
+                }
+
+                const ignored: bigint[] = data.ignored.map((i: string) => BigInt(i));
+
+                if (ignored.length > 0) {
+                    player.write(new UpdateIgnoreList(ignored));
+                }
+            } else if (opcode == FriendsServerOpcodes.PRIVATE_MESSAGE) {
+                // username37: username.toString(),
+                // targetUsername37: target.toString(),
+                // staffLvl,
+                // pmId,
+                // chat
+
+                const fromPlayer = BigInt(data.username37);
+                const fromPlayerStaffLvl = data.staffLvl;
+                const pmId = data.pmId;
+                const target = BigInt(data.targetUsername37);
+
+                const player = this.getPlayerByUsername(fromBase37(target));
+                if (!player) {
+                    printError(`FriendThread: player ${fromBase37(target)} not found`);
+                    return;
+                }
+
+                const chat = data.chat;
+
+                player.write(new MessagePrivate(fromPlayer, pmId, fromPlayerStaffLvl, chat));
+            } else {
+                printError('Unknown friend message: ' + opcode);
+            }
+        } catch (err) {
+            console.log(err);
+        }
+    }
 }
 
 export default new World();

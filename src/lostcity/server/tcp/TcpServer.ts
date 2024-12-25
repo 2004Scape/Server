@@ -4,7 +4,7 @@ import Packet from '#jagex/io/Packet.js';
 
 import Environment from '#lostcity/util/Environment.js';
 import NullClientSocket from '#lostcity/server/NullClientSocket.js';
-import TcpClientSocket from '#lostcity/server/TcpClientSocket.js';
+import TcpClientSocket from '#lostcity/server/tcp/TcpClientSocket.js';
 import Login from '#lostcity/engine/Login.js';
 
 export default class TcpServer {

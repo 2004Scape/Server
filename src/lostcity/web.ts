@@ -4,7 +4,7 @@ import http from 'http';
 import { basename, extname } from 'path';
 import ejs from 'ejs';
 
-import { CrcBuffer } from '#lostcity/server/CrcTable.js';
+import { CrcBuffer } from '#lostcity/cache/CrcTable.js';
 
 import Environment from '#lostcity/util/Environment.js';
 import { tryParseInt } from '#lostcity/util/TryParse.js';

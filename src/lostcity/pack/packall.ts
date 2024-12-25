@@ -19,7 +19,7 @@ import { packClientWordenc } from '#lostcity/pack/chat/pack.js';
 import { packClientTitle } from '#lostcity/pack/sprite/title.js';
 import { packClientTexture } from '#lostcity/pack/sprite/textures.js';
 import { packClientMedia } from '#lostcity/pack/sprite/media.js';
-import { CrcBuffer } from '#lostcity/server/CrcTable.js';
+import { CrcBuffer } from '#lostcity/cache/CrcTable.js';
 
 export async function packServer() {
     if (!fs.existsSync('RuneScriptCompiler.jar')) {

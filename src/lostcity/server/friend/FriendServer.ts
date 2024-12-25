@@ -3,7 +3,7 @@ import WsSyncReq from '#3rdparty/ws-sync/ws-sync.js';
 
 import { fromBase37, toBase37 } from '#jagex/jstring/JString.js';
 
-import { FriendServerRepository } from '#lostcity/server/FriendServerRepository.js';
+import { FriendServerRepository } from '#lostcity/server/friend/FriendServerRepository.js';
 
 import Environment from '#lostcity/util/Environment.js';
 import { ChatModePrivate } from '#lostcity/util/ChatModes.js';

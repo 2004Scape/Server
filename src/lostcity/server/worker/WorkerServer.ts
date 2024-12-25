@@ -4,7 +4,7 @@ import Login from '#lostcity/engine/Login.js';
 import ClientSocket from '#lostcity/server/ClientSocket.js';
 
 import NullClientSocket from '#lostcity/server/NullClientSocket.js';
-import WorkerClientSocket from '#lostcity/server/WorkerClientSocket.js';
+import WorkerClientSocket from '#lostcity/server/worker/WorkerClientSocket.js';
 
 export default class WorkerServer {
     sockets: Map<string, ClientSocket> = new Map();

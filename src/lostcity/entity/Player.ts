@@ -48,7 +48,7 @@ import DoublyLinkList from '#jagex/datastruct/DoublyLinkList.js';
 
 import {CollisionFlag} from '@2004scape/rsmod-pathfinder';
 
-import {PRELOADED, PRELOADED_CRC} from '#lostcity/server/PreloadedPacks.js';
+import {PRELOADED, PRELOADED_CRC} from '#lostcity/cache/PreloadedPacks.js';
 
 import OutgoingMessage from '#lostcity/network/outgoing/OutgoingMessage.js';
 import IfClose from '#lostcity/network/outgoing/model/IfClose.js';
