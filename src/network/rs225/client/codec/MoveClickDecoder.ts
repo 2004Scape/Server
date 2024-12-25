@@ -8,13 +8,13 @@ export default class MoveClickDecoder extends MessageDecoder<MoveClick> {
         super();
     }
 
-    decode(buf: Packet) {
+    decode(buf: Packet, length: number) {
         const ctrlHeld: number = buf.g1();
         const startX: number = buf.g2();
         const startZ: number = buf.g2();
 
         const offset: number = this.prot === ClientProt.MOVE_MINIMAPCLICK ? 14 : 0;
-        const waypoints: number = (buf.available - offset) >> 1;
+        const waypoints: number = (length - buf.pos - offset) / 2;
 
         const path: { x: number, z: number}[] = [
             { x: startX, z: startZ }

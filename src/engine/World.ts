@@ -1,13 +1,10 @@
 // stdlib
+import fs from 'fs';
 import { Worker as NodeWorker } from 'worker_threads';
 
 // deps
 import kleur from 'kleur';
-
-// jagex
-import LinkList from '#/util/LinkList.js';
-
-import { fromBase37, toBase37 } from '#/util/JString.js';
+import forge from 'node-forge';
 
 // lostcity
 import CategoryType from '#/cache/config/CategoryType.js';
@@ -32,13 +29,14 @@ import VarNpcType from '#/cache/config/VarNpcType.js';
 import VarPlayerType from '#/cache/config/VarPlayerType.js';
 import VarSharedType from '#/cache/config/VarSharedType.js';
 import WordEnc from '#/cache/wordenc/WordEnc.js';
+import { makeCrcs, makeCrcsAsync } from '#/cache/CrcTable.js';
+import { preloadClient, preloadClientAsync } from '#/cache/PreloadedPacks.js';
 
 import { CoordGrid } from '#/engine/CoordGrid.js';
 import GameMap, {changeLocCollision, changeNpcCollision, changePlayerCollision} from '#/engine/GameMap.js';
 import { Inventory } from '#/engine/Inventory.js';
 import WorldStat from '#/engine/WorldStat.js';
 
-import ScriptPointer from '#/engine/script/ScriptPointer.js';
 import ScriptProvider from '#/engine/script/ScriptProvider.js';
 import ScriptRunner from '#/engine/script/ScriptRunner.js';
 import ScriptState from '#/engine/script/ScriptState.js';
@@ -56,7 +54,7 @@ import Obj from '#/engine/entity/Obj.js';
 import Player from '#/engine/entity/Player.js';
 import EntityLifeCycle from '#/engine/entity/EntityLifeCycle.js';
 import { NpcList, PlayerList } from '#/engine/entity/EntityList.js';
-import { isClientConnected } from '#/engine/entity/NetworkPlayer.js';
+import { isClientConnected, NetworkPlayer } from '#/engine/entity/NetworkPlayer.js';
 import { EntityQueueState } from '#/engine/entity/EntityQueueRequest.js';
 import { PlayerTimerType } from '#/engine/entity/EntityTimer.js';
 
@@ -66,9 +64,9 @@ import UpdateIgnoreList from '#/network/server/model/UpdateIgnoreList.js';
 import MessagePrivate from '#/network/server/model/MessagePrivate.js';
 
 import ClientSocket from '#/server/ClientSocket.js';
-import { makeCrcs, makeCrcsAsync } from '#/cache/CrcTable.js';
-import { preloadClient, preloadClientAsync } from '#/cache/PreloadedPacks.js';
 import { FriendsServerOpcodes } from '#/server/friend/FriendServer.js';
+
+import Packet from '#/io/Packet.js';
 
 import Environment from '#/util/Environment.js';
 import { printDebug, printError, printInfo } from '#/util/Logger.js';
@@ -76,10 +74,20 @@ import { createWorker } from '#/util/WorkerFactory.js';
 import HuntModeType from '#/engine/entity/hunt/HuntModeType.js';
 import { trackCycleBandwidthInBytes, trackCycleBandwidthOutBytes, trackCycleClientInTime, trackCycleClientOutTime, trackCycleLoginTime, trackCycleLogoutTime, trackCycleNpcTime, trackCyclePlayerTime, trackCycleTime, trackCycleWorldTime, trackCycleZoneTime, trackNpcCount, trackPlayerCount } from '#/server/Metrics.js';
 import WalkTriggerSetting from '#/util/WalkTriggerSetting.js';
+import LinkList from '#/util/LinkList.js';
+import { fromBase37, toBase37, toSafeName } from '#/util/JString.js';
+import { PlayerLoading } from '#/engine/entity/PlayerLoading.js';
+import NullClientSocket from '#/server/NullClientSocket.js';
+import ScriptPointer from '#/engine/script/ScriptPointer.js';
+import Isaac from '#/io/Isaac.js';
+
+// todo: move to LoginThread
+// const priv = forge.pki.privateKeyFromPem(await (await fetch('data/config/private.pem')).text()); // worker code
+const priv = forge.pki.privateKeyFromPem(fs.readFileSync('data/config/private.pem', 'ascii'));
 
 class World {
-    private loginThread = createWorker(Environment.STANDALONE_BUNDLE ? 'LoginThread.js' : './lostcity/server/LoginThread.ts');
-    private friendThread = createWorker(Environment.STANDALONE_BUNDLE ? 'FriendThread.js' : './lostcity/server/FriendThread.ts');
+    private loginThread = createWorker(Environment.STANDALONE_BUNDLE ? 'LoginThread.js' : './server/login/LoginThread.ts');
+    private friendThread = createWorker(Environment.STANDALONE_BUNDLE ? 'FriendThread.js' : './server/friend/FriendThread.ts');
     private devThread: Worker | NodeWorker | null = null;
 
     private static readonly PLAYERS: number = 2048;
@@ -806,6 +814,58 @@ class World {
 
     private processLogins(): void {
         const start: number = Date.now();
+        player: for (const player of this.newPlayers) {
+            for (const other of this.players) {
+                if (player.username !== other.username) {
+                    continue;
+                }
+                if (isClientConnected(player)) {
+                    player.client.send(Uint8Array.from([ 5 ]));
+                    player.client.close();
+                }
+                continue player;
+            }
+
+            let pid: number;
+            try {
+                // if it throws then there was no available pid. otherwise guaranteed to not be -1.
+                pid = this.getNextPid(isClientConnected(player) ? player.client : null);
+            } catch (e) {
+                // world full
+                if (isClientConnected(player)) {
+                    player.client.send(Uint8Array.from([ 7 ]));
+                    player.client.close();
+                }
+                continue;
+            }
+
+            if (isClientConnected(player)) {
+                player.client.state = 1;
+
+                if (player.staffModLevel >= 2) {
+                    player.client.send(Uint8Array.from([ 18 ]));
+                } else if (player.reconnecting) {
+                    player.client.send(Uint8Array.from([ 15 ]));
+                } else {
+                    player.client.send(Uint8Array.from([ 2 ]));
+                }
+            }
+
+            // insert player into first available slot
+            this.players.set(pid, player);
+            player.pid = pid;
+            player.uid = ((Number(player.username37 & 0x1fffffn) << 11) | player.pid) >>> 0;
+            player.tele = true;
+            player.moveClickRequest = false;
+
+            this.gameMap.getZone(player.x, player.z, player.level).enter(player);
+            player.onLogin();
+
+            if (this.shutdownTick > -1) {
+                player.write(new UpdateRebootTimer(this.shutdownTick - this.currentTick));
+            }
+        }
+        this.newPlayers.clear();
         this.cycleStats[WorldStat.LOGIN] = Date.now() - start;
     }
 
@@ -1443,7 +1503,7 @@ class World {
     }
 
     private createDevThread() {
-        this.devThread = createWorker('./lostcity/server/DevThread.ts');
+        this.devThread = createWorker('./cache/DevThread.ts');
 
         if (this.devThread instanceof NodeWorker) {
             this.devThread.on('message', msg => {
@@ -1562,6 +1622,123 @@ class World {
         } catch (err) {
             console.log(err);
         }
+    }
+
+    static loginBuf = Packet.alloc(1);
+
+    onClientData(client: ClientSocket) {
+        if (client.state !== 0) {
+            // connection negotiation only
+            return;
+        }
+
+        if (client.available < 1) {
+            return;
+        }
+
+        if (client.opcode === -1) {
+            World.loginBuf.pos = 0;
+            client.read(World.loginBuf.data, 0, 1);
+
+            // todo: login encoders/decoders
+            client.opcode = World.loginBuf.g1();
+            client.waiting = client.opcode === 16 || client.opcode === 18 ? -1 : 0;
+        }
+
+        if (client.waiting === -1) {
+            World.loginBuf.pos = 0;
+            client.read(World.loginBuf.data, 0, 1);
+
+            client.waiting = World.loginBuf.g1();
+        } else if (client.waiting === -2) {
+            World.loginBuf.pos = 0;
+            client.read(World.loginBuf.data, 0, 2);
+
+            client.waiting = World.loginBuf.g2();
+        }
+
+        if (client.available < client.waiting) {
+            return;
+        }
+
+        World.loginBuf.pos = 0;
+        client.read(World.loginBuf.data, 0, client.waiting);
+
+        if (client.opcode === 16 || client.opcode === 18) {
+            const rev = World.loginBuf.g1();
+            if (rev !== 225) {
+                client.send(Uint8Array.from([ 6 ]));
+                client.close();
+                return;
+            }
+
+            const info = World.loginBuf.g1();
+            const lowMemory = (info & 0x1) !== 0;
+
+            const crcs = new Uint8Array(9 * 4);
+            World.loginBuf.gdata(crcs, 0, crcs.length);
+
+            World.loginBuf.rsadec(priv);
+
+            if (World.loginBuf.g1() !== 10) {
+                // RSA error
+                client.send(Uint8Array.from([ 11 ]));
+                client.close();
+                return;
+            }
+
+            const seed = [];
+            for (let i = 0; i < 4; i++) {
+                seed[i] = World.loginBuf.g4();
+            }
+            client.decryptor = new Isaac(seed);
+
+            for (let i = 0; i < 4; i++) {
+                seed[i] += 50;
+            }
+            client.encryptor = new Isaac(seed);
+
+            const uid = World.loginBuf.g4();
+            const username = World.loginBuf.gjstr();
+            const password = World.loginBuf.gjstr();
+
+            if (username.length < 1 || username.length > 12) {
+                client.send(Uint8Array.from([ 3 ]));
+                client.close();
+                return;
+            }
+
+            if (password.length < 1 || password.length > 20) {
+                client.send(Uint8Array.from([ 3 ]));
+                client.close();
+                return;
+            }
+
+            if (this.getTotalPlayers() > 2000) {
+                client.send(Uint8Array.from([ 7 ]));
+                client.close();
+                return;
+            }
+
+            const existing = this.getPlayerByUsername(username);
+            if (typeof existing !== 'undefined' && (client.opcode !== 18 || (existing instanceof NetworkPlayer && !(existing.client instanceof NullClientSocket)))) {
+                client.send(Uint8Array.from([ 5 ]));
+                client.close();
+                return;
+            }
+
+            const safeName = toSafeName(username);
+            const sav = fs.existsSync(`data/players/${safeName}.sav`) ? Packet.load(`data/players/${safeName}.sav`) : new Packet(new Uint8Array());
+            const player = PlayerLoading.load(safeName, sav, client);
+            player.reconnecting = client.opcode === 18;
+
+            this.newPlayers.add(player);
+            client.state = 1;
+        } else {
+            client.terminate();
+        }
+
+        client.opcode = -1;
     }
 }
 

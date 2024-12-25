@@ -11,7 +11,7 @@ export default abstract class ClientSocket {
     totalBytesRead = 0;
     totalBytesWritten = 0;
 
-    state = -1;
+    state = 0;
     player: NetworkPlayer | null = null;
     encryptor: Isaac | null = null;
     decryptor: Isaac | null = null;
@@ -26,8 +26,14 @@ export default abstract class ClientSocket {
         this.in.pdata(data, 0, data.length);
     }
 
+    // available bytes we can read
     get available() {
         return this.in.pos;
+    }
+
+    // remaining bytes we can buffer
+    get remaining() {
+        return this.in.length - this.in.pos;
     }
 
     read(dest: Uint8Array, offset: number, length: number) {

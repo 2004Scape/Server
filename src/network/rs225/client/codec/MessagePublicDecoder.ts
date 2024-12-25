@@ -7,11 +7,11 @@ import WordPack from '#/wordenc/WordPack.js';
 export default class MessagePublicDecoder extends MessageDecoder<MessagePublic> {
     prot = ClientProt.MESSAGE_PUBLIC;
 
-    decode(buf: Packet) {
+    decode(buf: Packet, length: number) {
         const color = buf.g1();
         const effect = buf.g1();
         // todo: do we want to unpack in the decoder or the handler?
-        const input = WordPack.unpack(buf, buf.length - 2);
+        const input = WordPack.unpack(buf, length - 2);
         return new MessagePublic(input, color, effect);
     }
 }

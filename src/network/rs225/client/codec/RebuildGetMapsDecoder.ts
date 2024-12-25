@@ -6,10 +6,10 @@ import RebuildGetMaps from '#/network/client/model/RebuildGetMaps.js';
 export default class RebuildGetMapsDecoder extends MessageDecoder<RebuildGetMaps> {
     prot = ClientProt.REBUILD_GETMAPS;
 
-    decode(buf: Packet) {
+    decode(buf: Packet, length: number) {
         const maps = [];
 
-        const count = buf.length / 3;
+        const count = length / 3;
         for (let i = 0; i < count; i++) {
             const type = buf.g1();
             const x = buf.g1();

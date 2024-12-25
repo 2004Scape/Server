@@ -7,9 +7,9 @@ import WordPack from '#/wordenc/WordPack.js';
 export default class MessagePrivateDecoder extends MessageDecoder<MessagePrivate> {
     prot = ClientProt.MESSAGE_PRIVATE;
 
-    decode(buf: Packet) {
+    decode(buf: Packet, length: number) {
         const username = buf.g8();
-        const input = WordPack.unpack(buf, buf.length - 8);
+        const input = WordPack.unpack(buf, length - 8);
         // todo: do we want to unpack in the decoder or the handler?
         return new MessagePrivate(username, input);
     }

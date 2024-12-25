@@ -36,9 +36,16 @@ import { printError } from '#/util/Logger.js';
 import NpcRenderer from '#/engine/renderer/NpcRenderer.js';
 import PlayerRenderer from '#/engine/renderer/PlayerRenderer.js';
 import NullClientSocket from '#/server/NullClientSocket.js';
+import Packet from '#/io/Packet.js';
+import ClientProt from '#/network/rs225/client/prot/ClientProt.js';
+import ClientProtRepository from '#/network/rs225/client/prot/ClientProtRepository.js';
+import ClientProtCategory from '#/network/client/prot/ClientProtCategory.js';
 
 export class NetworkPlayer extends Player {
     client: ClientSocket;
+    userLimit = 0; // user packet limit
+    clientLimit = 0; // client packet limit
+
     userPath: number[] = [];
     opcalled: boolean = false;
     opucalled: boolean = false;
@@ -59,11 +66,86 @@ export class NetworkPlayer extends Player {
             return false;
         }
 
-        if (this.client.in.pos > 0) {
+        this.userLimit = 0;
+        this.clientLimit = 0;
+
+        const bytesStart = this.client.in.pos;
+        while (this.userLimit < 5 && this.clientLimit < 50 && this.read()) {
+            // empty
+        }
+        const bytesRead = bytesStart - this.client.in.pos;
+
+        if (bytesRead > 0) {
             this.lastResponse = World.currentTick;
-            World.cycleStats[WorldStat.BANDWIDTH_IN] += this.client.in.pos;
+            World.cycleStats[WorldStat.BANDWIDTH_IN] += bytesRead;
         }
 
+        return true;
+    }
+
+    static inBuf = Packet.alloc(1);
+
+    read(): boolean {
+        if (this.client.available < 1) {
+            return false;
+        }
+
+        if (this.client.opcode === -1) {
+            NetworkPlayer.inBuf.pos = 0;
+            this.client.read(NetworkPlayer.inBuf.data, 0, 1);
+
+            if (this.client.decryptor) {
+                this.client.opcode = (NetworkPlayer.inBuf.g1() - this.client.decryptor.nextInt()) & 0xFF;
+            } else {
+                this.client.opcode = NetworkPlayer.inBuf.g1();
+            }
+
+            const packetType = ClientProt.byId[this.client.opcode];
+            if (!packetType) {
+                this.client.opcode = -1;
+                return false;
+            }
+
+            this.client.waiting = packetType.length;
+        }
+
+        if (this.client.waiting === -1) {
+            NetworkPlayer.inBuf.pos = 0;
+            this.client.read(NetworkPlayer.inBuf.data, 0, 1);
+
+            this.client.waiting = NetworkPlayer.inBuf.g1();
+        } else if (this.client.waiting === -2) {
+            NetworkPlayer.inBuf.pos = 0;
+            this.client.read(NetworkPlayer.inBuf.data, 0, 2);
+
+            this.client.waiting = NetworkPlayer.inBuf.g2();
+        }
+
+        if (this.client.available < this.client.waiting) {
+            return false;
+        }
+
+        NetworkPlayer.inBuf.pos = 0;
+        this.client.read(NetworkPlayer.inBuf.data, 0, this.client.waiting);
+
+        const packetType = ClientProt.byId[this.client.opcode];
+        const decoder = ClientProtRepository.getDecoder(packetType);
+
+        if (decoder) {
+            const message = decoder.decode(NetworkPlayer.inBuf, this.client.waiting);
+
+            // todo: move out of model
+            if (message.category === ClientProtCategory.USER_EVENT) {
+                this.userLimit++;
+            } else if (message.category === ClientProtCategory.CLIENT_EVENT) {
+                this.clientLimit++;
+            }
+
+            const handler = ClientProtRepository.getHandler(packetType)!;
+            handler.handle(message, this);
+        }
+
+        this.client.opcode = -1;
         return true;
     }
 
@@ -108,35 +190,45 @@ export class NetworkPlayer extends Player {
         if (!client) {
             return;
         }
+
         const encoder: MessageEncoder<OutgoingMessage> | undefined = ServerProtRepository.getEncoder(message);
         if (!encoder) {
             printError(`No encoder for message ${message.constructor.name}`);
             return;
         }
+
         const prot: ServerProt = encoder.prot;
         const buf = client.out;
         // const test = (1 + (prot.length === -1 ? 1 : prot.length === -2 ? 2 : 0)) + encoder.test(message);
         // if (buf.pos + test >= buf.length) {
         //     client.flush();
         // }
-        const pos: number = buf.pos;
-        buf.p1(prot.id);
-        if (prot.length === -1) {
-            buf.pos += 1;
-        } else if (prot.length === -2) {
-            buf.pos += 2;
+
+        buf.pos = 0;
+
+        if (client.encryptor) {
+            buf.p1(prot.id + client.encryptor.nextInt());
+        } else {
+            buf.p1(prot.id);
         }
+
+        if (prot.length === -1) {
+            buf.p1(0);
+        } else if (prot.length === -2) {
+            buf.p2(0);
+        }
+
         const start: number = buf.pos;
         encoder.encode(buf, message);
+
         if (prot.length === -1) {
             buf.psize1(buf.pos - start);
         } else if (prot.length === -2) {
             buf.psize2(buf.pos - start);
         }
-        if (client.encryptor) {
-            buf.data[pos] = (buf.data[pos] + client.encryptor.nextInt()) & 0xff;
-        }
-        World.cycleStats[WorldStat.BANDWIDTH_OUT] += buf.pos - pos;
+
+        this.client.send(buf.data.subarray(0, buf.pos));
+        World.cycleStats[WorldStat.BANDWIDTH_OUT] += buf.pos;
     }
 
     override logout() {

@@ -6,7 +6,7 @@ class TsWorker extends NodeWorker {
     constructor(filename: string | URL, options: WorkerOptions = {}) {
         options.workerData ??= {};
         options.workerData.__ts_worker_filename = filename.toString();
-        super(new URL('./worker.mjs', import.meta.url), options);
+        super(new URL('../worker.mjs', import.meta.url), options);
     }
 }
 

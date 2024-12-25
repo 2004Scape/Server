@@ -242,6 +242,7 @@ export default class Player extends PathingEntity {
     // runtime variables
     pid: number = -1;
     uid: number = -1;
+    reconnecting: boolean = false;
     lowMemory: boolean = false;
     webClient: boolean = false;
     combatLevel: number = 3;
