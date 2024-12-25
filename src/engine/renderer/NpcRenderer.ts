@@ -1,6 +1,6 @@
 import InfoProt from '#/network/225/outgoing/prot/InfoProt.js';
 import Renderer from '#/engine/renderer/Renderer.js';
-import Npc from '#/entity/Npc.js';
+import Npc from '#/engine/entity/Npc.js';
 import NpcInfoAnim from '#/network/outgoing/model/NpcInfoAnim.js';
 import NpcInfoFaceEntity from '#/network/outgoing/model/NpcInfoFaceEntity.js';
 import NpcInfoSay from '#/network/outgoing/model/NpcInfoSay.js';
@@ -8,7 +8,7 @@ import NpcInfoDamage from '#/network/outgoing/model/NpcInfoDamage.js';
 import NpcInfoChangeType from '#/network/outgoing/model/NpcInfoChangeType.js';
 import NpcInfoSpotanim from '#/network/outgoing/model/NpcInfoSpotanim.js';
 import NpcInfoFaceCoord from '#/network/outgoing/model/NpcInfoFaceCoord.js';
-import NpcStat from '#/entity/NpcStat.js';
+import NpcStat from '#/engine/entity/NpcStat.js';
 
 export default class NpcRenderer extends Renderer<Npc> {
     constructor() {

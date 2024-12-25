@@ -2,7 +2,7 @@ import fs from 'fs';
 
 import InvType from '#/cache/config/InvType.js';
 
-import { PlayerLoading } from '#/entity/PlayerLoading.js';
+import { PlayerLoading } from '#/engine/entity/PlayerLoading.js';
 import { printError } from '#/util/Logger.js';
 
 InvType.load('data/pack');

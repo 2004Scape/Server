@@ -2,7 +2,7 @@ import fs from 'fs';
 
 import { listFilesExt, loadDirExtFull, loadFile } from '#/util/Parse.js';
 import { basename, dirname } from 'path';
-import Environment from './Environment.js';
+import Environment from '#/util/Environment.js';
 
 // eslint-disable-next-line @typescript-eslint/no-explicit-any
 type PackFileValidator = (packfile: PackFile, ...args: any[]) => void;

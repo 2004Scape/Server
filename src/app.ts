@@ -4,7 +4,7 @@ import { startManagementWeb, startWeb } from '#/web.js';
 
 import World from '#/engine/World.js';
 
-import { packClient, packServer } from '#/pack/packall.js';
+import { packClient, packServer } from '#/cache/PackAll.js';
 
 import TcpServer from '#/server/tcp/TcpServer.js';
 import WSServer from '#/server/ws/WSServer.js';

@@ -2,9 +2,9 @@ import MessageHandler from '#/network/incoming/handler/MessageHandler.js';
 import OpPlayerT from '#/network/incoming/model/OpPlayerT.js';
 import Component from '#/cache/config/Component.js';
 import World from '#/engine/World.js';
-import Interaction from '#/entity/Interaction.js';
+import Interaction from '#/engine/entity/Interaction.js';
 import ServerTriggerType from '#/engine/script/ServerTriggerType.js';
-import { NetworkPlayer } from '#/entity/NetworkPlayer.js';
+import { NetworkPlayer } from '#/engine/entity/NetworkPlayer.js';
 import UnsetMapFlag from '#/network/outgoing/model/UnsetMapFlag.js';
 
 export default class OpPlayerTHandler extends MessageHandler<OpPlayerT> {

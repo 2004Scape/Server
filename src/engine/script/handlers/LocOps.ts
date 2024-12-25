@@ -10,9 +10,9 @@ import ScriptPointer, {ActiveLoc, checkedHandler} from '#/engine/script/ScriptPo
 import {CommandHandlers} from '#/engine/script/ScriptRunner.js';
 import {LocIterator} from '#/engine/script/ScriptIterators.js';
 
-import Loc from '#/entity/Loc.js';
+import Loc from '#/engine/entity/Loc.js';
 import {CoordGrid} from '#/engine/CoordGrid.js';
-import EntityLifeCycle from '#/entity/EntityLifeCycle.js';
+import EntityLifeCycle from '#/engine/entity/EntityLifeCycle.js';
 
 import {
     check,

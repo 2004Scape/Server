@@ -10,9 +10,9 @@ import ScriptOpcode from '#/engine/script/ScriptOpcode.js';
 import {ActiveObj, ActivePlayer} from '#/engine/script/ScriptPointer.js';
 import {CommandHandlers} from '#/engine/script/ScriptRunner.js';
 
-import Obj from '#/entity/Obj.js';
+import Obj from '#/engine/entity/Obj.js';
 import {CoordGrid} from '#/engine/CoordGrid.js';
-import EntityLifeCycle from '#/entity/EntityLifeCycle.js';
+import EntityLifeCycle from '#/engine/entity/EntityLifeCycle.js';
 
 import {
     check,

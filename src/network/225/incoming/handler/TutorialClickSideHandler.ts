@@ -1,5 +1,5 @@
 import MessageHandler from '#/network/incoming/handler/MessageHandler.js';
-import Player from '#/entity/Player.js';
+import Player from '#/engine/entity/Player.js';
 import TutorialClickSide from '#/network/incoming/model/TutorialClickSide.js';
 import ScriptProvider from '#/engine/script/ScriptProvider.js';
 import ServerTriggerType from '#/engine/script/ServerTriggerType.js';

@@ -1,5 +1,5 @@
 import MessageHandler from '#/network/incoming/handler/MessageHandler.js';
-import Player from '#/entity/Player.js';
+import Player from '#/engine/entity/Player.js';
 import FriendListAdd from '#/network/incoming/model/FriendListAdd.js';
 import World from '#/engine/World.js';
 

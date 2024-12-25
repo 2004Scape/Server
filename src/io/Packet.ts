@@ -6,8 +6,8 @@ import forge from 'node-forge';
 import PrivateKey = forge.pki.rsa.PrivateKey;
 import BigInteger = forge.jsbn.BigInteger;
 
-import LinkList from '#/datastruct/LinkList.js';
-import DoublyLinkable from '#/datastruct/DoublyLinkable.js';
+import LinkList from '#/util/LinkList.js';
+import DoublyLinkable from '#/util/DoublyLinkable.js';
 import Environment from '#/util/Environment.js';
 
 export default class Packet extends DoublyLinkable {

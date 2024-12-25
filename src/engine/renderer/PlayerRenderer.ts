@@ -1,4 +1,4 @@
-import Player from '#/entity/Player.js';
+import Player from '#/engine/entity/Player.js';
 import InfoProt from '#/network/225/outgoing/prot/InfoProt.js';
 import PlayerInfoAppearance from '#/network/outgoing/model/PlayerInfoAppearance.js';
 import PlayerInfoAnim from '#/network/outgoing/model/PlayerInfoAnim.js';
@@ -9,7 +9,7 @@ import PlayerInfoChat from '#/network/outgoing/model/PlayerInfoChat.js';
 import PlayerInfoSpotanim from '#/network/outgoing/model/PlayerInfoSpotanim.js';
 import Renderer from '#/engine/renderer/Renderer.js';
 import PlayerInfoDamage from '#/network/outgoing/model/PlayerInfoDamage.js';
-import PlayerStat from '#/entity/PlayerStat.js';
+import PlayerStat from '#/engine/entity/PlayerStat.js';
 import InfoMessage from '#/network/outgoing/InfoMessage.js';
 import Packet from '#/io/Packet.js';
 import PlayerInfoExactMove from '#/network/outgoing/model/PlayerInfoExactMove.js';

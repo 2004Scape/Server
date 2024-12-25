@@ -1,9 +1,9 @@
 import MessageHandler from '#/network/incoming/handler/MessageHandler.js';
 import World from '#/engine/World.js';
 import ObjType from '#/cache/config/ObjType.js';
-import Interaction from '#/entity/Interaction.js';
+import Interaction from '#/engine/entity/Interaction.js';
 import ServerTriggerType from '#/engine/script/ServerTriggerType.js';
-import { NetworkPlayer } from '#/entity/NetworkPlayer.js';
+import { NetworkPlayer } from '#/engine/entity/NetworkPlayer.js';
 import OpPlayerU from '#/network/incoming/model/OpPlayerU.js';
 import Component from '#/cache/config/Component.js';
 import Environment from '#/util/Environment.js';

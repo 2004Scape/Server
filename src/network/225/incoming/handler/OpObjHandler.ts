@@ -3,8 +3,8 @@ import ObjType from '#/cache/config/ObjType.js';
 import World from '#/engine/World.js';
 import OpObj from '#/network/incoming/model/OpObj.js';
 import ServerTriggerType from '#/engine/script/ServerTriggerType.js';
-import Interaction from '#/entity/Interaction.js';
-import { NetworkPlayer } from '#/entity/NetworkPlayer.js';
+import Interaction from '#/engine/entity/Interaction.js';
+import { NetworkPlayer } from '#/engine/entity/NetworkPlayer.js';
 import UnsetMapFlag from '#/network/outgoing/model/UnsetMapFlag.js';
 
 export default class OpObjHandler extends MessageHandler<OpObj> {

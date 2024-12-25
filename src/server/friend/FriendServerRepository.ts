@@ -1,4 +1,4 @@
-import { fromBase37, toBase37 } from '#/jstring/JString.js';
+import { fromBase37, toBase37 } from '#/util/JString.js';
 
 import { db } from '#/db/query.js';
 import { ChatModePrivate } from '#/util/ChatModes.js';

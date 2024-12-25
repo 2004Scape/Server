@@ -13,11 +13,11 @@ import {ActiveNpc, ActivePlayer} from '#/engine/script/ScriptPointer.js';
 import {HuntIterator, NpcHuntAllCommandIterator} from '#/engine/script/ScriptIterators.js';
 
 import { CoordGrid } from '#/engine/CoordGrid.js';
-import MapFindSqaureType from '#/entity/MapFindSquareType.js';
-import HuntModeType from '#/entity/hunt/HuntModeType.js';
-import Player from '#/entity/Player.js';
-import Npc from '#/entity/Npc.js';
-import HuntVis from '#/entity/hunt/HuntVis.js';
+import MapFindSqaureType from '#/engine/entity/MapFindSquareType.js';
+import HuntModeType from '#/engine/entity/hunt/HuntModeType.js';
+import Player from '#/engine/entity/Player.js';
+import Npc from '#/engine/entity/Npc.js';
+import HuntVis from '#/engine/entity/hunt/HuntVis.js';
 
 import Environment from '#/util/Environment.js';
 

@@ -1,6 +1,6 @@
 import fs from 'fs';
 
-import { fromBase37 } from '#/jstring/JString.js';
+import { fromBase37 } from '#/util/JString.js';
 import { printFatalError } from '#/util/Logger.js';
 
 const args = process.argv.slice(2);

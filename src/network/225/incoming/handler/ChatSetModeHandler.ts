@@ -1,5 +1,5 @@
 import MessageHandler from '#/network/incoming/handler/MessageHandler.js';
-import Player from '#/entity/Player.js';
+import Player from '#/engine/entity/Player.js';
 import ChatSetMode from '#/network/incoming/model/ChatSetMode.js';
 import World from '#/engine/World.js';
 

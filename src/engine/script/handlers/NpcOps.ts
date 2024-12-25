@@ -13,16 +13,16 @@ import ScriptState from '#/engine/script/ScriptState.js';
 import ServerTriggerType from '#/engine/script/ServerTriggerType.js';
 import {NpcIterator} from '#/engine/script/ScriptIterators.js';
 
-import Loc from '#/entity/Loc.js';
-import Obj from '#/entity/Obj.js';
+import Loc from '#/engine/entity/Loc.js';
+import Obj from '#/engine/entity/Obj.js';
 import { CoordGrid } from '#/engine/CoordGrid.js';
-import NpcIteratorType from '#/entity/NpcIteratorType.js';
-import Npc from '#/entity/Npc.js';
-import NpcMode from '#/entity/NpcMode.js';
-import Entity from '#/entity/Entity.js';
-import Interaction from '#/entity/Interaction.js';
-import HuntVis from '#/entity/hunt/HuntVis.js';
-import EntityLifeCycle from '#/entity/EntityLifeCycle.js';
+import NpcIteratorType from '#/engine/entity/NpcIteratorType.js';
+import Npc from '#/engine/entity/Npc.js';
+import NpcMode from '#/engine/entity/NpcMode.js';
+import Entity from '#/engine/entity/Entity.js';
+import Interaction from '#/engine/entity/Interaction.js';
+import HuntVis from '#/engine/entity/hunt/HuntVis.js';
+import EntityLifeCycle from '#/engine/entity/EntityLifeCycle.js';
 
 import {
     check,

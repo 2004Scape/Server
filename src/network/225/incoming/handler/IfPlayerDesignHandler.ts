@@ -1,5 +1,5 @@
 import MessageHandler from '#/network/incoming/handler/MessageHandler.js';
-import Player from '#/entity/Player.js';
+import Player from '#/engine/entity/Player.js';
 import IfPlayerDesign from '#/network/incoming/model/IfPlayerDesign.js';
 import IdkType from '#/cache/config/IdkType.js';
 import InvType from '#/cache/config/InvType.js';

@@ -1,4 +1,4 @@
-import Entity from '#/entity/Entity.js';
+import Entity from '#/engine/entity/Entity.js';
 import InfoMessage from '#/network/outgoing/InfoMessage.js';
 import InfoMessageEncoder from '#/network/outgoing/codec/InfoMessageEncoder.js';
 import ServerProtRepository from '#/network/225/outgoing/prot/ServerProtRepository.js';

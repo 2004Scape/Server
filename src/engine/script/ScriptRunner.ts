@@ -19,12 +19,12 @@ import PlayerOps from '#/engine/script/handlers/PlayerOps.js';
 import ServerOps from '#/engine/script/handlers/ServerOps.js';
 import StringOps from '#/engine/script/handlers/StringOps.js';
 
-import Entity from '#/entity/Entity.js';
-import { ScriptArgument } from '#/entity/EntityQueueRequest.js';
-import Loc from '#/entity/Loc.js';
-import Obj from '#/entity/Obj.js';
-import Npc from '#/entity/Npc.js';
-import Player from '#/entity/Player.js';
+import Entity from '#/engine/entity/Entity.js';
+import { ScriptArgument } from '#/engine/entity/EntityQueueRequest.js';
+import Loc from '#/engine/entity/Loc.js';
+import Obj from '#/engine/entity/Obj.js';
+import Npc from '#/engine/entity/Npc.js';
+import Player from '#/engine/entity/Player.js';
 import Environment from '#/util/Environment.js';
 import { printWarning } from '#/util/Logger.js';
 

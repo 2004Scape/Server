@@ -16,10 +16,10 @@ import Zone from '#/engine/zone/Zone.js';
 import ZoneGrid from '#/engine/zone/ZoneGrid.js';
 import ZoneMap from '#/engine/zone/ZoneMap.js';
 
-import Npc from '#/entity/Npc.js';
-import Obj from '#/entity/Obj.js';
-import EntityLifeCycle from '#/entity/EntityLifeCycle.js';
-import Loc from '#/entity/Loc.js';
+import Npc from '#/engine/entity/Npc.js';
+import Obj from '#/engine/entity/Obj.js';
+import EntityLifeCycle from '#/engine/entity/EntityLifeCycle.js';
+import Loc from '#/engine/entity/Loc.js';
 
 import { printDebug, printWarning } from '#/util/Logger.js';
 

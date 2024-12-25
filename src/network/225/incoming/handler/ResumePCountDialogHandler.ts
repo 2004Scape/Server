@@ -1,5 +1,5 @@
 import MessageHandler from '#/network/incoming/handler/MessageHandler.js';
-import Player from '#/entity/Player.js';
+import Player from '#/engine/entity/Player.js';
 import ScriptState from '#/engine/script/ScriptState.js';
 import ResumePCountDialog from '#/network/incoming/model/ResumePCountDialog.js';
 

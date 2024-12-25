@@ -5,11 +5,11 @@ import Packet from '#/io/Packet.js';
 import { ConfigType } from '#/cache/config/ConfigType.js';
 import { ParamHelper, ParamMap } from '#/cache/config/ParamHelper.js';
 
-import BlockWalk from '#/entity/BlockWalk.js';
-import MoveRestrict from '#/entity/MoveRestrict.js';
-import NpcMode from '#/entity/NpcMode.js';
+import BlockWalk from '#/engine/entity/BlockWalk.js';
+import MoveRestrict from '#/engine/entity/MoveRestrict.js';
+import NpcMode from '#/engine/entity/NpcMode.js';
 import Jagfile from '#/io/Jagfile.js';
-import NpcStat from '#/entity/NpcStat.js';
+import NpcStat from '#/engine/entity/NpcStat.js';
 
 export default class NpcType extends ConfigType {
     static configNames = new Map();

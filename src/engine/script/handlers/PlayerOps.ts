@@ -13,14 +13,14 @@ import { CommandHandlers } from '#/engine/script/ScriptRunner.js';
 import ScriptState from '#/engine/script/ScriptState.js';
 import ServerTriggerType from '#/engine/script/ServerTriggerType.js';
 
-import { PlayerQueueType, ScriptArgument } from '#/entity/EntityQueueRequest.js';
-import { PlayerTimerType } from '#/entity/EntityTimer.js';
-import { isBufferFull, isClientConnected } from '#/entity/NetworkPlayer.js';
+import { PlayerQueueType, ScriptArgument } from '#/engine/entity/EntityQueueRequest.js';
+import { PlayerTimerType } from '#/engine/entity/EntityTimer.js';
+import { isBufferFull, isClientConnected } from '#/engine/entity/NetworkPlayer.js';
 import { CoordGrid } from '#/engine/CoordGrid.js';
-import CameraInfo from '#/entity/CameraInfo.js';
-import Interaction from '#/entity/Interaction.js';
-import PlayerStat from '#/entity/PlayerStat.js';
-import Player from '#/entity/Player.js';
+import CameraInfo from '#/engine/entity/CameraInfo.js';
+import Interaction from '#/engine/entity/Interaction.js';
+import PlayerStat from '#/engine/entity/PlayerStat.js';
+import Player from '#/engine/entity/Player.js';
 
 import ServerProt from '#/network/225/outgoing/prot/ServerProt.js';
 import CamShake from '#/network/outgoing/model/CamShake.js';

@@ -3,8 +3,8 @@ import OpLoc from '#/network/incoming/model/OpLoc.js';
 import World from '#/engine/World.js';
 import LocType from '#/cache/config/LocType.js';
 import ServerTriggerType from '#/engine/script/ServerTriggerType.js';
-import Interaction from '#/entity/Interaction.js';
-import { NetworkPlayer } from '#/entity/NetworkPlayer.js';
+import Interaction from '#/engine/entity/Interaction.js';
+import { NetworkPlayer } from '#/engine/entity/NetworkPlayer.js';
 import UnsetMapFlag from '#/network/outgoing/model/UnsetMapFlag.js';
 
 export default class OpLocHandler extends MessageHandler<OpLoc> {

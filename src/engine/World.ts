@@ -5,9 +5,9 @@ import { Worker as NodeWorker } from 'worker_threads';
 import kleur from 'kleur';
 
 // jagex
-import LinkList from '#/datastruct/LinkList.js';
+import LinkList from '#/util/LinkList.js';
 
-import { fromBase37, toBase37 } from '#/jstring/JString.js';
+import { fromBase37, toBase37 } from '#/util/JString.js';
 
 // lostcity
 import CategoryType from '#/cache/config/CategoryType.js';
@@ -49,16 +49,16 @@ import NpcRenderer from '#/engine/renderer/NpcRenderer.js';
 
 import InfoProt from '#/network/225/outgoing/prot/InfoProt.js';
 
-import BlockWalk from '#/entity/BlockWalk.js';
-import Loc from '#/entity/Loc.js';
-import Npc from '#/entity/Npc.js';
-import Obj from '#/entity/Obj.js';
-import Player from '#/entity/Player.js';
-import EntityLifeCycle from '#/entity/EntityLifeCycle.js';
-import { NpcList, PlayerList } from '#/entity/EntityList.js';
-import { isClientConnected } from '#/entity/NetworkPlayer.js';
-import { EntityQueueState } from '#/entity/EntityQueueRequest.js';
-import { PlayerTimerType } from '#/entity/EntityTimer.js';
+import BlockWalk from '#/engine/entity/BlockWalk.js';
+import Loc from '#/engine/entity/Loc.js';
+import Npc from '#/engine/entity/Npc.js';
+import Obj from '#/engine/entity/Obj.js';
+import Player from '#/engine/entity/Player.js';
+import EntityLifeCycle from '#/engine/entity/EntityLifeCycle.js';
+import { NpcList, PlayerList } from '#/engine/entity/EntityList.js';
+import { isClientConnected } from '#/engine/entity/NetworkPlayer.js';
+import { EntityQueueState } from '#/engine/entity/EntityQueueRequest.js';
+import { PlayerTimerType } from '#/engine/entity/EntityTimer.js';
 
 import UpdateRebootTimer from '#/network/outgoing/model/UpdateRebootTimer.js';
 import UpdateFriendList from '#/network/outgoing/model/UpdateFriendList.js';
@@ -73,7 +73,7 @@ import { FriendsServerOpcodes } from '#/server/friend/FriendServer.js';
 import Environment from '#/util/Environment.js';
 import { printDebug, printError, printInfo } from '#/util/Logger.js';
 import { createWorker } from '#/util/WorkerFactory.js';
-import HuntModeType from '#/entity/hunt/HuntModeType.js';
+import HuntModeType from '#/engine/entity/hunt/HuntModeType.js';
 import { trackCycleBandwidthInBytes, trackCycleBandwidthOutBytes, trackCycleClientInTime, trackCycleClientOutTime, trackCycleLoginTime, trackCycleLogoutTime, trackCycleNpcTime, trackCyclePlayerTime, trackCycleTime, trackCycleWorldTime, trackCycleZoneTime, trackNpcCount, trackPlayerCount } from '#/server/Metrics.js';
 import WalkTriggerSetting from '#/util/WalkTriggerSetting.js';
 

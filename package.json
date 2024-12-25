@@ -4,7 +4,8 @@
   "type": "module",
   "imports": {
     "#3rdparty/*": "./src/3rdparty/*",
-    "#/*": "./src/*"
+    "#/*": "./src/*",
+    "#tools/*": "./tools/*"
   },
   "scripts": {
     "build": "tsx tools/cache/pack.ts",

@@ -1,6 +1,6 @@
 import 'dotenv/config';
-import { tryParseArray, tryParseBoolean, tryParseInt, tryParseString } from './TryParse.js';
-import WalkTriggerSetting from './WalkTriggerSetting.js';
+import { tryParseArray, tryParseBoolean, tryParseInt, tryParseString } from '#/util/TryParse.js';
+import WalkTriggerSetting from '#/util/WalkTriggerSetting.js';
 
 export default {
     // bundler/webrtc browser mode

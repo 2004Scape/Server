@@ -1,5 +1,5 @@
 import MessageHandler from '#/network/incoming/handler/MessageHandler.js';
-import Player from '#/entity/Player.js';
+import Player from '#/engine/entity/Player.js';
 import MessagePublic from '#/network/incoming/model/MessagePublic.js';
 import Packet from '#/io/Packet.js';
 import WordPack from '#/wordenc/WordPack.js';

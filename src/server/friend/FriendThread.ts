@@ -1,7 +1,7 @@
 import { parentPort } from 'worker_threads';
 
 import Environment from '#/util/Environment.js';
-import { FriendClient } from './FriendServer.js';
+import { FriendClient } from '#/server/friend/FriendServer.js';
 
 const client = new FriendClient(Environment.NODE_ID);
 

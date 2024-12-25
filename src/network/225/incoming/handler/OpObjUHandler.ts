@@ -3,9 +3,9 @@ import OpObjU from '#/network/incoming/model/OpObjU.js';
 import Component from '#/cache/config/Component.js';
 import World from '#/engine/World.js';
 import ObjType from '#/cache/config/ObjType.js';
-import Interaction from '#/entity/Interaction.js';
+import Interaction from '#/engine/entity/Interaction.js';
 import ServerTriggerType from '#/engine/script/ServerTriggerType.js';
-import { NetworkPlayer } from '#/entity/NetworkPlayer.js';
+import { NetworkPlayer } from '#/engine/entity/NetworkPlayer.js';
 import Environment from '#/util/Environment.js';
 import UnsetMapFlag from '#/network/outgoing/model/UnsetMapFlag.js';
 

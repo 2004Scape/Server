@@ -1,9 +1,9 @@
-import Loc from '#/entity/Loc.js';
-import Npc from '#/entity/Npc.js';
-import Obj from '#/entity/Obj.js';
-import Player from '#/entity/Player.js';
-import PathingEntity from '#/entity/PathingEntity.js';
-import EntityLifeCycle from '#/entity/EntityLifeCycle.js';
+import Loc from '#/engine/entity/Loc.js';
+import Npc from '#/engine/entity/Npc.js';
+import Obj from '#/engine/entity/Obj.js';
+import Player from '#/engine/entity/Player.js';
+import PathingEntity from '#/engine/entity/PathingEntity.js';
+import EntityLifeCycle from '#/engine/entity/EntityLifeCycle.js';
 import {CoordGrid} from '#/engine/CoordGrid.js';
 
 import World from '#/engine/World.js';
@@ -28,7 +28,7 @@ import ServerProtRepository from '#/network/225/outgoing/prot/ServerProtReposito
 import ZoneMessageEncoder from '#/network/outgoing/codec/ZoneMessageEncoder.js';
 import ZoneMessage from '#/network/outgoing/ZoneMessage.js';
 import ZoneEntityList, {LocList, ObjList} from '#/engine/zone/ZoneEntityList.js';
-import NonPathingEntity from '#/entity/NonPathingEntity.js';
+import NonPathingEntity from '#/engine/entity/NonPathingEntity.js';
 import ObjType from '#/cache/config/ObjType.js';
 import Environment from '#/util/Environment.js';
 

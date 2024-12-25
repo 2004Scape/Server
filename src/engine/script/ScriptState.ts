@@ -4,12 +4,12 @@ import ScriptFile from '#/engine/script/ScriptFile.js';
 import ScriptPointer from '#/engine/script/ScriptPointer.js';
 import ServerTriggerType from '#/engine/script/ServerTriggerType.js';
 
-import Entity from '#/entity/Entity.js';
-import { ScriptArgument } from '#/entity/EntityQueueRequest.js';
-import Loc from '#/entity/Loc.js';
-import Obj from '#/entity/Obj.js';
-import Npc from '#/entity/Npc.js';
-import Player from '#/entity/Player.js';
+import Entity from '#/engine/entity/Entity.js';
+import { ScriptArgument } from '#/engine/entity/EntityQueueRequest.js';
+import Loc from '#/engine/entity/Loc.js';
+import Obj from '#/engine/entity/Obj.js';
+import Npc from '#/engine/entity/Npc.js';
+import Player from '#/engine/entity/Player.js';
 
 import { toInt32 } from '#/util/Numbers.js';
 

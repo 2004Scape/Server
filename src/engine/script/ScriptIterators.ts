@@ -5,12 +5,12 @@ import NpcType from '#/cache/config/NpcType.js';
 import World from '#/engine/World.js';
 import {CoordGrid} from '#/engine/CoordGrid.js';
 
-import Loc from '#/entity/Loc.js';
-import HuntVis from '#/entity/hunt/HuntVis.js';
-import Npc from '#/entity/Npc.js';
-import HuntModeType from '#/entity/hunt/HuntModeType.js';
-import NpcIteratorType from '#/entity/NpcIteratorType.js';
-import Entity from '#/entity/Entity.js';
+import Loc from '#/engine/entity/Loc.js';
+import HuntVis from '#/engine/entity/hunt/HuntVis.js';
+import Npc from '#/engine/entity/Npc.js';
+import HuntModeType from '#/engine/entity/hunt/HuntModeType.js';
+import NpcIteratorType from '#/engine/entity/NpcIteratorType.js';
+import Entity from '#/engine/entity/Entity.js';
 
 import {isLineOfSight, isLineOfWalk} from '#/engine/GameMap.js';
 

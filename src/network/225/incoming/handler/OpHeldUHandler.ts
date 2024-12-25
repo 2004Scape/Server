@@ -1,5 +1,5 @@
 import MessageHandler from '#/network/incoming/handler/MessageHandler.js';
-import Player from '#/entity/Player.js';
+import Player from '#/engine/entity/Player.js';
 import OpHeldU from '#/network/incoming/model/OpHeldU.js';
 import Component from '#/cache/config/Component.js';
 import ObjType from '#/cache/config/ObjType.js';

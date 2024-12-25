@@ -1,6 +1,6 @@
 import MessageHandler from '#/network/incoming/handler/MessageHandler.js';
 import MoveClick from '#/network/incoming/model/MoveClick.js';
-import { NetworkPlayer } from '#/entity/NetworkPlayer.js';
+import { NetworkPlayer } from '#/engine/entity/NetworkPlayer.js';
 import { CoordGrid } from '#/engine/CoordGrid.js';
 import Environment from '#/util/Environment.js';
 import VarPlayerType from '#/cache/config/VarPlayerType.js';

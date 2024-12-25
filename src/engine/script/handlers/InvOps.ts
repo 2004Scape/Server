@@ -9,10 +9,10 @@ import ScriptOpcode from '#/engine/script/ScriptOpcode.js';
 import {CommandHandlers} from '#/engine/script/ScriptRunner.js';
 import {ActiveObj, ActivePlayer, checkedHandler, ProtectedActivePlayer} from '#/engine/script/ScriptPointer.js';
 
-import Obj from '#/entity/Obj.js';
+import Obj from '#/engine/entity/Obj.js';
 import {CoordGrid} from '#/engine/CoordGrid.js';
-import EntityLifeCycle from '#/entity/EntityLifeCycle.js';
-import Player from '#/entity/Player.js';
+import EntityLifeCycle from '#/engine/entity/EntityLifeCycle.js';
+import Player from '#/engine/entity/Player.js';
 
 import {
     CategoryTypeValid,

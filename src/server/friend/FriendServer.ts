@@ -1,7 +1,7 @@
 import { WebSocket, WebSocketServer } from 'ws';
 import WsSyncReq from '#3rdparty/ws-sync/ws-sync.js';
 
-import { fromBase37, toBase37 } from '#/jstring/JString.js';
+import { fromBase37, toBase37 } from '#/util/JString.js';
 
 import { FriendServerRepository } from '#/server/friend/FriendServerRepository.js';
 

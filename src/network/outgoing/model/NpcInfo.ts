@@ -1,6 +1,6 @@
 import OutgoingMessage from '#/network/outgoing/OutgoingMessage.js';
 import ServerProtPriority from '#/network/outgoing/prot/ServerProtPriority.js';
-import Player from '#/entity/Player.js';
+import Player from '#/engine/entity/Player.js';
 import NpcRenderer from '#/engine/renderer/NpcRenderer.js';
 
 // this is slightly unsafe.
