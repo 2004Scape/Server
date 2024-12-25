@@ -6,7 +6,7 @@ import path from 'path';
 import { printError } from '#/util/Logger.js';
 
 export function packClientModel() {
-    if (!shouldBuildFile('src/pack/graphics/pack.ts', 'data/pack/client/models') &&
+    if (!shouldBuildFile('tools/pack/graphics/pack.ts', 'data/pack/client/models') &&
         !shouldBuildFileAny('data/src/models', 'data/pack/client/models')
     ) {
         return;

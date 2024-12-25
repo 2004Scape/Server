@@ -815,14 +815,35 @@ class World {
     private processLogins(): void {
         const start: number = Date.now();
         player: for (const player of this.newPlayers) {
+            if (player.reconnecting) {
+                for (const other of this.players) {
+                    if (player.username !== other.username) {
+                        continue;
+                    }
+
+                    if (isClientConnected(other)) {
+                        other.client.close();
+                    }
+
+                    if (other instanceof NetworkPlayer && player instanceof NetworkPlayer) {
+                        other.client = player.client;
+                        player.client.send(Uint8Array.from([ 15 ]));
+                    }
+
+                    continue player;
+                }
+            }
+
             for (const other of this.players) {
                 if (player.username !== other.username) {
                     continue;
                 }
-                if (isClientConnected(player)) {
+
+                if (isClientConnected(other) && player instanceof NetworkPlayer) {
                     player.client.send(Uint8Array.from([ 5 ]));
                     player.client.close();
                 }
+
                 continue player;
             }
 
@@ -844,8 +865,6 @@ class World {
 
                 if (player.staffModLevel >= 2) {
                     player.client.send(Uint8Array.from([ 18 ]));
-                } else if (player.reconnecting) {
-                    player.client.send(Uint8Array.from([ 15 ]));
                 } else {
                     player.client.send(Uint8Array.from([ 2 ]));
                 }
@@ -1716,13 +1735,6 @@ class World {
 
             if (this.getTotalPlayers() > 2000) {
                 client.send(Uint8Array.from([ 7 ]));
-                client.close();
-                return;
-            }
-
-            const existing = this.getPlayerByUsername(username);
-            if (typeof existing !== 'undefined' && (client.opcode !== 18 || (existing instanceof NetworkPlayer && !(existing.client instanceof NullClientSocket)))) {
-                client.send(Uint8Array.from([ 5 ]));
                 client.close();
                 return;
             }

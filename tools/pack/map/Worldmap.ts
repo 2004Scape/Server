@@ -34,7 +34,7 @@ export async function packWorldmap() {
 
     if (
         !shouldBuildFileAny('data/pack/server/maps', 'data/pack/mapview/worldmap.jag') &&
-        !shouldBuildFile('src/pack/map/Worldmap.ts', 'data/pack/mapview/worldmap.jag')
+        !shouldBuildFile('tools/pack/map/Worldmap.ts', 'data/pack/mapview/worldmap.jag')
     ) {
         return;
     }
