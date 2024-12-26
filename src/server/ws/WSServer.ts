@@ -27,9 +27,7 @@ export default class WSServer {
     wss: WebSocketServer | null = null;
 
     start() {
-        const port = Environment.NODE_PORT + 1;
-
-        this.wss = new WebSocketServer({ port, host: '0.0.0.0' }, () => {
+        this.wss = new WebSocketServer({ port: Environment.NODE_PORT + 1, host: '0.0.0.0' }, () => {
         });
 
         this.wss.on('connection', (ws: WebSocket, req) => {

@@ -17,10 +17,14 @@ export default class TcpClientSocket extends ClientSocket {
     }
 
     close(): void {
-        this.socket.end();
+        this.state = -1;
+
+        setTimeout(() => this.socket.end(), 10);
     }
 
     terminate(): void {
-        this.socket.destroy();
+        this.state = -1;
+
+        setTimeout(() => this.socket.destroy(), 10);
     }
 }
