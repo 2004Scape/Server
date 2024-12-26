@@ -1,4 +1,4 @@
-import Trig from 'src/util/Trig.js';
+import Trig from '#/util/Trig.js';
 
 describe('Trig', (): void => {
     describe('cos', (): void => {
