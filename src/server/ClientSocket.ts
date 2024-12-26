@@ -23,6 +23,11 @@ export default abstract class ClientSocket {
     waiting = 0; // bytes to wait for (if any)
 
     buffer(data: Buffer) {
+        if (data.length + this.in.pos > this.in.length) {
+            this.close();
+            return;
+        }
+
         this.in.pdata(data, 0, data.length);
     }
 
