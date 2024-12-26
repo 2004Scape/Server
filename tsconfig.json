@@ -1,6 +1,6 @@
 {
   "compilerOptions": {
-    "rootDir": "src",
+    "rootDir": ".",
     "outDir": "out",
     "target": "ESNext",
     "lib": ["ESNext", "WebWorker"],
@@ -9,8 +9,8 @@
     "baseUrl": ".",
     "paths": {
       "#3rdparty/*": ["src/3rdparty/*"],
-      "#jagex/*": ["src/jagex/*"],
-      "#lostcity/*": ["src/lostcity/*"]
+      "#/*": ["src/*"],
+      "#tools/*": ["tools/*"]
     },
     "types": ["node", "bun-types", "vitest/globals"],
     "sourceMap": true,
@@ -22,6 +22,6 @@
     "esModuleInterop": true,
     "allowUnreachableCode": true
   },
-  "include": ["src/**/*.ts", "src/**/*.js"],
+  "include": ["src/**/*.ts", "src/**/*.js", "tools/**/*.ts", "tools/**/*.js"],
   "exclude": ["node_modules", "<node_internals>/**"]
 }

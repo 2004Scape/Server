@@ -1,6 +1,6 @@
 import { vi } from 'vitest';
 
-vi.mock('#lostcity/util/WorkerFactory.js', async () => {
+vi.mock('#/util/WorkerFactory.js', async () => {
     return {
         createWorker: () => ({
             on: vi.fn(),

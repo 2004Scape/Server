@@ -4,31 +4,26 @@
   "type": "module",
   "imports": {
     "#3rdparty/*": "./src/3rdparty/*",
-    "#jagex/*": "./src/jagex/*",
-    "#lostcity/*": "./src/lostcity/*"
+    "#/*": "./src/*",
+    "#tools/*": "./tools/*"
   },
   "scripts": {
-    "build": "tsx src/lostcity/scripts/cache/pack.ts",
+    "build": "tsx tools/cache/pack.ts",
     "bundle": "npm run bundle:esbuild",
     "bundle:bun": "bun bundle.js",
     "bundle:esbuild": "tsx bundle.js",
-    "clean": "npm run client:clean && npm run server:clean",
-    "client": "java -cp 225.2004-05-18.jar client 10 0 highmem members",
-    "client:clean": "tsx src/lostcity/scripts/cache/cleanClient.ts",
+    "clean": "tsx tools/cache/cleanServer.ts && tsx tools/cache/cleanClient.ts",
     "db:migrate": "prisma migrate deploy",
     "db:reset": "prisma migrate reset --force",
     "db:schema": "prisma migrate dev",
-    "dev": "tsx watch --include \"src/*\" src/lostcity/app.ts",
-    "friend": "tsx src/lostcity/friend.ts",
+    "dev": "tsx watch --clear-screen=false --include \"src/*\" src/app.ts",
     "lint": "eslint src",
     "lint:staged": "eslint",
-    "login": "tsx src/lostcity/login.ts",
-    "maintenance": "tsx src/lostcity/maintenance.ts",
+    "maintenance": "tsx src/appMaintenance.ts",
     "precommit": "prettier . --write && eslint src --fix",
     "prepare": "husky",
-    "quickstart": "tsx src/lostcity/app.ts",
-    "server:clean": "tsx src/lostcity/scripts/cache/cleanServer.ts",
-    "start": "npm i && tsx src/lostcity/app.ts",
+    "quickstart": "tsx src/app.ts",
+    "start": "npm i && tsx src/app.ts",
     "test": "vitest run ./src",
     "todo": "leasot src/ --skip-unsupported --exit-nicely"
   },
@@ -82,6 +77,6 @@
     "vitest": "^2.1.4"
   },
   "prisma": {
-    "seed": "tsx src/lostcity/db/seed.ts"
+    "seed": "tsx src/db/seed.ts"
   }
 }
