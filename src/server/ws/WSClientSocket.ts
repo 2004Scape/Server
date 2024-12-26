@@ -17,16 +17,13 @@ export default class WSClientSocket extends ClientSocket {
     }
 
     close(): void {
+        // give time to acknowledge and receive packets
         this.state = -1;
-
-        // give time to flush packets
-        setTimeout(() => this.socket.close(), 10);
+        setTimeout(() => this.socket.close(), 1000);
     }
 
     terminate(): void {
         this.state = -1;
-
-        // give time to flush packets
-        setTimeout(() => this.socket.terminate(), 10);
+        this.socket.terminate();
     }
 }
