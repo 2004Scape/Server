@@ -11,11 +11,3 @@ if (~macro_event_lost_hostile = true) {
     npc_del;
     return;
 }
-
-// todo: confirm this
-[opnpc2,macro_event_swarm]
-if (%npc_macro_event_target ! uid) {
-    mes("They're not here for you."); // guess based on strange plant
-    return;
-}
-@player_combat_start;

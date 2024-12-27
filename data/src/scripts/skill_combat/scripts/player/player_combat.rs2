@@ -110,6 +110,10 @@ if (add(%lastcombat, 8) > map_clock & (%aggressive_npc ! npc_uid & %aggressive_n
     mes("I'm already under attack.");
     return(false);
 }
+if (%npc_macro_event_target ! uid) {
+    mes("It's not after you."); // https://youtu.be/y58EFTJNIH8
+    return(false);
+}
 // npc has been attacked in the last 8 ticks, and not by the current player
 if ((add(%npc_lastcombat, 8) > map_clock & %npc_aggressive_player ! uid)) {
     mes("Someone else is fighting that.");

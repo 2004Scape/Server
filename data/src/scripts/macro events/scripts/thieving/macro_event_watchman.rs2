@@ -108,10 +108,3 @@ if ($random < 8) { // 8/128
 } else {
     obj_add(npc_coord, ~randomjewel, ^lootdrop_duration);
 }
-
-[opnpc2,_macro_event_watchman]
-if (%npc_macro_event_target ! uid) {
-    mes("It's not here for you."); // from strange plant
-    return;
-}
-@player_combat_start;
