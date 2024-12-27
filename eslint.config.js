@@ -5,7 +5,7 @@ import tseslint from 'typescript-eslint';
 /** @type {import('eslint').Linter.Config[]} */
 export default [
     {
-        ignores: ['bundle.js', 'out/*', 'public/*', 'data/*', 'src/3rdparty/*', 'src/**/*.test.ts', 'src/**/*.bench.ts']
+        ignores: ['bundle.js', 'eslint.config.js', 'out/**/*', 'public/**/*', 'data/**/*', 'src/3rdparty/**/*', 'src/**/*.test.ts', 'src/**/*.bench.ts']
     },
     { languageOptions: { globals: globals.node } },
     pluginJs.configs.recommended,
