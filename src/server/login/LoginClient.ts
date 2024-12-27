@@ -32,14 +32,14 @@ export default class LoginClient extends InternalClient {
             return { reply: -1, save: null };
         }
 
-        const reply = await this.wsr.fetchSync(JSON.stringify({
+        const reply = await this.wsr.fetchSync({
             type: 'player_login',
             nodeId: this.nodeId,
             nodeTime: Date.now(),
             username,
             password,
             uid
-        }));
+        });
 
         if (reply.error) {
             return { reply: -1, save: null };
@@ -62,13 +62,13 @@ export default class LoginClient extends InternalClient {
             return false;
         }
 
-        const reply = await this.wsr.fetchSync(JSON.stringify({
+        const reply = await this.wsr.fetchSync({
             type: 'player_logout',
             nodeId: this.nodeId,
             nodeTime: Date.now(),
             username,
             save: Buffer.from(save).toString('base64')
-        }));
+        });
 
         if (reply.error) {
             return false;

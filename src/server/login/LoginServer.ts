@@ -17,10 +17,10 @@ export default class LoginServer {
         });
 
         this.server.on('connection', (socket: WebSocket) => {
-            socket.on('message', async (buf: Buffer) => {
+            socket.on('message', async (data: Buffer) => {
                 try {
-                    const message = JSON.parse(buf.toString());
-                    const { type, nodeId, nodeTime } = message;
+                    const msg = JSON.parse(data.toString());
+                    const { type, nodeId, nodeTime } = msg;
 
                     if (type === 'world_startup') {
                         await db.updateTable('account').set({
@@ -28,7 +28,7 @@ export default class LoginServer {
                             login_time: null
                         }).where('logged_in', '=', nodeId).execute();
                     } else if (type === 'player_login') {
-                        const { replyTo, username, password, uid } = message;
+                        const { replyTo, username, password, uid } = msg;
 
                         // todo: record login attempt + uid
 
@@ -79,7 +79,7 @@ export default class LoginServer {
                             save: save.toString('base64')
                         }));
                     } else if (type === 'player_logout') {
-                        const { replyTo, username, save } = message;
+                        const { replyTo, username, save } = msg;
 
                         // todo: record logout history
 
@@ -95,11 +95,11 @@ export default class LoginServer {
                             response: 0
                         }));
                     } else if (type === 'player_autosave') {
-                        const { username, save } = message;
+                        const { username, save } = msg;
 
                         fs.writeFileSync(`data/players/${username}.sav`, Buffer.from(save, 'base64'));
                     } else if (type === 'player_force_logout') {
-                        const { username } = message;
+                        const { username } = msg;
 
                         await db.updateTable('account').set({
                             logged_in: 0,

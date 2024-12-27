@@ -281,12 +281,6 @@ export class NetworkPlayer extends Player {
             info.unlink();
         }
 
-        // no need to rebuild upon telejump anymore.
-        // causes u to full follows zones which is wrong.
-        /*if (this.moveSpeed === MoveSpeed.INSTANT && this.jump) {
-            loadedZones.clear();
-        }*/
-
         // update any newly tracked zones
         activeZones.clear();
 

@@ -77,13 +77,14 @@ import WalkTriggerSetting from '#/util/WalkTriggerSetting.js';
 import LinkList from '#/util/LinkList.js';
 import { fromBase37, toBase37, toSafeName } from '#/util/JString.js';
 import { PlayerLoading } from '#/engine/entity/PlayerLoading.js';
-import NullClientSocket from '#/server/NullClientSocket.js';
 import ScriptPointer from '#/engine/script/ScriptPointer.js';
 import Isaac from '#/io/Isaac.js';
 
-// todo: move to LoginThread
-// const priv = forge.pki.privateKeyFromPem(await (await fetch('data/config/private.pem')).text()); // worker code
-const priv = forge.pki.privateKeyFromPem(fs.readFileSync('data/config/private.pem', 'ascii'));
+const priv = forge.pki.privateKeyFromPem(
+    Environment.STANDALONE_BUNDLE ?
+        (await (await fetch('data/config/private.pem')).text()) :
+        fs.readFileSync('data/config/private.pem', 'ascii')
+);
 
 class World {
     private loginThread = createWorker(Environment.STANDALONE_BUNDLE ? 'LoginThread.js' : './server/login/LoginThread.ts');
@@ -93,17 +94,14 @@ class World {
     private static readonly PLAYERS: number = 2048;
     private static readonly NPCS: number = 8192; // todo: move to environment option
 
-    private static readonly NORMAL_TICKRATE: number = 600;
-    private static readonly SHUTDOWN_TICKRATE: number = 1;
+    private static readonly TICKRATE: number = 600; // 0.6s / 600ms
 
-    private static readonly LOGIN_PINGRATE: number = 100;
-    private static readonly INV_STOCKRATE: number = 100;
-    private static readonly AFK_EVENTRATE: number = 500;
-    private static readonly PLAYER_SAVERATE: number = 1500;
+    private static readonly INV_STOCKRATE: number = 100; // 1m
+    private static readonly AFK_EVENTRATE: number = 500; // 5m
+    private static readonly PLAYER_SAVERATE: number = 1500; // 15m
 
-    private static readonly SHUTDOWN_TICKS: number = 24000;
-    private static readonly TIMEOUT_IDLE_TICKS: number = 75;
-    private static readonly TIMEOUT_LOGOUT_TICKS: number = 100;
+    private static readonly TIMEOUT_SOCKET_IDLE: number = 16; // ~10s with no data- disconnect client
+    private static readonly TIMEOUT_SOCKET_LOGOUT: number = 100; // 60s with no client- remove player
 
     // the game/zones map
     readonly gameMap: GameMap;
@@ -112,6 +110,8 @@ class World {
     readonly invs: Set<Inventory>;
 
     // entities
+    readonly loginRequests: Map<string, ClientSocket> = new Map(); // waiting for response from login server
+    readonly logoutRequests: Map<string, Uint8Array> = new Map(); // waiting for confirmation from login server
     readonly newPlayers: Set<Player>; // players joining at the end of this tick
     readonly players: PlayerList;
     readonly npcs: NpcList;
@@ -128,7 +128,7 @@ class World {
     readonly lastCycleStats: number[];
     readonly cycleStats: number[];
 
-    tickRate: number = World.NORMAL_TICKRATE; // speeds up when we're processing server shutdown
+    tickRate: number = World.TICKRATE; // speeds up when we're processing server shutdown
     currentTick: number = 0;
     shutdownTick: number = -1;
     pmCount: number = 1; // can't be 0 as clients will ignore the pm, their array is filled with 0 as default
@@ -151,12 +151,24 @@ class World {
         this.cycleStats = new Array(12).fill(0);
 
         if (Environment.STANDALONE_BUNDLE) {
+            if (this.loginThread instanceof Worker) {
+                this.loginThread.onmessage = msg => {
+                    this.onLoginMessage(msg.data);
+                };
+            }
+
             if (this.friendThread instanceof Worker) {
                 this.friendThread.onmessage = msg => {
                     this.onFriendsMessage(msg.data);
                 };
             }
         } else {
+            if (this.loginThread instanceof NodeWorker) {
+                this.loginThread.on('message', msg => {
+                    this.onLoginMessage(msg);
+                });
+            }
+
             if (this.friendThread instanceof NodeWorker) {
                 this.friendThread.on('message', msg => {
                     this.onFriendsMessage(msg);
@@ -307,7 +319,7 @@ class World {
         }
 
         this.loginThread.postMessage({
-            type: 'reset'
+            type: 'world_startup'
         });
 
         this.friendThread.postMessage({
@@ -414,10 +426,6 @@ class World {
             // ----
 
             const tick: number = this.currentTick;
-
-            if (tick % World.LOGIN_PINGRATE === 0) {
-                this.heartbeat();
-            }
 
             // server shutdown
             if (this.shutdownTick > -1 && tick >= this.shutdownTick) {
@@ -750,7 +758,7 @@ class World {
                 if (this.shutdownTick < this.currentTick) {
                     // request logout on socket idle after 45 seconds (this may be 16 *ticks* in osrs!)
                     // increased timeout for compatibility with old PCs that take ages to load
-                    if (Environment.NODE_SOCKET_TIMEOUT && this.currentTick - player.lastResponse >= World.TIMEOUT_IDLE_TICKS) {
+                    if (Environment.NODE_SOCKET_TIMEOUT && this.currentTick - player.lastResponse >= World.TIMEOUT_SOCKET_IDLE) {
                         player.logoutRequested = true;
                     }
                 }
@@ -770,7 +778,7 @@ class World {
     private processLogouts(): void {
         const start: number = Date.now();
         for (const player of this.players) {
-            if (Environment.NODE_SOCKET_TIMEOUT && this.currentTick - player.lastResponse >= World.TIMEOUT_LOGOUT_TICKS) {
+            if (Environment.NODE_SOCKET_TIMEOUT && this.currentTick - player.lastResponse >= World.TIMEOUT_SOCKET_LOGOUT) {
                 // remove after 60 seconds
                 player.queue.clear();
                 player.weakQueue.clear();
@@ -827,8 +835,11 @@ class World {
 
                     if (other instanceof NetworkPlayer && player instanceof NetworkPlayer) {
                         other.client = player.client;
-                        player.client.send(Uint8Array.from([ 15 ]));
+                        other.client.send(Uint8Array.from([ 15 ]));
                     }
+
+                    // todo: ensure the player has the latest scene and doesn't have their position offset
+                    // note- rebuildnormal is not guaranteed to re-run
 
                     continue player;
                 }
@@ -1052,61 +1063,39 @@ class World {
         this.cycleStats[WorldStat.CLEANUP] = Date.now() - start;
     }
 
-    private heartbeat(): void {
-        const players: bigint[] = [];
-        for (const player of this.players) {
-            players.push(player.username37);
-        }
-
-        this.loginThread.postMessage({
-            type: 'heartbeat',
-            players
-        });
-    }
-
     private processShutdown(): void {
         const duration: number = this.currentTick - this.shutdownTick; // how long have we been trying to shutdown
         const online: number = this.getTotalPlayers();
 
-        if (online) {
-            for (const player of this.players) {
-                player.logoutRequested = true;
-
-                if (isClientConnected(player)) {
-                    player.logout(); // visually log out
-
-                    // if it's been more than a few ticks and the client just won't leave us alone, close the socket
-                    if (duration > 2) {
-                        player.client.close();
-                    }
-                }
-            }
-
-            this.npcs.reset();
-
-            if (duration > 2) {
-                printInfo('Super fast shutdown initiated...');
-
-                // we've already attempted to shutdown, now we speed things up
-                if (this.tickRate > World.SHUTDOWN_TICKRATE) {
-                    this.tickRate = World.SHUTDOWN_TICKRATE;
-                }
-
-                // if we've exceeded 24000 ticks then we *really* need to shut down now
-                if (duration > World.SHUTDOWN_TICKS) {
-                    for (const player of this.players) {
-                        this.removePlayer(player);
-                    }
-
-                    this.tickRate = World.NORMAL_TICKRATE;
-                }
-
-                if (!Environment.NODE_PRODUCTION) {
-                    process.exit(0);
-                }
-            }
-        } else {
+        if (online === 0 && this.logoutRequests.size === 0) {
             process.exit(0);
+        }
+
+        // todo: logout should process up to 1024 queues
+        for (const player of this.players) {
+            player.logoutRequested = true;
+
+            if (isClientConnected(player)) {
+                player.logout(); // visually log out
+
+                // if it's been more than a few ticks and the client just won't leave us alone, close the socket
+                if (duration > 2) {
+                    player.client.close();
+                }
+            }
+        }
+
+        this.npcs.reset();
+
+        if (duration >= 100) {
+            // failsafe if we've been stuck for a minute (needs more nuance... not exactly "correct")
+            for (const player of this.players) {
+                this.removePlayer(player);
+            }
+
+            if (!Environment.NODE_PRODUCTION) {
+                process.exit(0);
+            }
         }
     }
 
@@ -1117,7 +1106,11 @@ class World {
         }
 
         for (const player of this.players) {
-            player.save();
+            this.loginThread.postMessage({
+                type: 'player_autosave',
+                username: player.username,
+                save: player.save()
+            });
         }
     }
 
@@ -1406,7 +1399,6 @@ class World {
 
         player.playerLog('Logging out');
         if (isClientConnected(player)) {
-            // visually disconnect the client
             player.logout();
             player.client.close();
         }
@@ -1417,10 +1409,14 @@ class World {
         changeNpcCollision(player.width, player.x, player.z, player.level, false);
         player.pid = -1;
         player.uid = -1;
-        player.terminate();
 
-        // todo: flush save to login server
-        player.save();
+        const save = player.save();
+        this.logoutRequests.set(player.username, save);
+        this.loginThread.postMessage({
+            type: 'player_logout',
+            username: player.username,
+            save
+        });
 
         this.friendThread.postMessage({
             type: 'player_logout',
@@ -1584,6 +1580,73 @@ class World {
         }
     }
 
+    onLoginMessage(msg: any) {
+        const { type } = msg;
+
+        // console.log(msg);
+        if (type === 'player_login') {
+            const { socket } = msg;
+            if (!this.loginRequests.has(socket)) {
+                return;
+            }
+
+            const { reply, username, lowMemory, reconnecting } = msg;
+            const client = this.loginRequests.get(socket)!;
+            this.loginRequests.delete(socket);
+
+            if (reply === 4) {
+                // never logged in before
+                const save = new Packet(new Uint8Array());
+
+                const player = PlayerLoading.load(username, save, client);
+                player.reconnecting = reconnecting;
+                player.lowMemory = lowMemory;
+
+                this.newPlayers.add(player);
+                client.state = 1;
+            } else if (reply === 0 || reply === 2) {
+                // not logged in, or logged into the same world (may be reconnecting)
+                const { save } = msg;
+
+                const player = PlayerLoading.load(username, new Packet(save), client);
+                player.reconnecting = reconnecting;
+                player.lowMemory = lowMemory;
+
+                this.newPlayers.add(player);
+                client.state = 1;
+            } else if (reply === -1) {
+                // login server offline
+                client.send(Uint8Array.from([ 8 ]));
+                client.close();
+            } else if (reply === 1) {
+                // invalid username or password
+                client.send(Uint8Array.from([ 3 ]));
+                client.close();
+            } else if (reply === 3) {
+                // already logged in (on another world)
+                client.send(Uint8Array.from([ 5 ]));
+                client.close();
+            }
+        } else if (type === 'player_logout') {
+            const { username, success } = msg;
+            if (!this.logoutRequests.has(username)) {
+                return;
+            }
+
+            if (!success) {
+                setTimeout(() => {
+                    this.loginThread.postMessage({
+                        type: 'player_logout',
+                        username,
+                        save: this.logoutRequests
+                    });
+                }, 1000);
+            } else {
+                this.logoutRequests.delete(username);
+            }
+        }
+    }
+
     onFriendsMessage({ opcode, data }: { opcode: FriendsServerOpcodes, data: any }) {
         try {
             if (opcode === FriendsServerOpcodes.UPDATE_FRIENDLIST) {
@@ -1722,6 +1785,8 @@ class World {
             const username = World.loginBuf.gjstr();
             const password = World.loginBuf.gjstr();
 
+            // todo: record login attempt?
+
             if (username.length < 1 || username.length > 12) {
                 client.send(Uint8Array.from([ 3 ]));
                 client.close();
@@ -1740,13 +1805,25 @@ class World {
                 return;
             }
 
-            const safeName = toSafeName(username);
-            const sav = fs.existsSync(`data/players/${safeName}.sav`) ? Packet.load(`data/players/${safeName}.sav`) : new Packet(new Uint8Array());
-            const player = PlayerLoading.load(safeName, sav, client);
-            player.reconnecting = client.opcode === 18;
+            if (this.logoutRequests.has(username)) {
+                // still trying to log out from the last session on this world!
+                client.send(Uint8Array.from([ 5 ]));
+                client.close();
+                return;
+            }
 
-            this.newPlayers.add(player);
-            client.state = 1;
+            const safeName = toSafeName(username);
+
+            this.loginRequests.set(client.uuid, client);
+            this.loginThread.postMessage({
+                type: 'player_login',
+                socket: client.uuid,
+                username: safeName,
+                password,
+                uid,
+                lowMemory,
+                reconnecting: client.opcode === 18
+            });
         } else {
             client.terminate();
         }
