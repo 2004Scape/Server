@@ -1,7 +1,7 @@
 generator kysely {
     provider = "prisma-kysely"
 
-    output       = "../src/lostcity/db"
+    output       = "../src/db"
     fileName     = "types.ts"
     enumFileName = "enums.ts"
 }
@@ -19,6 +19,9 @@ model account {
 
     registration_ip   String?
     registration_date DateTime @default(now())
+
+    logged_in Int @default(0)
+    login_time DateTime?
 }
 
 model newspost {

@@ -8,6 +8,7 @@ import { FriendServerRepository } from '#/server/friend/FriendServerRepository.j
 import Environment from '#/util/Environment.js';
 import { ChatModePrivate } from '#/util/ChatModes.js';
 import { printInfo } from '#/util/Logger.js';
+import InternalClient from '#/server/InternalClient.js';
 
 /**
  * client -> server opcodes for friends server
@@ -387,73 +388,13 @@ export class FriendServer {
     }
 }
 
-export class FriendClient {
-    private ws: WebSocket | null = null;
-    private wsr: WsSyncReq | null = null;
-
+export class FriendClient extends InternalClient {
     nodeId: number = 0;
 
     constructor(nodeId: number) {
+        super(Environment.FRIEND_HOST, Environment.FRIEND_PORT);
+
         this.nodeId = nodeId;
-    }
-
-    async connect() {
-        if (this.wsr && this.wsr.checkIfWsLive()) {
-            return;
-        }
-
-        return new Promise<void>((res, rej) => {
-            this.ws = new WebSocket(`ws://${Environment.FRIEND_HOST}:${Environment.FRIEND_PORT}`,
-                {
-                    timeout: 5000
-                }
-            );
-
-            const timeout = setTimeout(() => {
-                if (this.ws) {
-                    this.ws.terminate();
-                }
-
-                this.ws = null;
-                this.wsr = null;
-                res();
-            }, 10000);
-
-            this.ws.once('close', () => {
-                clearTimeout(timeout);
-
-                this.ws = null;
-                this.wsr = null;
-                res();
-            });
-
-            this.ws.once('error', (err) => {
-                clearTimeout(timeout);
-
-                this.ws = null;
-                this.wsr = null;
-                res();
-            });
-
-            this.ws.once('open', () => {
-                clearTimeout(timeout);
-
-                this.wsr = new WsSyncReq(this.ws);
-                res();
-            });
-
-            this.ws.on('message', (buf: Buffer) => {
-                const message = JSON.parse(buf.toString());
-
-                this.messageHandlers.forEach(fn => fn(message.type, message));
-            });
-        });
-    }
-
-    private messageHandlers: ((opcode: number, data: any) => void)[] = [];
-
-    public async onMessage(fn: (opcode: number, data: any) => void) {
-        this.messageHandlers.push(fn);
     }
 
     public async worldConnect() {

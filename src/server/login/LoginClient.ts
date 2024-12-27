@@ -1,95 +1,112 @@
-import { WebSocket } from 'ws';
-import WsSyncReq from '#3rdparty/ws-sync/ws-sync.js';
+import InternalClient from '#/server/InternalClient.js';
 
 import Environment from '#/util/Environment.js';
 
-export default class LoginClient {
-    private ws: WebSocket | null = null;
-    private wsr: WsSyncReq | null = null;
+export default class LoginClient extends InternalClient {
+    private nodeId = 0;
 
-    async connect(): Promise<void> {
-        if (this.wsr && this.wsr.checkIfWsLive()) {
-            return;
-        }
+    constructor(nodeId: number) {
+        super(Environment.LOGIN_HOST, Environment.LOGIN_PORT);
 
-        return new Promise((res) => {
-            this.ws = new WebSocket(`ws://${Environment.LOGIN_HOST}:${Environment.LOGIN_PORT}`,
-                {
-                    timeout: 5000
-                }
-            );
-
-            const timeout = setTimeout(() => {
-                if (this.ws) {
-                    this.ws.terminate();
-                }
-
-                this.ws = null;
-                this.wsr = null;
-                res();
-            }, 10000);
-
-            this.ws.once('close', () => {
-                clearTimeout(timeout);
-
-                this.ws = null;
-                this.wsr = null;
-                res();
-            });
-
-            this.ws.once('error', () => {
-                clearTimeout(timeout);
-
-                this.ws = null;
-                this.wsr = null;
-                res();
-            });
-
-            this.ws.once('open', () => {
-                clearTimeout(timeout);
-
-                this.wsr = new WsSyncReq(this.ws);
-                res();
-            });
-
-            this.ws.on('message', (buf: Buffer) => {
-                const message = JSON.parse(buf.toString());
-
-                this.messageHandlers.forEach(fn => fn(message.type, message));
-            });
-        });
-    }
-
-    private messageHandlers: ((opcode: number, data: unknown) => void)[] = [];
-
-    public async onMessage(fn: (opcode: number, data: unknown) => void) {
-        this.messageHandlers.push(fn);
+        this.nodeId = nodeId;
     }
 
     public async worldStartup() {
         await this.connect();
 
         if (!this.ws || !this.wsr || !this.wsr.checkIfWsLive()) {
-            return -1;
+            return;
         }
 
         this.ws.send(JSON.stringify({
             type: 'world_startup',
-            world: Environment.NODE_ID
+            nodeId: this.nodeId,
+            nodeTime: Date.now()
         }));
     }
 
-    public async playerLogin(username: string, password: string) {
+    public async playerLogin(username: string, password: string, uid: number): Promise<{ reply: number, save: Uint8Array | null }> {
         await this.connect();
 
         if (!this.ws || !this.wsr || !this.wsr.checkIfWsLive()) {
-            return -1;
+            return { reply: -1, save: null };
+        }
+
+        const reply = await this.wsr.fetchSync(JSON.stringify({
+            type: 'player_login',
+            nodeId: this.nodeId,
+            nodeTime: Date.now(),
+            username,
+            password,
+            uid
+        }));
+
+        if (reply.error) {
+            return { reply: -1, save: null };
+        }
+
+        const { response, save } = reply.result;
+
+        if (response !== 0) {
+            return { reply: response, save: null };
+        }
+
+        return { reply: response, save: Buffer.from(save, 'base64') };
+    }
+
+    // returns true if the login server acknowledged the logout
+    public async playerLogout(username: string, save: Uint8Array) {
+        await this.connect();
+
+        if (!this.ws || !this.wsr || !this.wsr.checkIfWsLive()) {
+            return false;
+        }
+
+        const reply = await this.wsr.fetchSync(JSON.stringify({
+            type: 'player_logout',
+            nodeId: this.nodeId,
+            nodeTime: Date.now(),
+            username,
+            save: Buffer.from(save).toString('base64')
+        }));
+
+        if (reply.error) {
+            return false;
+        }
+
+        return reply.result.response === 0;
+    }
+
+    // we don't care about acknowledgement, send the save and continue on
+    public async playerAutosave(username: string, save: Uint8Array) {
+        await this.connect();
+
+        if (!this.ws || !this.wsr || !this.wsr.checkIfWsLive()) {
+            return;
         }
 
         this.ws.send(JSON.stringify({
-            type: 'player_login',
+            type: 'player_autosave',
+            nodeId: this.nodeId,
+            nodeTime: Date.now(),
             username,
-            password
+            save: Buffer.from(save).toString('base64')
+        }));
+    }
+
+    // in case the player is stuck logged-in
+    public async playerForceLogout(username: string) {
+        await this.connect();
+
+        if (!this.ws || !this.wsr || !this.wsr.checkIfWsLive()) {
+            return;
+        }
+
+        this.ws.send(JSON.stringify({
+            type: 'player_force_logout',
+            nodeId: this.nodeId,
+            nodeTime: Date.now(),
+            username
         }));
     }
 }

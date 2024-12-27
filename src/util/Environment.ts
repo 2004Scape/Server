@@ -41,11 +41,12 @@ export default {
     NODE_WALKTRIGGER_SETTING: tryParseInt(process.env.NODE_WALKTRIGGER_SETTING, WalkTriggerSetting.PLAYERPACKET),
 
     /// login server
+    LOGIN_SERVER: tryParseBoolean(process.env.LOGIN_SERVER, false),
     LOGIN_HOST: tryParseString(process.env.LOGIN_HOST, 'localhost'),
     LOGIN_PORT: tryParseInt(process.env.LOGIN_PORT, 43500),
-    LOGIN_KEY: tryParseString(process.env.LOGIN_KEY, ''),
 
     // friends server
+    FRIEND_SERVER: tryParseBoolean(process.env.FRIEND_SERVER, false),
     FRIEND_HOST: tryParseString(process.env.FRIEND_HOST, 'localhost'),
     FRIEND_PORT: tryParseInt(process.env.FRIEND_PORT, 45099),
 
