@@ -25,11 +25,11 @@ export default class LoginClient extends InternalClient {
         }));
     }
 
-    public async playerLogin(username: string, password: string, uid: number): Promise<{ reply: number, save: Uint8Array | null }> {
+    public async playerLogin(username: string, password: string, uid: number) {
         await this.connect();
 
         if (!this.ws || !this.wsr || !this.wsr.checkIfWsLive()) {
-            return { reply: -1, save: null };
+            return { reply: -1, save: null, muted_until: null };
         }
 
         const reply = await this.wsr.fetchSync({
@@ -42,16 +42,16 @@ export default class LoginClient extends InternalClient {
         });
 
         if (reply.error) {
-            return { reply: -1, save: null };
+            return { reply: -1, save: null, muted_until: null };
         }
 
-        const { response, save } = reply.result;
+        const { response, save, muted_until } = reply.result;
 
         if (response !== 0) {
-            return { reply: response, save: null };
+            return { reply: response, save: null, muted_until: null };
         }
 
-        return { reply: response, save: Buffer.from(save, 'base64') };
+        return { reply: response, save: Buffer.from(save, 'base64'), muted_until };
     }
 
     // returns true if the login server acknowledged the logout

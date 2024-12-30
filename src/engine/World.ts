@@ -1590,43 +1590,46 @@ class World {
                 return;
             }
 
-            const { reply, username, lowMemory, reconnecting } = msg;
+            const { reply } = msg;
             const client = this.loginRequests.get(socket)!;
             this.loginRequests.delete(socket);
 
-            if (reply === 4) {
-                // never logged in before
-                const save = new Packet(new Uint8Array());
-
-                const player = PlayerLoading.load(username, save, client);
-                player.reconnecting = reconnecting;
-                player.lowMemory = lowMemory;
-
-                this.newPlayers.add(player);
-                client.state = 1;
-            } else if (reply === 0 || reply === 2) {
-                // not logged in, or logged into the same world (may be reconnecting)
-                const { save } = msg;
-
-                const player = PlayerLoading.load(username, new Packet(save), client);
-                player.reconnecting = reconnecting;
-                player.lowMemory = lowMemory;
-
-                this.newPlayers.add(player);
-                client.state = 1;
-            } else if (reply === -1) {
+            if (reply === -1) {
                 // login server offline
                 client.send(Uint8Array.from([ 8 ]));
                 client.close();
+                return;
             } else if (reply === 1) {
                 // invalid username or password
                 client.send(Uint8Array.from([ 3 ]));
                 client.close();
+                return;
             } else if (reply === 3) {
                 // already logged in (on another world)
                 client.send(Uint8Array.from([ 5 ]));
                 client.close();
+                return;
+            } else if (reply === 5) {
+                // account has been disabled (banned)
+                client.send(Uint8Array.from([ 4 ]));
+                client.close();
+                return;
             }
+
+            const { username, lowMemory, reconnecting, muted_until } = msg;
+
+            let save = new Uint8Array();
+            if (reply === 0 || reply === 2) {
+                save = msg.save;
+            }
+
+            const player = PlayerLoading.load(username, new Packet(save), client);
+            player.reconnecting = reconnecting;
+            player.lowMemory = lowMemory;
+            player.muted_until = muted_until ? new Date(muted_until) : null;
+
+            this.newPlayers.add(player);
+            client.state = 1;
         } else if (type === 'player_logout') {
             const { username, success } = msg;
             if (!this.logoutRequests.has(username)) {

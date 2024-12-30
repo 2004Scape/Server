@@ -22,6 +22,9 @@ model account {
 
     logged_in Int @default(0)
     login_time DateTime?
+
+    muted_until DateTime?
+    banned_until DateTime?
 }
 
 model newspost {

@@ -14,12 +14,16 @@ const jagName = path.basename(args[0]);
 const jag = Jagfile.load(args[0]);
 for (let i = 0; i < jag.fileCount; i++) {
     const name = jag.fileName[i];
-    console.log(name);
 
-    const entry = jag.read(name);
-    if (!entry) {
-        continue;
+    try {
+        const entry = jag.read(name);
+        if (!entry) {
+            continue;
+        }
+
+        console.log(name);
+        entry.save(`dump/unpack/${jagName}.raw/${name}`, entry.data.length);
+    } catch (err) {
+        console.log('error', name);
     }
-
-    entry.save(`dump/unpack/${jagName}.raw/${name}`, entry.data.length);
 }

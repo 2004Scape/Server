@@ -12,6 +12,8 @@ export type account = {
     registration_date: Generated<Timestamp>;
     logged_in: Generated<number>;
     login_time: Timestamp | null;
+    muted_until: Timestamp | null;
+    banned_until: Timestamp | null;
 };
 export type friendlist = {
     account_id: number;

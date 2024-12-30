@@ -42,6 +42,15 @@ export default class LoginServer {
                             return;
                         }
 
+                        if (account.banned_until !== null && account.banned_until > new Date()) {
+                            // account disabled
+                            socket.send(JSON.stringify({
+                                replyTo,
+                                response: 5
+                            }));
+                            return;
+                        }
+
                         if (account.logged_in === nodeId) {
                             // could be a reconnect so we have special logic here
                             // the world will respond already logged in otherwise
@@ -67,7 +76,8 @@ export default class LoginServer {
                             // not an error - never logged in before
                             socket.send(JSON.stringify({
                                 replyTo,
-                                response: 4
+                                response: 4,
+                                muted_until: account.muted_until
                             }));
                             return;
                         }
@@ -76,7 +86,8 @@ export default class LoginServer {
                         socket.send(JSON.stringify({
                             replyTo,
                             response: 0,
-                            save: save.toString('base64')
+                            save: save.toString('base64'),
+                            muted_until: account.muted_until
                         }));
                     } else if (type === 'player_logout') {
                         const { replyTo, username, save } = msg;
