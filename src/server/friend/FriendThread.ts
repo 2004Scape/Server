@@ -41,47 +41,65 @@ type ParentPort = {
 async function handleRequests(parentPort: ParentPort, msg: any) {
     switch (msg.type) {
         case 'connect': {
-            await client.worldConnect();
+            if (Environment.FRIEND_SERVER) {
+                await client.worldConnect();
+            }
             break;
         }
         case 'player_login': {
-            const { username, chatModePrivate } = msg;
-            await client.playerLogin(username, chatModePrivate);
+            if (Environment.FRIEND_SERVER) {
+                const { username, chatModePrivate } = msg;
+                await client.playerLogin(username, chatModePrivate);
+            }
             break;
         }
         case 'player_logout': {
-            const { username } = msg;
-            await client.playerLogout(username);
+            if (Environment.FRIEND_SERVER) {
+                const { username } = msg;
+                await client.playerLogout(username);
+            }
             break;
         }
         case 'player_friendslist_add': {
-            const { username, target } = msg;
-            await client.playerFriendslistAdd(username, target);
+            if (Environment.FRIEND_SERVER) {
+                const { username, target } = msg;
+                await client.playerFriendslistAdd(username, target);
+            }
             break;
         }
         case 'player_friendslist_remove': {
-            const { username, target } = msg;
-            await client.playerFriendslistRemove(username, target);
+            if (Environment.FRIEND_SERVER) {
+                const { username, target } = msg;
+                await client.playerFriendslistRemove(username, target);
+            }
             break;
         }
         case 'player_ignorelist_add': {
-            const { username, target } = msg;
-            await client.playerIgnorelistAdd(username, target);
+            if (Environment.FRIEND_SERVER) {
+                const { username, target } = msg;
+                await client.playerIgnorelistAdd(username, target);
+            }
             break;
         }
         case 'player_ignorelist_remove': {
-            const { username, target } = msg;
-            await client.playerIgnorelistRemove(username, target);
+            if (Environment.FRIEND_SERVER) {
+                const { username, target } = msg;
+                await client.playerIgnorelistRemove(username, target);
+            }
             break;
         }
         case 'player_chat_setmode': {
-            const { username, chatModePrivate } = msg;
-            await client.playerChatSetMode(username, chatModePrivate);
+            if (Environment.FRIEND_SERVER) {
+                const { username, chatModePrivate } = msg;
+                await client.playerChatSetMode(username, chatModePrivate);
+            }
             break;
         }
         case 'private_message': {
-            const { username, staffLvl, pmId, target, message } = msg;
-            await client.privateMessage(username, staffLvl, pmId, target, message);
+            if (Environment.FRIEND_SERVER) {
+                const { username, staffLvl, pmId, target, message } = msg;
+                await client.privateMessage(username, staffLvl, pmId, target, message);
+            }
             break;
         }
         default:
