@@ -33,6 +33,7 @@ param=proj_launch,iron_arrow_launch
 param=proj_travel,iron_arrow_travel
 param=proj_height,48
 // osrs stats and Vislvl match 1:1
+// https://raw.githubusercontent.com/Joshua-F/osrs-dumps/refs/heads/master/config/dump.npc npc_6094
 
 [gnome_brown]
 name=Gnome
@@ -71,6 +72,7 @@ param=proj_launch,iron_arrow_launch
 param=proj_travel,iron_arrow_travel
 param=proj_height,48
 // osrs stats and Vislvl match 1:1
+// https://raw.githubusercontent.com/Joshua-F/osrs-dumps/refs/heads/master/config/dump.npc npc_6095
 
 [gnome_black]
 name=Gnome
@@ -113,6 +115,7 @@ param=proj_launch,iron_arrow_launch
 param=proj_travel,iron_arrow_travel
 param=proj_height,48
 // osrs stats and Vislvl match 1:1
+// https://raw.githubusercontent.com/Joshua-F/osrs-dumps/refs/heads/master/config/dump.npc npc_6096
 
 [terrorbird]
 name=Terrorbird
@@ -138,6 +141,7 @@ param=attack_sound,terrorbird_attack
 param=defend_sound,terrorbird_hit
 param=death_sound,terrorbird_death
 // osrs stats and Vislvl match 1:1
+// https://raw.githubusercontent.com/Joshua-F/osrs-dumps/refs/heads/master/config/dump.npc npc_2064
 
 [npc_137]
 name=Mounted terrorbird gnome
@@ -168,6 +172,7 @@ param=attack_sound,terrorbird_attack
 param=defend_sound,terrorbird_hit
 param=death_sound,terrorbird_death
 // Stats match osrs version but our version Vislvl is different.
+// https://raw.githubusercontent.com/Joshua-F/osrs-dumps/refs/heads/master/config/dump.npc npc_2067
 
 [npc_138]
 name=Mounted terrorbird gnome
@@ -199,6 +204,7 @@ param=attack_sound,terrorbird_attack
 param=defend_sound,terrorbird_hit
 param=death_sound,terrorbird_death
 // Stats match osrs version but our version Vislvl is different.
+// https://raw.githubusercontent.com/Joshua-F/osrs-dumps/refs/heads/master/config/dump.npc npc_2068
 
 [gnome_trainer]
 name=Gnome trainer
@@ -274,7 +280,7 @@ wanderrange=3
 param=death_anim,midget_death
 param=death_sound,gnome_death
 
-[npc_851]
+[gnome_waiter]
 name=Gnome Waiter
 desc=He can serve you gnome food.
 walkanim=midget_walk
@@ -336,6 +342,7 @@ param=attack_sound,gnome_attack
 param=defend_sound,gnome_hit
 param=death_sound,gnome_death
 // osrs stats and Vislvl match 1:1
+// https://raw.githubusercontent.com/Joshua-F/osrs-dumps/refs/heads/master/config/dump.npc npc_6077
 
 [gnome_child_blue]
 name=Gnome child
@@ -371,6 +378,7 @@ param=attack_sound,gnome_attack
 param=defend_sound,gnome_hit
 param=death_sound,gnome_death
 // osrs stats and Vislvl match 1:1
+// https://raw.githubusercontent.com/Joshua-F/osrs-dumps/refs/heads/master/config/dump.npc npc_6078
 
 [gnome_child_green]
 name=Gnome child
@@ -404,6 +412,7 @@ param=attack_sound,gnome_attack
 param=defend_sound,gnome_hit
 param=death_sound,gnome_death
 // osrs stats and Vislvl match 1:1
+// https://raw.githubusercontent.com/Joshua-F/osrs-dumps/refs/heads/master/config/dump.npc npc_6079
 
 [gnome_guard_halberd]
 name=Gnome guard
@@ -430,11 +439,11 @@ param=damagetype,^slash_style
 param=attack_anim,midget_attacksword
 param=defend_anim,midget_block
 param=death_anim,midget_death
-param=attack_sound,scythe_slash
-param=defend_sound,gnome_hit
+param=attack_sound,gnome_attack
+param=defend_sound,scythe_slash
 param=death_sound,gnome_death
-// osrs attack_sound,gnome_attack & defend_sound,scythe_slash
 // Stats match osrs version but our version Vislvl is different.
+// https://raw.githubusercontent.com/Joshua-F/osrs-dumps/refs/heads/master/config/dump.npc npc_6081
 
 [gnome_guard_sword]
 name=Gnome guard
@@ -468,6 +477,7 @@ param=attack_sound,hacksword_slash
 // param=attack_sound,brassclash
 param=death_sound,gnome_death
 // Stats match osrs version but our version Vislvl is different.
+// https://raw.githubusercontent.com/Joshua-F/osrs-dumps/refs/heads/master/config/dump.npc npc_6082
 
 [npc_165]
 name=Gnome shop keeper
@@ -554,6 +564,7 @@ param=proj_launch,iron_arrow_launch
 param=proj_travel,iron_arrow_travel
 param=proj_height,48
 // osrs stats and Vislvl match 1:1
+// https://raw.githubusercontent.com/Joshua-F/osrs-dumps/refs/heads/master/config/dump.npc npc_6086
 
 [gnome_woman_black]
 name=Gnome woman
@@ -599,6 +610,7 @@ param=proj_launch,iron_arrow_launch
 param=proj_travel,iron_arrow_travel
 param=proj_height,48
 // osrs stats and Vislvl match 1:1
+// https://raw.githubusercontent.com/Joshua-F/osrs-dumps/refs/heads/master/config/dump.npc npc_6087
 
 [gnome_pilot]
 name=Gnome pilot
@@ -962,6 +974,7 @@ param=proj_travel,iron_arrow_travel
 param=proj_height,48
 category=gnome_troop
 // osrs stats and Vislvl match 1:1
+// https://raw.githubusercontent.com/Joshua-F/osrs-dumps/refs/heads/master/config/dump.npc npc_4973
 
 [gnome_troop_black]
 name=Gnome troop
@@ -1006,3 +1019,4 @@ param=proj_travel,iron_arrow_travel
 param=proj_height,48
 category=gnome_troop
 // osrs stats and Vislvl match 1:1
+// https://raw.githubusercontent.com/Joshua-F/osrs-dumps/refs/heads/master/config/dump.npc npc_4974

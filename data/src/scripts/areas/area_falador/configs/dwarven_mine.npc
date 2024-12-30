@@ -22,7 +22,9 @@ param=shop_buy_multiplier,700
 param=shop_delta,20
 param=shop_title,Drogo's Mining Emporium.
 wanderrange=13
+param=damagetype,^stab_style
 param=death_anim,dwarf_death
+// https://raw.githubusercontent.com/Joshua-F/osrs-dumps/refs/heads/master/config/dump.npc npc_5895
 
 [dwarf_generalshop]
 vislevel=hide
@@ -52,7 +54,9 @@ param=shop_buy_multiplier,300
 param=shop_delta,30
 param=shop_title,Dwarven shopping store
 wanderrange=13
+param=damagetype,^stab_style
 param=death_anim,dwarf_death
+// https://raw.githubusercontent.com/Joshua-F/osrs-dumps/refs/heads/master/config/dump.npc npc_ 5904
 
 [nurmof]
 vislevel=hide
@@ -83,7 +87,9 @@ param=shop_buy_multiplier,600
 param=shop_delta,20
 param=shop_title,Nurmof's Pickaxe Shop.
 wanderrange=13
+param=damagetype,^stab_style
 param=death_anim,dwarf_death
+// https://raw.githubusercontent.com/Joshua-F/osrs-dumps/refs/heads/master/config/dump.npc npc_8686
 
 [crest_boot]
 vislevel=hide
@@ -103,5 +109,9 @@ hitpoints=16
 attack=8
 strength=8
 defence=7
+param=damagetype,^stab_style
+param=attackrate,5
+// param=attackbonus=
+param=strengthbonus,5
 param=death_anim,dwarf_death
 // https://raw.githubusercontent.com/Joshua-F/osrs-dumps/refs/heads/master/config/dump.npc npc_4985

@@ -102,6 +102,12 @@ if ($errand_state = 0) {
         ~chatplayer("<p,sad>I haven't found one yet.");
         ~chatnpc("<p,neutral>Oh well, tell me when you do. Remember that they can be found around the digsite; perhaps try panning the river.");
     }
+} else {
+    ~chatnpc("<p,happy>How's it going?");
+    ~chatplayer("<p,confused>I am stuck on some more exam questions.");
+    ~chatnpc("<p,happy>Okay, I'll tell you my latest notes...");
+    ~chatnpc("<p,neutral>Sample preparation: Samples cleaned, and carried only in specimen jars.");
+    ~chatplayer("<p,happy>Great, thanks for your advice.");
 }
 
 

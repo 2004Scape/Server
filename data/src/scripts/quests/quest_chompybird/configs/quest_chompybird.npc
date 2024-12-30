@@ -10,9 +10,11 @@ model1=model_2878_npc
 model2=model_3442_npc
 head1=model_141_npc_head
 wanderrange=2
+param=damagetype,^crush_style
 param=death_anim,ogre_death
 param=death_sound,giant_death
 timer=5
+// https://raw.githubusercontent.com/Joshua-F/osrs-dumps/refs/heads/master/config/dump.npc npc_1470
 
 [chompybird_fycie]
 vislevel=hide
@@ -31,8 +33,10 @@ model1=model_2878_npc
 model2=model_3441_npc
 head1=model_3444_npc_head
 wanderrange=3
+param=damagetype,^crush_style
 param=death_anim,ogre_death
 param=death_sound,giant_death
+// https://raw.githubusercontent.com/Joshua-F/osrs-dumps/refs/heads/master/config/dump.npc npc_1471
 
 [chompybird_bugs]
 vislevel=hide
@@ -51,8 +55,10 @@ model1=model_2878_npc
 model2=model_3441_npc
 head1=model_3444_npc_head
 wanderrange=3
+param=damagetype,^crush_style
 param=death_anim,ogre_death
 param=death_sound,giant_death
+// https://raw.githubusercontent.com/Joshua-F/osrs-dumps/refs/heads/master/config/dump.npc npc_1472
 
 [swamp_toad]
 vislevel=hide
@@ -94,11 +100,11 @@ param=attack_sound,chompy_bird_attack
 param=defend_sound,chompy_bird_hit
 param=death_sound,chompy_bird_death
 // TODO tbc + missing datas
-wanderrange=3
 // Hunt range is a guess
 // If removed, chompy won't hunt for toads during quest
 huntrange=10
 // osrs stats and Vislvl match 1:1
+// https://raw.githubusercontent.com/Joshua-F/osrs-dumps/refs/heads/master/config/dump.npc npc_1475
 
 [chompy_bird_corpse]
 vislevel=hide

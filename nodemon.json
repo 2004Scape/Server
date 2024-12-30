@@ -1,6 +1,0 @@
-{
-  "ignore": ["node_modules", "data", "dump"],
-  "watch": ["src"],
-  "exec": "node --import @swc-node/register/esm-register --enable-source-maps --no-warnings",
-  "ext": "ts,js,json"
-}

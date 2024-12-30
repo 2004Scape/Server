@@ -256,7 +256,7 @@ if (inv_getobj(worn, ^wearpos_ring) = ring_of_recoil & npc_finduid(%aggressive_n
 [proc,npc_retaliate](int $queue_delay)
 npc_queue(1, 0, $queue_delay);
 // if in singles and attacking another player, then delay npc action by 8 ticks
-if (map_multi(npc_coord) = false & %npc_attacking_uid ! uid & %npc_attacking_uid ! null) {
+if (map_multiway(npc_coord) = false & %npc_attacking_uid ! uid & %npc_attacking_uid ! null) {
     %npc_action_delay = add(map_clock, 8);
 }
 %npc_aggressive_player = uid;
@@ -269,7 +269,7 @@ if (map_multi(npc_coord) = false & %npc_attacking_uid ! uid & %npc_attacking_uid
 %aggressive_npc = npc_uid;
 
 [proc,npc_can_attack_player]()(boolean)
-if (map_multi(npc_coord) = true) {
+if (map_multiway(npc_coord) = true) {
     return(true);
 }
 if (add(%lastcombat_pvp, 8) > map_clock) {

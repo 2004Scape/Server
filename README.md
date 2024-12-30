@@ -26,7 +26,7 @@ Our content language of choice is a recreation of RuneScript: this gives us the 
 
 ## Getting Started
 
-1. Download this repo to your computer
+1. Download and extract this repo somewhere on your computer
 2. Install our list of [dependencies](#environment-dependencies)
 3. Open the folder you downloaded in a command prompt
 4. Run `npm start`
@@ -37,7 +37,7 @@ Now open [http://localhost](http://localhost) in your browser and play!
 > If you run into issues please see our [common issues](#common-issues) or hop in Discord.
 
 > [!TIP]
-> Windows users: We have a script called `quickstart.bat` that will launch the server for you, combining steps 3 and 4 above.
+> Windows users: We have a script called `quickstart.bat` that will launch the server for you, which combines steps 3 and 4 above.
 
 > [!TIP]
 > Advanced users: You can customize your setup by copying the `.env.example` file to `.env`. This is not necessary for a simple localhost setup.
@@ -59,7 +59,7 @@ Once the container starts, it automatically starts running `setup.sh`. You can c
 
 ## Environment Dependencies
 
-- [NodeJS 20.6+](https://nodejs.org/) (22 is fine as well)
+- [NodeJS 22](https://nodejs.org/)
 - [Java 17+](https://adoptium.net/)
 
 > [!TIP]
@@ -95,7 +95,7 @@ Configuration for the linter can be found in `.eslintrc.cjs`.
 ## Common Issues
 
 * `bad option: --import`  
-You are using an older version of Node (maybe 18). We are targeting 20.6+
+You are using an older version of Node. Update it and re-run.
 
 * `'"java"' is not recognized as an internal or external command`  
 You do not have Java 17 installed.

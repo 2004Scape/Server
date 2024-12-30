@@ -1,10 +1,10 @@
 [label,levelup_attack]
 //Attack level up unlock messages
 switch_int(stat_base(attack)) {
-    case 5 : ~objbox(steel_longsword,"You can now wield @dbl@Steel Weaponry@bla@!", 250, 0, 0);
-    case 10 : ~objbox(black_longsword,"You can now wield @dbl@Black Weaponry@bla@!", 250, 0, 0);
-    case 20 : ~objbox(mithril_longsword,"You can now wield @dbl@Mithril Weaponry@bla@!", 250, 0, 0);
-    case 30 : ~objbox(adamant_longsword,"You can now wield @dbl@Adamant Weaponry@bla@!", 250, 0, 0);
-    case 40 : ~objbox(rune_longsword,"You can now wield @dbl@Rune Weaponry@bla@!", 250, 0, 0);
-    case 60 : ~objbox(dragon_longsword,"Members can now wield @dbl@Dragon Weaponry@bla@!", 250, 0, 0);
+    case 5 : ~objbox(steel_longsword,"You can now wield @dbl@Steel Weaponry!", 250, 0, 0);
+    case 10 : ~objbox(black_longsword,"You can now wield @dbl@Black Weaponry!", 250, 0, 0);
+    case 20 : ~objbox(mithril_longsword,"You can now wield @dbl@Mithril Weaponry!", 250, 0, 0);
+    case 30 : ~objbox(adamant_longsword,"You can now wield @dbl@Adamant Weaponry!", 250, 0, 0);
+    case 40 : ~objbox(rune_longsword,"You can now wield @dbl@Rune Weaponry!", 250, 0, 0);
+    case 60 : ~objbox(dragon_longsword,"Members can now wield @dbl@Dragon Weaponry!", 250, 0, 0); //imgur.com/VfAYlr7
 }

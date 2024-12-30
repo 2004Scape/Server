@@ -20,12 +20,12 @@ if(%runemysteries_progress = ^runemysteries_given_package) {
     return;
 } else {
     ~chatnpc("<p,happy>Do you want to buy some runes?");
-    if (%runemysteries_progress <= ^runemysteries_given_talisman) {
-        @multi2("Yes please!", aubury_shop, "Oh, it's a rune shop. No thank you, then.", aubury_no);
+    if(%runemysteries_progress = ^runemysteries_complete) {
+        @multi3("Yes please!", aubury_shop, "Oh, it's a rune shop. No thank you, then.", aubury_no, "Can you teleport me to the Rune Essence?", aubury_ess);
     } else if (%runemysteries_progress = ^runemysteries_received_package & inv_total(inv, research_package) > 0) {
         @multi3("Yes please!", aubury_shop, "Oh, it's a rune shop. No thank you, then.", aubury_no, "I have been sent here with a package for you.", aubury_package);
     } else {
-        @multi3("Yes please!", aubury_shop, "Oh, it's a rune shop. No thank you, then.", aubury_no, "Can you teleport me to the Rune Essence?", aubury_ess);
+        @multi2("Yes please!", aubury_shop, "Oh, it's a rune shop. No thank you, then.", aubury_no);
     }
 }
 
