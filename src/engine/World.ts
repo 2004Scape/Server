@@ -159,7 +159,7 @@ class World {
 
             if (this.friendThread instanceof Worker) {
                 this.friendThread.onmessage = msg => {
-                    this.onFriendsMessage(msg.data);
+                    this.onFriendMessage(msg.data);
                 };
             }
         } else {
@@ -171,7 +171,7 @@ class World {
 
             if (this.friendThread instanceof NodeWorker) {
                 this.friendThread.on('message', msg => {
-                    this.onFriendsMessage(msg);
+                    this.onFriendMessage(msg);
                 });
             }
         }
@@ -894,6 +894,12 @@ class World {
             if (this.shutdownTick > -1) {
                 player.write(new UpdateRebootTimer(this.shutdownTick - this.currentTick));
             }
+
+            this.friendThread.postMessage({
+                type: 'player_login',
+                username: player.username,
+                chatModePrivate: player.privateChat,
+            });
         }
         this.newPlayers.clear();
         this.cycleStats[WorldStat.LOGIN] = Date.now() - start;
@@ -1376,12 +1382,6 @@ class World {
 
     addPlayer(player: Player): void {
         this.newPlayers.add(player);
-
-        this.friendThread.postMessage({
-            type: 'player_login',
-            username: player.username,
-            chatModePrivate: player.privateChat,
-        });
     }
 
     sendPrivateChatModeToFriendsServer(player: Player): void {
@@ -1583,7 +1583,6 @@ class World {
     onLoginMessage(msg: any) {
         const { type } = msg;
 
-        // console.log(msg);
         if (type === 'player_login') {
             const { socket } = msg;
             if (!this.loginRequests.has(socket)) {
@@ -1650,7 +1649,7 @@ class World {
         }
     }
 
-    onFriendsMessage({ opcode, data }: { opcode: FriendsServerOpcodes, data: any }) {
+    onFriendMessage({ opcode, data }: { opcode: FriendsServerOpcodes, data: any }) {
         try {
             if (opcode === FriendsServerOpcodes.UPDATE_FRIENDLIST) {
                 const username37 = BigInt(data.username37);

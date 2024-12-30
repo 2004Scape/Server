@@ -401,7 +401,7 @@ export class FriendClient extends InternalClient {
         await this.connect();
 
         if (!this.ws || !this.wsr || !this.wsr.checkIfWsLive()) {
-            return -1;
+            return;
         }
 
         this.ws.send(JSON.stringify({
@@ -414,7 +414,7 @@ export class FriendClient extends InternalClient {
         await this.connect();
 
         if (!this.ws || !this.wsr || !this.wsr.checkIfWsLive()) {
-            return -1;
+            return;
         }
 
         this.ws.send(JSON.stringify({
@@ -429,7 +429,7 @@ export class FriendClient extends InternalClient {
         await this.connect();
 
         if (!this.ws || !this.wsr || !this.wsr.checkIfWsLive()) {
-            return -1;
+            return;
         }
 
         this.ws.send(JSON.stringify({
@@ -443,7 +443,7 @@ export class FriendClient extends InternalClient {
         await this.connect();
 
         if (!this.ws || !this.wsr || !this.wsr.checkIfWsLive()) {
-            return -1;
+            return;
         }
 
         this.ws.send(JSON.stringify({
@@ -458,7 +458,7 @@ export class FriendClient extends InternalClient {
         await this.connect();
 
         if (!this.ws || !this.wsr || !this.wsr.checkIfWsLive()) {
-            return -1;
+            return;
         }
 
         this.ws.send(JSON.stringify({
@@ -473,7 +473,7 @@ export class FriendClient extends InternalClient {
         await this.connect();
 
         if (!this.ws || !this.wsr || !this.wsr.checkIfWsLive()) {
-            return -1;
+            return;
         }
 
         this.ws.send(JSON.stringify({
@@ -488,7 +488,7 @@ export class FriendClient extends InternalClient {
         await this.connect();
 
         if (!this.ws || !this.wsr || !this.wsr.checkIfWsLive()) {
-            return -1;
+            return;
         }
 
         this.ws.send(JSON.stringify({
@@ -503,7 +503,7 @@ export class FriendClient extends InternalClient {
         await this.connect();
 
         if (!this.ws || !this.wsr || !this.wsr.checkIfWsLive()) {
-            return -1;
+            return;
         }
 
         this.ws.send(JSON.stringify({
@@ -518,7 +518,7 @@ export class FriendClient extends InternalClient {
         await this.connect();
 
         if (!this.ws || !this.wsr || !this.wsr.checkIfWsLive()) {
-            return -1;
+            return;
         }
 
         this.ws.send(JSON.stringify({
