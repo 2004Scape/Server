@@ -413,10 +413,7 @@ val=14
 val=15
 val=16
 val=18
-val=19
 val=20
-val=21
-val=24
 val=25
 val=26
 val=27
@@ -425,15 +422,12 @@ val=29
 val=30
 val=32
 val=33
-val=34
 val=35
 val=37
-val=39
 val=40
 val=42
 val=43
 val=45
-val=48
 val=50
 val=53
 val=55
@@ -443,7 +437,6 @@ val=65
 val=80
 val=82
 val=91
-
 
 [levelup_unlocks_firemaking]
 inputtype=autoint
