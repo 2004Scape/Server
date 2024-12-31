@@ -38,8 +38,8 @@ healenergy(10000);
 ~clear_pk_skull;
 ~clear_poison;
 ~update_all($prev_wep);
+~initalltabs;
 // todo: end poison timer ~player_end_poison
-
 
 [proc,player_death_lose_items]
 def_boolean $skulled = false;
