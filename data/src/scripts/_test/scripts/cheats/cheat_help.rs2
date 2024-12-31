@@ -1,9 +1,6 @@
 [debugproc,help]
 if_close;
 if (p_finduid(uid) = true) {
-    if (map_production = true) {
-        ~mesbox("These cheats are only available during the Alpha phase.|If a command has options, run it by itself to get specific instructions.");
-    }
     switch_int(~p_choice5_header("Account commands", 1, "Item commands", 2, "Teleport commands", 3, "Quest commands", 4, "Client & Engine commands", 5, "Help Menu")) {
         case 1 : @account_commands;
         case 2 : @item_commands;
