@@ -292,7 +292,7 @@ export default class Player extends PathingEntity {
     cameraPackets: LinkList<CameraInfo> = new LinkList();
     timers: Map<number, EntityTimer> = new Map();
     tabs: number[] = new Array(14).fill(-1);
-    modalState = 0; // 1 - if_openmain, 2 - if_openchat, 4 - if_openside, 8 - tut_open, 16 - last_login_info
+    modalState = 0; // 1 - main, 2 - chat, 4 - side, 8 - tutorial, 16 - welcome
     modalMain = -1;
     lastModalMain = -1;
     modalChat = -1;

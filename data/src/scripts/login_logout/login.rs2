@@ -1,12 +1,6 @@
 [login,_]
 mes("Welcome to RuneScape.");
-if (map_production = true) {
-    mes("The server is currently in the Alpha testing phase.");
-    mes("Character progression will reset when Beta testing begins.");
-    mes("Available commands during this phase can be found by running ::help.");
-}
 cam_reset;
-//if_close; // come back to this if this proves to be problematic, commented so welcome screen is visible
 
 %music_mode = 1; // set to auto on login
 if (%game_brightness = 0) {
@@ -54,12 +48,7 @@ if(inzone(movecoord(^grandtree_jail_coord, 0, 0, -2), movecoord(^grandtree_jail_
 }
 
 if (%tutorial_progress < ^tutorial_complete) {
-     if (%tutorial_progress = 5 & inzone(0_48_48_14_27, 0_48_48_27_41, coord) = false) {
-        // This is a check to not bork every account that currently has a tutorial complete progress of 5.
-        // Remove after alpha!
-        %tutorial_progress = ^tutorial_complete;
-        ~initalltabs;
-    } else if (~in_tutorial_island(coord) = false & %tutorial_progress < ^tutorial_complete) {
+     if (~in_tutorial_island(coord) = false & %tutorial_progress < ^tutorial_complete) {
         // Checking if you're off tutorial island but it's not complete
         ~update_bas;
         @tutorial_complete;
@@ -68,16 +57,14 @@ if (%tutorial_progress < ^tutorial_complete) {
         ~update_bas;
         @start_tutorial;
     }
-} else {
-    if (map_production = true) {
-        // last_login_info; // todo: engine queue this or make it run after zone triggers
-    }
-    ~initalltabs;
 }
-// after init tabs
+~initalltabs;
 ~update_all(inv_getobj(worn, ^wearpos_rhand));
 ~update_stall_trade_timers;
 queue(follower_login, 0);
+if (map_production = true) {
+    last_login_info;
+}
 
 [proc,initalltabs]
 ~update_weapon_category(inv_getobj(worn, ^wearpos_rhand));
