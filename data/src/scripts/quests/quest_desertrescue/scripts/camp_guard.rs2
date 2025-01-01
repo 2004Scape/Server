@@ -1,0 +1,106 @@
+
+// "Don't talk to any of the Mercenary there as they will throw you into a cell." runeweb, not sure about rowdy guards so will copy rsc
+[opnpc1,npc_829] 
+if(~wearing_slave_robes = true) {
+    // underground camp
+    if(inzone(0_51_147_0_0, 0_51_147_63_63, coord) = true) {
+        switch_int(%desertrescue_progress) {
+            case ^desertrescue_entered_mine :
+                mes("This guard looks as if he's been down here a while.");
+                ~chatnpc("<p,angry>Yeah, what do you want?");
+                @multi2("Er nothing really.", camp_merc_nothing, "I'd like to mine in a different area.", camp_merc_minearea);
+        }
+    } else {
+        mes("This guard looks as if he's been in the sun for a while.");
+        ~chatnpc("<p,neutral>Move along now...");
+    }
+} else {
+    @mining_camp_caught;
+}
+
+[label,mining_camp_caught]
+npc_setmode(playerfaceclose);
+npc_say("Hey, they're interesting clothes!");
+mes("Guard: Hey, they're interesting clothes!");
+p_delay(3);
+npc_say("You're no slave.");
+mes("Guard: You're no slave.");
+p_delay(3);
+npc_say("What are you doing in here?");
+mes("Guard: What are you doing in here?");
+p_delay(3);
+~desertcamp_guard_search;
+
+[opnpc2,npc_829]
+// this is only opnpc2 for the mercenary in OSRS
+if(%npc_attacking_uid = uid) {
+    @player_combat_start;
+}
+~mesbox("This mercenary looks very fierce.|Are you sure you want to attack him?");
+def_int $op = ~p_choice2("Yes, I can take him on!", 1, "Er, no thanks, I've had second thoughts about it.", 2);
+if($op = 2) {
+    ~mesbox("You decide not to fight the Mercenary.");
+    return;
+}
+npc_say("Oh, want a fight do you!");
+~mercenary_camp_attack;
+
+[opnpc1,rowdy_guard] 
+mes("The Rowdy Guard does not appear interested in talking"); // rsc
+
+[opnpc2,rowdy_guard]
+// this is only opnpc2 for the mercenary in OSRS
+if(%npc_attacking_uid = uid) {
+    @player_combat_start;
+}
+~mesbox("This mercenary looks very fierce.|Are you sure you want to attack him?");
+def_int $op = ~p_choice2("Yes, I can take him on!", 1, "Er, no thanks, I've had second thoughts about it.", 2);
+if($op = 2) {
+    ~mesbox("You decide not to fight the Mercenary.");
+    return;
+}
+npc_say("Oh, want a fight do you!");
+~mercenary_camp_attack;
+
+[proc,mercenary_camp_attack]
+if_close;
+~npc_retaliate(0);
+~desertcamp_guard_search;
+
+[label,camp_merc_nothing]
+~chatplayer("<p,neutral>Er nothing really.");
+~chatnpc("<p,neutral>Okay... so move along and get on with your work.");
+
+[label,camp_merc_minearea]
+~chatplayer("<p,neutral>I'd like to mine in a different area.");
+~chatnpc("<p,happy>Oh, you want to work in another area of the mine eh?@dbl@--The guard seems pleased with his rhetorical question.--@bla@Well, I can understand that! A change is as good as a@bla@rest they say.");
+switch_int(~p_choice2("Huh, fat chance of a rest for me.", 1, "Yes sir, you're quite right sir.", 2)) {
+    case 1 :
+        ~chatplayer("<p,neutral>Huh, fat chance of a rest for me.");
+        ~damage_self(1);
+        ~chatnpc("<p,angry>You miserable whelp! Get back to work!");
+        mes("The guard cuffs you around head.");
+    case 2 :
+        ~chatplayer("<p,neutral>Yes sir, you're quite right sir.");
+        ~chatnpc("<p,happy>Of course I'm right. And what goes around comes around as they say. And it's been absolutely ages since I've had anything different to eat.");
+        ~chatnpc("<p,happy>What I wouldn't give for some whole, fresh, ripe and juicy pineapple for a change. And those Tenti's have the best pineapple in this entire area.");
+        ~mesbox("The guard winks at you.");
+        ~chatnpc("<p,neutral>I'm sure you get my meaning...");
+        if(%desertrescue_progress = ^desertrescue_entered_mine) %desertrescue_progress = ^desertrescue_finding_pineapple;
+        @multi3("How am I going to get some pineapples around here?", camp_merc_pineapple, "Yes sir, we understand each other perfectly.", camp_merc_perfect, "What are the Tenti's?", camp_merc_tentis);
+}
+
+[label,camp_merc_pineapple]
+~chatplayer("<p,neutral>How am I going to get some pineapples around here?");
+~chatnpc("<p,neutral>Well, that's not my problem is it? Also, I know that you slaves trade your items down here. I'm sure that if you're resourceful enough, you'll come up with the goods.");
+~chatnpc("<p,neutral>Now, get along and do some work, before we're both in for it. And remember, I prefer my pineapples whole, not chopped up with all the juice gone.");
+
+[label,camp_merc_perfect]
+~chatplayer("<p,neutral>Yes sir, we understand each other perfectly.");
+~chatnpc("<p,neutral>Okay, good then. And remember, I prefer my pineapples whole, not chopped up with all the juice gone.");
+~mesbox("The guard moves back to his post and winks at you knowingly.");
+
+[label,camp_merc_tentis]
+~chatplayer("<p,neutral>What are the Tenti's?");
+~chatnpc("<p,neutral>Well! You don't come from around here do you? The Tenti's are the nomadic people west of here. They live in tents, so we call them the Tenti's. They have great pineapples! I'm sure you get my meaning?");
+@multi2("How am I going to get some pineapples around here?", camp_merc_pineapple, "Yes sir, we understand each other perfectly.", camp_merc_perfect);

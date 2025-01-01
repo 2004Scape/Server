@@ -2,8 +2,26 @@
 ^desertrescue_started = 1
 ^desertrescue_approached_captain = 3
 ^desertrescue_killed_capt = 4
-
+^desertrescue_entered_camp = 5
+^desertrescue_spoken_slave = 6
+^desertrescue_freed_slave = 7
+^desertrescue_traded_clothes = 8
+^desertrescue_entered_mine = 9
+^desertrescue_finding_pineapple = 10
+^desertrescue_given_bedobin_key = 11
+^desertrescue_retrieved_plans = 12
+^desertrescue_shown_plans_shabim = 13
+^desertrescue_made_dart_tip = 14
+^desertrescue_finished_dart = 15
+^desertrescue_learned_darts = 16
 
 // bits positions (first 5 bits for guard interactions)
 ^desertrescue_find_al_shabim = 5
 ^desertrescue_spoke_al_shabim = 6
+^desertrescue_sailing = 7
+^desertrescue_distracted_siad = 8
+^desertrescue_lock_attempts1 = 9
+^desertrescue_lock_attempts2 = 10
+^desertrescue_gained_tent_access = 11
+
+^desertrescue_prison_coord = 0_51_47_21_26

@@ -14,7 +14,7 @@ def_obj $head = inv_getobj(worn, ^wearpos_head);
 def_obj $body = inv_getobj(worn, ^wearpos_torso);
 def_obj $legs = inv_getobj(worn, ^wearpos_legs);
 def_obj $feet = inv_getobj(worn, ^wearpos_feet);
-def_obj $rhand = inv_getobj(worn, ^wearpos_rhand);
+def_obj $lhand = inv_getobj(worn, ^wearpos_lhand);
 def_obj $hands = inv_getobj(worn, ^wearpos_hands);
 
 if ($head ! null) {
@@ -24,7 +24,7 @@ if ($head ! null) {
 if ($body ! null) {
     if($body = desert_shirt) {
         $time = calc($time + 20);
-    } else if($body = obj_1844) {
+    } else if($body = slave_shirt) {
         $time = calc($time + 10);
     } else if(oc_category($body) = armour_body) {
         $time = calc($time - 40);
@@ -34,7 +34,7 @@ if ($body ! null) {
 if ($legs ! null) {
     if($legs = desert_robe) {
         $time = calc($time + 20);
-    } else if($legs = obj_1845) {
+    } else if($legs = slave_robe) {
         $time = calc($time + 10);
     } else if(oc_category($legs) = armour_legs) {
         $time = calc($time - 30);
@@ -44,15 +44,15 @@ if ($legs ! null) {
 if ($feet ! null) {
     if($feet = desert_boots) {
         $time = calc($time + 10);
-    } else if($feet = obj_1846) {
+    } else if($feet = slave_boots) {
         $time = calc($time + 5);
     }// else if(oc_category($feet) = armour_feet) {
      //   $time = calc($time - 10);
     //} no feet armour in 225?
 }
 
-if ($rhand ! null) {
-    if(oc_category($rhand) = armour_shield) $time = calc($time - 10);
+if ($lhand ! null) {
+    if(oc_category($lhand) = armour_shield) $time = calc($time - 10);
 }
 
 if ($hands ! null) {

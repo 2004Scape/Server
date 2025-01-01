@@ -524,6 +524,7 @@ settimer(move_ikovtrigger, 1);
 
 [mapzone,0_51_47] 
 ~start_desertheat_timer;
+settimer(mercenary_check, 25);
 ~move_musictrigger(coord);
 
 [mapzone,0_51_48] 
@@ -556,7 +557,9 @@ settimer(move_ikovtrigger, 1);
 
 [mapzone,0_51_61] ~move_musictrigger(coord);
 
-[mapzone,0_51_147] ~move_musictrigger(coord);
+[mapzone,0_51_147] 
+settimer(mercenary_check, 25);
+~move_musictrigger(coord);
 
 [mapzone,0_51_154] ~move_musictrigger(coord);
 

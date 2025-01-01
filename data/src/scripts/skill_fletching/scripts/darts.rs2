@@ -8,6 +8,7 @@ switch_obj(last_useitem) {
 switch_obj(last_useitem) {
     case obj_2864 : @make_ogre_headless_arrows;
     case arrow_shaft : @make_headless_arrows;
+    case prototype_dart_tip : @make_prototype_dart;
     case default :
         if (oc_category(last_useitem) = category_969) {
             @make_darts(last_useitem);
@@ -28,7 +29,6 @@ if ($data = null) {
 }
 def_namedobj $product;
 def_int $max_count;
-// todo: Tourist trap requirement.
 $product, $max_count = db_getfield($data, fletching_table:product, 0);
 def_int $level = db_getfield($data, fletching_table:level, 0);
 if (stat(fletching) < $level) {
