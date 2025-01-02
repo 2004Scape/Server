@@ -44,9 +44,11 @@ async function handleRequests(parentPort: ParentPort, msg: any) {
 
     switch (type) {
         case 'session_log': {
-            // todo: batch up logs, cache account->username queries
-            const { username, session_uuid, timestamp, coord, event } = msg;
-            await client.sessionLog(username, session_uuid, timestamp, coord, event);
+            if (Environment.LOGGER_SERVER) {
+                // todo: batch up logs, cache account->username queries
+                const { username, session_uuid, timestamp, coord, event } = msg;
+                await client.sessionLog(username, session_uuid, timestamp, coord, event);
+            }
             break;
         }
         // todo: store session's packet traffic for analysis

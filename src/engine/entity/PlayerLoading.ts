@@ -43,12 +43,6 @@ export class PlayerLoading {
             ? new NetworkPlayer(safeName, name37, client)
             : new Player(safeName, name37);
 
-        if (!Environment.NODE_PRODUCTION) {
-            player.staffModLevel = 3; // dev (destructive commands)
-        } else if (!Environment.LOGIN_SERVER && Environment.NODE_STAFF.find(name => name === safeName) !== undefined) {
-            player.staffModLevel = 2; // staff (moderation commands)
-        }
-
         if (sav.data.length < 2) {
             for (let i = 0; i < 21; i++) {
                 player.stats[i] = 0;

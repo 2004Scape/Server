@@ -63,6 +63,13 @@ async function handleRequests(parentPort: ParentPort, msg: any) {
                     ...await client.playerLogin(username, password, uid)
                 });
             } else {
+                let staffmodlevel = 0;
+                if (!Environment.NODE_PRODUCTION) {
+                    staffmodlevel = 3; // dev (destructive commands)
+                } else if (Environment.NODE_STAFF.find(name => name === username) !== undefined) {
+                    staffmodlevel = 2; // staff (moderation commands)
+                }
+
                 if (!fs.existsSync(`data/players/${username}.sav`)) {
                     parentPort.postMessage({
                         type: 'player_login',
@@ -71,6 +78,7 @@ async function handleRequests(parentPort: ParentPort, msg: any) {
                         lowMemory,
                         reconnecting,
                         reply: 4,
+                        staffmodlevel,
                         save: null
                     });
                 } else {
@@ -81,6 +89,7 @@ async function handleRequests(parentPort: ParentPort, msg: any) {
                         lowMemory,
                         reconnecting,
                         reply: 0,
+                        staffmodlevel,
                         save: fs.readFileSync(`data/players/${username}.sav`)
                     });
                 }
@@ -123,6 +132,22 @@ async function handleRequests(parentPort: ParentPort, msg: any) {
             if (Environment.LOGIN_SERVER) {
                 const { username } = msg;
                 await client.playerForceLogout(username);
+            }
+            break;
+        }
+        case 'player_ban': {
+            if (Environment.LOGIN_SERVER) {
+                // todo: wait for confirmation? resend?
+                const { staff, username, until } = msg;
+                await client.playerBan(staff, username, until);
+            }
+            break;
+        }
+        case 'player_mute': {
+            if (Environment.LOGIN_SERVER) {
+                // todo: wait for confirmation? resend?
+                const { staff, username, until } = msg;
+                await client.playerMute(staff, username, until);
             }
             break;
         }

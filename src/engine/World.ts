@@ -880,7 +880,7 @@ class World {
 
                 player.client.state = 1;
 
-                if (player.staffModLevel >= 2) {
+                if (player.staffModLevel >= 1) {
                     player.client.send(Uint8Array.from([ 18 ]));
                 } else {
                     player.client.send(Uint8Array.from([ 2 ]));
@@ -1622,7 +1622,7 @@ class World {
                 return;
             }
 
-            const { username, lowMemory, reconnecting, muted_until } = msg;
+            const { username, lowMemory, reconnecting, staffmodlevel, muted_until } = msg;
 
             let save = new Uint8Array();
             if (reply === 0 || reply === 2) {
@@ -1631,6 +1631,7 @@ class World {
 
             const player = PlayerLoading.load(username, new Packet(save), client);
             player.reconnecting = reconnecting;
+            player.staffModLevel = staffmodlevel;
             player.lowMemory = lowMemory;
             player.muted_until = muted_until ? new Date(muted_until) : null;
 
@@ -1848,6 +1849,24 @@ class World {
             timestamp: Date.now(),
             coord,
             event: args.length ? message + ' ' + args.join(' ') : message,
+        });
+    }
+
+    notifyPlayerBan(staff: string, username: string, until: number) {
+        this.loginThread.postMessage({
+            type: 'player_ban',
+            staff,
+            username,
+            until
+        });
+    }
+
+    notifyPlayerMute(staff: string, username: string, until: number) {
+        this.loginThread.postMessage({
+            type: 'player_mute',
+            staff,
+            username,
+            until: until
         });
     }
 }

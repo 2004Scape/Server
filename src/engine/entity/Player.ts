@@ -1462,7 +1462,7 @@ export default class Player extends PathingEntity {
             }
 
             this.changeStat(stat);
-            this.addSessionLog('Advanced stat ' + stat + ' from ' + before + ' to ' + this.baseLevels[stat]);
+            this.addSessionLog('Advanced ' + Player.SKILLS[stat] + ' stat from ' + before + ' to ' + this.baseLevels[stat]);
 
             const script = ScriptProvider.getByTriggerSpecific(ServerTriggerType.ADVANCESTAT, stat, -1);
             if (script) {

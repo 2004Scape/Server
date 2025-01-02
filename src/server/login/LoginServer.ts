@@ -77,6 +77,7 @@ export default class LoginServer {
                             socket.send(JSON.stringify({
                                 replyTo,
                                 response: 4,
+                                staffmodlevel: account.staffmodlevel,
                                 muted_until: account.muted_until
                             }));
                             return;
@@ -86,6 +87,7 @@ export default class LoginServer {
                         socket.send(JSON.stringify({
                             replyTo,
                             response: 0,
+                            staffmodlevel: account.staffmodlevel,
                             save: save.toString('base64'),
                             muted_until: account.muted_until
                         }));
@@ -115,6 +117,22 @@ export default class LoginServer {
                         await db.updateTable('account').set({
                             logged_in: 0,
                             login_time: null
+                        }).where('username', '=', username).executeTakeFirst();
+                    } else if (type === 'player_ban') {
+                        const { staff, username, until } = msg;
+
+                        // todo: audit log
+
+                        await db.updateTable('account').set({
+                            banned_until: new Date(until)
+                        }).where('username', '=', username).executeTakeFirst();
+                    } else if (type === 'player_mute') {
+                        const { staff, username, until } = msg;
+
+                        // todo: audit log
+
+                        await db.updateTable('account').set({
+                            muted_until: new Date(until)
                         }).where('username', '=', username).executeTakeFirst();
                     }
                 } catch (err) {

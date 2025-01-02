@@ -45,13 +45,13 @@ export default class LoginClient extends InternalClient {
             return { reply: -1, save: null, muted_until: null };
         }
 
-        const { response, save, muted_until } = reply.result;
+        const { response, staffmodlevel, save, muted_until } = reply.result;
 
         if (response !== 0) {
             return { reply: response, save: null, muted_until: null };
         }
 
-        return { reply: response, save: Buffer.from(save, 'base64'), muted_until };
+        return { reply: response, staffmodlevel, save: Buffer.from(save, 'base64'), muted_until };
     }
 
     // returns true if the login server acknowledged the logout
@@ -107,6 +107,40 @@ export default class LoginClient extends InternalClient {
             nodeId: this.nodeId,
             nodeTime: Date.now(),
             username
+        }));
+    }
+
+    public async playerBan(staff: string, username: string, until: Date) {
+        await this.connect();
+
+        if (!this.ws || !this.wsr || !this.wsr.checkIfWsLive()) {
+            return;
+        }
+
+        this.ws.send(JSON.stringify({
+            type: 'player_ban',
+            nodeId: this.nodeId,
+            nodeTime: Date.now(),
+            staff,
+            username,
+            until
+        }));
+    }
+
+    public async playerMute(staff: string, username: string, until: Date) {
+        await this.connect();
+
+        if (!this.ws || !this.wsr || !this.wsr.checkIfWsLive()) {
+            return;
+        }
+
+        this.ws.send(JSON.stringify({
+            type: 'player_mute',
+            nodeId: this.nodeId,
+            nodeTime: Date.now(),
+            staff,
+            username,
+            until
         }));
     }
 }
