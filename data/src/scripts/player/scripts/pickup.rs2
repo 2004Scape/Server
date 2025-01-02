@@ -2,8 +2,10 @@
 
 [label,pickup_obj](coord $coord, namedobj $obj, int $amount)
 if (distance(coord, $coord) = 0) {
+    session_log("Picking up <oc_debugname($obj)> x<tostring($amount)> from the ground");
     @pickup_obj_floor($obj, $amount);
 } else {
+    session_log("Picking up <oc_debugname($obj)> x<tostring($amount)> from a table");
     @pickup_obj_table($obj, $amount);
 }
 

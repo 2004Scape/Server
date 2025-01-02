@@ -380,8 +380,10 @@ const InvOps: CommandHandlers = {
             fromInv.delete(slot);
             toInv.add(obj.id, obj.count);
 
-            fromPlayer.addSessionLog('Traded ' + ObjType.get(obj.id).name + ' x' + obj.count + ' with ' + toPlayer.username);
-            toPlayer.addSessionLog('Traded ' + ObjType.get(obj.id).name + ' x' + obj.count + ' with ' + fromPlayer.username);
+            const type = ObjType.get(obj.id);
+
+            fromPlayer.addSessionLog('Trade: Gave ' + type.debugname + ' x' + obj.count + ' to ' + toPlayer.username);
+            toPlayer.addSessionLog('Trade: Received ' + type.debugname + ' x' + obj.count + ' from ' + fromPlayer.username);
         }
     }),
 
