@@ -880,7 +880,7 @@ class World {
 
                 player.client.state = 1;
 
-                if (player.staffModLevel >= 2) {
+                if (player.staffModLevel >= 1) {
                     player.client.send(Uint8Array.from([ 18 ]));
                 } else {
                     player.client.send(Uint8Array.from([ 2 ]));
