@@ -1,3 +1,4 @@
+import World from '#/engine/World.js';
 import Packet from '#/io/Packet.js';
 
 import ClientSocket from '#/server/ClientSocket.js';
@@ -30,6 +31,7 @@ export default class WorkerServer {
                 case 'data': {
                     if (socket) {
                         socket.buffer(e.data.data);
+                        World.onClientData(socket);
                     }
                     break;
                 }

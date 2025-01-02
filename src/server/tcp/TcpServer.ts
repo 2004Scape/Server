@@ -29,28 +29,41 @@ export default class TcpServer {
             client.state = 0;
 
             s.on('data', (data: Buffer) => {
-                if (client.state === -1 || client.remaining <= 0) {
-                    client.terminate();
-                    return;
-                }
+                try {
+                    if (client.state === -1 || client.remaining <= 0) {
+                        client.terminate();
+                        return;
+                    }
 
-                client.buffer(data);
-                World.onClientData(client);
+                    client.buffer(data);
+                    World.onClientData(client);
+                } catch (err) {
+                    client.terminate();
+                }
             });
 
             s.on('close', () => {
                 client.state = -1;
 
                 if (client.player) {
+                    client.player.addSessionLog('TCP socket closed');
                     client.player.client = new NullClientSocket();
                 }
             });
 
-            s.on('error', () => {
+            s.on('error', (err) => {
+                if (client.player) {
+                    client.player.addSessionLog('TCP socket error', err.message);
+                }
+
                 s.destroy();
             });
 
             s.on('timeout', () => {
+                if (client.player) {
+                    client.player.addSessionLog('TCP socket timeout');
+                }
+
                 s.destroy();
             });
         });
