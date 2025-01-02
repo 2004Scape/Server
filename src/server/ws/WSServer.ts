@@ -40,24 +40,33 @@ export default class WSServer {
             client.send(seed.data);
 
             ws.on('message', (data: Buffer) => {
-                if (client.state === -1 || client.remaining <= 0) {
-                    client.terminate();
-                    return;
-                }
+                try {
+                    if (client.state === -1 || client.remaining <= 0) {
+                        client.terminate();
+                        return;
+                    }
 
-                client.buffer(data);
-                World.onClientData(client);
+                    client.buffer(data);
+                    World.onClientData(client);
+                } catch (err) {
+                    client.terminate();
+                }
             });
 
             ws.on('close', () => {
                 client.state = -1;
 
                 if (client.player) {
+                    client.player.addSessionLog('WS socket closed');
                     client.player.client = new NullClientSocket();
                 }
             });
 
-            ws.on('error', () => {
+            ws.on('error', (err) => {
+                if (client.player) {
+                    client.player.addSessionLog('WS socket error', err.message);
+                }
+
                 ws.terminate();
             });
         });

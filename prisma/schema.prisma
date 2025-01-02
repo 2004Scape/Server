@@ -11,6 +11,8 @@ datasource db {
     url      = env("DATABASE_URL")
 }
 
+// players
+
 model account {
     id Int @id @default(autoincrement())
 
@@ -25,7 +27,23 @@ model account {
 
     muted_until DateTime?
     banned_until DateTime?
+
+    staffmodlevel Int @default(0)
 }
+
+model account_session {
+    id Int @id @default(autoincrement())
+
+    account_id Int
+    game String // an account can have different character saves depending on the "game" (world type) it's logged into
+    session_uuid String
+
+    timestamp DateTime
+    coord Int
+    event String
+}
+
+// website
 
 model newspost {
     id Int @id @default(autoincrement())
@@ -52,6 +70,8 @@ model npc_hiscore {
     account_id Int
     kill_count Int @default(0)
 }
+
+// social
 
 model friendlist {
     account_id        Int

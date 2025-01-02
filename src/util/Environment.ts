@@ -31,7 +31,7 @@ export default {
     // measuring script execution
     NODE_DEBUG_PROFILE: tryParseBoolean(process.env.NODE_DEBUG_PROFILE, false),
     // *only* if no login server is running to authenticate accounts, this provides admin accs by username :)
-    NODE_STAFF: tryParseArray(process.env.NODE_STAFF?.split(','), ['pazaz']), // todo: add staffmodlevel to database
+    NODE_STAFF: tryParseArray(process.env.NODE_STAFF?.split(','), ['pazaz']),
     // no server routefinding until 2009
     NODE_CLIENT_ROUTEFINDER: tryParseBoolean(process.env.NODE_CLIENT_ROUTEFINDER, true),
     // controllable for bot testing
@@ -39,16 +39,23 @@ export default {
     // yellow-x walktriggers in osrs went from: in packet handler -> in player setup -> player movement
     // 0 = processed in packet handler. 1 = processed in player setup (client input). 2 = processed in player movement
     NODE_WALKTRIGGER_SETTING: tryParseInt(process.env.NODE_WALKTRIGGER_SETTING, WalkTriggerSetting.PLAYERPACKET),
+    // separate save folder
+    NODE_GAME: tryParseString(process.env.NODE_GAME, 'main'),
 
     /// login server
     LOGIN_SERVER: tryParseBoolean(process.env.LOGIN_SERVER, false),
     LOGIN_HOST: tryParseString(process.env.LOGIN_HOST, 'localhost'),
     LOGIN_PORT: tryParseInt(process.env.LOGIN_PORT, 43500),
 
-    // friends server
+    /// friends server
     FRIEND_SERVER: tryParseBoolean(process.env.FRIEND_SERVER, false),
     FRIEND_HOST: tryParseString(process.env.FRIEND_HOST, 'localhost'),
     FRIEND_PORT: tryParseInt(process.env.FRIEND_PORT, 45099),
+
+    /// logger server
+    LOGGER_SERVER: tryParseBoolean(process.env.LOGGER_SERVER, false),
+    LOGGER_HOST: tryParseString(process.env.LOGGER_HOST, 'localhost'),
+    LOGGER_PORT: tryParseInt(process.env.LOGGER_PORT, 43501),
 
     /// database
     DB_HOST: tryParseString(process.env.DB_HOST, 'localhost'),

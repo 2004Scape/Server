@@ -239,17 +239,8 @@ export class NetworkPlayer extends Player {
         this.client.terminate();
     }
 
-    override playerLog(message: string, ...args: string[]): void {
-        // would cause excessive save dialogs on webworker
-        if (typeof self !== 'undefined') {
-            return;
-        }
-
-        if (args.length > 0) {
-            fs.appendFileSync(`data/players/${this.username}.log`, `[${new Date().toISOString().split('T')[0]} ${this.client.remoteAddress}]: ${message} ${args.join(' ')}\n`);
-        } else {
-            fs.appendFileSync(`data/players/${this.username}.log`, `[${new Date().toISOString().split('T')[0]} ${this.client.remoteAddress}]: ${message}\n`);
-        }
+    override addSessionLog(message: string, ...args: string[]): void {
+        World.addSessionLog(this.username, isClientConnected(this) ? this.client.uuid : 'disconnected', CoordGrid.packCoord(this.level, this.x, this.z), message, ...args);
     }
 
     updateMap() {

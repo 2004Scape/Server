@@ -89,6 +89,7 @@ const priv = forge.pki.privateKeyFromPem(
 class World {
     private loginThread = createWorker(Environment.STANDALONE_BUNDLE ? 'LoginThread.js' : './server/login/LoginThread.ts');
     private friendThread = createWorker(Environment.STANDALONE_BUNDLE ? 'FriendThread.js' : './server/friend/FriendThread.ts');
+    private loggerThread = createWorker(Environment.STANDALONE_BUNDLE ? 'LoggerThread.js' : './server/logger/LoggerThread.ts');
     private devThread: Worker | NodeWorker | null = null;
 
     private static readonly PLAYERS: number = 2048;
@@ -813,8 +814,6 @@ class World {
                 if (player.logoutRequested) {
                     this.removePlayer(player);
                 }
-            } else {
-                player.messageGame('[DEBUG]: Waiting for queue to empty before logging out.');
             }
         }
         this.cycleStats[WorldStat.LOGOUT] = Date.now() - start;
@@ -830,6 +829,7 @@ class World {
                     }
 
                     if (isClientConnected(other)) {
+                        player.addSessionLog('Logged to world ' + Environment.NODE_ID + ' replacing session', other.client.uuid);
                         other.client.close();
                     }
 
@@ -872,6 +872,12 @@ class World {
             }
 
             if (isClientConnected(player)) {
+                if (player.reconnecting) {
+                    player.addSessionLog('Logged into world ' + Environment.NODE_ID + ' (client reports reconnecting)');
+                } else {
+                    player.addSessionLog('Logged into world ' + Environment.NODE_ID);
+                }
+
                 player.client.state = 1;
 
                 if (player.staffModLevel >= 2) {
@@ -1397,7 +1403,6 @@ class World {
             return;
         }
 
-        player.playerLog('Logging out');
         if (isClientConnected(player)) {
             player.logout();
             player.client.close();
@@ -1409,6 +1414,8 @@ class World {
         changeNpcCollision(player.width, player.x, player.z, player.level, false);
         player.pid = -1;
         player.uid = -1;
+
+        player.addSessionLog('Logged out of world ' + Environment.NODE_ID);
 
         const save = player.save();
         this.logoutRequests.set(player.username, save);
@@ -1831,6 +1838,17 @@ class World {
         }
 
         client.opcode = -1;
+    }
+
+    addSessionLog(username: string, session_uuid: string, coord: number, message: string, ...args: string[]) {
+        this.loggerThread.postMessage({
+            type: 'session_log',
+            username,
+            session_uuid,
+            timestamp: Date.now(),
+            coord,
+            event: args.length ? message + ' ' + args.join(' ') : message,
+        });
     }
 }
 

@@ -1070,6 +1070,10 @@ const PlayerOps: CommandHandlers = {
     [ScriptOpcode.WEIGHT]: checkedHandler(ProtectedActivePlayer, state => {
         state.pushInt(state.activePlayer.runweight);
     }),
+
+    [ScriptOpcode.SESSION_LOG]: checkedHandler(ActivePlayer, state => {
+        state.activePlayer.addSessionLog(state.popString());
+    }),
 };
 
 /**

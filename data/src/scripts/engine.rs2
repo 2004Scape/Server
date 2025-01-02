@@ -394,6 +394,8 @@
 [command,weight]()(int)
 // Requires protected access - clear the current interaction, but leave the walk queue intact
 [command,p_clearpendingaction]
+// Add an event to the player's session logs
+[command,session_log](string $event)
 
 // Npc ops (2500-2999)
 // Get access to the npc if they are in the world

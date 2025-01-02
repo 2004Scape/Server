@@ -1,8 +1,7 @@
 ^quest_dragon_not_started = 0
 ^quest_dragon_spoken_to_guildmaster = 1
 ^quest_dragon_spoken_to_oziach = 2
-^quest_dragon_maze_key = 3
-^quest_dragon_bought_ship = 4
+^quest_dragon_bought_ship = 3
 ^quest_dragon_repaired_ship = 7
 ^quest_dragon_ned_given_map = 8
 ^quest_dragon_sailed_to_crandor = 9

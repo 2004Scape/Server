@@ -357,8 +357,6 @@ export default class Player extends PathingEntity {
     // ----
 
     onLogin() {
-        this.playerLog('Logging in');
-
         // normalize client between logins
         this.write(new IfClose());
         this.write(new UpdateUid192(this.pid));
@@ -451,9 +449,8 @@ export default class Player extends PathingEntity {
         }
     }
 
-    // eslint-disable-next-line @typescript-eslint/no-unused-vars
-    playerLog(message: string, ...args: string[]): void {
-        // to be overridden
+    addSessionLog(message: string, ...args: string[]): void {
+        World.addSessionLog(this.username, 'headless', CoordGrid.packCoord(this.level, this.x, this.z), message, ...args);
     }
 
     processEngineQueue() {
@@ -1463,9 +1460,11 @@ export default class Player extends PathingEntity {
                 // replenish 1 of the stat upon levelup.
                 this.levels[stat] += 1;
             }
-            this.changeStat(stat);
-            const script = ScriptProvider.getByTriggerSpecific(ServerTriggerType.ADVANCESTAT, stat, -1);
 
+            this.changeStat(stat);
+            this.addSessionLog('Advanced stat ' + stat + ' from ' + before + ' to ' + this.baseLevels[stat]);
+
+            const script = ScriptProvider.getByTriggerSpecific(ServerTriggerType.ADVANCESTAT, stat, -1);
             if (script) {
                 this.enqueueScript(script, PlayerQueueType.ENGINE);
             }

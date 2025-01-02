@@ -182,7 +182,7 @@ const InvOps: CommandHandlers = {
             return;
         }
 
-        player.playerLog('Dropped item from', invType.debugname as string, objType.debugname as string);
+        // player.addSessionLog('Dropped item from', invType.debugname as string, objType.debugname as string);
 
         const floorObj: Obj = new Obj(position.level, position.x, position.z, EntityLifeCycle.DESPAWN, objType.id, completed);
         World.addObj(floorObj, player.pid, duration);
@@ -215,7 +215,7 @@ const InvOps: CommandHandlers = {
         }
 
         const objType = ObjType.get(obj.id);
-        player.playerLog('Dropped item from', invType.debugname as string, objType.debugname as string);
+        // player.addSessionLog('Dropped item from', invType.debugname as string, objType.debugname as string);
 
         if (!objType.stackable || completed === 1) {
             for (let i = 0; i < completed; i++) {
@@ -380,8 +380,10 @@ const InvOps: CommandHandlers = {
             fromInv.delete(slot);
             toInv.add(obj.id, obj.count);
 
-            fromPlayer.playerLog('Gave ' + ObjType.get(obj.id).name + ' x' + obj.count + ' during trade with ' + toPlayer.username);
-            toPlayer.playerLog('Received ' + ObjType.get(obj.id).name + ' x' + obj.count + ' during trade with ' + fromPlayer.username);
+            const type = ObjType.get(obj.id);
+
+            fromPlayer.addSessionLog('Trade: Gave ' + type.debugname + ' x' + obj.count + ' to ' + toPlayer.username);
+            toPlayer.addSessionLog('Trade: Received ' + type.debugname + ' x' + obj.count + ' from ' + fromPlayer.username);
         }
     }),
 
@@ -596,7 +598,7 @@ const InvOps: CommandHandlers = {
         }
 
         const objType: ObjType = ObjType.get(obj.id);
-        fromPlayer.playerLog('Dropped item from', invType.debugname as string, objType.debugname as string);
+        // fromPlayer.addSessionLog('Dropped item from', invType.debugname as string, objType.debugname as string);
 
         if (!objType.tradeable) {
             return; // stop untradables after delete.

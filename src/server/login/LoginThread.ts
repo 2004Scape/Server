@@ -15,7 +15,7 @@ if (Environment.STANDALONE_BUNDLE) {
             console.error(err);
         }
     };
-    
+
     client.onMessage((opcode, data) => {
         self.postMessage({ opcode, data });
     });

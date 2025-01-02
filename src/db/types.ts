@@ -14,6 +14,16 @@ export type account = {
     login_time: Timestamp | null;
     muted_until: Timestamp | null;
     banned_until: Timestamp | null;
+    staffmodlevel: Generated<number>;
+};
+export type account_session = {
+    id: Generated<number>;
+    account_id: number;
+    game: string;
+    session_uuid: string;
+    timestamp: Timestamp;
+    coord: number;
+    event: string;
 };
 export type friendlist = {
     account_id: number;
@@ -57,6 +67,7 @@ export type public_chat = {
 };
 export type DB = {
     account: account;
+    account_session: account_session;
     friendlist: friendlist;
     ignorelist: ignorelist;
     newspost: newspost;
