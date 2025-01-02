@@ -118,11 +118,11 @@ if ($choice = 0) {
 [label,oziach_first_piece]
 ~chatplayer("<p,quiz>Where is the first piece of the map?");
 ~chatnpc("<p,neutral>Deep in a strange building known as Melzar's maze|located north west of Rimmington.");
-if (%dragon_progress < ^quest_dragon_maze_key) {
+// tipit forum post from 2006 mentioning talk/drop trick working for this. source: https://forum.tip.it/topic/42769-melzars-maze-key/
+if (inv_total(inv, maze_key) = 0 & inv_total(bank, maze_key) = 0) {
     ~chatnpc("<p,neutral>You will need this to get in|this is the key to the front entrance to the maze.");
     inv_add(inv, maze_key, 1);
     ~objbox(maze_key, "Oziach hands you a key.", 250, 0, divide(^objbox_height, 2));
-    %dragon_progress = ^quest_dragon_maze_key;
 }
 @multi4("Where can I get an antidragon shield?", oziach_dragon_shield, "Where is the second piece of the map?", oziach_second_piece, "Where is the third piece of the map?", oziach_third_piece, "Ok I'll try and get everything together.", oziach_farewell);
 
