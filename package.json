@@ -20,6 +20,7 @@
     "friend": "tsx src/friend.ts",
     "lint": "eslint --no-warn-ignored src tools",
     "lint:staged": "eslint --no-warn-ignored",
+    "logger": "tsx src/logger.ts",
     "login": "tsx src/login.ts",
     "maintenance": "tsx src/appMaintenance.ts",
     "precommit": "prettier . --write && eslint src --fix",

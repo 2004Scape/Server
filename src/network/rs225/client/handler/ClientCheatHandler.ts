@@ -39,7 +39,7 @@ export default class ClientCheatHandler extends MessageHandler<ClientCheat> {
             return false;
         }
 
-        player.playerLog('Cheat ran', cheat);
+        player.addSessionLog('Ran cheat', cheat);
 
         if (player.staffModLevel >= 3) {
             // developer commands

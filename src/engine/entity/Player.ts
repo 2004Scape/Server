@@ -357,8 +357,6 @@ export default class Player extends PathingEntity {
     // ----
 
     onLogin() {
-        this.playerLog('Logging in');
-
         // normalize client between logins
         this.write(new IfClose());
         this.write(new UpdateUid192(this.pid));
@@ -451,9 +449,8 @@ export default class Player extends PathingEntity {
         }
     }
 
-    // eslint-disable-next-line @typescript-eslint/no-unused-vars
-    playerLog(message: string, ...args: string[]): void {
-        // to be overridden
+    addSessionLog(message: string, ...args: string[]): void {
+        World.addSessionLog(this.username, 'headless', CoordGrid.packCoord(this.level, this.x, this.z), message, ...args);
     }
 
     processEngineQueue() {
