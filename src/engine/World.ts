@@ -1648,7 +1648,7 @@ class World {
                     this.loginThread.postMessage({
                         type: 'player_logout',
                         username,
-                        save: this.logoutRequests
+                        save: this.logoutRequests.get(username)
                     });
                 }, 1000);
             } else {
