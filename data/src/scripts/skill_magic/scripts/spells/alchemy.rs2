@@ -20,8 +20,10 @@ spotanim_pl(highlvlalchemy_casting, 92, 0);
 ~delete_spell_runes($spell_data);
 ~give_spell_xp($spell_data);
 // give 0.6x of item's value and delete item
+def_int $profit = max(scale(6, 10, oc_cost($item)), 1);
+session_log("High alching <oc_debugname($item)> to make <tostring($profit)> coins");
 inv_del(inv, $item, 1);
-inv_add(inv, coins, max(scale(6, 10, oc_cost($item)), 1));
+inv_add(inv, coins, $profit);
 // delay by 5 ticks
 if (afk_event = ^true) {
     ~macro_event_general_spawn(~macro_event_set_random);
@@ -53,8 +55,10 @@ spotanim_pl(lowlvlalchemy_casting, 92, 0);
 ~delete_spell_runes($spell_data);
 ~give_spell_xp($spell_data);
 // give 0.4x of item's value and delete item
+def_int $profit = max(scale(4, 10, oc_cost($item)), 1);
+session_log("Low alching <oc_debugname($item)> to make <tostring($profit)> coins");
 inv_del(inv, $item, 1);
-inv_add(inv, coins, max(scale(4, 10, oc_cost($item)), 1));
+inv_add(inv, coins, $profit);
 if_settabactive(^tab_magic);
 if (afk_event = ^true) {
     ~macro_event_general_spawn(~macro_event_set_random);
