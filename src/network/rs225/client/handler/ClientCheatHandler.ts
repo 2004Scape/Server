@@ -332,6 +332,22 @@ export default class ClientCheatHandler extends MessageHandler<ClientCheat> {
             } else if (cmd === 'givemany') {
                 // authentic
                 // todo find a real usage to be able to write this
+            } else if (cmd === 'ban') {
+                if (args.length < 2) {
+                    return false;
+                }
+
+                // ::ban <username> <minutes>
+                const other = World.getPlayerByUsername(args[0]);
+                if (!other) {
+                    player.messageGame(`${args[0]} is not logged in.`);
+                    return false;
+                }
+
+                const minutes = Math.max(0, tryParseInt(args[1], 60));
+
+                World.removePlayer(other);
+                World.notifyPlayerBan(player.username, other.username, Date.now() + (minutes * 60 * 1000));
             }
         }
 
@@ -341,6 +357,22 @@ export default class ClientCheatHandler extends MessageHandler<ClientCheat> {
                 // authentic
                 // todo find a real usage to see if we have it right
                 player.messageGame(CoordGrid.formatString(player.level, player.x, player.z, '_'));
+            } else if (cmd === 'mute') {
+                if (args.length < 2) {
+                    return false;
+                }
+
+                // ::mute <username> <minutes>
+                const other = World.getPlayerByUsername(args[0]);
+                if (!other) {
+                    player.messageGame(`${args[0]} is not logged in.`);
+                    return false;
+                }
+
+                const minutes = Math.max(0, tryParseInt(args[1], 60));
+
+                other.muted_until = new Date(Date.now() + (minutes * 60 * 1000));
+                World.notifyPlayerMute(player.username, other.username, Date.now() + (minutes * 60 * 1000));
             }
         }
 
