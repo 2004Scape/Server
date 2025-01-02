@@ -379,8 +379,8 @@ const InvOps: CommandHandlers = {
 
             const type = ObjType.get(obj.id);
 
-            fromPlayer.addSessionLog(1, 'Trade: Gave ' + type.debugname + ' x' + obj.count + ' to ' + toPlayer.username);
-            toPlayer.addSessionLog(1, 'Trade: Received ' + type.debugname + ' x' + obj.count + ' from ' + fromPlayer.username);
+            fromPlayer.addWealthLog(-(type.cost * obj.count), 'Trade: Gave ' + type.debugname + ' x' + obj.count + ' to ' + toPlayer.username);
+            toPlayer.addWealthLog(type.cost * obj.count, 'Trade: Received ' + type.debugname + ' x' + obj.count + ' from ' + fromPlayer.username);
         }
     }),
 

@@ -6,6 +6,7 @@ import Environment from '#/util/Environment.js';
 import NullClientSocket from '#/server/NullClientSocket.js';
 import TcpClientSocket from '#/server/tcp/TcpClientSocket.js';
 import World from '#/engine/World.js';
+import LoggerEventType from '#/server/logger/LoggerEventType.js';
 
 export default class TcpServer {
     tcp: net.Server;
@@ -46,14 +47,14 @@ export default class TcpServer {
                 client.state = -1;
 
                 if (client.player) {
-                    client.player.addSessionLog(2, 'TCP socket closed');
+                    client.player.addSessionLog(LoggerEventType.ENGINE, 'TCP socket closed');
                     client.player.client = new NullClientSocket();
                 }
             });
 
             s.on('error', (err) => {
                 if (client.player) {
-                    client.player.addSessionLog(2, 'TCP socket error', err.message);
+                    client.player.addSessionLog(LoggerEventType.ENGINE, 'TCP socket error', err.message);
                 }
 
                 s.destroy();
@@ -61,7 +62,7 @@ export default class TcpServer {
 
             s.on('timeout', () => {
                 if (client.player) {
-                    client.player.addSessionLog(2, 'TCP socket timeout');
+                    client.player.addSessionLog(LoggerEventType.ENGINE, 'TCP socket timeout');
                 }
 
                 s.destroy();

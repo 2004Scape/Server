@@ -19,6 +19,7 @@ export type account = {
 export type account_session = {
     id: Generated<number>;
     account_id: number;
+    world: Generated<number>;
     game: string;
     session_uuid: string;
     timestamp: Timestamp;
