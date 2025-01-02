@@ -813,8 +813,6 @@ class World {
                 if (player.logoutRequested) {
                     this.removePlayer(player);
                 }
-            } else {
-                player.messageGame('[DEBUG]: Waiting for queue to empty before logging out.');
             }
         }
         this.cycleStats[WorldStat.LOGOUT] = Date.now() - start;
