@@ -12,7 +12,7 @@ export default class LoginServer {
     private server: WebSocketServer;
 
     constructor() {
-        this.server = new WebSocketServer({ port: Environment.LOGIN_PORT, host: Environment.LOGIN_HOST }, () => {
+        this.server = new WebSocketServer({ port: Environment.LOGIN_PORT, host: '0.0.0.0' }, () => {
             printInfo(`Login server listening on port ${Environment.LOGIN_PORT}`);
         });
 
