@@ -100,7 +100,6 @@ attack=2
 strength=2
 defence=3
 param=damagetype,^crush_style
-param=retreat,7
 // osrs stats and Vislvl match 1:1
 // https://raw.githubusercontent.com/Joshua-F/osrs-dumps/refs/heads/master/config/dump.npc npc_4068
 
