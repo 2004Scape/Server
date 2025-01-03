@@ -101,6 +101,7 @@ class World {
     private static readonly INV_STOCKRATE: number = 100; // 1m
     private static readonly AFK_EVENTRATE: number = 500; // 5m
     private static readonly PLAYER_SAVERATE: number = 1500; // 15m
+    private static readonly PLAYER_COORDLOGRATE: number = 50; // 30s
 
     private static readonly TIMEOUT_SOCKET_IDLE: number = 16; // ~10s with no data- disconnect client
     private static readonly TIMEOUT_SOCKET_LOGOUT: number = 100; // 60s with no client- remove player
@@ -437,6 +438,12 @@ class World {
             if (tick % World.PLAYER_SAVERATE === 0 && tick > 0) {
                 // auto-save players every 15 mins
                 this.savePlayers();
+            }
+
+            if (tick % World.PLAYER_COORDLOGRATE === 0 && tick > 0) {
+                for (const player of this.players) {
+                    player.addSessionLog(LoggerEventType.MODERATOR, 'Server check in');
+                }
             }
 
             this.cycleStats[WorldStat.CYCLE] = Date.now() - start;
