@@ -6,8 +6,10 @@ import Packet from '#/io/Packet.js';
 import { NetworkPlayer } from '#/engine/entity/NetworkPlayer.js';
 
 export default abstract class ClientSocket {
+    public static readonly NO_ADDRESS: string = 'unknown';
+
     uuid = randomUUID();
-    remoteAddress = 'unknown';
+    remoteAddress = ClientSocket.NO_ADDRESS;
     totalBytesRead = 0;
     totalBytesWritten = 0;
 

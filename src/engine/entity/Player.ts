@@ -1,7 +1,7 @@
 import 'dotenv/config';
 
 import Packet from '#/io/Packet.js';
-import {fromBase37, toDisplayName} from '#/util/JString.js';
+import { toDisplayName } from '#/util/JString.js';
 
 import FontType from '#/cache/config/FontType.js';
 import Component from '#/cache/config/Component.js';
@@ -134,7 +134,7 @@ export default class Player extends PathingEntity {
     save() {
         const sav = Packet.alloc(1);
         sav.p2(0x2004); // magic
-        sav.p2(5); // version
+        sav.p2(6); // version
 
         sav.p2(this.x);
         sav.p2(this.z);
@@ -201,7 +201,16 @@ export default class Player extends PathingEntity {
             sav.p4(this.afkZones[index]);
         }
         sav.p2(this.lastAfkZone);
+
         sav.p1((this.publicChat << 4) | (this.privateChat << 2) | this.tradeDuel);
+
+        if (this.lastAddress) {
+            sav.p1(this.lastAddress.length);
+            sav.pdata(this.lastAddress, 0, this.lastAddress.length);
+        } else {
+            sav.p1(0);
+        }
+        sav.p8(this.lastDate);
 
         sav.p4(Packet.getcrc(sav.data, 0, sav.pos));
         const data = sav.data.subarray(0, sav.pos);
@@ -213,6 +222,7 @@ export default class Player extends PathingEntity {
     username: string;
     username37: bigint;
     displayName: string;
+    password: string | null; // this is not saved anywhere, only used for ciphering the ip address.
     body: number[] = [
         0, // hair
         10, // beard
@@ -327,10 +337,14 @@ export default class Player extends PathingEntity {
 
     muted_until: Date | null = null;
 
-    constructor(username: string, username37: bigint) {
+    lastAddress: Uint8Array | null = null;
+    lastDate: bigint = 0n;
+
+    constructor(username: string, username37: bigint, password: string | null) {
         super(0, 3094, 3106, 1, 1, EntityLifeCycle.FOREVER, MoveRestrict.NORMAL, BlockWalk.NPC, MoveStrategy.SMART, InfoProt.PLAYER_FACE_COORD.id, InfoProt.PLAYER_FACE_ENTITY.id); // tutorial island.
         this.username = username;
         this.username37 = username37;
+        this.password = password;
         this.displayName = toDisplayName(username);
         this.vars = new Int32Array(VarPlayerType.count);
         this.varsString = new Array(VarPlayerType.count);

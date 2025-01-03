@@ -58,6 +58,7 @@ async function handleRequests(parentPort: ParentPort, msg: any) {
                     type: 'player_login',
                     socket,
                     username,
+                    password,
                     lowMemory,
                     reconnecting,
                     ...await client.playerLogin(username, password, uid)
@@ -75,6 +76,7 @@ async function handleRequests(parentPort: ParentPort, msg: any) {
                         type: 'player_login',
                         socket,
                         username,
+                        password,
                         lowMemory,
                         reconnecting,
                         reply: 4,
@@ -86,6 +88,7 @@ async function handleRequests(parentPort: ParentPort, msg: any) {
                         type: 'player_login',
                         socket,
                         username,
+                        password,
                         lowMemory,
                         reconnecting,
                         reply: 0,

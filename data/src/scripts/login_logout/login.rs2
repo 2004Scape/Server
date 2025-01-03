@@ -16,10 +16,10 @@ softtimer(stat_replenish, 100);
 softtimer(health_replenish, 100);
 // random event timer
 settimer(general_macro_events, 500);
-// chest macro gas 
+// chest macro gas
 ~check_chest_macro_gas;
 // for logout out during a general macro event, they respawn when you log back in
-// queue: 
+// queue:
 // - https://youtu.be/T0ulsgorBkY?list=PLn23LiLYLb1Y3P9S9qZbijcJihiD416jT
 // - https://youtu.be/HwGAzcmvF9k?list=PLn23LiLYLb1Y3P9S9qZbijcJihiD416jT
 // npc spawns only after interface is closed

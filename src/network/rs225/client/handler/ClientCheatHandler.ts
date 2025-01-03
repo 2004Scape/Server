@@ -61,13 +61,13 @@ export default class ClientCheatHandler extends MessageHandler<ClientCheat> {
             } else if (cmd === 'bots') {
                 player.messageGame('Adding bots');
                 for (let i = 0; i < 1999; i++) {
-                    const bot: Player = PlayerLoading.load(`bot${i}`, new Packet(new Uint8Array()), new NullClientSocket());
+                    const bot: Player = PlayerLoading.load(`bot${i}`, null, new Packet(new Uint8Array()), new NullClientSocket());
                     World.addPlayer(bot);
                 }
             } else if (cmd === 'lightbots') {
                 player.messageGame('Adding lightweight bots');
                 for (let i = 0; i < 1999; i++) {
-                    const bot: Player = PlayerLoading.load(`bot${i}`, new Packet(new Uint8Array()), null);
+                    const bot: Player = PlayerLoading.load(`bot${i}`, null, new Packet(new Uint8Array()), null);
                     World.addPlayer(bot);
                 }
             } else if (cmd === 'teleall') {

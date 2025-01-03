@@ -12,7 +12,6 @@ import { NetworkPlayer } from '#/engine/entity/NetworkPlayer.js';
 import Player, { getExpByLevel, getLevelByExp } from '#/engine/entity/Player.js';
 import PlayerStat from '#/engine/entity/PlayerStat.js';
 
-import Environment from '#/util/Environment.js';
 import InvType from '#/cache/config/InvType.js';
 
 export class PlayerLoading {
@@ -32,16 +31,16 @@ export class PlayerLoading {
             save = new Packet(new Uint8Array());
         }
 
-        return PlayerLoading.load(name, save, null);
+        return PlayerLoading.load(name, null, save, null);
     }
 
-    static load(name: string, sav: Packet, client: ClientSocket | null) {
+    static load(name: string, password: string | null, sav: Packet, client: ClientSocket | null) {
         const name37 = toBase37(name);
         const safeName = fromBase37(name37);
 
         const player = client
-            ? new NetworkPlayer(safeName, name37, client)
-            : new Player(safeName, name37);
+            ? new NetworkPlayer(safeName, name37, password, client)
+            : new Player(safeName, name37, password);
 
         if (sav.data.length < 2) {
             for (let i = 0; i < 21; i++) {
@@ -62,7 +61,7 @@ export class PlayerLoading {
         }
 
         const version = sav.g2();
-        if (version > 5) {
+        if (version > 6) {
             throw new Error('Unsupported player save format');
         }
 
@@ -148,6 +147,17 @@ export class PlayerLoading {
             player.publicChat = (packedChatModes >> 4) & 0b11;
             player.privateChat = (packedChatModes >> 2) & 0b11;
             player.tradeDuel = packedChatModes & 0b11;
+        }
+
+        // last login info
+        if (version >= 6) {
+            const length = sav.g1();
+            if (length > 0) {
+                const lastAddress = new Uint8Array(length);
+                sav.gdata(lastAddress, 0, lastAddress.length);
+                player.lastAddress = lastAddress;
+            }
+            player.lastDate = sav.g8();
         }
 
         player.combatLevel = player.getCombatLevel();

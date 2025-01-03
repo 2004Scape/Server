@@ -50,8 +50,8 @@ export class NetworkPlayer extends Player {
     opcalled: boolean = false;
     opucalled: boolean = false;
 
-    constructor(username: string, username37: bigint, client: ClientSocket) {
-        super(username, username37);
+    constructor(username: string, username37: bigint, password: string | null, client: ClientSocket) {
+        super(username, username37, password);
 
         this.client = client;
         this.client.player = this;

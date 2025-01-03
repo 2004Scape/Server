@@ -1622,14 +1622,14 @@ class World {
                 return;
             }
 
-            const { username, lowMemory, reconnecting, staffmodlevel, muted_until } = msg;
+            const { username, password, lowMemory, reconnecting, staffmodlevel, muted_until } = msg;
 
             let save = new Uint8Array();
             if (reply === 0 || reply === 2) {
                 save = msg.save;
             }
 
-            const player = PlayerLoading.load(username, new Packet(save), client);
+            const player = PlayerLoading.load(username, password, new Packet(save), client);
             player.reconnecting = reconnecting;
             player.staffModLevel = staffmodlevel;
             player.lowMemory = lowMemory;

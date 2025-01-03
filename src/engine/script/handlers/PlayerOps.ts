@@ -40,6 +40,8 @@ import IfSetText from '#/network/server/model/IfSetText.js';
 import IfSetNpcHead from '#/network/server/model/IfSetNpcHead.js';
 import IfSetPosition from '#/network/server/model/IfSetPosition.js';
 
+import ClientSocket from '#/server/ClientSocket.js';
+
 import ColorConversion from '#/util/ColorConversion.js';
 
 import {findPath} from '#/engine/GameMap.js';
@@ -60,6 +62,7 @@ import {
     GenderValid,
     SkinColourValid
 } from '#/engine/script/ScriptValidators.js';
+import { decrypt, encrypt } from '#/util/Crypto.js';
 
 const PlayerOps: CommandHandlers = {
     [ScriptOpcode.FINDUID]: state => {
@@ -800,18 +803,32 @@ const PlayerOps: CommandHandlers = {
             return;
         }
 
-        const client = player.client;
+        const client: ClientSocket = player.client;
+        const password: string | null = player.password;
+        const remoteAddress: string | null = client.remoteAddress !== ClientSocket.NO_ADDRESS ? client.remoteAddress : null;
 
-        const remoteAddress = client.remoteAddress;
-        if (remoteAddress == null) {
-            return;
+        // if decrypt throws then the interface just won't even show on the client side
+        const lastAddress: string | null = player.lastAddress && password ? decrypt(player.lastAddress, password) : remoteAddress;
+        const lastDate: bigint = player.lastDate === 0n ? BigInt(Date.now()) : player.lastDate;
+
+        const nextDate: bigint = BigInt(Date.now());
+
+        // message centre/recovery
+        const unreadMessageCount: number = 0;
+        const hasRecovery: boolean = true;
+        const daysSinceRecoveryChange: number = hasRecovery ? 201 : 0;
+
+        player.lastLoginInfo(
+            lastAddress ? new Uint32Array(new Uint8Array(lastAddress.split('.').map(Number)).reverse().buffer)[0] : 0,
+            Number(nextDate - lastDate) / (1000 * 60 * 60 * 24),
+            daysSinceRecoveryChange,
+            unreadMessageCount,
+        );
+
+        if (remoteAddress && password) {
+            player.lastAddress = encrypt(remoteAddress, password);
         }
-
-        const lastLoginIp = new Uint32Array(new Uint8Array(remoteAddress.split('.').map(x => parseInt(x))).reverse().buffer)[0];
-
-        // 201 sends welcome_screen if.
-        // not 201 sends welcome_screen_warning if.
-        player.lastLoginInfo(lastLoginIp, 0, 201, 0);
+        player.lastDate = nextDate;
     },
 
     [ScriptOpcode.BAS_READYANIM]: state => {
