@@ -122,4 +122,5 @@ while (npc_findnext = true) {
 }
 
 [queue,seaslug_quest_complete]
+session_log(^log_adventure, "Quest complete: Sea Slug");
 ~send_quest_complete(questlist:seaslug, sea_slug, 250, ^seaslug_questpoints, "You have completed the\\nSea Slug Quest!");

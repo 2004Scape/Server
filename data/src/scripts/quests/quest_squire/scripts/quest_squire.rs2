@@ -217,5 +217,6 @@ return(true);
 
 [queue,squire_complete]
 %squire_progress = ^squire_complete;
+session_log(^log_adventure, "Quest complete: The Knight's Sword");
 ~send_quest_complete(questlist:squire, blurite_sword, 250, ^squire_questpoints, "You have completed the Knight's Sword Quest!");
 stat_advance(smithing, 127250);

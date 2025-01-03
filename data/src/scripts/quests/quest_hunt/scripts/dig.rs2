@@ -34,6 +34,7 @@ inv_add(inv, coins, 450);
 inv_add(inv, gold_ring, 1);
 inv_add(inv, emerald, 1);
 %hunt_progress = 4;
+session_log(^log_adventure, "Quest complete: Pirate's Treasure");
 // https://web.archive.org/web/20080325101204/http://www.global-rs.com/quests/piratestreasure/
 ~send_quest_complete(questlist:hunt, emerald, 250, ^hunt_questpoints, "You have completed the Pirate's Treasure Quest!");
 
