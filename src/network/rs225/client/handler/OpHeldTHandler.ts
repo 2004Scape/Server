@@ -7,6 +7,7 @@ import Environment from '#/util/Environment.js';
 import Component from '#/cache/config/Component.js';
 import OpHeldT from '#/network/client/model/OpHeldT.js';
 import ObjType from '#/cache/config/ObjType.js';
+import LoggerEventType from '#/server/logger/LoggerEventType.js';
 
 export default class OpHeldTHandler extends MessageHandler<OpHeldT> {
     handle(message: OpHeldT, player: Player): boolean {
@@ -44,7 +45,7 @@ export default class OpHeldTHandler extends MessageHandler<OpHeldT> {
         player.faceEntity = -1;
         player.masks |= player.entitymask;
 
-        player.addSessionLog(2, `opheldt: casting ${spellCom.comName} on ${ObjType.get(item).debugname}`);
+        player.addSessionLog(LoggerEventType.MODERATOR, `Cast ${spellCom.comName} on ${ObjType.get(item).debugname}`);
 
         const script = ScriptProvider.getByTrigger(ServerTriggerType.OPHELDT, spellComId, -1);
         if (script) {

@@ -7,6 +7,7 @@ import ScriptRunner from '#/engine/script/ScriptRunner.js';
 import Environment from '#/util/Environment.js';
 import ObjType from '#/cache/config/ObjType.js';
 import OpHeld from '#/network/client/model/OpHeld.js';
+import LoggerEventType from '#/server/logger/LoggerEventType.js';
 
 export default class OpHeldHandler extends MessageHandler<OpHeld> {
     handle(message: OpHeld, player: Player): boolean {
@@ -47,18 +48,21 @@ export default class OpHeldHandler extends MessageHandler<OpHeld> {
 
         let trigger: ServerTriggerType;
         if (message.op === 1) {
+            player.addSessionLog(LoggerEventType.MODERATOR, `${type.iop![message.op - 1]} ${type.debugname}`);
             trigger = ServerTriggerType.OPHELD1;
         } else if (message.op === 2) {
+            player.addSessionLog(LoggerEventType.MODERATOR, `${type.iop![message.op - 1]} ${type.debugname}`);
             trigger = ServerTriggerType.OPHELD2;
         } else if (message.op === 3) {
+            player.addSessionLog(LoggerEventType.MODERATOR, `${type.iop![message.op - 1]} ${type.debugname}`);
             trigger = ServerTriggerType.OPHELD3;
         } else if (message.op === 4) {
+            player.addSessionLog(LoggerEventType.MODERATOR, `${type.iop![message.op - 1]} ${type.debugname}`);
             trigger = ServerTriggerType.OPHELD4;
         } else {
+            // wealth logged in content (it may not execute!)
             trigger = ServerTriggerType.OPHELD5;
         }
-
-        player.addSessionLog(2, `opheld${message.op}: using ${type.debugname}`);
 
         const script = ScriptProvider.getByTrigger(trigger, type.id, type.category);
         if (script) {

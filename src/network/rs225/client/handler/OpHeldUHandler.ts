@@ -8,6 +8,7 @@ import ServerTriggerType from '#/engine/script/ServerTriggerType.js';
 import CategoryType from '#/cache/config/CategoryType.js';
 import ScriptRunner from '#/engine/script/ScriptRunner.js';
 import Environment from '#/util/Environment.js';
+import LoggerEventType from '#/server/logger/LoggerEventType.js';
 
 export default class OpHeldUHandler extends MessageHandler<OpHeldU> {
     handle(message: OpHeldU, player: Player): boolean {
@@ -94,7 +95,7 @@ export default class OpHeldUHandler extends MessageHandler<OpHeldU> {
             [player.lastSlot, player.lastUseSlot] = [player.lastUseSlot, player.lastSlot];
         }
 
-        player.addSessionLog(2, `opheldu: using ${useObjType.debugname} on ${objType.debugname}`);
+        player.addSessionLog(LoggerEventType.MODERATOR, `Use ${useObjType.debugname} with ${objType.debugname}`);
 
         if (script) {
             player.executeScript(ScriptRunner.init(script, player), true);

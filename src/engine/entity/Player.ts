@@ -73,6 +73,7 @@ import WalkTriggerSetting from '#/util/WalkTriggerSetting.js';
 
 import Environment from '#/util/Environment.js';
 import { ChatModePrivate, ChatModePublic, ChatModeTradeDuel } from '#/util/ChatModes.js';
+import LoggerEventType from '#/server/logger/LoggerEventType.js';
 
 const levelExperience = new Int32Array(99);
 
@@ -463,8 +464,12 @@ export default class Player extends PathingEntity {
         }
     }
 
-    addSessionLog(type: number, message: string, ...args: string[]): void {
-        World.addSessionLog(this.username, 'headless', CoordGrid.packCoord(this.level, this.x, this.z), type, message, ...args);
+    addSessionLog(event_type: LoggerEventType, message: string, ...args: string[]): void {
+        World.addSessionLog(event_type, this.username, 'headless', CoordGrid.packCoord(this.level, this.x, this.z), message, ...args);
+    }
+
+    addWealthLog(change: number, message: string, ...args: string[]) {
+        World.addSessionLog(LoggerEventType.WEALTH, this.username, 'headless', CoordGrid.packCoord(this.level, this.x, this.z), change + ';' + message, ...args);
     }
 
     processEngineQueue() {
@@ -1476,7 +1481,7 @@ export default class Player extends PathingEntity {
             }
 
             this.changeStat(stat);
-            this.addSessionLog(0, 'Advanced ' + Player.SKILLS[stat] + ' stat from ' + before + ' to ' + this.baseLevels[stat]);
+            this.addSessionLog(LoggerEventType.ADVENTURE, 'Advanced ' + Player.SKILLS[stat] + ' stat from ' + before + ' to ' + this.baseLevels[stat]);
 
             const script = ScriptProvider.getByTriggerSpecific(ServerTriggerType.ADVANCESTAT, stat, -1);
             if (script) {

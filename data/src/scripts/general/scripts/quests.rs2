@@ -13,6 +13,7 @@ if ($progress = 0) {
 }
 
 [proc,send_quest_complete](component $component, namedobj $obj, int $objscale, int $questpoints, string $questmessage)
+session_log(^log_adventure, $questmessage);
 %questpoints = add(%questpoints, $questpoints);
 ~quest_complete_interface($component, $obj, $objscale, $questpoints, $questmessage);
 

@@ -24,6 +24,7 @@ import { PlayerLoading } from '#/engine/entity/PlayerLoading.js';
 import Packet from '#/io/Packet.js';
 import { printInfo } from '#/util/Logger.js';
 import {findPath, isMapBlocked} from '#/engine/GameMap.js';
+import LoggerEventType from '#/server/logger/LoggerEventType.js';
 
 export default class ClientCheatHandler extends MessageHandler<ClientCheat> {
     handle(message: ClientCheat, player: Player): boolean {
@@ -39,7 +40,7 @@ export default class ClientCheatHandler extends MessageHandler<ClientCheat> {
             return false;
         }
 
-        player.addSessionLog(0, 'Ran cheat', cheat);
+        player.addSessionLog(LoggerEventType.MODERATOR, 'Ran cheat', cheat);
 
         if (player.staffModLevel >= 3) {
             // developer commands

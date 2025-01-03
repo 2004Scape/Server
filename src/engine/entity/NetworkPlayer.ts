@@ -40,6 +40,7 @@ import Packet from '#/io/Packet.js';
 import ClientProt from '#/network/rs225/client/prot/ClientProt.js';
 import ClientProtRepository from '#/network/rs225/client/prot/ClientProtRepository.js';
 import ClientProtCategory from '#/network/client/prot/ClientProtCategory.js';
+import LoggerEventType from '#/server/logger/LoggerEventType.js';
 
 export class NetworkPlayer extends Player {
     client: ClientSocket;
@@ -239,8 +240,12 @@ export class NetworkPlayer extends Player {
         this.client.terminate();
     }
 
-    override addSessionLog(type: number, message: string, ...args: string[]): void {
-        World.addSessionLog(this.username, isClientConnected(this) ? this.client.uuid : 'disconnected', CoordGrid.packCoord(this.level, this.x, this.z), type, message, ...args);
+    override addSessionLog(event_type: LoggerEventType, message: string, ...args: string[]): void {
+        World.addSessionLog(event_type, this.username, isClientConnected(this) ? this.client.uuid : 'disconnected', CoordGrid.packCoord(this.level, this.x, this.z), message, ...args);
+    }
+
+    override addWealthLog(change: number, message: string, ...args: string[]) {
+        World.addSessionLog(LoggerEventType.WEALTH, this.username, isClientConnected(this) ? this.client.uuid : 'disconnected', CoordGrid.packCoord(this.level, this.x, this.z), change + ';' + message, ...args);
     }
 
     updateMap() {
