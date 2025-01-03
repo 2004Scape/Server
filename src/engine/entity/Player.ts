@@ -123,6 +123,52 @@ export default class Player extends PathingEntity {
         'stat19',
         'runecraft'
     ];
+    static readonly SKILLS_ENABLED = [
+        true,
+        true,
+        true,
+        true,
+        true,
+        true,
+        true,
+        true,
+        true,
+        true,
+        true,
+        true,
+        true,
+        true,
+        true,
+        true,
+        true,
+        true,
+        false,
+        false,
+        true,
+    ];
+    static readonly SKILLS_F2P = [
+        true,
+        true,
+        true,
+        true,
+        true,
+        true,
+        true,
+        true,
+        true,
+        false,
+        true,
+        true,
+        true,
+        true,
+        true,
+        false,
+        false,
+        false,
+        false,
+        false,
+        true,
+    ];
 
     static readonly DESIGN_BODY_COLORS: number[][] = [
         [6798, 107, 10283, 16, 4797, 7744, 5799, 4634, 33697, 22433, 2983, 54193],
@@ -1467,7 +1513,31 @@ export default class Player extends PathingEntity {
             }
 
             this.changeStat(stat);
-            this.addSessionLog(LoggerEventType.ADVENTURE, 'Advanced ' + Player.SKILLS[stat] + ' stat from ' + before + ' to ' + this.baseLevels[stat]);
+
+            // fun logging for players :)
+            this.addSessionLog(LoggerEventType.ADVENTURE, 'Levelled up ' + Player.SKILLS[stat] + ' from ' + before + ' to ' + this.baseLevels[stat]);
+
+            let total = 0;
+            let freeTotal = 0;
+            for (let stat = 0; stat < this.baseLevels.length; stat++) {
+                if (!Player.SKILLS_ENABLED[stat]) {
+                    continue;
+                }
+
+                total += this.baseLevels[stat];
+
+                if (Player.SKILLS_F2P[stat]) {
+                    freeTotal += this.baseLevels[stat];
+                }
+            }
+            if (total === 1881) {
+                this.addSessionLog(LoggerEventType.ADVENTURE, 'Reached total level 1881 - you beat p2p!');
+            } else if (total === 250 || total === 500 || total === 750 || total === 1000 || total === 1250 || total === 1500 || total === 1750) {
+                this.addSessionLog(LoggerEventType.ADVENTURE, `Reached total level ${total}`);
+            }
+            if (freeTotal === 1485) {
+                this.addSessionLog(LoggerEventType.ADVENTURE, 'Reached total level 1485 - you beat f2p!');
+            }
 
             const script = ScriptProvider.getByTriggerSpecific(ServerTriggerType.ADVANCESTAT, stat, -1);
             if (script) {
