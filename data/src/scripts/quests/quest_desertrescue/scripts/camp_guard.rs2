@@ -93,14 +93,25 @@ switch_int(~p_choice2("Huh, fat chance of a rest for me.", 1, "Yes sir, you're q
 [label,camp_merc_pineapple]
 ~chatplayer("<p,neutral>How am I going to get some pineapples around here?");
 ~chatnpc("<p,neutral>Well, that's not my problem is it? Also, I know that you slaves trade your items down here. I'm sure that if you're resourceful enough, you'll come up with the goods.");
-~chatnpc("<p,neutral>Now, get along and do some work, before we're both in for it. And remember, I prefer my pineapples whole, not chopped up with all the juice gone.");
+~chatnpc("<p,neutral>Now, get along and do some work, before we're both in for it.");
 
 [label,camp_merc_perfect]
 ~chatplayer("<p,neutral>Yes sir, we understand each other perfectly.");
-~chatnpc("<p,neutral>Okay, good then. And remember, I prefer my pineapples whole, not chopped up with all the juice gone.");
+~chatnpc("<p,neutral>Okay, good then.");
 ~mesbox("The guard moves back to his post and winks at you knowingly.");
 
 [label,camp_merc_tentis]
 ~chatplayer("<p,neutral>What are the Tenti's?");
 ~chatnpc("<p,neutral>Well! You don't come from around here do you? The Tenti's are the nomadic people west of here. They live in tents, so we call them the Tenti's. They have great pineapples! I'm sure you get my meaning?");
 @multi2("How am I going to get some pineapples around here?", camp_merc_pineapple, "Yes sir, we understand each other perfectly.", camp_merc_perfect);
+
+[opnpcu,npc_829]
+if(inzone(0_51_147_0_0, 0_51_147_63_63, coord) = true) {
+    if(%desertrescue_progress >= ^desertrescue_finding_pineapple & %desertrescue_progress < ^desertrescue_given_pineapple) {
+        if(last_useitem = pineapple) {
+            ~chatnpc("<p,happy>Oh great!");
+            ~objbox(pineapple, "The guard rolls his eyes in glee and takes a bite of the pineapple. His face turns from pleasure to pain as he spits the mouthful of pineapple out.", 250, 0, 0);
+            ~chatnpc("<p,angry>Yeuch! That's awful! That's not Tenti pineapple! Get me some Tenti pineapple if you know what's good for you.");
+        }
+    }
+}

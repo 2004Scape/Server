@@ -4,7 +4,7 @@ p_delay(2);
 @captain_siad_dialogue;
 
 [label,captain_siad_dialogue]
-if(%desertrescue_progress >= 13 | ~obj_gettotal(technical_plans) > 0) {
+if(~obj_gettotal(technical_plans) > 0) {
     ~chatnpc("<p,angry>I don't have time to talk to you.|Move along please!");
     return;
 }
