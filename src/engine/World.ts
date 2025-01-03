@@ -79,6 +79,7 @@ import { fromBase37, toBase37, toSafeName } from '#/util/JString.js';
 import { PlayerLoading } from '#/engine/entity/PlayerLoading.js';
 import ScriptPointer from '#/engine/script/ScriptPointer.js';
 import Isaac from '#/io/Isaac.js';
+import LoggerEventType from '#/server/logger/LoggerEventType.js';
 
 const priv = forge.pki.privateKeyFromPem(
     Environment.STANDALONE_BUNDLE ?
@@ -100,6 +101,7 @@ class World {
     private static readonly INV_STOCKRATE: number = 100; // 1m
     private static readonly AFK_EVENTRATE: number = 500; // 5m
     private static readonly PLAYER_SAVERATE: number = 1500; // 15m
+    private static readonly PLAYER_COORDLOGRATE: number = 50; // 30s
 
     private static readonly TIMEOUT_SOCKET_IDLE: number = 16; // ~10s with no data- disconnect client
     private static readonly TIMEOUT_SOCKET_LOGOUT: number = 100; // 60s with no client- remove player
@@ -436,6 +438,12 @@ class World {
             if (tick % World.PLAYER_SAVERATE === 0 && tick > 0) {
                 // auto-save players every 15 mins
                 this.savePlayers();
+            }
+
+            if (tick % World.PLAYER_COORDLOGRATE === 0 && tick > 0) {
+                for (const player of this.players) {
+                    player.addSessionLog(LoggerEventType.MODERATOR, 'Server check in');
+                }
             }
 
             this.cycleStats[WorldStat.CYCLE] = Date.now() - start;
@@ -829,7 +837,7 @@ class World {
                     }
 
                     if (isClientConnected(other)) {
-                        player.addSessionLog(0, 'Logged to world ' + Environment.NODE_ID + ' replacing session', other.client.uuid);
+                        player.addSessionLog(LoggerEventType.MODERATOR, 'Logged to world ' + Environment.NODE_ID + ' replacing session', other.client.uuid);
                         other.client.close();
                     }
 
@@ -873,9 +881,9 @@ class World {
 
             if (isClientConnected(player)) {
                 if (player.reconnecting) {
-                    player.addSessionLog(0, 'Logged into world ' + Environment.NODE_ID + ' (client reports reconnecting)');
+                    player.addSessionLog(LoggerEventType.MODERATOR, 'Logged in (client reports reconnecting)');
                 } else {
-                    player.addSessionLog(0, 'Logged into world ' + Environment.NODE_ID);
+                    player.addSessionLog(LoggerEventType.MODERATOR, 'Logged in');
                 }
 
                 player.client.state = 1;
@@ -1415,7 +1423,7 @@ class World {
         player.pid = -1;
         player.uid = -1;
 
-        player.addSessionLog(0, 'Logged out of world ' + Environment.NODE_ID);
+        player.addSessionLog(LoggerEventType.MODERATOR, 'Logged out');
 
         const save = player.save();
         this.logoutRequests.set(player.username, save);
@@ -1841,7 +1849,7 @@ class World {
         client.opcode = -1;
     }
 
-    addSessionLog(username: string, session_uuid: string, coord: number, type: number, message: string, ...args: string[]) {
+    addSessionLog(event_type: LoggerEventType, username: string, session_uuid: string, coord: number, message: string, ...args: string[]) {
         this.loggerThread.postMessage({
             type: 'session_log',
             username,
@@ -1849,7 +1857,7 @@ class World {
             timestamp: Date.now(),
             coord,
             event: args.length ? message + ' ' + args.join(' ') : message,
-            event_type: type
+            event_type
         });
     }
 

@@ -73,6 +73,7 @@ import WalkTriggerSetting from '#/util/WalkTriggerSetting.js';
 
 import Environment from '#/util/Environment.js';
 import { ChatModePrivate, ChatModePublic, ChatModeTradeDuel } from '#/util/ChatModes.js';
+import LoggerEventType from '#/server/logger/LoggerEventType.js';
 
 const levelExperience = new Int32Array(99);
 
@@ -121,6 +122,52 @@ export default class Player extends PathingEntity {
         'stat18',
         'stat19',
         'runecraft'
+    ];
+    static readonly SKILLS_ENABLED = [
+        true,
+        true,
+        true,
+        true,
+        true,
+        true,
+        true,
+        true,
+        true,
+        true,
+        true,
+        true,
+        true,
+        true,
+        true,
+        true,
+        true,
+        true,
+        false,
+        false,
+        true,
+    ];
+    static readonly SKILLS_F2P = [
+        true,
+        true,
+        true,
+        true,
+        true,
+        true,
+        true,
+        true,
+        true,
+        false,
+        true,
+        true,
+        true,
+        true,
+        true,
+        false,
+        false,
+        false,
+        false,
+        false,
+        true,
     ];
 
     static readonly DESIGN_BODY_COLORS: number[][] = [
@@ -449,8 +496,12 @@ export default class Player extends PathingEntity {
         }
     }
 
-    addSessionLog(type: number, message: string, ...args: string[]): void {
-        World.addSessionLog(this.username, 'headless', CoordGrid.packCoord(this.level, this.x, this.z), type, message, ...args);
+    addSessionLog(event_type: LoggerEventType, message: string, ...args: string[]): void {
+        World.addSessionLog(event_type, this.username, 'headless', CoordGrid.packCoord(this.level, this.x, this.z), message, ...args);
+    }
+
+    addWealthLog(change: number, message: string, ...args: string[]) {
+        World.addSessionLog(LoggerEventType.WEALTH, this.username, 'headless', CoordGrid.packCoord(this.level, this.x, this.z), change + ';' + message, ...args);
     }
 
     processEngineQueue() {
@@ -1462,7 +1513,31 @@ export default class Player extends PathingEntity {
             }
 
             this.changeStat(stat);
-            this.addSessionLog(0, 'Advanced ' + Player.SKILLS[stat] + ' stat from ' + before + ' to ' + this.baseLevels[stat]);
+
+            // fun logging for players :)
+            this.addSessionLog(LoggerEventType.ADVENTURE, 'Levelled up ' + Player.SKILLS[stat] + ' from ' + before + ' to ' + this.baseLevels[stat]);
+
+            let total = 0;
+            let freeTotal = 0;
+            for (let stat = 0; stat < this.baseLevels.length; stat++) {
+                if (!Player.SKILLS_ENABLED[stat]) {
+                    continue;
+                }
+
+                total += this.baseLevels[stat];
+
+                if (Player.SKILLS_F2P[stat]) {
+                    freeTotal += this.baseLevels[stat];
+                }
+            }
+            if (total === 1881) {
+                this.addSessionLog(LoggerEventType.ADVENTURE, 'Reached total level 1881 - you beat p2p!');
+            } else if (total === 250 || total === 500 || total === 750 || total === 1000 || total === 1250 || total === 1500 || total === 1750) {
+                this.addSessionLog(LoggerEventType.ADVENTURE, `Reached total level ${total}`);
+            }
+            if (freeTotal === 1485) {
+                this.addSessionLog(LoggerEventType.ADVENTURE, 'Reached total level 1485 - you beat f2p!');
+            }
 
             const script = ScriptProvider.getByTriggerSpecific(ServerTriggerType.ADVANCESTAT, stat, -1);
             if (script) {

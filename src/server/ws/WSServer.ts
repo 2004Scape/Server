@@ -7,6 +7,7 @@ import Environment from '#/util/Environment.js';
 import NullClientSocket from '#/server/NullClientSocket.js';
 import WSClientSocket from '#/server/ws/WSClientSocket.js';
 import World from '#/engine/World.js';
+import LoggerEventType from '#/server/logger/LoggerEventType.js';
 
 function getIp(req: IncomingMessage) {
     let forwardedFor = req.headers['x-forwarded-for'];
@@ -57,14 +58,14 @@ export default class WSServer {
                 client.state = -1;
 
                 if (client.player) {
-                    client.player.addSessionLog(2, 'WS socket closed');
+                    client.player.addSessionLog(LoggerEventType.ENGINE, 'WS socket closed');
                     client.player.client = new NullClientSocket();
                 }
             });
 
             ws.on('error', (err) => {
                 if (client.player) {
-                    client.player.addSessionLog(2, 'WS socket error', err.message);
+                    client.player.addSessionLog(LoggerEventType.ENGINE, 'WS socket error', err.message);
                 }
 
                 ws.terminate();

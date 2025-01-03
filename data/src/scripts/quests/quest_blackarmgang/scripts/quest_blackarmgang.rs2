@@ -120,8 +120,10 @@ inv_add(inv, arravshield2, 1);
 [queue,blackarmgang_quest_complete]
 if(%phoenixgang_progress = ^phoenixgang_joined) {
     %phoenixgang_progress = ^phoenixgang_complete;
+    session_log(^log_adventure, "Quest complete: Shield of Arrav (Phoenix Gang)");
 } else {
     %blackarmgang_progress = ^blackarmgang_complete;
+    session_log(^log_adventure, "Quest complete: Shield of Arrav (Black Arm Gang)");
 }
 ~send_quest_complete(questlist:blackarmgang, coins, 250, ^blackarmgang_questpoints, "You have completed the\\nShield of Arrav Quest!");
 inv_del(inv, arravcert_scroll, 1);

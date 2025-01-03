@@ -186,4 +186,5 @@ inv_del(bank, daconia_rock, ^max_32bit_int);
 stat_advance(agility, 79000);
 stat_advance(attack, 184000);
 stat_advance(magic, 21500);
+session_log(^log_adventure, "Quest complete: The Grand Tree");
 ~send_quest_complete(questlist:grandtree, daconia_rock, 250, ^grandtree_questpoints, "You have completed the\\nGrand Tree Quest!");

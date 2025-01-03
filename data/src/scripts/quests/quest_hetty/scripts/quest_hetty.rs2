@@ -9,4 +9,5 @@ if(%hetty_progress = ^hetty_objects_given) {
 [queue,hetty_quest_complete]
 %hetty_progress = ^hetty_complete;
 stat_advance(magic, 3250);
+session_log(^log_adventure, "Quest complete: Witch's Potion");
 ~send_quest_complete(questlist:hetty, eye_of_newt, 250, ^hetty_questpoints, "You have completed the\\nWitches Potion Quest!");

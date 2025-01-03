@@ -102,4 +102,5 @@ if($entering = false) {
 
 [queue,zanaris_quest_complete]
 %zanaris_progress = ^zanaris_complete;
+session_log(^log_adventure, "Quest complete: Lost City");
 ~send_quest_complete(questlist:zanaris, coins, 250, ^zanaris_questpoints, "You have completed the\\nLost City of Zanaris Quest!");

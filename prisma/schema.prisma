@@ -35,7 +35,8 @@ model account_session {
     id Int @id @default(autoincrement())
 
     account_id Int
-    game String // an account can have different character saves depending on the "game" (world type) it's logged into
+    world Int @default(0)
+    game String // an account can have different character saves depending on the "game" (world type) it's logged into at the time
     session_uuid String
 
     timestamp DateTime

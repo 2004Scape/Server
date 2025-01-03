@@ -5,6 +5,7 @@
 [queue,crest_complete]
 %crest_progress = ^crest_complete;
 inv_add(inv, steel_gauntlets, 1);
+session_log(^log_adventure, "Quest complete: Family Crest");
 ~send_quest_complete(questlist:crest, steel_gauntlets, 250, ^squire_questpoints, "You have completed the\\nFamily Crest Quest!");
 
 [oploc1,witchaven_north_room_lever_down]

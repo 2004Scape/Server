@@ -174,4 +174,5 @@ return($has_spoken);
 %blackknight_progress = ^blackknight_complete;
 inv_add(inv, coins, 2500);
 mes("Sir Amik hands you 2500 coins.");
+session_log(^log_adventure, "Quest complete: Black Knight's Fortress");
 ~send_quest_complete(questlist:fortress, coins, 250, ^blackknight_questpoints, "You have completed the\\nBlack Knights' Fortress Quest!");

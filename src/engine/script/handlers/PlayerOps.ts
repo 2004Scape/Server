@@ -60,6 +60,7 @@ import {
     GenderValid,
     SkinColourValid
 } from '#/engine/script/ScriptValidators.js';
+import LoggerEventType from '#/server/logger/LoggerEventType.js';
 
 const PlayerOps: CommandHandlers = {
     [ScriptOpcode.FINDUID]: state => {
@@ -1072,7 +1073,17 @@ const PlayerOps: CommandHandlers = {
     }),
 
     [ScriptOpcode.SESSION_LOG]: checkedHandler(ActivePlayer, state => {
-        state.activePlayer.addSessionLog(1, state.popString());
+        const eventType = state.popInt() + 2;
+        const event = state.popString();
+
+        state.activePlayer.addSessionLog(eventType, event);
+    }),
+
+    [ScriptOpcode.WEALTH_LOG]: checkedHandler(ActivePlayer, state => {
+        const [isGained, amount] = state.popInts(2);
+        const event = state.popString();
+
+        state.activePlayer.addWealthLog(isGained ? amount : -amount, event);
     }),
 };
 
