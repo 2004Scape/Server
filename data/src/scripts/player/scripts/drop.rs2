@@ -12,7 +12,7 @@ if (~inzone_coord_pair_table(trawler_wreck_zones, coord) = true) {
 
 def_obj $item = inv_getobj(inv, $last);
 def_int $count = inv_getnum(inv, $last);
-wealth_log(^wealth_lost, calc($count * oc_cost($item)), "Dropping <oc_debugname($item)> x<tostring($count)> on the ground");
+wealth_log(^wealth_lost, calc($count * oc_cost($item)), "Dropped <oc_debugname($item)> x<tostring($count)> on the ground");
 
 inv_dropslot(inv, coord, $last, 200);
 anim(null, 0); // https://youtu.be/QvDYolBZNjY?t=164, https://youtu.be/DVHCP2JhQE0?t=142

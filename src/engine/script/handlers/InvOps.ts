@@ -595,6 +595,8 @@ const InvOps: CommandHandlers = {
         }
 
         const objType: ObjType = ObjType.get(obj.id);
+        state.activePlayer.addWealthLog(-(obj.count * objType.cost), `Lost ${objType.debugname} x${obj.count}`);
+
         if (!objType.tradeable) {
             return; // stop untradables after delete.
         }
@@ -630,6 +632,8 @@ const InvOps: CommandHandlers = {
             inventory.delete(slot);
 
             const objType: ObjType = ObjType.get(obj.id);
+            state.activePlayer.addWealthLog(-(obj.count * objType.cost), `Lost ${objType.debugname} x${obj.count}`);
+
             if (!objType.tradeable) {
                 continue; // stop untradables after delete.
             }
