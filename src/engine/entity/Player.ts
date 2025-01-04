@@ -1,7 +1,7 @@
 import 'dotenv/config';
 
 import Packet from '#/io/Packet.js';
-import {fromBase37, toDisplayName} from '#/util/JString.js';
+import {toDisplayName} from '#/util/JString.js';
 
 import FontType from '#/cache/config/FontType.js';
 import Component from '#/cache/config/Component.js';
@@ -1704,6 +1704,7 @@ export default class Player extends PathingEntity {
         this.z = endZ;
         this.lastStepX = this.x - 1;
         this.lastStepZ = this.z;
+        this.tele = true;
     }
 
     setTab(com: number, tab: number) {
