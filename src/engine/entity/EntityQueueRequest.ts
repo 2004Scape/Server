@@ -8,6 +8,7 @@ export enum NpcQueueType {
 
 export enum PlayerQueueType {
     NORMAL,
+    LONG, // like normal with dev-controlled logout behavior
     ENGINE,
     WEAK, // sept 2004
     STRONG, // late-2004

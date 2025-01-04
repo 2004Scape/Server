@@ -704,12 +704,26 @@ export default class Player extends PathingEntity {
             }
 
             const delay = request.delay--;
-            if (this.canAccess() && delay <= 0) {
+            if (this.canAccess() && (delay <= 0 || (this.logoutRequested && request.type === PlayerQueueType.LONG))) {
                 request.unlink();
 
-                const script = ScriptRunner.init(request.script, this, null, request.args);
                 const save = this.queue.cursor; // LinkList-specific behavior so we can getqueue/clearqueue inside of this
-                this.executeScript(script, true);
+
+                if (this.logoutRequested && request.type === PlayerQueueType.LONG) {
+                    // I decided to put the logout action first in the queue request args
+
+                    if (request.args[0] === 0) {
+                        // ^accelerate
+                        const script = ScriptRunner.init(request.script, this, null, request.args.slice(1));
+                        this.executeScript(script, true);
+                    }
+
+                    // ^discard is a no-op (already removed)
+                } else {
+                    const script = ScriptRunner.init(request.script, this, null, request.args);
+                    this.executeScript(script, true);
+                }
+
                 this.queue.cursor = save;
             }
         }

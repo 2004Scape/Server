@@ -293,8 +293,11 @@
 // Requires protected access - move the player from $startCoord to $endCoord with a finer ability to control speed
 [command,p_exactmove](coord $startCoord, coord $endCoord, int $startCycle, int $endCycle, int $direction)
 // Queue a script on a player
-[command,queue](queue $queue, int $delay) // , $arg)
-[command,.queue](queue $queue, int $delay) // , $arg)
+[command,queue](queue $queue, int $delay) // + args
+[command,.queue](queue $queue, int $delay) // + args
+// Long queue a script on a player with special behavior if it hasn't ran by the time the player logs out
+[command,longqueue](queue $queue, int $delay, int $logout_action) // + args
+[command,.longqueue](queue $queue, int $delay, int $logout_action) // + args
 // Returns true if the player has an open modal or is delayed
 [command,busy]()(boolean)
 [command,.busy]()(boolean)

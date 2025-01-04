@@ -139,6 +139,19 @@ const PlayerOps: CommandHandlers = {
         state.activePlayer.enqueueScript(script, PlayerQueueType.NORMAL, delay, args);
     }),
 
+    [ScriptOpcode.LONGQUEUE]: checkedHandler(ActivePlayer, state => {
+        let args = popScriptArgs(state);
+        const [scriptId, delay, logoutAction] = state.popInts(3);
+        args = [logoutAction, ...args]; // concatenating- easier to hook into existing queue code and slice it later
+
+        const script = ScriptProvider.get(scriptId);
+        if (!script) {
+            throw new Error(`Unable to find queue script: ${scriptId}`);
+        }
+
+        state.activePlayer.enqueueScript(script, PlayerQueueType.LONG, delay, args);
+    }),
+
     // https://x.com/JagexAsh/status/1806246992797921391
     [ScriptOpcode.ANIM]: checkedHandler(ActivePlayer, state => {
         const delay = state.popInt();
