@@ -28,7 +28,7 @@ export default class InvButtonDHandler extends MessageHandler<InvButtonD> {
             return false;
         }
 
-        if (player.delayed()) {
+        if (player.delayed) {
             // do nothing; revert the client visual
             player.write(new UpdateInvPartial(comId, inv, slot, targetSlot));
             return false;

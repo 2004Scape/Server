@@ -496,7 +496,7 @@ export default class Player extends PathingEntity {
         if (!moved || this.stepsTaken === 0) {
             return;
         }
-        if (!this.delayed() && this.moveSpeed === MoveSpeed.RUN && this.stepsTaken > 1) {
+        if (!this.delayed && this.moveSpeed === MoveSpeed.RUN && this.stepsTaken > 1) {
             const weightKg = Math.floor(this.runweight / 1000);
             const clampWeight = Math.min(Math.max(weightKg, 0), 64);
             const loss = (67 + (67 * clampWeight) / 64) | 0;
@@ -505,7 +505,7 @@ export default class Player extends PathingEntity {
     }
 
     private recoverEnergy(moved: boolean): void {
-        if (!this.delayed() && (!moved || this.moveSpeed !== MoveSpeed.RUN) && this.runenergy < 10000) {
+        if (!this.delayed && (!moved || this.moveSpeed !== MoveSpeed.RUN) && this.runenergy < 10000) {
             const recovered = (this.baseLevels[PlayerStat.AGILITY] / 9 | 0) + 8;
             this.runenergy = Math.min(this.runenergy + recovered, 10000);
         }
@@ -536,7 +536,7 @@ export default class Player extends PathingEntity {
     closeModal() {
         this.weakQueue.clear();
 
-        if (!this.delayed()) {
+        if (!this.delayed) {
             this.protect = false;
         }
 
@@ -581,7 +581,7 @@ export default class Player extends PathingEntity {
     }
 
     busy() {
-        return this.delayed() || this.containsModalInterface();
+        return this.delayed || this.containsModalInterface();
     }
 
     canAccess() {
@@ -780,7 +780,7 @@ export default class Player extends PathingEntity {
     // we process walktriggers from regular movement in client input, 
     // and for each interaction.
     processWalktrigger() {
-        if (this.walktrigger !== -1 && (!this.protect && !this.delayed())) {
+        if (this.walktrigger !== -1 && (!this.protect && !this.delayed)) {
             const trigger = ScriptProvider.get(this.walktrigger);
             this.walktrigger = -1;
             if (trigger) {
@@ -802,7 +802,7 @@ export default class Player extends PathingEntity {
             return;
         }
 
-        if (this.target instanceof Npc && (typeof World.getNpc(this.target.nid) === 'undefined' || this.target.delayed())) {
+        if (this.target instanceof Npc && (typeof World.getNpc(this.target.nid) === 'undefined' || this.target.delayed)) {
             this.clearInteraction();
             this.unsetMapFlag();
             return;
@@ -1708,7 +1708,7 @@ export default class Player extends PathingEntity {
     // ----
 
     runScript(script: ScriptState, protect: boolean = false, force: boolean = false) {
-        if (!force && protect && (this.protect || this.delayed())) {
+        if (!force && protect && (this.protect || this.delayed)) {
             // can't get protected access, bye-bye
             // printDebug('No protected access:', script.script.name, protect, this.protect);
             return -1;

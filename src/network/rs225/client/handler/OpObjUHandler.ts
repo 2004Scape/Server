@@ -13,7 +13,7 @@ export default class OpObjUHandler extends MessageHandler<OpObjU> {
     handle(message: OpObjU, player: NetworkPlayer): boolean {
         const { x, z, obj: objId, useObj: item, useSlot: slot, useComponent: comId } = message;
 
-        if (player.delayed()) {
+        if (player.delayed) {
             player.write(new UnsetMapFlag());
             return false;
         }

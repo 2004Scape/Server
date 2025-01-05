@@ -33,7 +33,7 @@ export default class OpHeldHandler extends MessageHandler<OpHeld> {
             return false;
         }
 
-        if (player.delayed()) {
+        if (player.delayed) {
             return false;
         }
 

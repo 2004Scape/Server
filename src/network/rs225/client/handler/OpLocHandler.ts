@@ -11,7 +11,7 @@ export default class OpLocHandler extends MessageHandler<OpLoc> {
     handle(message: OpLoc, player: NetworkPlayer): boolean {
         const { x, z, loc: locId } = message;
 
-        if (player.delayed()) {
+        if (player.delayed) {
             player.write(new UnsetMapFlag());
             return false;
         }

@@ -326,7 +326,8 @@ const PlayerOps: CommandHandlers = {
             return;
         }
 
-        state.activePlayer.delay = 1;
+        state.activePlayer.delayed = true;
+        state.activePlayer.delayedUntil = World.currentTick + 1;
         state.execution = ScriptState.SUSPENDED;
     }),
 
@@ -338,7 +339,8 @@ const PlayerOps: CommandHandlers = {
     // https://x.com/JagexAsh/status/1684478874703343616
     // https://x.com/JagexAsh/status/1780932943038345562
     [ScriptOpcode.P_DELAY]: checkedHandler(ProtectedActivePlayer, state => {
-        state.activePlayer.delay = check(state.popInt(), NumberNotNull) + 1;
+        state.activePlayer.delayed = true;
+        state.activePlayer.delayedUntil = World.currentTick + 1 + check(state.popInt(), NumberNotNull);
         state.execution = ScriptState.SUSPENDED;
     }),
 

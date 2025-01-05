@@ -31,7 +31,7 @@ export default class InvButtonHandler extends MessageHandler<InvButton> {
             return false;
         }
 
-        if (player.delayed()) {
+        if (player.delayed) {
             return false;
         }
 

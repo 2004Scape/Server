@@ -339,11 +339,11 @@ export default class Npc extends PathingEntity {
     processQueue() {
         for (let request = this.queue.head(); request !== null; request = this.queue.next()) {
             // purposely only decrements the delay when the npc is not delayed
-            if (!this.delayed()) {
+            if (!this.delayed) {
                 request.delay--;
             }
 
-            if (!this.delayed() && request.delay <= 0) {
+            if (!this.delayed && request.delay <= 0) {
                 request.unlink();
 
                 const state = ScriptRunner.init(request.script, this, null, request.args);
@@ -608,7 +608,7 @@ export default class Npc extends PathingEntity {
     }
 
     aiMode(): void {
-        if (this.delayed() || !this.target) {
+        if (this.delayed || !this.target) {
             this.defaultMode();
             return;
         }
@@ -618,7 +618,7 @@ export default class Npc extends PathingEntity {
             return;
         }
 
-        if (this.target instanceof Npc && (typeof World.getNpc(this.target.nid) === 'undefined' || this.target.delayed())) {
+        if (this.target instanceof Npc && (typeof World.getNpc(this.target.nid) === 'undefined' || this.target.delayed)) {
             this.defaultMode();
             return;
         }
