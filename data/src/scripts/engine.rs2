@@ -850,6 +850,8 @@
 [command,timespent]
 // Get the time spent since the timespent command was ran. This can be ^micros or ^millis
 [command,gettimespent](int $unit)(int)
+// Print a message on the server
+[command,console](string $text)
 
 // [command,inv_setvar](inv $inv, int $slot, obj $obj, int $value)
 // [command,inv_getvar](inv $inv, int $slot, obj $obj)(int)

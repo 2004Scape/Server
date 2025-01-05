@@ -280,7 +280,6 @@ export function packNpcConfigs(configs: Map<string, ConfigLine[]>): { client: Pa
         const models: number[] = [];
         const heads: number[] = [];
         const params: ParamValue[] = [];
-        const stats: number[] = [1, 1, 1, 1, 1, 1];
         const patrol = [];
         let vislevel = false;
 

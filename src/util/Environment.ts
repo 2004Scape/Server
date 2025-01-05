@@ -34,8 +34,6 @@ export default {
     NODE_STAFF: tryParseArray(process.env.NODE_STAFF?.split(','), ['pazaz']),
     // no server routefinding until 2009
     NODE_CLIENT_ROUTEFINDER: tryParseBoolean(process.env.NODE_CLIENT_ROUTEFINDER, true),
-    // controllable for bot testing
-    NODE_SOCKET_TIMEOUT: tryParseBoolean(process.env.NODE_SOCKET_TIMEOUT, true),
     // yellow-x walktriggers in osrs went from: in packet handler -> in player setup -> player movement
     // 0 = processed in packet handler. 1 = processed in player setup (client input). 2 = processed in player movement
     NODE_WALKTRIGGER_SETTING: tryParseInt(process.env.NODE_WALKTRIGGER_SETTING, WalkTriggerSetting.PLAYERPACKET),

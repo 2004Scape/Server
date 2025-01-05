@@ -104,7 +104,7 @@ class World {
     private static readonly PLAYER_COORDLOGRATE: number = 50; // 30s
 
     private static readonly TIMEOUT_SOCKET_IDLE: number = 16; // ~10s with no data- disconnect client
-    private static readonly TIMEOUT_SOCKET_LOGOUT: number = 100; // 60s with no client- remove player
+    private static readonly TIMEOUT_SOCKET_LOGOUT: number = 100; // 60s with no client- remove player from processing
 
     // the game/zones map
     readonly gameMap: GameMap;
@@ -352,7 +352,7 @@ class World {
 
     // ----
 
-    cycle(continueCycle: boolean = true): void {
+    cycle(): void {
         try {
             const start: number = Date.now();
 
@@ -446,10 +446,6 @@ class World {
                 }
             }
 
-            this.cycleStats[WorldStat.CYCLE] = Date.now() - start;
-
-            // ----
-
             this.lastCycleStats[WorldStat.CYCLE] = this.cycleStats[WorldStat.CYCLE];
             this.lastCycleStats[WorldStat.WORLD] = this.cycleStats[WorldStat.WORLD];
             this.lastCycleStats[WorldStat.CLIENT_IN] = this.cycleStats[WorldStat.CLIENT_IN];
@@ -464,22 +460,23 @@ class World {
             this.lastCycleStats[WorldStat.BANDWIDTH_OUT] = this.cycleStats[WorldStat.BANDWIDTH_OUT];
 
             // push stats to prometheus
-            // todo: lock this behind a feature flag? most users may never use this feature
-            trackPlayerCount.set(this.getTotalPlayers());
-            trackNpcCount.set(this.getTotalNpcs());
+            if (Environment.NODE_PRODUCTION) {
+                trackPlayerCount.set(this.getTotalPlayers());
+                trackNpcCount.set(this.getTotalNpcs());
 
-            trackCycleTime.observe(this.cycleStats[WorldStat.CYCLE]);
-            trackCycleWorldTime.observe(this.cycleStats[WorldStat.WORLD]);
-            trackCycleClientInTime.observe(this.cycleStats[WorldStat.CLIENT_IN]);
-            trackCycleClientOutTime.observe(this.cycleStats[WorldStat.CLIENT_OUT]);
-            trackCycleNpcTime.observe(this.cycleStats[WorldStat.NPC]);
-            trackCyclePlayerTime.observe(this.cycleStats[WorldStat.PLAYER]);
-            trackCycleZoneTime.observe(this.cycleStats[WorldStat.ZONE]);
-            trackCycleLoginTime.observe(this.cycleStats[WorldStat.LOGIN]);
-            trackCycleLogoutTime.observe(this.cycleStats[WorldStat.LOGOUT]);
+                trackCycleTime.observe(this.cycleStats[WorldStat.CYCLE]);
+                trackCycleWorldTime.observe(this.cycleStats[WorldStat.WORLD]);
+                trackCycleClientInTime.observe(this.cycleStats[WorldStat.CLIENT_IN]);
+                trackCycleClientOutTime.observe(this.cycleStats[WorldStat.CLIENT_OUT]);
+                trackCycleNpcTime.observe(this.cycleStats[WorldStat.NPC]);
+                trackCyclePlayerTime.observe(this.cycleStats[WorldStat.PLAYER]);
+                trackCycleZoneTime.observe(this.cycleStats[WorldStat.ZONE]);
+                trackCycleLoginTime.observe(this.cycleStats[WorldStat.LOGIN]);
+                trackCycleLogoutTime.observe(this.cycleStats[WorldStat.LOGOUT]);
 
-            trackCycleBandwidthInBytes.inc(this.cycleStats[WorldStat.BANDWIDTH_IN]);
-            trackCycleBandwidthOutBytes.inc(this.cycleStats[WorldStat.BANDWIDTH_OUT]);
+                trackCycleBandwidthInBytes.inc(this.cycleStats[WorldStat.BANDWIDTH_IN]);
+                trackCycleBandwidthOutBytes.inc(this.cycleStats[WorldStat.BANDWIDTH_OUT]);
+            }
 
             if (Environment.NODE_DEBUG_PROFILE) {
                 printDebug(`| [tick ${this.currentTick}; ${this.cycleStats[WorldStat.CYCLE]}/${this.tickRate}ms] | ${this.getTotalPlayers()} players | ${this.getTotalNpcs()} npcs | ${this.gameMap.getTotalZones()} zones | ${this.gameMap.getTotalLocs()} locs | ${this.gameMap.getTotalObjs()} objs |`);
@@ -489,9 +486,11 @@ class World {
 
             this.currentTick++;
 
-            if (continueCycle) {
-                setTimeout(this.cycle.bind(this), this.tickRate - this.cycleStats[WorldStat.CYCLE]);
-            }
+            this.cycleStats[WorldStat.CYCLE] = Date.now() - start;
+
+            // ----
+
+            setTimeout(this.cycle.bind(this), this.tickRate - this.cycleStats[WorldStat.CYCLE]);
         } catch (err) {
             if (err instanceof Error) {
                 printError('eep eep cabbage! An unhandled error occurred during the cycle: ' + err.message);
@@ -608,31 +607,32 @@ class World {
                             player.unsetMapFlag();
                             continue;
                         }
-        
+
                         if ((!player.target || player.target instanceof Loc || player.target instanceof Obj) && player.faceEntity !== -1) {
                             player.faceEntity = -1;
                             player.masks |= InfoProt.PLAYER_FACE_ENTITY.id;
                         }
-        
+
                         if ((!player.busy() && player.opcalled) || player.opucalled) { // opu in osrs doesnt have a busy check
                             player.moveClickRequest = false;
                         } else {
                             player.moveClickRequest = true;
                         }
-        
+
                         if (!followingPlayer && player.opcalled && (player.userPath.length === 0 || !Environment.NODE_CLIENT_ROUTEFINDER)) {
                             player.pathToTarget();
                             continue;
                         }
+
                         if (Environment.NODE_WALKTRIGGER_SETTING !== WalkTriggerSetting.PLAYERPACKET) {
                             player.pathToMoveClick(player.userPath, !Environment.NODE_CLIENT_ROUTEFINDER);
-                            
+
                             if (Environment.NODE_WALKTRIGGER_SETTING === WalkTriggerSetting.PLAYERSETUP && !player.opcalled && player.hasWaypoints()) {
                                 player.processWalktrigger();
                             }
                         }
                     }
-        
+
                     if (player.target instanceof Player && followingPlayer) {
                         if (CoordGrid.distanceToSW(player, player.target) <= 25) {
                             player.pathToPathingTarget();
@@ -640,6 +640,14 @@ class World {
                             player.clearWaypoints();
                         }
                     }
+                }
+
+                if (this.currentTick - player.lastResponse >= World.TIMEOUT_SOCKET_LOGOUT) {
+                    // x-logged / timed out for 60s: force logout
+                    player.loggedOut = true;
+                } else if (this.currentTick - player.lastResponse >= World.TIMEOUT_SOCKET_IDLE) {
+                    // x-logged / timed out for 10s: attempt logout
+                    player.tryLogout = true;
                 }
             } catch (err) {
                 console.error(err);
@@ -745,15 +753,18 @@ class World {
     // - close interface if attempting to logout
     private processPlayers(): void {
         const start: number = Date.now();
+
         for (const player of this.players) {
             try {
                 // - primary queue
                 // - weak queue
                 player.processQueues();
-                // - timers
-                player.processTimers(PlayerTimerType.NORMAL);
-                // - soft timers
-                player.processTimers(PlayerTimerType.SOFT);
+                if (!player.loggedOut) {
+                    // - timers
+                    player.processTimers(PlayerTimerType.NORMAL);
+                    // - soft timers
+                    player.processTimers(PlayerTimerType.SOFT);
+                }
                 // - engine queue
                 player.processEngineQueue();
                 // - interactions
@@ -764,49 +775,42 @@ class World {
                     player.validateDistanceWalked();
                 }
 
-                if (this.shutdownTick < this.currentTick) {
-                    // request logout on socket idle after 45 seconds (this may be 16 *ticks* in osrs!)
-                    // increased timeout for compatibility with old PCs that take ages to load
-                    if (Environment.NODE_SOCKET_TIMEOUT && this.currentTick - player.lastResponse >= World.TIMEOUT_SOCKET_IDLE) {
-                        player.logoutRequested = true;
-                    }
+                // - close interface if attempting to logout
+                if (player.tryLogout) {
+                    player.closeModal();
                 }
 
-                // - close interface if attempting to logout
-                if (player.logoutRequested) {
-                    player.closeModal();
+                if (player.loggedOut) {
+                    player.clearInteraction();
                 }
             } catch (err) {
                 console.error(err);
                 this.removePlayer(player);
             }
         }
+
         this.cycleStats[WorldStat.PLAYER] = Date.now() - start;
     }
 
     private processLogouts(): void {
         const start: number = Date.now();
+
         for (const player of this.players) {
-            if (Environment.NODE_SOCKET_TIMEOUT && this.currentTick - player.lastResponse >= World.TIMEOUT_SOCKET_LOGOUT) {
-                // remove after 60 seconds
-                player.queue.clear();
-                player.weakQueue.clear();
-                player.engineQueue.clear();
-                player.clearInteraction();
-                player.closeModal();
-                player.unsetMapFlag();
-                player.logoutRequested = true;
+            if (player.loggedOut) {
+                player.tryLogout = true;
                 player.setVar(VarPlayerType.LASTCOMBAT, 0); // temp fix for logging out in combat, since logout trigger conditions still run...
             }
 
-            if (!player.logoutRequested) {
+            if (!player.tryLogout) {
                 continue;
             }
+
+            // todo: can a player recover from the fakelog/logged out state?
 
             if (player.queue.head() === null) {
                 const script = ScriptProvider.getByTriggerSpecific(ServerTriggerType.LOGOUT, -1, -1);
                 if (!script) {
-                    printError('LOGOUT TRIGGER IS BROKEN!');
+                    printError('LOGOUT TRIGGER IS BROKEN!'); // (iirc this is a real message!)
                     continue;
                 }
 
@@ -815,21 +819,29 @@ class World {
                 ScriptRunner.execute(state);
 
                 const result = state.popInt();
-                if (result === 0) {
-                    player.logoutRequested = false;
-                }
-
-                if (player.logoutRequested) {
+                if (result === 1) {
                     this.removePlayer(player);
+                } else {
+                    player.tryLogout = false;
                 }
             }
         }
+
         this.cycleStats[WorldStat.LOGOUT] = Date.now() - start;
     }
 
     private processLogins(): void {
         const start: number = Date.now();
         player: for (const player of this.newPlayers) {
+            if (this.shutdownTick != -1 && this.shutdownTick > this.currentTick) {
+                if (isClientConnected(player)) {
+                    player.client.send(Uint8Array.from([ 14 ]));
+                    player.client.close();
+                }
+
+                continue;
+            }
+
             if (player.reconnecting) {
                 for (const other of this.players) {
                     if (player.username !== other.username) {
@@ -858,7 +870,7 @@ class World {
                     continue;
                 }
 
-                if (isClientConnected(other) && player instanceof NetworkPlayer) {
+                if (player instanceof NetworkPlayer) {
                     player.client.send(Uint8Array.from([ 5 ]));
                     player.client.close();
                 }
@@ -1084,38 +1096,31 @@ class World {
     }
 
     private processShutdown(): void {
-        const duration: number = this.currentTick - this.shutdownTick; // how long have we been trying to shutdown
-        const online: number = this.getTotalPlayers();
+        const duration = this.currentTick - this.shutdownTick;
+        if (duration >= 1024) {
+            // force remove all players, they had their chances to finish processing
+            for (const player of this.players) {
+                this.removePlayer(player);
+            }
+        }
 
+        const online = this.getTotalPlayers();
         if (online === 0 && this.logoutRequests.size === 0) {
             process.exit(0);
         }
 
-        // todo: logout should process up to 1024 queues
         for (const player of this.players) {
-            player.logoutRequested = true;
+            player.loggedOut = true;
 
             if (isClientConnected(player)) {
-                player.logout(); // visually log out
-
-                // if it's been more than a few ticks and the client just won't leave us alone, close the socket
-                if (duration > 2) {
-                    player.client.close();
-                }
+                player.logout(); // see ya
+                player.client.close();
             }
         }
 
-        this.npcs.reset();
-
-        if (duration >= 100) {
-            // failsafe if we've been stuck for a minute (needs more nuance... not exactly "correct")
-            for (const player of this.players) {
-                this.removePlayer(player);
-            }
-
-            if (!Environment.NODE_PRODUCTION) {
-                process.exit(0);
-            }
+        if (duration > 2) {
+            // after 1 second, kick into high gear (need time to flush logout packets first)
+            this.tickRate = 0;
         }
     }
 

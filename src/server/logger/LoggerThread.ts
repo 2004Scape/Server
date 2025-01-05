@@ -39,7 +39,7 @@ type ParentPort = {
     postMessage: (msg: any) => void;
 };
 
-async function handleRequests(parentPort: ParentPort, msg: any) {
+async function handleRequests(_parentPort: ParentPort, msg: any) {
     const { type } = msg;
 
     switch (type) {

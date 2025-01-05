@@ -76,7 +76,7 @@ export async function packWorldmap() {
         if (parts.length === 2) {
             const [from, to] = parts;
             const [fromLevel, fromMx, fromMz, fromLx, fromLz] = from.split('_').map(x => parseInt(x));
-            const [toLevel, toMx, toMz, toLx, toLz] = to.split('_').map(x => parseInt(x));
+            const [_toLevel, toMx, toMz, toLx, toLz] = to.split('_').map(x => parseInt(x));
 
             if (fromLx % 8 !== 0 || fromLz % 8 !== 0 || toLx % 8 !== 7 || toLz % 8 !== 7 || fromMx > toMx || fromMz > toMz || (fromMx <= toMx && fromMz <= toMz && (fromLx > toLx || fromLz > toLz))) {
                 printWarning('Multiway map not aligned to a zone ' + multiway[i]);
@@ -117,7 +117,7 @@ export async function packWorldmap() {
         if (parts.length === 2) {
             const [from, to] = parts;
             const [fromLevel, fromMx, fromMz, fromLx, fromLz] = from.split('_').map(x => parseInt(x));
-            const [toLevel, toMx, toMz, toLx, toLz] = to.split('_').map(x => parseInt(x));
+            const [_toLevel, toMx, toMz, toLx, toLz] = to.split('_').map(x => parseInt(x));
 
             if (fromLx % 8 !== 0 || fromLz % 8 !== 0 || toLx % 8 !== 7 || toLz % 8 !== 7 || fromMx > toMx || fromMz > toMz || (fromMx <= toMx && fromMz <= toMz && (fromLx > toLx || fromLz > toLz))) {
                 printWarning('Free map not aligned to a zone ' + free2play[i]);
@@ -410,7 +410,7 @@ export async function packWorldmap() {
                 const count = objBuf.g1();
                 for (let j = 0; j < count; j++) {
                     const objId = objBuf.g2();
-                    const objCount = objBuf.g1();
+                    const _objCount = objBuf.g1();
                     objs[level][localX][localZ] = objId;
                 }
             }

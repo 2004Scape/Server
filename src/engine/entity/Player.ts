@@ -27,7 +27,7 @@ import {CoordGrid} from '#/engine/CoordGrid.js';
 import CameraInfo from '#/engine/entity/CameraInfo.js';
 import MoveSpeed from '#/engine/entity/MoveSpeed.js';
 import EntityLifeCycle from '#/engine/entity/EntityLifeCycle.js';
-import PlayerStat from '#/engine/entity/PlayerStat.js';
+import {PlayerStat, PlayerStatEnabled, PlayerStatFree} from '#/engine/entity/PlayerStat.js';
 import MoveStrategy from '#/engine/entity/MoveStrategy.js';
 import BuildArea from '#/engine/entity/BuildArea.js';
 import HeroPoints from '#/engine/entity/HeroPoints.js';
@@ -100,76 +100,6 @@ export function getExpByLevel(level: number) {
 }
 
 export default class Player extends PathingEntity {
-    static readonly SKILLS = [
-        'attack',
-        'defence',
-        'strength',
-        'hitpoints',
-        'ranged',
-        'prayer',
-        'magic',
-        'cooking',
-        'woodcutting',
-        'fletching',
-        'fishing',
-        'firemaking',
-        'crafting',
-        'smithing',
-        'mining',
-        'herblore',
-        'agility',
-        'thieving',
-        'stat18',
-        'stat19',
-        'runecraft'
-    ];
-    static readonly SKILLS_ENABLED = [
-        true,
-        true,
-        true,
-        true,
-        true,
-        true,
-        true,
-        true,
-        true,
-        true,
-        true,
-        true,
-        true,
-        true,
-        true,
-        true,
-        true,
-        true,
-        false,
-        false,
-        true,
-    ];
-    static readonly SKILLS_F2P = [
-        true,
-        true,
-        true,
-        true,
-        true,
-        true,
-        true,
-        true,
-        true,
-        false,
-        true,
-        true,
-        true,
-        true,
-        true,
-        false,
-        false,
-        false,
-        false,
-        false,
-        true,
-    ];
-
     static readonly DESIGN_BODY_COLORS: number[][] = [
         [6798, 107, 10283, 16, 4797, 7744, 5799, 4634, 33697, 22433, 2983, 54193],
         [8741, 12, 64030, 43162, 7735, 8404, 1701, 38430, 24094, 10153, 56621, 4783, 1341, 16578, 35003, 25239],
@@ -309,7 +239,6 @@ export default class Player extends PathingEntity {
     basWalkRight: number = -1;
     basRunning: number = -1;
     animProtect: number = 0;
-    logoutRequested: boolean = false;
     invListeners: {
         type: number; // InvType
         com: number; // Component
@@ -320,6 +249,9 @@ export default class Player extends PathingEntity {
     afkEventReady: boolean = false;
     interactWalkTrigger: boolean = false;
     moveClickRequest: boolean = false;
+
+    loggedOut: boolean = false; // pending logout processing
+    tryLogout: boolean = false; // logout requested (you *really* need to be sure the logout if_button logic matches the logout trigger...)
 
     // not stored as a byte buffer so we can write and encrypt opcodes later
     buffer: DoublyLinkList<OutgoingMessage> = new DoublyLinkList();
@@ -653,7 +585,8 @@ export default class Player extends PathingEntity {
     }
 
     canAccess() {
-        return !this.protect && !this.busy();
+        // if the world is shutting down, no protection rules apply
+        return World.shutdownTick < World.currentTick && !this.protect && !this.busy();
     }
 
     /**
@@ -703,26 +636,25 @@ export default class Player extends PathingEntity {
                 this.closeModal();
             }
 
+            if (this.tryLogout && request.type === PlayerQueueType.LONG) {
+                if (request.args[0] === 0) {
+                    // ^accelerate
+                    request.delay = 0;
+                } else {
+                    // ^discard
+                    request.unlink();
+                    continue;
+                }
+            }
+
             const delay = request.delay--;
-            if (this.canAccess() && (delay <= 0 || (this.logoutRequested && request.type === PlayerQueueType.LONG))) {
+            if (this.canAccess() && delay <= 0) {
                 request.unlink();
 
                 const save = this.queue.cursor; // LinkList-specific behavior so we can getqueue/clearqueue inside of this
 
-                if (this.logoutRequested && request.type === PlayerQueueType.LONG) {
-                    // I decided to put the logout action first in the queue request args
-
-                    if (request.args[0] === 0) {
-                        // ^accelerate
-                        const script = ScriptRunner.init(request.script, this, null, request.args.slice(1));
-                        this.executeScript(script, true);
-                    }
-
-                    // ^discard is a no-op (already removed)
-                } else {
-                    const script = ScriptRunner.init(request.script, this, null, request.args);
-                    this.executeScript(script, true);
-                }
+                const script = ScriptRunner.init(request.script, this, null, request.args);
+                this.executeScript(script, true);
 
                 this.queue.cursor = save;
             }
@@ -735,9 +667,11 @@ export default class Player extends PathingEntity {
             if (this.canAccess() && delay <= 0) {
                 request.unlink();
 
-                const script = ScriptRunner.init(request.script, this, null, request.args);
                 const save = this.queue.cursor; // LinkList-specific behavior so we can getqueue/clearqueue inside of this
+
+                const script = ScriptRunner.init(request.script, this, null, request.args);
                 this.executeScript(script, true);
+
                 this.queue.cursor = save;
             }
         }
@@ -1529,18 +1463,18 @@ export default class Player extends PathingEntity {
             this.changeStat(stat);
 
             // fun logging for players :)
-            this.addSessionLog(LoggerEventType.ADVENTURE, 'Levelled up ' + Player.SKILLS[stat] + ' from ' + before + ' to ' + this.baseLevels[stat]);
+            this.addSessionLog(LoggerEventType.ADVENTURE, 'Levelled up ' + PlayerStat[stat].toLowerCase() + ' from ' + before + ' to ' + this.baseLevels[stat]);
 
             let total = 0;
             let freeTotal = 0;
             for (let stat = 0; stat < this.baseLevels.length; stat++) {
-                if (!Player.SKILLS_ENABLED[stat]) {
+                if (!PlayerStatEnabled[stat]) {
                     continue;
                 }
 
                 total += this.baseLevels[stat];
 
-                if (Player.SKILLS_F2P[stat]) {
+                if (PlayerStatFree[stat]) {
                     freeTotal += this.baseLevels[stat];
                 }
             }
@@ -1776,7 +1710,7 @@ export default class Player extends PathingEntity {
     runScript(script: ScriptState, protect: boolean = false, force: boolean = false) {
         if (!force && protect && (this.protect || this.delayed())) {
             // can't get protected access, bye-bye
-            // printDebug('No protected access:', script.script.info.scriptName, protect, this.protect);
+            // printDebug('No protected access:', script.script.name, protect, this.protect);
             return -1;
         }
 
@@ -1805,11 +1739,11 @@ export default class Player extends PathingEntity {
     }
 
     executeScript(script: ScriptState, protect: boolean = false, force: boolean = false) {
-        // printDebug('Executing', script.script.info.scriptName);
+        // printDebug('Executing', script.script.name);
 
         const state = this.runScript(script, protect, force);
         if (state === -1) {
-            // printDebug('Script did not run', script.script.info.scriptName, protect, this.protect);
+            // printDebug('Script did not run', script.script.name, protect, this.protect);
             return;
         }
 

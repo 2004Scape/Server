@@ -13,17 +13,13 @@ import Component from '#/cache/config/Component.js';
 import SeqType from '#/cache/config/SeqType.js';
 import SpotanimType from '#/cache/config/SpotanimType.js';
 import ScriptProvider from '#/engine/script/ScriptProvider.js';
-import NullClientSocket from '#/server/NullClientSocket.js';
 import { tryParseInt } from '#/util/TryParse.js';
 import ScriptVarType from '#/cache/config/ScriptVarType.js';
 import { CoordGrid } from '#/engine/CoordGrid.js';
 import ScriptRunner from '#/engine/script/ScriptRunner.js';
-import PlayerStat from '#/engine/entity/PlayerStat.js';
+import { PlayerStat, PlayerStatEnabled, PlayerStatKey } from '#/engine/entity/PlayerStat.js';
 import MoveStrategy from '#/engine/entity/MoveStrategy.js';
-import { PlayerLoading } from '#/engine/entity/PlayerLoading.js';
-import Packet from '#/io/Packet.js';
-import { printInfo } from '#/util/Logger.js';
-import {findPath, isMapBlocked} from '#/engine/GameMap.js';
+import { findPath, isMapBlocked } from '#/engine/GameMap.js';
 import LoggerEventType from '#/server/logger/LoggerEventType.js';
 
 export default class ClientCheatHandler extends MessageHandler<ClientCheat> {
@@ -44,163 +40,90 @@ export default class ClientCheatHandler extends MessageHandler<ClientCheat> {
 
         if (player.staffModLevel >= 3) {
             // developer commands
-            if (cmd === 'reload' && !Environment.STANDALONE_BUNDLE && !Environment.NODE_PRODUCTION) {
-                World.reload();
-            } else if (cmd === 'rebuild' && !Environment.STANDALONE_BUNDLE && !Environment.NODE_PRODUCTION) {
-                player.messageGame('Rebuilding scripts...');
 
-                World.rebuild();
-            } else if (cmd === 'serverdrop') {
+            if (!Environment.STANDALONE_BUNDLE && !Environment.NODE_PRODUCTION) {
+                // local developer commands
+
+                if (cmd === 'reload' && !Environment.STANDALONE_BUNDLE && !Environment.NODE_PRODUCTION) {
+                    World.reload();
+                } else if (cmd === 'rebuild' && !Environment.STANDALONE_BUNDLE && !Environment.NODE_PRODUCTION) {
+                    player.messageGame('Rebuilding scripts...');
+                    World.rebuild();
+                }
+            }
+
+            if (cmd === 'serverdrop') {
                 player.terminate();
-            } else if (cmd === 'bench') {
-                const start = Date.now();
-                for (let index = 0; index < 100_000; index++) {
-                    findPath(player.level, player.x, player.z, player.x, player.z + 10);
-                }
-                const end = Date.now();
-                printInfo(`pf benchmark took = ${end - start} ms`);
-            } else if (cmd === 'bots') {
-                player.messageGame('Adding bots');
-                for (let i = 0; i < 1999; i++) {
-                    const bot: Player = PlayerLoading.load(`bot${i}`, new Packet(new Uint8Array()), new NullClientSocket());
-                    World.addPlayer(bot);
-                }
-            } else if (cmd === 'lightbots') {
-                player.messageGame('Adding lightweight bots');
-                for (let i = 0; i < 1999; i++) {
-                    const bot: Player = PlayerLoading.load(`bot${i}`, new Packet(new Uint8Array()), null);
-                    World.addPlayer(bot);
-                }
-            } else if (cmd === 'teleall') {
-                player.messageGame('Teleporting all players');
-                for (const player of World.players) {
-                    player.closeModal();
-    
-                    do {
-                        const x = Math.floor(Math.random() * 64) + 3200;
-                        const z = Math.floor(Math.random() * 64) + 3200;
-    
-                        player.teleJump(x + Math.floor(Math.random() * 64) - 32, z + Math.floor(Math.random() * 64) - 32, 0);
-                    } while (isMapBlocked(player.x, player.z, player.level));
-                }
-            } else if (cmd === 'moveall') {
-                player.messageGame('Moving all players');
-                console.time('moveall');
-                for (const player of World.players) {
-                    player.closeModal();
-                    player.queueWaypoints(findPath(player.level, player.x, player.z, ((player.x >>> 6) << 6) + 32, ((player.z >>> 6) << 6) + 32));
-                }
-                console.timeEnd('moveall');
-            } else if (cmd === 'speed') {
-                if (args.length < 1) {
-                    player.messageGame('Usage: ::speed <ms>');
-                    return false;
-                }
-    
-                const speed: number = tryParseInt(args.shift(), 20);
-                if (speed < 20) {
-                    player.messageGame('::speed input was too low.');
-                    return false;
-                }
-    
-                player.messageGame(`World speed was changed to ${speed}ms`);
-                World.tickRate = speed;
             } else if (cmd === 'fly') {
                 if (player.moveStrategy === MoveStrategy.FLY) {
                     player.moveStrategy = MoveStrategy.SMART;
                 } else {
                     player.moveStrategy = MoveStrategy.FLY;
                 }
-                player.messageGame(`Fly is on? ${player.moveStrategy === MoveStrategy.FLY}`);
+
+                player.messageGame(`Changed move strategy: ${player.moveStrategy === MoveStrategy.FLY ? 'fly' : 'smart'}`);
             } else if (cmd === 'naive') {
                 if (player.moveStrategy === MoveStrategy.NAIVE) {
                     player.moveStrategy = MoveStrategy.SMART;
                 } else {
                     player.moveStrategy = MoveStrategy.NAIVE;
                 }
-                player.messageGame(`Naive is on? ${player.moveStrategy === MoveStrategy.NAIVE}`);
-            } else if (cmd === 'teleto') {
-                // would like this command to be in the admin command block, but we allow cheats on the live server currently
-                if (args.length < 1) {
-                    return false;
-                }
-    
-                // ::teleto <username>
-                const other = World.getPlayerByUsername(args[0]);
-                if (!other) {
-                    player.messageGame(`${args[0]} is not logged in.`);
-                    return false;
-                }
-    
-                player.teleJump(other.x, other.z, other.level);
-            } else if (cmd === 'teleother') {
-                // would like this command to be in the admin command block, but we allow cheats on the live server currently
-                if (args.length < 1) {
-                    return false;
-                }
-    
-                // ::teleother <username>
-                const other = World.getPlayerByUsername(args[0]);
-                if (!other) {
-                    player.messageGame(`${args[0]} is not logged in.`);
-                    return false;
-                }
-    
-                other.teleJump(player.x, player.z, player.level);
-            } else if (cmd === 'setvarother') {
-                // would like this command to be in the admin command block, but we allow cheats on the live server currently
-                if (args.length < 3) {
-                    return false;
-                }
-    
-                // ::setvarother <username> <name> <value>
-                const other = World.getPlayerByUsername(args[0]);
-                if (!other) {
-                    player.messageGame(`${args[0]} is not logged in.`);
-                    return false;
-                }
-    
-                const varp = VarPlayerType.getId(args[1]);
-                const value = Math.max(-0x80000000, Math.min(tryParseInt(args[2], 0), 0x7fffffff));
-    
-                if (varp === -1) {
-                    return false;
-                }
-    
-                other.setVar(varp, value);
-                player.messageGame('set ' + args[1] + ': to ' + value + ' on ' + other.username);
+
+                player.messageGame(`Naive move strategy: ${player.moveStrategy === MoveStrategy.NAIVE ? 'naive' : 'smart'}`);
             } else if (cmd === 'shutdown') {
                 if (args.length < 1) {
+                    // ::shutdown <seconds>
                     return false;
                 }
 
-                World.rebootTimer(tryParseInt(args[0], 50));
+                World.rebootTimer(Math.ceil(tryParseInt(args[0], 30) * 1000 / 600));
+            } else if (cmd === 'random') {
+                player.afkEventReady = true;
+            } else if (cmd === 'minme') {
+                // like maxme debugproc, but in engine because xp goes down
+                for (let i = 0; i < PlayerStatEnabled.length; i++) {
+                    if (i === PlayerStat.HITPOINTS) {
+                        player.setLevel(i, 10);
+                    } else {
+                        player.setLevel(i, 1);
+                    }
+                }
             }
         }
 
         if (Environment.NODE_ALLOW_CHEATS || player.staffModLevel >= 2) {
             // admin commands
-            // todo: after launch move a bunch of these into dev commands block
             if (cmd === 'tele') {
                 // authentic
                 if (args.length < 1) {
+                    // allowed formats:
+                    // ::tele level,x,z,x,z
+                    // ::tele x z level
+                    // ::tele up
+                    // ::tele down
                     return false;
                 }
 
-                // ::tele level,x,z,x,z
-                // ::tele up
-                // ::tele down
+                player.closeModal();
+
+                if (!player.canAccess()) {
+                    player.messageGame('Please finish what you are doing first.');
+                    return false;
+                }
+
+                player.clearInteraction();
+                player.unsetMapFlag();
 
                 if (args[0] === 'up') {
-                    // this would be handled in cs2 in 2007+ and did not exist in 2004
+                    // not authentic: this would be handled in cs2 in 2007+ and did not exist in 2004
                     player.teleJump(player.x, player.z, player.level + 1);
                     player.messageGame('::tele ' + CoordGrid.formatString(player.level, player.x, player.z, ','));
                 } else if (args[0] === 'down') {
-                    // this would be handled in cs2 in 2007+ and did not exist in 2004
+                    // not authentic: this would be handled in cs2 in 2007+ and did not exist in 2004
                     player.teleJump(player.x, player.z, player.level - 1);
                     player.messageGame('::tele ' + CoordGrid.formatString(player.level, player.x, player.z, ','));
                 } else if (args[0].indexOf(',') === -1) {
-                    // not authentic but rsps users are used to absolute coordinates
+                    // not authentic: rsps is too used to absolute coordinates
                     player.teleJump(tryParseInt(args[0], 3200), tryParseInt(args[1], 3200), tryParseInt(args[2], player.level));
                 } else {
                     // authentic
@@ -226,6 +149,52 @@ export default class ClientCheatHandler extends MessageHandler<ClientCheat> {
 
                     player.teleJump((mx << 6) + lx, (mz << 6) + lz, level);
                 }
+            } else if (cmd === 'teleto') {
+                if (args.length < 1) {
+                    return false;
+                }
+
+                // ::teleto <username>
+                const other = World.getPlayerByUsername(args[0]);
+                if (!other) {
+                    player.messageGame(`${args[0]} is not logged in.`);
+                    return false;
+                }
+
+                player.closeModal();
+
+                if (!player.canAccess()) {
+                    player.messageGame('Please finish what you are doing first.');
+                    return false;
+                }
+
+                player.clearInteraction();
+                player.unsetMapFlag();
+
+                player.teleJump(other.x, other.z, other.level);
+            } else if (cmd === 'teleother') {
+                if (args.length < 1) {
+                    return false;
+                }
+
+                // ::teleother <username>
+                const other = World.getPlayerByUsername(args[0]);
+                if (!other) {
+                    player.messageGame(`${args[0]} is not logged in.`);
+                    return false;
+                }
+
+                other.closeModal();
+
+                if (!other.canAccess()) {
+                    player.messageGame(`${args[0]} is busy right now.`);
+                    return false;
+                }
+
+                other.clearInteraction();
+                other.unsetMapFlag();
+
+                other.teleJump(player.x, player.z, player.level);
             } else if (cmd === 'setvar') {
                 // authentic
                 if (args.length < 2) {
@@ -233,49 +202,101 @@ export default class ClientCheatHandler extends MessageHandler<ClientCheat> {
                 }
 
                 // ::setvar <name> <value>
-                const varp = VarPlayerType.getId(args[0]);
-                const value = Math.max(-0x80000000, Math.min(tryParseInt(args[1], 0), 0x7fffffff));
-
-                if (varp === -1) {
+                const varp = VarPlayerType.getByName(args[1]);
+                if (!varp) {
                     return false;
                 }
 
-                player.setVar(varp, value);
-                player.messageGame('set ' + args[0] + ': to ' + value);
-            } else if (cmd === 'random') {
-                player.afkEventReady = true;
-            } else if (cmd === 'minme') {
-                // like maxme debugproc, but in engine
-                for (let i = 0; i < Player.SKILLS.length; i++) {
-                    if (i === PlayerStat.HITPOINTS) {
-                        player.setLevel(i, 10);
-                    } else {
-                        player.setLevel(i, 1);
+                if (varp.protect) {
+                    player.closeModal();
+
+                    if (!player.canAccess()) {
+                        player.messageGame('Please finish what you are doing first.');
+                        return false;
                     }
+
+                    player.clearInteraction();
+                    player.unsetMapFlag();
                 }
-            } else if (cmd === 'setxp') {
+
+                const value = Math.max(-0x80000000, Math.min(tryParseInt(args[1], 0), 0x7fffffff));
+                player.setVar(varp.id, value);
+                player.messageGame('set ' + varp.debugname + ': to ' + value);
+            } else if (cmd === 'setvarother') {
+                if (args.length < 3) {
+                    return false;
+                }
+
+                // ::setvarother <username> <name> <value>
+                const other = World.getPlayerByUsername(args[0]);
+                if (!other) {
+                    player.messageGame(`${args[0]} is not logged in.`);
+                    return false;
+                }
+
+                const varp = VarPlayerType.getByName(args[1]);
+                if (!varp) {
+                    return false;
+                }
+
+                if (varp.protect) {
+                    other.closeModal();
+
+                    if (!other.canAccess()) {
+                        player.messageGame(`${args[0]} is busy right now.`);
+                        return false;
+                    }
+
+                    other.clearInteraction();
+                    other.unsetMapFlag();
+                }
+
+                const value = Math.max(-0x80000000, Math.min(tryParseInt(args[2], 0), 0x7fffffff));
+                other.setVar(varp.id, value);
+                player.messageGame('set ' + args[1] + ': to ' + value + ' on ' + other.username);
+            } else if (cmd === 'getvar') {
+                // authentic
+                // todo find a real usage to see if we have it right
+                if (args.length < 1) {
+                    return false;
+                }
+
+                // ::getvar <varp>
+                const varp = VarPlayerType.getByName(args[1]);
+                if (!varp) {
+                    return false;
+                }
+
+                const value = player.getVar(varp.id);
+                player.messageGame('get ' + varp.debugname + ': ' + value);
+            } else if (cmd === 'getvarother') {
                 if (args.length < 2) {
-                    player.messageGame('Usage: ::setxp <stat> <xp>');
+                    // ::getvarother <username> <varp>
                     return false;
                 }
-    
-                const stat = Player.SKILLS.indexOf(args[0]);
-                if (stat === -1) {
-                    player.messageGame(`Unknown stat ${args[0]}`);
+
+                const other = World.getPlayerByUsername(args[0]);
+                if (!other) {
+                    player.messageGame(`${args[0]} is not logged in.`);
                     return false;
                 }
-    
-                const exp = parseInt(args[1]) * 10;
-                player.stats[stat] = exp;
+
+                const varp = VarPlayerType.getByName(args[1]);
+                if (!varp) {
+                    return false;
+                }
+
+                const value = player.getVar(varp.id);
+                player.messageGame('get ' + varp.debugname + ': ' + value + ' on ' + other.username);
             } else if (cmd === 'setstat') {
                 // authentic
                 if (args.length < 2) {
+                    // ::setstat <name> <level>
                     return false;
                 }
 
-                // ::setstat <name> <level>
-                const stat = Player.SKILLS.indexOf(args[0]);
-                if (stat === -1) {
+                const stat = PlayerStat[args[0].toUpperCase() as PlayerStatKey];
+                if (typeof stat === 'undefined') {
                     return false;
                 }
 
@@ -284,49 +305,50 @@ export default class ClientCheatHandler extends MessageHandler<ClientCheat> {
                 // authentic
                 // todo find a real usage to see if we have it right
                 if (args.length < 1) {
+                    // ::advancestat <name> (levels)
                     return false;
                 }
 
-                // ::advancestat <name> (levels)
-                const stat = Player.SKILLS.indexOf(args[0]);
+                const stat = PlayerStat[args[0].toUpperCase() as PlayerStatKey];
+                if (typeof stat === 'undefined') {
+                    return false;
+                }
+
                 const level = Math.min(99, Math.max(1, tryParseInt(args[1], 1)));
-
-                if (stat === -1) {
-                    return false;
-                }
-
                 player.setLevel(stat, player.baseLevels[stat] + level);
-            } else if (cmd === 'getvar') {
-                // authentic
-                // todo find a real usage to see if we have it right
-                if (args.length < 1) {
-                    return false;
-                }
-
-                // ::getvar <name>
-                const varp = VarPlayerType.getId(args[0]);
-
-                if (varp === -1) {
-                    return false;
-                }
-
-                const value = player.getVar(varp);
-                player.messageGame('get ' + args[0] + ': ' + value);
             } else if (cmd === 'give') {
                 // authentic
                 if (args.length < 1) {
+                    // ::give <obj> (count)
                     return false;
                 }
 
-                // ::give <obj> (count)
                 const obj = ObjType.getId(args[0]);
-                const count = Math.max(1, Math.min(tryParseInt(args[1], 1), 0x7fffffff));
-
                 if (obj === -1) {
                     return false;
                 }
 
+                const count = Math.max(1, Math.min(tryParseInt(args[1], 1), 0x7fffffff));
                 player.invAdd(InvType.INV, obj, count, false);
+            } else if (cmd === 'giveother') {
+                if (args.length < 2) {
+                    // ::giveother <username> <obj> (count)
+                    return false;
+                }
+
+                const other = World.getPlayerByUsername(args[0]);
+                if (!other) {
+                    player.messageGame(`${args[0]} is not logged in.`);
+                    return false;
+                }
+
+                const obj = ObjType.getId(args[1]);
+                if (obj === -1) {
+                    return false;
+                }
+
+                const count = Math.max(1, Math.min(tryParseInt(args[2], 1), 0x7fffffff));
+                other.invAdd(InvType.INV, obj, count, false);
             } else if (cmd === 'givecrap') {
                 // authentic
                 // todo find a real usage to be able to write this
@@ -335,10 +357,10 @@ export default class ClientCheatHandler extends MessageHandler<ClientCheat> {
                 // todo find a real usage to be able to write this
             } else if (cmd === 'ban') {
                 if (args.length < 2) {
+                    // ::ban <username> <minutes>
                     return false;
                 }
 
-                // ::ban <username> <minutes>
                 const other = World.getPlayerByUsername(args[0]);
                 if (!other) {
                     player.messageGame(`${args[0]} is not logged in.`);
@@ -360,10 +382,10 @@ export default class ClientCheatHandler extends MessageHandler<ClientCheat> {
                 player.messageGame(CoordGrid.formatString(player.level, player.x, player.z, '_'));
             } else if (cmd === 'mute') {
                 if (args.length < 2) {
+                    // ::mute <username> <minutes>
                     return false;
                 }
 
-                // ::mute <username> <minutes>
                 const other = World.getPlayerByUsername(args[0]);
                 if (!other) {
                     player.messageGame(`${args[0]} is not logged in.`);
@@ -377,9 +399,8 @@ export default class ClientCheatHandler extends MessageHandler<ClientCheat> {
             }
         }
 
-        if (Environment.NODE_ALLOW_CHEATS || player.staffModLevel >= 2) {
-            // todo: after launch this should be dev-only `staffModLevel >= 3` to limit
-            //    how much admins can do on hosted worlds, using engine commands only
+        if (Environment.NODE_ALLOW_CHEATS || player.staffModLevel >= 3) {
+            // dev debugproc commands (scriptable commands)
             const script = ScriptProvider.getByName(`[debugproc,${cmd}]`);
             if (!script) {
                 return false;
@@ -424,8 +445,8 @@ export default class ClientCheatHandler extends MessageHandler<ClientCheat> {
                             break;
                         }
                         case ScriptVarType.STAT: {
-                            const name = args.shift();
-                            params[i] = Player.SKILLS.indexOf(name ?? '');
+                            const name = args.shift() ?? '';
+                            params[i] = PlayerStat[name.toUpperCase() as PlayerStatKey];
                             break;
                         }
                         case ScriptVarType.INV: {

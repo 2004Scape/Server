@@ -19,7 +19,7 @@ import { isBufferFull, isClientConnected } from '#/engine/entity/NetworkPlayer.j
 import { CoordGrid } from '#/engine/CoordGrid.js';
 import CameraInfo from '#/engine/entity/CameraInfo.js';
 import Interaction from '#/engine/entity/Interaction.js';
-import PlayerStat from '#/engine/entity/PlayerStat.js';
+import {PlayerStat} from '#/engine/entity/PlayerStat.js';
 import Player from '#/engine/entity/Player.js';
 
 import ServerProt from '#/network/rs225/server/prot/ServerProt.js';
@@ -60,7 +60,6 @@ import {
     GenderValid,
     SkinColourValid
 } from '#/engine/script/ScriptValidators.js';
-import LoggerEventType from '#/server/logger/LoggerEventType.js';
 
 const PlayerOps: CommandHandlers = {
     [ScriptOpcode.FINDUID]: state => {
@@ -140,9 +139,9 @@ const PlayerOps: CommandHandlers = {
     }),
 
     [ScriptOpcode.LONGQUEUE]: checkedHandler(ActivePlayer, state => {
-        let args = popScriptArgs(state);
-        const [scriptId, delay, logoutAction] = state.popInts(3);
-        args = [logoutAction, ...args]; // concatenating- easier to hook into existing queue code and slice it later
+        // todo: come back here when the compiler updates and logoutAction isn't compiled into the arg list
+        const args = popScriptArgs(state);
+        const [scriptId, delay] = state.popInts(2);
 
         const script = ScriptProvider.get(scriptId);
         if (!script) {
@@ -343,7 +342,7 @@ const PlayerOps: CommandHandlers = {
         state.execution = ScriptState.SUSPENDED;
     }),
 
-    [ScriptOpcode.P_OPHELD]: checkedHandler(ProtectedActivePlayer, state => {
+    [ScriptOpcode.P_OPHELD]: checkedHandler(ProtectedActivePlayer, () => {
         throw new Error('unimplemented');
     }),
 
@@ -517,7 +516,7 @@ const PlayerOps: CommandHandlers = {
     }),
 
     [ScriptOpcode.P_LOGOUT]: checkedHandler(ProtectedActivePlayer, state => {
-        state.activePlayer.logoutRequested = true;
+        state.activePlayer.tryLogout = true;
     }),
 
     [ScriptOpcode.IF_SETCOLOUR]: checkedHandler(ActivePlayer, state => {

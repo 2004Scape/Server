@@ -91,15 +91,23 @@ export class HuntIterator extends ScriptIterator<Entity> {
                         if (World.currentTick > this.tick) {
                             throw new Error('[HuntIterator] tried to use an old iterator. Create a new iterator instead.');
                         }
+
                         if (CoordGrid.distanceToSW({ x: this.x, z: this.z }, player) > this.distance) {
                             continue;
                         }
+
                         if (this.checkVis === HuntVis.LINEOFSIGHT && !isLineOfSight(this.level, this.x, this.z, player.x, player.z)) {
                             continue;
                         }
+
                         if (this.checkVis === HuntVis.LINEOFWALK && !isLineOfWalk(this.level, this.x, this.z, player.x, player.z)) {
                             continue;
                         }
+
+                        if (player.loggedOut) {
+                            continue;
+                        }
+
                         yield player;
                     }
                 } else if (this.type === HuntModeType.NPC) {

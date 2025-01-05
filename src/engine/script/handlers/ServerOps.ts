@@ -331,7 +331,7 @@ const ServerOps: CommandHandlers = {
         const spotanimType: SpotanimType = check(spotanim, SpotAnimTypeValid);
 
         const slot = npcUid & 0xffff;
-        const expectedType = (npcUid >> 16) & 0xffff;
+        const _expectedType = (npcUid >> 16) & 0xffff;
 
         const npc = World.getNpc(slot);
         if (!npc) {

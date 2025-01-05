@@ -174,23 +174,23 @@ export function packClientMap() {
             }
 
             // get size to pre-allocate
-            let size = 64 * 64 * 4;
-            for (let level = 0; level < 4; level++) {
-                for (let x = 0; x < 64; x++) {
-                    for (let z = 0; z < 64; z++) {
-                        let height = levelHeightmap[level][x][z];
-                        let overlay = levelTileOverlayIds[level][x][z];
+            // let size = 64 * 64 * 4;
+            // for (let level = 0; level < 4; level++) {
+            //     for (let x = 0; x < 64; x++) {
+            //         for (let z = 0; z < 64; z++) {
+            //             let height = levelHeightmap[level][x][z];
+            //             let overlay = levelTileOverlayIds[level][x][z];
 
-                        if (overlay != -1) {
-                            size += 1;
-                        }
+            //             if (overlay != -1) {
+            //                 size += 1;
+            //             }
 
-                        if (height != 0) {
-                            size += 1;
-                        }
-                    }
-                }
-            }
+            //             if (height != 0) {
+            //                 size += 1;
+            //             }
+            //         }
+            //     }
+            // }
 
             // encode into client format
             let out = Packet2.alloc(3);

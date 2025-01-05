@@ -285,7 +285,7 @@ export default class GameMap {
             if (parts.length === 2) {
                 const [from, to] = parts;
                 const [fromLevel, fromMx, fromMz, fromLx, fromLz] = from.split('_').map(Number);
-                const [toLevel, toMx, toMz, toLx, toLz] = to.split('_').map(Number);
+                const [_toLevel, toMx, toMz, toLx, toLz] = to.split('_').map(Number);
 
                 if (fromLx % 8 !== 0 || fromLz % 8 !== 0 || toLx % 8 !== 7 || toLz % 8 !== 7 || fromMx > toMx || fromMz > toMz || (fromMx <= toMx && fromMz <= toMz && (fromLx > toLx || fromLz > toLz))) {
                     printWarning('Free to play map not aligned to a zone ' + csv[i]);

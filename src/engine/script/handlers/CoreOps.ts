@@ -249,15 +249,15 @@ const CoreOps: CommandHandlers = {
         state.gotoFrame(label);
     },
 
-    [ScriptOpcode.DEFINE_ARRAY]: state => {
+    [ScriptOpcode.DEFINE_ARRAY]: () => {
         throw new Error('unimplemented');
     },
 
-    [ScriptOpcode.PUSH_ARRAY_INT]: state => {
+    [ScriptOpcode.PUSH_ARRAY_INT]: () => {
         throw new Error('unimplemented');
     },
 
-    [ScriptOpcode.POP_ARRAY_INT]: state => {
+    [ScriptOpcode.POP_ARRAY_INT]: () => {
         throw new Error('unimplemented');
     },
 

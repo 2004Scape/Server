@@ -9,7 +9,7 @@ import PlayerInfoChat from '#/network/server/model/PlayerInfoChat.js';
 import PlayerInfoSpotanim from '#/network/server/model/PlayerInfoSpotanim.js';
 import Renderer from '#/engine/renderer/Renderer.js';
 import PlayerInfoDamage from '#/network/server/model/PlayerInfoDamage.js';
-import PlayerStat from '#/engine/entity/PlayerStat.js';
+import {PlayerStat} from '#/engine/entity/PlayerStat.js';
 import InfoMessage from '#/network/server/InfoMessage.js';
 import Packet from '#/io/Packet.js';
 import PlayerInfoExactMove from '#/network/server/model/PlayerInfoExactMove.js';

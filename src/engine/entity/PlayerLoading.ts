@@ -10,9 +10,8 @@ import World from '#/engine/World.js';
 
 import { NetworkPlayer } from '#/engine/entity/NetworkPlayer.js';
 import Player, { getExpByLevel, getLevelByExp } from '#/engine/entity/Player.js';
-import PlayerStat from '#/engine/entity/PlayerStat.js';
+import {PlayerStat} from '#/engine/entity/PlayerStat.js';
 
-import Environment from '#/util/Environment.js';
 import InvType from '#/cache/config/InvType.js';
 
 export class PlayerLoading {

@@ -72,7 +72,7 @@ const models = Jagfile.load('data/client/models');
     }
 
     const total = head.g2(); // # to read
-    const instances = head.g2(); // highest ID
+    const _instances = head.g2(); // highest ID
 
     for (let i = 0; i < total; i++) {
         // let hstart = head.pos;
@@ -153,7 +153,7 @@ const models = Jagfile.load('data/client/models');
     }
 
     const total = head.g2();
-    const instances = head.g2();
+    const _instances = head.g2();
 
     for (let i = 0; i < total; i++) {
         const hstart = head.pos;
