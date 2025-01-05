@@ -889,6 +889,11 @@ export default class Npc extends PathingEntity {
             if (!(player instanceof Player)) {
                 throw new Error('[Npc] huntAll must be of type Player here.');
             }
+
+            if (player.loggedOut) {
+                continue;
+            }
+
             if (hunt.checkNotBusy && player.busy()) {
                 continue;
             }

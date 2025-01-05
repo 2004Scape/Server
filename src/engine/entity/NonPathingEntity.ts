@@ -1,7 +1,7 @@
 import Entity from '#/engine/entity/Entity.js';
 
 export default abstract class NonPathingEntity extends Entity {
-    resetEntity(respawn: boolean) {
+    resetEntity(_respawn: boolean) {
         // nothing happens here
     }
 }

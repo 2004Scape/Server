@@ -8,7 +8,7 @@ import { CommandHandlers } from '#/engine/script/ScriptRunner.js';
 import {check, DbRowTypeValid, DbTableTypeValid} from '#/engine/script/ScriptValidators.js';
 
 const DebugOps: CommandHandlers = {
-    [ScriptOpcode.DB_FIND_WITH_COUNT]: state => {
+    [ScriptOpcode.DB_FIND_WITH_COUNT]: () => {
         throw new Error('unimplemented');
     },
 
@@ -32,7 +32,7 @@ const DebugOps: CommandHandlers = {
 
         const table = (tableColumnPacked >> 12) & 0xffff;
         const column = (tableColumnPacked >> 4) & 0x7f;
-        const tuple = tableColumnPacked & 0x3f;
+        const _tuple = tableColumnPacked & 0x3f;
 
         const rowType: DbRowType = check(row, DbRowTypeValid);
         const tableType: DbTableType = check(table, DbTableTypeValid);
@@ -59,7 +59,7 @@ const DebugOps: CommandHandlers = {
 
         const table = (tableColumnPacked >> 12) & 0xffff;
         const column = (tableColumnPacked >> 4) & 0x7f;
-        const tuple = tableColumnPacked & 0x3f;
+        const _tuple = tableColumnPacked & 0x3f;
 
         const rowType: DbRowType = check(row, DbRowTypeValid);
         const tableType: DbTableType = check(table, DbTableTypeValid);
@@ -72,7 +72,7 @@ const DebugOps: CommandHandlers = {
         state.pushInt(rowType.columnValues[column].length / tableType.types[column].length);
     },
 
-    [ScriptOpcode.DB_LISTALL_WITH_COUNT]: state => {
+    [ScriptOpcode.DB_LISTALL_WITH_COUNT]: () => {
         throw new Error('unimplemented');
     },
 
@@ -80,11 +80,11 @@ const DebugOps: CommandHandlers = {
         state.pushInt(check(state.popInt(), DbRowTypeValid).tableId);
     },
 
-    [ScriptOpcode.DB_FINDBYINDEX]: state => {
+    [ScriptOpcode.DB_FINDBYINDEX]: () => {
         throw new Error('unimplemented');
     },
 
-    [ScriptOpcode.DB_FIND_REFINE_WITH_COUNT]: state => {
+    [ScriptOpcode.DB_FIND_REFINE_WITH_COUNT]: () => {
         throw new Error('unimplemented');
     },
 
@@ -95,7 +95,7 @@ const DebugOps: CommandHandlers = {
 
         const table = (tableColumnPacked >> 12) & 0xffff;
         const column = (tableColumnPacked >> 4) & 0x7f;
-        const tuple = tableColumnPacked & 0x3f;
+        const _tuple = tableColumnPacked & 0x3f;
 
         state.dbTable = check(table, DbTableTypeValid);
         state.dbRow = -1;
@@ -121,7 +121,7 @@ const DebugOps: CommandHandlers = {
 
         const table = (tableColumnPacked >> 12) & 0xffff;
         const column = (tableColumnPacked >> 4) & 0x7f;
-        const tuple = tableColumnPacked & 0x3f;
+        const _tuple = tableColumnPacked & 0x3f;
 
         // ----
 
@@ -148,7 +148,7 @@ const DebugOps: CommandHandlers = {
         state.pushInt(state.dbRowQuery.length);
     },
 
-    [ScriptOpcode.DB_LISTALL]: state => {
+    [ScriptOpcode.DB_LISTALL]: () => {
         throw new Error('unimplemented');
     }
 };

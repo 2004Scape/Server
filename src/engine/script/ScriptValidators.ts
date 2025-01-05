@@ -25,7 +25,7 @@ import DbRowType from '#/cache/config/DbRowType.js';
 import DbTableType from '#/cache/config/DbTableType.js';
 import NpcStat from '#/engine/entity/NpcStat.js';
 import HitType from '#/engine/entity/HitType.js';
-import PlayerStat from '#/engine/entity/PlayerStat.js';
+import {PlayerStat} from '#/engine/entity/PlayerStat.js';
 import MapFindSqaureType from '#/engine/entity/MapFindSquareType.js';
 
 interface ScriptValidator<T, R> {

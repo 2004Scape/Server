@@ -25,6 +25,7 @@ def_int $delay = ~coord_projectile(coord, $pickaxe_coord, pickaxe_head_launch, 3
 // https://youtu.be/tev6FR2iowQ?t=16 Looks like it delays the player
 p_delay(calc($delay/60));
 obj_add($pickaxe_coord, $pickaxe_head, 1, ^lootdrop_duration);
+session_log(^log_adventure, "Lost their <oc_name($pickaxe)> head");
 
 [label,reattach_pickaxe](obj $pickaxe_head)
 def_namedobj $pickaxe = oc_param($pickaxe_head, fixed);

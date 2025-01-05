@@ -1,0 +1,15 @@
+[debugproc,longqueue]
+longqueue(testlongqueue, 100000, ^accelerate, "accelerate ran");
+longqueue(testlongqueue, 100000, ^discard, "discard ran (!)");
+if (p_finduid(uid) = true) {
+    p_logout;
+}
+
+[queue,testlongqueue](string $msg)
+console($msg);
+
+[debugproc,dangerous_requeue]
+queue(dangerous_requeue, 0);
+
+[queue,dangerous_requeue]
+queue(dangerous_requeue, 0);

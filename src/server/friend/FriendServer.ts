@@ -1,5 +1,4 @@
 import { WebSocket, WebSocketServer } from 'ws';
-import WsSyncReq from '#3rdparty/ws-sync/ws-sync.js';
 
 import { fromBase37, toBase37 } from '#/util/JString.js';
 
@@ -63,7 +62,7 @@ export class FriendServer {
 
             socket.on('message', async (buf: Buffer) => {
                 const message = JSON.parse(buf.toString());
-                const { type, replyTo } = message;
+                const { type, _replyTo } = message;
 
                 try {
                     if (type === FriendsClientOpcodes.WORLD_CONNECT) {
@@ -142,7 +141,7 @@ export class FriendServer {
                         }
 
                         const username37 = BigInt(message.username37);
-                        const username = fromBase37(username37);
+                        const _username = fromBase37(username37);
 
                         // printDebug(`[Friends]: Player ${username} logged out of world ${world}`);
 
@@ -167,7 +166,7 @@ export class FriendServer {
                         }
 
                         const username37 = BigInt(message.username37);
-                        const username = fromBase37(username37);
+                        const _username = fromBase37(username37);
                         let privateChat: ChatModePrivate = message.privateChat;
 
                         if (privateChat !== 0 && privateChat !== 1 && privateChat !== 2) {

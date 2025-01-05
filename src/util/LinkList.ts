@@ -85,7 +85,6 @@ export default class LinkList<T extends Linkable> {
     }
 
     clear(): void {
-        // eslint-disable-next-line no-constant-condition
         while (true) {
             const node: T | null = this.sentinel.next as T | null;
             if (node === this.sentinel) {

@@ -201,6 +201,7 @@ enum ScriptOpcode {
     LAST_COORD,
     SESSION_LOG, // custom
     WEALTH_LOG, // custom
+    LOGGEDOUT, // custom
 
     // Npc ops (2500-2999)
     NPC_ADD = 2500, // official
@@ -345,6 +346,7 @@ enum ScriptOpcode {
     INV_DROPALL,
     INV_TOTALPARAM, // official, see cs2
     INV_TOTALPARAM_STACK, // official, see cs2
+    INV_DEBUGNAME,
 
     // Enum ops (4400-4499)
     ENUM = 4400, // official
@@ -439,6 +441,7 @@ enum ScriptOpcode {
     MAP_LASTBANDWIDTHOUT,
     TIMESPENT, // custom: used to profile script execution (record start time)
     GETTIMESPENT, // custom: used to profile script execution (current duration)
+    CONSOLE,
 }
 
 export default ScriptOpcode;

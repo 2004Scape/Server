@@ -20,7 +20,7 @@ export default class LoginServer {
             socket.on('message', async (data: Buffer) => {
                 try {
                     const msg = JSON.parse(data.toString());
-                    const { type, nodeId, nodeTime } = msg;
+                    const { type, nodeId, _nodeTime } = msg;
 
                     if (type === 'world_startup') {
                         await db.updateTable('account').set({
@@ -28,7 +28,7 @@ export default class LoginServer {
                             login_time: null
                         }).where('logged_in', '=', nodeId).execute();
                     } else if (type === 'player_login') {
-                        const { replyTo, username, password, uid } = msg;
+                        const { replyTo, username, password, _uid } = msg;
 
                         // todo: record login attempt + uid
 
@@ -119,7 +119,7 @@ export default class LoginServer {
                             login_time: null
                         }).where('username', '=', username).executeTakeFirst();
                     } else if (type === 'player_ban') {
-                        const { staff, username, until } = msg;
+                        const { _staff, username, until } = msg;
 
                         // todo: audit log
 
@@ -127,7 +127,7 @@ export default class LoginServer {
                             banned_until: new Date(until)
                         }).where('username', '=', username).executeTakeFirst();
                     } else if (type === 'player_mute') {
-                        const { staff, username, until } = msg;
+                        const { _staff, username, until } = msg;
 
                         // todo: audit log
 

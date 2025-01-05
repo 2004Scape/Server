@@ -10,6 +10,10 @@ const DebugOps: CommandHandlers = {
         throw new Error(state.popString());
     },
 
+    [ScriptOpcode.CONSOLE]: state => {
+        console.log(state.popString());
+    },
+
     [ScriptOpcode.MAP_PRODUCTION]: state => {
         state.pushInt(Environment.NODE_PRODUCTION ? 1 : 0);
     },

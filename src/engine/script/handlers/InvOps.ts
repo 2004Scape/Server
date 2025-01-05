@@ -41,6 +41,13 @@ const InvOps: CommandHandlers = {
     },
 
     // inv config
+    [ScriptOpcode.INV_DEBUGNAME]: state => {
+        const invType: InvType = check(state.popInt(), InvTypeValid);
+
+        state.pushString(invType.debugname ?? 'null');
+    },
+
+    // inv config
     [ScriptOpcode.INV_STOCKBASE]: state => {
         const [inv, obj] = state.popInts(2);
 
@@ -589,13 +596,13 @@ const InvOps: CommandHandlers = {
             throw new Error('$slot is empty');
         }
 
+        const objType: ObjType = ObjType.get(obj.id);
+        state.activePlayer.addWealthLog(-(obj.count * objType.cost), `Lost ${objType.debugname} x${obj.count}`);
+
         const completed: number = fromPlayer.invDel(invType.id, obj.id, obj.count, slot);
         if (completed === 0) {
             return;
         }
-
-        const objType: ObjType = ObjType.get(obj.id);
-        state.activePlayer.addWealthLog(-(obj.count * objType.cost), `Lost ${objType.debugname} x${obj.count}`);
 
         if (!objType.tradeable) {
             return; // stop untradables after delete.
@@ -629,10 +636,10 @@ const InvOps: CommandHandlers = {
                 continue;
             }
 
-            inventory.delete(slot);
-
             const objType: ObjType = ObjType.get(obj.id);
             state.activePlayer.addWealthLog(-(obj.count * objType.cost), `Lost ${objType.debugname} x${obj.count}`);
+
+            inventory.delete(slot);
 
             if (!objType.tradeable) {
                 continue; // stop untradables after delete.

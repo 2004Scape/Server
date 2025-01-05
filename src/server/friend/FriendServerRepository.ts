@@ -163,7 +163,7 @@ export class FriendServerRepository {
 
     public async deleteFriend(username37: bigint, targetUsername37: bigint) {
         const username = fromBase37(username37);
-        const targetUsername = fromBase37(targetUsername37);
+        const _targetUsername = fromBase37(targetUsername37);
 
         this.playerFriends[username] = this.playerFriends[username] ?? [];
         const index = this.playerFriends[username].indexOf(targetUsername37);
@@ -201,7 +201,7 @@ export class FriendServerRepository {
 
     public async addFriend(username37: bigint, targetUsername37: bigint) {
         const username = fromBase37(username37);
-        const targetUsername = fromBase37(targetUsername37);
+        const _targetUsername = fromBase37(targetUsername37);
 
         this.playerFriends[username] = this.playerFriends[username] ?? [];
 
@@ -245,7 +245,7 @@ export class FriendServerRepository {
 
     public async addIgnore(username37: bigint, targetUsername37: bigint) {
         const username = fromBase37(username37);
-        const targetUsername = fromBase37(targetUsername37);
+        const _targetUsername = fromBase37(targetUsername37);
 
         this.playerIgnores[username] = this.playerIgnores[username] ?? [];
 
@@ -289,7 +289,7 @@ export class FriendServerRepository {
 
     public async deleteIgnore(username37: bigint, targetUsername37: bigint) {
         const username = fromBase37(username37);
-        const targetUsername = fromBase37(targetUsername37);
+        const _targetUsername = fromBase37(targetUsername37);
 
         this.playerIgnores[username] = this.playerIgnores[username] ?? [];
         const index = this.playerIgnores[username].indexOf(targetUsername37);

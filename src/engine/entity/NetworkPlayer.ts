@@ -1,5 +1,4 @@
 import 'dotenv/config';
-import fs from 'fs';
 
 import ServerProt from '#/network/rs225/server/prot/ServerProt.js';
 

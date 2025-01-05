@@ -71,7 +71,7 @@ function trackDir(dir: string) {
             continue;
         }
 
-        fs.watch(full, (event, filename) => {
+        fs.watch(full, (_event, filename) => {
             if (!filename) {
                 return;
             }

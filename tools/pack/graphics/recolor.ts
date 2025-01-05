@@ -66,13 +66,13 @@ function modelIsTextured(modelName: string, textureId: number): boolean {
 function convertRecolorRetex(src: string[], file: string, path: string) {
     let changed = false;
 
-    let configName = '';
-    let retexCount = 0;
+    let _configName = '';
+    let _retexCount = 0;
     let modelName = '';
     for (let i = 0; i < src.length; i++) {
         if (src[i].startsWith('[')) {
-            configName = src[i];
-            retexCount = 0;
+            _configName = src[i];
+            _retexCount = 0;
         } else if (src[i].startsWith('model=')) {
             modelName = src[i].split('=')[1];
         }
