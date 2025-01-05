@@ -17,7 +17,6 @@ export default class VarPlayerType extends ConfigType {
     // commonly referenced in-engine
     static PLAYER_RUN = -1;
     static TEMP_RUN = -1;
-    static LASTCOMBAT = -1;
 
     static load(dir: string) {
         if (!fs.existsSync(`${dir}/server/varp.dat`)) {
@@ -62,7 +61,6 @@ export default class VarPlayerType extends ConfigType {
 
         VarPlayerType.PLAYER_RUN = VarPlayerType.getId('player_run');
         VarPlayerType.TEMP_RUN = VarPlayerType.getId('temp_run');
-        VarPlayerType.LASTCOMBAT = VarPlayerType.getId('lastcombat');
     }
 
     static get(id: number): VarPlayerType {

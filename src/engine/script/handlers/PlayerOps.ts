@@ -519,6 +519,10 @@ const PlayerOps: CommandHandlers = {
         state.activePlayer.tryLogout = true;
     }),
 
+    [ScriptOpcode.LOGGEDOUT]: checkedHandler(ActivePlayer, state => {
+        state.pushInt(state.activePlayer.loggedOut ? 1 : 0);
+    }),
+
     [ScriptOpcode.IF_SETCOLOUR]: checkedHandler(ActivePlayer, state => {
         const [com, colour] = state.popInts(2);
 

@@ -774,15 +774,6 @@ class World {
                 if ((player.masks & InfoProt.PLAYER_EXACT_MOVE.id) == 0) {
                     player.validateDistanceWalked();
                 }
-
-                // - close interface if attempting to logout
-                if (player.tryLogout) {
-                    player.closeModal();
-                }
-
-                if (player.loggedOut) {
-                    player.clearInteraction();
-                }
             } catch (err) {
                 console.error(err);
                 this.removePlayer(player);
@@ -798,14 +789,14 @@ class World {
         for (const player of this.players) {
             if (player.loggedOut) {
                 player.tryLogout = true;
-                player.setVar(VarPlayerType.LASTCOMBAT, 0); // temp fix for logging out in combat, since logout trigger conditions still run...
+                player.clearInteraction();
             }
 
             if (!player.tryLogout) {
                 continue;
             }
 
-            // todo: can a player recover from the fakelog/logged out state?
+            player.closeModal();
 
             if (player.queue.head() === null) {
                 const script = ScriptProvider.getByTriggerSpecific(ServerTriggerType.LOGOUT, -1, -1);
@@ -1471,6 +1462,11 @@ class World {
         }
 
         if (Number(player.username37 & 0x1fffffn) !== name37) {
+            return null;
+        }
+
+        if (player.loggedOut) {
+            // todo: proper?
             return null;
         }
 

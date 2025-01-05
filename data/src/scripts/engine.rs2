@@ -204,6 +204,8 @@
 [command,.uid]()(player_uid)
 // Requires protected access - request the player to log out
 [command,p_logout]
+// Check if the player is marked as "logged out" but not removed yet
+[command,loggedout]()(boolean)
 // Set a component's colour
 [command,if_setcolour](component $component, int $colour)
 // Open a modal in the chat box
