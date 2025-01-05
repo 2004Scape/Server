@@ -371,6 +371,20 @@ export default class ClientCheatHandler extends MessageHandler<ClientCheat> {
 
                 World.removePlayer(other);
                 World.notifyPlayerBan(player.username, other.username, Date.now() + (minutes * 60 * 1000));
+            } else if (cmd === 'kick') {
+                if (args.length < 1) {
+                    // ::kick <username>
+                    return false;
+                }
+
+                const other = World.getPlayerByUsername(args[0]);
+                if (!other) {
+                    player.messageGame(`${args[0]} is not logged in.`);
+                    return false;
+                }
+
+                // not safe, but when you need them gone...
+                World.removePlayer(other);
             }
         }
 
