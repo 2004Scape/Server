@@ -1456,8 +1456,8 @@ export default class Player extends PathingEntity {
 
         if (this.baseLevels[stat] > before) {
             if (this.levels[stat] < before) {
-                // replenish 1 of the stat upon levelup.
-                this.levels[stat] += 1;
+                // replenish stat
+                this.levels[stat] += this.baseLevels[stat] - before;
             }
 
             this.changeStat(stat);
