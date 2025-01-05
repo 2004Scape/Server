@@ -729,6 +729,7 @@
 // [command,.inv_totalparam]/*(inv $inv, param $param)(int)*/
 // [command,inv_totalparam_stack]/*(inv $inv, param $param)(int)*/
 // [command,.inv_totalparam_stack]/*(inv $inv, param $param)(int)*/
+[command,inv_debugname](inv $inv)(string)
 
 // Enum ops (4400-4499)
 // Get a value from an enum - type $input, type $output, enum $enum, any $key

@@ -41,6 +41,13 @@ const InvOps: CommandHandlers = {
     },
 
     // inv config
+    [ScriptOpcode.INV_DEBUGNAME]: state => {
+        const invType: InvType = check(state.popInt(), InvTypeValid);
+
+        state.pushString(invType.debugname ?? 'null');
+    },
+
+    // inv config
     [ScriptOpcode.INV_STOCKBASE]: state => {
         const [inv, obj] = state.popInts(2);
 

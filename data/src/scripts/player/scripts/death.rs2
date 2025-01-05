@@ -10,7 +10,6 @@ clearqueue(player_death);
 
 midi_jingle(^death_jingle_2, ^death_jingle_2_millis);
 mes("Oh dear you are dead.");
-session_log(^log_moderator, "Player died");
 if (~in_duel_arena(coord) = true & .finduid(%duelpartner) = true & ~.in_duel_arena(.coord) = true) {
     if_close;
     .if_close;
@@ -24,8 +23,11 @@ if (~in_duel_arena(coord) = true & .finduid(%duelpartner) = true & ~.in_duel_are
 def_obj $prev_wep = inv_getobj(worn, ^wearpos_rhand);
 if (findhero = true) {
     ~pvp_death_lose_items;
+    session_log(^log_moderator, "Player died to <.displayname>");
 } else {
     ~player_death_lose_items;
+    // todo: what npc killed the player
+    session_log(^log_moderator, "Player died");
 }
 p_telejump(map_findsquare(0_50_50_21_18, 0, 2, ^map_findsquare_lineofwalk));
 buildappearance(worn);
