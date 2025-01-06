@@ -1605,32 +1605,6 @@ desc=The perfect accompaniment to a bedroom.
 model=model_loc_373
 width=2
 
-[loc_376]
-name=Closed chest
-desc=I wonder what's inside.
-model=wooden_chest
-op1=Open
-forceapproach=north
-recol1s=10570
-recol1d=17921
-
-[loc_377]
-name=Closed chest
-desc=I wonder what's inside.
-model=wooden_chest
-op1=Open
-forceapproach=north
-
-[loc_379]
-name=Open chest
-desc=Perhaps I should search it.
-model=model_loc_76
-op2=Search
-op3=Shut
-forceapproach=north
-recol1s=10570
-recol1d=17921
-
 [loc_380]
 name=Bookcase
 desc=A good source of books!
