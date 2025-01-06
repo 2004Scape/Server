@@ -72,7 +72,8 @@ export default abstract class PathingEntity extends Entity {
     walktrigger: number = -1;
     walktriggerArg: number = 0; // used for npcs
 
-    delay: number = -1;
+    delayed: boolean = false;
+    delayedUntil: number = -1;
     interacted: boolean = false;
     repathed: boolean = false;
     target: Entity | null = null;
@@ -571,10 +572,6 @@ export default abstract class PathingEntity extends Entity {
         this.targetZ = -1;
         this.apRange = 10;
         this.apRangeCalled = false;
-    }
-
-    delayed() {
-        return this.delay > 0;
     }
 
     protected getCollisionStrategy(): CollisionType | null {

@@ -13,7 +13,7 @@ export default class OpNpcUHandler extends MessageHandler<OpNpcU> {
     handle(message: OpNpcU, player: NetworkPlayer): boolean {
         const { nid, useObj: item, useSlot: slot, useComponent: comId } = message;
 
-        if (player.delayed()) {
+        if (player.delayed) {
             player.write(new UnsetMapFlag());
             return false;
         }
@@ -37,7 +37,7 @@ export default class OpNpcUHandler extends MessageHandler<OpNpcU> {
         }
 
         const npc = World.getNpc(nid);
-        if (!npc || npc.delayed()) {
+        if (!npc || npc.delayed) {
             player.write(new UnsetMapFlag());
             return false;
         }

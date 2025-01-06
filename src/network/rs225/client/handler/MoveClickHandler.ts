@@ -9,7 +9,7 @@ import WalkTriggerSetting from '#/util/WalkTriggerSetting.js';
 
 export default class MoveClickHandler extends MessageHandler<MoveClick> {
     handle(message: MoveClick, player: NetworkPlayer): boolean {
-        if (player.delayed()) {
+        if (player.delayed) {
             player.write(new UnsetMapFlag());
             return false;
         }
