@@ -13425,13 +13425,6 @@ active=yes
 op1=Open
 forceapproach=north
 
-[loc_2791]
-name=Counter
-desc=A counter made from a stone block.
-model=model_loc_2791
-width=2
-active=yes
-
 [loc_2792]
 name=Counter
 desc=A counter made from a stone block.
