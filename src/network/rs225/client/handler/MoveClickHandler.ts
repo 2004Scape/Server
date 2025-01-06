@@ -35,13 +35,13 @@ export default class MoveClickHandler extends MessageHandler<MoveClick> {
             const dest = message.path[message.path.length - 1];
             player.userPath = [CoordGrid.packCoord(player.level, dest.x, dest.z)];
         }
+        player.clearInteraction();
+        player.closeModal();
         if (Environment.NODE_WALKTRIGGER_SETTING === WalkTriggerSetting.PLAYERPACKET) {
             player.pathToMoveClick(player.userPath, !Environment.NODE_CLIENT_ROUTEFINDER);
         }
         player.interactWalkTrigger = false;
         if (!message.opClick) {
-            player.clearInteraction();
-            player.closeModal();
             if (player.runenergy < 100 && message.ctrlHeld === 1) {
                 player.setVar(VarPlayerType.TEMP_RUN, 0);
             } else {
