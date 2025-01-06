@@ -650,7 +650,7 @@ const PlayerOps: CommandHandlers = {
         state.activePlayer.write(new IfSetPosition(com, x, y));
     }),
 
-    [ScriptOpcode.STAT_ADVANCE]: checkedHandler(ProtectedActivePlayer, state => {
+    [ScriptOpcode.STAT_ADVANCE]: checkedHandler(ActivePlayer, state => {
         const [stat, xp] = state.popInts(2);
 
         check(stat, NumberNotNull);
@@ -943,17 +943,7 @@ const PlayerOps: CommandHandlers = {
     // https://x.com/JagexAsh/status/1821831590906859683
     [ScriptOpcode.CLEARQUEUE]: state => {
         const scriptId = state.popInt();
-
-        for (let request = state.activePlayer.queue.head(); request !== null; request = state.activePlayer.queue.next()) {
-            if (request.script.id === scriptId) {
-                request.unlink();
-            }
-        }
-        for (let request = state.activePlayer.weakQueue.head(); request !== null; request = state.activePlayer.weakQueue.next()) {
-            if (request.script.id === scriptId) {
-                request.unlink();
-            }
-        }
+        state.activePlayer.unlinkQueuedScript(scriptId);
     },
 
     [ScriptOpcode.HEALENERGY]: state => {
