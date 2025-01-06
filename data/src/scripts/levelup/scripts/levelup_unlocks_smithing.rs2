@@ -4,7 +4,7 @@ switch_int(stat_base(smithing)) {
     case 2 : ~objbox(bronze_mace,"You can now make @dbl@Bronze Maces.", 250, 0, divide(^objbox_height, 2));
     case 3 : ~objbox(bronze_med_helm,"You can now make @dbl@Bronze Medium Helms.", 250, 0, ^objbox_height);
     case 4 : ~doubleobjbox(bronze_sword,bronze_dart_tip,"You can now make @dbl@Bronze Short Swords@bla@ and members|can make @dbl@Bronze Dart Tips@bla@ and @dbl@Bronze Wire@bla@.", 200);
-    case 5 : ~doubleobjbox(bronze_scimitar,bronze_spear,"You can now make @dbl@Bronze Scimitars@bla@ and members|can make @dbl@Bronze Arrow Heads@bla@ and @dbl@Bronze|@dbl@Spears@bla@.", 200);
+    case 5 : ~doubleobjbox(bronze_scimitar,bronze_arrowheads,"You can now make @dbl@Bronze Scimitars@bla@ and members|can make @dbl@Bronze Arrow Heads@bla@.", 200);
     case 6 : ~objbox(bronze_longsword,"You can now make @dbl@Bronze Long Swords.", 250, 0, 0);
     case 7 : ~doubleobjbox(bronze_full_helm,bronze_knife,"You can now make @dbl@Bronze Full Helms@bla@ and members|can make @dbl@Bronze Throwing Knives@bla@.", 200);
     case 8 : ~objbox(bronze_sq_shield,"You can now make @dbl@Bronze Square Shields.", 250, 0, 0);
@@ -18,7 +18,7 @@ switch_int(stat_base(smithing)) {
     case 17 : ~objbox(iron_mace,"You can now make @dbl@Iron Maces.", 250, 0, divide(^objbox_height, 2));
     case 18 : ~doubleobjbox(bronze_platebody,iron_med_helm," You can now make @dbl@Bronze Plate Bodies and Iron||@dbl@Medium Helms. ||", 200);
     case 19 : ~doubleobjbox(iron_sword,iron_dart_tip,"You can now make @dbl@Iron Short Swords@bla@ and members|can make @dbl@Iron Dart Tips@bla@.", 200);
-    case 20 : ~doubleobjbox(silver_ore,iron_scimitar,"You can now smlet @dbl@Silver Ore@bla@ and make @dbl@Iron|@dbl@Scimitars@bla@ and members can make @dbl@Iron Arrow Heads@bla@|and @dbl@Iron|@dbl@Spears@bla@.", 200);
+    case 20 : ~doubleobjbox(silver_ore,iron_scimitar,"You can now smlet @dbl@Silver Ore@bla@ and make @dbl@Iron|@dbl@Scimitars@bla@ and members can make @dbl@Iron Arrow Heads@bla@.", 200);
     case 21 : ~objbox(iron_longsword,"You can now make @dbl@Iron Long Swords.", 250, 0, 0);
     case 22 : ~doubleobjbox(iron_full_helm,iron_knife,"You can now make @dbl@Iron Full Helms@bla@ and members can|make @dbl@Iron Throwing Knives@bla@.", 200);
     case 23 : ~objbox(iron_sq_shield,"You can now make @dbl@Iron Square Shields.", 250, 0, 0);
@@ -32,7 +32,7 @@ switch_int(stat_base(smithing)) {
     case 32 : ~objbox(steel_mace,"You can now make @dbl@Steel Maces.", 250, 0, divide(^objbox_height, 2));
     case 33 : ~doubleobjbox(iron_platebody,steel_med_helm," You can now make @dbl@Iron Plate Bodies and Steel||@dbl@Medium Helms. ||", 200);
     case 34 : ~doubleobjbox(steel_sword,steel_dart_tip,"You can now make @dbl@Steel Short Swords@bla@ and members|can make @dbl@Steel Dart Tips@bla@.", 200);
-    case 35 : ~doubleobjbox(steel_scimitar,steel_spear,"You can now make @dbl@Steel Scimitars and members can|make @dbl@Steel Arrow Heads@bla@ and @dbl@Steel Spears@bla@.", 200);
+    case 35 : ~doubleobjbox(steel_scimitar,steel_arrowheads,"You can now make @dbl@Steel Scimitars and members can|make @dbl@Steel Arrow Heads@bla@.", 200);
     case 36 : ~doubleobjbox(steel_longsword,steel_studs,"You can now make @dbl@Steel Long Swords@bla@. Members can|make @dbl@Steel Studs@bla@.", 200);
     case 37 : ~doubleobjbox(steel_full_helm,steel_knife,"You can now make @dbl@Steel Full Helms@bla@ and members can|make @dbl@Steel Throwing Knives@bla@.", 200);
     case 38 : ~objbox(steel_sq_shield,"You can now make @dbl@Steel Square Shields.", 250, 0, 0);
@@ -48,7 +48,7 @@ switch_int(stat_base(smithing)) {
     case 52 : ~objbox(mithril_mace,"You can now make @dbl@Mithril Maces.", 250, 0, divide(^objbox_height, 2));
     case 53 : ~objbox(mithril_med_helm,"You can now make @dbl@Mithril Medium Helms.", 250, 0, divide(^objbox_height, 2));
     case 54 : ~doubleobjbox(mithril_sword,iron_dart_tip,"You can now make @dbl@Mithril Short Swords@bla@ and members|can make @dbl@Mithril Dart Tips@bla@.", 200);
-    case 55 : ~doubleobjbox(mithril_scimitar,mithril_spear,"You can now make @dbl@Mithril Scimitars@bla@ and members|can make @dbl@Mithril Arrow Heads@bla@ and @dbl@Mithril|@dbl@Spears@bla@.", 200);
+    case 55 : ~doubleobjbox(mithril_scimitar,mithril_arrowheads,"You can now make @dbl@Mithril Scimitars@bla@ and members|can make @dbl@Mithril Arrow Heads@bla@.", 200);
     case 56 : ~objbox(mithril_longsword,"You can now make @dbl@Mithril Long Swords.", 250, 0, 0);
     case 57 : ~doubleobjbox(mithril_full_helm,mithril_knife,"You can now make @dbl@Mithril Full Helms@bla@ and members|can make @dbl@Mithril Throwing Knives@bla@.", 200);
     case 58 : ~objbox(mithril_sq_shield,"You can now make @dbl@Mithril Square Shields.", 250, 0, 0);
@@ -64,7 +64,7 @@ switch_int(stat_base(smithing)) {
     case 72 : ~objbox(adamant_mace,"You can now make @dbl@Adamant Maces.", 250, 0, divide(^objbox_height, 2));
     case 73 : ~objbox(adamant_med_helm,"You can now make @dbl@Adamant Medium Helms.", 250, 0, divide(^objbox_height, 2));
     case 74 : ~doubleobjbox(adamant_sword,adamant_dart_tip,"You can now make @dbl@Adamant Short Swords@bla@ and members|can make @dbl@Adamant Dart Tips@bla@.", 200);
-    case 75 : ~doubleobjbox(adamant_scimitar,adamant_spear,"You can now make @dbl@Adamant Scimitars@bla@ and members|can make @dbl@Adamant Arrow Heads@bla@ and @dbl@Adamant|@dbl@Spears@bla@.", 200);
+    case 75 : ~doubleobjbox(adamant_scimitar,adamant_arrowheads,"You can now make @dbl@Adamant Scimitars@bla@ and members|can make @dbl@Adamant Arrow Heads@bla@.", 200);
     case 76 : ~objbox(adamant_longsword,"You can now make @dbl@Adamant Long Swords.", 250, 0, 0);
     case 77 : ~doubleobjbox(adamant_full_helm,adamant_knife,"You can now make @dbl@Adamant Full Helms@bla@ and members|can make @dbl@Adamant Throwing Knives@bla@.", 200);
     case 78 : ~objbox(adamant_sq_shield,"You can now make @dbl@Adamant Square Shields.", 250, 0, 0);
@@ -78,7 +78,7 @@ switch_int(stat_base(smithing)) {
     case 87 : ~objbox(rune_mace,"You can now make @dbl@Rune Maces.", 250, 0, divide(^objbox_height, 2));
     case 88 : ~doubleobjbox(adamant_platebody,rune_med_helm," You can now make @dbl@Adamant Plate Bodies and Rune||@dbl@Medium Helms. ||", 200); //imgur.com/hYWReFZ
     case 89 : ~doubleobjbox(rune_sword,rune_dart_tip,"You can now make @dbl@Rune Short Swords@bla@ and members|can make @dbl@Rune Dart Tips@bla@.", 200);
-    case 90 : ~doubleobjbox(rune_scimitar,rune_spear,"You can now make @dbl@Rune Scimitars@bla@ and members|can make @dbl@Rune Arrow Heads@bla@ and @dbl@Rune|@dbl@Spears@bla@.", 200);
+    case 90 : ~doubleobjbox(rune_scimitar,rune_arrowheads,"You can now make @dbl@Rune Scimitars@bla@ and members|can make @dbl@Rune Arrow Heads@bla@.", 200);
     case 91 : ~objbox(rune_longsword,"You can now make @dbl@Rune Long Swords.", 250, 0, 0);
     case 92 : ~doubleobjbox(rune_full_helm,rune_knife,"You can now make @dbl@Rune Full Helms@bla@ and members|can make @dbl@Rune Throwing Knives@bla@.", 200);
     case 93 : ~objbox(rune_sq_shield,"You can now make @dbl@Rune Square Shields.", 250, 0, 0);
