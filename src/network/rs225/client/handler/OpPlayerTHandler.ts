@@ -11,7 +11,7 @@ export default class OpPlayerTHandler extends MessageHandler<OpPlayerT> {
     handle(message: OpPlayerT, player: NetworkPlayer): boolean {
         const { pid, spellComponent: spellComId } = message;
 
-        if (player.delayed()) {
+        if (player.delayed) {
             player.write(new UnsetMapFlag());
             return false;
         }

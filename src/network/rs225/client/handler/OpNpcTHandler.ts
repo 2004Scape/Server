@@ -11,7 +11,7 @@ export default class OpNpcTHandler extends MessageHandler<OpNpcT> {
     handle(message: OpNpcT, player: NetworkPlayer): boolean {
         const { nid, spellComponent: spellComId } = message;
 
-        if (player.delayed()) {
+        if (player.delayed) {
             player.write(new UnsetMapFlag());
             return false;
         }
@@ -23,7 +23,7 @@ export default class OpNpcTHandler extends MessageHandler<OpNpcT> {
         }
 
         const npc = World.getNpc(nid);
-        if (!npc || npc.delayed()) {
+        if (!npc || npc.delayed) {
             player.write(new UnsetMapFlag());
             return false;
         }

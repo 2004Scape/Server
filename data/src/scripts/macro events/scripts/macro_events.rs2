@@ -136,7 +136,11 @@ p_delay(0);
 def_int $i = 0;
 while ($i < inv_size(inv)) {
     def_coord $coord = map_findsquare(coord, 0, 5, ^map_findsquare_lineofwalk); // 11x11 for now. todo: confirm how scattering works
-    if (inv_getobj(inv, $i) ! null) {
+    def_obj $item = inv_getobj(inv, $i);
+    if ($item ! null) {
+        def_int $count = inv_getnum(inv, $i);
+        wealth_log(^wealth_lost, calc($count * oc_cost($item)), "Lost <oc_debugname($item)> x<tostring($count)>");
+
         inv_dropslot(inv, $coord, $i, 200);
         spotanim_map(small_smokepuff, $coord, 124, 0);
     }

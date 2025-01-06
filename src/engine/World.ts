@@ -364,7 +364,6 @@ class World {
 
             // player setup (todo better name)
             // - calculate afk event readiness
-            // - resume active script
             // - process packets
             // - process pathfinding/following request
             this.processPlayerSetup();
@@ -561,7 +560,7 @@ class World {
                     npc.executeScript(ScriptRunner.init(script, npc));
                 }
             }
-            if (npc.delayed()) {
+            if (npc.delayed) {
                 continue;
             }
             if (npc.huntMode !== -1) {
@@ -591,19 +590,10 @@ class World {
                     player.afkEventReady = Math.random() < (player.zonesAfk() ? 0.1666 : 0.0833);
                 }
 
-                // active scripts resume here in early rs2
-                if (player.delayed()) {
-                    player.delay--;
-                }
-
-                if (player.activeScript && player.activeScript.execution === ScriptState.SUSPENDED && !player.delayed()) {
-                    player.executeScript(player.activeScript, true, true);
-                }
-
                 if (isClientConnected(player) && player.decodeIn()) {
                     const followingPlayer = (player.targetOp === ServerTriggerType.APPLAYER3 || player.targetOp === ServerTriggerType.OPPLAYER3);
                     if (player.userPath.length > 0 || player.opcalled) {
-                        if (player.delayed()) {
+                        if (player.delayed) {
                             player.unsetMapFlag();
                             continue;
                         }
@@ -673,14 +663,11 @@ class World {
                     npc.timerClock++;
                 }
                 if (npc.checkLifeCycle(this.currentTick)) {
-                    if (npc.delayed()) {
-                        npc.delay--;
-                    }
-                    if (!npc.delayed()) {
-                        // - resume suspended script
-                        if (npc.activeScript && npc.activeScript.execution === ScriptState.NPC_SUSPENDED) {
-                            npc.executeScript(npc.activeScript);
-                        }
+                    if (npc.delayed && this.currentTick >= npc.delayedUntil) npc.delayed = false;
+
+                    // - resume suspended script
+                    if (!npc.delayed && npc.activeScript && npc.activeScript.execution === ScriptState.NPC_SUSPENDED) {
+                        npc.executeScript(npc.activeScript);
                     }
                 }
                 
@@ -708,7 +695,7 @@ class World {
                     }
                 }
 
-                if (npc.delayed()) {
+                if (npc.delayed) {
                     continue;
                 }
 
@@ -743,6 +730,7 @@ class World {
         this.cycleStats[WorldStat.NPC] = Date.now() - start;
     }
 
+    // - resume suspended script
     // - primary queue
     // - weak queue
     // - timers
@@ -756,6 +744,13 @@ class World {
 
         for (const player of this.players) {
             try {
+                if (player.delayed && this.currentTick >= player.delayedUntil) player.delayed = false;
+
+                // - resume suspended script
+                if (!player.delayed && player.activeScript && player.activeScript.execution === ScriptState.SUSPENDED) {
+                    player.executeScript(player.activeScript, true, true);
+                }
+
                 // - primary queue
                 // - weak queue
                 player.processQueues();

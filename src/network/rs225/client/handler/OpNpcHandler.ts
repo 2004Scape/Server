@@ -11,13 +11,13 @@ export default class OpNpcHandler extends MessageHandler<OpNpc> {
     handle(message: OpNpc, player: NetworkPlayer): boolean {
         const { nid } = message;
 
-        if (player.delayed()) {
+        if (player.delayed) {
             player.write(new UnsetMapFlag());
             return false;
         }
 
         const npc = World.getNpc(nid);
-        if (!npc || npc.delayed()) {
+        if (!npc || npc.delayed) {
             player.write(new UnsetMapFlag());
             return false;
         }

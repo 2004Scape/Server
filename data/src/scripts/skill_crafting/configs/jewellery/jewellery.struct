@@ -115,6 +115,7 @@ param=strung,obj_1716
 param=levelrequired,16
 param=productexp,500
 param=name,Holy Symbol of Saradomin
+param=stringing_name,holy symbol
 
 [unstrung_emblem]
 param=product,unstrung_emblem
@@ -122,6 +123,8 @@ param=strung,unpowered_symbol
 param=levelrequired,17
 param=productexp,500
 param=name,Unholy Symbol of Zamorak
+// https://storage.googleapis.com/tannerdino/images/Luck1.jpg
+param=stringing_name,unholy symbol
 
 [perfect_ring]
 param=product,perfect_ring

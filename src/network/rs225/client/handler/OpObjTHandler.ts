@@ -11,7 +11,7 @@ export default class OpObjTHandler extends MessageHandler<OpObjT> {
     handle(message: OpObjT, player: NetworkPlayer): boolean {
         const { x, z, obj: objId, spellComponent: spellComId } = message;
 
-        if (player.delayed()) {
+        if (player.delayed) {
             player.write(new UnsetMapFlag());
             return false;
         }

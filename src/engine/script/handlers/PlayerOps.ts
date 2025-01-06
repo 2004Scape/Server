@@ -326,7 +326,8 @@ const PlayerOps: CommandHandlers = {
             return;
         }
 
-        state.activePlayer.delay = 1;
+        state.activePlayer.delayed = true;
+        state.activePlayer.delayedUntil = World.currentTick + 1;
         state.execution = ScriptState.SUSPENDED;
     }),
 
@@ -338,7 +339,8 @@ const PlayerOps: CommandHandlers = {
     // https://x.com/JagexAsh/status/1684478874703343616
     // https://x.com/JagexAsh/status/1780932943038345562
     [ScriptOpcode.P_DELAY]: checkedHandler(ProtectedActivePlayer, state => {
-        state.activePlayer.delay = check(state.popInt(), NumberNotNull) + 1;
+        state.activePlayer.delayed = true;
+        state.activePlayer.delayedUntil = World.currentTick + 1 + check(state.popInt(), NumberNotNull);
         state.execution = ScriptState.SUSPENDED;
     }),
 
@@ -650,7 +652,7 @@ const PlayerOps: CommandHandlers = {
         state.activePlayer.write(new IfSetPosition(com, x, y));
     }),
 
-    [ScriptOpcode.STAT_ADVANCE]: checkedHandler(ProtectedActivePlayer, state => {
+    [ScriptOpcode.STAT_ADVANCE]: checkedHandler(ActivePlayer, state => {
         const [stat, xp] = state.popInts(2);
 
         check(stat, NumberNotNull);
@@ -943,17 +945,7 @@ const PlayerOps: CommandHandlers = {
     // https://x.com/JagexAsh/status/1821831590906859683
     [ScriptOpcode.CLEARQUEUE]: state => {
         const scriptId = state.popInt();
-
-        for (let request = state.activePlayer.queue.head(); request !== null; request = state.activePlayer.queue.next()) {
-            if (request.script.id === scriptId) {
-                request.unlink();
-            }
-        }
-        for (let request = state.activePlayer.weakQueue.head(); request !== null; request = state.activePlayer.weakQueue.next()) {
-            if (request.script.id === scriptId) {
-                request.unlink();
-            }
-        }
+        state.activePlayer.unlinkQueuedScript(scriptId);
     },
 
     [ScriptOpcode.HEALENERGY]: state => {
