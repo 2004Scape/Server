@@ -632,10 +632,6 @@ export default class Player extends PathingEntity {
         // - thank you De0 for the explanation
         // essentially, if a script is before the end of the list, it can be processed this tick and result in inconsistent queue timing (authentic)
         for (let request = this.queue.head(); request !== null; request = this.queue.next()) {
-            if (request.type === PlayerQueueType.STRONG) {
-                this.closeModal();
-            }
-
             if (this.tryLogout && request.type === PlayerQueueType.LONG) {
                 if (request.args[0] === 0) {
                     // ^accelerate
