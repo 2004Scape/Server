@@ -3,7 +3,8 @@ if(%ikov_progress >= ^ikov_started) {
     ~open_and_close_door2(loc_1532, ~check_axis_locactive(coord), door_open);
     return;
 }
-mes("The door won't open.");
+// https://www.youtube.com/watch?v=-tsHE3OEuYk&t=126s
+mes("The door won't open. No one seems to be in.");
 
 [proc,randomize_ice_arrow_chest]
 switch_int(random(6)) {
