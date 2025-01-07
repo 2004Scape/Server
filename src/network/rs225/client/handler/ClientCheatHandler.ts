@@ -202,7 +202,7 @@ export default class ClientCheatHandler extends MessageHandler<ClientCheat> {
                 }
 
                 // ::setvar <name> <value>
-                const varp = VarPlayerType.getByName(args[1]);
+                const varp = VarPlayerType.getByName(args[0]);
                 if (!varp) {
                     return false;
                 }
@@ -262,7 +262,7 @@ export default class ClientCheatHandler extends MessageHandler<ClientCheat> {
                 }
 
                 // ::getvar <varp>
-                const varp = VarPlayerType.getByName(args[1]);
+                const varp = VarPlayerType.getByName(args[0]);
                 if (!varp) {
                     return false;
                 }
