@@ -2,6 +2,7 @@
 ~chatnpc("<p,neutral>Hello Effendi!");
 if(%desertrescue_progress >= ^desertrescue_learned_darts) {
     ~chatnpc("<p,neutral>Many thanks with your help previously Effendi!");
+    if(%desertrescue_progress >= ^desertrescue_given_pineapple) return;
     if(~obj_gettotal(tenti_pineapple) = 0) {
         @multi2("I am looking for a pineapple.", shabim_pineapple, "What is this place?", shabim_whatplace);
     } else {
@@ -49,7 +50,8 @@ if(%desertrescue_progress >= ^desertrescue_learned_darts) {
 if(inv_total(inv, technical_plans) > 0) {
     ~chatnpc("<p,neutral>We will take the technical plans for the weapon as well.");
     ~objbox(technical_plans, "You hand over the technical plans for the weapon.", 250, 0, 0);
-    inv_del(inv, technical_plans, ^max_32bit_int);
+    if_close;
+    inv_del(inv, technical_plans, 1);
     p_delay(2);
 }
 ~chatnpc("<p,neutral>We are forever grateful for this gift. My advisors have discovered some secrets which we will share with you.");
@@ -61,10 +63,10 @@ if(inv_total(inv, bronze_dart) = 0) { // wont get darts if you have some on osrs
 }
 if(inv_total(inv, bedobin_key) > 0) {
     ~chatnpc("<p,neutral>I'll take that key off your hands as well effendi! Many thanks!");
-    inv_del(inv, bedobin_key, ^max_32bit_int);
+    inv_del(inv, bedobin_key, 1);
 }
 %desertrescue_progress = ^desertrescue_learned_darts;
-inv_del(inv, prototype_dart, ^max_32bit_int);
+inv_del(inv, prototype_dart, 1);
 // https://web.archive.org/web/20051025141912im_/http://runeweb.net/rathofdoom/quests/touristtrap/5.png
 ~objbox(prototype_dart, "@dbl@*** Dart Construction ***|@dbl@Congratulations! You can now construct darts.", 250, 0, 0);
 ~chatnpc("<p,neutral>Oh, and here is your pineapple!");

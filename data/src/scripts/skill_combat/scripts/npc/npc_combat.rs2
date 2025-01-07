@@ -269,6 +269,15 @@ if (map_multiway(npc_coord) = false & %npc_attacking_uid ! uid & %npc_attacking_
 %npc_aggressive_player = uid;
 %npc_lastcombat = map_clock;
 
+[proc,.npc_retaliate](int $queue_delay)
+.npc_queue(1, 0, $queue_delay);
+// if in singles and attacking another player, then delay npc action by 8 ticks
+if (map_multiway(.npc_coord) = false & .%npc_attacking_uid ! uid & .%npc_attacking_uid ! null) {
+    .%npc_action_delay = add(map_clock, 8);
+}
+.%npc_aggressive_player = uid;
+.%npc_lastcombat = map_clock;
+
 [proc,npc_set_attack_vars]
 %lastcombat = map_clock;
 %npc_lastattack = map_clock;

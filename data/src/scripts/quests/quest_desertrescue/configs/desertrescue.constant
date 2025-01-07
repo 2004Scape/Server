@@ -14,6 +14,13 @@
 ^desertrescue_made_dart_tip = 14
 ^desertrescue_finished_dart = 15
 ^desertrescue_learned_darts = 16
+^desertrescue_given_pineapple = 17
+^desertrescue_used_mine_cart = 18
+^desertrescue_caught_ana = 19
+^desertrescue_ana_minecart = 20
+^desertrescue_retrieved_ana_minecart = 21
+^desertrescue_picked_first_skill = 28
+^desertrescue_picked_second_skill = 29
 
 // bits positions (first 5 bits for guard interactions)
 ^desertrescue_find_al_shabim = 5
@@ -23,5 +30,7 @@
 ^desertrescue_lock_attempts1 = 9
 ^desertrescue_lock_attempts2 = 10
 ^desertrescue_gained_tent_access = 11
+^desertrescue_ana_minecart_barrel = 12
 
 ^desertrescue_prison_coord = 0_51_47_21_26
+^desertrescue_underground_prison_coord = 0_51_147_24_29

@@ -1,5 +1,7 @@
 [opnpc1,bedabin_nomad_guard]
-if(testbit(%desertrescue_map_mechanisms, ^desertrescue_gained_tent_access) = true) {
+if(%desertrescue_progress >= ^desertrescue_given_pineapple) {
+    ~chatnpc("<p,happy>Sorry, but you can't use the tent without permission.|But thanks for all your help with the Bedabin people.");
+} else if(testbit(%desertrescue_map_mechanisms, ^desertrescue_gained_tent_access) = true & %desertrescue_progress < ^desertrescue_learned_darts) {
     ~chatnpc("<p,happy>Oh, I remember you; yeah go on in. Hope the weapon construction is going okay.");
     if_close;
     if(coord ! 0_49_47_33_37) {
@@ -11,23 +13,28 @@ if(testbit(%desertrescue_map_mechanisms, ^desertrescue_gained_tent_access) = tru
     p_teleport(0_49_47_33_38);
     p_delay(3);
     return;
-}
-~chatnpc("<p,angry>Sorry, but you can't use the tent without permission. Orders of Al Shabim.");
-if(%desertrescue_progress = ^desertrescue_retrieved_plans) {
-    if(inv_total(inv, technical_plans) = 0) {
-
+} else {
+    ~chatnpc("<p,angry>Sorry, but you can't use the tent without permission. Orders of Al Shabim.");
+    if(%desertrescue_progress = ^desertrescue_retrieved_plans) {
+        if(inv_total(inv, technical_plans) = 0) {
+            ~chatnpc("<p,neutral>Sorry, no one is allowed to enter.");
+            ~chatplayer("<p,neutral>But Al Shabim said I could enter!");
+            ~chatnpc("<p,neutral>I can only let someone in who has plans for the secret weapon.");
+            if(inv_total(bank, technical_plans) > 0)  ~chatplayer("<p,neutral>Oh drat, I've gone and left those in my bank. I'll have to go and get them.");
+            return;
+        }
+        ~chatnpc("<p,neutral>Okay, you can go in, Al Shabim has told me about you.");
+        if_close;
+        %desertrescue_map_mechanisms = setbit(%desertrescue_map_mechanisms, ^desertrescue_gained_tent_access);
+        if(coord ! 0_49_47_33_37) {
+            def_int $dist = distance(coord, 0_49_47_33_37);
+            ~forcewalk(0_49_47_33_37);
+            p_delay(max(0, calc(3 - $dist)));
+        }
+        if(loc_find(0_49_47_33_38, loc_2700) = true) loc_change(loc_2701, 2);
+        p_teleport(0_49_47_33_38);
+        p_delay(3);
     }
-    ~chatnpc("<p,neutral>Okay, you can go in, Al Shabim has told me about you.");
-    if_close;
-    %desertrescue_map_mechanisms = setbit(%desertrescue_map_mechanisms, ^desertrescue_gained_tent_access);
-    if(coord ! 0_49_47_33_37) {
-        def_int $dist = distance(coord, 0_49_47_33_37);
-        ~forcewalk(0_49_47_33_37);
-        p_delay(max(0, calc(3 - $dist)));
-    }
-    if(loc_find(0_49_47_33_38, loc_2700) = true) loc_change(loc_2701, 2);
-    p_teleport(0_49_47_33_38);
-    p_delay(3);
 }
 
 [oploc1,loc_2700]
@@ -43,7 +50,9 @@ if(testbit(%desertrescue_map_mechanisms, ^desertrescue_gained_tent_access) = tru
     }
     return;
 } else if(npc_find(coord, bedabin_nomad_guard, 5, 0) = true) { // you can kill these in 225, changed in Oct 2004 so need to confirm original behaviour
-    if(%desertrescue_progress = ^desertrescue_retrieved_plans) {
+    if(%desertrescue_progress >= ^desertrescue_given_pineapple) {
+        ~chatnpc("<p,happy>Sorry, but you can't use the tent without permission.|But thanks for all your help with the Bedabin people.");
+    } else if(%desertrescue_progress = ^desertrescue_retrieved_plans) {
         if(inv_total(inv, technical_plans) > 0) {
             ~chatplayer("<p,neutral>Al Shabim said I could enter, here are the plans!");
             ~chatnpc("<p,happy>Okay go ahead.");

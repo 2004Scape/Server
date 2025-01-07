@@ -1068,7 +1068,7 @@ recol1d=13840
 members=yes
 stackable=yes
 
-[obj_1855]
+[desertrescuerock]
 name=Rock
 desc=Looks like a plain rock, must have some ore in it?
 weight=500g

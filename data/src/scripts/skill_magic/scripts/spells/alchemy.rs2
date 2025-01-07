@@ -82,7 +82,7 @@ switch_obj($item) {
             return(false);
         }
     case anainabarrel :
-        mes("unimplemented");
+        mes("You can't do that to the poor girl!");
         return(false);
     case coins :
         mes("Coins are already made of gold.");
