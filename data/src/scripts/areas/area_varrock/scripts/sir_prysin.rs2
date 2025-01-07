@@ -202,7 +202,8 @@ else{
     }
     else if ($option = 2){
         ~chatplayer("<p,sad>No, I'm afraid I've lost Silverlight.");
-        ~chatnpc("<p,neutral>Fortunately for you it has come back into my possession.|Please be more careful this time");
+        // osrs dialogue
+        ~chatnpc("<p,neutral>Yes, I know, someone returned it to me. |Take better care of it this time.");
         inv_add(inv, silverlight, 1);
     }
 }
