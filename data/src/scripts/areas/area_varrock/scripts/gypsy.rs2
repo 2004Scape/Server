@@ -1,7 +1,7 @@
 [opnpc1,gypsy]
-if (%demon_progress = 0) {
+if (%demon_progress = ^demon_not_started) {
     @demon_slayer_not_started_gypsy;
-} else if (%demon_progress = 1) {
+} else if (%demon_progress = ^demon_talked_gypsy) {
     ~chatnpc("<p,neutral>How goes the quest?");
     ~chatplayer("<p,happy>I'm still working on it.");
     ~chatnpc("<p,happy>Well if you need any advice I'm always here, young one.");
@@ -16,7 +16,7 @@ if (%demon_progress = 0) {
     } else if ($option = 4) {
         @demon_slayer_gypsy_stop_calling_me_that;
     }
-} else if (%demon_progress > 2 & %demon_progress < ^demon_complete) {
+} else if (%demon_progress = ^demon_key_hunt) {
     if (inv_total(inv, silverlight) < 1 & inv_getobj(worn, 3) ! silverlight) {
         ~chatnpc("<p,neutral>How goes the quest?");
         ~chatplayer("<p,happy>I have found Sir Prysin. Unfortunately, I haven't got the sword yet. He made it complicated for me!");
@@ -223,7 +223,8 @@ if ($option = 1) {
 ~chatnpc("<p,happy>By reciting the correct magical incantation, and thrusting Silverlight into Delrith while he was newly summoned, Wally was able to imprison Delrith in the stone block in the centre of the circle.");
 ~chatnpc("<p,sad>Delrith will come forth from the stone circle again.");
 ~chatnpc("<p,sad>I would imagine an evil sorcerer is already starting on the rituals to summon Delrith as we speak.");
-~update_demon_progress;
+%demon_progress = ^demon_talked_gypsy;
+~send_quest_progress(questlist:demon, %demon_progress, ^demon_complete);
 @demon_slayer_gypsy_more_info;
 
 [label,demon_slayer_gypsy_more_info]
