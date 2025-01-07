@@ -196,7 +196,7 @@ if (~demon_slayer_has_silverlight = true) {
     @demon_slayer_not_sorted_yet;
 }
 else{
-    def_int $option = ~p_choice2("No, not yet.", 1, "No, I'm afraid I've lost Sliverlight.", 2);
+    def_int $option = ~p_choice2("No, not yet.", 1, "No, I'm afraid I've lost Silverlight.", 2);
     if ($option = 1){
         @demon_slayer_not_sorted_yet;
     }
