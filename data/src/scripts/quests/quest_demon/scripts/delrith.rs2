@@ -104,4 +104,3 @@ if (npc_find(coord, weakened_delrith, 8, 0) = true) {
 npc_changetype(delrith);
 npc_statheal(hitpoints, npc_basestat(hitpoints), 0);
 npc_setmode(none);
-npc_settimer(5)
