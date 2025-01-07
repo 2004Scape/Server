@@ -26,7 +26,7 @@ switch_int ($option) {
                 ~chatplayer("<p,quiz>And what do you do?");
                 ~chatnpcrange("<p,happy>We will look after your items and money for you. Leave your valuables with us if you want to keep them safe.");
             case 2 :
-                ~chatplayer("<p,quiz>Didn't you used to be called the bank of Varrock?");
+                ~chatplayer("<p,quiz>Didn't you used to be called the Bank of Varrock?");
                 ~chatnpcrange("<p,neutral>Yes we did, but people kept on coming into our branches outside of Varrock and telling us that our signs were wrong. They acted as if we didn't know what town we were in or something.");
 
         }
