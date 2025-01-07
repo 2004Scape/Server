@@ -231,35 +231,6 @@ export default class Jagfile {
         jag.save(path);
         jag.release();
     }
-
-    deconstruct(name: string) {
-        const dat: Packet | null = this.read(name + '.dat');
-        const idx: Packet | null = this.read(name + '.idx');
-
-        if (dat === null || idx === null) {
-            throw new Error('Failed to read dat or idx');
-        }
-
-        const count: number = idx.g2();
-
-        const sizes: number[] = new Array(count);
-        const offsets: number[] = new Array(count);
-
-        let offset: number = 2;
-        for (let i: number = 0; i < count; i++) {
-            sizes[i] = idx.g2();
-            offsets[i] = offset;
-            offset += sizes[i];
-        }
-
-        const checksums: number[] = new Array(count);
-        for (let i: number = 0; i < count; i++) {
-            dat.pos = offsets[i];
-            checksums[i] = Packet.getcrc(dat.data, offset, sizes[i]);
-        }
-
-        return { count, sizes, offsets, checksums };
-    }
 }
 
 export const KNOWN_NAMES: string[] = [

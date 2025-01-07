@@ -3,11 +3,12 @@ import fs from 'fs';
 import Jagfile from '#/io/Jagfile.js';
 
 import { convertImage } from '#/util/PixPack.js';
-import { shouldBuildFileAny } from '#/util/PackFile.js';
+import { shouldBuildFile, shouldBuildFileAny } from '#/util/PackFile.js';
 import Packet from '#/io/Packet.js';
 
 export async function packClientTexture() {
-    if (!shouldBuildFileAny('data/src/textures', 'data/pack/client/textures')) {
+    if (!shouldBuildFileAny('data/src/textures', 'data/pack/client/textures') &&
+        !shouldBuildFile('tools/pack/sprite/textures.ts', 'data/pack/client/textures')) {
         return;
     }
 
