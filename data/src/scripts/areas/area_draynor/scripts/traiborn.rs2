@@ -1,8 +1,8 @@
 [opnpc1,traiborn]
-if (%demon_progress < ^demon_find_bones | %demon_progress >= ^demon_silverlight) {
-    @traiborn_dialogue;
-} else if (%demon_progress = calc(^demon_silverlight - 1) & inv_total(inv, demon_traiborn_key) < 1 & inv_total(bank, demon_traiborn_key) < 1){
+if (%demon_progress = ^demon_got_traiborn_key & inv_total(inv, demon_traiborn_key) < 1 & inv_total(bank, demon_traiborn_key) < 1){
     @demon_slayer_traiborn_lost_key;
+} else if (%demon_progress < ^demon_find_bones | %demon_progress >= ^demon_got_traiborn_key) {
+    @traiborn_dialogue;
 } else {
     @demon_slayer_traiborn_bones_dialogue;
 }
@@ -32,7 +32,7 @@ if(%demon_progress >= ^demon_find_bones & %demon_progress < ^demon_got_traiborn_
 }
 
 [proc,traiborn_dialogue_options](int $demon_progress)(int)
-if (%demon_progress < ^demon_key_hunt | %demon_progress > ^demon_silverlight) {
+if (%demon_progress < ^demon_key_hunt | %demon_progress >= ^demon_got_traiborn_key) {
    return(~p_choice2("What's a thingummywut?", 1, "Teach me to be a mighty and powerful wizard.", 2));
 } else if ($demon_progress < ^demon_silverlight) {
    return (~p_choice3("What's a thingummywut?", 1, "Teach me to be a mighty and powerful wizard.", 2, "I need to get a key given to you by Sir Prysin.", 3));
