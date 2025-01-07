@@ -25,6 +25,7 @@ protect=no
 [frozen]
 
 [attackstyle]
+scope=perm
 transmit=yes
 
 [com_stabattack]
