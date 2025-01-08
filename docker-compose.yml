@@ -15,6 +15,7 @@ services:
       - XP_MULTIPLIER
       - PROD_MODE
     # TODO: Env vars?
+    # TODO: Env file
     ports:
       - 80:80
       - 43594:43594
@@ -38,7 +39,7 @@ services:
     profiles:
       - prod
     env_file:
-      - .env
+      - .env_prod
     # Migration waits till our database is up and running
     # Stops if failed 5 times, 10 second intervals
     healthcheck:
@@ -58,7 +59,7 @@ services:
     profiles:
       - prod
     env_file:
-      - .env
+      - .env_prod
     deploy:
       restart_policy:
         condition: none
@@ -83,7 +84,7 @@ services:
     profiles:
       - prod
     env_file:
-      - .env
+      - .env_prod
     # TODO: Env vars?
     ports: 
       - 3000:3000
@@ -104,7 +105,7 @@ services:
     profiles:
       - prod
     env_file:
-      - .env
+      - .env_prod
     # TODO: Env vars
     ports:
       - 43500:43500
@@ -120,7 +121,7 @@ services:
     profiles:
       - prod
     env_file:
-      - .env
+      - .env_prod
     # TODO: Env vars
     ports:
       - 43501:43501
@@ -136,7 +137,7 @@ services:
     profiles:
       - prod
     env_file:
-      - .env
+      - .env_prod
     # TODO: Env vars
     ports:
       - 45099:45099
@@ -175,4 +176,4 @@ services:
       - 43594:43594
       - 43595:43595
     env_file:
-      - .env
+      - .env_prod
