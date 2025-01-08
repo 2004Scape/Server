@@ -133,16 +133,13 @@ export class NetworkPlayer extends Player {
 
         if (decoder) {
             const message = decoder.decode(NetworkPlayer.inBuf, this.client.waiting);
-
+            const success: boolean = ClientProtRepository.getHandler(packetType)?.handle(message, this) ?? false;
             // todo: move out of model
-            if (message.category === ClientProtCategory.USER_EVENT) {
+            if (success && message.category === ClientProtCategory.USER_EVENT) {
                 this.userLimit++;
-            } else if (message.category === ClientProtCategory.CLIENT_EVENT) {
+            } else {
                 this.clientLimit++;
             }
-
-            const handler = ClientProtRepository.getHandler(packetType)!;
-            handler.handle(message, this);
         }
 
         this.client.opcode = -1;

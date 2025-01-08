@@ -132,7 +132,8 @@ class World {
     readonly cycleStats: number[];
 
     tickRate: number = World.TICKRATE; // speeds up when we're processing server shutdown
-    currentTick: number = 0;
+    currentTick: number = 0; // the current tick of the game world.
+    nextTick: number = Date.now() + World.TICKRATE; // the next time the game world should tick.
     shutdownTick: number = -1;
     pmCount: number = 1; // can't be 0 as clients will ignore the pm, their array is filled with 0 as default
 
@@ -355,6 +356,7 @@ class World {
     cycle(): void {
         try {
             const start: number = Date.now();
+            const drift = Math.max(0, start - this.nextTick);
 
             // world processing
             // - world queue
@@ -364,7 +366,6 @@ class World {
 
             // player setup (todo better name)
             // - calculate afk event readiness
-            // - resume active script
             // - process packets
             // - process pathfinding/following request
             this.processPlayerSetup();
@@ -446,6 +447,8 @@ class World {
                 }
             }
 
+            this.cycleStats[WorldStat.CYCLE] = Date.now() - start; // set the main logic stat here, before telemetry.
+
             this.lastCycleStats[WorldStat.CYCLE] = this.cycleStats[WorldStat.CYCLE];
             this.lastCycleStats[WorldStat.WORLD] = this.cycleStats[WorldStat.WORLD];
             this.lastCycleStats[WorldStat.CLIENT_IN] = this.cycleStats[WorldStat.CLIENT_IN];
@@ -485,12 +488,11 @@ class World {
             }
 
             this.currentTick++;
-
-            this.cycleStats[WorldStat.CYCLE] = Date.now() - start;
+            this.nextTick += this.tickRate;
 
             // ----
 
-            setTimeout(this.cycle.bind(this), this.tickRate - this.cycleStats[WorldStat.CYCLE]);
+            setTimeout(this.cycle.bind(this), Math.max(0, this.tickRate - (Date.now() - start) - drift));
         } catch (err) {
             if (err instanceof Error) {
                 printError('eep eep cabbage! An unhandled error occurred during the cycle: ' + err.message);
@@ -561,7 +563,7 @@ class World {
                     npc.executeScript(ScriptRunner.init(script, npc));
                 }
             }
-            if (npc.delayed()) {
+            if (npc.delayed) {
                 continue;
             }
             if (npc.huntMode !== -1) {
@@ -570,7 +572,7 @@ class World {
                     npc.huntAll();
                 }
             }
-            
+
         }
 
         this.cycleStats[WorldStat.WORLD] = Date.now() - start;
@@ -591,19 +593,10 @@ class World {
                     player.afkEventReady = Math.random() < (player.zonesAfk() ? 0.1666 : 0.0833);
                 }
 
-                // active scripts resume here in early rs2
-                if (player.delayed()) {
-                    player.delay--;
-                }
-
-                if (player.activeScript && player.activeScript.execution === ScriptState.SUSPENDED && !player.delayed()) {
-                    player.executeScript(player.activeScript, true, true);
-                }
-
                 if (isClientConnected(player) && player.decodeIn()) {
                     const followingPlayer = (player.targetOp === ServerTriggerType.APPLAYER3 || player.targetOp === ServerTriggerType.OPPLAYER3);
                     if (player.userPath.length > 0 || player.opcalled) {
-                        if (player.delayed()) {
+                        if (player.delayed) {
                             player.unsetMapFlag();
                             continue;
                         }
@@ -673,17 +666,14 @@ class World {
                     npc.timerClock++;
                 }
                 if (npc.checkLifeCycle(this.currentTick)) {
-                    if (npc.delayed()) {
-                        npc.delay--;
-                    }
-                    if (!npc.delayed()) {
-                        // - resume suspended script
-                        if (npc.activeScript && npc.activeScript.execution === ScriptState.NPC_SUSPENDED) {
-                            npc.executeScript(npc.activeScript);
-                        }
+                    if (npc.delayed && this.currentTick >= npc.delayedUntil) npc.delayed = false;
+
+                    // - resume suspended script
+                    if (!npc.delayed && npc.activeScript && npc.activeScript.execution === ScriptState.NPC_SUSPENDED) {
+                        npc.executeScript(npc.activeScript);
                     }
                 }
-                
+
                 // - respawn
                 if (npc.updateLifeCycle(this.currentTick)) {
                     try {
@@ -700,15 +690,15 @@ class World {
                         } else if (npc.lifecycle === EntityLifeCycle.DESPAWN) {
                             printError('[World] An unhandled error occurred while despawning a NPC');
                         }
-        
+
                         printError(`[World] NPC type:${npc.type} lifecycle:${npc.lifecycle} ID:${npc.nid}`);
                         console.error(err);
-        
+
                         npc.setLifeCycle(this.currentTick + 1); // retry next tick
                     }
                 }
 
-                if (npc.delayed()) {
+                if (npc.delayed) {
                     continue;
                 }
 
@@ -743,6 +733,7 @@ class World {
         this.cycleStats[WorldStat.NPC] = Date.now() - start;
     }
 
+    // - resume suspended script
     // - primary queue
     // - weak queue
     // - timers
@@ -756,6 +747,13 @@ class World {
 
         for (const player of this.players) {
             try {
+                if (player.delayed && this.currentTick >= player.delayedUntil) player.delayed = false;
+
+                // - resume suspended script
+                if (!player.delayed && player.activeScript && player.activeScript.execution === ScriptState.SUSPENDED) {
+                    player.executeScript(player.activeScript, true, true);
+                }
+
                 // - primary queue
                 // - weak queue
                 player.processQueues();
@@ -801,7 +799,7 @@ class World {
             if (player.queue.head() === null) {
                 const script = ScriptProvider.getByTriggerSpecific(ServerTriggerType.LOGOUT, -1, -1);
                 if (!script) {
-                    printError('LOGOUT TRIGGER IS BROKEN!'); // (iirc this is a real message!)
+                    printError('LOGOUT TRIGGER IS BROKEN!');
                     continue;
                 }
 
@@ -824,7 +822,8 @@ class World {
     private processLogins(): void {
         const start: number = Date.now();
         player: for (const player of this.newPlayers) {
-            if (this.shutdownTick != -1 && this.shutdownTick > this.currentTick) {
+            // prevent logging in when the server is shutting down
+            if (this.shutdownTick >= this.currentTick) {
                 if (isClientConnected(player)) {
                     player.client.send(Uint8Array.from([ 14 ]));
                     player.client.close();
@@ -833,6 +832,18 @@ class World {
                 continue;
             }
 
+            // prevent logging in if a player save is being flushed
+            if (this.logoutRequests.has(player.username)) {
+                player.addSessionLog(LoggerEventType.ENGINE, 'Tried to log in - old player is logging out');
+
+                if (isClientConnected(player)) {
+                    player.client.send(Uint8Array.from([ 5 ]));
+                    player.client.close();
+                }
+                continue;
+            }
+
+            // reconnect a new socket with player in the world
             if (player.reconnecting) {
                 for (const other of this.players) {
                     if (player.username !== other.username) {
@@ -856,12 +867,14 @@ class World {
                 }
             }
 
+            // player already logged in
             for (const other of this.players) {
                 if (player.username !== other.username) {
                     continue;
                 }
 
                 if (player instanceof NetworkPlayer) {
+                    player.addSessionLog(LoggerEventType.ENGINE, 'Tried to log in - already logged in');
                     player.client.send(Uint8Array.from([ 5 ]));
                     player.client.close();
                 }
@@ -869,6 +882,7 @@ class World {
                 continue player;
             }
 
+            // normal login process
             let pid: number;
             try {
                 // if it throws then there was no available pid. otherwise guaranteed to not be -1.
@@ -876,6 +890,7 @@ class World {
             } catch (e) {
                 // world full
                 if (isClientConnected(player)) {
+                    player.addSessionLog(LoggerEventType.ENGINE, 'Tried to log in - world full');
                     player.client.send(Uint8Array.from([ 7 ]));
                     player.client.close();
                 }

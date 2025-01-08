@@ -213,13 +213,14 @@ const InvOps: CommandHandlers = {
             throw new Error('$slot is empty');
         }
 
+        const objType = ObjType.get(obj.id);
+        state.activePlayer.addWealthLog(-(obj.count * objType.cost), `Dropped ${objType.debugname} x${obj.count}`);
+
         const player = state.activePlayer;
         const completed = player.invDel(invType.id, obj.id, obj.count, slot);
         if (completed === 0) {
             return;
         }
-
-        const objType = ObjType.get(obj.id);
 
         if (!objType.stackable || completed === 1) {
             for (let i = 0; i < completed; i++) {
@@ -597,7 +598,7 @@ const InvOps: CommandHandlers = {
         }
 
         const objType: ObjType = ObjType.get(obj.id);
-        state.activePlayer.addWealthLog(-(obj.count * objType.cost), `Lost ${objType.debugname} x${obj.count}`);
+        state.activePlayer.addWealthLog(-(obj.count * objType.cost), `Dropped ${objType.debugname} x${obj.count}`);
 
         const completed: number = fromPlayer.invDel(invType.id, obj.id, obj.count, slot);
         if (completed === 0) {
@@ -637,7 +638,7 @@ const InvOps: CommandHandlers = {
             }
 
             const objType: ObjType = ObjType.get(obj.id);
-            state.activePlayer.addWealthLog(-(obj.count * objType.cost), `Lost ${objType.debugname} x${obj.count}`);
+            state.activePlayer.addWealthLog(-(obj.count * objType.cost), `Dropped ${objType.debugname} x${obj.count}`);
 
             inventory.delete(slot);
 

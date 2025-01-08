@@ -51,3 +51,10 @@ param=start_coord,0_40_148_38_17
 param=end_coord,0_40_148_39_22
 param=obstacle_low_fail,36
 param=obstacle_high_fail,330
+
+[loc_377]
+name=Closed chest
+desc=I wonder what's inside.
+model=wooden_chest
+op1=Open
+forceapproach=north

@@ -45,7 +45,11 @@ anim(human_castsuperheatitem, 0);
 // delete runes and give xp
 ~delete_spell_runes($spell_data);
 ~give_spell_xp($spell_data);
-stat_advance(smithing, struct_param($bar_struct, productexp));
+def_int $smith_xp = struct_param($bar_struct, productexp);
+if ($bar = gold_bar & inv_total(worn, gauntlets_of_goldsmithing) > 0) {
+    $smith_xp = scale(5, 2, $smith_xp); // 2.5x
+}
+stat_advance(smithing, $smith_xp);
 // delete ores and give bar
 inv_del(inv, $ore1, 1);
 if ($ore2 ! null) {

@@ -201,6 +201,8 @@ export default class Player extends PathingEntity {
     ];
     colors: number[] = [0, 0, 0, 0, 0];
     gender: number = 0;
+    run: number = 0;
+    tempRun: number = 0;
     runenergy: number = 10000;
     lastRunEnergy: number = -1;
     runweight: number = 0;
@@ -467,24 +469,26 @@ export default class Player extends PathingEntity {
             this.moveSpeed = this.defaultMoveSpeed();
             if (this.basRunning === -1) {
                 this.moveSpeed = MoveSpeed.WALK;
-            } else if (this.getVar(VarPlayerType.TEMP_RUN)) {
+            } else if (this.tempRun) {
                 this.moveSpeed = MoveSpeed.RUN;
             }
         }
 
         if (!super.processMovement()) {
             // todo: this is running every idle tick
-            this.setVar(VarPlayerType.TEMP_RUN, 0);
+            this.tempRun = 0;
         }
 
         const moved = this.lastTickX !== this.x || this.lastTickZ !== this.z;
         this.drainEnergy(moved);
         this.recoverEnergy(moved);
         if (this.runenergy === 0) {
-            this.setVar(VarPlayerType.PLAYER_RUN, 0);
+            this.run = 0;
+            // todo: better way to sync engine varp
+            this.setVar(VarPlayerType.RUN, this.run);
         }
         if (this.runenergy < 100) {
-            this.setVar(VarPlayerType.TEMP_RUN, 0);
+            this.tempRun = 0;
         }
         if (moved) {
             this.lastMovement = World.currentTick + 1;
@@ -496,7 +500,7 @@ export default class Player extends PathingEntity {
         if (!moved || this.stepsTaken === 0) {
             return;
         }
-        if (!this.delayed() && this.moveSpeed === MoveSpeed.RUN && this.stepsTaken > 1) {
+        if (!this.delayed && this.moveSpeed === MoveSpeed.RUN && this.stepsTaken > 1) {
             const weightKg = Math.floor(this.runweight / 1000);
             const clampWeight = Math.min(Math.max(weightKg, 0), 64);
             const loss = (67 + (67 * clampWeight) / 64) | 0;
@@ -505,7 +509,7 @@ export default class Player extends PathingEntity {
     }
 
     private recoverEnergy(moved: boolean): void {
-        if (!this.delayed() && (!moved || this.moveSpeed !== MoveSpeed.RUN) && this.runenergy < 10000) {
+        if (!this.delayed && (!moved || this.moveSpeed !== MoveSpeed.RUN) && this.runenergy < 10000) {
             const recovered = (this.baseLevels[PlayerStat.AGILITY] / 9 | 0) + 8;
             this.runenergy = Math.min(this.runenergy + recovered, 10000);
         }
@@ -516,7 +520,7 @@ export default class Player extends PathingEntity {
     }
 
     defaultMoveSpeed(): MoveSpeed {
-        return this.getVar(VarPlayerType.PLAYER_RUN) ? MoveSpeed.RUN : MoveSpeed.WALK;
+        return this.run ? MoveSpeed.RUN : MoveSpeed.WALK;
     }
 
     // ----
@@ -536,7 +540,7 @@ export default class Player extends PathingEntity {
     closeModal() {
         this.weakQueue.clear();
 
-        if (!this.delayed()) {
+        if (!this.delayed) {
             this.protect = false;
         }
 
@@ -581,12 +585,16 @@ export default class Player extends PathingEntity {
     }
 
     busy() {
-        return this.delayed() || this.containsModalInterface();
+        return this.delayed || this.containsModalInterface();
     }
 
     canAccess() {
-        // once the world is shutting down, no protection rules apply
-        return World.shutdownTick <= World.currentTick && !this.protect && !this.busy();
+        if (World.shutdownTick > World.currentTick) {
+            // once the world has gone past shutting down, no protection rules apply
+            return true;
+        } else {
+            return !this.protect && !this.busy();
+        }
     }
 
     /**
@@ -606,6 +614,28 @@ export default class Player extends PathingEntity {
         } else {
             this.queue.addTail(request);
         }
+    }
+
+    unlinkQueuedScript(scriptId: number, type: QueueType = PlayerQueueType.NORMAL) {
+        if (type === PlayerQueueType.ENGINE) {
+            for (let request = this.engineQueue.head(); request !== null; request = this.engineQueue.next()) {
+                if (request.script.id === scriptId) {
+                    request.unlink();
+                }
+            }
+        } else {
+            for (let request = this.queue.head(); request !== null; request = this.queue.next()) {
+                if (request.script.id === scriptId) {
+                    request.unlink();
+                }
+            }
+            for (let request = this.weakQueue.head(); request !== null; request = this.weakQueue.next()) {
+                if (request.script.id === scriptId) {
+                    request.unlink();
+                }
+            }
+        }
+        
     }
 
     processQueues() {
@@ -632,10 +662,6 @@ export default class Player extends PathingEntity {
         // - thank you De0 for the explanation
         // essentially, if a script is before the end of the list, it can be processed this tick and result in inconsistent queue timing (authentic)
         for (let request = this.queue.head(); request !== null; request = this.queue.next()) {
-            if (request.type === PlayerQueueType.STRONG) {
-                this.closeModal();
-            }
-
             if (this.tryLogout && request.type === PlayerQueueType.LONG) {
                 if (request.args[0] === 0) {
                     // ^accelerate
@@ -780,7 +806,7 @@ export default class Player extends PathingEntity {
     // we process walktriggers from regular movement in client input, 
     // and for each interaction.
     processWalktrigger() {
-        if (this.walktrigger !== -1 && (!this.protect && !this.delayed())) {
+        if (this.walktrigger !== -1 && (!this.protect && !this.delayed)) {
             const trigger = ScriptProvider.get(this.walktrigger);
             this.walktrigger = -1;
             if (trigger) {
@@ -802,7 +828,7 @@ export default class Player extends PathingEntity {
             return;
         }
 
-        if (this.target instanceof Npc && (typeof World.getNpc(this.target.nid) === 'undefined' || this.target.delayed())) {
+        if (this.target instanceof Npc && (typeof World.getNpc(this.target.nid) === 'undefined' || this.target.delayed)) {
             this.clearInteraction();
             this.unsetMapFlag();
             return;
@@ -1489,6 +1515,7 @@ export default class Player extends PathingEntity {
 
             const script = ScriptProvider.getByTriggerSpecific(ServerTriggerType.ADVANCESTAT, stat, -1);
             if (script) {
+                this.unlinkQueuedScript(script.id, PlayerQueueType.ENGINE);
                 this.enqueueScript(script, PlayerQueueType.ENGINE);
             }
         }
@@ -1708,7 +1735,7 @@ export default class Player extends PathingEntity {
     // ----
 
     runScript(script: ScriptState, protect: boolean = false, force: boolean = false) {
-        if (!force && protect && (this.protect || this.delayed())) {
+        if (!force && protect && (this.protect || this.delayed)) {
             // can't get protected access, bye-bye
             // printDebug('No protected access:', script.script.name, protect, this.protect);
             return -1;

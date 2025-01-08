@@ -68,3 +68,6 @@ while ($i < $inv_total) {
     $i = calc($i + 1);
 }
 cleartimer(fermenting_wine);
+
+[proc,ferment_wines_login]
+settimer(fermenting_wine, 20);

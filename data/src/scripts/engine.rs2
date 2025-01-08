@@ -403,6 +403,8 @@
 [command,session_log](int $type, string $event)
 // Add a wealth event to the player's session logs
 [command,wealth_log](boolean $is_gained, int $amount, string $event)
+// Toggle the player's run-mode
+[command,p_run](int $state)
 
 // Npc ops (2500-2999)
 // Get access to the npc if they are in the world

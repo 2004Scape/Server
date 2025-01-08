@@ -60,6 +60,7 @@ import {
     GenderValid,
     SkinColourValid
 } from '#/engine/script/ScriptValidators.js';
+import VarPlayerType from '#/cache/config/VarPlayerType.js';
 
 const PlayerOps: CommandHandlers = {
     [ScriptOpcode.FINDUID]: state => {
@@ -326,7 +327,8 @@ const PlayerOps: CommandHandlers = {
             return;
         }
 
-        state.activePlayer.delay = 1;
+        state.activePlayer.delayed = true;
+        state.activePlayer.delayedUntil = World.currentTick + 1;
         state.execution = ScriptState.SUSPENDED;
     }),
 
@@ -338,7 +340,8 @@ const PlayerOps: CommandHandlers = {
     // https://x.com/JagexAsh/status/1684478874703343616
     // https://x.com/JagexAsh/status/1780932943038345562
     [ScriptOpcode.P_DELAY]: checkedHandler(ProtectedActivePlayer, state => {
-        state.activePlayer.delay = check(state.popInt(), NumberNotNull) + 1;
+        state.activePlayer.delayed = true;
+        state.activePlayer.delayedUntil = World.currentTick + 1 + check(state.popInt(), NumberNotNull);
         state.execution = ScriptState.SUSPENDED;
     }),
 
@@ -650,7 +653,7 @@ const PlayerOps: CommandHandlers = {
         state.activePlayer.write(new IfSetPosition(com, x, y));
     }),
 
-    [ScriptOpcode.STAT_ADVANCE]: checkedHandler(ProtectedActivePlayer, state => {
+    [ScriptOpcode.STAT_ADVANCE]: checkedHandler(ActivePlayer, state => {
         const [stat, xp] = state.popInts(2);
 
         check(stat, NumberNotNull);
@@ -943,17 +946,7 @@ const PlayerOps: CommandHandlers = {
     // https://x.com/JagexAsh/status/1821831590906859683
     [ScriptOpcode.CLEARQUEUE]: state => {
         const scriptId = state.popInt();
-
-        for (let request = state.activePlayer.queue.head(); request !== null; request = state.activePlayer.queue.next()) {
-            if (request.script.id === scriptId) {
-                request.unlink();
-            }
-        }
-        for (let request = state.activePlayer.weakQueue.head(); request !== null; request = state.activePlayer.weakQueue.next()) {
-            if (request.script.id === scriptId) {
-                request.unlink();
-            }
-        }
+        state.activePlayer.unlinkQueuedScript(scriptId);
     },
 
     [ScriptOpcode.HEALENERGY]: state => {
@@ -1100,6 +1093,13 @@ const PlayerOps: CommandHandlers = {
         const event = state.popString();
 
         state.activePlayer.addWealthLog(isGained ? amount : -amount, event);
+    }),
+
+    [ScriptOpcode.P_RUN]: checkedHandler(ActivePlayer, state => {
+        state.activePlayer.run = state.popInt();
+        // todo: better way to sync engine varp
+        state.activePlayer.setVar(VarPlayerType.RUN, state.activePlayer.run);
+        state.activePlayer.clearPendingAction();
     }),
 };
 

@@ -202,6 +202,7 @@ enum ScriptOpcode {
     SESSION_LOG, // custom
     WEALTH_LOG, // custom
     LOGGEDOUT, // custom
+    P_RUN, // todo: real command name?
 
     // Npc ops (2500-2999)
     NPC_ADD = 2500, // official

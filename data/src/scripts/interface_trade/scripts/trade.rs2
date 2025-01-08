@@ -77,6 +77,9 @@ if (.finduid(%tradepartner) = true) {
         .inv_stoptransmit(trademain:otherinv);
         .inv_stoptransmit(tradeside:inv);
 
+        ~inv_remove_leading_empty_slots(tempinv);
+        ~.inv_remove_leading_empty_slots(tempinv);
+
         if (~enough_trade_space = false) {
             mes("Other player doesn't have enough inventory space for this trade.");
             .mes("You don't have enough inventory space for this trade.");
@@ -92,8 +95,6 @@ if (.finduid(%tradepartner) = true) {
             .if_close;
             return;
         }
-        ~inv_remove_leading_empty_slots(tempinv);
-        ~.inv_remove_leading_empty_slots(tempinv);
 
         def_int $tempinvused = sub(inv_size(tempinv), inv_freespace(tempinv));
         if ($tempinvused < 1) {

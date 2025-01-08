@@ -67,7 +67,7 @@ inv_add(inv, struct_param($struct, strung), 1);
 stat_advance(crafting, 40);
 
 // display game message
-def_string $name = struct_param($struct, name);
+def_string $name = struct_param($struct, stringing_name);
 if (string_length($name) < 1) {
     $name = "amulet";
 }

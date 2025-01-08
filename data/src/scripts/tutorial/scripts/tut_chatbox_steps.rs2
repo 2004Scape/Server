@@ -109,7 +109,7 @@ if_settab(controls, ^tab_player_controls);
 
 [proc,tutorial_step_enable_run]
 if (p_finduid(uid) = true) {
-    %player_run = ^player_run_off;
+    p_run(^player_run_off);
     return;
 }
 queue(set_run, 0, 0);

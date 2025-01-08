@@ -1,0 +1,7 @@
+^demon_not_started = 0
+^demon_talked_gypsy = 1
+^demon_key_hunt = 2
+^demon_find_bones = 3
+// Each stage here is one more bone
+^demon_got_traiborn_key = 28
+^demon_silverlight = 29

@@ -33,15 +33,14 @@ export default class OpHeldTHandler extends MessageHandler<OpHeldT> {
             return false;
         }
 
-        if (player.delayed()) {
+        if (player.delayed) {
             return false;
         }
 
         player.lastItem = item;
         player.lastSlot = slot;
 
-        player.clearInteraction();
-        player.closeModal();
+        player.clearPendingAction();
         player.faceEntity = -1;
         player.masks |= player.entitymask;
 

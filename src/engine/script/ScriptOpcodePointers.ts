@@ -499,6 +499,11 @@ const ScriptOpcodePointers: {
         require: ['active_player'],
         require2: ['active_player2']
     },
+    [ScriptOpcode.P_RUN]: {
+        require: ['active_player'],
+        require2: ['active_player2']
+    },
+
     // Npc ops
     [ScriptOpcode.NPC_ADD]: {
         set: ['active_npc'],

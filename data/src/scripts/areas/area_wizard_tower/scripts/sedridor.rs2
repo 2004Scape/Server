@@ -28,47 +28,7 @@ if(%runemysteries_progress = ^runemysteries_not_started) {
     ~chatplayer("<p,confused>No... he told me to go back after he'd had a quick look at the research you sent him.");
     ~chatnpc("<p,confused>I think perhaps you should go and speak to him again then, adventurer.");
 } else if(%runemysteries_progress = ^runemysteries_received_notes) {
-    ~chatnpc("<p,neutral>Ah, <displayname()>. How goes your quest? Have you delivered the research notes to my friend Aubury yet?");
-    ~chatplayer("<p,neutral>Yes, I have. He gave me some research notes to pass on to you.");
-    ~chatnpc("<p,neutral>May I have his notes then?");
-    if(~obj_gettotal(notes) = 0) {
-        ~chatplayer("<p,neutral>Uh... I kind of... lost them...");
-        ~chatnpc("<p,neutral>You did? You are extremely careless aren't you? I suggest you go and speak to Aubury once more, with luck he will have made copies of his research.");
-        return;
-    }
-    if(inv_total(inv, notes) = 0) {
-        ~chatplayer("<p,neutral>Sure, I'll go and get them from the bank.");
-        return;
-    }
-    ~chatplayer("<p,neutral>Sure. I have them here.");
-    ~chatnpc("<p,neutral>Well, before you hand them over to me, as you have been nothing but truthful with me to this point, and I admire that in an adventurer, I will let you into the secret of our research.");
-    ~chatnpc("<p,neutral>Now as you may or may not know, many|centuries ago, the wizards at this Tower|learnt the secret of creating Rune Stones, which|allowed us to cast Magic very easily.");
-    ~chatnpc("<p,neutral>When this Tower was burnt down the secret of creating runes was lost to us for all time... except it wasn't. Some months ago, while searching these ruins for information from old days,");
-    ~chatnpc("<p,neutral>I came upon a scroll, almost destroyed, that detailed a magical rock deep in the icefields of the North, closed off from access by anything other than magical means.");
-    ~chatnpc("<p,neutral>This rock was called the 'Rune Essence' by the|magicians who studied its powers. Apparently, by simply|breaking a chunk from it, a Rune Stone could be|fashioned very quickly and easily at certain");
-    ~chatnpc("<p,neutral>elemental altars that were scattered across the land|back then. Now, this is an intersting little piece of|history, but not much use to us as modern wizards|without access to the Rune Essence,");
-    ~chatnpc("<p,neutral>or these elemental altars. This is where you and|Aubury come into this story. A few weeks back,|Aubury discovered in a standard delivery of runes|to his store, a parchment detailing a");
-    ~chatnpc("<p,neutral>teleportation spell that he had never come across before. To his shock, when cast it took him to a strange rock he had never encountered before... yet that felt strangely familiar...");
-    ~chatnpc("<p,neutral>As I'm sure you have now guessed, he had discovered a portal leading to the mythical Rune Essence. As soon as he told me of this spell I saw the importance of his find,");
-    ~chatnpc("<p,neutral>for if we could but find the elemental altars spoken|of in the ancient texts, we would once more be able|to create runes as our ancestors had done! It would|be the saviour of the wizards' art!");
-    ~chatplayer("<p,neutral>I'm still not sure how I fit into|this little story of yours...");
-    ~chatnpc("<p,neutral>You haven't guessed? This talisman you brought me...|it is the key to the elemental altar of air! When|you hold it next, it will direct you towards");
-    ~chatnpc("<p,neutral>the entrance to the long forgotten Air Altar! By|bringing pieces of the Rune Essence to the Air Temple,|you will be able to fashion your own Air Runes!");
-    ~chatnpc("<p,neutral>And this is not all! By finding other talismans similar to this one, you will eventually be able to craft every rune that is available on this world! Just");
-    ~chatnpc("<p,neutral>as our ancestors did! I cannot stress enough what a find this is! Now, due to the risks involved of letting this mighty power fall into the wrong hands");
-    ~chatnpc("<p,neutral>I will keep the teleport skill to the Rune Essence|a closely guarded secret, shared only by myself|and those Magic users around the world|whom I trust enough to keep it.");
-    ~chatnpc("<p,neutral>This means that if any evil power should discover|the talismans required to enter the elemental|temples, we will be able to prevent their access|to the Rune Essence and prevent");
-    ~chatnpc("<p,neutral>tragedy befalling this world. I know not where the|temples are located, nor do I know where the talismans|have been scattered to in this land, but I now");
-    ~chatnpc("<p,neutral>return your Air Talisman to you. Find the Air|Temple, and you will be able to charge your Rune|Essences to become Air Runes at will. Any time");
-    ~chatnpc("<p,neutral>you wish to visit the Rune Essence, speak to me|or Aubury and we will open a portal to that|mystical place for you to visit.");
-    ~chatplayer("<p,neutral>So only you and Aubury know the teleport|spell to the Rune Essence?");
-    ~chatnpc("<p,neutral>No... there are others... whom I will tell of your|authorisation to visit that place. When you speak|to them, they will know you, and grant you|access to that place when asked.");
-    ~chatnpc("<p,neutral>Use the Air Talisman to locate the air temple,|and use any further talismans you find to locate|the other missing elemental temples.|Now... my research notes please?");
-    ~mesbox("You hand the head wizard the research notes.|He hands you back the Air Talisman.");
-    inv_del(inv, notes, 1);
-    inv_add(inv, air_talisman, 1);
-    queue(rune_mysteries_complete, 0);
-
+    @sedridor_notes;
 } else if(%runemysteries_progress = ^runemysteries_complete) {
     
     def_int $option = ~p_choice2("Nothing thanks, I'm just looking around.", 1, "Can you teleport me to the Rune Essence?", 2);
@@ -82,7 +42,8 @@ if(%runemysteries_progress = ^runemysteries_not_started) {
 }
 
 [opnpcu,sedridor]
-if(last_useitem = notes & %runemysteries_progress = ^runemysteries_received_notes) @aubury_package;
+// no air talisman interaction i'm assuming since osrs dialogue is streamlined here (it starts from beginning in osrs)
+if(last_useitem = notes & %runemysteries_progress = ^runemysteries_received_notes) @sedridor_notes;
 ~displaymessage(^dm_default);
 
 [label,rune_mysteries]
@@ -172,3 +133,45 @@ if ($option = 1) {
 [label,sedridor_nothing]
 ~chatplayer("<p,neutral>Nothing thanks, I'm just looking around.");
 ~chatnpc("<p,confused>Well, take care adventurer. You stand on the ruins of the destroyed Wizards' Tower. Strange and powerful magicks lurk here.");
+
+[label,sedridor_notes]
+~chatnpc("<p,neutral>Ah, <displayname()>. How goes your quest? Have you delivered the research notes to my friend Aubury yet?");
+~chatplayer("<p,neutral>Yes, I have. He gave me some research notes to pass on to you.");
+~chatnpc("<p,neutral>May I have his notes then?");
+if(~obj_gettotal(notes) = 0) {
+    ~chatplayer("<p,neutral>Uh... I kind of... lost them...");
+    ~chatnpc("<p,neutral>You did? You are extremely careless aren't you? I suggest you go and speak to Aubury once more, with luck he will have made copies of his research.");
+    return;
+}
+if(inv_total(inv, notes) = 0) {
+    ~chatplayer("<p,neutral>Sure, I'll go and get them from the bank.");
+    return;
+}
+~chatplayer("<p,neutral>Sure. I have them here.");
+~chatnpc("<p,neutral>Well, before you hand them over to me, as you have been nothing but truthful with me to this point, and I admire that in an adventurer, I will let you into the secret of our research.");
+~chatnpc("<p,neutral>Now as you may or may not know, many|centuries ago, the wizards at this Tower|learnt the secret of creating Rune Stones, which|allowed us to cast Magic very easily.");
+~chatnpc("<p,neutral>When this Tower was burnt down the secret of creating runes was lost to us for all time... except it wasn't. Some months ago, while searching these ruins for information from old days,");
+~chatnpc("<p,neutral>I came upon a scroll, almost destroyed, that detailed a magical rock deep in the icefields of the North, closed off from access by anything other than magical means.");
+~chatnpc("<p,neutral>This rock was called the 'Rune Essence' by the|magicians who studied its powers. Apparently, by simply|breaking a chunk from it, a Rune Stone could be|fashioned very quickly and easily at certain");
+~chatnpc("<p,neutral>elemental altars that were scattered across the land|back then. Now, this is an intersting little piece of|history, but not much use to us as modern wizards|without access to the Rune Essence,");
+~chatnpc("<p,neutral>or these elemental altars. This is where you and|Aubury come into this story. A few weeks back,|Aubury discovered in a standard delivery of runes|to his store, a parchment detailing a");
+~chatnpc("<p,neutral>teleportation spell that he had never come across before. To his shock, when cast it took him to a strange rock he had never encountered before... yet that felt strangely familiar...");
+~chatnpc("<p,neutral>As I'm sure you have now guessed, he had discovered a portal leading to the mythical Rune Essence. As soon as he told me of this spell I saw the importance of his find,");
+~chatnpc("<p,neutral>for if we could but find the elemental altars spoken|of in the ancient texts, we would once more be able|to create runes as our ancestors had done! It would|be the saviour of the wizards' art!");
+~chatplayer("<p,neutral>I'm still not sure how I fit into|this little story of yours...");
+~chatnpc("<p,neutral>You haven't guessed? This talisman you brought me...|it is the key to the elemental altar of air! When|you hold it next, it will direct you towards");
+~chatnpc("<p,neutral>the entrance to the long forgotten Air Altar! By|bringing pieces of the Rune Essence to the Air Temple,|you will be able to fashion your own Air Runes!");
+~chatnpc("<p,neutral>And this is not all! By finding other talismans similar to this one, you will eventually be able to craft every rune that is available on this world! Just");
+~chatnpc("<p,neutral>as our ancestors did! I cannot stress enough what a find this is! Now, due to the risks involved of letting this mighty power fall into the wrong hands");
+~chatnpc("<p,neutral>I will keep the teleport skill to the Rune Essence|a closely guarded secret, shared only by myself|and those Magic users around the world|whom I trust enough to keep it.");
+~chatnpc("<p,neutral>This means that if any evil power should discover|the talismans required to enter the elemental|temples, we will be able to prevent their access|to the Rune Essence and prevent");
+~chatnpc("<p,neutral>tragedy befalling this world. I know not where the|temples are located, nor do I know where the talismans|have been scattered to in this land, but I now");
+~chatnpc("<p,neutral>return your Air Talisman to you. Find the Air|Temple, and you will be able to charge your Rune|Essences to become Air Runes at will. Any time");
+~chatnpc("<p,neutral>you wish to visit the Rune Essence, speak to me|or Aubury and we will open a portal to that|mystical place for you to visit.");
+~chatplayer("<p,neutral>So only you and Aubury know the teleport|spell to the Rune Essence?");
+~chatnpc("<p,neutral>No... there are others... whom I will tell of your|authorisation to visit that place. When you speak|to them, they will know you, and grant you|access to that place when asked.");
+~chatnpc("<p,neutral>Use the Air Talisman to locate the air temple,|and use any further talismans you find to locate|the other missing elemental temples.|Now... my research notes please?");
+~mesbox("You hand the head wizard the research notes.|He hands you back the Air Talisman.");
+inv_del(inv, notes, 1);
+inv_add(inv, air_talisman, 1);
+queue(rune_mysteries_complete, 0);
