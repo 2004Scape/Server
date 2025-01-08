@@ -61,8 +61,7 @@ export default class OpHeldUHandler extends MessageHandler<OpHeldU> {
         const objType = ObjType.get(player.lastItem);
         const useObjType = ObjType.get(player.lastUseItem);
 
-        player.clearInteraction();
-        player.closeModal();
+        player.clearPendingAction();
         player.faceEntity = -1;
         player.masks |= player.entitymask;
 

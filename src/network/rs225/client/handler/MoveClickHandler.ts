@@ -40,8 +40,7 @@ export default class MoveClickHandler extends MessageHandler<MoveClick> {
         }
         player.interactWalkTrigger = false;
         if (!message.opClick) {
-            player.clearInteraction();
-            player.closeModal();
+            player.clearPendingAction();
             if (player.runenergy < 100 && message.ctrlHeld === 1) {
                 player.setVar(VarPlayerType.TEMP_RUN, 0);
             } else {
