@@ -1,4 +1,5 @@
-version: "3.8"
+# version: "3.8"
+# Compose V2 doesn't require a version anymore: `version` is obsolete"
 
 services:
   2004scape:
@@ -17,3 +18,41 @@ services:
       - 80:80
       - 43594:43594
       - 43595:43595
+    profiles:
+      - dev
+
+  db:
+    image: mariadb:10.5
+    environment:
+      MYSQL_ROOT_PASSWORD: ${DB_ROOT_PASS}
+      MYSQL_DATABASE: ${DB_NAME}
+      MYSQL_USER: ${DB_USER}
+      MYSQL_PASSWORD: ${DB_PASS}
+    volumes:
+      - ./mysql_data:/var/lib/mysql
+    ports:
+      - "3306:3306"
+    profiles:
+      - prod
+    env_file:
+      - .env
+    healthcheck:
+      test: ["CMD", "mariadb-admin", "ping", "-h", "localhost", "-u${DB_USER}", "-p${DB_PASS}"]
+      interval: 10s
+      retries: 5
+      start_period: 10s
+
+  db_migrate:
+    build: .
+    command: ["/bin/bash", "-c", "npm run db:migrate"]
+    depends_on:
+      db:
+        condition: service_healthy
+    profiles:
+      - prod
+    env_file:
+      - .env
+    deploy:
+      restart_policy:
+        condition: none
+    restart: "no"
