@@ -24,8 +24,8 @@ protect=no
 
 [frozen]
 
+// not perm: https://youtu.be/HAeh4qE3WJ4?t=34
 [attackstyle]
-scope=perm
 transmit=yes
 
 [com_stabattack]
@@ -112,6 +112,7 @@ type=boolean
 [newcomers_pos]
 transmit=yes
 
+// not perm: https://runescape.wiki/w/Update:Game_Improvements
 [attackstyle_magic]
 transmit=yes
 
