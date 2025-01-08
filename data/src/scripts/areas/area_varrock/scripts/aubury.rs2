@@ -29,6 +29,10 @@ if(%runemysteries_progress = ^runemysteries_given_package) {
     }
 }
 
+[opnpcu,aubury]
+if(last_useitem = research_package & %runemysteries_progress = ^runemysteries_received_package) @aubury_package;
+~displaymessage(^dm_default);
+
 [label,aubury_shop] ~openshop_activenpc;
 
 [label,aubury_no]
