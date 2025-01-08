@@ -2,7 +2,7 @@
 echo.
 
 echo [INFO] Please wait.. This can take a minute..
-docker-compose --profile fullstack up -d 
+docker-compose --profile prod up -d 
 if %ERRORLEVEL% NEQ 0 (
     echo [!] Failed to start containers.. Something went wrong.. Stopping..
     docker-compose down

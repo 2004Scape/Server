@@ -13,8 +13,6 @@ services:
     ports:
       - "${WEB_PORT}:80"
       - "${NODE_PORT}:43594"
-      # Unsure what this is? Is this leftover?
-      - 43595:43595 
     profiles:
       - dev
     env_file:
@@ -70,15 +68,16 @@ services:
     working_dir: /usr/src/app
     # Creates a default world configuration
     # TODO: This is a bit hacky, make this configurable
-    command: ["/bin/bash", "-c", "git clone https://github.com/2004Scape/Website.git /usr/src/app && mkdir -p /usr/src/app/data/config && echo '[{\"id\": 1, \"region\": \"Local Development\", \"address\": \"http://localhost:80\", \"members\": \"false\", \"portOffset\": 0}]' > /usr/src/app/data/config/worlds.json && cd /usr/src/app && npm install && npm start"]
+    # TODO: Forces http
+    command: ["/bin/bash", "-c", "git clone https://github.com/2004Scape/Website.git /usr/src/app && mkdir -p /usr/src/app/data/config && echo '[{\"id\": 10, \"region\": \"Local Development\", \"address\": \"http://localhost:${WEB_PORT}\", \"members\": \"false\", \"portOffset\": 0}]' > /usr/src/app/data/config/worlds.json && cd /usr/src/app && npm install && npm start"]
     profiles:
       - prod
     env_file:
       - .env_prod
     ports: 
-      - "${WEB_PORT}:3000"
+      - "${WEB_PORT}:80"
     healthcheck:
-      test: ["CMD", "curl", "-f", "http://localhost:3000"]
+      test: ["CMD", "curl", "-f", "http://localhost:${WEB_PORT}"]
       interval: 10s
       retries: 5
       start_period: 10s
@@ -92,7 +91,6 @@ services:
       - prod
     env_file:
       - .env_prod
-    # TODO: Env vars
     ports:
       - "${LOGIN_PORT}:43500"
 
@@ -133,8 +131,8 @@ services:
       dockerfile: ./Dockerfile
     command: ["npm", "run", "start"]
     environment:
-      # Important, point host into its service names
-      # Don't change these:
+      # Important: point host into its docker service names
+      # Don't change these, unless you know what you're doing:
       - LOGGER_HOST=logger
       - FRIEND_HOST=friend
       - LOGIN_HOST=login
@@ -147,10 +145,7 @@ services:
     profiles:
       - prod
     ports:
-      - "${WEB_PORT}:3000"
       - "${NODE_PORT}:43594"
       - "${WEB_MANAGEMENT_PORT}:8898"
-      # Still don't know what this is 
-      - 43595:43595
     env_file:
       - .env_prod
