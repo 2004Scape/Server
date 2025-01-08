@@ -26,8 +26,10 @@ data/config/login.json
 data/config/friend.json
 
 dump/
-
 node_modules/
+
+# prod build mysql database
+mysql_data/
 
 # keep these precompiled files out of the repo
 bz2.dll
