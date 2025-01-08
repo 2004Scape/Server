@@ -79,8 +79,6 @@ export default abstract class PathingEntity extends Entity {
     target: Entity | null = null;
     targetOp: TargetOp = -1;
     targetSubject: TargetSubject = {type: -1, com: -1};
-    targetX: number = -1;
-    targetZ: number = -1;
     apRange: number = 10;
     apRangeCalled: boolean = false;
 
@@ -450,14 +448,6 @@ export default abstract class PathingEntity extends Entity {
             return;
         }
 
-        this.targetX = this.target.x;
-        this.targetZ = this.target.z;
-
-        const faceX: number = this.target.x * 2 + this.target.width;
-        const faceZ: number = this.target.z * 2 + this.target.length;
-        this.orientationX = faceX;
-        this.orientationZ = faceZ;
-
         if (this.moveStrategy === MoveStrategy.SMART) {
             if (this.target instanceof PathingEntity) {
                 if (Environment.NODE_CLIENT_ROUTEFINDER && CoordGrid.intersects(this.x, this.z, this.width, this.length, this.target.x, this.target.z, this.target.width, this.target.length)) {
@@ -525,8 +515,6 @@ export default abstract class PathingEntity extends Entity {
         this.target = target;
         this.targetOp = op;
         this.targetSubject = subject ?? {type: -1, com: -1};
-        this.targetX = target.x;
-        this.targetZ = target.z;
         this.apRange = 10;
         this.apRangeCalled = false;
 
@@ -569,8 +557,6 @@ export default abstract class PathingEntity extends Entity {
         this.target = null;
         this.targetOp = -1;
         this.targetSubject = {type: -1, com: -1};
-        this.targetX = -1;
-        this.targetZ = -1;
         this.apRange = 10;
         this.apRangeCalled = false;
     }
