@@ -799,7 +799,7 @@ class World {
             if (player.queue.head() === null) {
                 const script = ScriptProvider.getByTriggerSpecific(ServerTriggerType.LOGOUT, -1, -1);
                 if (!script) {
-                    printError('LOGOUT TRIGGER IS BROKEN!'); // (iirc this is a real message!)
+                    printError('LOGOUT TRIGGER IS BROKEN!');
                     continue;
                 }
 
@@ -822,7 +822,8 @@ class World {
     private processLogins(): void {
         const start: number = Date.now();
         player: for (const player of this.newPlayers) {
-            if (this.shutdownTick != -1 && this.shutdownTick > this.currentTick) {
+            // prevent logging in when the server is shutting down
+            if (this.shutdownTick >= this.currentTick) {
                 if (isClientConnected(player)) {
                     player.client.send(Uint8Array.from([ 14 ]));
                     player.client.close();
@@ -831,6 +832,18 @@ class World {
                 continue;
             }
 
+            // prevent logging in if a player save is being flushed
+            if (this.logoutRequests.has(player.username)) {
+                player.addSessionLog(LoggerEventType.ENGINE, 'Tried to log in - old player is logging out');
+
+                if (isClientConnected(player)) {
+                    player.client.send(Uint8Array.from([ 5 ]));
+                    player.client.close();
+                }
+                continue;
+            }
+
+            // reconnect a new socket with player in the world
             if (player.reconnecting) {
                 for (const other of this.players) {
                     if (player.username !== other.username) {
@@ -854,12 +867,14 @@ class World {
                 }
             }
 
+            // player already logged in
             for (const other of this.players) {
                 if (player.username !== other.username) {
                     continue;
                 }
 
                 if (player instanceof NetworkPlayer) {
+                    player.addSessionLog(LoggerEventType.ENGINE, 'Tried to log in - already logged in');
                     player.client.send(Uint8Array.from([ 5 ]));
                     player.client.close();
                 }
@@ -867,6 +882,7 @@ class World {
                 continue player;
             }
 
+            // normal login process
             let pid: number;
             try {
                 // if it throws then there was no available pid. otherwise guaranteed to not be -1.
@@ -874,6 +890,7 @@ class World {
             } catch (e) {
                 // world full
                 if (isClientConnected(player)) {
+                    player.addSessionLog(LoggerEventType.ENGINE, 'Tried to log in - world full');
                     player.client.send(Uint8Array.from([ 7 ]));
                     player.client.close();
                 }
