@@ -4,14 +4,14 @@ if(map_members = true & inv_total(inv, trail_clue_hard_riddle_exp015) > 0) {
     ~progress_clue_hard(trail_clue_hard_riddle_exp015, "Sir Prysin has given you another clue scroll!");
     return;
 }
-if (%demon_progress = 0 | %demon_progress = 1) {
+if (%demon_progress = ^demon_not_started | %demon_progress = ^demon_talked_gypsy) {
     @demon_slayer_sir_prysin_pre_silverlight;
-} else if (%demon_progress > 1 & %demon_progress < ^demon_complete) {
+} else if (%demon_progress >= ^demon_key_hunt & %demon_progress < ^demon_silverlight) {
     @demon_slayer_sir_prysin_key_search_progress;
+} else if (%demon_progress = ^demon_silverlight){
+    @demon_slayer_need_to_kill;
 } else if (%demon_progress = ^demon_complete) {
-    ~chatnpc("<p,happy>Hello. I've heard you stopped the demon, well done.");
-    ~chatplayer("<p,neutral>Yes, that's right.");
-    ~chatnpc("<p,happy>Thank you.");
+    @demon_slayer_completed;
 }
 
 [label,demon_slayer_sir_prysin_pre_silverlight]
@@ -30,41 +30,35 @@ if ($option = 1) {
 }
 
 [label,demon_slayer_sir_prysin_key_search_progress]
-if (inv_total(inv, silverlight) < 1 & inv_getobj(worn, 3) ! silverlight) {
-    ~chatnpc("<p,neutral>So how are you doing with getting the keys?");
+~chatnpc("<p,neutral>So how are you doing with getting the keys?");
 
-    if (inv_total(inv, demon_traiborn_key) > 0 & inv_total(inv, demon_rovin_key) > 0 & inv_total(inv, demon_prysin_key) > 0) {
-        @demon_slayer_prysin_got_them;
-    } else if (inv_total(inv, demon_traiborn_key) < 1 & inv_total(inv, demon_rovin_key) < 1 & inv_total(inv, demon_prysin_key) < 1) {
-        ~chatplayer("<p,happy>I've not found any of them yet.");
-    } else {
-        ~chatplayer("<p,neutral>I've made a start.");
-    }
-    if (inv_total(inv, demon_traiborn_key) > 0) {
-        ~chatplayer("<p,neutral>I've got the key off Wizard Traiborn.");
-    }
-
-    if (inv_total(inv, demon_rovin_key) > 0) {
-        ~chatplayer("<p,neutral>I've got the key off Captain Rovin.");
-    }
-
-    if (inv_total(inv, demon_prysin_key) > 0) {
-        ~chatplayer("<p,neutral>I've got the key You dropped down the drain.");
-    }
-
-    def_int $option = ~p_choice2("Can you remind me where all they keys were again?", 1, "I'm still looking.", 2);
-
-    if ($option = 1) {
-        ~chatplayer("<p,neutral>Can you remind me where all they keys were again?");
-        @demon_slayer_sir_prysin_keys;
-    } else {
-        ~chatplayer("<p,neutral>I'm still looking.");
-        ~chatnpc("<p,neutral>Ok, tell me when you've got them all.");
-    }
+if (inv_total(inv, demon_traiborn_key) > 0 & inv_total(inv, demon_rovin_key) > 0 & inv_total(inv, demon_prysin_key) > 0) {
+    @demon_slayer_prysin_got_them;
+} else if (inv_total(inv, demon_traiborn_key) < 1 & inv_total(inv, demon_rovin_key) < 1 & inv_total(inv, demon_prysin_key) < 1) {
+    ~chatplayer("<p,happy>I've not found any of them yet.");
 } else {
-    ~chatnpc("<p,neutral>You sorted out that demon yet?");
-    ~chatplayer("<p,happy>No, not yet.");
-    ~chatnpc("<p,neutral>Well get on with it. He'll be pretty powerful when he gets to full strength.");
+    ~chatplayer("<p,neutral>I've made a start.");
+}
+if (inv_total(inv, demon_traiborn_key) > 0) {
+    ~chatplayer("<p,neutral>I've got the key off Wizard Traiborn.");
+}
+
+if (inv_total(inv, demon_rovin_key) > 0) {
+    ~chatplayer("<p,neutral>I've got the key off Captain Rovin.");
+}
+
+if (inv_total(inv, demon_prysin_key) > 0) {
+    ~chatplayer("<p,neutral>I've got the key You dropped down the drain.");
+}
+
+def_int $option = ~p_choice2("Can you remind me where all they keys were again?", 1, "I'm still looking.", 2);
+
+if ($option = 1) {
+    ~chatplayer("<p,neutral>Can you remind me where all they keys were again?");
+    @demon_slayer_sir_prysin_keys;
+} else {
+    ~chatplayer("<p,neutral>I'm still looking.");
+    ~chatnpc("<p,neutral>Ok, tell me when you've got them all.");
 }
 
 [label,demon_slayer_prysin_got_them]
@@ -79,6 +73,7 @@ p_delay(2);
 mes("Prysin hands you an impressive looking sword.");
 p_delay(2);
 inv_add(inv, silverlight, 1);
+%demon_progress = ^demon_silverlight;
 
 [label,demon_slayer_sir_prysin_gypsy]
 ~chatnpc("<p,neutral>Gypsy Aris? Is she still alive? I remember her from when I was pretty young. Well what do you need to talk to me about?");
@@ -125,9 +120,7 @@ if ($option_keys = 1) {
 ~chatnpc("<p,neutral>I kept one of the keys. I gave the other two to other people for safe keeping.");
 ~chatnpc("<p,neutral>One I gave to Rovin, the captain of the palace guard.");
 ~chatnpc("<p,neutral>I gave the other to the wizard Traiborn.");
-if (%demon_progress < 2) {
-    ~update_demon_progress;
-}
+%demon_progress = ^demon_key_hunt;
 def_int $option_keys = ~p_choice3("Can you give me your key?", 1, "Where can I find Captain Rovin?", 2, "Where does the wizard live?", 3);
 
 if ($option_keys = 1) {
@@ -197,9 +190,91 @@ if ($option = 1) {
 ~chatplayer("<p,happy>Well I'd better go key hunting.");
 ~chatnpc("<p,happy>Ok, goodbye.");
 
+[label,demon_slayer_need_to_kill]
+~chatnpc("<p,neutral>You sorted out that demon yet?");
+if (~demon_slayer_has_silverlight = true) {
+    @demon_slayer_not_sorted_yet;
+}
+else{
+    def_int $option = ~p_choice2("No, not yet.", 1, "No, I'm afraid I've lost Silverlight.", 2);
+    if ($option = 1){
+        @demon_slayer_not_sorted_yet;
+    }
+    else if ($option = 2){
+        ~chatplayer("<p,sad>No, I'm afraid I've lost Silverlight.");
+        // osrs dialogue
+        ~chatnpc("<p,neutral>Yes, I know, someone returned it to me. |Take better care of it this time.");
+        inv_add(inv, silverlight, 1);
+    }
+}
+
+[label,demon_slayer_not_sorted_yet]
+    ~chatplayer("<p,happy>No, not yet.");
+    ~chatnpc("<p,neutral>Well get on with it. He'll be pretty powerful when he gets to full strength.");
+
+[label,demon_slayer_completed]
+~chatnpc("<p,happy>Hello. I've heard you stopped the demon, well done!");
+if (~demon_slayer_has_silverlight = true){
+    @demon_slayer_boast;
+}
+else{
+    def_int $option = ~p_choice2("Yes, that's right.", 1, "Yes, although I'm afraid I've lost Silverlight.", 2);
+    if ($option = 1){
+        @demon_slayer_boast;
+    }
+    else{
+        ~chatplayer("<p,neutral>Yes, although I'm afraid I've lost Silverlight.");
+        ~chatnpc("<p,angry>Yes, news of your carelessness is as widespread as |news of your victory. Fortunately for you, Silverlight| has come back into my possession.");
+        $option = ~p_choice2("Phew, that's a relief!", 1, "Is there any chance of me borrowing it again?", 2);
+        if ($option = 1){
+            ~chatplayer("<p, neutral> Phew, that's a relief!");
+        }
+        else if ($option = 2){
+            ~chatplayer("<p,neutral>Is there any change of me borrowing it again?");
+            ~chatnpc("<p,neutral>I won't give it awat that easily again. It's far too|important to be treated so disrespectfully.");
+            ~chatnpc("<p,neutral>If you with to make use of Silverlight again, it will cost|you 500 gold pieces. Maybe that will encourage you to|look after it.");
+            $option = ~p_choice2("No way, it's not worth that much.", 1, "Okay, I'll pay.", 2);
+            if ($option = 1){
+                // Unknown what else should be here
+                ~chatplayer("<p,neutral>No way, it's not worth that much.");
+            }
+            if ($option = 2){
+                @demon_slayer_buy_silverlight;
+            }
+        }
+    }
+}
+
+
+[label,demon_slayer_boast]
+~chatplayer("<p,neutral>Yes, that's right.");
+~chatnpc("<p,happy>A good job well done.");
+~chatplayer("<p,happy>Thank you.");
+
+[label,demon_slayer_buy_silverlight]
+~chatplayer("<p,neutral>Okay, I'll pay.");
+if (inv_total(inv, coins) >= 500){
+    inv_del(inv, coins, 500);
+    inv_add(inv, silverlight, 1);
+    ~chatnpc("May you make good use of it.");
+}
+else{
+    // Inauthentic what should happen here
+    ~chatnpc("<p,angry>You don't even have enough money.");
+}
+
 [proc,demon_slayer_sir_prysin_options](int $demon_progress)(int)
-if ($demon_progress = 0) {
+if ($demon_progress = ^demon_not_started) {
     return(~p_choice2("I am a mighty adventurer. Who are you?", 1, "I'm not sure, I was hoping you could tell me.", 2));
-} else if ($demon_progress = 1) {
-    return (~p_choice3("I am a mighty adventurer. Who are you?", 1, "I'm not sure, I was hoping you could tell me.", 2, "Gypsy Aris said I should come and talk to you.", 3));
+} else if ($demon_progress = ^demon_talked_gypsy) {
+    return(~p_choice3("I am a mighty adventurer. Who are you?", 1, "I'm not sure, I was hoping you could tell me.", 2, "Gypsy Aris said I should come and talk to you.", 3));
+}
+
+
+[proc,demon_slayer_has_silverlight]()(boolean)
+// Turns out you can't put all of this in a return statement
+if (inv_total(inv, silverlight) > 0 | (inv_getobj(worn, 3) = silverlight) | inv_total(bank, silverlight) > 0 ) {
+    return(true);
+} else {
+    return(false);
 }
