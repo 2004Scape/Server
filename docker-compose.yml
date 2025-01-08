@@ -14,6 +14,7 @@ services:
       - MEMBERS_WORLD
       - XP_MULTIPLIER
       - PROD_MODE
+    # TODO: Env vars?
     ports:
       - 80:80
       - 43594:43594
@@ -21,6 +22,7 @@ services:
     profiles:
       - dev
 
+  # MySQL Database service, uses MariaDB
   db:
     image: mariadb:10.5
     environment:
@@ -30,18 +32,23 @@ services:
       MYSQL_PASSWORD: ${DB_PASS}
     volumes:
       - ./mysql_data:/var/lib/mysql
+    # TODO: Env vars?
     ports:
       - "3306:3306"
     profiles:
       - prod
     env_file:
       - .env
+    # Migration waits till our database is up and running
+    # Stops if failed 5 times, 10 second intervals
     healthcheck:
       test: ["CMD", "mariadb-admin", "ping", "-h", "localhost", "-u${DB_USER}", "-p${DB_PASS}"]
       interval: 10s
       retries: 5
       start_period: 10s
 
+  # Migration service (this should be deleted afterwards)
+  # Runs database migrations after database is setup successfully
   db_migrate:
     build: .
     command: ["/bin/bash", "-c", "npm run db:migrate"]
@@ -56,3 +63,32 @@ services:
       restart_policy:
         condition: none
     restart: "no"
+
+  # Website service, pull remote repository, and run it 
+  website:
+    image: node:latest
+    working_dir: /usr/src/app
+    # Creates a default world configuration
+    # TODO: This is a bit hacky, make this configurable
+    command: ["/bin/bash", "-c", "git clone https://github.com/2004Scape/Website.git /usr/src/app && mkdir -p /usr/src/app/data/config && echo '[{\"id\": 1, \"region\": \"Local Development\", \"address\": \"http://localhost:80\", \"members\": \"false\", \"portOffset\": 0}]' > /usr/src/app/data/config/worlds.json && cd /usr/src/app && npm install && npm start"]
+    environment:
+      PUBLIC_IP: localhost
+      # TODO: env vars?
+      WEB_PORT: 3000
+      SKIP_CORS: false
+      HTTPS_ENABLED: false
+      ADDRESS_SHOWPORT: false
+      LOGIN_HOST: localhost
+      LOGIN_KEY: abcdef
+    profiles:
+      - fullstack
+    env_file:
+      - .env
+    # TODO: Env vars?
+    ports: 
+      - 3000:3000
+    healthcheck:
+      test: ["CMD", "curl", "-f", "http://localhost:3000"]
+      interval: 10s
+      retries: 5
+      start_period: 10s
