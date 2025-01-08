@@ -424,6 +424,11 @@ export default abstract class PathingEntity extends Entity {
             return;
         }
 
+        if (Environment.NODE_CLIENT_ROUTEFINDER && CoordGrid.intersects(this.x, this.z, this.width, this.length, this.target.x, this.target.z, this.target.width, this.target.length)) {
+            this.queueWaypoints(findNaivePath(this.level, this.x, this.z, this.target.x, this.target.z, this.width, this.length, this.target.width, this.target.length, 0, CollisionType.NORMAL));
+            return;
+        }
+
         if (!this.isLastOrNoWaypoint()) {
             return;
         }
