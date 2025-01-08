@@ -37,6 +37,7 @@ if ($option = 1) {
         ~chatplayer("<p,neutral>It's not them who are going to fight the demon, it's me.");
         ~chatnpc("<p,shock>What, all by yourself? How are you going to do that?");
         ~chatplayer("<p,neutral>I'm going to use the powerful sword Silverlight, which I believe you have one of the keys for?");
+        // RSC let you repeat this OSRS is what added blocks
         ~chatnpc("<p,quiz>Yes you are right. Here you go.");
         if_close();
         p_delay(2);
@@ -54,8 +55,8 @@ if ($option = 1) {
 }
 
 [proc,demon_slayer_captain_rovin_dialogue_options]()(int)
-if (%demon_progress < 2 | %demon_progress = ^demon_complete) {
+if (%demon_progress < ^demon_key_hunt | %demon_progress >= ^demon_silverlight) {
     return(~p_choice2("I am one of the palace guards.", 1, "What about the King?", 2));
-} else if (%demon_progress > 1 & %demon_progress < ^demon_complete) {
+} else if (%demon_progress >= ^demon_key_hunt  & %demon_progress < ^demon_silverlight) {
     return(~p_choice3("I am one of the palace guards.", 1, "What about the King?", 2, "Yes I know, but this is important.", 3));
 }

@@ -201,6 +201,8 @@ export default class Player extends PathingEntity {
     ];
     colors: number[] = [0, 0, 0, 0, 0];
     gender: number = 0;
+    run: number = 0;
+    tempRun: number = 0;
     runenergy: number = 10000;
     lastRunEnergy: number = -1;
     runweight: number = 0;
@@ -467,24 +469,26 @@ export default class Player extends PathingEntity {
             this.moveSpeed = this.defaultMoveSpeed();
             if (this.basRunning === -1) {
                 this.moveSpeed = MoveSpeed.WALK;
-            } else if (this.getVar(VarPlayerType.TEMP_RUN)) {
+            } else if (this.tempRun) {
                 this.moveSpeed = MoveSpeed.RUN;
             }
         }
 
         if (!super.processMovement()) {
             // todo: this is running every idle tick
-            this.setVar(VarPlayerType.TEMP_RUN, 0);
+            this.tempRun = 0;
         }
 
         const moved = this.lastTickX !== this.x || this.lastTickZ !== this.z;
         this.drainEnergy(moved);
         this.recoverEnergy(moved);
         if (this.runenergy === 0) {
-            this.setVar(VarPlayerType.PLAYER_RUN, 0);
+            this.run = 0;
+            // todo: better way to sync engine varp
+            this.setVar(VarPlayerType.RUN, this.run);
         }
         if (this.runenergy < 100) {
-            this.setVar(VarPlayerType.TEMP_RUN, 0);
+            this.tempRun = 0;
         }
         if (moved) {
             this.lastMovement = World.currentTick + 1;
@@ -516,7 +520,7 @@ export default class Player extends PathingEntity {
     }
 
     defaultMoveSpeed(): MoveSpeed {
-        return this.getVar(VarPlayerType.PLAYER_RUN) ? MoveSpeed.RUN : MoveSpeed.WALK;
+        return this.run ? MoveSpeed.RUN : MoveSpeed.WALK;
     }
 
     // ----

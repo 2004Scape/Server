@@ -156,9 +156,11 @@ const ObjOps: CommandHandlers = {
             state.activePlayer.invAdd(invType.id, obj.type, obj.count);
 
             if (obj.lifecycle === EntityLifeCycle.RESPAWN) {
+                state.activePlayer.addWealthLog(obj.count * objType.cost, `Picked up ${objType.debugname} x${obj.count}`);
                 World.removeObj(obj, objType.respawnrate);
                 break;
             } else if (obj.lifecycle === EntityLifeCycle.DESPAWN) {
+                state.activePlayer.addWealthLog(obj.count * objType.cost, `Picked up ${objType.debugname} x${obj.count}`);
                 World.removeObj(obj, 0);
                 break;
             }

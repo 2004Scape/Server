@@ -60,6 +60,7 @@ import {
     GenderValid,
     SkinColourValid
 } from '#/engine/script/ScriptValidators.js';
+import VarPlayerType from '#/cache/config/VarPlayerType.js';
 
 const PlayerOps: CommandHandlers = {
     [ScriptOpcode.FINDUID]: state => {
@@ -1092,6 +1093,13 @@ const PlayerOps: CommandHandlers = {
         const event = state.popString();
 
         state.activePlayer.addWealthLog(isGained ? amount : -amount, event);
+    }),
+
+    [ScriptOpcode.P_RUN]: checkedHandler(ActivePlayer, state => {
+        state.activePlayer.run = state.popInt();
+        // todo: better way to sync engine varp
+        state.activePlayer.setVar(VarPlayerType.RUN, state.activePlayer.run);
+        state.activePlayer.clearPendingAction();
     }),
 };
 
