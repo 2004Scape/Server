@@ -92,3 +92,51 @@ services:
       interval: 10s
       retries: 5
       start_period: 10s
+
+  login:
+    build: .
+    command: ["npm", "run", "login"]
+    # TODO: Login key used?
+    environment:
+      - LOGIN_KEY=abcde
+    depends_on:
+      - website
+    profiles:
+      - fullstack
+    env_file:
+      - .env
+    # TODO: Env vars
+    ports:
+      - 43500:43500
+
+  logger:
+    build: .
+    command: ["npm", "run", "logger"]
+    # TODO: Env vars
+    environment:
+      - LOGIN_KEY=abcde
+    depends_on:
+      - login
+    profiles:
+      - fullstack
+    env_file:
+      - .env
+    # TODO: Env vars
+    ports:
+      - 43501:43501
+
+  friend:
+    build: .
+    command: ["npm", "run", "friend"]
+    # TODO: Env vars
+    environment:
+      - LOGIN_KEY=abcde
+    depends_on:
+      - logger
+    profiles:
+      - fullstack
+    env_file:
+      - .env
+    # TODO: Env vars
+    ports:
+      - 45099:45099
