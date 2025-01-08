@@ -28,7 +28,7 @@ queue(set_auto_retaliate, 0, 1);
 [if_button,controls:com_4] 
 if_close;
 if (p_finduid(uid) = true) {
-    %player_run = ^player_run_off;
+    p_run(^player_run_off);
     return;
 }
 queue(set_run, 0, 0);
@@ -38,14 +38,14 @@ queue(set_run, 0, 0);
 if_close;
 if (p_finduid(uid) = true) {
     if (runenergy < 100) {
-        %player_run = ^player_run_off;
+        p_run(^player_run_off);
         return;
     }
     if (%tutorial_progress = ^tutorial_open_player_controls) {
         %tutorial_progress = ^tutorial_has_toggled_on_run;
         ~set_tutorial_progress;
     }
-    %player_run = ^player_run_on;
+    p_run(^player_run_on);
     return;
 }
 queue(set_run, 0, 1);
@@ -57,11 +57,11 @@ if (%tutorial_progress = ^tutorial_open_player_controls) {
 }
 if ($value = ^player_run_on) {
     if (runenergy < 100) {
-        %player_run = ^player_run_off;
+        p_run(^player_run_off);
         return;
     }
 }
-%player_run = $value;
+p_run($value);
 
 // emotes
 [if_button,controls:com_13] @controls_emote(emote_cry);

@@ -14,9 +14,8 @@ export default class VarPlayerType extends ConfigType {
     static SCOPE_TEMP = 0;
     static SCOPE_PERM = 1;
 
-    // commonly referenced in-engine
-    static PLAYER_RUN = -1;
-    static TEMP_RUN = -1;
+    // engine-level client <-> server varp
+    static RUN = 0;
 
     static load(dir: string) {
         if (!fs.existsSync(`${dir}/server/varp.dat`)) {
@@ -57,10 +56,12 @@ export default class VarPlayerType extends ConfigType {
             if (config.debugname) {
                 VarPlayerType.configNames.set(config.debugname, id);
             }
-        }
 
-        VarPlayerType.PLAYER_RUN = VarPlayerType.getId('player_run');
-        VarPlayerType.TEMP_RUN = VarPlayerType.getId('temp_run');
+            if (config.clientcode === 7) {
+                // unused in client so my best guess is that this was used to find the engine varp
+                VarPlayerType.RUN = config.id;
+            }
+        }
     }
 
     static get(id: number): VarPlayerType {

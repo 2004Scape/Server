@@ -171,8 +171,8 @@
 170=mouse_buttons
 171=chat_effects
 172=auto_retaliate
-173=player_run
-174=temp_run
+173=run
+174=varp_174
 175=junglepotion_progress
 176=dragon_progress
 177=dragon_planks

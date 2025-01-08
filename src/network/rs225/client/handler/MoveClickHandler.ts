@@ -43,9 +43,9 @@ export default class MoveClickHandler extends MessageHandler<MoveClick> {
         player.interactWalkTrigger = false;
         if (!message.opClick) {
             if (player.runenergy < 100 && message.ctrlHeld === 1) {
-                player.setVar(VarPlayerType.TEMP_RUN, 0);
+                player.tempRun = 0;
             } else {
-                player.setVar(VarPlayerType.TEMP_RUN, message.ctrlHeld);
+                player.tempRun = message.ctrlHeld;
             }
             if (Environment.NODE_WALKTRIGGER_SETTING === WalkTriggerSetting.PLAYERPACKET && player.hasWaypoints()) {
                 player.processWalktrigger();
