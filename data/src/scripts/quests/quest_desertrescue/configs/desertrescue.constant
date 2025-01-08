@@ -19,6 +19,10 @@
 ^desertrescue_caught_ana = 19
 ^desertrescue_ana_minecart = 20
 ^desertrescue_retrieved_ana_minecart = 21
+^desertrescue_ana_lift = 22
+^desertrescue_retrieved_ana_lift = 23
+^desertrescue_retrieved_ana_liftbarrel = 24
+^desertrescue_saved_ana = 27
 ^desertrescue_picked_first_skill = 28
 ^desertrescue_picked_second_skill = 29
 
