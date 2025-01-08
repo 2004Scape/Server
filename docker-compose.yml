@@ -81,7 +81,7 @@ services:
       LOGIN_HOST: localhost
       LOGIN_KEY: abcdef
     profiles:
-      - fullstack
+      - prod
     env_file:
       - .env
     # TODO: Env vars?
@@ -102,7 +102,7 @@ services:
     depends_on:
       - website
     profiles:
-      - fullstack
+      - prod
     env_file:
       - .env
     # TODO: Env vars
@@ -118,7 +118,7 @@ services:
     depends_on:
       - login
     profiles:
-      - fullstack
+      - prod
     env_file:
       - .env
     # TODO: Env vars
@@ -134,9 +134,45 @@ services:
     depends_on:
       - logger
     profiles:
-      - fullstack
+      - prod
     env_file:
       - .env
     # TODO: Env vars
     ports:
       - 45099:45099
+
+  # Server composer  
+  server:
+    build:
+      context: .
+      dockerfile: ./Dockerfile
+    command: ["npm", "run", "start"]
+    environment:
+      - PUBLIC_IP
+      - WEB_PORT
+      - GAME_PORT
+      - LOCAL_DEV
+      - MEMBERS_WORLD
+      - XP_MULTIPLIER
+      - PROD_MODE
+      # Important, point host into its service names
+      # Don't change these:
+      - LOGGER_HOST=logger
+      - FRIEND_HOST=friend
+      - LOGIN_HOST=login
+    depends_on:
+      website:
+        # Wait for website to launch successfully 
+        # This essentially waits till the entire thing is done
+        # Server build is quite fast, so after this is done, it should pretty much be live 
+        condition: service_healthy
+    profiles:
+      - prod
+    # TODO: Env vars
+    ports:
+      - 80:80
+      - 8898:8898
+      - 43594:43594
+      - 43595:43595
+    env_file:
+      - .env
