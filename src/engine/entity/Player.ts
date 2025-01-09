@@ -589,8 +589,12 @@ export default class Player extends PathingEntity {
     }
 
     canAccess() {
-        // once the world is shutting down, no protection rules apply
-        return World.shutdownTick <= World.currentTick && !this.protect && !this.busy();
+        if (World.shutdownTick > World.currentTick) {
+            // once the world has gone past shutting down, no protection rules apply
+            return true;
+        } else {
+            return !this.protect && !this.busy();
+        }
     }
 
     /**
