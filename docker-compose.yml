@@ -69,15 +69,21 @@ services:
     # Creates a default world configuration
     # TODO: This is a bit hacky, make this configurable
     # TODO: Forces http
-    command: ["/bin/bash", "-c", "git clone https://github.com/2004Scape/Website.git /usr/src/app && mkdir -p /usr/src/app/data/config && echo '[{\"id\": 10, \"region\": \"Local Development\", \"address\": \"http://localhost:${WEB_PORT}\", \"members\": \"false\", \"portOffset\": 0}]' > /usr/src/app/data/config/worlds.json && cd /usr/src/app && npm install && npm start"]
+    # TODO: Currently uses custom branch (where https redirect is fixed)
+    # git clone https://github.com/2004Scape/Website.git
+    # git clone -b fix/https_env_var https://github.com/Rohanlogs/2004Scape-Website.git
+    command: ["/bin/bash", "-c", "git clone -b fix/https_env_var https://github.com/Rohanlogs/2004Scape-Website.git /usr/src/app && mkdir -p /usr/src/app/data/config && echo '[{\"id\": 10, \"region\": \"Local Development\", \"address\": \"http://localhost:${WEB_PORT}\", \"members\": \"true\", \"portOffset\": 0}]' > /usr/src/app/data/config/worlds.json && cd /usr/src/app && npm install && npm start"]
     profiles:
       - prod
     env_file:
       - .env_prod
+    # Important, we have to keep separate ports with web service & game 
+    environment:
+      WEB_PORT: 3000
     ports: 
-      - "${WEB_PORT}:80"
+      - "3000:3000"
     healthcheck:
-      test: ["CMD", "curl", "-f", "http://localhost:${WEB_PORT}"]
+      test: ["CMD", "curl", "-f", "http://localhost:3000"]
       interval: 10s
       retries: 5
       start_period: 10s
@@ -112,9 +118,6 @@ services:
   friend:
     build: .
     command: ["npm", "run", "friend"]
-    # TODO: Env vars
-    environment:
-      - LOGIN_KEY=abcde
     depends_on:
       - logger
     profiles:
@@ -136,6 +139,7 @@ services:
       - LOGGER_HOST=logger
       - FRIEND_HOST=friend
       - LOGIN_HOST=login
+      - DB_HOST=db
     depends_on:
       website:
         # Wait for website to launch successfully 
@@ -145,7 +149,9 @@ services:
     profiles:
       - prod
     ports:
+      - "${WEB_PORT}:80"
       - "${NODE_PORT}:43594"
       - "${WEB_MANAGEMENT_PORT}:8898"
+      - 43595:43595
     env_file:
       - .env_prod
