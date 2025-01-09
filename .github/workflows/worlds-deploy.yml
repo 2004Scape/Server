@@ -1,0 +1,62 @@
+name: Deploy World
+env: ${{ secrets }}
+
+on:
+  workflow_call:
+    inputs:
+      environment:
+        required: true
+        type: string
+
+# pm2 start npm --name "w1-maintenance" -- run maintenance
+# pm2 start npm --name "w2-maintenance" -- run maintenance
+# pm2 start npm --name "w1-server" --kill-timeout 600000 -- run quickstart
+# pm2 start npm --name "w2-server" --kill-timeout 600000 -- run quickstart
+
+jobs:
+  deploy:
+    runs-on: ubuntu-latest
+    environment: ${{ inputs.environment}}
+
+    steps:
+    - name: Download Packed Data
+      uses: actions/download-artifact@v4
+      with:
+        name: packed
+
+    - name: Shutdown World
+      uses: appleboy/ssh-action@v1.2.0
+      with:
+        host: ${{ secrets.HOST }}
+        port: ${{ secrets.PORT }}
+        username: ${{ secrets.USERNAME }}
+        key: ${{ secrets.KEY }}
+        script: |
+          source ~/.bashrc
+          cd ${{ secrets.DIR }}
+          git pull
+          pnpm i
+          pm2 stop ${{ secrets.PROCESS }}
+          pm2 start ${{ secrets.MAINT_PROCESS }}
+
+    - name: Update Content
+      uses: appleboy/scp-action@v0.1.7
+      with:
+        host: ${{ secrets.HOST }}
+        port: ${{ secrets.PORT }}
+        username: ${{ secrets.USERNAME }}
+        key: ${{ secrets.KEY }}
+        source: "client,server"
+        target: ${{ secrets.DIR }}/data/pack
+        rm: true
+
+    - name: Start World
+      uses: appleboy/ssh-action@v1.2.0
+      with:
+        host: ${{ secrets.HOST }}
+        port: ${{ secrets.PORT }}
+        username: ${{ secrets.USERNAME }}
+        key: ${{ secrets.KEY }}
+        script: |
+          pm2 stop ${{ secrets.MAINT_PROCESS }}
+          pm2 start ${{ secrets.PROCESS }}
