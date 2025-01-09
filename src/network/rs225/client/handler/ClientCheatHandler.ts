@@ -93,7 +93,13 @@ export default class ClientCheatHandler extends MessageHandler<ClientCheat> {
 
         if (Environment.NODE_ALLOW_CHEATS || player.staffModLevel >= 2) {
             // admin commands
-            if (cmd === 'tele') {
+            if (cmd === 'broadcast') {
+                if (args.length < 0) {
+                    return false;
+                }
+
+                World.broadcastMes(args[0]);
+            } else if (cmd === 'tele') {
                 // authentic
                 if (args.length < 1) {
                     // allowed formats:
