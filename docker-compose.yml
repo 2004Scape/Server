@@ -1,5 +1,5 @@
 # version: "3.8"
-# Compose V2 doesn't require a version anymore: `version` is obsolete"
+# Compose V2 doesn't require a version anymore: `version` is obsolete
 
 services:
   # --------------- Dev --------------- #
@@ -103,9 +103,6 @@ services:
   logger:
     build: .
     command: ["npm", "run", "logger"]
-    # TODO: Env vars
-    environment:
-      - LOGIN_KEY=abcde
     depends_on:
       - login
     profiles:
