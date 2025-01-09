@@ -6608,7 +6608,10 @@ param=demonbane_vulnerable,yes
 param=attack_sound,black_demon_attack
 param=defend_sound,black_demon_hit
 param=death_sound,black_demon_death
-param=death_drop,null
+// https://classic.runescape.wiki/w/Nezikchened#100%_drops
+// https://oldschool.runescape.wiki/w/Nezikchened#Trivia
+// "Nezikchened is one of the few demons which still drops regular Ashes."
+param=death_drop,ashes
 // osrs stats and Vislvl match 1:1
 // https://raw.githubusercontent.com/Joshua-F/osrs-dumps/refs/heads/master/config/dump.npc npc_3962
 
