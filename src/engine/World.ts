@@ -181,6 +181,15 @@ class World {
         }
     }
 
+    get shutdown() {
+        return this.shutdownTick != -1 && this.currentTick >= this.shutdownTick;
+    }
+
+    // shutting down within the next 30s
+    get shutdownSoon() {
+        return this.shutdownTick != -1 && this.currentTick >= this.shutdownTick - 50;
+    }
+
     reload(): void {
         VarPlayerType.load('data/pack');
         ParamType.load('data/pack');
@@ -431,8 +440,7 @@ class World {
 
             const tick: number = this.currentTick;
 
-            // server shutdown
-            if (this.shutdownTick > -1 && tick >= this.shutdownTick) {
+            if (this.shutdown) {
                 this.processShutdown();
             }
 
@@ -636,7 +644,7 @@ class World {
                 }
 
                 if (this.currentTick - player.lastResponse >= World.TIMEOUT_SOCKET_LOGOUT) {
-                    // x-logged / timed out for 60s: force logout
+                    // x-logged / timed out for 60s: logout
                     player.loggedOut = true;
                 } else if (this.currentTick - player.lastResponse >= World.TIMEOUT_SOCKET_IDLE) {
                     // x-logged / timed out for 10s: attempt logout
@@ -822,24 +830,15 @@ class World {
     private processLogins(): void {
         const start: number = Date.now();
         player: for (const player of this.newPlayers) {
-            // prevent logging in when the server is shutting down
-            if (this.shutdownTick >= this.currentTick) {
-                if (isClientConnected(player)) {
-                    player.client.send(Uint8Array.from([ 14 ]));
-                    player.client.close();
-                }
-
-                continue;
-            }
-
             // prevent logging in if a player save is being flushed
             if (this.logoutRequests.has(player.username)) {
-                player.addSessionLog(LoggerEventType.ENGINE, 'Tried to log in - old player is logging out');
+                player.addSessionLog(LoggerEventType.ENGINE, 'Tried to log in - old session is mid-logout');
 
                 if (isClientConnected(player)) {
                     player.client.send(Uint8Array.from([ 5 ]));
                     player.client.close();
                 }
+
                 continue;
             }
 
@@ -882,6 +881,17 @@ class World {
                 continue player;
             }
 
+            // prevent logging in when the server is shutting down
+            if (this.shutdownSoon) {
+                if (isClientConnected(player)) {
+                    player.addSessionLog(LoggerEventType.ENGINE, 'Tried to log in - server is shutting down');
+                    this.forceLogout(player, 14);
+                }
+
+                continue;
+            }
+
+
             // normal login process
             let pid: number;
             try {
@@ -891,8 +901,7 @@ class World {
                 // world full
                 if (isClientConnected(player)) {
                     player.addSessionLog(LoggerEventType.ENGINE, 'Tried to log in - world full');
-                    player.client.send(Uint8Array.from([ 7 ]));
-                    player.client.close();
+                    this.forceLogout(player, 7);
                 }
                 continue;
             }
@@ -923,7 +932,7 @@ class World {
             this.gameMap.getZone(player.x, player.z, player.level).enter(player);
             player.onLogin();
 
-            if (this.shutdownTick > -1) {
+            if (this.shutdownTick != -1) {
                 player.write(new UpdateRebootTimer(this.shutdownTick - this.currentTick));
             }
 
@@ -1112,6 +1121,7 @@ class World {
 
         const online = this.getTotalPlayers();
         if (online === 0 && this.logoutRequests.size === 0) {
+            printInfo('Server shutdown complete');
             process.exit(0);
         }
 
@@ -1448,6 +1458,22 @@ class World {
             type: 'player_logout',
             username: player.username,
         });
+    }
+
+    // let the login server know this player can log in elsewhere, do not update save file
+    forceLogout(player: Player, response = -1) {
+        this.loginThread.postMessage({
+            type: 'player_force_logout',
+            username: player.username
+        });
+
+        if (isClientConnected(player)) {
+            if (response !== -1) {
+                player.client.send(Uint8Array.from([ response ]));
+            }
+
+            player.client.close();
+        }
     }
 
     sendPrivateMessage(player: Player, targetUsername37: bigint, message: string): void {

@@ -19,7 +19,6 @@ import { CoordGrid } from '#/engine/CoordGrid.js';
 import ScriptRunner from '#/engine/script/ScriptRunner.js';
 import { PlayerStat, PlayerStatEnabled, PlayerStatKey } from '#/engine/entity/PlayerStat.js';
 import MoveStrategy from '#/engine/entity/MoveStrategy.js';
-import { findPath, isMapBlocked } from '#/engine/GameMap.js';
 import LoggerEventType from '#/server/logger/LoggerEventType.js';
 
 export default class ClientCheatHandler extends MessageHandler<ClientCheat> {
@@ -98,7 +97,7 @@ export default class ClientCheatHandler extends MessageHandler<ClientCheat> {
                     return false;
                 }
 
-                World.broadcastMes(args[0]);
+                World.broadcastMes(cheat.substring(cmd.length + 1));
             } else if (cmd === 'tele') {
                 // authentic
                 if (args.length < 1) {
