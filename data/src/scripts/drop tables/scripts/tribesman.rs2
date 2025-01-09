@@ -1,4 +1,4 @@
-[ai_queue3,tribalman]
+[ai_queue3,tribesman]
 gosub(npc_death);
 if (npc_findhero = false){
     return;
