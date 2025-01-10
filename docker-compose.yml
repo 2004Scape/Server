@@ -62,6 +62,27 @@ services:
         condition: none
     restart: "no"
 
+  # Database interface with basic authentication 
+  phpmyadmin:
+    image: phpmyadmin/phpmyadmin
+    environment:
+      PMA_HOST: db
+      PMA_PORT: 3306
+      MYSQL_ROOT_PASSWORD: ${DB_ROOT_PASS}
+      UPLOAD_LIMIT: ${DB_UPLOAD_LIMIT}
+      # Optional basic auth for minimal protection
+      MYSQL_USER: ${DB_USER}
+      MYSQL_PASSWORD: ${DB_PASS}
+    ports:
+      - "8080:80"
+    depends_on:
+      db:
+        condition: service_healthy
+    env_file:
+      - .env_prod
+    profiles:
+      - prod
+
   # Website service, pull remote repository, and run it 
   website:
     image: node:latest
@@ -75,8 +96,9 @@ services:
       - prod
     env_file:
       - .env_prod
-    # Important, we have to keep separate ports with web service & game 
     environment:
+      # Important, we have to keep separate ports with web service & game 
+      WORLD_REDIRECT: ${WEB_PORT}
       WEB_PORT: 3000
       WORLD_CONFIG_PATH: /usr/src/app/prodWorldsConf.js
     # Add this file so website service can access it 
