@@ -1,13 +1,20 @@
 [debugproc,longqueue]
-longqueue(testlongqueue, 100000, ^accelerate, "accelerate ran");
-longqueue(testlongqueue, 100000, ^discard, "discard ran (!)");
+longqueue(testlongqueueint, 100000, ^accelerate, 123);
+longqueue(testlongqueueint, 100000, ^discard, 456);
+longqueue(testlongqueuestr, 100000, ^accelerate, "accelerate ran");
+longqueue(testlongqueuestr, 100000, ^discard, "discard ran (!)");
+
 if (p_finduid(uid) = true) {
     p_logout;
 }
 
-[queue,testlongqueue](string $msg)
-console($msg);
+[queue,testlongqueueint](int $test)
+console("int: <tostring($test)>");
 
+[queue,testlongqueuestr](string $msg)
+console("str: <$msg>");
+
+// blocks safe logout!
 [debugproc,dangerous_requeue]
 queue(dangerous_requeue, 0);
 
