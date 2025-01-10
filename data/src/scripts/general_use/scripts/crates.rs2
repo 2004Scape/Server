@@ -34,7 +34,7 @@ if(map_members = true) {
     }
 } 
 if (random(^findsomethingnice_chance) = 0 & ~in_tutorial_island(coord) = false) { // complete guess
-    mes("You search the crate."); // https://youtu.be/YkSpV1DX1cw
+    mes("You search the crate..."); // guess
     p_delay(2);
     ~findsomethingnice;
     return;
@@ -53,7 +53,7 @@ if (map_members = true) {
     }
 }
 if (random(^findsomethingnice_chance) = 0 & ~in_tutorial_island(coord) = false) { // complete guess
-    mes("You search the crates."); // guess
+    mes("You search the crates..."); // guess
     p_delay(2);
     ~findsomethingnice;
     return;
@@ -81,7 +81,7 @@ if(map_members = true) {
     }
 }
 if (random(^findsomethingnice_chance) = 0 & ~in_tutorial_island(coord) = false) { // complete guess
-    mes("You search the boxes.");
+    mes("You search the boxes...");
     p_delay(2);
     ~findsomethingnice;
     return;

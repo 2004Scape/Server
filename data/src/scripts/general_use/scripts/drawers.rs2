@@ -58,7 +58,7 @@ if(map_members = true) {
     }
 }
 if (random(^findsomethingnice_chance) = 0 & ~in_tutorial_island(coord) = false) { // complete guess
-    mes("You search the drawers."); // guess
+    mes("You search the drawers..."); // guess
     p_delay(2);
     ~findsomethingnice;
     return;

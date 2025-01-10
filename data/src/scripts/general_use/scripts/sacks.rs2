@@ -4,7 +4,7 @@
 
 // todo figure out if u can actually find swords and broken staves from these
 if (random(^findsomethingnice_chance) = 0 & ~in_tutorial_island(coord) = false) {
-    mes("You search the sacks."); // guess
+    mes("You search the sacks..."); // guess
     p_delay(2);
     ~findsomethingnice;
     return;
