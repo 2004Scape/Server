@@ -140,16 +140,15 @@ const PlayerOps: CommandHandlers = {
     }),
 
     [ScriptOpcode.LONGQUEUE]: checkedHandler(ActivePlayer, state => {
-        // todo: come back here when the compiler updates and logoutAction isn't compiled into the arg list
         const args = popScriptArgs(state);
-        const [scriptId, delay] = state.popInts(2);
+        const [scriptId, delay, logoutAction] = state.popInts(3);
 
         const script = ScriptProvider.get(scriptId);
         if (!script) {
             throw new Error(`Unable to find queue script: ${scriptId}`);
         }
 
-        state.activePlayer.enqueueScript(script, PlayerQueueType.LONG, delay, args);
+        state.activePlayer.enqueueScript(script, PlayerQueueType.LONG, delay, [logoutAction, ...args]);
     }),
 
     // https://x.com/JagexAsh/status/1806246992797921391
