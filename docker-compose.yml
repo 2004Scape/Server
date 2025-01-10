@@ -66,13 +66,11 @@ services:
   website:
     image: node:latest
     working_dir: /usr/src/app
-    # Creates a default world configuration
-    # TODO: This is a bit hacky, make this configurable
-    # TODO: Forces http
-    # TODO: Currently uses custom branch (where https redirect is fixed)
+    # Creates world configuration
+    # TODO: Fix repo
     # git clone https://github.com/2004Scape/Website.git
-    # git clone -b fix/https_env_var https://github.com/Rohanlogs/2004Scape-Website.git
-    command: ["/bin/bash", "-c", "git clone -b fix/https_env_var https://github.com/Rohanlogs/2004Scape-Website.git /usr/src/app && mkdir -p /usr/src/app/data/config && echo '[{\"id\": 10, \"region\": \"Local Development\", \"address\": \"http://localhost:${WEB_PORT}\", \"members\": \"true\", \"portOffset\": 0}]' > /usr/src/app/data/config/worlds.json && cd /usr/src/app && npm install && npm start"]
+    # git clone -b infra/world_generation https://github.com/Rohanlogs/2004Scape-Website.git
+    command: ["/bin/bash", "-c", "git clone -b infra/world_generation https://github.com/Rohanlogs/2004Scape-Website.git /usr/src/app && cd /usr/src/app && node src/lostcity/util/dockerWorldsConf.js && npm install && npm start"]
     profiles:
       - prod
     env_file:
@@ -80,6 +78,10 @@ services:
     # Important, we have to keep separate ports with web service & game 
     environment:
       WEB_PORT: 3000
+      WORLD_CONFIG_PATH: /usr/src/app/prodWorldsConf.js
+    # Add this file so website service can access it 
+    volumes:
+      - ./src/prodWorldsConf.js:/usr/src/prodWorldsConf.js
     ports: 
       - "3000:3000"
     healthcheck:
