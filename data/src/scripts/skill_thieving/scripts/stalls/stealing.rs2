@@ -21,10 +21,6 @@
 
 [label,attempt_steal_from_stall](loc $loc, coord $loc_coord, int $loc_angle, locshape $loc_shape)
 p_arrivedelay;
-if (map_members = false) {
-    mes(^mes_members_thieving);
-    return;
-}
 
 db_find(stealing:loc, $loc);
 def_dbrow $data = db_findnext;
@@ -32,14 +28,24 @@ if ($data = null) {
     ~displaymessage(^dm_default);
     return;
 }
+// probably goes before mems check based on this bug:
+// 'There was a bug in free worlds where if the player tried to steal from a stall 
+// (such as the tea stall) in south-east Varrock, a watchman would appear. 
+// He would attack and the player could fight him. 
+// He would not drop any member items on free to play worlds.'
+// - https://oldschool.runescape.wiki/w/Watchman_(random_event)
+if (afk_event = ^true) {
+    @macro_randomthieving;
+}
+
+if (map_members = false) {
+    mes(^mes_members_thieving);
+    return;
+}
 // if player is in combat, prevent stealing
 if (add(%lastcombat, 10) > map_clock) {
     mes("You can't steal from the market stall during combat!");
     return;
-}
-
-if (afk_event = ^true) {
-    @macro_randomthieving;
 }
 
 def_string $stall = db_getfield($data, stealing:stall, 0);
