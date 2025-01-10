@@ -54,11 +54,6 @@ mes("You've been stunned!");
 walktrigger(stunned);
 
 [proc,steal_from_stall](dbrow $data, coord $loc_coord, int $loc_angle, locshape $loc_shape)
-// if player is in combat, prevent stealing
-if (add(%lastcombat, 10) > map_clock) {
-    mes("You can't steal from the market stall during combat!");
-    return;
-}
 // if guard sees (for first time), stop player from stealing.
 // guards proioritize over sellers
 if (~stealing_check_for_guard($data) = true) {
