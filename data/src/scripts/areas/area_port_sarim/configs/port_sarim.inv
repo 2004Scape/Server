@@ -65,8 +65,8 @@ stock6=bodyrune,1000,25
 stock7=chaosrune,100,25
 stock8=deathrune,100,45
 stock9=eye_of_newt,300,10
-stock10=wizards_hat_blue,1,100
-stock11=wizard_hat,1,100
+stock10=wizards_hat,1,100
+stock11=wizards_hat_dark,1,100
 
 [brian_battleaxe]
 // https://classic.runescape.wiki/w/Brian%27s_Great_Axes

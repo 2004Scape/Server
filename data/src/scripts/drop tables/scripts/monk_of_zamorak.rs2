@@ -1,18 +1,20 @@
-[ai_queue3,_monk_of_zamorak]
-gosub(npc_death);
-if (npc_findhero = false) {
-    return;
-}
-
+//[ai_queue3,_monk_of_zamorak]
+//gosub(npc_death);
+//if (npc_findhero = false) {
+//    return;
+//}
+//
 // Default drop from config.
-obj_add(npc_coord, npc_param(death_drop), 1, ^lootdrop_duration);
-
-if (map_members = true) {
-    def_int $random = random(20);
-
-    if ($random < 1) {
-        obj_add(npc_coord, zamorak_monk_bottom, 1, ^lootdrop_duration);
-    } else if ($random < 2) {
-        obj_add(npc_coord, zamorak_monk_top, 1, ^lootdrop_duration);
-    }
-}
+//obj_add(npc_coord, npc_param(death_drop), 1, ^lootdrop_duration);
+//
+//if (map_members = true) {
+//    def_int $random = random(20);
+//
+// if ($random < 1) {
+//     obj_add(npc_coord, zamorak_monk_bottom, 1, ^lootdrop_duration);
+//    } else if ($random < 2) {
+//    obj_add(npc_coord, zamorak_monk_top, 1, ^lootdrop_duration);
+//    }
+//}
+// There is a mention here that all Zamorak monks now drop Zamorak robes, including those on f2p servers date 20 July 2017.
+// https://oldschool.runescape.wiki/w/Update:F2P_Castle_Wars

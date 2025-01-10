@@ -29,11 +29,7 @@ if ($random < 2) {
     obj_add(npc_coord, ~randomherb, ^lootdrop_duration);
 } else if ($random < 62) {
     obj_add(npc_coord, coins, 3, ^lootdrop_duration);
-} else if ($random < 85) {
-    obj_add(npc_coord, coins, 10, ^lootdrop_duration);
-} else if ($random < 94) {
-    obj_add(npc_coord, coins, 5, ^lootdrop_duration);
-} else if ($random < 98) {
+} else if ($random < 98) { // Only dropped in Free-to-play
     obj_add(npc_coord, coins, 15, ^lootdrop_duration);
 } else if ($random < 99) {
     obj_add(npc_coord, coins, 25, ^lootdrop_duration);
@@ -45,6 +41,12 @@ if ($random < 2) {
     obj_add(npc_coord, earth_talisman, 1, ^lootdrop_duration);
 } else if ($random < 109) {
     obj_add(npc_coord, cabbage, 1, ^lootdrop_duration);
+
 }
-
-
+// rsc coins drop piles 3,5,15,25
+// } else if ($random < 94) { // recheck droprate % // replaces seeds drops? exist before farming?
+//    obj_add(npc_coord, coins, 5, ^lootdrop_duration);
+//} else if ($random < 85) {
+//    obj_add(npc_coord, coins, 10, ^lootdrop_duration);
+//} else if ($random < 94) {
+//    obj_add(npc_coord, coins, 5, ^lootdrop_duration);

@@ -54,3 +54,5 @@ if ($random < 4) {
 } else if ($random < 128) {
     obj_add(npc_coord, ~ultrarare_getitem, ^lootdrop_duration);
 }
+
+// rsc coins drop piles 30,44,132,220,460

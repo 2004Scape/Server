@@ -19,10 +19,6 @@ if ($random < 13) {
     obj_add(npc_coord, bronze_battleaxe, 1, ^lootdrop_duration);
 } else if ($random < 20) {
     obj_add(npc_coord, iron_battleaxe, 1, ^lootdrop_duration);
-} else if ($random < 27) {
-    if (map_members = true) {
-        obj_add(npc_coord, bolt, ~random_range(2, 12), ^lootdrop_duration);
-    }
 } else if ($random < 31) {
     obj_add(npc_coord, chaosrune, 2, ^lootdrop_duration);
 } else if ($random < 35) {
@@ -50,3 +46,9 @@ if ($random < 13) {
 } else if ($random < 105) {
     obj_add(npc_coord, ~randomjewel, ^lootdrop_duration);
 }
+
+// rsc coins drop piles 4,10,30
+//} else if ($random < 27) {
+//   if (map_members = true) {
+//        obj_add(npc_coord, bolt, ~random_range(2, 12), ^lootdrop_duration);
+//    }

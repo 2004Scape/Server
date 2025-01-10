@@ -4697,13 +4697,11 @@ param=damagetype,^slash_style
 param=attack_anim,human_sword_slash
 param=defend_anim,human_sword_defend2
 param=attack_sound,hacksword_slash
-huntmode=cowardly
-huntrange=1
 category=pirate
 // Stats match osrs version but our version Vislvl is different.
 // https://raw.githubusercontent.com/Joshua-F/osrs-dumps/refs/heads/master/config/dump.npc npc_521
 
-[npc_183]
+[pirate_black]
 name=Pirate
 desc=Avast ye scurvy land lubbers!
 walkanim=human_walk_f,human_walk_b,human_walk_l,human_walk_r
@@ -4744,13 +4742,11 @@ param=damagetype,^slash_style
 param=attack_anim,human_sword_slash
 param=defend_anim,human_sword_defend2
 param=attack_sound,hacksword_slash
-huntmode=cowardly
-huntrange=1
 category=pirate
 // Stats match osrs version but our version Vislvl is different.
 // https://raw.githubusercontent.com/Joshua-F/osrs-dumps/refs/heads/master/config/dump.npc npc_522
 
-[npc_184]
+[pirate_red]
 name=Pirate
 desc=This ones had too much to drink!
 walkanim=human_walk_f,human_walk_b,human_walk_l,human_walk_r
@@ -4835,8 +4831,6 @@ param=attack_anim,human_sword_slash
 param=defend_anim,human_sword_defend2
 param=attack_sound,hacksword_slash
 category=pirate
-huntmode=cowardly
-huntrange=1
 // Stats match osrs version but our version Vislvl is different.
 // https://raw.githubusercontent.com/Joshua-F/osrs-dumps/refs/heads/master/config/dump.npc npc_524
 

@@ -42,3 +42,5 @@ if ($random < 4) {
 } else if ($random < 98) {
     obj_add(npc_coord, coins, 20, ^lootdrop_duration);
 }
+
+// rsc coins drop piles 8,15,30

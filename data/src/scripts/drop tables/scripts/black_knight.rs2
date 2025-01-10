@@ -19,8 +19,6 @@ if ($random < 4) {
     obj_add(npc_coord, iron_full_helm, 1, ^lootdrop_duration);
 } else if ($random < 7) {
     obj_add(npc_coord, steel_mace, 1, ^lootdrop_duration);
-} else if ($random < 11) {
-    obj_add(npc_coord, mithril_arrow, 3, ^lootdrop_duration);
 } else if ($random < 14) {
     obj_add(npc_coord, bodyrune, 9, ^lootdrop_duration);
 } else if ($random < 17) {
@@ -34,7 +32,7 @@ if ($random < 4) {
 } else if ($random < 25) {
     obj_add(npc_coord, cosmicrune, 7, ^lootdrop_duration);
 } else if ($random < 26) {
-    obj_add(npc_coord, mindrune, 1, ^lootdrop_duration);
+    obj_add(npc_coord, mindrune, 2, ^lootdrop_duration);
 } else if ($random < 29) {
     obj_add(npc_coord, ~randomherb, ^lootdrop_duration);
 } else if ($random < 35) {
@@ -60,3 +58,9 @@ if ($random < 4) {
 } else if ($random < 108) {
     obj_add(npc_coord, ~randomjewel, ^lootdrop_duration);
 }
+
+// rsc coins drop piles 1,6,12,35,58,80
+// } else if ($random < 11) { // possible added update 29 March 2005..
+//    obj_add(npc_coord, mithril_arrow, 3, ^lootdrop_duration);
+// } else if ($random < ??) { // recheck droprate % // replaces seeds drops? exist before farming?
+//    obj_add(npc_coord, coins, 5, ^lootdrop_duration);

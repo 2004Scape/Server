@@ -23,12 +23,6 @@ if ($random < 3) {
     obj_add(npc_coord, lawrune, 2, ^lootdrop_duration);
 } else if ($random < 34) {
     obj_add(npc_coord, cosmicrune, 2, ^lootdrop_duration);
-} else if ($random < 39) {
-    obj_add(npc_coord, mithril_arrow, 3, ^lootdrop_duration);
-} else if ($random < 41) {
-    if (map_members = true) {
-        obj_add(npc_coord, adamant_arrow, 2, ^lootdrop_duration);
-    }
 } else if ($random < 44) {
     obj_add(npc_coord, deathrune, 2, ^lootdrop_duration);
 } else if ($random < 45) {
@@ -41,4 +35,14 @@ if ($random < 3) {
     obj_add(npc_coord, coins, 15, ^lootdrop_duration);
 } else if ($random < 97) {
     obj_add(npc_coord, ~randomjewel, ^lootdrop_duration);
+//} else if ($random < ??) { // mentioned tip.it + appear too rsc droptable // recheck droptable %
+//   obj_add(npc_coord, bronze_spear, 1, ^lootdrop_duration);
 }
+
+// rsc coins drop piles 15
+// } else if ($random < 39) { // possibly added with update 29 March 2005.
+//   obj_add(npc_coord, mithril_arrow, 3, ^lootdrop_duration);
+// } else if ($random < 41) { // possibly added with update 29 March 2005.
+//   obj_add(npc_coord, adamant_arrow, 2, ^lootdrop_duration);
+//} else if ($random < ??) { // replace seeds drops. // possibly added with update 6 June 2005. Only drops in free-to-play.
+//    obj_add(npc_coord, coins, 5, ^lootdrop_duration);

@@ -52,8 +52,6 @@ if ($random < 8) {
     obj_add(npc_coord, steel_arrow, 5, ^lootdrop_duration);
 } else if ($random < 67) {
     obj_add(npc_coord, coins, 1, ^lootdrop_duration);
-} else if ($random < 85) {
-    obj_add(npc_coord, coins, 5, ^lootdrop_duration);
 } else if ($random < 101) {
     obj_add(npc_coord, coins, 7, ^lootdrop_duration);
 } else if ($random < 110) {
@@ -66,4 +64,9 @@ if ($random < 8) {
     obj_add(npc_coord, coins, 17, ^lootdrop_duration);
 } else if ($random < 128) {
     obj_add(npc_coord, coins, 30, ^lootdrop_duration);
+//} else if ($random < ??) {
+//    obj_add(npc_coord, bolt, ~random_range(1,3), ^lootdrop_duration);
 }
+// rsc coins drop piles 1,4,7,12,17,25,30
+//} else if ($random < 85) { // (Seeds) // possibly added with update 6 June 2005. Only drops in free-to-play.
+//    obj_add(npc_coord, coins, 5, ^lootdrop_duration);

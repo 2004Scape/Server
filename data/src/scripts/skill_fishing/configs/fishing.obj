@@ -932,7 +932,7 @@ cost=5
 weight=80g
 members=yes
 
-[oyster_perl]
+[oyster_pearl]
 name=Oyster pearl
 desc=I could work wonders with a chisel on this pearl.
 model=model_2721_obj
@@ -945,7 +945,7 @@ cost=112
 weight=2g
 members=yes
 
-[oyster_perls]
+[oyster_pearls]
 name=Oyster pearls
 desc=I could work wonders with a chisel on these pearls.
 model=model_2377_obj

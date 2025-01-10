@@ -414,7 +414,7 @@ model=model_2345_obj
 cost=1
 weight=1lb
 
-[obj_1946]
+[flour]
 name=Flour
 desc=A little heap of flour.
 cost=2

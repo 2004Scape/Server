@@ -21,8 +21,8 @@ if ($dropint < 2) {
     // 1/128
     obj_add(npc_coord, iron_dagger, 1, 200);
 } else if ($dropint < 25) {
-    // 22/128
-    obj_add(npc_coord, bolt, ~random_range(2, 12), 200);
+    // ?/??? 
+    obj_add(npc_coord, bolt, ~random_range(1,3), 200);
 } else if ($dropint < 28) {
     // 3/128
     obj_add(npc_coord, bronze_arrow, 7, 200);
@@ -68,3 +68,7 @@ if ($dropint < 2) {
 }
 
 // 8/128 nothing
+// rsc coins drop piles 3,5,15,25
+// } else if ($dropint < 25) {
+//    // 22/128  // added 31 July 2006.??
+//    obj_add(npc_coord, bolt, ~random_range(2,12), 200);

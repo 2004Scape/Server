@@ -32,7 +32,7 @@ if ($random < 6) {
 } else if ($random < 26) {
     obj_add(npc_coord, mindrune, 5, ^lootdrop_duration);
 } else if ($random < 27) {
-    obj_add(npc_coord, lawrune, 1, ^lootdrop_duration);
+    obj_add(npc_coord, lawrune, 2, ^lootdrop_duration);
 } else if ($random < 69) {
     obj_add(npc_coord, coins, 5, ^lootdrop_duration);
 } else if ($random < 78) {
@@ -53,7 +53,10 @@ if ($random < 6) {
     obj_add(npc_coord, flier, 1, ^lootdrop_duration);
 } else if ($random < 92) {
     obj_add(npc_coord, ring_mould, 1, ^lootdrop_duration);
+//} else if ($random < ??) {
+//    obj_add(npc_coord, ~randomjewel, ^lootdrop_duration);
 }
+// rsc coins drop piles 5,8,17,27
 
 [ai_queue3,gunthor_the_brave]
 gosub(npc_death);
@@ -114,3 +117,5 @@ if ($random < 6) {
 } else if ($random < 96) {
     obj_add(npc_coord, ~randomjewel, ^lootdrop_duration);
 }
+
+// rsc coins drop piles 5,8,17,27

@@ -1,83 +1,83 @@
 [stringing_normal_shortbow]
 table=fletching_table
-data=item,obj_50
+data=item,unstrung_shortbow
 data=product,shortbow,1
 data=level,5
 data=experience,50
 
 [stringing_normal_longbow]
 table=fletching_table
-data=item,obj_48
+data=item,unstrung_longbow
 data=product,longbow,1
 data=level,10
 data=experience,100
 
 [stringing_oak_shortbow]
 table=fletching_table
-data=item,obj_54
+data=item,unstrung_oak_shortbow
 data=product,oak_shortbow,1
 data=level,20
 data=experience,165
 
 [stringing_oak_longbow]
 table=fletching_table
-data=item,obj_56
+data=item,unstrung_oak_longbow
 data=product,oak_longbow,1
 data=level,25
 data=experience,250
 
 [stringing_willow_shortbow]
 table=fletching_table
-data=item,obj_60
+data=item,unstrung_willow_shortbow
 data=product,willow_shortbow,1
 data=level,35
 data=experience,332
 
 [stringing_willow_longbow]
 table=fletching_table
-data=item,obj_58
+data=item,unstrung_willow_longbow
 data=product,willow_longbow,1
 data=level,40
 data=experience,415
 
 [stringing_maple_shortbow]
 table=fletching_table
-data=item,obj_64
+data=item,unstrung_maple_shortbow
 data=product,maple_shortbow,1
 data=level,50
 data=experience,500
 
 [stringing_maple_longbow]
 table=fletching_table
-data=item,obj_62
+data=item,unstrung_maple_longbow
 data=product,maple_longbow,1
 data=level,55
 data=experience,582
 
 [stringing_yew_shortbow]
 table=fletching_table
-data=item,obj_68
+data=item,unstrung_yew_shortbow
 data=product,yew_shortbow,1
 data=level,65
 data=experience,675
 
 [stringing_yew_longbow]
 table=fletching_table
-data=item,obj_66
+data=item,unstrung_yew_longbow
 data=product,yew_longbow,1
 data=level,70
 data=experience,750
 
 [stringing_magic_shortbow]
 table=fletching_table
-data=item,obj_72
+data=item,unstrung_magic_shortbow
 data=product,magic_shortbow,1
 data=level,80
 data=experience,832
 
 [stringing_magic_longbow]
 table=fletching_table
-data=item,obj_70
+data=item,unstrung_magic_longbow
 data=product,magic_longbow,1
 data=level,85
 data=experience,915

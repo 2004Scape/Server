@@ -23,8 +23,8 @@ if ($random < 4) {
     obj_add(npc_coord, steel_axe, 1, ^lootdrop_duration);
 } else if ($random < 14) {
     obj_add(npc_coord, jug_wine, 1, ^lootdrop_duration);
-} else if ($random < 15) {
-    obj_add(npc_coord, jug_wine, 1, ^lootdrop_duration);
+//} else if ($random < 15) { // Why this drop appearing here twice?
+//    obj_add(npc_coord, jug_wine, 1, ^lootdrop_duration);
 } else if ($random < 19) {
     obj_add(npc_coord, steel_full_helm, 1, ^lootdrop_duration);
 } else if ($random < 29) {
@@ -47,6 +47,8 @@ if ($random < 4) {
     obj_add(npc_coord, deathrune, 3, ^lootdrop_duration);
 } else if ($random < 121) {
     obj_add(npc_coord, chaosrune, 12, ^lootdrop_duration);
-} else {
+} else { // (normal 10 coins)
     obj_add(npc_coord, coins, 10, ^lootdrop_duration);
 }
+
+// rsc coins drop piles 10,40,120,200

@@ -24,7 +24,7 @@ if ($dropint < 5) {
     obj_add(npc_coord, bolt, 1, 200);
 } else if ($dropint < 36) {
     // 8 slots
-    obj_add(npc_coord, wizards_hat_blue, 1, 200);
+    obj_add(npc_coord, wizards_hat, 1, 200);
 } else if ($dropint < 41) {
     // 5 slots
     obj_add(npc_coord, egg, 1, 200);

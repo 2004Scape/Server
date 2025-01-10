@@ -51,3 +51,4 @@ if ($random < 4) {
 } else if ($random < 126) {
     obj_add(npc_coord, ~randomjewel, ^lootdrop_duration);
 }
+// rsc coins drop piles 11,44,132,220,460

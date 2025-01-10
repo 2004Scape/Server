@@ -138,7 +138,7 @@ p_delay(1);
 
 [oplocu,loc_3264]
 switch_obj(last_useitem) {
-    case obj_1481, obj_1482, obj_1483, obj_1484 :
+    case orb_of_light1, orb_of_light2, orb_of_light3, orb_of_light4 :
         mes("You place the orb in the well...");
         p_delay(2);
         mes("A mystical force blasts the orb back out.");
@@ -155,29 +155,29 @@ mes("...and out of the well.");
 
 [oploc3,loc_3361] @upass_orboflight_trap;
 
-[opobj3,obj_1481]
-if (inv_total(inv, obj_1481) > 0) {
+[opobj3,orb_of_light1]
+if (inv_total(inv, orb_of_light1) > 0) {
     mes("You are already carrying this orb.");
     return;
 }
 @pickup_obj(obj_coord, obj_type, obj_count);
 
-[opobj3,obj_1482]
-if (inv_total(inv, obj_1482) > 0) {
+[opobj3,orb_of_light2]
+if (inv_total(inv, orb_of_light2) > 0) {
     mes("You are already carrying this orb.");
     return;
 }
 @pickup_obj(obj_coord, obj_type, obj_count);
 
-[opobj3,obj_1483]
-if (inv_total(inv, obj_1483) > 0) {
+[opobj3,orb_of_light3]
+if (inv_total(inv, orb_of_light3) > 0) {
     mes("You are already carrying this orb.");
     return;
 }
 @pickup_obj(obj_coord, obj_type, obj_count);
 
-[opobj3,obj_1484]
-if (inv_total(inv, obj_1484) > 0) {
+[opobj3,orb_of_light4]
+if (inv_total(inv, orb_of_light4) > 0) {
     mes("You are already carrying this orb.");
     return;
 }
