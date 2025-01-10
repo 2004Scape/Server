@@ -1,4 +1,6 @@
 [ai_queue3,ice_warrior]
+[ai_queue3,ice_warrior_icequeen]
+
 gosub(npc_death);
 if (npc_findhero = false) {
     return;

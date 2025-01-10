@@ -3966,7 +3966,7 @@ huntrange=2
 // osrs stats and Vislvl match 1:1
 // https://raw.githubusercontent.com/Joshua-F/osrs-dumps/refs/heads/master/config/dump.npc npc_3027
 
-[npc_145]
+[ice_warrior_icequeen]
 hasalpha=yes
 walkanim=earthwarrior_walk
 readyanim=earthwarrior_ready
