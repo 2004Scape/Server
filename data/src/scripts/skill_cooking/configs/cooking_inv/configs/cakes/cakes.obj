@@ -10,9 +10,9 @@ model=model_2531_obj
 2dxan=164
 weight=300g
 category=category_130
-param=next_obj_stage,obj_1893
+param=next_obj_stage,partial_cake
 
-[obj_1893]
+[partial_cake]
 iop1=Eat
 name=2/3 cake
 desc=Someone has eaten a big chunk of this cake.
@@ -28,9 +28,9 @@ recol2d=21921
 2dxan=180
 weight=200g
 category=category_130
-param=next_obj_stage,obj_1895
+param=next_obj_stage,slice_of_cake
 
-[obj_1895]
+[slice_of_cake]
 iop1=Eat
 name=Slice of cake
 desc=I'd rather have a whole cake.
@@ -66,9 +66,9 @@ recol3d=10432
 2dxan=164
 weight=300g
 category=category_130
-param=next_obj_stage,obj_1899
+param=next_obj_stage,partial_chocolate_cake
 
-[obj_1899]
+[partial_chocolate_cake]
 iop1=Eat
 name=2/3 chocolate cake
 desc=Someone has eaten a big chunk of this cake.

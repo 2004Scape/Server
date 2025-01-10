@@ -35,10 +35,10 @@ if (p_finduid(uid) = true) {
     inv_add(bank, rotten_apples, 100);
     inv_add(bank, lava_eel, 100);
     inv_add(bank, cake, 100);
-    inv_add(bank, obj_1893, 100);
-    inv_add(bank, obj_1895, 100);
+    inv_add(bank, partial_cake, 100);
+    inv_add(bank, slice_of_cake, 100);
     inv_add(bank, chocolate_cake, 100);
-    inv_add(bank, obj_1899, 100);
+    inv_add(bank, partial_chocolate_cake, 100);
     inv_add(bank, chocolate_slice, 100);
     inv_add(bank, chocolate_bar, 100);
     inv_add(bank, bread, 100);
@@ -153,8 +153,8 @@ if (p_finduid(uid) = true) {
     inv_add(bank, edible_seaweed, 100);
     inv_add(bank, jangerberries, 100);
     inv_add(bank, blamish_oil, 100);
-    inv_add(bank, obj_712, 100);
-    inv_add(bank, obj_739, 100);
+    inv_add(bank, display_tea, 100);
+    inv_add(bank, bravery_potion, 100);
     inv_add(bank, asgarnian_ale, 100);
     inv_add(bank, wizards_mind_bomb, 100);
     inv_add(bank, greenmans_ale, 100);

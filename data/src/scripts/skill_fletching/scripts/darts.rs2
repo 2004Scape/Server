@@ -6,7 +6,7 @@ switch_obj(last_useitem) {
 }
 [opheldu,feather]
 switch_obj(last_useitem) {
-    case obj_2864 : @make_ogre_headless_arrows;
+    case ogre_arrow_shaft : @make_ogre_headless_arrows;
     case arrow_shaft : @make_headless_arrows;
     case default :
         if (oc_category(last_useitem) = category_969) {
