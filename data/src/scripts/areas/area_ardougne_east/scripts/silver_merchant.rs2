@@ -1,5 +1,5 @@
 [opnpc1,silver_merchant]
-if (map_clock < %last_stolen_from_stall_silver) {
+if (getqueue(stolen_from_stall_silver) > 0) {
     npc_say("You stole from me. Talk to me when you've considered your actions!");
     return;
 }
@@ -14,7 +14,8 @@ if($option = 1) {
 }
 
 [opnpc3,silver_merchant]
-if (map_clock < %last_stolen_from_stall_silver) {
+// is this correct?? different than op1
+if (getqueue(stolen_from_stall_silver) > 0) {
     @stall_owner_alert_guards;
 }
 ~openshop_activenpc;

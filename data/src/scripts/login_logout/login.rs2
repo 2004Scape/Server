@@ -43,6 +43,7 @@ queue(macro_event_login, 0);
 ~update_weight_equipment;
 ~set_cannon_vars_login;
 ~ferment_wines_login;
+~thieving_stall_timers_login;
 
 if(inzone(movecoord(^grandtree_jail_coord, 0, 0, -2), movecoord(^grandtree_jail_coord, 3, 0, 2), coord) = true) {
     ~grandtree_spawn_charlie;
@@ -61,7 +62,6 @@ if (%tutorial_progress < ^tutorial_complete) {
 }
 ~initalltabs;
 ~update_all(inv_getobj(worn, ^wearpos_rhand));
-~update_stall_trade_timers;
 queue(follower_login, 0);
 if (map_production = true) {
     last_login_info;

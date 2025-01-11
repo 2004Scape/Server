@@ -151,26 +151,20 @@ type=player_uid
 
 [skill_sound]
 
-[last_stolen_from_stall_baker]
+[thieving_stall_timer]
 scope=perm
 
-[last_stolen_from_stall_tea]
-scope=perm
+[varp_133]
 
-[last_stolen_from_stall_silk]
-scope=perm
+[varp_134]
 
-[last_stolen_from_stall_fur]
-scope=perm
+[varp_135]
 
-[last_stolen_from_stall_silver]
-scope=perm
+[varp_136]
 
-[last_stolen_from_stall_spice]
-scope=perm
+[varp_137]
 
-[last_stolen_from_stall_gem]
-scope=perm
+[varp_138]
 
 [legends_progress]
 scope=perm

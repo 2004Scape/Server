@@ -1,0 +1,23 @@
+[opheld4,_category_136]
+// https://youtu.be/vGH1Nyp4IBU
+mes("You rub the ring...");
+def_obj $item = last_item;
+def_int $slot = last_slot;
+if (~wilderness_level(coord) > 20) {
+    // yes it actually says this in osrs
+    mes("A mysterious force blocks your teleport spell!");
+    mes("You can't use this teleport after level 20 wilderness.");
+    return;
+}
+if (~pre_tele_checks(coord) = false) {
+    return;
+}
+~player_teleport_normal(map_findsquare(0_51_50_51_35, 0, 2, ^map_findsquare_lineofwalk));
+def_namedobj $new_ring = oc_param($item, next_obj_stage);
+if ($new_ring = null) {
+    inv_delslot(inv, $slot);
+    mes("Your ring of dueling crumbles to dust.");
+} else {
+    inv_setslot(inv, $slot, $new_ring, 1);
+    mes("Your ring of dueling has <~pluralise(oc_param($new_ring, charges), "use")> left.");
+}

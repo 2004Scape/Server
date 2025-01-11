@@ -58,6 +58,9 @@ p_delay(3);
 ~p_telejump_safe($coord);
 
 [proc,p_telejump_safe](coord $coord)
+if (stat(hitpoints) = 0) {
+    return;
+}
 p_telejump($coord);
 anim(null, 0);
 // todo: ensure this proc is used for other teleports too
