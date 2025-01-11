@@ -63,7 +63,8 @@ if (~check_fish_equipment(fly_fishing_rod) = false) {
     return;
 }
 // check if inv is full
-if (inv_freespace(inv) = 0) {
+// Don't need the check for 0 feathers here but it is clearer
+if (inv_freespace(inv) = 0 & (inv_total(inv, feather) > 1 | inv_total(inv, feather) = 0)) {
     anim(null, 0);
     ~mesbox("You can't carry any more fish.");
     return;
