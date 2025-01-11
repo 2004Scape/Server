@@ -21,6 +21,13 @@ if(%desertrescue_progress >= ^desertrescue_saved_ana | inv_total(inv, anainabarr
     mes("This slave does not appear interested in talking to you.");
     return;
 }
+if(getbit_range(%desertrescue_map_mechanisms, ^desertrescue_ana_minecart_barrel, ^desertrescue_ready_rescue) > 0) {
+    %desertrescue_map_mechanisms = clearbit_range(%desertrescue_map_mechanisms, ^desertrescue_ana_minecart_barrel, ^desertrescue_ready_rescue);
+    mes("Oh, here's Ana, the guards must have discovered her.");
+    p_delay(2);
+    mes("And sent her back to the mines...");
+    p_delay(2);
+}
 if(~wearing_slave_robes() = false) {
     npc_say("Ooops... looks like a guard ");
     p_delay(2);
@@ -48,7 +55,7 @@ switch_int(~p_choice2("No, I'm new here!", 1, "What's your name.", 2)) {
 
 [opnpcu,ana]
 if(last_useitem = desertrescue_barrel) {
-    if(%desertrescue_progress >= 27) {
+    if(%desertrescue_progress >= ^desertrescue_saved_ana) {
         mes("You have already completed this quest.");
         ~chatnpc("<p,neutral>I think you might have me confused with someone else."); // rsc
         return;
@@ -57,8 +64,8 @@ if(last_useitem = desertrescue_barrel) {
         mes("You already have Ana in a barrel, you can't get two in there!");
         return;
     }
-    if(getbit_range(%desertrescue_map_mechanisms, 12, 14) > 0) {
-        %desertrescue_map_mechanisms = clearbit_range(%desertrescue_map_mechanisms, 12, 14);
+    if(getbit_range(%desertrescue_map_mechanisms, ^desertrescue_ana_minecart_barrel, ^desertrescue_ready_rescue) > 0) {
+        %desertrescue_map_mechanisms = clearbit_range(%desertrescue_map_mechanisms, ^desertrescue_ana_minecart_barrel, ^desertrescue_ready_rescue);
         mes("Oh, here's Ana, the guards must have discovered her.");
         p_delay(2);
         mes("And sent her back to the mines...");
