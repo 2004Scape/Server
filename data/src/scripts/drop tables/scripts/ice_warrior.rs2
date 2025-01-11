@@ -1,7 +1,4 @@
-[ai_queue3,ice_warrior] @ice_warrior_drop_table;
-[ai_queue3,ice_warrior_icequeen] @ice_warrior_drop_table;
-
-[label,ice_warrior_drop_table]
+[ai_queue3,_ice_warrior]
 gosub(npc_death);
 if (npc_findhero = false) {
     return;
