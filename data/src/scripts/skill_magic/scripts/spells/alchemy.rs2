@@ -85,8 +85,8 @@ switch_obj($item) {
             mes("You do not have enough Fire Runes to cast this spell.");
             return(false);
         }
-    case obj_1842 :
-        mes("unimplemented");
+    case anainabarrel :
+        mes("You can't do that to the poor girl!");
         return(false);
     case coins :
         mes("Coins are already made of gold.");

@@ -1,0 +1,249 @@
+[desertrescue_metalkey]
+name=Metal key
+desc=A metal key, it's very crudely constructed.
+cost=1
+members=yes
+weight=10g
+model=model_2372_obj
+recol1s=31393
+recol1d=21071
+2dxof=-3
+2dyof=5
+2dzoom=700
+2dyan=20
+2dxan=328
+members=yes
+tradeable=no
+
+[desertrescue_cell_door_key]
+name=Cell door key
+desc=A metalic key, usually used by prison guards.
+cost=1
+weight=10g
+model=model_2372_obj
+recol1s=31393
+recol1d=15819
+2dxof=-3
+2dyof=5
+2dzoom=700
+2dyan=20
+2dxan=328
+members=yes
+tradeable=no
+
+[desertrescue_barrel]
+name=Barrel
+desc=An empty mining barrel.
+weight=22lb
+model=model_2546_obj
+cost=1
+2dyof=-5
+2dzoom=1820
+2dyan=76
+2dxan=136
+members=yes
+tradeable=no
+
+[anainabarrel]
+name=Ana in a barrel
+desc=A mining barrel with Ana in it.
+cost=1
+model=model_2821_obj
+2dxof=4
+2dyof=-34
+2dzoom=2110
+2dyan=88
+2dxan=196
+members=yes
+iop1=Look
+weight=32kg
+tradeable=no
+
+[desertrescue_ironkey]
+name=Wrought iron key
+desc=This key unlocks a very sturdy gate of some sort.
+cost=1
+weight=10g
+members=yes
+model=model_2372_obj
+recol1s=31393
+recol1d=10432
+2dxof=-3
+2dyof=5
+2dzoom=700
+2dyan=20
+2dxan=328
+tradeable=no
+
+[slave_shirt]
+name=Slaves' shirt
+desc=A filthy, smelly, flea infested shirt.
+cost=40
+model=model_2786_obj
+recol1s=14724
+recol1d=14725
+2dyof=7
+2dzoom=1370
+2dxan=536
+wearpos=torso
+wearpos2=arms
+iop2=Wear
+weight=2lb
+manwear=model_292_idk,0
+manwear2=model_170_idk
+womanwear=model_456_idk,0
+womanwear2=model_348_idk
+members=yes
+tradeable=no
+
+[slave_robe]
+name=Slave robe
+desc=A filthy, smelly, flea infested robe.
+cost=40
+model=model_2521_obj
+recol1s=2340
+recol1d=14725
+weight=2lb
+2dyof=1
+2dzoom=1940
+2dxan=572
+iop2=Wear
+wearpos=legs
+members=yes
+manwear=model_265_obj_wear,0
+womanwear=model_428_idk,0
+tradeable=no
+
+[slave_boots]
+name=Slave boots
+desc=Comfortable desert shoes.
+cost=1
+model=model_2837_obj
+recol1s=7298
+recol1d=14725
+2dxof=1
+2dyof=-6
+2dzoom=770
+2dyan=160
+2dxan=152
+wearpos=feet
+iop2=Wear
+weight=24oz
+category=category_118
+members=yes
+manwear=model_185_obj_wear,0
+womanwear=model_361_obj_wear,0
+tradeable=no
+
+[obj_1847]
+name=Scrumpled paper
+desc=A piece of paper with barely legible writing - looks like a recipe!
+cost=10
+model=model_2746_obj
+recol1s=29494
+recol1d=24319
+2dxof=3
+2dyof=1
+2dzoom=1720
+2dyan=156
+2dxan=472
+members=yes
+iop1=Read
+weight=10g
+tradeable=no
+
+[shantay_disclaimer]
+name=Shantay disclaimer
+desc=Very important information.
+cost=1
+model=model_2746_obj
+recol1s=30918
+recol1d=32767
+members=yes
+2dxof=3
+2dyof=1
+2dzoom=1720
+2dyan=156
+2dxan=472
+iop1=Read
+weight=10g
+tradeable=no
+
+[prototype_dart]
+name=Prototype dart
+desc=An experimental type of weapon.
+cost=70
+desc=A prototype throwing dart.
+stackable=yes
+members=yes
+weight=10g
+cost=2
+model=model_2379_obj
+recol1s=21140
+recol1d=8354
+2dxof=8
+2dyof=11
+2dzoom=720
+2dyan=336
+2dxan=396
+tradeable=no
+
+[technical_plans]
+name=Technical plans
+desc=Plans of a technical nature.
+cost=1
+members=yes
+model=model_2809_obj
+2dxof=3
+2dyof=1
+2dzoom=1720
+2dyan=156
+2dxan=472
+iop1=Read
+weight=15g
+tradeable=no
+
+[tenti_pineapple]
+name=Tenti pineapple
+desc=The most delicious of pineapples.
+cost=1
+category=category_120
+weight=2lb
+members=yes
+model=model_2736_obj
+members=yes
+2dxof=1
+2dzoom=1740
+2dyan=48
+2dxan=228
+tradeable=no
+
+[bedobin_key]
+name=Bedobin key
+desc=A key to the chest in Captain Siad's room.
+cost=1
+weight=10g
+model=model_2372_obj
+recol1s=31393
+recol1d=20801
+members=yes
+2dxof=-3
+2dyof=5
+2dzoom=700
+2dyan=20
+2dxan=328
+tradeable=no
+
+[prototype_dart_tip]
+name=Prototype dart tip
+desc=A protoype dart tip - it looks deadly.
+cost=1
+weight=8g
+model=model_2518_obj
+2dxof=5
+2dzoom=720
+2dyan=308
+2dxan=344
+members=yes
+stackable=yes
+tradeable=no

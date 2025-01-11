@@ -74,6 +74,10 @@ if(inv_total(inv, plague_sample) > 0) {
     mes("The plague sample is too delicate...it disintegrates in the crossing.");
     return;
 }
+if(inv_total(inv, anainabarrel) > 0) {
+    ~chatnpc_specific("Ana (in a Barrel)", anabarrel, "@dbl@-- You can't teleport while holding the barrel, it's just @dbl@too difficult to concentrate. --");
+    return;
+}
 
 [proc,pre_tele_checks](coord $coord)(boolean)
 if (~inzone_coord_pair_table(trawler_wreck_zones, $coord) = true) {

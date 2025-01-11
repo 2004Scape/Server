@@ -1,0 +1,26 @@
+[opnpc1,bedabin_nomad]
+~chatnpc("<p,neutral>Hello Effendi! How can I help you?");
+def_int $op;
+if(%desertrescue_progress = ^desertrescue_finding_pineapple) {
+    $op = ~p_choice5("What is this place?", 1, "Do you know where I could get a tenti pineapple?", 4, "Where is the Shantay Pass?", 2, "What do you have to sell?", 3, "Okay, thanks", null);
+} else {
+    $op = ~p_choice4("What is this place?", 1, "Where is the Shantay Pass?", 2, "What do you have to sell?", 3, "Okay, thanks", null);
+}
+while($op ! null) {
+    if($op = 1) {
+        ~chatplayer("<p,neutral>What is this place?");
+        ~chatnpc("<p,neutral>This is the camp of the Bedabin. Talk to our leader, Al Shabim, he'll be happy to chat. We can sell you very reasonably priced water...");
+        $op = ~p_choice4("What is this place?", 1, "Where is the Shantay Pass?", 2, "What do you have to sell?", 3, "Okay, thanks", null);
+    } else if($op = 2) {
+        ~chatplayer("<p,neutral>Where is the Shantay Pass?");
+        ~chatnpc("<p,neutral>It is North East of here effendi, across the trackless desert. It will be a thirsty trip, can I interest you in a drink?");
+        $op = ~p_choice4("What is this place?", 1, "Where is the Shantay Pass?", 2, "What do you have to sell?", 3, "Okay, thanks", null);
+    } else if($op = 3) {
+        ~openshop_activenpc;
+        return;
+    } else {
+        ~chatplayer("<p,neutral>Do you know where I could get a tenti pineapple?");
+        ~chatnpc("<p,shifty>Oooh, you're looking for a really very special item then! You must go and talk to our very illustrious leader, Al Shabim. He's located in the largest tent in our village.");
+    }
+}
+~chatplayer("<p,neutral>Okay, thanks"); // intentional
