@@ -31,6 +31,7 @@ import ZoneEntityList, {LocList, ObjList} from '#/engine/zone/ZoneEntityList.js'
 import NonPathingEntity from '#/engine/entity/NonPathingEntity.js';
 import ObjType from '#/cache/config/ObjType.js';
 import Environment from '#/util/Environment.js';
+import Packet from '#/io/Packet.js';
 
 export default class Zone {
     private static readonly SIZE: number = 8 * 8;
@@ -123,32 +124,28 @@ export default class Zone {
                 }
             }
         } while (updated);
+        this.computeShared();
     }
 
     computeShared(): void {
-        let length: number = 0;
-        const enclosed: Uint8Array[] = [];
+        const buf: Packet = Packet.alloc(1);
         for (const event of this.enclosed()) {
             const encoder: ZoneMessageEncoder<ZoneMessage> | undefined = ServerProtRepository.getZoneEncoder(event.message);
             if (typeof encoder === 'undefined') {
                 continue;
             }
-            const bytes: Uint8Array = encoder.enclose(event.message);
-            enclosed.push(bytes);
-            length += bytes.length;
+            encoder.enclose(buf, event.message);
         }
 
-        if (length === 0) {
+        if (buf.pos === 0) {
+            buf.release();
             return;
         }
 
-        const shared: Uint8Array = new Uint8Array(length);
-        let ptr: number = 0;
-        for (const bytes of enclosed) {
-            shared.set(bytes, ptr);
-            ptr += bytes.length;
-        }
-
+        const shared: Uint8Array = new Uint8Array(buf.pos);
+        buf.pos = 0;
+        buf.gdata(shared, 0, shared.length);
+        buf.release();
         this.shared = shared;
     }
 

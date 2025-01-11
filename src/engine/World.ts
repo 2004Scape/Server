@@ -946,17 +946,14 @@ class World {
         this.cycleStats[WorldStat.LOGIN] = Date.now() - start;
     }
 
-    // - build list of active zones around players
     // - loc/obj despawn/respawn
     // - compute shared buffer
     private processZones(): void {
         const start: number = Date.now();
         const tick: number = this.currentTick;
         // - loc/obj despawn/respawn
-        this.zonesTracking.get(tick)?.forEach(zone => zone.tick(tick));
-        // - build list of active zones around players
         // - compute shared buffer
-        this.computeSharedEvents();
+        this.zonesTracking.get(tick)?.forEach(zone => zone.tick(tick));
         this.cycleStats[WorldStat.ZONE] = Date.now() - start;
     }
 
@@ -1173,19 +1170,6 @@ class World {
         const inventory: Inventory = Inventory.fromType(inv);
         this.invs.add(inventory);
         return inventory;
-    }
-
-    computeSharedEvents(): void {
-        const zones: Set<number> = new Set();
-        for (const player of this.players) {
-            if (!isClientConnected(player)) {
-                continue;
-            }
-            for (const zone of player.buildArea.loadedZones) {
-                zones.add(zone);
-            }
-        }
-        zones.forEach(zoneIndex => this.gameMap.getZoneIndex(zoneIndex).computeShared());
     }
 
     addNpc(npc: Npc, duration: number, firstSpawn: boolean = true): void {
