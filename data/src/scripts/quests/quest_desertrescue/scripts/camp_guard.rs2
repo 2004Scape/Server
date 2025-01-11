@@ -16,6 +16,9 @@ if(~wearing_slave_robes = true) {
             @multi2("Er nothing really.", camp_merc_nothing, "I'd like to mine in a different area.", camp_merc_minearea);
         }
     } else if(inzone(0_51_147_26_14, 0_51_147_29_16, coord) = true) { // winch guard, it checks specifically the platform in OSRS
+        if(inv_total(inv, anainabarrel) > 0) {
+            @camp_merc_barrel_help;
+        }
         ~chatnpc("<p,neutral>Yes, what do you want?");
         switch_int(~p_choice2("Nothing thanks - sorry for disturbing you.", 1, "Your head on a stick.", 2)) {
             case 1 :
@@ -44,6 +47,9 @@ if(~wearing_slave_robes = true) {
 }
 
 [label,mining_camp_caught]
+if(%desertrescue_progress = ^desertrescue_complete) { // this check will return before anything happens, will still disallow any action that calls
+    return;
+}
 npc_setmode(playerfaceclose);
 npc_say("Hey, they're interesting clothes!");
 mes("Guard: Hey, they're interesting clothes!");
@@ -167,3 +173,37 @@ inv_del(inv, $pineapple_type, 1);
 ~chatplayer("<p,neutral>Can I use this?");
 ~chatnpc("<p,bored>Of course not, you'd be doing me out of a job. Anyway, you haven't got any barrels that need to go to the surface.");
 ~chatnpc("<p,bored>Now, move along and get some work done before you get a good beating.");
+
+[label,camp_merc_barrel_help]
+~mesbox("The guard notices the barrel (with Ana in it) that you're carrying.");
+~chatnpc("<p,quiz>Hey, that Barrel looks heavy, do you need a hand?");
+switch_int(~p_choice2("Yes please.", 1, "No thanks, I can manage.", 2)) {
+    case 1 :
+        ~chatplayer("<p,neutral>Yes please.");
+        ~mesbox("The guard comes over and helps you. He takes one end of the barrel.");
+        ~chatnpc("<p,neutral>Blimey! This is heavy!");
+        ~chatnpc_specific("Ana (in a Barrel)", anabarrel, "<p,angry>Why you cheeky....!");
+        ~chatnpc("<p,shock>@blu@~ The guard looks around, surprised at Ana's outburst. @blu@~ @bla@What was that?");
+        ~chatplayer("<p,shifty>Oh, it was nothing.");
+        ~chatnpc("<p,confused>I could have sworn I heard something!");
+        ~chatnpc_specific("Ana (in a Barrel)", anabarrel, "<p,angry>Yes you did you ignoramus.");
+        ~chatnpc("<p,angry>What was that you said?");
+        switch_int(~p_choice2("I said you were very gregarious!", 1, "Oh, nothing.", 2)) {
+            case 1 :
+                ~chatplayer("<p,happy>I said you were very gregarious!");
+                ~chatnpc_specific("Ana (in a Barrel)", anabarrel, "<p,angry>You creep!");
+                ~chatnpc("<p,happy>Oh, right, how very nice of you to say so.||@dbl@-- The guard seems flattered. --"); // double br
+                ~chatnpc("<p,neutral>Anyway, let's get this barrel up to the surface, plenty more work for you to do!");
+                ~mesbox("The guard places the barrel carefully on the lift platform.");
+                ~chatnpc("<p,neutral>Oh, there's no one operating the lift up top, hope this barrel isn't urgent? You'd better get back to work!");
+                inv_del(inv, anainabarrel, 1);
+                if(%desertrescue_progress = ^desertrescue_retrieved_ana_minecart) %desertrescue_progress = ^desertrescue_ana_lift;
+                %desertrescue_map_mechanisms = setbit(%desertrescue_map_mechanisms, ^desertrescue_ana_on_lift);
+            case 2 :
+                ~chatplayer("<p,shifty>Oh, nothing.");
+                ~chatnpc("<p,angry>I heard you say something, now spit it out!");
+        }
+    case 2 :
+        ~chatplayer("<p,neutral>No thanks, I can manage.");
+        ~chatnpc("<p,bored>Ok, fair enough, I was only offering.");
+}

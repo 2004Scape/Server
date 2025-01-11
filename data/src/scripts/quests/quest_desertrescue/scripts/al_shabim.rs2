@@ -130,7 +130,7 @@ switch_int(~p_choice2("Yes, I'm interested.", 1, "Not at the moment.", 2)) {
     case 1 :
         ~chatplayer("<p,shifty>Yes, I'm interested.");
         ~chatnpc("<p,happy>That's great Effendi!");
-        ~chatplayer("<p,neutral>Here is a copy of the key that should give you access to the chest.");
+        ~chatnpc("<p,neutral>Here is a copy of the key that should give you access to the chest.");
         %desertrescue_progress = ^desertrescue_given_bedobin_key;
         inv_add(inv, bedobin_key, 1);
         ~objbox(bedobin_key, "Al Shabim gives you a key.", 250, 0, 0);

@@ -1,5 +1,23 @@
 [opnpc1,ana]
-if(%desertrescue_progress >= 27) {
+if(%desertrescue_progress = ^desertrescue_saved_ana & inzone(0_51_48_36_37, 0_51_48_50_50, coord) = true) {
+    ~chatnpc("<p,happy>Great! Thanks for getting me out of that mine! And that barrel wasn't too bad anyway! Pop by again sometime, I'm sure we'll have a barrel of laughs!");
+    if(inv_total(inv, desertrescue_ironkey) = 0) {
+        ~chatnpc("<p,happy>Oh! I nearly forgot! Here's a key I found in the tunnels. It might be of some use to you, not sure what it opens. Sorry, but I have to go now.");
+        inv_add(inv, desertrescue_ironkey, 1);
+        ~objbox(desertrescue_ironkey, "Ana gives you a wrought iron key...", 250, 0, 0);
+    }
+    if_close;
+    mes("Ana spots Irena and waves...");
+    p_delay(2);
+    npc_del;
+    if(npc_find(coord, irena, 8, 0) = true) {
+        npc_say("Hi Ana!");
+        p_delay(0);
+    }
+    @irena_ana_found;
+}
+if(inzone(0_51_147_30_50, 0_51_147_50_63, coord) = false) return;
+if(%desertrescue_progress >= ^desertrescue_saved_ana | inv_total(inv, anainabarrel) > 0) {
     mes("This slave does not appear interested in talking to you.");
     return;
 }
@@ -30,9 +48,21 @@ switch_int(~p_choice2("No, I'm new here!", 1, "What's your name.", 2)) {
 
 [opnpcu,ana]
 if(last_useitem = desertrescue_barrel) {
+    if(%desertrescue_progress >= 27) {
+        mes("You have already completed this quest.");
+        ~chatnpc("<p,neutral>I think you might have me confused with someone else."); // rsc
+        return;
+    }
     if(inv_total(inv, anainabarrel) > 0) {
         mes("You already have Ana in a barrel, you can't get two in there!");
         return;
+    }
+    if(getbit_range(%desertrescue_map_mechanisms, 12, 14) > 0) {
+        %desertrescue_map_mechanisms = clearbit_range(%desertrescue_map_mechanisms, 12, 14);
+        mes("Oh, here's Ana, the guards must have discovered her.");
+        p_delay(2);
+        mes("And sent her back to the mines...");
+        p_delay(2);
     }
     if(%desertrescue_progress < ^desertrescue_caught_ana) {
         ~chatnpc("<p,angry>Hey, what do you think you're doing?");
@@ -40,7 +70,9 @@ if(last_useitem = desertrescue_barrel) {
     } else {
         ~chatnpc("<p,angry>Hey, what do you think you're doing? Leave me alone and let me get on with my work. Else we'll both be in trouble. Oh no, NOT AGAIN!");
     }
-    inv_changeslot(inv, anainabarrel, desertrescue_barrel, 1); // this might've been inv_del + add originally 
+    if_close;
+    inv_del(inv, desertrescue_barrel, 1);
+    inv_add(inv, anainabarrel, 1);
     npc_del;
     say("Shush... It's for your own good!");
     p_delay(1);
@@ -54,8 +86,20 @@ if(last_useitem = desertrescue_barrel) {
 ~chatnpc_specific("Ana (in a Barrel)", anabarrel, "<p,angry>@dbl@-- Ana looks pretty angry, she starts shouting at you. --|Get me out of here!|Do you hear me!|Get me OUT OF HERE I say!");
 
 [opheld5,anainabarrel]
+if(~inzone_coord_pair_table(mining_camp_zones, coord) = false) { 
+    if(~inzone_coord_pair_table(desert_zones, coord) = true) {
+        ~chatnpc_specific("Ana (in a Barrel)", anabarrel, "<p,confused>You can't drop me here!|I'll die in the desert on my own.|Take me to the Shantay pass near Al Kharid.");
+    } else {
+        ~chatnpc_specific("Ana (in a Barrel)", anabarrel, "<p,confused>You can't drop me here!|Take me to the Shantay pass near Al Kharid.");
+    }
+    return;
+}
 ~chatnpc_specific("Ana (in a Barrel)", anabarrel, "<p,silent>You drop the barrel on the floor, Ana gets out.");
-inv_del(inv, anainabarrel, 1);
+if(inzone(0_51_47_20_23, 0_51_47_23_29, coord) = true) { // if in jail do nothing (OSRS behaviour)
+    return;
+}
+inv_del(inv, desertrescue_barrel, 1);
+inv_add(inv, anainabarrel, 1);
 npc_add(map_findsquare(coord, 1, 1, ^map_findsquare_lineofwalk), ana, 8);
 npc_say("How dare you put me in that barrel you barbarian!");
 mes("Ana's outburst attracts the guards, they come running over.");
@@ -71,7 +115,8 @@ npc_del;
 p_delay(4);
 mes("You are roughed up by the guards and manhandled into a cell.");
 p_delay(3);
-p_teleport(^desertrescue_underground_prison_coord);
+if(inzone(0_51_147_0_0, 0_51_147_63_63, coord) = true) p_teleport(^desertrescue_underground_prison_coord);
+else p_teleport(^desertrescue_prison_coord);
 
 [label,ana_out]
 ~chatplayer("<p,shifty>I want to try and get you out of here.");

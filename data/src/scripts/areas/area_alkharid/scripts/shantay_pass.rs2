@@ -68,6 +68,10 @@ if (map_members = false) {
     mes(^mes_members_gate); // guess
     return;
 }
+if (inv_total(inv, anainabarrel) > 0 & %desertrescue_progress = ^desertrescue_escaped) {
+    ~chatnpc_specific("Ana (in a Barrel)", anabarrel, "<p,neutral>@blu@-- Ana looks out of the barrel --|Hey great, we're at the Shantay pass!");
+    @desertrescue_ana_rescued;
+}
 // if player is south of the pass, teleport them north of the pass scot-free.
 if (coordz(coord) <= coordz(loc_coord)) {
     p_delay(0);

@@ -1,2 +1,5 @@
 [desertrescue_progress]
 scope=perm
+
+[desertrescue_map_mechanisms]
+scope=perm

@@ -410,7 +410,7 @@ param=damagetype,^crush_style
 param=attack_anim,human_sword_slash
 param=defend_anim,human_sword_defend2
 param=attack_sound,hacksword_slash
-huntmode=ranged
+huntmode=cowardly
 // https://oldschool.runescape.wiki/w/Guard_(Desert_Mining_Camp)#Brown_hair
 // stats taken here and param taken osrs desert mining camp guards.
 // https://raw.githubusercontent.com/Joshua-F/osrs-dumps/refs/heads/master/config/dump.npc npc_4654

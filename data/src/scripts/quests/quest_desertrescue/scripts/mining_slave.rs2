@@ -15,7 +15,7 @@ if(inzone(0_51_147_0_0, 0_51_147_63_63, coord) = true) {
 
 if(%desertrescue_progress >= ^desertrescue_traded_clothes) {
     // this only checks worn
-    if(inv_total(worn, slave_shirt) = 0 & inv_total(worn, slave_robe) = 0 & inv_total(worn, slave_boots) = 0) {
+    if(inv_total(worn, slave_shirt) = 0 | inv_total(worn, slave_robe) = 0 | inv_total(worn, slave_boots) = 0) {
         ~chatnpc("<p,neutral>Oh bother, I was caught by the guards again... Listen, if you can get me some Desert Clothes, I'll trade you for my slaves clothes again.. Do you want to trade?");
         @multi2("Yes, I'll trade.", male_slave_trade, "No thanks...", male_slave_notrade);
     } else {
@@ -236,7 +236,7 @@ npc_changetype(male_slave);
 [opnpc1,escaping_slave]
 if(%desertrescue_progress >= ^desertrescue_traded_clothes) {
     // this only checks worn
-    if(inv_total(worn, slave_shirt) = 0 & inv_total(worn, slave_robe) = 0 & inv_total(worn, slave_boots) = 0) {
+    if(inv_total(worn, slave_shirt) = 0 | inv_total(worn, slave_robe) = 0 | inv_total(worn, slave_boots) = 0) {
         npc_changetype(male_slave);
         ~chatnpc("<p,neutral>Oh bother, I was caught by the guards again... Listen, if you can get me some Desert Clothes, I'll trade you for my slaves clothes again.. Do you want to trade?");
         @multi2("Yes, I'll trade.", male_slave_trade, "No thanks...", male_slave_notrade);
@@ -256,3 +256,24 @@ switch_int(random(5)) {
     case 4 : npc_say("You wanna piece of me?");
 }
 ~npc_retaliate(0);
+
+[ai_queue3,rowdy_slave]
+if (finduid(%npc_attacking_uid) = true) { 
+    if(inv_total(inv, slave_shirt) = 0) {
+        obj_add(npc_coord, slave_shirt, 1, ^lootdrop_duration);
+        mes("The slave drops his shirt.");
+    }
+    if(inv_total(inv, slave_robe) = 0) {
+        obj_add(npc_coord, slave_robe, 1, ^lootdrop_duration);
+        mes("The slave drops his robe.");
+    }
+    if(inv_total(inv, slave_boots) = 0) {
+        obj_add(npc_coord, slave_boots, 1, ^lootdrop_duration);
+        mes("The slave drops his boots.");
+    }
+}
+gosub(npc_death);
+if (npc_findhero = false) {
+    return;
+}
+obj_add(npc_coord, npc_param(death_drop), 1, ^lootdrop_duration);
