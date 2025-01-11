@@ -1234,7 +1234,7 @@ class World {
 
         if (npc.lifecycle === EntityLifeCycle.DESPAWN) {
             this.npcs.remove(npc.nid);
-            npc.clear();
+            npc.cleanup();
         } else if (npc.lifecycle === EntityLifeCycle.RESPAWN) {
             npc.setLifeCycle(this.currentTick + adjustedDuration);
         }
@@ -1440,7 +1440,7 @@ class World {
         this.gameMap.getZone(player.x, player.z, player.level).leave(player);
         this.players.remove(player.pid);
         changeNpcCollision(player.width, player.x, player.z, player.level, false);
-        player.clear();
+        player.cleanup();
 
         player.addSessionLog(LoggerEventType.MODERATOR, 'Logged out');
 

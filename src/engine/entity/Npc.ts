@@ -104,7 +104,7 @@ export default class Npc extends PathingEntity {
         this.lastWanderTick = World.currentTick;
     }
 
-    clear(): void {
+    cleanup(): void {
         this.nid = -1;
         this.uid = -1;
         this.activeScript = null;

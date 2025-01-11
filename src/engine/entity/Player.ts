@@ -319,7 +319,7 @@ export default class Player extends PathingEntity {
         this.lastLevels.fill(-1);
     }
 
-    clear(): void {
+    cleanup(): void {
         this.pid = -1;
         this.uid = -1;
         this.activeScript = null;
