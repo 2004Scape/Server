@@ -150,6 +150,7 @@ if(%desertrescue_progress >= ^desertrescue_given_bedobin_key) {
 [label,siad_weller]
 ~chatplayer("<p,neutral>Well, er... erm, I err....");
 ~chatnpc("<p,angry>Come on, spit it out!|Right that's it! Guards!");
+@siad_sendguards;
 
 [label,siad_noslave]
 ~chatplayer("<p,neutral>Er, no, one of the slaves told me.");
@@ -162,6 +163,9 @@ mes("The Captain goes back to his desk and starts studying.");
 mes("The Captain goes back to his desk and starts studying.");
 
 [label,siad_sendguards]
+if(%desertrescue_progress < ^desertrescue_complete) {
+    return;
+}
 if_close;
 mes("The guards search you!");
 p_delay(1);

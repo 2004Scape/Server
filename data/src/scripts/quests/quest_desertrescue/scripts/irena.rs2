@@ -62,8 +62,8 @@ if(%desertrescue_progress = ^desertrescue_not_started) {
 [label,irena_daughter]
 ~chatplayer("<p,shifty>Okay Irena, calm down. I'll get your daughter back for you.");
 ~chatnpc("<p,happy>That would be great! That's really very nice of you! She was wearing a red silk scarf when she left.");
-~send_quest_progress(questlist:desertrescue, %desertrescue_progress, ^desertrescue_complete);
 %desertrescue_progress = ^desertrescue_started;
+~send_quest_progress(questlist:desertrescue, %desertrescue_progress, ^desertrescue_complete);
 
 [label,irena_toobusy]
 ~chatplayer("<p,neutral>No, sorry, I'm just too busy!");

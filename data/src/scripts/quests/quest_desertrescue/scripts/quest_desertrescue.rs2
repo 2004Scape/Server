@@ -423,6 +423,10 @@ if(~wearing_slave_robes = true) {
     npc_say("Hey, you're no slave, where do you think you're going!");
     p_delay(1);
     npc_say("Guards! Guards!");
+    if(%desertrescue_progress = ^desertrescue_complete) {
+        mes("No other guards come to the rescue.");
+        return;
+    }
     ~mercenary_camp_attack;
 }
 
@@ -436,15 +440,15 @@ if(inv_total(worn, slave_shirt) > 0 & inv_total(worn, slave_robe) > 0 & inv_tota
 return (false);
 
 [oploc1,_desertrescue_minecave]
-if(~wearing_slave_robes = false) {
-    // shouldn't ever fail since you can't attack these guards
-    if(npc_find(coord, npc_828, 6, 0) = true | npc_find(coord, npc_829, 6, 0) = true) {
-        ~npc_retaliate(0);
-        ~desertcamp_guard_search;
-    }
-    return;
-}
 if(coordx(coord) < coordx(loc_coord)) {
+    if(~wearing_slave_robes = false) {
+        // shouldn't ever fail since you can't attack these guards
+        if(npc_find(coord, npc_829, 6, 0) = true) {
+            ~npc_retaliate(0);
+            ~desertcamp_guard_search;
+        }
+        return;
+    }
     if(%desertrescue_progress < ^desertrescue_given_pineapple) { 
         mes("Two guards block your way further into the caves.");
         ~chatnpc_specific(nc_name(npc_829), npc_829, "<p,angry>Hey you, move away from there!");
@@ -455,6 +459,14 @@ if(coordx(coord) < coordx(loc_coord)) {
         p_teleport(0_51_147_22_7);
     }
 } else {
+    if(~wearing_slave_robes = false & %desertrescue_progress < ^desertrescue_complete) {
+        // shouldn't ever fail since you can't attack these guards
+        if(npc_find(coord, npc_828, 6, 0) = true | npc_find(coord, npc_829, 6, 0) = true) {
+            ~npc_retaliate(0);
+            ~desertcamp_guard_search;
+        }
+        return;
+    }
     if(inv_total(inv, anainabarrel) > 0) {
         if(npc_find(coord, npc_828, 6, 0) = true | npc_find(coord, npc_829, 6, 0) = true) { // basing off rsc w/osrs delays cause osrs version is not possible
             npc_say("Hey, where d'ya think you're going with that Barrel?");
@@ -493,6 +505,9 @@ if(coordx(coord) < coordx(loc_coord)) {
 ~doubleobjbox(technical_plans, hammer, "The plans look very technical!|But you can see that this item will require|a bronze bar and at least 10 feathers.", 150);
 
 [proc,desertcamp_guard_search]
+if(%desertrescue_progress < ^desertrescue_complete) {
+    return;
+}
 if(inv_total(inv, anainabarrel) > 0) {
     npc_say("Hey, what's in this barrel?");
     p_delay(1);
@@ -778,8 +793,10 @@ if(%desertrescue_progress = ^desertrescue_given_pineapple) %desertrescue_progres
 mes("You succeed!");
 if(loc_coord = ^desertrescue_lower_minecart_coord) {
     p_teleport(0_51_147_55_23);
+    ~mesbox("You appear in a large open room with what looks like lots of miners working away. This is a very rough looking area, the miners look like they're on their last legs.");
 } else {
     p_teleport(0_51_147_38_9);
+    ~mesbox("You appear back in the barrel loading room. A nearby slave looks surprised to see you popping out of the cart.");
 }
 
 [oplocu,loc_2684]

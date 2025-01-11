@@ -105,8 +105,9 @@ if(~inzone_coord_pair_table(mining_camp_zones, coord) = false) {
 if(inzone(0_51_47_20_23, 0_51_47_23_29, coord) = true) { // if in jail do nothing (OSRS behaviour)
     return;
 }
-inv_del(inv, desertrescue_barrel, 1);
-inv_add(inv, anainabarrel, 1);
+if_close;
+inv_del(inv, anainabarrel, 1);
+inv_add(inv, desertrescue_barrel, 1);
 npc_add(map_findsquare(coord, 1, 1, ^map_findsquare_lineofwalk), ana, 8);
 npc_say("How dare you put me in that barrel you barbarian!");
 mes("Ana's outburst attracts the guards, they come running over.");

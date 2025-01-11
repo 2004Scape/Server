@@ -38,9 +38,9 @@
 ^desertrescue_gained_tent_access = 11
 ^desertrescue_ana_minecart_barrel = 12
 ^desertrescue_ana_on_lift = 13
-^desertrescue_ana_lift_barrel = 13
-^desertrescue_ana_mining_cart = 14
-^desertrescue_ready_rescue = 15
+^desertrescue_ana_lift_barrel = 14
+^desertrescue_ana_mining_cart = 15
+^desertrescue_ready_rescue = 16
 
 ^desertrescue_prison_coord = 0_51_47_21_26
 ^desertrescue_underground_prison_coord = 0_51_147_24_29
