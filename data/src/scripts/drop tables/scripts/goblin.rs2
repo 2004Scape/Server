@@ -82,8 +82,8 @@ if ($dropint < 3) {
     if (map_members = true) {
         obj_add(npc_coord, bronze_spear, 1, ^lootdrop_duration);
     } else {
-        // guessing it gets replaced
-        obj_add(npc_coord, hammer, 1, ^lootdrop_duration);
+        // it gets replaced by coins according to OSRS
+        obj_add(npc_coord, coins, 10, ^lootdrop_duration);
     }
 } else if ($dropint < 16) {
     obj_add(npc_coord, bronze_arrow, 7, ^lootdrop_duration);
