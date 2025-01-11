@@ -37,6 +37,7 @@ param=attack_sound,baxe_crush
 // osrs param=defend_sound,blade2
 // osrs attack sound warhammer_crush
 // osrs stats and Vislvl match 1:1
+// https://raw.githubusercontent.com/Joshua-F/osrs-dumps/refs/heads/master/config/dump.npc npc_4969
 
 [khazard_trooper_spear]
 name=Khazard trooper
@@ -75,6 +76,7 @@ param=defend_anim,human_spear_block
 param=attack_sound,staff_stab
 // param=defend_sound,blade5
 // osrs stats and Vislvl match 1:1
+// https://raw.githubusercontent.com/Joshua-F/osrs-dumps/refs/heads/master/config/dump.npc npc_4970
 
 [khazard_warlord]
 name=Khazard warlord
@@ -115,6 +117,7 @@ param=attack_sound,baxe_crush
 // osrs param=defend_sound,blade2
 // osrs attack sound warhammer_crush
 // osrs stats and Vislvl match 1:1
+// https://raw.githubusercontent.com/Joshua-F/osrs-dumps/refs/heads/master/config/dump.npc npc_7622
 
 [khazard_commander]
 name=Khazard commander
@@ -151,3 +154,4 @@ param=attack_sound,staff_stab
 huntmode=cowardly
 huntrange=1
 // osrs stats and Vislvl match 1:1
+// https://raw.githubusercontent.com/Joshua-F/osrs-dumps/refs/heads/master/config/dump.npc npc_4972

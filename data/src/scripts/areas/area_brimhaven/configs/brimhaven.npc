@@ -50,6 +50,7 @@ model8=model_320_idk
 head1=model_67_idk_head
 head2=model_79_idk_head
 hitpoints=7
+param=damagetype,^crush_style
 category=shop_keeper
 param=owned_shop,shrimp_and_parrot
 param=shop_sell_multiplier,1300

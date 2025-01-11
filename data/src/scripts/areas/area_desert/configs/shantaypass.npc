@@ -90,6 +90,8 @@ hitpoints=32
 attack=17
 strength=16
 defence=16
+magic=0
+ranged=0
 param=attackbonus,11
 param=strengthbonus,12
 param=stabdefence,12
@@ -101,6 +103,8 @@ param=damagetype,^stab_style
 param=attack_anim,human_sword_slash
 param=defend_anim,human_sword_defend2
 param=attack_sound,stabsword_slash
+// osrs stats and Vislvl match 1:1
+// https://raw.githubusercontent.com/Joshua-F/osrs-dumps/refs/heads/master/config/dump.npc npc_4643
 
 [shantay_pass_guard]
 name=Shantay Guard
@@ -131,3 +135,22 @@ model9=model_519_obj_wear
 head1=model_63_idk_head
 wanderrange=0
 moverestrict=nomove
+respawnrate=100
+hitpoints=32
+attack=17
+strength=16
+defence=16
+magic=0
+ranged=0
+param=attackbonus,11
+param=strengthbonus,12
+param=stabdefence,12
+param=slashdefence,15
+param=crushdefence,18
+param=magicdefence,6
+param=rangedefence,15
+param=damagetype,^stab_style
+param=attack_anim,human_sword_slash
+param=defend_anim,human_sword_defend2
+param=attack_sound,stabsword_slash
+// https://raw.githubusercontent.com/Joshua-F/osrs-dumps/refs/heads/master/config/dump.npc npc_4648

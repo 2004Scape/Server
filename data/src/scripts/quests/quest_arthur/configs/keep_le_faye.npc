@@ -42,6 +42,7 @@ param=attack_sound,stabsword_stab
 huntmode=cowardly
 huntrange=1
 // Stats match osrs version but our version Vislvl is different.
+// https://raw.githubusercontent.com/Joshua-F/osrs-dumps/refs/heads/master/config/dump.npc npc_3517
 
 [sir_mordred]
 name=Sir Mordred
@@ -92,6 +93,7 @@ param=defend_anim,human_sword_defend2
 param=attack_sound,2H_slash
 // param_defend_sound,steel2
 // Stats match osrs version but our version Vislvl is different.
+// https://raw.githubusercontent.com/Joshua-F/osrs-dumps/refs/heads/master/config/dump.npc npc_3527
 
 [morgan_le_faye]
 vislevel=hide

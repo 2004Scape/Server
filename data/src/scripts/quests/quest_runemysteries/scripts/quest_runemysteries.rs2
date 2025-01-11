@@ -1,5 +1,4 @@
-
-
 [queue,rune_mysteries_complete]
 %runemysteries_progress = ^runemysteries_complete;
+session_log(^log_adventure, "Quest complete: Rune Mysteries");
 ~send_quest_complete(questlist:runemysteries, air_talisman, 250, ^runemysteries_questpoints, "You have completed the\\nMysteries Of The Runes Quest!");

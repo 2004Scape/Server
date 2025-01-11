@@ -16,7 +16,7 @@ switch_int(stat_base(herblore)) {
     case 50 : ~objbox(3dosefisherspotion,"You can now make @dbl@Fishing Potions@bla@.", 250, 0, ^objbox_height);
     case 54 : ~objbox(kwuarm,"You can now identify @dbl@Kwuarm@bla@.", 250, 0, 0);
     case 55 : ~objbox(3dose2strength,"You can now make @dbl@Super Strength Potions@bla@.", 250, 0, ^objbox_height);
-    case 60 : ~objbox(weapon_poison,"You can now make @dbl@Weapon Poisons@bla@.", 250, 0, ^objbox_height);
+    case 60 : ~objbox(weapon_poison,"You can now make @dbl@Weapon Poisons.", 250, 0, ^objbox_height); //imgur.com/dLoBair
     case 65 : ~objbox(cadantine,"You can now identify @dbl@Cadantine@bla@.", 250, 0, 0);
     case 66 : ~objbox(3dose2defense,"You can now make @dbl@Super Defence Potions@bla@.", 250, 0, ^objbox_height);
     case 67 : ~objbox(lantadyme,"You can now identify @dbl@Lantadyme@bla@.", 250, 0, 0);

@@ -253,6 +253,7 @@ queue(itgronigen_quest_complete, 0);
 @professor_friend_of_gods;
 
 [queue,itgronigen_quest_complete]
+session_log(^log_adventure, "Quest complete: Observatory");
 // Random quest complete jingle.
 def_int $random = random(128);
 if ($random < 32) {

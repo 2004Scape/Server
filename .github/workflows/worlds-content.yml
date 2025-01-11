@@ -1,0 +1,39 @@
+﻿name: Pack Content
+
+on:
+  workflow_call:
+
+jobs:
+  pack:
+    runs-on: ubuntu-latest
+
+    steps:
+    - uses: actions/checkout@v4
+
+    - uses: pnpm/action-setup@v4
+      name: Install pnpm
+      with:
+        version: 10
+        run_install: false
+
+    - uses: actions/setup-node@v4
+      with:
+        node-version: '22.x'
+        cache: 'pnpm'
+
+    - uses: actions/setup-java@v4
+      with:
+        distribution: 'temurin'
+        java-version: '17'
+
+    - run: pnpm i
+
+    - name: Pack
+      run: npm run build
+
+    - name: Upload Packed Data
+      uses: actions/upload-artifact@v4
+      with:
+        name: packed
+        path: data/pack
+        retention-days: 1

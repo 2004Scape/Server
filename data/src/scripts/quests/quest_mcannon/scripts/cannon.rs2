@@ -82,14 +82,16 @@ if ($setupcoord = null) {
     mes("There isn't enough space to set up here.");
     return;
 }
-~forcewalk2($setupcoord);
+~playerwalk3($setupcoord);
+
+facesquare($center);
+p_delay(0);
 
 def_coord $origin = movecoord($center, -1, 0, -1); // south-west tile
 %mcannon_coord = $origin;
 // %mcannon_world = map_world;
 %mcannon_ammo = 0;
 
-facesquare($center);
 anim(human_pickupfloor, 0);
 inv_del(inv, cannon_base, 1);
 loc_add($origin, cannon_base, 0, centrepiece_straight, ^cannon_decay_length);

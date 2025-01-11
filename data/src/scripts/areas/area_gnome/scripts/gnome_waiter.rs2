@@ -1,4 +1,4 @@
-[opnpc1,npc_851]
+[opnpc1,gnome_waiter]
 ~chatplayer("<p,neutral>Hello.");
 ~chatnpc("<p,sad>Hello sir, can I tempt you with any of the dishes on|our new menu?");
 def_int $choice;

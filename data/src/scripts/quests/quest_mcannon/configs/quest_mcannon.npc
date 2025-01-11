@@ -39,6 +39,7 @@ param=attack_sound,gnome_hit
 // param=defend_sound,brassclash2
 param=death_sound,gnome_death
 // osrs side this npc use somereason gnome sound datas (notice but npc is graphical updated)
+// https://raw.githubusercontent.com/Joshua-F/osrs-dumps/refs/heads/master/config/dump.npc npc_5185
 
 [dwarf_youngster]
 vislevel=hide

@@ -65,7 +65,7 @@ defence=4
 param=attackrate,6
 param=attackbonus,12
 param=strengthbonus,12
-param=damagetype,^crush_style
+param=damagetype,^stab_style
 param=attack_anim,goblin_attack_armed
 param=defend_anim,goblin_block
 param=death_anim,goblin_death
@@ -74,6 +74,7 @@ param=defend_sound,goblin_hit
 param=death_sound,goblin_death
 // https://oldschool.runescape.wiki/w/Goblin_(historical)#Green_(original)
 // https://raw.githubusercontent.com/Joshua-F/osrs-dumps/refs/heads/master/config/dump.npc npc_677
+// osrs ver damage type is crush.
 // osrs stats and Vislvl match 1:1
 
 [goblin_armed_red]
@@ -101,7 +102,7 @@ defence=4
 param=attackrate,6
 param=attackbonus,12
 param=strengthbonus,12
-param=damagetype,^crush_style
+param=damagetype,^stab_style
 param=attack_anim,goblin_attack_armed
 param=defend_anim,goblin_block
 param=death_anim,goblin_death
@@ -110,4 +111,5 @@ param=defend_sound,goblin_hit
 param=death_sound,goblin_death
 // https://oldschool.runescape.wiki/w/Goblin_(historical)#Green_(original)
 // https://raw.githubusercontent.com/Joshua-F/osrs-dumps/refs/heads/master/config/dump.npc npc_678
+// osrs ver damage type is crush.
 // osrs stats and Vislvl match 1:1

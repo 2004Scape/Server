@@ -627,11 +627,11 @@ param=slashdefence,23
 param=crushdefence,21
 param=magicdefence,-6
 param=rangedefence,20
-param=damagetype,^crush_style
+param=damagetype,^slash_style
 param=attack_sound,stabsword_slash
 // param=defend,sound,blade3
-// osrs weaponsmater uses the unarmed punch animation even though
 // Stats match osrs version but our version Vislvl is different.
+// https://raw.githubusercontent.com/Joshua-F/osrs-dumps/refs/heads/master/config/dump.npc npc_14137
 
 [straven]
 name=Straven
@@ -662,8 +662,8 @@ attack=21
 strength=21
 defence=21
 param=damagetype,^crush_style
-// TODO param stats
 // guess stats taken from weaponmaster.
+// https://raw.githubusercontent.com/Joshua-F/osrs-dumps/refs/heads/master/config/dump.npc npc_5212
 
 [jonny_the_beard]
 name=Jonny the beard
@@ -694,6 +694,7 @@ respawnrate=74
 hitpoints=8
 param=damagetype,^crush_style
 // Stats match osrs version but our version Vislvl is different.
+// https://raw.githubusercontent.com/Joshua-F/osrs-dumps/refs/heads/master/config/dump.npc npc_14139
 
 [king_roald]
 vislevel=hide

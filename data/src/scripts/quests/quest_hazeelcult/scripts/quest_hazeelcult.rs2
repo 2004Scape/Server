@@ -182,4 +182,5 @@ if_openmain(questscroll);
 inv_del(inv, scroll_of_hazeel, 1);
 stat_advance(thieving, 15000);
 inv_add(inv, coins, 2000);
+session_log(^log_adventure, "Quest complete: Hazeel Cult");
 ~send_quest_complete(questlist:hazeelcult, coins, 250, ^hazeelcult_questpoints, "You have completed the\\nHazeel Cult Quest!");

@@ -105,7 +105,6 @@ head1=model_63_idk_head
 head2=model_30_npc_head
 head3=model_80_idk_head
 wanderrange=0
-maxrange=4
 respawnrate=100
 hitpoints=70
 attack=51
@@ -119,5 +118,5 @@ param=damagetype,^slash_style
 param=attack_anim,human_sword_slash
 param=defend_anim,human_sword_defend2
 param=attack_sound,hacksword_slash
-// params taken npc Bedabin nomad fighter.
+// attackbonus is guess // seqs taken npc Bedabin nomad fighter.
 // stats taken here https://raw.githubusercontent.com/Joshua-F/osrs-dumps/refs/heads/master/config/dump.npc npc_4639

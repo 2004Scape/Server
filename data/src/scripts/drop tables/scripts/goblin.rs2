@@ -18,7 +18,9 @@ obj_add(npc_coord, npc_param(death_drop), 1, ^lootdrop_duration);
 
 def_int $dropint = random(128);
 
-// todo: may need to redo this table, and/or add bronze_javelin (check old fan sites)
+// may need to redo this table, and/or add bronze_javelin (check old fan sites)
+// That appears to only be fore the goblin_armed_red and _green
+// https://oldschool.runescape.wiki/w/Goblin_(Goblin_Village)
 if ($dropint < 1) {
     obj_add(npc_coord, coins, 1, ^lootdrop_duration);
 } else if ($dropint < 2) {
@@ -51,9 +53,7 @@ if ($dropint < 1) {
     obj_add(npc_coord, goblin_mail, 1, ^lootdrop_duration);
 } else if ($dropint < 45) {
     obj_add(npc_coord, waterrune, 6, ^lootdrop_duration);
-} else if ($dropint < 60) {
-    obj_add(npc_coord, hammer, 1, ^lootdrop_duration);
-} else if ($dropint < 88) {
+} else if ($dropint < 63) {
     obj_add(npc_coord, coins, 5, ^lootdrop_duration);
 }
 

@@ -191,8 +191,6 @@ if ($jewelry_obj = obj_1691 | $jewelry_obj = obj_1672 | $jewelry_obj = obj_1653)
 def_struct $struct = oc_param($jewelry_obj, crafting_jewelry_struct);
 def_int $level = struct_param($struct, levelrequired);
 if (stat(crafting) < $level) {
-    //not sure if i need this if_close here
-    if_close;
     ~mesbox("You need at least level <tostring($level)> Crafting to make that.");
     return;
 }
@@ -287,17 +285,24 @@ if (inv_total(inv, unholy_mould) > 0 & inv_total(inv, holy_mould) > 0 & map_memb
     ~mesbox("You require a mould to make that.");
     return;
 }
-// macro event
-if (afk_event = ^true) {
-    ~macro_event_general_spawn(~macro_event_set_random);
-    return;
-}
 switch_int ($choice) {
     case 1 : $product = unstrung_symbol;
     case 2 : $product = unstrung_emblem;
 }
 
 def_struct $struct = oc_param($product, crafting_jewelry_struct);
+
+def_int $level = struct_param($struct, levelrequired);
+if (stat(crafting) < $level) {
+    ~mesbox("You need at least level <tostring($level)> Crafting to make that.");
+    return;
+}
+
+// macro event
+if (afk_event = ^true) {
+    ~macro_event_general_spawn(~macro_event_set_random);
+    return;
+}
 
 anim(human_furnace, 0);
 sound_synth(furnace, 0, 0);

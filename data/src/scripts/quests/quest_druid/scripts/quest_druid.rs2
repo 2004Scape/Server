@@ -1,6 +1,7 @@
 [queue,druid_quest_complete](npc_uid $uid)
 %druid_progress = ^druid_complete;
 stat_advance(herblore, 2500);
+session_log(^log_adventure, "Quest complete: Druidic Ritual");
 ~send_quest_complete(questlist:druid, marentill, 220, ^druid_questpoints, "You have completed the\\nDruidic Ritual Quest!");
 queue(druid_fundamentals, 0, $uid);
 

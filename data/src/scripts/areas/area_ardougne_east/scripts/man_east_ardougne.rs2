@@ -1,0 +1,59 @@
+// these don't share regular man/woman drop table (just bones)
+[opnpc1,man_cavalier] @citizen_dialogue_eastardy;
+[opnpc1,woman_east_ardougne] @citizen_dialogue_eastardy;
+
+[label,citizen_dialogue_eastardy]
+~chatplayer("<p,happy>Hello, how's it going?");
+switch_int(random(23)) {
+    case 0 :
+        ~chatnpc("<p,neutral>Do you require any assistance?");
+        def_int $option = ~p_choice3("Do you wish to trade?", 1, "I'm in search of a quest.", 2, "I'm in search of enemies to kill.", 3);
+        if ($option = 1) {
+            ~chatplayer("<p,neutral>Do you want to trade?");
+            ~chatnpc("<p,neutral>No, I have nothing I wish to get rid of.|If you want to do some trading,|there are plenty of shops and market stalls around though.");
+        } else if ($option = 2) {
+            ~chatplayer("<p,happy>I'm in search of a quest.");
+            ~chatnpc("<p,neutral>I'm sorry I can't help you there.");
+        } else if ($option = 3) {
+            ~chatplayer("<p,neutral>I'm in search of enemies to kill.");
+            ~chatnpc("<p,neutral>I've heard there are many fearsome|creatures that dwell under the ground...");
+        }
+    case 1 : ~chatnpc("<p,happy>I'm very well thank you."); 
+    case 2 : ~chatnpc("<p,angry>No I don't have any spare change.");
+    case 3 : ~chatnpc("<p,neutral>That is classified information.");
+    case 4 : ~chatnpc("<p,happy>Not too bad thanks.");
+    case 5 : ~chatnpc("<p,happy>I like our king, he's keeping the poor and infected away from us decent folk.");
+    case 6 : ~chatnpc("<p,happy>Good day to you. Nice weather we've been having.");
+    case 7 : ~chatnpc("<p,angry>Get out of my way, I'm in a hurry!");
+    case 8 : ~chatnpc("<p,neutral>I'm a little worried|I've heard there's lots of people going about,|killing citizens at random.");
+    case 9 : ~chatnpc("<p,angry>None of your business.");
+    case 10 : ~chatnpc("<p,angry>No, I don't want to buy anything!");
+    case 11 : ~chatnpc("<p,happy>Hello.");
+    case 12 : ~chatnpc("<p,neutral>I'm busy right now.");
+    case 13 : ~chatnpc("<p,happy>Yo, wassup!");
+    case 14 :~chatnpc("<p,confused>Do I know you? I'm in a hurry!");
+    case 15 :
+        ~chatnpc("<p,happy>I'm fine, how are you?");
+        ~chatplayer("<p,happy>Very well thank you.");
+    case 16 :
+        ~chatnpc("<p,confused>Who are you?");
+        ~chatplayer("<p,happy>I'm a bold adventurer.");
+        ~chatnpc("<p,happy>Ah, I suppose someone has to do it.");
+    case 17 :
+        ~chatnpc("<p,angry>Are you asking for a fight?"); // doesn't attack you after?
+    case 18 :
+        ~chatnpc("<p,neutral>Not too bad, but I'm a little worried|about the increase of goblins these days.");
+        ~chatplayer("<p,happy>Don't worry, I'll kill them."); 
+    case 23 :
+        inv_add(inv, flier, 1);
+        ~chatnpc("<p,happy>Have this flier...");
+    case 20 :
+        ~chatplayer("<p,happy>I'm in search of a quest.");
+        ~chatnpc("<p,neutral>I'm sorry I can't help you there.");
+    case 21 :
+        ~chatplayer("<p,neutral>I'm in search of enemies to kill.");
+        ~chatnpc("<p,neutral>I've heard there are many fearsome|creatures that dwell under the ground...");
+    case 22 :
+        ~chatplayer("<p,neutral>Do you wish to trade?");
+        ~chatnpc("<p,neutral>No, I have nothing I wish to get rid of.|If you want to do some trading,|there are plenty of shops and market stalls around though.");
+}

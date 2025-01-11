@@ -192,12 +192,14 @@ defence=4
 param=stabdefence,5
 param=slashdefence,6
 param=crushdefence,8
+param=damagetype,^slash_style
 param=attack_anim,human_sword_slash
 param=defend_anim,human_sword_defend2
 // TODO: param=attack_sound,
 // https://www.youtube.com/watch?v=ZYPB823IyRk&t=395s
 // https://www.youtube.com/watch?v=Tm1r7zi4oUY
 // TODO monster examine spell
+// https://raw.githubusercontent.com/Joshua-F/osrs-dumps/refs/heads/master/config/dump.npc npc_12093
 
 [hazeel]
 vislevel=296

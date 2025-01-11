@@ -26,6 +26,7 @@ param=death_sound,ghost_death
 param=death_drop,null
 param=undead,^true
 // osrs stats and Vislvl match 1:1
+// https://raw.githubusercontent.com/Joshua-F/osrs-dumps/refs/heads/master/config/dump.npc npc_5370
 
 [spirit_of_scorpius]
 vislevel=hide
@@ -70,3 +71,4 @@ param=defend_sound,insect_hit
 param=death_sound,insect_death
 param=death_drop,null
 // osrs stats and Vislvl match 1:1
+// https://raw.githubusercontent.com/Joshua-F/osrs-dumps/refs/heads/master/config/dump.npc npc_5372

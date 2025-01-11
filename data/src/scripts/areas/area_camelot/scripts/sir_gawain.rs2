@@ -6,7 +6,7 @@ if(%grail_progress > ^grail_not_started & %grail_progress < ^grail_complete) {
     ~chatplayer("<p,quiz>Galahad? Who is he?");
     ~chatnpc("<p,neutral>He used to be one of the Knights of the Round Table, but he mysteriously disappeared many years ago.");
     ~chatplayer("<p,neutral>Why would he quit being a Knight?");
-    ~chatnpc("<p,sad>|That is a good question.");
+    ~chatnpc("<p,sad>That is a good question.");
     ~chatnpc("<p,sad>I'm afraid I don't have the answer.");
     return;
 } 

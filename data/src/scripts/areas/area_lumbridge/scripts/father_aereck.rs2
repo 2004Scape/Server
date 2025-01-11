@@ -7,7 +7,7 @@ switch_int(%priest_progress) {
 
 [label,father_aereck_default]
 ~chatnpc("<p,happy>Welcome to the church of holy Saradomin.");
-switch_int (~p_choice3("Who's Saradomin?", 1, "Nice place you've got here.", 2, "I'm looking for a quest.", 3)) {
+switch_int (~p_choice3("Who's Saradomin?", 1, "Nice place you've got here.", 2, "I'm looking for a quest!", 3)) {
     case 1 :
         ~chatplayer("<p,quiz>Who's Saradomin?");
         ~chatnpc("<p,shock>Surely you have heard of the god, Saradomin?");
@@ -48,7 +48,7 @@ switch_int (~p_choice3("Who's Saradomin?", 1, "Nice place you've got here.", 2, 
                 ~chatnpc("<p,happy>Thank you. The problem is, there is a ghost in the church graveyard: I would like you to get rid of it.");
                 ~chatnpc("<p,happy>If you need any help, my friend Father Urhney is an expert on ghosts.");
                 ~chatnpc("<p,happy>I believe he is currently living as a hermit. He has a little shack somewhere in the swamps south of here. I'm sure if you told him that I sent you he'd be willing to help.");
-                ~chatnpc("<p,happy>My name is father Aereck by the way.|Pleased to meet you.");
+                ~chatnpc("<p,happy>My name is Father Aereck by the way.|Pleased to meet you.");
                 ~chatplayer("<p,happy>Likewise.");
                 ~chatnpc("<p,neutral>Take care travelling through the swamps.|I have heard they can be quite dangerous.");
                 ~chatplayer("<p,happy>I will, thanks.");
@@ -60,7 +60,7 @@ switch_int (~p_choice3("Who's Saradomin?", 1, "Nice place you've got here.", 2, 
 ~chatnpc("<p,neutral>Have you got rid of the ghost yet?");
 switch_int (%priest_progress) {
     case ^priest_started :
-        ~chatplayer("<p,sad>I can't find father Urhney at the moment.");
+        ~chatplayer("<p,sad>I can't find Father Urhney at the moment.");
         ~chatnpc("<p,happy>Well, to get to the swamp he is in you need to go round the back of the castle. The swamp is on the otherside of the fence to the south.");
         ~chatnpc("<p,happy>You'll have to go through the wood to the west to get round the fence. Then you'll have to go right into the eastern depths of the swamp.");
     case ^priest_spoken_urhney :

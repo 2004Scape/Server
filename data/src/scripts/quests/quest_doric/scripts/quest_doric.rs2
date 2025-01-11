@@ -112,6 +112,7 @@ if (inv_total(inv, clay) > 5 & inv_total(inv, copper_ore) > 3 & inv_total(inv, i
 [queue,doric_quest_complete]
 %doric_progress = ^doric_complete;
 stat_advance(mining, 13000);
+session_log(^log_adventure, "Quest complete: Doric's Quest");
 ~send_quest_complete(questlist:doric, steel_pickaxe, 250, ^doric_questpoints, "You have completed\\nDoric's Quest!");
 
 [label,trail_doric]

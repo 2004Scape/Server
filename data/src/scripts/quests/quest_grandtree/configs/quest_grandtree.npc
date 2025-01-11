@@ -126,8 +126,12 @@ ranged=0
 param=slashdefence,1
 param=crushdefence,1
 param=damagetype,^crush_style
+param=attack_sound,gnome_attack
+param=defend_sound,gnome_hit
+param=death_sound,gnome_death
 // trivia npc sounds - https://oldschool.runescape.wiki/w/Foreman
 // Stats match osrs version but our version Vislvl is different.
+// https://raw.githubusercontent.com/Joshua-F/osrs-dumps/refs/heads/master/config/dump.npc npc_1429
 
 [grandtree_shipyard_worker]
 name=Shipyard worker
@@ -220,3 +224,4 @@ param=death_drop,ashes
 category=black_demon
 timer=20
 // osrs stats and Vislvl match 1:1
+// https://raw.githubusercontent.com/Joshua-F/osrs-dumps/refs/heads/master/config/dump.npc npc_1432

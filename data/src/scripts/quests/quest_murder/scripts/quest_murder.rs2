@@ -534,4 +534,5 @@ if(inv_total(bank, unknown_print) > 0) {
 %murder_murderer_id = 0;
 stat_advance(crafting, 14060);
 inv_add(inv, coins, 2000);
+session_log(^log_adventure, "Quest complete: Murder Mystery");
 ~send_quest_complete(questlist:murder, coins, 250, ^murder_questpoints, "You have completed the\\nMurder Mystery Quest!");
