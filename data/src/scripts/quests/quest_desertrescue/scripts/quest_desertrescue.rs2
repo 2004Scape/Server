@@ -797,14 +797,30 @@ if(last_useitem = anainabarrel) {
     inv_del(inv, anainabarrel, 1);
 }
 
-[oploc1,loc_2687] @desertrescue_open_wrought_gate;
-[oploc1,loc_2688] @desertrescue_open_wrought_gate;
+[oploc1,loc_2687] @desertrescue_open_wrought_gate(^left);
+[oploc1,loc_2688] @desertrescue_open_wrought_gate(^right);
+
+[oplocu,loc_2687] @desertrescue_useobj_wrought_gate(^left);
+[oplocu,loc_2688] @desertrescue_useobj_wrought_gate(^right);
 
 [oploc2,loc_2687] @desertrescue_search_wrought_gate;
 [oploc2,loc_2688] @desertrescue_search_wrought_gate;
 
-[label,desertrescue_open_wrought_gate]
+[label,desertrescue_open_wrought_gate](int $side)
+if(inv_total(inv, desertrescue_ironkey) > 0 | coordz(coord) > coordz(loc_coord)) {
+    mes("You push the gates open and walk through.");
+    ~open_and_close_double_door2(~check_axis(coord, loc_coord, loc_angle), $side, grate_open);
+    return;
+}
 mes("This gate looks like it needs a key to open it.");
+
+[label,desertrescue_useobj_wrought_gate](int $side)
+if(last_useitem = desertrescue_ironkey) {
+    mes("You use the wrought iron key on gates.");
+    ~open_and_close_double_door2(~check_axis(coord, loc_coord, loc_angle), $side, grate_open);
+    return;
+}
+~displaymessage(^dm_default);
 
 [label,desertrescue_search_wrought_gate]
 ~mesbox("These wrought iron gates look like they're designed to keep people out. It looks like you'll need a key to get past these.");
