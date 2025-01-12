@@ -90,8 +90,6 @@ switch_obj(last_item) {
 // ************************* TRIGGERS **************************
 
 // all normal foods use %eat_delay
-// some foods use %eat_delay2, like karambwans (later rev) or in our case gnome food
-// potions use %drink_delay
 [label,player_consume_item](label $consume_effect, int $eat_delay, int $skill_delay)
 def_obj $obj = inv_getobj(inv, last_slot);
 
