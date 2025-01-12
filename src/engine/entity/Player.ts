@@ -319,6 +319,22 @@ export default class Player extends PathingEntity {
         this.lastLevels.fill(-1);
     }
 
+    cleanup(): void {
+        this.pid = -1;
+        this.uid = -1;
+        this.activeScript = null;
+        this.invListeners.length = 0;
+        this.resumeButtons.length = 0;
+        this.buffer.clear();
+        this.queue.clear();
+        this.weakQueue.clear();
+        this.engineQueue.clear();
+        this.cameraPackets.clear();
+        this.timers.clear();
+        this.heroPoints.clear();
+        this.buildArea.clear();
+    }
+
     resetEntity(respawn: boolean) {
         if (respawn) {
             this.faceX = -1;
@@ -635,7 +651,7 @@ export default class Player extends PathingEntity {
                 }
             }
         }
-        
+
     }
 
     processQueues() {

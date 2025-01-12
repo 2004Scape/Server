@@ -38,6 +38,16 @@ export default class BuildArea {
         this.appearances = new Map();
     }
 
+    clear(): void {
+        this.players.clear();
+        this.npcs.clear();
+        this.loadedZones.clear();
+        this.activeZones.clear();
+        this.appearances.clear();
+        this.clearPlayerInfo();
+        this.clearNpcInfo();
+    }
+
     resize(): void {
         if (this.forceViewDistance) {
             return;
