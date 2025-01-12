@@ -299,6 +299,9 @@ if (inv_total(inv, $cocktail1) >= $count1 & inv_total(inv, $cocktail2) >= $count
     if ($cocktail3 ! null) {
         inv_del(inv, $cocktail3, $count3);
     }
+    if ($cocktail4 ! null) {
+        inv_del(inv, $cocktail4, $count4);
+    }
     %gnome_bar_progress = 13;
     ~mesbox("You give blurberry <$order>.");
     ~chatnpc(append("<p,neutral>", $order_succeed));
