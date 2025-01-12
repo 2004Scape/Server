@@ -27,26 +27,35 @@ p_exactmove(coord, movecoord(coord, 0, 0, -1), 30, 56, ^exact_north);
 
 [label,open_ikov_southgate](int $side)
 def_boolean $entering = ~check_axis_locactive(coord);
-if($entering = false | %ikov_lever = 1) {
+if($entering = false | testbit(%ikov_dungeon, ^ikov_lever) = true) {
     ~open_and_close_double_door2($entering, $side, grate_open);
     return;
 }
 ~mesbox("The door won't open!");
 
-[mapzoneexit,0_41_153] cleartimer(move_ikovtrigger);
+[mapzoneexit,0_41_153] 
+cleartimer(move_ikovtrigger);
+%ikov_dungeon = clearbit(%ikov_dungeon, ^ikov_bridge);
 
 [timer,move_ikovtrigger]
+// coming from west side is queued and will take 1t longer, coming from east side is not, meaning you can cancel coming from west side
 if(inzone(^ikovbridge_zone_lower, ^ikovbridge_zone_upper, coord) = true) {
-    queue(ikov_movebridge, 0);
+    if(coordx(coord) = coordx(^ikovbridge_zone_lower)) {
+        queue(ikov_movequeue, 0);
+    } else {
+        @ikov_movebridge;
+    }
 }
 
-[queue,ikov_movebridge]
+[queue,ikov_movequeue] @ikov_movebridge;
+
+[label,ikov_movebridge]
 if(inzone(^ikovbridge_zone_lower, ^ikovbridge_zone_upper, coord) = false) {
     return;
 }
-// todo: refactor this without last_coord
-def_coord $last_coord = coord;
-if(coordx($last_coord) <= coordx(movecoord(^ikovbridge_zone_lower, 1, 0, 0))) {
+def_boolean $crossed_bridge = testbit(%ikov_dungeon, ^ikov_bridge);
+%ikov_dungeon = togglebit(%ikov_dungeon, ^ikov_bridge);
+if($crossed_bridge = true) {
     ~forcemove(movecoord(^ikovbridge_zone_lower, 1, 0, abs(calc(coordz(^ikovbridge_zone_lower) - coordz(coord)))));
     if(weight >= 0) {
         @ikov_bridgefail;
@@ -95,7 +104,7 @@ sound_synth(locked, 0, 0);
 p_delay(0);
 sound_synth(locked, 0, 0);
 p_delay(0);
-%ikov_lever = 1;
+%ikov_dungeon = setbit(%ikov_dungeon, ^ikov_lever);
 ~mesbox("You hear the clunking of some hidden machinery.");
 
 [oploc1,loc_103] ~open_chest(loc_104);
