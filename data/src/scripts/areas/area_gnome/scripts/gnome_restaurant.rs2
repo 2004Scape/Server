@@ -70,10 +70,8 @@ if (inv_total(inv, batta_tin) < 1) {
         return;
     }
 }
-if (inv_total(inv, cheese_tom_batta) < 1) {
-    ~chatplayer("<p,confused>Erm, I've not quite finished it yet.");
-    ~chatnpc("<p,neutral>Ok, let me know when you have. I just need one cheese and tomato batta.");
-}
+~chatplayer("<p,confused>Erm, I've not quite finished it yet.");
+~chatnpc("<p,neutral>Ok, let me know when you have. I just need one cheese and tomato batta.");
 
 [label,gnome_restaurant_assign_toad_batta]
 ~chatplayer("<p,neutral>Hello Aluft.");
@@ -109,11 +107,8 @@ if (inv_total(inv, gnomebowl_mould) < 1) {
         return;
     }
 }
-if (inv_total(inv, chocolate_bomb) < 1) {
-    ~chatplayer("<p,neutral>I haven't made it yet.");
-    ~chatnpc("<p,neutral>Just follow the instructions carefully. I need one chocolate bomb.");
-    return;
-}
+~chatplayer("<p,neutral>I haven't made it yet.");
+~chatnpc("<p,neutral>Just follow the instructions carefully. I need one chocolate bomb.");
 
 [label,gnome_restaurant_assign_worm_hole]
 ~chatplayer("<p,neutral>Hi Mr Gianne.");
@@ -148,12 +143,9 @@ if (inv_total(inv, batta_tin) < 1) {
         return;
     }
 }
-if (inv_total(inv, toad_batta) < 1) {
-    ~chatplayer("<p,neutral>I'm not done yet.");
-    ~chatnpc("<p,neutral>Ok, quick as you can though.");
-    ~chatplayer("<p,happy>No problem.");
-    return;
-}
+~chatplayer("<p,neutral>I'm not done yet.");
+~chatnpc("<p,neutral>Ok, quick as you can though.");
+~chatplayer("<p,happy>No problem.");
 
 [label,gnome_restaurant_assign_toad_crunchies]
 ~chatplayer("<p,neutral>Hello again Aluft.");
@@ -188,13 +180,9 @@ if (inv_total(inv, gnomebowl_mould) < 1) {
         return;
     }
 }
-
-if (inv_total(inv, worm_hole) < 1) {
-    ~chatplayer("<p,neutral>I'm not done yet.");
-    ~chatnpc("<p,neutral>Ok, quick as you can though. I need one worm hole.");
-    ~chatplayer("<p,happy>No problem.");
-    return;
-}
+~chatplayer("<p,neutral>I'm not done yet.");
+~chatnpc("<p,neutral>Ok, quick as you can though. I need one worm hole.");
+~chatplayer("<p,happy>No problem.");
 
 [label,gnome_restaurant_complete]
 ~chatplayer("<p,neutral>Hi Aluft.");
@@ -227,12 +215,8 @@ if (inv_total(inv, crunchy_tray) < 1) {
         return;
     }
 }
-
-if (inv_total(inv, toad_crunchies) < 1) {
-    ~chatplayer("<p,neutral>No luck so far.");
-    ~chatnpc("<p,neutral>Ok then but don't take too long. I need some toad crunchies.");
-    return;
-}
+~chatplayer("<p,neutral>No luck so far.");
+~chatnpc("<p,neutral>Ok then but don't take too long. I need some toad crunchies.");
 
 [proc,gnome_restaurant_food_check](obj $food, string $food_name)(boolean)
 if (inv_total(inv, $food) > 0) {
