@@ -1,4 +1,4 @@
-[premade_chocolate_bomb]
+[chocolate_bomb]
 name=Chocolate bomb
 desc=Looks great!
 category=category_127
@@ -15,7 +15,7 @@ iop1=Eat
 weight=350g
 members=yes
 
-[premade_tangled_toads_legs]
+[tangled_toads_legs]
 cost=2
 name=Tangled toad's legs
 desc=It actually smells quite good.
@@ -29,7 +29,7 @@ iop1=Eat
 weight=350g
 members=yes
 
-[premade_worm_hole]
+[worm_hole]
 category=category_127
 cost=2
 name=Worm hole
@@ -43,7 +43,7 @@ iop1=Eat
 weight=350g
 members=yes
 
-[premade_veg_ball]
+[veg_ball]
 name=Veg ball
 desc=This looks pretty healthy.
 category=category_127
@@ -57,7 +57,7 @@ iop1=Eat
 weight=350g
 members=yes
 
-[chocolate_bomb]
+[premade_chocolate_bomb]
 name=Chocolate bomb
 desc=Looks great!
 model=model_2647_obj
@@ -73,7 +73,7 @@ cost=160
 weight=350g
 category=category_128
 
-[tangled_toads_legs]
+[premade_tangled_toads_legs]
 name=Tangled toad's legs
 desc=It actually smells quite good.
 model=model_2579_obj
@@ -87,7 +87,7 @@ cost=160
 weight=350g
 category=category_128
 
-[worm_hole]
+[premade_worm_hole]
 name=Worm hole
 desc=It actually smells quite good.
 model=model_2609_obj
@@ -101,7 +101,7 @@ cost=150
 weight=350g
 category=category_128
 
-[veg_ball]
+[premade_veg_ball]
 name=Veg ball
 desc=This looks pretty healthy.
 model=model_2823_obj
