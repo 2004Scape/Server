@@ -14,16 +14,11 @@ export default class BuildArea {
     readonly players: Set<Player>; // observed players
     readonly loadedZones: Set<number>;
     readonly activeZones: Set<number>;
-    readonly highPlayers: Set<Player>; // cleared after player_info
-    readonly lowPlayers: Set<Player>; // cleared after player_info
-    readonly highNpcs: Set<Npc>; // cleared after npc_info
-    readonly lowNpcs: Set<Npc>; // cleared after npc_info
     readonly appearances: Map<number, number>; // cached appearance ticks
 
     // runtime
     forceViewDistance: boolean = false;
     viewDistance: number = BuildArea.PREFERRED_VIEW_DISTANCE;
-
     lastResize: number = 0;
 
     constructor() {
@@ -31,10 +26,6 @@ export default class BuildArea {
         this.players = new Set();
         this.loadedZones = new Set();
         this.activeZones = new Set();
-        this.highPlayers = new Set();
-        this.lowPlayers = new Set();
-        this.highNpcs = new Set();
-        this.lowNpcs = new Set();
         this.appearances = new Map();
     }
 
@@ -44,8 +35,6 @@ export default class BuildArea {
         this.loadedZones.clear();
         this.activeZones.clear();
         this.appearances.clear();
-        this.clearPlayerInfo();
-        this.clearNpcInfo();
     }
 
     resize(): void {
@@ -78,16 +67,6 @@ export default class BuildArea {
 
     saveAppearance(pid: number, tick: number): void {
         this.appearances.set(pid, tick);
-    }
-
-    clearPlayerInfo(): void {
-        this.highPlayers.clear();
-        this.lowPlayers.clear();
-    }
-
-    clearNpcInfo(): void {
-        this.highNpcs.clear();
-        this.lowNpcs.clear();
     }
 
     *getNearbyPlayers(pid: number, level: number, x: number, z: number, originX: number, originZ: number): IterableIterator<Player> {
