@@ -40,7 +40,7 @@ mes("<$message>.");
 if_close;
 //p_stopaction;
 switch_obj(last_useitem) {
-    case king_worm, onion, cheese, dwellberry, tomato, equa_leaves, gnome_spice, toad_legs, chocolate_bar : @add_bowl_ingredient(last_useitem);
+    case king_worm, onion, cheese, dwellberry, potato, equa_leaves, gnome_spice, toad_legs, chocolate_bar : @add_bowl_ingredient(last_useitem);
     case default : ~displaymessage(^dm_default);
 }
 
@@ -80,9 +80,9 @@ if ($chocolate_bar_count = 4 & $equa_leaves_count = 1 & $null_count = 6) {
 }
 // veg ball
 def_int $onion_count = ~get_bowl_ingredient_count(onion);
-def_int $tomato_count = ~get_bowl_ingredient_count(tomato);
+def_int $potato_count = ~get_bowl_ingredient_count(potato);
 def_int $gnome_spice_count = ~get_bowl_ingredient_count(gnome_spice);
-if ($onion_count = 2 & $tomato_count = 2 & $gnome_spice_count = 1 & $null_count = 6) {
+if ($onion_count = 2 & $potato_count = 2 & $gnome_spice_count = 1 & $null_count = 6) {
     ~clear_bowl_ingredients;
     return(unfinished_veg_ball1);
 }

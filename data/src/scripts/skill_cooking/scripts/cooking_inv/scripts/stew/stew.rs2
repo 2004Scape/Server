@@ -4,6 +4,7 @@ switch_obj (last_useitem) {
     case incomplete_stew_meat : @make_uncooked_stew(last_slot, last_useslot);
     case bowl_empty : @no_water_stew_message;
     case raw_chompy : @quest_chompybird_add_ingredients_to_chompy_message;
+    case half_baked_gnomebowl : @add_bowl_ingredient(last_item);
     case default : ~displaymessage(^dm_default);
 };
 
