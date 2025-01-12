@@ -92,7 +92,7 @@ if ($cheese_count = 1 & $tomato_count = 1 & $null_count = 4) {
 def_int $equa_leaves_count = ~get_batta_ingredient_count(equa_leaves);
 if ($equa_leaves_count = 4 & $null_count = 2) {
     ~clear_batta_ingredients;
-    return(unfinished_fruit_batta2);
+    return(unfinished_fruit_batta1);
 }
 // vegetable batta
 def_int $onion_count = ~get_batta_ingredient_count(onion);
