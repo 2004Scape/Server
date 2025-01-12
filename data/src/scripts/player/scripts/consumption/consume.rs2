@@ -7,7 +7,6 @@
 [opheld1,rotten_apples] ~displaymessage(^dm_default);
 [opheld1,_category_120] @player_consume_item(consume_effect_stat, 2, 3);
 [opheld1,_category_131] @player_consume_item(consume_effect_stat, 2, 3);
-[opheld1,vegetable_batta] @player_consume_item(consume_effect_stat, 2, 3);
 [opheld1,pineapple]
 mes("You cant eat it whole; maybe you should cut it up.");
 [opheld1,_alcoholic_drinks] @player_consume_item(consume_effect_stat, 2, 3);
