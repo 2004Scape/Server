@@ -68,7 +68,7 @@ if (oc_param($next_gnome_food, gnome_cooking_type) = null) {
 }
 def_string $name;
 def_string $message;
-switch_int(oc_param($next_gnome_food, gnome_cooking_type)) {
+switch_int(oc_param($gnome_food, gnome_cooking_type)) {
     case ^gnome_batta : $name = "gnome batta.";
     case ^gnome_crunchies : $name = "gnome crunchies.";
     case ^gnome_bowl : $name = "gnome bowl.";
