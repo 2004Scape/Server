@@ -20,30 +20,32 @@ mes("You cant eat it whole; maybe you should cut it up.");
 [opheld1,curry] @player_consume_item(consume_effect_stat2, 2, 3);
 [opheld1,stew] @player_consume_item(consume_effect_stat2, 2, 3);
 
-// gnome food
-// impossible to know how category_15 worked, i assume they work the same way as other gnome food
-[opheld1,_category_15]
+// gnome foods
+// these are combo eatable in osrs
+[opheld1,_gnome_crunchies] @player_consume_item(consume_effect_stat, null, null);
+[opheld1,_gnome_unf_odd_crunchies] @player_consume_item(consume_effect_stat, null, null);
+[opheld1,_gnome_batta] @player_consume_item(consume_effect_stat, null, null);
+[opheld1,_gnome_unf_odd_batta] @player_consume_item(consume_effect_stat, null, null);
+[opheld1,_gnome_bowl] @player_consume_item(consume_effect_stat, null, null);
+[opheld1,_gnome_unf_odd_bowl] @player_consume_item(consume_effect_stat, null, null);
+[opheld1,_gnome_premade_and_toadlegs_kingworm] @player_consume_item(consume_effect_stat, null, null);
+
+// cocktails
+// these work like normal food in osrs
+[opheld1,_gnome_cocktail]
+switch_obj(last_item) { 
+    case premade_fruit_blast, fruit_blast, pineapple_punch, pineapple_punch : @player_consume_item(consume_effect_stat, 2, 3);
+    case default : @player_consume_item(consume_effect_stat2, 2, 3);
+}
+[opheld1,_gnome_unf_odd_cocktail]
 switch_obj(last_item) {
     case odd_cocktail1, odd_cocktail2, odd_cocktail3, odd_cocktail4 :
         inv_delslot(inv, last_slot);
         inv_add(inv, oc_param(last_item, next_obj_stage), 1);
         mes("You empty the cocktail.");
-    case default : @player_consume_item(consume_effect_stat, null, null); // odd gnome food, unfinished cocktails
+    case default : @player_consume_item(consume_effect_stat, 2, 3); // unfinished cocktails
 }
-[opheld1,_category_123] @player_consume_item(consume_effect_stat, null, null);
-[opheld1,_category_125] @player_consume_item(consume_effect_stat, null, null);
-[opheld1,_category_127] @player_consume_item(consume_effect_stat, null, null);
-[opheld1,_category_128] @player_consume_item(consume_effect_stat, null, null);
-
-// cock tails
-[opheld1,_category_83]
-switch_obj(last_item) { 
-    // i really dont know if these should be delayed like gnome food
-    case premade_fruit_blast, fruit_blast, pineapple_punch, pineapple_punch : @player_consume_item(consume_effect_stat, 2, 3);
-    case default : @player_consume_item(consume_effect_stat2, 2, 3);
-}
-//odd cocktail
-[opheld3,_category_15]@player_consume_item(consume_effect_stat2, null, null);
+[opheld3,_gnome_unf_odd_cocktail] @player_consume_item(consume_effect_stat2, 2, 3); // odd cocktails
 
 // pies
 [opheld1,_category_129]

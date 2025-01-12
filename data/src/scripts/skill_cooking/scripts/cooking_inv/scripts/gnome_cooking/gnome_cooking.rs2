@@ -18,13 +18,10 @@ if ($tin = gnomebowl_mould) {
     mes("You put the Gianne dough into the <lowercase(oc_name($tin))>.");
 }
 
-[opheldu,_category_15]
-switch_int(oc_param(last_item, gnome_cooking_type)) {
-    case ^gnome_cocktail : @finish_cocktail(last_item, last_useitem);
-    case ^gnome_bowl, ^gnome_batta, ^gnome_crunchies : @finish_gnome_food(last_useitem, last_item);
-    case default : ~displaymessage(^dm_default);
-}
-
+[opheldu,_gnome_unf_odd_cocktail] @finish_cocktail(last_item, last_useitem);
+[opheldu,_gnome_unf_odd_crunchies] @finish_gnome_food(last_item, last_useitem);
+[opheldu,_gnome_unf_odd_batta] @finish_gnome_food(last_item, last_useitem);
+[opheldu,_gnome_unf_odd_bowl] @finish_gnome_food(last_item, last_useitem);
 
 [opheldu,gnome_spice]
 switch_int(oc_param(last_useitem, gnome_cooking_type)) {
