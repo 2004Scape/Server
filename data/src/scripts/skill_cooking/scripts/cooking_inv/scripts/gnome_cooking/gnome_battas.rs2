@@ -61,14 +61,6 @@ switch_obj(last_useitem) {
 
 [proc,get_gnome_batta_product]()(namedobj)
 def_int $null_count = calc(~get_batta_ingredient_count(null) + ~get_batta_ingredient_count(dwarf_remains));
-if ($null_count = 6) {
-    return(null);
-}
-// if only 1 ingredient then return odd batta
-if ($null_count > 4) {
-    ~clear_batta_ingredients;
-    return(odd_batta);
-}
 def_int $spicy_worm_count = ~get_batta_ingredient_count(spicy_worm);
 def_int $cheese_count = ~get_batta_ingredient_count(cheese);
 // worm batta
