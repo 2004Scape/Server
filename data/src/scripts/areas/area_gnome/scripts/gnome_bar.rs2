@@ -213,23 +213,23 @@ if ($choice = 1) {
     return;
 }
 ~chatplayer("<p,happy>Ok then, what do you need?");
-def_int $rand = randominc(5);
+def_int $rand = random(5);
 
-%gnome_bar_progress = calc(7 + $rand);
+%gnome_bar_progress = calc(8 + $rand);
 switch_int($rand) {
-    case 1 :
+    case 0 :
         ~chatnpc("<p,neutral>Can you make me one Pineapple Punch, one Choc Saturday and one Drunk Dragon!");
         ~chatplayer("<p,neutral>Ok then I'll be back soon.");
-    case 2 :
+    case 1 :
         ~chatnpc("<p,neutral>Ok, I need two Wizard Blizzards and an SGG!");
         ~chatplayer("<p,neutral>No problem!");
-    case 3 :
+    case 2 :
         ~chatnpc("<p,neutral>Ok, I need one Wizard Blizzard, one Pineapple Punch, one Blurberry Special and two Fruit Blasts!");
         ~chatplayer("<p,neutral>I'll do my best.");
-    case 4 :
+    case 3 :
         ~chatnpc("<p,neutral>I just need two SGG's and one Blurberry Special!");
         ~chatplayer("<p,neutral>No problem!");
-    case default :
+    case 4 :
         ~chatnpc("<p,neutral>I just need one Fruit Blast!");
         ~chatplayer("<p,neutral>No problem!");
 }
