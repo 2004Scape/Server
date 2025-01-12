@@ -75,11 +75,10 @@ switch_int(oc_param($gnome_food, gnome_cooking_type)) {
     case default : $name = "gnome dish";
 }
 if ($ingredient = pot_of_cream) {
-    $message = "You pour thick cream over the <$name>.";
+    mes("You pour thick cream over the <$name>.");
 } else {
-    $message = "You sprinkle the <lowercase(oc_name($ingredient))> over the <$name>.";
+    mes("You sprinkle the <lowercase(oc_name($ingredient))> over the <$name>.");
 }
-~mesbox($message);
 
 [opheld1,swamp_toad]
 inv_del(inv, swamp_toad, 1);
