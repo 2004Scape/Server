@@ -1,6 +1,4 @@
 [opheld1,half_baked_batta]
-if_close;
-//p_stopaction;
 def_int $total_steps = ~get_batta_ingredient_step();
 if ($total_steps < 1) {
     mes("The half baked batta is completely plain.");
@@ -37,16 +35,12 @@ while ($i < enum_getoutputcount(gnome_batta_ingredients)) {
 mes("<$message>.");
 
 [opheldu,half_baked_batta]
-if_close;
-//p_stopaction;
 switch_obj(last_useitem) {
     case cheese, tomato, onion, cabbage, dwellberry, seasoned_toad_legs, spicy_worm, equa_leaves : @add_batta_ingredient(last_useitem);
     case default : ~displaymessage(^dm_default);
 }
 
 [opheldu,cabbage]
-if_close;
-//p_stopaction;
 switch_obj(last_useitem) {
     case half_baked_batta : @add_batta_ingredient(last_item);
     case raw_chompy : @quest_chompybird_add_ingredients_to_chompy_message;
@@ -54,16 +48,12 @@ switch_obj(last_useitem) {
 }
 
 [opheldu,seasoned_toad_legs]
-if_close;
-//p_stopaction;
 switch_obj(last_useitem) {
     case half_baked_batta : @add_batta_ingredient(last_item);
     case default : ~displaymessage(^dm_default);
 }
 
 [opheldu,spicy_worm]
-if_close;
-//p_stopaction;
 switch_obj(last_useitem) {
     case half_baked_batta : @add_batta_ingredient(last_item);
     case default : ~displaymessage(^dm_default);

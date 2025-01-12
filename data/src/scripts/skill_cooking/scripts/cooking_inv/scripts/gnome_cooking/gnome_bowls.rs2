@@ -1,6 +1,4 @@
 [opheld1,half_baked_gnomebowl]
-if_close;
-//p_stopaction;
 def_int $total_steps = ~get_bowl_ingredient_step();
 if ($total_steps < 1) {
     mes("The half baked bowl is empty.");
@@ -37,8 +35,6 @@ while ($i < enum_getoutputcount(gnome_bowl_ingredients)) {
 mes("<$message>.");
 
 [opheldu,half_baked_gnomebowl]
-if_close;
-//p_stopaction;
 switch_obj(last_useitem) {
     case king_worm, onion, cheese, dwellberry, potato, equa_leaves, gnome_spice, toad_legs, chocolate_bar : @add_bowl_ingredient(last_useitem);
     case default : ~displaymessage(^dm_default);
