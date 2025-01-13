@@ -80,7 +80,7 @@ if(p_finduid(uid) = false) {
     return;
 }
 mes("Resetting all varps affected by ikov update");
-%ikov_lever = 0;
+%ikov_dungeon = 0;
 %ikov_icearrowchest_coord = 0_0_0_0_0;
 %haunted_lever = 0;
 %haunted_manor_fountain_poisoned = 0;
