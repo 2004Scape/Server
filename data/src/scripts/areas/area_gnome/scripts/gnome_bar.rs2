@@ -56,10 +56,7 @@ if (inv_total(inv, fruit_blast) > 0) {
 if (~gnome_bar_cocktail_checks(premade_fruit_blast, "Fruit Blast") = false) {
     return;
 }
-if (inv_total(inv, fruit_blast) < 1) {
-    ~chatnpc("<p,angry>I don't know what you have there but it's no Fruit|Blast!");
-    return;
-}
+~chatnpc("<p,angry>I don't know what you have there but it's no Fruit|Blast!");
 
 [label,gnome_bar_assign_ssg]
 ~chatplayer("<p,neutral>Hello Blurberry.");
@@ -87,10 +84,7 @@ if (inv_total(inv, drunk_dragon) > 0) {
 if (~gnome_bar_cocktail_checks(premade_drunk_dragon, "Drunk Dragon") = false) {
     return;
 }
-if (inv_total(inv, drunk_dragon) < 1) {
-    ~chatnpc("<p,angry>I don't know what you have there but it's no Drunk|Dragon!");
-    return;
-}
+~chatnpc("<p,angry>I don't know what you have there but it's no Drunk|Dragon!");
 
 [label,gnome_bar_assign_chocolate_saturday]
 ~chatplayer("<p,neutral>Hi Blurberry.");
@@ -118,10 +112,7 @@ if (inv_total(inv, short_green_guy) > 0) {
 if (~gnome_bar_cocktail_checks(premade_short_green_guy, "SGG") = false) {
     return;
 }
-if (inv_total(inv, short_green_guy) < 1) {
-    ~chatnpc("<p,angry>I don't know what you have there but it's no SGG!");
-    return;
-}
+~chatnpc("<p,angry>I don't know what you have there but it's no SGG!");
 
 [label,gnome_bar_assign_blurberry_special]
 ~chatplayer("<p,neutral>Hello Blurberry.");
@@ -148,11 +139,8 @@ if (inv_total(inv, chocolate_saturday) > 0) {
 if (~gnome_bar_cocktail_checks(premade_chocolate_saturday, "Choc Saturday") = false) {
     return;
 }
-if (inv_total(inv, chocolate_saturday) < 1) {
-    ~chatplayer("<p,sad>I haven't managed to make it yet.");
-    ~chatnpc("<p,neutral>Ok, it's one Choc Saturday I need.  Let me know when|it's done.");
-    return;
-}
+~chatplayer("<p,sad>I haven't managed to make it yet.");
+~chatnpc("<p,neutral>Ok, it's one Choc Saturday I need.  Let me know when|it's done.");
 
 [label,gnome_bar_complete]
 ~chatplayer("<p,neutral>Hi again.");
@@ -175,11 +163,8 @@ if (inv_total(inv, blurberry_special) > 0) {
 if (~gnome_bar_cocktail_checks(premade_blurberry_special, "Blurberry Special") = false) {
     return;
 }
-if (inv_total(inv, blurberry_special) < 1) {
-    ~chatplayer("<p,sad>I haven't managed to make it yet.");
-    ~chatnpc("<p,neutral>I need one Blurberry Special.  Let me know when|it's done.");
-    return;
-}
+~chatplayer("<p,sad>I haven't managed to make it yet.");
+~chatnpc("<p,neutral>I need one Blurberry Special.  Let me know when|it's done.");
 
 
 [proc,gnome_bar_cocktail_checks](namedobj $premade_cocktail, string $name)(boolean)
@@ -213,23 +198,23 @@ if ($choice = 1) {
     return;
 }
 ~chatplayer("<p,happy>Ok then, what do you need?");
-def_int $rand = randominc(5);
+def_int $rand = random(5);
 
-%gnome_bar_progress = calc(7 + $rand);
+%gnome_bar_progress = calc(8 + $rand);
 switch_int($rand) {
-    case 1 :
+    case 0 :
         ~chatnpc("<p,neutral>Can you make me one Pineapple Punch, one Choc Saturday and one Drunk Dragon!");
         ~chatplayer("<p,neutral>Ok then I'll be back soon.");
-    case 2 :
+    case 1 :
         ~chatnpc("<p,neutral>Ok, I need two Wizard Blizzards and an SGG!");
         ~chatplayer("<p,neutral>No problem!");
-    case 3 :
+    case 2 :
         ~chatnpc("<p,neutral>Ok, I need one Wizard Blizzard, one Pineapple Punch, one Blurberry Special and two Fruit Blasts!");
         ~chatplayer("<p,neutral>I'll do my best.");
-    case 4 :
+    case 3 :
         ~chatnpc("<p,neutral>I just need two SGG's and one Blurberry Special!");
         ~chatplayer("<p,neutral>No problem!");
-    case default :
+    case 4 :
         ~chatnpc("<p,neutral>I just need one Fruit Blast!");
         ~chatplayer("<p,neutral>No problem!");
 }
@@ -298,6 +283,9 @@ if (inv_total(inv, $cocktail1) >= $count1 & inv_total(inv, $cocktail2) >= $count
     }
     if ($cocktail3 ! null) {
         inv_del(inv, $cocktail3, $count3);
+    }
+    if ($cocktail4 ! null) {
+        inv_del(inv, $cocktail4, $count4);
     }
     %gnome_bar_progress = 13;
     ~mesbox("You give blurberry <$order>.");

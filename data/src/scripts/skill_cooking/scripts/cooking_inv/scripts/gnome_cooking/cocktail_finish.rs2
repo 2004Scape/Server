@@ -1,4 +1,5 @@
 [opheldu,lemon_slices] @finish_cocktail(last_useitem, last_item);
+[opheldu,orange_slices] @finish_cocktail(last_useitem, last_item);
 [opheldu,lime_slices] @finish_cocktail(last_useitem, last_item);
 [opheldu,lemon_chunks]
 switch_int(oc_param(last_useitem, gnome_cooking_type)) {
@@ -26,10 +27,7 @@ switch_int(oc_param(last_useitem, gnome_cooking_type)) {
 }
 
 
-
 [label,finish_cocktail](obj $gnome_food, obj $ingredient)
-if_close;
-//p_stopaction;
 // look up item in dbtable
 db_find(gnome_food_cooking:gnome_food, $gnome_food);
 def_dbrow $data = db_findnext;
@@ -52,7 +50,7 @@ if (oc_param($ingredient, next_obj_stage) ! null) {
 }
 
 // if finished cocktail, give xp
-if (oc_category($next_gnome_food) = category_83) {
+if (oc_category($next_gnome_food) = gnome_cocktail) {
     stat_advance(cooking, 600);
 }
 

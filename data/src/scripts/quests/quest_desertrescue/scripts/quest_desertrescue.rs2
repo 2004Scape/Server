@@ -866,4 +866,5 @@ p_opnpc(1);
 
 [queue,desertrescue_complete]
 %desertrescue_progress = ^desertrescue_complete;
-~send_quest_complete(questlist:desertrescue, bronze_dart, 250, ^desertrescue_questpoints, "You have completed the\\nTourist Trap Quest!");
+// https://web.archive.org/web/20051025141912im_/http://runeweb.net/rathofdoom/quests/touristtrap/7.png
+~send_quest_complete(questlist:desertrescue, bronze_dart, 200, ^desertrescue_questpoints, "You have completed the\\nTourist Trap Quest!");
