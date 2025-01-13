@@ -20,6 +20,8 @@ import ScriptRunner from '#/engine/script/ScriptRunner.js';
 import { PlayerStat, PlayerStatEnabled, PlayerStatKey } from '#/engine/entity/PlayerStat.js';
 import MoveStrategy from '#/engine/entity/MoveStrategy.js';
 import LoggerEventType from '#/server/logger/LoggerEventType.js';
+import Obj from '#/engine/entity/Obj.js';
+import EntityLifeCycle from '#/engine/entity/EntityLifeCycle.js';
 
 export default class ClientCheatHandler extends MessageHandler<ClientCheat> {
     handle(message: ClientCheat, player: Player): boolean {
@@ -43,11 +45,18 @@ export default class ClientCheatHandler extends MessageHandler<ClientCheat> {
             if (!Environment.STANDALONE_BUNDLE && !Environment.NODE_PRODUCTION) {
                 // local developer commands
 
-                if (cmd === 'reload' && !Environment.STANDALONE_BUNDLE && !Environment.NODE_PRODUCTION) {
+                if (cmd === 'reload') {
                     World.reload();
-                } else if (cmd === 'rebuild' && !Environment.STANDALONE_BUNDLE && !Environment.NODE_PRODUCTION) {
+                } else if (cmd === 'rebuild') {
                     player.messageGame('Rebuilding scripts...');
                     World.rebuild();
+                } else if (cmd === 'objtest') {
+                    for (let x = player.x - 500; x < player.x + 500; x++) {
+                        for (let z = player.z - 500; z < player.z + 500; z++) {
+                            // using player.pid will result in individual packets rather than using zone_enclosed
+                            World.addObj(new Obj(player.level, x, z, EntityLifeCycle.DESPAWN, 1333, 1), -1, 100);
+                        }
+                    }
                 }
             }
 
