@@ -7,6 +7,8 @@ export default abstract class ZoneEntityList<T> extends Array<T[] | undefined> {
     private readonly capacity: number;
     private readonly onFilled: (item: T) => void;
 
+    count: number = 0;
+
     constructor(capacity: number, onFilled: (item: T) => void) {
         super();
         this.capacity = capacity;
@@ -60,11 +62,13 @@ export default abstract class ZoneEntityList<T> extends Array<T[] | undefined> {
     addLast(coord: number, item: T, unchecked: boolean = false): void {
         this.check(coord, unchecked);
         this[coord]?.push(item);
+        this.count++;
     }
 
     addFirst(coord: number, item: T, unchecked: boolean = false): void {
         this.check(coord, unchecked);
         this[coord]?.unshift(item);
+        this.count++;
     }
 
     sortStack(coord: number, unchecked: boolean = false): void {
@@ -92,6 +96,7 @@ export default abstract class ZoneEntityList<T> extends Array<T[] | undefined> {
             return;
         }
         items.splice(index, 1);
+        this.count--;
     }
 
     contains(coord: number, item: T): boolean {
@@ -107,24 +112,12 @@ export default abstract class ZoneEntityList<T> extends Array<T[] | undefined> {
         if (typeof items === 'undefined') {
             this[coord] = [];
         }
-        if (!unchecked && this.total === this.capacity) {
+        if (!unchecked && this.count === this.capacity) {
             const bottom: T | undefined = this.nextBottomAll();
             if (typeof bottom !== 'undefined') {
                 this.onFilled(bottom);
             }
         }
-    }
-
-    private get total(): number {
-        let total: number = 0;
-        for (let index: number = 0; index < this.length; index++) {
-            const items: T[] | undefined = this[index];
-            if (typeof items === 'undefined') {
-                continue;
-            }
-            total += items.length;
-        }
-        return total;
     }
 }
 
