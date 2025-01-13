@@ -3,7 +3,7 @@
 // image from 2005, probably accidental space from removing linebreak (matches rsc)
 ~chatnpc("<p,happy>Good day to you.|What can I get you to drink?");
 def_int $choice;
-if (inv_totalcat(inv, category_83) > 0) {
+if (inv_totalcat(inv, gnome_cocktail) > 0) {
     if(testbit(%barcrawl_progress, ^blurberry_index) = false & inv_total(inv, barcrawl_card) > 0) {
         $choice = ~p_choice4("I'm trying to do Alfred Grimhand's barcrawl.", 5, "What do you have?", 1, "Nothing thanks.", 2, "Actually I'd like to sell some drinks.", 3);
     } else {

@@ -29,7 +29,8 @@ val=3,1 shot vodka\n1 shot gin\nDwellberry juice
 val=4,Juice 1 pineapple\nJuice 1 orange\nJuice 1 lemon
 val=5,Juice 1 lemon\nJuice 1 orange\nJuice 2 pineapples
 val=6,1 shot vodka\nJuice 3 limes
-val=7,2 shots vodka\n1 shot gin\nJuice 1 orange\nJuice 1 lime\nJuice 1 lemon
+// rsc has pineapple but osrs doesn't, probably because 6 ingredients didn't fit the cocktail mixing interface
+val=7,2 shots vodka\n1 shot gin\nJuice 1 pineapple\nJuice 1 orange\nJuice 1 lime\nJuice 1 lemon
 
 [cocktail_guide_text_right]
 inputtype=int
