@@ -29,7 +29,7 @@ import VarNpcType from '#/cache/config/VarNpcType.js';
 import VarPlayerType from '#/cache/config/VarPlayerType.js';
 import VarSharedType from '#/cache/config/VarSharedType.js';
 import WordEnc from '#/cache/wordenc/WordEnc.js';
-import { makeCrcs, makeCrcsAsync } from '#/cache/CrcTable.js';
+import { CrcBuffer32, makeCrcs, makeCrcsAsync } from '#/cache/CrcTable.js';
 import { preloadClient, preloadClientAsync } from '#/cache/PreloadedPacks.js';
 
 import { CoordGrid } from '#/engine/CoordGrid.js';
@@ -103,8 +103,8 @@ class World {
     private static readonly PLAYER_SAVERATE: number = 1500; // 15m
     private static readonly PLAYER_COORDLOGRATE: number = 50; // 30s
 
-    private static readonly TIMEOUT_SOCKET_IDLE: number = 16; // ~10s with no data- disconnect client
-    private static readonly TIMEOUT_SOCKET_LOGOUT: number = 100; // 60s with no client- remove player from processing
+    private static readonly TIMEOUT_SOCKET_IDLE: number = Environment.NODE_DEBUG_SOCKET ? 60000 : 16; // ~10s with no data- disconnect client
+    private static readonly TIMEOUT_SOCKET_LOGOUT: number = Environment.NODE_DEBUG_SOCKET ? 60000 : 100; // 60s with no client- remove player from processing
 
     // the game/zones map
     readonly gameMap: GameMap;
@@ -1802,6 +1802,12 @@ class World {
 
             const crcs = new Uint8Array(9 * 4);
             World.loginBuf.gdata(crcs, 0, crcs.length);
+
+            if (CrcBuffer32 !== Packet.getcrc(crcs, 0, crcs.length)) {
+                client.send(Uint8Array.from([ 6 ]));
+                client.close();
+                return;
+            }
 
             World.loginBuf.rsadec(priv);
 
