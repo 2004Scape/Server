@@ -1,0 +1,5 @@
+[ai_applayer2,guard_bandit]
+npc_say("You shall not pass!");
+npc_setmode(opplayer2);
+
+[ai_queue1,guard_bandit] ~npc_default_retaliate_ap;
