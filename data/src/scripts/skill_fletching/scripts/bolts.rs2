@@ -70,6 +70,10 @@ def_int $tip_count = min(inv_total(inv, $bolt_tips), $max_count);
 def_int $bolt_count = min(inv_total(inv, bolt), $max_count);
 def_int $bolts_count = min($tip_count, $bolt_count);
 
+if(inv_itemspace(inv, $product, $bolts_count, inv_size(inv)) = false & (inv_total(inv, bolt) > $max_count | inv_total(inv, $bolt_tips) > $max_count)) {
+    mes("You do not have enough inventory space for the tipped bolts."); // OSRS, this might be post july 2006?
+    return;
+}
 // delete supplies
 inv_del(inv, $bolt_tips, $bolts_count);
 inv_del(inv, bolt, $bolts_count);
