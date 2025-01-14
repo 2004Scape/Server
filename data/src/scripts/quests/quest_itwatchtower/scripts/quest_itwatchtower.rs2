@@ -1,0 +1,46 @@
+[oploc1,loc_2299]
+if(stat(agility) < 18) {
+    ~mesbox("You need an Agility level of 18 to climb this wall.");
+    return;
+}
+mes("You climb up the wall...");
+mes("...and squeeze in through the window.");
+~agility_climb_up(310, 1_39_48_52_45);
+
+[oploc1,loc_2798]
+if(%itwatchtower_progress = ^itwatchtower_not_started) {
+    ~chatplayer("<p,happy>I am not sure why I am searching this bush.");
+    return;
+}
+
+[oploc1,loc_2799]
+if(%itwatchtower_progress = ^itwatchtower_not_started) {
+    say("I am not sure why I am searching this bush.");
+    return;
+}
+
+[oploc1,loc_2833]
+if(%itwatchtower_progress = ^itwatchtower_not_started) {
+    ~chatnpc_specific(nc_name(tower_guard), tower_guard, "You can't go up there. That's private, that is.");
+    return;
+}
+
+[oploc1,loc_2805]
+mes("There's no way I can find my way through without a map of some kind.");
+p_teleport(0_39_47_27_62);
+
+[oploc1,loc_2806]
+mes("There's no way I can find my way through without a map of some kind.");
+p_teleport(0_39_47_44_47);
+
+[oploc1,loc_2807]
+mes("There's no way I can find my way through without a map of some kind.");
+p_teleport(0_39_47_57_47);
+
+[oploc1,loc_2808]
+mes("There's no way I can find my way through without a map of some kind.");
+p_teleport(0_39_47_56_26);
+
+[oploc1,loc_2809]
+mes("There's no way I can find my way through without a map of some kind.");
+p_teleport(0_40_47_3_16);
