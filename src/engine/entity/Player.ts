@@ -319,6 +319,22 @@ export default class Player extends PathingEntity {
         this.lastLevels.fill(-1);
     }
 
+    cleanup(): void {
+        this.pid = -1;
+        this.uid = -1;
+        this.activeScript = null;
+        this.invListeners.length = 0;
+        this.resumeButtons.length = 0;
+        this.buffer.clear();
+        this.queue.clear();
+        this.weakQueue.clear();
+        this.engineQueue.clear();
+        this.cameraPackets.clear();
+        this.timers.clear();
+        this.heroPoints.clear();
+        this.buildArea.clear();
+    }
+
     resetEntity(respawn: boolean) {
         if (respawn) {
             this.faceX = -1;
@@ -589,7 +605,7 @@ export default class Player extends PathingEntity {
     }
 
     canAccess() {
-        if (World.shutdownTick > World.currentTick) {
+        if (World.shutdown) {
             // once the world has gone past shutting down, no protection rules apply
             return true;
         } else {
@@ -635,7 +651,7 @@ export default class Player extends PathingEntity {
                 }
             }
         }
-        
+
     }
 
     processQueues() {
@@ -663,7 +679,8 @@ export default class Player extends PathingEntity {
         // essentially, if a script is before the end of the list, it can be processed this tick and result in inconsistent queue timing (authentic)
         for (let request = this.queue.head(); request !== null; request = this.queue.next()) {
             if (this.tryLogout && request.type === PlayerQueueType.LONG) {
-                if (request.args[0] === 0) {
+                const logoutAction = request.args.shift();
+                if (logoutAction === 0) {
                     // ^accelerate
                     request.delay = 0;
                 } else {

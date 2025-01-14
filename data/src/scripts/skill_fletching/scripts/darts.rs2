@@ -8,6 +8,7 @@ switch_obj(last_useitem) {
 switch_obj(last_useitem) {
     case obj_2864 : @make_ogre_headless_arrows;
     case arrow_shaft : @make_headless_arrows;
+    case prototype_dart_tip : @make_prototype_dart;
     case default :
         if (oc_category(last_useitem) = category_969) {
             @make_darts(last_useitem);
@@ -28,7 +29,6 @@ if ($data = null) {
 }
 def_namedobj $product;
 def_int $max_count;
-// todo: Tourist trap requirement.
 $product, $max_count = db_getfield($data, fletching_table:product, 0);
 def_int $level = db_getfield($data, fletching_table:level, 0);
 if (stat(fletching) < $level) {
@@ -41,6 +41,12 @@ if (stat(fletching) < $level) {
 def_int $tip_count = min(inv_total(inv, $dart_tips), $max_count);
 def_int $feather_count = min(inv_total(inv, feather), $max_count);
 def_int $darts_count = min($tip_count, $feather_count);
+
+if(inv_itemspace(inv, $product, $darts_count, inv_size(inv)) = false & (inv_total(inv, feather) > $max_count | inv_total(inv, $dart_tips) > $max_count)) {
+    mes("You'll need to clear some space in your inventory for the darts before you start"); // OSRS
+    mes("fletching.");
+    return;
+}
 
 // delete supplies
 inv_del(inv, $dart_tips, $darts_count);

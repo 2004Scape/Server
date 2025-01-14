@@ -1,5 +1,5 @@
 [opnpc1,spice_seller]
-if (map_clock < %last_stolen_from_stall_spice) {
+if (getqueue(stolen_from_stall_spice) > 0) {
     @stall_owner_alert_guards;
 }
 ~chatnpc("<p,neutral>Are you interested in buying or selling spice?");
@@ -13,7 +13,7 @@ if($option = 1) {
 }
 
 [opnpc3,spice_seller]
-if (map_clock < %last_stolen_from_stall_spice) {
+if (getqueue(stolen_from_stall_spice) > 0) {
     @stall_owner_alert_guards;
 }
 ~openshop_activenpc;

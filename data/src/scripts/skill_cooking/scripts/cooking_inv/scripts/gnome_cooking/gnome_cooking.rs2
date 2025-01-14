@@ -18,13 +18,10 @@ if ($tin = gnomebowl_mould) {
     mes("You put the Gianne dough into the <lowercase(oc_name($tin))>.");
 }
 
-[opheldu,_category_15]
-switch_int(oc_param(last_item, gnome_cooking_type)) {
-    case ^gnome_cocktail : @finish_cocktail(last_item, last_useitem);
-    case ^gnome_bowl, ^gnome_batta, ^gnome_crunchies : @finish_gnome_food(last_useitem, last_item);
-    case default : ~displaymessage(^dm_default);
-}
-
+[opheldu,_gnome_unf_odd_cocktail] @finish_cocktail(last_item, last_useitem);
+[opheldu,_gnome_unf_odd_crunchies] @finish_gnome_food(last_item, last_useitem);
+[opheldu,_gnome_unf_odd_batta] @finish_gnome_food(last_item, last_useitem);
+[opheldu,_gnome_unf_odd_bowl] @finish_gnome_food(last_item, last_useitem);
 
 [opheldu,gnome_spice]
 switch_int(oc_param(last_useitem, gnome_cooking_type)) {
@@ -68,18 +65,17 @@ if (oc_param($next_gnome_food, gnome_cooking_type) = null) {
 }
 def_string $name;
 def_string $message;
-switch_int(oc_param($next_gnome_food, gnome_cooking_type)) {
-    case ^gnome_batta : $name = "gnome batta.";
-    case ^gnome_crunchies : $name = "gnome crunchies.";
-    case ^gnome_bowl : $name = "gnome bowl.";
-    case default : $name = "gnome dish.";
+switch_int(oc_param($gnome_food, gnome_cooking_type)) {
+    case ^gnome_batta : $name = "gnome batta";
+    case ^gnome_crunchies : $name = "gnome crunchies";
+    case ^gnome_bowl : $name = "gnome bowl";
+    case default : $name = "gnome dish";
 }
 if ($ingredient = pot_of_cream) {
-    $message = "You pour thick cream over the <$name>.";
+    mes("You pour thick cream over the <$name>.");
 } else {
-    $message = "You sprinkle the <lowercase(oc_name($ingredient))> over the <$name>.";
+    mes("You sprinkle the <lowercase(oc_name($ingredient))> over the <$name>.");
 }
-~mesbox($message);
 
 [opheld1,swamp_toad]
 inv_del(inv, swamp_toad, 1);

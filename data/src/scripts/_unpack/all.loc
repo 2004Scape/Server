@@ -12818,6 +12818,8 @@ model=model_loc_52
 active=yes
 op1=Open
 op2=Search
+category=double_door_open_and_close_left
+param=next_loc_stage,loc_1562
 
 [loc_2674]
 name=Gate
@@ -12826,6 +12828,8 @@ mirror=yes
 active=yes
 op1=Open
 op2=Search
+category=double_door_open_and_close_right
+param=next_loc_stage,loc_1563
 
 [loc_2675]
 name=Mine door entrance
@@ -12911,6 +12915,8 @@ model=model_loc_52
 active=yes
 op1=Open
 op2=Search
+category=double_door_open_and_close_left
+param=next_loc_stage,loc_1562
 
 [loc_2686]
 name=Gate
@@ -12919,6 +12925,8 @@ mirror=yes
 active=yes
 op1=Open
 op2=Search
+category=double_door_open_and_close_right
+param=next_loc_stage,loc_1563
 
 [loc_2687]
 name=Gate
@@ -12926,6 +12934,8 @@ model=model_loc_52
 active=yes
 op1=Open
 op2=Search
+category=double_door_open_and_close_left
+param=next_loc_stage,loc_1562
 
 [loc_2688]
 name=Gate
@@ -12934,6 +12944,8 @@ mirror=yes
 active=yes
 op1=Open
 op2=Search
+category=double_door_open_and_close_right
+param=next_loc_stage,loc_1563
 
 [loc_2689]
 name=Prison door
@@ -12948,6 +12960,8 @@ desc=Large solid, thick set oak doors - they lead outside.
 model=model_loc_71
 op1=Open
 op2=Search
+category=double_door_open_and_close_left
+param=next_loc_stage,loc_1522
 
 [loc_2691]
 name=Mine door entrance
@@ -12956,6 +12970,8 @@ model=model_loc_71
 mirror=yes
 op1=Open
 op2=Search
+category=double_door_open_and_close_right
+param=next_loc_stage,loc_1523
 
 [loc_2694]
 name=Rock
@@ -12995,6 +13011,7 @@ model=model_loc_1423
 sharelight=yes
 hillskew=yes
 op1=Walk through
+category=desertrescue_minecave
 
 [loc_2699]
 name=Mine cave
@@ -13003,6 +13020,7 @@ sharelight=yes
 hillskew=yes
 mirror=yes
 op1=Walk through
+category=desertrescue_minecave
 
 [loc_2700]
 name=Tent door
@@ -13051,6 +13069,8 @@ op2=Prospect
 op3=hidden
 recol1s=6342
 recol1d=7400
+category=mining_rock_normal
+param=next_loc_stage_mining,plainrock1
 
 [loc_2705]
 name=Door

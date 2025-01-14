@@ -81,11 +81,6 @@ while ($i < db_getfieldcount($effect_data, consume_table:stat_heal)) {
 ~consume_effect_sound(db_getfield($effect_data, consume_table:consume_sound, 0));
 // display messages
 ~consume_effect_messages($consumable, $hitpoints, $say);
-db_find(consume_messages_table:consumable, $consumable);
-def_dbrow $message_data = db_findnext;
-if ($message_data ! null & db_getfieldcount($message_data, consume_messages_table:end_delay) > 0) {
-    p_delay(db_getfield($message_data, consume_messages_table:end_delay, 0));
-}
 
 [proc,consume_effect_sound](synth $sound)
 if ($sound = null) {
@@ -114,11 +109,6 @@ if ($message_data ! null) {
     if (string_length(db_getfield($message_data, consume_messages_table:restore_message2, 0)) > 0) {
         $restore_message2 = db_getfield($message_data, consume_messages_table:restore_message2, 0);
     }
-    // delay
-    if (db_getfieldcount($message_data, consume_messages_table:message_delay1) > 0) {
-        p_delay(db_getfield($message_data, consume_messages_table:message_delay1, 0));
-    }
-
 }
 
 // if potion then display doses left instead of consume_message2
@@ -131,9 +121,9 @@ if ($consumable ! null & oc_category($consumable) = category_69) {
             mes("You drink the <lowercase(oc_name($consumable))>.");
         }
     }
-    //potions have delay https://youtu.be/PvDSzx7lAfU?t=119
-    if (db_getfieldcount($message_data, consume_messages_table:message_delay2) > 0) {
-        p_delay(db_getfield($message_data, consume_messages_table:message_delay2, 0));
+    // potions have delay: https://www.youtube.com/watch?v=s5sDZdBzapk&t=151s
+    if (db_getfieldcount($message_data, consume_messages_table:message_delay) > 0) {
+        p_delay(db_getfield($message_data, consume_messages_table:message_delay, 0));
     }
     if ($consumable = vial_empty) {
         mes("You have finished your potion.");
@@ -174,8 +164,8 @@ if (compare($restore_message1, "0") ! 0 & $hitpoints < stat(hitpoints) & string_
 // gnome food probably uses this, since karambwans and gnome food are the same in osrs
 // https://oldschool.runescape.wiki/w/Update:Chat_update_and_%27Operate%27
 // https://youtu.be/Z-e_O0O6A50?t=33
-if ($message_data ! null & db_getfieldcount($message_data, consume_messages_table:message_delay2) > 0) {
-    p_delay(db_getfield($message_data, consume_messages_table:message_delay2, 0));
+if ($message_data ! null & db_getfieldcount($message_data, consume_messages_table:message_delay) > 0) {
+    p_delay(db_getfield($message_data, consume_messages_table:message_delay, 0));
 }
 
 if (compare($restore_message2, "0") ! 0 & $hitpoints < stat(hitpoints)) {

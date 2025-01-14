@@ -11,7 +11,7 @@ export default class ScriptProvider {
     /**
      * The expected version of the script compiler that the runtime should be loading scripts from.
      */
-    public static readonly COMPILER_VERSION = 21;
+    public static readonly COMPILER_VERSION = 22;
 
     /**
      * Array of loaded scripts.
@@ -50,8 +50,8 @@ export default class ScriptProvider {
             printFatalError('No server cache found. Please build the cache first.');
         }
 
-        const entries = dat.g2();
-        idx.pos += 2;
+        const entries = dat.g4();
+        idx.pos += 4;
 
         const version = dat.g4();
         if (version !== ScriptProvider.COMPILER_VERSION) {
@@ -64,7 +64,7 @@ export default class ScriptProvider {
 
         let loaded = 0;
         for (let id = 0; id < entries; id++) {
-            const size = idx.g2();
+            const size = idx.g4();
             if (size === 0) {
                 continue;
             }

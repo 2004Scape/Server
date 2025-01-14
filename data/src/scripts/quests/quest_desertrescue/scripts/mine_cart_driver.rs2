@@ -1,0 +1,200 @@
+[opnpc1,npc_841]
+if(%desertrescue_progress = ^desertrescue_ana_on_mining_cart | %desertrescue_progress = ^desertrescue_escaped) {
+    if(testbit(%desertrescue_map_mechanisms, ^desertrescue_ready_rescue) = true) {
+        ~chatnpc("<p,neutral>Hurry up, get in the cart or I'll go without you!");
+    } else if(testbit(%desertrescue_map_mechanisms, ^desertrescue_ana_mining_cart) = true) {
+        ~mesbox("The cart driver seems to be festidiously cleaning his cart. It doesn't look as if he wants to be disturbed.");
+        @multi3("Hello!", cartdriver_hello, "Nice cart.", cartdriver_nice, "Pssst...", cartdriver_psst);
+    } else {
+        mes("The cart driver is busy loading the cart up ...");
+        return;
+    }
+}
+if(inv_total(inv, anainabarrel) > 0) {
+    ~chatnpc("<p,quiz>What're you doing carrying that big barrel around?|Put it in the back of the cart like all the others!");
+    return;
+}
+~chatnpc("<p,angry>Don't trouble me, can't you see I'm busy?");
+
+[label,cartdriver_hello]
+~chatplayer("<p,neutral>Hello!");
+~chatnpc("<p,neutral>Can't you see I'm busy? Now get out of here!");
+@multi3("Oh, okay, sorry.", cartdriver_ohok, "Nice cart.", cartdriver_nice, "Pssst...", cartdriver_psst);
+
+[label,cartdriver_nice]
+~chatplayer("<p,neutral>Nice cart.");
+~mesbox("The cart driver looks around at you and tries to weigh you up.");
+~chatnpc("<p,quiz>Hmmm.");
+~mesbox("He tuts to himself and starts checking the wheels.");
+npc_say("Tut !"); // space is correct
+@multi3("I wonder if you could help me?", cartdriver_help, "One wagon wheel says to the other, 'I'll see you around'.", cartdriver_joke, "Can I help you at all?", cartdriver_helpyou);
+
+[label,cartdriver_joke]
+~chatplayer("<p,happy>One wagon wheel says to the other, 'I'll see you around'.");
+~chatnpc("<p,happy>@dbl@-- The cart driver smirks a little. --");
+~mesbox("He starts checking the steering on the cart.");
+@multi2("'One good turn deserves another'", cartdriver_joke2, "Can you get me the heck out of here please?", cartdriver_heckout);
+
+[label,cartdriver_joke2]
+~chatplayer("<p,neutral>'One good turn deserves another.'");
+~mesbox("The cart driver smiles a bit and then turns to you.");
+~chatnpc("<p,happy>Are you trying to get me fired?");
+@multi3("No", cartdriver_no, "Yes", cartdriver_yes, "Fired... no, shot perhaps!", cartdriver_joke3);
+
+[label,cartdriver_joke3]
+~chatplayer("<p,neutral>Fired... no, shot perhaps!");
+~chatnpc("<p,happy>Ha ha ha! You're funny! @dbl@-- The cart driver checks that @dbl@guards aren't watching. -- @bla@What're you in fer?");
+@multi3("Oh, I'm not supposed to be here at all actually.", cartdriver_notsupposed, "I'm in for murder, so you'd better get me out of here!", cartdriver_murder, "In for a penny in for a pound.", cartdriver_joke4);
+
+[label,cartdriver_notsupposed]
+~chatplayer("<p,neutral>Oh, I'm not supposed to be here at all actually.");
+~chatnpc("<p,happy>Hmmm, interesting... let me guess. You're completely innocent... like all the other inmates in here. Ha ha ha!");
+mes("The Cart driver goes back to his work.");
+
+[label,cartdriver_murder]
+~chatplayer("<p,shifty>I'm in for murder, so you'd better get me out of here!");
+~chatnpc("<p,confused>Hmm, well, I wonder what the guards are gonna say about that! Guards! Guards!");
+@cartdriver_call_guards;
+
+[label,cartdriver_joke4]
+~chatplayer("<p,happy>In for a penny in for a pound.");
+~mesbox("The cart driver laughs at your pun...");
+~chatnpc("<p,happy>Ha ha ha, oh stop it!");
+~mesbox("The cart driver seems much happier now.");
+~chatnpc("<p,happy>What can I do for you anyway?");
+@multi3("Can you smuggle me out on your cart?", cartdriver_smuggle, "Can you smuggle my friend Ana out on your cart?", cartdriver_ana, "Well, you see, it's like this...", cartdriver_well);
+
+[label,cartdriver_smuggle]
+~chatplayer("<p,neutral>Can you smuggle me out on your cart?");
+~mesbox("The cart driver points at a nearby guard.");
+~chatnpc("<p,happy>Ask that man over there if it's okay and I'll consider it! Ha ha ha!");
+~mesbox("The cart driver goes back to his work, laughing to himself.");
+
+[label,cartdriver_ana]
+~chatplayer("<p,neutral>Can you smuggle my friend Ana out on your cart?");
+~chatnpc("<p,happy>As long as your friend is a barrel full of rocks. I don't think it would be a problem at all! Ha ha ha!");
+mes("The cart driver goes back to his work, laughing to himself.");
+
+[label,cartdriver_well]
+~chatplayer("<p,shifty>Well, you see, it's like this...");
+~chatnpc("<p,confused>Yeah!");
+@multi2("Prison riot in ten minutes, get your cart out of here!", cartdriver_prisonriot, "There's ten gold in it for you if you leave now - no questions asked.", cartdriver_10gold);
+
+[label,cartdriver_prisonriot]
+~chatplayer("<p,neutral>Prison riot in ten minutes, get your cart out of here!");
+~mesbox("The cart driver seems visibly shaken...");
+~chatnpc("<p,shock>Oh, right..yes... yess, okay...");
+~mesbox("The cart driver quickly starts preparing the cart.");
+@multi2("Good luck!", cartdriver_goodluck, "You can't leave me here, I'll get killed!", cartdriver_killed);
+
+[label,cartdriver_10gold]
+~chatplayer("<p,shifty>There's ten gold in it for you if you leave now no questions asked.");
+~chatnpc("<p,happy>If you're going to bribe me, at least make it worth my while. Now, let's say 100 Gold pieces should we? Ha ha ha!");
+@multi2("A hundred it is!", cartdriver_100, "Forget it!", cartdriver_forget);
+
+[label,cartdriver_killed]
+~chatplayer("<p,neutral>You can't leave me here, I'll get killed!");
+%desertrescue_map_mechanisms = setbit(%desertrescue_map_mechanisms, ^desertrescue_ready_rescue);
+~chatnpc("<p,confused>Oh, right... Okay, you'd better jump in the cart then! Quickly!");
+
+[label,cartdriver_100]
+~chatplayer("<p,neutral>A hundred it is!");
+~chatnpc("<p,happy>Great!");
+if(inv_total(inv, coins) < 100) {
+    ~chatnpc("<p,angry>You little cheat, trying to trick me! I'll show you! Guards! Guards!");
+    @cartdriver_call_guards;
+}
+inv_del(inv, coins, 100);
+~chatnpc("<p,happy>Okay, get in the back of the cart then!");
+// this does set only after dialogue ends, don't cancel early!
+%desertrescue_map_mechanisms = setbit(%desertrescue_map_mechanisms, ^desertrescue_ready_rescue);
+
+[label,cartdriver_forget]
+~chatplayer("<p,neutral>Forget it!");
+~chatnpc("<p,angry>Okay, fair enough! But don't bother me anymore.");
+mes("The cart driver goes back to work.");
+
+[label,cartdriver_goodluck]
+~chatplayer("<p,confused>Good luck!");
+~chatnpc("<p,confused>Yeah, you too!");
+~mesbox("The cart sets off at a hectic pace. The guards at the gate get suspiscious and search the cart. They find Ana in the Barrel and take her back into the mine.");
+%desertrescue_map_mechanisms = clearbit(%desertrescue_map_mechanisms, ^desertrescue_ana_mining_cart);
+~desertcamp_guard_search;
+
+[label,cartdriver_no]
+~chatplayer("<p,neutral>No"); // intentional
+~chatnpc("<p,angry>It certainly sounds like it, now leave me alone. If you bug me again, I'm gonna call the guards.");
+mes("The cart driver goes back to his work.");
+
+[label,cartdriver_yes]
+~chatplayer("<p,neutral>Yes");
+~chatnpc("<p,quiz>And why would you want to do a crazy thing like that for? I ought to teach you a lesson! Guards! Guards!");
+@cartdriver_call_guards;
+
+[label,cartdriver_psst]
+~chatplayer("<p,neutral>Pssst...");
+~mesbox("The cart driver completely ignores you.");
+@multi3("Psssst...", cartdriver_psst2, "Psssssst...", cartdriver_psst3, "Pssssssssttt!!!", cartdriver_psst4);
+
+[label,cartdriver_psst2]
+~chatplayer("<p,neutral>Psssst...");
+~mesbox("The driver completely ignores you.");
+@multi3("Psssssst...", cartdriver_psst3, "Pssst...", cartdriver_psst, "Pssssssssttt!!!", cartdriver_psst4);
+
+[label,cartdriver_psst3]
+~chatplayer("<p,neutral>Psssssst...");
+~mesbox("The driver completely ignores you.");
+@multi3("Psssst...", cartdriver_psst2, "Pssst...", cartdriver_psst, "Pssssssssttt!!!", cartdriver_psst4);
+
+[label,cartdriver_psst4]
+~chatplayer("<p,neutral>Pssssssssttt!!!");
+~mesbox("The cart driver turns around quickly to face you.");
+~chatnpc("<p,angry>What! Can't you see I'm busy?");
+@multi3("Oh, okay, sorry.", cartdriver_ohok, "Shhshhh!", cartdriver_shh, "I wonder if you could help me?", cartdriver_help);
+
+[label,cartdriver_ohok]
+~chatplayer("<p,neutral>Oh, okay, sorry.");
+~chatnpc("<p,angry>Look just leave me alone!");
+mes("The cart driver goes back to his work.");
+
+[label,cartdriver_shh]
+~chatplayer("<p,neutral>Shhshhh!");
+~chatnpc("<p,neutral>Shush yourself!");
+mes("The cart driver goes back to his work.");
+
+[label,cartdriver_help]
+~chatplayer("<p,neutral>I wonder if you could help me?");
+~chatnpc("<p,neutral>Sorry friend, I'm busy, go bug the guards, I'm sure they'll give ya the time of day.");
+mes("The cart driver chuckles to himself.");
+npc_say("He, he, he, ha!");
+@multi2("Can I help you at all?", cartdriver_helpyou, "Can you get me the heck out of here please?", cartdriver_heckout);
+
+[label,cartdriver_helpyou]
+~chatplayer("<p,neutral>Can I help you at all?");
+~chatnpc("<p,angry>I'm quite capable thanks... Now get lost before I call the guards.");
+@multi2("Can you get me the heck out of here please?", cartdriver_heckout, "I could help, I know a lot about carts.", cartdriver_helpcarts);
+
+[label,cartdriver_helpcarts]
+~chatplayer("<p,neutral>I could help, I know a lot about carts.");
+~chatnpc("<p,neutral>Are you saying I don't know anything about carts?");
+// black lines are intentional here, linebreaks match osrs
+~chatnpc("<p,angry>Why you cheeky little....|@dbl@-- The cart driver seems mortally offended --|-- his temper explodes as he calls the guards.--|Guards! Guards!");
+@cartdriver_call_guards;
+
+[label,cartdriver_heckout]
+~chatplayer("<p,neutral>Can you get me the heck out of here please?");
+~chatnpc("<p,angry>No way, and if you bug me again, I'm gonna call the guards.");
+mes("The cart driver goes back to his work.");
+
+[label,cartdriver_call_guards]
+if(random(2) = 0) {
+    mes("Some guards notice you and come over.");
+    if(npc_find(coord, npc_829, 4, 2) = true | npc_find(coord, npc_828, 4, 2) = true) { // check dist on this
+        npc_say("Hey, what are you doin'!");
+        ~npc_retaliate(0);
+        ~desertcamp_guard_search;
+        return;
+    }
+} else {
+    mes("You quickly slope away and hide from the guards.");
+}

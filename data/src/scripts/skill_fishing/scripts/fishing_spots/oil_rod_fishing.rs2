@@ -100,7 +100,7 @@ if (inv_total(inv, fishing_bait) < 1) {
     return(false);
 }
 // check if inv is full
-if (inv_freespace(inv) < 1) {
+if (inv_freespace(inv) < 1 & inv_total(inv, fishing_bait) > 1) {
     anim(null, 0);
     ~mesbox("You can't carry any more eels.");
     return(false);

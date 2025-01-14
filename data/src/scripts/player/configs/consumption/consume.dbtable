@@ -11,6 +11,4 @@ column=consume_message1,string
 column=consume_message2,string
 column=restore_message1,string
 column=restore_message2,string
-column=message_delay1,int
-column=message_delay2,int
-column=end_delay,int
+column=message_delay,int

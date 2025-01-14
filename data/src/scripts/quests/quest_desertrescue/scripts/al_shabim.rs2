@@ -1,0 +1,186 @@
+[opnpc1,al_shabim]
+~chatnpc("<p,neutral>Hello Effendi!");
+if(%desertrescue_progress >= ^desertrescue_learned_darts) {
+    ~chatnpc("<p,neutral>Many thanks with your help previously Effendi!");
+    if(%desertrescue_progress >= ^desertrescue_given_pineapple) return;
+    if(~obj_gettotal(tenti_pineapple) = 0) {
+        @multi2("I am looking for a pineapple.", shabim_pineapple, "What is this place?", shabim_whatplace);
+    } else {
+        @multi2("What is this place?", shabim_whatplace, "Goodbye!", shabim_goodbye);
+    }
+} else if(%desertrescue_progress >= ^desertrescue_given_bedobin_key) {
+    if(%desertrescue_progress = ^desertrescue_finished_dart & inv_total(inv, prototype_dart) > 0) {
+        ~chatnpc("<p,neutral>Wonderful, I see you have made the new weapon!");
+        @shabim_showdart;
+    } else if(inv_total(inv, technical_plans) > 0) {
+        @shabim_haveplans;
+    } else if(%desertrescue_progress = ^desertrescue_given_bedobin_key & ~obj_gettotal(bedobin_key) = 0) {
+        ~chatnpc("<p,neutral>How are things going Effendi?");
+        @multi3("I've lost the key!", shabim_lostkey, "What is this place?", shabim_whatplace, "Goodbye!", shabim_goodbye);
+    } else if(%desertrescue_progress = ^desertrescue_made_dart_tip & ~obj_gettotal(prototype_dart_tip) = 0 & ~obj_gettotal(bedobin_key) = 0 & ~obj_gettotal(technical_plans) = 0) {
+        @multi3("I've lost the key and the plans!", shabim_lostkeyplans, "What is this place?", shabim_whatplace, "Goodbye!", shabim_goodbye);
+    } else if(~obj_gettotal(bedobin_key) = 0 & ~obj_gettotal(technical_plans) = 0) {
+        @multi3("I've lost the key and the plans!", shabim_lostkeyplans, "What is this place?", shabim_whatplace, "Goodbye!", shabim_goodbye);
+    }
+    return;
+}
+~chatnpc("<p,neutral>I am Al Shabim, greetings on behalf of the Bedabin nomads.");
+if(%desertrescue_progress = ^desertrescue_finding_pineapple) {
+    @multi3("I am looking for a pineapple.", shabim_pineapple, "What is this place?", shabim_whatplace, "Who are you?", shabim_who);
+} else if(%desertrescue_progress >= ^desertrescue_started & testbit(%desertrescue_map_mechanisms, ^desertrescue_find_al_shabim) = true) {
+    @multi3("Who are you?", shabim_who, "I am looking for Al Zaba Bhasim.", shabim_looking, "What is this place?", shabim_whatplace);
+}
+@multi2("Who are you?", shabim_who, "What is this place?", shabim_whatplace);
+
+[opnpcu,al_shabim]
+switch_obj(last_useitem) {
+    case prototype_dart : @shabim_showdart;
+    case technical_plans : @shabim_haveplans;
+    case default : ~displaymessage(^dm_default);
+}
+
+[label,shabim_showdart]
+if(%desertrescue_progress >= ^desertrescue_learned_darts) {
+    inv_del(inv, prototype_dart, 1);
+    ~chatnpc("<p,neutral>Where did you get this from Effendi! I'll have to confiscate this for your own safety!");
+    return;
+}
+~objbox(prototype_dart, "You show Al Shabim the prototype dart.", 250, 0, 0);
+~chatnpc("<p,neutral>This is truly fantastic Effendi!");
+if(inv_total(inv, technical_plans) > 0) {
+    ~chatnpc("<p,neutral>We will take the technical plans for the weapon as well.");
+    ~objbox(technical_plans, "You hand over the technical plans for the weapon.", 250, 0, 0);
+    if_close;
+    inv_del(inv, technical_plans, 1);
+    p_delay(2);
+}
+~chatnpc("<p,neutral>We are forever grateful for this gift. My advisors have discovered some secrets which we will share with you.");
+~mesbox("Al Shabim's advisors show you some advanced techniques for making the new weapon.");
+if(inv_total(inv, bronze_dart) = 0) { // wont get darts if you have some on osrs
+    ~chatnpc("<p,neutral>Please accept this selection of six bronze throwing darts as a token of our appreciation.");
+    ~objbox(bronze_dart, "You receive six bronze throwing darts from Al Shabim.", 250, 0, 0);
+    inv_add(inv, bronze_dart, 6);
+}
+if(inv_total(inv, bedobin_key) > 0) {
+    ~chatnpc("<p,neutral>I'll take that key off your hands as well effendi! Many thanks!");
+    inv_del(inv, bedobin_key, 1);
+}
+%desertrescue_progress = ^desertrescue_learned_darts;
+inv_del(inv, prototype_dart, 1);
+// https://web.archive.org/web/20051025141912im_/http://runeweb.net/rathofdoom/quests/touristtrap/5.png
+~objbox(prototype_dart, "@dbl@*** Dart Construction ***|@dbl@Congratulations! You can now construct darts.", 250, 0, 0);
+~chatnpc("<p,neutral>Oh, and here is your pineapple!");
+inv_add(inv, tenti_pineapple, 1);
+~objbox(tenti_pineapple, "You receive a tasty looking pineapple from Al Shabim", 250, 0, 0);
+
+[label,shabim_who]
+~chatplayer("<p,quiz>Who are you?");
+~chatnpc("<p,happy>I am Al Shabim Effendi! I am the leader of the Bedabin peoples!");
+@multi3("Okay thanks!", shabim_ok, "What is there to do around here?", shabim_whatdo, "What is this place?", shabim_whatplace);
+
+[label,shabim_haveplans]
+if(%desertrescue_progress >= ^desertrescue_learned_darts) {
+    inv_del(inv, technical_plans, 1);
+    ~mesbox("Al Shabim takes the technical plans off you.");
+    ~chatnpc("<p,neutral>Thanks for the technical plans Effendi!|We've been lost without them!");
+    return;
+}
+~chatnpc("<p,neutral>Aha! I see you have the plans. This is great! However, these plans do indeed look very technical. My people have further need of your skills.");
+~chatnpc("<p,neutral>If you can help us to manufacture this item, we will share its secret with you. Does this deal interest you effendi?");
+@multi2("Yes, I'm very interested.", shabim_yesplans, "No, sorry.", shabim_no);
+
+[label,shabim_whatplace]
+~chatplayer("<p,neutral>What is this place?");
+~chatnpc("<p,neutral>This is the home of the Bedabin. We're a peaceful tribe of desert dwellers. Some idiots call us 'Tenti's', a childish name borne of ignorance.");
+~chatnpc("<p,neutral>We're renowned for surviving in the harshest desert climate. We also grow the 'Bedabin ambrosia.'... A pineapple of such delicious sumptiousness that it defies description.");
+~chatnpc("<p,neutral>Take a look around our camp if you like!");
+@multi2("Okay thanks!", shabim_ok, "What is there to do around here?", shabim_whatdo);
+
+[label,shabim_looking]
+~chatplayer("<p,neutral>I am looking for Al Zaba Bhasim.");
+if(testbit(%desertrescue_map_mechanisms, ^desertrescue_spoke_al_shabim) = true) {
+    ~chatnpc("<p,bored>I've already explained that he doesn't exist. Now, can we move on?");
+    return;
+}
+~chatnpc("<p,angry>Huh! You have been talking to the guards at the mining camp. Or worse, that cowardly mercenary captain. Al Zaba Bhasim does not exist, he is a figment of their imagination!");
+~chatnpc("<p,neutral>Go back and tell this captain that if he wants to find this man he should search for him personally. See how much of his own time he would like to waste.");
+%desertrescue_map_mechanisms = setbit(%desertrescue_map_mechanisms, ^desertrescue_spoke_al_shabim);
+
+[label,shabim_whatdo]
+~chatplayer("<p,neutral>What is there to do around here?");
+~chatnpc("<p,confused>Well, we are all very busy most of the time, tending to the pineapples. They are grown in a secret location, to stop thieves from raiding our most precious prize.");
+
+[label,shabim_ok]
+~chatplayer("<p,neutral>Okay Thanks!");
+~chatnpc("<p,happy>Good day Effendi!");
+
+[label,shabim_pineapple]
+~chatplayer("<p,neutral>I am looking for a pineapple.");
+if(%desertrescue_progress >= ^desertrescue_learned_darts) {
+    inv_add(inv, tenti_pineapple, 1);
+    ~chatnpc("<p,neutral>Here is another pineapple, try not to lose this one.");
+    mes("Al Shabim gives you another pineapple.");
+    return;
+}
+~chatnpc("<p,quiz>Oh yes, well that is interesting. Our sweet pineapples are renowned throughout the whole of Kharid ! And I'll give you one if you do me a favour?");
+~chatplayer("<p,shifty>Oh yes?");
+~chatnpc("<p,neutral>Captain Siad at the mining camp is holding some secret information. It is very important to us and we would like you to get it for us. It gives details of an interesting, yet ancient weapon.");
+~chatnpc("<p,neutral>We would gladly share this information with you. All you have to do is gain access to his private room upstairs. We have a key for the chest that contains this information. Are you interested in our deal?");
+switch_int(~p_choice2("Yes, I'm interested.", 1, "Not at the moment.", 2)) {
+    case 1 :
+        ~chatplayer("<p,shifty>Yes, I'm interested.");
+        ~chatnpc("<p,happy>That's great Effendi!");
+        ~chatnpc("<p,neutral>Here is a copy of the key that should give you access to the chest.");
+        %desertrescue_progress = ^desertrescue_given_bedobin_key;
+        inv_add(inv, bedobin_key, 1);
+        ~objbox(bedobin_key, "Al Shabim gives you a key.", 250, 0, 0);
+        ~chatnpc("<p,happy>Bring us back the plans inside the chest, they should be sealed. All haste to you Effendi!");
+    case 2 :
+        ~chatplayer("<p,neutral>Not at the moment.");
+        ~chatnpc("<p,sad>Very well Effendi!");
+}
+
+[label,shabim_goodbye]
+~chatplayer("<p,neutral>Goodbye!");
+~chatnpc("<p,neutral>Very well, good day Effendi!");
+
+[label,shabim_lostkey]
+~chatplayer("<p,neutral>I've lost the key!");
+~chatnpc("<p,angry>How very careless of you! Here is another key, don't lose it this time !");
+inv_add(inv, bedobin_key, 1);
+~objbox(bedobin_key, "Al Shabim gives you another key.", 250, 0, 0);
+
+[label,shabim_lostkeyplans]
+if(%desertrescue_progress = ^desertrescue_made_dart_tip) {
+    ~chatplayer("<p,neutral>I've lost the plans and the dart tips!");
+} else {
+    ~chatplayer("<p,neutral>I've lost the key and the plans!");
+}
+~chatnpc("<p,neutral>How very careless of you!");
+~mesbox("Al Shabim thinks for a moment.");
+if_close;
+p_delay(5);
+~chatnpc("<p,confused>The Captain may have some new plans drawn up. Go back and see if you can collect them.");
+~chatnpc("<p,neutral>Here is the key you'll need for the chest!");
+inv_add(inv, bedobin_key, 1);
+~objbox(bedobin_key, "Al Shabim gives you another key.", 250, 0, 0);
+
+[label,shabim_yesplans]
+~chatplayer("<p,neutral>Yes, I'm very interested.");
+if(inv_total(inv, bronze_bar) > 0 & inv_total(inv, feather) >= 10) {
+    ~chatnpc("<p,happy>Aha! I see you have the items we need!|Are you still willing to help make the weapon?");
+    @multi2("Yes, I'm kind of curious.", shabim_curious, "No, sorry.", shabim_no);
+} else {
+    ~chatnpc("<p,happy>Great, we need the following items:|a bar of pure bronze, 10 feathers and a hammer.|Bring them to me and we'll continue to make the item.");
+}
+
+[label,shabim_no]
+~chatplayer("<p,neutral>No, sorry.");
+~chatnpc("<p,neutral>As you wish Effendi!");
+~chatnpc("<p,neutral>Come back if you change your mind!");
+
+[label,shabim_curious]
+~chatplayer("<p,neutral>Yes, I'm kind of curious.");
+~chatnpc("<p,neutral>Okay Effendi, you need to follow the plans. You will need some special tools for this...  There is an anvil in the other tent. You have my permission to use it, but show the plans to the guard.");
+~chatnpc("<p,neutral>You have the plans and all the items needed. You should be able to complete the item on your own. Please bring me the item when it is finished.");
+if(%desertrescue_progress = ^desertrescue_retrieved_plans) %desertrescue_progress = ^desertrescue_shown_plans_shabim;

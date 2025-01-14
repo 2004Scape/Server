@@ -14,7 +14,7 @@ recol2d=30385
 2dxan=236
 iop1=Eat
 weight=250g
-category=category_128
+category=gnome_premade_and_toadlegs_kingworm
 members=yes
 
 [premade_toad_batta]
@@ -32,7 +32,7 @@ iop1=Eat
 members=yes
 cost=120
 weight=250g
-category=category_128
+category=gnome_premade_and_toadlegs_kingworm
 
 [premade_cheese_tom_batta]
 name=Cheese+tom batta
@@ -49,7 +49,7 @@ iop1=Eat
 members=yes
 cost=120
 weight=250g
-category=category_128
+category=gnome_premade_and_toadlegs_kingworm
 
 [premade_fruit_batta]
 name=Fruit batta
@@ -66,7 +66,7 @@ iop1=Eat
 members=yes
 cost=120
 weight=250g
-category=category_128
+category=gnome_premade_and_toadlegs_kingworm
 
 [premade_vegetable_batta]
 name=Vegetable batta
@@ -85,7 +85,7 @@ iop1=Eat
 members=yes
 cost=120
 weight=250g
-category=category_128
+category=gnome_premade_and_toadlegs_kingworm
 
 [odd_batta]
 name=Odd batta
@@ -99,7 +99,7 @@ recol2s=16129
 recol2d=15841
 recol3s=15648
 recol3d=15744
-category=category_124
+category=gnome_unf_odd_batta
 2dxof=1
 2dyof=32
 2dzoom=780
@@ -107,7 +107,6 @@ category=category_124
 2dxan=236
 weight=250g
 iop1=Eat
-category=category_15
 
 [burnt_batta]
 name=Burnt batta
@@ -158,7 +157,7 @@ tradeable=no
 [unfinished_worm_batta1]
 name=Unfinished batta
 desc=This batta is just missing those little finishing touches.
-category=category_124
+category=gnome_unf_odd_batta
 model=model_2803_obj
 recol1s=15360
 recol1d=25096
@@ -171,14 +170,13 @@ recol2d=30385
 2dxan=236
 iop1=Eat
 weight=250g
-category=category_15
 members=yes
 param=gnome_cooking_type,3
 
 [worm_batta]
 name=Worm batta
 desc=It actually smells quite good.
-category=category_125
+category=gnome_batta
 model=model_2803_obj
 recol1s=15360
 recol1d=25096
@@ -194,7 +192,7 @@ iop1=Eat
 members=yes
 
 [toad_batta]
-category=category_125
+category=gnome_batta
 cost=2
 name=Toad batta
 desc=It actually smells quite good.
@@ -213,7 +211,7 @@ members=yes
 [unfinished_cheese_tom_batta1]
 name=Unfinished batta
 desc=This batta is just missing those little finishing touches.
-category=category_124
+category=gnome_unf_odd_batta
 model=model_2803_obj
 recol1s=16129
 recol1d=31649
@@ -224,12 +222,11 @@ recol1d=31649
 2dxan=236
 iop1=Eat
 weight=250g
-category=category_15
 members=yes
 param=gnome_cooking_type,3
 
 [cheese_tom_batta]
-category=category_125
+category=gnome_batta
 cost=2
 name=Cheese+tom batta
 desc=This smells really good.
@@ -248,7 +245,7 @@ members=yes
 [unfinished_fruit_batta1]
 name=Unfinished batta
 desc=This batta is just missing those little finishing touches.
-category=category_124
+category=gnome_unf_odd_batta
 model=model_2803_obj
 recol1s=15360
 recol1d=480
@@ -261,14 +258,13 @@ recol2d=352
 2dxan=236
 iop1=Eat
 weight=250g
-category=category_15
 members=yes
 param=gnome_cooking_type,3
 
 [unfinished_fruit_batta2]
 name=Unfinished batta
 desc=This batta is just missing those little finishing touches.
-category=category_124
+category=gnome_unf_odd_batta
 model=model_2803_obj
 recol1s=15360
 recol1d=832
@@ -281,14 +277,13 @@ recol2d=352
 2dxan=236
 iop1=Eat
 weight=250g
-category=category_15
 members=yes
 param=gnome_cooking_type,3
 
 [unfinished_fruit_batta3]
 name=Unfinished batta
 desc=This batta is just missing those little finishing touches.
-category=category_124
+category=gnome_unf_odd_batta
 model=model_2803_obj
 recol1s=15360
 recol1d=31201
@@ -301,14 +296,13 @@ recol2d=352
 2dxan=236
 iop1=Eat
 weight=250g
-category=category_15
 members=yes
 param=gnome_cooking_type,3
 
 [unfinished_fruit_batta4]
 name=Unfinished batta
 desc=This batta is just missing those little finishing touches.
-category=category_124
+category=gnome_unf_odd_batta
 model=model_2803_obj
 recol1s=15360
 recol1d=31393
@@ -321,14 +315,13 @@ recol2d=352
 2dxan=236
 iop1=Eat
 weight=250g
-category=category_15
 members=yes
 param=gnome_cooking_type,3
 
 [unfinished_fruit_batta5]
 name=Unfinished batta
 desc=This batta is just missing those little finishing touches.
-category=category_124
+category=gnome_unf_odd_batta
 model=model_2803_obj
 recol1s=15360
 recol1d=832
@@ -341,14 +334,13 @@ recol2d=31201
 2dxan=236
 iop1=Eat
 weight=250g
-category=category_15
 members=yes
 param=gnome_cooking_type,3
 
 [unfinished_fruit_batta6]
 name=Unfinished batta
 desc=This batta is just missing those little finishing touches.
-category=category_124
+category=gnome_unf_odd_batta
 members=yes
 2dzoom=780
 2dxan=236
@@ -362,13 +354,12 @@ recol2s=16129
 recol2d=31393
 weight=250g
 iop1=Eat
-category=category_15
 param=gnome_cooking_type,3
 
 [unfinished_fruit_batta7]
 name=Unfinished batta
 desc=This batta is just missing those little finishing touches.
-category=category_124
+category=gnome_unf_odd_batta
 model=model_2803_obj
 recol1s=15360
 recol1d=31201
@@ -381,14 +372,13 @@ recol2d=31393
 2dxan=236
 iop1=Eat
 weight=250g
-category=category_15
 members=yes
 param=gnome_cooking_type,3
 
 [unfinished_fruit_batta8]
 name=Unfinished batta
 desc=This batta is just missing those little finishing touches.
-category=category_124
+category=gnome_unf_odd_batta
 model=model_2803_obj
 recol1s=15360
 recol1d=31201
@@ -399,12 +389,11 @@ recol1d=31201
 2dxan=236
 iop1=Eat
 weight=250g
-category=category_15
 members=yes
 param=gnome_cooking_type,3
 
 [fruit_batta]
-category=category_125
+category=gnome_batta
 cost=2
 name=Fruit batta
 desc=It actually smells quite good.
@@ -423,7 +412,7 @@ members=yes
 [unfinished_vegetable_batta1]
 name=Unfinished batta
 desc=This batta is just missing those little finishing touches.
-category=category_124
+category=gnome_unf_odd_batta
 model=model_2803_obj
 recol1s=15360
 recol1d=24609
@@ -436,7 +425,6 @@ recol2d=27567
 2dxan=236
 iop1=Eat
 weight=250g
-category=category_15
 members=yes
 param=gnome_cooking_type,3
 

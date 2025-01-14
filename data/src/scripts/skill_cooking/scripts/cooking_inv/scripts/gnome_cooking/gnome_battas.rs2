@@ -1,6 +1,4 @@
 [opheld1,half_baked_batta]
-if_close;
-//p_stopaction;
 def_int $total_steps = ~get_batta_ingredient_step();
 if ($total_steps < 1) {
     mes("The half baked batta is completely plain.");
@@ -37,16 +35,12 @@ while ($i < enum_getoutputcount(gnome_batta_ingredients)) {
 mes("<$message>.");
 
 [opheldu,half_baked_batta]
-if_close;
-//p_stopaction;
 switch_obj(last_useitem) {
     case cheese, tomato, onion, cabbage, dwellberry, seasoned_toad_legs, spicy_worm, equa_leaves : @add_batta_ingredient(last_useitem);
     case default : ~displaymessage(^dm_default);
 }
 
 [opheldu,cabbage]
-if_close;
-//p_stopaction;
 switch_obj(last_useitem) {
     case half_baked_batta : @add_batta_ingredient(last_item);
     case raw_chompy : @quest_chompybird_add_ingredients_to_chompy_message;
@@ -54,16 +48,12 @@ switch_obj(last_useitem) {
 }
 
 [opheldu,seasoned_toad_legs]
-if_close;
-//p_stopaction;
 switch_obj(last_useitem) {
     case half_baked_batta : @add_batta_ingredient(last_item);
     case default : ~displaymessage(^dm_default);
 }
 
 [opheldu,spicy_worm]
-if_close;
-//p_stopaction;
 switch_obj(last_useitem) {
     case half_baked_batta : @add_batta_ingredient(last_item);
     case default : ~displaymessage(^dm_default);
@@ -71,14 +61,6 @@ switch_obj(last_useitem) {
 
 [proc,get_gnome_batta_product]()(namedobj)
 def_int $null_count = calc(~get_batta_ingredient_count(null) + ~get_batta_ingredient_count(dwarf_remains));
-if ($null_count = 6) {
-    return(null);
-}
-// if only 1 ingredient then return odd batta
-if ($null_count > 4) {
-    ~clear_batta_ingredients;
-    return(odd_batta);
-}
 def_int $spicy_worm_count = ~get_batta_ingredient_count(spicy_worm);
 def_int $cheese_count = ~get_batta_ingredient_count(cheese);
 // worm batta
@@ -102,7 +84,7 @@ if ($cheese_count = 1 & $tomato_count = 1 & $null_count = 4) {
 def_int $equa_leaves_count = ~get_batta_ingredient_count(equa_leaves);
 if ($equa_leaves_count = 4 & $null_count = 2) {
     ~clear_batta_ingredients;
-    return(unfinished_fruit_batta2);
+    return(unfinished_fruit_batta1);
 }
 // vegetable batta
 def_int $onion_count = ~get_batta_ingredient_count(onion);

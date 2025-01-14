@@ -104,6 +104,15 @@ export default class Npc extends PathingEntity {
         this.lastWanderTick = World.currentTick;
     }
 
+    cleanup(): void {
+        this.nid = -1;
+        this.uid = -1;
+        this.activeScript = null;
+        this.huntTarget = null;
+        this.queue.clear();
+        this.heroPoints.clear();
+    }
+
     getVar(id: number) {
         const varn = VarNpcType.get(id);
         return varn.type === ScriptVarType.STRING ? this.varsString[varn.id] : this.vars[varn.id];

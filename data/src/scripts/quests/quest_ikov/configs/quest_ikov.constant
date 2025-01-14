@@ -9,5 +9,8 @@
 ^ikov_completed_armadyl = 80
 ^ikov_completed_lucien = 90
 
+^ikov_lever = 0
+^ikov_bridge = 1
+
 ^ikovbridge_zone_lower = 0_41_153_24_36
 ^ikovbridge_zone_upper = 0_41_153_26_37

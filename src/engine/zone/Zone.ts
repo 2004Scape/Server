@@ -31,6 +31,7 @@ import ZoneEntityList, {LocList, ObjList} from '#/engine/zone/ZoneEntityList.js'
 import NonPathingEntity from '#/engine/entity/NonPathingEntity.js';
 import ObjType from '#/cache/config/ObjType.js';
 import Environment from '#/util/Environment.js';
+import Packet from '#/io/Packet.js';
 
 export default class Zone {
     private static readonly SIZE: number = 8 * 8;
@@ -53,9 +54,6 @@ export default class Zone {
     private readonly events: Set<ZoneEvent>;
     private shared: Uint8Array | null = null;
 
-    totalLocs: number = 0;
-    totalObjs: number = 0;
-
     constructor(index: number) {
         this.index = index;
         const coord: CoordGrid = ZoneMap.unpackIndex(index);
@@ -68,6 +66,14 @@ export default class Zone {
         this.locs = new LocList(Zone.LOCS, (loc: Loc) => World.removeLoc(loc, 100));
         this.objs = new ObjList(Zone.OBJS, (obj: Obj) => World.removeObj(obj, 100));
         this.entityEvents = new Map();
+    }
+
+    get totalLocs(): number {
+        return this.locs.count;
+    }
+
+    get totalObjs(): number {
+        return this.objs.count;
     }
 
     enter(entity: PathingEntity): void {
@@ -123,32 +129,28 @@ export default class Zone {
                 }
             }
         } while (updated);
+        this.computeShared();
     }
 
     computeShared(): void {
-        let length: number = 0;
-        const enclosed: Uint8Array[] = [];
+        const buf: Packet = Packet.alloc(1);
         for (const event of this.enclosed()) {
             const encoder: ZoneMessageEncoder<ZoneMessage> | undefined = ServerProtRepository.getZoneEncoder(event.message);
             if (typeof encoder === 'undefined') {
                 continue;
             }
-            const bytes: Uint8Array = encoder.enclose(event.message);
-            enclosed.push(bytes);
-            length += bytes.length;
+            encoder.enclose(buf, event.message);
         }
 
-        if (length === 0) {
+        if (buf.pos === 0) {
+            buf.release();
             return;
         }
 
-        const shared: Uint8Array = new Uint8Array(length);
-        let ptr: number = 0;
-        for (const bytes of enclosed) {
-            shared.set(bytes, ptr);
-            ptr += bytes.length;
-        }
-
+        const shared: Uint8Array = new Uint8Array(buf.pos);
+        buf.pos = 0;
+        buf.gdata(shared, 0, shared.length);
+        buf.release();
         this.shared = shared;
     }
 
@@ -228,14 +230,12 @@ export default class Zone {
     addStaticLoc(loc: Loc): void {
         const coord: number = CoordGrid.packZoneCoord(loc.x, loc.z);
         this.locs.addLast(coord, loc, true);
-        this.totalLocs++;
         this.locs.sortStack(coord, true);
     }
 
     addStaticObj(obj: Obj): void {
         const coord: number = CoordGrid.packZoneCoord(obj.x, obj.z);
         this.objs.addLast(coord, obj, true);
-        this.totalObjs++;
         this.objs.sortStack(coord, true);
     }
 
@@ -245,7 +245,6 @@ export default class Zone {
         const coord: number = CoordGrid.packZoneCoord(loc.x, loc.z);
         if (loc.lifecycle === EntityLifeCycle.DESPAWN) {
             this.locs.addLast(coord, loc);
-            this.totalLocs++;
         }
 
         this.locs.sortStack(coord);
@@ -257,7 +256,6 @@ export default class Zone {
         const coord: number = CoordGrid.packZoneCoord(loc.x, loc.z);
         if (loc.lifecycle === EntityLifeCycle.DESPAWN) {
             this.locs.remove(coord, loc);
-            this.totalLocs--;
         }
 
         this.locs.sortStack(coord);
@@ -291,7 +289,6 @@ export default class Zone {
         const coord: number = CoordGrid.packZoneCoord(obj.x, obj.z);
         if (obj.lifecycle === EntityLifeCycle.DESPAWN) {
             this.objs.addLast(coord, obj);
-            this.totalObjs++;
         }
 
         this.objs.sortStack(coord);
@@ -333,7 +330,6 @@ export default class Zone {
         const coord: number = CoordGrid.packZoneCoord(obj.x, obj.z);
         if (obj.lifecycle === EntityLifeCycle.DESPAWN) {
             this.objs.remove(coord, obj);
-            this.totalObjs--;
         }
 
         this.objs.sortStack(coord);
@@ -523,7 +519,7 @@ export default class Zone {
             this.entityEvents.set(entity, [event]);
             return;
         }
-        this.entityEvents.set(entity, exist.concat(event));
+        exist.push(event);
     }
 
     /**

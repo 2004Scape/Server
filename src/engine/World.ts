@@ -29,7 +29,7 @@ import VarNpcType from '#/cache/config/VarNpcType.js';
 import VarPlayerType from '#/cache/config/VarPlayerType.js';
 import VarSharedType from '#/cache/config/VarSharedType.js';
 import WordEnc from '#/cache/wordenc/WordEnc.js';
-import { makeCrcs, makeCrcsAsync } from '#/cache/CrcTable.js';
+import { CrcBuffer32, makeCrcs, makeCrcsAsync } from '#/cache/CrcTable.js';
 import { preloadClient, preloadClientAsync } from '#/cache/PreloadedPacks.js';
 
 import { CoordGrid } from '#/engine/CoordGrid.js';
@@ -103,8 +103,8 @@ class World {
     private static readonly PLAYER_SAVERATE: number = 1500; // 15m
     private static readonly PLAYER_COORDLOGRATE: number = 50; // 30s
 
-    private static readonly TIMEOUT_SOCKET_IDLE: number = 16; // ~10s with no data- disconnect client
-    private static readonly TIMEOUT_SOCKET_LOGOUT: number = 100; // 60s with no client- remove player from processing
+    private static readonly TIMEOUT_SOCKET_IDLE: number = Environment.NODE_DEBUG_SOCKET ? 60000 : 16; // ~10s with no data- disconnect client
+    private static readonly TIMEOUT_SOCKET_LOGOUT: number = Environment.NODE_DEBUG_SOCKET ? 60000 : 100; // 60s with no client- remove player from processing
 
     // the game/zones map
     readonly gameMap: GameMap;
@@ -179,6 +179,15 @@ class World {
                 });
             }
         }
+    }
+
+    get shutdown() {
+        return this.shutdownTick != -1 && this.currentTick >= this.shutdownTick;
+    }
+
+    // shutting down within the next 30s
+    get shutdownSoon() {
+        return this.shutdownTick != -1 && this.currentTick >= this.shutdownTick - 50;
     }
 
     reload(): void {
@@ -431,8 +440,7 @@ class World {
 
             const tick: number = this.currentTick;
 
-            // server shutdown
-            if (this.shutdownTick > -1 && tick >= this.shutdownTick) {
+            if (this.shutdown) {
                 this.processShutdown();
             }
 
@@ -482,9 +490,9 @@ class World {
             }
 
             if (Environment.NODE_DEBUG_PROFILE) {
-                printDebug(`| [tick ${this.currentTick}; ${this.cycleStats[WorldStat.CYCLE]}/${this.tickRate}ms] | ${this.getTotalPlayers()} players | ${this.getTotalNpcs()} npcs | ${this.gameMap.getTotalZones()} zones | ${this.gameMap.getTotalLocs()} locs | ${this.gameMap.getTotalObjs()} objs |`);
-                printDebug(`| ${this.cycleStats[WorldStat.WORLD]}ms world | ${this.cycleStats[WorldStat.CLIENT_IN]}ms client in | ${this.cycleStats[WorldStat.NPC]}ms npcs | ${this.cycleStats[WorldStat.PLAYER]}ms players | ${this.cycleStats[WorldStat.LOGOUT]}ms logout | ${this.cycleStats[WorldStat.LOGIN]}ms login | ${this.cycleStats[WorldStat.ZONE]}ms zones | ${this.cycleStats[WorldStat.CLIENT_OUT]}ms client out | ${this.cycleStats[WorldStat.CLEANUP]}ms cleanup |`);
-                printDebug('----');
+                printInfo(`tick ${this.currentTick}: ${this.cycleStats[WorldStat.CYCLE]}/${this.tickRate} ms, ${Math.trunc(process.memoryUsage().heapTotal / 1024 / 1024)} MB heap`);
+                printDebug(`${this.getTotalPlayers()} players | ${this.getTotalNpcs()} npcs | ${this.gameMap.getTotalZones()} zones | ${this.gameMap.getTotalLocs()} locs | ${this.gameMap.getTotalObjs()} objs`);
+                printDebug(`${this.cycleStats[WorldStat.WORLD]} ms world | ${this.cycleStats[WorldStat.CLIENT_IN]} ms client in | ${this.cycleStats[WorldStat.NPC]} ms npcs | ${this.cycleStats[WorldStat.PLAYER]} ms players | ${this.cycleStats[WorldStat.LOGOUT]} ms logout | ${this.cycleStats[WorldStat.LOGIN]} ms login | ${this.cycleStats[WorldStat.ZONE]} ms zones | ${this.cycleStats[WorldStat.CLIENT_OUT]} ms client out | ${this.cycleStats[WorldStat.CLEANUP]} ms cleanup`);
             }
 
             this.currentTick++;
@@ -636,7 +644,7 @@ class World {
                 }
 
                 if (this.currentTick - player.lastResponse >= World.TIMEOUT_SOCKET_LOGOUT) {
-                    // x-logged / timed out for 60s: force logout
+                    // x-logged / timed out for 60s: logout
                     player.loggedOut = true;
                 } else if (this.currentTick - player.lastResponse >= World.TIMEOUT_SOCKET_IDLE) {
                     // x-logged / timed out for 10s: attempt logout
@@ -822,24 +830,15 @@ class World {
     private processLogins(): void {
         const start: number = Date.now();
         player: for (const player of this.newPlayers) {
-            // prevent logging in when the server is shutting down
-            if (this.shutdownTick >= this.currentTick) {
-                if (isClientConnected(player)) {
-                    player.client.send(Uint8Array.from([ 14 ]));
-                    player.client.close();
-                }
-
-                continue;
-            }
-
             // prevent logging in if a player save is being flushed
             if (this.logoutRequests.has(player.username)) {
-                player.addSessionLog(LoggerEventType.ENGINE, 'Tried to log in - old player is logging out');
+                player.addSessionLog(LoggerEventType.ENGINE, 'Tried to log in - old session is mid-logout');
 
                 if (isClientConnected(player)) {
                     player.client.send(Uint8Array.from([ 5 ]));
                     player.client.close();
                 }
+
                 continue;
             }
 
@@ -882,6 +881,17 @@ class World {
                 continue player;
             }
 
+            // prevent logging in when the server is shutting down
+            if (this.shutdownSoon) {
+                if (isClientConnected(player)) {
+                    player.addSessionLog(LoggerEventType.ENGINE, 'Tried to log in - server is shutting down');
+                    this.forceLogout(player, 14);
+                }
+
+                continue;
+            }
+
+
             // normal login process
             let pid: number;
             try {
@@ -891,8 +901,7 @@ class World {
                 // world full
                 if (isClientConnected(player)) {
                     player.addSessionLog(LoggerEventType.ENGINE, 'Tried to log in - world full');
-                    player.client.send(Uint8Array.from([ 7 ]));
-                    player.client.close();
+                    this.forceLogout(player, 7);
                 }
                 continue;
             }
@@ -923,7 +932,7 @@ class World {
             this.gameMap.getZone(player.x, player.z, player.level).enter(player);
             player.onLogin();
 
-            if (this.shutdownTick > -1) {
+            if (this.shutdownTick != -1) {
                 player.write(new UpdateRebootTimer(this.shutdownTick - this.currentTick));
             }
 
@@ -937,17 +946,14 @@ class World {
         this.cycleStats[WorldStat.LOGIN] = Date.now() - start;
     }
 
-    // - build list of active zones around players
     // - loc/obj despawn/respawn
     // - compute shared buffer
     private processZones(): void {
         const start: number = Date.now();
         const tick: number = this.currentTick;
         // - loc/obj despawn/respawn
-        this.zonesTracking.get(tick)?.forEach(zone => zone.tick(tick));
-        // - build list of active zones around players
         // - compute shared buffer
-        this.computeSharedEvents();
+        this.zonesTracking.get(tick)?.forEach(zone => zone.tick(tick));
         this.cycleStats[WorldStat.ZONE] = Date.now() - start;
     }
 
@@ -1112,6 +1118,7 @@ class World {
 
         const online = this.getTotalPlayers();
         if (online === 0 && this.logoutRequests.size === 0) {
+            printInfo('Server shutdown complete');
             process.exit(0);
         }
 
@@ -1165,19 +1172,6 @@ class World {
         return inventory;
     }
 
-    computeSharedEvents(): void {
-        const zones: Set<number> = new Set();
-        for (const player of this.players) {
-            if (!isClientConnected(player)) {
-                continue;
-            }
-            for (const zone of player.buildArea.loadedZones) {
-                zones.add(zone);
-            }
-        }
-        zones.forEach(zoneIndex => this.gameMap.getZoneIndex(zoneIndex).computeShared());
-    }
-
     addNpc(npc: Npc, duration: number, firstSpawn: boolean = true): void {
         if (firstSpawn) {
             this.npcs.set(npc.nid, npc);
@@ -1224,8 +1218,7 @@ class World {
 
         if (npc.lifecycle === EntityLifeCycle.DESPAWN) {
             this.npcs.remove(npc.nid);
-            npc.nid = -1;
-            npc.uid = -1;
+            npc.cleanup();
         } else if (npc.lifecycle === EntityLifeCycle.RESPAWN) {
             npc.setLifeCycle(this.currentTick + adjustedDuration);
         }
@@ -1431,8 +1424,7 @@ class World {
         this.gameMap.getZone(player.x, player.z, player.level).leave(player);
         this.players.remove(player.pid);
         changeNpcCollision(player.width, player.x, player.z, player.level, false);
-        player.pid = -1;
-        player.uid = -1;
+        player.cleanup();
 
         player.addSessionLog(LoggerEventType.MODERATOR, 'Logged out');
 
@@ -1448,6 +1440,22 @@ class World {
             type: 'player_logout',
             username: player.username,
         });
+    }
+
+    // let the login server know this player can log in elsewhere, do not update save file
+    forceLogout(player: Player, response = -1) {
+        this.loginThread.postMessage({
+            type: 'player_force_logout',
+            username: player.username
+        });
+
+        if (isClientConnected(player)) {
+            if (response !== -1) {
+                player.client.send(Uint8Array.from([ response ]));
+            }
+
+            player.client.close();
+        }
     }
 
     sendPrivateMessage(player: Player, targetUsername37: bigint, message: string): void {
@@ -1794,6 +1802,12 @@ class World {
 
             const crcs = new Uint8Array(9 * 4);
             World.loginBuf.gdata(crcs, 0, crcs.length);
+
+            if (CrcBuffer32 !== Packet.getcrc(crcs, 0, crcs.length)) {
+                client.send(Uint8Array.from([ 6 ]));
+                client.close();
+                return;
+            }
 
             World.loginBuf.rsadec(priv);
 

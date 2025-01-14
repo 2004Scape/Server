@@ -1,0 +1,35 @@
+[opheld4,amulet_of_glory_4] @amulet_of_glory_interface("Your amulet has three charges left.");
+[opheld4,amulet_of_glory_3] @amulet_of_glory_interface("Your amulet has two charges left.");
+[opheld4,amulet_of_glory_2] @amulet_of_glory_interface("Your amulet has one charge left.");
+[opheld4,amulet_of_glory_1] @amulet_of_glory_interface("You use your amulet's last charge.");
+[opheld4,amulet_of_glory] mes("The amulet has lost its charge.");
+
+[label,amulet_of_glory_interface](string $message)
+def_obj $item = last_item;
+def_int $slot = last_slot;
+// https://youtu.be/Zv7Wh3TIDOc
+mes("You rub the amulet...");
+// Space after "to" is intentional. Based off of this screenshot: https://storage.googleapis.com/tannerdino/images/rstransport9.gif
+def_int $choice = ~p_choice5_header("Edgeville.", 1, "Karamja.", 2, "Draynor Village.", 3, "Al Kharid.", 4, "Nowhere.", 5, "Where would you like to teleport to ?");
+// https://i.imgur.com/HsKKBnr.png
+if ($choice = 5) {
+    mes("You remain where you were.");
+    return;
+}
+if (~wilderness_level(coord) > 30) {
+    // osrs
+    mes("A mysterious force blocks your teleport.");
+    mes("You can't use this teleport after level 30 wilderness.");
+    return;
+}
+if (~pre_tele_checks(coord) = false) {
+    return;
+}
+mes($message);
+switch_int($choice) {
+    case 1 : ~player_teleport_normal(0_48_54_15_40);
+    case 2 : ~player_teleport_normal(0_45_49_38_40);
+    case 3 : ~player_teleport_normal(0_48_50_33_51);
+    case 4 : ~player_teleport_normal(0_51_49_29_27);
+}
+inv_setslot(inv, $slot, oc_param($item, next_obj_stage), 1);

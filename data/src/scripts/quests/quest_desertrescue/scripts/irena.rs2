@@ -1,0 +1,103 @@
+[opnpc1,irena]
+if(%desertrescue_progress = ^desertrescue_not_started) {
+        ~mesbox("Irena seems to be very upset and cries as you approach her.");
+        ~chatnpc("<p,sad>Boo hoo! Oh dear, my only daughter....");
+        switch_int(~p_choice2("What's the matter?", 1, "Cheer up, it might never happen.", 2)) {
+            case 1 :
+                ~chatplayer("<p,neutral>What's the matter?");
+                ~chatnpc("<p,sad>Oh dear... my daughter, Ana, has gone missing in the desert. I fear that she is lost, or perhaps... *sob* even worse.");
+            case 2 :
+                ~chatplayer("<p,neutral>Cheer up, it might never happen.");
+                ~chatnpc("<p,sad>It may already have happened you thoughtless oaf! My daughter, Ana, could be dead or dying in the desert!");
+        }
+        // OSRS removed the 2nd and 3rd option so the mesanims there are guessed (dialogue from chisel)
+        @multi3("When did she go into the desert?", irena_whendesert, "What did she go into the desert for?", irena_whatdesert, "Is there a reward if I get her back?", irena_reward);
+} else if(%desertrescue_progress < ^desertrescue_escaped) {
+    ~chatnpc("<p,sad>Please bring my daughter back to me. She is most likely lost in the Desert somewhere. I miss her so much... Wahhhhh! *Sob*");
+} else if (%desertrescue_progress = ^desertrescue_escaped) {
+    if(inv_total(inv, anainabarrel) = 0) {
+        ~chatnpc("<p,sad>Please bring my daughter back to me. She is most likely lost in the Desert somewhere. I miss her so much... Wahhhhh! *Sob*");
+        return;
+    }
+    ~chatnpc("<p,neutral>Hey, great you've found Ana!");
+    ~chatnpc_specific("Ana (in a Barrel)", anabarrel, "<p,neutral>@blu@-- You show Irena the barrel With Ana in it. --|Hey great, there's my Mum!");
+    @desertrescue_ana_rescued;
+} else if(%desertrescue_progress = ^desertrescue_saved_ana) {
+    ~chatnpc("<p,happy>Thank you very much for returning my daughter to me. I'm really very grateful... I would like to reward you for your bravery and daring. I can offer you increased knowledge in two of the following areas.");
+    @irena_xpreward;
+} else if(%desertrescue_progress = ^desertrescue_picked_first_skill) {
+    ~chatnpc("<p,happy>Thank you very much for returning my daughter to me. I'm really very grateful... I would like to reward you for your bravery and daring. I can offer you increased knowledge in one of the following areas.");
+    @irena_xpreward;
+} else if(%desertrescue_progress = ^desertrescue_picked_first_skill) {
+    ~chatnpc("<p,happy>Thank you very much for returning my daughter to me. I'm really very grateful... I would like to reward you for your bravery and daring. I can offer you increased knowledge in one of the following areas.");
+    @irena_xpreward;
+} else if(%desertrescue_progress = ^desertrescue_complete) {
+    mes("Irena seems happy now that her daughter has returned home.");
+    ~chatnpc("<p,neutral>Thanks so much for returning my daughter to me. I expect that she will go on another trip soon though. She is the adventurous type... a bit like yourself really! Okay, see you around then!");
+}
+
+[label,irena_whendesert]
+~chatplayer("<p,neutral>When did she go into the desert?");
+~chatnpc("<p,sad>*Sob* she went in there just a few days ago, *Sob* she said she would be back yesterday.");
+~chatnpc("<p,sad>*Sob* And she's not...");
+
+[label,irena_whatdesert]
+~chatplayer("<p,neutral>What did she go into the desert for?");
+~mesbox("Irena's bottom lip trembles a little.");
+~chatnpc("<p,sad>She was just travelling, a tourist you might say. *Sob* She said she would be safe and now she could be. *Whhhhhaaaaa*");
+~mesbox("Irena cries her heart out in front of you.");
+@multi3("When did she go into the desert?", irena_whendesert, "Is there a reward if I get her back?", irena_reward, "I'll look for your daughter.", irena_look);
+
+[label,irena_reward]
+~chatplayer("<p,neutral>Is there a reward if I get her back?");
+~chatnpc("<p,sad>Well, yes, you'll have my gratitude young <text_gender("man", "lady")>.");
+~chatnpc("<p,sad>And I'm sure that Ana will also be very pleased! And I may see if I can get a small reward together... But I cannot promise anything. So does that mean that you'll look for her then?");
+@multi2("Okay Irena, calm down. I'll get your daughter back for you.", irena_daughter, "No, sorry, I'm just too busy!", irena_toobusy);
+
+[label,irena_look]
+~chatplayer("<p,neutral>I'll look for your daughter.");
+~chatnpc("<p,sad>That would be very good of you. You would have the gratitude of a very loving mother. Are you sure you want to take on that responsibility?");
+@multi2("Okay Irena, calm down. I'll get your daughter back for you.", irena_daughter, "No, sorry, I'm just too busy!", irena_toobusy);
+
+[label,irena_daughter]
+~chatplayer("<p,shifty>Okay Irena, calm down. I'll get your daughter back for you.");
+~chatnpc("<p,happy>That would be great! That's really very nice of you! She was wearing a red silk scarf when she left.");
+%desertrescue_progress = ^desertrescue_started;
+~send_quest_progress(questlist:desertrescue, %desertrescue_progress, ^desertrescue_complete);
+
+[label,irena_toobusy]
+~chatplayer("<p,neutral>No, sorry, I'm just too busy!");
+~chatnpc("<p,sad>Oh really, is there no way I can persuade you to help me?");
+
+[label,irena_ana_found]
+~chatnpc("<p,happy>Thank you very much for returning my daughter to me. I'm really very grateful... I would like to reward you for your bravery and daring.");
+~chatnpc("<p,happy>I can offer you increased knowledge in two of the following areas.");
+@irena_xpreward;
+
+[label,irena_xpreward]
+switch_int(~p_choice4("Fletching.", 1, "Agility.", 2, "Smithing.", 3, "Thieving", 4)) {
+    case 1 :
+        stat_advance(fletching, 46500);
+        mes("You advance your stat in Fletching.");
+    case 2 :
+        stat_advance(agility, 46500);
+        mes("You advance your stat in Agility.");
+    case 3 :
+        stat_advance(smithing, 46500);
+        mes("You advance your stat in Smithing.");
+    case 4 :
+        stat_advance(thieving, 46500);
+        mes("You advance your stat in Thieving.");
+}
+%desertrescue_progress = calc(%desertrescue_progress + 1);
+@irena_checkrewards;
+
+[label,irena_checkrewards]
+if(%desertrescue_progress = ^desertrescue_picked_first_skill) {
+    ~chatnpc("<p,happy>Okay, now choose your second skill.");
+    @irena_xpreward;
+} else if(%desertrescue_progress = ^desertrescue_picked_second_skill) {
+    queue(desertrescue_complete, 0);
+    ~chatnpc("<p,happy>Okay, that's all the skills I can teach you!");
+}
+

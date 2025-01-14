@@ -4,6 +4,8 @@ table=coord_pair_table
 data=coord_pair,0_49_47_20_11,0_49_47_50_40
 data=coord_pair,0_49_47_19_22,0_49_47_45_45
 data=coord_pair,0_49_47_18_23,0_49_47_31_47
+// desert mining camp
+data=coord_pair,0_51_47_10_3,0_51_47_42_35
 
 [desert_zones]
 table=coord_pair_table

@@ -1,0 +1,5 @@
+[mining_camp_zones]
+table=coord_pair_table
+// desert mining camp
+data=coord_pair,0_51_47_10_3,0_51_47_42_35
+data=coord_pair,0_51_147_0_0,0_51_147_63_63

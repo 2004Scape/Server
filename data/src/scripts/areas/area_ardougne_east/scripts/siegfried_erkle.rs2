@@ -1,0 +1,12 @@
+[opnpc1,siegfried_erkle]
+~chatnpc("<p,sad>Hello there and welcome to the shop of useful items. Can I help you at all?");
+def_int $option = ~p_choice2("Yes please. What are you selling?", 1, "No thanks." , 2);
+if ($option = 1){
+    ~chatplayer("<p,neutral>Yes please. What are you selling?");
+    ~chatnpc("<p,sad>Take a look.");
+    ~openshop_activenpc;
+}
+else if($option = 2){
+    ~chatplayer("<p,neutral>No thanks.");
+    ~chatnpc("<p,sad>Ok, well, if you change your mind, do pop back.");
+}
