@@ -110,7 +110,6 @@ export default class Npc extends PathingEntity {
         this.activeScript = null;
         this.huntTarget = null;
         this.queue.clear();
-        this.heroPoints.clear();
     }
 
     getVar(id: number) {
