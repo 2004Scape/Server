@@ -43,7 +43,6 @@ param=rangeattack_sound,arrowlaunch2
 param=proj_launch,iron_arrow_launch
 param=proj_travel,iron_arrow_travel
 // Stats match osrs version but our version Vislvl is different.
-// attack and maxrange is still wip.
 
 [ranging_guild_doorman]
 vislevel=hide

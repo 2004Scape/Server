@@ -3,194 +3,70 @@
 // https://youtu.be/dpOJn0HyTx4?t=52
 // https://youtu.be/jdcT9ogpMwE?t=104 underground
 // all on the same z axis
-[label,wilderness_warning]
-if (%wilderness = ^false & (coordz(coord) = ^wilderness_warning_z | coordz(coord) = add(^wilderness_warning_z, 1))) {
+
+[queue,wilderness_warning]
+if (%wilderness = ^false) {
     %wilderness = ^true;
     p_stopaction;
     if_openmain(wilderness_warning);
 }
 
-[label,wilderness_exit]
-if (~wilderness_level(coord) < 1) {
-    %wilderness = ^false;
-}
-
-[mapzoneexit,0_46_55] @wilderness_exit;
-[mapzoneexit,0_46_56] @wilderness_exit;
-[mapzoneexit,0_46_57] @wilderness_exit;
-[mapzoneexit,0_46_58] @wilderness_exit;
-[mapzoneexit,0_46_59] @wilderness_exit;
-[mapzoneexit,0_46_60] @wilderness_exit;
-[mapzoneexit,0_46_61] @wilderness_exit;
-
-[mapzoneexit,0_47_55] @wilderness_exit;
-[mapzoneexit,0_47_56] @wilderness_exit;
-[mapzoneexit,0_47_57] @wilderness_exit;
-[mapzoneexit,0_47_58] @wilderness_exit;
-[mapzoneexit,0_47_59] @wilderness_exit;
-[mapzoneexit,0_47_60] @wilderness_exit;
-[mapzoneexit,0_47_61] @wilderness_exit;
-
-[mapzoneexit,0_48_55] @wilderness_exit;
-[mapzoneexit,0_48_56] @wilderness_exit;
-[mapzoneexit,0_48_57] @wilderness_exit;
-[mapzoneexit,0_48_58] @wilderness_exit;
-[mapzoneexit,0_48_59] @wilderness_exit;
-[mapzoneexit,0_48_60] @wilderness_exit;
-[mapzoneexit,0_48_61] @wilderness_exit;
-
-[mapzoneexit,0_49_55] @wilderness_exit;
-[mapzoneexit,0_49_56] @wilderness_exit;
-[mapzoneexit,0_49_57] @wilderness_exit;
-[mapzoneexit,0_49_58] @wilderness_exit;
-[mapzoneexit,0_49_59] @wilderness_exit;
-[mapzoneexit,0_49_60] @wilderness_exit;
-[mapzoneexit,0_49_61] @wilderness_exit;
-
-[mapzoneexit,0_50_55] @wilderness_exit;
-[mapzoneexit,0_50_56] @wilderness_exit;
-[mapzoneexit,0_50_57] @wilderness_exit;
-[mapzoneexit,0_50_58] @wilderness_exit;
-[mapzoneexit,0_50_59] @wilderness_exit;
-[mapzoneexit,0_50_60] @wilderness_exit;
-[mapzoneexit,0_50_61] @wilderness_exit;
-
-[mapzoneexit,0_51_55] @wilderness_exit;
-[mapzoneexit,0_51_56] @wilderness_exit;
-[mapzoneexit,0_51_57] @wilderness_exit;
-[mapzoneexit,0_51_58] @wilderness_exit;
-[mapzoneexit,0_51_59] @wilderness_exit;
-[mapzoneexit,0_51_60] @wilderness_exit;
-[mapzoneexit,0_51_61] @wilderness_exit;
-
-[mapzoneexit,0_52_55] @wilderness_exit;
-[mapzoneexit,0_52_56] @wilderness_exit;
-[mapzoneexit,0_52_57] @wilderness_exit;
-[mapzoneexit,0_52_58] @wilderness_exit;
-[mapzoneexit,0_52_59] @wilderness_exit;
-[mapzoneexit,0_52_60] @wilderness_exit;
-[mapzoneexit,0_52_61] @wilderness_exit;
-
-// underground
-[mapzoneexit,0_48_155] @wilderness_exit;
-[mapzoneexit,0_48_156] @wilderness_exit;
-
-[zone,0_45_54_48_56] @wilderness_warning;
-[zone,0_45_54_56_56] @wilderness_warning;
-[zone,0_46_54_0_56] @wilderness_warning;
-[zone,0_46_54_8_56] @wilderness_warning;
-[zone,0_46_54_16_56] @wilderness_warning;
-[zone,0_46_54_24_56] @wilderness_warning;
-[zone,0_46_54_32_56] @wilderness_warning;
-[zone,0_46_54_40_56] @wilderness_warning;
-[zone,0_46_54_48_56] @wilderness_warning;
-[zone,0_46_54_56_56] @wilderness_warning;
-[zone,0_47_54_0_56] @wilderness_warning;
-[zone,0_47_54_8_56] @wilderness_warning;
-[zone,0_47_54_16_56] @wilderness_warning;
-[zone,0_47_54_24_56] @wilderness_warning;
-[zone,0_47_54_32_56] @wilderness_warning;
-[zone,0_47_54_40_56] @wilderness_warning;
-[zone,0_47_54_48_56] @wilderness_warning;
-[zone,0_47_54_56_56] @wilderness_warning;
-[zone,0_48_54_0_56] @wilderness_warning;
-[zone,0_48_54_8_56] @wilderness_warning;
-[zone,0_48_54_16_56] @wilderness_warning;
-[zone,0_48_54_24_56] @wilderness_warning;
-[zone,0_48_54_32_56] @wilderness_warning;
-[zone,0_48_54_40_56] @wilderness_warning;
-[zone,0_48_54_48_56] @wilderness_warning;
-[zone,0_48_54_56_56] @wilderness_warning;
-[zone,0_49_54_0_56] @wilderness_warning;
-[zone,0_49_54_8_56] @wilderness_warning;
-[zone,0_49_54_16_56] @wilderness_warning;
-[zone,0_49_54_24_56] @wilderness_warning;
-[zone,0_49_54_32_56] @wilderness_warning;
-[zone,0_49_54_40_56] @wilderness_warning;
-[zone,0_49_54_48_56] @wilderness_warning;
-[zone,0_49_54_56_56] @wilderness_warning;
-[zone,0_50_54_0_56] @wilderness_warning;
-[zone,0_50_54_8_56] @wilderness_warning;
-[zone,0_50_54_16_56] @wilderness_warning;
-[zone,0_50_54_24_56] @wilderness_warning;
-[zone,0_50_54_32_56] @wilderness_warning;
-[zone,0_50_54_40_56] @wilderness_warning;
-[zone,0_50_54_48_56] @wilderness_warning;
-[zone,0_50_54_56_56] @wilderness_warning;
-[zone,0_51_54_0_56] @wilderness_warning;
-[zone,0_51_54_8_56] @wilderness_warning;
-[zone,0_51_54_16_56] @wilderness_warning;
-[zone,0_51_54_24_56] @wilderness_warning;
-[zone,0_51_54_32_56] @wilderness_warning;
-[zone,0_51_54_40_56] @wilderness_warning;
-[zone,0_51_54_48_56] @wilderness_warning;
-[zone,0_51_54_56_56] @wilderness_warning;
-[zone,0_52_54_0_56] @wilderness_warning;
-[zone,0_52_54_8_56] @wilderness_warning;
-[zone,0_52_54_16_56] @wilderness_warning;
-[zone,0_52_54_24_56] @wilderness_warning;
-[zone,0_52_54_32_56] @wilderness_warning;
-[zone,0_52_54_40_56] @wilderness_warning;
-[zone,0_52_54_48_56] @wilderness_warning;
-[zone,0_52_54_56_56] @wilderness_warning;
-[zone,0_48_154_56_56] @wilderness_warning;
-
-[zoneexit,0_45_54_48_56] @wilderness_exit;
-[zoneexit,0_45_54_56_56] @wilderness_exit;
-[zoneexit,0_46_54_0_56] @wilderness_exit;
-[zoneexit,0_46_54_8_56] @wilderness_exit;
-[zoneexit,0_46_54_16_56] @wilderness_exit;
-[zoneexit,0_46_54_24_56] @wilderness_exit;
-[zoneexit,0_46_54_32_56] @wilderness_exit;
-[zoneexit,0_46_54_40_56] @wilderness_exit;
-[zoneexit,0_46_54_48_56] @wilderness_exit;
-[zoneexit,0_46_54_56_56] @wilderness_exit;
-[zoneexit,0_47_54_0_56] @wilderness_exit;
-[zoneexit,0_47_54_8_56] @wilderness_exit;
-[zoneexit,0_47_54_16_56] @wilderness_exit;
-[zoneexit,0_47_54_24_56] @wilderness_exit;
-[zoneexit,0_47_54_32_56] @wilderness_exit;
-[zoneexit,0_47_54_40_56] @wilderness_exit;
-[zoneexit,0_47_54_48_56] @wilderness_exit;
-[zoneexit,0_47_54_56_56] @wilderness_exit;
-[zoneexit,0_48_54_0_56] @wilderness_exit;
-[zoneexit,0_48_54_8_56] @wilderness_exit;
-[zoneexit,0_48_54_16_56] @wilderness_exit;
-[zoneexit,0_48_54_24_56] @wilderness_exit;
-[zoneexit,0_48_54_32_56] @wilderness_exit;
-[zoneexit,0_48_54_40_56] @wilderness_exit;
-[zoneexit,0_48_54_48_56] @wilderness_exit;
-[zoneexit,0_48_54_56_56] @wilderness_exit;
-[zoneexit,0_49_54_0_56] @wilderness_exit;
-[zoneexit,0_49_54_8_56] @wilderness_exit;
-[zoneexit,0_49_54_16_56] @wilderness_exit;
-[zoneexit,0_49_54_24_56] @wilderness_exit;
-[zoneexit,0_49_54_32_56] @wilderness_exit;
-[zoneexit,0_49_54_40_56] @wilderness_exit;
-[zoneexit,0_49_54_48_56] @wilderness_exit;
-[zoneexit,0_49_54_56_56] @wilderness_exit;
-[zoneexit,0_50_54_0_56] @wilderness_exit;
-[zoneexit,0_50_54_8_56] @wilderness_exit;
-[zoneexit,0_50_54_16_56] @wilderness_exit;
-[zoneexit,0_50_54_24_56] @wilderness_exit;
-[zoneexit,0_50_54_32_56] @wilderness_exit;
-[zoneexit,0_50_54_40_56] @wilderness_exit;
-[zoneexit,0_50_54_48_56] @wilderness_exit;
-[zoneexit,0_50_54_56_56] @wilderness_exit;
-[zoneexit,0_51_54_0_56] @wilderness_exit;
-[zoneexit,0_51_54_8_56] @wilderness_exit;
-[zoneexit,0_51_54_16_56] @wilderness_exit;
-[zoneexit,0_51_54_24_56] @wilderness_exit;
-[zoneexit,0_51_54_32_56] @wilderness_exit;
-[zoneexit,0_51_54_40_56] @wilderness_exit;
-[zoneexit,0_51_54_48_56] @wilderness_exit;
-[zoneexit,0_51_54_56_56] @wilderness_exit;
-[zoneexit,0_52_54_0_56] @wilderness_exit;
-[zoneexit,0_52_54_8_56] @wilderness_exit;
-[zoneexit,0_52_54_16_56] @wilderness_exit;
-[zoneexit,0_52_54_24_56] @wilderness_exit;
-[zoneexit,0_52_54_32_56] @wilderness_exit;
-[zoneexit,0_52_54_40_56] @wilderness_exit;
-[zoneexit,0_52_54_48_56] @wilderness_exit;
-[zoneexit,0_52_54_56_56] @wilderness_exit;
-[zoneexit,0_48_154_56_56] @wilderness_exit;
+[zone,0_45_54_48_56] queue(wilderness_warning, 0);
+[zone,0_45_54_56_56] queue(wilderness_warning, 0);
+[zone,0_46_54_0_56] queue(wilderness_warning, 0);
+[zone,0_46_54_8_56] queue(wilderness_warning, 0);
+[zone,0_46_54_16_56] queue(wilderness_warning, 0);
+[zone,0_46_54_24_56] queue(wilderness_warning, 0);
+[zone,0_46_54_32_56] queue(wilderness_warning, 0);
+[zone,0_46_54_40_56] queue(wilderness_warning, 0);
+[zone,0_46_54_48_56] queue(wilderness_warning, 0);
+[zone,0_46_54_56_56] queue(wilderness_warning, 0);
+[zone,0_47_54_0_56] queue(wilderness_warning, 0);
+[zone,0_47_54_8_56] queue(wilderness_warning, 0);
+[zone,0_47_54_16_56] queue(wilderness_warning, 0);
+[zone,0_47_54_24_56] queue(wilderness_warning, 0);
+[zone,0_47_54_32_56] queue(wilderness_warning, 0);
+[zone,0_47_54_40_56] queue(wilderness_warning, 0);
+[zone,0_47_54_48_56] queue(wilderness_warning, 0);
+[zone,0_47_54_56_56] queue(wilderness_warning, 0);
+[zone,0_48_54_0_56] queue(wilderness_warning, 0);
+[zone,0_48_54_8_56] queue(wilderness_warning, 0);
+[zone,0_48_54_16_56] queue(wilderness_warning, 0);
+[zone,0_48_54_24_56] queue(wilderness_warning, 0);
+[zone,0_48_54_32_56] queue(wilderness_warning, 0);
+[zone,0_48_54_40_56] queue(wilderness_warning, 0);
+[zone,0_48_54_48_56] queue(wilderness_warning, 0);
+[zone,0_48_54_56_56] queue(wilderness_warning, 0);
+[zone,0_49_54_0_56] queue(wilderness_warning, 0);
+[zone,0_49_54_8_56] queue(wilderness_warning, 0);
+[zone,0_49_54_16_56] queue(wilderness_warning, 0);
+[zone,0_49_54_24_56] queue(wilderness_warning, 0);
+[zone,0_49_54_32_56] queue(wilderness_warning, 0);
+[zone,0_49_54_40_56] queue(wilderness_warning, 0);
+[zone,0_49_54_48_56] queue(wilderness_warning, 0);
+[zone,0_49_54_56_56] queue(wilderness_warning, 0);
+[zone,0_50_54_0_56] queue(wilderness_warning, 0);
+[zone,0_50_54_8_56] queue(wilderness_warning, 0);
+[zone,0_50_54_16_56] queue(wilderness_warning, 0);
+[zone,0_50_54_24_56] queue(wilderness_warning, 0);
+[zone,0_50_54_32_56] queue(wilderness_warning, 0);
+[zone,0_50_54_40_56] queue(wilderness_warning, 0);
+[zone,0_50_54_48_56] queue(wilderness_warning, 0);
+[zone,0_50_54_56_56] queue(wilderness_warning, 0);
+[zone,0_51_54_0_56] queue(wilderness_warning, 0);
+[zone,0_51_54_8_56] queue(wilderness_warning, 0);
+[zone,0_51_54_16_56] queue(wilderness_warning, 0);
+[zone,0_51_54_24_56] queue(wilderness_warning, 0);
+[zone,0_51_54_32_56] queue(wilderness_warning, 0);
+[zone,0_51_54_40_56] queue(wilderness_warning, 0);
+[zone,0_51_54_48_56] queue(wilderness_warning, 0);
+[zone,0_51_54_56_56] queue(wilderness_warning, 0);
+[zone,0_52_54_0_56] queue(wilderness_warning, 0);
+[zone,0_52_54_8_56] queue(wilderness_warning, 0);
+[zone,0_52_54_16_56] queue(wilderness_warning, 0);
+[zone,0_52_54_24_56] queue(wilderness_warning, 0);
+[zone,0_52_54_32_56] queue(wilderness_warning, 0);
+[zone,0_52_54_40_56] queue(wilderness_warning, 0);
+[zone,0_52_54_48_56] queue(wilderness_warning, 0);
+[zone,0_52_54_56_56] queue(wilderness_warning, 0);
+[zone,0_48_154_56_56] queue(wilderness_warning, 0);

@@ -264,10 +264,12 @@ export default class GameMap {
                 const shape: number = info >> 2;
                 const angle: number = info & 0x3;
 
-                this.getZone(absoluteX, absoluteZ, actualLevel).addStaticLoc(new Loc(actualLevel, absoluteX, absoluteZ, width, length, EntityLifeCycle.RESPAWN, locId, shape, angle));
-
                 if (type.blockwalk) {
                     changeLocCollision(shape, angle, type.blockrange, length, width, type.active, absoluteX, absoluteZ, actualLevel, true);
+                }
+
+                if (type.active === 1) {
+                    this.getZone(absoluteX, absoluteZ, actualLevel).addStaticLoc(new Loc(actualLevel, absoluteX, absoluteZ, width, length, EntityLifeCycle.RESPAWN, locId, shape, angle));
                 }
             }
             locIdOffset = packet.gsmart();

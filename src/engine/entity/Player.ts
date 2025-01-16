@@ -189,6 +189,7 @@ export default class Player extends PathingEntity {
     // constructor properties
     username: string;
     username37: bigint;
+    hash64: bigint;
     displayName: string;
     body: number[] = [
         0, // hair
@@ -308,10 +309,11 @@ export default class Player extends PathingEntity {
 
     muted_until: Date | null = null;
 
-    constructor(username: string, username37: bigint) {
+    constructor(username: string, username37: bigint, hash64: bigint) {
         super(0, 3094, 3106, 1, 1, EntityLifeCycle.FOREVER, MoveRestrict.NORMAL, BlockWalk.NPC, MoveStrategy.SMART, InfoProt.PLAYER_FACE_COORD.id, InfoProt.PLAYER_FACE_ENTITY.id); // tutorial island.
         this.username = username;
         this.username37 = username37;
+        this.hash64 = hash64;
         this.displayName = toDisplayName(username);
         this.vars = new Int32Array(VarPlayerType.count);
         this.varsString = new Array(VarPlayerType.count);
@@ -858,7 +860,7 @@ export default class Player extends PathingEntity {
             return;
         }
 
-        if (this.target instanceof Obj && World.getObj(this.target.x, this.target.z, this.level, this.target.type, this.pid) === null) {
+        if (this.target instanceof Obj && World.getObj(this.target.x, this.target.z, this.level, this.target.type, this.hash64) === null) {
             this.clearInteraction();
             this.unsetMapFlag();
             return;
