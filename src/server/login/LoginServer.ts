@@ -7,6 +7,8 @@ import { db } from '#/db/query.js';
 
 import Environment from '#/util/Environment.js';
 import { printInfo } from '#/util/Logger.js';
+import { PlayerLoading } from '#/engine/entity/PlayerLoading.js';
+import Packet from '#/io/Packet.js';
 
 export default class LoginServer {
     private server: WebSocketServer;
@@ -96,7 +98,12 @@ export default class LoginServer {
 
                         // todo: record logout history
 
-                        fs.writeFileSync(`data/players/${username}.sav`, Buffer.from(save, 'base64'));
+                        const raw = Buffer.from(save, 'base64');
+                        if (PlayerLoading.verify(new Packet(raw))) {
+                            fs.writeFileSync(`data/players/${username}.sav`, raw);
+                        } else {
+                            console.error(username, 'Invalid save file');
+                        }
 
                         await db.updateTable('account').set({
                             logged_in: 0,
@@ -140,8 +147,8 @@ export default class LoginServer {
                 }
             });
 
-            socket.on('close', () => {});
-            socket.on('error', () => {});
+            socket.on('close', () => { });
+            socket.on('error', () => { });
         });
     }
 }

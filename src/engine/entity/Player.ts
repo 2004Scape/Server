@@ -181,9 +181,7 @@ export default class Player extends PathingEntity {
         sav.p1((this.publicChat << 4) | (this.privateChat << 2) | this.tradeDuel);
 
         sav.p4(Packet.getcrc(sav.data, 0, sav.pos));
-        const data = sav.data.subarray(0, sav.pos);
-        sav.release();
-        return data;
+        return sav.data.subarray(0, sav.pos);
     }
 
     // constructor properties

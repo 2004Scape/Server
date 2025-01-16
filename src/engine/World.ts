@@ -1696,14 +1696,31 @@ class World {
                 save = msg.save;
             }
 
-            const player = PlayerLoading.load(username, new Packet(save), client);
-            player.reconnecting = reconnecting;
-            player.staffModLevel = staffmodlevel;
-            player.lowMemory = lowMemory;
-            player.muted_until = muted_until ? new Date(muted_until) : null;
+            try {
+                const player = PlayerLoading.load(username, new Packet(save), client);
 
-            this.newPlayers.add(player);
-            client.state = 1;
+                player.reconnecting = reconnecting;
+                player.staffModLevel = staffmodlevel;
+                player.lowMemory = lowMemory;
+                player.muted_until = muted_until ? new Date(muted_until) : null;
+
+                this.newPlayers.add(player);
+                client.state = 1;
+            } catch (err) {
+                if (err instanceof Error) {
+                    console.error(username, err.message);
+                }
+
+                // bad save :( the player won't be happy
+                client.send(Uint8Array.from([ 13 ]));
+                client.close();
+
+                // todo: maybe we can tell the login thread to swap for the last-good save?
+                this.loginThread.postMessage({
+                    type: 'player_force_logout',
+                    username: username
+                });
+            }
         } else if (type === 'player_logout') {
             const { username, success } = msg;
             if (!this.logoutRequests.has(username)) {
