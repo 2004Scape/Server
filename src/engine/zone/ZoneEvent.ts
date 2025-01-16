@@ -3,12 +3,12 @@ import ZoneMessage from '#/network/server/ZoneMessage.js';
 
 export default class ZoneEvent {
     readonly type: ZoneEventType;
-    readonly receiverId: number;
+    readonly receiverHash64: bigint;
     readonly message: ZoneMessage;
 
-    constructor(type: ZoneEventType, receiverId: number, message: ZoneMessage) {
+    constructor(type: ZoneEventType, receiverHash64: bigint, message: ZoneMessage) {
         this.type = type;
-        this.receiverId = receiverId;
+        this.receiverHash64 = receiverHash64;
         this.message = message;
     }
 }

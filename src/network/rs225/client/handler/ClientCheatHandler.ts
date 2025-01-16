@@ -54,7 +54,7 @@ export default class ClientCheatHandler extends MessageHandler<ClientCheat> {
                     for (let x = player.x - 500; x < player.x + 500; x++) {
                         for (let z = player.z - 500; z < player.z + 500; z++) {
                             // using player.pid will result in individual packets rather than using zone_enclosed
-                            World.addObj(new Obj(player.level, x, z, EntityLifeCycle.DESPAWN, 1333, 1), -1, 100);
+                            World.addObj(new Obj(player.level, x, z, EntityLifeCycle.DESPAWN, 1333, 1), Obj.NO_RECEIVER, 100);
                         }
                     }
                 }
