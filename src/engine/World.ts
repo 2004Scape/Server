@@ -133,7 +133,7 @@ class World {
 
     tickRate: number = World.TICKRATE; // speeds up when we're processing server shutdown
     currentTick: number = 0; // the current tick of the game world.
-    nextTick: number = Date.now() + World.TICKRATE; // the next time the game world should tick.
+    nextTick: number = 0; // the next time the game world should tick.
     shutdownTick: number = -1;
     pmCount: number = 1; // can't be 0 as clients will ignore the pm, their array is filled with 0 as default
 
@@ -356,6 +356,7 @@ class World {
         }
 
         if (startCycle) {
+            this.nextTick = Date.now() + World.TICKRATE;
             this.cycle();
         }
     }
