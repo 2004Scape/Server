@@ -1,5 +1,11 @@
 [login,_]
 mes("Welcome to RuneScape.");
+if (map_production = true) {
+    mes("The server is currently in the Alpha testing phase!");
+    mes("Character progression will reset when Beta testing begins, currently scheduled");
+    mes("for February 1st, 2025. Your progress will be permanent after this date.");
+    mes("More information can be found on the website under Latest News and Updates.");
+}
 cam_reset;
 
 %music_mode = 1; // set to auto on login
