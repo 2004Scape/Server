@@ -157,25 +157,41 @@ class World {
         if (Environment.STANDALONE_BUNDLE) {
             if (this.loginThread instanceof Worker) {
                 this.loginThread.onmessage = msg => {
-                    this.onLoginMessage(msg.data);
+                    try {
+                        this.onLoginMessage(msg.data);
+                    } catch (err) {
+                        console.error(err);
+                    }
                 };
             }
 
             if (this.friendThread instanceof Worker) {
                 this.friendThread.onmessage = msg => {
-                    this.onFriendMessage(msg.data);
+                    try {
+                        this.onFriendMessage(msg.data);
+                    } catch (err) {
+                        console.error(err);
+                    }
                 };
             }
         } else {
             if (this.loginThread instanceof NodeWorker) {
                 this.loginThread.on('message', msg => {
-                    this.onLoginMessage(msg);
+                    try {
+                        this.onLoginMessage(msg);
+                    } catch (err) {
+                        console.error(err);
+                    }
                 });
             }
 
             if (this.friendThread instanceof NodeWorker) {
                 this.friendThread.on('message', msg => {
-                    this.onFriendMessage(msg);
+                    try {
+                        this.onFriendMessage(msg);
+                    } catch (err) {
+                        console.error(err);
+                    }
                 });
             }
         }
@@ -1573,33 +1589,41 @@ class World {
 
         if (this.devThread instanceof NodeWorker) {
             this.devThread.on('message', msg => {
-                if (msg.type === 'dev_reload') {
-                    this.reload();
-                } else if (msg.type === 'dev_failure') {
-                    if (msg.error) {
-                        console.error(msg.error);
+                try {
+                    if (msg.type === 'dev_reload') {
+                        this.reload();
+                    } else if (msg.type === 'dev_failure') {
+                        if (msg.error) {
+                            console.error(msg.error);
 
-                        this.broadcastMes(msg.error.replaceAll('data/src/scripts/', ''));
-                        this.broadcastMes('Check the console for more information.');
-                    }
-                } else if (msg.type === 'dev_progress') {
-                    if (msg.broadcast) {
-                        console.log(msg.broadcast);
+                            this.broadcastMes(msg.error.replaceAll('data/src/scripts/', ''));
+                            this.broadcastMes('Check the console for more information.');
+                        }
+                    } else if (msg.type === 'dev_progress') {
+                        if (msg.broadcast) {
+                            console.log(msg.broadcast);
 
-                        this.broadcastMes(msg.broadcast);
-                    } else if (msg.text) {
-                        console.log(msg.text);
+                            this.broadcastMes(msg.broadcast);
+                        } else if (msg.text) {
+                            console.log(msg.text);
+                        }
                     }
+                } catch (err) {
+                    console.error(err);
                 }
             });
 
             // todo: catch all cases where it might exit instead of throwing an error, so we aren't
             // re-initializing the file watchers after errors
             this.devThread.on('exit', () => {
-                // todo: remove this mes after above the todo above is addressed
-                this.broadcastMes('Error while rebuilding - see console for more info.');
+                try {
+                    // todo: remove this mes after above the todo above is addressed
+                    this.broadcastMes('Error while rebuilding - see console for more info.');
 
-                this.createDevThread();
+                    this.createDevThread();
+                } catch (err) {
+                    console.error(err);
+                }
             });
         }
     }
