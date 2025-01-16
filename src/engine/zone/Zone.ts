@@ -167,7 +167,7 @@ export default class Zone {
         // full update necessary to clear client zone memory
         player.write(new UpdateZoneFullFollows(this.x, this.z, player.originX, player.originZ));
         for (const obj of this.getAllObjsUnsafe(true)) {
-            if (obj.lastLifecycleTick === currentTick || (obj.receiverHash64 !== Obj.NO_RECEIVER && obj.receiverHash64 !== player.hash64)) {
+            if (obj.lastLifecycleTick === currentTick || (obj.receiver64 !== Obj.NO_RECEIVER && obj.receiver64 !== player.hash64)) {
                 continue;
             }
             player.write(new UpdateZonePartialFollows(this.x, this.z, player.originX, player.originZ));
@@ -212,7 +212,7 @@ export default class Zone {
         }
         player.write(new UpdateZonePartialFollows(this.x, this.z, player.originX, player.originZ));
         for (const event of this.follows()) {
-            if (event.receiverHash64 !== Obj.NO_RECEIVER && event.receiverHash64 !== player.hash64) {
+            if (event.receiver64 !== Obj.NO_RECEIVER && event.receiver64 !== player.hash64) {
                 continue;
             }
             player.write(event.message);
@@ -285,7 +285,7 @@ export default class Zone {
 
     // ---- objs ----
 
-    addObj(obj: Obj, receiverHash64: bigint): void {
+    addObj(obj: Obj, receiver64: bigint): void {
         const coord: number = CoordGrid.packZoneCoord(obj.x, obj.z);
         if (obj.lifecycle === EntityLifeCycle.DESPAWN) {
             this.objs.addLast(coord, obj);
@@ -293,38 +293,38 @@ export default class Zone {
 
         this.objs.sortStack(coord);
 
-        if (obj.lifecycle === EntityLifeCycle.RESPAWN || receiverHash64 === Obj.NO_RECEIVER) {
-            this.queueEvent(obj, new ZoneEvent(ZoneEventType.ENCLOSED, receiverHash64, new ObjAdd(coord, obj.type, obj.count)));
+        if (obj.lifecycle === EntityLifeCycle.RESPAWN || receiver64 === Obj.NO_RECEIVER) {
+            this.queueEvent(obj, new ZoneEvent(ZoneEventType.ENCLOSED, receiver64, new ObjAdd(coord, obj.type, obj.count)));
         } else if (obj.lifecycle === EntityLifeCycle.DESPAWN) {
-            this.queueEvent(obj, new ZoneEvent(ZoneEventType.FOLLOWS, receiverHash64, new ObjAdd(coord, obj.type, obj.count)));
+            this.queueEvent(obj, new ZoneEvent(ZoneEventType.FOLLOWS, receiver64, new ObjAdd(coord, obj.type, obj.count)));
         }
     }
 
-    revealObj(obj: Obj, receiverHash64: bigint): void {
+    revealObj(obj: Obj, receiver64: bigint): void {
         const objType: ObjType = ObjType.get(obj.type);
         if (!(objType.tradeable && (objType.members && Environment.NODE_MEMBERS || !objType.members))) {
             obj.reveal = -1;
             return;
         }
 
-        obj.receiverHash64 = Obj.NO_RECEIVER;
+        obj.receiver64 = Obj.NO_RECEIVER;
         obj.reveal = -1;
         obj.lastChange = -1;
 
         const coord: number = CoordGrid.packZoneCoord(obj.x, obj.z);
         this.objs.sortStack(coord);
 
-        this.queueEvent(obj, new ZoneEvent(ZoneEventType.ENCLOSED, receiverHash64, new ObjReveal(coord, obj.type, obj.count, World.getPlayerByHash64(receiverHash64)?.pid ?? 0)));
+        this.queueEvent(obj, new ZoneEvent(ZoneEventType.ENCLOSED, receiver64, new ObjReveal(coord, obj.type, obj.count, World.getPlayerByHash64(receiver64)?.pid ?? 0)));
     }
 
-    changeObj(obj: Obj, receiverHash64: bigint, oldCount: number, newCount: number): void {
+    changeObj(obj: Obj, receiver64: bigint, oldCount: number, newCount: number): void {
         obj.count = newCount;
         obj.lastChange = World.currentTick;
 
         const coord: number = CoordGrid.packZoneCoord(obj.x, obj.z);
         this.objs.sortStack(coord);
 
-        this.queueEvent(obj, new ZoneEvent(ZoneEventType.FOLLOWS, receiverHash64, new ObjCount(coord, obj.type, oldCount, newCount)));
+        this.queueEvent(obj, new ZoneEvent(ZoneEventType.FOLLOWS, receiver64, new ObjCount(coord, obj.type, oldCount, newCount)));
     }
 
     removeObj(obj: Obj): void {
@@ -337,7 +337,7 @@ export default class Zone {
         this.clearQueuedEvents(obj);
 
         if (obj.lastLifecycleTick !== World.currentTick) {
-            if (obj.lifecycle === EntityLifeCycle.RESPAWN || obj.receiverHash64 === Obj.NO_RECEIVER) {
+            if (obj.lifecycle === EntityLifeCycle.RESPAWN || obj.receiver64 === Obj.NO_RECEIVER) {
                 this.queueEvent(obj, new ZoneEvent(ZoneEventType.ENCLOSED, Obj.NO_RECEIVER, new ObjDel(coord, obj.type)));
             } else if (obj.lifecycle === EntityLifeCycle.DESPAWN) {
                 this.queueEvent(obj, new ZoneEvent(ZoneEventType.FOLLOWS, Obj.NO_RECEIVER, new ObjDel(coord, obj.type)));
@@ -345,18 +345,18 @@ export default class Zone {
         }
     }
 
-    getObj(x: number, z: number, type: number, receiverHash64: bigint): Obj | null {
+    getObj(x: number, z: number, type: number, receiver64: bigint): Obj | null {
         for (const obj of this.getObjsSafe(CoordGrid.packZoneCoord(x, z))) {
-            if (!((obj.receiverHash64 !== Obj.NO_RECEIVER && obj.receiverHash64 !== receiverHash64) || obj.type !== type)) {
+            if (!((obj.receiver64 !== Obj.NO_RECEIVER && obj.receiver64 !== receiver64) || obj.type !== type)) {
                 return obj;
             }
         }
         return null;
     }
 
-    getObjOfReceiver(x: number, z: number, type: number, receiverHash64: bigint): Obj | null {
+    getObjOfReceiver(x: number, z: number, type: number, receiver64: bigint): Obj | null {
         for (const obj of this.getObjsSafe(CoordGrid.packZoneCoord(x, z))) {
-            if (!((obj.receiverHash64 !== receiverHash64) || obj.type !== type)) {
+            if (!((obj.receiver64 !== receiver64) || obj.type !== type)) {
                 return obj;
             }
         }

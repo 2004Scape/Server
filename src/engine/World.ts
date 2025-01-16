@@ -1228,12 +1228,12 @@ class World {
         return this.gameMap.getZone(x, z, level).getLoc(x, z, locId);
     }
 
-    getObj(x: number, z: number, level: number, objId: number, receiverHash64: bigint): Obj | null {
-        return this.gameMap.getZone(x, z, level).getObj(x, z, objId, receiverHash64);
+    getObj(x: number, z: number, level: number, objId: number, receiver64: bigint): Obj | null {
+        return this.gameMap.getZone(x, z, level).getObj(x, z, objId, receiver64);
     }
 
-    getObjOfReceiver(x: number, z: number, level: number, objId: number, receiverHash64: bigint): Obj | null {
-        return this.gameMap.getZone(x, z, level).getObjOfReceiver(x, z, objId, receiverHash64);
+    getObjOfReceiver(x: number, z: number, level: number, objId: number, receiver64: bigint): Obj | null {
+        return this.gameMap.getZone(x, z, level).getObjOfReceiver(x, z, objId, receiver64);
     }
 
     trackZone(tick: number, zone: Zone): void {
@@ -1286,30 +1286,30 @@ class World {
         this.trackZone(this.currentTick, zone);
     }
 
-    addObj(obj: Obj, receiverHash64: bigint, duration: number): void {
+    addObj(obj: Obj, receiver64: bigint, duration: number): void {
         // printDebug(`[World] addObj => name: ${ObjType.get(obj.type).name}, receiverId: ${receiverId}, duration: ${duration}`);
         // check if we need to changeobj first.
         if (ObjType.get(obj.type).stackable && obj.lifecycle === EntityLifeCycle.DESPAWN) {
-            const existing = this.getObjOfReceiver(obj.x, obj.z, obj.level, obj.type, receiverHash64);
+            const existing = this.getObjOfReceiver(obj.x, obj.z, obj.level, obj.type, receiver64);
             if (existing && existing.lifecycle === EntityLifeCycle.DESPAWN) {
                 const nextCount = obj.count + existing.count;
                 if (nextCount <= Inventory.STACK_LIMIT) {
                     // if an obj of the same type exists and is stackable and have the same receiver, then we merge them.
-                    this.changeObj(existing, receiverHash64, nextCount);
+                    this.changeObj(existing, receiver64, nextCount);
                     return;
                 }
             }
         }
         const zone: Zone = this.gameMap.getZone(obj.x, obj.z, obj.level);
-        zone.addObj(obj, receiverHash64);
-        if (receiverHash64 !== Obj.NO_RECEIVER) {
+        zone.addObj(obj, receiver64);
+        if (receiver64 !== Obj.NO_RECEIVER) {
             // objs with a receiver always attempt to reveal 100 ticks after being dropped.
             // items that can't be revealed (untradable, members obj in f2p) will be skipped in revealObj
             const reveal: number = this.currentTick + Obj.REVEAL;
             obj.setLifeCycle(reveal);
             this.trackZone(reveal, zone);
             this.trackZone(this.currentTick, zone);
-            obj.receiverHash64 = receiverHash64;
+            obj.receiver64 = receiver64;
             obj.reveal = duration;
         } else {
             obj.setLifeCycle(this.currentTick + duration);
@@ -1323,7 +1323,7 @@ class World {
         const duration: number = obj.reveal;
         const change: number = obj.lastChange;
         const zone: Zone = this.gameMap.getZone(obj.x, obj.z, obj.level);
-        zone.revealObj(obj, obj.receiverHash64);
+        zone.revealObj(obj, obj.receiver64);
         // objs next life cycle always starts from the last time they changed + the inputted duration.
         // accounting for reveal time here.
         const nextLifecycle: number = (change !== -1 ? (Obj.REVEAL - (this.currentTick - change)) : 0) + this.currentTick + duration;
@@ -1332,10 +1332,10 @@ class World {
         this.trackZone(this.currentTick, zone);
     }
 
-    changeObj(obj: Obj, receiverHash64: bigint, newCount: number): void {
+    changeObj(obj: Obj, receiver64: bigint, newCount: number): void {
         // printDebug(`[World] changeObj => name: ${ObjType.get(obj.type).name}, receiverId: ${receiverId}, newCount: ${newCount}`);
         const zone: Zone = this.gameMap.getZone(obj.x, obj.z, obj.level);
-        zone.changeObj(obj, receiverHash64, obj.count, newCount);
+        zone.changeObj(obj, receiver64, obj.count, newCount);
         this.trackZone(this.currentTick, zone);
     }
 

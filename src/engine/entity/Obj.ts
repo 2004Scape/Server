@@ -13,7 +13,7 @@ export default class Obj extends NonPathingEntity {
     count: number;
 
     // runtime
-    receiverHash64: bigint = Obj.NO_RECEIVER;
+    receiver64: bigint = Obj.NO_RECEIVER;
     reveal: number = -1;
     lastChange: number = -1;
 

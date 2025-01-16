@@ -149,7 +149,7 @@ const ObjOps: CommandHandlers = {
                 continue;
             }
 
-            if (o.receiverHash64 !== Obj.NO_RECEIVER && o.receiverHash64 !== state.activePlayer.hash64) {
+            if (o.receiver64 !== Obj.NO_RECEIVER && o.receiver64 !== state.activePlayer.hash64) {
                 continue;
             }
 
