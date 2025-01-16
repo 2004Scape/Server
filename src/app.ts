@@ -59,10 +59,14 @@ function safeExit() {
 
     exiting = true;
 
-    if (Environment.NODE_PRODUCTION) {
-        World.rebootTimer(Environment.NODE_KILLTIMER as number);
-    } else {
-        World.rebootTimer(0);
+    try {
+        if (Environment.NODE_PRODUCTION) {
+            World.rebootTimer(Environment.NODE_KILLTIMER as number);
+        } else {
+            World.rebootTimer(0);
+        }
+    } catch (err) {
+        console.error(err);
     }
 }
 

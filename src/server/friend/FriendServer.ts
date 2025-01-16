@@ -61,10 +61,10 @@ export class FriendServer {
             let world: number | null = null;
 
             socket.on('message', async (buf: Buffer) => {
-                const message = JSON.parse(buf.toString());
-                const { type, _replyTo } = message;
-
                 try {
+                    const message = JSON.parse(buf.toString());
+                    const { type, _replyTo } = message;
+
                     if (type === FriendsClientOpcodes.WORLD_CONNECT) {
                         if (world !== null) {
                             // console.error('[Friends]: Received WORLD_CONNECT after already connected');

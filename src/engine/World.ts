@@ -133,7 +133,7 @@ class World {
 
     tickRate: number = World.TICKRATE; // speeds up when we're processing server shutdown
     currentTick: number = 0; // the current tick of the game world.
-    nextTick: number = Date.now() + World.TICKRATE; // the next time the game world should tick.
+    nextTick: number = 0; // the next time the game world should tick.
     shutdownTick: number = -1;
     pmCount: number = 1; // can't be 0 as clients will ignore the pm, their array is filled with 0 as default
 
@@ -157,25 +157,41 @@ class World {
         if (Environment.STANDALONE_BUNDLE) {
             if (this.loginThread instanceof Worker) {
                 this.loginThread.onmessage = msg => {
-                    this.onLoginMessage(msg.data);
+                    try {
+                        this.onLoginMessage(msg.data);
+                    } catch (err) {
+                        console.error(err);
+                    }
                 };
             }
 
             if (this.friendThread instanceof Worker) {
                 this.friendThread.onmessage = msg => {
-                    this.onFriendMessage(msg.data);
+                    try {
+                        this.onFriendMessage(msg.data);
+                    } catch (err) {
+                        console.error(err);
+                    }
                 };
             }
         } else {
             if (this.loginThread instanceof NodeWorker) {
                 this.loginThread.on('message', msg => {
-                    this.onLoginMessage(msg);
+                    try {
+                        this.onLoginMessage(msg);
+                    } catch (err) {
+                        console.error(err);
+                    }
                 });
             }
 
             if (this.friendThread instanceof NodeWorker) {
                 this.friendThread.on('message', msg => {
-                    this.onFriendMessage(msg);
+                    try {
+                        this.onFriendMessage(msg);
+                    } catch (err) {
+                        console.error(err);
+                    }
                 });
             }
         }
@@ -356,6 +372,7 @@ class World {
         }
 
         if (startCycle) {
+            this.nextTick = Date.now() + World.TICKRATE;
             this.cycle();
         }
     }
@@ -1572,33 +1589,41 @@ class World {
 
         if (this.devThread instanceof NodeWorker) {
             this.devThread.on('message', msg => {
-                if (msg.type === 'dev_reload') {
-                    this.reload();
-                } else if (msg.type === 'dev_failure') {
-                    if (msg.error) {
-                        console.error(msg.error);
+                try {
+                    if (msg.type === 'dev_reload') {
+                        this.reload();
+                    } else if (msg.type === 'dev_failure') {
+                        if (msg.error) {
+                            console.error(msg.error);
 
-                        this.broadcastMes(msg.error.replaceAll('data/src/scripts/', ''));
-                        this.broadcastMes('Check the console for more information.');
-                    }
-                } else if (msg.type === 'dev_progress') {
-                    if (msg.broadcast) {
-                        console.log(msg.broadcast);
+                            this.broadcastMes(msg.error.replaceAll('data/src/scripts/', ''));
+                            this.broadcastMes('Check the console for more information.');
+                        }
+                    } else if (msg.type === 'dev_progress') {
+                        if (msg.broadcast) {
+                            console.log(msg.broadcast);
 
-                        this.broadcastMes(msg.broadcast);
-                    } else if (msg.text) {
-                        console.log(msg.text);
+                            this.broadcastMes(msg.broadcast);
+                        } else if (msg.text) {
+                            console.log(msg.text);
+                        }
                     }
+                } catch (err) {
+                    console.error(err);
                 }
             });
 
             // todo: catch all cases where it might exit instead of throwing an error, so we aren't
             // re-initializing the file watchers after errors
             this.devThread.on('exit', () => {
-                // todo: remove this mes after above the todo above is addressed
-                this.broadcastMes('Error while rebuilding - see console for more info.');
+                try {
+                    // todo: remove this mes after above the todo above is addressed
+                    this.broadcastMes('Error while rebuilding - see console for more info.');
 
-                this.createDevThread();
+                    this.createDevThread();
+                } catch (err) {
+                    console.error(err);
+                }
             });
         }
     }
@@ -1671,14 +1696,31 @@ class World {
                 save = msg.save;
             }
 
-            const player = PlayerLoading.load(username, new Packet(save), client);
-            player.reconnecting = reconnecting;
-            player.staffModLevel = staffmodlevel;
-            player.lowMemory = lowMemory;
-            player.muted_until = muted_until ? new Date(muted_until) : null;
+            try {
+                const player = PlayerLoading.load(username, new Packet(save), client);
 
-            this.newPlayers.add(player);
-            client.state = 1;
+                player.reconnecting = reconnecting;
+                player.staffModLevel = staffmodlevel;
+                player.lowMemory = lowMemory;
+                player.muted_until = muted_until ? new Date(muted_until) : null;
+
+                this.newPlayers.add(player);
+                client.state = 1;
+            } catch (err) {
+                if (err instanceof Error) {
+                    console.error(username, err.message);
+                }
+
+                // bad save :( the player won't be happy
+                client.send(Uint8Array.from([ 13 ]));
+                client.close();
+
+                // todo: maybe we can tell the login thread to swap for the last-good save?
+                this.loginThread.postMessage({
+                    type: 'player_force_logout',
+                    username: username
+                });
+            }
         } else if (type === 'player_logout') {
             const { username, success } = msg;
             if (!this.logoutRequests.has(username)) {

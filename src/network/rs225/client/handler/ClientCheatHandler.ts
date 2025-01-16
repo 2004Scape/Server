@@ -375,30 +375,27 @@ export default class ClientCheatHandler extends MessageHandler<ClientCheat> {
                     return false;
                 }
 
-                const other = World.getPlayerByUsername(args[0]);
-                if (!other) {
-                    player.messageGame(`${args[0]} is not logged in.`);
-                    return false;
-                }
-
+                const username = args[0];
                 const minutes = Math.max(0, tryParseInt(args[1], 60));
 
-                World.removePlayer(other);
-                World.notifyPlayerBan(player.username, other.username, Date.now() + (minutes * 60 * 1000));
+                World.notifyPlayerBan(player.username, username, Date.now() + (minutes * 60 * 1000));
+
+                const other = World.getPlayerByUsername(username);
+                if (other) {
+                    World.removePlayer(other);
+                }
             } else if (cmd === 'kick') {
                 if (args.length < 1) {
                     // ::kick <username>
                     return false;
                 }
 
-                const other = World.getPlayerByUsername(args[0]);
-                if (!other) {
-                    player.messageGame(`${args[0]} is not logged in.`);
-                    return false;
-                }
+                const username = args[0];
 
-                // not safe, but when you need them gone...
-                World.removePlayer(other);
+                const other = World.getPlayerByUsername(username);
+                if (other) {
+                    World.removePlayer(other);
+                }
             }
         }
 
