@@ -624,9 +624,9 @@ param=strengthbonus,50
 param=attackrate,5
 param=ready_baseanim,human_staffready
 param=crushattack_anim,human_blunt_crush
-param=defend_anim,human_ibanstaff_2h_defend
+// param=defend_anim,human_ibanstaff_2h_defend
 // param=crushattack_anim,earthwarrior_chop
-// param=defend_anim,human_blunt_defend1
+param=defend_anim,human_blunt_defend1
 // osrs use attack seq_401 and defend seq_403 + the weapon was already 1 handed in 2006
 tradeable=no
 
