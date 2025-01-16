@@ -39,7 +39,7 @@ else {
 [label,legends_guard_what]
 ~chatplayer("<p,quiz>What is this place?");
 ~chatnpc("<p,neutral>This is the Legends Guild, <text_gender("sir", "ma'am")>!");
-~chatnpc("<p,neutral>Legendary Gielinor citizens are invited on a quest in order to become members of the guild.");
+~chatnpc("<p,neutral>Legendary RuneScape citizens are invited on a quest in order to become members of the guild.");
 @multi2("Can I go on the quest?", legends_guard_eligible,
         "What kind of quest is it?", legends_guard_quest_info);
 
@@ -174,7 +174,7 @@ else {
 
 [label,legends_guard_how]
 ~chatplayer("<p,quiz>How do I get in here?");
-~chatnpc("<p,neutral>Well <text_gender("sir", "ma'am")>, you'll need to be a legendary citizen of Gielinor.");
+~chatnpc("<p,neutral>Well <text_gender("sir", "ma'am")>, you'll need to be a legendary citizen of RuneScape.");
 ~chatnpc("<p,neutral>If you want to use the Legends Hall, you'll be invited to complete a quest. Once you have completed that quest, you'll be a fully fledged member of the Guild.");
 @multi3("What is this place?", legends_guard_what,
         "Can I speak to someone in charge?", legends_guard_charge,

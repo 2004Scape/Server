@@ -7,6 +7,31 @@ mes("Gujuo approaches...");
 npc_setmode(none);
 @gujuo_start;
 
+[opnpcu,gujuo]
+switch_obj(last_useitem) {
+    // todo: add things he does need
+    case gold_bowl :
+        if (%legends_progress < ^legends_asked_gujuo_holy_water) {
+            // shouldn't be possible under normal circumstances
+            ~displaymessage(^dm_default);
+            return;
+        }
+        // slightly different dialogue here, full stop intentional
+        ~chatnpc("<p,neutral>Aha Bwana, well done, you have made the golden bowl. Would you like me to show you how to bless it.");
+        def_int $choice = ~p_choice2("Yes, I'd like to bless my gold bowl.", 1, "No thanks, I'll wait.", 2);
+        if ($choice = 1) {
+            ~chatplayer("<p,neutral>Yes, I'd like to bless my gold bowl.");
+            @gujuo_bless_bowl;
+        }
+        else {
+            ~chatplayer("<p,neutral>No thanks, I'll wait.");
+            ~chatnpc("<p,neutral>Very well, let me know when you want to try.");
+            @gujuo_how_goes_ungadulu;
+        }
+    case default : 
+        ~chatnpc("<p,neutral>Sorry, but I don't need that Bwana.");
+}
+
 [label,gujuo_start]
 if (p_finduid(uid) = false) {
     return;
@@ -17,33 +42,113 @@ if (%legends_progress = ^legends_got_bullroarer | %legends_progress = ^legends_s
             "Sorry, it was a mistake?", gujuo_sorry);
 }
 else if (%legends_progress >= ^legends_accepted_rescue_ungadulu) {
-    ~chatnpc("<p,neutral>How goes your quest to release Ungadulu Bwana?");
-    switch_int(%legends_progress) {
-        case ^legends_accepted_rescue_ungadulu :
-            @multi2("I can't find the caves...", gujuo_cant_find,
+    if (inv_total(inv, gold_bowl) > 0) {
+        ~chatnpc("<p,neutral>Greetings Bwana. Ah I see you have the golden bowl! Would you like me to show you how to bless it?");
+        def_int $choice = ~p_choice2("Yes, I'd like you to bless my gold bowl.", 1, "No thanks, I need help with something else.", 2);
+        if ($choice = 1) {
+            ~chatplayer("<p,neutral>Yes, I'd like you to bless my gold bowl.");
+            @gujuo_bless_bowl;
+        }
+        // selecting the no option skips straight to ungadulu question
+    }
+    @gujuo_how_goes_ungadulu;
+}
+
+[label,gujuo_how_goes_ungadulu]
+~chatnpc("<p,neutral>How goes your quest to release Ungadulu Bwana?");
+switch_int(%legends_progress) {
+    case ^legends_accepted_rescue_ungadulu :
+        @multi2("I can't find the caves...", gujuo_cant_find,
+                "Ok thanks for your help.", gujuo_thanks);
+    case ^legends_found_entrance :
+        if (testbit(%legends_map_runes, ^legends_entered_cavern) = true) {
+            @multi2("Ungadulu is trapped in some magical flames!", gujuo_ungadulu_trapped,
+                    "I'm not sure what to do.", gujuo_idk);
+        }
+        else {
+            @multi2("I've found the caves, but I don't know what to do.", gujuo_found_but_idk,
                     "Ok thanks for your help.", gujuo_thanks);
-        case ^legends_found_entrance :
-            if (testbit(%legends_map_runes, ^legends_entered_cavern) = true) {
-                @multi2("Ungadulu is trapped in some magical flames!", gujuo_ungadulu_trapped,
-                        "I'm not sure what to do.", gujuo_idk);
-            }
-            else {
-                @multi2("I've found the caves, but I don't know what to do.", gujuo_found_but_idk,
-                        "Ok thanks for your help.", gujuo_thanks);
-            }
-        case ^legends_spoke_ungadulu :
+        }
+    case ^legends_spoke_ungadulu, ^legends_asked_gujuo_holy_water, ^legends_filled_bowl :
+        if (testbit(%legends_map_runes, ^legends_ungadulu_called_vacu) = true) {
             @multi5("Ungadulu looks a little strange.", gujuo_ungadulu_strange,
                     "I'm not sure what to do.", gujuo_idk,
                     "I need some pure water to douse some magic flames.", gujuo_pure_water,
                     "Ungadulu called me a 'Vacu'", gujuo_vacu,
                     "Ok thanks for your help.", gujuo_thanks);
+        }
+        else if (testbit(%legends_map_runes, ^legends_asked_ungadulu_where) = true) {
+            @multi5("Ungadulu looks a little strange.", gujuo_ungadulu_strange,
+                    "I'm not sure what to do.", gujuo_idk,
+                    "Sorry for bothering you.", gujuo_sorry_bothering,
+                    "I need some pure water to douse some magic flames.", gujuo_pure_water,
+                    "Ok thanks for your help.", gujuo_thanks);
+        }
+        else {
+            @multi5("Ungadulu looks a little strange.", gujuo_ungadulu_strange,
+                    "Sorry for bothering you.", gujuo_sorry_bothering,
+                    "I'm not sure what to do.", gujuo_idk,
+                    "Ungadulu mumbled something about 'pure' water?", gujuo_ungadulu_mumbled,
+                    "Ok thanks for your help.", gujuo_thanks);
+        }
+}
+
+[label,gujuo_bless_bowl]
+if (stat(prayer) < 42) {
+    ~chatnpc("<p,neutral>Bwana, I am very sorry, but you are too inexperienced to bless this bowl.");
+    // dialogue ends here
+    mes("You need a Prayer level of at least 42 to complete this task.");
+    return;
+}
+if (inv_total(inv, blessed_gold_bowl) > 0) {
+    // says hello again
+    ~chatnpc("<p,neutral>Hello Bwana, I see that you already have a blessed golden bowl. Have you fallen under the spell of the metal of the sun? Alas, I cannot allow you to bless the vessel if you're possessed by greed.");
+    return;
+}
+~chatnpc("<p,neutral>Very well Bwana...");
+if_close;
+mes("Gujuo places the bowl on the floor in front of you, and leads you into a deep");
+mes("meditation...");
+p_delay(3);
+npc_say("Ohhhhhmmmmmm");
+p_delay(3);
+say("Oooooommmmmmmmmm");
+p_delay(3);
+npc_say("Ohhhhhmmmmmm");
+p_delay(3);
+say("Oooooohhhhmmmmmmmmmm");
+p_delay(3);
+npc_say("Ohhhhhmmmmmm");
+p_delay(3);
+// guess but it seems pretty common
+if(random(2) = 0) {
+    ~mesbox("You were not able to go into a deep enough trance. You lose some prayer...");
+    stat_sub(prayer, 5, 0);
+    ~chatnpc("<p,neutral>Would you like to try again?");
+    // this choice has slightly different wording ("like to" vs "like you to") - intentional
+    def_int $choice = ~p_choice2("Yes, I'd like to bless my gold bowl.", 1, "No thanks, I'll wait.", 2);
+    if ($choice = 1) {
+        ~chatplayer("<p,neutral>Yes, I'd like to bless my gold bowl.");
+        @gujuo_bless_bowl;
     }
+    else {
+        ~chatplayer("<p,neutral>No thanks, I'll wait.");
+        ~chatnpc("<p,neutral>Very well, let me know when you want to try.");
+        @gujuo_how_goes_ungadulu;
+    }
+}
+else {
+    inv_del(inv, gold_bowl, 1);
+    inv_add(inv, blessed_gold_bowl, 1);
+    ~objbox(blessed_gold_bowl, "You're surrounded by a totally peaceful aura as you bring the blessings of your god down on the bowl.", 250, 0, divide(^objbox_height, 2));
+    ~objbox(blessed_gold_bowl, "The bowl is blessed!", 250, 0, divide(^objbox_height, 2));
+    @gujuo_how_goes_ungadulu;
 }
 
 [label,gujuo_ungadulu_trapped]
-~chatplayer("<p,neutral>I can't find the caves...");
+~chatplayer("<p,neutral>Ungadulu is trapped in some magical flames!");
 ~chatnpc("<p,neutral>Well, maybe you can get his attention somehow? Did you examine the nature of the magical flames? From where did they come do you think?");
-@multi2("Sorry for bothering you.", gujuo_sorry,
+@multi2("Sorry for bothering you.", gujuo_sorry_bothering,
         "I'm not sure what to do.", gujuo_idk);
 
 [label,gujuo_cant_find]
@@ -57,20 +162,49 @@ else if (%legends_progress >= ^legends_accepted_rescue_ungadulu) {
 ~chatnpc("<p,neutral>Search the caves and try to talk to Ungadulu, there may be some clues to be had by searching all the items in the cave...");
 @gujuo_leave;
 
+[label,gujuo_ungadulu_mumbled]
+~chatplayer("<p,neutral>Ungadulu mumbled something about 'pure' water?");
+~chatnpc("<p,neutral>Hmm, that sounds strange. But it looks like the Shaman has lost his mind. I am sorry Bwana, but it looks like I've sent you on a fools errand. My apologies Bwana.");
+@multi4("Sorry for bothering you.", gujuo_sorry_bothering,
+        "I'm not sure what to do.", gujuo_idk,
+        "Can we still get the people together?", gujuo_still_people,
+        "Strange, why?", gujuo_strange_why);
+
+[label,gujuo_strange_why]
+~chatplayer("<p,neutral>Strange, why?");
+~chatnpc("<p,neutral>Well, there is a pool of water that is sacred to us. It contains pure water, but I am not sure why he needs this. Perhaps you should go back and talk to him again and get more information.");
+@multi3("Sorry for bothering you.", gujuo_sorry_bothering,
+        "I'm not sure what to do.", gujuo_idk,
+        "Ok, thanks... Goodbye.", gujuo_water_thanks);
+
 [label,gujuo_ungadulu_strange]
 ~chatplayer("<p,neutral>Ungadulu looks a little strange.");
-~chatnpc("<p,neutral>Be wary Bwana. There are many unknown spirits that reside in these dark areas. You may be tricked by an unknown force..");
-@multi5("Ok, thanks... Goodbye.", gujuo_water_thanks,
-        "What kind of unknown force?", gujuo_force,
-        "Sorry for bothering you.", gujuo_sorry,
-        "I'm not sure what to do.", gujuo_idk,
-        "I need some pure water to douse some magic flames.", gujuo_pure_water);
-        // todo: vacu option?
+~chatnpc("<p,neutral>Be wary Bwana. There are many unknown spirits that reside in these dark areas. You may be tricked by an unknown force...");
+if (testbit(%legends_map_runes, ^legends_asked_ungadulu_where) = true) {
+    @multi5("Ok, thanks... Goodbye.", gujuo_water_thanks,
+            "What kind of unknown force?", gujuo_force,
+            "Sorry for bothering you.", gujuo_sorry_bothering,
+            "I'm not sure what to do.", gujuo_idk,
+            "I need some pure water to douse some magic flames.", gujuo_pure_water);
+}
+else if (testbit(%legends_map_runes, ^legends_ungadulu_called_vacu) = true) {
+    @multi5("Ok, thanks... Goodbye.", gujuo_water_thanks,
+            "What kind of unknown force?", gujuo_force,
+            "Sorry for bothering you.", gujuo_sorry_bothering,
+            "I need some pure water to douse some magic flames.", gujuo_pure_water,
+            "Ungadulu called me 'Vacu', what does that mean?", gujuo_vacu);
+}
+else {
+    @multi4("What kind of unknown force?", gujuo_force,
+            "Sorry for bothering you.", gujuo_sorry_bothering,
+            "I'm not sure what to do.", gujuo_idk,
+            "Ungadulu mumbled something about 'pure' water?", gujuo_ungadulu_mumbled);
+}
 
 [label,gujuo_force]
 ~chatplayer("<p,neutral>What kind of unknown force?");
 ~chatnpc("<p,neutral>Strange spirits that our forefathers summoned for visions. They haunt the underworld and caves that exist in this area. Take not anything as it might first appear.");
-@multi4("Sorry for bothering you.", gujuo_sorry,
+@multi4("Sorry for bothering you.", gujuo_sorry_bothering,
         "I'm not sure what to do.", gujuo_idk,
         "How did they summon the spirits?", gujuo_spirits,
         "Ok, thanks... Goodbye.", gujuo_water_thanks);
@@ -79,29 +213,28 @@ else if (%legends_progress >= ^legends_accepted_rescue_ungadulu) {
 ~chatplayer("<p,neutral>How did they summon the spirits?");
 ~chatnpc("<p,neutral>I am unlearned in such matters. But I am told of sacred patterns that are scored on the ground to bind the spirit and confine it... But that is all I know.");
 @multi4("Ungadulu looks a little strange.", gujuo_ungadulu_strange,
-        "Sorry for bothering you.", gujuo_sorry,
+        "Sorry for bothering you.", gujuo_sorry_bothering,
         "I'm not sure what to do.", gujuo_idk,
         "Ok, thanks... Goodbye.", gujuo_water_thanks);
 
 [label,gujuo_idk]
 ~chatplayer("<p,neutral>I'm not sure what to do.");
 if (%legends_progress >= ^legends_spoke_ungadulu) {
-    ~chatnpc("<p,neutral>I am at a loss as well Bwana. At this time Ungadulu is the only one who might know of a solution for this puzzle and at this time, he is part of that same puzzle");
+    ~chatnpc("<p,neutral>I am at a loss as well Bwana. At this time Ungadulu is the only one who might know of a solution for this puzzle and at this time, he is part of that same puzzle.");
 }
 else {
     ~chatnpc("<p,neutral>Perhaps you should investigate the caves further? Have you been able to speak to Ungadulu yet? He may have some information to give you that could help?");
 }
 @multi3("Ok, thanks... Goodbye.", gujuo_water_thanks,
-        "Sorry for bothering you.", gujuo_sorry,
+        "Sorry for bothering you.", gujuo_sorry_bothering,
         "Ungadulu looks a little strange.", gujuo_ungadulu_strange);
 
 [label,gujuo_pure_water]
 ~chatplayer("<p,neutral>I need some pure water to douse some magic flames.");
-// need to test both scenarios here on osrs
-if (testbit(%legends_map_runes, ^legends_asked_who) = true) {
+if (testbit(%legends_map_runes, ^legends_asked_ungadulu_who) = true) {
     ~chatnpc("<p,neutral>This sounds very strange Bwana... but maybe I can help. There is a pool of water that is sacred to us. It is located in the middle of the Kharazi Jungle.");
     ~chatnpc("<p,neutral>The water contains special properties but it can only be contained in a blessed vessel made from metal of the sun. The water is difficult to get to, but I am sure you will manage to claim some.");
-    @multi5("Sorry for bothering you.", gujuo_sorry,
+    @multi5("Sorry for bothering you.", gujuo_sorry_bothering,
             "I'm not sure what to do.", gujuo_idk,
             "Ok, thanks... Goodbye.", gujuo_water_thanks,
             "Metal of the sun, what is that?", gujuo_metal,
@@ -110,7 +243,7 @@ if (testbit(%legends_map_runes, ^legends_asked_who) = true) {
 else {
     ~chatnpc("<p,neutral>Well there is a pool of water that is very sacred to us. But I am unsure why he would need that to douse flames. Perhaps the poor Shaman has lost his mind in the darkness of the caves?");
     @multi5("Ok, thanks... Goodbye.", gujuo_water_thanks,
-            "Sorry for bothering you.", gujuo_sorry,
+            "Sorry for bothering you.", gujuo_sorry_bothering,
             "I'm not sure what to do.", gujuo_idk,
             "Can we still get the people together?", gujuo_still_people,
             "Where is the pool of sacred water?", gujuo_pool_where);
@@ -128,14 +261,14 @@ mes("Gujuo disappears into the Kharazi Jungle as swiftly as he appeared...");
 ~chatnpc("<p,neutral>The 'Vacu' were priests who summoned the spirits of our ancestors. But the priests were enslaved by the evil spirits of the underworld. It is but a myth, perhaps a story told to scare badly behaved children.");
 @multi4("Ok, thanks... Goodbye.", gujuo_water_thanks,
         "Ungadulu looks a little strange.", gujuo_ungadulu_strange,
-        "Sorry for bothering you.", gujuo_sorry,
+        "Sorry for bothering you.", gujuo_sorry_bothering,
         "I'm not sure what to do.", gujuo_idk);
 
 [label,gujuo_still_people]
 ~chatplayer("<p,neutral>Can we still get the people together?");
 ~chatnpc("<p,neutral>I am sorry Bwana, my people are scattered throughout the Kharazi Jungle. Without the totem pole to allay their fears, I believe it is impossible to collect them together as a group.");
 @multi4("Ungadulu looks a little strange.", gujuo_ungadulu_strange,
-        "Sorry for bothering you.", gujuo_sorry,
+        "Sorry for bothering you.", gujuo_sorry_bothering,
         "I'm not sure what to do.", gujuo_idk,
         "Ok, thanks... Goodbye.", gujuo_water_thanks);
     
@@ -143,17 +276,28 @@ mes("Gujuo disappears into the Kharazi Jungle as swiftly as he appeared...");
 ~chatplayer("<p,neutral>Where is the pool of sacred water?");
 ~chatnpc("<p,neutral>The pool of sacred water is very precious to us, it is located in the middle of the Kharazi Jungle.");
 ~chatnpc("<p,neutral>The water contains special properties which can only be retained if the water is contained in a blessed vessel made from metal of the sun.");
-@multi5("Sorry for bothering you.", gujuo_sorry,
+@multi5("Sorry for bothering you.", gujuo_sorry_bothering,
         "I'm not sure what to do.", gujuo_idk,
         "Ok, thanks... Goodbye.", gujuo_water_thanks,
         "Metal of the sun, what is that?", gujuo_metal,
         "What kind of a vessel?", gujuo_vessel);
 
+[label,gujuo_sorry_bothering]
+~chatplayer("<p,neutral>Sorry for bothering you.");
+~chatnpc("<p,neutral>That's fine Bwana, not to worry. I hope your quest is going well in any case.");
+@multi3("Ok, thanks... Goodbye.", gujuo_water_thanks,
+        "I'm not sure what to do.", gujuo_idk,
+        "Ungadulu looks a little strange.", gujuo_ungadulu_strange);
+
 [label,gujuo_vessel]
 ~chatplayer("<p,neutral>What kind of a vessel?");
 ~chatnpc("<p,neutral>A vessel made of sun metal, but it can be of any shape. However, it must be blessed.");
 if (inv_total(inv, sketch) = 0) {
+    ~objbox(sketch, "Gujuo takes out a small scroll and some charcoal and draws a rough sketch. When he has finished, he gives the sketch to you.", 180, 0, 0);
     ~chatnpc("<p,neutral>Here, have this as an example... I pray that it will help you.");
+    if (%legends_progress < ^legends_asked_gujuo_holy_water) {
+        %legends_progress = ^legends_asked_gujuo_holy_water;
+    }
     inv_add(inv, sketch, 1);
 }
 else {
@@ -161,7 +305,6 @@ else {
 }
 @multi2("How do I bless the vessel?", gujuo_bless,
         "Ok thanks for your help.", gujuo_thanks);
-
 
 [label,gujuo_metal]
 ~chatplayer("<p,neutral>Metal of the sun, what is that?");

@@ -59,14 +59,18 @@ inv_setslot(inv, $use_slot, oc_param($used_with, changesto), 1); //new empty sou
 
 [oplocu,_watersource]
 switch_obj (last_useitem) {
-    case bucket_empty, jug_empty, vial_empty, bowl_empty : @fill_container_water(last_useitem);
+    case bucket_empty, jug_empty, vial_empty, bowl_empty, gold_bowl, blessed_gold_bowl : @fill_container_water(last_useitem);
     case default : ~displaymessage(^dm_default);
 }
 
 [label,fill_container_water](obj $container)
 def_string $source_name = lowercase(loc_name);
 def_string $container_name = lowercase(oc_name($container));
-if(compare($source_name, "well") = 0 & compare($container_name, "bucket") ! 0) {
+if(compare($source_name, "well") = 0 & ($container = gold_bowl | $container = blessed_gold_bowl)) {
+    mes("If I drop my bowl down there I don't think I'm likely to get it back.");
+    return;
+}
+if(compare($source_name, "well") = 0 & $container = bucket_empty) {
     ~displaymessage(^dm_default);
     return;
 }

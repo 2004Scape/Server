@@ -1,0 +1,122 @@
+[opnpc1,ungadulu] @ungadulu_start;
+[opnpc2,ungadulu] @attack_ungadulu;
+[apnpc2,ungadulu] @attack_ungadulu;
+[opnpc2,ungadulu_possessed] @attack_ungadulu;
+[apnpc2,ungadulu_possessed] @attack_ungadulu;
+
+[label,ungadulu_start]
+if (%legends_progress < ^legends_defeated_nezikchened_fire) @ungadulu_run;
+else mes("Unhandled dialogue stage"); // todo
+
+[label,ungadulu_run]
+~chatnpc("<p,neutral>Please run for your life...");
+~mesbox("The Shaman seems to be fighting an inner battle.");
+~chatnpc("<p,neutral>Go... go now...!");
+~mesbox("The Shaman seems to change in front of your eyes...");
+npc_changetype(ungadulu_possessed);
+~chatnpc("<p,neutral>Welcome Vacu, to eternal...");
+if_close;
+mes("The Shaman starts an incantation...");
+p_delay(1);
+mes("You feel a strange power coming over you...");
+p_delay(1);
+mes("You feel very weak...");
+p_delay(1);
+mes("The Shaman seems to get stronger!");
+p_delay(1);
+npc_changetype(ungadulu);
+mes("The Shaman seems to return to normal...");
+~chatnpc("<p,neutral>Run, run away... Run like the leopard Bwana!");
+// if the player casts confuse/curse/weaken shortly after this dialogue, 
+// there's special dialogue about getting the book of binding.
+// todo: how do we track this? timer?
+
+[label,ungadulu_no_closer]
+~chatnpc("<p,neutral>Please come no closer... the flames will incinerate you.");
+if (%legends_progress < ^legends_spoke_ungadulu) {
+    %legends_progress = ^legends_spoke_ungadulu;
+}
+@multi2("How can I extinguish the flames?", ungadulu_extinguish,
+        "Who are you?", ungadulu_who);
+
+[label,ungadulu_extinguish]
+~chatplayer("<p,neutral>How can I extinguish the flames?");
+~chatnpc("<p,neutral>Please don't try to extinguish...");
+npc_changetype(ungadulu_possessed);
+~chatnpc("<p,neutral>Yes, douse the flames with water, pure water... foo...");
+npc_changetype(ungadulu);
+// double space intentional
+// https://youtu.be/atp7nZUwC8E?t=33
+~chatnpc("<p,neutral>Please, leave now... don't listen to me... I beg you, leave now,  don't touch the flames...");
+@multi2("Where do I get pure water from?", ungadulu_where,
+        "Who are you?", ungadulu_who);
+
+[label,ungadulu_where]
+~chatplayer("<p,neutral>Where do I get pure water from?");
+~chatnpc("<p,neutral>Please, leave now...");
+npc_changetype(ungadulu_possessed);
+~chatnpc("<p,neutral>...from the above lands... hurry and release me...");
+npc_changetype(ungadulu);
+~chatnpc("<p,neutral>Leave here, please, go... now...");
+%legends_map_runes = setbit(%legends_map_runes, ^legends_asked_ungadulu_where);
+npc_changetype(ungadulu_possessed);
+~chatnpc("<p,madlaugh>Hurry, Vacu, the heat kills me... ha ha ha");
+%legends_map_runes = setbit(%legends_map_runes, ^legends_ungadulu_called_vacu);
+~mesbox("The Shaman throws himself down on the floor and starts convulsing.");
+
+[label,ungadulu_who]
+~chatplayer("<p,neutral>Who are you?");
+~chatnpc("<p,neutral>I am Ungadulu, trapped here many years now... Leave these caves and save yourself...");
+npc_changetype(ungadulu_possessed);
+~chatnpc("<p,neutral>Wait... get pure water from the pool... above lands...");
+%legends_map_runes = setbit(%legends_map_runes, ^legends_asked_ungadulu_where);
+%legends_map_runes = setbit(%legends_map_runes, ^legends_asked_ungadulu_who);
+npc_changetype(ungadulu);
+~chatnpc("<p,neutral>Please Bwana, don't listen to me... run, save yourself...");
+@multi2("How can I extinguish the flames?", ungadulu_extinguish,
+        "Where do I get pure water from?", ungadulu_where);
+
+// Ungadulu cannot be attacked with melee or ranged weapons; he will throw players out of the Octagram, 
+// hitting them for between 4 and 10 damage. However, players can manually cast combat spells on him both inside
+// and outside the Octagram to damage and kill him without being thrown by his spell. 
+[label,attack_ungadulu]
+if (~inzone_coord_pair_table(legends_fire_wall, coord) = false) {
+    ~mesbox("You feel certain that your weapon would melt if you tried to attack through these magical flames.");
+}
+else {
+    p_delay(1);
+    npc_facesquare(coord);
+    mes("The shaman casts a spell!");
+    npc_changetype(ungadulu_possessed);
+    npc_say("Ha ha ha ha! Die, Vacu!");
+    spotanim_npc(zap, 100, 0);
+    npc_anim(zap, 0);
+    p_delay(1);
+    // this isn't correct - not sure what the exact target coord mechanism is
+    def_coord $thrown = movecoord(coord, 0, 0, 5);
+    //def_int $dist = distance(coord, $thrown);
+    //[proc,agility_exactmove](seq $anim, int $anim_delay, int $movement_delay, coord $start_coord, coord $end_coord, int $start_cycle, int $end_cycle, int $direction, boolean $merge_with_loc)
+    //~agility_exactmove(human_walk_fence_north, 30, 2, $start_coord, $end_coord, 30, 94, $dir, true);
+    // start 5376 (2791, 9237)
+    // end 5382 (2785, 9329)
+    ~agility_exactmove(human_knockback_long, 0, 6, coord, $thrown, 31, 115, ^exact_south, false);
+    queue(damage_player, 0, calc(random(7) + 4));
+    anim(null, 0);
+    ~mesbox("Ungadulu unleashes a savage bolt of energy at you. You're knocked out of the octagram by the power of the spell.");
+    npc_say("<p,madlaugh>Ha, ha ha Vacu... Come for me again and you'll taste more of my power!");
+    // todo check coord, anim, etc
+}
+
+// curse to start: 
+//https://youtu.be/uYxkN3aJ-44?t=4317
+// npc_say("What...what's happening...") + dizzy anim
+// mes("The shaman somehow resists the power of the spell.")
+// mes("Perhaps you should try again?");
+// approaches you, becomes possessed, attacks, "Ha ha ha ha! Die, Vacu!", throws you out
+// throwing out is pretty janky: https://youtu.be/uYxkN3aJ-44?t=4323
+
+// when possessed form despawns, regular form spawns immediately. can be different tile (2 away from table is spawn loc)
+
+// https://youtu.be/uYxkN3aJ-44?t=4486
+// if you talk to him and go through possession -> normal, then cast curse/weakness/etc on him, get dialogue about book of binding
+// then mesbox("The shaman's eyes roll back and he returns to his quiet, unassuming self.")

@@ -1,6 +1,3 @@
-[oploc1,_jungle_tree] @chop_jungle(^jungle_type_tree);
-[oploc1,_jungle_bush] @chop_jungle(^jungle_type_bush);
-
 [oploc1,legends_rocks_1] @legends_search_rocks;
 [oploc1,legends_mossy_rock_1] @legends_search_rocks;
 [oploc1,legends_mossy_rock_2] @legends_search_rocks;
@@ -8,8 +5,134 @@
 [oploc1,legends_cave_entrance_1] @legends_cave_entrance;
 [oploc1,legends_cave_entrance_2] @legends_cave_entrance;
 
-[oploc1,legends_fire_wall_1] @legends_fire_wall;
-[oploc1,legends_fire_wall_2] @legends_fire_wall;
+[oploc1,legends_fire_wall_1] @legends_touch_fire_wall;
+[oploc1,legends_fire_wall_2] @legends_touch_fire_wall;
+[oploc2,legends_fire_wall_1] @legends_investigate_fire_wall;
+[oploc2,legends_fire_wall_2] @legends_investigate_fire_wall;
+
+[opheld1,a_scribbled_note]
+~mesbox("You try your best to decode the writing.|This is what you make out...");
+~objbox(a_scribbled_note, "I fear that the spirit of an ancient one resides within me and uses me... I am too weak to cast the curse myself and fight the beast within.", 180, 0, 0);
+~objbox(a_scribbled_note, "Day 3 ...my last hope is that someone will read this and aid me... I am undone and I fear....", 180, 0, 0);
+~mesbox("The writing trails off at this point.");
+
+[opheld1,scrawled_note]
+~mesbox("You try your best to decode the writing.|This is what you make out...");
+~objbox(scrawled_note, "Daily notes of Ungadulu...|Day 1... I have prepared the incantations and will invoke the spirits of my ancestors and pay them homage.", 180, 0, 0);
+~objbox(scrawled_note, "Though I feel a strange presence in these caves, it is with the heart of the lion that I fight my fears and mark the magical octagram.", 180, 0, 0);
+~objbox(scrawled_note, "Day 2... What have I done? My spirit is overthrown by feelings of fear and evil, I am not myself these days and feel helpless and weak. From my teachings...", 180, 0, 0);
+~mesbox("The writing trails off at this point.");
+
+[opheld1,scrumpled_note]
+~mesbox("You try your best to decode the writing.|This is what you make out...");
+~objbox(scrumpled_note, "Day 4 ... These days come so fleetingly, I have no idea how long I have been here now...|Day 5... A wizened charm will release me, but never magic that would harm...", 180, 0, 0);
+
+[opheld1,shamans_tome]
+~mesbox("You read the ancient shaman's tome. It is written in a strange sort of language but you manage a rough translation.");
+~mesbox("...scattered are my hopes that I will ever be released from this flaming Octagram, it is the only thing which will contain this beast within. Although its grip over me is weakened with magic, it is hopeless to know if a saviour would guess this. I am doomed...");
+
+[oploc1,legends_table]
+~mesbox("A crudely constructed makeshift table made from various pieces of wood. You see a piece of screwed up paper on the table top.");
+
+[oploc2,legends_table]
+if (inv_total(inv, a_scribbled_note) < 0) {
+    // no delay
+    mes("You start searching the table...");
+    ~mesbox("You find a scrap of paper with what looks like nonsense written on it.");
+    inv_add(inv, a_scribbled_note, 1);
+}
+else {
+    mes("You cannot find anything else in here.");
+}
+
+[oploc1,legends_crate]
+~mesbox("It looks like a rickety old crate, perhaps placed in this recess to hide it from prying eyes.");
+
+[oploc2,legends_crate]
+mes("You search the crate.");
+if (inv_total(inv, scrawled_note) < 0) {
+    p_delay(1);
+    ~objbox(scrawled_note, "After some time you find a scrumpled up piece of paper. It looks like rubbish.", 180, 0, 0);
+    inv_add(inv, scrawled_note, 1);
+}
+else {
+    mes("You can't find anything else here.");
+}
+
+[oploc2,legends_bed]
+// no delay
+mes("You search the flea infested rags...");
+    if (inv_total(inv, scrumpled_note) < 0) {
+    // mes instead of mesbox here
+    mes("You find a scrap of paper with spidery writing on it.");;
+    inv_add(inv, scrumpled_note, 1);
+}
+else {
+    mes("You cannot find anything else in here.");
+}
+
+[oploc1,legends_desk]
+mes("It's a very old rickety desk made of bamboo.");
+
+[oploc2,legends_desk]
+// rs3
+mes("You give the desk a good search.");
+p_delay(2);
+if (inv_total(inv,shamans_tome) = 0) {
+    inv_add(inv, shamans_tome, 1);
+    ~mesbox("You find an interesting tome. It looks heavy and very unique.");
+}
+else {
+    mes("You find nothing else of interest here.");
+}
+
+[oploc1,legends_bookcase]
+~mesbox("This bamboo book shelf doesn't house many books, it doesn't look as if the Shaman has much opportunity to read at the moment in any case.");
+
+[oploc2,legends_bookcase]
+~mesbox("You search the bookcase, it looks fairy old...|After a while you notice that there is a small crevice|in the back. You might just be able to force your way|through if you were in any way athletic.");
+if (~p_choice2_header("Yes please!", 1, "No thanks!", 2, "Would you like to squeeze into this crevice?") = 1) {
+    if_close;
+    p_walk(0_43_145_42_59);
+    p_delay(1);
+    anim(human_pickupfloor, 0);
+    p_delay(1);
+    ~agility_exactmove(human_crawling, 0, 0, coord, 0_43_145_43_60, 6, 20, ^exact_east, false);
+    // guess
+    if (stat_random(stat(agility), 125, 250) = false) {
+        mes("You get stuck as you try to squeeze into the crevice.");
+        p_delay(5);
+        mes("It takes you a while to get back out again.");
+        ~agility_exactmove(human_crawling, 0, 0, coord, 0_43_145_42_59, 6, 20, ^exact_west, false);
+        return;
+    }
+    mes("You successfully squeeze through the crevice into a small tunnel.");
+    p_telejump(0_43_145_47_61);
+    anim(human_crawling, 0);
+    p_delay(2);
+    p_walk(0_43_145_48_60);
+}
+else {
+    mes("You decide not to squeeze yourself into that ridiculously small crevice.");
+}
+
+[oploc1,legends_crevice]
+mes("It looks like a crevice, you could possibly squeeze through.");
+
+[oploc2,legends_crevice]
+~mesbox("You search the the crevice. It looks as if you might be able to squeeze through, would you like to try?");
+if (~p_choice2_header("Yes please!", 1, "No thanks.", 2, "Squeeze through incredibly tight crevice?") = 1) {
+    if_close;
+    mes("You squeeze your way through the crevice.");
+    anim(human_crawling, 0);
+    p_delay(1);
+    p_teleport(0_43_145_43_58);
+}
+else {
+    mes("You decide not to try and squeeze your way through the crevice.");
+}
+
+
 
 [oploc2,legends_radimus_cupboard_open]
 // No quest progress check here
@@ -26,7 +149,7 @@ else {
 [oploc3,legends_radimus_cupboard_open]
 @close_cupboard(true);
 
-[label,legends_fire_wall]
+[label,legends_touch_fire_wall]
 mes("You approach the supernatural flames.");
 p_delay(2);
 mes("They give off an incredibly intense heat.");
@@ -41,6 +164,25 @@ else {
     say("Whew!");
     mes("The heat is intense and just before you burn yourself you pull yourself away");
     mes("from the flames.");
+}
+
+[label,legends_investigate_fire_wall]
+~mesbox("You look closely at the flames. They seem to form a straight wall. Something about them looks very strange: they look completely supernatural. For example, they seem to come straight out of the ground.");
+say("Mmmm, pretty!");
+~mesbox("You see a white clad figure in the midst of the flames...");
+~mesbox("You see the white robed figure inside the flaming octagram gesturing to you.");
+// range guess
+// todo: test if this works to handle someone else talking to him, 
+// making him possessed
+npc_findallany(coord, 12, 0);
+while (npc_findnext = true) {
+    if (npc_type = ungadulu) {
+        @ungadulu_no_closer;
+    }
+    else if (npc_type = ungadulu_possessed) {
+        npc_changetype(ungadulu);
+        @ungadulu_no_closer;
+    }
 }
 
 [label,legends_search_rocks]
@@ -95,92 +237,277 @@ if (%legends_progress >= ^legends_found_entrance) {
         }
     }
     else {
-        ~mesbox("You decide against forcing yourself into the tiny crevice.");
+        // rsc/rs3
+        ~mesbox("You decide against forcing yourself into the tiny crevice. And realise that you have much better things to do. Like visit inns and mine ore.");
     }
 }
 
 [label,legends_cave_entrance]
+p_delay(1);
 mes("You crawl back out from the cavern...");
 p_delay(3);
 p_teleport(0_43_45_29_54);
 
-[opheld1,sketch]
-~mesbox("This is a crudely drawn picture of some kind of vessel, it looks vaguely bowl shaped - this is what Gujuo was referring to when he said that you needed to make a vessel made from the metal of the sun.");
+[oploc1,legends_ancient_gate_1_closed] @open_ancient_gate;
+[oploc1,legends_ancient_gate_2_closed] @open_ancient_gate;
+[oploc2,legends_ancient_gate_1_closed] @search_ancient_gate(^left);
+[oploc2,legends_ancient_gate_2_closed] @search_ancient_gate(^right);
+[oplocu,legends_ancient_gate_1_closed] @use_on_ancient_gate(^left);
+[oplocu,legends_ancient_gate_2_closed] @use_on_ancient_gate(^right);
 
-[label,chop_jungle](int $type)
-// todo: 
-// - time to cut varies, may need to use normal tree logic here
-if (inv_total(inv, radimus_notes) = 0 & inv_total(inv, radimus_notes_complete) = 0 & %legends_progress < ^legends_complete) {
-    ~mesbox("You'll get lost in this jungle without a map. You decide not to go any further.");
-    return;
-}
-def_namedobj $axe = ~woodcutting_axe_checker(false);
-if ($axe = null) {
-    // OSRS message
-    ~mesbox("You'll need an axe to get through this rough jungle. You don't think it would be a good idea to continue without one you've got the level to use.");
-    return;
-}
-if (inv_total(inv, machete) = 0 & inv_total(worn, machete) = 0) {
-    // Says bush even for tree
-    mes("You need a machete to cut your way through this dense jungle bush.");
-    return;
-}
-if ($type = ^jungle_type_tree) {
-    anim(struct_param(oc_param($axe, woodcutting_struct), skill_anim), 0);
-    // No sound for jungle trees
-}
-else {
-    anim(human_machette_chop, 32);
-    sound_synth(woodchop_4, 0, 0);
-    sound_synth(woodchop_4, 0, 32);
-    sound_synth(woodchop_4, 0, 64);
-}
-
-if ($type = ^jungle_type_tree) {
-    mes("You swing your axe at the tree.");
-}
-else {
-    mes("You swing your machete at the jungle plant.");
-}
+[label,open_ancient_gate]
+p_delay(2);
+anim(human_push, 0);
 p_delay(1);
-loc_change(loc_param(next_loc_stage), 4);
-// Not guaranteed to get logs. Can roll multiple logs before tree falls
-// If no inv space, just don't give logs (or xp)
-if (inv_freespace(inv) > 0 & random(2) = 0) {
-    mes("You get some wood.");
-    stat_advance(woodcutting, 100);
-    inv_add(inv, logs, 1);
-}
-def_coord $dest = coord;
-// If you chop jungle that you're standing on, you don't move forward
-// todo: test that this always gives the blocked off message, as it seems to on OSRS
-if (coord ! loc_coord) {
-    $dest = ~movecoord_indirection(coord, ~coord_direction(coord, loc_coord), 2);
-}
+~mesbox("You push on the doors, they're really shut. It looks like the doors have a huge locking mechanism. Although ancient, it looks very sophisticated.");
 
-// todo: test on OSRS
-if (map_blocked($dest) = true & ~jungle_at_dest($dest) = false) {
-    mes("This way is blocked off, no chance to get through here!");
+[label,search_ancient_gate](int $side)
+p_delay(2);
+def_boolean $entering = ~check_axis(coord, loc_coord, loc_angle);
+if ($entering = false) {
+    ~open_and_close_double_door2($entering, $side, door_open);
+    return;
 }
-else {
-    if ($type = ^jungle_type_tree) {
-        mes("You hack your way through the tree.");
+if (inv_total(inv, lockpick) = 0) {
+    ~mesbox("These doors are huge! They have a very sophisticated locking mechanism. You're definitely going to need a lockpick to get through these doors.");
+    return;
+}
+if (stat(thieving) < 50) {
+    // guess
+    ~mesbox("You need a Thieving level of 50 to pick this lock.");
+    return;
+}
+~mesbox("You attempt to pick the lock...");
+anim(human_pickuptable, 0);
+~mesbox("It looks very sophisticated...");
+say("Hmmm, interesting...");
+anim(human_pickuptable, 0);
+~mesbox("You carefully insert your lockpick into the lock.");
+say("This will be a challenge.");
+if_close;
+anim(human_pickuptable, 0);
+p_delay(2);
+~mesbox("You feel for the pins and levers in the mechanism.");
+say("Easy does it...");
+anim(human_pickuptable, 0);
+// todo: rate?
+if (random(2) = 0) {
+    ~mesbox("But you fail to pick the lock.");
+    inv_del(inv, lockpick, 1);
+    // todo: placeholder message
+    ~mesbox("You break your lockpick in the door.");
+    return;
+}
+~mesbox("CLICK!");
+~chatplayer("<p,neutral>Easy as pie...");
+~mesbox("You tumble the lock mechanism and the door opens easily.");
+stat_advance(thieving, 100);
+~open_and_close_double_door2($entering, $side, door_open);
+
+[label,use_on_ancient_gate](int $side)
+if (last_useitem = lockpick) {
+    @search_ancient_gate($side);
+}
+~displaymessage(^dm_default);
+
+[oploc1,_legends_boulder]
+def_obj $pickaxe = ~pickaxe_checker;
+if ($pickaxe = null) {
+    // osrs
+    mes("You need a pickaxe to mine this rock.");
+    mes("You do not have a pickaxe which you have the Mining level to use");
+    return;
+}
+if(stat(mining) < 52) {
+    mes("You need a Mining level of 52 to mine your way through this rock.");
+    return;
+}
+mes("You swing your pick at the rock.");
+anim(oc_param($pickaxe, mining_animation), 0);
+~mining_sound;
+p_delay(2);
+// todo: random chance, add rock to inv, replace with stone
+// instead of loc_del
+mes("You manage to smash the rock to bits.");
+loc_del(6);
+~forcemove(movecoord(coord, 0, 0, -2));
+p_delay(1);
+~forcemove(movecoord(coord, 0, 0, -1));
+
+[oploc1,legends_water_pool]
+~mesbox("It looks like a small babbling brook that comes from and disappears underground again. The water bubbles with a strange effervescence.");
+
+[oploc2,legends_water_pool]
+~mesbox("It looks like you'll have problems getting some of the water as it's difficult to reach with all the rocks around it. There is a narrow gap that you simply won't be able to get a container into.");
+
+[oplocu,legends_water_pool]
+if (last_useitem = hollow_reed) {
+    if (inv_total(inv, blessed_gold_bowl) > 0) {
+        inv_del(inv, blessed_gold_bowl, 1);
+        inv_del(inv, hollow_reed, 1);
+        inv_add(inv, blessed_golden_bowl_pure_water, 1);
+        // inconsistent use of "syphon" here is accurate
+        // https://youtu.be/Lid8enDEF_U?t=1463
+        ~objbox(blessed_golden_bowl_pure_water, "You use the cut reed plant to syphon some water from the pool into your blessed golden bowl. The water seems to bubble and sparkle as if alive.", 250, 0, divide(^objbox_height, 2));
+    }
+    else if (inv_total(inv, enchanted_vial) > 0) {
+        inv_del(inv, enchanted_vial, 1);
+        inv_del(inv, hollow_reed, 1);
+        inv_add(inv, holy_water, 1);
+        ~objbox(holy_water, "You use the cut reed plant to siphon some water from the pool into your enchanted vial. The water seems to bubble and sparkle as if alive.", 250, 0, divide(^objbox_height, 2));
+    }
+    else if (inv_total(inv, gold_bowl) > 0) {
+        inv_del(inv, gold_bowl, 1);
+        inv_del(inv, hollow_reed, 1);
+        inv_add(inv, golden_bowl_pure_water, 1);
+        ~objbox(golden_bowl_pure_water, "You use the cut reed plant to siphon some water from the pool into your golden bowl. The water doesn't seem as sparkly as it looked in the pool...", 250, 0, divide(^objbox_height, 2));
+    }
+    else if (inv_total(inv, bucket_empty) > 0) {
+        inv_del(inv, bucket_empty, 1);
+        inv_add(inv, bucket_water, 1);
+        // lack of full stop is intentional
+        // https://youtu.be/1A8nP50qIX8?t=1166
+        ~objbox(bucket_water, "You use the hollow reed to siphon some water from the pool into your bucket The water doesn't seem as sparkly as it looked in the pool.", 250, 0, divide(^objbox_height, 2));
+    }
+    else if (inv_total(inv, vial_empty) > 0) {
+        inv_del(inv, vial_empty, 1);
+        inv_del(inv, hollow_reed, 1);
+        inv_add(inv, vial_water, 1);
+        // lack of full stop is intentional
+        // https://runescape.wiki/w/Transcript:Legends%27_Quest#With_an_empty_vial_and_without_a_blessed_gold_bowl
+        ~objbox(vial_water, "You use the hollow reed to siphon some water from the pool into your vial The water doesn't seem as sparkly as it looked in the pool.", 250, 0, divide(^objbox_height, 2));
     }
     else {
-        mes("You hack your way through the jungle bush.");
+        mes("You start to siphon some of the water up the tube...");
+        p_delay(3);
+        mes("But you have nothing to put the water in.");
+        return;
     }
-    // Same message even when leaving the jungle
-    mes("You move deeper into the jungle.");
-    ~forcemove($dest);
+    ~objbox(hollow_reed, "The hollow reed is soaked through with water and is now all soggy.", 180, 0, 0);
+}
+else if (last_useitem = bucket_empty | last_useitem = vial_empty | last_useitem = gold_bowl | last_useitem = blessed_gold_bowl) {
+    ~mesbox("This item doesn't fit in the gap between the rocks. You'll need to find another way to reach the water.");
+}
+else {
+    ~displaymessage(^dm_default);
 }
 
-[proc,jungle_at_dest](coord $dest)(boolean)
-if (loc_find($dest, jungle_bush_1) = true | loc_find($dest, jungle_bush_2) = true | 
-    loc_find($dest, jungle_tree_1) = true | loc_find($dest, jungle_tree_2) = true | 
-    loc_find($dest, jungle_tree_3) = true) {
-        return (true);
+[oploc1,legends_tall_reeds]
+~mesbox("These look like interesting plants, right next to the water's edge. They make the pool look really picturesque.");
+
+[oploc2,legends_tall_reeds]
+~mesbox("These tall reeds look nice and long with a long tube for a stem. They reach all the way down to the water.");
+
+[oplocu,legends_tall_reeds]
+if (last_useitem = knife) {
+    anim(human_knife_slash, 0);
+    p_delay(1);
+    mes("You use your knife to cut down a reed.");
+    inv_add(inv, hollow_reed, 1);
 }
-return (false);
+else if (last_useitem = machete) {
+    anim(human_machette_chop, 0);
+    p_delay(1);
+    mes("You use your machete to cut down a reed.");
+    inv_add(inv, hollow_reed, 1);
+}
+else {
+    ~displaymessage(^dm_default);
+}
+
+[opheld1,sketch]
+~objbox(sketch, "This is a crudely drawn picture of some kind of vessel, it looks vaguely bowl shaped - this is what Gujuo was referring to when he said that you needed to make a vessel made from the metal of the sun.", 180, 0, 0);
+
+// none of these empty ops operate on the used slot, will empty the first instance of the item they find
+[opheld1,golden_bowl_pure_water]
+inv_del(inv, golden_bowl_pure_water, 1);
+inv_add(inv, gold_bowl, 1);
+mes("You empty the pure water out of the golden bowl.");
+
+[opheld1,golden_bowl_water]
+inv_del(inv, golden_bowl_water, 1);
+inv_add(inv, gold_bowl, 1);
+mes("You empty the plain water out of the golden bowl.");
+
+[opheld1,blessed_golden_bowl_water]
+inv_del(inv, blessed_golden_bowl_water, 1);
+inv_add(inv, blessed_gold_bowl, 1);
+mes("You empty the plain water out of the blessed golden bowl.");
+
+[opheld1,blessed_golden_bowl_pure_water]
+inv_del(inv, blessed_golden_bowl_pure_water, 1);
+inv_add(inv, blessed_gold_bowl, 1);
+mes("You empty the pure water out of the blessed golden bowl.");
+
+[opheldu,blessed_golden_bowl_pure_water]
+// this doesn't work in reverse (bowl -> vial = nothing interesting happens)
+if (last_useitem = vial_empty) {
+    mes("You decant some water from the golden bowl into the vial.");
+    def_int $bowl_uses = getbit_range(%legends_map_runes, ^legends_golden_bowl_uses_start, ^legends_golden_bowl_uses_end);
+    inv_del(inv, vial_empty, 1);
+    inv_add(inv, vial_water, 1);
+    if ($bowl_uses = 1) {
+        $bowl_uses = 10;
+        inv_del(inv, blessed_golden_bowl_pure_water, 1);
+        inv_add(inv, blessed_gold_bowl, 1);
+        mes("The golden bowl is empty. There's no sacred water left.");
+    }
+    else {
+        $bowl_uses = sub($bowl_uses, 1);
+    }
+    %legends_map_runes = setbit_range_toint(%legends_map_runes, $bowl_uses, ^legends_golden_bowl_uses_start, ^legends_golden_bowl_uses_end);
+    // if water count = 0, replace bowl with empty bowl
+    mes("The water doesn't seem as effervescent as it was in the bowl.");
+}
+
+[label,make_golden_bowl]
+if (map_members = false) {
+    mes("You can only make that on a members' server.");
+    return;
+}
+if (~p_choice2_header("Yes", 1, "No", 2, "Would you like to make a golden bowl?") = 2) {
+    return;
+}
+if_close;
+if (inv_total(inv, gold_bar) < 2) {
+    ~mesbox("You need two Gold Bars to make a bowl.");
+    return;
+}
+if (stat(smithing) < 50) {
+    // rsc
+    ~mesbox("You need at least level 50 smithing to work gold.");
+    return;
+}
+if (inv_total(inv, hammer) < 1) {
+    ~mesbox("You need a hammer to work the metal with.");
+    return;
+}
+// play anim and sound
+anim(human_smithing, 0);
+sound_synth(anvil_4, 0, 0);
+p_delay(4);
+// guessing 50% chance of failure. not sure if impacted by smithing level?
+// https://youtu.be/uF1a9xsV7zo?t=931
+// fail rate doesn't appear to be impacted by having vs not having the sketch,
+// despite OSRS wiki saying otherwise
+if (random(2) = 0) {
+    mes("You make a mistake forging the bowl.");
+    // 135/256 chance of removing a second gold bar
+    // https://x.com/JagexAsh/status/1346079741821022209
+    if (random(256) < 135) {
+        mes("You pour molten gold all over the floor.");
+        inv_del(inv, gold_bar, 2);
+    }
+    else {
+        inv_del(inv, gold_bar, 1);
+    }
+}
+else {
+    mes("You forge a beautiful bowl out of solid gold.");
+    inv_del(inv, gold_bar, 2);
+    inv_add(inv, gold_bowl, 1);
+    stat_advance(smithing, 300);
+}
 
 [queue,legends_quest_complete]
 %legends_progress = ^legends_complete;
@@ -205,6 +532,12 @@ if (p_finduid(uid) = true) {
 // legends guild
 if (p_finduid(uid) = true) {
     p_telejump(0_42_52_40_38);
+}
+
+[debugproc,lw]
+// legends water
+if (p_finduid(uid) = true) {
+    p_telejump(0_44_45_23_36);
 }
 
 [debugproc,jf]

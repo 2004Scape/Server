@@ -305,6 +305,8 @@ model=model_loc_2912
 active=yes
 op1=Open
 op2=Search
+category=double_door_open_and_close_left
+param=next_loc_stage,legends_ancient_gate_1_open
 
 [legends_ancient_gate_2_closed]
 name=Ancient Gate
@@ -312,6 +314,8 @@ model=model_loc_2913
 active=yes
 op1=Open
 op2=Search
+category=double_door_open_and_close_right
+param=next_loc_stage,legends_ancient_gate_2_open
 
 [legends_ancient_gate_1_open]
 model=model_loc_2912
@@ -349,6 +353,7 @@ width=2
 length=2
 mapscene=11
 op1=Smash-to-bits
+category=legends_boulder
 
 [legends_boulder_2]
 name=Boulder
@@ -358,6 +363,7 @@ width=2
 length=2
 mapscene=11
 op1=Smash-to-bits
+category=legends_boulder
 
 [legends_boulder_3]
 name=Boulder
@@ -367,6 +373,7 @@ width=2
 length=2
 mapscene=11
 op1=Smash-to-bits
+category=legends_boulder
 
 [legends_ancient_gate_3_closed]
 name=Ancient Gate
