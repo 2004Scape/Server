@@ -1,0 +1,197 @@
+[oploc1,_jungle_tree] @start_chop_jungle;
+[oploc1,_jungle_bush] @start_chop_jungle;
+[oploc3,_jungle_tree] @chop_jungle;
+[oploc3,_jungle_bush] @chop_jungle;
+
+// todo: evaporate water if move through jungle with it
+
+// the success rates in here don't feel quite right, probably need tweaking
+
+[label,start_chop_jungle]
+if (inv_total(inv, radimus_notes) = 0 & inv_total(inv, radimus_notes_complete) = 0 & %legends_progress < ^legends_complete) {
+    ~mesbox("You'll get lost in this jungle without a map. You decide not to go any further.");
+    return;
+}
+def_namedobj $axe = ~woodcutting_axe_checker(false);
+if ($axe = null) {
+    // OSRS message
+    ~mesbox("You'll need an axe to get through this rough jungle. You don't think it would be a good idea to continue without one you've got the level to use.");
+    return;
+}
+if (inv_total(inv, machete) = 0 & inv_total(worn, machete) = 0) {
+    // Says bush even for tree
+    mes("You need a machete to cut your way through this dense jungle bush.");
+    return;
+}
+def_int $bowl_water_count = inv_total(inv, golden_bowl_water);
+def_int $bowl_pure_water_count = inv_total(inv, golden_bowl_pure_water);
+def_int $blessed_bowl_water_count = inv_total(inv, blessed_golden_bowl_water);
+def_int $blessed_bowl_pure_water_count = inv_total(inv, blessed_golden_bowl_pure_water);
+
+if (calc($bowl_water_count + $bowl_pure_water_count + $blessed_bowl_water_count + $blessed_bowl_pure_water_count) > 0) {
+        mes("The heat in this jungle is terrific.");
+        mes("The water from your golden bowl evaporates.");
+        if ($bowl_water_count > 0) {
+            inv_del(inv, golden_bowl_water, $bowl_water_count);
+            inv_add(inv, gold_bowl, $bowl_water_count);
+        }
+        if ($bowl_pure_water_count > 0) {
+            inv_del(inv, golden_bowl_pure_water, $bowl_pure_water_count);
+            inv_add(inv, gold_bowl, $bowl_pure_water_count);
+        }
+        if ($blessed_bowl_water_count > 0) {
+            inv_del(inv, blessed_golden_bowl_water, $blessed_bowl_water_count);
+            inv_add(inv, blessed_gold_bowl, $blessed_bowl_water_count);
+        }
+        if ($blessed_bowl_pure_water_count > 0) {
+            inv_del(inv, blessed_golden_bowl_pure_water, $blessed_bowl_pure_water_count);
+            inv_add(inv, blessed_gold_bowl, $blessed_bowl_pure_water_count);
+        }
+    }
+db_find(woodcutting_trees:tree, loc_type);
+def_dbrow $data = db_findnext;
+if ($data = null) {
+    ~displaymessage(^dm_default);
+    return;
+}
+
+if (%action_delay < map_clock) {
+    // No sound for jungle trees
+    if (loc_category = jungle_bush) {
+        // scuffed implementation for lining up skill sounds (very first chop)
+        if (%skill_sound = calc(map_clock + 4)) {
+            sound_synth(woodchop_4,0,20);
+        }
+    }
+    %action_delay = calc(map_clock + 3);
+    %skill_anim = calc(map_clock + 3);
+    p_oploc(1);
+} else {
+    if (loc_category = jungle_bush) {
+        anim(human_machette_chop, 0);
+        sound_synth(woodchop_4, 0, 10);
+        mes("You swing your machete at the jungle plant.");
+    }
+    else {
+        anim(struct_param(oc_param($axe, woodcutting_struct), skill_anim), 0);
+        mes("You swing your axe at the tree.");
+    }
+    %skill_sound = calc(map_clock + 5);
+
+    @chop_jungle;
+}
+
+[label,chop_jungle]
+// check if player has axe and level, ifso return best axe
+def_namedobj $axe = ~woodcutting_axe_checker(true);
+if ($axe = null) {
+    return;
+}
+// find tree in db
+db_find(woodcutting_trees:tree, loc_type);
+def_dbrow $data = db_findnext;
+if ($data = null) {
+    ~displaymessage(^dm_default);
+    return;
+}
+def_namedobj $product = db_getfield($data, woodcutting_trees:product, 0);
+// play animation every 4 ticks
+// make sure this is before the skill clock check, else theres a few cases where the skill anim
+// gets redefined after skill(anim, null)
+if (%skill_anim <= map_clock) {
+    if (loc_category = jungle_bush) {
+        %skill_anim = calc(map_clock + 2);
+        anim(human_machette_chop, 0);
+    }
+    else {
+        %skill_anim = calc(map_clock + 4);
+        anim(struct_param(oc_param($axe, woodcutting_struct), skill_anim), 0);
+    }
+}
+// this is here because theres always a tick where no mes("You swing your axe at the tree.") when spam clicking on tree
+// this tick is when you get you get a roll. so that means that skill clock is set next tick after roll is given
+if (%action_delay < map_clock) {
+    %action_delay = calc(map_clock + 3);
+}
+if (%action_delay = map_clock) {
+    // get lows and highs
+    def_int $tree_chance_low;
+    def_int $tree_chance_high;
+    $tree_chance_low, $tree_chance_high = ~woodcutting_successchance($data, $axe);
+    def_int $respawnrate = db_getfield($data, woodcutting_trees:respawnrate, 0);
+    def_int $deplete_chance = 3; // 1/3 chance to deplete - this is a guess
+    if (stat_random(stat(woodcutting), $tree_chance_low, $tree_chance_high) = true) {
+        // Jungle trees/bushes just silently fail to give logs/xp if no space
+        // There's also a chance to receive no logs. This is guessed at 75% here
+        if (inv_freespace(inv) > 0 & random(4) = 0) {
+            mes("You get some <lowercase(oc_name($product))>.");
+            stat_advance(woodcutting, db_getfield($data, woodcutting_trees:productexp, 0));
+            inv_add(inv, $product, 1);
+        }
+        if (randominc($deplete_chance) = $deplete_chance) {
+            $respawnrate = ~scale_by_playercount($respawnrate);
+            loc_change(loc_param(next_loc_stage), $respawnrate);
+            // set skill anim so it doesnt continue after depletion
+            anim(null, 0);
+            %skill_sound = calc(map_clock + 1);
+            def_coord $dest = coord;
+            // If you chop jungle that you're standing on, you don't move forward
+            if (coord ! loc_coord) {
+                $dest = ~movecoord_indirection(coord, ~coord_direction(coord, loc_coord), 2);
+            }
+            else {
+                mes("This way is blocked off, no chance to get through here!");
+                return;
+            }
+
+            // todo: test on OSRS
+            if (map_blocked($dest) = true & ~jungle_at_dest($dest) = false) {
+                mes("This way is blocked off, no chance to get through here!");
+            }
+            else {
+                if (loc_category = jungle_tree) {
+                    mes("You hack your way through the tree.");
+                }
+                else {
+                    mes("You hack your way through the jungle bush.");
+                }
+                // Same message even when leaving the jungle
+                mes("You move deeper into the jungle.");
+                ~forcemove($dest);
+            }
+            return;
+        } 
+    }
+}
+if (loc_category = jungle_bush) {
+    // this is for the very first chop
+    if (%skill_sound = calc(map_clock + 4)) {
+        %skill_sound = calc(map_clock + 3);
+        if (loc_category = jungle_bush) {
+            sound_synth(woodchop_4,0,25);
+        }
+    } 
+    // third
+    else if (%skill_sound < map_clock) {
+        %skill_sound = calc(map_clock + 3);
+        sound_synth(woodchop_4,0,8);
+    } 
+    // second
+    else if (%skill_sound = map_clock) {
+        sound_synth(woodchop_4,0,0);
+    } 
+    // first
+    else if (%skill_sound = calc(map_clock + 2)) {
+        sound_synth(woodchop_4,0,18);
+    }
+}
+p_oploc(3);
+
+
+[proc,jungle_at_dest](coord $dest)(boolean)
+if (loc_find($dest, jungle_bush_1) = true | loc_find($dest, jungle_bush_2) = true | 
+    loc_find($dest, jungle_tree_1) = true | loc_find($dest, jungle_tree_2) = true | 
+    loc_find($dest, jungle_tree_3) = true) {
+        return (true);
+}
+return (false);

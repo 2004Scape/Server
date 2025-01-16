@@ -34,6 +34,25 @@ data=successchance,mithril_axe,160,500
 data=successchance,adamant_axe,192,600
 data=successchance,rune_axe,224,700
 
+[jungle_tree_table]
+table=woodcutting_trees
+data=tree,jungle_tree_1
+data=tree,jungle_tree_2
+data=tree,jungle_tree_3
+data=tree,jungle_bush_1
+data=tree,jungle_bush_2
+data=levelrequired,0
+data=productexp,100
+data=product,logs
+data=respawnrate,4
+data=successchance,bronze_axe,64,200
+data=successchance,iron_axe,96,300
+data=successchance,steel_axe,128,400
+data=successchance,black_axe,144,450
+data=successchance,mithril_axe,160,500
+data=successchance,adamant_axe,192,600
+data=successchance,rune_axe,224,700
+
 [burnt_tree_table]
 table=woodcutting_trees
 data=tree,loc_1384

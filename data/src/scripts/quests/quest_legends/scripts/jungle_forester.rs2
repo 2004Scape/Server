@@ -116,7 +116,6 @@ else {
 }
 
 [label,jungle_forester_map]
-// todo: mesanim check
 ~chatnpc("<p,neutral>@blu@--The forester looks very interested--|@bla@Oh, well, that sounds quite good actually... Sorry if I sounded rude before, it just didn't seem like a good idea to me.");
 ~chatnpc("<p,neutral>I guess I just wouldn't want to do it myself. But a map of that area would certainly be a big task. And it would certainly be very useful...|@blu@-- The forester looks very thoughtful --");
 ~chatnpc("<p,neutral>Hey, if you manage to complete it, be sure to let me take a look! Well, best of luck with it, I'm sure you're going to need it.");

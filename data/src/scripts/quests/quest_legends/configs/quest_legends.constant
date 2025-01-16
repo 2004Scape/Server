@@ -37,17 +37,20 @@
 ^legends_jungle_west_mapped = 0
 ^legends_jungle_middle_mapped = 1
 ^legends_jungle_east_mapped = 2
+// Below are used to enable dialogue options with Gujuo, but are not tracked as part of quest progress
 ^legends_entered_cavern = 3
-// not sure on this one
-^legends_asked_who = 4
-
-
-^legends_soul_rune_used = 3
-^legends_mind_rune_used = 4
-^legends_earth_rune_used = 5
-^legends_law_rune_1_used = 6
-^legends_law_rune_2_used = 7
+^legends_asked_ungadulu_where = 4
+^legends_asked_ungadulu_who = 5
+^legends_ungadulu_called_vacu = 6
+^legends_soul_rune_used = 7
+^legends_mind_rune_used = 8
+^legends_earth_rune_used = 9
+^legends_law_rune_1_used = 10
+^legends_law_rune_2_used = 11
 // todo: check if gem puzzle progress is stored. wiki seems to suggest not
+// 10 doses of holy water, decremented when using vial or extinguishing flames
+^legends_golden_bowl_uses_start = 11
+^legends_golden_bowl_uses_end = 15
 
 ^legends_required_questpoints = 107
 

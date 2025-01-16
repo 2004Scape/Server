@@ -44,8 +44,10 @@ if (%tutorial_progress < ^tutorial_complete) {
     }
 }
 
-if (oc_category(last_useitem) = category_151) @smithing_anvil_interface(last_useitem);
+if (last_useitem = gold_bar & %legends_progress >= ^legends_asked_gujuo_holy_water) @make_golden_bowl;
+else if (oc_category(last_useitem) = category_151) @smithing_anvil_interface(last_useitem);
 else if (last_useitem = shield_left_half | last_useitem = shield_right_half) @make_dragon_sq;
+else ~displaymessage(^dm_default);
 
 [if_close,smithing]
 inv_stoptransmit(smithing:column1);
