@@ -35,12 +35,13 @@ export class PlayerLoading {
     }
 
     static load(name: string, sav: Packet, client: ClientSocket | null) {
-        const name37 = toBase37(name);
-        const safeName = fromBase37(name37);
+        const hash64 = toBase37(name); // username or email.
+        const name37 = toBase37(name); // always username.
+        const safeName = fromBase37(name37); // always safe username.
 
         const player = client
-            ? new NetworkPlayer(safeName, name37, client)
-            : new Player(safeName, name37);
+            ? new NetworkPlayer(safeName, name37, hash64, client)
+            : new Player(safeName, name37, hash64);
 
         if (sav.data.length < 2) {
             for (let i = 0; i < 21; i++) {

@@ -112,7 +112,7 @@ export default class Zone {
                         updated = true;
                     }
                 } else if (obj.lifecycle === EntityLifeCycle.RESPAWN) {
-                    World.addObj(obj, -1, 0);
+                    World.addObj(obj, Obj.NO_RECEIVER, 0);
                     updated = true;
                 }
             }
@@ -167,7 +167,7 @@ export default class Zone {
         // full update necessary to clear client zone memory
         player.write(new UpdateZoneFullFollows(this.x, this.z, player.originX, player.originZ));
         for (const obj of this.getAllObjsUnsafe(true)) {
-            if (obj.lastLifecycleTick === currentTick || (obj.receiverId !== -1 && obj.receiverId !== player.pid)) {
+            if (obj.lastLifecycleTick === currentTick || (obj.receiver64 !== Obj.NO_RECEIVER && obj.receiver64 !== player.hash64)) {
                 continue;
             }
             player.write(new UpdateZonePartialFollows(this.x, this.z, player.originX, player.originZ));
@@ -212,7 +212,7 @@ export default class Zone {
         }
         player.write(new UpdateZonePartialFollows(this.x, this.z, player.originX, player.originZ));
         for (const event of this.follows()) {
-            if (event.receiverId !== -1 && event.receiverId !== player.pid) {
+            if (event.receiver64 !== Obj.NO_RECEIVER && event.receiver64 !== player.hash64) {
                 continue;
             }
             player.write(event.message);
@@ -249,7 +249,7 @@ export default class Zone {
 
         this.locs.sortStack(coord);
 
-        this.queueEvent(loc, new ZoneEvent(ZoneEventType.ENCLOSED, -1, new LocAddChange(coord, loc.type, loc.shape, loc.angle)));
+        this.queueEvent(loc, new ZoneEvent(ZoneEventType.ENCLOSED, -1n, new LocAddChange(coord, loc.type, loc.shape, loc.angle)));
     }
 
     removeLoc(loc: Loc): void {
@@ -262,7 +262,7 @@ export default class Zone {
         this.clearQueuedEvents(loc);
 
         if (loc.lastLifecycleTick !== World.currentTick) {
-            this.queueEvent(loc, new ZoneEvent(ZoneEventType.ENCLOSED, -1, new LocDel(coord, loc.shape, loc.angle)));
+            this.queueEvent(loc, new ZoneEvent(ZoneEventType.ENCLOSED, -1n, new LocDel(coord, loc.shape, loc.angle)));
         }
     }
 
@@ -276,16 +276,16 @@ export default class Zone {
     }
 
     mergeLoc(loc: Loc, player: Player, startCycle: number, endCycle: number, south: number, east: number, north: number, west: number): void {
-        this.queueEvent(loc, new ZoneEvent(ZoneEventType.ENCLOSED, -1, new LocMerge(loc.x, loc.z, loc.shape, loc.angle, loc.type, startCycle, endCycle, player.pid, east, south, west, north)));
+        this.queueEvent(loc, new ZoneEvent(ZoneEventType.ENCLOSED, -1n, new LocMerge(loc.x, loc.z, loc.shape, loc.angle, loc.type, startCycle, endCycle, player.pid, east, south, west, north)));
     }
 
     animLoc(loc: Loc, seq: number): void {
-        this.queueEvent(loc, new ZoneEvent(ZoneEventType.ENCLOSED, -1, new LocAnim(CoordGrid.packZoneCoord(loc.x, loc.z), loc.shape, loc.angle, seq)));
+        this.queueEvent(loc, new ZoneEvent(ZoneEventType.ENCLOSED, -1n, new LocAnim(CoordGrid.packZoneCoord(loc.x, loc.z), loc.shape, loc.angle, seq)));
     }
 
     // ---- objs ----
 
-    addObj(obj: Obj, receiverId: number): void {
+    addObj(obj: Obj, receiver64: bigint): void {
         const coord: number = CoordGrid.packZoneCoord(obj.x, obj.z);
         if (obj.lifecycle === EntityLifeCycle.DESPAWN) {
             this.objs.addLast(coord, obj);
@@ -293,37 +293,38 @@ export default class Zone {
 
         this.objs.sortStack(coord);
 
-        if (obj.lifecycle === EntityLifeCycle.RESPAWN || receiverId === -1) {
-            this.queueEvent(obj, new ZoneEvent(ZoneEventType.ENCLOSED, receiverId, new ObjAdd(coord, obj.type, obj.count)));
+        if (obj.lifecycle === EntityLifeCycle.RESPAWN || receiver64 === Obj.NO_RECEIVER) {
+            this.queueEvent(obj, new ZoneEvent(ZoneEventType.ENCLOSED, receiver64, new ObjAdd(coord, obj.type, obj.count)));
         } else if (obj.lifecycle === EntityLifeCycle.DESPAWN) {
-            this.queueEvent(obj, new ZoneEvent(ZoneEventType.FOLLOWS, receiverId, new ObjAdd(coord, obj.type, obj.count)));
+            this.queueEvent(obj, new ZoneEvent(ZoneEventType.FOLLOWS, receiver64, new ObjAdd(coord, obj.type, obj.count)));
         }
     }
 
-    revealObj(obj: Obj, receiverId: number): void {
+    revealObj(obj: Obj, receiver64: bigint): void {
         const objType: ObjType = ObjType.get(obj.type);
-        if(!(objType.tradeable && (objType.members && Environment.NODE_MEMBERS || !objType.members))) {
+        if (!(objType.tradeable && (objType.members && Environment.NODE_MEMBERS || !objType.members))) {
             obj.reveal = -1;
             return;
         }
-        obj.receiverId = -1;
+
+        obj.receiver64 = Obj.NO_RECEIVER;
         obj.reveal = -1;
         obj.lastChange = -1;
 
         const coord: number = CoordGrid.packZoneCoord(obj.x, obj.z);
         this.objs.sortStack(coord);
 
-        this.queueEvent(obj, new ZoneEvent(ZoneEventType.ENCLOSED, receiverId, new ObjReveal(coord, obj.type, obj.count, receiverId)));
+        this.queueEvent(obj, new ZoneEvent(ZoneEventType.ENCLOSED, receiver64, new ObjReveal(coord, obj.type, obj.count, World.getPlayerByHash64(receiver64)?.pid ?? 0)));
     }
 
-    changeObj(obj: Obj, receiverId: number, oldCount: number, newCount: number): void {
+    changeObj(obj: Obj, receiver64: bigint, oldCount: number, newCount: number): void {
         obj.count = newCount;
         obj.lastChange = World.currentTick;
 
         const coord: number = CoordGrid.packZoneCoord(obj.x, obj.z);
         this.objs.sortStack(coord);
 
-        this.queueEvent(obj, new ZoneEvent(ZoneEventType.FOLLOWS, receiverId, new ObjCount(coord, obj.type, oldCount, newCount)));
+        this.queueEvent(obj, new ZoneEvent(ZoneEventType.FOLLOWS, receiver64, new ObjCount(coord, obj.type, oldCount, newCount)));
     }
 
     removeObj(obj: Obj): void {
@@ -336,26 +337,26 @@ export default class Zone {
         this.clearQueuedEvents(obj);
 
         if (obj.lastLifecycleTick !== World.currentTick) {
-            if (obj.lifecycle === EntityLifeCycle.RESPAWN || obj.receiverId === -1) {
-                this.queueEvent(obj, new ZoneEvent(ZoneEventType.ENCLOSED, -1, new ObjDel(coord, obj.type)));
+            if (obj.lifecycle === EntityLifeCycle.RESPAWN || obj.receiver64 === Obj.NO_RECEIVER) {
+                this.queueEvent(obj, new ZoneEvent(ZoneEventType.ENCLOSED, Obj.NO_RECEIVER, new ObjDel(coord, obj.type)));
             } else if (obj.lifecycle === EntityLifeCycle.DESPAWN) {
-                this.queueEvent(obj, new ZoneEvent(ZoneEventType.FOLLOWS, -1, new ObjDel(coord, obj.type)));
+                this.queueEvent(obj, new ZoneEvent(ZoneEventType.FOLLOWS, Obj.NO_RECEIVER, new ObjDel(coord, obj.type)));
             }
         }
     }
 
-    getObj(x: number, z: number, type: number, receiverId: number): Obj | null {
+    getObj(x: number, z: number, type: number, receiver64: bigint): Obj | null {
         for (const obj of this.getObjsSafe(CoordGrid.packZoneCoord(x, z))) {
-            if (!((obj.receiverId !== -1 && obj.receiverId !== receiverId) || obj.type !== type)) {
+            if (!((obj.receiver64 !== Obj.NO_RECEIVER && obj.receiver64 !== receiver64) || obj.type !== type)) {
                 return obj;
             }
         }
         return null;
     }
 
-    getObjOfReceiver(x: number, z: number, type: number, receiverId: number): Obj | null {
+    getObjOfReceiver(x: number, z: number, type: number, receiver64: bigint): Obj | null {
         for (const obj of this.getObjsSafe(CoordGrid.packZoneCoord(x, z))) {
-            if (!((obj.receiverId !== receiverId) || obj.type !== type)) {
+            if (!((obj.receiver64 !== receiver64) || obj.type !== type)) {
                 return obj;
             }
         }
@@ -365,11 +366,11 @@ export default class Zone {
     // ---- not tied to any entities ----
 
     animMap(x: number, z: number, spotanim: number, height: number, delay: number): void {
-        this.events.add(new ZoneEvent(ZoneEventType.ENCLOSED, -1, new MapAnim(CoordGrid.packZoneCoord(x, z), spotanim, height, delay)));
+        this.events.add(new ZoneEvent(ZoneEventType.ENCLOSED, -1n, new MapAnim(CoordGrid.packZoneCoord(x, z), spotanim, height, delay)));
     }
 
     mapProjAnim(x: number, z: number, dstX: number, dstZ: number, target: number, spotanim: number, srcHeight: number, dstHeight: number, startDelay: number, endDelay: number, peak: number, arc: number): void {
-        this.events.add(new ZoneEvent(ZoneEventType.ENCLOSED, -1, new MapProjAnim(x, z, dstX, dstZ, target, spotanim, srcHeight, dstHeight, startDelay, endDelay, peak, arc)));
+        this.events.add(new ZoneEvent(ZoneEventType.ENCLOSED, -1n, new MapProjAnim(x, z, dstX, dstZ, target, spotanim, srcHeight, dstHeight, startDelay, endDelay, peak, arc)));
     }
 
     // ---- core functions ----
