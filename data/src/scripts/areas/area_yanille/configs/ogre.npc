@@ -133,7 +133,7 @@ head1=model_141_npc_head
 param=death_anim,giant_death
 param=death_sound,giant_death
 
-[npc_854]
+[grew]
 vislevel=hide
 name=Grew
 desc=Very probably an ogre.

@@ -1,0 +1,5 @@
+[opnpc1,grew]
+switch_int(%itwatchtower_progress) {
+    case ^itwatchtower_not_started : 
+        mes("The ogre has nothing to say to you at the moment.");
+}
