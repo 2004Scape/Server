@@ -50,14 +50,15 @@ if (uid ! %npc_macro_event_target) {
     ~chatnpc("<p,drunk>You're not my matey!"); // osrs
     return;
 }
-if (%macro_event_uid ! npc_uid) {
+if (%npc_macro_event_status = ^drunken_dwarf_happy) {
     ~chatnpc("<p,drunk>'Ave a good 'un buddy!"); // osrs
     return;
 }
 inv_add(inv, kebab, 1);
 inv_add(inv, beer, 1);
+
+%npc_macro_event_status = ^drunken_dwarf_happy;
 %macro_event = ^no_macro_event;
-%macro_event_uid = null;
 
 npc_queue(6, 0, 0); // say good bye
 ~chatnpc("<p,drunk>I 'new it were you matey! 'Ere, have some ob the good stuff!"); // osrs
@@ -74,11 +75,6 @@ if (%npc_macro_event_status = ^drunken_dwarf_angry) {
 if (~macro_event_lost = true) {
     npc_queue(5, 0, 0);
     return;
-}
-if (finduid(%npc_macro_event_target) = true) {
-    if (%macro_event_uid = npc_uid) {
-        npc_setmode(playerfollow); // this is here because they used ~chatnpc back in the day, which sets the npc
-    }
 }
 
 // https://youtu.be/8wJZmDwcBKs?t=108

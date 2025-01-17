@@ -12,10 +12,6 @@ npc_setmode(playerfollow);
 
 [ai_queue4,macro_event_genie]
 if (finduid(%npc_macro_event_target) = true) {
-    if (%macro_event_uid ! npc_uid) {
-        npc_queue(5, 0, 2); // just incase
-        return;
-    }
     // warning message https://youtu.be/TCQl_9PALag?list=PLn23LiLYLb1Y3P9S9qZbijcJihiD416jT&t=395
     // this video goes 50t after respawn without warning message https://youtu.be/KkyVz0tSOQA?list=PLn23LiLYLb1Y3P9S9qZbijcJihiD416jT&t=176
     // 3 warning messages: https://youtu.be/g5k3XuXxyYQ?list=PLn23LiLYLb1Y3P9S9qZbijcJihiD416jT
@@ -29,19 +25,19 @@ if (finduid(%npc_macro_event_target) = true) {
         npc_anim(emote_angry, 20);
         npc_say("You shouldn't ignore a Genie master <displayname>?");
     } else if (last_int = 3) { // failing genie: https://youtu.be/MS7ADB-hh18?t=6
-        queue(genie_fail, 0);
+        npc_say("No one ignores me!");
+        npc_anim(human_castteleport, 0);
+        // if (random(2) = 0 & inv_freespace(inv) < inv_size(inv)) { // 50% chance to teleport or scatter inv. Only scatter if they actually have items
+        //     queue(macro_event_fail_scatter_inv, 0);
+        // } else {
+        //     queue(macro_event_fail_teleport, 0);
+        // }
+        queue(macro_event_fail_teleport, 0);
+        npc_delay(0);
+        npc_del;
         return;
     }
     npc_queue(4, add(last_int, 1), 20);
-}
-
-[queue,genie_fail]
-if (npc_finduid(%macro_event_uid) = true) {
-    if (random(2) < 1 & inv_freespace(inv) < inv_size(inv)) { // 50% chance to teleport or scatter inv
-        ~macro_event_fail_scatter_inv;
-    } else {
-        ~macro_event_fail_teleport;
-    }
 }
 
 [ai_queue5,macro_event_genie]
@@ -64,11 +60,11 @@ if (uid ! %npc_macro_event_target) {
     }
     return;
 }
-if (%macro_event_uid ! npc_uid) {
+if (%npc_macro_event_status = ^genie_happy) {
     ~chatnpc("<p,neutral>Have a nice day, <text_gender("master", "mistress")>.");
     return;
 }
-%macro_event_uid = null;
+%npc_macro_event_status = ^genie_happy;
 %macro_event = ^no_macro_event;
 inv_add(inv, lamp, 1);
 // delays are taken from this video: https://youtu.be/EN4c2hV65Qk?list=PLn23LiLYLb1Y3P9S9qZbijcJihiD416jT
@@ -81,9 +77,4 @@ if (~macro_event_lost = true) {
     // only confirmed for mysterious old man
     npc_queue(5, 0, 0);
     return;
-}
-if (finduid(%npc_macro_event_target) = true) {
-    if (%macro_event_uid = npc_uid) {
-        npc_setmode(playerfollow); // this is here because they used ~chatnpc back in the day, which sets the npc
-    }
 }

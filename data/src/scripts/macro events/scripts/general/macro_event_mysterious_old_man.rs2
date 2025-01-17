@@ -16,10 +16,6 @@ npc_setmode(playerfollow);
 // warnings https://youtu.be/Ai89wqupYqA
 // https://youtu.be/HpmsgVshwxg?t=267
 if (finduid(%npc_macro_event_target) = true) {
-    if (%macro_event_uid ! npc_uid) {
-        npc_queue(5, 0, 2); // just incase
-        return;
-    }
     if (last_int = 0) {
         npc_anim(emote_wave, 20);
         npc_say("ehem... Hello <displayname>!");
@@ -30,19 +26,18 @@ if (finduid(%npc_macro_event_target) = true) {
         npc_anim(emote_angry, 20);
         npc_say("It's really rude to ignore someone, <displayname>!");
     } else if (last_int = 3) { // fail
-        queue(mysterious_old_man_fail, 0);
+        npc_say("No one ignores me!");
+        npc_anim(human_castteleport, 0);
+        // https://youtu.be/Ai89wqupYqA?t=45
+        queue(macro_event_fail_teleport, 0);
+        queue(macro_event_fail_note_inv, 0);
+        npc_delay(2);
+        npc_del;
         return;
     }
     npc_queue(4, add(last_int, 1), 20);
 }
 
-
-[queue,mysterious_old_man_fail]
-if (npc_finduid(%macro_event_uid) = true) {
-    // https://youtu.be/Ai89wqupYqA?t=45
-    ~macro_event_fail_teleport;
-    ~macro_event_fail_note_inv; // not sure if this existed but Sudden and a couple others remember it being a thing
-}
 
 [ai_queue5,macro_event_mysterious_old_man_general] // despawn
 npc_anim(emote_cry, 20);
@@ -63,12 +58,11 @@ if (uid ! %npc_macro_event_target) {
     }
     return;
 }
-if (%macro_event_uid ! npc_uid) {
+if (%npc_macro_event_status = ^mysterious_old_man_happy) {
     ~chatnpc("<p,neutral>Goodbye.");
     return;
 }
-%macro_event = ^no_macro_event;
-%macro_event_uid = null;
+%npc_macro_event_status = ^mysterious_old_man_happy;
 inv_add(inv, ~macro_event_mysterious_old_man_general_reward);
 // dialogue taken from osrs. Neutral is a guess.
 npc_queue(6, 0, 2); // say goodbye to player
@@ -111,9 +105,4 @@ if (~macro_event_lost = true) {
     // only confirmed for mysterious old man https://youtu.be/HwGAzcmvF9k?list=PLn23LiLYLb1Y3P9S9qZbijcJihiD416jT
     npc_queue(5, 0, 0);
     return;
-}
-if (finduid(%npc_macro_event_target) = true) {
-    if (%macro_event_uid = npc_uid) {
-        npc_setmode(playerfollow); // this is here because they used ~chatnpc back in the day, which sets the npc
-    }
 }
