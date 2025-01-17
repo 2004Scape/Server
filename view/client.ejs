@@ -1,3 +1,4 @@
+<!DOCTYPE html>
 <html>
 
 <head>
@@ -7,10 +8,12 @@
     <meta name="viewport" content="width=device-width, initial-scale=1">
 
     <style>
-        body, td, p {
-          font-family: Arial, Helvetica, sans-serif;
-          font-size: 12px;
-          color: white;
+        body,
+        td,
+        p {
+            font-family: Arial, Helvetica, sans-serif;
+            font-size: 12px;
+            color: white;
         }
 
         body {
@@ -103,21 +106,22 @@
 
 <body>
     <canvas id="canvas" width="789" height="532">
-        This browser is not capable of running the Modern Web Client. Please use one of the other playable options.
+        Your browser is not capable of running our web client.
     </canvas>
 
     <div class="centered" id="controls">
-        <a class="green" href="#" id="fullscreen" onclick="toggleFullscreen();">Go fullscreen</a> | 
+        <a class="green" href="#" id="fullscreen" onclick="toggleFullscreen();">Go fullscreen</a> |
         <a class="green" href="#" id="filtering" onclick="toggleFiltering();">Auto scaling</a> |
         <a class="green" href="#" id="screenshot" onclick="saveScreenshot();">Take screenshot</a> |
         <a class="green" href="#" id="hide" onclick="hideControls();">Hide controls</a>
     </div>
 
-    <script type="text/javascript" charset="utf-8" src="/js/client.js"></script>
-    <script>
-        window.onload = async () => {
-            new Game(<%= nodeid %>, <%= portoff %>, <%= lowmem %>, <%= members %>);
-        }
+    <script type="module">
+        import { Client } from './client/Client.js';
+
+        (() => {
+            new Client(<%= nodeid %>, <%= portoff %>, <%= lowmem %>, <%= members %>);
+        })();
     </script>
 </body>
 
