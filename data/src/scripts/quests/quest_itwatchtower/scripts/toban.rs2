@@ -1,0 +1,2 @@
+[opnpc1,toban]
+mes("He is busy at the moment.");

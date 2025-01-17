@@ -119,7 +119,7 @@ huntrange=2
 // Stats match osrs version but our version Vislvl is different.
 // https://raw.githubusercontent.com/Joshua-F/osrs-dumps/refs/heads/master/config/dump.npc npc_4363
 
-[npc_853]
+[og]
 vislevel=hide
 name=Og
 desc=A senior member of the ogre community.
@@ -147,7 +147,7 @@ head1=model_141_npc_head
 param=death_anim,giant_death
 param=death_sound,giant_death
 
-[npc_855]
+[toban]
 vislevel=hide
 name=Toban
 desc=Ogre-ish.
@@ -161,7 +161,7 @@ head1=model_141_npc_head
 param=death_anim,giant_death
 param=death_sound,giant_death
 
-[npc_856]
+[gorad]
 name=Gorad
 desc=Big, dumb and ugly.
 size=2

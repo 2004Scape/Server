@@ -21,7 +21,7 @@ if(%itwatchtower_progress = ^itwatchtower_not_started) {
 
 [oploc1,loc_2833]
 if(%itwatchtower_progress = ^itwatchtower_not_started) {
-    ~chatnpc_specific(nc_name(tower_guard), tower_guard, "You can't go up there. That's private, that is.");
+    ~chatnpc_specific(nc_name(tower_guard), tower_guard, "<p,angry>You can't go up there.|That's private, that is.");
     return;
 }
 
@@ -44,3 +44,22 @@ p_teleport(0_39_47_56_26);
 [oploc1,loc_2809]
 mes("There's no way I can find my way through without a map of some kind.");
 p_teleport(0_40_47_3_16);
+
+[oploc1,loc_2790]
+mes("The chest is locked.");
+~chatplayer("<p,quiz>I think I need a key of some sort.");
+
+[oploc1,loc_2811]
+mes("You enter the cave.");
+p_teleport(0_40_47_16_21);
+~chatplayer("<p,shock>Wow! That tunnel went a long way.");
+
+[oploc1,loc_2812]
+mes("You climb down the ladder.");
+p_teleport(0_39_46_4_44);
+
+[oploc1,loc_2796]
+@climb_ladder(2_39_48_53_40, true);
+
+[oploc1,loc_2797]
+@climb_ladder(1_39_48_53_40, true);

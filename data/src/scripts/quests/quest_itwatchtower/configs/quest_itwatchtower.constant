@@ -1,3 +1,4 @@
 ^itwatchtower_not_started = 0
+^itwatchtower_started = 1
 ^itwatchtower_complete = 13
 ^itwatchtower_complete_read_scroll = 14

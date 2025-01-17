@@ -1,0 +1,2 @@
+[opnpc1,gorad]
+mes("Gorad is busy; try again later.");
