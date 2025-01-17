@@ -8,7 +8,6 @@ export default class MidiJingleEncoder extends MessageEncoder<MidiJingle> {
 
     encode(buf: Packet, message: MidiJingle): void {
         buf.p2(message.delay);
-        buf.p4(message.data.length);
         buf.pdata(message.data, 0, message.data.length);
     }
 

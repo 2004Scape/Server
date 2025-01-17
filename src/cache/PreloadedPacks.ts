@@ -32,8 +32,7 @@ export function preloadClient() {
     for (let i = 0; i < allJingles.length; i++) {
         const name = allJingles[i];
 
-        // Strip off bzip header.
-        const jingle = new Uint8Array(fs.readFileSync(`data/pack/client/jingles/${name}`).subarray(4));
+        const jingle = new Uint8Array(fs.readFileSync(`data/pack/client/jingles/${name}`));
         const crc = Packet.getcrc(jingle, 0, jingle.length);
 
         PRELOADED.set(name, jingle);
