@@ -26,6 +26,7 @@
     "precommit": "prettier . --write && eslint src --fix",
     "prepare": "husky",
     "quickstart": "tsx src/app.ts",
+    "setup": "tsx tools/server/setup.ts",
     "start": "npm i && tsx src/app.ts",
     "test": "vitest run ./src",
     "todo": "leasot src/ --skip-unsupported --exit-nicely"
@@ -38,6 +39,7 @@
     ]
   },
   "dependencies": {
+    "@inquirer/prompts": "^7.2.3",
     "@jimp/js-png": "^1.6.0",
     "@jimp/plugin-quantize": "^1.6.0",
     "axios": "^1.7.9",

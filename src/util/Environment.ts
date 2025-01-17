@@ -3,6 +3,8 @@ import { tryParseArray, tryParseBoolean, tryParseInt, tryParseString } from '#/u
 import WalkTriggerSetting from '#/util/WalkTriggerSetting.js';
 
 export default {
+    EASY_STARTUP: tryParseBoolean(process.env.EASY_STARTUP, false),
+
     // bundler/webrtc browser mode
     STANDALONE_BUNDLE: tryParseBoolean(process.env.STANDALONE_BUNDLE, false),
 
