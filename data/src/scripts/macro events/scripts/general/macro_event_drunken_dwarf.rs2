@@ -72,7 +72,7 @@ if (%npc_macro_event_status = ^drunken_dwarf_angry) {
     }
     return;
 }
-if (~macro_event_lost = true) {
+if (~macro_event_lost = true & %npc_macro_event_status ! ^drunken_dwarf_happy) {
     npc_queue(5, 0, 0);
     return;
 }
