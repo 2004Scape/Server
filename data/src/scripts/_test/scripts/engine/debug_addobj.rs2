@@ -1,7 +1,4 @@
 [debugproc,addobj]
-if (map_production = true) {
-    return;
-}
 if_close;
 if (p_finduid(uid) = true) {
     obj_add(movecoord(coord, 0, 0, 5), logs, 1, ^lootdrop_duration);
@@ -11,10 +8,6 @@ if (p_finduid(uid) = true) {
 }
 
 [debugproc,addobj2](int $size)
-if (map_production = true) {
-    return;
-}
-
 def_int $half = calc(($size / 2) * -1);
 
 def_int $x = 0;

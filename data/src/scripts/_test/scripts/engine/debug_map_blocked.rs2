@@ -1,8 +1,4 @@
 [debugproc,map_blocked]
-if (map_production = true) {
-    return;
-}
-
 def_boolean $west = map_blocked(movecoord(coord, -1, 0, 0));
 def_boolean $east = map_blocked(movecoord(coord, 1, 0, 0));
 def_boolean $north = map_blocked(movecoord(coord, 0, 0, 1));
