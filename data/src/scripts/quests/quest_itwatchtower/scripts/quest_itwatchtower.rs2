@@ -10,8 +10,6 @@ mes("...and squeeze in through the window.");
 [oploc1,loc_2798]
 if(%itwatchtower_progress = ^itwatchtower_not_started) {
     ~chatplayer("<p,happy>I am not sure why I am searching this bush.");
-} else if(%itwatchtower_progress = ^itwatchtower_started) {
-
 } else {
     ~chatplayer("<p,happy>Hmmm, nothing here.");
 }
@@ -20,12 +18,6 @@ if(%itwatchtower_progress = ^itwatchtower_not_started) {
 if(%itwatchtower_progress = ^itwatchtower_not_started) {
     say("I am not sure why I am searching this bush.");
 } else if(%itwatchtower_progress = ^itwatchtower_started) {
-    if(inv_total(inv, unusual_armour) > 0) { // no bank check for any of them
-        ~chatplayer("<p,quiz>I have already searched this place.");
-        return;
-    }
-    inv_add(inv, unusual_armour, 1);
-    ~chatplayer("<p,happy>Here's some armour; it could be evidence...");
 } else {
     ~chatplayer("<p,happy>I have already searched this place.");
 }
@@ -74,17 +66,18 @@ if(%itwatchtower_progress = ^itwatchtower_not_started) {
 
 [oploc1,loc_2803]
 if(%itwatchtower_progress = ^itwatchtower_not_started) {
-    ~chatplayer("<p,happy>I am not sure why I am searching this bush.");
-} if(%itwatchtower_progress = ^itwatchtower_started) {
-    if(inv_total(inv, old_robe) > 0) {
+    say("I am not sure why I am searching this bush.");
+} else if(%itwatchtower_progress = ^itwatchtower_started) {
+    if(inv_total(inv, unusual_armour) > 0) { // no bank check for any of them
         ~chatplayer("<p,quiz>I have already searched this place.");
         return;
     }
-    inv_add(inv, old_robe, 1);
-    ~chatplayer("<p,happy>Aha! A robe. This could be a clue...");
+    inv_add(inv, unusual_armour, 1);
+    ~chatplayer("<p,happy>Here's some armour; it could be evidence...");
 } else {
     ~chatplayer("<p,happy>Hmmm, nothing here.");
 }
+
 
 [oploc1,loc_2833]
 if(%itwatchtower_progress = ^itwatchtower_not_started) {
