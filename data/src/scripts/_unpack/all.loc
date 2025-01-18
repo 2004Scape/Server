@@ -13387,6 +13387,8 @@ desc=An entrance to Gu'Tanoth.
 model=model_loc_52
 op1=Open
 active=yes
+category=double_door_open_and_close_left
+param=next_loc_stage,loc_1562
 
 [loc_2787]
 name=City gate
@@ -13395,6 +13397,8 @@ model=model_loc_52
 op1=Open
 active=yes
 mirror=yes
+category=double_door_open_and_close_right
+param=next_loc_stage,loc_1563
 
 [loc_2788]
 name=City gate

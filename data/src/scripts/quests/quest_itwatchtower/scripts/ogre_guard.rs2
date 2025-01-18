@@ -1,0 +1,28 @@
+[opnpc1,ogre_guard_east]
+switch_int(%itwatchtower_gold) {
+    case ^itwatchtower_found_gold :
+        ~chatnpc("<p,neutral>I know you, creature; you may pass.");
+        if(loc_find(0_39_47_53_20, loc_2787) = true) p_oploc(1);
+    case ^itwatchtower_looking_gold :
+        ~chatnpc("<p,quiz>Creature, did you bring me the gold?");
+        if(inv_total(inv, gold_bar) > 0) {
+            ~chatplayer("<p,happy>Here it is!");
+            inv_del(inv, gold_bar, 1);
+            %itwatchtower_gold = ^itwatchtower_found_gold;
+            ~chatnpc("<p,happy>It's brought it! On your way.");
+            if(loc_find(0_39_47_53_20, loc_2787) = true) p_oploc(1);
+            return;
+        }
+        ~chatplayer("<p,sad>No, I don't have it.");
+        ~chatnpc("<p,angry>No gold, no passage.|Get out of this city!");
+        mes("The guard pushes you back down the hill.");
+        p_teleport(^gutanoth_hill);
+    case default :
+        ~chatnpc("<p,angry>Halt! You cannot pass here.");
+        ~chatplayer("<p,happy>I am a friend to ogres.");
+        ~chatnpc("<p,angry>You will be my friend only with gold.|Bring me a bar of pure gold and I will let you pass.");
+        %itwatchtower_gold = ^itwatchtower_looking_gold;
+        ~chatnpc("<p,angry>For now - begone!");
+        mes("The guard pushes you back down the hill.");
+        p_teleport(^gutanoth_hill);
+}

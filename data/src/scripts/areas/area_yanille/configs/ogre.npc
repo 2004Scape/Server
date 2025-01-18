@@ -227,7 +227,7 @@ param=death_sound,giant_death
 param=death_drop,big_bones
 // https://raw.githubusercontent.com/Joshua-F/osrs-dumps/refs/heads/master/config/dump.npc npc_4368
 
-[npc_858]
+[ogre_guard_east]
 name=Ogre guard
 desc=These ogres protect the city.
 size=2

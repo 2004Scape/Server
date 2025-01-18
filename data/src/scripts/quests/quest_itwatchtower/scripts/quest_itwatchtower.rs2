@@ -10,33 +10,83 @@ mes("...and squeeze in through the window.");
 [oploc1,loc_2798]
 if(%itwatchtower_progress = ^itwatchtower_not_started) {
     ~chatplayer("<p,happy>I am not sure why I am searching this bush.");
-    return;
+} else {
+    ~chatplayer("<p,happy>Hmmm, nothing here.");
 }
 
 [oploc1,loc_2799]
 if(%itwatchtower_progress = ^itwatchtower_not_started) {
     say("I am not sure why I am searching this bush.");
-    return;
+} else if(%itwatchtower_progress = ^itwatchtower_started) {
 } else {
-    // Message("What's this? Disgusting! Some fingernails. They may be a clue though... I'd better take them.")
-    // idx: 1127, x = 2545, y = 3134, z = 0) Animation(id = 5216)
-    //
-    // anim(anim_5216, 0);
-    // not sure how to use animations yet! the above does not compile.
-    // they need unpacked and converted to "seq" or something?
-    inv_add(inv, fingernails, 1);
-    ~chatplayer("<p,quiz>What's this? Disgusting! Some fingernails. They may be a clue though... I'd better take them.");
-    // Message("I have already searched this place.")
-    // after getting fingernails
+    ~chatplayer("<p,happy>I have already searched this place.");
 }
+
+[oploc1,loc_2800]
+if(%itwatchtower_progress = ^itwatchtower_not_started) {
+    ~chatplayer("<p,happy>I am not sure why I am searching this bush.");
+} if(%itwatchtower_progress = ^itwatchtower_started) {
+    if(inv_total(inv, damaged_dagger) > 0) {
+        ~chatplayer("<p,quiz>I have already searched this place.");
+        return;
+    }
+    inv_add(inv, damaged_dagger, 1);
+    ~chatplayer("<p,happy>Aha, a dagger! I wonder if this is evidence...");
+} else {
+    ~chatplayer("<p,happy>Hmmm, nothing here.");
+}
+
+[oploc1,loc_2801]
+if(%itwatchtower_progress = ^itwatchtower_not_started) {
+    ~chatplayer("<p,happy>I am not sure why I am searching this bush.");
+} if(%itwatchtower_progress = ^itwatchtower_started) {
+    if(inv_total(inv, tattered_eye_patch) > 0) {
+        ~chatplayer("<p,quiz>I have already searched this place.");
+        return;
+    }
+    inv_add(inv, tattered_eye_patch, 1);
+    ~chatplayer("<p,happy>I've found an eye patch; I had better show this to the Watchtower Wizard.");
+} else {
+    ~chatplayer("<p,happy>Hmmm, nothing here.");
+}
+
+[oploc1,loc_2802]
+if(%itwatchtower_progress = ^itwatchtower_not_started) {
+    ~chatplayer("<p,happy>I am not sure why I am searching this bush.");
+} if(%itwatchtower_progress = ^itwatchtower_started) {
+    if(inv_total(inv, old_robe) > 0) {
+        ~chatplayer("<p,quiz>I have already searched this place.");
+        return;
+    }
+    inv_add(inv, old_robe, 1);
+    ~chatplayer("<p,happy>Aha! A robe. This could be a clue...");
+} else {
+    ~chatplayer("<p,happy>Hmmm, nothing here.");
+}
+
+[oploc1,loc_2803]
+if(%itwatchtower_progress = ^itwatchtower_not_started) {
+    say("I am not sure why I am searching this bush.");
+} else if(%itwatchtower_progress = ^itwatchtower_started) {
+    if(inv_total(inv, unusual_armour) > 0) { // no bank check for any of them
+        ~chatplayer("<p,quiz>I have already searched this place.");
+        return;
+    }
+    inv_add(inv, unusual_armour, 1);
+    ~chatplayer("<p,happy>Here's some armour; it could be evidence...");
+} else {
+    ~chatplayer("<p,happy>Hmmm, nothing here.");
+}
+
 
 [oploc1,loc_2833]
 if(%itwatchtower_progress = ^itwatchtower_not_started) {
     ~chatnpc_specific(nc_name(tower_guard), tower_guard, "<p,angry>You can't go up there.|That's private, that is.");
     return;
 } else {
-    @climb_ladder(1_39_48_48_40, true);
+    ~chatnpc_specific(nc_name(tower_guard), tower_guard, "<p,neutral>It is the wizards' helping hand - let 'em up.");
 }
+@climb_ladder(movecoord(coord, 0, 1, 0), true);
 
 [oploc1,loc_2805]
 mes("There's no way I can find my way through without a map of some kind.");
@@ -58,6 +108,9 @@ p_teleport(0_39_47_56_26);
 mes("There's no way I can find my way through without a map of some kind.");
 p_teleport(0_40_47_3_16);
 
+[oploc1,loc_2810]
+p_teleport(0_39_47_27_62);
+
 [oploc1,loc_2790]
 mes("The chest is locked.");
 ~chatplayer("<p,quiz>I think I need a key of some sort.");
@@ -76,3 +129,16 @@ p_teleport(0_39_46_4_44);
 
 [oploc1,loc_2797]
 @climb_ladder(1_39_48_53_40, true);
+
+[oploc1,loc_2786] @open_east_gutanoth_gate(^left);
+[oploc1,loc_2787] @open_east_gutanoth_gate(^right);
+
+[label,open_east_gutanoth_gate](int $side)
+if(%itwatchtower_gold < ^itwatchtower_found_gold) {
+    mes("A nearby guard calls you over.");
+    if(npc_find(coord, ogre_guard_east, 6, 2) = true) {
+        p_opnpc(1);
+    }
+    return;
+}
+~open_and_close_double_door2(~check_axis(coord, loc_coord, loc_angle), $side, grate_open); // iron_door_open
