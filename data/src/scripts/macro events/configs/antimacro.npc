@@ -81,7 +81,8 @@ model8=model_270_npc
 head1=model_64_npc_head
 head2=model_73_npc_head
 head3=model_84_idk_head
-timer=10
+// probably the same as mysterious old man
+timer=20
 param=follow_player_on_logout,^true
 
 [macro_event_mysterious_old_man_general]
@@ -114,7 +115,8 @@ model8=model_267_idk
 model9=model_185_obj_wear
 head1=model_48_npc_head
 head2=model_82_idk_head
-timer=10
+// he disappears every 20 ticks https://youtu.be/HwGAzcmvF9k?list=PLn23LiLYLb1Y3P9S9qZbijcJihiD416jT
+timer=20
 param=follow_player_on_logout,^true
 
 [macro_event_swarm]
