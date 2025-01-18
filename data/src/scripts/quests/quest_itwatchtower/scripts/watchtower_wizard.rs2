@@ -1,7 +1,29 @@
 [opnpc1,watchtower_wizard]
 switch_int(%itwatchtower_progress) {
     case ^itwatchtower_started :
-        ~chatplayer("<p,happy>Hello again.|Did you find anything of interest?");
+        ~chatnpc("<p,happy>Hello again.|Did you find anything of interest?");
+        if(inv_total(inv, fingernails) > 0) {
+            ~chatplayer("<p,happy>Have a look at these...");
+            ~chatnpc("<p,neutral>Interesting, very interesting.");
+            ~chatnpc("<p,shock>Long nails...grey in colour.|Well chewed..."); // this line at least is authentic, from sudden's RAR of images
+            ~chatnpc("<p,happy>Of course! They belong to a skavid!");
+            ~chatplayer("<p,confused>A skavid?");
+            ~chatnpc("<p,neutral>A servant race to the ogres: grey, depressed-looking|creatures, always losing nails, teeth and hair!");
+            ~chatnpc("<p,neutral>They inhabit the caves in the Feldip Hills.");
+            ~chatnpc("<p,confused>They normally keep to themselves, though. It's unusual|for them to venture from their caves.");
+            ~chatplayer("<p,neutral>What do you suggest I do?");
+            ~chatnpc("<p,neutral>It's no good searching the caves. Well, not yet, anyway.");
+            ~chatplayer("<p,confused>Why not?");
+            ~chatnpc("<p,neutral>They are deep and complex. The only way you will navigate the caves is to have a map or something.");
+            ~chatnpc("<p,neutral>It may be that the ogres have one...");
+            ~chatplayer("<p,confused>And how do you know that?");
+            ~chatnpc("<p,happy>Well... I don't.");
+            @multi2("So what do I do?", watchwiz_stage2, "I won't bother then.", watchwiz_wontbother);
+        } else {
+            // need dialog for if you have not found fingernails yet
+            // or there is different dialog for showing him the
+            // red-herring items perhaps?
+        }
     case ^itwatchtower_not_started :
         ~chatnpc("<p,sad>Oh my, oh my!");
         switch_int(~p_choice2("What's the matter?", 1, "You wizards are always complaining.", 2)) {
@@ -48,3 +70,20 @@ switch_int(~p_choice3("Can I be of help?", 1, "I'm not sure I can help.", 2, "I'
         ~chatplayer("<p,neutral>I'm not interested.");
         ~chatnpc("<p,angry>That's typical, nowadays.|It's left to us wizards to do all the work.");
 }
+
+[label,watchwiz_stage2]
+~chatnpc("<p,neutral>You need to be fearless and gain entrance to|Gu'Tanoth, the city of the ogres, then find out how to|navigate the caves.");
+~chatplayer("<p,neutral>That sounds scary...");
+~chatnpc("<p,neutral>Ogres are nasty creatures, yes. Only a strong warrior,|and a clever one at that, can get the better of them.");
+~chatplayer("<p,neutral>What do I need to do to get into the city?");
+~chatnpc("<p,neutral>You'll need some way to make the guards let you in.");
+%itwatchtower_progress = ^itwatchtower_gave_fingernails;
+inv_del(inv, fingernails, 1);
+~chatnpc("<p,happy>You could start by checking out the ogre settlements|around here. Tribal ogres often dislike their|neighbours... In the meantime, I'll throw those|fingernails out for you.");
+
+
+
+
+[label,watchwiz_wontbother]
+~chatplayer("<p,neutral>I won't bother then.");
+// presumably something else goes here
