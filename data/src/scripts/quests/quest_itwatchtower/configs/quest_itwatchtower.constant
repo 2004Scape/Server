@@ -2,3 +2,8 @@
 ^itwatchtower_started = 1
 ^itwatchtower_complete = 13
 ^itwatchtower_complete_read_scroll = 14
+
+^itwatchtower_looking_gold = 1
+^itwatchtower_found_gold = 2
+
+^gutanoth_hill = 0_39_47_50_57

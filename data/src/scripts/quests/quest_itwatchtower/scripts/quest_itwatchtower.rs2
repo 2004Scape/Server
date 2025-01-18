@@ -8,22 +8,38 @@ mes("...and squeeze in through the window.");
 ~agility_climb_up(310, 1_39_48_52_45);
 
 [oploc1,loc_2798]
-if(%itwatchtower_progress = ^itwatchtower_not_started) {
-    ~chatplayer("<p,happy>I am not sure why I am searching this bush.");
+if(%itwatchtower_progress = ^itwatchtower_started) {
     return;
 }
+~chatplayer("<p,happy>I am not sure why I am searching this bush.");
 
 [oploc1,loc_2799]
-if(%itwatchtower_progress = ^itwatchtower_not_started) {
-    say("I am not sure why I am searching this bush.");
+if(%itwatchtower_progress = ^itwatchtower_started) {
+
     return;
 }
+say("I am not sure why I am searching this bush.");
+
+[oploc1,loc_2802]
+if(%itwatchtower_progress = ^itwatchtower_started) {
+    if(inv_total(inv, old_robe) > 0) {
+        ~chatplayer("<p,quiz>I have already searched this place.");
+        return;
+    }
+    inv_add(inv, old_robe, 1);
+    ~chatplayer("<p,happy>Aha! A robe. This could be a clue...");
+    return;
+}
+ say("I am not sure why I am searching this bush.");
 
 [oploc1,loc_2833]
 if(%itwatchtower_progress = ^itwatchtower_not_started) {
     ~chatnpc_specific(nc_name(tower_guard), tower_guard, "<p,angry>You can't go up there.|That's private, that is.");
     return;
+} else {
+    ~chatnpc_specific(nc_name(tower_guard), tower_guard, "<p,neutral>It is the wizards' helping hand - let 'em up.");
 }
+@climb_ladder(movecoord(coord, 0, 1, 0), true);
 
 [oploc1,loc_2805]
 mes("There's no way I can find my way through without a map of some kind.");
@@ -45,6 +61,9 @@ p_teleport(0_39_47_56_26);
 mes("There's no way I can find my way through without a map of some kind.");
 p_teleport(0_40_47_3_16);
 
+[oploc1,loc_2810]
+p_teleport(0_39_47_27_62);
+
 [oploc1,loc_2790]
 mes("The chest is locked.");
 ~chatplayer("<p,quiz>I think I need a key of some sort.");
@@ -63,3 +82,16 @@ p_teleport(0_39_46_4_44);
 
 [oploc1,loc_2797]
 @climb_ladder(1_39_48_53_40, true);
+
+[oploc1,loc_2786] @open_east_gutanoth_gate(^left);
+[oploc1,loc_2787] @open_east_gutanoth_gate(^right);
+
+[label,open_east_gutanoth_gate](int $side)
+if(%itwatchtower_gold < ^itwatchtower_found_gold) {
+    mes("A nearby guard calls you over.");
+    if(npc_find(coord, ogre_guard_east, 6, 2) = true) {
+        p_opnpc(1);
+    }
+    return;
+}
+~open_and_close_double_door2(~check_axis(coord, loc_coord, loc_angle), $side, grate_open); // iron_door_open
