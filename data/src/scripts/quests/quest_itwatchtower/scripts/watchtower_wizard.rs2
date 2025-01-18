@@ -31,7 +31,7 @@ switch_int(%itwatchtower_progress) {
 ~chatnpc("<p,angry>Stolen!");
 ~chatplayer("<p,confused>Stolen?");
 ~chatnpc("<p,angry>Yes, yes! Do I have to repeat myself?");
-switch_int(~p_choice3("Can I be of help?", 1, "I'm not sure I can help.", 2, "I'm not interested.", 3) {
+switch_int(~p_choice3("Can I be of help?", 1, "I'm not sure I can help.", 2, "I'm not interested.", 3)) {
     case 1 :
         ~chatplayer("<p,neutral>Can I be of help?");
         ~chatnpc("<p,happy>Help? Oh wonderful, dear traveller!");
