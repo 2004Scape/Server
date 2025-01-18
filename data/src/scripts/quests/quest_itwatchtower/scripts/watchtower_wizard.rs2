@@ -1,5 +1,50 @@
 [opnpc1,watchtower_wizard]
 switch_int(%itwatchtower_progress) {
+    case ^itwatchtower_started:
+        ~chatplayer("<p,happy>Hello again.|Did you find anything of interest?");
     case ^itwatchtower_not_started :
-        ~chatnpc("<p,shock>Oh my, oh my!");
+        ~chatnpc("<p,sad>Oh my, oh my!");
+        switch_int(~p_choice2("What's the matter?", 1, "You wizards are always complaining.", 2)) {
+            case 1 :
+                ~chatnpc("<p,sad>Oh dear, oh dear.|Darn and drat!");
+                ~chatnpc("<p,sad>We try hard to keep this town protected.");
+                ~chatnpc("<p,sad>But how can we do that when the Watchtower isn't working?");
+                ~chatplayer("<p,neutral>What do you mean it isn't working?");
+                ~chatnpc("<p,neutral>The Watchtower here works by the power of magic.|An ancient spell designed to ward off ogres|that has been in place here for many moons.");
+                ~chatnpc("<p,sad>The exact knowledge of the spell is lost to us now,|but the essence of the spell|has been infused into four powering crystals|that keep the tower protected from the hordes in the Feldips.");
+                @multi2("So how come the spell doesn't work?", watchwiz_spell, "I'm not interested in your rantings.", watchwiz_rantings);
+            case 2 :
+                ~chatplayer("<p,happy>You wizards are always complaining.");
+                ~chatnpc("<p,angry>Complaining? Complaining!");
+                ~chatnpc("<p,neutral>What folks these days don't realise|is that if it weren't for us wizards,|this entire world would be overrun|with every creature you could possibly imagine.|And some you couldn't even conceive of!");
+        }
+}
+
+[label,watchwiz_rantings]
+~chatplayer("<p,neutral>I'm not interested in your rantings.");
+~chatnpc("<p,angry>Hmph! Suit yourself.");
+
+[label,watchwiz_spell]
+~chatplayer("<p,neutral>So how come the spell doesn't work?");
+~chatnpc("<p,sad>The crystals! The crystals have been taken!");
+~chatplayer("<p,quiz>Taken?");
+~chatnpc("<p,angry>Stolen!");
+~chatplayer("<p,confused>Stolen?");
+~chatnpc("<p,angry>Yes, yes! Do I have to repeat myself?");
+switch_int(~p_choice3("Can I be of help?", 1, "I'm not sure I can help.", 2, "I'm not interested.", 3) {
+    case 1 :
+        ~chatplayer("<p,neutral>Can I be of help?");
+        ~chatnpc("<p,happy>Help? Oh wonderful, dear traveller!");
+        ~chatnpc("<p,happy>Yes I could do with an extra pair of eyes here.");
+        ~chatplayer("<p,neutral>???");
+        ~chatnpc("<p,neutral>There must be some evidence of what has happened here. Perhaps you could assist me in searching for clues?");
+        ~chatplayer("<p,neutral>I would be happy to.");
+        %itwatchtower_progress = ^itwatchtower_started;
+        ~chatnpc("<p,neutral>Try searching the surrounding area.|If you find anything unusual, bring it here.");
+    case 2 :
+        ~chatplayer("<p,neutral>I'm not sure I can help.");
+        ~chatnpc("<p,sad>Oh dear, what am I to do? The safety of this whole area is in jeopardy!");
+    case 3 :
+        ~chatplayer("<p,neutral>I'm not interested.");
+        ~chatnpc("<p,angry>That's typical, nowadays.|It's left to us wizards to do all the work.");
 }
