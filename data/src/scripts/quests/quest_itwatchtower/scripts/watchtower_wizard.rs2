@@ -1,6 +1,6 @@
 [opnpc1,watchtower_wizard]
 switch_int(%itwatchtower_progress) {
-    case ^itwatchtower_started:
+    case ^itwatchtower_started :
         ~chatplayer("<p,happy>Hello again.|Did you find anything of interest?");
     case ^itwatchtower_not_started :
         ~chatnpc("<p,sad>Oh my, oh my!");

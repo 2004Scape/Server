@@ -1,4 +1,15 @@
 ^itwatchtower_not_started = 0
 ^itwatchtower_started = 1
+^itwatchtower_gave_watchwiz_fingernails = 2
+^itwatchtower_received_complete_statue = 3
+^itwatchtower_friend_of_ogres = 4
+^itwatchtower_city_guard = 5
+^itwatchtower_skavid_map = 6
+^itwatchtower_mad_skavid = 7
+^itwatchtower_nightshade = 8
+^itwatchtower_watchwiz_recipe = 9
+^itwatchtower_watchwiz_potion = 10
+^itwatchtower_place_crystals = 11
+// 12 gets skipped in retail
 ^itwatchtower_complete = 13
 ^itwatchtower_complete_read_scroll = 14
