@@ -8,29 +8,83 @@ mes("...and squeeze in through the window.");
 ~agility_climb_up(310, 1_39_48_52_45);
 
 [oploc1,loc_2798]
-if(%itwatchtower_progress = ^itwatchtower_started) {
-    return;
+if(%itwatchtower_progress = ^itwatchtower_not_started) {
+    ~chatplayer("<p,happy>I am not sure why I am searching this bush.");
+} else if(%itwatchtower_progress = ^itwatchtower_started) {
+
+} else {
+    ~chatplayer("<p,happy>Hmmm, nothing here.");
 }
-~chatplayer("<p,happy>I am not sure why I am searching this bush.");
 
 [oploc1,loc_2799]
-if(%itwatchtower_progress = ^itwatchtower_started) {
-
-    return;
+if(%itwatchtower_progress = ^itwatchtower_not_started) {
+    say("I am not sure why I am searching this bush.");
+} else if(%itwatchtower_progress = ^itwatchtower_started) {
+    if(inv_total(inv, unusual_armour) > 0) { // no bank check for any of them
+        ~chatplayer("<p,quiz>I have already searched this place.");
+        return;
+    }
+    inv_add(inv, unusual_armour, 1);
+    ~chatplayer("<p,happy>Here's some armour; it could be evidence...");
+} else {
+    ~chatplayer("<p,happy>I have already searched this place.");
 }
-say("I am not sure why I am searching this bush.");
+
+[oploc1,loc_2800]
+if(%itwatchtower_progress = ^itwatchtower_not_started) {
+    ~chatplayer("<p,happy>I am not sure why I am searching this bush.");
+} if(%itwatchtower_progress = ^itwatchtower_started) {
+    if(inv_total(inv, damaged_dagger) > 0) {
+        ~chatplayer("<p,quiz>I have already searched this place.");
+        return;
+    }
+    inv_add(inv, damaged_dagger, 1);
+    ~chatplayer("<p,happy>Aha, a dagger! I wonder if this is evidence...");
+} else {
+    ~chatplayer("<p,happy>Hmmm, nothing here.");
+}
+
+[oploc1,loc_2801]
+if(%itwatchtower_progress = ^itwatchtower_not_started) {
+    ~chatplayer("<p,happy>I am not sure why I am searching this bush.");
+} if(%itwatchtower_progress = ^itwatchtower_started) {
+    if(inv_total(inv, tattered_eye_patch) > 0) {
+        ~chatplayer("<p,quiz>I have already searched this place.");
+        return;
+    }
+    inv_add(inv, tattered_eye_patch, 1);
+    ~chatplayer("<p,happy>I've found an eye patch; I had better show this to the Watchtower Wizard.");
+} else {
+    ~chatplayer("<p,happy>Hmmm, nothing here.");
+}
 
 [oploc1,loc_2802]
-if(%itwatchtower_progress = ^itwatchtower_started) {
+if(%itwatchtower_progress = ^itwatchtower_not_started) {
+    ~chatplayer("<p,happy>I am not sure why I am searching this bush.");
+} if(%itwatchtower_progress = ^itwatchtower_started) {
     if(inv_total(inv, old_robe) > 0) {
         ~chatplayer("<p,quiz>I have already searched this place.");
         return;
     }
     inv_add(inv, old_robe, 1);
     ~chatplayer("<p,happy>Aha! A robe. This could be a clue...");
-    return;
+} else {
+    ~chatplayer("<p,happy>Hmmm, nothing here.");
 }
- say("I am not sure why I am searching this bush.");
+
+[oploc1,loc_2803]
+if(%itwatchtower_progress = ^itwatchtower_not_started) {
+    ~chatplayer("<p,happy>I am not sure why I am searching this bush.");
+} if(%itwatchtower_progress = ^itwatchtower_started) {
+    if(inv_total(inv, old_robe) > 0) {
+        ~chatplayer("<p,quiz>I have already searched this place.");
+        return;
+    }
+    inv_add(inv, old_robe, 1);
+    ~chatplayer("<p,happy>Aha! A robe. This could be a clue...");
+} else {
+    ~chatplayer("<p,happy>Hmmm, nothing here.");
+}
 
 [oploc1,loc_2833]
 if(%itwatchtower_progress = ^itwatchtower_not_started) {
