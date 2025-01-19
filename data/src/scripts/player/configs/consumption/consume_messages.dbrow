@@ -109,7 +109,7 @@ data=consume_message1,You eat part of the cake.
 
 [cake_part_consume_messages]
 table=consume_messages_table
-data=consumable,obj_1893
+data=consumable,partial_cake
 data=consume_message1,You eat some more of the cake.
 
 [chocolate_cake_consume_messages]
@@ -119,7 +119,7 @@ data=consume_message1,You eat part of the chocolate cake.
 
 [chocolate_cake_part_consume_messages]
 table=consume_messages_table
-data=consumable,obj_1899
+data=consumable,partial_chocolate_cake
 data=consume_message1,You eat some more of the chocolate cake.
 
 [chocolate_cake_slice_consume_messages]

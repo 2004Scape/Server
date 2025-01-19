@@ -577,7 +577,7 @@ iop2=Read
 weight=18oz
 tradeable=no
 
-[obj_712]
+[display_tea]
 name=Cup of tea
 desc=A refreshing cuppa.
 iop1=Drink

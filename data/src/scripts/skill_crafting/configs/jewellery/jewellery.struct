@@ -111,7 +111,7 @@ param=productexp,1500
 
 [unstrung_symbol]
 param=product,unstrung_symbol
-param=strung,obj_1716
+param=strung,unblessed_symbol
 param=levelrequired,16
 param=productexp,500
 param=name,Holy Symbol of Saradomin

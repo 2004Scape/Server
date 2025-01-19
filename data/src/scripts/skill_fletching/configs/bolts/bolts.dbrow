@@ -1,7 +1,7 @@
 [fletching_opal_tips]
 table=fletching_table
 data=item,opal
-data=product,obj_45,12
+data=product,opal_bolttips,12
 data=level,11
 data=experience,15
 data=skill_anim,human_opalcutting
@@ -9,35 +9,35 @@ data=skill_sound,chisel
 
 [fletching_oyster_pearl_tips]
 table=fletching_table
-data=item,oyster_perl
-data=product,obj_46,6
+data=item,oyster_pearl
+data=product,pearl_bolttips,6
 data=level,41
 data=experience,32
 
 [fletching_oyster_pearls_tips]
 table=fletching_table
-data=item,oyster_perls
-data=product,obj_46,24
+data=item,oyster_pearls
+data=product,pearl_bolttips,24
 data=level,41
 data=experience,32
 
 [fletching_opal_bolts]
 table=fletching_table
-data=item,obj_45
+data=item,opal_bolttips
 data=product,opal_bolt,10
 data=level,11
 data=experience,16
 
 [fletching_pearl_bolts]
 table=fletching_table
-data=item,obj_46
+data=item,pearl_bolttips
 data=product,pearl_bolt,10
 data=level,41
 data=experience,32
 
 [fletching_barb_bolts]
 table=fletching_table
-data=item,obj_47
+data=item,Barb_bolttips
 data=product,barbed_bolt,10
 data=level,51
 data=experience,95

@@ -4665,7 +4665,7 @@ huntmode=ranged
 // osrs stats and Vislvl match 1:1
 // https://raw.githubusercontent.com/Joshua-F/osrs-dumps/refs/heads/master/config/dump.npc npc_520
 
-[npc_182]
+[pirate_brown]
 name=Pirate
 desc=Yar! Shiver me timbers!
 walkanim=human_walk_f,human_walk_b,human_walk_l,human_walk_r
@@ -4700,13 +4700,11 @@ param=damagetype,^slash_style
 param=attack_anim,human_sword_slash
 param=defend_anim,human_sword_defend2
 param=attack_sound,hacksword_slash
-huntmode=cowardly
-huntrange=1
 category=pirate
 // Stats match osrs version but our version Vislvl is different.
 // https://raw.githubusercontent.com/Joshua-F/osrs-dumps/refs/heads/master/config/dump.npc npc_521
 
-[npc_183]
+[pirate_black]
 name=Pirate
 desc=Avast ye scurvy land lubbers!
 walkanim=human_walk_f,human_walk_b,human_walk_l,human_walk_r
@@ -4747,13 +4745,11 @@ param=damagetype,^slash_style
 param=attack_anim,human_sword_slash
 param=defend_anim,human_sword_defend2
 param=attack_sound,hacksword_slash
-huntmode=cowardly
-huntrange=1
 category=pirate
 // Stats match osrs version but our version Vislvl is different.
 // https://raw.githubusercontent.com/Joshua-F/osrs-dumps/refs/heads/master/config/dump.npc npc_522
 
-[npc_184]
+[pirate_red]
 name=Pirate
 desc=This ones had too much to drink!
 walkanim=human_walk_f,human_walk_b,human_walk_l,human_walk_r
@@ -4799,8 +4795,7 @@ huntrange=1
 // Stats match osrs version but our version Vislvl is different.
 // https://raw.githubusercontent.com/Joshua-F/osrs-dumps/refs/heads/master/config/dump.npc npc_523
 
-
-[npc_185]
+[pirate_woman]
 name=Pirate
 desc=A fine example of piracys' equal opportunities program.
 walkanim=human_walk_f,human_walk_b,human_walk_l,human_walk_r
@@ -4838,8 +4833,6 @@ param=attack_anim,human_sword_slash
 param=defend_anim,human_sword_defend2
 param=attack_sound,hacksword_slash
 category=pirate
-huntmode=cowardly
-huntrange=1
 // Stats match osrs version but our version Vislvl is different.
 // https://raw.githubusercontent.com/Joshua-F/osrs-dumps/refs/heads/master/config/dump.npc npc_524
 
