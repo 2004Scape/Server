@@ -14,6 +14,7 @@ if (%crate_bananas = 10) {
     ~chatplayer("<p,happy>I've filled a crate with bananas.");
     ~chatnpc("<p,happy>Well done, here's your payment.");
 
+    if_close;
     mes("Luthas hands you 30 coins.");
     inv_add(inv, coins, 30);
     %hunt_store_employed = clearbit(%hunt_store_employed, ^plantation);
