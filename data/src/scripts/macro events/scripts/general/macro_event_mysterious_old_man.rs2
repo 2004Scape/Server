@@ -67,6 +67,7 @@ if (%npc_int = ^mysterious_old_man_happy) {
     return;
 }
 %npc_int = ^mysterious_old_man_happy;
+%macro_event = ^no_macro_event;
 inv_add(inv, ~macro_event_mysterious_old_man_general_reward);
 // dialogue taken from osrs. Neutral is a guess.
 npc_queue(6, 0, 2); // say goodbye to player
