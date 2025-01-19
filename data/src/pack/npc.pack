@@ -113,7 +113,7 @@
 112=moss_giant
 113=jogre
 114=npc_114
-115=npc_115
+115=ogre
 116=cyclops
 117=giant
 118=npc_118
@@ -857,7 +857,7 @@
 856=gorad
 857=npc_857
 858=ogre_guard_east
-859=npc_859
+859=ogre_guard_west
 860=npc_860
 861=npc_861
 862=npc_862

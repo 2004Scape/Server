@@ -151,3 +151,25 @@ if(%itwatchtower_gold < ^itwatchtower_found_gold) {
 
 [oploc1,loc_2834]
 ~chatplayer("<p,confused>What's this? The bridge is out - I'll need to find another way in. I can see a ladder up there coming out of a hole; there must be a tunnel that leads here...");
+
+[oplocu,loc_2326]
+if(last_useitem = rope) {
+    if(distance(coord, loc_coord) > 3) {
+        mes("You need to be closer.");
+        return;
+    }
+    ~forcewalk2(0_39_48_5_15);
+    p_arrivedelay;
+    facesquare(movecoord(coord, 4, 0, 0));
+    mes("You tie the rope to the tree...");
+    anim(seq_775, 0);
+    p_delay(0);
+    inv_del(inv, rope, 1);
+    loc_change(loc_2324, 4);
+    p_delay(0);
+    loc_anim(rope_swing);
+    ~agility_exactmove(human_ropeswing, 20, 0, coord, movecoord(loc_coord, 6, 0, 0), 45, 70, ^exact_east, false);
+    mes("You skillfully swing across.");
+    return;
+}
+mes("You see no way to do that.");

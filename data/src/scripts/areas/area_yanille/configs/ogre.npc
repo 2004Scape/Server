@@ -31,7 +31,7 @@ huntrange=2
 // Stats match osrs version but our version Vislvl is different.
 // https://raw.githubusercontent.com/Joshua-F/osrs-dumps/refs/heads/master/config/dump.npc npc_2095
 
-[npc_115]
+[ogre]
 size=2
 walkanim=ogre_walk
 readyanim=ogre_ready
@@ -258,7 +258,7 @@ param=death_sound,giant_death
 param=death_drop,big_bones
 // https://raw.githubusercontent.com/Joshua-F/osrs-dumps/refs/heads/master/config/dump.npc npc_4369
 
-[npc_859]
+[ogre_guard_west]
 name=Ogre guard
 desc=An ogre that guards.
 size=2

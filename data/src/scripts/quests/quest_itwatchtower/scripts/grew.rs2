@@ -1,5 +1,28 @@
 [opnpc1,grew]
-switch_int(%itwatchtower_progress) {
-    case ^itwatchtower_not_started : 
+if(testbit(%itwatchtower_bits, ^itwatchtower_spoken_grew) = true) {
+    ~chatnpc("<p,neutral>The morsel is back.|Does it have our tooth for us?");
+    ~chatplayer("<p,neutral>Err, I don't have it.");
+    ~chatnpc("<p,angry>Morsel, you dare to return without the tooth!|Either you are stoopid, or wants to be eaten!");
+} else if(%itwatchtower_progress >= ^itwatchtower_given_fingernails) {
+        ~chatnpc("<p,angry>What do you want, little morsel?|You would look good on my plate!");
+        ~chatplayer("<p,neutral>I want to enter the city of ogres.");
+        ~chatnpc("<p,happy>Hah! I should eat you instead!");
+        switch_int(~p_choice2("Don't eat me; I can help you.", 1, "You will have to kill me first.", 2)) {
+            case 1 :
+                ~chatplayer("<p,shock>Don't eat me; I can help you.");
+                ~chatnpc("<p,bored>What can a morsel like you do for me?");
+                ~chatplayer("<p,happy>I am a mighty adventurer,|slayer of monsters and user of magic powers.");
+                ~chatnpc("<p,neutral>Well, well, perhaps the morsel can help after all...");
+                %itwatchtower_bits = setbit(%itwatchtower_bits, ^itwatchtower_spoken_grew);
+                ~chatnpc("<p,happy>If you t'ink you're tough,|find Gorad, my enemy to the south-east,|and knock one of his teeth out!|Heheheheh!");
+            case 2 :
+                ~chatplayer("<p,angry>You will have to kill me first.");
+                npc_huntall(coord, 5, 0); // seems to be 5 tiles in OSRS
+                while(npc_huntnext = true) {
+                    if(npc_type = ogre) ~npc_retaliate(0);
+                }
+                ~chatnpc("<p,angry>That's not tricky - guards!");
+        }
+} else {
         mes("The ogre has nothing to say to you at the moment.");
 }
