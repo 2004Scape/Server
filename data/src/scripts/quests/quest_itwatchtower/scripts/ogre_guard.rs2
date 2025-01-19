@@ -35,7 +35,7 @@ if(%itwatchtower_gold >= ^itwatchtower_found_gold) {
     if(last_useitem = gold_bar) p_opnpc(1); 
     else ~chatnpc("<p,angry>That is not what I want, creature! Bring me a bar of pure gold and I will let you pass.");
 } else {
-    mes("The ogre has not asked you for anything.")
+    mes("The ogre has not asked you for anything.");
 }
 
 [opnpc1,ogre_guard_west]
@@ -48,7 +48,7 @@ if(inv_total(inv, ogre_relic) > 0) {
     ~chatplayer("<p,happy>I have a relic!");
     %itwatchtower_progress = ^itwatchtower_given_relic;
     ~chatnpc("<p,happy>It's got the statue of Dalgroth. Welcome to Gu'Tanoth, friend of the ogres.");
-    // enter city
+    if(loc_find(0_39_47_8_54, loc_2788) = true) p_oploc(1);
     return;
 }
 mes("The guard pushes you back down the hill.");
@@ -62,5 +62,5 @@ if(%itwatchtower_progress >= 4) {
     if(last_useitem = ogre_relic) p_opnpc(1); 
     else ~chatnpc("<p,angry>That is of no use to me, creature!");
 } else {
-    mes("The ogre has not asked you for anything.")
+    mes("The ogre has not asked you for anything.");
 }

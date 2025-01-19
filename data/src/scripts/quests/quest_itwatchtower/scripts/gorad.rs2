@@ -12,5 +12,5 @@ if(%itwatchtower_progress >= ^itwatchtower_given_fingernails) {
             ~chatnpc("<p,angry>I am Gorad, and you are tiny.|Go now and I won't chase you!");
     }
 } else {
-    es("Gorad is busy; try again later.");
+    mes("Gorad is busy; try again later.");
 }
