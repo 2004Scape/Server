@@ -18,6 +18,12 @@ if(%itwatchtower_progress = ^itwatchtower_not_started) {
 if(%itwatchtower_progress = ^itwatchtower_not_started) {
     say("I am not sure why I am searching this bush.");
 } else if(%itwatchtower_progress = ^itwatchtower_started) {
+    if(inv_total(inv, fingernails) > 0) {
+        ~chatplayer("<p,quiz>I have already searched this place.");
+        return;
+    }
+    inv_add(inv, fingernails, 1);
+    ~chatplayer("<p,quiz>What's this? Disgusting! Some fingernails. They may be a clue though... I'd better take them.");
 } else {
     ~chatplayer("<p,happy>I have already searched this place.");
 }
@@ -82,11 +88,11 @@ if(%itwatchtower_progress = ^itwatchtower_not_started) {
 [oploc1,loc_2833]
 if(%itwatchtower_progress = ^itwatchtower_not_started) {
     ~chatnpc_specific(nc_name(tower_guard), tower_guard, "<p,angry>You can't go up there.|That's private, that is.");
-    return;
 } else {
     ~chatnpc_specific(nc_name(tower_guard), tower_guard, "<p,neutral>It is the wizards' helping hand - let 'em up.");
+    if_close;
+    @climb_ladder(movecoord(coord, 0, 1, 0), true);
 }
-@climb_ladder(movecoord(coord, 0, 1, 0), true);
 
 [oploc1,loc_2805]
 mes("There's no way I can find my way through without a map of some kind.");

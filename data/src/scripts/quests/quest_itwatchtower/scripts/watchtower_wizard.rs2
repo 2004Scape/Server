@@ -1,7 +1,48 @@
 [opnpc1,watchtower_wizard]
 switch_int(%itwatchtower_progress) {
     case ^itwatchtower_started :
-        ~chatplayer("<p,happy>Hello again.|Did you find anything of interest?");
+        ~chatnpc("<p,happy>Hello again.|Did you find anything of interest?");
+        if(inv_total(inv, fingernails) > 0) {
+            ~chatplayer("<p,happy>Have a look at these...");
+            ~chatnpc("<p,neutral>Interesting, very interesting.");
+            ~chatnpc("<p,confused>Long nails...grey in colour...well chewed...");
+            ~chatnpc("<p,happy>Of course! They belong to a skavid!");
+            ~chatplayer("<p,confused>A skavid?");
+            ~chatnpc("<p,neutral>A servant race to the ogres:|grey, depressed-looking creatures,|always losing nails, teeth and hair!");
+            ~chatnpc("<p,neutral>They inhabit the caves in the Feldip Hills.");
+            ~chatnpc("<p,neutral>They normally keep to themselves, though.|It's unusual for them to venture from their caves.");
+            def_int $op = ~p_choice2("What do you suggest I do?", 1, "Shall I search the caves?", 2);
+            if($op = 1) {
+                ~chatplayer("<p,neutral>What do you suggest I do?")
+            } else {
+                ~chatplayer("<p,neutral>Shall I search the caves?");
+            }
+            ~chatnpc("<p,neutral>It's no good searching the caves. Well, not yet, anyway.");
+            ~chatplayer("<p,confused>Why not?");
+            ~chatnpc("<p,neutral>They are deep and complex. The only way you will navigate the caves is to have a map or something.");
+            ~chatnpc("<p,neutral>It may be that the ogres have one...");
+            ~chatplayer("<p,confused>And how do you know that?");
+            ~chatnpc("<p,happy>Well... I don't.");
+            @multi2("So what do I do?", watchwiz_whatdo, "I won't bother then.", watchwiz_wontbother);
+        }
+        if(inv_total(inv, old_robe) > 0) {
+            ~chatplayer("<p,happy>I have this robe...");
+            @watchwiz_not_evidence;
+        }
+        if(inv_total(inv, old_robe) > 0) {
+            ~chatplayer("<p,happy>I found this dagger...");
+            @watchwiz_not_evidence;
+        }
+        if(inv_total(inv, old_robe) > 0) {
+            ~chatplayer("<p,happy>I have this armour...");
+            @watchwiz_not_evidence;
+        }
+        if(inv_total(inv, old_robe) > 0) {
+            ~chatplayer("<p,happy>I have an eye patch...");
+            @watchwiz_not_evidence;
+        }
+        ~chatplayer("<p,sad>No, sorry, nothing yet.");
+        ~chatnpc("<p,sad>Oh dear, oh dear, there must be something,|somewhere...");
     case ^itwatchtower_not_started :
         ~chatnpc("<p,sad>Oh my, oh my!");
         switch_int(~p_choice2("What's the matter?", 1, "You wizards are always complaining.", 2)) {
@@ -19,6 +60,21 @@ switch_int(%itwatchtower_progress) {
                 ~chatnpc("<p,neutral>What folks these days don't realise|is that if it weren't for us wizards,|this entire world would be overrun|with every creature you could possibly imagine.|And some you couldn't even conceive of!");
         }
 }
+
+[opnpcu,watchtower_wizard]
+if(%itwatchtower_progress = ^itwatchtower_started) {
+    if(last_useitem = fingernails) {
+        p_opnpc(1);
+    }
+    if(last_useitem = old_robe | last_useitem = unusual_armour | last_useitem = tattered_eye_patch | last_useitem = damaged_dagger) {
+        @watchwiz_not_evidence;
+    }
+}
+~displaymessage(^dm_default);
+
+[label,watchwiz_not_evidence]
+~chatnpc("<p,confused>Let me see...");
+~chatnpc("<p,neutral>No, sorry, this is not evidence. You need to keep searching, I'm afraid.");
 
 [label,watchwiz_rantings]
 ~chatplayer("<p,neutral>I'm not interested in your rantings.");
@@ -48,3 +104,11 @@ switch_int(~p_choice3("Can I be of help?", 1, "I'm not sure I can help.", 2, "I'
         ~chatplayer("<p,neutral>I'm not interested.");
         ~chatnpc("<p,angry>That's typical, nowadays.|It's left to us wizards to do all the work.");
 }
+
+[label,watchwiz_whatdo]
+~chatplayer("<p,confused>So what do I do?");
+
+[label,watchwiz_wontbother]
+~chatplayer("<p,neutral>I won't bother then.");
+~chatnpc("<p,angry>Won't bother? Won't bother!");
+~chatnpc("<p,confused>Perhaps this quest is too hard for you?");
