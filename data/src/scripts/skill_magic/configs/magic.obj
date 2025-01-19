@@ -39,7 +39,7 @@ weight=1lb
 param=magicattack,2
 param=magicdefence,2
 
-[obj_581]
+[wizards_robe_black]
 cost=13
 name=Black robe
 desc=I can do magic better in this.
@@ -60,7 +60,7 @@ weight=2lb
 param=magicattack,3
 param=magicdefence,3
 
-[wizard_hat]
+[wizards_hat_black]
 cost=2
 name=Wizards hat
 desc=A silly pointed hat.

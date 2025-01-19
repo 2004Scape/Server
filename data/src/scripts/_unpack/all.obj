@@ -110,7 +110,7 @@ model=model_2637_obj
 2dxan=272
 weight=200g
 
-[obj_964]
+[skull]
 name=Skull
 desc=Ooooh spooky!
 model=model_2388_obj
@@ -124,7 +124,7 @@ recol1d=28433
 2dxan=160
 weight=80g
 
-[obj_966]
+[tile]
 name=Tile
 desc=A fraction of a roof.
 model=model_2617_obj
@@ -135,7 +135,7 @@ model=model_2617_obj
 2dxan=340
 weight=70g
 
-[obj_968]
+[rock]
 name=Rock
 desc=A rock
 model=model_2571_obj
@@ -1418,12 +1418,3 @@ womanwear=model_3333_obj_wear,6
 2dxan=40
 weight=50g
 iop1=Play-with
-
-[obj_2529]
-name=Orb of light
-desc=A magical sphere that glimmers within.
-cost=1
-model=model_loc_771_0
-members=yes
-respawnrate=50
-tradeable=no
