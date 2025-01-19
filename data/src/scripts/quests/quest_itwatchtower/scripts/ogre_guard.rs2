@@ -48,7 +48,7 @@ if(inv_total(inv, ogre_relic) > 0) {
     ~chatplayer("<p,happy>I have a relic!");
     %itwatchtower_progress = ^itwatchtower_given_relic;
     ~chatnpc("<p,happy>It's got the statue of Dalgroth. Welcome to Gu'Tanoth, friend of the ogres.");
-    // enter city
+    if(loc_find(0_39_47_8_54, loc_2788) = true) p_oploc(1);
     return;
 }
 mes("The guard pushes you back down the hill.");
