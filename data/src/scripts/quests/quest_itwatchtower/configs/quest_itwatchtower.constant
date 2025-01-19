@@ -1,9 +1,16 @@
 ^itwatchtower_not_started = 0
 ^itwatchtower_started = 1
+^itwatchtower_given_fingernails = 2
+^itwatchtower_made_relic = 3
+^itwatchtower_given_relic = 4
 ^itwatchtower_complete = 13
 ^itwatchtower_complete_read_scroll = 14
 
 ^itwatchtower_looking_gold = 1
 ^itwatchtower_found_gold = 2
+
+^itwatchtower_looking_relic = 0
+^itwatchtower_spoken_toban = 1
+^itwatchtower_helped_toban = 2
 
 ^gutanoth_hill = 0_39_47_50_57

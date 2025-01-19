@@ -1,2 +1,16 @@
 [opnpc1,gorad]
-mes("Gorad is busy; try again later.");
+if(%itwatchtower_progress >= ^itwatchtower_given_fingernails) {
+    ~chatplayer("<p,happy>Hello!");
+    ~chatnpc("<p,shifty>You know who I is?");
+    switch_int(~p_choice2("A big, ugly creature.", 1, "I don't know who you are.", 2)) {
+        case 1 :
+            ~chatplayer("<p,happy>A big, ugly creature.");
+            ~chatnpc("<p,angry>I hit you!");
+            ~damage_self(12);
+        case 2 :
+            ~chatplayer("<p,bored>I don't know who you are.");
+            ~chatnpc("<p,angry>I am Gorad, and you are tiny.|Go now and I won't chase you!");
+    }
+} else {
+    es("Gorad is busy; try again later.");
+}

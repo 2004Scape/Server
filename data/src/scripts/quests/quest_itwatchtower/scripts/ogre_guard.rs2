@@ -26,3 +26,41 @@ switch_int(%itwatchtower_gold) {
         mes("The guard pushes you back down the hill.");
         p_teleport(^gutanoth_hill);
 }
+
+[opnpcu,ogre_guard_east]
+if(%itwatchtower_gold >= ^itwatchtower_found_gold) {
+    ~chatnpc("<p,happy>No thank you, creature.|You are already my friend.");
+    return;
+} else if(%itwatchtower_gold = ^itwatchtower_looking_gold) {
+    if(last_useitem = gold_bar) p_opnpc(1); 
+    else ~chatnpc("<p,angry>That is not what I want, creature! Bring me a bar of pure gold and I will let you pass.");
+} else {
+    mes("The ogre has not asked you for anything.")
+}
+
+[opnpc1,ogre_guard_west]
+~chatnpc("<p,angry>Stop, creature! Only ogres and their friends allowed in this city. Show me a sign of companionship, like a lost relic or somefing, and you may pass");
+~chatnpc("<p,happy>Until then, back to whence you came!");
+%itwatchtower_bits = setbit(%itwatchtower_bits, ^itwatchtower_looking_relic);
+if(inv_total(inv, ogre_relic) > 0) {
+    ~chatplayer("<p,happy>I've got a proof of friendship right here!");
+    ~chatnpc("<p,quiz>Well, what proof of friendship did you bring?");
+    ~chatplayer("<p,happy>I have a relic!");
+    %itwatchtower_progress = ^itwatchtower_given_relic;
+    ~chatnpc("<p,happy>It's got the statue of Dalgroth. Welcome to Gu'Tanoth, friend of the ogres.");
+    // enter city
+    return;
+}
+mes("The guard pushes you back down the hill.");
+p_teleport(^gutanoth_hill);
+
+[opnpcu,ogre_guard_west]
+if(%itwatchtower_progress >= 4) {
+    ~chatnpc("<p,happy>No thank you, creature.|You have already proven your companionship.");
+    return;
+} else if(testbit(%itwatchtower_bits, ^itwatchtower_looking_relic) = true) {
+    if(last_useitem = ogre_relic) p_opnpc(1); 
+    else ~chatnpc("<p,angry>That is of no use to me, creature!");
+} else {
+    mes("The ogre has not asked you for anything.")
+}
