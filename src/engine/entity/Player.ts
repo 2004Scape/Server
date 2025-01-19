@@ -272,7 +272,7 @@ export default class Player extends PathingEntity {
     cameraPackets: LinkList<CameraInfo> = new LinkList();
     timers: Map<number, EntityTimer> = new Map();
     tabs: number[] = new Array(14).fill(-1);
-    modalState = 0; // 1 - main, 2 - chat, 4 - side, 8 - tutorial, 16 - welcome
+    modalState = 0; // 1 - main, 2 - chat, 4 - side, 8 - tutorial
     modalMain = -1;
     lastModalMain = -1;
     modalChat = -1;
@@ -282,6 +282,7 @@ export default class Player extends PathingEntity {
     modalTutorial = -1;
     refreshModal = false;
     refreshModalClose = false;
+    requestModalClose = false;
 
     protect: boolean = false; // whether protected access is available
     activeScript: ScriptState | null = null;
@@ -596,8 +597,8 @@ export default class Player extends PathingEntity {
     }
 
     containsModalInterface() {
-        // main, chat, or last_login_info is open
-        return (this.modalState & 1) !== 0 || (this.modalState & 2) !== 0 || (this.modalState & 16) !== 0;
+        // main or chat is open
+        return (this.modalState & 1) !== 0 || (this.modalState & 2) !== 0;
     }
 
     busy() {
@@ -655,15 +656,15 @@ export default class Player extends PathingEntity {
     }
 
     processQueues() {
-        // the presence of a strong script closes modals before anything runs regardless of the order
-        let hasStrong: boolean = false;
+        // the presence of a strong script closes modals before queue runs
         for (let request = this.queue.head(); request !== null; request = this.queue.next()) {
             if (request.type === PlayerQueueType.STRONG) {
-                hasStrong = true;
+                this.requestModalClose = true;
                 break;
             }
         }
-        if (hasStrong) {
+        if (this.requestModalClose) {
+            this.requestModalClose = false;
             this.closeModal();
         }
 
@@ -1853,7 +1854,6 @@ export default class Player extends PathingEntity {
 
     lastLoginInfo(lastLoginIp: number, daysSinceLogin: number, daysSinceRecoveryChange: number, unreadMessageCount: number) {
         this.write(new LastLoginInfo(lastLoginIp, daysSinceLogin, daysSinceRecoveryChange, unreadMessageCount));
-        this.modalState |= 16;
     }
 
     logout(): void {
