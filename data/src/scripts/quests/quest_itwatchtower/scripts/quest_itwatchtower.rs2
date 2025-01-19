@@ -37,7 +37,7 @@ if(%itwatchtower_progress = ^itwatchtower_not_started) {
         return;
     }
     inv_add(inv, damaged_dagger, 1);
-    ~chatplayer("<p,happy>Aha, a dagger! I wonder if this is evidence...");
+    ~chatplayer("<p,happy>Aha a dagger!|I wonder if this is evidence...");
 } else {
     ~chatplayer("<p,happy>Hmmm, nothing here.");
 }
@@ -65,7 +65,7 @@ if(%itwatchtower_progress = ^itwatchtower_not_started) {
         return;
     }
     inv_add(inv, old_robe, 1);
-    ~chatplayer("<p,happy>Aha! A robe. This could be a clue...");
+    ~chatplayer("<p,happy>Aha! A robe.|This could be a clue...");
 } else {
     ~chatplayer("<p,happy>Hmmm, nothing here.");
 }
@@ -87,7 +87,7 @@ if(%itwatchtower_progress = ^itwatchtower_not_started) {
 
 [oploc1,loc_2833]
 if(%itwatchtower_progress = ^itwatchtower_not_started) {
-    ~chatnpc_specific(nc_name(tower_guard), tower_guard, "<p,angry>You can't go up there.|That's private, that is.");
+    ~chatnpc_specific(nc_name(tower_guard), tower_guard, "<p,angry>You can't go up there.|That's private that is.");
 } else {
     ~chatnpc_specific(nc_name(tower_guard), tower_guard, "<p,neutral>It is the wizards' helping hand - let 'em up.");
     if_close;
@@ -118,8 +118,25 @@ p_teleport(0_40_47_3_16);
 p_teleport(0_39_47_27_62);
 
 [oploc1,loc_2790]
+if(inv_total(inv, toban_key) > 0) {
+    mes("You use the key Og gave you.");
+    @open_toban_chest;
+}
 mes("The chest is locked.");
 ~chatplayer("<p,quiz>I think I need a key of some sort.");
+
+[oplocu,loc_2790]
+if(last_useitem = toban_key) {
+    @open_toban_chest;
+}
+~displaymessage(^dm_default);
+
+[label,open_toban_chest]
+inv_del(inv, toban_key, 1);
+loc_change(loc_3273, 20);
+inv_del(inv, toban_key, 1);
+sound_synth(chest_open, 0, 0);
+~objbox(tobans_gold, "You find a stash of gold inside.", 250, 0, 0);
 
 [oploc1,loc_2811]
 mes("You enter the cave.");

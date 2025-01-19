@@ -20,24 +20,25 @@ if(testbit(%itwatchtower_bits, ^itwatchtower_spoken_og) = true) {
             ~chatnpc("<p,angry>Stoopid!");
     }
 } else if(%itwatchtower_progress >= ^itwatchtower_given_fingernails) {
-    ~chatnpc("<p,confused>Why you here, little t'ing?");
+    // https://web.archive.org/web/20051025143129im_/http://www.runeweb.net/fireball/Watchtower%20Images/Watchtower5.PNG
+    ~chatnpc("<p,confused>Why you here little rat?");
     switch_int(~p_choice2("I seek entrance to the city of ogres.", 1, "I have come to kill you.", 2)) {
         case 1 :
             ~chatplayer("<p,neutral>I seek entrance to the city of ogres.");
             ~chatnpc("<p,angry>You got no business there!");
             ~chatnpc("<p,neutral>Just a minute... Maybe if you did somet'ing for me, I might help you get in.");
             ~chatplayer("<p,quiz>What can I do to help an ogre?");
-            ~chatnpc("<p,neutral>South-east of here der is more ogres - the name of the chieftain is Toban. He stole gold from me and I want it back!");
+            ~chatnpc("<p,neutral>South-east of here der is more ogres -|the name of the chieftain is Toban.|He stole gold from me|and I want it back!");
             %itwatchtower_bits = setbit(%itwatchtower_bits, ^itwatchtower_spoken_og);
             inv_add(inv, toban_key, 1);
-            ~chatnpc("<p,neutral>Here is a key to the chest it's in.|If you bring it here, I may reward you...");
+            ~chatnpc("<p,neutral>Here is a key to the chest it's in.|If you bring it here,|I may reward you...");
         case 2 :
             ~chatplayer("<p,angry>I have come to kill you!");
             npc_huntall(coord, 5, 0); // seems to be 5 tiles in OSRS
             while(npc_huntnext = true) {
                 if(npc_type = ogre) ~npc_retaliate(0);
             }
-            ~chatnpc("<p,angry>Kill me, eh?|You shall be crushed.|Guards!");
+            ~chatnpc("<p,angry>Kill me, eh?|You shall be crushed like the vermin you are!|Guards!");
     }
 } else {
     mes("He's busy; try him another time.");

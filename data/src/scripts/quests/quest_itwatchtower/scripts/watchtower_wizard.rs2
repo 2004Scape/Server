@@ -126,6 +126,14 @@ switch_int(~p_choice3("Can I be of help?", 1, "I'm not sure I can help.", 2, "I'
 
 [label,watchwiz_whatdo]
 ~chatplayer("<p,confused>So what do I do?");
+~chatnpc("<p,neutral>You need to be fearless and gain entrance to|Gu'Tanoth, the city of the ogres, then find out how to|navigate the caves.");
+~chatplayer("<p,neutral>That sounds scary...");
+~chatnpc("<p,neutral>Ogres are nasty creatures, yes. Only a strong warrior,|and a clever one at that, can get the better of them.");
+~chatplayer("<p,neutral>What do I need to do to get into the city?");
+~chatnpc("<p,neutral>You'll need some way to make the guards let you in.");
+%itwatchtower_progress = ^itwatchtower_given_fingernails;
+inv_del(inv, fingernails, 1);
+~chatnpc("<p,happy>You could start by checking out the ogre settlements|around here. Tribal ogres often dislike their|neighbours... In the meantime, I'll throw those|fingernails out for you.");
 
 [label,watchwiz_wontbother]
 ~chatplayer("<p,neutral>I won't bother then.");
