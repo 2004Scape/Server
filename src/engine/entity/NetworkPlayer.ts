@@ -246,12 +246,14 @@ export class NetworkPlayer extends Player {
 
     updateMap() {
         const loadedZones: Set<number> = this.buildArea.loadedZones;
-        const activeZones: Set<number> = this.buildArea.activeZones;
 
-        const reloadLeftX = (CoordGrid.zone(this.originX) - 4) << 3;
-        const reloadRightX = (CoordGrid.zone(this.originX) + 5) << 3;
-        const reloadTopZ = (CoordGrid.zone(this.originZ) + 5) << 3;
-        const reloadBottomZ = (CoordGrid.zone(this.originZ) - 4) << 3;
+        const originX: number = CoordGrid.zone(this.originX);
+        const originZ: number = CoordGrid.zone(this.originZ);
+
+        const reloadLeftX = (originX - 4) << 3;
+        const reloadRightX = (originX + 5) << 3;
+        const reloadTopZ = (originZ + 5) << 3;
+        const reloadBottomZ = (originZ - 4) << 3;
 
         // if the build area should be regenerated, do so now
         if (this.x < reloadLeftX || this.z < reloadBottomZ || this.x > reloadRightX - 1 || this.z > reloadTopZ - 1) {
@@ -262,6 +264,7 @@ export class NetworkPlayer extends Player {
             loadedZones.clear();
         }
 
+        // update the camera after rebuild.
         for (let info = this.cameraPackets.head(); info !== null; info = this.cameraPackets.next()) {
             const localX = info.camX - CoordGrid.zoneOrigin(this.originX);
             const localZ = info.camZ - CoordGrid.zoneOrigin(this.originZ);
@@ -273,30 +276,10 @@ export class NetworkPlayer extends Player {
             info.unlink();
         }
 
-        // update any newly tracked zones
-        activeZones.clear();
-
-        const centerX = CoordGrid.zone(this.x);
-        const centerZ = CoordGrid.zone(this.z);
-
-        const leftX = CoordGrid.zone(this.originX) - 6;
-        const rightX = CoordGrid.zone(this.originX) + 6;
-        const topZ = CoordGrid.zone(this.originZ) + 6;
-        const bottomZ = CoordGrid.zone(this.originZ) - 6;
-
-        for (let x = centerX - 3; x <= centerX + 3; x++) {
-            for (let z = centerZ - 3; z <= centerZ + 3; z++) {
-                // check if the zone is within the build area
-                if (x < leftX || x > rightX || z > topZ || z < bottomZ) {
-                    continue;
-                }
-
-                activeZones.add(ZoneMap.zoneIndex(x << 3, z << 3, this.level));
-            }
-        }
-
+        // map zone changed
         const mapZone = CoordGrid.packCoord(0, this.x >> 6 << 6, this.z >> 6 << 6);
         if (this.lastMapZone !== mapZone) {
+            // map zone triggers
             if (this.lastMapZone !== -1) {
                 const { x, z } = CoordGrid.unpackCoord(this.lastMapZone);
                 this.triggerMapzoneExit(x, z);
@@ -306,8 +289,34 @@ export class NetworkPlayer extends Player {
             this.lastMapZone = mapZone;
         }
 
+        // zone changed
         const zone = CoordGrid.packCoord(this.level, this.x >> 3 << 3, this.z >> 3 << 3);
         if (this.lastZone !== zone) {
+            // update any newly tracked zones
+            this.buildArea.activeZones.clear();
+
+            const centerX = CoordGrid.zone(this.x);
+            const centerZ = CoordGrid.zone(this.z);
+
+            const originX: number = CoordGrid.zone(this.originX);
+            const originZ: number = CoordGrid.zone(this.originZ);
+
+            const leftX = originX - 6;
+            const rightX = originX + 6;
+            const topZ = originZ + 6;
+            const bottomZ = originZ - 6;
+
+            for (let x = centerX - 3; x <= centerX + 3; x++) {
+                for (let z = centerZ - 3; z <= centerZ + 3; z++) {
+                    // check if the zone is within the build area
+                    if (x < leftX || x > rightX || z > topZ || z < bottomZ) {
+                        continue;
+                    }
+                    this.buildArea.activeZones.add(ZoneMap.zoneIndex(x << 3, z << 3, this.level));
+                }
+            }
+
+            // zone triggers
             const lastWasMulti = World.gameMap.isMulti(this.lastZone);
             const nowIsMulti = World.gameMap.isMulti(zone);
             if (lastWasMulti != nowIsMulti) {
