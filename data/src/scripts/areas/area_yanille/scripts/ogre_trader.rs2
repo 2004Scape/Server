@@ -7,8 +7,9 @@
 ~npc_retaliate(0);
 
 [oploc1,loc_2793]
-if(npc_find(coord, npc_875, 3, 2) = true) {
+if(npc_find(coord, npc_875, 1, 0) = true) {
     ~chatnpc("<p,angry>Grr! Get your hands off those cakes!");
+    ~npc_retaliate(0);
     return;
 }
 if (stat(thieving) < 15) {

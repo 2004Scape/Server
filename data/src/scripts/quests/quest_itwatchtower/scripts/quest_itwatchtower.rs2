@@ -197,6 +197,10 @@ if(last_useitem = rope) {
 }
 mes("You see no way to do that.");
 
+[oploc1,loc_2804]
+~chatnpc("<p,angry>No you don't!");
+~npc_retaliate(0);
+
 [label,enter_gutanoth](coord $dest)
 def_coord $loc_coord = loc_coord;
 def_int $angle = loc_angle;
