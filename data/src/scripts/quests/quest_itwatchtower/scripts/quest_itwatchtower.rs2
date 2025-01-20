@@ -157,14 +157,16 @@ p_teleport(0_39_46_4_44);
 [oploc1,loc_2797]
 @climb_ladder(1_39_48_53_40, true);
 
-[oploc1,loc_2786] @open_east_gutanoth_gate(^left);
-[oploc1,loc_2787] @open_east_gutanoth_gate(^right);
+[oploc1,loc_2786] @open_gutanoth_gate(^left, ogre_guard_east);
+[oploc1,loc_2787] @open_gutanoth_gate(^right, ogre_guard_east);
+[oploc1,loc_2788] @open_gutanoth_gate(^left, ogre_guard_west);
+[oploc1,loc_2789] @open_gutanoth_gate(^right, ogre_guard_west);
 
-[label,open_east_gutanoth_gate](int $side)
-if(%itwatchtower_gold < ^itwatchtower_found_gold) {
-    mes("A nearby guard calls you over.");
-    if(npc_find(coord, ogre_guard_east, 6, 2) = true) {
-        p_opnpc(1);
+[label,open_gutanoth_gate](int $side, npc $guard)
+if(($guard = ogre_guard_east & %itwatchtower_gold < ^itwatchtower_found_gold) |  ($guard = ogre_guard_west & %itwatchtower_progress < 4)) {
+    if(npc_find(coord, $guard, 6, 2) = true) {
+        mes("A nearby guard calls you over.");
+        p_opnpc(1);   
     }
     return;
 }
