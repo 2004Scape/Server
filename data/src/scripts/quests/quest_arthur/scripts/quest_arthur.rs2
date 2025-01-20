@@ -271,4 +271,5 @@ switch_obj(last_useitem) {
 
 [queue,arthur_quest_complete]
 %arthur_progress = ^arthur_complete;
+session_log(^log_adventure, "Quest complete: Merlin's Crystal");
 ~send_quest_complete(questlist:arthur, excalibur, 250, ^arthur_questpoints, "You have completed the\\nMerlins' Crystal Quest!");

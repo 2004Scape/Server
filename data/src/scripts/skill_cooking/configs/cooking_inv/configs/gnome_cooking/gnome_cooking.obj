@@ -90,7 +90,7 @@ model=model_2668_obj
 2dyan=1960
 2dxan=340
 weight=150g
-category=category_128
+category=gnome_premade_and_toadlegs_kingworm
 param=plural_name,toad's legs
 
 [equa_toad_legs]
@@ -106,7 +106,7 @@ model=model_2668_obj
 2dyan=1960
 2dxan=340
 weight=150g
-category=category_15
+category=gnome_premade_and_toadlegs_kingworm
 
 [spicy_toad_legs]
 iop1=Eat
@@ -121,7 +121,7 @@ model=model_2668_obj
 2dyan=1960
 2dxan=340
 weight=150g
-category=category_15
+category=gnome_premade_and_toadlegs_kingworm
 
 [seasoned_toad_legs]
 iop1=Eat
@@ -136,7 +136,7 @@ model=model_2668_obj
 2dyan=1960
 2dxan=340
 weight=150g
-category=category_15
+category=gnome_premade_and_toadlegs_kingworm
 param=singular_name,toad's legs
 param=plural_name,toad's legs
 param=batta_message,You add the seasoned toad's legs to the gnome batta.
@@ -154,7 +154,7 @@ model=model_2519_obj
 2dyan=1748
 2dxan=404
 weight=100g
-category=category_15
+category=gnome_premade_and_toadlegs_kingworm
 param=batta_message,You add the spicy king worm to the gnome batta.
 
 [king_worm]
@@ -170,7 +170,7 @@ model=model_2519_obj
 2dyan=1748
 2dxan=404
 weight=120g
-category=category_128
+category=gnome_premade_and_toadlegs_kingworm
 
 [batta_tin]
 name=Batta tin

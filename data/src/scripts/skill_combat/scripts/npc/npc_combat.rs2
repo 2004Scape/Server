@@ -132,6 +132,10 @@ if(npc_type = lucien_edge) {
     return (~lucien_attack);
 } 
 
+if(npc_type = npc_830) {
+    return (~mercenary_capt_attack(false));
+} 
+
 if(npc_type = fire_warrior_of_lesarkus & (inv_total(worn, ice_arrow) = 0 | %damagetype ! ^ranged_style)) {
     ~chatnpc("<p,angry>Your puny weapons do nothing against me human! Come back when you can give me a real fight!");
     return (false);
@@ -170,6 +174,9 @@ if(npc_type = general_khazard & %arena_progress < ^arena_freed_servils) {
 }
 if(npc_type = lucien_edge) {
     return (~lucien_attack);
+}
+if(npc_type = npc_830) {
+    return (~mercenary_capt_attack(true));
 } 
 if(npc_type = fire_warrior_of_lesarkus) { // can't attack with magic
     ~chatnpc("<p,angry>Your puny weapons do nothing against me human! Come back when you can give me a real fight!");
@@ -261,6 +268,15 @@ if (map_multiway(npc_coord) = false & %npc_attacking_uid ! uid & %npc_attacking_
 }
 %npc_aggressive_player = uid;
 %npc_lastcombat = map_clock;
+
+[proc,.npc_retaliate](int $queue_delay)
+.npc_queue(1, 0, $queue_delay);
+// if in singles and attacking another player, then delay npc action by 8 ticks
+if (map_multiway(.npc_coord) = false & .%npc_attacking_uid ! uid & .%npc_attacking_uid ! null) {
+    .%npc_action_delay = add(map_clock, 8);
+}
+.%npc_aggressive_player = uid;
+.%npc_lastcombat = map_clock;
 
 [proc,npc_set_attack_vars]
 %lastcombat = map_clock;

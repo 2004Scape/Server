@@ -81,14 +81,17 @@ mes("You search the chest.");
 mes("The chest contains nothing.");
 
 [oploc2,loc_2198]
-mes("You search the chest.");
-mes("You find a small key inside.");
-loc_change(loc_2197, 300);
 if(~obj_gettotal(keep_key) > 0) {
     mes("You already have a keep key.");
     mes("Another one will be of no use.");
     return;
 }
+if(inv_freespace(inv) = 0) {
+    mes("There's a key in there, but you don't have space to carry it.");
+    return;
+}
+~objbox(keep_key, "You find a keep key.", 250, 0, 0);
+loc_change(loc_2197, 300);
 inv_add(inv, keep_key, 1);
 
 [oplocu,_observatory_dungeon_gate] 
@@ -253,6 +256,7 @@ queue(itgronigen_quest_complete, 0);
 @professor_friend_of_gods;
 
 [queue,itgronigen_quest_complete]
+session_log(^log_adventure, "Quest complete: Observatory");
 // Random quest complete jingle.
 def_int $random = random(128);
 if ($random < 32) {

@@ -1,6 +1,10 @@
 [if_button,prayer:prayer_clarity]
 if_close;
-queue(prayer_activate, 0, 7);
+if (p_finduid(uid) = true) {
+    @activate_prayer_clarity;
+} else {
+    queue(prayer_activate, 0, 7);
+}
 
 [label,activate_prayer_clarity]
 def_dbrow $data = ~get_prayer_data(^prayer_clarity);

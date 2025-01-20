@@ -1,0 +1,241 @@
+[opnpc1,npc_830]
+if(%desertrescue_progress >= ^desertrescue_killed_capt) {
+    if(inv_total(inv, desertrescue_metalkey) = 0) { // only inv in osrs as well
+        @approach_merc_capt;
+    }
+    ~chatnpc("<p,angry>Move along now... we've had enough of your sort!");
+} else if(%desertrescue_progress <= ^desertrescue_not_started | %desertrescue_progress >= ^desertrescue_killed_capt) {
+    ~chatnpc("<p,angry>Move along now... we've had enough of your sort!");
+} else {
+    @approach_merc_capt;
+}
+
+[label,approach_merc_capt]
+~mesbox("You approach the Mercenary Captain.");
+if(%desertrescue_progress = ^desertrescue_started) %desertrescue_progress = ^desertrescue_approached_captain;
+if(testbit(%desertrescue_map_mechanisms, ^desertrescue_spoke_al_shabim) = true) {
+    @multi4("Wow! A real captain!", mercenary_capt_realcapt, "You there!", mercenary_capt_you, "Hey ugly!", mercenary_capt_ugly, "I've some information for you about Al Zaba Bhasim", merc_capt_alzaba);
+}
+@multi3("Wow! A real captain!", mercenary_capt_realcapt, "You there!", mercenary_capt_you, "Hey ugly!", mercenary_capt_ugly);
+
+[label,merc_capt_alzaba]
+~chatplayer("<p,neutral>I've some information for you about Al Zaba Bhasim"); // intentional . (incl the multi op)
+~chatnpc("<p,happy>Oh yes and what might that be?");
+~chatplayer("<p,neutral>Al Zaba Bhasim is a figment of your diseased imagination. Go look for him yourself and waste your own time if you think he still exists.");
+~chatnpc("<p,angry>Why, I've never been so insulted in all my days. Prepare to defend yourself wretch, I'll run you through myself!");
+~mesbox("The guards gather around to watch the fight.");
+~npc_retaliate(0);
+
+[label,mercenary_capt_realcapt]
+~chatplayer("<p,neutral>Wow! A real captain!");
+~chatnpc("<p,neutral>Be off effendi, you are not wanted around here.");
+@multi2("That's rude, I ought to teach you some manners.", merc_capt_rude, "I'd love to work for a tough guy like you!", merc_capt_tough);
+
+[label,merc_capt_tough]
+~chatplayer("<p,neutral>I'd love to work for a tough guy like you!");
+~chatnpc("<p,neutral>Hmmm, oh yes, what can you do?");
+@multi2("I can mine!", merc_capt_mine, "Can't I do something for a strong Captain like you?", merc_capt_strongcapt);
+
+[label,merc_capt_mine]
+~chatplayer("<p,neutral>I can mine!");
+~chatnpc("<p,happy>Ha, ha, ha! You come to a mining camp and offer us your mining skills! Thanks effendi, but we have all the miners we'll ever need.");
+~chatnpc("<p,angry>Now be off with you, before we reduce you to a bloody mess on the sand.");
+@multi2("Can't I do something for a strong Captain like you?", merc_capt_strongcapt, "You don't scare me!", merc_capt_scare);
+
+[label,merc_capt_strongcapt]
+~chatplayer("<p,neutral>Can't I do something for a strong Captain like you?");
+~mesbox("The Captain ponders a moment and then looks at you critically.");
+~chatnpc("<p,neutral>You could bring me the head of Al Zaba Bhasim.");
+~chatnpc("<p,neutral>He is the leader of the notorius desert bandits, they plague us daily. You should find them west of here. You should have no problem in finishing them all off. Do this for me and maybe I will consider helping you.");
+%desertrescue_map_mechanisms = setbit(%desertrescue_map_mechanisms, ^desertrescue_find_al_shabim);
+@multi2("Consider it done.", merc_capt_considerdone, "Sorry Sir, I don't think I can do that.", merc_capt_sorrysir);
+
+[label,merc_capt_considerdone]
+~chatplayer("<p,neutral>Consider it done.");
+~chatnpc("<p,angry>Good... run along then. You stand around flapping your tongue chatting like an insane camel.");
+
+[label,merc_capt_sorrysir]
+~chatplayer("<p,sad>Sorry Sir, I don't think I can do that.");
+~chatnpc("<p,neutral>Hmm, well yes, I did consider that you might not be right for the job. Be off with you then before I turn my men loose on you.");
+@multi2("It's a funny captain who can't fight his own battles!", merc_capt_ownbattle, "Okay, I'll be moving along then.", merc_capt_movingalong);
+
+[label,merc_capt_ownbattle]
+~chatplayer("<p,quiz>It's a funny captain who can't fight his own battles!");
+~mesbox("The men around you fall silent and the Captain silently fumes. All eyes turn to the Captain...");
+~chatnpc("<p,angry>Very well, if you're challenging me, let's get on with it!");
+~mesbox("The guards gather around to watch the fight.");
+~npc_retaliate(0);
+
+[label,merc_capt_movingalong]
+~chatplayer("<p,neutral>Okay, I'll be moving along then.");
+~chatnpc("<p,happy>Effendi, I think you'll find that is the wisest decision you have made today.");
+
+[label,merc_capt_rude]
+~chatplayer("<p,neutral>That's rude, I ought to teach you some manners.");
+~chatnpc("<p,neutral>Oh yes! How might you do that? You seem little more than a gutter dweller. How could you teach me manners?");
+@multi2("With my right fist and a good deal of force.", merc_capt_fist, "Err, sorry, I thought I was talking to someone else.", merc_capt_sorry);
+
+[label,merc_capt_fist]
+~chatplayer("<p,neutral>With my right fist and a good deal of force.");
+~chatnpc("<p,happy>Oh yes, ready your weapon then! I'm sure you won't mind if my men join in? Har, har, har! Guards, kill this gutter dwelling slime.");
+@mercenary_capt_randompunish;
+
+[label,merc_capt_sorry]
+~chatplayer("<p,neutral>Err, sorry, I thought I was talking to someone else.");
+~chatnpc("<p,neutral>Well, Effendi, you do need to be careful of what you say to people. Or they may take it the wrong way. Thankfully, I'm very understanding. I'll just let my guards deal with you.");
+~chatnpc("<p,neutral>Guards, teach this desert weed some manners.");
+@mercenary_capt_randompunish;
+
+[label,mercenary_capt_you]
+~chatplayer("<p,neutral>You there!");
+~chatnpc("<p,neutral>How dare you talk to me like that! Explain your business quickly... or my guards will slay you where you stand.");
+~mesbox("Some guards close in around you.");
+@multi2("I'm lost, can you help me?", merc_capt_lost, "What are you guarding?", merc_capt_guarding);
+
+[label,mercenary_capt_ugly]
+~chatplayer("<p,happy>Hey ugly!");
+~chatnpc("<p,angry>I will not tolerate such insults.. Guards, kill <text_gender("him", "her")>!");
+~mesbox("The captain marches away in disgust leaving his guards to tackle you.");
+@mercenary_capt_randompunish;
+
+[label,merc_capt_lost]
+~chatplayer("<p,neutral>I'm lost, can you help me?");
+~mesbox("The captain smiles broadly and with a sickening voice says...");
+~chatnpc("<p,neutral>We are not a charity effendi, Be off with you before I have your head removed from your body.");
+@multi2("What are you guarding?", merc_capt_guarding, "You don't scare me!", merc_capt_scare);
+
+[label,merc_capt_guarding]
+~chatplayer("<p,neutral>What are you guarding?");
+~chatnpc("<p,happy>Effendi...");
+~chatnpc("<p,happy>For just one second, imagine that it's none of your business!");
+~chatnpc("<p,angry>Also imagine having your limbs pulled from your body one at a time.");
+~chatnpc("<p,quiz>Now, what was the question again?");
+@multi2("Do you have sand in your ears, I said, 'What are you guarding?'", merc_capt_sandears, "You don't scare me!", merc_capt_scare);
+
+[label,merc_capt_scare]
+~chatplayer("<p,neutral>You don't scare me!");
+~chatnpc("<p,neutral>Well, perhaps I can try a little harder. Guards, kill this infidel.");
+@mercenary_capt_randompunish;
+
+[label,merc_capt_sandears]
+~chatplayer("<p,neutral>Do you have sand in your ears, I said, 'What are you guarding?'");
+~chatnpc("<p,angry>Why... you ignorant, rude and eternally damned infidel,|@dbl@-- The Captain is very angry at what you just said. --@bla@|Guards, kill this infidel!");
+@mercenary_capt_randompunish;
+
+[label,mercenary_capt_randompunish]
+def_int $cur_stage = getbit_range(%desertrescue_map_mechanisms, 0, 1);
+def_int $next_stage = calc($cur_stage + 1);
+if($next_stage > 3) $next_stage = 0;
+%desertrescue_map_mechanisms = setbit_range_toint(%desertrescue_map_mechanisms, $next_stage, 0, 1);
+if(npc_find(coord, npc_828, 7, 0) = true) {
+    switch_int($cur_stage) {
+        case 0 :
+            ~mesbox("A guard approaches you and pretends to start hitting you.");
+            if_close;
+            p_delay(2);
+            ~chatnpc("<p,neutral>Take that you infidel!");
+            ~mesbox("The guard leans closer to you and says in a low voice.");
+            ~chatnpc("<p,neutral>We're sick of having to kill every lunatic that comes along and insults the captain, it makes such a mess. Thankfully, he's a bit decrepit so he doesn't notice so please, buzz off and don't come here again.");
+        case 1 :
+            ~mesbox("The guard approaches you again and gives you a sharp kick.");
+            ~damage_self(1);
+            say("Ow!");
+            ~chatnpc("<p,neutral>Take that you mad child of a dog!"); // can't get past this in osrs cause damage closes if, RSC dialogue
+            ~mesbox("The guard leans closer to you and says in a low voice.");
+            ~chatnpc("<p,neutral>What are you doing here again?|Didn't I tell you to get out of here!|Now get lost, properly this time!|Or we may be forced to see his orders through properly.");
+        case 2 : 
+            ~chatnpc("<p,neutral>Prepare to die effendi!");
+            ~mesbox("The guard leans close and whispers");
+            ~chatnpc("<p,neutral>Are you mad effendi? This is your last chance! Leave now and never come back or I'll introduce you to my friend.");
+            ~objbox(bronze_scimitar, "The guard half draws his fearsome looking scimitar.", 250, 0, 0);
+            ~chatnpc("<p,happy>And we'll be pleased to clean the mess up after you've been dispatched.");
+        case 3 :
+            if_close;
+            mes("An angry guard approaches you and whips out his sword.");
+            p_delay(2);
+            npc_say("Okay, that does it!");
+            p_delay(2);
+            npc_say("You're in serious trouble now!");
+            p_delay(2);
+            npc_say("Okay men, we need to teach this person a thing or two");
+            p_delay(2);
+            npc_say("about desert survival techniques.");
+            p_delay(2);
+            mes("The guards grab you and rough you up a bit.");
+            p_delay(2);
+            mes("You're grabbed and manhandled onto a cart.");
+            p_delay(2);
+            mes("Sometime later you're dumped in the middle of the desert.");
+            switch_int(random(3)) {
+                case 0 : p_teleport(0_50_48_38_19);
+                case 1 : p_teleport(0_50_48_9_47);
+                case 2 : p_teleport(0_50_47_29_38);
+            }
+            p_delay(0);
+            // seq doesn't exist (probably rework)
+            if(inv_total(inv, water_skin1) > 0 | inv_total(inv, water_skin2) > 0 | inv_total(inv, water_skin3) > 0 | inv_total(inv, water_skin4) > 0) {
+                mes("Guard: You won't be needing that water anymore!");
+                mes("The guards throw your water away.");
+                inv_del(inv, water_skin1, ^max_32bit_int);
+                inv_del(inv, water_skin2, ^max_32bit_int);
+                inv_del(inv, water_skin3, ^max_32bit_int);
+                inv_del(inv, water_skin4, ^max_32bit_int);
+                if(inv_total(inv, water_skin0) = 0) inv_add(inv, water_skin0, 1);
+            }
+            mes("The guards move off leaving you stranded in the desert.");
+            ~mesbox("The guards move off leaving you stranded in the desert.");
+    }
+}
+
+[opnpc3,npc_830]
+~mesbox("You watch the Mercenary Captain for some time.|He has a large metal key attached to his belt.|You notice that he usually gets his men to do his dirty work.");
+
+[ai_queue3,npc_830]
+if (finduid(%npc_attacking_uid) = true) { 
+    queue(defeat_merc_capt, 0);
+}
+gosub(npc_death);
+if (npc_findhero = false) {
+    return;
+}
+obj_add(npc_coord, npc_param(death_drop), 1, ^lootdrop_duration);
+
+[queue,defeat_merc_capt]
+// https://web.archive.org/web/20050204075401/http://www.runehq.com/cacheguides/viewquestguide00356.htm auto-added to inv before rework as well it seems
+mes("You kill the captain!");
+if(%desertrescue_progress = ^desertrescue_approached_captain) %desertrescue_progress = ^desertrescue_killed_capt;
+if(inv_total(inv, desertrescue_metalkey) > 0) return;
+if(inv_total(bank, desertrescue_metalkey) > 0) { 
+    mes("After killing the captain, you remember that you stored a mining gate key in your"); // did this exist originally?
+    mes("bank.");
+    return;
+}
+mes("The mercenary captain drops a metal key on the floor. You quickly grab the key");
+mes("and add it to your inventory.");
+inv_add(inv, desertrescue_metalkey, 1);
+~objbox(desertrescue_metalkey, "The mercenary captain drops a metal key on the floor.|You quickly grab the key and add it to your inventory.", 250, 0, 0);
+
+[proc,mercenary_capt_attack](boolean $npct)(boolean)
+if(%npc_attacking_uid = uid | %desertrescue_progress >= ^desertrescue_killed_capt) {
+    return (true);
+}
+if($npct = true) { 
+    p_delay(0); 
+}
+~mesbox("This mercenary Captain looks very fierce.|Are you sure you want to attack him?");
+def_int $op = ~p_choice2("Yes, I can take him on!", 1, "Er, no thanks, I've had second thoughts about it.", 2);
+if($op = 2) {
+    ~mesbox("You decide not to fight the Mercenary Captain.");
+    return (false);
+}
+switch_int(random(4)) {
+    case 0 : npc_say("Destroy this low life desert rat guards!");
+    case 1 : npc_say("Guards! Attack that Desert Jackal!");
+    case 2 : npc_say("Kill that intruder guards!");
+    case 3 : npc_say("Men! Kill this filthy vermin.");
+    case 4 : npc_say("Kill this madman guards!");
+}
+npc_say("Kill that intruder guards!");
+npc_setmode(playerescape);
+if(npc_find(coord, npc_828, 7, 0) = true) ~mercenary_attack;
+return (false);

@@ -3,7 +3,7 @@ if (map_members = false) {
     mes(^mes_members_store_owner);
     return;
 }
-if (map_clock < %last_stolen_from_stall_tea) {
+if (getqueue(stolen_from_stall_tea) > 0) {
     @stall_owner_alert_guards;
 }
 
@@ -28,10 +28,10 @@ if (map_members = false) {
     mes(^mes_members_store_owner);
     return;
 }
-if (map_clock < %last_stolen_from_stall_tea) {
+if (getqueue(stolen_from_stall_tea) > 0) {
     @stall_owner_alert_guards; //no guards nearby
 }
 ~openshop_activenpc;
 
 
-[opobj3,obj_712] ~chatnpc_specific(nc_name(tea_seller), tea_seller, "<p,angry>Hey! Put that back! Those are for display only!");
+[opobj3,display_tea] ~chatnpc_specific(nc_name(tea_seller), tea_seller, "<p,angry>Hey! Put that back! Those are for display only!");

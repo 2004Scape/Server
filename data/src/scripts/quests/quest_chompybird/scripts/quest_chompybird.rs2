@@ -43,4 +43,5 @@ stat_advance(fletching, 262);
 stat_advance(cooking, 1470);
 stat_advance(ranged, 735);
 // todo is ogre bow given separately here?
+session_log(^log_adventure, "Quest complete: Big Chompy Bird Hunting");
 ~send_quest_complete(questlist:chompybird, ogre_bow, 250, ^chompybird_questpoints, "You have completed the 'Chompy Bird' Quest!");

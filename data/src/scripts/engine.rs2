@@ -204,6 +204,8 @@
 [command,.uid]()(player_uid)
 // Requires protected access - request the player to log out
 [command,p_logout]
+// Check if the player is marked as "logged out" but not removed yet
+[command,loggedout]()(boolean)
 // Set a component's colour
 [command,if_setcolour](component $component, int $colour)
 // Open a modal in the chat box
@@ -293,8 +295,11 @@
 // Requires protected access - move the player from $startCoord to $endCoord with a finer ability to control speed
 [command,p_exactmove](coord $startCoord, coord $endCoord, int $startCycle, int $endCycle, int $direction)
 // Queue a script on a player
-[command,queue](queue $queue, int $delay) // , $arg)
-[command,.queue](queue $queue, int $delay) // , $arg)
+[command,queue](queue $queue, int $delay) // + args
+[command,.queue](queue $queue, int $delay) // + args
+// Long queue a script on a player with special behavior if it hasn't ran by the time the player logs out
+[command,longqueue](queue $queue, int $delay, int $logout_action) // + args
+[command,.longqueue](queue $queue, int $delay, int $logout_action) // + args
 // Returns true if the player has an open modal or is delayed
 [command,busy]()(boolean)
 [command,.busy]()(boolean)
@@ -394,6 +399,12 @@
 [command,weight]()(int)
 // Requires protected access - clear the current interaction, but leave the walk queue intact
 [command,p_clearpendingaction]
+// Add an event to the player's session logs
+[command,session_log](int $type, string $event)
+// Add a wealth event to the player's session logs
+[command,wealth_log](boolean $is_gained, int $amount, string $event)
+// Toggle the player's run-mode
+[command,p_run](int $state)
 
 // Npc ops (2500-2999)
 // Get access to the npc if they are in the world
@@ -720,6 +731,7 @@
 // [command,.inv_totalparam]/*(inv $inv, param $param)(int)*/
 // [command,inv_totalparam_stack]/*(inv $inv, param $param)(int)*/
 // [command,.inv_totalparam_stack]/*(inv $inv, param $param)(int)*/
+[command,inv_debugname](inv $inv)(string)
 
 // Enum ops (4400-4499)
 // Get a value from an enum - type $input, type $output, enum $enum, any $key
@@ -843,6 +855,8 @@
 [command,timespent]
 // Get the time spent since the timespent command was ran. This can be ^micros or ^millis
 [command,gettimespent](int $unit)(int)
+// Print a message on the server
+[command,console](string $text)
 
 // [command,inv_setvar](inv $inv, int $slot, obj $obj, int $value)
 // [command,inv_getvar](inv $inv, int $slot, obj $obj)(int)

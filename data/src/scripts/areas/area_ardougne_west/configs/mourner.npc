@@ -38,6 +38,7 @@ param=strengthbonus,2
 param=stabdefence,6
 param=slashdefence,6
 param=crushdefence,9
+// https://raw.githubusercontent.com/Joshua-F/osrs-dumps/refs/heads/master/config/dump.npc npc_9013
 
 [npc_348]
 name=Mourner
@@ -179,6 +180,7 @@ defence=10
 param=stabdefence,3
 param=slashdefence,2
 param=crushdefence,4
+param=damagetype,^crush_style
 // https://raw.githubusercontent.com/Joshua-F/osrs-dumps/refs/heads/master/config/dump.npc npc_9230 (Biohazard boss)
 
 [npc_371]

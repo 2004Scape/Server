@@ -3,7 +3,8 @@ if (busy = true) {
     return(false);
 }
 
-if (map_clock > 17 & add(%lastcombat, 17) > map_clock) {
+// if not an engine logout, and the player was hit within the last 10s, don't logout
+if (loggedout = false & map_clock > 17 & add(%lastcombat, 17) > map_clock) {
     return(false);
 }
 
@@ -15,7 +16,6 @@ if (%tradepartner ! null) {
     }
     %tradepartner = null;
 }
-~reset_stall_trade_timers;
 ~set_pk_skull_logout;
 ~set_antifire_logout;
 ~set_antipoison_logout;

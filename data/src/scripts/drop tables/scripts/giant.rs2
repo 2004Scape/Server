@@ -35,7 +35,7 @@ if ($random < 5) {
 } else if ($random < 38) {
     obj_add(npc_coord, chaosrune, 2, ^lootdrop_duration);
 } else if ($random < 39) {
-    obj_add(npc_coord, deathrune, 1, ^lootdrop_duration);
+    obj_add(npc_coord, deathrune, 2, ^lootdrop_duration);
 } else if ($random < 46) {
     obj_add(npc_coord, ~randomherb, ^lootdrop_duration);
 } else if ($random < 60) {

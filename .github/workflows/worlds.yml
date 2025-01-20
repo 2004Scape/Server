@@ -1,0 +1,23 @@
+name: Deploy All Worlds
+
+on:
+  workflow_dispatch:
+
+concurrency:
+  group: worlds
+  cancel-in-progress: true
+
+jobs:
+  content:
+    uses: ./.github/workflows/worlds-content.yml
+
+  worlds:
+    strategy:
+      fail-fast: false
+      matrix:
+        environment: [world1, world2, world3, world4]
+    needs: [content]
+    uses: ./.github/workflows/worlds-deploy.yml
+    with:
+      environment: ${{ matrix.environment }}
+    secrets: inherit

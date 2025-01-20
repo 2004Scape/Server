@@ -60,6 +60,7 @@ param=death_sound,imp_death
 param=death_drop,null
 category=witches_experiment
 // osrs stats and Vislvl match 1:1
+// https://raw.githubusercontent.com/Joshua-F/osrs-dumps/refs/heads/master/config/dump.npc npc_3996
 
 [witches_experiment_p2]
 name=Witches experiment second form
@@ -87,6 +88,7 @@ param=death_sound,insect_death
 param=death_drop,null
 category=witches_experiment
 // osrs stats and Vislvl match 1:1
+// https://raw.githubusercontent.com/Joshua-F/osrs-dumps/refs/heads/master/config/dump.npc npc_3997
 
 [witches_experiment_p3]
 name=Witches experiment third form
@@ -118,6 +120,7 @@ param=death_sound,bear_death
 param=death_drop,null
 category=witches_experiment
 // osrs stats and Vislvl match 1:1
+// https://raw.githubusercontent.com/Joshua-F/osrs-dumps/refs/heads/master/config/dump.npc npc_3998
 
 [witches_experiment_p4]
 name=Witches experiment fourth form
@@ -148,6 +151,8 @@ param=death_sound,wolf_death
 param=death_drop,null
 category=witches_experiment
 // osrs stats and Vislvl match 1:1
+// on runescape only wolf form can drop bones.
+// https://raw.githubusercontent.com/Joshua-F/osrs-dumps/refs/heads/master/config/dump.npc npc_3999
 
 [ball_mouse]
 vislevel=hide

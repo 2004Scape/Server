@@ -3,9 +3,9 @@ import {basename, dirname, join} from 'path';
 import * as esbuild from 'esbuild';
 
 const outDir = '../Client2/public/';
-const entrypoints = ['src/lostcity/worker.ts', 'src/lostcity/server/LoginThread.ts'];
+const entrypoints = ['src/appWorker.ts', 'src/server/login/LoginThread.ts'];
 const esbuildExternals = ['node:fs/promises', 'path', 'net', 'crypto', 'fs'];
-const externals = ['kleur', 'buffer', 'module', 'watcher', 'worker_threads', 'dotenv/config', 'bcrypt', '#lostcity/db/query.js', '#lostcity/util/PackFile.js'];
+const externals = ['kleur', 'buffer', 'module', 'watcher', 'worker_threads', 'dotenv/config', 'bcrypt', '#/db/query.js', '#/util/PackFile.js'];
 const defines = {
     'process.platform': JSON.stringify('webworker'),
     'process.env.STANDALONE_BUNDLE': 'true',
@@ -97,7 +97,7 @@ function removeImports(output, file) {
 }
 
 function preloadDirs() {
-    const path = 'src/lostcity/server/PreloadedDirs.ts';
+    const path = 'src/server/PreloadedDirs.ts';
     console.log(`Generating ${path}...`);
 
     // readdirSync is not really sync in bun

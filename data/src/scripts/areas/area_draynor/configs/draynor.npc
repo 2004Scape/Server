@@ -203,6 +203,7 @@ huntmode=aggressive_melee
 // osrs
 huntrange=5
 // osrs stats and Vislvl match 1:1
+// https://raw.githubusercontent.com/Joshua-F/osrs-dumps/refs/heads/master/config/dump.npc npc_4276
 
 [traiborn]
 vislevel=107

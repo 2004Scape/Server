@@ -2,9 +2,6 @@
 transmit=yes
 scope=perm
 
-[player_run]
+[run]
 clientcode=7
 transmit=yes
-
-[temp_run]
-scope=temp

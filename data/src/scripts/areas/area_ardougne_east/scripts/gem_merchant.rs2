@@ -1,12 +1,12 @@
 [opnpc1,gem_merchant]
-if (map_clock < %last_stolen_from_stall_gem) {
+if (getqueue(stolen_from_stall_gem) > 0) {
     @stall_owner_alert_guards;
 }
 ~chatnpc("<p,neutral>Here, look at my lovely gems.");
 ~openshop_activenpc;
 
 [opnpc3,gem_merchant]
-if (map_clock < %last_stolen_from_stall_gem) {
+if (getqueue(stolen_from_stall_gem) > 0) {
     @stall_owner_alert_guards;
 }
 ~openshop_activenpc;

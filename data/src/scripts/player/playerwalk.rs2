@@ -1,0 +1,8 @@
+// https://x.com/JagexAsh/status/1605130887292751873
+[proc,playerwalk3](coord $coord)
+p_walk($coord);
+if (%run = ^player_run_off) {
+    p_delay(sub(distance(coord, $coord), 1));
+} else {
+    p_delay(sub(divide(distance(coord, $coord), 2), 1));
+}

@@ -58,3 +58,4 @@ param=defend_sound,skelly_hit
 param=death_sound,skeleton_death
 param=undead,^true
 // TODO monster examine spell
+// https://raw.githubusercontent.com/Joshua-F/osrs-dumps/refs/heads/master/config/dump.npc npc_924

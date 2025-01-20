@@ -21,10 +21,6 @@
 
 [label,attempt_steal_from_stall](loc $loc, coord $loc_coord, int $loc_angle, locshape $loc_shape)
 p_arrivedelay;
-if (map_members = false) {
-    mes(^mes_members_thieving);
-    return;
-}
 
 db_find(stealing:loc, $loc);
 def_dbrow $data = db_findnext;
@@ -32,9 +28,24 @@ if ($data = null) {
     ~displaymessage(^dm_default);
     return;
 }
-
+// probably goes before mems check based on this bug:
+// 'There was a bug in free worlds where if the player tried to steal from a stall 
+// (such as the tea stall) in south-east Varrock, a watchman would appear. 
+// He would attack and the player could fight him. 
+// He would not drop any member items on free to play worlds.'
+// - https://oldschool.runescape.wiki/w/Watchman_(random_event)
 if (afk_event = ^true) {
     @macro_randomthieving;
+}
+
+if (map_members = false) {
+    mes(^mes_members_thieving);
+    return;
+}
+// if player is in combat, prevent stealing
+if (add(%lastcombat, 10) > map_clock) {
+    mes("You can't steal from the market stall during combat!");
+    return;
 }
 
 def_string $stall = db_getfield($data, stealing:stall, 0);
@@ -61,13 +72,22 @@ if ($free_space = 0) {
 ~steal_from_stall($data, $loc_coord, $loc_angle, $loc_shape);
 
 [proc,stealing_check_for_guard](dbrow $data)(boolean)
-// todo: makesure this works properly for singles
-if (npc_finduid(~stealing_guard_within_distance($data)) = true) {
-    npc_say("Hey! Get your hands off there!");
-    ~npc_retaliate(0);
-    return(true);
+def_int $npc_count = db_getfieldcount($data, stealing:guard);
+def_npc $npc1 = db_getfield($data, stealing:guard, min(0, $npc_count));
+def_npc $npc2 = db_getfield($data, stealing:guard, min(1, $npc_count));
+def_npc $npc3 = db_getfield($data, stealing:guard, min(2, $npc_count));
+def_npc $npc4 = db_getfield($data, stealing:guard, min(3, $npc_count));
+def_npc $npc5 = db_getfield($data, stealing:guard, min(4, $npc_count));
+
+npc_huntall(coord, 5, 0);
+while (npc_huntnext = true) {
+    if ((npc_type = $npc1 | npc_type = $npc2 | npc_type = $npc3 | npc_type = $npc4 | npc_type = $npc5)
+        & npc_getmode ! opplayer2 & lineofsight(npc_coord, coord) = true) {
+        npc_say("Hey! Get your hands off there!");
+        ~npc_retaliate(0);
+        return(true);
+    }
 }
-return(false);
 
 [proc,stealing_check_for_owner](dbrow $data)(boolean)
 def_npc $owner = db_getfield($data, stealing:owner, 0);
@@ -76,118 +96,61 @@ if (npc_find(coord, $owner, 5, 0) = true & lineofsight(npc_coord, coord) = true)
     return(true);
 }
 
-// heros and paladins do not aggro player. They only aggro if the owner yells "Guards! Guards!"
-[proc,stealing_guard_within_distance](dbrow $data)(npc_uid)
-def_coord $coord = coord;
-def_int $distance = 5;
-def_int $radius = add(1, divide($distance, 8));
-
-def_int $x = coordx($coord);
-def_int $z = coordz($coord);
-
-def_int $centerX = divide($x, pow(2, 3));
-def_int $centerZ = divide($z, pow(2, 3));
-
-def_int $maxX = add($centerX, $radius);
-def_int $minX = sub($centerX, $radius);
-
-def_int $closet_distance = $distance;
-def_npc_uid $closest_npc = null;
-
-def_int $npc_count = db_getfieldcount($data, stealing:guard);
-def_npc $npc1 = db_getfield($data, stealing:guard, min(0, $npc_count));
-def_npc $npc2 = db_getfield($data, stealing:guard, min(1, $npc_count));
-def_npc $npc3 = db_getfield($data, stealing:guard, min(2, $npc_count));
-def_npc $npc4 = db_getfield($data, stealing:guard, min(3, $npc_count));
-def_npc $npc5 = db_getfield($data, stealing:guard, min(4, $npc_count));
-
-while ($maxX >= $minX) {
-    def_int $zoneX = multiply($maxX, pow(2, 3));
-    def_int $maxZ = add($centerZ, $radius);
-    def_int $minZ = sub($centerZ, $radius);
-    while ($maxZ >= $minZ) {
-        def_int $zoneZ = multiply($maxZ, pow(2, 3));
-
-        def_int $dx = sub($zoneX, $x);
-        def_int $dz = sub($zoneZ, $z);
-        def_coord $zoneCoord = movecoord($coord, $dx, 0, $dz);
-
-        npc_findallzone($zoneCoord);
-        while (npc_findnext = true) {
-            if ((npc_type = $npc1 | npc_type = $npc2 | npc_type = $npc3 | npc_type = $npc4 | npc_type = $npc5) & distance($coord, npc_coord) <= $closet_distance & lineofsight(npc_coord, coord) = true & npc_getmode() ! opplayer2) {
-                $closet_distance = distance($coord, npc_coord);
-                $closest_npc = npc_uid;
-            }
-        }
-        $maxZ = sub($maxZ, 1);
-    }
-    $maxX = sub($maxX, 1);
-}
-if ($closet_distance < $distance | $closest_npc ! null) {
-    return($closest_npc);
-}
-return(null);
-
 [label,stall_owner_alert_guards]
 npc_say("You're the one who stole something from me!");
 p_delay(1);
 npc_say("Guards guards!");
-if (npc_find(coord, guard_ardougne, 5, 0) = true & lineofsight(npc_coord, coord) = true & npc_getmode() ! opplayer2) {
-    ~npc_retaliate(0);
-} else if (npc_find(coord, knight_of_ardougne_1, 5, 0) = true & lineofsight(npc_coord, coord) = true & npc_getmode() ! opplayer2) {
-    ~npc_retaliate(0);
-} else if (npc_find(coord, knight_of_ardougne_2, 5, 0) = true & lineofsight(npc_coord, coord) = true & npc_getmode() ! opplayer2) {
-    ~npc_retaliate(0);
-} else if (npc_find(coord, paladin, 5, 0) = true & lineofsight(npc_coord, coord) = true & npc_getmode() ! opplayer2) {
-    ~npc_retaliate(0);
-} else if (npc_find(coord, npc_365, 5, 0) = true & lineofsight(npc_coord, coord) = true & npc_getmode() ! opplayer2) {
-    ~npc_retaliate(0);
-} else if (npc_find(coord, hero, 5, 0) = true & lineofsight(npc_coord, coord) = true & npc_getmode() ! opplayer2) {
-    ~npc_retaliate(0);
+
+npc_huntall(npc_coord, 5, 0);
+while (npc_huntnext = true) {
+    if ((npc_type = guard_ardougne | npc_type = knight_of_ardougne_1 | npc_type = knight_of_ardougne_2 | npc_type = paladin | npc_type = hero)
+        & npc_getmode ! opplayer2 & lineofsight(npc_coord, coord) = true) {
+        ~npc_retaliate(0);
+    }
 }
 
-[proc,update_stall_trade_timers]
-if (%last_stolen_from_stall_baker = null) {
-    %last_stolen_from_stall_baker = calc(map_clock + ^bakery_stall_timer);
+[proc,thieving_stall_timers_login]
+if (testbit(%thieving_stall_timer, ^baker_stall_index) = true) {
+    longqueue(stolen_from_stall_baker, ^bakery_stall_timer, ^discard);
 }
-if (%last_stolen_from_stall_tea = null) {
-    %last_stolen_from_stall_tea = calc(map_clock + ^tea_stall_timer);
+if (testbit(%thieving_stall_timer, ^tea_stall_index) = true) {
+    longqueue(stolen_from_stall_tea, ^tea_stall_timer, ^discard);
 }
-if (%last_stolen_from_stall_silk = null) {
-    %last_stolen_from_stall_silk = calc(map_clock + ^silk_stall_timer);
+if (testbit(%thieving_stall_timer, ^silk_stall_index) = true) {
+    longqueue(stolen_from_stall_silk, ^silk_stall_timer, ^discard);
 }
-if (%last_stolen_from_stall_fur = null) {
-    %last_stolen_from_stall_fur = calc(map_clock + ^fur_stall_timer);
+if (testbit(%thieving_stall_timer, ^fur_stall_index) = true) {
+    longqueue(stolen_from_stall_fur, ^fur_stall_timer, ^discard); 
 }
-if (%last_stolen_from_stall_silver = null) {
-    %last_stolen_from_stall_silver = calc(map_clock + ^silver_stall_timer);
+if (testbit(%thieving_stall_timer, ^silver_stall_index) = true) {
+    longqueue(stolen_from_stall_silver, ^silver_stall_timer, ^discard);
 }
-if (%last_stolen_from_stall_spice = null) {
-    %last_stolen_from_stall_spice = calc(map_clock + ^spice_stall_timer);
+if (testbit(%thieving_stall_timer, ^spice_stall_index) = true) {
+    longqueue(stolen_from_stall_spice, ^spice_stall_timer, ^discard);
 }
-if (%last_stolen_from_stall_gem = null) {
-    %last_stolen_from_stall_gem = calc(map_clock + ^gem_stall_timer);
+if (testbit(%thieving_stall_timer, ^gem_stall_index) = true) {
+    longqueue(stolen_from_stall_gem, ^gem_stall_timer, ^discard);
 }
 
-[proc,reset_stall_trade_timers]
-if (%last_stolen_from_stall_baker > map_clock) {
-    %last_stolen_from_stall_baker = null;
-}
-if (%last_stolen_from_stall_tea > map_clock) {
-    %last_stolen_from_stall_tea = null;
-}
-if (%last_stolen_from_stall_silk > map_clock) {
-    %last_stolen_from_stall_silk = null;
-}
-if (%last_stolen_from_stall_fur > map_clock) {
-    %last_stolen_from_stall_fur = null;
-}
-if (%last_stolen_from_stall_silver > map_clock) {
-    %last_stolen_from_stall_silver = null;
-}
-if (%last_stolen_from_stall_spice > map_clock) {
-    %last_stolen_from_stall_spice = null;
-}
-if (%last_stolen_from_stall_gem > map_clock) {
-    %last_stolen_from_stall_gem = null;
-}
+// these are longqueues in osrs - they affect movement when p_delay'd
+
+[queue,stolen_from_stall_baker]
+%thieving_stall_timer = setbit(^false, ^baker_stall_index);
+
+[queue,stolen_from_stall_tea]
+%thieving_stall_timer = setbit(^false, ^tea_stall_index);
+
+[queue,stolen_from_stall_silk]
+%thieving_stall_timer = setbit(^false, ^silk_stall_index);
+
+[queue,stolen_from_stall_fur]
+%thieving_stall_timer = setbit(^false, ^fur_stall_index);
+
+[queue,stolen_from_stall_silver]
+%thieving_stall_timer = setbit(^false, ^silver_stall_index);
+
+[queue,stolen_from_stall_spice]
+%thieving_stall_timer = setbit(^false, ^spice_stall_index);
+
+[queue,stolen_from_stall_gem]
+%thieving_stall_timer = setbit(^false, ^gem_stall_index);

@@ -1,7 +1,7 @@
 generator kysely {
     provider = "prisma-kysely"
 
-    output       = "../src/lostcity/db"
+    output       = "../src/db"
     fileName     = "types.ts"
     enumFileName = "enums.ts"
 }
@@ -11,6 +11,8 @@ datasource db {
     url      = env("DATABASE_URL")
 }
 
+// players
+
 model account {
     id Int @id @default(autoincrement())
 
@@ -19,7 +21,31 @@ model account {
 
     registration_ip   String?
     registration_date DateTime @default(now())
+
+    logged_in Int @default(0)
+    login_time DateTime?
+
+    muted_until DateTime?
+    banned_until DateTime?
+
+    staffmodlevel Int @default(0)
 }
+
+model account_session {
+    id Int @id @default(autoincrement())
+
+    account_id Int
+    world Int @default(0)
+    game String // an account can have different character saves depending on the "game" (world type) it's logged into at the time
+    session_uuid String
+
+    timestamp DateTime
+    coord Int
+    event String
+    event_type Int @default(-1)
+}
+
+// website
 
 model newspost {
     id Int @id @default(autoincrement())
@@ -46,6 +72,8 @@ model npc_hiscore {
     account_id Int
     kill_count Int @default(0)
 }
+
+// social
 
 model friendlist {
     account_id        Int

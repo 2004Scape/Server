@@ -24,6 +24,7 @@ mes("You swing your axe at the tree.");
 def_int $delay = ~coord_projectile(coord, $axe_coord, axe_head_launch, 35, 0, 14, 16, -2, 64, 10);
 p_delay(calc($delay/60)); // https://youtu.be/tev6FR2iowQ?t=16
 obj_add($axe_coord, $axe_head, 1, ^lootdrop_duration);
+session_log(^log_adventure, "Lost their <oc_name($axe)> head");
 
 
 [label,reattach_axe](obj $axe_head)

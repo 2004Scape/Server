@@ -54,11 +54,6 @@ mes("You've been stunned!");
 walktrigger(stunned);
 
 [proc,steal_from_stall](dbrow $data, coord $loc_coord, int $loc_angle, locshape $loc_shape)
-// if player is in combat, prevent stealing
-if (add(%lastcombat, 10) > map_clock) {
-    mes("You can't steal from the market stall during combat!");
-    return;
-}
 // if guard sees (for first time), stop player from stealing.
 // guards proioritize over sellers
 if (~stealing_check_for_guard($data) = true) {
@@ -73,13 +68,27 @@ anim(human_pickuptable, 0);
 sound_synth(pick, 0, 0);
 p_delay(0);
 switch_loc (loc_type) {
-    case bakers_stall_stealing : %last_stolen_from_stall_baker = calc(map_clock + ^bakery_stall_timer);
-    case tea_stall_stealing : %last_stolen_from_stall_tea = calc(map_clock + ^tea_stall_timer);
-    case silk_stall_stealing : %last_stolen_from_stall_silk = calc(map_clock + ^silk_stall_timer);
-    case fur_stall_stealing : %last_stolen_from_stall_fur = calc(map_clock + ^fur_stall_timer); 
-    case silver_stall_stealing : %last_stolen_from_stall_silver = calc(map_clock + ^silver_stall_timer);
-    case spice_stall_stealing : %last_stolen_from_stall_spice = calc(map_clock + ^spice_stall_timer);
-    case gem_stall_stealing : %last_stolen_from_stall_gem = calc(map_clock + ^gem_stall_timer);
+    case bakers_stall_stealing : 
+        longqueue(stolen_from_stall_baker, ^bakery_stall_timer, ^discard);
+        %thieving_stall_timer = setbit(^true, ^baker_stall_index);
+    case tea_stall_stealing : 
+        longqueue(stolen_from_stall_tea, ^tea_stall_timer, ^discard);
+        %thieving_stall_timer = setbit(^true, ^tea_stall_index);
+    case silk_stall_stealing : 
+        longqueue(stolen_from_stall_silk, ^silk_stall_timer, ^discard);
+        %thieving_stall_timer = setbit(^true, ^silk_stall_index);
+    case fur_stall_stealing : 
+        longqueue(stolen_from_stall_fur, ^fur_stall_timer, ^discard); 
+        %thieving_stall_timer = setbit(^true, ^fur_stall_index);
+    case silver_stall_stealing : 
+        longqueue(stolen_from_stall_silver, ^silver_stall_timer, ^discard);
+        %thieving_stall_timer = setbit(^true, ^silver_stall_index);
+    case spice_stall_stealing : 
+        longqueue(stolen_from_stall_spice, ^spice_stall_timer, ^discard);
+        %thieving_stall_timer = setbit(^true, ^spice_stall_index);
+    case gem_stall_stealing : 
+        longqueue(stolen_from_stall_gem, ^gem_stall_timer, ^discard);
+        %thieving_stall_timer = setbit(^true, ^gem_stall_index);
 }
 ~stealing_check_for_reward($data);
 stat_advance(thieving, $experience);

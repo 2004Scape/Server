@@ -89,7 +89,7 @@ weight=20g
 param=no_alchemy,1
 tradeable=no
 
-[obj_421]
+[lathas_amulet]
 name=Lathas' amulet
 desc=Yup. It's an amulet.
 cost=10

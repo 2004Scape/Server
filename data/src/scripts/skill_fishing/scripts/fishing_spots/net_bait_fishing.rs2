@@ -104,7 +104,7 @@ if (~check_fish_equipment(fishing_rod) = false) {
     return;
 }
 // check if inv is full
-if (inv_freespace(inv) < 1) {
+if (inv_freespace(inv) < 1 & inv_total(inv, fishing_bait) > 1) {
     anim(null, 0);
     ~mesbox("You can't carry any more fish.");
     return;
@@ -146,7 +146,7 @@ if (~check_fish_equipment(fishing_rod) = false) {
     return;
 }
 // check if inv is full
-if (inv_freespace(inv) < 1) {
+if (inv_freespace(inv) < 1 & inv_total(inv, fishing_bait) > 1) {
     anim(null, 0);
     ~mesbox("You can't carry any more fish.");
     return;

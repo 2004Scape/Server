@@ -302,6 +302,9 @@ param=strengthbonus,22
 param=stabdefence,18
 param=slashdefence,27
 param=crushdefence,18
+// param=stabdefence,17
+// param=slashdefence,20
+// param=crushdefence,19
 param=magicdefence,1000
 param=rangedefence,1000
 param=damagetype,^crush_style
@@ -312,3 +315,4 @@ param=death_anim,giant_death
 // this npc uses human_unarmedpunch and human_death sound for attack and death animations.
 // although npc are classified as Giant based on appearance/animations.
 // Stats match osrs version but our version Vislvl is different.
+// https://raw.githubusercontent.com/Joshua-F/osrs-dumps/refs/heads/master/config/dump.npc npc_4067

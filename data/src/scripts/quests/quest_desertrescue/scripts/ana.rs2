@@ -1,0 +1,234 @@
+[opnpc1,ana]
+if(%desertrescue_progress = ^desertrescue_saved_ana & inzone(0_51_48_36_37, 0_51_48_50_50, coord) = true) {
+    ~chatnpc("<p,happy>Great! Thanks for getting me out of that mine! And that barrel wasn't too bad anyway! Pop by again sometime, I'm sure we'll have a barrel of laughs!");
+    if(inv_total(inv, desertrescue_ironkey) = 0) {
+        ~chatnpc("<p,happy>Oh! I nearly forgot! Here's a key I found in the tunnels. It might be of some use to you, not sure what it opens. Sorry, but I have to go now.");
+        inv_add(inv, desertrescue_ironkey, 1);
+        ~objbox(desertrescue_ironkey, "Ana gives you a wrought iron key...", 250, 0, 0);
+    }
+    if_close;
+    mes("Ana spots Irena and waves...");
+    p_delay(2);
+    npc_del;
+    if(npc_find(coord, irena, 8, 0) = true) {
+        npc_say("Hi Ana!");
+        p_delay(0);
+    }
+    @irena_ana_found;
+}
+if(inzone(0_51_147_30_50, 0_51_147_50_63, coord) = false) return;
+if(%desertrescue_progress >= ^desertrescue_saved_ana | inv_total(inv, anainabarrel) > 0) {
+    mes("This slave does not appear interested in talking to you.");
+    return;
+}
+if(getbit_range(%desertrescue_map_mechanisms, ^desertrescue_ana_minecart_barrel, ^desertrescue_ready_rescue) > 0) {
+    %desertrescue_map_mechanisms = clearbit_range(%desertrescue_map_mechanisms, ^desertrescue_ana_minecart_barrel, ^desertrescue_ready_rescue);
+    mes("Oh, here's Ana, the guards must have discovered her.");
+    p_delay(2);
+    mes("And sent her back to the mines...");
+    p_delay(2);
+}
+if(~wearing_slave_robes() = false) {
+    npc_say("Ooops... looks like a guard ");
+    p_delay(2);
+    npc_say("has seen your fancy clothes.");
+    p_delay(2);
+    if(npc_find(coord, npc_829, 4, 2) = true | npc_find(coord, npc_828, 4, 2) = true) { // check dist on this
+        @mining_camp_caught;
+    }
+}
+// osrs uses varbit so this dialogue only shows up once, rsc doesnt have that dialogue at all so we'll copy from them
+~chatplayer("<p,neutral>Hello!");
+~chatnpc("<p,quiz>Hello there, I don't think I've seen you before.");
+switch_int(~p_choice2("No, I'm new here!", 1, "What's your name.", 2)) {
+    case 1 :
+        ~chatplayer("<p,neutral>No, I'm new here!");
+        ~chatnpc("<p,happy>I thought so you know! How do you like the hospitality down here? Not exactly Al Kharid town style is it? Well, I guess I'd better get back to work.");
+        ~chatnpc("<p,sad>Don't want to get into trouble with the guards again.");
+        @multi2("Do you get into trouble with guards often?", ana_troubleguard, "I want to try and get you out of here.", ana_out);
+    case 2 :
+        ~chatplayer("<p,neutral>What's your name.");
+        ~chatnpc("<p,quiz>My name? Oh, how sweet, my name is Ana. I come from Al-Kharid though we've only recently moved there. I was born, and did most of my growing up, in Varrock. I thought the desert might be interesting.");
+        ~chatnpc("<p,quiz>What a surprise I got!");
+        @multi2("What kind of surprise did you get?", ana_surprise, "Do you want to go back to Al-Kharid?", ana_alkharid);
+}
+
+[opnpcu,ana]
+if(last_useitem = desertrescue_barrel) {
+    if(%desertrescue_progress >= ^desertrescue_saved_ana) {
+        mes("You have already completed this quest.");
+        ~chatnpc("<p,neutral>I think you might have me confused with someone else."); // rsc
+        return;
+    }
+    if(inv_total(inv, anainabarrel) > 0) {
+        mes("You already have Ana in a barrel, you can't get two in there!");
+        return;
+    }
+    if(getbit_range(%desertrescue_map_mechanisms, ^desertrescue_ana_minecart_barrel, ^desertrescue_ready_rescue) > 0) {
+        %desertrescue_map_mechanisms = clearbit_range(%desertrescue_map_mechanisms, ^desertrescue_ana_minecart_barrel, ^desertrescue_ready_rescue);
+        mes("Oh, here's Ana, the guards must have discovered her.");
+        p_delay(2);
+        mes("And sent her back to the mines...");
+        p_delay(2);
+    }
+    if(%desertrescue_progress < ^desertrescue_caught_ana) {
+        ~chatnpc("<p,angry>Hey, what do you think you're doing?");
+        %desertrescue_progress = ^desertrescue_caught_ana;
+    } else {
+        ~chatnpc("<p,angry>Hey, what do you think you're doing? Leave me alone and let me get on with my work. Else we'll both be in trouble. Oh no, NOT AGAIN!");
+    }
+    if_close;
+    inv_del(inv, desertrescue_barrel, 1);
+    inv_add(inv, anainabarrel, 1);
+    npc_del;
+    say("Shush... It's for your own good!");
+    p_delay(1);
+    // https://web.archive.org/web/20050628074043im_/http://runescape.salmoneus.net/quests/TouristTrap/anainabarrel.gif
+    ~chatnpc_specific("Ana (in a Barrel)", anabarrel, "<p,angry>@blu@-- You manage to squeeze Ana into the barrel, --|@blu@-- despite her many complaints. --|I djont fit in dis bawwel...|Wet me out!!");
+    return;
+}
+~chatnpc("<p,happy>Thanks, but I don't need that... really!");
+
+[opheld1,anainabarrel]
+~chatnpc_specific("Ana (in a Barrel)", anabarrel, "<p,angry>@dbl@-- Ana looks pretty angry, she starts shouting at you. --|Get me out of here!|Do you hear me!|Get me OUT OF HERE I say!");
+
+[opheld5,anainabarrel]
+if(~inzone_coord_pair_table(mining_camp_zones, coord) = false) { 
+    if(~inzone_coord_pair_table(desert_zones, coord) = true) {
+        ~chatnpc_specific("Ana (in a Barrel)", anabarrel, "<p,confused>You can't drop me here!|I'll die in the desert on my own.|Take me to the Shantay pass near Al Kharid.");
+    } else {
+        ~chatnpc_specific("Ana (in a Barrel)", anabarrel, "<p,confused>You can't drop me here!|Take me to the Shantay pass near Al Kharid.");
+    }
+    return;
+}
+~chatnpc_specific("Ana (in a Barrel)", anabarrel, "<p,silent>You drop the barrel on the floor, Ana gets out.");
+if(inzone(0_51_47_20_23, 0_51_47_23_29, coord) = true) { // if in jail do nothing (OSRS behaviour)
+    return;
+}
+if_close;
+inv_del(inv, anainabarrel, 1);
+inv_add(inv, desertrescue_barrel, 1);
+npc_add(map_findsquare(coord, 1, 1, ^map_findsquare_lineofwalk), ana, 8);
+npc_say("How dare you put me in that barrel you barbarian!");
+mes("Ana's outburst attracts the guards, they come running over.");
+p_delay(2);
+// doesn't spawn one in osrs
+if(.npc_find(coord, npc_829, 6, 2) = true | .npc_find(coord, npc_828, 6, 2) = true) { 
+    .npc_say("Hey! What's going on here then?");
+    ~.npc_retaliate(0);
+}
+mes("Guard: Hey! What's going on here then?");
+mes("The guards drag Ana away and then throw you into a cell.");
+npc_del;
+p_delay(4);
+mes("You are roughed up by the guards and manhandled into a cell.");
+p_delay(3);
+if(inzone(0_51_147_0_0, 0_51_147_63_63, coord) = true) p_teleport(^desertrescue_underground_prison_coord);
+else p_teleport(^desertrescue_prison_coord);
+
+[label,ana_out]
+~chatplayer("<p,shifty>I want to try and get you out of here.");
+~chatnpc("<p,confused>Wow! You're brave. How do you propose we do that? In case you hadn't noticed, this place is quite well guarded.");
+@multi2("We could try to sneak out.", ana_sneak, "Have you got any suggestions?", ana_suggestions);
+
+[label,ana_sneak]
+~chatplayer("<p,neutral>We could try to sneak out.");
+~chatnpc("<p,happy>That doesn't sound very likely. How did you get in here anyway? Did you deliberately hand yourself over to the guards? Ha, ha ha ha! Sorry, just kidding.");
+@multi2("I managed to sneak past the guards.", ana_sneakguards, "Huh, these guards are rubbish, it was easy to sneak past them!", ana_rubbishguards);
+
+[label,ana_sneakguards]
+~chatplayer("<p,neutral>I managed to sneak past the guards.");
+~chatnpc("<p,confused>Hmm, impressive, but can you so easily sneak out again? How did you manage to get through the gate?");
+@multi2("I have a key.", ana_key, "It's a trade secret!", ana_secret);
+
+[label,ana_key]
+~chatplayer("<p,neutral>I used a key.");
+if(.npc_find(coord, npc_829, 6, 2) = true | .npc_find(coord, npc_828, 6, 2) = true) { // pretty sure this is 6 tiles
+    // reworked version is a bit different, copying rsc with osrs delays
+    .npc_say("I heard that! So you used a key did you?!");
+    mes("Guard: I heard that! So you used a key did you?!");
+    p_delay(1);
+    if(inv_total(inv, desertrescue_metalkey) > 0) {
+        .npc_say("Right, we'll have that key off you!");
+        mes("Guard: Right, we'll have that key off you!");
+        inv_del(inv, desertrescue_metalkey, 1);
+    }
+    p_delay(1);
+    ~.npc_retaliate(0);
+    .npc_say("Oops! See ya!");
+    .npc_say("Guards! Guards!");
+    p_delay(1);
+    mes("You are roughed up by the guards and manhandled into a cell.");
+    p_delay(1);
+    .npc_say("Into the cell you go! I hope this teaches you a lesson.");
+    p_delay(1);
+    p_teleport(^desertrescue_underground_prison_coord);
+}
+
+[label,ana_rubbishguards]
+~chatplayer("<p,happy>Huh, these guards are rubbish, it was easy to sneak past them!");
+if(.npc_find(coord, npc_829, 6, 2) = true | .npc_find(coord, npc_828, 6, 2) = true) {
+    // reworked version is a bit different, copying rsc with osrs delays
+    .npc_say("I heard that! So you managed to sneak in did you!");
+    mes("Guard: I heard that! So you managed to sneak in did you!");
+    p_delay(3);
+    ~.npc_retaliate(0);
+    .npc_say("Oops! See ya!");
+    .npc_say("Guards! Guards!");
+    p_delay(1);
+    mes("You are roughed up by the guards and manhandled into a cell.");
+    p_delay(1);
+    .npc_say("Into the cell you go! I hope this teaches you a lesson.");
+    p_delay(1);
+    p_teleport(^desertrescue_underground_prison_coord);
+}
+
+[label,ana_secret]
+~chatplayer("<p,happy>It's a trade secret!");
+~chatnpc("<p,quiz>Oh, right, well, I guess you know what you're doing. Anyway, I have to get back to work. The guards will come along soon and give us some trouble else.");
+
+[label,ana_suggestions]
+~chatplayer("<p,neutral>Have you got any suggestions?");
+~chatnpc("<p,quiz>Hmmm, let me think...");
+~chatnpc("<p,quiz>Hmmm.");
+~chatnpc("<p,sad>No, sorry...");
+~chatnpc("<p,quiz>The only thing that gets out of here is the rock that we mine.");
+~chatnpc("<p,neutral>Not even the dead get a decent funeral. Bodies are just thrown down disused mine holes. It's very disrespectful...");
+@multi2("Okay, I'll check around for another way to try and get out.", ana_anotherway, "How does the rock get out?", ana_rock);
+
+[label,ana_anotherway]
+~chatplayer("<p,neutral>Okay, I'll check around for another way to try and get out.");
+~chatnpc("<p,neutral>Good luck!");
+
+[label,ana_rock]
+~chatplayer("<p,neutral>How does the rock get out?");
+~chatnpc("<p,neutral>Well, we mine it in this section, then someone scoops it into a barrel. The barrels are loaded onto a mine cart. Then they're deposited near the surface lift.");
+~chatnpc("<p,neutral>I have no idea where they go from there. But that's not going to help us, is it?");
+
+[label,ana_troubleguard]
+~chatplayer("<p,quiz>Do you get into trouble with guards often?");
+~chatnpc("<p,happy>No, not really, because I'm usually working very hard. Come to think of it, I'd better get back to work.");
+switch_int(~p_choice2("Do you enjoy it down here?", 1, "Okay, see ya!", 2)) {
+    case 1 :
+        ~chatplayer("<p,neutral>Do you enjoy it down here?");
+        ~chatnpc("<p,confused>Of course not! I just don't have much choice about it a the moment.");
+        @multi2("I want to try and get you out of here.", ana_out, "Do you have any ideas about how we can get out of here?", ana_ideas);
+    case 2 :
+        ~chatplayer("<p,neutral>Okay, see ya!");
+        ~chatnpc("<p,neutral>Goodbye and good luck!");
+}
+
+[label,ana_ideas]
+~chatplayer("<p,neutral>Do you have any ideas about how we can get out of here?");
+~chatnpc("<p,quiz>Hmmm, not really, I would have tried them already if I did. The guards seem to live in the compound. How did you get in there anyway?");
+@multi2("I managed to sneak past the guards.", ana_sneakguards, "Huh, these guards are rubbish, it was easy to sneak past them!", ana_rubbishguards);
+
+[label,ana_surprise]
+~chatplayer("<p,neutral>What kind of surprise did you get?");
+~chatnpc("<p,angry>Well, I was just touring the desert looking for the nomad tribe to the West. And I was set upon by these armoured men.");
+~chatnpc("<p,quiz>I think that the guards think I am an escaped prisoner. They didn't understand that I was exploring the desert as an adventurer.");
+
+[label,ana_alkharid]
+~chatplayer("<p,neutral>Do you want to go back to Al Kharid?");
+~chatnpc("<p,happy>Sure, I miss my Mum, her name is Irena and she is probably waiting for me. How do you propose we get out of here though?");
+~chatnpc("<p,neutral>I'm sure you've noticed the many square jawed guards around here. You look like you can handle yourself, but I have my doubts that you can take them all on!");

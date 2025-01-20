@@ -29,6 +29,7 @@ param=damagetype,^crush_style
 param=defend_sound,female_hit
 param=death_sound,female_death
 // osrs stats and Vislvl match 1:1
+// https://raw.githubusercontent.com/Joshua-F/osrs-dumps/refs/heads/master/config/dump.npc npc_1119
 
 [npc_353]
 name=Woman
@@ -59,6 +60,7 @@ param=damagetype,^crush_style
 param=defend_sound,female_hit
 param=death_sound,female_death
 // osrs stats and Vislvl match 1:1
+// https://raw.githubusercontent.com/Joshua-F/osrs-dumps/refs/heads/master/config/dump.npc npc_1130
 
 [npc_354]
 name=Woman
@@ -91,6 +93,7 @@ param=damagetype,^crush_style
 param=defend_sound,female_hit
 param=death_sound,female_death
 // osrs stats and Vislvl match 1:1
+// https://raw.githubusercontent.com/Joshua-F/osrs-dumps/refs/heads/master/config/dump.npc npc_1131
 
 [npc_360]
 name=Woman
@@ -123,6 +126,7 @@ param=damagetype,^crush_style
 param=defend_sound,female_hit
 param=death_sound,female_death
 // osrs stats and Vislvl match 1:1
+// https://raw.githubusercontent.com/Joshua-F/osrs-dumps/refs/heads/master/config/dump.npc npc_1139
 
 [npc_361]
 name=Woman
@@ -154,6 +158,7 @@ param=damagetype,^crush_style
 param=defend_sound,female_hit
 param=death_sound,female_death
 // osrs stats and Vislvl match 1:1
+// https://raw.githubusercontent.com/Joshua-F/osrs-dumps/refs/heads/master/config/dump.npc npc_1140
 
 [npc_362]
 name=Woman
@@ -181,6 +186,7 @@ param=damagetype,^crush_style
 param=defend_sound,female_hit
 param=death_sound,female_death
 // osrs stats and Vislvl match 1:1
+// https://raw.githubusercontent.com/Joshua-F/osrs-dumps/refs/heads/master/config/dump.npc npc_1141
 
 [npc_363]
 name=Woman
@@ -210,3 +216,4 @@ param=damagetype,^crush_style
 param=defend_sound,female_hit
 param=death_sound,female_death
 // osrs stats and Vislvl match 1:1
+// https://raw.githubusercontent.com/Joshua-F/osrs-dumps/refs/heads/master/config/dump.npc npc_1142

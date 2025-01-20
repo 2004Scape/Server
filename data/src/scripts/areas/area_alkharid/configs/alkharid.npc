@@ -397,6 +397,7 @@ hitpoints=7
 param=damagetype,^crush_style
 category=citizen
 // osrs stats and Vislvl match 1:1
+// https://raw.githubusercontent.com/Joshua-F/osrs-dumps/refs/heads/master/config/dump.npc npc_3261
 
 [silk_trader]
 vislevel=hide
@@ -470,3 +471,4 @@ param=defend_anim,human_sword_defend2
 param=attack_sound,hacksword_slash
 // param=defend_sound,brassclash2
 // osrs stats and Vislvl match 1:1
+// https://raw.githubusercontent.com/Joshua-F/osrs-dumps/refs/heads/master/config/dump.npc npc_3292

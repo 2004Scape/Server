@@ -175,8 +175,9 @@ if(%squire_progress = 4 | %squire_progress = 5 & inv_total(inv, portrait) = 0) {
     ~chatnpc("<p,sad>But it is guarded by a very powerful ice giant.");
     ~chatnpc("<p,neutral>Most of the rocks in that cliff are pretty useless, and don't contain much of anything, but there's DEFINITELY some blurite in there.");
     ~chatnpc("<p,neutral>You'll need a little bit of mining experience to be able to find it.");
-    %squire_progress = 6;
     ~chatplayer("<p,neutral>Ok. I'll go and find them then.");
+    inv_del(inv, portrait, 1);
+    %squire_progress = 6;
 } else if (%squire_progress = 6) {
     @thurgo_check_blurite;
 }
@@ -216,5 +217,6 @@ return(true);
 
 [queue,squire_complete]
 %squire_progress = ^squire_complete;
+session_log(^log_adventure, "Quest complete: The Knight's Sword");
 ~send_quest_complete(questlist:squire, blurite_sword, 250, ^squire_questpoints, "You have completed the Knight's Sword Quest!");
 stat_advance(smithing, 127250);

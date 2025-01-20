@@ -30,6 +30,10 @@ if (map_members = false) {
 def_int $feather_count = min(inv_total(inv, feather), 15);
 def_int $shaft_count = min(inv_total(inv, arrow_shaft), 15);
 def_int $arrow_count = min($feather_count, $shaft_count);
+if(inv_itemspace(inv, headless_arrow, $arrow_count, inv_size(inv)) = false & (inv_total(inv, feather) > 15 | inv_total(inv, arrow_shaft) > 15)) {
+    mes("You do not have enough inventory space for the headless arrows."); // OSRS
+    return;
+}
 // delete supplies
 inv_del(inv, feather, $arrow_count);
 inv_del(inv, arrow_shaft, $arrow_count);

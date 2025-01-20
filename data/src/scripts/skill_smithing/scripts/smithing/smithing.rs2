@@ -168,14 +168,13 @@ if ($data = null) {
 }
 // todo: check if they have tourist trap completed for dart tips
 // IT CHECKS FOR DARTS FIRST BTW (before members check)
-// switch_obj(db_getfield($data,smithing:product,0))
-// {
-//     case bronze_dart_tip, iron_dart_tip, steel_dart_tip, mithril_dart_tip, adamant_dart_tip, rune_dart_tip :
-//         if (quest_completed(tourist_trap) = 0) {
-//             ~mesbox("You're not sure how to make darts yet.");
-//             return;
-//         }
-// }
+switch_obj(db_getfield($data,smithing:product,0)) {
+     case bronze_dart_tip, iron_dart_tip, steel_dart_tip, mithril_dart_tip, adamant_dart_tip, rune_dart_tip :
+         if (%desertrescue_progress < ^desertrescue_learned_darts) {
+             ~mesbox("You're not sure how to make darts yet.");
+             return;
+         }
+ }
 
 // This check comes after darts but before mems, confirmed.
 if (~in_tutorial_island(coord) = true & last_item ! bronze_dagger) {

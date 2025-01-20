@@ -15,10 +15,10 @@ if ($amount > 0) {
 
 if (stat(hitpoints) = 0){
     queue(player_death, 0);
-    return;
+    // no early return, ring of life still processes on death. https://youtu.be/LSpyUVXa4LE?t=202
 }
-~ring_of_life_check;
 
+~ring_of_life_check;
 
 [proc,human_hit_sound]
 def_int $rand;

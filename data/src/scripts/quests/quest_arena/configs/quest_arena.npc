@@ -29,15 +29,16 @@ strength=18
 defence=20
 param=attackbonus,10
 param=strengthbonus,14
-param=stabdefence,35
-param=slashdefence,29
-param=crushdefence,21
+param=stabdefence,44
+param=slashdefence,38
+param=crushdefence,30
 param=damagetype,^slash_style
 param=attack_anim,human_baxe_slash
 param=defend_anim,human_baxe_defend2
 param=attack_sound,baxe_slash
 // param=defend_sound,blade3_mail
 // Stats match osrs version but our version Vislvl is different.
+// https://raw.githubusercontent.com/Joshua-F/osrs-dumps/refs/heads/master/config/dump.npc npc_1208
 
 [khazard_guard_drunk]
 name=Khazard Guard
@@ -70,15 +71,17 @@ strength=18
 defence=20
 param=attackbonus,10
 param=strengthbonus,14
-param=stabdefence,35
-param=slashdefence,29
-param=crushdefence,21
+param=stabdefence,44
+param=slashdefence,38
+param=crushdefence,30
 param=damagetype,^slash_style
 param=attack_anim,human_baxe_slash
 param=defend_anim,human_baxe_defend2
 param=attack_sound,baxe_slash
 // param=defend_sound,blade3_mail
 // Stats match osrs version but our version Vislvl is different.
+// The NPC in question has been replaced by another NPC that no longer has an attack option or stats. npc_1209
+// stats and params is guess.
 
 [khazard_guard_chest]
 name=Khazard Guard
@@ -119,6 +122,8 @@ param=defend_anim,human_baxe_defend2
 param=attack_sound,baxe_slash
 // param=defend_sound,blade3_mail
 // Stats match osrs version but our version Vislvl is different.
+// The NPC in question has been replaced by another NPC that no longer has an attack option or stats. npc_1210
+// stats and params is guess.
 
 [khazard_guard_standard]
 name=Khazard Guard
@@ -160,6 +165,7 @@ param=defend_anim,human_baxe_defend2
 param=attack_sound,baxe_slash
 // param=defend_sound,blade3_mail
 // Stats match osrs version but our version Vislvl is different.
+// https://raw.githubusercontent.com/Joshua-F/osrs-dumps/refs/heads/master/config/dump.npc npc_1211
 
 [khazard_guard_cutscene]
 name=Khazard Guard
@@ -181,22 +187,23 @@ model7=model_185_obj_wear
 model8=model_550_obj_wear
 head1=model_63_idk_head
 head2=model_84_idk_head
-respawnrate=100
 wanderrange=0
+respawnrate=100
 hitpoints=25
 attack=20
 strength=18
 defence=20
 param=attackbonus,10
 param=strengthbonus,14
-param=stabdefence,35
-param=slashdefence,29
-param=crushdefence,21
+param=stabdefence,44
+param=slashdefence,38
+param=crushdefence,30
 param=damagetype,^slash_style
 param=attack_anim,human_baxe_slash
 param=defend_anim,human_baxe_defend2
 param=attack_sound,baxe_slash
 // param=defend_sound,blade3_mail
+// https://chisel.weirdgloop.org/moid/npc_id.html#1212 npc_1212
 
 [general_khazard]
 name=General Khazard
@@ -231,9 +238,9 @@ param=defend_anim,human_2h_sword_defend
 // param=defend_sound,
 // osrs use attack seq_406
 // TODO monster examine spell
-// TODO param stats
 // TODO sounds + maxranges
 // Stats match osrs version but our version Vislvl is different.
+// https://raw.githubusercontent.com/Joshua-F/osrs-dumps/refs/heads/master/config/dump.npc npc_12025
 
 [khazard_barman]
 vislevel=hide
@@ -258,7 +265,6 @@ model7=model_181_idk
 model8=model_326_idk
 head1=model_63_idk_head
 head2=model_79_idk_head
-wanderrange=4
 
 [kelvin]
 vislevel=hide
@@ -485,8 +491,8 @@ param=defend_sound,growl5
 huntmode=aggressive_melee
 huntrange=2
 // TODO monster examine spell
-// TODO param stats
 // Stats match osrs version but our version Vislvl is different.
+// https://raw.githubusercontent.com/Joshua-F/osrs-dumps/refs/heads/master/config/dump.npc npc_1224
 
 [khazard_ogre]
 name=Khazard Ogre
@@ -507,9 +513,9 @@ hitpoints=60
 attack=54
 strength=53
 defence=53
+param=attackrate,6
 param=attackbonus,22
 param=strengthbonus,20
-param=attackrate,6
 param=damagetype,^crush_style
 param=attack_anim,ogre_attack
 param=defend_anim,ogre_block
@@ -520,8 +526,8 @@ param=death_sound,giant_death
 huntmode=aggressive_melee
 huntrange=2
 // TODO monster examine spell
-// TODO param stats
 // Stats match osrs version but our version Vislvl is different.
+// https://raw.githubusercontent.com/Joshua-F/osrs-dumps/refs/heads/master/config/dump.npc npc_1225
 
 [khazard_scorpion]
 name=Khazard Scorpion
@@ -559,5 +565,5 @@ param=death_drop,null
 huntmode=aggressive_melee
 huntrange=2
 // TODO monster examine spell
-// TODO param stats
 // osrs stats and Vislvl match 1:1
+// https://raw.githubusercontent.com/Joshua-F/osrs-dumps/refs/heads/master/config/dump.npc npc_1226

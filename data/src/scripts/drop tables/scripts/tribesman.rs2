@@ -1,0 +1,57 @@
+[ai_queue3,tribesman]
+gosub(npc_death);
+if (npc_findhero = false){
+    return;
+}
+
+// Default drop from config
+obj_add(npc_coord, npc_param(death_drop), 1, ^lootdrop_duration);
+
+def_int $random = random(138);
+if ($random < 7){
+    obj_add(npc_coord, bronze_spear, 1, ^lootdrop_duration);
+} else if ($random < 10) {
+    obj_add(npc_coord, steel_javelin, 10, ^lootdrop_duration);
+} else if ($random < 12) {
+    obj_add(npc_coord, bolt_p, 4, ^lootdrop_duration);
+} else if ($random < 14) {
+    obj_add(npc_coord, iron_spear, 1, ^lootdrop_duration);
+} else if ($random < 16) {
+    obj_add(npc_coord, steel_arrow_p, 5, ^lootdrop_duration);
+} else if ($random < 18) {
+    obj_add(npc_coord, mithril_javelin, 10, ^lootdrop_duration);
+} else if ($random < 19) {
+    obj_add(npc_coord, mithril_spear, 1, ^lootdrop_duration);
+} else if ($random < 24) {
+    obj_add(npc_coord, unidentified_rogues_purse, 1, ^lootdrop_duration);
+} else if ($random < 29) {
+    obj_add(npc_coord, unidentified_snake_weed, 1, ^lootdrop_duration);
+} else if ($random < 40) {
+    obj_add(npc_coord, ~randomherb, ^lootdrop_duration);
+} else if ($random < 65) {
+    obj_add(npc_coord, coins, 15, ^lootdrop_duration);
+} else if ($random < 85) {
+    obj_add(npc_coord, snape_grass, 1, ^lootdrop_duration);
+} else if ($random < 97) {
+    obj_add(npc_coord, limpwurt_root, 1, ^lootdrop_duration);
+} else if ($random < 109) {
+    obj_add(npc_coord, coins, 28, ^lootdrop_duration);
+} else if ($random < 117) {
+    obj_add(npc_coord, naturerune, 3, ^lootdrop_duration);
+} else if ($random < 122) {
+    obj_add(npc_coord, coins, 62, ^lootdrop_duration);
+} else if ($random < 127) {
+    obj_add(npc_coord, gold_ore, 1, ^lootdrop_duration);
+} else if ($random < 130) {
+    obj_add(npc_coord, 2dose2antipoison, 1, ^lootdrop_duration);
+} else if ($random < 131) {
+    obj_add(npc_coord, 3dose2antipoison, 1, ^lootdrop_duration);
+} else if ($random < 132) {
+    obj_add(npc_coord, bread, 1, ^lootdrop_duration);
+} else if ($random < 133) {
+    obj_add(npc_coord, tin_ore, 1, ^lootdrop_duration);
+} else if ($random < 134) {
+    obj_add(npc_coord, pot_of_flour, 1, ^lootdrop_duration);
+} else if ($random < 136) {
+    obj_add(npc_coord, ~randomjewel, ^lootdrop_duration);
+}

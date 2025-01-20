@@ -1,8 +1,8 @@
 [opnpc1,traiborn]
-if (%demon_progress < 3 | %demon_progress > 29 | inv_total(inv, demon_traiborn_key) > 0) {
-    @traiborn_dialogue;
-} else if (%demon_progress = 29 & inv_total(inv, demon_traiborn_key) < 1){
+if (%demon_progress = ^demon_got_traiborn_key & inv_total(inv, demon_traiborn_key) < 1 & inv_total(bank, demon_traiborn_key) < 1){
     @demon_slayer_traiborn_lost_key;
+} else if (%demon_progress < ^demon_find_bones | %demon_progress >= ^demon_got_traiborn_key) {
+    @traiborn_dialogue;
 } else {
     @demon_slayer_traiborn_bones_dialogue;
 }
@@ -20,21 +20,21 @@ if(inv_total(inv, bones) < 1) {
 }
 
 [label,demon_slayer_traiborn_give_bones]
-if(inv_total(inv, bones) > 0 & %demon_progress > 2 & %demon_progress < 28) {
+if(%demon_progress >= ^demon_find_bones & %demon_progress < ^demon_got_traiborn_key & inv_total(inv, bones) > 0) {
     if_close();
     inv_del(inv, bones, 1);
     mes("You give Traiborn a set of bones.");
-    ~update_demon_progress;
     p_delay(1);
+    %demon_progress = calc(%demon_progress + 1);
     @demon_slayer_traiborn_give_bones;
 } else {
     @demon_slayer_traiborn_stop_giving_bones;
 }
 
 [proc,traiborn_dialogue_options](int $demon_progress)(int)
-if ($demon_progress < 2 | %demon_progress > 28) {
+if (%demon_progress < ^demon_key_hunt | %demon_progress >= ^demon_got_traiborn_key) {
    return(~p_choice2("What's a thingummywut?", 1, "Teach me to be a mighty and powerful wizard.", 2));
-} else if ($demon_progress = 2) {
+} else if ($demon_progress < ^demon_silverlight) {
    return (~p_choice3("What's a thingummywut?", 1, "Teach me to be a mighty and powerful wizard.", 2, "I need to get a key given to you by Sir Prysin.", 3));
 }
 
@@ -77,7 +77,7 @@ if ($option = 1) {
 [label,demon_slayer_traiborn_lost_key]
 ~chatplayer("<p,sad>I've lost the key you gave to me.");
 ~chatnpc("<p,confused>Yes I know, it was returned to me. If you want it back you're going to have to collect another 25 sets of bones.");
-~set_demon_progress(3);
+%demon_progress = ^demon_find_bones;
 
 [label,traiborn_teach_me]
 ~chatnpc("<p,shock>Wizard eh? You don't want any truck with that sort. They're not to be trusted. That's what I've heard anyways.");
@@ -143,9 +143,7 @@ if ($option = 1) {
     ~chatplayer("<p,neutral>I'll help get the bones for you.");
     ~chatnpc("<p,happy>Ooh that would be very good of you.");
     ~chatplayer("<p,neutral>Okay, I'll speak to you when I've got some bones.");
-    if (%demon_progress = 2) {
-        ~update_demon_progress;
-    }
+    %demon_progress = ^demon_find_bones;
 }
 
 [label,demon_slayer_traiborn_be_off_keys_around]
@@ -191,7 +189,7 @@ if ($option = 1) {
 }
 
 [label,demon_slayer_traiborn_stop_giving_bones]
-if (%demon_progress = 28) {
+if (%demon_progress = ^demon_got_traiborn_key) {
     ~chatnpc("<p,happy>Hurrah! That's all 25 sets of bones.");
     @demon_slayer_traiborn_incantation;
 } else {
@@ -210,8 +208,5 @@ p_delay(2);
 mes("Traiborn hands you a key");
 inv_add(inv, demon_traiborn_key, 1);
 p_delay(2);
-if (%demon_progress = 28) {
-    ~update_demon_progress;
-}
 ~chatplayer("<p,happy>Thank you very much.");
 ~chatnpc("<p,happy>Not a problem for a friend of Sir What's-his-face.");

@@ -268,9 +268,11 @@ wanderrange=6
 maxrange=8
 respawnrate=60
 hitpoints=3
-attack=1
-strength=1
-defence=1
+// param=attackbonus,
+param=stabdefence,-100
+param=slashdefence,-100
+param=crushdefence,-100
+// param=rangedefence,
 param=damagetype,^stab_style
 param=attack_anim,giantrat_attack
 param=defend_anim,giantrat_block
@@ -278,6 +280,8 @@ param=death_anim,giantrat_death
 param=attack_sound,rat_attack
 param=defend_sound,rat_hit
 param=death_sound,rat_death
+param=death_drop,tutorial_bones
+// https://raw.githubusercontent.com/Joshua-F/osrs-dumps/refs/heads/master/config/dump.npc npc_3313
 
 [tut_chicken]
 vislevel=3
@@ -287,14 +291,19 @@ walkanim=chicken_walk
 readyanim=chicken_ready
 op2=Attack
 model1=model_2849_npc
-// TODO
+hitpoints=3
+// param=attackbonus,
+param=magicdefence,-100
+// param=rangedefence,
 param=attack_anim,chicken_attack
 param=defend_anim,chicken_block
 param=death_anim,chicken_death
 param=attack_sound,chicken_attack
 param=defend_sound,chicken_hit
 param=death_sound,chicken_death
+param=death_drop,tutorial_bones
 category=chicken
+// https://raw.githubusercontent.com/Joshua-F/osrs-dumps/refs/heads/master/config/dump.npc npc_3316
 
 [tut_fishing_spot]
 vislevel=hide
@@ -362,3 +371,9 @@ model8=model_280_obj_wear
 model9=model_284_obj_wear
 head1=model_59_idk_head
 wanderrange=2
+hitpoints=15
+attack=2
+strength=2
+defence=3
+param=damagetype,^crush_style
+// https://raw.githubusercontent.com/Joshua-F/osrs-dumps/refs/heads/master/config/dump.npc npc_3319

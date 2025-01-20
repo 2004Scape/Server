@@ -1,3 +1,12 @@
+[fairy]
+vislevel=hide
+name=Fairy
+desc=A delicate creature from this strange realm.
+walkanim=fairy_walk
+readyanim=fairy_ready
+model1=model_2857_npc
+param=death_anim,fairy_death
+
 [fairy_queen]
 vislevel=hide
 name=Fairy Queen

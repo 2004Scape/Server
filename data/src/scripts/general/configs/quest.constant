@@ -40,6 +40,7 @@
 ^itgronigen_complete = 7
 ^junglepotion_complete = 12
 ^biohazard_complete = 16
+^desertrescue_complete = 30
 
 ^blackarmgang_questpoints = 1
 ^blackknight_questpoints = 3
@@ -89,3 +90,4 @@
 ^upass_questpoints = 5
 ^zombiequeen_questpoints = 2
 ^crest_questpoints = 1
+^desertrescue_questpoints = 2

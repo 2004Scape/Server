@@ -1,0 +1,37 @@
+﻿name: Verify Content
+
+on:
+  pull_request:
+  push:
+    paths:
+      - '.github/workflows/content.yml'
+      - 'data/src/**'
+  workflow_dispatch:
+
+jobs:
+  pack:
+    runs-on: ubuntu-latest
+
+    steps:
+    - uses: actions/checkout@v4
+
+    - uses: pnpm/action-setup@v4
+      name: Install pnpm
+      with:
+        version: 10
+        run_install: false
+
+    - uses: actions/setup-node@v4
+      with:
+        node-version: '22.x'
+        cache: 'pnpm'
+
+    - uses: actions/setup-java@v4
+      with:
+        distribution: 'temurin'
+        java-version: '17'
+
+    - run: pnpm i
+
+    - name: Pack
+      run: npm run build

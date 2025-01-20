@@ -1,0 +1,186 @@
+[opnpc1,captain_siad]
+mes("The captain looks up from his work as you address him.");
+p_delay(2);
+@captain_siad_dialogue;
+
+[label,captain_siad_dialogue]
+if(~obj_gettotal(technical_plans) > 0) {
+    ~chatnpc("<p,angry>I don't have time to talk to you.|Move along please!");
+    return;
+}
+~chatnpc("<p,angry>What are you doing in here?");
+@multi5("I wanted to have a chat?", siad_chat, "What's it got to do with you?", siad_dowithyou, "Prepare to die!", siad_preparedie, "All the slaves have broken free!", siad_slaves, "Fire! Fire!", siad_fire);
+
+[label,siad_chat]
+~chatplayer("<p,happy>I wanted to have a chat?");
+~chatnpc("<p,angry>You don't belong in here, get out!");
+@multi5("But I just need two minutes of your time?", siad_2mins, "Prepare to die!", siad_preparedie, "All the slaves have broken free!", siad_slaves, "Fire! Fire!", siad_fire, "You seem to have a lot of books!", siad_books);
+
+[label,siad_2mins]
+~chatplayer("<p,neutral>But I just need two minutes of your time?");
+~chatnpc("<p,confused>Well, okay, but very quickly. I am a very busy person you know!");
+@multi2("Well, er... erm, I err....", siad_weller, "Oh my, a dragon just flew straight past your window!", siad_dragon);
+
+[label,siad_dragon]
+~chatplayer("<p,neutral>Oh my, a dragon just flew straight past your window!");
+if(random(10) = 0) {
+    %desertrescue_map_mechanisms = setbit(%desertrescue_map_mechanisms, ^desertrescue_distracted_siad);
+    ~mesbox("The captain seems distracted with what you just said.|The captain looks out of the window for the dragon.");
+    return;
+}
+~chatnpc("<p,angry>Really! Where? I don't see any dragons young <text_gender("man", "lady")>? Now, please get out of my office, I have work to do.");
+mes("The Captain goes back to his work.");
+
+[label,siad_dowithyou]
+~chatplayer("<p,quiz>What's it got to do with you?");
+~chatnpc("<p,angry>This happens to be my office. Now explain yourself before I run you through!");
+if(%desertrescue_progress >= ^desertrescue_given_bedobin_key) {
+    @multi3("I'm here to take your plans, hand them over now or I'll kill you!", siad_takeplans, "The guard downstairs said you were lonely.", siad_lonely, "I need to service your chest.", siad_service);
+} else {
+    @multi2("The guard downstairs said you were lonely.", siad_lonely, "I need to service your chest.", siad_service);
+}
+
+[label,siad_books]
+~chatplayer("<p,happy>You seem to have a lot of books!");
+~chatnpc("<p,angry>Yes, I do. Now please get to the point?");
+@multi3("How long have you been interested in books?", siad_interest, "I could get you some books!", siad_getbooks, "So, you're interested in sailing?", siad_sailing);
+
+[label,siad_interest]
+~chatplayer("<p,neutral>How long have you been interested in books?");
+~chatnpc("<p,angry>Long enough to know when someone is stalling!");
+~chatnpc("<p,angry>Okay, that's it, get out! Guards!");
+@siad_sendguards;
+
+[label,siad_getbooks]
+~chatplayer("<p,neutral>I could get you some books!");
+~chatnpc("<p,happy>Oh, really!");
+~chatnpc("<p,angry>Sorry, not interested!");
+npc_say("GUARDS!");
+~desertcamp_guard_search;
+
+[label,siad_sailing]
+~chatplayer("<p,neutral>So, you're interested in sailing?");
+~mesbox("The captain's interest seems to perk up.");
+~chatnpc("<p,happy>Well, yes actually... It's been a passion of mine for some years...");
+@multi2("I could tell by the cut of your jib.", siad_jib, "Not much sailing to be done around here though?", siad_notsail);
+
+[label,siad_notsail]
+~chatplayer("<p,neutral>Not much sailing to be done around here though?");
+~chatnpc("<p,angry>Well of course there isn't, we're surrounded by desert. Now, why are you here exactly?");
+@multi2("Oh my, a dragon just flew straight past your window!", siad_dragon, "Well, er... erm, I err....", siad_weller);
+
+[label,siad_jib]
+~chatplayer("<p,neutral>I could tell by the cut of your jib.");
+~chatnpc("<p,happy>Oh yes? Really?");
+~mesbox("@blu@-- The Captain looks flattered. --");
+~chatnpc("<p,happy>Well, I was quite a catch in my day you know!");
+%desertrescue_map_mechanisms = setbit(%desertrescue_map_mechanisms, ^desertrescue_distracted_siad);
+~mesbox("The captain starts rambling on about his days as a salty sea dog. He looks quite distracted...");
+
+[label,siad_takeplans]
+~chatplayer("<p,angry>I'm here to take your plans, hand them over now or I'll kill you!");
+~chatnpc("<p,angry>Don't be silly!|I'm going to teach you a lesson!|Guards! Guards!");
+@siad_sendguards;
+
+[label,siad_preparedie]
+~chatplayer("<p,angry>Prepare to die!");
+~chatnpc("<p,angry>I'll teach you a lesson!|Guards! Guards!");
+@siad_sendguards;
+
+[label,siad_slaves]
+~chatplayer("<p,shock>All the slaves have broken free!");
+~chatnpc("<p,angry>Don't talk rubbish, the warning siren isn't sounding. Now state your business before I have you thrown out.");
+if(%desertrescue_progress >= ^desertrescue_given_bedobin_key) {
+    @multi3("I'm here to take your plans, hand them over now or I'll kill you!", siad_takeplans, "The guard downstairs said you were lonely.", siad_lonely, "I need to service your chest.", siad_service);
+} else {
+    @multi2("The guard downstairs said you were lonely.", siad_lonely, "I need to service your chest.", siad_service);
+}
+
+[label,siad_lonely]
+~chatplayer("<p,shifty>The guard downstairs said you were lonely.");
+~chatnpc("<p,quiz>Well, I most certainly am not lonely!");
+~chatnpc("<p,angry>I'm an incredibly busy man you know!|Now, get to the point, what do you want?");
+
+[label,siad_fire]
+~chatplayer("<p,shock>Fire! Fire!");
+if(random(4) = 0) {
+    %desertrescue_map_mechanisms = setbit(%desertrescue_map_mechanisms, ^desertrescue_distracted_siad);
+    ~mesbox("The captain seems distracted with what you just said.|The captain looks out of the window to see if there is a fire.");
+    return;
+}
+~chatnpc("<p,angry>Where's the fire? I don't see any fire? Stop messing me around and state your business!");
+@multi2("It's down in the lower mines, sound the alarm!", siad_lowermines, "Oh yes, you're right, they must have put it out!", siad_out);
+
+[label,siad_lowermines]
+~chatplayer("<p,neutral>It's down in the lower mines, sound the alarm!");
+~chatnpc("<p,angry>You go and sound the alarm, I can't see anything wrong with the mine. Have you seen the fire yourself?");
+@multi2("Yes actually!", siad_yes, "Er, no, one of the slaves told me.", siad_noslave);
+
+[label,siad_yes]
+~chatplayer("<p,shifty>Yes actually!");
+~chatnpc("<p,angry>Well, why didn't you raise the alarm?");
+@multi2("I don't know where the alarm is.", siad_wherealarm, "I was so concerned for your safety that I rushed to save you.", siad_safety);
+
+[label,siad_wherealarm]
+~chatplayer("<p,neutral>I don't know where the alarm is.");
+~chatnpc("<p,angry>That's the most ridiculous thing I've heard. Who are you? Where do you come from? It doesn't matter... Guards! Show this person out!");
+@siad_sendguards;
+
+[label,siad_safety]
+~chatplayer("<p,neutral>I was so concerned for your safety that I rushed to save you.");
+~chatnpc("<p,angry>Well, that's very good of you. But as you can see, I am very fine and well thanks! Now, please leave so that I can get back to my work.");
+mes("The Captain goes back to his desk.");
+
+[label,siad_service]
+~chatplayer("<p,shifty>I need to service your chest.");
+~chatnpc("<p,quiz>You need to what?");
+~chatplayer("<p,shifty>I need to service your chest?");
+~chatnpc("<p,angry>There's nothing wrong with the chest, it's fine, now get out!");
+if(%desertrescue_progress >= ^desertrescue_given_bedobin_key) {
+    @multi2("I'm here to take your plans, hand them over now or I'll kill you!", siad_takeplans, "Fire! Fire!", siad_fire);
+} else {
+    @multi2("Fire! Fire!", siad_fire, "Oh my, a dragon just flew straight past your window!", siad_dragon);
+}
+
+[label,siad_out]
+~chatplayer("<p,neutral>Oh yes, you're right, they must have put it out!");
+~chatnpc("<p,angry>Good, now perhaps you can leave me in peace? After all I do have some work to do.");
+@multi2("Er, yes okay then.", siad_eryes, "Well, er... erm, I err....", siad_weller);
+
+[label,siad_weller]
+~chatplayer("<p,neutral>Well, er... erm, I err....");
+~chatnpc("<p,angry>Come on, spit it out!|Right that's it! Guards!");
+@siad_sendguards;
+
+[label,siad_noslave]
+~chatplayer("<p,neutral>Er, no, one of the slaves told me.");
+~chatnpc("<p,angry>Well... you can't believe them, they're all a bunch of convicts. Anyway, it doesn't look as if there is a fire down there. So I'm going to get on with my work. Please remove yourself from my office.");
+mes("The Captain goes back to his desk and starts studying.");
+
+[label,siad_eryes]
+~chatplayer("<p,neutral>Er, yes okay then.");
+~chatnpc("<p,angry>Good! Please remove yourself from my office.");
+mes("The Captain goes back to his desk and starts studying.");
+
+[label,siad_sendguards]
+if(%desertrescue_progress < ^desertrescue_complete) {
+    return;
+}
+if_close;
+mes("The guards search you!");
+p_delay(1);
+if(inv_total(inv, desertrescue_cell_door_key) > 0) {
+    inv_del(inv, desertrescue_cell_door_key, 1);
+    mes("The guards find the cell door key and remove it!");
+}
+if(inv_total(inv, desertrescue_metalkey) > 0) {
+    inv_del(inv, desertrescue_metalkey, 1);
+    mes("The guards find the main gate key and remove it!");
+}
+mes("Some guards rush to help the captain.");
+p_delay(3);
+mes("You are roughed up by the guards and manhandled into a cell.");
+p_delay(1);
+npc_say("Into the cell you go! I hope this teaches you a lesson.");
+p_delay(1);
+p_teleport(^desertrescue_prison_coord);

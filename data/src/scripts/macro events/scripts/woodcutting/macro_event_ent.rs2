@@ -23,6 +23,7 @@ switch_obj(last_useitem) {
     case bronze_axe, iron_axe, steel_axe, black_axe, mithril_axe, adamant_axe, rune_axe :
         p_opnpc(1); // gets delayed by a tick >:(
     case raw_herring, herring :
+        // note: added in 2005-2006 by mod ash?
         mes("This is not the mightiest tree in the forest.");
         return;
     case default : ~displaymessage(^dm_default);
@@ -140,6 +141,7 @@ if (%action_delay = map_clock) { // break axe
         npc_facesquare(coord);
         anim(null, 0);
         sound_synth(staff_stab, 0, 0); // osrs used spear sound
+        session_log(^log_adventure, "Broke their <oc_name($axe)>");
         return;
     }
     %macro_ent_counter = add(%macro_ent_counter, 1);
