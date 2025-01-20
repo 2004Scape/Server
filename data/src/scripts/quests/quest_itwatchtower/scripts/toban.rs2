@@ -1,5 +1,7 @@
 [opnpc1,toban]
-if(testbit(%itwatchtower_bits, ^itwatchtower_helped_toban) = true) {
+if(%itwatchtower_progress >= ^itwatchtower_made_relic) {
+    mes("The ogre is not interested in you anymore.");
+} else if(testbit(%itwatchtower_bits, ^itwatchtower_helped_toban) = true) {
     ~chatnpc("<p,bored>The small t'ing returns; what do you want now?");
     switch_int(~p_choice2("I seek another task.", 1, "I can't find the relic part you gave me.", 2)) {
         case 1 :
