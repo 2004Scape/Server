@@ -1,0 +1,15 @@
+[opnpc1,npc_875]
+~chatnpc("<p,angry>Arr, small thing wants my food, does it?|I'll teach you to deal with ogres!");
+~npc_retaliate(0);
+
+[opnpc3,npc_875]
+~chatnpc("<p,angry>Arr, small thing wants my food, does it?|I'll teach you to deal with ogres!");
+~npc_retaliate(0);
+
+[opnpc1,npc_876]
+~chatnpc("<p,angry>Grrr, little animal; I shall destroy you!");
+~npc_retaliate(0);
+
+[opnpc3,npc_876]
+~chatnpc("<p,angry>Trade with me? Who do you think you are?");
+~npc_retaliate(0);
