@@ -75,21 +75,65 @@ switch_int(%itwatchtower_progress) {
 }
 
 [opnpcu,watchtower_wizard]
-if(%itwatchtower_progress > ^itwatchtower_started) {
-    if(last_useitem = fingernails | last_useitem = old_robe | last_useitem = unusual_armour | last_useitem = tattered_eye_patch | last_useitem = damaged_dagger) {
+if(last_useitem = watchtower_crystal1) {
+    ~chatplayer("<p,happy>Wizard, look what I have found.");
+    ~chatnpc("<p,happy>Well done, well done!|You are clever;|hold onto it until you have all four.");
+    ~chatnpc("<p,neutral>Keep searching for the others.|If you've dropped any,|then you will need to go back to where you got it from.");
+} else if(last_useitem = relic_part_1) {
+    inv_del(inv, relic_part_1, 1);
+    ~chatplayer("<p,neutral>I had this given to me...");
+    if(testbit(%itwatchtower_bits, ^itwatchtower_relic1) = true) {
+        ~chatnpc("<p,shifty>I already have that part..."); // guessed, rsc dialogue
+        return;
+    }
+    @check_relic_parts;
+} else if(last_useitem = relic_part_2) {
+    inv_del(inv, relic_part_2, 1);
+    ~chatplayer("<p,neutral>I got given this by an ogre...");
+    if(testbit(%itwatchtower_bits, ^itwatchtower_relic1) = true) {
+        ~chatnpc("<p,shifty>I already have that part..."); // guessed, rsc dialogue
+        return;
+    }
+    @check_relic_parts;
+} else if(last_useitem = relic_part_3) {
+    inv_del(inv, relic_part_3, 1);
+    ~chatplayer("<p,neutral>An ogre gave me this...");
+    if(testbit(%itwatchtower_bits, ^itwatchtower_relic1) = true) {
+        ~chatnpc("<p,shifty>I already have that part..."); // guessed, rsc dialogue
+        return;
+    }
+    // https://web.archive.org/web/20051025143129im_/http://www.runeweb.net/fireball/Watchtower%20Images/Watchtower8.PNG
+    ~chatnpc("<p,neutral>Ah, it's part of an old ogre statue.");
+    @check_relic_parts;
+} else if(last_useitem = fingernails) {
+    if(%itwatchtower_progress ! ^itwatchtower_started) {
         inv_del(inv, last_useitem, 1);
         ~chatnpc("<p,shifty>Yes, I'll take that off you.");
         return;
     }
-} else if(%itwatchtower_progress = ^itwatchtower_started) {
-    if(last_useitem = fingernails) {
-        p_opnpc(1);
+    p_opnpc(1);
+} else if(last_useitem = old_robe | last_useitem = unusual_armour | last_useitem = tattered_eye_patch | last_useitem = damaged_dagger) {
+    if(%itwatchtower_progress ! ^itwatchtower_started) {
+        inv_del(inv, last_useitem, 1);
+        ~chatnpc("<p,shifty>Yes, I'll take that off you.");
+        return;
     }
-    if(last_useitem = old_robe | last_useitem = unusual_armour | last_useitem = tattered_eye_patch | last_useitem = damaged_dagger) {
-        @watchwiz_not_evidence;
-    }
+    @watchwiz_not_evidence;
 }
 ~displaymessage(^dm_default);
+
+
+[label,check_relic_parts]
+if(getbit_range(%itwatchtower_bits, ^itwatchtower_relic1, ^itwatchtower_relic3) < 7) {
+    ~chatnpc("<p,neutral>There may be more parts to find...|I'll keep this for later.");
+    return;
+}
+inv_add(inv, ogre_relic, 1);
+%itwatchtower_progress = ^itwatchtower_made_relic;
+~chatnpc("<p,happy>Excellent! That seems to be all the pieces.|Now I can assemble it...");
+~chatnpc("<p,neutral>Hmm, yes it is as I thought...|A statue symbolising an ogre warrior of old.");
+~chatnpc("<p,happy>Well, if you ever wanted to make friends with an ogre, then this is the item to have!");
+~objbox(ogre_relic, "The wizard gives you a complete statue.", 250, 0, 0);
 
 [label,watchwiz_not_evidence]
 ~chatnpc("<p,confused>Let me see...");
@@ -126,6 +170,14 @@ switch_int(~p_choice3("Can I be of help?", 1, "I'm not sure I can help.", 2, "I'
 
 [label,watchwiz_whatdo]
 ~chatplayer("<p,confused>So what do I do?");
+~chatnpc("<p,neutral>You need to be fearless and gain entrance to|Gu'Tanoth, the city of the ogres, then find out how to|navigate the caves.");
+~chatplayer("<p,neutral>That sounds scary...");
+~chatnpc("<p,neutral>Ogres are nasty creatures, yes. Only a strong warrior,|and a clever one at that, can get the better of them.");
+~chatplayer("<p,neutral>What do I need to do to get into the city?");
+~chatnpc("<p,neutral>You'll need some way to make the guards let you in.");
+%itwatchtower_progress = ^itwatchtower_given_fingernails;
+inv_del(inv, fingernails, 1);
+~chatnpc("<p,happy>You could start by checking out the ogre settlements|around here. Tribal ogres often dislike their|neighbours... In the meantime, I'll throw those|fingernails out for you.");
 
 [label,watchwiz_wontbother]
 ~chatplayer("<p,neutral>I won't bother then.");

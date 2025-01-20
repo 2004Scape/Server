@@ -1155,7 +1155,7 @@ weight=10g
 members=yes
 tradeable=no
 
-[obj_2378]
+[toban_key]
 name=Toban key
 model=model_2372_obj
 2dxof=-3

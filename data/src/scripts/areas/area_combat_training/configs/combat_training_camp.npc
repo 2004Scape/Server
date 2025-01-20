@@ -95,7 +95,7 @@ param=death_drop,big_bones
 huntmode=cowardly
 huntrange=2
 // Stats match osrs version but our version Vislvl is different.
-// https://raw.githubusercontent.com/Joshua-F/osrs-dumps/refs/heads/master/config/dump.npc npc_1153
+// https://raw.githubusercontent.com/Joshua-F/osrs-dumps/refs/heads/master/config/dump.npc ogre3
 
 [npc_561]
 vislevel=hide

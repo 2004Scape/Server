@@ -31,7 +31,7 @@ huntrange=2
 // Stats match osrs version but our version Vislvl is different.
 // https://raw.githubusercontent.com/Joshua-F/osrs-dumps/refs/heads/master/config/dump.npc npc_2095
 
-[npc_115]
+[ogre]
 size=2
 walkanim=ogre_walk
 readyanim=ogre_ready
