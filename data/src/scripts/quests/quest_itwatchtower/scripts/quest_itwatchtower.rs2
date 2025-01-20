@@ -134,8 +134,12 @@ if(last_useitem = toban_key) {
 [label,open_toban_chest]
 inv_del(inv, toban_key, 1);
 loc_change(loc_3273, 20);
-inv_del(inv, toban_key, 1);
 sound_synth(chest_open, 0, 0);
+if(inv_total(inv, tobans_gold) > 0) {
+    mes("You have already got the stolen gold.");
+    return;
+}
+inv_add(inv, tobans_gold, 1);
 ~objbox(tobans_gold, "You find a stash of gold inside.", 250, 0, 0);
 
 [oploc1,loc_2811]

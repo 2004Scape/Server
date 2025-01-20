@@ -25,10 +25,12 @@ if(getbit_range(%itwatchtower_bits, ^itwatchtower_spoken_grew, ^itwatchtower_hel
 } else if(getbit_range(%itwatchtower_bits, ^itwatchtower_spoken_grew, ^itwatchtower_helped_grew) = 1) {
     ~chatnpc("<p,neutral>The morsel is back.|Does it have our tooth for us?");
     if(inv_total(inv, ogre_tooth) > 0) {
+        %itwatchtower_bits = %itwatchtower_bits = setbit_range_toint(%itwatchtower_bits, 2, ^itwatchtower_spoken_grew, ^itwatchtower_helped_grew);
+        inv_del(inv, ogre_tooth, 1);
+        inv_add(inv, relic_part_2, 1);
         ~chatplayer("<p,happy>I have it.");
         ~chatnpc("<p,happy>That'll annoy Gorad lots! Heheheheh!");
         ~chatnpc("<p,happy>Here's a token of my gratitude: some old gem I stole from Gorad, and an old part of a statue.");
-        inv_add(inv, relic_part_2, 1);
         inv_add(inv, watchtower_crystal1, 1);
         ~doubleobjbox(relic_part_2, watchtower_crystal1, "You get part of a horrible statue... and one of the crystals!", 200);
         return;

@@ -1,6 +1,30 @@
 [opnpc1,og]
-if(testbit(%itwatchtower_bits, ^itwatchtower_spoken_og) = true) {
+if(testbit(%itwatchtower_bits, ^itwatchtower_helped_og) = true) {
+    ~chatnpc("<p,bored>It's the little t'ing again.");
+    switch_int(~p_choice2("Do you have any other tasks for me?", 1, "I haven't got it yet.", 2)) {
+        case 1 : 
+            ~chatplayer("<p,neutral>Do you have any other tasks for me?");
+            ~chatnpc("<p,bored>No, I have no more tasks for you, now go away.");
+        case 2 : 
+            ~chatplayer("<p,sad>I have lost the relic part you gave me.");
+            if(inv_total(inv, relic_part_1) > 0) {
+                ~chatnpc("<p,angry>Are you blind? I can see you got it even from here!");
+                return;
+            }
+            inv_add(inv, relic_part_1, 1);
+            ~chatnpc("<p,angry>Grrr, why do I bother?|It's a good job I got another part.");
+    }
+} else if(testbit(%itwatchtower_bits, ^itwatchtower_spoken_og) = true) {
     ~chatnpc("<p,neutral>Where my gold from dat dirty Toban?");
+    if(inv_total(inv, tobans_gold) > 0) {
+        ~chatplayer("<p,happy>I have your gold.");
+        inv_del(inv, tobans_gold, 1);
+        inv_add(inv, relic_part_1, 1);
+        %itwatchtower_bits = setbit(%itwatchtower_bits, ^itwatchtower_helped_og);
+        ~chatnpc("<p,happy>Well, well, the little t'ing has got it! Take dis to show little t'ing is a friend to da ogres. Hahahahaha!");
+        ~objbox(relic_part_1, "The ogre gives you part of a horrible statue.", 250, 0, 0);
+        return;
+    }
     switch_int(~p_choice3("I have your gold.", 1, "I haven't got it yet.", 2, "I have lost the key!", 3)) {
         case 1 :
             ~chatplayer("<p,happy>I have your gold.");
@@ -43,3 +67,12 @@ if(testbit(%itwatchtower_bits, ^itwatchtower_spoken_og) = true) {
 } else {
     mes("He's busy; try him another time.");
 }
+
+[opnpcu,toban]
+if(last_useitem = tobans_gold) {
+    if(testbit(%itwatchtower_bits, ^itwatchtower_spoken_og) = true & testbit(%itwatchtower_bits, ^itwatchtower_helped_og) = false) {
+        p_opnpc(1);
+    }
+    return;
+}
+~displaymessage(^dm_default);

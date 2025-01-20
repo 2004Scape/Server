@@ -27,7 +27,6 @@ if (npc_findhero = false) {
 queue(defeat_gorad, 0);
 obj_add(npc_coord, npc_param(death_drop), 1, ^lootdrop_duration);
 
-
 [queue,defeat_gorad]
 mes("Gorad has gone.");
 if(~obj_gettotal(ogre_tooth) > 0) return; // not possible?
