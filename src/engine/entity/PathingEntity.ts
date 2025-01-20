@@ -228,8 +228,8 @@ export default abstract class PathingEntity extends Entity {
         const previousZ: number = this.z;
         this.x = CoordGrid.moveX(this.x, dir);
         this.z = CoordGrid.moveZ(this.z, dir);
-        this.orientationX = CoordGrid.moveX(this.x, dir) * 2 + 1;
-        this.orientationZ = CoordGrid.moveZ(this.z, dir) * 2 + 1;
+        this.orientationX = CoordGrid.moveX(this.x, dir) * 2 + this.width;
+        this.orientationZ = CoordGrid.moveZ(this.z, dir) * 2 + this.length;
         this.stepsTaken++;
         this.refreshZonePresence(previousX, previousZ, this.level);
 
@@ -518,8 +518,18 @@ export default abstract class PathingEntity extends Entity {
         this.apRange = 10;
         this.apRangeCalled = false;
 
+        // set the direction of the player/npc every time an interaction is set.
+        // does not necessarily require the coord mask to be sent.
         const faceX: number = target.x * 2 + target.width;
         const faceZ: number = target.z * 2 + target.length;
+
+        // direction when the player/npc is first observed (updates on movement)
+        this.orientationX = faceX;
+        this.orientationZ = faceZ;
+
+        // direction update (only updates from facesquare or interactions)
+        this.faceX = faceX;
+        this.faceZ = faceZ;
 
         if (target instanceof Player) {
             const pid: number = target.pid + 32768;
@@ -534,14 +544,6 @@ export default abstract class PathingEntity extends Entity {
                 this.masks |= this.entitymask;
             }
         } else {
-            // direction when the player is first observed (updates on movement)
-            this.orientationX = faceX;
-            this.orientationZ = faceZ;
-
-            // direction update (only updates from facesquare or interactions)
-            this.faceX = faceX;
-            this.faceZ = faceZ;
-
             if (interaction === Interaction.ENGINE) {
                 // mask updates will be sent every time from the packet handler
                 this.masks |= this.coordmask;
