@@ -1,5 +1,24 @@
 [opnpc1,watchtower_wizard]
 switch_int(%itwatchtower_progress) {
+    case ^itwatchtower_made_relic :
+        ~chatnpc("<p,happy>Ah, the warrior returns.|Have you found a way into Gu'Tanoth yet?");
+        ~chatplayer("<p,sad>I can't get past the guards.");
+        ~chatnpc("<p,neutral>Well, ogres dislike others apart from their own kind. What you need is some form of proof of friendship, something to trick them into believing you're their friend.");
+        ~chatnpc("<p,happy>Which shouldn't be too hard, considering their intelligence.");
+        switch_int(~p_choice2("I have lost the relic you gave me.", 1, "I will find my way in, no problem.", 2)) {
+            case 1 :
+                ~chatplayer("<p,sad>I have lost the relic you gave me.");
+                if(inv_total(inv, ogre_relic) > 0) { // did bank and freesapce checks exist originally? classic doesn't have them
+                    ~chatnpc("<p,angry>Have you gone mad? I can see you have it with you!");
+                    return;
+                }
+                ~chatnpc("<p,neutral>What? Lost the relic? How careless!|It's a good job I copied its design, then!|You can take this copy instead - it's just as good.");
+                inv_add(inv, ogre_relic, 1);
+                ~objbox(ogre_relic, "The wizard gives you another statue.", 250, 0, 0);
+            case 2 : 
+                ~chatplayer("<p,happy>I will find my way in, no problem.");
+                ~chatnpc("<p,happy>Yes, I'm sure you will... Good luck!");
+        }
     case ^itwatchtower_given_fingernails :
         ~chatnpc("<p,happy>How's it going?");
         switch_int(~p_choice3("I am having difficulty with the tribes.", 1, "I have everything under control.", 2, "I have lost something the ogres gave to me.", 3)) {
@@ -75,7 +94,10 @@ switch_int(%itwatchtower_progress) {
 }
 
 [opnpcu,watchtower_wizard]
-if(last_useitem = watchtower_crystal1) {
+if(last_useitem = ogre_relic) {
+    ~chatplayer("<p,confused>What is this?");
+    ~chatnpc("<p,confused>It is the ogre statue I finished for you.");
+} else if(last_useitem = watchtower_crystal1) {
     ~chatplayer("<p,happy>Wizard, look what I have found.");
     ~chatnpc("<p,happy>Well done, well done!|You are clever;|hold onto it until you have all four.");
     ~chatnpc("<p,neutral>Keep searching for the others.|If you've dropped any,|then you will need to go back to where you got it from.");

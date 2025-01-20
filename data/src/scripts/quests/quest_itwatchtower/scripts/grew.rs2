@@ -1,7 +1,13 @@
 [opnpc1,grew]
 if(getbit_range(%itwatchtower_bits, ^itwatchtower_spoken_grew, ^itwatchtower_helped_grew) = 2) {
     ~chatnpc("<p,angry>What are you doing here, morsel?");
-    switch_int(~p_choice3("Can I do anything else for you?", 1, "I've lost the relic part you gave me.", 2, "I have lost the key!", 3)) {
+    def_int $op;
+    if(testbit(%itwatchtower_bits, ^itwatchtower_relic2) = true) {
+        $op = ~p_choice2("Can I do anything else for you?", 1, "I've lost the crystal you gave me.", 3);
+    } else {
+        $op = ~p_choice3("Can I do anything else for you?", 1, "I've lost the relic part you gave me.", 2, "I've lost the crystal you gave me.", 3);
+    }
+    switch_int($op) {
         case 1 :
             ~chatplayer("<p,neutral>Can I do anything else for you?");
             ~chatnpc("<p,angry>I have nothing left for you but the cooking pot!");
@@ -25,7 +31,7 @@ if(getbit_range(%itwatchtower_bits, ^itwatchtower_spoken_grew, ^itwatchtower_hel
 } else if(getbit_range(%itwatchtower_bits, ^itwatchtower_spoken_grew, ^itwatchtower_helped_grew) = 1) {
     ~chatnpc("<p,neutral>The morsel is back.|Does it have our tooth for us?");
     if(inv_total(inv, ogre_tooth) > 0) {
-        %itwatchtower_bits = %itwatchtower_bits = setbit_range_toint(%itwatchtower_bits, 2, ^itwatchtower_spoken_grew, ^itwatchtower_helped_grew);
+        %itwatchtower_bits = setbit_range_toint(%itwatchtower_bits, 2, ^itwatchtower_spoken_grew, ^itwatchtower_helped_grew);
         inv_del(inv, ogre_tooth, 1);
         inv_add(inv, relic_part_2, 1);
         ~chatplayer("<p,happy>I have it.");
@@ -58,7 +64,7 @@ if(getbit_range(%itwatchtower_bits, ^itwatchtower_spoken_grew, ^itwatchtower_hel
                 ~chatnpc("<p,angry>That's not tricky - guards!");
         }
 } else {
-        mes("The ogre has nothing to say to you at the moment.");
+    mes("The ogre has nothing to say to you at the moment.");
 }
 
 [opnpcu,grew]

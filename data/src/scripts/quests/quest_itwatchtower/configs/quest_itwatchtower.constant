@@ -15,5 +15,9 @@
 ^itwatchtower_spoken_grew = 3
 ^itwatchtower_helped_grew = 4
 ^itwatchtower_spoken_og = 5
+^itwatchtower_helped_og = 6
+^itwatchtower_relic1 = 7
+^itwatchtower_relic2 = 8
+^itwatchtower_relic3 = 9
 
 ^gutanoth_hill = 0_39_47_50_57

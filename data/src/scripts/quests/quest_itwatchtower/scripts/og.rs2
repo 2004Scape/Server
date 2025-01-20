@@ -1,5 +1,7 @@
 [opnpc1,og]
-if(testbit(%itwatchtower_bits, ^itwatchtower_helped_og) = true) {
+if(%itwatchtower_progress >= ^itwatchtower_made_relic | %itwatchtower_progress < ^itwatchtower_given_fingernails) {
+    mes("He's busy; try him another time.");
+} if(testbit(%itwatchtower_bits, ^itwatchtower_helped_og) = true) {
     ~chatnpc("<p,bored>It's the little t'ing again.");
     switch_int(~p_choice2("Do you have any other tasks for me?", 1, "I haven't got it yet.", 2)) {
         case 1 : 
@@ -64,11 +66,9 @@ if(testbit(%itwatchtower_bits, ^itwatchtower_helped_og) = true) {
             }
             ~chatnpc("<p,angry>Kill me, eh?|You shall be crushed like the vermin you are!|Guards!");
     }
-} else {
-    mes("He's busy; try him another time.");
 }
 
-[opnpcu,toban]
+[opnpcu,og]
 if(last_useitem = tobans_gold) {
     if(testbit(%itwatchtower_bits, ^itwatchtower_spoken_og) = true & testbit(%itwatchtower_bits, ^itwatchtower_helped_og) = false) {
         p_opnpc(1);

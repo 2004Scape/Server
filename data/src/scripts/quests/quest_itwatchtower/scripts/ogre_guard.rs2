@@ -2,7 +2,6 @@
 switch_int(%itwatchtower_gold) {
     case ^itwatchtower_found_gold :
         ~chatnpc("<p,neutral>I know you, creature; you may pass.");
-        if(loc_find(0_39_47_53_20, loc_2787) = true) p_oploc(1);
     case ^itwatchtower_looking_gold :
         ~chatnpc("<p,quiz>Creature, did you bring me the gold?");
         if(inv_total(inv, gold_bar) > 0) {
@@ -10,7 +9,7 @@ switch_int(%itwatchtower_gold) {
             inv_del(inv, gold_bar, 1);
             %itwatchtower_gold = ^itwatchtower_found_gold;
             ~chatnpc("<p,happy>It's brought it! On your way.");
-            if(loc_find(0_39_47_53_20, loc_2787) = true) p_oploc(1);
+            if(loc_find(0_39_47_53_20, loc_2787) = true) @open_east_gutanoth_gate(^right);
             return;
         }
         ~chatplayer("<p,sad>No, I don't have it.");
@@ -28,15 +27,14 @@ switch_int(%itwatchtower_gold) {
 }
 
 [opnpcu,ogre_guard_east]
-if(%itwatchtower_gold >= ^itwatchtower_found_gold) {
-    ~chatnpc("<p,happy>No thank you, creature.|You are already my friend.");
-    return;
-} else if(%itwatchtower_gold = ^itwatchtower_looking_gold) {
-    if(last_useitem = gold_bar) p_opnpc(1); 
-    else ~chatnpc("<p,angry>That is not what I want, creature! Bring me a bar of pure gold and I will let you pass.");
-} else {
-    mes("The ogre has not asked you for anything.");
+if(last_useitem = gold_bar) {
+    if(%itwatchtower_gold >= ^itwatchtower_found_gold) {
+        if(loc_find(0_39_47_53_20, loc_2787) = true) @open_east_gutanoth_gate(^right);
+        return;
+    }
+    p_opnpc(1);
 }
+// no nothing interesting happens
 
 [opnpc1,ogre_guard_west]
 ~chatnpc("<p,angry>Stop, creature! Only ogres and their friends allowed in this city. Show me a sign of companionship, like a lost relic or somefing, and you may pass");
@@ -48,19 +46,17 @@ if(inv_total(inv, ogre_relic) > 0) {
     ~chatplayer("<p,happy>I have a relic!");
     %itwatchtower_progress = ^itwatchtower_given_relic;
     ~chatnpc("<p,happy>It's got the statue of Dalgroth.|Welcome to Gu'Tanoth,|friend of the ogres.");
-    if(loc_find(0_39_47_8_54, loc_2788) = true) p_oploc(1);
+    if(loc_find(0_39_47_8_54, loc_2788) = true) @open_east_gutanoth_gate(^right);
     return;
 }
 mes("The guard pushes you back down the hill.");
 p_teleport(^gutanoth_hill);
 
 [opnpcu,ogre_guard_west]
-if(%itwatchtower_progress >= 4) {
-    ~chatnpc("<p,happy>No thank you, creature.|You have already proven your companionship.");
-    return;
-} else if(testbit(%itwatchtower_bits, ^itwatchtower_looking_relic) = true) {
-    if(last_useitem = ogre_relic) p_opnpc(1); 
-    else ~chatnpc("<p,angry>That is of no use to me, creature!");
-} else {
-    mes("The ogre has not asked you for anything.");
+if(last_useitem = gold_bar) {
+    if(%itwatchtower_progress >= ^itwatchtower_given_relic) {
+        if(loc_find(0_39_47_8_54, loc_2788) = true) @open_east_gutanoth_gate(^right);
+        return;
+    }
+    p_opnpc(1);
 }
