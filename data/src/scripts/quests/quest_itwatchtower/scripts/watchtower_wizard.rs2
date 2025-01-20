@@ -1,5 +1,12 @@
 [opnpc1,watchtower_wizard]
 switch_int(%itwatchtower_progress) {
+    case ^itwatchtower_given_relic :
+        ~chatnpc("<p,neutral>How are you doing with the ogres?");
+        ~chatplayer("<p,happy>I have gained entry to the city!");
+        ~chatnpc("<p,happy>Already? Excellent!");
+        ~chatplayer("<p,confused>I still can't navigate the skavid caves.");
+        ~chatnpc("<p,neutral>You need a map of some kind...|I bet one of the ogres has one.");
+        ~chatplayer("<p,neutral>Okay thanks, I'll go and find out.");
     case ^itwatchtower_made_relic :
         ~chatnpc("<p,happy>Ah, the warrior returns.|Have you found a way into Gu'Tanoth yet?");
         ~chatplayer("<p,sad>I can't get past the guards.");

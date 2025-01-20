@@ -165,8 +165,8 @@ p_teleport(0_39_46_4_44);
 [label,open_gutanoth_gate](int $side, npc $guard)
 if(($guard = ogre_guard_east & %itwatchtower_gold < ^itwatchtower_found_gold) |  ($guard = ogre_guard_west & %itwatchtower_progress < 4)) {
     if(npc_find(coord, $guard, 6, 2) = true) {
-        mes("A nearby guard calls you over.");
-        p_opnpc(1);   
+        if(npc_type = ogre_guard_east) @ogre_guard_east_dialogue;
+        else @ogre_guard_west_dialogue;
     }
     return;
 }
@@ -196,3 +196,21 @@ if(last_useitem = rope) {
     return;
 }
 mes("You see no way to do that.");
+
+[label,enter_gutanoth](coord $dest)
+def_coord $loc_coord = loc_coord;
+def_int $angle = loc_angle;
+def_locshape $shape = loc_shape;
+
+def_coord $opposite_coord = loc_coord;
+$opposite_coord = ~movecoord_loc_return(~multiply2(~door_close(loc_angle, loc_shape), -1));
+
+p_teleport($dest);
+if (loc_type = loc_2788) {
+    ~open_double_doors_left(2, double_door_open_and_close_right, null);
+} else {
+    ~open_double_doors_right(2, double_door_open_and_close_left, null);
+}
+
+loc_add($opposite_coord, loc_83, $angle, $shape, 2);
+loc_add($loc_coord, loc_83, $angle, $shape, 2);
