@@ -6,6 +6,24 @@
 ~chatnpc("<p,angry>Arr, small thing wants my food, does it?|I'll teach you to deal with ogres!");
 ~npc_retaliate(0);
 
+[oploc1,loc_2793]
+if(npc_find(coord, npc_875, 3, 2) = true) {
+    ~chatnpc("<p,angry>Grr! Get your hands off those cakes!");
+    return;
+}
+if (stat(thieving) < 15) {
+    ~mesbox("You need a thieving level of 15 to steal from this stall."); // recheck this (rsc)
+    return;
+}
+if(inv_freespace(inv) = 0) {
+    mes("You don't have enough inventory space to take a rockcake.");
+    return;
+}
+mes("You cautiously grab a cake from the stall.");
+inv_add(inv, rock_cake, 1);
+loc_change(loc_2792, 11); // 11t osrs
+stat_advance(thieving, 65);
+
 [opnpc1,npc_876]
 ~chatnpc("<p,angry>Grrr, little animal; I shall destroy you!");
 ~npc_retaliate(0);
