@@ -477,7 +477,7 @@ head1=model_146_npc_head
 param=death_anim,skavid_death
 param=death_sound,imp_death
 
-[npc_870]
+[enclave_guard]
 name=Enclave guard
 desc=Big and ugly looking.
 size=2
