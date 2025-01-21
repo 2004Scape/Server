@@ -10,18 +10,13 @@
 > [!IMPORTANT]
 > If you run into issues please see our [common issues](#common-issues).
 
-> [!TIP]
-> Windows users: We have a script called `quickstart.bat` that will launch the server for you, which combines steps 3 and 4 below.
-
 1. Download and extract this repo somewhere on your computer
-2. Install our [Dependencies](#environment-dependencies)
-3. Open the folder you downloaded in a command prompt
-4. Run `npm start`
+2. Install our [dependencies](#environment-dependencies)
+3. Open the folder you downloaded: **Run the quickstart script and follow the on-screen prompts.** You may disregard any severity warnings you see
 
-Once it tells you the world has started, open up [http://localhost](http://localhost) in your browser and play!
+Once your setup process has completed, wait for it to tell you the world has started before trying to play.
 
-> [!TIP]
-> Advanced users: You can customize your setup by copying the `.env.example` file to `.env`. This is not necessary to connect and develop.
+The server includes its own webclient, so you don't have to download a client!
 
 ## Dependencies
 

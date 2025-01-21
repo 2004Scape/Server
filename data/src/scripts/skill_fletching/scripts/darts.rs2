@@ -6,7 +6,7 @@ switch_obj(last_useitem) {
 }
 [opheldu,feather]
 switch_obj(last_useitem) {
-    case obj_2864 : @make_ogre_headless_arrows;
+    case ogre_arrow_shaft : @make_ogre_headless_arrows;
     case arrow_shaft : @make_headless_arrows;
     case prototype_dart_tip : @make_prototype_dart;
     case default :

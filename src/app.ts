@@ -13,6 +13,7 @@ import Environment from '#/util/Environment.js';
 import { printError, printInfo } from '#/util/Logger.js';
 import { updateCompiler } from '#/util/RuneScriptCompiler.js';
 import { collectDefaultMetrics, register } from 'prom-client';
+import { createWorker } from '#/util/WorkerFactory.js';
 
 if (Environment.BUILD_STARTUP_UPDATE) {
     await updateCompiler();
@@ -34,6 +35,12 @@ if (!fs.existsSync('data/pack/client/config') || !fs.existsSync('data/pack/serve
 }
 
 fs.mkdirSync('data/players', { recursive: true });
+
+if (Environment.EASY_STARTUP) {
+    createWorker('./login.ts');
+    createWorker('./friend.ts');
+    createWorker('./logger.ts');
+}
 
 await World.start();
 

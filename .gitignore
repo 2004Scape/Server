@@ -47,6 +47,7 @@ coverage/
 public/loader.jar
 public/runescape*.jar
 public/downloads/LostCityInstaller.msi
+public/client/Client.js.map
 
 ### Windows ###
 Thumbs.db

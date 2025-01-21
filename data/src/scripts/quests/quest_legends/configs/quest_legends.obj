@@ -236,7 +236,7 @@ iop1=Empty
 weight=1kg
 tradeable=no
 
-[obj_727]
+[hollow_reed]
 cost=2
 name=Hollow reed
 desc=One of nature's pipes.
@@ -251,7 +251,7 @@ womanwear=model_515_obj_wear,0
 2dxan=212
 weight=12g
 
-[obj_729]
+[shamans_tome]
 name=Shamans tome
 desc=It looks like the Shamans personal notes...
 model=model_2633_obj
@@ -267,7 +267,7 @@ iop1=Read
 weight=18oz
 tradeable=no
 
-[obj_730]
+[book_of_binding]
 name=Book of binding
 desc=An ancient tome on Demonology.
 model=model_2509_obj
@@ -290,7 +290,7 @@ iop1=Read
 weight=18oz
 tradeable=no
 
-[obj_731]
+[enchanted_vial]
 name=Enchanted vial
 desc=An enchanted empty glass vial.
 model=model_1736_obj
@@ -333,7 +333,7 @@ param=proj_travel,holy_water_travel
 param=rangeattack_sound,thrown
 tradeable=no
 
-[obj_733]
+[smashed_glass]
 name=Smashed glass
 desc=Fragments of a broken container.
 cost=1
@@ -380,7 +380,7 @@ op1=Look
 weight=1g
 tradeable=no
 
-[obj_737]
+[snakeweed_mixture]
 name=Snakeweed mixture
 desc=It's a mixture of Snakeweed and water, I need another ingredient to finish this potion.
 model=model_2789_obj
@@ -394,7 +394,7 @@ weight=25g
 members=yes
 tradeable=no
 
-[obj_738]
+[ardrigal_mixture]
 name=Ardrigal mixture
 desc=It's a mixture of Ardrigal and water, I need another ingredient to finish this potion.
 model=model_2789_obj
@@ -408,7 +408,7 @@ members=yes
 weight=25g
 tradeable=no
 
-[obj_739]
+[bravery_potion]
 name=Bravery potion
 desc=A bravery potion which Gujuo gave you the details for, let's hope it works.
 model=model_2789_obj
@@ -423,7 +423,7 @@ iop1=Drink
 weight=25g
 tradeable=no
 
-[obj_740]
+[blue_hat]
 name=Blue hat
 desc=A strange blue wizards hat.
 cost=2
@@ -445,7 +445,7 @@ param=magicattack,3
 param=magicdefence,3
 tradeable=no
 
-[obj_741]
+[chunk_of_crystal]
 name=Chunk of crystal
 desc=It looks like it's been snapped off of something.
 model=model_2842_obj
@@ -456,7 +456,7 @@ members=yes
 weight=50g
 tradeable=no
 
-[obj_742]
+[hunk_of_crystal]
 name=Hunk of crystal
 desc=It looks like it's been snapped off of something.
 model=model_2843_obj
@@ -467,7 +467,7 @@ members=yes
 weight=50g
 tradeable=no
 
-[obj_743]
+[lumb_of_crystal]
 name=Lump of crystal
 desc=It looks like it's been snapped off of something.
 model=model_2844_obj
@@ -479,7 +479,7 @@ members=yes
 weight=50g
 tradeable=no
 
-[obj_744]
+[heart_crystal]
 name=Heart crystal
 desc=A heart shaped crystal.
 model=model_2472_obj
@@ -491,7 +491,7 @@ weight=150g
 iop1=Look-at
 tradeable=no
 
-[obj_745]
+[glowing_heart_crystal]
 name=Heart crystal
 desc=A heart shaped crystal.
 model=model_2827_obj
@@ -503,7 +503,7 @@ weight=150g
 iop1=Look-at
 tradeable=no
 
-[obj_746]
+[dark_dagger]
 model=model_2614_obj
 members=yes
 2dxof=1
@@ -531,7 +531,7 @@ param=stab_sound,stabsword_stab
 param=slash_sound,stabsword_slash
 tradeable=no
 
-[obj_747]
+[glowing_dagger]
 model=model_2733_obj
 2dxof=1
 2dzoom=1000
@@ -558,7 +558,7 @@ param=stab_sound,stabsword_stab
 param=slash_sound,stabsword_slash
 tradeable=no
 
-[obj_748]
+[holy_force]
 name=Holy force
 desc=A powerful spell for good.
 model=model_2583_obj
@@ -571,7 +571,7 @@ iop1=Cast Spell
 weight=20g
 tradeable=no
 
-[obj_749]
+[yommi_totem]
 name=Yommi totem
 desc=A well carved totem pole made from the trunk of a Yommi tree.
 members=yes
@@ -584,7 +584,7 @@ model=model_loc_870_8
 weight=3kg
 tradeable=no
 
-[obj_750]
+[gilded_totem]
 name=Gilded totem
 desc=A gilded totem pole from the Kharazi tribe.
 model=model_loc_870_8

@@ -1,8 +1,4 @@
 [debugproc,loc](loc $loc)
-if (map_production = true) {
-    return;
-}
-
 if ($loc = null) {
     @debugusage("::loc (name)", "::loc magic_tree", "::loc castlewall");
     return;

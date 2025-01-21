@@ -2,5 +2,5 @@
 // Agility level up unlock messages
 switch_int(stat_base(agility)) {
     case 35 : ~objbox(steel_battleaxe, "You can now enter the @dbl@Barbarian Agility Course@bla@.", 250, 0, 0);
-    case 52 : ~objbox(obj_964, "You can now enter the @dbl@Wilderness Agility Course@bla@.", 250, 0, ^objbox_height);
+    case 52 : ~objbox(skull, "You can now enter the @dbl@Wilderness Agility Course@bla@.", 250, 0, ^objbox_height);
 }

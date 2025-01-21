@@ -231,7 +231,7 @@ inv_del(inv, oyster, 1);
 def_int $random = random(32);
 
 if ($random < 25) {
-    inv_add(inv, oyster_perl, 1);
+    inv_add(inv, oyster_pearl, 1);
 } else {
     inv_add(inv, empty_oyster, 1);
 }

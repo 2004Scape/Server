@@ -56,6 +56,11 @@ inv_stoptransmit(smithing:column5);
 
 [label,smithing_anvil_interface](obj $last_item)
 def_struct $struct = oc_param($last_item, smithing_anvil_struct);
+if ($struct = null) {
+    // https://web.archive.org/web/20170122060114/https://www.neoseeker.com/forums/2410/t682388-silver/
+    ~chatplayer("<p,neutral>Perhaps I should use this in a furnace instead.");
+    return;
+}
 def_int $levelrequired = struct_param($struct, levelrequired);
 def_int $player_level = stat(smithing);
 // check if high enough level
