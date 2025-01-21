@@ -153,24 +153,8 @@ export default class ClientCheatHandler extends MessageHandler<ClientCheat> {
                 }
 
                 player.messageGame(`Naive move strategy: ${player.moveStrategy === MoveStrategy.NAIVE ? 'naive' : 'smart'}`);
-            } else if (cmd === 'shutdown') {
-                if (args.length < 1) {
-                    // ::shutdown <seconds>
-                    return false;
-                }
-
-                World.rebootTimer(Math.ceil(tryParseInt(args[0], 30) * 1000 / 600));
             } else if (cmd === 'random') {
                 player.afkEventReady = true;
-            } else if (cmd === 'minme') {
-                // like maxme debugproc, but in engine because xp goes down
-                for (let i = 0; i < PlayerStatEnabled.length; i++) {
-                    if (i === PlayerStat.HITPOINTS) {
-                        player.setLevel(i, 10);
-                    } else {
-                        player.setLevel(i, 1);
-                    }
-                }
             } else if (cmd === 'objtest') {
                 for (let x = player.x - 500; x < player.x + 500; x++) {
                     for (let z = player.z - 500; z < player.z + 500; z++) {
@@ -392,6 +376,15 @@ export default class ClientCheatHandler extends MessageHandler<ClientCheat> {
 
                 const level = Math.min(99, Math.max(1, tryParseInt(args[1], 1)));
                 player.setLevel(stat, player.baseLevels[stat] + level);
+            } else if (cmd === 'minme') {
+                // like maxme debugproc, but in engine because xp goes down
+                for (let i = 0; i < PlayerStatEnabled.length; i++) {
+                    if (i === PlayerStat.HITPOINTS) {
+                        player.setLevel(i, 10);
+                    } else {
+                        player.setLevel(i, 1);
+                    }
+                }
             } else if (cmd === 'give') {
                 // authentic
                 if (args.length < 1) {
@@ -481,6 +474,13 @@ export default class ClientCheatHandler extends MessageHandler<ClientCheat> {
                 }
 
                 World.broadcastMes(cheat.substring(cmd.length + 1));
+            } else if (cmd === 'shutdown') {
+                if (args.length < 1) {
+                    // ::shutdown <seconds>
+                    return false;
+                }
+
+                World.rebootTimer(Math.ceil(tryParseInt(args[0], 30) * 1000 / 600));
             }
         }
 
