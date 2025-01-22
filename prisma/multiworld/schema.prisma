@@ -1,7 +1,7 @@
 generator kysely {
     provider = "prisma-kysely"
 
-    output       = "../src/db"
+    output       = "../../src/db"
     fileName     = "types.ts"
     enumFileName = "enums.ts"
 }
@@ -51,8 +51,8 @@ model newspost {
     id Int @id @default(autoincrement())
 
     category_id Int
-    title       String   @db.TinyText
-    content     String   @db.Text
+    title       String
+    content     String
     date        DateTime @default(now())
     updated     DateTime? @default(now()) @updatedAt
 }

@@ -4,6 +4,7 @@ import WalkTriggerSetting from '#/util/WalkTriggerSetting.js';
 
 export default {
     EASY_STARTUP: tryParseBoolean(process.env.EASY_STARTUP, false),
+    WEBSITE_REGISTRATION: tryParseBoolean(process.env.WEBSITE_REGISTRATION, true),
 
     // bundler/webrtc browser mode
     STANDALONE_BUNDLE: tryParseBoolean(process.env.STANDALONE_BUNDLE, false),
@@ -60,7 +61,9 @@ export default {
     LOGGER_PORT: tryParseInt(process.env.LOGGER_PORT, 43501),
 
     /// database
+    DB_BACKEND: tryParseString(process.env.DB_BACKEND, 'sqlite'),
     DB_HOST: tryParseString(process.env.DB_HOST, 'localhost'),
+    DB_PORT: tryParseInt(process.env.DB_PORT, 3306),
     DB_USER: tryParseString(process.env.DB_USER, 'root'),
     DB_PASS: tryParseString(process.env.DB_PASS, 'password'),
     DB_NAME: tryParseString(process.env.DB_NAME, 'lostcity'),

@@ -35,6 +35,23 @@ export default class LoginServer {
                         // todo: record login attempt + uid
 
                         const account = await db.selectFrom('account').where('username', '=', username).selectAll().executeTakeFirst();
+
+                        if (!Environment.WEBSITE_REGISTRATION && !account) {
+                            // register the user automatically
+                            // todo: registration ip
+                            await db.insertInto('account').values({
+                                username,
+                                password: bcrypt.hashSync(password.toLowerCase(), 10)
+                            }).execute();
+
+                            socket.send(JSON.stringify({
+                                replyTo,
+                                response: 4,
+                                staffmodlevel: 0
+                            }));
+                            return;
+                        }
+
                         if (!account || !(await bcrypt.compare(password.toLowerCase(), account.password))) {
                             // invalid username or password
                             socket.send(JSON.stringify({
@@ -44,7 +61,7 @@ export default class LoginServer {
                             return;
                         }
 
-                        if (account.banned_until !== null && account.banned_until > new Date()) {
+                        if (account.banned_until !== null && new Date(account.banned_until) > new Date()) {
                             // account disabled
                             socket.send(JSON.stringify({
                                 replyTo,
@@ -71,7 +88,7 @@ export default class LoginServer {
 
                         await db.updateTable('account').set({
                             logged_in: nodeId,
-                            login_time: new Date()
+                            login_time: new Date().toString()
                         }).where('id', '=', account.id).executeTakeFirst();
 
                         if (!fs.existsSync(`data/players/${username}.sav`)) {
@@ -131,7 +148,7 @@ export default class LoginServer {
                         // todo: audit log
 
                         await db.updateTable('account').set({
-                            banned_until: new Date(until)
+                            banned_until: new Date(until).toString()
                         }).where('username', '=', username).executeTakeFirst();
                     } else if (type === 'player_mute') {
                         const { _staff, username, until } = msg;
@@ -139,7 +156,7 @@ export default class LoginServer {
                         // todo: audit log
 
                         await db.updateTable('account').set({
-                            muted_until: new Date(until)
+                            muted_until: new Date(until).toString()
                         }).where('username', '=', username).executeTakeFirst();
                     }
                 } catch (err) {

@@ -1,0 +1,107 @@
+generator kysely {
+    provider = "prisma-kysely"
+
+    output       = "../../src/db"
+    fileName     = "types.ts"
+    enumFileName = "enums.ts"
+}
+
+datasource db {
+    provider = "sqlite"
+    url      = "file:../../db.sqlite"
+}
+
+// players
+
+model account {
+    id Int @id @default(autoincrement())
+
+    username String @unique
+    password String
+
+    registration_ip   String?
+    registration_date DateTime @default(now())
+
+    logged_in Int @default(0)
+    login_time DateTime?
+
+    muted_until DateTime?
+    banned_until DateTime?
+
+    staffmodlevel Int @default(0)
+}
+
+model account_session {
+    id Int @id @default(autoincrement())
+
+    account_id Int
+    world Int @default(0)
+    game String // an account can have different character saves depending on the "game" (world type) it's logged into at the time
+    session_uuid String
+
+    timestamp DateTime
+    coord Int
+    event String
+    event_type Int @default(-1)
+}
+
+// website
+
+model newspost {
+    id Int @id @default(autoincrement())
+
+    category_id Int
+    title       String
+    content     String
+    date        DateTime @default(now())
+    updated     DateTime? @default(now()) @updatedAt
+}
+
+model newspost_category {
+    id Int @id @default(autoincrement())
+
+    name  String
+    // css style class
+    style String
+}
+
+model npc_hiscore {
+    id Int @id @default(autoincrement())
+
+    npc_id     Int
+    account_id Int
+    kill_count Int @default(0)
+}
+
+// social
+
+model friendlist {
+    account_id        Int
+    friend_account_id Int
+
+    @@id([account_id, friend_account_id])
+}
+
+model ignorelist {
+    account_id        Int
+    ignore_account_id Int
+
+    @@id([account_id, ignore_account_id])
+}
+
+model public_chat {
+    id Int @id @default(autoincrement())
+
+    account_id Int
+    message    String
+    date       DateTime @default(now())
+}
+
+model private_chat {
+    id Int @id @default(autoincrement())
+
+    from_account_id Int
+    to_account_id   Int
+    message         String
+    date            DateTime @default(now())
+}

@@ -33,7 +33,7 @@ export default class LoggerServer {
                                     game,
                                     session_uuid,
 
-                                    timestamp: new Date(timestamp),
+                                    timestamp: new Date(timestamp).toString(),
                                     coord,
                                     event,
                                     event_type
