@@ -22,6 +22,7 @@ if(%prince_keystatus = ^prince_keyclaimed & inv_total(inv, bronze_key) = 0 & inv
     if(inv_total(inv, coins) < 15) {
         ~chatplayer("<p,sad>I haven't got 15 coins with me.");
         ~chatnpc("<p,neutral>Then come back to me when you do.");
+        return;
     }
     ~chatplayer("<p,neutral>Here, I have 15 coins.");
     ~mesbox("Leela gives you another key.");
