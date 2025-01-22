@@ -198,8 +198,70 @@ if(last_useitem = rope) {
 mes("You see no way to do that.");
 
 [oploc1,loc_2804]
-~chatnpc("<p,angry>No you don't!");
-~npc_retaliate(0);
+if(npc_find(coord, enclave_guard, 5, 0) = true) {
+    ~chatnpc("<p,angry>No you don't!");
+    ~npc_retaliate(0);
+}
+
+[oploc1,loc_2832]
+if(getbit_range(%itwatchtower_bits, ^itwatchtower_market_lower, ^itwatchtower_market_upper) < 2) {
+    if(npc_find(coord, ogre_guard_battlements, 7, 0) = true) @ogre_guard_battlements_dialogue;
+    return;
+}
+def_int $dir = ^exact_east; 
+def_coord $end = movecoord(loc_coord, 1, 0, 0);
+if(coordx(coord) > coordx(loc_coord)) {
+    $dir = ^exact_west;
+    $end = movecoord(loc_coord, -1, 0, 0);
+}
+p_delay(0);
+~agility_exactmove(human_walk_fence_north, 30, 2, coord, $end, 30, 90, $dir, true);
+
+[opheld3,rock_cake]
+mes("You feel strangely heavier...");
+inv_del(inv, rock_cake, 1);
+def_int $damage = 4;
+if(stat(hitpoints) <= 5) {
+    $damage = calc(stat(hitpoints) / 2);
+}
+queue(damage_player, 0, 4);
+~chatplayer("<p,shock>Ow! I nearly broke a tooth!");
+
+[oploc1,loc_2827]
+p_arrivedelay;
+anim(human_openchest, 0);
+loc_change(loc_3273, 300);
+sound_synth(chest_open, 0, 0);
+switch_int(random(8)) {
+    case 0 :
+        inv_add(inv, emerald, 1);
+        ~chatplayer("<p,happy>Wow, look at the size of this emerald!");
+    case 1 :
+        inv_add(inv, burnt_salmon_trout_carp_cod_pike, 1);
+        ~chatplayer("<p,sad>Burnt fish - why did I bother?");
+    case 2 :
+        inv_add(inv, rotten_apples, 1);
+        ~chatplayer("<p,neutral>Oh dear, I bet these apples taste disgusting.");
+    case 3 :
+        inv_add(inv, bones, 1);
+        ~chatplayer("<p,bored>Oh great, some bones!");
+    case 4 :
+        npc_add(map_findsquare(coord, 1, 1, ^map_findsquare_lineofwalk), npc_119, 1000);
+        ~npc_retaliate(0);
+        ~chatplayer("<p,quiz>How on earth did this dwarf get in here?");
+    case 5 :
+        npc_add(map_findsquare(coord, 1, 1, ^map_findsquare_lineofwalk), rat, 1000);
+        ~npc_retaliate(0);
+        ~chatplayer("<p,shock>Ugh! a dirty rat!");
+    case 6 :
+        npc_add(map_findsquare(coord, 1, 1, ^map_findsquare_lineofwalk), scorpion, 1000);
+        ~npc_retaliate(0);
+        ~chatplayer("<p,shock>Hey! A scorpion is in here!");     
+    case 7 :
+        npc_add(map_findsquare(coord, 1, 1, ^map_findsquare_lineofwalk), npc_134, 1000);
+        ~npc_retaliate(0);
+        ~chatplayer("<p,shock>Oh no, not one of these spider things!");     
+}
 
 [label,enter_gutanoth](coord $dest)
 def_coord $loc_coord = loc_coord;

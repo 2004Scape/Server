@@ -289,7 +289,7 @@ param=death_sound,giant_death
 param=death_drop,big_bones
 // https://raw.githubusercontent.com/Joshua-F/osrs-dumps/refs/heads/master/config/dump.npc npc_4370
 
-[npc_860]
+[ogre_guard_battlements]
 name=Ogre guard
 desc=An ogre that guards.
 size=2

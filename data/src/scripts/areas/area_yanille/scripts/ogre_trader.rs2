@@ -1,3 +1,15 @@
+[opnpc1,npc_873]
+~chatnpc("<p,quiz>What the human be wantin'?");
+switch_int(~p_choice2("Can I see what you are selling?", 1, "I don't need anything.", 2)) {
+    case 1 :
+        ~chatplayer("<p,neutral>Can I see what you are selling?");
+        ~chatnpc("<p,bored>I suppose so.");
+        ~openshop_activenpc;
+    case 2 :
+        ~chatplayer("<p,neutral>I don't need anything.");
+        ~chatnpc("<p,bored>As you wish.");
+}
+
 [opnpc1,npc_875]
 ~chatnpc("<p,angry>Arr, small thing wants my food, does it?|I'll teach you to deal with ogres!");
 ~npc_retaliate(0);
@@ -7,7 +19,7 @@
 ~npc_retaliate(0);
 
 [oploc1,loc_2793]
-if(npc_find(coord, npc_875, 1, 0) = true) {
+if(npc_find(coord, npc_875, 3, 2) = true) {
     ~chatnpc("<p,angry>Grr! Get your hands off those cakes!");
     ~npc_retaliate(0);
     return;

@@ -19,5 +19,8 @@
 ^itwatchtower_relic1 = 7
 ^itwatchtower_relic2 = 8
 ^itwatchtower_relic3 = 9
+^itwatchtower_market_lower = 10
+^itwatchtower_market_upper = 11
 
 ^gutanoth_hill = 0_39_47_50_57
+^gutanoth_hill_lower = 0_39_46_27_54
