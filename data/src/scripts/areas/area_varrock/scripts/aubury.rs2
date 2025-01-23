@@ -10,7 +10,7 @@ if(%runemysteries_progress = ^runemysteries_given_package) {
     ~chatnpc("<p,neutral>I suggest you take those research notes of mine back to the head wizard at the Wizards' Tower.");
     if(~obj_gettotal(notes) = 0) {
         ~chatplayer("<p,neutral>I can't... I lost them...");
-        ~chatplayer("<p,neutral>Well, luckily I have duplicates. It's a good thing they are written in code, I would not want the wrong kind of person to get access to the information contained within.");
+        ~chatnpc("<p,neutral>Well, luckily I have duplicates. It's a good thing they are written in code, I would not want the wrong kind of person to get access to the information contained within.");
         inv_add(inv, notes, 1);
     } else {
        ~chatplayer("<p,neutral>Ok then, I will do that.");
