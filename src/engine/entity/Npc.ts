@@ -131,10 +131,7 @@ export default class Npc extends PathingEntity {
         if (respawn) {
             this.type = this.origType;
             this.uid = (this.type << 16) | this.nid;
-            this.faceX = -1;
-            this.faceZ = -1;
-            this.orientationX = -1;
-            this.orientationZ = -1;
+            this.unfocus();
             this.playAnimation(-1, 0); // reset animation or last anim has a chance to appear on respawn
             for (let index = 0; index < this.baseLevels.length; index++) {
                 this.levels[index] = this.baseLevels[index];
@@ -1001,11 +998,7 @@ export default class Npc extends PathingEntity {
     }
 
     faceSquare(x: number, z: number) {
-        this.faceX = x * 2 + 1;
-        this.faceZ = z * 2 + 1;
-        this.orientationX = this.faceX;
-        this.orientationZ = this.faceZ;
-        this.masks |= InfoProt.NPC_FACE_COORD.id;
+        this.focus(CoordGrid.fine(x, 1), CoordGrid.fine(z, 1), true);
     }
 
     changeType(type: number) {
