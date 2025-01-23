@@ -213,7 +213,7 @@ export default class PlayerInfoEncoder extends MessageEncoder<PlayerInfo> {
                 renderer.cache(pid, new PlayerInfoFaceCoord(other.orientationX, other.orientationZ), InfoProt.PLAYER_FACE_COORD);
             } else {
                 // this is a fail safe but should not happen.
-                renderer.cache(pid, new PlayerInfoFaceCoord(other.x * 2 + 1, (other.z - 1) * 2 + 1), InfoProt.PLAYER_FACE_COORD);
+                renderer.cache(pid, new PlayerInfoFaceCoord(CoordGrid.fine(other.x, 1), CoordGrid.fine(other.z - 1, 1)), InfoProt.PLAYER_FACE_COORD);
             }
         }
 
