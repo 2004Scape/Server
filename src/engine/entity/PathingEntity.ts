@@ -398,7 +398,7 @@ export default abstract class PathingEntity extends Entity {
         if (target instanceof PathingEntity) {
             // Try to focus back on a possible target because they move.
             this.focus(CoordGrid.fine(target.x, target.width), CoordGrid.fine(target.z, target.length), false);
-        } else if (this.targetX !== -1 && !this.hasWaypoints()) {
+        } else if (this.targetX !== -1 && this.stepsTaken === 0) {
             // If the entity targeted then moved off, then we try to refocus after running out of steps.
             // this is only set when clicking non pathing entities.
             // we do not update the client, the client was already notified of the update.
