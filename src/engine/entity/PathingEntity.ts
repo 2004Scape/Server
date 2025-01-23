@@ -35,6 +35,7 @@ import {
     reachedLoc,
     reachedObj
 } from '#/engine/GameMap.js';
+import NonPathingEntity from '#/engine/entity/NonPathingEntity.js';
 
 type TargetSubject = {
     type: number,
@@ -82,6 +83,12 @@ export default abstract class PathingEntity extends Entity {
     apRange: number = 10;
     apRangeCalled: boolean = false;
 
+    // this is only used to hack in the turning after walking on non pathing entity.
+    // do not use this for anything else.
+    targetX: number = -1;
+    targetZ: number = -1;
+
+    // info update masks. resets at the end of every tick.
     masks: number = 0;
     exactStartX: number = -1;
     exactStartZ: number = -1;
@@ -228,8 +235,9 @@ export default abstract class PathingEntity extends Entity {
         const previousZ: number = this.z;
         this.x = CoordGrid.moveX(this.x, dir);
         this.z = CoordGrid.moveZ(this.z, dir);
-        this.orientationX = CoordGrid.moveX(this.x, dir) * 2 + this.width;
-        this.orientationZ = CoordGrid.moveZ(this.z, dir) * 2 + this.length;
+        const moveX: number = CoordGrid.moveX(this.x, dir);
+        const moveZ: number = CoordGrid.moveZ(this.z, dir);
+        this.focus(CoordGrid.fine(moveX, this.width), CoordGrid.fine(moveZ, this.length), false);
         this.stepsTaken++;
         this.refreshZonePresence(previousX, previousZ, this.level);
 
@@ -288,6 +296,10 @@ export default abstract class PathingEntity extends Entity {
         this.x = x;
         this.z = z;
         this.level = level;
+        const dir: number = CoordGrid.face(previousX, previousZ, x, z);
+        const moveX: number = CoordGrid.moveX(this.x, dir);
+        const moveZ: number = CoordGrid.moveZ(this.z, dir);
+        this.focus(CoordGrid.fine(moveX, this.width), CoordGrid.fine(moveZ, this.length), false);
         this.refreshZonePresence(previousX, previousZ, previousLevel);
         this.lastStepX = this.x - 1;
         this.lastStepZ = this.z;
@@ -347,6 +359,53 @@ export default abstract class PathingEntity extends Entity {
         this.walkDir = walkDir;
         this.runDir = runDir;
         this.tele = tele;
+    }
+
+    /**
+     * Face and orient to a specified fine coord.
+     * Enable `client` to update connected clients about the new focus, enabling the face_coord mask.
+     */
+    focus(fineX: number, fineZ: number, client: boolean): void {
+        // set the direction of the player/npc every time an interaction is set.
+        // does not necessarily require the coord mask to be sent.
+        // direction when the player/npc is first observed (updates on movement)
+        this.orientationX = fineX;
+        this.orientationZ = fineZ;
+        if (client) {
+            // direction update (only updates from facesquare or interactions)
+            this.faceX = fineX;
+            this.faceZ = fineZ;
+            this.masks |= this.coordmask;
+        }
+    }
+
+    /**
+     * Face and orient back to the default south.
+     */
+    unfocus(): void {
+        this.orientationX = CoordGrid.fine(this.x, this.width);
+        this.orientationZ = CoordGrid.fine(this.z - 1, this.length);
+    }
+
+    /**
+     * Try to focus back on a possible target.
+     * This is needed because the target can move.
+     * This should be done after all pathing entities have moved.
+     * If the entity targeted then moved off, then we try to refocus after running out of steps.
+     */
+    reorient(): void {
+        const target: Entity | null = this.target;
+        if (target instanceof PathingEntity) {
+            // Try to focus back on a possible target because they move.
+            this.focus(CoordGrid.fine(target.x, target.width), CoordGrid.fine(target.z, target.length), false);
+        } else if (this.targetX !== -1 && this.stepsTaken === 0) {
+            // If the entity targeted then moved off, then we try to refocus after running out of steps.
+            // this is only set when clicking non pathing entities.
+            // we do not update the client, the client was already notified of the update.
+            this.focus(this.targetX, this.targetZ, false);
+            this.targetX = -1;
+            this.targetZ = -1;
+        }
     }
 
     /**
@@ -518,18 +577,11 @@ export default abstract class PathingEntity extends Entity {
         this.apRange = 10;
         this.apRangeCalled = false;
 
-        // set the direction of the player/npc every time an interaction is set.
-        // does not necessarily require the coord mask to be sent.
-        const faceX: number = target.x * 2 + target.width;
-        const faceZ: number = target.z * 2 + target.length;
-
-        // direction when the player/npc is first observed (updates on movement)
-        this.orientationX = faceX;
-        this.orientationZ = faceZ;
-
-        // direction update (only updates from facesquare or interactions)
-        this.faceX = faceX;
-        this.faceZ = faceZ;
+        this.focus(
+            CoordGrid.fine(target.x, target.width),
+            CoordGrid.fine(target.z, target.length),
+            target instanceof NonPathingEntity && interaction === Interaction.ENGINE
+        );
 
         if (target instanceof Player) {
             const pid: number = target.pid + 32768;
@@ -544,10 +596,8 @@ export default abstract class PathingEntity extends Entity {
                 this.masks |= this.entitymask;
             }
         } else {
-            if (interaction === Interaction.ENGINE) {
-                // mask updates will be sent every time from the packet handler
-                this.masks |= this.coordmask;
-            }
+            this.targetX = CoordGrid.fine(target.x, target.width);
+            this.targetZ = CoordGrid.fine(target.z, target.length);
         }
 
         if (interaction === Interaction.SCRIPT) {
@@ -613,6 +663,8 @@ export default abstract class PathingEntity extends Entity {
         this.graphicId = -1;
         this.graphicHeight = -1;
         this.graphicDelay = -1;
+        this.faceX = -1;
+        this.faceZ = -1;
 
         if (!this.target && this.faceEntity !== -1) {
             this.masks |= this.entitymask;

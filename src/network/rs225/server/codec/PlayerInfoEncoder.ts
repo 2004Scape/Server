@@ -207,12 +207,13 @@ export default class PlayerInfoEncoder extends MessageEncoder<PlayerInfo> {
         }
 
         if (!renderer.has(pid, InfoProt.PLAYER_FACE_COORD)) {
-            if (other.orientationX !== -1) {
-                renderer.cache(pid, new PlayerInfoFaceCoord(other.orientationX, other.orientationZ), InfoProt.PLAYER_FACE_COORD);
-            } else if (other.faceX !== -1) {
+            if (other.faceX !== -1) {
                 renderer.cache(pid, new PlayerInfoFaceCoord(other.faceX, other.faceZ), InfoProt.PLAYER_FACE_COORD);
+            } else if (other.orientationX !== -1) {
+                renderer.cache(pid, new PlayerInfoFaceCoord(other.orientationX, other.orientationZ), InfoProt.PLAYER_FACE_COORD);
             } else {
-                renderer.cache(pid, new PlayerInfoFaceCoord(other.x * 2 + 1, (other.z - 1) * 2 + 1), InfoProt.PLAYER_FACE_COORD);
+                // this is a fail safe but should not happen.
+                renderer.cache(pid, new PlayerInfoFaceCoord(CoordGrid.fine(other.x, 1), CoordGrid.fine(other.z - 1, 1)), InfoProt.PLAYER_FACE_COORD);
             }
         }
 

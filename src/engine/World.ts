@@ -982,6 +982,7 @@ class World {
         // TODO: benchmark this?
         for (const player of this.players) {
             player.convertMovementDir();
+            player.reorient();
 
             const grid = this.playerGrid;
             const coord = CoordGrid.packCoord(player.level, player.x, player.z);
@@ -996,6 +997,7 @@ class World {
 
         for (const npc of this.npcs) {
             npc.convertMovementDir();
+            npc.reorient();
             this.npcRenderer.computeInfo(npc);
         }
     }
