@@ -644,7 +644,7 @@ export default class Npc extends PathingEntity {
             return;
         }
 
-        if (this.target instanceof Player && World.getPlayerByUid(this.target.uid) === null) {
+        if (this.target instanceof Player && (World.getPlayerByUid(this.target.uid) === null || !World.getPlayerByUid(this.target.uid)?.visible)) {
             this.defaultMode();
             return;
         }

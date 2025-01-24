@@ -418,6 +418,20 @@ export default class ClientCheatHandler extends MessageHandler<ClientCheat> {
 
                 const count = Math.max(1, Math.min(tryParseInt(args[2], 1), 0x7fffffff));
                 other.invAdd(InvType.INV, obj, count, false);
+            } else if (cmd === 'invis' || cmd === 'invisible') {
+                World.togglePlayerVisibility(player);
+            } else if (cmd === 'possess') {
+                if (args.length < 1) {
+                    // ::possess <username>
+                    return false;
+                }
+                
+                const username = args[0];
+                const other = World.getPlayerByUsername(username);
+                if (other) {
+                    World.setPlayerVisible(player, false);
+                    player.teleport(other.x, other.z, other.level);
+                }
             }
             // todo:
             // else if (cmd === 'givecrap') {
