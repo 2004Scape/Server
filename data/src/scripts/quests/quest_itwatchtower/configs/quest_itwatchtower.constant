@@ -3,6 +3,8 @@
 ^itwatchtower_given_fingernails = 2
 ^itwatchtower_made_relic = 3
 ^itwatchtower_given_relic = 4
+^itwatchtower_given_riddle = 5
+^itwatchtower_solved_riddle = 6
 ^itwatchtower_complete = 13
 ^itwatchtower_complete_read_scroll = 14
 

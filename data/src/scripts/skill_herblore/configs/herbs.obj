@@ -19,7 +19,6 @@ category=category_774
 param=identified_herb_exp,25
 param=identified_herb_message,This herb is a Guam Leaf.
 param=brew_potion_struct,unf_guam_potion
-param=brew_potion_struct_secondary,guam_leaf_explode
 // jagex name (yes they spelled it wrong)
 
 [marentill]

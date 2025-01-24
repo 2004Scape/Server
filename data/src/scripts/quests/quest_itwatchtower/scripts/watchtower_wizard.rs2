@@ -1,5 +1,28 @@
 [opnpc1,watchtower_wizard]
 switch_int(%itwatchtower_progress) {
+    case ^itwatchtower_given_riddle :
+        ~chatnpc("<p,happy>How are you doing?");
+        switch_int(~p_choice2("Some of the city guards have set me a puzzle.", 1, "Can you tell me more about the city?", 2)) {
+            case 1 :
+                ~chatplayer("<p,neutral>Some of the city guards have set me a puzzle"); // missing .
+                ~chatnpc("<p,confused>Ummm, is that so?|I can't help you there, I never was much good at puzzles.");
+            case 2 : 
+                ~chatplayer("<p,neutral>Can you tell me more about the city?");
+                ~chatnpc("<p,neutral>Yes indeed, this city is very ancient.|It's not clear whether the ogres actually constructed it,|or whether they took it over from another race.");
+                ~chatnpc("<p,neutral>What I can tell you is that the whole city is controlled|by a group of ogre shamans.");
+                ~chatplayer("<p,confused>Ogre Shamans?");
+                ~chatnpc("<p,angry>Indeed, these ogres have harnessed the black arts.|They wield great power.");
+                ~chatplayer("<p,neutral>They sounds nasty!");
+                ~chatnpc("<p,neutral>Indeed they are, but you must confront them|to break the power of the ogres. They MUST be beaten!");
+                switch_int(~p_choice2("But I'm scared of those shamans!", 1, "Leave it to me, I fear no ogre!", 2)) {
+                    case 1 :
+                        ~chatplayer("<p,confused>But I'm scared of those shamans!");
+                        ~chatnpc("<p,sad>Scared? To get this far and to falter now... Perchance, you are not ready for the final challenge?");
+                    case 2 :
+                        ~chatplayer("<p,happy>Leave it to me, I fear no ogre!");
+                        ~chatnpc("<p,happy>That's the spirit! May your search prove fruitful.");
+                }
+        }
     case ^itwatchtower_given_relic :
         ~chatnpc("<p,neutral>How are you doing with the ogres?");
         ~chatplayer("<p,happy>I have gained entry to the city!");
@@ -188,6 +211,7 @@ switch_int(~p_choice3("Can I be of help?", 1, "I'm not sure I can help.", 2, "I'
         ~chatnpc("<p,neutral>There must be some evidence of what has happened here. Perhaps you could assist me in searching for clues?");
         ~chatplayer("<p,neutral>I would be happy to.");
         %itwatchtower_progress = ^itwatchtower_started;
+        ~send_quest_progress(questlist:itwatchtower, %itwatchtower_progress, ^itwatchtower_complete);
         ~chatnpc("<p,neutral>Try searching the surrounding area.|If you find anything unusual, bring it here.");
     case 2 :
         ~chatplayer("<p,neutral>I'm not sure I can help.");

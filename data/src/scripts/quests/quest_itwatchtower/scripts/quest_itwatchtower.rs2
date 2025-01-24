@@ -215,6 +215,7 @@ if(coordx(coord) > coordx(loc_coord)) {
     $end = movecoord(loc_coord, -1, 0, 0);
 }
 p_delay(0);
+mes("You climb over the low wall.");
 ~agility_exactmove(human_walk_fence_north, 30, 2, coord, $end, 30, 90, $dir, true);
 
 [opheld3,rock_cake]
@@ -227,11 +228,23 @@ if(stat(hitpoints) <= 5) {
 queue(damage_player, 0, 4);
 ~chatplayer("<p,shock>Ow! I nearly broke a tooth!");
 
+[oploc1,loc_2826]
+p_arrivedelay;
+anim(human_openchest, 0);
+sound_synth(chest_open, 0, 0);
+p_delay(0);
+loc_change(loc_3273, 300);
+mes("Ahh! There is a spider inside.");
+mes("Someone's idea of a joke...");
+npc_add(coord, npc_134, 1000);
+~npc_retaliate(0);
+
 [oploc1,loc_2827]
 p_arrivedelay;
 anim(human_openchest, 0);
-loc_change(loc_3273, 300);
 sound_synth(chest_open, 0, 0);
+p_delay(0);
+loc_change(loc_3273, 300);
 switch_int(random(8)) {
     case 0 :
         inv_add(inv, emerald, 1);
@@ -262,6 +275,37 @@ switch_int(random(8)) {
         ~npc_retaliate(0);
         ~chatplayer("<p,shock>Oh no, not one of these spider things!");     
 }
+
+[oploc1,loc_2830]
+if(npc_find(coord, npc_861, 8, 0) = true) {
+    ~chatnpc("<p,neutral>Oi! Little thing, if you want to cross here,|you can pay me first - 20 gold pieces!");
+    ~chatplayer("<p,quiz>20 gold pieces to jump off a bridge!!?");
+    ~chatnpc("<p,happy>That's what I said, like it or lump it.");
+    switch_int(~p_choice2("Okay, I'll pay it.", 1, "Forget it, I'm not paying.", 2)) {
+        case 1 :
+            ~chatplayer("<p,neutral>Okay, I'll pay it.");
+            ~chatnpc("<p,happy>A wise choice, little thing.");
+            if(inv_total(inv, coins) < 20) {
+                ~chatnpc("<p,angry>And where is your money? Grrrr!|Do you want to get hurt or something?");
+                return;
+            }
+            mes("You daringly jump across the chasm.");
+            inv_del(inv, coins, 20);
+            stat_advance(agility, 50);
+            p_teleport(0_39_47_34_21);
+            // jumping seq doesn't exist in our verison, maybe just teleport at this point?
+            ~chatplayer("<p,happy>Phew! I just made it.");
+        case 2 :
+            ~chatplayer("<p,sad>Forget it, I'm not paying.");
+            ~chatnpc("<p,angry>In that case you're not crossing.");
+            mes("The guard blocks your path.");
+    }
+}
+
+[oploc1,loc_2831]
+p_teleport(0_39_47_35_18);
+// jumping seq doesn't exist in our verison, maybe just teleport at this point?
+~chatplayer("<p,happy>I'm glad that was easier on the way back!");
 
 [label,enter_gutanoth](coord $dest)
 def_coord $loc_coord = loc_coord;
