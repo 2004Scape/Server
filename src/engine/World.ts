@@ -1962,16 +1962,6 @@ class World {
             until: until
         });
     }
-
-    setPlayerVisible(player: Player, visible: boolean) {
-        player.visible = visible;
-        player.clearInteraction();
-        player.messageGame(`You are now ${player.visible ? 'visible' : 'invisible'} to others.`);
-    }
-
-    togglePlayerVisibility(player: Player): void {
-        this.setPlayerVisible(player, !player.visible);
-    }
 }
 
 export default new World();

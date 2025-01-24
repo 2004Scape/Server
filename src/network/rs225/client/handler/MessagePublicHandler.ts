@@ -8,11 +8,6 @@ import InfoProt from '#/network/rs225/server/prot/InfoProt.js';
 
 export default class MessagePublicHandler extends MessageHandler<MessagePublic> {
     handle(message: MessagePublic, player: Player): boolean {
-        if (!player.visible) {
-            player.messageGame('You can\'t chat in public while invisible.');
-            return false;
-        }
-
         if (player.muted_until !== null && player.muted_until > new Date()) {
             // todo: do we still log their attempt to chat?
             return false;

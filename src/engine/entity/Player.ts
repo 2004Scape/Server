@@ -74,6 +74,7 @@ import WalkTriggerSetting from '#/util/WalkTriggerSetting.js';
 import Environment from '#/util/Environment.js';
 import { ChatModePrivate, ChatModePublic, ChatModeTradeDuel } from '#/util/ChatModes.js';
 import LoggerEventType from '#/server/logger/LoggerEventType.js';
+import Visibility from './Visibility.js';
 
 const levelExperience = new Int32Array(99);
 
@@ -296,7 +297,7 @@ export default class Player extends PathingEntity {
     lastCom: number = -1; // if_button
 
     staffModLevel: number = 0;
-    visible: boolean = true;
+    visibility: Visibility = Visibility.DEFAULT;
 
     heroPoints: HeroPoints = new HeroPoints(16); // be sure to reset when stats are recovered/reset
 
@@ -838,7 +839,7 @@ export default class Player extends PathingEntity {
             return;
         }
 
-        if (this.target.level !== this.level || (this.target instanceof Player && !this.target.visible)) {
+        if (this.target.level !== this.level || (this.target instanceof Player && this.target.visibility !== Visibility.DEFAULT)) {
             this.clearInteraction();
             this.unsetMapFlag(); // assuming its right
             return;
@@ -1594,6 +1595,16 @@ export default class Player extends PathingEntity {
         }
 
         this.masks |= InfoProt.PLAYER_DAMAGE.id;
+    }
+
+    setVisibility(visibility: Visibility) {
+        if (visibility === Visibility.SOFT) {
+            this.messageGame(`vis: ${visibility} (not implemented - you are still on vis: ${this.visibility})`);
+            return;
+        }
+        this.visibility = visibility;
+        this.clearInteraction();
+        this.messageGame(`vis: ${visibility}`);
     }
 
     say(message: string) {

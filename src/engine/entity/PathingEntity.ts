@@ -36,6 +36,7 @@ import {
     reachedObj
 } from '#/engine/GameMap.js';
 import NonPathingEntity from '#/engine/entity/NonPathingEntity.js';
+import Visibility from '#/engine/entity/Visibility.js';
 
 type TargetSubject = {
     type: number,
@@ -571,13 +572,7 @@ export default abstract class PathingEntity extends Entity {
     }
 
     setInteraction(interaction: Interaction, target: Entity, op: TargetOp, subject?: TargetSubject): void {
-        if (target instanceof Player && !target.visible) {
-            return;
-        }
-
-        if (target instanceof PathingEntity && this instanceof Player && !this.visible) {
-            this.stopAction();
-            this.messageGame('You cannot interact with players or npcs while invisible.');
+        if (target instanceof Player && target.visibility === Visibility.HARD) {
             return;
         }
 

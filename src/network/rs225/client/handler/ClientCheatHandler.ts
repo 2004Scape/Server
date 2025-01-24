@@ -22,6 +22,7 @@ import MoveStrategy from '#/engine/entity/MoveStrategy.js';
 import LoggerEventType from '#/server/logger/LoggerEventType.js';
 import Obj from '#/engine/entity/Obj.js';
 import EntityLifeCycle from '#/engine/entity/EntityLifeCycle.js';
+import Visibility from '#/engine/entity/Visibility.js';
 
 export default class ClientCheatHandler extends MessageHandler<ClientCheat> {
     handle(message: ClientCheat, player: Player): boolean {
@@ -418,8 +419,18 @@ export default class ClientCheatHandler extends MessageHandler<ClientCheat> {
 
                 const count = Math.max(1, Math.min(tryParseInt(args[2], 1), 0x7fffffff));
                 other.invAdd(InvType.INV, obj, count, false);
-            } else if (cmd === 'invis' || cmd === 'invisible') {
-                World.togglePlayerVisibility(player);
+            } else if (cmd === 'setvis') {
+                if (args.length < 1) {
+                    // ::setvis <level>
+                    return false;
+                }
+
+                switch (args[0]) {
+                    case '0': player.setVisibility(Visibility.DEFAULT); break;
+                    case '1': player.setVisibility(Visibility.SOFT); break;
+                    case '2': player.setVisibility(Visibility.HARD); break;
+                    default: return false;
+                }
             } else if (cmd === 'possess') {
                 if (args.length < 1) {
                     // ::possess <username>
@@ -429,7 +440,7 @@ export default class ClientCheatHandler extends MessageHandler<ClientCheat> {
                 const username = args[0];
                 const other = World.getPlayerByUsername(username);
                 if (other) {
-                    World.setPlayerVisible(player, false);
+                    player.setVisibility(Visibility.HARD);
                     player.teleport(other.x, other.z, other.level);
                 }
             }
