@@ -1,19 +1,171 @@
-version: "3.8"
+# version: "3.8"
+# Compose V2 doesn't require a version anymore: `version` is obsolete
 
 services:
-  2004scape:
+  db:
+    profiles: 
+      - prod
+    env_file:
+      - .env_prod
+    image: mariadb:10.5
+    environment:
+      MYSQL_ROOT_PASSWORD: ${DB_ROOT_PASS}
+      MYSQL_DATABASE: ${DB_NAME}
+      MYSQL_USER: ${DB_USER}
+      MYSQL_PASSWORD: ${DB_PASS}
+    volumes:
+      - ./mysql_data:/var/lib/mysql
+    ports:
+      - "${MYSQL_PORT}:3306"
+    # Migration waits till our database is up and running
+    # Stops if failed 5 times, 10 second intervals
+    healthcheck:
+      test: ["CMD", "mariadb-admin", "ping", "-h", "localhost", "-u${DB_USER}", "-p${DB_PASS}"]
+      interval: 10s
+      retries: 5
+      start_period: 10s
+
+  # Migration service (this should be deleted afterwards)
+  # Runs database migrations after database is setup successfully
+  db_migrate:
+    profiles: 
+      - prod
+    env_file:
+      - .env_prod
+    build: .
+    command: ["/bin/bash", "-c", "npm run db:migrate"]
+    depends_on:
+      db:
+        condition: service_healthy
+    deploy:
+      restart_policy:
+        condition: none
+    restart: "no"
+
+  # Database interface with basic authentication 
+  phpmyadmin:
+    profiles: 
+      - prod
+    env_file:
+      - .env_prod
+    image: phpmyadmin/phpmyadmin
+    environment:
+      PMA_HOST: db
+      PMA_PORT: 3306
+      MYSQL_ROOT_PASSWORD: ${DB_ROOT_PASS}
+      UPLOAD_LIMIT: ${DB_UPLOAD_LIMIT}
+      # Optional basic auth for minimal protection
+      MYSQL_USER: ${DB_USER}
+      MYSQL_PASSWORD: ${DB_PASS}
+    ports:
+      - "8080:80"
+    depends_on:
+      db:
+        condition: service_healthy
+
+  # Website service, pull remote repository, and run it 
+  website:
+    profiles: 
+      - prod
+    env_file:
+      - .env_prod
+    image: node:latest
+    working_dir: /usr/src/app
+    # Creates world configuration
+    # TODO: Fix repo
+    # git clone https://github.com/2004Scape/Website.git
+    # git clone -b infra/world_generation https://github.com/Rohanlogs/2004Scape-Website.git
+    command: ["/bin/bash", "-c", "git clone -b infra/world_generation https://github.com/Rohanlogs/2004Scape-Website.git /usr/src/app && cd /usr/src/app && node src/lostcity/util/dockerWorldsConf.js && npm install && npm start"]
+    environment:
+      # Important, we have to keep separate ports with web service & game 
+      WORLD_REDIRECT: ${WEB_PORT}
+      WEB_PORT: 3000
+      WORLD_CONFIG_PATH: /usr/src/app/prodWorldsConf.js
+    # Add this file so website service can access it 
+    volumes:
+      - ./src/prodWorldsConf.js:/usr/src/prodWorldsConf.js
+    ports: 
+      - "3000:3000"
+    healthcheck:
+      test: ["CMD", "curl", "-f", "http://localhost:3000"]
+      interval: 10s
+      retries: 5
+      start_period: 10s
+
+  login:
+    profiles: 
+      - prod
+    env_file:
+      - .env_prod
+    build: .
+    command: ["npm", "run", "login"]
+    depends_on:
+      - website
+    ports:
+      - "${LOGIN_PORT}:43500"
+
+  logger:
+    profiles: 
+      - prod
+    env_file:
+      - .env_prod
+    build: .
+    command: ["npm", "run", "logger"]
+    depends_on:
+      - login
+    ports:
+      - "${LOGGER_PORT}:43501"
+
+  friend:
+    profiles: 
+      - prod
+    env_file:
+      - .env_prod
+    build: .
+    command: ["npm", "run", "friend"]
+    depends_on:
+      - logger
+    ports:
+      - "${FRIEND_PORT}:45099"
+
+  # Server composer  
+  server:
+    profiles: 
+      - prod
+    env_file:
+      - .env_prod
     build:
       context: .
       dockerfile: ./Dockerfile
+    command: ["npm", "run", "start"]
     environment:
-      - PUBLIC_IP
-      - WEB_PORT
-      - GAME_PORT
-      - LOCAL_DEV
-      - MEMBERS_WORLD
-      - XP_MULTIPLIER
-      - PROD_MODE
+      # Important: point host into its docker service names
+      # Don't change these, unless you know what you're doing:
+      - LOGGER_HOST=logger
+      - FRIEND_HOST=friend
+      - LOGIN_HOST=login
+      - DB_HOST=db
+    depends_on:
+      website:
+        # Wait for website to launch successfully 
+        # This essentially waits till the entire thing is done
+        # Server build is quite fast, so after this is done, it should pretty much be live 
+        condition: service_healthy
     ports:
-      - 80:80
-      - 43594:43594
-      - 43595:43595
+      - "${WEB_PORT}:80"
+      - "${NODE_PORT}:43594"
+      - "${WEB_MANAGEMENT_PORT}:8898"
+      - "43595:43595"
+
+  # --------------- Dev --------------- #
+  2004scape:
+    profiles:
+      - dev
+    env_file:
+      - .env
+    build:
+      context: .
+      dockerfile: ./Dockerfile
+    ports:
+      - "${WEB_PORT}:80"
+      - "${NODE_PORT}:43594"
