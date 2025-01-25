@@ -46,6 +46,10 @@ for (const file of players) {
         let totalXp = 0;
         let totalLevel = 0;
         for (let i = 0; i < player.stats.length; i++) {
+            if (!PlayerStatEnabled[i]) {
+                continue;
+            }
+
             totalXp += player.stats[i];
             totalLevel += player.baseLevels[i];
         }
