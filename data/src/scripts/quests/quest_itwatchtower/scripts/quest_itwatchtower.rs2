@@ -111,6 +111,7 @@ if(inv_total(inv, skavid_map) > 0) {
             return(2);
         }
     }
+    return(1);
 } else {
     mes("There's no way I can find my way through without a map of some kind.");
     return(0);
