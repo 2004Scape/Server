@@ -173,7 +173,15 @@ switch_int($outcome) {
 p_teleport(0_39_47_56_26);
 
 [oploc1,loc_2810]
-p_teleport(0_39_47_27_62);
+def_int $outcome = ~check_map_lightsource_tinderbox;
+switch_int($outcome) {
+    case 0 : p_teleport(0_39_47_27_62);
+    case 1 : p_teleport(0_39_147_26_3);
+    case default : return;
+}
+
+[oploc1,loc_2822]
+p_teleport(0_39_47_33_5);
 
 [oploc1,loc_2790]
 if(inv_total(inv, toban_key) > 0) {
