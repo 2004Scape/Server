@@ -420,6 +420,7 @@ export default class ClientCheatHandler extends MessageHandler<ClientCheat> {
                 const count = Math.max(1, Math.min(tryParseInt(args[2], 1), 0x7fffffff));
                 other.invAdd(InvType.INV, obj, count, false);
             } else if (cmd === 'setvis') {
+                // authentic
                 if (args.length < 1) {
                     // ::setvis <level>
                     return false;
@@ -430,18 +431,6 @@ export default class ClientCheatHandler extends MessageHandler<ClientCheat> {
                     case '1': player.setVisibility(Visibility.SOFT); break;
                     case '2': player.setVisibility(Visibility.HARD); break;
                     default: return false;
-                }
-            } else if (cmd === 'possess') {
-                if (args.length < 1) {
-                    // ::possess <username>
-                    return false;
-                }
-                
-                const username = args[0];
-                const other = World.getPlayerByUsername(username);
-                if (other) {
-                    player.setVisibility(Visibility.HARD);
-                    player.teleport(other.x, other.z, other.level);
                 }
             }
             // todo:
