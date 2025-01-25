@@ -1602,8 +1602,8 @@ export default class Player extends PathingEntity {
             this.messageGame(`vis: ${visibility} (not implemented - you are still on vis: ${this.visibility})`);
             return;
         }
+        // This doesn't actually cancel interactions, source: https://youtu.be/ARS7eO3_Z8U?si=OkYfjW0sVhkQmQ8y&t=293
         this.visibility = visibility;
-        this.clearInteraction();
         this.messageGame(`vis: ${visibility}`);
     }
 
