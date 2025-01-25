@@ -810,6 +810,11 @@ class World {
         const start: number = Date.now();
 
         for (const player of this.players) {
+            if (player.staffModLevel > 1) {
+                player.loggedOut = false;
+                continue;
+            }
+
             if (player.loggedOut) {
                 player.tryLogout = true;
                 player.clearInteraction();
