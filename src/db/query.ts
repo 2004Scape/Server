@@ -27,3 +27,11 @@ if (Environment.DB_BACKEND === 'sqlite') {
 export const db = new Kysely<DB>({
     dialect
 });
+
+export function toDbDate(date: Date | string | number) {
+    if (typeof date === 'string' || typeof date === 'number') {
+        date = new Date(date);
+    }
+
+    return date.toISOString().slice(0, 19).replace('T', ' ');
+}

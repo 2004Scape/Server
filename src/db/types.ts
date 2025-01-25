@@ -34,12 +34,14 @@ export type friendlist = {
 export type hiscore = {
     account_id: number;
     type: number;
+    level: number;
     value: number;
     date: Generated<string>;
 };
 export type hiscore_large = {
     account_id: number;
     type: number;
+    level: number;
     value: number;
     date: Generated<string>;
 };

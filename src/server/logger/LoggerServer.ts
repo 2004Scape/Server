@@ -2,7 +2,7 @@ import { WebSocketServer } from 'ws';
 
 import Environment from '#/util/Environment.js';
 import { printInfo } from '#/util/Logger.js';
-import { db } from '#/db/query.js';
+import { db, toDbDate } from '#/db/query.js';
 
 export default class LoggerServer {
     private server: WebSocketServer;
@@ -33,7 +33,7 @@ export default class LoggerServer {
                                     game,
                                     session_uuid,
 
-                                    timestamp: new Date(timestamp).toString(),
+                                    timestamp: toDbDate(timestamp),
                                     coord,
                                     event,
                                     event_type

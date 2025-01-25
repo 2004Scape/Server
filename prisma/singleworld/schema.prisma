@@ -62,6 +62,7 @@ model newspost {
 model hiscore {
     account_id Int
     type       Int
+    level      Int
     value      Int
     date       DateTime @default(now()) @updatedAt
 
@@ -72,6 +73,7 @@ model hiscore {
 model hiscore_large {
     account_id Int
     type       Int
+    level      Int
     value      BigInt
     date       DateTime @default(now()) @updatedAt
 

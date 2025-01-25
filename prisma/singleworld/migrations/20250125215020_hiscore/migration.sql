@@ -16,6 +16,7 @@ PRAGMA foreign_keys=on;
 CREATE TABLE "hiscore" (
     "account_id" INTEGER NOT NULL,
     "type" INTEGER NOT NULL,
+    "level" INTEGER NOT NULL,
     "value" INTEGER NOT NULL,
     "date" DATETIME NOT NULL DEFAULT CURRENT_TIMESTAMP,
 
@@ -26,6 +27,7 @@ CREATE TABLE "hiscore" (
 CREATE TABLE "hiscore_large" (
     "account_id" INTEGER NOT NULL,
     "type" INTEGER NOT NULL,
+    "level" INTEGER NOT NULL,
     "value" BIGINT NOT NULL,
     "date" DATETIME NOT NULL DEFAULT CURRENT_TIMESTAMP,
 

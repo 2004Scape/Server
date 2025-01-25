@@ -3,7 +3,7 @@ import { WebSocketServer } from 'ws';
 
 import bcrypt from 'bcrypt';
 
-import { db } from '#/db/query.js';
+import { db, toDbDate } from '#/db/query.js';
 
 import Environment from '#/util/Environment.js';
 import { printInfo } from '#/util/Logger.js';
@@ -88,7 +88,7 @@ export default class LoginServer {
 
                         await db.updateTable('account').set({
                             logged_in: nodeId,
-                            login_time: new Date().toString()
+                            login_time: toDbDate(new Date())
                         }).where('id', '=', account.id).executeTakeFirst();
 
                         if (!fs.existsSync(`data/players/${username}.sav`)) {
@@ -148,7 +148,7 @@ export default class LoginServer {
                         // todo: audit log
 
                         await db.updateTable('account').set({
-                            banned_until: new Date(until).toString()
+                            banned_until: toDbDate(until)
                         }).where('username', '=', username).executeTakeFirst();
                     } else if (type === 'player_mute') {
                         const { _staff, username, until } = msg;
@@ -156,7 +156,7 @@ export default class LoginServer {
                         // todo: audit log
 
                         await db.updateTable('account').set({
-                            muted_until: new Date(until).toString()
+                            muted_until: toDbDate(until)
                         }).where('username', '=', username).executeTakeFirst();
                     }
                 } catch (err) {

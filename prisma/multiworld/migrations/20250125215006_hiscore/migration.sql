@@ -15,7 +15,7 @@ ALTER TABLE `newspost` DROP COLUMN `category_id`,
     ADD COLUMN `created` DATETIME(3) NOT NULL DEFAULT CURRENT_TIMESTAMP(3),
     ADD COLUMN `slug` VARCHAR(191) NULL,
     MODIFY `title` VARCHAR(191) NOT NULL,
-    MODIFY `content` VARCHAR(191) NOT NULL,
+    MODIFY `content` MEDIUMTEXT NOT NULL,
     MODIFY `updated` DATETIME(3) NOT NULL DEFAULT CURRENT_TIMESTAMP(3);
 
 -- DropTable
@@ -25,6 +25,7 @@ DROP TABLE `newspost_category`;
 CREATE TABLE `hiscore` (
     `account_id` INTEGER NOT NULL,
     `type` INTEGER NOT NULL,
+    `level` INTEGER NOT NULL,
     `value` INTEGER NOT NULL,
     `date` DATETIME(3) NOT NULL DEFAULT CURRENT_TIMESTAMP(3),
 
@@ -35,6 +36,7 @@ CREATE TABLE `hiscore` (
 CREATE TABLE `hiscore_large` (
     `account_id` INTEGER NOT NULL,
     `type` INTEGER NOT NULL,
+    `level` INTEGER NOT NULL,
     `value` BIGINT NOT NULL,
     `date` DATETIME(3) NOT NULL DEFAULT CURRENT_TIMESTAMP(3),
 
