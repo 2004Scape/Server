@@ -69,3 +69,70 @@ if(last_useitem = ogre_relic) {
     }
     @ogre_guard_west_dialogue;
 }
+
+[opnpc1,ogre_guard_battlements] @ogre_guard_battlements_dialogue;
+
+[opnpcu,ogre_guard_battlements]
+// recheck this on rs3
+if(getbit_range(%itwatchtower_bits, ^itwatchtower_market_lower, ^itwatchtower_market_upper) = 2) {
+    ~chatnpc("<p,happy>No thank you, creature, the rock cake you brought me was plenty.");
+} else if(getbit_range(%itwatchtower_bits, ^itwatchtower_market_lower, ^itwatchtower_market_upper) = 1) {
+    if(last_useitem = rock_cake) {
+        @battlements_rockcake;
+    } else {
+        ~chatnpc("<p,angry>That is of no use to me, creature!");
+        npc_anim(ogre_attack, 0);
+        ~damage_self(2);
+    }
+} else {
+    // https://youtu.be/R8E9Rir_kKg?si=Qg1oFtos6w4T8Mhh&t=851
+    if(last_useitem = rock_cake) ~chatplayer("<p,confused>Why am I giving this cake to an ogre?");
+}
+
+[label,battlements_rockcake]
+inv_del(inv, rock_cake, 1);
+%itwatchtower_bits = setbit_range_toint(%itwatchtower_bits, 2, ^itwatchtower_market_lower, ^itwatchtower_market_upper);
+~chatplayer("<p,neutral>How about this?");
+~chatnpc("<p,happy>Well, well, look at this.|My favourite: rock cake!|Okay, we will let it through.");
+if(loc_find(0_39_47_11_3, loc_2832) = true) p_oploc(1); // might be force walk into interaction instead originally
+
+[label,ogre_guard_battlements_dialogue]
+switch_int(getbit_range(%itwatchtower_bits, ^itwatchtower_market_lower, ^itwatchtower_market_upper)) {
+    case 2 :
+    case 1 :
+        ~chatnpc("<p,neutral>Stop, creature! Oh it's you.|Well, what have you got for us, then?");
+        if(inv_total(inv, rock_cake) > 0) @battlements_rockcake;
+        ~chatnpc("<p,sad>I didn't bring anything.");
+        ~chatnpc("<p,angry>Didn't bring anything!|In that case shove off!");
+        mes("The guard pushes you out of the city.");
+        p_teleport(^gutanoth_hill_lower);
+    case default :
+        ~chatnpc("<p,angry>Oi! Where do you think you are going?|You are for the cooking pot!");
+        switch_int(~p_choice2("But I am a friend to ogres...", 1, "Not if I can help it.", 2)) {
+            case 1 : 
+                ~chatplayer("<p,quiz>But I am a friend to ogres...");
+                %itwatchtower_bits = setbit_range_toint(%itwatchtower_bits, 1, ^itwatchtower_market_lower, ^itwatchtower_market_upper);
+                ~chatnpc("<p,neutral>Prove it to us with a gift.|Get us something from the market.");
+                ~chatplayer("<p,quiz>Like what?");
+                ~chatnpc("<p,happy>Surprise us...");
+            case 2 :
+                ~chatplayer("<p,shock>Not if I can help it.");
+                ~chatnpc("<p,angry>You can help by being tonight's dinner,|or you can go away. Now, which shall it be?");
+                @multi2("Okay, okay, I'm going.", battlements_going, "I tire of ogres; prepare to die!", battlements_die);
+        }
+}
+
+[label,battlements_going]
+~chatplayer("<p,sad>Okay, okay, I'm going.");
+~chatnpc("<p,happy>Back to whence you came!");
+mes("The guard pushes you out of the city.");
+p_teleport(^gutanoth_hill_lower);
+
+[label,battlements_die]
+~chatplayer("<p,bored>I tire of ogres; prepare to die!");
+~chatnpc("<p,angry>Grrrrr!");
+~npc_retaliate(0);
+
+[opnpc1,npc_861] ~chatnpc("<p,angry>What do you want, small thing?|Leave us alone!");
+
+

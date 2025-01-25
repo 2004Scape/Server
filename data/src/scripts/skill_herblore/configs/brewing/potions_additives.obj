@@ -178,6 +178,3 @@ model=model_2742_obj
 2dxan=136
 weight=100g
 members=yes
-param=brew_potion_struct,ogre_potion
-param=brew_potion_struct_secondary,bat_bones_explode
-param=brew_potion_struct_tertiary,bat_bones_explode2
