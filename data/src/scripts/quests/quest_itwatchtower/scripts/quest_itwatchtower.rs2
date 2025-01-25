@@ -84,7 +84,6 @@ if(%itwatchtower_progress = ^itwatchtower_not_started) {
     ~chatplayer("<p,happy>Hmmm, nothing here.");
 }
 
-
 [oploc1,loc_2833]
 if(%itwatchtower_progress = ^itwatchtower_not_started) {
     ~chatnpc_specific(nc_name(tower_guard), tower_guard, "<p,angry>You can't go up there.|That's private that is.");
@@ -94,28 +93,95 @@ if(%itwatchtower_progress = ^itwatchtower_not_started) {
     @climb_ladder(movecoord(coord, 0, 1, 0), true);
 }
 
+// checks if the player has a map, lightsource, and tinderbox. possible outcomes are:
+// 0 = no map, not allowed to enter cave
+// 1 = good to enter cave
+// 2 = either no lightsource OR no tinderbox and player chose to come back later
+[proc,check_map_lightsource_tinderbox]()(int)
+if(inv_total(inv, skavid_map) > 0) {
+    if(inv_totalcat(inv, light_source_lit) < 1) {
+        ~mesbox("The cave is very dark, you cannot go in without a light source."); // complete guess
+        return(2);
+    } else if (inv_total(inv, tinderbox) < 1) {
+        ~mesbox("If your light source goes out down there you'll be in trouble! Are|you sure you want to go in without a tinderbox?");
+        def_int $option = ~p_choice2("I'll be fine without a tinderbox.", 1, "I'll come back with a tinderbox.", 2);
+        if($option = 1) {
+            return(1);
+        } else {
+            return(2);
+        }
+    }
+    return(1);
+} else {
+    mes("There's no way I can find my way through without a map of some kind.");
+    return(0);
+}
+
 [oploc1,loc_2805]
-mes("There's no way I can find my way through without a map of some kind.");
-p_teleport(0_39_47_27_62);
+def_int $outcome = ~check_map_lightsource_tinderbox;
+switch_int($outcome) {
+    case 0 : p_teleport(0_39_47_27_62);    
+    case 1 : p_teleport(0_39_147_2_10);
+    case default : return;
+} 
+
+[oploc1,loc_2817]
+p_teleport(0_40_47_2_16);
 
 [oploc1,loc_2806]
-mes("There's no way I can find my way through without a map of some kind.");
-p_teleport(0_39_47_44_47);
+def_int $outcome = ~check_map_lightsource_tinderbox;
+switch_int($outcome) {
+    case 0 : p_teleport(0_39_47_44_47);
+    case 1 : p_teleport(0_39_147_36_61);
+    case default : return;
+}
+
+[oploc1,loc_2818]
+p_teleport(0_39_47_28_62);
 
 [oploc1,loc_2807]
-mes("There's no way I can find my way through without a map of some kind.");
-p_teleport(0_39_47_57_47);
+def_int $outcome = ~check_map_lightsource_tinderbox;
+switch_int($outcome) {
+    case 0 : p_teleport(0_39_47_57_47);
+    case 1 : p_teleport(0_39_147_22_47);
+    case default : return;
+}
+
+[oploc1,loc_2819]
+p_teleport(0_39_47_44_46);
 
 [oploc1,loc_2808]
-mes("There's no way I can find my way through without a map of some kind.");
-p_teleport(0_39_47_56_26);
+def_int $outcome = ~check_map_lightsource_tinderbox;
+switch_int($outcome) {
+    case 0 : p_teleport(0_39_47_56_26);
+    case 1 : p_teleport(0_39_147_2_43);
+    case default : return;
+}
+
+[oploc1,loc_2820]
+p_teleport(0_39_47_57_46);
 
 [oploc1,loc_2809]
-mes("There's no way I can find my way through without a map of some kind.");
-p_teleport(0_40_47_3_16);
+def_int $outcome = ~check_map_lightsource_tinderbox;
+switch_int($outcome) {
+    case 0 : p_teleport(0_40_47_3_16);
+    case 1 : p_teleport(0_39_147_8_33);
+    case default : return;
+}
+
+[oploc1,loc_2821]
+p_teleport(0_39_47_56_26);
 
 [oploc1,loc_2810]
-p_teleport(0_39_47_27_62);
+def_int $outcome = ~check_map_lightsource_tinderbox;
+switch_int($outcome) {
+    case 0 : p_teleport(0_39_47_27_62);
+    case 1 : p_teleport(0_39_147_26_3);
+    case default : return;
+}
+
+[oploc1,loc_2822]
+p_teleport(0_39_47_33_5);
 
 [oploc1,loc_2790]
 if(inv_total(inv, toban_key) > 0) {
