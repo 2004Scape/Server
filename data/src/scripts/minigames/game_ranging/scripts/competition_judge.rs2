@@ -3,6 +3,12 @@ if(%target1 = 11) {
     @competition_judge_reward_pts;
 } else if(%target1 >= 1 & %target1 < 11) {
     ~chatnpc("<p,happy>Hello again, do you need reminding of the rules?");
+    if(inv_total(inv, bronze_arrow) = 0 & inv_total(worn, bronze_arrow) = 0) {
+        // https://www.youtube.com/watch?v=U7A6tezhTzQ
+        ~chatplayer("<p,neutral>Well, I actually don't have any more arrows. Could I get some?");
+        ~chatnpc("<p,neutral>Ok, but it'll cost you 100 coins.");
+        @multi2("Sure, i'll take some.", competition_judge_buyarrow, "No thanks.", competition_judge_no);
+    }
     switch_int(~p_choice3("Yes please.", 1, "No thanks, I've got it.", 2, "How am I doing so far?", 3)) {
         case 1 :
             ~chatplayer("<p,neutral>Yes please.");
@@ -37,6 +43,17 @@ if(%target1 = 11) {
     @multi3("Sure, I'll give it a go.", competition_judge_sure, "What are the rules?", competition_judge_rules, "No thanks.", competition_judge_no);
 }
 
+[label,competition_judge_buyarrow]
+~chatplayer("<p,happy>Sure, i'll take some.");
+if(inv_total(inv, coins) < 100) {
+    ~chatplayer("<p,sad>Oops, I don't have enough coins on me...");
+    ~chatnpc("<p,neutral>Never mind, come back when you've got enough.");
+    return;
+}
+inv_del(inv, coins, 100);
+inv_add(inv, bronze_arrow, 10);
+mes("You pay the judge and he gives you 10 bronze arrows.");
+
 [label,competition_judge_sure]
 ~chatplayer("<p,happy>Sure, I'll give it a go.");
 ~chatnpc("<p,happy>Great! That will be 200 coins then please.");
@@ -65,10 +82,5 @@ def_int $token_count = %target2; // this is what osrs does
 %target2 = 0;
 %target1 = 0;
 inv_add(inv, archery_ticket, $token_count);
-~chatnpc("<p,happy>Well done. Your score is: <tostring(calc($token_count * 10))>. For that score you will receive <tostring($token_count)> Archery tickets. Would you like to try again for another 200 coins?");
-if(inv_total(inv, coins) < 200) {
-    ~chatplayer("<p,sad>I haven't got the money.");
-    return;
-}
-@multi2("Sure, I'll give it a go.", competition_judge_sure, "No thanks.", competition_judge_no);
+~chatnpc("<p,happy>Well done. Your score is: <tostring(calc($token_count * 10))>.|For that score you will receive <tostring($token_count)> Archery Coupons.");
 
