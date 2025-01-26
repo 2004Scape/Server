@@ -412,7 +412,7 @@ head1=model_146_npc_head
 param=death_anim,skavid_death
 param=death_sound,imp_death
 
-[npc_865]
+[skavid_ig]
 vislevel=hide
 name=Skavid
 desc=A skavid.
@@ -425,7 +425,7 @@ head1=model_146_npc_head
 param=death_anim,skavid_death
 param=death_sound,imp_death
 
-[npc_866]
+[skavid_ar]
 vislevel=hide
 name=Skavid
 desc=A skavid.

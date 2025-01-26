@@ -298,10 +298,7 @@ mes("You climb over the low wall.");
 [opheld3,rock_cake]
 mes("You feel strangely heavier...");
 inv_del(inv, rock_cake, 1);
-def_int $damage = 4;
-if(stat(hitpoints) <= 5) {
-    $damage = calc(stat(hitpoints) / 2);
-}
+// on OSRS if you have 5 HP or less it will do hp / 2 instead to prevent death
 queue(damage_player, 0, 4);
 ~chatplayer("<p,shock>Ow! I nearly broke a tooth!");
 

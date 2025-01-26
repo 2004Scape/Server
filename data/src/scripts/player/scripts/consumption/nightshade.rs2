@@ -1,11 +1,6 @@
 [opheld2,nightshade]
 inv_delslot(inv, last_slot);
+mes("You eat the nightshade...");
+mes("The nightshade was highly poisonous.");
+queue(damage_player, 0, 15);
 ~chatplayer("<p,angry>Ahhhh! What have I done!");
-@nightshade_damage_player;
-
-[label,nightshade_damage_player]
-if (stat(hitpoints) >= 20) {
-    ~damage_self(15);
-} else {
-    ~damage_self(calc(stat(hitpoints) / 2));
-}

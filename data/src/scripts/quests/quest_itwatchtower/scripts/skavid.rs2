@@ -1,0 +1,10 @@
+[opnpc1,skavid_ar]
+~chatnpc("<p,bored>Cur bidith...");
+if(testbit(%itwatchtower_bits, ^itwatchtower_learned_skavid) = false) {
+    @skavid_no_skavid_speech;
+}
+
+[label,skavid_no_skavid_speech]
+~chatplayer("<p,neutral>???");
+mes("The skavid is trying to communicate...");
+mes("You don't know any skavid words yet!");
