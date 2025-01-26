@@ -100,16 +100,7 @@ if(%itwatchtower_progress = ^itwatchtower_not_started) {
 [proc,check_map_lightsource_tinderbox]()(int)
 if(inv_total(inv, skavid_map) > 0) {
     if(inv_totalcat(inv, light_source_lit) < 1) {
-        ~mesbox("The cave is very dark, you cannot go in without a light source."); // complete guess
         return(2);
-    } else if (inv_total(inv, tinderbox) < 1) {
-        ~mesbox("If your light source goes out down there you'll be in trouble! Are|you sure you want to go in without a tinderbox?");
-        def_int $option = ~p_choice2("I'll be fine without a tinderbox.", 1, "I'll come back with a tinderbox.", 2);
-        if($option = 1) {
-            return(1);
-        } else {
-            return(2);
-        }
     }
     return(1);
 } else {
@@ -122,7 +113,7 @@ def_int $outcome = ~check_map_lightsource_tinderbox;
 switch_int($outcome) {
     case 0 : p_teleport(0_39_47_27_62);    
     case 1 : p_teleport(0_39_147_2_10);
-    case default : return;
+    case 2 : @teleport_dark_skavid_cave;
 } 
 
 [oploc1,loc_2817]
@@ -133,7 +124,7 @@ def_int $outcome = ~check_map_lightsource_tinderbox;
 switch_int($outcome) {
     case 0 : p_teleport(0_39_47_44_47);
     case 1 : p_teleport(0_39_147_36_61);
-    case default : return;
+    case default : @teleport_dark_skavid_cave;
 }
 
 [oploc1,loc_2818]
@@ -144,7 +135,7 @@ def_int $outcome = ~check_map_lightsource_tinderbox;
 switch_int($outcome) {
     case 0 : p_teleport(0_39_47_57_47);
     case 1 : p_teleport(0_39_147_22_47);
-    case default : return;
+    case default : @teleport_dark_skavid_cave;
 }
 
 [oploc1,loc_2819]
@@ -155,7 +146,7 @@ def_int $outcome = ~check_map_lightsource_tinderbox;
 switch_int($outcome) {
     case 0 : p_teleport(0_39_47_56_26);
     case 1 : p_teleport(0_39_147_2_43);
-    case default : return;
+    case default : @teleport_dark_skavid_cave;
 }
 
 [oploc1,loc_2820]
@@ -166,7 +157,7 @@ def_int $outcome = ~check_map_lightsource_tinderbox;
 switch_int($outcome) {
     case 0 : p_teleport(0_40_47_3_16);
     case 1 : p_teleport(0_39_147_8_33);
-    case default : return;
+    case default : @teleport_dark_skavid_cave;
 }
 
 [oploc1,loc_2821]
@@ -177,7 +168,27 @@ def_int $outcome = ~check_map_lightsource_tinderbox;
 switch_int($outcome) {
     case 0 : p_teleport(0_39_47_27_62);
     case 1 : p_teleport(0_39_147_26_3);
-    case default : return;
+    case default : @teleport_dark_skavid_cave;
+}
+
+[label,teleport_dark_skavid_cave]
+p_teleport(0_39_147_9_52);
+settimer(skavid_find_rope, 1);
+~chatplayer("<p,shock>Oh my! It's dark!|All I can see are lots of rocks on the floor.|I suppose I better search them for a way out.");
+
+[oploc1,loc_2835]
+mes("You search the rock.");
+mes("There's nothing here.");
+
+[oploc1,loc_2825]
+p_teleport(0_39_47_44_46);
+~chatplayer("<p,shock>Phew! At last I'm out...|Next time I will take some light!");
+
+[timer,skavid_find_rope]
+if(distance(coord, 0_39_147_40_17) <= 5) {
+    mes("You find a rope!");
+    cleartimer(skavid_find_rope);
+    return;
 }
 
 [oploc1,loc_2822]

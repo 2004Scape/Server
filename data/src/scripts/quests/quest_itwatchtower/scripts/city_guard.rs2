@@ -1,7 +1,28 @@
 [opnpc1,city_guard]
 if(%itwatchtower_progress >= ^itwatchtower_solved_riddle) {
     ~chatnpc("<p,bored>What is it?");
-
+    switch_int(~p_choice2("Do you have any other riddles for me?", 1, "I have lost the map you gave me.", 2)) {
+        case 1 :
+            ~chatplayer("<p,neutral>Do you have any other riddles for me?");
+            ~chatnpc("<p,happy>Yes, what looks good on a plate with salad?");
+            switch_int(~p_choice2("I don't know...", 1, "A nice pizza?", 2)) {
+                case 1 :
+                    ~chatplayer("<p,confused>I don't know...");
+                    ~chatnpc("<p,angry>You! Now go, and bother me no more.)"); // intentional bracket
+                case 2 :
+                    ~chatplayer("<p,happy>A nice pizza?");
+                    ~chatnpc("<p,angry>Grr! Think you are a comedian, eh?|Get lost!");
+            }
+        case 2 :
+            ~chatplayer("<p,sad>I have lost the map you gave me.");
+            if(inv_total(inv, skavid_map) > 0) {
+                ~chatnpc("<p,angry>Are you blind? What is that you are carrying?");
+                ~chatplayer("<p,shifty>Oh, that map...");
+                return;
+            }
+            ~chatnpc("<p,bored>What's the point?|Take this copy and bother me no more!");
+            inv_add(inv, skavid_map, 1);
+    }
     return;
 }
 ~chatnpc("<p,angry>Grrrr, what business you got here?");
