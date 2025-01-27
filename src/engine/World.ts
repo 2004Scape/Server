@@ -390,11 +390,12 @@ class World {
             // - npc hunt
             this.processWorld();
 
-            // player setup (todo better name)
+            // client input
             // - calculate afk event readiness
             // - process packets
             // - process pathfinding/following request
-            this.processPlayerSetup();
+            // - client input tracking
+            this.processClientsIn();
 
             // npc processing (if npc is not busy)
             // - resume suspended script
@@ -414,6 +415,7 @@ class World {
             // - interactions
             // - movement
             // - close interface if attempting to logout
+            // - client input tracking
             this.processPlayers();
 
             // player logout
@@ -603,7 +605,11 @@ class World {
         this.cycleStats[WorldStat.WORLD] = Date.now() - start;
     }
 
-    private processPlayerSetup(): void {
+    // - calculate afk event readiness
+    // - process packets
+    // - process pathfinding/following request
+    // - client input tracking
+    private processClientsIn(): void {
         const start: number = Date.now();
 
         this.cycleStats[WorldStat.BANDWIDTH_IN] = 0;
@@ -667,6 +673,8 @@ class World {
                     // x-logged / timed out for 10s: attempt logout
                     player.tryLogout = true;
                 }
+                // - client input tracking
+                player.processInputTracking();
             } catch (err) {
                 console.error(err);
                 this.removePlayer(player);
