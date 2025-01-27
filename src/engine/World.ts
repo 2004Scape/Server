@@ -415,7 +415,6 @@ class World {
             // - interactions
             // - movement
             // - close interface if attempting to logout
-            // - client input tracking
             this.processPlayers();
 
             // player logout
