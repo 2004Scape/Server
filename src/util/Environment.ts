@@ -43,7 +43,7 @@ export default {
     // 0 = processed in packet handler. 1 = processed in player setup (client input). 2 = processed in player movement
     NODE_WALKTRIGGER_SETTING: tryParseInt(process.env.NODE_WALKTRIGGER_SETTING, WalkTriggerSetting.PLAYERPACKET),
     // separate save folder
-    NODE_GAME: tryParseString(process.env.NODE_GAME, 'main'),
+    NODE_PROFILE: tryParseString(process.env.NODE_PROFILE, 'main'),
 
     /// login server
     LOGIN_SERVER: tryParseBoolean(process.env.LOGIN_SERVER, false),

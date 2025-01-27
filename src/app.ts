@@ -34,8 +34,6 @@ if (!fs.existsSync('data/pack/client/config') || !fs.existsSync('data/pack/serve
     }
 }
 
-fs.mkdirSync('data/players', { recursive: true });
-
 if (Environment.EASY_STARTUP) {
     createWorker('./login.ts');
     createWorker('./friend.ts');

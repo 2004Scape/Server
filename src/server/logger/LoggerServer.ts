@@ -20,7 +20,7 @@ export default class LoggerServer {
 
                     switch (type) {
                         case 'session_log': {
-                            const { world, game, username, session_uuid, timestamp, coord, event, event_type } = msg;
+                            const { world, profile, username, session_uuid, timestamp, coord, event, event_type } = msg;
 
                             const account = await db.selectFrom('account').where('username', '=', username).selectAll().executeTakeFirst();
 
@@ -30,7 +30,7 @@ export default class LoggerServer {
                                 await db.insertInto('account_session').values({
                                     account_id: account.id,
                                     world,
-                                    game,
+                                    profile,
                                     session_uuid,
 
                                     timestamp: toDbDate(timestamp),
