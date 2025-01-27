@@ -77,6 +77,7 @@ export default class InputTracking {
             // 2: the player is on a very slow connection and the report packet never came in.
             // TODO: log this?
             this.player.tryLogout = true;
+            return;
         }
         // everything below means the player was active during this tracking.
         this.waitingReport = false;
