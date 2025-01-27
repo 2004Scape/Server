@@ -442,6 +442,7 @@
 [command,.npc_findallany](coord $coord, int $distance, int $checkvis)
 // Return true if a specific npc exists at $coord
 [command,npc_findexact](coord $coord, npc $npc)(boolean)
+[command,.npc_findexact](coord $coord, npc $npc)(boolean)
 // Return true if the player that has dealt the most damage to this npc is in the world
 [command,npc_findhero]()(boolean)
 // Get a param on the current npc
