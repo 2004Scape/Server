@@ -93,8 +93,8 @@ class World {
     private loggerThread = createWorker(Environment.STANDALONE_BUNDLE ? 'LoggerThread.js' : './server/logger/LoggerThread.ts');
     private devThread: Worker | NodeWorker | null = null;
 
-    private static readonly PLAYERS: number = 2048;
-    private static readonly NPCS: number = 8192; // todo: move to environment option
+    private static readonly PLAYERS: number = Environment.NODE_MAX_PLAYERS;
+    private static readonly NPCS: number = Environment.NODE_MAX_NPCS;
 
     private static readonly TICKRATE: number = 600; // 0.6s / 600ms
 
@@ -144,8 +144,8 @@ class World {
         this.gameMap = new GameMap(Environment.NODE_MEMBERS);
         this.invs = new Set();
         this.newPlayers = new Set();
-        this.players = new PlayerList(World.PLAYERS - 1);
-        this.npcs = new NpcList(World.NPCS - 1);
+        this.players = new PlayerList(World.PLAYERS);
+        this.npcs = new NpcList(World.NPCS);
         this.playerGrid = new Map();
         this.zonesTracking = new Map();
         this.queue = new LinkList();
@@ -508,7 +508,7 @@ class World {
 
             if (Environment.NODE_DEBUG_PROFILE) {
                 printInfo(`tick ${this.currentTick}: ${this.cycleStats[WorldStat.CYCLE]}/${this.tickRate} ms, ${Math.trunc(process.memoryUsage().heapTotal / 1024 / 1024)} MB heap`);
-                printDebug(`${this.getTotalPlayers()} players | ${this.getTotalNpcs()} npcs | ${this.gameMap.getTotalZones()} zones | ${this.gameMap.getTotalLocs()} locs | ${this.gameMap.getTotalObjs()} objs`);
+                printDebug(`${this.getTotalPlayers()}/${World.PLAYERS} players | ${this.getTotalNpcs()}/${World.NPCS} npcs | ${this.gameMap.getTotalZones()} zones | ${this.gameMap.getTotalLocs()} locs | ${this.gameMap.getTotalObjs()} objs`);
                 printDebug(`${this.cycleStats[WorldStat.WORLD]} ms world | ${this.cycleStats[WorldStat.CLIENT_IN]} ms client in | ${this.cycleStats[WorldStat.NPC]} ms npcs | ${this.cycleStats[WorldStat.PLAYER]} ms players | ${this.cycleStats[WorldStat.LOGOUT]} ms logout | ${this.cycleStats[WorldStat.LOGIN]} ms login | ${this.cycleStats[WorldStat.ZONE]} ms zones | ${this.cycleStats[WorldStat.CLIENT_OUT]} ms client out | ${this.cycleStats[WorldStat.CLEANUP]} ms cleanup`);
             }
 

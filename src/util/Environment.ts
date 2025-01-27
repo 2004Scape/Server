@@ -44,6 +44,9 @@ export default {
     NODE_WALKTRIGGER_SETTING: tryParseInt(process.env.NODE_WALKTRIGGER_SETTING, WalkTriggerSetting.PLAYERPACKET),
     // separate save folder
     NODE_GAME: tryParseString(process.env.NODE_GAME, 'main'),
+    // entities cap
+    NODE_MAX_PLAYERS: tryParseInt(process.env.NODE_MAX_PLAYERS, 2047),
+    NODE_MAX_NPCS: tryParseInt(process.env.NODE_MAX_NPCS, 8191),
 
     /// login server
     LOGIN_SERVER: tryParseBoolean(process.env.LOGIN_SERVER, false),
