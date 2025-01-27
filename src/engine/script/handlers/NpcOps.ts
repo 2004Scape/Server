@@ -336,6 +336,7 @@ const NpcOps: CommandHandlers = {
         state.pushInt(1);
     },
 
+    // https://x.com/JagexAsh/status/1796878374398246990
     [ScriptOpcode.NPC_FINDALLANY]: state => {
         const [coord, distance, checkVis] = state.popInts(3);
 
