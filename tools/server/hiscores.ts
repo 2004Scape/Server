@@ -15,23 +15,30 @@ InvType.load('data/pack');
 // for (const { profile } of worldProfiles) {
 //     const players = fs.readdirSync(`data/players/${profile}`);
 
+const args = process.argv.slice(2);
+if (args.length < 1) {
+    process.exit(0);
+}
+
+const profile = args[0];
+
 console.time('hiscores');
-const players = fs.readdirSync('data/players');
+const players = fs.readdirSync(`data/players/${profile}`);
 for (const file of players) {
     try {
         const username = file.slice(0, -4);
-        const player = PlayerLoading.load(username, Packet.load(`data/players/${file}`), null);
-        const account = await db.selectFrom('account').selectAll().where('username', '=', player.username).executeTakeFirstOrThrow();
+        const player = PlayerLoading.load(username, Packet.load(`data/players/${profile}/${file}`), null);
+        let account = await db.selectFrom('account').selectAll().where('username', '=', player.username).executeTakeFirst();
 
-        // if (!account) {
-        //     // testing!
-        //     await db.insertInto('account').values({
-        //         username: player.username,
-        //         password: ''
-        //     }).execute();
+        if (!account) {
+            // testing!
+            await db.insertInto('account').values({
+                username: player.username,
+                password: ''
+            }).execute();
 
-        //     account = await db.selectFrom('account').selectAll().where('username', '=', player.username).executeTakeFirstOrThrow();
-        // }
+            account = await db.selectFrom('account').selectAll().where('username', '=', player.username).executeTakeFirstOrThrow();
+        }
 
         if (account.staffmodlevel > 1 || (account.banned_until !== null && new Date(account.banned_until) > new Date())) {
             // todo: banned players will lose their exact rank position whenever they get unbanned this logic
@@ -54,9 +61,10 @@ for (const file of players) {
             totalLevel += player.baseLevels[i];
         }
 
-        const existing = await db.selectFrom('hiscore_large').select('type').select('value').where('account_id', '=', account.id).where('type', '=', 0).executeTakeFirst();
+        const existing = await db.selectFrom('hiscore_large').select('type').select('value').where('account_id', '=', account.id).where('type', '=', 0).where('profile', '=', profile).executeTakeFirst();
         if (existing && existing.value !== totalXp) {
             await db.updateTable('hiscore_large').set({
+                profile,
                 type: 0,
                 level: totalLevel,
                 value: totalXp
@@ -64,6 +72,7 @@ for (const file of players) {
         } else if (!existing) {
             await db.insertInto('hiscore_large').values({
                 account_id: account.id,
+                profile,
                 type: 0,
                 level: totalLevel,
                 value: totalXp
@@ -79,9 +88,10 @@ for (const file of players) {
                 const hiscoreType = stat + 1;
 
                 // todo: can we upsert in kysely?
-                const existing = await db.selectFrom('hiscore').select('type').select('value').where('account_id', '=', account.id).where('type', '=', hiscoreType).executeTakeFirst();
+                const existing = await db.selectFrom('hiscore').select('type').select('value').where('account_id', '=', account.id).where('type', '=', hiscoreType).where('profile', '=', profile).executeTakeFirst();
                 if (existing && existing.value !== player.stats[stat]) {
                     update.push({
+                        profile,
                         type: hiscoreType,
                         level: player.baseLevels[stat],
                         value: player.stats[stat]
@@ -89,6 +99,7 @@ for (const file of players) {
                 } else if (!existing) {
                     insert.push({
                         account_id: account.id,
+                        profile,
                         type: hiscoreType,
                         level: player.baseLevels[stat],
                         value: player.stats[stat]

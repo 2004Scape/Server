@@ -36,7 +36,7 @@ model account_session {
 
     account_id   Int
     world        Int    @default(0)
-    game         String // an account can have different character saves depending on the "game" (world type) it's logged into at the time
+    profile      String @default("main")
     session_uuid String
 
     timestamp  DateTime
@@ -61,23 +61,25 @@ model newspost {
 
 model hiscore {
     account_id Int
+    profile    String   @default("main")
     type       Int
     level      Int
     value      Int
     date       DateTime @default(now()) @updatedAt
 
-    @@id([account_id, type])
+    @@id([account_id, profile, type])
 }
 
 // upped value size to 8 bytes used for larger values e.g. total xp tracking
 model hiscore_large {
     account_id Int
+    profile    String   @default("main")
     type       Int
     level      Int
     value      BigInt
     date       DateTime @default(now()) @updatedAt
 
-    @@id([account_id, type])
+    @@id([account_id, profile, type])
 }
 
 model npc_hiscore {
@@ -105,7 +107,8 @@ model ignorelist {
 }
 
 model public_chat {
-    id Int @id @default(autoincrement())
+    id      Int    @id @default(autoincrement())
+    profile String @default("main")
 
     account_id Int
     message    String
@@ -113,7 +116,8 @@ model public_chat {
 }
 
 model private_chat {
-    id Int @id @default(autoincrement())
+    id      Int    @id @default(autoincrement())
+    profile String @default("main")
 
     from_account_id Int
     to_account_id   Int

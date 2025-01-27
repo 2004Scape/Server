@@ -20,7 +20,7 @@ export type account_session = {
     id: Generated<number>;
     account_id: number;
     world: Generated<number>;
-    game: string;
+    profile: Generated<string>;
     session_uuid: string;
     timestamp: string;
     coord: number;
@@ -32,6 +32,7 @@ export type friendlist = {
     friend_account_id: number;
 };
 export type hiscore = {
+    profile: Generated<string>;
     account_id: number;
     type: number;
     level: number;
@@ -39,6 +40,7 @@ export type hiscore = {
     date: Generated<string>;
 };
 export type hiscore_large = {
+    profile: Generated<string>;
     account_id: number;
     type: number;
     level: number;
