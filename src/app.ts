@@ -65,7 +65,7 @@ function safeExit() {
     exiting = true;
 
     try {
-        if (Environment.NODE_PRODUCTION) {
+        if (!Environment.EASY_STARTUP) {
             World.rebootTimer(Environment.NODE_KILLTIMER as number);
         } else {
             World.rebootTimer(0);

@@ -84,7 +84,7 @@ const web = http.createServer(async (req, res) => {
             res.writeHead(200);
             res.end(await fsp.readFile('data/pack/server/' + basename(url.pathname)));
         } else if (url.pathname === '/') {
-            if (Environment.NODE_PRODUCTION) {
+            if (Environment.WEBSITE_REGISTRATION) {
                 res.writeHead(404);
                 res.end();
             } else {
