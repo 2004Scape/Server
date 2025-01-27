@@ -70,7 +70,12 @@ async function handleRequests(parentPort: ParentPort, msg: any) {
                     staffmodlevel = 2; // staff (moderation commands)
                 }
 
-                if (!fs.existsSync(`data/players/${username}.sav`)) {
+                const profile = Environment.NODE_PROFILE;
+                if (!fs.existsSync(`data/players/${profile}`)) {
+                    fs.mkdirSync(`data/players/${profile}`, { recursive: true });
+                }
+
+                if (!fs.existsSync(`data/players/${profile}/${username}.sav`)) {
                     parentPort.postMessage({
                         type: 'player_login',
                         socket,
@@ -90,7 +95,7 @@ async function handleRequests(parentPort: ParentPort, msg: any) {
                         reconnecting,
                         reply: 0,
                         staffmodlevel,
-                        save: fs.readFileSync(`data/players/${username}.sav`)
+                        save: fs.readFileSync(`data/players/${profile}/${username}.sav`)
                     });
                 }
             }
@@ -108,7 +113,12 @@ async function handleRequests(parentPort: ParentPort, msg: any) {
                     success
                 });
             } else {
-                fs.writeFileSync(`data/players/${username}.sav`, save);
+                const profile = Environment.NODE_PROFILE;
+                if (!fs.existsSync(`data/players/${profile}`)) {
+                    fs.mkdirSync(`data/players/${profile}`, { recursive: true });
+                }
+
+                fs.writeFileSync(`data/players/${profile}/${username}.sav`, save);
 
                 parentPort.postMessage({
                     type: 'player_logout',
@@ -124,7 +134,12 @@ async function handleRequests(parentPort: ParentPort, msg: any) {
             if (Environment.LOGIN_SERVER) {
                 await client.playerAutosave(username, save);
             } else {
-                fs.writeFileSync(`data/players/${username}.sav`, save);
+                const profile = Environment.NODE_PROFILE;
+                if (!fs.existsSync(`data/players/${profile}`)) {
+                    fs.mkdirSync(`data/players/${profile}`, { recursive: true });
+                }
+
+                fs.writeFileSync(`data/players/${profile}/${username}.sav`, save);
             }
             break;
         }

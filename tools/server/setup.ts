@@ -1,3 +1,4 @@
+import child_process from 'child_process';
 import fs from 'fs';
 
 import { confirm, input, number, password, select } from '@inquirer/prompts';
@@ -26,6 +27,8 @@ function setNodeXpRate(rate: number) {
 
 function setNodeProduction(state: boolean) {
     fs.appendFileSync('.env', `NODE_PRODUCTION=${state}\n`);
+    fs.appendFileSync('.env', `NODE_DEBUG=${!state}\n`);
+    fs.appendFileSync('.env', `NODE_ALLOW_CHEATS=${!state}\n`);
 }
 
 function setNodeKillTimer(timer: number) {
@@ -232,6 +235,15 @@ async function promptDatabase() {
     setDatabase(host, port!, name, user, pass);
 }
 
+async function promptWebsiteRegistration() {
+    const autoregister = await confirm({
+        message: 'Do you want to automatically register accounts when they attempt to log in?',
+        default: true
+    });
+
+    fs.appendFileSync('.env', `WEBSITE_REGISTRATION=${!autoregister}\n`);
+}
+
 // ----
 
 async function startup() {
@@ -247,17 +259,17 @@ async function startup() {
         }
 
         choices.push({
-            name: 'Set up for development',
+            name: 'Set up as a development world',
             value: 'configure-dev'
         });
 
         choices.push({
-            name: 'Set up as a small server',
+            name: 'Set up as a single world',
             value: 'configure-local'
         });
 
         choices.push({
-            name: 'Set up as a production server',
+            name: 'Set up as part of a multi-world infrastructure',
             value: 'configure-prod'
         });
 
@@ -281,11 +293,11 @@ async function startup() {
                 break;
             }
             case 'configure-local': {
-                await configureLocal();
+                await configureSingle();
                 break;
             }
             case 'configure-prod': {
-                await configureProd();
+                await configureMulti();
                 break;
             }
             case 'advanced': {
@@ -302,7 +314,7 @@ async function configureDev() {
     process.exit(0);
 }
 
-async function configureLocal() {
+async function configureSingle() {
     fs.copyFileSync('.env.example', '.env');
     fs.appendFileSync('.env', '\n## SETUP SCRIPT\n');
 
@@ -311,18 +323,21 @@ async function configureLocal() {
     await promptNodeId();
     await promptNodeXpRate();
     await promptNodeMembers();
-    // todo: support simple sqlite setups
-    await promptDatabase();
+    fs.appendFileSync('.env', 'DB_BACKEND=sqlite\n');
+    await promptWebsiteRegistration();
 
     setLoginServer(true, 'localhost', 43500);
     setFriendServer(true, 'localhost', 45099);
     setLoggerServer(true, 'localhost', 43501);
 
-    fs.appendFileSync('.env', 'EASY_STARTUP=true');
+    fs.appendFileSync('.env', 'EASY_STARTUP=true\n');
+    child_process.execSync('npm run sqlite:migrate', {
+        stdio: 'inherit'
+    });
     process.exit(0);
 }
 
-async function configureProd() {
+async function configureMulti() {
     fs.copyFileSync('.env.example', '.env');
     fs.appendFileSync('.env', '\n## SETUP SCRIPT\n');
 
@@ -333,8 +348,13 @@ async function configureProd() {
     await promptNodeMembers();
     await promptDatabase();
     await promptLogin();
+    await promptWebsiteRegistration();
     await promptFriend();
     await promptLogger();
+
+    child_process.execSync('npm run db:migrate', {
+        stdio: 'inherit'
+    });
     process.exit(0);
 }
 

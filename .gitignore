@@ -37,6 +37,9 @@ PreloadedDirs.ts
 
 *.bz2
 
+db.sqlite
+db.sqlite-journal
+
 # coverage reports
 coverage/
 

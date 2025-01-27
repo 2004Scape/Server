@@ -1,7 +1,7 @@
 generator kysely {
     provider = "prisma-kysely"
 
-    output       = "../src/db"
+    output       = "../../src/db"
     fileName     = "types.ts"
     enumFileName = "enums.ts"
 }
@@ -22,10 +22,10 @@ model account {
     registration_ip   String?
     registration_date DateTime @default(now())
 
-    logged_in Int @default(0)
+    logged_in  Int       @default(0)
     login_time DateTime?
 
-    muted_until DateTime?
+    muted_until  DateTime?
     banned_until DateTime?
 
     staffmodlevel Int @default(0)
@@ -34,15 +34,15 @@ model account {
 model account_session {
     id Int @id @default(autoincrement())
 
-    account_id Int
-    world Int @default(0)
-    game String // an account can have different character saves depending on the "game" (world type) it's logged into at the time
+    account_id   Int
+    world        Int    @default(0)
+    profile      String @default("main")
     session_uuid String
 
-    timestamp DateTime
-    coord Int
-    event String
-    event_type Int @default(-1)
+    timestamp  DateTime
+    coord      Int
+    event      String
+    event_type Int      @default(-1)
 }
 
 // website
@@ -50,19 +50,36 @@ model account_session {
 model newspost {
     id Int @id @default(autoincrement())
 
-    category_id Int
-    title       String   @db.TinyText
-    content     String   @db.Text
-    date        DateTime @default(now())
-    updated     DateTime? @default(now()) @updatedAt
+    category Int
+    title    String
+    content  String  @db.MediumText
+    slug     String?
+
+    created DateTime @default(now())
+    updated DateTime @default(now()) @updatedAt
 }
 
-model newspost_category {
-    id Int @id @default(autoincrement())
+model hiscore {
+    account_id Int
+    profile    String   @default("main")
+    type       Int
+    level      Int
+    value      Int
+    date       DateTime @default(now()) @updatedAt
 
-    name  String
-    // css style class
-    style String
+    @@id([account_id, profile, type])
+}
+
+// upped value size to 8 bytes used for larger values e.g. total xp tracking
+model hiscore_large {
+    account_id Int
+    profile    String   @default("main")
+    type       Int
+    level      Int
+    value      BigInt
+    date       DateTime @default(now()) @updatedAt
+
+    @@id([account_id, profile, type])
 }
 
 model npc_hiscore {
@@ -90,7 +107,8 @@ model ignorelist {
 }
 
 model public_chat {
-    id Int @id @default(autoincrement())
+    id      Int    @id @default(autoincrement())
+    profile String @default("main")
 
     account_id Int
     message    String
@@ -98,7 +116,8 @@ model public_chat {
 }
 
 model private_chat {
-    id Int @id @default(autoincrement())
+    id      Int    @id @default(autoincrement())
+    profile String @default("main")
 
     from_account_id Int
     to_account_id   Int

@@ -156,12 +156,13 @@ export default class NpcInfoEncoder extends MessageEncoder<NpcInfo> {
         }
 
         if (!renderer.has(nid, InfoProt.NPC_FACE_COORD)) {
-            if (other.orientationX !== -1) {
-                renderer.cache(nid, new NpcInfoFaceCoord(other.orientationX, other.orientationZ), InfoProt.NPC_FACE_COORD);
-            } else if (other.faceX !== -1) {
+            if (other.faceX !== -1) {
                 renderer.cache(nid, new NpcInfoFaceCoord(other.faceX, other.faceZ), InfoProt.NPC_FACE_COORD);
+            } else if (other.orientationX !== -1) {
+                renderer.cache(nid, new NpcInfoFaceCoord(other.orientationX, other.orientationZ), InfoProt.NPC_FACE_COORD);
             } else {
-                renderer.cache(nid, new NpcInfoFaceCoord(other.x * 2 + 1, (other.z - 1) * 2 + 1), InfoProt.NPC_FACE_COORD);
+                // this is a fail safe but should not happen.
+                renderer.cache(nid, new NpcInfoFaceCoord(CoordGrid.fine(other.x, 1), CoordGrid.fine(other.z - 1, 1)), InfoProt.NPC_FACE_COORD);
             }
         }
 

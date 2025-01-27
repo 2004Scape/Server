@@ -338,10 +338,7 @@ export default class Player extends PathingEntity {
 
     resetEntity(respawn: boolean) {
         if (respawn) {
-            this.faceX = -1;
-            this.faceZ = -1;
-            this.orientationX = -1;
-            this.orientationZ = -1;
+            this.unfocus();
         }
         super.resetPathingEntity();
         this.repathed = false;
@@ -1604,11 +1601,7 @@ export default class Player extends PathingEntity {
     }
 
     faceSquare(x: number, z: number) {
-        this.faceX = x * 2 + 1;
-        this.faceZ = z * 2 + 1;
-        this.orientationX = this.faceX;
-        this.orientationZ = this.faceZ;
-        this.masks |= InfoProt.PLAYER_FACE_COORD.id;
+        this.focus(CoordGrid.fine(x, 1), CoordGrid.fine(z, 1), true);
     }
 
     playSong(name: string) {

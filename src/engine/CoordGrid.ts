@@ -114,6 +114,10 @@ export const CoordGrid = {
         return 0;
     },
 
+    fine(pos: number, size: number): number {
+        return pos * 2 + size;
+    },
+
     unpackCoord(coord: number): CoordGrid {
         const level: number = (coord >> 28) & 0x3;
         const x: number = (coord >> 14) & 0x3fff;

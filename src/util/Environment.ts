@@ -4,6 +4,7 @@ import WalkTriggerSetting from '#/util/WalkTriggerSetting.js';
 
 export default {
     EASY_STARTUP: tryParseBoolean(process.env.EASY_STARTUP, false),
+    WEBSITE_REGISTRATION: tryParseBoolean(process.env.WEBSITE_REGISTRATION, true),
 
     // bundler/webrtc browser mode
     STANDALONE_BUNDLE: tryParseBoolean(process.env.STANDALONE_BUNDLE, false),
@@ -42,7 +43,7 @@ export default {
     // 0 = processed in packet handler. 1 = processed in player setup (client input). 2 = processed in player movement
     NODE_WALKTRIGGER_SETTING: tryParseInt(process.env.NODE_WALKTRIGGER_SETTING, WalkTriggerSetting.PLAYERPACKET),
     // separate save folder
-    NODE_GAME: tryParseString(process.env.NODE_GAME, 'main'),
+    NODE_PROFILE: tryParseString(process.env.NODE_PROFILE, 'main'),
 
     /// login server
     LOGIN_SERVER: tryParseBoolean(process.env.LOGIN_SERVER, false),
@@ -60,7 +61,9 @@ export default {
     LOGGER_PORT: tryParseInt(process.env.LOGGER_PORT, 43501),
 
     /// database
+    DB_BACKEND: tryParseString(process.env.DB_BACKEND, 'sqlite'),
     DB_HOST: tryParseString(process.env.DB_HOST, 'localhost'),
+    DB_PORT: tryParseInt(process.env.DB_PORT, 3306),
     DB_USER: tryParseString(process.env.DB_USER, 'root'),
     DB_PASS: tryParseString(process.env.DB_PASS, 'password'),
     DB_NAME: tryParseString(process.env.DB_NAME, 'lostcity'),

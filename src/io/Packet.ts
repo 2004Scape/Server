@@ -423,23 +423,27 @@ export default class Packet extends DoublyLinkable {
     }
 
     rsadec(pem: PrivateKey): void {
+        const enc: Uint8Array = new Uint8Array(this.g1());
+        this.gdata(enc, 0, enc.length);
+
+        const cipher: BigInteger = new BigInteger(Array.from(enc));
+
+        // decrypt using the Chinese Remainder Theorem
         const p: BigInteger = pem.p;
         const q: BigInteger = pem.q;
         const dP: BigInteger = pem.dP;
         const dQ: BigInteger = pem.dQ;
         const qInv: BigInteger = pem.qInv;
 
-        const enc: Uint8Array = new Uint8Array(this.g1());
-        this.gdata(enc, 0, enc.length);
+        const mP: BigInteger = cipher.mod(p).modPow(dP, p);
+        const mQ: BigInteger = cipher.mod(q).modPow(dQ, q);
 
-        const bigRaw: BigInteger = new BigInteger(Array.from(enc));
-        const m1: BigInteger = bigRaw.mod(p).modPow(dP, p);
-        const m2: BigInteger = bigRaw.mod(q).modPow(dQ, q);
-        const h: BigInteger = qInv.multiply(m1.subtract(m2)).mod(p);
-        const rawDec: Uint8Array = new Uint8Array(m2.add(h.multiply(q)).toByteArray());
+        const h: BigInteger = qInv.multiply(mP.subtract(mQ)).mod(p);
+
+        const plain: Uint8Array = Uint8Array.from(mQ.add(h.multiply(q)).toByteArray());
 
         this.pos = 0;
-        this.pdata(rawDec, 0, rawDec.length);
+        this.pdata(plain, 0, plain.length);
         this.pos = 0;
     }
 

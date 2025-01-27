@@ -21,7 +21,7 @@ export default class LoggerClient extends InternalClient {
         this.ws.send(JSON.stringify({
             type: 'session_log',
             world: Environment.NODE_ID,
-            game: Environment.NODE_GAME,
+            profile: Environment.NODE_PROFILE,
             username,
             session_uuid,
             timestamp,

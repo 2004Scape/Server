@@ -3,7 +3,7 @@ import { WebSocketServer } from 'ws';
 
 import bcrypt from 'bcrypt';
 
-import { db } from '#/db/query.js';
+import { db, toDbDate } from '#/db/query.js';
 
 import Environment from '#/util/Environment.js';
 import { printInfo } from '#/util/Logger.js';
@@ -22,7 +22,7 @@ export default class LoginServer {
             socket.on('message', async (data: Buffer) => {
                 try {
                     const msg = JSON.parse(data.toString());
-                    const { type, nodeId, _nodeTime } = msg;
+                    const { type, nodeId, _nodeTime, profile } = msg;
 
                     if (type === 'world_startup') {
                         await db.updateTable('account').set({
@@ -35,6 +35,23 @@ export default class LoginServer {
                         // todo: record login attempt + uid
 
                         const account = await db.selectFrom('account').where('username', '=', username).selectAll().executeTakeFirst();
+
+                        if (!Environment.WEBSITE_REGISTRATION && !account) {
+                            // register the user automatically
+                            // todo: registration ip
+                            await db.insertInto('account').values({
+                                username,
+                                password: bcrypt.hashSync(password.toLowerCase(), 10)
+                            }).execute();
+
+                            socket.send(JSON.stringify({
+                                replyTo,
+                                response: 4,
+                                staffmodlevel: 0
+                            }));
+                            return;
+                        }
+
                         if (!account || !(await bcrypt.compare(password.toLowerCase(), account.password))) {
                             // invalid username or password
                             socket.send(JSON.stringify({
@@ -44,7 +61,7 @@ export default class LoginServer {
                             return;
                         }
 
-                        if (account.banned_until !== null && account.banned_until > new Date()) {
+                        if (account.banned_until !== null && new Date(account.banned_until) > new Date()) {
                             // account disabled
                             socket.send(JSON.stringify({
                                 replyTo,
@@ -71,10 +88,10 @@ export default class LoginServer {
 
                         await db.updateTable('account').set({
                             logged_in: nodeId,
-                            login_time: new Date()
+                            login_time: toDbDate(new Date())
                         }).where('id', '=', account.id).executeTakeFirst();
 
-                        if (!fs.existsSync(`data/players/${username}.sav`)) {
+                        if (!fs.existsSync(`data/players/${profile}/${username}.sav`)) {
                             // not an error - never logged in before
                             socket.send(JSON.stringify({
                                 replyTo,
@@ -85,7 +102,7 @@ export default class LoginServer {
                             return;
                         }
 
-                        const save = fs.readFileSync(`data/players/${username}.sav`);
+                        const save = fs.readFileSync(`data/players/${profile}/${username}.sav`);
                         socket.send(JSON.stringify({
                             replyTo,
                             response: 0,
@@ -100,7 +117,7 @@ export default class LoginServer {
 
                         const raw = Buffer.from(save, 'base64');
                         if (PlayerLoading.verify(new Packet(raw))) {
-                            fs.writeFileSync(`data/players/${username}.sav`, raw);
+                            fs.writeFileSync(`data/players/${profile}/${username}.sav`, raw);
                         } else {
                             console.error(username, 'Invalid save file');
                         }
@@ -117,7 +134,7 @@ export default class LoginServer {
                     } else if (type === 'player_autosave') {
                         const { username, save } = msg;
 
-                        fs.writeFileSync(`data/players/${username}.sav`, Buffer.from(save, 'base64'));
+                        fs.writeFileSync(`data/players/${profile}/${username}.sav`, Buffer.from(save, 'base64'));
                     } else if (type === 'player_force_logout') {
                         const { username } = msg;
 
@@ -131,7 +148,7 @@ export default class LoginServer {
                         // todo: audit log
 
                         await db.updateTable('account').set({
-                            banned_until: new Date(until)
+                            banned_until: toDbDate(until)
                         }).where('username', '=', username).executeTakeFirst();
                     } else if (type === 'player_mute') {
                         const { _staff, username, until } = msg;
@@ -139,7 +156,7 @@ export default class LoginServer {
                         // todo: audit log
 
                         await db.updateTable('account').set({
-                            muted_until: new Date(until)
+                            muted_until: toDbDate(until)
                         }).where('username', '=', username).executeTakeFirst();
                     }
                 } catch (err) {

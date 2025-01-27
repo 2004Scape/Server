@@ -333,7 +333,7 @@ queue(quest_chompybird_complete, 0);
 
 // look for any chompy birds to shoot
 [ai_timer,chompybird_rantz]
-.npc_findallany(npc_coord, 24, 0);
+.npc_findallany(npc_coord, 24, ^vis_off);
 while (.npc_findnext = true) {
     // find any chompy birds close to Rantz
     if (.npc_type = chompy_bird) {
