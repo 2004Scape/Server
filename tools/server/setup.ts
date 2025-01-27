@@ -341,6 +341,7 @@ async function configureMulti() {
     fs.copyFileSync('.env.example', '.env');
     fs.appendFileSync('.env', '\n## SETUP SCRIPT\n');
 
+    fs.appendFileSync('.env', 'WEBSITE_REGISTRATION=true\n');
     setNodeProduction(true);
 
     await promptNodeId();

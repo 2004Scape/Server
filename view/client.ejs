@@ -5,7 +5,7 @@
     <title>2004Scape Game</title>
  
     <meta charset="utf-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="viewport" content="width=device-width, initial-scale=0.7">
  
     <style>
         body,
@@ -21,8 +21,8 @@
             overflow: auto;
             background-color: black;
         }
- 
-        canvas {
+
+        #game {
             padding-left: 0;
             padding-right: 0;
             margin-left: auto;
@@ -30,8 +30,10 @@
             display: block;
             width: 789px;
             height: 532px;
+        }
  
-            touch-action: none;
+        canvas {
+            /* touch-action: none; */
             -webkit-touch-callout: none;
             -webkit-user-select: none;
             -khtml-user-select: none;
@@ -54,6 +56,10 @@
         .green {
             text-decoration: none;
             color: #04A800;
+        }
+
+        #controls {
+            margin-bottom: 10px;
         }
     </style>
  
@@ -119,17 +125,21 @@
 </head>
  
 <body>
-    <canvas id="canvas" width="789" height="532">
-        Your browser is not capable of running our web client.
-    </canvas>
- 
-    <div class="centered" id="controls">
-        <a class="green" href="#" id="fullscreen" onclick="toggleFullscreen();">Go fullscreen</a> |
-        <a class="green" href="#" id="filtering" onclick="toggleFiltering();">Auto scaling</a> |
-        <a class="green" href="#" id="canvasSize" onclick="changeCanvasSize();">1x size</a> |
-        <a class="green" href="#" id="screenshot" onclick="saveScreenshot();">Take screenshot</a> |
-        <a class="green" href="#" id="hide" onclick="hideControls();">Hide controls</a>
-    </div>
+    <center>
+        <div id="game">
+            <canvas id="canvas" width="789" height="532">
+                Your browser is not capable of running our web client.
+            </canvas>
+        </div>
+
+        <div class="centered" id="controls">
+            <a class="green" href="#" id="fullscreen" onclick="toggleFullscreen();">Go fullscreen</a> |
+            <a class="green" href="#" id="filtering" onclick="toggleFiltering();">Auto scaling</a> |
+            <a class="green" href="#" id="canvasSize" onclick="changeCanvasSize();">1x size</a> |
+            <a class="green" href="#" id="screenshot" onclick="saveScreenshot();">Take screenshot</a> |
+            <a class="green" href="#" id="hide" onclick="hideControls();">Hide controls</a>
+        </div>
+    </center>
  
     <script type="module">
         import { Client } from './client/Client.js';

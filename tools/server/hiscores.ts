@@ -64,11 +64,10 @@ for (const file of players) {
         const existing = await db.selectFrom('hiscore_large').select('type').select('value').where('account_id', '=', account.id).where('type', '=', 0).where('profile', '=', profile).executeTakeFirst();
         if (existing && existing.value !== totalXp) {
             await db.updateTable('hiscore_large').set({
-                profile,
                 type: 0,
                 level: totalLevel,
                 value: totalXp
-            }).where('account_id', '=', account.id).where('type', '=', 0).execute();
+            }).where('account_id', '=', account.id).where('type', '=', 0).where('profile', '=', profile).execute();
         } else if (!existing) {
             await db.insertInto('hiscore_large').values({
                 account_id: account.id,
@@ -91,7 +90,6 @@ for (const file of players) {
                 const existing = await db.selectFrom('hiscore').select('type').select('value').where('account_id', '=', account.id).where('type', '=', hiscoreType).where('profile', '=', profile).executeTakeFirst();
                 if (existing && existing.value !== player.stats[stat]) {
                     update.push({
-                        profile,
                         type: hiscoreType,
                         level: player.baseLevels[stat],
                         value: player.stats[stat]
@@ -114,7 +112,7 @@ for (const file of players) {
 
         // todo: batch update query?
         for (let i = 0; i < update.length; i++) {
-            await db.updateTable('hiscore').set(update[i]).where('account_id', '=', account.id).where('type', '=', update[i].type).execute();
+            await db.updateTable('hiscore').set(update[i]).where('account_id', '=', account.id).where('type', '=', update[i].type).where('profile', '=', profile).execute();
         }
     } catch (err) {
         if (err instanceof Error) {
