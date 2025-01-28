@@ -117,6 +117,10 @@ export default class LoginServer {
 
                         const raw = Buffer.from(save, 'base64');
                         if (PlayerLoading.verify(new Packet(raw))) {
+                            if (!fs.existsSync(`data/players/${profile}`)) {
+                                fs.mkdirSync(`data/players/${profile}`, { recursive: true });
+                            }
+
                             fs.writeFileSync(`data/players/${profile}/${username}.sav`, raw);
                         } else {
                             console.error(username, 'Invalid save file');
@@ -134,7 +138,16 @@ export default class LoginServer {
                     } else if (type === 'player_autosave') {
                         const { username, save } = msg;
 
-                        fs.writeFileSync(`data/players/${profile}/${username}.sav`, Buffer.from(save, 'base64'));
+                        const raw = Buffer.from(save, 'base64');
+                        if (PlayerLoading.verify(new Packet(raw))) {
+                            if (!fs.existsSync(`data/players/${profile}`)) {
+                                fs.mkdirSync(`data/players/${profile}`, { recursive: true });
+                            }
+
+                            fs.writeFileSync(`data/players/${profile}/${username}.sav`, raw);
+                        } else {
+                            console.error(username, 'Invalid save file');
+                        }
                     } else if (type === 'player_force_logout') {
                         const { username } = msg;
 
