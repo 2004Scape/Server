@@ -1,5 +1,5 @@
 import MessageHandler from '#/network/client/handler/MessageHandler.js';
-import Player from '#/engine/entity/Player.js';
+import Player, { getExpByLevel } from '#/engine/entity/Player.js';
 import ClientCheat from '#/network/client/model/ClientCheat.js';
 import Environment from '#/util/Environment.js';
 import InvType from '#/cache/config/InvType.js';
@@ -172,16 +172,19 @@ export default class ClientCheatHandler extends MessageHandler<ClientCheat> {
 
             if (cmd === 'getcoord') {
                 // authentic
+
+                // Displays current coordinate
                 player.messageGame(CoordGrid.formatString(player.level, player.x, player.z, ','));
             } else if (cmd === 'tele') {
                 // authentic
                 if (args.length < 1) {
-                    // ::tele level,mx,mz,lx,lz
+                    // ::tele x,xx,xx[,xx,xx]
+                    // Teleports you to the coordinate. In order, the parts are level, horizontal map square, vertical map square, horizontal tile, vertical tile.
                     return false;
                 }
 
                 const coord = args[0].split(',');
-                if (coord.length !== 5) {
+                if (coord.length < 3) {
                     return false;
                 }
 
@@ -212,6 +215,7 @@ export default class ClientCheatHandler extends MessageHandler<ClientCheat> {
 
                 player.teleJump((mx << 6) + lx, (mz << 6) + lz, level);
             } else if (cmd === 'teleto') {
+                // custom
                 if (args.length < 1) {
                     return false;
                 }
@@ -235,11 +239,12 @@ export default class ClientCheatHandler extends MessageHandler<ClientCheat> {
 
                 player.teleJump(other.x, other.z, other.level);
             } else if (cmd === 'teleother') {
+                // custom
                 if (args.length < 1) {
+                    // ::teleother <username>
                     return false;
                 }
 
-                // ::teleother <username>
                 const other = World.getPlayerByUsername(args[0]);
                 if (!other) {
                     player.messageGame(`${args[0]} is not logged in.`);
@@ -260,10 +265,11 @@ export default class ClientCheatHandler extends MessageHandler<ClientCheat> {
             } else if (cmd === 'setvar') {
                 // authentic
                 if (args.length < 2) {
+                    // ::setvar <variable> <value>
+                    // Sets variable to specified value
                     return false;
                 }
 
-                // ::setvar <name> <value>
                 const varp = VarPlayerType.getByName(args[0]);
                 if (!varp) {
                     return false;
@@ -285,11 +291,12 @@ export default class ClientCheatHandler extends MessageHandler<ClientCheat> {
                 player.setVar(varp.id, value);
                 player.messageGame('set ' + varp.debugname + ': to ' + value);
             } else if (cmd === 'setvarother') {
+                // custom
                 if (args.length < 3) {
+                    // ::setvarother <username> <name> <value>
                     return false;
                 }
 
-                // ::setvarother <username> <name> <value>
                 const other = World.getPlayerByUsername(args[0]);
                 if (!other) {
                     player.messageGame(`${args[0]} is not logged in.`);
@@ -319,10 +326,11 @@ export default class ClientCheatHandler extends MessageHandler<ClientCheat> {
             } else if (cmd === 'getvar') {
                 // authentic
                 if (args.length < 1) {
+                    // ::getvar <variable>
+                    // Displays value of specified variable
                     return false;
                 }
 
-                // ::getvar <varp>
                 const varp = VarPlayerType.getByName(args[0]);
                 if (!varp) {
                     return false;
@@ -331,8 +339,9 @@ export default class ClientCheatHandler extends MessageHandler<ClientCheat> {
                 const value = player.getVar(varp.id);
                 player.messageGame('get ' + varp.debugname + ': ' + value);
             } else if (cmd === 'getvarother') {
+                // custom
                 if (args.length < 2) {
-                    // ::getvarother <username> <varp>
+                    // ::getvarother <username> <variable>
                     return false;
                 }
 
@@ -352,7 +361,8 @@ export default class ClientCheatHandler extends MessageHandler<ClientCheat> {
             } else if (cmd === 'setstat') {
                 // authentic
                 if (args.length < 2) {
-                    // ::setstat <name> <level>
+                    // ::setstat <skill> <level>
+                    // Sets the skill to specified level
                     return false;
                 }
 
@@ -365,7 +375,8 @@ export default class ClientCheatHandler extends MessageHandler<ClientCheat> {
             } else if (cmd === 'advancestat') {
                 // authentic
                 if (args.length < 1) {
-                    // ::advancestat <name> (levels)
+                    // ::advancestat <skill> <level>
+                    // Advances skill to specified level, generates level up message etc.
                     return false;
                 }
 
@@ -374,8 +385,10 @@ export default class ClientCheatHandler extends MessageHandler<ClientCheat> {
                     return false;
                 }
 
-                const level = Math.min(99, Math.max(1, tryParseInt(args[1], 1)));
-                player.setLevel(stat, player.baseLevels[stat] + level);
+                player.stats[stat] = 0;
+                player.baseLevels[stat] = 1;
+                player.levels[stat] = 1;
+                player.addXp(stat, getExpByLevel(parseInt(args[1])));
             } else if (cmd === 'minme') {
                 // like maxme debugproc, but in engine because xp goes down
                 for (let i = 0; i < PlayerStatEnabled.length; i++) {
@@ -388,7 +401,8 @@ export default class ClientCheatHandler extends MessageHandler<ClientCheat> {
             } else if (cmd === 'give') {
                 // authentic
                 if (args.length < 1) {
-                    // ::give <obj> (count)
+                    // ::give <item> (amount)
+                    // Adds the items(s) to your inventory
                     return false;
                 }
 
@@ -400,8 +414,9 @@ export default class ClientCheatHandler extends MessageHandler<ClientCheat> {
                 const count = Math.max(1, Math.min(tryParseInt(args[1], 1), 0x7fffffff));
                 player.invAdd(InvType.INV, obj, count, false);
             } else if (cmd === 'giveother') {
+                // custom
                 if (args.length < 2) {
-                    // ::giveother <username> <obj> (count)
+                    // ::giveother <username> <item> (amount)
                     return false;
                 }
 
@@ -418,14 +433,38 @@ export default class ClientCheatHandler extends MessageHandler<ClientCheat> {
 
                 const count = Math.max(1, Math.min(tryParseInt(args[2], 1), 0x7fffffff));
                 other.invAdd(InvType.INV, obj, count, false);
-            }
-            // todo:
-            // else if (cmd === 'givecrap') {
-            //     // authentic
-            // } else if (cmd === 'givemany') {
-            //     // authentic
-            // }
-            else if (cmd === 'ban') {
+            } else if (cmd === 'givecrap') {
+                // authentic (we don't know the exact specifics of this...)
+
+                // Fills your inventory with random items
+                for (let i = 0; i < 28; i++) {
+                    let random = -1;
+                    while (random === -1) {
+                        random = Math.trunc(Math.random() * ObjType.count);
+                        const obj = ObjType.get(random);
+                        if ((!Environment.NODE_MEMBERS && obj.members) || obj.dummyitem != 0) {
+                            random = -1;
+                        }
+                    }
+
+                    player.invAdd(InvType.INV, random, 1, false);
+                }
+            } else if (cmd === 'givemany') {
+                // authentic
+                if (args.length < 1) {
+                    // ::givemany <item>
+                    // Adds up to 1000 of the item to your inventory
+                    return false;
+                }
+
+                const obj = ObjType.getId(args[0]);
+                if (obj === -1) {
+                    return false;
+                }
+
+                player.invAdd(InvType.INV, obj, 1000, false);
+            } else if (cmd === 'ban') {
+                // custom
                 if (args.length < 2) {
                     // ::ban <username> <minutes>
                     return false;
@@ -441,6 +480,7 @@ export default class ClientCheatHandler extends MessageHandler<ClientCheat> {
                     World.removePlayer(other);
                 }
             } else if (cmd === 'kick') {
+                // custom
                 if (args.length < 1) {
                     // ::kick <username>
                     return false;
@@ -453,6 +493,7 @@ export default class ClientCheatHandler extends MessageHandler<ClientCheat> {
                     World.removePlayer(other);
                 }
             } else if (cmd === 'mute') {
+                // custom
                 if (args.length < 2) {
                     // ::mute <username> <minutes>
                     return false;
@@ -469,14 +510,22 @@ export default class ClientCheatHandler extends MessageHandler<ClientCheat> {
                 other.muted_until = new Date(Date.now() + (minutes * 60 * 1000));
                 World.notifyPlayerMute(player.username, other.username, Date.now() + (minutes * 60 * 1000));
             } else if (cmd === 'broadcast') {
+                // custom
                 if (args.length < 0) {
                     return false;
                 }
 
                 World.broadcastMes(cheat.substring(cmd.length + 1));
-            } else if (cmd === 'shutdown') {
+            } else if (cmd === 'reboot') {
+                // semi-authentic - we actually just shut down for maintenance
+
+                // Reboots the game world, applying packed changes
+                World.rebootTimer(0);
+            } else if (cmd === 'slowreboot') {
+                // semi-authentic - we actually just shut down for maintenance
                 if (args.length < 1) {
-                    // ::shutdown <seconds>
+                    // ::slowreboot <seconds>
+                    // Reboots the game world, with a timer
                     return false;
                 }
 
