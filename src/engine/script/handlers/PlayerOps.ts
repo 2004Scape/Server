@@ -1096,9 +1096,9 @@ const PlayerOps: CommandHandlers = {
 
     [ScriptOpcode.P_RUN]: checkedHandler(ActivePlayer, state => {
         state.activePlayer.run = state.popInt();
+
         // todo: better way to sync engine varp
         state.activePlayer.setVar(VarPlayerType.RUN, state.activePlayer.run);
-        state.activePlayer.clearPendingAction();
     }),
 };
 
