@@ -388,7 +388,7 @@ export default class ClientCheatHandler extends MessageHandler<ClientCheat> {
                 player.stats[stat] = 0;
                 player.baseLevels[stat] = 1;
                 player.levels[stat] = 1;
-                player.addXp(stat, getExpByLevel(parseInt(args[1])));
+                player.addXp(stat, getExpByLevel(parseInt(args[1])), false);
             } else if (cmd === 'minme') {
                 // like maxme debugproc, but in engine because xp goes down
                 for (let i = 0; i < PlayerStatEnabled.length; i++) {
