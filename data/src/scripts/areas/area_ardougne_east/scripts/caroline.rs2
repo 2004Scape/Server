@@ -39,7 +39,10 @@ switch_int(~p_choice2("I suppose so, how do I get there?", 1, "I'm sorry, I'm to
 ~chatnpc("<p,neutral>Yes, Holgart told me and sent a rescue party out.|Kent's back home now, resting with Kennith.|I don't think he'll be doing any fishing for a while.");
 ~chatnpc("<p,neutral>Here, take these Oyster pearls as a reward.|They're worth quite a bit|and can be used to make lethal crossbow bolts.");
 // QUEST REWARD
+%seaslug_progress = ^seaslug_complete;
+%questpoints = add(%questpoints, ^seaslug_questpoints);
 inv_add(inv, oyster_pearls, 1);
+stat_advance(fishing, 71750);
 queue(seaslug_quest_complete, 0);
 ~chatplayer("<p,happy>Thanks!");
 ~chatnpc("<p,happy>Thank you.|Take care of yourself traveller.");
