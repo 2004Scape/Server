@@ -1,15 +1,16 @@
+import http from 'http';
 import { WebSocketServer, WebSocket } from 'ws';
 
 import Packet from '#/io/Packet.js';
-
-import Environment from '#/util/Environment.js';
 
 // todo: websocket keepalives
 export default class WSMaintenanceServer {
     wss: WebSocketServer | null = null;
 
-    start() {
-        this.wss = new WebSocketServer({ port: Environment.NODE_PORT + 1, host: '0.0.0.0' }, () => {
+    start(server: http.Server) {
+        this.wss = new WebSocketServer({
+            server,
+            perMessageDeflate: false
         });
 
         this.wss.on('connection', (ws: WebSocket) => {
