@@ -2,7 +2,7 @@
 // https://youtu.be/rEzuCix51aM?t=1582 - showing speaking again after giving ID papers
 if (%hero_progress < ^hero_blackarm_id_papers_given) {
   ~chatplayer("<p,neutral>Hi there. I am Hertigen. reporting for duty as your new deputy sir!");
-  ~chatnpc("<p,neutral>Ah good, at last. You took your timee getting here! Now let me see...");
+  ~chatnpc("<p,neutral>Ah good, at last. You took your time getting here! Now let me see...");
   ~chatnpc("<p,neutral>I'll get your hours and duty roster sorted out in a while. Oh, and do you have your I.D. papers with you? Internal security is almost as important as external security for a guard.");
   if(inv_total(inv, id_papers) < 1) {
     // https://youtu.be/KRhwwgo8YHM?t=424 - OSRS talking to grip without ID paper
