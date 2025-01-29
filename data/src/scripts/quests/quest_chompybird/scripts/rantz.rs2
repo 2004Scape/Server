@@ -96,7 +96,6 @@ switch_int(%chompybird_progress) {
     case ^chompybird_told_to_cook_chompy :
         @rantz_tell_chompy_flavour;
     case ^chompybird_chompy_cooked :
-        // todo what if the player no longer has the seasoned chompy? Does it still auto-hand in?
         @hand_chompy_to_rantz;
     case ^chompybird_complete :
         ~chatnpc("<p,neutral>Hey deyr, t'anks for da chompy, it was scrumbly!");
@@ -322,6 +321,11 @@ if (p_finduid(uid) = true) {
 [label,hand_chompy_to_rantz]
 // todo mesanim and line breaks TBC
 ~chatnpc("<p,neutral>Hey creature, did you's get da cooked chompy yet?|I smelled something cooking and it mades me 'ungry.|Hand over da chompy if ya know what's good for ya.");
+if (inv_total(inv, seasoned_chompy) < 1) {
+    ~chatplayer("<p,neutral>Well, erm, I don't have one at the moment.");
+    ~chatnpc("<p,neutral>Well, 'urry up... else you's creature is looking tasty to me soon!");
+    return;
+}
 ~chatplayer("<p,neutral>Yes, here you go, here's your cooked chompy bird.");
 inv_del(inv, seasoned_chompy, 1);
 queue(quest_chompybird_complete, 0);
