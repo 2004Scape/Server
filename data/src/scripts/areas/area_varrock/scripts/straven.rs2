@@ -108,7 +108,7 @@ else if (%hero_progress = ^hero_started) {
 [label,straven_gangmember_dialogues](int $option)
 switch_int($option) {
     case 1 : // Lost armband
-        ~chatplayer("<p,sad>I'm afraid I've lost my Master Theif armband.");
+        ~chatplayer("<p,sad>I'm afraid I've lost my master thief armband.");
         ~chatnpc("<p,neutral>Lucky for you I have a spare. Don't lose it again!");
         inv_add(inv, thieves_armband, 1);
     case 2 : // Lost weapon store key
@@ -139,20 +139,20 @@ switch_int($option) {
     case 6 : // After heroes started, brought back valid candlestick
         ~chatnpc("<p,neutral>Hmmm. Not bad, not bad. Let's see it, make sure it's|genuine.");
         ~mesbox("You hand Straven the candlestick.");
-        ~chatplayer("<p,neutral>So is this enough to get me a Master Theif armband?");
+        ~chatplayer("<p,neutral>So is this enough to get me a master thief armband?");
         ~chatnpc("<p,neutral>Hmm...");
         ~chatnpc("<p,neutral>I dunno...");
         ~chatnpc("<p,neutral>Aww, go on then. I suppose I'm in a generous mood|today.");
-        ~mesbox("Straven hands you a Master Theif armband.");
+        ~mesbox("Straven hands you a master thief armband."); // imgur.com/EXYKfbv
         inv_del(inv, petes_candlestick, 1);
         inv_add(inv, thieves_armband, 1);
         %hero_progress = ^hero_phoenix_obtained_armband;
     case 7 : // After heroes started, brought back invalid candlestick [todo : Need real dialgue for this one]
         ~chatnpc("<p,angry>That's not real! Come back when you get the real one.");
     case 8 : // First chat after heroes started
-        ~chatplayer("<p,quiz>How would I go about getting a Master Thief armband?");
+        ~chatplayer("<p,quiz>How would I go about getting a master thief armband?");
         ~chatnpc("<p,neutral>Ooh... tricky stuff. Took me YEARS to get that rank.");
-        ~chatnpc("<p,neutral>Well, what some of the more aspiring thieves in our|gang are working on right now is to steal some very|valuable candlesticks from Scarface Pete - the pirate|leader on Karamja.");
+        ~chatnpc("<p,neutral>Well, what some of the more aspiring thieves in|our gang are working on right now is to|steal some very valuable rare candlesticks From|Scarface Pete - the pirate leader on Karamja."); // imgur.com/wpqzghp
         ~chatnpc("<p,neutral>His security is excellent, and the target very valuable so|that might be enough to get you the rank.");
         ~chatnpc("<p,neutral>Go talk to our man Alfonse, the waiter in the Shrimp|and Parrot.");
         ~chatnpc("<p,neutral>Use the secret word 'gherkin' to show you're one of us.");
