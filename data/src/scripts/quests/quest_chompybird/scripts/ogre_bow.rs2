@@ -1,0 +1,79 @@
+[opheld3,ogre_bow]
+if (%chompybird_progress < ^chompybird_complete) {
+    mes("You've scratched up no kills yet! You've got to complete the quest first!");
+    return;
+}
+def_int $kills = getbit_range(%chompybird_kills, ^chompybird_varbit_kills_start, ^chompybird_varbit_kills_end);
+def_string $rank = ~add_article(~get_chompy_rank($kills));
+mes("You've scratched up a total of <tostring($kills)> chompy bird kills so far!");
+mes("~ You're <$rank>! ~");
+// https://media.discordapp.net/attachments/1126857544523063367/1331479444136919040/hunt.png?ex=679afedd&is=6799ad5d&hm=254c6abe7ebfdbf6412478e24ba4dd97a649d33bd9ee3d5c4dacd35e6ee9847d&=&format=webp&quality=lossless
+~objbox(chompy_bird_obj, "You've killed a total of @blu@<tostring($kills)> @bla@chompy birds so far!||@blu@~ You're <$rank>! ~", 250, 0, ^objbox_height);
+
+[proc,get_chompy_rank](int $kills)(string)
+if ($kills < 5) {
+    return("Ogre Novice");
+}
+if ($kills < 15) {
+    return("Beginner");
+}
+if ($kills < 20) {
+    return("Ogre Learner");
+}
+if ($kills < 30) {
+    return("Learner");
+}
+if ($kills < 40) {
+    return("Ogre Bowman");
+}
+if ($kills < 50) {
+    return("Bowman");
+}
+if ($kills < 70) {
+    return("Ogre Yeoman");
+}
+if ($kills < 95) {
+    return("Yeoman");
+}
+if ($kills < 125) {
+    return("Ogre Markman");
+}
+if ($kills < 170) {
+    return("Marksman");
+}
+if ($kills < 225) {
+    return("Ogre Woodsman");
+}
+if ($kills < 300) {
+    return("Woodsman");
+}
+if ($kills < 400) {
+    return("Ogre Forester");
+}
+if ($kills < 550) {
+    return("Forester");
+}
+if ($kills < 700) {
+    return("Ogre Bowmaster");
+}
+if ($kills < 1000) {
+    return("Bowmaster");
+}
+if ($kills < 1300) {
+    return("Ogre Expert");
+}
+if ($kills < 1700) {
+    return("Expert");
+}
+if ($kills < 2250) {
+    return("Ogre Dragon Archer");
+}
+if ($kills < 3000) {
+    return("Dragon Archer");
+}
+if ($kills < 4000) {
+    return("Expert Ogre Dragon Archer");
+}
+else {
+    return("Expert Dragon Archer");
+}

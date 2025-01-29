@@ -123,6 +123,21 @@ while (npc_findnext = true) {
 
 [queue,seaslug_quest_complete]
 session_log(^log_adventure, "Quest complete: Sea Slug");
-stat_advance(fishing, 71750);
-%seaslug_progress = ^seaslug_complete;
-~send_quest_complete(questlist:seaslug, sea_slug, 250, ^seaslug_questpoints, "You have completed the\\nSea Slug Quest!");
+def_int $random = random(128);
+if ($random < 32) {
+    // The least common music that plays when completing a quest.
+    midi_jingle(^quest_complete_3_jingle, ^quest_complete_3_millis);
+} else if ($random < 64) {
+    // A less common music that plays when completing a quest.
+    midi_jingle(^quest_complete_2_jingle, ^quest_complete_2_millis);
+} else {
+    // The most common music that plays when completing a quest.
+    midi_jingle(^quest_complete_1_jingle, ^quest_complete_1_millis);
+}
+if_settext(questscroll:com_3, "You have completed the\\nSea Slug Quest!");
+if_settext(questscroll:com_9, tostring(1));
+if_setobject(questscroll:com_4, sea_slug, 250);
+if_openmain(questscroll);
+if_setcolour(questlist:seaslug, ^green_rgb);
+if_settab(questlist, ^tab_quest_journal);
+mes("Congratulations! Quest complete!");
