@@ -232,6 +232,10 @@ if (%crest_progress = ^crest_complete) {
     $questpoints = add($questpoints, ^crest_questpoints);
 }
 
+if (%itexam_progress = ^itexam_complete) {
+    $questpoints = add($questpoints, ^itexam_questpoints);
+}
+
 if (%desertrescue_progress = ^desertrescue_complete) {
     $questpoints = add($questpoints, ^desertrescue_questpoints);
 }
