@@ -1,9 +1,8 @@
+import http, { IncomingMessage } from 'http';
 import { WebSocketServer, WebSocket } from 'ws';
-import { IncomingMessage } from 'http';
 
 import Packet from '#/io/Packet.js';
 
-import Environment from '#/util/Environment.js';
 import NullClientSocket from '#/server/NullClientSocket.js';
 import WSClientSocket from '#/server/ws/WSClientSocket.js';
 import World from '#/engine/World.js';
@@ -27,8 +26,10 @@ function getIp(req: IncomingMessage) {
 export default class WSServer {
     wss: WebSocketServer | null = null;
 
-    start() {
-        this.wss = new WebSocketServer({ port: Environment.NODE_PORT + 1, host: '0.0.0.0' }, () => {
+    start(server: http.Server) {
+        this.wss = new WebSocketServer({
+            server,
+            perMessageDeflate: false
         });
 
         this.wss.on('connection', (ws: WebSocket, req) => {
