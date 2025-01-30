@@ -92,19 +92,24 @@ else {
     spotanim_npc(zap, 100, 0);
     npc_anim(zap, 0);
     p_delay(1);
-    // this isn't correct - not sure what the exact target coord mechanism is
-    def_coord $thrown = movecoord(coord, 0, 0, 5);
-    //def_int $dist = distance(coord, $thrown);
-    //[proc,agility_exactmove](seq $anim, int $anim_delay, int $movement_delay, coord $start_coord, coord $end_coord, int $start_cycle, int $end_cycle, int $direction, boolean $merge_with_loc)
-    //~agility_exactmove(human_walk_fence_north, 30, 2, $start_coord, $end_coord, 30, 94, $dir, true);
-    // start 5376 (2791, 9237)
-    // end 5382 (2785, 9329)
-    ~agility_exactmove(human_knockback_long, 0, 6, coord, $thrown, 31, 115, ^exact_south, false);
-    queue(damage_player, 0, calc(random(7) + 4));
+    // it's difficult to know the exact logic here, guessing that one of a few safe coords is picked
+    // then a random 0-1 range around that tile
+    def_coord $start_coord = coord;
+    def_coord $closest_coord = ~closest_enum_coord(coord, legends_ungadulu_throw_coords);
+    def_coord $throw_coord = movecoord($closest_coord, ~random_range(-1, 1), 0, ~random_range(-1, 1));
+    // only one anim is sent on osrs to cover human_knockback_long and human_knockback_long_end.
+    // assuming they've merged the anims at some point. we do this instead to play them in succession.
+    // not sure if the outcome is period authentic - no references
+    anim(human_knockback_long, 0);
+    p_exactmove($start_coord, $throw_coord, 31, 115, ~coord_direction($throw_coord, $start_coord));
+    p_delay(add(divide(distance($start_coord, $throw_coord), 2), 1));
     anim(null, 0);
+    p_delay(0);
+    anim(human_knockback_long_end, 15);
+    p_delay(1);
+    ~damage_self(calc(random(7) + 4));
     ~mesbox("Ungadulu unleashes a savage bolt of energy at you. You're knocked out of the octagram by the power of the spell.");
-    npc_say("<p,madlaugh>Ha, ha ha Vacu... Come for me again and you'll taste more of my power!");
-    // todo check coord, anim, etc
+    ~chatnpc("<p,madlaugh>Ha, ha ha Vacu... Come for me again and you'll taste more of my power!");
 }
 
 // curse to start: 
@@ -120,3 +125,6 @@ else {
 // https://youtu.be/uYxkN3aJ-44?t=4486
 // if you talk to him and go through possession -> normal, then cast curse/weakness/etc on him, get dialogue about book of binding
 // then mesbox("The shaman's eyes roll back and he returns to his quiet, unassuming self.")
+
+// book of binding formatting
+//~mesbox("You open the Book of Binding in front of Ungadulu and a|supernatural light starts emanating from the pages, illuminating|Ungadulu whose face twists and contorts in spasms.");

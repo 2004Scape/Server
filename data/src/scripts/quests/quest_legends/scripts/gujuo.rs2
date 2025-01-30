@@ -9,7 +9,6 @@ npc_setmode(none);
 
 [opnpcu,gujuo]
 switch_obj(last_useitem) {
-    // todo: add things he does need
     case gold_bowl :
         if (%legends_progress < ^legends_asked_gujuo_holy_water) {
             // shouldn't be possible under normal circumstances
