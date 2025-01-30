@@ -814,25 +814,9 @@ const PlayerOps: CommandHandlers = {
     }),
 
     [ScriptOpcode.LAST_LOGIN_INFO]: state => {
-        const player = state.activePlayer;
-        if (!isClientConnected(player)) {
-            return;
-        }
-
-        const client = player.client;
-
-        const remoteAddress = client.remoteAddress;
-        if (remoteAddress == null) {
-            return;
-        }
-
         // for everyone's sake lets not show user IPs :)
         // proxying websockets through cf may show IPv6 and breaks anyways
-        const lastLoginIp = 0;
-
-        // 201 sends welcome_screen if.
-        // not 201 sends welcome_screen_warning if.
-        player.lastLoginInfo(lastLoginIp, 0, 201, 0);
+        state.activePlayer.lastLoginInfo(0, 0, 201, 0);
     },
 
     [ScriptOpcode.BAS_READYANIM]: state => {
