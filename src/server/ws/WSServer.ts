@@ -7,12 +7,14 @@ import NullClientSocket from '#/server/NullClientSocket.js';
 import WSClientSocket from '#/server/ws/WSClientSocket.js';
 import World from '#/engine/World.js';
 import LoggerEventType from '#/server/logger/LoggerEventType.js';
+import Environment from '#/util/Environment.js';
 
 function getIp(req: IncomingMessage) {
-    let forwardedFor = req.headers['x-forwarded-for'];
+    // todo: environment flag to respect cf-connecting-ip (NOT safe if origin is exposed publicly by IP + proxied)
+    let forwardedFor = req.headers['cf-connecting-ip'] || req.headers['x-forwarded-for'] || req.socket.remoteAddress;
 
     if (!forwardedFor) {
-        return req.socket.remoteAddress;
+        return null;
     }
 
     if (Array.isArray(forwardedFor)) {
@@ -29,13 +31,24 @@ export default class WSServer {
     start(server: http.Server) {
         this.wss = new WebSocketServer({
             server,
-            perMessageDeflate: false
+            perMessageDeflate: false,
+            verifyClient: (info, cb) => {
+                const { origin } = info;
+
+                // todo: check more than just the origin header (important!)
+                if (Environment.WEB_ALLOWED_ORIGIN && origin !== Environment.WEB_ALLOWED_ORIGIN) {
+                    cb(false);
+                    return;
+                }
+
+                cb(true);
+            }
         });
 
         this.wss.on('connection', (ws: WebSocket, req) => {
             const client = new WSClientSocket(ws, getIp(req) ?? 'unknown');
 
-            // todo: connection negotation feature flag
+            // todo: connection negotation feature flag for future revisions
             const seed = new Packet(new Uint8Array(8));
             seed.p4(Math.floor(Math.random() * 0xffffffff));
             seed.p4(Math.floor(Math.random() * 0xffffffff));

@@ -96,6 +96,11 @@ if ($option = 1) {
 [oploc1,blackknight_potion_room_door]
 mes("It's locked.");
 
+// Secret wall push
+[oploc1,blackknight_pushable_wall]
+~open_and_close_door2(loc_param(next_loc_stage), ~check_axis_locactive(coord), coffin_open);
+mes("You push against the wall. You find a secret passage.");
+
 // Using Cabbage on hole
 [oplocu,blackknight_hole]
 switch_obj (last_useitem)

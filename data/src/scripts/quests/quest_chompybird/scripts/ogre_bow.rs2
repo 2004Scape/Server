@@ -7,8 +7,7 @@ def_int $kills = getbit_range(%chompybird_kills, ^chompybird_varbit_kills_start,
 def_string $rank = ~add_article(~get_chompy_rank($kills));
 mes("You've scratched up a total of <tostring($kills)> chompy bird kills so far!");
 mes("~ You're <$rank>! ~");
-// https://media.discordapp.net/attachments/1126857544523063367/1331479444136919040/hunt.png?ex=679afedd&is=6799ad5d&hm=254c6abe7ebfdbf6412478e24ba4dd97a649d33bd9ee3d5c4dacd35e6ee9847d&=&format=webp&quality=lossless
-~objbox(chompy_bird_obj, "You've killed a total of @blu@<tostring($kills)> @bla@chompy birds so far!||@blu@~ You're <$rank>! ~", 250, 0, ^objbox_height);
+~objbox(chompy_bird_obj, "You've killed a total of @blu@<tostring($kills)> @bla@chompy birds so far!||@blu@~ You're <$rank>! ~", 250, 0, ^objbox_height); // imgur.com/N4FttpP
 
 [proc,get_chompy_rank](int $kills)(string)
 if ($kills < 5) {

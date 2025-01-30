@@ -122,7 +122,7 @@ switch_int (~determine_katrine_option) {
         ~chatnpc("<p,neutral>Master thief? Ain't we the ambitious one!"); 
         ~chatnpc("<p,neutral>Well, you're gonna have to do something pretty amazing."); 
         ~chatplayer("<p,quiz>Anything you can suggest?");
-        ~chatnpc("<p,neutral>Well some of the MOST coveted prizes in theifdom right now are in the pirate town of Brimhaven on Karamja."); 
+        ~chatnpc("<p,neutral>Well some of the MOST coveted prizes in thiefdom right now are in the pirate town of Brimhaven on Karamja."); 
         ~chatnpc("<p,neutral>The pirate leader Scarface Pete has a pair of extremely valuable candlesticks."); 
         ~chatnpc("<p,neutral>His security is VERY good."); 
         ~chatnpc("<p,neutral>We, of course, have gang members in a town like Brimhaven who may be able to help you."); 
@@ -136,11 +136,11 @@ switch_int (~determine_katrine_option) {
         ~chatnpc("<p,shock>Wow.... is... it REALLY it?");
         ~chatnpc("<p,shock>This really is a FINE bit of thievery.");
         ~chatnpc("<p,shock>Us thieves have been trying to get ahold of this one for a while!");
-        ~chatnpc("<p,shock>You wanted to be ranked as a master theif didn't you? Well, I guess this just about ranks as good enough!");
+        ~chatnpc("<p,shock>You wanted to be ranked as a master thief didn't you? Well, I guess this just about ranks as good enough!");
         inv_del(inv, petes_candlestick, 1);
         inv_add(inv, thieves_armband, 1);
         %hero_progress = ^hero_blackarm_obtained_armband;
-        ~mesbox("Katrine gives you a master theif armband.");
+        ~mesbox("Katrine gives you a master thief armband.");
     case 5 : // Showing candlestick (did not progress quest correctly)
         ~chatplayer("<p,neutral>I have a candlestick now!");
         ~chatnpc("<p,angry>Good for you. I'll give a master thief's armband to the one who retrieved that. I know it wasn't you.");

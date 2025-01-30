@@ -9,6 +9,7 @@ import InfoProt from '#/network/rs225/server/prot/InfoProt.js';
 import PlayerInfoFaceEntity from '#/network/server/model/PlayerInfoFaceEntity.js';
 import PlayerInfoFaceCoord from '#/network/server/model/PlayerInfoFaceCoord.js';
 import PlayerRenderer from '#/engine/renderer/PlayerRenderer.js';
+import Visibility from '#/engine/entity/Visibility.js';
 
 export default class PlayerInfoEncoder extends MessageEncoder<PlayerInfo> {
     private static readonly BITS_NEW: number = 11 + 5 + 5 + 1 + 1;
@@ -77,7 +78,7 @@ export default class PlayerInfoEncoder extends MessageEncoder<PlayerInfo> {
         buf.pBit(8, buildArea.players.size);
         for (const other of buildArea.players) {
             const pid: number = other.pid;
-            if (pid === -1 || other.tele || other.level !== player.level || !CoordGrid.isWithinDistanceSW(player, other, buildArea.viewDistance) || !other.checkLifeCycle(currentTick)) {
+            if (pid === -1 || other.tele || other.level !== player.level || !CoordGrid.isWithinDistanceSW(player, other, buildArea.viewDistance) || !other.checkLifeCycle(currentTick) || other.visibility === Visibility.HARD) {
                 // if the player was teleported, they need to be removed and re-added
                 this.remove(buf, player, other);
                 continue;
@@ -103,6 +104,10 @@ export default class PlayerInfoEncoder extends MessageEncoder<PlayerInfo> {
         const { renderer, player } = message;
         const { buildArea, pid, level, x, z, originX, originZ } = player;
         for (const other of buildArea.getNearbyPlayers(pid, level, x, z, originX, originZ)) {
+            if (other.visibility === Visibility.HARD) {
+                continue;
+            }
+
             const pid: number = other.pid;
             const length: number = renderer.lowdefinitions(pid) + renderer.highdefinitions(pid);
             // bits to add player + extended info size + bits to break loop (11)

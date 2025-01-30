@@ -11,7 +11,7 @@ export default {
 
     /// web server
     WEB_PORT: tryParseInt(process.env.WEB_PORT, process.platform === 'win32' || process.platform === 'darwin' ? 80 : 8888),
-    WEB_CORS: tryParseBoolean(process.env.WEB_CORS, true),
+    WEB_ALLOWED_ORIGIN: tryParseString(process.env.WEB_ALLOWED_ORIGIN, ''),
 
     // management server
     WEB_MANAGEMENT_PORT: tryParseInt(process.env.WEB_MANAGEMENT_PORT, 8898),
@@ -44,6 +44,9 @@ export default {
     NODE_WALKTRIGGER_SETTING: tryParseInt(process.env.NODE_WALKTRIGGER_SETTING, WalkTriggerSetting.PLAYERPACKET),
     // separate save folder
     NODE_PROFILE: tryParseString(process.env.NODE_PROFILE, 'main'),
+    // entities cap
+    NODE_MAX_PLAYERS: tryParseInt(process.env.NODE_MAX_PLAYERS, 2047),
+    NODE_MAX_NPCS: tryParseInt(process.env.NODE_MAX_NPCS, 8191),
 
     /// login server
     LOGIN_SERVER: tryParseBoolean(process.env.LOGIN_SERVER, false),
