@@ -56,12 +56,14 @@ mes("The ladder is broken, I can't climb it."); // osrs
 
 [label,open_melzar_maze_door](obj $key)
  if (last_useitem = $key) {
-    mes("The key disintegrates as it unlocks the door."); // osrs
+    // mes("The key disintegrates as it unlocks the door."); // osrs
+    mes("The key disintegrates as it unlocks the door..."); // screenshot
     inv_del(inv, $key, 1);
     ~open_and_close_door(loc_1535, ~check_axis_locactive(coord), false);
 } else {
     ~displaymessage(^dm_default); // osrs
 }
+// https://cdn.discordapp.com/attachments/917979227926695979/1332908385456361536/found-old-drive-with-rsdemon-and-some-screenshots-v0-s3lvaq7glqzd1.png?ex=679a42eb&is=6798f16b&hm=a9ec282375ac60ae6ff623484e38d4ad8a3c97423addf386ef5fb28da4e75f8f&
 
 // rat
 [ai_queue3,melzar_maze_giant_rat]

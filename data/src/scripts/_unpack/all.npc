@@ -2687,7 +2687,6 @@ param=defend_sound,wolf_hit
 huntmode=cowardly
 huntrange=1
 // osrs stats and Vislvl match 1:1
-// TODO sounds
 // https://raw.githubusercontent.com/Joshua-F/osrs-dumps/refs/heads/master/config/dump.npc npc_114
 
 [goblin_unarmed1]
