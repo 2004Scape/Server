@@ -4,7 +4,7 @@ import WalkTriggerSetting from '#/util/WalkTriggerSetting.js';
 
 export default {
     EASY_STARTUP: tryParseBoolean(process.env.EASY_STARTUP, false),
-    WEBSITE_REGISTRATION: tryParseBoolean(process.env.WEBSITE_REGISTRATION, true),
+    WEBSITE_REGISTRATION: tryParseBoolean(process.env.WEBSITE_REGISTRATION, false),
 
     // bundler/webrtc browser mode
     STANDALONE_BUNDLE: tryParseBoolean(process.env.STANDALONE_BUNDLE, false),
@@ -43,7 +43,7 @@ export default {
     // 0 = processed in packet handler. 1 = processed in player setup (client input). 2 = processed in player movement
     NODE_WALKTRIGGER_SETTING: tryParseInt(process.env.NODE_WALKTRIGGER_SETTING, WalkTriggerSetting.PLAYERPACKET),
     // separate save folder
-    NODE_GAME: tryParseString(process.env.NODE_GAME, 'main'),
+    NODE_PROFILE: tryParseString(process.env.NODE_PROFILE, 'main'),
     // entities cap
     NODE_MAX_PLAYERS: tryParseInt(process.env.NODE_MAX_PLAYERS, 2047),
     NODE_MAX_NPCS: tryParseInt(process.env.NODE_MAX_NPCS, 8191),

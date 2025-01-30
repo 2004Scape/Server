@@ -40,6 +40,7 @@ import LinkList from '#/util/LinkList.js';
 import {CollisionFlag} from '@2004scape/rsmod-pathfinder';
 
 import InfoProt from '#/network/rs225/server/prot/InfoProt.js';
+import Visibility from '#/engine/entity/Visibility.js';
 
 export default class Npc extends PathingEntity {
     // constructor properties
@@ -644,7 +645,7 @@ export default class Npc extends PathingEntity {
             return;
         }
 
-        if (this.target instanceof Player && World.getPlayerByUid(this.target.uid) === null) {
+        if (this.target instanceof Player && (World.getPlayerByUid(this.target.uid) === null || this.target.visibility !== Visibility.DEFAULT)) {
             this.defaultMode();
             return;
         }

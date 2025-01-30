@@ -20,7 +20,7 @@ export type account_session = {
     id: Generated<number>;
     account_id: number;
     world: Generated<number>;
-    game: string;
+    profile: Generated<string>;
     session_uuid: string;
     timestamp: string;
     coord: number;
@@ -31,22 +31,34 @@ export type friendlist = {
     account_id: number;
     friend_account_id: number;
 };
+export type hiscore = {
+    profile: Generated<string>;
+    account_id: number;
+    type: number;
+    level: number;
+    value: number;
+    date: Generated<string>;
+};
+export type hiscore_large = {
+    profile: Generated<string>;
+    account_id: number;
+    type: number;
+    level: number;
+    value: number;
+    date: Generated<string>;
+};
 export type ignorelist = {
     account_id: number;
     ignore_account_id: number;
 };
 export type newspost = {
     id: Generated<number>;
-    category_id: number;
+    category: number;
     title: string;
     content: string;
-    date: Generated<string>;
-    updated: Generated<string | null>;
-};
-export type newspost_category = {
-    id: Generated<number>;
-    name: string;
-    style: string;
+    slug: string | null;
+    created: Generated<string>;
+    updated: Generated<string>;
 };
 export type npc_hiscore = {
     id: Generated<number>;
@@ -71,9 +83,10 @@ export type DB = {
     account: account;
     account_session: account_session;
     friendlist: friendlist;
+    hiscore: hiscore;
+    hiscore_large: hiscore_large;
     ignorelist: ignorelist;
     newspost: newspost;
-    newspost_category: newspost_category;
     npc_hiscore: npc_hiscore;
     private_chat: private_chat;
     public_chat: public_chat;

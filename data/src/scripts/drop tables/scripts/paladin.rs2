@@ -36,7 +36,7 @@ if ($random < 2) {
 } else if ($random < 96) {
     obj_add(npc_coord, coins, 15, ^lootdrop_duration);
 } else if ($random < 112) {
-    obj_add(npc_coord, coins, 1, ^lootdrop_duration);
+    obj_add(npc_coord, coins, 2, ^lootdrop_duration);
 } else if ($random < 122) {
     obj_add(npc_coord, coins, 8, ^lootdrop_duration);
 } else if ($random < 124) {

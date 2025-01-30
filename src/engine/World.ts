@@ -80,6 +80,7 @@ import { PlayerLoading } from '#/engine/entity/PlayerLoading.js';
 import ScriptPointer from '#/engine/script/ScriptPointer.js';
 import Isaac from '#/io/Isaac.js';
 import LoggerEventType from '#/server/logger/LoggerEventType.js';
+import MoveSpeed from '#/engine/entity/MoveSpeed.js';
 
 const priv = forge.pki.privateKeyFromPem(
     Environment.STANDALONE_BUNDLE ?
@@ -876,8 +877,16 @@ class World {
                         other.client.send(Uint8Array.from([ 15 ]));
                     }
 
-                    // todo: ensure the player has the latest scene and doesn't have their position offset
-                    // note- rebuildnormal is not guaranteed to re-run
+                    // force resyncing
+                    // reload entity info (overkill? does the client have some logic around this?)
+                    other.buildArea.players.clear();
+                    other.buildArea.npcs.clear();
+                    // rebuild scene (rebuildnormal won't run if you're in the same zone!)
+                    other.originX = -1;
+                    other.originZ = -1;
+                    other.moveSpeed = MoveSpeed.INSTANT;
+                    other.tele = true;
+                    other.jump = true;
 
                     continue player;
                 }

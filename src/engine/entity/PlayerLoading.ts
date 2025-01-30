@@ -1,5 +1,4 @@
 import 'dotenv/config';
-import fs from 'fs';
 
 import Packet from '#/io/Packet.js';
 import { fromBase37, toBase37 } from '#/util/JString.js';

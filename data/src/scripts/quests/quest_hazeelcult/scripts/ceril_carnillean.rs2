@@ -118,9 +118,9 @@ if(coordy(coord) = 0) {
     return;
 }
 ~chatnpc("<p,angry>W-what? RIGHT! You! We're going to blooming well sort this out right now once and for all!");
-if(inv_total(inv, carnillean_armour) = 0 ) {
+if(inv_total(inv, carnillean_armour) > 0) {
     inv_del(inv, carnillean_armour, 1);
-} else if(inv_total(worn, carnillean_armour) = 0) {
+} else if(inv_total(worn, carnillean_armour) > 0) {
     inv_del(worn, carnillean_armour, 1);
 }
 queue(hazeelcult_fake_complete, 0);

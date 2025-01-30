@@ -1,9 +1,9 @@
 [label,beer_barrel_beatdown]
 mes("The barbarians probably don't like people messing with their barrels.");
-npc_findallzone(coord);
+npc_findallany(coord, 10, ^vis_lineofsight);
 while (npc_findnext = true) {
     if (npc_category = barbarian) {
-        npc_say("Oi - That's ours!");
+        npc_say("Oi - that's ours!");
         npc_setmode(opplayer2);
     }
 }

@@ -75,7 +75,7 @@ if (inv_getobj(worn, ^wearpos_rhand) = gnomeball) {
 
 %gnomeball = 0;
 
-npc_findallany(^gnomeball_centre_coord, 14, 0);
+npc_findallany(^gnomeball_centre_coord, 14, ^vis_off);
 while (npc_findnext = true) {
     // basically if gnome has ball, and ball was taken from player no longer in gnomeball game, then reset npc
     if (.finduid(%npc_attacking_uid) = false) {
@@ -92,7 +92,7 @@ while (npc_findnext = true) {
 }
 
 [proc,gnomeball_inplay](npc_uid $npc_uid)(boolean)
-npc_findallany(^gnomeball_centre_coord, 14, 0);
+npc_findallany(^gnomeball_centre_coord, 14, ^vis_off);
 while (npc_findnext = true) {
     if (npc_param(gnome_original) ! null) {
         if ($npc_uid ! null) {

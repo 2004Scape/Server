@@ -32,7 +32,7 @@ if ($random < 6) {
 } else if ($random < 26) {
     obj_add(npc_coord, mindrune, 5, ^lootdrop_duration);
 } else if ($random < 27) {
-    obj_add(npc_coord, lawrune, 1, ^lootdrop_duration);
+    obj_add(npc_coord, lawrune, 2, ^lootdrop_duration);
 } else if ($random < 69) {
     obj_add(npc_coord, coins, 5, ^lootdrop_duration);
 } else if ($random < 78) {

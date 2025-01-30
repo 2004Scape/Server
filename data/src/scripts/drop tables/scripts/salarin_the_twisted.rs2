@@ -23,7 +23,7 @@ if ($random < 1) {
 } else if ($random < 10) {
     obj_add(npc_coord, lawrune, 2, ^lootdrop_duration);
 } else if ($random < 11) {
-    obj_add(npc_coord, naturerune, 1, ^lootdrop_duration);
+    obj_add(npc_coord, naturerune, 3, ^lootdrop_duration);
 } else if ($random < 12) {
     obj_add(npc_coord, firerune, 36, ^lootdrop_duration);
 } else if ($random < 51) {
