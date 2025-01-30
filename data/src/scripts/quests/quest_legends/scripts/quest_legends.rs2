@@ -167,7 +167,7 @@ else {
 }
 
 [label,legends_investigate_fire_wall]
-~mesbox("You look closely at the flames. They seem to form a straight wall. Something about them looks very strange: they look completely supernatural. For example, they seem to come straight out of the ground.");
+~mesbox("You look closely at the flames. They seem to form a straight wall.|Something about them looks very strange: they look completely|supernatural. For example, they seem to come from|straight out of the ground.");
 say("Mmmm, pretty!");
 ~mesbox("You see a white clad figure in the midst of the flames...");
 ~mesbox("You see the white robed figure inside the flaming octagram gesturing to you.");
