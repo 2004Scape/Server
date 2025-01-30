@@ -152,7 +152,7 @@ say("Blearrgh!");
 );
 
 [label,bartender_dancingdonkey_yes]  
-~chatplayer("<p,happty>Yes please!");
+~chatplayer("<p,happy>Yes please!");
 ~chatnpc("<p,happy>Ok then, that's two gold coins please.");
 if (inv_total(inv, coins) < 2) {
     // End of dialogue
