@@ -826,7 +826,9 @@ const PlayerOps: CommandHandlers = {
             return;
         }
 
-        const lastLoginIp = new Uint32Array(new Uint8Array(remoteAddress.split('.').map(x => parseInt(x))).reverse().buffer)[0];
+        // for everyone's sake lets not show user IPs :)
+        // proxying websockets through cf may show IPv6 and breaks anyways
+        const lastLoginIp = 0;
 
         // 201 sends welcome_screen if.
         // not 201 sends welcome_screen_warning if.

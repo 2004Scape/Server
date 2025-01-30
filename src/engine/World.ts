@@ -1580,11 +1580,17 @@ class World {
     getNextPid(client: ClientSocket | null = null): number {
         // valid pid range is 1-2046
         if (client) {
-            // pid = first available index starting from (low ip octet % 20) * 100
             const ip = client.remoteAddress;
-            const octets = ip.split('.');
-            const start = (parseInt(octets[3]) % 20) * 100;
-            return this.players.next(true, start);
+            if (ip.indexOf('.') !== -1) {
+                // IPv4 - first available index starting from (low ip octet % 20) * 100
+                const octets = ip.split('.');
+                const start = (parseInt(octets[3]) % 20) * 100;
+                return this.players.next(true, start);
+            } else if (ip.indexOf(':') !== -1) {
+                // IPv6 - first available index starting from (low site prefix % 20) * 100
+                const start = (parseInt(ip.split(':')[2], 16) % 20) * 100;
+                return this.players.next(true, start);
+            }
         }
         return this.players.next();
     }
