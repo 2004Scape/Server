@@ -5,7 +5,7 @@
     
     npc_add($spawn_coord, chompy_bird, 100);
     %quest_chompybird_baiter = $baiter_uid;
-    // todo anim?
+    npc_anim(chompy_landing, 0);
     npc_say("Sqwirk!");
 
     // todo confirm behaviour, looks like it wanders first then hunts?
@@ -14,19 +14,22 @@
 
 // triggered by the .hunt config, the Chompy has found, and arrived at, the Bloated Toad
 [ai_queue4,chompy_bird]
-if (.npc_find(npc_coord, bloated_toad, 1, 1) = true) {
+if (.npc_find(npc_coord, bloated_toad, 2, 1) = true) {
     npc_sethuntmode(null);
     npc_facesquare(.npc_coord);
     npc_queue(5, 0, 0);
     .npc_queue(5, 0, 0);
 }
 
+
 // the Chompy is eating the toad
 [ai_queue5,chompy_bird]
 npc_say("Sqwark!");
+npc_anim(chompy_attack, 0);
 npc_delay(3);
 npc_say("Gobble!");
 npc_delay(2);
+npc_sethuntmode(chompybird);
 
 // todo consider some check that the toad actually still exists?
 //      might not be necessary though
@@ -180,9 +183,8 @@ if (~player_npc_hit_roll(%damagetype) = true) {
 def_int $delay = add(~player_use_ogre_bow($ammo), 30); // osrs it seems to be delayed an extra tick
 anim(%com_attackanim, 0);
 sound_synth(%com_attacksound, 0, 0);
-~npc_retaliate(calc($delay / 30));
+// Chompies don't fight back
 npc_queue(2, $damage, calc($delay / 30));
-npc_anim(npc_param(defend_anim), sub($delay, 30)); // delay npc this tick
 if (npc_param(defend_sound) ! null) {
     sound_synth(npc_param(defend_sound), 0, sub($delay, 30)); // delay 1 client tick for the hit queue
 }
@@ -198,6 +200,12 @@ if (random(5) ! 0) {
     }
 }
 inv_clear(ranged_quiver_inv);
+
+if (random(2) = 0) {
+    // There's some randomness here, this is a guess
+    npc_say("Screech!");
+    npc_setmode(playerescape);
+}
 
 // Ogre arrow launch spotanim is higher than other arrows by default, so we compensate for that here
 [proc,player_use_ogre_bow](obj $ammo)(int)
@@ -219,4 +227,5 @@ npc_add(npc_coord, chompy_bird_corpse, 100);
 if (%chompybird_progress = ^chompybird_rantz_gave_player_bow) {
     %chompybird_progress = ^chompybird_player_killed_chompy;
 }
-// todo add chompy bird killcount
+def_int $kills = getbit_range(%chompybird_kills, ^chompybird_varbit_kills_start, ^chompybird_varbit_kills_end);
+%chompybird_kills = setbit_range_toint(%chompybird_kills, calc($kills + 1), ^chompybird_varbit_kills_start, ^chompybird_varbit_kills_end);

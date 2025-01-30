@@ -140,9 +140,7 @@ if ($has_rantz_ingredient = false | $has_bugs_ingredient = false | $has_fycie_in
     return;
 }
 
-if (loc_find($loc_coord, ogre_spitroast) = true) {
-    %chompybird_progress = ^chompybird_chompy_cooked;
-    
+if (loc_find($loc_coord, ogre_spitroast) = true) {   
     mes("You carefully place the chompy bird on the spit-roast.");
     inv_del(inv, raw_chompy, 1);
     loc_change(ogre_spitroast_raw_chompy, 4);
@@ -154,6 +152,7 @@ if (loc_find($loc_coord, ogre_spitroast) = true) {
     def_boolean $passes_roll = stat_random(stat(cooking), 200, 255);
     if ($passes_roll = true) {
         mes("You add the other ingredients and cook the food.");
+        %chompybird_progress = ^chompybird_chompy_cooked;
         ~delete_chompy_ingredients($rantz_ingredient, $bugs_ingredient, $fycie_ingredient);
         loc_change(ogre_spitroast_cooked_chompy, 4);
         loc_anim(spit_anim);

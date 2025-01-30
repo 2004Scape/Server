@@ -4,8 +4,8 @@ huntall(npc_coord, 3, 0);
 while (huntnext = true) {
 // the witch can still get los if you're on the edge of a hedge, this wouldn't match osrs behaviour!
 def_int $dz = calc(coordz(coord) - coordz(npc_coord));
-if(lineofsight(npc_coord, coord) = true & ($dz > 0 & loc_find(movecoord(coord, 0, 0, -1), loc_1116) = false & loc_find(movecoord(coord, 0, 0, -1), loc_1117) = false) |
-    ($dz < 0 & loc_find(movecoord(coord, 0, 0, 1), loc_1116) = false)) {
+if(lineofsight(npc_coord, coord) = true & (($dz > 0 & loc_find(movecoord(coord, 0, 0, -1), loc_1116) = false & loc_find(movecoord(coord, 0, 0, -1), loc_1117) = false) |
+    ($dz < 0 & loc_find(movecoord(coord, 0, 0, 1), loc_1116) = false))) {
         if_close;
         if (p_finduid(uid) = false) {
             return;

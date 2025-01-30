@@ -61,7 +61,7 @@ if (%hetty_progress = ^hetty_complete) {
 }
 
 if (%chompybird_progress = ^chompybird_complete) {
-    %questpoints = add($questpoints, ^chompybird_questpoints);
+    $questpoints = add($questpoints, ^chompybird_questpoints);
 }
 
 if (%priest_progress = ^priest_complete) {
@@ -230,6 +230,10 @@ if (%zombiequeen_progress >= ^zombiequeen_complete) {
 
 if (%crest_progress = ^crest_complete) {
     $questpoints = add($questpoints, ^crest_questpoints);
+}
+
+if (%itexam_progress = ^itexam_complete) {
+    $questpoints = add($questpoints, ^itexam_questpoints);
 }
 
 if (%desertrescue_progress = ^desertrescue_complete) {

@@ -536,8 +536,6 @@ const ServerOps: CommandHandlers = {
 
         state.pushInt(World.gameMap.isMulti(coord) ? 1 : 0);
     }
-
-    // npc_findallany // https://x.com/JagexAsh/status/1796878374398246990
 };
 
 export default ServerOps;

@@ -3,31 +3,32 @@ transmit=yes
 scope=temp
 protect=no
 
-[music_mapsquare]
-type=coord
-transmit=no
-scope=temp
-
 [music1]
 transmit=yes
 scope=perm
+protect=no
 
 [music2]
 transmit=yes
 scope=perm
+protect=no
 
 [music3]
 transmit=yes
 scope=perm
+protect=no
 
 [music4]
 transmit=yes
 scope=perm
+protect=no
 
 [music5]
 transmit=yes
 scope=perm
+protect=no
 
 [music6]
 transmit=yes
 scope=perm
+protect=no

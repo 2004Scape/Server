@@ -19,7 +19,7 @@ MIME_TYPES.set('.wasm', 'application/wasm');
 MIME_TYPES.set('.sf2', 'application/octet-stream');
 
 // we don't need/want a full blown website or API on the game server
-const web = http.createServer(async (req, res) => {
+export const web = http.createServer(async (req, res) => {
     try {
         if (Environment.WEB_CORS) {
             res.setHeader('Access-Control-Allow-Origin', '*');
@@ -84,7 +84,7 @@ const web = http.createServer(async (req, res) => {
             res.writeHead(200);
             res.end(await fsp.readFile('data/pack/server/' + basename(url.pathname)));
         } else if (url.pathname === '/') {
-            if (Environment.NODE_PRODUCTION) {
+            if (Environment.WEBSITE_REGISTRATION) {
                 res.writeHead(404);
                 res.end();
             } else {
