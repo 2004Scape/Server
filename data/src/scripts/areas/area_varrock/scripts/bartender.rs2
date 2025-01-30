@@ -144,7 +144,7 @@ say("Blearrgh!");
 
 [opnpc1,bartender_dancingdonkey] // Dancing Donkey Inn
 ~chatplayer("<p,happy>Hello.");
-~chatnpc("<p,quiz> Good day to you, brave adventurer. Can I get you a refreshing beer?");
+~chatnpc("<p,happy> Good day to you, brave adventurer. Can I get you a refreshing beer?");
 @multi3(
     "Yes please!", bartender_dancingdonkey_yes,
     "No thanks.", bartender_dancingdonkey_no,
@@ -155,7 +155,7 @@ say("Blearrgh!");
 ~chatplayer("<p,happy>Yes please!");
 ~chatnpc("<p,happy>Ok then, that's two gold coins please.");
 if (inv_total(inv, coins) < 2) {
-    // End of dialogue
+    mes("You don't have enough gold!");
 } else {
     inv_del(inv, coins, 2);
     inv_add(inv, beer, 1);
@@ -166,12 +166,12 @@ if (inv_total(inv, coins) < 2) {
 
 [label,bartender_dancingdonkey_no]        
 ~chatplayer("<p,neutral>No thanks.");
-~chatnpc("<p,neutral>Let me know if you change your mind.");
+~chatnpc("<p,confused>Let me know if you change your mind.");
 
 
 [label,bartender_dancingdonkey_howmuch]        
 ~chatplayer("<p,quiz>How much?");
-~chatnpc("<p,quiz>Two gold pieces a pint. So, what do you say?");
+~chatnpc("<p,happy>Two gold pieces a pint. So, what do you say?");
 @multi2(
     "Yes please!", bartender_dancingdonkey_yes,
     "No thanks.", bartender_dancingdonkey_no
