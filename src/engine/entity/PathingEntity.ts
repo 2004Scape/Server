@@ -36,6 +36,7 @@ import {
     reachedObj
 } from '#/engine/GameMap.js';
 import NonPathingEntity from '#/engine/entity/NonPathingEntity.js';
+import Visibility from '#/engine/entity/Visibility.js';
 
 type TargetSubject = {
     type: number,
@@ -571,6 +572,10 @@ export default abstract class PathingEntity extends Entity {
     }
 
     setInteraction(interaction: Interaction, target: Entity, op: TargetOp, subject?: TargetSubject): void {
+        if (target instanceof Player && target.visibility === Visibility.HARD) {
+            return;
+        }
+
         this.target = target;
         this.targetOp = op;
         this.targetSubject = subject ?? {type: -1, com: -1};
