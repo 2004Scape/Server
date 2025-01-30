@@ -398,3 +398,9 @@ if (loc_type = loc_2788) {
 
 loc_add($opposite_coord, loc_83, $angle, $shape, 2);
 loc_add($loc_coord, loc_83, $angle, $shape, 2);
+
+[oploc1,loc_2823]
+mes("You enter the tunnel.");
+mes("So that's how the skavids are getting into Yanille!");
+p_teleport(0_40_48_25_36);
+stat_advance(agility, 40);

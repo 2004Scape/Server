@@ -1,2 +1,12 @@
 [opnpc1,enclave_guard]
 ~chatnpc("<p,bored>Stop bothering me, minion!");
+
+[opnpcu,enclave_guard]
+if(last_useitem = nightshade) {
+    // if_settext	com=217:6, text="I think I had better deal with those skavids first..." neutral
+    if(%itwatchtower_progress < 7 | %itwatchtower_progress >= ^itwatchtower_complete) {
+        mes("The guard is occupied at the moment."); // rs1
+        return;
+    }
+}
+// no nothing interesting happens

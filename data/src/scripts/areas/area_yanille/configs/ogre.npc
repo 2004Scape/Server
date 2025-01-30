@@ -384,7 +384,7 @@ param=death_drop,big_bones
 // Stats match osrs version but our version Vislvl is different.
 // https://raw.githubusercontent.com/Joshua-F/osrs-dumps/refs/heads/master/config/dump.npc npc_4373
 
-[npc_863]
+[scared_skavid]
 vislevel=hide
 name=Scared skavid
 desc=Frightened looking.
@@ -397,7 +397,7 @@ head1=model_146_npc_head
 param=death_anim,skavid_death
 param=death_sound,imp_death
 
-[npc_864]
+[mad_skavid]
 vislevel=hide
 name=Mad skavid
 desc=Looks mad.
@@ -438,7 +438,7 @@ head1=model_146_npc_head
 param=death_anim,skavid_death
 param=death_sound,imp_death
 
-[npc_867]
+[skavid_cur]
 vislevel=hide
 name=Skavid
 desc=A skavid.
@@ -451,7 +451,7 @@ head1=model_146_npc_head
 param=death_anim,skavid_death
 param=death_sound,imp_death
 
-[npc_868]
+[skavid_nod]
 vislevel=hide
 name=Skavid
 desc=A skavid.

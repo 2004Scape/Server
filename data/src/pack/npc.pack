@@ -861,12 +861,12 @@
 860=ogre_guard_battlements
 861=npc_861
 862=city_guard
-863=npc_863
-864=npc_864
+863=scared_skavid
+864=mad_skavid
 865=skavid_ig
 866=skavid_ar
-867=npc_867
-868=npc_868
+867=skavid_cur
+868=skavid_nod
 869=npc_869
 870=enclave_guard
 871=npc_871
