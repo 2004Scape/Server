@@ -7,6 +7,7 @@ import NullClientSocket from '#/server/NullClientSocket.js';
 import WSClientSocket from '#/server/ws/WSClientSocket.js';
 import World from '#/engine/World.js';
 import LoggerEventType from '#/server/logger/LoggerEventType.js';
+import Environment from '#/util/Environment.js';
 
 function getIp(req: IncomingMessage) {
     // todo: environment flag to respect cf-connecting-ip (NOT safe if origin is exposed publicly by IP + proxied)
@@ -30,7 +31,18 @@ export default class WSServer {
     start(server: http.Server) {
         this.wss = new WebSocketServer({
             server,
-            perMessageDeflate: false
+            perMessageDeflate: false,
+            verifyClient: (info, cb) => {
+                const { origin } = info;
+
+                // todo: check more than just the origin header (important!)
+                if (Environment.WEB_ALLOWED_ORIGIN && origin !== Environment.WEB_ALLOWED_ORIGIN) {
+                    cb(false);
+                    return;
+                }
+
+                cb(true);
+            }
         });
 
         this.wss.on('connection', (ws: WebSocket, req) => {
