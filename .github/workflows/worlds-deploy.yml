@@ -8,10 +8,8 @@ on:
         required: true
         type: string
 
-# pm2 start npm --name "w1-maintenance" -- run maintenance
-# pm2 start npm --name "w2-maintenance" -- run maintenance
-# pm2 start npm --name "w1-server" --kill-timeout 600000 -- run quickstart
-# pm2 start npm --name "w2-server" --kill-timeout 600000 -- run quickstart
+# pm2 start npm --name "world1-maintenance" -- run maintenance
+# pm2 start npm --name "world1-server" --kill-timeout 600000 -- run quickstart
 
 jobs:
   deploy:
@@ -35,9 +33,9 @@ jobs:
           source ~/.bashrc
           cd ${{ secrets.DIR }}
           git pull
-          pnpm i
-          pm2 stop ${{ secrets.PROCESS }}
-          pm2 start ${{ secrets.MAINT_PROCESS }}
+          npm i
+          pm2 stop ${{ inputs.environment}}-server
+          pm2 start ${{ inputs.environment}}-maintenance
 
     - name: Update Content
       uses: appleboy/scp-action@v0.1.7
@@ -58,5 +56,5 @@ jobs:
         username: ${{ secrets.USERNAME }}
         key: ${{ secrets.KEY }}
         script: |
-          pm2 stop ${{ secrets.MAINT_PROCESS }}
-          pm2 start ${{ secrets.PROCESS }}
+          pm2 stop ${{ inputs.environment}}-maintenance
+          pm2 start ${{ inputs.environment}}-server
