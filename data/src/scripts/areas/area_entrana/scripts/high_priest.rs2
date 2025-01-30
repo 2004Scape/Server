@@ -16,7 +16,7 @@ if (~hero_in_progress = true) {
     ~chatplayer("<p,neutral>Hello, I am in search of an Entranan Firebird. Can you help me?");
     ~chatnpc("<p,neutral>Well adventurer, I have heard that they exist on this|island, but have not ever seen one myself.");
     ~chatnpc("<p,neutral>According to legend however, they are so hot that their|merest touch can burn flesh.");
-    ~chatnpc("<p,neutral>Apparently long ago a great hero used a pair of magical|gloves, stolen from the Queen of the Ice to cool the|bird down enough to catch as a pet.");
+    ~chatnpc("<p,neutral>Apparently long ago a great hero used|a pair of magical gloves, stolen|from the Queen of the Ice to cool the|bird down enough to catch as a pet."); // imgur.com/VHHp1gy
     ~chatplayer("<p,quiz>So where would I find this 'Queen of the Ice' then?");
     ~chatnpc("<p,neutral>I know not adventurer, it was just a myth I was told|as a young boy. Perhaps somewhere icey?");
     ~chatplayer("<p,neutral>Thanks!");

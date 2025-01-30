@@ -1106,7 +1106,7 @@ if(last_useitem = rashiliya_corpse) {
             p_delay(1); // 1t
             npc_add($spawn_coord, npc_506, 100); // 100t osrs
         }
-        ~chatnpc("<p,happy>You have my gratitude for releasing my spirit. I have suffered a vengeful and evil existence. I was tricked by Zamorak. He returned my son to me as an undead creature.");
+        ~chatnpc("<p,happy>You have my gratitude for releasing my spirit.|I have suffered a vengeful and evil existence.|I was tricked by Zamorak.|He returned my son to me as an undead creature."); // imgur.com/GoUvoVV
         ~chatnpc("<p,happy>My hatred and bitterness corrupted me. I tried to destroy all life... now I am released. And am grateful to contemplate eternal rest...");
         mes("Without warning the spirit of Rashiliyia disappears.");
         spotanim_map(spotanim_184, npc_coord, 5, 0);

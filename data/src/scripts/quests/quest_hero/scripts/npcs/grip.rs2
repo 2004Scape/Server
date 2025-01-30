@@ -31,7 +31,7 @@ switch_int($option) {
   case 1 :
     // https://youtu.be/1lx2X_PvEfY?t=735
     ~chatplayer("<p,quiz>So can I guard the treasure room please?");
-    ~chatnpc("<p,neutral>Well, I might post you outside it sometimes. I prefer to be the only one inside however.");
+    ~chatnpc("<p,neutral>Well, I might post you outside it sometimes.|I prefer to be the only one allowed inside however."); // imgur.com/IHB4z9w
     ~chatnpc("<p,neutral>There's some pretty valuable artefacts in there! Those keys stay ONLY with the head guard and Scarface Pete.");
     @grip_chat_options(^grip_stage_asked_treasure);
   case 2 :
