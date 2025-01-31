@@ -1882,7 +1882,8 @@ class World {
 
             if (World.loginBuf.g1() !== 10) {
                 // RSA error
-                client.send(Uint8Array.from([ 11 ]));
+                // sending out of date intentionally
+                client.send(Uint8Array.from([ 6 ]));
                 client.close();
                 return;
             }
