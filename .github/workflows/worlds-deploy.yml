@@ -8,8 +8,8 @@ on:
         required: true
         type: string
 
+# pm2 start npm --name "world1" --kill-timeout 600000 -- run quickstart
 # pm2 start npm --name "world1-maintenance" -- run maintenance
-# pm2 start npm --name "world1-server" --kill-timeout 600000 -- run quickstart
 
 jobs:
   deploy:
@@ -17,6 +17,21 @@ jobs:
     environment: ${{ inputs.environment}}
 
     steps:
+    - name: Checkout Client-TS
+      uses: actions/checkout@v4
+      with:
+        repository: 'LostCityRS/Client-TS'
+
+    - name: Setup Bun
+      uses: oven-sh/setup-bun@v2
+
+    - name: Build Client-TS
+      run: |
+        bun install
+        bun run rsa.ts
+        echo "SECURE_ORIGIN=${{ secrets.SECURE_ORIGIN }}" >> .env
+        bun run build:uglify
+
     - name: Download Packed Data
       uses: actions/download-artifact@v4
       with:
@@ -30,12 +45,12 @@ jobs:
         username: ${{ secrets.USERNAME }}
         key: ${{ secrets.KEY }}
         script: |
-          source ~/.bashrc
-          cd ${{ secrets.DIR }}
+          pm2 stop ${{ inputs.environment }}
+          pm2 start ${{ inputs.environment }}-maintenance
+          cd ${{ inputs.environment }}
+          git reset --hard
           git pull
           npm i
-          pm2 stop ${{ inputs.environment}}-server
-          pm2 start ${{ inputs.environment}}-maintenance
 
     - name: Update Content
       uses: appleboy/scp-action@v0.1.7
@@ -45,8 +60,29 @@ jobs:
         username: ${{ secrets.USERNAME }}
         key: ${{ secrets.KEY }}
         source: "client,server"
-        target: ${{ secrets.DIR }}/data/pack
+        target: ${{ inputs.environment }}/data/pack
         rm: true
+
+    - name: Update RSA
+      uses: appleboy/scp-action@v0.1.7
+      with:
+        host: ${{ secrets.HOST }}
+        port: ${{ secrets.PORT }}
+        username: ${{ secrets.USERNAME }}
+        key: ${{ secrets.KEY }}
+        source: "private.pem"
+        target: ${{ inputs.environment }}/data/config
+
+    - name: Update Client
+      uses: appleboy/scp-action@v0.1.7
+      with:
+        host: ${{ secrets.HOST }}
+        port: ${{ secrets.PORT }}
+        username: ${{ secrets.USERNAME }}
+        key: ${{ secrets.KEY }}
+        source: "out"
+        target: ${{ inputs.environment }}/public/client
+        strip_components: 1
 
     - name: Start World
       uses: appleboy/ssh-action@v1.2.0
@@ -57,4 +93,4 @@ jobs:
         key: ${{ secrets.KEY }}
         script: |
           pm2 stop ${{ inputs.environment}}-maintenance
-          pm2 start ${{ inputs.environment}}-server
+          pm2 start ${{ inputs.environment}}

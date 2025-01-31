@@ -4,10 +4,11 @@ on:
   pull_request:
   push:
     paths:
-      - '.github/workflows/engine.yml'
-      - 'src/**'
-      - 'tools/**'
+    - '.github/workflows/engine.yml'
+    - 'src/**'
+    - 'tools/**'
   workflow_dispatch:
+
 
 jobs:
   verify:
