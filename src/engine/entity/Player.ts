@@ -74,6 +74,7 @@ import WalkTriggerSetting from '#/util/WalkTriggerSetting.js';
 import Environment from '#/util/Environment.js';
 import { ChatModePrivate, ChatModePublic, ChatModeTradeDuel } from '#/util/ChatModes.js';
 import LoggerEventType from '#/server/logger/LoggerEventType.js';
+import InputTracking from '#/engine/entity/tracking/InputTracking.js';
 import Visibility from './Visibility.js';
 
 const levelExperience = new Int32Array(99);
@@ -217,6 +218,9 @@ export default class Player extends PathingEntity {
     privateChat: ChatModePrivate = ChatModePrivate.ON;
     tradeDuel: ChatModeTradeDuel = ChatModeTradeDuel.ON;
 
+    // input tracking
+    input: InputTracking;
+
     // runtime variables
     pid: number = -1;
     uid: number = -1;
@@ -320,6 +324,7 @@ export default class Player extends PathingEntity {
         this.varsString = new Array(VarPlayerType.count);
         this.lastStats.fill(-1);
         this.lastLevels.fill(-1);
+        this.input = new InputTracking(this);
     }
 
     cleanup(): void {
@@ -1027,6 +1032,10 @@ export default class Player extends PathingEntity {
         if (!this.hasWaypoints()) {
             this.unsetMapFlag();
         }
+    }
+
+    processInputTracking(): void {
+        this.input.process();
     }
 
     // ----
