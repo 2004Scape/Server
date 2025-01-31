@@ -2,7 +2,7 @@
 // https://youtu.be/rEzuCix51aM?t=1582 - showing speaking again after giving ID papers
 if (%hero_progress < ^hero_blackarm_id_papers_given) {
   ~chatplayer("<p,neutral>Hi there. I am Hertigen. reporting for duty as your new deputy sir!");
-  ~chatnpc("<p,neutral>Ah good, at last. You took your timee getting here! Now let me see...");
+  ~chatnpc("<p,neutral>Ah good, at last. You took your time getting here! Now let me see...");
   ~chatnpc("<p,neutral>I'll get your hours and duty roster sorted out in a while. Oh, and do you have your I.D. papers with you? Internal security is almost as important as external security for a guard.");
   if(inv_total(inv, id_papers) < 1) {
     // https://youtu.be/KRhwwgo8YHM?t=424 - OSRS talking to grip without ID paper
@@ -31,7 +31,7 @@ switch_int($option) {
   case 1 :
     // https://youtu.be/1lx2X_PvEfY?t=735
     ~chatplayer("<p,quiz>So can I guard the treasure room please?");
-    ~chatnpc("<p,neutral>Well, I might post you outside it sometimes. I prefer to be the only one inside however.");
+    ~chatnpc("<p,neutral>Well, I might post you outside it sometimes.|I prefer to be the only one allowed inside however."); // imgur.com/IHB4z9w
     ~chatnpc("<p,neutral>There's some pretty valuable artefacts in there! Those keys stay ONLY with the head guard and Scarface Pete.");
     @grip_chat_options(^grip_stage_asked_treasure);
   case 2 :

@@ -11,7 +11,7 @@ if ($random < 3) {
 } else if ($random < 5) {
     obj_add(npc_coord, staff_of_earth, 1, ^lootdrop_duration);
 } else if ($random < 18) {
-    obj_add(npc_coord, earthrune, 13, ^lootdrop_duration);
+    obj_add(npc_coord, earthrune, 12, ^lootdrop_duration);
 } else if ($random < 27) {
     obj_add(npc_coord, naturerune, 3, ^lootdrop_duration);
 } else if ($random < 34) {

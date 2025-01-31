@@ -14,7 +14,7 @@ if ($random < 1) {
 } else if ($random < 6) {
     obj_add(npc_coord, firerune, 12, ^lootdrop_duration);
 } else if ($random < 10) {
-    obj_add(npc_coord, lawrune, 22, ^lootdrop_duration);
+    obj_add(npc_coord, lawrune, 2, ^lootdrop_duration);
 } else if ($random < 12) {
     obj_add(npc_coord, earthrune, 9, ^lootdrop_duration);
 } else if ($random < 13) {
@@ -37,9 +37,9 @@ if ($random < 1) {
 } else if ($random < 68) {
     obj_add(npc_coord, snape_grass, 1, ^lootdrop_duration);
 } else if ($random < 69) {
-    obj_add(npc_coord, vial_water, 2, ^lootdrop_duration);
+    obj_add(npc_coord, vial_water, 1, ^lootdrop_duration);
 } else if ($random < 84) {
-    obj_add(npc_coord, coins, 13, ^lootdrop_duration);
+    obj_add(npc_coord, coins, 3, ^lootdrop_duration);
 } else if ($random < 87) {
     obj_add(npc_coord, coins, 29, ^lootdrop_duration);
 } else if ($random < 88) {

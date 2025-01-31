@@ -53,7 +53,7 @@ if ($random < 4) {
 } else if ($random < 61) {
     obj_add(npc_coord, cosmicrune, 2, ^lootdrop_duration);
 } else if ($random < 62) {
-    obj_add(npc_coord, lawrune, 2, ^lootdrop_duration);
+    obj_add(npc_coord, lawrune, 3, ^lootdrop_duration);
 } else if ($random < 79) {
     obj_add(npc_coord, coins, 1, ^lootdrop_duration);
 } else if ($random < 95) {

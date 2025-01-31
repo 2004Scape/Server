@@ -63,6 +63,8 @@ inv_add(inv, bird_feed, 1);
 [opheld1,pigeon_cage]
 if(%biohazard_progress = ^biohazard_used_birdfeed & inzone(0_39_51_63_35, 0_40_51_5_43, coord) = true) {
     mes("The pigeons fly towards the watch tower");
+    inv_del(inv, pigeon_cage, 1);
+    inv_add(inv, pigeon_cage_empty, 1);
     %biohazard_progress = ^biohazard_released_pigeons;
     ~coord_projectile(coord, 0_39_51_63_39, spotanim_72, 16, 130, 25, 20, 21, 10, 20);
     ~coord_projectile(coord, 0_40_51_0_40, spotanim_72, 16, 125, 15, 20, 31, 10, 20);

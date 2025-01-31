@@ -1,6 +1,6 @@
 [if_button,music:com_203]
 %music_mode = 1;
-~music_playbyregion(coord);
+@music_playbyregion(coord);
 
 [if_button,music:com_204]
 %music_mode = 0;

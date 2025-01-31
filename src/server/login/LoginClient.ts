@@ -36,6 +36,7 @@ export default class LoginClient extends InternalClient {
             type: 'player_login',
             nodeId: this.nodeId,
             nodeTime: Date.now(),
+            profile: Environment.NODE_PROFILE,
             username,
             password,
             uid
@@ -66,6 +67,7 @@ export default class LoginClient extends InternalClient {
             type: 'player_logout',
             nodeId: this.nodeId,
             nodeTime: Date.now(),
+            profile: Environment.NODE_PROFILE,
             username,
             save: Buffer.from(save).toString('base64')
         });
@@ -89,6 +91,7 @@ export default class LoginClient extends InternalClient {
             type: 'player_autosave',
             nodeId: this.nodeId,
             nodeTime: Date.now(),
+            profile: Environment.NODE_PROFILE,
             username,
             save: Buffer.from(save).toString('base64')
         }));
@@ -106,6 +109,7 @@ export default class LoginClient extends InternalClient {
             type: 'player_force_logout',
             nodeId: this.nodeId,
             nodeTime: Date.now(),
+            profile: Environment.NODE_PROFILE,
             username
         }));
     }

@@ -12963,7 +12963,7 @@ stretches=yes
 frame1=anim_4005
 delay1=14464
 
-[seq_1011]
+[chompy_attack]
 stretches=yes
 frame1=anim_4012
 frame2=anim_4019
@@ -12975,7 +12975,7 @@ frame7=anim_4004
 frame8=anim_4014
 frame9=anim_4021
 
-[seq_1012]
+[chompy_defend]
 frame1=anim_4042
 frame2=anim_4054
 frame3=anim_4063
@@ -12986,7 +12986,7 @@ replayoff=2
 frame1=anim_4005
 frame2=anim_4005
 
-[seq_1014]
+[chompy_landing]
 frame1=anim_4044
 frame2=anim_4056
 frame3=anim_4065

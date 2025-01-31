@@ -40,10 +40,10 @@ if ($random < 5) {
     obj_add(npc_coord, ~randomherb, ^lootdrop_duration);
 } else if ($random < 60) {
     obj_add(npc_coord, coins, 38, ^lootdrop_duration);
-} else if ($random < 70) {
-    obj_add(npc_coord, coins, 52, ^lootdrop_duration);
 } else if ($random < 68) {
     obj_add(npc_coord, coins, 15, ^lootdrop_duration);
+} else if ($random < 70) {
+    obj_add(npc_coord, coins, 52, ^lootdrop_duration);
 } else if ($random < 74) {
     obj_add(npc_coord, coins, 8, ^lootdrop_duration);
 } else if ($random < 76) {

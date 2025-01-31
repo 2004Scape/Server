@@ -75,6 +75,7 @@ import Environment from '#/util/Environment.js';
 import { ChatModePrivate, ChatModePublic, ChatModeTradeDuel } from '#/util/ChatModes.js';
 import LoggerEventType from '#/server/logger/LoggerEventType.js';
 import InputTracking from '#/engine/entity/tracking/InputTracking.js';
+import Visibility from './Visibility.js';
 
 const levelExperience = new Int32Array(99);
 
@@ -300,6 +301,7 @@ export default class Player extends PathingEntity {
     lastCom: number = -1; // if_button
 
     staffModLevel: number = 0;
+    visibility: Visibility = Visibility.DEFAULT;
 
     heroPoints: HeroPoints = new HeroPoints(16); // be sure to reset when stats are recovered/reset
 
@@ -842,7 +844,7 @@ export default class Player extends PathingEntity {
             return;
         }
 
-        if (this.target.level !== this.level) {
+        if (this.target.level !== this.level || (this.target instanceof Player && this.target.visibility !== Visibility.DEFAULT)) {
             this.clearInteraction();
             this.unsetMapFlag(); // assuming its right
             return;
@@ -1478,7 +1480,7 @@ export default class Player extends PathingEntity {
         }
     }
 
-    addXp(stat: number, xp: number) {
+    addXp(stat: number, xp: number, allowMulti: boolean = true) {
         // require xp is >= 0. there is no reason for a requested addXp to be negative.
         if (xp < 0) {
             throw new Error(`Invalid xp parameter for addXp call: Stat was: ${stat}, Exp was: ${xp}`);
@@ -1489,7 +1491,7 @@ export default class Player extends PathingEntity {
             return;
         }
 
-        const multi = Number(Environment.NODE_XPRATE) || 1;
+        const multi = allowMulti ? Environment.NODE_XPRATE : 1;
         this.stats[stat] += xp * multi;
 
         // cap to 200m, this is represented as "2 billion" because we use 32-bit signed integers and divide by 10 to give us a decimal point
@@ -1602,6 +1604,16 @@ export default class Player extends PathingEntity {
         }
 
         this.masks |= InfoProt.PLAYER_DAMAGE.id;
+    }
+
+    setVisibility(visibility: Visibility) {
+        if (visibility === Visibility.SOFT) {
+            this.messageGame(`vis: ${visibility} (not implemented - you are still on vis: ${this.visibility})`);
+            return;
+        }
+        // This doesn't actually cancel interactions, source: https://youtu.be/ARS7eO3_Z8U?si=OkYfjW0sVhkQmQ8y&t=293
+        this.visibility = visibility;
+        this.messageGame(`vis: ${visibility}`);
     }
 
     say(message: string) {
@@ -1855,6 +1867,9 @@ export default class Player extends PathingEntity {
     }
 
     lastLoginInfo(lastLoginIp: number, daysSinceLogin: number, daysSinceRecoveryChange: number, unreadMessageCount: number) {
+        // daysSinceRecoveryChange
+        // - 201 shows welcome_screen.if
+        // - any other value shows welcome_screen_warning
         this.write(new LastLoginInfo(lastLoginIp, daysSinceLogin, daysSinceRecoveryChange, unreadMessageCount));
     }
 

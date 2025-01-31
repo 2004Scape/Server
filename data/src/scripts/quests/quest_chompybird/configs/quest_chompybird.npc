@@ -93,8 +93,8 @@ hitpoints=10
 attack=5
 strength=5
 defence=3
-param=attack_anim,seq_1012
-param=defend_anim,seq_1011
+param=attack_anim,chompy_attack
+param=defend_anim,chompy_defend
 param=death_anim,seq_1009
 param=attack_sound,chompy_bird_attack
 param=defend_sound,chompy_bird_hit
@@ -102,7 +102,7 @@ param=death_sound,chompy_bird_death
 // TODO tbc + missing datas
 // Hunt range is a guess
 // If removed, chompy won't hunt for toads during quest
-huntrange=10
+huntrange=2
 // osrs stats and Vislvl match 1:1
 // https://raw.githubusercontent.com/Joshua-F/osrs-dumps/refs/heads/master/config/dump.npc npc_1475
 
