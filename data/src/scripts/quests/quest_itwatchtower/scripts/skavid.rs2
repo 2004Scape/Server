@@ -3,28 +3,61 @@
 if(testbit(%itwatchtower_bits, ^itwatchtower_learning_skavid) = false) {
     @skavid_no_skavid_speech;
 }
+@skavid_comm;
 
 [opnpc1,skavid_ig]
 ~chatnpc("<p,bored>Gor cur...");
 if(testbit(%itwatchtower_bits, ^itwatchtower_learning_skavid) = false) {
     @skavid_no_skavid_speech;
 }
+@skavid_comm;
 
 [opnpc1,skavid_cur]
+if(testbit(%itwatchtower_bits, ^itwatchtower_learned_cur) = true) {
+    ~chatnpc("<p,bored>Cur tanath!");
+    mes("You have already talked to this skavid.");
+    return;
+}
 ~chatnpc("<p,bored>Bidith tanath...");
 if(testbit(%itwatchtower_bits, ^itwatchtower_learning_skavid) = false) {
     @skavid_no_skavid_speech;
 }
-switch_int(~p_choice5("Cur.", 1, "Ar.", 2, "Ig.", 3, "Nod.", 4, "Gor.", 5)) {
-    
-}
-
+@skavid_comm;
 
 [opnpc1,skavid_nod]
 ~chatnpc("<p,bored>Tanath gor...");
 if(testbit(%itwatchtower_bits, ^itwatchtower_learning_skavid) = false) {
     @skavid_no_skavid_speech;
 }
+@skavid_comm;
+
+[label,skavid_comm]
+mes("The skavid is trying to communicate...");
+@multi5("Cur.", skavid_saycur, "Ar.", skavid_sayar, "Ig.", skavid_sayig, "Nod.", skavid_saynod, "Gor.", skavid_saygor);
+
+[label,skavid_saycur]
+~chatplayer("<p,neutral>Cur.");
+if(npc_type = skavid_cur) {
+    %itwatchtower_bits = setbit(%itwatchtower_bits, ^itwatchtower_learned_cur);
+    mes("It seems the skavid understood you.");
+    ~chatnpc("<p,happy>Cur,|cur tanath!");
+    return;
+}
+@skavid_fail;
+
+[label,skavid_saynod]
+~chatplayer("<p,neutral>Nod.");
+if(npc_type = skavid_nod) {
+    %itwatchtower_bits = setbit(%itwatchtower_bits, ^itwatchtower_learned_nod);
+    mes("It seems the skavid understood you.");
+    ~chatnpc("<p,happy>Nod,|Gor nod!");
+    return;
+}
+@skavid_fail;
+
+[label,skavid_fail]
+~chatnpc("<p,neutral>???");
+mes("It seems that was the wrong reply.");
 
 [opnpc1,scared_skavid]
 if(testbit(%itwatchtower_bits, ^itwatchtower_learning_skavid) = true) {
