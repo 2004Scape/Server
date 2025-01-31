@@ -1858,6 +1858,9 @@ export default class Player extends PathingEntity {
     }
 
     lastLoginInfo(lastLoginIp: number, daysSinceLogin: number, daysSinceRecoveryChange: number, unreadMessageCount: number) {
+        // daysSinceRecoveryChange
+        // - 201 shows welcome_screen.if
+        // - any other value shows welcome_screen_warning
         this.write(new LastLoginInfo(lastLoginIp, daysSinceLogin, daysSinceRecoveryChange, unreadMessageCount));
     }
 
