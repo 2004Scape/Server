@@ -1,41 +1,58 @@
-[queue,duel_arena_finish]
-if (getqueue(duel_arena_finish) > 0) {
-    clearqueue(duel_arena_finish);
+[queue,player_death_duel]
+%duelstatus = ^duelstatus_lost;
+if (~in_duel_arena(coord) = true) {
+    ~player_death;
 }
-if (~in_duel_arena(coord) = false) {
-    %duelstatus = 0;
-    %duelpartner = null;
-    return;
-}
-~duel_reset_all;
+clearqueue(duel_finish);
+queue(duel_finish, 0);
 
-if (.finduid(%duelpartner) = true & (%duelstatus = ^duelstatus_victory | %duelstatus = ^duelstatus_opponent_resigned)) {
-    if (%duelstatus = ^duelstatus_opponent_resigned) {
-        if_settext(duel_win:com_99, "You are victorious! Your opponent resigned!"); // 2006
-        mes("Well done! <.displayname> resigned!"); // 2006
-    } else {
+if (.finduid(%duelpartner) = true) {
+    .if_close;
+    .%duelstatus = ^duelstatus_victory;
+    .clearqueue(duel_finish);
+    .queue(duel_finish, 0);
+}
+// ur able to get double mes if opponent kills u with knives: https://youtu.be/KRDZJKa1whI?list=PLn23LiLYLb1bQ7Hwp77KoNBjKvpZQTfJT&t=12
+midi_jingle(^death_jingle_2, ^death_jingle_2_millis);
+mes("Oh dear you are dead.");
+
+
+[queue,duel_finish]
+if (.finduid(%duelpartner) = true) {
+    if (%duelstatus = ^duelstatus_victory) {
         if_settext(duel_win:com_99, "You are victorious!");
         mes("Well done! You have defeated <.displayname>!");
+        midi_jingle(^duel_win_2_jingle, ^duel_win_2_jingle_millis);
+        ~duel_reset_all;
+        ~duel_spoils;
+        return;
+    } else if (%duelstatus = ^duelstatus_opponent_resigned) {
+        if_settext(duel_win:com_99, "You are victorious! Your opponent resigned!"); // 2006
+        mes("Well done! <.displayname> resigned!"); // 2006
+        midi_jingle(^duel_win_2_jingle, ^duel_win_2_jingle_millis);
+        ~duel_reset_all;
+        ~duel_spoils;
+        return;
     }
-    midi_jingle(^duel_win_2_jingle, ^duel_win_2_jingle_millis);
-    if_openmain(duel_win);
-    ~duel_adjust_scoreboard(displayname, ~player_combat_level, .displayname, ~.player_combat_level);
-    if_settext(duel_win:displayname, .displayname);
-    if_settext(duel_win:combat_level, tostring(~.player_combat_level));
-
-    ~duel_give_stake_back;
-
-    // take stuff from other player's stakeinv
-    .both_moveinv(stakeinv, stakeinv);
-    // .%duelpartner = null;
-    // display spoils
-    inv_transmit(stakeinv, duel_win:spoils);
 }
+~duel_reset_all;
+[proc,duel_spoils]
+midi_jingle(^duel_win_2_jingle, ^duel_win_2_jingle_millis);
+if_openmain(duel_win);
+~duel_adjust_scoreboard(displayname, ~player_combat_level, .displayname, ~.player_combat_level);
+if_settext(duel_win:displayname, .displayname);
+if_settext(duel_win:combat_level, tostring(~.player_combat_level));
 
-%duelstatus = 0;
-%duelpartner = null;
+~duel_give_stake_back;
+
+// take stuff from other player's stakeinv
+.both_moveinv(stakeinv, stakeinv);
+inv_transmit(stakeinv, duel_win:spoils);
 
 [proc,duel_reset_all]
+if (~in_duel_arena(coord) = false) {
+    return;
+}
 // get arrows back
 def_int $i = 0;
 while ($i < inv_size(tempinv)) {
@@ -55,11 +72,13 @@ p_stopaction;
 ~stat_reset_all;
 healenergy(10000);
 ~combat_clearqueue;
-clearqueue(player_death);
+clearqueue(player_death_default);
 ~clear_pk_skull;
 ~clear_poison;
 ~update_all(inv_getobj(worn, ^wearpos_rhand));
 hint_stop;
+%duelstatus = 0;
+%duelpartner = null;
 
 [proc,duel_give_stake_back]
 def_int $i = 0;
