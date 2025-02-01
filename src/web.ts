@@ -19,12 +19,8 @@ MIME_TYPES.set('.wasm', 'application/wasm');
 MIME_TYPES.set('.sf2', 'application/octet-stream');
 
 // we don't need/want a full blown website or API on the game server
-const web = http.createServer(async (req, res) => {
+export const web = http.createServer(async (req, res) => {
     try {
-        if (Environment.WEB_CORS) {
-            res.setHeader('Access-Control-Allow-Origin', '*');
-        }
-
         if (req.method !== 'GET') {
             res.writeHead(405);
             res.end();
@@ -79,10 +75,6 @@ const web = http.createServer(async (req, res) => {
             res.setHeader('Content-Type', 'application/octet-stream');
             res.writeHead(200);
             res.end(await fsp.readFile('data/pack/client/sounds'));
-        } else if (url.pathname.startsWith('/server/') && fs.existsSync('data/pack/server/' + basename(url.pathname))) {
-            res.setHeader('Content-Type', MIME_TYPES.get(extname(url.pathname ?? '')) ?? 'text/plain');
-            res.writeHead(200);
-            res.end(await fsp.readFile('data/pack/server/' + basename(url.pathname)));
         } else if (url.pathname === '/') {
             if (Environment.WEBSITE_REGISTRATION) {
                 res.writeHead(404);
@@ -101,7 +93,6 @@ const web = http.createServer(async (req, res) => {
             res.end(await ejs.renderFile('view/client.ejs', {
                 plugin,
                 nodeid: Environment.NODE_ID,
-                portoff: Environment.NODE_PORT - 43594,
                 lowmem,
                 members: Environment.NODE_MEMBERS
             }));

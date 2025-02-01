@@ -214,7 +214,10 @@ const InvOps: CommandHandlers = {
         }
 
         const objType = ObjType.get(obj.id);
-        state.activePlayer.addWealthLog(-(obj.count * objType.cost), `Dropped ${objType.debugname} x${obj.count}`);
+        if (invType.scope === InvType.SCOPE_PERM) {
+            // ammo drops are temp, without checking scope this spams in ranged combat
+            state.activePlayer.addWealthLog(-(obj.count * objType.cost), `Dropped ${objType.debugname} x${obj.count}`);
+        }
 
         const player = state.activePlayer;
         const completed = player.invDel(invType.id, obj.id, obj.count, slot);
@@ -598,7 +601,9 @@ const InvOps: CommandHandlers = {
         }
 
         const objType: ObjType = ObjType.get(obj.id);
-        state.activePlayer.addWealthLog(-(obj.count * objType.cost), `Dropped ${objType.debugname} x${obj.count}`);
+        if (invType.scope === InvType.SCOPE_PERM) {
+            state.activePlayer.addWealthLog(-(obj.count * objType.cost), `Dropped ${objType.debugname} x${obj.count}`);
+        }
 
         const completed: number = fromPlayer.invDel(invType.id, obj.id, obj.count, slot);
         if (completed === 0) {
@@ -638,7 +643,9 @@ const InvOps: CommandHandlers = {
             }
 
             const objType: ObjType = ObjType.get(obj.id);
-            state.activePlayer.addWealthLog(-(obj.count * objType.cost), `Dropped ${objType.debugname} x${obj.count}`);
+            if (invType.scope === InvType.SCOPE_PERM) {
+                state.activePlayer.addWealthLog(-(obj.count * objType.cost), `Dropped ${objType.debugname} x${obj.count}`);
+            }
 
             inventory.delete(slot);
 

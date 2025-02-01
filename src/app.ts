@@ -1,6 +1,6 @@
 import fs from 'fs';
 
-import { startManagementWeb, startWeb } from '#/web.js';
+import { startManagementWeb, startWeb, web } from '#/web.js';
 
 import World from '#/engine/World.js';
 
@@ -42,17 +42,17 @@ if (Environment.EASY_STARTUP) {
 
 await World.start();
 
+const tcpServer = new TcpServer();
+tcpServer.start();
+
+const wsServer = new WSServer();
+wsServer.start(web);
+
 startWeb();
 startManagementWeb();
 
 register.setDefaultLabels({nodeId: Environment.NODE_ID});
 collectDefaultMetrics({register});
-
-const tcpServer = new TcpServer();
-tcpServer.start();
-
-const wsServer = new WSServer();
-wsServer.start();
 
 // unfortunately, tsx watch is not giving us a way to gracefully shut down in our dev mode:
 // https://github.com/privatenumber/tsx/issues/494

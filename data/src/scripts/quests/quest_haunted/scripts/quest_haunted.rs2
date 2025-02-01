@@ -136,6 +136,7 @@ p_delay(1);
 [label,manor_bookcase_door](coord $dest)
 def_coord $start_coord = coord;
 p_delay(0);
+sound_synth(coffin_open, 0, 0);
 // If you search from the north end of the northern bookcase, you will be in a different zone
 // than the bookcases, this is a small workaround
 loc_findallzone(movecoord(coord, 0, 0, -1));

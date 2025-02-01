@@ -227,6 +227,7 @@ model7=model_546_obj_wear
 model8=model_323_obj_wear
 head1=model_149_npc_head
 wanderrange=1
+// maxrange=TODO
 hitpoints=170
 attack=75
 strength=78
@@ -238,7 +239,7 @@ param=defend_anim,human_2h_sword_defend
 // param=defend_sound,
 // osrs use attack seq_406
 // TODO monster examine spell
-// TODO sounds + maxranges
+// TODO sounds
 // Stats match osrs version but our version Vislvl is different.
 // https://raw.githubusercontent.com/Joshua-F/osrs-dumps/refs/heads/master/config/dump.npc npc_12025
 

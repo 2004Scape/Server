@@ -29,7 +29,8 @@ param=attackrate,5
 param=crushattack_anim,human_blunt_crush
 param=defend_anim,human_baxe_defend1
 param=crush_sound,baxe_crush
-// Defend seq is guess.. it is either seq_397 or seq_403.
+// stats mentioned here https://web.archive.org/web/20050303033424/http://koti.mbnet.fi/~timpat/index2.htm -> esineet -> aseet -> Kirveenvarsi(Headless axe)
+// Trivia mentions that the this item can be taken to the entrana. https://runescape.wiki/w/Lost_City
 
 [bronze_pickaxe_broken]
 name=Broken pickaxe
@@ -294,7 +295,8 @@ param=attackrate,5
 param=crushattack_anim,human_blunt_crush
 param=defend_anim,human_baxe_defend1
 param=crush_sound,baxe_crush
-// Defend seq is guess.. it is either seq_397 or seq_403.
+// stats mentioned here https://web.archive.org/web/20050303033424/http://koti.mbnet.fi/~timpat/index2.htm -> esineet -> aseet -> Kirveenvarsi(Headless axe)
+// Trivia mentions that the this item can be taken to the entrana. https://runescape.wiki/w/Lost_City
 
 [bronze_axe_broken]
 name=Broken axe

@@ -4,9 +4,10 @@ on:
   pull_request:
   push:
     paths:
-      - '.github/workflows/content.yml'
-      - 'data/src/**'
+    - '.github/workflows/content.yml'
+    - 'data/src/**'
   workflow_dispatch:
+
 
 jobs:
   pack:

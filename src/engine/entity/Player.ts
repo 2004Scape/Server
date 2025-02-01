@@ -74,6 +74,8 @@ import WalkTriggerSetting from '#/util/WalkTriggerSetting.js';
 import Environment from '#/util/Environment.js';
 import { ChatModePrivate, ChatModePublic, ChatModeTradeDuel } from '#/util/ChatModes.js';
 import LoggerEventType from '#/server/logger/LoggerEventType.js';
+import InputTracking from '#/engine/entity/tracking/InputTracking.js';
+import Visibility from './Visibility.js';
 
 const levelExperience = new Int32Array(99);
 
@@ -216,6 +218,9 @@ export default class Player extends PathingEntity {
     privateChat: ChatModePrivate = ChatModePrivate.ON;
     tradeDuel: ChatModeTradeDuel = ChatModeTradeDuel.ON;
 
+    // input tracking
+    input: InputTracking;
+
     // runtime variables
     pid: number = -1;
     uid: number = -1;
@@ -296,6 +301,7 @@ export default class Player extends PathingEntity {
     lastCom: number = -1; // if_button
 
     staffModLevel: number = 0;
+    visibility: Visibility = Visibility.DEFAULT;
 
     heroPoints: HeroPoints = new HeroPoints(16); // be sure to reset when stats are recovered/reset
 
@@ -318,6 +324,7 @@ export default class Player extends PathingEntity {
         this.varsString = new Array(VarPlayerType.count);
         this.lastStats.fill(-1);
         this.lastLevels.fill(-1);
+        this.input = new InputTracking(this);
     }
 
     cleanup(): void {
@@ -837,7 +844,7 @@ export default class Player extends PathingEntity {
             return;
         }
 
-        if (this.target.level !== this.level) {
+        if (this.target.level !== this.level || (this.target instanceof Player && this.target.visibility !== Visibility.DEFAULT)) {
             this.clearInteraction();
             this.unsetMapFlag(); // assuming its right
             return;
@@ -1025,6 +1032,10 @@ export default class Player extends PathingEntity {
         if (!this.hasWaypoints()) {
             this.unsetMapFlag();
         }
+    }
+
+    processInputTracking(): void {
+        this.input.process();
     }
 
     // ----
@@ -1595,6 +1606,16 @@ export default class Player extends PathingEntity {
         this.masks |= InfoProt.PLAYER_DAMAGE.id;
     }
 
+    setVisibility(visibility: Visibility) {
+        if (visibility === Visibility.SOFT) {
+            this.messageGame(`vis: ${visibility} (not implemented - you are still on vis: ${this.visibility})`);
+            return;
+        }
+        // This doesn't actually cancel interactions, source: https://youtu.be/ARS7eO3_Z8U?si=OkYfjW0sVhkQmQ8y&t=293
+        this.visibility = visibility;
+        this.messageGame(`vis: ${visibility}`);
+    }
+
     say(message: string) {
         this.chat = message;
         this.masks |= InfoProt.PLAYER_SAY.id;
@@ -1846,6 +1867,9 @@ export default class Player extends PathingEntity {
     }
 
     lastLoginInfo(lastLoginIp: number, daysSinceLogin: number, daysSinceRecoveryChange: number, unreadMessageCount: number) {
+        // daysSinceRecoveryChange
+        // - 201 shows welcome_screen.if
+        // - any other value shows welcome_screen_warning
         this.write(new LastLoginInfo(lastLoginIp, daysSinceLogin, daysSinceRecoveryChange, unreadMessageCount));
     }
 

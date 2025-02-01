@@ -142,10 +142,10 @@
     </center>
  
     <script type="module">
-        import { Client } from './client/Client.js';
+        import { Client } from './client/client.js';
  
         (() => {
-            new Client(<%= nodeid %>, <%= portoff %>, <%= lowmem %>, <%= members %>);
+            new Client(<%= nodeid %>, <%= lowmem %>, <%= members %>);
         })();
     </script>
 </body>
