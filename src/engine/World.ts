@@ -254,12 +254,12 @@ class World {
             }
 
             for (let i = 0; i < this.vars.length; i++) {
-                const varp = VarPlayerType.get(i);
-                if (varp.type === ScriptVarType.STRING) {
+                const varsh = VarSharedType.get(i);
+                if (varsh.type === ScriptVarType.STRING) {
                     // todo: "null"? another value?
                     continue;
                 } else {
-                    this.vars[i] = ScriptVarType.INT ? 0 : -1;
+                    this.vars[i] = varsh.type === ScriptVarType.INT ? 0 : -1;
                 }
             }
         }
@@ -332,12 +332,12 @@ class World {
             }
 
             for (let i = 0; i < this.vars.length; i++) {
-                const varp = VarPlayerType.get(i);
-                if (varp.type === ScriptVarType.STRING) {
+                const varsh = VarSharedType.get(i);
+                if (varsh.type === ScriptVarType.STRING) {
                     // todo: "null"? another value?
                     continue;
                 } else {
-                    this.vars[i] = ScriptVarType.INT ? 0 : -1;
+                    this.vars[i] = varsh.type === ScriptVarType.INT ? 0 : -1;
                 }
             }
         }

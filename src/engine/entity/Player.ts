@@ -332,7 +332,7 @@ export default class Player extends PathingEntity {
                 // todo: "null"? another value?
                 continue;
             } else {
-                this.vars[i] = ScriptVarType.INT ? 0 : -1;
+                this.vars[i] = varp.type === ScriptVarType.INT ? 0 : -1;
             }
         }
     }
