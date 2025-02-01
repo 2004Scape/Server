@@ -18,6 +18,7 @@ if_settab(null, 11);
 if_settab(null, 12);
 if_settab(null, 13);
 
+mes($start_mes);
 p_delay($delay);
 
 ~initalltabs;
