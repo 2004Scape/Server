@@ -1,12 +1,22 @@
 [opnpc1,skavid_ar]
-~chatnpc("<p,bored>Cur bidith...");
+if(testbit(%itwatchtower_bits, ^itwatchtower_learned_ar) = true) {
+    ~chatnpc("<p,bored>Ar cur!");
+    mes("You have already talked to this skavid.");
+    return;
+}
+~chatnpc("<p,bored>Gor cur...");
 if(testbit(%itwatchtower_bits, ^itwatchtower_learning_skavid) = false) {
     @skavid_no_skavid_speech;
 }
 @skavid_comm;
 
 [opnpc1,skavid_ig]
-~chatnpc("<p,bored>Gor cur...");
+if(testbit(%itwatchtower_bits, ^itwatchtower_learned_ig) = true) {
+    ~chatnpc("<p,bored>Bidith ig!");
+    mes("You have already talked to this skavid.");
+    return;
+}
+~chatnpc("<p,bored>Cur bidith...");
 if(testbit(%itwatchtower_bits, ^itwatchtower_learning_skavid) = false) {
     @skavid_no_skavid_speech;
 }
@@ -25,6 +35,11 @@ if(testbit(%itwatchtower_bits, ^itwatchtower_learning_skavid) = false) {
 @skavid_comm;
 
 [opnpc1,skavid_nod]
+if(testbit(%itwatchtower_bits, ^itwatchtower_learned_nod) = true) {
+    ~chatnpc("<p,bored>Gor nod!");
+    mes("You have already talked to this skavid.");
+    return;
+}
 ~chatnpc("<p,bored>Tanath gor...");
 if(testbit(%itwatchtower_bits, ^itwatchtower_learning_skavid) = false) {
     @skavid_no_skavid_speech;
@@ -45,6 +60,26 @@ if(npc_type = skavid_cur) {
 }
 @skavid_fail;
 
+[label,skavid_sayar]
+~chatplayer("<p,neutral>Ar.");
+if(npc_type = skavid_ar) {
+    %itwatchtower_bits = setbit(%itwatchtower_bits, ^itwatchtower_learned_ar);
+    mes("It seems the skavid understood you.");
+    ~chatnpc("<p,happy>Ar,|Ar cur!");
+    return;
+}
+@skavid_fail;
+
+[label,skavid_sayig]
+~chatplayer("<p,neutral>Ig.");
+if(npc_type = skavid_ig) {
+    %itwatchtower_bits = setbit(%itwatchtower_bits, ^itwatchtower_learned_ig);
+    mes("It seems the skavid understood you.");
+    ~chatnpc("<p,happy>Ig!|Bidith ig!");
+    return;
+}
+@skavid_fail;
+
 [label,skavid_saynod]
 ~chatplayer("<p,neutral>Nod.");
 if(npc_type = skavid_nod) {
@@ -53,6 +88,10 @@ if(npc_type = skavid_nod) {
     ~chatnpc("<p,happy>Nod,|Gor nod!");
     return;
 }
+@skavid_fail;
+
+[label,skavid_saygor]
+~chatplayer("<p,neutral>Gor.");
 @skavid_fail;
 
 [label,skavid_fail]
