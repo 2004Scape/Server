@@ -103,6 +103,16 @@ export default class Npc extends PathingEntity {
         this.huntMode = npcType.huntmode;
         this.huntrange = npcType.huntrange;
         this.lastWanderTick = World.currentTick;
+
+        for (let i = 0; i < this.vars.length; i++) {
+            const varp = VarNpcType.get(i);
+            if (varp.type === ScriptVarType.STRING) {
+                // todo: "null"? another value?
+                continue;
+            } else {
+                this.vars[i] = ScriptVarType.INT ? 0 : -1;
+            }
+        }
     }
 
     cleanup(): void {

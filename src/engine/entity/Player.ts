@@ -325,6 +325,16 @@ export default class Player extends PathingEntity {
         this.lastStats.fill(-1);
         this.lastLevels.fill(-1);
         this.input = new InputTracking(this);
+
+        for (let i = 0; i < this.vars.length; i++) {
+            const varp = VarPlayerType.get(i);
+            if (varp.type === ScriptVarType.STRING) {
+                // todo: "null"? another value?
+                continue;
+            } else {
+                this.vars[i] = ScriptVarType.INT ? 0 : -1;
+            }
+        }
     }
 
     cleanup(): void {

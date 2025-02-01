@@ -81,6 +81,7 @@ import ScriptPointer from '#/engine/script/ScriptPointer.js';
 import Isaac from '#/io/Isaac.js';
 import LoggerEventType from '#/server/logger/LoggerEventType.js';
 import MoveSpeed from '#/engine/entity/MoveSpeed.js';
+import ScriptVarType from '#/cache/config/ScriptVarType.js';
 
 const priv = forge.pki.privateKeyFromPem(
     Environment.STANDALONE_BUNDLE ?
@@ -251,6 +252,16 @@ class World {
             for (let i = 0; i < VarSharedType.count && i < old.length; i++) {
                 this.varsString[i] = oldString[i];
             }
+
+            for (let i = 0; i < this.vars.length; i++) {
+                const varp = VarPlayerType.get(i);
+                if (varp.type === ScriptVarType.STRING) {
+                    // todo: "null"? another value?
+                    continue;
+                } else {
+                    this.vars[i] = ScriptVarType.INT ? 0 : -1;
+                }
+            }
         }
 
         Component.load('data/pack');
@@ -318,6 +329,16 @@ class World {
             this.varsString = new Array(VarSharedType.count);
             for (let i = 0; i < VarSharedType.count && i < old.length; i++) {
                 this.varsString[i] = oldString[i];
+            }
+
+            for (let i = 0; i < this.vars.length; i++) {
+                const varp = VarPlayerType.get(i);
+                if (varp.type === ScriptVarType.STRING) {
+                    // todo: "null"? another value?
+                    continue;
+                } else {
+                    this.vars[i] = ScriptVarType.INT ? 0 : -1;
+                }
             }
         }
 
