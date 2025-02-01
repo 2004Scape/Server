@@ -18,11 +18,11 @@ export default class LoginServer {
             printInfo(`Login server listening on port ${Environment.LOGIN_PORT}`);
         });
 
-        this.server.on('connection', (socket: WebSocket) => {
-            socket.on('message', async (data: Buffer) => {
+        this.server.on('connection', (s: WebSocket) => {
+            s.on('message', async (data: Buffer) => {
                 try {
                     const msg = JSON.parse(data.toString());
-                    const { type, nodeId, _nodeTime, profile } = msg;
+                    const { type, nodeId, nodeTime, profile } = msg;
 
                     if (type === 'world_startup') {
                         await db.updateTable('account').set({
@@ -30,9 +30,7 @@ export default class LoginServer {
                             login_time: null
                         }).where('logged_in', '=', nodeId).execute();
                     } else if (type === 'player_login') {
-                        const { replyTo, username, password, _uid } = msg;
-
-                        // todo: record login attempt + uid
+                        const { replyTo, username, password, uid, socket, remoteAddress } = msg;
 
                         const account = await db.selectFrom('account').where('username', '=', username).selectAll().executeTakeFirst();
 
@@ -44,7 +42,7 @@ export default class LoginServer {
                                 password: bcrypt.hashSync(password.toLowerCase(), 10)
                             }).execute();
 
-                            socket.send(JSON.stringify({
+                            s.send(JSON.stringify({
                                 replyTo,
                                 response: 4,
                                 staffmodlevel: 0
@@ -54,7 +52,7 @@ export default class LoginServer {
 
                         if (!account || !(await bcrypt.compare(password.toLowerCase(), account.password))) {
                             // invalid username or password
-                            socket.send(JSON.stringify({
+                            s.send(JSON.stringify({
                                 replyTo,
                                 response: 1
                             }));
@@ -63,23 +61,33 @@ export default class LoginServer {
 
                         if (account.banned_until !== null && new Date(account.banned_until) > new Date()) {
                             // account disabled
-                            socket.send(JSON.stringify({
+                            s.send(JSON.stringify({
                                 replyTo,
                                 response: 5
                             }));
                             return;
                         }
 
+                        await db.insertInto('session').values({
+                            uuid: socket,
+                            account_id: account.id,
+                            profile,
+                            world: nodeId,
+                            timestamp: toDbDate(nodeTime),
+                            uid,
+                            ip: remoteAddress
+                        }).execute();
+
                         if (account.logged_in === nodeId) {
                             // could be a reconnect so we have special logic here
                             // the world will respond already logged in otherwise
-                            socket.send(JSON.stringify({
+                            s.send(JSON.stringify({
                                 replyTo,
                                 response: 2
                             }));
                         } else if (account.logged_in !== 0) {
                             // already logged in elsewhere
-                            socket.send(JSON.stringify({
+                            s.send(JSON.stringify({
                                 replyTo,
                                 response: 3
                             }));
@@ -93,7 +101,7 @@ export default class LoginServer {
 
                         if (!fs.existsSync(`data/players/${profile}/${username}.sav`)) {
                             // not an error - never logged in before
-                            socket.send(JSON.stringify({
+                            s.send(JSON.stringify({
                                 replyTo,
                                 response: 4,
                                 staffmodlevel: account.staffmodlevel,
@@ -103,7 +111,7 @@ export default class LoginServer {
                         }
 
                         const save = fs.readFileSync(`data/players/${profile}/${username}.sav`);
-                        socket.send(JSON.stringify({
+                        s.send(JSON.stringify({
                             replyTo,
                             response: 0,
                             staffmodlevel: account.staffmodlevel,
@@ -131,7 +139,7 @@ export default class LoginServer {
                             login_time: null
                         }).where('username', '=', username).executeTakeFirst();
 
-                        socket.send(JSON.stringify({
+                        s.send(JSON.stringify({
                             replyTo,
                             response: 0
                         }));
@@ -177,8 +185,8 @@ export default class LoginServer {
                 }
             });
 
-            socket.on('close', () => { });
-            socket.on('error', () => { });
+            s.on('close', () => { });
+            s.on('error', () => { });
         });
     }
 }

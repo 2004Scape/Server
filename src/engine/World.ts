@@ -81,6 +81,8 @@ import ScriptPointer from '#/engine/script/ScriptPointer.js';
 import Isaac from '#/io/Isaac.js';
 import LoggerEventType from '#/server/logger/LoggerEventType.js';
 import MoveSpeed from '#/engine/entity/MoveSpeed.js';
+import ScriptVarType from '#/cache/config/ScriptVarType.js';
+import WordPack from '#/wordenc/WordPack.js';
 
 const priv = forge.pki.privateKeyFromPem(
     Environment.STANDALONE_BUNDLE ?
@@ -251,6 +253,16 @@ class World {
             for (let i = 0; i < VarSharedType.count && i < old.length; i++) {
                 this.varsString[i] = oldString[i];
             }
+
+            for (let i = 0; i < this.vars.length; i++) {
+                const varsh = VarSharedType.get(i);
+                if (varsh.type === ScriptVarType.STRING) {
+                    // todo: "null"? another value?
+                    continue;
+                } else {
+                    this.vars[i] = varsh.type === ScriptVarType.INT ? 0 : -1;
+                }
+            }
         }
 
         Component.load('data/pack');
@@ -318,6 +330,16 @@ class World {
             this.varsString = new Array(VarSharedType.count);
             for (let i = 0; i < VarSharedType.count && i < old.length; i++) {
                 this.varsString[i] = oldString[i];
+            }
+
+            for (let i = 0; i < this.vars.length; i++) {
+                const varsh = VarSharedType.get(i);
+                if (varsh.type === ScriptVarType.STRING) {
+                    // todo: "null"? another value?
+                    continue;
+                } else {
+                    this.vars[i] = varsh.type === ScriptVarType.INT ? 0 : -1;
+                }
             }
         }
 
@@ -391,11 +413,12 @@ class World {
             // - npc hunt
             this.processWorld();
 
-            // player setup (todo better name)
+            // client input
             // - calculate afk event readiness
             // - process packets
             // - process pathfinding/following request
-            this.processPlayerSetup();
+            // - client input tracking
+            this.processClientsIn();
 
             // npc processing (if npc is not busy)
             // - resume suspended script
@@ -604,7 +627,11 @@ class World {
         this.cycleStats[WorldStat.WORLD] = Date.now() - start;
     }
 
-    private processPlayerSetup(): void {
+    // - calculate afk event readiness
+    // - process packets
+    // - process pathfinding/following request
+    // - client input tracking
+    private processClientsIn(): void {
         const start: number = Date.now();
 
         this.cycleStats[WorldStat.BANDWIDTH_IN] = 0;
@@ -667,6 +694,13 @@ class World {
                 } else if (this.currentTick - player.lastResponse >= World.TIMEOUT_SOCKET_IDLE) {
                     // x-logged / timed out for 10s: attempt logout
                     player.tryLogout = true;
+                }
+
+                // - client input tracking
+                player.processInputTracking();
+
+                if (player.logMessage !== null) {
+                    this.logPublicChat(player, player.logMessage);
                 }
             } catch (err) {
                 console.error(err);
@@ -1439,6 +1473,15 @@ class World {
         });
     }
 
+    logPublicChat(player: Player, chat: string) {
+        this.friendThread.postMessage({
+            type: 'public_message',
+            username: player.username,
+            coord: player.coord,
+            chat
+        });
+    }
+
     removePlayer(player: Player): void {
         if (player.pid === -1) {
             return;
@@ -1496,7 +1539,8 @@ class World {
             staffLvl: player.staffModLevel,
             pmId: (Environment.NODE_ID << 24) + (Math.random() * 0xFF << 16) + (this.pmCount++),
             target: targetUsername37,
-            message: message
+            message: message,
+            coord: player.coord
         });
     }
 
@@ -1936,6 +1980,7 @@ class World {
             this.loginThread.postMessage({
                 type: 'player_login',
                 socket: client.uuid,
+                remoteAddress: client.remoteAddress,
                 username: safeName,
                 password,
                 uid,
@@ -1976,6 +2021,16 @@ class World {
             staff,
             username,
             until: until
+        });
+    }
+
+    notifyPlayerReport(player: Player, offender: string, reason: number) {
+        this.loggerThread.postMessage({
+            type: 'report',
+            username: player.username,
+            coord: player.coord,
+            offender,
+            reason
         });
     }
 }

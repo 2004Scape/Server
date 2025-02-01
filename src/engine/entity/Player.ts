@@ -52,7 +52,7 @@ import {PRELOADED, PRELOADED_CRC} from '#/cache/PreloadedPacks.js';
 
 import OutgoingMessage from '#/network/server/OutgoingMessage.js';
 import IfClose from '#/network/server/model/IfClose.js';
-import UpdateUid192 from '#/network/server/model/UpdateUid192.js';
+import UpdateUid192 from '#/network/server/model/UpdatePid.js';
 import ResetAnims from '#/network/server/model/ResetAnims.js';
 import ResetClientVarCache from '#/network/server/model/ResetClientVarCache.js';
 import TutOpen from '#/network/server/model/TutOpen.js';
@@ -74,6 +74,7 @@ import WalkTriggerSetting from '#/util/WalkTriggerSetting.js';
 import Environment from '#/util/Environment.js';
 import { ChatModePrivate, ChatModePublic, ChatModeTradeDuel } from '#/util/ChatModes.js';
 import LoggerEventType from '#/server/logger/LoggerEventType.js';
+import InputTracking from '#/engine/entity/tracking/InputTracking.js';
 import Visibility from './Visibility.js';
 
 const levelExperience = new Int32Array(99);
@@ -217,6 +218,9 @@ export default class Player extends PathingEntity {
     privateChat: ChatModePrivate = ChatModePrivate.ON;
     tradeDuel: ChatModeTradeDuel = ChatModeTradeDuel.ON;
 
+    // input tracking
+    input: InputTracking;
+
     // runtime variables
     pid: number = -1;
     uid: number = -1;
@@ -263,6 +267,7 @@ export default class Player extends PathingEntity {
     messageEffect: number | null = null;
     messageType: number | null = null;
     message: Uint8Array | null = null;
+    logMessage: string | null = null;
 
     // ---
 
@@ -320,6 +325,17 @@ export default class Player extends PathingEntity {
         this.varsString = new Array(VarPlayerType.count);
         this.lastStats.fill(-1);
         this.lastLevels.fill(-1);
+        this.input = new InputTracking(this);
+
+        for (let i = 0; i < this.vars.length; i++) {
+            const varp = VarPlayerType.get(i);
+            if (varp.type === ScriptVarType.STRING) {
+                // todo: "null"? another value?
+                continue;
+            } else {
+                this.vars[i] = varp.type === ScriptVarType.INT ? 0 : -1;
+            }
+        }
     }
 
     cleanup(): void {
@@ -349,6 +365,7 @@ export default class Player extends PathingEntity {
         this.messageEffect = null;
         this.messageType = null;
         this.message = null;
+        this.logMessage = null;
     }
 
     // ----
@@ -1027,6 +1044,10 @@ export default class Player extends PathingEntity {
         if (!this.hasWaypoints()) {
             this.unsetMapFlag();
         }
+    }
+
+    processInputTracking(): void {
+        this.input.process();
     }
 
     // ----

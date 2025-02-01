@@ -1,25 +1,27 @@
-[queue,player_death]
+[proc,player_die]
+if (.finduid(%duelpartner) = true) {
+    if (~.in_duel_arena(.coord) = true & ~in_duel_arena(coord) = true) {
+        queue(player_death_duel, 0);
+        return;
+    }
+}
+queue(player_death_default, 0);
+
+[proc,player_death]
 p_delay(1);
 p_stopaction;
 if_close;
 anim(human_death, 0);
 p_delay(3);
 
-~combat_clearqueue;
-clearqueue(player_death);
-
+[queue,player_death_default]
+~player_death;
 midi_jingle(^death_jingle_2, ^death_jingle_2_millis);
 mes("Oh dear you are dead.");
-if (~in_duel_arena(coord) = true & .finduid(%duelpartner) = true & ~.in_duel_arena(.coord) = true) {
-    if_close;
-    .if_close;
-    %duelstatus = ^duelstatus_lost;
-    .%duelstatus = ^duelstatus_victory;
-    queue(duel_arena_finish, 0);
-    .queue(duel_arena_finish, 0);
-    // player2 can move freely whilst player 1 is in death anim: https://youtu.be/BBYbpuquiZw?t=412 (vid he equips dragon sword)
-    return;
-}
+
+~combat_clearqueue;
+clearqueue(player_death_default);
+
 def_obj $prev_wep = inv_getobj(worn, ^wearpos_rhand);
 if (findhero = true) {
     ~pvp_death_lose_items;

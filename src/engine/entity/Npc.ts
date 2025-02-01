@@ -139,7 +139,17 @@ export default class Npc extends PathingEntity {
             }
             this.heroPoints.clear();
             this.queue.clear();
-            this.vars.fill(0);
+
+            for (let i = 0; i < this.vars.length; i++) {
+                const varn = VarNpcType.get(i);
+                if (varn.type === ScriptVarType.STRING) {
+                    // todo: "null"? another value?
+                    continue;
+                } else {
+                    this.vars[i] = varn.type === ScriptVarType.INT ? 0 : -1;
+                }
+            }
+
             this.varsString.fill(undefined);
             this.defaultMode();
 

@@ -8,6 +8,7 @@ export type account = {
     id: Generated<number>;
     username: string;
     password: string;
+    email: string | null;
     registration_ip: string | null;
     registration_date: Generated<string>;
     logged_in: Generated<number>;
@@ -60,24 +61,42 @@ export type newspost = {
     created: Generated<string>;
     updated: Generated<string>;
 };
-export type npc_hiscore = {
-    id: Generated<number>;
-    npc_id: number;
-    account_id: number;
-    kill_count: Generated<number>;
-};
 export type private_chat = {
     id: Generated<number>;
-    from_account_id: number;
+    account_id: number;
+    profile: string;
+    timestamp: string;
+    coord: number;
     to_account_id: number;
     message: string;
-    date: Generated<string>;
 };
 export type public_chat = {
     id: Generated<number>;
     account_id: number;
+    profile: string;
+    world: number;
+    timestamp: string;
+    coord: number;
     message: string;
-    date: Generated<string>;
+};
+export type report = {
+    id: Generated<number>;
+    account_id: number;
+    profile: string;
+    world: number;
+    timestamp: string;
+    coord: number;
+    offender: string;
+    reason: number;
+};
+export type session = {
+    uuid: string;
+    account_id: number;
+    profile: string;
+    world: number;
+    timestamp: string;
+    uid: number;
+    ip: string | null;
 };
 export type DB = {
     account: account;
@@ -87,7 +106,8 @@ export type DB = {
     hiscore_large: hiscore_large;
     ignorelist: ignorelist;
     newspost: newspost;
-    npc_hiscore: npc_hiscore;
     private_chat: private_chat;
     public_chat: public_chat;
+    report: report;
+    session: session;
 };

@@ -82,7 +82,7 @@ export default class ClientProt {
     static readonly TUTORIAL_CLICKSIDE = new ClientProt(204, 175, 1);
 
     static readonly MOVE_OPCLICK = new ClientProt(242, 93, -1); // comes with OP packets, name based on other MOVE packets
-    static readonly BUG_REPORT = new ClientProt(243, 190, 10); // NXT naming
+    static readonly REPORT_ABUSE = new ClientProt(243, 190, 10);
     static readonly MOVE_MINIMAPCLICK = new ClientProt(244, 165, -1); // NXT naming
     static readonly INV_BUTTOND = new ClientProt(245, 159, 6); // NXT has "IF_BUTTOND" but for our interface system, this makes more sense
     static readonly IGNORELIST_DEL = new ClientProt(246, 171, 8); // NXT naming

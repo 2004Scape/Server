@@ -8,6 +8,7 @@ import Environment from '#/util/Environment.js';
 import { ChatModePrivate } from '#/util/ChatModes.js';
 import { printInfo } from '#/util/Logger.js';
 import InternalClient from '#/server/InternalClient.js';
+import { db, toDbDate } from '#/db/query.js';
 
 /**
  * client -> server opcodes for friends server
@@ -22,6 +23,7 @@ export enum FriendsClientOpcodes {
     PLAYER_LOGOUT,
     PLAYER_CHAT_SETMODE,
     PRIVATE_MESSAGE,
+    PUBLIC_CHAT_LOG
 }
 
 /**
@@ -292,8 +294,34 @@ export class FriendServer {
                         const username37 = BigInt(message.username37);
                         const targetUsername37 = BigInt(message.targetUsername37);
                         const { staffLvl, pmId, chat } = message;
-                        
+
+                        const from = await db.selectFrom('account').selectAll().where('username', '=', fromBase37(username37)).executeTakeFirstOrThrow();
+                        const to = await db.selectFrom('account').selectAll().where('username', '=', fromBase37(targetUsername37)).executeTakeFirstOrThrow();
+
+                        await db.insertInto('private_chat').values({
+                            account_id: from.id,
+                            profile: message.profile,
+                            to_account_id: to.id,
+                            timestamp: toDbDate(Date.now()),
+                            coord: message.coord,
+                            message: chat
+                        }).execute();
+
                         await this.sendPrivateMessage(username37, staffLvl, pmId, targetUsername37, chat);
+                    } else if (type === FriendsClientOpcodes.PUBLIC_CHAT_LOG) {
+                        const { nodeId, nodeTime, profile, username, coord, chat } = message;
+
+                        const from = await db.selectFrom('account').selectAll().where('username', '=', username).executeTakeFirstOrThrow();
+
+                        await db.insertInto('public_chat').values({
+                            account_id: from.id,
+                            profile,
+                            world: nodeId,
+
+                            timestamp: toDbDate(nodeTime),
+                            coord,
+                            message: chat
+                        }).execute();
                     } else {
                         // console.error(`[Friends]: Unknown opcode ${opcode}, length ${length}`);
                     }
@@ -513,7 +541,7 @@ export class FriendClient extends InternalClient {
         }));
     }
 
-    public async privateMessage(username: string, staffLvl: number, pmId: number, target: bigint, chat: string) {
+    public async privateMessage(username: string, staffLvl: number, pmId: number, target: bigint, chat: string, coord: number) {
         await this.connect();
 
         if (!this.ws || !this.wsr || !this.wsr.checkIfWsLive()) {
@@ -523,10 +551,31 @@ export class FriendClient extends InternalClient {
         this.ws.send(JSON.stringify({
             type: FriendsClientOpcodes.PRIVATE_MESSAGE,
             world: this.nodeId,
+            nodeTime: Date.now(),
+            profile: Environment.NODE_PROFILE,
             username37: toBase37(username).toString(),
             targetUsername37: target.toString(),
             staffLvl,
             pmId,
+            chat,
+            coord
+        }));
+    }
+
+    async publicMessage(username: string, coord: number, chat: string) {
+        await this.connect();
+
+        if (!this.ws || !this.wsr || !this.wsr.checkIfWsLive()) {
+            return;
+        }
+
+        this.ws.send(JSON.stringify({
+            type: FriendsClientOpcodes.PUBLIC_CHAT_LOG,
+            nodeId: this.nodeId,
+            nodeTime: Date.now(),
+            profile: Environment.NODE_PROFILE,
+            username,
+            coord,
             chat
         }));
     }
