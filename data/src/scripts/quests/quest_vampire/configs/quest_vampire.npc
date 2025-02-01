@@ -34,6 +34,7 @@ param=stabdefence,2
 param=slashdefence,1
 param=crushdefence,3
 param=damagetype,^crush_style
+param=combat_xp_multiplier,100
 timer=1
 // Stats match osrs version but our version Vislvl is different.
 // https://raw.githubusercontent.com/Joshua-F/osrs-dumps/refs/heads/master/config/dump.npc npc_3481
