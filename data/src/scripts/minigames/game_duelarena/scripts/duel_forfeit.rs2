@@ -12,14 +12,10 @@ def_int $choice = ~p_choice2_header("Yes", 1, "No", 2, "Do you wish to forfeit?"
 if ($choice = 2) {
     return;
 }
-if_close;
 %duelstatus = ^duelstatus_lost;
-if (getqueue(duel_arena_finish) < 1) {
-    queue(duel_arena_finish, 0);
-}
-
-if (.finduid(%duelpartner) = true)  {
+queue(duel_finish, 0);
+if (.finduid(%duelpartner) = true) {
     .if_close;
     .%duelstatus = ^duelstatus_opponent_resigned;
-    .queue(duel_arena_finish, 0);
+    .queue(duel_finish, 0);
 }
