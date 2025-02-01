@@ -5,7 +5,7 @@ if (inv_freespace(inv) = 0) {
 }
 
 loc_change(loc_param(next_loc_stage), 500);
-mes(lc_debugname(loc_type));
+//mes(lc_debugname(loc_type));
 inv_add(inv, pineapple, 1);
 
 mes("You pick a pineapple.");
