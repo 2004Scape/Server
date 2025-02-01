@@ -68,6 +68,10 @@
 
 [if_button,combat_staff_2:auto_toggle]
 if_close;
+if (%attackstyle_magic = 0) {
+    mes("You need to choose a spell first."); // https://youtu.be/Mo6AcO4rg4A?t=69
+    return;
+}
 if (p_finduid(uid) = true) {
     %attackstyle_magic = togglebit(%attackstyle_magic, 0);
     return;
