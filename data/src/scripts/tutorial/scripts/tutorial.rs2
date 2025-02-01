@@ -52,6 +52,7 @@ if (%tutorial_progress = ^runescape_guide_start) {
     allowdesign(true);
 }
 ~set_tutorial_progress;
+@music_playbyregion(coord);
 
 [proc,tutorial_set_active_tabs]
 if (%tutorial_progress > ^runescape_guide_start) {
