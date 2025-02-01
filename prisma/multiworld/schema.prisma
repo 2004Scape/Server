@@ -16,8 +16,9 @@ datasource db {
 model account {
     id Int @id @default(autoincrement())
 
-    username String @unique
+    username String  @unique
     password String
+    email    String?
 
     registration_ip   String?
     registration_date DateTime @default(now())
@@ -31,6 +32,19 @@ model account {
     staffmodlevel Int @default(0)
 }
 
+model session {
+    uuid String @id
+
+    account_id Int
+    profile    String
+
+    world     Int
+    timestamp DateTime
+    uid       Int
+    ip        String?
+}
+
+// todo: rename this to e.g. session_log one day
 model account_session {
     id Int @id @default(autoincrement())
 
@@ -82,14 +96,6 @@ model hiscore_large {
     @@id([account_id, profile, type])
 }
 
-model npc_hiscore {
-    id Int @id @default(autoincrement())
-
-    npc_id     Int
-    account_id Int
-    kill_count Int @default(0)
-}
-
 // social
 
 model friendlist {
@@ -107,20 +113,39 @@ model ignorelist {
 }
 
 model public_chat {
-    id      Int    @id @default(autoincrement())
-    profile String @default("main")
+    id Int @id @default(autoincrement())
 
     account_id Int
-    message    String
-    date       DateTime @default(now())
+    profile    String
+
+    world     Int
+    timestamp DateTime
+    coord     Int
+    message   String
 }
 
 model private_chat {
-    id      Int    @id @default(autoincrement())
-    profile String @default("main")
+    id Int @id @default(autoincrement())
 
-    from_account_id Int
-    to_account_id   Int
-    message         String
-    date            DateTime @default(now())
+    account_id Int
+    profile    String
+
+    timestamp     DateTime
+    coord         Int
+    to_account_id Int
+    message       String
+}
+
+model report {
+    id Int @id @default(autoincrement())
+
+    account_id Int
+    profile    String
+
+    world     Int
+    timestamp DateTime
+    coord     Int
+
+    offender String
+    reason   Int
 }

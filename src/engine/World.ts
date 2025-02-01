@@ -82,6 +82,7 @@ import Isaac from '#/io/Isaac.js';
 import LoggerEventType from '#/server/logger/LoggerEventType.js';
 import MoveSpeed from '#/engine/entity/MoveSpeed.js';
 import ScriptVarType from '#/cache/config/ScriptVarType.js';
+import WordPack from '#/wordenc/WordPack.js';
 
 const priv = forge.pki.privateKeyFromPem(
     Environment.STANDALONE_BUNDLE ?
@@ -694,8 +695,13 @@ class World {
                     // x-logged / timed out for 10s: attempt logout
                     player.tryLogout = true;
                 }
+
                 // - client input tracking
                 player.processInputTracking();
+
+                if (player.logMessage !== null) {
+                    this.logPublicChat(player, player.logMessage);
+                }
             } catch (err) {
                 console.error(err);
                 this.removePlayer(player);
@@ -1467,6 +1473,15 @@ class World {
         });
     }
 
+    logPublicChat(player: Player, chat: string) {
+        this.friendThread.postMessage({
+            type: 'public_message',
+            username: player.username,
+            coord: player.coord,
+            chat
+        });
+    }
+
     removePlayer(player: Player): void {
         if (player.pid === -1) {
             return;
@@ -1524,7 +1539,8 @@ class World {
             staffLvl: player.staffModLevel,
             pmId: (Environment.NODE_ID << 24) + (Math.random() * 0xFF << 16) + (this.pmCount++),
             target: targetUsername37,
-            message: message
+            message: message,
+            coord: player.coord
         });
     }
 
@@ -1964,6 +1980,7 @@ class World {
             this.loginThread.postMessage({
                 type: 'player_login',
                 socket: client.uuid,
+                remoteAddress: client.remoteAddress,
                 username: safeName,
                 password,
                 uid,
@@ -2004,6 +2021,16 @@ class World {
             staff,
             username,
             until: until
+        });
+    }
+
+    notifyPlayerReport(player: Player, offender: string, reason: number) {
+        this.loggerThread.postMessage({
+            type: 'report',
+            username: player.username,
+            coord: player.coord,
+            offender,
+            reason
         });
     }
 }

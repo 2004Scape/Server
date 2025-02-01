@@ -72,6 +72,8 @@ import IgnoreListAddHandler from '#/network/rs225/client/handler/IgnoreListAddHa
 import IgnoreListDelHandler from '#/network/rs225/client/handler/IgnoreListDelHandler.js';
 import EventTrackingDecoder from '#/network/rs225/client/codec/EventTrackingDecoder.js';
 import EventTrackingHandler from '#/network/rs225/client/handler/EventTrackingHandler.js';
+import ReportAbuseDecoder from '#/network/rs225/client/codec/ReportAbuseDecoder.js';
+import ReportAbuseHandler from '#/network/rs225/client/handler/ReportAbuseHandler.js';
 
 class ClientProtRepository {
     decoders: Map<number, MessageDecoder<IncomingMessage>> = new Map();
@@ -151,6 +153,7 @@ class ClientProtRepository {
         this.bind(new TutorialClickSideDecoder(), new TutorialClickSideHandler());
         this.bind(new ChatSetModeDecoder(), new ChatSetModeHandler());
         this.bind(new EventTrackingDecoder(), new EventTrackingHandler());
+        this.bind(new ReportAbuseDecoder(), new ReportAbuseHandler());
     }
 
     getDecoder(prot: ClientProt) {

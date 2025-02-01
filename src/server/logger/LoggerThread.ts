@@ -51,6 +51,13 @@ async function handleRequests(_parentPort: ParentPort, msg: any) {
             }
             break;
         }
+        case 'report': {
+            if (Environment.LOGGER_SERVER) {
+                const { username, coord, offender, reason } = msg;
+                await client.report(username, coord, offender, reason);
+            }
+            break;
+        }
         // todo: store session's packet traffic for analysis
         default:
             console.error('Unknown message type: ' + msg.type);

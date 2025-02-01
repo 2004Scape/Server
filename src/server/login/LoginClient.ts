@@ -1,3 +1,4 @@
+import ClientSocket from '#/server/ClientSocket.js';
 import InternalClient from '#/server/InternalClient.js';
 
 import Environment from '#/util/Environment.js';
@@ -25,7 +26,7 @@ export default class LoginClient extends InternalClient {
         }));
     }
 
-    public async playerLogin(username: string, password: string, uid: number) {
+    public async playerLogin(username: string, password: string, uid: number, socket: string, remoteAddress: string) {
         await this.connect();
 
         if (!this.ws || !this.wsr || !this.wsr.checkIfWsLive()) {
@@ -39,7 +40,9 @@ export default class LoginClient extends InternalClient {
             profile: Environment.NODE_PROFILE,
             username,
             password,
-            uid
+            uid,
+            socket,
+            remoteAddress
         });
 
         if (reply.error) {

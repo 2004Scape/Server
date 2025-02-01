@@ -42,6 +42,24 @@ export default class LoggerServer {
 
                             break;
                         }
+                        case 'report': {
+                            const { world, profile, username, timestamp, coord, offender, reason } = msg;
+
+                            const account = await db.selectFrom('account').where('username', '=', username).selectAll().executeTakeFirstOrThrow();
+
+                            await db.insertInto('report').values({
+                                account_id: account.id,
+                                world,
+                                profile,
+
+                                timestamp: toDbDate(timestamp),
+                                coord,
+                                offender,
+                                reason
+                            }).execute();
+
+                            break;
+                        }
                     }
                 } catch (err) {
                     console.error(err);

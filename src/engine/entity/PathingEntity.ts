@@ -135,6 +135,10 @@ export default abstract class PathingEntity extends Entity {
         this.lastStepZ = z;
     }
 
+    get coord() {
+        return CoordGrid.packCoord(this.level, this.x, this.z);
+    }
+
     /**
      * Attempts to update movement for a PathingEntity.
      */

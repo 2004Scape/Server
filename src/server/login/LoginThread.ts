@@ -51,7 +51,7 @@ async function handleRequests(parentPort: ParentPort, msg: any) {
             break;
         }
         case 'player_login': {
-            const { socket, username, password, uid, lowMemory, reconnecting } = msg;
+            const { socket, remoteAddress, username, password, uid, lowMemory, reconnecting } = msg;
 
             if (Environment.LOGIN_SERVER) {
                 parentPort.postMessage({
@@ -60,7 +60,7 @@ async function handleRequests(parentPort: ParentPort, msg: any) {
                     username,
                     lowMemory,
                     reconnecting,
-                    ...await client.playerLogin(username, password, uid)
+                    ...await client.playerLogin(username, password, uid, socket, remoteAddress)
                 });
             } else {
                 let staffmodlevel = 0;
