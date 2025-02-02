@@ -91,12 +91,12 @@ if(inv_total(inv, pressure_gauge) > 0 & inv_total(inv, oil_can) > 0 & inv_total(
     if(inv_total(inv, pressure_gauge) > 0) {
         $player_items = append($player_items, "|I have a pressure gauge.");
     } else {
-        $oddenstein_items = append($oddenstein_items, "|A rubber tube.");
+        $oddenstein_items = append($oddenstein_items, "|A pressure gauge.");
     }
     if(inv_total(inv, rubber_tube) > 0) {
         $player_items = append($player_items, "|I have a rubber tube.");
     } else {
-        $oddenstein_items = append($oddenstein_items, "|A pressure gauge.");
+        $oddenstein_items = append($oddenstein_items, "|A rubber tube.");
     }
     mes($player_items);
     ~chatplayer("<p,neutral>I have found some of the things you need:<$player_items>");
