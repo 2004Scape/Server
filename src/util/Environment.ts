@@ -28,7 +28,6 @@ export default {
     NODE_PRODUCTION: tryParseBoolean(process.env.NODE_PRODUCTION, false),
     // automatic shutdown time for production mode on sigint
     NODE_KILLTIMER: tryParseInt(process.env.NODE_KILLTIMER, 500), // 5 minutes
-    NODE_ALLOW_CHEATS: tryParseBoolean(process.env.NODE_ALLOW_CHEATS, true),
     // extra debug info e.g. missing triggers
     NODE_DEBUG: tryParseBoolean(process.env.NODE_DEBUG, true),
     // measuring script execution

@@ -168,7 +168,7 @@ export default class ClientCheatHandler extends MessageHandler<ClientCheat> {
             }
         }
 
-        if (Environment.NODE_ALLOW_CHEATS || player.staffModLevel >= 2) {
+        if (player.staffModLevel >= 2) {
             // admin commands
 
             if (cmd === 'getcoord') {
@@ -464,52 +464,6 @@ export default class ClientCheatHandler extends MessageHandler<ClientCheat> {
                 }
 
                 player.invAdd(InvType.INV, obj, 1000, false);
-            } else if (cmd === 'ban') {
-                // custom
-                if (args.length < 2) {
-                    // ::ban <username> <minutes>
-                    return false;
-                }
-
-                const username = args[0];
-                const minutes = Math.max(0, tryParseInt(args[1], 60));
-
-                World.notifyPlayerBan(player.username, username, Date.now() + (minutes * 60 * 1000));
-
-                const other = World.getPlayerByUsername(username);
-                if (other) {
-                    World.removePlayer(other);
-                }
-            } else if (cmd === 'kick') {
-                // custom
-                if (args.length < 1) {
-                    // ::kick <username>
-                    return false;
-                }
-
-                const username = args[0];
-
-                const other = World.getPlayerByUsername(username);
-                if (other) {
-                    World.removePlayer(other);
-                }
-            } else if (cmd === 'mute') {
-                // custom
-                if (args.length < 2) {
-                    // ::mute <username> <minutes>
-                    return false;
-                }
-
-                const other = World.getPlayerByUsername(args[0]);
-                if (!other) {
-                    player.messageGame(`${args[0]} is not logged in.`);
-                    return false;
-                }
-
-                const minutes = Math.max(0, tryParseInt(args[1], 60));
-
-                other.muted_until = new Date(Date.now() + (minutes * 60 * 1000));
-                World.notifyPlayerMute(player.username, other.username, Date.now() + (minutes * 60 * 1000));
             } else if (cmd === 'broadcast') {
                 // custom
                 if (args.length < 0) {
@@ -543,6 +497,55 @@ export default class ClientCheatHandler extends MessageHandler<ClientCheat> {
                     case '1': player.setVisibility(Visibility.SOFT); break;
                     case '2': player.setVisibility(Visibility.HARD); break;
                     default: return false;
+                }
+            }
+        }
+
+        if (player.staffModLevel >= 1) {
+            if (cmd === 'ban') {
+                // custom
+                if (args.length < 2) {
+                    // ::ban <username> <minutes>
+                    return false;
+                }
+
+                const username = args[0];
+                const minutes = Math.max(0, tryParseInt(args[1], 60));
+
+                World.notifyPlayerBan(player.username, username, Date.now() + (minutes * 60 * 1000));
+
+                const other = World.getPlayerByUsername(username);
+                if (other) {
+                    World.removePlayer(other);
+                }
+            } else if (cmd === 'mute') {
+                // custom
+                if (args.length < 2) {
+                    // ::mute <username> <minutes>
+                    return false;
+                }
+
+                const username = args[0];
+                const minutes = Math.max(0, tryParseInt(args[1], 60));
+
+                World.notifyPlayerMute(player.username, username, Date.now() + (minutes * 60 * 1000));
+
+                const other = World.getPlayerByUsername(username);
+                if (other) {
+                    other.muted_until = new Date(Date.now() + (minutes * 60 * 1000));
+                }
+            } else if (cmd === 'kick') {
+                // custom
+                if (args.length < 1) {
+                    // ::kick <username>
+                    return false;
+                }
+
+                const username = args[0];
+
+                const other = World.getPlayerByUsername(username);
+                if (other) {
+                    World.removePlayer(other);
                 }
             }
         }
