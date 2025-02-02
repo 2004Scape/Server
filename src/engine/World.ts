@@ -1178,12 +1178,6 @@ class World {
             }
         }
 
-        const online = this.getTotalPlayers();
-        if (online === 0 && this.logoutRequests.size === 0) {
-            printInfo('Server shutdown complete');
-            process.exit(0);
-        }
-
         for (const player of this.players) {
             player.loggedOut = true;
 
@@ -1191,6 +1185,12 @@ class World {
                 player.logout(); // see ya
                 player.client.close();
             }
+        }
+
+        const online = this.getTotalPlayers();
+        if (online === 0 && this.logoutRequests.size === 0) {
+            printInfo('Server shutdown complete');
+            process.exit(0);
         }
 
         if (duration > 2) {
