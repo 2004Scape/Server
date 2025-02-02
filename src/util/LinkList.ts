@@ -1,15 +1,14 @@
 import Linkable from '#/util/Linkable.js';
 
 export default class LinkList<T extends Linkable> {
-    // constructor
-    private readonly sentinel: Linkable = new Linkable();
-
-    // runtime
+    private readonly sentinel: Linkable;
     public cursor: Linkable | null = null;
 
     constructor() {
-        this.sentinel.next = this.sentinel;
-        this.sentinel.prev = this.sentinel;
+        const head: Linkable = new Linkable();
+        head.next = head;
+        head.prev = head;
+        this.sentinel = head;
     }
 
     addTail(node: T): void {
@@ -86,7 +85,6 @@ export default class LinkList<T extends Linkable> {
     }
 
     clear(): void {
-        // eslint-disable-next-line no-constant-condition
         while (true) {
             const node: T | null = this.sentinel.next as T | null;
             if (node === this.sentinel) {
