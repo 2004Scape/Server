@@ -247,7 +247,7 @@ param=max_dealt,0
 // osrs stats and Vislvl match 1:1
 // https://raw.githubusercontent.com/Joshua-F/osrs-dumps/refs/heads/master/config/dump.npc npc_304
 
-[npc_872]
+[watchtower_wizard]
 vislevel=hide
 name=Watchtower wizard
 desc=The hat is a dead give away.

@@ -90,6 +90,7 @@ switch_coord (loc_param(start_coord)) {
     case 0_42_50_21_9 : return (%brimnorth_ropeswing_used);
     case 0_42_50_17_5 : return (%brimsouth_ropeswing_used);
     case 0_39_48_15_19 : return (%ogre_ropeswing_used);
+    case default : return (^max_32bit_int);
 }
 
 [proc,set_island_rope_var](int $value)

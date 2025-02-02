@@ -20,6 +20,7 @@ data=restore_message2,They heal some health.
 table=consume_messages_table
 data=consumable,jangerberries
 data=consume_message2,They taste very bitter.
+data=restore_message2,0
 
 [ugthanki_kebab_consume_messages]
 table=consume_messages_table

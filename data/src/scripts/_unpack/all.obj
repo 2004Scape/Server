@@ -1155,7 +1155,7 @@ weight=10g
 members=yes
 tradeable=no
 
-[obj_2378]
+[toban_key]
 name=Toban key
 model=model_2372_obj
 2dxof=-3
@@ -1180,7 +1180,7 @@ iop2=Eat
 category=category_734
 tradeable=no
 
-[obj_2380]
+[watchtower_crystal1]
 name=Crystal
 model=model_2335_obj
 recol1s=22292
@@ -1195,7 +1195,7 @@ weight=2lb
 members=yes
 tradeable=no
 
-[obj_2381]
+[watchtower_crystal2]
 name=Crystal
 model=model_2335_obj
 recol1s=22292
@@ -1210,7 +1210,7 @@ weight=2lb
 members=yes
 tradeable=no
 
-[obj_2382]
+[watchtower_crystal3]
 name=Crystal
 model=model_2335_obj
 recol1s=22292
@@ -1225,7 +1225,7 @@ weight=2lb
 members=yes
 tradeable=no
 
-[obj_2383]
+[watchtower_crystal4]
 name=Crystal
 model=model_2335_obj
 recol1s=2978
@@ -1240,7 +1240,7 @@ weight=2lb
 members=yes
 tradeable=no
 
-[obj_2384]
+[fingernails]
 name=Finger nails
 desc=Eeeeyeeew!
 model=model_1787_obj
@@ -1252,7 +1252,7 @@ weight=2g
 members=yes
 tradeable=no
 
-[obj_2385]
+[old_robe]
 name=Old robe
 desc=I can't wear this old thing.
 model=model_2786_obj
@@ -1263,7 +1263,7 @@ weight=4lb
 members=yes
 tradeable=no
 
-[obj_2386]
+[unusual_armour]
 name=Unusual armour
 desc=Looks kind of useless...
 model=model_2574_obj
@@ -1274,7 +1274,7 @@ weight=8lb
 members=yes
 tradeable=no
 
-[obj_2387]
+[damaged_dagger]
 name=Damaged dagger
 desc=Pointy.
 model=model_2672_obj
