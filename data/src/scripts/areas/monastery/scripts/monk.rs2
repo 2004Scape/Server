@@ -9,7 +9,7 @@ if ($heal = 0) {
 
 [label,monk_heal_self]
 sound_synth(selfheal,0,0);
-spotanim_pl(heal_casting, 120, 0);
+spotanim_npc(heal_casting, 120, 0);
 npc_statheal(hitpoints,2,0);
 npc_anim(human_castheal,0);
 %npc_action_delay = add(map_clock, 4);
