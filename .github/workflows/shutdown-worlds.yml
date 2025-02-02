@@ -1,0 +1,26 @@
+name: Shutdown World
+env: ${{ secrets }}
+
+on:
+  workflow_call:
+    inputs:
+      environment:
+        required: true
+        type: string
+
+jobs:
+  deploy:
+    runs-on: ubuntu-latest
+    environment: ${{ inputs.environment}}
+
+    steps:
+    - name: Shutdown World
+      uses: appleboy/ssh-action@v1.2.0
+      with:
+        host: ${{ secrets.HOST }}
+        port: ${{ secrets.PORT }}
+        username: ${{ secrets.USERNAME }}
+        key: ${{ secrets.KEY }}
+        script: |
+          pm2 stop ${{ inputs.environment }}
+          pm2 start ${{ inputs.environment }}-maintenance
