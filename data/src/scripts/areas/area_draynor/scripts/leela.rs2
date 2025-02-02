@@ -3,9 +3,7 @@ switch_int (%prince_progress) {
     case ^prince_not_started, ^prince_started :
         ~chatplayer("<p,happy>What are you waiting here for?");
         ~chatnpc("<p,neutral>That is no concern of yours, adventurer.");
-    case ^prince_spoken_osman, ^prince_prep_finished : @leela_help;
-    case ^prince_guard_drunk : ~chatnpc("<p,neutral>Great! The guard is now harmless. Now you just need to use the rope on Keli to remove her. Then you can go in and give everything to the prince.");
-    case ^prince_tied_keli : ~chatnpc("<p,neutral>You should carry on, get in and rescue the prince. Keli is sharp, she won't stay tied up long."); // from chisel
+    case ^prince_spoken_osman, ^prince_prep_finished, ^prince_guard_drunk, ^prince_tied_keli : @leela_help;
     case ^prince_saved, ^prince_complete : ~chatnpc("<p,happy>Thank you, Al-Kharid will forever owe you for your help.|I think that if there is ever anything that needs to be done,|you will be someone they can rely on.");;
 }
 
@@ -29,8 +27,12 @@ if(%prince_keystatus = ^prince_keyclaimed & inv_total(inv, bronze_key) = 0 & inv
     inv_add(inv, bronze_key, 1);
     inv_del(inv, coins, 15);
     return;
-} 
-if(%prince_progress = ^prince_spoken_osman & inv_total(inv, bronze_key) >= 1 & inv_total(inv, wig_blonde) >= 1 & inv_total(inv, pink_skirt) >= 1 & inv_total(inv, paste) >= 1) {
+}
+if(%prince_progress = ^prince_guard_drunk) {
+    ~chatnpc("<p,neutral>Great! The guard is now harmless. Now you just need to use the rope on Keli to remove her. Then you can go in and give everything to the prince.");
+} else if(%prince_progress = ^prince_tied_keli) {
+    ~chatnpc("<p,neutral>You should carry on, get in and rescue the prince. Keli is sharp, she won't stay tied up long."); // from chisel
+} else if(%prince_progress = ^prince_spoken_osman & inv_total(inv, bronze_key) >= 1 & inv_total(inv, wig_blonde) >= 1 & inv_total(inv, pink_skirt) >= 1 & inv_total(inv, paste) >= 1) {
     %prince_progress = ^prince_prep_finished;
     ~chatnpc("<p,shifty>Good, you have all the basic equipment. Next to deal with the guard on the door. He is talkative, try to find a weakness in him.");
 } else if(%prince_progress = ^prince_prep_finished) { // mesanims guessed cause no video + not on osrs, dialogue from chisel
@@ -105,23 +107,3 @@ if(inv_total(inv, rope) >= 1) {
 [label,leela_rest_escape]
 ~chatplayer("<p,neutral>I will go and get the rest of the escape equipment.");
 ~chatnpc("<p,shifty>Good, I shall await your return with everything.");
-
-[label,leela_post_key]
-if(inv_total(inv, bronze_key) = 0 & inv_total(bank, bronze_key) = 0) {
-    ~chatplayer("<p,sad>I'm afraid I lost that key you gave me.");
-    ~chatnpc("<p,angry>Foolish <text_gender("man", "woman")>! A new key will cost 15 coins.");
-    if(inv_total(inv, coins) < 15) {
-        ~chatplayer("<p,sad>I haven't got 15 coins with me.");
-        ~chatnpc("<p,neutral>Then come back to me when you do.");
-    }
-    ~chatplayer("<p,neutral>Here, I have 15 coins.");
-    ~mesbox("Leela gives you another key.");
-    inv_add(inv, bronze_key, 1);
-    inv_del(inv, coins, 15);
-} else if (%prince_progress >= ^prince_guard_drunk) { 
-    ~chatnpc("<p,neutral>Great! The guard is now harmless.|Now you just need to use the rope on Keli to remove her.|Then you can go in and give everything to the prince.");
-} else if(inv_total(inv, bronze_key) >= 1 & inv_total(inv, wig_blonde) >= 1 & inv_total(inv, pink_skirt) >= 1 & inv_total(inv, paste) >= 1) {
-    ~chatnpc("<p,shifty>Good, you have all the basic equipment. Next to deal with the guard on the door. He is talkative, try to find a weakness in him.");
-} else {
-    @leela_help;
-}

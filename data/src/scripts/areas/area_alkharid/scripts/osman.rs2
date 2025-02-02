@@ -2,8 +2,7 @@
 switch_int (%prince_progress) {
     case ^prince_not_started : @osman_prequest;
     case ^prince_started : @osman_instructions;
-    case ^prince_spoken_osman : @osman_items;
-    case ^prince_prep_finished,^prince_prep_finished,^prince_guard_drunk,^prince_tied_keli : ~chatnpc("<p,shifty>I hear from Leela that you are well on the way with the rescue. I am always kept informed, you know.");
+    case ^prince_spoken_osman, ^prince_prep_finished, ^prince_guard_drunk, ^prince_tied_keli : @osman_items;
     case ^prince_saved : ~chatnpc("<p,shifty>The prince is safe and on his way home with Leela.|You can pick up your payment from the chancellor.");
     case ^prince_complete : ~chatnpc("<p,shifty>Well done, A great rescue.|I will remember you if I have anything dangerous to do.");
 }
@@ -94,6 +93,8 @@ if(%prince_keystatus = ^prince_keyclaimed & ~obj_gettotal(bronze_key) = 0) { // 
     ~mesbox("Osman takes the key imprint and the bronze bar.");
     ~chatnpc("<p,shifty>Pick the key up from Leela.");
     @multi2("Thank you. I will try to find the other items.", osman_other_items, "Can you tell me what I still need to get?", osman_still_need);
+} else if(%prince_progress >= ^prince_prep_finished) {
+    ~chatnpc("<p,shifty>I hear from Leela that you are well on the way with the rescue. I am always kept informed, you know.");
 } else {
     @osman_still_need;
 }
