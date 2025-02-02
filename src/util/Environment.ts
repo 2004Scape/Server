@@ -34,8 +34,6 @@ export default {
     NODE_DEBUG_PROFILE: tryParseBoolean(process.env.NODE_DEBUG_PROFILE, false),
     // doing headless bot testing!
     NODE_DEBUG_SOCKET: tryParseBoolean(process.env.NODE_DEBUG_SOCKET, false),
-    // *only* if no login server is running to authenticate accounts, this provides admin accs by username :)
-    NODE_STAFF: tryParseArray(process.env.NODE_STAFF?.split(','), ['pazaz']),
     // no server routefinding until 2009
     NODE_CLIENT_ROUTEFINDER: tryParseBoolean(process.env.NODE_CLIENT_ROUTEFINDER, true),
     // yellow-x walktriggers in osrs went from: in packet handler -> in player setup -> player movement
