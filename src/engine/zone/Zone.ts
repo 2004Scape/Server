@@ -340,7 +340,7 @@ export default class Zone {
             if (obj.lifecycle === EntityLifeCycle.RESPAWN || obj.receiver64 === Obj.NO_RECEIVER) {
                 this.queueEvent(obj, new ZoneEvent(ZoneEventType.ENCLOSED, Obj.NO_RECEIVER, new ObjDel(coord, obj.type)));
             } else if (obj.lifecycle === EntityLifeCycle.DESPAWN) {
-                this.queueEvent(obj, new ZoneEvent(ZoneEventType.FOLLOWS, Obj.NO_RECEIVER, new ObjDel(coord, obj.type)));
+                this.queueEvent(obj, new ZoneEvent(ZoneEventType.FOLLOWS, obj.receiver64, new ObjDel(coord, obj.type)));
             }
         }
     }
