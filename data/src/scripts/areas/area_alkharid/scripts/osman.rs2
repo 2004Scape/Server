@@ -2,8 +2,7 @@
 switch_int (%prince_progress) {
     case ^prince_not_started : @osman_prequest;
     case ^prince_started : @osman_instructions;
-    case ^prince_spoken_osman : @osman_items;
-    case ^prince_prep_finished,^prince_prep_finished,^prince_guard_drunk,^prince_tied_keli : ~chatnpc("<p,shifty>I hear from Leela that you are well on the way with the rescue. I am always kept informed, you know.");
+    case ^prince_spoken_osman, ^prince_prep_finished, ^prince_guard_drunk, ^prince_tied_keli : @osman_items;
     case ^prince_saved : ~chatnpc("<p,shifty>The prince is safe and on his way home with Leela.|You can pick up your payment from the chancellor.");
     case ^prince_complete : ~chatnpc("<p,shifty>Well done, A great rescue.|I will remember you if I have anything dangerous to do.");
 }
@@ -75,28 +74,38 @@ if($option = 1) {
 %prince_progress = ^prince_spoken_osman;
 
 [label,osman_items]
-if(%prince_keystatus = ^prince_keyclaimed & ~obj_gettotal(bronze_key) = 0) { // guessed mesanims, dialogue from chisel (can't find any video)
-    ~chatplayer("<p,sad>I'm afraid I lost that key you gave me.");
-    ~chatnpc("<p,angry>Foolish <text_gender("man", "woman")>! A new key will cost 15gp.");
-    if(inv_total(inv, coins) < 15) {
-        ~chatplayer("<p,sad>I haven't got 15 coins with me.");
-        ~chatnpc("<p,neutral>Then come back to me when you do.");
-    }
-    ~chatplayer("<p,neutral>Here, I have 15gp.");
-    inv_del(inv, coins, 15);
-    %prince_keystatus = ^prince_keymade;
-    ~mesbox("That is good. I will have another key made. You may collect it from Leela.");
+if(%prince_keystatus = ^prince_keyclaimed & ~obj_gettotal(bronze_key) = 0) {
+    @osman_lostkey;
 } else if(%prince_keystatus = 0 & inv_total(inv, key_print) >= 1 & inv_total(inv, bronze_bar) >= 1) {
-    ~chatnpc("<p,shifty>Well done; we can make the key now.");
-    inv_del(inv, key_print, 1);
-    inv_del(inv, bronze_bar, 1);
-    %prince_keystatus = ^prince_keymade;
-    ~mesbox("Osman takes the key imprint and the bronze bar.");
-    ~chatnpc("<p,shifty>Pick the key up from Leela.");
-    @multi2("Thank you. I will try to find the other items.", osman_other_items, "Can you tell me what I still need to get?", osman_still_need);
-} else {
-    @osman_still_need;
+    @osman_makekey;
 }
+if(%prince_progress >= ^prince_prep_finished) {
+    ~chatnpc("<p,shifty>I hear from Leela that you are well on the way with the rescue. I am always kept informed, you know.");
+    return;
+} 
+@osman_still_need;
+
+[label,osman_lostkey]
+// guessed mesanims, dialogue from chisel (can't find any video)
+~chatplayer("<p,sad>I'm afraid I lost that key you gave me.");
+~chatnpc("<p,angry>Foolish <text_gender("man", "woman")>! A new key will cost 15gp.");
+if(inv_total(inv, coins) < 15) {
+    ~chatplayer("<p,sad>I haven't got 15 coins with me.");
+    ~chatnpc("<p,neutral>Then come back to me when you do.");
+}
+~chatplayer("<p,neutral>Here, I have 15gp.");
+inv_del(inv, coins, 15);
+%prince_keystatus = ^prince_keymade;
+~mesbox("That is good. I will have another key made. You may collect it from Leela.");
+
+[label,osman_makekey]
+~chatnpc("<p,shifty>Well done; we can make the key now.");
+inv_del(inv, key_print, 1);
+inv_del(inv, bronze_bar, 1);
+%prince_keystatus = ^prince_keymade;
+~mesbox("Osman takes the key imprint and the bronze bar.");
+~chatnpc("<p,shifty>Pick the key up from Leela.");
+@multi2("Thank you. I will try to find the other items.", osman_other_items, "Can you tell me what I still need to get?", osman_still_need);
 
 [label,osman_still_need]
 ~chatplayer("<p,neutral>Can you tell me what I still need to get?");
