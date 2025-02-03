@@ -187,7 +187,7 @@ if (inv_total(inv, orb_of_light4) > 0) {
 ~forcewalk(movecoord(loc_coord, 1, 0, 0));
 p_delay(0);
 if(loc_find(0_37_151_12_3, loc_3338) = true) loc_anim(seq_458);
-~agility_exactmove(seq_734, 20, 2, coord, movecoord(coord, 5, 0, 0), 20, 80, ^exact_west, false);
+~agility_exactmove(human_knockback, 20, 2, coord, movecoord(coord, 5, 0, 0), 20, 80, ^exact_west, false);
 anim(seq_848, 0);
 spotanim_pl(stunned_thieving, 124, 0);
 sound_synth(stunned, 0, 0);

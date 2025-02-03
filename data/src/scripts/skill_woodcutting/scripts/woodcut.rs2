@@ -56,7 +56,7 @@ if (%action_delay < map_clock) {
     p_oploc(1);
 } else {
     // axe message is here after the skill clock is set
-    def_namedobj $axe = ~woodcutting_axe_checker();
+    def_namedobj $axe = ~woodcutting_axe_checker(true);
     if ($axe = null) {
         return;
     }
@@ -70,7 +70,7 @@ if (%action_delay < map_clock) {
 
 [label,cut_tree]
 // check if player has axe and level, ifso return best axe
-def_namedobj $axe = ~woodcutting_axe_checker();
+def_namedobj $axe = ~woodcutting_axe_checker(true);
 if ($axe = null) {
     return;
 }
@@ -160,7 +160,7 @@ p_oploc(3);
 
 
 // check if player has axe and level, ifso return best axe
-[proc,woodcutting_axe_checker]()(namedobj)
+[proc,woodcutting_axe_checker](boolean $print_mes)(namedobj)
 def_int $level = stat(woodcutting);
 def_obj $obj1 = inv_getobj(worn, ^wearpos_rhand);
 // no wc req in 2004, this is also the case in rsc. Heres a guide from 2004 that says so :
@@ -210,7 +210,9 @@ if (($obj1 = bronze_axe | inv_total(inv, bronze_axe) > 0)) {
 // mes("You need an axe to chop down this tree."); // this message was added in 2005 when they fixed axe wc reqs
 // https://imgur.com/Cj7w6y9
 // https://imgur.com/fnmlJ7R
-mes("You do not have an axe which you have the woodcutting level to use.");
+if ($print_mes = true) {
+    mes("You do not have an axe which you have the woodcutting level to use.");
+}
 return(null);
 
 [proc,woodcutting_successchance](dbrow $data, namedobj $axe)(int, int)

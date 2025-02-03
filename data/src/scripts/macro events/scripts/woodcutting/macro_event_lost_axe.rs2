@@ -1,5 +1,5 @@
 [proc,macro_event_lost_axe_spawn]
-def_obj $axe = ~woodcutting_axe_checker;
+def_obj $axe = ~woodcutting_axe_checker(true);
 if ($axe = null) {
     return;
 }
