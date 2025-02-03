@@ -49,8 +49,8 @@
 ^legends_law_rune_2_used = 11
 // todo: check if gem puzzle progress is stored. wiki seems to suggest not
 // 10 doses of holy water, decremented when using vial or extinguishing flames
-^legends_golden_bowl_uses_start = 11
-^legends_golden_bowl_uses_end = 15
+^legends_golden_bowl_uses_start = 12
+^legends_golden_bowl_uses_end = 16
 
 ^legends_required_questpoints = 107
 
