@@ -388,6 +388,8 @@ recol3s=6342
 recol3d=1057
 recol4s=9512
 recol4d=11328
+category=double_door_open_and_close_left
+param=next_loc_stage,legends_ancient_gate_3_open
 
 [legends_ancient_gate_4_closed]
 name=Ancient Gate
@@ -402,6 +404,8 @@ recol3s=6342
 recol3d=1057
 recol4s=9512
 recol4d=11328
+category=double_door_open_and_close_right
+param=next_loc_stage,legends_ancient_gate_4_open
 
 [legends_ancient_gate_3_open]
 name=Ancient Gate

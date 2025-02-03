@@ -248,26 +248,43 @@ mes("You crawl back out from the cavern...");
 p_delay(3);
 p_teleport(0_43_45_29_54);
 
-[oploc1,legends_ancient_gate_1_closed] @open_ancient_gate;
-[oploc1,legends_ancient_gate_2_closed] @open_ancient_gate;
-[oploc2,legends_ancient_gate_1_closed] @search_ancient_gate(^left);
-[oploc2,legends_ancient_gate_2_closed] @search_ancient_gate(^right);
-[oplocu,legends_ancient_gate_1_closed] @use_on_ancient_gate(^left);
-[oplocu,legends_ancient_gate_2_closed] @use_on_ancient_gate(^right);
+[oploc1,legends_ancient_gate_1_closed] @open_outer_ancient_gate(^left);
+[oploc1,legends_ancient_gate_2_closed] @open_outer_ancient_gate(^right);
+[oploc2,legends_ancient_gate_1_closed] @search_outer_ancient_gate(^left);
+[oploc2,legends_ancient_gate_2_closed] @search_outer_ancient_gate(^right);
+[oplocu,legends_ancient_gate_1_closed] @use_on_outer_ancient_gate(^left);
+[oplocu,legends_ancient_gate_2_closed] @use_on_outer_ancient_gate(^right);
+[oploc1,legends_ancient_gate_3_closed] @open_inner_ancient_gate(^left);
+[oploc1,legends_ancient_gate_4_closed] @open_inner_ancient_gate(^right);
 
-[label,open_ancient_gate]
+[label,open_outer_ancient_gate](int $side)
+def_boolean $entering = ~check_axis(coord, loc_coord, loc_angle);
+if ($entering = false) {
+    ~mesbox("You see a lever which you pull on to open the door.");
+    if_close;
+    anim(human_push, 0);
+    p_delay(1);
+    mes("The doors make a satisfying click sound as they close.");
+    ~open_and_close_double_door2($entering, $side, door_open);
+    return;
+}
 p_delay(2);
 anim(human_push, 0);
 p_delay(1);
 ~mesbox("You push on the doors, they're really shut. It looks like the doors have a huge locking mechanism. Although ancient, it looks very sophisticated.");
 
-[label,search_ancient_gate](int $side)
-p_delay(2);
+[label,search_outer_ancient_gate](int $side)
 def_boolean $entering = ~check_axis(coord, loc_coord, loc_angle);
 if ($entering = false) {
+    ~mesbox("You see a lever which you pull on to open the door.");
+    if_close;
+    anim(human_push, 0);
+    p_delay(1);
+    mes("The doors make a satisfying click sound as they close.");
     ~open_and_close_double_door2($entering, $side, door_open);
     return;
 }
+p_delay(2);
 if (inv_total(inv, lockpick) = 0) {
     ~mesbox("These doors are huge! They have a very sophisticated locking mechanism. You're definitely going to need a lockpick to get through these doors.");
     return;
@@ -290,12 +307,12 @@ p_delay(2);
 ~mesbox("You feel for the pins and levers in the mechanism.");
 say("Easy does it...");
 anim(human_pickuptable, 0);
-// todo: rate?
-if (random(2) = 0) {
+// todo: real rate?
+if (stat_random(stat(thieving), 0, 255) = false) {
     ~mesbox("But you fail to pick the lock.");
-    inv_del(inv, lockpick, 1);
-    // todo: placeholder message
-    ~mesbox("You break your lockpick in the door.");
+    // todo: is it actually possible to break the lockpick here?
+    //inv_del(inv, lockpick, 1);
+    //~mesbox("You break your lockpick in the door.");
     return;
 }
 ~mesbox("CLICK!");
@@ -304,11 +321,45 @@ if (random(2) = 0) {
 stat_advance(thieving, 100);
 ~open_and_close_double_door2($entering, $side, door_open);
 
-[label,use_on_ancient_gate](int $side)
+[label,use_on_outer_ancient_gate](int $side)
 if (last_useitem = lockpick) {
-    @search_ancient_gate($side);
+    @search_outer_ancient_gate($side);
 }
 ~displaymessage(^dm_default);
+
+[label,open_inner_ancient_gate](int $side)
+def_boolean $entering = ~check_axis(coord, loc_coord, loc_angle);
+~mesbox("Two huge metal doors bar the way further... There is an intense|and unpleasant feeling from this place and as you peer through the|cracks in the door you can see why. You see dark, shadowy shapes|flapping around in the still dark air.");
+~mesbox("You push the doors... They're quite stiff... They won't budge with a|normal push. Do you want to try to force them open with brute|strength?");
+def_int $choice = ~p_choice2_header("Yes, I'm very strong, I'll force them open.", 1, "No, I'm having second thoughts.", 2, "Use brute strength on the gates?");
+if ($choice = 1) {
+    ~mesbox("You ripple your muscles and prepare to exert yourself...");
+    say("Hup!");
+    ~mesbox("You brace yourself against the doors...");
+    anim(human_push, 0);
+    say("Urghhhhh!");
+    ~mesbox("You start to force the doors open...");
+    say("Arghhhhhhh!");
+    ~mesbox("You push and push...");
+    // lose 1 str immediately on failure
+    // lose 1-2 more if you continue instead of clicking out of the mesbox
+    anim(human_push, 0);
+    // todo: real rate?
+    if (stat_random(stat(strength), 0, 255) = true) {
+        say("Shhhhhhhshshehshsh"); // this keyboard mashing is no longer in osrs
+        ~mesbox("...and you just manage to force the doors open slightly, just enough to force yourself through.");
+        ~open_and_close_double_door2($entering, $side, door_open);
+    }
+    else {
+        stat_sub(strength, 1, 0);
+        // osrs message
+        ~mesbox("...but you run out of steam before you're able to force the doors open. You feel exhausted.");
+        stat_sub(strength, add(random(1), 1), 0);
+    }
+}   
+else {
+    mes("You decide against forcing the doors.");
+}
 
 [oploc1,_legends_boulder]
 def_obj $pickaxe = ~pickaxe_checker;
@@ -316,23 +367,222 @@ if ($pickaxe = null) {
     // osrs
     mes("You need a pickaxe to mine this rock.");
     mes("You do not have a pickaxe which you have the Mining level to use");
+    // this triggers if you are south of the first boulder, or interacting with either of the latter
+    // two boulders from either side
+    if(coordz(coord) < coordz(loc_coord) | loc_type = legends_boulder_2 | loc_type = legends_boulder_3) {
+        @legends_boulder_stuck;
+    }
     return;
 }
-if(stat(mining) < 52) {
+if (stat(mining) < 52) {
     mes("You need a Mining level of 52 to mine your way through this rock.");
+    if(coordz(coord) < coordz(loc_coord) | loc_type = legends_boulder_2 | loc_type = legends_boulder_3) {
+        @legends_boulder_stuck;
+    }
     return;
 }
 mes("You swing your pick at the rock.");
 anim(oc_param($pickaxe, mining_animation), 0);
 ~mining_sound;
-p_delay(2);
-// todo: random chance, add rock to inv, replace with stone
-// instead of loc_del
-mes("You manage to smash the rock to bits.");
-loc_del(6);
-~forcemove(movecoord(coord, 0, 0, -2));
-p_delay(1);
-~forcemove(movecoord(coord, 0, 0, -1));
+// todo: real rate?
+if (stat_random(stat(mining), 0, 255) = true) {
+    // no delays on any of this
+    // https://youtu.be/uF1a9xsV7zo?t=1256
+    mes("You manage to smash the rock to bits.");
+    if (inv_freespace(inv) > 0) {
+        mes("You get some rock.");
+        inv_add(inv, rocks, 1);
+        stat_advance(mining, 350);
+    }
+    loc_change(loc_446, 6);
+    def_int $move = -1;
+    if(coordz(coord) < coordz(loc_coord)) {
+        $move = 1;
+    } 
+    ~forcemove(movecoord(coord, 0, 0, calc($move * 3)));
+    p_delay(2);
+    mes("Another boulder drops down behind you.");
+}
+else {
+    mes("You only succeed in scratching the rock.");
+    mes("Your pickaxe clangs heavily against the rock face and the vibrations rattle your");
+    mes("nerves.");
+    stat_sub(mining, 1, 0);
+}
+
+[label,legends_boulder_stuck]
+// osrs wording
+~mesbox("You seem to be stuck! You may be able to climb out, but it looks pretty dangerous. Would you like to try?");
+// rsc:
+// You could be stuck here for ages until your mining ability returns.
+// Would you like to try to climb out?
+// It looks rough going, but at least you won't be stuck here for ages.
+// Yes I'll climb out. / No, I'll stay here a while.
+def_int $choice = ~p_choice2_header("Yes, I'll try to climb out.", 1, "No thanks, I think there's something else I can do.", 2, "Climb out of dangerous mining trial.");
+if ($choice = 1) {
+    p_teleport(0_43_145_58_50);
+    mes("You eventually manage to climb your way out, but you cut yourself to ribbons in the");
+    mes("process.");
+    // static 2 damage
+    ~damage_self(2);
+    p_delay(1);
+}   
+else {
+    ~mesbox("You decide to stay where you are.");
+}
+
+[oploc1,legends_jagged_wall]
+~mesbox("It looks like this room was once sealed, but the top wall fell down.|If you're feeling particularly agile, you could try jumping over it.");
+
+[oploc2,legends_jagged_wall]
+if (stat(agility) < 50) {
+    mes("You need an Agility level of 50 to jump this wall.");
+    return;
+}
+mes("You prepare to jump over the crumbly wall.");
+def_int $dir = ^exact_north;
+def_coord $end = movecoord(coord, -1, 0, 1);
+if(coordz(coord) > 9295) {
+    $dir = ^exact_south;
+    $end = movecoord(coord, 1, 0, -1);
+}
+// todo: real rate?
+// this one feels more punishing than the doors/boulders
+if (stat_random(stat(agility), 50, 200) = true) {
+    mes("You take a good run up and sail majestically over the wall.");
+    ~agility_exactmove(human_jump_stones, 0, 2, coord, $end, 37, 50, $dir, true);
+    mes("You land perfectly and stand ready for action.");
+}
+else {
+    mes("You fail to jump the wall properly and clip the wall with your leg.");
+    ~agility_exactmove(human_jump_stones, 0, 2, coord, $end, 37, 50, $dir, true);
+    mes("You're spun around mid air and hit the floor heavily.");
+    p_delay(2);
+    mes("The fall knocks the wind out of you.");
+    anim(human_crawling, 0);
+    // static 6 damage
+    ~damage_self(6);
+}
+
+[oploc1,legends_marked_wall]
+if (testbit(%legends_map_runes, ^legends_law_rune_2_used) = true) {
+    @enter_marked_wall(loc_coord);
+}
+else {
+    // 4 periods authentic
+    mes("You see no way to use that....");
+    p_delay(1);
+    mes("Perhaps you should search it?");
+}
+
+[oploc2,legends_marked_wall]
+mes("You search the wall.");
+if (testbit(%legends_map_runes, ^legends_law_rune_2_used) = true) {
+    ~mesbox("You find the word 'SMELL' marked on the wall. The outline of a door appears on the wall. What would you like to do?");
+    def_int $choice = ~p_choice2("Read the message on the wall?", 1, "Investigate the outline of the door.", 2);
+    if ($choice = 1) {
+        // all of the formatting, quotation marks, etc. here is authentic
+        ~mesbox("'Place the five in order to pass or your life will dwindle until the last.|All five are stones of magical power, Place them wrong and your fate|will sour.''First is the spirit of man or beast, Second is the place|where thoughts are born, Third is the soil from which good things grow Four and five are the rules all men should know.''All put|together make the word of a basic sense. And from perspective help|make maps from indifference.'");
+    }   
+    else {
+        ~mesbox("You see a small door outline starting to form in the wall. Slowly a|well formed door handle starts to emerge, suddenly, the door cracks|open. Would you like to go through?");
+        $choice = ~p_choice2("Yes, I'll go through!", 1, "No, I'll stay here.", 2);
+        if ($choice = 1) {
+            @enter_marked_wall(loc_coord);
+        }
+        else {
+            mes("You decide to stay where you are.");
+        }
+    }
+}
+else {
+    ~mesbox("You find five slightly round depressions and some strange markings. There is a lot of dirt and mould growing over the markings, but you clear it out. After a while you manage to see that it is some form of message. Would you like to read it?");
+    def_int $choice = ~p_choice2_header("Yes, I'll read it.", 1, "No, I won't read it.", 2, "Read message on wall?");
+    if ($choice = 1) {
+        ~mesbox("'Place the five in order to pass or your life will dwindle until the last.|All five are stones of magical power, Place them wrong and your fate|will sour.''First is the spirit of man or beast, Second is the place|where thoughts are born, Third is the soil from which good things grow Four and five are the rules all men should know.''All put|together make the word of a basic sense. And from perspective help|make maps from indifference.'");
+    }   
+    else {
+        ~mesbox("You decide against reading the message.");
+    }
+}
+
+
+[oplocu,legends_marked_wall]
+if (last_useitem = soulrune) {
+    if (testbit(%legends_map_runes, ^legends_soul_rune_used) = false) {
+        inv_del(inv, soulrune, 1);
+        anim(human_pickuptable, 0);
+        ~mesbox("You slide the Soul Rune into the first depression... It glows slightly|and then merges with the wall. The letter 'S' appears where the Soul|Rune merged with the wall.");
+        %legends_map_runes = setbit(%legends_map_runes, ^legends_soul_rune_used);
+    }
+    else {
+        ~displaymessage(^dm_default);
+    }
+}
+else if (last_useitem = mindrune) {
+    if (testbit(%legends_map_runes, ^legends_soul_rune_used) = true & testbit(%legends_map_runes, ^legends_mind_rune_used) = false) {
+        inv_del(inv, mindrune, 1);
+        anim(human_pickuptable, 0);
+        ~mesbox("You slide the Mind Rune into the second depression... It glows slightly|and then merges with the wall. The letter 'M' appears where the Mind|Rune merged with the wall.");
+        %legends_map_runes = setbit(%legends_map_runes, ^legends_mind_rune_used);
+    }
+    else {
+        ~displaymessage(^dm_default);
+    }
+}
+else if (last_useitem = earthrune) {
+    if (testbit(%legends_map_runes, ^legends_mind_rune_used) = true & testbit(%legends_map_runes, ^legends_earth_rune_used) = false) {
+        inv_del(inv, earthrune, 1);
+        anim(human_pickuptable, 0);
+        ~mesbox("You slide the Earth Rune into the third depression... It glows slightly|and then merges with the wall. The letter 'E' appears where the Earth|Rune merged with the wall.");
+        %legends_map_runes = setbit(%legends_map_runes, ^legends_earth_rune_used);
+    }
+    else {
+        ~displaymessage(^dm_default);
+    }
+}
+else if (last_useitem = lawrune) {
+    if (testbit(%legends_map_runes, ^legends_earth_rune_used) = true & testbit(%legends_map_runes, ^legends_law_rune_1_used) = false) {
+        inv_del(inv, lawrune, 1);
+        anim(human_pickuptable, 0);
+        ~mesbox("You slide the Law Rune into the fourth depression... It glows slightly|and then merges with the wall. The letter 'L' appears where the Law|Rune merged with the wall.");
+        %legends_map_runes = setbit(%legends_map_runes, ^legends_law_rune_1_used);
+    }
+    else if (testbit(%legends_map_runes, ^legends_law_rune_1_used) = true & testbit(%legends_map_runes, ^legends_law_rune_2_used) = false) {
+        inv_del(inv, lawrune, 1);
+        anim(human_pickuptable, 0);
+        ~mesbox("You slide the Law Rune into the fifth depression... It glows slightly|and then merges with the wall. The letter 'L' appears where the Law|Rune merged with the wall.");
+        %legends_map_runes = setbit(%legends_map_runes, ^legends_law_rune_2_used);
+        ~mesbox("You see a small door outline starting to form in the wall. Slowly a|well formed door handle starts to emerge, suddenly, the door cracks|open. Would you like to go through?");
+        def_int $choice = ~p_choice2("Yes, I'll go through!", 1, "No, I'll stay here.", 2);
+        if ($choice = 1) {
+            @enter_marked_wall(loc_coord);
+        }
+        else {
+            mes("You decide to stay where you are.");
+        }
+    }
+    else {
+        ~displaymessage(^dm_default);
+    }
+}
+else {
+    ~displaymessage(^dm_default);
+}
+
+[label,enter_marked_wall](coord $wall_coord)
+~mesbox("You walk into the darkness of the magical doorway. You walk for a|short distance before pushing open another door.");
+if_close;
+if ($wall_coord = 0_43_145_24_23) {
+    p_teleport(0_43_145_28_26);
+    mes("You appear in a small walled cavern.");
+    p_delay(1);
+    mes("There seems to be an exit to the south east.");
+}
+else {
+    p_teleport(0_43_145_22_21);
+    mes("You appear in a large cavern like room filled with pools of water.");
+}
 
 [oploc1,legends_water_pool]
 ~mesbox("It looks like a small babbling brook that comes from and disappears underground again. The water bubbles with a strange effervescence.");
