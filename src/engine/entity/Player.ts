@@ -562,7 +562,7 @@ export default class Player extends PathingEntity {
         if (this.modalTutorial !== -1) {
             const closeTrigger = ScriptProvider.getByTrigger(ServerTriggerType.IF_CLOSE, this.modalTutorial);
             if (closeTrigger) {
-                this.enqueueScript(closeTrigger, PlayerQueueType.ENGINE);
+                this.executeScript(ScriptRunner.init(closeTrigger, this), false);
             }
 
             this.modalTutorial = -1;
@@ -584,7 +584,7 @@ export default class Player extends PathingEntity {
         if (this.modalMain !== -1) {
             const closeTrigger = ScriptProvider.getByTrigger(ServerTriggerType.IF_CLOSE, this.modalMain);
             if (closeTrigger) {
-                this.enqueueScript(closeTrigger, PlayerQueueType.ENGINE);
+                this.executeScript(ScriptRunner.init(closeTrigger, this), false);
             }
 
             this.modalMain = -1;
@@ -593,7 +593,7 @@ export default class Player extends PathingEntity {
         if (this.modalChat !== -1) {
             const closeTrigger = ScriptProvider.getByTrigger(ServerTriggerType.IF_CLOSE, this.modalChat);
             if (closeTrigger) {
-                this.enqueueScript(closeTrigger, PlayerQueueType.ENGINE);
+                this.executeScript(ScriptRunner.init(closeTrigger, this), false);
             }
 
             this.modalChat = -1;
@@ -602,7 +602,7 @@ export default class Player extends PathingEntity {
         if (this.modalSide !== -1) {
             const closeTrigger = ScriptProvider.getByTrigger(ServerTriggerType.IF_CLOSE, this.modalSide);
             if (closeTrigger) {
-                this.enqueueScript(closeTrigger, PlayerQueueType.ENGINE);
+                this.executeScript(ScriptRunner.init(closeTrigger, this), false);
             }
 
             this.modalSide = -1;
