@@ -80,7 +80,7 @@ if (~player_autocast_enabled = false & ~inzone_coord_pair_table(mage_arena, coor
 }
 
 // For magic
-[proc,pvp_is_attackable_opt]
+[proc,pvp_is_attackable_opt]()(boolean)
 if (~in_duel_arena(coord) = true) {
     if (~duel_arena_checks = false) {
         return(false);
