@@ -19,23 +19,27 @@ export default class OpHeldUHandler extends MessageHandler<OpHeldU> {
 
         const com = Component.get(comId);
         if (typeof com === 'undefined' || !player.isComponentVisible(com)) {
+            player.clearPendingAction();
             return false;
         }
 
         const useCom = Component.get(comId);
         if (typeof useCom === 'undefined' || !player.isComponentVisible(useCom)) {
+            player.clearPendingAction();
             return false;
         }
 
         {
             const listener = player.invListeners.find(l => l.com === comId);
             if (!listener) {
+                player.clearPendingAction();
                 return false;
             }
 
             const inv = player.getInventoryFromListener(listener);
             if (!inv || !inv.validSlot(slot) || !inv.hasAt(slot, item)) {
                 player.moveClickRequest = false; // removed early osrs
+                player.clearPendingAction();
                 return false;
             }
         }
@@ -43,12 +47,14 @@ export default class OpHeldUHandler extends MessageHandler<OpHeldU> {
         {
             const listener = player.invListeners.find(l => l.com === useComId);
             if (!listener) {
+                player.clearPendingAction();
                 return false;
             }
 
             const inv = player.getInventoryFromListener(listener);
             if (!inv || !inv.validSlot(useSlot) || !inv.hasAt(useSlot, useItem)) {
                 player.moveClickRequest = false; // removed early osrs
+                player.clearPendingAction();
                 return false;
             }
         }

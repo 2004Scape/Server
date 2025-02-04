@@ -21,6 +21,7 @@ export default class OpObjUHandler extends MessageHandler<OpObjU> {
         const com = Component.get(comId);
         if (typeof com === 'undefined' || !player.isComponentVisible(com)) {
             player.write(new UnsetMapFlag());
+            player.clearPendingAction();
             return false;
         }
 
@@ -30,24 +31,28 @@ export default class OpObjUHandler extends MessageHandler<OpObjU> {
         const absBottomZ = player.originZ - 52;
         if (x < absLeftX || x > absRightX || z < absBottomZ || z > absTopZ) {
             player.write(new UnsetMapFlag());
+            player.clearPendingAction();
             return false;
         }
 
         const listener = player.invListeners.find(l => l.com === comId);
         if (!listener) {
             player.write(new UnsetMapFlag());
+            player.clearPendingAction();
             return false;
         }
 
         const inv = player.getInventoryFromListener(listener);
         if (!inv || !inv.validSlot(slot) || !inv.hasAt(slot, item)) {
             player.write(new UnsetMapFlag());
+            player.clearPendingAction();
             return false;
         }
 
         const obj = World.getObj(x, z, player.level, objId, player.hash64);
         if (!obj) {
             player.write(new UnsetMapFlag());
+            player.clearPendingAction();
             return false;
         }
 
