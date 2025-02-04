@@ -1,0 +1,22 @@
+[opnpc1,ogre_shaman]
+mes("A magic blast comes from the shaman.");
+mes("You are badly injured by the blast.");
+queue(damage_player, 0, 20); // this is strongqueued on osrs for some reason
+~chatnpc("<p,angry>Grr! How dare you talk to us.|We will destroy you!");
+
+[ai_queue2,ogre_shaman]
+if(finduid(%npc_attacking_uid) = true) {
+    mes("A magic blast comes from the shaman.");
+    mes("You are badly injured by the blast.");
+    ~damage_self(30);
+}
+npc_say("You fool! Your primitive weapons are no match for our superior magics!");
+
+[opnpcu,ogre_shaman]
+if(last_useitem = ogre_potion) {
+    mes("There is a small flash...");
+    mes("...but the potion was ineffective.");
+    ~chatplayer("<p,shock>Oh no! I better go back to the wizards about this!");
+    return;
+} 
+~displaymessage(^dm_default);

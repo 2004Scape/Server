@@ -148,8 +148,6 @@ category=category_86
 members=yes
 respawnrate=30
 param=brew_potion_struct,3dosepotionofzamorak
-param=brew_potion_struct_secondary,vial_water_jangerberries
-param=brew_potion_struct_tertiary,mixture_guam_jangerberries
 
 [blamish_snail_slime]
 name=Blamish snail slime

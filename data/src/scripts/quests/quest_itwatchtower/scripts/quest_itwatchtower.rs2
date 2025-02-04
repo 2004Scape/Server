@@ -404,3 +404,24 @@ mes("You enter the tunnel.");
 mes("So that's how the skavids are getting into Yanille!");
 p_teleport(0_40_48_25_36);
 stat_advance(agility, 40);
+
+[oploc1,loc_2814] @open_shamancave_gate;
+[oploc1,loc_2815] @open_shamancave_gate;
+
+[label,open_shamancave_gate]
+mes("The gate is locked tight.");
+mes("You'll have to find another way out.");
+
+[oploc1,loc_2813]
+p_teleport(0_39_47_44_46);
+
+[oploc1,loc_2816]
+mes("You examine the rock for ores...");
+p_delay(3);
+mes("The rock contains a crystal!");
+
+[oploc2,loc_2816]
+if(getbit_range(%itwatchtower_bits, ^itwatchtower_shaman_kills_lower, ^itwatchtower_shaman_kills_higher) < 6) {
+    ~chatplayer("<p,confused>I can't touch it...|Perhaps it is linked with the shamans in some strange way?");
+    return;
+}

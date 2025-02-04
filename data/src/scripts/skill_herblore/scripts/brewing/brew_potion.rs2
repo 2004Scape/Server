@@ -1,6 +1,6 @@
 [opheldu,vial_water]
 if(last_useitem = jangerberries) {
-    if(%itwatchtower_progress < 9) {
+    if(%itwatchtower_progress < ^itwatchtower_learned_potion) {
         ~chatplayer("<p,confused>Hmm, perhaps I shouldn't mix these together. It might have unpredictable results...");
         return;
     }

@@ -512,7 +512,7 @@ param=death_drop,big_bones
 // Stats match osrs version but our version Vislvl is different.
 // https://raw.githubusercontent.com/Joshua-F/osrs-dumps/refs/heads/master/config/dump.npc npc_4381
 
-[npc_871]
+[ogre_shaman]
 name=Ogre shaman
 desc=Seems intelligent... for an ogre.
 size=2

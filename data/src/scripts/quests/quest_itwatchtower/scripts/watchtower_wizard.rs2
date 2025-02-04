@@ -1,5 +1,37 @@
 [opnpc1,watchtower_wizard]
 switch_int(%itwatchtower_progress) {
+    case ^itwatchtower_made_potion :
+        // todo - can you make the potion through dialogue at this stage (if lost) like in OSRS? in RSC you have to use opnpcu
+
+    case ^itwatchtower_learned_potion :
+        ~chatnpc("<p,neutral>Any more news?");
+        if(inv_total(inv, ogre_potion) > 0) {
+            @make_magic_ogre_potion;
+        }
+        ~chatplayer("<p,quiz>Can you tell me again what I need for the potion?");
+        ~chatnpc("<p,neutral>Yes indeed, you need some guam leaves,|jangerberries and ground bat bones.");
+        ~chatnpc("<p,neutral>Then the potion can be powered with magic|and the ogre shaman can be destroyed.");
+    case ^itwatchtower_fed_nightshade :
+        ~chatplayer("<p,sad>I have found the cave of ogre shaman, but I cannot touch them!");
+        ~chatnpc("<p,neutral>That is because of their magical powers.|We must fight them with their own methods;|do not speak to them!|I suggest a potion...");
+        %itwatchtower_progress = ^itwatchtower_learned_potion;
+        ~chatnpc("<p,neutral>Collect a guam leaf, add jangerberries, then mix in some ground bat bones. You must return it to me before you use it, so that I can empower it with my magic.");
+        ~chatnpc("<p,neutral>Be very careful how you mix it as it is extremely volatile. Mixing ingredients of this type in the wrong order can cause explosions!");
+        ~chatnpc("<p,neutral>I hope you've been brushing up Herblore and Magic? I must warn you, only experienced magicians can use the potion. It is too dangerous in the hands of the unskilled.");
+    case ^itwatchtower_skavid_crystal :
+        ~chatnpc("<p,happy>Hello again. How do you fare?");
+        switch_int(~p_choice3("It goes well. I can now navigate the skavid caves.", 1, "I had a crystal but I lost it!", 2, "I am now ready for the shamans.", 3)) {
+            case 1 :
+                ~chatplayer("<p,happy>It goes well. I can now navigate the skavid caves."); 
+                ~chatnpc("<p,happy>That is good news.|Let me know if you find anything of interest.");
+            case 2 : 
+                ~chatplayer("<p,sad>I had a crystal, but I lost it!");
+                ~chatnpc("<p,sad>Oh no, well you had better go back there again then!");
+            case 3 :
+                ~chatplayer("<p,happy>I am now ready for the shamans.");
+                ~chatnpc("<p,neutral>Remember all I told you, you must distract the guard somehow.|The herbs with blue leaves and berries is what you are looking for.");
+                ~chatnpc("<p,neutral>This herb is very poisonous however, handle it carefully. Also, be on your guard in that cave. Who knows what monsters may be in that awful place...");
+        }
     case ^itwatchtower_solved_riddle :
         ~chatnpc("<p,happy>How is the quest going?");
         ~chatplayer("<p,happy>I have worked out the guard's puzzle.");
@@ -144,7 +176,7 @@ switch_int(%itwatchtower_progress) {
 if(last_useitem = ogre_relic) {
     ~chatplayer("<p,confused>What is this?");
     ~chatnpc("<p,confused>It is the ogre statue I finished for you.");
-} else if(last_useitem = watchtower_crystal1) {
+} else if(last_useitem = watchtower_crystal1 | last_useitem = watchtower_crystal2 | last_useitem = watchtower_crystal3 | last_useitem = watchtower_crytal4) {
     ~chatplayer("<p,happy>Wizard, look what I have found.");
     ~chatnpc("<p,happy>Well done, well done!|You are clever;|hold onto it until you have all four.");
     ~chatnpc("<p,neutral>Keep searching for the others.|If you've dropped any,|then you will need to go back to where you got it from.");
@@ -188,8 +220,21 @@ if(last_useitem = ogre_relic) {
         return;
     }
     @watchwiz_not_evidence;
+} else if(last_useitem = skavid_map) {
+    ~chatnpc("<p,happy>Well, well - a map!|Indeed, this shows the paths into the skavid caves,|so you can go in there.");
+} else if(last_useitem = vial_water_jangerberries | last_useitem = mixture_guam_jangerberries) {
+    ~chatnpc("<p,confused>No, no. The potion is not complete yet.");
+} else if(last_useitem = ogre_potion) {
+    if(%itwatchtower_progress >= ^itwatchtower_complete) {
+        // RSC, guessing mesanim
+        inv_del(inv, ogre_potion, 1);
+        ~chatnpc("<p,confused>I can't let you use this now, it's just too dangerous.|I'd better take it from you before you injure yourself.");
+        return;
+    }
+    @make_magic_ogre_potion;
+} else {
+    ~displaymessage(^dm_default);
 }
-~displaymessage(^dm_default);
 
 
 [label,check_relic_parts]
@@ -253,3 +298,5 @@ inv_del(inv, fingernails, 1);
 ~chatplayer("<p,neutral>I won't bother then.");
 ~chatnpc("<p,angry>Won't bother? Won't bother!");
 ~chatnpc("<p,confused>Perhaps this quest is too hard for you?");
+
+[label,make_magic_ogre_potion]
