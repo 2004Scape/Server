@@ -1,0 +1,4 @@
+[legends_gem_data]
+column=rock_coord,coord
+column=gem,namedobj
+column=gem_bit,int

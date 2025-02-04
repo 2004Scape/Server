@@ -23,3 +23,7 @@ data=coord_pair,0_43_145_37_45,0_43_145_44_52
 // there's a bug in osrs which considers this row of tiles to be
 // inside the octagram even though they are not
 data=coord_pair,0_43_145_36_37,0_43_145_36_46
+
+[legends_gem_room]
+table=coord_pair_table
+data=coord_pair,0_43_145_3_0,0_43_145_30_31

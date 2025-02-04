@@ -1,0 +1,31 @@
+[ai_queue3,nezikchened]
+if (npc_findhero = false) {
+    npc_del;
+    return;
+}
+if (finduid(%npc_attacking_uid) = true & p_finduid(uid) = true) {
+    // todo: timings here
+    if (%legends_progress = ^legends_filled_bowl) {
+        mes("Nezikchened: Ha ha ha... I shall return for you when the time is right.");
+        npc_say("Ha ha ha... I shall return for you when the time is right.");
+        mes("The demon starts an incantation...");
+        p_delay(2);
+        mes("Nezikchened: But I will leave you with a taste of my power...");
+        p_delay(2);
+        mes("As he finishes the incantation a powerful bolt of energy strikes you.");
+        p_delay(2);
+        mes("Nezikchened: Haha hah ha ha ha ha....");
+        // todo: fire bolt projectile
+        p_delay(2);
+        ~damage_self(15);
+        p_delay(4);
+        npc_del;
+        mes("The demon's body falls to the floor in a pile of ashes...");
+        %legends_progress = ^legends_defeated_nezikchened_fire;
+    }
+    // todo: other appearances later in the quest
+    else {
+        // shouldn't be here
+        npc_del;
+    }
+}

@@ -150,6 +150,13 @@ else {
 @close_cupboard(true);
 
 [label,legends_touch_fire_wall]
+// todo: jump out option
+if (%legends_progress >= ^legends_defeated_nezikchened_fire) {
+    mes("You feel completely fine to walk through these flames.");
+    mes("The magic of Ungadulu's spell protects you from the flames.");
+    // todo: walk through
+    return;
+}
 mes("You approach the supernatural flames.");
 p_delay(2);
 mes("They give off an incredibly intense heat.");
@@ -167,6 +174,12 @@ else {
 }
 
 [label,legends_investigate_fire_wall]
+if (%legends_progress >= ^legends_defeated_nezikchened_fire) {
+    mes("You feel completely fine to walk through these flames.");
+    mes("The magic of Ungadulu's spell protects you from the flames.");
+    // todo: walk through
+    return;
+}
 ~mesbox("You look closely at the flames. They seem to form a straight wall.|Something about them looks very strange: they look completely|supernatural. For example, they seem to come from|straight out of the ground.");
 say("Mmmm, pretty!");
 ~mesbox("You see a white clad figure in the midst of the flames...");
@@ -506,7 +519,6 @@ else {
     }
 }
 
-
 [oplocu,legends_marked_wall]
 if (last_useitem = soulrune) {
     if (testbit(%legends_map_runes, ^legends_soul_rune_used) = false) {
@@ -584,6 +596,191 @@ else {
     mes("You appear in a large cavern like room filled with pools of water.");
 }
 
+[oploc1,legends_carved_rock]
+~mesbox("It's meant to look like a stalagmite, but there is something that looks slightly artificial about it. Looking at it more carefully, it seems to look carved.");
+
+[oploc2,legends_carved_rock]
+mes("You see a delicate inscription.");
+~mesbox("You see a delicate inscription on the rock, it says. 'Once there were crystals to make the pool shine. Ordered in stature to retrieve what's mine.'");
+
+db_find(legends_gem_data:rock_coord, loc_coord);
+def_dbrow $data = db_findnext;
+if ($data = null) {
+    return;
+}
+def_namedobj $gem = db_getfield($data, legends_gem_data:gem, 0);
+def_int $gem_bit = db_getfield($data, legends_gem_data:gem_bit, 0);
+if (testbit(%legends_map_runes, $gem_bit) = true) {
+    // todo: can you take the gem here? if you can and do i assume it unsets the bit
+    obj_add(loc_coord, $gem, 1, 5);
+    mes("A barely visible <oc_name($gem)> becomes visible again, spinning above the rock.");
+    mes("The gem soon begins to fade.");
+    p_delay(7);
+    obj_del;
+}
+
+[oplocu,legends_carved_rock]
+db_find(legends_gem_data:rock_coord, loc_coord);
+def_dbrow $data = db_findnext;
+if ($data = null) {
+    ~displaymessage(^dm_default);
+    return;
+}
+def_namedobj $gem = db_getfield($data, legends_gem_data:gem, 0);
+def_int $gem_bit = db_getfield($data, legends_gem_data:gem_bit, 0);
+if (last_useitem = $gem & testbit(%legends_map_runes, $gem_bit) = false) {
+    anim(human_pickuptable, 0);
+    // confirm behaviour - slot or item?
+    inv_dropslot(inv, loc_coord, last_useslot, 5);
+    mes("You carefully move the gem closer to the rock.");
+    mes("The <lowercase(oc_name($gem))> glows and starts spinning as it hovers above the rock.");
+    mes("The gem soon begins to fade.");
+    //if (getbit_range(%legends_map_runes, ^legends_opal_used, ^legends_emerald_used) = ^legends_all_gems_used) {
+    if (1 = 1) {
+        ~check_gem_puzzle_complete;
+    }
+    else {
+        // todo: confirm delay
+        world_delay(7);
+        obj_del;
+    }
+    //%legends_map_runes = setbit(%legends_map_runes, $gem_bit);
+
+}
+else {
+    ~displaymessage(^dm_default);
+}
+
+[proc,legends_drop_gem]
+db_find(legends_gem_data:gem, obj_type);
+def_dbrow $data = db_findnext;
+if ($data = null) {
+    return;
+}
+def_coord $rock_coord = db_getfield($data, legends_gem_data:rock_coord, 0);
+// todo: confirm distance req and that the gem does spawn on the rock
+if (distance(coord, $rock_coord) = 1) {
+    obj_del;
+    obj_add($rock_coord, obj_type, 1, 5);
+    mes("As you drop the gem, it slowly glides over to the sharp rock.");
+    mes("The <lowercase(obj_name)> glows and starts spinning as it hovers above the rock.");
+    mes("The gem soon begins to fade.");
+    if (getbit_range(%legends_map_runes, ^legends_opal_used, ^legends_emerald_used) = ^legends_all_gems_used) {
+        ~check_gem_puzzle_complete;
+    }
+    else {
+        world_delay(7);
+        obj_del;
+    }
+    //%legends_map_runes = setbit(%legends_map_runes, $gem_bit);
+}
+
+[proc,check_gem_puzzle_complete]
+if (p_finduid(uid) = false) {
+    return;
+}
+mes("You feel a powerful force picking you up....");
+p_delay(1);
+def_coord $start_coord = coord;
+def_coord $middle = 0_43_145_12_16;
+anim(human_knockback_long, 0);
+// todo: exact values here
+p_exactmove($start_coord, $middle, 31, 115, ^exact_north);
+p_delay(add(divide(distance($start_coord, $middle), 2), 1));
+anim(null, 0);
+p_delay(0);
+anim(human_knockback_long_end, 15);
+obj_del;
+p_delay(1);
+p_delay(2);
+mes("All the gems suddenly appear again...");
+mes("Suddenly the room is lit up with a brilliant light...");
+def_int $gem_count = db_listall_with_count(legends_gem_data);
+def_dbrow $data;
+def_int $i = 0;
+while ($i < $gem_count) {
+    $data = db_findnext;
+    if ($data = null) {
+        return;
+    }
+    def_namedobj $gem = db_getfield($data, legends_gem_data:gem, 0);
+    def_coord $rock_coord = db_getfield($data, legends_gem_data:rock_coord, 0);
+    obj_add($rock_coord, $gem, 1, 5);
+    // todo: exact values here
+    ~coord_projectile($rock_coord, 0_43_145_13_17, windblast_travel, 16, 130, 50, 20, 21, 10, 20);
+    ~coord_projectile($rock_coord, 0_43_145_13_17, windblast_travel, 16, 130, 200, 20, 21, 10, 20);
+    ~coord_projectile($rock_coord, 0_43_145_13_17, windblast_travel, 16, 130, 350, 20, 21, 10, 20);
+    ~coord_projectile($rock_coord, 0_43_145_13_17, windblast_travel, 16, 130, 500, 20, 21, 10, 20);
+    $i = calc($i + 1);
+}
+// todo: exact values here
+spotanim_map(windwave_impact, 0_43_145_13_17, 92, 200);
+spotanim_map(windwave_impact, 0_43_145_13_17, 92, 350);
+spotanim_map(windwave_impact, 0_43_145_13_17, 92, 500);
+spotanim_map(windwave_impact, 0_43_145_13_17, 92, 650);
+p_delay(15);
+db_listall(legends_gem_data);
+$i = 0;
+while ($i < $gem_count) {
+    $data = db_findnext;
+    if ($data = null) {
+        return;
+    }
+    def_namedobj $gem = db_getfield($data, legends_gem_data:gem, 0);
+    def_coord $rock_coord = db_getfield($data, legends_gem_data:rock_coord, 0);
+    obj_find($rock_coord, $gem);
+    obj_del;
+    $i = calc($i + 1);
+}
+p_delay(1);
+mes("...Strangely a book appears near the middle of the room.");
+// todo: confirm duration
+obj_add(0_43_145_13_17, book_of_binding, 1, 200);
+// bit range cleared so puzzle can be completed again if book is lost
+%legends_map_runes = clearbit_range(%legends_map_runes, ^legends_opal_used, ^legends_emerald_used);
+
+[opheld1,book_of_binding]
+%book_page = 0;
+%open_book = book_of_binding;
+@open_book_of_binding;
+
+[label,open_book_of_binding]
+@book_flip_page(0, 0, 4, book_of_binding_page);
+
+[proc,book_of_binding_page]
+switch_int (%book_page) {
+    // todo: rest of pages and try to get this from rsprox
+    case 0 : ~book("Book of Binding", "|--------------------------------|   Book of Binding|--------------------------------||- A treatise on Demons -|||||||    -- Indexo --||     Arcana : I||   Instructo : II||    Defeati : III||   Enchanto : IIII");
+    case 1 : ~book("Book of Binding", "");
+    case 2 : ~book("Book of Binding", "");
+    case 3 : ~book("Book of Binding", "");
+    case 4 : ~book("Book of Binding", "");
+}
+
+[oploc1,legends_buried_skeleton]
+~mesbox("It looks as if some poor unfortunate soul died here.");
+mes("There's nothing interesting about these remains.");
+
+[oploc1,legends_ancient_gate_5_closed]
+~mesbox("This door is fused with rock, it doesn't seem possible to open it.|But it does look slightly strange in some way.");
+
+[oploc2,legends_ancient_gate_5_closed]
+~mesbox("It just looks like a normal door... at first.|And then you notice that some of the inscriptions make up letters.|After some time you manage to make sense of it.|Would you like to read it?");
+def_int $choice = ~p_choice3("Yes, I'll read it.", 1, "No, I don't want to read that.", 2, "Search further...", 3);
+if ($choice = 1) {
+    ~mesbox("You attempt to read the message on the door...|It looks like some sort of riddle:");
+    ~mesbox("@blu@Doors of metal will not be kind,|@blu@To those who care not for the way of mind.|@blu@To all men of learning and supernatural powers,|@blu@With book and rune spend the long dark hours.");
+    ~mesbox("@blu@If passage further you would endure,|@blu@Give me a taste of your power so pure.");
+}
+else if ($choice = 2) {
+    mes("You decide not to read the message.");
+}
+else {
+    ~mesbox("You scour the door for more clues.|Something etched into the wall nearby catches your eye...|It looks like a picture of four pillars!");
+    ~mesbox("Over the first pillar is a picture of a cloud.|Etched over the second pillar are flickering flames.|Over the third pillar is the carved image of a dew drop or a tear.|Over the fourth pillar is the likeness of a ploughed field.");
+    ~mesbox("All of these images are contained within a sphere.");
+}
+
 [oploc1,legends_water_pool]
 ~mesbox("It looks like a small babbling brook that comes from and disappears underground again. The water bubbles with a strange effervescence.");
 
@@ -592,6 +789,14 @@ else {
 
 [oplocu,legends_water_pool]
 if (last_useitem = hollow_reed) {
+    if (%legends_progress > ^legends_talk_ungadulu & %legends_progress < ^legends_defeated_nezikchened_water) {
+        if (%legends_progress < ^legends_water_pool_dried_up) {
+            %legends_progress = ^legends_water_pool_dried_up;
+        }
+        // todo: check this duration
+        loc_change(legends_polluted_water, 20);
+        ~mesbox("It looks as if this pool has dried up. A thick black sludge has replaced|the sparkling pure water. There is a disgusting stench of death that|emanates from this area. Maybe Gujuo knows what's happened.");
+    }
     if (inv_total(inv, blessed_gold_bowl) > 0) {
         inv_del(inv, blessed_gold_bowl, 1);
         inv_del(inv, hollow_reed, 1);
@@ -642,6 +847,14 @@ else {
     ~displaymessage(^dm_default);
 }
 
+[oplocu,legends_polluted_water]
+// todo: test this assumption
+if (last_useitem = hollow_reed) {
+    ~mesbox("It looks as if this pool has dried up. A thick black sludge has replaced|the sparkling pure water. There is a disgusting stench of death that|emanates from this area. Maybe Gujuo knows what's happened.");
+}
+else {
+    ~displaymessage(^dm_default);
+}
 [oploc1,legends_tall_reeds]
 ~mesbox("These look like interesting plants, right next to the water's edge. They make the pool look really picturesque.");
 
@@ -700,15 +913,60 @@ if (last_useitem = vial_empty) {
         $bowl_uses = 10;
         inv_del(inv, blessed_golden_bowl_pure_water, 1);
         inv_add(inv, blessed_gold_bowl, 1);
-        mes("The golden bowl is empty. There's no sacred water left.");
+        // osrs
+        //mes("The golden bowl is empty. There's no sacred water left.");
+        // rs3
+        mes("The pure water in the golden bowl has run out...");
     }
     else {
         $bowl_uses = sub($bowl_uses, 1);
     }
     %legends_map_runes = setbit_range_toint(%legends_map_runes, $bowl_uses, ^legends_golden_bowl_uses_start, ^legends_golden_bowl_uses_end);
-    // if water count = 0, replace bowl with empty bowl
     mes("The water doesn't seem as effervescent as it was in the bowl.");
 }
+else if (last_useitem = yommi_tree_seeds) {
+    ~doubleobjbox(yommi_tree_seeds, blessed_golden_bowl_pure_water, "You place the seeds into the golden bowl of pure sacred|water.", 150);
+    // todo: max amount done at once or whole stack?
+    def_int $seed_qty = inv_total(inv, yommi_tree_seeds);
+    inv_del(inv, yommi_tree_seeds, $seed_qty);
+    inv_add(inv, yommi_tree_seeds_germinated, $seed_qty);
+    // todo: confirm this always uses all the water
+    inv_del(inv, blessed_golden_bowl_pure_water, 1);
+    inv_add(inv, blessed_gold_bowl, 1);
+    ~mesbox("You start to see little shoots growing on the seeds. These seeds look|as if they're germinated now.");
+}
+else {
+    ~displaymessage(^dm_default);
+}
+
+[opheldu,ardrigal_mixture]
+if (last_useitem = snake_weed) {
+    // no full stop authentic
+    ~doubleobjbox(snake_weed, ardrigal_mixture, "You mix the two ingredients together", 150);
+    anim(human_herbing_vial, 0);
+    inv_del(inv, ardrigal_mixture, 1);
+    inv_del(inv, snake_weed, 1);
+    inv_add(inv, bravery_potion, 1);
+    ~objbox(bravery_potion, "It makes a heady brew. This must be what Gujuo was|talking about. You certainly would need to be brave to|drink this!", 180, 0, divide(^objbox_height, 2));
+}
+else {
+    ~displaymessage(^dm_default);
+}
+
+[opheldu,snakeweed_mixture]
+if (last_useitem = ardrigal) {
+    // no full stop authentic
+    ~doubleobjbox(snake_weed, snakeweed_mixture, "You mix the two ingredients together", 150);
+    anim(human_herbing_vial, 0);
+    inv_del(inv, snakeweed_mixture, 1);
+    inv_del(inv, ardrigal, 1);
+    inv_add(inv, bravery_potion, 1);
+    ~objbox(bravery_potion, "It makes a heady brew. This must be what Gujuo was|talking about. You certainly would need to be brave to|drink this!", 180, 0, divide(^objbox_height, 2));
+}
+else {
+    ~displaymessage(^dm_default);
+}
+
 
 [label,make_golden_bowl]
 if (map_members = false) {
@@ -770,6 +1028,12 @@ else {
 // legends fire
 if (p_finduid(uid) = true) {
     p_telejump(0_43_145_32_51);
+}
+
+[debugproc,lgem]
+// legends gem puzzle
+if (p_finduid(uid) = true) {
+    p_telejump(0_43_145_12_16);
 }
 
 [debugproc,lb]

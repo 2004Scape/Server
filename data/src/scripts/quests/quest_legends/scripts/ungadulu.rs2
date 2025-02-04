@@ -1,12 +1,17 @@
 [opnpc1,ungadulu] @ungadulu_start;
 [opnpc2,ungadulu] @attack_ungadulu;
 [apnpc2,ungadulu] @attack_ungadulu;
+[opnpc1,ungadulu_possessed] @ungadulu_possessed_start;
 [opnpc2,ungadulu_possessed] @attack_ungadulu;
 [apnpc2,ungadulu_possessed] @attack_ungadulu;
 
 [label,ungadulu_start]
 if (%legends_progress < ^legends_defeated_nezikchened_fire) @ungadulu_run;
+else if (%legends_progress >= ^legends_defeated_nezikchened_fire) @ungadulu_after_demon;
 else mes("Unhandled dialogue stage"); // todo
+
+[label,ungadulu_possessed_start]
+mes("Unhandled dialogue stage");
 
 [label,ungadulu_run]
 ~chatnpc("<p,neutral>Please run for your life...");
@@ -76,6 +81,59 @@ npc_changetype(ungadulu);
 @multi2("How can I extinguish the flames?", ungadulu_extinguish,
         "Where do I get pure water from?", ungadulu_where);
 
+[label,ungadulu_after_demon]
+~chatnpc("<p,neutral>Greetings bwana... Many thanks for defeating the|demon... and releasing me from this dreadful|possession... Pray tell me, what can I do to repay this|great favour?");
+@multi3("I need to collect some Yommi tree seeds for Gujuo.", ungadulu_yommi,
+        "How do I get out of here?", ungadulu_out,
+        "Ok, thanks...", ungadulu_thanks);
+
+[label,ungadulu_yommi]
+~chatplayer("<p,neutral>I need to collect some Yommi tree seeds for Gujuo.");
+~chatnpc("<p,neutral>Oh, yes, Bwana... you will be doing a great favour to|our people by doing this. However, you must know that|it is a difficult task, the Yommi tree is difficult to grow.");
+~chatnpc("<p,neutral>You must have a natural ability with such things to have|a chance...");
+~objbox(yommi_tree_seeds, "The Shaman holds out his gnarly old hand and reveals|three largish green seeds.", 250, 0, divide(^objbox_height, 2));
+~chatnpc("<p,neutral>Here you are, accept these with my gratitude. You'll|need to soak them in sacred water before planting them.|I notice that you must already be familiar with sacred|water to have passed into the flaming octagram.");
+inv_add(inv, yommi_tree_seeds, 3);
+@multi3("How do I grow the Yommi tree?", ungadulu_grow,
+        "What do you know about the pure water?", ungadulu_water,
+        "Ok, thanks...", ungadulu_thanks);
+
+[label,ungadulu_grow]
+~chatplayer("<p,neutral>How do I grow the Yommi tree?");
+~chatnpc("<p,neutral>A good question Bwana, but it is essentially quite simple.|First you will need to soak the seeds in some pure|water. This will help to germinate the seed and begin|the growing process.");
+~chatnpc("<p,neutral>The tree should show some remarkable growth quite|early but will slow down, you may be able to speed the|process up by watering the tree with more pure water,|although it can be difficult to find it.");
+@multi3("What will you do now?", ungadulu_what,
+        "What do you know about the pure water?", ungadulu_water,
+        "Ok, thanks...", ungadulu_thanks);
+
+[label,ungadulu_water]
+~chatplayer("<p,neutral>What do you know about the pure water?");
+~chatnpc("<p,neutral>Hmmm, the pure water is sacred to us. It is from a|sacred spring which is fed from deep underground.");
+~chatnpc("<p,neutral>Legend has it that the spring is protected by spirits of long dead adventurers who went in search of the source of the spring. It is likely a myth and the source of the spring is buried deep underground with no paths");
+~chatnpc("<p,neutral>to it.");
+
+[label,ungadulu_what]
+~chatplayer("<p,neutral>What will you do now?");
+~chatnpc("<p,neutral>I will remain here in the protection of the flaming|Octagram and continue my research into the spirit|world. I am somewhat of an authority with my recent|experience!");
+// double spacing and Demon capitalisation here are authentic
+~chatnpc("<p,neutral>But do remember me from time to time and come to|visit an old man. You never know, I may be able to|help you in the future, and repay you the favour  of|releasing me from that terrible Demon...");
+@multi3("I need to collect some Yommi tree seeds for Gujuo.", ungadulu_yommi,
+        "How do I get out of here?", ungadulu_out,
+        "Ok, thanks...", ungadulu_thanks);
+
+
+[label,ungadulu_out]
+~chatplayer("<p,neutral>How do I get out of here?");
+~chatnpc("<p,neutral>Now that you have defeated the demon you can come|and go as you please. I cast a spell on you which|means that you can pass through the flames without|harm.");
+@multi3("I need to collect some Yommi tree seeds for Gujuo.", ungadulu_yommi,
+        "What will you do now?", ungadulu_what,
+        "Ok, thanks...", ungadulu_thanks);
+
+[label,ungadulu_thanks]
+~chatplayer("<p,neutral>Ok, thanks...");
+~chatnpc("<p,neutral>My sincerest pleasure Bwana...");
+
+
 // Ungadulu cannot be attacked with melee or ranged weapons; he will throw players out of the Octagram, 
 // hitting them for between 4 and 10 damage. However, players can manually cast combat spells on him both inside
 // and outside the Octagram to damage and kill him without being thrown by his spell. 
@@ -112,6 +170,32 @@ else {
     ~chatnpc("<p,madlaugh>Ha, ha ha Vacu... Come for me again and you'll taste more of my power!");
 }
 
+[opnpcu,ungadulu]
+if (last_useitem = book_of_binding) {
+    if (%legends_progress = ^legends_filled_bowl) {
+        ~mesbox("You open the Book of Binding in front of Ungadulu and a|supernatural light starts emanating from the pages, illuminating|Ungadulu whose face twists and contorts in spasms.");
+        ~chatnpc("<p,neutral>Curse you foul intruder... 'Ere near to death ye come|now that ye has meddled in my dealings..");
+        ~mesbox("Without warning, the outline of a huge demon starts to emerge in|front of you as Ungadulu falls to the floor unconscious.");
+        // todo: ungadulu plank anim (before spawning nezikchened)
+        npc_add(coord, nezikchened, 1000);
+        mes("Nezikchened: Your faith will help you little here.");
+        npc_say("Your faith will help you little here.");
+        mes("A sense of hopelessness fills your body...");
+        // todo: confirm flat 40
+        stat_sub(prayer, 40, 0);
+        npc_setmode(opplayer2);
+        // todo: shouldn't be able to hit nezikchened from outside fire
+        // todo: maybe shouldn't be able to be kicked out of octagram if you click ungadulu mid fight
+    }
+    else {
+        // todo: check for post-demon kill interaction w/ book
+        ~displaymessage(^dm_default);
+    }
+}
+else {
+    ~displaymessage(^dm_default);
+}
+
 // curse to start: 
 //https://youtu.be/uYxkN3aJ-44?t=4317
 // npc_say("What...what's happening...") + dizzy anim
@@ -125,6 +209,3 @@ else {
 // https://youtu.be/uYxkN3aJ-44?t=4486
 // if you talk to him and go through possession -> normal, then cast curse/weakness/etc on him, get dialogue about book of binding
 // then mesbox("The shaman's eyes roll back and he returns to his quiet, unassuming self.")
-
-// book of binding formatting
-//~mesbox("You open the Book of Binding in front of Ungadulu and a|supernatural light starts emanating from the pages, illuminating|Ungadulu whose face twists and contorts in spasms.");
