@@ -102,8 +102,8 @@ export default class PlayerInfoEncoder extends MessageEncoder<PlayerInfo> {
 
     private writeNewPlayers(buf: Packet, updates: Packet, message: PlayerInfo, bytes: number): void {
         const { renderer, player } = message;
-        const { buildArea, pid, level, x, z, originX, originZ } = player;
-        for (const other of buildArea.getNearbyPlayers(pid, level, x, z, originX, originZ)) {
+        const { buildArea, pid, level, x, z } = player;
+        for (const other of buildArea.getNearbyPlayers(pid, level, x, z)) {
             if (other.visibility === Visibility.HARD) {
                 continue;
             }
