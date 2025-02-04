@@ -97,7 +97,14 @@ export default class Zone {
     }
 
     tick(tick: number): void {
+        this.checkObjs(tick);
+        this.checkLocs(tick);
+        this.computeShared();
+    }
+
+    private checkObjs(tick: number): void {
         let updated: boolean;
+        // despawn/change objs
         do {
             updated = false;
             for (const obj of this.getAllObjsUnsafe()) {
@@ -111,11 +118,29 @@ export default class Zone {
                         World.removeObj(obj, 0);
                         updated = true;
                     }
-                } else if (obj.lifecycle === EntityLifeCycle.RESPAWN) {
+                }
+            }
+        } while (updated);
+        // respawn objs
+        do {
+            updated = false;
+            for (const obj of this.getAllObjsUnsafe()) {
+                if (!obj.updateLifeCycle(tick) || obj.lastLifecycleTick === tick) {
+                    continue;
+                }
+                if (obj.lifecycle === EntityLifeCycle.RESPAWN) {
                     World.addObj(obj, Obj.NO_RECEIVER, 0);
                     updated = true;
                 }
             }
+        } while (updated);
+    }
+
+    private checkLocs(tick: number): void {
+        let updated: boolean;
+        // despawn locs
+        do {
+            updated = false;
             for (const loc of this.getAllLocsUnsafe()) {
                 if (!loc.updateLifeCycle(tick) || loc.lastLifecycleTick === tick) {
                     continue;
@@ -125,6 +150,10 @@ export default class Zone {
                     updated = true;
                 }
             }
+        } while (updated);
+        // respawn locs
+        do {
+            updated = false;
             for (const loc of this.getAllLocsUnsafe()) {
                 if (!loc.updateLifeCycle(tick) || loc.lastLifecycleTick === tick) {
                     continue;
@@ -134,21 +163,62 @@ export default class Zone {
                     updated = true;
                 }
             }
-            // for (const loc of this.getAllLocsUnsafe()) {
-            //     if (!loc.updateLifeCycle(tick) || loc.lastLifecycleTick === tick) {
-            //         continue;
-            //     }
-            //     if (loc.lifecycle === EntityLifeCycle.DESPAWN) {
-            //         World.removeLoc(loc, 0);
-            //         updated = true;
-            //     } else if (loc.lifecycle === EntityLifeCycle.RESPAWN) {
-            //         World.addLoc(loc, 0);
-            //         updated = true;
-            //     }
-            // }
         } while (updated);
-        this.computeShared();
     }
+
+    // tick(tick: number): void {
+    //     let updated: boolean;
+    //     do {
+    //         updated = false;
+    //         for (const obj of this.getAllObjsUnsafe()) {
+    //             if (!obj.updateLifeCycle(tick) || obj.lastLifecycleTick === tick) {
+    //                 continue;
+    //             }
+    //             if (obj.lifecycle === EntityLifeCycle.DESPAWN) {
+    //                 if (obj.reveal !== -1) {
+    //                     World.revealObj(obj);
+    //                 } else {
+    //                     World.removeObj(obj, 0);
+    //                     updated = true;
+    //                 }
+    //             } else if (obj.lifecycle === EntityLifeCycle.RESPAWN) {
+    //                 World.addObj(obj, Obj.NO_RECEIVER, 0);
+    //                 updated = true;
+    //             }
+    //         }
+    //         for (const loc of this.getAllLocsUnsafe()) {
+    //             if (!loc.updateLifeCycle(tick) || loc.lastLifecycleTick === tick) {
+    //                 continue;
+    //             }
+    //             if (loc.lifecycle === EntityLifeCycle.DESPAWN) {
+    //                 World.removeLoc(loc, 0);
+    //                 updated = true;
+    //             }
+    //         }
+    //         for (const loc of this.getAllLocsUnsafe()) {
+    //             if (!loc.updateLifeCycle(tick) || loc.lastLifecycleTick === tick) {
+    //                 continue;
+    //             }
+    //             if (loc.lifecycle === EntityLifeCycle.RESPAWN) {
+    //                 World.addLoc(loc, 0);
+    //                 updated = true;
+    //             }
+    //         }
+    //         // for (const loc of this.getAllLocsUnsafe()) {
+    //         //     if (!loc.updateLifeCycle(tick) || loc.lastLifecycleTick === tick) {
+    //         //         continue;
+    //         //     }
+    //         //     if (loc.lifecycle === EntityLifeCycle.DESPAWN) {
+    //         //         World.removeLoc(loc, 0);
+    //         //         updated = true;
+    //         //     } else if (loc.lifecycle === EntityLifeCycle.RESPAWN) {
+    //         //         World.addLoc(loc, 0);
+    //         //         updated = true;
+    //         //     }
+    //         // }
+    //     } while (updated);
+    //     this.computeShared();
+    // }
 
     computeShared(): void {
         const buf: Packet = Packet.alloc(1);
