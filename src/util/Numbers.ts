@@ -45,11 +45,3 @@ function initMaskArray(): number[] {
     }
     return data;
 }
-
-export function coerceAtMost(value: number, max: number): number {
-    return value > max ? max : value;
-}
-
-export function coerceAtLeast(value: number, min: number): number {
-    return value < min ? min : value;
-}

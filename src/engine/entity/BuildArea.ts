@@ -2,7 +2,6 @@ import {CoordGrid} from '#/engine/CoordGrid.js';
 import Player from '#/engine/entity/Player.js';
 import World from '#/engine/World.js';
 import Npc from '#/engine/entity/Npc.js';
-import { coerceAtLeast, coerceAtMost } from '#/util/Numbers.js';
 
 export default class BuildArea {
     public static readonly INTERVAL: number = 10;
@@ -114,10 +113,10 @@ export default class BuildArea {
     }
 
     *getNearbyNpcs(level: number, x: number, z: number): IterableIterator<Npc> {
-        const startX: number = coerceAtLeast(0, CoordGrid.zone(x - BuildArea.PREFERRED_VIEW_DISTANCE));
-        const startZ: number = coerceAtLeast(0, CoordGrid.zone(z - BuildArea.PREFERRED_VIEW_DISTANCE));
-        const endX: number = coerceAtMost(0x7ff, CoordGrid.zone(x + BuildArea.PREFERRED_VIEW_DISTANCE));
-        const endZ: number = coerceAtMost(0x7ff, CoordGrid.zone(z + BuildArea.PREFERRED_VIEW_DISTANCE));
+        const startX: number = CoordGrid.zone(x - BuildArea.PREFERRED_VIEW_DISTANCE);
+        const startZ: number = CoordGrid.zone(z - BuildArea.PREFERRED_VIEW_DISTANCE);
+        const endX: number = CoordGrid.zone(x + BuildArea.PREFERRED_VIEW_DISTANCE);
+        const endZ: number = CoordGrid.zone(z + BuildArea.PREFERRED_VIEW_DISTANCE);
 
         for (let zx = startX; zx <= endX; zx++) {
             const zoneX: number = zx << 3;
