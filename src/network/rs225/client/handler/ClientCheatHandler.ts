@@ -357,7 +357,7 @@ export default class ClientCheatHandler extends MessageHandler<ClientCheat> {
                     return false;
                 }
 
-                const value = player.getVar(varp.id);
+                const value = other.getVar(varp.id);
                 player.messageGame('get ' + varp.debugname + ': ' + value + ' on ' + other.username);
             } else if (cmd === 'setstat') {
                 // authentic
