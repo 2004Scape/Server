@@ -421,7 +421,31 @@ p_delay(3);
 mes("The rock contains a crystal!");
 
 [oploc2,loc_2816]
-if(getbit_range(%itwatchtower_bits, ^itwatchtower_shaman_kills_lower, ^itwatchtower_shaman_kills_higher) < 6) {
+if(getbit_range(%itwatchtower_bits, ^itwatchtower_shaman_kills_lower, ^itwatchtower_shaman_kills_upper) < 6 | %itwatchtower_progress >= ^itwatchtower_complete) {
     ~chatplayer("<p,confused>I can't touch it...|Perhaps it is linked with the shamans in some strange way?");
     return;
 }
+if(stat(mining) < 40) {
+  mes("You need at least level 40 Mining to mine this rock.");
+  return;
+}
+def_obj $pickaxe = ~pickaxe_checker;
+if ($pickaxe = null) {
+    ~mesbox("You need a pickaxe to mine this rock. You do not have a pickaxe which you have the Mining level to use.");
+    return;
+}
+
+
+[opheld1,shaman_robe]
+mes("You search the robe.");
+p_delay(2);
+if(inv_total(inv, watchtower_crystal3) > 0 | %itwatchtower_progress >= ^itwatchtower_complete | getbit_range(%itwatchtower_bits, ^itwatchtower_shaman_kills_lower, ^itwatchtower_shaman_kills_upper) < 6) {
+    mes("You find nothing.");
+    return;
+} 
+if(inv_total(bank, watchtower_crystal3) > 0) {
+    ~chatplayer("<p,neutral>I already have this in my bank."); // rsc
+    return;
+}
+mes("You find a crystal wrapped in the folds of the material.");
+inv_add(inv, watchtower_crystal3, 1);

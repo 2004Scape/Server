@@ -2,7 +2,9 @@
 switch_int(%itwatchtower_progress) {
     case ^itwatchtower_made_potion :
         // todo - can you make the potion through dialogue at this stage (if lost) like in OSRS? in RSC you have to use opnpcu
-
+        ~chatnpc("<p,neutral>Hello again.|Did the potion work?");
+        ~chatplayer("<p,neutral>I am still working to rid us of the shamans...");
+        ~chatnpc("<p,happy>May you have success in your task.");
     case ^itwatchtower_learned_potion :
         ~chatnpc("<p,neutral>Any more news?");
         if(inv_total(inv, ogre_potion) > 0) {
@@ -176,7 +178,7 @@ switch_int(%itwatchtower_progress) {
 if(last_useitem = ogre_relic) {
     ~chatplayer("<p,confused>What is this?");
     ~chatnpc("<p,confused>It is the ogre statue I finished for you.");
-} else if(last_useitem = watchtower_crystal1 | last_useitem = watchtower_crystal2 | last_useitem = watchtower_crystal3 | last_useitem = watchtower_crytal4) {
+} else if(last_useitem = watchtower_crystal1 | last_useitem = watchtower_crystal2 | last_useitem = watchtower_crystal3 | last_useitem = watchtower_crystal4) {
     ~chatplayer("<p,happy>Wizard, look what I have found.");
     ~chatnpc("<p,happy>Well done, well done!|You are clever;|hold onto it until you have all four.");
     ~chatnpc("<p,neutral>Keep searching for the others.|If you've dropped any,|then you will need to go back to where you got it from.");
@@ -227,11 +229,14 @@ if(last_useitem = ogre_relic) {
 } else if(last_useitem = ogre_potion) {
     if(%itwatchtower_progress >= ^itwatchtower_complete) {
         // RSC, guessing mesanim
+        ~chatnpc("<p,shifty>Another potion?|Ooo no, I don't think so...");
         inv_del(inv, ogre_potion, 1);
-        ~chatnpc("<p,confused>I can't let you use this now, it's just too dangerous.|I'd better take it from you before you injure yourself.");
+        ~chatnpc("<p,shifty>I can't let you use this now, it's just too dangerous.|I'd better take it from you before you injure yourself.");
         return;
     }
     @make_magic_ogre_potion;
+} else if(last_useitem = magic_ogre_potion) {
+    ~chatnpc("<p,confused>Yes, that is the potion I enchanted for you.|Go and use it now...");
 } else {
     ~displaymessage(^dm_default);
 }

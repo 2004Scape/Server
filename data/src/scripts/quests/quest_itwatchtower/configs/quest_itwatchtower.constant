@@ -8,6 +8,7 @@
 ^itwatchtower_skavid_crystal = 7
 ^itwatchtower_fed_nightshade = 8
 ^itwatchtower_learned_potion = 9
+^itwatchtower_made_potion = 10
 ^itwatchtower_complete = 13
 ^itwatchtower_complete_read_scroll = 14
 
@@ -32,7 +33,7 @@
 ^itwatchtower_learned_cur = 15
 ^itwatchtower_learned_nod = 16
 ^itwatchtower_shaman_kills_lower = 17
-^itwatchtower_shaman_kills_higher = 19
+^itwatchtower_shaman_kills_upper = 19
 
 ^gutanoth_hill = 0_39_47_50_57
 ^gutanoth_hill_lower = 0_39_46_27_54
