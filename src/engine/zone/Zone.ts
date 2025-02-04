@@ -123,11 +123,29 @@ export default class Zone {
                 if (loc.lifecycle === EntityLifeCycle.DESPAWN) {
                     World.removeLoc(loc, 0);
                     updated = true;
-                } else if (loc.lifecycle === EntityLifeCycle.RESPAWN) {
+                }
+            }
+            for (const loc of this.getAllLocsUnsafe()) {
+                if (!loc.updateLifeCycle(tick) || loc.lastLifecycleTick === tick) {
+                    continue;
+                }
+                if (loc.lifecycle === EntityLifeCycle.RESPAWN) {
                     World.addLoc(loc, 0);
                     updated = true;
                 }
             }
+            // for (const loc of this.getAllLocsUnsafe()) {
+            //     if (!loc.updateLifeCycle(tick) || loc.lastLifecycleTick === tick) {
+            //         continue;
+            //     }
+            //     if (loc.lifecycle === EntityLifeCycle.DESPAWN) {
+            //         World.removeLoc(loc, 0);
+            //         updated = true;
+            //     } else if (loc.lifecycle === EntityLifeCycle.RESPAWN) {
+            //         World.addLoc(loc, 0);
+            //         updated = true;
+            //     }
+            // }
         } while (updated);
         this.computeShared();
     }
@@ -177,16 +195,32 @@ export default class Zone {
                 player.write(new ObjAdd(CoordGrid.packZoneCoord(obj.x, obj.z), obj.type, obj.count));
             }
         }
-        for (const loc of this.getAllLocsUnsafe(true)) {
+        for (const loc of this.getAllLocsUnsafe()) {
+            if (loc.lastLifecycleTick === currentTick) {
+                continue;
+            }
+            if (loc.lifecycle === EntityLifeCycle.RESPAWN && !loc.checkLifeCycle(currentTick)) {
+                player.write(new LocDel(CoordGrid.packZoneCoord(loc.x, loc.z), loc.shape, loc.angle));
+            }
+        }
+        for (const loc of this.getAllLocsUnsafe()) {
             if (loc.lastLifecycleTick === currentTick) {
                 continue;
             }
             if (loc.lifecycle === EntityLifeCycle.DESPAWN && loc.checkLifeCycle(currentTick)) {
                 player.write(new LocAddChange(CoordGrid.packZoneCoord(loc.x, loc.z), loc.type, loc.shape, loc.angle));
-            } else if (loc.lifecycle === EntityLifeCycle.RESPAWN && !loc.checkLifeCycle(currentTick)) {
-                player.write(new LocDel(CoordGrid.packZoneCoord(loc.x, loc.z), loc.shape, loc.angle));
             }
         }
+        // for (const loc of this.getAllLocsUnsafe(true)) {
+        //     if (loc.lastLifecycleTick === currentTick) {
+        //         continue;
+        //     }
+        //     if (loc.lifecycle === EntityLifeCycle.DESPAWN && loc.checkLifeCycle(currentTick)) {
+        //         player.write(new LocAddChange(CoordGrid.packZoneCoord(loc.x, loc.z), loc.type, loc.shape, loc.angle));
+        //     } else if (loc.lifecycle === EntityLifeCycle.RESPAWN && !loc.checkLifeCycle(currentTick)) {
+        //         player.write(new LocDel(CoordGrid.packZoneCoord(loc.x, loc.z), loc.shape, loc.angle));
+        //     }
+        // }
     }
 
     /**
