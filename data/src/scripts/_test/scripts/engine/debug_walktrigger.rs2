@@ -1,0 +1,20 @@
+[debugproc,stunned](int $stun)
+if (p_finduid(uid) = false) {
+    return;
+}
+%stunned = add(map_clock, $stun);
+walktrigger(stunned);
+
+[debugproc,pvpstun1]
+if (p_finduid(uid) = true) {
+    p_teleport(0_49_73_61_35);
+    inv_add(inv, naturerune, 100);
+    inv_add(inv, earthrune, 100);
+    inv_add(inv, waterrune, 100);
+    stat_add(magic, 255, 0);
+}
+
+[debugproc,pvpstun2]
+if (p_finduid(uid) = true) {
+    p_teleport(0_49_73_61_45);
+}
