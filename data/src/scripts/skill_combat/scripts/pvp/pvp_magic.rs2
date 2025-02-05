@@ -170,6 +170,9 @@ if ($freeze_time > 0) {
     if (~.check_protect_prayer(^magic_style) = true) {
         $freeze_time = divide($freeze_time, 2); // 50% reduction https://oldschool.runescape.wiki/w/Update:RS2_bugfixes_-_part_4
     }
+    if (.p_finduid(.uid) = true) {
+        .p_stopaction;
+    }
     .%pk_binder = uid;
     .queue(pvp_freeze_player, 0, $freeze_time);
 }
@@ -255,7 +258,7 @@ return($maxhit);
 
 [queue,pvp_freeze_player](int $duration)
 mes("You've been frozen!");
-%frozen = calc(map_clock + $duration + 1);
+%frozen = calc(map_clock + $duration);
 walktrigger(pvp_frozen);
 
 
