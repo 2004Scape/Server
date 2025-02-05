@@ -77,8 +77,8 @@ export default class NpcInfoEncoder extends MessageEncoder<NpcInfo> {
 
     private writeNewNpcs(buf: Packet, updates: Packet, message: NpcInfo, bytes: number): void {
         const { renderer, player } = message;
-        const { buildArea, level, x, z, originX, originZ } = player;
-        for (const npc of buildArea.getNearbyNpcs(level, x, z, originX, originZ)) {
+        const { buildArea, level, x, z } = player;
+        for (const npc of buildArea.getNearbyNpcs(level, x, z)) {
             const nid: number = npc.nid;
             const length: number = renderer.lowdefinitions(nid) + renderer.highdefinitions(nid);
             // bits to add npc + extended info size + bits to break loop (13)
