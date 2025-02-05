@@ -9,6 +9,8 @@
 [oploc1,legends_fire_wall_2] @legends_touch_fire_wall;
 [oploc2,legends_fire_wall_1] @legends_investigate_fire_wall;
 [oploc2,legends_fire_wall_2] @legends_investigate_fire_wall;
+[oplocu,legends_fire_wall_1] @legends_use_on_fire_wall;
+[oplocu,legends_fire_wall_2] @legends_use_on_fire_wall;
 
 [opheld1,a_scribbled_note]
 ~mesbox("You try your best to decode the writing.|This is what you make out...");
@@ -182,6 +184,23 @@ if (%legends_progress >= ^legends_defeated_nezikchened_fire) {
 }
 ~mesbox("You look closely at the flames. They seem to form a straight wall.|Something about them looks very strange: they look completely|supernatural. For example, they seem to come from|straight out of the ground.");
 say("Mmmm, pretty!");
+def_boolean $entering = ~check_axis(coord, loc_coord, loc_angle);
+if ($entering = false) {
+    def_int $choice = ~p_choice2_header("Leap out of the flaming octagram.", 1, 
+                                        "Attract the shaman's attention.", 2, 
+                                        "What would you like to do?");
+    if ($choice = 1) {
+        mes("This is quite dangerous, but you find a suitable location to jump.");
+        // delay and walk to defined spot
+        mes("You take a run up...");
+        // walk out of flames
+        // damage player 6
+        // -6 att str def
+        mes("You sail over the top of the flame wall...");
+        mes("Getting only slightly singed as you go.");
+        return;
+    }
+}
 ~mesbox("You see a white clad figure in the midst of the flames...");
 ~mesbox("You see the white robed figure inside the flaming octagram gesturing to you.");
 // range guess
@@ -196,6 +215,57 @@ while (npc_findnext = true) {
         npc_changetype(ungadulu);
         @ungadulu_no_closer;
     }
+}
+
+[label,legends_use_on_fire_wall]
+if (last_useitem = blessed_golden_bowl_pure_water) {
+    p_delay(1);
+    anim(human_pickuptable, 0);
+    loc_del(1);
+    spotanim_map(small_smokepuff, loc_coord, 64, 0);
+
+    def_int $dir;
+    if (loc_type = legends_fire_wall_2) {
+        if (~check_axis(coord, loc_coord, loc_angle) = true) {
+            // todo... :(
+            switch_int(loc_angle) {
+                case ^loc_west : $dir = ^exact_west;
+                case ^loc_north : $dir = ^exact_north;
+                case ^loc_east : $dir = ^exact_east;
+                case ^loc_south : $dir = ^exact_south;
+            }
+        }
+        else {
+            switch_int(loc_angle) {
+                case ^loc_west : $dir = ^exact_east;
+                case ^loc_north : $dir = ^exact_south;
+                case ^loc_east : $dir = ^exact_west;
+                case ^loc_south : $dir = ^exact_north;
+            }
+        }
+    }
+    else {
+        if (~check_axis(coord, loc_coord, loc_angle) = true) {
+            switch_int(loc_angle) {
+                case ^loc_west : $dir = ^exact_west;
+                case ^loc_north : $dir = ^exact_north;
+                case ^loc_east : $dir = ^exact_east;
+                case ^loc_south : $dir = ^exact_south;
+            }
+        }
+        else {
+            switch_int(loc_angle) {
+                case ^loc_west : $dir = ^exact_east;
+                case ^loc_north : $dir = ^exact_south;
+                case ^loc_east : $dir = ^exact_west;
+                case ^loc_south : $dir = ^exact_north;
+            }
+        }
+    }
+    def_coord $dest = ~movecoord_indirection(loc_coord, $dir, 1);
+    ~forcewalk($dest);
+    mes("You splash some sacred water on the flames.");
+    mes("<lc_debugname(loc_type)>");
 }
 
 [label,legends_search_rocks]

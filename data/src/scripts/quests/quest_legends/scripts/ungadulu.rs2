@@ -31,10 +31,41 @@ mes("The Shaman seems to get stronger!");
 p_delay(1);
 npc_changetype(ungadulu);
 mes("The Shaman seems to return to normal...");
-~chatnpc("<p,neutral>Run, run away... Run like the leopard Bwana!");
 // if the player casts confuse/curse/weaken shortly after this dialogue, 
 // there's special dialogue about getting the book of binding.
-// todo: how do we track this? timer?
+// todo: confirm length and if it is set before or after final chat message
+settimer(ungadulu_curse, 20);
+~chatnpc("<p,neutral>Run, run away... Run like the leopard Bwana!");
+
+[ai_timer,ungadulu_possessed]
+npc_changetype(ungadulu);
+npc_tele(0_43_145_40_47);
+npc_settimer(0);
+
+[timer,ungadulu_curse]
+cleartimer(ungadulu_curse);
+
+[proc,legends_check_spell_usage](int $spell, dbrow $spell_data, int $duration)(boolean)
+if (npc_type = ungadulu & ($spell = ^confuse | $spell = ^curse | $spell = ^weaken)) {
+    if (gettimer(ungadulu_curse) > 0) {
+        spotanim_npc(db_getfield($spell_data, magic_spell_table:spotanim_target, 0), $duration);
+        ~chatnpc("<p,shock>Thank you, Bwana! You have released me from the|demon's grasp, but only for a short while! You must|seek out the Book of Binding - it's hidden in these caves somewhere!.");
+        ~chatnpc("<p,shock>There are many trials you must pass... but please,|you're my only hope of escape!");
+        ~mesbox("The shaman's eyes roll back and he returns to his quiet, unassuming|self.");
+        cleartimer(ungadulu_curse);
+        return (true);
+    }
+    ~pvm_spell_fail($spell_data, $duration);
+    npc_say("What...what's happening...");
+    // dizzy anim
+    //npc_anim()
+    p_delay(2);
+    npc_setmode(opplayer2);
+    mes("The shaman somehow resists the power of the spell.");
+    mes("Perhaps you should try again?");
+    return (true);
+}
+return (false);
 
 [label,ungadulu_no_closer]
 ~chatnpc("<p,neutral>Please come no closer... the flames will incinerate you.");
@@ -166,6 +197,8 @@ else {
     anim(human_knockback_long_end, 15);
     p_delay(1);
     ~damage_self(calc(random(7) + 4));
+    npc_setmode(wander);
+    npc_settimer(10);
     ~mesbox("Ungadulu unleashes a savage bolt of energy at you. You're knocked out of the octagram by the power of the spell.");
     ~chatnpc("<p,madlaugh>Ha, ha ha Vacu... Come for me again and you'll taste more of my power!");
 }
