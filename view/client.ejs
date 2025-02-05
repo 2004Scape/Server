@@ -93,6 +93,12 @@
         function toggleFiltering() {
             let canvas = document.getElementById('canvas');
             let filtering = canvas.style.imageRendering == 'pixelated';
+            
+            setFiltering(canvas, filtering);
+            localStorage.setItem('filtering', filtering);
+        }
+
+        function setFiltering(canvas, filtering) {
             canvas.style.imageRendering = filtering ? 'auto' : 'pixelated';
  
             let element = document.getElementById('filtering');
@@ -103,14 +109,22 @@
         let maxCanvasSize = 3;
         function changeCanvasSize() {
             canvasSize += 1;
-            if (canvasSize > maxCanvasSize) {
-                canvasSize = 1;
+            let canvas = document.getElementById('canvas');
+            canvasSize = setCanvasSize(canvas, canvasSize);
+            localStorage.setItem('canvasSize', canvasSize);
+        }
+
+        function setCanvasSize(canvas, size) {
+            if (size > maxCanvasSize) {
+                size = 1;
             }
-            canvas.style.width = (789 * canvasSize) + 'px';
-            canvas.style.height = (532 * canvasSize) + 'px';
+            canvas.style.width = (789 * size) + 'px';
+            canvas.style.height = (532 * size) + 'px';
             
             let element = document.getElementById('canvasSize');
-            element.textContent = canvasSize + "x size";
+            element.textContent = size + "x size";
+
+            return size;
         }
  
         function saveScreenshot() {
@@ -120,6 +134,21 @@
  
         function hideControls() {
             document.getElementById('controls').style.display = 'none';
+        }
+
+        function loadSettings() {
+            let canvas = document.getElementById('canvas');
+
+            let filtering = localStorage.getItem('filtering');
+            if (filtering) {
+                setFiltering(canvas, filtering === 'true');
+            }
+
+            let size = localStorage.getItem('canvasSize');
+            if (size) {
+                 size = setCanvasSize(canvas, size);
+                 localStorage.setItem('canvasSize', size);
+            }
         }
     </script>
 </head>
@@ -147,6 +176,8 @@
         (() => {
             new Client(<%= nodeid %>, <%= lowmem %>, <%= members %>);
         })();
+        
+        loadSettings();
     </script>
 </body>
  
