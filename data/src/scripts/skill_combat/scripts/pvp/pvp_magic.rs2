@@ -89,20 +89,8 @@ if (~check_spell_requirements($spell_data) = false) {
     return(false);
 }
 // these go after rune check
-if (~in_duel_arena(coord) = true) {
-    if (~duel_arena_checks = false) {
-        return(false);
-    }
-    if (~duel_arena_magic_check = false) {
-        return(false);
-    }
-} else {
-    if (~pvp_level_check = false) {
-        return(false);
-    }
-    if (~pvp_in_combat_check = false) {
-        return(false);
-    }
+if (~pvp_is_attackable_opt = false) {
+    return(false);
 }
 return(true);
 
@@ -252,7 +240,7 @@ if (db_getfieldcount($spell_data, magic_spell_table:spotanim_proj) > 0) {
 }
 
 // continue by autocast
-if (testbit(%attackstyle_magic, 0) = true & %attackstyle_magic = 3 & %autocast_spell > 0 & db_getfield($spell_data, magic_spell_table:continue_by_autocast, 0) = true) {
+if (~player_autocast_enabled = true & db_getfield($spell_data, magic_spell_table:continue_by_autocast, 0) = true) {
     p_opplayert(db_getfield(~get_spell_data(%autocast_spell), magic_spell_table:spellcom, 0));
 }
 return($duration);

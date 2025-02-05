@@ -11,18 +11,11 @@ if (inv_getobj(worn, ^wearpos_rhand) ! null) {
     }
 }
 
-// mes("<tostring(%attackstyle_magic)>");
-// if (testbit(%attackstyle_magic, 0) = true){
-//     mes("TRUE");
-// }
-// mes("<tostring(%autocast_spell)>");
-// if auto cast is enabled, and autocast spell is set
-if (testbit(%attackstyle_magic, 0) = true & %attackstyle_magic = 3 & %autocast_spell > 0){
+if (~player_autocast_enabled = true){
     $attackrange = 10;
 }
 
 if (($attackrange <= 1 & ~player_in_combat_check = false) | $distance > $attackrange) {
-    // p_opnpc(2);
     p_aprange($attackrange);
     return;
 }
@@ -32,17 +25,10 @@ if (($attackrange <= 1 & ~player_in_combat_check = false) | $distance > $attackr
 if (~player_in_combat_check = false) {
     return;
 }
-// facesquare(npc_coord);
-// todo: Range and mage check
 if (%damagetype = ^ranged_style) {
     @player_ranged_attack;
 }
-// mes("<tostring(%attackstyle_magic)>");
-// if (testbit(%attackstyle_magic, 0) = true){
-//     mes("TRUE");
-// }
-// if autocast is enabled and spell is selected
-if (testbit(%attackstyle_magic, 0) = true & %attackstyle_magic = 3 & %autocast_spell > 0) {
+if (~player_autocast_enabled = true) {
     def_dbrow $spell_data = ~get_spell_data(%autocast_spell);
     if (~check_spell_requirements($spell_data) = true) {
         p_stopaction;

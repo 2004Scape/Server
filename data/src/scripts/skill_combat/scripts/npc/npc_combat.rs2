@@ -114,6 +114,11 @@ if (npc_category = battle_mage & %magearena < ^mage_arena_complete) {
     return(false);
 }
 
+if (~player_autocast_enabled = false & ~inzone_coord_pair_table(mage_arena, coord) = true) {
+    mes("Kolodion allows only magical combat within the arena."); // taken from pvp
+    return(false);
+}
+
 if ((npc_type = zamorak_wizard | npc_type = grandtree_black_demon) & %npc_attacking_uid ! uid) {
     mes("It's not after you...");
     return(false);
@@ -151,8 +156,8 @@ if (npc_hasop(2) = true) {
 }
 return (false);
 
-// this proc is primarily used for magic, due to the "You cant attack this npc." message
-[proc,npc_is_attackable_message]()(boolean)
+// this proc is used for magic
+[proc,npc_is_attackable_opt]()(boolean)
 if (npc_type = wormbrain & (~quest_dragon_getting_map_parts = false | inv_total(inv, crandor_map_part2) > 0 | %dragon_goblin ! ^quest_dragon_knows_about_goblin)) {
     mes("The goblin is already in prison. You have no reason to attack him.");
     return (false);

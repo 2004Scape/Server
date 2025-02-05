@@ -1,17 +1,8 @@
 [opplayer2,_] @pvp_combat_start;
 
 [applayer2,_]
-if (~in_duel_arena(coord) = true) {
-    if (~duel_arena_checks = false) {
-        return;
-    }
-} else {
-    if (~pvp_level_check = false) {
-        return;
-    }
-    if (~pvp_in_combat_check = false) {
-        return;
-    }
+if (~pvp_is_attackable = false) {
+    return;
 }
 
 def_int $distance = distance(coord, .coord);
@@ -23,7 +14,7 @@ if (inv_getobj(worn, ^wearpos_rhand) ! null) {
     }
 }
 
-if (testbit(%attackstyle_magic, 0) = true & %attackstyle_magic = 3 & %autocast_spell > 0){
+if (~player_autocast_enabled = true){
     $attackrange = 10;
 }
 if ($attackrange <= 1) {
@@ -34,29 +25,14 @@ p_aprange($attackrange);
 @pvp_combat_start;
 
 [label,pvp_combat_start]
-if (~in_duel_arena(coord) = true) {
-    if (~duel_arena_checks = false) {
-        return;
-    }
-} else {
-    if (~pvp_level_check = false) {
-        return;
-    }
-    if (~pvp_in_combat_check = false) {
-        return;
-    }
-}
-
-if (~inzone_coord_pair_table(mage_arena, coord) = true) {
-    mes("Kolodion allows only magical combat within the arena."); // osrs
+if (~pvp_is_attackable = false) {
     return;
 }
 if (%damagetype = ^ranged_style) {
     @pvp_ranged_attack;
 }
 
-// if autocast is enabled and spell is selected
-if (testbit(%attackstyle_magic, 0) = true & %attackstyle_magic = 3 & %autocast_spell > 0) {
+if (~player_autocast_enabled = true) {
     // look for spell in db
     def_dbrow $spell_data = ~get_spell_data(%autocast_spell);
     if (~check_spell_requirements($spell_data) = false) {
@@ -84,6 +60,42 @@ if ($wilderness_level < $combat_level_diff) {
     return(false);
 }
 return(true);
+
+[proc,pvp_is_attackable]()(boolean)
+if (~in_duel_arena(coord) = true) {
+    if (~duel_arena_checks = false) {
+        return(false);
+    }
+    return(true);
+}
+if (~pvp_level_check = false) {
+    return(false);
+}
+if (~pvp_in_combat_check = false) {
+    return(false);
+}
+if (~player_autocast_enabled = false & ~inzone_coord_pair_table(mage_arena, coord) = true) {
+    mes("Kolodion allows only magical combat within the arena."); // osrs
+    return(false);
+}
+
+// For magic
+[proc,pvp_is_attackable_opt]()(boolean)
+if (~in_duel_arena(coord) = true) {
+    if (~duel_arena_checks = false) {
+        return(false);
+    }
+    if (~duel_arena_magic_check = false) {
+        return(false);
+    }
+    return(true); // important!! Duel arena doesnt have normal pvp rules
+}
+if (~pvp_level_check = false) {
+    return(false);
+}
+if (~pvp_in_combat_check = false) {
+    return(false);
+}
 
 [proc,pvp_in_combat_check]()(boolean)
 // if multi, return true
