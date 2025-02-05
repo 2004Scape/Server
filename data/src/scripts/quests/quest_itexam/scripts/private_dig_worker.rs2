@@ -6,27 +6,59 @@ switch_int (~itexam_progress) {
 
 [label,digsite_workman_cave_default]
 ~chatplayer("<p,happy>Hello.");
-~chatnpc("<p,confused>Well, well... I have a visitor. What are you doing here?");
-
-if (~itexam_testbit(^itexam_bit_searched_bricks) = true) {
-    @multi4("I have been invited to research here.", digsite_workman_cave_invited_to_research, "I am not sure really.", digsite_workman_cave_not_sure, "I'm here to get rich, rich, rich!", digsite_workman_cave_not_rich_rich, "How could I move a large pile of rocks?", digsite_workman_cave_move_pile_of_rocks);
-} else {
-    @multi3("I have been invited to research here.", digsite_workman_cave_invited_to_research, "I am not sure really.", digsite_workman_cave_not_sure, "I'm here to get rich, rich, rich!", digsite_workman_cave_not_rich_rich);
-}
+~chatnpc("<p,confused>Well, well...|I have a visitor.|What are you doing here?");
+@multi3("I have been invited to research here.", digsite_workman_cave_invited_to_research, "I am not sure really.", digsite_workman_cave_not_sure, "I'm here to get rich, rich, rich!", digsite_workman_cave_not_rich_rich);
 
 [label,digsite_workman_cave_invited_to_research]
 ~chatplayer("<p,happy>I have been invited to research here.");
-~chatnpc("<p,happy>Indeed, you must be someone special to be allowed down here.");
+~chatnpc("<p,happy>Indeed, you must be someone special to be allowed down here...");
 
-def_int $choice = ~p_choice2("Do you know where to find a specimen jar?", 1, "I have things to do...", 2);
+def_int $choice = ~p_choice2("Do you know where to find a specimen jar?", 1, "Do you know where to find a chest key?", 2);
 
 if ($choice = 1) {
     ~chatplayer("<p,neutral>Do you know where to find a specimen jar?");
     ~chatnpc("<p,quiz>Hmmm, let me think... Nope, can't help you there I'm afraid.");
 } else {
-    ~chatplayer("<p,neutral>I have things to do...");
-    ~chatnpc("<p,happy>Of course, don't let me keep you.");
+    // https://web.archive.org/web/20060909012420/http://www.runeweb.net/index.php?page=rs2-quest-digsite, "Pickpocket a workmen to get two ropes and go down the northern wench. Beg the workmen till he gives you a key to a chest."
+    ~chatplayer("<p,neutral>Do you know where to find a chest key?"); // whole chain is from RSC, so guessing mesanims from here on unfortunately
+    ~chatnpc("<p,neutral>Yes, I might have one...");
+    @multi3("I don't suppose I could use it?", digsite_workman_usekey, "Can I buy it from you?", digsite_workman_buykey, "Hey that's my key!", digsite_workman_mykey);
 }
+
+[label,digsite_workman_usekey]
+~chatplayer("<p,quiz>I don't suppose I could use it?");
+~chatnpc("<p,sad>Aww, but I need it...");
+@multi3("Please?", digsite_workman_please, "Can I buy it from you?", digsite_workman_buykey, "Hey that's my key!", digsite_workman_mykey);
+
+[label,digsite_workman_please]
+~chatplayer("<p,happy>Please?");
+~chatnpc("<p,confused>I am not sure about this...");
+@multi3("Aww... go on.", digsite_workman_aww, "Can I buy it from you?", digsite_workman_buykey, "Hey that's my key!", digsite_workman_mykey);
+
+[label,digsite_workman_aww]
+~chatplayer("<p,happy>Aww... go on.");
+~chatnpc("<p,confused>Hmmm... well I don't know.");
+@multi3("Pretty please!", digsite_workman_please2, "Can I buy it from you?", digsite_workman_buykey, "Hey that's my key!", digsite_workman_mykey);
+
+[label,digsite_workman_please2]
+~chatplayer("<p,happy>Pretty please!");
+~chatnpc("<p,confused>You are trying to change my mind.");
+~chatplayer("<p,happy>Of course!");
+@multi3("Pretty please with sugar on top!", digsite_workman_please3, "Can I buy it from you?", digsite_workman_buykey, "Hey that's my key!", digsite_workman_mykey);
+
+[label,digsite_workman_please3]
+~chatplayer("<p,happy>Pretty please with sugar on top!");
+inv_add(inv, digsite_chest_key, 1);
+~chatnpc("<p,neutral>All right, all right!|Stop begging I can't stand it.|Here's the key... take care of it.");
+~chatplayer("<p,happy>Thanks!");
+
+[label,digsite_workman_buykey]
+~chatplayer("<p,quiz>Can I buy it from you?");
+~chatnpc("<p,neutral>Ooo no, I need it!");
+
+[label,digsite_workman_mykey]
+~chatplayer("<p,happy>Hey that's my key!");
+~chatnpc("<p,angry>You don't think im going to fall for that do you?|Get lost!");
 
 [label,digsite_workman_cave_not_sure]
 ~chatplayer("<p,confused>I am not sure really.");
@@ -35,15 +67,6 @@ if ($choice = 1) {
 [label,digsite_workman_cave_not_rich_rich]
 ~chatplayer("<p,happy>I'm here to get rich, rich, rich!");
 ~chatnpc("<p,happy>Oh, well, don't forget that wealth and riches aren't everything.");
-
-[label,digsite_workman_cave_move_pile_of_rocks]
-~chatplayer("<p,quiz>How do you move a large pile of rocks?");
-~chatnpc("<p,neutral>There used to be this chap that worked in the other shaft. He was working on an explosive chemical mixture to be used for clearing blocked areas underground.");
-~chatnpc("<p,confused>He left in a hurry one day; something in the shaft scared him to death, but he didn't say what.");
-~chatplayer("<p,quiz>Oh?");
-~chatnpc("<p,shifty>Rumour has it he'd been writing a book on his chemical mixture. I'm not sure what goes in it but I'm sure you'll find the stuff he was using scattered around the digsite. He left so quickly he didn't take anything with him. In fact, I still have a chest key he gave me to look after; perhaps it's more useful to you.");
-inv_add(inv, digsite_chest_key, 1);
-~objbox(digsite_chest_key, "Doug hands you a key.", 250, 0, divide(^objbox_height, 2));
 
 [label,digsite_workman_cave_quest_complete]
 ~chatnpc("<p,neutral>Well, hello again. Congratulations on your finds");

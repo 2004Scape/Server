@@ -1,2 +1,8 @@
 [itexam_progress]
 scope=perm
+
+[itexam_errands]
+scope=perm
+
+[itexam_bits]
+scope=perm

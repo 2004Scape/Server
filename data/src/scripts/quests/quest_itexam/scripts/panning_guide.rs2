@@ -21,8 +21,8 @@ if (~itexam_testbit(^itexam_bit_panning_guide_tea_given) = false) {
 if (inv_total(inv, cup_of_tea) > 0) {
     ~chatplayer("<p,happy>I've some here that you can have.");
     inv_del(inv, cup_of_tea, 1);
-    ~chatnpc("<p,happy>Ah! Lovely! You can't beat a good cuppa... You're free to pan all you want.");
     ~itexam_setbit(^itexam_bit_panning_guide_tea_given);
+    ~chatnpc("<p,happy>Ah! Lovely! You can't beat a good cuppa... You're free to pan all you want.");
 } else {
     ~chatplayer("<p,shock>Tea?!");
     ~chatnpc("<p,happy>Absolutely, I'm parched!");

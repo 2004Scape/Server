@@ -44,12 +44,12 @@ if ($choice = 1) {
 ////////////////////////////////////////////////
 
 [label,itexam_examiner_deliver_stamped_letter]
-~chatplayer("<p,neutral>Hello.");
-~chatnpc("<p,neutral>Hello again.");
+~chatplayer("<p,happy>Hello.");
+~chatnpc("<p,happy>Hello again.");
 
 if (inv_total(inv, stamped_letter) > 0) {
-    ~chatplayer("<p,neutral>Here is the stamped letter you asked for.");
-    ~chatnpc("<p,neutral>Good, good. We will begin the exam...");
+    ~chatplayer("<p,happy>Here is the stamped letter you asked for.");
+    ~chatnpc("<p,happy>Good good, we will begin the exam...");
     inv_del(inv, stamped_letter, ^max_32bit_int);
     ~itexam_set_progress(^itexam_first_exam);
     @itexam_examiner_first_exam;
@@ -58,22 +58,22 @@ if (inv_total(inv, stamped_letter) > 0) {
         ~mesbox("Perhaps you should fetch the Letter of Recommendation from your bank before talking to the examiner.");
         return;
     }
-    ~chatnpc("<p,neutral>I am still waiting for your letter of recommendation.");
+    ~chatnpc("<p,confused>I am still waiting for your letter of recommendation.");
     def_int $choice = ~p_choice2("I have lost the letter you gave me.", 1, "Alright I'll try and get it.", 2);
 
     if ($choice = 1) {
         ~chatplayer("<p,sad>I have lost the letter you gave me.");
-        if (inv_total(inv, unstamped_letter) > 0) {
-            ~chatnpc("<p,neutral>Oh now come on. You have it with you!");
-        } else if (inv_total(bank, unstamped_letter) > 0) {
-            ~chatnpc("<p,neutral>You already have the letter in your bank.");
+        if (inv_total(bank, unstamped_letter) > 0) {
+            ~chatnpc("<p,confused>You already have the letter in your bank.");
+        } else if (inv_total(inv, unstamped_letter) > 0) {
+            ~chatnpc("<p,confused>Oh now come on. You have it with you!");
         } else {
             inv_add(inv, unstamped_letter, 1);
-            ~chatnpc("<p,sad>That was foolish. Take this one and don't lose it!");
+            ~chatnpc("<p,angry>That was foolish. Take this one and don't lose it!");
         }
     } else {
         ~chatplayer("<p,neutral>Alright I'll try and get it.");
-        ~chatnpc("<p,neutral>I am sure you won't get any problems. Speak to the Curator of Varrock's museum.");
+        ~chatnpc("<p,happy>I am sure you won't get any problems. Speak to the Curator of Varrock's museum.");
     }
 }
 
@@ -82,16 +82,16 @@ if (inv_total(inv, stamped_letter) > 0) {
 ////////////////////////////////////////////////
 
 [label,itexam_examiner_take_first_exam]
-~chatplayer("<p,neutral>Hello.");
-~chatnpc("<p,neutral>Hello again. Are you ready for another shot at the exam?");
+~chatplayer("<p,happy>Hello.");
+~chatnpc("<p,happy>Hello again. Are you ready for another shot at the exam?");
 def_int $choice = ~p_choice2("Yes, I certainly am.", 1, "No, not at the moment.", 2);
 
 if ($choice = 1) {
-    ~chatplayer("<p,neutral>Yes, I certainly am.");
+    ~chatplayer("<p,happy>Yes, I certainly am.");
     @itexam_examiner_first_exam;
 } else {
     ~chatplayer("<p,neutral>No, not at the moment.");
-    ~chatnpc("<p,neutral>Okay, take your time if you wish.");
+    ~chatnpc("<p,happy>Okay, take your time if you wish.");
 }
 
 ////////////////////////////////////////////////
@@ -154,7 +154,7 @@ def_int $q1choice;
 def_int $q2choice;
 def_int $q3choice;
 
-~chatnpc("<p,neutral>Okay, we will start with the first exam: Earth Sciences level 1 - Beginner.");
+~chatnpc("<p,happy>Okay, we will start with the first exam: Earth Sciences level 1 - Beginner.");
 ~chatnpc("<p,neutral>Question 1 - Earth Sciences overview. Can you tell me what Earth Science is?");
 
 if (~itexam_errand_progress(^itexam_errand_student1) = 2) {
@@ -229,7 +229,7 @@ if (~itexam_errand_progress(^itexam_errand_student3) = 2) {
     }
 }
 ~chatnpc("<p,neutral>That concludes the exam for Earth Sciences level 1.");
-~chatnpc("<p,neutral>Let's see how you did...");
+~chatnpc("<p,happy>Let's see how you did...");
 
 def_int $correct_answer_count = 0;
 
