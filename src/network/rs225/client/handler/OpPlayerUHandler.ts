@@ -21,29 +21,34 @@ export default class OpPlayerUHandler extends MessageHandler<OpPlayerU> {
         const com = Component.get(comId);
         if (typeof com === 'undefined' || !player.isComponentVisible(com)) {
             player.write(new UnsetMapFlag());
+            player.clearPendingAction();
             return false;
         }
 
         const listener = player.invListeners.find(l => l.com === comId);
         if (!listener) {
             player.write(new UnsetMapFlag());
+            player.clearPendingAction();
             return false;
         }
 
         const inv = player.getInventoryFromListener(listener);
         if (!inv || !inv.validSlot(slot) || !inv.hasAt(slot, item)) {
             player.write(new UnsetMapFlag());
+            player.clearPendingAction();
             return false;
         }
 
         const other = World.getPlayer(pid);
         if (!other) {
             player.write(new UnsetMapFlag());
+            player.clearPendingAction();
             return false;
         }
 
         if (!player.buildArea.players.has(other)) {
             player.write(new UnsetMapFlag());
+            player.clearPendingAction();
             return false;
         }
 

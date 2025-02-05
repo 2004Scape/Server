@@ -22,12 +22,14 @@ export default class OpObjHandler extends MessageHandler<OpObj> {
         const absBottomZ = player.originZ - 52;
         if (x < absLeftX || x > absRightX || z < absBottomZ || z > absTopZ) {
             player.write(new UnsetMapFlag());
+            player.clearPendingAction();
             return false;
         }
 
         const obj = World.getObj(x, z, player.level, objId, player.hash64);
         if (!obj) {
             player.moveClickRequest = false;
+            player.clearPendingAction();
             return false;
         }
 
@@ -35,6 +37,7 @@ export default class OpObjHandler extends MessageHandler<OpObj> {
         // todo: validate all options
         if ((message.op === 1 && ((objType.op && !objType.op[0]) || !objType.op)) || (message.op === 4 && ((objType.op && !objType.op[3]) || !objType.op))) {
             player.write(new UnsetMapFlag());
+            player.clearPendingAction();
             return false;
         }
 
