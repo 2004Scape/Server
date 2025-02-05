@@ -103,6 +103,7 @@ stock7=premade_wizard_blizzard,10,100
 // https://classic.runescape.wiki/w/Gulluck_and_Sons
 // https://web.archive.org/web/20110722115315im_/http://www.runevillage.com/images/rs2Cities/rsgnome17.gif (full stocks)
 // https://web.archive.org/web/20111216182054im_/http://www.runehq.com/images/cityguides/Sggulluck.jpg
+// https://www.spookspring.com/noobsquad/imagegif/spookart/gnome.GIF
 scope=shared
 size=40
 restock=yes

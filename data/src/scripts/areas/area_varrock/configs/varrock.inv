@@ -123,6 +123,7 @@ stock18=adamant_dagger,2,12000
 [lowes_archery_emporium]
 // https://oldschool.runescape.wiki/w/Lowe%27s_Archery_Emporium
 // https://storage.googleapis.com/tannerdino/images/varrock8.png
+// https://www.spookspring.com/noobsquad/imagegif/spookart/lowes.GIF
 scope=shared
 size=40
 restock=yes
@@ -134,8 +135,8 @@ stock3=steel_arrow,1000,20
 stock4=bolt,1500,10
 stock5=shortbow,4,100
 stock6=longbow,4,100
-stock7=oak_shortbow,3,200
-stock8=oak_longbow,3,200
+stock7=oak_shortbow,2,200
+stock8=oak_longbow,2,200
 stock9=crossbow,2,400
 
 [armourshop]
