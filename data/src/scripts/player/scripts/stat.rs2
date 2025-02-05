@@ -70,7 +70,7 @@ if (calc($level + $boost) > $max_level) {
 }
 
 // add the boost, with no percent
-stat_add($stat, $boost, 0);
+stat_add($stat, max($boost, 0), 0);
 
 // not sure if this is used anywhere
 // thought it was for kebabs but its not the case
