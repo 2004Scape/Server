@@ -130,13 +130,13 @@
 129=shop_haggle
 130=blackknight_progress
 131=itexam_progress
-132=thieving_stall_timer
-133=varp_133
+132=itexam_errands
+133=itexam_bits
 134=varp_134
 135=varp_135
 136=varp_136
 137=varp_137
-138=varp_138
+138=thieving_stall_timer
 139=legends_progress
 140=book_page
 141=gnome_bar_progress
