@@ -77,16 +77,23 @@ while ($i < %trawler_catch) {
 
 
 [if_close,trawler_catch]
-def_int $i = 0;
 if(p_finduid(uid) = true) {
-    while ($i < inv_size(trawler_catch)) {
-        if (inv_getobj(trawler_catch, $i) ! null) {
-            inv_dropslot(trawler_catch, coord, $i, 100); // drops in osrs
-        }
-        $i = add($i, 1);
-    }
+    @drop_trawler_catch;
+} else {
+    queue(queue_drop_trawler_catch, 0);
 }
 inv_stoptransmit(trawler_catch:inv);
+
+[label,drop_trawler_catch]
+def_int $i = 0;
+while ($i < inv_size(trawler_catch)) {
+    if (inv_getobj(trawler_catch, $i) ! null) {
+        inv_dropslot(trawler_catch, coord, $i, 100); // drops in osrs
+    }
+    $i = add($i, 1);
+}
+
+[queue,queue_drop_trawler_catch] @drop_trawler_catch;
 
 // osrs drops on ground on full inv
 [inv_button1,trawler_catch:inv] 
