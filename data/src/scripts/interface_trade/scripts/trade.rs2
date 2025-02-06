@@ -149,7 +149,6 @@ if (.finduid(%tradepartner) = true) {
 [proc,enough_trade_space]()(boolean)
 // check if contents of tempinv fits in other player's inv
 def_int $space = .inv_freespace(inv);
-def_int $fails = 0;
 def_int $size = inv_size(tempinv);
 def_int $slot = 0;
 while ($slot < $size) {
@@ -164,26 +163,22 @@ while ($slot < $size) {
             } else {
                 $space = sub($space, 1);
                 if ($space < 0) {
-                    $fails = add($fails, 1);
+                    return(false);
                 }
             }
         } else {
             $space = sub($space, 1);
             if ($space < 0) {
-                $fails = add($fails, 1);
+                return(false);
             }
         }
     }
     $slot = add($slot, 1);
 }
-if ($fails > 0) {
-    return(false);
-}
 return(true);
 
 [proc,.enough_trade_space]()(boolean)
 def_int $space = inv_freespace(inv);
-def_int $fails = 0;
 def_int $size = .inv_size(tempinv);
 def_int $slot = 0;
 while ($slot < $size) {
@@ -198,20 +193,17 @@ while ($slot < $size) {
             } else {
                 $space = sub($space, 1);
                 if ($space < 0) {
-                    $fails = add($fails, 1);
+                    return(false);
                 }
             }
         } else {
             $space = sub($space, 1);
             if ($space < 0) {
-                $fails = add($fails, 1);
+                return(false);
             }
         }
     }
     $slot = add($slot, 1);
-}
-if ($fails > 0) {
-    return(false);
 }
 return(true);
 
