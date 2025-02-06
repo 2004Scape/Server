@@ -5,8 +5,9 @@ gosub(npc_death);
 if (npc_findhero = false) {
     return;
 }
-// Default drop from config.
-obj_add(npc_coord, npc_param(death_drop), 1, ^lootdrop_duration);
+if (%npc_aggressive_player ! uid) { // if u didnt do the last hit
+    return;
+}
 // finish dragon slayer quest
 // https://youtu.be/zmYEl97Smxs?list=PLn23LiLYLb1aqrojPTi1_Np81LJku2Nd0&t=222
 if (%dragon_progress < ^dragon_complete) {

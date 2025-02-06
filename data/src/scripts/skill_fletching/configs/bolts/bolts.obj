@@ -1,4 +1,4 @@
-[obj_45]
+[opal_bolttips]
 name=Opal bolttips
 desc=I can make bolts with these.
 model=model_2780_obj
@@ -15,7 +15,7 @@ cost=30
 weight=4g
 category=category_530
 
-[obj_46]
+[pearl_bolttips]
 name=Pearl bolttips
 desc=I can make bolts with these.
 model=model_2780_obj
@@ -30,7 +30,7 @@ cost=56
 weight=4g
 category=category_530
 
-[obj_47]
+[Barb_bolttips]
 name=Barb bolttips
 desc=I can make bolts with these.
 model=model_2445_obj

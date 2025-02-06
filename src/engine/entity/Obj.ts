@@ -6,13 +6,14 @@ export default class Obj extends NonPathingEntity {
      * The number of ticks for an obj to reveal.
      */
     static readonly REVEAL: number = 100;
+    static readonly NO_RECEIVER: bigint = -1n;
 
     // constructor properties
     type: number;
     count: number;
 
     // runtime
-    receiverId: number = -1;
+    receiver64: bigint = Obj.NO_RECEIVER;
     reveal: number = -1;
     lastChange: number = -1;
 

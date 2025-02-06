@@ -97,8 +97,15 @@ async function handleRequests(_parentPort: ParentPort, msg: any) {
         }
         case 'private_message': {
             if (Environment.FRIEND_SERVER) {
-                const { username, staffLvl, pmId, target, message } = msg;
-                await client.privateMessage(username, staffLvl, pmId, target, message);
+                const { username, staffLvl, pmId, target, message, coord } = msg;
+                await client.privateMessage(username, staffLvl, pmId, target, message, coord);
+            }
+            break;
+        }
+        case 'public_message': {
+            if (Environment.FRIEND_SERVER) {
+                const { username, coord, chat } = msg;
+                await client.publicMessage(username, coord, chat);
             }
             break;
         }

@@ -25,7 +25,7 @@ if (distance(coord, 0_41_46_12_21) > 5) {
 }
 
 // todo tbc any npc? or just toads
-npc_findallany(coord, 0, 0);
+npc_findallany(coord, 0, ^vis_off);
 if (npc_findnext = true) {
     mes("There is a bloated toad already placed at this location.");
     return;

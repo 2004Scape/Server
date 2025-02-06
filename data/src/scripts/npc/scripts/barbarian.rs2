@@ -1,0 +1,7 @@
+[ai_opplayer2,barbarian] @barbarian_default_attack;
+[ai_opplayer2,barbarian_woman] @barbarian_default_attack;
+
+[label,barbarian_default_attack]
+if (%npc_action_delay > map_clock) return;
+npc_say("YYEEEEEAAARRRRGGHHHH!!!");
+~npc_default_attack;

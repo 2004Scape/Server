@@ -32,8 +32,7 @@ export function preloadClient() {
     for (let i = 0; i < allJingles.length; i++) {
         const name = allJingles[i];
 
-        // Strip off bzip header.
-        const jingle = new Uint8Array(fs.readFileSync(`data/pack/client/jingles/${name}`).subarray(4));
+        const jingle = new Uint8Array(fs.readFileSync(`data/pack/client/jingles/${name}`));
         const crc = Packet.getcrc(jingle, 0, jingle.length);
 
         PRELOADED.set(name, jingle);
@@ -43,11 +42,7 @@ export function preloadClient() {
 
 export async function preloadClientAsync() {
     const fetchAll = async (type: string, name: string) => {
-        let data = new Uint8Array(await (await fetch(`data/pack/client/${type}/${name}`)).arrayBuffer());
-        if (type === 'jingles') {
-            // Strip off bzip header.
-            data = data.subarray(4);
-        }
+        const data = new Uint8Array(await (await fetch(`data/pack/client/${type}/${name}`)).arrayBuffer());
         const crc = Packet.getcrc(data, 0, data.length);
 
         PRELOADED.set(name, data);

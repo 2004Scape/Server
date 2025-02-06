@@ -67,7 +67,7 @@ if (p_finduid(uid) = true) {
 }
 
 [proc,reset_itest]
-npc_findallany(0_37_55_32_30, 10, 0);
+npc_findallany(0_37_55_32_30, 10, ^vis_off);
 while (npc_findnext = true) {
     if (npc_type = cow_1 | npc_type = goblin_unarmed1) {
         npc_del;

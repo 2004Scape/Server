@@ -59,9 +59,13 @@ export default class InternalClient {
             });
 
             this.ws.on('message', (buf: Buffer) => {
-                const message = JSON.parse(buf.toString());
+                try {
+                    const message = JSON.parse(buf.toString());
 
-                this.messageHandlers.forEach(fn => fn(message.type, message));
+                    this.messageHandlers.forEach(fn => fn(message.type, message));
+                } catch (err) {
+                    console.error(err);
+                }
             });
         });
     }

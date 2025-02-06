@@ -52,7 +52,7 @@ import {PRELOADED, PRELOADED_CRC} from '#/cache/PreloadedPacks.js';
 
 import OutgoingMessage from '#/network/server/OutgoingMessage.js';
 import IfClose from '#/network/server/model/IfClose.js';
-import UpdateUid192 from '#/network/server/model/UpdateUid192.js';
+import UpdateUid192 from '#/network/server/model/UpdatePid.js';
 import ResetAnims from '#/network/server/model/ResetAnims.js';
 import ResetClientVarCache from '#/network/server/model/ResetClientVarCache.js';
 import TutOpen from '#/network/server/model/TutOpen.js';
@@ -74,6 +74,8 @@ import WalkTriggerSetting from '#/util/WalkTriggerSetting.js';
 import Environment from '#/util/Environment.js';
 import { ChatModePrivate, ChatModePublic, ChatModeTradeDuel } from '#/util/ChatModes.js';
 import LoggerEventType from '#/server/logger/LoggerEventType.js';
+import InputTracking from '#/engine/entity/tracking/InputTracking.js';
+import Visibility from './Visibility.js';
 
 const levelExperience = new Int32Array(99);
 
@@ -181,14 +183,13 @@ export default class Player extends PathingEntity {
         sav.p1((this.publicChat << 4) | (this.privateChat << 2) | this.tradeDuel);
 
         sav.p4(Packet.getcrc(sav.data, 0, sav.pos));
-        const data = sav.data.subarray(0, sav.pos);
-        sav.release();
-        return data;
+        return sav.data.subarray(0, sav.pos);
     }
 
     // constructor properties
     username: string;
     username37: bigint;
+    hash64: bigint;
     displayName: string;
     body: number[] = [
         0, // hair
@@ -216,6 +217,9 @@ export default class Player extends PathingEntity {
     publicChat: ChatModePublic = ChatModePublic.ON;
     privateChat: ChatModePrivate = ChatModePrivate.ON;
     tradeDuel: ChatModeTradeDuel = ChatModeTradeDuel.ON;
+
+    // input tracking
+    input: InputTracking;
 
     // runtime variables
     pid: number = -1;
@@ -263,6 +267,7 @@ export default class Player extends PathingEntity {
     messageEffect: number | null = null;
     messageType: number | null = null;
     message: Uint8Array | null = null;
+    logMessage: string | null = null;
 
     // ---
 
@@ -273,7 +278,7 @@ export default class Player extends PathingEntity {
     cameraPackets: LinkList<CameraInfo> = new LinkList();
     timers: Map<number, EntityTimer> = new Map();
     tabs: number[] = new Array(14).fill(-1);
-    modalState = 0; // 1 - main, 2 - chat, 4 - side, 8 - tutorial, 16 - welcome
+    modalState = 0; // 1 - main, 2 - chat, 4 - side, 8 - tutorial
     modalMain = -1;
     lastModalMain = -1;
     modalChat = -1;
@@ -283,6 +288,7 @@ export default class Player extends PathingEntity {
     modalTutorial = -1;
     refreshModal = false;
     refreshModalClose = false;
+    requestModalClose = false;
 
     protect: boolean = false; // whether protected access is available
     activeScript: ScriptState | null = null;
@@ -296,6 +302,7 @@ export default class Player extends PathingEntity {
     lastCom: number = -1; // if_button
 
     staffModLevel: number = 0;
+    visibility: Visibility = Visibility.DEFAULT;
 
     heroPoints: HeroPoints = new HeroPoints(16); // be sure to reset when stats are recovered/reset
 
@@ -308,23 +315,48 @@ export default class Player extends PathingEntity {
 
     muted_until: Date | null = null;
 
-    constructor(username: string, username37: bigint) {
+    constructor(username: string, username37: bigint, hash64: bigint) {
         super(0, 3094, 3106, 1, 1, EntityLifeCycle.FOREVER, MoveRestrict.NORMAL, BlockWalk.NPC, MoveStrategy.SMART, InfoProt.PLAYER_FACE_COORD.id, InfoProt.PLAYER_FACE_ENTITY.id); // tutorial island.
         this.username = username;
         this.username37 = username37;
+        this.hash64 = hash64;
         this.displayName = toDisplayName(username);
         this.vars = new Int32Array(VarPlayerType.count);
         this.varsString = new Array(VarPlayerType.count);
         this.lastStats.fill(-1);
         this.lastLevels.fill(-1);
+        this.input = new InputTracking(this);
+
+        for (let i = 0; i < this.vars.length; i++) {
+            const varp = VarPlayerType.get(i);
+            if (varp.type === ScriptVarType.STRING) {
+                // todo: "null"? another value?
+                continue;
+            } else {
+                this.vars[i] = varp.type === ScriptVarType.INT ? 0 : -1;
+            }
+        }
+    }
+
+    cleanup(): void {
+        this.pid = -1;
+        this.uid = -1;
+        this.activeScript = null;
+        this.invListeners.length = 0;
+        this.resumeButtons.length = 0;
+        this.buffer.clear();
+        this.queue.clear();
+        this.weakQueue.clear();
+        this.engineQueue.clear();
+        this.cameraPackets.clear();
+        this.timers.clear();
+        this.heroPoints.clear();
+        this.buildArea.clear();
     }
 
     resetEntity(respawn: boolean) {
         if (respawn) {
-            this.faceX = -1;
-            this.faceZ = -1;
-            this.orientationX = -1;
-            this.orientationZ = -1;
+            this.unfocus();
         }
         super.resetPathingEntity();
         this.repathed = false;
@@ -333,6 +365,7 @@ export default class Player extends PathingEntity {
         this.messageEffect = null;
         this.messageType = null;
         this.message = null;
+        this.logMessage = null;
     }
 
     // ----
@@ -509,7 +542,7 @@ export default class Player extends PathingEntity {
     }
 
     private recoverEnergy(moved: boolean): void {
-        if (!this.delayed && (!moved || this.moveSpeed !== MoveSpeed.RUN) && this.runenergy < 10000) {
+        if (!this.delayed && (!moved || this.stepsTaken < 2) && this.runenergy < 10000) {
             const recovered = (this.baseLevels[PlayerStat.AGILITY] / 9 | 0) + 8;
             this.runenergy = Math.min(this.runenergy + recovered, 10000);
         }
@@ -529,7 +562,7 @@ export default class Player extends PathingEntity {
         if (this.modalTutorial !== -1) {
             const closeTrigger = ScriptProvider.getByTrigger(ServerTriggerType.IF_CLOSE, this.modalTutorial);
             if (closeTrigger) {
-                this.enqueueScript(closeTrigger, PlayerQueueType.ENGINE);
+                this.executeScript(ScriptRunner.init(closeTrigger, this), false);
             }
 
             this.modalTutorial = -1;
@@ -551,7 +584,7 @@ export default class Player extends PathingEntity {
         if (this.modalMain !== -1) {
             const closeTrigger = ScriptProvider.getByTrigger(ServerTriggerType.IF_CLOSE, this.modalMain);
             if (closeTrigger) {
-                this.enqueueScript(closeTrigger, PlayerQueueType.ENGINE);
+                this.executeScript(ScriptRunner.init(closeTrigger, this), false);
             }
 
             this.modalMain = -1;
@@ -560,7 +593,7 @@ export default class Player extends PathingEntity {
         if (this.modalChat !== -1) {
             const closeTrigger = ScriptProvider.getByTrigger(ServerTriggerType.IF_CLOSE, this.modalChat);
             if (closeTrigger) {
-                this.enqueueScript(closeTrigger, PlayerQueueType.ENGINE);
+                this.executeScript(ScriptRunner.init(closeTrigger, this), false);
             }
 
             this.modalChat = -1;
@@ -569,7 +602,7 @@ export default class Player extends PathingEntity {
         if (this.modalSide !== -1) {
             const closeTrigger = ScriptProvider.getByTrigger(ServerTriggerType.IF_CLOSE, this.modalSide);
             if (closeTrigger) {
-                this.enqueueScript(closeTrigger, PlayerQueueType.ENGINE);
+                this.executeScript(ScriptRunner.init(closeTrigger, this), false);
             }
 
             this.modalSide = -1;
@@ -580,8 +613,8 @@ export default class Player extends PathingEntity {
     }
 
     containsModalInterface() {
-        // main, chat, or last_login_info is open
-        return (this.modalState & 1) !== 0 || (this.modalState & 2) !== 0 || (this.modalState & 16) !== 0;
+        // main or chat is open
+        return (this.modalState & 1) !== 0 || (this.modalState & 2) !== 0;
     }
 
     busy() {
@@ -635,19 +668,19 @@ export default class Player extends PathingEntity {
                 }
             }
         }
-        
+
     }
 
     processQueues() {
-        // the presence of a strong script closes modals before anything runs regardless of the order
-        let hasStrong: boolean = false;
+        // the presence of a strong script closes modals before queue runs
         for (let request = this.queue.head(); request !== null; request = this.queue.next()) {
             if (request.type === PlayerQueueType.STRONG) {
-                hasStrong = true;
+                this.requestModalClose = true;
                 break;
             }
         }
-        if (hasStrong) {
+        if (this.requestModalClose) {
+            this.requestModalClose = false;
             this.closeModal();
         }
 
@@ -823,7 +856,7 @@ export default class Player extends PathingEntity {
             return;
         }
 
-        if (this.target.level !== this.level) {
+        if (this.target.level !== this.level || (this.target instanceof Player && this.target.visibility !== Visibility.DEFAULT)) {
             this.clearInteraction();
             this.unsetMapFlag(); // assuming its right
             return;
@@ -842,7 +875,7 @@ export default class Player extends PathingEntity {
             return;
         }
 
-        if (this.target instanceof Obj && World.getObj(this.target.x, this.target.z, this.level, this.target.type, this.pid) === null) {
+        if (this.target instanceof Obj && World.getObj(this.target.x, this.target.z, this.level, this.target.type, this.hash64) === null) {
             this.clearInteraction();
             this.unsetMapFlag();
             return;
@@ -1011,6 +1044,10 @@ export default class Player extends PathingEntity {
         if (!this.hasWaypoints()) {
             this.unsetMapFlag();
         }
+    }
+
+    processInputTracking(): void {
+        this.input.process();
     }
 
     // ----
@@ -1455,7 +1492,7 @@ export default class Player extends PathingEntity {
         }
     }
 
-    addXp(stat: number, xp: number) {
+    addXp(stat: number, xp: number, allowMulti: boolean = true) {
         // require xp is >= 0. there is no reason for a requested addXp to be negative.
         if (xp < 0) {
             throw new Error(`Invalid xp parameter for addXp call: Stat was: ${stat}, Exp was: ${xp}`);
@@ -1466,7 +1503,7 @@ export default class Player extends PathingEntity {
             return;
         }
 
-        const multi = Number(Environment.NODE_XPRATE) || 1;
+        const multi = allowMulti ? Environment.NODE_XPRATE : 1;
         this.stats[stat] += xp * multi;
 
         // cap to 200m, this is represented as "2 billion" because we use 32-bit signed integers and divide by 10 to give us a decimal point
@@ -1581,17 +1618,23 @@ export default class Player extends PathingEntity {
         this.masks |= InfoProt.PLAYER_DAMAGE.id;
     }
 
+    setVisibility(visibility: Visibility) {
+        if (visibility === Visibility.SOFT) {
+            this.messageGame(`vis: ${visibility} (not implemented - you are still on vis: ${this.visibility})`);
+            return;
+        }
+        // This doesn't actually cancel interactions, source: https://youtu.be/ARS7eO3_Z8U?si=OkYfjW0sVhkQmQ8y&t=293
+        this.visibility = visibility;
+        this.messageGame(`vis: ${visibility}`);
+    }
+
     say(message: string) {
         this.chat = message;
         this.masks |= InfoProt.PLAYER_SAY.id;
     }
 
     faceSquare(x: number, z: number) {
-        this.faceX = x * 2 + 1;
-        this.faceZ = z * 2 + 1;
-        this.orientationX = this.faceX;
-        this.orientationZ = this.faceZ;
-        this.masks |= InfoProt.PLAYER_FACE_COORD.id;
+        this.focus(CoordGrid.fine(x, 1), CoordGrid.fine(z, 1), true);
     }
 
     playSong(name: string) {
@@ -1836,8 +1879,10 @@ export default class Player extends PathingEntity {
     }
 
     lastLoginInfo(lastLoginIp: number, daysSinceLogin: number, daysSinceRecoveryChange: number, unreadMessageCount: number) {
+        // daysSinceRecoveryChange
+        // - 201 shows welcome_screen.if
+        // - any other value shows welcome_screen_warning
         this.write(new LastLoginInfo(lastLoginIp, daysSinceLogin, daysSinceRecoveryChange, unreadMessageCount));
-        this.modalState |= 16;
     }
 
     logout(): void {

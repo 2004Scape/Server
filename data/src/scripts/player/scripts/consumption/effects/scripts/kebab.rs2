@@ -36,7 +36,7 @@ if ($random < 120) { // 4/128 chance
     stat_sub(attack, 3, 0);
     stat_sub(strength, 3, 0);
     stat_sub(defence, 3, 0);
-    def_stat $random_stat = enum(int, stat, stats, add(random(enum_getoutputcount(stats)), 1));
+    def_stat $random_stat = ~random_stat;
     // has a weird check for stats close to 1. Minimum it can reduce to is 2
     // it always reduces by 4 unless stats are low, if stat is low it reduces it to level 2
     // never reduces to level 1 or lower. Doesnt show 2nd message if stat is 1 or 2
@@ -61,7 +61,7 @@ if ($random < 124) { // 4/128 chance
 
 mes("That tasted a bit dodgy. You feel a bit ill.");
 // reduces random stat by 3
-def_stat $random_stat = enum(int, stat, stats, add(random(enum_getoutputcount(stats)), 1));
+def_stat $random_stat = ~random_stat;
 def_int $debuff;
 if (stat($random_stat) > 4) {
     $debuff = 3;

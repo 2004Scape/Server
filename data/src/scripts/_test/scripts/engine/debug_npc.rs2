@@ -1,8 +1,4 @@
 [debugproc,npc](npc $npc)
-if (map_production = true) {
-    return;
-}
-
 if ($npc = null) {
     @debugusage("::npc (name)", "::npc man_blue", "::npc king_black_dragon");
     return;

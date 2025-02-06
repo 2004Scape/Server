@@ -111,7 +111,7 @@ if_openmain(glidermap);
 @multi2("Can you take me on the glider?", gnome_pilot_glider, "Sorry, I don't want anything now.", gnome_pilot_sorry);
 
 [label,gnome_pilot_sorry]
-~chatnpc("<p,confused>Sorry, I don't want anything now.");
+~chatplayer("<p,confused>Sorry, I don't want anything now.");
 
 [label,gnome_pilot_what]
 ~chatplayer("<p,quiz>What's Gnome Air?");

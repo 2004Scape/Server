@@ -1,0 +1,200 @@
+<!DOCTYPE html>
+<html>
+ 
+<head>
+    <title>2004Scape Game</title>
+ 
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=0.7">
+ 
+    <style>
+        body,
+        td,
+        p {
+            font-family: Arial, Helvetica, sans-serif;
+            font-size: 12px;
+            color: white;
+        }
+ 
+        body {
+            margin: 0px 0px;
+            overflow: auto;
+            background-color: black;
+        }
+
+        #game {
+            padding-left: 0;
+            padding-right: 0;
+            margin-left: auto;
+            margin-right: auto;
+            display: block;
+        }
+ 
+        canvas {
+            width: 789px;
+            height: 532px;
+            /* touch-action: none; */
+            -webkit-touch-callout: none;
+            -webkit-user-select: none;
+            -khtml-user-select: none;
+            -moz-user-select: none;
+            -ms-user-select: none;
+            user-select: none;
+            outline: none;
+            -webkit-tap-highlight-color: rgba(255, 255, 255, 0);
+            z-index: -1;
+        }
+ 
+        html:-webkit-full-screen {
+            background-color: black !important;
+        }
+ 
+        .centered {
+            text-align: center;
+        }
+ 
+        .green {
+            text-decoration: none;
+            color: #04A800;
+        }
+
+        #controls {
+            margin-bottom: 10px;
+        }
+    </style>
+ 
+    <script>
+        function toggleFullscreen() {
+            if (document.fullscreenElement || document.webkitFullscreenElement || document.mozFullScreenElement || document.msFullscreenElement) {
+                if (document.exitFullscreen) {
+                    document.exitFullscreen();
+                } else if (document.webkitExitFullscreen) {
+                    document.webkitExitFullscreen();
+                } else if (document.mozCancelFullScreen) {
+                    document.mozCancelFullScreen();
+                } else if (document.msExitFullscreen) {
+                    document.msExitFullscreen();
+                }
+            } else {
+                let element = document.getElementById('canvas');
+ 
+                if (element.requestFullscreen) {
+                    element.requestFullscreen();
+                } else if (element.webkitRequestFullscreen) {
+                    element.webkitRequestFullscreen();
+                } else if (element.mozRequestFullScreen) {
+                    element.mozRequestFullScreen();
+                } else if (element.msRequestFullscreen) {
+                    element.msRequestFullscreen();
+                }
+            }
+        }
+ 
+        function toggleFiltering() {
+            let canvas = document.getElementById('canvas');
+            let filtering = canvas.style.imageRendering == 'pixelated';
+            
+            setFiltering(canvas, filtering);
+            localStorage.setItem('filtering', filtering);
+        }
+
+        function setFiltering(canvas, filtering) {
+            canvas.style.imageRendering = filtering ? 'auto' : 'pixelated';
+ 
+            let element = document.getElementById('filtering');
+            element.textContent = filtering ? "Auto scaling" : "Pixel scaling";
+        }
+        
+        let canvasSize = 1;
+        let maxCanvasSize = 3;
+        function changeCanvasSize() {
+            canvasSize += 1;
+            let canvas = document.getElementById('canvas');
+            canvasSize = setCanvasSize(canvas, canvasSize);
+            localStorage.setItem('canvasSize', canvasSize);
+        }
+
+        function setCanvasSize(canvas, size) {
+            if (size > maxCanvasSize) {
+                size = 1;
+            }
+            canvas.style.width = (789 * size) + 'px';
+            canvas.style.height = (532 * size) + 'px';
+            
+            let element = document.getElementById('canvasSize');
+            element.textContent = size + "x size";
+
+            return size;
+        }
+ 
+        function saveScreenshot() {
+            document.getElementById('screenshot').download = 'screenshot-' + Math.floor(Date.now() / 1000) + '.png';
+            document.getElementById('screenshot').href = document.getElementById('canvas').toDataURL('image/png').replace(/^data:image\/[^;]/, 'data:application/octet-stream');
+        }
+ 
+        function hideControls() {
+            document.getElementById('controls').style.display = 'none';
+            document.getElementById('show').style.display = '';
+
+            localStorage.setItem('hideControls', true);
+        }
+        
+        function showControls() {
+            document.getElementById('controls').style.display = '';
+            document.getElementById('show').style.display = 'none';
+            
+            localStorage.removeItem('hideControls');
+        }
+
+        function loadSettings() {
+            let canvas = document.getElementById('canvas');
+
+            let filtering = localStorage.getItem('filtering');
+            if (filtering) {
+                setFiltering(canvas, filtering === 'true');
+            }
+
+            let size = localStorage.getItem('canvasSize');
+            if (size) {
+                 size = setCanvasSize(canvas, size);
+                 localStorage.setItem('canvasSize', size);
+            }
+
+            let controls = localStorage.getItem('hideControls');
+            if (controls === 'true') {
+                hideControls();
+            }
+        }
+    </script>
+</head>
+ 
+<body>
+    <center>
+        <div id="game">
+            <canvas id="canvas" width="789" height="532">
+                Your browser is not capable of running our web client.
+            </canvas>
+        </div>
+
+        <div class="centered" id="controls">
+            <a class="green" href="#" id="fullscreen" onclick="toggleFullscreen();">Go fullscreen</a> |
+            <a class="green" href="#" id="filtering" onclick="toggleFiltering();">Auto scaling</a> |
+            <a class="green" href="#" id="canvasSize" onclick="changeCanvasSize();">1x size</a> |
+            <a class="green" href="#" id="screenshot" onclick="saveScreenshot();">Take screenshot</a> |
+            <a class="green" href="#" id="hide" onclick="hideControls();">Hide controls</a>
+        </div>
+        <a class="green" href="#" id="show" onclick="showControls();" style="display: none;" alt="Show controls">🖥️</a>
+    </center>
+ 
+    <script type="module">
+        import { Client } from './client/client.js';
+ 
+        (() => {
+            new Client(<%= nodeid %>, <%= lowmem %>, <%= members %>);
+        })();
+        
+        loadSettings();
+    </script>
+</body>
+ 
+</html>

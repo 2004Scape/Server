@@ -15,11 +15,9 @@ if (p_finduid(uid) = true) {
 [label,client_engine_commands]
 ~mesbox("@blu@Client commands|@whi@::debug@bla@ - Toggles the debug overlay|@whi@::chat@bla@ - Switches the chat font-era|@whi@::perf@bla@ - Show FPS");
 ~mesbox("@blu@Engine commands|@whi@::coord@bla@ - Get your position in Jagex's format|@whi@::pos@bla@ - Get your position|@whi@::zone@bla@ - Get your zone|@whi@::players@bla@ - Get the number of players online");
-if (map_production = false) {
-    ~mesbox("@blu@Engine commands|@whi@::busy@bla@ - Check if your player is busy|@whi@::lineofwalk@bla@ - Check where your player has line-of-walk|@whi@::map_blocked@bla@ - Check where your player is touching blocked tiles");
-    ~mesbox("@blu@Engine commands|@whi@::delay@bla@ - Delay yourself for n ticks|@whi@::open@bla@ - Open an interface to check how it looks|@whi@::close@bla@ - Close open interfaces");
-    ~mesbox("@blu@Engine commands|@whi@::seq@bla@/@whi@::anim@bla@ - Play a seq on your player|@whi@::spotanim@bla@ - Play a spotanim on your player|@whi@::loc@bla@ - Spawn a loc under your player|@whi@::npc@bla@ - Spawn an NPC under your player");
-}
+~mesbox("@blu@Engine commands|@whi@::busy@bla@ - Check if your player is busy|@whi@::lineofwalk@bla@ - Check where your player has line-of-walk|@whi@::map_blocked@bla@ - Check where your player is touching blocked tiles");
+~mesbox("@blu@Engine commands|@whi@::delay@bla@ - Delay yourself for n ticks|@whi@::open@bla@ - Open an interface to check how it looks|@whi@::close@bla@ - Close open interfaces");
+~mesbox("@blu@Engine commands|@whi@::seq@bla@/@whi@::anim@bla@ - Play a seq on your player|@whi@::spotanim@bla@ - Play a spotanim on your player|@whi@::loc@bla@ - Spawn a loc under your player|@whi@::npc@bla@ - Spawn an NPC under your player");
 
 [label,account_commands]
 ~mesbox("@blu@Account commands|@whi@::reset@bla@ - Reset your progress|@whi@::minme@bla@ - Set all your stats to level 1|@whi@::maxme@bla@ - Set all your stats to level 99|@whi@::setstat@bla@ - Set a stat to a specific level");

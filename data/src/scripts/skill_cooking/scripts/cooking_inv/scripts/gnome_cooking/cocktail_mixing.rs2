@@ -1,6 +1,4 @@
 [opheld1,cocktail_shaker]
-if_close;
-//p_stopaction;
 def_int $total_steps = ~get_cocktail_ingredient_step;
 if ($total_steps  < 1) {
     mes("The cocktail shaker is empty.");
@@ -37,24 +35,18 @@ while ($i < enum_getoutputcount(gnome_cocktail_ingredients)) {
 mes("<$message>.");
 
 [opheldu,cocktail_shaker] 
-if_close;
-//p_stopaction;
 switch_obj(last_useitem) {
     case cocktail_glass : @pour_cocktail_shaker;
     case default : @add_cocktail_ingredient(last_useitem);
 }
 
 [opheldu,cocktail_glass]
-if_close;
-//p_stopaction;
 switch_obj(last_useitem) {
     case cocktail_shaker : @pour_cocktail_shaker;
     case default : ~displaymessage(^dm_default);
 }
 
 [opheldu,dwellberry]
-if_close;
-//p_stopaction;
 switch_obj(last_useitem) {
     case cocktail_shaker : @add_cocktail_ingredient(last_item);
     case half_baked_gnomebowl : @add_bowl_ingredient(last_item);
@@ -63,16 +55,12 @@ switch_obj(last_useitem) {
 }
 
 [opheldu,_alcoholic_drinks]
-if_close;
-//p_stopaction;
 switch_obj(last_useitem) {
     case cocktail_shaker : @add_cocktail_ingredient(last_item);
     case default : ~displaymessage(^dm_default);
 }
 
 [opheldu,equa_leaves]
-if_close;
-//p_stopaction;
 switch_int(oc_param(last_useitem, gnome_cooking_type)) {
     case ^gnome_cocktail : @finish_cocktail(last_useitem, last_item);
     case ^gnome_bowl, ^gnome_batta, ^gnome_crunchies : @finish_gnome_food(last_useitem, last_item);

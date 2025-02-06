@@ -1,5 +1,4 @@
 import 'dotenv/config';
-import fs from 'fs';
 
 import Packet from '#/io/Packet.js';
 import { fromBase37, toBase37 } from '#/util/JString.js';
@@ -15,32 +14,33 @@ import {PlayerStat} from '#/engine/entity/PlayerStat.js';
 import InvType from '#/cache/config/InvType.js';
 
 export class PlayerLoading {
-    /**
-     * Creates a non-networked player from a save file.
-     *
-     * Used for tooling.
-     */
-    static loadFromFile(name: string) {
-        const name37 = toBase37(name);
-        const safeName = fromBase37(name37);
-
-        let save: Packet;
-        if (fs.existsSync(`data/players/${safeName}.sav`)) {
-            save = Packet.load(`data/players/${safeName}.sav`);
-        } else {
-            save = new Packet(new Uint8Array());
+    static verify(sav: Packet) {
+        if (sav.g2() !== 0x2004) {
+            return false;
         }
 
-        return PlayerLoading.load(name, save, null);
+        const version = sav.g2();
+        if (version > 5) {
+            return false;
+        }
+
+        sav.pos = sav.data.length - 4;
+        const crc = sav.g4();
+        if (crc != Packet.getcrc(sav.data, 0, sav.data.length - 4)) {
+            return false;
+        }
+
+        return true;
     }
 
     static load(name: string, sav: Packet, client: ClientSocket | null) {
-        const name37 = toBase37(name);
-        const safeName = fromBase37(name37);
+        const hash64 = toBase37(name); // username or email.
+        const name37 = toBase37(name); // always username.
+        const safeName = fromBase37(name37); // always safe username.
 
         const player = client
-            ? new NetworkPlayer(safeName, name37, client)
-            : new Player(safeName, name37);
+            ? new NetworkPlayer(safeName, name37, hash64, client)
+            : new Player(safeName, name37, hash64);
 
         if (sav.data.length < 2) {
             for (let i = 0; i < 21; i++) {
@@ -57,18 +57,18 @@ export class PlayerLoading {
         }
 
         if (sav.g2() !== 0x2004) {
-            throw new Error('Invalid player save');
+            throw new Error('Invalid save file');
         }
 
         const version = sav.g2();
         if (version > 5) {
-            throw new Error('Unsupported player save format');
+            throw new Error('Unsupported save version');
         }
 
         sav.pos = sav.data.length - 4;
         const crc = sav.g4();
         if (crc != Packet.getcrc(sav.data, 0, sav.data.length - 4)) {
-            throw new Error('Player save corrupted');
+            throw new Error('Incorrect save checksum');
         }
 
         sav.pos = 4;

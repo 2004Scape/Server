@@ -135,19 +135,3 @@ model=model_2764_obj
 2dyan=100
 2dxan=216
 weight=12g
-
-[obj_2864]
-name=Ogre arrow shaft
-desc=A wooden arrow shaft.
-cost=1
-stackable=yes
-members=yes
-model=model_2616_obj
-recol1s=10368
-recol1d=11556
-2dxof=6
-2dyof=-29
-2dzoom=1220
-2dyan=100
-2dxan=216
-weight=10g

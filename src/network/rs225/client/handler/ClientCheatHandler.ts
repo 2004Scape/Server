@@ -1,5 +1,5 @@
 import MessageHandler from '#/network/client/handler/MessageHandler.js';
-import Player from '#/engine/entity/Player.js';
+import Player, { getExpByLevel } from '#/engine/entity/Player.js';
 import ClientCheat from '#/network/client/model/ClientCheat.js';
 import Environment from '#/util/Environment.js';
 import InvType from '#/cache/config/InvType.js';
@@ -20,6 +20,9 @@ import ScriptRunner from '#/engine/script/ScriptRunner.js';
 import { PlayerStat, PlayerStatEnabled, PlayerStatKey } from '#/engine/entity/PlayerStat.js';
 import MoveStrategy from '#/engine/entity/MoveStrategy.js';
 import LoggerEventType from '#/server/logger/LoggerEventType.js';
+import Obj from '#/engine/entity/Obj.js';
+import EntityLifeCycle from '#/engine/entity/EntityLifeCycle.js';
+import Visibility from '#/engine/entity/Visibility.js';
 
 export default class ClientCheatHandler extends MessageHandler<ClientCheat> {
     handle(message: ClientCheat, player: Player): boolean {
@@ -35,24 +38,106 @@ export default class ClientCheatHandler extends MessageHandler<ClientCheat> {
             return false;
         }
 
-        player.addSessionLog(LoggerEventType.MODERATOR, 'Ran cheat', cheat);
+        if (player.staffModLevel >= 2) {
+            player.addSessionLog(LoggerEventType.MODERATOR, 'Ran cheat', cheat);    
+        }
 
-        if (player.staffModLevel >= 3) {
+        if (!Environment.NODE_PRODUCTION && player.staffModLevel >= 3) {
             // developer commands
 
-            if (!Environment.STANDALONE_BUNDLE && !Environment.NODE_PRODUCTION) {
-                // local developer commands
-
-                if (cmd === 'reload' && !Environment.STANDALONE_BUNDLE && !Environment.NODE_PRODUCTION) {
-                    World.reload();
-                } else if (cmd === 'rebuild' && !Environment.STANDALONE_BUNDLE && !Environment.NODE_PRODUCTION) {
-                    player.messageGame('Rebuilding scripts...');
-                    World.rebuild();
+            if (cmd[0] === '~') {
+                // debugprocs are NOT allowed on live ;)
+                const script = ScriptProvider.getByName(`[debugproc,${cmd.slice(1)}]`);
+                if (!script) {
+                    return false;
                 }
-            }
 
-            if (cmd === 'serverdrop') {
-                player.terminate();
+                const params = new Array(script.info.parameterTypes.length).fill(-1);
+                for (let i = 0; i < script.info.parameterTypes.length; i++) {
+                    const type = script.info.parameterTypes[i];
+
+                    try {
+                        switch (type) {
+                            case ScriptVarType.STRING: {
+                                const value = args.shift();
+                                params[i] = value ?? '';
+                                break;
+                            }
+                            case ScriptVarType.INT: {
+                                const value = args.shift();
+                                params[i] = parseInt(value ?? '0', 10) | 0;
+                                break;
+                            }
+                            case ScriptVarType.OBJ:
+                            case ScriptVarType.NAMEDOBJ: {
+                                const name = args.shift();
+                                params[i] = ObjType.getId(name ?? '');
+                                break;
+                            }
+                            case ScriptVarType.NPC: {
+                                const name = args.shift();
+                                params[i] = NpcType.getId(name ?? '');
+                                break;
+                            }
+                            case ScriptVarType.LOC: {
+                                const name = args.shift();
+                                params[i] = LocType.getId(name ?? '');
+                                break;
+                            }
+                            case ScriptVarType.SEQ: {
+                                const name = args.shift();
+                                params[i] = SeqType.getId(name ?? '');
+                                break;
+                            }
+                            case ScriptVarType.STAT: {
+                                const name = args.shift() ?? '';
+                                params[i] = PlayerStat[name.toUpperCase() as PlayerStatKey];
+                                break;
+                            }
+                            case ScriptVarType.INV: {
+                                const name = args.shift();
+                                params[i] = InvType.getId(name ?? '');
+                                break;
+                            }
+                            case ScriptVarType.COORD: {
+                                const args2 = cheat.split('_');
+
+                                const level = parseInt(args2[0].slice(6));
+                                const mx = parseInt(args2[1]);
+                                const mz = parseInt(args2[2]);
+                                const lx = parseInt(args2[3]);
+                                const lz = parseInt(args2[4]);
+
+                                params[i] = CoordGrid.packCoord(level, (mx << 6) + lx, (mz << 6) + lz);
+                                break;
+                            }
+                            case ScriptVarType.INTERFACE: {
+                                const name = args.shift();
+                                params[i] = Component.getId(name ?? '');
+                                break;
+                            }
+                            case ScriptVarType.SPOTANIM: {
+                                const name = args.shift();
+                                params[i] = SpotanimType.getId(name ?? '');
+                                break;
+                            }
+                            case ScriptVarType.IDKIT: {
+                                const name = args.shift();
+                                params[i] = IdkType.getId(name ?? '');
+                                break;
+                            }
+                        }
+                    } catch (err) {
+                        return false;
+                    }
+                }
+
+                player.executeScript(ScriptRunner.init(script, player, null, params), false);
+            } else if (cmd === 'reload' && !Environment.STANDALONE_BUNDLE) {
+                World.reload();
+            } else if (cmd === 'rebuild' && !Environment.STANDALONE_BUNDLE) {
+                player.messageGame('Rebuilding scripts...');
+                World.rebuild();
             } else if (cmd === 'fly') {
                 if (player.moveStrategy === MoveStrategy.FLY) {
                     player.moveStrategy = MoveStrategy.SMART;
@@ -69,43 +154,38 @@ export default class ClientCheatHandler extends MessageHandler<ClientCheat> {
                 }
 
                 player.messageGame(`Naive move strategy: ${player.moveStrategy === MoveStrategy.NAIVE ? 'naive' : 'smart'}`);
-            } else if (cmd === 'shutdown') {
-                if (args.length < 1) {
-                    // ::shutdown <seconds>
-                    return false;
-                }
-
-                World.rebootTimer(Math.ceil(tryParseInt(args[0], 30) * 1000 / 600));
             } else if (cmd === 'random') {
                 player.afkEventReady = true;
-            } else if (cmd === 'minme') {
-                // like maxme debugproc, but in engine because xp goes down
-                for (let i = 0; i < PlayerStatEnabled.length; i++) {
-                    if (i === PlayerStat.HITPOINTS) {
-                        player.setLevel(i, 10);
-                    } else {
-                        player.setLevel(i, 1);
+            } else if (cmd === 'objtest') {
+                for (let x = player.x - 500; x < player.x + 500; x++) {
+                    for (let z = player.z - 500; z < player.z + 500; z++) {
+                        // using player.pid will result in individual packets rather than using zone_enclosed
+                        World.addObj(new Obj(player.level, x, z, EntityLifeCycle.DESPAWN, 1333, 1), Obj.NO_RECEIVER, 100);
                     }
                 }
+            } else if (cmd === 'serverdrop') {
+                player.terminate();
             }
         }
 
-        if (Environment.NODE_ALLOW_CHEATS || player.staffModLevel >= 2) {
+        if (player.staffModLevel >= 2) {
             // admin commands
-            if (cmd === 'broadcast') {
-                if (args.length < 0) {
-                    return false;
-                }
 
-                World.broadcastMes(cheat.substring(cmd.length + 1));
+            if (cmd === 'getcoord') {
+                // authentic
+
+                // Displays current coordinate
+                player.messageGame(CoordGrid.formatString(player.level, player.x, player.z, ','));
             } else if (cmd === 'tele') {
                 // authentic
                 if (args.length < 1) {
-                    // allowed formats:
-                    // ::tele level,x,z,x,z
-                    // ::tele x z level
-                    // ::tele up
-                    // ::tele down
+                    // ::tele x,xx,xx[,xx,xx]
+                    // Teleports you to the coordinate. In order, the parts are level, horizontal map square, vertical map square, horizontal tile, vertical tile.
+                    return false;
+                }
+
+                const coord = args[0].split(',');
+                if (coord.length < 3) {
                     return false;
                 }
 
@@ -119,42 +199,24 @@ export default class ClientCheatHandler extends MessageHandler<ClientCheat> {
                 player.clearInteraction();
                 player.unsetMapFlag();
 
-                if (args[0] === 'up') {
-                    // not authentic: this would be handled in cs2 in 2007+ and did not exist in 2004
-                    player.teleJump(player.x, player.z, player.level + 1);
-                    player.messageGame('::tele ' + CoordGrid.formatString(player.level, player.x, player.z, ','));
-                } else if (args[0] === 'down') {
-                    // not authentic: this would be handled in cs2 in 2007+ and did not exist in 2004
-                    player.teleJump(player.x, player.z, player.level - 1);
-                    player.messageGame('::tele ' + CoordGrid.formatString(player.level, player.x, player.z, ','));
-                } else if (args[0].indexOf(',') === -1) {
-                    // not authentic: rsps is too used to absolute coordinates
-                    player.teleJump(tryParseInt(args[0], 3200), tryParseInt(args[1], 3200), tryParseInt(args[2], player.level));
-                } else {
-                    // authentic
-                    const coord = args[0].split(',');
-                    if (coord.length !== 5) {
-                        return false;
-                    }
+                const level = tryParseInt(coord[0], 0);
+                const mx = tryParseInt(coord[1], 50);
+                const mz = tryParseInt(coord[2], 50);
+                const lx = tryParseInt(coord[3], 0);
+                const lz = tryParseInt(coord[4], 0);
 
-                    const level = tryParseInt(coord[0], 0);
-                    const mx = tryParseInt(coord[1], 50);
-                    const mz = tryParseInt(coord[2], 50);
-                    const lx = tryParseInt(coord[3], 0);
-                    const lz = tryParseInt(coord[4], 0);
-
-                    if (level < 0 || level > 3 ||
-                        mx < 0 || mx > 255 ||
-                        mz < 0 || mz > 255 ||
-                        lx < 0 || lx > 63 ||
-                        lz < 0 || lz > 63
-                    ) {
-                        return false;
-                    }
-
-                    player.teleJump((mx << 6) + lx, (mz << 6) + lz, level);
+                if (level < 0 || level > 3 ||
+                    mx < 0 || mx > 255 ||
+                    mz < 0 || mz > 255 ||
+                    lx < 0 || lx > 63 ||
+                    lz < 0 || lz > 63
+                ) {
+                    return false;
                 }
+
+                player.teleJump((mx << 6) + lx, (mz << 6) + lz, level);
             } else if (cmd === 'teleto') {
+                // custom
                 if (args.length < 1) {
                     return false;
                 }
@@ -178,11 +240,12 @@ export default class ClientCheatHandler extends MessageHandler<ClientCheat> {
 
                 player.teleJump(other.x, other.z, other.level);
             } else if (cmd === 'teleother') {
+                // custom
                 if (args.length < 1) {
+                    // ::teleother <username>
                     return false;
                 }
 
-                // ::teleother <username>
                 const other = World.getPlayerByUsername(args[0]);
                 if (!other) {
                     player.messageGame(`${args[0]} is not logged in.`);
@@ -203,10 +266,11 @@ export default class ClientCheatHandler extends MessageHandler<ClientCheat> {
             } else if (cmd === 'setvar') {
                 // authentic
                 if (args.length < 2) {
+                    // ::setvar <variable> <value>
+                    // Sets variable to specified value
                     return false;
                 }
 
-                // ::setvar <name> <value>
                 const varp = VarPlayerType.getByName(args[0]);
                 if (!varp) {
                     return false;
@@ -228,11 +292,12 @@ export default class ClientCheatHandler extends MessageHandler<ClientCheat> {
                 player.setVar(varp.id, value);
                 player.messageGame('set ' + varp.debugname + ': to ' + value);
             } else if (cmd === 'setvarother') {
+                // custom
                 if (args.length < 3) {
+                    // ::setvarother <username> <name> <value>
                     return false;
                 }
 
-                // ::setvarother <username> <name> <value>
                 const other = World.getPlayerByUsername(args[0]);
                 if (!other) {
                     player.messageGame(`${args[0]} is not logged in.`);
@@ -261,12 +326,12 @@ export default class ClientCheatHandler extends MessageHandler<ClientCheat> {
                 player.messageGame('set ' + args[1] + ': to ' + value + ' on ' + other.username);
             } else if (cmd === 'getvar') {
                 // authentic
-                // todo find a real usage to see if we have it right
                 if (args.length < 1) {
+                    // ::getvar <variable>
+                    // Displays value of specified variable
                     return false;
                 }
 
-                // ::getvar <varp>
                 const varp = VarPlayerType.getByName(args[0]);
                 if (!varp) {
                     return false;
@@ -275,8 +340,9 @@ export default class ClientCheatHandler extends MessageHandler<ClientCheat> {
                 const value = player.getVar(varp.id);
                 player.messageGame('get ' + varp.debugname + ': ' + value);
             } else if (cmd === 'getvarother') {
+                // custom
                 if (args.length < 2) {
-                    // ::getvarother <username> <varp>
+                    // ::getvarother <username> <variable>
                     return false;
                 }
 
@@ -291,12 +357,13 @@ export default class ClientCheatHandler extends MessageHandler<ClientCheat> {
                     return false;
                 }
 
-                const value = player.getVar(varp.id);
+                const value = other.getVar(varp.id);
                 player.messageGame('get ' + varp.debugname + ': ' + value + ' on ' + other.username);
             } else if (cmd === 'setstat') {
                 // authentic
                 if (args.length < 2) {
-                    // ::setstat <name> <level>
+                    // ::setstat <skill> <level>
+                    // Sets the skill to specified level
                     return false;
                 }
 
@@ -308,9 +375,9 @@ export default class ClientCheatHandler extends MessageHandler<ClientCheat> {
                 player.setLevel(stat, parseInt(args[1]));
             } else if (cmd === 'advancestat') {
                 // authentic
-                // todo find a real usage to see if we have it right
                 if (args.length < 1) {
-                    // ::advancestat <name> (levels)
+                    // ::advancestat <skill> <level>
+                    // Advances skill to specified level, generates level up message etc.
                     return false;
                 }
 
@@ -319,12 +386,24 @@ export default class ClientCheatHandler extends MessageHandler<ClientCheat> {
                     return false;
                 }
 
-                const level = Math.min(99, Math.max(1, tryParseInt(args[1], 1)));
-                player.setLevel(stat, player.baseLevels[stat] + level);
+                player.stats[stat] = 0;
+                player.baseLevels[stat] = 1;
+                player.levels[stat] = 1;
+                player.addXp(stat, getExpByLevel(parseInt(args[1])), false);
+            } else if (cmd === 'minme') {
+                // like maxme debugproc, but in engine because xp goes down
+                for (let i = 0; i < PlayerStatEnabled.length; i++) {
+                    if (i === PlayerStat.HITPOINTS) {
+                        player.setLevel(i, 10);
+                    } else {
+                        player.setLevel(i, 1);
+                    }
+                }
             } else if (cmd === 'give') {
                 // authentic
                 if (args.length < 1) {
-                    // ::give <obj> (count)
+                    // ::give <item> (amount)
+                    // Adds the items(s) to your inventory
                     return false;
                 }
 
@@ -336,8 +415,9 @@ export default class ClientCheatHandler extends MessageHandler<ClientCheat> {
                 const count = Math.max(1, Math.min(tryParseInt(args[1], 1), 0x7fffffff));
                 player.invAdd(InvType.INV, obj, count, false);
             } else if (cmd === 'giveother') {
+                // custom
                 if (args.length < 2) {
-                    // ::giveother <username> <obj> (count)
+                    // ::giveother <username> <item> (amount)
                     return false;
                 }
 
@@ -355,158 +435,119 @@ export default class ClientCheatHandler extends MessageHandler<ClientCheat> {
                 const count = Math.max(1, Math.min(tryParseInt(args[2], 1), 0x7fffffff));
                 other.invAdd(InvType.INV, obj, count, false);
             } else if (cmd === 'givecrap') {
-                // authentic
-                // todo find a real usage to be able to write this
+                // authentic (we don't know the exact specifics of this...)
+
+                // Fills your inventory with random items
+                for (let i = 0; i < 28; i++) {
+                    let random = -1;
+                    while (random === -1) {
+                        random = Math.trunc(Math.random() * ObjType.count);
+                        const obj = ObjType.get(random);
+                        if ((!Environment.NODE_MEMBERS && obj.members) || obj.dummyitem != 0) {
+                            random = -1;
+                        }
+                    }
+
+                    player.invAdd(InvType.INV, random, 1, false);
+                }
             } else if (cmd === 'givemany') {
                 // authentic
-                // todo find a real usage to be able to write this
-            } else if (cmd === 'ban') {
+                if (args.length < 1) {
+                    // ::givemany <item>
+                    // Adds up to 1000 of the item to your inventory
+                    return false;
+                }
+
+                const obj = ObjType.getId(args[0]);
+                if (obj === -1) {
+                    return false;
+                }
+
+                player.invAdd(InvType.INV, obj, 1000, false);
+            } else if (cmd === 'broadcast') {
+                // custom
+                if (args.length < 0) {
+                    return false;
+                }
+
+                World.broadcastMes(cheat.substring(cmd.length + 1));
+            } else if (cmd === 'reboot') {
+                // semi-authentic - we actually just shut down for maintenance
+
+                // Reboots the game world, applying packed changes
+                World.rebootTimer(0);
+            } else if (cmd === 'slowreboot') {
+                // semi-authentic - we actually just shut down for maintenance
+                if (args.length < 1) {
+                    // ::slowreboot <seconds>
+                    // Reboots the game world, with a timer
+                    return false;
+                }
+
+                World.rebootTimer(Math.ceil(tryParseInt(args[0], 30) * 1000 / 600));
+            } else if (cmd === 'setvis') {
+                // authentic
+                if (args.length < 1) {
+                    // ::setvis <level>
+                    return false;
+                }
+
+                switch (args[0]) {
+                    case '0': player.setVisibility(Visibility.DEFAULT); break;
+                    case '1': player.setVisibility(Visibility.SOFT); break;
+                    case '2': player.setVisibility(Visibility.HARD); break;
+                    default: return false;
+                }
+            }
+        }
+
+        if (player.staffModLevel >= 1) {
+            if (cmd === 'ban') {
+                // custom
                 if (args.length < 2) {
                     // ::ban <username> <minutes>
                     return false;
                 }
 
-                const other = World.getPlayerByUsername(args[0]);
-                if (!other) {
-                    player.messageGame(`${args[0]} is not logged in.`);
-                    return false;
-                }
-
+                const username = args[0];
                 const minutes = Math.max(0, tryParseInt(args[1], 60));
 
-                World.removePlayer(other);
-                World.notifyPlayerBan(player.username, other.username, Date.now() + (minutes * 60 * 1000));
-            } else if (cmd === 'kick') {
-                if (args.length < 1) {
-                    // ::kick <username>
-                    return false;
+                World.notifyPlayerBan(player.username, username, Date.now() + (minutes * 60 * 1000));
+
+                const other = World.getPlayerByUsername(username);
+                if (other) {
+                    World.removePlayer(other);
                 }
-
-                const other = World.getPlayerByUsername(args[0]);
-                if (!other) {
-                    player.messageGame(`${args[0]} is not logged in.`);
-                    return false;
-                }
-
-                // not safe, but when you need them gone...
-                World.removePlayer(other);
-            }
-        }
-
-        if (Environment.NODE_ALLOW_CHEATS || player.staffModLevel >= 1) {
-            // player mod commands
-            if (cmd === 'getcoord') {
-                // authentic
-                // todo find a real usage to see if we have it right
-                player.messageGame(CoordGrid.formatString(player.level, player.x, player.z, '_'));
             } else if (cmd === 'mute') {
+                // custom
                 if (args.length < 2) {
                     // ::mute <username> <minutes>
                     return false;
                 }
 
-                const other = World.getPlayerByUsername(args[0]);
-                if (!other) {
-                    player.messageGame(`${args[0]} is not logged in.`);
-                    return false;
-                }
-
+                const username = args[0];
                 const minutes = Math.max(0, tryParseInt(args[1], 60));
 
-                other.muted_until = new Date(Date.now() + (minutes * 60 * 1000));
-                World.notifyPlayerMute(player.username, other.username, Date.now() + (minutes * 60 * 1000));
-            }
-        }
+                World.notifyPlayerMute(player.username, username, Date.now() + (minutes * 60 * 1000));
 
-        if (Environment.NODE_ALLOW_CHEATS || player.staffModLevel >= 3) {
-            // dev debugproc commands (scriptable commands)
-            const script = ScriptProvider.getByName(`[debugproc,${cmd}]`);
-            if (!script) {
-                return false;
-            }
-
-            const params = new Array(script.info.parameterTypes.length).fill(-1);
-
-            for (let i = 0; i < script.info.parameterTypes.length; i++) {
-                const type = script.info.parameterTypes[i];
-
-                try {
-                    switch (type) {
-                        case ScriptVarType.STRING: {
-                            const value = args.shift();
-                            params[i] = value ?? '';
-                            break;
-                        }
-                        case ScriptVarType.INT: {
-                            const value = args.shift();
-                            params[i] = parseInt(value ?? '0', 10) | 0;
-                            break;
-                        }
-                        case ScriptVarType.OBJ:
-                        case ScriptVarType.NAMEDOBJ: {
-                            const name = args.shift();
-                            params[i] = ObjType.getId(name ?? '');
-                            break;
-                        }
-                        case ScriptVarType.NPC: {
-                            const name = args.shift();
-                            params[i] = NpcType.getId(name ?? '');
-                            break;
-                        }
-                        case ScriptVarType.LOC: {
-                            const name = args.shift();
-                            params[i] = LocType.getId(name ?? '');
-                            break;
-                        }
-                        case ScriptVarType.SEQ: {
-                            const name = args.shift();
-                            params[i] = SeqType.getId(name ?? '');
-                            break;
-                        }
-                        case ScriptVarType.STAT: {
-                            const name = args.shift() ?? '';
-                            params[i] = PlayerStat[name.toUpperCase() as PlayerStatKey];
-                            break;
-                        }
-                        case ScriptVarType.INV: {
-                            const name = args.shift();
-                            params[i] = InvType.getId(name ?? '');
-                            break;
-                        }
-                        case ScriptVarType.COORD: {
-                            const args2 = cheat.split('_');
-
-                            const level = parseInt(args2[0].slice(6));
-                            const mx = parseInt(args2[1]);
-                            const mz = parseInt(args2[2]);
-                            const lx = parseInt(args2[3]);
-                            const lz = parseInt(args2[4]);
-
-                            params[i] = CoordGrid.packCoord(level, (mx << 6) + lx, (mz << 6) + lz);
-                            break;
-                        }
-                        case ScriptVarType.INTERFACE: {
-                            const name = args.shift();
-                            params[i] = Component.getId(name ?? '');
-                            break;
-                        }
-                        case ScriptVarType.SPOTANIM: {
-                            const name = args.shift();
-                            params[i] = SpotanimType.getId(name ?? '');
-                            break;
-                        }
-                        case ScriptVarType.IDKIT: {
-                            const name = args.shift();
-                            params[i] = IdkType.getId(name ?? '');
-                            break;
-                        }
-                    }
-                } catch (err) {
+                const other = World.getPlayerByUsername(username);
+                if (other) {
+                    other.muted_until = new Date(Date.now() + (minutes * 60 * 1000));
+                }
+            } else if (cmd === 'kick') {
+                // custom
+                if (args.length < 1) {
+                    // ::kick <username>
                     return false;
                 }
-            }
 
-            player.executeScript(ScriptRunner.init(script, player, null, params), false);
+                const username = args[0];
+
+                const other = World.getPlayerByUsername(username);
+                if (other) {
+                    World.removePlayer(other);
+                }
+            }
         }
 
         return true;

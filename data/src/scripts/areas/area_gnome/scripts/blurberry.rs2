@@ -28,7 +28,7 @@ if(testbit(%barcrawl_progress, ^blurberry_index) = false & last_useitem = barcra
     @blurberry_barcrawl;
 }
 def_category $category = oc_category(last_useitem);
-if ($category = category_83 | $category = category_15) {
+if ($category = gnome_cocktail | $category = gnome_unf_odd_cocktail) {
     switch_int(%gnome_bar_progress) {
         case 0 : ~chatnpc("<p,neutral>Nice cocktail, but I don't need any right now...");
         case 1 : @gnome_bar_assign_fruit_blast;

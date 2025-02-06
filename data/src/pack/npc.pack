@@ -143,7 +143,7 @@
 142=npc_142
 143=npc_143
 144=npc_144
-145=npc_145
+145=ice_warrior_royal_guard
 146=npc_146
 147=npc_147
 148=npc_148
@@ -180,10 +180,10 @@
 179=black_knight_aggre
 180=highwayman
 181=chaos_druid
-182=npc_182
-183=npc_183
-184=npc_184
-185=npc_185
+182=pirate_brown
+183=pirate_black
+184=pirate_red
+185=pirate_woman
 186=thug
 187=rogue
 188=monk_of_zamorak_22

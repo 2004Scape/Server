@@ -1,65 +1,8 @@
-[premade_chocolate_bomb]
-name=Chocolate bomb
-desc=Looks great!
-category=category_127
-cost=2
-model=model_2647_obj
-recol1s=6208
-recol1d=11426
-2dxof=1
-2dzoom=850
-2dyan=1888
-2dxan=192
-weight=350g
-iop1=Eat
-weight=350g
-members=yes
-
-[premade_tangled_toads_legs]
-cost=2
-name=Tangled toad's legs
-desc=It actually smells quite good.
-category=category_127
-model=model_2579_obj
-2dxof=1
-2dzoom=850
-2dyan=1888
-2dxan=192
-iop1=Eat
-weight=350g
-members=yes
-
-[premade_worm_hole]
-category=category_127
-cost=2
-name=Worm hole
-desc=It actually smells quite good.
-model=model_2609_obj
-2dxof=1
-2dzoom=850
-2dyan=1888
-2dxan=192
-iop1=Eat
-weight=350g
-members=yes
-
-[premade_veg_ball]
-name=Veg ball
-desc=This looks pretty healthy.
-category=category_127
-cost=2
-model=model_2823_obj
-2dxof=1
-2dzoom=850
-2dyan=1888
-2dxan=192
-iop1=Eat
-weight=350g
-members=yes
-
 [chocolate_bomb]
 name=Chocolate bomb
 desc=Looks great!
+category=gnome_bowl
+cost=2
 model=model_2647_obj
 recol1s=6208
 recol1d=11426
@@ -67,27 +10,28 @@ recol1d=11426
 2dzoom=850
 2dyan=1888
 2dxan=192
-iop1=Eat
-members=yes
-cost=160
 weight=350g
-category=category_128
+iop1=Eat
+weight=350g
+members=yes
 
 [tangled_toads_legs]
+cost=2
 name=Tangled toad's legs
 desc=It actually smells quite good.
+category=gnome_bowl
 model=model_2579_obj
 2dxof=1
 2dzoom=850
 2dyan=1888
 2dxan=192
 iop1=Eat
-members=yes
-cost=160
 weight=350g
-category=category_128
+members=yes
 
 [worm_hole]
+category=gnome_bowl
+cost=2
 name=Worm hole
 desc=It actually smells quite good.
 model=model_2609_obj
@@ -96,14 +40,70 @@ model=model_2609_obj
 2dyan=1888
 2dxan=192
 iop1=Eat
-members=yes
-cost=150
 weight=350g
-category=category_128
+members=yes
 
 [veg_ball]
 name=Veg ball
 desc=This looks pretty healthy.
+category=gnome_bowl
+cost=2
+model=model_2823_obj
+2dxof=1
+2dzoom=850
+2dyan=1888
+2dxan=192
+iop1=Eat
+weight=350g
+members=yes
+
+[premade_chocolate_bomb]
+name=Chocolate bomb
+desc=Looks great!
+model=model_2647_obj
+recol1s=6208
+recol1d=11426
+2dxof=1
+2dzoom=850
+2dyan=1888
+2dxan=192
+iop1=Eat
+members=yes
+cost=160
+weight=350g
+category=gnome_premade_and_toadlegs_kingworm
+
+[premade_tangled_toads_legs]
+name=Tangled toad's legs
+desc=It actually smells quite good.
+model=model_2579_obj
+2dxof=1
+2dzoom=850
+2dyan=1888
+2dxan=192
+iop1=Eat
+members=yes
+cost=160
+weight=350g
+category=gnome_premade_and_toadlegs_kingworm
+
+[premade_worm_hole]
+name=Worm hole
+desc=It actually smells quite good.
+model=model_2609_obj
+2dxof=1
+2dzoom=850
+2dyan=1888
+2dxan=192
+iop1=Eat
+members=yes
+cost=150
+weight=350g
+category=gnome_premade_and_toadlegs_kingworm
+
+[premade_veg_ball]
+name=Veg ball
+desc=This looks pretty healthy.
 model=model_2823_obj
 2dxof=1
 2dzoom=850
@@ -113,12 +113,12 @@ iop1=Eat
 members=yes
 cost=150
 weight=350g
-category=category_128
+category=gnome_premade_and_toadlegs_kingworm
 
 [odd_gnomebowl]
 name=Odd gnomebowl
 desc=This gnome bowl doesn't look very appetising.
-category=category_126
+category=gnome_unf_odd_bowl
 cost=2
 members=yes
 model=model_2728_obj
@@ -132,7 +132,6 @@ recol2d=15745
 2dxan=192
 weight=250g
 iop1=Eat
-category=category_15
 
 [burnt_gnomebowl]
 name=Burnt gnomebowl
@@ -184,7 +183,7 @@ tradeable=no
 [unfinished_chocolate_bomb1]
 name=Unfinished bowl
 desc=This dish is just missing those little finishing touches.
-category=category_126
+category=gnome_unf_odd_bowl
 model=model_2647_obj
 recol1s=6208
 recol1d=11426
@@ -199,13 +198,12 @@ recol3d=11426
 weight=300g
 members=yes
 iop1=Eat
-category=category_15
 param=gnome_cooking_type,1
 
 [unfinished_chocolate_bomb2]
 name=Unfinished bowl
 desc=This dish is just missing those little finishing touches.
-category=category_126
+category=gnome_unf_odd_bowl
 model=model_2647_obj
 recol1s=6208
 recol1d=11426
@@ -217,14 +215,13 @@ recol2d=30652
 2dxan=192
 iop1=Eat
 weight=300g
-category=category_15
 members=yes
 param=gnome_cooking_type,1
 
 [unfinished_chocolate_bomb3]
 name=Unfinished bowl
 desc=This dish is just missing those little finishing touches.
-category=category_126
+category=gnome_unf_odd_bowl
 model=model_2647_obj
 recol1s=6208
 recol1d=11426
@@ -236,14 +233,13 @@ recol2d=30652
 2dxan=192
 iop1=Eat
 weight=300g
-category=category_15
 members=yes
 param=gnome_cooking_type,1
 
 [unfinished_worm_hole1]
 name=Unfinished bowl
 desc=This dish is just missing those little finishing touches.
-category=category_126
+category=gnome_unf_odd_bowl
 model=model_2609_obj
 2dxof=1
 2dzoom=850
@@ -251,14 +247,13 @@ model=model_2609_obj
 2dxan=192
 iop1=Eat
 weight=300g
-category=category_15
 members=yes
 param=gnome_cooking_type,1
 
 [unfinished_veg_ball1]
 name=Unfinished bowl
 desc=This dish is just missing those little finishing touches.
-category=category_126
+category=gnome_unf_odd_bowl
 model=model_2823_obj
 recol1s=5729
 recol1d=21072
@@ -269,5 +264,4 @@ recol1d=21072
 members=yes
 weight=300g
 iop1=Eat
-category=category_15
 param=gnome_cooking_type,1

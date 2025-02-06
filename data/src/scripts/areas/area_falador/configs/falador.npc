@@ -38,7 +38,7 @@ param=rangedefence,74
 param=damagetype,^slash_style
 param=attack_anim,human_2h_slash
 param=defend_anim,human_sword_defend2
-param=attack_sound,2H_crush
+param=attack_sound,2H_slash
 param=defend_sound,sound_218
 // Despite the slash attack style they still use the crush anim today
 // osrs attack anim seq_406 and defend anim seq_410.

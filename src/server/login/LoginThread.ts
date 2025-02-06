@@ -51,26 +51,31 @@ async function handleRequests(parentPort: ParentPort, msg: any) {
             break;
         }
         case 'player_login': {
-            const { socket, username, password, uid, lowMemory, reconnecting } = msg;
+            const { socket, remoteAddress, username, password, uid, lowMemory, reconnecting } = msg;
 
             if (Environment.LOGIN_SERVER) {
+                const response = await client.playerLogin(username, password, uid, socket, remoteAddress);
+
                 parentPort.postMessage({
                     type: 'player_login',
                     socket,
                     username,
                     lowMemory,
                     reconnecting,
-                    ...await client.playerLogin(username, password, uid)
+                    ...response
                 });
             } else {
                 let staffmodlevel = 0;
                 if (!Environment.NODE_PRODUCTION) {
                     staffmodlevel = 3; // dev (destructive commands)
-                } else if (Environment.NODE_STAFF.find(name => name === username) !== undefined) {
-                    staffmodlevel = 2; // staff (moderation commands)
                 }
 
-                if (!fs.existsSync(`data/players/${username}.sav`)) {
+                const profile = Environment.NODE_PROFILE;
+                if (!fs.existsSync(`data/players/${profile}`)) {
+                    fs.mkdirSync(`data/players/${profile}`, { recursive: true });
+                }
+
+                if (!fs.existsSync(`data/players/${profile}/${username}.sav`)) {
                     parentPort.postMessage({
                         type: 'player_login',
                         socket,
@@ -90,7 +95,7 @@ async function handleRequests(parentPort: ParentPort, msg: any) {
                         reconnecting,
                         reply: 0,
                         staffmodlevel,
-                        save: fs.readFileSync(`data/players/${username}.sav`)
+                        save: fs.readFileSync(`data/players/${profile}/${username}.sav`)
                     });
                 }
             }
@@ -108,7 +113,12 @@ async function handleRequests(parentPort: ParentPort, msg: any) {
                     success
                 });
             } else {
-                fs.writeFileSync(`data/players/${username}.sav`, save);
+                const profile = Environment.NODE_PROFILE;
+                if (!fs.existsSync(`data/players/${profile}`)) {
+                    fs.mkdirSync(`data/players/${profile}`, { recursive: true });
+                }
+
+                fs.writeFileSync(`data/players/${profile}/${username}.sav`, save);
 
                 parentPort.postMessage({
                     type: 'player_logout',
@@ -124,7 +134,12 @@ async function handleRequests(parentPort: ParentPort, msg: any) {
             if (Environment.LOGIN_SERVER) {
                 await client.playerAutosave(username, save);
             } else {
-                fs.writeFileSync(`data/players/${username}.sav`, save);
+                const profile = Environment.NODE_PROFILE;
+                if (!fs.existsSync(`data/players/${profile}`)) {
+                    fs.mkdirSync(`data/players/${profile}`, { recursive: true });
+                }
+
+                fs.writeFileSync(`data/players/${profile}/${username}.sav`, save);
             }
             break;
         }

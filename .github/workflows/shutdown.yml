@@ -1,0 +1,20 @@
+name: Shutdown All Worlds
+
+on:
+  workflow_dispatch:
+
+
+concurrency:
+  group: worlds
+  cancel-in-progress: true
+
+jobs:
+  worlds:
+    strategy:
+      fail-fast: false
+      matrix:
+        environment: [ world1, world2, world3, world4, world5, world6, world7, world8, world9, world10 ]
+    uses: ./.github/workflows/shutdown-worlds.yml
+    with:
+      environment: ${{ matrix.environment }}
+    secrets: inherit

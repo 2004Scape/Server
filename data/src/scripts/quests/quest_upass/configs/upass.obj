@@ -6,7 +6,7 @@ womanwear=model_549_obj_wear,6
 weight=2lb
 dummyitem=graphic_only
 
-[obj_1480]
+[rocks]
 name=Rocks
 desc=Some rocks.
 model=model_2394_obj
@@ -14,7 +14,7 @@ weight=1g
 members=yes
 tradeable=no
 
-[obj_1481]
+[orb_of_light1]
 name=Orb of light
 desc=A magical sphere that glimmers within.
 cost=10
@@ -28,7 +28,7 @@ param=no_alchemy,1
 param=orb_bit,^upass_orb1_bit
 tradeable=no
 
-[obj_1482]
+[orb_of_light2]
 name=Orb of light
 desc=A magical sphere that glimmers within.
 cost=10
@@ -42,7 +42,7 @@ param=no_alchemy,1
 param=orb_bit,^upass_orb2_bit
 tradeable=no
 
-[obj_1483]
+[orb_of_light3]
 name=Orb of light
 desc=A magical sphere that glimmers within.
 cost=10
@@ -56,7 +56,7 @@ param=no_alchemy,1
 param=orb_bit,^upass_orb3_bit
 tradeable=no
 
-[obj_1484]
+[orb_of_light4]
 name=Orb of light
 desc=A magical sphere that glimmers within.
 cost=20
@@ -355,4 +355,13 @@ recol1d=7399
 2dxan=264
 weight=2oz
 members=yes
+tradeable=no
+
+[orb_of_light_invisible]
+name=Orb of light
+desc=A magical sphere that glimmers within.
+cost=1
+model=model_loc_771_0
+members=yes
+respawnrate=50
 tradeable=no

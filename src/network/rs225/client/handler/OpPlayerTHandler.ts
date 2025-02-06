@@ -19,17 +19,20 @@ export default class OpPlayerTHandler extends MessageHandler<OpPlayerT> {
         const spellCom = Component.get(spellComId);
         if (typeof spellCom === 'undefined' || !player.isComponentVisible(spellCom)) {
             player.write(new UnsetMapFlag());
+            player.clearPendingAction();
             return false;
         }
 
         const other = World.getPlayer(pid);
         if (!other) {
             player.write(new UnsetMapFlag());
+            player.clearPendingAction();
             return false;
         }
 
         if (!player.buildArea.players.has(other)) {
             player.write(new UnsetMapFlag());
+            player.clearPendingAction();
             return false;
         }
 

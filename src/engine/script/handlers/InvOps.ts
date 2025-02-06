@@ -84,10 +84,10 @@ const InvOps: CommandHandlers = {
         if (overflow > 0) {
             if (!objType.stackable || overflow === 1) {
                 for (let i = 0; i < overflow; i++) {
-                    World.addObj(new Obj(player.level, player.x, player.z, EntityLifeCycle.DESPAWN, objType.id, 1), player.pid, 200);
+                    World.addObj(new Obj(player.level, player.x, player.z, EntityLifeCycle.DESPAWN, objType.id, 1), player.hash64, 200);
                 }
             } else {
-                World.addObj(new Obj(player.level, player.x, player.z, EntityLifeCycle.DESPAWN, objType.id, overflow), player.pid, 200);
+                World.addObj(new Obj(player.level, player.x, player.z, EntityLifeCycle.DESPAWN, objType.id, overflow), player.hash64, 200);
             }
         }
     }),
@@ -190,7 +190,7 @@ const InvOps: CommandHandlers = {
         }
 
         const floorObj: Obj = new Obj(position.level, position.x, position.z, EntityLifeCycle.DESPAWN, objType.id, completed);
-        World.addObj(floorObj, player.pid, duration);
+        World.addObj(floorObj, player.hash64, duration);
         state.activeObj = floorObj;
         state.pointerAdd(ActiveObj[state.intOperand]);
     }),
@@ -214,7 +214,10 @@ const InvOps: CommandHandlers = {
         }
 
         const objType = ObjType.get(obj.id);
-        state.activePlayer.addWealthLog(-(obj.count * objType.cost), `Dropped ${objType.debugname} x${obj.count}`);
+        if (invType.scope === InvType.SCOPE_PERM) {
+            // ammo drops are temp, without checking scope this spams in ranged combat
+            state.activePlayer.addWealthLog(-(obj.count * objType.cost), `Dropped ${objType.debugname} x${obj.count}`);
+        }
 
         const player = state.activePlayer;
         const completed = player.invDel(invType.id, obj.id, obj.count, slot);
@@ -225,14 +228,14 @@ const InvOps: CommandHandlers = {
         if (!objType.stackable || completed === 1) {
             for (let i = 0; i < completed; i++) {
                 const floorObj: Obj = new Obj(position.level, position.x, position.z, EntityLifeCycle.DESPAWN, obj.id, 1);
-                World.addObj(floorObj, player.pid, duration);
+                World.addObj(floorObj, player.hash64, duration);
     
                 state.activeObj = floorObj;
                 state.pointerAdd(ActiveObj[state.intOperand]);
             }
         } else {
             const floorObj: Obj = new Obj(position.level, position.x, position.z, EntityLifeCycle.DESPAWN, obj.id, completed);
-            World.addObj(floorObj, player.pid, duration);
+            World.addObj(floorObj, player.hash64, duration);
 
             state.activeObj = floorObj;
             state.pointerAdd(ActiveObj[state.intOperand]);
@@ -310,10 +313,10 @@ const InvOps: CommandHandlers = {
             const objType: ObjType = ObjType.get(fromObj);
             if (!objType.stackable || overflow === 1) {
                 for (let i = 0; i < overflow; i++) {
-                    World.addObj(new Obj(player.level, player.x, player.z, EntityLifeCycle.DESPAWN, fromObj, 1), player.pid, 200);
+                    World.addObj(new Obj(player.level, player.x, player.z, EntityLifeCycle.DESPAWN, fromObj, 1), player.hash64, 200);
                 }
             } else {
-                World.addObj(new Obj(player.level, player.x, player.z, EntityLifeCycle.DESPAWN, fromObj, overflow), player.pid, 200);
+                World.addObj(new Obj(player.level, player.x, player.z, EntityLifeCycle.DESPAWN, fromObj, overflow), player.hash64, 200);
             }
         }
     }),
@@ -420,10 +423,10 @@ const InvOps: CommandHandlers = {
         if (overflow > 0) {
             if (!objType.stackable || overflow === 1) {
                 for (let i = 0; i < overflow; i++) {
-                    World.addObj(new Obj(player.level, player.x, player.z, EntityLifeCycle.DESPAWN, objType.id, 1), player.pid, 200);
+                    World.addObj(new Obj(player.level, player.x, player.z, EntityLifeCycle.DESPAWN, objType.id, 1), player.hash64, 200);
                 }
             } else {
-                World.addObj(new Obj(player.level, player.x, player.z, EntityLifeCycle.DESPAWN, objType.id, overflow), player.pid, 200);
+                World.addObj(new Obj(player.level, player.x, player.z, EntityLifeCycle.DESPAWN, objType.id, overflow), player.hash64, 200);
             }
         }
     }),
@@ -459,7 +462,7 @@ const InvOps: CommandHandlers = {
         const overflow = count - player.invAdd(toInvType.id, finalObj, completed, false);
         if (overflow > 0) {
             // should be a stackable cert already!
-            World.addObj(new Obj(player.level, player.x, player.z, EntityLifeCycle.DESPAWN, finalObj, overflow), player.pid, 200);
+            World.addObj(new Obj(player.level, player.x, player.z, EntityLifeCycle.DESPAWN, finalObj, overflow), player.hash64, 200);
         }
     
     }),
@@ -598,7 +601,9 @@ const InvOps: CommandHandlers = {
         }
 
         const objType: ObjType = ObjType.get(obj.id);
-        state.activePlayer.addWealthLog(-(obj.count * objType.cost), `Dropped ${objType.debugname} x${obj.count}`);
+        if (invType.scope === InvType.SCOPE_PERM) {
+            state.activePlayer.addWealthLog(-(obj.count * objType.cost), `Dropped ${objType.debugname} x${obj.count}`);
+        }
 
         const completed: number = fromPlayer.invDel(invType.id, obj.id, obj.count, slot);
         if (completed === 0) {
@@ -609,7 +614,7 @@ const InvOps: CommandHandlers = {
             return; // stop untradables after delete.
         }
 
-        World.addObj(new Obj(position.level, position.x, position.z, EntityLifeCycle.DESPAWN, obj.id, completed), toPlayer.pid, duration);
+        World.addObj(new Obj(position.level, position.x, position.z, EntityLifeCycle.DESPAWN, obj.id, completed), toPlayer.hash64, duration);
     }),
 
     // https://x.com/JagexAsh/status/1778879334167548366
@@ -638,7 +643,9 @@ const InvOps: CommandHandlers = {
             }
 
             const objType: ObjType = ObjType.get(obj.id);
-            state.activePlayer.addWealthLog(-(obj.count * objType.cost), `Dropped ${objType.debugname} x${obj.count}`);
+            if (invType.scope === InvType.SCOPE_PERM) {
+                state.activePlayer.addWealthLog(-(obj.count * objType.cost), `Dropped ${objType.debugname} x${obj.count}`);
+            }
 
             inventory.delete(slot);
 
@@ -646,7 +653,7 @@ const InvOps: CommandHandlers = {
                 continue; // stop untradables after delete.
             }
 
-            World.addObj(new Obj(position.level, position.x, position.z, EntityLifeCycle.DESPAWN, obj.id, obj.count), -1, duration);
+            World.addObj(new Obj(position.level, position.x, position.z, EntityLifeCycle.DESPAWN, obj.id, obj.count), Obj.NO_RECEIVER, duration);
         }
     }),
 

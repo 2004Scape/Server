@@ -21,13 +21,32 @@ export default class LoggerClient extends InternalClient {
         this.ws.send(JSON.stringify({
             type: 'session_log',
             world: Environment.NODE_ID,
-            game: Environment.NODE_GAME,
+            profile: Environment.NODE_PROFILE,
             username,
             session_uuid,
             timestamp,
             coord,
             event,
             event_type
+        }));
+    }
+
+    public async report(username: string, coord: number, offender: string, reason: number) {
+        await this.connect();
+
+        if (!this.ws || !this.wsr || !this.wsr.checkIfWsLive()) {
+            return;
+        }
+
+        this.ws.send(JSON.stringify({
+            type: 'report',
+            world: Environment.NODE_ID,
+            profile: Environment.NODE_PROFILE,
+            username,
+            timestamp: Date.now(),
+            coord,
+            offender,
+            reason
         }));
     }
 }

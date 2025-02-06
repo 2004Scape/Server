@@ -21,29 +21,34 @@ export default class OpNpcUHandler extends MessageHandler<OpNpcU> {
         const com = Component.get(comId);
         if (typeof com === 'undefined' || !player.isComponentVisible(com)) {
             player.write(new UnsetMapFlag());
+            player.clearPendingAction();
             return false;
         }
 
         const listener = player.invListeners.find(l => l.com === comId);
         if (!listener) {
             player.write(new UnsetMapFlag());
+            player.clearPendingAction();
             return false;
         }
 
         const inv = player.getInventoryFromListener(listener);
         if (!inv || !inv.validSlot(slot) || !inv.hasAt(slot, item)) {
             player.write(new UnsetMapFlag());
+            player.clearPendingAction();
             return false;
         }
 
         const npc = World.getNpc(nid);
         if (!npc || npc.delayed) {
             player.write(new UnsetMapFlag());
+            player.clearPendingAction();
             return false;
         }
 
         if (!player.buildArea.npcs.has(npc)) {
             player.write(new UnsetMapFlag());
+            player.clearPendingAction();
             return false;
         }
 

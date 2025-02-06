@@ -124,10 +124,6 @@ switch_obj($uncooked_item) {
     case half_baked_gnomebowl : $cooked_item = ~get_gnome_bowl_product();
     case half_baked_crunchies : $cooked_item = ~get_gnome_crunchies_product();
 }
-if ($cooked_item = null) {
-    ~mesbox("You can't cook that.");
-    return;
-}
 // rsc delays for about 3 ticks.
 // This post says they removed unnecessary delays and "None of the above no longer take any more time than in Runescape 1."
 // https://oldschool.runescape.wiki/w/Update:Huge_Runescape_2_update

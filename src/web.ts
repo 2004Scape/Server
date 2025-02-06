@@ -19,12 +19,8 @@ MIME_TYPES.set('.wasm', 'application/wasm');
 MIME_TYPES.set('.sf2', 'application/octet-stream');
 
 // we don't need/want a full blown website or API on the game server
-const web = http.createServer(async (req, res) => {
+export const web = http.createServer(async (req, res) => {
     try {
-        if (Environment.WEB_CORS) {
-            res.setHeader('Access-Control-Allow-Origin', '*');
-        }
-
         if (req.method !== 'GET') {
             res.writeHead(405);
             res.end();
@@ -79,12 +75,8 @@ const web = http.createServer(async (req, res) => {
             res.setHeader('Content-Type', 'application/octet-stream');
             res.writeHead(200);
             res.end(await fsp.readFile('data/pack/client/sounds'));
-        } else if (url.pathname.startsWith('/server/') && fs.existsSync('data/pack/server/' + basename(url.pathname))) {
-            res.setHeader('Content-Type', MIME_TYPES.get(extname(url.pathname ?? '')) ?? 'text/plain');
-            res.writeHead(200);
-            res.end(await fsp.readFile('data/pack/server/' + basename(url.pathname)));
         } else if (url.pathname === '/') {
-            if (Environment.NODE_PRODUCTION) {
+            if (Environment.WEBSITE_REGISTRATION) {
                 res.writeHead(404);
                 res.end();
             } else {
@@ -96,51 +88,14 @@ const web = http.createServer(async (req, res) => {
             const plugin = tryParseInt(url.searchParams.get('plugin'), 0);
             const lowmem = tryParseInt(url.searchParams.get('lowmem'), 0);
 
-            if (plugin === 1) {
-                // plugin 1 - transpiled webclient
-                res.setHeader('Content-Type', 'text/html');
-                res.writeHead(200);
-                res.end(await ejs.renderFile('view/teavmclient.ejs', {
-                    plugin,
-                    nodeid: Environment.NODE_ID,
-                    portoff: Environment.NODE_PORT - 43594,
-                    lowmem: lowmem ? 'lowmem' : 'highmem',
-                    members: Environment.NODE_MEMBERS ? 'members' : 'free'
-                }));
-            } else if (plugin === 2) {
-                // plugin 2 - java applet
-                res.setHeader('Content-Type', 'text/html');
-                res.writeHead(200);
-                res.end(await ejs.renderFile('view/javaclient.ejs', {
-                    plugin,
-                    nodeid: Environment.NODE_ID,
-                    portoff: Environment.NODE_PORT - 43594,
-                    lowmem,
-                    members: Environment.NODE_MEMBERS
-                }));
-            } else if (plugin === 3) {
-                // plugin 3 - unsigned java applet
-                res.setHeader('Content-Type', 'text/html');
-                res.writeHead(200);
-                res.end(await ejs.renderFile('view/javaclientunsigned.ejs', {
-                    plugin,
-                    nodeid: Environment.NODE_ID,
-                    portoff: Environment.NODE_PORT - 43594,
-                    lowmem,
-                    members: Environment.NODE_MEMBERS
-                }));
-            } else {
-                // plugin 0 / default - typescript webclient
-                res.setHeader('Content-Type', 'text/html');
-                res.writeHead(200);
-                res.end(await ejs.renderFile('view/tsclient.ejs', {
-                    plugin,
-                    nodeid: Environment.NODE_ID,
-                    portoff: Environment.NODE_PORT - 43594,
-                    lowmem,
-                    members: Environment.NODE_MEMBERS
-                }));
-            }
+            res.setHeader('Content-Type', 'text/html');
+            res.writeHead(200);
+            res.end(await ejs.renderFile('view/client.ejs', {
+                plugin,
+                nodeid: Environment.NODE_ID,
+                lowmem,
+                members: Environment.NODE_MEMBERS
+            }));
         } else if (fs.existsSync('public' + url.pathname)) {
             res.setHeader('Content-Type', MIME_TYPES.get(extname(url.pathname ?? '')) ?? 'text/plain');
             res.writeHead(200);

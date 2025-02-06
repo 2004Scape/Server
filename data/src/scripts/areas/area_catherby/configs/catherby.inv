@@ -27,6 +27,7 @@ stock17=raw_shark,0,3500
 [hickton_archery]
 // https://oldschool.runescape.wiki/w/Hickton%27s_Archery_Emporium.
 // https://web.archive.org/web/20110713112002im_/http://runehq.com/images/cityguides/catherby5.jpg
+// https://www.spookspring.com/noobsquad/imagegif/spookart/catherby.GIF
 scope=shared
 size=40
 restock=yes

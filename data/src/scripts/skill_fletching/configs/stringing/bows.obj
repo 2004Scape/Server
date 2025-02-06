@@ -1,4 +1,4 @@
-[obj_48]
+[unstrung_longbow]
 name=Longbow
 desc=I need to find a string for this.
 cost=60
@@ -14,7 +14,7 @@ recol1d=21985
 weight=47oz
 category=unstrung_bow
 
-[obj_50]
+[unstrung_shortbow]
 name=Shortbow
 desc=I need to find a string for this.
 cost=23
@@ -30,7 +30,7 @@ recol1d=21985
 weight=35oz
 category=unstrung_bow
 
-[obj_54]
+[unstrung_oak_shortbow]
 cost=50
 members=yes
 name=Oak shortbow
@@ -46,7 +46,7 @@ recol1d=23009
 weight=35oz
 category=unstrung_bow
 
-[obj_56]
+[unstrung_oak_longbow]
 cost=80
 members=yes
 name=Oak longbow
@@ -62,7 +62,7 @@ recol1d=23009
 weight=47oz
 category=unstrung_bow
 
-[obj_58]
+[unstrung_willow_longbow]
 cost=160
 members=yes
 name=Willow longbow
@@ -77,7 +77,7 @@ recol1d=20004
 2dxan=460
 weight=47oz
 category=unstrung_bow
-[obj_60]
+[unstrung_willow_shortbow]
 cost=100
 members=yes
 name=Willow shortbow
@@ -93,7 +93,7 @@ recol1d=20004
 weight=35oz
 category=unstrung_bow
 
-[obj_62]
+[unstrung_maple_longbow]
 cost=320
 members=yes
 name=Maple longbow
@@ -109,7 +109,7 @@ recol1d=21040
 weight=47oz
 category=unstrung_bow
 
-[obj_64]
+[unstrung_maple_shortbow]
 cost=200
 members=yes
 name=Maple shortbow
@@ -125,7 +125,7 @@ recol1d=21040
 weight=35oz
 category=unstrung_bow
 
-[obj_66]
+[unstrung_yew_longbow]
 cost=640
 members=yes
 name=Yew longbow
@@ -141,7 +141,7 @@ recol1d=23073
 weight=47oz
 category=unstrung_bow
 
-[obj_68]
+[unstrung_yew_shortbow]
 cost=400
 members=yes
 name=Yew shortbow
@@ -157,7 +157,7 @@ recol1d=23073
 weight=35oz
 category=unstrung_bow
 
-[obj_70]
+[unstrung_magic_longbow]
 cost=1280
 members=yes
 name=Magic longbow
@@ -173,7 +173,7 @@ recol1d=1451
 weight=47oz
 category=unstrung_bow
 
-[obj_72]
+[unstrung_magic_shortbow]
 cost=800
 members=yes
 name=Magic shortbow

@@ -89,20 +89,8 @@ if (~check_spell_requirements($spell_data) = false) {
     return(false);
 }
 // these go after rune check
-if (~in_duel_arena(coord) = true) {
-    if (~duel_arena_checks = false) {
-        return(false);
-    }
-    if (~duel_arena_magic_check = false) {
-        return(false);
-    }
-} else {
-    if (~pvp_level_check = false) {
-        return(false);
-    }
-    if (~pvp_in_combat_check = false) {
-        return(false);
-    }
+if (~pvp_is_attackable_opt = false) {
+    return(false);
 }
 return(true);
 
@@ -182,6 +170,9 @@ if ($freeze_time > 0) {
     if (~.check_protect_prayer(^magic_style) = true) {
         $freeze_time = divide($freeze_time, 2); // 50% reduction https://oldschool.runescape.wiki/w/Update:RS2_bugfixes_-_part_4
     }
+    if (.p_finduid(.uid) = true) {
+        .p_stopaction;
+    }
     .%pk_binder = uid;
     .queue(pvp_freeze_player, 0, $freeze_time);
 }
@@ -238,8 +229,13 @@ if (%damagestyle = ^style_melee_defensive & inv_getobj(worn, ^wearpos_rhand) ! n
     %damagestyle = ^style_magic_normal; // if this script is running they have to be using a spell, so assume magic style
 }
 
+// spell anim
 anim(db_getfield($spell_data, magic_spell_table:anim, 0), 0);
-spotanim_pl(db_getfield($spell_data, magic_spell_table:spotanim_origin, 0), 92, 0);
+// player spell visual effect
+if (db_getfieldcount($spell_data, magic_spell_table:spotanim_origin) > 0) {
+    spotanim_pl(db_getfield($spell_data, magic_spell_table:spotanim_origin, 0), 92, 0);
+}
+// shoot spell projectile
 %action_delay = add(map_clock, 5);
 def_int $duration = 0;
 if (db_getfieldcount($spell_data, magic_spell_table:spotanim_proj) > 0) {
@@ -247,7 +243,7 @@ if (db_getfieldcount($spell_data, magic_spell_table:spotanim_proj) > 0) {
 }
 
 // continue by autocast
-if (testbit(%attackstyle_magic, 0) = true & %attackstyle_magic = 3 & %autocast_spell > 0 & db_getfield($spell_data, magic_spell_table:continue_by_autocast, 0) = true) {
+if (~player_autocast_enabled = true & db_getfield($spell_data, magic_spell_table:continue_by_autocast, 0) = true) {
     p_opplayert(db_getfield(~get_spell_data(%autocast_spell), magic_spell_table:spellcom, 0));
 }
 return($duration);
@@ -262,7 +258,7 @@ return($maxhit);
 
 [queue,pvp_freeze_player](int $duration)
 mes("You've been frozen!");
-%frozen = calc(map_clock + $duration + 1);
+%frozen = calc(map_clock + $duration);
 walktrigger(pvp_frozen);
 
 

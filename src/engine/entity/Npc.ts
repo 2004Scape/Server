@@ -5,7 +5,7 @@ import ScriptVarType from '#/cache/config/ScriptVarType.js';
 import SeqType from '#/cache/config/SeqType.js';
 
 import World from '#/engine/World.js';
-import {Direction, CoordGrid} from '#/engine/CoordGrid.js';
+import { Direction, CoordGrid } from '#/engine/CoordGrid.js';
 
 import ScriptFile from '#/engine/script/ScriptFile.js';
 import ScriptPointer from '#/engine/script/ScriptPointer.js';
@@ -13,11 +13,11 @@ import ScriptProvider from '#/engine/script/ScriptProvider.js';
 import ScriptRunner from '#/engine/script/ScriptRunner.js';
 import ScriptState from '#/engine/script/ScriptState.js';
 import ServerTriggerType from '#/engine/script/ServerTriggerType.js';
-import {HuntIterator} from '#/engine/script/ScriptIterators.js';
-import {isFlagged} from '#/engine/GameMap.js';
+import { HuntIterator } from '#/engine/script/ScriptIterators.js';
+import { isFlagged } from '#/engine/GameMap.js';
 
 import BlockWalk from '#/engine/entity/BlockWalk.js';
-import {EntityQueueRequest, NpcQueueType} from '#/engine/entity/EntityQueueRequest.js';
+import { EntityQueueRequest, NpcQueueType } from '#/engine/entity/EntityQueueRequest.js';
 import Loc from '#/engine/entity/Loc.js';
 import MoveRestrict from '#/engine/entity/MoveRestrict.js';
 import NpcMode from '#/engine/entity/NpcMode.js';
@@ -37,9 +37,10 @@ import HeroPoints from '#/engine/entity/HeroPoints.js';
 
 import LinkList from '#/util/LinkList.js';
 
-import {CollisionFlag} from '@2004scape/rsmod-pathfinder';
+import { CollisionFlag } from '@2004scape/rsmod-pathfinder';
 
 import InfoProt from '#/network/rs225/server/prot/InfoProt.js';
+import Visibility from '#/engine/entity/Visibility.js';
 
 export default class Npc extends PathingEntity {
     // constructor properties
@@ -69,8 +70,8 @@ export default class Npc extends PathingEntity {
     huntrange: number = 0;
 
     nextPatrolTick: number = -1;
-    nextPatrolPoint : number = 0;
-    delayedPatrol : boolean = false;
+    nextPatrolPoint: number = 0;
+    delayedPatrol: boolean = false;
 
     lastWanderTick: number = 0;
 
@@ -104,6 +105,14 @@ export default class Npc extends PathingEntity {
         this.lastWanderTick = World.currentTick;
     }
 
+    cleanup(): void {
+        this.nid = -1;
+        this.uid = -1;
+        this.activeScript = null;
+        this.huntTarget = null;
+        this.queue.clear();
+    }
+
     getVar(id: number) {
         const varn = VarNpcType.get(id);
         return varn.type === ScriptVarType.STRING ? this.varsString[varn.id] : this.vars[varn.id];
@@ -123,17 +132,24 @@ export default class Npc extends PathingEntity {
         if (respawn) {
             this.type = this.origType;
             this.uid = (this.type << 16) | this.nid;
-            this.faceX = -1;
-            this.faceZ = -1;
-            this.orientationX = -1;
-            this.orientationZ = -1;
+            this.unfocus();
             this.playAnimation(-1, 0); // reset animation or last anim has a chance to appear on respawn
             for (let index = 0; index < this.baseLevels.length; index++) {
                 this.levels[index] = this.baseLevels[index];
             }
             this.heroPoints.clear();
             this.queue.clear();
-            this.vars.fill(0);
+
+            for (let i = 0; i < this.vars.length; i++) {
+                const varn = VarNpcType.get(i);
+                if (varn.type === ScriptVarType.STRING) {
+                    // todo: "null"? another value?
+                    continue;
+                } else {
+                    this.vars[i] = varn.type === ScriptVarType.INT ? 0 : -1;
+                }
+            }
+
             this.varsString.fill(undefined);
             this.defaultMode();
 
@@ -207,10 +223,10 @@ export default class Npc extends PathingEntity {
         const type = NpcType.get(this.type);
 
         const apTrigger: boolean =
-        (this.targetOp >= NpcMode.APNPC1 && this.targetOp <= NpcMode.APNPC5) ||
-        (this.targetOp >= NpcMode.APPLAYER1 && this.targetOp <= NpcMode.APPLAYER5) ||
-        (this.targetOp >= NpcMode.APLOC1 && this.targetOp <= NpcMode.APLOC5) ||
-        (this.targetOp >= NpcMode.APOBJ1 && this.targetOp <= NpcMode.APOBJ5);
+            (this.targetOp >= NpcMode.APNPC1 && this.targetOp <= NpcMode.APNPC5) ||
+            (this.targetOp >= NpcMode.APPLAYER1 && this.targetOp <= NpcMode.APPLAYER5) ||
+            (this.targetOp >= NpcMode.APLOC1 && this.targetOp <= NpcMode.APLOC5) ||
+            (this.targetOp >= NpcMode.APOBJ1 && this.targetOp <= NpcMode.APOBJ5);
         const opTrigger: boolean = !apTrigger;
         if (opTrigger) {
             const distanceToX = Math.abs(this.target.x - this.startX);
@@ -220,11 +236,11 @@ export default class Npc extends PathingEntity {
             }
             // remove corner
             if (distanceToX === type.maxrange + 1 && distanceToZ === type.maxrange + 1) {
-                return false; 
+                return false;
             }
         } else if (apTrigger) {
-            if (CoordGrid.distanceToSW(this.target, {x: this.startX, z: this.startZ}) > type.maxrange + type.attackrange) {
-                return false; 
+            if (CoordGrid.distanceToSW(this.target, { x: this.startX, z: this.startZ }) > type.maxrange + type.attackrange) {
+                return false;
             }
         } else if (this.targetOp === NpcMode.PLAYERESCAPE) {
             const distanceToEscape = CoordGrid.distanceTo(this, {
@@ -243,7 +259,7 @@ export default class Npc extends PathingEntity {
             if (targetDistanceFromStart > type.maxrange && distanceToEscape > type.maxrange) {
                 return false;
             }
-        } else if (CoordGrid.distanceToSW(this.target, {x: this.startX, z: this.startZ}) > type.maxrange) {
+        } else if (CoordGrid.distanceToSW(this.target, { x: this.startX, z: this.startZ }) > type.maxrange) {
             return false;
         }
         return true;
@@ -308,9 +324,12 @@ export default class Npc extends PathingEntity {
 
     processRegen() {
         const type = NpcType.get(this.type);
-        if (type.regenRate !== 0 && ++this.regenClock >= type.regenRate) {
-            this.regenClock = 0;
 
+        // Hp regen timer counts down and procs every `regenRate` ticks
+        // Since regenClock is initialized to 0, NPCs regen their hp on their first turn alive, and then on turn 101
+        // This is accurate to OSRS behavior
+        if (type.regenRate !== 0 && --this.regenClock <= 0) {
+            this.regenClock = type.regenRate;
             for (let index = 0; index < this.baseLevels.length; index++) {
                 const stat = this.levels[index];
                 const baseStat = this.baseLevels[index];
@@ -320,7 +339,6 @@ export default class Npc extends PathingEntity {
                     this.levels[index]--;
                 }
             }
-
         }
     }
 
@@ -436,17 +454,18 @@ export default class Npc extends PathingEntity {
         let dest = CoordGrid.unpackCoord(patrolPoints[this.nextPatrolPoint]);
 
         this.updateMovement(false);
-        if (!this.hasWaypoints() && !this.target) { // requeue waypoints in cases where an npc was interacting and the interaction has been cleared
+        if (!this.hasWaypoints() && !this.target) {
+            // requeue waypoints in cases where an npc was interacting and the interaction has been cleared
             this.queueWaypoint(dest.x, dest.z);
         }
-        if(!(this.x === dest.x && this.z === dest.z) && World.currentTick >= this.nextPatrolTick) {
+        if (!(this.x === dest.x && this.z === dest.z) && World.currentTick >= this.nextPatrolTick) {
             this.teleport(dest.x, dest.z, dest.level);
         }
-        if ((this.x === dest.x && this.z === dest.z) && !this.delayedPatrol) {
+        if (this.x === dest.x && this.z === dest.z && !this.delayedPatrol) {
             this.nextPatrolTick = World.currentTick + patrolDelay;
             this.delayedPatrol = true;
         }
-        if(this.nextPatrolTick > World.currentTick) {
+        if (this.nextPatrolTick > World.currentTick) {
             return;
         }
 
@@ -501,11 +520,13 @@ export default class Npc extends PathingEntity {
             return;
         }
 
-        const coord: CoordGrid = {x: mx, z: mz, level: this.level};
-        if (CoordGrid.distanceToSW(coord, {
-            x: this.startX,
-            z: this.startZ
-        }) < NpcType.get(this.type).maxrange) {
+        const coord: CoordGrid = { x: mx, z: mz, level: this.level };
+        if (
+            CoordGrid.distanceToSW(coord, {
+                x: this.startX,
+                z: this.startZ
+            }) < NpcType.get(this.type).maxrange
+        ) {
             this.queueWaypoint(coord.x, coord.z);
             this.updateMovement(false);
             return;
@@ -629,7 +650,7 @@ export default class Npc extends PathingEntity {
             return;
         }
 
-        if (this.target instanceof Obj && World.getObj(this.target.x, this.target.z, this.level, this.target.type, -1) === null) {
+        if (this.target instanceof Obj && World.getObj(this.target.x, this.target.z, this.level, this.target.type, Obj.NO_RECEIVER) === null) {
             this.defaultMode();
             return;
         }
@@ -639,7 +660,7 @@ export default class Npc extends PathingEntity {
             return;
         }
 
-        if (this.target instanceof Player && World.getPlayerByUid(this.target.uid) === null) {
+        if (this.target instanceof Player && (World.getPlayerByUid(this.target.uid) === null || this.target.visibility !== Visibility.DEFAULT)) {
             this.defaultMode();
             return;
         }
@@ -913,12 +934,15 @@ export default class Npc extends PathingEntity {
                     continue;
                 }
             }
-            if (hunt.checkVars && !hunt.checkVars.every(checkVar => {
-                return checkVar.varId === -1 || hunt.checkHuntCondition(player.getVar(checkVar.varId) as number, checkVar.condition, checkVar.val);
-            })) {
+            if (
+                hunt.checkVars &&
+                !hunt.checkVars.every(checkVar => {
+                    return checkVar.varId === -1 || hunt.checkHuntCondition(player.getVar(checkVar.varId) as number, checkVar.condition, checkVar.val);
+                })
+            ) {
                 continue;
             }
-            
+
             if (hunt.checkInv !== -1) {
                 let quantity: number = 0;
                 if (hunt.checkObj !== -1) {
@@ -993,11 +1017,7 @@ export default class Npc extends PathingEntity {
     }
 
     faceSquare(x: number, z: number) {
-        this.faceX = x * 2 + 1;
-        this.faceZ = z * 2 + 1;
-        this.orientationX = this.faceX;
-        this.orientationZ = this.faceZ;
-        this.masks |= InfoProt.NPC_FACE_COORD.id;
+        this.focus(CoordGrid.fine(x, 1), CoordGrid.fine(z, 1), true);
     }
 
     changeType(type: number) {

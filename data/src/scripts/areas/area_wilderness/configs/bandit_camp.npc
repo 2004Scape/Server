@@ -196,3 +196,92 @@ param=attack_sound,hacksword_slash
 category=bandit_camp_leader
 // osrs stats and Vislvl match 1:1
 // https://raw.githubusercontent.com/Joshua-F/osrs-dumps/refs/heads/master/config/dump.npc npc_303
+
+[bandit]
+name=Bandit
+desc=A wilderness outlaw.
+walkanim=human_walk_f,human_walk_b,human_walk_l,human_walk_r
+readyanim=human_ready
+op2=Attack
+vislevel=21
+recol1s=2340
+recol1d=4226
+recol2s=14724
+recol2d=4234
+recol3s=8386
+recol3d=4226
+recol4s=31649
+recol4d=4226
+model1=model_215_idk
+model2=model_248_idk
+model3=model_292_idk
+model4=model_151_idk
+model5=model_176_idk
+model6=model_254_idk
+model7=model_185_obj_wear
+model8=model_243_obj_wear
+model9=model_323_obj_wear
+model10=model_518_obj_wear
+hitpoints=27
+attack=17
+strength=17
+defence=17
+param=attackbonus,11
+param=strengthbonus,12
+param=slashdefence,3
+param=crushdefence,2
+param=damagetype,^stab_style
+param=attack_anim,human_sword_stab
+param=defend_anim,human_sword_defend2
+param=attack_sound,stabsword_stab
+huntmode=cowardly
+huntrange=6
+// Stats match osrs version but our version Vislvl is different.
+// https://raw.githubusercontent.com/Joshua-F/osrs-dumps/refs/heads/master/config/dump.npc npc_1026
+
+[guard_bandit]
+name=Guard Bandit
+desc=Bandit Camp guard.
+walkanim=human_walk_f,human_walk_b,human_walk_l,human_walk_r
+readyanim=human_ready
+op2=Attack
+vislevel=21
+recol1s=2340
+recol1d=4226
+recol2s=14724
+recol2d=4234
+recol3s=8386
+recol3d=4226
+recol4s=31649
+recol4d=4226
+model1=model_215_idk
+model2=model_248_idk
+model3=model_292_idk
+model4=model_151_idk
+model5=model_176_idk
+model6=model_254_idk
+model7=model_185_obj_wear
+model8=model_243_obj_wear
+model9=model_323_obj_wear
+model10=model_518_obj_wear
+model11=model_517_obj_wear
+hitpoints=27
+attack=17
+strength=17
+defence=17
+param=attackbonus,11
+param=strengthbonus,12
+param=stabdefence,4
+param=slashdefence,8
+param=crushdefence,5
+param=magicdefence,1
+param=rangedefence,4
+param=damagetype,^stab_style
+param=attack_anim,human_sword_stab
+param=defend_anim,human_sword_defend2
+param=attack_sound,stabsword_stab
+huntmode=ranged
+huntrange=1
+attackrange=1
+// Stats match osrs version but our version Vislvl is different.
+// https://raw.githubusercontent.com/Joshua-F/osrs-dumps/refs/heads/master/config/dump.npc npc_1027

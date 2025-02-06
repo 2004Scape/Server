@@ -37,6 +37,9 @@ PreloadedDirs.ts
 
 *.bz2
 
+db.sqlite
+db.sqlite-journal
+
 # coverage reports
 coverage/
 
@@ -46,7 +49,7 @@ coverage/
 # these are artifacts generated from other repos
 public/loader.jar
 public/runescape*.jar
-public/downloads/LostCityInstaller.msi
+public/client/*.js.map
 
 ### Windows ###
 Thumbs.db

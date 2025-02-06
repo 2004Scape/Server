@@ -11,6 +11,8 @@ protect=no
 [lastcombat]
 protect=no
 
+[varp_19]
+
 [varp_35]
 
 [lastcombat_pvp]
@@ -151,11 +153,6 @@ type=player_uid
 
 [skill_sound]
 
-[thieving_stall_timer]
-scope=perm
-
-[varp_133]
-
 [varp_134]
 
 [varp_135]
@@ -164,7 +161,8 @@ scope=perm
 
 [varp_137]
 
-[varp_138]
+[thieving_stall_timer]
+scope=perm
 
 [legends_progress]
 scope=perm

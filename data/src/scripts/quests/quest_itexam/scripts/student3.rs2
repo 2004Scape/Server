@@ -52,7 +52,8 @@ if ($errand_state = 0) {
     ~chatnpc("<p,happy>How's it going?");
     ~chatplayer("<p,confused>I am stuck on some more exam questions.");
     ~chatnpc("<p,happy>Okay, I'll tell you my latest notes...");
-    ~chatnpc("<p,neutral>The proper health and safety points are: Leather gloves and boots to be worn at all times; proper tools must be used.");
+    // https://web.archive.org/web/20060909012420im_/http://www.runeweb.net/fireball/Digsite%20Images/digsite6.png
+    ~chatnpc("<p,neutral>The proper health and safety points are:|Leather gloves and boots to be worn at all times,|proper tools must be used.");
     ~chatplayer("<p,happy>Great, thanks for your advice.");
 }
 
@@ -61,7 +62,7 @@ if ($errand_state = 0) {
 inv_del(inv, rock_sample_3, ^max_32bit_int);
 ~itexam_set_errand_progress(^itexam_errand_student3, 2);
 ~chatnpc("<p,happy>Hey! My sample! Thanks ever so much. Let me help you with those questions now.");
-~chatnpc("<p,neutral>The proper health and safety points are: Leather gloves and boots to be worn at all times; proper tools must be used.");
+~chatnpc("<p,neutral>The proper health and safety points are:|Leather gloves and boots to be worn at all times,|proper tools must be used.");
 ~chatplayer("<p,happy>Great, thanks for your advice.");
 
 [label,itexam_student3_second_exam_tips]
@@ -69,7 +70,8 @@ inv_del(inv, rock_sample_3, ^max_32bit_int);
 ~chatplayer("<p,confused>I am stuck on some more exam questions.");
 ~chatnpc("<p,happy>Okay, I'll tell you my latest notes...");
 ~itexam_set_errand_progress(^itexam_errand_student3, 2);
-~chatnpc("<p,neutral>Finds handling: Finds must be carefully handled, and gloves worn.");
+// https://web.archive.org/web/20060909012420im_/http://www.runeweb.net/fireball/Digsite%20Images/digsite10.png
+~chatnpc("<p,neutral>Finds handling:|Finds must be carefully handled, and gloves worn.");
 ~chatplayer("<p,happy>Great, thanks for your advice.");
 
 [label,itexam_student3_third_exam_tips]
@@ -96,7 +98,8 @@ if ($errand_state = 0) {
         ~chatnpc("<p,happy>Wow, great, you've found one. This will look beautiful set in my necklace. Thanks for that; now I'll tell you what I know...");
         inv_del(inv, opal, 1);
         ~itexam_set_errand_progress(^itexam_errand_student3, 2);
-        ~chatnpc("<p,neutral>Sample preparation: Samples cleaned, and carried only in specimen jars.");
+        // https://web.archive.org/web/20060909012420im_/http://www.runeweb.net/fireball/Digsite%20Images/digsite11.png
+        ~chatnpc("<p,neutral>Sample preparation:|Samples cleaned and carried only in specimen jars.");
         ~chatplayer("<p,happy>Great, thanks for your advice.");
     } else {
         ~chatplayer("<p,sad>I haven't found one yet.");
@@ -106,7 +109,7 @@ if ($errand_state = 0) {
     ~chatnpc("<p,happy>How's it going?");
     ~chatplayer("<p,confused>I am stuck on some more exam questions.");
     ~chatnpc("<p,happy>Okay, I'll tell you my latest notes...");
-    ~chatnpc("<p,neutral>Sample preparation: Samples cleaned, and carried only in specimen jars.");
+    ~chatnpc("<p,neutral>Sample preparation:|Samples cleaned and carried only in specimen jars.");
     ~chatplayer("<p,happy>Great, thanks for your advice.");
 }
 

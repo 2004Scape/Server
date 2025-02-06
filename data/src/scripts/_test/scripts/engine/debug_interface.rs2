@@ -1,13 +1,9 @@
 [debugproc,open](interface $interface)
-if (map_production = true | $interface = null) {
+if ($interface = null) {
     return;
 }
 
 if_openmain($interface);
 
 [debugproc,close]
-if (map_production = true) {
-    return;
-}
-
 if_close;

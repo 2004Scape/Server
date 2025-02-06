@@ -12,6 +12,9 @@ sound_synth(coffin_open, 0, 0);
 p_delay(0);
 loc_change(loc_2146, 300);
 
+[oploc2,loc_2145]
+~mesbox("Maybe I should open it first."); // guessing, op was never removed before rework
+
 [oploc1,loc_2146]
 mes("You close the coffin.");
 anim(human_closechest, 0);
@@ -29,6 +32,7 @@ if (npc_find(loc_coord, restless_ghost, 4, 0) = false) {
 }
 
 [oploc2,loc_2146]
+~check_restlessghost_spawn;
 if (%priest_progress = ^priest_complete) {
     ~mesbox("Theres a nice and complete skeleton in here!");
 } else if (%priest_progress >= ^priest_started) {
@@ -36,7 +40,6 @@ if (%priest_progress = ^priest_complete) {
 } else {
     mes("You search the coffin and find some human remains.");
 }
-~check_restlessghost_spawn;
 
 [oplocu,loc_2145]
 if (last_useitem = ghost_skull & %priest_progress = ^priest_obtained_skull) {

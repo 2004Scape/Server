@@ -20,18 +20,18 @@ return (getbit_range(%itexam_progress, 0, 3));
 
 [proc,itexam_errand_progress](int $errand)(int)
 // we're reserving 2 bits for each errand, 0 = not started, 1 = in progress, 2 = complete
-def_int $bit_start = calc(^itexam_errands_offset + $errand * 2);
-return (getbit_range(%itexam_progress, $bit_start, calc($bit_start + 1)));
+def_int $bit_start = calc($errand * 2);
+return (getbit_range(%itexam_errands, $bit_start, calc($bit_start + 1)));
 
 [proc,itexam_set_errand_progress](int $errand, int $progress)
-def_int $bit_start = calc(^itexam_errands_offset + $errand * 2);
-%itexam_progress = setbit_range_toint(%itexam_progress, $progress, $bit_start, calc($bit_start + 1));
+def_int $bit_start = calc($errand * 2);
+%itexam_errands = setbit_range_toint(%itexam_errands, $progress, $bit_start, calc($bit_start + 1));
 
 [proc,itexam_testbit](int $bit)(boolean)
-return (testbit(%itexam_progress, calc(^itexam_bits_offset + $bit)));
+return (testbit(%itexam_bits, $bit));
 
 [proc,itexam_setbit](int $bit)
-%itexam_progress = setbit(%itexam_progress, calc(^itexam_bits_offset + $bit));
+%itexam_bits = setbit(%itexam_bits, $bit);
 
 [queue,itexam_complete]
 ~itexam_set_progress(^itexam_complete);

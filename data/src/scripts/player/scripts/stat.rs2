@@ -70,7 +70,7 @@ if (calc($level + $boost) > $max_level) {
 }
 
 // add the boost, with no percent
-stat_add($stat, $boost, 0);
+stat_add($stat, max($boost, 0), 0);
 
 // not sure if this is used anywhere
 // thought it was for kebabs but its not the case
@@ -145,4 +145,11 @@ while ($i <= enum_getoutputcount(stats)) {
         ~.stat_reset($stat);
     }
     $i = calc($i + 1);
+}
+
+[proc,random_stat]()(stat)
+if (map_members = true) {
+    return(enum(int, stat, stats, add(random(enum_getoutputcount(stats)), 1)));
+} else {
+    return(enum(int, stat, stats_free, add(random(enum_getoutputcount(stats_free)), 1)));
 }

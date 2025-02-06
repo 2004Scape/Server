@@ -51,14 +51,14 @@ const ObjOps: CommandHandlers = {
         if (!objType.stackable || count === 1) {
             for (let i = 0; i < count; i++) {
                 const obj: Obj = new Obj(position.level, position.x, position.z, EntityLifeCycle.DESPAWN, objId, 1);
-                World.addObj(obj, state.activePlayer.pid, duration);
+                World.addObj(obj, state.activePlayer.hash64, duration);
 
                 state.activeObj = obj;
                 state.pointerAdd(ActiveObj[state.intOperand]);
             }
         } else {
             const obj: Obj = new Obj(position.level, position.x, position.z, EntityLifeCycle.DESPAWN, objId, count);
-            World.addObj(obj, state.activePlayer.pid, duration);
+            World.addObj(obj, state.activePlayer.hash64, duration);
 
             state.activeObj = obj;
             state.pointerAdd(ActiveObj[state.intOperand]);
@@ -89,14 +89,14 @@ const ObjOps: CommandHandlers = {
         if (!objType.stackable || count === 1) {
             for (let i = 0; i < count; i++) {
                 const obj: Obj = new Obj(position.level, position.x, position.z, EntityLifeCycle.DESPAWN, objId, 1);
-                World.addObj(obj, -1, duration);
+                World.addObj(obj, Obj.NO_RECEIVER, duration);
     
                 state.activeObj = obj;
                 state.pointerAdd(ActiveObj[state.intOperand]);
             }
         } else {
             const obj: Obj = new Obj(position.level, position.x, position.z, EntityLifeCycle.DESPAWN, objId, count);
-            World.addObj(obj, -1, duration);
+            World.addObj(obj, Obj.NO_RECEIVER, duration);
 
             state.activeObj = obj;
             state.pointerAdd(ActiveObj[state.intOperand]);
@@ -149,7 +149,7 @@ const ObjOps: CommandHandlers = {
                 continue;
             }
 
-            if (o.receiverId !== -1 && o.receiverId !== state.activePlayer.pid) {
+            if (o.receiver64 !== Obj.NO_RECEIVER && o.receiver64 !== state.activePlayer.hash64) {
                 continue;
             }
 
@@ -178,7 +178,7 @@ const ObjOps: CommandHandlers = {
         const objType: ObjType = check(objId, ObjTypeValid);
         const position: CoordGrid = check(coord, CoordValid);
 
-        const obj = World.getObj(position.x, position.z, position.level, objType.id, state.activePlayer.pid);
+        const obj = World.getObj(position.x, position.z, position.level, objType.id, state.activePlayer.hash64);
         if (!obj) {
             state.pushInt(0);
             return;

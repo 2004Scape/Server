@@ -29,7 +29,7 @@ import VarNpcType from '#/cache/config/VarNpcType.js';
 import VarPlayerType from '#/cache/config/VarPlayerType.js';
 import VarSharedType from '#/cache/config/VarSharedType.js';
 import WordEnc from '#/cache/wordenc/WordEnc.js';
-import { makeCrcs, makeCrcsAsync } from '#/cache/CrcTable.js';
+import { CrcBuffer32, makeCrcs, makeCrcsAsync } from '#/cache/CrcTable.js';
 import { preloadClient, preloadClientAsync } from '#/cache/PreloadedPacks.js';
 
 import { CoordGrid } from '#/engine/CoordGrid.js';
@@ -80,6 +80,8 @@ import { PlayerLoading } from '#/engine/entity/PlayerLoading.js';
 import ScriptPointer from '#/engine/script/ScriptPointer.js';
 import Isaac from '#/io/Isaac.js';
 import LoggerEventType from '#/server/logger/LoggerEventType.js';
+import MoveSpeed from '#/engine/entity/MoveSpeed.js';
+import ScriptVarType from '#/cache/config/ScriptVarType.js';
 
 const priv = forge.pki.privateKeyFromPem(
     Environment.STANDALONE_BUNDLE ?
@@ -87,24 +89,29 @@ const priv = forge.pki.privateKeyFromPem(
         fs.readFileSync('data/config/private.pem', 'ascii')
 );
 
+type LogoutRequest = {
+    save: Uint8Array;
+    lastAttempt: number;
+}
+
 class World {
     private loginThread = createWorker(Environment.STANDALONE_BUNDLE ? 'LoginThread.js' : './server/login/LoginThread.ts');
     private friendThread = createWorker(Environment.STANDALONE_BUNDLE ? 'FriendThread.js' : './server/friend/FriendThread.ts');
     private loggerThread = createWorker(Environment.STANDALONE_BUNDLE ? 'LoggerThread.js' : './server/logger/LoggerThread.ts');
     private devThread: Worker | NodeWorker | null = null;
 
-    private static readonly PLAYERS: number = 2048;
-    private static readonly NPCS: number = 8192; // todo: move to environment option
+    private static readonly PLAYERS: number = Environment.NODE_MAX_PLAYERS;
+    private static readonly NPCS: number = Environment.NODE_MAX_NPCS;
 
     private static readonly TICKRATE: number = 600; // 0.6s / 600ms
 
     private static readonly INV_STOCKRATE: number = 100; // 1m
     private static readonly AFK_EVENTRATE: number = 500; // 5m
-    private static readonly PLAYER_SAVERATE: number = 1500; // 15m
+    private static readonly PLAYER_SAVERATE: number = 500; // 5m
     private static readonly PLAYER_COORDLOGRATE: number = 50; // 30s
 
-    private static readonly TIMEOUT_SOCKET_IDLE: number = 16; // ~10s with no data- disconnect client
-    private static readonly TIMEOUT_SOCKET_LOGOUT: number = 100; // 60s with no client- remove player from processing
+    private static readonly TIMEOUT_SOCKET_IDLE: number = Environment.NODE_DEBUG_SOCKET ? 60000 : 50; // 30s with no data- disconnect client
+    private static readonly TIMEOUT_SOCKET_LOGOUT: number = Environment.NODE_DEBUG_SOCKET ? 60000 : 100; // 60s with no client- remove player from processing
 
     // the game/zones map
     readonly gameMap: GameMap;
@@ -114,7 +121,7 @@ class World {
 
     // entities
     readonly loginRequests: Map<string, ClientSocket> = new Map(); // waiting for response from login server
-    readonly logoutRequests: Map<string, Uint8Array> = new Map(); // waiting for confirmation from login server
+    readonly logoutRequests: Map<string, LogoutRequest> = new Map(); // waiting for confirmation from login server
     readonly newPlayers: Set<Player>; // players joining at the end of this tick
     readonly players: PlayerList;
     readonly npcs: NpcList;
@@ -133,7 +140,7 @@ class World {
 
     tickRate: number = World.TICKRATE; // speeds up when we're processing server shutdown
     currentTick: number = 0; // the current tick of the game world.
-    nextTick: number = Date.now() + World.TICKRATE; // the next time the game world should tick.
+    nextTick: number = 0; // the next time the game world should tick.
     shutdownTick: number = -1;
     pmCount: number = 1; // can't be 0 as clients will ignore the pm, their array is filled with 0 as default
 
@@ -144,8 +151,8 @@ class World {
         this.gameMap = new GameMap(Environment.NODE_MEMBERS);
         this.invs = new Set();
         this.newPlayers = new Set();
-        this.players = new PlayerList(World.PLAYERS - 1);
-        this.npcs = new NpcList(World.NPCS - 1);
+        this.players = new PlayerList(World.PLAYERS);
+        this.npcs = new NpcList(World.NPCS);
         this.playerGrid = new Map();
         this.zonesTracking = new Map();
         this.queue = new LinkList();
@@ -157,25 +164,41 @@ class World {
         if (Environment.STANDALONE_BUNDLE) {
             if (this.loginThread instanceof Worker) {
                 this.loginThread.onmessage = msg => {
-                    this.onLoginMessage(msg.data);
+                    try {
+                        this.onLoginMessage(msg.data);
+                    } catch (err) {
+                        console.error(err);
+                    }
                 };
             }
 
             if (this.friendThread instanceof Worker) {
                 this.friendThread.onmessage = msg => {
-                    this.onFriendMessage(msg.data);
+                    try {
+                        this.onFriendMessage(msg.data);
+                    } catch (err) {
+                        console.error(err);
+                    }
                 };
             }
         } else {
             if (this.loginThread instanceof NodeWorker) {
                 this.loginThread.on('message', msg => {
-                    this.onLoginMessage(msg);
+                    try {
+                        this.onLoginMessage(msg);
+                    } catch (err) {
+                        console.error(err);
+                    }
                 });
             }
 
             if (this.friendThread instanceof NodeWorker) {
                 this.friendThread.on('message', msg => {
-                    this.onFriendMessage(msg);
+                    try {
+                        this.onFriendMessage(msg);
+                    } catch (err) {
+                        console.error(err);
+                    }
                 });
             }
         }
@@ -233,6 +256,16 @@ class World {
             this.varsString = new Array(VarSharedType.count);
             for (let i = 0; i < VarSharedType.count && i < old.length; i++) {
                 this.varsString[i] = oldString[i];
+            }
+
+            for (let i = 0; i < this.vars.length; i++) {
+                const varsh = VarSharedType.get(i);
+                if (varsh.type === ScriptVarType.STRING) {
+                    // todo: "null"? another value?
+                    continue;
+                } else {
+                    this.vars[i] = varsh.type === ScriptVarType.INT ? 0 : -1;
+                }
             }
         }
 
@@ -302,6 +335,16 @@ class World {
             for (let i = 0; i < VarSharedType.count && i < old.length; i++) {
                 this.varsString[i] = oldString[i];
             }
+
+            for (let i = 0; i < this.vars.length; i++) {
+                const varsh = VarSharedType.get(i);
+                if (varsh.type === ScriptVarType.STRING) {
+                    // todo: "null"? another value?
+                    continue;
+                } else {
+                    this.vars[i] = varsh.type === ScriptVarType.INT ? 0 : -1;
+                }
+            }
         }
 
         if (count === -1) {
@@ -349,13 +392,14 @@ class World {
             }
 
             if (Environment.WEB_PORT === 80) {
-                printInfo(kleur.green().bold('World ready') + kleur.white().bold(': http://localhost'));
+                printInfo(kleur.green().bold('World ready') + kleur.white().bold(': Visit http://localhost/rs2.cgi'));
             } else {
-                printInfo(kleur.green().bold('World ready') + kleur.white().bold(': http://localhost:' + Environment.WEB_PORT));
+                printInfo(kleur.green().bold('World ready') + kleur.white().bold(': Visit http://localhost:' + Environment.WEB_PORT + '/rs2.cgi'));
             }
         }
 
         if (startCycle) {
+            this.nextTick = Date.now() + World.TICKRATE;
             this.cycle();
         }
     }
@@ -373,11 +417,12 @@ class World {
             // - npc hunt
             this.processWorld();
 
-            // player setup (todo better name)
+            // client input
             // - calculate afk event readiness
             // - process packets
             // - process pathfinding/following request
-            this.processPlayerSetup();
+            // - client input tracking
+            this.processClientsIn();
 
             // npc processing (if npc is not busy)
             // - resume suspended script
@@ -490,9 +535,9 @@ class World {
             }
 
             if (Environment.NODE_DEBUG_PROFILE) {
-                printDebug(`| [tick ${this.currentTick}; ${this.cycleStats[WorldStat.CYCLE]}/${this.tickRate}ms] | ${this.getTotalPlayers()} players | ${this.getTotalNpcs()} npcs | ${this.gameMap.getTotalZones()} zones | ${this.gameMap.getTotalLocs()} locs | ${this.gameMap.getTotalObjs()} objs |`);
-                printDebug(`| ${this.cycleStats[WorldStat.WORLD]}ms world | ${this.cycleStats[WorldStat.CLIENT_IN]}ms client in | ${this.cycleStats[WorldStat.NPC]}ms npcs | ${this.cycleStats[WorldStat.PLAYER]}ms players | ${this.cycleStats[WorldStat.LOGOUT]}ms logout | ${this.cycleStats[WorldStat.LOGIN]}ms login | ${this.cycleStats[WorldStat.ZONE]}ms zones | ${this.cycleStats[WorldStat.CLIENT_OUT]}ms client out | ${this.cycleStats[WorldStat.CLEANUP]}ms cleanup |`);
-                printDebug('----');
+                printInfo(`tick ${this.currentTick}: ${this.cycleStats[WorldStat.CYCLE]}/${this.tickRate} ms, ${Math.trunc(process.memoryUsage().heapTotal / 1024 / 1024)} MB heap`);
+                printDebug(`${this.getTotalPlayers()}/${World.PLAYERS} players | ${this.getTotalNpcs()}/${World.NPCS} npcs | ${this.gameMap.getTotalZones()} zones | ${this.gameMap.getTotalLocs()} locs | ${this.gameMap.getTotalObjs()} objs`);
+                printDebug(`${this.cycleStats[WorldStat.WORLD]} ms world | ${this.cycleStats[WorldStat.CLIENT_IN]} ms client in | ${this.cycleStats[WorldStat.NPC]} ms npcs | ${this.cycleStats[WorldStat.PLAYER]} ms players | ${this.cycleStats[WorldStat.LOGOUT]} ms logout | ${this.cycleStats[WorldStat.LOGIN]} ms login | ${this.cycleStats[WorldStat.ZONE]} ms zones | ${this.cycleStats[WorldStat.CLIENT_OUT]} ms client out | ${this.cycleStats[WorldStat.CLEANUP]} ms cleanup`);
             }
 
             this.currentTick++;
@@ -586,7 +631,11 @@ class World {
         this.cycleStats[WorldStat.WORLD] = Date.now() - start;
     }
 
-    private processPlayerSetup(): void {
+    // - calculate afk event readiness
+    // - process packets
+    // - process pathfinding/following request
+    // - client input tracking
+    private processClientsIn(): void {
         const start: number = Date.now();
 
         this.cycleStats[WorldStat.BANDWIDTH_IN] = 0;
@@ -649,6 +698,13 @@ class World {
                 } else if (this.currentTick - player.lastResponse >= World.TIMEOUT_SOCKET_IDLE) {
                     // x-logged / timed out for 10s: attempt logout
                     player.tryLogout = true;
+                }
+
+                // - client input tracking
+                player.processInputTracking();
+
+                if (player.logMessage !== null) {
+                    this.logPublicChat(player, player.logMessage);
                 }
             } catch (err) {
                 console.error(err);
@@ -824,6 +880,17 @@ class World {
             }
         }
 
+        for (const [username, request] of this.logoutRequests) {
+            if (request.lastAttempt < Date.now() - 15000) {
+                request.lastAttempt = Date.now();
+                this.loginThread.postMessage({
+                    type: 'player_logout',
+                    username,
+                    save: request.save
+                });
+            }
+        }
+
         this.cycleStats[WorldStat.LOGOUT] = Date.now() - start;
     }
 
@@ -859,8 +926,16 @@ class World {
                         other.client.send(Uint8Array.from([ 15 ]));
                     }
 
-                    // todo: ensure the player has the latest scene and doesn't have their position offset
-                    // note- rebuildnormal is not guaranteed to re-run
+                    // force resyncing
+                    // reload entity info (overkill? does the client have some logic around this?)
+                    other.buildArea.players.clear();
+                    other.buildArea.npcs.clear();
+                    // rebuild scene (rebuildnormal won't run if you're in the same zone!)
+                    other.originX = -1;
+                    other.originZ = -1;
+                    other.moveSpeed = MoveSpeed.INSTANT;
+                    other.tele = true;
+                    other.jump = true;
 
                     continue player;
                 }
@@ -965,6 +1040,7 @@ class World {
         // TODO: benchmark this?
         for (const player of this.players) {
             player.convertMovementDir();
+            player.reorient();
 
             const grid = this.playerGrid;
             const coord = CoordGrid.packCoord(player.level, player.x, player.z);
@@ -979,6 +1055,7 @@ class World {
 
         for (const npc of this.npcs) {
             npc.convertMovementDir();
+            npc.reorient();
             this.npcRenderer.computeInfo(npc);
         }
     }
@@ -1116,12 +1193,6 @@ class World {
             }
         }
 
-        const online = this.getTotalPlayers();
-        if (online === 0 && this.logoutRequests.size === 0) {
-            printInfo('Server shutdown complete');
-            process.exit(0);
-        }
-
         for (const player of this.players) {
             player.loggedOut = true;
 
@@ -1129,6 +1200,12 @@ class World {
                 player.logout(); // see ya
                 player.client.close();
             }
+        }
+
+        const online = this.getTotalPlayers();
+        if (online === 0 && this.logoutRequests.size === 0) {
+            printInfo('Server shutdown complete');
+            process.exit(0);
         }
 
         if (duration > 2) {
@@ -1218,8 +1295,7 @@ class World {
 
         if (npc.lifecycle === EntityLifeCycle.DESPAWN) {
             this.npcs.remove(npc.nid);
-            npc.nid = -1;
-            npc.uid = -1;
+            npc.cleanup();
         } else if (npc.lifecycle === EntityLifeCycle.RESPAWN) {
             npc.setLifeCycle(this.currentTick + adjustedDuration);
         }
@@ -1229,12 +1305,12 @@ class World {
         return this.gameMap.getZone(x, z, level).getLoc(x, z, locId);
     }
 
-    getObj(x: number, z: number, level: number, objId: number, receiverId: number): Obj | null {
-        return this.gameMap.getZone(x, z, level).getObj(x, z, objId, receiverId);
+    getObj(x: number, z: number, level: number, objId: number, receiver64: bigint): Obj | null {
+        return this.gameMap.getZone(x, z, level).getObj(x, z, objId, receiver64);
     }
 
-    getObjOfReceiver(x: number, z: number, level: number, objId: number, receiverId: number): Obj | null {
-        return this.gameMap.getZone(x, z, level).getObjOfReceiver(x, z, objId, receiverId);
+    getObjOfReceiver(x: number, z: number, level: number, objId: number, receiver64: bigint): Obj | null {
+        return this.gameMap.getZone(x, z, level).getObjOfReceiver(x, z, objId, receiver64);
     }
 
     trackZone(tick: number, zone: Zone): void {
@@ -1287,29 +1363,30 @@ class World {
         this.trackZone(this.currentTick, zone);
     }
 
-    addObj(obj: Obj, receiverId: number, duration: number): void {
+    addObj(obj: Obj, receiver64: bigint, duration: number): void {
         // printDebug(`[World] addObj => name: ${ObjType.get(obj.type).name}, receiverId: ${receiverId}, duration: ${duration}`);
-        const objType: ObjType = ObjType.get(obj.type);
         // check if we need to changeobj first.
-        const existing = this.getObjOfReceiver(obj.x, obj.z, obj.level, obj.type, receiverId);
-        if (existing && existing.lifecycle === EntityLifeCycle.DESPAWN && obj.lifecycle === EntityLifeCycle.DESPAWN) {
-            const nextCount = obj.count + existing.count;
-            if (objType.stackable && nextCount <= Inventory.STACK_LIMIT) {
-                // if an obj of the same type exists and is stackable and have the same receiver, then we merge them.
-                this.changeObj(existing, receiverId, nextCount);
-                return;
+        if (ObjType.get(obj.type).stackable && obj.lifecycle === EntityLifeCycle.DESPAWN) {
+            const existing = this.getObjOfReceiver(obj.x, obj.z, obj.level, obj.type, receiver64);
+            if (existing && existing.lifecycle === EntityLifeCycle.DESPAWN) {
+                const nextCount = obj.count + existing.count;
+                if (nextCount <= Inventory.STACK_LIMIT) {
+                    // if an obj of the same type exists and is stackable and have the same receiver, then we merge them.
+                    this.changeObj(existing, receiver64, nextCount);
+                    return;
+                }
             }
         }
         const zone: Zone = this.gameMap.getZone(obj.x, obj.z, obj.level);
-        zone.addObj(obj, receiverId);
-        if (receiverId !== -1) {
+        zone.addObj(obj, receiver64);
+        if (receiver64 !== Obj.NO_RECEIVER) {
             // objs with a receiver always attempt to reveal 100 ticks after being dropped.
             // items that can't be revealed (untradable, members obj in f2p) will be skipped in revealObj
             const reveal: number = this.currentTick + Obj.REVEAL;
             obj.setLifeCycle(reveal);
             this.trackZone(reveal, zone);
             this.trackZone(this.currentTick, zone);
-            obj.receiverId = receiverId;
+            obj.receiver64 = receiver64;
             obj.reveal = duration;
         } else {
             obj.setLifeCycle(this.currentTick + duration);
@@ -1323,7 +1400,7 @@ class World {
         const duration: number = obj.reveal;
         const change: number = obj.lastChange;
         const zone: Zone = this.gameMap.getZone(obj.x, obj.z, obj.level);
-        zone.revealObj(obj, obj.receiverId);
+        zone.revealObj(obj, obj.receiver64);
         // objs next life cycle always starts from the last time they changed + the inputted duration.
         // accounting for reveal time here.
         const nextLifecycle: number = (change !== -1 ? (Obj.REVEAL - (this.currentTick - change)) : 0) + this.currentTick + duration;
@@ -1332,10 +1409,10 @@ class World {
         this.trackZone(this.currentTick, zone);
     }
 
-    changeObj(obj: Obj, receiverId: number, newCount: number): void {
+    changeObj(obj: Obj, receiver64: bigint, newCount: number): void {
         // printDebug(`[World] changeObj => name: ${ObjType.get(obj.type).name}, receiverId: ${receiverId}, newCount: ${newCount}`);
         const zone: Zone = this.gameMap.getZone(obj.x, obj.z, obj.level);
-        zone.changeObj(obj, receiverId, obj.count, newCount);
+        zone.changeObj(obj, receiver64, obj.count, newCount);
         this.trackZone(this.currentTick, zone);
     }
 
@@ -1411,6 +1488,15 @@ class World {
         });
     }
 
+    logPublicChat(player: Player, chat: string) {
+        this.friendThread.postMessage({
+            type: 'public_message',
+            username: player.username,
+            coord: player.coord,
+            chat
+        });
+    }
+
     removePlayer(player: Player): void {
         if (player.pid === -1) {
             return;
@@ -1425,18 +1511,10 @@ class World {
         this.gameMap.getZone(player.x, player.z, player.level).leave(player);
         this.players.remove(player.pid);
         changeNpcCollision(player.width, player.x, player.z, player.level, false);
-        player.pid = -1;
-        player.uid = -1;
+        player.cleanup();
 
         player.addSessionLog(LoggerEventType.MODERATOR, 'Logged out');
-
-        const save = player.save();
-        this.logoutRequests.set(player.username, save);
-        this.loginThread.postMessage({
-            type: 'player_logout',
-            username: player.username,
-            save
-        });
+        this.flushPlayer(player);
 
         this.friendThread.postMessage({
             type: 'player_logout',
@@ -1469,7 +1547,8 @@ class World {
             staffLvl: player.staffModLevel,
             pmId: (Environment.NODE_ID << 24) + (Math.random() * 0xFF << 16) + (this.pmCount++),
             target: targetUsername37,
-            message: message
+            message: message,
+            coord: player.coord
         });
     }
 
@@ -1513,6 +1592,15 @@ class World {
         return undefined;
     }
 
+    getPlayerByHash64(hash64: bigint): Player | undefined {
+        for (const player of this.players) {
+            if (player.hash64 === hash64) {
+                return player;
+            }
+        }
+        return undefined;
+    }
+
     getTotalPlayers(): number {
         return this.players.count;
     }
@@ -1544,11 +1632,17 @@ class World {
     getNextPid(client: ClientSocket | null = null): number {
         // valid pid range is 1-2046
         if (client) {
-            // pid = first available index starting from (low ip octet % 20) * 100
             const ip = client.remoteAddress;
-            const octets = ip.split('.');
-            const start = (parseInt(octets[3]) % 20) * 100;
-            return this.players.next(true, start);
+            if (ip.indexOf('.') !== -1) {
+                // IPv4 - first available index starting from (low ip octet % 20) * 100
+                const octets = ip.split('.');
+                const start = (parseInt(octets[3]) % 20) * 100;
+                return this.players.next(true, start);
+            } else if (ip.indexOf(':') !== -1) {
+                // IPv6 - first available index starting from (low site prefix % 20) * 100
+                const start = (parseInt(ip.split(':')[2], 16) % 20) * 100;
+                return this.players.next(true, start);
+            }
         }
         return this.players.next();
     }
@@ -1564,33 +1658,41 @@ class World {
 
         if (this.devThread instanceof NodeWorker) {
             this.devThread.on('message', msg => {
-                if (msg.type === 'dev_reload') {
-                    this.reload();
-                } else if (msg.type === 'dev_failure') {
-                    if (msg.error) {
-                        console.error(msg.error);
+                try {
+                    if (msg.type === 'dev_reload') {
+                        this.reload();
+                    } else if (msg.type === 'dev_failure') {
+                        if (msg.error) {
+                            console.error(msg.error);
 
-                        this.broadcastMes(msg.error.replaceAll('data/src/scripts/', ''));
-                        this.broadcastMes('Check the console for more information.');
-                    }
-                } else if (msg.type === 'dev_progress') {
-                    if (msg.broadcast) {
-                        console.log(msg.broadcast);
+                            this.broadcastMes(msg.error.replaceAll('data/src/scripts/', ''));
+                            this.broadcastMes('Check the console for more information.');
+                        }
+                    } else if (msg.type === 'dev_progress') {
+                        if (msg.broadcast) {
+                            console.log(msg.broadcast);
 
-                        this.broadcastMes(msg.broadcast);
-                    } else if (msg.text) {
-                        console.log(msg.text);
+                            this.broadcastMes(msg.broadcast);
+                        } else if (msg.text) {
+                            console.log(msg.text);
+                        }
                     }
+                } catch (err) {
+                    console.error(err);
                 }
             });
 
             // todo: catch all cases where it might exit instead of throwing an error, so we aren't
             // re-initializing the file watchers after errors
             this.devThread.on('exit', () => {
-                // todo: remove this mes after above the todo above is addressed
-                this.broadcastMes('Error while rebuilding - see console for more info.');
+                try {
+                    // todo: remove this mes after above the todo above is addressed
+                    this.broadcastMes('Error while rebuilding - see console for more info.');
 
-                this.createDevThread();
+                    this.createDevThread();
+                } catch (err) {
+                    console.error(err);
+                }
             });
         }
     }
@@ -1663,29 +1765,45 @@ class World {
                 save = msg.save;
             }
 
-            const player = PlayerLoading.load(username, new Packet(save), client);
-            player.reconnecting = reconnecting;
-            player.staffModLevel = staffmodlevel;
-            player.lowMemory = lowMemory;
-            player.muted_until = muted_until ? new Date(muted_until) : null;
+            try {
+                const player = PlayerLoading.load(username, new Packet(save), client);
 
-            this.newPlayers.add(player);
-            client.state = 1;
+                player.reconnecting = reconnecting;
+                player.staffModLevel = staffmodlevel;
+                player.lowMemory = lowMemory;
+                player.muted_until = muted_until ? new Date(muted_until) : null;
+
+                if (this.logoutRequests.has(username)) {
+                    // already logged in (on another world)
+                    client.send(Uint8Array.from([5]));
+                    client.close();
+                    return;
+                }
+
+                this.newPlayers.add(player);
+                client.state = 1;
+            } catch (err) {
+                if (err instanceof Error) {
+                    console.error(username, err.message);
+                }
+
+                // bad save :( the player won't be happy
+                client.send(Uint8Array.from([ 13 ]));
+                client.close();
+
+                // todo: maybe we can tell the login thread to swap for the last-good save?
+                this.loginThread.postMessage({
+                    type: 'player_force_logout',
+                    username: username
+                });
+            }
         } else if (type === 'player_logout') {
             const { username, success } = msg;
             if (!this.logoutRequests.has(username)) {
                 return;
             }
 
-            if (!success) {
-                setTimeout(() => {
-                    this.loginThread.postMessage({
-                        type: 'player_logout',
-                        username,
-                        save: this.logoutRequests.get(username)
-                    });
-                }, 1000);
-            } else {
+            if (success) {
                 this.logoutRequests.delete(username);
             }
         }
@@ -1805,11 +1923,18 @@ class World {
             const crcs = new Uint8Array(9 * 4);
             World.loginBuf.gdata(crcs, 0, crcs.length);
 
+            if (CrcBuffer32 !== Packet.getcrc(crcs, 0, crcs.length)) {
+                client.send(Uint8Array.from([ 6 ]));
+                client.close();
+                return;
+            }
+
             World.loginBuf.rsadec(priv);
 
             if (World.loginBuf.g1() !== 10) {
                 // RSA error
-                client.send(Uint8Array.from([ 11 ]));
+                // sending out of date intentionally
+                client.send(Uint8Array.from([ 6 ]));
                 client.close();
                 return;
             }
@@ -1862,6 +1987,7 @@ class World {
             this.loginThread.postMessage({
                 type: 'player_login',
                 socket: client.uuid,
+                remoteAddress: client.remoteAddress,
                 username: safeName,
                 password,
                 uid,
@@ -1902,6 +2028,25 @@ class World {
             staff,
             username,
             until: until
+        });
+    }
+
+    notifyPlayerReport(player: Player, offender: string, reason: number) {
+        this.loggerThread.postMessage({
+            type: 'report',
+            username: player.username,
+            coord: player.coord,
+            offender,
+            reason
+        });
+    }
+
+    flushPlayer(player: Player) {
+        const save = player.save();
+
+        this.logoutRequests.set(player.username, {
+            save,
+            lastAttempt: -1
         });
     }
 }

@@ -1,3 +1,4 @@
+import ClientSocket from '#/server/ClientSocket.js';
 import InternalClient from '#/server/InternalClient.js';
 
 import Environment from '#/util/Environment.js';
@@ -25,7 +26,7 @@ export default class LoginClient extends InternalClient {
         }));
     }
 
-    public async playerLogin(username: string, password: string, uid: number) {
+    public async playerLogin(username: string, password: string, uid: number, socket: string, remoteAddress: string) {
         await this.connect();
 
         if (!this.ws || !this.wsr || !this.wsr.checkIfWsLive()) {
@@ -36,9 +37,12 @@ export default class LoginClient extends InternalClient {
             type: 'player_login',
             nodeId: this.nodeId,
             nodeTime: Date.now(),
+            profile: Environment.NODE_PROFILE,
             username,
             password,
-            uid
+            uid,
+            socket,
+            remoteAddress
         });
 
         if (reply.error) {
@@ -66,6 +70,7 @@ export default class LoginClient extends InternalClient {
             type: 'player_logout',
             nodeId: this.nodeId,
             nodeTime: Date.now(),
+            profile: Environment.NODE_PROFILE,
             username,
             save: Buffer.from(save).toString('base64')
         });
@@ -89,6 +94,7 @@ export default class LoginClient extends InternalClient {
             type: 'player_autosave',
             nodeId: this.nodeId,
             nodeTime: Date.now(),
+            profile: Environment.NODE_PROFILE,
             username,
             save: Buffer.from(save).toString('base64')
         }));
@@ -106,6 +112,7 @@ export default class LoginClient extends InternalClient {
             type: 'player_force_logout',
             nodeId: this.nodeId,
             nodeTime: Date.now(),
+            profile: Environment.NODE_PROFILE,
             username
         }));
     }

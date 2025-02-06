@@ -3,12 +3,15 @@ import { tryParseArray, tryParseBoolean, tryParseInt, tryParseString } from '#/u
 import WalkTriggerSetting from '#/util/WalkTriggerSetting.js';
 
 export default {
+    EASY_STARTUP: tryParseBoolean(process.env.EASY_STARTUP, false),
+    WEBSITE_REGISTRATION: tryParseBoolean(process.env.WEBSITE_REGISTRATION, true),
+
     // bundler/webrtc browser mode
     STANDALONE_BUNDLE: tryParseBoolean(process.env.STANDALONE_BUNDLE, false),
 
     /// web server
     WEB_PORT: tryParseInt(process.env.WEB_PORT, process.platform === 'win32' || process.platform === 'darwin' ? 80 : 8888),
-    WEB_CORS: tryParseBoolean(process.env.WEB_CORS, true),
+    WEB_ALLOWED_ORIGIN: tryParseString(process.env.WEB_ALLOWED_ORIGIN, ''),
 
     // management server
     WEB_MANAGEMENT_PORT: tryParseInt(process.env.WEB_MANAGEMENT_PORT, 8898),
@@ -25,20 +28,22 @@ export default {
     NODE_PRODUCTION: tryParseBoolean(process.env.NODE_PRODUCTION, false),
     // automatic shutdown time for production mode on sigint
     NODE_KILLTIMER: tryParseInt(process.env.NODE_KILLTIMER, 500), // 5 minutes
-    NODE_ALLOW_CHEATS: tryParseBoolean(process.env.NODE_ALLOW_CHEATS, true),
     // extra debug info e.g. missing triggers
     NODE_DEBUG: tryParseBoolean(process.env.NODE_DEBUG, true),
     // measuring script execution
     NODE_DEBUG_PROFILE: tryParseBoolean(process.env.NODE_DEBUG_PROFILE, false),
-    // *only* if no login server is running to authenticate accounts, this provides admin accs by username :)
-    NODE_STAFF: tryParseArray(process.env.NODE_STAFF?.split(','), ['pazaz']),
+    // doing headless bot testing!
+    NODE_DEBUG_SOCKET: tryParseBoolean(process.env.NODE_DEBUG_SOCKET, false),
     // no server routefinding until 2009
     NODE_CLIENT_ROUTEFINDER: tryParseBoolean(process.env.NODE_CLIENT_ROUTEFINDER, true),
     // yellow-x walktriggers in osrs went from: in packet handler -> in player setup -> player movement
     // 0 = processed in packet handler. 1 = processed in player setup (client input). 2 = processed in player movement
     NODE_WALKTRIGGER_SETTING: tryParseInt(process.env.NODE_WALKTRIGGER_SETTING, WalkTriggerSetting.PLAYERPACKET),
     // separate save folder
-    NODE_GAME: tryParseString(process.env.NODE_GAME, 'main'),
+    NODE_PROFILE: tryParseString(process.env.NODE_PROFILE, 'main'),
+    // entities cap
+    NODE_MAX_PLAYERS: tryParseInt(process.env.NODE_MAX_PLAYERS, 2047),
+    NODE_MAX_NPCS: tryParseInt(process.env.NODE_MAX_NPCS, 8191),
 
     /// login server
     LOGIN_SERVER: tryParseBoolean(process.env.LOGIN_SERVER, false),
@@ -56,7 +61,9 @@ export default {
     LOGGER_PORT: tryParseInt(process.env.LOGGER_PORT, 43501),
 
     /// database
+    DB_BACKEND: tryParseString(process.env.DB_BACKEND, 'sqlite'),
     DB_HOST: tryParseString(process.env.DB_HOST, 'localhost'),
+    DB_PORT: tryParseInt(process.env.DB_PORT, 3306),
     DB_USER: tryParseString(process.env.DB_USER, 'root'),
     DB_PASS: tryParseString(process.env.DB_PASS, 'password'),
     DB_NAME: tryParseString(process.env.DB_NAME, 'lostcity'),
