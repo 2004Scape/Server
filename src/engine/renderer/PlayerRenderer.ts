@@ -61,7 +61,7 @@ export default class PlayerRenderer extends Renderer<Player>  {
             highs += lows += this.cache(pid, new PlayerInfoFaceCoord(player.faceX, player.faceZ), InfoProt.PLAYER_FACE_COORD);
         }
         if (masks & InfoProt.PLAYER_CHAT.id && player.messageColor !== null && player.messageEffect !== null && player.messageType !== null && player.message) {
-            highs += this.cache(pid, new PlayerInfoChat(player.messageColor, player.messageEffect, player.messageType, player.message), InfoProt.PLAYER_CHAT);
+            highs += this.cache(pid, new PlayerInfoChat(player.messageColor, player.messageEffect, player.messageType, player.staffModLevel, player.message), InfoProt.PLAYER_CHAT);
         }
         if (masks & InfoProt.PLAYER_SPOTANIM.id) {
             highs += this.cache(pid, new PlayerInfoSpotanim(player.graphicId, player.graphicHeight, player.graphicDelay), InfoProt.PLAYER_SPOTANIM);
