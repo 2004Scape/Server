@@ -82,7 +82,6 @@ if(p_finduid(uid) = true) {
 } else {
     queue(queue_drop_trawler_catch, 0);
 }
-inv_stoptransmit(trawler_catch:inv);
 
 [label,drop_trawler_catch]
 def_int $i = 0;
@@ -92,6 +91,7 @@ while ($i < inv_size(trawler_catch)) {
     }
     $i = add($i, 1);
 }
+inv_stoptransmit(trawler_catch:inv);
 
 [queue,queue_drop_trawler_catch] @drop_trawler_catch;
 
