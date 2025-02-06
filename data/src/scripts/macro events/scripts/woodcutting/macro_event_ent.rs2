@@ -70,7 +70,7 @@ if (%action_delay < map_clock) {
     p_opnpc(1);
 } else {
     // axe message is here after the skill clock is set
-    def_namedobj $axe = ~woodcutting_axe_checker();
+    def_namedobj $axe = ~woodcutting_axe_checker(true);
     if ($axe = null) {
         return;
     }
@@ -83,7 +83,7 @@ if (%action_delay < map_clock) {
 
 [label,cut_ent]
 // check if player has axe and level, ifso return best axe
-def_namedobj $axe = ~woodcutting_axe_checker();
+def_namedobj $axe = ~woodcutting_axe_checker(true);
 if ($axe = null) {
     return;
 }

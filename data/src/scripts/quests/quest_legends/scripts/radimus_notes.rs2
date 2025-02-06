@@ -1,0 +1,141 @@
+[opheld1,radimus_notes_complete]
+~objbox(radimus_notes_complete, "The map of the Kharazi Jungle is complete, Sir Radimus Erkle will be pleased.", 180, 0, 0);
+// Capitalisation and full stops at the end of options are authentic
+@multi2("Read Mission Briefing.", radimus_notes_read,
+        "Close.", radimus_notes_close);
+
+[opheld1,radimus_notes]
+~objbox(radimus_notes, "You open and start to read the scrolls that Radimus|gave you.", 180, 0, 0);
+@multi2("Read Mission Briefing.", radimus_notes_read,
+        "Start Mapping Kharazi Jungle.", radimus_notes_begin);
+
+[label,radimus_notes_read]
+// RS3
+~mesbox("@blu@*** Legends Guild Quest ***|@bla@Map the Kharazi Jungle (Southern end of Karamja), there are three main areas that need to be mapped.|Try to meet up with the local friendly natives. Some are not so friendly so be careful. See if you can get a trophy or native jungle");
+~mesbox("item from the natives to display in the Legends Guild. You may be given a task or test to earn this.|* Note - You may need to get help from other people near the jungle, for example, the local woodsmen may have some knowledge of the Jungle area.");
+
+[label,radimus_notes_close]
+mes("You put the scrolls away.");
+
+[opheld2,radimus_notes]
+@radimus_notes_begin;
+
+[label,radimus_notes_begin]
+if (~inzone_coord_pair_table(kharazi_jungle_west, coord) = true) {
+    if (testbit(%legends_map_runes, ^legends_jungle_west_mapped) = true) {
+        ~objbox(radimus_notes, "You have already completed this part of the map.", 180, 0, 0);
+    }
+    else {
+        @map_jungle(^legends_jungle_west_mapped);
+    }
+}
+else if (~inzone_coord_pair_table(kharazi_jungle_middle, coord) = true) {
+    if (testbit(%legends_map_runes, ^legends_jungle_middle_mapped) = true) {
+        ~objbox(radimus_notes, "You have already completed this part of the map.", 180, 0, 0);
+    }
+    else {
+        @map_jungle(^legends_jungle_middle_mapped);
+    }
+}
+else if (~inzone_coord_pair_table(kharazi_jungle_east, coord) = true) {
+    if (testbit(%legends_map_runes, ^legends_jungle_east_mapped) = true) {
+        ~objbox(radimus_notes, "You have already completed this part of the map.", 180, 0, 0);
+    }
+    else {
+        @map_jungle(^legends_jungle_east_mapped);
+    }
+}
+else {
+    ~mesbox("You're not even in the Kharazi Jungle yet. You need to get to the|Southern end of Karamja before you can start mapping.");
+}
+
+[label,map_jungle](int $jungle_section)
+if (inv_total(inv, papyrus) = 0 & inv_total(inv, charcoal) = 0) {
+    ~doubleobjbox(papyrus, charcoal, "You'll need some papyrus and charcoal to complete this map.", 150);
+    return;
+}
+if (inv_total(inv, papyrus) = 0) {
+    ~objbox(papyrus, "You'll need some additional papyrus to complete this map.", 180, 0, 0);
+    return;
+}
+if (inv_total(inv, charcoal) = 0) {
+    ~objbox(charcoal, "You'll need some additional charcoal to complete this map.", 180, 0, 0);
+    return;
+}
+if (stat(crafting) < 50) {
+    ~mesbox("You need a crafting level of 50 to perform this task.");
+    return;
+}
+~mesbox("You prepare to start mapping this area...");
+def_int $rand = random(100);
+if ($rand < 10) {
+    ~objbox(radimus_notes, "You make a mess but are able to rescue the paper.", 180, 0, 0);
+}
+else if ($rand < 30) {
+    inv_del(inv, charcoal, 1);
+    ~objbox(charcoal, "You snap your stick of charcoal.", 180, 0, 0);
+}
+else if ($rand < 50) {
+    inv_del(inv, papyrus, 1);
+    ~objbox(papyrus, "You make a mess of the map, the paper is totally ruined.", 180, 0, 0);
+}
+else if ($rand < 70) {
+    // From RSC, not sure if this happens in RS2?
+    inv_del(inv, papyrus, 1);
+    ~doubleobjbox(papyrus, charcoal, "You fall over, landing on your charcoal and papyrus, destroying them both.", 150);
+}
+else {
+    inv_del(inv, papyrus, 1);
+    // This mapping animation doesn't display properly - the papyrus stays at the player's side instead of lifting up
+    // to meet the charcoal.
+    anim(human_mapping, 0);
+    p_delay(1);
+    %legends_map_runes = setbit(%legends_map_runes, $jungle_section);
+    // Crafting is capitalised in OSRS now, but lowercase is authentic
+    ~objbox(radimus_notes, "You use your crafting skill to neatly add a new section to your map.", 180, 0, 0);
+    if_close;
+    // Plays again
+    anim(human_mapping, 0);
+    p_delay(1);
+
+    def_boolean $west_mapped = testbit(%legends_map_runes, ^legends_jungle_west_mapped);
+    def_boolean $middle_mapped = testbit(%legends_map_runes, ^legends_jungle_middle_mapped);
+    def_boolean $east_mapped = testbit(%legends_map_runes, ^legends_jungle_east_mapped);
+    
+    if ($west_mapped = true & $middle_mapped = true & $east_mapped = true) {
+        ~objbox(radimus_notes_complete, "Well done! You have completed mapping the Kharazi Jungle.  Grand Vizier Erkle will be pleased.", 180, 0, 0);
+        // OSRS replaces the first instance of notes if you have multiple
+        inv_del(inv, radimus_notes, 1);
+        inv_add(inv, radimus_notes_complete, 1);
+        // Need to check because it's possible to do this multiple times, and we don't want to reset
+        // quest progress if it happens again later
+        if (%legends_progress < ^legends_mapped_jungle) {
+            %legends_progress = ^legends_mapped_jungle;
+        }
+        // OSRS behaviour suggests these bits are reset here (if you have other incomplete notes,
+        // mapping starts again from scratch)
+        clearbit(%legends_map_runes, ^legends_jungle_west_mapped);
+        clearbit(%legends_map_runes, ^legends_jungle_middle_mapped);
+        clearbit(%legends_map_runes, ^legends_jungle_east_mapped);
+    }
+    else {
+        mes("You still have some sections of the map to complete.");
+    }
+
+    def_string $map_result = "*** Mapping the Kharazi Jungle ***|";
+    // Dash spacing on eastern vs middle and western is authentic
+    if ($east_mapped = true)
+        $map_result = append($map_result, "@blu@Eastern Kharazi Jungle - *** Completed ***|");
+    else
+        $map_result = append($map_result, "@red@Eastern Kharazi Jungle - *** Incomplete ***|");
+    if ($middle_mapped = true)
+        $map_result = append($map_result, "@blu@Middle Kharazi Jungle- *** Completed ***|");
+    else 
+        $map_result = append($map_result, "@red@Middle Kharazi Jungle- *** Incomplete ***|");
+    if ($west_mapped = true)
+        $map_result = append($map_result, "@blu@Western Kharazi Jungle- *** Completed ***");
+    else 
+        $map_result = append($map_result, "@red@Western Kharazi Jungle- *** Incomplete ***");
+
+    ~objbox(radimus_notes, $map_result, 180, 0, 0);
+}
