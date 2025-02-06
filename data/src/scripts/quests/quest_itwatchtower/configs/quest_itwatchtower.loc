@@ -1,0 +1,380 @@
+[loc_2784]
+name=Blacksmith's tools
+desc=Various implements for working with metal.
+model=model_loc_2784
+active=yes
+
+[loc_2786]
+name=City gate
+desc=An entrance to Gu'Tanoth.
+model=model_loc_52
+op1=Open
+active=yes
+category=double_door_open_and_close_left
+param=next_loc_stage,loc_1562
+
+[loc_2787]
+name=City gate
+desc=An entrance to Gu'Tanoth.
+model=model_loc_52
+op1=Open
+active=yes
+mirror=yes
+category=double_door_open_and_close_right
+param=next_loc_stage,loc_1563
+
+[loc_2788]
+name=City gate
+desc=An entrance to Gu'Tanoth.
+model=model_loc_52
+op1=Open
+active=yes
+category=double_door_open_and_close_left
+param=next_loc_stage,loc_1562
+
+[loc_2789]
+name=City gate
+desc=An entrance to Gu'Tanoth.
+model=model_loc_52
+op1=Open
+active=yes
+mirror=yes
+category=double_door_open_and_close_right
+param=next_loc_stage,loc_1563
+
+[loc_2790]
+name=Chest
+desc=I wonder what's inside it.
+model=wooden_chest
+active=yes
+op1=Open
+forceapproach=north
+
+[loc_2792]
+name=Counter
+desc=A counter made from a stone block.
+model=model_loc_2791
+width=2
+active=yes
+op1=Steal-From
+
+[loc_2793]
+name=Counter
+desc=An ogre is selling cakes here.
+model=model_loc_2793
+width=2
+active=yes
+op1=Steal-From
+
+[loc_2794]
+name=Lever
+desc=A lever for activating something.
+model=model_loc_34_q
+op1=Pull
+active=yes
+
+[loc_2795]
+name=Lever
+desc=A lever for activating something.
+model=model_loc_33_q
+op1=Pull
+active=yes
+
+[loc_2796]
+name=Ladder
+desc=This leads to the watchtower.
+model=model_loc_11
+op1=Climb-up
+
+[loc_2797]
+name=Ladder
+desc=This leads downwards.
+model=model_loc_133
+op1=Climb-down
+
+[loc_2798]
+name=Bush
+desc=A leafy bush.
+model=model_loc_1124
+op1=Search
+mapscene=9
+
+[loc_2799]
+name=Bush
+desc=A leafy bush.
+model=model_loc_1124
+op1=Search
+mapscene=9
+
+[loc_2800]
+name=Bush
+desc=A leafy bush.
+model=model_loc_1124
+op1=Search
+mapscene=9
+
+[loc_2801]
+name=Bush
+desc=A leafy bush.
+model=model_loc_1124
+op1=Search
+mapscene=9
+
+[loc_2802]
+name=Bush
+desc=A leafy bush.
+model=model_loc_1124
+op1=Search
+mapscene=9
+
+[loc_2803]
+name=Bush
+desc=A leafy bush.
+model=model_loc_1124
+op1=Search
+mapscene=9
+
+[loc_2804]
+name=Cave entrance
+desc=I think I can squeeze through here...
+model=model_loc_2
+width=4
+length=2
+op1=Enter
+active=yes
+
+[loc_2805]
+name=Cave entrance
+desc=I think I can squeeze through here...
+model=model_loc_2
+width=4
+length=2
+op1=Enter
+
+[loc_2806]
+name=Cave entrance
+desc=I think I can squeeze through here...
+model=model_loc_2
+width=4
+length=2
+op1=Enter
+
+[loc_2807]
+name=Cave entrance
+desc=I think I can squeeze through here...
+model=model_loc_2
+width=4
+length=2
+op1=Enter
+
+[loc_2808]
+name=Cave entrance
+desc=I think I can squeeze through here...
+model=model_loc_2
+width=4
+length=2
+op1=Enter
+
+[loc_2809]
+name=Cave entrance
+desc=I think I can squeeze through here...
+model=model_loc_2
+width=4
+length=2
+op1=Enter
+
+[loc_2810]
+name=Cave entrance
+desc=I think I can squeeze through here...
+model=model_loc_2
+width=4
+length=2
+op1=Enter
+
+[loc_2811]
+name=Cave entrance
+desc=I think I can squeeze through here...
+model=model_loc_2
+width=4
+length=2
+op1=Enter
+
+[loc_2812]
+name=Ladder
+desc=This leads downwards.
+model=model_loc_1759
+op1=Climb-down
+
+[loc_2813]
+name=Cave entrance
+desc=I think I can squeeze through here...
+model=model_loc_2
+width=4
+length=2
+op1=Enter
+
+[loc_2814]
+name=Gate
+desc=The gate has been locked shut.
+model=model_loc_52
+op1=Open
+
+[loc_2815]
+name=Gate
+desc=The gate has been locked shut.
+model=model_loc_52
+op1=Open
+mirror=yes
+
+[loc_2816]
+name=Rock of Dalgroth
+desc=A strange looking rock...
+model=model_loc_2816
+width=2
+length=2
+mapscene=11
+op1=Prospect
+op2=Mine
+
+[loc_2817]
+name=Cave exit
+desc=I think I can get out here...
+model=model_loc_727
+sharelight=yes
+op1=Leave
+hillskew=yes
+recol1s=3171
+recol1d=7366
+
+[loc_2818]
+name=Cave exit
+desc=I think I can get out here...
+model=model_loc_727
+sharelight=yes
+op1=Leave
+hillskew=yes
+recol1s=3171
+recol1d=7366
+
+[loc_2819]
+name=Cave exit
+desc=I think I can get out here...
+model=model_loc_727
+sharelight=yes
+op1=Leave
+hillskew=yes
+recol1s=3171
+recol1d=7366
+
+[loc_2820]
+name=Cave exit
+desc=I think I can get out here...
+model=model_loc_727
+sharelight=yes
+op1=Leave
+hillskew=yes
+recol1s=3171
+recol1d=7366
+
+[loc_2821]
+name=Cave exit
+desc=I think I can get out here...
+model=model_loc_727
+sharelight=yes
+op1=Leave
+hillskew=yes
+recol1s=3171
+recol1d=7366
+
+[loc_2822]
+name=Cave exit
+desc=I think I can get out here...
+model=model_loc_727
+sharelight=yes
+op1=Leave
+hillskew=yes
+recol1s=3171
+recol1d=7366
+
+[loc_2823]
+name=Hole
+desc=A hole.
+model=model_loc_696
+op1=Climb-down
+
+[loc_2824]
+name=Hole
+desc=A hole
+model=model_loc_696
+
+[loc_2825]
+name=Climbing rope
+desc=I hope this leads the way out.
+model=model_loc_1762
+op1=Climb
+
+[loc_2826]
+name=Chest
+desc=I wonder what's inside it?
+model=wooden_chest
+active=yes
+op1=Open
+forceapproach=north
+
+[loc_2827]
+name=Chest
+desc=I wonder what's inside it?
+model=wooden_chest
+active=yes
+op1=Open
+forceapproach=north
+
+[loc_2828]
+model=model_loc_76
+op1=Close
+forceapproach=north
+active=no
+
+[loc_2829]
+model=model_loc_76
+active=no
+op1=Close
+forceapproach=north
+
+[loc_2830]
+name=Rock
+desc=You can probably jump over from here.
+model=plainrock2
+op1=Jump-From
+
+[loc_2831]
+name=Rock
+desc=You can probably jump over from here.
+model=plainrock2
+op1=Jump-From
+
+[loc_2832]
+name=Battlement
+desc=A low wall is blocking your path.
+model=model_loc_2832
+active=yes
+blockrange=no
+op1=Climb-over
+
+[loc_2833]
+name=Ladder
+desc=This goes up!
+model=model_loc_11
+op1=Climb-up
+
+[loc_2834]
+name=Battlement
+desc=A low wall is blocking your path.
+model=model_loc_1629
+op1=Climb_over
+active=yes
+
+[loc_2835]
+name=Rock
+model=plainrock1
+op1=Search
