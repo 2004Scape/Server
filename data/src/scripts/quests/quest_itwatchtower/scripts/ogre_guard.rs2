@@ -4,7 +4,6 @@
 switch_int(%gutanoth_gold) {
     case ^gutanoth_found_gold :
         ~chatnpc("<p,neutral>I know you, creature; you may pass.");
-        if(loc_find(0_39_47_53_20, loc_2787) = true) @enter_gutanoth(movecoord(loc_coord, 0, 0, -1)); // rs3 doesn't but classic does
     case ^gutanoth_looking_gold :
         ~chatnpc("<p,quiz>Creature, did you bring me the gold?");
         if(inv_total(inv, gold_bar) > 0) {
@@ -44,7 +43,7 @@ if(last_useitem = gold_bar) {
 [label,ogre_guard_west_dialogue]
 if(%itwatchtower_progress >= ^itwatchtower_given_relic) {
     ~chatnpc("<p,neutral>It's the small creature;|you may pass.");
-    if(loc_find(0_39_47_8_54, loc_2788) = true) @enter_gutanoth(movecoord(loc_coord, -1, 0, 0)); // rs3 doesn't but classic does
+    return;
 }
 if(testbit(%itwatchtower_bits, ^itwatchtower_looking_relic) = true) {
     @ogre_guard_friendship_proof;

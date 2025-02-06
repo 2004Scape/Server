@@ -15,7 +15,7 @@ if(%itwatchtower_progress >= ^itwatchtower_solved_riddle) {
             }
         case 2 :
             ~chatplayer("<p,sad>I have lost the map you gave me.");
-            if(inv_total(inv, skavid_map) > 0) {
+            if(inv_total(inv, skavid_map) > 0) { // no bank check (RS3)
                 ~chatnpc("<p,angry>Are you blind? What is that you are carrying?");
                 ~chatplayer("<p,shifty>Oh, that map...");
                 return;
@@ -45,9 +45,8 @@ switch_int(~p_choice2("I am an ogre killer come to destroy you!", 1, "I seek pas
 } 
 
 [opnpcu,city_guard]
-if(%itwatchtower_progress = ^itwatchtower_given_riddle) {
-    if(last_useitem = deathrune) {
-        // https://youtu.be/QSsx_W9x5i4?si=61kNbznELJiWRHPG&t=1173, re check on rs3!
+if(last_useitem = deathrune) {
+    if(%itwatchtower_progress = ^itwatchtower_given_riddle) {
         inv_del(inv, deathrune, 1);
         inv_add(inv, skavid_map, 1);
         %itwatchtower_progress = ^itwatchtower_solved_riddle;
@@ -56,6 +55,6 @@ if(%itwatchtower_progress = ^itwatchtower_given_riddle) {
         mes("The guard gives you a map.");
         return;
     }
-    ~chatnpc("<p,bored>That is not what I want, imp!");
+    mes("The guard is not listening to you.");
 }
-mes("The guard does not want anything from you now.");
+// no NIH

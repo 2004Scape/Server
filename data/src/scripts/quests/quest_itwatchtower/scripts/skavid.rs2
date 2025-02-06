@@ -146,6 +146,7 @@ if(%itwatchtower_progress >= ^itwatchtower_skavid_crystal) {
     switch_int(~p_choice2("But I've lost it!", 1, "Oh, okay then.", 2)) {
         case 1 :
             ~chatplayer("<p,sad>But I've lost it!");
+            if(inv_total(bank, watchtower_crystal2) > 0) return; // rs3
             if(%itwatchtower_progress >= ^itwatchtower_complete | inv_total(inv, watchtower_crystal2) > 0) {
                 ~chatnpc("<p,confused>I haves no more for you.");
                 return;

@@ -1,6 +1,6 @@
 [opnpc1,grew]
-if(%itwatchtower_progress < ^itwatchtower_given_fingernails | %itwatchtower_progress >= ^itwatchtower_complete) {
-    mes("The ogre has nothing to say to you at the moment.");
+if(%itwatchtower_progress >= ^itwatchtower_complete) {
+    mes("The ogre is not interested in you anymore.");
 } else if(getbit_range(%itwatchtower_bits, ^itwatchtower_spoken_grew, ^itwatchtower_helped_grew) = 2) {
     ~chatnpc("<p,angry>What are you doing here, morsel?");
     def_int $op;
@@ -23,7 +23,7 @@ if(%itwatchtower_progress < ^itwatchtower_given_fingernails | %itwatchtower_prog
             ~chatnpc("<p,angry>Stupid morsel, I have another.|Take it and go now before I lose my temper.");
         case 3 :
             ~chatplayer("<p,sad>I've lost the crystal you gave me.");
-            if(inv_total(inv, watchtower_crystal1) > 0) {
+            if(inv_total(inv, watchtower_crystal1) > 0) { // no bank check (RS3)
                 ~chatnpc("<p,angry>How dare you lie to me morsel! I will grind you up for my bread!");
                 return;
             }
@@ -65,6 +65,8 @@ if(%itwatchtower_progress < ^itwatchtower_given_fingernails | %itwatchtower_prog
                 }
                 ~chatnpc("<p,angry>That's not tricky - guards!");
         }
+} else {
+    mes("The ogre has nothing to say to you at the moment.");
 }
 
 [label,grew_spoken]

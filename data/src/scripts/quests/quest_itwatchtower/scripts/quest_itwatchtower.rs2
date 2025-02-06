@@ -102,6 +102,7 @@ if(inv_total(inv, skavid_map) > 0) {
     if(inv_totalcat(inv, light_source_lit) < 1) {
         return(2);
     }
+    mes("You enter the cave...");
     return(1);
 } else {
     mes("There's no way I can find my way through without a map of some kind.");
@@ -433,6 +434,10 @@ if(inv_total(inv, watchtower_crystal4) > 0) {
     ~chatplayer("<p,confused>I already have this crystal.|There is no benefit to getting another.");
     return;
 }
+if(inv_total(bank, watchtower_crystal4) > 0) {
+    ~chatplayer("<p,confused>I already have this crystal in the bank."); // RS3
+    return;
+}
 if(stat(mining) < 40) {
   mes("You need at least level 40 Mining to mine this rock.");
   return;
@@ -442,10 +447,7 @@ if ($pickaxe = null) {
     mes("You do not have a pickaxe that you can use with your current Mining level."); // OSRS
     return;
 }
-if(inv_freespace(inv) = 0) {
-    mes("You're not going to have space to hold anything.");
-    return;
-}
+// no inv space check on RS3
 anim(oc_param($pickaxe, mining_animation), 0); // no sound?
 mes("You swing your pick at the rock...");
 p_delay(3);
@@ -460,7 +462,7 @@ if(inv_total(inv, watchtower_crystal3) > 0 | %itwatchtower_progress >= ^itwatcht
     return;
 } 
 if(inv_total(bank, watchtower_crystal3) > 0) {
-    ~chatplayer("<p,neutral>I already have this in my bank."); // rsc
+    say("I already have this in my bank."); // RS3, rsc has this check as well
     return;
 }
 mes("You find a crystal wrapped in the folds of the material.");

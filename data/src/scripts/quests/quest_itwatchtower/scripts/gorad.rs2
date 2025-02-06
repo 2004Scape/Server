@@ -24,7 +24,7 @@ gosub(npc_death);
 if (npc_findhero = false) {
     return;
 }
-queue(defeat_gorad, 0);
+if(%itwatchtower_progress < ^itwatchtower_given_relic) queue(defeat_gorad, 0);
 obj_add(npc_coord, npc_param(death_drop), 1, ^lootdrop_duration);
 
 [queue,defeat_gorad]

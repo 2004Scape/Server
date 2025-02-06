@@ -7,10 +7,9 @@ switch_int(%itwatchtower_progress) {
         switch_int(~p_choice2("I lost the scroll you gave me.", 1, "That's okay.", 2)) {
             case 1 :
                 ~chatplayer("<p,sad>I lost the scroll you gave me.");
-                if(inv_total(inv, spell_scroll) > 0) {
+                if(inv_total(inv, spell_scroll) > 0) { // no bank check in rs3
                     ~chatnpc("<p,happy>Ho, ho, ho! A comedian to the finish.|There it is, in your backpack!");
-                } else if(inv_total(bank, spell_scroll) > 0) {
-                    ~chatnpc("<p,happy>Ho, ho, ho! A comedian to the finish.|There it is, in your bank!"); // osrs mes is different
+                    return;
                 }
                 inv_add(inv, spell_scroll, 1);
                 ~chatnpc("<p,happy>Never mind, have another...");
@@ -218,13 +217,48 @@ switch_int(%itwatchtower_progress) {
 if(last_useitem = ogre_relic) {
     ~chatplayer("<p,confused>What is this?");
     ~chatnpc("<p,confused>It is the ogre statue I finished for you.");
-} else if(last_useitem = watchtower_crystal1 | last_useitem = watchtower_crystal2 | last_useitem = watchtower_crystal3 | last_useitem = watchtower_crystal4) {
+} else if(last_useitem = watchtower_crystal1) {
     if(%itwatchtower_progress >= ^itwatchtower_complete) {
         ~chatnpc("<p,confused>More crystals?|I don't need any more now..."); // RSC
         return;
     }
     ~chatplayer("<p,happy>Wizard, look what I have found.");
-    ~chatnpc("<p,happy>Well done, well done!|You are clever;|hold onto it until you have all four.");
+    ~chatnpc("<p,happy>Well done, well done!|That's a crystal found!|You are clever;|hold onto it until you have all four.");
+    if(~watchtower_has_all_crystals = true & %itwatchtower_progress = ^itwatchtower_made_potion) {
+        ~chatplayer("<p,happy>This is the last one.");
+        @watchwiz_all_crystals;
+    }
+    ~chatnpc("<p,neutral>Keep searching for the others.|If you've dropped any,|then you will need to go back to where you got it from.");
+} else if(last_useitem = watchtower_crystal2) {
+    if(%itwatchtower_progress >= ^itwatchtower_complete) {
+        ~chatnpc("<p,confused>More crystals?|I don't need any more now..."); // RSC
+        return;
+    }
+    ~chatplayer("<p,happy>Here is another crystal.");
+    ~chatnpc("<p,happy>Superb!|Keep up the good work|Hold onto it until you have all four...");
+    if(~watchtower_has_all_crystals = true & %itwatchtower_progress = ^itwatchtower_made_potion) {
+        ~chatplayer("<p,happy>This is the last one.");
+        @watchwiz_all_crystals;
+    }
+    ~chatnpc("<p,neutral>Keep searching for the others.|If you've dropped any,|then you will need to go back to where you got it from.");
+} else if(last_useitem = watchtower_crystal3) {
+    if(%itwatchtower_progress >= ^itwatchtower_complete) {
+        ~chatnpc("<p,confused>More crystals?|I don't need any more now..."); // RSC
+        return;
+    }
+    ~chatplayer("<p,happy>Wizard, I have found another crystal.");
+    ~chatnpc("<p,happy>I must say I'm impressed.|May Saradomin speed you in finding them all.|Hold onto it until you have all four...");
+    if(~watchtower_has_all_crystals = true & %itwatchtower_progress = ^itwatchtower_made_potion) {
+        ~chatplayer("<p,happy>This is the last one.");
+        @watchwiz_all_crystals;
+    }
+    ~chatnpc("<p,neutral>Keep searching for the others.|If you've dropped any,|then you will need to go back to where you got it from.");
+} else if(last_useitem = watchtower_crystal4) {
+    if(%itwatchtower_progress >= ^itwatchtower_complete) {
+        ~chatnpc("<p,confused>More crystals?|I don't need any more now..."); // RSC
+        return;
+    }
+    ~chatnpc("<p,happy>Well done! Well done!");
     if(~watchtower_has_all_crystals = true & %itwatchtower_progress = ^itwatchtower_made_potion) {
         ~chatplayer("<p,happy>This is the last one.");
         @watchwiz_all_crystals;
@@ -281,10 +315,10 @@ if(last_useitem = ogre_relic) {
     ~chatnpc("<p,confused>No, no. The potion is not complete yet.");
 } else if(last_useitem = ogre_potion) {
     if(%itwatchtower_progress >= ^itwatchtower_complete) {
-        // RSC, guessing mesanim
-        ~chatnpc("<p,shifty>Another potion?|Ooo no, I don't think so...");
+        // mesanims from rs3
+        ~chatnpc("<p,confused>Another potion?|Ooo no, I don't think so...");
+        ~chatnpc("<p,neutral>I can't let you use this now, it's just too dangerous.|I'd better take it from you before you injure yourself.");
         inv_del(inv, ogre_potion, 1);
-        ~chatnpc("<p,shifty>I can't let you use this now, it's just too dangerous.|I'd better take it from you before you injure yourself.");
         return;
     }
     @make_magic_ogre_potion;
@@ -363,10 +397,12 @@ inv_del(inv, fingernails, 1);
 ~chatnpc("<p,happy>Throw the lever to activate the system...");
 
 [label,make_magic_ogre_potion]
-~chatplayer("<p,happy>I have made the potion.");
-~chatnpc("<p,happy>That's great news; let me infuse it with magic...");
-mes("The wizard mutters strange words over the liquid...");
 inv_del(inv, ogre_potion, 1);
 inv_add(inv, magic_ogre_potion, 1);
 %itwatchtower_progress = ^itwatchtower_made_potion;
+~chatplayer("<p,happy>I have made the potion.");
+~chatnpc("<p,happy>That's great news; let me infuse it with magic...");
+if_close;
+mes("The wizard mutters strange words over the liquid...");
+p_delay(3);
 ~chatnpc("<p,neutral>Here it is - a dangerous substance.|I must remind you that this potion can only be used|if your magic ability is high enough.");

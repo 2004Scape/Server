@@ -40,8 +40,6 @@ if(%itwatchtower_progress >= ^itwatchtower_made_relic) {
 if(last_useitem = dragon_bones) {
     if(testbit(%itwatchtower_bits, ^itwatchtower_spoken_toban) = true & testbit(%itwatchtower_bits, ^itwatchtower_helped_toban) = false) {
         @spoken_toban;
-    } else {
-        ~chatnpc("<p,happy>Mmm! But not just now, t'anks.");
     }
     return;
 }
