@@ -30,7 +30,7 @@ if(%itwatchtower_progress = ^itwatchtower_not_started) {
 
 [oploc1,loc_2800]
 if(%itwatchtower_progress = ^itwatchtower_not_started) {
-    ~chatplayer("<p,happy>I am not sure why I am searching this bush.");
+    ~chatplayer("<p,confused>I am not sure why I am searching this bush.");
 } if(%itwatchtower_progress = ^itwatchtower_started) {
     if(inv_total(inv, damaged_dagger) > 0) {
         ~chatplayer("<p,quiz>I have already searched this place.");
@@ -44,7 +44,7 @@ if(%itwatchtower_progress = ^itwatchtower_not_started) {
 
 [oploc1,loc_2801]
 if(%itwatchtower_progress = ^itwatchtower_not_started) {
-    ~chatplayer("<p,happy>I am not sure why I am searching this bush.");
+    ~chatplayer("<p,confused>I am not sure why I am searching this bush.");
 } if(%itwatchtower_progress = ^itwatchtower_started) {
     if(inv_total(inv, tattered_eye_patch) > 0) {
         ~chatplayer("<p,quiz>I have already searched this place.");
@@ -58,7 +58,7 @@ if(%itwatchtower_progress = ^itwatchtower_not_started) {
 
 [oploc1,loc_2802]
 if(%itwatchtower_progress = ^itwatchtower_not_started) {
-    ~chatplayer("<p,happy>I am not sure why I am searching this bush.");
+    ~chatplayer("<p,confused>I am not sure why I am searching this bush.");
 } if(%itwatchtower_progress = ^itwatchtower_started) {
     if(inv_total(inv, old_robe) > 0) {
         ~chatplayer("<p,quiz>I have already searched this place.");
@@ -72,7 +72,7 @@ if(%itwatchtower_progress = ^itwatchtower_not_started) {
 
 [oploc1,loc_2803]
 if(%itwatchtower_progress = ^itwatchtower_not_started) {
-    say("I am not sure why I am searching this bush.");
+    ~chatplayer("<p,confused>I am not sure why I am searching this bush.");
 } else if(%itwatchtower_progress = ^itwatchtower_started) {
     if(inv_total(inv, unusual_armour) > 0) { // no bank check for any of them
         ~chatplayer("<p,quiz>I have already searched this place.");
@@ -198,6 +198,7 @@ p_teleport(0_39_47_33_5);
 [oploc1,loc_2790]
 if(inv_total(inv, toban_key) > 0) {
     mes("You use the key Og gave you.");
+    inv_del(inv, toban_key, 1);
     @open_toban_chest;
 }
 mes("The chest is locked.");
@@ -205,12 +206,17 @@ mes("The chest is locked.");
 
 [oplocu,loc_2790]
 if(last_useitem = toban_key) {
+    if(inv_freespace(inv) = 0) {
+        loc_change(loc_3273, 20);
+        sound_synth(chest_open, 0, 0);
+        ~mesbox("There is something in there.|But you don't have the free space to hold it.");
+        return;
+    }
     @open_toban_chest;
 }
 ~displaymessage(^dm_default);
 
 [label,open_toban_chest]
-inv_del(inv, toban_key, 1);
 loc_change(loc_3273, 20);
 sound_synth(chest_open, 0, 0);
 if(inv_total(inv, tobans_gold) > 0) {
@@ -228,6 +234,25 @@ p_teleport(0_40_47_16_21);
 [oploc1,loc_2812]
 mes("You climb down the ladder.");
 p_teleport(0_39_46_4_44);
+
+[opheldu,relic_part_1]
+if(last_useitem = relic_part_2 | last_useitem = relic_part_3) {
+    @player_make_ogre_statue;
+}
+
+[opheldu,relic_part_2]
+if(last_useitem = relic_part_1 | last_useitem = relic_part_3) {
+    @player_make_ogre_statue;
+}
+
+[opheldu,relic_part_3]
+if(last_useitem = relic_part_1 | last_useitem = relic_part_2) {
+    @player_make_ogre_statue;
+}
+
+[label,player_make_ogre_statue]
+mes("I think these fit together, but I can't seem to make them fit.");
+mes("I am going to need someone with experience to help me with this.");
 
 [oploc1,loc_2796]
 if(%itwatchtower_progress >= ^itwatchtower_complete) {

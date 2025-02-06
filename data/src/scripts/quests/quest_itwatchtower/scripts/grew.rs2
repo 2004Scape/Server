@@ -89,4 +89,4 @@ if(inv_total(inv, ogre_tooth) > 0) {
 if(getbit_range(%itwatchtower_bits, ^itwatchtower_spoken_grew, ^itwatchtower_helped_grew) = 1 & last_useitem = ogre_tooth) {
    @grew_spoken;
 }
-~displaymessage(^dm_default);
+// no NIH

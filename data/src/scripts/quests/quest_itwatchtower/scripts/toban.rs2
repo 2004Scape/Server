@@ -41,7 +41,6 @@ if(last_useitem = dragon_bones) {
     if(testbit(%itwatchtower_bits, ^itwatchtower_spoken_toban) = true & testbit(%itwatchtower_bits, ^itwatchtower_helped_toban) = false) {
         @spoken_toban;
     }
-    return;
 }
 ~displaymessage(^dm_default);
 

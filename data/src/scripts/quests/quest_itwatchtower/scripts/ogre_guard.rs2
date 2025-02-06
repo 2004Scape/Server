@@ -66,41 +66,33 @@ if(inv_total(inv, ogre_relic) > 0) {
     if(loc_find(0_39_47_8_54, loc_2788) = true) @enter_gutanoth(movecoord(loc_coord, -1, 0, 0));
     return;
 }
-if(inv_total(inv, relic_part_1) > 0 | inv_total(inv, relic_part_2) > 0 | inv_total(inv, relic_part_3) > 0) {
-    ~chatplayer("<p,neutral>I've got this odd piece of a relic.");
-    ~chatnpc("<p,angry>What's this thing?|It looks a bit like our Dalgroth...|but it's broken. Go away!");
-} else {
-    ~chatplayer("<p,sad>I don't have anything.");
-    ~chatnpc("<p,angry>Why have you returned with no proof of companionship? Back to whence you came!");
-}
+~chatplayer("<p,sad>I don't have anything.");
+~chatnpc("<p,angry>Why have you returned with no proof of companionship? Back to whence you came!");
 mes("The guard pushes you back down the hill.");
 p_teleport(^gutanoth_hill);
 
 [opnpcu,ogre_guard_west]
-if(last_useitem = ogre_relic | last_useitem = relic_part_1 | last_useitem = relic_part_2 | last_useitem = relic_part_3) {
+if(last_useitem = ogre_relic) {
     if(%itwatchtower_progress >= ^itwatchtower_given_relic) {
         if(loc_find(0_39_47_53_20, loc_2787) = true) @enter_gutanoth(movecoord(loc_coord, 0, 0, -1));
     }
     @ogre_guard_friendship_proof;
 }
+if(last_useitem = relic_part_1 | last_useitem = relic_part_2 | last_useitem = relic_part_3) {
+    ~chatnpc("<p,angry>What's this thing?|It looks a bit like our Dalgroth...|but it's in bits... Go away!");
+}
 
 [opnpc1,ogre_guard_battlements] @ogre_guard_battlements_dialogue;
 
 [opnpcu,ogre_guard_battlements]
-// recheck this on rs3
-if(getbit_range(%itwatchtower_bits, ^itwatchtower_market_lower, ^itwatchtower_market_upper) = 2) {
-    ~chatnpc("<p,happy>No thank you, creature, the rock cake you brought me was plenty.");
-} else if(getbit_range(%itwatchtower_bits, ^itwatchtower_market_lower, ^itwatchtower_market_upper) = 1) {
-    if(last_useitem = rock_cake) {
-        @battlements_rockcake;
-    } else {
-        ~chatnpc("<p,angry>That is of no use to me, creature!");
-        npc_anim(ogre_attack, 0);
-        ~damage_self(2);
-    }
-} else {
+if(last_useitem = rock_cake) {
+    if(getbit_range(%itwatchtower_bits, ^itwatchtower_market_lower, ^itwatchtower_market_upper) = 1) @battlements_rockcake;
     // https://youtu.be/R8E9Rir_kKg?si=Qg1oFtos6w4T8Mhh&t=851
-    if(last_useitem = rock_cake) ~chatplayer("<p,confused>Why am I giving this cake to an ogre?");
+    else ~chatplayer("<p,confused>Why am I giving this cake to an ogre?");
+} else {
+    ~chatnpc("<p,angry>Uh? What do you seek to gain by giving me this rubbish?"); // RS3
+    npc_anim(ogre_attack, 0);
+    ~damage_self(2);
 }
 
 [label,battlements_rockcake]

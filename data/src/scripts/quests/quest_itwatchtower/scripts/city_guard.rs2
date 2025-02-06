@@ -46,7 +46,7 @@ switch_int(~p_choice2("I am an ogre killer come to destroy you!", 1, "I seek pas
 
 [opnpcu,city_guard]
 if(last_useitem = deathrune) {
-    if(%itwatchtower_progress = ^itwatchtower_given_riddle) {
+    if(%itwatchtower_progress <= ^itwatchtower_given_riddle) {
         inv_del(inv, deathrune, 1);
         inv_add(inv, skavid_map, 1);
         %itwatchtower_progress = ^itwatchtower_solved_riddle;

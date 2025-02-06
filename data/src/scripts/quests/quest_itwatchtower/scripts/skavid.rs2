@@ -136,8 +136,10 @@ switch_int(~p_choice2("I don't believe you, hand it over!", 1, "Okay, okay, I'm 
         ~chatnpc("<p,happy>Thank you, kind one.");
         ~chatnpc("<p,neutral>I'll tells you where that things you wants is.|The mad skavids have it in their cave in the city.");
         ~chatnpc("<p,neutral>You will have to learn skavid,|otherwise they will not talks to you.|Make sure you remembers all that you hear.");
+        ~chatnpc("<p,neutral>Let me tells you the most common skavid words...");
+        ~chatnpc("<p,neutral>Ar, nod, gor, ig, cur.");
+        ~chatnpc("<p,neutral>Those will gets you started...");
         %itwatchtower_bits = setbit(%itwatchtower_bits, ^itwatchtower_learning_skavid);
-        ~chatnpc("<p,shifty>Let me tells you the most common skavid words...|Ar, nod, gor, ig, cur.|That will gets you started...");
 }
 
 [opnpc1,mad_skavid]
