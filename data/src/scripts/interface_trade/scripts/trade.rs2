@@ -148,35 +148,61 @@ if (.finduid(%tradepartner) = true) {
 
 [proc,enough_trade_space]()(boolean)
 // check if contents of tempinv fits in other player's inv
+def_int $space = .inv_freespace(inv);
 def_int $size = inv_size(tempinv);
 def_int $slot = 0;
 while ($slot < $size) {
     def_obj $obj = inv_getobj(tempinv, $slot);
-    def_int $num = inv_getnum(tempinv, $slot);
-
     if ($obj ! null) {
-        if (.inv_itemspace(inv, $obj, $num, sub(.inv_size(inv), $slot)) = false) {
-            return(false);
+        if (oc_stackable($obj) = true) {
+            def_int $total = .inv_total(inv, $obj);
+            if ($total > 0) {
+                if (calc(^max_32bit_int - $total - inv_getnum(tempinv, $slot)) < 0) {
+                    return(false);
+                }
+            } else {
+                $space = sub($space, 1);
+                if ($space < 0) {
+                    return(false);
+                }
+            }
+        } else {
+            $space = sub($space, 1);
+            if ($space < 0) {
+                return(false);
+            }
         }
     }
-
     $slot = add($slot, 1);
 }
 return(true);
 
 [proc,.enough_trade_space]()(boolean)
+def_int $space = inv_freespace(inv);
 def_int $size = .inv_size(tempinv);
 def_int $slot = 0;
 while ($slot < $size) {
     def_obj $obj = .inv_getobj(tempinv, $slot);
-    def_int $num = .inv_getnum(tempinv, $slot);
-
     if ($obj ! null) {
-        if (inv_itemspace(inv, $obj, $num, sub(inv_size(inv), $slot)) = false) {
-            return(false);
+        if (oc_stackable($obj) = true) {
+            def_int $total = inv_total(inv, $obj);
+            if ($total > 0) {
+                if (calc(^max_32bit_int - $total - .inv_getnum(tempinv, $slot)) < 0) {
+                    return(false);
+                }
+            } else {
+                $space = sub($space, 1);
+                if ($space < 0) {
+                    return(false);
+                }
+            }
+        } else {
+            $space = sub($space, 1);
+            if ($space < 0) {
+                return(false);
+            }
         }
     }
-
     $slot = add($slot, 1);
 }
 return(true);
