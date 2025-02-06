@@ -9,9 +9,14 @@ export default class MessagePrivateEncoder extends MessageEncoder<MessagePrivate
     prot = ServerProt.MESSAGE_PRIVATE;
 
     encode(buf: Packet, message: MessagePrivate): void {
+        let staffLvl: number = message.staffModLevel;
+        if (staffLvl > 0) {
+            staffLvl += 1;
+        }
+        
         buf.p8(message.from);
         buf.p4(message.messageId);
-        buf.p1(message.staffModLevel);
+        buf.p1(staffLvl);
         WordPack.pack(buf, WordEnc.filter(message.msg));
     }
 

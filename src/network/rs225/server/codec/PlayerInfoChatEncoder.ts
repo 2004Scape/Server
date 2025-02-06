@@ -10,12 +10,11 @@ export default class PlayerInfoChatEncoder extends InfoMessageEncoder<PlayerInfo
         buf.p1(message.color);
         buf.p1(message.effect);
         buf.p1(message.type);
-        buf.p1(message.staffModLevel);
         buf.p1(message.chat.length);
         buf.pdata(message.chat, 0, message.chat.length);
     }
 
     test(message: PlayerInfoChat): number {
-        return 1 + 1 + 1 + 1 + 1 + message.chat.length;
+        return 1 + 1 + 1 + 1 + message.chat.length;
     }
 }

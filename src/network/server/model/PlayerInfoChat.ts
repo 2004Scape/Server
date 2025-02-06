@@ -5,7 +5,6 @@ export default class PlayerInfoChat extends InfoMessage {
         readonly color: number,
         readonly effect: number,
         readonly type: number,
-        readonly staffModLevel: number,
         readonly chat: Uint8Array
     ) {
         super();
