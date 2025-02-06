@@ -220,10 +220,6 @@ transmit=yes
 [smithing_level]
 transmit=yes
 
-[itwatchtower_gold]
-
-[itwatchtower_bits]
-
 [varp_215]
 
 [varp_216]

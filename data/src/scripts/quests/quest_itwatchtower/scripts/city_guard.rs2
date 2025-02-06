@@ -36,7 +36,7 @@ switch_int(~p_choice2("I am an ogre killer come to destroy you!", 1, "I seek pas
     case 2 :
         ~chatplayer("<p,neutral>I seek passage into the skavid caves.");
         ~chatnpc("<p,quiz>Is that so... You humour me small t'ing. Answer this riddle and I will help you...");
-        if(%itwatchtower_progress = ^itwatchtower_given_riddle) %itwatchtower_progress = ^itwatchtower_given_riddle;
+        if(%itwatchtower_progress = ^itwatchtower_given_relic) %itwatchtower_progress = ^itwatchtower_given_riddle;
         ~chatnpc("<p,neutral>I want you to bring me an item: I will give you all the letters of this item, you work out what it is...");
         ~chatnpc("<p,neutral>My first is in days, but not in years,|My second is in evil, and also in tears,|My third is in all, but not in none,|My fourth is in hot, but not in sun.");
         ~chatnpc("<p,neutral>My fifth is in heaven, and also in hate,|My sixth is in fearing, but not in fate,|My seventh is in plush, but not in place.");

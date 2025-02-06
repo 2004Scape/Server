@@ -1,8 +1,47 @@
 [opnpc1,watchtower_wizard]
 switch_int(%itwatchtower_progress) {
+    case ^itwatchtower_complete_read_scroll :
+        ~chatnpc("<p,happy>Greetings, friend.|I trust all is well with you?|Yanille is safe at last!");
+    case ^itwatchtower_complete :
+        ~chatnpc("<p,happy>Hello again adventurer.|Thanks again for your help in keeping us safe.");
+        switch_int(~p_choice2("I lost the scroll you gave me.", 1, "That's okay.", 2)) {
+            case 1 :
+                ~chatplayer("<p,sad>I lost the scroll you gave me.");
+                if(inv_total(inv, spell_scroll) > 0) {
+                    ~chatnpc("<p,happy>Ho, ho, ho! A comedian to the finish.|There it is, in your backpack!");
+                } else if(inv_total(bank, spell_scroll) > 0) {
+                    ~chatnpc("<p,happy>Ho, ho, ho! A comedian to the finish.|There it is, in your bank!"); // osrs mes is different
+                }
+                inv_add(inv, spell_scroll, 1);
+                ~chatnpc("<p,happy>Never mind, have another...");
+            case 2 : 
+                ~chatplayer("<p,happy>That's okay.");
+                ~chatnpc("<p,happy>We are always in your debt...");
+        }
+    case ^itwatchtower_found_all_crystals :
+        ~chatnpc("<p,neutral>The system is not activated yet.|Throw the switch to start it.");
     case ^itwatchtower_made_potion :
-        // todo - can you make the potion through dialogue at this stage (if lost) like in OSRS? in RSC you have to use opnpcu
         ~chatnpc("<p,neutral>Hello again.|Did the potion work?");
+        if(getbit_range(%itwatchtower_bits, ^itwatchtower_shaman_kills_lower, ^itwatchtower_shaman_kills_upper) = 6) {
+            // fansites imply you can just talk to him instead of having to use the crystal like RSC
+            ~chatplayer("<p,happy>Indeed it did! I wiped out those ogre shamans!");
+            if(~watchtower_has_all_crystals = true) {
+                @watchwiz_all_crystals;
+            }
+            switch_int(~p_choice3("I had another crystal but I lost it.", 1, "I am looking for another crystal.", 2, "I have found another crystal!", 3)) {
+                case 1 :
+                    ~chatplayer("<p,sad>I had another crystal but I lost it.");
+                    ~chatnpc("<p,neutral>Dissappointing, dissappointing..|Well there's not much I can do...|You had better go back and search the area again.");
+                case 2 :
+                    ~chatplayer("<p,neutral>I am looking for another crystal.");
+                    ~chatnpc("<p,neutral>The rock of the shaman is the key.|I understand their power is linked to it in some way.|You may need something heavy to crack this boulder...");
+                case 3 :
+                    ~chatplayer("<p,happy>I have found another crystal!");
+                    ~chatnpc("<p,happy>Wonderful!|Show it to me so I can confirm it's the real thing...");
+            }
+            return;
+        }
+        // todo - can you make the potion through dialogue at this stage (if lost) like in OSRS? in RSC you have to use opnpcu
         ~chatplayer("<p,neutral>I am still working to rid us of the shamans...");
         ~chatnpc("<p,happy>May you have success in your task.");
     case ^itwatchtower_learned_potion :
@@ -95,7 +134,7 @@ switch_int(%itwatchtower_progress) {
                 }
                 ~chatnpc("<p,neutral>What? Lost the relic? How careless!|It's a good job I copied its design, then!|You can take this copy instead - it's just as good.");
                 inv_add(inv, ogre_relic, 1);
-                ~objbox(ogre_relic, "The wizard gives you another statue.", 250, 0, 0);
+                ~objbox(ogre_relic, "The wizard gives you another statue.", 250, 0, ^objbox_height);
             case 2 : 
                 ~chatplayer("<p,happy>I will find my way in, no problem.");
                 ~chatnpc("<p,happy>Yes, I'm sure you will... Good luck!");
@@ -160,6 +199,7 @@ switch_int(%itwatchtower_progress) {
         ~chatnpc("<p,sad>Oh my, oh my!");
         switch_int(~p_choice2("What's the matter?", 1, "You wizards are always complaining.", 2)) {
             case 1 :
+                ~chatplayer("<p,neutral>What's the matter?");
                 ~chatnpc("<p,sad>Oh dear, oh dear.|Darn and drat!");
                 ~chatnpc("<p,sad>We try hard to keep this town protected.");
                 ~chatnpc("<p,sad>But how can we do that when the Watchtower isn't working?");
@@ -179,34 +219,47 @@ if(last_useitem = ogre_relic) {
     ~chatplayer("<p,confused>What is this?");
     ~chatnpc("<p,confused>It is the ogre statue I finished for you.");
 } else if(last_useitem = watchtower_crystal1 | last_useitem = watchtower_crystal2 | last_useitem = watchtower_crystal3 | last_useitem = watchtower_crystal4) {
+    if(%itwatchtower_progress >= ^itwatchtower_complete) {
+        ~chatnpc("<p,confused>More crystals?|I don't need any more now..."); // RSC
+        return;
+    }
     ~chatplayer("<p,happy>Wizard, look what I have found.");
     ~chatnpc("<p,happy>Well done, well done!|You are clever;|hold onto it until you have all four.");
+    if(~watchtower_has_all_crystals = true & %itwatchtower_progress = ^itwatchtower_made_potion) {
+        ~chatplayer("<p,happy>This is the last one.");
+        @watchwiz_all_crystals;
+    }
     ~chatnpc("<p,neutral>Keep searching for the others.|If you've dropped any,|then you will need to go back to where you got it from.");
 } else if(last_useitem = relic_part_1) {
-    inv_del(inv, relic_part_1, 1);
     ~chatplayer("<p,neutral>I had this given to me...");
     if(testbit(%itwatchtower_bits, ^itwatchtower_relic1) = true) {
         ~chatnpc("<p,shifty>I already have that part..."); // guessed, rsc dialogue
         return;
     }
+    ~chatnpc("<p,neutral>It's part of an ogre relic.");
+    inv_del(inv, relic_part_1, 1);
+    %itwatchtower_bits = setbit(%itwatchtower_bits, ^itwatchtower_relic1);
     @check_relic_parts;
 } else if(last_useitem = relic_part_2) {
-    inv_del(inv, relic_part_2, 1);
     ~chatplayer("<p,neutral>I got given this by an ogre...");
-    if(testbit(%itwatchtower_bits, ^itwatchtower_relic1) = true) {
+    if(testbit(%itwatchtower_bits, ^itwatchtower_relic2) = true) {
         ~chatnpc("<p,shifty>I already have that part..."); // guessed, rsc dialogue
         return;
     }
+    ~chatnpc("<p,neutral>Good good, a part of an ogre relic.");
+    inv_del(inv, relic_part_2, 1);
+    %itwatchtower_bits = setbit(%itwatchtower_bits, ^itwatchtower_relic2);
     @check_relic_parts;
 } else if(last_useitem = relic_part_3) {
-    inv_del(inv, relic_part_3, 1);
     ~chatplayer("<p,neutral>An ogre gave me this...");
-    if(testbit(%itwatchtower_bits, ^itwatchtower_relic1) = true) {
+    if(testbit(%itwatchtower_bits, ^itwatchtower_relic3) = true) {
         ~chatnpc("<p,shifty>I already have that part..."); // guessed, rsc dialogue
         return;
     }
     // https://web.archive.org/web/20051025143129im_/http://www.runeweb.net/fireball/Watchtower%20Images/Watchtower8.PNG
     ~chatnpc("<p,neutral>Ah, it's part of an old ogre statue.");
+    inv_del(inv, relic_part_3, 1);
+    %itwatchtower_bits = setbit(%itwatchtower_bits, ^itwatchtower_relic3);
     @check_relic_parts;
 } else if(last_useitem = fingernails) {
     if(%itwatchtower_progress ! ^itwatchtower_started) {
@@ -241,7 +294,6 @@ if(last_useitem = ogre_relic) {
     ~displaymessage(^dm_default);
 }
 
-
 [label,check_relic_parts]
 if(getbit_range(%itwatchtower_bits, ^itwatchtower_relic1, ^itwatchtower_relic3) < 7) {
     ~chatnpc("<p,neutral>There may be more parts to find...|I'll keep this for later.");
@@ -252,7 +304,7 @@ inv_add(inv, ogre_relic, 1);
 ~chatnpc("<p,happy>Excellent! That seems to be all the pieces.|Now I can assemble it...");
 ~chatnpc("<p,neutral>Hmm, yes it is as I thought...|A statue symbolising an ogre warrior of old.");
 ~chatnpc("<p,happy>Well, if you ever wanted to make friends with an ogre, then this is the item to have!");
-~objbox(ogre_relic, "The wizard gives you a complete statue.", 250, 0, 0);
+~objbox(ogre_relic, "The wizard gives you a complete statue.", 250, 0, ^objbox_height);
 
 [label,watchwiz_not_evidence]
 ~chatnpc("<p,confused>Let me see...");
@@ -304,4 +356,17 @@ inv_del(inv, fingernails, 1);
 ~chatnpc("<p,angry>Won't bother? Won't bother!");
 ~chatnpc("<p,confused>Perhaps this quest is too hard for you?");
 
+[label,watchwiz_all_crystals]
+~chatnpc("<p,happy>Magnificent!|At last you've brought all the crystals.");
+~chatnpc("<p,happy>Now the shield generator can be activated again.|And, once again, Yanille will be safe|from the threat of the ogres.");
+%itwatchtower_progress = ^itwatchtower_found_all_crystals;
+~chatnpc("<p,happy>Throw the lever to activate the system...");
+
 [label,make_magic_ogre_potion]
+~chatplayer("<p,happy>I have made the potion.");
+~chatnpc("<p,happy>That's great news; let me infuse it with magic...");
+mes("The wizard mutters strange words over the liquid...");
+inv_del(inv, ogre_potion, 1);
+inv_add(inv, magic_ogre_potion, 1);
+%itwatchtower_progress = ^itwatchtower_made_potion;
+~chatnpc("<p,neutral>Here it is - a dangerous substance.|I must remind you that this potion can only be used|if your magic ability is high enough.");

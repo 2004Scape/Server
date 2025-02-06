@@ -9,11 +9,9 @@
 ^itwatchtower_fed_nightshade = 8
 ^itwatchtower_learned_potion = 9
 ^itwatchtower_made_potion = 10
+^itwatchtower_found_all_crystals = 11
 ^itwatchtower_complete = 13
 ^itwatchtower_complete_read_scroll = 14
-
-^itwatchtower_looking_gold = 1
-^itwatchtower_found_gold = 2
 
 ^itwatchtower_looking_relic = 0
 ^itwatchtower_spoken_toban = 1
@@ -34,6 +32,9 @@
 ^itwatchtower_learned_nod = 16
 ^itwatchtower_shaman_kills_lower = 17
 ^itwatchtower_shaman_kills_upper = 19
+
+^gutanoth_looking_gold = 1
+^gutanoth_found_gold = 2
 
 ^gutanoth_hill = 0_39_47_50_57
 ^gutanoth_hill_lower = 0_39_46_27_54

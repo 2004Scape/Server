@@ -39,13 +39,27 @@ if(%itwatchtower_progress >= ^itwatchtower_made_relic) {
 [opnpcu,toban]
 if(last_useitem = dragon_bones) {
     if(testbit(%itwatchtower_bits, ^itwatchtower_spoken_toban) = true & testbit(%itwatchtower_bits, ^itwatchtower_helped_toban) = false) {
-        p_opnpc(1);
+        @spoken_toban;
     } else {
         ~chatnpc("<p,happy>Mmm! But not just now, t'anks.");
     }
     return;
 }
 ~displaymessage(^dm_default);
+
+[label,spoken_toban]
+~chatnpc("<p,happy>Hahaha! Small t'ing returns.|Did you bring the dragon bone?");
+if(inv_total(inv, dragon_bones) > 0) {
+    inv_del(inv, dragon_bones, 1);
+    inv_add(inv, relic_part_3, 1);
+    %itwatchtower_bits = setbit(%itwatchtower_bits, ^itwatchtower_helped_toban);
+    ~chatplayer("<p,happy>When I say I will get something, I get it!");
+    ~chatnpc("<p,happy>Hahaha! Small t'ing has done it. Toban is glad - take this...");
+    ~objbox(relic_part_3, "The ogre gives you part of a statue.", 250, 0, 0);
+    return;
+}
+~chatplayer("<p,neutral>I don't have what you want.");
+~chatnpc("<p,neutral>Then you shall get nothing from me!");
 
 [label,toban_seek]
 ~chatplayer("<p,neutral>I seek entrance to the city of ogres.");
@@ -56,9 +70,9 @@ if(last_useitem = dragon_bones) {
 
 [label,toban_do]
 ~chatplayer("<p,neutral>I could do something for you...");
-~chatnpc("<p,happy>Hahaha! This creature t'inks it can help me! I would eat you now, but for your puny size.");
+~chatnpc("<p,happy>Hahaha! This creature t'inks it can help me!|I would eat you now, but for your puny size.");
 %itwatchtower_bits = setbit(%itwatchtower_bits, ^itwatchtower_spoken_toban);
-~chatnpc("<p,neutral>Prove to me your might: bring me the bones of an adult dragon to chew on, and I'll eat them, not you.");
+~chatnpc("<p,neutral>Prove to me your might:|bring me the bones of an adult dragon to chew on,|and I'll eat them, not you.");
 
 [label,toban_die]
 ~chatplayer("<p,angry>Die, creature!");

@@ -4,6 +4,7 @@ if(last_useitem = jangerberries) {
         ~chatplayer("<p,confused>Hmm, perhaps I shouldn't mix these together. It might have unpredictable results...");
         return;
     }
+    @ogrepotion_add_jangerberries(vial_water);
 }
 if(last_useitem = ground_bat_bones) {
   @ogrepotion_add_bat_bones(vial_water);
@@ -11,6 +12,13 @@ if(last_useitem = ground_bat_bones) {
 ~attempt_brew_potion(last_useslot, last_slot);
 
 [opheldu,unf_guam_potion]
+if(last_useitem = jangerberries) {
+    if(%itwatchtower_progress < ^itwatchtower_learned_potion) {
+        ~chatplayer("<p,confused>Hmm, perhaps I shouldn't mix these together. It might have unpredictable results...");
+        return;
+    }
+    @ogrepotion_add_jangerberries(unf_guam_potion);
+}
 if(last_useitem = ground_bat_bones) {
   @ogrepotion_add_bat_bones(unf_guam_potion);
 }

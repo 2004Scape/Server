@@ -26,7 +26,8 @@ if(last_useitem = magic_ogre_potion) {
     }
     mes("There is a bright flash!");
     mes("The ogre dissolves into spirit form.");
-    spotanim_npc(smokepuff_large, 124, 34);
+    spotanim_map(small_smokepuff, npc_coord, 124, 0);
+    sound_synth(smokepuff, 0, 0);
     npc_del;
     p_delay(1);
     def_int $current_kills = getbit_range(%itwatchtower_bits, ^itwatchtower_shaman_kills_lower, ^itwatchtower_shaman_kills_upper);
@@ -50,5 +51,6 @@ if(last_useitem = magic_ogre_potion) {
             inv_add(inv, vial_empty, 1);
             inv_add(inv, watchtower_crystal3, 1);
     }
+    return;
 }
 ~displaymessage(^dm_default);

@@ -31,4 +31,4 @@ obj_add(npc_coord, npc_param(death_drop), 1, ^lootdrop_duration);
 mes("Gorad has gone.");
 if(~obj_gettotal(ogre_tooth) > 0) return; // not possible?
 inv_add(inv, ogre_tooth, 1);
-~objbox(ogre_tooth, "He's dropped a tooth; I'll keep that!", 250, 0, 0);
+~objbox(ogre_tooth, "He's dropped a tooth; I'll keep that!", 250, 0, divide(^objbox_height, 2));

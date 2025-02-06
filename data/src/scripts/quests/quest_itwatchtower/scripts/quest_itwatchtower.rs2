@@ -23,7 +23,7 @@ if(%itwatchtower_progress = ^itwatchtower_not_started) {
         return;
     }
     inv_add(inv, fingernails, 1);
-    ~chatplayer("<p,quiz>What's this? Disgusting! Some fingernails. They may be a clue though... I'd better take them.");
+    ~chatplayer("<p,quiz>What's this?|Disgusting! Some fingernails.|They may be a clue though... I'd better take them.");
 } else {
     ~chatplayer("<p,happy>I have already searched this place.");
 }
@@ -217,7 +217,7 @@ if(inv_total(inv, tobans_gold) > 0) {
     return;
 }
 inv_add(inv, tobans_gold, 1);
-~objbox(tobans_gold, "You find a stash of gold inside.", 250, 0, 0);
+~objbox(tobans_gold, "You find a stash of gold inside.", 250, 0, divide(^objbox_height, 2));
 
 [oploc1,loc_2811]
 mes("You enter the cave.");
@@ -229,6 +229,9 @@ mes("You climb down the ladder.");
 p_teleport(0_39_46_4_44);
 
 [oploc1,loc_2796]
+if(%itwatchtower_progress >= ^itwatchtower_complete) {
+    @climb_ladder(2_45_73_53_40, true);
+}
 @climb_ladder(2_39_48_53_40, true);
 
 [oploc1,loc_2797]
@@ -240,7 +243,7 @@ p_teleport(0_39_46_4_44);
 [oploc1,loc_2789] @open_gutanoth_gate(^right, ogre_guard_west);
 
 [label,open_gutanoth_gate](int $side, npc $guard)
-if(($guard = ogre_guard_east & %itwatchtower_gold < ^itwatchtower_found_gold) |  ($guard = ogre_guard_west & %itwatchtower_progress < 4)) {
+if(($guard = ogre_guard_east & %gutanoth_gold < ^gutanoth_found_gold) |  ($guard = ogre_guard_west & %itwatchtower_progress < 4)) {
     if(npc_find(coord, $guard, 6, 2) = true) {
         if(npc_type = ogre_guard_east) @ogre_guard_east_dialogue;
         else @ogre_guard_west_dialogue;
@@ -390,6 +393,7 @@ def_coord $opposite_coord = loc_coord;
 $opposite_coord = ~movecoord_loc_return(~multiply2(~door_close(loc_angle, loc_shape), -1));
 
 p_teleport($dest);
+sound_synth(grate_open, 0, 0);
 if (loc_type = loc_2788) {
     ~open_double_doors_left(2, double_door_open_and_close_right, null);
 } else {
@@ -425,16 +429,28 @@ if(getbit_range(%itwatchtower_bits, ^itwatchtower_shaman_kills_lower, ^itwatchto
     ~chatplayer("<p,confused>I can't touch it...|Perhaps it is linked with the shamans in some strange way?");
     return;
 }
+if(inv_total(inv, watchtower_crystal4) > 0) {
+    ~chatplayer("<p,confused>I already have this crystal.|There is no benefit to getting another.");
+    return;
+}
 if(stat(mining) < 40) {
   mes("You need at least level 40 Mining to mine this rock.");
   return;
 }
 def_obj $pickaxe = ~pickaxe_checker;
 if ($pickaxe = null) {
-    ~mesbox("You need a pickaxe to mine this rock. You do not have a pickaxe which you have the Mining level to use.");
+    mes("You do not have a pickaxe that you can use with your current Mining level."); // OSRS
     return;
 }
-
+if(inv_freespace(inv) = 0) {
+    mes("You're not going to have space to hold anything.");
+    return;
+}
+anim(oc_param($pickaxe, mining_animation), 0); // no sound?
+mes("You swing your pick at the rock...");
+p_delay(3);
+mes("A crack appears in the rock and you prise a crystal out.");
+inv_add(inv, watchtower_crystal4, 1);
 
 [opheld1,shaman_robe]
 mes("You search the robe.");
@@ -449,3 +465,69 @@ if(inv_total(bank, watchtower_crystal3) > 0) {
 }
 mes("You find a crystal wrapped in the folds of the material.");
 inv_add(inv, watchtower_crystal3, 1);
+
+[oploc1,loc_2794]
+mes("You pull the lever...");
+anim(human_leverdown, 0); // OSRS uses seq's not in 225, going to assume here
+sound_synth(lever, 0, 0);
+p_delay(0);
+if(~watchtower_has_all_crystals = true & %itwatchtower_progress = ^itwatchtower_found_all_crystals) {
+    mes("The magic forcefield activates.");
+    // QUEST REWARD
+    %itwatchtower_progress = ^itwatchtower_complete;
+    p_teleport(2_45_73_48_43);
+    stat_advance(magic, 153000);
+    // https://youtu.be/0hkyRGQImlg?si=huZf7suXxmjXPtxN&t=1198
+    inv_del(inv, watchtower_crystal1, 1);
+    inv_del(inv, watchtower_crystal2, 1);
+    inv_del(inv, watchtower_crystal3, 1);
+    inv_del(inv, watchtower_crystal4, 1);
+    inv_add(inv, coins, 5000);
+    inv_add(inv, spell_scroll, 1);
+    queue(itwatchtower_quest_complete, 0);
+    p_delay(3);
+    %questpoints = add(%questpoints, 4);
+    if(npc_find(coord, watchtower_wizard, 6, 0) = true) {
+        ~chatnpc("<p,happy>Marvellous! it works!|The town will now be safe.");
+        ~chatnpc("<p,happy>Your help was invaluable.|Take this payment as a token of my gratitude...");
+        ~chatnpc("<p,happy>Also, let me improve your Magic level for you.");
+        ~chatnpc("<p,happy>Here is a special item for you...|It's a new spell.|Read the scroll and you will be able|to teleport yourself here magically...");
+    }
+    return;
+}
+mes("It had no effect.");
+
+[proc,watchtower_has_all_crystals]()(boolean)
+if(inv_total(inv, watchtower_crystal1) > 0 & inv_total(inv, watchtower_crystal2) > 0 & inv_total(inv, watchtower_crystal3) > 0 & inv_total(inv, watchtower_crystal4) > 0) {
+    return (true);
+}
+return (false);
+
+[opheld1,spell_scroll]
+if(%itwatchtower_progress = ^itwatchtower_complete) %itwatchtower_progress = ^itwatchtower_complete_read_scroll;
+~mesbox("You memorise what is written on the scroll.");
+inv_del(inv, spell_scroll, 1);
+~mesbox("You can now cast the Watchtower Teleport spell...|...providing you have the required runes and magic level.");
+mes("The scroll crumbles to dust.");
+
+[queue,itwatchtower_quest_complete]
+session_log(^log_adventure, "Quest complete: Watch Tower");
+def_int $random = random(128);
+if ($random < 32) {
+    // The least common music that plays when completing a quest.
+    midi_jingle(^quest_complete_3_jingle, ^quest_complete_3_millis);
+} else if ($random < 64) {
+    // A less common music that plays when completing a quest.
+    midi_jingle(^quest_complete_2_jingle, ^quest_complete_2_millis);
+} else {
+    // The most common music that plays when completing a quest.
+    midi_jingle(^quest_complete_1_jingle, ^quest_complete_1_millis);
+}
+if_settext(questscroll:com_3, "You have finished the Watchtower Quest.");
+if_settext(questscroll:com_9, tostring(4));
+// https://web.archive.org/web/20041229124758im_/http://img7.imageshack.us/img7/9247/complete.jpg
+if_setobject(questscroll:com_4, ogre_relic, 260);
+if_openmain(questscroll);
+if_setcolour(questlist:itwatchtower, ^green_rgb);
+if_settab(questlist, ^tab_quest_journal);
+mes("Congratulations! Quest complete!");

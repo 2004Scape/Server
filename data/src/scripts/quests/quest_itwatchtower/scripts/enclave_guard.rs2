@@ -2,7 +2,7 @@
 if(%itwatchtower_progress < ^itwatchtower_skavid_crystal) {
     ~chatnpc("<p,bored>Stop bothering me, minion!");
 } else if(%itwatchtower_progress >= ^itwatchtower_complete) {
-    mes("The guard is occupied at the moment.");
+    mes("The guard is occupied at the moment."); // rsc
 } else {
     ~chatnpc("<p,quiz>What do you want?");
     switch_int(~p_choice2("I want to go in there.", 1, "I want to rid the world of ogres.", 2)) {

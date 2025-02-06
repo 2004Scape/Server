@@ -1,9 +1,9 @@
 [opnpc1,og]
 if(%itwatchtower_progress >= ^itwatchtower_made_relic | %itwatchtower_progress < ^itwatchtower_given_fingernails) {
     mes("He's busy; try him another time.");
-} if(testbit(%itwatchtower_bits, ^itwatchtower_helped_og) = true) {
+} else if(testbit(%itwatchtower_bits, ^itwatchtower_helped_og) = true) {
     ~chatnpc("<p,bored>It's the little t'ing again.");
-    switch_int(~p_choice2("Do you have any other tasks for me?", 1, "I haven't got it yet.", 2)) {
+    switch_int(~p_choice2("Do you have any other tasks for me?", 1, "I have lost the relic part you gave me.", 2)) {
         case 1 : 
             ~chatplayer("<p,neutral>Do you have any other tasks for me?");
             ~chatnpc("<p,bored>No, I have no more tasks for you, now go away.");
@@ -17,34 +17,7 @@ if(%itwatchtower_progress >= ^itwatchtower_made_relic | %itwatchtower_progress <
             ~chatnpc("<p,angry>Grrr, why do I bother?|It's a good job I got another part.");
     }
 } else if(testbit(%itwatchtower_bits, ^itwatchtower_spoken_og) = true) {
-    ~chatnpc("<p,neutral>Where my gold from dat dirty Toban?");
-    if(inv_total(inv, tobans_gold) > 0) {
-        ~chatplayer("<p,happy>I have your gold.");
-        inv_del(inv, tobans_gold, 1);
-        inv_add(inv, relic_part_1, 1);
-        %itwatchtower_bits = setbit(%itwatchtower_bits, ^itwatchtower_helped_og);
-        ~chatnpc("<p,happy>Well, well, the little t'ing has got it! Take dis to show little t'ing is a friend to da ogres. Hahahahaha!");
-        ~objbox(relic_part_1, "The ogre gives you part of a horrible statue.", 250, 0, 0);
-        return;
-    }
-    switch_int(~p_choice3("I have your gold.", 1, "I haven't got it yet.", 2, "I have lost the key!", 3)) {
-        case 1 :
-            ~chatplayer("<p,happy>I have your gold.");
-            ~chatnpc("<p,angry>No you don't!|If you want to impress me,|get da gold I asked for!");
-        case 2 : 
-            ~chatplayer("<p,sad>I haven't got it yet.");
-            ~chatnpc("<p,angry>Don't come back until you have it,|unless you wanna be on tonight's menu!");
-        case 3 :
-            ~chatplayer("<p,sad>I have lost the key!");
-            if(inv_total(inv, toban_key) = 0) {
-                inv_add(inv, toban_key, 1);
-                ~chatnpc("<p,angry>Stoopid! Take another and don't lose it!");
-                return;
-            }
-            ~chatnpc("<p,angry>Oh yeah? What's dat den?");
-            ~chatplayer("<p,confused>Oh yeah, I've got it right here.");
-            ~chatnpc("<p,angry>Stoopid!");
-    }
+    @og_spoken;
 } else if(%itwatchtower_progress >= ^itwatchtower_given_fingernails) {
     // https://web.archive.org/web/20051025143129im_/http://www.runeweb.net/fireball/Watchtower%20Images/Watchtower5.PNG
     ~chatnpc("<p,confused>Why you here little rat?");
@@ -68,11 +41,38 @@ if(%itwatchtower_progress >= ^itwatchtower_made_relic | %itwatchtower_progress <
     }
 }
 
-[opnpcu,og]
-if(last_useitem = tobans_gold) {
-    if(testbit(%itwatchtower_bits, ^itwatchtower_spoken_og) = true & testbit(%itwatchtower_bits, ^itwatchtower_helped_og) = false) {
-        p_opnpc(1);
-    }
+[label,og_spoken]
+~chatnpc("<p,neutral>Where my gold from dat dirty Toban?");
+if(inv_total(inv, tobans_gold) > 0) {
+    ~chatplayer("<p,happy>I have your gold.");
+    inv_del(inv, tobans_gold, 1);
+    inv_add(inv, relic_part_1, 1);
+    %itwatchtower_bits = setbit(%itwatchtower_bits, ^itwatchtower_helped_og);
+    ~chatnpc("<p,happy>Well, well, the little t'ing has got it! Take dis to show little t'ing is a friend to da ogres. Hahahahaha!");
+    ~objbox(relic_part_1, "The ogre gives you part of a horrible statue.", 250, 0, divide(^objbox_height, 2));
     return;
+}
+switch_int(~p_choice3("I have your gold.", 1, "I haven't got it yet.", 2, "I have lost the key!", 3)) {
+    case 1 :
+        ~chatplayer("<p,happy>I have your gold.");
+        ~chatnpc("<p,angry>No you don't!|If you want to impress me,|get da gold I asked for!");
+    case 2 : 
+        ~chatplayer("<p,sad>I haven't got it yet.");
+        ~chatnpc("<p,angry>Don't come back until you have it,|unless you wanna be on tonight's menu!");
+    case 3 :
+        ~chatplayer("<p,sad>I have lost the key!");
+        if(inv_total(inv, toban_key) = 0) {
+            inv_add(inv, toban_key, 1);
+            ~chatnpc("<p,angry>Stoopid! Take another and don't lose it!");
+            return;
+        }
+        ~chatnpc("<p,angry>Oh yeah? What's dat den?");
+        ~chatplayer("<p,confused>Oh yeah, I've got it right here.");
+        ~chatnpc("<p,angry>Stoopid!");
+}
+
+[opnpcu,og]
+if(last_useitem = tobans_gold & testbit(%itwatchtower_bits, ^itwatchtower_spoken_og) = true & testbit(%itwatchtower_bits, ^itwatchtower_helped_og) = false) {
+    @og_spoken;
 }
 ~displaymessage(^dm_default);
