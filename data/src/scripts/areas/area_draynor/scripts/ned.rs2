@@ -184,7 +184,7 @@ if ($choice = 1) {
         ~chatnpc("<p,neutral>I said I would and old Ned is a man of his word!"); // osrs
         ~chatnpc("<p,quiz>So where's your ship?");
         @ned_so_wheres_your_ship;
-    } else if (%dragon_progress = ^quest_dragon_ned_given_map) {
+    } else if ((%dragon_progress = ^quest_dragon_ned_given_map | %dragon_progress = ^quest_dragon_sailed_to_crandor)) {
         ~chatnpc("<p,neutral>I said I would and old Ned is a man of his word! I'll meet you on board the Lady Lumbridge in Port Sarim.");
         return;
     }
