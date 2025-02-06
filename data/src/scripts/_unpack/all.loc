@@ -13519,7 +13519,6 @@ width=4
 length=2
 op1=Enter
 active=yes
-category=watchtower_cave_entrance
 
 [loc_2805]
 name=Cave entrance
@@ -13528,7 +13527,6 @@ model=model_loc_2
 width=4
 length=2
 op1=Enter
-category=watchtower_cave_entrance
 
 [loc_2806]
 name=Cave entrance
@@ -13537,7 +13535,6 @@ model=model_loc_2
 width=4
 length=2
 op1=Enter
-category=watchtower_cave_entrance
 
 [loc_2807]
 name=Cave entrance
@@ -13546,7 +13543,6 @@ model=model_loc_2
 width=4
 length=2
 op1=Enter
-category=watchtower_cave_entrance
 
 [loc_2808]
 name=Cave entrance
@@ -13555,7 +13551,6 @@ model=model_loc_2
 width=4
 length=2
 op1=Enter
-category=watchtower_cave_entrance
 
 [loc_2809]
 name=Cave entrance
@@ -13564,7 +13559,6 @@ model=model_loc_2
 width=4
 length=2
 op1=Enter
-category=watchtower_cave_entrance
 
 [loc_2810]
 name=Cave entrance
@@ -13573,7 +13567,6 @@ model=model_loc_2
 width=4
 length=2
 op1=Enter
-category=watchtower_cave_entrance
 
 [loc_2811]
 name=Cave entrance
