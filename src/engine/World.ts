@@ -392,9 +392,9 @@ class World {
             }
 
             if (Environment.WEB_PORT === 80) {
-                printInfo(kleur.green().bold('World ready') + kleur.white().bold(': http://localhost'));
+                printInfo(kleur.green().bold('World ready') + kleur.white().bold(': Visit http://localhost/rs2.cgi'));
             } else {
-                printInfo(kleur.green().bold('World ready') + kleur.white().bold(': http://localhost:' + Environment.WEB_PORT));
+                printInfo(kleur.green().bold('World ready') + kleur.white().bold(': Visit http://localhost:' + Environment.WEB_PORT + '/rs2.cgi'));
             }
         }
 
