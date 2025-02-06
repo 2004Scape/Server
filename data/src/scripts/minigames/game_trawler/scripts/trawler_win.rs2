@@ -78,11 +78,13 @@ while ($i < %trawler_catch) {
 
 [if_close,trawler_catch]
 def_int $i = 0;
-while ($i < inv_size(trawler_catch)) {
-    if (inv_getobj(trawler_catch, $i) ! null) {
-        inv_dropslot(trawler_catch, coord, $i, 100); // drops in osrs
+if(p_finduid(uid) = true) {
+    while ($i < inv_size(trawler_catch)) {
+        if (inv_getobj(trawler_catch, $i) ! null) {
+            inv_dropslot(trawler_catch, coord, $i, 100); // drops in osrs
+        }
+        $i = add($i, 1);
     }
-    $i = add($i, 1);
 }
 inv_stoptransmit(trawler_catch:inv);
 

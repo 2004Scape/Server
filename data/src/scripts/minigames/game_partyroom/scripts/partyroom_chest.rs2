@@ -11,7 +11,7 @@ if_openmain_side(party_drop_chest, party_drop_chest_side);
 inv_stoptransmit(party_drop_chest_side:inv);
 inv_stoptransmit(party_drop_chest:inv);
 inv_stoptransmit(party_drop_chest:playerinv);
-~moveallinv(partyroomoffer, inv);
+if(p_finduid(uid) = true) ~moveallinv(partyroomoffer, inv);
 
 [oploc3,loc_2418]
 ~close_chest(loc_2417);

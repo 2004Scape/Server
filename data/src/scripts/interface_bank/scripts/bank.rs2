@@ -16,7 +16,7 @@ inv_transmit(bank, bank_main:inv);
 if_openmain_side(bank_main, bank_side);
 
 [label,closebank]
-~reorganize_bank;
+if(p_finduid(uid) = true) ~reorganize_bank;
 inv_stoptransmit(bank_side:inv);
 inv_stoptransmit(bank_main:inv);
 
