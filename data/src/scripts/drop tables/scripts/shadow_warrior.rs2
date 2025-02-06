@@ -9,16 +9,6 @@ obj_add(npc_coord, npc_param(death_drop), 1, ^lootdrop_duration);
 
 def_int $random = random(128);
 
-// Released on 20 August 2003 on RSC, the runes it could drop were:
-// 30 air runes
-// 1 blood rune
-// 1 death rune
-// 2 cosmic runes
-
-// Earliest RS2 source I could find is from mid 2006 https://runescape.wiki/w/Shadow_warrior?oldid=4577
-// All drops are same except an increased quantity of runes.
-// Since the RSC data is much closer to 2004, I went with that.
-
 if ($random < 1) {
     obj_add(npc_coord, adamant_spear, 1, ^lootdrop_duration);
 } else if ($random < 2) {
@@ -30,13 +20,13 @@ if ($random < 1) {
 } else if ($random < 5) {
     obj_add(npc_coord, wizards_robe_black, 1, ^lootdrop_duration);
 } else if ($random < 14) {
-    obj_add(npc_coord, cosmicrune, 2, ^lootdrop_duration);
+    obj_add(npc_coord, cosmicrune, 3, ^lootdrop_duration);
 } else if ($random < 20) {
-    obj_add(npc_coord, bloodrune, 1, ^lootdrop_duration);
+    obj_add(npc_coord, bloodrune, 2, ^lootdrop_duration);
 } else if ($random < 24) {
-    obj_add(npc_coord, airrune, 30, ^lootdrop_duration);
+    obj_add(npc_coord, airrune, 45, ^lootdrop_duration);
 } else if ($random < 28) {
-    obj_add(npc_coord, deathrune, 1, ^lootdrop_duration);
+    obj_add(npc_coord, deathrune, 2, ^lootdrop_duration);
 } else if ($random < 75) {
     obj_add(npc_coord, coins, 8, ^lootdrop_duration);
 } else if ($random < 79) {
