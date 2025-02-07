@@ -1017,6 +1017,7 @@ class World {
                 type: 'player_login',
                 username: player.username,
                 chatModePrivate: player.privateChat,
+                staffLvl: player.staffModLevel
             });
         }
         this.newPlayers.clear();

@@ -48,8 +48,8 @@ async function handleRequests(_parentPort: ParentPort, msg: any) {
         }
         case 'player_login': {
             if (Environment.FRIEND_SERVER) {
-                const { username, chatModePrivate } = msg;
-                await client.playerLogin(username, chatModePrivate);
+                const { username, chatModePrivate, staffLvl } = msg;
+                await client.playerLogin(username, chatModePrivate, staffLvl);
             }
             break;
         }
