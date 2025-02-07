@@ -22,13 +22,12 @@ if (last_useitem ! bucket_water) {
     return;
 }
 mes("You pour the liquid down the drain.");
+inv_del(inv, bucket_water, 1);
+inv_add(inv, bucket_empty, 1);
 p_delay(2);
 mes("Ok, I think I've washed the key down to the sewer.");
 p_delay(2);
 mes("I'd better go down and get it before someone else finds it.");
-p_delay(2);
-inv_del(inv, bucket_water, 1);
-inv_add(inv, bucket_empty, 1);
 // Tele to 3227 9898 0
 // todo: this should be instanced per player
 obj_add(0_50_154_25_41, demon_prysin_key, 1, 300); // Guessing Duration is ticks?
