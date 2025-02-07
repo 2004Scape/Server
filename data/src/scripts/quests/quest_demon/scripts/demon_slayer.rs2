@@ -24,7 +24,6 @@ if (last_useitem ! bucket_water) {
 mes("You pour the liquid down the drain.");
 inv_del(inv, bucket_water, 1);
 inv_add(inv, bucket_empty, 1);
-p_delay(2);
 mes("Ok, I think I've washed the key down to the sewer.");
 p_delay(2);
 mes("I'd better go down and get it before someone else finds it.");
