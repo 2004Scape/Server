@@ -948,6 +948,8 @@ export default class Player extends PathingEntity {
     }
 
     validateTarget(): boolean {
+        // todo: all of these validation checks should be checking against the entity itself rather than trying to look up a similar entity from the World
+
         // Validate that the target is on the same floor and that it's not a player who is invisible
         if (this.target?.level !== this.level || (this.target instanceof Player && this.target.visibility !== Visibility.DEFAULT)) {
             return false;
