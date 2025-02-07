@@ -222,7 +222,10 @@ while ($i < 50) {
     $nw = movecoord($sw, 1, 0, 0);
     $se = movecoord($sw, 0, 0, 1);
     $ne = movecoord($sw, 1, 0, 1);
-    if (map_blocked($sw) = false & map_blocked($nw) = false & map_blocked($se) = false & map_blocked($ne) = false & lineofwalk($sw, $ne) = true & $sw ! coord & $se ! coord & $nw ! coord & $ne ! coord){
+    if (map_blocked($sw) = false & map_blocked($nw) = false & map_blocked($se) = false & map_blocked($ne) = false
+        & $sw ! coord & $se ! coord & $nw ! coord & $ne ! coord
+        & lineofwalk($sw, coord) = true
+        ){
         return($sw);
     }
     $i = calc($i + 1);
