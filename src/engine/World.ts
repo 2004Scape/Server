@@ -696,7 +696,7 @@ class World {
                     // x-logged / timed out for 60s: logout
                     player.loggedOut = true;
                 } else if (this.currentTick - player.lastResponse >= World.TIMEOUT_SOCKET_IDLE) {
-                    // x-logged / timed out for 10s: attempt logout
+                    // x-logged / timed out for 30s: attempt logout
                     player.tryLogout = true;
                 }
 
