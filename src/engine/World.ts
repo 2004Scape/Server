@@ -1777,11 +1777,7 @@ class World {
                 const player = PlayerLoading.load(username, new Packet(save), client);
 
                 player.reconnecting = reconnecting;
-                if (staffmodlevel === undefined) {
-                    player.staffModLevel = 0;
-                } else {
-                    player.staffModLevel = staffmodlevel;
-                }
+                player.staffModLevel = staffmodlevel ?? 0;
                 player.lowMemory = lowMemory;
                 player.muted_until = muted_until ? new Date(muted_until) : null;
 
