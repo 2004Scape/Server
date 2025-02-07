@@ -32,6 +32,7 @@ import MoveStrategy from '#/engine/entity/MoveStrategy.js';
 import BuildArea from '#/engine/entity/BuildArea.js';
 import HeroPoints from '#/engine/entity/HeroPoints.js';
 import { isClientConnected } from '#/engine/entity/NetworkPlayer.js';
+import Entity from '#/engine/entity/Entity.js';
 
 import { Inventory } from '#/engine/Inventory.js';
 import World from '#/engine/World.js';
@@ -213,6 +214,7 @@ export default class Player extends PathingEntity {
     vars: Int32Array;
     varsString: string[];
     invs: Map<number, Inventory> = new Map<number, Inventory>();
+    nextTarget: Entity | null = null;
 
     publicChat: ChatModePublic = ChatModePublic.ON;
     privateChat: ChatModePrivate = ChatModePrivate.ON;
@@ -870,13 +872,12 @@ export default class Player extends PathingEntity {
             this.messageGame(`No trigger for [${ServerTriggerType[this.targetOp + 7].toLowerCase()},${debugname}]`);
         }
 
-        this.target = null;
         this.messageGame('Nothing interesting happens.');
         this.interacted = true;
         this.clearWaypoints();
     }
 
-    tryInteraction(allowOpScenery: boolean) {
+    tryInteract(allowOpScenery: boolean) {
         if (this.target === null || !this.canAccess()) {
             return;
         }
@@ -884,45 +885,63 @@ export default class Player extends PathingEntity {
         const opTrigger = this.getOpTrigger();
         const apTrigger = this.getApTrigger();
 
-        // Try op
+        // Run the opTrigger if it exists and Player is within range
+        // allowOpScenery controls if Locs and Objs can be op'd
         if (opTrigger && (this.target instanceof PathingEntity || allowOpScenery) && this.inOperableDistance(this.target)) {
             const target = this.target;
+
             this.target = null;
             this.clearWaypoints();
 
             this.executeScript(ScriptRunner.init(opTrigger, this, target), true);
             this.interacted = true;
+
+            // If p_opnpc was called, remember it for later
+            // For now, keep the current target
+            this.nextTarget = this.target;
+            this.target = target;
         }
 
-        // Try ap
+        // Run the apTrigger if it exists and Player is within range
         else if (apTrigger && this.inApproachDistance(this.apRange, this.target)) {
+            // Reset apRangeCalled
             this.apRangeCalled = false;
 
-            const target = this.target;
-            this.target = null;
+            // Store initial values
             const wayPoints = this.waypoints;
             const waypointIndex = this.waypointIndex;
+            const target = this.target;
+
+            this.target = null;
             this.clearWaypoints();
 
             this.executeScript(ScriptRunner.init(apTrigger, this, target), true);
+            this.interacted = true;
 
+            // If p_opnpc was called, remember it for later
+            // For now, keep the current target
+            this.nextTarget = this.target;
+            this.target = target;
+
+            // If p_opnpc was called, make sure destination is not set
+            if (this.nextTarget) {
+                this.clearWaypoints();
+            }
             // if aprange was called then we did not interact.
-            if (this.apRangeCalled) {
+            else if (this.apRangeCalled) {
                 this.waypoints = wayPoints;
                 this.waypointIndex = waypointIndex;
                 this.target = target;
-            } else {
-                if (this.target === target) {
-                    // if p_opnpc was called
-                    this.clearWaypoints();
-                }
-                this.interacted = true;
+                this.interacted = false;
             }
-        } else if (this.inApproachDistance(this.apRange, this.target)) {
+        }
+
+        // Run the default apTrigger. This is the ap analog to the "NIH" default op
+        else if (this.inApproachDistance(this.apRange, this.target)) {
             this.apRange = -1;
         }
 
-        // Try default op
+        // Run the default opTrigger if within range
         else if (this.target && (this.target instanceof PathingEntity || allowOpScenery) && this.inOperableDistance(this.target)) {
             this.defaultOp();
         }
@@ -930,7 +949,7 @@ export default class Player extends PathingEntity {
 
     validateTarget(): boolean {
         // Validate that the target is on the same floor and that it's not a player who is invisible
-        if (this.target.level !== this.level || (this.target instanceof Player && this.target.visibility !== Visibility.DEFAULT)) {
+        if (this.target?.level !== this.level || (this.target instanceof Player && this.target.visibility !== Visibility.DEFAULT)) {
             return false;
         }
 
@@ -939,7 +958,7 @@ export default class Player extends PathingEntity {
             return false;
         }
 
-        // this is effectively checking if the npc did a changetype
+        // This is effectively checking if the npc did a changetype
         if (this.target instanceof Npc && this.targetSubject.type !== -1 && World.getNpcByUid((this.targetSubject.type << 16) | this.target.nid) === null) {
             return false;
         }
@@ -975,6 +994,7 @@ export default class Player extends PathingEntity {
         }
 
         const opTrigger = this.getOpTrigger();
+        this.nextTarget = null;
 
         // opplayer3 is `Follow`
         // Follow interaction behaves different than standard ones
@@ -997,28 +1017,39 @@ export default class Player extends PathingEntity {
         }
 
         // Try an interaction
-        this.tryInteraction(false);
+        this.tryInteract(false);
 
         let moved = false;
-        if (this.interacted && !this.apRangeCalled) {
-            this.recoverEnergy(false);
-        } else if (this.target) {
-            this.interacted = false;
-            this.processWalktrigger();
-            moved = this.updateMovement();
 
-            this.tryInteraction(!moved);
+        // If interacted, recover energy because the Player did not move
+        if (this.interacted) {
+            this.recoverEnergy(false);
         }
 
+        // Otherwise, a target still exists to try to interact with
+        else if (this.target) {
+            this.processWalktrigger();
+            moved = this.updateMovement();
+            this.tryInteract(!moved);
+        }
+
+        // If Player did not interact, has no path, and did not move this cycle, terminate the interaction
         if (!this.interacted && !this.hasWaypoints() && !moved) {
             this.messageGame("I can't reach that!");
             this.clearInteraction();
         }
 
-        if (this.interacted && !this.apRangeCalled && this.target === null) {
+        // If a script called p_op*, then nextTarget is prepped for next cycle
+        else if (this.nextTarget) {
+            this.target = this.nextTarget;
+        }
+
+        // Otherwise, the interaction ran
+        else if (this.interacted && !this.apRangeCalled) {
             this.clearInteraction();
         }
 
+        // Remove mapflag if there are no waypoints
         if (!this.hasWaypoints()) {
             this.unsetMapFlag();
         }
