@@ -20,6 +20,11 @@ export class FriendServerRepository {
     private worldByPlayer: Record<string, number> = {};
 
     /**
+     * logged in player staff on any world
+     */
+    private playerStaff: Set<bigint> = new Set();
+
+    /**
      * privateChatByPlayer[username] = privateChat
      */
     private privateChatByPlayer: Record<string, ChatModePrivate> = {};
@@ -54,7 +59,7 @@ export class FriendServerRepository {
         return this.privateChatByPlayer[username];
     }
 
-    public async register(world: number, username37: bigint, privateChat: ChatModePrivate) {
+    public async register(world: number, username37: bigint, privateChat: ChatModePrivate, staffLvl: number = 0) {
         const username = fromBase37(username37);
 
         // add player to new world
@@ -63,6 +68,10 @@ export class FriendServerRepository {
             // TODO handle this better?
             console.error(`[Friends]: World ${world} is full`);
             return false;
+        }
+
+        if (!this.playerStaff.has(username37) && staffLvl > 0) {
+            this.playerStaff.add(username37);
         }
 
         this.playersByWorld[world][newIndex] = username37;
@@ -86,6 +95,7 @@ export class FriendServerRepository {
                 delete this.worldByPlayer[username];
                 delete this.privateChatByPlayer[username];
                 delete this.playerFriends[username];
+                this.playerStaff.delete(username37);
                 return;
             }
         }
@@ -103,6 +113,7 @@ export class FriendServerRepository {
                 delete this.worldByPlayer[username];
                 delete this.privateChatByPlayer[username];
                 delete this.playerFriends[username];
+                this.playerStaff.delete(username37);
             }
         }
     }
@@ -339,7 +350,12 @@ export class FriendServerRepository {
      * @returns Whether the viewer can see the other player's online status
      */
     public isVisibleTo(viewer37: bigint, other37: bigint) {
+        const isViewerStaff = this.playerStaff.has(viewer37);
         const otherUsername = fromBase37(other37);
+
+        if (isViewerStaff) {
+            return true;
+        }
 
         if (this.playerIgnores[otherUsername] && this.playerIgnores[otherUsername].includes(viewer37)) {
             return false;

@@ -12,6 +12,7 @@ export default class ReportAbuseHandler extends MessageHandler<ReportAbuse> {
         }
 
         World.notifyPlayerReport(player, fromBase37(message.offender), message.reason);
+        player.messageGame('Thank-you, your abuse report has been received.');
         return true;
     }
 }

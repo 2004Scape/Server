@@ -25,7 +25,7 @@ if ($random < 4) {
 } else if ($random < 13) {
     obj_add(npc_coord, rune_full_helm, 1, ^lootdrop_duration);
 } else if ($random < 21) {
-    obj_add(npc_coord, firerune, 76, ^lootdrop_duration);
+    obj_add(npc_coord, firerune, 75, ^lootdrop_duration);
 } else if ($random < 24) {
     obj_add(npc_coord, chaosrune, 15, ^lootdrop_duration);
 } else if ($random < 27) {
@@ -47,7 +47,7 @@ if ($random < 4) {
 } else if ($random < 120) {
     obj_add(npc_coord, gold_bar, 1, ^lootdrop_duration);
 } else if ($random < 121) {
-    obj_add(npc_coord, thread, 1, ^lootdrop_duration);
+    obj_add(npc_coord, thread, 10, ^lootdrop_duration);
 } else if ($random < 126) {
     obj_add(npc_coord, ~randomjewel, ^lootdrop_duration);
 }

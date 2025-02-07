@@ -1,4 +1,5 @@
 import fs from 'fs';
+import fsp from 'fs/promises';
 import { WebSocketServer } from 'ws';
 
 import bcrypt from 'bcrypt';
@@ -110,7 +111,7 @@ export default class LoginServer {
                             return;
                         }
 
-                        const save = fs.readFileSync(`data/players/${profile}/${username}.sav`);
+                        const save = await fsp.readFile(`data/players/${profile}/${username}.sav`);
                         s.send(JSON.stringify({
                             replyTo,
                             response: 0,
@@ -126,10 +127,10 @@ export default class LoginServer {
                         const raw = Buffer.from(save, 'base64');
                         if (PlayerLoading.verify(new Packet(raw))) {
                             if (!fs.existsSync(`data/players/${profile}`)) {
-                                fs.mkdirSync(`data/players/${profile}`, { recursive: true });
+                                await fsp.mkdir(`data/players/${profile}`, { recursive: true });
                             }
 
-                            fs.writeFileSync(`data/players/${profile}/${username}.sav`, raw);
+                            await fsp.writeFile(`data/players/${profile}/${username}.sav`, raw);
                         } else {
                             console.error(username, 'Invalid save file');
                         }
@@ -149,10 +150,10 @@ export default class LoginServer {
                         const raw = Buffer.from(save, 'base64');
                         if (PlayerLoading.verify(new Packet(raw))) {
                             if (!fs.existsSync(`data/players/${profile}`)) {
-                                fs.mkdirSync(`data/players/${profile}`, { recursive: true });
+                                await fsp.mkdir(`data/players/${profile}`, { recursive: true });
                             }
 
-                            fs.writeFileSync(`data/players/${profile}/${username}.sav`, raw);
+                            await fsp.writeFile(`data/players/${profile}/${username}.sav`, raw);
                         } else {
                             console.error(username, 'Invalid save file');
                         }

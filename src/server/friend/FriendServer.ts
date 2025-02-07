@@ -111,7 +111,7 @@ export class FriendServer {
                         // remove player from previous world, if any
                         this.repository.unregister(username37);
 
-                        if (!await this.repository.register(world, username37, privateChat)) {
+                        if (!await this.repository.register(world, username37, privateChat, message.staffLvl)) {
                             // TODO handle this better?
                             // console.error(`[Friends]: World ${world} is full`);
                             return;
@@ -437,7 +437,7 @@ export class FriendClient extends InternalClient {
         }));
     }
 
-    public async playerLogin(username: string, privateChat: number) {
+    public async playerLogin(username: string, privateChat: number, staffLvl: number) {
         await this.connect();
 
         if (!this.ws || !this.wsr || !this.wsr.checkIfWsLive()) {
@@ -448,7 +448,8 @@ export class FriendClient extends InternalClient {
             type: FriendsClientOpcodes.PLAYER_LOGIN,
             world: this.nodeId,
             username37: toBase37(username).toString(),
-            privateChat
+            privateChat,
+            staffLvl
         }));
     }
 

@@ -112,7 +112,7 @@ if(stat_random(stat(thieving), 100, 240) = false) {
 [opnpcu,digsite_workman]
 if (last_useitem = invitation_letter) {
     inv_del(inv, invitation_letter, 1);
-    ~itexam_set_progress(^itexam_mineshaft_permit);
+    if(%itexam_progress = ^itexam_impress_archeological_expert) ~itexam_set_progress(^itexam_mineshaft_permit);
     ~chatplayer("<p,happy>Here, have a look at this...");
     ~chatnpc("<p,bored>I give permission... blah de blah... etc. Okay, that's all in order; you may use the mineshaft now. I'll hang onto this scroll, shall I?");
 } else {

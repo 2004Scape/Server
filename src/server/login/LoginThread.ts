@@ -54,20 +54,20 @@ async function handleRequests(parentPort: ParentPort, msg: any) {
             const { socket, remoteAddress, username, password, uid, lowMemory, reconnecting } = msg;
 
             if (Environment.LOGIN_SERVER) {
+                const response = await client.playerLogin(username, password, uid, socket, remoteAddress);
+
                 parentPort.postMessage({
                     type: 'player_login',
                     socket,
                     username,
                     lowMemory,
                     reconnecting,
-                    ...await client.playerLogin(username, password, uid, socket, remoteAddress)
+                    ...response
                 });
             } else {
                 let staffmodlevel = 0;
                 if (!Environment.NODE_PRODUCTION) {
                     staffmodlevel = 3; // dev (destructive commands)
-                } else if (Environment.NODE_STAFF.find(name => name === username) !== undefined) {
-                    staffmodlevel = 2; // staff (moderation commands)
                 }
 
                 const profile = Environment.NODE_PROFILE;

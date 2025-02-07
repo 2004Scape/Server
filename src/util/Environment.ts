@@ -4,7 +4,7 @@ import WalkTriggerSetting from '#/util/WalkTriggerSetting.js';
 
 export default {
     EASY_STARTUP: tryParseBoolean(process.env.EASY_STARTUP, false),
-    WEBSITE_REGISTRATION: tryParseBoolean(process.env.WEBSITE_REGISTRATION, false),
+    WEBSITE_REGISTRATION: tryParseBoolean(process.env.WEBSITE_REGISTRATION, true),
 
     // bundler/webrtc browser mode
     STANDALONE_BUNDLE: tryParseBoolean(process.env.STANDALONE_BUNDLE, false),
@@ -28,15 +28,12 @@ export default {
     NODE_PRODUCTION: tryParseBoolean(process.env.NODE_PRODUCTION, false),
     // automatic shutdown time for production mode on sigint
     NODE_KILLTIMER: tryParseInt(process.env.NODE_KILLTIMER, 500), // 5 minutes
-    NODE_ALLOW_CHEATS: tryParseBoolean(process.env.NODE_ALLOW_CHEATS, true),
     // extra debug info e.g. missing triggers
     NODE_DEBUG: tryParseBoolean(process.env.NODE_DEBUG, true),
     // measuring script execution
     NODE_DEBUG_PROFILE: tryParseBoolean(process.env.NODE_DEBUG_PROFILE, false),
     // doing headless bot testing!
     NODE_DEBUG_SOCKET: tryParseBoolean(process.env.NODE_DEBUG_SOCKET, false),
-    // *only* if no login server is running to authenticate accounts, this provides admin accs by username :)
-    NODE_STAFF: tryParseArray(process.env.NODE_STAFF?.split(','), ['pazaz']),
     // no server routefinding until 2009
     NODE_CLIENT_ROUTEFINDER: tryParseBoolean(process.env.NODE_CLIENT_ROUTEFINDER, true),
     // yellow-x walktriggers in osrs went from: in packet handler -> in player setup -> player movement

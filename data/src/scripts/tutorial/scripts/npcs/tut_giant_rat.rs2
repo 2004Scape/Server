@@ -89,7 +89,7 @@ if (inv_getobj(worn, ^wearpos_rhand) ! null) {
     }
 }
 
-if (testbit(%attackstyle_magic, 0) = true & %attackstyle_magic = 3 & %autocast_spell > 0){
+if (~player_autocast_enabled = true){
     $attackrange = 10;
 }
 if ($attackrange <= 1) {

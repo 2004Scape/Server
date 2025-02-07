@@ -441,6 +441,7 @@ def_int $rand = random(20);
 
 if ($rand < 2) {
     mes("You find nothing.");
+    return;
 } else if ($rand < 3) {
     if (~itexam_testbit(^itexam_bit_shown_ancient_symbol) = false & inv_total(inv, talisman_of_zaros) = 0) {
         inv_add(inv, talisman_of_zaros, 1);
@@ -705,7 +706,6 @@ facesquare(0_52_53_25_25);
 if (~itexam_progress = ^itexam_poured_compound_on_bricks) {
     ~chatplayer("<p,neutral>The brick is covered with the chemicals I made.");
 } else {
-    ~itexam_setbit(^itexam_bit_searched_bricks);
     ~chatplayer("<p,neutral>Hmmm, there's a room past these bricks. If I could move them out of the way then I could find out what's inside. Maybe there's someone around here who can help...");
 }
 

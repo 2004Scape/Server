@@ -153,11 +153,6 @@ type=player_uid
 
 [skill_sound]
 
-[thieving_stall_timer]
-scope=perm
-
-[varp_133]
-
 [varp_134]
 
 [varp_135]
@@ -166,7 +161,8 @@ scope=perm
 
 [varp_137]
 
-[varp_138]
+[thieving_stall_timer]
+scope=perm
 
 [legends_progress]
 scope=perm

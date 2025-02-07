@@ -1,32 +1,9 @@
 [opnpc1,curator]
 ~chatnpc("<p,neutral>Welcome to the museum of Varrock.");
-if (inv_total(inv, unstamped_letter) > 0) {
-    ~chatplayer("<p,neutral>I have been given this letter by an examiner at the Dig Site. Can you stamp this for me?");
-    ~chatnpc("<p,neutral>What we have here? A letter of recommendation indeed...");
-    // TODO: I'm not sure if this variance was available in the original 2004 port or not (likely not based on the rsc video)
-    if (%phoenixgang_progress = ^phoenixgang_complete | %blackarmgang_progress = ^blackarmgang_complete) {
-        ~chatnpc("<p,neutral>The letter here says your name is <displayname>. Well, <displayname>, I wouldn't normally do this for just anyone, but as you did such a great service with the Shielf of Arrav I don't see why not. Run this letter back to the Examiner to begin your adventure into the world of Earth Sciences. Enjoy your studies, Student!");
-    } else if (%romeojuliet_progress = ^romeojuliet_spoken_father) {
-        ~chatnpc("<p,neutral>The letter here says your name is <displayname>. Well, <displayname>, I wouldn't normally do this for just anyone, but I heard what you did for Romeo and Juliet so I don't see why not. Run this letter back to the Examiner to begin your adventure into the world of Earth Sciences. Enjoy your studies, Student!");
-    } else {
-        ~chatnpc("<p,neutral>The letter here says your name is <displayname>. Well, <displayname>, I wouldn't normally do this for just anyone, but in this instance I don't see why not. Run this letter back to the Examiner to begin your adventure into the world of Earth Sciences. Enjoy your studies, Student!");
-    }
-    // osrs sets varbit 2552 (varp 135, bit 9) to 1 signifying we've already stamped once, if we bring another letter to stamp the curator will instead say
-    // player: I have another letter here; could you stamp it for me again?
-    // curator <confused>: You've already given me one of those! But... ok, give it here...
-    // player: Thanks!
-
-    // another fun fact is that osrs clears this varbit after quest completion, meaning we can go back to the curator and get the initial dialogue again
-
-    // there's also this if we loose all the stamped letters and are still in the %itexam_progress = ^itexam_stamping quest stage
-    // player <sad>: I seem to have lost the letter of recommendation that you stamped for me.
-    // curator: Yes, I saw you drop it as you walked off last time. Here it is.
-    // player: Thanks!
-    inv_del(inv, unstamped_letter, 1);
-    inv_add(inv, stamped_letter, 1);
-    ~chatnpc("<p,neutral>There you go, good luck student... Be sure to come back and show me your certificates. I would like to see how you get on.");
-    ~chatplayer("<p,neutral>Ok, I will. Thanks, see you later.");
-}
+if (inv_total(inv, unstamped_letter) > 0) @curator_stamp_letter;
+if (inv_total(inv, level_1_certificate) > 0) @curator_level_1;
+if (inv_total(inv, level_2_certificate) > 0) @curator_level_2;
+if (inv_total(inv, level_3_certificate) > 0) @curator_level_3;
 if(%phoenixgang_progress = ^phoenixgang_joined | %blackarmgang_progress = ^blackarmgang_joined) {
     if(inv_total(inv, arravshield1) > 0 & inv_total(inv, arravshield2) > 0) { // mostly 1-1 with RSC
         ~chatplayer("<p,quiz>I have retrieved the shield of Arrav|and I would like to claim my reward.");
@@ -60,4 +37,64 @@ if($option = 1) {
     ~chatnpc("<p,neutral>Look around you! This museum is full of treasures!");
     ~chatplayer("<p,sad>No, I meant treasures for ME.");
     ~chatnpc("<p,neutral>Any treasures this museum knows about it goes to great lengths to acquire.");
+}
+
+[opnpcu,curator]
+switch_obj(last_useitem) {
+    case unstamped_letter : @curator_stamp_letter;
+    case stamped_letter : ~chatnpc("<p,confused>No, I don't want it back, thank you.");
+    case level_1_certificate : @curator_level_1;
+    case level_2_certificate : @curator_level_2;
+    case level_3_certificate : @curator_level_3;
+    case default : ~displaymessage(^dm_default);
+}
+
+[label,curator_stamp_letter]
+~chatplayer("<p,happy>I have been given this letter by an examiner at the Dig Site. Can you stamp this for me?");
+~chatnpc("<p,confused>What we have here? A letter of recommendation indeed...");
+~chatnpc("<p,happy>Normally I wouldn't do this...|But in this instance I don't see why not.");
+// osrs sets varbit 2552 (varp 135, bit 9) to 1 signifying we've already stamped once, if we bring another letter to stamp the curator will instead say
+// player: I have another letter here; could you stamp it for me again?
+// curator <confused>: You've already given me one of those! But... ok, give it here...
+// player: Thanks!
+
+// another fun fact is that osrs clears this varbit after quest completion, meaning we can go back to the curator and get the initial dialogue again
+
+// there's also this if we loose all the stamped letters and are still in the %itexam_progress = ^itexam_stamping quest stage
+// player <sad>: I seem to have lost the letter of recommendation that you stamped for me.
+// curator: Yes, I saw you drop it as you walked off last time. Here it is.
+// player: Thanks!
+inv_del(inv, unstamped_letter, 1);
+inv_add(inv, stamped_letter, 1);
+~chatnpc("<p,happy>There you go, good luck student...|Be sure to come back and show me your certificates.|I would like to see how you get on.");
+ ~chatplayer("<p,happy>Okay, I will. Thanks, see you later.");
+
+
+[label,curator_level_1]
+inv_del(inv, level_1_certificate, 1);
+~chatplayer("<p,happy>Look what I have been awarded.");
+~chatnpc("<p,happy>Well that's great, well done.|I'll take that for safekeeping;|come and tell me when you are the next level.");
+
+[label,curator_level_2]
+inv_del(inv, level_2_certificate, 1);
+~chatplayer("<p,happy>Look, I am level 2 now...");
+~chatnpc("<p,happy>Excellent work!|I'll take that for safe keeping,|remember to come and see me when you have graduated.");
+
+[label,curator_level_3]
+inv_del(inv, level_3_certificate, 1);
+~chatplayer("<p,happy>Look at this certificate, curator...");
+~chatnpc("<p,happy>Well, well - a level 3 graduate!|I'll keep your certificate safe for you.|I feel I must reward you for your work...");
+~chatnpc("<p,neutral>What would you prefer: something to eat or drink?");
+switch_int(~p_choice2("Something to eat please.", 1, "Something to drink please.", 2)) { 
+    case 1 :
+        ~chatplayer("<p,happy>Something to eat please.");
+        inv_add(inv, chocolate_cake, 1);
+        ~chatnpc("<p,happy>Very good! Come and eat this cake I baked!");
+    case 2 : 
+        ~chatnpc("<p,happy>Certainly, have this...");
+        inv_add(inv, fruit_blast, 1);
+        ~chatplayer("<p,quiz>A cocktail?");
+        ~chatnpc("<p,happy>It's a new recipe from the gnome kingdom.|You'll like it I'm sure!");
+        ~chatplayer("<p,happy>Cheers!");
+        ~chatnpc("<p,happy>Cheers!");
 }

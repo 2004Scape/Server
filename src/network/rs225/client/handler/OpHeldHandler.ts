@@ -15,21 +15,25 @@ export default class OpHeldHandler extends MessageHandler<OpHeld> {
 
         const com = Component.get(comId);
         if (typeof com === 'undefined' || !player.isComponentVisible(com)) {
+            player.clearPendingAction();
             return false;
         }
 
         const type = ObjType.get(item);
         if (message.op !== 5 && ((type.iop && !type.iop[message.op - 1]) || !type.iop)) {
+            player.clearPendingAction();
             return false;
         }
 
         const listener = player.invListeners.find(l => l.com === comId);
         if (!listener) {
+            player.clearPendingAction();
             return false;
         }
 
         const inv = player.getInventoryFromListener(listener);
         if (!inv || !inv.validSlot(slot) || !inv.hasAt(slot, item)) {
+            player.clearPendingAction();
             return false;
         }
 

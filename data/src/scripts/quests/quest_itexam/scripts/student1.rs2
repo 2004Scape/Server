@@ -73,7 +73,8 @@ inv_del(inv, rock_sample_1, ^max_32bit_int);
 ~chatplayer("<p,happy>I need more help with the exam.");
 ~chatnpc("<p,happy>Well ok, this is what I have learned since I last spoke to you...");
 ~itexam_set_errand_progress(^itexam_errand_student1, 2);
-~chatnpc("<p,neutral>Correct rock pick usage: Always handle with care; strike the rock cleanly on its cleaving point.");
+// https://web.archive.org/web/20060909012420im_/http://www.runeweb.net/fireball/Digsite%20Images/digsite8.png
+~chatnpc("<p,neutral>Correct rockpick usage:|Always handle with care,|strike the rock cleanly on its cleaving point.");
 ~chatplayer("<p,happy>Okay, I'll remember that.");
 
 [label,itexam_student1_third_exam_tips]
@@ -81,5 +82,6 @@ inv_del(inv, rock_sample_1, ^max_32bit_int);
 ~chatplayer("<p,happy>I need more help with the exam.");
 ~chatnpc("<p,happy>Well ok, this is what I have learned since I last spoke to you...");
 ~itexam_set_errand_progress(^itexam_errand_student1, 2);
-~chatnpc("<p,neutral>Specimen brush use: Brush carefully and slowly using short strokes.");
+// https://web.archive.org/web/20060909012420im_/http://www.runeweb.net/fireball/Digsite%20Images/digsite12.png
+~chatnpc("<p,neutral>Specimen brush use:|Brush carefully and slowly using short strokes.");
 ~chatplayer("<p,happy>Okay, I'll remember that. Thanks for all your help.");

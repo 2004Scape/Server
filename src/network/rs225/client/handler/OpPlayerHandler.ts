@@ -18,11 +18,13 @@ export default class OpPlayerHandler extends MessageHandler<OpPlayer> {
         const other = World.getPlayer(pid);
         if (!other) {
             player.write(new UnsetMapFlag());
+            player.clearPendingAction();
             return false;
         }
 
         if (!player.buildArea.players.has(other)) {
             player.write(new UnsetMapFlag());
+            player.clearPendingAction();
             return false;
         }
 
