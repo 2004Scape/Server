@@ -1004,6 +1004,7 @@ class World {
             player.uid = ((Number(player.username37 & 0x1fffffn) << 11) | player.pid) >>> 0;
             player.tele = true;
             player.moveClickRequest = false;
+            player.lastResponse = this.currentTick;
 
             this.gameMap.getZone(player.x, player.z, player.level).enter(player);
             player.onLogin();
