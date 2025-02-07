@@ -926,17 +926,7 @@ class World {
                         other.client.send(Uint8Array.from([ 15 ]));
                     }
 
-                    // force resyncing
-                    // reload entity info (overkill? does the client have some logic around this?)
-                    other.buildArea.clear();
-                    // rebuild scene (rebuildnormal won't run if you're in the same zone!)
-                    other.originX = -1;
-                    other.originZ = -1;
-                    // resync invs
-                    other.refreshInvs();
-                    other.moveSpeed = MoveSpeed.INSTANT;
-                    other.tele = true;
-                    other.jump = true;
+                    other.onReconnect();
 
                     continue player;
                 }

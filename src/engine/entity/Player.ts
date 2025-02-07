@@ -353,7 +353,7 @@ export default class Player extends PathingEntity {
         this.cameraPackets.clear();
         this.timers.clear();
         this.heroPoints.clear();
-        this.buildArea.clear();
+        this.buildArea.clear(false);
     }
 
     resetEntity(respawn: boolean) {
@@ -395,6 +395,20 @@ export default class Player extends PathingEntity {
 
         this.lastStepX = this.x - 1;
         this.lastStepZ = this.z;
+    }
+
+    onReconnect() {
+        // force resyncing
+        // reload entity info (overkill? does the client have some logic around this?)
+        this.buildArea.clear(true);
+        // rebuild scene (rebuildnormal won't run if you're in the same zone!)
+        this.originX = -1;
+        this.originZ = -1;
+        // resync invs
+        this.refreshInvs();
+        this.moveSpeed = MoveSpeed.INSTANT;
+        this.tele = true;
+        this.jump = true;
     }
 
     triggerMapzone(x: number, z: number) {
