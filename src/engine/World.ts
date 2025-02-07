@@ -696,7 +696,7 @@ class World {
                     // x-logged / timed out for 60s: logout
                     player.loggedOut = true;
                 } else if (this.currentTick - player.lastResponse >= World.TIMEOUT_SOCKET_IDLE) {
-                    // x-logged / timed out for 10s: attempt logout
+                    // x-logged / timed out for 30s: attempt logout
                     player.tryLogout = true;
                 }
 
@@ -994,7 +994,6 @@ class World {
             player.uid = ((Number(player.username37 & 0x1fffffn) << 11) | player.pid) >>> 0;
             player.tele = true;
             player.moveClickRequest = false;
-            player.lastResponse = this.currentTick;
 
             this.gameMap.getZone(player.x, player.z, player.level).enter(player);
             player.onLogin();
