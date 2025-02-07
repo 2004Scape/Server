@@ -29,11 +29,13 @@ export default class BuildArea {
         this.appearances = new Map();
     }
 
-    clear(): void {
+    clear(reconnecting: boolean): void {
+        if (!reconnecting) {
+            this.activeZones.clear();
+            this.loadedZones.clear();
+        }
         this.players.clear();
         this.npcs.clear();
-        this.loadedZones.clear();
-        this.activeZones.clear();
         this.appearances.clear();
     }
 
