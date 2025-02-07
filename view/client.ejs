@@ -154,10 +154,10 @@
                 setFiltering(canvas, filtering === 'true');
             }
 
-            let size = localStorage.getItem('canvasSize');
+            let size = parseInt(localStorage.getItem('canvasSize'));
             if (size) {
-                 size = setCanvasSize(canvas, size);
-                 localStorage.setItem('canvasSize', size);
+                canvasSize = setCanvasSize(canvas, size);
+                localStorage.setItem('canvasSize', canvasSize);
             }
 
             let controls = localStorage.getItem('hideControls');
