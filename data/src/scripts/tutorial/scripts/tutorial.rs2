@@ -137,6 +137,9 @@ if (%tutorial_progress = ^combat_instructor_during_attacking_melee
 if_close;
 
 [if_close,player_kit]
+queue(tutorial_designed_character, 0);
+
+[queue,tutorial_designed_character]
 %tutorial_progress = ^runescape_guide_designed_character;
 allowdesign(false);
 

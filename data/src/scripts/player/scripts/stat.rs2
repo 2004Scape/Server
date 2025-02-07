@@ -146,3 +146,10 @@ while ($i <= enum_getoutputcount(stats)) {
     }
     $i = calc($i + 1);
 }
+
+[proc,random_stat]()(stat)
+if (map_members = true) {
+    return(enum(int, stat, stats, add(random(enum_getoutputcount(stats)), 1)));
+} else {
+    return(enum(int, stat, stats_free, add(random(enum_getoutputcount(stats_free)), 1)));
+}

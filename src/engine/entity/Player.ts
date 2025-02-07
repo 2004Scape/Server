@@ -544,7 +544,7 @@ export default class Player extends PathingEntity {
     }
 
     private recoverEnergy(moved: boolean): void {
-        if (!this.delayed && (!moved || this.moveSpeed !== MoveSpeed.RUN) && this.runenergy < 10000) {
+        if (!this.delayed && (!moved || this.stepsTaken < 2) && this.runenergy < 10000) {
             const recovered = ((this.baseLevels[PlayerStat.AGILITY] / 9) | 0) + 8;
             this.runenergy = Math.min(this.runenergy + recovered, 10000);
         }
@@ -564,7 +564,7 @@ export default class Player extends PathingEntity {
         if (this.modalTutorial !== -1) {
             const closeTrigger = ScriptProvider.getByTrigger(ServerTriggerType.IF_CLOSE, this.modalTutorial);
             if (closeTrigger) {
-                this.enqueueScript(closeTrigger, PlayerQueueType.ENGINE);
+                this.executeScript(ScriptRunner.init(closeTrigger, this), false);
             }
 
             this.modalTutorial = -1;
@@ -586,7 +586,7 @@ export default class Player extends PathingEntity {
         if (this.modalMain !== -1) {
             const closeTrigger = ScriptProvider.getByTrigger(ServerTriggerType.IF_CLOSE, this.modalMain);
             if (closeTrigger) {
-                this.enqueueScript(closeTrigger, PlayerQueueType.ENGINE);
+                this.executeScript(ScriptRunner.init(closeTrigger, this), false);
             }
 
             this.modalMain = -1;
@@ -595,7 +595,7 @@ export default class Player extends PathingEntity {
         if (this.modalChat !== -1) {
             const closeTrigger = ScriptProvider.getByTrigger(ServerTriggerType.IF_CLOSE, this.modalChat);
             if (closeTrigger) {
-                this.enqueueScript(closeTrigger, PlayerQueueType.ENGINE);
+                this.executeScript(ScriptRunner.init(closeTrigger, this), false);
             }
 
             this.modalChat = -1;
@@ -604,7 +604,7 @@ export default class Player extends PathingEntity {
         if (this.modalSide !== -1) {
             const closeTrigger = ScriptProvider.getByTrigger(ServerTriggerType.IF_CLOSE, this.modalSide);
             if (closeTrigger) {
-                this.enqueueScript(closeTrigger, PlayerQueueType.ENGINE);
+                this.executeScript(ScriptRunner.init(closeTrigger, this), false);
             }
 
             this.modalSide = -1;

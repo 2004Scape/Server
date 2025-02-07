@@ -22,6 +22,26 @@ val=17,firemaking
 val=18,woodcutting
 val=19,fletching
 
+[stats_free]
+inputtype=int
+outputtype=stat
+default=null
+val=1,attack
+val=2,strength
+val=3,ranged
+val=4,magic
+val=5,defence
+val=6,hitpoints
+val=7,prayer
+val=8,crafting
+val=9,runecraft
+val=10,mining
+val=11,smithing
+val=12,fishing
+val=13,cooking
+val=14,firemaking
+val=15,woodcutting
+
 [stat_names]
 inputtype=stat
 outputtype=string
