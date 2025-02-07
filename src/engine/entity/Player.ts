@@ -583,6 +583,8 @@ export default class Player extends PathingEntity {
             return;
         }
 
+        this.modalState = 0;
+
         if (this.modalMain !== -1) {
             const closeTrigger = ScriptProvider.getByTrigger(ServerTriggerType.IF_CLOSE, this.modalMain);
             if (closeTrigger) {
@@ -610,7 +612,6 @@ export default class Player extends PathingEntity {
             this.modalSide = -1;
         }
 
-        this.modalState = 0;
         this.refreshModalClose = true;
     }
 
