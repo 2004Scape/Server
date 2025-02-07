@@ -77,13 +77,6 @@ while ($i < %trawler_catch) {
 
 
 [if_close,trawler_catch]
-if(p_finduid(uid) = true) {
-    @drop_trawler_catch;
-} else {
-    queue(queue_drop_trawler_catch, 0);
-}
-
-[label,drop_trawler_catch]
 def_int $i = 0;
 while ($i < inv_size(trawler_catch)) {
     if (inv_getobj(trawler_catch, $i) ! null) {
@@ -92,8 +85,6 @@ while ($i < inv_size(trawler_catch)) {
     $i = add($i, 1);
 }
 inv_stoptransmit(trawler_catch:inv);
-
-[queue,queue_drop_trawler_catch] @drop_trawler_catch;
 
 // osrs drops on ground on full inv
 [inv_button1,trawler_catch:inv] 
