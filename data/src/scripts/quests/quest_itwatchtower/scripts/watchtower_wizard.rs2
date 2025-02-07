@@ -198,7 +198,7 @@ if(last_useitem = ogre_relic) {
     ~chatplayer("<p,confused>What is this?");
     ~chatnpc("<p,confused>It is the ogre statue I finished for you.");
 } else if(last_useitem = watchtower_crystal1) {
-    if(%itwatchtower_progress >= ^itwatchtower_complete) {
+    if(%itwatchtower_progress >= ^itwatchtower_found_all_crystals) {
         ~chatnpc("<p,confused>More crystals?|I don't need any more now..."); // RSC and RS3
         return;
     }
@@ -210,7 +210,7 @@ if(last_useitem = ogre_relic) {
     }
     ~chatnpc("<p,neutral>Keep searching for the others.|If you've dropped any,|then you will need to go back to where you got it from.");
 } else if(last_useitem = watchtower_crystal2) {
-    if(%itwatchtower_progress >= ^itwatchtower_complete) {
+    if(%itwatchtower_progress >= ^itwatchtower_found_all_crystals) {
         ~chatnpc("<p,confused>More crystals?|I don't need any more now..."); // RSC
         return;
     }
@@ -222,7 +222,7 @@ if(last_useitem = ogre_relic) {
     }
     ~chatnpc("<p,neutral>Keep searching for the others.|If you've dropped any,|then you will need to go back to where you got it from.");
 } else if(last_useitem = watchtower_crystal3) {
-    if(%itwatchtower_progress >= ^itwatchtower_complete) {
+    if(%itwatchtower_progress >= ^itwatchtower_found_all_crystals) {
         ~chatnpc("<p,confused>More crystals?|I don't need any more now..."); // RSC
         return;
     }
@@ -234,7 +234,7 @@ if(last_useitem = ogre_relic) {
     }
     ~chatnpc("<p,neutral>Keep searching for the others.|If you've dropped any,|then you will need to go back to where you got it from.");
 } else if(last_useitem = watchtower_crystal4) {
-    if(%itwatchtower_progress >= ^itwatchtower_complete) {
+    if(%itwatchtower_progress >= ^itwatchtower_found_all_crystals) {
         ~chatnpc("<p,confused>More crystals?|I don't need any more now..."); // RSC
         return;
     }
