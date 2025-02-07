@@ -132,7 +132,7 @@ switch_int($choice) {
 if($first_val = 1 & $second_val = 2 & $third_val = 2) {
     ~chatnpc("<p,neutral>Sorry to have kept you.");
     if_close;
-    p_delay(4); // 4t todo: -1 after delay change
+    p_delay(3); // 4t
     @open_shipyard_gate;
 }
 ~chatnpc("<p,angry>You have no idea!");
