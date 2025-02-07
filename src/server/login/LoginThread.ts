@@ -1,9 +1,10 @@
 import fs from 'fs';
 import { parentPort } from 'worker_threads';
 
-import LoginClient from '#/server/login/LoginClient.js';
+import { LoginClient } from '#/server/login/LoginClient.js';
 
 import Environment from '#/util/Environment.js';
+import { type LoginResponse, type LogoutResponse } from './index.d.js';
 
 const client = new LoginClient(Environment.NODE_ID);
 
@@ -37,7 +38,7 @@ if (Environment.STANDALONE_BUNDLE) {
 }
 
 type ParentPort = {
-    postMessage: (msg: any) => void;
+    postMessage: (msg: LoginResponse | LogoutResponse) => void;
 };
 
 async function handleRequests(parentPort: ParentPort, msg: any) {

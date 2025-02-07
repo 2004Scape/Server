@@ -34,7 +34,7 @@ import HeroPoints from '#/engine/entity/HeroPoints.js';
 import { isClientConnected } from '#/engine/entity/NetworkPlayer.js';
 import Entity from '#/engine/entity/Entity.js';
 
-import { Inventory } from '#/engine/Inventory.js';
+import { Inventory, InventoryListener } from '#/engine/Inventory.js';
 import World from '#/engine/World.js';
 
 import ScriptFile from '#/engine/script/ScriptFile.js';
@@ -247,12 +247,7 @@ export default class Player extends PathingEntity {
     basWalkRight: number = -1;
     basRunning: number = -1;
     animProtect: number = 0;
-    invListeners: {
-        type: number; // InvType
-        com: number; // Component
-        source: number; // uid or -1 for world
-        firstSeen: boolean;
-    }[] = [];
+    invListeners: InventoryListener[] = [];
     allowDesign: boolean = false;
     afkEventReady: boolean = false;
     interactWalkTrigger: boolean = false;
@@ -996,7 +991,7 @@ export default class Player extends PathingEntity {
             return;
         }
 
-        const opTrigger = this.getOpTrigger();
+        const _opTrigger = this.getOpTrigger();
         this.nextTarget = null;
 
         // opplayer3 is `Follow`
@@ -1187,7 +1182,7 @@ export default class Player extends PathingEntity {
         }
     }
 
-    getInventoryFromListener(listener: any) {
+    getInventoryFromListener(listener: InventoryListener) {
         if (listener.source === -1) {
             return World.getInventory(listener.type);
         } else {
