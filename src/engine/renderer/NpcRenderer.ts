@@ -9,7 +9,6 @@ import NpcInfoChangeType from '#/network/server/model/NpcInfoChangeType.js';
 import NpcInfoSpotanim from '#/network/server/model/NpcInfoSpotanim.js';
 import NpcInfoFaceCoord from '#/network/server/model/NpcInfoFaceCoord.js';
 import NpcStat from '#/engine/entity/NpcStat.js';
-import Packet from '#/io/Packet.js';
 
 export default class NpcRenderer extends Renderer<Npc> {
     constructor() {
