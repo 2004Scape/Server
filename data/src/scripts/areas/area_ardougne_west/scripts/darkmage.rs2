@@ -25,7 +25,7 @@ if(inv_total(inv, broken_iban_staff) > 0) {
             inv_del(inv, coins, 200000);
             inv_del(inv, broken_iban_staff, 1);
             mes("You give the mage 200,000 coins and the staff.");
-            p_delay(3); // 3t
+            p_delay(2); // 3t
             inv_add(inv, iban_staff, 1);
             ~objbox(iban_staff, "The mage fixes the staff and returns it to you.", 250, 0, divide(^objbox_height, 2));
             ~chatplayer("<p,happy>Thanks. I appreciate that.");
