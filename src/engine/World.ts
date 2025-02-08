@@ -860,7 +860,7 @@ class World {
 
             player.closeModal();
 
-            if (player.queue.head() === null) {
+            if (player.canAccess() && player.queue.head() === null && player.engineQueue.head() === null) {
                 const script = ScriptProvider.getByTriggerSpecific(ServerTriggerType.LOGOUT, -1, -1);
                 if (!script) {
                     printError('LOGOUT TRIGGER IS BROKEN!');
