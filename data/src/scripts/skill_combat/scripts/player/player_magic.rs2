@@ -1,33 +1,9 @@
 // to add a new combat spell:
 // create a constant (^spellname) in ../configs/magic/spells.constant
 // add it to the spell table in ../configs/magic/magic_combat_spells.dbrow
-// create an opnpct and apnpct trigger for it in this script
-[opnpct,magic:wind_strike] ~pvm_default_spell(^wind_strike);
-[opnpct,magic:water_strike] ~pvm_default_spell(^water_strike);
-[opnpct,magic:earth_strike] ~pvm_default_spell(^earth_strike);
-[opnpct,magic:fire_strike] ~pvm_default_spell(^fire_strike);
-[opnpct,magic:wind_bolt] ~pvm_default_spell(^wind_bolt);
-[opnpct,magic:water_bolt] ~pvm_default_spell(^water_bolt);
-[opnpct,magic:earth_bolt] ~pvm_default_spell(^earth_bolt);
-[opnpct,magic:fire_bolt] ~pvm_default_spell(^fire_bolt);
-[opnpct,magic:wind_blast] ~pvm_default_spell(^wind_blast);
-[opnpct,magic:water_blast] ~pvm_default_spell(^water_blast);
-[opnpct,magic:earth_blast] ~pvm_default_spell(^earth_blast);
-[opnpct,magic:fire_blast] ~pvm_default_spell(^fire_blast);
-[opnpct,magic:wind_wave] ~pvm_default_spell(^wind_wave);
-[opnpct,magic:water_wave] ~pvm_default_spell(^water_wave);
-[opnpct,magic:earth_wave] ~pvm_default_spell(^earth_wave);
-[opnpct,magic:fire_wave] ~pvm_default_spell(^fire_wave);
-[opnpct,magic:curse] ~pvm_default_spell(^curse);
-[opnpct,magic:weaken] ~pvm_default_spell(^weaken);
-[opnpct,magic:confuse] ~pvm_default_spell(^confuse);
-[opnpct,magic:bind] ~pvm_default_spell(^bind);
-[opnpct,magic:snare] ~pvm_default_spell(^snare);
-[opnpct,magic:entangle] ~pvm_default_spell(^entangle);
-[opnpct,magic:vulnerability] ~pvm_default_spell(^vulnerability);
-[opnpct,magic:enfeeble] ~pvm_default_spell(^enfeeble);
-[opnpct,magic:stun] ~pvm_default_spell(^stun);
+// create an apnpct trigger for it in this script
 
+// osrs's opnpct triggers are unused
 [apnpct,magic:wind_strike]
 if (%tutorial_progress < ^tutorial_complete) {
    ~pvm_tutorial_spell(^wind_strike);
