@@ -53,6 +53,8 @@ export default abstract class PathingEntity extends Entity {
     jump: boolean = false;
     lastStepX: number = -1;
     lastStepZ: number = -1;
+    followX: number = -1;
+    followZ: number = -1;
     stepsTaken: number = 0;
     lastInt: number = -1; // resume_p_countdialog, ai_queue
     lastCrawl: boolean = false;
@@ -476,7 +478,7 @@ export default abstract class PathingEntity extends Entity {
         }
 
         if (this.targetOp === ServerTriggerType.APPLAYER3 || this.targetOp === ServerTriggerType.OPPLAYER3) {
-            this.queueWaypoint(this.target.lastStepX, this.target.lastStepZ);
+            this.queueWaypoint(this.target.followX, this.target.followZ);
             return;
         }
 

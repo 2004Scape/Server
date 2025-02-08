@@ -999,6 +999,9 @@ export default class Player extends PathingEntity {
     }
 
     processInteraction() {
+        this.followX = this.lastStepX;
+        this.followZ = this.lastStepZ;
+
         if (this.target === null || !this.canAccess()) {
             this.updateMovement(false);
             return false;
@@ -1017,14 +1020,17 @@ export default class Player extends PathingEntity {
         // Follow interaction behaves different than standard ones
         if (this.targetOp === ServerTriggerType.APPLAYER3 || this.targetOp === ServerTriggerType.OPPLAYER3) {
             const walktrigger: number = this.walktrigger;
-            if (this.hasWaypoints()) {
-                this.processWalktrigger();
-            }
-            const moved: boolean = this.updateMovement(false);
-            if (!moved && walktrigger !== -1 && this.target instanceof Player && (this.x !== this.target.lastStepX || this.z !== this.target.lastStepZ)) {
+
+            this.pathToPathingTarget();
+            this.processWalktrigger();
+
+            if (!this.hasWaypoints()) {
                 this.clearInteraction();
                 this.unsetMapFlag();
+                return;
             }
+
+            this.updateMovement(false);
             return;
         }
 
