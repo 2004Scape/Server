@@ -90,13 +90,13 @@ export default class PlayerRenderer extends Renderer<Player>  {
         const extend: boolean = bytes > 0;
         const { pid, walkDir, runDir } = entity;
         if (runDir !== -1) {
-            this.run(pid, walkDir, runDir, extend, bytes);
+            this.run(pid, walkDir, runDir, bytes);
         } else if (walkDir !== -1) {
-            this.walk(pid, walkDir, extend, bytes);
+            this.walk(pid, walkDir, bytes);
         } else if (extend) {
             this.extend(pid, bytes);
         } else {
-            this.idle(pid, bytes);
+            this.idle(pid);
         }
     }
 

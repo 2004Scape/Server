@@ -77,13 +77,13 @@ export default class NpcRenderer extends Renderer<Npc> {
         const extend: boolean = bytes > 0;
         const { nid, walkDir, runDir } = entity;
         if (runDir !== -1) {
-            this.run(nid, walkDir, runDir, extend, bytes);
+            this.run(nid, walkDir, runDir, bytes);
         } else if (walkDir !== -1) {
-            this.walk(nid, walkDir, extend, bytes);
+            this.walk(nid, walkDir, bytes);
         } else if (extend) {
             this.extend(nid, bytes);
         } else {
-            this.idle(nid, bytes);
+            this.idle(nid);
         }
     }
 

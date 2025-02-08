@@ -29,13 +29,15 @@ export default abstract class Renderer<T extends Entity> {
     protected readonly highs: Map<number, number>;
     protected readonly lows: Map<number, number>;
 
-    private readonly bits: Map<number, Bits>;
+    private readonly highbits: Map<number, Bits>;
+    private readonly lowbits: Map<number, Bits>;
 
     protected constructor(infos: Map<InfoProt, Map<number, Uint8Array>>) {
         this.infos = infos;
         this.highs = new Map();
         this.lows = new Map();
-        this.bits = new Map();
+        this.highbits = new Map();
+        this.lowbits = new Map();
     }
 
     abstract computeInfo(entity: T): void;
@@ -66,8 +68,12 @@ export default abstract class Renderer<T extends Entity> {
         return this.encodeInfo(cache, id, message);
     }
 
-    cacheBits(id: number, bits: Bits): void {
-        this.bits.set(id, bits);
+    cacheHighBits(id: number, bits: Bits): void {
+        this.highbits.set(id, bits);
+    }
+
+    cacheLowBits(id: number, bits: Bits): void {
+        this.lowbits.set(id, bits);
     }
 
     write(buf: Packet, id: number, prot: InfoProt): void {
@@ -79,16 +85,20 @@ export default abstract class Renderer<T extends Entity> {
     }
 
     writeBits(buf: Packet, id: number, bytes: number): number {
-        const bits: Bits | undefined = this.bits.get(id);
-        if (typeof bits === 'undefined') {
-            throw new Error('[Renderer] tried to write a bits buf not cached!');
+        const high: Bits | undefined = this.highbits.get(id);
+        if (typeof high === 'undefined') {
+            throw new Error('[Renderer] tried to write a high bits buf not cached!');
         }
-        if (!this.space(bytes, buf, bits.n, bits.bytes)) {
-            buf.pBit(Renderer.IDLE_BITS, 0);
-            return 0;
+        if (!this.space(bytes, buf, high.n, high.bytes) || high.bytes === 0) {
+            const low: Bits | undefined = this.lowbits.get(id);
+            if (typeof low === 'undefined') {
+                throw new Error('[Renderer] tried to write a low bits buf not cached!');
+            }
+            buf.pBit(low.n, low.value);
+            return low.bytes;
         }
-        buf.pBit(bits.n, bits.value);
-        return bits.bytes;
+        buf.pBit(high.n, high.value);
+        return high.bytes;
     }
 
     has(id: number, prot: InfoProt): boolean {
@@ -106,7 +116,8 @@ export default abstract class Renderer<T extends Entity> {
 
     removeTemporary() {
         this.highs.clear();
-        this.bits.clear();
+        this.highbits.clear();
+        this.lowbits.clear();
     }
 
     removePermanent(id: number) {
@@ -130,35 +141,59 @@ export default abstract class Renderer<T extends Entity> {
         buf.pBit(Renderer.NPC_ADD_BITS, ((nid & 0x1fff) << 22) | ((type & 0x7ff) << 11) | ((x & 0x1f) << 6) | ((z & 0x1f) << 1) | 1);
     }
 
-    protected run(id: number, walkDir: number, runDir: number, extend: boolean, bytes: number): void {
-        this.cacheBits(id, {
+    protected run(id: number, walkDir: number, runDir: number, bytes: number): void {
+        this.cacheHighBits(id, {
             n: Renderer.RUN_BITS,
-            value: (1 << 9) | (2 << 7) | ((walkDir & 0x7) << 4) | ((runDir & 0x7) << 1) | (extend ? 1 : 0),
+            value: (1 << 9) | (2 << 7) | ((walkDir & 0x7) << 4) | ((runDir & 0x7) << 1) | 1,
             bytes: bytes,
+        });
+
+        this.cacheLowBits(id, {
+            n: Renderer.RUN_BITS,
+            value: (1 << 9) | (2 << 7) | ((walkDir & 0x7) << 4) | ((runDir & 0x7) << 1) | 0,
+            bytes: 0,
         });
     }
 
-    protected walk(id: number, walkDir: number, extend: boolean, bytes: number): void {
-        this.cacheBits(id, {
+    protected walk(id: number, walkDir: number, bytes: number): void {
+        this.cacheHighBits(id, {
             n: Renderer.WALK_BITS,
-            value: (1 << 6) | (1 << 4) | ((walkDir & 0x7) << 1) | (extend ? 1 : 0),
+            value: (1 << 6) | (1 << 4) | ((walkDir & 0x7) << 1) | 1,
             bytes: bytes,
+        });
+
+        this.cacheLowBits(id, {
+            n: Renderer.WALK_BITS,
+            value: (1 << 6) | (1 << 4) | ((walkDir & 0x7) << 1) | 0,
+            bytes: 0,
         });
     }
 
     protected extend(id: number, bytes: number): void {
-        this.cacheBits(id, {
+        this.cacheHighBits(id, {
             n: Renderer.EXTEND_BITS,
-            value: 1 << 2,
+            value: (1 << 2) | 0,
             bytes: bytes,
+        });
+
+        this.cacheLowBits(id, {
+            n: Renderer.IDLE_BITS,
+            value: 0,
+            bytes: 0,
         });
     }
 
-    protected idle(id: number, bytes: number): void {
-        this.cacheBits(id, {
+    protected idle(id: number): void {
+        this.cacheHighBits(id, {
             n: Renderer.IDLE_BITS,
             value: 0,
-            bytes: bytes,
+            bytes: 0,
+        });
+
+        this.cacheLowBits(id, {
+            n: Renderer.IDLE_BITS,
+            value: 0,
+            bytes: 0,
         });
     }
 
