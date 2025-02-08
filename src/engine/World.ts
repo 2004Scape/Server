@@ -1697,6 +1697,14 @@ class World {
         }
     }
 
+    get isPendingShutdown(): boolean {
+        return this.shutdownTicksRemaining > -1;
+    }
+
+    get shutdownTicksRemaining(): number {
+        return this.shutdownTick - this.currentTick;
+    }
+
     broadcastMes(message: string): void {
         for (const player of this.players) {
             if (message.includes('\n')) {
