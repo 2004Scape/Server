@@ -121,6 +121,7 @@ if (%action_delay = calc(map_clock + 4)) {
     return;
 } else if (%action_delay = calc(map_clock + 3)) {
     mes("You attempt to catch a fish.");
+    sound_synth(fishing_cast, 0, 0);
     p_opnpc(5);
 } else if (%action_delay = map_clock) {
     if (stat(fishing) >= 10) {
@@ -153,7 +154,6 @@ if (inv_freespace(inv) < 1 & inv_total(inv, fishing_bait) > 1) {
 }
 if (%action_delay < map_clock) {
     %action_delay = calc(map_clock + 4);
-    sound_synth(fishing_cast, 0, 0);
     anim(human_fish_onspot, 0);
 }
 if (%action_delay = map_clock) {

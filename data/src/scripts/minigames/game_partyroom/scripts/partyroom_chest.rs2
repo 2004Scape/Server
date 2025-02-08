@@ -11,10 +11,6 @@ if_openmain_side(party_drop_chest, party_drop_chest_side);
 inv_stoptransmit(party_drop_chest_side:inv);
 inv_stoptransmit(party_drop_chest:inv);
 inv_stoptransmit(party_drop_chest:playerinv);
-if(p_finduid(uid) = true) ~moveallinv(partyroomoffer, inv);
-else queue(move_party_room_offer, 0);
-
-[queue,move_party_room_offer]
 ~moveallinv(partyroomoffer, inv);
 
 [oploc3,loc_2418]

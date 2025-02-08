@@ -1,6 +1,7 @@
 [trawler_catch]
 size=40
 stackall=yes
+protect=no
 
 [inv_55]
 size=1
