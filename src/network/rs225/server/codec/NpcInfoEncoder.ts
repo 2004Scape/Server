@@ -12,8 +12,6 @@ import NpcRenderer from '#/engine/renderer/NpcRenderer.js';
 import Renderer from '#/engine/renderer/Renderer.js';
 
 export default class NpcInfoEncoder extends MessageEncoder<NpcInfo> {
-    private static readonly BYTES_LIMIT: number = 4997;
-
     prot = ServerProt.NPC_INFO;
 
     encode(buf: Packet, message: NpcInfo): void {
@@ -39,7 +37,7 @@ export default class NpcInfoEncoder extends MessageEncoder<NpcInfo> {
     }
 
     test(_: NpcInfo): number {
-        return NpcInfoEncoder.BYTES_LIMIT;
+        return Renderer.MAX_BYTES;
     }
 
     private writeNpcs(buf: Packet, updates: Packet, message: NpcInfo, bytes: number): number {
@@ -55,7 +53,7 @@ export default class NpcInfoEncoder extends MessageEncoder<NpcInfo> {
                 buildArea.npcs.delete(npc);
                 continue;
             }
-            const length: number = renderer.writeBits(buf, nid);
+            const length: number = renderer.writeBits(buf, nid, bytes);
             if (length > 0) {
                 this.highdefinition(updates, renderer, npc);
                 bytes += length;
@@ -71,7 +69,7 @@ export default class NpcInfoEncoder extends MessageEncoder<NpcInfo> {
             const nid: number = npc.nid;
             const length: number = renderer.lowdefinitions(nid) + renderer.highdefinitions(nid);
             // bits to add npc + extended info size + bits to break loop (13)
-            if (!this.willFit(bytes, buf, Renderer.NPC_ADD_BITS + 13, length)) {
+            if (!renderer.space(bytes, buf, Renderer.NPC_ADD_BITS + 13, length)) {
                 // more npcs get added next tick
                 break;
             }
@@ -134,10 +132,5 @@ export default class NpcInfoEncoder extends MessageEncoder<NpcInfo> {
         if (masks & InfoProt.NPC_FACE_COORD.id) {
             renderer.write(updates, nid, InfoProt.NPC_FACE_COORD);
         }
-    }
-
-    private willFit(bytes: number, buf: Packet, bitsToAdd: number, bytesToAdd: number): boolean {
-        // 7 aligns to the next byte
-        return ((buf.bitPos + bitsToAdd + 7) >>> 3) + (bytes + bytesToAdd) <= NpcInfoEncoder.BYTES_LIMIT;
     }
 }

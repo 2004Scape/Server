@@ -12,6 +12,8 @@ interface Bits {
 }
 
 export default abstract class Renderer<T extends Entity> {
+    public static readonly MAX_BYTES: number = 4997;
+
     public static readonly PLAYER_ADD_BITS: number = 23;
     public static readonly NPC_ADD_BITS: number = 35;
 
@@ -76,10 +78,14 @@ export default abstract class Renderer<T extends Entity> {
         this.writeBlock(buf, cache, id);
     }
 
-    writeBits(buf: Packet, id: number): number {
+    writeBits(buf: Packet, id: number, bytes: number): number {
         const bits: Bits | undefined = this.bits.get(id);
         if (typeof bits === 'undefined') {
             throw new Error('[Renderer] tried to write a bits buf not cached!');
+        }
+        if (!this.space(bytes, buf, bits.n, bits.bytes)) {
+            buf.pBit(Renderer.IDLE_BITS, 0);
+            return 0;
         }
         buf.pBit(bits.n, bits.value);
         return bits.bytes;
@@ -182,5 +188,10 @@ export default abstract class Renderer<T extends Entity> {
             length += 1;
         }
         return length;
+    }
+
+    space(bytes: number, buf: Packet, bitsToAdd: number, bytesToAdd: number): boolean {
+        // 7 aligns to the next byte
+        return ((buf.bitPos + bitsToAdd + 7) >>> 3) + (bytes + bytesToAdd) <= Renderer.MAX_BYTES;
     }
 }

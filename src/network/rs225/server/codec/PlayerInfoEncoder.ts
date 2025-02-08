@@ -13,8 +13,6 @@ import Visibility from '#/engine/entity/Visibility.js';
 import Renderer from '#/engine/renderer/Renderer.js';
 
 export default class PlayerInfoEncoder extends MessageEncoder<PlayerInfo> {
-    private static readonly BYTES_LIMIT: number = 4997;
-
     prot = ServerProt.PLAYER_INFO;
 
     encode(buf: Packet, message: PlayerInfo): void {
@@ -45,7 +43,7 @@ export default class PlayerInfoEncoder extends MessageEncoder<PlayerInfo> {
     }
 
     test(_: PlayerInfo): number {
-        return PlayerInfoEncoder.BYTES_LIMIT;
+        return Renderer.MAX_BYTES;
     }
 
     private writeLocalPlayer(buf: Packet, updates: Packet, message: PlayerInfo): number {
@@ -54,7 +52,7 @@ export default class PlayerInfoEncoder extends MessageEncoder<PlayerInfo> {
         if (player.tele) {
             length = renderer.writeTeleport(buf, player.pid, player.x, player.level, player.z, player.originX, player.originZ, player.jump);
         } else {
-            length = renderer.writeBits(buf, player.pid);
+            length = renderer.writeBits(buf, player.pid, 0);
         }
         if (length > 0) {
             this.highdefinition(updates, renderer, player, player);
@@ -75,7 +73,7 @@ export default class PlayerInfoEncoder extends MessageEncoder<PlayerInfo> {
                 buildArea.players.delete(other);
                 continue;
             }
-            const length: number = renderer.writeBits(buf, pid);
+            const length: number = renderer.writeBits(buf, pid, bytes);
             if (length > 0) {
                 this.highdefinition(updates, renderer, player, other);
                 bytes += length;
@@ -95,7 +93,7 @@ export default class PlayerInfoEncoder extends MessageEncoder<PlayerInfo> {
             const pid: number = other.pid;
             const length: number = renderer.lowdefinitions(pid) + renderer.highdefinitions(pid);
             // bits to add player + extended info size + bits to break loop (11)
-            if (!this.willFit(bytes, buf, Renderer.PLAYER_ADD_BITS + 11, length)) {
+            if (!renderer.space(bytes, buf, Renderer.PLAYER_ADD_BITS + 11, length)) {
                 // more players get added next tick
                 break;
             }
@@ -187,10 +185,5 @@ export default class PlayerInfoEncoder extends MessageEncoder<PlayerInfo> {
                 other.exactMoveDirection
             );
         }
-    }
-
-    private willFit(bytes: number, buf: Packet, bitsToAdd: number, bytesToAdd: number): boolean {
-        // 7 aligns to the next byte
-        return ((buf.bitPos + bitsToAdd + 7) >>> 3) + (bytes + bytesToAdd) <= PlayerInfoEncoder.BYTES_LIMIT;
     }
 }
