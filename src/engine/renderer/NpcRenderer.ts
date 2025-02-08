@@ -9,6 +9,7 @@ import NpcInfoChangeType from '#/network/server/model/NpcInfoChangeType.js';
 import NpcInfoSpotanim from '#/network/server/model/NpcInfoSpotanim.js';
 import NpcInfoFaceCoord from '#/network/server/model/NpcInfoFaceCoord.js';
 import NpcStat from '#/engine/entity/NpcStat.js';
+import Packet from '#/io/Packet.js';
 
 export default class NpcRenderer extends Renderer<Npc> {
     constructor() {
@@ -68,14 +69,33 @@ export default class NpcRenderer extends Renderer<Npc> {
         }
     }
 
+    computeBits(entity: Npc): void {
+        if (entity.nid === -1) {
+            return;
+        }
+
+        const bytes: number = this.highdefinitions(entity.nid);
+        const extend: boolean = bytes > 0;
+        const { nid, walkDir, runDir } = entity;
+        if (runDir !== -1) {
+            this.run(nid, walkDir, runDir, extend, bytes);
+        } else if (walkDir !== -1) {
+            this.walk(nid, walkDir, extend, bytes);
+        } else if (extend) {
+            this.extend(nid, bytes);
+        } else {
+            this.idle(nid, bytes);
+        }
+    }
+
     removeTemporary() {
         super.removeTemporary();
-        this.caches.get(InfoProt.NPC_ANIM)?.clear();
-        this.caches.get(InfoProt.NPC_FACE_ENTITY)?.clear();
-        this.caches.get(InfoProt.NPC_SAY)?.clear();
-        this.caches.get(InfoProt.NPC_DAMAGE)?.clear();
-        this.caches.get(InfoProt.NPC_CHANGE_TYPE)?.clear();
-        this.caches.get(InfoProt.NPC_SPOTANIM)?.clear();
-        this.caches.get(InfoProt.NPC_FACE_COORD)?.clear();
+        this.infos.get(InfoProt.NPC_ANIM)?.clear();
+        this.infos.get(InfoProt.NPC_FACE_ENTITY)?.clear();
+        this.infos.get(InfoProt.NPC_SAY)?.clear();
+        this.infos.get(InfoProt.NPC_DAMAGE)?.clear();
+        this.infos.get(InfoProt.NPC_CHANGE_TYPE)?.clear();
+        this.infos.get(InfoProt.NPC_SPOTANIM)?.clear();
+        this.infos.get(InfoProt.NPC_FACE_COORD)?.clear();
     }
 }

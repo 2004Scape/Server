@@ -15,6 +15,7 @@ import Packet from '#/io/Packet.js';
 import PlayerInfoExactMove from '#/network/server/model/PlayerInfoExactMove.js';
 import InfoMessageEncoder from '#/network/server/codec/InfoMessageEncoder.js';
 import ServerProtRepository from '#/network/rs225/server/prot/ServerProtRepository.js';
+import { CoordGrid } from '#/engine/CoordGrid.js';
 
 export default class PlayerRenderer extends Renderer<Player>  {
     constructor() {
@@ -75,9 +76,35 @@ export default class PlayerRenderer extends Renderer<Player>  {
         }
         if (lows > 0) {
             const header: number = this.header(InfoProt.PLAYER_APPEARANCE.id + InfoProt.PLAYER_FACE_ENTITY.id + InfoProt.PLAYER_FACE_COORD.id);
-            const appearance: number = this.caches.get(InfoProt.PLAYER_APPEARANCE)?.get(pid)?.length ?? 0;
+            const appearance: number = this.infos.get(InfoProt.PLAYER_APPEARANCE)?.get(pid)?.length ?? 0;
             this.lows.set(pid, header + InfoProt.PLAYER_FACE_ENTITY.length + InfoProt.PLAYER_FACE_COORD.length + appearance);
         }
+    }
+
+    computeBits(entity: Player): void {
+        if (entity.pid === -1) {
+            return;
+        }
+
+        const bytes: number = this.highdefinitions(entity.pid);
+        const extend: boolean = bytes > 0;
+        const { pid, walkDir, runDir } = entity;
+        if (runDir !== -1) {
+            this.run(pid, walkDir, runDir, extend, bytes);
+        } else if (walkDir !== -1) {
+            this.walk(pid, walkDir, extend, bytes);
+        } else if (extend) {
+            this.extend(pid, bytes);
+        } else {
+            this.idle(pid, bytes);
+        }
+    }
+
+    writeTeleport(buf: Packet, pid: number, x: number, y: number, z: number, originX: number, originZ: number, jump: boolean): number {
+        const length: number = this.highdefinitions(pid);
+        const extend: boolean = length > 0;
+        this.teleport(buf, y, CoordGrid.local(x, originX), CoordGrid.local(z, originZ), jump, extend);
+        return length;
     }
 
     writeExactmove(buf: Packet, startX: number, startZ: number, endX: number, endZ: number, start: number, end: number, direction: number): void {
@@ -91,17 +118,17 @@ export default class PlayerRenderer extends Renderer<Player>  {
 
     removeTemporary() {
         super.removeTemporary();
-        this.caches.get(InfoProt.PLAYER_ANIM)?.clear();
-        this.caches.get(InfoProt.PLAYER_FACE_ENTITY)?.clear();
-        this.caches.get(InfoProt.PLAYER_SAY)?.clear();
-        this.caches.get(InfoProt.PLAYER_DAMAGE)?.clear();
-        this.caches.get(InfoProt.PLAYER_FACE_COORD)?.clear();
-        this.caches.get(InfoProt.PLAYER_SPOTANIM)?.clear();
-        this.caches.get(InfoProt.PLAYER_CHAT)?.clear();
+        this.infos.get(InfoProt.PLAYER_ANIM)?.clear();
+        this.infos.get(InfoProt.PLAYER_FACE_ENTITY)?.clear();
+        this.infos.get(InfoProt.PLAYER_SAY)?.clear();
+        this.infos.get(InfoProt.PLAYER_DAMAGE)?.clear();
+        this.infos.get(InfoProt.PLAYER_FACE_COORD)?.clear();
+        this.infos.get(InfoProt.PLAYER_SPOTANIM)?.clear();
+        this.infos.get(InfoProt.PLAYER_CHAT)?.clear();
     }
 
     removePermanent(pid: number) {
         super.removePermanent(pid);
-        this.caches.get(InfoProt.PLAYER_APPEARANCE)?.delete(pid);
+        this.infos.get(InfoProt.PLAYER_APPEARANCE)?.delete(pid);
     }
 }

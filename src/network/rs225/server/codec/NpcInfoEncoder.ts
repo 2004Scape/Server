@@ -5,17 +5,13 @@ import NpcInfo from '#/network/server/model/NpcInfo.js';
 import { CoordGrid } from '#/engine/CoordGrid.js';
 import Npc from '#/engine/entity/Npc.js';
 import BuildArea from '#/engine/entity/BuildArea.js';
-import Player from '#/engine/entity/Player.js';
 import NpcInfoFaceEntity from '#/network/server/model/NpcInfoFaceEntity.js';
 import InfoProt from '#/network/rs225/server/prot/InfoProt.js';
 import NpcInfoFaceCoord from '#/network/server/model/NpcInfoFaceCoord.js';
 import NpcRenderer from '#/engine/renderer/NpcRenderer.js';
+import Renderer from '#/engine/renderer/Renderer.js';
 
 export default class NpcInfoEncoder extends MessageEncoder<NpcInfo> {
-    private static readonly BITS_NEW: number = 13 + 11 + 5 + 5 + 1;
-    private static readonly BITS_RUN: number = 1 + 2 + 3 + 3 + 1;
-    private static readonly BITS_WALK: number = 1 + 2 + 3 + 1;
-    private static readonly BITS_EXTENDED: number = 1 + 2;
     private static readonly BYTES_LIMIT: number = 4997;
 
     prot = ServerProt.NPC_INFO;
@@ -55,22 +51,15 @@ export default class NpcInfoEncoder extends MessageEncoder<NpcInfo> {
             const nid: number = npc.nid;
             if (nid === -1 || npc.tele || npc.level !== player.level || !CoordGrid.isWithinDistanceSW(player, npc, 15) || !npc.checkLifeCycle(currentTick)) {
                 // if the npc was teleported, it needs to be removed and re-added
-                this.remove(buf, buildArea, npc);
+                renderer.remove(buf);
+                buildArea.npcs.delete(npc);
                 continue;
             }
-            const length: number = renderer.highdefinitions(nid);
-            const extend: boolean = length > 0;
-            const { walkDir, runDir } = npc;
-            if (runDir !== -1) {
-                this.run(buf, updates, renderer, npc, walkDir, runDir, extend && this.willFit(bytes, buf, NpcInfoEncoder.BITS_RUN, length));
-            } else if (walkDir !== -1) {
-                this.walk(buf, updates, renderer, npc, walkDir, extend && this.willFit(bytes, buf, NpcInfoEncoder.BITS_WALK, length));
-            } else if (extend && this.willFit(bytes, buf, NpcInfoEncoder.BITS_EXTENDED, length)) {
-                this.extend(buf, updates, renderer, npc);
-            } else {
-                this.idle(buf);
+            const length: number = renderer.writeBits(buf, nid);
+            if (length > 0) {
+                this.highdefinition(updates, renderer, npc);
+                bytes += length;
             }
-            bytes += length;
         }
         return bytes;
     }
@@ -82,64 +71,15 @@ export default class NpcInfoEncoder extends MessageEncoder<NpcInfo> {
             const nid: number = npc.nid;
             const length: number = renderer.lowdefinitions(nid) + renderer.highdefinitions(nid);
             // bits to add npc + extended info size + bits to break loop (13)
-            if (!this.willFit(bytes, buf, NpcInfoEncoder.BITS_NEW + 13, length)) {
+            if (!this.willFit(bytes, buf, Renderer.NPC_ADD_BITS + 13, length)) {
                 // more npcs get added next tick
                 break;
             }
-            this.add(buf, updates, renderer, player, npc, nid, npc.x - x, npc.z - z, npc.type);
+            renderer.addNpc(buf, nid, npc.type, npc.x - x, npc.z - z);
+            this.lowdefinition(updates, renderer, npc);
+            buildArea.npcs.add(npc);
             bytes += length;
         }
-    }
-
-    private add(buf: Packet, updates: Packet, renderer: NpcRenderer, player: Player, npc: Npc, nid: number, x: number, z: number, type: number): void {
-        buf.pBit(13, nid);
-        buf.pBit(11, type);
-        buf.pBit(5, x);
-        buf.pBit(5, z);
-        buf.pBit(1, 1); // extend
-        this.lowdefinition(updates, renderer, npc);
-        player.buildArea.npcs.add(npc);
-    }
-
-    private remove(buf: Packet, buildArea: BuildArea, npc: Npc): void {
-        buf.pBit(1, 1);
-        buf.pBit(2, 3);
-        buildArea.npcs.delete(npc);
-    }
-
-    private run(buf: Packet, updates: Packet, renderer: NpcRenderer, npc: Npc, walkDir: number, runDir: number, extend: boolean): void {
-        buf.pBit(1, 1);
-        buf.pBit(2, 2);
-        buf.pBit(3, walkDir);
-        buf.pBit(3, runDir);
-        if (extend) {
-            buf.pBit(1, 1);
-            this.highdefinition(updates, renderer, npc);
-        } else {
-            buf.pBit(1, 0);
-        }
-    }
-
-    private walk(buf: Packet, updates: Packet, renderer: NpcRenderer, npc: Npc, walkDir: number, extend: boolean): void {
-        buf.pBit(1, 1);
-        buf.pBit(2, 1);
-        buf.pBit(3, walkDir);
-        if (extend) {
-            buf.pBit(1, 1);
-            this.highdefinition(updates, renderer, npc);
-        } else {
-            buf.pBit(1, 0);
-        }
-    }
-
-    private extend(buf: Packet, updates: Packet, renderer: NpcRenderer, npc: Npc): void {
-        buf.pBit(1, 1);
-        buf.pBit(2, 0);
-        this.highdefinition(updates, renderer, npc);
-    }
-
-    private idle(buf: Packet): void {
-        buf.pBit(1, 0);
     }
 
     private highdefinition(updates: Packet, renderer: NpcRenderer, other: Npc): void {
