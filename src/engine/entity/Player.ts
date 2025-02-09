@@ -501,18 +501,18 @@ export default class Player extends PathingEntity {
 
     // ----
 
-    updateMovement(repathAllowed: boolean = true): boolean {
+    updateMovement(): boolean {
         // players cannot walk if they have a modal open *and* something in their queue, confirmed as far back as 2005
         if (this.moveClickRequest && this.busy() && (this.queue.head() != null || this.engineQueue.head() != null || this.walktrigger !== -1)) {
             this.recoverEnergy(false);
             return false;
         }
 
+        // todo: I think this code block should not exist
+        //       Even if we want behavior to match 2023+ osrs behavior, this block of code is likely redundant
+        //       -markb5
         if (Environment.NODE_WALKTRIGGER_SETTING === WalkTriggerSetting.PLAYERMOVEMENT && !this.target && this.hasWaypoints()) {
             this.processWalktrigger();
-        }
-        if (repathAllowed && this.target instanceof PathingEntity && !this.interacted && this.walktrigger === -1) {
-            this.pathToPathingTarget();
         }
         if (this.moveSpeed !== MoveSpeed.INSTANT) {
             this.moveSpeed = this.defaultMoveSpeed();
@@ -1003,7 +1003,7 @@ export default class Player extends PathingEntity {
         this.followZ = this.lastStepZ;
 
         if (this.target === null || !this.canAccess()) {
-            this.updateMovement(false);
+            this.updateMovement();
             return false;
         }
 
@@ -1030,7 +1030,7 @@ export default class Player extends PathingEntity {
                 return;
             }
 
-            this.updateMovement(false);
+            this.updateMovement();
             return;
         }
 
@@ -1051,6 +1051,7 @@ export default class Player extends PathingEntity {
 
         // Otherwise, a target still exists to try to interact with
         else if (this.target) {
+            this.pathToPathingTarget();
             this.processWalktrigger();
             moved = this.updateMovement();
             this.tryInteract(!moved);
