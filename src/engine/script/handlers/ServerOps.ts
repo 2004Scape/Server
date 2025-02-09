@@ -21,7 +21,7 @@ import HuntVis from '#/engine/entity/hunt/HuntVis.js';
 
 import Environment from '#/util/Environment.js';
 
-import { LocLayer, LocAngle, isZoneAllocated } from '@2004scape/rsmod-pathfinder';
+import { LocLayer, LocAngle } from '@2004scape/rsmod-pathfinder';
 
 import {
     isIndoors,
