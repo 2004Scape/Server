@@ -77,6 +77,7 @@ import { ChatModePrivate, ChatModePublic, ChatModeTradeDuel } from '#/util/ChatM
 import LoggerEventType from '#/server/logger/LoggerEventType.js';
 import InputTracking from '#/engine/entity/tracking/InputTracking.js';
 import Visibility from './Visibility.js';
+import UpdateRebootTimer from '#/network/server/model/UpdateRebootTimer.js';
 
 const levelExperience = new Int32Array(99);
 
@@ -401,6 +402,11 @@ export default class Player extends PathingEntity {
         // force resyncing
         // reload entity info (overkill? does the client have some logic around this?)
         this.buildArea.clear(true);
+        // in case of pending update
+        if (World.isPendingShutdown) {
+            const ticksBeforeShutdown = World.shutdownTicksRemaining;
+            this.write(new UpdateRebootTimer(ticksBeforeShutdown));
+        }
         // rebuild scene (rebuildnormal won't run if you're in the same zone!)
         this.originX = -1;
         this.originZ = -1;
