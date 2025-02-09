@@ -21,13 +21,11 @@ export default class PlayerInfoEncoder extends MessageEncoder<PlayerInfo> {
     prot = ServerProt.PLAYER_INFO;
 
     encode(buf: Packet, message: PlayerInfo): void {
-        const buildArea: BuildArea = message.player.buildArea;
+        const player = message.player;
+        const buildArea: BuildArea = player.buildArea;
 
         if (message.changedLevel || message.deltaX > buildArea.viewDistance || message.deltaZ > buildArea.viewDistance) {
-            // optimization to avoid sending 3 bits * observed players when everything has to be removed anyways
-            buildArea.players.clear();
-            buildArea.lastResize = 0;
-            buildArea.viewDistance = BuildArea.PREFERRED_VIEW_DISTANCE;
+            buildArea.rebuildPlayers(player.pid, player.level, player.x, player.z);
         } else {
             buildArea.resize();
         }
