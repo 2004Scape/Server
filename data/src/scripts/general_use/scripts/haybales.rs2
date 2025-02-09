@@ -21,8 +21,8 @@ def_int $rand = random(100);
 if ($rand < 2) {
     ~damage_self(1);
 } else if ($rand < 12) {
-    ~chatplayer("<p,quiz>Wow! A needle!|Now what are the chances of finding that?");
     inv_add(inv, needle, 1);
+    ~chatplayer("<p,happy>Wow! A needle!|Now what are the chances of finding that?");
 } else {
     mes("You find nothing of interest.");
 }
