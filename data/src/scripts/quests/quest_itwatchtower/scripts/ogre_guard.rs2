@@ -16,7 +16,7 @@ switch_int(%gutanoth_gold) {
         }
         ~chatplayer("<p,sad>No, I don't have it.");
         ~chatnpc("<p,angry>No gold, no passage.|Get out of this city!");
-        mes("The guard pushes you back down the hill.");
+        mes("The guard pushes you outside the city.");
         p_teleport(^gutanoth_hill);
     case default :
         ~chatnpc("<p,angry>Halt! You cannot pass here.");
@@ -24,7 +24,7 @@ switch_int(%gutanoth_gold) {
         ~chatnpc("<p,angry>You will be my friend only with gold.|Bring me a bar of pure gold and I will let you pass.");
         %gutanoth_gold = ^gutanoth_looking_gold;
         ~chatnpc("<p,angry>For now - begone!");
-        mes("The guard pushes you back down the hill.");
+        mes("The guard pushes you outside the city.");
         p_teleport(^gutanoth_hill);
 }
 
@@ -72,14 +72,17 @@ mes("The guard pushes you back down the hill.");
 p_teleport(^gutanoth_hill);
 
 [opnpcu,ogre_guard_west]
+if(%itwatchtower_progress >= ^itwatchtower_given_relic) {
+    ~chatnpc("<p,neutral>Don't need anything from you, creature."); // RS3
+    return;
+}
 if(last_useitem = ogre_relic) {
-    if(%itwatchtower_progress >= ^itwatchtower_given_relic) {
-        if(loc_find(0_39_47_53_20, loc_2787) = true) @enter_gutanoth(movecoord(loc_coord, 0, 0, -1));
-    }
     @ogre_guard_friendship_proof;
 }
 if(last_useitem = relic_part_1 | last_useitem = relic_part_2 | last_useitem = relic_part_3) {
     ~chatnpc("<p,angry>What's this thing?|It looks a bit like our Dalgroth...|but it's in bits... Go away!");
+    mes("The guard pushes you back down the hill.");
+    p_teleport(^gutanoth_hill);
 }
 
 [opnpc1,ogre_guard_battlements] @ogre_guard_battlements_dialogue;
@@ -89,6 +92,11 @@ if(last_useitem = rock_cake) {
     if(getbit_range(%itwatchtower_bits, ^itwatchtower_market_lower, ^itwatchtower_market_upper) = 1) @battlements_rockcake;
     // https://youtu.be/R8E9Rir_kKg?si=Qg1oFtos6w4T8Mhh&t=851
     else ~chatplayer("<p,confused>Why am I giving this cake to an ogre?");
+} else if(last_useitem = ogre_relic) {
+    ~chatnpc("<p,angry>It's a relic, what of it?");
+    say("Ow!");
+    mes("The guard gives you a smack around the head.");
+    ~chatnpc("<p,angry>Bring me something good next time!");
 } else {
     ~chatnpc("<p,angry>Uh? What do you seek to gain by giving me this rubbish?"); // RS3
     npc_anim(ogre_attack, 0);
