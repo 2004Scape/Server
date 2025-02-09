@@ -847,6 +847,9 @@ class World {
                 // - movement
                 player.processInteraction();
 
+                // - run energy
+                player.updateEnergy();
+
                 if ((player.masks & InfoProt.PLAYER_EXACT_MOVE.id) == 0) {
                     player.validateDistanceWalked();
                 }
