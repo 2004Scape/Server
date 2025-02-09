@@ -138,10 +138,11 @@ export default class BuildArea {
     }
 
     private *getNearbyPlayersByZones(pid: number, level: number, x: number, z: number): IterableIterator<Player> {
-        const startX: number = CoordGrid.zone(x - this.viewDistance);
-        const startZ: number = CoordGrid.zone(z - this.viewDistance);
-        const endX: number = CoordGrid.zone(x + this.viewDistance);
-        const endZ: number = CoordGrid.zone(z + this.viewDistance);
+        const distance: number = BuildArea.PREFERRED_VIEW_DISTANCE;
+        const startX: number = CoordGrid.zone(x - distance);
+        const startZ: number = CoordGrid.zone(z - distance);
+        const endX: number = CoordGrid.zone(x + distance);
+        const endZ: number = CoordGrid.zone(z + distance);
 
         for (let zx = startX; zx <= endX; zx++) {
             const zoneX: number = zx << 3;
@@ -161,10 +162,11 @@ export default class BuildArea {
     }
 
     *getNearbyNpcs(level: number, x: number, z: number): IterableIterator<Npc> {
-        const startX: number = CoordGrid.zone(x - BuildArea.PREFERRED_VIEW_DISTANCE);
-        const startZ: number = CoordGrid.zone(z - BuildArea.PREFERRED_VIEW_DISTANCE);
-        const endX: number = CoordGrid.zone(x + BuildArea.PREFERRED_VIEW_DISTANCE);
-        const endZ: number = CoordGrid.zone(z + BuildArea.PREFERRED_VIEW_DISTANCE);
+        const distance: number = BuildArea.PREFERRED_VIEW_DISTANCE;
+        const startX: number = CoordGrid.zone(x - distance);
+        const startZ: number = CoordGrid.zone(z - distance);
+        const endX: number = CoordGrid.zone(x + distance);
+        const endZ: number = CoordGrid.zone(z + distance);
 
         for (let zx = startX; zx <= endX; zx++) {
             const zoneX: number = zx << 3;
