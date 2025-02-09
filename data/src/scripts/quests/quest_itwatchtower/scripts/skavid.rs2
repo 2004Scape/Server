@@ -1,0 +1,215 @@
+// none of these chatheads move... but if they get fixed later these mesanims match osrs
+[opnpc1,skavid_ar]
+if(testbit(%itwatchtower_bits, ^itwatchtower_learned_ar) = true) {
+    ~chatnpc("<p,bored>Ar cur!");
+    if(%itwatchtower_progress >= ^itwatchtower_complete) mes("You have already learned the skavid language.");
+    else mes("You have already talked to this skavid.");
+    return;
+}
+~chatnpc("<p,bored>Gor cur...");
+if(testbit(%itwatchtower_bits, ^itwatchtower_learning_skavid) = false) {
+    @skavid_no_skavid_speech;
+}
+@skavid_comm;
+
+[opnpc1,skavid_ig]
+if(testbit(%itwatchtower_bits, ^itwatchtower_learned_ig) = true) {
+    ~chatnpc("<p,bored>Bidith ig!");
+    if(%itwatchtower_progress >= ^itwatchtower_complete) mes("You have already learned the skavid language.");
+    else mes("You have already talked to this skavid.");
+    return;
+}
+~chatnpc("<p,bored>Cur bidith...");
+if(testbit(%itwatchtower_bits, ^itwatchtower_learning_skavid) = false) {
+    @skavid_no_skavid_speech;
+}
+@skavid_comm;
+
+[opnpc1,skavid_cur]
+if(testbit(%itwatchtower_bits, ^itwatchtower_learned_cur) = true) {
+    ~chatnpc("<p,bored>Cur tanath!");
+    if(%itwatchtower_progress >= ^itwatchtower_complete) mes("You have already learned the skavid language.");
+    else mes("You have already talked to this skavid.");
+    return;
+}
+~chatnpc("<p,bored>Bidith tanath...");
+if(testbit(%itwatchtower_bits, ^itwatchtower_learning_skavid) = false) {
+    @skavid_no_skavid_speech;
+}
+@skavid_comm;
+
+[opnpc1,skavid_nod]
+if(testbit(%itwatchtower_bits, ^itwatchtower_learned_nod) = true) {
+    ~chatnpc("<p,bored>Gor nod!");
+    if(%itwatchtower_progress >= ^itwatchtower_complete) mes("You have already learned the skavid language.");
+    else mes("You have already talked to this skavid.");
+    return;
+}
+~chatnpc("<p,bored>Tanath gor...");
+if(testbit(%itwatchtower_bits, ^itwatchtower_learning_skavid) = false) {
+    @skavid_no_skavid_speech;
+}
+@skavid_comm;
+
+[label,skavid_comm]
+mes("The skavid is trying to communicate...");
+@multi5("Cur.", skavid_saycur, "Ar.", skavid_sayar, "Ig.", skavid_sayig, "Nod.", skavid_saynod, "Gor.", skavid_saygor);
+
+[label,skavid_saycur]
+~chatplayer("<p,neutral>Cur.");
+if(npc_type = skavid_cur) {
+    %itwatchtower_bits = setbit(%itwatchtower_bits, ^itwatchtower_learned_cur);
+    mes("It seems the skavid understood you.");
+    ~chatnpc("<p,happy>Cur,|cur tanath!");
+    return;
+}
+@skavid_fail;
+
+[label,skavid_sayar]
+~chatplayer("<p,neutral>Ar.");
+if(npc_type = skavid_ar) {
+    %itwatchtower_bits = setbit(%itwatchtower_bits, ^itwatchtower_learned_ar);
+    mes("It seems the skavid understood you.");
+    ~chatnpc("<p,happy>Ar,|Ar cur!");
+    return;
+}
+@skavid_fail;
+
+[label,skavid_sayig]
+~chatplayer("<p,neutral>Ig.");
+if(npc_type = skavid_ig) {
+    %itwatchtower_bits = setbit(%itwatchtower_bits, ^itwatchtower_learned_ig);
+    mes("It seems the skavid understood you.");
+    ~chatnpc("<p,happy>Ig!|Bidith ig!");
+    return;
+}
+@skavid_fail;
+
+[label,skavid_saynod]
+~chatplayer("<p,neutral>Nod.");
+if(npc_type = skavid_nod) {
+    %itwatchtower_bits = setbit(%itwatchtower_bits, ^itwatchtower_learned_nod);
+    mes("It seems the skavid understood you.");
+    ~chatnpc("<p,happy>Nod,|Gor nod!");
+    return;
+}
+@skavid_fail;
+
+[label,skavid_saygor]
+~chatplayer("<p,neutral>Gor.");
+@skavid_fail;
+
+[label,skavid_fail]
+~chatnpc("<p,neutral>???");
+mes("It seems that was the wrong reply.");
+
+[opnpc1,scared_skavid]
+if(%itwatchtower_progress >= ^itwatchtower_complete) {
+    ~chatnpc("<p,happy>Ah, master.|You did well to understand our language.");
+    return;
+}
+if(getbit_range(%itwatchtower_bits, ^itwatchtower_learning_skavid, ^itwatchtower_learned_nod) = calc(pow(2, 5) - 1)) {
+    ~chatnpc("<p,happy>Master, my kinsmen tell me you have learned skavid.|You should speak to the mad ones in their cave.");
+    return;
+} 
+if(testbit(%itwatchtower_bits, ^itwatchtower_learning_skavid) = true) {
+    ~chatnpc("<p,happy>Master, how are you doing learning our language?");
+    ~chatplayer("<p,happy>I am studying the speech of your kind...");
+    return;
+}
+~chatnpc("<p,shock>Tanath cur, tanath cur!");
+~chatplayer("<p,neutral>???");
+~chatnpc("<p,sad>Don't hurt me, don't hurt me!");
+~chatplayer("<p,neutral>Stop moaning, creature.|I know about you skavids -|you serve those monsters, the ogres.");
+~chatnpc("<p,shock>Please don't touch me!");
+~chatplayer("<p,angry>You have something that belongs to me...");
+~chatnpc("<p,shock>I don't have anything; please believe me!");
+~chatplayer("<p,bored>Somehow, I find your words hard to believe.");
+~chatnpc("<p,shifty>I'm begging your kindness; I don't have it!");
+switch_int(~p_choice2("I don't believe you, hand it over!", 1, "Okay, okay, I'm not going to hurt you.", 2)) {
+    case 1 :
+        ~chatplayer("<p,angry>I don't believe you, hand it over!");
+        ~chatnpc("<p,shock>Ahhhhh, help!");
+        ~chatplayer("<p,sad>Oh great, I'm not getting anywhere.");
+    case 2 :
+        ~chatplayer("<p,happy>Okay, okay, I'm not going to hurt you.");
+        ~chatnpc("<p,happy>Thank you, kind one.");
+        ~chatnpc("<p,neutral>I'll tells you where that things you wants is.|The mad skavids have it in their cave in the city.");
+        ~chatnpc("<p,neutral>You will have to learn skavid,|otherwise they will not talks to you.|Make sure you remembers all that you hear.");
+        ~chatnpc("<p,neutral>Let me tells you the most common skavid words...");
+        ~chatnpc("<p,neutral>Ar, nod, gor, ig, cur.");
+        ~chatnpc("<p,neutral>Those will gets you started...");
+        %itwatchtower_bits = setbit(%itwatchtower_bits, ^itwatchtower_learning_skavid);
+}
+
+[opnpc1,mad_skavid]
+if(%itwatchtower_progress >= ^itwatchtower_skavid_crystal) {
+    ~chatnpc("<p,confused>What, you gots the crystal...");
+    switch_int(~p_choice2("But I've lost it!", 1, "Oh, okay then.", 2)) {
+        case 1 :
+            ~chatplayer("<p,sad>But I've lost it!");
+            if(inv_total(bank, watchtower_crystal2) > 0) return; // rs3
+            if(%itwatchtower_progress >= ^itwatchtower_complete | inv_total(inv, watchtower_crystal2) > 0) {
+                ~chatnpc("<p,confused>I haves no more for you.");
+                return;
+            }
+            ~chatnpc("<p,confused>Alright, take this one then...");
+            ~objbox(watchtower_crystal2, "The skavid gives you a crystal.", 250, 0, ^objbox_height);
+            inv_add(inv, watchtower_crystal2, 1);
+        case 2 :
+            ~chatplayer("<p,neutral>Oh, okay then.");
+            ~chatnpc("<p,neutral>You be on your way, then.");
+    }
+    return;
+}
+if(getbit_range(%itwatchtower_bits, ^itwatchtower_learning_skavid, ^itwatchtower_learned_nod) = calc(pow(2, 5) - 1)) {
+    def_int $mes_type = random(3);
+    switch_int($mes_type) {
+        case 0 : ~chatnpc("<p,bored>Ar cur...");
+        case 1 : ~chatnpc("<p,bored>Bidith ig...");
+        case 2 : ~chatnpc("<p,bored>Cur tanath...");
+        case 3 : ~chatnpc("<p,bored>Gor nod...");
+    }
+    switch_int(~p_choice5("Cur.", 1, "Ar.", 2, "Bidith.", 3, "Tanath.", 4, "Gor.", 5)) {
+        case 1 :
+            ~chatplayer("<p,neutral>Cur.");
+            if($mes_type = 1) @mad_skavid_correct;
+            @mad_skavid_wrong;
+        case 2 : 
+            ~chatplayer("<p,neutral>Ar.");
+            mes("It seems your response has upset the skavid.");
+            ~chatnpc("<p,neutral>Grrr!");
+        case 3 :
+            ~chatplayer("<p,neutral>Bidith.");
+            if($mes_type = 2) @mad_skavid_correct;
+            @mad_skavid_wrong;
+        case 4 :
+            ~chatplayer("<p,neutral>Tanath.");
+            if($mes_type = 3) @mad_skavid_correct;
+            @mad_skavid_wrong;
+        case 5 :
+            ~chatplayer("<p,neutral>Gor.");
+            if($mes_type = 0) @mad_skavid_correct;
+            @mad_skavid_wrong;
+    }
+}
+~chatnpc("<p,happy>Tanath gor ar bidith?");
+~chatplayer("<p,neutral>???");
+mes("You cannot communicate with the skavid.");
+mes("It seems you haven't learned enough of their language yet...");
+
+[label,mad_skavid_wrong]
+mes("The response was wrong.");
+~chatnpc("<p,neutral>???");
+
+[label,mad_skavid_correct]
+// https://web.archive.org/web/20041126094839im_/http://img14.imageshack.us/img14/1421/crystalpeicemad.jpg
+~chatnpc("<p,happy>Heh-heh! So you speak a little skavid eh?|I'm impressed, here take this prize...");
+~objbox(watchtower_crystal2, "The skavid gives you a large crystal.", 250, 0, ^objbox_height);
+inv_add(inv, watchtower_crystal2, 1);
+%itwatchtower_progress = ^itwatchtower_skavid_crystal;
+
+[label,skavid_no_skavid_speech]
+~chatplayer("<p,neutral>???");
+mes("The skavid is trying to communicate...");
+mes("You don't know any skavid words yet!");
