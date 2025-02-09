@@ -19,13 +19,13 @@ switch_int(~p_choice2("Can I see what you are selling?", 1, "I don't need anythi
 ~npc_retaliate(0);
 
 [oploc1,loc_2793]
+if (stat(thieving) < 15) {
+    ~mesbox("You need a Thieving level of 15 to steal from this stall."); // OSRS (matches RSC)
+    return;
+}
 if(npc_find(coord, npc_875, 3, 2) = true) {
     ~chatnpc("<p,angry>Grr! Get your hands off those cakes!");
     ~npc_retaliate(0);
-    return;
-}
-if (stat(thieving) < 15) {
-    ~mesbox("You need a thieving level of 15 to steal from this stall."); // recheck this (rsc)
     return;
 }
 if(inv_freespace(inv) = 0) {
