@@ -56,7 +56,7 @@ if ($hands ! null) {
 settimer(desert_heat, $time);
 
 [proc,clear_desertheat_timer]
-if(~inzone_coord_pair_table(desert_zones, coord) = false) {
+if(~inzone_coord_pair_table(desert_zones, coord) = false & %desert = ^true) {
     %desert = ^false;
     cleartimer(desert_heat);
     mes("Desert effect is now over."); // found in 2004-2005 images
