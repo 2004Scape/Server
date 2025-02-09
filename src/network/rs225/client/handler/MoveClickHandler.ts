@@ -38,7 +38,6 @@ export default class MoveClickHandler extends MessageHandler<MoveClick> {
         if (Environment.NODE_WALKTRIGGER_SETTING === WalkTriggerSetting.PLAYERPACKET) {
             player.pathToMoveClick(player.userPath, !Environment.NODE_CLIENT_ROUTEFINDER);
         }
-        player.interactWalkTrigger = false;
         if (!message.opClick) {
             player.clearPendingAction();
             if (player.runenergy < 100 && message.ctrlHeld === 1) {

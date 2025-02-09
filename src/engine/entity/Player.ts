@@ -255,7 +255,6 @@ export default class Player extends PathingEntity {
     }[] = [];
     allowDesign: boolean = false;
     afkEventReady: boolean = false;
-    interactWalkTrigger: boolean = false;
     moveClickRequest: boolean = false;
 
     loggedOut: boolean = false; // pending logout processing
@@ -1034,9 +1033,8 @@ export default class Player extends PathingEntity {
             return;
         }
 
-        if (!this.interactWalkTrigger || this.hasWaypoints()) {
+        if (this.hasWaypoints()) {
             this.processWalktrigger();
-            this.interactWalkTrigger = true;
         }
 
         // Try an interaction
