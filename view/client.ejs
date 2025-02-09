@@ -61,6 +61,17 @@
         #controls {
             margin-bottom: 10px;
         }
+
+        @keyframes blink {
+            50% {
+                opacity: 0.5;
+            }
+        }
+
+        .blink {
+            animation: blink 1.5s linear infinite;
+        }
+
     </style>
  
     <script>
@@ -134,17 +145,44 @@
  
         function hideControls() {
             document.getElementById('controls').style.display = 'none';
-            document.getElementById('show').style.display = '';
+            document.getElementById('hide-message').style.display = '';
+
+            countDown = 0;
+            hideMessage();
 
             localStorage.setItem('hideControls', true);
         }
         
+        let timer;
+        let countDown = 0;
+        let countDownMax = 10;
+        function hideMessage() {
+            if (countDown >= countDownMax) {
+                document.getElementById('hide-message').style.display = 'none';
+                return;
+            }
+
+            document.getElementById('count-down').textContent = (countDownMax - countDown) + 's'
+
+            countDown++;
+            timer = setTimeout(hideMessage, 1000);
+        }
+        
         function showControls() {
+            clearTimeout(timer);
+
             document.getElementById('controls').style.display = '';
-            document.getElementById('show').style.display = 'none';
+            document.getElementById('hide-message').style.display = 'none';
             
             localStorage.removeItem('hideControls');
         }
+
+        document.addEventListener('keydown', function(e) {
+            if (e.ctrlKey && e.altKey && e.key == 'h') {
+                e.preventDefault();
+                showControls();
+            }
+        })
 
         function loadSettings() {
             let canvas = document.getElementById('canvas');
@@ -183,7 +221,10 @@
             <a class="green" href="#" id="screenshot" onclick="saveScreenshot();">Take screenshot</a> |
             <a class="green" href="#" id="hide" onclick="hideControls();">Hide controls</a>
         </div>
-        <a class="green" href="#" id="show" onclick="showControls();" style="display: none;" alt="Show controls">🖥️</a>
+        <div id="hide-message" style="display: none;">
+            <p class="green blink">Controls have been hidden press ctrl+alt+h to unhide.</p>
+            <p class="green" id="count-down"></span>
+        </div>
     </center>
  
     <script type="module">
