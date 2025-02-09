@@ -24,8 +24,7 @@ export default class NpcInfoEncoder extends MessageEncoder<NpcInfo> {
         const buildArea: BuildArea = message.player.buildArea;
 
         if (message.changedLevel || message.deltaX > buildArea.viewDistance || message.deltaZ > buildArea.viewDistance) {
-            // optimization to avoid sending 3 bits * observed npcs when everything has to be removed anyways
-            buildArea.npcs.clear();
+            buildArea.rebuildNpcs();
         }
 
         const updates: Packet = Packet.alloc(1);
