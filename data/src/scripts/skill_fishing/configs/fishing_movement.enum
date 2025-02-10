@@ -233,7 +233,7 @@ val=1,0_51_49_4_11
 val=2,0_51_49_12_4
 val=3,0_51_49_11_4
 
-[fishing_movement_taverly_dungeon_enum]
+[fishing_movement_taverley_dungeon_enum]
 inputtype=int
 outputtype=coord
 val=0,0_45_152_14_36
