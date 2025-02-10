@@ -23,13 +23,21 @@ model account {
     registration_ip   String?
     registration_date DateTime @default(now())
 
+    // current login
     logged_in  Int       @default(0)
     login_time DateTime?
+
+    // last logout
+    logged_out  Int       @default(0)
+    logout_time DateTime?
 
     muted_until  DateTime?
     banned_until DateTime?
 
     staffmodlevel Int @default(0)
+
+    notes         String?   @db.Text
+    notes_updated DateTime?
 }
 
 model session {
@@ -42,6 +50,20 @@ model session {
     timestamp DateTime
     uid       Int
     ip        String?
+}
+
+// attempts (monitoring abuse)
+model login {
+    uuid       String   @id
+    account_id Int
+    world      Int
+    timestamp  DateTime
+    uid        Int
+    ip         String?
+}
+
+model ipban {
+    ip String @id
 }
 
 // todo: rename this to e.g. session_log one day

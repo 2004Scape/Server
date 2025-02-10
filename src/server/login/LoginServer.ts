@@ -33,14 +33,26 @@ export default class LoginServer {
                     } else if (type === 'player_login') {
                         const { replyTo, username, password, uid, socket, remoteAddress } = msg;
 
+                        const ipBan = await db.selectFrom('ipban').selectAll()
+                            .where('ip', '=', remoteAddress).executeTakeFirst();
+
+                        if (ipBan) {
+                            s.send(JSON.stringify({
+                                replyTo,
+                                response: 7
+                            }));
+                            return;
+                        }
+
                         const account = await db.selectFrom('account').where('username', '=', username).selectAll().executeTakeFirst();
 
                         if (!Environment.WEBSITE_REGISTRATION && !account) {
                             // register the user automatically
-                            // todo: registration ip
                             await db.insertInto('account').values({
                                 username,
-                                password: bcrypt.hashSync(password.toLowerCase(), 10)
+                                password: bcrypt.hashSync(password.toLowerCase(), 10),
+                                registration_ip: remoteAddress,
+                                registration_date: toDbDate(new Date())
                             }).execute();
 
                             s.send(JSON.stringify({
@@ -49,6 +61,34 @@ export default class LoginServer {
                                 staffmodlevel: 0
                             }));
                             return;
+                        }
+
+                        if (account) {
+                            const recent = await db.selectFrom('login').selectAll()
+                                .where('account_id', '=', account.id)
+                                .where('ip', '=', remoteAddress)
+                                .where('timestamp', '>=', toDbDate(new Date(Date.now() - 5000)))
+                                .limit(3).execute();
+
+                            if (recent.length === 3) {
+                                // rate limited
+                                s.send(JSON.stringify({
+                                    replyTo,
+                                    response: 8
+                                }));
+                                return;
+                            }
+
+                            // todo: concurrent logins by ip
+
+                            await db.insertInto('login').values({
+                                uuid: socket,
+                                account_id: account.id,
+                                world: nodeId,
+                                timestamp: toDbDate(nodeTime),
+                                uid,
+                                ip: remoteAddress
+                            }).execute();
                         }
 
                         if (!account || !(await bcrypt.compare(password.toLowerCase(), account.password))) {
@@ -69,6 +109,45 @@ export default class LoginServer {
                             return;
                         }
 
+                        if (account.logged_in === nodeId) {
+                            // could be a reconnect so we have special logic here
+                            // the world will respond already logged in otherwise
+
+                            // todo: session not guaranteed at this point
+                            await db.insertInto('session').values({
+                                uuid: socket,
+                                account_id: account.id,
+                                profile,
+                                world: nodeId,
+                                timestamp: toDbDate(nodeTime),
+                                uid,
+                                ip: remoteAddress
+                            }).execute();
+
+                            s.send(JSON.stringify({
+                                replyTo,
+                                response: 2
+                            }));
+                            return;
+                        } else if (account.logged_in !== 0) {
+                            // already logged in elsewhere
+                            s.send(JSON.stringify({
+                                replyTo,
+                                response: 3
+                            }));
+                            return;
+                        } else if (
+                            account.logged_out !== 0 && account.logged_out !== nodeId &&
+                            account.logout_time !== null && new Date(account.logout_time) >= new Date(Date.now() - 45000)
+                        ) {
+                            // rate limited (hop timer)
+                            s.send(JSON.stringify({
+                                replyTo,
+                                response: 6
+                            }));
+                            return;
+                        }
+
                         await db.insertInto('session').values({
                             uuid: socket,
                             account_id: account.id,
@@ -78,22 +157,6 @@ export default class LoginServer {
                             uid,
                             ip: remoteAddress
                         }).execute();
-
-                        if (account.logged_in === nodeId) {
-                            // could be a reconnect so we have special logic here
-                            // the world will respond already logged in otherwise
-                            s.send(JSON.stringify({
-                                replyTo,
-                                response: 2
-                            }));
-                        } else if (account.logged_in !== 0) {
-                            // already logged in elsewhere
-                            s.send(JSON.stringify({
-                                replyTo,
-                                response: 3
-                            }));
-                            return;
-                        }
 
                         await db.updateTable('account').set({
                             logged_in: nodeId,
@@ -122,8 +185,6 @@ export default class LoginServer {
                     } else if (type === 'player_logout') {
                         const { replyTo, username, save } = msg;
 
-                        // todo: record logout history
-
                         const raw = Buffer.from(save, 'base64');
                         if (PlayerLoading.verify(new Packet(raw))) {
                             if (!fs.existsSync(`data/players/${profile}`)) {
@@ -137,7 +198,9 @@ export default class LoginServer {
 
                         await db.updateTable('account').set({
                             logged_in: 0,
-                            login_time: null
+                            login_time: null,
+                            logged_out: nodeId,
+                            logout_time: toDbDate(new Date()),
                         }).where('username', '=', username).executeTakeFirst();
 
                         s.send(JSON.stringify({
@@ -180,6 +243,10 @@ export default class LoginServer {
                         await db.updateTable('account').set({
                             muted_until: toDbDate(until)
                         }).where('username', '=', username).executeTakeFirst();
+                    } else if (type === 'world_heartbeat') {
+                        const { names } = msg;
+
+                        // todo: ensure no accounts are locked
                     }
                 } catch (err) {
                     console.error(err);

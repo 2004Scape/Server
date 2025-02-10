@@ -13,9 +13,13 @@ export type account = {
     registration_date: Generated<string>;
     logged_in: Generated<number>;
     login_time: string | null;
+    logged_out: Generated<number>;
+    logout_time: string | null;
     muted_until: string | null;
     banned_until: string | null;
     staffmodlevel: Generated<number>;
+    notes: string | null;
+    notes_updated: string | null;
 };
 export type account_session = {
     id: Generated<number>;
@@ -51,6 +55,17 @@ export type hiscore_large = {
 export type ignorelist = {
     account_id: number;
     ignore_account_id: number;
+};
+export type ipban = {
+    ip: string;
+};
+export type login = {
+    uuid: string;
+    account_id: number;
+    world: number;
+    timestamp: string;
+    uid: number;
+    ip: string | null;
 };
 export type newspost = {
     id: Generated<number>;
@@ -105,6 +120,8 @@ export type DB = {
     hiscore: hiscore;
     hiscore_large: hiscore_large;
     ignorelist: ignorelist;
+    ipban: ipban;
+    login: login;
     newspost: newspost;
     private_chat: private_chat;
     public_chat: public_chat;

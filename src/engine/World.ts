@@ -1220,13 +1220,22 @@ class World {
             return;
         }
 
+        const names = [];
+
         for (const player of this.players) {
+            names.push(player.username);
+
             this.loginThread.postMessage({
                 type: 'player_autosave',
                 username: player.username,
                 save: player.save()
             });
         }
+
+        this.loginThread.postMessage({
+            type: 'world_heartbeat',
+            names
+        });
     }
 
     enqueueScript(script: ScriptState, delay: number = 0): void {
@@ -1762,6 +1771,21 @@ class World {
             } else if (reply === 5) {
                 // account has been disabled (banned)
                 client.send(Uint8Array.from([4]));
+                client.close();
+                return;
+            } else if (reply === 6) {
+                // login limit exceeded
+                client.send(Uint8Array.from([9]));
+                client.close();
+                return;
+            } else if (reply === 7) {
+                // rejected
+                client.send(Uint8Array.from([11]));
+                client.close();
+                return;
+            } else if (reply === 8) {
+                // too many attempts
+                client.send(Uint8Array.from([16]));
                 client.close();
                 return;
             }
