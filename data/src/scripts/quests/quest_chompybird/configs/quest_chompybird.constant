@@ -26,7 +26,3 @@
 // 0 = not set, 1 = tomato, 2 = doogle leaves
 ^chompybird_varbit_fycie_flavour_start = 4
 ^chompybird_varbit_fycie_flavour_end = 5
-
-// max value 16384 (guess)
-^chompybird_varbit_kills_start = 6
-^chompybird_varbit_kills_end = 20
