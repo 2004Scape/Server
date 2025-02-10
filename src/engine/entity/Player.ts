@@ -557,25 +557,6 @@ export default class Player extends PathingEntity {
         }
     }
 
-    private drainEnergy(moved: boolean): void {
-        if (!moved || this.stepsTaken === 0) {
-            return;
-        }
-        if (!this.delayed && this.moveSpeed === MoveSpeed.RUN && this.stepsTaken > 1) {
-            const weightKg = Math.floor(this.runweight / 1000);
-            const clampWeight = Math.min(Math.max(weightKg, 0), 64);
-            const loss = (67 + (67 * clampWeight) / 64) | 0;
-            this.runenergy = Math.max(this.runenergy - loss, 0);
-        }
-    }
-
-    private recoverEnergy(moved: boolean): void {
-        if (!this.delayed && (!moved || this.stepsTaken < 2) && this.runenergy < 10000) {
-            const recovered = ((this.baseLevels[PlayerStat.AGILITY] / 9) | 0) + 8;
-            this.runenergy = Math.min(this.runenergy + recovered, 10000);
-        }
-    }
-
     blockWalkFlag(): CollisionFlag {
         return CollisionFlag.PLAYER;
     }
@@ -1060,19 +1041,19 @@ export default class Player extends PathingEntity {
             this.updateMovement();
 
             // If there's a target and p_access is available, try to interact after moving
-            if (this.target && this.canAccess()) {
+            if (this.target && this.canAccess() && !followOp) {
                 interacted = this.tryInteract(this.stepsTaken === 0);
+
+                // If Player did not interact, has no path, and did not move this cycle, terminate the interaction
+                if (!interacted && !this.hasWaypoints() && this.stepsTaken === 0) {
+                    this.messageGame("I can't reach that!");
+                    this.clearInteraction();
+                }
             }
         }
 
-        // If Player did not interact, has no path, and did not move this cycle, terminate the interaction
-        if (!interacted && !this.hasWaypoints() && this.stepsTaken === 0 && this.target && !followOp) {
-            this.messageGame("I can't reach that!");
-            this.clearInteraction();
-        }
-
         // If a script called p_op*, then nextTarget is prepped for next cycle
-        else if (this.nextTarget) {
+        if (this.nextTarget) {
             this.target = this.nextTarget;
         }
 

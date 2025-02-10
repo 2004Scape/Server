@@ -696,14 +696,6 @@ class World {
                             }
                         }
                     }
-
-                    // if (player.target instanceof Player && followingPlayer) {
-                    //     if (CoordGrid.distanceToSW(player, player.target) <= 25) {
-                    //         player.pathToPathingTarget();
-                    //     } else {
-                    //         player.clearWaypoints();
-                    //     }
-                    // }
                 }
 
                 if (this.currentTick - player.lastResponse >= World.TIMEOUT_SOCKET_LOGOUT) {
