@@ -258,7 +258,7 @@ switch_int(random(5)) {
 ~npc_retaliate(0);
 
 [ai_queue3,rowdy_slave]
-if (finduid(%npc_attacking_uid) = true) { 
+if (finduid(%npc_aggressive_player) = true) { 
     if(inv_total(inv, slave_shirt) = 0) {
         obj_add(npc_coord, slave_shirt, 1, ^lootdrop_duration);
         mes("The slave drops his shirt.");
