@@ -1060,19 +1060,19 @@ export default class Player extends PathingEntity {
             this.updateMovement();
 
             // If there's a target and p_access is available, try to interact after moving
-            if (this.target && this.canAccess()) {
+            if (this.target && this.canAccess() && !followOp) {
                 interacted = this.tryInteract(this.stepsTaken === 0);
+
+                // If Player did not interact, has no path, and did not move this cycle, terminate the interaction
+                if (!interacted && !this.hasWaypoints() && this.stepsTaken === 0) {
+                    this.messageGame("I can't reach that!");
+                    this.clearInteraction();
+                }
             }
         }
 
-        // If Player did not interact, has no path, and did not move this cycle, terminate the interaction
-        if (!interacted && !this.hasWaypoints() && this.stepsTaken === 0 && this.target && !followOp) {
-            this.messageGame("I can't reach that!");
-            this.clearInteraction();
-        }
-
         // If a script called p_op*, then nextTarget is prepped for next cycle
-        else if (this.nextTarget) {
+        if (this.nextTarget) {
             this.target = this.nextTarget;
         }
 
