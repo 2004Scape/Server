@@ -137,6 +137,7 @@ export default class LoginServer {
                             }));
                             return;
                         } else if (
+                            account.staffmodlevel < 1 &&
                             account.logged_out !== 0 && account.logged_out !== nodeId &&
                             account.logout_time !== null && new Date(account.logout_time) >= new Date(Date.now() - 45000)
                         ) {

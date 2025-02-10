@@ -1749,7 +1749,7 @@ class World {
                 return;
             }
 
-            const { reply } = msg;
+            const { reply, username } = msg;
             const client = this.loginRequests.get(socket)!;
             this.loginRequests.delete(socket);
 
@@ -1790,11 +1790,14 @@ class World {
                 return;
             }
 
-            const { username, lowMemory, reconnecting, staffmodlevel, muted_until } = msg;
+            const { lowMemory, reconnecting, staffmodlevel, muted_until } = msg;
+            const save = reply === 0 ? msg.save : new Uint8Array();
 
-            let save = new Uint8Array();
-            if (reply === 0 || reply === 2) {
-                save = msg.save;
+            if (!save && reconnecting) {
+                // rejected
+                client.send(Uint8Array.from([11]));
+                client.close();
+                return;
             }
 
             try {
