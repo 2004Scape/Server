@@ -11,12 +11,12 @@ if (~itexam_testbit(^itexam_bit_panning_guide_tea_given) = false) {
 }
 
 if (inv_total(inv, panning_tray_empty) > 0) {
-    strongqueue(panning_action, 0);
+    @panning_action;
 } else {
     mes("You need a panning tray to pan here!");
 }
 
-[queue,panning_action]
+[label,panning_action]
 // The panning anims were seemingly added with the 2006 rework, not sure what happens here, i'm mixing a bit of RSC + osrs behavior.
 mes("You scrape the tray along the bottom");
 p_delay(2);
@@ -728,10 +728,10 @@ if ($item = tinderbox) {
     mes("You strike the tinderbox...");
     mes("Fizz...");
     ~chatplayer("<p,shock>Whoa! This is going to blow! I'd better run!");
-    strongqueue(digsite_blockage_run_sequence, 0);
+    @digsite_blockage_run_sequence;
 }
 
-[queue,digsite_blockage_run_sequence]
+[label,digsite_blockage_run_sequence]
 if (coord ! 0_52_153_51_34) {
     mes("Eep! Eep! Unexpected player coord!");
     return;
