@@ -50,7 +50,7 @@ export type hiscore_large = {
 };
 export type ignorelist = {
     account_id: number;
-    ignore_account_id: number;
+    value: string;
 };
 export type newspost = {
     id: Generated<number>;
