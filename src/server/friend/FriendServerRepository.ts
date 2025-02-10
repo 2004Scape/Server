@@ -390,14 +390,15 @@ export class FriendServerRepository {
 
     private async loadIgnores(username37: bigint) {
         const username = fromBase37(username37);
-        const ignoreUsernames = await db
-            .selectFrom('account as a')
-            .innerJoin('ignorelist as i', 'a.id', 'i.ignore_account_id')
-            .innerJoin('account as local', 'local.id', 'i.account_id')
-            .select('a.username')
+        const ignores = await db
+            .selectFrom('account as local')
+            .innerJoin('ignorelist as i', 'local.id', 'i.account_id')
+            .select('i.value')
             .where('local.username', '=', username)
             .execute();
-        const ignoreUsername37s = ignoreUsernames.map(f => toBase37(f.username));
+
+        const ignoreUsername37s = ignores.map(f => toBase37(f.value));
 
         this.playerIgnores[username] = ignoreUsername37s;
-    }}
+    }
+}
