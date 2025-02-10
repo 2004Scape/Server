@@ -108,7 +108,7 @@ model friendlist {
 model ignorelist {
     account_id        Int
 
-    value             String  @unique
+    value             String
 
     @@id([account_id, value])
 }
