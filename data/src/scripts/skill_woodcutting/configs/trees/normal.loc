@@ -300,14 +300,3 @@ op3=hidden
 category=tree
 param=next_loc_stage,loc_1358
 param=ent,macro_event_ent_dead_tree2
-
-[loc_1384]
-name=Dead tree
-desc=It's only useful for firewood now.
-model=model_loc_1384
-mapscene=6
-op1=Chop down
-op3=hidden
-category=tree
-param=next_loc_stage,loc_1359
-param=ent,macro_event_ent_dead_tree2
