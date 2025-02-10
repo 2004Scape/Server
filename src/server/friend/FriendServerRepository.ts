@@ -382,6 +382,7 @@ export class FriendServerRepository {
             .innerJoin('account as local', 'local.id', 'f.account_id')
             .select('a.username')
             .where('local.username', '=', username)
+            .orderBy('f.created asc')
             .execute();
         const friendUsername37s = friendUsernames.map(f => toBase37(f.username));
 
@@ -396,6 +397,7 @@ export class FriendServerRepository {
             .innerJoin('account as local', 'local.id', 'i.account_id')
             .select('a.username')
             .where('local.username', '=', username)
+            .orderBy('i.created asc')
             .execute();
         const ignoreUsername37s = ignoreUsernames.map(f => toBase37(f.username));
 
