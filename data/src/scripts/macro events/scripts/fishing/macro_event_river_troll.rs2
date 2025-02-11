@@ -73,6 +73,7 @@ if (map_members = true) {
     } 
 } else {
     // f2p drop table
+    // no idea if this is how it worked but i just made it so members drops drop nothing
     if ($random < 27) { // 27/128
         obj_add(npc_coord, fishing_bait, 5, ^lootdrop_duration);
     } else if ($random < 40) { // 13/128
@@ -85,19 +86,17 @@ if (map_members = true) {
         obj_add(npc_coord, feather, 20, ^lootdrop_duration);
     } else if ($random < 59) { // 4/128
         obj_add(npc_coord, feather, 40, ^lootdrop_duration);
-    } else if ($random < 80) { // 21/128. Complete guess, todo: confirm with ash or something
+    } else if ($random < 60) { // 1/128
         obj_add(npc_coord, raw_tuna, 1, ^lootdrop_duration);
-    } else if ($random < 99) { // 19/128
+    } else if ($random < 79) { // 19/128
         obj_add(npc_coord, raw_swordfish, 1, ^lootdrop_duration);
-    } else if ($random < 111) { // 12/128
-        obj_add(npc_coord, raw_shark, 1, ^lootdrop_duration);
-    } else if ($random < 117) { // 6/128
+    } else if ($random < 85) { // 6/128
         obj_add(npc_coord, raw_pike, 1, ^lootdrop_duration);
-    } else if ($random < 121) { // 4/128
+    } else if ($random < 89) { // 4/128
         obj_add(npc_coord, raw_salmon, 1, ^lootdrop_duration);
-    } else if ($random < 125) { // 4/128
+    } else if ($random < 93) { // 4/128
         obj_add(npc_coord, raw_sardine, 1, ^lootdrop_duration);
-    } else if ($random < 128) { // 3/128
+    } else if ($random < 96) { // 3/128
         obj_add(npc_coord, raw_herring, 1, ^lootdrop_duration);
     }
 }
