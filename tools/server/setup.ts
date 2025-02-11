@@ -274,7 +274,14 @@ async function startup() {
 
         choices.push({
             name: 'Set up as a development world',
+            description: 'Game server only, using sqlite',
             value: 'configure-dev'
+        });
+
+        choices.push({
+            name: 'Set up as a full development stack',
+            description: 'Includes login, friend, and logger servers',
+            value: 'configure-dev-stack'
         });
 
         choices.push({
@@ -306,6 +313,10 @@ async function startup() {
                 await configureDev();
                 break;
             }
+            case 'configure-dev-stack': {
+                await configureDevStack();
+                break;
+            }
             case 'configure-local': {
                 await configureSingle();
                 break;
@@ -325,6 +336,54 @@ async function startup() {
 async function configureDev() {
     // we don't actually have to do anything because it's good OOTB :)
     fs.copyFileSync('.env.example', '.env');
+    process.exit(0);
+}
+
+async function configureDevStack() {
+    fs.copyFileSync('.env.example', '.env');
+    fs.appendFileSync('.env', '\n## SETUP SCRIPT\n');
+
+    setWebsiteRegistration(false);
+    setNodeProduction(false);
+
+    const backend = await select({
+        message: 'Choose a database backend',
+        choices: [
+            {
+                name: 'SQLite',
+                value: 'sqlite'
+            },
+            {
+                name: 'MySQL',
+                value: 'mysql'
+            }
+        ]
+    });
+
+    if (backend === 'sqlite') {
+        setDbBackend('sqlite');
+    } else if (backend === 'mysql') {
+        setDbBackend('mysql');
+        await promptDatabase();
+    } else {
+        console.error('Invalid database backend');
+        process.exit(1);
+    }    
+    
+    setLocalSupportServers();
+
+    fs.appendFileSync('.env', 'EASY_STARTUP=true\n');
+
+    if (backend === 'sqlite') {
+        child_process.execSync('npm run sqlite:migrate', {
+            stdio: 'inherit'
+        });
+    } else if (backend === 'mysql') {
+        child_process.execSync('npm run db:migrate', {
+            stdio: 'inherit'
+        });
+    }
+    
     process.exit(0);
 }
 
