@@ -27,7 +27,7 @@ switch_stat($stat) {
 error("Invalid stat: <~stat_name($stat)>");
 
 // handles restoring a players stat towards the base level
-[softtimer,stat_replenish]
+[softtimer,stat_regen]
 def_int $i = 1;
 while ($i <= enum_getoutputcount(stats)) {
     def_stat $stat = enum(int, stat, stats, $i);
@@ -37,8 +37,18 @@ while ($i <= enum_getoutputcount(stats)) {
     if ($base_level > $level & $stat ! prayer & $stat ! hitpoints) {
         // level is lower than base so add to it
         stat_add($stat, 1, 0);
-    } else if ($base_level < $level & $stat ! prayer & $stat ! hitpoints) {
-        // level is higher than base so sub from it
+    }
+
+    $i = calc($i + 1);
+}
+
+[softtimer,stat_boost_restore]
+def_int $i = 1;
+while ($i <= enum_getoutputcount(stats)) {
+    def_stat $stat = enum(int, stat, stats, $i);
+    def_int $base_level = stat_base($stat);
+    def_int $level = stat($stat);
+    if ($base_level < $level & $stat ! prayer & $stat ! hitpoints) {
         stat_sub($stat, 1, 0);
     }
 
@@ -46,7 +56,7 @@ while ($i <= enum_getoutputcount(stats)) {
 }
 
 //hp is on a seperate timer, because of rapid heal and rapid restore
-[softtimer,health_replenish]
+[softtimer,health_regen]
 // hitpoints doesnt deplete when too high
 if (stat(hitpoints) < stat_base(hitpoints)) {
     stat_add(hitpoints, 1, 0);
