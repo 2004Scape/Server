@@ -65,6 +65,10 @@ function setLocalSupportServers() {
     setLoggerServer(true, 'localhost', 43501);
 }
 
+function setDbBackend(backend: 'sqlite' | 'mysql') {    
+    fs.appendFileSync('.env', `DB_BACKEND=${backend}\n`);
+}
+
 function setDatabase(host: string, port: number, name: string, user: string, pass: string) {
     fs.appendFileSync('.env', `DATABASE_URL=mysql://${user}:${pass}@${host}:${port}/${name}\n`);
     fs.appendFileSync('.env', `DB_HOST=${host}\nDB_PORT=${port}\nDB_NAME=${name}\nDB_USER=${user}\nDB_PASS=${pass}\n`);
@@ -355,6 +359,7 @@ async function configureMulti() {
     await promptNodeId();
     await promptNodeXpRate();
     await promptNodeMembers();
+    setDbBackend('mysql');
     await promptDatabase();
     await promptLogin();
     await promptWebsiteRegistration();
