@@ -59,6 +59,12 @@ function setLoggerServer(state: boolean, host?: string, port?: number) {
     }
 }
 
+function setLocalSupportServers() {
+    setLoginServer(true, 'localhost', 43500);
+    setFriendServer(true, 'localhost', 45099);
+    setLoggerServer(true, 'localhost', 43501);
+}
+
 function setDatabase(host: string, port: number, name: string, user: string, pass: string) {
     fs.appendFileSync('.env', `DATABASE_URL=mysql://${user}:${pass}@${host}:${port}/${name}\n`);
     fs.appendFileSync('.env', `DB_HOST=${host}\nDB_PORT=${port}\nDB_NAME=${name}\nDB_USER=${user}\nDB_PASS=${pass}\n`);
@@ -330,9 +336,7 @@ async function configureSingle() {
     fs.appendFileSync('.env', 'DB_BACKEND=sqlite\n');
     await promptWebsiteRegistration();
 
-    setLoginServer(true, 'localhost', 43500);
-    setFriendServer(true, 'localhost', 45099);
-    setLoggerServer(true, 'localhost', 43501);
+    setLocalSupportServers();
 
     fs.appendFileSync('.env', 'EASY_STARTUP=true\n');
     child_process.execSync('npm run sqlite:migrate', {
