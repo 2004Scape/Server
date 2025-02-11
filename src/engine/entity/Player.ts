@@ -76,9 +76,10 @@ import Environment from '#/util/Environment.js';
 import { ChatModePrivate, ChatModePublic, ChatModeTradeDuel } from '#/util/ChatModes.js';
 import LoggerEventType from '#/server/logger/LoggerEventType.js';
 import InputTracking from '#/engine/entity/tracking/InputTracking.js';
+import { findNaivePath } from '#/engine/GameMap.js';
 import Visibility from './Visibility.js';
 import UpdateRebootTimer from '#/network/server/model/UpdateRebootTimer.js';
-
+import { CollisionType } from '@2004scape/rsmod-pathfinder';
 const levelExperience = new Int32Array(99);
 
 let acc = 0;
@@ -844,6 +845,30 @@ export default class Player extends PathingEntity {
 
         return ScriptProvider.getByTrigger(this.targetOp, typeId, categoryId) ?? null;
     }
+
+    pathToPathingTarget(): void {
+        if (!(this.target instanceof PathingEntity)) {
+            return;
+        }
+
+        if (this.isLastOrNoWaypoint() && (this.targetOp === ServerTriggerType.APPLAYER3 || this.targetOp === ServerTriggerType.OPPLAYER3)) {
+            this.queueWaypoint(this.target.followX, this.target.followZ);
+            return;
+        }
+
+        if (!this.canAccess()) {
+            return;
+        }
+
+        if (Environment.NODE_CLIENT_ROUTEFINDER && CoordGrid.intersects(this.x, this.z, this.width, this.length, this.target.x, this.target.z, this.target.width, this.target.length)) {
+            this.queueWaypoints(findNaivePath(this.level, this.x, this.z, this.target.x, this.target.z, this.width, this.length, this.target.width, this.target.length, 0, CollisionType.NORMAL));
+            return;
+        }
+        if (this.isLastOrNoWaypoint()) {
+            this.pathToTarget();
+        }
+    }
+
     // https://youtu.be/_NmFftkMm0I?si=xSgb8GCydgUXUayR&t=79
     // to allow p_walk (sets player destination tile) during walktriggers
     // we process walktriggers from regular movement in client input,
@@ -1029,7 +1054,7 @@ export default class Player extends PathingEntity {
             this.pathToPathingTarget();
 
             // Process walktrigger if there is waypoints
-            if (this.hasWaypoints()) {
+            if (this.hasWaypoints() && this.canAccess()) {
                 this.processWalktrigger();
             }
 
