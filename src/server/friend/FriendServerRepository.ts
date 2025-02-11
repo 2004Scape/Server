@@ -2,6 +2,7 @@ import { fromBase37, toBase37 } from '#/util/JString.js';
 
 import { db } from '#/db/query.js';
 import { ChatModePrivate } from '#/util/ChatModes.js';
+import Environment from '#/util/Environment.js';
 
 /**
  * Stores friends data related to players.
@@ -265,34 +266,42 @@ export class FriendServerRepository {
 
         this.playerIgnores[username].push(value37);
 
-        const response = await db
+        const account = await db
             .selectFrom('account')
-            .innerJoin('ignorelist', 'account.id', 'ignorelist.account_id')
-            .select(['account.id', 'ignorelist.value'])
+            .select('id')
             .where('username', '=', fromBase37(username37))
-            .where('value', '=', fromBase37(value37))
             .limit(1)
             .executeTakeFirst();
 
-        if (!response) {
+        if (!account) {
             return;
         }
 
-        const { id, value } = response;
-
-        if (value) {
-            return;
-        }
+        const { id } = account;
 
         // TODO check player is not over ignore limit
 
-        await db
+        let query = db
             .insertInto('ignorelist')
             .values({
                 account_id: id,
                 value: fromBase37(value37),
-            })
-            .execute();
+            });
+
+        // todo: resolve this when kyseley 0.28 releases .ignore()
+        //       https://github.com/kysely-org/kysely/issues/916
+        if (Environment.DB_BACKEND === 'sqlite') {
+            query = query.onConflict(oc => oc.doNothing());
+        } else if (Environment.DB_BACKEND === 'mysql') {
+            query = query.onDuplicateKeyUpdate({
+                value: fromBase37(value37),
+            });
+        } else {
+            console.error('[Friends] Unknown DB_BACKEND');
+            return;
+        }
+
+        await query.execute();
     }
 
     public async deleteIgnore(username37: bigint, value37: bigint) {
