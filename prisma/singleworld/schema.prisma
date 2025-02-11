@@ -129,9 +129,10 @@ model friendlist {
 
 model ignorelist {
     account_id        Int
-    ignore_account_id Int
 
-    @@id([account_id, ignore_account_id])
+    value             String
+
+    @@id([account_id, value])
 }
 
 model public_chat {
