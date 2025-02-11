@@ -31,7 +31,7 @@ export default class LoginServer {
                             login_time: null
                         }).where('logged_in', '=', nodeId).execute();
                     } else if (type === 'player_login') {
-                        const { replyTo, username, password, uid, socket, remoteAddress } = msg;
+                        const { replyTo, username, password, uid, socket, remoteAddress, reconnecting } = msg;
 
                         const ipBan = await db.selectFrom('ipban').selectAll()
                             .where('ip', '=', remoteAddress).executeTakeFirst();
@@ -109,11 +109,7 @@ export default class LoginServer {
                             return;
                         }
 
-                        if (account.logged_in === nodeId) {
-                            // could be a reconnect so we have special logic here
-                            // the world will respond already logged in otherwise
-
-                            // todo: session not guaranteed at this point
+                        if (reconnecting && account.logged_in === nodeId) {
                             await db.insertInto('session').values({
                                 uuid: socket,
                                 account_id: account.id,

@@ -191,7 +191,7 @@ if(npc_find(coord, npc_828, 7, 0) = true) {
 ~mesbox("You watch the Mercenary Captain for some time.|He has a large metal key attached to his belt.|You notice that he usually gets his men to do his dirty work.");
 
 [ai_queue3,npc_830]
-if (finduid(%npc_attacking_uid) = true) { 
+if (finduid(%npc_aggressive_player) = true) { 
     queue(defeat_merc_capt, 0);
 }
 gosub(npc_death);

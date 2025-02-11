@@ -55,7 +55,7 @@ export type hiscore_large = {
 };
 export type ignorelist = {
     account_id: number;
-    ignore_account_id: number;
+    value: string;
     created: Generated<string>;
 };
 export type ipban = {

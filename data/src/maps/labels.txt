@@ -67,7 +67,7 @@
 =Chaos/Temple,2934,3526,0
 =Heros'/Guild,2894,3501,0
 =Druids'/Circle,2925,3473,0
-=Taverly,2900,3458,0
+=Taverley,2900,3458,0
 =White Wolf/Mountain,2849,3492,1
 =Catherby,2821,3432,0
 =Camelot/Castle,2763,3505,0

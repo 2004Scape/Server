@@ -1793,7 +1793,7 @@ class World {
             const { lowMemory, reconnecting, staffmodlevel, muted_until } = msg;
             const save = reply === 0 ? msg.save : new Uint8Array();
 
-            if (!save && reconnecting) {
+            if (!save && !reconnecting) {
                 // rejected
                 client.send(Uint8Array.from([11]));
                 client.close();

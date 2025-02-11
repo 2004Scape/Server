@@ -53,7 +53,6 @@ if (%action_delay = calc(map_clock + 3)) {
 if (%action_delay = map_clock) { 
     ~fish_roll(raw_lobster, null, lobster_pot, null);
     anim(human_lobster, 0);
-    sound_synth(fishing_cast, 0, 20);
 }
 if (afk_event = ^true & npc_param(is_whirlpool) = ^false) {
     @macro_event_fishing(lobster_pot);
