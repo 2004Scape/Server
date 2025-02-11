@@ -7,7 +7,7 @@
 [ai_queue2,delrith]
 ~npc_default_damage(last_int);
 if (npc_stat(hitpoints) = 0) {
-    if (finduid(%npc_attacking_uid) = true) {
+    if (finduid(%npc_aggressive_player) = true) {
         queue(delrith_death, 1);
     }
 }
