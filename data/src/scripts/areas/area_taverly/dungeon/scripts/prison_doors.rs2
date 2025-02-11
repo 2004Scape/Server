@@ -1,4 +1,4 @@
-[label,taverly_dungeon_open_doors](int $side)
+[label,taverley_dungeon_open_doors](int $side)
 def_coord $southern_position = 0_45_153_7_37;
 def_coord $northern_position = 0_45_153_7_40;
 def_boolean $inside = ~check_axis(coord, loc_coord, loc_angle);
@@ -22,5 +22,5 @@ if($inside = false) {
 }
 ~open_and_close_double_door2($inside, $side, grate_open);
 
-[oploc1,loc_2143] @taverly_dungeon_open_doors(^right);
-[oploc1,loc_2144] @taverly_dungeon_open_doors(^left);
+[oploc1,loc_2143] @taverley_dungeon_open_doors(^right);
+[oploc1,loc_2144] @taverley_dungeon_open_doors(^left);

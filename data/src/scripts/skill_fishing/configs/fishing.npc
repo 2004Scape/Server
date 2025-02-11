@@ -528,7 +528,7 @@ op3=hidden
 model1=model_loc_2630_8
 moverestrict=nomove
 timer=250
-param=fishing_movement_enum,fishing_movement_taverly_dungeon_enum
+param=fishing_movement_enum,fishing_movement_taverley_dungeon_enum
 //--- lava eel Taverley Dungeon
 
 //--- (Lure/Bait) Observatory
