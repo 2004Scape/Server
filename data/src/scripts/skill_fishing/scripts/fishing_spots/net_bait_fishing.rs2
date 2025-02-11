@@ -52,7 +52,6 @@ if (%action_delay = calc(map_clock + 3)) {
         ~fish_roll(raw_shrimps, null, net, null);
     }
     anim(human_smallnet, 0);
-    sound_synth(fishing_cast, 0, 15);
 }
 
 if (afk_event = ^true & npc_param(is_whirlpool) = ^false) {
@@ -80,14 +79,10 @@ if (%action_delay = map_clock) {
         ~fish_roll(raw_shrimps, null, net, null);
     }
 }
-// play anim every 6 ticks, and sound every 3 ticks
+// play anim every 6 ticks
 if (%skill_anim < map_clock) {
     %skill_anim = calc(map_clock + 5);
     anim(human_smallnet, 0);
-    sound_synth(fishing_cast, 0, 15);
-} else
-if (%skill_anim = calc(map_clock + 2)) {
-    sound_synth(fishing_cast, 0, 15);
 }
 p_opnpc(4);
 
