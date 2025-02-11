@@ -64,6 +64,10 @@ function setDatabase(host: string, port: number, name: string, user: string, pas
     fs.appendFileSync('.env', `DB_HOST=${host}\nDB_PORT=${port}\nDB_NAME=${name}\nDB_USER=${user}\nDB_PASS=${pass}\n`);
 }
 
+function setWebsiteRegistration(state: boolean) {
+    fs.appendFileSync('.env', `WEBSITE_REGISTRATION=${state}\n`);
+}
+
 // ----
 
 async function promptWebPort() {
@@ -241,7 +245,7 @@ async function promptWebsiteRegistration() {
         default: true
     });
 
-    fs.appendFileSync('.env', `WEBSITE_REGISTRATION=${!autoregister}\n`);
+    setWebsiteRegistration(!autoregister);
 }
 
 // ----
@@ -341,7 +345,7 @@ async function configureMulti() {
     fs.copyFileSync('.env.example', '.env');
     fs.appendFileSync('.env', '\n## SETUP SCRIPT\n');
 
-    fs.appendFileSync('.env', 'WEBSITE_REGISTRATION=true\n');
+    setWebsiteRegistration(true);
     setNodeProduction(true);
 
     await promptNodeId();
