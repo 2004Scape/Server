@@ -1,0 +1,92 @@
+[opnpc1,grew]
+if(%itwatchtower_progress >= ^itwatchtower_complete) {
+    mes("The ogre is not interested in you anymore.");
+} else if(getbit_range(%itwatchtower_bits, ^itwatchtower_spoken_grew, ^itwatchtower_helped_grew) = 2) {
+    ~chatnpc("<p,angry>What are you doing here, morsel?");
+    def_int $op;
+    if(testbit(%itwatchtower_bits, ^itwatchtower_relic2) = true) {
+        $op = ~p_choice2("Can I do anything else for you?", 1, "I've lost the crystal you gave me.", 3);
+    } else {
+        $op = ~p_choice3("Can I do anything else for you?", 1, "I've lost the relic part you gave me.", 2, "I've lost the crystal you gave me.", 3);
+    }
+    switch_int($op) {
+        case 1 :
+            ~chatplayer("<p,neutral>Can I do anything else for you?");
+            ~chatnpc("<p,angry>I have nothing left for you but the cooking pot!");
+        case 2 : 
+            ~chatplayer("<p,sad>I've lost the relic part you gave me.");
+            if(inv_total(inv, relic_part_2) > 0) {
+                ~chatnpc("<p,angry>You lie to me, morsel!");
+                return;
+            }
+            inv_add(inv, relic_part_2, 1);
+            ~chatnpc("<p,angry>Stupid morsel, I have another.|Take it and go now before I lose my temper.");
+        case 3 :
+            ~chatplayer("<p,sad>I've lost the crystal you gave me.");
+            if(inv_total(inv, watchtower_crystal1) > 0) { // no bank check (RS3)
+                ~chatnpc("<p,angry>How dare you lie to me morsel! I will grind you up for my bread!");
+                return;
+            }
+            inv_add(inv, watchtower_crystal1, 1);
+            ~chatnpc("<p,neutral>I suppose you want another?|I suppose just this once I could give you my copy...");
+    }
+} else if(getbit_range(%itwatchtower_bits, ^itwatchtower_spoken_grew, ^itwatchtower_helped_grew) = 1) {
+    ~chatnpc("<p,neutral>The morsel is back.|Does it have our tooth for us?");
+    if(inv_total(inv, ogre_tooth) > 0) {
+        %itwatchtower_bits = setbit_range_toint(%itwatchtower_bits, 2, ^itwatchtower_spoken_grew, ^itwatchtower_helped_grew);
+        inv_del(inv, ogre_tooth, 1);
+        inv_add(inv, relic_part_2, 1);
+        ~chatplayer("<p,happy>I have it.");
+        ~chatnpc("<p,happy>That'll annoy Gorad lots! Heheheheh!");
+        ~chatnpc("<p,happy>Here's a token of my gratitude: some old gem I stole from Gorad, and an old part of a statue.");
+        inv_add(inv, watchtower_crystal1, 1);
+        ~doubleobjbox(relic_part_2, watchtower_crystal1, "You get part of a horrible statue... and one of the crystals!", 200);
+        return;
+    }
+    ~chatplayer("<p,neutral>Err, I don't have it.");
+    ~chatnpc("<p,angry>Morsel, you dare to return without the tooth!|Either you are stoopid, or wants to be eaten!");
+} else if(%itwatchtower_progress >= ^itwatchtower_given_fingernails) {
+        ~chatnpc("<p,angry>What do you want, little morsel?|You would look good on my plate!");
+        ~chatplayer("<p,neutral>I want to enter the city of ogres.");
+        ~chatnpc("<p,happy>Hah! I should eat you instead!");
+        switch_int(~p_choice2("Don't eat me; I can help you.", 1, "You will have to kill me first.", 2)) {
+            case 1 :
+                ~chatplayer("<p,shock>Don't eat me; I can help you.");
+                ~chatnpc("<p,bored>What can a morsel like you do for me?");
+                ~chatplayer("<p,happy>I am a mighty adventurer,|slayer of monsters and user of magic powers.");
+                ~chatnpc("<p,neutral>Well, well, perhaps the morsel can help after all...");
+                %itwatchtower_bits = setbit_range_toint(%itwatchtower_bits, 1, ^itwatchtower_spoken_grew, ^itwatchtower_helped_grew);
+                ~chatnpc("<p,happy>If you t'ink you're tough,|find Gorad, my enemy to the south-east,|and knock one of his teeth out!|Heheheheh!");
+            case 2 :
+                ~chatplayer("<p,angry>You will have to kill me first.");
+                npc_huntall(coord, 5, 0); // seems to be 5 tiles in OSRS
+                while(npc_huntnext = true) {
+                    if(npc_type = ogre) ~npc_retaliate(0);
+                }
+                ~chatnpc("<p,angry>That's not tricky - guards!");
+        }
+} else {
+    mes("The ogre has nothing to say to you at the moment.");
+}
+
+[label,grew_spoken]
+~chatnpc("<p,neutral>The morsel is back.|Does it have our tooth for us?");
+if(inv_total(inv, ogre_tooth) > 0) {
+    %itwatchtower_bits = setbit_range_toint(%itwatchtower_bits, 2, ^itwatchtower_spoken_grew, ^itwatchtower_helped_grew);
+    inv_del(inv, ogre_tooth, 1);
+    inv_add(inv, relic_part_2, 1);
+    ~chatplayer("<p,happy>I have it.");
+    ~chatnpc("<p,happy>That'll annoy Gorad lots! Heheheheh!");
+    ~chatnpc("<p,happy>Here's a token of my gratitude: some old gem I stole from Gorad, and an old part of a statue.");
+    inv_add(inv, watchtower_crystal1, 1);
+    ~doubleobjbox(relic_part_2, watchtower_crystal1, "You get part of a horrible statue... and one of the crystals!", 200);
+    return;
+}
+~chatplayer("<p,neutral>Err, I don't have it.");
+~chatnpc("<p,angry>Morsel, you dare to return without the tooth!|Either you are stoopid, or wants to be eaten!");
+
+[opnpcu,grew]
+if(getbit_range(%itwatchtower_bits, ^itwatchtower_spoken_grew, ^itwatchtower_helped_grew) = 1 & last_useitem = ogre_tooth) {
+   @grew_spoken;
+}
+// no NIH

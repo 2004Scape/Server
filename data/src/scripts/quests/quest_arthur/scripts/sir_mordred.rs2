@@ -13,7 +13,7 @@ gosub(npc_default_death);
 
 [label,lefaye_spare_son]
 if_close;
-if(p_finduid(%npc_attacking_uid) = false) {
+if(p_finduid(%npc_aggressive_player) = false) {
     return;
 }
 // clear player and mordred interactions

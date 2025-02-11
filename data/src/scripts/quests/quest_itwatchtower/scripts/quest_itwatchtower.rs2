@@ -1,0 +1,564 @@
+[oploc1,loc_2299]
+if(stat(agility) < 18) {
+    ~mesbox("You need an Agility level of 18 to climb this wall.");
+    return;
+}
+mes("You climb up the wall...");
+mes("...and squeeze in through the window.");
+~agility_climb_up(310, 1_39_48_52_45);
+
+[oploc1,loc_2798]
+if(%itwatchtower_progress = ^itwatchtower_not_started) {
+    ~chatplayer("<p,happy>I am not sure why I am searching this bush.");
+} else {
+    ~chatplayer("<p,happy>Hmmm, nothing here.");
+}
+
+[oploc1,loc_2799]
+if(%itwatchtower_progress = ^itwatchtower_not_started) {
+    say("I am not sure why I am searching this bush.");
+} else if(%itwatchtower_progress = ^itwatchtower_started) {
+    if(inv_total(inv, fingernails) > 0) {
+        ~chatplayer("<p,quiz>I have already searched this place.");
+        return;
+    }
+    inv_add(inv, fingernails, 1);
+    ~chatplayer("<p,quiz>What's this?|Disgusting! Some fingernails.|They may be a clue though... I'd better take them.");
+} else {
+    ~chatplayer("<p,happy>I have already searched this place.");
+}
+
+[oploc1,loc_2800]
+if(%itwatchtower_progress = ^itwatchtower_not_started) {
+    ~chatplayer("<p,confused>I am not sure why I am searching this bush.");
+} if(%itwatchtower_progress = ^itwatchtower_started) {
+    if(inv_total(inv, damaged_dagger) > 0) {
+        ~chatplayer("<p,quiz>I have already searched this place.");
+        return;
+    }
+    inv_add(inv, damaged_dagger, 1);
+    ~chatplayer("<p,happy>Aha a dagger!|I wonder if this is evidence...");
+} else {
+    ~chatplayer("<p,happy>Hmmm, nothing here.");
+}
+
+[oploc1,loc_2801]
+if(%itwatchtower_progress = ^itwatchtower_not_started) {
+    ~chatplayer("<p,confused>I am not sure why I am searching this bush.");
+} if(%itwatchtower_progress = ^itwatchtower_started) {
+    if(inv_total(inv, tattered_eye_patch) > 0) {
+        ~chatplayer("<p,quiz>I have already searched this place.");
+        return;
+    }
+    inv_add(inv, tattered_eye_patch, 1);
+    ~chatplayer("<p,happy>I've found an eye patch; I had better show this to the Watchtower Wizard.");
+} else {
+    ~chatplayer("<p,happy>Hmmm, nothing here.");
+}
+
+[oploc1,loc_2802]
+if(%itwatchtower_progress = ^itwatchtower_not_started) {
+    ~chatplayer("<p,confused>I am not sure why I am searching this bush.");
+} if(%itwatchtower_progress = ^itwatchtower_started) {
+    if(inv_total(inv, old_robe) > 0) {
+        ~chatplayer("<p,quiz>I have already searched this place.");
+        return;
+    }
+    inv_add(inv, old_robe, 1);
+    ~chatplayer("<p,happy>Aha! A robe.|This could be a clue...");
+} else {
+    ~chatplayer("<p,happy>Hmmm, nothing here.");
+}
+
+[oploc1,loc_2803]
+if(%itwatchtower_progress = ^itwatchtower_not_started) {
+    ~chatplayer("<p,confused>I am not sure why I am searching this bush.");
+} else if(%itwatchtower_progress = ^itwatchtower_started) {
+    if(inv_total(inv, unusual_armour) > 0) { // no bank check for any of them
+        ~chatplayer("<p,quiz>I have already searched this place.");
+        return;
+    }
+    inv_add(inv, unusual_armour, 1);
+    ~chatplayer("<p,happy>Here's some armour; it could be evidence...");
+} else {
+    ~chatplayer("<p,happy>Hmmm, nothing here.");
+}
+
+[oploc1,loc_2833]
+if(%itwatchtower_progress = ^itwatchtower_not_started) {
+    ~chatnpc_specific(nc_name(tower_guard), tower_guard, "<p,angry>You can't go up there.|That's private that is.");
+} else {
+    ~chatnpc_specific(nc_name(tower_guard), tower_guard, "<p,neutral>It is the wizards' helping hand - let 'em up.");
+    if_close;
+    @climb_ladder(movecoord(coord, 0, 1, 0), true);
+}
+
+// checks if the player has a map, lightsource, and tinderbox. possible outcomes are:
+// 0 = no map, not allowed to enter cave
+// 1 = good to enter cave
+// 2 = either no lightsource OR no tinderbox and player chose to come back later
+[proc,check_map_lightsource_tinderbox]()(int)
+if(inv_total(inv, skavid_map) > 0) {
+    if(inv_totalcat(inv, light_source_lit) < 1) {
+        return(2);
+    }
+    mes("You enter the cave...");
+    return(1);
+} else {
+    mes("There's no way I can find my way through without a map of some kind.");
+    return(0);
+}
+
+[oploc1,loc_2805]
+def_int $outcome = ~check_map_lightsource_tinderbox;
+switch_int($outcome) {
+    case 0 : p_teleport(0_39_47_27_62);    
+    case 1 : p_teleport(0_39_147_2_10);
+    case 2 : @teleport_dark_skavid_cave;
+} 
+
+[oploc1,loc_2817]
+p_teleport(0_40_47_2_16);
+
+[oploc1,loc_2806]
+def_int $outcome = ~check_map_lightsource_tinderbox;
+switch_int($outcome) {
+    case 0 : p_teleport(0_39_47_44_47);
+    case 1 : p_teleport(0_39_147_36_61);
+    case default : @teleport_dark_skavid_cave;
+}
+
+[oploc1,loc_2818]
+p_teleport(0_39_47_28_62);
+
+[oploc1,loc_2807]
+def_int $outcome = ~check_map_lightsource_tinderbox;
+switch_int($outcome) {
+    case 0 : p_teleport(0_39_47_57_47);
+    case 1 : p_teleport(0_39_147_22_47);
+    case default : @teleport_dark_skavid_cave;
+}
+
+[oploc1,loc_2819]
+p_teleport(0_39_47_44_46);
+
+[oploc1,loc_2808]
+def_int $outcome = ~check_map_lightsource_tinderbox;
+switch_int($outcome) {
+    case 0 : p_teleport(0_39_47_56_26);
+    case 1 : p_teleport(0_39_147_2_43);
+    case default : @teleport_dark_skavid_cave;
+}
+
+[oploc1,loc_2820]
+p_teleport(0_39_47_57_46);
+
+[oploc1,loc_2809]
+def_int $outcome = ~check_map_lightsource_tinderbox;
+switch_int($outcome) {
+    case 0 : p_teleport(0_40_47_3_16);
+    case 1 : p_teleport(0_39_147_8_33);
+    case default : @teleport_dark_skavid_cave;
+}
+
+[oploc1,loc_2821]
+p_teleport(0_39_47_56_26);
+
+[oploc1,loc_2810]
+def_int $outcome = ~check_map_lightsource_tinderbox;
+switch_int($outcome) {
+    case 0 : p_teleport(0_39_47_27_62);
+    case 1 : p_teleport(0_39_147_26_3);
+    case default : @teleport_dark_skavid_cave;
+}
+
+[label,teleport_dark_skavid_cave]
+p_teleport(0_39_147_9_52);
+settimer(skavid_find_rope, 1);
+~chatplayer("<p,shock>Oh my! It's dark!|All I can see are lots of rocks on the floor.|I suppose I better search them for a way out.");
+
+[oploc1,loc_2835]
+mes("You search the rock.");
+mes("There's nothing here.");
+
+[oploc1,loc_2825]
+p_teleport(0_39_47_44_46);
+~chatplayer("<p,shock>Phew! At last I'm out...|Next time I will take some light!");
+
+[timer,skavid_find_rope]
+if(distance(coord, 0_39_147_40_17) <= 5) {
+    mes("You find a rope!");
+    cleartimer(skavid_find_rope);
+    return;
+}
+
+[oploc1,loc_2822]
+p_teleport(0_39_47_33_5);
+
+[oploc1,loc_2790]
+if(inv_total(inv, toban_key) > 0) {
+    mes("You use the key Og gave you.");
+    inv_del(inv, toban_key, 1);
+    @open_toban_chest;
+}
+mes("The chest is locked.");
+~chatplayer("<p,quiz>I think I need a key of some sort.");
+
+[oplocu,loc_2790]
+if(last_useitem = toban_key) {
+    if(inv_freespace(inv) = 0) {
+        loc_change(loc_3273, 20);
+        sound_synth(chest_open, 0, 0);
+        ~mesbox("There is something in there.|But you don't have the free space to hold it.");
+        return;
+    }
+    @open_toban_chest;
+}
+~displaymessage(^dm_default);
+
+[label,open_toban_chest]
+loc_change(loc_3273, 20);
+sound_synth(chest_open, 0, 0);
+if(inv_total(inv, tobans_gold) > 0) {
+    mes("You have already got the stolen gold.");
+    return;
+}
+inv_add(inv, tobans_gold, 1);
+~objbox(tobans_gold, "You find a stash of gold inside.", 250, 0, divide(^objbox_height, 2));
+
+[oploc1,loc_2811]
+mes("You enter the cave.");
+p_teleport(0_40_47_16_21);
+~chatplayer("<p,shock>Wow! That tunnel went a long way.");
+
+[oploc1,loc_2812]
+mes("You climb down the ladder.");
+p_teleport(0_39_46_4_44);
+
+[opheldu,relic_part_1]
+if(last_useitem = relic_part_2 | last_useitem = relic_part_3) {
+    @player_make_ogre_statue;
+}
+
+[opheldu,relic_part_2]
+if(last_useitem = relic_part_1 | last_useitem = relic_part_3) {
+    @player_make_ogre_statue;
+}
+
+[opheldu,relic_part_3]
+if(last_useitem = relic_part_1 | last_useitem = relic_part_2) {
+    @player_make_ogre_statue;
+}
+
+[label,player_make_ogre_statue]
+mes("I think these fit together, but I can't seem to make them fit.");
+mes("I am going to need someone with experience to help me with this.");
+
+[oploc1,loc_2796]
+if(%itwatchtower_progress >= ^itwatchtower_complete) {
+    @climb_ladder(2_45_73_53_40, true);
+}
+@climb_ladder(2_39_48_53_40, true);
+
+[oploc1,loc_2797]
+@climb_ladder(1_39_48_53_40, true);
+
+[oploc1,loc_2786] @open_gutanoth_gate(^left, ogre_guard_east);
+[oploc1,loc_2787] @open_gutanoth_gate(^right, ogre_guard_east);
+[oploc1,loc_2788] @open_gutanoth_gate(^left, ogre_guard_west);
+[oploc1,loc_2789] @open_gutanoth_gate(^right, ogre_guard_west);
+
+[label,open_gutanoth_gate](int $side, npc $guard)
+if(($guard = ogre_guard_east & %gutanoth_gold < ^gutanoth_found_gold) |  ($guard = ogre_guard_west & %itwatchtower_progress < 4)) {
+    if(npc_find(coord, $guard, 6, 2) = true) {
+        if(npc_type = ogre_guard_east) @ogre_guard_east_dialogue;
+        else @ogre_guard_west_dialogue;
+    }
+    return;
+}
+~open_and_close_double_door2(~check_axis(coord, loc_coord, loc_angle), $side, grate_open); // iron_door_open
+
+[oploc1,loc_2834]
+~chatplayer("<p,confused>What's this? The bridge is out - I'll need to find another way in. I can see a ladder up there coming out of a hole; there must be a tunnel that leads here...");
+
+[oplocu,loc_2326]
+if(last_useitem = rope) {
+    if(distance(coord, loc_coord) > 3) {
+        mes("You need to be closer.");
+        return;
+    }
+    ~forcewalk2(0_39_48_5_15);
+    p_arrivedelay;
+    facesquare(movecoord(coord, 4, 0, 0));
+    mes("You tie the rope to the tree...");
+    anim(seq_775, 0);
+    p_delay(0);
+    inv_del(inv, rope, 1);
+    loc_change(loc_2324, 4);
+    p_delay(0);
+    loc_anim(rope_swing);
+    ~agility_exactmove(human_ropeswing, 20, 0, coord, movecoord(loc_coord, 6, 0, 0), 45, 70, ^exact_east, false);
+    mes("You skillfully swing across.");
+    return;
+}
+mes("You see no way to do that.");
+
+[oploc1,loc_2804]
+if(npc_find(coord, enclave_guard, 5, 0) = true) {
+    ~chatnpc("<p,angry>No you don't!");
+    ~npc_retaliate(0);
+}
+
+[oploc1,loc_2832]
+if(getbit_range(%itwatchtower_bits, ^itwatchtower_market_lower, ^itwatchtower_market_upper) < 2) {
+    if(npc_find(coord, ogre_guard_battlements, 7, 0) = true) @ogre_guard_battlements_dialogue;
+    return;
+}
+def_int $dir = ^exact_east; 
+def_coord $end = movecoord(loc_coord, 1, 0, 0);
+if(coordx(coord) > coordx(loc_coord)) {
+    $dir = ^exact_west;
+    $end = movecoord(loc_coord, -1, 0, 0);
+}
+p_delay(0);
+mes("You climb over the low wall.");
+~agility_exactmove(human_walk_fence_north, 30, 2, coord, $end, 30, 90, $dir, true);
+
+[opheld3,rock_cake]
+mes("You feel strangely heavier...");
+inv_del(inv, rock_cake, 1);
+// on OSRS if you have 5 HP or less it will do hp / 2 instead to prevent death
+queue(damage_player, 0, 4);
+~chatplayer("<p,shock>Ow! I nearly broke a tooth!");
+
+[oploc1,loc_2826]
+p_arrivedelay;
+anim(human_openchest, 0);
+sound_synth(chest_open, 0, 0);
+p_delay(0);
+loc_change(loc_3273, 300);
+mes("Ahh! There is a spider inside.");
+mes("Someone's idea of a joke...");
+npc_add(coord, npc_134, 1000);
+~npc_retaliate(0);
+
+[oploc1,loc_2827]
+p_arrivedelay;
+anim(human_openchest, 0);
+sound_synth(chest_open, 0, 0);
+p_delay(0);
+loc_change(loc_3273, 300);
+switch_int(random(8)) {
+    case 0 :
+        inv_add(inv, emerald, 1);
+        ~chatplayer("<p,happy>Wow, look at the size of this emerald!");
+    case 1 :
+        inv_add(inv, burnt_salmon_trout_carp_cod_pike, 1);
+        ~chatplayer("<p,sad>Burnt fish - why did I bother?");
+    case 2 :
+        inv_add(inv, rotten_apples, 1);
+        ~chatplayer("<p,neutral>Oh dear, I bet these apples taste disgusting.");
+    case 3 :
+        inv_add(inv, bones, 1);
+        ~chatplayer("<p,bored>Oh great, some bones!");
+    case 4 :
+        npc_add(map_findsquare(coord, 1, 1, ^map_findsquare_lineofwalk), npc_119, 1000);
+        ~npc_retaliate(0);
+        ~chatplayer("<p,quiz>How on earth did this dwarf get in here?");
+    case 5 :
+        npc_add(map_findsquare(coord, 1, 1, ^map_findsquare_lineofwalk), rat, 1000);
+        ~npc_retaliate(0);
+        ~chatplayer("<p,shock>Ugh! a dirty rat!");
+    case 6 :
+        npc_add(map_findsquare(coord, 1, 1, ^map_findsquare_lineofwalk), scorpion, 1000);
+        ~npc_retaliate(0);
+        ~chatplayer("<p,shock>Hey! A scorpion is in here!");     
+    case 7 :
+        npc_add(map_findsquare(coord, 1, 1, ^map_findsquare_lineofwalk), npc_134, 1000);
+        ~npc_retaliate(0);
+        ~chatplayer("<p,shock>Oh no, not one of these spider things!");     
+}
+
+[oploc1,loc_2830]
+if(stat(agility) < 25) {
+    mes("You need an Agility level of 25 to attempt this jump."); // OSRS
+    return;
+}
+if(npc_find(coord, npc_861, 8, 0) = true) {
+    ~chatnpc("<p,neutral>Oi! Little thing, if you want to cross here,|you can pay me first - 20 gold pieces!");
+    ~chatplayer("<p,quiz>20 gold pieces to jump off a bridge!!?");
+    ~chatnpc("<p,happy>That's what I said, like it or lump it.");
+    switch_int(~p_choice2("Okay, I'll pay it.", 1, "Forget it, I'm not paying.", 2)) {
+        case 1 :
+            ~chatplayer("<p,neutral>Okay, I'll pay it.");
+            ~chatnpc("<p,happy>A wise choice, little thing.");
+            if(inv_total(inv, coins) < 20) {
+                ~chatnpc("<p,angry>And where is your money? Grrrr!|Do you want to get hurt or something?");
+                return;
+            }
+            mes("You daringly jump across the chasm.");
+            inv_del(inv, coins, 20);
+            stat_advance(agility, 50);
+            p_teleport(0_39_47_34_21);
+            // jumping seq doesn't exist in our verison, maybe just teleport at this point?
+            ~chatplayer("<p,happy>Phew! I just made it.");
+        case 2 :
+            ~chatplayer("<p,sad>Forget it, I'm not paying.");
+            ~chatnpc("<p,angry>In that case you're not crossing.");
+            mes("The guard blocks your path.");
+    }
+}
+
+[oploc1,loc_2831]
+p_teleport(0_39_47_35_18);
+// jumping seq doesn't exist in our verison, maybe just teleport at this point?
+~chatplayer("<p,happy>I'm glad that was easier on the way back!");
+
+[label,enter_gutanoth](coord $dest)
+def_coord $loc_coord = loc_coord;
+def_int $angle = loc_angle;
+def_locshape $shape = loc_shape;
+
+def_coord $opposite_coord = loc_coord;
+$opposite_coord = ~movecoord_loc_return(~multiply2(~door_close(loc_angle, loc_shape), -1));
+
+p_teleport($dest);
+sound_synth(grate_open, 0, 0);
+if (loc_type = loc_2788) {
+    ~open_double_doors_left(2, double_door_open_and_close_right, null);
+} else {
+    ~open_double_doors_right(2, double_door_open_and_close_left, null);
+}
+
+loc_add($opposite_coord, loc_83, $angle, $shape, 2);
+loc_add($loc_coord, loc_83, $angle, $shape, 2);
+
+[oploc1,loc_2823]
+mes("You enter the tunnel.");
+mes("So that's how the skavids are getting into Yanille!");
+p_teleport(0_40_48_25_36);
+stat_advance(agility, 40);
+
+[oploc1,loc_2814] @open_shamancave_gate;
+[oploc1,loc_2815] @open_shamancave_gate;
+
+[label,open_shamancave_gate]
+mes("The gate is locked tight.");
+mes("You'll have to find another way out.");
+
+[oploc1,loc_2813]
+p_teleport(0_39_47_44_46);
+
+[oploc1,loc_2816]
+mes("You examine the rock for ores...");
+p_delay(3);
+mes("The rock contains a crystal!");
+
+[oploc2,loc_2816]
+if(getbit_range(%itwatchtower_bits, ^itwatchtower_shaman_kills_lower, ^itwatchtower_shaman_kills_upper) < 6 | %itwatchtower_progress >= ^itwatchtower_complete) {
+    ~chatplayer("<p,confused>I can't touch it...|Perhaps it is linked with the shamans in some strange way?");
+    return;
+}
+if(inv_total(inv, watchtower_crystal4) > 0) {
+    ~chatplayer("<p,confused>I already have this crystal.|There is no benefit to getting another.");
+    return;
+}
+if(inv_total(bank, watchtower_crystal4) > 0) {
+    ~chatplayer("<p,confused>I already have this crystal in the bank."); // RS3
+    return;
+}
+if(stat(mining) < 40) {
+  mes("You need at least level 40 Mining to mine this rock.");
+  return;
+}
+def_obj $pickaxe = ~pickaxe_checker;
+if ($pickaxe = null) {
+    mes("You do not have a pickaxe that you can use with your current Mining level."); // OSRS
+    return;
+}
+// no inv space check on RS3
+anim(oc_param($pickaxe, mining_animation), 0); // no sound?
+mes("You swing your pick at the rock...");
+p_delay(3);
+mes("A crack appears in the rock and you prise a crystal out.");
+inv_add(inv, watchtower_crystal4, 1);
+
+[opheld1,shaman_robe]
+mes("You search the robe.");
+p_delay(2);
+if(inv_total(inv, watchtower_crystal3) > 0 | %itwatchtower_progress >= ^itwatchtower_complete | getbit_range(%itwatchtower_bits, ^itwatchtower_shaman_kills_lower, ^itwatchtower_shaman_kills_upper) < 6) {
+    mes("You find nothing.");
+    return;
+} 
+if(inv_total(bank, watchtower_crystal3) > 0) {
+    say("I already have this in my bank."); // RS3, rsc has this check as well
+    return;
+}
+mes("You find a crystal wrapped in the folds of the material.");
+inv_add(inv, watchtower_crystal3, 1);
+
+[oploc1,loc_2794]
+mes("You pull the lever...");
+anim(human_leverdown, 0); // OSRS uses seq's not in 225, going to assume here
+sound_synth(lever, 0, 0);
+p_delay(0);
+if(~watchtower_has_all_crystals = true & %itwatchtower_progress = ^itwatchtower_found_all_crystals) {
+    mes("The magic forcefield activates.");
+    // QUEST REWARD
+    %itwatchtower_progress = ^itwatchtower_complete;
+    p_teleport(2_45_73_48_43);
+    stat_advance(magic, 153000);
+    // https://youtu.be/0hkyRGQImlg?si=huZf7suXxmjXPtxN&t=1198
+    inv_del(inv, watchtower_crystal1, 1);
+    inv_del(inv, watchtower_crystal2, 1);
+    inv_del(inv, watchtower_crystal3, 1);
+    inv_del(inv, watchtower_crystal4, 1);
+    inv_add(inv, coins, 5000);
+    inv_add(inv, spell_scroll, 1);
+    queue(itwatchtower_quest_complete, 0);
+    p_delay(3);
+    %questpoints = add(%questpoints, 4);
+    if(npc_find(coord, watchtower_wizard, 6, 0) = true) {
+        ~chatnpc("<p,happy>Marvellous! it works!|The town will now be safe.");
+        ~chatnpc("<p,happy>Your help was invaluable.|Take this payment as a token of my gratitude...");
+        ~chatnpc("<p,happy>Also, let me improve your Magic level for you.");
+        ~chatnpc("<p,happy>Here is a special item for you...|It's a new spell.|Read the scroll and you will be able|to teleport yourself here magically...");
+    }
+    return;
+}
+mes("It had no effect.");
+
+[proc,watchtower_has_all_crystals]()(boolean)
+if(inv_total(inv, watchtower_crystal1) > 0 & inv_total(inv, watchtower_crystal2) > 0 & inv_total(inv, watchtower_crystal3) > 0 & inv_total(inv, watchtower_crystal4) > 0) {
+    return (true);
+}
+return (false);
+
+[opheld1,spell_scroll]
+if(%itwatchtower_progress = ^itwatchtower_complete) %itwatchtower_progress = ^itwatchtower_complete_read_scroll;
+~mesbox("You memorise what is written on the scroll.");
+inv_del(inv, spell_scroll, 1);
+~mesbox("You can now cast the Watchtower Teleport spell...|...providing you have the required runes and magic level.");
+mes("The scroll crumbles to dust.");
+
+[queue,itwatchtower_quest_complete]
+session_log(^log_adventure, "Quest complete: Watch Tower");
+def_int $random = random(128);
+if ($random < 32) {
+    // The least common music that plays when completing a quest.
+    midi_jingle(^quest_complete_3_jingle, ^quest_complete_3_millis);
+} else if ($random < 64) {
+    // A less common music that plays when completing a quest.
+    midi_jingle(^quest_complete_2_jingle, ^quest_complete_2_millis);
+} else {
+    // The most common music that plays when completing a quest.
+    midi_jingle(^quest_complete_1_jingle, ^quest_complete_1_millis);
+}
+if_settext(questscroll:com_3, "You have finished the Watchtower Quest.");
+if_settext(questscroll:com_9, tostring(4));
+// https://web.archive.org/web/20041229124758im_/http://img7.imageshack.us/img7/9247/complete.jpg
+if_setobject(questscroll:com_4, ogre_relic, 260);
+if_openmain(questscroll);
+if_setcolour(questlist:itwatchtower, ^green_rgb);
+if_settab(questlist, ^tab_quest_journal);
+mes("Congratulations! Quest complete!");

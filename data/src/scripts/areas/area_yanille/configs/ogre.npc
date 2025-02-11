@@ -31,7 +31,7 @@ huntrange=2
 // Stats match osrs version but our version Vislvl is different.
 // https://raw.githubusercontent.com/Joshua-F/osrs-dumps/refs/heads/master/config/dump.npc npc_2095
 
-[npc_115]
+[ogre]
 size=2
 walkanim=ogre_walk
 readyanim=ogre_ready
@@ -82,7 +82,7 @@ param=defend_sound,imp_hit
 param=death_sound,imp_death
 // https://raw.githubusercontent.com/Joshua-F/osrs-dumps/refs/heads/master/config/dump.npc npc_2846
 
-[npc_852]
+[ogre_chieftan]
 name=Ogre chieftain
 desc=Tough looking.
 size=2
@@ -119,7 +119,7 @@ huntrange=2
 // Stats match osrs version but our version Vislvl is different.
 // https://raw.githubusercontent.com/Joshua-F/osrs-dumps/refs/heads/master/config/dump.npc npc_4363
 
-[npc_853]
+[og]
 vislevel=hide
 name=Og
 desc=A senior member of the ogre community.
@@ -133,7 +133,7 @@ head1=model_141_npc_head
 param=death_anim,giant_death
 param=death_sound,giant_death
 
-[npc_854]
+[grew]
 vislevel=hide
 name=Grew
 desc=Very probably an ogre.
@@ -147,7 +147,7 @@ head1=model_141_npc_head
 param=death_anim,giant_death
 param=death_sound,giant_death
 
-[npc_855]
+[toban]
 vislevel=hide
 name=Toban
 desc=Ogre-ish.
@@ -161,7 +161,7 @@ head1=model_141_npc_head
 param=death_anim,giant_death
 param=death_sound,giant_death
 
-[npc_856]
+[gorad]
 name=Gorad
 desc=Big, dumb and ugly.
 size=2
@@ -227,7 +227,7 @@ param=death_sound,giant_death
 param=death_drop,big_bones
 // https://raw.githubusercontent.com/Joshua-F/osrs-dumps/refs/heads/master/config/dump.npc npc_4368
 
-[npc_858]
+[ogre_guard_east]
 name=Ogre guard
 desc=These ogres protect the city.
 size=2
@@ -258,7 +258,7 @@ param=death_sound,giant_death
 param=death_drop,big_bones
 // https://raw.githubusercontent.com/Joshua-F/osrs-dumps/refs/heads/master/config/dump.npc npc_4369
 
-[npc_859]
+[ogre_guard_west]
 name=Ogre guard
 desc=An ogre that guards.
 size=2
@@ -289,7 +289,7 @@ param=death_sound,giant_death
 param=death_drop,big_bones
 // https://raw.githubusercontent.com/Joshua-F/osrs-dumps/refs/heads/master/config/dump.npc npc_4370
 
-[npc_860]
+[ogre_guard_battlements]
 name=Ogre guard
 desc=An ogre that guards.
 size=2
@@ -351,7 +351,7 @@ param=death_sound,giant_death
 param=death_drop,big_bones
 // https://raw.githubusercontent.com/Joshua-F/osrs-dumps/refs/heads/master/config/dump.npc npc_4372
 
-[npc_862]
+[city_guard]
 name=City guard
 desc=Tries to keep the peace.
 size=2
@@ -384,7 +384,7 @@ param=death_drop,big_bones
 // Stats match osrs version but our version Vislvl is different.
 // https://raw.githubusercontent.com/Joshua-F/osrs-dumps/refs/heads/master/config/dump.npc npc_4373
 
-[npc_863]
+[scared_skavid]
 vislevel=hide
 name=Scared skavid
 desc=Frightened looking.
@@ -397,7 +397,7 @@ head1=model_146_npc_head
 param=death_anim,skavid_death
 param=death_sound,imp_death
 
-[npc_864]
+[mad_skavid]
 vislevel=hide
 name=Mad skavid
 desc=Looks mad.
@@ -412,7 +412,7 @@ head1=model_146_npc_head
 param=death_anim,skavid_death
 param=death_sound,imp_death
 
-[npc_865]
+[skavid_ig]
 vislevel=hide
 name=Skavid
 desc=A skavid.
@@ -425,7 +425,7 @@ head1=model_146_npc_head
 param=death_anim,skavid_death
 param=death_sound,imp_death
 
-[npc_866]
+[skavid_ar]
 vislevel=hide
 name=Skavid
 desc=A skavid.
@@ -438,7 +438,7 @@ head1=model_146_npc_head
 param=death_anim,skavid_death
 param=death_sound,imp_death
 
-[npc_867]
+[skavid_cur]
 vislevel=hide
 name=Skavid
 desc=A skavid.
@@ -451,7 +451,7 @@ head1=model_146_npc_head
 param=death_anim,skavid_death
 param=death_sound,imp_death
 
-[npc_868]
+[skavid_nod]
 vislevel=hide
 name=Skavid
 desc=A skavid.
@@ -477,7 +477,7 @@ head1=model_146_npc_head
 param=death_anim,skavid_death
 param=death_sound,imp_death
 
-[npc_870]
+[enclave_guard]
 name=Enclave guard
 desc=Big and ugly looking.
 size=2
@@ -512,7 +512,7 @@ param=death_drop,big_bones
 // Stats match osrs version but our version Vislvl is different.
 // https://raw.githubusercontent.com/Joshua-F/osrs-dumps/refs/heads/master/config/dump.npc npc_4381
 
-[npc_871]
+[ogre_shaman]
 name=Ogre shaman
 desc=Seems intelligent... for an ogre.
 size=2

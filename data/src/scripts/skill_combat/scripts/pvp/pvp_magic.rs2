@@ -171,7 +171,7 @@ if ($freeze_time > 0) {
         $freeze_time = divide($freeze_time, 2); // 50% reduction https://oldschool.runescape.wiki/w/Update:RS2_bugfixes_-_part_4
     }
     if (.p_finduid(.uid) = true) {
-        .p_stopaction;
+        .p_walk(.coord);
     }
     .%pk_binder = uid;
     .queue(pvp_freeze_player, 0, $freeze_time);
@@ -239,7 +239,7 @@ if (db_getfieldcount($spell_data, magic_spell_table:spotanim_origin) > 0) {
 %action_delay = add(map_clock, 5);
 def_int $duration = 0;
 if (db_getfieldcount($spell_data, magic_spell_table:spotanim_proj) > 0) {
-    $duration = ~player_projectile(coord, .coord, .uid, db_getfield($spell_data, magic_spell_table:spotanim_proj, 0), 51, 16, -5, 64, 10);
+    $duration = ~player_projectile(coord, .coord, .uid, db_getfield($spell_data, magic_spell_table:spotanim_proj, 0));
 }
 
 // continue by autocast

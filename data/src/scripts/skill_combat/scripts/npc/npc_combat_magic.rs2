@@ -106,7 +106,7 @@ if (db_getfieldcount($spell_data, magic_spell_table:spotanim_origin) > 0) {
 %npc_action_delay = add(map_clock, $attackspeed);
 def_int $duration = 64;
 if (db_getfieldcount($spell_data, magic_spell_table:spotanim_proj) > 0) {
-    $duration = ~player_projectile(npc_coord, coord, uid, db_getfield($spell_data, magic_spell_table:spotanim_proj, 0), 51, 16, -5, 64, 10);
+    $duration = ~player_projectile(npc_coord, coord, uid, db_getfield($spell_data, magic_spell_table:spotanim_proj, 0));
 }
 return($duration);
 

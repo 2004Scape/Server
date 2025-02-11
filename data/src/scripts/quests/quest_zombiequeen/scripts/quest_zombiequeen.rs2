@@ -48,7 +48,7 @@ switch_int(~p_choice2("Yes, I am very nimble and agile!", 1, "No, actually, I ha
     case 1 :
         if_close;
         mes("The gates slowly begin to open...");
-        p_delay(1); // 1t
+        p_delay(0); // 1t
         mes("Suddenly some Zombies grab you and start dragging you inside!");
         queue(shilo_mist_queue, 16);
         ~shilo_metalgates_open;
@@ -56,7 +56,7 @@ switch_int(~p_choice2("Yes, I am very nimble and agile!", 1, "No, actually, I ha
     case 2 :
         if_close;
         mes("You drag your quivering body away from the gates.");
-        p_delay(2); // 2t
+        p_delay(1); // 2t
         mes("You look around, but you don't think anyone saw you.");
 }
 
@@ -173,7 +173,7 @@ if(%zombiequeen_progress = ^zombiequeen_entered_tomb_bervirius & testbit(%zq_map
 [oplocu,_rashiliyia_tomb_door_closed]
 if(last_useitem = bone_key) {
     mes("You try the bone key with the lock.");
-    p_delay(1); // 1t
+    p_delay(0); // 1t
     if(%zombiequeen_progress = ^zombiequeen_entered_tomb_bervirius) %zombiequeen_progress = ^zombiequeen_unlocked_rashliyia_tomb;
     @open_rash_tombdoor;
 }
@@ -385,7 +385,7 @@ if(%zombiequeen_progress = ^zombiequeen_lit_mound) {
     return;
 }
 if_close;
-p_delay(1); // TOOD: 1t
+p_delay(0); // 1t
 if(stat(agility) < 32) {
     mes("You need a level 32 agility to attempt this.");
     return;
@@ -679,7 +679,7 @@ switch_int(~p_choice3("A ladder", 1, "A crude raft", 2, "A pole vault", 3)) {
         stat_advance(crafting, 30);
         %zq_map_mechanisms = setbit(%zq_map_mechanisms, ^zq_used_table_logs);
         p_teleport(0_45_146_17_29);
-        p_delay(2); // 2t
+        p_delay(1); // 2t
         mes("You board the raft!");
         p_delay(1);
         mes("You push off!");
@@ -923,7 +923,7 @@ switch_int(~p_choice2("I don't think so, it might animate and attack me!", 1, "Y
 
 [label,bury_zadimus_corpse]
 mes("You feel an unearthly compunction to bury this corpse!");
-p_delay(2); // 2t todo: adjust when delay fix
+p_delay(1); // 2t
 if(inzone(0_43_48_42_15, 0_43_48_46_18, coord) = true) {
     def_coord $spawn_coord = map_findsquare(coord, 1, 1, ^map_findsquare_lineofwalk);
     facesquare($spawn_coord);
@@ -936,7 +936,7 @@ if(inzone(0_43_48_42_15, 0_43_48_46_18, coord) = true) {
     ~mesbox("You hear an unearthly moaning sound as you see an apparition materialise right in front of you.");
     if_close;
     spotanim_map(small_smokepuff, $spawn_coord, 5, 0);
-    p_delay(1); // 1t todo: adjust when delay fixed
+    p_delay(0); // 1t
     npc_add($spawn_coord, npc_501, 30);
     ~chatnpc("<p,neutral>You have released me from my torture, and now I shall aid you. You seek to dispell the one who tortured and killed me. Remember this... 'I am the key, but only kin may approach her.'");
     inv_del(inv, zadimus_corpse, 1);
@@ -1103,7 +1103,7 @@ if(last_useitem = rashiliya_corpse) {
             def_coord $spawn_coord = map_findsquare(coord, 1, 1, ^map_findsquare_lineofwalk);
             spotanim_map(spotanim_184, $spawn_coord, 5, 0);
             // swamp_gas
-            p_delay(1); // 1t
+            p_delay(0); // 1t
             npc_add($spawn_coord, npc_506, 100); // 100t osrs
         }
         ~chatnpc("<p,happy>You have my gratitude for releasing my spirit.|I have suffered a vengeful and evil existence.|I was tricked by Zamorak.|He returned my son to me as an undead creature."); // imgur.com/GoUvoVV
@@ -1374,7 +1374,7 @@ if($last_obj = bones) {
     } else switch_int(~get_zqtombdoorstate) {
         case 0 :
             anim(human_pickuptable, 0);
-            p_delay(1); // 1t
+            p_delay(0); // 1t
             mes("You carefully place a bone in the door...");
             inv_del(inv, bones, 1);
             if((loc_find(0_45_148_12_8, loc_2246) = true | loc_find(0_45_148_12_8, loc_2248) = true | loc_find(0_45_148_12_8, loc_2249) = true) & (.loc_find(0_45_148_13_8, loc_2247) = true | .loc_find(0_45_148_13_8, loc_2250) = true)) {
@@ -1385,7 +1385,7 @@ if($last_obj = bones) {
             ~objbox(bones, "You place the bone into the skeletal door and it fits. There are two recesses left now.", 250, 0, divide(^objbox_height, 2));
         case 1 :
             anim(human_pickuptable, 0);
-            p_delay(1); // 1t
+            p_delay(0); // 1t
             mes("You carefully place another bone in the door...");
             inv_del(inv, bones, 1);
             if((loc_find(0_45_148_12_8, loc_2246) = true | loc_find(0_45_148_12_8, loc_2248) = true | loc_find(0_45_148_12_8, loc_2249) = true) & (.loc_find(0_45_148_13_8, loc_2247) = true | .loc_find(0_45_148_13_8, loc_2250) = true)) {
@@ -1396,7 +1396,7 @@ if($last_obj = bones) {
             ~objbox(bones, "You place the bone into the skeletal door and it fits. There is just one recess left now.", 250, 0, divide(^objbox_height, 2));
         case 2 :
             anim(human_pickuptable, 0);
-            p_delay(1); // 1t
+            p_delay(0); // 1t
             mes("You carefully place another bone in the door...");
             inv_del(inv, bones, 1);
             if((loc_find(0_45_148_12_8, loc_2246) = true | loc_find(0_45_148_12_8, loc_2248) = true | loc_find(0_45_148_12_8, loc_2249) = true) & (.loc_find(0_45_148_13_8, loc_2247) = true | .loc_find(0_45_148_13_8, loc_2250) = true)) {
@@ -1506,7 +1506,7 @@ if_close;
 // might be result of some movement proc, not sure
 if(coordx(coord) = 2893) p_teleport(movecoord(coord, -1, 0, 0));
 else if(coordz(coord) = 9488) p_teleport(movecoord(coord, 0, 0, -1));
-p_delay(~random_range(5,8)); // 5-8t, seems completely random?
+p_delay(~random_range(4,7)); // 5-8t, seems completely random?
 @summon_nazastarool;
 
 [label,summon_nazastarool]
@@ -1570,7 +1570,7 @@ switch_int(~p_choice2("Yes, I am sure.", 1, "No, I'll keep hold of the remains."
         anim(human_pickupfloor, 0);
         inv_del(inv, rashiliya_corpse, 1);
         def_coord $coord = map_findsquare(coord, 1, 1, ^map_findsquare_lineofwalk);
-        p_delay(1); // 1t
+        p_delay(0); // 1t
         obj_add($coord, rashiliya_corpse, 1, 5);
         p_delay(1); // 2t
         spotanim_map(small_smokepuff, $coord, 5, 0);

@@ -42,6 +42,8 @@ export class PlayerLoading {
             ? new NetworkPlayer(safeName, name37, hash64, client)
             : new Player(safeName, name37, hash64);
 
+        player.lastResponse = World.currentTick;
+
         if (sav.data.length < 2) {
             for (let i = 0; i < 21; i++) {
                 player.stats[i] = 0;
@@ -150,7 +152,6 @@ export class PlayerLoading {
         }
 
         player.combatLevel = player.getCombatLevel();
-        player.lastResponse = World.currentTick;
 
         return player;
     }

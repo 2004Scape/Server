@@ -126,8 +126,8 @@ if (
 
 def_obj $ammo = inv_getobj(worn, ^wearpos_quiver);
 if ($ammo = null) {
-    // todo confirm for 2004
-    mes("There is no ammo left in your quiver.");
+    // https://youtu.be/Qc-4z_z2JLk?si=Bh2bAhDlFQxedAqg&t=446
+    mes("There is no ammo left in your quiver");
     return;
 }
 
@@ -214,11 +214,10 @@ inv_moveitem(worn, ranged_quiver_inv, $ammo, 1);
 return(~npc_projectile(coord, npc_uid, oc_param($ammo, proj_travel), 40, 36, 41, 15, 5, 11, 5));
 
 [ai_queue3,chompy_bird]
-gosub(npc_death);
-
-if(npc_findhero = true) {
+if(npc_findhero = true) { // happens before npc_death
     queue(chompybird_kill, 0);
 }
+gosub(npc_death);
 
 // todo confirm duration
 npc_add(npc_coord, chompy_bird_corpse, 100);
@@ -226,6 +225,17 @@ npc_add(npc_coord, chompy_bird_corpse, 100);
 [queue,chompybird_kill]
 if (%chompybird_progress = ^chompybird_rantz_gave_player_bow) {
     %chompybird_progress = ^chompybird_player_killed_chompy;
+    return;
 }
-def_int $kills = getbit_range(%chompybird_kills, ^chompybird_varbit_kills_start, ^chompybird_varbit_kills_end);
-%chompybird_kills = setbit_range_toint(%chompybird_kills, calc($kills + 1), ^chompybird_varbit_kills_start, ^chompybird_varbit_kills_end);
+if(%chompybird_kills >= 100000) { 
+    return; 
+}
+// https://youtu.be/7ze4YEvQwHM?si=AYdN3zfe62SP4emb&t=215
+mes("You scratch a notch on your bow for the chompy bird kill.");
+%chompybird_kills = calc(%chompybird_kills + 1);
+if(%chompybird_kills = 4000) {
+    stat_advance(ranged, 300000);
+    mes("You've been awarded ranged experience for your relentless pursuit of chompies!");
+    // https://youtu.be/cQ_HQgUodI0?si=NMThWxkpJozNbe57&t=121
+    ~objbox(chompy_bird_obj, "@blu@**** Congratulations! 4000 Chompies! ****|@dre@~ You're an Expert Dragon Archer! ~|This is the highest honour that can be bestowed on any chompy bird hunter.", 250, 0, ^objbox_height); 
+}

@@ -1,0 +1,34 @@
+[opnpc1,gorad]
+if(getbit_range(%itwatchtower_bits, ^itwatchtower_spoken_grew, ^itwatchtower_helped_grew) = 1) {
+    ~chatplayer("<p,happy>I've come to knock your teeth out!");
+    ~chatnpc("<p,angry>You shut your face! I smack you till you dead and sorry!");
+    ~npc_retaliate(0);
+} else if(%itwatchtower_progress >= ^itwatchtower_given_fingernails) {
+    ~chatplayer("<p,happy>Hello!");
+    ~chatnpc("<p,shifty>You know who I is?");
+    switch_int(~p_choice2("A big, ugly creature.", 1, "I don't know who you are.", 2)) {
+        case 1 :
+            ~chatplayer("<p,happy>A big, ugly creature.");
+            ~chatnpc("<p,angry>I hit you!");
+            ~damage_self(12);
+        case 2 :
+            ~chatplayer("<p,bored>I don't know who you are.");
+            ~chatnpc("<p,angry>I am Gorad, and you are tiny.|Go now and I won't chase you!");
+    }
+} else {
+    mes("Gorad is busy; try again later.");
+}
+
+[ai_queue3,gorad]
+gosub(npc_death);
+if (npc_findhero = false) {
+    return;
+}
+if(%itwatchtower_progress < ^itwatchtower_given_relic) queue(defeat_gorad, 0);
+obj_add(npc_coord, npc_param(death_drop), 1, ^lootdrop_duration);
+
+[queue,defeat_gorad]
+if(inv_freespace(inv) = 0 | ~obj_gettotal(ogre_tooth) > 0) return; 
+mes("Gorad has gone.");
+inv_add(inv, ogre_tooth, 1);
+~objbox(ogre_tooth, "He's dropped a tooth; I'll keep that!", 250, 0, divide(^objbox_height, 2));

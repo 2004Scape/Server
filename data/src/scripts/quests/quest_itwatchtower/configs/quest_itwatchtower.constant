@@ -1,2 +1,40 @@
+^itwatchtower_not_started = 0
+^itwatchtower_started = 1
+^itwatchtower_given_fingernails = 2
+^itwatchtower_made_relic = 3
+^itwatchtower_given_relic = 4
+^itwatchtower_given_riddle = 5
+^itwatchtower_solved_riddle = 6
+^itwatchtower_skavid_crystal = 7
+^itwatchtower_fed_nightshade = 8
+^itwatchtower_learned_potion = 9
+^itwatchtower_made_potion = 10
+^itwatchtower_found_all_crystals = 11
 ^itwatchtower_complete = 13
 ^itwatchtower_complete_read_scroll = 14
+
+^itwatchtower_looking_relic = 0
+^itwatchtower_spoken_toban = 1
+^itwatchtower_helped_toban = 2
+^itwatchtower_spoken_grew = 3
+^itwatchtower_helped_grew = 4
+^itwatchtower_spoken_og = 5
+^itwatchtower_helped_og = 6
+^itwatchtower_relic1 = 7
+^itwatchtower_relic2 = 8
+^itwatchtower_relic3 = 9
+^itwatchtower_market_lower = 10
+^itwatchtower_market_upper = 11
+^itwatchtower_learning_skavid = 12
+^itwatchtower_learned_ar = 13
+^itwatchtower_learned_ig = 14
+^itwatchtower_learned_cur = 15
+^itwatchtower_learned_nod = 16
+^itwatchtower_shaman_kills_lower = 17
+^itwatchtower_shaman_kills_upper = 19
+
+^gutanoth_looking_gold = 1
+^gutanoth_found_gold = 2
+
+^gutanoth_hill = 0_39_47_50_57
+^gutanoth_hill_lower = 0_39_46_27_54

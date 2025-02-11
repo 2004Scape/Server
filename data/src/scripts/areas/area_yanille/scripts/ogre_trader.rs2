@@ -1,0 +1,46 @@
+[opnpc1,npc_873]
+~chatnpc("<p,quiz>What the human be wantin'?");
+switch_int(~p_choice2("Can I see what you are selling?", 1, "I don't need anything.", 2)) {
+    case 1 :
+        ~chatplayer("<p,neutral>Can I see what you are selling?");
+        ~chatnpc("<p,bored>I suppose so.");
+        ~openshop_activenpc;
+    case 2 :
+        ~chatplayer("<p,neutral>I don't need anything.");
+        ~chatnpc("<p,bored>As you wish.");
+}
+
+[opnpc1,npc_875]
+~chatnpc("<p,angry>Arr, small thing wants my food, does it?|I'll teach you to deal with ogres!");
+~npc_retaliate(0);
+
+[opnpc3,npc_875]
+~chatnpc("<p,angry>Arr, small thing wants my food, does it?|I'll teach you to deal with ogres!");
+~npc_retaliate(0);
+
+[oploc1,loc_2793]
+if (stat(thieving) < 15) {
+    ~mesbox("You need a Thieving level of 15 to steal from this stall."); // OSRS (matches RSC)
+    return;
+}
+if(npc_find(coord, npc_875, 3, 2) = true) {
+    ~chatnpc("<p,angry>Grr! Get your hands off those cakes!");
+    ~npc_retaliate(0);
+    return;
+}
+if(inv_freespace(inv) = 0) {
+    mes("You don't have enough inventory space to take a rockcake.");
+    return;
+}
+mes("You cautiously grab a cake from the stall.");
+inv_add(inv, rock_cake, 1);
+loc_change(loc_2792, 11); // 11t osrs
+stat_advance(thieving, 65);
+
+[opnpc1,npc_876]
+~chatnpc("<p,angry>Grrr, little animal; I shall destroy you!");
+~npc_retaliate(0);
+
+[opnpc3,npc_876]
+~chatnpc("<p,angry>Trade with me? Who do you think you are?");
+~npc_retaliate(0);

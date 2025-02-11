@@ -506,6 +506,7 @@ export default class ClientCheatHandler extends MessageHandler<ClientCheat> {
                 // custom
                 if (args.length < 2) {
                     // ::ban <username> <minutes>
+                    player.messageGame('Usage: ::ban <username> <minutes>');
                     return false;
                 }
 
@@ -518,10 +519,12 @@ export default class ClientCheatHandler extends MessageHandler<ClientCheat> {
                 if (other) {
                     World.removePlayer(other);
                 }
+                player.messageGame(`Player '${args[0]}' has been banned for ${minutes} minutes.`);
             } else if (cmd === 'mute') {
                 // custom
                 if (args.length < 2) {
                     // ::mute <username> <minutes>
+                    player.messageGame('Usage: ::mute <username> <minutes>');
                     return false;
                 }
 
@@ -534,10 +537,12 @@ export default class ClientCheatHandler extends MessageHandler<ClientCheat> {
                 if (other) {
                     other.muted_until = new Date(Date.now() + (minutes * 60 * 1000));
                 }
+                player.messageGame(`Player '${args[0]}' has been muted for ${minutes} minutes.`);
             } else if (cmd === 'kick') {
                 // custom
                 if (args.length < 1) {
                     // ::kick <username>
+                    player.messageGame('Usage: ::kick <username>');
                     return false;
                 }
 
@@ -546,6 +551,9 @@ export default class ClientCheatHandler extends MessageHandler<ClientCheat> {
                 const other = World.getPlayerByUsername(username);
                 if (other) {
                     World.removePlayer(other);
+                    player.messageGame(`Player '${args[0]}' has been kicked from the game.`);
+                } else {
+                    player.messageGame(`Player '${args[0]}' does not exist or is not logged in.`);
                 }
             }
         }

@@ -59,6 +59,27 @@ export default class BuildArea {
         }
     }
 
+    rebuildNpcs(): void {
+        // optimization to avoid sending 3 bits * observed npcs when everything has to be removed anyways
+        this.npcs.clear();
+    }
+
+    rebuildPlayers(pid: number, level: number, x: number, z: number): void {
+        // optimization to avoid sending 3 bits * observed players when everything has to be removed anyways
+        this.players.clear();
+        this.lastResize = 0;
+        this.viewDistance = BuildArea.PREFERRED_VIEW_DISTANCE;
+        // pre calc if we can go ahead and shorten view distance
+        let count: number = 0;
+        for (const _ of this.getNearbyPlayersByClosest(pid, level, x, z)) {
+            count++;
+            if (count >= BuildArea.PREFERRED_PLAYERS) {
+                this.viewDistance--;
+                break;
+            }
+        }
+    }
+
     hasAppearance(pid: number, tick: number): boolean {
         const appearance: number | undefined = this.appearances.get(pid);
         if (typeof appearance === 'undefined') {
@@ -72,6 +93,14 @@ export default class BuildArea {
     }
 
     *getNearbyPlayers(pid: number, level: number, x: number, z: number): IterableIterator<Player> {
+        if (this.viewDistance < BuildArea.PREFERRED_VIEW_DISTANCE) {
+            yield *this.getNearbyPlayersByClosest(pid, level, x, z);
+        } else {
+            yield *this.getNearbyPlayersByZones(pid, level, x, z);
+        }
+    }
+
+    private *getNearbyPlayersByClosest(pid: number, level: number, x: number, z: number): IterableIterator<Player> {
         const radius = this.viewDistance * 2;
         const min = -radius >> 1;
         const max = radius >> 1;
@@ -90,13 +119,7 @@ export default class BuildArea {
                         if (this.players.size >= BuildArea.PREFERRED_PLAYERS) {
                             return;
                         }
-                        if (
-                            player.pid !== -1 &&
-                            player.pid !== pid &&
-                            CoordGrid.isWithinDistanceSW({ x: x + dx, z: z + dz }, player, this.viewDistance) &&
-                            !this.players.has(player) &&
-                            player.level === level
-                        ) {
+                        if (this.filterPlayer(player, pid, level, x, z)) {
                             yield player;
                         }
                     }
@@ -114,11 +137,36 @@ export default class BuildArea {
         }
     }
 
+    private *getNearbyPlayersByZones(pid: number, level: number, x: number, z: number): IterableIterator<Player> {
+        const distance: number = BuildArea.PREFERRED_VIEW_DISTANCE;
+        const startX: number = CoordGrid.zone(x - distance);
+        const startZ: number = CoordGrid.zone(z - distance);
+        const endX: number = CoordGrid.zone(x + distance);
+        const endZ: number = CoordGrid.zone(z + distance);
+
+        for (let zx = startX; zx <= endX; zx++) {
+            const zoneX: number = zx << 3;
+            for (let zz = startZ; zz <= endZ; zz++) {
+                const zoneZ: number = zz << 3;
+                for (const player of World.gameMap.getZone(zoneX, zoneZ, level).getAllPlayersSafe()) {
+                    if (this.players.size >= BuildArea.PREFERRED_PLAYERS) {
+                        return;
+                    }
+                    if (!this.filterPlayer(player, pid, level, x, z)) {
+                        continue;
+                    }
+                    yield player;
+                }
+            }
+        }
+    }
+
     *getNearbyNpcs(level: number, x: number, z: number): IterableIterator<Npc> {
-        const startX: number = CoordGrid.zone(x - BuildArea.PREFERRED_VIEW_DISTANCE);
-        const startZ: number = CoordGrid.zone(z - BuildArea.PREFERRED_VIEW_DISTANCE);
-        const endX: number = CoordGrid.zone(x + BuildArea.PREFERRED_VIEW_DISTANCE);
-        const endZ: number = CoordGrid.zone(z + BuildArea.PREFERRED_VIEW_DISTANCE);
+        const distance: number = BuildArea.PREFERRED_VIEW_DISTANCE;
+        const startX: number = CoordGrid.zone(x - distance);
+        const startZ: number = CoordGrid.zone(z - distance);
+        const endX: number = CoordGrid.zone(x + distance);
+        const endZ: number = CoordGrid.zone(z + distance);
 
         for (let zx = startX; zx <= endX; zx++) {
             const zoneX: number = zx << 3;
@@ -128,12 +176,20 @@ export default class BuildArea {
                     if (this.npcs.size >= BuildArea.PREFERRED_NPCS) {
                         return;
                     }
-                    if (!CoordGrid.isWithinDistanceSW({ x, z }, npc, BuildArea.PREFERRED_VIEW_DISTANCE) || npc.nid === -1 || this.npcs.has(npc) || npc.level !== level) {
+                    if (!this.filterNpc(npc, level, x, z)) {
                         continue;
                     }
                     yield npc;
                 }
             }
         }
+    }
+
+    private filterPlayer(player: Player, pid: number, level: number, x: number, z: number): boolean {
+        return !(!CoordGrid.isWithinDistanceSW({ x, z }, player, this.viewDistance) || player.pid === -1 || player.pid === pid || this.players.has(player) || player.level !== level);
+    }
+
+    private filterNpc(npc: Npc, level: number, x: number, z: number): boolean {
+        return !(!CoordGrid.isWithinDistanceSW({ x, z }, npc, BuildArea.PREFERRED_VIEW_DISTANCE) || npc.nid === -1 || this.npcs.has(npc) || npc.level !== level);
     }
 }

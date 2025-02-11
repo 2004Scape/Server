@@ -51,9 +51,11 @@ if (npc_find(coord, delrith, 8, 0) = true) {
     npc_setmode(none); // stop fighting
 }
 
+// https://www.youtube.com/watch?v=rjQprrDDUfE
+
 p_stopaction;
 p_delay(1);
-~chatplayer("<p,neutral>Now what was that incantation again?");
+~chatplayer("<p,angry>Now what was that incantation again?");
 def_int $option = ~p_choice4("Carlem Gabindo Purchai Zaree Camerinthum", 1, "Purchai Zaree Gabindo Carlem Camerinthum", 2, "Purchai Camerinthum Aber Gabindo Carlem", 3, "Carlem Aber Camerinthum Purchai Gabindo", 4);
 
 if ($option = 1) {
@@ -72,25 +74,20 @@ if ($option = 1) {
 
 [label,demon_slayer_wrong_incantation]
 if_close;
-mes("As you chant, Delrith is sucked towards the vortex.");
-p_delay(1);
-mes("Suddenly, the vortex closes!");
-p_delay(1);
-
+~mesbox("As you chant, Delrith is sucked towards the vortex....");
 if (npc_find(coord, weakened_delrith, 8, 0) = true) {
-    @restore_delrith;
+    // On restore Delrith does not keep attacking you in 2004
+    // https://www.youtube.com/watch?v=rjQprrDDUfE
+    npc_changetype(delrith);
+    npc_statheal(hitpoints, npc_basestat(hitpoints), 0);
+    ~mesbox("Suddenly the vortex collapses. That was the wrong incantation");
     return;
 }
 
-[label,restore_delrith]
-npc_changetype(delrith);
-npc_statheal(hitpoints, npc_basestat(hitpoints), 0);
-npc_setmode(opplayer2);
-mes("That was the wrong incantation");
-
 [label,demon_slayer_correct_incantation]
+// Between 20 feb and 6 march 2006 this becomes 2 separate message boxes
+// https://www.youtube.com/watch?v=w7uLKC_rYfc
 ~mesbox("As you chant, Delrith is sucked towards the vortex...|Back to the dark dimension from which he came...");
-if_close;
 
 if (npc_find(coord, weakened_delrith, 8, 0) = true) {
     gosub(npc_death);

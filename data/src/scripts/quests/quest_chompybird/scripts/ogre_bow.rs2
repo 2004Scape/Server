@@ -3,7 +3,7 @@ if (%chompybird_progress < ^chompybird_complete) {
     mes("You've scratched up no kills yet! You've got to complete the quest first!");
     return;
 }
-def_int $kills = getbit_range(%chompybird_kills, ^chompybird_varbit_kills_start, ^chompybird_varbit_kills_end);
+def_int $kills = %chompybird_kills;
 def_string $rank = ~add_article(~get_chompy_rank($kills));
 mes("You've scratched up a total of <tostring($kills)> chompy bird kills so far!");
 mes("~ You're <$rank>! ~");

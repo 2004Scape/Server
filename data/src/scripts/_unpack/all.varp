@@ -1,6 +1,8 @@
-[varp_7]
+[bunny_ears_unlocked]
+scope=perm
 
-[varp_8]
+[scythe_unlocked]
+scope=perm
 
 [damagetype]
 protect=no
@@ -217,10 +219,6 @@ transmit=yes
 
 [smithing_level]
 transmit=yes
-
-[varp_213]
-
-[varp_214]
 
 [varp_215]
 

@@ -77,6 +77,7 @@ import { ChatModePrivate, ChatModePublic, ChatModeTradeDuel } from '#/util/ChatM
 import LoggerEventType from '#/server/logger/LoggerEventType.js';
 import InputTracking from '#/engine/entity/tracking/InputTracking.js';
 import Visibility from './Visibility.js';
+import UpdateRebootTimer from '#/network/server/model/UpdateRebootTimer.js';
 
 const levelExperience = new Int32Array(99);
 
@@ -255,7 +256,6 @@ export default class Player extends PathingEntity {
     }[] = [];
     allowDesign: boolean = false;
     afkEventReady: boolean = false;
-    interactWalkTrigger: boolean = false;
     moveClickRequest: boolean = false;
 
     loggedOut: boolean = false; // pending logout processing
@@ -401,6 +401,11 @@ export default class Player extends PathingEntity {
         // force resyncing
         // reload entity info (overkill? does the client have some logic around this?)
         this.buildArea.clear(true);
+        // in case of pending update
+        if (World.isPendingShutdown) {
+            const ticksBeforeShutdown = World.shutdownTicksRemaining;
+            this.write(new UpdateRebootTimer(ticksBeforeShutdown));
+        }
         // rebuild scene (rebuildnormal won't run if you're in the same zone!)
         this.originX = -1;
         this.originZ = -1;
@@ -501,19 +506,12 @@ export default class Player extends PathingEntity {
 
     // ----
 
-    updateMovement(repathAllowed: boolean = true): boolean {
+    updateMovement(): boolean {
         // players cannot walk if they have a modal open *and* something in their queue, confirmed as far back as 2005
-        if (this.moveClickRequest && this.busy() && (this.queue.head() != null || this.engineQueue.head() != null || this.walktrigger !== -1)) {
-            this.recoverEnergy(false);
+        if (this.moveClickRequest && this.busy() && (this.queue.head() != null || this.engineQueue.head() != null)) {
             return false;
         }
 
-        if (Environment.NODE_WALKTRIGGER_SETTING === WalkTriggerSetting.PLAYERMOVEMENT && !this.target && this.hasWaypoints()) {
-            this.processWalktrigger();
-        }
-        if (repathAllowed && this.target instanceof PathingEntity && !this.interacted && this.walktrigger === -1) {
-            this.pathToPathingTarget();
-        }
         if (this.moveSpeed !== MoveSpeed.INSTANT) {
             this.moveSpeed = this.defaultMoveSpeed();
             if (this.basRunning === -1) {
@@ -528,9 +526,27 @@ export default class Player extends PathingEntity {
             this.tempRun = 0;
         }
 
-        const moved = this.lastTickX !== this.x || this.lastTickZ !== this.z;
-        this.drainEnergy(moved);
-        this.recoverEnergy(moved);
+        if (this.stepsTaken > 0) {
+            this.lastMovement = World.currentTick + 1;
+        }
+
+        return this.stepsTaken > 0;
+    }
+
+    updateEnergy() {
+        if (this.delayed) {
+            return;
+        }
+        if (this.stepsTaken < 2) {
+            const recovered = ((this.baseLevels[PlayerStat.AGILITY] / 9) | 0) + 8;
+            this.runenergy = Math.min(this.runenergy + recovered, 10000);
+        } else {
+            const weightKg = Math.floor(this.runweight / 1000);
+            const clampWeight = Math.min(Math.max(weightKg, 0), 64);
+            const loss = (67 + (67 * clampWeight) / 64) | 0;
+            this.runenergy = Math.max(this.runenergy - loss, 0);
+        }
+
         if (this.runenergy === 0) {
             this.run = 0;
             // todo: better way to sync engine varp
@@ -538,29 +554,6 @@ export default class Player extends PathingEntity {
         }
         if (this.runenergy < 100) {
             this.tempRun = 0;
-        }
-        if (moved) {
-            this.lastMovement = World.currentTick + 1;
-        }
-        return moved;
-    }
-
-    private drainEnergy(moved: boolean): void {
-        if (!moved || this.stepsTaken === 0) {
-            return;
-        }
-        if (!this.delayed && this.moveSpeed === MoveSpeed.RUN && this.stepsTaken > 1) {
-            const weightKg = Math.floor(this.runweight / 1000);
-            const clampWeight = Math.min(Math.max(weightKg, 0), 64);
-            const loss = (67 + (67 * clampWeight) / 64) | 0;
-            this.runenergy = Math.max(this.runenergy - loss, 0);
-        }
-    }
-
-    private recoverEnergy(moved: boolean): void {
-        if (!this.delayed && (!moved || this.stepsTaken < 2) && this.runenergy < 10000) {
-            const recovered = ((this.baseLevels[PlayerStat.AGILITY] / 9) | 0) + 8;
-            this.runenergy = Math.min(this.runenergy + recovered, 10000);
         }
     }
 
@@ -888,18 +881,21 @@ export default class Player extends PathingEntity {
         }
 
         this.messageGame('Nothing interesting happens.');
-        this.interacted = true;
         this.clearWaypoints();
     }
 
-    tryInteract(allowOpScenery: boolean) {
+    tryInteract(allowOpScenery: boolean): boolean {
         if (this.target === null || !this.canAccess()) {
-            return;
+            return false;
         }
 
         const opTrigger = this.getOpTrigger();
         const apTrigger = this.getApTrigger();
 
+        // The follow interaction doesn't do anything, just continue
+        if (this.targetOp === ServerTriggerType.APPLAYER3 || this.targetOp === ServerTriggerType.OPPLAYER3) {
+            return false;
+        }
         // Run the opTrigger if it exists and Player is within range
         // allowOpScenery controls if Locs and Objs can be op'd
         if (opTrigger && (this.target instanceof PathingEntity || allowOpScenery) && this.inOperableDistance(this.target)) {
@@ -909,12 +905,12 @@ export default class Player extends PathingEntity {
             this.clearWaypoints();
 
             this.executeScript(ScriptRunner.init(opTrigger, this, target), true);
-            this.interacted = true;
 
             // If p_opnpc was called, remember it for later
             // For now, keep the current target
             this.nextTarget = this.target;
             this.target = target;
+            return true;
         }
 
         // Run the apTrigger if it exists and Player is within range
@@ -931,7 +927,6 @@ export default class Player extends PathingEntity {
             this.clearWaypoints();
 
             this.executeScript(ScriptRunner.init(apTrigger, this, target), true);
-            this.interacted = true;
 
             // If p_opnpc was called, remember it for later
             // For now, keep the current target
@@ -947,19 +942,23 @@ export default class Player extends PathingEntity {
                 this.waypoints = wayPoints;
                 this.waypointIndex = waypointIndex;
                 this.target = target;
-                this.interacted = false;
+                return false;
             }
+            return true;
         }
 
         // Run the default apTrigger. This is the ap analog to the "NIH" default op
         else if (this.inApproachDistance(this.apRange, this.target)) {
             this.apRange = -1;
+            return false;
         }
 
         // Run the default opTrigger if within range
         else if (this.target && (this.target instanceof PathingEntity || allowOpScenery) && this.inOperableDistance(this.target)) {
             this.defaultOp();
+            return true;
         }
+        return false;
     }
 
     validateTarget(): boolean {
@@ -999,70 +998,67 @@ export default class Player extends PathingEntity {
     }
 
     processInteraction() {
-        if (this.target === null || !this.canAccess()) {
-            this.updateMovement(false);
-            return false;
-        }
-
-        if (!this.validateTarget()) {
-            this.clearInteraction();
-            this.unsetMapFlag();
-            return;
-        }
-
-        const opTrigger = this.getOpTrigger();
+        this.followX = this.lastStepX;
+        this.followZ = this.lastStepZ;
         this.nextTarget = null;
 
-        // opplayer3 is `Follow`
-        // Follow interaction behaves different than standard ones
-        if (this.targetOp === ServerTriggerType.APPLAYER3 || this.targetOp === ServerTriggerType.OPPLAYER3) {
-            const walktrigger: number = this.walktrigger;
+        const followOp = this.targetOp === ServerTriggerType.APPLAYER3 || this.targetOp === ServerTriggerType.OPPLAYER3;
+
+        let interacted = false;
+
+        // If there is a target and p_access is available, try to interact before movement
+        if (this.target && this.canAccess()) {
+            // Clear the interaction if target validation does not pass
+            if (!this.validateTarget()) {
+                this.clearInteraction();
+                this.unsetMapFlag();
+                return;
+            }
+
+            // Run the optrigger, but applayer3 should not run this
+            if (!followOp) {
+                this.processWalktrigger();
+            }
+
+            interacted = this.tryInteract(false);
+        }
+
+        // This block won't run if the initial interaction attempt was successful
+        if (!interacted) {
+            // Recalc path
+            this.pathToPathingTarget();
+
+            // Process walktrigger if there is waypoints
             if (this.hasWaypoints()) {
                 this.processWalktrigger();
             }
-            const moved: boolean = this.updateMovement(false);
-            if (!moved && walktrigger !== -1 && this.target instanceof Player && (this.x !== this.target.lastStepX || this.z !== this.target.lastStepZ)) {
+
+            // If a stun clears the Player's waypoints, clear the interaction
+            if (!this.hasWaypoints() && followOp) {
                 this.clearInteraction();
-                this.unsetMapFlag();
             }
-            return;
-        }
 
-        if (!this.interactWalkTrigger || this.hasWaypoints()) {
-            this.processWalktrigger();
-            this.interactWalkTrigger = true;
-        }
+            this.updateMovement();
 
-        // Try an interaction
-        this.tryInteract(false);
+            // If there's a target and p_access is available, try to interact after moving
+            if (this.target && this.canAccess() && !followOp) {
+                interacted = this.tryInteract(this.stepsTaken === 0);
 
-        let moved = false;
-
-        // If interacted, recover energy because the Player did not move
-        if (this.interacted) {
-            this.recoverEnergy(false);
-        }
-
-        // Otherwise, a target still exists to try to interact with
-        else if (this.target) {
-            this.processWalktrigger();
-            moved = this.updateMovement();
-            this.tryInteract(!moved);
-        }
-
-        // If Player did not interact, has no path, and did not move this cycle, terminate the interaction
-        if (!this.interacted && !this.hasWaypoints() && !moved) {
-            this.messageGame("I can't reach that!");
-            this.clearInteraction();
+                // If Player did not interact, has no path, and did not move this cycle, terminate the interaction
+                if (!interacted && !this.hasWaypoints() && this.stepsTaken === 0) {
+                    this.messageGame("I can't reach that!");
+                    this.clearInteraction();
+                }
+            }
         }
 
         // If a script called p_op*, then nextTarget is prepped for next cycle
-        else if (this.nextTarget) {
+        if (this.nextTarget) {
             this.target = this.nextTarget;
         }
 
         // Otherwise, the interaction ran
-        else if (this.interacted && !this.apRangeCalled) {
+        else if (interacted && !this.apRangeCalled) {
             this.clearInteraction();
         }
 

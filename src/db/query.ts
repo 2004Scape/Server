@@ -20,7 +20,8 @@ if (Environment.DB_BACKEND === 'sqlite') {
                 host: Environment.DB_HOST,
                 port: Environment.DB_PORT,
                 user: Environment.DB_USER,
-                password: Environment.DB_PASS
+                password: Environment.DB_PASS,
+                timezone: 'Z'
             })
     });
 }
