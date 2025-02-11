@@ -35,6 +35,7 @@ export type account_session = {
 export type friendlist = {
     account_id: number;
     friend_account_id: number;
+    created: Generated<string>;
 };
 export type hiscore = {
     profile: Generated<string>;
@@ -55,6 +56,7 @@ export type hiscore_large = {
 export type ignorelist = {
     account_id: number;
     value: string;
+    created: Generated<string>;
 };
 export type ipban = {
     ip: string;
