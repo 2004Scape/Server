@@ -26,7 +26,7 @@ export default class LoginClient extends InternalClient {
         }));
     }
 
-    public async playerLogin(username: string, password: string, uid: number, socket: string, remoteAddress: string) {
+    public async playerLogin(username: string, password: string, uid: number, socket: string, remoteAddress: string, reconnecting: boolean) {
         await this.connect();
 
         if (!this.ws || !this.wsr || !this.wsr.checkIfWsLive()) {
@@ -42,7 +42,8 @@ export default class LoginClient extends InternalClient {
             password,
             uid,
             socket,
-            remoteAddress
+            remoteAddress,
+            reconnecting
         });
 
         if (reply.error) {
