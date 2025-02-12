@@ -1794,7 +1794,12 @@ class World {
             const { lowMemory, reconnecting, staffmodlevel, muted_until } = msg;
             const save = reply === 0 ? msg.save : new Uint8Array();
 
-            if (!save && !reconnecting) {
+            if (reconnecting && !this.getPlayerByUsername(username)) {
+                // rejected
+                client.send(Uint8Array.from([11]));
+                client.close();
+                return;
+            } else if (!save && !reconnecting) {
                 // rejected
                 client.send(Uint8Array.from([11]));
                 client.close();
