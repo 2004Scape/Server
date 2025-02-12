@@ -165,6 +165,7 @@ export default class LoginServer {
                             s.send(JSON.stringify({
                                 replyTo,
                                 response: 4,
+                                account_id: account.id,
                                 staffmodlevel: account.staffmodlevel,
                                 muted_until: account.muted_until
                             }));
@@ -175,6 +176,7 @@ export default class LoginServer {
                         s.send(JSON.stringify({
                             replyTo,
                             response: 0,
+                            account_id: account.id,
                             staffmodlevel: account.staffmodlevel,
                             save: save.toString('base64'),
                             muted_until: account.muted_until

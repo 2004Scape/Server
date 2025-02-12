@@ -221,6 +221,7 @@ export default class Player extends PathingEntity {
     tradeDuel: ChatModeTradeDuel = ChatModeTradeDuel.ON;
 
     // input tracking
+    account_id: number = -1;
     input: InputTracking;
 
     // runtime variables
@@ -484,11 +485,11 @@ export default class Player extends PathingEntity {
     }
 
     addSessionLog(event_type: LoggerEventType, message: string, ...args: string[]): void {
-        World.addSessionLog(event_type, this.username, 'headless', CoordGrid.packCoord(this.level, this.x, this.z), message, ...args);
+        World.addSessionLog(event_type, this.account_id, 'headless', CoordGrid.packCoord(this.level, this.x, this.z), message, ...args);
     }
 
     addWealthLog(change: number, message: string, ...args: string[]) {
-        World.addSessionLog(LoggerEventType.WEALTH, this.username, 'headless', CoordGrid.packCoord(this.level, this.x, this.z), change + ';' + message, ...args);
+        World.addSessionLog(LoggerEventType.WEALTH, this.account_id, 'headless', CoordGrid.packCoord(this.level, this.x, this.z), change + ';' + message, ...args);
     }
 
     processEngineQueue() {

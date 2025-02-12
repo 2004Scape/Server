@@ -30,7 +30,7 @@ export default class LoginClient extends InternalClient {
         await this.connect();
 
         if (!this.ws || !this.wsr || !this.wsr.checkIfWsLive()) {
-            return { reply: -1, save: null, muted_until: null };
+            return { reply: -1, account_id: -1, save: null, muted_until: null };
         }
 
         const reply = await this.wsr.fetchSync({
@@ -47,16 +47,16 @@ export default class LoginClient extends InternalClient {
         });
 
         if (reply.error) {
-            return { reply: -1, save: null, muted_until: null };
+            return { reply: -1, account_id: -1, save: null, muted_until: null };
         }
 
-        const { response, staffmodlevel, save, muted_until } = reply.result;
+        const { response, account_id, staffmodlevel, save, muted_until } = reply.result;
 
         if (response !== 0) {
-            return { reply: response, save: null, muted_until: null };
+            return { reply: response, account_id: -1, save: null, muted_until: null };
         }
 
-        return { reply: response, staffmodlevel, save: Buffer.from(save, 'base64'), muted_until };
+        return { reply: response, account_id, staffmodlevel, save: Buffer.from(save, 'base64'), muted_until };
     }
 
     // returns true if the login server acknowledged the logout

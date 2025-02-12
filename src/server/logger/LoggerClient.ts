@@ -12,7 +12,7 @@ export default class LoggerClient extends InternalClient {
         this.nodeId = nodeId;
     }
 
-    public async sessionLog(username: string, session_uuid: string, timestamp: number, coord: number, event: string, event_type: number) {
+    public async sessionLog(logs: string[]) {
         await this.connect();
 
         if (!this.ws || !this.wsr || !this.wsr.checkIfWsLive()) {
@@ -23,12 +23,7 @@ export default class LoggerClient extends InternalClient {
             type: 'session_log',
             world: Environment.NODE_ID,
             profile: Environment.NODE_PROFILE,
-            username,
-            session_uuid,
-            timestamp,
-            coord,
-            event,
-            event_type
+            logs
         }));
     }
 

@@ -4,6 +4,7 @@ import Environment from '#/util/Environment.js';
 import { printInfo } from '#/util/Logger.js';
 import { db, loggerDb, toDbDate } from '#/db/query.js';
 import InputTrackingEvent from '#/engine/entity/tracking/InputEvent.js';
+import { SessionLog } from '#/engine/entity/tracking/SessionLog.js';
 
 export default class LoggerServer {
     private server: WebSocketServer;
@@ -21,26 +22,21 @@ export default class LoggerServer {
 
                     switch (type) {
                         case 'session_log': {
-                            const { world, profile, username, session_uuid, timestamp, coord, event, event_type } = msg;
+                            const { world, profile, logs } = msg;
 
-                            const account = await db.selectFrom('account').where('username', '=', username).selectAll().executeTakeFirst();
+                            const schemaLogs = logs.map((x: SessionLog) => ({
+                                account_id: x.account_id,
+                                world,
+                                profile,
+                                session_uuid: x.session_uuid,
 
-                            if (!account) {
-                                console.log(msg);
-                            } else {
-                                await loggerDb.insertInto('account_session').values({
-                                    account_id: account.id,
-                                    world,
-                                    profile,
-                                    session_uuid,
+                                timestamp: toDbDate(x.timestamp),
+                                coord: x.coord,
+                                event: x.event,
+                                event_type: x.event_type
+                            }));
 
-                                    timestamp: toDbDate(timestamp),
-                                    coord,
-                                    event,
-                                    event_type
-                                }).execute();
-                            }
-
+                            await loggerDb.insertInto('account_session').values(schemaLogs).execute();
                             break;
                         }
                         case 'report': {
