@@ -59,9 +59,23 @@ function setLoggerServer(state: boolean, host?: string, port?: number) {
     }
 }
 
+function setLocalSupportServers() {
+    setLoginServer(true, 'localhost', 43500);
+    setFriendServer(true, 'localhost', 45099);
+    setLoggerServer(true, 'localhost', 43501);
+}
+
+function setDbBackend(backend: 'sqlite' | 'mysql') {    
+    fs.appendFileSync('.env', `DB_BACKEND=${backend}\n`);
+}
+
 function setDatabase(host: string, port: number, name: string, user: string, pass: string) {
     fs.appendFileSync('.env', `DATABASE_URL=mysql://${user}:${pass}@${host}:${port}/${name}\n`);
     fs.appendFileSync('.env', `DB_HOST=${host}\nDB_PORT=${port}\nDB_NAME=${name}\nDB_USER=${user}\nDB_PASS=${pass}\n`);
+}
+
+function setWebsiteRegistration(state: boolean) {
+    fs.appendFileSync('.env', `WEBSITE_REGISTRATION=${state}\n`);
 }
 
 // ----
@@ -241,7 +255,7 @@ async function promptWebsiteRegistration() {
         default: true
     });
 
-    fs.appendFileSync('.env', `WEBSITE_REGISTRATION=${!autoregister}\n`);
+    setWebsiteRegistration(!autoregister);
 }
 
 // ----
@@ -260,7 +274,14 @@ async function startup() {
 
         choices.push({
             name: 'Set up as a development world',
+            description: 'Game server only, using sqlite',
             value: 'configure-dev'
+        });
+
+        choices.push({
+            name: 'Set up as a full development stack',
+            description: 'Includes login, friend, and logger servers',
+            value: 'configure-dev-stack'
         });
 
         choices.push({
@@ -292,6 +313,10 @@ async function startup() {
                 await configureDev();
                 break;
             }
+            case 'configure-dev-stack': {
+                await configureDevStack();
+                break;
+            }
             case 'configure-local': {
                 await configureSingle();
                 break;
@@ -314,6 +339,54 @@ async function configureDev() {
     process.exit(0);
 }
 
+async function configureDevStack() {
+    fs.copyFileSync('.env.example', '.env');
+    fs.appendFileSync('.env', '\n## SETUP SCRIPT\n');
+
+    setWebsiteRegistration(false);
+    setNodeProduction(false);
+
+    const backend = await select({
+        message: 'Choose a database backend',
+        choices: [
+            {
+                name: 'SQLite',
+                value: 'sqlite'
+            },
+            {
+                name: 'MySQL',
+                value: 'mysql'
+            }
+        ]
+    });
+
+    if (backend === 'sqlite') {
+        setDbBackend('sqlite');
+    } else if (backend === 'mysql') {
+        setDbBackend('mysql');
+        await promptDatabase();
+    } else {
+        console.error('Invalid database backend');
+        process.exit(1);
+    }    
+    
+    setLocalSupportServers();
+
+    fs.appendFileSync('.env', 'EASY_STARTUP=true\n');
+
+    if (backend === 'sqlite') {
+        child_process.execSync('npm run sqlite:migrate', {
+            stdio: 'inherit'
+        });
+    } else if (backend === 'mysql') {
+        child_process.execSync('npm run db:migrate', {
+            stdio: 'inherit'
+        });
+    }
+    
+    process.exit(0);
+}
+
 async function configureSingle() {
     fs.copyFileSync('.env.example', '.env');
     fs.appendFileSync('.env', '\n## SETUP SCRIPT\n');
@@ -326,9 +399,7 @@ async function configureSingle() {
     fs.appendFileSync('.env', 'DB_BACKEND=sqlite\n');
     await promptWebsiteRegistration();
 
-    setLoginServer(true, 'localhost', 43500);
-    setFriendServer(true, 'localhost', 45099);
-    setLoggerServer(true, 'localhost', 43501);
+    setLocalSupportServers();
 
     fs.appendFileSync('.env', 'EASY_STARTUP=true\n');
     child_process.execSync('npm run sqlite:migrate', {
@@ -341,12 +412,13 @@ async function configureMulti() {
     fs.copyFileSync('.env.example', '.env');
     fs.appendFileSync('.env', '\n## SETUP SCRIPT\n');
 
-    fs.appendFileSync('.env', 'WEBSITE_REGISTRATION=true\n');
+    setWebsiteRegistration(true);
     setNodeProduction(true);
 
     await promptNodeId();
     await promptNodeXpRate();
     await promptNodeMembers();
+    setDbBackend('mysql');
     await promptDatabase();
     await promptLogin();
     await promptWebsiteRegistration();
