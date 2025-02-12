@@ -42,6 +42,7 @@ export class PlayerLoading {
             ? new NetworkPlayer(safeName, name37, hash64, client)
             : new Player(safeName, name37, hash64);
 
+        player.lastConnected = World.currentTick;
         player.lastResponse = World.currentTick;
 
         if (sav.data.length < 2) {

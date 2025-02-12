@@ -202,10 +202,11 @@
 // Get the player's UID to use in finduid/p_finduid later
 [command,uid]()(player_uid)
 [command,.uid]()(player_uid)
-// Requires protected access - request the player to log out
+// Request the player to log out
 [command,p_logout]
-// Check if the player is marked as "logged out" but not removed yet
-[command,loggedout]()(boolean)
+// Prevent logout for a duration
+[command,p_preventlogout](string $message, int $duration)
+[command,.p_preventlogout](string $message, int $duration)
 // Set a component's colour
 [command,if_setcolour](component $component, int $colour)
 // Open a modal in the chat box

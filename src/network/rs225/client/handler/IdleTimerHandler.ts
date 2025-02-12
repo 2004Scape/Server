@@ -6,7 +6,7 @@ import Environment from '#/util/Environment.js';
 export default class IdleTimerHandler extends MessageHandler<IdleTimer> {
     handle(_message: IdleTimer, player: Player): boolean {
         if (!Environment.NODE_DEBUG) {
-            player.tryLogout = true;
+            player.requestIdleLogout = true;
         }
 
         return true;

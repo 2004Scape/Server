@@ -154,6 +154,7 @@ enum ScriptOpcode {
     P_FINDUID, // official
     P_LOCMERGE, // official
     P_LOGOUT,
+    P_PREVENTLOGOUT,
     P_OPHELD, // official
     P_OPLOC, // official
     P_OPNPC, // official
@@ -201,7 +202,6 @@ enum ScriptOpcode {
     LAST_COORD,
     SESSION_LOG, // custom
     WEALTH_LOG, // custom
-    LOGGEDOUT, // custom
     P_RUN, // todo: real command name?
 
     // Npc ops (2500-2999)

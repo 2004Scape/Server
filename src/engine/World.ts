@@ -55,7 +55,7 @@ import Player from '#/engine/entity/Player.js';
 import EntityLifeCycle from '#/engine/entity/EntityLifeCycle.js';
 import { NpcList, PlayerList } from '#/engine/entity/EntityList.js';
 import { isClientConnected, NetworkPlayer } from '#/engine/entity/NetworkPlayer.js';
-import { EntityQueueState } from '#/engine/entity/EntityQueueRequest.js';
+import { EntityQueueState, PlayerQueueType } from '#/engine/entity/EntityQueueRequest.js';
 import { PlayerTimerType } from '#/engine/entity/EntityTimer.js';
 
 import UpdateRebootTimer from '#/network/server/model/UpdateRebootTimer.js';
@@ -122,8 +122,8 @@ class World {
     private static readonly PLAYER_SAVERATE: number = 500; // 5m
     private static readonly PLAYER_COORDLOGRATE: number = 50; // 30s
 
-    private static readonly TIMEOUT_SOCKET_IDLE: number = Environment.NODE_DEBUG_SOCKET ? 60000 : 50; // 30s with no data- disconnect client
-    private static readonly TIMEOUT_SOCKET_LOGOUT: number = Environment.NODE_DEBUG_SOCKET ? 60000 : 100; // 60s with no client- remove player from processing
+    private static readonly TIMEOUT_NO_CONNECTION: number = Environment.NODE_DEBUG_SOCKET ? 60000 : 50; // 30s with no connection (16 ticks in osrs)
+    private static readonly TIMEOUT_NO_RESPONSE: number = Environment.NODE_DEBUG_SOCKET ? 60000 : 100; // 60s without any response
 
     // the game/zones map
     readonly gameMap: GameMap;
@@ -712,14 +712,6 @@ class World {
                     }
                 }
 
-                if (this.currentTick - player.lastResponse >= World.TIMEOUT_SOCKET_LOGOUT) {
-                    // x-logged / timed out for 60s: logout
-                    player.loggedOut = true;
-                } else if (this.currentTick - player.lastResponse >= World.TIMEOUT_SOCKET_IDLE) {
-                    // x-logged / timed out for 30s: attempt logout
-                    player.tryLogout = true;
-                }
-
                 // - client input tracking
                 player.processInputTracking();
 
@@ -728,7 +720,10 @@ class World {
                 }
             } catch (err) {
                 console.error(err);
-                this.removePlayer(player);
+                if (isClientConnected(player)) {
+                    player.logout();
+                    player.client.close();
+                }
             }
         }
 
@@ -841,7 +836,7 @@ class World {
                 // - primary queue
                 // - weak queue
                 player.processQueues();
-                if (!player.loggedOut) {
+                if (!player.loggingOut) {
                     // - timers
                     player.processTimers(PlayerTimerType.NORMAL);
                     // - soft timers
@@ -861,7 +856,10 @@ class World {
                 }
             } catch (err) {
                 console.error(err);
-                this.removePlayer(player);
+                if (isClientConnected(player)) {
+                    player.logout();
+                    player.client.close();
+                }
             }
         }
 
@@ -872,33 +870,54 @@ class World {
         const start: number = Date.now();
 
         for (const player of this.players) {
-            if (player.loggedOut) {
-                player.tryLogout = true;
-                player.clearInteraction();
+            let force = false;
+            if (this.shutdown || this.currentTick - player.lastResponse >= World.TIMEOUT_NO_RESPONSE) {
+                // world shutdown or x-logged / timed out for 60s: force logout
+                player.loggingOut = true;
+                force = true;
+            } else if (this.currentTick - player.lastConnected >= World.TIMEOUT_NO_CONNECTION) {
+                // connection lost for 30s: request idle logout
+                player.requestIdleLogout = true;
             }
 
-            if (!player.tryLogout) {
-                continue;
-            }
-
-            player.closeModal();
-
-            if (player.canAccess() && player.queue.head() === null && player.engineQueue.head() === null) {
-                const script = ScriptProvider.getByTriggerSpecific(ServerTriggerType.LOGOUT, -1, -1);
-                if (!script) {
-                    printError('LOGOUT TRIGGER IS BROKEN!');
-                    continue;
+            if (player.requestLogout || player.requestIdleLogout) {
+                if (this.currentTick >= player.preventLogoutUntil) {
+                    player.loggingOut = true;
+                } else if (player.requestLogout && player.preventLogoutMessage !== null) {
+                    player.messageGame(player.preventLogoutMessage); // engine message type in osrs
+                    player.preventLogoutMessage = null;
                 }
+                player.requestLogout = false;
+                player.requestIdleLogout = false;
+            }
 
-                const state = ScriptRunner.init(script, player);
-                state.pointerAdd(ScriptPointer.ProtectedActivePlayer);
-                ScriptRunner.execute(state);
+            if (player.loggingOut && (force || this.currentTick >= player.preventLogoutUntil)) {
+                player.closeModal();
 
-                const result = state.popInt();
-                if (result === 1) {
+                let queueDiscardable = true;
+                for (let request = player.queue.head(); request !== null; request = player.queue.next()) {
+                    if (request.type === PlayerQueueType.LONG) {
+                        const logoutAction = request.args[0];
+                        if (logoutAction === 1) {
+                            // ^discard
+                            continue;
+                        }
+                    }
+                    queueDiscardable = false;
+                    break;
+                }
+                if (player.canAccess() && player.engineQueue.head() === null && queueDiscardable) {
+                    const script = ScriptProvider.getByTriggerSpecific(ServerTriggerType.LOGOUT, -1, -1);
+                    if (!script) {
+                        printError('LOGOUT TRIGGER IS BROKEN!');
+                        continue;
+                    }
+    
+                    const state = ScriptRunner.init(script, player);
+                    state.pointerAdd(ScriptPointer.ProtectedActivePlayer);
+                    ScriptRunner.execute(state);
+    
                     this.removePlayer(player);
-                } else {
-                    player.tryLogout = false;
                 }
             }
         }
@@ -1112,7 +1131,10 @@ class World {
                 player.encodeOut();
             } catch (err) {
                 console.error(err);
-                this.removePlayer(player);
+                if (isClientConnected(player)) {
+                    player.logout();
+                    player.client.close();
+                }
             }
         }
         this.cycleStats[WorldStat.CLIENT_OUT] = Date.now() - start;
@@ -1199,20 +1221,20 @@ class World {
     }
 
     private processShutdown(): void {
+        for (const player of this.players) {
+            if (isClientConnected(player)) {
+                player.logout();
+                player.client.close();
+            }
+        }
+
         const duration = this.currentTick - this.shutdownTick;
         if (duration >= 1024) {
             // force remove all players, they had their chances to finish processing
             for (const player of this.players) {
+                player.addSessionLog(LoggerEventType.ENGINE, 'Player force removed!');
+                printError(`Player '${player.username}' force removed!`);
                 this.removePlayer(player);
-            }
-        }
-
-        for (const player of this.players) {
-            player.loggedOut = true;
-
-            if (isClientConnected(player)) {
-                player.logout(); // see ya
-                player.client.close();
             }
         }
 
@@ -1589,11 +1611,6 @@ class World {
         }
 
         if (Number(player.username37 & 0x1fffffn) !== name37) {
-            return null;
-        }
-
-        if (player.loggedOut) {
-            // todo: proper?
             return null;
         }
 

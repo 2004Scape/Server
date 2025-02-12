@@ -104,7 +104,7 @@ export class HuntIterator extends ScriptIterator<Entity> {
                             continue;
                         }
 
-                        if (player.loggedOut) {
+                        if (player.loggingOut) {
                             continue;
                         }
 
