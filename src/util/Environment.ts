@@ -68,6 +68,9 @@ export default {
     DB_PASS: tryParseString(process.env.DB_PASS, 'password'),
     DB_NAME: tryParseString(process.env.DB_NAME, 'lostcity'),
 
+    /// kysely
+    KYSELY_VERBOSE: tryParseBoolean(process.env.KYSELY_VERBOSE, false),
+
     /// development
     // some users may not be able to change their system PATH for this project
     BUILD_JAVA_PATH: tryParseString(process.env.BUILD_JAVA_PATH, 'java'),

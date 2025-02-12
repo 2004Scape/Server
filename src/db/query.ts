@@ -1,6 +1,6 @@
 import Database from 'better-sqlite3';
 import { createPool } from 'mysql2';
-import { Dialect, Kysely, MysqlDialect, SqliteDialect } from 'kysely';
+import { Dialect, Kysely, LogEvent, MysqlDialect, SqliteDialect } from 'kysely';
 
 import { DB } from '#/db/types.js';
 
@@ -26,14 +26,16 @@ if (Environment.DB_BACKEND === 'sqlite') {
     });
 }
 
+function logVerbose(event: LogEvent) {
+    if (event.level === 'query') {
+        console.log(event.query.sql);
+        console.log(event.query.parameters);
+    }
+}
+
 export const db = new Kysely<DB>({
     dialect,
-    // log(event) {
-    //     if (event.level === 'query') {
-    //         console.log(event.query.sql);
-    //         console.log(event.query.parameters);
-    //     }
-    // }
+    log: Environment.KYSELY_VERBOSE ? logVerbose : []
 });
 
 export function toDbDate(date: Date | string | number) {
