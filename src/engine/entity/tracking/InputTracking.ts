@@ -87,7 +87,7 @@ export default class InputTracking {
             // 1: the player is trying to avoid afk timer.
             // 2: the player is on a very slow connection and the report packet never came in.
             this.player.addSessionLog(LoggerEventType.ENGINE, 'Client did not submit an input tracking report');
-            this.player.tryLogout = true;
+            this.player.requestIdleLogout = true;
             return;
         }
         // everything below means the player was active during this tracking.

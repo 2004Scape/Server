@@ -66,6 +66,7 @@ export class NetworkPlayer extends Player {
             return false;
         }
 
+        this.lastConnected = World.currentTick;
         this.userLimit = 0;
         this.clientLimit = 0;
 

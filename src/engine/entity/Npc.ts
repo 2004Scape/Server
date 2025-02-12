@@ -390,6 +390,39 @@ export default class Npc extends PathingEntity {
         }
     }
 
+    validateTarget(): boolean {
+        if (this.target === null) {
+            return false;
+        }
+
+        // For Npc targets, validate that the Npc is found in the world and that it's not delayed
+        if (this.target instanceof Npc && (typeof World.getNpc(this.target.nid) === 'undefined' || this.target.delayed)) {
+            return false;
+        }
+
+        // This is effectively checking if the npc did a changetype
+        if (this.target instanceof Npc && this.targetSubject.type !== -1 && World.getNpcByUid((this.targetSubject.type << 16) | this.target.nid) === null) {
+            return false;
+        }
+
+        // For Obj targets, validate that the Obj still exists in the World
+        if (this.target instanceof Obj && World.getObj(this.target.x, this.target.z, this.level, this.target.type, Obj.NO_RECEIVER) === null) {
+            return false;
+        }
+
+        // For Loc targets, validate that the Loc still exists in the world
+        if (this.target instanceof Loc && World.getLoc(this.target.x, this.target.z, this.level, this.target.type) === null) {
+            return false;
+        }
+
+        // For Player targets, validate that the Player still exists in the world and is not in the process of logging out or invisible
+        if (this.target instanceof Player && (World.getPlayerByUid(this.target.uid) === null || this.target.loggingOut || this.target.visibility !== Visibility.DEFAULT)) {
+            return false;
+        }
+
+        return true;
+    }
+
     processNpcModes() {
         if (this.targetOp === NpcMode.NULL) {
             this.defaultMode();
@@ -477,18 +510,13 @@ export default class Npc extends PathingEntity {
     }
 
     playerEscapeMode(): void {
-        if (!this.target) {
+        if (!this.validateTarget()) {
             this.defaultMode();
             return;
         }
 
         if (!(this.target instanceof Player)) {
             throw new Error('[Npc] Target must be a Player for playerescape mode.');
-        }
-
-        if (World.getPlayerByUid(this.target.uid) === null) {
-            this.defaultMode();
-            return;
         }
 
         if (CoordGrid.distanceToSW(this, this.target) > 25) {
@@ -542,18 +570,14 @@ export default class Npc extends PathingEntity {
     }
 
     playerFollowMode(): void {
-        const player = this.target;
-        if (!player) {
+        if (!this.validateTarget()) {
             this.defaultMode();
             return;
         }
+        const player = this.target;
 
         if (!(player instanceof Player)) {
             throw new Error('[Npc] Target must be a Player for playerfollow mode.');
-        }
-        if (World.getPlayerByUid(player.uid) === null) {
-            this.defaultMode();
-            return;
         }
 
         this.pathToTarget();
@@ -569,18 +593,13 @@ export default class Npc extends PathingEntity {
     }
 
     playerFaceMode(): void {
-        if (!this.target) {
+        if (!this.validateTarget()) {
             this.defaultMode();
             return;
         }
 
         if (!(this.target instanceof Player)) {
             throw new Error('[Npc] Target must be a Player for playerface mode.');
-        }
-
-        if (World.getPlayerByUid(this.target.uid) === null) {
-            this.defaultMode();
-            return;
         }
 
         if (this.level !== this.target.level) {
@@ -600,18 +619,13 @@ export default class Npc extends PathingEntity {
     }
 
     playerFaceCloseMode(): void {
-        if (!this.target) {
+        if (!this.validateTarget()) {
             this.defaultMode();
             return;
         }
 
         if (!(this.target instanceof Player)) {
             throw new Error('[Npc] Target must be a Player for playerfaceclose mode.');
-        }
-
-        if (World.getPlayerByUid(this.target.uid) == null) {
-            this.defaultMode();
-            return;
         }
 
         if (this.level !== this.target.level) {
@@ -629,41 +643,11 @@ export default class Npc extends PathingEntity {
     }
 
     aiMode(): void {
-        if (this.delayed || !this.target) {
+        if (!this.target || !this.validateTarget() || this.delayed || this.target.level !== this.level ) {
             this.defaultMode();
             return;
         }
 
-        if (this.target.level !== this.level) {
-            this.defaultMode();
-            return;
-        }
-
-        if (this.target instanceof Npc && (typeof World.getNpc(this.target.nid) === 'undefined' || this.target.delayed)) {
-            this.defaultMode();
-            return;
-        }
-
-        // this is effectively checking if the npc did a changetype
-        if (this.target instanceof Npc && this.targetSubject.type !== -1 && World.getNpcByUid((this.targetSubject.type << 16) | this.target.nid) === null) {
-            this.defaultMode();
-            return;
-        }
-
-        if (this.target instanceof Obj && World.getObj(this.target.x, this.target.z, this.level, this.target.type, Obj.NO_RECEIVER) === null) {
-            this.defaultMode();
-            return;
-        }
-
-        if (this.target instanceof Loc && World.getLoc(this.target.x, this.target.z, this.level, this.target.type) === null) {
-            this.defaultMode();
-            return;
-        }
-
-        if (this.target instanceof Player && (World.getPlayerByUid(this.target.uid) === null || this.target.visibility !== Visibility.DEFAULT)) {
-            this.defaultMode();
-            return;
-        }
         const type: NpcType = NpcType.get(this.type);
         const apTrigger: boolean =
             (this.targetOp >= NpcMode.APNPC1 && this.targetOp <= NpcMode.APNPC5) ||
@@ -909,10 +893,6 @@ export default class Npc extends PathingEntity {
         for (const player of hunted) {
             if (!(player instanceof Player)) {
                 throw new Error('[Npc] huntAll must be of type Player here.');
-            }
-
-            if (player.loggedOut) {
-                continue;
             }
 
             if (hunt.checkNotBusy && player.busy()) {

@@ -258,12 +258,16 @@ export default class Player extends PathingEntity {
     afkEventReady: boolean = false;
     moveClickRequest: boolean = false;
 
-    loggedOut: boolean = false; // pending logout processing
-    tryLogout: boolean = false; // logout requested (you *really* need to be sure the logout if_button logic matches the logout trigger...)
+    requestLogout: boolean = false;
+    requestIdleLogout: boolean = false;
+    loggingOut: boolean = false;
+    preventLogoutMessage: string | null = null;
+    preventLogoutUntil: number = -1;
 
     // not stored as a byte buffer so we can write and encrypt opcodes later
     buffer: LinkList<OutgoingMessage> = new LinkList();
-    lastResponse = -1;
+    lastResponse: number = -1;
+    lastConnected: number = -1;
 
     messageColor: number | null = null;
     messageEffect: number | null = null;
@@ -712,16 +716,9 @@ export default class Player extends PathingEntity {
         // - thank you De0 for the explanation
         // essentially, if a script is before the end of the list, it can be processed this tick and result in inconsistent queue timing (authentic)
         for (let request = this.queue.head(); request !== null; request = this.queue.next()) {
-            if (this.tryLogout && request.type === PlayerQueueType.LONG) {
-                const logoutAction = request.args.shift();
-                if (logoutAction === 0) {
-                    // ^accelerate
-                    request.delay = 0;
-                } else {
-                    // ^discard
-                    request.unlink();
-                    continue;
-                }
+            if (this.loggingOut && request.type === PlayerQueueType.LONG && request.args[0] === 0) {
+                // ^accelerate
+                request.delay = 0;
             }
 
             const delay = request.delay--;
@@ -730,6 +727,9 @@ export default class Player extends PathingEntity {
 
                 const save = this.queue.cursor; // LinkList-specific behavior so we can getqueue/clearqueue inside of this
 
+                if (request.type === PlayerQueueType.LONG) {
+                    request.args.shift();
+                }
                 const script = ScriptRunner.init(request.script, this, null, request.args);
                 this.executeScript(script, true);
 
@@ -996,8 +996,8 @@ export default class Player extends PathingEntity {
     validateTarget(): boolean {
         // todo: all of these validation checks should be checking against the entity itself rather than trying to look up a similar entity from the World
 
-        // Validate that the target is on the same floor and that it's not a player who is invisible
-        if (this.target?.level !== this.level || (this.target instanceof Player && this.target.visibility !== Visibility.DEFAULT)) {
+        // Validate that the target is on the same floor
+        if (this.target?.level !== this.level) {
             return false;
         }
 
@@ -1021,8 +1021,8 @@ export default class Player extends PathingEntity {
             return false;
         }
 
-        // For Player targets, validate that the Player still exists in the world
-        if (this.target instanceof Player && World.getPlayerByUid(this.target.uid) === null) {
+        // For Player targets, validate that the Player still exists in the world and is not in the process of logging out or invisible
+        if (this.target instanceof Player && (World.getPlayerByUid(this.target.uid) === null || this.target.loggingOut || this.target.visibility !== Visibility.DEFAULT)) {
             return false;
         }
 
