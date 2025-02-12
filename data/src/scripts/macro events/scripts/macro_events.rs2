@@ -71,6 +71,11 @@ if (nc_param(~macro_event_npc(%macro_event), follow_player_on_logout) = ^true) {
     ~macro_event_general_spawn(%macro_event);
 }
 
+[proc,macro_event_logout]
+if (npc_finduid(%macro_event_uid) = true) {
+    %npc_macro_event_target = null;
+}
+
 [proc,macro_event_npc](int $event)(npc)
 def_npc $event_npc;
 if (map_members = true) {
