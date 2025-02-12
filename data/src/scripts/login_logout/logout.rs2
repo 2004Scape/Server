@@ -23,7 +23,7 @@ if (%tradepartner ! null) {
 ~follower_logout;
 ~rashiliyia_door_logout;
 ~duel_arena_logout;
-
+~macro_event_logout;
 return(true);
 
 [if_button,logout:try_logout]
