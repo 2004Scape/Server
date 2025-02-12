@@ -263,7 +263,7 @@ export default class Player extends PathingEntity {
     tryLogout: boolean = false; // logout requested (you *really* need to be sure the logout if_button logic matches the logout trigger...)
 
     // not stored as a byte buffer so we can write and encrypt opcodes later
-    buffer: DoublyLinkList<OutgoingMessage> = new DoublyLinkList();
+    buffer: LinkList<OutgoingMessage> = new LinkList();
     lastResponse = -1;
 
     messageColor: number | null = null;
@@ -1910,7 +1910,7 @@ export default class Player extends PathingEntity {
         if (message.priority === ServerProtPriority.IMMEDIATE) {
             this.writeInner(message);
         } else {
-            this.buffer.push(message);
+            this.buffer.addTail(message);
         }
     }
 
