@@ -122,28 +122,11 @@ return (false);
 %prayer_protectfrommissiles = ^false;
 %prayer_protectfrommelee = ^false;
 ~headicons_clear;
+if (%pk_skull > 0) {
+    ~pk_skull(%pk_skull);
+}
 %prayer_drain_effect = 0;
 %prayer_drain_counter = 0;
-
-[proc,.deactivate_prayers]
-.%prayer_thickskin = ^false;
-.%prayer_strengthburst = ^false;
-.%prayer_clarity = ^false;
-.%prayer_rockskin = ^false;
-.%prayer_superhumanstrength = ^false;
-.%prayer_improvedreflexes = ^false;
-.%prayer_rapidrestore = ^false;
-.%prayer_rapidheal = ^false;
-.%prayer_protectitems = ^false;
-.%prayer_steelskin = ^false;
-.%prayer_ultimatestrength = ^false;
-.%prayer_incrediblereflexes = ^false;
-.%prayer_protectfrommagic = ^false;
-.%prayer_protectfrommissiles = ^false;
-.%prayer_protectfrommelee = ^false;
-~.headicons_clear;
-.%prayer_drain_effect = 0;
-.%prayer_drain_counter = 0;
 
 [proc,prayer_deactivate](int $prayer)
 def_int $drain = enum(int, int, prayer_drain_effects, $prayer);
