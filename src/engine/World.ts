@@ -2067,12 +2067,13 @@ class World {
         });
     }
 
-    notifyPlayerBan(staff: string, username: string, until: number) {
+    notifyPlayerBan(staff: string, username: string, until: number, banwave: boolean = false) {
         this.loginThread.postMessage({
             type: 'player_ban',
             staff,
             username,
-            until
+            until,
+            banwave
         });
     }
 

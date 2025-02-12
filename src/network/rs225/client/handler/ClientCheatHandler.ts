@@ -520,6 +520,17 @@ export default class ClientCheatHandler extends MessageHandler<ClientCheat> {
                     World.removePlayer(other);
                 }
                 player.messageGame(`Player '${args[0]}' has been banned for ${minutes} minutes.`);
+            } else if (cmd === 'banlater') {
+                if (args.length < 2) {
+                    player.messageGame('Usage: ::banlater <username> <minutes>');
+                    return false;
+                }
+
+                const username = args[0];
+                const minutes = Math.max(0, tryParseInt(args[1], 60));
+
+                World.notifyPlayerBan(player.username, username, Date.now() + (minutes * 60 * 1000), true);
+                player.messageGame(`Player '${args[0]}' will be banned in the next ban wave for ${minutes} minutes.`);
             } else if (cmd === 'mute') {
                 // custom
                 if (args.length < 2) {

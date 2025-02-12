@@ -153,8 +153,8 @@ async function handleRequests(parentPort: ParentPort, msg: any) {
         case 'player_ban': {
             if (Environment.LOGIN_SERVER) {
                 // todo: wait for confirmation? resend?
-                const { staff, username, until } = msg;
-                await client.playerBan(staff, username, until);
+                const { staff, username, until, banwave } = msg;
+                await client.playerBan(staff, username, until, banwave);
             }
             break;
         }

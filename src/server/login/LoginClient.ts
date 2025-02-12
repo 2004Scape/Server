@@ -118,7 +118,7 @@ export default class LoginClient extends InternalClient {
         }));
     }
 
-    public async playerBan(staff: string, username: string, until: Date) {
+    public async playerBan(staff: string, username: string, until: Date, banwave: boolean = false) {
         await this.connect();
 
         if (!this.ws || !this.wsr || !this.wsr.checkIfWsLive()) {
@@ -131,7 +131,8 @@ export default class LoginClient extends InternalClient {
             nodeTime: Date.now(),
             staff,
             username,
-            until
+            until,
+            banwave
         }));
     }
 
