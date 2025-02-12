@@ -115,7 +115,7 @@ mes("The fire catches and the logs begin to burn.");
 def_int $delay = calc(100 + random(100)); // firemaking length: https://archive.is/zF5hb
 loc_add($fire_coord, loc_2732, 1, centrepiece_straight, $delay);
 world_delay($delay);
-obj_add($fire_coord, ashes, 1, 100);
+obj_addall($fire_coord, ashes, 1, 100);
 
 [proc,area_allow_loc_add](coord $coord)(boolean)
 if (map_locaddunsafe($coord) = true) {
