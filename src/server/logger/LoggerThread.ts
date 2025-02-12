@@ -60,8 +60,8 @@ async function handleRequests(_parentPort: ParentPort, msg: any) {
         }
         case 'input_track': {
             if (Environment.LOGGER_SERVER) {
-                const { username, session_uuid, timestamp, coord, events } = msg;
-                await client.inputTrack(username, session_uuid, timestamp, coord, events);
+                const { username, session_uuid, timestamp, events } = msg;
+                await client.inputTrack(username, session_uuid, timestamp, events);
             }
             break;
         }

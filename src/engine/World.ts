@@ -2077,13 +2077,12 @@ class World {
         });
     }
 
-    submitInputTracking(username: string, session_uuid: string, coord: number, events: InputTrackingEvent[]) {
+    submitInputTracking(username: string, session_uuid: string, events: InputTrackingEvent[]) {
         this.loggerThread.postMessage({
             type: 'input_track',
             username,
             session_uuid,
             timestamp: Date.now(),
-            coord,
             events
         });
     }

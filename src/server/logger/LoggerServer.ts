@@ -62,7 +62,7 @@ export default class LoggerServer {
                             break;
                         }
                         case 'input_track': {
-                            const { username, session_uuid, timestamp, coord, events } = msg;
+                            const { username, session_uuid, timestamp, events } = msg;
 
                             const account = await db.selectFrom('account').where('username', '=', username).selectAll().executeTakeFirst();
                             if (!account) {
@@ -79,7 +79,7 @@ export default class LoggerServer {
                                         input_type: e.type,
                                         seq: e.seq,
                                         delta: e.delta,
-                                        coord: coord,
+                                        coord: e.coord,
                                         mouse_x: e.mouseX,
                                         mouse_y: e.mouseY,
                                         key_code: e.keyPress

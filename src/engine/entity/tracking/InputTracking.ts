@@ -74,7 +74,7 @@ export default class InputTracking {
     }
 
     record(type: InputTrackingEventType, delta: number, mouseX?: number, mouseY?: number, keyPress?: number): void {
-        this.recordedEvents.push(new InputTrackingEvent(type, this.recordedEventCount++, delta, mouseX, mouseY, keyPress));
+        this.recordedEvents.push(new InputTrackingEvent(type, this.recordedEventCount++, delta, mouseX, mouseY, keyPress, this.player.coord));
         this.report(ReportEvent.ACTIVE);
     }
 
@@ -97,7 +97,6 @@ export default class InputTracking {
             World.submitInputTracking(
                 this.player.username, 
                 this.player instanceof NetworkPlayer ? this.player.client.uuid : 'headless', 
-                this.player.coord, 
                 this.recordedEvents);
             this.recordedEvents = [];
             this.recordedEventCount = 0;

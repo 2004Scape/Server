@@ -8,13 +8,15 @@ export default class InputTrackingEvent {
     readonly mouseX?: number;
     readonly mouseY?: number;
     readonly keyPress?: number;
+    readonly coord?: number;
 
-    constructor(type: InputTrackingEventType, seq: number, delta: number, mouseX?: number, mouseY?: number, keyPress?: number) {
+    constructor(type: InputTrackingEventType, seq: number, delta: number, mouseX?: number, mouseY?: number, keyPress?: number, coord?: number) {
         this.seq = seq;
         this.type = type;
         this.delta = delta;
         this.mouseX = mouseX;
         this.mouseY = mouseY;
         this.keyPress = keyPress;
+        this.coord = coord;
     }
 }

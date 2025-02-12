@@ -166,6 +166,9 @@ async function handleRequests(parentPort: ParentPort, msg: any) {
             }
             break;
         }
+        case 'world_heartbeat': {
+            break;
+        }
         default:
             console.error('Unknown message type: ' + msg.type);
             break;

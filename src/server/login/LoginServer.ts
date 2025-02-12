@@ -240,10 +240,6 @@ export default class LoginServer {
                         await db.updateTable('account').set({
                             muted_until: toDbDate(until)
                         }).where('username', '=', username).executeTakeFirst();
-                    } else if (type === 'world_heartbeat') {
-                        const { names } = msg;
-
-                        // todo: ensure no accounts are locked
                     }
                 } catch (err) {
                     console.error(err);

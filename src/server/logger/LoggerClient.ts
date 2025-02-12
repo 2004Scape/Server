@@ -51,7 +51,7 @@ export default class LoggerClient extends InternalClient {
         }));
     }
 
-    public async inputTrack(username: string, session_uuid: string, timestamp: number, coord: number, events: InputTrackingEvent[]) {
+    public async inputTrack(username: string, session_uuid: string, timestamp: number, events: InputTrackingEvent[]) {
         await this.connect();
 
         if (!this.ws || !this.wsr || !this.wsr.checkIfWsLive()) {
@@ -65,7 +65,6 @@ export default class LoggerClient extends InternalClient {
             username,
             session_uuid,
             timestamp,
-            coord,
             events
         }));
     }
