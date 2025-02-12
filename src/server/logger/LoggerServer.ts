@@ -2,7 +2,7 @@ import { WebSocketServer } from 'ws';
 
 import Environment from '#/util/Environment.js';
 import { printInfo } from '#/util/Logger.js';
-import { db, toDbDate } from '#/db/query.js';
+import { db, loggerDb, toDbDate } from '#/db/query.js';
 import InputTrackingEvent from '#/engine/entity/tracking/InputEvent.js';
 
 export default class LoggerServer {
@@ -28,7 +28,7 @@ export default class LoggerServer {
                             if (!account) {
                                 console.log(msg);
                             } else {
-                                await db.insertInto('account_session').values({
+                                await loggerDb.insertInto('account_session').values({
                                     account_id: account.id,
                                     world,
                                     profile,
@@ -68,7 +68,7 @@ export default class LoggerServer {
                             if (!account) {
                                 console.log(msg);
                             } else {
-                                const report = await db.insertInto('input_report').values({
+                                const report = await loggerDb.insertInto('input_report').values({
                                     account_id: account.id,
                                     session_uuid,
                                     timestamp: toDbDate(timestamp),
@@ -85,7 +85,7 @@ export default class LoggerServer {
                                         key_code: e.keyPress
                                     };
                                 });
-                                await db.insertInto('input_report_event').values(values).execute();
+                                await loggerDb.insertInto('input_report_event').values(values).execute();
                             }
                             break;
                         }

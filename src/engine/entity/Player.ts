@@ -45,7 +45,6 @@ import ServerTriggerType from '#/engine/script/ServerTriggerType.js';
 import ScriptPointer from '#/engine/script/ScriptPointer.js';
 
 import LinkList from '#/util/LinkList.js';
-import DoublyLinkList from '#/util/DoublyLinkList.js';
 
 import { CollisionFlag } from '@2004scape/rsmod-pathfinder';
 
@@ -70,7 +69,6 @@ import MessageGame from '#/network/server/model/MessageGame.js';
 import ServerProtPriority from '#/network/server/prot/ServerProtPriority.js';
 import ChatFilterSettings from '#/network/server/model/ChatFilterSettings.js';
 import InfoProt from '#/network/rs225/server/prot/InfoProt.js';
-import WalkTriggerSetting from '#/util/WalkTriggerSetting.js';
 
 import Environment from '#/util/Environment.js';
 import { ChatModePrivate, ChatModePublic, ChatModeTradeDuel } from '#/util/ChatModes.js';

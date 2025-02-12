@@ -178,7 +178,7 @@ export class NetworkPlayer extends Player {
 
         for (let message: OutgoingMessage | null = this.buffer.head(); message; message = this.buffer.next()) {
             this.writeInner(message);
-            message.unlink2();
+            message.unlink();
         }
     }
 

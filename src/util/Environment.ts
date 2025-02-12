@@ -1,5 +1,6 @@
 import 'dotenv/config';
-import { tryParseArray, tryParseBoolean, tryParseInt, tryParseString } from '#/util/TryParse.js';
+
+import { tryParseBoolean, tryParseInt, tryParseString } from '#/util/TryParse.js';
 import WalkTriggerSetting from '#/util/WalkTriggerSetting.js';
 
 export default {
@@ -67,6 +68,11 @@ export default {
     DB_USER: tryParseString(process.env.DB_USER, 'root'),
     DB_PASS: tryParseString(process.env.DB_PASS, 'password'),
     DB_NAME: tryParseString(process.env.DB_NAME, 'lostcity'),
+    DB_LOGGER_HOST: tryParseString(process.env.DB_LOGGER_HOST, ''),
+    DB_LOGGER_PORT: tryParseInt(process.env.DB_LOGGER_PORT, 0),
+    DB_LOGGER_USER: tryParseString(process.env.DB_LOGGER_USER, ''),
+    DB_LOGGER_PASS: tryParseString(process.env.DB_LOGGER_PASS, ''),
+    DB_LOGGER_NAME: tryParseString(process.env.DB_LOGGER_NAME, ''),
 
     /// kysely
     KYSELY_VERBOSE: tryParseBoolean(process.env.KYSELY_VERBOSE, false),
