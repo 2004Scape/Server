@@ -1,12 +1,10 @@
 -- CreateTable
 CREATE TABLE `input_report` (
-    `id` INTEGER NOT NULL AUTO_INCREMENT,
+    `id` INTEGER NOT NULL PRIMARY KEY AUTOINCREMENT,
     `account_id` INTEGER NOT NULL,
     `timestamp` DATETIME(3) NOT NULL,
-    `session_uuid` VARCHAR(191) NOT NULL,
-
-    PRIMARY KEY (`id`)
-) DEFAULT CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci;
+    `session_uuid` VARCHAR(191) NOT NULL
+);
 
 -- CreateTable
 CREATE TABLE `input_report_event` (
@@ -20,5 +18,4 @@ CREATE TABLE `input_report_event` (
     `key_code` INTEGER NULL,
 
     PRIMARY KEY (`input_report_id`, `seq`)
-) DEFAULT CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci;
-
+);
