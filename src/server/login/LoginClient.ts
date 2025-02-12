@@ -53,7 +53,7 @@ export default class LoginClient extends InternalClient {
         const { response, account_id, staffmodlevel, save, muted_until } = reply.result;
 
         if (response !== 0) {
-            return { reply: response, account_id: -1, save: null, muted_until: null };
+            return { reply: response, account_id, save: null, muted_until };
         }
 
         return { reply: response, account_id, staffmodlevel, save: Buffer.from(save, 'base64'), muted_until };
