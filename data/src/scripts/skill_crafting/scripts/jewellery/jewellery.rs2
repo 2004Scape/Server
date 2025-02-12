@@ -191,6 +191,7 @@ if ($jewelry_obj = obj_1691 | $jewelry_obj = obj_1672 | $jewelry_obj = obj_1653)
 def_struct $struct = oc_param($jewelry_obj, crafting_jewelry_struct);
 def_int $level = struct_param($struct, levelrequired);
 if (stat(crafting) < $level) {
+    if_close;
     ~mesbox("You need at least level <tostring($level)> Crafting to make that.");
     return;
 }
