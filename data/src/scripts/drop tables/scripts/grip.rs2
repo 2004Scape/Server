@@ -11,3 +11,6 @@ if (p_finduid(uid) = true & %hero_progress = ^hero_phoenix_talked_charlie) {
 
 // Key appears for anyone
 obj_addall(npc_coord, npc_param(death_drop), 1, ^lootdrop_duration);
+
+[ai_queue10,grip]
+npc_setmode(null);
