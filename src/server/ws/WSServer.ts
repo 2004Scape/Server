@@ -35,9 +35,9 @@ export default class WSServer {
             server,
             perMessageDeflate: false,
             verifyClient: (info, cb) => {
-                if (Environment.WEB_CSRF_PROTECT) {
-                    // if WEB_CSRF_PROTECT is enabled, we must have a matching
-                    // per-deployment token sent via cookie.
+                if (Environment.WEB_SOCKET_TOKEN_PROTECTION) {
+                    // if WEB_CONNECTION_TOKEN_PROTECTION is enabled, we must
+                    // have a matching per-deployment token sent via cookie.
                     const headers = info.req.headers;
                     if (!headers.cookie) {
                         // no cookie

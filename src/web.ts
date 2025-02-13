@@ -98,7 +98,7 @@ export const web = http.createServer(async (req, res) => {
                 members: Environment.NODE_MEMBERS,
                 per_deployment_token: '',
             };
-            if (Environment.WEB_CSRF_PROTECT) {
+            if (Environment.WEB_SOCKET_TOKEN_PROTECTION) {
                 context.per_deployment_token = getPublicPerDeploymentToken();
             }
             res.end(await ejs.renderFile('view/client.ejs', context));
