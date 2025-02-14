@@ -2085,6 +2085,15 @@ class World {
     }
 
     notifyPlayerBan(staff: string, username: string, until: number, banwave: boolean = false) {
+        const other = this.getPlayerByUsername(username);
+        if (other) {
+            other.loggingOut = true;
+            if (isClientConnected(other)) {
+                other.logout();
+                other.client.close();
+            }
+        }
+        
         this.loginThread.postMessage({
             type: 'player_ban',
             staff,
