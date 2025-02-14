@@ -5,6 +5,9 @@ export default class ClientProtCategory {
     static readonly CLIENT_EVENT = new ClientProtCategory(0, 20);
     static readonly USER_EVENT = new ClientProtCategory(1, 5);
 
+    // no client/user should be able to send more than one of these
+    static readonly RESTRICTED_EVENT = new ClientProtCategory(2, 1);
+
     // packet decoding limit per tick, exceeding this ends decoding and picks up where it left off on the next tick
     constructor(readonly id: number, readonly limit: number) {
     }

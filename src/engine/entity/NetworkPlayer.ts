@@ -45,6 +45,7 @@ export class NetworkPlayer extends Player {
     client: ClientSocket;
     userLimit = 0; // user packet limit
     clientLimit = 0; // client packet limit
+    restrictedLimit = 0;
 
     userPath: number[] = [];
     opcalled: boolean = false;
@@ -69,9 +70,15 @@ export class NetworkPlayer extends Player {
         this.lastConnected = World.currentTick;
         this.userLimit = 0;
         this.clientLimit = 0;
+        this.restrictedLimit = 0;
 
         const bytesStart = this.client.in.pos;
-        while (this.userLimit < 5 && this.clientLimit < 50 && this.read()) {
+        while (
+            this.userLimit < ClientProtCategory.USER_EVENT.limit &&
+            this.clientLimit < ClientProtCategory.CLIENT_EVENT.limit &&
+            this.restrictedLimit < ClientProtCategory.RESTRICTED_EVENT.limit &&
+            this.read()
+        ) {
             // empty
         }
         const bytesRead = bytesStart - this.client.in.pos;
@@ -104,6 +111,7 @@ export class NetworkPlayer extends Player {
             const packetType = ClientProt.byId[this.client.opcode];
             if (!packetType) {
                 this.client.opcode = -1;
+                this.client.close();
                 return false;
             }
 
@@ -120,6 +128,10 @@ export class NetworkPlayer extends Player {
             this.client.read(NetworkPlayer.inBuf.data, 0, 2);
 
             this.client.waiting = NetworkPlayer.inBuf.g2();
+            if (this.client.waiting > 1600) {
+                this.client.close();
+                return false;
+            }
         }
 
         if (this.client.available < this.client.waiting) {
@@ -138,6 +150,8 @@ export class NetworkPlayer extends Player {
             // todo: move out of model
             if (success && message.category === ClientProtCategory.USER_EVENT) {
                 this.userLimit++;
+            } else if (message.category === ClientProtCategory.RESTRICTED_EVENT) {
+                this.restrictedLimit++;
             } else {
                 this.clientLimit++;
             }
