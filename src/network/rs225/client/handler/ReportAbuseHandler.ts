@@ -6,7 +6,7 @@ import { fromBase37 } from '#/util/JString.js';
 
 export default class ReportAbuseHandler extends MessageHandler<ReportAbuse> {
     handle(message: ReportAbuse, player: Player): boolean {
-        if (message.reason > 11 || fromBase37(message.offender) === 'invalid_name') {
+        if (message.reason > 11) {
             World.notifyPlayerBan('automated', player.username, Date.now() + 172800000);
             return false;
         }
