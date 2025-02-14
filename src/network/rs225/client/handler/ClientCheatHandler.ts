@@ -23,6 +23,7 @@ import LoggerEventType from '#/server/logger/LoggerEventType.js';
 import Obj from '#/engine/entity/Obj.js';
 import EntityLifeCycle from '#/engine/entity/EntityLifeCycle.js';
 import Visibility from '#/engine/entity/Visibility.js';
+import { isClientConnected } from '#/engine/entity/NetworkPlayer.js';
 
 export default class ClientCheatHandler extends MessageHandler<ClientCheat> {
     handle(message: ClientCheat, player: Player): boolean {
@@ -514,11 +515,6 @@ export default class ClientCheatHandler extends MessageHandler<ClientCheat> {
                 const minutes = Math.max(0, tryParseInt(args[1], 60));
 
                 World.notifyPlayerBan(player.username, username, Date.now() + (minutes * 60 * 1000));
-
-                const other = World.getPlayerByUsername(username);
-                if (other) {
-                    World.removePlayer(other);
-                }
                 player.messageGame(`Player '${args[0]}' has been banned for ${minutes} minutes.`);
             } else if (cmd === 'banlater') {
                 if (args.length < 2) {
@@ -543,11 +539,6 @@ export default class ClientCheatHandler extends MessageHandler<ClientCheat> {
                 const minutes = Math.max(0, tryParseInt(args[1], 60));
 
                 World.notifyPlayerMute(player.username, username, Date.now() + (minutes * 60 * 1000));
-
-                const other = World.getPlayerByUsername(username);
-                if (other) {
-                    other.muted_until = new Date(Date.now() + (minutes * 60 * 1000));
-                }
                 player.messageGame(`Player '${args[0]}' has been muted for ${minutes} minutes.`);
             } else if (cmd === 'kick') {
                 // custom
@@ -561,7 +552,11 @@ export default class ClientCheatHandler extends MessageHandler<ClientCheat> {
 
                 const other = World.getPlayerByUsername(username);
                 if (other) {
-                    World.removePlayer(other);
+                    other.loggingOut = true;
+                    if (isClientConnected(other)) {
+                        other.logout();
+                        other.client.close();
+                    }
                     player.messageGame(`Player '${args[0]}' has been kicked from the game.`);
                 } else {
                     player.messageGame(`Player '${args[0]}' does not exist or is not logged in.`);

@@ -146,6 +146,7 @@
 [command,.mes](string $text)
 // Get the player's internally stored name - lowercased, underscores
 [command,name]()(string)
+[command,.name]()(string)
 // Requires protected access - set 
 [command,p_aprange](int $range)
 // Requires protected access - if the player moved this cycle, wait a tick before continuing
@@ -202,10 +203,11 @@
 // Get the player's UID to use in finduid/p_finduid later
 [command,uid]()(player_uid)
 [command,.uid]()(player_uid)
-// Requires protected access - request the player to log out
+// Request the player to log out
 [command,p_logout]
-// Check if the player is marked as "logged out" but not removed yet
-[command,loggedout]()(boolean)
+// Prevent logout for a duration
+[command,p_preventlogout](string $message, int $duration)
+[command,.p_preventlogout](string $message, int $duration)
 // Set a component's colour
 [command,if_setcolour](component $component, int $colour)
 // Open a modal in the chat box
@@ -571,7 +573,7 @@
 // Get how many of the current object there are
 [command,obj_count]()(int)
 // Get the current object's type
-[command,obj_type]()(namedobj)
+[command,obj_type]()(obj)
 // Pick up the current object and place it in $inv
 [command,obj_takeitem](inv $inv)
 // Get the current object's coord

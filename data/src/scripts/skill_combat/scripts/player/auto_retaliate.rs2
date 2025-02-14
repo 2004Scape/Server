@@ -22,6 +22,7 @@ if (%auto_retaliate = ^player_auto_retaliate_on & npc_finduid($nid) = true & bus
 
 // this needs fixing, and .queue support
 [queue,pvp_retaliate](player_uid $uid)
+p_preventlogout("You can't log out until 10 seconds after the end of combat.", 16);
 if (%auto_retaliate = ^player_auto_retaliate_on & .finduid($uid) = true & busy2 = false) {
     // npc flinches player
     if (%action_delay < map_clock) {

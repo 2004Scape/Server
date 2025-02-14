@@ -58,7 +58,9 @@ npc_delay(2);
 if (uid ! %npc_macro_event_target) {
     if (.finduid(%npc_macro_event_target) = true) {
         ~chatnpc("<p,sad>Sorry, I'm trying to talk to <.text_gender("Master", "Mistress")> <.displayname>, but <.text_gender("he", "she")> seems to be ignoring me."); // osrs
+        return;
     }
+    ~chatnpc("<p,neutral>Have a nice day, <text_gender("master", "mistress")>.");
     return;
 }
 if (%npc_int = ^genie_happy) {

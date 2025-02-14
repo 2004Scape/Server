@@ -1,29 +1,13 @@
+// TODO: Change compiler to remove return value
 [logout,_]()(boolean)
-if (busy = true) {
-    return(false);
-}
-
-// if not an engine logout, and the player was hit within the last 10s, don't logout
-if (loggedout = false & map_clock > 17 & add(%lastcombat, 17) > map_clock) {
-    return(false);
-}
-
-// logging out mid-trade, restore inv and cancel trade
-if (%tradepartner ! null) {
-    ~moveallinv(tempinv, inv);
-    if (.finduid(%tradepartner) = true) {
-        .if_close;
-    }
-    %tradepartner = null;
-}
 ~set_pk_skull_logout;
-~set_antifire_logout;
-~set_antipoison_logout;
+~set_antifire_logout; // TODO: should be timer
+~set_antipoison_logout; // TODO: should be timer
 ~set_cannon_vars_logout;
 ~follower_logout;
 ~rashiliyia_door_logout;
 ~duel_arena_logout;
-
+~macro_event_logout;
 return(true);
 
 [if_button,logout:try_logout]
@@ -39,9 +23,5 @@ if (p_finduid(uid) = true) {
         return;
     }
 
-    if (map_clock > 17 & add(%lastcombat, 17) > map_clock) {
-        mes("You can't logout until 10 seconds after the end of combat."); // todo: confirm this message for 2004
-        return;
-    }
     p_logout;
 }

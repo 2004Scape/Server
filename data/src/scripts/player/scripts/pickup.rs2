@@ -1,13 +1,13 @@
 [opobj3,_] @pickup_obj(obj_coord, obj_type, obj_count);
 
-[label,pickup_obj](coord $coord, namedobj $obj, int $amount)
+[label,pickup_obj](coord $coord, obj $obj, int $amount)
 if (distance(coord, $coord) = 0) {
     @pickup_obj_floor($obj, $amount);
 } else {
     @pickup_obj_table($obj, $amount);
 }
 
-[label,pickup_obj_floor](namedobj $obj, int $amount)
+[label,pickup_obj_floor](obj $obj, int $amount)
 if (~pickup_obj_check_for_space($obj, $amount) = false) {
     return;
 }
@@ -15,7 +15,7 @@ anim(null, 0);
 obj_takeitem(inv);
 sound_synth(pick2, 0, 0);
 
-[label,pickup_obj_table](namedobj $obj, int $amount)
+[label,pickup_obj_table](obj $obj, int $amount)
 if (~pickup_obj_check_for_space($obj, $amount) = false) {
     return;
 }
@@ -39,7 +39,7 @@ loc_del($respawn_ticks);
 inv_add(inv, $replacement, 1);
 wealth_log(^wealth_gained, oc_cost($replacement), "Picked up <oc_debugname($replacement)> x1");
 
-[proc,pickup_obj_check_for_space](namedobj $obj, int $amount)(boolean)
+[proc,pickup_obj_check_for_space](obj $obj, int $amount)(boolean)
 if (inv_itemspace(inv, $obj, $amount, inv_size(inv)) = false) {
     mes("You don't have enough inventory space to hold that item.");
     return(false);

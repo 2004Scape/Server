@@ -337,8 +337,9 @@ const ScriptOpcodePointers: {
     [ScriptOpcode.P_LOGOUT]: {
         require: ['p_active_player']
     },
-    [ScriptOpcode.LOGGEDOUT]: {
-        require: ['active_player']
+    [ScriptOpcode.P_PREVENTLOGOUT]: {
+        require: ['p_active_player'],
+        require2: ['p_active_player2']
     },
     [ScriptOpcode.P_OPHELD]: {
         require: ['p_active_player']

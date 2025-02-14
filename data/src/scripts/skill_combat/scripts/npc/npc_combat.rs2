@@ -282,6 +282,7 @@ if (inv_getobj(worn, ^wearpos_ring) = ring_of_recoil & npc_finduid(%aggressive_n
     npc_queue(2, $recoil_damage, 0);
     ~ring_of_recoil_lose_charge($recoil_damage);
 }
+p_preventlogout("You can't log out until 10 seconds after the end of combat.", 16);
 ~damage_self($damage);
 
 [proc,npc_retaliate](int $queue_delay)

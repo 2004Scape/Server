@@ -31,7 +31,7 @@ export default class LoginServer {
                             login_time: null
                         }).where('logged_in', '=', nodeId).execute();
                     } else if (type === 'player_login') {
-                        const { replyTo, username, password, uid, socket, remoteAddress, reconnecting } = msg;
+                        const { replyTo, username, password, uid, socket, remoteAddress, reconnecting, hasSave } = msg;
 
                         const ipBan = await db.selectFrom('ipban').selectAll()
                             .where('ip', '=', remoteAddress).executeTakeFirst();
@@ -120,10 +120,25 @@ export default class LoginServer {
                                 ip: remoteAddress
                             }).execute();
 
-                            s.send(JSON.stringify({
-                                replyTo,
-                                response: 2
-                            }));
+                            if (!hasSave) {
+                                const save = await fsp.readFile(`data/players/${profile}/${username}.sav`);
+                                s.send(JSON.stringify({
+                                    replyTo,
+                                    response: 2,
+                                    account_id: account.id,
+                                    staffmodlevel: account.staffmodlevel,
+                                    muted_until: account.muted_until,
+                                    save: save.toString('base64'),
+                                }));
+                            } else {
+                                s.send(JSON.stringify({
+                                    replyTo,
+                                    response: 2,
+                                    account_id: account.id,
+                                    staffmodlevel: account.staffmodlevel,
+                                    muted_until: account.muted_until
+                                }));
+                            }
                             return;
                         } else if (account.logged_in !== 0) {
                             // already logged in elsewhere

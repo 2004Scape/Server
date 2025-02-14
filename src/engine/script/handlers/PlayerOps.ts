@@ -166,7 +166,7 @@ const PlayerOps: CommandHandlers = {
     }),
 
     [ScriptOpcode.BUILDAPPEARANCE]: checkedHandler(ActivePlayer, state => {
-        state.activePlayer.generateAppearance(check(state.popInt(), InvTypeValid).id);
+        state.activePlayer.buildAppearance(check(state.popInt(), InvTypeValid).id);
     }),
 
     [ScriptOpcode.CAM_LOOKAT]: checkedHandler(ActivePlayer, state => {
@@ -518,11 +518,13 @@ const PlayerOps: CommandHandlers = {
     }),
 
     [ScriptOpcode.P_LOGOUT]: checkedHandler(ProtectedActivePlayer, state => {
-        state.activePlayer.tryLogout = true;
+        state.activePlayer.requestLogout = true;
     }),
 
-    [ScriptOpcode.LOGGEDOUT]: checkedHandler(ActivePlayer, state => {
-        state.pushInt(state.activePlayer.loggedOut ? 1 : 0);
+    [ScriptOpcode.P_PREVENTLOGOUT]: checkedHandler(ProtectedActivePlayer, state => {
+        // a short antilog can overwrite a long one in osrs, so no checks here
+        state.activePlayer.preventLogoutMessage = check(state.popString(), StringNotNull);
+        state.activePlayer.preventLogoutUntil = World.currentTick + check(state.popInt(), NumberNotNull);
     }),
 
     [ScriptOpcode.IF_SETCOLOUR]: checkedHandler(ActivePlayer, state => {
@@ -776,7 +778,7 @@ const PlayerOps: CommandHandlers = {
 
     // https://x.com/JagexAsh/status/1653407769989349377
     [ScriptOpcode.BUSY]: state => {
-        state.pushInt(state.activePlayer.busy() ? 1 : 0);
+        state.pushInt(state.activePlayer.busy() || state.activePlayer.loggingOut ? 1 : 0);
     },
 
     // https://x.com/JagexAsh/status/1791053667228856563

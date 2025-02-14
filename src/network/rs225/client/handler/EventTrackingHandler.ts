@@ -22,7 +22,7 @@ export enum InputTrackingEventType {
 export default class EventTrackingHandler extends MessageHandler<EventTracking> {
     handle(message: EventTracking, player: Player): boolean {
         const bytes: Uint8Array = message.bytes;
-        if (bytes.length === 0 || bytes.length > 5000) {
+        if (bytes.length === 0 || bytes.length > 500) {
             return false;
         }
         if (!player.input.tracking()) {

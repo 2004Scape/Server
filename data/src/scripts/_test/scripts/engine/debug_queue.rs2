@@ -1,0 +1,23 @@
+[debugproc,longqueue]
+longqueue(testqueueint, 100000, ^accelerate, 123);
+longqueue(testqueueint, 100000, ^discard, 456);
+longqueue(testqueuestr, 100000, ^accelerate, "accelerate ran");
+longqueue(testqueuestr, 100000, ^discard, "long discard ran (!)");
+longqueue(testqueuestr, 5, ^discard, "short discard ran");
+
+[debugproc,queue](int $duration)
+queue(testqueueint, $duration, 123);
+queue(testqueuestr, $duration, "queue ran");
+
+[queue,testqueueint](int $test)
+console("int: <tostring($test)>");
+
+[queue,testqueuestr](string $msg)
+console("str: <$msg>");
+
+// blocks safe logout!
+[debugproc,dangerous_requeue]
+queue(dangerous_requeue, 0);
+
+[queue,dangerous_requeue]
+queue(dangerous_requeue, 0);
