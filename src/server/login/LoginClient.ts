@@ -26,7 +26,7 @@ export default class LoginClient extends InternalClient {
         }));
     }
 
-    public async playerLogin(username: string, password: string, uid: number, socket: string, remoteAddress: string, reconnecting: boolean) {
+    public async playerLogin(username: string, password: string, uid: number, socket: string, remoteAddress: string, reconnecting: boolean, hasSave: boolean) {
         await this.connect();
 
         if (!this.ws || !this.wsr || !this.wsr.checkIfWsLive()) {
@@ -43,7 +43,8 @@ export default class LoginClient extends InternalClient {
             uid,
             socket,
             remoteAddress,
-            reconnecting
+            reconnecting,
+            hasSave
         });
 
         if (reply.error) {
@@ -52,11 +53,12 @@ export default class LoginClient extends InternalClient {
 
         const { response, account_id, staffmodlevel, save, muted_until } = reply.result;
 
-        if (response !== 0) {
-            return { reply: response, account_id, save: null, muted_until };
-        }
-
-        return { reply: response, account_id, staffmodlevel, save: Buffer.from(save, 'base64'), muted_until };
+        return {
+            reply: response,
+            account_id,
+            staffmodlevel,
+            save: save ? Buffer.from(save, 'base64') : null,
+            muted_until };
     }
 
     // returns true if the login server acknowledged the logout

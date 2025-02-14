@@ -1822,7 +1822,7 @@ class World {
             }
 
             const { account_id, username, lowMemory, reconnecting, staffmodlevel, muted_until } = msg;
-            const save = reply === 0 ? msg.save : new Uint8Array();
+            const save = msg.save ?? new Uint8Array();
 
             // if (reconnecting && !this.getPlayerByUsername(username)) {
             //     // rejected
@@ -2027,8 +2027,6 @@ class World {
             const username = World.loginBuf.gjstr();
             const password = World.loginBuf.gjstr();
 
-            // todo: record login attempt?
-
             if (username.length < 1 || username.length > 12) {
                 client.send(Uint8Array.from([3]));
                 client.close();
@@ -2041,7 +2039,7 @@ class World {
                 return;
             }
 
-            if (this.getTotalPlayers() > 2000) {
+            if (this.getTotalPlayers() > 750) {
                 client.send(Uint8Array.from([7]));
                 client.close();
                 return;
@@ -2065,7 +2063,8 @@ class World {
                 password,
                 uid,
                 lowMemory,
-                reconnecting: client.opcode === 18
+                reconnecting: client.opcode === 18,
+                hasSave: client.opcode === 18 ? typeof this.getPlayerByUsername(username) !== 'undefined' : false
             });
         } else {
             client.terminate();

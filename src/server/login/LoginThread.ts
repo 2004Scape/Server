@@ -51,10 +51,10 @@ async function handleRequests(parentPort: ParentPort, msg: any) {
             break;
         }
         case 'player_login': {
-            const { socket, remoteAddress, username, password, uid, lowMemory, reconnecting } = msg;
+            const { socket, remoteAddress, username, password, uid, lowMemory, reconnecting, hasSave } = msg;
 
             if (Environment.LOGIN_SERVER) {
-                const response = await client.playerLogin(username, password, uid, socket, remoteAddress, reconnecting);
+                const response = await client.playerLogin(username, password, uid, socket, remoteAddress, reconnecting, hasSave);
 
                 parentPort.postMessage({
                     type: 'player_login',
