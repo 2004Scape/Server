@@ -49,7 +49,7 @@ if ($initial_obj = dragonstone_amulet) {
 } else {
     mes("You successfully enchant the <lowercase(oc_name($initial_obj))>.");
 }
-p_delay(2);
+p_delay(1);
 if (afk_event = ^true) {
     ~macro_event_general_spawn(~macro_event_set_random);
     return;
