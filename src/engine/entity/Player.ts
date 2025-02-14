@@ -410,6 +410,7 @@ export default class Player extends PathingEntity {
             const ticksBeforeShutdown = World.shutdownTicksRemaining;
             this.write(new UpdateRebootTimer(ticksBeforeShutdown));
         }
+        this.write(new ResetAnims());
         // rebuild scene (rebuildnormal won't run if you're in the same zone!)
         this.originX = -1;
         this.originZ = -1;
