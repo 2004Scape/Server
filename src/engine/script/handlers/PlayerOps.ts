@@ -166,7 +166,7 @@ const PlayerOps: CommandHandlers = {
     }),
 
     [ScriptOpcode.BUILDAPPEARANCE]: checkedHandler(ActivePlayer, state => {
-        state.activePlayer.generateAppearance(check(state.popInt(), InvTypeValid).id);
+        state.activePlayer.buildAppearance(check(state.popInt(), InvTypeValid).id);
     }),
 
     [ScriptOpcode.CAM_LOOKAT]: checkedHandler(ActivePlayer, state => {
