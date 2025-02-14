@@ -1072,9 +1072,6 @@ class World {
     private processInfo(): void {
         // TODO: benchmark this?
         for (const player of this.players) {
-            player.convertMovementDir();
-            player.reorient();
-
             const grid = this.playerGrid;
             const coord = CoordGrid.packCoord(player.level, player.x, player.z);
             const players = grid.get(coord) ?? [];
@@ -1083,13 +1080,17 @@ class World {
                 grid.set(coord, players);
             }
 
+            player.convertMovementDir();
+            player.reorient();
             this.playerRenderer.computeInfo(player);
+            this.playerRenderer.computeBits(player);
         }
 
         for (const npc of this.npcs) {
             npc.convertMovementDir();
             npc.reorient();
             this.npcRenderer.computeInfo(npc);
+            this.npcRenderer.computeBits(npc);
         }
     }
 
