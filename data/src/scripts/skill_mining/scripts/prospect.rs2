@@ -6,8 +6,9 @@
 
 [label,prospect_rock](label $finish_prospect)
 mes("You examine the rock for ores...");
-p_delay(3);
+p_delay(0);
 sound_synth(prospect, 1, 0);
+p_delay(1);
 jump($finish_prospect);
 
 
