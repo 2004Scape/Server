@@ -9,7 +9,7 @@ if (~wine_of_zamorak_attack(obj_type, obj_coord) = true) {
 @pickup_obj(obj_coord, obj_type, obj_count);
 
 
-[proc,wine_of_zamorak_attack](namedobj $obj, coord $coord)(boolean)
+[proc,wine_of_zamorak_attack](obj $obj, coord $coord)(boolean)
 if ($obj = wine_of_zamorak & $coord = 0_45_54_50_59) {
     mes("STOP STEALING MY WINE! GAH!");
     spotanim_pl(zamorak_flame, 0, 0);

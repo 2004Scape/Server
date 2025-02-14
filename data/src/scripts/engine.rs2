@@ -572,7 +572,7 @@
 // Get how many of the current object there are
 [command,obj_count]()(int)
 // Get the current object's type
-[command,obj_type]()(namedobj)
+[command,obj_type]()(obj)
 // Pick up the current object and place it in $inv
 [command,obj_takeitem](inv $inv)
 // Get the current object's coord
