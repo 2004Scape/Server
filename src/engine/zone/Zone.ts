@@ -432,8 +432,6 @@ export default class Zone {
     }
 
     removeObj(obj: Obj): void {
-        obj.count = 0;
-
         const coord: number = CoordGrid.packZoneCoord(obj.x, obj.z);
         if (obj.lifecycle === EntityLifeCycle.DESPAWN) {
             this.objs.remove(coord, obj);

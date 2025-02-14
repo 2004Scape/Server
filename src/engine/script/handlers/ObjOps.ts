@@ -130,7 +130,23 @@ const ObjOps: CommandHandlers = {
     },
 
     [ScriptOpcode.OBJ_COUNT]: state => {
-        state.pushInt(state.activeObj.count);
+        const obj: Obj = state.activeObj;
+
+        const zone: Zone = World.gameMap.getZone(obj.x, obj.z, obj.level);
+        for (const o of zone.getObjsSafe(CoordGrid.packZoneCoord(obj.x, obj.z))) {
+            if (o !== obj) {
+                continue;
+            }
+
+            if (o.receiver64 !== Obj.NO_RECEIVER && o.receiver64 !== state.activePlayer.hash64) {
+                continue;
+            }
+
+            state.pushInt(state.activeObj.count);
+            return;
+        }
+
+        state.pushInt(0);
     },
 
     [ScriptOpcode.OBJ_TYPE]: state => {
