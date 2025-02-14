@@ -42,8 +42,8 @@ export default class PlayerRenderer extends Renderer<Player>  {
         let lows: number = 0;
         let highs: number = 0;
 
-        if (masks & InfoProt.PLAYER_APPEARANCE.id && player.appearance) {
-            const length: number = this.cache(pid, new PlayerInfoAppearance(player.appearance), InfoProt.PLAYER_APPEARANCE);
+        if (masks & InfoProt.PLAYER_APPEARANCE.id) {
+            const length: number = this.cache(pid, new PlayerInfoAppearance(player.generateAppearance()), InfoProt.PLAYER_APPEARANCE);
             highs += length;
             lows += length;
         }

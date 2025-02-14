@@ -78,6 +78,7 @@ import { findNaivePath } from '#/engine/GameMap.js';
 import Visibility from './Visibility.js';
 import UpdateRebootTimer from '#/network/server/model/UpdateRebootTimer.js';
 import { CollisionType } from '@2004scape/rsmod-pathfinder';
+
 const levelExperience = new Int32Array(99);
 
 let acc = 0;
@@ -232,7 +233,7 @@ export default class Player extends PathingEntity {
     webClient: boolean = false;
     combatLevel: number = 3;
     headicons: number = 0;
-    appearance: Uint8Array | null = null; // cached appearance
+    buildAppearance: number = -1;
     lastAppearance: number = 0;
     baseLevels = new Uint8Array(21);
     lastStats: Int32Array = new Int32Array(21); // we track this so we know to flush stats only once a tick on changes
@@ -372,6 +373,7 @@ export default class Player extends PathingEntity {
         this.messageType = null;
         this.message = null;
         this.logMessage = null;
+        this.buildAppearance = -1;
     }
 
     // ----
@@ -1139,7 +1141,7 @@ export default class Player extends PathingEntity {
         return Math.floor(base + Math.max(melee, range, magic));
     }
 
-    generateAppearance(inv: number) {
+    generateAppearance(): Uint8Array {
         const stream = Packet.alloc(0);
 
         stream.p1(this.gender);
@@ -1147,7 +1149,7 @@ export default class Player extends PathingEntity {
 
         const skippedSlots = [];
 
-        let worn = this.getInventory(inv);
+        let worn = this.getInventory(this.buildAppearance);
         if (!worn) {
             worn = new Inventory(InvType.WORN, 0);
         }
@@ -1207,14 +1209,13 @@ export default class Player extends PathingEntity {
         stream.p8(this.username37);
         stream.p1(this.combatLevel);
 
-        this.masks |= InfoProt.PLAYER_APPEARANCE.id;
-
-        this.appearance = new Uint8Array(stream.pos);
+        const appearance: Uint8Array = new Uint8Array(stream.pos);
         stream.pos = 0;
-        stream.gdata(this.appearance, 0, this.appearance.length);
+        stream.gdata(appearance, 0, appearance.length);
         stream.release();
 
         this.lastAppearance = World.currentTick;
+        return appearance;
     }
 
     // ----
@@ -1624,7 +1625,7 @@ export default class Player extends PathingEntity {
 
         if (this.combatLevel != this.getCombatLevel()) {
             this.combatLevel = this.getCombatLevel();
-            this.generateAppearance(InvType.WORN);
+            this.updateAppearance(InvType.WORN);
         }
     }
 
@@ -1644,8 +1645,13 @@ export default class Player extends PathingEntity {
 
         if (this.getCombatLevel() != this.combatLevel) {
             this.combatLevel = this.getCombatLevel();
-            this.generateAppearance(InvType.WORN);
+            this.updateAppearance(InvType.WORN);
         }
+    }
+
+    updateAppearance(inv: number): void {
+        this.buildAppearance = inv;
+        this.masks |= InfoProt.PLAYER_APPEARANCE.id;
     }
 
     playAnimation(anim: number, delay: number) {
