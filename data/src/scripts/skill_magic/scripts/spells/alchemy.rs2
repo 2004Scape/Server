@@ -33,7 +33,7 @@ if (afk_event = ^true) {
 // > When you high alch while your cannon is spinning, it stops spinning until you finish alching
 // Also this video: https://www.youtube.com/watch?v=P_o3Cxg73Tg&t=91s
 if_settabactive(^tab_magic);
-p_delay(4);
+p_delay(3);
 
 
 [label,magic_spell_low_alch](int $spell, obj $item)
@@ -64,7 +64,7 @@ if (afk_event = ^true) {
     ~macro_event_general_spawn(~macro_event_set_random);
 }
 // delay by 3 ticks
-p_delay(2);
+p_delay(1);
 
 [proc,is_alchable](obj $item, dbrow $spell_data)(boolean)
 def_namedobj $rune1;
