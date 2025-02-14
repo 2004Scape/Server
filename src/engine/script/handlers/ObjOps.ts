@@ -130,7 +130,7 @@ const ObjOps: CommandHandlers = {
     },
 
     [ScriptOpcode.OBJ_COUNT]: state => {
-        state.pushInt(check(state.activeObj.count, ObjStackValid));
+        state.pushInt(state.activeObj.count);
     },
 
     [ScriptOpcode.OBJ_TYPE]: state => {
