@@ -233,7 +233,7 @@ export default class Player extends PathingEntity {
     webClient: boolean = false;
     combatLevel: number = 3;
     headicons: number = 0;
-    buildAppearance: number = -1;
+    appearance: number = -1;
     lastAppearance: number = 0;
     baseLevels = new Uint8Array(21);
     lastStats: Int32Array = new Int32Array(21); // we track this so we know to flush stats only once a tick on changes
@@ -373,7 +373,7 @@ export default class Player extends PathingEntity {
         this.messageType = null;
         this.message = null;
         this.logMessage = null;
-        this.buildAppearance = -1;
+        this.appearance = -1;
     }
 
     // ----
@@ -1149,7 +1149,7 @@ export default class Player extends PathingEntity {
 
         const skippedSlots = [];
 
-        let worn = this.getInventory(this.buildAppearance);
+        let worn = this.getInventory(this.appearance);
         if (!worn) {
             worn = new Inventory(InvType.WORN, 0);
         }
@@ -1650,7 +1650,7 @@ export default class Player extends PathingEntity {
     }
 
     updateAppearance(inv: number): void {
-        this.buildAppearance = inv;
+        this.appearance = inv;
         this.masks |= InfoProt.PLAYER_APPEARANCE.id;
     }
 
