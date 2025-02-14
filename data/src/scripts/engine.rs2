@@ -146,6 +146,7 @@
 [command,.mes](string $text)
 // Get the player's internally stored name - lowercased, underscores
 [command,name]()(string)
+[command,.name]()(string)
 // Requires protected access - set 
 [command,p_aprange](int $range)
 // Requires protected access - if the player moved this cycle, wait a tick before continuing
