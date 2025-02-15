@@ -27,6 +27,7 @@ export default {
     NODE_XPRATE: tryParseInt(process.env.NODE_XPRATE, 1),
     // production mode!
     NODE_PRODUCTION: tryParseBoolean(process.env.NODE_PRODUCTION, false),
+    NODE_SUBMIT_INPUT: tryParseBoolean(process.env.NODE_SUBMIT_INPUT, false),
     // automatic shutdown time for production mode on sigint
     NODE_KILLTIMER: tryParseInt(process.env.NODE_KILLTIMER, 500), // 5 minutes
     // extra debug info e.g. missing triggers

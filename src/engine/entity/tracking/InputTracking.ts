@@ -7,6 +7,7 @@ import InputTrackingEvent from '#/engine/entity/tracking/InputEvent.js';
 import { NetworkPlayer } from '#/engine/entity/NetworkPlayer.js';
 import LoggerEventType from '#/server/logger/LoggerEventType.js';
 import { InputTrackingEventType } from '#/network/rs225/client/handler/EventTrackingHandler.js';
+import Environment from '#/util/Environment.js';
 
 export default class InputTracking {
     private static readonly TRACKING_RATE: number = 200; // 2m track interval +offset. lower this to be more aggressive.
@@ -94,10 +95,12 @@ export default class InputTracking {
         this.waitingReport = false;
         this.lastReport = -1;
         if (this.recordedEvents.length > 0) {
-            World.submitInputTracking(
-                this.player.username, 
-                this.player instanceof NetworkPlayer ? this.player.client.uuid : 'headless', 
-                this.recordedEvents);
+            if (Environment.NODE_SUBMIT_INPUT || this.player.submitInput) {
+                World.submitInputTracking(
+                    this.player.username, 
+                    this.player instanceof NetworkPlayer ? this.player.client.uuid : 'headless', 
+                    this.recordedEvents);
+            }
             this.recordedEvents = [];
             this.recordedEventCount = 0;
         }

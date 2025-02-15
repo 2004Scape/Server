@@ -1934,6 +1934,40 @@ class World {
                 const chat = data.chat;
 
                 player.write(new MessagePrivate(fromPlayer, pmId, fromPlayerStaffLvl, chat));
+            } else if (opcode === FriendsServerOpcodes.RELAY_MUTE) {
+                const { username, muted_until } = data;
+
+                const player = this.getPlayerByUsername(username);
+                if (player) {
+                    player.muted_until = muted_until ? new Date(muted_until) : null;
+                }
+            } else if (opcode === FriendsServerOpcodes.RELAY_KICK) {
+                const { username } = data;
+
+                const player = this.getPlayerByUsername(username);
+                if (player) {
+                    player.loggingOut = true;
+
+                    if (isClientConnected(player)) {
+                        player.logout();
+                        player.client.close();
+                    }
+                }
+            } else if (opcode === FriendsServerOpcodes.RELAY_BROADCAST) {
+                const { message } = data;
+
+                this.broadcastMes(message);
+            } else if (opcode === FriendsServerOpcodes.RELAY_SHUTDOWN) {
+                const { duration } = data;
+
+                this.rebootTimer(duration);
+            } else if (opcode === FriendsServerOpcodes.RELAY_TRACK) {
+                const { username, state } = data;
+
+                const player = this.getPlayerByUsername(username);
+                if (player) {
+                    player.submitInput = state;
+                }
             } else {
                 printError('Unknown friend message: ' + opcode);
             }

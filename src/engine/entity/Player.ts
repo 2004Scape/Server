@@ -224,6 +224,7 @@ export default class Player extends PathingEntity {
     // input tracking
     account_id: number = -1;
     input: InputTracking;
+    submitInput: boolean = false;
 
     // runtime variables
     pid: number = -1;
