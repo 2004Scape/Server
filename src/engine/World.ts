@@ -690,8 +690,7 @@ class World {
                             player.masks |= InfoProt.PLAYER_FACE_ENTITY.id;
                         }
 
-                        if ((!player.busy() && player.opcalled) || player.opucalled) {
-                            // opu in osrs doesnt have a busy check
+                        if (!player.busy() && player.opcalled) {
                             player.moveClickRequest = false;
                         } else {
                             player.moveClickRequest = true;

@@ -49,7 +49,6 @@ export class NetworkPlayer extends Player {
 
     userPath: number[] = [];
     opcalled: boolean = false;
-    opucalled: boolean = false;
 
     constructor(username: string, username37: bigint, hash64: bigint, client: ClientSocket) {
         super(username, username37, hash64);
@@ -61,7 +60,6 @@ export class NetworkPlayer extends Player {
     decodeIn() {
         this.userPath = [];
         this.opcalled = false;
-        this.opucalled = false;
 
         if (!isClientConnected(this)) {
             return false;
