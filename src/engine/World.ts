@@ -1870,7 +1870,7 @@ class World {
                         });
                         return;
                     }
-                    player.teleport(3221, 3218, 0);
+                    player.teleport(3221, 3219, 0);
                 }
 
                 this.newPlayers.add(player);
