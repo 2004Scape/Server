@@ -2084,7 +2084,7 @@ class World {
         });
     }
 
-    notifyPlayerBan(staff: string, username: string, until: number) {
+    notifyPlayerBan(staff: string, username: string, until: number, banwave: boolean = false) {
         const other = this.getPlayerByUsername(username);
         if (other) {
             other.loggingOut = true;
@@ -2093,12 +2093,13 @@ class World {
                 other.client.close();
             }
         }
-
+        
         this.loginThread.postMessage({
             type: 'player_ban',
             staff,
             username,
-            until
+            until,
+            banwave
         });
     }
 
