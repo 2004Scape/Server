@@ -109,6 +109,14 @@ export default class LoginServer {
                             return;
                         }
 
+                        if (Environment.NODE_MEMBERS && !account.members) {
+                            s.send(JSON.stringify({
+                                replyTo,
+                                response: 9
+                            }));
+                            return;
+                        }
+
                         if (reconnecting && account.logged_in === nodeId) {
                             await db.insertInto('session').values({
                                 uuid: socket,
@@ -129,6 +137,7 @@ export default class LoginServer {
                                     staffmodlevel: account.staffmodlevel,
                                     muted_until: account.muted_until,
                                     save: save.toString('base64'),
+                                    members: account.members
                                 }));
                             } else {
                                 s.send(JSON.stringify({
@@ -136,7 +145,8 @@ export default class LoginServer {
                                     response: 2,
                                     account_id: account.id,
                                     staffmodlevel: account.staffmodlevel,
-                                    muted_until: account.muted_until
+                                    muted_until: account.muted_until,
+                                    members: account.members
                                 }));
                             }
                             return;
@@ -182,7 +192,8 @@ export default class LoginServer {
                                 response: 4,
                                 account_id: account.id,
                                 staffmodlevel: account.staffmodlevel,
-                                muted_until: account.muted_until
+                                muted_until: account.muted_until,
+                                members: account.members
                             }));
                             return;
                         }
@@ -194,7 +205,8 @@ export default class LoginServer {
                             account_id: account.id,
                             staffmodlevel: account.staffmodlevel,
                             save: save.toString('base64'),
-                            muted_until: account.muted_until
+                            muted_until: account.muted_until,
+                            members: account.members
                         }));
                     } else if (type === 'player_logout') {
                         const { replyTo, username, save } = msg;

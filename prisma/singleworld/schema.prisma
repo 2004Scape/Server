@@ -38,6 +38,8 @@ model account {
 
     notes         String?
     notes_updated DateTime?
+
+    members       Boolean  @default(true)
 }
 
 // logged in sessions
