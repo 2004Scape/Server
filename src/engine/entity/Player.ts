@@ -334,7 +334,6 @@ export default class Player extends PathingEntity {
         this.lastStats.fill(-1);
         this.lastLevels.fill(-1);
         this.input = new InputTracking(this);
-        this.isActive = true;
 
         for (let i = 0; i < this.vars.length; i++) {
             const varp = VarPlayerType.get(i);
@@ -361,6 +360,7 @@ export default class Player extends PathingEntity {
         this.timers.clear();
         this.heroPoints.clear();
         this.buildArea.clear(false);
+        this.isActive = false;
     }
 
     resetEntity(respawn: boolean) {
@@ -403,6 +403,7 @@ export default class Player extends PathingEntity {
 
         this.lastStepX = this.x - 1;
         this.lastStepZ = this.z;
+        this.isActive = true;
     }
 
     onReconnect() {
