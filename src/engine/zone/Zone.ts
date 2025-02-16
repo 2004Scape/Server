@@ -461,7 +461,6 @@ export default class Zone {
 
     getObj(x: number, z: number, type: number, receiver64: bigint): Obj | null {
         for (const obj of this.getObjsSafe(CoordGrid.packZoneCoord(x, z))) {
-            // if (!((obj.receiver64 !== Obj.NO_RECEIVER && obj.receiver64 !== receiver64) || obj.type !== type)) {
             if ((obj.receiver64 === Obj.NO_RECEIVER || obj.receiver64 === receiver64) && obj.type === type) {
                 return obj;
             }
@@ -497,7 +496,7 @@ export default class Zone {
     *getAllPlayersSafe(): IterableIterator<Player> {
         for (const uid of this.players) {
             const player: Player | null = World.getPlayerByUid(uid);
-            if (player && player.checkLifeCycle(World.currentTick)) {
+            if (player && player.isValid()) {
                 yield player;
             }
         }
@@ -510,7 +509,7 @@ export default class Zone {
     *getAllNpcsSafe(): IterableIterator<Npc> {
         for (const nid of this.npcs) {
             const npc: Npc | undefined = World.getNpc(nid);
-            if (npc && npc.checkLifeCycle(World.currentTick)) {
+            if (npc && npc.isValid()) {
                 yield npc;
             }
         }
@@ -522,7 +521,7 @@ export default class Zone {
      */
     *getAllObjsSafe(): IterableIterator<Obj> {
         for (const obj of this.objs.all()) {
-            if (obj.checkLifeCycle(World.currentTick)) {
+            if (obj.isValid()) {
                 yield obj;
             }
         }
@@ -534,8 +533,7 @@ export default class Zone {
      */
     *getObjsSafe(coord: number): IterableIterator<Obj> {
         for (const obj of this.objs.stack(coord)) {
-            // lifecycle is set after reveal, this is so objects aren't unavailble the tick they are revealed
-            if (obj.checkLifeCycle(World.currentTick) || obj.reveal !== -1) {
+            if (obj.isValid()) {
                 yield obj;
             }
         }
@@ -565,7 +563,7 @@ export default class Zone {
      */
     *getAllLocsSafe(): IterableIterator<Loc> {
         for (const loc of this.locs.all()) {
-            if (loc.checkLifeCycle(World.currentTick)) {
+            if (loc.isValid()) {
                 yield loc;
             }
         }
@@ -577,7 +575,7 @@ export default class Zone {
      */
     *getLocsSafe(coord: number): IterableIterator<Loc> {
         for (const loc of this.locs.stack(coord)) {
-            if (loc.checkLifeCycle(World.currentTick)) {
+            if (loc.isValid()) {
                 yield loc;
             }
         }
