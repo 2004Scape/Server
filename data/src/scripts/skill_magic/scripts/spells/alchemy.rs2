@@ -92,6 +92,14 @@ switch_obj($item) {
         mes("Coins are already made of gold.");
         return(false);
     case default :
+        if(oc_category($item) = kitten) {
+            mes("You can't do that to a defenceless kitten!");
+            return(false);
+        }
+        if(oc_category($item) = cat) { // you can alch witches cat (RS3)
+            mes("You can't do that to a defenceless cat!");
+            return(false);
+        }
         if (oc_param($item, no_alchemy) = ^true) {
             mes("You cannot use alchemy on that item.");
             return(false);
