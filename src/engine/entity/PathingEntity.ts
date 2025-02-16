@@ -559,7 +559,6 @@ export default abstract class PathingEntity extends Entity {
 
     setInteraction(interaction: Interaction, target: Entity, op: TargetOp, subject?: TargetSubject): boolean {
         if (!target.isValid(this instanceof Player ? this.hash64 : undefined)) {
-            console.log('interaction could not be set');
             return false;
         }
 

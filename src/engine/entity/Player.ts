@@ -1950,12 +1950,10 @@ export default class Player extends PathingEntity {
 
     isValid(hash64?: bigint): boolean {
         if (this.loggingOut) {
-            console.log('player is loggingOut');
             return false;
         }
 
         if (this.visibility !== Visibility.DEFAULT) {
-            console.log('player is invisible');
             return false;
         }
 
