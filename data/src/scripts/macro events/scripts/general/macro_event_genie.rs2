@@ -19,13 +19,13 @@ if (finduid(%npc_macro_event_target) = true) {
     // 3 warning messages: https://youtu.be/g5k3XuXxyYQ?list=PLn23LiLYLb1Y3P9S9qZbijcJihiD416jT
     if (%npc_int = 0) {
         npc_anim(emote_wave, 20);
-        npc_say("Ehem... master <displayname>?");
+        npc_say("Ehem... <text_gender("master", "mistress")> <displayname>?");
     } else if (%npc_int = 1) {
         npc_anim(emote_think, 20);
-        npc_say("Are you there, master <displayname>?");
+        npc_say("Are you there, <text_gender("master", "mistress")> <displayname>?");
     } else if (%npc_int = 2) {
         npc_anim(emote_angry, 20);
-        npc_say("You shouldn't ignore a Genie master <displayname>?");
+        npc_say("You shouldn't ignore a Genie <text_gender("master", "mistress")> <displayname>?");
     } else if (%npc_int = 3) { // failing genie: https://youtu.be/MS7ADB-hh18?t=6
         npc_say("No one ignores me!");
         npc_anim(human_castteleport, 0);
