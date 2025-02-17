@@ -123,7 +123,7 @@ return (false);
 %prayer_protectfrommelee = ^false;
 ~headicons_clear;
 if (%pk_skull > 0) {
-    ~pk_skull(%pk_skull);
+    ~pk_skull(sub(%pk_skull, map_clock));
 }
 %prayer_drain_effect = 0;
 %prayer_drain_counter = 0;
