@@ -324,7 +324,7 @@ p_delay(0);
 mes("You climb over the low wall.");
 ~agility_exactmove(human_walk_fence_north, 30, 2, coord, $end, 30, 90, $dir, true);
 
-[opheld3,rock_cake]
+[opheld2,rock_cake]
 mes("You feel strangely heavier...");
 inv_del(inv, rock_cake, 1);
 // on OSRS if you have 5 HP or less it will do hp / 2 instead to prevent death
