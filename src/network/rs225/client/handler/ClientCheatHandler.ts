@@ -39,11 +39,11 @@ export default class ClientCheatHandler extends MessageHandler<ClientCheat> {
             return false;
         }
 
-        if (player.staffModLevel >= 2) {
+        if (player.staffModLevel >= 3) {
             player.addSessionLog(LoggerEventType.MODERATOR, 'Ran cheat', cheat);    
         }
 
-        if (!Environment.NODE_PRODUCTION && player.staffModLevel >= 3) {
+        if (!Environment.NODE_PRODUCTION && player.staffModLevel >= 4) {
             // developer commands
 
             if (cmd[0] === '~') {
@@ -169,102 +169,10 @@ export default class ClientCheatHandler extends MessageHandler<ClientCheat> {
             }
         }
 
-        if (player.staffModLevel >= 2) {
+        if (player.staffModLevel >= 3) {
             // admin commands
 
-            if (cmd === 'getcoord') {
-                // authentic
-
-                // Displays current coordinate
-                player.messageGame(CoordGrid.formatString(player.level, player.x, player.z, ','));
-            } else if (cmd === 'tele') {
-                // authentic
-                if (args.length < 1) {
-                    // ::tele x,xx,xx[,xx,xx]
-                    // Teleports you to the coordinate. In order, the parts are level, horizontal map square, vertical map square, horizontal tile, vertical tile.
-                    return false;
-                }
-
-                const coord = args[0].split(',');
-                if (coord.length < 3) {
-                    return false;
-                }
-
-                player.closeModal();
-
-                if (!player.canAccess()) {
-                    player.messageGame('Please finish what you are doing first.');
-                    return false;
-                }
-
-                player.clearInteraction();
-                player.unsetMapFlag();
-
-                const level = tryParseInt(coord[0], 0);
-                const mx = tryParseInt(coord[1], 50);
-                const mz = tryParseInt(coord[2], 50);
-                const lx = tryParseInt(coord[3], 0);
-                const lz = tryParseInt(coord[4], 0);
-
-                if (level < 0 || level > 3 ||
-                    mx < 0 || mx > 255 ||
-                    mz < 0 || mz > 255 ||
-                    lx < 0 || lx > 63 ||
-                    lz < 0 || lz > 63
-                ) {
-                    return false;
-                }
-
-                player.teleJump((mx << 6) + lx, (mz << 6) + lz, level);
-            } else if (cmd === 'teleto') {
-                // custom
-                if (args.length < 1) {
-                    return false;
-                }
-
-                // ::teleto <username>
-                const other = World.getPlayerByUsername(args[0]);
-                if (!other) {
-                    player.messageGame(`${args[0]} is not logged in.`);
-                    return false;
-                }
-
-                player.closeModal();
-
-                if (!player.canAccess()) {
-                    player.messageGame('Please finish what you are doing first.');
-                    return false;
-                }
-
-                player.clearInteraction();
-                player.unsetMapFlag();
-
-                player.teleJump(other.x, other.z, other.level);
-            } else if (cmd === 'teleother') {
-                // custom
-                if (args.length < 1) {
-                    // ::teleother <username>
-                    return false;
-                }
-
-                const other = World.getPlayerByUsername(args[0]);
-                if (!other) {
-                    player.messageGame(`${args[0]} is not logged in.`);
-                    return false;
-                }
-
-                other.closeModal();
-
-                if (!other.canAccess()) {
-                    player.messageGame(`${args[0]} is busy right now.`);
-                    return false;
-                }
-
-                other.clearInteraction();
-                other.unsetMapFlag();
-
-                other.teleJump(player.x, player.z, player.level);
-            } else if (cmd === 'setvar') {
+            if (cmd === 'setvar') {
                 // authentic
                 if (args.length < 2) {
                     // ::setvar <variable> <value>
@@ -360,46 +268,6 @@ export default class ClientCheatHandler extends MessageHandler<ClientCheat> {
 
                 const value = other.getVar(varp.id);
                 player.messageGame('get ' + varp.debugname + ': ' + value + ' on ' + other.username);
-            } else if (cmd === 'setstat') {
-                // authentic
-                if (args.length < 2) {
-                    // ::setstat <skill> <level>
-                    // Sets the skill to specified level
-                    return false;
-                }
-
-                const stat = PlayerStat[args[0].toUpperCase() as PlayerStatKey];
-                if (typeof stat === 'undefined') {
-                    return false;
-                }
-
-                player.setLevel(stat, parseInt(args[1]));
-            } else if (cmd === 'advancestat') {
-                // authentic
-                if (args.length < 1) {
-                    // ::advancestat <skill> <level>
-                    // Advances skill to specified level, generates level up message etc.
-                    return false;
-                }
-
-                const stat = PlayerStat[args[0].toUpperCase() as PlayerStatKey];
-                if (typeof stat === 'undefined') {
-                    return false;
-                }
-
-                player.stats[stat] = 0;
-                player.baseLevels[stat] = 1;
-                player.levels[stat] = 1;
-                player.addXp(stat, getExpByLevel(parseInt(args[1])), false);
-            } else if (cmd === 'minme') {
-                // like maxme debugproc, but in engine because xp goes down
-                for (let i = 0; i < PlayerStatEnabled.length; i++) {
-                    if (i === PlayerStat.HITPOINTS) {
-                        player.setLevel(i, 10);
-                    } else {
-                        player.setLevel(i, 1);
-                    }
-                }
             } else if (cmd === 'give') {
                 // authentic
                 if (args.length < 1) {
@@ -486,6 +354,139 @@ export default class ClientCheatHandler extends MessageHandler<ClientCheat> {
                 }
 
                 World.rebootTimer(Math.ceil(tryParseInt(args[0], 30) * 1000 / 600));
+            }
+        }
+
+        if (player.staffModLevel >= 2) {
+            // super-moderator commands
+
+            if (cmd === 'getcoord') {
+                // authentic
+
+                // Displays current coordinate
+                player.messageGame(CoordGrid.formatString(player.level, player.x, player.z, ','));
+            } else if (cmd === 'tele') {
+                // authentic
+                if (args.length < 1) {
+                    // ::tele x,xx,xx[,xx,xx]
+                    // Teleports you to the coordinate. In order, the parts are level, horizontal map square, vertical map square, horizontal tile, vertical tile.
+                    return false;
+                }
+
+                const coord = args[0].split(',');
+                if (coord.length < 3) {
+                    return false;
+                }
+
+                player.closeModal();
+
+                if (!player.canAccess()) {
+                    player.messageGame('Please finish what you are doing first.');
+                    return false;
+                }
+
+                player.clearInteraction();
+                player.unsetMapFlag();
+
+                const level = tryParseInt(coord[0], 0);
+                const mx = tryParseInt(coord[1], 50);
+                const mz = tryParseInt(coord[2], 50);
+                const lx = tryParseInt(coord[3], 0);
+                const lz = tryParseInt(coord[4], 0);
+
+                if (level < 0 || level > 3 || mx < 0 || mx > 255 || mz < 0 || mz > 255 || lx < 0 || lx > 63 || lz < 0 || lz > 63) {
+                    return false;
+                }
+
+                player.teleJump((mx << 6) + lx, (mz << 6) + lz, level);
+            } else if (cmd === 'teleto') {
+                // custom
+                if (args.length < 1) {
+                    return false;
+                }
+
+                // ::teleto <username>
+                const other = World.getPlayerByUsername(args[0]);
+                if (!other) {
+                    player.messageGame(`${args[0]} is not logged in.`);
+                    return false;
+                }
+
+                player.closeModal();
+
+                if (!player.canAccess()) {
+                    player.messageGame('Please finish what you are doing first.');
+                    return false;
+                }
+
+                player.clearInteraction();
+                player.unsetMapFlag();
+
+                player.teleJump(other.x, other.z, other.level);
+            } else if (cmd === 'teleother') {
+                // custom
+                if (args.length < 1) {
+                    // ::teleother <username>
+                    return false;
+                }
+
+                const other = World.getPlayerByUsername(args[0]);
+                if (!other) {
+                    player.messageGame(`${args[0]} is not logged in.`);
+                    return false;
+                }
+
+                other.closeModal();
+
+                if (!other.canAccess()) {
+                    player.messageGame(`${args[0]} is busy right now.`);
+                    return false;
+                }
+
+                other.clearInteraction();
+                other.unsetMapFlag();
+
+                other.teleJump(player.x, player.z, player.level);
+            } else if (cmd === 'setstat') {
+                // authentic
+                if (args.length < 2) {
+                    // ::setstat <skill> <level>
+                    // Sets the skill to specified level
+                    return false;
+                }
+
+                const stat = PlayerStat[args[0].toUpperCase() as PlayerStatKey];
+                if (typeof stat === 'undefined') {
+                    return false;
+                }
+
+                player.setLevel(stat, parseInt(args[1]));
+            } else if (cmd === 'advancestat') {
+                // authentic
+                if (args.length < 1) {
+                    // ::advancestat <skill> <level>
+                    // Advances skill to specified level, generates level up message etc.
+                    return false;
+                }
+
+                const stat = PlayerStat[args[0].toUpperCase() as PlayerStatKey];
+                if (typeof stat === 'undefined') {
+                    return false;
+                }
+
+                player.stats[stat] = 0;
+                player.baseLevels[stat] = 1;
+                player.levels[stat] = 1;
+                player.addXp(stat, getExpByLevel(parseInt(args[1])), false);
+            } else if (cmd === 'minme') {
+                // like maxme debugproc, but in engine because xp goes down
+                for (let i = 0; i < PlayerStatEnabled.length; i++) {
+                    if (i === PlayerStat.HITPOINTS) {
+                        player.setLevel(i, 10);
+                    } else {
+                        player.setLevel(i, 1);
+                    }
+                }
             } else if (cmd === 'setvis') {
                 // authentic
                 if (args.length < 1) {

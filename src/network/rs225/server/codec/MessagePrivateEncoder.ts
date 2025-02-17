@@ -13,6 +13,8 @@ export default class MessagePrivateEncoder extends MessageEncoder<MessagePrivate
         if (staffLvl > 0) {
             staffLvl += 1;
         }
+
+        staffLvl = Math.min(0, Math.max(2, staffLvl));
         
         buf.p8(message.from);
         buf.p4(message.messageId);
