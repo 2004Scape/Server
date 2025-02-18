@@ -22,10 +22,10 @@ p_opnpc(1); // not sure if p_opnpc is used (delays an extra tick)
 switch_obj(last_useitem) {
     case bronze_axe, iron_axe, steel_axe, black_axe, mithril_axe, adamant_axe, rune_axe :
         p_opnpc(1); // gets delayed by a tick >:(
-    case raw_herring, herring :
-        // note: added in 2005-2006 by mod ash?
-        mes("This is not the mightiest tree in the forest.");
-        return;
+    // case raw_herring, herring :
+    //     // note: added in 2005-2006 by mod ash?
+    //     mes("This is not the mightiest tree in the forest.");
+    //     return;
     case default : ~displaymessage(^dm_default);
 };
 
