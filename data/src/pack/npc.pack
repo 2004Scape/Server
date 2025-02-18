@@ -117,7 +117,7 @@
 116=cyclops
 117=giant
 118=npc_118
-119=npc_119
+119=chaos_dwarf
 120=npc_120
 121=npc_121
 122=hobgoblin
@@ -132,7 +132,7 @@
 131=penguin
 132=monkey
 133=black_unicorn
-134=npc_134
+134=poison_spider
 135=mammoth
 136=terrorbird
 137=npc_137
@@ -171,7 +171,7 @@
 170=gnome_pilot
 171=brimstail
 172=dark_wizard_earth
-173=npc_173
+173=invrigar_the_necromancer
 174=dark_wizard_water
 175=mugger
 176=witch_draynor
@@ -871,10 +871,10 @@
 870=enclave_guard
 871=ogre_shaman
 872=watchtower_wizard
-873=npc_873
-874=npc_874
-875=npc_875
-876=npc_876
+873=ogre_trader_1
+874=ogre_merchant
+875=ogre_trader_2
+876=ogre_trader_3
 877=tower_guard
 878=colonel_radick
 879=delrith

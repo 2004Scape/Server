@@ -541,7 +541,7 @@ param=death_sound,giant_death
 // osrs stats and Vislvl match 1:1
 // https://raw.githubusercontent.com/Joshua-F/osrs-dumps/refs/heads/master/config/dump.npc npc_4382
 
-[npc_873]
+[ogre_trader_1]
 name=Ogre trader
 desc=Funnily enough, doesn't actually buy or sell ogres.
 size=2
@@ -577,7 +577,7 @@ param=shop_delta,30
 param=shop_title,Dal's General Ogre Supplies
 // https://raw.githubusercontent.com/Joshua-F/osrs-dumps/refs/heads/master/config/dump.npc npc_4401
 
-[npc_874]
+[ogre_merchant]
 name=Ogre merchant
 desc=Funnily enough, doesn't actually buy or sell ogres.
 size=2
@@ -613,7 +613,7 @@ param=shop_delta,30
 param=shop_title,Grud's Herblore Stall.
 // https://raw.githubusercontent.com/Joshua-F/osrs-dumps/refs/heads/master/config/dump.npc npc_4402
 
-[npc_875]
+[ogre_trader_2]
 name=Ogre trader
 desc=Funnily enough, doesn't actually buy or sell ogres.
 size=2
@@ -643,7 +643,7 @@ param=death_sound,giant_death
 param=death_drop,big_bones
 // https://raw.githubusercontent.com/Joshua-F/osrs-dumps/refs/heads/master/config/dump.npc npc_4403
 
-[npc_876]
+[ogre_trader_3]
 name=Ogre trader
 desc=Funnily enough, doesn't actually buy or sell ogres.
 size=2

@@ -1,10 +1,10 @@
-[ai_queue1,npc_173] ~npc_default_retaliate;
+[ai_queue1,invrigar_the_necromancer] ~npc_default_retaliate;
 
-[ai_applayer2,npc_173] 
+[ai_applayer2,invrigar_the_necromancer] 
 npc_setmode(opplayer2);
 ~invrigar_attack;
 
-[ai_opplayer2,npc_173] 
+[ai_opplayer2,invrigar_the_necromancer] 
 ~invrigar_attack;
 
 [ai_queue1,necromancer] ~npc_default_retaliate;
