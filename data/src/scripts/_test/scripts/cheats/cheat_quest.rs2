@@ -104,7 +104,13 @@ if (p_finduid(uid) = true) {
             case 46 : queue(tree_quest_complete, 0);
             case 47 : queue(totem_quest_complete, 0);
             case 48 : queue(upass_quest_complete, 0);
-            case 49 : mes("Quest not implemented");
+            case 49 : 
+                queue(itwatchtower_quest_complete, 0);
+                %itwatchtower_progress = ^itwatchtower_complete;
+                // rewards are given before quest completion, so give here
+                stat_advance(magic, 153000);
+                inv_add(inv, coins, 5000);
+                inv_add(inv, spell_scroll, 1);
             case 50 : queue(waterfall_quest_complete, 0);
             case 51 : queue(ball_quest_complete, 0);
             case default : mes("Quest not found.");
@@ -207,7 +213,9 @@ if (p_finduid(uid) = true) {
             case 48 :
                 %upass_progress = 0;
                 %upass_map_mechanisms = 0;
-            case 49 : mes("Quest not implemented");
+            case 49 : 
+                %itwatchtower_progress = 0;
+                %itwatchtower_bits = 0;
             case 50 :
                 %waterfall_golrie_and_puzzle = 0;
                 %waterfall_progress = 0;

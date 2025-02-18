@@ -507,19 +507,19 @@ if(~watchtower_has_all_crystals = true & %itwatchtower_progress = ^itwatchtower_
     // QUEST REWARD
     %itwatchtower_progress = ^itwatchtower_complete;
     p_teleport(2_45_73_48_43);
-    stat_advance(magic, 153000);
     // https://youtu.be/0hkyRGQImlg?si=huZf7suXxmjXPtxN&t=1198
     inv_del(inv, watchtower_crystal1, 1);
     inv_del(inv, watchtower_crystal2, 1);
     inv_del(inv, watchtower_crystal3, 1);
     inv_del(inv, watchtower_crystal4, 1);
+    p_delay(3);
+    stat_advance(magic, 153000);
     inv_add(inv, coins, 5000);
     inv_add(inv, spell_scroll, 1);
     queue(itwatchtower_quest_complete, 0);
-    p_delay(3);
-    %questpoints = add(%questpoints, 4);
+    %questpoints = add(%questpoints, ^itwatchtower_questpoints);
     if(npc_find(coord, watchtower_wizard, 6, 0) = true) {
-        ~chatnpc("<p,happy>Marvellous! it works!|The town will now be safe.");
+        ~chatnpc("<p,happy>Marvellous! It works!|The town will now be safe.");
         ~chatnpc("<p,happy>Your help was invaluable.|Take this payment as a token of my gratitude...");
         ~chatnpc("<p,happy>Also, let me improve your Magic level for you.");
         ~chatnpc("<p,happy>Here is a special item for you...|It's a new spell.|Read the scroll and you will be able|to teleport yourself here magically...");
