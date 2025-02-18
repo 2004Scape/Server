@@ -170,8 +170,8 @@
 169=loc_169
 170=muddy_chest_closed
 171=muddy_chest_opened
-172=loc_172
-173=loc_173
+172=closed_crystal_chest
+173=opened_crystal_chest
 174=rubble_1
 175=rubble_2
 176=loc_176
@@ -2036,7 +2036,7 @@
 2035=loc_2035
 2036=loc_2036
 2037=loc_2037
-2038=loc_2038
+2038=combat_training_dummy
 2039=loc_2039
 2040=loc_2040
 2041=loc_2041
