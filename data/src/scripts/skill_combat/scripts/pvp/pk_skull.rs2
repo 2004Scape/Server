@@ -54,4 +54,7 @@ if (%pk_skull < 1) {
 if (%pk_skull < 1) {
     return;
 }
+if (%pk_skull > 3000) {
+    %pk_skull = 3000;
+}
 ~pk_skull(%pk_skull);
