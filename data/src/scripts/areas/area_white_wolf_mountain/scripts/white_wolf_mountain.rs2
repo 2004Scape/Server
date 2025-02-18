@@ -22,7 +22,7 @@ if(stat(mining) < 50) {
   return;
 }
 anim(oc_param($pickaxe, mining_animation), 0);
-~mining_sound;
+sound_synth(mine_quick, 0, 0);
 def_coord $loc_coord = loc_coord;
 loc_change(loc_472, 2);
 p_delay(1);

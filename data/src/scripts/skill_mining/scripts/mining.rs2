@@ -53,21 +53,17 @@ if ($pickaxe = null) {
 def_int $mining_rate = oc_param($pickaxe, mining_rate);
 if (%action_delay < map_clock) {
     %action_delay = calc(map_clock + $mining_rate);
-    if (%skill_sound = calc(map_clock + $mining_rate)) {
-        sound_synth(mine_quick, 0, 0);
-    }
     p_oploc(1);
-} else {
-    %skill_anim = %action_delay;
-    %skill_sound = calc(map_clock + $mining_rate + 1);
-    anim(oc_param($pickaxe, mining_animation), 0);
-    mes("You swing your pick at the rock.");
-    @mining_continue($get_ore);
+    return;
 }
+anim(oc_param($pickaxe, mining_animation), 0);
+mes("You swing your pick at the rock.");
+if (%action_delay = map_clock) {
+    jump($get_ore);
+}
+p_oploc(3);
 
 [label,mining_continue](label $get_ore)
-// mes("mining_continue: %skill_anim = <tostring(%skill_anim)>, %skill_sound = <tostring(%skill_sound)>");
-// mes("%action_delay = <tostring(%action_delay)>, map_clock = <tostring(map_clock)>");
 db_find(mining_table:rock, loc_type);
 def_dbrow $data = db_findnext;
 if ($data = null) {
@@ -94,20 +90,15 @@ if ($pickaxe = null) {
 def_int $mining_rate = oc_param($pickaxe, mining_rate);
 
 // sounds and skill anim is based off https://youtu.be/ix4_VVi9Xm4
-if (%skill_anim < calc(map_clock + 1)) {
-    %skill_anim = calc(map_clock + $mining_rate + 1);
-    %skill_sound = calc(map_clock + $mining_rate + 1);
-    anim(oc_param($pickaxe, mining_animation), 0);
-    sound_synth(mine_quick, 0, 0);
-}
+sound_synth(mine_quick, 0, 0);
+
 // if roll is due
 if (%action_delay < map_clock) {
     %action_delay = calc(map_clock + $mining_rate);
 } else if (%action_delay = map_clock) {
-    %skill_sound = null;
+    anim(oc_param($pickaxe, mining_animation), 0);
     jump($get_ore);
 }
-~mining_sound;
 p_oploc(3);
 
 [label,get_ore_normal]
@@ -121,7 +112,7 @@ if ($data = null) {
 def_int $chance = 256;
 def_obj $neck = inv_getobj(worn, ^wearpos_front);
 if ($neck ! null & oc_category($neck) = category_557) {
-    $chance = 64;
+    $chance = 86;
 }
 if (random($chance) = ^true) {
     def_namedobj $gem = ~mining_gem_table;
@@ -137,8 +128,7 @@ if (random($chance) = ^true) {
     // deplete
     def_int $respawn = ~scale_by_playercount(db_getfield($data, mining_table:rock_respawnrate, 0));
     loc_change(loc_param(next_loc_stage_mining), $respawn);
-    // stop mining, give ore and xp. Sudden says its sound_230
-    sound_synth(sound_230, 0, 0);
+    sound_synth(sound_230, 0, 0); // Sudden says its sound_230
     anim(null, 0);
     // The 'perfect' gold rocks in Family Crest are the same ID as regular gold rocks, so check to 
     // give out the right ore if we're in that location. Only gold rocks are in this room.
@@ -151,7 +141,6 @@ if (random($chance) = ^true) {
     mes("You manage to mine some <db_getfield($data, mining_table:ore_name, 0)>.");
     return;
 }
-~mining_sound;
 p_oploc(3);
 
 
@@ -181,15 +170,13 @@ if (random($chance) = ^true) {
     // deplete
     def_int $respawn = ~scale_by_playercount(db_getfield($data, mining_table:rock_respawnrate, 0));
     loc_change(loc_param(next_loc_stage_mining), $respawn);
-    // stop mining, give ore and xp. Sudden says its sound_230
-    sound_synth(sound_230, 0, 0);
+    sound_synth(sound_230, 0, 0); // Sudden says its sound_230
     anim(null, 0);
     inv_add(inv, db_getfield($data, mining_table:rock_output, 0), 1);
     stat_advance(mining, db_getfield($data, mining_table:rock_exp, 0));
     mes("You manage to mine some <db_getfield($data, mining_table:ore_name, 0)>.");
     return;
 }
-~mining_sound;
 p_oploc(3);
 
 
@@ -203,7 +190,6 @@ if ($data = null) {
 inv_add(inv, db_getfield($data, mining_table:rock_output, 0), 1);
 stat_advance(mining, db_getfield($data, mining_table:rock_exp, 0));
 mes("You manage to mine an unbound rune stone.");
-~mining_sound;
 p_oploc(3);
 
 
@@ -242,7 +228,6 @@ if (stat_random(stat(mining), $low, $high) = true) {
     mes("You just mined <~add_article(oc_name(db_getfield($data, gem_cutting_table:cut_gem, 0)))>!");
     return;
 }
-~mining_sound;
 p_oploc(3);
 
 [proc,mining_gem_table]()(namedobj)
@@ -252,14 +237,3 @@ if ($rand < 10) return (uncut_ruby);
 if ($rand < 26) return (uncut_emerald);
 if ($rand < 58) return (uncut_sapphire);
 else return(null);
-
-
-[proc,mining_sound]
-def_int $mining_rate = oc_param(~pickaxe_checker, mining_rate);
-// mes(tostring(%skill_sound));
-if (%skill_sound = calc(map_clock + $mining_rate)) {
-    sound_synth(mine_quick, 14, 0);
-}
-if (%skill_sound < calc(map_clock + $mining_rate)) {
-    sound_synth(mine_quick, 17, 0);
-}
