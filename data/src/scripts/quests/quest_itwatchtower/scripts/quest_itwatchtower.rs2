@@ -517,7 +517,7 @@ if(~watchtower_has_all_crystals = true & %itwatchtower_progress = ^itwatchtower_
     inv_add(inv, spell_scroll, 1);
     queue(itwatchtower_quest_complete, 0);
     p_delay(3);
-    %questpoints = add(%questpoints, 4);
+    %questpoints = add(%questpoints, ^itwatchtower_questpoints);
     if(npc_find(coord, watchtower_wizard, 6, 0) = true) {
         ~chatnpc("<p,happy>Marvellous! It works!|The town will now be safe.");
         ~chatnpc("<p,happy>Your help was invaluable.|Take this payment as a token of my gratitude...");
