@@ -519,7 +519,7 @@ if(~watchtower_has_all_crystals = true & %itwatchtower_progress = ^itwatchtower_
     p_delay(3);
     %questpoints = add(%questpoints, 4);
     if(npc_find(coord, watchtower_wizard, 6, 0) = true) {
-        ~chatnpc("<p,happy>Marvellous! it works!|The town will now be safe.");
+        ~chatnpc("<p,happy>Marvellous! It works!|The town will now be safe.");
         ~chatnpc("<p,happy>Your help was invaluable.|Take this payment as a token of my gratitude...");
         ~chatnpc("<p,happy>Also, let me improve your Magic level for you.");
         ~chatnpc("<p,happy>Here is a special item for you...|It's a new spell.|Read the scroll and you will be able|to teleport yourself here magically...");
