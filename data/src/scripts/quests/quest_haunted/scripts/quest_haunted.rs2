@@ -102,7 +102,7 @@ anim(human_pickpocket, 0);
 inv_del(inv, poisoned_fish_good, 1);
 mes("You pour the poisoned fish food into the fountain.");
 p_delay(1);
-mes("The pirhanas eating the food...");
+mes("The piranhas start eating the food...");
 p_delay(2);
 mes("... then die and float to the surface.");
 %haunted_manor_fountain_poisoned = 1;
