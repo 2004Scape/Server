@@ -213,7 +213,9 @@ if (p_finduid(uid) = true) {
             case 48 :
                 %upass_progress = 0;
                 %upass_map_mechanisms = 0;
-            case 49 : %itwatchtower_progress = 0;
+            case 49 : 
+                %itwatchtower_progress = 0;
+                %itwatchtower_progress = 0;
             case 50 :
                 %waterfall_golrie_and_puzzle = 0;
                 %waterfall_progress = 0;
