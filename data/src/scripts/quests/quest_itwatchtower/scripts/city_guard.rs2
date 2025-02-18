@@ -51,7 +51,7 @@ if(last_useitem = deathrune) {
         inv_add(inv, skavid_map, 1);
         %itwatchtower_progress = ^itwatchtower_solved_riddle;
         ~chatplayer("<p,happy>I worked it out!");
-        ~chatplayer("<p,happy>Well, well. The imp has done it!|Thanks for the rune;|This is what you be needing...");
+        ~chatnpc("<p,happy>Well, well. The imp has done it!|Thanks for the rune;|This is what you be needing...");
         mes("The guard gives you a map.");
         return;
     }
