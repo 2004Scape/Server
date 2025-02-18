@@ -83,6 +83,10 @@ export default class InputTracking {
         if (!this.waitingReport) {
             return;
         }
+        // We either have a report (ReportEvent.ACTIVE), or we do not (ReportEvent.NO_REPORT).
+        // Either way, we are no longer waiting for one to come in:
+        this.waitingReport = false;
+        this.lastReport = -1;
         if (event === ReportEvent.NO_REPORT) {
             // this means that:
             // 1: the player is trying to avoid afk timer.
@@ -92,8 +96,6 @@ export default class InputTracking {
             return;
         }
         // everything below means the player was active during this tracking.
-        this.waitingReport = false;
-        this.lastReport = -1;
         if (this.recordedEvents.length > 0) {
             if (Environment.NODE_SUBMIT_INPUT || this.player.submitInput) {
                 World.submitInputTracking(
