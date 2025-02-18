@@ -27,6 +27,8 @@
 if (inzone(0_44_150_31_28, 0_44_150_47_46, coord) = true) { // only tele if in the elvarg lair
     p_teleport(0_44_150_30_36);
 }
+%dragon_ned_hired = ^false;
+%dragon_planks = 0;
 %dragon_progress = ^dragon_complete;
 stat_advance(strength, 186500);
 stat_advance(defence, 186500);
