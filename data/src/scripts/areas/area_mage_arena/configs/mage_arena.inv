@@ -11,13 +11,13 @@ stock1=firerune,200,50
 stock2=waterrune,200,50
 stock3=airrune,200,50
 stock4=earthrune,200,50
-stock5=mindrune,200,50
+stock5=mindrune,140,50
 stock6=bodyrune,140,50
-stock7=naturerune,20,100
-stock8=chaosrune,30,100
-stock9=lawrune,20,100
+stock7=naturerune,250,300
+stock8=chaosrune,250,100
+stock9=lawrune,250,300
 stock10=cosmicrune,20,100
-stock11=deathrune,20,100
+stock11=deathrune,250,150
 
 [mage_arena_staffs]
 // https://storage.googleapis.com/tannerdino/images/magearena6.jpg
