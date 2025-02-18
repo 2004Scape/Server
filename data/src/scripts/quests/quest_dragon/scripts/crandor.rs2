@@ -18,6 +18,8 @@ if (%dragon_wall = ^false) {
     if ($entering = true | %dragon_progress >= ^dragon_complete) {
         mes("You found a secret door!");
         mes("You remember where the secret door is for future reference.");
+        %dragon_planks = 0;
+        %dragon_ned_hired = 0;
         %dragon_wall = ^true;
     } else {
         ~displaymessage(^dm_default);
