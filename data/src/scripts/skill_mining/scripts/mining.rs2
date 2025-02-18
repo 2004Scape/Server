@@ -95,8 +95,8 @@ sound_synth(mine_quick, 0, 0);
 // if roll is due
 if (%action_delay < map_clock) {
     %action_delay = calc(map_clock + $mining_rate);
-    anim(oc_param($pickaxe, mining_animation), 0);
 } else if (%action_delay = map_clock) {
+    anim(oc_param($pickaxe, mining_animation), 0);
     jump($get_ore);
 }
 p_oploc(3);
