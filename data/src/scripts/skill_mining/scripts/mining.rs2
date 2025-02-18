@@ -112,7 +112,7 @@ if ($data = null) {
 def_int $chance = 256;
 def_obj $neck = inv_getobj(worn, ^wearpos_front);
 if ($neck ! null & oc_category($neck) = category_557) {
-    $chance = 64;
+    $chance = 86;
 }
 if (random($chance) = ^true) {
     def_namedobj $gem = ~mining_gem_table;
