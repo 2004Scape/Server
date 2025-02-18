@@ -1,5 +1,5 @@
 [oploc1,dragonslayer_gangplank_board]
-if (%dragon_progress < ^quest_dragon_bought_ship | %dragon_wall = ^true) {
+if (%dragon_progress < ^quest_dragon_bought_ship | %dragon_progress >= ^dragon_complete) {
     if (npc_find(coord, klarense, 5, 0) = true) {
         ~chatnpc("<p,neutral>Hey, stay off my ship! That's private property!");
     }
@@ -85,9 +85,8 @@ if (%dragon_planks < 3) {
 if (%dragon_progress = ^quest_dragon_bought_ship) {
     %dragon_progress = ^quest_dragon_repaired_ship;
 }
-// teleports the player 1 story up, if ned is re-hired we teleport up 2 levels
-if(%dragon_ned_hired = ^false) p_teleport(movecoord(coord, 0, 1, 0));
-else p_teleport(movecoord(coord, 0, 2, 0));
+// teleports the player 1 story up
+p_teleport(movecoord(coord, 0, 1, 0));
 // holes is not a typo https://youtu.be/kCMB4I_aJJM?t=106
 ~mesbox("You have successfully patched the holes in the ship.");
 
