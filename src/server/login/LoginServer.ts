@@ -23,6 +23,26 @@ export default class LoginServer {
         }));
     }
 
+    async wouldResetSaveFile(newSaveBytes: Buffer, profile: string, username: string) {
+        // check whether `save`, if saved to disk, would have reset `username`'s progress.
+        // it does this by checking whether user is on tutorial island when they weren't before.
+        if (!fs.existsSync(`data/players/${profile}/${username}.sav`)) {
+            // No existing save - no problem.
+            return false;
+        }
+        const existingSaveRaw = await fsp.readFile(`data/players/${profile}/${username}.sav`);
+        const existingSave = PlayerLoading.load('tmp', new Packet(existingSaveRaw), null);
+        const newSave = PlayerLoading.load('tmp', new Packet(newSaveBytes), null);
+        function onTutorialIsland(save: {x: number, z: number}) {
+            // monka
+            return save.x >= 3053 && save.z >= 3057 && save.x <= 3153 && save.z <= 3153;
+        }
+        if (onTutorialIsland(newSave) && !onTutorialIsland(existingSave)) {
+            return true;
+        }
+        return false;
+    }
+
     constructor() {
         this.server = new WebSocketServer({ port: Environment.LOGIN_PORT, host: '0.0.0.0' }, () => {
             printInfo(`Login server listening on port ${Environment.LOGIN_PORT}`);
@@ -228,7 +248,7 @@ export default class LoginServer {
                         const { replyTo, username, save } = msg;
 
                         const raw = Buffer.from(save, 'base64');
-                        if (PlayerLoading.verify(new Packet(raw))) {
+                        if (PlayerLoading.verify(new Packet(raw)) && !(await this.wouldResetSaveFile(raw, profile, username))) {
                             if (!fs.existsSync(`data/players/${profile}`)) {
                                 await fsp.mkdir(`data/players/${profile}`, { recursive: true });
                             }
@@ -253,7 +273,7 @@ export default class LoginServer {
                         const { username, save } = msg;
 
                         const raw = Buffer.from(save, 'base64');
-                        if (PlayerLoading.verify(new Packet(raw))) {
+                        if (PlayerLoading.verify(new Packet(raw)) && !(await this.wouldResetSaveFile(raw, profile, username))) {
                             if (!fs.existsSync(`data/players/${profile}`)) {
                                 await fsp.mkdir(`data/players/${profile}`, { recursive: true });
                             }
