@@ -1,5 +1,4 @@
 import 'dotenv/config';
-
 import { tryParseBoolean, tryParseInt, tryParseString } from '#/util/TryParse.js';
 import WalkTriggerSetting from '#/util/WalkTriggerSetting.js';
 

@@ -95,7 +95,7 @@ function connectTcp(username: string, host = '127.0.0.1', port = 43594) {
         });
 
         socket.on('error', () => {});
-    } catch (err) {
+    } catch (_) {  // eslint-disable-line @typescript-eslint/no-unused-vars
         // no-op
     }
 }

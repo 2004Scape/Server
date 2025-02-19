@@ -24,6 +24,6 @@ for (let i = 0; i < jag.fileCount; i++) {
         console.log(name);
         entry.save(`dump/unpack/${jagName}.raw/${name}`, entry.data.length);
     } catch (err) {
-        console.log('error', name);
+        console.error(err, name);
     }
 }

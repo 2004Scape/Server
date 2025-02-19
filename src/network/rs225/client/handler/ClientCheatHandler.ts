@@ -128,7 +128,8 @@ export default class ClientCheatHandler extends MessageHandler<ClientCheat> {
                                 break;
                             }
                         }
-                    } catch (err) {
+                    } catch (_) {  // eslint-disable-line @typescript-eslint/no-unused-vars
+                        // invalid arguments
                         return false;
                     }
                 }

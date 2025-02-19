@@ -1,9 +1,14 @@
 import { parentPort } from 'worker_threads';
 
 import Environment from '#/util/Environment.js';
-import { FriendClient } from '#/server/friend/FriendServer.js';
+import { FriendClient, FriendsServerOpcodes } from '#/server/friend/FriendServer.js';
 
 const client = new FriendClient(Environment.NODE_ID);
+
+export interface FriendThreadMessage {
+    opcode: FriendsServerOpcodes;
+    data: any
+}
 
 if (Environment.STANDALONE_BUNDLE) {
     self.onmessage = async msg => {

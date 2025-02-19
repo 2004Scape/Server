@@ -1,9 +1,10 @@
 import fs from 'fs';
 import { parentPort } from 'worker_threads';
 
-import LoginClient from '#/server/login/LoginClient.js';
+import { LoginClient } from '#/server/login/LoginClient.js';
 
 import Environment from '#/util/Environment.js';
+import { type GenericLoginThreadResponse } from './index.d.js';
 
 const client = new LoginClient(Environment.NODE_ID);
 
@@ -37,7 +38,7 @@ if (Environment.STANDALONE_BUNDLE) {
 }
 
 type ParentPort = {
-    postMessage: (msg: any) => void;
+    postMessage: (msg: GenericLoginThreadResponse) => void;
 };
 
 async function handleRequests(parentPort: ParentPort, msg: any) {
@@ -84,7 +85,8 @@ async function handleRequests(parentPort: ParentPort, msg: any) {
                         reconnecting,
                         reply: 4,
                         staffmodlevel,
-                        save: null
+                        save: null,
+                        account_id: -1
                     });
                 } else {
                     parentPort.postMessage({
@@ -95,7 +97,8 @@ async function handleRequests(parentPort: ParentPort, msg: any) {
                         reconnecting,
                         reply: 0,
                         staffmodlevel,
-                        save: fs.readFileSync(`data/players/${profile}/${username}.sav`)
+                        save: fs.readFileSync(`data/players/${profile}/${username}.sav`),
+                        account_id: -1
                     });
                 }
             }

@@ -64,7 +64,7 @@ export default class WSServer {
 
                     client.buffer(data);
                     World.onClientData(client);
-                } catch (err) {
+                } catch (_) {  // eslint-disable-line @typescript-eslint/no-unused-vars
                     client.terminate();
                 }
             });
