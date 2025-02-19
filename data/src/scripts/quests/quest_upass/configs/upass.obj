@@ -24,7 +24,6 @@ model=model_loc_3361_8
 2dxan=100
 weight=1lb
 members=yes
-param=no_alchemy,1
 param=orb_bit,^upass_orb1_bit
 tradeable=no
 
@@ -38,7 +37,6 @@ model=model_loc_3361_8
 2dxan=100
 weight=1lb
 members=yes
-param=no_alchemy,1
 param=orb_bit,^upass_orb2_bit
 tradeable=no
 
@@ -52,7 +50,6 @@ model=model_loc_3361_8
 2dxan=100
 weight=1lb
 members=yes
-param=no_alchemy,1
 param=orb_bit,^upass_orb3_bit
 tradeable=no
 
@@ -66,7 +63,6 @@ model=model_loc_3361_8
 2dxan=100
 weight=1lb
 members=yes
-param=no_alchemy,1
 param=orb_bit,^upass_orb4_bit
 tradeable=no
 

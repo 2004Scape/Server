@@ -10,7 +10,6 @@ desc=An expensive colourless liquid.
 2dyan=1996
 2dxan=84
 weight=30g
-param=no_alchemy,1
 tradeable=no
 
 [liquid_honey]
@@ -26,7 +25,6 @@ desc=This isn't worth much.
 2dyan=1996
 2dxan=84
 weight=30g
-param=no_alchemy,1
 tradeable=no
 
 [sulphuric_broline]
@@ -42,7 +40,6 @@ desc=It's highly poisonous.
 2dyan=1996
 2dxan=84
 weight=30g
-param=no_alchemy,1
 tradeable=no
 
 [plague_sample]
@@ -56,7 +53,6 @@ model=model_2788_obj
 2dxan=136
 weight=50g
 members=yes
-param=no_alchemy,1
 tradeable=no
 
 [touch_paper]
@@ -71,7 +67,6 @@ model=model_2781_obj
 2dxan=288
 weight=10g
 members=yes
-param=no_alchemy,1
 tradeable=no
 
 [distillator]
@@ -86,7 +81,6 @@ model=model_2613_obj
 2dyan=684
 2dxan=304
 weight=20g
-param=no_alchemy,1
 tradeable=no
 
 [lathas_amulet]
@@ -119,7 +113,6 @@ model=model_2678_obj
 2dxan=116
 weight=50g
 members=yes
-param=no_alchemy,1
 tradeable=no
 
 [biohazard_key]
@@ -134,7 +127,6 @@ model=model_2372_obj
 2dxan=328
 weight=10g
 members=yes
-param=no_alchemy,1
 tradeable=no
 
 [pigeon_cage]
@@ -150,7 +142,6 @@ model=model_2479_obj
 iop1=Open
 weight=2kg
 members=yes
-param=no_alchemy,1
 tradeable=no
 
 [pigeon_cage_empty]
@@ -163,7 +154,6 @@ model=model_2663_obj
 2dxan=192
 weight=500g
 members=yes
-param=no_alchemy,1
 tradeable=no
 
 [priest_gown_top]
