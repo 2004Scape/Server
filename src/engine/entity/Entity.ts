@@ -1,11 +1,11 @@
 import EntityLifeCycle from '#/engine/entity/EntityLifeCycle.js';
 import World from '#/engine/World.js';
-
 export default abstract class Entity {
     // constructor
     level: number;
     x: number;
     z: number;
+    isActive: boolean;
     readonly width: number;
     readonly length: number;
     readonly lifecycle: EntityLifeCycle;
@@ -21,9 +21,14 @@ export default abstract class Entity {
         this.width = width;
         this.length = length;
         this.lifecycle = lifecycle;
+        this.isActive = false;
     }
 
     abstract resetEntity(respawn: boolean): void;
+
+    isValid(hash64?: bigint): boolean {
+        return this.isActive;
+    }
 
     updateLifeCycle(tick: number): boolean {
         return this.lifecycleTick === tick && this.lifecycle !== EntityLifeCycle.FOREVER;

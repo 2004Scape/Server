@@ -360,6 +360,7 @@ export default class Player extends PathingEntity {
         this.timers.clear();
         this.heroPoints.clear();
         this.buildArea.clear(false);
+        this.isActive = false;
     }
 
     resetEntity(respawn: boolean) {
@@ -402,6 +403,7 @@ export default class Player extends PathingEntity {
 
         this.lastStepX = this.x - 1;
         this.lastStepZ = this.z;
+        this.isActive = true;
     }
 
     onReconnect() {
@@ -998,15 +1000,8 @@ export default class Player extends PathingEntity {
     }
 
     validateTarget(): boolean {
-        // todo: all of these validation checks should be checking against the entity itself rather than trying to look up a similar entity from the World
-
         // Validate that the target is on the same floor
         if (this.target?.level !== this.level) {
-            return false;
-        }
-
-        // For Npc targets, validate that the Npc is found in the world and that it's not delayed
-        if (this.target instanceof Npc && (typeof World.getNpc(this.target.nid) === 'undefined' || this.target.delayed)) {
             return false;
         }
 
@@ -1015,22 +1010,7 @@ export default class Player extends PathingEntity {
             return false;
         }
 
-        // For Obj targets, validate that the Obj still exists in the World
-        if (this.target instanceof Obj && World.getObj(this.target.x, this.target.z, this.level, this.target.type, this.hash64) === null) {
-            return false;
-        }
-
-        // For Loc targets, validate that the Loc still exists in the world
-        if (this.target instanceof Loc && World.getLoc(this.target.x, this.target.z, this.level, this.target.type) === null) {
-            return false;
-        }
-
-        // For Player targets, validate that the Player still exists in the world and is not in the process of logging out or invisible
-        if (this.target instanceof Player && (World.getPlayerByUid(this.target.uid) === null || this.target.loggingOut || this.target.visibility !== Visibility.DEFAULT)) {
-            return false;
-        }
-
-        return true;
+        return this.target.isValid(this.hash64);
     }
 
     processInteraction() {
@@ -1966,5 +1946,17 @@ export default class Player extends PathingEntity {
 
     messageGame(msg: string) {
         this.write(new MessageGame(msg));
+    }
+
+    isValid(hash64?: bigint): boolean {
+        if (this.loggingOut) {
+            return false;
+        }
+
+        if (this.visibility !== Visibility.DEFAULT) {
+            return false;
+        }
+
+        return super.isValid();
     }
 }
