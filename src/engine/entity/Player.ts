@@ -1092,7 +1092,7 @@ export default class Player extends PathingEntity {
         }
 
         // Remove mapflag if there are no waypoints
-        if (!this.hasWaypoints()) {
+        if (!this.hasWaypoints() && this.stepsTaken > 0) {
             this.unsetMapFlag();
         }
     }
