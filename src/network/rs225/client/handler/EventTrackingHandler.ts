@@ -4,10 +4,10 @@ import Player from '#/engine/entity/Player.js';
 import Packet from '#/io/Packet.js';
 
 export enum InputTrackingEventType {
-    MOUSEDOWNL = 1,
-    MOUSEDOWNR = 2,
-    MOUSEUPL = 3,
-    MOUSEUPR = 4,
+    MOUSEDOWNR = 1,
+    MOUSEDOWNL = 2,
+    MOUSEUPR = 3,
+    MOUSEUPL = 4,
     MOUSEMOVE1 = 5,
     MOUSEMOVE2 = 6,
     MOUSEMOVE3 = 7,

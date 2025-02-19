@@ -170,6 +170,13 @@ switch_int($damagestyle) {
 }
 stat_advance(hitpoints, scale($multiplier, 1000, scale(133, 100, $base)));
 
+[proc,.pvp_damage](int $delay, int $damage)
+.if_close;
+if (.p_finduid(.uid) = true) {
+    .p_preventlogout("You can't log out until 10 seconds after the end of combat.", 16);
+}
+.queue(pvp_damage, $delay, $damage);
+
 // needs to be a queue
 [queue,pvp_damage](int $damage)
 if (inv_getobj(worn, ^wearpos_ring) = ring_of_recoil & .finduid(%pk_predator1) = true & $damage > 0 & stat(hitpoints) > 0) {
