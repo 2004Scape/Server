@@ -14,6 +14,15 @@ import Packet from '#/io/Packet.js';
 export default class LoginServer {
     private server: WebSocketServer;
 
+    rejectLoginForSafety(s: WebSocket, replyTo: number) {
+        // Send opcode 7 ('Please try again') if something has gone wrong
+        // during login attempt, which may be resolved by simply retrying.
+        s.send(JSON.stringify({
+            replyTo,
+            response: 7
+        }));
+    }
+
     constructor() {
         this.server = new WebSocketServer({ port: Environment.LOGIN_PORT, host: '0.0.0.0' }, () => {
             printInfo(`Login server listening on port ${Environment.LOGIN_PORT}`);
@@ -122,6 +131,11 @@ export default class LoginServer {
 
                             if (!hasSave) {
                                 const save = await fsp.readFile(`data/players/${profile}/${username}.sav`);
+                                if (!save || !PlayerLoading.verify(new Packet(save))) {
+                                    // Extreme safety check for savefile existing but having bad data on read:
+                                    console.error('on reconnect, account_id %s had invalid save data on disk', account.id);
+                                    this.rejectLoginForSafety(s, replyTo);
+                                }
                                 s.send(JSON.stringify({
                                     replyTo,
                                     response: 2,
@@ -170,32 +184,46 @@ export default class LoginServer {
                             ip: remoteAddress
                         }).execute();
 
+                        if (!fs.existsSync(`data/players/${profile}/${username}.sav`)) {
+                            // not an error - never logged in before
+                            // ^ Only not an error if the user has never logged in before:
+                            if (account.logout_time !== null) {
+                                console.error('on login, account_id %s had no save data on disk!', account.id);
+                                this.rejectLoginForSafety(s, replyTo);
+                                return;
+                            } else {
+                                s.send(JSON.stringify({
+                                    replyTo,
+                                    response: 4,
+                                    account_id: account.id,
+                                    staffmodlevel: account.staffmodlevel,
+                                    muted_until: account.muted_until
+                                }));
+                            }
+                        } else {
+
+                            const save = await fsp.readFile(`data/players/${profile}/${username}.sav`);
+                            // Extreme safety check for savefile existing but having bad data on read:
+                            if (!save || !PlayerLoading.verify(new Packet(save))) {
+                                console.error('on login, account_id %s had invalid save data on disk!', account.id);
+                                this.rejectLoginForSafety(s, replyTo);
+                                return;
+                            }
+                            s.send(JSON.stringify({
+                                replyTo,
+                                response: 0,
+                                account_id: account.id,
+                                staffmodlevel: account.staffmodlevel,
+                                save: save.toString('base64'),
+                                muted_until: account.muted_until
+                            }));
+                        }
+
+                        // Login is valid - update account table
                         await db.updateTable('account').set({
                             logged_in: nodeId,
                             login_time: toDbDate(new Date())
                         }).where('id', '=', account.id).executeTakeFirst();
-
-                        if (!fs.existsSync(`data/players/${profile}/${username}.sav`)) {
-                            // not an error - never logged in before
-                            s.send(JSON.stringify({
-                                replyTo,
-                                response: 4,
-                                account_id: account.id,
-                                staffmodlevel: account.staffmodlevel,
-                                muted_until: account.muted_until
-                            }));
-                            return;
-                        }
-
-                        const save = await fsp.readFile(`data/players/${profile}/${username}.sav`);
-                        s.send(JSON.stringify({
-                            replyTo,
-                            response: 0,
-                            account_id: account.id,
-                            staffmodlevel: account.staffmodlevel,
-                            save: save.toString('base64'),
-                            muted_until: account.muted_until
-                        }));
                     } else if (type === 'player_logout') {
                         const { replyTo, username, save } = msg;
 
