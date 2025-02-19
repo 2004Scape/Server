@@ -25,7 +25,7 @@ export default class LoginServer {
 
     async wouldResetSaveFile(newSaveBytes: Buffer, profile: string, username: string) {
         // check whether `save`, if saved to disk, would have reset `username`'s progress.
-        // it does this by checking whether user is on tutorial island when they weren't before.
+        // it does this by checking whether the player's tick count has gone backwards.
         if (!fs.existsSync(`data/players/${profile}/${username}.sav`)) {
             // No existing save - no problem.
             return false;
@@ -33,11 +33,8 @@ export default class LoginServer {
         const existingSaveRaw = await fsp.readFile(`data/players/${profile}/${username}.sav`);
         const existingSave = PlayerLoading.load('tmp', new Packet(existingSaveRaw), null);
         const newSave = PlayerLoading.load('tmp', new Packet(newSaveBytes), null);
-        function onTutorialIsland(save: {x: number, z: number}) {
-            // monka
-            return save.x >= 3053 && save.z >= 3057 && save.x <= 3153 && save.z <= 3153;
-        }
-        if (onTutorialIsland(newSave) && !onTutorialIsland(existingSave)) {
+        if (existingSave.playtime > newSave.playtime) {
+            // Int32, 1 per tick logged in. Should wrap only after insane amount of years.
             return true;
         }
         return false;
