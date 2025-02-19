@@ -14,6 +14,10 @@ loc_add($new_loc_coord, loc_param(next_loc_stage), modulo(add(loc_angle, 1), 4),
 // mes("Loc coord: <~coord_tostring(loc_coord)>");
 
 [oploc1,_door_opened]
+if(loc_coord = 0_50_53_53_7) {
+mes("That's strange. It won't budge!"); //FIXME TODO NOT AUTHENTIC, purely to stop essence miner door abuse.
+return;
+}
 // mes("Door close");
 // ~loc_shape_debug(loc_shape);
 // mes(tostring(loc_angle));
