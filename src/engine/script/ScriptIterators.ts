@@ -3,7 +3,7 @@ import LocType from '#/cache/config/LocType.js';
 import NpcType from '#/cache/config/NpcType.js';
 
 import World from '#/engine/World.js';
-import {CoordGrid} from '#/engine/CoordGrid.js';
+import { CoordGrid } from '#/engine/CoordGrid.js';
 
 import Loc from '#/engine/entity/Loc.js';
 import HuntVis from '#/engine/entity/hunt/HuntVis.js';
@@ -12,7 +12,7 @@ import HuntModeType from '#/engine/entity/hunt/HuntModeType.js';
 import NpcIteratorType from '#/engine/entity/NpcIteratorType.js';
 import Entity from '#/engine/entity/Entity.js';
 
-import {isLineOfSight, isLineOfWalk} from '#/engine/GameMap.js';
+import { isLineOfSight, isLineOfWalk } from '#/engine/GameMap.js';
 
 abstract class ScriptIterator<T extends Entity> implements IterableIterator<T> {
     private readonly iterator: IterableIterator<T>;
@@ -51,21 +51,11 @@ export class HuntIterator extends ScriptIterator<Entity> {
     private readonly checkCategory: number;
     private readonly type: HuntModeType;
 
-    constructor(
-        tick: number,
-        level: number,
-        x: number,
-        z: number,
-        distance: number,
-        checkVis: HuntVis,
-        checkType: number,
-        checkCategory: number,
-        type: HuntModeType
-    ) {
+    constructor(tick: number, level: number, x: number, z: number, distance: number, checkVis: HuntVis, checkType: number, checkCategory: number, type: HuntModeType) {
         super(tick);
         const centerX: number = CoordGrid.zone(x);
         const centerZ: number = CoordGrid.zone(z);
-        const radius: number = (1 + (distance / 8)) | 0;
+        const radius: number = (1 + distance / 8) | 0;
         this.x = x;
         this.z = z;
         this.level = level;
@@ -101,10 +91,6 @@ export class HuntIterator extends ScriptIterator<Entity> {
                         }
 
                         if (this.checkVis === HuntVis.LINEOFWALK && !isLineOfWalk(this.level, this.x, this.z, player.x, player.z)) {
-                            continue;
-                        }
-
-                        if (player.loggingOut) {
                             continue;
                         }
 
@@ -203,18 +189,11 @@ export class NpcHuntAllCommandIterator extends ScriptIterator<Entity> {
     private readonly distance: number;
     private readonly checkVis: HuntVis;
 
-    constructor(
-        tick: number,
-        level: number,
-        x: number,
-        z: number,
-        distance: number,
-        checkVis: HuntVis,
-    ) {
+    constructor(tick: number, level: number, x: number, z: number, distance: number, checkVis: HuntVis) {
         super(tick);
         const centerX: number = CoordGrid.zone(x);
         const centerZ: number = CoordGrid.zone(z);
-        const radius: number = (1 + (distance / 8)) | 0;
+        const radius: number = (1 + distance / 8) | 0;
         this.x = x;
         this.z = z;
         this.level = level;
@@ -272,11 +251,11 @@ export class NpcIterator extends ScriptIterator<Npc> {
     private readonly type: NpcIteratorType;
     private readonly npcType?: NpcType;
 
-    constructor(tick: number, level: number, x: number, z: number,  distance: number, checkVis: HuntVis, type: NpcIteratorType, npcType?: NpcType) {
+    constructor(tick: number, level: number, x: number, z: number, distance: number, checkVis: HuntVis, type: NpcIteratorType, npcType?: NpcType) {
         super(tick);
         const centerX: number = CoordGrid.zone(x);
         const centerZ: number = CoordGrid.zone(z);
-        const radius: number = (1 + (distance / 8)) | 0;
+        const radius: number = (1 + distance / 8) | 0;
         this.x = x;
         this.z = z;
         this.level = level;

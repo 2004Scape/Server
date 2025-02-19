@@ -416,15 +416,6 @@ export default abstract class PathingEntity extends Entity {
             return reachedLoc(this.level, this.x, this.z, target.x, target.z, target.width, target.length, this.width, target.angle, target.shape, forceapproach);
         }
         // instanceof Obj
-        const reachedAdjacent: boolean = reachedEntity(this.level, this.x, this.z, target.x, target.z, target.width, target.length, this.width);
-        if (isMapBlocked(target.x, target.z, target.level)) {
-            // picking up off of tables
-            return reachedAdjacent;
-        }
-        if (!this.hasWaypoints() && reachedAdjacent) {
-            // picking up while walktrigger prevents movement
-            return true;
-        }
         return reachedObj(this.level, this.x, this.z, target.x, target.z, target.width, target.length, this.width);
     }
 
@@ -557,9 +548,9 @@ export default abstract class PathingEntity extends Entity {
         }
     }
 
-    setInteraction(interaction: Interaction, target: Entity, op: TargetOp, subject?: TargetSubject): void {
-        if (target instanceof Player && target.visibility === Visibility.HARD) {
-            return;
+    setInteraction(interaction: Interaction, target: Entity, op: TargetOp, subject?: TargetSubject): boolean {
+        if (!target.isValid(this instanceof Player ? this.hash64 : undefined)) {
+            return false;
         }
 
         this.target = target;
@@ -590,6 +581,8 @@ export default abstract class PathingEntity extends Entity {
         if (interaction === Interaction.SCRIPT) {
             this.pathToTarget();
         }
+
+        return true;
     }
 
     clearInteraction(): void {

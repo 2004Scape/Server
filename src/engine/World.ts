@@ -911,11 +911,11 @@ class World {
                         printError('LOGOUT TRIGGER IS BROKEN!');
                         continue;
                     }
-    
+
                     const state = ScriptRunner.init(script, player);
                     state.pointerAdd(ScriptPointer.ProtectedActivePlayer);
                     ScriptRunner.execute(state);
-    
+
                     this.removePlayer(player);
                 }
             }
@@ -1300,6 +1300,7 @@ class World {
 
         npc.x = npc.startX;
         npc.z = npc.startZ;
+        npc.isActive = true;
 
         const zone = this.gameMap.getZone(npc.x, npc.z, npc.level);
         zone.enter(npc);
@@ -1324,6 +1325,7 @@ class World {
         const zone = this.gameMap.getZone(npc.x, npc.z, npc.level);
         const adjustedDuration = this.scaleByPlayerCount(duration);
         zone.leave(npc);
+        npc.isActive = false;
 
         switch (npc.blockWalk) {
             case BlockWalk.NPC:
@@ -1522,6 +1524,7 @@ class World {
 
     addPlayer(player: Player): void {
         this.newPlayers.add(player);
+        player.isActive = true;
     }
 
     sendPrivateChatModeToFriendsServer(player: Player): void {
@@ -1556,6 +1559,8 @@ class World {
         this.players.remove(player.pid);
         changeNpcCollision(player.width, player.x, player.z, player.level, false);
         player.cleanup();
+
+        player.isActive = false;
 
         player.addSessionLog(LoggerEventType.MODERATOR, 'Logged out');
         this.flushPlayer(player);
