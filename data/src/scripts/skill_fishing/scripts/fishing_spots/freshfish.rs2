@@ -34,31 +34,18 @@ if (~check_fish_equipment(fly_fishing_rod) = false) {
     return;
 }
 // matches this video 1:1 https://youtu.be/neAoU0yiGFY?t=16
-// probably the implementation after https://oldschool.runescape.wiki/w/Update:Agility_improved_and_bug_fixes
-// if (%action_delay < map_clock) {
-//     %action_delay = calc(map_clock + 4);
-//     p_opnpc(1);
-//     return;
-// }
-// if (%action_delay = calc(map_clock + 3)) {
-//     anim(human_fishing_casting, 0);
-//     mes("You cast out your line...");
-//     p_opnpc(1);
-//     return;
-// }
-// if (%action_delay = calc(map_clock + 2)) {
-//     sound_synth(fishing_cast, 0, 0);
-//     mes("You attempt to catch a fish.");
-// }
-// p_opnpc(4);
 if (%action_delay < map_clock) {
-    anim(human_fishing_casting, 0);
-    mes("You cast out your line..."); // separation of messages is correct: https://youtu.be/neAoU0yiGFY?t=16
     %action_delay = calc(map_clock + 4);
     p_opnpc(1);
     return;
 }
 if (%action_delay = calc(map_clock + 3)) {
+    anim(human_fishing_casting, 0);
+    mes("You cast out your line...");
+    p_opnpc(1);
+    return;
+}
+if (%action_delay = calc(map_clock + 2)) {
     sound_synth(fishing_cast, 0, 0);
     mes("You attempt to catch a fish.");
 }
@@ -113,13 +100,17 @@ if (~check_fish_equipment(fishing_rod) = false) {
     return;
 }
 if (%action_delay < map_clock) {
-    anim(human_fishing_casting, 0);
-    mes("You cast out your line...");
     %action_delay = calc(map_clock + 4);
     p_opnpc(3);
     return;
 }
 if (%action_delay = calc(map_clock + 3)) {
+    anim(human_fishing_casting, 0);
+    mes("You cast out your line...");
+    p_opnpc(3);
+    return;
+}
+if (%action_delay = calc(map_clock + 2)) {
     sound_synth(fishing_cast, 0, 0);
     mes("You attempt to catch a fish.");
 }
