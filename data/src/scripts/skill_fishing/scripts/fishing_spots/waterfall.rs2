@@ -1,0 +1,125 @@
+// im guessing these loc fishing spots didnt have fishing spot random events?
+
+[oploc1,loc_2027]
+// check level
+if (stat(fishing) < 20) {
+    anim(null, 0);
+    ~mesbox("You need at least 20 Fishing to lure these fish.");
+    return;
+}
+// check if they have fishing equipment & bait
+if (~check_fish_equipment(fly_fishing_rod) = false) {
+    return;
+}
+if (%action_delay < map_clock) {
+    %action_delay = calc(map_clock + 4);
+    p_oploc(1);
+    return;
+}
+if (%action_delay = calc(map_clock + 3)) {
+    anim(human_fishing_casting, 0);
+    mes("You cast out your line...");
+    p_oploc(1);
+    return;
+}
+if (%action_delay = calc(map_clock + 2)) {
+    sound_synth(fishing_cast, 0, 0);
+    mes("You attempt to catch a fish.");
+}
+p_oploc(3);
+
+[oploc3,loc_2027]
+// check level
+if (stat(fishing) < 20) {
+    anim(null, 0);
+    ~mesbox("You need at least 20 Fishing to lure these fish.");
+    return;
+}
+// check if they still have fishing equipment & bait
+if (~check_fish_equipment(fly_fishing_rod) = false) {
+    return;
+}
+// check if inv is full
+if (inv_freespace(inv) = 0 & inv_total(inv, feather) > 1) {
+    anim(null, 0);
+    ~mesbox("You can't carry any more fish.");
+    return;
+}
+if (%action_delay < map_clock) {
+    %action_delay = calc(map_clock + 4);
+} else if (%action_delay = map_clock) {
+    if (stat(fishing) >= 30) {
+        ~fish_roll_loc(raw_trout, raw_salmon, feather);
+    } else {
+        ~fish_roll_loc(raw_trout, null, feather);
+    }
+    anim(human_fish_onspot, 0);
+    p_oploc(3);
+}
+p_oploc(3);
+
+
+[oploc2,loc_2027]
+// check level
+if (stat(fishing) < 25) {
+    anim(null, 0);
+    ~mesbox("You need at least 25 Fishing to bait these fish.");
+    return;
+}
+// check if they have fishing equipment & bait
+if (~check_fish_equipment(fishing_rod) = false) {
+    return;
+}
+if (%action_delay < map_clock) {
+    %action_delay = calc(map_clock + 4);
+    p_oploc(2);
+    return;
+}
+if (%action_delay = calc(map_clock + 3)) {
+    anim(human_fishing_casting, 0);
+    mes("You cast out your line...");
+    p_oploc(2);
+    return;
+}
+if (%action_delay = calc(map_clock + 2)) {
+    sound_synth(fishing_cast, 0, 0);
+    mes("You attempt to catch a fish.");
+}
+p_oploc(4);
+
+[oploc4,loc_2027]
+// check level
+if (stat(fishing) < 25) {
+    anim(null, 0);
+    ~mesbox("You need at least 25 Fishing to bait these fish.");
+    return;
+}
+// check if they still have fishing equipment & bait
+if (~check_fish_equipment(fishing_rod) = false) {
+    return;
+}
+// check if inv is full
+if (inv_freespace(inv) = 0 & inv_total(inv, fishing_bait) > 1) {
+    anim(null, 0);
+    ~mesbox("You can't carry any more fish.");
+    return;
+}
+
+if (%action_delay < map_clock) {
+    %action_delay = calc(map_clock + 4);
+} else if (%action_delay = map_clock) {
+    ~fish_roll_loc(raw_pike, null, fishing_bait);
+    if (random(5) = 0) { // 1/5 chance to recast
+        p_oploc(2);
+        return;
+    }
+    anim(human_fish_onspot, 0);
+}
+p_oploc(4);
+
+[oplocu,loc_2027]
+switch_obj(last_useitem) {
+    case fishing_rod : p_oploc(2);
+    case fly_fishing_rod : p_oploc(1);
+    case default : @fishing_wrong_spot_message(last_useitem);
+}

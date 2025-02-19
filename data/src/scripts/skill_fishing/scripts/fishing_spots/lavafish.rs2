@@ -53,7 +53,6 @@ if (%action_delay < map_clock) {
     return;
 } else if (%action_delay = calc(map_clock + 4)) {
     anim(human_fishing_casting, 0);
-    sound_synth(fishing_cast, 0, 39);
     mes("You cast out your line...");
     p_opnpc(1);
     return;
@@ -75,13 +74,17 @@ if (~oil_rod_fishing_check_requirements = false) {
 if (%action_delay < map_clock) {
     %action_delay = calc(map_clock + 4);
     anim(human_fish_onspot, 0);
-}
-if (%action_delay = map_clock) {
+} else if (%action_delay = map_clock) {
     ~fish_roll(raw_lava_eel, null, fishing_rod, fishing_bait);
 }
 p_opnpc(3);
 
 [proc,oil_rod_fishing_check_requirements]()(boolean)
+if (map_members = false) {
+    anim(null, 0);
+    ~mesbox(^mes_members_fish_here);
+    return(false);
+}
 // check level
 if (stat(fishing) < 53) {
     anim(null, 0);
