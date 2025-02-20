@@ -100,7 +100,11 @@ if (p_finduid(uid) = true) {
                 } else if ($choice3 = 1) {
                     queue(ikov_lucien_quest_complete, 0);
                 }
-            case 45 : mes("Quest not implemented");
+            case 45 :
+                %desertrescue_progress = ^desertrescue_saved_ana;
+                if (npc_find(0_51_48_40_40, irena, 20, 0) = true) {
+                    @irena_ana_found;
+                }
             case 46 : queue(tree_quest_complete, 0);
             case 47 : queue(totem_quest_complete, 0);
             case 48 : queue(upass_quest_complete, 0);
@@ -207,7 +211,9 @@ if (p_finduid(uid) = true) {
                 %haunted_lever = 0;
                 %haunted_manor_fountain_poisoned = 0;
                 %varp_35 = 0;
-            case 45 : mes("Quest not implemented");
+            case 45 : 
+                %desertrescue_map_mechanisms = 0;
+                %desertrescue_progress = 0;
             case 46 : %tree_progress = 0;
             case 47 : %totem_progress = 0;
             case 48 :
