@@ -269,6 +269,11 @@ const InvOps: CommandHandlers = {
     [ScriptOpcode.INV_ITEMSPACE]: checkedHandler(ActivePlayer, state => {
         const [inv, obj, count, size] = state.popInts(4);
 
+        if (count === 0) {
+            state.pushInt(0);
+            return;
+        }
+
         const invType: InvType = check(inv, InvTypeValid);
         const objType: ObjType = check(obj, ObjTypeValid);
         check(count, ObjStackValid);
@@ -283,6 +288,11 @@ const InvOps: CommandHandlers = {
     // inv read
     [ScriptOpcode.INV_ITEMSPACE2]: checkedHandler(ActivePlayer, state => {
         const [inv, obj, count, size] = state.popInts(4);
+
+        if (count === 0) {
+            state.pushInt(0);
+            return;
+        }
 
         const invType: InvType = check(inv, InvTypeValid);
         const objType: ObjType = check(obj, ObjTypeValid);

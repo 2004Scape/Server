@@ -29,9 +29,8 @@ if (%action_delay < map_clock) {
 }
 if (%action_delay = calc(map_clock + 4)) {
     mes("You start Harpooning fish.");
-    %skill_anim = calc(map_clock + 7);
-    %skill_sound = calc(map_clock + 7);
     anim(human_harpoon, 0);
+    sound_synth(fishing_cast, 0, 0);
     p_opnpc(5);
 } else if (%action_delay = map_clock) { 
     ~fish_roll(raw_shark, null, harpoon, null);
@@ -62,15 +61,9 @@ if (inv_freespace(inv) < 1) {
 }
 if (%action_delay < map_clock) {
     %action_delay = calc(map_clock + 5);
-} else
-if (%action_delay = map_clock) {
-    ~fish_roll(raw_shark, null, harpoon, null);
-}
-// play animation every 8 ticks
-if (%skill_anim < map_clock) {
-    %skill_anim = calc(map_clock + 7);
-    %skill_sound = calc(map_clock + 7);
+} else if (%action_delay = map_clock) {
     anim(human_harpoon, 0);
+    ~fish_roll(raw_shark, null, harpoon, null);
 }
 p_opnpc(5);
 
@@ -99,10 +92,8 @@ if (%action_delay < map_clock) {
 } 
 if (%action_delay = calc(map_clock + 3)) {
     mes("You cast out your net...");
-    // not sure if its delayed by a tick
     anim(human_largenet, 0);
-    sound_synth(fishing_cast, 0, 15);
-    %skill_anim = calc(map_clock + 5);
+    sound_synth(fishing_cast, 0, 0);
     p_opnpc(4);
 } else if (%action_delay = map_clock) { 
     ~fish_roll_big_net;
@@ -132,14 +123,9 @@ if (inv_freespace(inv) < 1) {
 }
 if (%action_delay < map_clock) {
     %action_delay = calc(map_clock + 5);
-} else
-if (%action_delay = map_clock) {
-    ~fish_roll_big_net;
-}
-// play anim every 6 ticks
-if (%skill_anim < map_clock) {
-    %skill_anim = calc(map_clock + 5);
+} else if (%action_delay = map_clock) {
     anim(human_largenet, 0);
+    ~fish_roll_big_net;
 }
 p_opnpc(4);
 

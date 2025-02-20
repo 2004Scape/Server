@@ -57,7 +57,7 @@ if ($ore2 ! null) {
 }
 inv_add(inv, $bar, 1);
 if_settabactive(^tab_magic);
-p_delay(2);
+p_delay(1);
 
 if (afk_event = ^true) {
     ~macro_event_general_spawn(~macro_event_set_random);

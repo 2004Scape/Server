@@ -10,3 +10,6 @@
 
 // this exists in osrs mesbox, not sure if it actually exists though. for trying to enter chaos altar on f2p worlds
 ^mes_members_do_that = "You must be on a members' world to do that."
+
+// unconfirmed
+^mes_members_fish_here = "You need to be on a members world to fish here."

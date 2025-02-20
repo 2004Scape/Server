@@ -8,7 +8,7 @@ if(map_members = true & inv_total(inv, trail_clue_easy_simple_exp021) = 1) {
     // with him agreeing. Even though you cant access the ship anymore.
     // For now i'll just make it so he doesnt have it after the quest is finished.
     @ned_dragon_slayer_back_in_draynor_after_visiting_crandor;
-} else if (%dragon_ned_hired > 0) {
+} else if (%dragon_ned_hired > 0 & %dragon_progress < ^quest_dragon_sailed_to_crandor) {
     // ned got the job
     // looks like dragon slayer overrides neds standard dialogue https://youtu.be/kCMB4I_aJJM?t=129
     @ned_dragon_slayer_hired;

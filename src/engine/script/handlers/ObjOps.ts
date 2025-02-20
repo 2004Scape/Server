@@ -1,28 +1,20 @@
 import InvType from '#/cache/config/InvType.js';
 import ObjType from '#/cache/config/ObjType.js';
-import {ParamHelper} from '#/cache/config/ParamHelper.js';
+import { ParamHelper } from '#/cache/config/ParamHelper.js';
 import ParamType from '#/cache/config/ParamType.js';
 
 import World from '#/engine/World.js';
 import Zone from '#/engine/zone/Zone.js';
 
 import ScriptOpcode from '#/engine/script/ScriptOpcode.js';
-import {ActiveObj, ActivePlayer} from '#/engine/script/ScriptPointer.js';
-import {CommandHandlers} from '#/engine/script/ScriptRunner.js';
+import { ActiveObj, ActivePlayer } from '#/engine/script/ScriptPointer.js';
+import { CommandHandlers } from '#/engine/script/ScriptRunner.js';
 
 import Obj from '#/engine/entity/Obj.js';
-import {CoordGrid} from '#/engine/CoordGrid.js';
+import { CoordGrid } from '#/engine/CoordGrid.js';
 import EntityLifeCycle from '#/engine/entity/EntityLifeCycle.js';
 
-import {
-    check,
-    CoordValid,
-    DurationValid,
-    InvTypeValid,
-    ObjStackValid,
-    ObjTypeValid,
-    ParamTypeValid
-} from '#/engine/script/ScriptValidators.js';
+import { check, CoordValid, DurationValid, InvTypeValid, ObjStackValid, ObjTypeValid, ParamTypeValid } from '#/engine/script/ScriptValidators.js';
 import Environment from '#/util/Environment.js';
 
 const ObjOps: CommandHandlers = {
@@ -90,7 +82,7 @@ const ObjOps: CommandHandlers = {
             for (let i = 0; i < count; i++) {
                 const obj: Obj = new Obj(position.level, position.x, position.z, EntityLifeCycle.DESPAWN, objId, 1);
                 World.addObj(obj, Obj.NO_RECEIVER, duration);
-    
+
                 state.activeObj = obj;
                 state.pointerAdd(ActiveObj[state.intOperand]);
             }
@@ -132,16 +124,7 @@ const ObjOps: CommandHandlers = {
     [ScriptOpcode.OBJ_COUNT]: state => {
         const obj: Obj = state.activeObj;
 
-        const zone: Zone = World.gameMap.getZone(obj.x, obj.z, obj.level);
-        for (const o of zone.getObjsSafe(CoordGrid.packZoneCoord(obj.x, obj.z))) {
-            if (o !== obj) {
-                continue;
-            }
-
-            if (o.receiver64 !== Obj.NO_RECEIVER && o.receiver64 !== state.activePlayer.hash64) {
-                continue;
-            }
-
+        if (obj.isValid(state.activePlayer.hash64)) {
             state.pushInt(state.activeObj.count);
             return;
         }
@@ -159,27 +142,19 @@ const ObjOps: CommandHandlers = {
 
         const obj: Obj = state.activeObj;
         const objType = ObjType.get(obj.type);
-        const zone: Zone = World.gameMap.getZone(obj.x, obj.z, obj.level);
-        for (const o of zone.getObjsSafe(CoordGrid.packZoneCoord(obj.x, obj.z))) {
-            if (o !== obj) {
-                continue;
-            }
 
-            if (o.receiver64 !== Obj.NO_RECEIVER && o.receiver64 !== state.activePlayer.hash64) {
-                continue;
-            }
+        if (!obj.isValid(state.activePlayer.hash64)) {
+            return false;
+        }
 
-            state.activePlayer.invAdd(invType.id, obj.type, obj.count);
+        state.activePlayer.invAdd(invType.id, obj.type, obj.count);
 
-            if (obj.lifecycle === EntityLifeCycle.RESPAWN) {
-                state.activePlayer.addWealthLog(obj.count * objType.cost, `Picked up ${objType.debugname} x${obj.count}`);
-                World.removeObj(obj, objType.respawnrate);
-                break;
-            } else if (obj.lifecycle === EntityLifeCycle.DESPAWN) {
-                state.activePlayer.addWealthLog(obj.count * objType.cost, `Picked up ${objType.debugname} x${obj.count}`);
-                World.removeObj(obj, 0);
-                break;
-            }
+        if (obj.lifecycle === EntityLifeCycle.RESPAWN) {
+            state.activePlayer.addWealthLog(obj.count * objType.cost, `Picked up ${objType.debugname} x${obj.count}`);
+            World.removeObj(obj, objType.respawnrate);
+        } else if (obj.lifecycle === EntityLifeCycle.DESPAWN) {
+            state.activePlayer.addWealthLog(obj.count * objType.cost, `Picked up ${objType.debugname} x${obj.count}`);
+            World.removeObj(obj, 0);
         }
     },
 

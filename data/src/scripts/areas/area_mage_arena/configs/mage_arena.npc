@@ -41,7 +41,7 @@ head2=model_84_idk_head
 param=owned_shop,lundails_arena_side_rune_shop
 param=shop_sell_multiplier,1000
 param=shop_buy_multiplier,600
-param=shop_delta,20
+param=shop_delta,30
 param=shop_title,Lundail's Arena-side Rune Shop.
 
 [chamber_guardian]

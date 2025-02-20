@@ -15,7 +15,7 @@ import ServerTriggerType from '#/engine/script/ServerTriggerType.js';
 
 import { PlayerQueueType, ScriptArgument } from '#/engine/entity/EntityQueueRequest.js';
 import { PlayerTimerType } from '#/engine/entity/EntityTimer.js';
-import { isBufferFull, isClientConnected } from '#/engine/entity/NetworkPlayer.js';
+import { isBufferFull } from '#/engine/entity/NetworkPlayer.js';
 import { CoordGrid } from '#/engine/CoordGrid.js';
 import CameraInfo from '#/engine/entity/CameraInfo.js';
 import Interaction from '#/engine/entity/Interaction.js';

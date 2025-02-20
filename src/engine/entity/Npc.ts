@@ -643,7 +643,7 @@ export default class Npc extends PathingEntity {
     }
 
     aiMode(): void {
-        if (!this.target || !this.validateTarget() || this.delayed || this.target.level !== this.level ) {
+        if (!this.target || !this.validateTarget() || this.delayed || this.target.level !== this.level) {
             this.defaultMode();
             return;
         }
@@ -1007,5 +1007,12 @@ export default class Npc extends PathingEntity {
 
         const npcType: NpcType = NpcType.get(type);
         this.setTimer(npcType.timer);
+    }
+
+    isValid(hash64?: bigint): boolean {
+        if (this.delayed) {
+            return false;
+        }
+        return super.isValid();
     }
 }

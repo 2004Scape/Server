@@ -37,5 +37,5 @@ if (p_finduid(uid) = true) {
     // doesnt delay in current osrs, but it did in early osrs:
     // https://youtu.be/OQWflbHRYLo?t=859
     // https://oldschool.runescape.wiki/w/Update:Bugfixes_%26_Combining_Tentacles
-    p_delay(3);
+    p_delay(2);
 }
