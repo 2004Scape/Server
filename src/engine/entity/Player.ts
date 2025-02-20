@@ -74,11 +74,10 @@ import Environment from '#/util/Environment.js';
 import { ChatModePrivate, ChatModePublic, ChatModeTradeDuel } from '#/util/ChatModes.js';
 import LoggerEventType from '#/server/logger/LoggerEventType.js';
 import InputTracking from '#/engine/entity/tracking/InputTracking.js';
-import { findNaivePath } from '#/engine/GameMap.js';
+import { findNaivePath, reachedEntity, reachedLoc, reachedObj } from '#/engine/GameMap.js';
 import Visibility from './Visibility.js';
 import UpdateRebootTimer from '#/network/server/model/UpdateRebootTimer.js';
 import { CollisionType } from '@2004scape/rsmod-pathfinder';
-
 const levelExperience = new Int32Array(99);
 
 let acc = 0;
@@ -917,6 +916,20 @@ export default class Player extends PathingEntity {
         this.clearWaypoints();
     }
 
+    protected inOperableDistance(target: Entity): boolean {
+        if (target.level !== this.level) {
+            return false;
+        }
+        if (target instanceof PathingEntity) {
+            return reachedEntity(this.level, this.x, this.z, target.x, target.z, target.width, target.length, this.width);
+        } else if (target instanceof Loc) {
+            const forceapproach = LocType.get(target.type).forceapproach;
+            return reachedLoc(this.level, this.x, this.z, target.x, target.z, target.width, target.length, this.width, target.angle, target.shape, forceapproach);
+        }
+        // instanceof Obj
+        return reachedEntity(this.level, this.x, this.z, target.x, target.z, target.width, target.length, this.width) || reachedObj(this.level, this.x, this.z, target.x, target.z, target.width, target.length, this.width);
+    }
+
     tryInteract(allowOpScenery: boolean): boolean {
         if (this.target === null || !this.canAccess()) {
             return false;
@@ -1074,7 +1087,7 @@ export default class Player extends PathingEntity {
         }
 
         // Remove mapflag if there are no waypoints
-        if (!this.hasWaypoints()) {
+        if (!this.hasWaypoints() && this.stepsTaken > 0) {
             this.unsetMapFlag();
         }
     }
