@@ -90,9 +90,3 @@ if(loc_find(0_39_50_30_4, loc_2180) = true) {
     }
 
 }
-
-
-[debugproc,tes]
-if(p_finduid(uid) = true) {
-    mes("<tostring(distance(0_39_50_31_5, 0_39_50_30_42))>");
-}
