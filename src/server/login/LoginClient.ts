@@ -50,14 +50,15 @@ export class LoginClient extends InternalClient {
             return { reply: -1, account_id: -1, save: null, muted_until: null };
         }
 
-        const { response, account_id, staffmodlevel, save, muted_until } = reply.result;
+        const { response, account_id, staffmodlevel, save, muted_until, members } = reply.result;
 
         return {
             reply: response,
             account_id,
             staffmodlevel,
             save: save ? Buffer.from(save, 'base64') : null,
-            muted_until };
+            muted_until,
+            members };
     }
 
     // returns true if the login server acknowledged the logout

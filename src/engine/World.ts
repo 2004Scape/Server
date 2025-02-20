@@ -1823,9 +1823,14 @@ class World {
                 client.send(Uint8Array.from([16]));
                 client.close();
                 return;
+            } else if (reply === 9) {
+                // logging in to p2p on a f2p account
+                client.send(Uint8Array.from([12]));
+                client.close();
+                return;
             }
 
-            const { account_id, username, lowMemory, reconnecting, staffmodlevel, muted_until } = msg;
+            const { account_id, username, lowMemory, reconnecting, staffmodlevel, muted_until, members } = msg;
             const save = msg.save ?? new Uint8Array();
 
             // if (reconnecting && !this.getPlayerByUsername(username)) {
@@ -1849,12 +1854,27 @@ class World {
                 player.staffModLevel = staffmodlevel ?? 0;
                 player.lowMemory = lowMemory;
                 player.muted_until = muted_until ? new Date(muted_until) : null;
+                player.members = members;
 
                 if (this.logoutRequests.has(username)) {
                     // already logged in (on another world)
                     client.send(Uint8Array.from([5]));
                     client.close();
                     return;
+                }
+
+                if (!Environment.NODE_MEMBERS && !this.gameMap.isFreeToPlay(player.x, player.z)) {
+                    // in a p2p zone when logging into f2p
+                    if(player.members) {
+                        client.send(Uint8Array.from([17]));
+                        client.close();
+                        this.loginThread.postMessage({
+                            type: 'player_force_logout',
+                            username: username
+                        });
+                        return;
+                    }
+                    player.teleport(3221, 3219, 0);
                 }
 
                 this.newPlayers.add(player);

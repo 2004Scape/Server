@@ -38,6 +38,8 @@ model account {
 
     notes         String?   @db.Text
     notes_updated DateTime?
+
+    members       Boolean  @default(true)
 }
 
 model session {
