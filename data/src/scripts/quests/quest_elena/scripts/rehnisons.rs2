@@ -15,9 +15,10 @@ p_telejump(0_39_52_31_3);
 switch_int(%elena_progress) {
     case ^quest_elena_returned_book, ^quest_elena_spoken_martha_ted :
         ~chatplayer("<p,happy>Hi, I hear a woman called <nc_name(elena)> is staying here.");
+        // https://youtu.be/UkF8Aqrck4Y?si=ssVMtqlJQPUXl-Xv&t=356
         ~chatnpc("<p,sad>Yes she was staying here,|but slightly over a week ago|she was getting ready to go back.");
         if(%elena_progress = ^quest_elena_returned_book) ~quest_elena_set_progress(^quest_elena_spoken_martha_ted);
-        ~chatnpc("However she never managed to leave.|My daughter Milli was playing near the west wall|when she saw some shadowy figures jump out and grab her. Milli is upstairs if you wish to speak to her.");
+        ~chatnpc("<p,sad>However she never managed to leave.|My daughter Milli was playing near the west wall|when she saw some shadowy figures jump out and grab her. Milli is upstairs if you wish to speak to her.");
     case ^quest_elena_spoke_to_milli, ^quest_elena_spoke_to_plague_house, ^quest_elena_spoke_to_clerk, ^quest_elena_spoke_to_bravek, ^quest_elena_spoke_cured_bravek :
         ~chatnpc("<p,quiz>Any luck with finding <nc_name(elena)> yet?");
         ~chatplayer("<p,sad>Not yet...");
@@ -31,8 +32,9 @@ switch_int(%elena_progress) {
 [label,rehnisons_ask_milli_what_happened]
 switch_int(%elena_progress) {
     case ^quest_elena_returned_book :
-        ~chatplayer("<p,neutral>Hello.");
-        ~mesbox("Milli ignores you."); // mes in rs3?
+        // https://youtu.be/UkF8Aqrck4Y?si=MoA8Jt-5Bn7eRW21&t=340
+        ~chatplayer("<p,happy>Hello.");
+        mes("Milli ignores you."); 
     case ^quest_elena_spoken_martha_ted :
         ~chatplayer("<p,neutral>Hello.|Your parents say you saw what happened to <nc_name(elena)>...");
         ~chatnpc("<p,sad>*sniff*|Yes I was near the south east corner|when I saw <nc_name(elena)> walking by.");
