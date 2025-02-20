@@ -1,22 +1,11 @@
-import { InputTrackingEventType } from '#/network/rs225/client/handler/EventTrackingHandler.js';
-
 export default class InputTrackingEvent {
-
-    readonly type: InputTrackingEventType;
     readonly seq: number;
-    readonly delta: number;
-    readonly mouseX?: number;
-    readonly mouseY?: number;
-    readonly keyPress?: number;
+    readonly data: string;
     readonly coord?: number;
 
-    constructor(type: InputTrackingEventType, seq: number, delta: number, mouseX?: number, mouseY?: number, keyPress?: number, coord?: number) {
+    constructor(data: Uint8Array, seq: number, coord?: number) {
         this.seq = seq;
-        this.type = type;
-        this.delta = delta;
-        this.mouseX = mouseX;
-        this.mouseY = mouseY;
-        this.keyPress = keyPress;
+        this.data = Buffer.from(data).toString('base64');
         this.coord = coord;
     }
 }

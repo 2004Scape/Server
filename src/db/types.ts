@@ -58,21 +58,10 @@ export type ignorelist = {
     value: string;
     created: Generated<string>;
 };
-export type ipban = {
-    ip: string;
-};
-export type login = {
-    uuid: string;
-    account_id: number;
-    world: number;
-    timestamp: string;
-    uid: number;
-    ip: string | null;
-};
 export type input_report = {
     id: Generated<number>;
     account_id: number;
-    timestamp: Timestamp;
+    timestamp: string;
     session_uuid: string;
 };
 export type input_report_event = {
@@ -84,6 +73,23 @@ export type input_report_event = {
     mouse_x: number | null;
     mouse_y: number | null;
     key_code: number | null;
+};
+export type input_report_event_raw = {
+    input_report_id: number;
+    seq: number;
+    coord: number;
+    data: Buffer;
+};
+export type ipban = {
+    ip: string;
+};
+export type login = {
+    uuid: string;
+    account_id: number;
+    world: number;
+    timestamp: string;
+    uid: number;
+    ip: string | null;
 };
 export type newspost = {
     id: Generated<number>;
@@ -140,6 +146,7 @@ export type DB = {
     ignorelist: ignorelist;
     input_report: input_report;
     input_report_event: input_report_event;
+    input_report_event_raw: input_report_event_raw;
     ipban: ipban;
     login: login;
     newspost: newspost;

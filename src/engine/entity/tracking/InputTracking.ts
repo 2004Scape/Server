@@ -5,7 +5,6 @@ import World from '#/engine/World.js';
 import InputTrackingEvent from '#/engine/entity/tracking/InputEvent.js';
 import { NetworkPlayer } from '#/engine/entity/NetworkPlayer.js';
 import LoggerEventType from '#/server/logger/LoggerEventType.js';
-import { InputTrackingEventType } from '#/network/rs225/client/handler/EventTrackingHandler.js';
 import Environment from '#/util/Environment.js';
 
 export default class InputTracking {
@@ -24,6 +23,7 @@ export default class InputTracking {
     endTrackingAt: number = this.calculateTrackingEnd();
     recordedEvents: InputTrackingEvent[] = [];
     recordedEventCount: number = 0;
+    recordedEventsSizeTotal: number = 0;
 
     constructor(player: Player) {
         this.player = player;
@@ -89,9 +89,9 @@ export default class InputTracking {
         return this.player.submitInput || Environment.NODE_SUBMIT_INPUT;
     }
 
-    record(type: InputTrackingEventType, delta: number, mouseX?: number, mouseY?: number, keyPress?: number): void {
-        this.recordedEvents.push(new InputTrackingEvent(type, this.recordedEventCount++, delta, mouseX, mouseY, keyPress, this.player.coord));
-        this.recordedEventCount++;
+    record(rawData: Uint8Array): void {
+        this.recordedEventsSizeTotal += rawData.length;
+        this.recordedEvents.push(new InputTrackingEvent(rawData, this.recordedEventCount++, this.player.coord));
     }
 
     /**
@@ -120,6 +120,7 @@ export default class InputTracking {
         this.waitingForLastReport = false;
         this.recordedEvents = [];
         this.recordedEventCount = 0;
+        this.recordedEventsSizeTotal = 0;
         this.hasSeenReport = false;
     }
 
