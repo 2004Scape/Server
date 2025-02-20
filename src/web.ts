@@ -1,7 +1,7 @@
 import fs from 'fs';
 import fsp from 'fs/promises';
 import http from 'http';
-import { basename, extname } from 'path';
+import { extname } from 'path';
 import ejs from 'ejs';
 
 import { CrcBuffer } from '#/cache/CrcTable.js';
@@ -104,7 +104,7 @@ export const web = http.createServer(async (req, res) => {
             res.writeHead(404);
             res.end();
         }
-    } catch (err) {
+    } catch (_) {  // eslint-disable-line @typescript-eslint/no-unused-vars
         res.end();
     }
 });

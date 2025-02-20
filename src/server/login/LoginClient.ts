@@ -1,9 +1,8 @@
-import ClientSocket from '#/server/ClientSocket.js';
 import InternalClient from '#/server/InternalClient.js';
 
 import Environment from '#/util/Environment.js';
 
-export default class LoginClient extends InternalClient {
+export class LoginClient extends InternalClient {
     private nodeId = 0;
 
     constructor(nodeId: number) {
