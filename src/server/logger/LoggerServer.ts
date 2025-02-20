@@ -59,6 +59,9 @@ export default class LoggerServer {
                         }
                         case 'input_track': {
                             const { username, session_uuid, timestamp, events } = msg;
+                            if (!events.length) {
+                                break;
+                            }
 
                             const account = await db.selectFrom('account').where('username', '=', username).selectAll().executeTakeFirst();
                             if (!account) {
@@ -72,16 +75,12 @@ export default class LoggerServer {
                                 const values = events.map((e: InputTrackingEvent) => {
                                     return {
                                         input_report_id: report.insertId,
-                                        input_type: e.type,
                                         seq: e.seq,
-                                        delta: e.delta,
                                         coord: e.coord,
-                                        mouse_x: e.mouseX,
-                                        mouse_y: e.mouseY,
-                                        key_code: e.keyPress
+                                        data: Buffer.from(e.data, 'base64'),
                                     };
                                 });
-                                await loggerDb.insertInto('input_report_event').values(values).execute();
+                                await loggerDb.insertInto('input_report_event_raw').values(values).execute();
                             }
                             break;
                         }

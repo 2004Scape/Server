@@ -195,3 +195,13 @@ model input_report_event {
     
     @@id([input_report_id, seq])
 }
+
+model input_report_event_raw {
+    input_report_id Int
+    seq             Int
+
+    coord           Int
+    data            Bytes
+
+    @@id([input_report_id, seq])
+}
