@@ -28,6 +28,18 @@ export default class EventTrackingHandler extends MessageHandler<EventTracking> 
         if (!player.input.isActive()) {
             return false;
         }
+        // Mark that the player has sent at least one report in this tracking.
+        player.input.hasSeenReport = true;
+        // Only parse the data if we're specifically profiling this player.
+        if (!player.input.shouldSubmitTrackingDetails()) {
+            return true;
+        }
+        if (player.input.recordedEventCount > 10_000) {
+            // An upper limit for the number of events in a tracking session.
+            // Could only get under half in 2m with constant spamming the mouse non-stop.
+            // Prevents further parsing of events.
+            return false;
+        }
         const buf: Packet = new Packet(bytes);
         while (buf.available > 0 && player.input.isActive()) {
             const event: number = buf.g1();

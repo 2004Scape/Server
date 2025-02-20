@@ -19,8 +19,9 @@ export default class InputTracking {
     private readonly player: Player;
 
     enabled: boolean = false;
-    endTrackingAt: number = -1;
+    hasSeenReport: boolean = false;;
     waitingForLastReport: boolean = false;
+    endTrackingAt: number = this.calculateTrackingEnd();
     recordedEvents: InputTrackingEvent[] = [];
     recordedEventCount: number = 0;
 
@@ -80,6 +81,14 @@ export default class InputTracking {
         return this.enabled || this.waitingForLastReport;
     }
 
+    /**
+     * Whether the player should submit their detailed tracking events to the
+     * server. Activated by either the per-player flag, or global env.
+     */
+    shouldSubmitTrackingDetails(): boolean {
+        return this.player.submitInput || Environment.NODE_SUBMIT_INPUT;
+    }
+
     record(type: InputTrackingEventType, delta: number, mouseX?: number, mouseY?: number, keyPress?: number): void {
         this.recordedEvents.push(new InputTrackingEvent(type, this.recordedEventCount++, delta, mouseX, mouseY, keyPress, this.player.coord));
         this.recordedEventCount++;
@@ -91,26 +100,27 @@ export default class InputTracking {
      * Otherwise, if we are actually recording, submit tracking.
      */
     submitEvents(): void {
-        if (this.recordedEventCount === 0) {
-            // this means that:
-            // 1: the player is trying to avoid afk timer.
-            // 2: the player is on a very slow connection and the report packet never came in.
-            this.player.addSessionLog(LoggerEventType.ENGINE, 'Client did not submit an input tracking report');
-            this.player.requestIdleLogout = true;
-        } else {
+        if (this.hasSeenReport) {
             // Have events to be submitted
-            if (Environment.NODE_SUBMIT_INPUT || this.player.submitInput) {
+            if (this.shouldSubmitTrackingDetails()) {
                 World.submitInputTracking(
                     this.player.username, 
                     this.player instanceof NetworkPlayer ? this.player.client.uuid : 'headless', 
                     this.recordedEvents,
                 );
             }
+        } else {
+            // this means that:
+            // 1: the player is trying to avoid afk timer.
+            // 2: the player is on a very slow connection and the report packet never came in.
+            this.player.addSessionLog(LoggerEventType.ENGINE, 'Client did not submit an input tracking report');
+            this.player.requestIdleLogout = true;
         }
         // This finalizes the tracking session, so reset initial state.
         this.waitingForLastReport = false;
         this.recordedEvents = [];
         this.recordedEventCount = 0;
+        this.hasSeenReport = false;
     }
 
     offset(n: number): number {
