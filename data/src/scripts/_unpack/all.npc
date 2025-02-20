@@ -3532,7 +3532,7 @@ param=attack_sound,hacksword_slash
 param=defend_sound,ice_warrior_hit
 param=death_sound,ice_warrior_death
 huntmode=cowardly
-huntrange=1
+huntrange=5
 category=ice_warrior
 // Stats match osrs version but our version Vislvl is different.
 // https://raw.githubusercontent.com/Joshua-F/osrs-dumps/refs/heads/master/config/dump.npc npc_2841
@@ -4014,7 +4014,7 @@ param=attack_sound,hacksword_slash
 param=defend_sound,ice_warrior_hit
 param=death_sound,ice_warrior_death
 huntmode=cowardly
-huntrange=1
+huntrange=5
 category=ice_warrior
 // Stats match osrs version but our version Vislvl is different.
 // https://raw.githubusercontent.com/Joshua-F/osrs-dumps/refs/heads/master/config/dump.npc npc_2851
