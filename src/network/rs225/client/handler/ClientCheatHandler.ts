@@ -23,7 +23,7 @@ import LoggerEventType from '#/server/logger/LoggerEventType.js';
 import Obj from '#/engine/entity/Obj.js';
 import EntityLifeCycle from '#/engine/entity/EntityLifeCycle.js';
 import Visibility from '#/engine/entity/Visibility.js';
-import { isClientConnected } from '#/engine/entity/NetworkPlayer.js';
+import { isClientConnected, type NetworkPlayer } from '#/engine/entity/NetworkPlayer.js';
 
 export default class ClientCheatHandler extends MessageHandler<ClientCheat> {
     handle(message: ClientCheat, player: Player): boolean {
@@ -551,6 +551,10 @@ export default class ClientCheatHandler extends MessageHandler<ClientCheat> {
                 } else {
                     player.messageGame(`Player '${args[0]}' does not exist or is not logged in.`);
                 }
+            } else if (cmd === 'drop_socket') {
+                // custom
+                // for testing reconnection logic. silently drops client socket.
+                (player as NetworkPlayer).client.close();
             }
         }
 
