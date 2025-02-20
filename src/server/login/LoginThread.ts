@@ -86,7 +86,8 @@ async function handleRequests(parentPort: ParentPort, msg: any) {
                         reply: 4,
                         staffmodlevel,
                         save: null,
-                        account_id: 1
+                        account_id: 1,
+                        members: Environment.NODE_MEMBERS
                     });
                 } else {
                     parentPort.postMessage({
@@ -98,7 +99,8 @@ async function handleRequests(parentPort: ParentPort, msg: any) {
                         reply: 0,
                         staffmodlevel,
                         save: fs.readFileSync(`data/players/${profile}/${username}.sav`),
-                        account_id: 1
+                        account_id: 1,
+                        members: Environment.NODE_MEMBERS
                     });
                 }
             }

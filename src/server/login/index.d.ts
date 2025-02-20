@@ -9,6 +9,7 @@ interface LoginResponse {
     muted_until?: any | null;
     save: Uint8Array | null;
     account_id: number;
+    members: boolean;
 }
 
 interface LogoutResponse {

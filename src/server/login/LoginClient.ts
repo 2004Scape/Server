@@ -1,4 +1,5 @@
 import InternalClient from '#/server/InternalClient.js';
+import { LoginResponse } from '#/server/login/index.js';
 
 import Environment from '#/util/Environment.js';
 
@@ -29,7 +30,7 @@ export class LoginClient extends InternalClient {
         await this.connect();
 
         if (!this.ws || !this.wsr || !this.wsr.checkIfWsLive()) {
-            return { reply: -1, account_id: -1, save: null, muted_until: null };
+            return { reply: -1, account_id: -1, save: null, muted_until: null, members: false};
         }
 
         const reply = await this.wsr.fetchSync({
@@ -47,7 +48,7 @@ export class LoginClient extends InternalClient {
         });
 
         if (reply.error) {
-            return { reply: -1, account_id: -1, save: null, muted_until: null };
+            return { reply: -1, account_id: -1, save: null, muted_until: null, members: false };
         }
 
         const { response, account_id, staffmodlevel, save, muted_until, members } = reply.result;
