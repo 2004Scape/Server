@@ -25,11 +25,11 @@ export default class EventTrackingHandler extends MessageHandler<EventTracking> 
         if (bytes.length === 0 || bytes.length > 500) {
             return false;
         }
-        if (!player.input.tracking()) {
+        if (!player.input.isActive()) {
             return false;
         }
         const buf: Packet = new Packet(bytes);
-        while (buf.available > 0 && player.input.tracking()) {
+        while (buf.available > 0 && player.input.isActive()) {
             const event: number = buf.g1();
             if (event === InputTrackingEventType.MOUSEDOWNL || event === InputTrackingEventType.MOUSEDOWNR) {
                 this.onmousedown(player, buf, event);
