@@ -1,19 +1,12 @@
 // timer is initiated on login, in scripts\player\scripts\global.rs2
 [timer,general_macro_events]
-if (~macro_event_area(coord) = false) { // return before checking so random events are effectively "queued" for when the player leaves a no macro event area
+// make sure this is before afk_event is called, to retain the 'queueing' behavior for random event spawning
+if (~macro_event_allowed = false) { 
     return;
 }
 if (afk_event = ^true) {
-    // macro_event varp resets when a random event is due to spawn?
-    // Just so the player isnt permanantly stuck at a certain %macro_event value
-    if (%macro_event > 0) {
-        %macro_event = ^no_macro_event;
-    }
-    // random events arent restricted in wildy?
-    // https://youtu.be/uPKaH7yg4To?t=421
-
+    // random events arent restricted in wildy? https://youtu.be/uPKaH7yg4To?t=421
     // Not restricted in banks: https://youtu.be/1Rz9Eg4ZHhA
-
     ~macro_event_general_spawn(~macro_event_set_random);
 }
 
@@ -30,7 +23,7 @@ if (afk_event = ^true) {
 // - smithing at furnace. Confirmed? https://youtu.be/a6NobmSGBYw
 // - crafting at furnace. Confirmed: https://youtu.be/7pS6s5rvvEY
 [proc,macro_event_general_spawn](int $event)
-if (~macro_event_area(coord) = false) {
+if (~macro_event_allowed = false) { 
     return;
 }
 def_coord $event_coord = map_findsquare(coord, 1, 1, ^map_findsquare_lineofwalk);
@@ -61,6 +54,16 @@ if (~inzone_coord_pair_table(trawler_game_zones, $coord) = true | ~inzone_coord_
     return(false);
 }
 if (~in_tutorial_island($coord) = true) {
+    return(false);
+}
+return(true);
+
+[proc,macro_event_allowed]()(boolean)
+if (~macro_event_area(coord) = false) {
+    return(false);
+}
+// if this var isnt reset on npc delete, then youll never get a random event: https://youtu.be/vRlOfkCCGkw
+if (%macro_event > 0) {
     return(false);
 }
 return(true);

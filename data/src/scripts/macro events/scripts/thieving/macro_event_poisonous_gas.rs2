@@ -17,6 +17,7 @@ p_delay(0);
 settimer(poison_gas, 1); // start the timer
 
 say("I better run!"); // 2004 https://i.imgur.com/nwQIetY.png
+%macro_event = ^no_macro_event;
 
 // timer is set when chest_macro_gas is called.
 // timer is cleared when player is not within 10 tiles of chest_macro_gas

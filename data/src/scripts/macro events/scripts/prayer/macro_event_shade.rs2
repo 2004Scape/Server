@@ -11,10 +11,8 @@ if ($shade_coord = null) {
 npc_add($shade_coord, $shade, 1000); // guess
 npc_say("Leave this place mortal!");
 %npc_macro_event_target = uid;
+%macro_event = ^no_macro_event;
 spotanim_map(zamorak_flame, $shade_coord, 0, 0);
-if (finduid(uid) = false) {
-    return;
-}
 npc_delay(3);
 %aggressive_npc = npc_uid; // interupt the player if they're in combat https://youtu.be/tw66JWQzpD0?t=32
 npc_setmode(opplayer2);

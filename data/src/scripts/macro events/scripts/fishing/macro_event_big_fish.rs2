@@ -1,9 +1,6 @@
 // requires active npc
 [proc,macro_event_big_fish_spawn](namedobj $fishing_equipment)
 %macro_event = ^no_macro_event;
-if (p_finduid(uid) = false) {
-    return;
-}
 // todo: figure out sounds
 sound_synth(watersplash, 0, 0); // complete guess
 def_npc $old = npc_type;
