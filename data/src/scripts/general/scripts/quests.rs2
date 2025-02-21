@@ -244,6 +244,10 @@ if (%itwatchtower_progress = ^itwatchtower_complete) {
     $questpoints = add($questpoints, ^itwatchtower_questpoints);
 }
 
+if (%legends_progress = ^legends_complete) {
+    $questpoints = add($questpoints, ^legends_questpoints);
+}
+
 %questpoints = $questpoints;
 
 ~send_quest_progress_colour(questlist:runemysteries, %runemysteries_progress, ^runemysteries_complete);
@@ -305,6 +309,7 @@ if (testbit(%upass_map_mechanisms, ^upass_started_bit) = true & %upass_progress 
 ~send_quest_progress_colour(questlist:crest, %crest_progress, ^crest_complete);
 ~send_quest_progress_colour(questlist:desertrescue, %desertrescue_progress, ^desertrescue_complete);
 ~send_quest_progress_colour(questlist:itwatchtower, %itwatchtower_progress, ^itwatchtower_complete);
+~send_quest_progress_colour(questlist:legends, %legends_progress, ^legends_complete);
 if_settab(questlist, ^tab_quest_journal);
 
 if (%drunkmonk_progress >= ^drunkmonk_spoken_to_omad) {

@@ -166,16 +166,11 @@ type=player_uid
 [thieving_stall_timer]
 scope=perm
 
-[legends_progress]
-scope=perm
-
 [gnome_bar_progress]
 scope=perm
 
 [gnome_restaurant_progress]
 scope=perm
-
-[book_page]
 
 [gnomeball]
 transmit=yes
@@ -192,7 +187,7 @@ scope=perm
 [gnomeball_progress]
 scope=perm
 
-[varp_164]
+[book_page]
 
 [elena_progress]
 scope=perm
