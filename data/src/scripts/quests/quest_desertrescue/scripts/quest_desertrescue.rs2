@@ -306,8 +306,9 @@ if(npc_find(coord, captain_siad, 7, 0) = true) {
 
 [oplocu,loc_2677]
 if(last_useitem = bedobin_key) {
+    def_boolean $can_open = testbit(%desertrescue_map_mechanisms, ^desertrescue_distracted_siad);
     %desertrescue_map_mechanisms = clearbit(%desertrescue_map_mechanisms, ^desertrescue_distracted_siad);
-    if(testbit(%desertrescue_map_mechanisms, ^desertrescue_distracted_siad) = true) {
+    if($can_open = true) {
         @unlock_bedobin_chest;
     } else {
         if(npc_find(coord, captain_siad, 7, 0) = true) @captain_siad_dialogue; // osrs behaviour
