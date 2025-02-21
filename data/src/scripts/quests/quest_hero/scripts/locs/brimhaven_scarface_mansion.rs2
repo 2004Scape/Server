@@ -24,6 +24,7 @@ if (npc_find(coord, pirate_guard, 4, 0) = true) {
         npc_setmode(none);
         npc_walk(0_43_49_25_62);
         npc_say("Stay out of my drinks cabinet!");
+        if_close;
         p_delay(6);
         npc_queue(10, 0, 1);
       }
