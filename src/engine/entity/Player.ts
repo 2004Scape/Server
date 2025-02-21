@@ -279,7 +279,7 @@ export default class Player extends PathingEntity {
     preventLogoutUntil: number = -1;
 
     // not stored as a byte buffer so we can write and encrypt opcodes later
-    buffer: LinkList<OutgoingMessage> = new LinkList();
+    buffer: OutgoingMessage[] = [];
     lastResponse: number = -1;
     lastConnected: number = -1;
 
@@ -365,7 +365,7 @@ export default class Player extends PathingEntity {
         this.activeScript = null;
         this.invListeners.length = 0;
         this.resumeButtons.length = 0;
-        this.buffer.clear();
+        this.buffer = [];
         this.queue.clear();
         this.weakQueue.clear();
         this.engineQueue.clear();
@@ -1931,7 +1931,7 @@ export default class Player extends PathingEntity {
         if (message.priority === ServerProtPriority.IMMEDIATE) {
             this.writeInner(message);
         } else {
-            this.buffer.addTail(message);
+            this.buffer.push(message);
         }
     }
 

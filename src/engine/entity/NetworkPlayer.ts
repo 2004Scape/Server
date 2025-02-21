@@ -189,10 +189,11 @@ export class NetworkPlayer extends Player {
             this.refreshModal = false;
         }
 
-        for (let message: OutgoingMessage | null = this.buffer.head(); message; message = this.buffer.next()) {
+        for (const message of this.buffer) {
             this.writeInner(message);
-            message.unlink();
         }
+
+        this.buffer = [];
     }
 
     writeInner(message: OutgoingMessage): void {
