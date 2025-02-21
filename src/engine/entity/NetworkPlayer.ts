@@ -383,9 +383,12 @@ export class NetworkPlayer extends Player {
             const zone: Zone = World.gameMap.getZoneIndex(zoneIndex);
             if (!loadedZones.has(zone.index)) {
                 zone.writeFullFollows(this);
+            } else {
+                // osrs does partial follows first, and then partial enclosed.
+                zone.writePartialFollows(this);
+                // partial enclosed is only written with already viewed zones.
+                zone.writePartialEnclosed(this);
             }
-            zone.writePartialEncloses(this);
-            zone.writePartialFollows(this);
             loadedZones.add(zone.index);
         }
     }

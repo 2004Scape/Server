@@ -40,8 +40,8 @@ const LocOps: CommandHandlers = {
         const created: Loc = new Loc(position.level, position.x, position.z, locType.width, locType.length, EntityLifeCycle.DESPAWN, locType.id, locShape, locAngle);
         const locs: IterableIterator<Loc> = World.gameMap.getZone(position.x, position.z, position.level).getLocsUnsafe(CoordGrid.packZoneCoord(position.x, position.z));
         for (const loc of locs) {
-            if (loc !== created && loc.angle === locAngle && loc.shape === locShape) {
-                World.removeLoc(loc, duration);
+            if (loc !== created && loc.layer === created.layer && loc.lifecycle === EntityLifeCycle.RESPAWN) {
+                loc.setLifeCycle(World.currentTick + duration);
                 break;
             }
         }
@@ -71,21 +71,9 @@ const LocOps: CommandHandlers = {
         const locType: LocType = check(id, LocTypeValid);
         check(duration, DurationValid);
 
-        World.removeLoc(state.activeLoc, duration);
-
-        // const loc = new Loc(state.activeLoc.level, state.activeLoc.x, state.activeLoc.z, locType.width, locType.length, EntityLifeCycle.DESPAWN, id, state.activeLoc.shape, state.activeLoc.angle);
-        // World.addLoc(loc, duration);
-
         const {level, x, z, angle, shape} = state.activeLoc;
         const created: Loc = new Loc(level, x, z, locType.width, locType.length, EntityLifeCycle.DESPAWN, locType.id, shape, angle);
-        const locs: IterableIterator<Loc> = World.gameMap.getZone(x, z, level).getLocsUnsafe(CoordGrid.packZoneCoord(x, z));
-        for (const loc of locs) {
-            if (loc !== created && loc.angle === angle && loc.shape === shape) {
-                World.removeLoc(loc, duration);
-                break;
-            }
-        }
-        World.addLoc(created, duration);
+        World.changeLoc(state.activeLoc, created, duration);
         state.activeLoc = created;
         state.pointerAdd(ActiveLoc[state.intOperand]);
     }),
@@ -98,11 +86,12 @@ const LocOps: CommandHandlers = {
     [ScriptOpcode.LOC_DEL]: checkedHandler(ActiveLoc, state => {
         const duration: number = check(state.popInt(), DurationValid);
 
-        const {level, x, z, angle, shape} = state.activeLoc;
+        const {level, x, z, layer} = state.activeLoc;
         const locs: IterableIterator<Loc> = World.gameMap.getZone(x, z, level).getLocsUnsafe(CoordGrid.packZoneCoord(x, z));
         for (const loc of locs) {
-            if (loc !== state.activeLoc && loc.angle === angle && loc.shape === shape) {
-                World.removeLoc(loc, duration);
+            if (loc !== state.activeLoc && loc.layer === layer && loc.lifecycle === EntityLifeCycle.RESPAWN) {
+                // extend duration of a static loc on this tile.
+                loc.setLifeCycle(World.currentTick + duration);
                 break;
             }
         }

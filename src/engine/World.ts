@@ -1383,6 +1383,23 @@ class World {
         this.trackZone(this.currentTick, zone);
     }
 
+    changeLoc(from: Loc, to: Loc, duration: number): void {
+        const fromType: LocType = LocType.get(from.type);
+        if (fromType.blockwalk) {
+            changeLocCollision(from.shape, from.angle, fromType.blockrange, fromType.length, fromType.width, fromType.active, from.x, from.z, from.level, false);
+        }
+        const toType: LocType = LocType.get(to.type);
+        if (toType.blockwalk) {
+            changeLocCollision(to.shape, to.angle, toType.blockrange, toType.length, toType.width, toType.active, to.x, to.z, to.level, true);
+        }
+        const zone: Zone = this.gameMap.getZone(from.x, from.z, from.level);
+        zone.changeLoc(from, to);
+        from.setLifeCycle(this.currentTick + duration);
+        to.setLifeCycle(this.currentTick + duration);
+        this.trackZone(this.currentTick + duration, zone);
+        this.trackZone(this.currentTick, zone);
+    }
+
     mergeLoc(loc: Loc, player: Player, startCycle: number, endCycle: number, south: number, east: number, north: number, west: number): void {
         // printDebug(`[World] mergeLoc => name: ${LocType.get(loc.type).name}`);
         const zone: Zone = this.gameMap.getZone(loc.x, loc.z, loc.level);
