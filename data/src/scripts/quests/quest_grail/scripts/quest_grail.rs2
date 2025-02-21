@@ -43,7 +43,7 @@ if(inzone(0_42_50_52_34, 0_42_50_55_37, coord) = true) { // Karamja -> fisher's 
     } else {
         p_teleport(0_43_73_54_43);
     }
-} else if(~inzone_coord_pair_table(fisher_realm_zones, coord) = true) { // fisher's realm -> karamja
+} else if(inzone(0_41_73_0_0, 2_43_73_63_63, coord) = true) { // fisher's realm -> karamja
     p_teleport(0_42_50_53_35);
 } else {
     ~mesbox("The whistle makes no noise.|It will not work in this location.");
