@@ -998,6 +998,10 @@ const PlayerOps: CommandHandlers = {
             if(gender === 1) {
                 state.activePlayer.body[i] = Player.MALE_FEMALE_MAP.get(state.activePlayer.body[i]) ?? -1;
             } else {
+                if(i == 1) {
+                    state.activePlayer.body[i] = 14;
+                    continue;
+                }
                 state.activePlayer.body[i] = Player.FEMALE_MALE_MAP.get(state.activePlayer.body[i]) ?? -1;
             }
         }
