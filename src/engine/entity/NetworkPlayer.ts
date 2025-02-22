@@ -478,7 +478,7 @@ export function isBufferFull(player: Player): boolean {
 
     let total = 0;
 
-    for (let message: OutgoingMessage | null = player.buffer.head(); message; message = player.buffer.next()) {
+    for (const message of player.buffer) {
         const encoder: MessageEncoder<OutgoingMessage> | undefined = ServerProtRepository.getEncoder(message);
         if (!encoder) {
             return true;
