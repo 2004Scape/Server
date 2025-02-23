@@ -1,6 +1,6 @@
 // Unarmed Zombie
-[ai_queue3,zombie1] @unarmed_zombie;
-[ai_queue3,zombie2] @unarmed_zombie;
+[ai_queue3,zombie_1] @unarmed_zombie;
+[ai_queue3,zombie_2] @unarmed_zombie;
 
 [label,unarmed_zombie]
 gosub(npc_death);
@@ -48,7 +48,7 @@ if ($dropint < 4) {
 }
 
 // Armed Zombie
-[ai_queue3,zombie3] @armed_zombie;
+[ai_queue3,zombie_armed] @armed_zombie;
 
 [label,armed_zombie]
 gosub(npc_death);

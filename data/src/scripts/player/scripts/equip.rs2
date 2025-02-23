@@ -15,7 +15,7 @@ if (p_finduid(uid) = true) {
     }
     // might be rework behaviour, hard to confirm
     if(inzone(0_51_147_0_0, 0_51_147_19_63, coord) = true) {
-        if(npc_find(coord, npc_829, 4, 2) = true | npc_find(coord, npc_828, 4, 2) = true) {
+        if(npc_find(coord, mercenary_2, 4, 2) = true | npc_find(coord, mercenary_1, 4, 2) = true) {
             ~npc_retaliate(0);
             ~desertcamp_guard_search;
         }
