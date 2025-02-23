@@ -78,6 +78,8 @@ import { findNaivePath, reachedEntity, reachedLoc, reachedObj } from '#/engine/G
 import Visibility from './Visibility.js';
 import UpdateRebootTimer from '#/network/server/model/UpdateRebootTimer.js';
 import { CollisionType } from '@2004scape/rsmod-pathfinder';
+import SceneState from '#/engine/entity/SceneState.js';
+import ZoneMap from '#/engine/zone/ZoneMap.js';
 const levelExperience = new Int32Array(99);
 
 let acc = 0;
@@ -115,16 +117,16 @@ export default class Player extends PathingEntity {
         [0, 45], [1, 47], [2, 48], [3, 49], [4, 50], [5, 51], [6, 52], [7, 53], [8, 54], [9, 55],
         [18, 56], [19, 56], [20, 56], [21, 56], [22, 56], [23, 56], [24, 56], [25, 56],
         [26, 61], [27, 63], [28, 62], [29, 65], [30, 64], [31, 63], [32, 66],
-        [33, 67], [34, 68], [35, 69], 
+        [33, 67], [34, 68], [35, 69],
         [36, 70], [37, 71], [38, 72], [39, 76], [40, 75], [41, 78],
         [42, 79], [43, 80], [44, 81]
     ]);
 
     static readonly FEMALE_MALE_MAP = new Map<number, number>([
         [45, 0], [46, 0], [47, 1], [48, 2], [49, 3], [50, 4], [51, 5], [52, 6], [53, 7], [54, 8], [55, 9],
-        [56, 18], [57, 18], [58, 18], [59, 18], [60, 18], 
+        [56, 18], [57, 18], [58, 18], [59, 18], [60, 18],
         [61, 26], [62, 27], [63, 28], [64, 29], [65, 29], [66, 32],
-        [67, 33], [68, 34], [69, 35], 
+        [67, 33], [68, 34], [69, 35],
         [70, 36], [71, 37], [72, 38], [73, 36], [74, 36], [75, 40], [76, 39], [77, 36], [78, 41],
         [79, 42], [80, 43], [81, 44]
     ]);
@@ -336,6 +338,8 @@ export default class Player extends PathingEntity {
     muted_until: Date | null = null;
     members: boolean = true;
 
+    scene: SceneState = SceneState.NONE;
+
     constructor(username: string, username37: bigint, hash64: bigint) {
         super(0, 3094, 3106, 1, 1, EntityLifeCycle.FOREVER, MoveRestrict.NORMAL, BlockWalk.NPC, MoveStrategy.SMART, InfoProt.PLAYER_FACE_COORD.id, InfoProt.PLAYER_FACE_ENTITY.id); // tutorial island.
         this.username = username;
@@ -414,6 +418,7 @@ export default class Player extends PathingEntity {
             this.executeScript(ScriptRunner.init(loginTrigger, this), true);
         }
 
+        this.scene = SceneState.NONE;
         this.lastStepX = this.x - 1;
         this.lastStepZ = this.z;
         this.isActive = true;
@@ -1851,6 +1856,32 @@ export default class Player extends PathingEntity {
             return true;
         } else {
             return false;
+        }
+    }
+
+    rebuildZones(): void {
+        // update any newly tracked zones
+        this.buildArea.activeZones.clear();
+
+        const centerX = CoordGrid.zone(this.x);
+        const centerZ = CoordGrid.zone(this.z);
+
+        const originX: number = CoordGrid.zone(this.originX);
+        const originZ: number = CoordGrid.zone(this.originZ);
+
+        const leftX = originX - 6;
+        const rightX = originX + 6;
+        const topZ = originZ + 6;
+        const bottomZ = originZ - 6;
+
+        for (let x = centerX - 3; x <= centerX + 3; x++) {
+            for (let z = centerZ - 3; z <= centerZ + 3; z++) {
+                // check if the zone is within the build area
+                if (x < leftX || x > rightX || z > topZ || z < bottomZ) {
+                    continue;
+                }
+                this.buildArea.activeZones.add(ZoneMap.zoneIndex(x << 3, z << 3, this.level));
+            }
         }
     }
 
