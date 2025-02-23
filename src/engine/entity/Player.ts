@@ -1450,13 +1450,13 @@ export default class Player extends PathingEntity {
         }
 
         const fromObj = this.invGetSlot(fromInv, fromSlot);
-        if (!fromObj) {
-            throw new Error(`invMoveToSlot: Invalid from obj was null. This means the obj does not exist at this slot: ${fromSlot}`);
-        }
-
         const toObj = this.invGetSlot(toInv, toSlot);
-        this.invSet(toInv, fromObj.id, fromObj.count, toSlot);
 
+        if (fromObj) {
+            this.invSet(toInv, fromObj.id, fromObj.count, toSlot);
+        } else {
+            this.invDelSlot(toInv, toSlot);
+        }
         if (toObj) {
             this.invSet(fromInv, toObj.id, toObj.count, fromSlot);
         } else {
