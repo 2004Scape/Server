@@ -6,11 +6,12 @@ import { fromBase37 } from '#/util/JString.js';
 
 export default class IgnoreListAddHandler extends MessageHandler<IgnoreListAdd> {
     handle(message: IgnoreListAdd, player: Player): boolean {
-        if (fromBase37(message.username) === 'invalid_name') {
+        if (player.socialProtect || fromBase37(message.username) === 'invalid_name') {
             return false;
         }
 
         World.addIgnore(player, message.username);
+        player.socialProtect = true;
         return true;
     }
 }

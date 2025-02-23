@@ -338,6 +338,8 @@ export default class Player extends PathingEntity {
     muted_until: Date | null = null;
     members: boolean = true;
 
+    socialProtect: boolean = false; // social packet spam protection
+
     scene: SceneState = SceneState.NONE;
 
     constructor(username: string, username37: bigint, hash64: bigint) {
@@ -393,6 +395,7 @@ export default class Player extends PathingEntity {
         this.message = null;
         this.logMessage = null;
         this.appearance = -1;
+        this.socialProtect = false;
     }
 
     // ----

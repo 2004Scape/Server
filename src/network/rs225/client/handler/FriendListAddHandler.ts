@@ -6,11 +6,12 @@ import { fromBase37 } from '#/util/JString.js';
 
 export default class FriendListAddHandler extends MessageHandler<FriendListAdd> {
     handle(message: FriendListAdd, player: Player): boolean {
-        if (fromBase37(message.username) === 'invalid_name') {
+        if (player.socialProtect || fromBase37(message.username) === 'invalid_name') {
             return false;
         }
 
         World.addFriend(player, message.username);
+        player.socialProtect = true;
         return true;
     }
 }
