@@ -339,6 +339,7 @@ export default class Player extends PathingEntity {
     members: boolean = true;
 
     socialProtect: boolean = false; // social packet spam protection
+    reportAbuseProtect: boolean = false; // social packet spam protection
 
     scene: SceneState = SceneState.NONE;
 
@@ -396,6 +397,7 @@ export default class Player extends PathingEntity {
         this.logMessage = null;
         this.appearance = -1;
         this.socialProtect = false;
+        this.reportAbuseProtect = false;
     }
 
     // ----
