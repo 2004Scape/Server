@@ -9,11 +9,12 @@ import LoggerEventType from '#/server/logger/LoggerEventType.js';
 import World from '#/engine/World.js';
 import Player from '#/engine/entity/Player.js';
 import { CoordGrid } from '#/engine/CoordGrid.js';
-import Zone from '#/engine/zone/Zone.js';
 import WorldStat from '#/engine/WorldStat.js';
 import NpcRenderer from '#/engine/renderer/NpcRenderer.js';
 import PlayerRenderer from '#/engine/renderer/PlayerRenderer.js';
 import SceneState from '#/engine/entity/SceneState.js';
+import Zone from '#/engine/zone/Zone.js';
+import ZoneMap from '#/engine/zone/ZoneMap.js';
 
 import InvType from '#/cache/config/InvType.js';
 
@@ -21,6 +22,7 @@ import ServerProt from '#/network/rs225/server/prot/ServerProt.js';
 import ClientProt from '#/network/rs225/client/prot/ClientProt.js';
 import ClientProtRepository from '#/network/rs225/client/prot/ClientProtRepository.js';
 import ClientProtCategory from '#/network/client/prot/ClientProtCategory.js';
+import ServerProtRepository from '#/network/rs225/server/prot/ServerProtRepository.js';
 
 import IfClose from '#/network/server/model/IfClose.js';
 import IfOpenMainSide from '#/network/server/model/IfOpenMainSide.js';
@@ -35,12 +37,12 @@ import UpdateRunWeight from '#/network/server/model/UpdateRunWeight.js';
 import CamMoveTo from '#/network/server/model/CamMoveTo.js';
 import CamLookAt from '#/network/server/model/CamLookAt.js';
 import OutgoingMessage from '#/network/server/OutgoingMessage.js';
-import ServerProtRepository from '#/network/rs225/server/prot/ServerProtRepository.js';
 import MessageEncoder from '#/network/server/codec/MessageEncoder.js';
 import Logout from '#/network/server/model/Logout.js';
 import PlayerInfo from '#/network/server/model/PlayerInfo.js';
 import NpcInfo from '#/network/server/model/NpcInfo.js';
 import SetMultiway from '#/network/server/model/SetMultiway.js';
+import UpdateZoneFullFollows from '#/network/server/model/UpdateZoneFullFollows.js';
 
 import { printError } from '#/util/Logger.js';
 
@@ -262,8 +264,6 @@ export class NetworkPlayer extends Player {
     }
 
     updateMap() {
-        const loadedZones: Set<number> = this.buildArea.loadedZones;
-
         const originX: number = CoordGrid.zone(this.originX);
         const originZ: number = CoordGrid.zone(this.originZ);
 
@@ -274,12 +274,20 @@ export class NetworkPlayer extends Player {
 
         // if the build area should be regenerated, do so now
         if (this.x < reloadLeftX || this.z < reloadBottomZ || this.x > reloadRightX - 1 || this.z > reloadTopZ - 1) {
+            // this fixes invisible door issue...
+            for (const zone of this.buildArea.activeZones) {
+                const { x, z } = ZoneMap.unpackIndex(zone);
+                if (x < reloadLeftX || z < reloadBottomZ || x > reloadRightX - 1 || z > reloadTopZ - 1) {
+                    this.write(new UpdateZoneFullFollows(CoordGrid.zone(x), CoordGrid.zone(z), this.originX, this.originZ));
+                }
+            }
+
             this.write(new RebuildNormal(CoordGrid.zone(this.x), CoordGrid.zone(this.z)));
 
             this.originX = this.x;
             this.originZ = this.z;
             this.scene = SceneState.NONE;
-            loadedZones.clear();
+            this.buildArea.loadedZones.clear();
         }
 
         // update the camera after rebuild.
