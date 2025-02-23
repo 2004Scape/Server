@@ -1,16 +1,27 @@
 import 'dotenv/config';
 
-import ServerProt from '#/network/rs225/server/prot/ServerProt.js';
+import Packet from '#/io/Packet.js';
+
+import ClientSocket from '#/server/ClientSocket.js';
+import NullClientSocket from '#/server/NullClientSocket.js';
+import LoggerEventType from '#/server/logger/LoggerEventType.js';
 
 import World from '#/engine/World.js';
-
 import Player from '#/engine/entity/Player.js';
-import ClientSocket from '#/server/ClientSocket.js';
-
 import { CoordGrid } from '#/engine/CoordGrid.js';
-import ZoneMap from '#/engine/zone/ZoneMap.js';
 import Zone from '#/engine/zone/Zone.js';
+import WorldStat from '#/engine/WorldStat.js';
+import NpcRenderer from '#/engine/renderer/NpcRenderer.js';
+import PlayerRenderer from '#/engine/renderer/PlayerRenderer.js';
+import SceneState from '#/engine/entity/SceneState.js';
+
 import InvType from '#/cache/config/InvType.js';
+
+import ServerProt from '#/network/rs225/server/prot/ServerProt.js';
+import ClientProt from '#/network/rs225/client/prot/ClientProt.js';
+import ClientProtRepository from '#/network/rs225/client/prot/ClientProtRepository.js';
+import ClientProtCategory from '#/network/client/prot/ClientProtCategory.js';
+
 import IfClose from '#/network/server/model/IfClose.js';
 import IfOpenMainSide from '#/network/server/model/IfOpenMainSide.js';
 import IfOpenMain from '#/network/server/model/IfOpenMain.js';
@@ -29,17 +40,9 @@ import MessageEncoder from '#/network/server/codec/MessageEncoder.js';
 import Logout from '#/network/server/model/Logout.js';
 import PlayerInfo from '#/network/server/model/PlayerInfo.js';
 import NpcInfo from '#/network/server/model/NpcInfo.js';
-import WorldStat from '#/engine/WorldStat.js';
 import SetMultiway from '#/network/server/model/SetMultiway.js';
+
 import { printError } from '#/util/Logger.js';
-import NpcRenderer from '#/engine/renderer/NpcRenderer.js';
-import PlayerRenderer from '#/engine/renderer/PlayerRenderer.js';
-import NullClientSocket from '#/server/NullClientSocket.js';
-import Packet from '#/io/Packet.js';
-import ClientProt from '#/network/rs225/client/prot/ClientProt.js';
-import ClientProtRepository from '#/network/rs225/client/prot/ClientProtRepository.js';
-import ClientProtCategory from '#/network/client/prot/ClientProtCategory.js';
-import LoggerEventType from '#/server/logger/LoggerEventType.js';
 
 export class NetworkPlayer extends Player {
     client: ClientSocket;
@@ -275,6 +278,7 @@ export class NetworkPlayer extends Player {
 
             this.originX = this.x;
             this.originZ = this.z;
+            this.scene = SceneState.NONE;
             loadedZones.clear();
         }
 
@@ -306,28 +310,8 @@ export class NetworkPlayer extends Player {
         // zone changed
         const zone = CoordGrid.packCoord(this.level, this.x >> 3 << 3, this.z >> 3 << 3);
         if (this.lastZone !== zone) {
-            // update any newly tracked zones
-            this.buildArea.activeZones.clear();
-
-            const centerX = CoordGrid.zone(this.x);
-            const centerZ = CoordGrid.zone(this.z);
-
-            const originX: number = CoordGrid.zone(this.originX);
-            const originZ: number = CoordGrid.zone(this.originZ);
-
-            const leftX = originX - 6;
-            const rightX = originX + 6;
-            const topZ = originZ + 6;
-            const bottomZ = originZ - 6;
-
-            for (let x = centerX - 3; x <= centerX + 3; x++) {
-                for (let z = centerZ - 3; z <= centerZ + 3; z++) {
-                    // check if the zone is within the build area
-                    if (x < leftX || x > rightX || z > topZ || z < bottomZ) {
-                        continue;
-                    }
-                    this.buildArea.activeZones.add(ZoneMap.zoneIndex(x << 3, z << 3, this.level));
-                }
+            if (this.scene === SceneState.READY) {
+                this.rebuildZones();
             }
 
             // zone triggers
@@ -370,6 +354,14 @@ export class NetworkPlayer extends Player {
     }
 
     updateZones() {
+        if (this.scene === SceneState.NONE) {
+            return;
+        }
+
+        if (this.scene === SceneState.LOAD) {
+            this.scene = SceneState.READY;
+        }
+
         const loadedZones: Set<number> = this.buildArea.loadedZones;
         const activeZones: Set<number> = this.buildArea.activeZones;
         // unload any zones that are no longer active

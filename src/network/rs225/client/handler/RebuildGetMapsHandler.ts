@@ -6,6 +6,7 @@ import DataLand from '#/network/server/model/DataLand.js';
 import DataLandDone from '#/network/server/model/DataLandDone.js';
 import DataLoc from '#/network/server/model/DataLoc.js';
 import DataLocDone from '#/network/server/model/DataLocDone.js';
+import SceneState from '#/engine/entity/SceneState.js';
 
 export default class RebuildGetMapsHandler extends MessageHandler<RebuildGetMaps> {
     handle(message: RebuildGetMaps, player: Player): boolean {
@@ -37,6 +38,9 @@ export default class RebuildGetMapsHandler extends MessageHandler<RebuildGetMaps
                 player.write(new DataLocDone(x, z));
             }
         }
+
+        player.scene = SceneState.LOAD;
+        player.rebuildZones();
 
         return true;
     }
