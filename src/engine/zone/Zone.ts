@@ -600,6 +600,34 @@ export default class Zone {
     }
 
     /**
+     * Generates all npcs in this zone.
+     * Does not guarantee that the npcs are currently "visible".
+     * "visible" meaning they are active on the server and available to the client.
+     */
+    *getAllNpcsUnsafe(): IterableIterator<Npc> {
+        for (const nid of this.npcs) {
+            const npc = World.getNpc(nid);
+            if (npc) {
+                yield npc;
+            }
+        }
+    }
+
+    /**
+     * Generates all players in this zone.
+     * Does not guarantee that the players are currently "visible".
+     * "visible" meaning they are active on the server and available to the client.
+     */
+    *getAllPlayersUnsafe(): IterableIterator<Player> {
+        for (const uid of this.players) {
+            const player: Player | null = World.getPlayerByUid(uid);
+            if (player) {
+                yield player;
+            }
+        }
+    }
+
+    /**
      * Generates the enclosed (shared) zone events currently queued for this zone.
      * These are cleared at the end of every game cycle.
      */

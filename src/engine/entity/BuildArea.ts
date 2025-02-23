@@ -1,4 +1,4 @@
-import {CoordGrid} from '#/engine/CoordGrid.js';
+import { CoordGrid } from '#/engine/CoordGrid.js';
 import Player from '#/engine/entity/Player.js';
 import World from '#/engine/World.js';
 import Npc from '#/engine/entity/Npc.js';
@@ -94,9 +94,9 @@ export default class BuildArea {
 
     *getNearbyPlayers(pid: number, level: number, x: number, z: number): IterableIterator<Player> {
         if (this.viewDistance < BuildArea.PREFERRED_VIEW_DISTANCE) {
-            yield *this.getNearbyPlayersByClosest(pid, level, x, z);
+            yield* this.getNearbyPlayersByClosest(pid, level, x, z);
         } else {
-            yield *this.getNearbyPlayersByZones(pid, level, x, z);
+            yield* this.getNearbyPlayersByZones(pid, level, x, z);
         }
     }
 
@@ -148,7 +148,7 @@ export default class BuildArea {
             const zoneX: number = zx << 3;
             for (let zz = startZ; zz <= endZ; zz++) {
                 const zoneZ: number = zz << 3;
-                for (const player of World.gameMap.getZone(zoneX, zoneZ, level).getAllPlayersSafe()) {
+                for (const player of World.gameMap.getZone(zoneX, zoneZ, level).getAllPlayersUnsafe()) {
                     if (this.players.size >= BuildArea.PREFERRED_PLAYERS) {
                         return;
                     }
@@ -172,7 +172,7 @@ export default class BuildArea {
             const zoneX: number = zx << 3;
             for (let zz = startZ; zz <= endZ; zz++) {
                 const zoneZ: number = zz << 3;
-                for (const npc of World.gameMap.getZone(zoneX, zoneZ, level).getAllNpcsSafe()) {
+                for (const npc of World.gameMap.getZone(zoneX, zoneZ, level).getAllNpcsUnsafe()) {
                     if (this.npcs.size >= BuildArea.PREFERRED_NPCS) {
                         return;
                     }
