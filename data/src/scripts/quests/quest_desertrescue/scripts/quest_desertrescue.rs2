@@ -332,7 +332,7 @@ inv_add(inv, technical_plans, 1);
 
 [oploc2,loc_2678]
 %desertrescue_map_mechanisms = setbit(%desertrescue_map_mechanisms, ^desertrescue_sailing);
-~mesbox("You notice several books on the subject of Sailing.");
+~mesbox("You notice several books on the subject of sailing.");
 
 [oploc1,loc_2682]
 ~mesbox("A sturdy looking cart for carrying barrels of rocks out of the mining camp.");

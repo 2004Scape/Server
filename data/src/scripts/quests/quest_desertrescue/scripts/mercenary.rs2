@@ -8,6 +8,27 @@ if(%desertrescue_progress >= ^desertrescue_entered_camp) {
     } else if($bet = 0) {
         ~chatnpc("<p,bored>Well, you've killed our Captain. I guess you've proved yourself in combat. But you've left a horrible mess now. And it's gonna cost you for us to clean it up. Let's say 20 gold and we won't have to get rough with you?");
         @multi3("Yeah, okay, I'll give you 20 gold.", mercenary_give20, "I'll give you 15, that's all you're gettin'", mercenary_give15, "You can whistle for your money, I'll take you all on.", mercenary_whistle);
+    } else {
+        ~chatplayer("<p,happy>Hey, I've come to collect my bet!");
+        ~chatnpc("<p,bored>Well, I guess congratulations are in order.");
+        ~chatplayer("<p,happy>Thanks!");
+        ~chatnpc("<p,confused>And we'll only charge the paltry sum of.. erm...|@dbl@-- The guards starts to do some mental calculations. --|@dbl@-- You can see his brow furrow and he starts to --|@dbl@-- sweat profusely. --");
+        def_int $winnings = 1;
+        def_string $cleanup = "Five";
+        switch_int($bet) {
+            case 2 :
+                $winnings = 2;
+                $cleanup = "10";
+            case 3 :
+                $winnings = 4;
+                $cleanup = "15";
+            case 4 :
+                $winnings = 10;
+                $cleanup = "20";
+        }
+        ~chatnpc("<p,neutral><$cleanup> gold for cleaning up the mess. You have won <tostring($winnings)> Gold pieces! Well done..! Ha, ha, ha ha! @dbl@-- The guards @dbl@walk off chuckling to themselves. --");
+        inv_add(inv, coins, $winnings);
+        %desertrescue_map_mechanisms = setbit_range_toint(%desertrescue_map_mechanisms, 5, 2, 4);
     }
 } else {
     ~chatnpc("<p,angry>Yeah, what do you want?");
@@ -39,8 +60,8 @@ if(inv_total(inv, coins) < 15) {
     return;
 }
 inv_del(inv, coins, 15);
-%desertrescue_map_mechanisms = setbit_range_toint(%desertrescue_map_mechanisms, 5, 2, 4);
 ~chatnpc("<p,neutral>Okay, we'll take fifteen, you push a hard bargain!");
+%desertrescue_map_mechanisms = setbit_range_toint(%desertrescue_map_mechanisms, 5, 2, 4);
 
 [label,mercenary_give20]
 ~chatplayer("<p,neutral>Yeah, okay, I'll give you 20 gold.");
@@ -50,8 +71,8 @@ if(inv_total(inv, coins) < 20) {
     return;
 }
 inv_del(inv, coins, 20);
-%desertrescue_map_mechanisms = setbit_range_toint(%desertrescue_map_mechanisms, 5, 2, 4); // check this as i checked quest stage increase first
-~chatnpc("<p,neutral>Good! Seeya, we have some cleaning to do.");
+~chatnpc("<p,happy>Good! Seeya, we have some cleaning to do.");
+%desertrescue_map_mechanisms = setbit_range_toint(%desertrescue_map_mechanisms, 5, 2, 4); // if you cancel early you do just lose the money
 
 [proc,mercenary_attack]
 npc_say("Guards!! Guards!"); // non-click here to continue dialogue in osrs
@@ -142,6 +163,7 @@ inv_del(inv, coins, 5);
 ~chatplayer("<p,happy>So you could almost say that they got their ... 'Just Desserts'");
 ~chatnpc("<p,bored>You could say that...|@dbl@-- There is an awkward pause --@dbl@");
 ~chatnpc("<p,bored>But it wouldn't be very funny.");
+~chatplayer("<p,confused>When they talk about 'the silence of the desert',|this must be what they mean.");
 @multi2("Can I take a look around the place?", mercenary_lookplace, "Okay, thanks.", mercenary_okthanks);
 
 [label,mercenary_lookplace]
@@ -176,13 +198,13 @@ mes("The guard walks off.");
 
 [label,mercenary_guarding2]
 ~chatplayer("<p,neutral>What are you guarding?");
-~chatnpc("<p,bored>Well, if you have to know, we're making sure that no prisoners get out. -- The guard gives you a disapproving look. --  And to make sure that unauthorised people don't get in.");
-~chatnpc("<p,bored>-- The guard looks around nervously. -- You'd better go soon before the Captain orders us to kill you.");
+~chatnpc("<p,bored>Well, if you have to know, we're making sure that no prisoners get out. @dbl@-- The guard gives you a @dbl@disapproving look. --  @bla@And to make sure that unauthorised people don't get in.");
+~chatnpc("<p,bored>@dbl@-- The guard looks around nervously. -- @bla@You'd better go soon before the Captain orders us to kill you.");
 @multi2("Does the Captain order you to kill a lot of people?", mercenary_captorder, "Okay, thanks.", mercenary_okthanks);
 
 [label,mercenary_captorder]
 ~chatplayer("<p,neutral>Does the Captain order you to kill a lot of people?");
-~chatnpc("<p,bored>-- The guard snorts. -- *Snort* Just about anyone who talks to him.");
+~chatnpc("<p,bored>@dbl@-- The guard snorts. --|*Snort*|Just about anyone who talks to him.");
 ~chatnpc("<p,bored>Unless he has a use for you, he'll probably just order us to kill you. And it's such a horrible job cleaning up the mess afterwards.");
 @multi2("Not to mention the senseless waste of human life.", mercenary_wastelife, "Okay, thanks.", mercenary_okthanks);
 
@@ -195,11 +217,15 @@ mes("The guard walks off.");
 ~chatplayer("<p,neutral>It doesn't sound as if you respect your Captain much.");
 // https://web.archive.org/web/20060111201917im_/http://runeweb.net/rathofdoom/quests/touristtrap/2.png, using classic dialogue here since OSRS has this part in the screenshot different
 ~chatnpc("<p,bored>Well, to be honest.|-- The guard looks around conspiratorially. --|We think he's not exactly as brave as he makes out.|But we have to follow his orders.");
-~chatnpc("<p,bored>If someone called him a coward,|or managed to trick him into a one-on-one duel.|Many of us bet that he'll be slaughtered in double quick time,|and all the men agreed that they wouldn't intervene.");
+~chatnpc("<p,bored>If someone called him a coward, or managed to trick him into a one-on-one duel. Many of us bet that he'll be slaughtered in double quick time, and all the men agreed that they wouldn't intervene.");
 @multi2("Can I have a bet on that?", mercenary_bet, "Okay, thanks.", mercenary_okthanks);
 
 [label,mercenary_bet]
 ~chatplayer("<p,neutral>Can I have a bet on that?");
+if(getbit_range(%desertrescue_map_mechanisms, 2, 4) > 0) {
+    ~chatnpc("<p,bored>Sorry, we've already taken your bet, wouldn't want any cheating now. Anyway, I have to get back to work. See ya around...");
+    return;
+}
 ~chatnpc("<p,bored>Well, if you think you stand a chance, sure. But remember, if he gives us an order, we have to obey.");
 switch_int(~p_choice5("I'll bet 5 gold that I win.", 1, "I'll bet 10 gold that I win.", 2, "I'll bet 15 gold that I win.", 3, "I'll bet 20 gold that I win.", 4, "Okay, thanks.", 5)) {
     case 1 : @mercenary_makebet(5);
@@ -225,7 +251,7 @@ switch_int($coins) {
     case 15 : $reward = 19;
     case 20 : $reward = 30;
 }
-~chatnpc("<p,neutral>Okay, if you win, you'll get <tostring($reward)> gold back. Anyway, I have to get going, I do have work to do. @dbl@-- The guard walks off. --");
+~chatnpc("<p,happy>Okay, if you win, you'll get <tostring($reward)> gold back.|Anyway, I have to get going, I do have work to do.|@dbl@-- The guard walks off. --");
 
 [label,mercenary_place1]
 ~chatplayer("<p,neutral>What is this place?");
