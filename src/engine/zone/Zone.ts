@@ -146,12 +146,7 @@ export default class Zone {
                     continue;
                 }
                 if (loc.lifecycle === EntityLifeCycle.DESPAWN) {
-                    const change = this.findChangeLoc(loc);
-                    if (change) {
-                        World.changeLoc(loc, change, 0);
-                    } else {
-                        World.removeLoc(loc, 0);
-                    }
+                    World.removeLoc(loc, 0);
                     updated = true;
                 }
             }
@@ -170,6 +165,60 @@ export default class Zone {
             }
         } while (updated);
     }
+
+    // tick(tick: number): void {
+    //     let updated: boolean;
+    //     do {
+    //         updated = false;
+    //         for (const obj of this.getAllObjsUnsafe()) {
+    //             if (!obj.updateLifeCycle(tick) || obj.lastLifecycleTick === tick) {
+    //                 continue;
+    //             }
+    //             if (obj.lifecycle === EntityLifeCycle.DESPAWN) {
+    //                 if (obj.reveal !== -1) {
+    //                     World.revealObj(obj);
+    //                 } else {
+    //                     World.removeObj(obj, 0);
+    //                     updated = true;
+    //                 }
+    //             } else if (obj.lifecycle === EntityLifeCycle.RESPAWN) {
+    //                 World.addObj(obj, Obj.NO_RECEIVER, 0);
+    //                 updated = true;
+    //             }
+    //         }
+    //         for (const loc of this.getAllLocsUnsafe()) {
+    //             if (!loc.updateLifeCycle(tick) || loc.lastLifecycleTick === tick) {
+    //                 continue;
+    //             }
+    //             if (loc.lifecycle === EntityLifeCycle.DESPAWN) {
+    //                 World.removeLoc(loc, 0);
+    //                 updated = true;
+    //             }
+    //         }
+    //         for (const loc of this.getAllLocsUnsafe()) {
+    //             if (!loc.updateLifeCycle(tick) || loc.lastLifecycleTick === tick) {
+    //                 continue;
+    //             }
+    //             if (loc.lifecycle === EntityLifeCycle.RESPAWN) {
+    //                 World.addLoc(loc, 0);
+    //                 updated = true;
+    //             }
+    //         }
+    //         // for (const loc of this.getAllLocsUnsafe()) {
+    //         //     if (!loc.updateLifeCycle(tick) || loc.lastLifecycleTick === tick) {
+    //         //         continue;
+    //         //     }
+    //         //     if (loc.lifecycle === EntityLifeCycle.DESPAWN) {
+    //         //         World.removeLoc(loc, 0);
+    //         //         updated = true;
+    //         //     } else if (loc.lifecycle === EntityLifeCycle.RESPAWN) {
+    //         //         World.addLoc(loc, 0);
+    //         //         updated = true;
+    //         //     }
+    //         // }
+    //     } while (updated);
+    //     this.computeShared();
+    // }
 
     computeShared(): void {
         const buf: Packet = Packet.alloc(1);
@@ -202,28 +251,46 @@ export default class Zone {
      * - This does not include any updates that were made to the zones "THIS TICK".
      */
     writeFullFollows(player: Player): void {
+        const currentTick: number = World.currentTick;
         // full update necessary to clear client zone memory
         player.write(new UpdateZoneFullFollows(this.x, this.z, player.originX, player.originZ));
-        // osrs does locs first and then objs.
-        for (const loc of this.getAllLocsUnsafe(true)) {
-            if (loc.lifecycle === EntityLifeCycle.DESPAWN && loc.isValid()) {
-                player.write(new LocAddChange(CoordGrid.packZoneCoord(loc.x, loc.z), loc.type, loc.shape, loc.angle));
-            } else if (loc.lifecycle === EntityLifeCycle.RESPAWN && !loc.isValid() && !this.findChangeLoc(loc)) {
+        for (const obj of this.getAllObjsUnsafe(true)) {
+            if (obj.lastLifecycleTick === currentTick || (obj.receiver64 !== Obj.NO_RECEIVER && obj.receiver64 !== player.hash64)) {
+                continue;
+            }
+            player.write(new UpdateZonePartialFollows(this.x, this.z, player.originX, player.originZ));
+            if (obj.lifecycle === EntityLifeCycle.DESPAWN && obj.checkLifeCycle(currentTick)) {
+                player.write(new ObjAdd(CoordGrid.packZoneCoord(obj.x, obj.z), obj.type, obj.count));
+            } else if (obj.lifecycle === EntityLifeCycle.RESPAWN && obj.checkLifeCycle(currentTick)) {
+                player.write(new ObjAdd(CoordGrid.packZoneCoord(obj.x, obj.z), obj.type, obj.count));
+            }
+        }
+        for (const loc of this.getAllLocsUnsafe()) {
+            if (loc.lastLifecycleTick === currentTick) {
+                continue;
+            }
+            if (loc.lifecycle === EntityLifeCycle.RESPAWN && !loc.checkLifeCycle(currentTick)) {
                 player.write(new LocDel(CoordGrid.packZoneCoord(loc.x, loc.z), loc.shape, loc.angle));
             }
         }
-        for (const obj of this.getAllObjsUnsafe(true)) {
-            if (obj.receiver64 !== Obj.NO_RECEIVER && obj.receiver64 !== player.hash64) {
+        for (const loc of this.getAllLocsUnsafe()) {
+            if (loc.lastLifecycleTick === currentTick) {
                 continue;
             }
-            // osrs sends individual partial follows even on the same tick+zone+tile.
-            player.write(new UpdateZonePartialFollows(this.x, this.z, player.originX, player.originZ));
-            if (obj.lifecycle === EntityLifeCycle.DESPAWN && obj.isValid()) {
-                player.write(new ObjAdd(CoordGrid.packZoneCoord(obj.x, obj.z), obj.type, obj.count));
-            } else if (obj.lifecycle === EntityLifeCycle.RESPAWN && obj.isValid()) {
-                player.write(new ObjAdd(CoordGrid.packZoneCoord(obj.x, obj.z), obj.type, obj.count));
+            if (loc.lifecycle === EntityLifeCycle.DESPAWN && loc.checkLifeCycle(currentTick)) {
+                player.write(new LocAddChange(CoordGrid.packZoneCoord(loc.x, loc.z), loc.type, loc.shape, loc.angle));
             }
         }
+        // for (const loc of this.getAllLocsUnsafe(true)) {
+        //     if (loc.lastLifecycleTick === currentTick) {
+        //         continue;
+        //     }
+        //     if (loc.lifecycle === EntityLifeCycle.DESPAWN && loc.checkLifeCycle(currentTick)) {
+        //         player.write(new LocAddChange(CoordGrid.packZoneCoord(loc.x, loc.z), loc.type, loc.shape, loc.angle));
+        //     } else if (loc.lifecycle === EntityLifeCycle.RESPAWN && !loc.checkLifeCycle(currentTick)) {
+        //         player.write(new LocDel(CoordGrid.packZoneCoord(loc.x, loc.z), loc.shape, loc.angle));
+        //     }
+        // }
     }
 
     /**
@@ -233,7 +300,7 @@ export default class Zone {
      * updates after the client is set back to the original map then updated with the "currently seen zones".
      * - "currently seen zones" meaning all the visible objs and locs that should be visible to the client.
      */
-    writePartialEnclosed(player: Player): void {
+    writePartialEncloses(player: Player): void {
         if (!this.shared) {
             return;
         }
@@ -247,12 +314,11 @@ export default class Zone {
         if (this.events.size === 0) {
             return;
         }
+        player.write(new UpdateZonePartialFollows(this.x, this.z, player.originX, player.originZ));
         for (const event of this.follows()) {
             if (event.receiver64 !== Obj.NO_RECEIVER && event.receiver64 !== player.hash64) {
                 continue;
             }
-            // osrs sends individual partial follows even on the same tick+zone+tile.
-            player.write(new UpdateZonePartialFollows(this.x, this.z, player.originX, player.originZ));
             player.write(event.message);
         }
     }
@@ -292,21 +358,6 @@ export default class Zone {
         loc.isActive = true;
 
         this.queueEvent(loc, new ZoneEvent(ZoneEventType.ENCLOSED, -1n, new LocAddChange(coord, loc.type, loc.shape, loc.angle)));
-    }
-
-    changeLoc(from: Loc, to: Loc): void {
-        const coord: number = CoordGrid.packZoneCoord(from.x, from.z);
-        if (to.lifecycle === EntityLifeCycle.DESPAWN) {
-            this.locs.addLast(coord, to);
-        } else if (from.lifecycle === EntityLifeCycle.DESPAWN) {
-            this.locs.remove(coord, from);
-        }
-
-        this.locs.sortStack(coord);
-        from.isActive = false;
-        to.isActive = true;
-
-        this.queueEvent(from, new ZoneEvent(ZoneEventType.ENCLOSED, -1n, new LocAddChange(coord, to.type, to.shape, to.angle)));
     }
 
     removeLoc(loc: Loc): void {
@@ -546,18 +597,6 @@ export default class Zone {
      */
     *getAllLocsUnsafe(reverse: boolean = false): IterableIterator<Loc> {
         yield* this.locs.all(reverse);
-    }
-
-    private findChangeLoc(entity: Loc): Loc | null {
-        for (const loc of this.getLocsUnsafe(CoordGrid.packZoneCoord(entity.x, entity.z))) {
-            if (loc === entity) {
-                continue;
-            }
-            if (loc.layer === entity.layer && entity.shape === loc.shape) {
-                return loc;
-            }
-        }
-        return null;
     }
 
     /**

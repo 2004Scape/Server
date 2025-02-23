@@ -189,10 +189,11 @@ export class NetworkPlayer extends Player {
             this.refreshModal = false;
         }
 
-        for (let message: OutgoingMessage | null = this.buffer.head(); message; message = this.buffer.next()) {
+        for (const message of this.buffer) {
             this.writeInner(message);
-            message.unlink();
         }
+
+        this.buffer = [];
     }
 
     writeInner(message: OutgoingMessage): void {
@@ -383,12 +384,9 @@ export class NetworkPlayer extends Player {
             const zone: Zone = World.gameMap.getZoneIndex(zoneIndex);
             if (!loadedZones.has(zone.index)) {
                 zone.writeFullFollows(this);
-            } else {
-                // osrs does partial follows first, and then partial enclosed.
-                zone.writePartialFollows(this);
-                // partial enclosed is only written with already viewed zones.
-                zone.writePartialEnclosed(this);
             }
+            zone.writePartialEncloses(this);
+            zone.writePartialFollows(this);
             loadedZones.add(zone.index);
         }
     }
@@ -480,7 +478,7 @@ export function isBufferFull(player: Player): boolean {
 
     let total = 0;
 
-    for (let message: OutgoingMessage | null = player.buffer.head(); message; message = player.buffer.next()) {
+    for (const message of player.buffer) {
         const encoder: MessageEncoder<OutgoingMessage> | undefined = ServerProtRepository.getEncoder(message);
         if (!encoder) {
             return true;
