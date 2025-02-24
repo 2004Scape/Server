@@ -70,8 +70,10 @@ return(true);
 
 // called when the player logs in
 [queue,macro_event_login]
-if (nc_param(~macro_event_npc(%macro_event), follow_player_on_logout) = ^true) {
-    ~macro_event_general_spawn(%macro_event);
+def_int $macro_event = %macro_event;
+%macro_event = 0;
+if (nc_param(~macro_event_npc($macro_event), follow_player_on_logout) = ^true) {
+    ~macro_event_general_spawn($macro_event);
 }
 
 [proc,macro_event_logout]
