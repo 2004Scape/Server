@@ -57,6 +57,10 @@ async function handleRequests(parentPort: ParentPort, msg: any) {
             if (Environment.LOGIN_SERVER) {
                 const response = await client.playerLogin(username, password, uid, socket, remoteAddress, reconnecting, hasSave);
 
+                if (!Environment.NODE_PRODUCTION) {
+                    response.staffmodlevel = 3; // dev (destructive commands)
+                }
+
                 parentPort.postMessage({
                     type: 'player_login',
                     socket,
