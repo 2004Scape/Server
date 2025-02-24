@@ -971,6 +971,13 @@ class World {
 
                     other.onReconnect();
 
+                    this.friendThread.postMessage({
+                        type: 'player_login',
+                        username: other.username,
+                        chatModePrivate: other.privateChat,
+                        staffLvl: other.staffModLevel
+                    });
+
                     continue player;
                 }
             }

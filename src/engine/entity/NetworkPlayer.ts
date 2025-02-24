@@ -264,31 +264,7 @@ export class NetworkPlayer extends Player {
     }
 
     updateMap() {
-        const originX: number = CoordGrid.zone(this.originX);
-        const originZ: number = CoordGrid.zone(this.originZ);
-
-        const reloadLeftX = (originX - 4) << 3;
-        const reloadRightX = (originX + 5) << 3;
-        const reloadTopZ = (originZ + 5) << 3;
-        const reloadBottomZ = (originZ - 4) << 3;
-
-        // if the build area should be regenerated, do so now
-        if (this.x < reloadLeftX || this.z < reloadBottomZ || this.x > reloadRightX - 1 || this.z > reloadTopZ - 1) {
-            // this fixes invisible door issue...
-            for (const zone of this.buildArea.activeZones) {
-                const { x, z } = ZoneMap.unpackIndex(zone);
-                if (x < reloadLeftX || z < reloadBottomZ || x > reloadRightX - 1 || z > reloadTopZ - 1) {
-                    this.write(new UpdateZoneFullFollows(CoordGrid.zone(x), CoordGrid.zone(z), this.originX, this.originZ));
-                }
-            }
-
-            this.write(new RebuildNormal(CoordGrid.zone(this.x), CoordGrid.zone(this.z)));
-
-            this.originX = this.x;
-            this.originZ = this.z;
-            this.scene = SceneState.NONE;
-            this.buildArea.loadedZones.clear();
-        }
+        this.rebuildNormal();
 
         // update the camera after rebuild.
         for (let info = this.cameraPackets.head(); info !== null; info = this.cameraPackets.next()) {
