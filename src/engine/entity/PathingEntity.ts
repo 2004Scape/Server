@@ -14,6 +14,7 @@ import MoveSpeed from '#/engine/entity/MoveSpeed.js';
 import EntityLifeCycle from '#/engine/entity/EntityLifeCycle.js';
 import MoveStrategy from '#/engine/entity/MoveStrategy.js';
 import Obj from '#/engine/entity/Obj.js';
+import NonPathingEntity from '#/engine/entity/NonPathingEntity.js';
 
 import LocType from '#/cache/config/LocType.js';
 
@@ -21,9 +22,7 @@ import Environment from '#/util/Environment.js';
 
 import { CollisionFlag, CollisionType } from '@2004scape/rsmod-pathfinder';
 
-import { canTravel, changeNpcCollision, changePlayerCollision, findNaivePath, findPath, findPathToEntity, findPathToLoc, isApproached, isMapBlocked, reachedEntity, reachedLoc, reachedObj } from '#/engine/GameMap.js';
-import NonPathingEntity from '#/engine/entity/NonPathingEntity.js';
-import Visibility from '#/engine/entity/Visibility.js';
+import { canTravel, changeNpcCollision, changePlayerCollision, findNaivePath, findPath, findPathToEntity, findPathToLoc, isApproached, reachedEntity, reachedLoc, reachedObj } from '#/engine/GameMap.js';
 
 type TargetSubject = {
     type: number;
@@ -35,7 +34,7 @@ export type TargetOp = ServerTriggerType | NpcMode;
 export default abstract class PathingEntity extends Entity {
     // constructor properties
     protected readonly moveRestrict: MoveRestrict;
-    readonly blockWalk: BlockWalk;
+    blockWalk: BlockWalk;
     moveStrategy: MoveStrategy;
     private readonly coordmask: number;
     readonly entitymask: number;
