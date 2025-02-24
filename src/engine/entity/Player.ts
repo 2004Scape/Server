@@ -439,6 +439,7 @@ export default class Player extends PathingEntity {
         this.buildArea.clear(true);
         // rebuild scene (rebuildnormal won't run if you're in the same zone!)
         this.rebuildNormal();
+        this.scene = SceneState.LOAD;
         // in case of pending update
         if (World.isPendingShutdown) {
             const ticksBeforeShutdown = World.shutdownTicksRemaining;
@@ -1906,7 +1907,7 @@ export default class Player extends PathingEntity {
         const reloadBottomZ = (originZ - 4) << 3;
 
         // if the build area should be regenerated, do so now
-        if (this.x < reloadLeftX || this.z < reloadBottomZ || this.x > reloadRightX - 1 || this.z > reloadTopZ - 1) {
+        if (this.x < reloadLeftX || this.z < reloadBottomZ || this.x > reloadRightX - 1 || this.z > reloadTopZ - 1 || this.scene === SceneState.NONE) {
             if (this.scene === SceneState.READY) {
                 // this fixes invisible door issue...
                 for (const zone of this.buildArea.activeZones) {
@@ -1923,9 +1924,6 @@ export default class Player extends PathingEntity {
             this.originZ = this.z;
             this.scene = SceneState.NONE;
             this.buildArea.loadedZones.clear();
-        } else if (this.scene === SceneState.NONE) {
-            this.scene = SceneState.LOAD;
-            this.rebuildZones();
         }
     }
 
