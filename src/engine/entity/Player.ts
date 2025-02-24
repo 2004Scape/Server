@@ -74,14 +74,7 @@ import Environment from '#/util/Environment.js';
 import { ChatModePrivate, ChatModePublic, ChatModeTradeDuel } from '#/util/ChatModes.js';
 import LoggerEventType from '#/server/logger/LoggerEventType.js';
 import InputTracking from '#/engine/entity/tracking/InputTracking.js';
-import {
-    changeNpcCollision,
-    changePlayerCollision,
-    findNaivePath,
-    reachedEntity,
-    reachedLoc,
-    reachedObj
-} from '#/engine/GameMap.js';
+import { changeNpcCollision, changePlayerCollision, findNaivePath, reachedEntity, reachedLoc, reachedObj } from '#/engine/GameMap.js';
 import Visibility from './Visibility.js';
 import UpdateRebootTimer from '#/network/server/model/UpdateRebootTimer.js';
 import { CollisionType } from '@2004scape/rsmod-pathfinder';
