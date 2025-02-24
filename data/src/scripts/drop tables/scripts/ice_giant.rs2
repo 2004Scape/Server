@@ -32,36 +32,36 @@ if ($random < 5) {
     obj_add(npc_coord, bodyrune, 37, ^lootdrop_duration);
 } else if ($random < 32) { // 2/128
     obj_add(npc_coord, lawrune, 3, ^lootdrop_duration);
-} else if ($random < 31) { // 1/128
-    obj_add(npc_coord, waterrune, 12, ^lootdrop_duration);
-} else if ($random < 32) { // 1/128
-    obj_add(npc_coord, cosmicrune, 4, ^lootdrop_duration);
 } else if ($random < 33) { // 1/128
+    obj_add(npc_coord, waterrune, 12, ^lootdrop_duration);
+} else if ($random < 34) { // 1/128
+    obj_add(npc_coord, cosmicrune, 4, ^lootdrop_duration);
+} else if ($random < 35) { // 1/128
     obj_add(npc_coord, deathrune, 3, ^lootdrop_duration);
-} else if ($random < 34) {
+} else if ($random < 36) {
     if (map_members = true) {
         obj_add(npc_coord, bloodrune, 2, ^lootdrop_duration);
     } else {
         obj_add(npc_coord, black_kiteshield, 1, ^lootdrop_duration);
     }
-} else if ($random < 66) {
+} else if ($random < 68) {
     obj_add(npc_coord, coins, 117, ^lootdrop_duration);
-} else if ($random < 78) {
+} else if ($random < 80) {
     obj_add(npc_coord, coins, 53, ^lootdrop_duration);
-} else if ($random < 88) {
+} else if ($random < 90) {
     obj_add(npc_coord, coins, 196, ^lootdrop_duration);
-} else if ($random < 95) {
+} else if ($random < 97) {
     obj_add(npc_coord, coins, 8, ^lootdrop_duration);
-} else if ($random < 101) {
-    obj_add(npc_coord, coins, 22, ^lootdrop_duration);
 } else if ($random < 103) {
+    obj_add(npc_coord, coins, 22, ^lootdrop_duration);
+} else if ($random < 105) {
     obj_add(npc_coord, coins, 400, ^lootdrop_duration);
-} else if ($random < 106) {
-    obj_add(npc_coord, jug_wine, 1, ^lootdrop_duration);
-} else if ($random < 107) {
-    obj_add(npc_coord, mithril_ore, 1, ^lootdrop_duration);
 } else if ($random < 108) {
+    obj_add(npc_coord, jug_wine, 1, ^lootdrop_duration);
+} else if ($random < 109) {
+    obj_add(npc_coord, mithril_ore, 1, ^lootdrop_duration);
+} else if ($random < 110) {
     obj_add(npc_coord, banana, 1, ^lootdrop_duration);
-} else if ($random < 112) {
+} else if ($random < 114) {
     obj_add(npc_coord, ~randomjewel, ^lootdrop_duration);
 }
