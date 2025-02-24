@@ -16,9 +16,11 @@ if (coordy(coord) ! coordy(npc_coord) | npc_range(coord) > 15) {
     npc_tele(map_findsquare(coord, 1, 1, ^map_findsquare_lineofwalk));
 }
 // temp fix for pets until refactor?
+%npc_int = add(%npc_int, 10);
 if (modulo(%npc_int, 150) ! 0) {
     return;
-} 
+}
+%npc_int = 0;
 def_int $hunger = getbit_range(%cat_growth, 0,  4); //hunger       (0-16-18-20)
 def_int $attent = getbit_range(%cat_growth, 5, 10); //attention    (0-40-45-50)
 def_int $growth = getbit_range(%cat_growth, 11,19); //growth       (0-120-320)
@@ -78,7 +80,6 @@ if(oc_category(nc_param(npc_type, pet_item_id)) = kitten) {
             ~follower_death;
     }
 }
-%npc_int = add(%npc_int, 10);
 
 [opheld5,_kitten] ~cat_drop; //kitten
 [opheld5,_cat] ~cat_drop; //cat
