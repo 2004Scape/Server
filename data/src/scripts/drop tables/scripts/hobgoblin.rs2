@@ -117,11 +117,9 @@ if ($random < 3) {
 } else if ($random < 89) {
     if (map_members = true) {
         obj_add(npc_coord, coins, 1, ^lootdrop_duration);
-    } else {
-        obj_add(npc_coord, goblin_mail, 3, ^lootdrop_duration);
     }
 } else if ($random < 90) {
-    obj_add(npc_coord, coins, 42, ^lootdrop_duration);
+    obj_add(npc_coord, coins, 1, ^lootdrop_duration);
 } else if ($random < 111) {
     obj_add(npc_coord, limpwurt_root, 1, ^lootdrop_duration);
 } else if ($random < 113) {
