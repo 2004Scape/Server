@@ -80,6 +80,9 @@ import UpdateRebootTimer from '#/network/server/model/UpdateRebootTimer.js';
 import { CollisionType } from '@2004scape/rsmod-pathfinder';
 import SceneState from '#/engine/entity/SceneState.js';
 import ZoneMap from '#/engine/zone/ZoneMap.js';
+import UpdateStat from '#/network/server/model/UpdateStat.js';
+import UpdateZoneFullFollows from '#/network/server/model/UpdateZoneFullFollows.js';
+import RebuildNormal from '#/network/server/model/RebuildNormal.js';
 const levelExperience = new Int32Array(99);
 
 let acc = 0;
@@ -404,6 +407,7 @@ export default class Player extends PathingEntity {
 
     onLogin() {
         // normalize client between logins
+        this.rebuildNormal();
         this.write(new IfClose());
         this.write(new UpdateUid192(this.pid));
         this.unsetMapFlag();
@@ -423,7 +427,6 @@ export default class Player extends PathingEntity {
             this.executeScript(ScriptRunner.init(loginTrigger, this), true);
         }
 
-        this.scene = SceneState.NONE;
         this.lastStepX = this.x - 1;
         this.lastStepZ = this.z;
         this.isActive = true;
@@ -431,17 +434,20 @@ export default class Player extends PathingEntity {
 
     onReconnect() {
         // force resyncing
+        this.scene = SceneState.NONE;
         // reload entity info (overkill? does the client have some logic around this?)
         this.buildArea.clear(true);
+        // rebuild scene (rebuildnormal won't run if you're in the same zone!)
+        this.rebuildNormal();
         // in case of pending update
         if (World.isPendingShutdown) {
             const ticksBeforeShutdown = World.shutdownTicksRemaining;
             this.write(new UpdateRebootTimer(ticksBeforeShutdown));
         }
         this.write(new ResetAnims());
-        // rebuild scene (rebuildnormal won't run if you're in the same zone!)
-        this.originX = -1;
-        this.originZ = -1;
+        for (let i = 0; i < this.stats.length; i++) {
+            this.write(new UpdateStat(i, this.stats[i], this.levels[i]));
+        }
         // resync invs
         this.refreshInvs();
         this.moveSpeed = MoveSpeed.INSTANT;
@@ -1887,6 +1893,39 @@ export default class Player extends PathingEntity {
                 }
                 this.buildArea.activeZones.add(ZoneMap.zoneIndex(x << 3, z << 3, this.level));
             }
+        }
+    }
+
+    rebuildNormal(): void {
+        const originX: number = CoordGrid.zone(this.originX);
+        const originZ: number = CoordGrid.zone(this.originZ);
+
+        const reloadLeftX = (originX - 4) << 3;
+        const reloadRightX = (originX + 5) << 3;
+        const reloadTopZ = (originZ + 5) << 3;
+        const reloadBottomZ = (originZ - 4) << 3;
+
+        // if the build area should be regenerated, do so now
+        if (this.x < reloadLeftX || this.z < reloadBottomZ || this.x > reloadRightX - 1 || this.z > reloadTopZ - 1) {
+            if (this.scene === SceneState.READY) {
+                // this fixes invisible door issue...
+                for (const zone of this.buildArea.activeZones) {
+                    const { x, z } = ZoneMap.unpackIndex(zone);
+                    if (x < reloadLeftX || z < reloadBottomZ || x > reloadRightX - 1 || z > reloadTopZ - 1) {
+                        this.write(new UpdateZoneFullFollows(CoordGrid.zone(x), CoordGrid.zone(z), this.originX, this.originZ));
+                    }
+                }
+            }
+
+            this.write(new RebuildNormal(CoordGrid.zone(this.x), CoordGrid.zone(this.z)));
+
+            this.originX = this.x;
+            this.originZ = this.z;
+            this.scene = SceneState.NONE;
+            this.buildArea.loadedZones.clear();
+        } else if (this.scene === SceneState.NONE) {
+            this.scene = SceneState.LOAD;
+            this.rebuildZones();
         }
     }
 
