@@ -12,6 +12,13 @@ if (p_finduid(uid) = true) {
 if (finduid(%npc_attacking_uid) = false | p_finduid(uid) = false) { //paused when player is busy
     return; 
 }
+if (coordy(coord) ! coordy(npc_coord) | npc_range(coord) > 15) {
+    npc_tele(map_findsquare(coord, 1, 1, ^map_findsquare_lineofwalk));
+}
+// temp fix for pets until refactor?
+if (modulo(%npc_int, 150) ! 0) {
+    return;
+} 
 def_int $hunger = getbit_range(%cat_growth, 0,  4); //hunger       (0-16-18-20)
 def_int $attent = getbit_range(%cat_growth, 5, 10); //attention    (0-40-45-50)
 def_int $growth = getbit_range(%cat_growth, 11,19); //growth       (0-120-320)
@@ -29,7 +36,7 @@ if(oc_category(nc_param(npc_type, pet_item_id)) ! overgrown) {
                 %follower_obj = nc_param(npc_type, pet_item_id);
                 %follower_uid = npc_uid;
                 npc_say("Meeeooowww!");
-                npc_settimer(150); //reset timer -- bug where timer would go insanely fast upon growing up
+                npc_settimer(10); //reset timer -- bug where timer would go insanely fast upon growing up
                 ~mesbox("Your kitten has grown into a healthy cat,|that can hunt for itself."); //imgur.com/ni0BBTb
             }
         case 320 :
@@ -39,7 +46,7 @@ if(oc_category(nc_param(npc_type, pet_item_id)) ! overgrown) {
                 %follower_uid = npc_uid;
                 %cat_growth = 0; //according to ash, this gets wiped when the cat becomes overgrown
                 npc_say("Meeeooowww!");
-                npc_settimer(150);
+                npc_settimer(10);
                 ~mesbox("Your cat has grown into a mighty feline,|but it will no longer be able to chase vermin."); //linebreak is guessed
             }
     } 
@@ -71,6 +78,7 @@ if(oc_category(nc_param(npc_type, pet_item_id)) = kitten) {
             ~follower_death;
     }
 }
+%npc_int = add(%npc_int, 10);
 
 [opheld5,_kitten] ~cat_drop; //kitten
 [opheld5,_cat] ~cat_drop; //cat
@@ -219,7 +227,7 @@ npc_add(coord, oc_param(last_item, follower_id), ^max_32bit_int);
 %npc_attacking_uid = uid;
 npc_setmode(playerfollow);
 npc_say("Miaow!");
-npc_settimer(150);
+npc_settimer(10);
 
 [proc,follower_death]
 if (npc_finduid(%follower_uid) = true) {
@@ -247,6 +255,6 @@ if (%follower_obj ! null) {
         %follower_uid = npc_uid;
         npc_setmode(playerfollow);
         npc_say("Meeeew!"); //youtu.be/6y_cOu5OQf4?t=110
-        npc_settimer(150);
+        npc_settimer(10);
     }
 }
