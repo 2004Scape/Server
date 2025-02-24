@@ -29,7 +29,7 @@ if (~deserves_pk_skull = true) {
 [proc,pk_skull](int $duration)
 ~headicon_add(^headicon_skull);
 %pk_skull = add(map_clock, $duration);
-cleartimer(pk_skull_timer);
+clearsofttimer(pk_skull_timer);
 softtimer(pk_skull_timer, $duration);
 
 [proc,clear_pk_skull]
