@@ -74,7 +74,14 @@ import Environment from '#/util/Environment.js';
 import { ChatModePrivate, ChatModePublic, ChatModeTradeDuel } from '#/util/ChatModes.js';
 import LoggerEventType from '#/server/logger/LoggerEventType.js';
 import InputTracking from '#/engine/entity/tracking/InputTracking.js';
-import { findNaivePath, reachedEntity, reachedLoc, reachedObj } from '#/engine/GameMap.js';
+import {
+    changeNpcCollision,
+    changePlayerCollision,
+    findNaivePath,
+    reachedEntity,
+    reachedLoc,
+    reachedObj
+} from '#/engine/GameMap.js';
 import Visibility from './Visibility.js';
 import UpdateRebootTimer from '#/network/server/model/UpdateRebootTimer.js';
 import { CollisionType } from '@2004scape/rsmod-pathfinder';
@@ -1713,6 +1720,14 @@ export default class Player extends PathingEntity {
         }
         // This doesn't actually cancel interactions, source: https://youtu.be/ARS7eO3_Z8U?si=OkYfjW0sVhkQmQ8y&t=293
         this.visibility = visibility;
+        if (visibility === Visibility.DEFAULT) {
+            this.blockWalk = BlockWalk.NPC;
+            changeNpcCollision(this.width, this.x, this.z, this.level, true);
+        } else {
+            this.blockWalk = BlockWalk.NONE;
+            changeNpcCollision(this.width, this.x, this.z, this.level, false);
+            changePlayerCollision(this.width, this.x, this.z, this.level, false);
+        }
         this.messageGame(`vis: ${visibility}`);
     }
 
