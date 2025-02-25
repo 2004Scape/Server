@@ -18,7 +18,7 @@ export default class InputTracking {
     private readonly player: Player;
 
     enabled: boolean = false;
-    hasSeenReport: boolean = false;;
+    hasSeenReport: boolean = false;
     waitingForLastReport: boolean = false;
     endTrackingAt: number = this.calculateTrackingEnd();
     recordedEvents: InputTrackingEvent[] = [];
