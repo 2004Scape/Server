@@ -407,8 +407,3 @@ if_close;
 mes("The wizard mutters strange words over the liquid...");
 p_delay(3);
 ~chatnpc("<p,neutral>Here it is - a dangerous substance.|I must remind you that this potion can only be used|if your magic ability is high enough.");
-
-[debugproc,tes]
-if(p_finduid(uid) = false) return;
-npc_add(coord, watchtower_wizard, 100);
-~chatnpc("<p,confused>Long nails...grey in colour.|Well chewed...");
