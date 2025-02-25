@@ -1,4 +1,7 @@
 [label,macro_randomwoodcutting]
+if (~macro_event_allowed = false) {
+    return;
+}
 switch_int (random(calc(~macro_event_general_count + 3))) {
     case 0 : ~macro_event_dryad_spawn;
     case 1 : ~macro_event_ent_spawn;

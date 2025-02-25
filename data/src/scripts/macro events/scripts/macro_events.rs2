@@ -1,19 +1,12 @@
 // timer is initiated on login, in scripts\player\scripts\global.rs2
 [timer,general_macro_events]
-if (~macro_event_area(coord) = false) { // return before checking so random events are effectively "queued" for when the player leaves a no macro event area
+// make sure this is before afk_event is called, to retain the 'queueing' behavior for random event spawning
+if (~macro_event_allowed = false) { 
     return;
 }
 if (afk_event = ^true) {
-    // macro_event varp resets when a random event is due to spawn?
-    // Just so the player isnt permanantly stuck at a certain %macro_event value
-    if (%macro_event > 0) {
-        %macro_event = ^no_macro_event;
-    }
-    // random events arent restricted in wildy?
-    // https://youtu.be/uPKaH7yg4To?t=421
-
+    // random events arent restricted in wildy? https://youtu.be/uPKaH7yg4To?t=421
     // Not restricted in banks: https://youtu.be/1Rz9Eg4ZHhA
-
     ~macro_event_general_spawn(~macro_event_set_random);
 }
 
@@ -30,7 +23,7 @@ if (afk_event = ^true) {
 // - smithing at furnace. Confirmed? https://youtu.be/a6NobmSGBYw
 // - crafting at furnace. Confirmed: https://youtu.be/7pS6s5rvvEY
 [proc,macro_event_general_spawn](int $event)
-if (~macro_event_area(coord) = false) {
+if (~macro_event_allowed = false) { 
     return;
 }
 def_coord $event_coord = map_findsquare(coord, 1, 1, ^map_findsquare_lineofwalk);
@@ -65,10 +58,22 @@ if (~in_tutorial_island($coord) = true) {
 }
 return(true);
 
+[proc,macro_event_allowed]()(boolean)
+if (~macro_event_area(coord) = false) {
+    return(false);
+}
+// if this var isnt reset on npc delete, then youll never get a random event: https://youtu.be/vRlOfkCCGkw
+if (%macro_event > 0) {
+    return(false);
+}
+return(true);
+
 // called when the player logs in
 [queue,macro_event_login]
-if (nc_param(~macro_event_npc(%macro_event), follow_player_on_logout) = ^true) {
-    ~macro_event_general_spawn(%macro_event);
+def_int $macro_event = %macro_event;
+%macro_event = 0;
+if (nc_param(~macro_event_npc($macro_event), follow_player_on_logout) = ^true) {
+    ~macro_event_general_spawn($macro_event);
 }
 
 [proc,macro_event_logout]
@@ -176,9 +181,13 @@ if (finduid(%npc_macro_event_target) = true) {
     if (~macro_event_area(coord) = false) {
         return(true);
     }
-    // i think osrs added a distance check from spawn point after random event rework in 2014
-    // so going up ladders for example would make the random event despawn
-    npc_setmode(playerfollow); // this is here because they used ~chatnpc back in the day, which sets the npc
+    // https://youtu.be/vRlOfkCCGkw?t=87
+    if (coordy(coord) ! coordy(npc_coord) | npc_range(coord) > 15) {
+        npc_tele(map_findsquare(coord, 1, 1, ^map_findsquare_lineofwalk));
+        spotanim_map(small_smokepuff, npc_coord, 124, 0);
+        sound_synth(smokepuff, 0, 0);
+    }
+    npc_setmode(playerfollow);
     return(false);
 }
 return(true);

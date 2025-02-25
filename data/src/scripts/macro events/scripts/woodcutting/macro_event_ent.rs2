@@ -15,6 +15,7 @@ if ($loc = null) {
 npc_add($coord, $ent, 60);
 sound_synth(anothercry, 0, 0); // complete guess, this is near the toher wc sounds so it might be this one?
 p_opnpc(1); // not sure if p_opnpc is used (delays an extra tick)
+%macro_event = ^no_macro_event;
 
 [opnpc1,_macro_event_ent] @attempt_cut_ent;
 [opnpc3,_macro_event_ent] @cut_ent;

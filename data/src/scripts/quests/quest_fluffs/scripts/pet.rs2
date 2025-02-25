@@ -9,67 +9,82 @@ if (p_finduid(uid) = true) {
 }
 
 [ai_timer,_petcat]
-if (finduid(%npc_attacking_uid) = false | p_finduid(uid) = false) { //paused when player is busy
-    return; 
+if (finduid(%npc_attacking_uid) = true) {
+    if (coordy(coord) ! coordy(npc_coord) | npc_range(coord) > 15) {
+        npc_tele(map_findsquare(coord, 1, 1, ^map_findsquare_lineofwalk));
+    }
 }
-def_int $hunger = getbit_range(%cat_growth, 0,  4); //hunger       (0-16-18-20)
-def_int $attent = getbit_range(%cat_growth, 5, 10); //attention    (0-40-45-50)
-def_int $growth = getbit_range(%cat_growth, 11,19); //growth       (0-120-320)
-def_int $vermin = getbit_range(%cat_growth, 20,26); //rats caught  (0-100)
-if($attent = 0) { 
-    $attent = 28; //default attent for a new kitten is supposed to be 28
+
+[timer,petcat_growth]
+if (%follower_uid = null) {
+    cleartimer(petcat_growth);
+    return;
 }
-if(oc_category(nc_param(npc_type, pet_item_id)) ! overgrown) {
+if (npc_finduid(%follower_uid) = true) {
+    def_category $cat_cat = oc_category(nc_param(npc_type, pet_item_id));
+    if ($cat_cat = overgrown) {
+        cleartimer(petcat_growth);
+        return;
+    }
+    def_int $growth = getbit_range(%cat_growth, 11, 19); //growth       (0-120-320)
     npc_say("Meow!"); //done every 90s, no random chance
     %cat_growth = setbit_range_toint(%cat_growth, min(320,max(calc($growth + 1),-1)), 11, 19);
-    switch_int (getbit_range(%cat_growth, 11, 19)) {
-        case 120 :
-            if(oc_category(nc_param(npc_type, pet_item_id)) = kitten) {
-                npc_changetype(nc_param(npc_type, cat_next_id));
-                %follower_obj = nc_param(npc_type, pet_item_id);
-                %follower_uid = npc_uid;
-                npc_say("Meeeooowww!");
-                npc_settimer(150); //reset timer -- bug where timer would go insanely fast upon growing up
-                ~mesbox("Your kitten has grown into a healthy cat,|that can hunt for itself."); //imgur.com/ni0BBTb
-            }
-        case 320 :
-            if(oc_category(nc_param(npc_type, pet_item_id)) = cat) {
-                npc_changetype(nc_param(npc_type, cat_next_id));
-                %follower_obj = nc_param(npc_type, pet_item_id);
-                %follower_uid = npc_uid;
-                %cat_growth = 0; //according to ash, this gets wiped when the cat becomes overgrown
-                npc_say("Meeeooowww!");
-                npc_settimer(150);
-                ~mesbox("Your cat has grown into a mighty feline,|but it will no longer be able to chase vermin."); //linebreak is guessed
-            }
-    } 
+    if ($cat_cat = cat) {
+        @cat_growth;
+    }
+    if ($cat_cat = kitten) {
+        @kitten_growth;
+    }
+} else {
+    cleartimer(petcat_growth);
 }
-if(oc_category(nc_param(npc_type, pet_item_id)) = kitten) {
-    %cat_growth = setbit_range_toint(%cat_growth, calc($hunger + 1), 0, 4);
-    switch_int (getbit_range(%cat_growth, 0, 4)) {
-        case 16 :
-            npc_say("Miaow!");
-            ~chatplayer("<p,worried>I think it's hungry!"); //youtu.be/1vY_uGOq6qM //mes added later
-        case 18 :
-            npc_say("Meeeooowww!");
-            ~chatplayer("<p,worried>I think it's really hungry!"); 
-        case 20 :
-            mes("Your kitten has run away to look for food.");
-            ~follower_death;
-    }
 
-    %cat_growth = setbit_range_toint(%cat_growth, calc($attent + 1), 5, 10);
-    switch_int (getbit_range(%cat_growth, 5, 10)) {
-        case 40 :
-            npc_say("Purr...");
-            ~chatplayer("<p,neutral>I think it wants some attention.");
-        case 45 :
-            npc_say("Meeeooowww...");
-            ~chatplayer("<p,neutral>I think it's feeling lonely."); //738
-        case 50 :
-            mes("Your kitten got lonely and ran off.");
-            ~follower_death;
-    }
+[label,cat_growth]
+if (getbit_range(%cat_growth, 11, 19) = 320) {
+    npc_changetype(nc_param(npc_type, cat_next_id));
+    %follower_obj = nc_param(npc_type, pet_item_id);
+    %cat_growth = 0; //according to ash, this gets wiped when the cat becomes overgrown
+    npc_say("Meeeooowww!");
+    ~mesbox("Your cat has grown into a mighty feline,|but it will no longer be able to chase vermin."); //linebreak is guessed
+}
+
+[label,kitten_growth]
+def_int $hunger = getbit_range(%cat_growth, 0, 4); //hunger       (0-16-18-20)
+def_int $attent = getbit_range(%cat_growth, 5, 10); //attention    (0-40-45-50)
+if ($attent = 0) { 
+    $attent = 28; //default attent for a new kitten is supposed to be 28
+}
+if (getbit_range(%cat_growth, 11, 19) = 120) {
+    npc_changetype(nc_param(npc_type, cat_next_id));
+    %follower_obj = nc_param(npc_type, pet_item_id);
+    npc_say("Meeeooowww!");
+    ~mesbox("Your kitten has grown into a healthy cat,|that can hunt for itself."); //imgur.com/ni0BBTb
+    return;
+}
+%cat_growth = setbit_range_toint(%cat_growth, calc($hunger + 1), 0, 4);
+switch_int (getbit_range(%cat_growth, 0, 4)) {
+    case 16 :
+        npc_say("Miaow!");
+        ~chatplayer("<p,worried>I think it's hungry!"); //youtu.be/1vY_uGOq6qM //mes added later
+    case 18 :
+        npc_say("Meeeooowww!");
+        ~chatplayer("<p,worried>I think it's really hungry!"); 
+    case 20 :
+        mes("Your kitten has run away to look for food.");
+        ~follower_death;
+}
+
+%cat_growth = setbit_range_toint(%cat_growth, calc($attent + 1), 5, 10);
+switch_int (getbit_range(%cat_growth, 5, 10)) {
+    case 40 :
+        npc_say("Purr...");
+        ~chatplayer("<p,neutral>I think it wants some attention.");
+    case 45 :
+        npc_say("Meeeooowww...");
+        ~chatplayer("<p,neutral>I think it's feeling lonely."); //738
+    case 50 :
+        mes("Your kitten got lonely and ran off.");
+        ~follower_death;
 }
 
 [opheld5,_kitten] ~cat_drop; //kitten
@@ -219,7 +234,7 @@ npc_add(coord, oc_param(last_item, follower_id), ^max_32bit_int);
 %npc_attacking_uid = uid;
 npc_setmode(playerfollow);
 npc_say("Miaow!");
-npc_settimer(150);
+settimer(petcat_growth, 150);
 
 [proc,follower_death]
 if (npc_finduid(%follower_uid) = true) {
@@ -247,6 +262,6 @@ if (%follower_obj ! null) {
         %follower_uid = npc_uid;
         npc_setmode(playerfollow);
         npc_say("Meeeew!"); //youtu.be/6y_cOu5OQf4?t=110
-        npc_settimer(150);
+        settimer(petcat_growth, 150);
     }
 }
