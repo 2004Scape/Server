@@ -123,8 +123,8 @@ if (random($chance) = ^true) {
         mes("You just found <~add_article(oc_name(db_getfield($data, gem_cutting_table:cut_gem, 0)))>!");
     }
 } else if (stat_random(stat(mining), db_getfield($data, mining_table:rock_successchance, 0)) = true) {
-    // normal mining has a 1t delay, osrs used to be this way but changed it in like 
-    p_delay(0);
+    // They added a 1t p_delay in this update: https://oldschool.runescape.wiki/w/Update:Special_Attacks
+    // p_delay(0);
     // deplete
     def_int $respawn = ~scale_by_playercount(db_getfield($data, mining_table:rock_respawnrate, 0));
     loc_change(loc_param(next_loc_stage_mining), $respawn);
@@ -209,8 +209,8 @@ if ($neck ! null & oc_category($neck) = category_557) {
     $high = multiply($high, 3);
 }
 if (stat_random(stat(mining), $low, $high) = true) {
-    // normal mining has a 1t delay, osrs used to be this way but changed it in like 
-    p_delay(0);
+    // They added a 1t p_delay in this update: https://oldschool.runescape.wiki/w/Update:Special_Attacks
+    // p_delay(0);
     // deplete
     def_int $respawn = ~scale_by_playercount(db_getfield($data, mining_table:rock_respawnrate, 0));
     loc_change(loc_param(next_loc_stage_mining), $respawn);
