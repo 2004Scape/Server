@@ -39,4 +39,5 @@ stat_advance(mining, 153000);
 stat_advance(herblore, 20000);
 inv_add(inv, gold_bar, 2);
 session_log(^log_adventure, "Quest complete: Digsite");
-~send_quest_complete(questlist:itexam, trowel, 200, ^itexam_questpoints, "You have finished the Digsite Quest!");
+// https://web.archive.org/web/20050612015017/http://runescape.salmoneus.net/quests/DigsiteQuest/digsitecomplt.pnghell
+~send_quest_complete(questlist:itexam, trowel, 200, ^itexam_questpoints, "You have finished the Digsite Quest.");
