@@ -2,7 +2,7 @@
 if(%itwatchtower_progress >= ^itwatchtower_made_relic | %itwatchtower_progress < ^itwatchtower_given_fingernails) {
     mes("He's busy; try him another time.");
 } else if(testbit(%itwatchtower_bits, ^itwatchtower_helped_og) = true) {
-    ~chatnpc("<p,bored>It's the little t'ing again.");
+    ~chatnpc("<p,bored>It's the little rat again.");
     switch_int(~p_choice2("Do you have any other tasks for me?", 1, "I have lost the relic part you gave me.", 2)) {
         case 1 : 
             ~chatplayer("<p,neutral>Do you have any other tasks for me?");
@@ -25,7 +25,7 @@ if(%itwatchtower_progress >= ^itwatchtower_made_relic | %itwatchtower_progress <
         case 1 :
             ~chatplayer("<p,neutral>I seek entrance to the city of ogres.");
             ~chatnpc("<p,angry>You got no business there!");
-            ~chatnpc("<p,neutral>Just a minute... Maybe if you did somet'ing for me, I might help you get in.");
+            ~chatnpc("<p,neutral>Just a minute... Maybe if you did something for me, I might help you get in.");
             ~chatplayer("<p,quiz>What can I do to help an ogre?");
             ~chatnpc("<p,neutral>South-east of here der is more ogres -|the name of the chieftain is Toban.|He stole gold from me|and I want it back!");
             %itwatchtower_bits = setbit(%itwatchtower_bits, ^itwatchtower_spoken_og);
@@ -48,7 +48,8 @@ if(inv_total(inv, tobans_gold) > 0) {
     inv_del(inv, tobans_gold, 1);
     inv_add(inv, relic_part_1, 1);
     %itwatchtower_bits = setbit(%itwatchtower_bits, ^itwatchtower_helped_og);
-    ~chatnpc("<p,happy>Well, well, the little t'ing has got it! Take dis to show little t'ing is a friend to da ogres. Hahahahaha!");
+    // https://web.archive.org/web/20041201004103if_/http://img35.imageshack.us:80/img35/9167/relicpartone.jpg
+    ~chatnpc("<p,happy>Well well, the little rat has got it!|Take this to show little rat is a friend to the ogres.|Hahahahaha!");
     ~objbox(relic_part_1, "The ogre gives you part of a horrible statue.", 250, 0, divide(^objbox_height, 2));
     return;
 }
