@@ -3,11 +3,6 @@
 if (~in_duel_arena(coord) = true) {
     return(false);
 }
-if (%pk_skull > 0) { 
-    // in osrs pk skull resets after each new player you attack.
-    // this was not the case before this update though: https://oldschool.runescape.wiki/w/Update :Grand_Exchange_Tax_%26_Item_Sink
-    return(false);
-}
 if (.%pk_prey1 = uid | .%pk_prey2 = uid | %pk_predator1 = .uid | %pk_predator2 = .uid | %pk_predator3 = .uid) {
     return(false);
 }
@@ -34,6 +29,7 @@ if (~deserves_pk_skull = true) {
 [proc,pk_skull](int $duration)
 ~headicon_add(^headicon_skull);
 %pk_skull = add(map_clock, $duration);
+clearsofttimer(pk_skull_timer);
 softtimer(pk_skull_timer, $duration);
 
 [proc,clear_pk_skull]
