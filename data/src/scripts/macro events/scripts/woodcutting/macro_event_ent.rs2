@@ -61,7 +61,7 @@ if (inv_freespace(inv) < 1) {
     return;
 }
 if (%action_delay < map_clock) {
-    if ($level > 0 & ~woodcutting_axe_checker = null) {
+    if ($level > 0 & ~woodcutting_axe_checker(true) = null) {
         return;
     }
     %action_delay = calc(map_clock + 3);

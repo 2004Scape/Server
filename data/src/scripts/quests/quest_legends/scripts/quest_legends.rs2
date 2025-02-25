@@ -466,7 +466,7 @@ if (stat(mining) < 52) {
 }
 mes("You swing your pick at the rock.");
 anim(oc_param($pickaxe, mining_animation), 0);
-~mining_sound;
+sound_synth(mine_quick, 0, 10);
 // todo: real rate?
 if (stat_random(stat(mining), 0, 255) = true) {
     // no delays on any of this
@@ -678,7 +678,7 @@ def_dbrow $data = db_findnext;
 if ($data = null) {
     return;
 }
-def_namedobj $gem = db_getfield($data, legends_gem_data:gem, 0);
+def_namedobj $gem = db_getfield($data, legends_gem_data:gem_named, 0);
 def_int $gem_bit = db_getfield($data, legends_gem_data:gem_bit, 0);
 if (testbit(%legends_map_runes, $gem_bit) = true) {
     // todo: can you take the gem here? if you can and do i assume it unsets the bit
@@ -696,7 +696,7 @@ if ($data = null) {
     ~displaymessage(^dm_default);
     return;
 }
-def_namedobj $gem = db_getfield($data, legends_gem_data:gem, 0);
+def_namedobj $gem = db_getfield($data, legends_gem_data:gem_named, 0);
 def_int $gem_bit = db_getfield($data, legends_gem_data:gem_bit, 0);
 if (last_useitem = $gem & testbit(%legends_map_runes, $gem_bit) = false) {
     anim(human_pickuptable, 0);
@@ -727,11 +727,12 @@ def_dbrow $data = db_findnext;
 if ($data = null) {
     return;
 }
+def_namedobj $gem = db_getfield($data, legends_gem_data:gem_named, 0);
 def_coord $rock_coord = db_getfield($data, legends_gem_data:rock_coord, 0);
 // todo: confirm distance req and that the gem does spawn on the rock
 if (distance(coord, $rock_coord) = 1) {
     obj_del;
-    obj_add($rock_coord, obj_type, 1, 5);
+    obj_add($rock_coord, $gem, 1, 5);
     mes("As you drop the gem, it slowly glides over to the sharp rock.");
     mes("The <lowercase(obj_name)> glows and starts spinning as it hovers above the rock.");
     mes("The gem soon begins to fade.");
@@ -773,7 +774,7 @@ while ($i < $gem_count) {
     if ($data = null) {
         return;
     }
-    def_namedobj $gem = db_getfield($data, legends_gem_data:gem, 0);
+    def_namedobj $gem = db_getfield($data, legends_gem_data:gem_named, 0);
     def_coord $rock_coord = db_getfield($data, legends_gem_data:rock_coord, 0);
     obj_add($rock_coord, $gem, 1, 5);
     // todo: exact values here
@@ -796,7 +797,7 @@ while ($i < $gem_count) {
     if ($data = null) {
         return;
     }
-    def_namedobj $gem = db_getfield($data, legends_gem_data:gem, 0);
+    def_namedobj $gem = db_getfield($data, legends_gem_data:gem_named, 0);
     def_coord $rock_coord = db_getfield($data, legends_gem_data:rock_coord, 0);
     obj_find($rock_coord, $gem);
     obj_del;

@@ -49,7 +49,7 @@ if (afk_event = ^true) {
     @macro_randomwoodcutting;
 }
 if (%action_delay < map_clock) {
-    if ($level > 0 & ~woodcutting_axe_checker = null) {
+    if ($level > 0 & ~woodcutting_axe_checker(true) = null) {
         return;
     }
     %action_delay = calc(map_clock + 3);
@@ -75,7 +75,7 @@ p_oploc(3);
 
 
 [label,cut_tree]
-def_obj $axe = ~woodcutting_axe_checker;
+def_obj $axe = ~woodcutting_axe_checker(true);
 if ($axe = null) {
     return;
 }
