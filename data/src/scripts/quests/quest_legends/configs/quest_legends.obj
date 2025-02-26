@@ -1,4 +1,4 @@
-[obj_714]
+[radimus_notes]
 name=Radimus notes
 desc=Notes given to you by Radimus Erkle, it includes a partially completed map.
 members=yes
@@ -17,7 +17,7 @@ iop2=Complete
 weight=20g
 tradeable=no
 
-[obj_715]
+[radimus_notes_complete]
 name=Radimus notes
 desc=Notes given to you by Radimus Erkle, it includes a partially completed map.
 members=yes
@@ -47,7 +47,7 @@ iop1=Swing
 weight=20g
 tradeable=no
 
-[obj_717]
+[scrawled_note]
 name=Scrawled note
 desc=A scrawled note with spidery writing on it.
 members=yes
@@ -73,7 +73,7 @@ iop1=Read
 weight=20g
 tradeable=no
 
-[obj_718]
+[a_scribbled_note]
 name=A scribbled note
 desc=A scrawled note with spidery writing on it.
 members=yes
@@ -99,7 +99,7 @@ iop1=Read
 weight=20g
 tradeable=no
 
-[obj_719]
+[scrumpled_note]
 name=Scrumpled note
 desc=A scrawled note with spidery writing on it.
 members=yes
@@ -125,7 +125,7 @@ iop1=Read
 weight=20g
 tradeable=no
 
-[obj_720]
+[sketch]
 name=Sketch
 desc=A rough sketch of a bowl shaped vessel given to you by Gujuo.
 cost=10
@@ -144,7 +144,7 @@ iop1=Look
 weight=20g
 tradeable=no
 
-[obj_721]
+[gold_bowl]
 name=Gold bowl
 desc=A specially made bowl constructed out of pure gold.
 cost=700
@@ -159,8 +159,9 @@ recol2d=31528
 2dxan=204
 weight=800g
 tradeable=no
+param=changesto,golden_bowl_water
 
-[obj_722]
+[blessed_gold_bowl]
 name=Blessed gold bowl
 desc=A specially made bowl constructed out of pure gold and blessed.
 cost=700
@@ -175,8 +176,9 @@ recol2d=31528
 2dxan=204
 weight=800g
 tradeable=no
+param=changesto,blessed_golden_bowl_water
 
-[obj_723]
+[golden_bowl_water]
 name=Golden bowl
 desc=A specially made golden bowl with water.
 cost=700
@@ -190,8 +192,9 @@ recol1d=31528
 iop1=Empty
 weight=1kg
 tradeable=no
+param=next_obj_stage,gold_bowl
 
-[obj_724]
+[golden_bowl_pure_water]
 name=Golden bowl
 desc=A specially made bowl constructed out of pure gold. It has pure water in it.
 cost=700
@@ -205,8 +208,9 @@ recol1d=31528
 iop1=Empty
 weight=1kg
 tradeable=no
+param=next_obj_stage,gold_bowl
 
-[obj_725]
+[blessed_golden_bowl_water]
 name=Golden bowl
 desc=A blessed golden bowl. It has water in it.
 cost=700
@@ -220,8 +224,9 @@ recol1d=31528
 iop1=Empty
 weight=1kg
 tradeable=no
+param=next_obj_stage,blessed_gold_bowl
 
-[obj_726]
+[blessed_golden_bowl_pure_water]
 name=Golden bowl
 desc=A blessed golden bowl. It has pure sacred water in it.
 cost=700
@@ -235,6 +240,7 @@ recol1d=31528
 iop1=Empty
 weight=1kg
 tradeable=no
+param=next_obj_stage,blessed_gold_bowl
 
 [hollow_reed]
 cost=2
@@ -346,7 +352,7 @@ model=model_2676_obj
 2dxan=412
 weight=2g
 
-[obj_735]
+[yommi_tree_seeds]
 name=Yommi tree seeds
 desc=These need to be germinated before they can be used.
 model=model_2381_obj
@@ -363,7 +369,7 @@ op1=Look
 weight=1g
 tradeable=no
 
-[obj_736]
+[yommi_tree_seeds_germinated]
 name=Yommi tree seeds
 desc=These are germinated and ready to be planted in fertile soil.
 model=model_2381_obj
@@ -467,7 +473,7 @@ members=yes
 weight=50g
 tradeable=no
 
-[lumb_of_crystal]
+[lump_of_crystal]
 name=Lump of crystal
 desc=It looks like it's been snapped off of something.
 model=model_2844_obj

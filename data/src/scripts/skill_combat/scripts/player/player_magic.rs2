@@ -47,6 +47,10 @@ if (~pvm_debuff_allowed($spell_data) = false) {
     return;
 }
 def_int $duration = ~pvm_spell_cast($spell_data);
+if (~legends_check_spell_usage($spell, $spell_data, $duration) = true) {
+    // if this is true, the whole interaction has been handled in the proc so return
+    return;
+}
 // if player DOESNT splash:
 if (~player_npc_hit_roll(^magic_style) = true) {
     def_int $maxhit = ~magic_spell_maxhit($spell_data);

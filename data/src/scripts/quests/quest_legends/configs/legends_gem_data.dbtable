@@ -1,0 +1,8 @@
+[legends_gem_data]
+column=rock_coord,coord
+// we need to check against obj when a gem is dropped, but we need
+// to return a namedobj when adding that gem to the rock.
+// if there's a better way to do this, please change it!
+column=gem,obj
+column=gem_named,namedobj
+column=gem_bit,int
