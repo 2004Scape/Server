@@ -175,6 +175,9 @@ stat_advance(hitpoints, scale($multiplier, 1000, scale(133, 100, $base)));
 if (.p_finduid(.uid) = true) {
     .p_preventlogout("You can't log out until 10 seconds after the end of combat.", 16);
 }
+if ($damage < 0) {
+    return;
+}
 .queue(pvp_damage, $delay, $damage);
 
 // needs to be a queue
