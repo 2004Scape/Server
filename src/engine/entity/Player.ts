@@ -472,6 +472,7 @@ export default class Player extends PathingEntity {
             const ticksBeforeShutdown = World.shutdownTicksRemaining;
             this.write(new UpdateRebootTimer(ticksBeforeShutdown));
         }
+        this.closeModal();
         this.refreshInvs();
         for (let i = 0; i < this.stats.length; i++) {
             this.write(new UpdateStat(i, this.stats[i], this.levels[i]));
