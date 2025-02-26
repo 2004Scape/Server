@@ -12,6 +12,13 @@ export default {
     /// web server
     WEB_PORT: tryParseInt(process.env.WEB_PORT, process.platform === 'win32' || process.platform === 'darwin' ? 80 : 8888),
     WEB_ALLOWED_ORIGIN: tryParseString(process.env.WEB_ALLOWED_ORIGIN, ''),
+    // WEB_SOCKET_TOKEN_RPOTECTION tightens security somewhat by embedding a token in the
+    // rs2.cgi html which is sent on each login. if token is absent or wrong,
+    // the login is rejected. this is mainly for preventing external WebSockets
+    // that have not accessed the server's game page.
+    // NOTE: if you set protection on, and there were clients with page loaded without this option on,
+    // they wont be able to connect until they F5, as the cookie won't have been sent.
+    WEB_SOCKET_TOKEN_PROTECTION: tryParseBoolean(process.env.WEB_SOCKET_TOKEN_PROTECTECTION, false),
 
     // management server
     WEB_MANAGEMENT_PORT: tryParseInt(process.env.WEB_MANAGEMENT_PORT, 8898),
