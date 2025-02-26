@@ -83,6 +83,7 @@ import ZoneMap from '#/engine/zone/ZoneMap.js';
 import UpdateStat from '#/network/server/model/UpdateStat.js';
 import UpdateZoneFullFollows from '#/network/server/model/UpdateZoneFullFollows.js';
 import RebuildNormal from '#/network/server/model/RebuildNormal.js';
+import UpdateRunEnergy from '#/network/server/model/UpdateRunEnergy.js';
 const levelExperience = new Int32Array(99);
 
 let acc = 0;
@@ -406,12 +407,21 @@ export default class Player extends PathingEntity {
     // ----
 
     onLogin() {
-        // normalize client between logins
+        // - rebuild_normal
+        // - chat_filter_settings
+        // - varp_reset
+        // - varps
+        // - invs
+        // - interfaces
+        // - stats
+        // - runweight
+        // - runenergy
+        // - reset anims
+        // - social
         this.rebuildNormal();
+        this.write(new ChatFilterSettings(this.publicChat, this.privateChat, this.tradeDuel));
         this.write(new IfClose());
         this.write(new UpdateUid192(this.pid));
-        this.unsetMapFlag();
-        this.write(new ResetAnims());
         this.write(new ResetClientVarCache());
         for (let varp = 0; varp < this.vars.length; varp++) {
             const type = VarPlayerType.get(varp);
@@ -420,7 +430,7 @@ export default class Player extends PathingEntity {
                 this.writeVarp(varp, value);
             }
         }
-        this.write(new ChatFilterSettings(this.publicChat, this.privateChat, this.tradeDuel));
+        this.write(new ResetAnims());
 
         const loginTrigger = ScriptProvider.getByTriggerSpecific(ServerTriggerType.LOGIN, -1, -1);
         if (loginTrigger) {
@@ -433,6 +443,23 @@ export default class Player extends PathingEntity {
     }
 
     onReconnect() {
+        // - varp_reset
+        // - varps
+        // - rebuild_normal
+        // - invs
+        // - stats
+        // - runweight
+        // - runenergy
+        // - reset_anims
+        // - socials
+        this.write(new ResetClientVarCache());
+        for (let varp = 0; varp < this.vars.length; varp++) {
+            const type = VarPlayerType.get(varp);
+            const value = this.vars[varp];
+            if (type.transmit) {
+                this.writeVarp(varp, value);
+            }
+        }
         // force resyncing
         this.scene = SceneState.NONE;
         // reload entity info (overkill? does the client have some logic around this?)
@@ -445,12 +472,13 @@ export default class Player extends PathingEntity {
             const ticksBeforeShutdown = World.shutdownTicksRemaining;
             this.write(new UpdateRebootTimer(ticksBeforeShutdown));
         }
-        this.write(new ResetAnims());
+        this.closeModal();
+        this.refreshInvs();
         for (let i = 0; i < this.stats.length; i++) {
             this.write(new UpdateStat(i, this.stats[i], this.levels[i]));
         }
-        // resync invs
-        this.refreshInvs();
+        this.write(new UpdateRunEnergy(this.runenergy));
+        this.write(new ResetAnims());
         this.moveSpeed = MoveSpeed.INSTANT;
         this.tele = true;
         this.jump = true;
