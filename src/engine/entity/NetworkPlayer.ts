@@ -76,12 +76,7 @@ export class NetworkPlayer extends Player {
         this.restrictedLimit = 0;
 
         const bytesStart = this.client.in.pos;
-        while (
-            this.userLimit < ClientProtCategory.USER_EVENT.limit &&
-            this.clientLimit < ClientProtCategory.CLIENT_EVENT.limit &&
-            this.restrictedLimit < ClientProtCategory.RESTRICTED_EVENT.limit &&
-            this.read()
-        ) {
+        while (this.userLimit < ClientProtCategory.USER_EVENT.limit && this.clientLimit < ClientProtCategory.CLIENT_EVENT.limit && this.restrictedLimit < ClientProtCategory.RESTRICTED_EVENT.limit && this.read()) {
             // empty
         }
         const bytesRead = bytesStart - this.client.in.pos;
@@ -106,7 +101,7 @@ export class NetworkPlayer extends Player {
             this.client.read(NetworkPlayer.inBuf.data, 0, 1);
 
             if (this.client.decryptor) {
-                this.client.opcode = (NetworkPlayer.inBuf.g1() - this.client.decryptor.nextInt()) & 0xFF;
+                this.client.opcode = (NetworkPlayer.inBuf.g1() - this.client.decryptor.nextInt()) & 0xff;
             } else {
                 this.client.opcode = NetworkPlayer.inBuf.g1();
             }
@@ -279,7 +274,7 @@ export class NetworkPlayer extends Player {
         }
 
         // map zone changed
-        const mapZone = CoordGrid.packCoord(0, this.x >> 6 << 6, this.z >> 6 << 6);
+        const mapZone = CoordGrid.packCoord(0, (this.x >> 6) << 6, (this.z >> 6) << 6);
         if (this.lastMapZone !== mapZone) {
             // map zone triggers
             if (this.lastMapZone !== -1) {
@@ -287,12 +282,12 @@ export class NetworkPlayer extends Player {
                 this.triggerMapzoneExit(x, z);
             }
 
-            this.triggerMapzone(this.x >> 6 << 6, this.z >> 6 << 6);
+            this.triggerMapzone((this.x >> 6) << 6, (this.z >> 6) << 6);
             this.lastMapZone = mapZone;
         }
 
         // zone changed
-        const zone = CoordGrid.packCoord(this.level, this.x >> 3 << 3, this.z >> 3 << 3);
+        const zone = CoordGrid.packCoord(this.level, (this.x >> 3) << 3, (this.z >> 3) << 3);
         if (this.lastZone !== zone) {
             if (this.scene === SceneState.READY) {
                 this.rebuildZones();
@@ -310,31 +305,17 @@ export class NetworkPlayer extends Player {
                 this.triggerZoneExit(level, x, z);
             }
 
-            this.triggerZone(this.level, this.x >> 3 << 3, this.z >> 3 << 3);
+            this.triggerZone(this.level, (this.x >> 3) << 3, (this.z >> 3) << 3);
             this.lastZone = zone;
         }
     }
 
     updatePlayers(renderer: PlayerRenderer) {
-        this.write(new PlayerInfo(
-            World.currentTick,
-            renderer,
-            this,
-            Math.abs(this.lastTickX - this.x),
-            Math.abs(this.lastTickZ - this.z),
-            this.lastLevel !== this.level
-        ));
+        this.write(new PlayerInfo(World.currentTick, renderer, this, Math.abs(this.lastTickX - this.x), Math.abs(this.lastTickZ - this.z), this.lastLevel !== this.level));
     }
 
     updateNpcs(renderer: NpcRenderer) {
-        this.write(new NpcInfo(
-            World.currentTick,
-            renderer,
-            this,
-            Math.abs(this.lastTickX - this.x),
-            Math.abs(this.lastTickZ - this.z),
-            this.lastLevel !== this.level)
-        );
+        this.write(new NpcInfo(World.currentTick, renderer, this, Math.abs(this.lastTickX - this.x), Math.abs(this.lastTickZ - this.z), this.lastLevel !== this.level));
     }
 
     updateZones() {
@@ -438,7 +419,7 @@ export class NetworkPlayer extends Player {
         }
 
         if (runWeightChanged || firstSeen) {
-            this.write(new UpdateRunWeight(Math.ceil(this.runweight / 1000)));
+            this.write(new UpdateRunWeight(Math.trunc(this.runweight / 1000)));
         }
     }
 }
@@ -461,7 +442,7 @@ export function isBufferFull(player: Player): boolean {
         }
 
         const prot: ServerProt = encoder.prot;
-        total += (1 + (prot.length === -1 ? 1 : prot.length === -2 ? 2 : 0)) + encoder.test(message);
+        total += 1 + (prot.length === -1 ? 1 : prot.length === -2 ? 2 : 0) + encoder.test(message);
     }
 
     return total >= 5000;
