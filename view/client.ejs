@@ -228,6 +228,22 @@
             <p class="green" id="count-down"></span>
         </div>
     </center>
+
+    <script>
+        const canvas = document.getElementById('canvas');
+
+        if (canvas) {
+            const ctx = canvas.getContext('2d');
+
+            ctx.fillStyle = 'black';
+            ctx.fillRect(0, 0, canvas.width, canvas.height);
+
+            ctx.fillStyle = 'white';
+            ctx.font = 'bold 20px Arial';
+            ctx.textAlign = 'center';
+            ctx.fillText('Loading...', canvas.width / 2, canvas.height / 2);
+        }
+    </script>
  
     <script type="module">
         import { Client } from './client/client.js';
