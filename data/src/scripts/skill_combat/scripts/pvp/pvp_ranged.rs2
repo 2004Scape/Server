@@ -6,18 +6,12 @@ if (.stat(hitpoints) = 0) {
     p_stopaction;
     return;
 }
-def_obj $rhand = inv_getobj(worn, ^wearpos_rhand);
-if ($rhand = null) {
-    mes("That was your last one!");
-    p_stopaction;
-    ~update_all($rhand);
-    return;
-}
 if (%action_delay > map_clock) {
     p_opplayer(2);
     return;
 }
 // this can be either the quiver or rhand.
+def_obj $rhand = inv_getobj(worn, ^wearpos_rhand);
 def_obj $ammo = ~player_ranged_check_ammo($rhand);
 if ($ammo = null) {
     p_stopaction;
@@ -42,7 +36,6 @@ if (~pvp_hit_roll(%damagetype) = true) {
     $damage = min(randominc($maxhit), .stat(hitpoints)); // tick eating existed! https://oldschool.runescape.wiki/w/Update:The_Wintertodt
     ~give_combat_experience_pvp(%damagestyle, $damage, ~pvp_xp_multiplier(~.player_combat_level));
 }
-
 def_int $delay = ~pvp_ranged_use_weapon($rhand, $ammo);
 anim(%com_attackanim, 0);
 sound_synth(%com_attacksound, 0, 0);
@@ -57,12 +50,11 @@ both_heropoints($damage);
 // .sound_synth(.%com_defendsound, 0, 20);
 // sound_synth(.%com_defendsound, 0, 20);
 
-def_obj $weapon = inv_getobj(worn, ^wearpos_rhand);
-if ($weapon = null) {
+if ($rhand = null) {
     %action_delay = add(map_clock, 4);
 } else {
-    %action_delay = add(map_clock, oc_param($weapon, attackrate));
-    def_int $poison_severity = oc_param($weapon, poison_severity);
+    %action_delay = add(map_clock, oc_param($rhand, attackrate));
+    def_int $poison_severity = oc_param($rhand, poison_severity);
     if ($damage > 0 & $poison_severity > 0 & random(4) = 0) { // 1/4 chance to poison
         .queue(poison_player, 0, $poison_severity);
     }
@@ -98,6 +90,10 @@ switch_category(oc_category($rhand)) {
     case weapon_bow, weapon_crossbow :
         $delay = ~player_projectile(coord, .coord, .uid, oc_param($ammo, proj_travel), 40, 36, 32, 15, 0, 11, 5);
     case weapon_thrown, weapon_javelin :
+        if (inv_total(worn, $ammo) = 0) {
+            mes("That was your last one!");
+            ~update_all($rhand);
+        }
         $delay = ~player_projectile(coord, .coord, .uid, oc_param($ammo, proj_travel), 40, 36, 32, 15, 0, 11, 5);
 }
 return($delay);

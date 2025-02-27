@@ -1,3 +1,11 @@
+[label,pvp_magic_attack]
+def_dbrow $spell_data = ~get_spell_data(%autocast_spell);
+if (~check_spell_requirements($spell_data) = false) {
+    // %attackstyle_magic = 0; // todo: figure out if this is needed or not (unsets auto cast)
+    return;
+}
+p_opplayert(db_getfield($spell_data, magic_spell_table:spellcom, 0));
+
 [applayert,magic:wind_strike] ~pvp_default_spell(^wind_strike);
 [applayert,magic:water_strike] ~pvp_default_spell(^water_strike);
 [applayert,magic:earth_strike] ~pvp_default_spell(^earth_strike);

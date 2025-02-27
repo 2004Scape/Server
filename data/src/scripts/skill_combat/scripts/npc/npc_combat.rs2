@@ -160,6 +160,9 @@ if(npc_type = npc_374 & %damagetype <= ^crush_style & npc_range(coord) <= 1) {
     mes("These ogres are for ranged combat only.");
     return (false);
 }
+if (npc_type = delrith & (%demon_progress >= ^demon_complete | inv_getobj(worn, ^wearpos_rhand) ! silverlight)) {
+    return(false);
+}
 
 if (npc_hasop(2) = true) {
     return (true);
@@ -227,6 +230,9 @@ if (npc_type = chompy_bird) {
 }
 if (%vampire_progress = ^vampire_complete & npc_type = count_draynor) {
     mes("You've done enough vampire slaying.");
+    return(false);
+}
+if (npc_type = delrith & (%demon_progress >= ^demon_complete | inv_getobj(worn, ^wearpos_rhand) ! silverlight)) {
     return(false);
 }
 

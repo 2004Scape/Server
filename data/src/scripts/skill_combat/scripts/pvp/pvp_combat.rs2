@@ -17,11 +17,10 @@ if (inv_getobj(worn, ^wearpos_rhand) ! null) {
 if (~player_autocast_enabled = true){
     $attackrange = 10;
 }
-if ($attackrange <= 1) {
+if (($attackrange <= 1 & ~pvp_is_attackable = false) | $distance > $attackrange) {
     p_aprange($attackrange); // walk then op again
     return;
 }
-p_aprange($attackrange);
 @pvp_combat_start;
 
 [label,pvp_combat_start]
@@ -33,16 +32,7 @@ if (%damagetype = ^ranged_style) {
 }
 
 if (~player_autocast_enabled = true) {
-    // look for spell in db
-    def_dbrow $spell_data = ~get_spell_data(%autocast_spell);
-    if (~check_spell_requirements($spell_data) = false) {
-        %attackstyle_magic = 0;
-        return;
-    }
-
-    // in osrs you cant tick manip with autocast delay, so its prob its on varp?
-    p_opplayert(db_getfield($spell_data, magic_spell_table:spellcom, 0));
-    return;
+    @pvp_magic_attack;
 }
 @pvp_melee_attack;
 
