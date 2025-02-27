@@ -22,6 +22,17 @@
 ^south_east_camera = 6
 ^south_west_camera = 7
 
-^duelstatus_lost = 5
-^duelstatus_victory = 6
-^duelstatus_opponent_resigned = 7
+^duelstatus_noduel = 0
+^duelstatus_pendaccept = 1
+^duelstatus_accept = 2
+^duelstatus_pendconfirm = 3
+^duelstatus_confirm = 4
+
+^duelstatus_start_3 = 4
+^duelstatus_start_2 = 5
+^duelstatus_start_1 = 6
+^duelstatus_start_fight = 7
+
+^duelstatus_lost = 15
+^duelstatus_victory = 16
+^duelstatus_opponent_resigned = 17

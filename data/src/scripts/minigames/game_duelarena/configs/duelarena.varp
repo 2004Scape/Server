@@ -6,6 +6,8 @@ protect=no
 type=int
 protect=no
 
+[duelstart_clock]
+
 [duel_settings]
 transmit=yes
 protect=no
