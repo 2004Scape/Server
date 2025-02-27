@@ -4,11 +4,11 @@ if(%phoenixgang_progress = ^phoenixgang_read_book) {
 }
 ~chatnpc("<p,neutral>Hello stranger.");
 if(%squire_progress = 1 & %phoenixgang_progress = 0) { // knights sword started and arrav not started
-    @multi4("I'm in search of a quest", reldo_phoenixstart, "Do you have anything to trade?", reldo_trade, "What do you do?", reldo_what_do, "What do you know about the Imcando dwarves?", reldo_imcando_dwaves);
+    @multi4("I'm in search of a quest.", reldo_phoenixstart, "Do you have anything to trade?", reldo_trade, "What do you do?", reldo_what_do, "What do you know about the Imcando dwarves?", reldo_imcando_dwaves);
 } else if(%squire_progress = 1) { // knights sword started and arrav in progress
     @multi3("Do you have anything to trade?", reldo_trade, "What do you do?", reldo_what_do, "What do you know about the Imcando dwarves?", reldo_imcando_dwaves);
 } else if(%phoenixgang_progress = 0) { // knights sword started and arrav not started
-    @multi3("I'm in search of a quest", reldo_phoenixstart, "Do you have anything to trade?", reldo_trade, "What do you do?", reldo_what_do);
+    @multi3("I'm in search of a quest.", reldo_phoenixstart, "Do you have anything to trade?", reldo_trade, "What do you do?", reldo_what_do);
 } else {
     @multi2("Do you have anything to trade?", reldo_trade, "What do you do?", reldo_what_do);
 }
@@ -31,7 +31,7 @@ if(%squire_progress = 1 & %phoenixgang_progress = 0) { // knights sword started 
 ~chatplayer("<p,neutral>I'm in search of a quest.");
 ~chatnpc("<p,neutral>Hmmm. I don't... believe there are any here...");
 ~chatnpc("<p,confused>Let me think actually...");
-~chatnpc("<p,neutral>If you look in a book called 'The Shield of Arrav',|you'll find a quest in there.");
+~chatnpc("<p,neutral>Ah yes. I know.|If you look in a book called 'The Shield of Arrav',|you'll find a quest in there.");
 %phoenixgang_progress = ^phoenixgang_started; 
 ~send_quest_progress(questlist:blackarmgang, %phoenixgang_progress, ^phoenixgang_complete);
 ~chatnpc("<p,neutral>I'm not sure where the book is mind you...|but I'm sure it's around here somewhere.");
