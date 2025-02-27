@@ -147,7 +147,6 @@ if (~in_duel_arena($origin_coord) = true) {
     return;
 }
 if (coord ! $origin_coord) {
-    p_delay(0);
     return;
 }
 if (lineofwalk(coord, movecoord(coord, -1, 0, 0)) = true & coord = $origin_coord) { // check west

@@ -11,10 +11,10 @@ if (%game_brightness = 0) {
 }
 
 // register the soft timer that handles replenishing stats
-softtimer(stat_regen, 100);
-softtimer(stat_boost_restore, 100);
+settimer(stat_regen, 100);
+settimer(stat_boost_restore, 100);
 // same for health
-softtimer(health_regen, 100);
+settimer(health_regen, 100);
 // random event timer
 settimer(general_macro_events, 500);
 // chest macro gas 
