@@ -1,4 +1,4 @@
-[npc_500]
+[mosol_rei]
 vislevel=hide
 name=Mosol Rei
 desc=Slightly under dressed.
@@ -22,7 +22,7 @@ model8=model_553_npc
 head1=model_46_idk_head
 head2=model_81_idk_head
 
-[npc_501]
+[zadimus_spirit]
 vislevel=hide
 name=Zadimus' spirit.
 desc=The animated spirit of a soul not at rest.
@@ -39,7 +39,7 @@ param=undead,^true
 param=death_anim,ghost_death
 param=death_sound,ghost_death
 
-[npc_502]
+[undead1_skeleton]
 name=Undead One
 desc=It rattles when it walks.
 walkanim=skeleton_walk
@@ -72,7 +72,7 @@ category=undead_one
 // Stats match osrs version but our version Vislvl is different.
 // https://raw.githubusercontent.com/Joshua-F/osrs-dumps/refs/heads/master/config/dump.npc npc_5342
 
-[npc_503]
+[undead1_skeleton_armed]
 name=Undead One
 desc=A minion of Rashiliyia.
 walkanim=skeleton_walk
@@ -113,7 +113,7 @@ category=undead_one
 // Stats match osrs version but our version Vislvl is different.
 // https://raw.githubusercontent.com/Joshua-F/osrs-dumps/refs/heads/master/config/dump.npc npc_5344
 
-[npc_504]
+[undead1_zombie]
 name=Undead One
 desc=The animated dead, one of Rashiliyias' minions.
 walkanim=zombie_walk
@@ -153,7 +153,7 @@ category=undead_one
 // Stats match osrs version but our version Vislvl is different.
 // https://raw.githubusercontent.com/Joshua-F/osrs-dumps/refs/heads/master/config/dump.npc npc_5346
 
-[npc_505]
+[undead1_zombie_armed]
 name=Undead One
 desc=The animated dead, one of Rashiliyias' minions.
 walkanim=zombie_walk
@@ -198,7 +198,7 @@ category=undead_one
 // Stats match osrs version but our version Vislvl is different.
 // https://raw.githubusercontent.com/Joshua-F/osrs-dumps/refs/heads/master/config/dump.npc npc_5349
 
-[npc_506]
+[Rashiliyia]
 vislevel=hide
 name=Rashiliyia
 desc=The animated spirit of Rashiliyia the Zombie Queen.
@@ -228,7 +228,7 @@ param=death_anim,ghost_death
 param=death_sound,ghost_death
 // https://raw.githubusercontent.com/Joshua-F/osrs-dumps/refs/heads/master/config/dump.npc npc_5352
 
-[npc_507]
+[nazastarool_zombie]
 name=Nazastarool
 desc=A giant zombie of huge strength and devastating power.
 walkanim=zombie_walk
@@ -266,7 +266,7 @@ param=death_drop,null
 // Stats match osrs version but our version Vislvl is different.
 // https://raw.githubusercontent.com/Joshua-F/osrs-dumps/refs/heads/master/config/dump.npc npc_5353
 
-[npc_508]
+[nazastarool_skeleton]
 name=Nazastarool
 desc=A giant skeleton of huge strength and devastating power.
 walkanim=skeleton_walk
@@ -304,7 +304,7 @@ param=death_drop,null
 // Stats match osrs version but our version Vislvl is different.
 // https://raw.githubusercontent.com/Joshua-F/osrs-dumps/refs/heads/master/config/dump.npc npc_5354
 
-[npc_509]
+[nazastarool_ghost]
 name=Nazastarool
 desc=A giant ghost of huge strength and devastating power.
 hasalpha=yes

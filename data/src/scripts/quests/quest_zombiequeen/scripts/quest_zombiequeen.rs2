@@ -9,7 +9,7 @@ if(coordx(coord) <= coordx(loc_coord)) {
     return;
 }
 ~mesbox("You approach the cart and see undead creatures gathering by the village gates. There is a note attached to the cart. The note says,|@red@:: Danger :: Deadly green mist DO NOT ENTER IF YOU @red@VALUE YOUR LIFE!");
-if(npc_find(coord, npc_500, 8, 0) = true) {
+if(npc_find(coord, mosol_rei, 8, 0) = true) {
     if(random(2) = 0) ~chatnpc("<p,shock>Hey, move away from the cart please!|It's unsafe to go in there."); // chatnpc_specific in OSRS but chatnpc on RS3
     else ~chatnpc("<p,shock>You must be a maniac to go in there!|The whole place is swarming with zombies!");
 }
@@ -302,7 +302,7 @@ mes("Rashiliyia appears!");
 def_coord $spawn_coord = map_findsquare(coord, 1, 1, ^map_findsquare_lineofwalk);
 spotanim_map(spotanim_184, $spawn_coord, 5, 0);
 facesquare($spawn_coord);
-npc_add($spawn_coord, npc_506, 100);
+npc_add($spawn_coord, Rashiliyia, 100);
 //sound_synth(swamp_gas, 0, 0);
 npc_setmode(playerface);
 %zq_rash_timer = calc(map_clock + 200);
@@ -937,7 +937,7 @@ if(inzone(0_43_48_42_15, 0_43_48_46_18, coord) = true) {
     if_close;
     spotanim_map(small_smokepuff, $spawn_coord, 5, 0);
     p_delay(0); // 1t
-    npc_add($spawn_coord, npc_501, 30);
+    npc_add($spawn_coord, zadimus_spirit, 30);
     ~chatnpc("<p,neutral>You have released me from my torture, and now I shall aid you. You seek to dispell the one who tortured and killed me. Remember this... 'I am the key, but only kin may approach her.'");
     inv_del(inv, zadimus_corpse, 1);
     inv_add(inv, bone_shard, 1);
@@ -1099,12 +1099,12 @@ if(last_useitem = rashiliya_corpse) {
     if(%zombiequeen_progress = ^zombiequeen_retrieved_corpse) {
         ~objbox(rashiliya_corpse, "You carefully place Rashiliyia's remains on the dolmen.|You feel a strange vibration in the air.", 250, 0, 0);
         if_close;
-        if(npc_find(coord, npc_506, 7, 0) = false) {
+        if(npc_find(coord, Rashiliyia, 7, 0) = false) {
             def_coord $spawn_coord = map_findsquare(coord, 1, 1, ^map_findsquare_lineofwalk);
             spotanim_map(spotanim_184, $spawn_coord, 5, 0);
             // swamp_gas
             p_delay(0); // 1t
-            npc_add($spawn_coord, npc_506, 100); // 100t osrs
+            npc_add($spawn_coord, Rashiliyia, 100); // 100t osrs
         }
         ~chatnpc("<p,happy>You have my gratitude for releasing my spirit.|I have suffered a vengeful and evil existence.|I was tricked by Zamorak.|He returned my son to me as an undead creature."); // imgur.com/GoUvoVV
         ~chatnpc("<p,happy>My hatred and bitterness corrupted me. I tried to destroy all life... now I am released. And am grateful to contemplate eternal rest...");
@@ -1494,7 +1494,7 @@ if(%zombiequeen_progress >= ^zombiequeen_complete) {
 npc_huntall(coord, 5, 0);
 while (npc_huntnext = true) {
     // attacking_uid check (not aggrewssive check)
-    if((npc_type = npc_507 | npc_type = npc_508 | npc_type = npc_509) & %npc_attacking_uid = uid) {
+    if((npc_type = nazastarool_zombie | npc_type = nazastarool_skeleton | npc_type = nazastarool_ghost) & %npc_attacking_uid = uid) {
         mes("The dolmen remains silent.");
         return;
     }
@@ -1516,7 +1516,7 @@ if(~obj_gettotal(rashiliya_corpse) > 0) { // don't spawn next form if player has
 // this is reset after you kill it, if you kill the 2nd or 3rd phase after this it will summon the 1st + 3rd, or 1st + 2nd
 if(testbit(%zq_map_mechanisms, ^zq_defeated_nazastarool1) = false) {
     def_coord $spawn_coord = map_findsquare(coord, 1, 1, ^map_findsquare_lineofwalk);
-    npc_add($spawn_coord, npc_507, 500); // 500t osrs
+    npc_add($spawn_coord, nazastarool_zombie, 500); // 500t osrs
     npc_say("Who dares disturb Rashiliyia's rest?");
     npc_setmode(playerface);
     %npc_aggressive_player = uid;
@@ -1525,7 +1525,7 @@ if(testbit(%zq_map_mechanisms, ^zq_defeated_nazastarool1) = false) {
     if(p_finduid(%npc_aggressive_player) = true) ~npc_retaliate(0);
 } else if(testbit(%zq_map_mechanisms, ^zq_defeated_nazastarool2) = false) {
     def_coord $spawn_coord = map_findsquare(coord, 1, 2, ^map_findsquare_lineofwalk);
-    npc_add($spawn_coord, npc_508, 500); // 500t osrs
+    npc_add($spawn_coord, nazastarool_skeleton, 500); // 500t osrs
     npc_say("Quake in fear, for I am reborn!");
     npc_setmode(playerface);
     %npc_aggressive_player = uid;
@@ -1534,7 +1534,7 @@ if(testbit(%zq_map_mechanisms, ^zq_defeated_nazastarool1) = false) {
     if(p_finduid(%npc_aggressive_player) = true) ~npc_retaliate(0);
 } else if(testbit(%zq_map_mechanisms, ^zq_defeated_nazastarool3) = false) {
     def_coord $spawn_coord = map_findsquare(coord, 1, 2, ^map_findsquare_lineofwalk);
-    npc_add($spawn_coord, npc_509, 500); // 500t osrs
+    npc_add($spawn_coord, nazastarool_ghost, 500); // 500t osrs
     npc_say("Nazastarool returns with vengeance!");
     npc_setmode(playerface);
     npc_delay(1); 
@@ -1577,7 +1577,7 @@ switch_int(~p_choice2("Yes, I am sure.", 1, "No, I'll keep hold of the remains."
         sound_synth(smokepuff, 0, 0);
         p_delay(1); // 2t
         obj_del;
-        npc_add($coord, npc_506, 30);
+        npc_add($coord, Rashiliyia, 30);
         %npc_attacking_uid = null;
         ~chatnpc("<p,angry>You have my gratitude for releasing me, there is still much that needs to be done before Shilo Village is utterly destroyed. Please excuse me, I have plans and people to execute!");
         spotanim_map(small_smokepuff, $coord, 5, 0);
@@ -1592,10 +1592,10 @@ cam_reset;
 
 [proc,random_undead_one]()(npc)
 switch_int(random(4)) {
-    case 0 : return (npc_502);
-    case 1 : return (npc_503);
-    case 2 : return (npc_504);
-    case 3 : return (npc_505);
+    case 0 : return (undead1_skeleton);
+    case 1 : return (undead1_skeleton_armed);
+    case 2 : return (undead1_zombie);
+    case 3 : return (undead1_zombie_armed);
 }
 
 [queue,zombiequeen_quest_complete]

@@ -1,4 +1,4 @@
-[opnpc1,npc_828]
+[opnpc1,mercenary_1]
 if(%desertrescue_progress >= ^desertrescue_entered_camp) {
         ~chatnpc("<p,angry>Move along now, we've had enough of your sort!");
 } else if(%desertrescue_progress = ^desertrescue_killed_capt) {
@@ -38,7 +38,7 @@ if(%desertrescue_progress >= ^desertrescue_entered_camp) {
     @multi2("What is this place?", mercenary_place1, "What are you guarding?", mercenary_guarding1);
 }
 
-[opnpc2,npc_828]
+[opnpc2,mercenary_1]
 // this is only opnpc2 for the mercenary in OSRS
 if(%npc_attacking_uid = uid) {
     @player_combat_start;

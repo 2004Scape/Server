@@ -384,7 +384,7 @@ if(stat(agility) < 25) {
     mes("You need an Agility level of 25 to attempt this jump."); // OSRS
     return;
 }
-if(npc_find(coord, npc_861, 8, 0) = true) {
+if(npc_find(coord, ogre_guard_broken_bridge, 8, 0) = true) {
     ~chatnpc("<p,neutral>Oi! Little thing, if you want to cross here,|you can pay me first - 20 gold pieces!");
     ~chatplayer("<p,quiz>20 gold pieces to jump off a bridge!!?");
     ~chatnpc("<p,happy>That's what I said, like it or lump it.");

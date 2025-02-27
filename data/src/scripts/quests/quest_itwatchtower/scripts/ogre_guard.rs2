@@ -148,6 +148,6 @@ p_teleport(^gutanoth_hill_lower);
 ~chatnpc("<p,angry>Grrrrr!");
 ~npc_retaliate(0);
 
-[opnpc1,npc_861] ~chatnpc("<p,angry>What do you want, small thing?|Leave us alone!");
+[opnpc1,ogre_guard_broken_bridge] ~chatnpc("<p,angry>What do you want, small thing?|Leave us alone!");
 
 
