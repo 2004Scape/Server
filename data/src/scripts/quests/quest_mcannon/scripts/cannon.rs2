@@ -354,9 +354,6 @@ if (%mcannon_ammo < 1) {
 if (~npc_is_attackable = false) {
     return;
 }
-if (npc_stat(hitpoints) = 0) {
-    return;
-}
 if (~player_in_combat_check = false) { // https://youtu.be/TeQXQDaawO0?t=247
     return;
 }
