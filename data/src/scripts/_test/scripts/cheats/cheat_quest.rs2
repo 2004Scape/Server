@@ -101,19 +101,18 @@ if (p_finduid(uid) = true) {
                 if (npc_find(0_51_48_40_40, irena, 20, 0) = true) {
                     @irena_ana_found;
                 }
+            case 1 :
             queue(tree_quest_complete, 0);
             queue(totem_quest_complete, 0);
             queue(upass_quest_complete, 0);
+            queue(waterfall_quest_complete, 0);
+            queue(ball_quest_complete, 0);
             queue(itwatchtower_quest_complete, 0);
                 %itwatchtower_progress = ^itwatchtower_complete;
                 // rewards are given before quest completion, so give here
                 stat_advance(magic, 153000);
                 inv_add(inv, coins, 5000);
                 inv_add(inv, spell_scroll, 1);
-            queue(waterfall_quest_complete, 0);
-            queue(ball_quest_complete, 0);
-            queue(black_knights_fortress_quest_complete, 0);
-            case 1 : queue(cooks_quest_complete, 0);
             case 2 : queue(demon_slayer_complete, 0);
             case 3 : queue(doric_quest_complete, 0);
             case 4 : queue(dragon_complete, 0);
@@ -199,6 +198,7 @@ if (p_finduid(uid) = true) {
             case 50 : queue(waterfall_quest_complete, 0);
             case 51 : queue(ball_quest_complete, 0);
             case 52 : queue(black_knights_fortress_quest_complete, 0);
+            case 53 : queue(cooks_quest_complete, 0);
             case default : mes("Quest not found.");
         }
     } else if ($choice2 = 1) {
@@ -279,6 +279,7 @@ if (p_finduid(uid) = true) {
                 %varp_35 = 0;
                 %desertrescue_map_mechanisms = 0;
                 %desertrescue_progress = 0;
+            case 1 :
                 %tree_progress = 0;
                 %totem_progress = 0;
                 %upass_progress = 0;
@@ -288,8 +289,6 @@ if (p_finduid(uid) = true) {
                 %waterfall_golrie_and_puzzle = 0;
                 %waterfall_progress = 0;
                 %ball_progress = 0;
-                %blackknight_progress = 0;
-            case 1 : %cook_progress = 0;
             case 2 : %demon_progress = 0;
             case 3 : %doric_progress = 0;
             case 4 :
@@ -394,6 +393,7 @@ if (p_finduid(uid) = true) {
                 %waterfall_progress = 0;
             case 51 : %ball_progress = 0;
             case 52 : %blackknight_progress = 0;
+            case 53 : %cook_progress = 0;
             case default : mes("Quest not found.");
         }
         ~update_quests;
