@@ -25,8 +25,8 @@ if (%prayer_rapidrestore = ^true) {
         cleartimer(drain_prayer);
         //clearqueue(start_draining);
     }
-    clearsofttimer(stat_regen);
-    softtimer(stat_regen, 100);
+    cleartimer(stat_regen);
+    settimer(stat_regen, 100);
 } else {
     if (~prayer_checks($data) = false) {
         %prayer_rapidrestore = ^false;
@@ -36,8 +36,8 @@ if (%prayer_rapidrestore = ^true) {
         ~mesbox("You need a @dbl@Prayer level of <tostring(db_getfield($data, prayers:level, 0))> to use <db_getfield($data, prayers:name, 0)>.");
     } else {
         %prayer_rapidrestore = ^true;
-        clearsofttimer(stat_regen);
-        softtimer(stat_regen, 50);
+        cleartimer(stat_regen);
+        settimer(stat_regen, 50);
         ~prayer_activate($data);
     }
 }
