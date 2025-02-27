@@ -163,3 +163,17 @@ if (map_members = true) {
 } else {
     return(enum(int, stat, stats_free, add(random(enum_getoutputcount(stats_free)), 1)));
 }
+
+[proc,stat_boost_login]
+if (map_members = true) {
+    return;
+}
+def_int $i = 1;
+while ($i <= enum_getoutputcount(stats)) {
+    def_stat $stat = enum(int, stat, stats, $i);
+    // in 2006, every stat except prayer, smithing, and mining reset on login if boosted (same as current osrs)
+    if (stat($stat) > stat_base($stat) & $stat ! prayer & $stat ! smithing & $stat ! mining) {
+        ~stat_reset($stat);
+    }
+    $i = calc($i + 1);
+}
