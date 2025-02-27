@@ -389,6 +389,7 @@ const InvOps: CommandHandlers = {
         }
 
         // we're going to assume the content has made sure this will go as expected
+        const wealthLog = [];  // Holds a record of the wealth for logging only
         for (let slot = 0; slot < fromInv.capacity; slot++) {
             const obj = fromInv.get(slot);
             if (!obj) {
@@ -399,9 +400,26 @@ const InvOps: CommandHandlers = {
             toInv.add(obj.id, obj.count);
 
             const type = ObjType.get(obj.id);
-
-            fromPlayer.addWealthLog(-(type.cost * obj.count), 'Gave ' + type.debugname + ' x' + obj.count + ' to ' + toPlayer.username);
-            toPlayer.addWealthLog(type.cost * obj.count, 'Received ' + type.debugname + ' x' + obj.count + ' from ' + fromPlayer.username);
+            // Check whether we have already seen this obj.id in the wealth log
+            let alreadyPresent = false;
+            for (let i = 0; i < wealthLog.length; i++) {
+                if (wealthLog[i].id === obj.id) {
+                    // If we've seen it, increase the count
+                    wealthLog[i].count += obj.count;
+                    alreadyPresent = true;
+                    break;
+                }
+            }
+            if (!alreadyPresent) {
+                // Otherwise, create a new entry
+                wealthLog.push({ id: obj.id, count: obj.count, debugname: type.debugname, baseCost: type.cost });
+            }
+        }
+        for (const toLog of wealthLog) {
+            // Log all wealth events
+            const totalValueGp = toLog.baseCost * toLog.count;
+            fromPlayer.addWealthLog(-totalValueGp, 'Gave ' + toLog.debugname + ' x' + toLog.count + ' to ' + toPlayer.username);
+            toPlayer.addWealthLog(totalValueGp, 'Received ' + toLog.debugname + ' x' + toLog.count + ' from ' + fromPlayer.username);
         }
     }),
 
@@ -646,6 +664,7 @@ const InvOps: CommandHandlers = {
             return;
         }
 
+        const wealthLog = [];  // Holds a record of the wealth for logging only
         for (let slot: number = 0; slot < inventory.capacity; slot++) {
             const obj = inventory.get(slot);
             if (!obj) {
@@ -653,8 +672,22 @@ const InvOps: CommandHandlers = {
             }
 
             const objType: ObjType = ObjType.get(obj.id);
+
             if (invType.scope === InvType.SCOPE_PERM) {
-                state.activePlayer.addWealthLog(-(obj.count * objType.cost), `Dropped ${objType.debugname} x${obj.count}`);
+                // Check whether we have already seen this obj.id in the wealth log
+                let alreadyPresent = false;
+                for (let i = 0; i < wealthLog.length; i++) {
+                    if (wealthLog[i].id === obj.id) {
+                        // If we've seen it, increase the count
+                        wealthLog[i].count += obj.count;
+                        alreadyPresent = true;
+                        break;
+                    }
+                }
+                if (!alreadyPresent) {
+                    // Otherwise, create a new entry
+                    wealthLog.push({ id: obj.id, count: obj.count, debugname: objType.debugname, baseCost: objType.cost });
+                }
             }
 
             inventory.delete(slot);
@@ -664,6 +697,11 @@ const InvOps: CommandHandlers = {
             }
 
             World.addObj(new Obj(position.level, position.x, position.z, EntityLifeCycle.DESPAWN, obj.id, obj.count), Obj.NO_RECEIVER, duration);
+        }
+        for (const toLog of wealthLog) {
+            // Log all wealth events
+            const totalValueGp = toLog.baseCost * toLog.count;
+            state.activePlayer.addWealthLog(-totalValueGp, `Dropped ${toLog.debugname} x${toLog.count}`);
         }
     }),
 
