@@ -1,7 +1,9 @@
 [label,pvp_magic_attack]
 def_dbrow $spell_data = ~get_spell_data(%autocast_spell);
 if (~check_spell_requirements($spell_data) = false) {
-    // %attackstyle_magic = 0; // todo: figure out if this is needed or not (unsets auto cast)
+    if (%autocast_spell = db_getfield($spell_data, magic_spell_table:spell, 0)) { // matches osrs behavior
+        %attackstyle_magic = 0;
+    }
     return;
 }
 p_opplayert(db_getfield($spell_data, magic_spell_table:spellcom, 0));
@@ -67,6 +69,9 @@ if (map_clock < %action_delay) {
     return(false);
 }
 if (~check_spell_requirements($spell_data) = false) {
+    if (%autocast_spell = db_getfield($spell_data, magic_spell_table:spell, 0)) { // matches osrs behavior
+        %attackstyle_magic = 0;
+    }
     return(false);
 }
 // these go after rune check

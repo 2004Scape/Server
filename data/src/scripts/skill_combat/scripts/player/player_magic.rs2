@@ -4,11 +4,16 @@
 // create an apnpct trigger for it in this script
 
 [label,player_magic_attack]
+if (~npc_is_attackable = false) { // test: wormbrain's special mes shows before if you dont have enough runes to autocast a specific spell
+    return;
+}
 def_dbrow $spell_data = ~get_spell_data(%autocast_spell);
 if (~check_spell_requirements($spell_data) = false) {
-    // todo: figure out if this should automatically unset autocast?
+    if (%autocast_spell = db_getfield($spell_data, magic_spell_table:spell, 0)) { // matches osrs behavior
+        %attackstyle_magic = 0;
+    }
     return;
-}  
+}
 p_opnpct(db_getfield($spell_data, magic_spell_table:spellcom, 0));
 
 // osrs's opnpct triggers are unused
@@ -77,6 +82,9 @@ if (map_clock < %action_delay) {
     return(false);
 }
 if (~check_spell_requirements($spell_data) = false) {
+    if (%autocast_spell = db_getfield($spell_data, magic_spell_table:spell, 0)) { // matches osrs behavior
+        %attackstyle_magic = 0;
+    }
     return(false);
 }
 if (~player_in_combat_check = false) {
