@@ -1,9 +1,20 @@
 [ai_opplayer2,shadow_spider] 
+if (stat(hitpoints) = 0) {
+    npc_setmode(null);
+    return;
+}
+if (%npc_action_delay > map_clock) {
+    return;
+}
+if (~npc_can_attack_player = false) {
+    npc_setmode(null);
+    return;
+}
 // https://www.youtube.com/watch?v=qCuX19-3SHc&t=185s
 if (~npc_out_of_combat = true) {
     ~shadow_spider_drain;
 }
-gosub(npc_default_attack);
+~npc_meleeattack;
 
 [proc,shadow_spider_drain]
 mes("The spider drains your prayer...");
