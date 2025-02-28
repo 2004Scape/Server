@@ -17,12 +17,12 @@ switch_int(%itgronigen_progress) {
         if(~has_sextant_clue = true) {
             @professor_hastrail;
         }
-        @professor_initial;
+        @professor_standard;
 }
 
 [label,professor_hastrail]
 ~chatnpc("<p,neutral>What would you like to talk about?");
-@multi2("Talk about the Observatory quest.", professor_initial, "Talk about Treasure Trails.", professor_trails);
+@multi2("Talk about the Observatory quest.", professor_standard, "Talk about Treasure Trails.", professor_trails);
 
 [label,professor_glass]
 ~chatnpc("<p,neutral>How are you getting on finding me some glass?");
@@ -140,9 +140,12 @@ if(last_useitem = plank | last_useitem = molten_glass | last_useitem = bronze_ba
 ~chatplayer("<p,happy>What do you think of this!");
 ~chatnpc("<p,neutral>Wonderful. You must be very proud to have it.");
 
-[label,professor_initial]
+[label,professor_standard]
 // this whole dialogue is quite different compared to OSRS, and unfortunately we have no RS2 reference so this
 // is mostly RSC + grammar corrected
+if(%itgronigen_progress >= ^itgronigen_complete) {
+    @professor_returns;
+}
 ~chatnpc("<p,neutral>Hello adventurer.|What brings you to these parts?");
 switch_int (~p_choice4("I am lost!!!", 1, "I'd like to have a look through that telescope.", 2, "What's the ladder over there for?", 3, "It is of no concern of yours...", 4)) {
      case 1 :
