@@ -2214,6 +2214,15 @@ class World {
         });
     }
 
+    addRedFlag(player: Player, reason_index: number, extra_context?: string) {
+        this.loggerThread.postMessage({
+            type: 'red_flag',
+            username: player.username,
+            reason_index: reason_index,
+            extra_context: extra_context,
+        });
+    }
+
     submitInputTracking(username: string, session_uuid: string, events: InputTrackingEvent[]) {
         this.loggerThread.postMessage({
             type: 'input_track',

@@ -64,6 +64,13 @@ async function handleRequests(_parentPort: ParentPort, msg: any) {
             }
             break;
         }
+        case 'red_flag': {
+            if (Environment.LOGGER_SERVER) {
+                const { username, reason_index, extra_context } = msg;
+                await client.redFlag(username, reason_index, extra_context);
+            }
+            break;
+        }
         // todo: store session's packet traffic for analysis
         default:
             console.error('Unknown message type: ' + msg.type);

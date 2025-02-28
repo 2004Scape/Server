@@ -565,6 +565,25 @@ export default class ClientCheatHandler extends MessageHandler<ClientCheat> {
                 } else {
                     player.messageGame(`Player '${args[0]}' does not exist or is not logged in.`);
                 }
+            } else if (cmd === 'red_flag') {
+                // custom - for testing flag behaviour
+                if (args.length < 2) {
+                    // ::red_flag username reason_index
+                    player.messageGame('Usage: ::red_flag <username> <reason_number>');
+                    return false;
+                }
+                const username = args[0];
+                const reason_index = tryParseInt(args[1], -1);
+                if (reason_index === -1) {
+                    return false;
+                }
+                const other = World.getPlayerByUsername(username);
+                if (!other) {
+                    player.messageGame(`Player '${args[0]}' does not exist or is not logged in.`);
+                    return false;
+                }
+                World.addRedFlag(other, reason_index);
+                player.messageGame(`flag ${reason_index} has been applied to player '${username}'`);
             }
         }
 

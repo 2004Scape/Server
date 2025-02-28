@@ -40,6 +40,13 @@ model account {
     notes_updated DateTime?
 
     members       Boolean  @default(true)
+
+    red_flag        Boolean  @default(false)
+    red_flag_reason Int?
+    red_flag_context String?
+    flagged_at      DateTime?
+    flag_removed_by_id Int?
+    flag_removed_reason String?
 }
 
 model session {
