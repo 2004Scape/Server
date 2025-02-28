@@ -1,12 +1,4 @@
-import {
-    ConfigValue,
-    ConfigLine,
-    PackedData,
-    isConfigBoolean,
-    getConfigBoolean,
-    HuntCheckInv, HuntCheckInvParam,
-    HuntCheckVar
-} from '#tools/pack/config/PackShared.js';
+import { ConfigValue, ConfigLine, PackedData, isConfigBoolean, getConfigBoolean, HuntCheckInv, HuntCheckInvParam, HuntCheckVar } from '#tools/pack/config/PackShared.js';
 
 import HuntModeType from '#/engine/entity/hunt/HuntModeType.js';
 import HuntVis from '#/engine/entity/hunt/HuntVis.js';
@@ -14,17 +6,7 @@ import HuntCheckNotTooStrong from '#/engine/entity/hunt/HuntCheckNotTooStrong.js
 import HuntNobodyNear from '#/engine/entity/hunt/HuntNobodyNear.js';
 import NpcMode from '#/engine/entity/NpcMode.js';
 
-import {
-    CategoryPack,
-    HuntPack,
-    InvPack,
-    LocPack,
-    NpcPack,
-    ObjPack,
-    ParamPack,
-    VarnPack,
-    VarpPack
-} from '#/util/PackFile.js';
+import { CategoryPack, HuntPack, InvPack, LocPack, NpcPack, ObjPack, ParamPack, VarnPack, VarpPack } from '#/util/PackFile.js';
 
 export function parseHuntConfig(key: string, value: string): ConfigValue | null | undefined {
     const stringKeys: string[] = [];
@@ -344,7 +326,7 @@ export function parseHuntConfig(key: string, value: string): ConfigValue | null 
         if (isNaN(val)) {
             return null;
         }
-        return {inv, obj, condition, val};
+        return { inv, obj, condition, val };
     } else if (key === 'check_invparam') {
         // check_inv=inv,param,min,max
         const parts: string[] = value.split(',');
@@ -370,14 +352,14 @@ export function parseHuntConfig(key: string, value: string): ConfigValue | null 
         if (isNaN(val)) {
             return null;
         }
-        return {inv, param, condition, val};
+        return { inv, param, condition, val };
     } else if (key === 'extracheck_var') {
         const parts: string[] = value.split(',');
-    
+
         if (parts.length !== 2) {
             return null;
         }
-    
+
         if (!parts[0].startsWith('%')) {
             return null;
         }
@@ -394,13 +376,13 @@ export function parseHuntConfig(key: string, value: string): ConfigValue | null 
         if (isNaN(val)) {
             return null;
         }
-        return {varp, condition, val};
+        return { varp, condition, val };
     } else {
         return undefined;
     }
 }
 
-export function packHuntConfigs(configs: Map<string, ConfigLine[]>): { client: PackedData, server: PackedData } {
+export function packHuntConfigs(configs: Map<string, ConfigLine[]>): { client: PackedData; server: PackedData } {
     const client: PackedData = new PackedData(HuntPack.size);
     const server: PackedData = new PackedData(HuntPack.size);
 
@@ -464,35 +446,50 @@ export function packHuntConfigs(configs: Map<string, ConfigLine[]>): { client: P
                     server.p2(value as number);
                 }
             } else if (key === 'check_category') {
-                if (config.every(x => x.key !== 'check_npc' && x.key !== 'check_obj' && x.key !== 'check_loc' && x.key !== 'check_inv' && x.key !== 'check_invparam') && config.filter(x => x.key === 'type' && (x.value === HuntModeType.NPC || x.value === HuntModeType.OBJ || x.value === HuntModeType.SCENERY)).length > 0) {
+                if (
+                    config.every(x => x.key !== 'check_npc' && x.key !== 'check_obj' && x.key !== 'check_loc' && x.key !== 'check_inv' && x.key !== 'check_invparam') &&
+                    config.filter(x => x.key === 'type' && (x.value === HuntModeType.NPC || x.value === HuntModeType.OBJ || x.value === HuntModeType.SCENERY)).length > 0
+                ) {
                     server.p1(12);
                     server.p2(value as number);
                 } else {
                     throw new Error(`Hunt config: [${debugname}] unable to pack line!!!.\nInvalid property value: ${key}=${value}`);
                 }
             } else if (key === 'check_npc') {
-                if (config.every(x => x.key !== 'check_category' && x.key !== 'check_obj' && x.key !== 'check_loc' && x.key !== 'check_inv' && x.key !== 'check_invparam') && config.filter(x => x.key === 'type' && x.value === HuntModeType.NPC).length > 0) {
+                if (
+                    config.every(x => x.key !== 'check_category' && x.key !== 'check_obj' && x.key !== 'check_loc' && x.key !== 'check_inv' && x.key !== 'check_invparam') &&
+                    config.filter(x => x.key === 'type' && x.value === HuntModeType.NPC).length > 0
+                ) {
                     server.p1(13);
                     server.p2(value as number);
                 } else {
                     throw new Error(`Hunt config: [${debugname}] unable to pack line!!!.\nInvalid property value: ${key}=${value}`);
                 }
             } else if (key === 'check_obj') {
-                if (config.every(x => x.key !== 'check_category' && x.key !== 'check_npc' && x.key !== 'check_loc' && x.key !== 'check_inv' && x.key !== 'check_invparam') && config.filter(x => x.key === 'type' && x.value === HuntModeType.OBJ).length > 0) {
+                if (
+                    config.every(x => x.key !== 'check_category' && x.key !== 'check_npc' && x.key !== 'check_loc' && x.key !== 'check_inv' && x.key !== 'check_invparam') &&
+                    config.filter(x => x.key === 'type' && x.value === HuntModeType.OBJ).length > 0
+                ) {
                     server.p1(14);
                     server.p2(value as number);
                 } else {
                     throw new Error(`Hunt config: [${debugname}] unable to pack line!!!.\nInvalid property value: ${key}=${value}`);
                 }
             } else if (key === 'check_loc') {
-                if (config.every(x => x.key !== 'check_category' && x.key !== 'check_npc' && x.key !== 'check_obj' && x.key !== 'check_inv' && x.key !== 'check_invparam') && config.filter(x => x.key === 'type' && x.value === HuntModeType.SCENERY).length > 0) {
+                if (
+                    config.every(x => x.key !== 'check_category' && x.key !== 'check_npc' && x.key !== 'check_obj' && x.key !== 'check_inv' && x.key !== 'check_invparam') &&
+                    config.filter(x => x.key === 'type' && x.value === HuntModeType.SCENERY).length > 0
+                ) {
                     server.p1(15);
                     server.p2(value as number);
                 } else {
                     throw new Error(`Hunt config: [${debugname}] unable to pack line!!!.\nInvalid property value: ${key}=${value}`);
                 }
             } else if (key === 'check_inv') {
-                if (config.every(x => x.key !== 'check_category' && x.key !== 'check_npc' && x.key !== 'check_obj' && x.key !== 'check_loc' && x.key !== 'check_invparam') && config.filter(x => x.key === 'type' && x.value === HuntModeType.PLAYER).length > 0) {
+                if (
+                    config.every(x => x.key !== 'check_category' && x.key !== 'check_npc' && x.key !== 'check_obj' && x.key !== 'check_loc' && x.key !== 'check_invparam') &&
+                    config.filter(x => x.key === 'type' && x.value === HuntModeType.PLAYER).length > 0
+                ) {
                     const checkInv: HuntCheckInv = value as HuntCheckInv;
                     server.p1(16);
                     server.p2(checkInv.inv);
@@ -503,7 +500,10 @@ export function packHuntConfigs(configs: Map<string, ConfigLine[]>): { client: P
                     throw new Error(`Hunt config: [${debugname}] unable to pack line!!!.\nInvalid property value: ${key}=${value}`);
                 }
             } else if (key === 'check_invparam') {
-                if (config.every(x => x.key !== 'check_category' && x.key !== 'check_npc' && x.key !== 'check_obj' && x.key !== 'check_loc' && x.key !== 'check_inv') && config.filter(x => x.key === 'type' && x.value === HuntModeType.PLAYER).length > 0) {
+                if (
+                    config.every(x => x.key !== 'check_category' && x.key !== 'check_npc' && x.key !== 'check_obj' && x.key !== 'check_loc' && x.key !== 'check_inv') &&
+                    config.filter(x => x.key === 'type' && x.value === HuntModeType.PLAYER).length > 0
+                ) {
                     const checkInv: HuntCheckInvParam = value as HuntCheckInvParam;
                     server.p1(17);
                     server.p2(checkInv.inv);
@@ -513,10 +513,11 @@ export function packHuntConfigs(configs: Map<string, ConfigLine[]>): { client: P
                 } else {
                     throw new Error(`Hunt config: [${debugname}] unable to pack line!!!.\nInvalid property value: ${key}=${value}`);
                 }
-            } else if (key === 'extracheck_var') { // 18-20
+            } else if (key === 'extracheck_var') {
+                // 18-20
                 if (extracheckVarsCount > 2) {
                     throw new Error(`Hunt config: [${debugname}] unable to pack line!!!.\nLimit of 3 extracheck_var properties exceeded.`);
-                } else if (value !== null  && config.filter(x => x.key === 'type' && (x.value === HuntModeType.PLAYER)).length > 0) {
+                } else if (value !== null && config.filter(x => x.key === 'type' && x.value === HuntModeType.PLAYER).length > 0) {
                     const checkVar: HuntCheckVar = value as HuntCheckVar;
                     server.p1(18 + extracheckVarsCount);
                     server.p2(checkVar.varp);
@@ -526,7 +527,7 @@ export function packHuntConfigs(configs: Map<string, ConfigLine[]>): { client: P
                 } else {
                     throw new Error(`Hunt config: [${debugname}] unable to pack line!!!.\nInvalid property value: ${key}=${value}`);
                 }
-            } 
+            }
         }
 
         server.p1(250);
