@@ -291,6 +291,7 @@ model2=model_2872_npc
 wanderrange=0
 maxrange=0
 moverestrict=nomove
+blockwalk=all
 respawnrate=10
 hitpoints=142
 attack=91
