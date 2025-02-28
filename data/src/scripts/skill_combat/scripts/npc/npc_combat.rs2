@@ -175,6 +175,12 @@ if (npc_type = delrith) {
         return(false);
     }
 }
+if (npc_type = count_draynor) {
+    if (%vampire_progress = ^vampire_complete) {
+        mes("You've done enough vampire slaying.");
+        return(false);
+    }
+}
 
 if (npc_hasop(2) = true) {
     return (true);
@@ -258,7 +264,12 @@ if (npc_type = delrith) {
         return(false);
     }
 }
-
+if (npc_type = count_draynor) {
+    if (%vampire_progress = ^vampire_complete) {
+        mes("You've done enough vampire slaying.");
+        return(false);
+    }
+}
 if (npc_hasop(2) = true) {
     return (true);
 }
