@@ -29,6 +29,7 @@ if(inv_total(worn, excalibur) = 0) { // if this was queued we'll need to regain 
     if(%grail_progress = ^grail_spoken_crone) {
         %grail_progress = ^grail_failed_defeat_titan;
     }
+    npc_statheal(hitpoints, npc_basestat(hitpoints), 0);
     mes("Maybe you need something more to beat the titan?");
     ~chatnpc("<p,angry>@red@Puny mortal...|@red@You cannot defeat me...");
     ~chatnpc("<p,angry>@red@I...|@red@Am...|@red@INVINCIBLE!!!");

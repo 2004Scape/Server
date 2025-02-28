@@ -12,6 +12,8 @@ gosub(npc_default_death);
 [ai_queue4,sir_mordred] gosub(npc_default_death);
 
 [label,lefaye_spare_son]
+npc_statheal(hitpoints, npc_basestat(hitpoints), 0);
+
 if_close;
 if(p_finduid(%npc_aggressive_player) = false) {
     return;

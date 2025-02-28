@@ -3,6 +3,19 @@
 // add it to the spell table in ../configs/magic/magic_combat_spells.dbrow
 // create an apnpct trigger for it in this script
 
+[label,player_magic_attack]
+if (~npc_is_attackable = false) { // test: wormbrain's special mes shows before if you dont have enough runes to autocast a specific spell
+    return;
+}
+def_dbrow $spell_data = ~get_spell_data(%autocast_spell);
+if (~check_spell_requirements($spell_data) = false) {
+    if (%autocast_spell = db_getfield($spell_data, magic_spell_table:spell, 0)) { // matches osrs behavior
+        %attackstyle_magic = 0;
+    }
+    return;
+}
+p_opnpct(db_getfield($spell_data, magic_spell_table:spellcom, 0));
+
 // osrs's opnpct triggers are unused
 [apnpct,magic:wind_strike]
 if (%tutorial_progress < ^tutorial_complete) {
@@ -60,40 +73,26 @@ if (~player_npc_hit_roll(^magic_style) = true) {
     ~pvm_spell_fail($spell_data, $duration);
 }
 
+// no 0 hp check for magic: you can attack slayer npcs when they're at 0 hp
 [proc,pvm_combat_spell_checks](dbrow $spell_data)(boolean)
 if_close;
 p_stopaction;
-if(npc_stat(hitpoints) = 0 & (npc_type = sir_mordred | npc_type = black_knight_titan)) {
-    npc_statheal(hitpoints, npc_basestat(hitpoints), 0);
-}
-if (npc_stat(hitpoints) = 0) {
-    return(false); // this means the npc is not avail to fight i.e dead
-}
 if (map_clock < %action_delay) {
     p_opnpct(db_getfield($spell_data, magic_spell_table:spellcom, 0));
     return(false);
 }
 if (~check_spell_requirements($spell_data) = false) {
+    if (%autocast_spell = db_getfield($spell_data, magic_spell_table:spell, 0)) { // matches osrs behavior
+        %attackstyle_magic = 0;
+    }
     return(false);
 }
 if (~player_in_combat_check = false) {
     return(false);
 }
 // check if npc is attackable
-if (~npc_is_attackable_opt() = false) {
+if (~npc_is_attackable_opt = false) {
     return(false);
-}
-if (npc_type = delrith) {
-    if (%demon_progress < ^demon_complete) {
-        if (inv_getobj(worn, 3) ! silverlight) {
-           return(false);
-        }
-    } else {
-        return(false);
-    }
-}
-if (npc_type = shadow_spider & %npc_attacking_uid ! uid & ~npc_out_of_combat = true) {
-    ~shadow_spider_drain;
 }
 return(true);
 
