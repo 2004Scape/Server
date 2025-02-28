@@ -96,7 +96,7 @@ if (~inzone_coord_pair_table(sheepherder_pen_gate, npc_coord) = true) {
     npc_facesquare(movecoord(npc_coord, 0, 0, -1));
     npc_setmode(none);
     %sheepherder_disposal = setbit(%sheepherder_disposal, $npc_start_bit);
-    mes("The sheep obligingly jumps over the gate and into the inclosure.");
+    mes("The sheep obligingly jumps over the gate and into the enclosure.");
 }
 
 [ai_timer,_diseased_sheep]
