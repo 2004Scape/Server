@@ -1,0 +1,145 @@
+[opnpc1,jungle_forester_male] @jungle_forester_start;
+[opnpc1,jungle_forester_female] @jungle_forester_start;
+
+[opnpcu,jungle_forester_male] @jungle_forester_show_item;
+[opnpcu,jungle_forester_female] @jungle_forester_show_item;
+
+[label,jungle_forester_show_item]
+if (last_useitem = radimus_notes_complete) {
+    if (~obj_gettotal(bullroarer) = 0) {
+        // https://youtu.be/Lid8enDEF_U?t=746
+        ~chatnpc("<p,neutral>*Gasp* @blu@-- The jungle forester looks speechless. --");
+        ~chatnpc("<p,neutral>This is very impressive! I'm amazed, it's just great! Do|you mind if I make a copy of it, and I'll give you an|item in return.");
+        @multi3("Yes, go ahead make a copy!", jungle_forester_copy,
+                "What will you give me in return?", jungle_forester_return,
+                "Sorry, I must complete my quest.", jungle_forester_sorry);
+    }
+    else {
+        ~mesbox("You show the completed map of Kharazi Jungle to the Forester.");
+        ~chatnpc("<p,neutral>It's a great map, thanks for letting me take a copy! It has helped me out a number of times now.");
+    }
+}
+else {
+    ~chatnpc("<p,neutral>Sorry, but I have no use for that.");
+}
+
+[label,jungle_forester_copy]
+~chatplayer("<p,neutral>Yes, go ahead make a copy!");
+~chatnpc("<p,neutral>Many thanks friend.");
+def_string $gender = "He";
+if (npc_type = jungle_forester_female) {
+    $gender = "She";
+}
+~mesbox("The Jungle Forester takes out some parchment and some charcoal. <$gender> studiously renders another copy of your map.");
+// "Many thanks friend" twice is correct, ref. https://youtu.be/Lid8enDEF_U?t=749
+~chatnpc("<p,neutral>Many thanks friend.");
+~objbox(bullroarer, "<$gender> takes out a strange looking object and hands it to you.", 180, 0, 0);
+// Can't find any evidence of an inv space check
+inv_add(inv, bullroarer, 1);
+~chatnpc("<p,neutral>Here, I won't be needing this any longer, and it may|help you. Whenever I've used it before, it attracted the|attention of jungle natives.");
+// No inv space check, drops to floor if full
+[label,jungle_forester_return]
+~chatplayer("<p,neutral>What will you give me in return?");
+~chatnpc("<p,neutral>Well, I can offer you this?");
+~objbox(bullroarer, "The Jungle Forester takes out a strange looking object. It looks like a wooden pole, with string attached to one end. And at the other end of the string is a shaped piece of wood.", 180, 0, 0);
+~chatnpc("<p,neutral>If you swing this above your head, it makes a strange sound. I noticed that it attracts the attention of the natives. Is it a deal? Can I make a copy of your map?");
+@multi2("Yes, go ahead make a copy!", jungle_forester_copy,
+        "Sorry, I must complete my quest.", jungle_forester_sorry);
+
+[label,jungle_forester_sorry]
+~chatplayer("<p,neutral>Sorry, I must complete my quest.");
+// Mesanim taken from OSRS, but text is different
+~chatnpc("<p,sad>Very well friend, I understand, I must be on my way as well.|@blu@-- The Jungle Forester seems a bit annoyed... and wanders off. --");
+
+[label,jungle_forester_start]
+~chatnpc("<p,neutral>Hello friend. You're a long way from civilisation!");
+if (%legends_progress > ^legends_not_started) {
+    @multi3("How do I get into the Kharazi Jungle?", jungle_forester_how,
+            "What do you do here?", jungle_forester_what,
+            "Have you seen any natives in the jungle?", jungle_forester_natives);
+}
+else {
+    @multi3("What do you do here?", jungle_forester_what,
+        "How do I get into the Kharazi Jungle?", jungle_forester_how,
+        "Who are you?", jungle_forester_who);
+}
+
+[label,jungle_forester_natives]
+~chatplayer("<p,neutral>Have you seen any natives in the jungle?");
+~chatnpc("<p,neutral>Well, I've heard some funny sounds and I think I've seen a native... but I'm not sure. They generally don't like to be seen I guess.");
+// This line (and subsequent "can I have it" option) continues to appear even after they've given you the bullroarer
+~chatnpc("<p,neutral>But I found an item that you might be interested in. You swing it above your head and it makes a strange sound, it seems to attract their attention.");
+// Lowercase jungle correct
+@multi3("Can I have the item please?", jungle_forester_bullroarer,
+        "How do I get into the Kharazi jungle?", jungle_forester_how,
+        "Ok thanks.", jungle_forester_thanks);
+
+[label,jungle_forester_bullroarer]
+~chatplayer("<p,neutral>Can I have the item please?");
+~chatnpc("<p,neutral>Well, I wish I could give it to you. However, I have grown fond of it. And it may help me in case I get lost in the jungle.");
+@multi2("Will you trade something for it?", jungle_forester_trade,
+        "Ok thanks.", jungle_forester_thanks);
+
+[label,jungle_forester_trade]
+~chatplayer("<p,neutral>Will you trade something for it?");
+~chatnpc("<p,neutral>Well, if you have something interesting, let me have a look at it and I'll offer you something in return. OK, I have to go now, but it's been nice talking with you.");
+
+[label,jungle_forester_what]
+~chatplayer("<p,neutral>What do you do here?");
+~chatnpc("<p,neutral>I'm a forester, and I specialise in exotic woods. I've not managed to penetrate the Kharazi Jungle very far but I have found some interesting tree specimens.");
+~chatnpc("<p,neutral>If you do happen to get into the Kharazi Jungle, do come and let me know. I'd love to be able to safely navigate my own way in and out.");
+@multi3("How do I get into the Kharazi Jungle?", jungle_forester_how,
+        "Who are you?", jungle_forester_who,
+        "Ok thanks.", jungle_forester_thanks);
+
+[label,jungle_forester_who]
+~chatplayer("<p,neutral>Who are you?");
+~chatnpc("<p,neutral>I'm a jungle forester. Names mean little in this part of the world.");
+@multi2("What do you do here?", jungle_forester_what,
+        "How do I get into the Kharazi Jungle?", jungle_forester_how);
+
+[label,jungle_forester_how]
+~chatplayer("<p,neutral>How do I get into the Kharazi Jungle?");
+~chatnpc("<p,neutral>Well, I've not managed it yet but I heard that someone managed to find a way in. But they only just managed to escape the jungle with their lives.");
+~chatnpc("<p,neutral>Apparently he was on a mission to map the area. How foolish is that?");
+if (%legends_progress > ^legends_not_started) {
+    @multi5("Well, in fact I plan to map that area myself.", jungle_forester_map,
+            "Are you calling me foolish?", jungle_forester_foolish,
+            "What do you do here?", jungle_forester_what,
+            "Have you seen any natives in the jungle?", jungle_forester_natives,
+            "Ok thanks.", jungle_forester_thanks); 
+}
+else {
+    @multi3("So someone managed to get into the jungle?", jungle_forester_someone,
+            "What do you do here?", jungle_forester_what,
+            "Ok thanks.", jungle_forester_thanks); 
+}
+
+[label,jungle_forester_map]
+~chatnpc("<p,neutral>@blu@--The forester looks very interested--|@bla@Oh, well, that sounds quite good actually... Sorry if I sounded rude before, it just didn't seem like a good idea to me.");
+~chatnpc("<p,neutral>I guess I just wouldn't want to do it myself. But a map of that area would certainly be a big task. And it would certainly be very useful...|@blu@-- The forester looks very thoughtful --");
+~chatnpc("<p,neutral>Hey, if you manage to complete it, be sure to let me take a look! Well, best of luck with it, I'm sure you're going to need it.");
+@multi3("Do you have any other tips about the Kharazi Jungle?", jungle_forester_tips,
+        "Have you seen any natives in the jungle?", jungle_forester_natives,
+        "Ok thanks.", jungle_forester_thanks);
+
+[label,jungle_forester_foolish]
+~chatplayer("<p,neutral>Are you calling me foolish?");
+// todo: mesanim check, maybe shifty?
+~chatnpc("<p,neutral>No, of course not... Sorry, I have to be on my way...");
+
+[label,jungle_forester_tips]
+~chatplayer("<p,neutral>Do you have any other tips about the Kharazi Jungle?");
+~chatnpc("<p,neutral>Not really, but I would say be careful, it's a dangerous place. And good luck.");
+    
+[label,jungle_forester_someone]
+// Difference in jungle capitalisation vs. option text is accurate
+~chatplayer("<p,neutral>So someone managed to get into the Jungle?");
+~chatnpc("<p,neutral>Yes, he said he was from some place... near the Sorcerer's Tower. Mentioned something about a legend? It meant nothing to me though.");
+@multi3("How do I get into the Kharazi Jungle?", jungle_forester_how,
+        "What do you do here?", jungle_forester_what,
+        "Ok thanks.", jungle_forester_thanks);
+
+[label,jungle_forester_thanks]
+~chatplayer("<p,neutral>Ok thanks.");
+~chatnpc("<p,neutral>You're welcome! See you around...");
