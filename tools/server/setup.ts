@@ -28,7 +28,6 @@ function setNodeXpRate(rate: number) {
 function setNodeProduction(state: boolean) {
     fs.appendFileSync('.env', `NODE_PRODUCTION=${state}\n`);
     fs.appendFileSync('.env', `NODE_DEBUG=${!state}\n`);
-    fs.appendFileSync('.env', `NODE_ALLOW_CHEATS=${!state}\n`);
 }
 
 function setNodeKillTimer(timer: number) {
@@ -65,7 +64,7 @@ function setLocalSupportServers() {
     setLoggerServer(true, 'localhost', 43501);
 }
 
-function setDbBackend(backend: 'sqlite' | 'mysql') {    
+function setDbBackend(backend: 'sqlite' | 'mysql') {
     fs.appendFileSync('.env', `DB_BACKEND=${backend}\n`);
 }
 
@@ -368,8 +367,8 @@ async function configureDevStack() {
     } else {
         console.error('Invalid database backend');
         process.exit(1);
-    }    
-    
+    }
+
     setLocalSupportServers();
 
     fs.appendFileSync('.env', 'EASY_STARTUP=true\n');
@@ -383,7 +382,7 @@ async function configureDevStack() {
             stdio: 'inherit'
         });
     }
-    
+
     process.exit(0);
 }
 
@@ -537,6 +536,7 @@ async function advancedOptions() {
 
 try {
     await startup();
-} catch (_) {  // eslint-disable-line @typescript-eslint/no-unused-vars
+} catch (_) {
+    // eslint-disable-line @typescript-eslint/no-unused-vars
     // no-op
 }
