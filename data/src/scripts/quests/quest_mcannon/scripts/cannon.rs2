@@ -37,6 +37,11 @@ while ($i < 50) {
 return(null);
 
 [opheld1,cannon_base]
+if (%mcannon_progress < ^mcannon_complete) {
+    mes("You can't set up this cannon.");
+    mes("You need to complete the Dwarf Cannon quest."); // osrs
+    return;
+}
 if (%mcannon_coord ! null) {
     if (loc_find(%mcannon_coord, cannon) = true) {
         // osrs
@@ -352,9 +357,6 @@ if (%mcannon_ammo < 1) {
     return;
 }
 if (~npc_is_attackable = false) {
-    return;
-}
-if (npc_stat(hitpoints) = 0) {
     return;
 }
 if (~player_in_combat_check = false) { // https://youtu.be/TeQXQDaawO0?t=247

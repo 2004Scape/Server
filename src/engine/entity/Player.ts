@@ -1,7 +1,7 @@
 import 'dotenv/config';
 
 import Packet from '#/io/Packet.js';
-import {toDisplayName} from '#/util/JString.js';
+import { toDisplayName } from '#/util/JString.js';
 
 import FontType from '#/cache/config/FontType.js';
 import Component from '#/cache/config/Component.js';
@@ -13,27 +13,28 @@ import ScriptVarType from '#/cache/config/ScriptVarType.js';
 import SeqType from '#/cache/config/SeqType.js';
 import VarPlayerType from '#/cache/config/VarPlayerType.js';
 import ParamType from '#/cache/config/ParamType.js';
-import {ParamHelper} from '#/cache/config/ParamHelper.js';
+import { ParamHelper } from '#/cache/config/ParamHelper.js';
 
 import BlockWalk from '#/engine/entity/BlockWalk.js';
-import {EntityTimer, PlayerTimerType} from '#/engine/entity/EntityTimer.js';
-import {EntityQueueRequest, PlayerQueueType, QueueType, ScriptArgument} from '#/engine/entity/EntityQueueRequest.js';
+import { EntityTimer, PlayerTimerType } from '#/engine/entity/EntityTimer.js';
+import { EntityQueueRequest, PlayerQueueType, QueueType, ScriptArgument } from '#/engine/entity/EntityQueueRequest.js';
 import Loc from '#/engine/entity/Loc.js';
 import Npc from '#/engine/entity/Npc.js';
 import MoveRestrict from '#/engine/entity/MoveRestrict.js';
 import Obj from '#/engine/entity/Obj.js';
 import PathingEntity from '#/engine/entity/PathingEntity.js';
-import {CoordGrid} from '#/engine/CoordGrid.js';
+import { CoordGrid } from '#/engine/CoordGrid.js';
 import CameraInfo from '#/engine/entity/CameraInfo.js';
 import MoveSpeed from '#/engine/entity/MoveSpeed.js';
 import EntityLifeCycle from '#/engine/entity/EntityLifeCycle.js';
-import {PlayerStat, PlayerStatEnabled, PlayerStatFree} from '#/engine/entity/PlayerStat.js';
+import { PlayerStat, PlayerStatEnabled, PlayerStatFree } from '#/engine/entity/PlayerStat.js';
 import MoveStrategy from '#/engine/entity/MoveStrategy.js';
 import BuildArea from '#/engine/entity/BuildArea.js';
 import HeroPoints from '#/engine/entity/HeroPoints.js';
-import {isClientConnected} from '#/engine/entity/NetworkPlayer.js';
+import { isClientConnected } from '#/engine/entity/NetworkPlayer.js';
+import Entity from '#/engine/entity/Entity.js';
 
-import {Inventory} from '#/engine/Inventory.js';
+import { Inventory, InventoryListener } from '#/engine/Inventory.js';
 import World from '#/engine/World.js';
 
 import ScriptFile from '#/engine/script/ScriptFile.js';
@@ -44,11 +45,10 @@ import ServerTriggerType from '#/engine/script/ServerTriggerType.js';
 import ScriptPointer from '#/engine/script/ScriptPointer.js';
 
 import LinkList from '#/util/LinkList.js';
-import DoublyLinkList from '#/util/DoublyLinkList.js';
 
-import {CollisionFlag} from '@2004scape/rsmod-pathfinder';
+import { CollisionFlag } from '@2004scape/rsmod-pathfinder';
 
-import {PRELOADED, PRELOADED_CRC} from '#/cache/PreloadedPacks.js';
+import { PRELOADED, PRELOADED_CRC } from '#/cache/PreloadedPacks.js';
 
 import OutgoingMessage from '#/network/server/OutgoingMessage.js';
 import IfClose from '#/network/server/model/IfClose.js';
@@ -69,14 +69,21 @@ import MessageGame from '#/network/server/model/MessageGame.js';
 import ServerProtPriority from '#/network/server/prot/ServerProtPriority.js';
 import ChatFilterSettings from '#/network/server/model/ChatFilterSettings.js';
 import InfoProt from '#/network/rs225/server/prot/InfoProt.js';
-import WalkTriggerSetting from '#/util/WalkTriggerSetting.js';
 
 import Environment from '#/util/Environment.js';
 import { ChatModePrivate, ChatModePublic, ChatModeTradeDuel } from '#/util/ChatModes.js';
 import LoggerEventType from '#/server/logger/LoggerEventType.js';
 import InputTracking from '#/engine/entity/tracking/InputTracking.js';
+import { changeNpcCollision, changePlayerCollision, findNaivePath, reachedEntity, reachedLoc, reachedObj } from '#/engine/GameMap.js';
 import Visibility from './Visibility.js';
-
+import UpdateRebootTimer from '#/network/server/model/UpdateRebootTimer.js';
+import { CollisionType } from '@2004scape/rsmod-pathfinder';
+import SceneState from '#/engine/entity/SceneState.js';
+import ZoneMap from '#/engine/zone/ZoneMap.js';
+import UpdateStat from '#/network/server/model/UpdateStat.js';
+import UpdateZoneFullFollows from '#/network/server/model/UpdateZoneFullFollows.js';
+import RebuildNormal from '#/network/server/model/RebuildNormal.js';
+import UpdateRunEnergy from '#/network/server/model/UpdateRunEnergy.js';
 const levelExperience = new Int32Array(99);
 
 let acc = 0;
@@ -109,6 +116,86 @@ export default class Player extends PathingEntity {
         [4626, 11146, 6439, 12, 4758, 10270],
         [4550, 4537, 5681, 5673, 5790, 6806, 8076, 4574]
     ];
+
+    static readonly MALE_FEMALE_MAP = new Map<number, number>([
+        [0, 45],
+        [1, 47],
+        [2, 48],
+        [3, 49],
+        [4, 50],
+        [5, 51],
+        [6, 52],
+        [7, 53],
+        [8, 54],
+        [9, 55],
+        [18, 56],
+        [19, 56],
+        [20, 56],
+        [21, 56],
+        [22, 56],
+        [23, 56],
+        [24, 56],
+        [25, 56],
+        [26, 61],
+        [27, 63],
+        [28, 62],
+        [29, 65],
+        [30, 64],
+        [31, 63],
+        [32, 66],
+        [33, 67],
+        [34, 68],
+        [35, 69],
+        [36, 70],
+        [37, 71],
+        [38, 72],
+        [39, 76],
+        [40, 75],
+        [41, 78],
+        [42, 79],
+        [43, 80],
+        [44, 81]
+    ]);
+
+    static readonly FEMALE_MALE_MAP = new Map<number, number>([
+        [45, 0],
+        [46, 0],
+        [47, 1],
+        [48, 2],
+        [49, 3],
+        [50, 4],
+        [51, 5],
+        [52, 6],
+        [53, 7],
+        [54, 8],
+        [55, 9],
+        [56, 18],
+        [57, 18],
+        [58, 18],
+        [59, 18],
+        [60, 18],
+        [61, 26],
+        [62, 27],
+        [63, 28],
+        [64, 29],
+        [65, 29],
+        [66, 32],
+        [67, 33],
+        [68, 34],
+        [69, 35],
+        [70, 36],
+        [71, 37],
+        [72, 38],
+        [73, 36],
+        [74, 36],
+        [75, 40],
+        [76, 39],
+        [77, 36],
+        [78, 41],
+        [79, 42],
+        [80, 43],
+        [81, 44]
+    ]);
 
     save() {
         const sav = Packet.alloc(1);
@@ -213,13 +300,16 @@ export default class Player extends PathingEntity {
     vars: Int32Array;
     varsString: string[];
     invs: Map<number, Inventory> = new Map<number, Inventory>();
+    nextTarget: Entity | null = null;
 
     publicChat: ChatModePublic = ChatModePublic.ON;
     privateChat: ChatModePrivate = ChatModePrivate.ON;
     tradeDuel: ChatModeTradeDuel = ChatModeTradeDuel.ON;
 
     // input tracking
+    account_id: number = -1;
     input: InputTracking;
+    submitInput: boolean = false;
 
     // runtime variables
     pid: number = -1;
@@ -229,7 +319,7 @@ export default class Player extends PathingEntity {
     webClient: boolean = false;
     combatLevel: number = 3;
     headicons: number = 0;
-    appearance: Uint8Array | null = null; // cached appearance
+    appearance: number = -1;
     lastAppearance: number = 0;
     baseLevels = new Uint8Array(21);
     lastStats: Int32Array = new Int32Array(21); // we track this so we know to flush stats only once a tick on changes
@@ -245,23 +335,21 @@ export default class Player extends PathingEntity {
     basWalkRight: number = -1;
     basRunning: number = -1;
     animProtect: number = 0;
-    invListeners: {
-        type: number; // InvType
-        com: number; // Component
-        source: number; // uid or -1 for world
-        firstSeen: boolean;
-    }[] = [];
+    invListeners: InventoryListener[] = [];
     allowDesign: boolean = false;
     afkEventReady: boolean = false;
-    interactWalkTrigger: boolean = false;
     moveClickRequest: boolean = false;
 
-    loggedOut: boolean = false; // pending logout processing
-    tryLogout: boolean = false; // logout requested (you *really* need to be sure the logout if_button logic matches the logout trigger...)
+    requestLogout: boolean = false;
+    requestIdleLogout: boolean = false;
+    loggingOut: boolean = false;
+    preventLogoutMessage: string | null = null;
+    preventLogoutUntil: number = -1;
 
     // not stored as a byte buffer so we can write and encrypt opcodes later
-    buffer: DoublyLinkList<OutgoingMessage> = new DoublyLinkList();
-    lastResponse = -1;
+    buffer: OutgoingMessage[] = [];
+    lastResponse: number = -1;
+    lastConnected: number = -1;
 
     messageColor: number | null = null;
     messageEffect: number | null = null;
@@ -314,6 +402,12 @@ export default class Player extends PathingEntity {
     lastZone: number = -1;
 
     muted_until: Date | null = null;
+    members: boolean = true;
+
+    socialProtect: boolean = false; // social packet spam protection
+    reportAbuseProtect: boolean = false; // social packet spam protection
+
+    scene: SceneState = SceneState.NONE;
 
     constructor(username: string, username37: bigint, hash64: bigint) {
         super(0, 3094, 3106, 1, 1, EntityLifeCycle.FOREVER, MoveRestrict.NORMAL, BlockWalk.NPC, MoveStrategy.SMART, InfoProt.PLAYER_FACE_COORD.id, InfoProt.PLAYER_FACE_ENTITY.id); // tutorial island.
@@ -344,14 +438,15 @@ export default class Player extends PathingEntity {
         this.activeScript = null;
         this.invListeners.length = 0;
         this.resumeButtons.length = 0;
-        this.buffer.clear();
+        this.buffer = [];
         this.queue.clear();
         this.weakQueue.clear();
         this.engineQueue.clear();
         this.cameraPackets.clear();
         this.timers.clear();
         this.heroPoints.clear();
-        this.buildArea.clear();
+        this.buildArea.clear(false);
+        this.isActive = false;
     }
 
     resetEntity(respawn: boolean) {
@@ -366,16 +461,29 @@ export default class Player extends PathingEntity {
         this.messageType = null;
         this.message = null;
         this.logMessage = null;
+        this.appearance = -1;
+        this.socialProtect = false;
+        this.reportAbuseProtect = false;
     }
 
     // ----
 
     onLogin() {
-        // normalize client between logins
+        // - rebuild_normal
+        // - chat_filter_settings
+        // - varp_reset
+        // - varps
+        // - invs
+        // - interfaces
+        // - stats
+        // - runweight
+        // - runenergy
+        // - reset anims
+        // - social
+        this.rebuildNormal();
+        this.write(new ChatFilterSettings(this.publicChat, this.privateChat, this.tradeDuel));
         this.write(new IfClose());
         this.write(new UpdateUid192(this.pid));
-        this.unsetMapFlag();
-        this.write(new ResetAnims());
         this.write(new ResetClientVarCache());
         for (let varp = 0; varp < this.vars.length; varp++) {
             const type = VarPlayerType.get(varp);
@@ -384,7 +492,7 @@ export default class Player extends PathingEntity {
                 this.writeVarp(varp, value);
             }
         }
-        this.write(new ChatFilterSettings(this.publicChat, this.privateChat, this.tradeDuel));
+        this.write(new ResetAnims());
 
         const loginTrigger = ScriptProvider.getByTriggerSpecific(ServerTriggerType.LOGIN, -1, -1);
         if (loginTrigger) {
@@ -393,6 +501,49 @@ export default class Player extends PathingEntity {
 
         this.lastStepX = this.x - 1;
         this.lastStepZ = this.z;
+        this.isActive = true;
+    }
+
+    onReconnect() {
+        // - varp_reset
+        // - varps
+        // - rebuild_normal
+        // - invs
+        // - stats
+        // - runweight
+        // - runenergy
+        // - reset_anims
+        // - socials
+        this.write(new ResetClientVarCache());
+        for (let varp = 0; varp < this.vars.length; varp++) {
+            const type = VarPlayerType.get(varp);
+            const value = this.vars[varp];
+            if (type.transmit) {
+                this.writeVarp(varp, value);
+            }
+        }
+        // force resyncing
+        this.scene = SceneState.NONE;
+        // reload entity info (overkill? does the client have some logic around this?)
+        this.buildArea.clear(true);
+        // rebuild scene (rebuildnormal won't run if you're in the same zone!)
+        this.rebuildNormal();
+        this.scene = SceneState.LOAD;
+        // in case of pending update
+        if (World.isPendingShutdown) {
+            const ticksBeforeShutdown = World.shutdownTicksRemaining;
+            this.write(new UpdateRebootTimer(ticksBeforeShutdown));
+        }
+        this.closeModal();
+        this.refreshInvs();
+        for (let i = 0; i < this.stats.length; i++) {
+            this.write(new UpdateStat(i, this.stats[i], this.levels[i]));
+        }
+        this.write(new UpdateRunEnergy(this.runenergy));
+        this.write(new ResetAnims());
+        this.moveSpeed = MoveSpeed.INSTANT;
+        this.tele = true;
+        this.jump = true;
     }
 
     triggerMapzone(x: number, z: number) {
@@ -413,8 +564,8 @@ export default class Player extends PathingEntity {
     triggerZone(level: number, x: number, z: number) {
         const mx = x >> 6;
         const mz = z >> 6;
-        const lx = (x & 0x3f) >> 3 << 3;
-        const lz = (z & 0x3f) >> 3 << 3;
+        const lx = ((x & 0x3f) >> 3) << 3;
+        const lz = ((z & 0x3f) >> 3) << 3;
         const trigger = ScriptProvider.getByName(`[zone,${level}_${mx}_${mz}_${lx}_${lz}]`);
         if (trigger) {
             this.enqueueScript(trigger, PlayerQueueType.ENGINE);
@@ -424,8 +575,8 @@ export default class Player extends PathingEntity {
     triggerZoneExit(level: number, x: number, z: number) {
         const mx = x >> 6;
         const mz = z >> 6;
-        const lx = (x & 0x3f) >> 3 << 3;
-        const lz = (z & 0x3f) >> 3 << 3;
+        const lx = ((x & 0x3f) >> 3) << 3;
+        const lz = ((z & 0x3f) >> 3) << 3;
         const trigger = ScriptProvider.getByName(`[zoneexit,${level}_${mx}_${mz}_${lx}_${lz}]`);
         if (trigger) {
             this.enqueueScript(trigger, PlayerQueueType.ENGINE);
@@ -464,11 +615,11 @@ export default class Player extends PathingEntity {
     }
 
     addSessionLog(event_type: LoggerEventType, message: string, ...args: string[]): void {
-        World.addSessionLog(event_type, this.username, 'headless', CoordGrid.packCoord(this.level, this.x, this.z), message, ...args);
+        World.addSessionLog(event_type, this.account_id, 'headless', CoordGrid.packCoord(this.level, this.x, this.z), message, ...args);
     }
 
     addWealthLog(change: number, message: string, ...args: string[]) {
-        World.addSessionLog(LoggerEventType.WEALTH, this.username, 'headless', CoordGrid.packCoord(this.level, this.x, this.z), change + ';' + message, ...args);
+        World.addSessionLog(LoggerEventType.WEALTH, this.account_id, 'headless', CoordGrid.packCoord(this.level, this.x, this.z), change + ';' + message, ...args);
     }
 
     processEngineQueue() {
@@ -485,19 +636,12 @@ export default class Player extends PathingEntity {
 
     // ----
 
-    updateMovement(repathAllowed: boolean = true): boolean {
+    updateMovement(): boolean {
         // players cannot walk if they have a modal open *and* something in their queue, confirmed as far back as 2005
-        if (this.moveClickRequest && this.busy() && (this.queue.head() != null || this.engineQueue.head() != null || this.walktrigger !== -1)) {
-            this.recoverEnergy(false);
+        if (this.moveClickRequest && this.busy() && (this.queue.head() != null || this.engineQueue.head() != null)) {
             return false;
         }
 
-        if (Environment.NODE_WALKTRIGGER_SETTING === WalkTriggerSetting.PLAYERMOVEMENT && !this.target && this.hasWaypoints()) {
-            this.processWalktrigger();
-        }
-        if (repathAllowed && this.target instanceof PathingEntity && !this.interacted && this.walktrigger === -1) {
-            this.pathToPathingTarget();
-        }
         if (this.moveSpeed !== MoveSpeed.INSTANT) {
             this.moveSpeed = this.defaultMoveSpeed();
             if (this.basRunning === -1) {
@@ -512,9 +656,27 @@ export default class Player extends PathingEntity {
             this.tempRun = 0;
         }
 
-        const moved = this.lastTickX !== this.x || this.lastTickZ !== this.z;
-        this.drainEnergy(moved);
-        this.recoverEnergy(moved);
+        if (this.stepsTaken > 0) {
+            this.lastMovement = World.currentTick + 1;
+        }
+
+        return this.stepsTaken > 0;
+    }
+
+    updateEnergy() {
+        if (this.delayed) {
+            return;
+        }
+        if (this.stepsTaken < 2) {
+            const recovered = ((this.baseLevels[PlayerStat.AGILITY] / 9) | 0) + 8;
+            this.runenergy = Math.min(this.runenergy + recovered, 10000);
+        } else {
+            const weightKg = this.runweight / 1000;
+            const clampWeight = Math.min(Math.max(weightKg, 0), 64);
+            const loss = (67 + (67 * clampWeight) / 64) | 0;
+            this.runenergy = Math.max(this.runenergy - loss, 0);
+        }
+
         if (this.runenergy === 0) {
             this.run = 0;
             // todo: better way to sync engine varp
@@ -522,29 +684,6 @@ export default class Player extends PathingEntity {
         }
         if (this.runenergy < 100) {
             this.tempRun = 0;
-        }
-        if (moved) {
-            this.lastMovement = World.currentTick + 1;
-        }
-        return moved;
-    }
-
-    private drainEnergy(moved: boolean): void {
-        if (!moved || this.stepsTaken === 0) {
-            return;
-        }
-        if (!this.delayed && this.moveSpeed === MoveSpeed.RUN && this.stepsTaken > 1) {
-            const weightKg = Math.floor(this.runweight / 1000);
-            const clampWeight = Math.min(Math.max(weightKg, 0), 64);
-            const loss = (67 + (67 * clampWeight) / 64) | 0;
-            this.runenergy = Math.max(this.runenergy - loss, 0);
-        }
-    }
-
-    private recoverEnergy(moved: boolean): void {
-        if (!this.delayed && (!moved || this.stepsTaken < 2) && this.runenergy < 10000) {
-            const recovered = (this.baseLevels[PlayerStat.AGILITY] / 9 | 0) + 8;
-            this.runenergy = Math.min(this.runenergy + recovered, 10000);
         }
     }
 
@@ -581,6 +720,14 @@ export default class Player extends PathingEntity {
             return;
         }
 
+        this.modalState = 0;
+
+        // close any input dialogue suspended scripts.
+        if (this.activeScript?.execution === ScriptState.COUNTDIALOG || this.activeScript?.execution === ScriptState.PAUSEBUTTON) {
+            this.activeScript = null;
+        }
+
+        // close any main viewport interface
         if (this.modalMain !== -1) {
             const closeTrigger = ScriptProvider.getByTrigger(ServerTriggerType.IF_CLOSE, this.modalMain);
             if (closeTrigger) {
@@ -590,6 +737,7 @@ export default class Player extends PathingEntity {
             this.modalMain = -1;
         }
 
+        // close any chatbox interface
         if (this.modalChat !== -1) {
             const closeTrigger = ScriptProvider.getByTrigger(ServerTriggerType.IF_CLOSE, this.modalChat);
             if (closeTrigger) {
@@ -599,6 +747,7 @@ export default class Player extends PathingEntity {
             this.modalChat = -1;
         }
 
+        // close any sidebar tabs interface
         if (this.modalSide !== -1) {
             const closeTrigger = ScriptProvider.getByTrigger(ServerTriggerType.IF_CLOSE, this.modalSide);
             if (closeTrigger) {
@@ -608,7 +757,6 @@ export default class Player extends PathingEntity {
             this.modalSide = -1;
         }
 
-        this.modalState = 0;
         this.refreshModalClose = true;
     }
 
@@ -668,7 +816,6 @@ export default class Player extends PathingEntity {
                 }
             }
         }
-
     }
 
     processQueues() {
@@ -695,16 +842,9 @@ export default class Player extends PathingEntity {
         // - thank you De0 for the explanation
         // essentially, if a script is before the end of the list, it can be processed this tick and result in inconsistent queue timing (authentic)
         for (let request = this.queue.head(); request !== null; request = this.queue.next()) {
-            if (this.tryLogout && request.type === PlayerQueueType.LONG) {
-                const logoutAction = request.args.shift();
-                if (logoutAction === 0) {
-                    // ^accelerate
-                    request.delay = 0;
-                } else {
-                    // ^discard
-                    request.unlink();
-                    continue;
-                }
+            if (this.loggingOut && request.type === PlayerQueueType.LONG && request.args[0] === 0) {
+                // ^accelerate
+                request.delay = 0;
             }
 
             const delay = request.delay--;
@@ -713,6 +853,9 @@ export default class Player extends PathingEntity {
 
                 const save = this.queue.cursor; // LinkList-specific behavior so we can getqueue/clearqueue inside of this
 
+                if (request.type === PlayerQueueType.LONG) {
+                    request.args.shift();
+                }
                 const script = ScriptRunner.init(request.script, this, null, request.args);
                 this.executeScript(script, true);
 
@@ -835,12 +978,36 @@ export default class Player extends PathingEntity {
 
         return ScriptProvider.getByTrigger(this.targetOp, typeId, categoryId) ?? null;
     }
+
+    pathToPathingTarget(): void {
+        if (!(this.target instanceof PathingEntity)) {
+            return;
+        }
+
+        if (this.isLastOrNoWaypoint() && (this.targetOp === ServerTriggerType.APPLAYER3 || this.targetOp === ServerTriggerType.OPPLAYER3)) {
+            this.queueWaypoint(this.target.followX, this.target.followZ);
+            return;
+        }
+
+        if (!this.canAccess()) {
+            return;
+        }
+
+        if (Environment.NODE_CLIENT_ROUTEFINDER && CoordGrid.intersects(this.x, this.z, this.width, this.length, this.target.x, this.target.z, this.target.width, this.target.length)) {
+            this.queueWaypoints(findNaivePath(this.level, this.x, this.z, this.target.x, this.target.z, this.width, this.length, this.target.width, this.target.length, 0, CollisionType.NORMAL));
+            return;
+        }
+        if (this.isLastOrNoWaypoint()) {
+            this.pathToTarget();
+        }
+    }
+
     // https://youtu.be/_NmFftkMm0I?si=xSgb8GCydgUXUayR&t=79
     // to allow p_walk (sets player destination tile) during walktriggers
-    // we process walktriggers from regular movement in client input, 
+    // we process walktriggers from regular movement in client input,
     // and for each interaction.
     processWalktrigger() {
-        if (this.walktrigger !== -1 && (!this.protect && !this.delayed)) {
+        if (this.walktrigger !== -1 && !this.protect && !this.delayed) {
             const trigger = ScriptProvider.get(this.walktrigger);
             this.walktrigger = -1;
             if (trigger) {
@@ -850,198 +1017,203 @@ export default class Player extends PathingEntity {
         }
     }
 
-    processInteraction() {
-        if (this.target === null || !this.canAccess()) {
-            this.updateMovement(false);
-            return;
-        }
+    defaultOp() {
+        const opTrigger = this.getOpTrigger();
+        const apTrigger = this.getApTrigger();
 
-        if (this.target.level !== this.level || (this.target instanceof Player && this.target.visibility !== Visibility.DEFAULT)) {
-            this.clearInteraction();
-            this.unsetMapFlag(); // assuming its right
-            return;
-        }
-
-        if (this.target instanceof Npc && (typeof World.getNpc(this.target.nid) === 'undefined' || this.target.delayed)) {
-            this.clearInteraction();
-            this.unsetMapFlag();
-            return;
-        }
-
-        // this is effectively checking if the npc did a changetype
-        if (this.target instanceof Npc && this.targetSubject.type !== -1 && World.getNpcByUid((this.targetSubject.type << 16) | this.target.nid) === null) {
-            this.clearInteraction();
-            this.unsetMapFlag();
-            return;
-        }
-
-        if (this.target instanceof Obj && World.getObj(this.target.x, this.target.z, this.level, this.target.type, this.hash64) === null) {
-            this.clearInteraction();
-            this.unsetMapFlag();
-            return;
-        }
-
-        if (this.target instanceof Loc && World.getLoc(this.target.x, this.target.z, this.level, this.target.type) === null) {
-            this.clearInteraction();
-            this.unsetMapFlag();
-            return;
-        }
-
-        if (this.target instanceof Player && World.getPlayerByUid(this.target.uid) === null) {
-            this.clearInteraction();
-            this.unsetMapFlag();
-            return;
-        }
-        if (this.targetOp === ServerTriggerType.APPLAYER3 || this.targetOp === ServerTriggerType.OPPLAYER3) {
-            const walktrigger: number = this.walktrigger;
-            if (this.hasWaypoints()) {
-                this.processWalktrigger();
-            }    
-            const moved: boolean = this.updateMovement(false);    
-            if (!moved && walktrigger !== -1 && this.target instanceof Player && (this.x !== this.target.lastStepX || this.z !== this.target.lastStepZ)) {
-                this.clearInteraction();
-                this.unsetMapFlag();
+        if (!Environment.NODE_PRODUCTION && !opTrigger && !apTrigger) {
+            let debugname = '_';
+            if (this.target instanceof Npc) {
+                debugname = NpcType.get(this.target.type)?.debugname ?? this.target.type.toString();
+            } else if (this.target instanceof Loc) {
+                debugname = LocType.get(this.target.type)?.debugname ?? this.target.type.toString();
+            } else if (this.target instanceof Obj) {
+                debugname = ObjType.get(this.target.type)?.debugname ?? this.target.type.toString();
+            } else if ((this.targetSubject.com !== -1 && this.targetOp === ServerTriggerType.APNPCT) || this.targetOp === ServerTriggerType.APPLAYERT || this.targetOp === ServerTriggerType.APLOCT || this.targetOp === ServerTriggerType.APOBJT) {
+                debugname = Component.get(this.targetSubject.com)?.comName ?? this.targetSubject.toString();
+            } else if (this.targetSubject.type !== -1) {
+                debugname = ObjType.get(this.targetSubject.type)?.debugname ?? this.targetSubject.toString();
             }
-            return;
+
+            this.messageGame(`No trigger for [${ServerTriggerType[this.targetOp + 7].toLowerCase()},${debugname}]`);
         }
-        if (!this.interactWalkTrigger || this.hasWaypoints()) {
-            this.processWalktrigger();
-            this.interactWalkTrigger = true;
+
+        this.messageGame('Nothing interesting happens.');
+        this.clearWaypoints();
+    }
+
+    inOperableDistance(target: Entity): boolean {
+        if (target.level !== this.level) {
+            return false;
+        }
+        if (target instanceof PathingEntity) {
+            return reachedEntity(this.level, this.x, this.z, target.x, target.z, target.width, target.length, this.width);
+        } else if (target instanceof Loc) {
+            const forceapproach = LocType.get(target.type).forceapproach;
+            return reachedLoc(this.level, this.x, this.z, target.x, target.z, target.width, target.length, this.width, target.angle, target.shape, forceapproach);
+        }
+        // instanceof Obj
+        return reachedEntity(this.level, this.x, this.z, target.x, target.z, target.width, target.length, this.width) || reachedObj(this.level, this.x, this.z, target.x, target.z, target.width, target.length, this.width);
+    }
+
+    tryInteract(allowOpScenery: boolean): boolean {
+        if (this.target === null || !this.canAccess()) {
+            return false;
         }
 
         const opTrigger = this.getOpTrigger();
         const apTrigger = this.getApTrigger();
 
-        if (opTrigger && this.target instanceof PathingEntity && this.inOperableDistance(this.target)) {
+        // The follow interaction doesn't do anything, just continue
+        if (this.targetOp === ServerTriggerType.APPLAYER3 || this.targetOp === ServerTriggerType.OPPLAYER3) {
+            return false;
+        }
+        // Run the opTrigger if it exists and Player is within range
+        // allowOpScenery controls if Locs and Objs can be op'd
+        if (opTrigger && (this.target instanceof PathingEntity || allowOpScenery) && this.inOperableDistance(this.target)) {
             const target = this.target;
+
             this.target = null;
-            this.clearWaypoints(); 
+            this.clearWaypoints();
 
             this.executeScript(ScriptRunner.init(opTrigger, this, target), true);
-            this.interacted = true;
 
-        } else if (apTrigger && this.inApproachDistance(this.apRange, this.target)) {
-            const target = this.target;
-            this.target = null;
+            // If p_opnpc was called, remember it for later
+            // For now, keep the current target
+            this.nextTarget = this.target;
+            this.target = target;
+            return true;
+        }
+
+        // Run the apTrigger if it exists and Player is within range
+        else if (apTrigger && this.inApproachDistance(this.apRange, this.target)) {
+            // Reset apRangeCalled
+            this.apRangeCalled = false;
+
+            // Store initial values
             const wayPoints = this.waypoints;
             const waypointIndex = this.waypointIndex;
+            const target = this.target;
+
+            this.target = null;
             this.clearWaypoints();
 
             this.executeScript(ScriptRunner.init(apTrigger, this, target), true);
 
+            // If p_opnpc was called, remember it for later
+            // For now, keep the current target
+            this.nextTarget = this.target;
+            this.target = target;
+
+            // If p_opnpc was called, make sure destination is not set
+            if (this.nextTarget) {
+                this.clearWaypoints();
+            }
             // if aprange was called then we did not interact.
-            if (this.apRangeCalled) {
+            else if (this.apRangeCalled) {
                 this.waypoints = wayPoints;
                 this.waypointIndex = waypointIndex;
                 this.target = target;
-            } else {
-                if (this.target === target) { // if p_opnpc was called
-                    this.clearWaypoints(); 
-                }
-                this.interacted = true;
+                return false;
             }
-
-        } else if (this.target instanceof PathingEntity && this.inOperableDistance(this.target)) {
-            if (Environment.NODE_DEBUG && !opTrigger && !apTrigger) {
-                let debugname = '_';
-                if (this.target instanceof Npc) {
-                    if (this.targetSubject.com !== -1 && this.targetOp === ServerTriggerType.APNPCT || this.targetOp === ServerTriggerType.OPNPCT) {
-                        debugname = Component.get(this.targetSubject.com)?.comName ?? this.targetSubject.toString();
-                    } else {
-                        debugname = NpcType.get(this.target.type)?.debugname ?? this.target.type.toString();
-                    }
-                } else if (this.target instanceof Loc) {
-                    debugname = LocType.get(this.target.type)?.debugname ?? this.target.type.toString();
-                } else if (this.target instanceof Obj) {
-                    debugname = ObjType.get(this.target.type)?.debugname ?? this.target.type.toString();
-                } else if (this.targetSubject.com !== -1 && this.targetOp === ServerTriggerType.APNPCT || this.targetOp === ServerTriggerType.APPLAYERT || this.targetOp === ServerTriggerType.APLOCT || this.targetOp === ServerTriggerType.APOBJT) {
-                    debugname = Component.get(this.targetSubject.com)?.comName ?? this.targetSubject.toString();
-                } else if (this.targetSubject.type !== -1) {
-                    debugname = ObjType.get(this.targetSubject.type)?.debugname ?? this.targetSubject.toString();
-                }
-
-                this.messageGame(`No trigger for [${ServerTriggerType[this.targetOp + 7].toLowerCase()},${debugname}]`);
-            }
-
-            this.target = null;
-            this.messageGame('Nothing interesting happens.');
-            this.interacted = true;
-            this.clearWaypoints();
+            return true;
         }
-        let moved = false;
-        if (this.interacted && !this.apRangeCalled) {
-            this.recoverEnergy(false);
-        } else if (this.target) {
-            this.interacted = false;
-            this.processWalktrigger();
-            moved = this.updateMovement();
-            if (opTrigger && (this.target instanceof PathingEntity || !moved) && this.inOperableDistance(this.target)) {
 
-                const target = this.target;
-                this.target = null;
-                this.clearWaypoints(); 
+        // Run the default apTrigger. This is the ap analog to the "NIH" default op
+        else if (this.inApproachDistance(this.apRange, this.target)) {
+            this.apRange = -1;
+            return false;
+        }
 
-                this.executeScript(ScriptRunner.init(opTrigger, this, target), true);
-                this.interacted = true;
+        // Run the default opTrigger if within range
+        else if (this.target && (this.target instanceof PathingEntity || allowOpScenery) && this.inOperableDistance(this.target)) {
+            this.defaultOp();
+            return true;
+        }
+        return false;
+    }
 
-            } else if (apTrigger && this.inApproachDistance(this.apRange, this.target)) {
-                this.apRangeCalled = false;
+    validateTarget(): boolean {
+        // Validate that the target is on the same floor
+        if (this.target?.level !== this.level) {
+            return false;
+        }
 
-                const target = this.target;
-                this.target = null;
-                const wayPoints = this.waypoints;
-                const waypointIndex = this.waypointIndex;
-                this.clearWaypoints();
+        // This is effectively checking if the npc did a changetype
+        if (this.target instanceof Npc && this.targetSubject.type !== -1 && World.getNpcByUid((this.targetSubject.type << 16) | this.target.nid) === null) {
+            return false;
+        }
 
-                this.executeScript(ScriptRunner.init(apTrigger, this, target), true);
+        return this.target.isValid(this.hash64);
+    }
 
-                // if aprange was called then we did not interact.
-                if (this.apRangeCalled) {
-                    this.target = target;
-                    this.waypoints = wayPoints;
-                    this.waypointIndex = waypointIndex;
-                } else {
-                    if (this.target === target) { // if p_opnpc was called
-                        this.clearWaypoints();
-                    }
-                    this.interacted = true;
+    processInteraction() {
+        this.followX = this.lastStepX;
+        this.followZ = this.lastStepZ;
+        this.nextTarget = null;
+
+        const followOp = this.targetOp === ServerTriggerType.APPLAYER3 || this.targetOp === ServerTriggerType.OPPLAYER3;
+
+        let interacted = false;
+
+        // If there is a target and p_access is available, try to interact before movement
+        if (this.target && this.canAccess()) {
+            // Clear the interaction if target validation does not pass
+            if (!this.validateTarget()) {
+                this.clearInteraction();
+                this.unsetMapFlag();
+                return;
+            }
+
+            // Run the optrigger, but applayer3 should not run this
+            if (!followOp) {
+                this.processWalktrigger();
+            }
+
+            interacted = this.tryInteract(false);
+        }
+
+        // This block won't run if the initial interaction attempt was successful
+        if (!interacted) {
+            // Recalc path
+            this.pathToPathingTarget();
+
+            // Process walktrigger if there is waypoints
+            if (this.hasWaypoints() && this.canAccess()) {
+                this.processWalktrigger();
+            }
+
+            // If a stun clears the Player's waypoints, clear the interaction
+            if (!this.hasWaypoints() && followOp) {
+                this.clearInteraction();
+            }
+
+            this.updateMovement();
+
+            // If there's a target and p_access is available, try to interact after moving
+            if (this.target && this.canAccess() && !followOp) {
+                interacted = this.tryInteract(this.stepsTaken === 0);
+
+                // If Player did not interact, has no path, and did not move this cycle, terminate the interaction
+                if (!interacted && !this.hasWaypoints() && this.stepsTaken === 0) {
+                    this.messageGame("I can't reach that!");
+                    this.clearInteraction();
                 }
-
-            } else if ((this.target instanceof PathingEntity || !moved) && this.inOperableDistance(this.target)) {
-                if (!Environment.NODE_PRODUCTION && !opTrigger && !apTrigger) {
-                    let debugname = '_';
-                    if (this.target instanceof Npc) {
-                        debugname = NpcType.get(this.target.type)?.debugname ?? this.target.type.toString();
-                    } else if (this.target instanceof Loc) {
-                        debugname = LocType.get(this.target.type)?.debugname ?? this.target.type.toString();
-                    } else if (this.target instanceof Obj) {
-                        debugname = ObjType.get(this.target.type)?.debugname ?? this.target.type.toString();
-                    } else if (this.targetSubject.com !== -1 && this.targetOp === ServerTriggerType.APNPCT || this.targetOp === ServerTriggerType.APPLAYERT || this.targetOp === ServerTriggerType.APLOCT || this.targetOp === ServerTriggerType.APOBJT) {
-                        debugname = Component.get(this.targetSubject.com)?.comName ?? this.targetSubject.toString();
-                    } else if (this.targetSubject.type !== -1) {
-                        debugname = ObjType.get(this.targetSubject.type)?.debugname ?? this.targetSubject.toString();
-                    }
-
-                    this.messageGame(`No trigger for [${ServerTriggerType[this.targetOp + 7].toLowerCase()},${debugname}]`);
-                }
-
-                this.target = null;
-                this.messageGame('Nothing interesting happens.');
-                this.interacted = true;
-                this.clearWaypoints();
             }
         }
 
-        if (!this.interacted && !this.hasWaypoints() && !moved) {
-            this.messageGame("I can't reach that!");
+        // If a script called p_op*, then nextTarget is prepped for next cycle
+        if (this.nextTarget) {
+            this.target = this.nextTarget;
+        }
+
+        // Otherwise, the interaction ran
+        else if (interacted && !this.apRangeCalled) {
             this.clearInteraction();
         }
 
-        if (this.interacted && !this.apRangeCalled && this.target === null) {
-            this.clearInteraction();
-        }
-        
-        if (!this.hasWaypoints()) {
+        // Remove mapflag if there are no waypoints
+        if (!this.hasWaypoints() && this.stepsTaken > 0) {
             this.unsetMapFlag();
         }
     }
@@ -1085,7 +1257,7 @@ export default class Player extends PathingEntity {
         return Math.floor(base + Math.max(melee, range, magic));
     }
 
-    generateAppearance(inv: number) {
+    generateAppearance(): Uint8Array {
         const stream = Packet.alloc(0);
 
         stream.p1(this.gender);
@@ -1093,7 +1265,7 @@ export default class Player extends PathingEntity {
 
         const skippedSlots = [];
 
-        let worn = this.getInventory(inv);
+        let worn = this.getInventory(this.appearance);
         if (!worn) {
             worn = new Inventory(InvType.WORN, 0);
         }
@@ -1153,19 +1325,28 @@ export default class Player extends PathingEntity {
         stream.p8(this.username37);
         stream.p1(this.combatLevel);
 
-        this.masks |= InfoProt.PLAYER_APPEARANCE.id;
-
-        this.appearance = new Uint8Array(stream.pos);
+        const appearance: Uint8Array = new Uint8Array(stream.pos);
         stream.pos = 0;
-        stream.gdata(this.appearance, 0, this.appearance.length);
+        stream.gdata(appearance, 0, appearance.length);
         stream.release();
 
         this.lastAppearance = World.currentTick;
+        return appearance;
     }
 
     // ----
 
-    getInventoryFromListener(listener: any) {
+    refreshInvs() {
+        for (let i: number = 0; i < this.invListeners.length; i++) {
+            const listener = this.invListeners[i];
+            if (!listener) {
+                continue;
+            }
+            listener.firstSeen = true;
+        }
+    }
+
+    getInventoryFromListener(listener: InventoryListener) {
         if (listener.source === -1) {
             return World.getInventory(listener.type);
         } else {
@@ -1376,13 +1557,13 @@ export default class Player extends PathingEntity {
         }
 
         const fromObj = this.invGetSlot(fromInv, fromSlot);
-        if (!fromObj) {
-            throw new Error(`invMoveToSlot: Invalid from obj was null. This means the obj does not exist at this slot: ${fromSlot}`);
-        }
-
         const toObj = this.invGetSlot(toInv, toSlot);
-        this.invSet(toInv, fromObj.id, fromObj.count, toSlot);
 
+        if (fromObj) {
+            this.invSet(toInv, fromObj.id, fromObj.count, toSlot);
+        } else {
+            this.invDelSlot(toInv, toSlot);
+        }
         if (toObj) {
             this.invSet(fromInv, toObj.id, toObj.count, fromSlot);
         } else {
@@ -1553,14 +1734,13 @@ export default class Player extends PathingEntity {
 
             const script = ScriptProvider.getByTriggerSpecific(ServerTriggerType.ADVANCESTAT, stat, -1);
             if (script) {
-                this.unlinkQueuedScript(script.id, PlayerQueueType.ENGINE);
                 this.enqueueScript(script, PlayerQueueType.ENGINE);
             }
         }
 
         if (this.combatLevel != this.getCombatLevel()) {
             this.combatLevel = this.getCombatLevel();
-            this.generateAppearance(InvType.WORN);
+            this.buildAppearance(InvType.WORN);
         }
     }
 
@@ -1580,8 +1760,13 @@ export default class Player extends PathingEntity {
 
         if (this.getCombatLevel() != this.combatLevel) {
             this.combatLevel = this.getCombatLevel();
-            this.generateAppearance(InvType.WORN);
+            this.buildAppearance(InvType.WORN);
         }
+    }
+
+    buildAppearance(inv: number): void {
+        this.appearance = inv;
+        this.masks |= InfoProt.PLAYER_APPEARANCE.id;
     }
 
     playAnimation(anim: number, delay: number) {
@@ -1625,6 +1810,14 @@ export default class Player extends PathingEntity {
         }
         // This doesn't actually cancel interactions, source: https://youtu.be/ARS7eO3_Z8U?si=OkYfjW0sVhkQmQ8y&t=293
         this.visibility = visibility;
+        if (visibility === Visibility.DEFAULT) {
+            this.blockWalk = BlockWalk.NPC;
+            changeNpcCollision(this.width, this.x, this.z, this.level, true);
+        } else {
+            this.blockWalk = BlockWalk.NONE;
+            changeNpcCollision(this.width, this.x, this.z, this.level, false);
+            changePlayerCollision(this.width, this.x, this.z, this.level, false);
+        }
         this.messageGame(`vis: ${visibility}`);
     }
 
@@ -1776,6 +1969,62 @@ export default class Player extends PathingEntity {
         }
     }
 
+    rebuildZones(): void {
+        // update any newly tracked zones
+        this.buildArea.activeZones.clear();
+
+        const centerX = CoordGrid.zone(this.x);
+        const centerZ = CoordGrid.zone(this.z);
+
+        const originX: number = CoordGrid.zone(this.originX);
+        const originZ: number = CoordGrid.zone(this.originZ);
+
+        const leftX = originX - 6;
+        const rightX = originX + 6;
+        const topZ = originZ + 6;
+        const bottomZ = originZ - 6;
+
+        for (let x = centerX - 3; x <= centerX + 3; x++) {
+            for (let z = centerZ - 3; z <= centerZ + 3; z++) {
+                // check if the zone is within the build area
+                if (x < leftX || x > rightX || z > topZ || z < bottomZ) {
+                    continue;
+                }
+                this.buildArea.activeZones.add(ZoneMap.zoneIndex(x << 3, z << 3, this.level));
+            }
+        }
+    }
+
+    rebuildNormal(): void {
+        const originX: number = CoordGrid.zone(this.originX);
+        const originZ: number = CoordGrid.zone(this.originZ);
+
+        const reloadLeftX = (originX - 4) << 3;
+        const reloadRightX = (originX + 5) << 3;
+        const reloadTopZ = (originZ + 5) << 3;
+        const reloadBottomZ = (originZ - 4) << 3;
+
+        // if the build area should be regenerated, do so now
+        if (this.x < reloadLeftX || this.z < reloadBottomZ || this.x > reloadRightX - 1 || this.z > reloadTopZ - 1 || this.scene === SceneState.NONE) {
+            if (this.scene === SceneState.READY) {
+                // this fixes invisible door issue...
+                for (const zone of this.buildArea.activeZones) {
+                    const { x, z } = ZoneMap.unpackIndex(zone);
+                    if (x < reloadLeftX || z < reloadBottomZ || x > reloadRightX - 1 || z > reloadTopZ - 1) {
+                        this.write(new UpdateZoneFullFollows(CoordGrid.zone(x), CoordGrid.zone(z), this.originX, this.originZ));
+                    }
+                }
+            }
+
+            this.write(new RebuildNormal(CoordGrid.zone(this.x), CoordGrid.zone(this.z)));
+
+            this.originX = this.x;
+            this.originZ = this.z;
+            this.scene = SceneState.NONE;
+            this.buildArea.loadedZones.clear();
+        }
+    }
+
     // ----
 
     runScript(script: ScriptState, protect: boolean = false, force: boolean = false) {
@@ -1895,5 +2144,17 @@ export default class Player extends PathingEntity {
 
     messageGame(msg: string) {
         this.write(new MessageGame(msg));
+    }
+
+    isValid(hash64?: bigint): boolean {
+        if (this.loggingOut) {
+            return false;
+        }
+
+        if (this.visibility !== Visibility.DEFAULT) {
+            return false;
+        }
+
+        return super.isValid();
     }
 }

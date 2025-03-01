@@ -1,3 +1,4 @@
+import InputTrackingEvent from '#/engine/entity/tracking/InputEvent.js';
 import InternalClient from '#/server/InternalClient.js';
 
 import Environment from '#/util/Environment.js';
@@ -11,7 +12,7 @@ export default class LoggerClient extends InternalClient {
         this.nodeId = nodeId;
     }
 
-    public async sessionLog(username: string, session_uuid: string, timestamp: number, coord: number, event: string, event_type: number) {
+    public async sessionLog(logs: string[]) {
         await this.connect();
 
         if (!this.ws || !this.wsr || !this.wsr.checkIfWsLive()) {
@@ -22,12 +23,7 @@ export default class LoggerClient extends InternalClient {
             type: 'session_log',
             world: Environment.NODE_ID,
             profile: Environment.NODE_PROFILE,
-            username,
-            session_uuid,
-            timestamp,
-            coord,
-            event,
-            event_type
+            logs
         }));
     }
 
@@ -47,6 +43,24 @@ export default class LoggerClient extends InternalClient {
             coord,
             offender,
             reason
+        }));
+    }
+
+    public async inputTrack(username: string, session_uuid: string, timestamp: number, events: InputTrackingEvent[]) {
+        await this.connect();
+
+        if (!this.ws || !this.wsr || !this.wsr.checkIfWsLive()) {
+            return;
+        }
+
+        this.ws.send(JSON.stringify({
+            type: 'input_track',
+            world: Environment.NODE_ID,
+            profile: Environment.NODE_PROFILE,
+            username,
+            session_uuid,
+            timestamp,
+            events
         }));
     }
 }

@@ -1,9 +1,14 @@
 import { parentPort } from 'worker_threads';
 
 import Environment from '#/util/Environment.js';
-import { FriendClient } from '#/server/friend/FriendServer.js';
+import { FriendClient, FriendsServerOpcodes } from '#/server/friend/FriendServer.js';
 
 const client = new FriendClient(Environment.NODE_ID);
+
+export interface FriendThreadMessage {
+    opcode: FriendsServerOpcodes;
+    data: any
+}
 
 if (Environment.STANDALONE_BUNDLE) {
     self.onmessage = async msg => {
@@ -48,8 +53,8 @@ async function handleRequests(_parentPort: ParentPort, msg: any) {
         }
         case 'player_login': {
             if (Environment.FRIEND_SERVER) {
-                const { username, chatModePrivate } = msg;
-                await client.playerLogin(username, chatModePrivate);
+                const { username, chatModePrivate, staffLvl } = msg;
+                await client.playerLogin(username, chatModePrivate, staffLvl);
             }
             break;
         }

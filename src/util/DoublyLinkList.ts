@@ -1,66 +1,32 @@
 import DoublyLinkable from '#/util/DoublyLinkable.js';
 
-export default class DoublyLinkList<T extends DoublyLinkable> {
-    readonly sentinel: DoublyLinkable;
-    private cursor: DoublyLinkable | null = null;
+export default class DoublyLinkList {
+    readonly head: DoublyLinkable = new DoublyLinkable();
 
     constructor() {
-        const head: DoublyLinkable = new DoublyLinkable();
-        head.next2 = head;
-        head.prev2 = head;
-        this.sentinel = head;
+        this.head.next2 = this.head;
+        this.head.prev2 = this.head;
     }
 
-    push(node: T): void {
+    push(node: DoublyLinkable): void {
         if (node.prev2) {
             node.unlink2();
         }
-        node.prev2 = this.sentinel.prev2;
-        node.next2 = this.sentinel;
+        node.prev2 = this.head.prev2;
+        node.next2 = this.head;
         if (node.prev2) {
             node.prev2.next2 = node;
         }
         node.next2.prev2 = node;
     }
 
-    pop(): T | null {
-        const node: T | null = this.sentinel.next2 as T | null;
-        if (node === this.sentinel) {
+    pop(): DoublyLinkable | null {
+        const node: DoublyLinkable | null = this.head.next2;
+        if (node === this.head) {
             return null;
-        }
-        node?.unlink2();
-        return node;
-    }
-
-    head(): T | null {
-        const node: T | null = this.sentinel.next2 as T | null;
-        if (node === this.sentinel) {
-            this.cursor = null;
-            return null;
-        }
-        this.cursor = node?.next2 || null;
-        return node;
-    }
-
-    next(): T | null {
-        const node: T | null = this.cursor as T | null;
-        if (node === this.sentinel) {
-            this.cursor = null;
-            return null;
-        }
-        this.cursor = node?.next2 || null;
-        return node;
-    }
-
-    clear(): void {
-        while (true) {
-            const node = this.sentinel.next;
-            if (node == this.sentinel) {
-                return;
-            }
-            if (node) {
-                node.unlink();
-            }
+        } else {
+            node?.unlink2();
+            return node;
         }
     }
 }

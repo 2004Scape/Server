@@ -1,6 +1,6 @@
 import World from '#/engine/World.js';
 import ServerTriggerType from '#/engine/script/ServerTriggerType.js';
-import {CoordGrid} from '#/engine/CoordGrid.js';
+import { CoordGrid } from '#/engine/CoordGrid.js';
 
 import BlockWalk from '#/engine/entity/BlockWalk.js';
 import Entity from '#/engine/entity/Entity.js';
@@ -14,41 +14,27 @@ import MoveSpeed from '#/engine/entity/MoveSpeed.js';
 import EntityLifeCycle from '#/engine/entity/EntityLifeCycle.js';
 import MoveStrategy from '#/engine/entity/MoveStrategy.js';
 import Obj from '#/engine/entity/Obj.js';
+import NonPathingEntity from '#/engine/entity/NonPathingEntity.js';
 
 import LocType from '#/cache/config/LocType.js';
 
 import Environment from '#/util/Environment.js';
 
-import {CollisionFlag, CollisionType} from '@2004scape/rsmod-pathfinder';
+import { CollisionFlag, CollisionType } from '@2004scape/rsmod-pathfinder';
 
-import {
-    canTravel,
-    changeNpcCollision,
-    changePlayerCollision,
-    findNaivePath,
-    findPath,
-    findPathToEntity,
-    findPathToLoc,
-    isApproached,
-    isMapBlocked,
-    reachedEntity,
-    reachedLoc,
-    reachedObj
-} from '#/engine/GameMap.js';
-import NonPathingEntity from '#/engine/entity/NonPathingEntity.js';
-import Visibility from '#/engine/entity/Visibility.js';
+import { canTravel, changeNpcCollision, changePlayerCollision, findNaivePath, findPath, findPathToEntity, findPathToLoc, isApproached, reachedEntity, reachedLoc, reachedObj } from '#/engine/GameMap.js';
 
 type TargetSubject = {
-    type: number,
+    type: number;
     com: number;
-}
+};
 
 export type TargetOp = ServerTriggerType | NpcMode;
 
 export default abstract class PathingEntity extends Entity {
     // constructor properties
     protected readonly moveRestrict: MoveRestrict;
-    readonly blockWalk: BlockWalk;
+    blockWalk: BlockWalk;
     moveStrategy: MoveStrategy;
     private readonly coordmask: number;
     readonly entitymask: number;
@@ -66,6 +52,8 @@ export default abstract class PathingEntity extends Entity {
     jump: boolean = false;
     lastStepX: number = -1;
     lastStepZ: number = -1;
+    followX: number = -1;
+    followZ: number = -1;
     stepsTaken: number = 0;
     lastInt: number = -1; // resume_p_countdialog, ai_queue
     lastCrawl: boolean = false;
@@ -80,7 +68,7 @@ export default abstract class PathingEntity extends Entity {
     repathed: boolean = false;
     target: Entity | null = null;
     targetOp: TargetOp = -1;
-    targetSubject: TargetSubject = {type: -1, com: -1};
+    targetSubject: TargetSubject = { type: -1, com: -1 };
     apRange: number = 10;
     apRangeCalled: boolean = false;
 
@@ -112,19 +100,7 @@ export default abstract class PathingEntity extends Entity {
     graphicHeight: number = -1;
     graphicDelay: number = -1;
 
-    protected constructor(
-        level: number,
-        x: number,
-        z: number,
-        width: number,
-        length: number,
-        lifecycle: EntityLifeCycle,
-        moveRestrict: MoveRestrict,
-        blockWalk: BlockWalk,
-        moveStrategy: MoveStrategy,
-        coordmask: number,
-        entitymask: number
-    ) {
+    protected constructor(level: number, x: number, z: number, width: number, length: number, lifecycle: EntityLifeCycle, moveRestrict: MoveRestrict, blockWalk: BlockWalk, moveStrategy: MoveStrategy, coordmask: number, entitymask: number) {
         super(level, x, z, width, length, lifecycle);
         this.moveRestrict = moveRestrict;
         this.blockWalk = blockWalk;
@@ -166,7 +142,8 @@ export default abstract class PathingEntity extends Entity {
             if (this.lastCrawl && this.walkDir === -1) {
                 this.walkDir = this.validateAndAdvanceStep();
             }
-        } else if (this.walkDir === -1) { // either walk or run speed here.
+        } else if (this.walkDir === -1) {
+            // either walk or run speed here.
             this.walkDir = this.validateAndAdvanceStep();
             if (this.moveSpeed === MoveSpeed.RUN && this.walkDir !== -1 && this.runDir === -1) {
                 this.runDir = this.validateAndAdvanceStep();
@@ -427,7 +404,7 @@ export default abstract class PathingEntity extends Entity {
         return this.waypointIndex <= 0;
     }
 
-    protected inOperableDistance(target: Entity): boolean {
+    inOperableDistance(target: Entity): boolean {
         if (target.level !== this.level) {
             return false;
         }
@@ -438,15 +415,6 @@ export default abstract class PathingEntity extends Entity {
             return reachedLoc(this.level, this.x, this.z, target.x, target.z, target.width, target.length, this.width, target.angle, target.shape, forceapproach);
         }
         // instanceof Obj
-        const reachedAdjacent: boolean = reachedEntity(this.level, this.x, this.z, target.x, target.z, target.width, target.length, this.width);
-        if (isMapBlocked(target.x, target.z, target.level)) {
-            // picking up off of tables
-            return reachedAdjacent;
-        }
-        if (!this.hasWaypoints() && reachedAdjacent) {
-            // picking up while walktrigger prevents movement
-            return true;
-        }
         return reachedObj(this.level, this.x, this.z, target.x, target.z, target.width, target.length, this.width);
     }
 
@@ -480,13 +448,17 @@ export default abstract class PathingEntity extends Entity {
         if (!this.target) {
             return;
         }
-        
+
         if (!(this.target instanceof PathingEntity)) {
             this.pathToTarget();
             return;
         }
 
-        if (Environment.NODE_CLIENT_ROUTEFINDER && CoordGrid.intersects(this.x, this.z, this.width, this.length, this.target.x, this.target.z, this.target.width, this.target.length)) {
+        if (
+            !(this.targetOp === ServerTriggerType.APPLAYER3 || this.targetOp === ServerTriggerType.OPPLAYER3) &&
+            Environment.NODE_CLIENT_ROUTEFINDER &&
+            CoordGrid.intersects(this.x, this.z, this.width, this.length, this.target.x, this.target.z, this.target.width, this.target.length)
+        ) {
             this.queueWaypoints(findNaivePath(this.level, this.x, this.z, this.target.x, this.target.z, this.width, this.length, this.target.width, this.target.length, 0, CollisionType.NORMAL));
             return;
         }
@@ -496,7 +468,7 @@ export default abstract class PathingEntity extends Entity {
         }
 
         if (this.targetOp === ServerTriggerType.APPLAYER3 || this.targetOp === ServerTriggerType.OPPLAYER3) {
-            this.queueWaypoint(this.target.lastStepX, this.target.lastStepZ);
+            this.queueWaypoint(this.target.followX, this.target.followZ);
             return;
         }
 
@@ -543,7 +515,7 @@ export default abstract class PathingEntity extends Entity {
                 if (this.width > 1 && !CoordGrid.intersects(this.x, this.z, this.width, this.length, this.target.x, this.target.z, this.target.width, this.target.length)) {
                     // west/east
                     let dir = CoordGrid.face(this.x, 0, this.target.x, 0);
-                    const distanceToTarget = CoordGrid.distanceTo({x: this.x, z: this.z, width: this.width, length: this.length}, {x: this.target.x, z: this.target.z, width: this.target.width, length: this.target.length});
+                    const distanceToTarget = CoordGrid.distanceTo({ x: this.x, z: this.z, width: this.width, length: this.length }, { x: this.target.x, z: this.target.z, width: this.target.width, length: this.target.length });
                     if (canTravel(this.level, this.x, this.z, CoordGrid.deltaX(dir), 0, this.width, extraFlag, collisionStrategy) || distanceToTarget <= 1) {
                         this.queueWaypoint(CoordGrid.moveX(this.x, dir), this.z);
                         return;
@@ -575,22 +547,18 @@ export default abstract class PathingEntity extends Entity {
         }
     }
 
-    setInteraction(interaction: Interaction, target: Entity, op: TargetOp, subject?: TargetSubject): void {
-        if (target instanceof Player && target.visibility === Visibility.HARD) {
-            return;
+    setInteraction(interaction: Interaction, target: Entity, op: TargetOp, subject?: TargetSubject): boolean {
+        if (!target.isValid(this instanceof Player ? this.hash64 : undefined)) {
+            return false;
         }
 
         this.target = target;
         this.targetOp = op;
-        this.targetSubject = subject ?? {type: -1, com: -1};
+        this.targetSubject = subject ?? { type: -1, com: -1 };
         this.apRange = 10;
         this.apRangeCalled = false;
 
-        this.focus(
-            CoordGrid.fine(target.x, target.width),
-            CoordGrid.fine(target.z, target.length),
-            target instanceof NonPathingEntity && interaction === Interaction.ENGINE
-        );
+        this.focus(CoordGrid.fine(target.x, target.width), CoordGrid.fine(target.z, target.length), target instanceof NonPathingEntity && interaction === Interaction.ENGINE);
 
         if (target instanceof Player) {
             const pid: number = target.pid + 32768;
@@ -609,15 +577,13 @@ export default abstract class PathingEntity extends Entity {
             this.targetZ = CoordGrid.fine(target.z, target.length);
         }
 
-        if (interaction === Interaction.SCRIPT) {
-            this.pathToTarget();
-        }
+        return true;
     }
 
     clearInteraction(): void {
         this.target = null;
         this.targetOp = -1;
-        this.targetSubject = {type: -1, com: -1};
+        this.targetSubject = { type: -1, com: -1 };
         this.apRange = 10;
         this.apRangeCalled = false;
     }
@@ -692,7 +658,7 @@ export default abstract class PathingEntity extends Entity {
         const srcX: number = this.x;
         const srcZ: number = this.z;
 
-        const {x, z} = CoordGrid.unpackCoord(this.waypoints[this.waypointIndex]);
+        const { x, z } = CoordGrid.unpackCoord(this.waypoints[this.waypointIndex]);
         const dir: number = CoordGrid.face(srcX, srcZ, x, z);
         const dx: number = CoordGrid.deltaX(dir);
         const dz: number = CoordGrid.deltaZ(dir);

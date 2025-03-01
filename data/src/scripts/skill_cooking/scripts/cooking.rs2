@@ -127,7 +127,7 @@ switch_obj($uncooked_item) {
 // rsc delays for about 3 ticks.
 // This post says they removed unnecessary delays and "None of the above no longer take any more time than in Runescape 1."
 // https://oldschool.runescape.wiki/w/Update:Huge_Runescape_2_update
-p_delay(2);
+p_delay(1);
 inv_del(inv, $uncooked_item, 1);
 
 if ($passes_roll = true) {

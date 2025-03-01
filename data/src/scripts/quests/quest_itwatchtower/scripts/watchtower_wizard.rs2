@@ -1,0 +1,409 @@
+[opnpc1,watchtower_wizard]
+switch_int(%itwatchtower_progress) {
+    case ^itwatchtower_complete_read_scroll :
+        ~chatnpc("<p,happy>Greetings, friend.|I trust all is well with you?|Yanille is safe at last!");
+    case ^itwatchtower_complete :
+        ~chatnpc("<p,happy>Hello again adventurer.|Thanks again for your help in keeping us safe.");
+        switch_int(~p_choice2("I lost the scroll you gave me.", 1, "That's okay.", 2)) {
+            case 1 :
+                ~chatplayer("<p,sad>I lost the scroll you gave me.");
+                if(inv_total(inv, spell_scroll) > 0) { // no bank check in rs3
+                    ~chatnpc("<p,happy>Ho, ho, ho! A comedian to the finish.|There it is, in your backpack!");
+                    return;
+                }
+                inv_add(inv, spell_scroll, 1);
+                ~chatnpc("<p,happy>Never mind, have another...");
+            case 2 : 
+                ~chatplayer("<p,happy>That's okay.");
+                ~chatnpc("<p,happy>We are always in your debt...");
+        }
+    case ^itwatchtower_found_all_crystals :
+        ~chatnpc("<p,neutral>The system is not activated yet.|Throw the switch to start it.");
+    case ^itwatchtower_made_potion :
+        ~chatnpc("<p,neutral>Hello again.|Did the potion work?");
+        if(getbit_range(%itwatchtower_bits, ^itwatchtower_shaman_kills_lower, ^itwatchtower_shaman_kills_upper) = 6) {
+            // fansites imply you can just talk to him instead of having to use the crystal like RSC
+            ~chatplayer("<p,happy>Indeed it did! I wiped out those ogre shamans!");
+            if(~watchtower_has_all_crystals = true) {
+                @watchwiz_all_crystals;
+            }
+            switch_int(~p_choice3("I had another crystal but I lost it.", 1, "I am looking for another crystal.", 2, "I have found another crystal!", 3)) {
+                case 1 :
+                    ~chatplayer("<p,sad>I had another crystal but I lost it.");
+                    ~chatnpc("<p,neutral>Dissappointing, dissappointing..|Well there's not much I can do...|You had better go back and search the area again.");
+                case 2 :
+                    ~chatplayer("<p,neutral>I am looking for another crystal.");
+                    ~chatnpc("<p,neutral>The rock of the shaman is the key.|I understand their power is linked to it in some way.|You may need something heavy to crack this boulder...");
+                case 3 :
+                    ~chatplayer("<p,happy>I have found another crystal!");
+                    ~chatnpc("<p,happy>Wonderful!|Show it to me so I can confirm it's the real thing...");
+            }
+            return;
+        }
+        // todo - can you make the potion through dialogue at this stage (if lost) like in OSRS? in RSC you have to use opnpcu
+        ~chatplayer("<p,neutral>I am still working to rid us of the shamans...");
+        ~chatnpc("<p,happy>May you have success in your task.");
+    case ^itwatchtower_learned_potion :
+        ~chatnpc("<p,neutral>Any more news?");
+        if(inv_total(inv, ogre_potion) > 0) {
+            @make_magic_ogre_potion;
+        }
+        ~chatplayer("<p,quiz>Can you tell me again what I need for the potion?");
+        ~chatnpc("<p,neutral>Yes indeed, you need some guam leaves,|jangerberries and ground bat bones.");
+        ~chatnpc("<p,neutral>Then the potion can be powered with magic|and the ogre shaman can be destroyed.");
+    case ^itwatchtower_fed_nightshade :
+        ~chatplayer("<p,sad>I have found the cave of ogre shaman, but I cannot touch them!");
+        ~chatnpc("<p,neutral>That is because of their magical powers.|We must fight them with their own methods;|do not speak to them!|I suggest a potion...");
+        ~chatnpc("<p,neutral>Collect a guam leaf, add jangerberries, then mix in some ground bat bones. You must return it to me before you use it, so that I can empower it with my magic.");
+        ~chatnpc("<p,neutral>Be very careful how you mix it as it is extremely volatile. Mixing ingredients of this type in the wrong order can cause explosions!");
+        ~chatnpc("<p,neutral>I hope you've been brushing up Herblore and Magic? I must warn you, only experienced magicians can use the potion. It is too dangerous in the hands of the unskilled.");
+        %itwatchtower_progress = ^itwatchtower_learned_potion;
+    case ^itwatchtower_skavid_crystal :
+        ~chatnpc("<p,happy>Hello again. How do you fare?");
+        switch_int(~p_choice3("It goes well. I can now navigate the skavid caves.", 1, "I had a crystal but I lost it!", 2, "I am now ready for the shamans.", 3)) {
+            case 1 :
+                ~chatplayer("<p,happy>It goes well. I can now navigate the skavid caves."); 
+                ~chatnpc("<p,happy>That is good news.|Let me know if you find anything of interest.");
+            case 2 : 
+                ~chatplayer("<p,sad>I had a crystal, but I lost it!");
+                ~chatnpc("<p,sad>Oh no, well you had better go back there again then!");
+            case 3 :
+                ~chatplayer("<p,happy>I am now ready for the shamans.");
+                ~chatnpc("<p,neutral>Remember all I told you, you must distract the guard somehow.|The herbs with blue leaves and berries is what you are looking for.");
+                ~chatnpc("<p,neutral>This herb is very poisonous however, handle it carefully. Also, be on your guard in that cave. Who knows what monsters may be in that awful place...");
+        }
+    case ^itwatchtower_solved_riddle :
+        ~chatnpc("<p,happy>How is the quest going?");
+        ~chatplayer("<p,happy>I have worked out the guard's puzzle.");
+        ~chatnpc("<p,happy>My, my! A wordsmith as well as a hero.");
+        switch_int(~p_choice3("I am still trying to navigate the skavid caves.", 1, "I am trying to get into the shamans' cave.", 2, "It is going well.", 3)) {
+            case 1 :
+                ~chatplayer("<p,confused>I am still trying to navigate the skavid caves."); 
+                ~chatnpc("<p,neutral>Take some illumination with you or else it will be dark.");
+            case 2 : 
+                ~chatplayer("<p,neutral>I am trying to get into the shamans' cave.");
+                ~chatnpc("<p,neutral>Yes, it will be well guarded.|Hmmm, let me see...");
+                ~chatnpc("<p,neutral>Ah yes, I gather some ogres are allergic to certain herbs...|Now what was it?|It had white berries and blue leaves.... I remember that!");
+                ~chatnpc("<p,neutral>You should try looking through some of the caves...");
+            case 3 :
+                ~chatplayer("<p,happy>It is going well.");
+                ~chatnpc("<p,happy>That's good to hear.|We are much closer to fixing the tower now.");
+        }
+    case ^itwatchtower_given_riddle :
+        ~chatnpc("<p,happy>How are you doing?");
+        switch_int(~p_choice2("Some of the city guards have set me a puzzle.", 1, "Can you tell me more about the city?", 2)) {
+            case 1 :
+                ~chatplayer("<p,neutral>Some of the city guards have set me a puzzle"); // missing .
+                ~chatnpc("<p,confused>Ummm, is that so?|I can't help you there, I never was much good at puzzles.");
+            case 2 : 
+                ~chatplayer("<p,neutral>Can you tell me more about the city?");
+                ~chatnpc("<p,neutral>Yes indeed, this city is very ancient.|It's not clear whether the ogres actually constructed it,|or whether they took it over from another race.");
+                ~chatnpc("<p,neutral>What I can tell you is that the whole city is controlled|by a group of ogre shamans.");
+                ~chatplayer("<p,confused>Ogre Shamans?");
+                ~chatnpc("<p,angry>Indeed, these ogres have harnessed the black arts.|They wield great power.");
+                ~chatplayer("<p,neutral>They sounds nasty!");
+                ~chatnpc("<p,neutral>Indeed they are, but you must confront them|to break the power of the ogres. They MUST be beaten!");
+                switch_int(~p_choice2("But I'm scared of those shamans!", 1, "Leave it to me, I fear no ogre!", 2)) {
+                    case 1 :
+                        ~chatplayer("<p,confused>But I'm scared of those shamans!");
+                        ~chatnpc("<p,sad>Scared? To get this far and to falter now... Perchance, you are not ready for the final challenge?");
+                    case 2 :
+                        ~chatplayer("<p,happy>Leave it to me, I fear no ogre!");
+                        ~chatnpc("<p,happy>That's the spirit! May your search prove fruitful.");
+                }
+        }
+    case ^itwatchtower_given_relic :
+        ~chatnpc("<p,neutral>How are you doing with the ogres?");
+        ~chatplayer("<p,happy>I have gained entry to the city!");
+        ~chatnpc("<p,happy>Already? Excellent!");
+        ~chatplayer("<p,confused>I still can't navigate the skavid caves.");
+        ~chatnpc("<p,neutral>You need a map of some kind...|I bet one of the ogres has one.");
+        ~chatplayer("<p,neutral>Okay thanks, I'll go and find out.");
+    case ^itwatchtower_made_relic :
+        ~chatnpc("<p,happy>Ah, the warrior returns.|Have you found a way into Gu'Tanoth yet?");
+        ~chatplayer("<p,sad>I can't get past the guards.");
+        ~chatnpc("<p,neutral>Well, ogres dislike others apart from their own kind. What you need is some form of proof of friendship, something to trick them into believing you're their friend.");
+        ~chatnpc("<p,happy>Which shouldn't be too hard, considering their intelligence.");
+        switch_int(~p_choice2("I have lost the relic you gave me.", 1, "I will find my way in, no problem.", 2)) {
+            case 1 :
+                ~chatplayer("<p,sad>I have lost the relic you gave me.");
+                if(inv_total(inv, ogre_relic) > 0) { // did bank and freesapce checks exist originally? classic doesn't have them
+                    ~chatnpc("<p,angry>Have you gone mad? I can see you have it with you!");
+                    return;
+                }
+                ~chatnpc("<p,neutral>What? Lost the relic? How careless!|It's a good job I copied its design, then!|You can take this copy instead - it's just as good.");
+                inv_add(inv, ogre_relic, 1);
+                ~objbox(ogre_relic, "The wizard gives you another statue.", 250, 0, ^objbox_height);
+            case 2 : 
+                ~chatplayer("<p,happy>I will find my way in, no problem.");
+                ~chatnpc("<p,happy>Yes, I'm sure you will... Good luck!");
+        }
+    case ^itwatchtower_given_fingernails :
+        ~chatnpc("<p,happy>How's it going?");
+        switch_int(~p_choice3("I am having difficulty with the tribes.", 1, "I have everything under control.", 2, "I have lost something the ogres gave to me.", 3)) {
+            case 1 :
+                ~chatplayer("<p,sad>I am having difficulty with the tribes.");
+                ~chatnpc("<p,neutral>Talk to them face to face|and don't show any fear.|Make sure you are rested and well fed,|and fight the good fight!");
+            case 2 :
+                ~chatplayer("<p,happy>I have everything under control.");
+                ~chatnpc("Good, good! I will expect the crystals back shortly then...");
+            case 3 :
+                ~chatplayer("<p,sad>I have lost something the ogres gave to me.");
+                ~chatnpc("<p,neutral>Oh, deary me!|Well, there's nothing I can do about it.|You will have to go back to them, I'm afraid.");
+        }
+    case ^itwatchtower_started :
+        ~chatnpc("<p,happy>Hello again.|Did you find anything of interest?");
+        if(inv_total(inv, fingernails) > 0) {
+            @watchwiz_give_fingernails;
+        }
+        if(inv_total(inv, old_robe) > 0) {
+            ~chatplayer("<p,happy>I have this robe...");
+            @watchwiz_not_evidence;
+        }
+        if(inv_total(inv, old_robe) > 0) {
+            ~chatplayer("<p,happy>I found this dagger...");
+            @watchwiz_not_evidence;
+        }
+        if(inv_total(inv, old_robe) > 0) {
+            ~chatplayer("<p,happy>I have this armour...");
+            @watchwiz_not_evidence;
+        }
+        if(inv_total(inv, old_robe) > 0) {
+            ~chatplayer("<p,happy>I have an eye patch...");
+            @watchwiz_not_evidence;
+        }
+        ~chatplayer("<p,sad>No, sorry, nothing yet.");
+        ~chatnpc("<p,sad>Oh dear, oh dear, there must be something,|somewhere...");
+    case ^itwatchtower_not_started :
+        ~chatnpc("<p,sad>Oh my, oh my!");
+        switch_int(~p_choice2("What's the matter?", 1, "You wizards are always complaining.", 2)) {
+            case 1 :
+                ~chatplayer("<p,neutral>What's the matter?");
+                ~chatnpc("<p,sad>Oh dear, oh dear.|Darn and drat!");
+                ~chatnpc("<p,sad>We try hard to keep this town protected.");
+                ~chatnpc("<p,sad>But how can we do that when the Watchtower isn't working?");
+                ~chatplayer("<p,neutral>What do you mean it isn't working?");
+                ~chatnpc("<p,neutral>The Watchtower here works by the power of magic.|An ancient spell designed to ward off ogres|that has been in place here for many moons.");
+                ~chatnpc("<p,sad>The exact knowledge of the spell is lost to us now,|but the essence of the spell|has been infused into four powering crystals|that keep the tower protected from the hordes in the Feldips.");
+                @multi2("So how come the spell doesn't work?", watchwiz_spell, "I'm not interested in your rantings.", watchwiz_rantings);
+            case 2 :
+                ~chatplayer("<p,happy>You wizards are always complaining.");
+                ~chatnpc("<p,angry>Complaining? Complaining!");
+                ~chatnpc("<p,neutral>What folks these days don't realise|is that if it weren't for us wizards,|this entire world would be overrun|with every creature you could possibly imagine.|And some you couldn't even conceive of!");
+        }
+}
+
+[opnpcu,watchtower_wizard]
+if(last_useitem = ogre_relic) {
+    ~chatplayer("<p,confused>What is this?");
+    ~chatnpc("<p,confused>It is the ogre statue I finished for you.");
+} else if(last_useitem = watchtower_crystal1) {
+    if(%itwatchtower_progress >= ^itwatchtower_found_all_crystals) {
+        ~chatnpc("<p,confused>More crystals?|I don't need any more now..."); // RSC and RS3
+        return;
+    }
+    ~chatplayer("<p,happy>Wizard, look what I have found.");
+    ~chatnpc("<p,happy>Well done, well done!|That's a crystal found!|You are clever;|hold onto it until you have all four.");
+    if(~watchtower_has_all_crystals = true & %itwatchtower_progress = ^itwatchtower_made_potion) {
+        ~chatplayer("<p,happy>This is the last one.");
+        @watchwiz_all_crystals;
+    }
+    ~chatnpc("<p,neutral>Keep searching for the others.|If you've dropped any,|then you will need to go back to where you got it from.");
+} else if(last_useitem = watchtower_crystal2) {
+    if(%itwatchtower_progress >= ^itwatchtower_found_all_crystals) {
+        ~chatnpc("<p,confused>More crystals?|I don't need any more now..."); // RSC
+        return;
+    }
+    ~chatplayer("<p,happy>Here is another crystal.");
+    ~chatnpc("<p,happy>Superb!|Keep up the good work|Hold onto it until you have all four...");
+    if(~watchtower_has_all_crystals = true & %itwatchtower_progress = ^itwatchtower_made_potion) {
+        ~chatplayer("<p,happy>This is the last one.");
+        @watchwiz_all_crystals;
+    }
+    ~chatnpc("<p,neutral>Keep searching for the others.|If you've dropped any,|then you will need to go back to where you got it from.");
+} else if(last_useitem = watchtower_crystal3) {
+    if(%itwatchtower_progress >= ^itwatchtower_found_all_crystals) {
+        ~chatnpc("<p,confused>More crystals?|I don't need any more now..."); // RSC
+        return;
+    }
+    ~chatplayer("<p,happy>Wizard, I have found another crystal.");
+    ~chatnpc("<p,happy>I must say I'm impressed.|May Saradomin speed you in finding them all.|Hold onto it until you have all four...");
+    if(~watchtower_has_all_crystals = true & %itwatchtower_progress = ^itwatchtower_made_potion) {
+        ~chatplayer("<p,happy>This is the last one.");
+        @watchwiz_all_crystals;
+    }
+    ~chatnpc("<p,neutral>Keep searching for the others.|If you've dropped any,|then you will need to go back to where you got it from.");
+} else if(last_useitem = watchtower_crystal4) {
+    if(%itwatchtower_progress >= ^itwatchtower_found_all_crystals) {
+        ~chatnpc("<p,confused>More crystals?|I don't need any more now..."); // RSC
+        return;
+    }
+    ~chatnpc("<p,happy>Well done! Well done!");
+    if(~watchtower_has_all_crystals = true & %itwatchtower_progress = ^itwatchtower_made_potion) {
+        ~chatplayer("<p,happy>This is the last one.");
+        @watchwiz_all_crystals;
+    }
+    ~chatnpc("<p,neutral>Keep searching for the others.|If you've dropped any,|then you will need to go back to where you got it from.");
+} else if(last_useitem = relic_part_1) {
+    ~chatplayer("<p,neutral>I had this given to me...");
+    if(testbit(%itwatchtower_bits, ^itwatchtower_relic1) = true) {
+        ~chatnpc("<p,confused>I already have that part..."); // rs3, rsc matches
+        return;
+    }
+    ~chatnpc("<p,neutral>It's part of an ogre relic.");
+    inv_del(inv, relic_part_1, 1);
+    %itwatchtower_bits = setbit(%itwatchtower_bits, ^itwatchtower_relic1);
+    @check_relic_parts;
+} else if(last_useitem = relic_part_2) {
+    ~chatplayer("<p,neutral>I got given this by an ogre...");
+    if(testbit(%itwatchtower_bits, ^itwatchtower_relic2) = true) {
+        ~chatnpc("<p,confused>I already have that part...");
+        return;
+    }
+    ~chatnpc("<p,neutral>Good good, a part of an ogre relic.");
+    inv_del(inv, relic_part_2, 1);
+    %itwatchtower_bits = setbit(%itwatchtower_bits, ^itwatchtower_relic2);
+    @check_relic_parts;
+} else if(last_useitem = relic_part_3) {
+    ~chatplayer("<p,neutral>An ogre gave me this...");
+    if(testbit(%itwatchtower_bits, ^itwatchtower_relic3) = true) {
+        ~chatnpc("<p,confused>I already have that part...");
+        return;
+    }
+    // https://web.archive.org/web/20051025143129im_/http://www.runeweb.net/fireball/Watchtower%20Images/Watchtower8.PNG
+    ~chatnpc("<p,neutral>Ah, it's part of an old ogre statue.");
+    inv_del(inv, relic_part_3, 1);
+    %itwatchtower_bits = setbit(%itwatchtower_bits, ^itwatchtower_relic3);
+    @check_relic_parts;
+} else if(last_useitem = fingernails) {
+    if(%itwatchtower_progress ! ^itwatchtower_started) {
+        mes("The wizard has no more need for evidence."); // RS3
+        return;
+    }
+    @watchwiz_give_fingernails;
+} else if(last_useitem = old_robe | last_useitem = unusual_armour | last_useitem = tattered_eye_patch | last_useitem = damaged_dagger) {
+    if(%itwatchtower_progress ! ^itwatchtower_started) {
+        mes("The wizard has no more need for evidence.");
+        return;
+    }
+    @watchwiz_not_evidence;
+} else if(last_useitem = skavid_map) {
+    ~chatnpc("<p,happy>Well, well - a map!|Indeed, this shows the paths into the skavid caves,|so you can go in there.");
+} else if(last_useitem = vial_water_jangerberries | last_useitem = mixture_guam_jangerberries) {
+    ~chatnpc("<p,confused>No, no. The potion is not complete yet.");
+} else if(last_useitem = ogre_potion) {
+    if(%itwatchtower_progress >= ^itwatchtower_complete) {
+        // mesanims from rs3
+        ~chatnpc("<p,confused>Another potion?|Ooo no, I don't think so...");
+        ~chatnpc("<p,neutral>I can't let you use this now, it's just too dangerous.|I'd better take it from you before you injure yourself.");
+        inv_del(inv, ogre_potion, 1);
+        return;
+    }
+    @make_magic_ogre_potion;
+} else if(last_useitem = magic_ogre_potion) {
+    ~chatnpc("<p,confused>Yes, that is the potion I enchanted for you.|Go and use it now...");
+} else {
+    ~displaymessage(^dm_default);
+}
+
+[label,check_relic_parts]
+if(getbit_range(%itwatchtower_bits, ^itwatchtower_relic1, ^itwatchtower_relic3) < 7) {
+    ~chatnpc("<p,neutral>There may be more parts to find...|I'll keep this for later.");
+    return;
+}
+inv_add(inv, ogre_relic, 1);
+%itwatchtower_progress = ^itwatchtower_made_relic;
+~chatnpc("<p,happy>Excellent! That seems to be all the pieces.|Now I can assemble it...");
+~chatnpc("<p,neutral>Hmm, yes it is as I thought...|A statue symbolising an ogre warrior of old.");
+~chatnpc("<p,happy>Well, if you ever wanted to make friends with an ogre, then this is the item to have!");
+~objbox(ogre_relic, "The wizard gives you a complete statue.", 250, 0, ^objbox_height);
+
+[label,watchwiz_not_evidence]
+~chatnpc("<p,confused>Let me see...");
+~chatnpc("<p,neutral>No, sorry, this is not evidence.|You need to keep searching, I'm afraid.");
+
+[label,watchwiz_rantings]
+~chatplayer("<p,neutral>I'm not interested in your rantings.");
+~chatnpc("<p,angry>Hmph! Suit yourself.");
+
+[label,watchwiz_spell]
+~chatplayer("<p,neutral>So how come the spell doesn't work?");
+~chatnpc("<p,sad>The crystals! The crystals have been taken!");
+~chatplayer("<p,quiz>Taken?");
+~chatnpc("<p,angry>Stolen!");
+~chatplayer("<p,confused>Stolen?");
+~chatnpc("<p,angry>Yes, yes! Do I have to repeat myself?");
+switch_int(~p_choice3("Can I be of help?", 1, "I'm not sure I can help.", 2, "I'm not interested.", 3)) {
+    case 1 :
+        ~chatplayer("<p,neutral>Can I be of help?");
+        ~chatnpc("<p,happy>Help? Oh wonderful, dear traveller!");
+        ~chatnpc("<p,happy>Yes I could do with an extra pair of eyes here.");
+        ~chatplayer("<p,neutral>???");
+        ~chatnpc("<p,neutral>There must be some evidence of what has happened here. Perhaps you could assist me in searching for clues?");
+        ~chatplayer("<p,neutral>I would be happy to.");
+        %itwatchtower_progress = ^itwatchtower_started;
+        ~send_quest_progress(questlist:itwatchtower, %itwatchtower_progress, ^itwatchtower_complete);
+        ~chatnpc("<p,neutral>Try searching the surrounding area.|If you find anything unusual, bring it here.");
+    case 2 :
+        ~chatplayer("<p,neutral>I'm not sure I can help.");
+        ~chatnpc("<p,sad>Oh dear, what am I to do? The safety of this whole area is in jeopardy!");
+    case 3 :
+        ~chatplayer("<p,neutral>I'm not interested.");
+        ~chatnpc("<p,angry>That's typical, nowadays.|It's left to us wizards to do all the work.");
+}
+
+[label,watchwiz_give_fingernails]
+~chatplayer("<p,happy>Have a look at these...");
+~chatnpc("<p,neutral>Interesting, very interesting.");
+// https://web.archive.org/web/20041126094839im_/http://img16.imageshack.us/img16/5301/wizardthree.jpg
+~chatnpc("<p,confused>Long nails... grey in colour.|Well chewed...");
+~chatnpc("<p,happy>Of course! They belong to a skavid!");
+~chatplayer("<p,confused>A skavid?");
+~chatnpc("<p,neutral>A servant race to the ogres:|grey, depressed-looking creatures,|always losing nails, teeth and hair!");
+~chatnpc("<p,neutral>They inhabit the caves in the Feldip Hills.");
+~chatnpc("<p,neutral>They normally keep to themselves, though.|It's unusual for them to venture from their caves.");
+def_int $op = ~p_choice2("What do you suggest I do?", 1, "Shall I search the caves?", 2);
+if($op = 1) {
+    ~chatplayer("<p,neutral>What do you suggest I do?");
+} else {
+    ~chatplayer("<p,neutral>Shall I search the caves?");
+}
+~chatnpc("<p,neutral>It's no good searching the caves. Well, not yet, anyway.");
+~chatplayer("<p,confused>Why not?");
+~chatnpc("<p,neutral>They are deep and complex. The only way you will navigate the caves is to have a map or something.");
+~chatnpc("<p,neutral>It may be that the ogres have one...");
+~chatplayer("<p,confused>And how do you know that?");
+~chatnpc("<p,happy>Well... I don't.");
+@multi2("So what do I do?", watchwiz_whatdo, "I won't bother then.", watchwiz_wontbother);
+
+[label,watchwiz_whatdo]
+~chatplayer("<p,confused>So what do I do?");
+~chatnpc("<p,neutral>You need to be fearless and gain entrance to|Gu'Tanoth, the city of the ogres, then find out how to|navigate the caves.");
+~chatplayer("<p,neutral>That sounds scary...");
+~chatnpc("<p,neutral>Ogres are nasty creatures, yes. Only a strong warrior,|and a clever one at that, can get the better of them.");
+~chatplayer("<p,neutral>What do I need to do to get into the city?");
+~chatnpc("<p,neutral>Well, the guards need to be dealt with.|You could start by checking out the ogre settlements found around here.");
+%itwatchtower_progress = ^itwatchtower_given_fingernails;
+~chatnpc("<p,happy>Tribal ogres often dislike their neighbours...");
+
+[label,watchwiz_wontbother]
+~chatplayer("<p,neutral>I won't bother then.");
+~chatnpc("<p,angry>Won't bother? Won't bother!");
+~chatnpc("<p,confused>Perhaps this quest is too hard for you?");
+
+[label,watchwiz_all_crystals]
+~chatnpc("<p,happy>Magnificent!|At last you've brought all the crystals.");
+~chatnpc("<p,happy>Now the shield generator can be activated again.|And, once again, Yanille will be safe|from the threat of the ogres.");
+%itwatchtower_progress = ^itwatchtower_found_all_crystals;
+~chatnpc("<p,happy>Throw the lever to activate the system...");
+
+[label,make_magic_ogre_potion]
+inv_del(inv, ogre_potion, 1);
+inv_add(inv, magic_ogre_potion, 1);
+%itwatchtower_progress = ^itwatchtower_made_potion;
+~chatplayer("<p,happy>I have made the potion.");
+~chatnpc("<p,happy>That's great news; let me infuse it with magic...");
+if_close;
+mes("The wizard mutters strange words over the liquid...");
+p_delay(3);
+~chatnpc("<p,neutral>Here it is - a dangerous substance.|I must remind you that this potion can only be used|if your magic ability is high enough.");

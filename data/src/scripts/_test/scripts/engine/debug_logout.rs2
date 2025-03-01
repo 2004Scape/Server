@@ -1,0 +1,4 @@
+[debugproc,antilog](int $duration)
+if (p_finduid(uid) = true) {
+    p_preventlogout("Antilog test", $duration);
+}

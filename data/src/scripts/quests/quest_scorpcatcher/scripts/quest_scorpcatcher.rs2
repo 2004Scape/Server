@@ -42,7 +42,7 @@ switch_obj (last_useitem) {
 [opnpc1,kharid_scorpion_second] @scorpion_sting;
 [opnpc1,kharid_scorpion_third] @scorpion_sting;
 
-// Taverly wall
+// Taverley wall
 [oploc1,loc_2117]
 if(%scorpcatcher_progress < ^scorpcatcher_first_hint) {
     mes("Looks like a wall...");

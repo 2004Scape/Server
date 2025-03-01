@@ -63,7 +63,7 @@ spotanim_pl(db_getfield($spell_data, magic_spell_table:spotanim_origin, 0), 92, 
 %action_delay = add(map_clock, 5);
 def_int $duration = 0;
 if (db_getfieldcount($spell_data, magic_spell_table:spotanim_proj) > 0) {
-    $duration = ~npc_projectile(coord, npc_uid, db_getfield($spell_data, magic_spell_table:spotanim_proj, 0), 51, 16, -5, 64, 10);
+    $duration = ~npc_projectile(coord, npc_uid, db_getfield($spell_data, magic_spell_table:spotanim_proj, 0));
 }
 // OSRS:
 // only continue fighting if auto cast is turned on

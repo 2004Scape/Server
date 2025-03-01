@@ -29,14 +29,8 @@ if (%damagetype = ^ranged_style) {
     @player_ranged_attack;
 }
 if (~player_autocast_enabled = true) {
-    def_dbrow $spell_data = ~get_spell_data(%autocast_spell);
-    if (~check_spell_requirements($spell_data) = true) {
-        p_stopaction;
-        p_opnpct(db_getfield($spell_data, magic_spell_table:spellcom, 0));
-    }  
-    return;
+    @player_magic_attack;
 }
-
 @player_melee_attack;
 
 

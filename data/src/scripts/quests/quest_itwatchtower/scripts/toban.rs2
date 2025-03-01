@@ -1,0 +1,67 @@
+[opnpc1,toban]
+if(%itwatchtower_progress >= ^itwatchtower_made_relic) {
+    mes("The ogre is not interested in you anymore.");
+} else if(testbit(%itwatchtower_bits, ^itwatchtower_helped_toban) = true) {
+    ~chatnpc("<p,bored>The small thing returns; what do you want now?");
+    switch_int(~p_choice2("I seek another task.", 1, "I can't find the relic part you gave me.", 2)) {
+        case 1 :
+            ~chatplayer("<p,neutral>I seek another task.");
+            ~chatnpc("<p,shifty>Have you arrived for dinner?|Hahaha! Be gone, small thing!");
+        case 2 :
+            ~chatplayer("<p,sad>I can't find the relic part you gave me.");
+            if(inv_total(inv, relic_part_3) > 0) {
+                ~chatnpc("<p,angry>Small thing, you lie to me!|I always says that small things are big trouble.");
+                return;
+            }
+            inv_add(inv, relic_part_3, 1);
+            ~chatnpc("<p,bored>Small thing, how could you be so careless?|Here, take this one.");
+    }
+} else if(testbit(%itwatchtower_bits, ^itwatchtower_spoken_toban) = true) {
+    @spoken_toban;
+} else if(%itwatchtower_progress >= ^itwatchtower_given_fingernails) {
+    ~chatnpc("<p,confused>What do you want, small thing?");
+    @multi2("I seek entrance to the city of ogres.", toban_seek, "Die, creature!", toban_die);
+} else {
+    mes("He is busy at the moment.");
+}
+
+[opnpcu,toban]
+if(last_useitem = dragon_bones) {
+    if(testbit(%itwatchtower_bits, ^itwatchtower_spoken_toban) = true & testbit(%itwatchtower_bits, ^itwatchtower_helped_toban) = false) {
+        @spoken_toban;
+    }
+}
+~displaymessage(^dm_default);
+
+[label,spoken_toban]
+~chatnpc("<p,happy>Hahaha! Small thing returns.|Did you bring the dragon bone?");
+if(inv_total(inv, dragon_bones) > 0) {
+    inv_del(inv, dragon_bones, 1);
+    inv_add(inv, relic_part_3, 1);
+    %itwatchtower_bits = setbit(%itwatchtower_bits, ^itwatchtower_helped_toban);
+    ~chatplayer("<p,happy>When I say I will get something, I get it!");
+    ~chatnpc("<p,happy>Hahaha! Small thing has done it.|Toban is glad, take this...");
+    ~objbox(relic_part_3, "The ogre gives you part of a statue.", 250, 0, 0);
+    return;
+}
+~chatplayer("<p,neutral>I don't have what you want.");
+~chatnpc("<p,neutral>Then you shall get nothing from me!");
+
+[label,toban_seek]
+~chatplayer("<p,neutral>I seek entrance to the city of ogres.");
+~chatnpc("<p,happy>Hahaha! You'll never get in there.");
+~chatplayer("<p,neutral>I'll find a way, trust me.");
+~chatnpc("<p,neutral>Bold words for a t'ing so small.");
+@multi2("I could do something for you...", toban_do, "Die, creature!", toban_die);
+
+[label,toban_do]
+~chatplayer("<p,neutral>I could do something for you...");
+~chatnpc("<p,happy>Hahaha! This creature t'inks it can help me!|I would eat you now, but for your puny size.");
+%itwatchtower_bits = setbit(%itwatchtower_bits, ^itwatchtower_spoken_toban);
+~chatnpc("<p,neutral>Prove to me your might:|bring me the bones of an adult dragon to chew on,|and I'll eat them, not you.");
+
+[label,toban_die]
+~chatplayer("<p,angry>Die, creature!");
+~chatnpc("<p,happy>Hahaha! It t'inks it's a match for Toban, does it?");
+npc_anim(ogre_attack, 0);
+~damage_self(5);

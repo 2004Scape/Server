@@ -1,11 +1,27 @@
 [opheldu,vial_water]
+if(last_useitem = jangerberries) {
+    if(%itwatchtower_progress < ^itwatchtower_learned_potion) {
+        ~chatplayer("<p,confused>Hmm, perhaps I shouldn't mix these together. It might have unpredictable results...");
+        return;
+    }
+    @ogrepotion_add_jangerberries(vial_water);
+}
 if(last_useitem = ground_bat_bones) {
-  @bat_bones_evaporate;
-  return;
+  @ogrepotion_add_bat_bones(vial_water);
 }
 ~attempt_brew_potion(last_useslot, last_slot);
 
 [opheldu,unf_guam_potion]
+if(last_useitem = jangerberries) {
+    if(%itwatchtower_progress < ^itwatchtower_learned_potion) {
+        ~chatplayer("<p,confused>Hmm, perhaps I shouldn't mix these together. It might have unpredictable results...");
+        return;
+    }
+    @ogrepotion_add_jangerberries(unf_guam_potion);
+}
+if(last_useitem = ground_bat_bones) {
+  @ogrepotion_add_bat_bones(unf_guam_potion);
+}
 ~attempt_brew_potion(last_useslot, last_slot);
 
 [opheldu,unf_marrentill_potion]
@@ -62,12 +78,6 @@ if(last_useitem = ground_bat_bones) {
 [opheldu,wine_of_zamorak]
 ~attempt_brew_potion(last_useslot, last_slot);
 
-[opheldu,jangerberries]
-~attempt_brew_potion(last_useslot, last_slot);
-
-[opheldu,vial_water_jangerberries]
-~attempt_brew_potion(last_useslot, last_slot);
-
 [proc,attempt_brew_potion](int $use_slot, int $last_slot)(boolean)
 // Find the struct of the potion being made (if valid item combo)
 def_struct $struct = ~get_brew_struct(inv_getobj(inv, $last_slot), inv_getobj(inv, $use_slot));
@@ -86,7 +96,7 @@ def_int $current_level = stat(herblore);
 def_int $herb_level = struct_param($struct, brew_potion_level);
 if ($current_level < $herb_level) {
     // https://youtu.be/VthR9A85TQU?t=159
-    mes("You need a Herblore level of at least <tostring($herb_level)> to make this potion.");
+    ~mesbox("You need a Herblore level of at least <tostring($herb_level)> to make this potion.");
     return(false);
 }
 
@@ -98,10 +108,6 @@ def_namedobj $solvent = struct_param($struct, brew_potion_solvent);
 def_int $experience = struct_param($struct, brew_potion_exp);
 if ($mixture = null) {
     ~displaymessage(^dm_default);
-    return(false);
-}
-if ($mixture = explodingvial) {
-    ~potion_explosion($ingredient, $solvent, $message);
     return(false);
 }
 ~brew_potion($struct, $ingredient, $solvent, $message, $mixture, $experience);

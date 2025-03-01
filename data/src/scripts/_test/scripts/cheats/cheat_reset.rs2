@@ -110,6 +110,8 @@ if (p_finduid(uid) = true) {
     %tutorial_progress = 0;
     %chompybird_progress = 0;
     %chompybird_kills = 0;
+    %bunny_ears_unlocked = 0;
+    %scythe_unlocked = 0;
 
     p_logout;
 } else {

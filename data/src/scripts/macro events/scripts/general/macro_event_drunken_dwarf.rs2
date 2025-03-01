@@ -42,6 +42,7 @@ if (finduid(%npc_macro_event_target) = true) {
         %aggressive_npc = npc_uid; // interupt the player if they're in combat https://youtu.be/tw66JWQzpD0?t=32
         npc_setmode(opplayer2);
         %npc_int = ^drunken_dwarf_angry;
+        %macro_event = ^no_macro_event;
         return;
     }
     %npc_int = add(%npc_int, 1);

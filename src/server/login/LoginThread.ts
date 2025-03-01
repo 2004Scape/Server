@@ -1,9 +1,10 @@
 import fs from 'fs';
 import { parentPort } from 'worker_threads';
 
-import LoginClient from '#/server/login/LoginClient.js';
+import { LoginClient } from '#/server/login/LoginClient.js';
 
 import Environment from '#/util/Environment.js';
+import { type GenericLoginThreadResponse } from './index.d.js';
 
 const client = new LoginClient(Environment.NODE_ID);
 
@@ -37,7 +38,7 @@ if (Environment.STANDALONE_BUNDLE) {
 }
 
 type ParentPort = {
-    postMessage: (msg: any) => void;
+    postMessage: (msg: GenericLoginThreadResponse) => void;
 };
 
 async function handleRequests(parentPort: ParentPort, msg: any) {
@@ -51,10 +52,14 @@ async function handleRequests(parentPort: ParentPort, msg: any) {
             break;
         }
         case 'player_login': {
-            const { socket, remoteAddress, username, password, uid, lowMemory, reconnecting } = msg;
+            const { socket, remoteAddress, username, password, uid, lowMemory, reconnecting, hasSave } = msg;
 
             if (Environment.LOGIN_SERVER) {
-                const response = await client.playerLogin(username, password, uid, socket, remoteAddress);
+                const response = await client.playerLogin(username, password, uid, socket, remoteAddress, reconnecting, hasSave);
+
+                if (!Environment.NODE_PRODUCTION) {
+                    response.staffmodlevel = 3; // dev (destructive commands)
+                }
 
                 parentPort.postMessage({
                     type: 'player_login',
@@ -84,7 +89,9 @@ async function handleRequests(parentPort: ParentPort, msg: any) {
                         reconnecting,
                         reply: 4,
                         staffmodlevel,
-                        save: null
+                        save: null,
+                        account_id: 1,
+                        members: Environment.NODE_MEMBERS
                     });
                 } else {
                     parentPort.postMessage({
@@ -95,7 +102,9 @@ async function handleRequests(parentPort: ParentPort, msg: any) {
                         reconnecting,
                         reply: 0,
                         staffmodlevel,
-                        save: fs.readFileSync(`data/players/${profile}/${username}.sav`)
+                        save: fs.readFileSync(`data/players/${profile}/${username}.sav`),
+                        account_id: 1,
+                        members: Environment.NODE_MEMBERS
                     });
                 }
             }
@@ -164,6 +173,9 @@ async function handleRequests(parentPort: ParentPort, msg: any) {
                 const { staff, username, until } = msg;
                 await client.playerMute(staff, username, until);
             }
+            break;
+        }
+        case 'world_heartbeat': {
             break;
         }
         default:

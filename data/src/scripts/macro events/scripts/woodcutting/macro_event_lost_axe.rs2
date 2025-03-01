@@ -19,6 +19,7 @@ def_coord $axe_coord = map_findsquare(coord, 1, 7, ^map_findsquare_lineofwalk);
 anim(human_woodcutting_axe_handle, 0);
 // not sure what sound to use
 sound_synth(lost_pickaxe, 0, 0);
+%macro_event = ^no_macro_event;
 mes("You swing your axe at the tree.");
 
 def_int $delay = ~coord_projectile(coord, $axe_coord, axe_head_launch, 35, 0, 14, 16, -2, 64, 10);

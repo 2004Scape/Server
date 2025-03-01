@@ -23,7 +23,13 @@ export enum FriendsClientOpcodes {
     PLAYER_LOGOUT,
     PLAYER_CHAT_SETMODE,
     PRIVATE_MESSAGE,
-    PUBLIC_CHAT_LOG
+    PUBLIC_CHAT_LOG,
+    // temporarily in the friend server (it has a constant connection established)
+    RELAY_MUTE,
+    RELAY_KICK,
+    RELAY_SHUTDOWN,
+    RELAY_BROADCAST,
+    RELAY_TRACK
 }
 
 /**
@@ -33,6 +39,12 @@ export enum FriendsServerOpcodes {
     UPDATE_FRIENDLIST,
     UPDATE_IGNORELIST,
     PRIVATE_MESSAGE,
+    // temporarily in the friend server
+    RELAY_MUTE,
+    RELAY_KICK,
+    RELAY_SHUTDOWN,
+    RELAY_BROADCAST,
+    RELAY_TRACK
 }
 
 // TODO make this configurable (or at least source it from somewhere common)
@@ -111,7 +123,7 @@ export class FriendServer {
                         // remove player from previous world, if any
                         this.repository.unregister(username37);
 
-                        if (!await this.repository.register(world, username37, privateChat)) {
+                        if (!await this.repository.register(world, username37, privateChat, message.staffLvl)) {
                             // TODO handle this better?
                             // console.error(`[Friends]: World ${world} is full`);
                             return;
@@ -322,6 +334,53 @@ export class FriendServer {
                             coord,
                             message: chat
                         }).execute();
+                    } else if (type === FriendsClientOpcodes.RELAY_MUTE) {
+                        const { nodeId, username, muted_until } = message;
+
+                        if (typeof this.socketByWorld[nodeId] !== 'undefined') {
+                            this.socketByWorld[nodeId].send(JSON.stringify({
+                                type: FriendsServerOpcodes.RELAY_MUTE,
+                                username,
+                                muted_until
+                            }));
+                        }
+                    } else if (type === FriendsClientOpcodes.RELAY_KICK) {
+                        const { nodeId, username } = message;
+
+                        if (typeof this.socketByWorld[nodeId] !== 'undefined') {
+                            this.socketByWorld[nodeId].send(JSON.stringify({
+                                type: FriendsServerOpcodes.RELAY_KICK,
+                                username
+                            }));
+                        }
+                    } else if (type === FriendsClientOpcodes.RELAY_SHUTDOWN) {
+                        const { nodeId, duration } = message;
+
+                        if (typeof this.socketByWorld[nodeId] !== 'undefined') {
+                            this.socketByWorld[nodeId].send(JSON.stringify({
+                                type: FriendsServerOpcodes.RELAY_SHUTDOWN,
+                                duration
+                            }));
+                        }
+                    } else if (type === FriendsClientOpcodes.RELAY_BROADCAST) {
+                        const { nodeId, broadcast } = message;
+
+                        if (typeof this.socketByWorld[nodeId] !== 'undefined') {
+                            this.socketByWorld[nodeId].send(JSON.stringify({
+                                type: FriendsServerOpcodes.RELAY_BROADCAST,
+                                message: broadcast
+                            }));
+                        }
+                    } else if (type === FriendsClientOpcodes.RELAY_TRACK) {
+                        const { nodeId, username, state } = message;
+
+                        if (typeof this.socketByWorld[nodeId] !== 'undefined') {
+                            this.socketByWorld[nodeId].send(JSON.stringify({
+                                type: FriendsServerOpcodes.RELAY_TRACK,
+                                username,
+                                state
+                            }));
+                        }
                     } else {
                         // console.error(`[Friends]: Unknown opcode ${opcode}, length ${length}`);
                     }
@@ -437,7 +496,7 @@ export class FriendClient extends InternalClient {
         }));
     }
 
-    public async playerLogin(username: string, privateChat: number) {
+    public async playerLogin(username: string, privateChat: number, staffLvl: number) {
         await this.connect();
 
         if (!this.ws || !this.wsr || !this.wsr.checkIfWsLive()) {
@@ -448,7 +507,8 @@ export class FriendClient extends InternalClient {
             type: FriendsClientOpcodes.PLAYER_LOGIN,
             world: this.nodeId,
             username37: toBase37(username).toString(),
-            privateChat
+            privateChat,
+            staffLvl
         }));
     }
 

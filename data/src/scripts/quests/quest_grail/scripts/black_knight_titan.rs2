@@ -23,12 +23,12 @@ if (npc_finduid($npc) = true) {
 
 [label,defeat_titan]
 p_stopaction;
-p_delay(0);
 // https://www.youtube.com/watch?v=KCjnsoBT0vA&t=97s
 if(inv_total(worn, excalibur) = 0) { // if this was queued we'll need to regain prot access
     if(%grail_progress = ^grail_spoken_crone) {
         %grail_progress = ^grail_failed_defeat_titan;
     }
+    npc_statheal(hitpoints, npc_basestat(hitpoints), 0);
     mes("Maybe you need something more to beat the titan?");
     ~chatnpc("<p,angry>@red@Puny mortal...|@red@You cannot defeat me...");
     ~chatnpc("<p,angry>@red@I...|@red@Am...|@red@INVINCIBLE!!!");
@@ -38,11 +38,7 @@ if(inv_total(worn, excalibur) = 0) { // if this was queued we'll need to regain 
     if(coordx(coord) > coordx(npc_coord)) {
         $dest = movecoord(npc_coord, -1, 0, 0);
     }
-    if(distance($dest, coord) > 2) { // looks like osrs does p_teleport with controlling walkspeed but we can't do that so this is the workaround
-        p_telejump($dest);
-    } else {
-        ~forcemove($dest);
-    }
+    p_teleport($dest); // walking speed in osrs, can't do that here and match death timing
     gosub(npc_death);
     obj_add(npc_coord, npc_param(death_drop), 1, ^lootdrop_duration);
     def_int $random = random(128);

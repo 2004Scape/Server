@@ -23,6 +23,7 @@ import LoggerEventType from '#/server/logger/LoggerEventType.js';
 import Obj from '#/engine/entity/Obj.js';
 import EntityLifeCycle from '#/engine/entity/EntityLifeCycle.js';
 import Visibility from '#/engine/entity/Visibility.js';
+import { isClientConnected } from '#/engine/entity/NetworkPlayer.js';
 
 export default class ClientCheatHandler extends MessageHandler<ClientCheat> {
     handle(message: ClientCheat, player: Player): boolean {
@@ -127,7 +128,8 @@ export default class ClientCheatHandler extends MessageHandler<ClientCheat> {
                                 break;
                             }
                         }
-                    } catch (err) {
+                    } catch (_) {  // eslint-disable-line @typescript-eslint/no-unused-vars
+                        // invalid arguments
                         return false;
                     }
                 }
@@ -138,6 +140,20 @@ export default class ClientCheatHandler extends MessageHandler<ClientCheat> {
             } else if (cmd === 'rebuild' && !Environment.STANDALONE_BUNDLE) {
                 player.messageGame('Rebuilding scripts...');
                 World.rebuild();
+            } else if (cmd === 'speed') {
+                if (args.length < 1) {
+                    player.messageGame('Usage: ::speed <ms>');
+                    return false;
+                }
+
+                const speed: number = tryParseInt(args.shift(), 20);
+                if (speed < 20) {
+                    player.messageGame('::speed input was too low.');
+                    return false;
+                }
+
+                player.messageGame(`World speed was changed to ${speed}ms`);
+                World.tickRate = speed;
             } else if (cmd === 'fly') {
                 if (player.moveStrategy === MoveStrategy.FLY) {
                     player.moveStrategy = MoveStrategy.SMART;
@@ -506,6 +522,7 @@ export default class ClientCheatHandler extends MessageHandler<ClientCheat> {
                 // custom
                 if (args.length < 2) {
                     // ::ban <username> <minutes>
+                    player.messageGame('Usage: ::ban <username> <minutes>');
                     return false;
                 }
 
@@ -513,15 +530,12 @@ export default class ClientCheatHandler extends MessageHandler<ClientCheat> {
                 const minutes = Math.max(0, tryParseInt(args[1], 60));
 
                 World.notifyPlayerBan(player.username, username, Date.now() + (minutes * 60 * 1000));
-
-                const other = World.getPlayerByUsername(username);
-                if (other) {
-                    World.removePlayer(other);
-                }
+                player.messageGame(`Player '${args[0]}' has been banned for ${minutes} minutes.`);
             } else if (cmd === 'mute') {
                 // custom
                 if (args.length < 2) {
                     // ::mute <username> <minutes>
+                    player.messageGame('Usage: ::mute <username> <minutes>');
                     return false;
                 }
 
@@ -529,15 +543,12 @@ export default class ClientCheatHandler extends MessageHandler<ClientCheat> {
                 const minutes = Math.max(0, tryParseInt(args[1], 60));
 
                 World.notifyPlayerMute(player.username, username, Date.now() + (minutes * 60 * 1000));
-
-                const other = World.getPlayerByUsername(username);
-                if (other) {
-                    other.muted_until = new Date(Date.now() + (minutes * 60 * 1000));
-                }
+                player.messageGame(`Player '${args[0]}' has been muted for ${minutes} minutes.`);
             } else if (cmd === 'kick') {
                 // custom
                 if (args.length < 1) {
                     // ::kick <username>
+                    player.messageGame('Usage: ::kick <username>');
                     return false;
                 }
 
@@ -545,7 +556,14 @@ export default class ClientCheatHandler extends MessageHandler<ClientCheat> {
 
                 const other = World.getPlayerByUsername(username);
                 if (other) {
-                    World.removePlayer(other);
+                    other.loggingOut = true;
+                    if (isClientConnected(other)) {
+                        other.logout();
+                        other.client.close();
+                    }
+                    player.messageGame(`Player '${args[0]}' has been kicked from the game.`);
+                } else {
+                    player.messageGame(`Player '${args[0]}' does not exist or is not logged in.`);
                 }
             }
         }

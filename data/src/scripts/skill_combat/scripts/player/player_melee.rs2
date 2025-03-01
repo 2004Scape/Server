@@ -67,8 +67,4 @@ if ($weapon = null) {
     %action_delay = add(map_clock, oc_param($weapon, attackrate));
 }
 
-if (npc_type = shadow_spider & %npc_attacking_uid ! uid & ~npc_out_of_combat = true) {
-    ~shadow_spider_drain;
-}
-
 p_opnpc(2);

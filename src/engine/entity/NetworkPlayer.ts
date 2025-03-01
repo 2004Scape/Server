@@ -1,16 +1,29 @@
 import 'dotenv/config';
 
-import ServerProt from '#/network/rs225/server/prot/ServerProt.js';
+import Packet from '#/io/Packet.js';
+
+import ClientSocket from '#/server/ClientSocket.js';
+import NullClientSocket from '#/server/NullClientSocket.js';
+import LoggerEventType from '#/server/logger/LoggerEventType.js';
 
 import World from '#/engine/World.js';
-
 import Player from '#/engine/entity/Player.js';
-import ClientSocket from '#/server/ClientSocket.js';
-
 import { CoordGrid } from '#/engine/CoordGrid.js';
-import ZoneMap from '#/engine/zone/ZoneMap.js';
+import WorldStat from '#/engine/WorldStat.js';
+import NpcRenderer from '#/engine/renderer/NpcRenderer.js';
+import PlayerRenderer from '#/engine/renderer/PlayerRenderer.js';
+import SceneState from '#/engine/entity/SceneState.js';
 import Zone from '#/engine/zone/Zone.js';
+import ZoneMap from '#/engine/zone/ZoneMap.js';
+
 import InvType from '#/cache/config/InvType.js';
+
+import ServerProt from '#/network/rs225/server/prot/ServerProt.js';
+import ClientProt from '#/network/rs225/client/prot/ClientProt.js';
+import ClientProtRepository from '#/network/rs225/client/prot/ClientProtRepository.js';
+import ClientProtCategory from '#/network/client/prot/ClientProtCategory.js';
+import ServerProtRepository from '#/network/rs225/server/prot/ServerProtRepository.js';
+
 import IfClose from '#/network/server/model/IfClose.js';
 import IfOpenMainSide from '#/network/server/model/IfOpenMainSide.js';
 import IfOpenMain from '#/network/server/model/IfOpenMain.js';
@@ -24,31 +37,23 @@ import UpdateRunWeight from '#/network/server/model/UpdateRunWeight.js';
 import CamMoveTo from '#/network/server/model/CamMoveTo.js';
 import CamLookAt from '#/network/server/model/CamLookAt.js';
 import OutgoingMessage from '#/network/server/OutgoingMessage.js';
-import ServerProtRepository from '#/network/rs225/server/prot/ServerProtRepository.js';
 import MessageEncoder from '#/network/server/codec/MessageEncoder.js';
 import Logout from '#/network/server/model/Logout.js';
 import PlayerInfo from '#/network/server/model/PlayerInfo.js';
 import NpcInfo from '#/network/server/model/NpcInfo.js';
-import WorldStat from '#/engine/WorldStat.js';
 import SetMultiway from '#/network/server/model/SetMultiway.js';
+import UpdateZoneFullFollows from '#/network/server/model/UpdateZoneFullFollows.js';
+
 import { printError } from '#/util/Logger.js';
-import NpcRenderer from '#/engine/renderer/NpcRenderer.js';
-import PlayerRenderer from '#/engine/renderer/PlayerRenderer.js';
-import NullClientSocket from '#/server/NullClientSocket.js';
-import Packet from '#/io/Packet.js';
-import ClientProt from '#/network/rs225/client/prot/ClientProt.js';
-import ClientProtRepository from '#/network/rs225/client/prot/ClientProtRepository.js';
-import ClientProtCategory from '#/network/client/prot/ClientProtCategory.js';
-import LoggerEventType from '#/server/logger/LoggerEventType.js';
 
 export class NetworkPlayer extends Player {
     client: ClientSocket;
     userLimit = 0; // user packet limit
     clientLimit = 0; // client packet limit
+    restrictedLimit = 0;
 
     userPath: number[] = [];
     opcalled: boolean = false;
-    opucalled: boolean = false;
 
     constructor(username: string, username37: bigint, hash64: bigint, client: ClientSocket) {
         super(username, username37, hash64);
@@ -60,17 +65,18 @@ export class NetworkPlayer extends Player {
     decodeIn() {
         this.userPath = [];
         this.opcalled = false;
-        this.opucalled = false;
 
         if (!isClientConnected(this)) {
             return false;
         }
 
+        this.lastConnected = World.currentTick;
         this.userLimit = 0;
         this.clientLimit = 0;
+        this.restrictedLimit = 0;
 
         const bytesStart = this.client.in.pos;
-        while (this.userLimit < 5 && this.clientLimit < 50 && this.read()) {
+        while (this.userLimit < ClientProtCategory.USER_EVENT.limit && this.clientLimit < ClientProtCategory.CLIENT_EVENT.limit && this.restrictedLimit < ClientProtCategory.RESTRICTED_EVENT.limit && this.read()) {
             // empty
         }
         const bytesRead = bytesStart - this.client.in.pos;
@@ -95,7 +101,7 @@ export class NetworkPlayer extends Player {
             this.client.read(NetworkPlayer.inBuf.data, 0, 1);
 
             if (this.client.decryptor) {
-                this.client.opcode = (NetworkPlayer.inBuf.g1() - this.client.decryptor.nextInt()) & 0xFF;
+                this.client.opcode = (NetworkPlayer.inBuf.g1() - this.client.decryptor.nextInt()) & 0xff;
             } else {
                 this.client.opcode = NetworkPlayer.inBuf.g1();
             }
@@ -103,6 +109,7 @@ export class NetworkPlayer extends Player {
             const packetType = ClientProt.byId[this.client.opcode];
             if (!packetType) {
                 this.client.opcode = -1;
+                this.client.close();
                 return false;
             }
 
@@ -119,6 +126,10 @@ export class NetworkPlayer extends Player {
             this.client.read(NetworkPlayer.inBuf.data, 0, 2);
 
             this.client.waiting = NetworkPlayer.inBuf.g2();
+            if (this.client.waiting > 1600) {
+                this.client.close();
+                return false;
+            }
         }
 
         if (this.client.available < this.client.waiting) {
@@ -137,6 +148,8 @@ export class NetworkPlayer extends Player {
             // todo: move out of model
             if (success && message.category === ClientProtCategory.USER_EVENT) {
                 this.userLimit++;
+            } else if (message.category === ClientProtCategory.RESTRICTED_EVENT) {
+                this.restrictedLimit++;
             } else {
                 this.clientLimit++;
             }
@@ -176,10 +189,11 @@ export class NetworkPlayer extends Player {
             this.refreshModal = false;
         }
 
-        for (let message: OutgoingMessage | null = this.buffer.head(); message; message = this.buffer.next()) {
+        for (const message of this.buffer) {
             this.writeInner(message);
-            message.unlink2();
         }
+
+        this.buffer = [];
     }
 
     writeInner(message: OutgoingMessage): void {
@@ -237,32 +251,15 @@ export class NetworkPlayer extends Player {
     }
 
     override addSessionLog(event_type: LoggerEventType, message: string, ...args: string[]): void {
-        World.addSessionLog(event_type, this.username, isClientConnected(this) ? this.client.uuid : 'disconnected', CoordGrid.packCoord(this.level, this.x, this.z), message, ...args);
+        World.addSessionLog(event_type, this.account_id, isClientConnected(this) ? this.client.uuid : 'disconnected', CoordGrid.packCoord(this.level, this.x, this.z), message, ...args);
     }
 
     override addWealthLog(change: number, message: string, ...args: string[]) {
-        World.addSessionLog(LoggerEventType.WEALTH, this.username, isClientConnected(this) ? this.client.uuid : 'disconnected', CoordGrid.packCoord(this.level, this.x, this.z), change + ';' + message, ...args);
+        World.addSessionLog(LoggerEventType.WEALTH, this.account_id, isClientConnected(this) ? this.client.uuid : 'disconnected', CoordGrid.packCoord(this.level, this.x, this.z), change + ';' + message, ...args);
     }
 
     updateMap() {
-        const loadedZones: Set<number> = this.buildArea.loadedZones;
-
-        const originX: number = CoordGrid.zone(this.originX);
-        const originZ: number = CoordGrid.zone(this.originZ);
-
-        const reloadLeftX = (originX - 4) << 3;
-        const reloadRightX = (originX + 5) << 3;
-        const reloadTopZ = (originZ + 5) << 3;
-        const reloadBottomZ = (originZ - 4) << 3;
-
-        // if the build area should be regenerated, do so now
-        if (this.x < reloadLeftX || this.z < reloadBottomZ || this.x > reloadRightX - 1 || this.z > reloadTopZ - 1) {
-            this.write(new RebuildNormal(CoordGrid.zone(this.x), CoordGrid.zone(this.z)));
-
-            this.originX = this.x;
-            this.originZ = this.z;
-            loadedZones.clear();
-        }
+        this.rebuildNormal();
 
         // update the camera after rebuild.
         for (let info = this.cameraPackets.head(); info !== null; info = this.cameraPackets.next()) {
@@ -277,7 +274,7 @@ export class NetworkPlayer extends Player {
         }
 
         // map zone changed
-        const mapZone = CoordGrid.packCoord(0, this.x >> 6 << 6, this.z >> 6 << 6);
+        const mapZone = CoordGrid.packCoord(0, (this.x >> 6) << 6, (this.z >> 6) << 6);
         if (this.lastMapZone !== mapZone) {
             // map zone triggers
             if (this.lastMapZone !== -1) {
@@ -285,35 +282,15 @@ export class NetworkPlayer extends Player {
                 this.triggerMapzoneExit(x, z);
             }
 
-            this.triggerMapzone(this.x >> 6 << 6, this.z >> 6 << 6);
+            this.triggerMapzone((this.x >> 6) << 6, (this.z >> 6) << 6);
             this.lastMapZone = mapZone;
         }
 
         // zone changed
-        const zone = CoordGrid.packCoord(this.level, this.x >> 3 << 3, this.z >> 3 << 3);
+        const zone = CoordGrid.packCoord(this.level, (this.x >> 3) << 3, (this.z >> 3) << 3);
         if (this.lastZone !== zone) {
-            // update any newly tracked zones
-            this.buildArea.activeZones.clear();
-
-            const centerX = CoordGrid.zone(this.x);
-            const centerZ = CoordGrid.zone(this.z);
-
-            const originX: number = CoordGrid.zone(this.originX);
-            const originZ: number = CoordGrid.zone(this.originZ);
-
-            const leftX = originX - 6;
-            const rightX = originX + 6;
-            const topZ = originZ + 6;
-            const bottomZ = originZ - 6;
-
-            for (let x = centerX - 3; x <= centerX + 3; x++) {
-                for (let z = centerZ - 3; z <= centerZ + 3; z++) {
-                    // check if the zone is within the build area
-                    if (x < leftX || x > rightX || z > topZ || z < bottomZ) {
-                        continue;
-                    }
-                    this.buildArea.activeZones.add(ZoneMap.zoneIndex(x << 3, z << 3, this.level));
-                }
+            if (this.scene === SceneState.READY) {
+                this.rebuildZones();
             }
 
             // zone triggers
@@ -328,34 +305,28 @@ export class NetworkPlayer extends Player {
                 this.triggerZoneExit(level, x, z);
             }
 
-            this.triggerZone(this.level, this.x >> 3 << 3, this.z >> 3 << 3);
+            this.triggerZone(this.level, (this.x >> 3) << 3, (this.z >> 3) << 3);
             this.lastZone = zone;
         }
     }
 
     updatePlayers(renderer: PlayerRenderer) {
-        this.write(new PlayerInfo(
-            World.currentTick,
-            renderer,
-            this,
-            Math.abs(this.lastTickX - this.x),
-            Math.abs(this.lastTickZ - this.z),
-            this.lastLevel !== this.level
-        ));
+        this.write(new PlayerInfo(World.currentTick, renderer, this, Math.abs(this.lastTickX - this.x), Math.abs(this.lastTickZ - this.z), this.lastLevel !== this.level));
     }
 
     updateNpcs(renderer: NpcRenderer) {
-        this.write(new NpcInfo(
-            World.currentTick,
-            renderer,
-            this,
-            Math.abs(this.lastTickX - this.x),
-            Math.abs(this.lastTickZ - this.z),
-            this.lastLevel !== this.level)
-        );
+        this.write(new NpcInfo(World.currentTick, renderer, this, Math.abs(this.lastTickX - this.x), Math.abs(this.lastTickZ - this.z), this.lastLevel !== this.level));
     }
 
     updateZones() {
+        if (this.scene === SceneState.NONE) {
+            return;
+        }
+
+        if (this.scene === SceneState.LOAD) {
+            this.scene = SceneState.READY;
+        }
+
         const loadedZones: Set<number> = this.buildArea.loadedZones;
         const activeZones: Set<number> = this.buildArea.activeZones;
         // unload any zones that are no longer active
@@ -448,7 +419,7 @@ export class NetworkPlayer extends Player {
         }
 
         if (runWeightChanged || firstSeen) {
-            this.write(new UpdateRunWeight(Math.ceil(this.runweight / 1000)));
+            this.write(new UpdateRunWeight(Math.trunc(this.runweight / 1000)));
         }
     }
 }
@@ -464,14 +435,14 @@ export function isBufferFull(player: Player): boolean {
 
     let total = 0;
 
-    for (let message: OutgoingMessage | null = player.buffer.head(); message; message = player.buffer.next()) {
+    for (const message of player.buffer) {
         const encoder: MessageEncoder<OutgoingMessage> | undefined = ServerProtRepository.getEncoder(message);
         if (!encoder) {
             return true;
         }
 
         const prot: ServerProt = encoder.prot;
-        total += (1 + (prot.length === -1 ? 1 : prot.length === -2 ? 2 : 0)) + encoder.test(message);
+        total += 1 + (prot.length === -1 ? 1 : prot.length === -2 ? 2 : 0) + encoder.test(message);
     }
 
     return total >= 5000;

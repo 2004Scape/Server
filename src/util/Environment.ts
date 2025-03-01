@@ -1,5 +1,5 @@
 import 'dotenv/config';
-import { tryParseArray, tryParseBoolean, tryParseInt, tryParseString } from '#/util/TryParse.js';
+import { tryParseBoolean, tryParseInt, tryParseString } from '#/util/TryParse.js';
 import WalkTriggerSetting from '#/util/WalkTriggerSetting.js';
 
 export default {
@@ -26,6 +26,10 @@ export default {
     NODE_XPRATE: tryParseInt(process.env.NODE_XPRATE, 1),
     // production mode!
     NODE_PRODUCTION: tryParseBoolean(process.env.NODE_PRODUCTION, false),
+    NODE_SUBMIT_INPUT: tryParseBoolean(process.env.NODE_SUBMIT_INPUT, false),
+    // Maximum approximate number of storage bytes allowed per single input tracking session.
+    // It does not seem remotely possible to get near this amount under normal inputs.
+    NODE_LIMIT_BYTES_PER_TRACKING_SESSION: tryParseInt(process.env.NODE_MAX_BYTES_PER_TRACKING_SESSION, 50_000),
     // automatic shutdown time for production mode on sigint
     NODE_KILLTIMER: tryParseInt(process.env.NODE_KILLTIMER, 500), // 5 minutes
     // extra debug info e.g. missing triggers
@@ -67,6 +71,14 @@ export default {
     DB_USER: tryParseString(process.env.DB_USER, 'root'),
     DB_PASS: tryParseString(process.env.DB_PASS, 'password'),
     DB_NAME: tryParseString(process.env.DB_NAME, 'lostcity'),
+    DB_LOGGER_HOST: tryParseString(process.env.DB_LOGGER_HOST, ''),
+    DB_LOGGER_PORT: tryParseInt(process.env.DB_LOGGER_PORT, 0),
+    DB_LOGGER_USER: tryParseString(process.env.DB_LOGGER_USER, ''),
+    DB_LOGGER_PASS: tryParseString(process.env.DB_LOGGER_PASS, ''),
+    DB_LOGGER_NAME: tryParseString(process.env.DB_LOGGER_NAME, ''),
+
+    /// kysely
+    KYSELY_VERBOSE: tryParseBoolean(process.env.KYSELY_VERBOSE, false),
 
     /// development
     // some users may not be able to change their system PATH for this project

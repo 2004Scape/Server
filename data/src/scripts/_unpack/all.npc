@@ -3263,7 +3263,7 @@ param=attack_sound,baxe_crush
 // TODO SOUNDS
 // https://raw.githubusercontent.com/Joshua-F/osrs-dumps/refs/heads/master/config/dump.npc npc_290
 
-[npc_119]
+[chaos_dwarf]
 walkanim=dwarf_walk
 readyanim=dwarf_ready
 name=Chaos dwarf
@@ -3532,7 +3532,7 @@ param=attack_sound,hacksword_slash
 param=defend_sound,ice_warrior_hit
 param=death_sound,ice_warrior_death
 huntmode=cowardly
-huntrange=1
+huntrange=5
 category=ice_warrior
 // Stats match osrs version but our version Vislvl is different.
 // https://raw.githubusercontent.com/Joshua-F/osrs-dumps/refs/heads/master/config/dump.npc npc_2841
@@ -3737,7 +3737,7 @@ category=unicorn
 // osrs stats and Vislvl match 1:1
 // https://raw.githubusercontent.com/Joshua-F/osrs-dumps/refs/heads/master/config/dump.npc npc_2849
 
-[npc_134]
+[poison_spider]
 walkanim=giantspider_walk
 readyanim=giantspider_ready
 name=Poison spider
@@ -4014,7 +4014,7 @@ param=attack_sound,hacksword_slash
 param=defend_sound,ice_warrior_hit
 param=death_sound,ice_warrior_death
 huntmode=cowardly
-huntrange=1
+huntrange=5
 category=ice_warrior
 // Stats match osrs version but our version Vislvl is different.
 // https://raw.githubusercontent.com/Joshua-F/osrs-dumps/refs/heads/master/config/dump.npc npc_2851
@@ -4308,7 +4308,7 @@ huntmode=ranged
 // osrs stats and Vislvl match 1:1
 // https://raw.githubusercontent.com/Joshua-F/osrs-dumps/refs/heads/master/config/dump.npc npc_510
 
-[npc_173]
+[invrigar_the_necromancer]
 name=Invrigar the Necromancer
 desc=An evil user of Magic powers
 walkanim=human_walk_f,human_walk_b,human_walk_l,human_walk_r

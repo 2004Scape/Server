@@ -10,9 +10,7 @@ if ($event_coord = null) {
 npc_add($event_coord, $event, 1000);
 npc_say("Leave these woods and never return!");
 %npc_macro_event_target = uid;
-if (finduid(uid) = false) {
-    return;
-}
+%macro_event = ^no_macro_event;
 sound_synth(dryad_appear, 0, 0);
 spotanim_map(snare_impact, npc_coord, 100, 0); // osrs
 npc_delay(1);

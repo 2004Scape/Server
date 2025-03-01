@@ -24,7 +24,7 @@ export default class InvButtonDHandler extends MessageHandler<InvButtonD> {
         }
 
         const inv = player.getInventoryFromListener(listener);
-        if (!inv || !inv.validSlot(slot) || !inv.get(slot) || !inv.validSlot(targetSlot)) {
+        if (!inv || !inv.validSlot(slot) || !inv.validSlot(targetSlot)) {
             return false;
         }
 

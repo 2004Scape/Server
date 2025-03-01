@@ -3,7 +3,6 @@ import MoveClick from '#/network/client/model/MoveClick.js';
 import { NetworkPlayer } from '#/engine/entity/NetworkPlayer.js';
 import { CoordGrid } from '#/engine/CoordGrid.js';
 import Environment from '#/util/Environment.js';
-import VarPlayerType from '#/cache/config/VarPlayerType.js';
 import UnsetMapFlag from '#/network/server/model/UnsetMapFlag.js';
 import WalkTriggerSetting from '#/util/WalkTriggerSetting.js';
 
@@ -38,7 +37,6 @@ export default class MoveClickHandler extends MessageHandler<MoveClick> {
         if (Environment.NODE_WALKTRIGGER_SETTING === WalkTriggerSetting.PLAYERPACKET) {
             player.pathToMoveClick(player.userPath, !Environment.NODE_CLIENT_ROUTEFINDER);
         }
-        player.interactWalkTrigger = false;
         if (!message.opClick) {
             player.clearPendingAction();
             if (player.runenergy < 100 && message.ctrlHeld === 1) {

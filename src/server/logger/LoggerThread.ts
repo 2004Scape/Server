@@ -45,9 +45,8 @@ async function handleRequests(_parentPort: ParentPort, msg: any) {
     switch (type) {
         case 'session_log': {
             if (Environment.LOGGER_SERVER) {
-                // todo: batch up logs, cache account->username queries
-                const { username, session_uuid, timestamp, coord, event, event_type } = msg;
-                await client.sessionLog(username, session_uuid, timestamp, coord, event, event_type);
+                const { logs } = msg;
+                await client.sessionLog(logs);
             }
             break;
         }
@@ -55,6 +54,13 @@ async function handleRequests(_parentPort: ParentPort, msg: any) {
             if (Environment.LOGGER_SERVER) {
                 const { username, coord, offender, reason } = msg;
                 await client.report(username, coord, offender, reason);
+            }
+            break;
+        }
+        case 'input_track': {
+            if (Environment.LOGGER_SERVER) {
+                const { username, session_uuid, timestamp, events } = msg;
+                await client.inputTrack(username, session_uuid, timestamp, events);
             }
             break;
         }

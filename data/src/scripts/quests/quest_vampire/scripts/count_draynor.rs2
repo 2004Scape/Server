@@ -1,15 +1,9 @@
-[ai_queue3,count_draynor] // do nothing
 [ai_queue4,count_draynor] gosub(npc_death);
 
-[opnpc2,count_draynor]
-if (~player_in_combat_check = false) {
-    return;
-}
-if (%vampire_progress = ^vampire_complete) {
-    mes("You've done enough vampire slaying.");
-    return;
-}
-// osrs wiki says manually casting spells doesnt work but autocast does. So its probably here
+// https://youtu.be/67aR5-_INcU
+// - seems to be called on npc damage, and on npc hit
+// - two calls from 66 hits
+[proc,count_draynor_garlic]
 if (inv_total(inv, garlic) > 0) {
     if (npc_stat(hitpoints) = npc_basestat(hitpoints)) { // osrs https://archive.is/djWKq
         npc_statsub(hitpoints, 10, 0);
@@ -17,44 +11,45 @@ if (inv_total(inv, garlic) > 0) {
         npc_statsub(strength, 10, 0);
         npc_statsub(defence, 40, 0);
         mes("The vampire seems to weaken.");
-    } else if (random(16) = 0) {
+    } else if (random(64) = 0) {
         mes("The vampire seems to weaken.");
     }
 }
 
-@player_combat_start;
-[apnpc2,count_draynor]
-if (~player_in_combat_check = false) {
+[ai_opplayer2,count_draynor]
+if (stat(hitpoints) = 0) {
+    npc_setmode(null);
     return;
 }
-if (%vampire_progress = ^vampire_complete) {
-    mes("You've done enough vampire slaying.");
+if (%npc_action_delay > map_clock) {
     return;
 }
-// osrs wiki says manually casting spells doesnt work but autocast does. So its probably here
-if (inv_total(inv, garlic) > 0) {
-    if (npc_stat(hitpoints) = npc_basestat(hitpoints)) { // osrs https://archive.is/djWKq
-        npc_statsub(hitpoints, 10, 0);
-        npc_statsub(attack, 10, 0);
-        npc_statsub(strength, 10, 0);
-        npc_statsub(defence, 40, 0);
-        mes("The vampire seems to weaken.");
-    } else if (random(16) = 0) {
-        mes("The vampire seems to weaken.");
-    }
+if (~npc_can_attack_player = false) {
+    npc_setmode(null);
+    return;
 }
-@player_combat_start_ap;
+anim(%com_defendanim, 0);
+npc_anim(npc_param(attack_anim), 0);
+if (npc_param(attack_sound) ! null) {
+    sound_synth(npc_param(attack_sound), 0, 0);
+}
+~count_draynor_garlic;
+~npc_meleeattack;
 
 [ai_queue2,count_draynor]
-~npc_default_damage(last_int);
-if (npc_stat(hitpoints) = 0) {
-    if (npc_findhero = true) {
-        if (p_finduid(uid) = true) {
-            @count_draynor_use_stake;
-        }
-    }
-    npc_statheal(hitpoints, 1, 0);
+if (finduid(%npc_aggressive_player) = true) {
+    ~count_draynor_garlic;
 }
+~npc_default_damage(last_int);
+
+
+[ai_queue3,count_draynor]
+if (npc_findhero = true) {
+    if (p_finduid(uid) = true) {
+        @count_draynor_use_stake;
+    }
+}
+npc_statheal(hitpoints, 1, 0);
 
 [label,count_draynor_use_stake]
 if (inv_total(inv, stake) = 0) {

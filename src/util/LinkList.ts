@@ -1,14 +1,15 @@
 import Linkable from '#/util/Linkable.js';
 
 export default class LinkList<T extends Linkable> {
-    private readonly sentinel: Linkable;
+    // constructor
+    private readonly sentinel: Linkable = new Linkable();
+
+    // runtime
     public cursor: Linkable | null = null;
 
     constructor() {
-        const head: Linkable = new Linkable();
-        head.next = head;
-        head.prev = head;
-        this.sentinel = head;
+        this.sentinel.next = this.sentinel;
+        this.sentinel.prev = this.sentinel;
     }
 
     addTail(node: T): void {

@@ -16,9 +16,12 @@ inv_transmit(bank, bank_main:inv);
 if_openmain_side(bank_main, bank_side);
 
 [label,closebank]
-~reorganize_bank;
 inv_stoptransmit(bank_side:inv);
 inv_stoptransmit(bank_main:inv);
+queue(reorganize_bank, 0); // confirmed queued
+
+[queue,reorganize_bank]
+~reorganize_bank;
 
 [label,bank_withdraw](int $slot, int $requested_number)
 // Check if the slot was empty.

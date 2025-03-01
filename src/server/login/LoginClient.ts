@@ -1,9 +1,9 @@
-import ClientSocket from '#/server/ClientSocket.js';
 import InternalClient from '#/server/InternalClient.js';
+import { LoginResponse } from '#/server/login/index.js';
 
 import Environment from '#/util/Environment.js';
 
-export default class LoginClient extends InternalClient {
+export class LoginClient extends InternalClient {
     private nodeId = 0;
 
     constructor(nodeId: number) {
@@ -26,11 +26,11 @@ export default class LoginClient extends InternalClient {
         }));
     }
 
-    public async playerLogin(username: string, password: string, uid: number, socket: string, remoteAddress: string) {
+    public async playerLogin(username: string, password: string, uid: number, socket: string, remoteAddress: string, reconnecting: boolean, hasSave: boolean) {
         await this.connect();
 
         if (!this.ws || !this.wsr || !this.wsr.checkIfWsLive()) {
-            return { reply: -1, save: null, muted_until: null };
+            return { reply: -1, account_id: -1, save: null, muted_until: null, members: false};
         }
 
         const reply = await this.wsr.fetchSync({
@@ -42,20 +42,24 @@ export default class LoginClient extends InternalClient {
             password,
             uid,
             socket,
-            remoteAddress
+            remoteAddress,
+            reconnecting,
+            hasSave
         });
 
         if (reply.error) {
-            return { reply: -1, save: null, muted_until: null };
+            return { reply: -1, account_id: -1, save: null, muted_until: null, members: false };
         }
 
-        const { response, staffmodlevel, save, muted_until } = reply.result;
+        const { response, account_id, staffmodlevel, save, muted_until, members } = reply.result;
 
-        if (response !== 0) {
-            return { reply: response, save: null, muted_until: null };
-        }
-
-        return { reply: response, staffmodlevel, save: Buffer.from(save, 'base64'), muted_until };
+        return {
+            reply: response,
+            account_id,
+            staffmodlevel,
+            save: save ? Buffer.from(save, 'base64') : null,
+            muted_until,
+            members };
     }
 
     // returns true if the login server acknowledged the logout

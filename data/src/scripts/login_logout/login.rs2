@@ -11,9 +11,10 @@ if (%game_brightness = 0) {
 }
 
 // register the soft timer that handles replenishing stats
-softtimer(stat_replenish, 100);
+settimer(stat_regen, 100);
+settimer(stat_boost_restore, 100);
 // same for health
-softtimer(health_replenish, 100);
+settimer(health_regen, 100);
 // random event timer
 settimer(general_macro_events, 500);
 // chest macro gas 
@@ -44,6 +45,7 @@ queue(macro_event_login, 0);
 ~set_cannon_vars_login;
 ~ferment_wines_login;
 ~thieving_stall_timers_login;
+~stat_boost_login; // f2p boost reset
 
 if(inzone(movecoord(^grandtree_jail_coord, 0, 0, -2), movecoord(^grandtree_jail_coord, 3, 0, 2), coord) = true) {
     ~grandtree_spawn_charlie;

@@ -1,0 +1,56 @@
+[opnpc1,ogre_shaman]
+mes("A magic blast comes from the shaman.");
+mes("You are badly injured by the blast.");
+queue(damage_player, 0, 20); // this is strongqueued on osrs for some reason
+~chatnpc("<p,angry>Grr! How dare you talk to us.|We will destroy you!");
+
+[ai_queue2,ogre_shaman]
+if(finduid(%npc_attacking_uid) = true) {
+    mes("A magic blast comes from the shaman.");
+    mes("You are badly injured by the blast.");
+    ~damage_self(30);
+}
+npc_say("You fool! Your primitive weapons are no match for our superior magics!");
+
+[opnpcu,ogre_shaman]
+if(last_useitem = ogre_potion) {
+    mes("There is a small flash...");
+    mes("...but the potion was ineffective.");
+    ~chatplayer("<p,shock>Oh no! I better go back to the wizards about this!");
+    return;
+}
+if(last_useitem = magic_ogre_potion) {
+    if(stat(magic) < 14) {
+        mes("You need a Magic level of 14 or over to use this potion."); // osrs
+        return;
+    }
+    mes("There is a bright flash!");
+    mes("The ogre dissolves into spirit form.");
+    spotanim_map(small_smokepuff, npc_coord, 124, 0);
+    sound_synth(smokepuff, 0, 0);
+    npc_del;
+    p_delay(1);
+    def_int $current_kills = getbit_range(%itwatchtower_bits, ^itwatchtower_shaman_kills_lower, ^itwatchtower_shaman_kills_upper);
+    if($current_kills >= 6) {
+        return;
+    }
+    %itwatchtower_bits = setbit_range_toint(%itwatchtower_bits, calc($current_kills + 1), ^itwatchtower_shaman_kills_lower, ^itwatchtower_shaman_kills_upper);
+    switch_int(calc($current_kills + 1)) {
+        case 1 : ~chatplayer("<p,happy>That's one destroyed...");
+        case 2 : ~chatplayer("<p,happy>That's the second one gone...");
+        case 3 : ~chatplayer("<p,happy>That's the next one dealt with...");
+        case 4 : ~chatplayer("<p,happy>There goes another one...");
+        case 5 : ~chatplayer("<p,happy>Thats five, only one more left now...");
+        case 6 : 
+            mes("You hear a scream...");
+            mes("The shaman dissolves before your eyes!");
+            // https://web.archive.org/web/20041126094839im_/http://img15.imageshack.us/img15/1109/crystalfour.jpg, not an objbox originally
+            mes("A crystal drops from the hand of the dissappearing ogre!");
+            mes("You snatch it up quickly.");
+            inv_del(inv, magic_ogre_potion, 1);
+            inv_add(inv, vial_empty, 1);
+            inv_add(inv, watchtower_crystal3, 1);
+    }
+    return;
+}
+~displaymessage(^dm_default);

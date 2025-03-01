@@ -63,3 +63,6 @@ if (%hero_progress >= ^hero_phoenix_talked_charlie & %phoenixgang_progress >= ^p
 ~chatplayer("<p,neutral>I can't attack the head guard here! There are too many witnesses around to see me do it! I'd have the whole of Brimhaven after me! Besides, if he dies I want the promotion!");
 // todo - I think theres a ~mesbox("") after the chatplayer, but I can't find the source anymore, something about find another player to help
 return(false);
+
+[ai_queue10,grip]
+npc_setmode(null);

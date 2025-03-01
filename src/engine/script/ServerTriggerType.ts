@@ -161,6 +161,7 @@ enum ServerTriggerType {
     AI_SPAWN = 166
 }
 
+// eslint-disable-next-line @typescript-eslint/no-namespace
 namespace ServerTriggerType {
     export function toString(trigger: ServerTriggerType) {
         return ServerTriggerType[trigger].toLowerCase();

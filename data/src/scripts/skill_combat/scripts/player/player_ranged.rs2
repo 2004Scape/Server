@@ -1,30 +1,5 @@
 [label,player_ranged_attack]
-p_stopaction;
-// npc_setmode(opplayer2);
-// facesquare(npc_coord);
-
-// todo this is for flinching players (pvp etc)
-//if (autoretaliateenabled && action_clock < gameClock()) action_clock = gameClock() + (weaponSpeed / 2)
-if(%action_delay <= map_clock & npc_stat(hitpoints) = 0 & (npc_type = sir_mordred | npc_type = black_knight_titan)) {
-    npc_statheal(hitpoints, npc_basestat(hitpoints), 0);
-}
-
-if (npc_stat(hitpoints) = 0) {
-    p_stopaction;
-    return; // this means the npc is not avail to fight i.e dead
-}
-
-def_obj $rhand = inv_getobj(worn, ^wearpos_rhand);
-if ($rhand = null) {
-    mes("That was your last one!");
-    p_stopaction;
-    ~update_all($rhand);
-    return;
-}
-
-// check if npc is attackable
-if (~npc_is_attackable() = false) {
-    p_stopaction;
+if (~npc_is_attackable = false) {
     return;
 }
 
@@ -33,14 +8,18 @@ if (%action_delay > map_clock) {
     return;
 }
 
+if (npc_stat(hitpoints) = 0) {
+    return;
+}
+
 ~player_combat_stat; // update combat varps before calculating action_delay and shooting
 
 // set the skill clock depending on the weapon attack rate
-def_obj $weapon = inv_getobj(worn, ^wearpos_rhand);
-if ($weapon = null) {
+def_obj $rhand = inv_getobj(worn, ^wearpos_rhand);
+if ($rhand = null) {
     %action_delay = add(map_clock, 4);
 } else {
-    %action_delay = add(map_clock, oc_param($weapon, attackrate));
+    %action_delay = add(map_clock, oc_param($rhand, attackrate));
 }
 if (%damagestyle = ^style_ranged_rapid) {
     %action_delay = sub(%action_delay, 1);
@@ -82,11 +61,8 @@ if (npc_param(defend_sound) ! null) {
 }
 
 npc_heropoints($damage);
-
-if (npc_type = shadow_spider & %npc_attacking_uid ! uid & ~npc_out_of_combat = true) {
-    ~shadow_spider_drain;
-}
 p_opnpc(2);
+
 if ($ammo = holy_water) {
     world_delay(calc($delay / 30 - 2));
     if (map_blocked(npc_coord) = true) {
@@ -146,4 +122,8 @@ return(~npc_projectile(coord, npc_uid, oc_param($ammo, proj_travel), 40, 36, 41,
 [proc,ranged_throw_npc](obj $ammo)(int)
 spotanim_pl(oc_param($ammo, proj_launch), 96, 0);
 inv_moveitem(worn, ranged_quiver_inv, $ammo, 1);
+if (inv_total(worn, $ammo) = 0) {
+    mes("That was your last one!");
+    ~update_all(inv_getobj(worn, ^wearpos_rhand));
+}
 return(~npc_projectile(coord, npc_uid, oc_param($ammo, proj_travel), 40, 36, 32, 15, 0, 11, 5));

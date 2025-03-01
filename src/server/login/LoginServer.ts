@@ -14,6 +14,32 @@ import Packet from '#/io/Packet.js';
 export default class LoginServer {
     private server: WebSocketServer;
 
+    rejectLoginForSafety(s: WebSocket, replyTo: number) {
+        // Send opcode 7 ('Please try again') if something has gone wrong
+        // during login attempt, which may be resolved by simply retrying.
+        s.send(JSON.stringify({
+            replyTo,
+            response: 7
+        }));
+    }
+
+    async wouldResetSaveFile(newSaveBytes: Buffer, profile: string, username: string) {
+        // check whether `save`, if saved to disk, would have reset `username`'s progress.
+        // it does this by checking whether the player's tick count has gone backwards.
+        if (!fs.existsSync(`data/players/${profile}/${username}.sav`)) {
+            // No existing save - no problem.
+            return false;
+        }
+        const existingSaveRaw = await fsp.readFile(`data/players/${profile}/${username}.sav`);
+        const existingSave = PlayerLoading.load('tmp', new Packet(existingSaveRaw), null);
+        const newSave = PlayerLoading.load('tmp', new Packet(newSaveBytes), null);
+        if (existingSave.playtime > newSave.playtime) {
+            // Int32, 1 per tick logged in. Should wrap only after insane amount of years.
+            return true;
+        }
+        return false;
+    }
+
     constructor() {
         this.server = new WebSocketServer({ port: Environment.LOGIN_PORT, host: '0.0.0.0' }, () => {
             printInfo(`Login server listening on port ${Environment.LOGIN_PORT}`);
@@ -31,16 +57,28 @@ export default class LoginServer {
                             login_time: null
                         }).where('logged_in', '=', nodeId).execute();
                     } else if (type === 'player_login') {
-                        const { replyTo, username, password, uid, socket, remoteAddress } = msg;
+                        const { replyTo, username, password, uid, socket, remoteAddress, reconnecting, hasSave } = msg;
+
+                        const ipBan = await db.selectFrom('ipban').selectAll()
+                            .where('ip', '=', remoteAddress).executeTakeFirst();
+
+                        if (ipBan) {
+                            s.send(JSON.stringify({
+                                replyTo,
+                                response: 7
+                            }));
+                            return;
+                        }
 
                         const account = await db.selectFrom('account').where('username', '=', username).selectAll().executeTakeFirst();
 
                         if (!Environment.WEBSITE_REGISTRATION && !account) {
                             // register the user automatically
-                            // todo: registration ip
                             await db.insertInto('account').values({
                                 username,
-                                password: bcrypt.hashSync(password.toLowerCase(), 10)
+                                password: bcrypt.hashSync(password.toLowerCase(), 10),
+                                registration_ip: remoteAddress,
+                                registration_date: toDbDate(new Date())
                             }).execute();
 
                             s.send(JSON.stringify({
@@ -49,6 +87,34 @@ export default class LoginServer {
                                 staffmodlevel: 0
                             }));
                             return;
+                        }
+
+                        if (account) {
+                            const recent = await db.selectFrom('login').selectAll()
+                                .where('account_id', '=', account.id)
+                                .where('ip', '=', remoteAddress)
+                                .where('timestamp', '>=', toDbDate(new Date(Date.now() - 5000)))
+                                .limit(3).execute();
+
+                            if (recent.length === 3) {
+                                // rate limited
+                                s.send(JSON.stringify({
+                                    replyTo,
+                                    response: 8
+                                }));
+                                return;
+                            }
+
+                            // todo: concurrent logins by ip
+
+                            await db.insertInto('login').values({
+                                uuid: socket,
+                                account_id: account.id,
+                                world: nodeId,
+                                timestamp: toDbDate(nodeTime),
+                                uid,
+                                ip: remoteAddress
+                            }).execute();
                         }
 
                         if (!account || !(await bcrypt.compare(password.toLowerCase(), account.password))) {
@@ -69,6 +135,72 @@ export default class LoginServer {
                             return;
                         }
 
+                        if (Environment.NODE_MEMBERS && !account.members) {
+                            s.send(JSON.stringify({
+                                replyTo,
+                                response: 9
+                            }));
+                            return;
+                        }
+
+                        if (reconnecting && account.logged_in === nodeId) {
+                            await db.insertInto('session').values({
+                                uuid: socket,
+                                account_id: account.id,
+                                profile,
+                                world: nodeId,
+                                timestamp: toDbDate(nodeTime),
+                                uid,
+                                ip: remoteAddress
+                            }).execute();
+
+                            if (!hasSave) {
+                                const save = await fsp.readFile(`data/players/${profile}/${username}.sav`);
+                                if (!save || !PlayerLoading.verify(new Packet(save))) {
+                                    // Extreme safety check for savefile existing but having bad data on read:
+                                    console.error('on reconnect, account_id %s had invalid save data on disk', account.id);
+                                    this.rejectLoginForSafety(s, replyTo);
+                                }
+                                s.send(JSON.stringify({
+                                    replyTo,
+                                    response: 2,
+                                    account_id: account.id,
+                                    staffmodlevel: account.staffmodlevel,
+                                    muted_until: account.muted_until,
+                                    save: save.toString('base64'),
+                                    members: account.members
+                                }));
+                            } else {
+                                s.send(JSON.stringify({
+                                    replyTo,
+                                    response: 2,
+                                    account_id: account.id,
+                                    staffmodlevel: account.staffmodlevel,
+                                    muted_until: account.muted_until,
+                                    members: account.members
+                                }));
+                            }
+                            return;
+                        } else if (account.logged_in !== 0) {
+                            // already logged in elsewhere
+                            s.send(JSON.stringify({
+                                replyTo,
+                                response: 3
+                            }));
+                            return;
+                        } else if (
+                            account.staffmodlevel < 1 &&
+                            account.logged_out !== 0 && account.logged_out !== nodeId &&
+                            account.logout_time !== null && new Date(account.logout_time) >= new Date(Date.now() - 45000)
+                        ) {
+                            // rate limited (hop timer)
+                            s.send(JSON.stringify({
+                                replyTo,
+                                response: 6
+                            }));
+                            return;
+                        }
+
                         await db.insertInto('session').values({
                             uuid: socket,
                             account_id: account.id,
@@ -79,53 +211,52 @@ export default class LoginServer {
                             ip: remoteAddress
                         }).execute();
 
-                        if (account.logged_in === nodeId) {
-                            // could be a reconnect so we have special logic here
-                            // the world will respond already logged in otherwise
+                        if (!fs.existsSync(`data/players/${profile}/${username}.sav`)) {
+                            // not an error - never logged in before
+                            // ^ Only not an error if the user has never logged in before:
+                            if (account.logout_time !== null) {
+                                console.error('on login, account_id %s had no save data on disk!', account.id);
+                                this.rejectLoginForSafety(s, replyTo);
+                                return;
+                            } else {
+                                s.send(JSON.stringify({
+                                    replyTo,
+                                    response: 4,
+                                    account_id: account.id,
+                                    staffmodlevel: account.staffmodlevel,
+                                    muted_until: account.muted_until
+                                }));
+                            }
+                        } else {
+
+                            const save = await fsp.readFile(`data/players/${profile}/${username}.sav`);
+                            // Extreme safety check for savefile existing but having bad data on read:
+                            if (!save || !PlayerLoading.verify(new Packet(save))) {
+                                console.error('on login, account_id %s had invalid save data on disk!', account.id);
+                                this.rejectLoginForSafety(s, replyTo);
+                                return;
+                            }
                             s.send(JSON.stringify({
                                 replyTo,
-                                response: 2
+                                response: 0,
+                                account_id: account.id,
+                                staffmodlevel: account.staffmodlevel,
+                                save: save.toString('base64'),
+                                muted_until: account.muted_until,
+                                members: account.members
                             }));
-                        } else if (account.logged_in !== 0) {
-                            // already logged in elsewhere
-                            s.send(JSON.stringify({
-                                replyTo,
-                                response: 3
-                            }));
-                            return;
                         }
 
+                        // Login is valid - update account table
                         await db.updateTable('account').set({
                             logged_in: nodeId,
                             login_time: toDbDate(new Date())
                         }).where('id', '=', account.id).executeTakeFirst();
-
-                        if (!fs.existsSync(`data/players/${profile}/${username}.sav`)) {
-                            // not an error - never logged in before
-                            s.send(JSON.stringify({
-                                replyTo,
-                                response: 4,
-                                staffmodlevel: account.staffmodlevel,
-                                muted_until: account.muted_until
-                            }));
-                            return;
-                        }
-
-                        const save = await fsp.readFile(`data/players/${profile}/${username}.sav`);
-                        s.send(JSON.stringify({
-                            replyTo,
-                            response: 0,
-                            staffmodlevel: account.staffmodlevel,
-                            save: save.toString('base64'),
-                            muted_until: account.muted_until
-                        }));
                     } else if (type === 'player_logout') {
                         const { replyTo, username, save } = msg;
 
-                        // todo: record logout history
-
                         const raw = Buffer.from(save, 'base64');
-                        if (PlayerLoading.verify(new Packet(raw))) {
+                        if (PlayerLoading.verify(new Packet(raw)) && !(await this.wouldResetSaveFile(raw, profile, username))) {
                             if (!fs.existsSync(`data/players/${profile}`)) {
                                 await fsp.mkdir(`data/players/${profile}`, { recursive: true });
                             }
@@ -137,7 +268,9 @@ export default class LoginServer {
 
                         await db.updateTable('account').set({
                             logged_in: 0,
-                            login_time: null
+                            login_time: null,
+                            logged_out: nodeId,
+                            logout_time: toDbDate(new Date()),
                         }).where('username', '=', username).executeTakeFirst();
 
                         s.send(JSON.stringify({
@@ -148,7 +281,7 @@ export default class LoginServer {
                         const { username, save } = msg;
 
                         const raw = Buffer.from(save, 'base64');
-                        if (PlayerLoading.verify(new Packet(raw))) {
+                        if (PlayerLoading.verify(new Packet(raw)) && !(await this.wouldResetSaveFile(raw, profile, username))) {
                             if (!fs.existsSync(`data/players/${profile}`)) {
                                 await fsp.mkdir(`data/players/${profile}`, { recursive: true });
                             }

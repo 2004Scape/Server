@@ -42,7 +42,8 @@ export default class WSServer {
                 }
 
                 cb(true);
-            }
+            },
+            maxPayload: 2000,
         });
 
         this.wss.on('connection', (ws: WebSocket, req) => {
@@ -63,7 +64,7 @@ export default class WSServer {
 
                     client.buffer(data);
                     World.onClientData(client);
-                } catch (err) {
+                } catch (_) {  // eslint-disable-line @typescript-eslint/no-unused-vars
                     client.terminate();
                 }
             });

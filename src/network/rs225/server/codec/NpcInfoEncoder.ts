@@ -24,8 +24,7 @@ export default class NpcInfoEncoder extends MessageEncoder<NpcInfo> {
         const buildArea: BuildArea = message.player.buildArea;
 
         if (message.changedLevel || message.deltaX > buildArea.viewDistance || message.deltaZ > buildArea.viewDistance) {
-            // optimization to avoid sending 3 bits * observed npcs when everything has to be removed anyways
-            buildArea.npcs.clear();
+            buildArea.rebuildNpcs();
         }
 
         const updates: Packet = Packet.alloc(1);
@@ -47,7 +46,7 @@ export default class NpcInfoEncoder extends MessageEncoder<NpcInfo> {
     }
 
     private writeNpcs(buf: Packet, updates: Packet, message: NpcInfo, bytes: number): number {
-        const {currentTick, renderer, player } = message;
+        const { currentTick, renderer, player } = message;
         const buildArea: BuildArea = player.buildArea;
         // update existing npcs (255 max - 8 bits)
         buf.pBit(8, buildArea.npcs.size);
@@ -98,12 +97,14 @@ export default class NpcInfoEncoder extends MessageEncoder<NpcInfo> {
         buf.pBit(5, z);
         buf.pBit(1, 1); // extend
         this.lowdefinition(updates, renderer, npc);
+        npc.observerCount++;
         player.buildArea.npcs.add(npc);
     }
 
     private remove(buf: Packet, buildArea: BuildArea, npc: Npc): void {
         buf.pBit(1, 1);
         buf.pBit(2, 3);
+        npc.observerCount--;
         buildArea.npcs.delete(npc);
     }
 

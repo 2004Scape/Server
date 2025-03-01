@@ -1,28 +1,17 @@
 [opnpc1,observatory_professor]
 // https://web.archive.org/web/20041021084243/http://www.runehq.net/RHQInn/viewtopic.php?t=158, you cannot talk about clues during the quest, only before and after completion
 // https://web.archive.org/web/20051214060247/http://www.tip.it/runescape/?page=treasure_trails.htm this mentions it as well
+// tip.it seems to imply it's within the main dialogue options instead of a seperate set as well (like OSRS does)
 switch_int(%itgronigen_progress) {
-    case ^itgronigen_complete, ^itgronigen_claimed_wine :
-        if(~has_sextant_clue = true) {
-            @professor_hastrail;
-        }
-        @professor_returns;
+    case ^itgronigen_complete, ^itgronigen_claimed_wine : @professor_returns;
     case ^itgronigen_sent_telescope : ~chatnpc("<p,happy>The telescope is now repaired!|Let's go to the Observatory."); // dialogue doesn't exist on OSRS at all
     case ^itgronigen_given_mould : @professor_lens;
     case ^itgronigen_given_glass : @professor_mould;
     case ^itgronigen_given_bronze : @professor_glass;
     case ^itgronigen_given_planks : @professor_bronze;
     case ^itgronigen_started : @professor_planks;
-    case ^itgronigen_not_started :
-        if(~has_sextant_clue = true) {
-            @professor_hastrail;
-        }
-        @professor_initial;
+    case ^itgronigen_not_started : @professor_initial;
 }
-
-[label,professor_hastrail]
-~chatnpc("<p,neutral>What would you like to talk about?");
-@multi2("Talk about the Observatory quest.", professor_initial, "Talk about Treasure Trails.", professor_trails);
 
 [label,professor_glass]
 ~chatnpc("<p,neutral>How are you getting on finding me some glass?");
@@ -144,7 +133,13 @@ if(last_useitem = plank | last_useitem = molten_glass | last_useitem = bronze_ba
 // this whole dialogue is quite different compared to OSRS, and unfortunately we have no RS2 reference so this
 // is mostly RSC + grammar corrected
 ~chatnpc("<p,neutral>Hello adventurer.|What brings you to these parts?");
-switch_int (~p_choice4("I am lost!!!", 1, "I'd like to have a look through that telescope.", 2, "What's the ladder over there for?", 3, "It is of no concern of yours...", 4)) {
+def_int $ops;
+if(~has_sextant_clue = true) {
+    $ops = ~p_choice5("I am lost!!!", 1, "I'd like to have a look through that telescope.", 2, "What's the ladder over there for?", 3, "Talk about Treasure Trails.", 5, "It is of no concern of yours...", 4);
+} else {
+    $ops = ~p_choice4("I am lost!!!", 1, "I'd like to have a look through that telescope.", 2, "What's the ladder over there for?", 3, "It is of no concern of yours...", 4);
+}
+switch_int ($ops) {
      case 1 :
         ~chatplayer("<p,sad>I am lost!!!");
         ~chatnpc("<p,neutral>Lost? It must have been those gnomes that led you astray.");
@@ -189,11 +184,18 @@ switch_int (~p_choice4("I am lost!!!", 1, "I'd like to have a look through that 
     case 4 :
         ~chatplayer("<p,neutral>It is of no concern of yours...");
         ~chatnpc("<p,angry>Okay okay, there's no need to be insulting!");
+    case 5 : @professor_trails;
 }
 
 [label,professor_returns]
 ~chatnpc("<p,happy>Aha, my friend returns.");
 ~chatnpc("<p,happy>Thanks for all your help with the telescope.|What can I do for you?"); // still has this linebreak in OSRS
+def_int $ops;
+if(~has_sextant_clue = true) {
+    $ops = ~p_choice3("Do you need any more help with the telescope?", 1, "Talk about Treasure Trails.", 3, "Nothing, thanks.", 2);
+} else {
+    $ops = ~p_choice2("Do you need any more help with the telescope?", 1, "Nothing, thanks.", 2);
+}
 // using OSRS dialogue here, seems like it's probably unchanged
 switch_int (~p_choice2("Do you need any more help with the telescope?", 1, "Nothing, thanks.", 2)) {
     case 1 :
@@ -203,6 +205,7 @@ switch_int (~p_choice2("Do you need any more help with the telescope?", 1, "Noth
     case 2 :
         ~chatplayer("<p,happy>Nothing, thanks.");
         ~chatnpc("<p,happy>Okay, no problem. See you again.");
+    case 3 : @professor_trails;
 }
 
 [label,professor_trails]

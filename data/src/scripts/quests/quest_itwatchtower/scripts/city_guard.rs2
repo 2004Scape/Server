@@ -1,0 +1,60 @@
+[opnpc1,city_guard]
+if(%itwatchtower_progress >= ^itwatchtower_solved_riddle) {
+    ~chatnpc("<p,bored>What is it?");
+    switch_int(~p_choice2("Do you have any other riddles for me?", 1, "I have lost the map you gave me.", 2)) {
+        case 1 :
+            ~chatplayer("<p,neutral>Do you have any other riddles for me?");
+            ~chatnpc("<p,happy>Yes, what looks good on a plate with salad?");
+            switch_int(~p_choice2("I don't know...", 1, "A nice pizza?", 2)) {
+                case 1 :
+                    ~chatplayer("<p,confused>I don't know...");
+                    ~chatnpc("<p,angry>You! Now go, and bother me no more.)"); // intentional bracket
+                case 2 :
+                    ~chatplayer("<p,happy>A nice pizza?");
+                    ~chatnpc("<p,angry>Grr! Think you are a comedian, eh?|Get lost!");
+            }
+        case 2 :
+            ~chatplayer("<p,sad>I have lost the map you gave me.");
+            if(inv_total(inv, skavid_map) > 0) { // no bank check (RS3)
+                ~chatnpc("<p,angry>Are you blind? What is that you are carrying?");
+                ~chatplayer("<p,shifty>Oh, that map...");
+                return;
+            }
+            ~chatnpc("<p,bored>What's the point?|Take this copy and bother me no more!");
+            inv_add(inv, skavid_map, 1);
+    }
+    return;
+}
+~chatnpc("<p,angry>Grrrr, what business you got here?");
+~chatplayer("<p,neutral>I am on an errand.");
+~chatnpc("<p,confused>So what you want with me?");
+switch_int(~p_choice2("I am an ogre killer come to destroy you!", 1, "I seek passage into the skavid caves.", 2)) {
+    case 1 :
+        ~chatplayer("<p,happy>I am an ogre killer come to destroy you!");
+        ~chatnpc("<p,angry>I would like to see you try!");
+        ~npc_retaliate(0);
+    case 2 :
+        ~chatplayer("<p,neutral>I seek passage into the skavid caves.");
+        ~chatnpc("<p,quiz>Is that so... You humour me small thing. Answer this riddle and I will help you...");
+        if(%itwatchtower_progress = ^itwatchtower_given_relic) %itwatchtower_progress = ^itwatchtower_given_riddle;
+        ~chatnpc("<p,neutral>I want you to bring me an item:|I will give you all the letters of this item,|you work out what it is...");
+        ~chatnpc("<p,neutral>My first is in days, but not in years,|My second is in evil, and also in tears,|My third is in all, but not in none,|My fourth is in hot, but not in sun.");
+        ~chatnpc("<p,neutral>My fifth is in heaven, and also in hate,|My sixth is in fearing, but not in fate,|My seventh is in plush, but not in place.");
+        ~chatnpc("<p,neutral>My eighth is in nine, but not in eight,|My last is in earth, and also in great.");
+        ~chatnpc("<p,neutral>My whole is an object, that magic will make,|It brings wrack and ruin to all in its wake...|Now how long I wonder, will this riddle take?");
+} 
+
+[opnpcu,city_guard]
+if(last_useitem = deathrune) {
+    if(%itwatchtower_progress <= ^itwatchtower_given_riddle) {
+        inv_del(inv, deathrune, 1);
+        inv_add(inv, skavid_map, 1);
+        %itwatchtower_progress = ^itwatchtower_solved_riddle;
+        ~chatplayer("<p,happy>I worked it out!");
+        ~chatnpc("<p,happy>Well, well. The imp has done it!|Thanks for the rune;|This is what you be needing...");
+        mes("The guard gives you a map.");
+        return;
+    }
+    mes("The guard is not listening to you.");
+}
+// no NIH

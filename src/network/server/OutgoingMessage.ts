@@ -1,6 +1,5 @@
 import ServerProtPriority from '#/network/server/prot/ServerProtPriority.js';
-import DoublyLinkable from '#/util/DoublyLinkable.js';
 
-export default abstract class OutgoingMessage extends DoublyLinkable {
+export default abstract class OutgoingMessage {
     readonly abstract priority: ServerProtPriority;
 }

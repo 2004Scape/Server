@@ -137,6 +137,16 @@ if(npc_type = lucien_edge) {
     return (~lucien_attack);
 } 
 
+if(npc_type = gorad & (~obj_gettotal(ogre_tooth) > 0 | getbit_range(%itwatchtower_bits, ^itwatchtower_spoken_grew, ^itwatchtower_helped_grew) ! 1)) {
+    if(%itwatchtower_progress = ^itwatchtower_complete) return (true);
+    if(getbit_range(%itwatchtower_bits, ^itwatchtower_spoken_grew, ^itwatchtower_helped_grew) < 1) {
+        mes("You don't need to fight him now.");
+    } else {
+        mes("You have already got his tooth.");
+    }
+    return(false);
+}
+
 if(npc_type = npc_830) {
     return (~mercenary_capt_attack(false));
 } 
@@ -149,6 +159,27 @@ if(npc_type = fire_warrior_of_lesarkus & (inv_total(worn, ice_arrow) = 0 | %dama
 if(npc_type = npc_374 & %damagetype <= ^crush_style & npc_range(coord) <= 1) {
     mes("These ogres are for ranged combat only.");
     return (false);
+}
+
+if (npc_type = delrith) {
+    if (%demon_progress >= ^demon_complete) {
+        mes("You've already done that quest.");
+        return(false);
+    }
+    if (inv_getobj(worn, 3) ! silverlight) {
+        if (inv_total(inv, silverlight) > 0) {
+            mes("Maybe I'd better wield silverlight first.");
+            return(false);
+        }
+        mes("I'd rather not. He looks scary");
+        return(false);
+    }
+}
+if (npc_type = count_draynor) {
+    if (%vampire_progress = ^vampire_complete) {
+        mes("You've done enough vampire slaying.");
+        return(false);
+    }
 }
 
 if (npc_hasop(2) = true) {
@@ -180,6 +211,15 @@ if(npc_type = general_khazard & %arena_progress < ^arena_freed_servils) {
 if(npc_type = lucien_edge) {
     return (~lucien_attack);
 }
+if(npc_type = gorad & (~obj_gettotal(ogre_tooth) > 0 | getbit_range(%itwatchtower_bits, ^itwatchtower_spoken_grew, ^itwatchtower_helped_grew) ! 1)) {
+    if(%itwatchtower_progress = ^itwatchtower_complete) return (true);
+    if(getbit_range(%itwatchtower_bits, ^itwatchtower_spoken_grew, ^itwatchtower_helped_grew) < 1) {
+        mes("You don't need to fight him now.");
+    } else {
+        mes("You have already got his tooth.");
+    }
+    return(false);
+}
 if(npc_type = npc_830) {
     return (~mercenary_capt_attack(true));
 } 
@@ -210,7 +250,26 @@ if (%vampire_progress = ^vampire_complete & npc_type = count_draynor) {
     mes("You've done enough vampire slaying.");
     return(false);
 }
-
+if (npc_type = delrith) {
+    if (%demon_progress >= ^demon_complete) {
+        mes("You've already done that quest.");
+        return(false);
+    }
+    if (inv_getobj(worn, 3) ! silverlight) {
+        if (inv_total(inv, silverlight) > 0) {
+            mes("Maybe I'd better wield silverlight first.");
+            return(false);
+        }
+        mes("I'd rather not. He looks scary");
+        return(false);
+    }
+}
+if (npc_type = count_draynor) {
+    if (%vampire_progress = ^vampire_complete) {
+        mes("You've done enough vampire slaying.");
+        return(false);
+    }
+}
 if (npc_hasop(2) = true) {
     return (true);
 }
@@ -263,6 +322,7 @@ if (inv_getobj(worn, ^wearpos_ring) = ring_of_recoil & npc_finduid(%aggressive_n
     npc_queue(2, $recoil_damage, 0);
     ~ring_of_recoil_lose_charge($recoil_damage);
 }
+p_preventlogout("You can't log out until 10 seconds after the end of combat.", 16);
 ~damage_self($damage);
 
 [proc,npc_retaliate](int $queue_delay)

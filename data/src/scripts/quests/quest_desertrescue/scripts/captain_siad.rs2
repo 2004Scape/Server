@@ -43,6 +43,9 @@ if(%desertrescue_progress >= ^desertrescue_given_bedobin_key) {
 [label,siad_books]
 ~chatplayer("<p,happy>You seem to have a lot of books!");
 ~chatnpc("<p,angry>Yes, I do. Now please get to the point?");
+if(testbit(%desertrescue_map_mechanisms, ^desertrescue_sailing) = false) {
+    @multi2("How long have you been interested in books?", siad_interest, "I could get you some books!", siad_getbooks);
+}
 @multi3("How long have you been interested in books?", siad_interest, "I could get you some books!", siad_getbooks, "So, you're interested in sailing?", siad_sailing);
 
 [label,siad_interest]

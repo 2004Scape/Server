@@ -435,8 +435,8 @@ export default class Packet extends DoublyLinkable {
         const dQ: BigInteger = pem.dQ;
         const qInv: BigInteger = pem.qInv;
 
-        const mP: BigInteger = cipher.mod(p).modPow(dP, p);
-        const mQ: BigInteger = cipher.mod(q).modPow(dQ, q);
+        const mP: BigInteger = cipher.modPow(dP, p);
+        const mQ: BigInteger = cipher.modPow(dQ, q);
 
         const h: BigInteger = qInv.multiply(mP.subtract(mQ)).mod(p);
 

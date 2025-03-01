@@ -1,0 +1,11 @@
+[opnpc1,ogre_merchant]
+~chatnpc("<p,quiz>Does the little creature want to buy sumfin'?");
+switch_int(~p_choice2("Yes I do.", 1, "No I don't.", 2)) {
+    case 1 :
+        ~chatplayer("<p,happy>Yes I do.");
+        ~chatnpc("<p,bored>Welcome to Grud's Herblore Stall.");
+        ~openshop_activenpc;
+    case 2 :
+        ~chatplayer("<p,neutral>No I don't.");
+        ~chatnpc("<p,bored>Suit yourself.");
+}
