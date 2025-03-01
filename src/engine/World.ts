@@ -1097,7 +1097,6 @@ class World {
     private processInfo(): void {
         // TODO: benchmark this?
         for (const player of this.players) {
-            player.convertMovementDir();
             player.reorient();
 
             const grid = this.playerGrid;
@@ -1112,7 +1111,6 @@ class World {
         }
 
         for (const npc of this.npcs) {
-            npc.convertMovementDir();
             npc.reorient();
             this.npcRenderer.computeInfo(npc);
         }

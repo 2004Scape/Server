@@ -309,40 +309,6 @@ export default abstract class PathingEntity extends Entity {
         }
     }
 
-    convertMovementDir() {
-        // temp variables to convert movement operations
-        let walkDir = this.walkDir;
-        let runDir = this.runDir;
-        let tele = this.tele;
-
-        // convert p_teleport() into walk or run
-        const distanceMoved = CoordGrid.distanceTo(this, {
-            x: this.lastTickX,
-            z: this.lastTickZ,
-            width: this.width,
-            length: this.length
-        });
-        if (tele && !this.jump && distanceMoved <= 2) {
-            if (distanceMoved === 2) {
-                // run
-                walkDir = CoordGrid.face(this.lastTickX, this.lastTickZ, this.x, this.z);
-                const walkX = CoordGrid.moveX(this.lastTickX, walkDir);
-                const walkZ = CoordGrid.moveZ(this.lastTickZ, walkDir);
-                runDir = CoordGrid.face(walkX, walkZ, this.x, this.z);
-            } else {
-                // walk
-                walkDir = CoordGrid.face(this.lastTickX, this.lastTickZ, this.x, this.z);
-                runDir = -1;
-            }
-
-            tele = false;
-        }
-
-        this.walkDir = walkDir;
-        this.runDir = runDir;
-        this.tele = tele;
-    }
-
     /**
      * Face and orient to a specified fine coord.
      * Enable `client` to update connected clients about the new focus, enabling the face_coord mask.
