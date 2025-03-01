@@ -1,4 +1,4 @@
 [debugproc,random]
-    ~macro_event_zombie_spawn;
-
-
+if (p_finduid(uid) = true) {
+    %macro_event = ^no_macro_event;
+}
