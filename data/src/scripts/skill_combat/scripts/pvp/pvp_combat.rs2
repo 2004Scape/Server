@@ -1,22 +1,22 @@
-[opplayer2,_] @pvp_combat_start;
-
-[applayer2,_]
+[opplayer2,_]
 if (~pvp_is_attackable = false) {
     return;
 }
+@pvp_combat_start;
 
+[applayer2,_]
+if (~pvp_is_attackable = false) { // this is always here: https://youtu.be/JoyUOTsAiBY?t=644
+    return;
+}
 def_int $distance = distance(coord, .coord);
 def_int $attackrange = ~player_attackrange(inv_getobj(worn, ^wearpos_rhand));
-if (($attackrange <= 1 & ~pvp_is_attackable = false) | $distance > $attackrange) {
+if ($attackrange <= 1 | $distance > $attackrange) {
     p_aprange($attackrange); // walk then op again
     return;
 }
 @pvp_combat_start;
 
 [label,pvp_combat_start]
-if (~pvp_is_attackable = false) {
-    return;
-}
 if (%damagetype = ^ranged_style) {
     @pvp_ranged_attack;
 }
