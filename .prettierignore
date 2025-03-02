@@ -8,3 +8,4 @@ src/3rdparty/*
 *.json
 *.yml
 *.md
+*.fakeextsn
