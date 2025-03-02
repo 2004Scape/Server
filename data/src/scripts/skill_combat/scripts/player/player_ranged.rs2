@@ -64,7 +64,7 @@ npc_heropoints($damage);
 p_opnpc(2);
 
 if ($ammo = holy_water) {
-    ~ranged_dropammo_npc($ammo, 0, sub(divide($delay, 30), 2)); // 100% chance to drop ammo
+    ~ranged_dropammo_npc($ammo, ^true, sub(divide($delay, 30), 2)); // 100% chance to drop ammo
     return;
 }
 ~ranged_dropammo_npc($ammo, 5, sub(divide($delay, 30), 2));
@@ -117,7 +117,7 @@ if (inv_total(worn, $ammo) = 0) {
 return(~npc_projectile(coord, npc_uid, oc_param($ammo, proj_travel), 40, 36, 32, 15, 0, 11, 5));
 
 [proc,ranged_dropammo_npc](obj $ammo, int $chance, int $delay)
-if (random($chance) ! 0) {
+if (random($chance) ! 0 | $chance = ^true) {
     world_delay($delay);
     if (map_blocked(npc_coord) = false) {
         obj_add(npc_coord, enum(obj, namedobj, ranged_ammo, $ammo), 1, 200);
