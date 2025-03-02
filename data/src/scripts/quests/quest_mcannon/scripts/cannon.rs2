@@ -326,8 +326,6 @@ if ($dir = 0) {
 }
 %mcannon_clock = add(%mcannon_clock, 1);
 
-~player_combat_stat;
-
 // check close range
 npc_huntall($close_range, 1, 1);
 while (npc_huntnext = true) {

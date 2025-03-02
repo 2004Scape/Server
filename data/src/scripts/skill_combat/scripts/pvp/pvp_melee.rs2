@@ -15,9 +15,6 @@ if (.stat(hitpoints) = 0) {
 p_opplayer(2);
 ~set_pk_vars;
 
-~player_combat_stat;
-~.player_combat_stat;
-
 def_int $damage = 0;
 // not sure if xp multipler exists for us or not?!
 // https://oldschool.runescape.wiki/w/Combat#PvP_bonus_experience
