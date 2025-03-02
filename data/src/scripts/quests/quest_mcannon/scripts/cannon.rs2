@@ -370,7 +370,6 @@ sound_synth(mcannon_fire, 0, 0);
 def_int $damage = 0;
 if (~player_npc_hit_roll(%damagetype) = true) {
     $damage = randominc(min(30, npc_param(max_dealt)));
-    $damage = min($damage, npc_stat(hitpoints));
     stat_advance(ranged, multiply(20, $damage));
 }
 
