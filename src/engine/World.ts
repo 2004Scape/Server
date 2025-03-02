@@ -1578,7 +1578,7 @@ class World {
 
         // Decrement observers of rendered npcs
         for (const npc of player.buildArea.npcs) {
-            npc.observerCount--;
+            npc.observerCount = Math.max(npc.observerCount - 1, 0);
         }
 
         this.playerRenderer.removePermanent(player.pid);
@@ -1588,11 +1588,6 @@ class World {
         player.cleanup();
 
         player.isActive = false;
-
-        // Decrement observers of rendered npcs
-        for (const npc of player.buildArea.npcs) {
-            npc.observerCount--;
-        }
 
         player.addSessionLog(LoggerEventType.MODERATOR, 'Logged out');
         this.flushPlayer(player);
