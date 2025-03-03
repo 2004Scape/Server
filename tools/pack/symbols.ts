@@ -226,7 +226,7 @@ export function generateServerSymbols() {
     fs.writeFileSync('data/symbols/mesanim.sym', mesanimSymbols);
 
     let synthSymbols = '';
-    const synths = loadPack('data/src/pack/sound.pack');
+    const synths = loadPack('data/src/pack/synth.pack');
     for (let i = 0; i < synths.length; i++) {
         synthSymbols += `${i}\t${synths[i]}\n`;
     }

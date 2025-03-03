@@ -32,7 +32,7 @@ class Wave {
             dat.gdata(data, 0, data.length);
             dat.pos = start;
 
-            fs.writeFileSync(`data/src/sounds/sound_${id}.synth`, data);
+            fs.writeFileSync(`data/src/synth/sound_${id}.synth`, data);
         }
 
         for (let i = 0; i < Wave.tracks.length; i++) {
@@ -162,5 +162,5 @@ if (!soundsData) {
 
 Wave.unpack(soundsData);
 
-fs.writeFileSync('data/src/pack/sound.pack', pack);
-fs.writeFileSync('data/src/pack/sound.order', order);
+fs.writeFileSync('data/src/pack/synth.pack', pack);
+fs.writeFileSync('data/src/pack/synth.order', order);
