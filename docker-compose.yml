@@ -11,7 +11,6 @@ services:
       - NODE_MEMBERS
       - NODE_XPRATE
       - NODE_PRODUCTION
-      - NODE_ALLOW_CHEATS
       - NODE_DEBUG
     ports:
       - 8888:8888
