@@ -25,6 +25,7 @@ if (~pvp_hit_roll(%damagetype) = true) {
     }
     $damage = min(randominc($maxhit), .stat(hitpoints)); // tick eating existed! https://oldschool.runescape.wiki/w/Update:The_Wintertodt
     ~give_combat_experience_pvp(%damagestyle, $damage, ~pvp_xp_multiplier(~.player_combat_level));
+    both_heropoints($damage);
 }
 
 anim(%com_attackanim, 0);
@@ -33,8 +34,6 @@ sound_synth(%com_attacksound, 0, 0);
 
 .queue(pvp_retaliate, 0, uid);
 ~.pvp_damage(0, $damage);
-
-both_heropoints($damage);
 
 .anim(.%com_defendanim, 20);
 // .sound_synth(.%com_defendsound, 0, 20);
