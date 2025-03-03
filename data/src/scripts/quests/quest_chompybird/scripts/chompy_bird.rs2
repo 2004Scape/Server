@@ -175,7 +175,8 @@ if (%damagestyle = ^style_ranged_rapid) {
 // check hit, give combat xp
 def_int $damage = 0;
 if (~player_npc_hit_roll(%damagetype) = true) {
-    $damage = randominc(min(%com_maxhit, npc_param(max_dealt)));
+    def_int $maxhit = %com_maxhit;
+    $damage = randominc(min($maxhit, npc_param(max_dealt)));
     def_int $damage_capped = min($damage, npc_stat(hitpoints));
     ~give_combat_experience(%damagestyle, $damage_capped, %npc_combat_xp_multiplier);
     npc_heropoints($damage_capped);
