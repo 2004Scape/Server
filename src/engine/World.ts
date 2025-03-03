@@ -1853,7 +1853,7 @@ class World {
                 return;
             }
 
-            const { account_id, username, lowMemory, reconnecting, staffmodlevel, muted_until, members } = msg;
+            const { account_id, username, lowMemory, reconnecting, staffmodlevel, muted_until, members, messageCount } = msg;
             const save = msg.save ?? new Uint8Array();
 
             // if (reconnecting && !this.getPlayerByUsername(username)) {
@@ -1878,6 +1878,7 @@ class World {
                 player.lowMemory = lowMemory;
                 player.muted_until = muted_until ? new Date(muted_until) : null;
                 player.members = members;
+                player.messageCount = messageCount ?? 0;
 
                 if (this.logoutRequests.has(username)) {
                     // already logged in (on another world)

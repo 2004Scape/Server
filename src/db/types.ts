@@ -138,6 +138,29 @@ export type session = {
     uid: number;
     ip: string | null;
 };
+export type message_thread = {
+    id: Generated<number>;
+    to_account_id: number | null;
+    from_account_id: number;
+    last_message_from: number;
+    subject: string;
+    created: Generated<string>;
+    updated: Generated<string>;
+    read: string | null;
+    closed: string | null;
+    to_deleted: string | null;
+    from_deleted: string | null;
+    messages: number;
+};
+export type message = {
+    id: Generated<number>;
+    thread_id: number;
+    sender_id: number;
+    sender_ip: string;
+    sender: 'me' | 'staff';
+    content: string;
+    created: Generated<string>;
+};
 export type DB = {
     account: account;
     account_session: account_session;
@@ -155,4 +178,6 @@ export type DB = {
     public_chat: public_chat;
     report: report;
     session: session;
+    message_thread: message_thread;
+    message: message;
 };

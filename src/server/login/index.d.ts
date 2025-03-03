@@ -10,6 +10,7 @@ interface LoginResponse {
     save: Uint8Array | null;
     account_id: number;
     members: boolean;
+    messageCount?: number;
 }
 
 interface LogoutResponse {
