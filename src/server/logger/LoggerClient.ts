@@ -63,4 +63,19 @@ export default class LoggerClient extends InternalClient {
             events
         }));
     }
+
+    public async redFlag(username: string, reason_index: number, extra_context?: string) {
+        await this.connect();
+
+        if (!this.ws || !this.wsr || !this.wsr.checkIfWsLive()) {
+            return;
+        }
+
+        this.ws.send(JSON.stringify({
+            type: 'red_flag',
+            username,
+            reason_index,
+            extra_context,
+        }));
+    }
 }

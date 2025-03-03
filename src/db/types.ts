@@ -20,7 +20,13 @@ export type account = {
     staffmodlevel: Generated<number>;
     notes: string | null;
     notes_updated: string | null;
-    members: Generated<boolean>;
+    members: Generated<number>;
+    red_flag: Generated<number>;
+    red_flag_reason: number | null;
+    red_flag_context: string | null;
+    flagged_at: string | null;
+    flag_removed_by_id: number | null;
+    flag_removed_reason: string | null;
 };
 export type account_session = {
     id: Generated<number>;

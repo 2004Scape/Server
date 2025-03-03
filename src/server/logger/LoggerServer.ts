@@ -84,6 +84,25 @@ export default class LoggerServer {
                             }
                             break;
                         }
+                        case 'red_flag': {
+                            const { username, reason_index, extra_context } = msg;
+                            const account = await db.selectFrom('account').where('username', '=', username).selectAll().executeTakeFirst();
+                            if (!account) {
+                                console.log('red_flag: no account found for %s, aborting.', username);
+                                break;
+                            }
+                            await db.updateTable('account')
+                                .set({
+                                    red_flag: 1,
+                                    red_flag_reason: reason_index,
+                                    red_flag_context: extra_context,
+                                    flagged_at: toDbDate(new Date(Date.now())),
+                                    flag_removed_by_id: null,
+                                    flag_removed_reason: null,
+                                })
+                                .where('id', '=', account.id)
+                                .execute();
+                        }
                     }
                 } catch (err) {
                     console.error(err);
