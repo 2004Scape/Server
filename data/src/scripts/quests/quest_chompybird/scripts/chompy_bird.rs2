@@ -163,8 +163,6 @@ if (%action_delay > map_clock) {
     return;
 }
 
-~player_combat_stat; // update combat varps before calculating action_delay and shooting
-
 // set the skill clock depending on the weapon attack rate
 %action_delay = add(map_clock, oc_param($rhand, attackrate));
 
