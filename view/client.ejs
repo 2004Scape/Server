@@ -77,6 +77,9 @@
     </style>
  
     <script>
+
+        const isMobile = /Mobi|Android|iPhone|iPad|Windows Phone|Mobile/i.test(navigator.userAgent);
+        
         function toggleFullscreen() {
             if (document.fullscreenElement || document.webkitFullscreenElement || document.mozFullScreenElement || document.msFullscreenElement) {
                 if (document.exitFullscreen) {
@@ -175,14 +178,16 @@
 
             document.getElementById('controls').style.display = '';
             document.getElementById('hide-message').style.display = 'none';
-            
+
             localStorage.removeItem('hideControls');
         }
 
         document.addEventListener('keydown', function(e) {
-            if (e.ctrlKey && e.altKey && e.key == 'i') {
-                e.preventDefault();
-                showControls();
+            if ((e.ctrlKey || e.metaKey) && e.altKey) {
+                if (e.code === 'KeyI') {
+                    e.preventDefault();
+                    showControls();
+                }
             }
         })
 
@@ -194,15 +199,18 @@
                 setFiltering(canvas, filtering === 'true');
             }
 
-            let size = parseInt(localStorage.getItem('canvasSize'));
-            if (size) {
-                canvasSize = setCanvasSize(canvas, size);
-                localStorage.setItem('canvasSize', canvasSize);
-            }
-
-            let controls = localStorage.getItem('hideControls');
-            if (controls === 'true') {
-                hideControls();
+            if (!isMobile)
+            {
+                let size = parseInt(localStorage.getItem('canvasSize'));
+                if (size) {
+                    canvasSize = setCanvasSize(canvas, size);
+                    localStorage.setItem('canvasSize', canvasSize);
+                }
+            
+                let controls = localStorage.getItem('hideControls');
+                if (controls === 'true') {
+                    hideControls();
+                }
             }
         }
     </script>
@@ -225,7 +233,7 @@
         </div>
         <div id="hide-message" style="display: none;">
             <p class="green blink">Controls have been hidden press ctrl+alt+i to unhide.</p>
-            <p class="green" id="count-down"></span>
+            <p class="green" id="count-down"></p>
         </div>
     </center>
 
