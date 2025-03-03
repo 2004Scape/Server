@@ -176,19 +176,20 @@ if (%damagestyle = ^style_ranged_rapid) {
 def_int $damage = 0;
 if (~player_npc_hit_roll(%damagetype) = true) {
     $damage = randominc(min(%com_maxhit, npc_param(max_dealt)));
-    ~give_combat_experience(%damagestyle, $damage, %npc_combat_xp_multiplier);
+    def_int $damage_capped = min($damage, npc_stat(hitpoints));
+    ~give_combat_experience(%damagestyle, $damage_capped, %npc_combat_xp_multiplier);
+    npc_heropoints($damage_capped);
 }
 
 def_int $delay = add(~player_use_ogre_bow($ammo), 30); // osrs it seems to be delayed an extra tick
 anim(%com_attackanim, 0);
 sound_synth(%com_attacksound, 0, 0);
 // Chompies don't fight back
-npc_queue(2, $damage, calc($delay / 30));
+npc_queue(2, $damage, calc($delay / 30)); // ai_queue2 takes uncapped damage (avoids npcs from tick healing)
 if (npc_param(defend_sound) ! null) {
     sound_synth(npc_param(defend_sound), 0, sub($delay, 30)); // delay 1 client tick for the hit queue
 }
 
-npc_heropoints($damage);
 p_opnpc(5);
 if (random(5) ! 0) {
     world_delay(calc($delay / 30 - 2));

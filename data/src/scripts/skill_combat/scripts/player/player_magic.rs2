@@ -213,12 +213,12 @@ if ($maxhit ! null) {
     if (npc_param(defend_sound) ! null) {
         sound_synth(npc_param(defend_sound), 0, $duration); // delay 1 client tick for the hit queue
     }
-    ~give_combat_experience(%damagestyle, $damage, %npc_combat_xp_multiplier);
+    def_int $damage_capped = min($damage, npc_stat(hitpoints));
+    ~give_combat_experience(%damagestyle, $damage_capped, %npc_combat_xp_multiplier);
+    npc_heropoints($damage_capped);
 }
 // spell visual
 spotanim_npc(db_getfield($spell_data, magic_spell_table:spotanim_target, 0), $duration);
-// npc auto retal
-npc_heropoints($damage);
 
 
 [proc,pvm_spell_fail](dbrow $spell_data, int $duration)
