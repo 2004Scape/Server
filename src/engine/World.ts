@@ -640,7 +640,7 @@ class World {
             // Check if npc is alive
             if (npc.isActive) {
                 // Hunts will process even if the npc is delayed during this portion
-                if (npc.huntMode !== -1) {
+                if (npc.huntMode !== -1 && npc.observerCount > 0) {
                     const hunt = HuntType.get(npc.huntMode);
 
                     if (hunt && hunt.type === HuntModeType.PLAYER) {
@@ -790,7 +790,7 @@ class World {
                 if (npc.huntMode !== -1) {
                     const hunt = HuntType.get(npc.huntMode);
 
-                    if (hunt.nobodyNear !== HuntNobodyNear.PAUSEHUNT || npc.observerCount > 0) {
+                    if (hunt.nobodyNear !== HuntNobodyNear.PAUSEHUNT || npc.observerCount > 0 || hunt.type === HuntModeType.PLAYER) {
                         // - hunt npc/obj/loc
                         if (hunt && hunt.type !== HuntModeType.PLAYER) {
                             npc.huntAll();
@@ -930,10 +930,6 @@ class World {
                     state.pointerAdd(ScriptPointer.ProtectedActivePlayer);
                     ScriptRunner.execute(state);
 
-                    // Decrement observers of rendered npcs
-                    for (const npc of player.buildArea.npcs) {
-                        npc.observerCount--;
-                    }
                     this.removePlayer(player);
                 }
             }
@@ -1578,6 +1574,11 @@ class World {
             player.client.close();
         }
 
+        // Decrement observers of rendered npcs
+        for (const npc of player.buildArea.npcs) {
+            npc.observerCount = Math.max(npc.observerCount - 1, 0);
+        }
+
         this.playerRenderer.removePermanent(player.pid);
         this.gameMap.getZone(player.x, player.z, player.level).leave(player);
         this.players.remove(player.pid);
@@ -1585,11 +1586,6 @@ class World {
         player.cleanup();
 
         player.isActive = false;
-
-        // Decrement observers of rendered npcs
-        for (const npc of player.buildArea.npcs) {
-            npc.observerCount--;
-        }
 
         player.addSessionLog(LoggerEventType.MODERATOR, 'Logged out');
         this.flushPlayer(player);
