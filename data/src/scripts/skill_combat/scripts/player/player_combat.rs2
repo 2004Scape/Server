@@ -2,20 +2,8 @@
 [apnpc2,_] @player_combat_start_ap;
 
 [label,player_combat_start_ap]
-def_int $distance = npc_range(coord);
-def_int $attackrange = 0;
-if (inv_getobj(worn, ^wearpos_rhand) ! null) {
-    $attackrange = min(oc_param(inv_getobj(worn, ^wearpos_rhand), attackrange), 10);
-    if (%damagestyle = ^style_ranged_longrange) {
-        $attackrange = min(add($attackrange, 2), 10);
-    }
-}
-
-if (~player_autocast_enabled = true){
-    $attackrange = 10;
-}
-
-if (($attackrange <= 1 & ~player_in_combat_check = false) | $distance > $attackrange) {
+def_int $attackrange = ~player_attackrange(inv_getobj(worn, ^wearpos_rhand));
+if (($attackrange <= 1 & ~player_in_combat_check = false) | npc_range(coord) > $attackrange) {
     p_aprange($attackrange);
     return;
 }
@@ -101,3 +89,16 @@ if (%npc_macro_event_target ! null & %npc_macro_event_target ! uid) {
     return(false);
 }
 return(true);
+
+[proc,player_attackrange](obj $rhand)(int)
+if (~player_autocast_enabled = true){
+    return(10);
+}
+def_int $attackrange = 0;
+if ($rhand ! null) {
+    $attackrange = min(oc_param($rhand, attackrange), 10);
+    if (%damagestyle = ^style_ranged_longrange) {
+        $attackrange = min(add($attackrange, 2), 10);
+    }
+}
+return($attackrange);

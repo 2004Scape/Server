@@ -62,20 +62,8 @@ if ($rhand = null) {
 if (%damagestyle = ^style_ranged_rapid) {
     %action_delay = sub(%action_delay, 1);
 }
-def_int $random = random(5);
-if (~in_duel_arena(coord) = true) {
-    if ($random = 0) {
-        inv_del(tempinv, $ammo, 1);
-    }
-} else if ($random ! 0) {
-    world_delay(calc($delay / 30 - 2));
-    if (map_blocked(.coord) = false) {
-        if (p_finduid(uid) = true & .p_finduid(.uid) = true) {
-            inv_dropslot(ranged_quiver_inv, .coord, 0, 200);
-        }
-    }
-}
-inv_clear(ranged_quiver_inv);
+
+~ranged_dropammo_pvp($ammo, 5, sub(divide($delay, 30), 2));
 
 
 [proc,pvp_ranged_use_weapon](obj $rhand, obj $ammo)(int)
@@ -83,7 +71,7 @@ spotanim_pl(oc_param($ammo, proj_launch), 96, 0);
 if (~in_duel_arena(coord) = true) {
     inv_moveitem(worn, tempinv, $ammo, 1); // give rangers their arrows back from duels
 } else {
-    inv_moveitem(worn, ranged_quiver_inv, $ammo, 1);
+    inv_del(worn, $ammo, 1);
 }
 def_int $delay = 30;
 switch_category(oc_category($rhand)) {
@@ -97,3 +85,17 @@ switch_category(oc_category($rhand)) {
         $delay = ~player_projectile(coord, .coord, .uid, oc_param($ammo, proj_travel), 40, 36, 32, 15, 0, 11, 5);
 }
 return($delay);
+
+[proc,ranged_dropammo_pvp](obj $ammo, int $chance, int $delay)
+if (~in_duel_arena(coord) = true) {
+    if (random($chance) = 0) {
+        inv_del(tempinv, $ammo, 1);
+    }
+    return;
+}
+if (random($chance) ! 0) {
+    world_delay($delay);
+    if (map_blocked(.coord) = false) {
+        obj_add(.coord, enum(obj, namedobj, ranged_ammo, $ammo), 1, 200);
+    }
+}

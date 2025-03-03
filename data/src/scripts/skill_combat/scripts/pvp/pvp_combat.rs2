@@ -1,32 +1,22 @@
-[opplayer2,_] @pvp_combat_start;
-
-[applayer2,_]
+[opplayer2,_]
 if (~pvp_is_attackable = false) {
     return;
 }
+@pvp_combat_start;
 
+[applayer2,_]
+if (~pvp_is_attackable = false) { // this is always here: https://youtu.be/JoyUOTsAiBY?t=644
+    return;
+}
 def_int $distance = distance(coord, .coord);
-def_int $attackrange = 0;
-if (inv_getobj(worn, ^wearpos_rhand) ! null) {
-    $attackrange = min(oc_param(inv_getobj(worn, ^wearpos_rhand), attackrange), 10);
-    if (%damagestyle = ^style_ranged_longrange) {
-        $attackrange = min(add($attackrange, 2), 10);
-    }
-}
-
-if (~player_autocast_enabled = true){
-    $attackrange = 10;
-}
-if (($attackrange <= 1 & ~pvp_is_attackable = false) | $distance > $attackrange) {
+def_int $attackrange = ~player_attackrange(inv_getobj(worn, ^wearpos_rhand));
+if ($attackrange <= 1 | $distance > $attackrange) {
     p_aprange($attackrange); // walk then op again
     return;
 }
 @pvp_combat_start;
 
 [label,pvp_combat_start]
-if (~pvp_is_attackable = false) {
-    return;
-}
 if (%damagetype = ^ranged_style) {
     @pvp_ranged_attack;
 }
@@ -172,6 +162,9 @@ if ($damage < 0) {
 
 // needs to be a queue
 [queue,pvp_damage](int $damage)
+if (.finduid(%pk_predator1) = true) {
+    .mes("<tostring(map_clock)>: damage");
+}
 if (inv_getobj(worn, ^wearpos_ring) = ring_of_recoil & .finduid(%pk_predator1) = true & $damage > 0 & stat(hitpoints) > 0) {
     // https://oldschool.runescape.wiki/w/Update:Clue_Scroll_Step_Counter
     // - "Recoil damage will now always target the entity that caused the initial damage, rather than the most recent entity to deal damage."

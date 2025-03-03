@@ -64,22 +64,10 @@ npc_heropoints($damage);
 p_opnpc(2);
 
 if ($ammo = holy_water) {
-    world_delay(calc($delay / 30 - 2));
-    if (map_blocked(npc_coord) = true) {
-        return;
-    }
-    obj_add(npc_coord, smashed_glass, 1, 200);
+    ~ranged_dropammo_npc($ammo, ^true, sub(divide($delay, 30), 2)); // 100% chance to drop ammo
     return;
 }
-if (random(5) ! 0) {
-    world_delay(calc($delay / 30 - 2));
-    if (map_blocked(npc_coord) = false) {
-        if (p_finduid(uid) = true) {
-            inv_dropslot(ranged_quiver_inv, npc_coord, 0, 200);
-        }
-    }
-}
-inv_clear(ranged_quiver_inv);
+~ranged_dropammo_npc($ammo, 5, sub(divide($delay, 30), 2));
 
 [proc,player_ranged_check_ammo](obj $rhand)(obj)
 def_category $weapon_cat = oc_category($rhand);
@@ -116,14 +104,22 @@ switch_category(oc_category($rhand)) {
 
 [proc,ranged_shoot_npc](obj $ammo)(int)
 spotanim_pl(oc_param($ammo, proj_launch), 96, 0);
-inv_moveitem(worn, ranged_quiver_inv, $ammo, 1);
+inv_del(worn, $ammo, 1);
 return(~npc_projectile(coord, npc_uid, oc_param($ammo, proj_travel), 40, 36, 41, 15, 5, 11, 5));
 
 [proc,ranged_throw_npc](obj $ammo)(int)
 spotanim_pl(oc_param($ammo, proj_launch), 96, 0);
-inv_moveitem(worn, ranged_quiver_inv, $ammo, 1);
+inv_del(worn, $ammo, 1);
 if (inv_total(worn, $ammo) = 0) {
     mes("That was your last one!");
     ~update_all(inv_getobj(worn, ^wearpos_rhand));
 }
 return(~npc_projectile(coord, npc_uid, oc_param($ammo, proj_travel), 40, 36, 32, 15, 0, 11, 5));
+
+[proc,ranged_dropammo_npc](obj $ammo, int $chance, int $delay)
+if (random($chance) ! 0 | $chance = ^true) {
+    world_delay($delay);
+    if (map_blocked(npc_coord) = false) {
+        obj_add(npc_coord, enum(obj, namedobj, ranged_ammo, $ammo), 1, 200);
+    }
+}
