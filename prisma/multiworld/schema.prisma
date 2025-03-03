@@ -39,7 +39,7 @@ model account {
     notes         String?   @db.Text
     notes_updated DateTime?
 
-    members       Boolean  @default(true)
+    members Boolean @default(true)
 }
 
 model session {
@@ -125,16 +125,16 @@ model hiscore_large {
 model friendlist {
     account_id        Int
     friend_account_id Int
-    
-    created           DateTime  @default(now())
+
+    created DateTime @default(now())
 
     @@id([account_id, friend_account_id])
 }
 
 model ignorelist {
-    account_id        Int
-    value             String
-    created           DateTime  @default(now())
+    account_id Int
+    value      String
+    created    DateTime @default(now())
 
     @@id([account_id, value])
 }
@@ -178,23 +178,23 @@ model report {
 }
 
 model input_report {
-    id              Int @id @default(autoincrement())
-    account_id      Int
-    timestamp       DateTime
-    session_uuid    String
+    id           Int      @id @default(autoincrement())
+    account_id   Int
+    timestamp    DateTime
+    session_uuid String
 }
 
 model input_report_event {
     input_report_id Int
     seq             Int
-    
-    input_type      Int    @default(-1)
-    delta           Int
-    coord           Int
-    mouse_x         Int?
-    mouse_y         Int?
-    key_code        Int?
-    
+
+    input_type Int  @default(-1)
+    delta      Int
+    coord      Int
+    mouse_x    Int?
+    mouse_y    Int?
+    key_code   Int?
+
     @@id([input_report_id, seq])
 }
 
@@ -202,8 +202,35 @@ model input_report_event_raw {
     input_report_id Int
     seq             Int
 
-    coord           Int
-    data            Bytes
+    coord Int
+    data  Bytes
 
     @@id([input_report_id, seq])
+}
+
+model message_thread {
+    id Int @id @default(autoincrement())
+
+    to_account_id     Int?
+    from_account_id   Int
+    last_message_from Int
+    subject           String
+    created           DateTime @default(now())
+    updated           DateTime @default(now())
+    read              DateTime?
+    closed            DateTime?
+    to_deleted        DateTime?
+    from_deleted      DateTime?
+    messages          Int @default(1)
+}
+
+model message {
+    id Int @id @default(autoincrement())
+
+    thread_id Int
+    sender_id Int
+    sender_ip String
+    sender    String @default("me")
+    content   String @db.Text
+    created   DateTime @default(now())
 }

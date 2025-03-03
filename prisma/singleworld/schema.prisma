@@ -207,3 +207,30 @@ model input_report_event_raw {
 
     @@id([input_report_id, seq])
 }
+
+model message_thread {
+    id Int @id @default(autoincrement())
+
+    to_account_id     Int?
+    from_account_id   Int
+    last_message_from Int
+    subject           String
+    created           DateTime @default(now())
+    updated           DateTime @default(now())
+    read              DateTime?
+    closed            DateTime?
+    to_deleted        DateTime?
+    from_deleted      DateTime?
+    messages          Int @default(1)
+}
+
+model message {
+    id Int @id @default(autoincrement())
+
+    thread_id Int
+    sender_id Int
+    sender_ip String
+    sender    String @default("me")
+    content   String
+    created   DateTime @default(now())
+}
