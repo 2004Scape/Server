@@ -1,7 +1,9 @@
+import { quicksort } from '#/util/QuickSort.js';
+
 type Hero = {
     uid: number;
     points: number;
-}
+};
 
 export default class HeroPoints extends Array<Hero> {
     constructor(length: number) {
@@ -26,13 +28,23 @@ export default class HeroPoints extends Array<Hero> {
         if (emptyIndex !== -1) {
             this[emptyIndex] = { uid, points };
         }
+
+        console.log(this);
     }
 
     findHero(): number {
         // quicksort heroes by points
-        this.sort((a, b) => {
+        quicksort(0, this.length, this, (a: Hero, b: Hero) => {
+            if (!a) {
+                a = { uid: 0, points: 0 };
+            }
+            if (!b) {
+                b = { uid: 0, points: 0 };
+            }
             return b.points - a.points;
         });
+
+        // console.log(this);
         return this[0].uid;
     }
 }
