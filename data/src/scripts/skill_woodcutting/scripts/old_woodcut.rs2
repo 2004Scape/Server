@@ -20,7 +20,8 @@ if ($axe = null) {
 }
 if (%action_delay = add(map_clock, 2)) {
     anim(struct_param(oc_param($axe, woodcutting_struct), skill_anim), 0);
-    sound_synth(woodchop, 0, 0); // no idea if this should exist?
+    sound_synth(woodchop, 0, 0);
+    mes("You swing your axe at the tree."); // No idea if this should exist?
 }
 
 if (%action_delay = map_clock) {
