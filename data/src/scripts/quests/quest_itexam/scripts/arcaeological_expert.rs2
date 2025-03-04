@@ -86,6 +86,10 @@ if ($item = talisman_of_zaros) {
     inv_add(inv, invitation_letter, 1);
     mes("The expert hands you a letter.");
 } else if ($item = stone_tablet) {
+    if(%itexam_progress = ^itexam_complete) {
+        ~chatnpc("<p,confused>I don't need another tablet! One is enough, thank you.");
+        return;
+    }
     ~chatplayer("<p,happy>I found this in a hidden cavern beneath the digsite.");
     ~chatnpc("<p,neutral>Incredible!");
     ~chatplayer("<p,neutral>There is an altar down there. The place is crawling with skeletons!");
