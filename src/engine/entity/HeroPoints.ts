@@ -23,28 +23,19 @@ export default class HeroPoints extends Array<Hero> {
             return;
         }
 
-        // otherwise, add a new uid. if all 16 spaces are taken do we replace the lowest?
+        // otherwise, add a new uid
         const emptyIndex = this.findIndex(hero => hero && hero.uid === -1);
         if (emptyIndex !== -1) {
             this[emptyIndex] = { uid, points };
         }
-
-        console.log(this);
     }
 
     findHero(): number {
         // quicksort heroes by points
-        quicksort(0, this.length, this, (a: Hero, b: Hero) => {
-            if (!a) {
-                a = { uid: 0, points: 0 };
-            }
-            if (!b) {
-                b = { uid: 0, points: 0 };
-            }
+        quicksort(0, this.length - 1, this, (a: Hero, b: Hero) => {
             return b.points - a.points;
         });
 
-        // console.log(this);
         return this[0].uid;
     }
 }
