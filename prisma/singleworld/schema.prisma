@@ -175,6 +175,8 @@ model report {
 
     offender String
     reason   Int
+
+    reviewed Boolean @default(false)
 }
 
 model input_report {
