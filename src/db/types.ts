@@ -151,6 +151,7 @@ export type report = {
     coord: number;
     offender: string;
     reason: number;
+    reviewed: Generated<number>;
 };
 export type session = {
     uuid: string;
