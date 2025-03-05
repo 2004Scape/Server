@@ -4434,7 +4434,12 @@ model4=model_353_idk
 model5=model_428_idk
 model6=model_361_obj_wear
 model7=model_377_obj_wear
-// TODO respawnrate
+// wanderrange, maxrange, attackrange, and respawnrate are taken from dark_wizard_earth
+wanderrange=3
+maxrange=5
+attackrange=5
+huntrange=5
+respawnrate=100
 hitpoints=10
 attack=25
 strength=25

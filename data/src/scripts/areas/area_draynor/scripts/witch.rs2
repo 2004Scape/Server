@@ -1,0 +1,19 @@
+// https://i.imgur.com/ZSyCzkS.png
+// https://archive.org/details/PCPowerplay-101-2004-07/page/n13/mode/2up?q=runescape
+
+[ai_queue1,witch_draynor] ~npc_default_retaliate_ap;
+[ai_opplayer2,witch_draynor] npc_setmode(applayer2);
+[ai_applayer2,witch_draynor]
+if (%npc_action_delay > map_clock) {
+    npc_setmode(applayer2);
+    return;
+}
+if (~npc_can_attack_player = false) {
+    npc_setmode(null);
+    return;
+}
+if (stat_base(strength) <= stat(strength) & random(2) = 0) { // guessed from dark wizards
+    ~npc_cast_spell(^weaken, 4);
+} else {
+    ~npc_cast_spell(^earth_strike, 4);
+}
