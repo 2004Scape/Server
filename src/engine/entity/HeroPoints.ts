@@ -16,6 +16,10 @@ export default class HeroPoints extends Array<Hero> {
     }
 
     addHero(hash64: bigint, points: number): void {
+        // Do nothing if no points added
+        if (points < 1) {
+            return;
+        }
         // Check if hero already exists, then add points
         const index = this.findIndex(hero => hero && hero.hash64 === hash64);
         if (index !== -1) {
