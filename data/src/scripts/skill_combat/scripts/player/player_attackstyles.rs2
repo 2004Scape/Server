@@ -83,12 +83,14 @@ queue(set_attack_style_magic, 0);
 if_close;
 if (p_finduid(uid) = true) {
     %attackstyle = $style;
+    ~player_combat_stat;
     return;
 }
 queue(set_attackstyle, 0, $style);
 
 [queue,set_attackstyle](int $style)
 %attackstyle = $style;
+~player_combat_stat;
 
 [queue,set_attack_style_magic]
 %attackstyle_magic = togglebit(%attackstyle_magic, 0);
