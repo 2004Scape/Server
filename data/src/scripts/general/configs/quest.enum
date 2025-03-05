@@ -1,8 +1,8 @@
 [quest_names_enum]
 inputtype=int
 outputtype=string
-val=0,All Quests At Once 1
-val=1,All Quests At Once 2
+val=0,Black Knight's Fortress
+val=1,Cook's Assistant
 val=2,Demon Slayer
 val=3,Doric's Quest
 val=4,Dragon Slayer
@@ -53,5 +53,3 @@ val=48,Underground Pass
 val=49,Watch Tower
 val=50,Waterfall Quest
 val=51,Witches House
-val=52,Black Knight's Fortress
-val=53,Cook's Assistant

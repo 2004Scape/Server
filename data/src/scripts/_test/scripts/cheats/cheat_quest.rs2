@@ -1,401 +1,463 @@
-[debugproc,quests] @debug_quests;
 [debugproc,quest] @debug_quests;
+[debugproc,quests] @debug_quests;
+[debugproc,completequests] @debug_completequests;
+[debugproc,resetquests] @debug_resetquests;
 
+// Short aliases for the commands
+[debugproc,cq] @debug_completequests; // Complete all quests
+[debugproc,rq] @debug_resetquests; // Reset all quests
+
+[label,debug_completequests]
+if_close;
+if (p_finduid(uid) = true) {
+    @complete_all_quests;
+}
+
+[label,debug_resetquests]
+if_close;
+if (p_finduid(uid) = true) {
+    @reset_all_quests;
+}
 
 [label,debug_quests]
 if_close;
 if (p_finduid(uid) = true) {
-    def_int $int1 = 0;
-    def_string $string1 = "";
-    def_int $int2 = 0;
-    def_string $string2 = "";
-    def_int $int3 = 0;
-    def_string $string3 = "";
+    def_int $choice = ~p_choice4_header("Complete All Quests.", 0, "Reset All Quests.", 1, "Select Individual Quest.", 2, "Cancel.", 3, "Quest Commands");
+    
+    if ($choice = 0) {
+        // Call the complete all quests functionality
+        @complete_all_quests;
+    } else if ($choice = 1) {
+        // Call the reset all quests functionality
+        @reset_all_quests;
+    } else if ($choice = 2) {
+        // This is the original individual quest selection code
+        def_int $int1 = 0;
+        def_string $string1 = "";
+        def_int $int2 = 0;
+        def_string $string2 = "";
+        def_int $int3 = 0;
+        def_string $string3 = "";
 
-    def_int $page = 0;
-    def_int $choice = -1;
-    def_int $max_pages = divide(add(enum_getoutputcount(quest_names_enum), 1), 3);
+        def_int $page = 0;
+        def_int $choice2 = -1;
+        def_int $max_pages = divide(add(enum_getoutputcount(quest_names_enum), 1), 3);
 
-    while ($choice = -1 | $choice = -2) {
-        $int1 = multiply($page, 3);
-        $string1 = enum(int, string, quest_names_enum, $int1);
-        $int2 = add($int1, 1);
-        $string2 = enum(int, string, quest_names_enum, $int2);
-        $int3 = add($int2, 1);
-        $string3 = enum(int, string, quest_names_enum, $int3);
-        $choice = ~p_choice5_header("Prev.", -1, "<tostring($int1)>. <$string1>", $int1, "<tostring($int2)>. <$string2>", $int2, "<tostring($int3)>. <$string3>", $int3, "Next.", -2, "Choose a quest: (Page <tostring($page)>/<tostring($max_pages)>)");
-        if ($choice = -1 & $page ! 0) {
-            $page = sub($page, 1);
-        } else if ($choice = -2 & $page ! $max_pages) {
-            $page = add($page, 1);
+        while ($choice2 = -1 | $choice2 = -2) {
+            $int1 = multiply($page, 3);
+            $string1 = enum(int, string, quest_names_enum, $int1);
+            $int2 = add($int1, 1);
+            $string2 = enum(int, string, quest_names_enum, $int2);
+            $int3 = add($int2, 1);
+            $string3 = enum(int, string, quest_names_enum, $int3);
+            $choice2 = ~p_choice5_header("Prev.", -1, "<tostring($int1)>. <$string1>", $int1, "<tostring($int2)>. <$string2>", $int2, "<tostring($int3)>. <$string3>", $int3, "Next.", -2, "Choose a quest: (Page <tostring($page)>/<tostring($max_pages)>)");
+            if ($choice2 = -1 & $page ! 0) {
+                $page = sub($page, 1);
+            } else if ($choice2 = -2 & $page ! $max_pages) {
+                $page = add($page, 1);
+            }
         }
-    }
-    def_int $quest = $choice;
-    def_int $choice2 = ~p_choice3_header("Complete.", 0, "Reset.", 1, "Cancel.", 3, "<enum(int, string, quest_names_enum, $quest)>");
-    if ($choice2 = 3) {
-        return;
-    } else if ($choice2 = 0) {
-        switch_int ($quest) {
-            case 0 :
-            queue(dragon_complete, 0);
-            queue(mcannon_complete, 0);
-            queue(hero_quest_complete, 0);
-            queue(zanaris_quest_complete, 0);
-            queue(doric_quest_complete, 0);
-            queue(black_knights_fortress_quest_complete, 0);
-            queue(haunted_quest_complete, 0);
-            queue(goblin_diplomacy_complete_quest, 0);
-            queue(squire_complete, 0);
-            queue(imp_quest_complete, 0);
-            queue(hunt_quest_complete, 0);
-            queue(prince_complete, 0);
-            queue(priest_quest_complete, 0);
-            queue(romeo_and_juliet_complete, 0);
-            queue(rune_mysteries_complete, 0);
-            queue(sheep_complete, 0);
-            switch_int(~p_choice2_header("Phoenix", 0, "Blackarm", 1, "Choose a gang")) {
-                    case 0 : %phoenixgang_progress = ^phoenixgang_joined;
-                    case 1 : %phoenixgang_progress = ^phoenixgang_not_started;
-                }
-            queue(blackarmgang_quest_complete, 0);
-            queue(quest_vampire_complete, 0);
-            queue(hetty_quest_complete, 0);
-            queue(quest_chompybird_complete, 0);
-            queue(quest_biohazard_complete, 0);
-            queue(cog_complete, 0);
-            queue(itexam_complete, 0);
-            if (npc_find(0_45_54_45_30, kaqemeex, 7, 0) = true) {
-            queue(druid_quest_complete, 0, npc_uid);
-                }
-            queue(mcannon_complete, 0);
-            queue(crest_complete, 0);
-                // Complete all blast spells and levers, gauntlet choice unselected
-                %crest_spells_levers_gauntlets = calc(pow(2, ^crest_south_lever) - 1);
-            queue(arena_quest_complete, 0);
-            queue(fishingcompo_quest_complete, 0);
-            queue(fluffs_complete, 0);
-            queue(grandtree_quest_complete, 0);
-            queue(hazeelcult_quest_complete, 0);
-            queue(cooks_quest_complete, 0);
-            queue(grail_quest_complete, 0);
-            queue(junglepotion_quest_complete, 0);
-            queue(demon_slayer_complete, 0);
-            queue(arthur_quest_complete, 0);
-            queue(drunkmonk_complete, 0);
-            queue(murder_quest_complete, 0);
-            queue(itgronigen_quest_complete, 0);
-            queue(quest_elena_complete, 0);
-            queue(scorpcatcher_quest_complete, 0);
-            queue(seaslug_quest_complete, 0);
-            queue(sheepherder_complete, 0);
-            queue(zombiequeen_quest_complete, 0);
-            def_int $choice3 = ~p_choice2("Armadyl.", 0, "Lucien.", 1);
-                if ($choice3 = 0) {
-                    if (npc_find(0_40_51_13_57, lucien_ardougne, 7, 0) = true) {
-            queue(ikov_armadyl_quest_complete, 0, npc_uid);
+        def_int $quest = $choice2;
+        def_int $choice3 = ~p_choice3_header("Complete.", 0, "Reset.", 1, "Cancel.", 3, "<enum(int, string, quest_names_enum, $quest)>");
+        if ($choice3 = 3) {
+            return;
+        } else if ($choice3 = 0) {
+            switch_int ($quest) {
+                case 0 : queue(black_knights_fortress_quest_complete, 0);
+                case 1 : queue(cooks_quest_complete, 0);
+                case 2 : queue(demon_slayer_complete, 0);
+                case 3 : queue(doric_quest_complete, 0);
+                case 4 : queue(dragon_complete, 0);
+                case 5 : queue(haunted_quest_complete, 0);
+                case 6 : queue(goblin_diplomacy_complete_quest, 0);
+                case 7 : queue(squire_complete, 0);
+                case 8 : queue(imp_quest_complete, 0);
+                case 9 : queue(hunt_quest_complete, 0);
+                case 10 : queue(prince_complete, 0);
+                case 11 : queue(priest_quest_complete, 0);
+                case 12 : queue(romeo_and_juliet_complete, 0);
+                case 13 : queue(rune_mysteries_complete, 0);
+                case 14 : queue(sheep_complete, 0);
+                case 15 : 
+                    switch_int(~p_choice2_header("Black Arm Gang.", 0, "Phoenix Gang.", 1, "Choose a gang for Shield of Arrav:")) {
+                        case 0 : %phoenixgang_progress = ^phoenixgang_not_started;
+                        case 1 : %phoenixgang_progress = ^phoenixgang_joined;
                     }
-                } else if ($choice3 = 1) {
-            queue(ikov_lucien_quest_complete, 0);
-                }
-            %desertrescue_progress = ^desertrescue_saved_ana;
-                if (npc_find(0_51_48_40_40, irena, 20, 0) = true) {
-                    @irena_ana_found;
-                }
-            case 1 :
-            queue(tree_quest_complete, 0);
-            queue(totem_quest_complete, 0);
-            queue(upass_quest_complete, 0);
-            queue(waterfall_quest_complete, 0);
-            queue(ball_quest_complete, 0);
-            queue(itwatchtower_quest_complete, 0);
-                %itwatchtower_progress = ^itwatchtower_complete;
-                // rewards are given before quest completion, so give here
-                stat_advance(magic, 153000);
-                inv_add(inv, coins, 5000);
-                inv_add(inv, spell_scroll, 1);
-            case 2 : queue(demon_slayer_complete, 0);
-            case 3 : queue(doric_quest_complete, 0);
-            case 4 : queue(dragon_complete, 0);
-            case 5 : queue(haunted_quest_complete, 0);
-            case 6 : queue(goblin_diplomacy_complete_quest, 0);
-            case 7 : queue(squire_complete, 0);
-            case 8 : queue(imp_quest_complete, 0);
-            case 9 : queue(hunt_quest_complete, 0);
-            case 10 : queue(prince_complete, 0);
-            case 11 : queue(priest_quest_complete, 0);
-            case 12 : queue(romeo_and_juliet_complete, 0);
-            case 13 : queue(rune_mysteries_complete, 0);
-            case 14 : queue(sheep_complete, 0);
-            case 15 :
-                switch_int(~p_choice2_header("Phoenix", 0, "Blackarm", 1, "Choose a gang")) {
-                    case 0 : %phoenixgang_progress = ^phoenixgang_joined;
-                    case 1 : %phoenixgang_progress = ^phoenixgang_not_started;
-                }
-                queue(blackarmgang_quest_complete, 0);
-            case 16 : queue(quest_vampire_complete, 0);
-            case 17 : queue(hetty_quest_complete, 0);
-            case 18 : queue(quest_chompybird_complete, 0);
-            case 19 : queue(quest_biohazard_complete, 0);
-            case 20 : queue(cog_complete, 0);
-            case 21 : queue(itexam_complete, 0);
-            case 22 :
-                if (npc_find(0_45_54_45_30, kaqemeex, 7, 0) = true) {
-                    queue(druid_quest_complete, 0, npc_uid);
-                }
-            case 23 : queue(mcannon_complete, 0);
-            case 24 :
-                queue(crest_complete, 0);
-                // Complete all blast spells and levers, gauntlet choice unselected
-                %crest_spells_levers_gauntlets = calc(pow(2, ^crest_south_lever) - 1);
-            case 25 : queue(arena_quest_complete, 0);
-            case 26 : queue(fishingcompo_quest_complete, 0);
-            case 27 : queue(fluffs_complete, 0);
-            case 28 : queue(grandtree_quest_complete, 0);
-            case 29 : queue(hazeelcult_quest_complete, 0);
-            case 30 : queue(hero_quest_complete, 0);
-            case 31 : queue(grail_quest_complete, 0);
-            case 32 : queue(junglepotion_quest_complete, 0);
-            case 33 : mes("Quest not implemented");
-            case 34 : queue(zanaris_quest_complete, 0);
-            case 35 : queue(arthur_quest_complete, 0);
-            case 36 : queue(drunkmonk_complete, 0);
-            case 37 : queue(murder_quest_complete, 0);
-            case 38 : queue(itgronigen_quest_complete, 0);
-            case 39 : queue(quest_elena_complete, 0);
-            case 40 : queue(scorpcatcher_quest_complete, 0);
-            case 41 :
-                %seaslug_progress = ^seaslug_complete;
-                %questpoints = add(%questpoints, ^seaslug_questpoints);
-                inv_add(inv, oyster_pearls, 1);
-                stat_advance(fishing, 71750);
-                queue(seaslug_quest_complete, 0);
-            case 42 : queue(sheepherder_complete, 0);
-            case 43 : queue(zombiequeen_quest_complete, 0);
-            case 44 :
-                def_int $choice3 = ~p_choice2("Armadyl.", 0, "Lucien.", 1);
-                if ($choice3 = 0) {
-                    if (npc_find(0_40_51_13_57, lucien_ardougne, 7, 0) = true) {
-                        queue(ikov_armadyl_quest_complete, 0, npc_uid);
+                    queue(blackarmgang_quest_complete, 0);
+                case 16 : queue(quest_vampire_complete, 0);
+                case 17 : queue(hetty_quest_complete, 0);
+                case 18 : queue(quest_chompybird_complete, 0);
+                case 19 : queue(quest_biohazard_complete, 0);
+                case 20 : queue(cog_complete, 0);
+                case 21 : queue(itexam_complete, 0);
+                case 22 :
+                    if (npc_find(0_45_54_45_30, kaqemeex, 7, 0) = true) {
+                        queue(druid_quest_complete, 0, npc_uid);
                     }
-                } else if ($choice3 = 1) {
-                    queue(ikov_lucien_quest_complete, 0);
-                }
-            case 45 :
-                %desertrescue_progress = ^desertrescue_saved_ana;
-                if (npc_find(0_51_48_40_40, irena, 20, 0) = true) {
-                    @irena_ana_found;
-                }
-            case 46 : queue(tree_quest_complete, 0);
-            case 47 : queue(totem_quest_complete, 0);
-            case 48 : queue(upass_quest_complete, 0);
-            case 49 :
-                queue(itwatchtower_quest_complete, 0);
-                %itwatchtower_progress = ^itwatchtower_complete;
-                // rewards are given before quest completion, so give here
-                stat_advance(magic, 153000);
-                inv_add(inv, coins, 5000);
-                inv_add(inv, spell_scroll, 1);
-            case 50 : queue(waterfall_quest_complete, 0);
-            case 51 : queue(ball_quest_complete, 0);
-            case 52 : queue(black_knights_fortress_quest_complete, 0);
-            case 53 : queue(cooks_quest_complete, 0);
-            case default : mes("Quest not found.");
+                case 23 : queue(mcannon_complete, 0);
+                case 24 : 
+                    queue(crest_complete, 0);
+                    // Complete all blast spells and levers, gauntlet choice unselected
+                    %crest_spells_levers_gauntlets = calc(pow(2, ^crest_south_lever) - 1);
+                case 25 : queue(arena_quest_complete, 0);
+                case 26 : queue(fishingcompo_quest_complete, 0);
+                case 27 : queue(fluffs_complete, 0);
+                case 28 : queue(grandtree_quest_complete, 0);
+                case 29 : queue(hazeelcult_quest_complete, 0);
+                case 30 : queue(hero_quest_complete, 0);
+                case 31 : queue(grail_quest_complete, 0);
+                case 32 : queue(junglepotion_quest_complete, 0);
+                case 33 : mes("Quest not implemented.");
+                case 34 : queue(zanaris_quest_complete, 0);
+                case 35 : queue(arthur_quest_complete, 0);
+                case 36 : queue(drunkmonk_complete, 0);
+                case 37 : queue(murder_quest_complete, 0);
+                case 38 : queue(itgronigen_quest_complete, 0);
+                case 39 : queue(quest_elena_complete, 0);
+                case 40 : queue(scorpcatcher_quest_complete, 0);
+                case 41 : 
+                    %seaslug_progress = ^seaslug_complete;
+                    %questpoints = add(%questpoints, ^seaslug_questpoints);
+                    inv_add(inv, oyster_pearls, 1);
+                    stat_advance(fishing, 71750);
+                    queue(seaslug_quest_complete, 0);
+                case 42 : queue(sheepherder_complete, 0);
+                case 43 : queue(zombiequeen_quest_complete, 0);
+                case 44 :
+                    def_int $choice4 = ~p_choice2_header("Armadyl.", 0, "Lucien.", 1, "Choose a side for Temple of Ikov:");
+                    if ($choice4 = 0) {
+                        if (npc_find(0_40_51_13_57, lucien_ardougne, 7, 0) = true) {
+                            queue(ikov_armadyl_quest_complete, 0, npc_uid);
+                        }
+                    } else if ($choice4 = 1) {
+                        queue(ikov_lucien_quest_complete, 0);
+                    }
+                case 45 :
+                    %desertrescue_progress = ^desertrescue_saved_ana;
+                    if (npc_find(0_51_48_40_40, irena, 20, 0) = true) {
+                        @irena_ana_found;
+                    }
+                case 46 : queue(tree_quest_complete, 0);
+                case 47 : queue(totem_quest_complete, 0);
+                case 48 : queue(upass_quest_complete, 0);
+                case 49 : 
+                    queue(itwatchtower_quest_complete, 0);
+                    %itwatchtower_progress = ^itwatchtower_complete;
+                    // Rewards are given before quest completion, so give here
+                    stat_advance(magic, 153000);
+                    inv_add(inv, coins, 5000);
+                    inv_add(inv, spell_scroll, 1);
+                case 50 : queue(waterfall_quest_complete, 0);
+                case 51 : queue(ball_quest_complete, 0);
+                case default : mes("Quest not found.");
+            }
+        } else if ($choice3 = 1) {
+            switch_int ($quest) {
+                case 0 : %blackknight_progress = 0;
+                case 1 : %cook_progress = 0;
+                case 2 : %demon_progress = 0;
+                case 3 : %doric_progress = 0;
+                case 4 :
+                    %dragon_goblin = 0;
+                    %dragon_ned_hired = 0;
+                    %dragon_oracle = 0;
+                    %dragon_shield = 0;
+                    %dragon_wall = 0;
+                    %dragon_progress = 0;
+                    %dragon_planks = 0;
+                case 5 :
+                    %haunted_lever = 0;
+                    %haunted_manor_fountain_poisoned = 0;
+                    %haunted_progress = 0;
+                case 6 : %gobdip_progress = 0;
+                case 7 : %squire_progress = 0;
+                case 8 : %imp_progress = 0;
+                case 9 :
+                    %hunt_progress = 0;
+                    %hunt_store_employed = 0;
+                case 10 :
+                    %prince_keystatus = 0;
+                    %prince_progress = 0;
+                case 11 : %priest_progress = 0;
+                case 12 : %romeojuliet_progress = 0;
+                case 13 : %runemysteries_progress = 0;
+                case 14 : %sheep_progress = 0;
+                case 15 : 
+                    %blackarmgang_progress = 0;
+                    %phoenixgang_progress = 0;
+                case 16 : %vampire_progress = 0;
+                case 17 : %hetty_progress = 0;
+                case 18 :
+                    %chompybird_kills = 0;
+                    %chompybird_progress = 0;
+                case 19 : %biohazard_progress = 0;
+                case 20 : %cog_progress = 0;
+                case 21 : %itexam_progress = 0;
+                case 22 : %druid_progress = 0;
+                case 23 :
+                    %mcannon_railings = 0;
+                    %mcannon_progress = 0;
+                case 24 : 
+                    %crest_progress = 0;
+                    %crest_spells_levers_gauntlets = 0;
+                case 25 : %arena_progress = 0;
+                case 26 : %fishingcompo_progress = 0;
+                case 27 : 
+                    %fluffs_progress = 0;
+                    %cat_growth = 0;
+                    %fluffs_crate = null;
+                    %follower_obj = null;
+                    %follower_uid = null;
+                case 28 : %grandtree_progress = 0;
+                case 29 :
+                    %hazeelcult_side = 0;
+                    %hazeelcult_progress = 0;
+                case 30 : %hero_progress = 0;
+                case 31 : %grail_progress = 0;
+                case 32 : %junglepotion_progress = 0;
+                case 33 : mes("Quest not implemented.");
+                case 34 : %zanaris_progress = 0;
+                case 35 : %arthur_progress = 0;
+                case 36 : %drunkmonk_progress = 0;
+                case 37 :
+                    %murder_murderer_id = 0;
+                    %murder_poisonproof_progress = 0;
+                    %murder_progress = 0;
+                    %murder_evidence = 0;
+                case 38 : 
+                    %itgronigen_progress = 0;
+                    %keepdoor_unlocked = 0;
+                    %scorpius_given_symbol = 0;
+                case 39 : %elena_progress = 0;
+                case 40 :
+                    %scorpcatcher_progress = 0;
+                    %scorpius_given_symbol = 0;
+                case 41 :
+                    %seaslug_progress = 0;
+                case 42 :
+                    %sheepherder_disposal = 0;
+                    %sheepherder_progress = 0;
+                case 43 : %zombiequeen_progress = 0;
+                case 44 :
+                    %ikov_dungeon = 0;
+                    %ikov_icearrowchest_coord = null;
+                    %haunted_lever = 0;
+                    %haunted_manor_fountain_poisoned = 0;
+                    %ikov_progress = 0; // Added this to fix Temple of Ikov reset issue
+                    %varp_35 = 0;
+                case 45 : 
+                    %desertrescue_map_mechanisms = 0;
+                    %desertrescue_progress = 0;
+                case 46 : %tree_progress = 0;
+                case 47 : %totem_progress = 0;
+                case 48 :
+                    %upass_progress = 0;
+                    %upass_map_mechanisms = 0;
+                case 49 : 
+                    %itwatchtower_progress = 0;
+                    %itwatchtower_bits = 0;
+                case 50 :
+                    %waterfall_golrie_and_puzzle = 0;
+                    %waterfall_progress = 0;
+                case 51 : %ball_progress = 0;
+                case default : mes("Quest not found.");
+            }
+            ~update_quests;
         }
-    } else if ($choice2 = 1) {
-        switch_int ($quest) {
-            case 0 :
-                %cook_progress = 0;
-                %demon_progress = 0;
-                %doric_progress = 0;
-                %dragon_goblin = 0;
-                %dragon_ned_hired = 0;
-                %dragon_oracle = 0;
-                %dragon_shield = 0;
-                %dragon_wall = 0;
-                %dragon_progress = 0;
-                %dragon_planks = 0;
-                %haunted_lever = 0;
-                %haunted_manor_fountain_poisoned = 0;
-                %haunted_progress = 0;
-                %gobdip_progress = 0;
-                %squire_progress = 0;
-                %imp_progress = 0;
-                %hunt_progress = 0;
-                %hunt_store_employed = 0;
-                %prince_keystatus = 0;
-                %prince_progress = 0;
-                %priest_progress = 0;
-                %romeojuliet_progress = 0;
-                %runemysteries_progress = 0;
-                %sheep_progress = 0;
-                %blackarmgang_progress = 0;
-                %vampire_progress = 0;
-                %hetty_progress = 0;
-                %chompybird_kills = 0;
-                %chompybird_progress = 0;
-                %biohazard_progress = 0;
-                %cog_progress = 0;
-                %itexam_progress = 0;
-                %druid_progress = 0;
-                %mcannon_railings = 0;
-                %mcannon_progress = 0;
-                %crest_progress = 0;
-                %crest_spells_levers_gauntlets = 0;
-                %arena_progress = 0;
-                %fishingcompo_progress = 0;
-                %fluffs_progress = 0;
-                %cat_growth = 0;
-                %fluffs_crate = null;
-                %follower_obj = null;
-                %follower_uid = null;
-                %grandtree_progress = 0;
-                %hazeelcult_side = 0;
-                %hazeelcult_progress = 0;
-                %hero_progress = 0;
-                %grail_progress = 0;
-                %junglepotion_progress = 0;
-                mes("Quest not implemented");
-                %zanaris_progress = 0;
-                %arthur_progress = 0;
-                %drunkmonk_progress = 0;
-                %murder_murderer_id = 0;
-                %murder_poisonproof_progress = 0;
-                %murder_progress = 0;
-                %murder_evidence = 0;
-                %itgronigen_progress = 0;
-                %keepdoor_unlocked = 0;
-                %scorpius_given_symbol = 0;
-                %elena_progress = 0;
-                %scorpcatcher_progress = 0;
-                %scorpius_given_symbol = 0;
-                %seaslug_progress = 0;
-                %sheepherder_disposal = 0;
-                %sheepherder_progress = 0;
-                %zombiequeen_progress = 0;
-                %ikov_dungeon = 0;
-                %ikov_icearrowchest_coord = 0_0_0_0_0;
-                %haunted_lever = 0;
-                %haunted_manor_fountain_poisoned = 0;
-                %varp_35 = 0;
-                %desertrescue_map_mechanisms = 0;
-                %desertrescue_progress = 0;
-            case 1 :
-                %tree_progress = 0;
-                %totem_progress = 0;
-                %upass_progress = 0;
-                %upass_map_mechanisms = 0;
-                %itwatchtower_progress = 0;
-                %itwatchtower_bits = 0;
-                %waterfall_golrie_and_puzzle = 0;
-                %waterfall_progress = 0;
-                %ball_progress = 0;
-            case 2 : %demon_progress = 0;
-            case 3 : %doric_progress = 0;
-            case 4 :
-                %dragon_goblin = 0;
-                %dragon_ned_hired = 0;
-                %dragon_oracle = 0;
-                %dragon_shield = 0;
-                %dragon_wall = 0;
-                %dragon_progress = 0;
-                %dragon_planks = 0;
-            case 5 :
-                %haunted_lever = 0;
-                %haunted_manor_fountain_poisoned = 0;
-                %haunted_progress = 0;
-            case 6 : %gobdip_progress = 0;
-            case 7 : %squire_progress = 0;
-            case 8 : %imp_progress = 0;
-            case 9 :
-                %hunt_progress = 0;
-                %hunt_store_employed = 0;
-            case 10 :
-                %prince_keystatus = 0;
-                %prince_progress = 0;
-            case 11 : %priest_progress = 0;
-            case 12 : %romeojuliet_progress = 0;
-            case 13 : %runemysteries_progress = 0;
-            case 14 : %sheep_progress = 0;
-            case 15 : %blackarmgang_progress = 0;
-            case 16 : %vampire_progress = 0;
-            case 17 : %hetty_progress = 0;
-            case 18 :
-                %chompybird_kills = 0;
-                %chompybird_progress = 0;
-            case 19 : %biohazard_progress = 0;
-            case 20 : %cog_progress = 0;
-            case 21 : %itexam_progress = 0;
-            case 22 : %druid_progress = 0;
-            case 23 :
-                %mcannon_railings = 0;
-                %mcannon_progress = 0;
-            case 24 :
-                %crest_progress = 0;
-                %crest_spells_levers_gauntlets = 0;
-            case 25 : %arena_progress = 0;
-            case 26 : %fishingcompo_progress = 0;
-            case 27 :
-                %fluffs_progress = 0;
-                %cat_growth = 0;
-                %fluffs_crate = null;
-                %follower_obj = null;
-                %follower_uid = null;
-            case 28 : %grandtree_progress = 0;
-            case 29 :
-                %hazeelcult_side = 0;
-                %hazeelcult_side = 0;
-                %hazeelcult_progress = 0;
-            case 30 : %hero_progress = 0;
-            case 31 : %grail_progress = 0;
-            case 32 : %junglepotion_progress = 0;
-            case 33 : mes("Quest not implemented");
-            case 34 : %zanaris_progress = 0;
-            case 35 : %arthur_progress = 0;
-            case 36 : %drunkmonk_progress = 0;
-            case 37 :
-                %murder_murderer_id = 0;
-                %murder_poisonproof_progress = 0;
-                %murder_progress = 0;
-                %murder_evidence = 0;
-            case 38 :
-                %itgronigen_progress = 0;
-                %keepdoor_unlocked = 0;
-                %scorpius_given_symbol = 0;
-            case 39 : %elena_progress = 0;
-            case 40 :
-                %scorpcatcher_progress = 0;
-                %scorpius_given_symbol = 0;
-            case 41 :
-                %seaslug_progress = 0;
-            case 42 :
-                %sheepherder_disposal = 0;
-                %sheepherder_progress = 0;
-            case 43 : %zombiequeen_progress = 0;
-            case 44 :
-                %ikov_dungeon = 0;
-                %ikov_icearrowchest_coord = 0_0_0_0_0;
-                %haunted_lever = 0;
-                %haunted_manor_fountain_poisoned = 0;
-                %varp_35 = 0;
-            case 45 :
-                %desertrescue_map_mechanisms = 0;
-                %desertrescue_progress = 0;
-            case 46 : %tree_progress = 0;
-            case 47 : %totem_progress = 0;
-            case 48 :
-                %upass_progress = 0;
-                %upass_map_mechanisms = 0;
-            case 49 :
-                %itwatchtower_progress = 0;
-                %itwatchtower_bits = 0;
-            case 50 :
-                %waterfall_golrie_and_puzzle = 0;
-                %waterfall_progress = 0;
-            case 51 : %ball_progress = 0;
-            case 52 : %blackknight_progress = 0;
-            case 53 : %cook_progress = 0;
-            case default : mes("Quest not found.");
-        }
-        ~update_quests;
     }
 }
+
+// New label to complete all quests
+[label,complete_all_quests]
+
+def_int $arrav_choice = ~p_choice2_header("Black Arm Gang.", 0, "Phoenix Gang.", 1, "Choose a gang for Shield of Arrav:");
+def_int $ikov_choice = ~p_choice2_header("Armadyl.", 0, "Lucien.", 1, "Choose a side for Temple of Ikov:");
+
+queue(black_knights_fortress_quest_complete, 0);
+queue(cooks_quest_complete, 0);
+queue(demon_slayer_complete, 0);
+queue(doric_quest_complete, 0);
+queue(dragon_complete, 0);
+queue(haunted_quest_complete, 0);
+queue(goblin_diplomacy_complete_quest, 0);
+queue(squire_complete, 0);
+queue(imp_quest_complete, 0);
+queue(hunt_quest_complete, 0);
+queue(prince_complete, 0);
+queue(priest_quest_complete, 0);
+queue(romeo_and_juliet_complete, 0);
+queue(rune_mysteries_complete, 0);
+queue(sheep_complete, 0);
+queue(blackarmgang_quest_complete, 0);
+queue(quest_vampire_complete, 0);
+queue(hetty_quest_complete, 0);
+queue(quest_chompybird_complete, 0);
+queue(quest_biohazard_complete, 0);
+queue(cog_complete, 0);
+queue(itexam_complete, 0);
+if (npc_find(0_45_54_45_30, kaqemeex, 7, 0) = true) {
+                        queue(druid_quest_complete, 0, npc_uid);
+                    }
+queue(mcannon_complete, 0);
+queue(crest_complete, 0);
+// Complete all blast spells and levers, gauntlet choice unselected
+%crest_spells_levers_gauntlets = calc(pow(2, ^crest_south_lever) - 1);
+queue(arena_quest_complete, 0);
+queue(fishingcompo_quest_complete, 0);
+queue(fluffs_complete, 0);
+queue(grandtree_quest_complete, 0);
+queue(hazeelcult_quest_complete, 0);
+queue(hero_quest_complete, 0);
+queue(grail_quest_complete, 0);
+queue(junglepotion_quest_complete, 0);
+queue(zanaris_quest_complete, 0);
+queue(arthur_quest_complete, 0);
+queue(drunkmonk_complete, 0);
+queue(murder_quest_complete, 0);
+queue(itgronigen_quest_complete, 0);
+queue(quest_elena_complete, 0);
+queue(scorpcatcher_quest_complete, 0);
+%seaslug_progress = ^seaslug_complete;
+%questpoints = add(%questpoints, ^seaslug_questpoints);
+inv_add(inv, oyster_pearls, 1);
+stat_advance(fishing, 71750);
+queue(seaslug_quest_complete, 0);
+queue(sheepherder_complete, 0);
+queue(zombiequeen_quest_complete, 0);
+queue(tree_quest_complete, 0);
+queue(totem_quest_complete, 0);
+queue(upass_quest_complete, 0);
+queue(itwatchtower_quest_complete, 0);
+%itwatchtower_progress = ^itwatchtower_complete;
+                // Rewards are given before quest completion, so give here
+                stat_advance(magic, 153000);
+                inv_add(inv, coins, 5000);
+                inv_add(inv, spell_scroll, 1);
+queue(waterfall_quest_complete, 0);
+queue(ball_quest_complete, 0);
+
+if ($arrav_choice = 0) {
+    // Black Arm gang
+    %blackarmgang_progress = ^blackarmgang_joined;
+    %phoenixgang_progress = ^phoenixgang_not_started;
+} else {
+    // Phoenix gang
+    %phoenixgang_progress = ^phoenixgang_joined;
+    %blackarmgang_progress = 0;
+}
+
+if ($ikov_choice = 0) {
+    // Armadyl side
+    if (npc_find(0_40_51_13_57, lucien_ardougne, 7, 0) = true) {
+        queue(ikov_armadyl_quest_complete, 0, npc_uid);
+    }
+} else {
+    // Lucien side
+    queue(ikov_lucien_quest_complete, 0);
+}
+
+%desertrescue_progress = ^desertrescue_saved_ana;
+                if (npc_find(0_51_48_40_40, irena, 20, 0) = true) {
+                    @irena_ana_found;
+                }
+
+
+
+~update_quests;
+mes("All quests have been completed.");
+return;
+
+// New label to reset all quests
+[label,reset_all_quests]
+
+%blackknight_progress = 0;
+%cook_progress = 0;
+%demon_progress = 0;
+%doric_progress = 0;
+%dragon_goblin = 0;
+%dragon_ned_hired = 0;
+%dragon_oracle = 0;
+%dragon_shield = 0;
+%dragon_wall = 0;
+%dragon_progress = 0;
+%dragon_planks = 0;
+%haunted_lever = 0;
+%haunted_manor_fountain_poisoned = 0;
+%haunted_progress = 0;
+%gobdip_progress = 0;
+%squire_progress = 0;
+%imp_progress = 0;
+%hunt_progress = 0;
+%hunt_store_employed = 0;
+%prince_keystatus = 0;
+%prince_progress = 0;
+%priest_progress = 0;
+%romeojuliet_progress = 0;
+%runemysteries_progress = 0;
+%sheep_progress = 0;
+%blackarmgang_progress = 0;
+%phoenixgang_progress = 0;
+%vampire_progress = 0;
+%hetty_progress = 0;
+%chompybird_kills = 0;
+%chompybird_progress = 0;
+%biohazard_progress = 0;
+%cog_progress = 0;
+%itexam_progress = 0;
+%druid_progress = 0;
+%mcannon_railings = 0;
+%mcannon_progress = 0;
+%crest_progress = 0;
+%crest_spells_levers_gauntlets = 0;
+%arena_progress = 0;
+%fishingcompo_progress = 0;
+%fluffs_progress = 0;
+%cat_growth = 0;
+%fluffs_crate = null;
+%follower_obj = null;
+%follower_uid = null;
+%grandtree_progress = 0;
+%hazeelcult_side = 0;
+%hazeelcult_progress = 0;
+%hero_progress = 0;
+%grail_progress = 0;
+%junglepotion_progress = 0;
+// Legend's Quest not implemented
+%zanaris_progress = 0;
+%arthur_progress = 0;
+%drunkmonk_progress = 0;
+%murder_murderer_id = 0;
+%murder_poisonproof_progress = 0;
+%murder_progress = 0;
+%murder_evidence = 0;
+%itgronigen_progress = 0;
+%keepdoor_unlocked = 0;
+%scorpius_given_symbol = 0;
+%elena_progress = 0;
+%scorpcatcher_progress = 0;
+%scorpius_given_symbol = 0;
+%seaslug_progress = 0;
+%sheepherder_disposal = 0;
+%sheepherder_progress = 0;
+%zombiequeen_progress = 0;
+%ikov_dungeon = 0;
+%ikov_icearrowchest_coord = null; //This was overwritten with 0_0_0_0_0
+%haunted_lever = 0;
+%haunted_manor_fountain_poisoned = 0; 
+%ikov_progress = 0;
+%varp_35 = 0;
+%desertrescue_map_mechanisms = 0;
+%desertrescue_progress = 0;
+%tree_progress = 0;
+%totem_progress = 0;
+%upass_progress = 0;
+%upass_map_mechanisms = 0;
+%itwatchtower_progress = 0;
+%itwatchtower_bits = 0;
+%waterfall_golrie_and_puzzle = 0;
+%waterfall_progress = 0;
+%ball_progress = 0;
+
+mes("All quests have been reset.");
+~update_quests;
+return;
