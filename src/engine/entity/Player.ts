@@ -888,7 +888,7 @@ export default class Player extends PathingEntity {
             script,
             args,
             interval,
-            clock: interval
+            clock: World.currentTick
         };
 
         this.timers.set(timerId, timer);
@@ -906,9 +906,9 @@ export default class Player extends PathingEntity {
 
             // only execute if it's time and able
             // soft timers can execute while busy, normal cannot
-            if (--timer.clock <= 0 && (timer.type === PlayerTimerType.SOFT || this.canAccess())) {
+            if (World.currentTick >= timer.clock + timer.interval && (timer.type === PlayerTimerType.SOFT || this.canAccess())) {
                 // set clock back to interval
-                timer.clock = timer.interval;
+                timer.clock = World.currentTick;
 
                 const script = ScriptRunner.init(timer.script, this, null, timer.args);
                 this.executeScript(script, timer.type === PlayerTimerType.NORMAL);
