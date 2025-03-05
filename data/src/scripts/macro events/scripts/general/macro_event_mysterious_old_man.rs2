@@ -59,10 +59,10 @@ npc_delay(2);
 if (uid ! %npc_macro_event_target) {
     // https://youtu.be/U_TRFGTfIY0?t=276
     if (.finduid(%npc_macro_event_target) = true) {
-        ~chatnpc("<p,neutral>Sorry, but I'm trying to talk to <.displayname>. However <.text_gender("he", "she")> appears to be ignoring me...");
+        ~chatnpc("<p,sad>Sorry, but I'm trying to talk to <.displayname>. However, <.text_gender("he", "she")> appears to be ignoring me..."); // same as genie
         return;
     }
-    ~chatnpc("<p,neutral>Goodbye.");
+    ~chatnpc("<p,sad>Sorry, but I'm trying to talk to another player.|However, they appear to be ignoring me...");
     return;
 }
 if (%npc_int = ^mysterious_old_man_happy) {
