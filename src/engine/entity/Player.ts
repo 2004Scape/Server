@@ -1724,12 +1724,12 @@ export default class Player extends PathingEntity {
                     freeTotal += this.baseLevels[stat];
                 }
             }
-            
-            const previousTotal = total - (this.baseLevels[stat] - before);
-            for (let milestoneLvl = 250; total >= milestoneLvl; milestoneLvl += 250) {
-                if (previousTotal < milestoneLvl) {
-                    this.addSessionLog(LoggerEventType.ADVENTURE, `Reached total level ${milestoneLvl}`);
-                }
+
+            const milestoneIncrements = 250; // Level milestones = multiple of this number (should be >= 100)
+            const totalMilestoneMod = total % milestoneIncrements;
+            const previousMilestoneMod = (total - (this.baseLevels[stat] - before)) % milestoneIncrements;
+            if (totalMilestoneMod < previousMilestoneMod) {
+                this.addSessionLog(LoggerEventType.ADVENTURE, `Reached total level ${total - totalMilestoneMod}`);
             }
             if (total === 1881) {
                 this.addSessionLog(LoggerEventType.ADVENTURE, 'Reached total level 1881 - you beat p2p!');
