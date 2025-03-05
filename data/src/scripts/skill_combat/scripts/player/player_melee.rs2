@@ -26,8 +26,9 @@ if (~player_npc_hit_roll(%damagetype) = true) {
         $maxhit = divide(multiply($maxhit, 160), 100);
     }
     $damage = randominc(min($maxhit, npc_param(max_dealt)));
-    $damage = min($damage, npc_stat(hitpoints));
-    ~give_combat_experience(%damagestyle, $damage, %npc_combat_xp_multiplier);
+    def_int $damage_capped = min($damage, npc_stat(hitpoints));
+    ~give_combat_experience(%damagestyle, $damage_capped, %npc_combat_xp_multiplier);
+    npc_heropoints($damage_capped);
 }
 
 def_obj $weapon = inv_getobj(worn, ^wearpos_rhand);
