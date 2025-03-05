@@ -1,7 +1,7 @@
 import { quicksort } from '#/util/QuickSort.js';
 
 type Hero = {
-    uid: number;
+    hash64: bigint;
     points: number;
 };
 
@@ -12,25 +12,25 @@ export default class HeroPoints extends Array<Hero> {
     }
 
     clear(): void {
-        this.fill({ uid: -1, points: 0 });
+        this.fill({ hash64: -1n, points: 0 });
     }
 
-    addHero(uid: number, points: number): void {
+    addHero(hash64: bigint, points: number): void {
         // Check if hero already exists, then add points
-        const index = this.findIndex(hero => hero && hero.uid === uid);
+        const index = this.findIndex(hero => hero && hero.hash64 === hash64);
         if (index !== -1) {
             this[index].points += points;
             return;
         }
 
-        // Otherwise, add a new uid
-        const emptyIndex = this.findIndex(hero => hero && hero.uid === -1);
+        // Otherwise, add a new hash64
+        const emptyIndex = this.findIndex(hero => hero && hero.hash64 === -1n);
         if (emptyIndex !== -1) {
-            this[emptyIndex] = { uid, points: 1 };
+            this[emptyIndex] = { hash64, points: 1 };
         }
     }
 
-    findHero(): number {
+    findHero(): bigint {
         // We clone the array because it should not be permanently sorted
         const clone = [...this];
 
@@ -39,6 +39,6 @@ export default class HeroPoints extends Array<Hero> {
             return b.points - a.points;
         });
 
-        return clone[0].uid;
+        return clone[0].hash64;
     }
 }
