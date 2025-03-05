@@ -29,7 +29,7 @@ if (.finduid(%duelpartner) = true) {
     p_stopaction;
     // only deactive prayers if no prayers is selected. based off: https://imgur.com/ETH1z4L
     if (testbit(%duel_settings, ^no_prayer) = true) {
-        ~deactivate_prayers;
+        ~prayer_deactivate_all;
     }
     // Doesnt rest stats.
     // - https://youtu.be/zMhQfzn4M0Y?list=PLn23LiLYLb1Zo7wVV7wY2Zj1VV4zz6LBK&t=64

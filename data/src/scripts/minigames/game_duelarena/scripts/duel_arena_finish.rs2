@@ -63,7 +63,7 @@ while ($i < inv_size(tempinv)) {
 }
 
 buildappearance(worn);
-~deactivate_prayers;
+~prayer_deactivate_all;
 ~follower_death;
 p_telejump(~duel_arena_finish_coord(coord));
 anim(null, 0);
