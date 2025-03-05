@@ -53,7 +53,7 @@ huntrange=1
 // osrs stats and Vislvl match 1:1
 // https://raw.githubusercontent.com/Joshua-F/osrs-dumps/refs/heads/master/config/dump.npc npc_2853
 
-[npc_398]
+[legends_guard_west]
 vislevel=hide
 name=Legends Guard
 desc=A Legends Guild Guard, he protects the entrance to the Legends Guild.
@@ -86,7 +86,7 @@ head2=model_85_idk_head
 param=damagetype,^stab_style
 // https://raw.githubusercontent.com/Joshua-F/osrs-dumps/refs/heads/master/config/dump.npc npc_3951
 
-[npc_399]
+[legends_guard_east]
 vislevel=hide
 name=Legends Guard
 desc=A Legends Guild Guard, he protects the entrance to the Legends Guild.

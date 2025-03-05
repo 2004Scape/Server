@@ -507,6 +507,7 @@ attack=8
 strength=8
 defence=5
 magic=10
+param=damagetype,^crush_style
 param=magicdefence,3
 // osrs stats and Vislvl match 1:1
 // https://raw.githubusercontent.com/Joshua-F/osrs-dumps/refs/heads/master/config/dump.npc npc_3257
@@ -2558,7 +2559,7 @@ param=undead,^true
 // Stats match osrs version but our version Vislvl is different.
 // https://raw.githubusercontent.com/Joshua-F/osrs-dumps/refs/heads/master/config/dump.npc npc_84
 
-[npc_95]
+[wolf_64]
 name=Wolf
 desc=Not mans' best friend.
 size=2
@@ -2587,7 +2588,7 @@ huntrange=2
 // osrs stats and Vislvl match 1:1
 // https://raw.githubusercontent.com/Joshua-F/osrs-dumps/refs/heads/master/config/dump.npc npc_106
 
-[npc_96]
+[white_wolf_25]
 size=2
 walkanim=dog_walk
 readyanim=dog_ready
@@ -2620,7 +2621,7 @@ huntrange=2
 // osrs stats and Vislvl match 1:1
 // https://raw.githubusercontent.com/Joshua-F/osrs-dumps/refs/heads/master/config/dump.npc npc_107
 
-[npc_97]
+[white_wolf_38]
 size=2
 walkanim=dog_walk
 readyanim=dog_ready
@@ -2653,7 +2654,7 @@ huntrange=2
 // osrs stats and Vislvl match 1:1
 // https://raw.githubusercontent.com/Joshua-F/osrs-dumps/refs/heads/master/config/dump.npc npc_108
 
-[npc_98]
+[dog]
 name=Dog
 desc=Bow wow.
 walkanim=dog_walk
@@ -3228,7 +3229,7 @@ huntrange=2
 // osrs stats and Vislvl match 1:1
 // https://raw.githubusercontent.com/Joshua-F/osrs-dumps/refs/heads/master/config/dump.npc npc_2098
 
-[npc_118]
+[dwarf_1]
 walkanim=dwarf_walk
 readyanim=dwarf_ready
 name=Dwarf
@@ -3309,7 +3310,7 @@ huntrange=1
 // TODO SOUNDS
 // https://raw.githubusercontent.com/Joshua-F/osrs-dumps/refs/heads/master/config/dump.npc npc_291
 
-[npc_120]
+[dwarf_2]
 walkanim=dwarf_walk
 readyanim=dwarf_ready
 name=Dwarf
@@ -3343,7 +3344,7 @@ param=attack_sound,baxe_crush
 // TODO SOUNDS
 // https://raw.githubusercontent.com/Joshua-F/osrs-dumps/refs/heads/master/config/dump.npc npc_292
 
-[npc_121]
+[dwarf_3]
 walkanim=dwarf_walk
 readyanim=dwarf_ready
 name=Dwarf
@@ -3831,7 +3832,7 @@ huntmode=cowardly
 huntrange=1
 // https://raw.githubusercontent.com/Joshua-F/osrs-dumps/refs/heads/master/config/dump.npc npc_508
 
-[npc_141]
+[big_wolf]
 size=2
 walkanim=dog_walk
 readyanim=dog_ready
@@ -3866,7 +3867,7 @@ huntrange=2
 // osrs stats and Vislvl match 1:1
 // https://raw.githubusercontent.com/Joshua-F/osrs-dumps/refs/heads/master/config/dump.npc npc_109
 
-[npc_142]
+[wolf_pack]
 size=2
 walkanim=dog_walk
 readyanim=dog_ready
@@ -3899,7 +3900,7 @@ huntrange=2
 // osrs stats and Vislvl match 1:1
 // https://raw.githubusercontent.com/Joshua-F/osrs-dumps/refs/heads/master/config/dump.npc npc_110
 
-[npc_143]
+[jungle_wolf]
 name=Jungle Wolf
 desc=A rare jungle wolf - specific to the Kharazi jungle.
 size=2
@@ -3932,7 +3933,7 @@ huntrange=2
 // osrs stats and Vislvl match 1:1
 // https://raw.githubusercontent.com/Joshua-F/osrs-dumps/refs/heads/master/config/dump.npc npc_232
 
-[npc_144]
+[king_scorpion]
 size=2
 walkanim=scorpion_walk
 readyanim=scorpion_ready
@@ -4205,7 +4206,7 @@ huntrange=1
 // "They have level 20 Attack & Strength" - ash
 // https://raw.githubusercontent.com/Joshua-F/osrs-dumps/refs/heads/master/config/dump.npc npc_4416
 
-[npc_153]
+[butterfly_white]
 name=Butterfly
 desc=These look much better in the wild.
 walkanim=butterfly_hover
@@ -4215,7 +4216,7 @@ vislevel=hide
 model1=model_3022_npc
 wanderrange=10
 
-[npc_154]
+[butterfly_cyan]
 name=Butterfly
 desc=I love butterflies.
 walkanim=butterfly_hover
@@ -4225,7 +4226,7 @@ vislevel=hide
 model1=model_3023_npc
 wanderrange=10
 
-[npc_155]
+[butterfly_blue]
 name=Butterfly
 desc=It's a Blue Morpho Butterfly.
 walkanim=butterfly_hover
@@ -4241,7 +4242,7 @@ recol3d=6274
 model1=model_3023_npc
 wanderrange=10
 
-[npc_156]
+[butterfly_yellow]
 name=Butterfly
 desc=It's a Tiger Swallowtail Butterfly.
 walkanim=butterfly_hover
@@ -4257,7 +4258,7 @@ recol3d=6342
 model1=model_3023_npc
 wanderrange=10
 
-[npc_157]
+[butterfly_orange]
 name=Butterfly
 desc=It's a Viceroy Butterfly.
 walkanim=butterfly_hover
@@ -4303,6 +4304,7 @@ attack=17
 strength=17
 defence=14
 magic=22
+param=damagetype,^crush_style
 param=magicdefence,3
 huntmode=ranged
 // osrs stats and Vislvl match 1:1
@@ -4368,6 +4370,7 @@ attack=5
 strength=2
 defence=5
 magic=6
+param=damagetype,^crush_style
 param=magicdefence,3
 huntmode=ranged
 huntrange=3
@@ -5263,7 +5266,7 @@ param=undead,^true
 // TODO monster examine spell
 // https://raw.githubusercontent.com/Joshua-F/osrs-dumps/refs/heads/master/config/dump.npc npc_3518
 
-[npc_282]
+[thief_ardougne]
 name=Thief
 desc=A dastardly blanket thief.
 walkanim=human_walk_f,human_walk_b,human_walk_l,human_walk_r
@@ -5480,7 +5483,7 @@ param=attack_sound,hacksword_slash
 // seqs and sounds param is guess
 // https://raw.githubusercontent.com/Joshua-F/osrs-dumps/refs/heads/master/config/dump.npc npc_1144
 
-[npc_382]
+[dwarf_mining_guild]
 vislevel=hide
 walkanim=dwarf_walk
 readyanim=dwarf_ready
@@ -5573,7 +5576,7 @@ category=cow
 // osrs stats and Vislvl match 1:1
 // https://raw.githubusercontent.com/Joshua-F/osrs-dumps/refs/heads/master/config/dump.npc npc_2791
 
-[npc_401]
+[jungle_forester_male]
 vislevel=hide
 name=Jungle Forester
 desc=He deals in exotic types of wood.
@@ -5604,7 +5607,7 @@ wanderrange=3
 param=damagetype,^slash_style
 // https://raw.githubusercontent.com/Joshua-F/osrs-dumps/refs/heads/master/config/dump.npc npc_3954
 
-[npc_402]
+[jungle_forester_female]
 vislevel=hide
 name=Jungle Forester
 desc=She deals in exotic types of wood.
@@ -5886,7 +5889,7 @@ param=attack_sound,stabsword_slash
 // osrs stats and Vislvl match 1:1
 // https://raw.githubusercontent.com/Joshua-F/osrs-dumps/refs/heads/master/config/dump.npc npc_4926
 
-[npc_928]
+[gujuo]
 vislevel=hide
 name=Gujuo
 desc=A dark, charismatic jungle native.
@@ -5918,7 +5921,7 @@ head1=model_64_npc_head
 param=damagetype,^stab_style
 // https://raw.githubusercontent.com/Joshua-F/osrs-dumps/refs/heads/master/config/dump.npc npc_3956
 
-[npc_929]
+[ungadulu]
 name=Ungadulu
 desc=The Kharazi tribes elusive Shaman.
 walkanim=human_walk_f,human_walk_b,human_walk_l,human_walk_r
@@ -5966,7 +5969,7 @@ param=attack_sound,staff_hit
 // osrs stats and Vislvl match 1:1
 // https://raw.githubusercontent.com/Joshua-F/osrs-dumps/refs/heads/master/config/dump.npc npc_3957
 
-[npc_930]
+[ungadulu_possessed]
 name=Ungadulu
 desc=The Kharazi tribes elusive Shaman - something doesn't look quite right with him.
 walkanim=human_walk_f,human_walk_b,human_walk_l,human_walk_r
@@ -6103,7 +6106,7 @@ param=death_drop,ashes
 // osrs stats and Vislvl match 1:1
 // https://raw.githubusercontent.com/Joshua-F/osrs-dumps/refs/heads/master/config/dump.npc npc_3962
 
-[npc_935]
+[viyeldi]
 name=Viyeldi
 desc=The spirit of a long dead wizard.
 readyanim=human_ready
@@ -6145,7 +6148,7 @@ param=defend_anim,human_staff_def
 // defend animation https://discord.com/channels/953326730632904844/1126857544523063367/1300620868782788709
 // https://raw.githubusercontent.com/Joshua-F/osrs-dumps/refs/heads/master/config/dump.npc npc_3963
 
-[npc_936]
+[san_tojalon]
 name=San Tojalon
 desc=The spirit of a long dead warrior.
 walkanim=skeleton_trans_ready
@@ -6191,7 +6194,7 @@ param=death_drop,null
 // Stats match osrs version but our version Vislvl is different.
 // https://raw.githubusercontent.com/Joshua-F/osrs-dumps/refs/heads/master/config/dump.npc npc_3964
 
-[npc_937]
+[irvig_senay]
 name=Irvig Senay
 desc=The spirit of a long dead warrior.
 walkanim=skeleton_trans_ready
@@ -6237,7 +6240,7 @@ param=death_drop,null
 // osrs stats and Vislvl match 1:1
 // https://raw.githubusercontent.com/Joshua-F/osrs-dumps/refs/heads/master/config/dump.npc npc_3965
 
-[npc_938]
+[ranalph_devere]
 name=Ranalph Devere
 desc=The spirit of a long dead warrior.
 walkanim=skeleton_trans_ready
@@ -6284,7 +6287,7 @@ param=death_drop,null
 // Stats match osrs version but our version Vislvl is different.
 // https://raw.githubusercontent.com/Joshua-F/osrs-dumps/refs/heads/master/config/dump.npc npc_3966
 
-[npc_939]
+[boulder_legend]
 name=Boulder
 desc=I wonder what this is doing here.
 size=2
@@ -6297,7 +6300,7 @@ wanderrange=0
 moverestrict=nomove
 blockwalk=all
 
-[npc_940]
+[echned_zekin]
 name=Echned Zekin
 desc=A spirit of the underworld.
 hasalpha=yes
@@ -6435,6 +6438,7 @@ hitpoints=80
 attack=24
 strength=24
 defence=24
+param=damagetype,^crush_style
 magic=80
 timer=20
 param=magicdefence,3

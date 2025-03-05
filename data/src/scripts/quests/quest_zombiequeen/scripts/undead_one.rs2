@@ -1,6 +1,6 @@
 [ai_queue3,_undead_one]
 gosub(npc_death);
-if(npc_type = npc_504 | npc_type = npc_505) {
+if(npc_type = undead1_zombie | npc_type = undead1_zombie_armed) {
     world_delay(3); // 4t
     @zq_greenmist(npc_coord, 0);
 }

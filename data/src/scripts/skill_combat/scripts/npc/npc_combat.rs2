@@ -147,7 +147,7 @@ if(npc_type = gorad & (~obj_gettotal(ogre_tooth) > 0 | getbit_range(%itwatchtowe
     return(false);
 }
 
-if(npc_type = npc_830) {
+if(npc_type = mercenary_captain) {
     return (~mercenary_capt_attack(false));
 } 
 
@@ -156,7 +156,7 @@ if(npc_type = fire_warrior_of_lesarkus & (inv_total(worn, ice_arrow) = 0 | %dama
     return (false);
 }
 
-if(npc_type = npc_374 & %damagetype <= ^crush_style & npc_range(coord) <= 1) {
+if(npc_type = combat_training_camp_ogre & %damagetype <= ^crush_style & npc_range(coord) <= 1) {
     mes("These ogres are for ranged combat only.");
     return (false);
 }
@@ -220,7 +220,7 @@ if(npc_type = gorad & (~obj_gettotal(ogre_tooth) > 0 | getbit_range(%itwatchtowe
     }
     return(false);
 }
-if(npc_type = npc_830) {
+if(npc_type = mercenary_captain) {
     return (~mercenary_capt_attack(true));
 } 
 if(npc_type = fire_warrior_of_lesarkus) { // can't attack with magic

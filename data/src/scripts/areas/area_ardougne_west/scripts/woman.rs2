@@ -1,10 +1,10 @@
-[opnpc1,npc_352] @man_woman_help_me_out_of_this_hell_hole; // woman brown
-[opnpc1,npc_353] @woman_bah_those_mourners; // woman white
-[opnpc1,npc_354] @man_woman_go_away_outsider; // woman tan? llmao idk
-[opnpc1,npc_360] @woman_life_is_tough; // 100th woman
-[opnpc1,npc_361] @man_woman_curse_king_tyras; // woman level 12
-[opnpc1,npc_362] @man_woman_go_away_outsider; // woman white 2
-[opnpc1,npc_363] @woman_bah_those_mourners; // woman needs slim fast
+[opnpc1,west_ardougne_woman_1] @man_woman_help_me_out_of_this_hell_hole; // woman brown
+[opnpc1,west_ardougne_woman_2] @woman_bah_those_mourners; // woman white
+[opnpc1,west_ardougne_woman_3] @man_woman_go_away_outsider; // woman tan? llmao idk
+[opnpc1,west_ardougne_woman_4] @woman_life_is_tough; // 100th woman
+[opnpc1,west_ardougne_woman_5] @man_woman_curse_king_tyras; // woman level 12
+[opnpc1,west_ardougne_woman_6] @man_woman_go_away_outsider; // woman white 2
+[opnpc1,west_ardougne_woman_7] @woman_bah_those_mourners; // woman needs slim fast
 
 [label,woman_life_is_tough]
 ~chatplayer("<p,happy>Hello, how's it going?");

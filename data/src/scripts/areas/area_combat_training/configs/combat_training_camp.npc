@@ -1,4 +1,4 @@
-[npc_344]
+[combat_training_camp_guard_1]
 vislevel=hide
 name=Guard
 desc=He tries to keep order around here.
@@ -21,7 +21,7 @@ head1=model_48_npc_head
 head2=model_80_idk_head
 wanderrange=1
 
-[npc_345]
+[combat_training_camp_guard_2]
 vislevel=hide
 name=Guard
 desc=He tries to keep order around here.
@@ -43,7 +43,7 @@ head1=model_48_npc_head
 head2=model_80_idk_head
 wanderrange=1
 
-[npc_346]
+[combat_training_camp_guard_3]
 vislevel=hide
 name=Guard
 desc=He tries to keep order around here.
@@ -64,7 +64,7 @@ model9=model_508_obj_wear
 head1=model_48_npc_head
 head2=model_80_idk_head
 
-[npc_374]
+[combat_training_camp_ogre]
 name=Ogre
 desc=Big, ugly, and smelly.
 size=2
@@ -97,7 +97,7 @@ huntrange=2
 // Stats match osrs version but our version Vislvl is different.
 // https://raw.githubusercontent.com/Joshua-F/osrs-dumps/refs/heads/master/config/dump.npc ogre3
 
-[npc_561]
+[shop_keeper_combat_training_camp]
 vislevel=hide
 name=Shop keeper
 desc=Could stand to lose a few pounds.

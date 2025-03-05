@@ -51,7 +51,7 @@ if(coordz(coord) > coordz(loc_coord)) {
 }
 ~open_and_close_metal_gate2(loc_1541, true, false);
 
-[ai_timer,npc_921]
+[ai_timer,prince_ali_disguised]
 npc_changetype(prince_ali);
 
 [queue,prince_complete]

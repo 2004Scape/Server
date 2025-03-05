@@ -10,7 +10,7 @@ moverestrict=outdoors
 param=death_anim,camel_death
 param=death_sound,cow_death
 
-[npc_839]
+[desert_wolf]
 name=Desert Wolf
 desc=A vicious Desert wolf
 walkanim=dog_walk
@@ -42,7 +42,7 @@ huntrange=1
 // osrs stats and Vislvl match 1:1
 // https://raw.githubusercontent.com/Joshua-F/osrs-dumps/refs/heads/master/config/dump.npc npc_4649
 
-[npc_840]
+[ugthanki]
 name=Ugthanki
 desc=A vicious attaking camel.
 size=2

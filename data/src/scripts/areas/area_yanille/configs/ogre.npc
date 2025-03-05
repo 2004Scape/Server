@@ -1,4 +1,4 @@
-[npc_114]
+[ogre_unarmed]
 size=2
 walkanim=ogre_walk
 readyanim=ogre_ready
@@ -31,7 +31,7 @@ huntrange=2
 // Stats match osrs version but our version Vislvl is different.
 // https://raw.githubusercontent.com/Joshua-F/osrs-dumps/refs/heads/master/config/dump.npc npc_2095
 
-[ogre]
+[ogre_armed]
 size=2
 walkanim=ogre_walk
 readyanim=ogre_ready
@@ -64,7 +64,7 @@ huntrange=2
 // Stats match osrs version but our version Vislvl is different.
 // https://raw.githubusercontent.com/Joshua-F/osrs-dumps/refs/heads/master/config/dump.npc npc_2096
 
-[npc_129]
+[skavid]
 walkanim=skavid_walk
 readyanim=skavid_ready
 name=Skavid
@@ -320,7 +320,7 @@ param=death_sound,giant_death
 param=death_drop,big_bones
 // https://raw.githubusercontent.com/Joshua-F/osrs-dumps/refs/heads/master/config/dump.npc npc_4371
 
-[npc_861]
+[ogre_guard_broken_bridge]
 name=Ogre guard
 desc=An ogre that guards.
 size=2

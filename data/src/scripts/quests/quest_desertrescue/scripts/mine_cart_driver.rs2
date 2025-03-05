@@ -1,4 +1,4 @@
-[opnpc1,npc_841]
+[opnpc1,mine_cart_driver]
 if(%desertrescue_progress = ^desertrescue_ana_on_mining_cart | %desertrescue_progress = ^desertrescue_escaped) {
     if(testbit(%desertrescue_map_mechanisms, ^desertrescue_ready_rescue) = true) {
         ~chatnpc("<p,neutral>Hurry up, get in the cart or I'll go without you!");
@@ -189,7 +189,7 @@ mes("The cart driver goes back to his work.");
 [label,cartdriver_call_guards]
 if(random(2) = 0) {
     mes("Some guards notice you and come over.");
-    if(npc_find(coord, npc_829, 4, 2) = true | npc_find(coord, npc_828, 4, 2) = true) { // check dist on this
+    if(npc_find(coord, mercenary_2, 4, 2) = true | npc_find(coord, mercenary_1, 4, 2) = true) { // check dist on this
         npc_say("Hey, what are you doin'!");
         ~npc_retaliate(0);
         ~desertcamp_guard_search;

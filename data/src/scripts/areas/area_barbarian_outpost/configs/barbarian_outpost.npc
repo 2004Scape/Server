@@ -1,4 +1,4 @@
-[npc_197]
+[barbarian_guard]
 name=Barbarian guard
 desc=Not very civilised looking.
 walkanim=human_walk_f,human_walk_b,human_walk_l,human_walk_r

@@ -3,7 +3,7 @@
 [label,standard_camp_slave]
 npc_say("Can't you see I'm busy?");
 mes("This person doesn't want to talk to you.");
-if((npc_find(coord, npc_828, 5, 0) = true | npc_find(coord, npc_829, 5, 0) = true) & ~wearing_slave_robes = false) {
+if((npc_find(coord, mercenary_1, 5, 0) = true | npc_find(coord, mercenary_2, 5, 0) = true) & ~wearing_slave_robes = false) {
     p_delay(1);
     @mining_camp_caught;
 }
@@ -126,7 +126,7 @@ if($fail = 0) {
 } else if ($fail = 1) {
     %desertrescue_map_mechanisms = setbit_range_toint(%desertrescue_map_mechanisms, add($attempts, 1), ^desertrescue_lock_attempts1, ^desertrescue_lock_attempts2);
     mes("You fail!");
-    if(.npc_find(coord, npc_828, 10, 0) = true | .npc_find(coord, npc_829, 10, 0) = true) {
+    if(.npc_find(coord, mercenary_1, 10, 0) = true | .npc_find(coord, mercenary_2, 10, 0) = true) {
         if_close;
         mes("A nearby guard spots you!");
         p_delay(3);

@@ -1,5 +1,5 @@
 // outside underground pass
-[opnpc1,npc_972]
+[opnpc1,koftik_ardougne]
 if(%upass_progress = ^upass_not_started & testbit(%upass_map_mechanisms, ^upass_started_bit) = true) {
     @koftik_first_dialogue;
 }
@@ -55,7 +55,7 @@ switch_int(~p_choice2("I'll take my chances.", 1, "Tell me more...", 2)) {
 }
 
 // before the bridge in area 1
-[opnpc1,npc_973]
+[opnpc1,koftik_2]
 switch_int(%upass_progress) {
     case ^upass_defeated_iban :
         ~chatplayer("<p,happy>Thanks for getting me out Koftik.");
@@ -96,7 +96,7 @@ switch_int(%upass_progress) {
 }
 
 // before the bridge in area 1
-[opnpc1,npc_974]
+[opnpc1,koftik_3]
 switch_int(%upass_progress) {
     case ^upass_defeated_iban, ^upass_complete :
         ~chatplayer("<p,quiz>Hello Koftik.");
@@ -112,7 +112,7 @@ switch_int(%upass_progress) {
         ~chatnpc("<p,neutral>So many paths to choose...|Here we must all take our own path."); // https://web.archive.org/web/20050421234903/http://www.trillionareguild.com/runescape/underground.php
 }
 
-[opnpc1,npc_975]
+[opnpc1,koftik_4]
 // guessing, need to confirm by getting someone midquest to spawn this one in
 if(%upass_progress >= ^upass_defeated_iban) {
     ~chatplayer("<p,quiz>Hello Koftik.");
@@ -128,7 +128,7 @@ if(testbit(%upass_map_mechanisms, ^upass_koftik_gone_insane) = true) {
 }
 @koftik_isthatyou;
 
-[opnpc1,npc_976] @koftik_whereami;
+[opnpc1,koftik_5] @koftik_whereami;
 
 [label,koftik_whereami]
 ~chatnpc("<p,confused>Traveller, where am I? I can't remember a thing!");

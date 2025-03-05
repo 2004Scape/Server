@@ -1,5 +1,5 @@
 //--- Fishing Contest
-[npc_233]
+[fishing_spot_fishcon_sinister]
 vislevel=hide
 name=Fishing spot
 desc=I can fish here.
@@ -12,7 +12,7 @@ model1=model_loc_42_8
 moverestrict=nomove
 timer=250
 
-[npc_234]
+[fishing_spot_fishcon_prizefish]
 vislevel=hide
 name=Fishing spot
 desc=I can fish here.
@@ -25,7 +25,7 @@ model1=model_loc_42_8
 moverestrict=nomove
 timer=250
 
-[npc_235]
+[fishing_spot_fishcon_dave]
 vislevel=hide
 name=Fishing spot
 desc=I can fish here.
@@ -38,7 +38,7 @@ model1=model_loc_42_8
 moverestrict=nomove
 timer=250
 
-[npc_236]
+[fishing_spot_fishcon_joshua]
 vislevel=hide
 name=Fishing spot
 desc=I can fish here.
@@ -515,7 +515,7 @@ param=fishing_movement_enum,fishing_movement_al_kharid_enum
 //--- (Net/Bait) Al-Kharid
 
 //--- lava eel Taverley Dungeon
-[npc_800]
+[0_45_152_lava_eel]
 vislevel=hide
 readyanim=seq_525
 walkanim=seq_525
@@ -532,7 +532,7 @@ param=fishing_movement_enum,fishing_movement_taverley_dungeon_enum
 //--- lava eel Taverley Dungeon
 
 //--- (Lure/Bait) Observatory
-[npc_927]
+[0_38_49_freshfish]
 vislevel=hide
 readyanim=fishingspot_ready
 walkanim=fishingspot_walk

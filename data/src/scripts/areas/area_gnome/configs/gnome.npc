@@ -22,7 +22,7 @@ param=slashdefence,-42
 param=crushdefence,-42
 param=magicdefence,-42
 param=rangedefence,-42
-param=damagetype,^ranged_style
+param=damagetype,^crush_style
 param=attack_anim,midget_attackbow
 param=defend_anim,midget_block
 param=death_anim,midget_death
@@ -61,7 +61,7 @@ param=slashdefence,-42
 param=crushdefence,-42
 param=magicdefence,-42
 param=rangedefence,-42
-param=damagetype,^ranged_style
+param=damagetype,^crush_style
 param=attack_anim,midget_attackbow
 param=defend_anim,midget_block
 param=death_anim,midget_death
@@ -104,7 +104,7 @@ param=slashdefence,-42
 param=crushdefence,-42
 param=magicdefence,-42
 param=rangedefence,-42
-param=damagetype,^ranged_style
+param=damagetype,^crush_style
 param=attack_anim,midget_attackbow
 param=defend_anim,midget_block
 param=death_anim,midget_death
@@ -143,7 +143,7 @@ param=death_sound,terrorbird_death
 // osrs stats and Vislvl match 1:1
 // https://raw.githubusercontent.com/Joshua-F/osrs-dumps/refs/heads/master/config/dump.npc npc_2064
 
-[npc_137]
+[terrorbird_gnome]
 name=Mounted terrorbird gnome
 desc=These gnomes know how to get around!
 size=2
@@ -174,7 +174,7 @@ param=death_sound,terrorbird_death
 // Stats match osrs version but our version Vislvl is different.
 // https://raw.githubusercontent.com/Joshua-F/osrs-dumps/refs/heads/master/config/dump.npc npc_2067
 
-[npc_138]
+[terrorbird_gnome_armed]
 name=Mounted terrorbird gnome
 desc=These gnomes know how to get around!
 size=2
@@ -553,7 +553,7 @@ param=slashdefence,-42
 param=crushdefence,-42
 param=magicdefence,-42
 param=rangedefence,-42
-param=damagetype,^ranged_style
+param=damagetype,^crush_style
 param=attack_anim,midget_attackbow
 param=defend_anim,midget_block
 param=death_anim,midget_death
@@ -599,7 +599,7 @@ param=slashdefence,-42
 param=crushdefence,-42
 param=magicdefence,-42
 param=rangedefence,-42
-param=damagetype,^ranged_style
+param=damagetype,^crush_style
 param=attack_anim,midget_attackbow
 param=defend_anim,midget_block
 param=death_anim,midget_death
@@ -962,7 +962,7 @@ param=slashdefence,4
 param=crushdefence,5
 param=magicdefence,2
 param=rangedefence,4
-param=damagetype,^ranged_style
+param=damagetype,^crush_style
 param=attack_anim,midget_attackbow
 param=defend_anim,midget_block
 param=death_anim,midget_death
@@ -1007,7 +1007,7 @@ param=slashdefence,4
 param=crushdefence,5
 param=magicdefence,2
 param=rangedefence,4
-param=damagetype,^ranged_style
+param=damagetype,^crush_style
 param=attack_anim,midget_attackbow
 param=defend_anim,midget_block
 param=death_anim,midget_death

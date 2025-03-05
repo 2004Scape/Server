@@ -1,4 +1,4 @@
-[opnpc1,npc_500]
+[opnpc1,mosol_rei]
 if(%junglepotion_progress < ^junglepotion_complete) {
     ~chatnpc("<p,neutral>Sorry Bwana, I cannot help you at this time. Go and talk to Trufitus at Tai Bwo Wannai, I believe he needs some help."); // rs3
     return;

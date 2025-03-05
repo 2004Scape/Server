@@ -8,15 +8,15 @@ if ($is_inside = false) {
             $fail_message = append($fail_message, " and come back wearing a chef's hat");
         }
         $fail_message = append($fail_message, ".");
-        ~chatnpc_specific("Head chef", npc_847, $fail_message);
+        ~chatnpc_specific("Head chef", head_chef_cooking_guild, $fail_message);
         return;
     }
     if (inv_total(worn, chefshat) < 1) {
-        ~chatnpc_specific("Head chef", npc_847, "<p,neutral>You can't come in here unless you're wearing a chef's hat, or something like that.");
+        ~chatnpc_specific("Head chef", head_chef_cooking_guild, "<p,neutral>You can't come in here unless you're wearing a chef's hat, or something like that.");
         return;
     }
 }
 ~open_and_close_door(loc_param(next_loc_stage), $is_inside, false);
 
-[opnpc1,npc_847]
+[opnpc1,head_chef_cooking_guild]
 ~chatnpc("<p,happy>Hello, welcome to the Cooking Guild.|Only accomplished chefs and cooks are allowed in here.|Feel free to use any of our facilities.");

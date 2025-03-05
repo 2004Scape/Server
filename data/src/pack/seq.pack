@@ -382,7 +382,7 @@
 381=human_dspear_stab
 382=human_dspear_pound
 383=human_dspear_def
-384=human_ibanstaff_2h_defend
+384=seq_384
 385=human_holy_water_throw
 386=human_sword_stab
 387=human_sword_defend1
@@ -409,7 +409,7 @@
 408=human_dspear_lunge
 409=human_spear_slash
 410=seq_410
-411=human_2h_sword_defend
+411=human_sword_defend3
 412=human_staff_spike
 413=human_staff_pummel
 414=human_staff_pound

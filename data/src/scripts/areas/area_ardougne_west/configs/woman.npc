@@ -1,4 +1,4 @@
-[npc_352]
+[west_ardougne_woman_1]
 name=Woman
 desc=One of RuneScapes' many citizens.
 walkanim=human_walk_f,human_walk_b,human_walk_l,human_walk_r
@@ -31,7 +31,7 @@ param=death_sound,female_death
 // osrs stats and Vislvl match 1:1
 // https://raw.githubusercontent.com/Joshua-F/osrs-dumps/refs/heads/master/config/dump.npc npc_1119
 
-[npc_353]
+[west_ardougne_woman_2]
 name=Woman
 desc=One of RuneScapes' many citizens.
 walkanim=human_walk_f,human_walk_b,human_walk_l,human_walk_r
@@ -62,7 +62,7 @@ param=death_sound,female_death
 // osrs stats and Vislvl match 1:1
 // https://raw.githubusercontent.com/Joshua-F/osrs-dumps/refs/heads/master/config/dump.npc npc_1130
 
-[npc_354]
+[west_ardougne_woman_3]
 name=Woman
 desc=One of RuneScapes' many citizens.
 walkanim=human_walk_f,human_walk_b,human_walk_l,human_walk_r
@@ -95,7 +95,7 @@ param=death_sound,female_death
 // osrs stats and Vislvl match 1:1
 // https://raw.githubusercontent.com/Joshua-F/osrs-dumps/refs/heads/master/config/dump.npc npc_1131
 
-[npc_360]
+[west_ardougne_woman_4]
 name=Woman
 desc=One of RuneScapes' many citizens.
 walkanim=human_walk_f,human_walk_b,human_walk_l,human_walk_r
@@ -128,7 +128,7 @@ param=death_sound,female_death
 // osrs stats and Vislvl match 1:1
 // https://raw.githubusercontent.com/Joshua-F/osrs-dumps/refs/heads/master/config/dump.npc npc_1139
 
-[npc_361]
+[west_ardougne_woman_5]
 name=Woman
 desc=One of RuneScapes' many citizens.
 walkanim=human_walk_f,human_walk_b,human_walk_l,human_walk_r
@@ -160,7 +160,7 @@ param=death_sound,female_death
 // osrs stats and Vislvl match 1:1
 // https://raw.githubusercontent.com/Joshua-F/osrs-dumps/refs/heads/master/config/dump.npc npc_1140
 
-[npc_362]
+[west_ardougne_woman_6]
 name=Woman
 desc=One of RuneScapes' many citizens.
 walkanim=human_walk_f,human_walk_b,human_walk_l,human_walk_r
@@ -188,7 +188,7 @@ param=death_sound,female_death
 // osrs stats and Vislvl match 1:1
 // https://raw.githubusercontent.com/Joshua-F/osrs-dumps/refs/heads/master/config/dump.npc npc_1141
 
-[npc_363]
+[west_ardougne_woman_7]
 name=Woman
 desc=One of RuneScapes' many citizens.
 walkanim=human_walk_f,human_walk_b,human_walk_l,human_walk_r

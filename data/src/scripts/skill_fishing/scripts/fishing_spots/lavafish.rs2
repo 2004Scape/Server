@@ -1,9 +1,9 @@
 // i assume no fishing random events for these guys
-[opnpc1,npc_800] @attempt_fish_lava_eel;
-[opnpc3,npc_800] @fish_lava_eel;
-[opnpcu,npc_800] @oil_rod_fishing_use_item;
+[opnpc1,0_45_152_lava_eel] @attempt_fish_lava_eel;
+[opnpc3,0_45_152_lava_eel] @fish_lava_eel;
+[opnpcu,0_45_152_lava_eel] @oil_rod_fishing_use_item;
 
-[apnpc1,npc_800]
+[apnpc1,0_45_152_lava_eel]
 if (npc_range(coord) > 1)
 {
   p_aprange(1);
@@ -11,7 +11,7 @@ if (npc_range(coord) > 1)
 }
 @attempt_fish_lava_eel;
 
-[apnpc3,npc_800]
+[apnpc3,0_45_152_lava_eel]
 if (npc_range(coord) > 1)
 {
   p_aprange(1);
@@ -19,7 +19,7 @@ if (npc_range(coord) > 1)
 }
 @fish_lava_eel;
 
-[apnpcu,npc_800]
+[apnpcu,0_45_152_lava_eel]
 if (npc_range(coord) > 1)
 {
   p_aprange(1);
