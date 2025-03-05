@@ -1032,13 +1032,13 @@ const PlayerOps: CommandHandlers = {
 
     // https://x.com/JagexAsh/status/1799020087086903511
     [ScriptOpcode.FINDHERO]: checkedHandler(ActivePlayer, state => {
-        const uid = state.activePlayer.heroPoints.findHero();
-        if (uid === -1) {
+        const hash64 = state.activePlayer.heroPoints.findHero();
+        if (hash64 === -1n) {
             state.pushInt(0);
             return;
         }
 
-        const player = World.getPlayerByUid(uid);
+        const player = World.getPlayerByHash64(hash64);
         if (!player) {
             state.pushInt(0);
             return;
@@ -1060,7 +1060,7 @@ const PlayerOps: CommandHandlers = {
             throw new Error('player is null');
         }
 
-        toPlayer.heroPoints.addHero(fromPlayer.uid, damage);
+        toPlayer.heroPoints.addHero(fromPlayer.hash64, damage);
     }),
 
     // https://x.com/JagexAsh/status/1806246992797921391
