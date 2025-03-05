@@ -1727,10 +1727,9 @@ export default class Player extends PathingEntity {
             
             const previousTotal = total - (this.baseLevels[stat] - before);
             const milestones = [250, 500, 750, 1000, 1250, 1500, 1750];
-            for (const milestone of milestones) {
-                if (previousTotal < milestone && total >= milestone) {
-                    this.addSessionLog(LoggerEventType.ADVENTURE, `Reached total level ${milestone}`);
-                    break;
+            for (let i = 0; i < milestones.length && total >= milestones[i]; i++) {
+                if (previousTotal < milestones[i]) {
+                    this.addSessionLog(LoggerEventType.ADVENTURE, `Reached total level ${milestones[i]}`);
                 }
             }
             if (total === 1881) {
