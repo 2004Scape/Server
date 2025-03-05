@@ -30,7 +30,7 @@ export default class HeroPoints extends Array<Hero> {
         // Otherwise, add a new hash64
         const emptyIndex = this.findIndex(hero => hero && hero.hash64 === -1n);
         if (emptyIndex !== -1) {
-            this[emptyIndex] = { hash64, points: 1 };
+            this[emptyIndex] = { hash64, points };
         }
     }
 
