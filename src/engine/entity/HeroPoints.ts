@@ -16,26 +16,29 @@ export default class HeroPoints extends Array<Hero> {
     }
 
     addHero(uid: number, points: number): void {
-        // check if hero already exists, then add points
+        // Check if hero already exists, then add points
         const index = this.findIndex(hero => hero && hero.uid === uid);
         if (index !== -1) {
             this[index].points += points;
             return;
         }
 
-        // otherwise, add a new uid
+        // Otherwise, add a new uid
         const emptyIndex = this.findIndex(hero => hero && hero.uid === -1);
         if (emptyIndex !== -1) {
-            this[emptyIndex] = { uid, points };
+            this[emptyIndex] = { uid, points: 1 };
         }
     }
 
     findHero(): number {
-        // quicksort heroes by points
-        quicksort(0, this.length - 1, this, (a: Hero, b: Hero) => {
+        // We clone the array because it should not be permanently sorted
+        const clone = [...this];
+
+        // Quicksort heroes by points
+        quicksort(0, this.length - 1, clone, (a: Hero, b: Hero) => {
             return b.points - a.points;
         });
 
-        return this[0].uid;
+        return clone[0].uid;
     }
 }
