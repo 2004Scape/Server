@@ -1,0 +1,7 @@
+^squire_not_started = 0
+^squire_started = 1
+^squire_spoken_reldo = 2
+^squire_given_pie = 3
+^squire_spoken_thurgo = 4
+^squire_looking_portrait = 5
+^squire_looking_blurite = 6
