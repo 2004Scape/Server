@@ -1730,6 +1730,7 @@ export default class Player extends PathingEntity {
             for (const milestone of milestones) {
                 if (previousTotal < milestone && total >= milestone) {
                     this.addSessionLog(LoggerEventType.ADVENTURE, `Reached total level ${milestone}`);
+                    break;
                 }
             }
             if (total === 1881) {
