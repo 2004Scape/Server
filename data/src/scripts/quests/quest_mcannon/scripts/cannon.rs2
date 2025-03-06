@@ -64,6 +64,10 @@ if (~inzone_coord_pair_table(bank_zones, coord) = true | ~in_duel_arena(coord) =
     mes("You can't set up a cannon here."); // osrs
     return;
 }
+if (inzone(0_40_49_21_15, 0_40_49_46_35, coord) = true) { // fight arena: https://www.youtube.com/watch?v=fQMD91nYPEk&t=420s, bounds guessed (reworked in both games)
+    mes("It is not permitted to set up a cannon inside the Fight Arena.");
+    return;
+}
 if (map_locaddunsafe(movecoord(coord, -1, 0, -1)) = true) {
     mes("There isn't enough space to set up here."); // osrs just checks sw coord for loc's
     return;

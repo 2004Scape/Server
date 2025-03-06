@@ -15,8 +15,13 @@ if (~can_pickup_cog = true) {
 
 [opobj3,black_cog]
 if (~can_pickup_cog = true) {
-    if(inv_total(inv, bucket_water) > 0 | inv_total(worn, ice_gloves) > 0) {
-        @take_black_cog;
+    if(%cog_cooled = ^true) {
+        @pickup_obj(obj_coord, obj_type, obj_count);
+    }
+    if(inv_total(worn, ice_gloves) > 0) {
+        %cog_cooled = ^true;
+        ~mesbox("The ice gloves cool down the cog.|You can carry it now.");
+        @pickup_obj(obj_coord, obj_type, obj_count);
     } else {
         ~mesbox("The cog is red hot from flames.|You cannot pick it up.");
     }
@@ -25,20 +30,14 @@ if (~can_pickup_cog = true) {
 [opobju,black_cog]
 if(last_useitem = bucket_water) {
     if (~can_pickup_cog = true) {
-        @take_black_cog;
+        inv_del(inv, bucket_water, 1);
+        inv_add(inv, bucket_empty, 1);
+        %cog_cooled = ^true;
+        ~mesbox("You pour water over the cog.|It quickly cools down enough to take.");
     }
 } else {
     ~displaymessage(^dm_default);
 }
-
-[label,take_black_cog]
-~mesbox("You pour water over the cog.|It quickly cools down enough to take.");
-inv_del(inv, bucket_water, 1);
-inv_add(inv, bucket_empty, 1);
-if(inv_freespace(inv) > 0) {
-    obj_takeitem(inv);
-}
-
 [proc,can_pickup_cog]()(boolean)
 if (~get_cog_progress = ^quest_cog_not_started) {
     mes("You must speak to Brother Kojo to begin this quest.");

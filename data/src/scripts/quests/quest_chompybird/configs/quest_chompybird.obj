@@ -11,6 +11,7 @@ model=model_3440_obj
 2dxan=112
 weight=18oz
 tradeable=no
+category=ogre_bellows
 
 [ogre_bellows_3]
 name=Ogre bellows (3)
@@ -25,6 +26,7 @@ recol1d=6628
 2dxan=112
 weight=18oz
 tradeable=no
+category=ogre_bellows
 
 [ogre_bellows_2]
 name=Ogre bellows (2)
@@ -39,6 +41,7 @@ recol1d=10726
 2dxan=112
 weight=18oz
 tradeable=no
+category=ogre_bellows
 
 [ogre_bellows_1]
 name=Ogre bellows (1)
@@ -53,6 +56,7 @@ recol1d=14824
 2dxan=112
 weight=18oz
 tradeable=no
+category=ogre_bellows
 
 [bloated_toad]
 name=Bloated toad
