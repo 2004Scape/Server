@@ -29,5 +29,4 @@
 ^prayer_incrediblereflexes_start = 6
 ^prayer_protectfrommagic_start = 5
 ^prayer_protectfrommissiles_start = 5
-// changed in late 2006
-^prayer_protectfrommelee_start = 10
+^prayer_protectfrommelee_start = 5
