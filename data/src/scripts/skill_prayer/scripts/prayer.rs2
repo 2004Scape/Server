@@ -53,6 +53,8 @@ if (gettimer(prayer_drain) < 1) {
 }
 %prayer_drain_effect = add(max(%prayer_drain_effect, 0), enum(int, int, prayer_drain_effects, db_getfield($data, prayers:prayer, 0)));
 
+~player_combat_stat; // THIS IS VERY IMPORTANT
+
 [proc,prayer_deactivate](int $prayer)
 sound_synth(cancel_prayer, 0, 0);
 %prayer_drain_effect = sub(%prayer_drain_effect, enum(int, int, prayer_drain_effects, $prayer));
@@ -63,6 +65,8 @@ def_int $headicon = enum(int, int, prayer_headicons, $prayer);
 if ($headicon > 0) {
     ~headicon_del($headicon);
 }
+
+~player_combat_stat; // THIS IS VERY IMPORTANT
 
 [proc,prayer_deactivate_conflicting](dbrow $data)
 def_int $i = 0;
