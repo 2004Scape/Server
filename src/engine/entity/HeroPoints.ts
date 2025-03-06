@@ -1,7 +1,9 @@
+import { quicksort } from '#/util/QuickSort.js';
+
 type Hero = {
-    uid: number;
+    hash64: bigint;
     points: number;
-}
+};
 
 export default class HeroPoints extends Array<Hero> {
     constructor(length: number) {
@@ -10,29 +12,37 @@ export default class HeroPoints extends Array<Hero> {
     }
 
     clear(): void {
-        this.fill({ uid: -1, points: 0 });
+        this.fill({ hash64: -1n, points: 0 });
     }
 
-    addHero(uid: number, points: number): void {
-        // check if hero already exists, then add points
-        const index = this.findIndex(hero => hero && hero.uid === uid);
+    addHero(hash64: bigint, points: number): void {
+        // Do nothing if no points added
+        if (points < 1) {
+            return;
+        }
+        // Check if hero already exists, then add points
+        const index = this.findIndex(hero => hero && hero.hash64 === hash64);
         if (index !== -1) {
             this[index].points += points;
             return;
         }
 
-        // otherwise, add a new uid. if all 16 spaces are taken do we replace the lowest?
-        const emptyIndex = this.findIndex(hero => hero && hero.uid === -1);
+        // Otherwise, add a new hash64
+        const emptyIndex = this.findIndex(hero => hero && hero.hash64 === -1n);
         if (emptyIndex !== -1) {
-            this[emptyIndex] = { uid, points };
+            this[emptyIndex] = { hash64, points };
         }
     }
 
-    findHero(): number {
-        // quicksort heroes by points
-        this.sort((a, b) => {
+    findHero(): bigint {
+        // We clone the array because it should not be permanently sorted
+        const clone = [...this];
+
+        // Quicksort heroes by points
+        quicksort(0, this.length - 1, clone, (a: Hero, b: Hero) => {
             return b.points - a.points;
         });
-        return this[0].uid;
+
+        return clone[0].hash64;
     }
 }

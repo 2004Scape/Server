@@ -1,5 +1,5 @@
 import fs from 'fs';
-import {basename, dirname, join} from 'path';
+import { basename, dirname, join } from 'path';
 import * as esbuild from 'esbuild';
 
 const outDir = '../Client2/public/';
@@ -17,7 +17,6 @@ const defines = {
     'process.env.NODE_XPRATE': 'undefined',
     'process.env.NODE_PRODUCTION': 'undefined',
     'process.env.NODE_KILLTIMER': 'undefined',
-    'process.env.NODE_ALLOW_CHEATS': 'undefined',
     'process.env.NODE_DEBUG': 'undefined',
     'process.env.NODE_DEBUG_PROFILE': 'undefined',
     'process.env.NODE_STAFF': 'undefined',
@@ -36,7 +35,7 @@ const defines = {
     'process.env.BUILD_VERIFY': 'undefined',
     'process.env.BUILD_VERIFY_FOLDER': 'undefined',
     'process.env.BUILD_VERIFY_PACK': 'undefined',
-    'process.env.BUILD_SRC_DIR': 'undefined',
+    'process.env.BUILD_SRC_DIR': 'undefined'
 };
 
 try {
@@ -51,17 +50,21 @@ try {
 }
 
 async function esb() {
-    const bundle = await esbuild.build({
-        bundle: true,
-        format: 'esm',
-        write: false,
-        outdir: 'placeholder', // unused but required by esbuild
-        entryPoints: entrypoints,
-        external: externals.concat(esbuildExternals),
-        define: defines,
-        // minify: true,
-        // sourcemap: 'linked',
-    }).catch((e) => { throw new Error(e); });
+    const bundle = await esbuild
+        .build({
+            bundle: true,
+            format: 'esm',
+            write: false,
+            outdir: 'placeholder', // unused but required by esbuild
+            entryPoints: entrypoints,
+            external: externals.concat(esbuildExternals),
+            define: defines
+            // minify: true,
+            // sourcemap: 'linked',
+        })
+        .catch(e => {
+            throw new Error(e);
+        });
 
     for (let index = 0; index < bundle.outputFiles.length; index++) {
         removeImports(bundle.outputFiles[index].text, entrypoints[index]);
@@ -73,10 +76,12 @@ async function bun() {
     const bundle = await Bun.build({
         entrypoints: entrypoints,
         external: externals,
-        define: defines,
+        define: defines
         // minify: true,
         // sourcemap: 'linked',
-    }).catch((e) => { throw new Error(e); });
+    }).catch(e => {
+        throw new Error(e);
+    });
 
     for (let index = 0; index < bundle.outputs.length; index++) {
         removeImports(await bundle.outputs[index].text(), entrypoints[index]);
@@ -87,7 +92,8 @@ function removeImports(output, file) {
     // turn into plugin for minify/sourcemaps
     const path = outDir + basename(file).replace('.ts', '.js');
 
-    output = output.split('\n')
+    output = output
+        .split('\n')
         .filter(line => !line.startsWith('import'))
         .filter(line => !line.startsWith('init_crypto')) // only needed for bun, crypto is an import in esbuild
         .join('\n');

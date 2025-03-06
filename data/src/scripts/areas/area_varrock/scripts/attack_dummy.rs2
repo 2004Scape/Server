@@ -1,5 +1,4 @@
 [oploc2,attack_dummy]
-~player_combat_stat;
 if (%damagestyle = ^style_ranged_accurate | %damagestyle = ^style_ranged_longrange | %damagestyle = ^style_ranged_rapid) {
     mes("You can't use ranged attacks on the dummy.");
     return;

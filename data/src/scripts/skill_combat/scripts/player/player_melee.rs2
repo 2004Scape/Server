@@ -1,12 +1,6 @@
 // begins combat
 [label,player_melee_attack]
 p_stopaction;
-// npc_setmode(opplayer2);
-// facesquare(npc_coord);
-
-// todo this is for flinching players (pvp etc)
-//if (autoretaliateenabled && action_clock < gameClock()) action_clock = gameClock() + (weaponSpeed / 2)
-
 if (~npc_is_attackable() = false) {
     return;
 }
@@ -16,29 +10,25 @@ if (%action_delay > map_clock) {
     return;
 }
 
-if(npc_stat(hitpoints) = 0 & (npc_type = sir_mordred | npc_type = black_knight_titan)) {
-    npc_statheal(hitpoints, npc_basestat(hitpoints), 0);
-}
-
 if (npc_stat(hitpoints) = 0) {
     p_stopaction;
     return; // this means the npc is not avail to fight i.e dead
 }
 
-~player_combat_stat; // update combat varps before swinging
-
 // check hit, give combat xp
 def_int $damage = 0;
 if (~player_npc_hit_roll(%damagetype) = true) {
+    def_int $maxhit = %com_maxhit;
     if (npc_type = count_draynor & inv_total(inv, garlic) > 0) {
-        %com_maxhit = add(%com_maxhit, 1);
+        $maxhit = add($maxhit, 1);
     }
     if (npc_param(demonbane_vulnerable) = true & inv_total(worn, silverlight) > 0) {
-        %com_maxhit = divide(multiply(%com_maxhit, 160), 100);
+        $maxhit = divide(multiply($maxhit, 160), 100);
     }
-    $damage = randominc(min(%com_maxhit, npc_param(max_dealt)));
-    $damage = min($damage, npc_stat(hitpoints));
-    ~give_combat_experience(%damagestyle, $damage, %npc_combat_xp_multiplier);
+    $damage = randominc(min($maxhit, npc_param(max_dealt)));
+    def_int $damage_capped = min($damage, npc_stat(hitpoints));
+    ~give_combat_experience(%damagestyle, $damage_capped, %npc_combat_xp_multiplier);
+    npc_heropoints($damage_capped);
 }
 
 def_obj $weapon = inv_getobj(worn, ^wearpos_rhand);
@@ -59,7 +49,6 @@ npc_anim(npc_param(defend_anim), 20);
 if (npc_param(defend_sound) ! null) {
     sound_synth(npc_param(defend_sound), 0, 20); // delay npc this tick
 }
-npc_heropoints($damage);
 // set the skill clock depending on the weapon attack rate
 if ($weapon = null) {
     %action_delay = add(map_clock, 4);

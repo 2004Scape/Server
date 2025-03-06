@@ -92,7 +92,7 @@ if (db_getfield($spell_data, magic_spell_table:freeze_time, 0) > 0) {
     if (calc(.%frozen + 5) > map_clock) {
         // osrs wiki trivia says that snare didnt have this? No proof though
         // ive found proof of bind and entangle having this in 2006: https://imgur.com/a/jBb1awE
-        mes("Your target is currently immume to that spell.");
+        mes("Your target is currently immune to that spell.");
         return(false);
     }
 }
@@ -206,8 +206,6 @@ sound_synth($sound, 0, 0);
 [proc,pvp_spell_cast](dbrow $spell_data)(int)
 ~set_pk_vars;
 .if_close;
-~player_combat_stat;
-~.player_combat_stat;
 ~delete_spell_runes($spell_data);
 ~give_spell_xp($spell_data);
 

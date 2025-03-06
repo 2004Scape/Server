@@ -104,7 +104,7 @@ export default class NpcInfoEncoder extends MessageEncoder<NpcInfo> {
     private remove(buf: Packet, buildArea: BuildArea, npc: Npc): void {
         buf.pBit(1, 1);
         buf.pBit(2, 3);
-        npc.observerCount--;
+        npc.observerCount = Math.max(npc.observerCount - 1, 0);
         buildArea.npcs.delete(npc);
     }
 

@@ -140,31 +140,25 @@ if (%damagestyle = ^style_ranged_rapid) {
 // check hit, give combat xp
 def_int $damage = 0;
 if (~player_npc_hit_roll(%damagetype) = true) {
-    $damage = randominc(min(%com_maxhit, npc_param(max_dealt)));
-    $damage = min($damage, npc_stat(hitpoints));
-    ~give_combat_experience(%damagestyle, $damage, %npc_combat_xp_multiplier);
+    def_int $maxhit = %com_maxhit;
+    $damage = randominc(min($maxhit, npc_param(max_dealt)));
+    def_int $damage_capped = min($damage, npc_stat(hitpoints));
+    ~give_combat_experience(%damagestyle, $damage_capped, %npc_combat_xp_multiplier);
+    npc_heropoints($damage_capped);
 }
 
 def_int $delay = add(~player_use_ogre_bow($ammo), 30); // osrs it seems to be delayed an extra tick
 anim(%com_attackanim, 0);
 sound_synth(%com_attacksound, 0, 0);
 // Chompies don't fight back
-npc_queue(2, $damage, calc($delay / 30));
+npc_queue(2, $damage, calc($delay / 30)); // ai_queue2 takes uncapped damage (avoids npcs from tick healing)
 if (npc_param(defend_sound) ! null) {
     sound_synth(npc_param(defend_sound), 0, sub($delay, 30)); // delay 1 client tick for the hit queue
 }
 
-npc_heropoints($damage);
 p_opnpc(5);
-if (random(5) ! 0) {
-    world_delay(calc($delay / 30 - 2));
-    if (map_blocked(npc_coord) = false) {
-        if (p_finduid(uid) = true) {
-            inv_dropslot(ranged_quiver_inv, npc_coord, 0, 200);
-        }
-    }
-}
-inv_clear(ranged_quiver_inv);
+
+~ranged_dropammo_npc($ammo, 5, sub(divide($delay, 30), 2));
 
 if (random(2) = 0) {
     // There's some randomness here, this is a guess
@@ -175,7 +169,7 @@ if (random(2) = 0) {
 // Ogre arrow launch spotanim is higher than other arrows by default, so we compensate for that here
 [proc,player_use_ogre_bow](obj $ammo)(int)
 spotanim_pl(oc_param($ammo, proj_launch), 46, 0);
-inv_moveitem(worn, ranged_quiver_inv, $ammo, 1);
+inv_del(worn, $ammo, 1);
 return(~npc_projectile(coord, npc_uid, oc_param($ammo, proj_travel), 40, 36, 41, 15, 5, 11, 5));
 
 [ai_queue3,chompy_bird]

@@ -280,7 +280,7 @@ export const ObjPack = new PackFile('obj', validateConfigPack, '.obj');
 export const ParamPack = new PackFile('param', validateConfigPack, '.param', true, false, false, true);
 export const ScriptPack = new PackFile('script', regenScriptPack);
 export const SeqPack = new PackFile('seq', validateConfigPack, '.seq');
-export const SoundPack = new PackFile('sound', validateFilesPack, `${Environment.BUILD_SRC_DIR}/sounds`, '.synth');
+export const SynthPack = new PackFile('synth', validateFilesPack, `${Environment.BUILD_SRC_DIR}/synth`, '.synth');
 export const SpotAnimPack = new PackFile('spotanim', validateConfigPack, '.spotanim');
 export const StructPack = new PackFile('struct', validateConfigPack, '.struct', true, false, false, true);
 export const TexturePack = new PackFile('texture', validateImagePack, `${Environment.BUILD_SRC_DIR}/textures`, '.png');
@@ -308,7 +308,7 @@ export function revalidatePack() {
     ParamPack.reload();
     ScriptPack.reload();
     SeqPack.reload();
-    SoundPack.reload();
+    SynthPack.reload();
     SpotAnimPack.reload();
     StructPack.reload();
     TexturePack.reload();

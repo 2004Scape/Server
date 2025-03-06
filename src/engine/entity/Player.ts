@@ -403,6 +403,7 @@ export default class Player extends PathingEntity {
 
     muted_until: Date | null = null;
     members: boolean = true;
+    messageCount: number = 0;
 
     socialProtect: boolean = false; // social packet spam protection
     reportAbuseProtect: boolean = false; // social packet spam protection
@@ -887,7 +888,7 @@ export default class Player extends PathingEntity {
             script,
             args,
             interval,
-            clock: interval
+            clock: World.currentTick
         };
 
         this.timers.set(timerId, timer);
@@ -905,9 +906,9 @@ export default class Player extends PathingEntity {
 
             // only execute if it's time and able
             // soft timers can execute while busy, normal cannot
-            if (--timer.clock <= 0 && (timer.type === PlayerTimerType.SOFT || this.canAccess())) {
+            if (World.currentTick >= timer.clock + timer.interval && (timer.type === PlayerTimerType.SOFT || this.canAccess())) {
                 // set clock back to interval
-                timer.clock = timer.interval;
+                timer.clock = World.currentTick;
 
                 const script = ScriptRunner.init(timer.script, this, null, timer.args);
                 this.executeScript(script, timer.type === PlayerTimerType.NORMAL);
@@ -1723,11 +1724,16 @@ export default class Player extends PathingEntity {
                     freeTotal += this.baseLevels[stat];
                 }
             }
+
+            const milestone = 250; // Level milestones = multiple of this number (should be >= 100)
+            const prevMilestone = ((total - (this.baseLevels[stat] - before)) / milestone) | 0;
+            const currMilestone = (total / milestone) | 0;
+            if (currMilestone > prevMilestone) {
+                this.addSessionLog(LoggerEventType.ADVENTURE, `Reached total level ${currMilestone * milestone}`);
+            }
             if (total === 1881) {
                 this.addSessionLog(LoggerEventType.ADVENTURE, 'Reached total level 1881 - you beat p2p!');
-            } else if (total === 250 || total === 500 || total === 750 || total === 1000 || total === 1250 || total === 1500 || total === 1750) {
-                this.addSessionLog(LoggerEventType.ADVENTURE, `Reached total level ${total}`);
-            }
+            } 
             if (freeTotal === 1485) {
                 this.addSessionLog(LoggerEventType.ADVENTURE, 'Reached total level 1485 - you beat f2p!');
             }
@@ -2127,11 +2133,11 @@ export default class Player extends PathingEntity {
         this.write(new HintArrow(-1, 0, 0, 0, 0, 0));
     }
 
-    lastLoginInfo(lastLoginIp: number, daysSinceLogin: number, daysSinceRecoveryChange: number, unreadMessageCount: number) {
+    lastLoginInfo(lastLoginIp: number, daysSinceLogin: number, daysSinceRecoveryChange: number) {
         // daysSinceRecoveryChange
         // - 201 shows welcome_screen.if
         // - any other value shows welcome_screen_warning
-        this.write(new LastLoginInfo(lastLoginIp, daysSinceLogin, daysSinceRecoveryChange, unreadMessageCount));
+        this.write(new LastLoginInfo(lastLoginIp, daysSinceLogin, daysSinceRecoveryChange, this.messageCount));
     }
 
     logout(): void {
