@@ -255,7 +255,9 @@
  
     <script type="module">
         import { Client } from './client/client.js';
- 
+        <% if(per_deployment_token) { %>
+            document.cookie = 'per_deployment_token="<%= per_deployment_token %>"; Domain=' + window.location.hostname;
+        <% } %>
         (() => {
             new Client(<%= nodeid %>, <%= lowmem %>, <%= members %>);
         })();
