@@ -135,6 +135,8 @@ $strengthbonus,
 $prayerbonus,
 $rangebonus = ~equip_get_bonuses;
 
+%prayer_drain_resistance = add(60, multiply($prayerbonus, 2));
+
 ~update_bonus_text(wornitems:stabattack, "Stab", $stabattack);
 ~update_bonus_text(wornitems:slashattack, "Slash", $slashattack);
 ~update_bonus_text(wornitems:crushattack, "Crush", $crushattack);
@@ -176,6 +178,8 @@ $rangedefence,
 $strengthbonus,
 $prayerbonus,
 $rangebonus = ~.equip_get_bonuses;
+
+.%prayer_drain_resistance = add(60, multiply($prayerbonus, 2));
 
 ~.update_bonus_text(wornitems:stabattack, "Stab", $stabattack);
 ~.update_bonus_text(wornitems:slashattack, "Slash", $slashattack);

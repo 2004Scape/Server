@@ -30,9 +30,6 @@ $strengthbonus,
 $prayerbonus,
 $rangebonus = ~equip_get_bonuses;
 
-//adjust prayer drain
-%prayer_drain_resistance = add(60, multiply($prayerbonus, 2));
-
 $attack_prayer = ~check_attack_prayer;
 $defence_prayer = ~check_defence_prayer;
 $strength_prayer = ~check_strength_prayer;
@@ -132,9 +129,6 @@ $rangedefence,
 $strengthbonus,
 $prayerbonus,
 $rangebonus = ~.equip_get_bonuses;
-
-//adjust prayer drain
-.%prayer_drain_resistance = add(60, multiply($prayerbonus, 2));
 
 $attack_prayer = ~.check_attack_prayer;
 $defence_prayer = ~.check_defence_prayer;
