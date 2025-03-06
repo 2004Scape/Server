@@ -130,6 +130,10 @@ if (%action_delay > map_clock) {
     return;
 }
 
+if (npc_stat(hitpoints) = 0) {
+    return;
+}
+
 // set the skill clock depending on the weapon attack rate
 %action_delay = add(map_clock, oc_param($rhand, attackrate));
 
