@@ -68,7 +68,7 @@ if ($headicon > 0) {
 def_int $i = 0;
 while ($i <= db_getfieldcount($data, prayers:prayer_deactivate)) {
     def_int $prayer = db_getfield($data, prayers:prayer_deactivate, $i);
-    ~prayer_deactivate($prayer);
+    ~prayer_deactivate_specific($prayer);
     $i = add($i, 1);
 }
 
