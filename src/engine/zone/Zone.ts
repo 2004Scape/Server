@@ -28,6 +28,7 @@ import UpdateZoneFullFollows from '#/network/server/model/UpdateZoneFullFollows.
 import UpdateZonePartialEnclosed from '#/network/server/model/UpdateZonePartialEnclosed.js';
 import UpdateZonePartialFollows from '#/network/server/model/UpdateZonePartialFollows.js';
 import ZoneMessage from '#/network/server/ZoneMessage.js';
+import Environment from '#/util/Environment.js';
 import LinkList from '#/util/LinkList.js';
 
 export default class Zone {
