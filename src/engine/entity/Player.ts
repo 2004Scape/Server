@@ -516,8 +516,8 @@ export default class Player extends PathingEntity {
         }
         // reload entity info (overkill? does the client have some logic around this?)
         this.buildArea.clear(true);
-        // rebuild scene (rebuildnormal won't run if you're in the same zone!)
-        this.rebuildNormal();
+        // rebuild scene later this tick (note: rebuild won't run on the client if you're in the same zone!)
+        this.rebuildNormal(true);
         // in case of pending update
         if (World.isPendingShutdown) {
             const ticksBeforeShutdown = World.shutdownTicksRemaining;
@@ -1989,7 +1989,7 @@ export default class Player extends PathingEntity {
         }
     }
 
-    rebuildNormal(): void {
+    rebuildNormal(reconnect: boolean = false): void {
         const originX: number = CoordGrid.zone(this.originX);
         const originZ: number = CoordGrid.zone(this.originZ);
 
@@ -1999,7 +1999,7 @@ export default class Player extends PathingEntity {
         const reloadBottomZ = (originZ - 4) << 3;
 
         // if the build area should be regenerated, do so now
-        if (this.x < reloadLeftX || this.z < reloadBottomZ || this.x > reloadRightX - 1 || this.z > reloadTopZ - 1) {
+        if (this.x < reloadLeftX || this.z < reloadBottomZ || this.x > reloadRightX - 1 || this.z > reloadTopZ - 1 || reconnect) {
             // temp fix: invisible door issue (need a deeper dive)
             for (const zone of this.buildArea.activeZones) {
                 const { x, z } = ZoneMap.unpackIndex(zone);
