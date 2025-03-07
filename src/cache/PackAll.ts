@@ -81,7 +81,7 @@ export async function packClient() {
     await packClientTexture();
     packClientWordenc();
     packClientSound();
-    
+
     packClientMap();
     packClientMusic();
 

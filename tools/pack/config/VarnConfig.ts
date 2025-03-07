@@ -51,7 +51,7 @@ export function parseVarnConfig(key: string, value: string): ConfigValue | null 
     }
 }
 
-export function packVarnConfigs(configs: Map<string, ConfigLine[]>): { client: PackedData, server: PackedData } {
+export function packVarnConfigs(configs: Map<string, ConfigLine[]>): { client: PackedData; server: PackedData } {
     const client: PackedData = new PackedData(VarnPack.size);
     const server: PackedData = new PackedData(VarnPack.size);
 

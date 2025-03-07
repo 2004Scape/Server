@@ -8,7 +8,7 @@ export default class UpdateInvFullEncoder extends MessageEncoder<UpdateInvFull> 
     prot = ServerProt.UPDATE_INV_FULL;
 
     encode(buf: Packet, message: UpdateInvFull): void {
-        const {component, inv} = message;
+        const { component, inv } = message;
 
         const comType = Component.get(component);
         const size = Math.min(inv.capacity, comType.width * comType.height);
@@ -36,7 +36,7 @@ export default class UpdateInvFullEncoder extends MessageEncoder<UpdateInvFull> 
     }
 
     test(message: UpdateInvFull): number {
-        const {component, inv} = message;
+        const { component, inv } = message;
 
         const comType = Component.get(component);
         const size = Math.min(inv.capacity, comType.width * comType.height);

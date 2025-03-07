@@ -4,7 +4,10 @@ import ClientProt from '#/network/rs225/client/prot/ClientProt.js';
 import OpHeld from '#/network/client/model/OpHeld.js';
 
 export default class OpHeldDecoder extends MessageDecoder<OpHeld> {
-    constructor(readonly prot: ClientProt, readonly op: number) {
+    constructor(
+        readonly prot: ClientProt,
+        readonly op: number
+    ) {
         super();
     }
 

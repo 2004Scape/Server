@@ -5,11 +5,7 @@ import { createHash } from 'crypto';
 import { hostname } from 'os';
 
 // Attempt to load the public.pem parameters:
-const pubkey = forge.pki.publicKeyFromPem(
-    Environment.STANDALONE_BUNDLE ?
-        (await (await fetch('data/config/public.pem')).text()) :
-        fs.readFileSync('data/config/public.pem', 'ascii')
-);
+const pubkey = forge.pki.publicKeyFromPem(Environment.STANDALONE_BUNDLE ? await (await fetch('data/config/public.pem')).text() : fs.readFileSync('data/config/public.pem', 'ascii'));
 const pubkeySha1 = createHash('sha1');
 // token consists of both the RSA parameters (which are changed each release),
 // alongside system hostname (to make this deterministic, yet unpredictable
@@ -25,7 +21,7 @@ const publicPerDeploymentToken = pubkeySha1.digest().toString('hex');
 /**
  * getPublicPerDeploymentToken returns a string unique to each individual
  * world, for each deployment (release).
-*/
+ */
 export function getPublicPerDeploymentToken() {
     return publicPerDeploymentToken;
 }

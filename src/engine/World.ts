@@ -1025,7 +1025,7 @@ class World {
                 // if it throws then there was no available pid. otherwise guaranteed to not be -1.
                 pid = this.getNextPid(isClientConnected(player) ? player.client : null);
             } catch (_) {
-                // eslint-disable-line @typescript-eslint/no-unused-vars
+                 
                 // world full
                 if (isClientConnected(player)) {
                     player.addSessionLog(LoggerEventType.ENGINE, 'Tried to log in - world full');

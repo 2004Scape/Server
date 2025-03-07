@@ -80,7 +80,7 @@ const DebugOps: CommandHandlers = {
             // milliseconds
             state.pushInt(elapsed);
         }
-    },
+    }
 };
 
 export default DebugOps;

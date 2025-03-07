@@ -265,7 +265,7 @@ export function parseNpcConfig(key: string, value: string): ConfigValue | null |
     }
 }
 
-export function packNpcConfigs(configs: Map<string, ConfigLine[]>): { client: PackedData, server: PackedData } {
+export function packNpcConfigs(configs: Map<string, ConfigLine[]>): { client: PackedData; server: PackedData } {
     const client: PackedData = new PackedData(NpcPack.size);
     const server: PackedData = new PackedData(NpcPack.size);
 
@@ -320,7 +320,7 @@ export function packNpcConfigs(configs: Map<string, ConfigLine[]>): { client: Pa
                     client.p2(value[2] as number);
                     client.p2(value[3] as number);
                 } else {
-                    client.p1(14);    
+                    client.p1(14);
                     client.p2(value as number);
                 }
             } else if (key === 'hasalpha') {

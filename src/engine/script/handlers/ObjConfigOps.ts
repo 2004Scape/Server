@@ -5,7 +5,7 @@ import ParamType from '#/cache/config/ParamType.js';
 import ScriptOpcode from '#/engine/script/ScriptOpcode.js';
 import { CommandHandlers } from '#/engine/script/ScriptRunner.js';
 
-import {check, ObjTypeValid, ParamTypeValid} from '#/engine/script/ScriptValidators.js';
+import { check, ObjTypeValid, ParamTypeValid } from '#/engine/script/ScriptValidators.js';
 
 const ObjConfigOps: CommandHandlers = {
     [ScriptOpcode.OC_NAME]: state => {

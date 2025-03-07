@@ -9,26 +9,28 @@ import PlayerInfoChat from '#/network/server/model/PlayerInfoChat.js';
 import PlayerInfoSpotanim from '#/network/server/model/PlayerInfoSpotanim.js';
 import Renderer from '#/engine/renderer/Renderer.js';
 import PlayerInfoDamage from '#/network/server/model/PlayerInfoDamage.js';
-import {PlayerStat} from '#/engine/entity/PlayerStat.js';
+import { PlayerStat } from '#/engine/entity/PlayerStat.js';
 import InfoMessage from '#/network/server/InfoMessage.js';
 import Packet from '#/io/Packet.js';
 import PlayerInfoExactMove from '#/network/server/model/PlayerInfoExactMove.js';
 import InfoMessageEncoder from '#/network/server/codec/InfoMessageEncoder.js';
 import ServerProtRepository from '#/network/rs225/server/prot/ServerProtRepository.js';
 
-export default class PlayerRenderer extends Renderer<Player>  {
+export default class PlayerRenderer extends Renderer<Player> {
     constructor() {
-        super(new Map([
-            [InfoProt.PLAYER_APPEARANCE, new Map()],
-            [InfoProt.PLAYER_ANIM, new Map()],
-            [InfoProt.PLAYER_FACE_ENTITY, new Map()],
-            [InfoProt.PLAYER_SAY, new Map()],
-            [InfoProt.PLAYER_DAMAGE, new Map()],
-            [InfoProt.PLAYER_FACE_COORD, new Map()],
-            [InfoProt.PLAYER_CHAT, new Map()],
-            [InfoProt.PLAYER_SPOTANIM, new Map()],
-            // exact move does not get cached, that is built on demand.
-        ]));
+        super(
+            new Map([
+                [InfoProt.PLAYER_APPEARANCE, new Map()],
+                [InfoProt.PLAYER_ANIM, new Map()],
+                [InfoProt.PLAYER_FACE_ENTITY, new Map()],
+                [InfoProt.PLAYER_SAY, new Map()],
+                [InfoProt.PLAYER_DAMAGE, new Map()],
+                [InfoProt.PLAYER_FACE_COORD, new Map()],
+                [InfoProt.PLAYER_CHAT, new Map()],
+                [InfoProt.PLAYER_SPOTANIM, new Map()]
+                // exact move does not get cached, that is built on demand.
+            ])
+        );
     }
 
     computeInfo(player: Player): void {

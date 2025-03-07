@@ -1,4 +1,4 @@
-import {fromBase37, toBase37, toTitleCase} from '#/util/JString.js';
+import { fromBase37, toBase37, toTitleCase } from '#/util/JString.js';
 
 describe('JString', (): void => {
     describe('toBase37', (): void => {

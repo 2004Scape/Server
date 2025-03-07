@@ -1,5 +1,5 @@
 import ZoneMessage from '#/network/server/ZoneMessage.js';
-import {CoordGrid} from '#/engine/CoordGrid.js';
+import { CoordGrid } from '#/engine/CoordGrid.js';
 
 export default class MapProjAnim extends ZoneMessage {
     constructor(

@@ -74,11 +74,15 @@ export default class HuntType extends ConfigType {
 
     public checkHuntCondition(value: number, condition: string, checkValue: number): boolean {
         switch (condition) {
-            case '>': return value > checkValue;
-            case '<': return value < checkValue;
-            case '=': return value === checkValue;
-            case '!': return value !== checkValue;
-        } 
+            case '>':
+                return value > checkValue;
+            case '<':
+                return value < checkValue;
+            case '=':
+                return value === checkValue;
+            case '!':
+                return value !== checkValue;
+        }
         return false;
     }
 
@@ -146,7 +150,7 @@ export default class HuntType extends ConfigType {
             this.checkInvCondition = dat.gjstr();
             this.checkInvVal = dat.g4();
         } else if (code > 17 && code < 21) {
-            this.checkVars.push({varId: dat.g2(), condition: dat.gjstr(), val: dat.g4()});
+            this.checkVars.push({ varId: dat.g2(), condition: dat.gjstr(), val: dat.g4() });
         } else if (code === 250) {
             this.debugname = dat.gjstr();
         } else {

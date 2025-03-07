@@ -92,7 +92,7 @@ export function parseInvConfig(key: string, value: string): ConfigValue | null |
     }
 }
 
-export function packInvConfigs(configs: Map<string, ConfigLine[]>): { client: PackedData, server: PackedData } {
+export function packInvConfigs(configs: Map<string, ConfigLine[]>): { client: PackedData; server: PackedData } {
     const client: PackedData = new PackedData(InvPack.size);
     const server: PackedData = new PackedData(InvPack.size);
 

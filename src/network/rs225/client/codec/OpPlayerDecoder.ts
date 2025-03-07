@@ -4,7 +4,10 @@ import ClientProt from '#/network/rs225/client/prot/ClientProt.js';
 import OpPlayer from '#/network/client/model/OpPlayer.js';
 
 export default class OpPlayerDecoder extends MessageDecoder<OpPlayer> {
-    constructor(readonly prot: ClientProt, readonly op: number) {
+    constructor(
+        readonly prot: ClientProt,
+        readonly op: number
+    ) {
         super();
     }
 

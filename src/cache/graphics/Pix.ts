@@ -18,13 +18,16 @@ function isPrime(num: number) {
 
 export default class Pix {
     private constructor(
-        public pixels: Uint8Array, public palette: Int32Array,
-        public width: number, public height: number,
-        public cropLeft: number, public cropTop: number,
-        public cropRight: number, public cropBottom: number,
+        public pixels: Uint8Array,
+        public palette: Int32Array,
+        public width: number,
+        public height: number,
+        public cropLeft: number,
+        public cropTop: number,
+        public cropRight: number,
+        public cropBottom: number,
         public pixelOrder: number
-    ) {
-    }
+    ) {}
 
     static unpackJag(jag: Jagfile, name: string, index: number = 0): Pix | null {
         const dat = jag.read(name + '.dat');
@@ -87,7 +90,7 @@ export default class Pix {
         } else if (pixelOrder === 1) {
             for (let x = 0; x < cropRight; x++) {
                 for (let y = 0; y < cropBottom; y++) {
-                    pixels[(y * cropRight) + x] = dat.g1();
+                    pixels[y * cropRight + x] = dat.g1();
                 }
             }
         }
@@ -207,7 +210,7 @@ export default class Pix {
         } else if (this.pixelOrder === 1) {
             for (let x = 0; x < this.cropRight; x++) {
                 for (let y = 0; y < this.cropBottom; y++) {
-                    dat.p1(this.pixels[(y * this.cropRight) + x]);
+                    dat.p1(this.pixels[y * this.cropRight + x]);
                 }
             }
         }
@@ -243,7 +246,7 @@ export default class Pix {
         } else if (this.pixelOrder === 1) {
             for (let x = 0; x < this.cropRight; x++) {
                 for (let y = 0; y < this.cropBottom; y++) {
-                    const index = this.pixels[(y * this.cropRight) + x];
+                    const index = this.pixels[y * this.cropRight + x];
                     if (index === 0) {
                         continue;
                     }

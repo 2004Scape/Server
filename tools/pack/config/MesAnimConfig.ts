@@ -54,7 +54,7 @@ export function parseMesAnimConfig(key: string, value: string): ConfigValue | nu
     }
 }
 
-export function packMesAnimConfigs(configs: Map<string, ConfigLine[]>): { client: PackedData, server: PackedData } {
+export function packMesAnimConfigs(configs: Map<string, ConfigLine[]>): { client: PackedData; server: PackedData } {
     const client: PackedData = new PackedData(MesAnimPack.size);
     const server: PackedData = new PackedData(MesAnimPack.size);
 

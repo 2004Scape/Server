@@ -49,7 +49,7 @@ const NumberOps: CommandHandlers = {
 
     [ScriptOpcode.ADDPERCENT]: state => {
         const [num, percent] = state.popInts(2);
-        state.pushInt((num * percent / 100 + num) | 0);
+        state.pushInt(((num * percent) / 100 + num) | 0);
     },
 
     [ScriptOpcode.SETBIT]: state => {

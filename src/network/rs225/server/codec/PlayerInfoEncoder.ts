@@ -254,16 +254,7 @@ export default class PlayerInfoEncoder extends MessageEncoder<PlayerInfo> {
         if (masks & InfoProt.PLAYER_EXACT_MOVE.id) {
             const x: number = CoordGrid.zoneOrigin(player.originX);
             const z: number = CoordGrid.zoneOrigin(player.originZ);
-            renderer.writeExactmove(
-                updates,
-                other.exactStartX - x,
-                other.exactStartZ - z,
-                other.exactEndX - x,
-                other.exactEndZ - z,
-                other.exactMoveStart,
-                other.exactMoveEnd,
-                other.exactMoveDirection
-            );
+            renderer.writeExactmove(updates, other.exactStartX - x, other.exactStartZ - z, other.exactEndX - x, other.exactEndZ - z, other.exactMoveStart, other.exactMoveEnd, other.exactMoveDirection);
         }
     }
 

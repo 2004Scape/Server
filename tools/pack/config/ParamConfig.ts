@@ -211,7 +211,7 @@ export function parseParamConfig(key: string, value: string): ConfigValue | null
     }
 }
 
-export function packParamConfigs(configs: Map<string, ConfigLine[]>): { client: PackedData, server: PackedData } {
+export function packParamConfigs(configs: Map<string, ConfigLine[]>): { client: PackedData; server: PackedData } {
     const client: PackedData = new PackedData(ParamPack.size);
     const server: PackedData = new PackedData(ParamPack.size);
 

@@ -82,7 +82,7 @@ export function parseDbRowConfig(key: string, value: string): ConfigValue | null
     }
 }
 
-export function packDbRowConfigs(configs: Map<string, ConfigLine[]>): { client: PackedData, server: PackedData } {
+export function packDbRowConfigs(configs: Map<string, ConfigLine[]>): { client: PackedData; server: PackedData } {
     const client: PackedData = new PackedData(DbRowPack.size);
     const server: PackedData = new PackedData(DbRowPack.size);
 

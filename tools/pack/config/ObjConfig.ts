@@ -193,7 +193,7 @@ export function parseObjConfig(key: string, value: string): ConfigValue | null |
     }
 }
 
-export function packObjConfigs(configs: Map<string, ConfigLine[]>): { client: PackedData, server: PackedData } {
+export function packObjConfigs(configs: Map<string, ConfigLine[]>): { client: PackedData; server: PackedData } {
     const client: PackedData = new PackedData(ObjPack.size);
     const server: PackedData = new PackedData(ObjPack.size);
 

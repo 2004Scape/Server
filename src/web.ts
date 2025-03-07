@@ -96,7 +96,7 @@ export const web = http.createServer(async (req, res) => {
                 nodeid: Environment.NODE_ID,
                 lowmem,
                 members: Environment.NODE_MEMBERS,
-                per_deployment_token: '',
+                per_deployment_token: ''
             };
             if (Environment.WEB_SOCKET_TOKEN_PROTECTION) {
                 context.per_deployment_token = getPublicPerDeploymentToken();
@@ -110,7 +110,8 @@ export const web = http.createServer(async (req, res) => {
             res.writeHead(404);
             res.end();
         }
-    } catch (_) {  // eslint-disable-line @typescript-eslint/no-unused-vars
+    } catch (_) {
+         
         res.end();
     }
 });

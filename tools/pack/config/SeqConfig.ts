@@ -118,7 +118,7 @@ export function parseSeqConfig(key: string, value: string): ConfigValue | null |
     }
 }
 
-export function packSeqConfigs(configs: Map<string, ConfigLine[]>): { client: PackedData, server: PackedData } {
+export function packSeqConfigs(configs: Map<string, ConfigLine[]>): { client: PackedData; server: PackedData } {
     const client: PackedData = new PackedData(SeqPack.size);
     const server: PackedData = new PackedData(SeqPack.size);
 

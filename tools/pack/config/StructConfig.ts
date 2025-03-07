@@ -68,7 +68,7 @@ export function parseStructConfig(key: string, value: string): ConfigValue | nul
     }
 }
 
-export function packStructConfigs(configs: Map<string, ConfigLine[]>): { client: PackedData, server: PackedData } {
+export function packStructConfigs(configs: Map<string, ConfigLine[]>): { client: PackedData; server: PackedData } {
     const client: PackedData = new PackedData(StructPack.size);
     const server: PackedData = new PackedData(StructPack.size);
 

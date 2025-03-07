@@ -10,7 +10,6 @@ import LoggerEventType from '#/server/logger/LoggerEventType.js';
 import Environment from '#/util/Environment.js';
 import { getPublicPerDeploymentToken } from '#/io/PemUtil.js';
 
-
 function getIp(req: IncomingMessage) {
     // todo: environment flag to respect cf-connecting-ip (NOT safe if origin is exposed publicly by IP + proxied)
     let forwardedFor = req.headers['cf-connecting-ip'] || req.headers['x-forwarded-for'] || req.socket.remoteAddress;
@@ -64,7 +63,7 @@ export default class WSServer {
 
                 cb(true);
             },
-            maxPayload: 2000,
+            maxPayload: 2000
         });
 
         this.wss.on('connection', (ws: WebSocket, req) => {
@@ -85,7 +84,8 @@ export default class WSServer {
 
                     client.buffer(data);
                     World.onClientData(client);
-                } catch (_) {  // eslint-disable-line @typescript-eslint/no-unused-vars
+                } catch (_) {
+                     
                     client.terminate();
                 }
             });
@@ -99,7 +99,7 @@ export default class WSServer {
                 }
             });
 
-            ws.on('error', (err) => {
+            ws.on('error', err => {
                 if (client.player) {
                     client.player.addSessionLog(LoggerEventType.ENGINE, 'WS socket error', err.message);
                 }

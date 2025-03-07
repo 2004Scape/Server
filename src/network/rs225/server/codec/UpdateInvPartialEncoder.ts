@@ -7,7 +7,7 @@ export default class UpdateInvPartialEncoder extends MessageEncoder<UpdateInvPar
     prot = ServerProt.UPDATE_INV_PARTIAL;
 
     encode(buf: Packet, message: UpdateInvPartial): void {
-        const {component, inv} = message;
+        const { component, inv } = message;
 
         buf.p2(component);
         for (const slot of message.slots) {
@@ -31,7 +31,7 @@ export default class UpdateInvPartialEncoder extends MessageEncoder<UpdateInvPar
     }
 
     test(message: UpdateInvPartial): number {
-        const {inv} = message;
+        const { inv } = message;
 
         let length: number = 0;
         length += 2;

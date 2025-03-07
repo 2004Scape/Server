@@ -1,6 +1,6 @@
 import fs from 'fs';
 
-import {CollisionFlag, CollisionType, LocAngle, LocLayer} from '@2004scape/rsmod-pathfinder';
+import { CollisionFlag, CollisionType, LocAngle, LocLayer } from '@2004scape/rsmod-pathfinder';
 import * as rsmod from '@2004scape/rsmod-pathfinder';
 
 import Packet from '#/io/Packet.js';
@@ -85,7 +85,8 @@ export default class GameMap {
                 await Packet.loadAsync(`${path}n${mx}_${mz}`),
                 await Packet.loadAsync(`${path}o${mx}_${mz}`),
                 await Packet.loadAsync(`${path}m${mx}_${mz}`),
-                await Packet.loadAsync(`${path}l${mx}_${mz}`)]);
+                await Packet.loadAsync(`${path}l${mx}_${mz}`)
+            ]);
 
             this.loadNpcs(npcData, mapsquareX, mapsquareZ);
             this.loadObjs(objData, mapsquareX, mapsquareZ);
@@ -143,7 +144,7 @@ export default class GameMap {
                 const npcType: NpcType = NpcType.get(id);
                 const size: number = npcType.size;
                 const npc: Npc = new Npc(level, absoluteX, absoluteZ, size, size, EntityLifeCycle.RESPAWN, World.getNextNid(), npcType.id, npcType.moverestrict, npcType.blockwalk);
-                if (npcType.members && this.members || !npcType.members) {
+                if ((npcType.members && this.members) || !npcType.members) {
                     World.addNpc(npc, -1);
                 }
             }
@@ -164,7 +165,7 @@ export default class GameMap {
                 }
                 const objType: ObjType = ObjType.get(id);
                 const obj: Obj = new Obj(level, absoluteX, absoluteZ, EntityLifeCycle.RESPAWN, objType.id, count);
-                if (objType.members && this.members || !objType.members) {
+                if ((objType.members && this.members) || !objType.members) {
                     this.getZone(obj.x, obj.z, obj.level).addStaticObj(obj);
                 }
             }
@@ -204,7 +205,8 @@ export default class GameMap {
                         continue;
                     }
 
-                    if (x % 7 === 0 && z % 7 === 0) { // allocate per zone
+                    if (x % 7 === 0 && z % 7 === 0) {
+                        // allocate per zone
                         rsmod.allocateIfAbsent(absoluteX, absoluteZ, level);
                     }
 
@@ -240,7 +242,7 @@ export default class GameMap {
             let coordOffset: number = packet.gsmart();
 
             while (coordOffset !== 0) {
-                const { x, z, level } = this.unpackCoord(coord += coordOffset - 1);
+                const { x, z, level } = this.unpackCoord((coord += coordOffset - 1));
 
                 const info: number = packet.g1();
                 coordOffset = packet.gsmart();
@@ -293,21 +295,21 @@ export default class GameMap {
                     printWarning('Free to play map not aligned to a zone ' + csv[i]);
                 }
 
-                const startX: number  = (fromMx << 6) + fromLx;
-                const startZ: number  = (fromMz << 6) + fromLz;
-                const endX: number  = (toMx << 6) + toLx;
-                const endZ: number  = (toMz << 6) + toLz;
+                const startX: number = (fromMx << 6) + fromLx;
+                const startZ: number = (fromMz << 6) + fromLz;
+                const endX: number = (toMx << 6) + toLx;
+                const endZ: number = (toMz << 6) + toLz;
 
-                for (let x: number  = startX; x <= endX; x++) {
-                    for (let z: number  = startZ; z <= endZ; z++) {
+                for (let x: number = startX; x <= endX; x++) {
+                    for (let z: number = startZ; z <= endZ; z++) {
                         map.add(CoordGrid.packCoord(fromLevel, x, z));
                     }
                 }
             } else {
                 const [level, mx, mz, lx, lz] = csv[i].split('_').map(Number);
 
-                for (let x: number  = 0; x < 8; x++) {
-                    for (let z: number  = 0; z < 8; z++) {
+                for (let x: number = 0; x < 8; x++) {
+                    for (let z: number = 0; z < 8; z++) {
                         map.add(CoordGrid.packCoord(level, (mx << 6) + lx + x, (mz << 6) + lz + z));
                     }
                 }

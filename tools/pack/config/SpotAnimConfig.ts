@@ -89,7 +89,7 @@ export function parseSpotAnimConfig(key: string, value: string): ConfigValue | n
     }
 }
 
-export function packSpotAnimConfigs(configs: Map<string, ConfigLine[]>): { client: PackedData, server: PackedData } {
+export function packSpotAnimConfigs(configs: Map<string, ConfigLine[]>): { client: PackedData; server: PackedData } {
     const client: PackedData = new PackedData(SpotAnimPack.size);
     const server: PackedData = new PackedData(SpotAnimPack.size);
 

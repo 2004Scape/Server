@@ -9,7 +9,7 @@ import World from '#/engine/World.js';
 
 import { NetworkPlayer } from '#/engine/entity/NetworkPlayer.js';
 import Player, { getExpByLevel, getLevelByExp } from '#/engine/entity/Player.js';
-import {PlayerStat} from '#/engine/entity/PlayerStat.js';
+import { PlayerStat } from '#/engine/entity/PlayerStat.js';
 
 import InvType from '#/cache/config/InvType.js';
 
@@ -38,9 +38,7 @@ export class PlayerLoading {
         const name37 = toBase37(name); // always username.
         const safeName = fromBase37(name37); // always safe username.
 
-        const player = client
-            ? new NetworkPlayer(safeName, name37, hash64, client)
-            : new Player(safeName, name37, hash64);
+        const player = client ? new NetworkPlayer(safeName, name37, hash64, client) : new Player(safeName, name37, hash64);
 
         player.lastConnected = World.currentTick;
         player.lastResponse = World.currentTick;

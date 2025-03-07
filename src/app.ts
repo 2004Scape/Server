@@ -29,7 +29,7 @@ if (!fs.existsSync('data/pack/client/config') || !fs.existsSync('data/pack/serve
         if (err instanceof Error) {
             printError(err.message);
         }
-    
+
         process.exit(1);
     }
 }
@@ -51,8 +51,8 @@ wsServer.start(web);
 startWeb();
 startManagementWeb();
 
-register.setDefaultLabels({nodeId: Environment.NODE_ID});
-collectDefaultMetrics({register});
+register.setDefaultLabels({ nodeId: Environment.NODE_ID });
+collectDefaultMetrics({ register });
 
 // unfortunately, tsx watch is not giving us a way to gracefully shut down in our dev mode:
 // https://github.com/privatenumber/tsx/issues/494

@@ -58,7 +58,7 @@ export function parseEnumConfig(key: string, value: string): ConfigValue | null 
     }
 }
 
-export function packEnumConfigs(configs: Map<string, ConfigLine[]>): { client: PackedData, server: PackedData } {
+export function packEnumConfigs(configs: Map<string, ConfigLine[]>): { client: PackedData; server: PackedData } {
     const client: PackedData = new PackedData(EnumPack.size);
     const server: PackedData = new PackedData(EnumPack.size);
 
@@ -80,7 +80,7 @@ export function packEnumConfigs(configs: Map<string, ConfigLine[]>): { client: P
                 val.push(value as string);
             } else if (key === 'inputtype') {
                 server.p1(1);
-                if (value as number === ScriptVarType.AUTOINT) {
+                if ((value as number) === ScriptVarType.AUTOINT) {
                     server.p1(ScriptVarType.INT);
                 } else {
                     server.p1(value as number);

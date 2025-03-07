@@ -9,11 +9,11 @@ import Environment from '#/util/Environment.js';
 
 export default class InputTracking {
     // How many ticks between tracking sessions:
-    private static readonly TRACKING_RATE: number = 200;  // 120 seconds
+    private static readonly TRACKING_RATE: number = 200; // 120 seconds
     // How many ticks the tracking is enabled for:
-    private static readonly TRACKING_TIME: number = 150;  // 90 seconds
+    private static readonly TRACKING_TIME: number = 150; // 90 seconds
     // How many ticks to allow for the last client report:
-    private static readonly FINAL_REPORT_TIME_LEEWAY: number = 16;  // ~10 seconds
+    private static readonly FINAL_REPORT_TIME_LEEWAY: number = 16; // ~10 seconds
 
     private readonly player: Player;
 
@@ -103,11 +103,7 @@ export default class InputTracking {
         if (this.hasSeenReport) {
             // Have events to be submitted
             if (this.shouldSubmitTrackingDetails()) {
-                World.submitInputTracking(
-                    this.player.username, 
-                    this.player instanceof NetworkPlayer ? this.player.client.uuid : 'headless', 
-                    this.recordedEvents,
-                );
+                World.submitInputTracking(this.player.username, this.player instanceof NetworkPlayer ? this.player.client.uuid : 'headless', this.recordedEvents);
             }
         } else if (!Environment.NODE_DEBUG) {
             // this means that:
@@ -125,6 +121,6 @@ export default class InputTracking {
     }
 
     offset(n: number): number {
-        return Math.floor(Math.random() * (n - (-n) + 1)) + (-n);
+        return Math.floor(Math.random() * (n - -n + 1)) + -n;
     }
 }

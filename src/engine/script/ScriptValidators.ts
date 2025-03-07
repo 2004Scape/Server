@@ -6,14 +6,14 @@ import NpcMode from '#/engine/entity/NpcMode.js';
 import SpotanimType from '#/cache/config/SpotanimType.js';
 import EnumType from '#/cache/config/EnumType.js';
 import ObjType from '#/cache/config/ObjType.js';
-import {Inventory} from '#/engine/Inventory.js';
+import { Inventory } from '#/engine/Inventory.js';
 import InvType from '#/cache/config/InvType.js';
 import CategoryType from '#/cache/config/CategoryType.js';
 import IdkType from '#/cache/config/IdkType.js';
 import HuntVis from '#/engine/entity/hunt/HuntVis.js';
-import {LocAngle, LocShape} from '@2004scape/rsmod-pathfinder';
-import {CoordGrid} from '#/engine/CoordGrid.js';
-import {ConfigType} from '#/cache/config/ConfigType.js';
+import { LocAngle, LocShape } from '@2004scape/rsmod-pathfinder';
+import { CoordGrid } from '#/engine/CoordGrid.js';
+import { ConfigType } from '#/cache/config/ConfigType.js';
 import SeqType from '#/cache/config/SeqType.js';
 import VarPlayerType from '#/cache/config/VarPlayerType.js';
 import VarNpcType from '#/cache/config/VarNpcType.js';
@@ -25,7 +25,7 @@ import DbRowType from '#/cache/config/DbRowType.js';
 import DbTableType from '#/cache/config/DbTableType.js';
 import NpcStat from '#/engine/entity/NpcStat.js';
 import HitType from '#/engine/entity/HitType.js';
-import {PlayerStat} from '#/engine/entity/PlayerStat.js';
+import { PlayerStat } from '#/engine/entity/PlayerStat.js';
 import MapFindSqaureType from '#/engine/entity/MapFindSquareType.js';
 
 interface ScriptValidator<T, R> {

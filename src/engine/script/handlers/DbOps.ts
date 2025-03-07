@@ -5,7 +5,7 @@ import ScriptVarType from '#/cache/config/ScriptVarType.js';
 import ScriptOpcode from '#/engine/script/ScriptOpcode.js';
 import { CommandHandlers } from '#/engine/script/ScriptRunner.js';
 
-import {check, DbRowTypeValid, DbTableTypeValid} from '#/engine/script/ScriptValidators.js';
+import { check, DbRowTypeValid, DbTableTypeValid } from '#/engine/script/ScriptValidators.js';
 
 const DebugOps: CommandHandlers = {
     [ScriptOpcode.DB_FIND_WITH_COUNT]: () => {

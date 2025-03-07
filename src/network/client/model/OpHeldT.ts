@@ -5,7 +5,9 @@ export default class OpHeldT extends IncomingMessage {
     category = ClientProtCategory.USER_EVENT;
 
     constructor(
-        readonly obj: number, readonly slot: number, readonly component: number,
+        readonly obj: number,
+        readonly slot: number,
+        readonly component: number,
         readonly spellComponent: number
     ) {
         super();

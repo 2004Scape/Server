@@ -1,5 +1,5 @@
 import MessageDecoder from '#/network/client/codec/MessageDecoder.js';
-import MessageHandler from '#/network/client/handler/MessageHandler.js'; 
+import MessageHandler from '#/network/client/handler/MessageHandler.js';
 import ClientProt from '#/network/rs225/client/prot/ClientProt.js';
 import IncomingMessage from '#/network/client/IncomingMessage.js';
 import ClientCheatDecoder from '#/network/rs225/client/codec/ClientCheatDecoder.js';

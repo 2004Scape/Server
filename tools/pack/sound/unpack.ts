@@ -27,7 +27,7 @@ class Wave {
 
             order += `${id}\n`;
 
-            const data = new Uint8Array((end - start) - start);
+            const data = new Uint8Array(end - start - start);
             dat.pos = start;
             dat.gdata(data, 0, data.length);
             dat.pos = start;

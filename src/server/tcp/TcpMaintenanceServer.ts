@@ -23,11 +23,10 @@ export default class TcpMaintenanceServer {
             s.write(seed.data);
 
             s.on('data', () => {
-                s.write(Uint8Array.from([ 14 ]));
+                s.write(Uint8Array.from([14]));
             });
 
-            s.on('close', () => {
-            });
+            s.on('close', () => {});
 
             s.on('error', () => {
                 s.destroy();
@@ -38,7 +37,6 @@ export default class TcpMaintenanceServer {
             });
         });
 
-        this.tcp.listen(Environment.NODE_PORT, '0.0.0.0', () => {
-        });
+        this.tcp.listen(Environment.NODE_PORT, '0.0.0.0', () => {});
     }
 }

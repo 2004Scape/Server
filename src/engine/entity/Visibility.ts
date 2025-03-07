@@ -1,7 +1,7 @@
 enum Visibility {
     DEFAULT,
     SOFT,
-    HARD,
+    HARD
 }
 
 export default Visibility;

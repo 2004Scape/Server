@@ -69,7 +69,13 @@ export class PackFile {
     }
 
     save() {
-        fs.writeFileSync(`${Environment.BUILD_SRC_DIR}/pack/${this.type}.pack`, Array.from(this.pack.entries()).sort((a, b) => a[0] - b[0]).map(([id, name]) => `${id}=${name}`).join('\n') + '\n');
+        fs.writeFileSync(
+            `${Environment.BUILD_SRC_DIR}/pack/${this.type}.pack`,
+            Array.from(this.pack.entries())
+                .sort((a, b) => a[0] - b[0])
+                .map(([id, name]) => `${id}=${name}`)
+                .join('\n') + '\n'
+        );
     }
 
     getById(id: number): string {
@@ -201,9 +207,11 @@ function validateConfigPack(pack: PackFile, ext: string, regen: boolean = false,
 }
 
 function validateCategoryPack(pack: PackFile) {
-    if (shouldBuild(`${Environment.BUILD_SRC_DIR}/scripts`, '.loc', `${Environment.BUILD_SRC_DIR}/pack/category.pack`) ||
+    if (
+        shouldBuild(`${Environment.BUILD_SRC_DIR}/scripts`, '.loc', `${Environment.BUILD_SRC_DIR}/pack/category.pack`) ||
         shouldBuild(`${Environment.BUILD_SRC_DIR}/scripts`, '.npc', `${Environment.BUILD_SRC_DIR}/pack/category.pack`) ||
-        shouldBuild(`${Environment.BUILD_SRC_DIR}/scripts`, '.obj', `${Environment.BUILD_SRC_DIR}/pack/category.pack`)) {
+        shouldBuild(`${Environment.BUILD_SRC_DIR}/scripts`, '.obj', `${Environment.BUILD_SRC_DIR}/pack/category.pack`)
+    ) {
         const categories = crawlConfigCategories();
         for (let i = 0; i < categories.length; i++) {
             pack.register(i, categories[i]);

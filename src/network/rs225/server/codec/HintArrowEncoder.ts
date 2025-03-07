@@ -7,7 +7,7 @@ export default class HintArrowEncoder extends MessageEncoder<HintArrow> {
     prot = ServerProt.HINT_ARROW;
 
     encode(buf: Packet, message: HintArrow): void {
-        const {type, nid, pid, x, z, y} = message;
+        const { type, nid, pid, x, z, y } = message;
 
         if (type === 1) {
             buf.p1(type);

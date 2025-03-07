@@ -60,7 +60,7 @@ export function parseFloConfig(key: string, value: string): ConfigValue | null |
     }
 }
 
-export function packFloConfigs(configs: Map<string, ConfigLine[]>): { client: PackedData, server: PackedData } {
+export function packFloConfigs(configs: Map<string, ConfigLine[]>): { client: PackedData; server: PackedData } {
     const client: PackedData = new PackedData(FloPack.size);
     const server: PackedData = new PackedData(FloPack.size);
 

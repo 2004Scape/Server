@@ -38,7 +38,8 @@ export default class TcpServer {
 
                     client.buffer(data);
                     World.onClientData(client);
-                } catch (_) {  // eslint-disable-line @typescript-eslint/no-unused-vars
+                } catch (_) {
+                     
                     client.terminate();
                 }
             });
@@ -52,7 +53,7 @@ export default class TcpServer {
                 }
             });
 
-            s.on('error', (err) => {
+            s.on('error', err => {
                 if (client.player) {
                     client.player.addSessionLog(LoggerEventType.ENGINE, 'TCP socket error', err.message);
                 }
@@ -69,7 +70,6 @@ export default class TcpServer {
             });
         });
 
-        this.tcp.listen(Environment.NODE_PORT, '0.0.0.0', () => {
-        });
+        this.tcp.listen(Environment.NODE_PORT, '0.0.0.0', () => {});
     }
 }

@@ -44,16 +44,19 @@ export default class LoggerServer {
 
                             const account = await db.selectFrom('account').where('username', '=', username).selectAll().executeTakeFirstOrThrow();
 
-                            await db.insertInto('report').values({
-                                account_id: account.id,
-                                world,
-                                profile,
+                            await db
+                                .insertInto('report')
+                                .values({
+                                    account_id: account.id,
+                                    world,
+                                    profile,
 
-                                timestamp: toDbDate(timestamp),
-                                coord,
-                                offender,
-                                reason
-                            }).execute();
+                                    timestamp: toDbDate(timestamp),
+                                    coord,
+                                    offender,
+                                    reason
+                                })
+                                .execute();
 
                             break;
                         }
@@ -67,17 +70,20 @@ export default class LoggerServer {
                             if (!account) {
                                 console.log(msg);
                             } else {
-                                const report = await loggerDb.insertInto('input_report').values({
-                                    account_id: account.id,
-                                    session_uuid,
-                                    timestamp: toDbDate(timestamp),
-                                }).executeTakeFirst();
+                                const report = await loggerDb
+                                    .insertInto('input_report')
+                                    .values({
+                                        account_id: account.id,
+                                        session_uuid,
+                                        timestamp: toDbDate(timestamp)
+                                    })
+                                    .executeTakeFirst();
                                 const values = events.map((e: InputTrackingEvent) => {
                                     return {
                                         input_report_id: report.insertId,
                                         seq: e.seq,
                                         coord: e.coord,
-                                        data: Buffer.from(e.data, 'base64'),
+                                        data: Buffer.from(e.data, 'base64')
                                     };
                                 });
                                 await loggerDb.insertInto('input_report_event_raw').values(values).execute();

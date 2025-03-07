@@ -21,11 +21,10 @@ export default class WSMaintenanceServer {
             ws.send(seed.data);
 
             ws.on('message', () => {
-                ws.send(Uint8Array.from([ 14 ]));
+                ws.send(Uint8Array.from([14]));
             });
 
-            ws.on('close', () => {
-            });
+            ws.on('close', () => {});
 
             ws.on('error', () => {
                 ws.terminate();

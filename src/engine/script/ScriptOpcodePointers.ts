@@ -162,7 +162,7 @@ const ScriptOpcodePointers: {
     },
     [ScriptOpcode.NPC_HASOP]: {
         require: ['active_npc'],
-        require2: ['active_npc2'],
+        require2: ['active_npc2']
     },
     [ScriptOpcode.IF_CLOSE]: {
         require: ['active_player'],
@@ -327,7 +327,7 @@ const ScriptOpcodePointers: {
         require: ['p_active_player']
     },
     [ScriptOpcode.P_FINDUID]: {
-        set: ['p_active_player', 'active_player' ],
+        set: ['p_active_player', 'active_player'],
         set2: ['p_active_player2', 'active_player2'],
         conditional: true
     },
@@ -540,18 +540,7 @@ const ScriptOpcodePointers: {
     },
     [ScriptOpcode.NPC_DELAY]: {
         require: ['active_npc'],
-        corrupt: [
-            'p_active_player',
-            'p_active_player2',
-            ...POINTER_GROUP_FIND,
-            'last_com',
-            'last_int',
-            'last_item',
-            'last_slot',
-            'last_targetslot',
-            'last_useitem',
-            'last_useslot'
-        ],
+        corrupt: ['p_active_player', 'p_active_player2', ...POINTER_GROUP_FIND, 'last_com', 'last_int', 'last_item', 'last_slot', 'last_targetslot', 'last_useitem', 'last_useslot'],
         require2: ['active_npc2']
     },
     [ScriptOpcode.NPC_FACESQUARE]: {
@@ -687,18 +676,7 @@ const ScriptOpcodePointers: {
     },
     [ScriptOpcode.NPC_ARRIVEDELAY]: {
         require: ['active_npc'],
-        corrupt: [
-            'p_active_player',
-            'p_active_player2',
-            ...POINTER_GROUP_FIND,
-            'last_com',
-            'last_int',
-            'last_item',
-            'last_slot',
-            'last_targetslot',
-            'last_useitem',
-            'last_useslot'
-        ],
+        corrupt: ['p_active_player', 'p_active_player2', ...POINTER_GROUP_FIND, 'last_com', 'last_int', 'last_item', 'last_slot', 'last_targetslot', 'last_useitem', 'last_useslot'],
         require2: ['active_npc2']
     },
 

@@ -203,7 +203,7 @@ export function parseLocConfig(key: string, value: string): ConfigValue | null |
     }
 }
 
-export function packLocConfigs(configs: Map<string, ConfigLine[]>): { client: PackedData, server: PackedData } {
+export function packLocConfigs(configs: Map<string, ConfigLine[]>): { client: PackedData; server: PackedData } {
     const client: PackedData = new PackedData(LocPack.size);
     const server: PackedData = new PackedData(LocPack.size);
 

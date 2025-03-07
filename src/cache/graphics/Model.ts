@@ -456,33 +456,47 @@ export default class Model {
         Model.axis.pos = meta.faceTextureAxisOffset * 6;
         Model.axis.gdata(p_rawTexturedVertex, 0, p_rawTexturedVertex.length);
 
-        return new Model({
-            vertexCount: vertexCount,
-            vertexX: vertexX,
-            vertexY: vertexY,
-            vertexZ: vertexZ,
-            faceCount: faceCount,
-            faceVertexA: faceVertexA,
-            faceVertexB: faceVertexB,
-            faceVertexC: faceVertexC,
-            faceColorA: null,
-            faceColorB: null,
-            faceColorC: null,
-            faceInfo: faceInfo,
-            facePriority: facePriority,
-            faceAlpha: faceAlpha,
-            faceColor: faceColor,
-            priority: priority,
-            texturedFaceCount: texturedFaceCount,
-            texturedVertexA: texturedVertexA,
-            texturedVertexB: texturedVertexB,
-            texturedVertexC: texturedVertexC,
-            vertexLabel: vertexLabel,
-            faceLabel: faceLabel
-        }, id, meta,
-        p_rawVertexFlags, p_rawVertexX, p_rawVertexY, p_rawVertexZ, p_rawVertexLabel,
-        p_rawFaceColor, p_rawFaceInfo, p_rawFacePriority, p_rawFaceAlpha,
-        p_rawFaceLabel, p_rawFaceVertex, p_rawFaceOrientation, p_rawTexturedVertex);
+        return new Model(
+            {
+                vertexCount: vertexCount,
+                vertexX: vertexX,
+                vertexY: vertexY,
+                vertexZ: vertexZ,
+                faceCount: faceCount,
+                faceVertexA: faceVertexA,
+                faceVertexB: faceVertexB,
+                faceVertexC: faceVertexC,
+                faceColorA: null,
+                faceColorB: null,
+                faceColorC: null,
+                faceInfo: faceInfo,
+                facePriority: facePriority,
+                faceAlpha: faceAlpha,
+                faceColor: faceColor,
+                priority: priority,
+                texturedFaceCount: texturedFaceCount,
+                texturedVertexA: texturedVertexA,
+                texturedVertexB: texturedVertexB,
+                texturedVertexC: texturedVertexC,
+                vertexLabel: vertexLabel,
+                faceLabel: faceLabel
+            },
+            id,
+            meta,
+            p_rawVertexFlags,
+            p_rawVertexX,
+            p_rawVertexY,
+            p_rawVertexZ,
+            p_rawVertexLabel,
+            p_rawFaceColor,
+            p_rawFaceInfo,
+            p_rawFacePriority,
+            p_rawFaceAlpha,
+            p_rawFaceLabel,
+            p_rawFaceVertex,
+            p_rawFaceOrientation,
+            p_rawTexturedVertex
+        );
     }
 
     // ----
@@ -531,11 +545,23 @@ export default class Model {
     rawFaceOrientation: Uint8Array | null;
     rawTexturedVertex: Uint8Array | null;
 
-    constructor(type: ModelType,
-        id: number, meta: Metadata,
-        rawVertexFlags?: Uint8Array | null, rawVertexX?: Uint8Array | null, rawVertexY?: Uint8Array | null, rawVertexZ?: Uint8Array | null, rawVertexLabel?: Uint8Array | null,
-        rawFaceColor?: Uint8Array | null, rawFaceInfo?: Uint8Array | null, rawFacePriority?: Uint8Array | null, rawFaceAlpha?: Uint8Array | null,
-        rawFaceLabel?: Uint8Array | null, rawFaceVertex?: Uint8Array | null, rawFaceOrientation?: Uint8Array | null, rawTexturedVertex?: Uint8Array | null
+    constructor(
+        type: ModelType,
+        id: number,
+        meta: Metadata,
+        rawVertexFlags?: Uint8Array | null,
+        rawVertexX?: Uint8Array | null,
+        rawVertexY?: Uint8Array | null,
+        rawVertexZ?: Uint8Array | null,
+        rawVertexLabel?: Uint8Array | null,
+        rawFaceColor?: Uint8Array | null,
+        rawFaceInfo?: Uint8Array | null,
+        rawFacePriority?: Uint8Array | null,
+        rawFaceAlpha?: Uint8Array | null,
+        rawFaceLabel?: Uint8Array | null,
+        rawFaceVertex?: Uint8Array | null,
+        rawFaceOrientation?: Uint8Array | null,
+        rawTexturedVertex?: Uint8Array | null
     ) {
         this.vertexCount = type.vertexCount;
         this.vertexX = type.vertexX;

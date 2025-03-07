@@ -20,7 +20,6 @@ export default class LocType extends ConfigType {
         const server = Packet.load(`${dir}/server/loc.dat`);
         const jag = Jagfile.load(`${dir}/client/config`);
         this.parse(server, jag);
-        
     }
 
     static async loadAsync(dir: string) {

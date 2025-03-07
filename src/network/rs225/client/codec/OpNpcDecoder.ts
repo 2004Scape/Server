@@ -4,7 +4,10 @@ import ClientProt from '#/network/rs225/client/prot/ClientProt.js';
 import OpNpc from '#/network/client/model/OpNpc.js';
 
 export default class OpNpcDecoder extends MessageDecoder<OpNpc> {
-    constructor(readonly prot: ClientProt, readonly op: number) {
+    constructor(
+        readonly prot: ClientProt,
+        readonly op: number
+    ) {
         super();
     }
 

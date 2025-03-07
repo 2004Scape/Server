@@ -7,7 +7,7 @@ const client = new FriendClient(Environment.NODE_ID);
 
 export interface FriendThreadMessage {
     opcode: FriendsServerOpcodes;
-    data: any
+    data: any;
 }
 
 if (Environment.STANDALONE_BUNDLE) {
@@ -18,7 +18,7 @@ if (Environment.STANDALONE_BUNDLE) {
             console.error(err);
         }
     };
-    
+
     client.onMessage((opcode, data) => {
         self.postMessage({ opcode, data });
     });

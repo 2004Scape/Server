@@ -52,10 +52,6 @@ export async function preloadClientAsync() {
     // eslint-disable-next-line @typescript-eslint/ban-ts-comment
     // @ts-ignore
     const { jingles, maps, songs } = await import('./PreloadedDirs.js');
-    const allPacks = [
-        ...maps.map((name: string) => fetchAll('maps', name)),
-        ...songs.map((name: string) => fetchAll('songs', name)),
-        ...jingles.map((name: string) => fetchAll('jingles', name))
-    ];
+    const allPacks = [...maps.map((name: string) => fetchAll('maps', name)), ...songs.map((name: string) => fetchAll('songs', name)), ...jingles.map((name: string) => fetchAll('jingles', name))];
     await Promise.all(allPacks);
 }

@@ -22,7 +22,6 @@ export default class NpcType extends ConfigType {
         const server = Packet.load(`${dir}/server/npc.dat`);
         const jag = Jagfile.load(`${dir}/client/config`);
         this.parse(server, jag);
-        
     }
 
     static async loadAsync(dir: string) {

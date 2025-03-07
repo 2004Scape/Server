@@ -2,7 +2,7 @@ import MessageEncoder from '#/network/server/codec/MessageEncoder.js';
 import Packet from '#/io/Packet.js';
 import ServerProt from '#/network/rs225/server/prot/ServerProt.js';
 import RebuildNormal from '#/network/server/model/RebuildNormal.js';
-import {PRELOADED_CRC} from '#/cache/PreloadedPacks.js';
+import { PRELOADED_CRC } from '#/cache/PreloadedPacks.js';
 
 export default class RebuildNormalEncoder extends MessageEncoder<RebuildNormal> {
     prot = ServerProt.REBUILD_NORMAL;
@@ -21,6 +21,6 @@ export default class RebuildNormalEncoder extends MessageEncoder<RebuildNormal> 
     }
 
     test(message: RebuildNormal): number {
-        return 2 + 2 + (message.mapsquares.size * (1 + 1 + 4 + 4));
+        return 2 + 2 + message.mapsquares.size * (1 + 1 + 4 + 4);
     }
 }
