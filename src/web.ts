@@ -7,6 +7,7 @@ import ejs from 'ejs';
 import { CrcBuffer } from '#/cache/CrcTable.js';
 
 import Environment from '#/util/Environment.js';
+import { getPublicPerDeploymentToken } from './io/PemUtil.js';
 import { tryParseInt } from '#/util/TryParse.js';
 import { register } from 'prom-client';
 
@@ -90,12 +91,17 @@ export const web = http.createServer(async (req, res) => {
 
             res.setHeader('Content-Type', 'text/html');
             res.writeHead(200);
-            res.end(await ejs.renderFile('view/client.ejs', {
+            const context = {
                 plugin,
                 nodeid: Environment.NODE_ID,
                 lowmem,
-                members: Environment.NODE_MEMBERS
-            }));
+                members: Environment.NODE_MEMBERS,
+                per_deployment_token: '',
+            };
+            if (Environment.WEB_SOCKET_TOKEN_PROTECTION) {
+                context.per_deployment_token = getPublicPerDeploymentToken();
+            }
+            res.end(await ejs.renderFile('view/client.ejs', context));
         } else if (fs.existsSync('public' + url.pathname)) {
             res.setHeader('Content-Type', MIME_TYPES.get(extname(url.pathname ?? '')) ?? 'text/plain');
             res.writeHead(200);
