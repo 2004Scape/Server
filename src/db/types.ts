@@ -17,6 +17,8 @@ export type account = {
     logout_time: string | null;
     muted_until: string | null;
     banned_until: string | null;
+    banwave_start: string | null;
+    banwave_until: string | null;
     staffmodlevel: Generated<number>;
     notes: string | null;
     notes_updated: string | null;

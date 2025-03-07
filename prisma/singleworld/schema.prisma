@@ -31,8 +31,10 @@ model account {
     logged_out  Int       @default(0)
     logout_time DateTime?
 
-    muted_until  DateTime?
-    banned_until DateTime?
+    muted_until   DateTime?
+    banned_until  DateTime?
+    banwave_start DateTime?
+    banwave_until DateTime?
 
     staffmodlevel Int @default(0)
 
