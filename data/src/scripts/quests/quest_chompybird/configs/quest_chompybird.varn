@@ -1,2 +1,5 @@
 [quest_chompybird_baiter]
 type=player_uid
+
+[rantz_attacking_chompy]
+type=npc_uid

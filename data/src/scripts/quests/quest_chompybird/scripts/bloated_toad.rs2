@@ -1,32 +1,62 @@
 [opheld4,bloated_toad]
 // release all
-// todo spawns toad(s?) on the ground
-inv_del(inv, bloated_toad, inv_size(inv));
-mes("You release the toads and see them hop off into the distance.");
+def_int $count = inv_total(inv, bloated_toad);
+def_int $i = 0;
+inv_del(inv, bloated_toad, $count);
+while($i < $count) {
+    ~release_toad;
+    $i = add($i, 1);
+}
+if($count = 1) {
+    if(random(5) = 0) say("Free the fatsy toady!");
+    mes("You release the toad and see it hop off into the distance.");
+} else {
+    if(random(5) = 0) say("Free the fatsy toadies!");
+    mes("You release the toads and see them hop off into the distance.");
+}
 
 [opheld5,bloated_toad]
 // release
-// todo spawn toad on the ground
 inv_delslot(inv, last_slot);
+~release_toad;
+if(random(5) = 0) say("Free the fatsy toady!");
 mes("You release the toad and see it hop off into the distance.");
+
+[proc,release_toad]
+def_coord $release_coord = map_findsquare(coord, 0, 1, ^map_findsquare_lineofwalk);
+npc_add(map_findsquare(coord, 1, 1, ^map_findsquare_lineofwalk), swamp_toad, 10);
+npc_walk(movecoord(npc_coord, calc(10 * (coordx($release_coord) - coordx(npc_coord))), 0, calc(10 * (coordz($release_coord) - coordz(npc_coord)))));
+switch_int(random(3)) {
+    case 0 : npc_say("Croak!");
+    case 1 : npc_say("Ribbet!");
+}
 
 [opheld1,bloated_toad]
 if (%chompybird_progress < ^chompybird_shown_toad) {
-    // todo confirm line breaks, currently overruns
     ~objbox(bloated_toad,"You're not sure where Rantz told you to place the bloated toad. You decide to wait and ask him where to place it.", 250, 0, divide(^objbox_height, 2));
     return;
 }
 
-// todo tbc which quest states show this message
-// todo tbc distance
-if (distance(coord, 0_41_46_12_21) > 5) {
-    mes("This is too far away for Rantz to shoot the chompy bird.");
-    return;
+if(%chompybird_progress < ^chompybird_complete) {
+    if (inzone(0_41_46_7_18, 0_41_46_15_27, coord) = false) {
+        mes("This is too far away for Rantz to shoot the chompy bird.");
+        return;
+    }
 }
 
-// todo tbc any npc? or just toads
-npc_findallany(coord, 0, ^vis_off);
-if (npc_findnext = true) {
+if(%chompybird_progress >= ^chompybird_complete) {
+    if (inzone(0_41_46_7_18, 0_41_46_15_27, coord) = true) {
+        mes("Rantz doesn't like it when you chompy hunt on his turf.");
+        mes("But you can hunt for chompys in the rest of the ogre area.");
+        return;
+    }
+    if(inzone(0_39_46_0_0, 0_41_46_63_63, coord) = false) { // just these 3 mapsquares at this point
+        mes("You won't attract a chompy bird this far away from the ogre area.");
+        return;
+    }
+}
+
+if(npc_findexact(coord, bloated_toad) = true) {
     mes("There is a bloated toad already placed at this location.");
     return;
 }
@@ -38,8 +68,6 @@ if (%chompybird_progress = ^chompybird_shown_toad) {
     %chompybird_progress = ^chompybird_dropped_toad;
 }
 
-p_delay(0);
-
 if (p_finduid(uid) = true) {
     npc_add(coord, bloated_toad, 101);
     %quest_chompybird_baiter = uid;
@@ -48,29 +76,7 @@ if (p_finduid(uid) = true) {
     mes("You carefully place the bloated toad bait.");
 
     p_delay(0);
-    if (lineofwalk(coord, movecoord(coord, -1, 0, 0)) = true) { // check west
-        p_teleport(movecoord(coord, -1, 0, 0));
-        p_delay(0);
-        return;
-    }
-
-    if (lineofwalk(coord, movecoord(coord, 1, 0, 0)) = true) { // check east
-        p_teleport(movecoord(coord, 1, 0, 0));
-        p_delay(0);
-        return;
-    }
-
-    if (lineofwalk(coord, movecoord(coord, 0, 0, 1)) = true) { // check south
-        p_teleport(movecoord(coord, 0, 0, 1));
-        p_delay(0);
-        return;
-    }
-
-    if (lineofwalk(coord, movecoord(coord, 0, 0, -1)) = true) { // check north
-        p_teleport(movecoord(coord, 0, 0, -1));
-        p_delay(0);
-        return;
-    }
+    ~push_player(coord);
 }
 
 /**

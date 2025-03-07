@@ -3,10 +3,13 @@
     // def_coord $spawn_coord = map_findsquare($coord, 3, 10, 1);
     def_coord $spawn_coord = map_findsquare($coord, 4, 4, 1);
     
-    npc_add($spawn_coord, chompy_bird, 100);
+    npc_add($spawn_coord, chompy_bird, 100); // no seq for flying away at end, prob just despawned?
     %quest_chompybird_baiter = $baiter_uid;
     npc_anim(chompy_landing, 0);
     npc_say("Sqwirk!");
+    if(finduid(%quest_chompybird_baiter) = true) {
+        hint_npc(npc_uid);
+    }
 
     // todo confirm behaviour, looks like it wanders first then hunts?
     npc_sethuntmode(chompybird);
@@ -14,8 +17,9 @@
 
 // triggered by the .hunt config, the Chompy has found, and arrived at, the Bloated Toad
 [ai_queue4,chompy_bird]
-if (.npc_find(npc_coord, bloated_toad, 2, 1) = true) {
+if (.npc_find(npc_coord, bloated_toad, 2, ^vis_lineofwalk) = true) {
     npc_sethuntmode(null);
+    npc_setmode(none);
     npc_facesquare(.npc_coord);
     npc_queue(5, 0, 0);
     .npc_queue(5, 0, 0);
@@ -29,6 +33,7 @@ npc_anim(chompy_attack, 0);
 npc_delay(3);
 npc_say("Gobble!");
 npc_delay(2);
+npc_setmode(null);
 npc_sethuntmode(chompybird);
 
 // todo consider some check that the toad actually still exists?
@@ -49,38 +54,9 @@ obj_add(npc_coord, bones, 1, ^lootdrop_duration);
 inv_add(inv, feather, calc(random(20) + 10));
 npc_del;
 
-[apnpc5,chompy_bird]
-def_obj $rhand = inv_getobj(worn, ^wearpos_rhand);
-// make the player run to the bird if they are unarmed
-if ($rhand = null)
-{
-    p_aprange(1);
-    return;
-}
-
-def_category $rhand_cat = oc_category($rhand);
-
-// make the player run to the bird if they have a melee weapon equipped
-if ($rhand_cat = weapon_slash
-    | $rhand_cat = weapon_stab
-    | $rhand_cat = weapon_axe
-    | $rhand_cat = weapon_pickaxe
-    | $rhand_cat = weapon_blunt
-    | $rhand_cat = weapon_spear
-    | $rhand_cat = weapon_spiked
-    | $rhand_cat = weapon_2h_sword
-    | $rhand_cat = weapon_staff
-    | $rhand_cat = weapon_scythe)
-{
-    p_aprange(1);
-    return;
-}
-
-// otherwise start combat from a distance
-@player_combat_chompybird_start;
-
-[opnpc5,chompy_bird]
-@player_combat_chompybird_start;
+// no attackrange checks (OSRS)
+[apnpc5,chompy_bird] @player_combat_chompybird_start;
+[opnpc5,chompy_bird] @player_combat_chompybird_start;
 
 [label,player_combat_chompybird_start]
 def_obj $rhand = inv_getobj(worn, ^wearpos_rhand);
@@ -142,24 +118,19 @@ if ($ammo ! ogre_arrow) {
 // is this right?  it's basically a replica of the existing combat logic,
 // but that relies on some npc_hasop(2) checks, which I don't want to mess with
 [proc,player_combat_chompybird](obj $rhand, obj $ammo)
-def_int $distance = npc_range(coord);
-def_int $attackrange = min(oc_param($rhand, attackrange), 10);
-if (%damagestyle = ^style_ranged_longrange) {
-    $attackrange = min(add($attackrange, 2), 10);
-}
-
-if (($attackrange <= 1 & ~player_in_combat_check = false) | $distance > $attackrange) {
-    p_opnpc(5);
-    p_aprange($attackrange);
+// no aprange stuff at all, cb style doesn't matter
+if (~player_in_combat_check = false) {
     return;
 }
 
 p_stopaction;
-// npc_setmode(opplayer2);
-// facesquare(npc_coord);
 
 if (%action_delay > map_clock) {
     p_opnpc(5);
+    return;
+}
+
+if (npc_stat(hitpoints) = 0) {
     return;
 }
 
@@ -219,7 +190,7 @@ if (%chompybird_progress = ^chompybird_rantz_gave_player_bow) {
     %chompybird_progress = ^chompybird_player_killed_chompy;
     return;
 }
-if(%chompybird_kills >= 100000) { 
+if(%chompybird_progress < ^chompybird_complete | %chompybird_kills >= 100000) { 
     return; 
 }
 // https://youtu.be/7ze4YEvQwHM?si=AYdN3zfe62SP4emb&t=215

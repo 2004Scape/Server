@@ -67,7 +67,7 @@ mes("He doesn't feel like talking.");
 
 [ai_queue3,npc_370]
 gosub(npc_death);
-if(npc_findhero = true) {
+if(finduid(%npc_aggressive_player) = true) {
     queue(defeat_biohazard_mourner, 0); // reg queue, doesn't if_close (OSRS)
 }
 

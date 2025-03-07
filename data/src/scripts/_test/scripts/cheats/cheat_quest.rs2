@@ -241,10 +241,7 @@ if (p_finduid(uid) = true) {
                 case 44 :
                     %ikov_dungeon = 0;
                     %ikov_icearrowchest_coord = null;
-                    %haunted_lever = 0;
-                    %haunted_manor_fountain_poisoned = 0;
                     %ikov_progress = 0; // Added this to fix Temple of Ikov reset issue
-                    %varp_35 = 0;
                 case 45 : 
                     %desertrescue_map_mechanisms = 0;
                     %desertrescue_progress = 0;
@@ -362,7 +359,6 @@ if ($ikov_choice = 0) {
                 }
 
 
-
 ~update_quests;
 mes("All quests have been completed.");
 return;
@@ -445,7 +441,7 @@ return;
 %haunted_lever = 0;
 %haunted_manor_fountain_poisoned = 0; 
 %ikov_progress = 0;
-%varp_35 = 0;
+%cog_cooled = 0;
 %desertrescue_map_mechanisms = 0;
 %desertrescue_progress = 0;
 %tree_progress = 0;

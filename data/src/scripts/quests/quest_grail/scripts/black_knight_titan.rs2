@@ -8,12 +8,14 @@ switch_int(~p_choice2("Ok, have at ye oh evil knight!", 1, "Actually I think I'l
 }
 
 [ai_queue3,black_knight_titan]
-if(npc_findhero = true) {
+if(finduid(%npc_aggressive_player) = true) {
     if_close;
     if(p_finduid(uid) = true) { 
         @defeat_titan;
     }
     queue(queue_defeat_titan, 0, npc_uid); //strongqueue probably
+} else {
+    npc_statheal(hitpoints, npc_basestat(hitpoints), 0);
 }
 
 [queue,queue_defeat_titan](npc_uid $npc)
