@@ -6,16 +6,11 @@ import DataLand from '#/network/server/model/DataLand.js';
 import DataLandDone from '#/network/server/model/DataLandDone.js';
 import DataLoc from '#/network/server/model/DataLoc.js';
 import DataLocDone from '#/network/server/model/DataLocDone.js';
-import SceneState from '#/engine/entity/SceneState.js';
 
 export default class RebuildGetMapsHandler extends MessageHandler<RebuildGetMaps> {
     private static readonly CHUNK_SIZE: number = 1000 - 1 - 2 - 1 - 1 - 2 - 2;
 
     handle(message: RebuildGetMaps, player: Player): boolean {
-        if (player.scene !== SceneState.NONE) {
-            return false;
-        }
-
         const { maps: requested } = message;
         const chunk: number = RebuildGetMapsHandler.CHUNK_SIZE;
 
@@ -45,7 +40,6 @@ export default class RebuildGetMapsHandler extends MessageHandler<RebuildGetMaps
             }
         }
 
-        player.scene = SceneState.LOAD;
         player.rebuildZones();
 
         return true;

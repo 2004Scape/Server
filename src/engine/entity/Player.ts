@@ -1,5 +1,7 @@
 import 'dotenv/config';
 
+import { CollisionType } from '@2004scape/rsmod-pathfinder';
+
 import Packet from '#/io/Packet.js';
 import { toDisplayName } from '#/util/JString.js';
 
@@ -77,13 +79,12 @@ import InputTracking from '#/engine/entity/tracking/InputTracking.js';
 import { changeNpcCollision, changePlayerCollision, findNaivePath, reachedEntity, reachedLoc, reachedObj } from '#/engine/GameMap.js';
 import Visibility from './Visibility.js';
 import UpdateRebootTimer from '#/network/server/model/UpdateRebootTimer.js';
-import { CollisionType } from '@2004scape/rsmod-pathfinder';
-import SceneState from '#/engine/entity/SceneState.js';
 import ZoneMap from '#/engine/zone/ZoneMap.js';
 import UpdateStat from '#/network/server/model/UpdateStat.js';
 import UpdateZoneFullFollows from '#/network/server/model/UpdateZoneFullFollows.js';
 import RebuildNormal from '#/network/server/model/RebuildNormal.js';
 import UpdateRunEnergy from '#/network/server/model/UpdateRunEnergy.js';
+
 const levelExperience = new Int32Array(99);
 
 let acc = 0;
@@ -408,8 +409,6 @@ export default class Player extends PathingEntity {
     socialProtect: boolean = false; // social packet spam protection
     reportAbuseProtect: boolean = false; // social packet spam protection
 
-    scene: SceneState = SceneState.NONE;
-
     constructor(username: string, username37: bigint, hash64: bigint) {
         super(0, 3094, 3106, 1, 1, EntityLifeCycle.FOREVER, MoveRestrict.NORMAL, BlockWalk.NPC, MoveStrategy.SMART, InfoProt.PLAYER_FACE_COORD.id, InfoProt.PLAYER_FACE_ENTITY.id); // tutorial island.
         this.username = username;
@@ -523,13 +522,10 @@ export default class Player extends PathingEntity {
                 this.writeVarp(varp, value);
             }
         }
-        // force resyncing
-        this.scene = SceneState.NONE;
         // reload entity info (overkill? does the client have some logic around this?)
         this.buildArea.clear(true);
         // rebuild scene (rebuildnormal won't run if you're in the same zone!)
         this.rebuildNormal();
-        this.scene = SceneState.LOAD;
         // in case of pending update
         if (World.isPendingShutdown) {
             const ticksBeforeShutdown = World.shutdownTicksRemaining;
@@ -2011,14 +2007,12 @@ export default class Player extends PathingEntity {
         const reloadBottomZ = (originZ - 4) << 3;
 
         // if the build area should be regenerated, do so now
-        if (this.x < reloadLeftX || this.z < reloadBottomZ || this.x > reloadRightX - 1 || this.z > reloadTopZ - 1 || this.scene === SceneState.NONE) {
-            if (this.scene === SceneState.READY) {
-                // this fixes invisible door issue...
-                for (const zone of this.buildArea.activeZones) {
-                    const { x, z } = ZoneMap.unpackIndex(zone);
-                    if (x < reloadLeftX || z < reloadBottomZ || x > reloadRightX - 1 || z > reloadTopZ - 1) {
-                        this.write(new UpdateZoneFullFollows(CoordGrid.zone(x), CoordGrid.zone(z), this.originX, this.originZ));
-                    }
+        if (this.x < reloadLeftX || this.z < reloadBottomZ || this.x > reloadRightX - 1 || this.z > reloadTopZ - 1) {
+            // temp fix: invisible door issue (need a deeper dive)
+            for (const zone of this.buildArea.activeZones) {
+                const { x, z } = ZoneMap.unpackIndex(zone);
+                if (x < reloadLeftX || z < reloadBottomZ || x > reloadRightX - 1 || z > reloadTopZ - 1) {
+                    this.write(new UpdateZoneFullFollows(CoordGrid.zone(x), CoordGrid.zone(z), this.originX, this.originZ));
                 }
             }
 
@@ -2026,7 +2020,6 @@ export default class Player extends PathingEntity {
 
             this.originX = this.x;
             this.originZ = this.z;
-            this.scene = SceneState.NONE;
             this.buildArea.loadedZones.clear();
         }
     }

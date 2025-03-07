@@ -12,9 +12,7 @@ import { CoordGrid } from '#/engine/CoordGrid.js';
 import WorldStat from '#/engine/WorldStat.js';
 import NpcRenderer from '#/engine/renderer/NpcRenderer.js';
 import PlayerRenderer from '#/engine/renderer/PlayerRenderer.js';
-import SceneState from '#/engine/entity/SceneState.js';
 import Zone from '#/engine/zone/Zone.js';
-import ZoneMap from '#/engine/zone/ZoneMap.js';
 
 import InvType from '#/cache/config/InvType.js';
 
@@ -29,7 +27,6 @@ import IfOpenMainSide from '#/network/server/model/IfOpenMainSide.js';
 import IfOpenMain from '#/network/server/model/IfOpenMain.js';
 import IfOpenChat from '#/network/server/model/IfOpenChat.js';
 import IfOpenSide from '#/network/server/model/IfOpenSide.js';
-import RebuildNormal from '#/network/server/model/RebuildNormal.js';
 import UpdateStat from '#/network/server/model/UpdateStat.js';
 import UpdateRunEnergy from '#/network/server/model/UpdateRunEnergy.js';
 import UpdateInvFull from '#/network/server/model/UpdateInvFull.js';
@@ -42,7 +39,6 @@ import Logout from '#/network/server/model/Logout.js';
 import PlayerInfo from '#/network/server/model/PlayerInfo.js';
 import NpcInfo from '#/network/server/model/NpcInfo.js';
 import SetMultiway from '#/network/server/model/SetMultiway.js';
-import UpdateZoneFullFollows from '#/network/server/model/UpdateZoneFullFollows.js';
 
 import { printError } from '#/util/Logger.js';
 
@@ -289,9 +285,7 @@ export class NetworkPlayer extends Player {
         // zone changed
         const zone = CoordGrid.packCoord(this.level, (this.x >> 3) << 3, (this.z >> 3) << 3);
         if (this.lastZone !== zone) {
-            if (this.scene === SceneState.READY) {
-                this.rebuildZones();
-            }
+            this.rebuildZones();
 
             // zone triggers
             const lastWasMulti = World.gameMap.isMulti(this.lastZone);
@@ -319,16 +313,9 @@ export class NetworkPlayer extends Player {
     }
 
     updateZones() {
-        if (this.scene === SceneState.NONE) {
-            return;
-        }
-
-        if (this.scene === SceneState.LOAD) {
-            this.scene = SceneState.READY;
-        }
-
         const loadedZones: Set<number> = this.buildArea.loadedZones;
         const activeZones: Set<number> = this.buildArea.activeZones;
+
         // unload any zones that are no longer active
         for (const zoneIndex of loadedZones) {
             if (!activeZones.has(zoneIndex)) {
