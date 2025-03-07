@@ -5,6 +5,7 @@ import { LoginClient } from '#/server/login/LoginClient.js';
 
 import Environment from '#/util/Environment.js';
 import { type GenericLoginThreadResponse } from './index.d.js';
+import { trackLoginAttempts, trackLoginTime } from './LoginMetrics.js';
 
 const client = new LoginClient(Environment.NODE_ID);
 
@@ -55,6 +56,8 @@ async function handleRequests(parentPort: ParentPort, msg: any) {
             const { socket, remoteAddress, username, password, uid, lowMemory, reconnecting, hasSave } = msg;
 
             if (Environment.LOGIN_SERVER) {
+                trackLoginAttempts.inc();
+                const stopTimer = trackLoginTime.startTimer();
                 const response = await client.playerLogin(username, password, uid, socket, remoteAddress, reconnecting, hasSave);
 
                 if (!Environment.NODE_PRODUCTION) {
@@ -69,6 +72,7 @@ async function handleRequests(parentPort: ParentPort, msg: any) {
                     reconnecting,
                     ...response
                 });
+                stopTimer();
             } else {
                 let staffmodlevel = 0;
                 if (!Environment.NODE_PRODUCTION) {

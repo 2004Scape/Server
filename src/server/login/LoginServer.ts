@@ -12,6 +12,8 @@ import { PlayerLoading } from '#/engine/entity/PlayerLoading.js';
 import Packet from '#/io/Packet.js';
 import { getUnreadMessageCount } from '#/util/Messages.js';
 
+import { startManagementWeb } from '#/web.js';
+
 export default class LoginServer {
     private server: WebSocketServer;
 
@@ -42,6 +44,10 @@ export default class LoginServer {
     }
 
     constructor() {
+        if (Environment.LOGIN_SERVER) {
+            startManagementWeb();
+        }
+        
         this.server = new WebSocketServer({ port: Environment.LOGIN_PORT, host: '0.0.0.0' }, () => {
             printInfo(`Login server listening on port ${Environment.LOGIN_PORT}`);
         });
