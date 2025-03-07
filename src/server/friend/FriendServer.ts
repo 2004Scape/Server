@@ -27,7 +27,8 @@ export enum FriendsClientOpcodes {
     RELAY_KICK,
     RELAY_SHUTDOWN,
     RELAY_BROADCAST,
-    RELAY_TRACK
+    RELAY_TRACK,
+    RELAY_RELOAD
 }
 
 /**
@@ -42,7 +43,8 @@ export enum FriendsServerOpcodes {
     RELAY_KICK,
     RELAY_SHUTDOWN,
     RELAY_BROADCAST,
-    RELAY_TRACK
+    RELAY_TRACK,
+    RELAY_RELOAD
 }
 
 // TODO make this configurable (or at least source it from somewhere common)
@@ -395,8 +397,18 @@ export class FriendServer {
                                 })
                             );
                         }
+                    } else if (type === FriendsClientOpcodes.RELAY_RELOAD) {
+                        const { nodeId } = message;
+
+                        if (typeof this.socketByWorld[nodeId] !== 'undefined') {
+                            this.socketByWorld[nodeId].send(
+                                JSON.stringify({
+                                    type: FriendsServerOpcodes.RELAY_RELOAD
+                                })
+                            );
+                        }
                     } else {
-                        // console.error(`[Friends]: Unknown opcode ${opcode}, length ${length}`);
+                        console.error(`[Friend]: Unknown message type=${type}`);
                     }
                 } catch (err) {
                     console.error(err);

@@ -223,7 +223,7 @@ class World {
         return this.shutdownTick != -1 && this.currentTick >= this.shutdownTick - 50;
     }
 
-    reload(): void {
+    reload(clearInvs: boolean = true): void {
         VarPlayerType.load('data/pack');
         ParamType.load('data/pack');
         ObjType.load('data/pack');
@@ -238,12 +238,14 @@ class World {
         StructType.load('data/pack');
         InvType.load('data/pack');
 
-        this.invs.clear();
-        for (let i = 0; i < InvType.count; i++) {
-            const inv = InvType.get(i);
+        if (clearInvs) {
+            this.invs.clear();
+            for (let i = 0; i < InvType.count; i++) {
+                const inv = InvType.get(i);
 
-            if (inv && inv.scope === InvType.SCOPE_SHARED) {
-                this.invs.add(Inventory.fromType(i));
+                if (inv && inv.scope === InvType.SCOPE_SHARED) {
+                    this.invs.add(Inventory.fromType(i));
+                }
             }
         }
 
@@ -252,7 +254,6 @@ class World {
         DbRowType.load('data/pack');
         HuntType.load('data/pack');
         VarNpcType.load('data/pack');
-
         VarSharedType.load('data/pack');
 
         if (this.vars.length !== VarSharedType.count) {
@@ -282,10 +283,18 @@ class World {
         Component.load('data/pack');
 
         const count = ScriptProvider.load('data/pack');
-        if (count === -1) {
-            this.broadcastMes('There was an issue while reloading scripts.');
+        if (Environment.NODE_DEBUG) {
+            if (count === -1) {
+                this.broadcastMes('There was an issue while reloading scripts.');
+            } else {
+                this.broadcastMes(`Loaded ${count} scripts.`);
+            }
         } else {
-            this.broadcastMes(`Reloaded ${count} scripts.`);
+            if (count === -1) {
+                printError('There was an issue while reloading scripts.');
+            } else {
+                printDebug(`Loaded ${count} scripts.`);
+            }
         }
 
         // todo: check if any jag files changed (transmitted) then reload crcs, instead of always
@@ -1930,6 +1939,8 @@ class World {
                 if (player) {
                     player.submitInput = state;
                 }
+            } else if (opcode === FriendsServerOpcodes.RELAY_RELOAD) {
+                this.reload(false);
             } else {
                 printError('Unknown friend message: ' + opcode);
             }
