@@ -5,57 +5,58 @@ switch_int (%fluffs_progress) {
         ~chatplayer("<p,happy>Hello, are you okay?");
         ~chatnpc("<p,angry>Do I look ok?|Those kids drive me crazy.");
         ~chatnpc("<p,sad>I'm sorry. It's just that I've lost her.");
-        ~chatplayer("<p,quiz>Lost who?");
+        ~chatplayer("<p,confused>Lost who?");
         ~chatnpc("<p,sad>Fluffs, poor Fluffs.|She never hurt anyone.");
-        ~chatplayer("<p,quiz>Who's Fluffs?");
+        ~chatplayer("<p,confused>Who's Fluffs?");
         ~chatnpc("<p,sad>My beloved feline friend Fluffs.|She's been purring by my side for almost a decade.|Please, could you go search for her|while I look over the kids?");
         @fluffs_start;
     case ^fluffs_started :
-        ~chatplayer("<p,neutral>Hello Gertrude.");
-        ~chatnpc("<p,sad>Have you seen my poor Fluffs?");
-        ~chatplayer("<p,neutral>I'm afraid not.");
-        ~chatnpc("<p,sad>What about Shilop?");
-        ~chatplayer("<p,neutral>No sign of him either.");
+        ~chatplayer("<p,happy>Hello Gertrude.");
+        ~chatnpc("<p,confused>Have you seen my poor Fluffs?");
+        ~chatplayer("<p,sad>I'm afraid not.");
+        ~chatnpc("<p,neutral>What about Shilop?");
+        ~chatplayer("<p,confused>No sign of him either.");
         ~chatnpc("<p,confused>Hmmm...strange,|he should be at the market.");
     case ^fluffs_paid_boy :
-        ~chatplayer("<p,neutral>Hello Gertrude.");
+        ~chatplayer("<p,happy>Hello Gertrude.");
         ~chatnpc("<p,neutral>Hello again, did you manage to find Shilop?|I can't keep an eye on him for the life of me.");
-        ~chatplayer("<p,neutral>He does seem quite a handful.");
+        ~chatplayer("<p,happy>He does seem quite a handful.");
         ~chatnpc("<p,neutral>You have no idea!|Did he help at all?");
         ~chatplayer("<p,neutral>I think so,|I'm just going to look now.");
-        ~chatnpc("<p,neutral>Thanks again, adventurer.");
+        ~chatnpc("<p,happy>Thanks again, adventurer.");
     case ^fluffs_gave_milk :
         ~chatplayer("<p,happy>Hello again.");
         ~chatnpc("<p,neutral>Hello. How's it going?|Any luck?");
         ~chatplayer("<p,happy>Yes, I've found Fluffs!");
         ~chatnpc("<p,happy>Well well, you are clever!|Did you bring her back?");
-        ~chatplayer("<p,neutral>Well, that's the thing, she refuses to leave.");
+        ~chatplayer("<p,confused>Well, that's the thing, she refuses to leave.");
         ~chatnpc("<p,sad>Oh dear, oh dear! Maybe she's just hungry.|She loves doogle sardines but I'm all out.");
-        ~chatplayer("<p,quiz>Doogle sardines?");
+        ~chatplayer("<p,confused>Doogle sardines?");
         ~chatnpc("<p,neutral>Yes, raw sardines seasoned with doogle leaves.|Unfortunately I've used all my doogle leaves,|but you may find some in the woods out back.");
     case ^fluffs_gave_sardine :
-        ~chatplayer("<p,neutral>Hi!");
+        ~chatplayer("<p,happy>Hi!");
         ~chatnpc("<p,neutral>Hey traveller, did Fluffs eat the sardines?");
-        ~chatplayer("<p,neutral>Yeah, she loved them, but she still won't leave.");
+        ~chatplayer("<p,happy>Yeah, she loved them, but she still won't leave.");
         ~chatnpc("<p,confused>Well that is strange, there must be a reason.");
     case ^fluffs_rescued :
         ~chatplayer("<p,neutral>Hello Gertrude.|Fluffs ran off with her kitten.");
         ~chatnpc("<p,happy>You're back! Thank you! Thank you!|Fluffs just came back!|I think she was just upset|as she couldn't find her kitten."); //imgur.com/lAhzO4q
         ~mesbox("Gertrude gives you a hug.");
         ~chatnpc("<p,happy>If you hadn't found her kitten|it would have died out there!");
-        ~chatplayer("<p,neutral>That's okay, I like to do my bit.");
+        ~chatplayer("<p,happy>That's okay, I like to do my bit.");
         ~chatnpc("<p,happy>I don't know how to thank you.|I have no real material possessions.|I do have kittens!|I can only really look after one.");
         ~chatplayer("<p,neutral>Well, if it needs a home.");
-        ~chatnpc("<p,neutral>I would sell it to my cousin in West Ardougne.|I hear there's a rat epidemic there.|But it's too far.");
+        ~chatnpc("<p,happy>I would sell it to my cousin in West Ardougne.|I hear there's a rat epidemic there.|But it's too far.");
         ~chatnpc("<p,happy>Here you go, look after her and thank you again!");
-        ~mesbox("Gertrude hands you a kitten.");
+        ~mesbox("Gertrude gives you a kitten.");
         if_close;
+        %fluffs_progress = ^fluffs_complete;
         ~gertrude_give_cat;
         p_delay(3);
         mes("... and some food!");
         inv_add(inv, chocolate_cake, 1);
         inv_add(inv, stew, 1);
-        p_delay(4);
+        p_delay(3);
         queue(fluffs_complete, 0);
     case ^fluffs_complete :
         if (getbit_range(%cat_growth, 20, 26) = 100 & inv_total(inv, cat_training_medal) = 0) {
@@ -80,23 +81,23 @@ switch_int (%fluffs_progress) {
             ~chatnpc("<p,neutral>Same old, running after Shilop most of the time.");
             ~chatplayer("<p,neutral>Nevermind, I'm sure he'll calm down with age.");
         } else {
-            ~chatplayer("<p,quiz>Do you have any more kittens?");
-            ~chatnpc("<p,neutral>Indeed I have.|They are 100 coins each, do you want one?");
+            ~chatplayer("<p,happy>Do you have any more kittens?");
+            ~chatnpc("<p,happy>Indeed I have.|They are 100 coins each, do you want one?");
+            if (inv_total(inv, coins) < 100) {
+                ~chatplayer("<p,neutral>Oops, looks like I'm a bit short.|I'll have to come back later.");
+                return;
+            } 
             def_int $option = ~p_choice2("Yes please.", 1, "No thanks.", 2);
             switch_int ($option) {
                 case 1 :
-                    if (inv_total(inv, coins) < 100) {
-                    ~chatplayer("<p,neutral>Oops, looks like I'm a bit short.|I'll have to come back later.");
-                    return;
-                    } 
                     ~chatplayer("<p,happy>Yes please.");
-                    ~chatnpc("<p,neutral>Ok then, here you go.");
+                    ~chatnpc("<p,happy>Okay then, here you go.");
                     ~chatplayer("<p,happy>Thanks.");
                     inv_del(inv, coins, 100);
                     ~gertrude_give_cat;
                     ~mesbox("Gertrude gives you another kitten.");
                 case 2 :
-                    ~chatplayer("No thanks.");
+                    ~chatplayer("<p,neutral>No thanks, I've paid that boy enough already.");
             }
         }
 }
@@ -105,17 +106,17 @@ switch_int (%fluffs_progress) {
 def_int $option = ~p_choice3("Well, I suppose I could.", 1, "What's in it for me?", 2, "Sorry, I'm too busy to play pet rescue.", 3);
 if($option = 1) {
     ~chatplayer("<p,neutral>Well, I suppose I could.");
+    %fluffs_progress = ^fluffs_started;
+    ~send_quest_progress(questlist:fluffs, %fluffs_progress, ^fluffs_complete);
     ~chatnpc("<p,happy>Really? Thank you so much!|I really have no idea where she could be!");
     ~chatnpc("<p,neutral>I think my sons, Shilop and Wilough, saw the cat last.|They'll be out in the market place.");
     ~chatplayer("<p,happy>Alright then, I'll see what I can do.");
-    %fluffs_progress = ^fluffs_started;
-    ~send_quest_progress(questlist:fluffs, %fluffs_progress, ^fluffs_complete);
 } else if($option = 2) {
-    ~chatplayer("<p,quiz>What's in it for me?");
+    ~chatplayer("<p,confused>What's in it for me?");
     ~chatnpc("<p,sad>I'm sorry, I'm too poor to pay you anything.|The best I could offer is a warm meal.|So, can you help?");
     @fluffs_start;
 } else if($option = 3) {
-    ~chatplayer("<p,neutral>Sorry, I'm too busy to play pet rescue.");
+    ~chatplayer("<p,bored>Sorry, I'm too busy to play pet rescue.");
     ~chatnpc("<p,sad>Well, okay then. I'll have to find someone else.");
 }
 
