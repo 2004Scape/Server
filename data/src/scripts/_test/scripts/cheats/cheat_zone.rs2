@@ -1,0 +1,12 @@
+[debugproc,drop_items]
+if (p_finduid(uid) = true) {
+    p_telejump(0_37_55_32_30);
+    def_int $count = 0;
+    obj_addall(0_37_55_32_30, logs, 40, 30);
+    p_delay(3);
+    obj_addall(0_37_55_32_29, logs, 40, 30);
+    p_delay(3);
+    obj_addall(0_37_55_32_28, logs, 40, 30);
+    p_delay(3);
+    obj_addall(0_37_55_32_27, logs, 40, 30);
+}
