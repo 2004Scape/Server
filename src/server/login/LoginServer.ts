@@ -44,7 +44,7 @@ export default class LoginServer {
     }
 
     constructor() {
-        if (Environment.LOGIN_SERVER) {
+        if (Environment.LOGIN_SERVER && !Environment.EASY_STARTUP) {
             startManagementWeb();
         }
         
