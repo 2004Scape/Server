@@ -252,7 +252,7 @@ head2=model_79_idk_head
 head3=model_78_npc_head
 moverestrict=indoors
 
-[npc_368]
+[biohazard_varrockgate_guard]
 vislevel=hide
 name=Guard
 desc=He tries to keep order around here.

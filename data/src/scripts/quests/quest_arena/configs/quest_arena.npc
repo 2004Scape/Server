@@ -234,7 +234,7 @@ strength=78
 defence=80
 param=damagetype,^slash_style
 param=attack_anim,human_2h_slash
-param=defend_anim,human_2h_sword_defend
+param=defend_anim,human_sword_defend3
 // param=attack_sound,
 // param=defend_sound,
 // osrs use attack seq_406

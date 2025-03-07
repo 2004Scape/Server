@@ -2,7 +2,7 @@
 [ai_timer,_rarefish] @move_fishing_spot;
 [ai_timer,_memberfish] @move_fishing_spot;
 [ai_timer,_saltfish] @move_fishing_spot;
-[ai_timer,npc_800] @move_fishing_spot; // lava eel
+[ai_timer,0_45_152_lava_eel] @move_fishing_spot; // lava eel
 
 [label,move_fishing_spot]
 if (npc_param(is_whirlpool) = ^true) {
@@ -36,7 +36,7 @@ return (npc_coord);
 [proc,check_fishing_spot_empty](coord $rand_coord)(boolean)
 npc_findallzone($rand_coord);
 while (npc_findnext = true) {
-    if (npc_coord = $rand_coord & (nc_category(npc_type) = saltfish | nc_category(npc_type) = freshfish | nc_category(npc_type) = saltfish | nc_category(npc_type) = rarefish | nc_category(npc_type) = memberfish | npc_type = npc_800)) {
+    if (npc_coord = $rand_coord & (nc_category(npc_type) = saltfish | nc_category(npc_type) = freshfish | nc_category(npc_type) = saltfish | nc_category(npc_type) = rarefish | nc_category(npc_type) = memberfish | npc_type = 0_45_152_lava_eel)) {
         return (false);
     }
 }
