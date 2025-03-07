@@ -231,7 +231,6 @@ if (last_useitem = bucket_milk) {
     npc_walk(1_51_54_46_53);
     p_delay(4);
     %fluffs_progress = ^fluffs_rescued;
-    %fluffs_crate = null;
     npc_del;
     .npc_del;
     ~mesbox("Fluffs has run off home with her offspring.");
