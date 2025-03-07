@@ -8,7 +8,6 @@ import Obj from '#/engine/entity/Obj.js';
 import PathingEntity from '#/engine/entity/PathingEntity.js';
 import Player from '#/engine/entity/Player.js';
 import World from '#/engine/World.js';
-import ZoneEntityList, { LocList, ObjList } from '#/engine/zone/ZoneEntityList.js';
 import ZoneEvent from '#/engine/zone/ZoneEvent.js';
 import ZoneEventType from '#/engine/zone/ZoneEventType.js';
 import ZoneMap from '#/engine/zone/ZoneMap.js';
