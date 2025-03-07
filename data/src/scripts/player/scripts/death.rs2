@@ -31,7 +31,7 @@ if (findhero = true) {
     // todo: what npc killed the player
     session_log(^log_moderator, "Player died");
 }
-p_telejump(map_findsquare(0_50_50_21_18, 0, 2, ^map_findsquare_lineofwalk));
+p_teleport(map_findsquare(0_50_50_21_18, 0, 2, ^map_findsquare_lineofwalk));
 buildappearance(worn);
 ~prayer_deactivate_all;
 ~follower_death;
