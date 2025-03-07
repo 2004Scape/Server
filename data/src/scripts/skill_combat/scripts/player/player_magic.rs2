@@ -152,11 +152,6 @@ if ($spell = ^crumble_undead & npc_param(undead) = ^false) {
 // in osrs you can only defensive cast with a staff. Not sure if this is the case in 2004
 // Might be confusing for players if they just so happen to have their non-magic weapon on defensive, and end up gaining def xp from manual casting.
 // so maybe jagex did it this way?
-if (%damagestyle = ^style_melee_defensive & inv_getobj(worn, ^wearpos_rhand) ! null & oc_category(inv_getobj(worn, ^wearpos_rhand)) = weapon_staff) {
-    %damagestyle = ^style_magic_defensive; // casting a spell with defensive on gives mage + def xp
-} else {
-    %damagestyle = ^style_magic_normal; // if this script is running they have to be using a spell, so assume magic style
-}
 
 // spell anim
 anim(db_getfield($spell_data, magic_spell_table:anim, 0), 0);
@@ -181,6 +176,11 @@ return($duration);
 
 
 [proc,pvm_spell_success](dbrow $spell_data, int $maxhit, int $duration)
+def_obj $weapon = inv_getobj(worn, ^wearpos_rhand);
+def_int $damagestyle = ^style_magic_normal;
+if (%damagestyle = ^style_melee_defensive) { // check varp directly
+    $damagestyle = ^style_magic_defensive; // casting a spell with defensive on gives mage + def xp
+}
 // play spell success sound
 sound_synth(db_getfield($spell_data, magic_spell_table:sound_success, 0), 0, 0);
 // roll 0-maxhit
@@ -213,7 +213,7 @@ if ($maxhit ! null) {
         sound_synth(npc_param(defend_sound), 0, $duration); // delay 1 client tick for the hit queue
     }
     def_int $damage_capped = min($damage, npc_stat(hitpoints));
-    ~give_combat_experience(%damagestyle, $damage_capped, %npc_combat_xp_multiplier);
+    ~give_combat_experience($damagestyle, $damage_capped, %npc_combat_xp_multiplier);
     npc_heropoints($damage_capped);
 }
 // spell visual

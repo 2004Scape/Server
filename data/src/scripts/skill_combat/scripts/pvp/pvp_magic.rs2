@@ -164,6 +164,11 @@ if ($freeze_time > 0) {
 }
 
 [proc,pvp_spell_success](dbrow $spell_data, int $maxhit, int $duration)
+def_obj $weapon = inv_getobj(worn, ^wearpos_rhand);
+def_int $damagestyle = ^style_magic_normal;
+if (%damagestyle = ^style_melee_defensive) { // check varp directly
+    $damagestyle = ^style_magic_defensive; // casting a spell with defensive on gives mage + def xp
+}
 def_synth $sound = db_getfield($spell_data, magic_spell_table:sound_success, 0);
 sound_synth($sound, 0, 0);
 .sound_synth($sound, 0, 0);
@@ -180,7 +185,7 @@ def_int $damage = randominc($maxhit); // tick eating existed! https://oldschool.
 $damage = min($damage, .stat(hitpoints));
 ~.pvp_damage(calc($duration / 30 + 1), $damage); // delayed an extra tick: https://youtu.be/eEdE0mvglM4?t=62
 // didnt have a flinch anim until sept 20 2006: https://oldschool.runescape.wiki/w/Update:Slug_Menace
-~give_combat_experience_pvp(%damagestyle, $damage, ~pvp_xp_multiplier(~.player_combat_level));
+~give_combat_experience_pvp($damagestyle, $damage, ~pvp_xp_multiplier(~.player_combat_level));
 both_heropoints($damage);
 
 .spotanim_pl(db_getfield($spell_data, magic_spell_table:spotanim_target, 0), $duration);
@@ -208,12 +213,6 @@ sound_synth($sound, 0, 0);
 .if_close;
 ~delete_spell_runes($spell_data);
 ~give_spell_xp($spell_data);
-
-if (%damagestyle = ^style_melee_defensive & inv_getobj(worn, ^wearpos_rhand) ! null & oc_category(inv_getobj(worn, ^wearpos_rhand)) = weapon_staff) {
-    %damagestyle = ^style_magic_defensive; // casting a spell with defensive on gives mage + def xp
-} else {
-    %damagestyle = ^style_magic_normal; // if this script is running they have to be using a spell, so assume magic style
-}
 
 // spell anim
 anim(db_getfield($spell_data, magic_spell_table:anim, 0), 0);
