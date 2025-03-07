@@ -18,18 +18,3 @@ while (loc_findnext = true) {
         loc_anim($seq);
     }
 }
-
-
-[debugproc,drop_items]
-if (p_finduid(uid) = true) {
-    p_telejump(0_37_55_32_30);
-    def_int $count = 0;
-    // while($count < 140){
-    //     obj_add(0_37_55_32_30, logs, 1, 20);
-    //     if(calc($count % 10) = 0){
-    //         p_delay(0);
-    //     }
-    //     $count = calc($count + 1);
-    // }
-    obj_add(0_37_55_32_30, logs, 5, 10);
-}

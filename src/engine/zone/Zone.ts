@@ -27,7 +27,6 @@ import LocMerge from '#/network/server/model/LocMerge.js';
 import ServerProtRepository from '#/network/rs225/server/prot/ServerProtRepository.js';
 import ZoneMessageEncoder from '#/network/server/codec/ZoneMessageEncoder.js';
 import ZoneMessage from '#/network/server/ZoneMessage.js';
-import ZoneEntityList, { LocList, ObjList } from '#/engine/zone/ZoneEntityList.js';
 import NonPathingEntity from '#/engine/entity/NonPathingEntity.js';
 import ObjType from '#/cache/config/ObjType.js';
 import Environment from '#/util/Environment.js';

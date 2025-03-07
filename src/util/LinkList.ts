@@ -18,6 +18,7 @@ export default class LinkList<T extends Linkable> {
         }
         return count;
     }
+
     addTail(node: T): void {
         if (node.prev) {
             node.unlink();
