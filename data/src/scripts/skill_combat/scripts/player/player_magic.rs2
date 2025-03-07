@@ -177,11 +177,9 @@ return($duration);
 
 [proc,pvm_spell_success](dbrow $spell_data, int $maxhit, int $duration)
 def_obj $weapon = inv_getobj(worn, ^wearpos_rhand);
-def_int $damagestyle = %damagestyle;
-if ($damagestyle = ^style_melee_defensive & $weapon ! null & oc_category($weapon) = weapon_staff) {
+def_int $damagestyle = ^style_magic_normal;
+if (%damagestyle = ^style_melee_defensive) { // check varp directly
     $damagestyle = ^style_magic_defensive; // casting a spell with defensive on gives mage + def xp
-} else {
-    $damagestyle = ^style_magic_normal; // if this script is running they have to be using a spell, so assume magic style
 }
 // play spell success sound
 sound_synth(db_getfield($spell_data, magic_spell_table:sound_success, 0), 0, 0);
