@@ -1,19 +1,17 @@
 import fs from 'fs';
 
-import { startManagementWeb, startWeb, web } from '#/web.js';
 
-import World from '#/engine/World.js';
+import { collectDefaultMetrics, register } from 'prom-client';
 
 import { packClient, packServer } from '#/cache/PackAll.js';
-
+import World from '#/engine/World.js';
 import TcpServer from '#/server/tcp/TcpServer.js';
 import WSServer from '#/server/ws/WSServer.js';
-
 import Environment from '#/util/Environment.js';
 import { printError, printInfo } from '#/util/Logger.js';
 import { updateCompiler } from '#/util/RuneScriptCompiler.js';
-import { collectDefaultMetrics, register } from 'prom-client';
 import { createWorker } from '#/util/WorkerFactory.js';
+import { startManagementWeb, startWeb, web } from '#/web.js';
 
 if (Environment.BUILD_STARTUP_UPDATE) {
     await updateCompiler();

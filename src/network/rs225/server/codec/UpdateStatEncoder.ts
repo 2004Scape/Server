@@ -1,6 +1,6 @@
-import MessageEncoder from '#/network/server/codec/MessageEncoder.js';
 import Packet from '#/io/Packet.js';
 import ServerProt from '#/network/rs225/server/prot/ServerProt.js';
+import MessageEncoder from '#/network/server/codec/MessageEncoder.js';
 import UpdateStat from '#/network/server/model/UpdateStat.js';
 
 export default class UpdateStatEncoder extends MessageEncoder<UpdateStat> {

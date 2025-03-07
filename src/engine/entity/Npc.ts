@@ -1,47 +1,40 @@
-import NpcType from '#/cache/config/NpcType.js';
-import VarNpcType from '#/cache/config/VarNpcType.js';
+import { CollisionFlag, CollisionType } from '@2004scape/rsmod-pathfinder';
+
 import HuntType from '#/cache/config/HuntType.js';
+import NpcType from '#/cache/config/NpcType.js';
 import ScriptVarType from '#/cache/config/ScriptVarType.js';
 import SeqType from '#/cache/config/SeqType.js';
-
-import World from '#/engine/World.js';
+import VarNpcType from '#/cache/config/VarNpcType.js';
 import { Direction, CoordGrid } from '#/engine/CoordGrid.js';
-
+import BlockWalk from '#/engine/entity/BlockWalk.js';
+import Entity from '#/engine/entity/Entity.js';
+import EntityLifeCycle from '#/engine/entity/EntityLifeCycle.js';
+import { EntityQueueRequest, NpcQueueType } from '#/engine/entity/EntityQueueRequest.js';
+import HeroPoints from '#/engine/entity/HeroPoints.js';
+import HuntCheckNotTooStrong from '#/engine/entity/hunt/HuntCheckNotTooStrong.js';
+import HuntModeType from '#/engine/entity/hunt/HuntModeType.js';
+import Interaction from '#/engine/entity/Interaction.js';
+import Loc from '#/engine/entity/Loc.js';
+import MoveRestrict from '#/engine/entity/MoveRestrict.js';
+import MoveSpeed from '#/engine/entity/MoveSpeed.js';
+import MoveStrategy from '#/engine/entity/MoveStrategy.js';
+import NpcMode from '#/engine/entity/NpcMode.js';
+import NpcStat from '#/engine/entity/NpcStat.js';
+import Obj from '#/engine/entity/Obj.js';
+import PathingEntity from '#/engine/entity/PathingEntity.js';
+import Player from '#/engine/entity/Player.js';
+import Visibility from '#/engine/entity/Visibility.js';
+import { isFlagged , findNaivePath } from '#/engine/GameMap.js';
 import ScriptFile from '#/engine/script/ScriptFile.js';
+import { HuntIterator } from '#/engine/script/ScriptIterators.js';
 import ScriptPointer from '#/engine/script/ScriptPointer.js';
 import ScriptProvider from '#/engine/script/ScriptProvider.js';
 import ScriptRunner from '#/engine/script/ScriptRunner.js';
 import ScriptState from '#/engine/script/ScriptState.js';
 import ServerTriggerType from '#/engine/script/ServerTriggerType.js';
-import { HuntIterator } from '#/engine/script/ScriptIterators.js';
-import { isFlagged } from '#/engine/GameMap.js';
-
-import BlockWalk from '#/engine/entity/BlockWalk.js';
-import { EntityQueueRequest, NpcQueueType } from '#/engine/entity/EntityQueueRequest.js';
-import Loc from '#/engine/entity/Loc.js';
-import MoveRestrict from '#/engine/entity/MoveRestrict.js';
-import NpcMode from '#/engine/entity/NpcMode.js';
-import Obj from '#/engine/entity/Obj.js';
-import PathingEntity from '#/engine/entity/PathingEntity.js';
-import Player from '#/engine/entity/Player.js';
-import MoveStrategy from '#/engine/entity/MoveStrategy.js';
-import HuntModeType from '#/engine/entity/hunt/HuntModeType.js';
-import HuntCheckNotTooStrong from '#/engine/entity/hunt/HuntCheckNotTooStrong.js';
-import MoveSpeed from '#/engine/entity/MoveSpeed.js';
-import Entity from '#/engine/entity/Entity.js';
-import Interaction from '#/engine/entity/Interaction.js';
-import EntityLifeCycle from '#/engine/entity/EntityLifeCycle.js';
-import NpcStat from '#/engine/entity/NpcStat.js';
-import HuntNobodyNear from '#/engine/entity/hunt/HuntNobodyNear.js';
-import HeroPoints from '#/engine/entity/HeroPoints.js';
-
-import LinkList from '#/util/LinkList.js';
-
-import { CollisionFlag, CollisionType } from '@2004scape/rsmod-pathfinder';
-import { findNaivePath } from '#/engine/GameMap.js';
-
+import World from '#/engine/World.js';
 import InfoProt from '#/network/rs225/server/prot/InfoProt.js';
-import Visibility from '#/engine/entity/Visibility.js';
+import LinkList from '#/util/LinkList.js';
 
 export default class Npc extends PathingEntity {
     // constructor properties
@@ -1023,7 +1016,7 @@ export default class Npc extends PathingEntity {
         this.setTimer(npcType.timer);
     }
 
-    isValid(hash64?: bigint): boolean {
+    isValid(_hash64?: bigint): boolean {
         if (this.delayed) {
             return false;
         }

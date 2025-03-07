@@ -1,6 +1,4 @@
 import InternalClient from '#/server/InternalClient.js';
-import { LoginResponse } from '#/server/login/index.js';
-
 import Environment from '#/util/Environment.js';
 
 export class LoginClient extends InternalClient {

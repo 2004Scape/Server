@@ -1,17 +1,16 @@
 import 'dotenv/config';
 
-import Packet from '#/io/Packet.js';
-import { fromBase37, toBase37 } from '#/util/JString.js';
-
-import ClientSocket from '#/server/ClientSocket.js';
-
-import World from '#/engine/World.js';
-
+import InvType from '#/cache/config/InvType.js';
 import { NetworkPlayer } from '#/engine/entity/NetworkPlayer.js';
 import Player, { getExpByLevel, getLevelByExp } from '#/engine/entity/Player.js';
 import { PlayerStat } from '#/engine/entity/PlayerStat.js';
+import World from '#/engine/World.js';
+import Packet from '#/io/Packet.js';
+import ClientSocket from '#/server/ClientSocket.js';
+import { fromBase37, toBase37 } from '#/util/JString.js';
 
-import InvType from '#/cache/config/InvType.js';
+
+
 
 export class PlayerLoading {
     static verify(sav: Packet) {

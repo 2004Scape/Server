@@ -1,30 +1,26 @@
-import ParamType from '#/cache/config/ParamType.js';
 import NpcType from '#/cache/config/NpcType.js';
 import { ParamHelper } from '#/cache/config/ParamHelper.js';
+import ParamType from '#/cache/config/ParamType.js';
 import SpotanimType from '#/cache/config/SpotanimType.js';
-
-import World from '#/engine/World.js';
-
+import { CoordGrid } from '#/engine/CoordGrid.js';
+import Entity from '#/engine/entity/Entity.js';
+import EntityLifeCycle from '#/engine/entity/EntityLifeCycle.js';
+import HuntVis from '#/engine/entity/hunt/HuntVis.js';
+import Interaction from '#/engine/entity/Interaction.js';
+import Loc from '#/engine/entity/Loc.js';
+import Npc from '#/engine/entity/Npc.js';
+import NpcIteratorType from '#/engine/entity/NpcIteratorType.js';
+import NpcMode from '#/engine/entity/NpcMode.js';
+import Obj from '#/engine/entity/Obj.js';
+import { NpcIterator } from '#/engine/script/ScriptIterators.js';
 import ScriptOpcode from '#/engine/script/ScriptOpcode.js';
 import ScriptPointer, { ActiveNpc, checkedHandler } from '#/engine/script/ScriptPointer.js';
 import ScriptProvider from '#/engine/script/ScriptProvider.js';
 import { CommandHandlers } from '#/engine/script/ScriptRunner.js';
 import ScriptState from '#/engine/script/ScriptState.js';
-import ServerTriggerType from '#/engine/script/ServerTriggerType.js';
-import { NpcIterator } from '#/engine/script/ScriptIterators.js';
-
-import Loc from '#/engine/entity/Loc.js';
-import Obj from '#/engine/entity/Obj.js';
-import { CoordGrid } from '#/engine/CoordGrid.js';
-import NpcIteratorType from '#/engine/entity/NpcIteratorType.js';
-import Npc from '#/engine/entity/Npc.js';
-import NpcMode from '#/engine/entity/NpcMode.js';
-import Entity from '#/engine/entity/Entity.js';
-import Interaction from '#/engine/entity/Interaction.js';
-import HuntVis from '#/engine/entity/hunt/HuntVis.js';
-import EntityLifeCycle from '#/engine/entity/EntityLifeCycle.js';
-
 import { check, CoordValid, DurationValid, HitTypeValid, HuntTypeValid, HuntVisValid, NpcModeValid, NpcStatValid, NpcTypeValid, NumberNotNull, ParamTypeValid, QueueValid, SpotAnimTypeValid } from '#/engine/script/ScriptValidators.js';
+import ServerTriggerType from '#/engine/script/ServerTriggerType.js';
+import World from '#/engine/World.js';
 
 const NpcOps: CommandHandlers = {
     [ScriptOpcode.NPC_FINDUID]: state => {

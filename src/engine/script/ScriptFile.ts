@@ -1,8 +1,7 @@
 import path from 'path';
 
-import Packet from '#/io/Packet.js';
-
 import ScriptOpcode from '#/engine/script/ScriptOpcode.js';
+import Packet from '#/io/Packet.js';
 import Environment from '#/util/Environment.js';
 
 export interface ScriptInfo {

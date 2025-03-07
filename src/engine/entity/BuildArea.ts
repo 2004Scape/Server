@@ -1,7 +1,7 @@
 import { CoordGrid } from '#/engine/CoordGrid.js';
+import Npc from '#/engine/entity/Npc.js';
 import Player from '#/engine/entity/Player.js';
 import World from '#/engine/World.js';
-import Npc from '#/engine/entity/Npc.js';
 
 export default class BuildArea {
     public static readonly INTERVAL: number = 10;

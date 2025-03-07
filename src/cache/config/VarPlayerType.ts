@@ -1,10 +1,10 @@
 import fs from 'fs';
 
-import Packet from '#/io/Packet.js';
 
 import { ConfigType } from '#/cache/config/ConfigType.js';
 import ScriptVarType from '#/cache/config/ScriptVarType.js';
 import Jagfile from '#/io/Jagfile.js';
+import Packet from '#/io/Packet.js';
 import { printError } from '#/util/Logger.js';
 
 export default class VarPlayerType extends ConfigType {

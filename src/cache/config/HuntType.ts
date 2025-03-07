@@ -1,15 +1,13 @@
 import fs from 'fs';
 
-import Packet from '#/io/Packet.js';
 
 import { ConfigType } from '#/cache/config/ConfigType.js';
-
 import HuntCheckNotTooStrong from '#/engine/entity/hunt/HuntCheckNotTooStrong.js';
 import HuntModeType from '#/engine/entity/hunt/HuntModeType.js';
 import HuntNobodyNear from '#/engine/entity/hunt/HuntNobodyNear.js';
 import HuntVis from '#/engine/entity/hunt/HuntVis.js';
-
 import NpcMode from '#/engine/entity/NpcMode.js';
+import Packet from '#/io/Packet.js';
 
 export default class HuntType extends ConfigType {
     private static configNames: Map<string, number> = new Map();

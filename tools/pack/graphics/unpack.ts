@@ -1,8 +1,8 @@
 import fs from 'fs';
-import Packet from '#/io/Packet.js';
 
-import Jagfile from '#/io/Jagfile.js';
 import Model from '#/cache/graphics/Model.js';
+import Jagfile from '#/io/Jagfile.js';
+import Packet from '#/io/Packet.js';
 import { printWarning } from '#/util/Logger.js';
 
 const models = Jagfile.load('data/client/models');

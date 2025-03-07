@@ -1,5 +1,5 @@
-import ZoneMessage from '#/network/server/ZoneMessage.js';
 import { CoordGrid } from '#/engine/CoordGrid.js';
+import ZoneMessage from '#/network/server/ZoneMessage.js';
 
 export default class LocMerge extends ZoneMessage {
     constructor(

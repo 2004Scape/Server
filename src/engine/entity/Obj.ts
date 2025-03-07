@@ -1,5 +1,5 @@
-import NonPathingEntity from '#/engine/entity/NonPathingEntity.js';
 import EntityLifeCycle from '#/engine/entity/EntityLifeCycle.js';
+import NonPathingEntity from '#/engine/entity/NonPathingEntity.js';
 
 export default class Obj extends NonPathingEntity {
     /**

@@ -21,6 +21,7 @@ import MesanimType from '#/cache/config/MesanimType.js';
 import NpcType from '#/cache/config/NpcType.js';
 import ObjType from '#/cache/config/ObjType.js';
 import ParamType from '#/cache/config/ParamType.js';
+import ScriptVarType from '#/cache/config/ScriptVarType.js';
 import SeqFrame from '#/cache/config/SeqFrame.js';
 import SeqType from '#/cache/config/SeqType.js';
 import SpotanimType from '#/cache/config/SpotanimType.js';
@@ -28,52 +29,48 @@ import StructType from '#/cache/config/StructType.js';
 import VarNpcType from '#/cache/config/VarNpcType.js';
 import VarPlayerType from '#/cache/config/VarPlayerType.js';
 import VarSharedType from '#/cache/config/VarSharedType.js';
-import WordEnc from '#/cache/wordenc/WordEnc.js';
 import { CrcBuffer32, makeCrcs, makeCrcsAsync } from '#/cache/CrcTable.js';
 import { preloadClient, preloadClientAsync } from '#/cache/PreloadedPacks.js';
-
+import WordEnc from '#/cache/wordenc/WordEnc.js';
 import { CoordGrid } from '#/engine/CoordGrid.js';
+import BlockWalk from '#/engine/entity/BlockWalk.js';
+import EntityLifeCycle from '#/engine/entity/EntityLifeCycle.js';
+import { NpcList, PlayerList } from '#/engine/entity/EntityList.js';
+import { EntityQueueState, PlayerQueueType } from '#/engine/entity/EntityQueueRequest.js';
+import { PlayerTimerType } from '#/engine/entity/EntityTimer.js';
+import HuntModeType from '#/engine/entity/hunt/HuntModeType.js';
+import HuntNobodyNear from '#/engine/entity/hunt/HuntNobodyNear.js';
+import Loc from '#/engine/entity/Loc.js';
+import { isClientConnected, NetworkPlayer } from '#/engine/entity/NetworkPlayer.js';
+import Npc from '#/engine/entity/Npc.js';
+import Obj from '#/engine/entity/Obj.js';
+import Player from '#/engine/entity/Player.js';
+import { PlayerLoading } from '#/engine/entity/PlayerLoading.js';
+import { SessionLog } from '#/engine/entity/tracking/SessionLog.js';
+import Visibility from '#/engine/entity/Visibility.js';
 import GameMap, { changeLocCollision, changeNpcCollision, changePlayerCollision } from '#/engine/GameMap.js';
 import { Inventory } from '#/engine/Inventory.js';
-import WorldStat from '#/engine/WorldStat.js';
-
+import NpcRenderer from '#/engine/renderer/NpcRenderer.js';
+import PlayerRenderer from '#/engine/renderer/PlayerRenderer.js';
+import ScriptPointer from '#/engine/script/ScriptPointer.js';
 import ScriptProvider from '#/engine/script/ScriptProvider.js';
 import ScriptRunner from '#/engine/script/ScriptRunner.js';
 import ScriptState from '#/engine/script/ScriptState.js';
 import ServerTriggerType from '#/engine/script/ServerTriggerType.js';
+import WorldStat from '#/engine/WorldStat.js';
 import Zone from '#/engine/zone/Zone.js';
-import PlayerRenderer from '#/engine/renderer/PlayerRenderer.js';
-import NpcRenderer from '#/engine/renderer/NpcRenderer.js';
-
+import Isaac from '#/io/Isaac.js';
+import Packet from '#/io/Packet.js';
 import InfoProt from '#/network/rs225/server/prot/InfoProt.js';
-
-import BlockWalk from '#/engine/entity/BlockWalk.js';
-import Loc from '#/engine/entity/Loc.js';
-import Npc from '#/engine/entity/Npc.js';
-import Obj from '#/engine/entity/Obj.js';
-import Player from '#/engine/entity/Player.js';
-import EntityLifeCycle from '#/engine/entity/EntityLifeCycle.js';
-import { NpcList, PlayerList } from '#/engine/entity/EntityList.js';
-import { isClientConnected, NetworkPlayer } from '#/engine/entity/NetworkPlayer.js';
-import { EntityQueueState, PlayerQueueType } from '#/engine/entity/EntityQueueRequest.js';
-import { PlayerTimerType } from '#/engine/entity/EntityTimer.js';
-
-import UpdateRebootTimer from '#/network/server/model/UpdateRebootTimer.js';
+import MessagePrivate from '#/network/server/model/MessagePrivate.js';
 import UpdateFriendList from '#/network/server/model/UpdateFriendList.js';
 import UpdateIgnoreList from '#/network/server/model/UpdateIgnoreList.js';
-import MessagePrivate from '#/network/server/model/MessagePrivate.js';
-
+import UpdateRebootTimer from '#/network/server/model/UpdateRebootTimer.js';
 import ClientSocket from '#/server/ClientSocket.js';
 import { FriendsServerOpcodes } from '#/server/friend/FriendServer.js';
-
-import Packet from '#/io/Packet.js';
-
-import Environment from '#/util/Environment.js';
-import { printDebug, printError, printInfo } from '#/util/Logger.js';
-import { createWorker } from '#/util/WorkerFactory.js';
-import HuntModeType from '#/engine/entity/hunt/HuntModeType.js';
-import HuntNobodyNear from '#/engine/entity/hunt/HuntNobodyNear.js';
-
+import { FriendThreadMessage } from '#/server/friend/FriendThread.js';
+import LoggerEventType from '#/server/logger/LoggerEventType.js';
+import { type GenericLoginThreadResponse, isPlayerLoginResponse, isPlayerLogoutResponse } from '#/server/login/index.d.js';
 import {
     trackCycleBandwidthInBytes,
     trackCycleBandwidthOutBytes,
@@ -89,19 +86,15 @@ import {
     trackNpcCount,
     trackPlayerCount
 } from '#/server/Metrics.js';
-import WalkTriggerSetting from '#/util/WalkTriggerSetting.js';
-import LinkList from '#/util/LinkList.js';
+import Environment from '#/util/Environment.js';
 import { fromBase37, toBase37, toSafeName } from '#/util/JString.js';
-import { PlayerLoading } from '#/engine/entity/PlayerLoading.js';
-import ScriptPointer from '#/engine/script/ScriptPointer.js';
-import Isaac from '#/io/Isaac.js';
-import LoggerEventType from '#/server/logger/LoggerEventType.js';
-import ScriptVarType from '#/cache/config/ScriptVarType.js';
+import LinkList from '#/util/LinkList.js';
+import { printDebug, printError, printInfo } from '#/util/Logger.js';
+import WalkTriggerSetting from '#/util/WalkTriggerSetting.js';
+import { createWorker } from '#/util/WorkerFactory.js';
+
 import InputTrackingEvent from './entity/tracking/InputEvent.js';
-import { SessionLog } from '#/engine/entity/tracking/SessionLog.js';
-import { type GenericLoginThreadResponse, isPlayerLoginResponse, isPlayerLogoutResponse } from '#/server/login/index.d.js';
-import { FriendThreadMessage } from '#/server/friend/FriendThread.js';
-import Visibility from '#/engine/entity/Visibility.js';
+
 
 const priv = forge.pki.privateKeyFromPem(Environment.STANDALONE_BUNDLE ? await (await fetch('data/config/private.pem')).text() : fs.readFileSync('data/config/private.pem', 'ascii'));
 
@@ -602,8 +595,6 @@ class World {
     // - npc hunt
     private processWorld(): void {
         const start: number = Date.now();
-
-        const tick: number = this.currentTick;
 
         // - world queue
         for (let request: EntityQueueState | null = this.queue.head(); request; request = this.queue.next()) {

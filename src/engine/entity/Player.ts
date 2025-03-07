@@ -1,89 +1,81 @@
 import 'dotenv/config';
 
-import { CollisionType } from '@2004scape/rsmod-pathfinder';
+import { CollisionType , CollisionFlag } from '@2004scape/rsmod-pathfinder';
 
-import Packet from '#/io/Packet.js';
-import { toDisplayName } from '#/util/JString.js';
 
-import FontType from '#/cache/config/FontType.js';
 import Component from '#/cache/config/Component.js';
+import FontType from '#/cache/config/FontType.js';
 import InvType from '#/cache/config/InvType.js';
 import LocType from '#/cache/config/LocType.js';
 import NpcType from '#/cache/config/NpcType.js';
 import ObjType from '#/cache/config/ObjType.js';
+import { ParamHelper } from '#/cache/config/ParamHelper.js';
+import ParamType from '#/cache/config/ParamType.js';
 import ScriptVarType from '#/cache/config/ScriptVarType.js';
 import SeqType from '#/cache/config/SeqType.js';
 import VarPlayerType from '#/cache/config/VarPlayerType.js';
-import ParamType from '#/cache/config/ParamType.js';
-import { ParamHelper } from '#/cache/config/ParamHelper.js';
-
+import { PRELOADED, PRELOADED_CRC } from '#/cache/PreloadedPacks.js';
+import { CoordGrid } from '#/engine/CoordGrid.js';
 import BlockWalk from '#/engine/entity/BlockWalk.js';
-import { EntityTimer, PlayerTimerType } from '#/engine/entity/EntityTimer.js';
+import BuildArea from '#/engine/entity/BuildArea.js';
+import CameraInfo from '#/engine/entity/CameraInfo.js';
+import Entity from '#/engine/entity/Entity.js';
+import EntityLifeCycle from '#/engine/entity/EntityLifeCycle.js';
 import { EntityQueueRequest, PlayerQueueType, QueueType, ScriptArgument } from '#/engine/entity/EntityQueueRequest.js';
+import { EntityTimer, PlayerTimerType } from '#/engine/entity/EntityTimer.js';
+import HeroPoints from '#/engine/entity/HeroPoints.js';
 import Loc from '#/engine/entity/Loc.js';
-import Npc from '#/engine/entity/Npc.js';
 import MoveRestrict from '#/engine/entity/MoveRestrict.js';
+import MoveSpeed from '#/engine/entity/MoveSpeed.js';
+import MoveStrategy from '#/engine/entity/MoveStrategy.js';
+import { isClientConnected } from '#/engine/entity/NetworkPlayer.js';
+import Npc from '#/engine/entity/Npc.js';
 import Obj from '#/engine/entity/Obj.js';
 import PathingEntity from '#/engine/entity/PathingEntity.js';
-import { CoordGrid } from '#/engine/CoordGrid.js';
-import CameraInfo from '#/engine/entity/CameraInfo.js';
-import MoveSpeed from '#/engine/entity/MoveSpeed.js';
-import EntityLifeCycle from '#/engine/entity/EntityLifeCycle.js';
 import { PlayerStat, PlayerStatEnabled, PlayerStatFree } from '#/engine/entity/PlayerStat.js';
-import MoveStrategy from '#/engine/entity/MoveStrategy.js';
-import BuildArea from '#/engine/entity/BuildArea.js';
-import HeroPoints from '#/engine/entity/HeroPoints.js';
-import { isClientConnected } from '#/engine/entity/NetworkPlayer.js';
-import Entity from '#/engine/entity/Entity.js';
-
+import InputTracking from '#/engine/entity/tracking/InputTracking.js';
+import { changeNpcCollision, changePlayerCollision, findNaivePath, reachedEntity, reachedLoc, reachedObj } from '#/engine/GameMap.js';
 import { Inventory, InventoryListener } from '#/engine/Inventory.js';
-import World from '#/engine/World.js';
-
 import ScriptFile from '#/engine/script/ScriptFile.js';
+import ScriptPointer from '#/engine/script/ScriptPointer.js';
 import ScriptProvider from '#/engine/script/ScriptProvider.js';
 import ScriptRunner from '#/engine/script/ScriptRunner.js';
 import ScriptState from '#/engine/script/ScriptState.js';
 import ServerTriggerType from '#/engine/script/ServerTriggerType.js';
-import ScriptPointer from '#/engine/script/ScriptPointer.js';
-
-import LinkList from '#/util/LinkList.js';
-
-import { CollisionFlag } from '@2004scape/rsmod-pathfinder';
-
-import { PRELOADED, PRELOADED_CRC } from '#/cache/PreloadedPacks.js';
-
-import OutgoingMessage from '#/network/server/OutgoingMessage.js';
+import World from '#/engine/World.js';
+import ZoneMap from '#/engine/zone/ZoneMap.js';
+import Packet from '#/io/Packet.js';
+import InfoProt from '#/network/rs225/server/prot/InfoProt.js';
+import ChatFilterSettings from '#/network/server/model/ChatFilterSettings.js';
+import HintArrow from '#/network/server/model/HintArrow.js';
 import IfClose from '#/network/server/model/IfClose.js';
-import UpdateUid192 from '#/network/server/model/UpdatePid.js';
+import IfSetTab from '#/network/server/model/IfSetTab.js';
+import LastLoginInfo from '#/network/server/model/LastLoginInfo.js';
+import MessageGame from '#/network/server/model/MessageGame.js';
+import MidiJingle from '#/network/server/model/MidiJingle.js';
+import MidiSong from '#/network/server/model/MidiSong.js';
+import RebuildNormal from '#/network/server/model/RebuildNormal.js';
 import ResetAnims from '#/network/server/model/ResetAnims.js';
 import ResetClientVarCache from '#/network/server/model/ResetClientVarCache.js';
 import TutOpen from '#/network/server/model/TutOpen.js';
-import UpdateInvStopTransmit from '#/network/server/model/UpdateInvStopTransmit.js';
-import VarpSmall from '#/network/server/model/VarpSmall.js';
-import VarpLarge from '#/network/server/model/VarpLarge.js';
-import MidiSong from '#/network/server/model/MidiSong.js';
-import MidiJingle from '#/network/server/model/MidiJingle.js';
-import IfSetTab from '#/network/server/model/IfSetTab.js';
 import UnsetMapFlag from '#/network/server/model/UnsetMapFlag.js';
-import HintArrow from '#/network/server/model/HintArrow.js';
-import LastLoginInfo from '#/network/server/model/LastLoginInfo.js';
-import MessageGame from '#/network/server/model/MessageGame.js';
-import ServerProtPriority from '#/network/server/prot/ServerProtPriority.js';
-import ChatFilterSettings from '#/network/server/model/ChatFilterSettings.js';
-import InfoProt from '#/network/rs225/server/prot/InfoProt.js';
-
-import Environment from '#/util/Environment.js';
-import { ChatModePrivate, ChatModePublic, ChatModeTradeDuel } from '#/util/ChatModes.js';
-import LoggerEventType from '#/server/logger/LoggerEventType.js';
-import InputTracking from '#/engine/entity/tracking/InputTracking.js';
-import { changeNpcCollision, changePlayerCollision, findNaivePath, reachedEntity, reachedLoc, reachedObj } from '#/engine/GameMap.js';
-import Visibility from './Visibility.js';
+import UpdateInvStopTransmit from '#/network/server/model/UpdateInvStopTransmit.js';
+import UpdateUid192 from '#/network/server/model/UpdatePid.js';
 import UpdateRebootTimer from '#/network/server/model/UpdateRebootTimer.js';
-import ZoneMap from '#/engine/zone/ZoneMap.js';
+import UpdateRunEnergy from '#/network/server/model/UpdateRunEnergy.js';
 import UpdateStat from '#/network/server/model/UpdateStat.js';
 import UpdateZoneFullFollows from '#/network/server/model/UpdateZoneFullFollows.js';
-import RebuildNormal from '#/network/server/model/RebuildNormal.js';
-import UpdateRunEnergy from '#/network/server/model/UpdateRunEnergy.js';
+import VarpLarge from '#/network/server/model/VarpLarge.js';
+import VarpSmall from '#/network/server/model/VarpSmall.js';
+import OutgoingMessage from '#/network/server/OutgoingMessage.js';
+import ServerProtPriority from '#/network/server/prot/ServerProtPriority.js';
+import LoggerEventType from '#/server/logger/LoggerEventType.js';
+import { ChatModePrivate, ChatModePublic, ChatModeTradeDuel } from '#/util/ChatModes.js';
+import Environment from '#/util/Environment.js';
+import { toDisplayName } from '#/util/JString.js';
+import LinkList from '#/util/LinkList.js';
+
+import Visibility from './Visibility.js';
 
 const levelExperience = new Int32Array(99);
 
@@ -2145,7 +2137,7 @@ export default class Player extends PathingEntity {
         this.write(new MessageGame(msg));
     }
 
-    isValid(hash64?: bigint): boolean {
+    isValid(_hash64?: bigint): boolean {
         if (this.loggingOut) {
             return false;
         }

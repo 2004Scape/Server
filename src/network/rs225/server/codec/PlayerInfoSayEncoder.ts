@@ -1,6 +1,6 @@
-import InfoMessageEncoder from '#/network/server/codec/InfoMessageEncoder.js';
 import Packet from '#/io/Packet.js';
 import InfoProt from '#/network/rs225/server/prot/InfoProt.js';
+import InfoMessageEncoder from '#/network/server/codec/InfoMessageEncoder.js';
 import PlayerInfoSay from '#/network/server/model/PlayerInfoSay.js';
 
 export default class PlayerInfoSayEncoder extends InfoMessageEncoder<PlayerInfoSay> {

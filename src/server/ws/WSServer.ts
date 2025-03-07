@@ -1,14 +1,14 @@
 import http, { IncomingMessage } from 'http';
+
 import { WebSocketServer, WebSocket } from 'ws';
 
+import World from '#/engine/World.js';
 import Packet from '#/io/Packet.js';
-
+import { getPublicPerDeploymentToken } from '#/io/PemUtil.js';
+import LoggerEventType from '#/server/logger/LoggerEventType.js';
 import NullClientSocket from '#/server/NullClientSocket.js';
 import WSClientSocket from '#/server/ws/WSClientSocket.js';
-import World from '#/engine/World.js';
-import LoggerEventType from '#/server/logger/LoggerEventType.js';
 import Environment from '#/util/Environment.js';
-import { getPublicPerDeploymentToken } from '#/io/PemUtil.js';
 
 function getIp(req: IncomingMessage) {
     // todo: environment flag to respect cf-connecting-ip (NOT safe if origin is exposed publicly by IP + proxied)
@@ -85,7 +85,6 @@ export default class WSServer {
                     client.buffer(data);
                     World.onClientData(client);
                 } catch (_) {
-                     
                     client.terminate();
                 }
             });

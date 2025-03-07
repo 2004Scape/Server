@@ -1,29 +1,29 @@
-import MessageHandler from '#/network/client/handler/MessageHandler.js';
-import Player, { getExpByLevel } from '#/engine/entity/Player.js';
-import ClientCheat from '#/network/client/model/ClientCheat.js';
-import Environment from '#/util/Environment.js';
-import InvType from '#/cache/config/InvType.js';
+import Component from '#/cache/config/Component.js';
 import IdkType from '#/cache/config/IdkType.js';
-import VarPlayerType from '#/cache/config/VarPlayerType.js';
-import ObjType from '#/cache/config/ObjType.js';
-import World from '#/engine/World.js';
+import InvType from '#/cache/config/InvType.js';
 import LocType from '#/cache/config/LocType.js';
 import NpcType from '#/cache/config/NpcType.js';
-import Component from '#/cache/config/Component.js';
+import ObjType from '#/cache/config/ObjType.js';
+import ScriptVarType from '#/cache/config/ScriptVarType.js';
 import SeqType from '#/cache/config/SeqType.js';
 import SpotanimType from '#/cache/config/SpotanimType.js';
-import ScriptProvider from '#/engine/script/ScriptProvider.js';
-import { tryParseInt } from '#/util/TryParse.js';
-import ScriptVarType from '#/cache/config/ScriptVarType.js';
+import VarPlayerType from '#/cache/config/VarPlayerType.js';
 import { CoordGrid } from '#/engine/CoordGrid.js';
-import ScriptRunner from '#/engine/script/ScriptRunner.js';
-import { PlayerStat, PlayerStatEnabled, PlayerStatKey } from '#/engine/entity/PlayerStat.js';
-import MoveStrategy from '#/engine/entity/MoveStrategy.js';
-import LoggerEventType from '#/server/logger/LoggerEventType.js';
-import Obj from '#/engine/entity/Obj.js';
 import EntityLifeCycle from '#/engine/entity/EntityLifeCycle.js';
-import Visibility from '#/engine/entity/Visibility.js';
+import MoveStrategy from '#/engine/entity/MoveStrategy.js';
 import { isClientConnected } from '#/engine/entity/NetworkPlayer.js';
+import Obj from '#/engine/entity/Obj.js';
+import Player, { getExpByLevel } from '#/engine/entity/Player.js';
+import { PlayerStat, PlayerStatEnabled, PlayerStatKey } from '#/engine/entity/PlayerStat.js';
+import Visibility from '#/engine/entity/Visibility.js';
+import ScriptProvider from '#/engine/script/ScriptProvider.js';
+import ScriptRunner from '#/engine/script/ScriptRunner.js';
+import World from '#/engine/World.js';
+import MessageHandler from '#/network/client/handler/MessageHandler.js';
+import ClientCheat from '#/network/client/model/ClientCheat.js';
+import LoggerEventType from '#/server/logger/LoggerEventType.js';
+import Environment from '#/util/Environment.js';
+import { tryParseInt } from '#/util/TryParse.js';
 
 export default class ClientCheatHandler extends MessageHandler<ClientCheat> {
     handle(message: ClientCheat, player: Player): boolean {

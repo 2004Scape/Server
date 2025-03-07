@@ -2,19 +2,14 @@ import InvType from '#/cache/config/InvType.js';
 import ObjType from '#/cache/config/ObjType.js';
 import { ParamHelper } from '#/cache/config/ParamHelper.js';
 import ParamType from '#/cache/config/ParamType.js';
-
-import World from '#/engine/World.js';
-import Zone from '#/engine/zone/Zone.js';
-
+import { CoordGrid } from '#/engine/CoordGrid.js';
+import EntityLifeCycle from '#/engine/entity/EntityLifeCycle.js';
+import Obj from '#/engine/entity/Obj.js';
 import ScriptOpcode from '#/engine/script/ScriptOpcode.js';
 import { ActiveObj, ActivePlayer } from '#/engine/script/ScriptPointer.js';
 import { CommandHandlers } from '#/engine/script/ScriptRunner.js';
-
-import Obj from '#/engine/entity/Obj.js';
-import { CoordGrid } from '#/engine/CoordGrid.js';
-import EntityLifeCycle from '#/engine/entity/EntityLifeCycle.js';
-
 import { check, CoordValid, DurationValid, InvTypeValid, ObjStackValid, ObjTypeValid, ParamTypeValid } from '#/engine/script/ScriptValidators.js';
+import World from '#/engine/World.js';
 import Environment from '#/util/Environment.js';
 
 const ObjOps: CommandHandlers = {

@@ -2,7 +2,6 @@ import fs from 'fs';
 import path from 'path';
 
 import Packet from '#/io/Packet.js';
-
 import { fromBase37 } from '#/util/JString.js';
 
 const args = process.argv.splice(2);

@@ -1,7 +1,6 @@
 import net from 'net';
 
 import Packet from '#/io/Packet.js';
-
 import Environment from '#/util/Environment.js';
 
 export default class TcpMaintenanceServer {

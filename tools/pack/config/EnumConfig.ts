@@ -1,8 +1,7 @@
 import ScriptVarType from '#/cache/config/ScriptVarType.js';
-
+import { EnumPack } from '#/util/PackFile.js';
 import { ConfigValue, ConfigLine, PackedData, isConfigBoolean, getConfigBoolean, packStepError } from '#tools/pack/config/PackShared.js';
 import { lookupParamValue } from '#tools/pack/config/ParamConfig.js';
-import { EnumPack } from '#/util/PackFile.js';
 
 export function parseEnumConfig(key: string, value: string): ConfigValue | null | undefined {
     const stringKeys: string[] = [];

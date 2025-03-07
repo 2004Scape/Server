@@ -537,6 +537,5 @@ async function advancedOptions() {
 try {
     await startup();
 } catch (_) {
-    // eslint-disable-line @typescript-eslint/no-unused-vars
     // no-op
 }

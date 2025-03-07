@@ -1,17 +1,16 @@
 import fs from 'fs';
 import fsp from 'fs/promises';
-import { WebSocketServer } from 'ws';
 
 import bcrypt from 'bcrypt';
+import { WebSocketServer } from 'ws';
+
 
 import { db, toDbDate } from '#/db/query.js';
-
-import Environment from '#/util/Environment.js';
-import { printInfo } from '#/util/Logger.js';
 import { PlayerLoading } from '#/engine/entity/PlayerLoading.js';
 import Packet from '#/io/Packet.js';
+import Environment from '#/util/Environment.js';
+import { printInfo } from '#/util/Logger.js';
 import { getUnreadMessageCount } from '#/util/Messages.js';
-
 import { startManagementWeb } from '#/web.js';
 
 export default class LoginServer {

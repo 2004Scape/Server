@@ -4,9 +4,8 @@ import net from 'net';
 import forge from 'node-forge';
 
 import { CrcBuffer } from '#/cache/CrcTable.js';
-
-import Packet from '#/io/Packet.js';
 import Isaac from '#/io/Isaac.js';
+import Packet from '#/io/Packet.js';
 
 const priv = forge.pki.privateKeyFromPem(fs.readFileSync('data/config/private.pem', 'ascii'));
 
@@ -89,7 +88,6 @@ function connectTcp(username: string, host = '127.0.0.1', port = 43594) {
 
         socket.on('error', () => {});
     } catch (_) {
-        // eslint-disable-line @typescript-eslint/no-unused-vars
         // no-op
     }
 }

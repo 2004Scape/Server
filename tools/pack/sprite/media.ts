@@ -1,7 +1,6 @@
 import Jagfile from '#/io/Jagfile.js';
 import Packet from '#/io/Packet.js';
 import { shouldBuildFileAny } from '#/util/PackFile.js';
-
 import { convertImage } from '#/util/PixPack.js';
 
 export async function packClientMedia() {

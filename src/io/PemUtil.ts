@@ -1,8 +1,10 @@
-import fs from 'fs';
-import forge from 'node-forge';
-import Environment from '#/util/Environment.js';
 import { createHash } from 'crypto';
+import fs from 'fs';
 import { hostname } from 'os';
+
+import forge from 'node-forge';
+
+import Environment from '#/util/Environment.js';
 
 // Attempt to load the public.pem parameters:
 const pubkey = forge.pki.publicKeyFromPem(Environment.STANDALONE_BUNDLE ? await (await fetch('data/config/public.pem')).text() : fs.readFileSync('data/config/public.pem', 'ascii'));

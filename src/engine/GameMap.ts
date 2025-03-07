@@ -3,24 +3,20 @@ import fs from 'fs';
 import { CollisionFlag, CollisionType, LocAngle, LocLayer } from '@2004scape/rsmod-pathfinder';
 import * as rsmod from '@2004scape/rsmod-pathfinder';
 
-import Packet from '#/io/Packet.js';
 
+import LocType from '#/cache/config/LocType.js';
 import NpcType from '#/cache/config/NpcType.js';
 import ObjType from '#/cache/config/ObjType.js';
-import LocType from '#/cache/config/LocType.js';
-
 import { CoordGrid } from '#/engine/CoordGrid.js';
+import EntityLifeCycle from '#/engine/entity/EntityLifeCycle.js';
+import Loc from '#/engine/entity/Loc.js';
+import Npc from '#/engine/entity/Npc.js';
+import Obj from '#/engine/entity/Obj.js';
 import World from '#/engine/World.js';
-
 import Zone from '#/engine/zone/Zone.js';
 import ZoneGrid from '#/engine/zone/ZoneGrid.js';
 import ZoneMap from '#/engine/zone/ZoneMap.js';
-
-import Npc from '#/engine/entity/Npc.js';
-import Obj from '#/engine/entity/Obj.js';
-import EntityLifeCycle from '#/engine/entity/EntityLifeCycle.js';
-import Loc from '#/engine/entity/Loc.js';
-
+import Packet from '#/io/Packet.js';
 import { printDebug, printWarning } from '#/util/Logger.js';
 
 export default class GameMap {

@@ -1,9 +1,8 @@
 import Database from 'better-sqlite3';
-import { createPool } from 'mysql2';
 import { Dialect, Kysely, LogEvent, MysqlDialect, SqliteDialect } from 'kysely';
+import { createPool } from 'mysql2';
 
 import { DB } from '#/db/types.js';
-
 import Environment from '#/util/Environment.js';
 
 let dialect: Dialect;

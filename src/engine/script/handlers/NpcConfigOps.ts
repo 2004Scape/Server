@@ -1,10 +1,8 @@
 import NpcType from '#/cache/config/NpcType.js';
 import { ParamHelper } from '#/cache/config/ParamHelper.js';
 import ParamType from '#/cache/config/ParamType.js';
-
 import ScriptOpcode from '#/engine/script/ScriptOpcode.js';
 import { CommandHandlers } from '#/engine/script/ScriptRunner.js';
-
 import { check, NpcTypeValid, NumberNotNull, ParamTypeValid } from '#/engine/script/ScriptValidators.js';
 
 const NpcConfigOps: CommandHandlers = {

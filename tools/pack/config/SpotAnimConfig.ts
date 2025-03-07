@@ -1,6 +1,6 @@
-import { ConfigValue, ConfigLine, PackedData, isConfigBoolean, getConfigBoolean } from '#tools/pack/config/PackShared.js';
 import ColorConversion from '#/util/ColorConversion.js';
 import { ModelPack, SeqPack, SpotAnimPack } from '#/util/PackFile.js';
+import { ConfigValue, ConfigLine, PackedData, isConfigBoolean, getConfigBoolean } from '#tools/pack/config/PackShared.js';
 
 export function parseSpotAnimConfig(key: string, value: string): ConfigValue | null | undefined {
     const stringKeys: string[] = [];

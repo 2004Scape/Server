@@ -1,6 +1,6 @@
-import MessageHandler from '#/network/client/handler/MessageHandler.js';
-import Player from '#/engine/entity/Player.js';
 import { PRELOADED } from '#/cache/PreloadedPacks.js';
+import Player from '#/engine/entity/Player.js';
+import MessageHandler from '#/network/client/handler/MessageHandler.js';
 import RebuildGetMaps from '#/network/client/model/RebuildGetMaps.js';
 import DataLand from '#/network/server/model/DataLand.js';
 import DataLandDone from '#/network/server/model/DataLandDone.js';

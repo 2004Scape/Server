@@ -1,31 +1,25 @@
-import { ParamHelper } from '#/cache/config/ParamHelper.js';
-import ParamType from '#/cache/config/ParamType.js';
-import StructType from '#/cache/config/StructType.js';
-import SpotanimType from '#/cache/config/SpotanimType.js';
-import MesanimType from '#/cache/config/MesanimType.js';
-
-import World from '#/engine/World.js';
-
-import ScriptOpcode from '#/engine/script/ScriptOpcode.js';
-import { CommandHandlers } from '#/engine/script/ScriptRunner.js';
-import ScriptState from '#/engine/script/ScriptState.js';
-import { ActiveNpc, ActivePlayer } from '#/engine/script/ScriptPointer.js';
-import { HuntIterator, NpcHuntAllCommandIterator } from '#/engine/script/ScriptIterators.js';
-
-import { CoordGrid } from '#/engine/CoordGrid.js';
-import MapFindSqaureType from '#/engine/entity/MapFindSquareType.js';
-import HuntModeType from '#/engine/entity/hunt/HuntModeType.js';
-import Player from '#/engine/entity/Player.js';
-import Npc from '#/engine/entity/Npc.js';
-import HuntVis from '#/engine/entity/hunt/HuntVis.js';
-
-import Environment from '#/util/Environment.js';
-
 import { LocLayer, LocAngle } from '@2004scape/rsmod-pathfinder';
 
+import MesanimType from '#/cache/config/MesanimType.js';
+import { ParamHelper } from '#/cache/config/ParamHelper.js';
+import ParamType from '#/cache/config/ParamType.js';
+import SpotanimType from '#/cache/config/SpotanimType.js';
+import StructType from '#/cache/config/StructType.js';
+import { CoordGrid } from '#/engine/CoordGrid.js';
+import HuntModeType from '#/engine/entity/hunt/HuntModeType.js';
+import HuntVis from '#/engine/entity/hunt/HuntVis.js';
+import MapFindSqaureType from '#/engine/entity/MapFindSquareType.js';
+import Npc from '#/engine/entity/Npc.js';
+import Player from '#/engine/entity/Player.js';
 import { isIndoors, isLineOfSight, isLineOfWalk, isMapBlocked, layerForLocShape } from '#/engine/GameMap.js';
-
+import { HuntIterator, NpcHuntAllCommandIterator } from '#/engine/script/ScriptIterators.js';
+import ScriptOpcode from '#/engine/script/ScriptOpcode.js';
+import { ActiveNpc, ActivePlayer } from '#/engine/script/ScriptPointer.js';
+import { CommandHandlers } from '#/engine/script/ScriptRunner.js';
+import ScriptState from '#/engine/script/ScriptState.js';
 import { check, CoordValid, FontTypeValid, HuntVisValid, LocTypeValid, MesanimValid, NumberNotNull, NumberPositive, ParamTypeValid, SeqTypeValid, SpotAnimTypeValid, StructTypeValid, FindSquareValid } from '#/engine/script/ScriptValidators.js';
+import World from '#/engine/World.js';
+import Environment from '#/util/Environment.js';
 
 const ServerOps: CommandHandlers = {
     [ScriptOpcode.MAP_CLOCK]: state => {

@@ -1,12 +1,11 @@
 import net from 'net';
 
+import World from '#/engine/World.js';
 import Packet from '#/io/Packet.js';
-
-import Environment from '#/util/Environment.js';
+import LoggerEventType from '#/server/logger/LoggerEventType.js';
 import NullClientSocket from '#/server/NullClientSocket.js';
 import TcpClientSocket from '#/server/tcp/TcpClientSocket.js';
-import World from '#/engine/World.js';
-import LoggerEventType from '#/server/logger/LoggerEventType.js';
+import Environment from '#/util/Environment.js';
 
 export default class TcpServer {
     tcp: net.Server;
@@ -39,7 +38,6 @@ export default class TcpServer {
                     client.buffer(data);
                     World.onClientData(client);
                 } catch (_) {
-                     
                     client.terminate();
                 }
             });

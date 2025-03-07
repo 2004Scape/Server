@@ -1,9 +1,9 @@
+import { NetworkPlayer } from '#/engine/entity/NetworkPlayer.js';
 import Player from '#/engine/entity/Player.js';
+import InputTrackingEvent from '#/engine/entity/tracking/InputEvent.js';
+import World from '#/engine/World.js';
 import EnableTracking from '#/network/server/model/EnableTracking.js';
 import FinishTracking from '#/network/server/model/FinishTracking.js';
-import World from '#/engine/World.js';
-import InputTrackingEvent from '#/engine/entity/tracking/InputEvent.js';
-import { NetworkPlayer } from '#/engine/entity/NetworkPlayer.js';
 import LoggerEventType from '#/server/logger/LoggerEventType.js';
 import Environment from '#/util/Environment.js';
 

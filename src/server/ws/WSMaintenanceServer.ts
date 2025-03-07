@@ -1,4 +1,5 @@
 import http from 'http';
+
 import { WebSocketServer, WebSocket } from 'ws';
 
 import Packet from '#/io/Packet.js';

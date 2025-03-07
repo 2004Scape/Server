@@ -1,7 +1,6 @@
 import { parentPort } from 'worker_threads';
 
 import LoggerClient from '#/server/logger/LoggerClient.js';
-
 import Environment from '#/util/Environment.js';
 
 const client = new LoggerClient(Environment.NODE_ID);

@@ -1,7 +1,7 @@
-import OutgoingMessage from '#/network/server/OutgoingMessage.js';
-import ServerProtPriority from '#/network/server/prot/ServerProtPriority.js';
 import Player from '#/engine/entity/Player.js';
 import PlayerRenderer from '#/engine/renderer/PlayerRenderer.js';
+import OutgoingMessage from '#/network/server/OutgoingMessage.js';
+import ServerProtPriority from '#/network/server/prot/ServerProtPriority.js';
 
 // this is slightly unsafe.
 export default class PlayerInfo extends OutgoingMessage {

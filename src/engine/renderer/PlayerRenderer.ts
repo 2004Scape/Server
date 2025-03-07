@@ -1,20 +1,20 @@
 import Player from '#/engine/entity/Player.js';
+import { PlayerStat } from '#/engine/entity/PlayerStat.js';
+import Renderer from '#/engine/renderer/Renderer.js';
+import Packet from '#/io/Packet.js';
 import InfoProt from '#/network/rs225/server/prot/InfoProt.js';
-import PlayerInfoAppearance from '#/network/server/model/PlayerInfoAppearance.js';
+import ServerProtRepository from '#/network/rs225/server/prot/ServerProtRepository.js';
+import InfoMessageEncoder from '#/network/server/codec/InfoMessageEncoder.js';
+import InfoMessage from '#/network/server/InfoMessage.js';
 import PlayerInfoAnim from '#/network/server/model/PlayerInfoAnim.js';
+import PlayerInfoAppearance from '#/network/server/model/PlayerInfoAppearance.js';
+import PlayerInfoChat from '#/network/server/model/PlayerInfoChat.js';
+import PlayerInfoDamage from '#/network/server/model/PlayerInfoDamage.js';
+import PlayerInfoExactMove from '#/network/server/model/PlayerInfoExactMove.js';
+import PlayerInfoFaceCoord from '#/network/server/model/PlayerInfoFaceCoord.js';
 import PlayerInfoFaceEntity from '#/network/server/model/PlayerInfoFaceEntity.js';
 import PlayerInfoSay from '#/network/server/model/PlayerInfoSay.js';
-import PlayerInfoFaceCoord from '#/network/server/model/PlayerInfoFaceCoord.js';
-import PlayerInfoChat from '#/network/server/model/PlayerInfoChat.js';
 import PlayerInfoSpotanim from '#/network/server/model/PlayerInfoSpotanim.js';
-import Renderer from '#/engine/renderer/Renderer.js';
-import PlayerInfoDamage from '#/network/server/model/PlayerInfoDamage.js';
-import { PlayerStat } from '#/engine/entity/PlayerStat.js';
-import InfoMessage from '#/network/server/InfoMessage.js';
-import Packet from '#/io/Packet.js';
-import PlayerInfoExactMove from '#/network/server/model/PlayerInfoExactMove.js';
-import InfoMessageEncoder from '#/network/server/codec/InfoMessageEncoder.js';
-import ServerProtRepository from '#/network/rs225/server/prot/ServerProtRepository.js';
 
 export default class PlayerRenderer extends Renderer<Player> {
     constructor() {

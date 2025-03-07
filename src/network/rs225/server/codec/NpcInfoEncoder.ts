@@ -1,15 +1,15 @@
-import MessageEncoder from '#/network/server/codec/MessageEncoder.js';
-import Packet from '#/io/Packet.js';
-import ServerProt from '#/network/rs225/server/prot/ServerProt.js';
-import NpcInfo from '#/network/server/model/NpcInfo.js';
 import { CoordGrid } from '#/engine/CoordGrid.js';
-import Npc from '#/engine/entity/Npc.js';
 import BuildArea from '#/engine/entity/BuildArea.js';
+import Npc from '#/engine/entity/Npc.js';
 import Player from '#/engine/entity/Player.js';
-import NpcInfoFaceEntity from '#/network/server/model/NpcInfoFaceEntity.js';
-import InfoProt from '#/network/rs225/server/prot/InfoProt.js';
-import NpcInfoFaceCoord from '#/network/server/model/NpcInfoFaceCoord.js';
 import NpcRenderer from '#/engine/renderer/NpcRenderer.js';
+import Packet from '#/io/Packet.js';
+import InfoProt from '#/network/rs225/server/prot/InfoProt.js';
+import ServerProt from '#/network/rs225/server/prot/ServerProt.js';
+import MessageEncoder from '#/network/server/codec/MessageEncoder.js';
+import NpcInfo from '#/network/server/model/NpcInfo.js';
+import NpcInfoFaceCoord from '#/network/server/model/NpcInfoFaceCoord.js';
+import NpcInfoFaceEntity from '#/network/server/model/NpcInfoFaceEntity.js';
 
 export default class NpcInfoEncoder extends MessageEncoder<NpcInfo> {
     private static readonly BITS_NEW: number = 13 + 11 + 5 + 5 + 1;

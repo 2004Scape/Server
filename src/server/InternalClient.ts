@@ -1,4 +1,5 @@
 import { WebSocket } from 'ws';
+
 import WsSyncReq from '#3rdparty/ws-sync/ws-sync.js';
 
 export default class InternalClient {

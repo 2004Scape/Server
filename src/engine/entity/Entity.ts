@@ -26,7 +26,7 @@ export default abstract class Entity {
 
     abstract resetEntity(respawn: boolean): void;
 
-    isValid(hash64?: bigint): boolean {
+    isValid(_hash64?: bigint): boolean {
         return this.isActive;
     }
 

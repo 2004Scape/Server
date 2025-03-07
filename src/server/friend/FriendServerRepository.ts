@@ -1,8 +1,8 @@
-import { fromBase37, toBase37 } from '#/util/JString.js';
 
 import { db } from '#/db/query.js';
 import { ChatModePrivate } from '#/util/ChatModes.js';
 import Environment from '#/util/Environment.js';
+import { fromBase37, toBase37 } from '#/util/JString.js';
 
 /**
  * Stores friends data related to players.

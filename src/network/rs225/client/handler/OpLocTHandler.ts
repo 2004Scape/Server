@@ -1,10 +1,10 @@
-import MessageHandler from '#/network/client/handler/MessageHandler.js';
-import { NetworkPlayer } from '#/engine/entity/NetworkPlayer.js';
 import Component from '#/cache/config/Component.js';
-import OpLocT from '#/network/client/model/OpLocT.js';
-import World from '#/engine/World.js';
 import Interaction from '#/engine/entity/Interaction.js';
+import { NetworkPlayer } from '#/engine/entity/NetworkPlayer.js';
 import ServerTriggerType from '#/engine/script/ServerTriggerType.js';
+import World from '#/engine/World.js';
+import MessageHandler from '#/network/client/handler/MessageHandler.js';
+import OpLocT from '#/network/client/model/OpLocT.js';
 import UnsetMapFlag from '#/network/server/model/UnsetMapFlag.js';
 
 export default class OpLocTHandler extends MessageHandler<OpLocT> {

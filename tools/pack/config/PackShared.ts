@@ -1,40 +1,32 @@
 import fs from 'fs';
 import readline from 'readline';
 
-import Packet from '#/io/Packet.js';
-
-import { VarnPack, VarpPack, VarsPack, shouldBuild } from '#/util/PackFile.js';
-
-import ParamType from '#/cache/config/ParamType.js';
-
-import { packParamConfigs, parseParamConfig } from '#tools/pack/config/ParamConfig.js';
-import { loadDir } from '#/util/NameMap.js';
-
-import { packFloConfigs, parseFloConfig } from '#tools/pack/config/FloConfig.js';
-import { packIdkConfigs, parseIdkConfig } from '#tools/pack/config/IdkConfig.js';
-import { packLocConfigs, parseLocConfig } from '#tools/pack/config/LocConfig.js';
-import { packNpcConfigs, parseNpcConfig } from '#tools/pack/config/NpcConfig.js';
-import { packObjConfigs, parseObjConfig } from '#tools/pack/config/ObjConfig.js';
-import { packSeqConfigs, parseSeqConfig } from '#tools/pack/config/SeqConfig.js';
-import { packSpotAnimConfigs, parseSpotAnimConfig } from '#tools/pack/config/SpotAnimConfig.js';
-import { packVarpConfigs, parseVarpConfig } from '#tools/pack/config/VarpConfig.js';
-
-import { AnimPack, CategoryPack, shouldBuildFile } from '#/util/PackFile.js';
-import { listFilesExt } from '#/util/Parse.js';
-
 import DbTableType from '#/cache/config/DbTableType.js';
-
+import ParamType from '#/cache/config/ParamType.js';
+import Jagfile from '#/io/Jagfile.js';
+import Packet from '#/io/Packet.js';
+import Environment from '#/util/Environment.js';
+import { loadDir } from '#/util/NameMap.js';
+import { VarnPack, VarpPack, VarsPack, shouldBuild, AnimPack, CategoryPack, shouldBuildFile } from '#/util/PackFile.js';
+import { listFilesExt } from '#/util/Parse.js';
 import { packDbRowConfigs, parseDbRowConfig } from '#tools/pack/config/DbRowConfig.js';
 import { packDbTableConfigs, parseDbTableConfig } from '#tools/pack/config/DbTableConfig.js';
 import { packEnumConfigs, parseEnumConfig } from '#tools/pack/config/EnumConfig.js';
-import { packInvConfigs, parseInvConfig } from '#tools/pack/config/InvConfig.js';
-import { packMesAnimConfigs, parseMesAnimConfig } from '#tools/pack/config/MesAnimConfig.js';
-import { packStructConfigs, parseStructConfig } from '#tools/pack/config/StructConfig.js';
+import { packFloConfigs, parseFloConfig } from '#tools/pack/config/FloConfig.js';
 import { packHuntConfigs, parseHuntConfig } from '#tools/pack/config/HuntConfig.js';
+import { packIdkConfigs, parseIdkConfig } from '#tools/pack/config/IdkConfig.js';
+import { packInvConfigs, parseInvConfig } from '#tools/pack/config/InvConfig.js';
+import { packLocConfigs, parseLocConfig } from '#tools/pack/config/LocConfig.js';
+import { packMesAnimConfigs, parseMesAnimConfig } from '#tools/pack/config/MesAnimConfig.js';
+import { packNpcConfigs, parseNpcConfig } from '#tools/pack/config/NpcConfig.js';
+import { packObjConfigs, parseObjConfig } from '#tools/pack/config/ObjConfig.js';
+import { packParamConfigs, parseParamConfig } from '#tools/pack/config/ParamConfig.js';
+import { packSeqConfigs, parseSeqConfig } from '#tools/pack/config/SeqConfig.js';
+import { packSpotAnimConfigs, parseSpotAnimConfig } from '#tools/pack/config/SpotAnimConfig.js';
+import { packStructConfigs, parseStructConfig } from '#tools/pack/config/StructConfig.js';
 import { packVarnConfigs, parseVarnConfig } from '#tools/pack/config/VarnConfig.js';
+import { packVarpConfigs, parseVarpConfig } from '#tools/pack/config/VarpConfig.js';
 import { packVarsConfigs, parseVarsConfig } from '#tools/pack/config/VarsConfig.js';
-import Jagfile from '#/io/Jagfile.js';
-import Environment from '#/util/Environment.js';
 
 export function isConfigBoolean(input: string): boolean {
     return input === 'yes' || input === 'no' || input === 'true' || input === 'false' || input === '1' || input === '0';

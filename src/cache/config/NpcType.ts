@@ -1,15 +1,14 @@
 import fs from 'fs';
 
-import Packet from '#/io/Packet.js';
 
 import { ConfigType } from '#/cache/config/ConfigType.js';
 import { ParamHelper, ParamMap } from '#/cache/config/ParamHelper.js';
-
 import BlockWalk from '#/engine/entity/BlockWalk.js';
 import MoveRestrict from '#/engine/entity/MoveRestrict.js';
 import NpcMode from '#/engine/entity/NpcMode.js';
-import Jagfile from '#/io/Jagfile.js';
 import NpcStat from '#/engine/entity/NpcStat.js';
+import Jagfile from '#/io/Jagfile.js';
+import Packet from '#/io/Packet.js';
 
 export default class NpcType extends ConfigType {
     static configNames = new Map();

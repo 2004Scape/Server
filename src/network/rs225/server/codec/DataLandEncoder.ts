@@ -1,6 +1,6 @@
-import MessageEncoder from '#/network/server/codec/MessageEncoder.js';
 import Packet from '#/io/Packet.js';
 import ServerProt from '#/network/rs225/server/prot/ServerProt.js';
+import MessageEncoder from '#/network/server/codec/MessageEncoder.js';
 import DataLand from '#/network/server/model/DataLand.js';
 
 export default class DataLandEncoder extends MessageEncoder<DataLand> {

@@ -1,6 +1,6 @@
+import { CoordGrid } from '#/engine/CoordGrid.js';
 import OutgoingMessage from '#/network/server/OutgoingMessage.js';
 import ServerProtPriority from '#/network/server/prot/ServerProtPriority.js';
-import { CoordGrid } from '#/engine/CoordGrid.js';
 
 export default class RebuildNormal extends OutgoingMessage {
     priority = ServerProtPriority.IMMEDIATE;

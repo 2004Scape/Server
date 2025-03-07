@@ -1,16 +1,16 @@
 import fs from 'fs';
 
-import Jagfile from '#/io/Jagfile.js';
-import Packet from '#/io/Packet.js';
+import { LocShape } from '@2004scape/rsmod-pathfinder';
 
 import FloType from '#/cache/config/FloType.js';
 import LocType from '#/cache/config/LocType.js';
-import { convertImage } from '#/util/PixPack.js';
-import { LocShape } from '@2004scape/rsmod-pathfinder';
-import { shouldBuildFile, shouldBuildFileAny } from '#/util/PackFile.js';
 import NpcType from '#/cache/config/NpcType.js';
 import { CoordGrid } from '#/engine/CoordGrid.js';
+import Jagfile from '#/io/Jagfile.js';
+import Packet from '#/io/Packet.js';
 import { printWarning } from '#/util/Logger.js';
+import { shouldBuildFile, shouldBuildFileAny } from '#/util/PackFile.js';
+import { convertImage } from '#/util/PixPack.js';
 
 function packWater(underlay: Packet, overlay: Packet, mx: number, mz: number) {
     underlay.p1(mx);

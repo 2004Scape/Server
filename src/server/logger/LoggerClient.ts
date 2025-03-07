@@ -1,6 +1,5 @@
 import InputTrackingEvent from '#/engine/entity/tracking/InputEvent.js';
 import InternalClient from '#/server/InternalClient.js';
-
 import Environment from '#/util/Environment.js';
 
 export default class LoggerClient extends InternalClient {

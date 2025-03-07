@@ -1,6 +1,6 @@
-import MessageEncoder from '#/network/server/codec/MessageEncoder.js';
 import Packet from '#/io/Packet.js';
 import ServerProt from '#/network/rs225/server/prot/ServerProt.js';
+import MessageEncoder from '#/network/server/codec/MessageEncoder.js';
 import UpdateIgnoreList from '#/network/server/model/UpdateIgnoreList.js';
 
 export default class UpdateIgnoreListEncoder extends MessageEncoder<UpdateIgnoreList> {

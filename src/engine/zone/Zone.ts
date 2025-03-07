@@ -1,37 +1,35 @@
+import ObjType from '#/cache/config/ObjType.js';
+import { CoordGrid } from '#/engine/CoordGrid.js';
+import EntityLifeCycle from '#/engine/entity/EntityLifeCycle.js';
 import Loc from '#/engine/entity/Loc.js';
+import NonPathingEntity from '#/engine/entity/NonPathingEntity.js';
 import Npc from '#/engine/entity/Npc.js';
 import Obj from '#/engine/entity/Obj.js';
-import Player from '#/engine/entity/Player.js';
 import PathingEntity from '#/engine/entity/PathingEntity.js';
-import EntityLifeCycle from '#/engine/entity/EntityLifeCycle.js';
-import { CoordGrid } from '#/engine/CoordGrid.js';
-
+import Player from '#/engine/entity/Player.js';
 import World from '#/engine/World.js';
-import ZoneMap from '#/engine/zone/ZoneMap.js';
+import ZoneEntityList, { LocList, ObjList } from '#/engine/zone/ZoneEntityList.js';
 import ZoneEvent from '#/engine/zone/ZoneEvent.js';
 import ZoneEventType from '#/engine/zone/ZoneEventType.js';
-
-import UpdateZonePartialEnclosed from '#/network/server/model/UpdateZonePartialEnclosed.js';
-import UpdateZoneFullFollows from '#/network/server/model/UpdateZoneFullFollows.js';
-import UpdateZonePartialFollows from '#/network/server/model/UpdateZonePartialFollows.js';
-import ObjAdd from '#/network/server/model/ObjAdd.js';
-import LocAddChange from '#/network/server/model/LocAddChange.js';
-import LocDel from '#/network/server/model/LocDel.js';
-import MapProjAnim from '#/network/server/model/MapProjAnim.js';
-import MapAnim from '#/network/server/model/MapAnim.js';
-import ObjDel from '#/network/server/model/ObjDel.js';
-import ObjCount from '#/network/server/model/ObjCount.js';
-import ObjReveal from '#/network/server/model/ObjReveal.js';
-import LocAnim from '#/network/server/model/LocAnim.js';
-import LocMerge from '#/network/server/model/LocMerge.js';
+import ZoneMap from '#/engine/zone/ZoneMap.js';
+import Packet from '#/io/Packet.js';
 import ServerProtRepository from '#/network/rs225/server/prot/ServerProtRepository.js';
 import ZoneMessageEncoder from '#/network/server/codec/ZoneMessageEncoder.js';
+import LocAddChange from '#/network/server/model/LocAddChange.js';
+import LocAnim from '#/network/server/model/LocAnim.js';
+import LocDel from '#/network/server/model/LocDel.js';
+import LocMerge from '#/network/server/model/LocMerge.js';
+import MapAnim from '#/network/server/model/MapAnim.js';
+import MapProjAnim from '#/network/server/model/MapProjAnim.js';
+import ObjAdd from '#/network/server/model/ObjAdd.js';
+import ObjCount from '#/network/server/model/ObjCount.js';
+import ObjDel from '#/network/server/model/ObjDel.js';
+import ObjReveal from '#/network/server/model/ObjReveal.js';
+import UpdateZoneFullFollows from '#/network/server/model/UpdateZoneFullFollows.js';
+import UpdateZonePartialEnclosed from '#/network/server/model/UpdateZonePartialEnclosed.js';
+import UpdateZonePartialFollows from '#/network/server/model/UpdateZonePartialFollows.js';
 import ZoneMessage from '#/network/server/ZoneMessage.js';
-import ZoneEntityList, { LocList, ObjList } from '#/engine/zone/ZoneEntityList.js';
-import NonPathingEntity from '#/engine/entity/NonPathingEntity.js';
-import ObjType from '#/cache/config/ObjType.js';
 import Environment from '#/util/Environment.js';
-import Packet from '#/io/Packet.js';
 
 export default class Zone {
     private static readonly SIZE: number = 8 * 8;

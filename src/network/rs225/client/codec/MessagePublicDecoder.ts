@@ -1,7 +1,7 @@
 import Packet from '#/io/Packet.js';
 import MessageDecoder from '#/network/client/codec/MessageDecoder.js';
-import ClientProt from '#/network/rs225/client/prot/ClientProt.js';
 import MessagePublic from '#/network/client/model/MessagePublic.js';
+import ClientProt from '#/network/rs225/client/prot/ClientProt.js';
 
 export default class MessagePublicDecoder extends MessageDecoder<MessagePublic> {
     prot = ClientProt.MESSAGE_PUBLIC;

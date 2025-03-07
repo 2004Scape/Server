@@ -1,7 +1,7 @@
 import Packet from '#/io/Packet.js';
 import MessageDecoder from '#/network/client/codec/MessageDecoder.js';
-import ClientProt from '#/network/rs225/client/prot/ClientProt.js';
 import OpPlayer from '#/network/client/model/OpPlayer.js';
+import ClientProt from '#/network/rs225/client/prot/ClientProt.js';
 
 export default class OpPlayerDecoder extends MessageDecoder<OpPlayer> {
     constructor(

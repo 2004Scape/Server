@@ -1,15 +1,16 @@
 import fs from 'fs';
-import { loadDir, loadPack } from '#/util/NameMap.js';
-import ParamType from '#/cache/config/ParamType.js';
-import DbTableType from '#/cache/config/DbTableType.js';
-import ScriptVarType from '#/cache/config/ScriptVarType.js';
-import ScriptOpcode from '#/engine/script/ScriptOpcode.js';
-import VarPlayerType from '#/cache/config/VarPlayerType.js';
-import VarNpcType from '#/cache/config/VarNpcType.js';
-import VarSharedType from '#/cache/config/VarSharedType.js';
-import ScriptOpcodePointers from '#/engine/script/ScriptOpcodePointers.js';
+
 import Component from '#/cache/config/Component.js';
+import DbTableType from '#/cache/config/DbTableType.js';
 import InvType from '#/cache/config/InvType.js';
+import ParamType from '#/cache/config/ParamType.js';
+import ScriptVarType from '#/cache/config/ScriptVarType.js';
+import VarNpcType from '#/cache/config/VarNpcType.js';
+import VarPlayerType from '#/cache/config/VarPlayerType.js';
+import VarSharedType from '#/cache/config/VarSharedType.js';
+import ScriptOpcode from '#/engine/script/ScriptOpcode.js';
+import ScriptOpcodePointers from '#/engine/script/ScriptOpcodePointers.js';
+import { loadDir, loadPack } from '#/util/NameMap.js';
 
 export function generateServerSymbols() {
     fs.mkdirSync('data/symbols', { recursive: true });

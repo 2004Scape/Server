@@ -1,30 +1,29 @@
-import ScriptFile from '#/engine/script/ScriptFile.js';
-import ScriptOpcode from '#/engine/script/ScriptOpcode.js';
-import ScriptPointer from '#/engine/script/ScriptPointer.js';
-import ScriptState from '#/engine/script/ScriptState.js';
 
+import Entity from '#/engine/entity/Entity.js';
+import { ScriptArgument } from '#/engine/entity/EntityQueueRequest.js';
+import Loc from '#/engine/entity/Loc.js';
+import Npc from '#/engine/entity/Npc.js';
+import Obj from '#/engine/entity/Obj.js';
+import Player from '#/engine/entity/Player.js';
 import CoreOps from '#/engine/script/handlers/CoreOps.js';
 import DbOps from '#/engine/script/handlers/DbOps.js';
 import DebugOps from '#/engine/script/handlers/DebugOps.js';
 import EnumOps from '#/engine/script/handlers/EnumOps.js';
 import InvOps from '#/engine/script/handlers/InvOps.js';
-import LocOps from '#/engine/script/handlers/LocOps.js';
 import LocConfigOps from '#/engine/script/handlers/LocConfigOps.js';
-import NpcOps from '#/engine/script/handlers/NpcOps.js';
+import LocOps from '#/engine/script/handlers/LocOps.js';
 import NpcConfigOps from '#/engine/script/handlers/NpcConfigOps.js';
+import NpcOps from '#/engine/script/handlers/NpcOps.js';
 import NumberOps from '#/engine/script/handlers/NumberOps.js';
-import ObjOps from '#/engine/script/handlers/ObjOps.js';
 import ObjConfigOps from '#/engine/script/handlers/ObjConfigOps.js';
+import ObjOps from '#/engine/script/handlers/ObjOps.js';
 import PlayerOps from '#/engine/script/handlers/PlayerOps.js';
 import ServerOps from '#/engine/script/handlers/ServerOps.js';
 import StringOps from '#/engine/script/handlers/StringOps.js';
-
-import Entity from '#/engine/entity/Entity.js';
-import { ScriptArgument } from '#/engine/entity/EntityQueueRequest.js';
-import Loc from '#/engine/entity/Loc.js';
-import Obj from '#/engine/entity/Obj.js';
-import Npc from '#/engine/entity/Npc.js';
-import Player from '#/engine/entity/Player.js';
+import ScriptFile from '#/engine/script/ScriptFile.js';
+import ScriptOpcode from '#/engine/script/ScriptOpcode.js';
+import ScriptPointer from '#/engine/script/ScriptPointer.js';
+import ScriptState from '#/engine/script/ScriptState.js';
 import Environment from '#/util/Environment.js';
 import { printWarning } from '#/util/Logger.js';
 

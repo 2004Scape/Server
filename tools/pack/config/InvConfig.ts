@@ -1,7 +1,6 @@
 import InvType from '#/cache/config/InvType.js';
-
-import { ConfigValue, ConfigLine, PackedData, isConfigBoolean, getConfigBoolean } from '#tools/pack/config/PackShared.js';
 import { InvPack, ObjPack } from '#/util/PackFile.js';
+import { ConfigValue, ConfigLine, PackedData, isConfigBoolean, getConfigBoolean } from '#tools/pack/config/PackShared.js';
 
 export function parseInvConfig(key: string, value: string): ConfigValue | null | undefined {
     const stringKeys: string[] = [];

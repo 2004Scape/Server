@@ -2,14 +2,15 @@ import fs from 'fs';
 import fsp from 'fs/promises';
 import http from 'http';
 import { extname } from 'path';
+
 import ejs from 'ejs';
+import { register } from 'prom-client';
 
 import { CrcBuffer } from '#/cache/CrcTable.js';
-
 import Environment from '#/util/Environment.js';
-import { getPublicPerDeploymentToken } from './io/PemUtil.js';
 import { tryParseInt } from '#/util/TryParse.js';
-import { register } from 'prom-client';
+
+import { getPublicPerDeploymentToken } from './io/PemUtil.js';
 
 const MIME_TYPES = new Map<string, string>();
 MIME_TYPES.set('.js', 'application/javascript');
@@ -111,7 +112,6 @@ export const web = http.createServer(async (req, res) => {
             res.end();
         }
     } catch (_) {
-         
         res.end();
     }
 });

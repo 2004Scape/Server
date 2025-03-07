@@ -1,9 +1,10 @@
-import Packet from '#/io/Packet.js';
-import { loadOrder, listFiles } from '#/util/NameMap.js';
-import Jagfile from '#/io/Jagfile.js';
-import { AnimPack, BasePack, ModelPack, shouldBuildFile, shouldBuildFileAny } from '#/util/PackFile.js';
 import path from 'path';
+
+import Jagfile from '#/io/Jagfile.js';
+import Packet from '#/io/Packet.js';
 import { printError } from '#/util/Logger.js';
+import { loadOrder, listFiles } from '#/util/NameMap.js';
+import { AnimPack, BasePack, ModelPack, shouldBuildFile, shouldBuildFileAny } from '#/util/PackFile.js';
 
 export function packClientModel() {
     if (!shouldBuildFile('tools/pack/graphics/pack.ts', 'data/pack/client/models') && !shouldBuildFileAny('data/src/models', 'data/pack/client/models')) {

@@ -2,16 +2,14 @@ import ScriptVarType from '#/cache/config/ScriptVarType.js';
 import VarNpcType from '#/cache/config/VarNpcType.js';
 import VarPlayerType from '#/cache/config/VarPlayerType.js';
 import VarSharedType from '#/cache/config/VarSharedType.js';
-
-import World from '#/engine/World.js';
-
 import ScriptFile from '#/engine/script/ScriptFile.js';
 import ScriptOpcode from '#/engine/script/ScriptOpcode.js';
+import { ProtectedActivePlayer } from '#/engine/script/ScriptPointer.js';
 import ScriptProvider from '#/engine/script/ScriptProvider.js';
 import { CommandHandlers } from '#/engine/script/ScriptRunner.js';
 import ScriptState from '#/engine/script/ScriptState.js';
 import { check, VarNpcValid, VarPlayerValid, VarSharedValid } from '#/engine/script/ScriptValidators.js';
-import { ProtectedActivePlayer } from '#/engine/script/ScriptPointer.js';
+import World from '#/engine/World.js';
 
 const CoreOps: CommandHandlers = {
     [ScriptOpcode.PUSH_CONSTANT_INT]: state => {

@@ -1,7 +1,7 @@
-import MessageHandler from '#/network/client/handler/MessageHandler.js';
 import Player from '#/engine/entity/Player.js';
-import ReportAbuse from '#/network/client/model/ReportAbuse.js';
 import World from '#/engine/World.js';
+import MessageHandler from '#/network/client/handler/MessageHandler.js';
+import ReportAbuse from '#/network/client/model/ReportAbuse.js';
 import { fromBase37 } from '#/util/JString.js';
 
 export default class ReportAbuseHandler extends MessageHandler<ReportAbuse> {

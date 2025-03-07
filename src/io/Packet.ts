@@ -3,12 +3,13 @@ import path from 'path';
 import zlib from 'zlib';
 
 import forge from 'node-forge';
-import PrivateKey = forge.pki.rsa.PrivateKey;
-import BigInteger = forge.jsbn.BigInteger;
 
-import LinkList from '#/util/LinkList.js';
 import DoublyLinkable from '#/util/DoublyLinkable.js';
 import Environment from '#/util/Environment.js';
+import LinkList from '#/util/LinkList.js';
+
+import PrivateKey = forge.pki.rsa.PrivateKey;
+import BigInteger = forge.jsbn.BigInteger;
 
 export default class Packet extends DoublyLinkable {
     private static readonly crctable: Int32Array = new Int32Array(256);

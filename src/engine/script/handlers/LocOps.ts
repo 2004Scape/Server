@@ -1,22 +1,19 @@
-import ParamType from '#/cache/config/ParamType.js';
+import { LocAngle, LocShape } from '@2004scape/rsmod-pathfinder';
+
 import LocType from '#/cache/config/LocType.js';
-import SeqType from '#/cache/config/SeqType.js';
 import { ParamHelper } from '#/cache/config/ParamHelper.js';
-
-import World from '#/engine/World.js';
-
+import ParamType from '#/cache/config/ParamType.js';
+import SeqType from '#/cache/config/SeqType.js';
+import { CoordGrid } from '#/engine/CoordGrid.js';
+import EntityLifeCycle from '#/engine/entity/EntityLifeCycle.js';
+import Loc from '#/engine/entity/Loc.js';
+import { LocIterator } from '#/engine/script/ScriptIterators.js';
 import ScriptOpcode from '#/engine/script/ScriptOpcode.js';
 import ScriptPointer, { ActiveLoc, checkedHandler } from '#/engine/script/ScriptPointer.js';
 import { CommandHandlers } from '#/engine/script/ScriptRunner.js';
-import { LocIterator } from '#/engine/script/ScriptIterators.js';
-
-import Loc from '#/engine/entity/Loc.js';
-import { CoordGrid } from '#/engine/CoordGrid.js';
-import EntityLifeCycle from '#/engine/entity/EntityLifeCycle.js';
-
 import { check, CoordValid, DurationValid, LocAngleValid, LocShapeValid, LocTypeValid, ParamTypeValid, SeqTypeValid } from '#/engine/script/ScriptValidators.js';
+import World from '#/engine/World.js';
 
-import { LocAngle, LocShape } from '@2004scape/rsmod-pathfinder';
 
 const LocOps: CommandHandlers = {
     [ScriptOpcode.LOC_ADD]: state => {

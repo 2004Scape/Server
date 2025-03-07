@@ -1,10 +1,10 @@
 import { WebSocketServer } from 'ws';
 
-import Environment from '#/util/Environment.js';
-import { printInfo } from '#/util/Logger.js';
 import { db, loggerDb, toDbDate } from '#/db/query.js';
 import InputTrackingEvent from '#/engine/entity/tracking/InputEvent.js';
 import { SessionLog } from '#/engine/entity/tracking/SessionLog.js';
+import Environment from '#/util/Environment.js';
+import { printInfo } from '#/util/Logger.js';
 
 export default class LoggerServer {
     private server: WebSocketServer;

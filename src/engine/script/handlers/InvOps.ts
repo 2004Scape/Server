@@ -1,20 +1,16 @@
+import CategoryType from '#/cache/config/CategoryType.js';
 import InvType from '#/cache/config/InvType.js';
 import ObjType from '#/cache/config/ObjType.js';
-import CategoryType from '#/cache/config/CategoryType.js';
-
-import World from '#/engine/World.js';
-import { Inventory } from '#/engine/Inventory.js';
-
-import ScriptOpcode from '#/engine/script/ScriptOpcode.js';
-import { CommandHandlers } from '#/engine/script/ScriptRunner.js';
-import { ActiveObj, ActivePlayer, checkedHandler, ProtectedActivePlayer } from '#/engine/script/ScriptPointer.js';
-
-import Obj from '#/engine/entity/Obj.js';
 import { CoordGrid } from '#/engine/CoordGrid.js';
 import EntityLifeCycle from '#/engine/entity/EntityLifeCycle.js';
+import Obj from '#/engine/entity/Obj.js';
 import Player from '#/engine/entity/Player.js';
-
+import { Inventory } from '#/engine/Inventory.js';
+import ScriptOpcode from '#/engine/script/ScriptOpcode.js';
+import { ActiveObj, ActivePlayer, checkedHandler, ProtectedActivePlayer } from '#/engine/script/ScriptPointer.js';
+import { CommandHandlers } from '#/engine/script/ScriptRunner.js';
 import { CategoryTypeValid, check, CoordValid, DurationValid, InvTypeValid, NumberNotNull, ObjStackValid, ObjTypeValid } from '#/engine/script/ScriptValidators.js';
+import World from '#/engine/World.js';
 
 const InvOps: CommandHandlers = {
     // inv config

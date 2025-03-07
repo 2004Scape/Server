@@ -1,6 +1,6 @@
-import { ConfigValue, ConfigLine, PackedData, isConfigBoolean, getConfigBoolean } from '#tools/pack/config/PackShared.js';
 import ColorConversion from '#/util/ColorConversion.js';
 import { IdkPack, ModelPack } from '#/util/PackFile.js';
+import { ConfigValue, ConfigLine, PackedData, isConfigBoolean, getConfigBoolean } from '#tools/pack/config/PackShared.js';
 
 export function parseIdkConfig(key: string, value: string): ConfigValue | null | undefined {
     const stringKeys: string[] = [];

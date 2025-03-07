@@ -1,9 +1,7 @@
-import Packet from '#/io/Packet.js';
-
+import { TargetOp } from '#/engine/entity/PathingEntity.js';
 import ScriptFile from '#/engine/script/ScriptFile.js';
 import ServerTriggerType from '#/engine/script/ServerTriggerType.js';
-
-import { TargetOp } from '#/engine/entity/PathingEntity.js';
+import Packet from '#/io/Packet.js';
 import { printFatalError, printWarning } from '#/util/Logger.js';
 
 // maintains a list of scripts (id <-> name)

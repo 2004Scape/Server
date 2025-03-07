@@ -1,7 +1,7 @@
-import MessageHandler from '#/network/client/handler/MessageHandler.js';
 import Player from '#/engine/entity/Player.js';
-import IgnoreListAdd from '#/network/client/model/IgnoreListAdd.js';
 import World from '#/engine/World.js';
+import MessageHandler from '#/network/client/handler/MessageHandler.js';
+import IgnoreListAdd from '#/network/client/model/IgnoreListAdd.js';
 import { fromBase37 } from '#/util/JString.js';
 
 export default class IgnoreListAddHandler extends MessageHandler<IgnoreListAdd> {

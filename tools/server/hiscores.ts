@@ -1,11 +1,10 @@
 import fs from 'fs';
 
-import { db } from '#/db/query.js';
-
-import { PlayerLoading } from '#/engine/entity/PlayerLoading.js';
-import Packet from '#/io/Packet.js';
 import InvType from '#/cache/config/InvType.js';
+import { db } from '#/db/query.js';
+import { PlayerLoading } from '#/engine/entity/PlayerLoading.js';
 import { PlayerStatEnabled } from '#/engine/entity/PlayerStat.js';
+import Packet from '#/io/Packet.js';
 
 InvType.load('data/pack');
 

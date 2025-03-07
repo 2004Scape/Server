@@ -1,15 +1,15 @@
-import MessageEncoder from '#/network/server/codec/MessageEncoder.js';
-import Packet from '#/io/Packet.js';
-import ServerProt from '#/network/rs225/server/prot/ServerProt.js';
-import PlayerInfo from '#/network/server/model/PlayerInfo.js';
 import { CoordGrid } from '#/engine/CoordGrid.js';
 import BuildArea from '#/engine/entity/BuildArea.js';
 import Player from '#/engine/entity/Player.js';
-import InfoProt from '#/network/rs225/server/prot/InfoProt.js';
-import PlayerInfoFaceEntity from '#/network/server/model/PlayerInfoFaceEntity.js';
-import PlayerInfoFaceCoord from '#/network/server/model/PlayerInfoFaceCoord.js';
-import PlayerRenderer from '#/engine/renderer/PlayerRenderer.js';
 import Visibility from '#/engine/entity/Visibility.js';
+import PlayerRenderer from '#/engine/renderer/PlayerRenderer.js';
+import Packet from '#/io/Packet.js';
+import InfoProt from '#/network/rs225/server/prot/InfoProt.js';
+import ServerProt from '#/network/rs225/server/prot/ServerProt.js';
+import MessageEncoder from '#/network/server/codec/MessageEncoder.js';
+import PlayerInfo from '#/network/server/model/PlayerInfo.js';
+import PlayerInfoFaceCoord from '#/network/server/model/PlayerInfoFaceCoord.js';
+import PlayerInfoFaceEntity from '#/network/server/model/PlayerInfoFaceEntity.js';
 
 export default class PlayerInfoEncoder extends MessageEncoder<PlayerInfo> {
     private static readonly BITS_NEW: number = 11 + 5 + 5 + 1 + 1;
