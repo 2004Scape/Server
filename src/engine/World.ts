@@ -29,8 +29,8 @@ import StructType from '#/cache/config/StructType.js';
 import VarNpcType from '#/cache/config/VarNpcType.js';
 import VarPlayerType from '#/cache/config/VarPlayerType.js';
 import VarSharedType from '#/cache/config/VarSharedType.js';
-import { CrcBuffer32, makeCrcs, makeCrcsAsync } from '#/cache/CrcTable.js';
-import { preloadClient, preloadClientAsync } from '#/cache/PreloadedPacks.js';
+import { CrcBuffer32, makeCrcs } from '#/cache/CrcTable.js';
+import { preloadClient } from '#/cache/PreloadedPacks.js';
 import WordEnc from '#/cache/wordenc/WordEnc.js';
 import { CoordGrid } from '#/engine/CoordGrid.js';
 import BlockWalk from '#/engine/entity/BlockWalk.js';
@@ -94,7 +94,6 @@ import WalkTriggerSetting from '#/util/WalkTriggerSetting.js';
 import { createWorker } from '#/util/WorkerFactory.js';
 
 import InputTrackingEvent from './entity/tracking/InputEvent.js';
-
 
 const priv = forge.pki.privateKeyFromPem(Environment.STANDALONE_BUNDLE ? await (await fetch('data/config/private.pem')).text() : fs.readFileSync('data/config/private.pem', 'ascii'));
 
@@ -296,87 +295,10 @@ class World {
         preloadClient();
     }
 
-    async loadAsync(): Promise<void> {
-        const count = (
-            await Promise.all([
-                NpcType.loadAsync('data/pack'),
-                ObjType.loadAsync('data/pack'),
-                LocType.loadAsync('data/pack'),
-                FontType.loadAsync('data/pack'),
-                WordEnc.loadAsync('data/pack'),
-                VarPlayerType.loadAsync('data/pack'),
-                ParamType.loadAsync('data/pack'),
-                IdkType.loadAsync('data/pack'),
-                SeqFrame.loadAsync('data/pack'),
-                SeqType.loadAsync('data/pack'),
-                SpotanimType.loadAsync('data/pack'),
-                CategoryType.loadAsync('data/pack'),
-                EnumType.loadAsync('data/pack'),
-                StructType.loadAsync('data/pack'),
-                InvType.loadAsync('data/pack'),
-                MesanimType.loadAsync('data/pack'),
-                DbTableType.loadAsync('data/pack'),
-                DbRowType.loadAsync('data/pack'),
-                HuntType.loadAsync('data/pack'),
-                VarNpcType.loadAsync('data/pack'),
-                VarSharedType.loadAsync('data/pack'),
-                Component.loadAsync('data/pack'),
-                makeCrcsAsync(),
-                preloadClientAsync(),
-                ScriptProvider.loadAsync('data/pack')
-            ])
-        ).at(-1);
-
-        this.invs.clear();
-        for (let i = 0; i < InvType.count; i++) {
-            const inv = InvType.get(i);
-
-            if (inv && inv.scope === InvType.SCOPE_SHARED) {
-                this.invs.add(Inventory.fromType(i));
-            }
-        }
-
-        if (this.vars.length !== VarSharedType.count) {
-            const old = this.vars;
-            this.vars = new Int32Array(VarSharedType.count);
-            for (let i = 0; i < VarSharedType.count && i < old.length; i++) {
-                this.vars[i] = old[i];
-            }
-
-            const oldString = this.varsString;
-            this.varsString = new Array(VarSharedType.count);
-            for (let i = 0; i < VarSharedType.count && i < old.length; i++) {
-                this.varsString[i] = oldString[i];
-            }
-
-            for (let i = 0; i < this.vars.length; i++) {
-                const varsh = VarSharedType.get(i);
-                if (varsh.type === ScriptVarType.STRING) {
-                    // todo: "null"? another value?
-                    continue;
-                } else {
-                    this.vars[i] = varsh.type === ScriptVarType.INT ? 0 : -1;
-                }
-            }
-        }
-
-        if (count === -1) {
-            this.broadcastMes('There was an issue while reloading scripts.');
-        } else {
-            this.broadcastMes(`Reloaded ${count} scripts.`);
-        }
-    }
-
     async start(skipMaps = false, startCycle = true): Promise<void> {
         printInfo('Starting world');
 
-        if (Environment.STANDALONE_BUNDLE) {
-            await this.loadAsync();
-
-            if (!skipMaps) {
-                await this.gameMap.initAsync();
-            }
-        } else {
+        if (!Environment.STANDALONE_BUNDLE) {
             FontType.load('data/pack');
             WordEnc.load('data/pack');
 

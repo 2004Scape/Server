@@ -67,33 +67,6 @@ export default class GameMap {
         }
     }
 
-    async initAsync(): Promise<void> {
-        const path: string = 'data/pack/server/maps/';
-        // eslint-disable-next-line @typescript-eslint/ban-ts-comment
-        // @ts-ignore
-        const { serverMaps } = await import('#/server/PreloadedDirs.js');
-        const maps = serverMaps.map(async (map: string) => {
-            const [mx, mz] = map.substring(1).split('_').map(Number);
-            const mapsquareX: number = mx << 6;
-            const mapsquareZ: number = mz << 6;
-
-            const [npcData, objData, landData, locData] = await Promise.all([
-                await Packet.loadAsync(`${path}n${mx}_${mz}`),
-                await Packet.loadAsync(`${path}o${mx}_${mz}`),
-                await Packet.loadAsync(`${path}m${mx}_${mz}`),
-                await Packet.loadAsync(`${path}l${mx}_${mz}`)
-            ]);
-
-            this.loadNpcs(npcData, mapsquareX, mapsquareZ);
-            this.loadObjs(objData, mapsquareX, mapsquareZ);
-            // collision
-            const lands: Int8Array = new Int8Array(GameMap.MAPSQUARE); // 4 * 64 * 64 size is guaranteed for lands
-            this.loadGround(lands, landData, mapsquareX, mapsquareZ);
-            this.loadLocations(lands, locData, mapsquareX, mapsquareZ);
-        });
-        await Promise.all(maps);
-    }
-
     isMulti(coord: number): boolean {
         return this.multimap.has(coord);
     }
