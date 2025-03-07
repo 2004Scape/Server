@@ -3,7 +3,6 @@ import Linkable from '#/util/Linkable.js';
 export default class LinkList<T extends Linkable> {
     // constructor
     private readonly sentinel: Linkable = new Linkable();
-    private size = 0;
     // runtime
     public cursor: Linkable | null = null;
 
@@ -13,7 +12,11 @@ export default class LinkList<T extends Linkable> {
     }
 
     get count() {
-        return this.size;
+        let count = 0;
+        for (let item = this.head(); item !== null; item = this.next()) {
+            count++;
+        }
+        return count;
     }
     addTail(node: T): void {
         if (node.prev) {
@@ -25,7 +28,6 @@ export default class LinkList<T extends Linkable> {
             node.prev.next = node;
         }
         node.next.prev = node;
-        this.size++;
     }
 
     addHead(node: T): void {
@@ -38,7 +40,6 @@ export default class LinkList<T extends Linkable> {
         if (node.next) {
             node.next.prev = node;
         }
-        this.size++;
     }
 
     removeHead(): T | null {
@@ -47,7 +48,6 @@ export default class LinkList<T extends Linkable> {
             return null;
         }
         node?.unlink();
-        this.size--;
         return node;
     }
 
@@ -99,6 +99,5 @@ export default class LinkList<T extends Linkable> {
             }
             node?.unlink();
         }
-        this.size = 0;
     }
 }

@@ -48,7 +48,7 @@ export default class Zone {
     private readonly players: Set<number>; // list of player uids
     private readonly npcs: Set<number>; // list of npc nids (not uid because type may change)
     private readonly locs: LinkList<Loc> = new LinkList();
-    private readonly objs: ZoneEntityList<Obj>;
+    private readonly objs: LinkList<Obj> = new LinkList();
     private readonly entityEvents: Map<NonPathingEntity, ZoneEvent[]>;
 
     // zone events
@@ -64,7 +64,6 @@ export default class Zone {
         this.events = new Set();
         this.players = new Set();
         this.npcs = new Set();
-        this.objs = new ObjList(Zone.OBJS, (obj: Obj) => World.removeObj(obj, 100));
         this.entityEvents = new Map();
     }
 
@@ -97,26 +96,20 @@ export default class Zone {
     }
 
     tick(tick: number): void {
-        let updated: boolean;
-        do {
-            updated = false;
-            for (const obj of this.getAllObjsUnsafe()) {
-                if (!obj.updateLifeCycle(tick) || obj.lastLifecycleTick === tick) {
-                    continue;
-                }
-                if (obj.lifecycle === EntityLifeCycle.DESPAWN) {
-                    if (obj.reveal !== -1) {
-                        World.revealObj(obj);
-                    } else {
-                        World.removeObj(obj, 0);
-                        updated = true;
-                    }
-                } else if (obj.lifecycle === EntityLifeCycle.RESPAWN) {
-                    World.addObj(obj, Obj.NO_RECEIVER, 0);
-                    updated = true;
-                }
+        for (const obj of this.getAllObjsUnsafe()) {
+            if (!obj.updateLifeCycle(tick) || obj.lastLifecycleTick === tick) {
+                continue;
             }
-        } while (updated);
+            if (obj.lifecycle === EntityLifeCycle.DESPAWN) {
+                if (obj.reveal !== -1) {
+                    World.revealObj(obj);
+                } else {
+                    World.removeObj(obj, 0);
+                }
+            } else if (obj.lifecycle === EntityLifeCycle.RESPAWN) {
+                World.addObj(obj, Obj.NO_RECEIVER, 0);
+            }
+        }
 
         for (const loc of this.getAllLocsUnsafe()) {
             if (!loc.updateLifeCycle(tick) || loc.lastLifecycleTick === tick) {
@@ -236,8 +229,7 @@ export default class Zone {
 
     addStaticObj(obj: Obj): void {
         const coord: number = CoordGrid.packZoneCoord(obj.x, obj.z);
-        this.objs.addLast(coord, obj, true);
-        this.objs.sortStack(coord, true);
+        this.objs.addTail(obj);
         obj.isRevealed = true;
         obj.isActive = true;
     }
@@ -291,10 +283,19 @@ export default class Zone {
     addObj(obj: Obj, receiver64: bigint): void {
         const coord: number = CoordGrid.packZoneCoord(obj.x, obj.z);
         if (obj.lifecycle === EntityLifeCycle.DESPAWN) {
-            this.objs.addLast(coord, obj);
+            if (this.objs.count >= Zone.OBJS) {
+                // Make room for the Obj in the zone if need
+                for (const obj2 of this.getAllObjsUnsafe()) {
+                    if (obj2.lifecycle === EntityLifeCycle.DESPAWN) {
+                        World.removeObj(obj2, 0);
+                        break;
+                    }
+                }
+            }
+
+            this.objs.addTail(obj);
         }
 
-        this.objs.sortStack(coord);
         obj.isActive = true;
 
         if (obj.lifecycle === EntityLifeCycle.RESPAWN || receiver64 === Obj.NO_RECEIVER) {
@@ -319,7 +320,6 @@ export default class Zone {
         obj.isRevealed = true;
 
         const coord: number = CoordGrid.packZoneCoord(obj.x, obj.z);
-        this.objs.sortStack(coord);
 
         this.queueEvent(obj, new ZoneEvent(ZoneEventType.ENCLOSED, receiver64, new ObjReveal(coord, obj.type, obj.count, World.getPlayerByHash64(receiver64)?.pid ?? 0)));
     }
@@ -329,7 +329,6 @@ export default class Zone {
         obj.lastChange = World.currentTick;
 
         const coord: number = CoordGrid.packZoneCoord(obj.x, obj.z);
-        this.objs.sortStack(coord);
 
         this.queueEvent(obj, new ZoneEvent(ZoneEventType.FOLLOWS, receiver64, new ObjCount(coord, obj.type, oldCount, newCount)));
     }
@@ -337,10 +336,9 @@ export default class Zone {
     removeObj(obj: Obj): void {
         const coord: number = CoordGrid.packZoneCoord(obj.x, obj.z);
         if (obj.lifecycle === EntityLifeCycle.DESPAWN) {
-            this.objs.remove(coord, obj);
+            obj.unlink();
         }
 
-        this.objs.sortStack(coord);
         this.clearQueuedEvents(obj);
         obj.isActive = false;
 
@@ -414,7 +412,7 @@ export default class Zone {
      * "visible" meaning they are active on the server and available to the client.
      */
     *getAllObjsSafe(): IterableIterator<Obj> {
-        for (const obj of this.objs.all()) {
+        for (let obj = this.objs.head(); obj !== null; obj = this.objs.next()) {
             if (obj.isValid()) {
                 yield obj;
             }
@@ -426,8 +424,8 @@ export default class Zone {
      * "visible" meaning they are active on the server and available to the client.
      */
     *getObjsSafe(coord: number): IterableIterator<Obj> {
-        for (const obj of this.objs.stack(coord)) {
-            if (obj.isValid()) {
+        for (let obj = this.objs.head(); obj !== null; obj = this.objs.next()) {
+            if (obj.isValid() && CoordGrid.packZoneCoord(obj.x, obj.z) === coord) {
                 yield obj;
             }
         }
@@ -439,7 +437,11 @@ export default class Zone {
      * "visible" meaning they are active on the server and available to the client.
      */
     *getObjsUnsafe(coord: number): IterableIterator<Obj> {
-        yield* this.objs.stack(coord);
+        for (let obj = this.objs.head(); obj !== null; obj = this.objs.next()) {
+            if (CoordGrid.packZoneCoord(obj.x, obj.z) === coord) {
+                yield obj;
+            }
+        }
     }
 
     /**
@@ -448,7 +450,9 @@ export default class Zone {
      * "visible" meaning they are active on the server and available to the client.
      */
     *getAllObjsUnsafe(reverse: boolean = false): IterableIterator<Obj> {
-        yield* this.objs.all(reverse);
+        for (let obj = reverse ? this.objs.tail() : this.objs.head(); obj !== null; obj = reverse ? this.objs.prev() : this.objs.next()) {
+            yield obj;
+        }
     }
 
     /**
