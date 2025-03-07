@@ -1,4 +1,4 @@
-[opnpc1,npc_830]
+[opnpc1,mercenary_captain]
 if(%desertrescue_progress >= ^desertrescue_killed_capt) {
     if(inv_total(inv, desertrescue_metalkey) = 0) { // only inv in osrs as well
         @approach_merc_capt;
@@ -127,7 +127,7 @@ def_int $cur_stage = getbit_range(%desertrescue_map_mechanisms, 0, 1);
 def_int $next_stage = calc($cur_stage + 1);
 if($next_stage > 3) $next_stage = 0;
 %desertrescue_map_mechanisms = setbit_range_toint(%desertrescue_map_mechanisms, $next_stage, 0, 1);
-if(npc_find(coord, npc_828, 7, 0) = true) {
+if(npc_find(coord, mercenary_1, 7, 0) = true) {
     switch_int($cur_stage) {
         case 0 :
             ~mesbox("A guard approaches you and pretends to start hitting you.");
@@ -187,10 +187,10 @@ if(npc_find(coord, npc_828, 7, 0) = true) {
     }
 }
 
-[opnpc3,npc_830]
+[opnpc3,mercenary_captain]
 ~mesbox("You watch the Mercenary Captain for some time.|He has a large metal key attached to his belt.|You notice that he usually gets his men to do his dirty work.");
 
-[ai_queue3,npc_830]
+[ai_queue3,mercenary_captain]
 if (finduid(%npc_aggressive_player) = true) { 
     queue(defeat_merc_capt, 0);
 }
@@ -237,5 +237,5 @@ switch_int(random(4)) {
 }
 npc_say("Kill that intruder guards!");
 npc_setmode(playerescape);
-if(npc_find(coord, npc_828, 7, 0) = true) ~mercenary_attack;
+if(npc_find(coord, mercenary_1, 7, 0) = true) ~mercenary_attack;
 return (false);

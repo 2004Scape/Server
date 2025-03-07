@@ -1,9 +1,8 @@
 import ParamType from '#/cache/config/ParamType.js';
 import ScriptVarType from '#/cache/config/ScriptVarType.js';
-
+import { StructPack } from '#/util/PackFile.js';
 import { ConfigValue, ConfigLine, ParamValue, PackedData, isConfigBoolean, getConfigBoolean } from '#tools/pack/config/PackShared.js';
 import { lookupParamValue } from '#tools/pack/config/ParamConfig.js';
-import { StructPack } from '#/util/PackFile.js';
 
 export function parseStructConfig(key: string, value: string): ConfigValue | null | undefined {
     const stringKeys: string[] = [];
@@ -68,7 +67,7 @@ export function parseStructConfig(key: string, value: string): ConfigValue | nul
     }
 }
 
-export function packStructConfigs(configs: Map<string, ConfigLine[]>): { client: PackedData, server: PackedData } {
+export function packStructConfigs(configs: Map<string, ConfigLine[]>): { client: PackedData; server: PackedData } {
     const client: PackedData = new PackedData(StructPack.size);
     const server: PackedData = new PackedData(StructPack.size);
 

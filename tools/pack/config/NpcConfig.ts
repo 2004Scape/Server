@@ -1,14 +1,12 @@
 import ParamType from '#/cache/config/ParamType.js';
 import ScriptVarType from '#/cache/config/ScriptVarType.js';
-
+import BlockWalk from '#/engine/entity/BlockWalk.js';
 import MoveRestrict from '#/engine/entity/MoveRestrict.js';
 import NpcMode from '#/engine/entity/NpcMode.js';
-
+import ColorConversion from '#/util/ColorConversion.js';
+import { CategoryPack, HuntPack, ModelPack, NpcPack, SeqPack } from '#/util/PackFile.js';
 import { ParamValue, ConfigValue, ConfigLine, PackedData, isConfigBoolean, getConfigBoolean } from '#tools/pack/config/PackShared.js';
 import { lookupParamValue } from '#tools/pack/config/ParamConfig.js';
-import BlockWalk from '#/engine/entity/BlockWalk.js';
-import { CategoryPack, HuntPack, ModelPack, NpcPack, SeqPack } from '#/util/PackFile.js';
-import ColorConversion from '#/util/ColorConversion.js';
 
 export function parseNpcConfig(key: string, value: string): ConfigValue | null | undefined {
     // prettier-ignore
@@ -265,7 +263,7 @@ export function parseNpcConfig(key: string, value: string): ConfigValue | null |
     }
 }
 
-export function packNpcConfigs(configs: Map<string, ConfigLine[]>): { client: PackedData, server: PackedData } {
+export function packNpcConfigs(configs: Map<string, ConfigLine[]>): { client: PackedData; server: PackedData } {
     const client: PackedData = new PackedData(NpcPack.size);
     const server: PackedData = new PackedData(NpcPack.size);
 
@@ -320,7 +318,7 @@ export function packNpcConfigs(configs: Map<string, ConfigLine[]>): { client: Pa
                     client.p2(value[2] as number);
                     client.p2(value[3] as number);
                 } else {
-                    client.p1(14);    
+                    client.p1(14);
                     client.p2(value as number);
                 }
             } else if (key === 'hasalpha') {

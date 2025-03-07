@@ -1,10 +1,9 @@
 import ParamType from '#/cache/config/ParamType.js';
 import ScriptVarType from '#/cache/config/ScriptVarType.js';
-
-import { LocModelShape, ConfigValue, ConfigLine, ParamValue, PackedData, isConfigBoolean, getConfigBoolean } from '#tools/pack/config/PackShared.js';
-import { lookupParamValue } from '#tools/pack/config/ParamConfig.js';
 import ColorConversion from '#/util/ColorConversion.js';
 import { CategoryPack, LocPack, ModelPack, SeqPack, TexturePack } from '#/util/PackFile.js';
+import { LocModelShape, ConfigValue, ConfigLine, ParamValue, PackedData, isConfigBoolean, getConfigBoolean } from '#tools/pack/config/PackShared.js';
+import { lookupParamValue } from '#tools/pack/config/ParamConfig.js';
 
 // these suffixes are simply the map editor keybinds
 enum LocShapeSuffix {
@@ -203,7 +202,7 @@ export function parseLocConfig(key: string, value: string): ConfigValue | null |
     }
 }
 
-export function packLocConfigs(configs: Map<string, ConfigLine[]>): { client: PackedData, server: PackedData } {
+export function packLocConfigs(configs: Map<string, ConfigLine[]>): { client: PackedData; server: PackedData } {
     const client: PackedData = new PackedData(LocPack.size);
     const server: PackedData = new PackedData(LocPack.size);
 

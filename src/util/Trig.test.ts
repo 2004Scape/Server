@@ -15,7 +15,7 @@ describe('Trig', (): void => {
         });
 
         it('result after 3pi/2', () => {
-            expect(Trig.cos(3 * Math.PI / 2)).toBe(16383);
+            expect(Trig.cos((3 * Math.PI) / 2)).toBe(16383);
         });
 
         it('result after 2pi', () => {
@@ -37,7 +37,7 @@ describe('Trig', (): void => {
         });
 
         it('result after 3pi/2', () => {
-            expect(Trig.sin(3 * Math.PI / 2)).toBe(25);
+            expect(Trig.sin((3 * Math.PI) / 2)).toBe(25);
         });
 
         it('result after 2pi', () => {

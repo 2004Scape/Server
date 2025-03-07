@@ -1,14 +1,15 @@
 import fs from 'fs';
 
-import Packet from '#/io/Packet.js';
+import kleur from 'kleur';
 
 import { ConfigType } from '#/cache/config/ConfigType.js';
 import { ParamHelper, ParamMap } from '#/cache/config/ParamHelper.js';
 import ParamType from '#/cache/config/ParamType.js';
 import Jagfile from '#/io/Jagfile.js';
+import Packet from '#/io/Packet.js';
 import Environment from '#/util/Environment.js';
 import { printFatalError } from '#/util/Logger.js';
-import kleur from 'kleur';
+
 
 export default class ObjType extends ConfigType {
     static configNames: Map<string, number> = new Map();

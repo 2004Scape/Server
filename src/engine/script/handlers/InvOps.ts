@@ -1,29 +1,16 @@
+import CategoryType from '#/cache/config/CategoryType.js';
 import InvType from '#/cache/config/InvType.js';
 import ObjType from '#/cache/config/ObjType.js';
-import CategoryType from '#/cache/config/CategoryType.js';
-
-import World from '#/engine/World.js';
-import {Inventory} from '#/engine/Inventory.js';
-
-import ScriptOpcode from '#/engine/script/ScriptOpcode.js';
-import {CommandHandlers} from '#/engine/script/ScriptRunner.js';
-import {ActiveObj, ActivePlayer, checkedHandler, ProtectedActivePlayer} from '#/engine/script/ScriptPointer.js';
-
-import Obj from '#/engine/entity/Obj.js';
-import {CoordGrid} from '#/engine/CoordGrid.js';
+import { CoordGrid } from '#/engine/CoordGrid.js';
 import EntityLifeCycle from '#/engine/entity/EntityLifeCycle.js';
+import Obj from '#/engine/entity/Obj.js';
 import Player from '#/engine/entity/Player.js';
-
-import {
-    CategoryTypeValid,
-    check,
-    CoordValid,
-    DurationValid,
-    InvTypeValid,
-    NumberNotNull,
-    ObjStackValid,
-    ObjTypeValid
-} from '#/engine/script/ScriptValidators.js';
+import { Inventory } from '#/engine/Inventory.js';
+import ScriptOpcode from '#/engine/script/ScriptOpcode.js';
+import { ActiveObj, ActivePlayer, checkedHandler, ProtectedActivePlayer } from '#/engine/script/ScriptPointer.js';
+import { CommandHandlers } from '#/engine/script/ScriptRunner.js';
+import { CategoryTypeValid, check, CoordValid, DurationValid, InvTypeValid, NumberNotNull, ObjStackValid, ObjTypeValid } from '#/engine/script/ScriptValidators.js';
+import World from '#/engine/World.js';
 
 const InvOps: CommandHandlers = {
     // inv config
@@ -102,8 +89,8 @@ const InvOps: CommandHandlers = {
             throw new Error(`$inv requires protected access: ${invType.debugname}`);
         }
 
-        const findObj : ObjType = check(find, ObjTypeValid);
-        const replaceObj : ObjType = check(replace, ObjTypeValid);
+        const findObj: ObjType = check(find, ObjTypeValid);
+        const replaceObj: ObjType = check(replace, ObjTypeValid);
         const fromInv = state.activePlayer.getInventory(inv);
 
         if (!fromInv) {
@@ -112,10 +99,10 @@ const InvOps: CommandHandlers = {
 
         for (let slot = 0; slot < fromInv.capacity; slot++) {
             const obj = fromInv.get(slot);
-            if(!obj) {
+            if (!obj) {
                 continue;
             }
-            if(obj.id === findObj.id) {
+            if (obj.id === findObj.id) {
                 state.activePlayer.invSet(invType.id, replaceObj.id, replaceCount, slot);
                 return;
             }
@@ -229,7 +216,7 @@ const InvOps: CommandHandlers = {
             for (let i = 0; i < completed; i++) {
                 const floorObj: Obj = new Obj(position.level, position.x, position.z, EntityLifeCycle.DESPAWN, obj.id, 1);
                 World.addObj(floorObj, player.hash64, duration);
-    
+
                 state.activeObj = floorObj;
                 state.pointerAdd(ActiveObj[state.intOperand]);
             }
@@ -389,7 +376,7 @@ const InvOps: CommandHandlers = {
         }
 
         // we're going to assume the content has made sure this will go as expected
-        const wealthLog = [];  // Holds a record of the wealth for logging only
+        const wealthLog = []; // Holds a record of the wealth for logging only
         for (let slot = 0; slot < fromInv.capacity; slot++) {
             const obj = fromInv.get(slot);
             if (!obj) {
@@ -492,7 +479,6 @@ const InvOps: CommandHandlers = {
             // should be a stackable cert already!
             World.addObj(new Obj(player.level, player.x, player.z, EntityLifeCycle.DESPAWN, finalObj, overflow), player.hash64, 200);
         }
-    
     }),
 
     // https://x.com/JagexAsh/status/1681616480763367424
@@ -654,7 +640,6 @@ const InvOps: CommandHandlers = {
         check(duration, DurationValid);
         const position: CoordGrid = check(coord, CoordValid);
 
-
         if (!state.pointerGet(ProtectedActivePlayer[state.intOperand]) && invType.protect && invType.scope !== InvType.SCOPE_SHARED) {
             throw new Error(`$inv requires protected access: ${invType.debugname}`);
         }
@@ -664,7 +649,7 @@ const InvOps: CommandHandlers = {
             return;
         }
 
-        const wealthLog = [];  // Holds a record of the wealth for logging only
+        const wealthLog = []; // Holds a record of the wealth for logging only
         for (let slot: number = 0; slot < inventory.capacity; slot++) {
             const obj = inventory.get(slot);
             if (!obj) {

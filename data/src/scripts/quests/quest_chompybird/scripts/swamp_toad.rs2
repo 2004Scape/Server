@@ -14,10 +14,10 @@
 
 [proc,come_here_toady]()
 {
-    // todo face toad towards player and face player towards toad?
-    // todo sound? in OSRS it's sound 1455
     say("Come here toady!");
+    npc_setmode(playerfaceclose);
     anim(human_ogre_bellows_use, 30);
+    sound_synth(ogre_bellows, 0, 30);
     spotanim_pl(ogre_bellows_use, 64, 30);
     npc_anim(chompy_toad_death, 30);
 }
@@ -25,11 +25,6 @@
 [opnpcu,swamp_toad]
 switch_obj(last_useitem) {
     case ogre_bellows_0 :
-        // todo tbc - wasn't tested on OSRS for if you can attempt with full inv but empty bellows
-        if (inv_freespace(inv) < 1) {
-            mes("You don't have space to carry that.");
-            return;
-        }
 
         ~come_here_toady();
 
@@ -56,9 +51,7 @@ switch_obj(last_useitem) {
         if (inv_total(inv, bloated_toad) >= 3) {
             mes("One of your bloated toads manages to escape.");
 
-            // todo does this spawn at players feet?
-            // todo is duration correct?
-            npc_add(coord, swamp_toad, 100);
+            npc_add(map_findsquare(coord, 1, 1, ^map_findsquare_lineofwalk), swamp_toad, 100);
             npc_say("Ribbitt!");
             inv_del(inv, bloated_toad, 1);
 
@@ -87,14 +80,11 @@ switch_obj(last_useitem) {
         ~come_here_toady();
 
         p_delay(3);
+        ~reduce_ogre_bellows($used_bellow);
+        mes("You add the bloated toad to your inventory.");
+        inv_add(inv, bloated_toad, 1);
 
-        if (p_finduid(uid) = true) {
-            ~reduce_ogre_bellows($used_bellow);
-            mes("You add the bloated toad to your inventory.");
-            inv_add(inv, bloated_toad, 1);
-
-            npc_del;
-        }
+        npc_del;
 
     case default :
         mes("Nothing interesting happens.");

@@ -5,8 +5,12 @@ export default class OpLocU extends IncomingMessage {
     category = ClientProtCategory.USER_EVENT;
 
     constructor(
-        readonly x: number, readonly z: number, readonly loc: number,
-        readonly useObj: number, readonly useSlot: number, readonly useComponent: number
+        readonly x: number,
+        readonly z: number,
+        readonly loc: number,
+        readonly useObj: number,
+        readonly useSlot: number,
+        readonly useComponent: number
     ) {
         super();
     }

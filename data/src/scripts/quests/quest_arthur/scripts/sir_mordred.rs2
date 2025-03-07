@@ -5,19 +5,18 @@
 ~npc_retaliate(0);
 
 [ai_queue3,sir_mordred]
-if (npc_findhero = true & %arthur_progress >= ^arthur_spoken_lancelot & %arthur_progress < ^arthur_complete) {
-    @lefaye_spare_son;
-} 
+if (finduid(%npc_aggressive_player) = true & %arthur_progress >= ^arthur_spoken_lancelot & %arthur_progress < ^arthur_complete) {
+    if_close;
+    if(p_finduid(%npc_aggressive_player) = true) { // will fail if delayed, no queue
+        @lefaye_spare_son;
+    }
+}
 gosub(npc_default_death);
+
 [ai_queue4,sir_mordred] gosub(npc_default_death);
 
 [label,lefaye_spare_son]
 npc_statheal(hitpoints, npc_basestat(hitpoints), 0);
-
-if_close;
-if(p_finduid(%npc_aggressive_player) = false) {
-    return;
-}
 // clear player and mordred interactions
 p_stopaction;
 npc_setmode(playerfaceclose);

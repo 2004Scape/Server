@@ -3,9 +3,9 @@ import path from 'path';
 
 import Jagfile from '#/io/Jagfile.js';
 import Packet from '#/io/Packet.js';
+import { printError } from '#/util/Logger.js';
 import { listFiles, loadOrder } from '#/util/NameMap.js';
 import { SynthPack, shouldBuildFileAny } from '#/util/PackFile.js';
-import { printError } from '#/util/Logger.js';
 
 export function packClientSound() {
     if (!shouldBuildFileAny('data/src/synth', 'data/pack/client/sounds')) {

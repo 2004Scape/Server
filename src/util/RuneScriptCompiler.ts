@@ -4,7 +4,6 @@ import fs from 'fs';
 import axios from 'axios';
 
 import ScriptProvider from '#/engine/script/ScriptProvider.js';
-
 import { printDebug, printWarning } from '#/util/Logger.js';
 
 export async function updateCompiler(): Promise<boolean> {

@@ -10,7 +10,7 @@ export default class ColorConversion {
             saturation >>= 1;
         }
 
-        return ((hue & 0xff) >> 2 << 10) + (saturation >> 5 << 7) + (lightness >> 1);
+        return (((hue & 0xff) >> 2) << 10) + ((saturation >> 5) << 7) + (lightness >> 1);
     }
 
     static rgb15to24(rgb: number): number {
@@ -18,7 +18,7 @@ export default class ColorConversion {
         const g: number = (rgb >> 5) & 0x1f;
         const b: number = rgb & 0x1f;
 
-        return (r << 3 << 16) + (g << 3 << 8) + (b << 3);
+        return ((r << 3) << 16) + ((g << 3) << 8) + (b << 3);
     }
 
     static rgb15toHsl16(rgb: number): number {

@@ -1,7 +1,6 @@
 import fs from 'fs';
 
 import Packet from '#/io/Packet.js';
-
 import RandomAccessFile from '#/util/RandomAccessFile.js';
 
 export default class FileStream {

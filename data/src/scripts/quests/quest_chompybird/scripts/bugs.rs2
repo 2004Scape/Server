@@ -3,8 +3,11 @@ switch_int(%chompybird_progress) {
     case ^chompybird_not_started :
         ~chatnpc("<p,neutral>You's better talk to Dad, him chasey sneaky da chompy.");
     case ^chompybird_started :
-        // todo is this the right check? source: https://oldschool.runescape.wiki/w/Transcript:Big_Chompy_Bird_Hunting#Talking_to_Bugs_without_a_chisel_and_knife
         if (inv_total(inv, chisel) > 0 & inv_total(inv, knife) > 0) {
+            ~chatnpc("<p,neutral>You's better talk to Dad, him chasey sneaky da chompy.");
+            return;
+        }
+        if (testbit(%chompybird_kills, ^chompybird_varbit_bought_scratchers) = true) {
             ~chatnpc("<p,neutral>I's sorry creature, I don't got no more scratchers! But I got lots of bright pretties! Hope you's get da stabbers for Dad soonly!");
             return;
         }
@@ -40,7 +43,7 @@ switch_int(%chompybird_progress) {
         }
 
     case ^chompybird_kids_play_with_toad, ^chompybird_removed_rock_from_chest :
-        ~chatplayer("<p,quiz>Rantz said that you play with the 'fatsy toadies', what are they?");
+        ~chatplayer("<p,neutral>Rantz said that you play with the 'fatsy toadies', what are they?");
         ~chatnpc("<p,neutral>Oh we sometimes use da blower on da toadies but Dad don't let us get in da locked box no more. He, he, it was good fun making da toadies fat on da swamp gas.");
 
     case ^chompybird_shown_toad :

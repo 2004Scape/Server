@@ -1,14 +1,13 @@
-import Packet from '#/io/Packet.js';
-import { loadOrder, listFiles } from '#/util/NameMap.js';
-import Jagfile from '#/io/Jagfile.js';
-import { AnimPack, BasePack, ModelPack, shouldBuildFile, shouldBuildFileAny } from '#/util/PackFile.js';
 import path from 'path';
+
+import Jagfile from '#/io/Jagfile.js';
+import Packet from '#/io/Packet.js';
 import { printError } from '#/util/Logger.js';
+import { loadOrder, listFiles } from '#/util/NameMap.js';
+import { AnimPack, BasePack, ModelPack, shouldBuildFile, shouldBuildFileAny } from '#/util/PackFile.js';
 
 export function packClientModel() {
-    if (!shouldBuildFile('tools/pack/graphics/pack.ts', 'data/pack/client/models') &&
-        !shouldBuildFileAny('data/src/models', 'data/pack/client/models')
-    ) {
+    if (!shouldBuildFile('tools/pack/graphics/pack.ts', 'data/pack/client/models') && !shouldBuildFileAny('data/src/models', 'data/pack/client/models')) {
         return;
     }
 
@@ -133,7 +132,6 @@ export function packClientModel() {
 
             const p_delLength = new Uint8Array(delLength);
             data.gdata(p_delLength, 0, p_delLength.length);
-
 
             frame_head.pdata(p_headLength, 0, p_headLength.length);
             frame_tran1.pdata(p_tran1Length, 0, p_tran1Length.length);

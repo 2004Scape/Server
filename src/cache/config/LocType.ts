@@ -1,12 +1,13 @@
 import fs from 'fs';
 
-import Packet from '#/io/Packet.js';
+import kleur from 'kleur';
 
 import { ConfigType } from '#/cache/config/ConfigType.js';
 import { ParamHelper, ParamMap } from '#/cache/config/ParamHelper.js';
 import Jagfile from '#/io/Jagfile.js';
+import Packet from '#/io/Packet.js';
 import { printFatalError } from '#/util/Logger.js';
-import kleur from 'kleur';
+
 
 export default class LocType extends ConfigType {
     static configNames: Map<string, number> = new Map();
@@ -20,7 +21,6 @@ export default class LocType extends ConfigType {
         const server = Packet.load(`${dir}/server/loc.dat`);
         const jag = Jagfile.load(`${dir}/client/config`);
         this.parse(server, jag);
-        
     }
 
     static async loadAsync(dir: string) {

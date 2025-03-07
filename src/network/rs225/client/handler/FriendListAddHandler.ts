@@ -1,7 +1,7 @@
-import MessageHandler from '#/network/client/handler/MessageHandler.js';
 import Player from '#/engine/entity/Player.js';
-import FriendListAdd from '#/network/client/model/FriendListAdd.js';
 import World from '#/engine/World.js';
+import MessageHandler from '#/network/client/handler/MessageHandler.js';
+import FriendListAdd from '#/network/client/model/FriendListAdd.js';
 import { fromBase37 } from '#/util/JString.js';
 
 export default class FriendListAddHandler extends MessageHandler<FriendListAdd> {

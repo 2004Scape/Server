@@ -1,13 +1,13 @@
-import MessageHandler from '#/network/client/handler/MessageHandler.js';
-import Player from '#/engine/entity/Player.js';
 import Component from '#/cache/config/Component.js';
-import ServerTriggerType from '#/engine/script/ServerTriggerType.js';
+import ObjType from '#/cache/config/ObjType.js';
+import Player from '#/engine/entity/Player.js';
 import ScriptProvider from '#/engine/script/ScriptProvider.js';
 import ScriptRunner from '#/engine/script/ScriptRunner.js';
-import Environment from '#/util/Environment.js';
-import ObjType from '#/cache/config/ObjType.js';
+import ServerTriggerType from '#/engine/script/ServerTriggerType.js';
+import MessageHandler from '#/network/client/handler/MessageHandler.js';
 import OpHeld from '#/network/client/model/OpHeld.js';
 import LoggerEventType from '#/server/logger/LoggerEventType.js';
+import Environment from '#/util/Environment.js';
 
 export default class OpHeldHandler extends MessageHandler<OpHeld> {
     handle(message: OpHeld, player: Player): boolean {

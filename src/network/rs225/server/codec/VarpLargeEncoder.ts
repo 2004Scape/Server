@@ -1,6 +1,6 @@
-import MessageEncoder from '#/network/server/codec/MessageEncoder.js';
 import Packet from '#/io/Packet.js';
 import ServerProt from '#/network/rs225/server/prot/ServerProt.js';
+import MessageEncoder from '#/network/server/codec/MessageEncoder.js';
 import VarpLarge from '#/network/server/model/VarpLarge.js';
 
 export default class VarpLargeEncoder extends MessageEncoder<VarpLarge> {

@@ -82,7 +82,8 @@ export function loadDir(path: string, extension: string, callback: (src: string[
     for (const file of files) {
         if (file.endsWith(extension)) {
             callback(
-                fs.readFileSync(file, 'ascii')
+                fs
+                    .readFileSync(file, 'ascii')
                     .replace(/\r/g, '')
                     .split('\n')
                     .filter(x => x),
@@ -98,13 +99,7 @@ export function loadDirExact(path: string, extension: string, callback: (src: st
 
     for (const file of files) {
         if (file.endsWith(extension)) {
-            callback(
-                fs.readFileSync(file, 'ascii')
-                    .replace(/\r/g, '')
-                    .split('\n'),
-                file.substring(file.lastIndexOf('/') + 1),
-                file.substring(0, file.lastIndexOf('/'))
-            );
+            callback(fs.readFileSync(file, 'ascii').replace(/\r/g, '').split('\n'), file.substring(file.lastIndexOf('/') + 1), file.substring(0, file.lastIndexOf('/')));
         }
     }
 }

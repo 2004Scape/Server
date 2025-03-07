@@ -1,5 +1,5 @@
-import { ConfigValue, ConfigLine, PackedData, isConfigBoolean, getConfigBoolean } from '#tools/pack/config/PackShared.js';
 import { AnimPack, ObjPack, SeqPack } from '#/util/PackFile.js';
+import { ConfigValue, ConfigLine, PackedData, isConfigBoolean, getConfigBoolean } from '#tools/pack/config/PackShared.js';
 
 export function parseSeqConfig(key: string, value: string): ConfigValue | null | undefined {
     const stringKeys: string[] = [];
@@ -118,7 +118,7 @@ export function parseSeqConfig(key: string, value: string): ConfigValue | null |
     }
 }
 
-export function packSeqConfigs(configs: Map<string, ConfigLine[]>): { client: PackedData, server: PackedData } {
+export function packSeqConfigs(configs: Map<string, ConfigLine[]>): { client: PackedData; server: PackedData } {
     const client: PackedData = new PackedData(SeqPack.size);
     const server: PackedData = new PackedData(SeqPack.size);
 

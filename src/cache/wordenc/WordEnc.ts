@@ -1,11 +1,11 @@
 import fs from 'fs';
 
-import Jagfile from '#/io/Jagfile.js';
 
-import WordEncFragments from '#/cache/wordenc/WordEncFragments.js';
 import WordEncBadWords from '#/cache/wordenc/WordEncBadWords.js';
 import WordEncDomains from '#/cache/wordenc/WordEncDomains.js';
+import WordEncFragments from '#/cache/wordenc/WordEncFragments.js';
 import WordEncTlds from '#/cache/wordenc/WordEncTlds.js';
+import Jagfile from '#/io/Jagfile.js';
 import Packet from '#/io/Packet.js';
 
 export default class WordEnc {

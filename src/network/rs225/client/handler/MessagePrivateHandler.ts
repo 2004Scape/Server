@@ -1,10 +1,10 @@
-import MessageHandler from '#/network/client/handler/MessageHandler.js';
 import Player from '#/engine/entity/Player.js';
-import MessagePrivate from '#/network/client/model/MessagePrivate.js';
 import World from '#/engine/World.js';
+import Packet from '#/io/Packet.js';
+import MessageHandler from '#/network/client/handler/MessageHandler.js';
+import MessagePrivate from '#/network/client/model/MessagePrivate.js';
 import { fromBase37 } from '#/util/JString.js';
 import WordPack from '#/wordenc/WordPack.js';
-import Packet from '#/io/Packet.js';
 
 export default class MessagePrivateHandler extends MessageHandler<MessagePrivate> {
     handle(message: MessagePrivate, player: Player): boolean {

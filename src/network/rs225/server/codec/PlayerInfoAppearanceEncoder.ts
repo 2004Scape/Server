@@ -1,7 +1,7 @@
-import InfoMessageEncoder from '#/network/server/codec/InfoMessageEncoder.js';
-import PlayerInfoAppearance from '#/network/server/model/PlayerInfoAppearance.js';
 import Packet from '#/io/Packet.js';
 import InfoProt from '#/network/rs225/server/prot/InfoProt.js';
+import InfoMessageEncoder from '#/network/server/codec/InfoMessageEncoder.js';
+import PlayerInfoAppearance from '#/network/server/model/PlayerInfoAppearance.js';
 
 export default class PlayerInfoAppearanceEncoder extends InfoMessageEncoder<PlayerInfoAppearance> {
     prot: InfoProt = InfoProt.PLAYER_APPEARANCE;

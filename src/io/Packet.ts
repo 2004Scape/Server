@@ -3,12 +3,13 @@ import path from 'path';
 import zlib from 'zlib';
 
 import forge from 'node-forge';
-import PrivateKey = forge.pki.rsa.PrivateKey;
-import BigInteger = forge.jsbn.BigInteger;
 
-import LinkList from '#/util/LinkList.js';
 import DoublyLinkable from '#/util/DoublyLinkable.js';
 import Environment from '#/util/Environment.js';
+import LinkList from '#/util/LinkList.js';
+
+import PrivateKey = forge.pki.rsa.PrivateKey;
+import BigInteger = forge.jsbn.BigInteger;
 
 export default class Packet extends DoublyLinkable {
     private static readonly crctable: Int32Array = new Int32Array(256);
@@ -18,7 +19,7 @@ export default class Packet extends DoublyLinkable {
      * Reversed CRC-32 polynomial for Cyclic Redundancy Check (CRC).
      * This is sometimes referred to as CRC32B.
      */
-    private static readonly crc32b = 0xEDB88320;
+    private static readonly crc32b = 0xedb88320;
 
     static {
         for (let i: number = 0; i < 32; i++) {
@@ -44,7 +45,7 @@ export default class Packet extends DoublyLinkable {
     static getcrc(src: Uint8Array, offset: number, length: number): number {
         let crc = 0xffffffff;
         for (let i = offset; i < length; i++) {
-            crc = (crc >>> 8) ^ (this.crctable[(crc ^ src[i]) & 0xFF]);
+            crc = (crc >>> 8) ^ this.crctable[(crc ^ src[i]) & 0xff];
         }
         return ~crc;
     }
@@ -270,7 +271,7 @@ export default class Packet extends DoublyLinkable {
         if (value < 64 && value >= -64) {
             this.p1(value + 64);
         } else if (value < 16384 && value >= -16384) {
-            this.p2(value + 0xC000);
+            this.p2(value + 0xc000);
         } else {
             throw new Error('Error psmarts out of range: ' + value);
         }
@@ -352,7 +353,7 @@ export default class Packet extends DoublyLinkable {
     }
 
     gsmarts(): number {
-        return this.#view.getUint8(this.pos) < 0x80 ? this.g1() - 64 : this.g2() - 0xC000;
+        return this.#view.getUint8(this.pos) < 0x80 ? this.g1() - 64 : this.g2() - 0xc000;
     }
 
     gsmart(): number {

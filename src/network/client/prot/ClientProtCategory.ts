@@ -8,6 +8,8 @@ export default class ClientProtCategory {
     static readonly RESTRICTED_EVENT = new ClientProtCategory(2, 2);
 
     // packet decoding limit per tick, exceeding this ends decoding and picks up where it left off on the next tick
-    constructor(readonly id: number, readonly limit: number) {
-    }
+    constructor(
+        readonly id: number,
+        readonly limit: number
+    ) {}
 }

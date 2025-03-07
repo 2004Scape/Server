@@ -1,49 +1,23 @@
 import IdkType from '#/cache/config/IdkType.js';
-import SpotanimType from '#/cache/config/SpotanimType.js';
-import NpcType from '#/cache/config/NpcType.js';
 import LocType from '#/cache/config/LocType.js';
+import NpcType from '#/cache/config/NpcType.js';
 import ObjType from '#/cache/config/ObjType.js';
-
-import World from '#/engine/World.js';
-
+import SpotanimType from '#/cache/config/SpotanimType.js';
+import VarPlayerType from '#/cache/config/VarPlayerType.js';
+import { CoordGrid } from '#/engine/CoordGrid.js';
+import CameraInfo from '#/engine/entity/CameraInfo.js';
+import { PlayerQueueType, ScriptArgument } from '#/engine/entity/EntityQueueRequest.js';
+import { PlayerTimerType } from '#/engine/entity/EntityTimer.js';
+import Interaction from '#/engine/entity/Interaction.js';
+import { isBufferFull } from '#/engine/entity/NetworkPlayer.js';
+import Player from '#/engine/entity/Player.js';
+import { PlayerStat } from '#/engine/entity/PlayerStat.js';
+import { findPath } from '#/engine/GameMap.js';
 import ScriptOpcode from '#/engine/script/ScriptOpcode.js';
 import ScriptPointer, { ActivePlayer, checkedHandler, ProtectedActivePlayer } from '#/engine/script/ScriptPointer.js';
 import ScriptProvider from '#/engine/script/ScriptProvider.js';
 import { CommandHandlers } from '#/engine/script/ScriptRunner.js';
 import ScriptState from '#/engine/script/ScriptState.js';
-import ServerTriggerType from '#/engine/script/ServerTriggerType.js';
-
-import { PlayerQueueType, ScriptArgument } from '#/engine/entity/EntityQueueRequest.js';
-import { PlayerTimerType } from '#/engine/entity/EntityTimer.js';
-import { isBufferFull } from '#/engine/entity/NetworkPlayer.js';
-import { CoordGrid } from '#/engine/CoordGrid.js';
-import CameraInfo from '#/engine/entity/CameraInfo.js';
-import Interaction from '#/engine/entity/Interaction.js';
-import { PlayerStat } from '#/engine/entity/PlayerStat.js';
-import Player from '#/engine/entity/Player.js';
-
-import ServerProt from '#/network/rs225/server/prot/ServerProt.js';
-import CamShake from '#/network/server/model/CamShake.js';
-import CamReset from '#/network/server/model/CamReset.js';
-import PCountDialog from '#/network/server/model/PCountDialog.js';
-import SynthSound from '#/network/server/model/SynthSound.js';
-import IfSetColour from '#/network/server/model/IfSetColour.js';
-import IfSetHide from '#/network/server/model/IfSetHide.js';
-import IfSetObject from '#/network/server/model/IfSetObject.js';
-import IfSetTabActive from '#/network/server/model/IfSetTabActive.js';
-import IfSetModel from '#/network/server/model/IfSetModel.js';
-import IfSetRecol from '#/network/server/model/IfSetRecol.js';
-import TutFlash from '#/network/server/model/TutFlash.js';
-import IfSetAnim from '#/network/server/model/IfSetAnim.js';
-import IfSetPlayerHead from '#/network/server/model/IfSetPlayerHead.js';
-import IfSetText from '#/network/server/model/IfSetText.js';
-import IfSetNpcHead from '#/network/server/model/IfSetNpcHead.js';
-import IfSetPosition from '#/network/server/model/IfSetPosition.js';
-
-import ColorConversion from '#/util/ColorConversion.js';
-
-import { findPath } from '#/engine/GameMap.js';
-
 import {
     check,
     CoordValid,
@@ -60,7 +34,26 @@ import {
     GenderValid,
     SkinColourValid
 } from '#/engine/script/ScriptValidators.js';
-import VarPlayerType from '#/cache/config/VarPlayerType.js';
+import ServerTriggerType from '#/engine/script/ServerTriggerType.js';
+import World from '#/engine/World.js';
+import ServerProt from '#/network/rs225/server/prot/ServerProt.js';
+import CamReset from '#/network/server/model/CamReset.js';
+import CamShake from '#/network/server/model/CamShake.js';
+import IfSetAnim from '#/network/server/model/IfSetAnim.js';
+import IfSetColour from '#/network/server/model/IfSetColour.js';
+import IfSetHide from '#/network/server/model/IfSetHide.js';
+import IfSetModel from '#/network/server/model/IfSetModel.js';
+import IfSetNpcHead from '#/network/server/model/IfSetNpcHead.js';
+import IfSetObject from '#/network/server/model/IfSetObject.js';
+import IfSetPlayerHead from '#/network/server/model/IfSetPlayerHead.js';
+import IfSetPosition from '#/network/server/model/IfSetPosition.js';
+import IfSetRecol from '#/network/server/model/IfSetRecol.js';
+import IfSetTabActive from '#/network/server/model/IfSetTabActive.js';
+import IfSetText from '#/network/server/model/IfSetText.js';
+import PCountDialog from '#/network/server/model/PCountDialog.js';
+import SynthSound from '#/network/server/model/SynthSound.js';
+import TutFlash from '#/network/server/model/TutFlash.js';
+import ColorConversion from '#/util/ColorConversion.js';
 
 const PlayerOps: CommandHandlers = {
     [ScriptOpcode.FINDUID]: state => {

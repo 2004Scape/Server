@@ -1,12 +1,11 @@
 import ObjType from '#/cache/config/ObjType.js';
 import ParamType from '#/cache/config/ParamType.js';
 import ScriptVarType from '#/cache/config/ScriptVarType.js';
-
-import { ParamValue, ConfigValue, ConfigLine, packStepError, PackedData, isConfigBoolean, getConfigBoolean } from '#tools/pack/config/PackShared.js';
-import { lookupParamValue } from '#tools/pack/config/ParamConfig.js';
 import ColorConversion from '#/util/ColorConversion.js';
 import { printWarning } from '#/util/Logger.js';
 import { CategoryPack, ModelPack, ObjPack, SeqPack } from '#/util/PackFile.js';
+import { ParamValue, ConfigValue, ConfigLine, packStepError, PackedData, isConfigBoolean, getConfigBoolean } from '#tools/pack/config/PackShared.js';
+import { lookupParamValue } from '#tools/pack/config/ParamConfig.js';
 
 export function parseObjConfig(key: string, value: string): ConfigValue | null | undefined {
     // prettier-ignore
@@ -193,7 +192,7 @@ export function parseObjConfig(key: string, value: string): ConfigValue | null |
     }
 }
 
-export function packObjConfigs(configs: Map<string, ConfigLine[]>): { client: PackedData, server: PackedData } {
+export function packObjConfigs(configs: Map<string, ConfigLine[]>): { client: PackedData; server: PackedData } {
     const client: PackedData = new PackedData(ObjPack.size);
     const server: PackedData = new PackedData(ObjPack.size);
 

@@ -1,6 +1,7 @@
 import globals from 'globals';
 import pluginJs from '@eslint/js';
 import tseslint from 'typescript-eslint';
+import importPlugin from 'eslint-plugin-import';
 
 /** @type {import('eslint').Linter.Config[]} */
 export default [
@@ -10,6 +11,7 @@ export default [
     { languageOptions: { globals: globals.node } },
     pluginJs.configs.recommended,
     ...tseslint.configs.recommended, // recommendedTypeChecked
+    importPlugin.flatConfigs.recommended,
     // {
     //   languageOptions: {
     //     parserOptions: {
@@ -18,6 +20,14 @@ export default [
     //     },
     //   }
     // },
+    {
+        settings: {
+            'import/resolver': {
+                'node': true,
+                'typescript': true
+            }
+        }
+    },
     {
         rules: {
             indent: ['error', 4, { SwitchCase: 1 }],
@@ -66,6 +76,26 @@ export default [
                     'argsIgnorePattern': '^_',
                 }
             ],
+
+            'import/order': [
+                'error',
+                {
+                    groups: ['builtin', 'external', 'internal'],
+                    pathGroups: [
+                        {
+                            pattern: 'node',
+                            group: 'external',
+                            position: 'before'
+                        }
+                    ],
+                    pathGroupsExcludedImportTypes: ['node'],
+                    'newlines-between': 'always',
+                    alphabetize: {
+                        order: 'asc',
+                        caseInsensitive: true
+                    }
+                }
+            ]
         }
     }
 ];

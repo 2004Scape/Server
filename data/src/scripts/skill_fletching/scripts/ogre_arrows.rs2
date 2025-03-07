@@ -45,9 +45,8 @@ if (map_members = false) {
     mes(^mes_members_fletching); // guess
     return;
 }
-if (%chompybird_progress < 1) {
-    // complete guess
-    mes("You're not sure what you would make with these bones.");
+if (%chompybird_progress < ^chompybird_started) {
+    mes("You're not sure what you would make with these."); // osrs
     return;
 }
 if (stat(fletching) < 5) {
@@ -73,9 +72,8 @@ if (map_members = false) {
     mes(^mes_members_fletching); // guess
     return;
 }
-if (%chompybird_progress < 1) {
-    // complete guess, i need to check this
-    mes("You're not sure what you would make with these arrow shafts.");
+if (%chompybird_progress < ^chompybird_started) {
+    mes("You're not sure what you would make with these."); // osrs
     return;
 }
 if (stat(fletching) < 5) {
@@ -110,8 +108,7 @@ if (map_members = false) {
     return;
 }
 if (%chompybird_progress = ^chompybird_not_started) {
-    // complete guess, i need to check this
-    mes("You're not sure what you would make with these flighted arrows.");
+    mes("You're not sure what you would make with these."); // osrs
     return;
 }
 if (stat(fletching) < 5) {

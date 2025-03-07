@@ -1,5 +1,7 @@
 import fs from 'fs';
-import { Bitmap, Jimp } from 'jimp';
+
+import { Jimp } from 'jimp';
+import type { Bitmap } from 'jimp';
 
 import Packet from '#/io/Packet.js';
 

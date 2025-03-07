@@ -1,28 +1,24 @@
-import World from '#/engine/World.js';
-import ServerTriggerType from '#/engine/script/ServerTriggerType.js';
-import { CoordGrid } from '#/engine/CoordGrid.js';
-
-import BlockWalk from '#/engine/entity/BlockWalk.js';
-import Entity from '#/engine/entity/Entity.js';
-import Npc from '#/engine/entity/Npc.js';
-import Loc from '#/engine/entity/Loc.js';
-import Interaction from '#/engine/entity/Interaction.js';
-import Player from '#/engine/entity/Player.js';
-import NpcMode from '#/engine/entity/NpcMode.js';
-import MoveRestrict from '#/engine/entity/MoveRestrict.js';
-import MoveSpeed from '#/engine/entity/MoveSpeed.js';
-import EntityLifeCycle from '#/engine/entity/EntityLifeCycle.js';
-import MoveStrategy from '#/engine/entity/MoveStrategy.js';
-import Obj from '#/engine/entity/Obj.js';
-import NonPathingEntity from '#/engine/entity/NonPathingEntity.js';
-
-import LocType from '#/cache/config/LocType.js';
-
-import Environment from '#/util/Environment.js';
-
 import { CollisionFlag, CollisionType } from '@2004scape/rsmod-pathfinder';
 
+import LocType from '#/cache/config/LocType.js';
+import { CoordGrid } from '#/engine/CoordGrid.js';
+import BlockWalk from '#/engine/entity/BlockWalk.js';
+import Entity from '#/engine/entity/Entity.js';
+import EntityLifeCycle from '#/engine/entity/EntityLifeCycle.js';
+import Interaction from '#/engine/entity/Interaction.js';
+import Loc from '#/engine/entity/Loc.js';
+import MoveRestrict from '#/engine/entity/MoveRestrict.js';
+import MoveSpeed from '#/engine/entity/MoveSpeed.js';
+import MoveStrategy from '#/engine/entity/MoveStrategy.js';
+import NonPathingEntity from '#/engine/entity/NonPathingEntity.js';
+import Npc from '#/engine/entity/Npc.js';
+import NpcMode from '#/engine/entity/NpcMode.js';
+import Obj from '#/engine/entity/Obj.js';
+import Player from '#/engine/entity/Player.js';
 import { canTravel, changeNpcCollision, changePlayerCollision, findNaivePath, findPath, findPathToEntity, findPathToLoc, isApproached, reachedEntity, reachedLoc, reachedObj } from '#/engine/GameMap.js';
+import ServerTriggerType from '#/engine/script/ServerTriggerType.js';
+import World from '#/engine/World.js';
+import Environment from '#/util/Environment.js';
 
 type TargetSubject = {
     type: number;

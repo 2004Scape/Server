@@ -14,7 +14,9 @@ describe('Component', () => {
 
             try {
                 Component.load('/path/to/data');
-            } catch (e) { /* empty */ }
+            } catch (e) {
+                /* empty */
+            }
 
             expect(Packet.load).toHaveBeenCalledWith('/path/to/data/server/interface.dat');
         });
@@ -38,7 +40,9 @@ describe('Component', () => {
 
             try {
                 Component.load('/path/to/data');
-            } catch (e) { /* empty */ }
+            } catch (e) {
+                /* empty */
+            }
 
             expect(Packet.load).toHaveBeenCalledWith('/path/to/data/server/interface.dat');
             expect(Component.get(0).comName).toBe('jordan');
@@ -58,7 +62,9 @@ describe('Component', () => {
 
             try {
                 Component.load('/path/to/data');
-            } catch (e) { /* empty */ }
+            } catch (e) {
+                /* empty */
+            }
 
             expect(Packet.load).toHaveBeenCalledWith('/path/to/data/server/interface.dat');
             expect(Component.getId('jordan')).toBe(0);
@@ -78,7 +84,9 @@ describe('Component', () => {
 
             try {
                 Component.load('/path/to/data');
-            } catch (e) { /* empty */ }
+            } catch (e) {
+                /* empty */
+            }
 
             expect(Packet.load).toHaveBeenCalledWith('/path/to/data/server/interface.dat');
             expect(Component.getByName('jordan')?.comName).toBe('jordan');
@@ -94,7 +102,9 @@ describe('Component', () => {
 
             try {
                 Component.load('/path/to/data');
-            } catch (e) { /* empty */ }
+            } catch (e) {
+                /* empty */
+            }
 
             expect(Packet.load).toHaveBeenCalledWith('/path/to/data/server/interface.dat');
             expect(Component.getByName('jordan')).toBeNull();
@@ -140,7 +150,9 @@ describe('Component', () => {
 
             try {
                 Component.load('/path/to/data');
-            } catch (e) { /* empty */ }
+            } catch (e) {
+                /* empty */
+            }
 
             const com = Component.get(0);
 
@@ -256,7 +268,9 @@ describe('Component', () => {
 
             try {
                 Component.load('/path/to/data');
-            } catch (e) { /* empty */ }
+            } catch (e) {
+                /* empty */
+            }
 
             const com = Component.get(0);
 
@@ -363,7 +377,9 @@ describe('Component', () => {
 
             try {
                 Component.load('/path/to/data');
-            } catch (e) { /* empty */ }
+            } catch (e) {
+                /* empty */
+            }
 
             const com = Component.get(0);
 
@@ -460,7 +476,9 @@ describe('Component', () => {
 
             try {
                 Component.load('/path/to/data');
-            } catch (e) { /* empty */ }
+            } catch (e) {
+                /* empty */
+            }
 
             const com = Component.get(0);
 
@@ -551,7 +569,9 @@ describe('Component', () => {
 
             try {
                 Component.load('/path/to/data');
-            } catch (e) { /* empty */ }
+            } catch (e) {
+                /* empty */
+            }
 
             const com = Component.get(0);
 
@@ -647,7 +667,9 @@ describe('Component', () => {
 
             try {
                 Component.load('/path/to/data');
-            } catch (e) { /* empty */ }
+            } catch (e) {
+                /* empty */
+            }
 
             const com = Component.get(0);
 
@@ -746,7 +768,9 @@ describe('Component', () => {
 
             try {
                 Component.load('/path/to/data');
-            } catch (e) { /* empty */ }
+            } catch (e) {
+                /* empty */
+            }
 
             const com = Component.get(0);
 
@@ -840,7 +864,9 @@ describe('Component', () => {
 
             try {
                 Component.load('/path/to/data');
-            } catch (e) { /* empty */ }
+            } catch (e) {
+                /* empty */
+            }
 
             const com = Component.get(0);
 
@@ -934,7 +960,9 @@ describe('Component', () => {
 
             try {
                 Component.load('/path/to/data');
-            } catch (e) { /* empty */ }
+            } catch (e) {
+                /* empty */
+            }
 
             const com = Component.get(0);
 

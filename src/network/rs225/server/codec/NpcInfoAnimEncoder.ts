@@ -1,6 +1,6 @@
-import InfoMessageEncoder from '#/network/server/codec/InfoMessageEncoder.js';
 import Packet from '#/io/Packet.js';
 import InfoProt from '#/network/rs225/server/prot/InfoProt.js';
+import InfoMessageEncoder from '#/network/server/codec/InfoMessageEncoder.js';
 import NpcInfoAnim from '#/network/server/model/NpcInfoAnim.js';
 
 export default class NpcInfoAnimEncoder extends InfoMessageEncoder<NpcInfoAnim> {

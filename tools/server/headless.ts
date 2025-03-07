@@ -4,13 +4,10 @@ import net from 'net';
 import forge from 'node-forge';
 
 import { CrcBuffer } from '#/cache/CrcTable.js';
-
-import Packet from '#/io/Packet.js';
 import Isaac from '#/io/Isaac.js';
+import Packet from '#/io/Packet.js';
 
-const priv = forge.pki.privateKeyFromPem(
-    fs.readFileSync('data/config/private.pem', 'ascii')
-);
+const priv = forge.pki.privateKeyFromPem(fs.readFileSync('data/config/private.pem', 'ascii'));
 
 type ClientWrapper = {
     socket: net.Socket;
@@ -18,7 +15,7 @@ type ClientWrapper = {
     encryptor: Isaac | null;
     decryptor: Isaac | null;
     // lastSent: number;
-}
+};
 
 const clients: ClientWrapper[] = [];
 
@@ -35,20 +32,15 @@ function connectTcp(username: string, host = '127.0.0.1', port = 43594) {
             socket,
             state: 1,
             encryptor: null,
-            decryptor: null,
+            decryptor: null
             // lastSent: -1,
         };
 
-        socket.on('data', (data) => {
+        socket.on('data', data => {
             const buf = new Packet(data);
 
             if (state === -1) {
-                const seed = [
-                    Math.trunc(Math.random() * 9.9999999e7),
-                    Math.trunc(Math.random() * 9.9999999e7),
-                    buf.g4(),
-                    buf.g4()
-                ];
+                const seed = [Math.trunc(Math.random() * 9.9999999e7), Math.trunc(Math.random() * 9.9999999e7), buf.g4(), buf.g4()];
 
                 const out = Packet.alloc(1);
                 out.p1(10);
@@ -95,7 +87,7 @@ function connectTcp(username: string, host = '127.0.0.1', port = 43594) {
         });
 
         socket.on('error', () => {});
-    } catch (_) {  // eslint-disable-line @typescript-eslint/no-unused-vars
+    } catch (_) {
         // no-op
     }
 }

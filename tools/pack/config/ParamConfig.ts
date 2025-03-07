@@ -1,7 +1,6 @@
 import ScriptVarType from '#/cache/config/ScriptVarType.js';
-
-import { ConfigValue, ConfigLine, packStepError, PackedData, isConfigBoolean, getConfigBoolean } from '#tools/pack/config/PackShared.js';
 import { CategoryPack, EnumPack, InterfacePack, InvPack, LocPack, NpcPack, ObjPack, ParamPack, SeqPack, SynthPack, SpotAnimPack, StructPack, VarpPack } from '#/util/PackFile.js';
+import { ConfigValue, ConfigLine, packStepError, PackedData, isConfigBoolean, getConfigBoolean } from '#tools/pack/config/PackShared.js';
 
 const stats: (string | null)[] = [
     'attack',
@@ -211,7 +210,7 @@ export function parseParamConfig(key: string, value: string): ConfigValue | null
     }
 }
 
-export function packParamConfigs(configs: Map<string, ConfigLine[]>): { client: PackedData, server: PackedData } {
+export function packParamConfigs(configs: Map<string, ConfigLine[]>): { client: PackedData; server: PackedData } {
     const client: PackedData = new PackedData(ParamPack.size);
     const server: PackedData = new PackedData(ParamPack.size);
 

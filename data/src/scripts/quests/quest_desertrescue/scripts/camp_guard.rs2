@@ -1,6 +1,6 @@
 
 // "Don't talk to any of the Mercenary there as they will throw you into a cell." runeweb, not sure about rowdy guards so will copy rsc
-[opnpc1,npc_829] 
+[opnpc1,mercenary_2] 
 if(~wearing_slave_robes = true) {
     if(inzone(0_51_147_10_5, 0_51_147_20_15, coord) = true) { // cave guards
         mes("This guard looks as if he's been down here a while.");
@@ -62,7 +62,7 @@ mes("Guard: What are you doing in here?");
 p_delay(3);
 ~desertcamp_guard_search;
 
-[opnpc2,npc_829]
+[opnpc2,mercenary_2]
 // this is only opnpc2 for the mercenary in OSRS
 if(%npc_attacking_uid = uid) {
     @player_combat_start;
@@ -136,7 +136,7 @@ switch_int(~p_choice2("Huh, fat chance of a rest for me.", 1, "Yes sir, you're q
 ~chatnpc("<p,neutral>Well! You don't come from around here do you? The Tenti's are the nomadic people west of here. They live in tents, so we call them the Tenti's. They have great pineapples! I'm sure you get my meaning?");
 @multi2("How am I going to get some pineapples around here?", camp_merc_pineapple, "Yes sir, we understand each other perfectly.", camp_merc_perfect);
 
-[opnpcu,npc_829]
+[opnpcu,mercenary_2]
 if(inzone(0_51_147_0_0, 0_51_147_63_63, coord) = true) {
     switch_obj(last_useitem) {
         case pineapple : @give_reg_pineapple(pineapple);

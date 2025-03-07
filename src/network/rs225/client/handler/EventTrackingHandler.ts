@@ -1,6 +1,6 @@
+import Player from '#/engine/entity/Player.js';
 import MessageHandler from '#/network/client/handler/MessageHandler.js';
 import EventTracking from '#/network/client/model/EventTracking.js';
-import Player from '#/engine/entity/Player.js';
 import Environment from '#/util/Environment.js';
 
 export default class EventTrackingHandler extends MessageHandler<EventTracking> {

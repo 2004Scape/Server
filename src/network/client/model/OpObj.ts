@@ -6,7 +6,9 @@ export default class OpObj extends IncomingMessage {
 
     constructor(
         readonly op: number,
-        readonly x: number, readonly z: number, readonly obj: number
+        readonly x: number,
+        readonly z: number,
+        readonly obj: number
     ) {
         super();
     }

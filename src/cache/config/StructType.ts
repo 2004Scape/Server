@@ -1,9 +1,9 @@
 import fs from 'fs';
 
-import Packet from '#/io/Packet.js';
 
 import { ConfigType } from '#/cache/config/ConfigType.js';
 import { ParamHelper, ParamHolder, ParamMap } from '#/cache/config/ParamHelper.js';
+import Packet from '#/io/Packet.js';
 
 export default class StructType extends ConfigType implements ParamHolder {
     private static configNames = new Map<string, number>();

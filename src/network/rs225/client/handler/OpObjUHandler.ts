@@ -1,13 +1,13 @@
-import MessageHandler from '#/network/client/handler/MessageHandler.js';
-import OpObjU from '#/network/client/model/OpObjU.js';
 import Component from '#/cache/config/Component.js';
-import World from '#/engine/World.js';
 import ObjType from '#/cache/config/ObjType.js';
 import Interaction from '#/engine/entity/Interaction.js';
-import ServerTriggerType from '#/engine/script/ServerTriggerType.js';
 import { NetworkPlayer } from '#/engine/entity/NetworkPlayer.js';
-import Environment from '#/util/Environment.js';
+import ServerTriggerType from '#/engine/script/ServerTriggerType.js';
+import World from '#/engine/World.js';
+import MessageHandler from '#/network/client/handler/MessageHandler.js';
+import OpObjU from '#/network/client/model/OpObjU.js';
 import UnsetMapFlag from '#/network/server/model/UnsetMapFlag.js';
+import Environment from '#/util/Environment.js';
 
 export default class OpObjUHandler extends MessageHandler<OpObjU> {
     handle(message: OpObjU, player: NetworkPlayer): boolean {

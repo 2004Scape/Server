@@ -102,9 +102,9 @@ if (inv_freespace(inv) < 1) {
 }
 
 if (%action_delay < map_clock) {
-    anim(struct_param(oc_param($axe, woodcutting_struct), skill_anim), 0);
     %action_delay = calc(map_clock + 3);
 } else if (%action_delay = map_clock) {
+    anim(struct_param(oc_param($axe, woodcutting_struct), skill_anim), 0);
     @get_logs($data, $axe);
 }
 

@@ -1,7 +1,6 @@
 import ScriptVarType from '#/cache/config/ScriptVarType.js';
-
-import { ConfigValue, ConfigLine, PackedData, isConfigBoolean, getConfigBoolean } from '#tools/pack/config/PackShared.js';
 import { VarnPack } from '#/util/PackFile.js';
+import { ConfigValue, ConfigLine, PackedData, isConfigBoolean, getConfigBoolean } from '#tools/pack/config/PackShared.js';
 
 export function parseVarnConfig(key: string, value: string): ConfigValue | null | undefined {
     const stringKeys: string[] = [];
@@ -51,7 +50,7 @@ export function parseVarnConfig(key: string, value: string): ConfigValue | null 
     }
 }
 
-export function packVarnConfigs(configs: Map<string, ConfigLine[]>): { client: PackedData, server: PackedData } {
+export function packVarnConfigs(configs: Map<string, ConfigLine[]>): { client: PackedData; server: PackedData } {
     const client: PackedData = new PackedData(VarnPack.size);
     const server: PackedData = new PackedData(VarnPack.size);
 

@@ -6,7 +6,9 @@ export default class OpNpcU extends IncomingMessage {
 
     constructor(
         readonly nid: number,
-        readonly useObj: number, readonly useSlot: number, readonly useComponent: number
+        readonly useObj: number,
+        readonly useSlot: number,
+        readonly useComponent: number
     ) {
         super();
     }

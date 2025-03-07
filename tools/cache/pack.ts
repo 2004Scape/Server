@@ -1,5 +1,4 @@
 import { packClient, packServer } from '#/cache/PackAll.js';
-
 import Environment from '#/util/Environment.js';
 import { updateCompiler } from '#/util/RuneScriptCompiler.js';
 
