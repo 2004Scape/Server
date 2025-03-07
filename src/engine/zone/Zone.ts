@@ -29,12 +29,7 @@ import UpdateZoneFullFollows from '#/network/server/model/UpdateZoneFullFollows.
 import UpdateZonePartialEnclosed from '#/network/server/model/UpdateZonePartialEnclosed.js';
 import UpdateZonePartialFollows from '#/network/server/model/UpdateZonePartialFollows.js';
 import ZoneMessage from '#/network/server/ZoneMessage.js';
-import NonPathingEntity from '#/engine/entity/NonPathingEntity.js';
-import ObjType from '#/cache/config/ObjType.js';
-import Environment from '#/util/Environment.js';
-import Packet from '#/io/Packet.js';
 import LinkList from '#/util/LinkList.js';
-import Environment from '#/util/Environment.js';
 
 export default class Zone {
     private static readonly SIZE: number = 8 * 8;
