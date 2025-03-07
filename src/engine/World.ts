@@ -888,6 +888,8 @@ class World {
                         other.client.send(Uint8Array.from([15]));
                     }
 
+                    rsbuf.cleanupPlayerBuildArea(other.pid);
+
                     other.onReconnect();
 
                     this.friendThread.postMessage({
