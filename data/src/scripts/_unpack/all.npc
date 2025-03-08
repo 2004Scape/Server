@@ -5302,6 +5302,8 @@ param=attack_anim,human_sword_stab
 param=defend_anim,human_sword_defend2
 param=attack_sound,stabsword_stab
 param=retreat,8
+huntmode=cowardly
+huntrange=1
 // osrs stats and Vislvl match 1:1
 // https://raw.githubusercontent.com/Joshua-F/osrs-dumps/refs/heads/master/config/dump.npc npc_4247
 
@@ -5340,6 +5342,8 @@ param=damagetype,^slash_style
 param=attack_anim,human_sword_slash
 param=defend_anim,human_sword_defend2
 param=attack_sound,stabsword_slash
+huntmode=cowardly
+huntrange=1
 // osrs stats and Vislvl match 1:1
 // https://raw.githubusercontent.com/Joshua-F/osrs-dumps/refs/heads/master/config/dump.npc npc_4248
 
