@@ -44,16 +44,6 @@ if (npc_type = tut_chicken & %tutorial_progress < ^tutorial_successful_wind_stri
 [proc,tut_pvm_spell_cast](dbrow $spell_data)(int)
 ~delete_spell_runes($spell_data);
 ~tut_give_spell_xp($spell_data);
-
-// in osrs you can only defensive cast with a staff. Not sure if this is the case in 2004
-// Might be confusing for players if they just so happen to have their non-magic weapon on defensive, and end up gaining def xp from manual casting.
-// so maybe jagex did it this way?
-if (%damagestyle = ^style_melee_defensive & inv_getobj(worn, ^wearpos_rhand) ! null & oc_category(inv_getobj(worn, ^wearpos_rhand)) = weapon_staff) {
-    %damagestyle = ^style_magic_defensive; // casting a spell with defensive on gives mage + def xp
-} else {
-    %damagestyle = ^style_magic_normal; // if this script is running they have to be using a spell, so assume magic style
-}
-
 // spell anim
 anim(db_getfield($spell_data, magic_spell_table:anim, 0), 0);
 // player spell visual effect
