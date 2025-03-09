@@ -19,3 +19,13 @@ if (p_finduid(uid) = true) {
     loc_add(0_37_55_32_28, loc_1276, 0, centrepiece_straight, 10);
     loc_add(0_37_55_32_27, loc_1276, 0, centrepiece_straight, 10);
 }
+
+
+[debugproc,loc_add_del]
+if (p_finduid(uid) = true) {
+    p_telejump(0_37_55_32_30);
+    p_delay(0);
+    loc_add(0_37_55_32_30, loc_1276, 0, centrepiece_straight, 10);
+    loc_del(100);
+}
+
