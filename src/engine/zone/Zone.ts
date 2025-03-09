@@ -174,16 +174,16 @@ export default class Zone {
                 continue;
             }
             // Send dynamic locs to the client
-            if (loc.lifecycle === EntityLifeCycle.DESPAWN && loc.checkLifeCycle(currentTick)) {
+            if (loc.lifecycle === EntityLifeCycle.DESPAWN && loc.isValid()) {
                 player.write(new LocAddChange(CoordGrid.packZoneCoord(loc.x, loc.z), loc.type, loc.shape, loc.angle));
+            }
+            // Inform the client that a static loc is not currently active
+            else if (loc.lifecycle === EntityLifeCycle.RESPAWN && !loc.isValid()) {
+                player.write(new LocDel(CoordGrid.packZoneCoord(loc.x, loc.z), loc.shape, loc.angle));
             }
             // Send 'changed' static locs to the client
             else if (loc.lifecycle === EntityLifeCycle.RESPAWN && loc.isChanged()) {
                 player.write(new LocAddChange(CoordGrid.packZoneCoord(loc.x, loc.z), loc.type, loc.shape, loc.angle));
-            }
-            // Inform the client that a static loc is not currently active
-            else if (loc.lifecycle === EntityLifeCycle.RESPAWN && !loc.checkLifeCycle(currentTick)) {
-                player.write(new LocDel(CoordGrid.packZoneCoord(loc.x, loc.z), loc.shape, loc.angle));
             }
         }
     }
