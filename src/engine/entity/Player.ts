@@ -1121,8 +1121,8 @@ export default class Player extends PathingEntity {
             return false;
         }
 
-        // This is effectively checking if the npc did a changetype
-        if (this.target instanceof Npc && this.targetSubject.type !== -1 && World.getNpcByUid((this.targetSubject.type << 16) | this.target.nid) === null) {
+        // This is effectively checking if the Npc or Loc did a changetype
+        if ((this.target instanceof Npc || this.target instanceof Loc) && this.targetSubject.type !== this.target.type) {
             return false;
         }
 

@@ -115,7 +115,6 @@ export default class Zone {
             if (loc.lifecycle === EntityLifeCycle.DESPAWN) {
                 World.removeLoc(loc, 0);
             } else if (loc.lifecycle === EntityLifeCycle.RESPAWN && loc.isChanged()) {
-                console.log('reverting loc');
                 World.revertLoc(loc);
             } else if (loc.lifecycle === EntityLifeCycle.RESPAWN) {
                 World.addLoc(loc, 0);
@@ -174,9 +173,16 @@ export default class Zone {
             if (loc.lastLifecycleTick === currentTick) {
                 continue;
             }
+            // Send dynamic locs to the client
             if (loc.lifecycle === EntityLifeCycle.DESPAWN && loc.checkLifeCycle(currentTick)) {
                 player.write(new LocAddChange(CoordGrid.packZoneCoord(loc.x, loc.z), loc.type, loc.shape, loc.angle));
-            } else if (loc.lifecycle === EntityLifeCycle.RESPAWN && !loc.checkLifeCycle(currentTick)) {
+            }
+            // Send 'changed' static locs to the client
+            else if (loc.lifecycle === EntityLifeCycle.RESPAWN && loc.isChanged()) {
+                player.write(new LocAddChange(CoordGrid.packZoneCoord(loc.x, loc.z), loc.type, loc.shape, loc.angle));
+            }
+            // Inform the client that a static loc is not currently active
+            else if (loc.lifecycle === EntityLifeCycle.RESPAWN && !loc.checkLifeCycle(currentTick)) {
                 player.write(new LocDel(CoordGrid.packZoneCoord(loc.x, loc.z), loc.shape, loc.angle));
             }
         }
