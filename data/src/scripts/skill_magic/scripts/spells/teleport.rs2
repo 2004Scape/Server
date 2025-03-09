@@ -61,6 +61,10 @@ p_delay(2);
 if (stat(hitpoints) = 0) {
     return;
 }
+if(inv_total(inv, anainabarrel) > 0) {
+    ~chatnpc_specific("Ana (in a Barrel)", anabarrel, "<p,silent>@dbl@-- You can't teleport while holding the barrel, it's just @dbl@too difficult to concentrate. --");
+    return;
+}
 p_telejump($coord);
 anim(null, 0);
 // todo: ensure this proc is used for other teleports too
@@ -72,10 +76,6 @@ if ($rum > 0) {
 if(inv_total(inv, plague_sample) > 0) {
     inv_del(inv, plague_sample, ^max_32bit_int);
     mes("The plague sample is too delicate...it disintegrates in the crossing.");
-    return;
-}
-if(inv_total(inv, anainabarrel) > 0) {
-    ~chatnpc_specific("Ana (in a Barrel)", anabarrel, "@dbl@-- You can't teleport while holding the barrel, it's just @dbl@too difficult to concentrate. --");
     return;
 }
 

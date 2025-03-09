@@ -16,8 +16,8 @@ else {
 ~chatnpc("<p,neutral>Eh, suit yourself.");
 
 [label,gem_trader_crest]
-~chatplayer("<p,neutral>I'm in search of a man named Avan Fitzharmon.");
-~chatnpc("<p,shifty>Fitzharmon eh? Hmmm.... If I'm not mistaken that's the family name of a member of the Varrockian nobility. You know, I HAVE seen someone of that");
+~chatplayer("<p,quiz>I'm in search of a man named Avan Fitzharmon.");
+~chatnpc("<p,confused>Fitzharmon eh? Hmmm.... If I'm not mistaken that's the family name of a member of the Varrockian nobility. You know, I HAVE seen someone of that");
 ~chatnpc("<p,neutral>persuasion around here recently... Wearing a poncey yellow cape he was! Came in here all la-di-dah, high and mighty, asking for jewelry made");
 ~chatnpc("<p,neutral>from 'perfect gold' - whatever that is - like 'normal' golds just not good enough for little lord fancy pants there! I told him to head to the desert");
 ~chatnpc("<p,neutral>'Cos I know theres gold out there, in them there sand dunes... and if it's not up to his lordships high standards of 'gold perfection'...");
