@@ -247,7 +247,7 @@ export default class Zone {
         if (loc.lifecycle === EntityLifeCycle.DESPAWN) {
             this.locs.addTail(loc);
         }
-
+        loc.revert();
         loc.isActive = true;
         this.queueEvent(loc, new ZoneEvent(ZoneEventType.ENCLOSED, -1n, new LocAddChange(coord, loc.type, loc.shape, loc.angle)));
     }
