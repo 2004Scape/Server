@@ -1322,7 +1322,7 @@ class World {
         this.trackZone(this.currentTick, zone);
     }
 
-    changeLoc(loc: Loc, typeID: number, duration: number) {
+    changeLoc(loc: Loc, typeID: number, shape: number, angle: number, duration: number) {
         // Remove previous collision from game world
         const fromType: LocType = LocType.get(loc.type);
         if (fromType.blockwalk) {
@@ -1336,7 +1336,7 @@ class World {
         }
 
         // Update loc to new type
-        loc.change(typeID, loc.shape, loc.angle);
+        loc.change(typeID, shape, angle);
 
         // Notify zone that loc has been changed
         const zone: Zone = this.gameMap.getZone(loc.x, loc.z, loc.level);

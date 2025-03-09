@@ -1,4 +1,4 @@
-import { LocAngle, LocShape } from '@2004scape/rsmod-pathfinder';
+import { LocAngle, LocShape, locShapeLayer } from '@2004scape/rsmod-pathfinder';
 
 import LocType from '#/cache/config/LocType.js';
 import { ParamHelper } from '#/cache/config/ParamHelper.js';
@@ -22,16 +22,21 @@ const LocOps: CommandHandlers = {
         const locType: LocType = check(type, LocTypeValid);
         const locAngle: LocAngle = check(angle, LocAngleValid);
         const locShape: LocShape = check(shape, LocShapeValid);
+        const locLayer = locShapeLayer(locShape);
         check(duration, DurationValid);
 
-        const created: Loc = new Loc(position.level, position.x, position.z, locType.width, locType.length, EntityLifeCycle.DESPAWN, locType.id, locShape, locAngle);
+        // Search through zone and change a loc if it's on the same layer
         const locs: IterableIterator<Loc> = World.gameMap.getZone(position.x, position.z, position.level).getLocsUnsafe(CoordGrid.packZoneCoord(position.x, position.z));
         for (const loc of locs) {
-            if (loc !== created && loc.angle === locAngle && loc.shape === locShape) {
-                World.removeLoc(loc, duration);
-                break;
+            if (loc.layer === locLayer) {
+                World.changeLoc(loc, type, locShape, locAngle, duration);
+                state.activeLoc = loc;
+                state.pointerAdd(ActiveLoc[state.intOperand]);
+                return;
             }
         }
+
+        const created: Loc = new Loc(position.level, position.x, position.z, locType.width, locType.length, EntityLifeCycle.DESPAWN, locType.id, locShape, locAngle);
         World.addLoc(created, duration);
         state.activeLoc = created;
         state.pointerAdd(ActiveLoc[state.intOperand]);
@@ -58,7 +63,7 @@ const LocOps: CommandHandlers = {
         const locType: LocType = check(id, LocTypeValid);
         check(duration, DurationValid);
 
-        World.changeLoc(state.activeLoc, id, duration);
+        World.changeLoc(state.activeLoc, id, state.activeLoc.shape, state.activeLoc.angle, duration);
     }),
 
     [ScriptOpcode.LOC_COORD]: checkedHandler(ActiveLoc, state => {
