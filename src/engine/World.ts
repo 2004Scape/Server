@@ -947,7 +947,6 @@ class World {
                 // if it throws then there was no available pid. otherwise guaranteed to not be -1.
                 pid = this.getNextPid(isClientConnected(player) ? player.client : null);
             } catch (_) {
-                 
                 // world full
                 if (isClientConnected(player)) {
                     player.addSessionLog(LoggerEventType.ENGINE, 'Tried to log in - world full');
@@ -1323,6 +1322,20 @@ class World {
         this.trackZone(this.currentTick, zone);
     }
 
+    changeLoc(loc: Loc, typeID: number, duration: number) {
+        const type: LocType = LocType.get(typeID);
+        if (type.blockwalk) {
+            changeLocCollision(loc.shape, loc.angle, type.blockrange, type.length, type.width, type.active, loc.x, loc.z, loc.level, true);
+        }
+
+        const zone: Zone = this.gameMap.getZone(loc.x, loc.z, loc.level);
+        loc.change(typeID, loc.shape, loc.angle);
+        zone.changeLoc(loc);
+        loc.setLifeCycle(this.currentTick + duration);
+        this.trackZone(this.currentTick + duration, zone);
+        this.trackZone(this.currentTick, zone);
+    }
+
     mergeLoc(loc: Loc, player: Player, startCycle: number, endCycle: number, south: number, east: number, north: number, west: number): void {
         // printDebug(`[World] mergeLoc => name: ${LocType.get(loc.type).name}`);
         const zone: Zone = this.gameMap.getZone(loc.x, loc.z, loc.level);
@@ -1348,6 +1361,18 @@ class World {
         zone.removeLoc(loc);
         loc.setLifeCycle(this.currentTick + duration);
         this.trackZone(this.currentTick + duration, zone);
+        this.trackZone(this.currentTick, zone);
+    }
+
+    revertLoc(loc: Loc) {
+        loc.revert();
+        const type: LocType = LocType.get(loc.type);
+        if (type.blockwalk) {
+            changeLocCollision(loc.shape, loc.angle, type.blockrange, type.length, type.width, type.active, loc.x, loc.z, loc.level, false);
+        }
+        const zone: Zone = this.gameMap.getZone(loc.x, loc.z, loc.level);
+        zone.changeLoc(loc);
+        // Runs computeshared at end of tick to send out packets
         this.trackZone(this.currentTick, zone);
     }
 

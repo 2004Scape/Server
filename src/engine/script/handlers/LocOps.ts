@@ -14,7 +14,6 @@ import { CommandHandlers } from '#/engine/script/ScriptRunner.js';
 import { check, CoordValid, DurationValid, LocAngleValid, LocShapeValid, LocTypeValid, ParamTypeValid, SeqTypeValid } from '#/engine/script/ScriptValidators.js';
 import World from '#/engine/World.js';
 
-
 const LocOps: CommandHandlers = {
     [ScriptOpcode.LOC_ADD]: state => {
         const [coord, type, angle, shape, duration] = state.popInts(5);
@@ -59,23 +58,7 @@ const LocOps: CommandHandlers = {
         const locType: LocType = check(id, LocTypeValid);
         check(duration, DurationValid);
 
-        World.removeLoc(state.activeLoc, duration);
-
-        // const loc = new Loc(state.activeLoc.level, state.activeLoc.x, state.activeLoc.z, locType.width, locType.length, EntityLifeCycle.DESPAWN, id, state.activeLoc.shape, state.activeLoc.angle);
-        // World.addLoc(loc, duration);
-
-        const { level, x, z, angle, shape } = state.activeLoc;
-        const created: Loc = new Loc(level, x, z, locType.width, locType.length, EntityLifeCycle.DESPAWN, locType.id, shape, angle);
-        const locs: IterableIterator<Loc> = World.gameMap.getZone(x, z, level).getLocsUnsafe(CoordGrid.packZoneCoord(x, z));
-        for (const loc of locs) {
-            if (loc !== created && loc.angle === angle && loc.shape === shape) {
-                World.removeLoc(loc, duration);
-                break;
-            }
-        }
-        World.addLoc(created, duration);
-        state.activeLoc = created;
-        state.pointerAdd(ActiveLoc[state.intOperand]);
+        World.changeLoc(state.activeLoc, id, duration);
     }),
 
     [ScriptOpcode.LOC_COORD]: checkedHandler(ActiveLoc, state => {

@@ -114,6 +114,9 @@ export default class Zone {
             }
             if (loc.lifecycle === EntityLifeCycle.DESPAWN) {
                 World.removeLoc(loc, 0);
+            } else if (loc.lifecycle === EntityLifeCycle.RESPAWN && loc.isChanged()) {
+                console.log('reverting loc');
+                World.revertLoc(loc);
             } else if (loc.lifecycle === EntityLifeCycle.RESPAWN) {
                 World.addLoc(loc, 0);
             }
@@ -240,7 +243,11 @@ export default class Zone {
         }
 
         loc.isActive = true;
+        this.queueEvent(loc, new ZoneEvent(ZoneEventType.ENCLOSED, -1n, new LocAddChange(coord, loc.type, loc.shape, loc.angle)));
+    }
 
+    changeLoc(loc: Loc) {
+        const coord: number = CoordGrid.packZoneCoord(loc.x, loc.z);
         this.queueEvent(loc, new ZoneEvent(ZoneEventType.ENCLOSED, -1n, new LocAddChange(coord, loc.type, loc.shape, loc.angle)));
     }
 

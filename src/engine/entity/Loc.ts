@@ -20,6 +20,10 @@ export default class Loc extends NonPathingEntity {
         return this.info;
     }
 
+    isChanged(): boolean {
+        return this.tempinfo !== -1;
+    }
+
     get type(): number {
         return this.currentinfo & 0x3fff;
     }
@@ -38,5 +42,9 @@ export default class Loc extends NonPathingEntity {
         } else if (this.lifecycle === EntityLifeCycle.DESPAWN) {
             this.info = (type & 0x3fff) | ((shape & 0x1f) << 14) | ((angle & 0x3) << 19);
         }
+    }
+
+    revert() {
+        this.tempinfo = -1;
     }
 }

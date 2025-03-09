@@ -509,16 +509,23 @@ export default abstract class PathingEntity extends Entity {
         }
     }
 
-    setInteraction(interaction: Interaction, target: Entity, op: TargetOp, subject?: TargetSubject): boolean {
+    setInteraction(interaction: Interaction, target: Entity, op: TargetOp, com?: number): boolean {
         if (!target.isValid(this instanceof Player ? this.hash64 : undefined)) {
             return false;
         }
 
         this.target = target;
         this.targetOp = op;
-        this.targetSubject = subject ?? { type: -1, com: -1 };
         this.apRange = 10;
         this.apRangeCalled = false;
+
+        this.targetSubject.com = com ? com : -1;
+        // Remember initial target type for validation
+        if (target instanceof Npc || target instanceof Loc || target instanceof Obj) {
+            this.targetSubject.type = target.type;
+        } else {
+            this.targetSubject.type = -1;
+        }
 
         this.focus(CoordGrid.fine(target.x, target.width), CoordGrid.fine(target.z, target.length), target instanceof NonPathingEntity && interaction === Interaction.ENGINE);
 
