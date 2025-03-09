@@ -29,3 +29,28 @@ if (p_finduid(uid) = true) {
     loc_del(100);
 }
 
+
+[debugproc,loc_add_static]
+if (p_finduid(uid) = true) {
+    p_telejump(0_37_55_32_9);
+    p_delay(0);
+    loc_add(0_37_55_30_9, loc_2732, 1, centrepiece_straight, 10);
+}
+
+[debugproc,loc_add_dynamic]
+if (p_finduid(uid) = true) {
+    p_telejump(0_37_55_32_9);
+    p_delay(0);
+    loc_add(0_37_55_32_9, loc_1276, 0, centrepiece_straight, 10);
+    p_delay(1);
+    loc_add(0_37_55_32_9, loc_2732, 1, centrepiece_straight, 10);
+}
+
+[debugproc,loc_change_dynamic]
+if (p_finduid(uid) = true) {
+    p_telejump(0_37_55_32_9);
+    p_delay(0);
+    loc_add(0_37_55_32_9, loc_1276, 0, centrepiece_straight, 10);
+    p_delay(1);
+    loc_change(loc_2732, 10);
+}
