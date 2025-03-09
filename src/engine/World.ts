@@ -1323,13 +1323,23 @@ class World {
     }
 
     changeLoc(loc: Loc, typeID: number, duration: number) {
+        // Remove previous collision from game world
+        const fromType: LocType = LocType.get(loc.type);
+        if (fromType.blockwalk) {
+            changeLocCollision(loc.shape, loc.angle, fromType.blockrange, fromType.length, fromType.width, fromType.active, loc.x, loc.z, loc.level, false);
+        }
+
+        // Add new collision to game world
         const type: LocType = LocType.get(typeID);
         if (type.blockwalk) {
             changeLocCollision(loc.shape, loc.angle, type.blockrange, type.length, type.width, type.active, loc.x, loc.z, loc.level, true);
         }
 
-        const zone: Zone = this.gameMap.getZone(loc.x, loc.z, loc.level);
+        // Update loc to new type
         loc.change(typeID, loc.shape, loc.angle);
+
+        // Notify zone that loc has been changed
+        const zone: Zone = this.gameMap.getZone(loc.x, loc.z, loc.level);
         zone.changeLoc(loc);
         loc.setLifeCycle(this.currentTick + duration);
         this.trackZone(this.currentTick + duration, zone);
