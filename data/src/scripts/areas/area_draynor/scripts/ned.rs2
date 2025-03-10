@@ -33,28 +33,22 @@ if (last_useitem = crandor_map) {
 def_int $option;
 if(%prince_progress >= ^prince_spoken_osman & %prince_progress < ^prince_saved) {
     if (~quest_dragon_getting_map_parts = true & %dragon_ned_hired = ^false) {
-        $option = ~p_choice4("You're a sailor? Could you take me to the island of Crandor?", 4, "Ned, could you make other things from wool?", 3, "Yes, I would like some rope.", 1, "No thanks, Ned. I don't need any.", 2);
+        @multi4("You're a sailor? Could you take me to the island of Crandor?", ned_dragon_slayer_before_hired, "Ned, could you make other things from wool?", ned_other_things, "Yes, I would like some rope.", ned_start_rope_purchase, "No thanks, Ned. I don't need any.", ned_decline_rope);
     } else {
-        $option = ~p_choice3("Ned, could you make other things from wool?", 3, "Yes, I would like some rope.", 1, "No thanks, Ned. I don't need any.", 2);
+        @multi3("Ned, could you make other things from wool?", ned_other_things, "Yes, I would like some rope.", ned_start_rope_purchase, "No thanks, Ned. I don't need any.", ned_decline_rope);
     }
 } else {
     if (~quest_dragon_getting_map_parts = true & %dragon_ned_hired = ^false) {
-        $option = ~p_choice3("You're a sailor? Could you take me to the island of Crandor?", 4, "Yes, I would like some rope.", 1, "No thanks, Ned. I don't need any.", 2);
+        @multi3("You're a sailor? Could you take me to the island of Crandor?", ned_dragon_slayer_before_hired, "Yes, I would like some rope.", ned_start_rope_purchase, "No thanks, Ned. I don't need any.", ned_decline_rope);
     } else {
-        $option = ~p_choice2("Yes, I would like some rope.", 1, "No thanks, Ned. I don't need any.", 2);
+        @multi2("Yes, I would like some rope.", ned_start_rope_purchase, "No thanks, Ned. I don't need any.", ned_decline_rope);
     }
 }
-if($option = 1) {
-    @ned_start_rope_purchase;
-} else if($option = 2) {
-    @ned_decline_rope;
-} else if($option = 3) {
-    ~chatplayer("<p,quiz>Ned, could you make other things from wool?");
-    ~chatnpc("<p,happy>I am sure I can. What are you thinking of?");
-    @multi3("Could you knit me a sweater?", ned_sweater, "How about some sort of wig?", ned_wig, "Could you repair the arrow holes in the back of my shirt?", ned_arrow_holes);
-} else if ($option = 4) {
-    @ned_dragon_slayer_before_hired;
-}
+
+[label,ned_other_things]
+~chatplayer("<p,quiz>Ned, could you make other things from wool?");
+~chatnpc("<p,happy>I am sure I can. What are you thinking of?");
+@multi3("Could you knit me a sweater?", ned_sweater, "How about some sort of wig?", ned_wig, "Could you repair the arrow holes in the back of my shirt?", ned_arrow_holes);
 
 [label,ned_start_rope_purchase]
 ~chatplayer("<p,neutral>Yes, I would like some rope.");
@@ -206,7 +200,12 @@ if ($choice = 2) {
 ~chatplayer("<p,confused>How did you get back from Crandor?");
 ~chatnpc("<p,neutral>I got towed back by a passing friendly whale.");
 ~chatnpc("<p,quiz>Anyway, would you like me to make some rope while you're here?");
-def_int $choice = ~p_choice3("Can you take me to Crandor again?", 1, "Yes, I would like some rope.", 2, "No thanks Ned, I don't need any.", 3);
+def_int $choice;
+if(%prince_progress >= ^prince_spoken_osman & %prince_progress < ^prince_saved) {
+    $choice = ~p_choice4("Can you take me to Crandor again?", 1, "Ned, could you make other things from wool?", 4, "Yes, I would like some rope.", 2, "No thanks Ned, I don't need any.", 3);
+} else {
+    $choice = ~p_choice3("Can you take me to Crandor again?", 1, "Yes, I would like some rope.", 2, "No thanks Ned, I don't need any.", 3);
+}
 if ($choice = 1) {
     ~chatplayer("<p,quiz>Can you take me to Crandor again?");
     ~chatnpc("<p,neutral>Aye, that I could. I'll meet you at the Port Sarim docks again. I'll try to steer a little better this time!");
