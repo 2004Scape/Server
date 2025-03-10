@@ -62,7 +62,7 @@ export default class OpNpcUHandler extends MessageHandler<OpNpcU> {
         player.lastUseItem = item;
         player.lastUseSlot = slot;
 
-        player.setInteraction(Interaction.ENGINE, npc, ServerTriggerType.APNPCU, { type: npc.type, com: -1 });
+        player.setInteraction(Interaction.ENGINE, npc, ServerTriggerType.APNPCU);
         player.opcalled = true;
         return true;
     }

@@ -50,7 +50,7 @@ export default class OpNpcHandler extends MessageHandler<OpNpc> {
         }
 
         player.clearPendingAction();
-        player.setInteraction(Interaction.ENGINE, npc, mode, { type: npc.type, com: -1 });
+        player.setInteraction(Interaction.ENGINE, npc, mode);
         player.opcalled = true;
         return true;
     }

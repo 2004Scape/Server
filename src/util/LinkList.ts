@@ -3,13 +3,20 @@ import Linkable from '#/util/Linkable.js';
 export default class LinkList<T extends Linkable> {
     // constructor
     private readonly sentinel: Linkable = new Linkable();
-
     // runtime
     public cursor: Linkable | null = null;
 
     constructor() {
         this.sentinel.next = this.sentinel;
         this.sentinel.prev = this.sentinel;
+    }
+
+    get count() {
+        let count = 0;
+        for (let item = this.head(); item !== null; item = this.next()) {
+            count++;
+        }
+        return count;
     }
 
     addTail(node: T): void {
