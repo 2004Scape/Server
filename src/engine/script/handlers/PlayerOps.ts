@@ -369,14 +369,14 @@ const PlayerOps: CommandHandlers = {
             return;
         }
         state.activePlayer.stopAction();
-        state.activePlayer.setInteraction(Interaction.SCRIPT, state.activeNpc, ServerTriggerType.APNPC1 + type, { type: state.activeNpc.type, com: -1 });
+        state.activePlayer.setInteraction(Interaction.SCRIPT, state.activeNpc, ServerTriggerType.APNPC1 + type);
     }),
 
     // https://x.com/JagexAsh/status/1791472651623370843
     [ScriptOpcode.P_OPNPCT]: checkedHandler(ProtectedActivePlayer, state => {
         const spellId: number = check(state.popInt(), NumberNotNull);
         state.activePlayer.stopAction();
-        state.activePlayer.setInteraction(Interaction.SCRIPT, state.activeNpc, ServerTriggerType.APNPCT, { type: state.activeNpc.type, com: spellId });
+        state.activePlayer.setInteraction(Interaction.SCRIPT, state.activeNpc, ServerTriggerType.APNPCT);
     }),
 
     // https://x.com/JagexAsh/status/1389465615631519744
@@ -1020,7 +1020,7 @@ const PlayerOps: CommandHandlers = {
             return;
         }
         state.activePlayer.stopAction();
-        state.activePlayer.setInteraction(Interaction.SCRIPT, target, ServerTriggerType.APPLAYERT, { type: -1, com: spellId });
+        state.activePlayer.setInteraction(Interaction.SCRIPT, target, ServerTriggerType.APPLAYERT, spellId);
     }),
 
     // https://x.com/JagexAsh/status/1799020087086903511

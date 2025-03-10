@@ -37,7 +37,7 @@ export default class OpPlayerTHandler extends MessageHandler<OpPlayerT> {
         }
 
         player.clearPendingAction();
-        player.setInteraction(Interaction.ENGINE, other, ServerTriggerType.APPLAYERT, { type: -1, com: spellComId });
+        player.setInteraction(Interaction.ENGINE, other, ServerTriggerType.APPLAYERT, spellComId);
         player.opcalled = true;
         return true;
     }
