@@ -74,13 +74,6 @@ $effective_ranged = add(add($effective_ranged, 8), $ranged_stylebonus);
 $effective_magic = add(add($effective_magic, 8), 1); // magic always has a style bonus of 1: https://x.com/JagexAsh/status/1395736740888031235
 $effective_magic_defence = add($effective_magic_defence, 8); // no idea if theres supposed to be a style bonus here?
 
-mes("effective_attack: <tostring($effective_attack)>");
-mes("effective_strength: <tostring($effective_strength)>");
-mes("effective_defence: <tostring($effective_defence)>");
-mes("effective_ranged: <tostring($effective_ranged)>");
-mes("effective_magic: <tostring($effective_magic)>");
-mes("effective_magic_defence: <tostring($effective_magic_defence)>");
-
 // style related varps
 %damagetype = $damagetype;
 %damagestyle = $damagestyle;
