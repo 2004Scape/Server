@@ -290,7 +290,8 @@ if ($damagetype = ^magic_style) {
     $stat = magic;
 }
 def_int $defencebonus = ~npc_combat_defencebonus($damagetype);
-def_int $effective_defence = ~combat_effective_stat(1, npc_stat($stat), 100); // no prayerbonus
+def_int $effective_defence = ~combat_effective_stat(npc_stat($stat), 100); // no prayerbonus
+$effective_defence = add($effective_defence, 9); // 'style bonus' of 1
 def_int $defence_roll = ~combat_stat($effective_defence, $defencebonus);
 return($defence_roll);
 

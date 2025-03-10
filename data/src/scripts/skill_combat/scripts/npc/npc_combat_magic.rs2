@@ -3,12 +3,14 @@ if (~check_protect_prayer(^magic_style) = true) {
     return(0);
 }
 def_int $magicattack = npc_param(magicattack);
-def_int $effective_magic = ~combat_effective_stat(1, npc_stat(magic), 100); // no prayerbonus
+def_int $effective_magic = ~combat_effective_stat(npc_stat(magic), 100); // no prayerbonus
+$effective_magic = add($effective_magic, 9); // 'style bonus' of 1
 return(~combat_stat($effective_magic, $magicattack));
 
 [proc,npc_magic_attack_roll_no_prot]()(int)
 def_int $magicattack = npc_param(magicattack);
-def_int $effective_magic = ~combat_effective_stat(1, npc_stat(magic), 100); // no prayerbonus
+def_int $effective_magic = ~combat_effective_stat(npc_stat(magic), 100); // no prayerbonus
+$effective_magic = add($effective_magic, 9); // 'style bonus' of 1
 return(~combat_stat($effective_magic, $magicattack));
 
 [walktrigger,frozen]

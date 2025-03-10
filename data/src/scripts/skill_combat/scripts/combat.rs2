@@ -1,8 +1,8 @@
 // https://oldschool.runescape.wiki/w/Damage_per_second/Melee
 
 // effective levels
-[proc,combat_effective_stat](int $stylebonus, int $stat_level, int $prayerbonus)(int)
-return(calc(scale(max(100, $prayerbonus), 100, $stat_level) + 8 + $stylebonus));
+[proc,combat_effective_stat](int $stat_level, int $prayerbonus)(int)
+return(scale(max(100, $prayerbonus), 100, $stat_level));
 
 [proc,combat_maxhit](int $combat_stat)(int)
 return(calc(($combat_stat + 320) / 640));
