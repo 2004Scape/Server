@@ -51,6 +51,10 @@ if (p_finduid(uid) = true) {
 [proc,player_teleport_normal](coord $coord)
 if_close;
 p_stopaction;
+if(inv_total(inv, anainabarrel) > 0) {
+    ~chatnpc_specific("Ana (in a Barrel)", anabarrel, "<p,silent>@dbl@-- You can't teleport while holding the barrel, it's just @dbl@too difficult to concentrate. --");
+    return;
+}
 sound_synth(teleport_all, 0, 0);
 anim(human_castteleport, 0);
 spotanim_pl(teleport_casting, 92, 0);
@@ -59,10 +63,6 @@ p_delay(2);
 
 [proc,p_telejump_safe](coord $coord)
 if (stat(hitpoints) = 0) {
-    return;
-}
-if(inv_total(inv, anainabarrel) > 0) {
-    ~chatnpc_specific("Ana (in a Barrel)", anabarrel, "<p,silent>@dbl@-- You can't teleport while holding the barrel, it's just @dbl@too difficult to concentrate. --");
     return;
 }
 p_telejump($coord);
