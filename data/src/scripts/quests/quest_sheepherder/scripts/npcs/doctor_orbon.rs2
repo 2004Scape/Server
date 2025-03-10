@@ -56,7 +56,7 @@ if (inv_total(inv, coins) < 100) {
     if (%sheepherder_progress = ^sheepherder_tasked_with_talking_to_dr_orbon) {
         %sheepherder_progress = ^sheepherder_tasked_with_disposing_of_sheep;
     }
-    ~chatnpc("<p,happy>These should protect you from infection.");
+    ~chatnpc("<p,neutral>These should protect you from infection.");
 }
 
 [label,doctor_orbon_sorry_doc_thats_too_much]

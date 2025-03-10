@@ -1,6 +1,6 @@
 [opnpc1,monk_of_entrana_sarim]
-if(map_members = false) { // guessing, OSRS has the new member mesbox, RS3 has a members only message, this is RSC's
-    mes("The Monk of Entrana does not appear interested in talking.");
+if(map_members = false) { // RS3
+    mes("You need to be on a members' world to access this content.");
     return;
 }
 ~chatnpc("<p,quiz>Do you seek passage to holy Entrana? If so, you must leave your weaponry and armour behind. This is Saradomin's will.");

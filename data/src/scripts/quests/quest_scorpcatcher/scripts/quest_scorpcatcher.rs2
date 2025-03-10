@@ -3,7 +3,7 @@ mes("You've already caught this scorpion");
 
 [label,scorpion_sting]
 mes("The scorpion stings you!");
-~damage_self(3);
+queue(damage_player, 0, 3);
 
 [label,catch_scorp](namedobj $next_cage)
 inv_del(inv, last_useitem, 1);

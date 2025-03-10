@@ -1,4 +1,8 @@
 [opnpc1,fancy_dress_shop_owner]
+if(map_members = false) {
+    ~chatnpc("<p,sad>Sorry, we're closed at the moment.");
+    return;
+}
 ~chatnpc("<p,happy>Now you look like someone who goes to a lot of fancy dress parties.");
 ~chatplayer("<p,confused>Errr...what are you saying exactly?");
 ~chatnpc("<p,happy>I'm just saying that perhaps you would like to peruse my selection of garments.");
@@ -10,3 +14,10 @@ if($option = 1) {
     ~chatplayer("<p,happy>Okay, lets see what you've got then.");
     ~openshop_activenpc;
 }
+
+[opnpc3,fancy_dress_shop_owner]
+if(map_members = false) {
+    ~chatnpc("<p,sad>Sorry, we're closed at the moment.");
+    return;
+}
+~openshop_activenpc;

@@ -1,6 +1,6 @@
 [opnpc1,crest_johnathon]
 if (%crest_progress < ^crest_avan_piece) {
-    ~chatnpc("<p,neutral>I am so very tired... Leave me be... to rest...");
+    ~chatnpc("<p,sad>I am so very tired... Leave me be... to rest...");
 }
 else {
     switch_int(%crest_progress) {
@@ -12,16 +12,19 @@ else {
 }
 
 [opnpcu,crest_johnathon]
-if (oc_param(last_useitem, cures_poison) = true) {
+// https://runescape.wiki/w/Update:This_Week_In_RuneScape_-_07/09/20#Patch_Notes
+// https://oldschool.runescape.wiki/w/Family_Crest?oldid=3908008, should be only standard antipoison originally
+if (last_useitem = 1doseantipoison | last_useitem = 2doseantipoison | last_useitem = 3doseantipoison | last_useitem = 4doseantipoison) {
     if (%crest_progress >= ^crest_cured_johnathon) {
         ~chatnpc("<p,neutral>I'm feeling alright now, thanks.");
-        return;
-    }
-    else if (%crest_progress = ^crest_spoken_johnathon) {   
+    } else if (%crest_progress = ^crest_spoken_johnathon) {   
         inv_del(inv, last_useitem, 1);
         %crest_progress = ^crest_cured_johnathon;
         @crest_johnathon_cured;
+    } else {
+        ~chatplayer("<p,confused>Why would I do that?");
     }
+    return;
 }
 ~displaymessage(^dm_default);
 
@@ -29,16 +32,16 @@ if (oc_param(last_useitem, cures_poison) = true) {
 ~chatplayer("<p,neutral>Greetings. Would you happen to be Johnathon Fitzharmon?");
 ~chatnpc("<p,sad>That... I am...");
 ~chatplayer("<p,neutral>I am here to retrieve your fragment of the Fitzharmon family crest.");
-~chatnpc("<p,neutral>The.. poison.. it is all.. too much... My head... will not... stop spinning...");
 %crest_progress = ^crest_spoken_johnathon;
+~chatnpc("<p,neutral>The.. poison.. it is all.. too much... My head... will not... stop spinning...");
 ~mesbox("Sweat is pouring down Johnathons' face.");
 
 [label,crest_johnathon_spider]
-~chatnpc("<p,sad>What... what did that spider... DO to me? I... I feel so weak... I can hardly... think at all...");
+~chatnpc("<p,neutral>What... what did that spider... DO to me? I... I feel so weak... I can hardly... think at all...");
 
 [label,crest_johnathon_cured]
-~chatnpc("<p,neutral>Ooooh... thank you... Wow! That's completely cured me!");
-~chatnpc("<p,neutral>How can I reward you?");
+~chatnpc("<p,happy>Ooooh... thank you... Wow! That's completely cured me!");
+~chatnpc("<p,quiz>How can I reward you?");
 ~chatplayer("<p,neutral>I've come here for your piece of the Fitzharmon family crest.");
 ~chatnpc("<p,sad>You have? Unfortunately I don't have it any more... in my attempts to slay the fiendish Chronozon, the blood demon, I lost a lot of equipment in");
 ~chatnpc("<p,sad>our last battle when he bested me and forced me away from his den. He probably still has it now.");
@@ -49,7 +52,7 @@ if (oc_param(last_useitem, cures_poison) = true) {
 
 [label,crest_johnathon_postcure]
 if (inv_total(inv, crest_part_3) >= 1) {
-    ~chatplayer("<p,neutral>I have your piece of the crest!");
+    ~chatplayer("<p,happy>I have your piece of the crest!");
     ~chatnpc("<p,neutral>Well done! Now return it to my father!");
 }
 else {
@@ -101,14 +104,14 @@ if (inv_total(inv, steel_gauntlets) >= 1) {
     ~chatnpc("<p,neutral>If you give me your gauntlets I will bestow upon them some of my power, and make any bolt spells you wish to cast more effective.");
     def_int $op = ~p_choice2("That sounds good to me.", 1, "I shall see what options your brothers can offer me first.", 2);
     if ($op = 1) {
-        ~chatplayer("<p,neutral>That sounds good to me!");
+        ~chatplayer("<p,happy>That sounds good to me!");
         ~mesbox("Johnathon takes your gauntlets from you, and begins a low chant over them. You see them begin to glow and sparkle, before he returns them to you.");
         %crest_spells_levers_gauntlets = setbit(%crest_spells_levers_gauntlets, ^crest_chaos_gauntlets_chosen);
         inv_del(inv, steel_gauntlets, 1);
         inv_add(inv, gauntlets_of_chaos, 1);
     }
     else {
-        ~chatplayer("<p,neutral>I think I'll check my other options with your brothers before committing myself.");
+        ~chatplayer("<p,confused>I think I'll check my other options with your brothers before committing myself.");
         ~chatnpc("<p,neutral>I doubt they will offer anything as useful as my magical boost, but as you wish.");
     }
 }
@@ -122,7 +125,7 @@ else if (testbit(%crest_spells_levers_gauntlets, ^crest_chaos_gauntlets_chosen) 
     ~chatnpc("<p,neutral>Your gauntlets are already imbued with my powers.");
 }
 else {
-    ~chatplayer("<p,quiz>Your father told me you could improve some gauntlets for me.");
-    ~chatnpc("<p,neutral>Bring them to me, and I'll see what I can do.");
+    ~chatplayer("<p,neutral>Your father told me you could improve some gauntlets for me.");
+    ~chatnpc("<p,happy>Bring them to me, and I'll see what I can do.");
 }
 
