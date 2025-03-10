@@ -1336,14 +1336,14 @@ class World {
             changeLocCollision(loc.shape, loc.angle, fromType.blockrange, fromType.length, fromType.width, fromType.active, loc.x, loc.z, loc.level, false);
         }
 
+        // Update loc to new type
+        loc.change(typeID, shape, angle);
+
         // Add new collision to game world
         const type: LocType = LocType.get(typeID);
         if (type.blockwalk) {
             changeLocCollision(loc.shape, loc.angle, type.blockrange, type.length, type.width, type.active, loc.x, loc.z, loc.level, true);
         }
-
-        // Update loc to new type
-        loc.change(typeID, shape, angle);
 
         // Notify zone that loc has been changed
         const zone: Zone = this.gameMap.getZone(loc.x, loc.z, loc.level);
@@ -1378,14 +1378,24 @@ class World {
     }
 
     revertLoc(loc: Loc) {
+        // Remove previous collision from game world
+        const fromType: LocType = LocType.get(loc.type);
+        if (fromType.blockwalk) {
+            changeLocCollision(loc.shape, loc.angle, fromType.blockrange, fromType.length, fromType.width, fromType.active, loc.x, loc.z, loc.level, false);
+        }
+
+        // Update loc to new type
         loc.revert();
+
+        // Add new collision to game world
         const type: LocType = LocType.get(loc.type);
         if (type.blockwalk) {
-            changeLocCollision(loc.shape, loc.angle, type.blockrange, type.length, type.width, type.active, loc.x, loc.z, loc.level, false);
+            changeLocCollision(loc.shape, loc.angle, type.blockrange, type.length, type.width, type.active, loc.x, loc.z, loc.level, true);
         }
+
+        // Notify zone that loc has been changed
         const zone: Zone = this.gameMap.getZone(loc.x, loc.z, loc.level);
         zone.changeLoc(loc);
-        // Runs computeshared at end of tick to send out packets
         this.trackZone(this.currentTick, zone);
     }
 
