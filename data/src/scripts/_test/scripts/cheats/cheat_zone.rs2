@@ -54,3 +54,17 @@ if (p_finduid(uid) = true) {
     p_delay(1);
     loc_change(loc_2732, 10);
 }
+
+
+[debugproc,loc_change_inactive]
+if (p_finduid(uid) = true) {
+    p_telejump(0_37_55_32_9);
+    p_delay(0);
+    // Change static loc and delete it
+    loc_add(0_37_55_30_9, loc_2732, 1, centrepiece_straight, 10);
+    loc_del(100);
+    p_delay(5);
+
+    // Change it again. This should set it active, and then after 10 ticks it will reappear
+    loc_add(0_37_55_30_9, loc_2732, 1, centrepiece_straight, 10);
+}

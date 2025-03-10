@@ -73,15 +73,6 @@ const LocOps: CommandHandlers = {
 
     [ScriptOpcode.LOC_DEL]: checkedHandler(ActiveLoc, state => {
         const duration: number = check(state.popInt(), DurationValid);
-
-        const { level, x, z, angle, shape } = state.activeLoc;
-        const locs: IterableIterator<Loc> = World.gameMap.getZone(x, z, level).getLocsUnsafe(CoordGrid.packZoneCoord(x, z));
-        for (const loc of locs) {
-            if (loc !== state.activeLoc && loc.angle === angle && loc.shape === shape) {
-                World.removeLoc(loc, duration);
-                break;
-            }
-        }
         World.removeLoc(state.activeLoc, duration);
     }),
 

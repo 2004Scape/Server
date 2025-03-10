@@ -253,6 +253,8 @@ export default class Zone {
     }
 
     changeLoc(loc: Loc) {
+        // If a loc is inactive, it should be set to active when we call a change
+        loc.isActive = true;
         const coord: number = CoordGrid.packZoneCoord(loc.x, loc.z);
         this.queueEvent(loc, new ZoneEvent(ZoneEventType.ENCLOSED, -1n, new LocAddChange(coord, loc.type, loc.shape, loc.angle)));
     }
@@ -266,9 +268,7 @@ export default class Zone {
         this.clearQueuedEvents(loc);
         loc.isActive = false;
 
-        if (loc.lastLifecycleTick !== World.currentTick) {
-            this.queueEvent(loc, new ZoneEvent(ZoneEventType.ENCLOSED, -1n, new LocDel(coord, loc.shape, loc.angle)));
-        }
+        this.queueEvent(loc, new ZoneEvent(ZoneEventType.ENCLOSED, -1n, new LocDel(coord, loc.shape, loc.angle)));
     }
 
     getLoc(x: number, z: number, type: number): Loc | null {
