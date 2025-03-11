@@ -178,6 +178,8 @@ p_delay(1);
 npc_say("Hisss!");
 npc_anim(cat_attack, 0);
 p_delay(0);
+// https://web.archive.org/web/20050222115027/http://runecrypt.com/index.php?pid=188, https://web.archive.org/web/20051126190636/http://runescape.salmoneus.net/quests/GertrudesCat.html
+~damage_self(3);
 say("Ouch!");
 p_delay(3);
 
