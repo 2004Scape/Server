@@ -11,14 +11,6 @@ export default class LinkList<T extends Linkable> {
         this.sentinel.prev = this.sentinel;
     }
 
-    get count() {
-        let count = 0;
-        for (let item = this.head(); item !== null; item = this.next()) {
-            count++;
-        }
-        return count;
-    }
-
     addTail(node: T): void {
         if (node.prev) {
             node.unlink();

@@ -46,6 +46,8 @@ export default class Zone {
     private readonly npcs: Set<number>; // list of npc nids (not uid because type may change)
     private readonly locs: LinkList<Loc> = new LinkList();
     private readonly objs: LinkList<Obj> = new LinkList();
+    private locsCount: number = 0;
+    private objsCount: number = 0;
     private readonly entityEvents: Map<NonPathingEntity, ZoneEvent[]>;
 
     // zone events
@@ -65,11 +67,11 @@ export default class Zone {
     }
 
     get totalLocs(): number {
-        return this.locs.count;
+        return this.locsCount;
     }
 
     get totalObjs(): number {
-        return this.objs.count;
+        return this.objsCount;
     }
 
     enter(entity: PathingEntity): void {
@@ -229,13 +231,14 @@ export default class Zone {
     addStaticLoc(loc: Loc): void {
         const coord: number = CoordGrid.packZoneCoord(loc.x, loc.z);
         this.locs.addTail(loc);
-        // this.locs.sortStack(coord, true);
+        this.locsCount++;
         loc.isActive = true;
     }
 
     addStaticObj(obj: Obj): void {
         const coord: number = CoordGrid.packZoneCoord(obj.x, obj.z);
         this.objs.addTail(obj);
+        this.objsCount++;
         obj.isRevealed = true;
         obj.isActive = true;
     }
@@ -246,6 +249,7 @@ export default class Zone {
         const coord: number = CoordGrid.packZoneCoord(loc.x, loc.z);
         if (loc.lifecycle === EntityLifeCycle.DESPAWN) {
             this.locs.addTail(loc);
+            this.locsCount++;
         }
         loc.revert();
         loc.isActive = true;
@@ -263,6 +267,7 @@ export default class Zone {
         const coord: number = CoordGrid.packZoneCoord(loc.x, loc.z);
         if (loc.lifecycle === EntityLifeCycle.DESPAWN) {
             loc.unlink();
+            this.locsCount--;
         }
 
         this.clearQueuedEvents(loc);
@@ -293,7 +298,7 @@ export default class Zone {
     addObj(obj: Obj, receiver64: bigint): void {
         const coord: number = CoordGrid.packZoneCoord(obj.x, obj.z);
         if (obj.lifecycle === EntityLifeCycle.DESPAWN) {
-            if (this.objs.count >= Zone.OBJS) {
+            if (this.totalObjs >= Zone.OBJS) {
                 // Make room for the Obj in the zone if need
                 for (const obj2 of this.getAllObjsUnsafe()) {
                     if (obj2.lifecycle === EntityLifeCycle.DESPAWN) {
@@ -304,6 +309,7 @@ export default class Zone {
             }
 
             this.objs.addTail(obj);
+            this.objsCount++;
         }
 
         obj.isActive = true;
@@ -347,6 +353,7 @@ export default class Zone {
         const coord: number = CoordGrid.packZoneCoord(obj.x, obj.z);
         if (obj.lifecycle === EntityLifeCycle.DESPAWN) {
             obj.unlink();
+            this.objsCount--;
         }
 
         this.clearQueuedEvents(obj);
