@@ -2,7 +2,8 @@
 [proc,npc_melee_maxhit]()(int)
 def_int $strengthbonus = npc_param(strengthbonus);
 //npcs are essentially always on controlled
-def_int $effective_strength = ~combat_effective_stat(1, npc_stat(strength), 100); // no prayerbonus
+def_int $effective_strength = ~combat_effective_stat(npc_stat(strength), 100); // no prayerbonus
+$effective_strength = add($effective_strength, 9); // 'style bonus' of 1
 def_int $melee_strength = ~combat_stat($effective_strength, $strengthbonus);
 return(~combat_maxhit($melee_strength));
 
@@ -13,7 +14,8 @@ if (~check_protect_prayer(^melee_style) = true) {
     return(0);
 }
 def_int $attackbonus = npc_param(attackbonus);
-def_int $effective_attack = ~combat_effective_stat(1, npc_stat(attack), 100); // no prayerbonus
+def_int $effective_attack = ~combat_effective_stat(npc_stat(attack), 100); // no prayerbonus
+$effective_attack = add($effective_attack, 9); // 'style bonus' of 1
 //npcs are essentially always on controlled
 return(~combat_stat($effective_attack, $attackbonus));
 
