@@ -43,13 +43,13 @@ else {
 ~chatplayer("<p,neutral>Well, I'll see what I can do.");
 
 [label,crest_man_gold]
-~chatnpc("<p,neutral>So how are you doing getting me my perfect gold jewelry?");
-~chatplayer("<p,neutral>I'm still after that 'perfect gold'.");
+~chatnpc("<p,quiz>So how are you doing getting me my perfect gold jewelry?");
+~chatplayer("<p,sad>I'm still after that 'perfect gold'.");
 ~chatnpc("<p,sad>I know how you feel... for such a long time I have searched and searched for the elusive perfect gold... I thought I had gotten a good lead on finding it");
 ~chatnpc("<p,sad>when I heard talk of a dwarven expert on gold named Boot some time back, but unfortunately for me, he has returned to his mountain home, which I cannot find.");
 
 [label,crest_man_jewelry]
-~chatnpc("<p,neutral>So how are you doing making me my perfect gold jewelry?");
+~chatnpc("<p,quiz>So how are you doing getting me my perfect gold jewelry?");
 if (inv_total(inv, perfect_ring) >= 1 & inv_total(inv, perfect_necklace) >= 1) {
     ~chatplayer("<p,neutral>I have the ring and necklace right here.");
     ~mesbox("You hand Avan the perfect gold ring and necklace.");
@@ -61,22 +61,21 @@ if (inv_total(inv, perfect_ring) >= 1 & inv_total(inv, perfect_necklace) >= 1) {
     ~chatnpc("<p,neutral>Now, I suppose you will be wanting to find my brother Johnathon who is in possession of the final piece of the family's crest?");
     ~chatplayer("<p,neutral>That's correct.");
     @crest_man_johnathon;
-}
-else {
+} else {
     ~chatplayer("<p,neutral>I have spoken to Boot the dwarf about the location of 'perfect gold' but haven't managed to make you your jewelry yet.");
     ~chatnpc("<p,neutral>Well, I won't entrust you with my piece of the crest until you have brought me a necklace of perfect gold with a red precious stone, and a perfect gold ring to match.");
 }
 
 [label,crest_man_where]
 // Second crest piece is not reobtainable until after Johnathon's section
-~chatplayer("<p,neutral>Where did you say I could find your brother Johnathon again?");
+~chatplayer("<p,quiz>Where did you say I could find your brother Johnathon again?");
 @crest_man_johnathon;
 
 [label,crest_man_johnathon]
 ~chatnpc("<p,neutral>Well, the last I heard of my brother Johnathon, he was studying the magical arts, and trying to hunt some demon or other out in The Wilderness.");
 ~chatnpc("<p,neutral>Unsurprisingly, I do not believe he is doing a particularly good job of things, and spends most of his time recovering from his injuries in");
 ~chatnpc("<p,neutral>some tavern or other near the edge of The Wilderness. You'll probably find him still there.");
-~chatplayer("<p,neutral>Thanks Avan.");
+~chatplayer("<p,happy>Thanks Avan.");
 
 [label,crest_man_pieces]
 ~chatnpc("<p,neutral>Greetings again, adventurer. How are you doing on retrieving the crest pieces?");
@@ -96,13 +95,13 @@ else {
 ~chatnpc("<p,neutral>I hope you succeed for my father's sake.");
 
 [label,crest_man_lost]
-~chatplayer("<p,neutral>I have lost the piece you gave me...");
-~chatnpc("<p,neutral>I have a confession myself adventurer... I did not fully trust you with the actual part of my family's crest before, and gave you a worthless replica before...");
+~chatplayer("<p,neutral>I have lost the fragment that you gave me...");
+~chatnpc("<p,confused>I have a confession myself adventurer... I did not fully trust you with the actual part of my family's crest before, and gave you a worthless replica before...");
 ~chatnpc("<p,neutral>In hindsight, it seems I was right. I will give you the real piece now, but PLEASE try not to lose it; it is a priceless family heirloom.");
 inv_add(inv, crest_part_2, 1);
 
 [label,crest_man_gauntlets]
-~chatnpc("<p,neutral>I have received word from my father of your assistance to our family in this matter. You have my thanks for restoring our honour.");
+~chatnpc("<p,happy>I have received word from my father of your assistance to our family in this matter. You have my thanks for restoring our honour.");
 if (inv_total(inv, steel_gauntlets) >= 1) {
     ~chatplayer("<p,quiz>Your father mentioned that you could improve these gauntlets in some way for me...");
     ~chatnpc("<p,neutral>Indeed I can. In my long time searching for the 'perfect' gold I learned a lot about gold items. I can improve these gauntlets so that they provide more than normal.");
@@ -116,7 +115,7 @@ if (inv_total(inv, steel_gauntlets) >= 1) {
         inv_add(inv, gauntlets_of_goldsmithing, 1);
     }
     else {
-        ~chatplayer("<p,neutral>I think I'll check my other options with your brothers before committing myself.");
+        ~chatplayer("<p,confused>I think I'll check my other options with your brothers before committing myself.");
         ~chatnpc("<p,neutral>If you feel you really must consort with the likes of them. I await your decision.");
     }
 }
@@ -126,13 +125,13 @@ else if (testbit(%crest_spells_levers_gauntlets, ^crest_goldsmithing_gauntlets_c
         ~chatplayer("<p,quiz>Your father mentioned that you could improve these gauntlets in some way for me...");
     }
     else {
-        ~chatplayer("<p,quiz>Your father mentioned that you could improve some gauntlets for me.");
+        ~chatplayer("<p,neutral>Your father mentioned that you could improve some gauntlets for me.");
     }
     ~chatnpc("<p,neutral>Your gauntlets have already been forged by me.");
 }
 else {
     // https://chisel.weirdgloop.org/dialogue/content/39108
-    ~chatplayer("<p,quiz>Your father mentioned that you could improve some gauntlets for me.");
-    ~chatnpc("<p,neutral>Bring them to me, and I'll see what I can do.");
+    ~chatplayer("<p,neutral>Your father mentioned that you could improve some gauntlets for me.");
+    ~chatnpc("<p,happy>Bring them to me, and I'll see what I can do.");
 }
 

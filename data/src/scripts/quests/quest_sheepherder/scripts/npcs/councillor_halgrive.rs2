@@ -34,9 +34,11 @@ switch_int(%sheepherder_progress) {
 
 [label,halgrive_i_can_do_that_for_you]
 ~chatplayer("<p,neutral>I can do that for you.");
-~chatnpc("<p,neutral>Y-you will??? That is excellent news! Head to the enclosure we have set up on Farmer Brumty's land to the north of the city; the four infected sheep should still be somewhere in that vicinity.|Before you will be allowed to enter the enclosure, however, you must ensure you have some kind of protective clothing to prevent contagion.");
+~chatnpc("<p,happy>Y-you will??? That is excellent news! Head to the enclosure we have set up on Farmer Brumty's land to the north of the city; the four infected sheep should still be somewhere in that vicinity.");
+~chatnpc("<p,neutral>Before you will be allowed to enter the enclosure, however, you must ensure you have some kind of protective clothing to prevent contagion.");
 ~chatplayer("<p,quiz>Where can I find some protective clothing then?");
-~chatnpc("<p,neutral>Doctor Orbon wears it when conducting mercy missions to the infected parts of the city. You should be able to find him in the chapel just north of here. Please also take this poisoned sheep feed; we believe poisoning the sheep will minimise the risk of airborne contamination, and is of course also more humane to the sheep.");
+~chatnpc("<p,neutral>Doctor Orbon wears it when conducting mercy missions to the infected parts of the city. You should be able to find him in the chapel just north of here.");
+~chatnpc("<p,neutral>Please also take this poisoned sheep feed; we believe poisoning the sheep will minimise the risk of airborne contamination, and is of course also more humane to the sheep.");
 ~mesbox("The councillor gives you some poisoned sheep feed.");
 inv_add(inv, poisoned_feed, 1);
 if (%sheepherder_progress = ^sheepherder_not_started) {
@@ -55,14 +57,19 @@ if (inv_total(inv, poisoned_feed) < 1) {
 ~chatplayer("<p,neutral>I'll do my best sir.");
 
 [label,halgrive_before_incinerating_sheep]
-~chatnpc("<p,quiz>Have you managed to find and dispose of those four sheep yet?");
 // test bit here
 if (getbit_range(%sheepherder_disposal, 0, 12) = 7020) {
+    ~chatnpc("<p,quiz>Have you managed to find and dispose of those four sheep yet?");
     ~chatplayer("<p,neutral>Yes, I have.");
-    ~chatnpc("<p,happy>Excellent work adventurer!|Please let me reimburse you the 100 gold|it cost you to purchase your protective clothing.");
-    ~chatnpc("<p,happy>And in recognition of your service to the|public health of Ardougne please accept this|further 3000 coins as a reward.");
+    ~chatnpc("<p,neutral>Excellent work adventurer!|Please let me reimburse you the 100 gold|it cost you to purchase your protective clothing.");
+    ~chatnpc("<p,neutral>And in recognition of your service to the|public health of Ardougne please accept this|further 3000 coins as a reward.");
     queue(sheepherder_complete, 0);
+// Player still needs to dispose of the sheep but have lost their poisoned feed :(
+} else if (inv_total(inv, poisoned_feed) < 1) {
+    @halgrive_need_more_poisoned_feed;
+// Player needs to be told to do their job!
 } else {
+    ~chatnpc("<p,quiz>Have you managed to find and dispose of those four sheep yet?");
     ~chatplayer("<p,confused>Uh... yeah... not quite just yet...");
     ~chatnpc("<p,angry>Not quite's not good enough. It is vital you catch, kill, and incinerate all four sheep as quickly as possible. Each second they are free, the risk of further contagion increases.");
     ~chatplayer("<p,neutral>Ok, I'll get to it.");
@@ -75,12 +82,12 @@ if (getbit_range(%sheepherder_disposal, 0, 12) = 7020) {
 inv_add(inv, poisoned_feed, 1);
 
 [label,halgrive_thats_not_a_job_for_me]
-~chatplayer("<p,neutral>That's not a job for me.");
+~chatplayer("<p,shock>That's not a job for me.");
 ~chatnpc("<p,sad>I do not blame you adventurer. It is not particularly pleasant work. My problem remains however. If you know anyone suitable please send them this way; time is of the essence.");
 
 // Using the RSC variant. I think the OSRS "More sheep have shown up" is in reference to MEP1 releasing.
 [label,halgrive_after_sheep_herder]
 ~chatplayer("<p,neutral>Hello again sir.");
 ~chatnpc("<p,happy>Well hello again adventurer!|How are you today?");
-~chatplayer("<p,neutral>Fine thank you.|And yourself?");
+~chatplayer("<p,happy>Fine thank you.|And yourself?");
 ~chatnpc("<p,happy>Much better now I don't have to worry about those sheep.");
