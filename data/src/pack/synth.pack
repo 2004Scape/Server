@@ -20,7 +20,7 @@
 19=wolf_death
 20=wolf_attack2
 21=wolf_attack
-22=firebreath
+22=dragonbreath
 23=kingicebreath
 24=lightningbreath
 25=toxicbreath
@@ -102,13 +102,13 @@
 101=confuse_all
 102=curse_all
 103=earth_wave_fail
-104=earth_strike_fail
+104=earth_bolt_fail
 105=earth_wave_all
 106=earth_blast_all
 107=earth_blast_fail
 108=earth_strike_all
 109=earth_bolt_all
-110=sound_110
+110=earth_strike_fail
 111=snare_all
 112=water_wave_fail
 113=water_strike_fail
@@ -146,7 +146,7 @@
 145=lockeddoor
 146=fire_teleport
 147=explosion
-148=sound_148
+148=exploding_vial
 149=fuse
 150=whistle
 151=throw
@@ -324,7 +324,7 @@
 323=rock_spirit
 324=birdlike
 325=grate_open
-326=sound_326
+326=ghost_attack2
 327=ghost_hit2
 328=lizardman_attack
 329=lizardman_death
@@ -393,7 +393,7 @@
 392=toad2
 393=squeaky_valve_gush
 394=squeaky_valve
-395=sound_395
+395=big_bellows
 396=ogre_bellows_suck
 397=shield_appear
 398=cleave
