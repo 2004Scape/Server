@@ -87,7 +87,7 @@ export default class LoginServer {
 
                         if (!Environment.WEBSITE_REGISTRATION && !account) {
                             // register the user automatically
-                            await db
+                            const insertResult = await db
                                 .insertInto('account')
                                 .values({
                                     username,
@@ -95,13 +95,14 @@ export default class LoginServer {
                                     registration_ip: remoteAddress,
                                     registration_date: toDbDate(new Date())
                                 })
-                                .execute();
+                                .executeTakeFirst();
 
                             s.send(
                                 JSON.stringify({
                                     replyTo,
                                     response: 4,
-                                    staffmodlevel: 0
+                                    staffmodlevel: 0,
+                                    account_id: Number(insertResult.insertId),  // bigint
                                 })
                             );
                             return;
