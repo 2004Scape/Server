@@ -426,32 +426,6 @@ export class FriendServer {
     }
 
     async start() {
-        // todo: make this store everything in db so we don't need to do this on startup!
-        const online = await db.selectFrom('account')
-            .select(['username', 'logged_in', 'staffmodlevel'])
-            .where('logged_in', '!=', 0)
-            .execute();
-
-        for (const account of online) {
-            try {
-                if (!this.repository.isInitialized(account.logged_in)) {
-                    this.repository.initializeWorld(account.logged_in, WORLD_PLAYER_LIMIT);
-                }
-
-                if (fs.existsSync(`data/players/${Environment.NODE_PROFILE}/${account.username}.sav`)) {
-                    const save = await fsp.readFile(`data/players/${Environment.NODE_PROFILE}/${account.username}.sav`);
-                    const player = PlayerLoading.load(account.username, new Packet(save), null);
-                    await this.repository.register(account.logged_in, player.username37, player.privateChat, account.staffmodlevel);
-                } else {
-                    // either on tutorial island or not saved yet, edge case
-                    await this.repository.register(account.logged_in, toBase37(account.username), ChatModePrivate.ON, account.staffmodlevel);
-                }
-            } catch (err) {
-                if (err instanceof Error) {
-                    printError(account.username + ': ' + err.message);
-                }
-            }
-        }
     }
 
     private async sendFriendsListToPlayer(username37: bigint, socket: WebSocket) {
