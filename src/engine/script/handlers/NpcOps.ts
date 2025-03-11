@@ -219,7 +219,7 @@ const NpcOps: CommandHandlers = {
 
         if (target) {
             if (target instanceof Npc || target instanceof Obj || target instanceof Loc) {
-                state.activeNpc.setInteraction(Interaction.SCRIPT, target, mode, { type: target.type, com: -1 });
+                state.activeNpc.setInteraction(Interaction.SCRIPT, target, mode);
             } else {
                 state.activeNpc.setInteraction(Interaction.SCRIPT, target, mode);
             }

@@ -41,7 +41,7 @@ export default class OpLocTHandler extends MessageHandler<OpLocT> {
         }
 
         player.clearPendingAction();
-        player.setInteraction(Interaction.ENGINE, loc, ServerTriggerType.APLOCT, { type: loc.type, com: spellComId });
+        player.setInteraction(Interaction.ENGINE, loc, ServerTriggerType.APLOCT, spellComId);
         player.opcalled = true;
         return true;
     }
