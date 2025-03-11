@@ -55,14 +55,19 @@ if (inv_total(inv, poisoned_feed) < 1) {
 ~chatplayer("<p,neutral>I'll do my best sir.");
 
 [label,halgrive_before_incinerating_sheep]
-~chatnpc("<p,quiz>Have you managed to find and dispose of those four sheep yet?");
 // test bit here
 if (getbit_range(%sheepherder_disposal, 0, 12) = 7020) {
+    ~chatnpc("<p,quiz>Have you managed to find and dispose of those four sheep yet?");
     ~chatplayer("<p,neutral>Yes, I have.");
     ~chatnpc("<p,happy>Excellent work adventurer!|Please let me reimburse you the 100 gold|it cost you to purchase your protective clothing.");
     ~chatnpc("<p,happy>And in recognition of your service to the|public health of Ardougne please accept this|further 3000 coins as a reward.");
     queue(sheepherder_complete, 0);
+// Player still needs to dispose of the sheep but have lost their poisoned feed :(
+} else if (inv_total(inv, poisoned_feed) < 1) {
+    @halgrive_need_more_poisoned_feed;
+// Player needs to be told to do their job!
 } else {
+    ~chatnpc("<p,quiz>Have you managed to find and dispose of those four sheep yet?");
     ~chatplayer("<p,confused>Uh... yeah... not quite just yet...");
     ~chatnpc("<p,angry>Not quite's not good enough. It is vital you catch, kill, and incinerate all four sheep as quickly as possible. Each second they are free, the risk of further contagion increases.");
     ~chatplayer("<p,neutral>Ok, I'll get to it.");

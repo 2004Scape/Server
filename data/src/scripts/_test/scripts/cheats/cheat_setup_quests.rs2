@@ -1,0 +1,8 @@
+[debugproc,setup_sheep_herder]
+if_close;
+if (p_finduid(uid) = true) {
+    inv_add(inv, coins, 5000);
+    ~player_teleport_normal(0_40_51_55_37);
+} else {
+    @please_finish;
+}
