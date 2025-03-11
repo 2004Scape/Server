@@ -1312,8 +1312,8 @@ class World {
         // In OSRS I suspect they use a counter per Loc/Obj to keep track of events rather than scheduling for a tick
         // In 2004scape, we schedule for a tick. Scheduling for a tick ends up naturally 1 tick slower, so we do a -1 to compensate to match OSRS behavior
         // - Bea5
-        entity.setLifeCycle(this.currentTick + duration - 1);
-        this.trackZone(this.currentTick + duration - 1, zone);
+        entity.setLifeCycle(this.currentTick + duration);
+        this.trackZone(this.currentTick + duration, zone);
         this.trackZone(this.currentTick, zone);
     }
 
