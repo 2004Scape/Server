@@ -116,6 +116,9 @@ if(coordz(coord) > coordz(loc_coord)) {
 } else {
     p_teleport(movecoord(coord, 0, 0, 1));
 }
+
+def_coord $initial_coord = loc_coord;
+
 loc_findallzone(coord);
 while(loc_findnext = true) {
      if(loc_category = observatory_dungeon_gate) {
@@ -136,7 +139,7 @@ if(%keepdoor_unlocked = 0) {
     mes("The key is useless now. You discard it.");
     inv_del(inv, keep_key, 1);
 }
-if(coordz(coord) < coordz(loc_coord)) { 
+if(coordz(coord) <= coordz($initial_coord)) { 
     ~chatplayer("<p,neutral>I'd better be quick,|there may be more guards about.");
 }   
 
