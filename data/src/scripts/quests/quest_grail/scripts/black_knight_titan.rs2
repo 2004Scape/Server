@@ -17,6 +17,9 @@ if(npc_findhero = true) {
 }
 
 [queue,queue_defeat_titan](npc_uid $npc)
+if(inzone(0_41_73_0_0, 2_43_73_63_63, coord) = false) { // doesn't run if you've teleported out
+    return;
+}
 if (npc_finduid($npc) = true) {
     @defeat_titan;
 }

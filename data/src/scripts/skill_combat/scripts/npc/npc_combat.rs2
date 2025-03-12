@@ -119,11 +119,6 @@ if (~player_autocast_enabled = false & ~inzone_coord_pair_table(mage_arena, coor
     return(false);
 }
 
-if ((npc_type = zamorak_wizard | npc_type = grandtree_black_demon) & %npc_attacking_uid ! uid) {
-    mes("It's not after you...");
-    return(false);
-}
-
 if(npc_type = general_khazard & %arena_progress < ^arena_freed_servils) {
     mes("I don't have time. I'm here to rescue Sir Servil and Jeremy.");
     return (false);

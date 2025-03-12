@@ -13,18 +13,18 @@ switch_int(~p_choice3("I'm looking for a gherkin...", 1, "I'm a fellow member of
 }
 
 [label,charlie_phoenix_dialogue]
-~chatnpc("<p,neutral>Aaaaaah... a fellow Phoenix! So, tell me compadre... what|brings you to sunny Brimhaven?");
+~chatnpc("<p,happy>Aaaaaah... a fellow Phoenix! So, tell me compadre... what|brings you to sunny Brimhaven?");
 switch_int(~p_choice2("Sun, sand and the fresh sea air!", 1, "I want to steal Scarface Pete's candlesticks.", 2)) {
   case 1 :
-    ~chatplayer("<p,happy>Sun, sand and the fresh sea air!");
-    ~chatnpc("<p,nuetral>Well, can't say I blame you compadre. I used to be a|city boy myself, but have to admit it's a lot nicer living|here nowadays. Brimhaven's certainly good for it.");
+    ~chatplayer("<p,neutral>Sun, sand and the fresh sea air!");
+    ~chatnpc("<p,happy>Well, can't say I blame you compadre. I used to be a|city boy myself, but have to admit it's a lot nicer living|here nowadays. Brimhaven's certainly good for it.");
   case 2 :
     ~chatplayer("<p,neutral>I want to steal Scarface Pete's candlesticks.");
-    ~chatnpc("<p,nuetral>Ah yes, of course. The candlesticks. Well, I have to be|honest with you compadre, we haven't made much|progress in that task ourselves so far. We can however|offer");
-    ~chatnpc("<p,nuetral>a little assistance. The setting up of this restaurant was|the start of things; we have a secret door out the back|of here that leads through the back of Mr Olbors'|garden.");
-    ~chatnpc("<p,nuetral>Now, at the other side of Mr Olbors' garden, is an old|side entrance to Scarface Pete's mansion. It seems to|have been blocked off from the rest of the mansion|some years ago");
-    ~chatnpc("<p,nuetral>and we can't seem to find a way through. We're|positive this is the key to entering the house undetected|however, and I promise to let you know if we find|anything there.");
+    ~chatnpc("<p,neutral>Ah yes, of course. The candlesticks. Well, I have to be|honest with you compadre, we haven't made much|progress in that task ourselves so far. We can however|offer");
+    ~chatnpc("<p,neutral>a little assistance. The setting up of this restaurant was|the start of things; we have a secret door out the back|of here that leads through the back of Mr Olbors'|garden.");
+    if(%hero_progress < ^hero_phoenix_talked_charlie) %hero_progress = ^hero_phoenix_talked_charlie;
+    ~chatnpc("<p,neutral>Now, at the other side of Mr Olbors' garden, is an old|side entrance to Scarface Pete's mansion. It seems to|have been blocked off from the rest of the mansion|some years ago");
+    ~chatnpc("<p,neutral>and we can't seem to find a way through. We're|positive this is the key to entering the house undetected|however, and I promise to let you know if we find|anything there.");
     ~chatplayer("<p,neutral>Mind if I check it out for myself?");
-    ~chatnpc("<p,nuetral>Not at all! The more minds we have working on the|problem, the quicker we get that loot!");
-    %hero_progress = ^hero_phoenix_talked_charlie;
+    ~chatnpc("<p,neutral>Not at all! The more minds we have working on the|problem, the quicker we get that loot!");
 }

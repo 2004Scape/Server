@@ -277,7 +277,6 @@ while(loc_findnext = true) {
      }
 }
 sound_synth(grate_open, 0, 0);
-// this moves 2 tiles in 1t on osrs w/walking speed so we can't really recreate
 if(coordz(coord) > coordz($loc_coord)) {
     p_teleport(0_45_148_49_43);
 } else {

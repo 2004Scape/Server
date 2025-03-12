@@ -9,7 +9,7 @@ if ($heal = 0) {
 
 [opnpc1,monk_entrana]
 ~chatnpc("<p,neutral>Greetings traveller.");
-if (~hero_in_progress = true) {
+if (%hero_progress = ^hero_started) { // only seems to be on this stage
     ~chatplayer("<p,quiz>Hello, I am in search of an Entranan Firebird. Can you help me?");
     ~chatnpc("<p,neutral>Oh ho! Another one! I don't think they exist, but you'd probably ask the head monk about it. If anyone would know, he would!");
     ~chatplayer("<p,happy>Thanks!");

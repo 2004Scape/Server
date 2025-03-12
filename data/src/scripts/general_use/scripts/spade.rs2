@@ -40,7 +40,7 @@ if(map_members = true & ~trail_hasclue_inv = true) {
             if(oc_param($clue, trail_guardian) ! null) {
                 def_npc $guard = oc_param($clue, trail_guardian);
                 if($guard = zamorak_wizard & testbit(%trail_clue, 4) = false) {
-                    if(npc_find(coord, zamorak_wizard, 8, 0) = true & %npc_attacking_uid = uid) {
+                    if(npc_find(coord, zamorak_wizard, 8, 0) = true & %npc_aggressive_player = uid) {
                         return;
                     }
                     // los not low: https://www.youtube.com/watch?v=AoozFVuxWx8&t=88s, https://youtu.be/K8IepVULXYM?si=-phA8d-3sJ1ohS9H&t=26
@@ -49,7 +49,9 @@ if(map_members = true & ~trail_hasclue_inv = true) {
                     spotanim_map(smokepuff_large, npc_coord, 124, 0);
                     npc_say("Die, human!");
                     %aggressive_npc = npc_uid;
-                    %npc_attacking_uid = uid;
+                    // this prevents other players from attacking w/manual cast, this might've been a later change
+                    %npc_lastcombat = ^max_32bit_int;
+                    %npc_aggressive_player = uid;
                     npc_setmode(applayer2);
                     return;
                 }
