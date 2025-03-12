@@ -16,13 +16,3 @@ def_obj $consumable = last_item;
 inv_setslot(inv, last_slot, oc_param($consumable, next_obj_stage), 1);
 ~consume_effect_messages($consumable, stat(hitpoints), false);
 
-
-[proc,set_antipoison_login]
-//I'm pretty sure that if we are changing this have just one poison variable that isn't relative to map_clock, then we shouldn't need to set this on login/logout?
-return;
-
-
-[proc,set_antipoison_logout]
-//I'm pretty sure that if we are changing this have just one poison variable that isn't relative to map_clock, then we shouldn't need to set this on login/logout?
-return;
-
