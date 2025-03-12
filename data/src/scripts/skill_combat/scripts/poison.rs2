@@ -64,9 +64,7 @@ if (stat(hitpoints) = 0) {
 cleartimer(poison);
 
 [proc,set_poison_login]
-if (%poison > 0) {
-    ~set_poison_timer;
-}
+~set_poison_timer;
 
 [proc,set_poison_timer]
 if(gettimer(poison) < 1){

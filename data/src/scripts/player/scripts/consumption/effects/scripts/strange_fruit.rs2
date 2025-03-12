@@ -9,8 +9,6 @@ inv_delslot(inv, last_slot);
 healenergy(1000);
 // https://oldschool.runescape.wiki/w/Strange_fruit 
 // https://archive.is/6SmRo provides 30 ticks of poison immunity
-if (%poison > 0) {
-    %poison = min(%poison,-1);
-    ~set_poison_timer;
-}
+%poison = min(%poison,-1);
+~set_poison_timer;
 ~consume_effect_messages($consumable, stat(hitpoints), false);
