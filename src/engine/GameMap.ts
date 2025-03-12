@@ -17,7 +17,7 @@ import Zone from '#/engine/zone/Zone.js';
 import ZoneGrid from '#/engine/zone/ZoneGrid.js';
 import ZoneMap from '#/engine/zone/ZoneMap.js';
 import Packet from '#/io/Packet.js';
-import { printDebug } from '#/util/Logger.js';
+import { printDebug, printWarning } from '#/util/Logger.js';
 
 export default class GameMap {
     private static readonly OPEN: number = 0x0;
@@ -256,6 +256,9 @@ export default class GameMap {
                 continue;
             }
             const [y, mx, mz, lx, lz] = line.split('_').map(Number);
+            if (lx % 8 !== 0 || lz % 8 !== 0) {
+                printWarning('CSV map line is not aligned to a zone: ' + line);
+            }
             map.add(ZoneMap.zoneIndex((mx << 6) + lx, (mz << 6) + lz, y));
         }
     }
