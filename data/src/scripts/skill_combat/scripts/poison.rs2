@@ -8,8 +8,10 @@ if (%poison > -1) {
     if (%poison = 0) {
         mes("You have been poisoned!");
     }
-    settimer(poison, 30);
-    %poison = $severity;
+    if(gettimer(poison)> 1){
+        settimer(poison, 30);
+    }
+    %poison = max(%poison, $severity);
 }
 
 [timer,poison]
@@ -19,13 +21,17 @@ if (%poison = 0) {
 }
 else if(%poison < 0){
     %poison = calc(%poison + 1);
-    settimer(poison, 30);
+    if(gettimer(poison)> 1){
+        settimer(poison, 30);
+    }
     return;
 }
 ~poison_damage(calc((%poison + 4)/5));
 
 %poison = calc(%poison - 1);
-settimer(poison, 30);
+if(gettimer(poison)> 1){
+        settimer(poison, 30);
+    }
 
 [debugproc,poison](int $severity)
 if_close;
@@ -65,6 +71,6 @@ if (stat(hitpoints) = 0) {
 cleartimer(poison);
 
 [proc,set_poison_login]
-if (%poison > 0) {
+if (%poison > 0 & gettimer(poison) > 1) {
     settimer(poison, 30);
 }

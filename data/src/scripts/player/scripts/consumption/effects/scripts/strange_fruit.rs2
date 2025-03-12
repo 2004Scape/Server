@@ -10,6 +10,6 @@ healenergy(1000);
 // https://oldschool.runescape.wiki/w/Strange_fruit 
 // https://archive.is/6SmRo provides 30 ticks of poison immunity
 if (%poison > 0) {
-    %poison = -1;
+    %poison = min(poison,-1);
 }
 ~consume_effect_messages($consumable, stat(hitpoints), false);
