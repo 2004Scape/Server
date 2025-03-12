@@ -21,7 +21,8 @@ else if(%poison < 0){
     %poison = calc(%poison + 1);
     return;
 }
-~poison_damage(calc((%poison + 4)/5));
+
+queue(poison_damage,0,calc((%poison + 4)/5));
 
 %poison = calc(%poison - 1);
 
@@ -29,7 +30,7 @@ else if(%poison < 0){
 if_close;
 queue(poison_player,0,$severity);
 
-[proc,poison_damage](int $damage)
+[queue,poison_damage](int $damage)
 if_close;
 def_synth $sound;
 def_int $rand;
