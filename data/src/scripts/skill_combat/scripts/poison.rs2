@@ -19,13 +19,11 @@ if (%poison = 0) {
 }
 else if(%poison < 0){
     %poison = calc(%poison + 1);
-    ~set_poison_timer;
     return;
 }
 ~poison_damage(calc((%poison + 4)/5));
 
 %poison = calc(%poison - 1);
-~set_poison_timer;
 
 [debugproc,poison](int $severity)
 if_close;
