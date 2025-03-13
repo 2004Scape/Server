@@ -68,11 +68,12 @@ export default class GameMap {
     }
 
     isMulti(coord: number): boolean {
-        return this.multimap.has(coord);
+        const pos: CoordGrid = CoordGrid.unpackCoord(coord);
+        return this.multimap.has(ZoneMap.zoneIndex(pos.x, pos.z, pos.level));
     }
 
     isFreeToPlay(x: number, z: number): boolean {
-        return this.freemap.has(CoordGrid.packCoord(0, x, z));
+        return this.freemap.has(ZoneMap.zoneIndex(x, z, 0)); // level does not matter here.
     }
 
     getZone(x: number, z: number, level: number): Zone {
@@ -249,40 +250,16 @@ export default class GameMap {
 
     private loadCsvMap(map: Set<number>, csv: string[]): void {
         // easiest solution for the time being
-        for (let i: number = 0; i < csv.length; i++) {
-            if (csv[i].startsWith('//') || !csv[i].length) {
+        for (let index: number = 0; index < csv.length; index++) {
+            const line: string = csv[index];
+            if (line.startsWith('//') || !line.length) {
                 continue;
             }
-
-            const parts: string[] = csv[i].split(',');
-            if (parts.length === 2) {
-                const [from, to] = parts;
-                const [fromLevel, fromMx, fromMz, fromLx, fromLz] = from.split('_').map(Number);
-                const [_toLevel, toMx, toMz, toLx, toLz] = to.split('_').map(Number);
-
-                if (fromLx % 8 !== 0 || fromLz % 8 !== 0 || toLx % 8 !== 7 || toLz % 8 !== 7 || fromMx > toMx || fromMz > toMz || (fromMx <= toMx && fromMz <= toMz && (fromLx > toLx || fromLz > toLz))) {
-                    printWarning('Free to play map not aligned to a zone ' + csv[i]);
-                }
-
-                const startX: number = (fromMx << 6) + fromLx;
-                const startZ: number = (fromMz << 6) + fromLz;
-                const endX: number = (toMx << 6) + toLx;
-                const endZ: number = (toMz << 6) + toLz;
-
-                for (let x: number = startX; x <= endX; x++) {
-                    for (let z: number = startZ; z <= endZ; z++) {
-                        map.add(CoordGrid.packCoord(fromLevel, x, z));
-                    }
-                }
-            } else {
-                const [level, mx, mz, lx, lz] = csv[i].split('_').map(Number);
-
-                for (let x: number = 0; x < 8; x++) {
-                    for (let z: number = 0; z < 8; z++) {
-                        map.add(CoordGrid.packCoord(level, (mx << 6) + lx + x, (mz << 6) + lz + z));
-                    }
-                }
+            const [y, mx, mz, lx, lz] = line.split('_').map(Number);
+            if (lx % 8 !== 0 || lz % 8 !== 0) {
+                printWarning('CSV map line is not aligned to a zone: ' + line);
             }
+            map.add(ZoneMap.zoneIndex((mx << 6) + lx, (mz << 6) + lz, y));
         }
     }
 
