@@ -25,7 +25,7 @@ if (p_finduid(uid) = true) {
 [if_button,controls:com_4] 
 if_close;
 if (p_finduid(uid) = true) {
-    p_stopaction; // probably changed to p_clearpendingaction ~aug 2006
+    p_clearpendingaction; // https://youtu.be/XhJ0tjJ9J60?t=62
     p_run(^player_run_off);
     return;
 }
@@ -34,7 +34,7 @@ if (p_finduid(uid) = true) {
 [if_button,controls:com_5]
 if_close;
 if (p_finduid(uid) = true) {
-    p_stopaction;
+    p_clearpendingaction;
     if (runenergy < 100) {
         p_run(^player_run_off);
         return;

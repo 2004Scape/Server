@@ -138,13 +138,6 @@ while ($i < db_getfieldcount($spell_data, magic_spell_table:stat_change) & $spel
 }
 return(true);
 
-
-// check if crumble undead & npc is undead
-if ($spell = ^crumble_undead & npc_param(undead) = ^false) {
-    mes("This spell only affects skeletons, zombies, ghosts and shades.");
-    return(false);
-}
-
 [proc,pvm_spell_cast](dbrow $spell_data)(int)
 ~delete_spell_runes($spell_data);
 ~give_spell_xp($spell_data);
