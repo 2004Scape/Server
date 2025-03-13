@@ -7,6 +7,7 @@ if (p_finduid(uid) = true) {
 }
 
 [label,activate_prayer_protectitems]
+p_clearpendingaction;
 def_dbrow $data = ~get_prayer_data(^prayer_protectitems);
 if ($data = null) {
     return;

@@ -8,6 +8,7 @@ if (p_finduid(uid) = true) {
 
 
 [label,activate_prayer_rapidrestore]
+p_clearpendingaction;
 def_dbrow $data = ~get_prayer_data(^prayer_rapidrestore);
 if ($data = null) {
     return;

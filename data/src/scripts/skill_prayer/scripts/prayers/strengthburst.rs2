@@ -6,6 +6,7 @@ if (p_finduid(uid) = true) {
     queue(prayer_activate, 0, 4);
 }
 [label,activate_prayer_strengthburst]
+p_clearpendingaction;
 def_dbrow $data = ~get_prayer_data(^prayer_strengthburst);
 if ($data = null) {
     return;
