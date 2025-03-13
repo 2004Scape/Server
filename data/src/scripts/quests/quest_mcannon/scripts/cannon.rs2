@@ -387,7 +387,7 @@ if (npc_type = king_black_dragon) {
 // "I would add in that if you take it to the King Black Dragon it explodes and cannot be used."
 // https://youtu.be/-wgfwyeRSmA?t=117
 [label,kbd_destroy_cannon]
-if (random(10) = 0 & %mcannon_coord ! null) { // guess
+if (random(4) = 0 & %mcannon_coord ! null) { // guess
 // (coord $coord, coord $coord2, spotanim $spotanim, int $startheight, int $endheight, int $delay, int $angle, int $length, int $offset, int $step)(int)
     def_int $duration = ~coord_projectile(npc_coord, %mcannon_coord, spotanim_54, 92, 31, 51, 16, -5, 64, 10);
     spotanim_map(fireblast_impact, %mcannon_coord, 124, $duration);
@@ -418,9 +418,9 @@ if (%mcannon_coord ! null & loc_find(%mcannon_coord, cannon) = true) {
 }
 %mcannon_decay_clock = add(%mcannon_decay_clock, map_clock);
 
-// [debugproc,mc]
-// if (%mcannon_coord ! null) {
-//     mes(tostring(coordx(%mcannon_coord)));
-// }
-// mes(tostring(%mcannon_decay_clock));
-// mes(tostring(map_clock));
+[debugproc,mc]
+if (%mcannon_coord ! null) {
+    mes(tostring(coordx(%mcannon_coord)));
+}
+mes(tostring(%mcannon_decay_clock));
+mes(tostring(map_clock));
