@@ -2,9 +2,8 @@
 if_close;
 if (p_finduid(uid) = true) {
     @activate_prayer_rockskin;
-} else {
-    queue(prayer_activate, 0, 2);
 }
+%prayer_rockskin = %prayer_rockskin;
 
 [label,activate_prayer_rockskin]
 p_clearpendingaction;

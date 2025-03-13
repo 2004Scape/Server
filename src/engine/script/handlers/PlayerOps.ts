@@ -1084,7 +1084,7 @@ const PlayerOps: CommandHandlers = {
         state.activePlayer.addWealthLog(isGained ? amount : -amount, event);
     }),
 
-    [ScriptOpcode.P_RUN]: checkedHandler(ActivePlayer, state => {
+    [ScriptOpcode.P_RUN]: checkedHandler(ProtectedActivePlayer, state => {
         state.activePlayer.run = state.popInt();
 
         // todo: better way to sync engine varp

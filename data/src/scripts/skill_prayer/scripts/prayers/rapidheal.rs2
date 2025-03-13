@@ -2,9 +2,8 @@
 if_close;
 if (p_finduid(uid) = true) {
     @activate_prayer_rapidheal;
-} else {
-    queue(prayer_activate, 0, 11);
 }
+%prayer_rapidheal = %prayer_rapidheal;
 
 [label,activate_prayer_rapidheal]
 p_clearpendingaction;

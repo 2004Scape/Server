@@ -2,9 +2,8 @@
 if_close;
 if (p_finduid(uid) = true) {
     @activate_prayer_steelskin;
-} else {
-    queue(prayer_activate, 0, 3);
 }
+%prayer_steelskin = %prayer_steelskin;
 
 [label,activate_prayer_steelskin]
 p_clearpendingaction;

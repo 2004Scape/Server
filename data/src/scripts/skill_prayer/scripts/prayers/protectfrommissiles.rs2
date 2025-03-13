@@ -2,9 +2,8 @@
 if_close;
 if (p_finduid(uid) = true) {
     @activate_prayer_protectfrommissiles;
-} else {
-    queue(prayer_activate, 0, 14);
 }
+%prayer_protectfrommissiles = %prayer_protectfrommissiles;
 
 [label,activate_prayer_protectfrommissiles]
 p_clearpendingaction;

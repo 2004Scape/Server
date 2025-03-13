@@ -2,9 +2,8 @@
 if_close;
 if (p_finduid(uid) = true) {
     @activate_prayer_protectfrommagic;
-} else {
-    queue(prayer_activate, 0, 13);
 }
+%prayer_protectfrommagic = %prayer_protectfrommagic;
 
 [label,activate_prayer_protectfrommagic]
 p_clearpendingaction;

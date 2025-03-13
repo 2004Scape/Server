@@ -2,9 +2,8 @@
 if_close;
 if (p_finduid(uid) = true) {
     @activate_prayer_protectitems;
-} else {
-    queue(prayer_activate, 0, 12);
 }
+%prayer_protectitems = %prayer_protectitems;
 
 [label,activate_prayer_protectitems]
 p_clearpendingaction;

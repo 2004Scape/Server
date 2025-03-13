@@ -2,9 +2,8 @@
 if_close;
 if (p_finduid(uid) = true) {
     @activate_prayer_clarity;
-} else {
-    queue(prayer_activate, 0, 7);
 }
+%prayer_clarity = %prayer_clarity; // resync varp
 
 [label,activate_prayer_clarity]
 p_clearpendingaction; // https://youtu.be/j-Z-43CzpZQ?t=120, https://youtu.be/NT74s7nJwAo?t=21, https://www.youtube.com/watch?v=fcRgR_4ZbdA

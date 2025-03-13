@@ -2,9 +2,9 @@
 if_close;
 if (p_finduid(uid) = true) {
     @activate_prayer_strengthburst;
-} else {
-    queue(prayer_activate, 0, 4);
 }
+%prayer_strengthburst = %prayer_strengthburst;
+
 [label,activate_prayer_strengthburst]
 p_clearpendingaction;
 def_dbrow $data = ~get_prayer_data(^prayer_strengthburst);

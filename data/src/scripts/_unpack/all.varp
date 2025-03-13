@@ -30,6 +30,7 @@ protect=no
 
 // not perm: https://youtu.be/HAeh4qE3WJ4?t=34
 [attackstyle]
+protect=no
 transmit=yes
 
 [com_stabattack]
@@ -118,6 +119,7 @@ transmit=yes
 
 // not perm: https://runescape.wiki/w/Update:Game_Improvements
 [attackstyle_magic]
+protect=no
 transmit=yes
 
 [trawler]
