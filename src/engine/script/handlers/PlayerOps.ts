@@ -376,7 +376,7 @@ const PlayerOps: CommandHandlers = {
     [ScriptOpcode.P_OPNPCT]: checkedHandler(ProtectedActivePlayer, state => {
         const spellId: number = check(state.popInt(), NumberNotNull);
         state.activePlayer.stopAction();
-        state.activePlayer.setInteraction(Interaction.SCRIPT, state.activeNpc, ServerTriggerType.APNPCT);
+        state.activePlayer.setInteraction(Interaction.SCRIPT, state.activeNpc, ServerTriggerType.APNPCT, spellId);
     }),
 
     // https://x.com/JagexAsh/status/1389465615631519744
