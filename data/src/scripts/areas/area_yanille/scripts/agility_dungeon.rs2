@@ -93,7 +93,7 @@ if(last_useitem = sinister_key) {
     p_delay(3);
     mes("A foul gas seeps from the chest");
     sound_synth(gas_hiss, 0, 0);
-    if(%antipoison >= map_clock) {
+    if(%poison < 0) {
         mes("Luckily your poison antidote saves you from harm.");
     } else {
         queue(poison_player, 0, 27);

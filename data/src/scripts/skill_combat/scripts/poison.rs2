@@ -3,29 +3,34 @@ if (map_members = false) {
     // nothing poisons in f2p
     return;
 }
-if (%antipoison < map_clock) { 
+
+if (%poison > -1) { 
     if (%poison = 0) {
         mes("You have been poisoned!");
     }
-    settimer(poison, 30);
+    ~set_poison_timer;
+    %poison = max(%poison, $severity);
 }
-%poison = $severity;
 
 [timer,poison]
-if (%poison = 0 | %antipoison > map_clock) {
+if (%poison = 0) {
     cleartimer(poison);
     return;
 }
-~poison_damage(calc((%poison + 4)/5));
+else if(%poison < 0){
+    %poison = calc(%poison + 1);
+    return;
+}
+
+queue(poison_damage,0,calc((%poison + 4)/5));
 
 %poison = calc(%poison - 1);
-settimer(poison, 30);
 
 [debugproc,poison](int $severity)
 if_close;
 queue(poison_player,0,$severity);
 
-[proc,poison_damage](int $damage)
+[queue,poison_damage](int $damage)
 if_close;
 def_synth $sound;
 def_int $rand;
@@ -59,6 +64,9 @@ if (stat(hitpoints) = 0) {
 cleartimer(poison);
 
 [proc,set_poison_login]
-if (%poison > 0) {
+~set_poison_timer;
+
+[proc,set_poison_timer]
+if(gettimer(poison) < 1){
     settimer(poison, 30);
 }

@@ -361,8 +361,7 @@ scope=perm
 [antifire]
 scope=perm
 
-[antipoison]
-scope=perm
+[varp_278]
 
 [varp_279]
 
