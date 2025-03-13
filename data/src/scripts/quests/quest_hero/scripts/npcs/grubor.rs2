@@ -7,17 +7,17 @@ if (npc_find(coord, grubor, 10, 0) = true) {
   facesquare(npc_coord);
   ~chatnpc("<p,quiz>Yes? What do you want?");
   if (%hero_progress < ^hero_blackarm_gangmember_spoken | %phoenixgang_progress >= ^phoenixgang_joined) { 
-    switch_int(~p_choice3("Would you like your hedges trimming?", 1, "I want to come in", 2, "Do you want to trade?", 3)) {
+    switch_int(~p_choice3("Would you like your hedges trimming?", 1, "I want to come in.", 2, "Do you want to trade?", 3)) {
       case 1 :
         // RSC: "Would you like to have your windows refitting?" // "Don't be daft, we don't have any windows"
         ~chatplayer("<p,quiz>Would you like your hedges trimming?");
-        ~chatnpc("<p,neutral>Eh? Don't be daft! We don't even HAVE any hedges!");
+        ~chatnpc("<p,confused>Eh? Don't be daft! We don't even HAVE any hedges!");
       case 2 :
-        ~chatplayer("<p,neutral>I want to come in.");
+        ~chatplayer("<p,angry>I want to come in.");
         ~chatnpc("<p,neutral>No, go away.");
       case 3 :
         ~chatplayer("<p,quiz>Do you want to trade?");
-        ~chatnpc("<p,neutral>No I'm busy.");
+        ~chatnpc("<p,neutral>No, I'm busy.");
     }
   } else {
     switch_int(~p_choice4("Rabbit's foot.", 1, "Four leaved clover.", 2, "Lucky horseshoe.", 3, "Black cat.", 4)) {

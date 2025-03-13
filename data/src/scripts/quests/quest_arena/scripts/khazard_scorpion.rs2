@@ -10,7 +10,7 @@ if(npc_findhero = true) {
 
 [queue,queue_defeat_khazard_scorpion](npc_uid $npc)
 if (npc_finduid($npc) = true) {
-    @defeat_khazard_scorpion;
+    if(distance(coord, npc_coord) < 17) @defeat_khazard_scorpion;
 }
 
 [label,defeat_khazard_scorpion]

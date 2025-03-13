@@ -15,9 +15,9 @@ switch_int(%grandtree_progress) {
         // https://youtu.be/LFvLBRCxFwk?si=jZsV07Dsc1uTR1WH&t=997
         ~chatnpc("<p,neutral>Hmm...you could be in luck! Before Glough had me|locked up I heard him mention that he'd left his|chest keys at his girlfriend's.");
         ~chatplayer("<p,quiz>Where does she live?");
-        %grandtree_progress = ^grandtree_clue_charlie;
         ~chatnpc("<p,neutral>Just west of the toad swamp.");
         ~chatplayer("<p,neutral>OK, I'll see what I can find.");
+        %grandtree_progress = ^grandtree_clue_charlie; // OSRS increments this earlier
     case ^grandtree_released_prison :
         ~chatplayer("<p,sad>I can't figure this out Charlie!");
         ~chatnpc("<p,neutral>Go and see the foreman in the Karamja jungle, there's a shipyard there, you might find some clues. Don't forget the password is Ka-Lu-Min; if they realise that you're not working for Glough there'll be trouble!");

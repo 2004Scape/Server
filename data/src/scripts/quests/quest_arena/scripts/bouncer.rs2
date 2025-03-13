@@ -10,7 +10,7 @@ if(npc_findhero = true) {
 
 [queue,queue_defeat_bouncer](npc_uid $npc)
 if (npc_finduid($npc) = true) {
-    @defeat_bouncer;
+    if(distance(coord, npc_coord) < 17) @defeat_bouncer;
 }
 
 [label,defeat_bouncer]
