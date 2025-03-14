@@ -3,7 +3,7 @@
 switch_int(%grandtree_progress) {
     case ^grandtree_found_invasion_plans :
         ~chatplayer("<p,angry>You were right! I searched Glough's chest and found some invasion plans!");
-        ~chatnpc("<p,angry>Go to the King and tell him! Finally you have proof. Surely King Narnode will belive you now and set me free!");
+        ~chatnpc("<p,angry>Go to the King and tell him! Finally you have proof. Surely King Narnode will belive you now and set me free!"); // typo is authentic // https://chisel.weirdgloop.org/dialogue/content/95838
         ~chatplayer("<p,happy>Hold tight Charlie!");
         ~chatnpc("<p,neutral>I'm not going anywhere!");
     case ^grandtree_obtained_lumber_order :

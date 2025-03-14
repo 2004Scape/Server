@@ -45,7 +45,7 @@ if ($option = 1) {
 ~chatnpc("<p,angry>Oh, the silly fool.");
 ~chatnpc("<p,angry>I leave town for just five months,|and ALREADY he can't manage.");
 ~chatnpc("<p,sad>(sigh)");
-~chatnpc("<p,angry>Well, I can't go back and exorcise it.|I vowed not to leave this place.|Until I had done a full two years of prayer and meditiation.");
+~chatnpc("<p,angry>Well, I can't go back and exorcise it.|I vowed not to leave this place.|Until I had done a full two years of prayer and meditation.");
 ~chatnpc("<p,neutral>Tell you what I can do though;|take this amulet.");
 %priest_progress = ^priest_spoken_urhney;
 inv_add(inv, amulet_of_ghostspeak, 1);
