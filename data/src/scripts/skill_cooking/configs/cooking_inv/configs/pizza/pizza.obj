@@ -1,4 +1,4 @@
-[obj_2291]
+[half_plain_pizza]
 iop1=Eat
 name=1/2 plain pizza
 desc=Half of this pizza has been eaten.
@@ -34,9 +34,9 @@ recol3d=19489
 2dxan=260
 weight=900g
 category=category_132
-param=next_obj_stage,obj_2295
+param=next_obj_stage,half_meat_pizza
 
-[obj_2295]
+[half_meat_pizza]
 iop1=Eat
 name=1/2 meat pizza
 desc=Half of this pizza has been eaten.
@@ -74,9 +74,9 @@ recol3d=19489
 2dxan=260
 weight=900g
 category=category_132
-param=next_obj_stage,obj_2299
+param=next_obj_stage,half_anchovy_pizza
 
-[obj_2299]
+[half_anchovy_pizza]
 iop1=Eat
 name=1/2 anchovy pizza
 desc=Half of this pizza has been eaten.
@@ -115,9 +115,9 @@ recol3d=19489
 weight=900g
 category=category_132
 members=yes
-param=next_obj_stage,obj_2303
+param=next_obj_stage,half_pineapple_pizza
 
-[obj_2303]
+[half_pineapple_pizza]
 iop1=Eat
 name=1/2pineapple pizza
 desc=Half of this pizza has been eaten.
@@ -154,7 +154,7 @@ recol2d=19489
 cost=40
 weight=800g
 category=category_132
-param=next_obj_stage,obj_2291
+param=next_obj_stage,half_plain_pizza
 
 [burnt_pizza]
 name=Burnt pizza
