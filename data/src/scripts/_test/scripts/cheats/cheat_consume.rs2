@@ -119,13 +119,13 @@ if (p_finduid(uid) = true) {
     inv_add(bank, obj_2331, 100);
     inv_add(bank, obj_2333, 100);
     inv_add(bank, half_an_apple_pie, 100);
-    inv_add(bank, obj_2291, 100);
+    inv_add(bank, half_plain_pizza, 100);
     inv_add(bank, meat_pizza, 100);
-    inv_add(bank, obj_2295, 100);
+    inv_add(bank, half_meat_pizza, 100);
     inv_add(bank, anchovy_pizza, 100);
-    inv_add(bank, obj_2299, 100);
+    inv_add(bank, half_anchovy_pizza, 100);
     inv_add(bank, pineapple_pizza, 100);
-    inv_add(bank, obj_2303, 100);
+    inv_add(bank, half_pineapple_pizza, 100);
     inv_add(bank, plain_pizza, 100);
     inv_add(bank, tomato, 100);
     inv_add(bank, cheese, 100);
