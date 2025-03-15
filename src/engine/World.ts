@@ -319,13 +319,15 @@ class World {
             }
         }
 
-        this.loginThread.postMessage({
-            type: 'world_startup'
-        });
-
-        this.friendThread.postMessage({
-            type: 'connect'
-        });
+        setTimeout(() => {
+            this.loginThread.postMessage({
+                type: 'world_startup'
+            });
+    
+            this.friendThread.postMessage({
+                type: 'connect'
+            });
+        }, 2000);
 
         if (!Environment.STANDALONE_BUNDLE) {
             if (!Environment.NODE_PRODUCTION) {
