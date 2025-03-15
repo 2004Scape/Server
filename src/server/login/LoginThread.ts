@@ -61,7 +61,7 @@ async function handleRequests(parentPort: ParentPort, msg: any) {
                 const response = await client.playerLogin(username, password, uid, socket, remoteAddress, reconnecting, hasSave);
 
                 if (!Environment.NODE_PRODUCTION) {
-                    response.staffmodlevel = 3; // dev (destructive commands)
+                    response.staffmodlevel = 4; // dev (destructive commands)
                 }
 
                 parentPort.postMessage({
@@ -75,6 +75,7 @@ async function handleRequests(parentPort: ParentPort, msg: any) {
                 stopTimer();
             } else {
                 let staffmodlevel = 0;
+
                 if (!Environment.NODE_PRODUCTION) {
                     staffmodlevel = 4; // dev (destructive commands)
                 }

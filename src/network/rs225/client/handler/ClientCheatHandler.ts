@@ -186,7 +186,7 @@ export default class ClientCheatHandler extends MessageHandler<ClientCheat> {
         }
 
         if (player.staffModLevel >= 3) {
-            // admin commands
+            // admin commands (potentially destructive for a live economy)
 
             if (cmd === 'setvar') {
                 // authentic
@@ -374,7 +374,7 @@ export default class ClientCheatHandler extends MessageHandler<ClientCheat> {
         }
 
         if (player.staffModLevel >= 2) {
-            // super-moderator commands
+            // "super-moderator" commands (similar to a jmod but we don't know their command capabilities on live)
 
             if (cmd === 'getcoord') {
                 // authentic
@@ -523,11 +523,7 @@ export default class ClientCheatHandler extends MessageHandler<ClientCheat> {
                     default:
                         return false;
                 }
-            }
-        }
-
-        if (player.staffModLevel >= 1) {
-            if (cmd === 'ban') {
+            } else if (cmd === 'ban') {
                 // custom
                 if (args.length < 2) {
                     // ::ban <username> <minutes>
