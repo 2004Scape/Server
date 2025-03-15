@@ -73,6 +73,7 @@ if (%attackstyle_magic = 0) {
     return;
 }
 if (p_finduid(uid) = true) {
+    p_clearpendingaction; // guess
     %attackstyle_magic = togglebit(%attackstyle_magic, 0);
     return;
 }
@@ -80,6 +81,7 @@ if (p_finduid(uid) = true) {
 [proc,set_attackstyle](int $style)
 if_close;
 if (p_finduid(uid) = true) {
+    p_clearpendingaction;
     %attackstyle = $style;
     ~player_combat_stat;
     return;
