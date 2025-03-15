@@ -10,9 +10,9 @@ if (%hero_progress >= ^hero_complete) {
 if (~hero_in_progress = true) {
   ~chatnpc("<p,quiz>How goes thy quest adventurer?");
   if ((inv_total(inv, fire_feather) >= 1) & (inv_total(inv, lava_eel) >= 1) & (inv_total(inv, thieves_armband) >= 1)) {
-    ~chatplayer("<p,neutral>I have all the required items.");
+    ~chatplayer("<p,happy>I have all the required items.");
     ~chatnpc("<p,neutral>I see that you have. Well done; Now, to complete the|quest, and gain entry to the Hero's Guild in your final|task all that you have to do is...");
-    ~chatplayer("<p,angry>W-what? What do you mean? There's MORE???");
+    ~chatplayer("<p,shock>W-what? What do you mean? There's MORE???");
     ~chatnpc("<p,neutral>I'm sorry, I was just having a little fun with you. Just|a little Hero's Guild humour there. What I really|meant was");
     ~chatnpc("<p,happy>Congratulations! You have completed the Hero's Guild|entry requirements! You will find the door now open|for you! Enter, Hero! And take this reward!");
     queue(hero_quest_complete, 0);
@@ -20,7 +20,7 @@ if (~hero_in_progress = true) {
     inv_del(inv, thieves_armband, 1);
     inv_del(inv, lava_eel, 1);
   } else {
-    ~chatplayer("<p,neutral>It's tough. I've not done it yet.");
+    ~chatplayer("<p,confused>It's tough. I've not done it yet.");
     ~chatnpc("<p,neutral>Remember, the items you need to enter are:");
     ~chatnpc("<p,neutral>An Entranan Firebirds' feather, A Master Thieves armband, and a cooked Lava Eel.");
     @achietties_help_dialogue;

@@ -48,6 +48,10 @@ export class FriendServerRepository {
         this.playersByWorld[world] = new Array(size).fill(null);
     }
 
+    public isInitialized(world: number) {
+        return typeof this.playersByWorld[world] !== 'undefined';
+    }
+
     public getWorld(username37: bigint) {
         const username = fromBase37(username37);
 

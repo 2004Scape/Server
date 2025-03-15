@@ -29,7 +29,8 @@ if (loc_find(%macro_chest_gas_coord, chest_macro_gas) = true) { // set active lo
     if (distance(loc_coord, coord) <= 1 & coordy(loc_coord) = coordy(coord)) {
         // todo: figure out the mes for this thing
         sound_synth(gas_hiss, 0, 0);
-        ~poison_damage(~random_range(2, 3)); // poison damage doesnt actually poison, its just a green hitsplat
+        def_int $random_poison_damage = ~random_range(2, 3);
+        queue(poison_damage, 0, $random_poison_damage); // poison damage doesnt actually poison, its just a green hitsplat
     }
     settimer(poison_gas, 4);
 } else {

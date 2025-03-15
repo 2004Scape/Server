@@ -86,6 +86,7 @@ stock5=mithril_platebody,1,3000
 
 [generalshop12]
 // empty vials could be a default stock of 300
+// There is no information about the original stack size for empty vials, but in 2006 the stack size was 500 and it is very possible that this information has unchanged.
 // https://classic.runescape.wiki/w/East_Ardougne_Adventurers%27_Store
 // https://web.archive.org/web/20120207054639im_/http://runehq.com/images/cityguides/Ardougne_East/ardougne12.jpg
 scope=shared
@@ -93,7 +94,7 @@ size=40
 restock=yes
 stackall=yes
 allstock=yes
-stock1=vial_empty,250,30
+stock1=vial_empty,500,30
 stock3=bronze_pickaxe,2,100
 stock4=iron_axe,2,100
 stock5=cooked_meat,2,100

@@ -1,5 +1,5 @@
 [opheld1,blamish_oil]
-~chatplayer("<p,neutral>You know... I'd really rather not.");
+~chatplayer("<p,confused>You know... I'd really rather not.");
 
 [opheldu,blamish_oil]
 def_obj $used_on = inv_getobj(inv, last_slot);

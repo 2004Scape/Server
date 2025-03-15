@@ -1,5 +1,13 @@
 [magic_guild_store]
-// https://storage.googleapis.com/tannerdino/images/guildstore8sb.jpg
+// https://cdn.discordapp.com/attachments/917979227926695979/1348684974290763846/magic_guild_store_2004.jpg?ex=67d05c43&is=67cf0ac3&hm=908036fee626ad0f8930c69078261489e7ff36d7d88a96a28f73cec61a6ee38a&=&format=webp // beta 2004?
+// https://i.postimg.cc/HsnzTBDR/runeshop4.jpg // launch 2004?
+// https://web.archive.org/web/20041217082458/http://www.runehq.com/cacheguides/viewguildguide00267.htm // Apr 21, 2004 - Dec 08, 2004
+// https://web.archive.org/web/20040803172352/http://www.tip.it/runescape/index.php?page=rs2gld_magic.htm // 03.august.2004 The date of the original modification of the site is unknown.
+// https://storage.googleapis.com/tannerdino/images/guildstore8sb.jpg // early 2005?
+// https://web.archive.org/web/20051130120706/http://runehq.com/RHQGuildGuidesView.php?id=00507 // May 23, 2005 - Sep 08, 2005 early 2005 slayer release or little earlier?
+// https://web.archive.org/web/20060508233149/http://www.tip.it/runescape/index.php?page=magic_guild.htm // after 13 June 2005
+// https://oldschool.runescape.wiki/w/Wizards%27_Guild
+
 scope=shared
 size=40
 restock=yes

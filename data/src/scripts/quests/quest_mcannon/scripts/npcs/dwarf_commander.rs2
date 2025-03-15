@@ -16,7 +16,7 @@ switch_int(%mcannon_progress) {
 
 [label,dwarf_commander_start_quest]
 ~chatplayer("<p,neutral>Hello.");
-~chatnpc("<p,happy>Hello traveller, I'm pleased to see you.|We were hoping to find an extra pair of hands.|That's if you don't mind helping?");;
+~chatnpc("<p,happy>Hello traveller, I'm pleased to see you.|We were hoping to find an extra pair of hands.|That's if you don't mind helping?");
 ~chatplayer("<p,quiz>Why, what's wrong?");
 ~chatnpc("<p,sad>As part of the Dwarven Black Guard,|it is our duty to protect these mines,|but we just don't have the man power.|Could you help?");
 @multi2(
@@ -160,7 +160,7 @@ p_delay(1);
 );
 
 [label,mcannon_sorry_ive_really_done_enough]
-~chatplayer("<p,bored>Sorry, I'vee really done enough.");
+~chatplayer("<p,bored>Sorry, I've really done enough.");
 ~chatnpc("<p,neutral>Fair enough.");
 
 [label,mcannon_ok_then_just_for_you]

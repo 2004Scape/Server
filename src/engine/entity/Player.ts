@@ -1,7 +1,6 @@
 import 'dotenv/config';
 
-import { CollisionType , CollisionFlag } from '@2004scape/rsmod-pathfinder';
-
+import { CollisionType, CollisionFlag } from '@2004scape/rsmod-pathfinder';
 
 import Component from '#/cache/config/Component.js';
 import FontType from '#/cache/config/FontType.js';
@@ -934,9 +933,6 @@ export default class Player extends PathingEntity {
             typeId = type.id;
             categoryId = type.category;
         }
-        if (this.targetSubject.type !== -1) {
-            typeId = this.targetSubject.type;
-        }
         if (this.targetSubject.com !== -1) {
             typeId = this.targetSubject.com;
         }
@@ -957,9 +953,6 @@ export default class Player extends PathingEntity {
             const type = this.target instanceof Npc ? NpcType.get(this.target.type) : this.target instanceof Loc ? LocType.get(this.target.type) : ObjType.get(this.target.type);
             typeId = type.id;
             categoryId = type.category;
-        }
-        if (this.targetSubject.type !== -1) {
-            typeId = this.targetSubject.type;
         }
         if (this.targetSubject.com !== -1) {
             typeId = this.targetSubject.com;
@@ -1128,8 +1121,8 @@ export default class Player extends PathingEntity {
             return false;
         }
 
-        // This is effectively checking if the npc did a changetype
-        if (this.target instanceof Npc && this.targetSubject.type !== -1 && World.getNpcByUid((this.targetSubject.type << 16) | this.target.nid) === null) {
+        // This is effectively checking if the Npc or Loc did a changetype
+        if ((this.target instanceof Npc || this.target instanceof Loc) && this.targetSubject.type !== this.target.type) {
             return false;
         }
 

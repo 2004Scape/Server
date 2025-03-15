@@ -231,7 +231,7 @@ else{
         }
         else if ($option = 2){
             ~chatplayer("<p,neutral>Is there any change of me borrowing it again?");
-            ~chatnpc("<p,neutral>I won't give it awat that easily again. It's far too|important to be treated so disrespectfully.");
+            ~chatnpc("<p,neutral>I won't give it away that easily again. It's far too|important to be treated so disrespectfully.");
             ~chatnpc("<p,neutral>If you with to make use of Silverlight again, it will cost|you 500 gold pieces. Maybe that will encourage you to|look after it.");
             $option = ~p_choice2("No way, it's not worth that much.", 1, "Okay, I'll pay.", 2);
             if ($option = 1){

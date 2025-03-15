@@ -11,7 +11,7 @@ if(%grail_progress < ^grail_finding_percival & %grail_progress >= ^grail_spoken_
     }
     @crone_the_grail;
 }
-if (~hero_in_progress = true) {
+if (%hero_progress = ^hero_started) { // only checks starting stage (OSRS)
     // OSRS https://youtu.be/9wwjNvDXjFw?t=121 
     ~chatplayer("<p,neutral>Hello, I am in search of an Entranan Firebird. Can you help me?");
     ~chatnpc("<p,neutral>Well adventurer, I have heard that they exist on this|island, but have not ever seen one myself.");

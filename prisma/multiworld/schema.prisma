@@ -186,20 +186,6 @@ model input_report {
     session_uuid String
 }
 
-model input_report_event {
-    input_report_id Int
-    seq             Int
-
-    input_type Int  @default(-1)
-    delta      Int
-    coord      Int
-    mouse_x    Int?
-    mouse_y    Int?
-    key_code   Int?
-
-    @@id([input_report_id, seq])
-}
-
 model input_report_event_raw {
     input_report_id Int
     seq             Int

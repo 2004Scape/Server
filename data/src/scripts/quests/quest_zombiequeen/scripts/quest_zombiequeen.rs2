@@ -277,7 +277,6 @@ while(loc_findnext = true) {
      }
 }
 sound_synth(grate_open, 0, 0);
-// this moves 2 tiles in 1t on osrs w/walking speed so we can't really recreate
 if(coordz(coord) > coordz($loc_coord)) {
     p_teleport(0_45_148_49_43);
 } else {
@@ -295,7 +294,10 @@ if(inv_total(worn, zqbeadsofthedead) > 0) {
 [queue,rash_queue] ~rash_summon;
 
 [proc,rash_summon]
-if(%zombiequeen_progress >= ^zombiequeen_complete | %zq_rash_timer > map_clock | inv_total(worn, zqbeadsofthedead) > 0) {
+if(%zombiequeen_progress >= ^zombiequeen_complete 
+    | %zq_rash_timer > map_clock 
+    | inv_total(worn, zqbeadsofthedead) > 0
+    | inzone(0_45_148_0_0, 0_45_148_63_63, coord) = false) {
     return;
 }
 mes("Rashiliyia appears!");
