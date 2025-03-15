@@ -1993,14 +1993,6 @@ export default class Player extends PathingEntity {
 
         // if the build area should be regenerated, do so now
         if (this.x < reloadLeftX || this.z < reloadBottomZ || this.x > reloadRightX - 1 || this.z > reloadTopZ - 1 || reconnect) {
-            // temp fix: invisible door issue (need a deeper dive)
-            for (const zone of this.buildArea.activeZones) {
-                const { x, z } = ZoneMap.unpackIndex(zone);
-                if (x < reloadLeftX || z < reloadBottomZ || x > reloadRightX - 1 || z > reloadTopZ - 1) {
-                    this.write(new UpdateZoneFullFollows(CoordGrid.zone(x), CoordGrid.zone(z), this.originX, this.originZ));
-                }
-            }
-
             this.write(new RebuildNormal(CoordGrid.zone(this.x), CoordGrid.zone(this.z)));
 
             this.originX = this.x;
