@@ -1,7 +1,6 @@
 import 'dotenv/config';
 
-import { CollisionType , CollisionFlag } from '@2004scape/rsmod-pathfinder';
-
+import { CollisionType, CollisionFlag } from '@2004scape/rsmod-pathfinder';
 
 import Component from '#/cache/config/Component.js';
 import FontType from '#/cache/config/FontType.js';
@@ -516,8 +515,8 @@ export default class Player extends PathingEntity {
         }
         // reload entity info (overkill? does the client have some logic around this?)
         this.buildArea.clear(true);
-        // rebuild scene (rebuildnormal won't run if you're in the same zone!)
-        this.rebuildNormal();
+        // rebuild scene later this tick (note: rebuild won't run on the client if you're in the same zone!)
+        this.rebuildNormal(true);
         // in case of pending update
         if (World.isPendingShutdown) {
             const ticksBeforeShutdown = World.shutdownTicksRemaining;
@@ -934,9 +933,6 @@ export default class Player extends PathingEntity {
             typeId = type.id;
             categoryId = type.category;
         }
-        if (this.targetSubject.type !== -1) {
-            typeId = this.targetSubject.type;
-        }
         if (this.targetSubject.com !== -1) {
             typeId = this.targetSubject.com;
         }
@@ -957,9 +953,6 @@ export default class Player extends PathingEntity {
             const type = this.target instanceof Npc ? NpcType.get(this.target.type) : this.target instanceof Loc ? LocType.get(this.target.type) : ObjType.get(this.target.type);
             typeId = type.id;
             categoryId = type.category;
-        }
-        if (this.targetSubject.type !== -1) {
-            typeId = this.targetSubject.type;
         }
         if (this.targetSubject.com !== -1) {
             typeId = this.targetSubject.com;
@@ -1128,8 +1121,8 @@ export default class Player extends PathingEntity {
             return false;
         }
 
-        // This is effectively checking if the npc did a changetype
-        if (this.target instanceof Npc && this.targetSubject.type !== -1 && World.getNpcByUid((this.targetSubject.type << 16) | this.target.nid) === null) {
+        // This is effectively checking if the Npc or Loc did a changetype
+        if ((this.target instanceof Npc || this.target instanceof Loc) && this.targetSubject.type !== this.target.type) {
             return false;
         }
 
@@ -1989,7 +1982,7 @@ export default class Player extends PathingEntity {
         }
     }
 
-    rebuildNormal(): void {
+    rebuildNormal(reconnect: boolean = false): void {
         const originX: number = CoordGrid.zone(this.originX);
         const originZ: number = CoordGrid.zone(this.originZ);
 
@@ -1999,7 +1992,7 @@ export default class Player extends PathingEntity {
         const reloadBottomZ = (originZ - 4) << 3;
 
         // if the build area should be regenerated, do so now
-        if (this.x < reloadLeftX || this.z < reloadBottomZ || this.x > reloadRightX - 1 || this.z > reloadTopZ - 1) {
+        if (this.x < reloadLeftX || this.z < reloadBottomZ || this.x > reloadRightX - 1 || this.z > reloadTopZ - 1 || reconnect) {
             // temp fix: invisible door issue (need a deeper dive)
             for (const zone of this.buildArea.activeZones) {
                 const { x, z } = ZoneMap.unpackIndex(zone);

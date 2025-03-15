@@ -1,6 +1,8 @@
 import EntityLifeCycle from '#/engine/entity/EntityLifeCycle.js';
 import World from '#/engine/World.js';
-export default abstract class Entity {
+import Linkable from '#/util/Linkable.js';
+
+export default abstract class Entity extends Linkable {
     // constructor
     level: number;
     x: number;
@@ -15,6 +17,7 @@ export default abstract class Entity {
     lastLifecycleTick: number = -1;
 
     protected constructor(level: number, x: number, z: number, width: number, length: number, lifecycle: EntityLifeCycle) {
+        super();
         this.level = level;
         this.x = x;
         this.z = z;

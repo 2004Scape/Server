@@ -1,37 +1,40 @@
 [opnpc1,enclave_guard]
 if(%itwatchtower_progress < ^itwatchtower_skavid_crystal) {
     ~chatnpc("<p,bored>Stop bothering me, minion!");
-} else if(%itwatchtower_progress >= ^itwatchtower_complete) {
-    mes("The guard is occupied at the moment."); // rsc
-} else {
-    ~chatnpc("<p,quiz>What do you want?");
-    switch_int(~p_choice2("I want to go in there.", 1, "I want to rid the world of ogres.", 2)) {
-        case 1 :
-            ~chatplayer("<p,neutral>I want to go in there.");
-            ~chatnpc("<p,angry>Oh you do, do you?|How about 'no'?");
-            ~npc_retaliate(0);
-        case 2 :
-            ~chatplayer("<p,angry>I want to rid the world of ogres.");
-            ~chatnpc("<p,angry>You dare mock me, creature!");
-            ~npc_retaliate(0);
-    }
+    return;
+}
+~chatnpc("<p,quiz>What do you want?");
+ switch_int(~p_choice2("I want to go in there.", 1, "I want to rid the world of ogres.", 2)) {
+    case 1 :
+        if(%itwatchtower_progress = ^itwatchtower_complete) {
+            @enter_skavid_cave;
+        }
+        ~chatplayer("<p,neutral>I want to go in there.");
+        ~chatnpc("<p,angry>Oh you do, do you?|How about 'no'?");
+        ~npc_retaliate(0);
+    case 2 :
+        ~chatplayer("<p,angry>I want to rid the world of ogres.");
+        ~chatnpc("<p,angry>You dare mock me, creature!");
+        ~npc_retaliate(0);
 }
 
 
 [opnpcu,enclave_guard]
 if(last_useitem = nightshade) {
-    // if_settext	com=217:6, text="I think I had better deal with those skavids first..." neutral
-    if(%itwatchtower_progress < ^itwatchtower_skavid_crystal | %itwatchtower_progress >= ^itwatchtower_complete) {
-        mes("The guard is occupied at the moment."); // rs1
+    if(%itwatchtower_progress < ^itwatchtower_skavid_crystal) {
+        ~chatplayer("<p,neutral>I think I had better deal with those skavids first...");
         return;
     }
     inv_del(inv, nightshade, 1);
     if(%itwatchtower_progress = ^itwatchtower_skavid_crystal) %itwatchtower_progress = ^itwatchtower_fed_nightshade;
     // https://web.archive.org/web/20041126094839im_/http://img26.imageshack.us/img26/1742/enclaveguard.jpg
     ~chatnpc("<p,shock>What is this!!!|Arrrrgh! I cannot stand this plant!|Ahhh, it burns! It burns!!!");
-    if_close;
-    mes("You run past the guard while he's busy.");
-    p_delay(2);
-    p_teleport(0_40_147_28_2);
+    @enter_skavid_cave;
 }
 // no nothing interesting happens
+
+[label,enter_skavid_cave]
+if_close;
+mes("You run past the guard while he's busy.");
+p_delay(2);
+p_teleport(0_40_147_28_2);

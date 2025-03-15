@@ -7,7 +7,8 @@ inv_delslot(inv, last_slot);
 // https://oldschool.runescape.wiki/w/Update:Special_Attacks was changed from 10 to 30 in this update
 // https://web.archive.org/web/20040713074721/http://runehq.com/viewguidedb.php?id=00206 guide says 10%
 healenergy(1000);
-if (%poison > 0) {
-    %poison = 0;
-}
+// https://oldschool.runescape.wiki/w/Strange_fruit 
+// https://archive.is/6SmRo provides 30 ticks of poison immunity
+%poison = min(%poison,-1);
+~set_poison_timer;
 ~consume_effect_messages($consumable, stat(hitpoints), false);

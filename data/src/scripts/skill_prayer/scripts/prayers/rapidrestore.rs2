@@ -2,12 +2,12 @@
 if_close;
 if (p_finduid(uid) = true) {
     @activate_prayer_rapidrestore;
-} else {
-    queue(prayer_activate, 0, 10);
 }
+%prayer_rapidrestore = %prayer_rapidrestore;
 
 
 [label,activate_prayer_rapidrestore]
+p_clearpendingaction;
 def_dbrow $data = ~get_prayer_data(^prayer_rapidrestore);
 if ($data = null) {
     return;

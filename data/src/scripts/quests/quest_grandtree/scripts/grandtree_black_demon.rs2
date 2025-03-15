@@ -1,5 +1,19 @@
+[opnpc2,grandtree_black_demon]
+if (%npc_aggressive_player ! uid) {
+    mes("It's not after you...");
+    return;
+}
+@player_combat_start;
+
+[apnpc2,grandtree_black_demon] 
+if (%npc_aggressive_player ! uid) {
+    mes("It's not after you...");
+    return;
+}
+@player_combat_start_ap;
+
 [ai_timer,grandtree_black_demon]
-if(finduid(%npc_attacking_uid) = false) {
+if(finduid(%npc_aggressive_player) = false) {
     npc_del;
     return;
 }

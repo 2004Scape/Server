@@ -139,7 +139,7 @@ switch_int($option) {
     case 6 : // After heroes started, brought back valid candlestick
         ~chatnpc("<p,neutral>Hmmm. Not bad, not bad. Let's see it, make sure it's|genuine.");
         ~mesbox("You hand Straven the candlestick.");
-        ~chatplayer("<p,neutral>So is this enough to get me a master thief armband?");
+        ~chatplayer("<p,quiz>So is this enough to get me a master thief armband?");
         ~chatnpc("<p,neutral>Hmm...");
         ~chatnpc("<p,neutral>I dunno...");
         ~chatnpc("<p,neutral>Aww, go on then. I suppose I'm in a generous mood|today.");
@@ -147,8 +147,8 @@ switch_int($option) {
         inv_del(inv, petes_candlestick, 1);
         inv_add(inv, thieves_armband, 1);
         %hero_progress = ^hero_phoenix_obtained_armband;
-    case 7 : // After heroes started, brought back invalid candlestick [todo : Need real dialgue for this one]
-        ~chatnpc("<p,angry>That's not real! Come back when you get the real one.");
+    case 7 : // After heroes started, brought back invalid candlestick
+        ~chatnpc("<p,neutral>Well, in all honesty, you didn't actually retrieve it yourself, did you? You don't qualify as a master thief unless you actually steal it yourself, you know...");
     case 8 : // First chat after heroes started
         ~chatplayer("<p,quiz>How would I go about getting a master thief armband?");
         ~chatnpc("<p,neutral>Ooh... tricky stuff. Took me YEARS to get that rank.");

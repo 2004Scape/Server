@@ -1,12 +1,17 @@
+import fs from 'fs';
+import fsp from 'fs/promises';
+
 import { WebSocket, WebSocketServer } from 'ws';
 
 import { db, toDbDate } from '#/db/query.js';
+import { PlayerLoading } from '#/engine/entity/PlayerLoading.js';
+import Packet from '#/io/Packet.js';
 import { FriendServerRepository } from '#/server/friend/FriendServerRepository.js';
 import InternalClient from '#/server/InternalClient.js';
 import { ChatModePrivate } from '#/util/ChatModes.js';
 import Environment from '#/util/Environment.js';
 import { fromBase37, toBase37 } from '#/util/JString.js';
-import { printInfo } from '#/util/Logger.js';
+import { printError, printInfo } from '#/util/Logger.js';
 
 /**
  * client -> server opcodes for friends server
@@ -27,7 +32,8 @@ export enum FriendsClientOpcodes {
     RELAY_KICK,
     RELAY_SHUTDOWN,
     RELAY_BROADCAST,
-    RELAY_TRACK
+    RELAY_TRACK,
+    RELAY_RELOAD
 }
 
 /**
@@ -42,7 +48,8 @@ export enum FriendsServerOpcodes {
     RELAY_KICK,
     RELAY_SHUTDOWN,
     RELAY_BROADCAST,
-    RELAY_TRACK
+    RELAY_TRACK,
+    RELAY_RELOAD
 }
 
 // TODO make this configurable (or at least source it from somewhere common)
@@ -395,8 +402,18 @@ export class FriendServer {
                                 })
                             );
                         }
+                    } else if (type === FriendsClientOpcodes.RELAY_RELOAD) {
+                        const { nodeId } = message;
+
+                        if (typeof this.socketByWorld[nodeId] !== 'undefined') {
+                            this.socketByWorld[nodeId].send(
+                                JSON.stringify({
+                                    type: FriendsServerOpcodes.RELAY_RELOAD
+                                })
+                            );
+                        }
                     } else {
-                        // console.error(`[Friends]: Unknown opcode ${opcode}, length ${length}`);
+                        console.error(`[Friend]: Unknown message type=${type}`);
                     }
                 } catch (err) {
                     console.error(err);
@@ -408,9 +425,7 @@ export class FriendServer {
         });
     }
 
-    start() {
-        // todo: move server start back here later
-        //       websocket has us set up the port/host in the constructor instead of on .listen
+    async start() {
     }
 
     private async sendFriendsListToPlayer(username37: bigint, socket: WebSocket) {

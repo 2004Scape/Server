@@ -66,9 +66,9 @@ export function generateServerSymbols() {
             continue;
         }
 
-        const type = InvType.get(i);
-        invSymbols += `${i}\t${invs[i]}\n`;
-        writeInvSymbols += `${i}\t${invs[i]}\tnone\t${type.protect}\n`;
+        const inv = InvType.get(i);
+        invSymbols += `${i}\t${inv.debugname}\n`;
+        writeInvSymbols += `${i}\t${inv.debugname}\tnone\t${inv.protect}\n`;
     }
     fs.writeFileSync('data/symbols/inv.sym', invSymbols);
     fs.writeFileSync('data/symbols/writeinv.sym', writeInvSymbols);
@@ -128,17 +128,19 @@ export function generateServerSymbols() {
         }
 
         const com = Component.get(i);
-        if (coms[i].indexOf(':') !== -1) {
-            comSymbols += `${i}\t${coms[i]}\n`;
+        const name = com.comName || coms[i];
+
+        if (name.indexOf(':') !== -1) {
+            comSymbols += `${i}\t${name}\n`;
         } else if (com.overlay) {
-            overlaySymbols += `${i}\t${coms[i]}\n`;
+            overlaySymbols += `${i}\t${name}\n`;
         } else {
-            interfaceSymbols += `${i}\t${coms[i]}\n`;
+            interfaceSymbols += `${i}\t${name}\n`;
         }
 
         // temporary: until compiler updates
         if (com.overlay) {
-            interfaceSymbols += `${i}\t${coms[i]}\n`;
+            interfaceSymbols += `${i}\t${name}\n`;
         }
     }
     fs.writeFileSync('data/symbols/component.sym', comSymbols);
@@ -154,7 +156,7 @@ export function generateServerSymbols() {
         }
 
         const varp = VarPlayerType.get(i);
-        varpSymbols += `${i}\t${varps[i]}\t${ScriptVarType.getType(varp.type)}\t${varp.protect}\n`;
+        varpSymbols += `${i}\t${varp.debugname}\t${ScriptVarType.getType(varp.type)}\t${varp.protect}\n`;
     }
     fs.writeFileSync('data/symbols/varp.sym', varpSymbols);
 
@@ -167,7 +169,7 @@ export function generateServerSymbols() {
         }
 
         const varn = VarNpcType.get(i);
-        varnSymbols += `${i}\t${varns[i]}\t${ScriptVarType.getType(varn.type)}\n`;
+        varnSymbols += `${i}\t${varn.debugname}\t${ScriptVarType.getType(varn.type)}\n`;
     }
     fs.writeFileSync('data/symbols/varn.sym', varnSymbols);
 
@@ -180,7 +182,7 @@ export function generateServerSymbols() {
         }
 
         const vars = VarSharedType.get(i);
-        varsSymbols += `${i}\t${varss[i]}\t${ScriptVarType.getType(vars.type)}\n`;
+        varsSymbols += `${i}\t${vars.debugname}\t${ScriptVarType.getType(vars.type)}\n`;
     }
     fs.writeFileSync('data/symbols/vars.sym', varsSymbols);
 
@@ -194,7 +196,7 @@ export function generateServerSymbols() {
         }
 
         const config = ParamType.get(i);
-        paramSymbols += `${i}\t${params[i]}\t${config.getType()}\n`;
+        paramSymbols += `${i}\t${config.debugname}\t${config.getType()}\n`;
     }
     fs.writeFileSync('data/symbols/param.sym', paramSymbols);
 
