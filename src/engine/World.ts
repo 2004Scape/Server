@@ -1331,6 +1331,10 @@ class World {
     }
 
     changeLoc(loc: Loc, typeID: number, shape: number, angle: number, duration: number) {
+        // If a dynamic loc is inactive, it should never return to the game world
+        if (loc.lifecycle === EntityLifeCycle.DESPAWN && !loc.isValid()) {
+            return;
+        }
         // Remove previous collision from game world
         const fromType: LocType = LocType.get(loc.type);
         if (fromType.blockwalk) {
