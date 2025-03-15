@@ -2,11 +2,11 @@
 if_close;
 if (p_finduid(uid) = true) {
     @activate_prayer_superhumanstrength;
-} else {
-    queue(prayer_activate, 0, 5);
 }
+%prayer_superhumanstrength = %prayer_superhumanstrength;
 
 [label,activate_prayer_superhumanstrength]
+p_clearpendingaction;
 def_dbrow $data = ~get_prayer_data(^prayer_superhumanstrength);
 if ($data = null) {
     return;

@@ -34,18 +34,27 @@ if (finduid(%npc_aggressive_player) = true) {
 }
 
 [queue,defeat_nazastarool1]
+if(inzone(0_45_148_0_0, 0_45_148_63_63, coord) = false) {
+    return;
+}
 %zq_map_mechanisms = setbit(%zq_map_mechanisms, ^zq_defeated_nazastarool1);
 ~mesbox("You defeat Nazastarool and the corpse falls to the ground. The bones start to move again and soon they reform into a grisly giant skeleton.");
 if_close;
 @summon_nazastarool;
 
 [queue,defeat_nazastarool2]
+if(inzone(0_45_148_0_0, 0_45_148_63_63, coord) = false) {
+    return;
+}
 %zq_map_mechanisms = setbit(%zq_map_mechanisms, ^zq_defeated_nazastarool2);
 ~mesbox("You defeat Nazastarool and the skeleton falls to the ground. An ethereal form starts taking shape above the bones and you soon face the vengeful ghost of Nazastarool.");
 if_close;
 @summon_nazastarool;
 
 [queue,defeat_nazastarool3]
+if(inzone(0_45_148_0_0, 0_45_148_63_63, coord) = false) {
+    return;
+}
 %zq_map_mechanisms = setbit(%zq_map_mechanisms, ^zq_defeated_nazastarool3);
 obj_add(0_45_148_13_15, rashiliya_corpse, 1, ^lootdrop_duration);
 queue(zq_corpseappear, 0);

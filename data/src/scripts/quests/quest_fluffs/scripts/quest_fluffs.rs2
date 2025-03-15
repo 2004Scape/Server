@@ -1,11 +1,21 @@
 //most linebreaks in the quest are guessed (added for 2004 flair) based off rsc dialogue breaks
 [label,fluffs_boy_dialogue]
+def_npc $other_boy = wilough;
+if(npc_type = wilough) {
+    $other_boy = shilop;
+}
 switch_int (%fluffs_progress) {
     case ^fluffs_not_started :
-        ~chatplayer("<p,neutral>Hello youngster!");
-        ~chatnpc("<p,neutral>I don't talk to strange old people.");
+        ~chatplayer("<p,happy>Hello youngster!");
+        if(.npc_find(coord, $other_boy, 3, ^vis_lineofsight) = true) {
+            ~chatnpc("<p,bored>We don't talk to strange old people.");
+            ~.chatnpc("<p,bored>No we don't!");
+        } else {
+            ~chatnpc("<p,bored>I don't talk to strange old people.");
+        }
+        ~chatplayer("<p,angry>Hey who you calling old?! And strange?!");
     case ^fluffs_started :
-        @fluffs_boy;
+        @fluffs_boy($other_boy);
     case ^fluffs_paid_boy :
         ~chatplayer("<p,neutral>Where did you say you saw Fluffs?");
         ~chatnpc("<p,neutral>Weren't you listening? I saw the flea bag|in the old lumber mill just north east of here.|Just walk past the Jolly Boar Inn|and you should find it.");
@@ -14,17 +24,29 @@ switch_int (%fluffs_progress) {
         ~chatnpc("<p,angry>You think you're tough do you?");
         ~chatplayer("<p,shock>Pardon?");
         ~chatnpc("<p,angry>I can beat anyone up!");
+        if(.npc_find(coord, $other_boy, 3, ^vis_lineofsight) = true) {
+            ~.chatnpc("<p,angry>He can you know!");
+        } 
         ~chatplayer("<p,bored>Really?");
         ~mesbox("The boy begins to jump around with his fists up.|You decide it's best not to kill him just yet.");
 }
 
-[label,fluffs_boy]
+[label,fluffs_boy](npc $other_boy)
 ~chatplayer("<p,neutral>Hello there, I've been looking for you.");
-~chatnpc("<p,neutral>I didn't mean to take it!|I just forgot to pay."); //imgur.com/jk6y117
-~chatplayer("<p,neutral>What? I'm trying to help your mum find Fluffs.");
-~chatnpc("<p,neutral>Ohh...well, in that case I might be able to help.|Fluffs followed me to my secret play area,|I haven't seen her since.");
-~chatplayer("<p,quiz>Where is this play area?");
-~chatnpc("<p,neutral>If I told you that, it wouldn't be a secret.");
+~chatnpc("<p,confused>I didn't mean to take it!|I just forgot to pay."); //imgur.com/jk6y117
+~chatplayer("<p,confused>What? I'm trying to help your mum find Fluffs.");
+if(.npc_find(npc_coord, $other_boy, 3, ^vis_lineofsight) = true) { 
+    ~.chatnpc("<p,neutral>I might be able to help. Fluffs followed me to our secret play area and I haven't seen her since.");
+    ~chatplayer("<p,quiz>Where is this play area?");
+    ~.chatnpc("<p,neutral>If I told you that, it wouldn't be a secret.");
+    @fluffs_boy_secondary;
+} else {
+    ~chatnpc("<p,neutral>Ohh...well, in that case I might be able to help.|Fluffs followed me to my secret play area,|I haven't seen her since.");
+    ~chatplayer("<p,quiz>Where is this play area?");
+    ~chatnpc("<p,neutral>If I told you that, it wouldn't be a secret.");
+}
+
+[label,fluffs_boy_single]
 def_int $option = ~p_choice3("Tell me sonny, or I will hurt you.", 1, "What will make you tell me?", 2, "Well never mind, it's Fluffs' loss.", 3);
 switch_int ($option) {
     case 1 :
@@ -35,20 +57,44 @@ switch_int ($option) {
         ~chatplayer("<p,quiz>What will make you tell me?");
         ~chatnpc("<p,neutral>Well...now you ask, I am a bit short on cash.");
         ~chatplayer("<p,bored>How much?");
-        ~chatnpc("<p,neutral>100 coins should cover it.");
+        ~chatnpc("<p,happy>100 coins should cover it.");
         ~chatplayer("<p,angry>100 coins!|Why should I pay you?");
         ~chatnpc("<p,neutral>You shouldn't,|but I won't help otherwise.|I never liked that cat anyway,|so what do you say?");
-        @fluffs_pay;
+        @fluffs_pay(false);
     case 3 :
-        ~chatplayer("<p,neutral>Well, never mind, it's Fluffs' loss.");
-        ~chatnpc("<p,neutral>I'm sure my mum will get over it.");
+        ~chatplayer("<p,bored>Well, never mind, it's Fluffs' loss.");
+        ~chatnpc("<p,bored>I'm sure my mum will get over it.");
 }
 
-[label,fluffs_pay]
+[label,fluffs_boy_secondary]
+def_int $option = ~p_choice3("Tell me sonny, or I will hurt you.", 1, "What will make you tell me?", 2, "Well never mind, it's Fluffs' loss.", 3);
+switch_int ($option) {
+    case 1 :
+        ~chatplayer("<p,angry>Tell me sonny, or I will hurt you.");
+        ~.chatnpc("<p,worried>W..wh..what?! Y..you wouldn't!|A young lad like me!");
+        ~chatnpc("<p,angry>If you want to hurt my brother you'll first have to get by me!");
+        ~mesbox("You decide it's best not to hurt the boy.");
+    case 2 :
+        ~chatplayer("<p,quiz>What will make you tell me?");
+        ~.chatnpc("<p,neutral>Well...now you ask, I am a bit short on cash.");
+        ~chatplayer("<p,bored>How much?");
+        ~.chatnpc("<p,happy>10 coins.");
+        ~chatnpc("<p,angry>10 coins?!");
+        ~chatnpc("<p,shifty>I'll handle this.");
+        ~chatnpc("<p,happy>100 coins should cover it.");
+        ~chatplayer("<p,angry>100 coins!|Why should I pay you?");
+        ~chatnpc("<p,neutral>You shouldn't,|but we won't help otherwise.|We never liked that cat anyway,|so what do you say?");
+        @fluffs_pay(true);
+    case 3 :
+        ~chatplayer("<p,bored>Well, never mind, it's Fluffs' loss.");
+        ~.chatnpc("<p,bored>I'm sure my mum will get over it.");
+}
+
+[label,fluffs_pay](boolean $secondary)
 def_int $option = ~p_choice2("I'm not paying you a penny.", 1, "Okay then, I'll pay.", 2); //imgur.com/PU4c51N
 switch_int ($option) {
     case 1 :
-        ~chatplayer("<p,happy>I'm not paying you a penny.");
+        ~chatplayer("<p,angry>I'm not paying you a penny.");
         ~chatnpc("<p,neutral>Okay then, I'll find another way to make money.");
     case 2 :
         ~chatplayer("<p,neutral>Okay then, I'll pay.");
@@ -58,12 +104,13 @@ switch_int ($option) {
             return;
         }
         inv_del(inv, coins, 100);
-        %fluffs_progress = ^fluffs_paid_boy;
         ~objbox(coins_25, "You give the lad 100 coins.", 250, 0, divide(^objbox_height, 2)); //imgur.com/jhDCIvP
         ~chatplayer("<p,neutral>There you go, now where did you see Fluffs ?"); //intentional
-        ~chatnpc("<p,neutral>I play at an abandoned lumber mill to the north east.|Just beyond the Jolly Boar Inn.|I saw Fluffs running around in there.");
+        if($secondary = true) ~.chatnpc("<p,neutral>We play at an abandoned lumber mill to the north east.|Just beyond the Jolly Boar Inn.|I saw Fluffs running around in there.");
+        else ~chatnpc("<p,neutral>I play at an abandoned lumber mill to the north east.|Just beyond the Jolly Boar Inn.|I saw Fluffs running around in there.");
         ~chatplayer("<p,neutral>Anything else?");
         ~chatnpc("<p,neutral>Well, you'll have to find the broken fence to get in.|I'm sure you can manage that.");
+        %fluffs_progress = ^fluffs_paid_boy;
 }
 
 [oploc1,loc_2618]
@@ -77,8 +124,7 @@ if(coordz(coord) < coordz(loc_coord)) {
 }
 p_teleport($start_coord);
 p_delay(0);
-~agility_exactmove(human_walk_fence_north, 30, 2, $start_coord, $end_coord, 30, 94, $dir, true);
-p_teleport($end_coord);
+~agility_exactmove(human_walk_fence_north, 30, 2, $start_coord, $end_coord, 0, 60, $dir, true);
 
 [opheldu,doogle_leaves]
 if(last_useitem = raw_sardine) {
@@ -112,12 +158,13 @@ if(%fluffs_progress >= ^fluffs_rescued) {
 }
 ~fluffs_attack;
 switch_int(%fluffs_progress) {
+    case ^fluffs_paid_boy : 
+        ~mesbox("Maybe the cat is thirsty?"); 
     case ^fluffs_gave_milk :
         ~mesbox("Maybe the cat is hungry?");
     case ^fluffs_gave_sardine :
+        ~mesbox("The cat seems afraid to leave.");
         ~mesbox("In the distance you can hear kittens mewing..."); //imgur.com/EPtymln
-    case default :
-        ~mesbox("Maybe the cat is thirsty?"); 
 }
 
 [opnpc3,fluffs]
@@ -131,18 +178,32 @@ p_delay(1);
 npc_say("Hisss!");
 npc_anim(cat_attack, 0);
 p_delay(0);
+// https://web.archive.org/web/20050222115027/http://runecrypt.com/index.php?pid=188, https://web.archive.org/web/20051126190636/http://runescape.salmoneus.net/quests/GertrudesCat.html
+~damage_self(3);
 say("Ouch!");
 p_delay(3);
 
 [opnpcu,fluffs]
-if (%fluffs_progress = ^fluffs_paid_boy & last_useitem = bucket_milk) {
+if(%fluffs_progress >= ^fluffs_rescued) {
+    ~chatplayer("<p,neutral>Oh, it looks like Fluffs has returned.|I'd better leave her alone."); //OSRS
+    return;
+}
+if (last_useitem = bucket_milk) {
+    if(%fluffs_progress ! ^fluffs_paid_boy) {
+        mes("The cat doesn't seem to be thirsty.");
+        return;
+    }
     anim(human_pickupfloor, 0);
     p_delay(0);
     npc_say("Mew!");
     inv_del(inv, bucket_milk, 1); //after delay
     inv_add(inv, bucket_empty, 1);
     %fluffs_progress = ^fluffs_gave_milk;
-} else if (%fluffs_progress = ^fluffs_gave_milk & last_useitem = seasoned_sardine) {
+} else if (last_useitem = seasoned_sardine) {
+    if(%fluffs_progress ! ^fluffs_gave_milk) {
+        mes("The cat doesn't seem to be hungry.");
+        return;
+    }
     inv_del(inv, seasoned_sardine, 1); //before delay
     anim(human_pickupfloor, 0);
     p_delay(0);
@@ -175,7 +236,11 @@ if (%fluffs_progress = ^fluffs_paid_boy & last_useitem = bucket_milk) {
     npc_del;
     .npc_del;
     ~mesbox("Fluffs has run off home with her offspring.");
-} else if (oc_category(last_useitem) = category_57 | oc_category(last_useitem) = category_58) { //todo: test more. works with raw sardine & salmon, cooked trout
+} else if (last_useitem = raw_sardine | last_useitem = sardine | 
+    last_useitem = raw_shrimps | last_useitem = shrimps | 
+    last_useitem = raw_anchovies | last_useitem = anchovies | 
+    last_useitem = raw_trout | last_useitem = trout | 
+    last_useitem = raw_salmon | last_useitem = salmon) { // Only seems to be these 5
     def_string $fishname = lowercase(oc_name(last_useitem));
     anim(human_pickupfloor, 0);
     p_delay(0);
@@ -197,7 +262,7 @@ mes("You search the crate.");
 p_delay(4);
 if (npc_coord = %fluffs_crate & %fluffs_progress = ^fluffs_gave_sardine & inv_total(inv, fluffs_kitten) = 0 & inv_total(bank, fluffs_kitten) = 0) {
     ~mesbox("You find a kitten!"); //imgur.com/np0oFUT
-    inv_add(inv, fluffs_kitten, 1);
+    inv_add(inv, fluffs_kitten, 1); // no inv_space check
     return;
 }
 mes("You find nothing.");
@@ -231,10 +296,10 @@ npc_say("Mew!");
 p_delay(0);
 npc_walk(%fluffs_crate);
 p_delay(4);
+npc_del;
 ~mesbox("The kitten has run off!");
 
 [queue,fluffs_complete] //imgur.com/6ePHvef
-%fluffs_progress = ^fluffs_complete;
 session_log(^log_adventure, "Quest complete: Gertrude's Cat");
 %questpoints = calc(%questpoints + ^fluffs_questpoints);
 // Random quest complete jingle.

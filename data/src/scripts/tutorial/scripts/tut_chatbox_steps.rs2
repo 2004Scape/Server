@@ -112,7 +112,7 @@ if (p_finduid(uid) = true) {
     p_run(^player_run_off);
     return;
 }
-queue(set_run, 0, 0);
+%run = %run;
 ~tutorialstep("Running.", "In this menu you will see many options from waving to walking.|At the top of the panel there are two buttons. One is walk the|other one is run. Click on the run button.");
 
 [proc,tutorial_step_enter_quest_guide_house]

@@ -29,8 +29,6 @@ queue(macro_event_login, 0);
 ~set_pk_skull_login;
 // so antifire persists after logging back in
 ~set_antifire_login;
-// so antipoison persists after logging back in
-~set_antipoison_login;
 // if player is in a duel, they are removed from the duel
 ~duel_arena_login;
 // if player is in a gnomeball game, they login outside of the arena

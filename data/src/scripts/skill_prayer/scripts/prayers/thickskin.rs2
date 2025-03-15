@@ -2,11 +2,11 @@
 if_close;
 if (p_finduid(uid) = true) {
     @activate_prayer_thickskin;
-} else {
-    queue(prayer_activate, 0, 1);
 }
+%prayer_thickskin = %prayer_thickskin;
 
 [label,activate_prayer_thickskin]
+p_clearpendingaction;
 def_dbrow $data = ~get_prayer_data(^prayer_thickskin);
 if ($data = null) {
     return;

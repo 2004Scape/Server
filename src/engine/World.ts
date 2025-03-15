@@ -61,6 +61,7 @@ import WorldStat from '#/engine/WorldStat.js';
 import Zone from '#/engine/zone/Zone.js';
 import Isaac from '#/io/Isaac.js';
 import Packet from '#/io/Packet.js';
+import { ReportAbuseReason } from '#/network/client/model/ReportAbuse.js';
 import InfoProt from '#/network/rs225/server/prot/InfoProt.js';
 import MessagePrivate from '#/network/server/model/MessagePrivate.js';
 import UpdateFriendList from '#/network/server/model/UpdateFriendList.js';
@@ -2164,7 +2165,14 @@ class World {
         });
     }
 
-    notifyPlayerReport(player: Player, offender: string, reason: number) {
+    notifyPlayerReport(player: Player, offender: string, reason: ReportAbuseReason) {
+        if (reason === ReportAbuseReason.MACROING || reason === ReportAbuseReason.BUG_ABUSE) {
+            const offenderPlayer = this.getPlayerByUsername(offender);
+            if (offenderPlayer) {
+                // Immediately turn on tracking when a user is reported as macroing or abusing a bug.
+                offenderPlayer.input.enable();
+            }
+        }
         this.loggerThread.postMessage({
             type: 'report',
             username: player.username,

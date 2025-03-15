@@ -376,7 +376,7 @@ const PlayerOps: CommandHandlers = {
     [ScriptOpcode.P_OPNPCT]: checkedHandler(ProtectedActivePlayer, state => {
         const spellId: number = check(state.popInt(), NumberNotNull);
         state.activePlayer.stopAction();
-        state.activePlayer.setInteraction(Interaction.SCRIPT, state.activeNpc, ServerTriggerType.APNPCT);
+        state.activePlayer.setInteraction(Interaction.SCRIPT, state.activeNpc, ServerTriggerType.APNPCT, spellId);
     }),
 
     // https://x.com/JagexAsh/status/1389465615631519744
@@ -1084,7 +1084,7 @@ const PlayerOps: CommandHandlers = {
         state.activePlayer.addWealthLog(isGained ? amount : -amount, event);
     }),
 
-    [ScriptOpcode.P_RUN]: checkedHandler(ActivePlayer, state => {
+    [ScriptOpcode.P_RUN]: checkedHandler(ProtectedActivePlayer, state => {
         state.activePlayer.run = state.popInt();
 
         // todo: better way to sync engine varp

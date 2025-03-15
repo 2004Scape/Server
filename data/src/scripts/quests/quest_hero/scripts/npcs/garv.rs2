@@ -3,13 +3,19 @@ if (~unlock_brimhaven_mansion = true) {
   return;
 }
 ~chatnpc("<p,neutral>Hello. What do you want?");
-switch_int(~p_choice2("Can I go in there?", 1, "I want for nothing!", 2)) {
+def_int $choice;
+if(%hero_progress = ^hero_complete) {
+  $choice = 2;
+} else {
+  $choice = ~p_choice2("Can I go in there?", 1, "I want for nothing!", 2);
+}
+switch_int($choice) {
   case 1 :
     ~chatplayer("<p,quiz>Can I go in there?");
     if (%hero_progress >= ^hero_blackarm_mansion_unlocked & %blackarmgang_progress >= ^blackarmgang_complete) {
-      ~chatnpc("<p,neutral>Sure."); // todo need dialogue if you talk to Garv after unlocking the door
+      ~chatnpc("<p,neutral>Yes, of course you can. You DO work here."); // todo need dialogue if you talk to Garv after unlocking the door
     } else {
-      ~chatnpc("<p,neutral>No. In there is private");
+      ~chatnpc("<p,neutral>No. In there is private.");
     }
   case 2 :
     ~chatplayer("<p,neutral>I want for nothing!");
@@ -17,6 +23,10 @@ switch_int(~p_choice2("Can I go in there?", 1, "I want for nothing!", 2)) {
 }
 
 [label,attempt_open_brimhaven_mansion_door]
+if(%hero_progress = ^hero_complete & %phoenixgang_progress >= ^phoenixgang_complete) {
+  mes("You don't have any reason to go in there.");
+  return;
+}
 if (npc_find(coord, garv, 7, 0) = true) {
   facesquare(npc_coord);
   ~chatnpc("<p,angry>Oi! Where do you think you're going pal?");
@@ -30,7 +40,7 @@ if (npc_find(coord, garv, 7, 0) = true) {
 if (%hero_progress = ^hero_blackarm_id_papers_obtained) { 
   ~chatplayer("<p,neutral>Hi. I'm Hertigen. I've come to work here.");
   if(~wearing_black_armour = false) { // https://youtu.be/rEzuCix51aM?t=1503 
-    ~chatnpc("<p,neutral>Hartigen the Black Knight? I don't think so. He doesn't dress like that"); 
+    ~chatnpc("<p,angry>Hartigen the Black Knight? I don't think so. He doesn't dress like that."); 
     return(false);
   }
   ~chatnpc("<p,neutral>I assume you have your I.D. papers then?");
@@ -39,7 +49,7 @@ if (%hero_progress = ^hero_blackarm_id_papers_obtained) {
     %hero_progress = ^hero_blackarm_mansion_unlocked;
     return(true);
   } else {
-    ~chatplayer("<p,neutral>Uh... Yeah. About that...I must have left them in my other suit of armour.");
+    ~chatplayer("<p,neutral>Uh... yeeeeaaaaah.... about that.... I must have left them in my other suit of armour....");
     return(false);
   }
 } else {
