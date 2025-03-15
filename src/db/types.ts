@@ -91,6 +91,13 @@ export type message = {
     content: string;
     created: Generated<string>;
 };
+export type message_status = {
+    id: Generated<number>;
+    thread_id: number;
+    account_id: number;
+    read: string | null;
+    deleted: string | null;
+};
 export type message_thread = {
     id: Generated<number>;
     to_account_id: number | null;
@@ -104,13 +111,6 @@ export type message_thread = {
     to_deleted: string | null;
     from_deleted: string | null;
     messages: Generated<number>;
-};
-export type message_status = {
-    id: Generated<number>;
-    thread_id: number;
-    account_id: number;
-    read: Generated<string> | null;
-    deleted: Generated<string> | null;
 };
 export type newspost = {
     id: Generated<number>;
@@ -171,8 +171,8 @@ export type DB = {
     ipban: ipban;
     login: login;
     message: message;
-    message_thread: message_thread;
     message_status: message_status;
+    message_thread: message_thread;
     newspost: newspost;
     private_chat: private_chat;
     public_chat: public_chat;
