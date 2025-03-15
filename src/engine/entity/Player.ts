@@ -438,6 +438,9 @@ export default class Player extends PathingEntity {
         this.timers.clear();
         this.heroPoints.clear();
         this.buildArea.clear(false);
+        this.appearance = -1;
+        this.lastAppearance = 0;
+        this.lastAppearanceBytes = null;
         this.isActive = false;
     }
 
