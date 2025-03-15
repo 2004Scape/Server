@@ -2,6 +2,7 @@ import Player from '#/engine/entity/Player.js';
 import World from '#/engine/World.js';
 import MessageHandler from '#/network/client/handler/MessageHandler.js';
 import ReportAbuse, { ReportAbuseReason } from '#/network/client/model/ReportAbuse.js';
+import Environment from '#/util/Environment.js';
 import { fromBase37 } from '#/util/JString.js';
 
 export default class ReportAbuseHandler extends MessageHandler<ReportAbuse> {
@@ -15,7 +16,7 @@ export default class ReportAbuseHandler extends MessageHandler<ReportAbuse> {
             return false;
         }
 
-        if (message.moderatorMute && player.staffModLevel > 0) {
+        if (message.moderatorMute && player.staffModLevel > 0 && Environment.NODE_PRODUCTION) {
             // 2 day mute
             World.notifyPlayerMute(player.username, fromBase37(message.offender), Date.now() + 172800000);
         }
