@@ -313,6 +313,7 @@ export default class Player extends PathingEntity {
     headicons: number = 0;
     appearance: number = -1;
     lastAppearance: number = 0;
+    lastAppearanceBytes: Uint8Array | null = null;
     baseLevels = new Uint8Array(21);
     lastStats: Int32Array = new Int32Array(21); // we track this so we know to flush stats only once a tick on changes
     lastLevels: Uint8Array = new Uint8Array(21); // we track this so we know to flush stats only once a tick on changes
@@ -1313,6 +1314,7 @@ export default class Player extends PathingEntity {
         stream.release();
 
         this.lastAppearance = World.currentTick;
+        this.lastAppearanceBytes = appearance;
         return appearance;
     }
 

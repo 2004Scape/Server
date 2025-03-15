@@ -1016,6 +1016,11 @@ class World {
         for (const player of this.players) {
             player.reorient();
             player.rebuildNormal();
+
+            const appearance = player.masks & InfoProt.PLAYER_APPEARANCE.id
+                ? player.generateAppearance()
+                : player.lastAppearanceBytes ?? player.generateAppearance();
+
             rsbuf.computePlayer(
                 player.x,
                 player.level,
@@ -1031,7 +1036,7 @@ class World {
                 player.lifecycle,
                 player.lifecycleTick,
                 player.masks,
-                player.generateAppearance(),
+                appearance,
                 player.lastAppearance,
                 player.faceEntity,
                 player.faceX,
