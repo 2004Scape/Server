@@ -105,6 +105,13 @@ export type message_thread = {
     from_deleted: string | null;
     messages: Generated<number>;
 };
+export type message_status = {
+    id: Generated<number>;
+    thread_id: number;
+    account_id: number;
+    read: Generated<string> | null;
+    deleted: Generated<string> | null;
+};
 export type newspost = {
     id: Generated<number>;
     category: number;
@@ -165,6 +172,7 @@ export type DB = {
     login: login;
     message: message;
     message_thread: message_thread;
+    message_status: message_status;
     newspost: newspost;
     private_chat: private_chat;
     public_chat: public_chat;

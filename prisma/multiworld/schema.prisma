@@ -222,3 +222,12 @@ model message {
     content   String @db.Text
     created   DateTime @default(now())
 }
+
+model message_status {
+  id Int @id @default(autoincrement())
+
+  thread_id  Int
+  account_id Int
+  read       DateTime?
+  deleted    DateTime?
+}
