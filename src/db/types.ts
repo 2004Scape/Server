@@ -1,5 +1,7 @@
 import type { ColumnType } from 'kysely';
-export type Generated<T> = T extends ColumnType<infer S, infer I, infer U> ? ColumnType<S, I | undefined, U> : ColumnType<T, T | undefined, T>;
+export type Generated<T> = T extends ColumnType<infer S, infer I, infer U>
+  ? ColumnType<S, I | undefined, U>
+  : ColumnType<T, T | undefined, T>;
 export type Timestamp = ColumnType<Date, Date | string, Date | string>;
 
 export type account = {
@@ -62,16 +64,6 @@ export type input_report = {
     account_id: number;
     timestamp: string;
     session_uuid: string;
-};
-export type input_report_event = {
-    input_report_id: number;
-    seq: number;
-    input_type: Generated<number>;
-    delta: number;
-    coord: number;
-    mouse_x: number | null;
-    mouse_y: number | null;
-    key_code: number | null;
 };
 export type input_report_event_raw = {
     input_report_id: number;
@@ -168,7 +160,6 @@ export type DB = {
     hiscore_large: hiscore_large;
     ignorelist: ignorelist;
     input_report: input_report;
-    input_report_event: input_report_event;
     input_report_event_raw: input_report_event_raw;
     ipban: ipban;
     login: login;
