@@ -23,8 +23,8 @@ export default [
     {
         settings: {
             'import/resolver': {
-                'node': true,
-                'typescript': true
+                node: true,
+                typescript: true
             }
         }
     },
@@ -58,22 +58,23 @@ export default [
             '@typescript-eslint/no-explicit-any': 'warn',
 
             '@typescript-eslint/no-unused-vars': [
-                // TODO: Set to error
-                'warn',
+                'error',
                 {
                     /**
                      * Allow variables prefixed with underscores to skip this rule.
                      * There aren't many good reasons to have unused variables,
                      * but the codebase has 100s of them.
                      */
-                    'vars': 'all',
-                    'varsIgnorePattern': '^_',
+                    vars: 'all',
+                    varsIgnorePattern: '^_',
                     /**
-                    * Allow parameters prefixed with underscores to skip this rule.
-                    * This is a common practice for router methods with req and res parameters.
-                    */
-                    'args': 'all',
-                    'argsIgnorePattern': '^_',
+                     * Allow parameters prefixed with underscores to skip this rule.
+                     * This is a common practice for router methods with req and res parameters.
+                     */
+                    args: 'all',
+                    argsIgnorePattern: '^_',
+                    caughtErrors: 'all',
+                    caughtErrorsIgnorePattern: '^_'
                 }
             ],
 

@@ -60,7 +60,6 @@ const LocOps: CommandHandlers = {
     [ScriptOpcode.LOC_CHANGE]: checkedHandler(ActiveLoc, state => {
         const [id, duration] = state.popInts(2);
 
-        const locType: LocType = check(id, LocTypeValid);
         check(duration, DurationValid);
 
         World.changeLoc(state.activeLoc, id, state.activeLoc.shape, state.activeLoc.angle, duration);

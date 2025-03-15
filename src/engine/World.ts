@@ -323,7 +323,7 @@ class World {
             this.loginThread.postMessage({
                 type: 'world_startup'
             });
-    
+
             this.friendThread.postMessage({
                 type: 'connect'
             });

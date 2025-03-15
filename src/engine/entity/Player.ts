@@ -63,7 +63,6 @@ import UpdateUid192 from '#/network/server/model/UpdatePid.js';
 import UpdateRebootTimer from '#/network/server/model/UpdateRebootTimer.js';
 import UpdateRunEnergy from '#/network/server/model/UpdateRunEnergy.js';
 import UpdateStat from '#/network/server/model/UpdateStat.js';
-import UpdateZoneFullFollows from '#/network/server/model/UpdateZoneFullFollows.js';
 import VarpLarge from '#/network/server/model/VarpLarge.js';
 import VarpSmall from '#/network/server/model/VarpSmall.js';
 import OutgoingMessage from '#/network/server/OutgoingMessage.js';

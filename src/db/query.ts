@@ -34,22 +34,7 @@ function logVerbose(event: LogEvent) {
 }
 
 export const db = new Kysely<DB>({
-    dialect:
-        Environment.DB_BACKEND === 'sqlite'
-            ? new SqliteDialect({
-                database: async () => new Database('db.sqlite')
-            })
-            : new MysqlDialect({
-                pool: async () =>
-                    createPool({
-                        database: Environment.DB_NAME,
-                        host: Environment.DB_HOST,
-                        port: Environment.DB_PORT,
-                        user: Environment.DB_USER,
-                        password: Environment.DB_PASS,
-                        timezone: 'Z'
-                    })
-            }),
+    dialect,
     log: Environment.KYSELY_VERBOSE ? logVerbose : []
 });
 
