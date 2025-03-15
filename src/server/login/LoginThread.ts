@@ -76,7 +76,7 @@ async function handleRequests(parentPort: ParentPort, msg: any) {
             } else {
                 let staffmodlevel = 0;
                 if (!Environment.NODE_PRODUCTION) {
-                    staffmodlevel = 3; // dev (destructive commands)
+                    staffmodlevel = 4; // dev (destructive commands)
                 }
 
                 const profile = Environment.NODE_PROFILE;
