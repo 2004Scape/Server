@@ -10,6 +10,7 @@ switch_int(random(2)) {
 
 [label,talk_legends_guard]
 mes("You approach a nearby guard...");
+%temp = 0;
 p_delay(1);
 @legends_guard_start;
 
@@ -37,14 +38,14 @@ else {
 }
 
 [label,legends_guard_what]
-~chatplayer("<p,quiz>What is this place?");
+~chatplayer("<p,neutral>What is this place?");
 ~chatnpc("<p,neutral>This is the Legends Guild, <text_gender("sir", "ma'am")>!");
 ~chatnpc("<p,neutral>Legendary RuneScape citizens are invited on a quest in order to become members of the guild.");
 @multi2("Can I go on the quest?", legends_guard_eligible,
         "What kind of quest is it?", legends_guard_quest_info);
 
 [label,legends_guard_eligible]
-~chatplayer("<p,quiz>Can I go on the quest?");
+~chatplayer("<p,neutral>Can I go on the quest?");
 ~mesbox("The guard gets out a scroll of paper and starts looking through it.");
 if (%crest_progress >= ^crest_complete & %hero_progress >= ^hero_complete & 
     %zombiequeen_progress >= ^zombiequeen_complete & %upass_progress >= ^upass_complete & 
@@ -56,8 +57,7 @@ if (%crest_progress >= ^crest_complete & %hero_progress >= ^hero_complete &
                     "Some other time perhaps.", legends_guard_decline);
     }
     else {
-        def_int $qp_needed = calc(^legends_required_questpoints - %questpoints);
-        ~chatnpc("<p,neutral>Well, you've completed the required quests. However, you also need to have 107 Quest points. Sorry to disappoint you, but you need <tostring($qp_needed)> more quest points. They don't call it the Legends Guild for nothing you know!");
+        ~chatnpc("<p,neutral>Well, you've completed the required quests. However, you also need to have 107 Quest points. Sorry to disappoint you, but you need <~legends_guard_missing_qp>. They don't call it the Legends Guild for nothing you know!");
     }
 }
 else {
@@ -65,8 +65,7 @@ else {
         ~chatnpc("<p,sad>I'm very sorry but you need to complete more quests before you can go on this quest.");
     }
     else {
-        def_int $qp_needed = calc(^legends_required_questpoints - %questpoints);
-        ~chatnpc("<p,sad>I'm very sorry but you need to complete more quests before you can go on this quest. Additionally you need to gain <tostring($qp_needed)> more quest points. They don't call it the Legends Guild for nothing you know!");
+        ~chatnpc("<p,sad>I'm very sorry but you need to complete more quests before you can go on this quest. Additionally you need to gain <~legends_guard_missing_qp>. They don't call it the Legends Guild for nothing you know!");
     }
     @multi2("Which quests do I need to complete?", legends_guard_missing_quests,
             "Ok thanks.", legends_guard_thanks_2);
@@ -78,23 +77,22 @@ else {
 @multi2("Yes, I'd like to talk to Grand Vizier Erkle.", legends_guard_enter,
         "Some other time perhaps.", legends_guard_decline);
 
-[debugproc,le]
-if (p_finduid(uid) = true) {
-    @legends_guard_open_gate;
-}
-
 [label,legends_guard_open_gate]
 if_close;
+if(%temp > 0) { // if you had started the dialogue by clicking on the gate, it will open as a standard gate
+    ~open_and_close_double_door2(~check_axis(coord, loc_coord, loc_angle), sub(%temp, 1), grate_open);
+    return;
+}
 if (loc_find(^legends_guild_gate_west_coord, legends_gate_west) = true) {
     def_coord $inside_dest = ^legends_guild_gate_dest_in_coord;
-    if (coord ! loc_coord & coord ! ^legends_guild_gate_east_coord) {
+    if (coord ! loc_coord) {
         // If you're not right next to the gate: sends you two steps away, then opens gate
         // and triggers walk to left inside tile on same tick. Always starts on right outside
         // tile and finishes on left inside tile.
         def_coord $player_coord = coord;
-        // Can visually run here, so p_walk
-        p_walk(^legends_guild_gate_dest_out_coord);
-        p_delay(max(distance($player_coord, ^legends_guild_gate_dest_out_coord), 1));
+        // https://youtu.be/Lid8enDEF_U?si=_WsthPuYw2_-MSwZ&t=256, will always walk, use forcemove
+        ~forcemove(^legends_guild_gate_dest_out_coord);
+        p_delay(0);
     }
     else {
         // If you are right next to it, you just go in straight away and don't cross sides.
@@ -102,8 +100,8 @@ if (loc_find(^legends_guild_gate_west_coord, legends_gate_west) = true) {
     }
     sound_synth(grate_open, 0, 0);
     ~open_double_doors_left(2, double_door_open_and_close_right, null);
-    // Cannot visually run here, so forcewalk
-    ~forcewalk($inside_dest);
+    // 2 tile p_teleport (OSRS)
+    p_teleport($inside_dest);
 }
 
 [label,legends_guard_enter]
@@ -166,8 +164,15 @@ else {
 }
 ~chatnpc("<p,neutral>They don't call it the Legends Guild for nothing you know! Best of luck if you intend to become a member!");
 
+[proc,legends_guard_missing_qp]()(string)
+def_int $qp_needed = calc(^legends_required_questpoints - %questpoints);
+if($qp_needed = 1) {
+    return ("one more quest point");
+}
+return ("<tostring($qp_needed)> more quest points");
+
 [label,legends_guard_quest_info]
-~chatplayer("<p,quiz>What kind of quest is it?");
+~chatplayer("<p,neutral>What kind of quest is it?");
 ~chatnpc("<p,neutral>Well, to be honest <text_gender("sir", "ma'am")>, I'm not really sure. You'll need to talk to Grand Vizier Erkle to find that out.");
 @multi2("Can I go on the quest?", legends_guard_eligible,
         "Thanks for your help.", legends_guard_thanks_3);

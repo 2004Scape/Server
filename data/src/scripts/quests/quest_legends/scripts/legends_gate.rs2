@@ -16,6 +16,7 @@ while (npc_findnext = true) {
                 ~open_and_close_double_door2(~check_axis(coord, loc_coord, loc_angle), $side, grate_open);
             }
             mes("A nearby guard approaches you...");
+            %temp = add($side, 1);
             p_delay(1);
             @legends_guard_start;
             return;
@@ -27,7 +28,8 @@ while (npc_findnext = true) {
                 // https://youtu.be/Na7_bVfAosM?t=27
                 npc_say("! ! ! Attention ! ! !");
                 p_delay(1);
-                npc_say("Legends Guild Member Approaching!");
+                // https://storage.googleapis.com/tannerdino/images/rslegendguild1.gif
+                npc_say("Legends Guild Member Approaching");
                 mes("The guards salute you as you walk past.");
             }
             else {

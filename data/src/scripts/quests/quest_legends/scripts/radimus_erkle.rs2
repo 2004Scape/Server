@@ -3,7 +3,7 @@
 
 [opnpc1,radimus_erkle] 
 if (%legends_progress = ^legends_not_started) {
-    ~chatnpc("<p,happy>Good day to you <text_gender("Sir", "m'Lady")>! No doubt you are keen to|become a member of the Legends Guild?");
+    ~chatnpc("<p,happy>Good day to you <text_gender("Sir", "m'Lady")>! No doubt you are keen to become a member of the Legends Guild?");
     @multi3("Yes actually, what's involved?", radimus_erkle_yes,
         "Maybe some other time.", radimus_erkle_decline,
         "Who are you?", radimus_erkle_who);
@@ -141,7 +141,7 @@ if (inv_freespace(inv) = 0) {
 }
 ~chatnpc("<p,neutral>Ok, you'll need this starting map of the Kharazi Jungle.");
 ~objbox(radimus_notes, "Grand Vizier Erkle gives you some notes and a map.", 180, 0, 0);
-%legends_progress = 1;
+%legends_progress = ^legends_started;
 ~send_quest_progress(questlist:legends, %legends_progress, ^legends_complete);
 inv_add(inv, radimus_notes, 1);
 ~chatnpc("<p,neutral>Complete this map when you get to the Kharazi Jungle.|It's towards the southern most part of Karamja.");

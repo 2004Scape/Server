@@ -95,8 +95,7 @@ else {
 ~mesbox("You search the bookcase, it looks fairy old...|After a while you notice that there is a small crevice|in the back. You might just be able to force your way|through if you were in any way athletic.");
 if (~p_choice2_header("Yes please!", 1, "No thanks!", 2, "Would you like to squeeze into this crevice?") = 1) {
     if_close;
-    p_walk(0_43_145_42_59);
-    p_delay(1);
+    ~forcewalk(0_43_145_42_59);
     anim(human_pickupfloor, 0);
     p_delay(1);
     ~agility_exactmove(human_crawling, 0, 0, coord, 0_43_145_43_60, 6, 20, ^exact_east, false);
@@ -151,12 +150,41 @@ else {
 [oploc3,legends_radimus_cupboard_open]
 @close_cupboard(true);
 
+[proc,legends_fire_wall_walk]
+if(loc_type = legends_fire_wall_1) {
+    mes("<tostring(loc_angle)>");
+    switch_int(loc_angle) {
+        case ^loc_north :
+            if(coordz(coord) > coordz(loc_coord)) p_teleport(movecoord(loc_coord, 0, 0, -1));
+            else p_teleport(movecoord(loc_coord, 0, 0, 1));
+        case ^loc_south :
+            if(coordz(coord) >= coordz(loc_coord)) p_teleport(movecoord(loc_coord, 0, 0, -1));
+            else p_teleport(movecoord(loc_coord, 0, 0, 1));
+        case ^loc_east :
+            if(coordx(coord) > coordx(loc_coord)) p_teleport(movecoord(loc_coord, -1, 0, 0));
+            else p_teleport(movecoord(loc_coord, 1, 0, 0));
+        case ^loc_west :
+            if(coordx(coord) >= coordx(loc_coord)) p_teleport(movecoord(loc_coord, -1, 0, 0));
+            else p_teleport(movecoord(loc_coord, 1, 0, 0));
+    }
+} else {
+    switch_int(loc_angle) {
+        case ^loc_north, ^loc_south :
+            if(coordx(coord) > coordx(loc_coord) | coordz(coord) > coordz(loc_coord)) p_teleport(movecoord(loc_coord, -1, 0, -1));
+            else p_teleport(movecoord(loc_coord, 1, 0, 1));
+        case ^loc_west, ^loc_east :
+            if(coordx(coord) < coordx(loc_coord) | coordz(coord) > coordz(loc_coord)) p_teleport(movecoord(loc_coord, 1, 0, -1));
+            else p_teleport(movecoord(loc_coord, -1, 0, 1));
+    }
+}
+p_delay(1);
+
 [label,legends_touch_fire_wall]
 // todo: jump out option
 if (%legends_progress >= ^legends_defeated_nezikchened_fire) {
     mes("You feel completely fine to walk through these flames.");
     mes("The magic of Ungadulu's spell protects you from the flames.");
-    // todo: walk through
+    ~legends_fire_wall_walk;
     return;
 }
 mes("You approach the supernatural flames.");
@@ -179,7 +207,8 @@ else {
 if (%legends_progress >= ^legends_defeated_nezikchened_fire) {
     mes("You feel completely fine to walk through these flames.");
     mes("The magic of Ungadulu's spell protects you from the flames.");
-    // todo: walk through
+    ~legends_fire_wall_walk;
+
     return;
 }
 ~mesbox("You look closely at the flames. They seem to form a straight wall.|Something about them looks very strange: they look completely|supernatural. For example, they seem to come from|straight out of the ground.");
@@ -219,53 +248,10 @@ while (npc_findnext = true) {
 
 [label,legends_use_on_fire_wall]
 if (last_useitem = blessed_golden_bowl_pure_water) {
-    p_delay(1);
-    anim(human_pickuptable, 0);
+    // https://youtu.be/uF1a9xsV7zo?si=XkkWfOB4Hj2Bewwl&t=1764
     loc_del(1);
-    spotanim_map(small_smokepuff, loc_coord, 64, 0);
-
-    def_int $dir;
-    if (loc_type = legends_fire_wall_2) {
-        if (~check_axis(coord, loc_coord, loc_angle) = true) {
-            // todo... :(
-            switch_int(loc_angle) {
-                case ^loc_west : $dir = ^exact_west;
-                case ^loc_north : $dir = ^exact_north;
-                case ^loc_east : $dir = ^exact_east;
-                case ^loc_south : $dir = ^exact_south;
-            }
-        }
-        else {
-            switch_int(loc_angle) {
-                case ^loc_west : $dir = ^exact_east;
-                case ^loc_north : $dir = ^exact_south;
-                case ^loc_east : $dir = ^exact_west;
-                case ^loc_south : $dir = ^exact_north;
-            }
-        }
-    }
-    else {
-        if (~check_axis(coord, loc_coord, loc_angle) = true) {
-            switch_int(loc_angle) {
-                case ^loc_west : $dir = ^exact_west;
-                case ^loc_north : $dir = ^exact_north;
-                case ^loc_east : $dir = ^exact_east;
-                case ^loc_south : $dir = ^exact_south;
-            }
-        }
-        else {
-            switch_int(loc_angle) {
-                case ^loc_west : $dir = ^exact_east;
-                case ^loc_north : $dir = ^exact_south;
-                case ^loc_east : $dir = ^exact_west;
-                case ^loc_south : $dir = ^exact_north;
-            }
-        }
-    }
-    def_coord $dest = ~movecoord_indirection(loc_coord, $dir, 1);
-    ~forcewalk($dest);
-    mes("You splash some sacred water on the flames.");
-    mes("<lc_debugname(loc_type)>");
+    ~legends_fire_wall_walk;
+    mes("You splash some pure water on the flames.");
 }
 
 [label,legends_search_rocks]
@@ -291,9 +277,9 @@ if (%legends_progress >= ^legends_found_entrance) {
             return;
         }
         mes("You try to crawl through...");
-        p_delay(1);
+        p_delay(0);
         mes("You contort your body to fit the crevice.");
-        p_delay(1);
+        p_delay(0);
         // guess
         if (stat_random(stat(agility), 125, 250) = false) {
             mes("You get cramped in the tiny space and start to suffocate.");
@@ -311,12 +297,12 @@ if (%legends_progress >= ^legends_found_entrance) {
         else {
             // "adroitely" is authentic, fixed in current OSRS
             mes("You adroitely squeeze serpent like into the crevice.");
-            p_delay(2);
+            p_delay(1);
             p_teleport(0_43_145_21_61);
             mes("You find a small narrow tunnel that goes for some distance.");
-            p_delay(2);
+            p_delay(1);
             mes("After some time, you find a small cave opening... and walk through.");
-            p_delay(3);
+            p_delay(2);
         }
     }
     else {
@@ -328,7 +314,7 @@ if (%legends_progress >= ^legends_found_entrance) {
 [label,legends_cave_entrance]
 p_delay(1);
 mes("You crawl back out from the cavern...");
-p_delay(3);
+p_delay(2);
 p_teleport(0_43_45_29_54);
 
 [oploc1,legends_ancient_gate_1_closed] @open_outer_ancient_gate(^left);
@@ -399,13 +385,15 @@ if (stat_random(stat(thieving), 0, 255) = false) {
     return;
 }
 ~mesbox("CLICK!");
-~chatplayer("<p,neutral>Easy as pie...");
+~chatplayer("<p,happy>Easy as pie...");
 ~mesbox("You tumble the lock mechanism and the door opens easily.");
 stat_advance(thieving, 100);
 ~open_and_close_double_door2($entering, $side, door_open);
 
 [label,use_on_outer_ancient_gate](int $side)
-if (last_useitem = lockpick) {
+def_obj $last_item = last_useitem;
+p_delay(0);
+if ($last_item = lockpick) {
     @search_outer_ancient_gate($side);
 }
 ~displaymessage(^dm_default);
@@ -423,6 +411,7 @@ if ($choice = 1) {
     say("Urghhhhh!");
     ~mesbox("You start to force the doors open...");
     say("Arghhhhhhh!");
+    anim(human_push, 0);
     ~mesbox("You push and push...");
     // lose 1 str immediately on failure
     // lose 1-2 more if you continue instead of clicking out of the mesbox
@@ -449,7 +438,7 @@ def_obj $pickaxe = ~pickaxe_checker;
 if ($pickaxe = null) {
     // osrs
     mes("You need a pickaxe to mine this rock.");
-    mes("You do not have a pickaxe which you have the Mining level to use");
+    mes("You do not have a pickaxe which you have the Mining level to use.");
     // this triggers if you are south of the first boulder, or interacting with either of the latter
     // two boulders from either side
     if(coordz(coord) < coordz(loc_coord) | loc_type = legends_boulder_2 | loc_type = legends_boulder_3) {
@@ -477,12 +466,14 @@ if (stat_random(stat(mining), 0, 255) = true) {
         inv_add(inv, rocks, 1);
         stat_advance(mining, 350);
     }
-    loc_change(loc_446, 6);
     def_int $move = -1;
     if(coordz(coord) < coordz(loc_coord)) {
-        $move = 1;
-    } 
-    ~forcemove(movecoord(coord, 0, 0, calc($move * 3)));
+        $move = 2;
+    }
+    loc_change(loc_446, 6);
+    p_teleport(loc_coord);
+    p_delay(2);
+    p_teleport(movecoord(coord, 0, 0, $move));
     p_delay(2);
     mes("Another boulder drops down behind you.");
 }
@@ -504,8 +495,8 @@ else {
 def_int $choice = ~p_choice2_header("Yes, I'll try to climb out.", 1, "No thanks, I think there's something else I can do.", 2, "Climb out of dangerous mining trial.");
 if ($choice = 1) {
     p_teleport(0_43_145_58_50);
-    mes("You eventually manage to climb your way out, but you cut yourself to ribbons in the");
-    mes("process.");
+    mes("You eventually manage to climb your way out, but you cut yourself to ribbons in");
+    mes("the process.");
     // static 2 damage
     ~damage_self(2);
     p_delay(1);
@@ -820,12 +811,11 @@ obj_add(0_43_145_13_17, book_of_binding, 1, 200);
 
 [proc,book_of_binding_page]
 switch_int (%book_page) {
-    // todo: rest of pages and try to get this from rsprox
     case 0 : ~book("Book of Binding", "|--------------------------------|   Book of Binding|--------------------------------||- A treatise on Demons -|||||||    -- Indexo --||     Arcana : I||   Instructo : II||    Defeati : III||   Enchanto : IIII");
-    case 1 : ~book("Book of Binding", "");
-    case 2 : ~book("Book of Binding", "");
-    case 3 : ~book("Book of Binding", "");
-    case 4 : ~book("Book of Binding", "");
+    case 1 : ~book("Book of Binding", "Arcana I: Use holy water to determine possession.| Slight appearance changes may be perceived|when doused.|| Legendary Silverlight will help to defeat any demon by weakening it.||| Arcana II : Be wary of any demon, it may have special forms of attack.|| Use an Octagram of Fire to confine unearthly creatures of the underworld - the perfect geometry confuses them.|                 Eximus");
+    case 2 : ~book("Book of Binding", "Instructo : Creation of holy water must be undertaken with determination and|urgency.|| Take to yourself empty vials free of all liquids.|| Read warily the enchantment contained herewithin in order to magick the vial for the holding of holy or sacred|water.| Take utmost care as you enchant them.| With great care and precision place the sacred water into a magicked vial and stopper it.|                 Eximus");
+    case 3 : ~book("Book of Binding", "Defeati... the dreaded demon will be of unholy power and abilities.| Present thyself before the possessed with good intent and ready|manner.| With least obstruction and utmost solemnity hold open the pages of this great tome in order that the goodlight falls upon the victim completely.| Be thee prepared in every capacity, for the demon's tricks and wiles will swiftly outwit the unready adventurer.| Attack with vigour and zest if thee hopes to see another day.|                 Eximus");
+    case 4 : ~book("Book of Binding", "Enchanto...|| Possessus valius emptious, projectus spellicus avoir valius|magicus.|| Castus enchanto avoir createur valius magicus holious avour defeati Demonicus Absolutus.||| Extralias projectus Magicus Holarius|| Attackanie Demonicus Absolutus distancie airus throwus armiues.|||                 Eximus");
 }
 
 [oploc1,legends_buried_skeleton]
@@ -833,6 +823,12 @@ switch_int (%book_page) {
 mes("There's nothing interesting about these remains.");
 
 [oploc1,legends_ancient_gate_5_closed]
+if(coordz(coord) > coordz(loc_coord)) {
+    mes("The gate shimmers and changes as you approach.");
+    mes("You feel yourself being pulled through the portal.");
+    ~agility_exactmove(human_knockback, 0, 1, coord, 0_43_145_11_32, 0, 130, ^exact_south, false);
+    return;
+}
 ~mesbox("This door is fused with rock, it doesn't seem possible to open it.|But it does look slightly strange in some way.");
 
 [oploc2,legends_ancient_gate_5_closed]
@@ -1038,7 +1034,6 @@ else {
     ~displaymessage(^dm_default);
 }
 
-
 [label,make_golden_bowl]
 if (map_members = false) {
     mes("You can only make that on a members' server.");
@@ -1087,6 +1082,50 @@ else {
     inv_add(inv, gold_bowl, 1);
     stat_advance(smithing, 300);
 }
+
+[label,legends_cast_orb_door](dbrow $spell_data)
+def_namedobj $final_obj;
+def_seq $anim;
+def_spotanim $spotanim;
+def_synth $sound;
+$final_obj, $anim, $spotanim, $sound = ~magic_spell_search_convertobj($spell_data, stafforb);
+~forcewalk2(0_43_145_11_31);
+facesquare(loc_coord);
+p_delay(0);
+inv_del(inv, stafforb, 1);
+~delete_spell_runes($spell_data);
+~give_spell_xp($spell_data);
+anim($anim, 0);
+spotanim_pl($spotanim, 92, 0);
+sound_synth($sound, 0, 0);
+loc_change(legends_ancient_gate_5_open, 10);
+p_delay(1);
+mes("The gate changes!");
+p_delay(0);
+~agility_exactmove(human_knockback, 0, 1, coord, 0_43_145_11_40, 0, 130, ^exact_north, false);
+~objbox(stafforb, "The orb shatters with the power of the magic. The spell works and you magically appear in a different part of the cave system. It seems that the gate was a test of magical ability.", 250, 0, 0);
+~mesbox("As soon as you enter the room, you are filled with dread. In the centre of the room is a large gaping hole. It goes down a long way...");
+
+[oploc1,legends_barrel]
+mes("You smash the barrel open.");
+loc_del(500);
+spotanim_map(Barrel_Smash, loc_coord, 0, 0);
+anim(%com_attackanim, 0);
+//settimer(legends_spawn_barrel, 20);
+def_int $rand = random(128);
+if($rand < 8) {
+    mes("There's nothing in the barrel.");
+    ~legends_barrel_spawn_npc;
+} else if($rand < 24) {
+    
+}
+
+[proc,legends_barrel_spawn_npc]
+spotanim_map(small_smokepuff, 0_41_154_22_10, 0, 0);
+sound_synth(smokepuff, 0, 0);
+
+
+[timer,legends_spawn_barrel]
 
 [queue,legends_quest_complete]
 %legends_progress = ^legends_complete;

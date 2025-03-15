@@ -13,6 +13,9 @@ def_dbrow $spell_data = ~get_spell_data($spell);
 if (~check_spell_requirements($spell_data) = false) {
     return;
 }
+if($loc = legends_ancient_gate_5_closed) {
+    @legends_cast_orb_door($spell_data);
+}
 // check if used on correct loc
 if (db_getfield($spell_data, magic_spell_table:loc_type, 0) ! $loc) {
     mes("This spell needs to be cast on <~add_article(lc_param(db_getfield($spell_data, magic_spell_table:loc_type, 0), charge_orb_name))>.");
