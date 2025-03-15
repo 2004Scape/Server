@@ -2,11 +2,9 @@
 table=coord_pair_table
 // varrock east bank
 data=coord_pair,0_50_53_53_33,0_50_53_53_35
-data=coord_pair,0_50_53_50_24,0_50_53_57_32
-data=coord_pair,1_50_53_50_24,1_50_53_57_32
+data=coord_pair,0_50_53_50_24,1_50_53_57_32
 // varrock west bank
-data=coord_pair,1_49_53_44_41,1_49_53_54_55
-data=coord_pair,0_49_53_44_41,0_49_53_54_55
+data=coord_pair,0_49_53_44_41,1_49_53_54_55
 // al kharid bank
 data=coord_pair,0_51_49_1_25,0_51_49_8_37
 // draynor bank
@@ -25,9 +23,8 @@ data=coord_pair,1_46_52_1_34,1_46_52_5_41
 // edgeville bank
 data=coord_pair,0_48_54_19_32,0_48_54_26_43
 // seers bank
-data=coord_pair,0_42_54_33_34,0_42_54_42_41
+data=coord_pair,0_42_54_33_34,1_42_54_42_41
 data=coord_pair,0_42_54_36_31,0_42_54_39_33
-data=coord_pair,1_42_54_33_34,1_42_54_42_41
 // catherby bank
 data=coord_pair,0_43_53_54_46,0_43_53_60_53
 // yanille bank
@@ -37,9 +34,7 @@ data=coord_pair,0_40_52_52_7,0_40_52_54_7
 data=coord_pair,0_40_52_59_7,0_40_52_61_7
 data=coord_pair,0_40_52_52_2,0_40_52_61_6
 // ardougne east bank
-data=coord_pair,0_41_51_25_16,0_41_51_34_23
-data=coord_pair,1_41_51_25_16,1_41_51_34_23
-data=coord_pair,2_41_51_25_16,2_41_51_34_23
+data=coord_pair,0_41_51_25_16,2_41_51_34_23
 // shilo village bank
 data=coord_pair,0_44_46_27_8,0_44_46_29_11
 data=coord_pair,0_44_46_30_9,0_44_46_42_11

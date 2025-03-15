@@ -355,7 +355,8 @@ switch_int(~p_choice3("Can I be of help?", 1, "I'm not sure I can help.", 2, "I'
 [label,watchwiz_give_fingernails]
 ~chatplayer("<p,happy>Have a look at these...");
 ~chatnpc("<p,neutral>Interesting, very interesting.");
-~chatnpc("<p,confused>Long nails...grey in colour...well chewed...");
+// https://web.archive.org/web/20041126094839im_/http://img16.imageshack.us/img16/5301/wizardthree.jpg
+~chatnpc("<p,confused>Long nails... grey in colour.|Well chewed...");
 ~chatnpc("<p,happy>Of course! They belong to a skavid!");
 ~chatplayer("<p,confused>A skavid?");
 ~chatnpc("<p,neutral>A servant race to the ogres:|grey, depressed-looking creatures,|always losing nails, teeth and hair!");

@@ -1,16 +1,16 @@
-[ai_queue10,npc_507]
+[ai_queue10,nazastarool_zombie]
 npc_say("I am Nazastarool! Prepare to die!");
 if(p_finduid(%npc_aggressive_player) = true) ~npc_retaliate(0);
 
-[ai_queue10,npc_508]
+[ai_queue10,nazastarool_skeleton]
 npc_say("Your death will be swift.");
 if(p_finduid(%npc_aggressive_player) = true) ~npc_retaliate(0);
 
-[ai_queue10,npc_509]
+[ai_queue10,nazastarool_ghost]
 npc_say("Soon you will serve Rashiliyia.");
 if(p_finduid(%npc_aggressive_player) = true) ~npc_retaliate(0);
 
-[ai_queue3,npc_507]
+[ai_queue3,nazastarool_zombie]
 gosub(npc_death);
 // don't need to deal damage, you just need to be the last player to attack
 // (that's why we're not checking heropoints here): https://www.youtube.com/watch?v=D_jR2BZy5_g
@@ -19,14 +19,14 @@ if (finduid(%npc_aggressive_player) = true) {
     queue(defeat_nazastarool1, 0);
 }
 
-[ai_queue3,npc_508]
+[ai_queue3,nazastarool_skeleton]
 gosub(npc_death);
 if (finduid(%npc_aggressive_player) = true) {
     if_close;
     queue(defeat_nazastarool2, 0);
 }
 
-[ai_queue3,npc_509]
+[ai_queue3,nazastarool_ghost]
 gosub(npc_death);
 if (finduid(%npc_aggressive_player) = true) {
     if_close;
@@ -34,18 +34,27 @@ if (finduid(%npc_aggressive_player) = true) {
 }
 
 [queue,defeat_nazastarool1]
+if(inzone(0_45_148_0_0, 0_45_148_63_63, coord) = false) {
+    return;
+}
 %zq_map_mechanisms = setbit(%zq_map_mechanisms, ^zq_defeated_nazastarool1);
 ~mesbox("You defeat Nazastarool and the corpse falls to the ground. The bones start to move again and soon they reform into a grisly giant skeleton.");
 if_close;
 @summon_nazastarool;
 
 [queue,defeat_nazastarool2]
+if(inzone(0_45_148_0_0, 0_45_148_63_63, coord) = false) {
+    return;
+}
 %zq_map_mechanisms = setbit(%zq_map_mechanisms, ^zq_defeated_nazastarool2);
 ~mesbox("You defeat Nazastarool and the skeleton falls to the ground. An ethereal form starts taking shape above the bones and you soon face the vengeful ghost of Nazastarool.");
 if_close;
 @summon_nazastarool;
 
 [queue,defeat_nazastarool3]
+if(inzone(0_45_148_0_0, 0_45_148_63_63, coord) = false) {
+    return;
+}
 %zq_map_mechanisms = setbit(%zq_map_mechanisms, ^zq_defeated_nazastarool3);
 obj_add(0_45_148_13_15, rashiliya_corpse, 1, ^lootdrop_duration);
 queue(zq_corpseappear, 0);

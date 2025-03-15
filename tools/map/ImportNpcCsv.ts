@@ -1,8 +1,8 @@
 import fs from 'fs';
 import { basename } from 'path';
 
-import { loadDir } from '#/util/Parse.js';
 import { printError, printFatalError, printInfo } from '#/util/Logger.js';
+import { loadDir } from '#/util/Parse.js';
 
 let allNpcs: {
     id: number;

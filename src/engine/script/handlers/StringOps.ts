@@ -1,5 +1,5 @@
-import { CommandHandlers } from '#/engine/script/ScriptRunner.js';
 import ScriptOpcode from '#/engine/script/ScriptOpcode.js';
+import { CommandHandlers } from '#/engine/script/ScriptRunner.js';
 
 const StringOps: CommandHandlers = {
     [ScriptOpcode.APPEND_NUM]: state => {

@@ -1,4 +1,5 @@
 import { WebSocket } from 'ws';
+
 import WsSyncReq from '#3rdparty/ws-sync/ws-sync.js';
 
 export default class InternalClient {
@@ -18,12 +19,10 @@ export default class InternalClient {
             return;
         }
 
-        return new Promise((res) => {
-            this.ws = new WebSocket(`ws://${this.host}:${this.port}`,
-                {
-                    timeout: 5000
-                }
-            );
+        return new Promise(res => {
+            this.ws = new WebSocket(`ws://${this.host}:${this.port}`, {
+                timeout: 5000
+            });
 
             const timeout = setTimeout(() => {
                 if (this.ws) {

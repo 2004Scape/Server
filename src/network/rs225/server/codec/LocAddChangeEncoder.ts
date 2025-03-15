@@ -1,7 +1,7 @@
 import Packet from '#/io/Packet.js';
 import ZoneProt from '#/network/rs225/server/prot/ZoneProt.js';
-import LocAddChange from '#/network/server/model/LocAddChange.js';
 import ZoneMessageEncoder from '#/network/server/codec/ZoneMessageEncoder.js';
+import LocAddChange from '#/network/server/model/LocAddChange.js';
 
 export default class LocAddChangeEncoder extends ZoneMessageEncoder<LocAddChange> {
     prot = ZoneProt.LOC_ADD_CHANGE;

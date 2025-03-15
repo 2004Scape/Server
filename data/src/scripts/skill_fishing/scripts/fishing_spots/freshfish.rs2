@@ -1,0 +1,150 @@
+[opnpc1,_freshfish] 
+//mes("<tostring(map_clock)>, <tostring(%action_delay)>");
+@attempt_fish_trout_salmon;
+[opnpc3,_freshfish] 
+//mes("<tostring(map_clock)>, <tostring(%action_delay)>");
+@attempt_fish_pike;
+
+// hidden options
+[opnpc4,_freshfish]
+//mes("<tostring(map_clock)>, <tostring(%action_delay)>");
+@fish_trout_salmon;
+[opnpc5,_freshfish] 
+//mes("<tostring(map_clock)>, <tostring(%action_delay)>");
+@fish_pike;
+
+
+[opnpcu,_freshfish]
+switch_obj(last_useitem) {
+    case fishing_rod : p_opnpc(3);
+    case fly_fishing_rod : p_opnpc(1);
+    case default : @fishing_wrong_spot_message(last_useitem);
+}
+
+// trout and salmon
+[label,attempt_fish_trout_salmon]
+// check level
+if (stat(fishing) < 20) {
+    anim(null, 0);
+    ~mesbox("You need at least 20 Fishing to lure these fish.");
+    return;
+}
+// check if they have fishing equipment & bait
+if (~check_fish_equipment(fly_fishing_rod) = false) {
+    return;
+}
+// matches this video 1:1 https://youtu.be/neAoU0yiGFY?t=16
+if (%action_delay < map_clock) {
+    %action_delay = calc(map_clock + 4);
+    p_opnpc(1);
+    return;
+}
+if (%action_delay = calc(map_clock + 3)) {
+    anim(human_fishing_casting, 0);
+    mes("You cast out your line...");
+    p_opnpc(1);
+    return;
+}
+if (%action_delay = calc(map_clock + 2)) {
+    sound_synth(fishing_cast, 0, 0);
+    mes("You attempt to catch a fish.");
+}
+p_opnpc(4);
+// random events didnt prevent you from continuing to fish: https://youtu.be/M_AOjwLD9Og?list=PLn23LiLYLb1am4weMQzkWn5m9b3m9fXv9&t=199
+if (afk_event = ^true & npc_param(is_whirlpool) = ^false) {
+    @macro_event_fishing(fly_fishing_rod);
+}
+
+
+[label,fish_trout_salmon]
+// check level
+if (stat(fishing) < 20) {
+    anim(null, 0);
+    ~mesbox("You need at least 20 Fishing to lure these fish.");
+    return;
+}
+// check if they still have fishing equipment & bait
+if (~check_fish_equipment(fly_fishing_rod) = false) {
+    return;
+}
+// check if inv is full
+// 0 feathers is checked earlier
+if (inv_freespace(inv) = 0 & inv_total(inv, feather) > 1) {
+    anim(null, 0);
+    ~mesbox("You can't carry any more fish.");
+    return;
+}
+if (%action_delay < map_clock) {
+    %action_delay = calc(map_clock + 4);
+} else if (%action_delay = map_clock) {
+    if (stat(fishing) >= 30) {
+        ~fish_roll(raw_trout, raw_salmon, fly_fishing_rod, feather);
+    } else {
+        ~fish_roll(raw_trout, null, fly_fishing_rod, feather);
+    }
+    anim(human_fish_onspot, 0);
+}
+p_opnpc(4);
+
+
+// pike
+[label,attempt_fish_pike]
+// check level
+if (stat(fishing) < 25) {
+    anim(null, 0);
+    ~mesbox("You need at least 25 Fishing to bait these fish.");
+    return;
+}
+// check if they have fishing equipment & bait
+if (~check_fish_equipment(fishing_rod) = false) {
+    return;
+}
+if (%action_delay < map_clock) {
+    %action_delay = calc(map_clock + 4);
+    p_opnpc(3);
+    return;
+}
+if (%action_delay = calc(map_clock + 3)) {
+    anim(human_fishing_casting, 0);
+    mes("You cast out your line...");
+    p_opnpc(3);
+    return;
+}
+if (%action_delay = calc(map_clock + 2)) {
+    sound_synth(fishing_cast, 0, 0);
+    mes("You attempt to catch a fish.");
+}
+p_opnpc(5);
+if (afk_event = ^true & npc_param(is_whirlpool) = ^false) {
+    @macro_event_fishing(fishing_rod);
+}
+
+
+[label,fish_pike]
+// check level
+if (stat(fishing) < 25) {
+    anim(null, 0);
+    ~mesbox("You need at least 25 Fishing to bait these fish.");
+    return;
+}
+// check if they still have fishing equipment & bait
+if (~check_fish_equipment(fishing_rod) = false) {
+    return;
+}
+// check if inv is full
+if (inv_freespace(inv) = 0 & inv_total(inv, fishing_bait) > 1) {
+    anim(null, 0);
+    ~mesbox("You can't carry any more fish.");
+    return;
+}
+if (%action_delay < map_clock) {
+    %action_delay = calc(map_clock + 4);
+} else if (%action_delay = map_clock) {
+    ~fish_roll(raw_pike, null, fishing_rod, fishing_bait);
+    if (random(5) = 0) { // 1/5 chance to recast https://x.com/JagexAsh/status/1585958606364868608
+        p_opnpc(3);
+        return;
+    }
+    anim(human_fish_onspot, 0);
+}
+p_opnpc(5);

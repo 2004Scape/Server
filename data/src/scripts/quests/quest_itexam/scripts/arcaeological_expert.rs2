@@ -86,13 +86,17 @@ if ($item = talisman_of_zaros) {
     inv_add(inv, invitation_letter, 1);
     mes("The expert hands you a letter.");
 } else if ($item = stone_tablet) {
+    if(%itexam_progress = ^itexam_complete) {
+        ~chatnpc("<p,confused>I don't need another tablet!|One is enough, thank you.");
+        return;
+    }
     ~chatplayer("<p,happy>I found this in a hidden cavern beneath the digsite.");
     ~chatnpc("<p,neutral>Incredible!");
-    ~chatplayer("<p,neutral>There is an altar down there. The place is crawling with skeletons!");
+    ~chatplayer("<p,neutral>There is an altar down there.|The place is crawling with skeletons!");
     ~chatnpc("<p,neutral>Yuck!");
-    ~chatnpc("<p,happy>This is an amazing discovery! All this while we were convinced that no other race had lived here.");
-    ~chatnpc("<p,happy>It seems the followers of Saradomin have tried to cover up the evidence of the Zaros altar. This whole city must have been built over it!");
-    ~chatnpc("<p,happy>Thanks for your help; your sharp eyes have spotted what many have missed. Here, take this gold as your reward.");
+    ~chatnpc("<p,happy>This is an amazing discovery!|All this while we were convinced|that no other race had lived here.");
+    ~chatnpc("<p,happy>It seems the followers of Saradomin|have tried to cover up the evidence of the Zaros altar.|This whole city must have been built over it!");
+    ~chatnpc("<p,happy>Thanks for your help;|your sharp eyes have spotted what many have missed.|Here, take this gold as your reward.");
     ~objbox(gold_bar, "The expert gives you 2 gold bars as payment.", 250, 0, divide(^objbox_height, 2));
     inv_del(inv, stone_tablet, 1);
     queue(itexam_complete, 0);

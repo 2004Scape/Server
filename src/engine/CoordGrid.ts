@@ -11,7 +11,7 @@ export const Direction = {
 // TODO (jkm) consider making this an enum
 type Direction = (typeof Direction)[keyof typeof Direction];
 
-export type CoordGrid = {level: number, x: number, z: number};
+export type CoordGrid = { level: number; x: number; z: number };
 
 // TODO (jkm) consider making this a class
 export const CoordGrid = {
@@ -72,14 +72,14 @@ export const CoordGrid = {
         };
     },
 
-    distanceToSW(pos: { x: number, z: number }, other: { x: number, z: number }) {
+    distanceToSW(pos: { x: number; z: number }, other: { x: number; z: number }) {
         const deltaX = Math.abs(pos.x - other.x);
         const deltaZ = Math.abs(pos.z - other.z);
 
         return Math.max(deltaX, deltaZ);
     },
 
-    isWithinDistanceSW(pos: { x: number, z: number }, other: { x: number, z: number }, distance: number) {
+    isWithinDistanceSW(pos: { x: number; z: number }, other: { x: number; z: number }, distance: number) {
         if (Math.abs(pos.x - other.x) > distance || Math.abs(pos.z - other.z) > distance) {
             return false;
         }

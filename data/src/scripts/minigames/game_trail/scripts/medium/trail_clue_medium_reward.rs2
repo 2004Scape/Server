@@ -17,7 +17,7 @@ while ($roll < $rolls) {
 ~trail_complete;
 
 [proc,trail_clue_medium_normal]
-def_int $random = random(27);
+def_int $random = random(26);
 
 switch_int ($random) {
     case 0 : inv_add(reward, coins, calc(200 + random(801)));
@@ -32,21 +32,20 @@ switch_int ($random) {
     case 9 : inv_add(reward, waterrune, calc(50 + random(51)));
     case 10 : inv_add(reward, mindrune, calc(50 + random(51)));
     case 11 : inv_add(reward, airrune, calc(50 + random(51)));
-    case 12 : inv_add(reward, black_full_helm, 1);
-    case 13 : inv_add(reward, black_platebody, 1);
-    case 14 : inv_add(reward, black_platelegs, 1);
-    case 15 : inv_add(reward, black_longsword, 1);
-    case 16 : inv_add(reward, black_battleaxe, 1);
-    case 17 : inv_add(reward, black_axe, 1);
-    case 18 : inv_add(reward, black_dagger, 1);
-    case 19 : inv_add(reward, steel_pickaxe, 1);
-    case 20 : inv_add(reward, coif, 1);
-    case 21 : inv_add(reward, studded_body, 1);
-    case 22 : inv_add(reward, studded_chaps, 1);
-    case 23 : inv_add(reward, willow_shortbow, 1);
-    case 24 : inv_add(reward, staff_of_air, 1);
-    case 25 : inv_add(reward, willow_longbow, 1); // these 2 are both slightly rarer than the other stuff on the table, maybe added later?
-    case 26 : inv_add(reward, amulet_of_magic, 1);
+    case 12 : inv_add(reward, adamant_full_helm, 1);
+    case 13 : inv_add(reward, adamant_platebody, 1);
+    case 14 : inv_add(reward, adamant_platelegs, 1);
+    case 15 : inv_add(reward, adamant_longsword, 1);
+    case 16 : inv_add(reward, adamant_battleaxe, 1);
+    case 17 : inv_add(reward, adamant_axe, 1);
+    case 18 : inv_add(reward, adamant_dagger, 1);
+    case 19 : inv_add(reward, adamant_pickaxe, 1);
+    case 20 : inv_add(reward, dragonhide_body, 1);
+    case 21 : inv_add(reward, dragonhide_chaps, 1);
+    case 22 : inv_add(reward, yew_shortbow, 1);
+    case 23 : inv_add(reward, fire_battlestaff, 1);
+    case 24 : inv_add(reward, yew_longbow, 1); // these 2 are both slightly rarer than the other stuff on the table, maybe added later?
+    case 25 : inv_add(reward, amulet_of_power, 1);
 }
 
 [proc,trail_clue_medium_rare]

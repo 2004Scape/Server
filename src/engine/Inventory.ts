@@ -35,6 +35,13 @@ export class InventoryTransaction {
     }
 }
 
+export interface InventoryListener {
+    type: number; // InvType
+    com: number; // Component
+    source: number; // uid or -1 for world
+    firstSeen: boolean;
+}
+
 export class Inventory {
     static STACK_LIMIT = 0x7fffffff /* - 1*/;
 

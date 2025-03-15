@@ -1,7 +1,7 @@
-import {CoordGrid} from '#/engine/CoordGrid.js';
+import { CoordGrid } from '#/engine/CoordGrid.js';
+import Npc from '#/engine/entity/Npc.js';
 import Player from '#/engine/entity/Player.js';
 import World from '#/engine/World.js';
-import Npc from '#/engine/entity/Npc.js';
 
 export default class BuildArea {
     public static readonly INTERVAL: number = 10;
@@ -94,9 +94,9 @@ export default class BuildArea {
 
     *getNearbyPlayers(pid: number, level: number, x: number, z: number): IterableIterator<Player> {
         if (this.viewDistance < BuildArea.PREFERRED_VIEW_DISTANCE) {
-            yield *this.getNearbyPlayersByClosest(pid, level, x, z);
+            yield* this.getNearbyPlayersByClosest(pid, level, x, z);
         } else {
-            yield *this.getNearbyPlayersByZones(pid, level, x, z);
+            yield* this.getNearbyPlayersByZones(pid, level, x, z);
         }
     }
 
@@ -105,6 +105,7 @@ export default class BuildArea {
         const min = -radius >> 1;
         const max = radius >> 1;
         const length = radius ** 2;
+        const tick: number = World.currentTick;
 
         let dx = 0;
         let dz = 0;
@@ -119,7 +120,7 @@ export default class BuildArea {
                         if (this.players.size >= BuildArea.PREFERRED_PLAYERS) {
                             return;
                         }
-                        if (this.filterPlayer(player, pid, level, x, z)) {
+                        if (this.filterPlayer(player, pid, level, x, z, tick)) {
                             yield player;
                         }
                     }
@@ -143,16 +144,17 @@ export default class BuildArea {
         const startZ: number = CoordGrid.zone(z - distance);
         const endX: number = CoordGrid.zone(x + distance);
         const endZ: number = CoordGrid.zone(z + distance);
+        const tick: number = World.currentTick;
 
         for (let zx = startX; zx <= endX; zx++) {
             const zoneX: number = zx << 3;
             for (let zz = startZ; zz <= endZ; zz++) {
                 const zoneZ: number = zz << 3;
-                for (const player of World.gameMap.getZone(zoneX, zoneZ, level).getAllPlayersSafe()) {
+                for (const player of World.gameMap.getZone(zoneX, zoneZ, level).getAllPlayersUnsafe()) {
                     if (this.players.size >= BuildArea.PREFERRED_PLAYERS) {
                         return;
                     }
-                    if (!this.filterPlayer(player, pid, level, x, z)) {
+                    if (!this.filterPlayer(player, pid, level, x, z, tick)) {
                         continue;
                     }
                     yield player;
@@ -167,16 +169,17 @@ export default class BuildArea {
         const startZ: number = CoordGrid.zone(z - distance);
         const endX: number = CoordGrid.zone(x + distance);
         const endZ: number = CoordGrid.zone(z + distance);
+        const tick: number = World.currentTick;
 
         for (let zx = startX; zx <= endX; zx++) {
             const zoneX: number = zx << 3;
             for (let zz = startZ; zz <= endZ; zz++) {
                 const zoneZ: number = zz << 3;
-                for (const npc of World.gameMap.getZone(zoneX, zoneZ, level).getAllNpcsSafe()) {
+                for (const npc of World.gameMap.getZone(zoneX, zoneZ, level).getAllNpcsUnsafe()) {
                     if (this.npcs.size >= BuildArea.PREFERRED_NPCS) {
                         return;
                     }
-                    if (!this.filterNpc(npc, level, x, z)) {
+                    if (!this.filterNpc(npc, level, x, z, tick)) {
                         continue;
                     }
                     yield npc;
@@ -185,11 +188,11 @@ export default class BuildArea {
         }
     }
 
-    private filterPlayer(player: Player, pid: number, level: number, x: number, z: number): boolean {
-        return !(!CoordGrid.isWithinDistanceSW({ x, z }, player, this.viewDistance) || player.pid === -1 || player.pid === pid || this.players.has(player) || player.level !== level);
+    private filterPlayer(player: Player, pid: number, level: number, x: number, z: number, tick: number): boolean {
+        return !(this.players.has(player) || !CoordGrid.isWithinDistanceSW({ x, z }, player, this.viewDistance) || player.pid === -1 || player.pid === pid || player.level !== level || !player.checkLifeCycle(tick));
     }
 
-    private filterNpc(npc: Npc, level: number, x: number, z: number): boolean {
-        return !(!CoordGrid.isWithinDistanceSW({ x, z }, npc, BuildArea.PREFERRED_VIEW_DISTANCE) || npc.nid === -1 || this.npcs.has(npc) || npc.level !== level);
+    private filterNpc(npc: Npc, level: number, x: number, z: number, tick: number): boolean {
+        return !(this.npcs.has(npc) || !CoordGrid.isWithinDistanceSW({ x, z }, npc, BuildArea.PREFERRED_VIEW_DISTANCE) || npc.nid === -1 || npc.level !== level || !npc.checkLifeCycle(tick));
     }
 }

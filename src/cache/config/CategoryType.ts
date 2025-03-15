@@ -1,8 +1,8 @@
 import fs from 'fs';
 
+import { ConfigType } from '#/cache/config/ConfigType.js';
 import Packet from '#/io/Packet.js';
 
-import { ConfigType } from '#/cache/config/ConfigType.js';
 
 // this is a virtual type (just contains debugname) so we have an easily reloadable, portable category lookup
 export default class CategoryType extends ConfigType {

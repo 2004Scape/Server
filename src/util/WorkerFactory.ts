@@ -12,7 +12,7 @@ class TsWorker extends NodeWorker {
 
 export function createWorker(filename: string): Worker | NodeWorker {
     if (Environment.STANDALONE_BUNDLE) {
-        return new Worker(filename, {type: 'module'});
+        return new Worker(filename, { type: 'module' });
     } else {
         return new TsWorker(filename);
     }

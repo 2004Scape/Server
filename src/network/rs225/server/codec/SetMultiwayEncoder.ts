@@ -1,6 +1,6 @@
-import MessageEncoder from '#/network/server/codec/MessageEncoder.js';
 import Packet from '#/io/Packet.js';
 import ServerProt from '#/network/rs225/server/prot/ServerProt.js';
+import MessageEncoder from '#/network/server/codec/MessageEncoder.js';
 import SetMultiway from '#/network/server/model/SetMultiway.js';
 
 export default class SetMultiwayEncoder extends MessageEncoder<SetMultiway> {

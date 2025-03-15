@@ -20,6 +20,7 @@ export type account = {
     staffmodlevel: Generated<number>;
     notes: string | null;
     notes_updated: string | null;
+    members: Generated<number>;
 };
 export type account_session = {
     id: Generated<number>;
@@ -58,6 +59,18 @@ export type ignorelist = {
     value: string;
     created: Generated<string>;
 };
+export type input_report = {
+    id: Generated<number>;
+    account_id: number;
+    timestamp: string;
+    session_uuid: string;
+};
+export type input_report_event_raw = {
+    input_report_id: number;
+    seq: number;
+    coord: number;
+    data: Buffer;
+};
 export type ipban = {
     ip: string;
 };
@@ -69,21 +82,28 @@ export type login = {
     uid: number;
     ip: string | null;
 };
-export type input_report = {
+export type message = {
     id: Generated<number>;
-    account_id: number;
-    timestamp: Timestamp;
-    session_uuid: string;
+    thread_id: number;
+    sender_id: number;
+    sender_ip: string;
+    sender: Generated<string>;
+    content: string;
+    created: Generated<string>;
 };
-export type input_report_event = {
-    input_report_id: number;
-    seq: number;
-    input_type: Generated<number>;
-    delta: number;
-    coord: number;
-    mouse_x: number | null;
-    mouse_y: number | null;
-    key_code: number | null;
+export type message_thread = {
+    id: Generated<number>;
+    to_account_id: number | null;
+    from_account_id: number;
+    last_message_from: number;
+    subject: string;
+    created: Generated<string>;
+    updated: Generated<string>;
+    read: string | null;
+    closed: string | null;
+    to_deleted: string | null;
+    from_deleted: string | null;
+    messages: Generated<number>;
 };
 export type newspost = {
     id: Generated<number>;
@@ -121,6 +141,7 @@ export type report = {
     coord: number;
     offender: string;
     reason: number;
+    reviewed: Generated<number>;
 };
 export type session = {
     uuid: string;
@@ -139,9 +160,11 @@ export type DB = {
     hiscore_large: hiscore_large;
     ignorelist: ignorelist;
     input_report: input_report;
-    input_report_event: input_report_event;
+    input_report_event_raw: input_report_event_raw;
     ipban: ipban;
     login: login;
+    message: message;
+    message_thread: message_thread;
     newspost: newspost;
     private_chat: private_chat;
     public_chat: public_chat;

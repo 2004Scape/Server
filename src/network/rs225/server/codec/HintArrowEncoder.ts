@@ -1,13 +1,13 @@
-import MessageEncoder from '#/network/server/codec/MessageEncoder.js';
 import Packet from '#/io/Packet.js';
 import ServerProt from '#/network/rs225/server/prot/ServerProt.js';
+import MessageEncoder from '#/network/server/codec/MessageEncoder.js';
 import HintArrow from '#/network/server/model/HintArrow.js';
 
 export default class HintArrowEncoder extends MessageEncoder<HintArrow> {
     prot = ServerProt.HINT_ARROW;
 
     encode(buf: Packet, message: HintArrow): void {
-        const {type, nid, pid, x, z, y} = message;
+        const { type, nid, pid, x, z, y } = message;
 
         if (type === 1) {
             buf.p1(type);

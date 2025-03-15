@@ -1,8 +1,8 @@
 import fs from 'fs';
-import Packet from '#/io/Packet.js';
 
-import Jagfile from '#/io/Jagfile.js';
 import Model from '#/cache/graphics/Model.js';
+import Jagfile from '#/io/Jagfile.js';
+import Packet from '#/io/Packet.js';
 import { printWarning } from '#/util/Logger.js';
 
 const models = Jagfile.load('data/client/models');
@@ -100,12 +100,12 @@ const models = Jagfile.load('data/client/models');
         const base = Packet.alloc(0);
         // base.pdata(head.gdata(hend - hstart, hstart, false));
 
-        const pp = new Uint8Array((tend - tstart));
+        const pp = new Uint8Array(tend - tstart);
         type.pos = tstart;
         type.gdata(pp, 0, pp.length);
         base.pdata(pp, 0, pp.length);
 
-        const pl = new Uint8Array((labelend - labelstart));
+        const pl = new Uint8Array(labelend - labelstart);
         label.pos = labelstart;
         label.gdata(pl, 0, pl.length);
         base.pdata(pl, 0, pl.length);
@@ -195,22 +195,22 @@ const models = Jagfile.load('data/client/models');
 
         const frame = Packet.alloc(2);
 
-        const p_hend = new Uint8Array((hend - hstart));
+        const p_hend = new Uint8Array(hend - hstart);
         head.pos = hstart;
         head.gdata(p_hend, 0, p_hend.length);
         frame.pdata(p_hend, 0, p_hend.length);
 
-        const p_t1end = new Uint8Array((t1end - t1start));
+        const p_t1end = new Uint8Array(t1end - t1start);
         tran1.pos = t1start;
         tran1.gdata(p_t1end, 0, p_t1end.length);
         frame.pdata(p_t1end, 0, p_t1end.length);
 
-        const p_t2end = new Uint8Array((t2end - t2start));
+        const p_t2end = new Uint8Array(t2end - t2start);
         tran2.pos = t2start;
         tran2.gdata(p_t2end, 0, p_t2end.length);
         frame.pdata(p_t2end, 0, p_t2end.length);
 
-        const p_dend = new Uint8Array((dend - dstart));
+        const p_dend = new Uint8Array(dend - dstart);
         del.pos = dstart;
         del.gdata(p_dend, 0, p_dend.length);
         frame.pdata(p_dend, 0, p_dend.length);

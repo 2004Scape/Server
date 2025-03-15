@@ -1,44 +1,26 @@
-import ParamType from '#/cache/config/ParamType.js';
 import NpcType from '#/cache/config/NpcType.js';
 import { ParamHelper } from '#/cache/config/ParamHelper.js';
+import ParamType from '#/cache/config/ParamType.js';
 import SpotanimType from '#/cache/config/SpotanimType.js';
-
-import World from '#/engine/World.js';
-
+import { CoordGrid } from '#/engine/CoordGrid.js';
+import Entity from '#/engine/entity/Entity.js';
+import EntityLifeCycle from '#/engine/entity/EntityLifeCycle.js';
+import HuntVis from '#/engine/entity/hunt/HuntVis.js';
+import Interaction from '#/engine/entity/Interaction.js';
+import Loc from '#/engine/entity/Loc.js';
+import Npc from '#/engine/entity/Npc.js';
+import NpcIteratorType from '#/engine/entity/NpcIteratorType.js';
+import NpcMode from '#/engine/entity/NpcMode.js';
+import Obj from '#/engine/entity/Obj.js';
+import { NpcIterator } from '#/engine/script/ScriptIterators.js';
 import ScriptOpcode from '#/engine/script/ScriptOpcode.js';
-import ScriptPointer, {ActiveNpc, checkedHandler} from '#/engine/script/ScriptPointer.js';
+import ScriptPointer, { ActiveNpc, checkedHandler } from '#/engine/script/ScriptPointer.js';
 import ScriptProvider from '#/engine/script/ScriptProvider.js';
 import { CommandHandlers } from '#/engine/script/ScriptRunner.js';
 import ScriptState from '#/engine/script/ScriptState.js';
+import { check, CoordValid, DurationValid, HitTypeValid, HuntTypeValid, HuntVisValid, NpcModeValid, NpcStatValid, NpcTypeValid, NumberNotNull, ParamTypeValid, QueueValid, SpotAnimTypeValid } from '#/engine/script/ScriptValidators.js';
 import ServerTriggerType from '#/engine/script/ServerTriggerType.js';
-import {NpcIterator} from '#/engine/script/ScriptIterators.js';
-
-import Loc from '#/engine/entity/Loc.js';
-import Obj from '#/engine/entity/Obj.js';
-import { CoordGrid } from '#/engine/CoordGrid.js';
-import NpcIteratorType from '#/engine/entity/NpcIteratorType.js';
-import Npc from '#/engine/entity/Npc.js';
-import NpcMode from '#/engine/entity/NpcMode.js';
-import Entity from '#/engine/entity/Entity.js';
-import Interaction from '#/engine/entity/Interaction.js';
-import HuntVis from '#/engine/entity/hunt/HuntVis.js';
-import EntityLifeCycle from '#/engine/entity/EntityLifeCycle.js';
-
-import {
-    check,
-    CoordValid,
-    DurationValid,
-    HitTypeValid,
-    HuntTypeValid,
-    HuntVisValid,
-    NpcModeValid,
-    NpcStatValid,
-    NpcTypeValid,
-    NumberNotNull,
-    ParamTypeValid,
-    QueueValid,
-    SpotAnimTypeValid
-} from '#/engine/script/ScriptValidators.js';
+import World from '#/engine/World.js';
 
 const NpcOps: CommandHandlers = {
     [ScriptOpcode.NPC_FINDUID]: state => {
@@ -130,13 +112,13 @@ const NpcOps: CommandHandlers = {
     },
 
     [ScriptOpcode.NPC_FINDHERO]: checkedHandler(ActiveNpc, state => {
-        const uid = state.activeNpc.heroPoints.findHero();
-        if (uid === -1) {
+        const hash64 = state.activeNpc.heroPoints.findHero();
+        if (hash64 === -1n) {
             state.pushInt(0);
             return;
         }
 
-        const player = World.getPlayerByUid(uid);
+        const player = World.getPlayerByHash64(hash64);
         if (!player) {
             state.pushInt(0);
             return;
@@ -213,7 +195,6 @@ const NpcOps: CommandHandlers = {
     // https://x.com/JagexAsh/status/1821835323808026853
     [ScriptOpcode.NPC_SETMODE]: checkedHandler(ActiveNpc, state => {
         const mode = check(state.popInt(), NpcModeValid);
-        state.activeNpc.clearWaypoints();
 
         if (mode === NpcMode.NULL || mode === NpcMode.NONE || mode === NpcMode.WANDER || mode === NpcMode.PATROL) {
             state.activeNpc.clearInteraction();
@@ -238,7 +219,7 @@ const NpcOps: CommandHandlers = {
 
         if (target) {
             if (target instanceof Npc || target instanceof Obj || target instanceof Loc) {
-                state.activeNpc.setInteraction(Interaction.SCRIPT, target, mode, {type: target.type, com: -1});
+                state.activeNpc.setInteraction(Interaction.SCRIPT, target, mode);
             } else {
                 state.activeNpc.setInteraction(Interaction.SCRIPT, target, mode);
             }
@@ -318,7 +299,7 @@ const NpcOps: CommandHandlers = {
         const npcs = new NpcIterator(World.currentTick, position.level, position.x, position.z, distance, huntvis, NpcIteratorType.DISTANCE);
 
         for (const npc of npcs) {
-            if(npc && npc.type === npcType.id) {
+            if (npc && npc.type === npcType.id) {
                 const npcDistance = CoordGrid.distanceToSW(position, npc);
                 if (npcDistance <= closestDistance) {
                     closestNpc = npc;
@@ -416,7 +397,7 @@ const NpcOps: CommandHandlers = {
 
     // https://x.com/JagexAsh/status/1704492467226091853
     [ScriptOpcode.NPC_HEROPOINTS]: checkedHandler([ScriptPointer.ActivePlayer, ...ActiveNpc], state => {
-        state.activeNpc.heroPoints.addHero(state.activePlayer.uid, check(state.popInt(), NumberNotNull));
+        state.activeNpc.heroPoints.addHero(state.activePlayer.hash64, check(state.popInt(), NumberNotNull));
     }),
 
     // https://x.com/JagexAsh/status/1780932943038345562
@@ -492,9 +473,9 @@ const NpcOps: CommandHandlers = {
         } else {
             state.activeNpc.delayedUntil = World.currentTick + 2;
         }
-        
+
         state.execution = ScriptState.NPC_SUSPENDED;
-    }),
+    })
 };
 
 export default NpcOps;

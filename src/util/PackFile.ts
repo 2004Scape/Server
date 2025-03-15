@@ -1,8 +1,8 @@
 import fs from 'fs';
-
-import { listFilesExt, loadDirExtFull, loadFile } from '#/util/Parse.js';
 import { basename, dirname } from 'path';
+
 import Environment from '#/util/Environment.js';
+import { listFilesExt, loadDirExtFull, loadFile } from '#/util/Parse.js';
 
 // eslint-disable-next-line @typescript-eslint/no-explicit-any
 type PackFileValidator = (packfile: PackFile, ...args: any[]) => void;
@@ -69,7 +69,13 @@ export class PackFile {
     }
 
     save() {
-        fs.writeFileSync(`${Environment.BUILD_SRC_DIR}/pack/${this.type}.pack`, Array.from(this.pack.entries()).sort((a, b) => a[0] - b[0]).map(([id, name]) => `${id}=${name}`).join('\n') + '\n');
+        fs.writeFileSync(
+            `${Environment.BUILD_SRC_DIR}/pack/${this.type}.pack`,
+            Array.from(this.pack.entries())
+                .sort((a, b) => a[0] - b[0])
+                .map(([id, name]) => `${id}=${name}`)
+                .join('\n') + '\n'
+        );
     }
 
     getById(id: number): string {
@@ -201,9 +207,11 @@ function validateConfigPack(pack: PackFile, ext: string, regen: boolean = false,
 }
 
 function validateCategoryPack(pack: PackFile) {
-    if (shouldBuild(`${Environment.BUILD_SRC_DIR}/scripts`, '.loc', `${Environment.BUILD_SRC_DIR}/pack/category.pack`) ||
+    if (
+        shouldBuild(`${Environment.BUILD_SRC_DIR}/scripts`, '.loc', `${Environment.BUILD_SRC_DIR}/pack/category.pack`) ||
         shouldBuild(`${Environment.BUILD_SRC_DIR}/scripts`, '.npc', `${Environment.BUILD_SRC_DIR}/pack/category.pack`) ||
-        shouldBuild(`${Environment.BUILD_SRC_DIR}/scripts`, '.obj', `${Environment.BUILD_SRC_DIR}/pack/category.pack`)) {
+        shouldBuild(`${Environment.BUILD_SRC_DIR}/scripts`, '.obj', `${Environment.BUILD_SRC_DIR}/pack/category.pack`)
+    ) {
         const categories = crawlConfigCategories();
         for (let i = 0; i < categories.length; i++) {
             pack.register(i, categories[i]);
@@ -280,7 +288,7 @@ export const ObjPack = new PackFile('obj', validateConfigPack, '.obj');
 export const ParamPack = new PackFile('param', validateConfigPack, '.param', true, false, false, true);
 export const ScriptPack = new PackFile('script', regenScriptPack);
 export const SeqPack = new PackFile('seq', validateConfigPack, '.seq');
-export const SoundPack = new PackFile('sound', validateFilesPack, `${Environment.BUILD_SRC_DIR}/sounds`, '.synth');
+export const SynthPack = new PackFile('synth', validateFilesPack, `${Environment.BUILD_SRC_DIR}/synth`, '.synth');
 export const SpotAnimPack = new PackFile('spotanim', validateConfigPack, '.spotanim');
 export const StructPack = new PackFile('struct', validateConfigPack, '.struct', true, false, false, true);
 export const TexturePack = new PackFile('texture', validateImagePack, `${Environment.BUILD_SRC_DIR}/textures`, '.png');
@@ -308,7 +316,7 @@ export function revalidatePack() {
     ParamPack.reload();
     ScriptPack.reload();
     SeqPack.reload();
-    SoundPack.reload();
+    SynthPack.reload();
     SpotAnimPack.reload();
     StructPack.reload();
     TexturePack.reload();

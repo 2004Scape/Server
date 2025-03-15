@@ -6,7 +6,9 @@ export default class OpLoc extends IncomingMessage {
 
     constructor(
         readonly op: number,
-        readonly x: number, readonly z: number, readonly loc: number
+        readonly x: number,
+        readonly z: number,
+        readonly loc: number
     ) {
         super();
     }

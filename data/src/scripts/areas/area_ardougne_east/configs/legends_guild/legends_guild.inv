@@ -14,6 +14,7 @@ stock4=steel_arrow,500,100
 [legends_guild_shop_of_useful_items]
 // https://classic.runescape.wiki/w/Legends%27_Guild_Shop
 // https://storage.googleapis.com/tannerdino/images/rslegendguild9.gif (full stocks)
+// https://web.archive.org/web/20041217081814/http://www.runehq.com/cacheguides/viewguildguide00242.htm (legend guild guide 2004)
 scope=shared
 size=40
 restock=yes

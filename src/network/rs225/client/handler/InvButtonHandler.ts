@@ -1,10 +1,10 @@
 import Component from '#/cache/config/Component.js';
+import Player from '#/engine/entity/Player.js';
 import ScriptProvider from '#/engine/script/ScriptProvider.js';
 import ScriptRunner from '#/engine/script/ScriptRunner.js';
 import ServerTriggerType from '#/engine/script/ServerTriggerType.js';
-import Player from '#/engine/entity/Player.js';
-import InvButton from '#/network/client/model/InvButton.js';
 import MessageHandler from '#/network/client/handler/MessageHandler.js';
+import InvButton from '#/network/client/model/InvButton.js';
 import Environment from '#/util/Environment.js';
 
 export default class InvButtonHandler extends MessageHandler<InvButton> {

@@ -62,17 +62,16 @@ export function packClientMap() {
 
     let queue = [];
 
-    fs.readdirSync('data/src/maps').filter(f => f.endsWith('.jm2')).forEach(file => {
-        let [x, z] = file.slice(1).split('.').shift().split('_');
-        if (
-            !shouldBuildFile(`data/src/maps/${file}`, `data/pack/client/maps/m${x}_${z}`) &&
-            !shouldBuildFile(`data/src/maps/${file}`, `data/pack/client/maps/l${x}_${z}`)
-        ) {
-            return;
-        }
+    fs.readdirSync('data/src/maps')
+        .filter(f => f.endsWith('.jm2'))
+        .forEach(file => {
+            let [x, z] = file.slice(1).split('.').shift().split('_');
+            if (!shouldBuildFile(`data/src/maps/${file}`, `data/pack/client/maps/m${x}_${z}`) && !shouldBuildFile(`data/src/maps/${file}`, `data/pack/client/maps/l${x}_${z}`)) {
+                return;
+            }
 
-        queue.push({ file, x, z });
-    });
+            queue.push({ file, x, z });
+        });
 
     if (!queue.length) {
         return;

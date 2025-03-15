@@ -1,4 +1,5 @@
 import fs from 'fs';
+
 import Jagfile from '#/io/Jagfile.js';
 import Packet from '#/io/Packet.js';
 
@@ -27,12 +28,12 @@ class Wave {
 
             order += `${id}\n`;
 
-            const data = new Uint8Array((end - start) - start);
+            const data = new Uint8Array(end - start - start);
             dat.pos = start;
             dat.gdata(data, 0, data.length);
             dat.pos = start;
 
-            fs.writeFileSync(`data/src/sounds/sound_${id}.synth`, data);
+            fs.writeFileSync(`data/src/synth/sound_${id}.synth`, data);
         }
 
         for (let i = 0; i < Wave.tracks.length; i++) {
@@ -162,5 +163,5 @@ if (!soundsData) {
 
 Wave.unpack(soundsData);
 
-fs.writeFileSync('data/src/pack/sound.pack', pack);
-fs.writeFileSync('data/src/pack/sound.order', order);
+fs.writeFileSync('data/src/pack/synth.pack', pack);
+fs.writeFileSync('data/src/pack/synth.order', order);

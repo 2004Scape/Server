@@ -1,6 +1,6 @@
-import OutgoingMessage from '#/network/server/OutgoingMessage.js';
-import ServerProt from '#/network/rs225/server/prot/ServerProt.js';
 import Packet from '#/io/Packet.js';
+import ServerProt from '#/network/rs225/server/prot/ServerProt.js';
+import OutgoingMessage from '#/network/server/OutgoingMessage.js';
 
 export default abstract class MessageEncoder<T extends OutgoingMessage> {
     abstract prot: ServerProt;

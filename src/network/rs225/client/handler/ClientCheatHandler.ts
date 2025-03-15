@@ -1,29 +1,29 @@
-import MessageHandler from '#/network/client/handler/MessageHandler.js';
-import Player, { getExpByLevel } from '#/engine/entity/Player.js';
-import ClientCheat from '#/network/client/model/ClientCheat.js';
-import Environment from '#/util/Environment.js';
-import InvType from '#/cache/config/InvType.js';
+import Component from '#/cache/config/Component.js';
 import IdkType from '#/cache/config/IdkType.js';
-import VarPlayerType from '#/cache/config/VarPlayerType.js';
-import ObjType from '#/cache/config/ObjType.js';
-import World from '#/engine/World.js';
+import InvType from '#/cache/config/InvType.js';
 import LocType from '#/cache/config/LocType.js';
 import NpcType from '#/cache/config/NpcType.js';
-import Component from '#/cache/config/Component.js';
+import ObjType from '#/cache/config/ObjType.js';
+import ScriptVarType from '#/cache/config/ScriptVarType.js';
 import SeqType from '#/cache/config/SeqType.js';
 import SpotanimType from '#/cache/config/SpotanimType.js';
-import ScriptProvider from '#/engine/script/ScriptProvider.js';
-import { tryParseInt } from '#/util/TryParse.js';
-import ScriptVarType from '#/cache/config/ScriptVarType.js';
+import VarPlayerType from '#/cache/config/VarPlayerType.js';
 import { CoordGrid } from '#/engine/CoordGrid.js';
-import ScriptRunner from '#/engine/script/ScriptRunner.js';
-import { PlayerStat, PlayerStatEnabled, PlayerStatKey } from '#/engine/entity/PlayerStat.js';
-import MoveStrategy from '#/engine/entity/MoveStrategy.js';
-import LoggerEventType from '#/server/logger/LoggerEventType.js';
-import Obj from '#/engine/entity/Obj.js';
 import EntityLifeCycle from '#/engine/entity/EntityLifeCycle.js';
-import Visibility from '#/engine/entity/Visibility.js';
+import MoveStrategy from '#/engine/entity/MoveStrategy.js';
 import { isClientConnected } from '#/engine/entity/NetworkPlayer.js';
+import Obj from '#/engine/entity/Obj.js';
+import Player, { getExpByLevel } from '#/engine/entity/Player.js';
+import { PlayerStat, PlayerStatEnabled, PlayerStatKey } from '#/engine/entity/PlayerStat.js';
+import Visibility from '#/engine/entity/Visibility.js';
+import ScriptProvider from '#/engine/script/ScriptProvider.js';
+import ScriptRunner from '#/engine/script/ScriptRunner.js';
+import World from '#/engine/World.js';
+import MessageHandler from '#/network/client/handler/MessageHandler.js';
+import ClientCheat from '#/network/client/model/ClientCheat.js';
+import LoggerEventType from '#/server/logger/LoggerEventType.js';
+import Environment from '#/util/Environment.js';
+import { tryParseInt } from '#/util/TryParse.js';
 
 export default class ClientCheatHandler extends MessageHandler<ClientCheat> {
     handle(message: ClientCheat, player: Player): boolean {
@@ -40,13 +40,13 @@ export default class ClientCheatHandler extends MessageHandler<ClientCheat> {
         }
 
         if (player.staffModLevel >= 2) {
-            player.addSessionLog(LoggerEventType.MODERATOR, 'Ran cheat', cheat);    
+            player.addSessionLog(LoggerEventType.MODERATOR, 'Ran cheat', cheat);
         }
 
         if (!Environment.NODE_PRODUCTION && player.staffModLevel >= 4) {
             // developer commands
 
-            if (cmd[0] === '~') {
+            if (cmd[0] === Environment.NODE_DEBUGPROC_CHAR) {
                 // debugprocs are NOT allowed on live ;)
                 const script = ScriptProvider.getByName(`[debugproc,${cmd.slice(1)}]`);
                 if (!script) {
@@ -128,7 +128,9 @@ export default class ClientCheatHandler extends MessageHandler<ClientCheat> {
                                 break;
                             }
                         }
-                    } catch (err) {
+                    } catch (_) {
+                         
+                        // invalid arguments
                         return false;
                     }
                 }
@@ -139,6 +141,20 @@ export default class ClientCheatHandler extends MessageHandler<ClientCheat> {
             } else if (cmd === 'rebuild' && !Environment.STANDALONE_BUNDLE) {
                 player.messageGame('Rebuilding scripts...');
                 World.rebuild();
+            } else if (cmd === 'speed') {
+                if (args.length < 1) {
+                    player.messageGame('Usage: ::speed <ms>');
+                    return false;
+                }
+
+                const speed: number = tryParseInt(args.shift(), 20);
+                if (speed < 20) {
+                    player.messageGame('::speed input was too low.');
+                    return false;
+                }
+
+                player.messageGame(`World speed was changed to ${speed}ms`);
+                World.tickRate = speed;
             } else if (cmd === 'fly') {
                 if (player.moveStrategy === MoveStrategy.FLY) {
                     player.moveStrategy = MoveStrategy.SMART;
@@ -495,10 +511,17 @@ export default class ClientCheatHandler extends MessageHandler<ClientCheat> {
                 }
 
                 switch (args[0]) {
-                    case '0': player.setVisibility(Visibility.DEFAULT); break;
-                    case '1': player.setVisibility(Visibility.SOFT); break;
-                    case '2': player.setVisibility(Visibility.HARD); break;
-                    default: return false;
+                    case '0':
+                        player.setVisibility(Visibility.DEFAULT);
+                        break;
+                    case '1':
+                        player.setVisibility(Visibility.SOFT);
+                        break;
+                    case '2':
+                        player.setVisibility(Visibility.HARD);
+                        break;
+                    default:
+                        return false;
                 }
             }
         }
@@ -515,7 +538,7 @@ export default class ClientCheatHandler extends MessageHandler<ClientCheat> {
                 const username = args[0];
                 const minutes = Math.max(0, tryParseInt(args[1], 60));
 
-                World.notifyPlayerBan(player.username, username, Date.now() + (minutes * 60 * 1000));
+                World.notifyPlayerBan(player.username, username, Date.now() + minutes * 60 * 1000);
                 player.messageGame(`Player '${args[0]}' has been banned for ${minutes} minutes.`);
             } else if (cmd === 'mute') {
                 // custom
@@ -528,7 +551,7 @@ export default class ClientCheatHandler extends MessageHandler<ClientCheat> {
                 const username = args[0];
                 const minutes = Math.max(0, tryParseInt(args[1], 60));
 
-                World.notifyPlayerMute(player.username, username, Date.now() + (minutes * 60 * 1000));
+                World.notifyPlayerMute(player.username, username, Date.now() + minutes * 60 * 1000);
                 player.messageGame(`Player '${args[0]}' has been muted for ${minutes} minutes.`);
             } else if (cmd === 'kick') {
                 // custom

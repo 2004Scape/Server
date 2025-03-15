@@ -1,8 +1,8 @@
 import fs from 'fs';
 
 import Jagfile from '#/io/Jagfile.js';
-import { loadPack } from '#/util/NameMap.js';
 import { printWarning } from '#/util/Logger.js';
+import { loadPack } from '#/util/NameMap.js';
 
 const pack = loadPack('data/src/pack/interface.pack');
 const objPack = loadPack('data/src/pack/obj.pack');

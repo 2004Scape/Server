@@ -1,4 +1,5 @@
 import fs from 'fs';
+
 import ObjType from '#/cache/config/ObjType.js';
 
 ObjType.load('data/pack');

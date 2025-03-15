@@ -1,9 +1,8 @@
 import DbTableType from '#/cache/config/DbTableType.js';
 import ScriptVarType from '#/cache/config/ScriptVarType.js';
-
+import { DbRowPack, DbTablePack } from '#/util/PackFile.js';
 import { ConfigValue, ConfigLine, packStepError, PackedData, isConfigBoolean, getConfigBoolean } from '#tools/pack/config/PackShared.js';
 import { lookupParamValue } from '#tools/pack/config/ParamConfig.js';
-import { DbRowPack, DbTablePack } from '#/util/PackFile.js';
 
 function parseCsv(str: string): string[] {
     const result = [];
@@ -82,7 +81,7 @@ export function parseDbRowConfig(key: string, value: string): ConfigValue | null
     }
 }
 
-export function packDbRowConfigs(configs: Map<string, ConfigLine[]>): { client: PackedData, server: PackedData } {
+export function packDbRowConfigs(configs: Map<string, ConfigLine[]>): { client: PackedData; server: PackedData } {
     const client: PackedData = new PackedData(DbRowPack.size);
     const server: PackedData = new PackedData(DbRowPack.size);
 

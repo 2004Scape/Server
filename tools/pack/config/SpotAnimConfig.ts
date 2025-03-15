@@ -1,6 +1,6 @@
-import { ConfigValue, ConfigLine, PackedData, isConfigBoolean, getConfigBoolean } from '#tools/pack/config/PackShared.js';
 import ColorConversion from '#/util/ColorConversion.js';
 import { ModelPack, SeqPack, SpotAnimPack } from '#/util/PackFile.js';
+import { ConfigValue, ConfigLine, PackedData, isConfigBoolean, getConfigBoolean } from '#tools/pack/config/PackShared.js';
 
 export function parseSpotAnimConfig(key: string, value: string): ConfigValue | null | undefined {
     const stringKeys: string[] = [];
@@ -89,7 +89,7 @@ export function parseSpotAnimConfig(key: string, value: string): ConfigValue | n
     }
 }
 
-export function packSpotAnimConfigs(configs: Map<string, ConfigLine[]>): { client: PackedData, server: PackedData } {
+export function packSpotAnimConfigs(configs: Map<string, ConfigLine[]>): { client: PackedData; server: PackedData } {
     const client: PackedData = new PackedData(SpotAnimPack.size);
     const server: PackedData = new PackedData(SpotAnimPack.size);
 

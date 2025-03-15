@@ -1,4 +1,4 @@
-import {tryParseBoolean, tryParseInt, tryParseString, tryParseArray} from '#/util/TryParse.js';
+import { tryParseBoolean, tryParseInt, tryParseString, tryParseArray } from '#/util/TryParse.js';
 
 describe('TryParse', (): void => {
     describe('tryParseBoolean', (): void => {

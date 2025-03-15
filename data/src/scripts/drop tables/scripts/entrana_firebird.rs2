@@ -7,5 +7,5 @@ if (npc_findhero = false) {
 obj_add(npc_coord, npc_param(death_drop), 1, ^lootdrop_duration);
 // Unobtainable after hero quest
 if(%hero_progress < ^hero_complete) {
-  obj_add(npc_coord, fire_feather, 1, ^lootdrop_duration);
+  obj_add(npc_coord, fire_feather, 1, calc(^lootdrop_duration / 2));
 }

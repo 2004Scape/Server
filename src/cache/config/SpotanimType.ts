@@ -1,9 +1,9 @@
 import fs from 'fs';
 
-import Packet from '#/io/Packet.js';
 
 import { ConfigType } from '#/cache/config/ConfigType.js';
 import Jagfile from '#/io/Jagfile.js';
+import Packet from '#/io/Packet.js';
 
 export default class SpotanimType extends ConfigType {
     private static configNames = new Map();

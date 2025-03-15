@@ -3,8 +3,7 @@ switch_int(%chompybird_progress) {
     case ^chompybird_not_started :
         ~chatnpc("<p,neutral>You's better talk to Dad, We not talk to wierdly|'umans.");
     case ^chompybird_started :
-        // todo is this the right check? source: https://oldschool.runescape.wiki/w/Transcript:Big_Chompy_Bird_Hunting#Talking_to_Fycie_after_buying_her_feathers
-        if (inv_total(inv, feather) >= 25) {
+        if (testbit(%chompybird_kills, ^chompybird_varbit_bought_feathers) = true) {
             ~chatnpc("<p,neutral>I's sorry creature, I don't got no more flufsies! But I got lots of bright pretties! Hope you's get da stabbers for Dad soonly!");
             return;
         }
@@ -29,7 +28,7 @@ switch_int(%chompybird_progress) {
 
                 // No inv space check - OSRS drops the feathers on the floor
                 ~doubleobjbox(feather, coins, "You offer the 50 coins for the 25 flufsies.", 200);
-
+                %chompybird_kills = setbit(%chompybird_kills, ^chompybird_varbit_bought_feathers);
                 inv_del(inv, coins, 50);
                 inv_add(inv, feather, 25);
                 ~chatnpc("<p,happy>Ok, dat's a good 'un, I got da bright pretties and you got da flufsies!");
@@ -39,7 +38,7 @@ switch_int(%chompybird_progress) {
         }
 
     case ^chompybird_kids_play_with_toad, ^chompybird_removed_rock_from_chest :
-        ~chatplayer("<p,quiz>Rantz said that you play with the 'fatsy toadies', what are they?");
+        ~chatplayer("<p,neutral>Rantz said that you play with the 'fatsy toadies', what are they?");
         ~chatnpc("<p,neutral>Oh we sometimes is using blower on da toadies but Dad don't let us get in da locksy bocksy no more. He, he, big chuklees when make da toadies fat on da swampy gas.");      
 
     case ^chompybird_told_to_cook_chompy :

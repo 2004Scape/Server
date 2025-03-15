@@ -2,9 +2,8 @@ FROM node:22
 
 RUN apt-get update && apt-get install -y openjdk-17-jre-headless
 
-VOLUME ["/app"]
-
 WORKDIR /app
+COPY . /app
 
 RUN npm install
 

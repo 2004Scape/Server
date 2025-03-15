@@ -1,5 +1,5 @@
-import NonPathingEntity from '#/engine/entity/NonPathingEntity.js';
 import EntityLifeCycle from '#/engine/entity/EntityLifeCycle.js';
+import NonPathingEntity from '#/engine/entity/NonPathingEntity.js';
 
 export default class Obj extends NonPathingEntity {
     /**
@@ -14,6 +14,7 @@ export default class Obj extends NonPathingEntity {
 
     // runtime
     receiver64: bigint = Obj.NO_RECEIVER;
+    isRevealed: boolean = false;
     reveal: number = -1;
     lastChange: number = -1;
 
@@ -21,5 +22,17 @@ export default class Obj extends NonPathingEntity {
         super(level, x, z, 1, 1, lifecycle);
         this.type = type;
         this.count = count;
+    }
+
+    isValid(hash64?: bigint): boolean {
+        if (!this.isRevealed && hash64 && hash64 !== this.receiver64) {
+            return false;
+        }
+
+        if (this.count < 1) {
+            return false;
+        }
+
+        return super.isValid();
     }
 }

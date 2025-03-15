@@ -528,24 +528,24 @@ data=restore_message2,0
 
 [half_pizza_consume_messages]
 table=consume_messages_table
-data=consumable,obj_2291
+data=consumable,half_plain_pizza
 data=consume_message1,You eat the remaining pizza.
 
 [half_meat_pizza_consume_messages]
 table=consume_messages_table
-data=consumable,obj_2295
+data=consumable,half_meat_pizza
 data=consume_message1,You eat the remaining meat pizza.
 data=restore_message2,0
 
 [half_anchovy_pizza_consume_messages]
 table=consume_messages_table
-data=consumable,obj_2299
+data=consumable,half_anchovy_pizza
 data=consume_message1,You eat the remaining anchovy pizza.
 data=restore_message2,0
 
 [half_pineapple_pizza_consume_messages]
 table=consume_messages_table
-data=consumable,obj_2303
+data=consumable,half_pineapple_pizza
 data=consume_message1,You eat the remaining pineapple pizza.
 data=restore_message2,0
 

@@ -1,8 +1,6 @@
 import World from '#/engine/World.js';
 import Packet from '#/io/Packet.js';
-
 import ClientSocket from '#/server/ClientSocket.js';
-
 import NullClientSocket from '#/server/NullClientSocket.js';
 import WorkerClientSocket from '#/server/worker/WorkerClientSocket.js';
 

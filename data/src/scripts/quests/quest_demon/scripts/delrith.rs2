@@ -12,38 +12,6 @@ if (npc_stat(hitpoints) = 0) {
     }
 }
 
-[apnpc2,delrith]
-if (npc_range(coord) > 1)
-{
-  p_aprange(1);
-  return;
-}
-@attack_delrith;
-
-[opnpc2,delrith]
-@attack_delrith;
-
-[label,attack_delrith]
-if (%demon_progress = ^demon_silverlight) {
-    if (inv_getobj(worn, 3) ! silverlight) {
-        if (inv_total(inv, silverlight) > 0) {
-            mes("Maybe I'd better wield silverlight first.");
-            return;
-        }
-
-        if (inv_total(inv, silverlight) < 1) {
-            mes("I'd rather not. He looks scary.");
-            return;
-        }
-    }
-    @player_combat_start;
-} else if (%demon_progress = ^demon_complete) {
-    mes("You've already done that quest.");
-}
-else{
-    mes("I'd rather not. He looks scary");
-}
-
 [queue,delrith_death]
 if_close;
 if (npc_find(coord, delrith, 8, 0) = true) {

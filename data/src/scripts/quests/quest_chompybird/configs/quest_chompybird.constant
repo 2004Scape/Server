@@ -26,3 +26,6 @@
 // 0 = not set, 1 = tomato, 2 = doogle leaves
 ^chompybird_varbit_fycie_flavour_start = 4
 ^chompybird_varbit_fycie_flavour_end = 5
+
+^chompybird_varbit_bought_feathers = 6
+^chompybird_varbit_bought_scratchers = 7

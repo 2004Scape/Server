@@ -1,6 +1,5 @@
 import InputTrackingEvent from '#/engine/entity/tracking/InputEvent.js';
 import InternalClient from '#/server/InternalClient.js';
-
 import Environment from '#/util/Environment.js';
 
 export default class LoggerClient extends InternalClient {
@@ -19,12 +18,14 @@ export default class LoggerClient extends InternalClient {
             return;
         }
 
-        this.ws.send(JSON.stringify({
-            type: 'session_log',
-            world: Environment.NODE_ID,
-            profile: Environment.NODE_PROFILE,
-            logs
-        }));
+        this.ws.send(
+            JSON.stringify({
+                type: 'session_log',
+                world: Environment.NODE_ID,
+                profile: Environment.NODE_PROFILE,
+                logs
+            })
+        );
     }
 
     public async report(username: string, coord: number, offender: string, reason: number) {
@@ -34,16 +35,18 @@ export default class LoggerClient extends InternalClient {
             return;
         }
 
-        this.ws.send(JSON.stringify({
-            type: 'report',
-            world: Environment.NODE_ID,
-            profile: Environment.NODE_PROFILE,
-            username,
-            timestamp: Date.now(),
-            coord,
-            offender,
-            reason
-        }));
+        this.ws.send(
+            JSON.stringify({
+                type: 'report',
+                world: Environment.NODE_ID,
+                profile: Environment.NODE_PROFILE,
+                username,
+                timestamp: Date.now(),
+                coord,
+                offender,
+                reason
+            })
+        );
     }
 
     public async inputTrack(username: string, session_uuid: string, timestamp: number, events: InputTrackingEvent[]) {
@@ -53,14 +56,16 @@ export default class LoggerClient extends InternalClient {
             return;
         }
 
-        this.ws.send(JSON.stringify({
-            type: 'input_track',
-            world: Environment.NODE_ID,
-            profile: Environment.NODE_PROFILE,
-            username,
-            session_uuid,
-            timestamp,
-            events
-        }));
+        this.ws.send(
+            JSON.stringify({
+                type: 'input_track',
+                world: Environment.NODE_ID,
+                profile: Environment.NODE_PROFILE,
+                username,
+                session_uuid,
+                timestamp,
+                events
+            })
+        );
     }
 }

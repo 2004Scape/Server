@@ -17,7 +17,7 @@ switch_int (%arthur_progress) {
         ~chatnpc("<p,happy>Sorry, I cannot help you with that.");
     case ^arthur_spoken_morgan_lefaye, ^arthur_excalibur_bound, ^arthur_freed_merlin :
         ~chatplayer("<p,quiz>I'd like some advice on finding Excalibur.");
-        ~chatnpc("<p,happy>orry, I cannot help you with that.");
+        ~chatnpc("<p,happy>Sorry, I cannot help you with that.");
     case ^arthur_complete :
         ~chatnpc("<p,happy>After your help freeing Merlin, my help is the least I can offer as a man of honour.");
         ~chatplayer("<p,happy>Nothing right now, but I'll bear it in mind. Thanks.");

@@ -46,14 +46,20 @@ if_openmain(makeover_mage);
 [if_button,makeover_mage:com_101] %option2 = 8;
 
 [if_button,makeover_mage:com_89]
-if (%option1 = 0 | %option2 = 0) {
-    mes("You must make a selection from both categories."); // guess based off thessalia
+def_int $cur_gender = calc(gender + 1);
+if (%option1 = $cur_gender & %option2 = 0) {
+    mes("You haven't changed anything."); // current OSRS
     return;
 }
 
+// https://youtu.be/sKxvSaYuAYU?si=gYlSZJQC4rp9dAY0&t=136
 if_close;
-setgender(calc(%option1 - 1));
-setskincolour(calc(%option2 - 1));
+if(%option1 ! $cur_gender) {
+    setgender(calc(%option1 - 1));
+}
+if(%option2 > 0) {
+    setskincolour(calc(%option2 - 1));
+}
 
 buildappearance(worn);
 inv_del(inv, coins, 3000);

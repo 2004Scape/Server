@@ -39,23 +39,3 @@ export function preloadClient() {
         PRELOADED_CRC.set(name, crc);
     }
 }
-
-export async function preloadClientAsync() {
-    const fetchAll = async (type: string, name: string) => {
-        const data = new Uint8Array(await (await fetch(`data/pack/client/${type}/${name}`)).arrayBuffer());
-        const crc = Packet.getcrc(data, 0, data.length);
-
-        PRELOADED.set(name, data);
-        PRELOADED_CRC.set(name, crc);
-    };
-
-    // eslint-disable-next-line @typescript-eslint/ban-ts-comment
-    // @ts-ignore
-    const { jingles, maps, songs } = await import('./PreloadedDirs.js');
-    const allPacks = [
-        ...maps.map((name: string) => fetchAll('maps', name)),
-        ...songs.map((name: string) => fetchAll('songs', name)),
-        ...jingles.map((name: string) => fetchAll('jingles', name))
-    ];
-    await Promise.all(allPacks);
-}

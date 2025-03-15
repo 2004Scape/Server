@@ -96,8 +96,8 @@ if (lowmemory = true) {
 hint_coord(^hint_east, 0_48_48_0_18, 150);
 if (lowmemory = true) { // https://web.archive.org/web/20040408025047/http://www.imageshack.us:80/img2/8038/runescapetypo1.png
     ~tutorialstep("The Music Player.", "As you are playing in low memery mode you will not be able to|listen to the music of RuneScape, but this is where you would|find the jukebox controls. Pass through the door to continue. If you need a recap on anything covered here talk to Lev.");
-} else {
-    ~tutorialstep("The Music Player.", "From this interface you can control the music that is played.|As you explore the world more of the tunes will become unlocked.|Once you've examined this menu use the next door|to continue.");
+} else { // https://archive.org/details/PCPowerplay-101-2004-07/page/n13/mode/2up?q=runescape
+    ~tutorialstep("The Music Player.", "From this interface you can control the music that is played.|As you explore the world more of the tunes will become unlocked.|Once you've examined this menu use the next door to continue.|If you need a recap on anything covered here talk to Lev.");
 }
 
 [proc,tutorial_step_click_run_icon]
@@ -112,7 +112,7 @@ if (p_finduid(uid) = true) {
     p_run(^player_run_off);
     return;
 }
-queue(set_run, 0, 0);
+%run = %run;
 ~tutorialstep("Running.", "In this menu you will see many options from waving to walking.|At the top of the panel there are two buttons. One is walk the|other one is run. Click on the run button.");
 
 [proc,tutorial_step_enter_quest_guide_house]

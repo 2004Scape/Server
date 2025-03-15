@@ -1,7 +1,7 @@
 import Packet from '#/io/Packet.js';
 import ZoneProt from '#/network/rs225/server/prot/ZoneProt.js';
-import ObjReveal from '#/network/server/model/ObjReveal.js';
 import ZoneMessageEncoder from '#/network/server/codec/ZoneMessageEncoder.js';
+import ObjReveal from '#/network/server/model/ObjReveal.js';
 
 export default class ObjRevealEncoder extends ZoneMessageEncoder<ObjReveal> {
     prot = ZoneProt.OBJ_REVEAL;

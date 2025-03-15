@@ -1,5 +1,5 @@
-import { ConfigValue, ConfigLine, PackedData, isConfigBoolean, getConfigBoolean } from '#tools/pack/config/PackShared.js';
 import { MesAnimPack, SeqPack } from '#/util/PackFile.js';
+import { ConfigValue, ConfigLine, PackedData, isConfigBoolean, getConfigBoolean } from '#tools/pack/config/PackShared.js';
 
 export function parseMesAnimConfig(key: string, value: string): ConfigValue | null | undefined {
     const stringKeys: string[] = [];
@@ -54,7 +54,7 @@ export function parseMesAnimConfig(key: string, value: string): ConfigValue | nu
     }
 }
 
-export function packMesAnimConfigs(configs: Map<string, ConfigLine[]>): { client: PackedData, server: PackedData } {
+export function packMesAnimConfigs(configs: Map<string, ConfigLine[]>): { client: PackedData; server: PackedData } {
     const client: PackedData = new PackedData(MesAnimPack.size);
     const server: PackedData = new PackedData(MesAnimPack.size);
 

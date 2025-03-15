@@ -1,6 +1,6 @@
-import MessageEncoder from '#/network/server/codec/MessageEncoder.js';
 import Packet from '#/io/Packet.js';
 import ServerProt from '#/network/rs225/server/prot/ServerProt.js';
+import MessageEncoder from '#/network/server/codec/MessageEncoder.js';
 import CamMoveTo from '#/network/server/model/CamMoveTo.js';
 
 export default class CamMoveToEncoder extends MessageEncoder<CamMoveTo> {

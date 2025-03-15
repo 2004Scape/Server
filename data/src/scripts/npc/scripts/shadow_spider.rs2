@@ -1,11 +1,28 @@
 [ai_opplayer2,shadow_spider] 
+if (stat(hitpoints) = 0) {
+    npc_setmode(null);
+    return;
+}
+if (%npc_action_delay > map_clock) {
+    return;
+}
+if (~npc_can_attack_player = false) {
+    npc_setmode(null);
+    return;
+}
 // https://www.youtube.com/watch?v=qCuX19-3SHc&t=185s
 if (~npc_out_of_combat = true) {
     ~shadow_spider_drain;
 }
-gosub(npc_default_attack);
+~npc_meleeattack;
 
 [proc,shadow_spider_drain]
 mes("The spider drains your prayer...");
 sound_synth(prayer_drain, 0, 0);
 stat_sub(prayer, divide(stat(prayer), 2), 0); // division by 2 round up, thats why percent isn't being used 
+
+[ai_queue2,shadow_spider]
+if (~npc_out_of_combat = true & finduid(%npc_aggressive_player) = true) {
+    ~shadow_spider_drain;
+}
+~npc_default_damage(last_int);

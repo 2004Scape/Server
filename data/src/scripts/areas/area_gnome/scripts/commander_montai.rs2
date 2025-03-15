@@ -71,15 +71,22 @@ switch_int(%tree_progress) {
         ~chatplayer("<p,happy>Hang in there.");
 }
 
-//[ai_timer,commander_montai]  catapult code, disabled for now, odd bug
-//loc_findallzone(0_39_50_31_5);
-//def_coord $projectile_start = 0_39_50_31_5;
-//def_coord $dest_coord = movecoord($projectile_start, calc(-5 + random(10)), 0, calc(random (15) + 34));
-//def_int $delay = calc(distance($projectile_start, $dest_coord) / 4);
-//while (loc_findnext = true) {
-//    if(loc_type = loc_2180) {
-//        loc_anim(catapult_fire);
-//        spotanim_map(spotanim_71, movecoord($projectile_start, calc(-10 + random(10)), 0, calc(random (15) + 34)), 0, calc(distance($projectile_start, $dest_coord) / 4));
-//        ~coord_projectile($projectile_start, movecoord($projectile_start, 0, 0, 34), spotanim_70, 50, 2, 15, 25, 21, 64, 10);
-//    }
-//}
+[ai_timer,commander_montai] 
+def_coord $projectile_start = 0_39_50_31_5;
+def_coord $dest_coord = map_findsquare(movecoord($projectile_start, -3, 0, 33), 0, 5, ^map_findsquare_none);
+def_int $delay = calc(distance($projectile_start, $dest_coord) / 2);
+if(loc_find(0_39_50_30_4, loc_2180) = true) {
+    loc_anim(catapult_fire);
+    ~coord_projectile($projectile_start, $dest_coord, spotanim_70, 50, 2, 15, 25, 21, 64, 10);
+    world_delay($delay);
+    spotanim_map(spotanim_71, $dest_coord, 0, 0); // yes, this does appear far after the projectile lands
+    huntall($dest_coord, 1, 0);
+    if(huntnext = true) {
+        ~damage_self(random(4)); // https://x.com/JagexAsh/status/1538818765676236801
+    }
+    npc_huntall($dest_coord, 1, 0);
+    while (npc_huntnext = true) {
+        ~npc_default_damage(random(4));
+    }
+
+}

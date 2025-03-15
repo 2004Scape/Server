@@ -3,14 +3,16 @@ if (~check_protect_prayer(^ranged_style) = true) {
     return(0);
 }
 def_int $rangeattack = npc_param(rangeattack);
-def_int $effective_ranged = ~combat_effective_stat(1, npc_stat(ranged), 100); // no prayerbonus
+def_int $effective_ranged = ~combat_effective_stat(npc_stat(ranged), 100); // no prayerbonus
+$effective_ranged = add($effective_ranged, 9); // 'style bonus' of 1
 return(~combat_stat($effective_ranged, $rangeattack));
 
 [proc,npc_ranged_maxhit]()(int)
 def_int $rangebonus = npc_param(rangebonus);
 //npcs are essentially always on controlled
-def_int $effective_strength = ~combat_effective_stat(1, npc_stat(ranged), 100); // no prayerbonus
-def_int $range_strength = ~combat_stat($effective_strength, $rangebonus);
+def_int $effective_ranged = ~combat_effective_stat(npc_stat(ranged), 100); // no prayerbonus
+$effective_ranged = add($effective_ranged, 9); // 'style bonus' of 1
+def_int $range_strength = ~combat_stat($effective_ranged, $rangebonus);
 return(~combat_maxhit($range_strength));
 
 [proc,npc_rangeattack]

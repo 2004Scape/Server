@@ -1,10 +1,10 @@
 import fs from 'fs';
 
-import Packet from '#/io/Packet.js';
 
 import { ConfigType } from '#/cache/config/ConfigType.js';
 import DbTableType from '#/cache/config/DbTableType.js';
 import ScriptVarType from '#/cache/config/ScriptVarType.js';
+import Packet from '#/io/Packet.js';
 
 export default class DbRowType extends ConfigType {
     private static configNames = new Map<string, number>();

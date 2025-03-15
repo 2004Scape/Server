@@ -6,7 +6,9 @@ export default class OpPlayerU extends IncomingMessage {
 
     constructor(
         readonly pid: number,
-        readonly useObj: number, readonly useSlot: number, readonly useComponent: number
+        readonly useObj: number,
+        readonly useSlot: number,
+        readonly useComponent: number
     ) {
         super();
     }

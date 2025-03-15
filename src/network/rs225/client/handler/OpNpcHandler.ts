@@ -1,9 +1,9 @@
-import MessageHandler from '#/network/client/handler/MessageHandler.js';
 import NpcType from '#/cache/config/NpcType.js';
-import ServerTriggerType from '#/engine/script/ServerTriggerType.js';
 import Interaction from '#/engine/entity/Interaction.js';
-import World from '#/engine/World.js';
 import { NetworkPlayer } from '#/engine/entity/NetworkPlayer.js';
+import ServerTriggerType from '#/engine/script/ServerTriggerType.js';
+import World from '#/engine/World.js';
+import MessageHandler from '#/network/client/handler/MessageHandler.js';
 import OpNpc from '#/network/client/model/OpNpc.js';
 import UnsetMapFlag from '#/network/server/model/UnsetMapFlag.js';
 
@@ -50,7 +50,7 @@ export default class OpNpcHandler extends MessageHandler<OpNpc> {
         }
 
         player.clearPendingAction();
-        player.setInteraction(Interaction.ENGINE, npc, mode, { type: npc.type, com: -1 });
+        player.setInteraction(Interaction.ENGINE, npc, mode);
         player.opcalled = true;
         return true;
     }

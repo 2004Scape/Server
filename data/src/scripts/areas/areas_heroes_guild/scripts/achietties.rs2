@@ -10,38 +10,45 @@ if (%hero_progress >= ^hero_complete) {
 if (~hero_in_progress = true) {
   ~chatnpc("<p,quiz>How goes thy quest adventurer?");
   if ((inv_total(inv, fire_feather) >= 1) & (inv_total(inv, lava_eel) >= 1) & (inv_total(inv, thieves_armband) >= 1)) {
-    ~chatplayer("<p,neutral>I have all the required items.");
+    ~chatplayer("<p,happy>I have all the required items.");
     ~chatnpc("<p,neutral>I see that you have. Well done; Now, to complete the|quest, and gain entry to the Hero's Guild in your final|task all that you have to do is...");
-    ~chatplayer("<p,angry>W-what? What do you mean? There's MORE???");
+    ~chatplayer("<p,shock>W-what? What do you mean? There's MORE???");
     ~chatnpc("<p,neutral>I'm sorry, I was just having a little fun with you. Just|a little Hero's Guild humour there. What I really|meant was");
     ~chatnpc("<p,happy>Congratulations! You have completed the Hero's Guild|entry requirements! You will find the door now open|for you! Enter, Hero! And take this reward!");
     queue(hero_quest_complete, 0);
     inv_del(inv, fire_feather, 1);
     inv_del(inv, thieves_armband, 1);
     inv_del(inv, lava_eel, 1);
-    return;
   } else {
-    ~chatplayer("<p,neutral>It's tough. I've not done it yet.");
+    ~chatplayer("<p,confused>It's tough. I've not done it yet.");
     ~chatnpc("<p,neutral>Remember, the items you need to enter are:");
     ~chatnpc("<p,neutral>An Entranan Firebirds' feather, A Master Thieves armband, and a cooked Lava Eel.");
     @achietties_help_dialogue;
-    return;
   }
+  return;
 }
 
-~chatnpc("<p,neutral>Only the greatest heroes of this land may gain|entrance to this guild.");
-~chatplayer("<p,neutral>I'm a hero. May I apply to join?");
+~chatnpc("<p,neutral>Only the greatest heroes of this land may gain entrance to this guild.");
+def_int $op = ~p_choice2("I'm a hero, may I apply to join?", 1, "Good for the foremost heroes of the land.", 2);
+if($op = 2) {
+  ~chatplayer("<p,neutral>Good for the foremost heroes of the land.");
+  ~chatnpc("<p,neutral>Yes. Yes it is.");
+  return;
+}
+~chatplayer("<p,quiz>I'm a hero. May I apply to join?");
 if (~has_hero_quest_requirements = true) {
   ~chatnpc("<p,neutral>Well, you have a lot of quest points, and you have done|all the required quests, so you may now begin the|tasks to meet the entry requirements for membership in|the Hero's Guild. The three items required");
   ~chatnpc("<p,neutral>for entrance are:|An Entranan Firebird feather,|a Master Thieves' armband,|and a cooked Lava Eel."); // imgur.com/8hiv333
   %hero_progress = ^hero_started;
   ~send_quest_progress(questlist:hero, %hero_progress, ^hero_complete);
   @achietties_help_dialogue;
-  return;
 } else {
-  ~chatnpc("<p,neutral>You're a hero? I've never heard of YOU. You are required to possess at least 55 quest points to file an application.");
+  if(%questpoints >= ^hero_required_questpoints) {
+    ~chatnpc("<p,neutral>Well, you have a lot of quest points, but to be deemed worthy, you must have completed the Shield of Arrav, Lost City, Merlin's Crystal and Dragon Slayer quests.");
+    return;
+  }
+  ~chatnpc("<p,confused>You're a hero? I've never heard of YOU. You are required to possess at least 55 quest points to file an application.");
   ~chatnpc("<p,neutral>Additionally you must have completed the Shield of Arrav, Lost City, Merlin's Crystal and Dragon Slayer quests.");
-  return;
 }
 
 [label,achietties_help_dialogue]

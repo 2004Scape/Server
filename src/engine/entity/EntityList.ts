@@ -1,6 +1,6 @@
+import Entity from '#/engine/entity/Entity.js';
 import Npc from '#/engine/entity/Npc.js';
 import Player from '#/engine/entity/Player.js';
-import Entity from '#/engine/entity/Entity.js';
 
 // inspired by https://github.com/rsmod/rsmod/blob/master/game/src/main/kotlin/org/rsmod/game/model/mob/list/MobList.kt
 abstract class EntityList<T extends Entity> extends Array<T | undefined> {

@@ -1,9 +1,9 @@
 import Entity from '#/engine/entity/Entity.js';
-import InfoMessage from '#/network/server/InfoMessage.js';
-import InfoMessageEncoder from '#/network/server/codec/InfoMessageEncoder.js';
-import ServerProtRepository from '#/network/rs225/server/prot/ServerProtRepository.js';
 import Packet from '#/io/Packet.js';
 import InfoProt from '#/network/rs225/server/prot/InfoProt.js';
+import ServerProtRepository from '#/network/rs225/server/prot/ServerProtRepository.js';
+import InfoMessageEncoder from '#/network/server/codec/InfoMessageEncoder.js';
+import InfoMessage from '#/network/server/InfoMessage.js';
 
 export default abstract class Renderer<T extends Entity> {
     protected readonly caches: Map<InfoProt, Map<number, Uint8Array>>;

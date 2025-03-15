@@ -35,20 +35,20 @@ export default class AnimBase {
 
             const types = new Int32Array(length);
             const labels = new Array(length);
-    
+
             for (let j = 0; j < length; j++) {
                 types[j] = type.g1();
             }
-    
+
             for (let j = 0; j < length; j++) {
                 const labelCount = label.g1();
                 labels[j] = new Int32Array(labelCount);
-    
+
                 for (let k = 0; k < labelCount; k++) {
                     labels[j][k] = label.g1();
                 }
             }
-    
+
             const base = new AnimBase();
             base.length = length;
             base.types = types;

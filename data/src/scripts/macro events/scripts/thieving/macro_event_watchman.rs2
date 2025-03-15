@@ -14,9 +14,7 @@ if ($event_coord = null) {
 npc_add($event_coord, $event, 1000);
 npc_say("<displayname>, you are under arrest!");
 %npc_macro_event_target = uid;
-if (finduid(uid) = false) {
-    return;
-}
+%macro_event = ^no_macro_event;
 // no idea what sound he makes
 sound_synth(smokepuff, 0, 0);
 spotanim_map(small_smokepuff, npc_coord, 124, 0);

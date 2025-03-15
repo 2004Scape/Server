@@ -1,7 +1,7 @@
-import MessageEncoder from '#/network/server/codec/MessageEncoder.js';
+import { CoordGrid } from '#/engine/CoordGrid.js';
 import Packet from '#/io/Packet.js';
 import ServerProt from '#/network/rs225/server/prot/ServerProt.js';
-import {CoordGrid} from '#/engine/CoordGrid.js';
+import MessageEncoder from '#/network/server/codec/MessageEncoder.js';
 import UpdateZonePartialFollows from '#/network/server/model/UpdateZonePartialFollows.js';
 
 export default class UpdateZonePartialFollowsEncoder extends MessageEncoder<UpdateZonePartialFollows> {

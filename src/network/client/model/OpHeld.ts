@@ -6,7 +6,9 @@ export default class OpHeld extends IncomingMessage {
 
     constructor(
         readonly op: number,
-        readonly obj: number, readonly slot: number, readonly component: number
+        readonly obj: number,
+        readonly slot: number,
+        readonly component: number
     ) {
         super();
     }

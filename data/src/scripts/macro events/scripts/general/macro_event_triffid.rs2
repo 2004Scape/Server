@@ -4,7 +4,6 @@ npc_anim(seq_348, 0);
 %npc_int = ^triffid_growing;
 %npc_macro_event_target = uid;
 sound_synth(triffid_appear, 0, 0);
-%macro_event = ^no_macro_event;
 
 [opnpc1,macro_event_triffid_friendly]
 if (%npc_macro_event_target ! uid) {
@@ -20,6 +19,7 @@ inv_add(inv, strange_fruit, 1);
 sound_synth(pick, 0, 0);
 // https://youtu.be/ghfKpXe7N5s?t=24
 mes("You pick the fruit from the plant."); // osrs
+%macro_event = ^no_macro_event;
 npc_anim(seq_350, 0); // take thing away
 npc_delay(22); // delayed when despawning in osrs
 npc_del;
@@ -36,8 +36,10 @@ if (%npc_int = ^triffid_ready_to_attack) { // turn hostile
     npc_settimer(1);
     if (finduid(%npc_macro_event_target) = true) {
         %aggressive_npc = npc_uid; // interupt the player if they're in combat https://youtu.be/tw66JWQzpD0?t=32
+        %macro_event = ^no_macro_event;
         npc_setmode(opplayer2);
     }
+    return;
 }
 %npc_int = ^triffid_ready_to_attack;
 

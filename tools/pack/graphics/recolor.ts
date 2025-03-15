@@ -1,8 +1,9 @@
 import fs from 'fs';
-import ColorConversion from '#/util/ColorConversion.js';
-import { loadDirExact, loadPack } from '#/util/NameMap.js';
+
 import Model from '#/cache/graphics/Model.js';
 import Jagfile from '#/io/Jagfile.js';
+import ColorConversion from '#/util/ColorConversion.js';
+import { loadDirExact, loadPack } from '#/util/NameMap.js';
 
 Model.unpack(Jagfile.load('data/pack/client/models'));
 

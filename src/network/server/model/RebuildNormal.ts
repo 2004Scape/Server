@@ -1,6 +1,6 @@
+import { CoordGrid } from '#/engine/CoordGrid.js';
 import OutgoingMessage from '#/network/server/OutgoingMessage.js';
 import ServerProtPriority from '#/network/server/prot/ServerProtPriority.js';
-import {CoordGrid} from '#/engine/CoordGrid.js';
 
 export default class RebuildNormal extends OutgoingMessage {
     priority = ServerProtPriority.IMMEDIATE;
@@ -23,7 +23,7 @@ export default class RebuildNormal extends OutgoingMessage {
             const mx: number = CoordGrid.mapsquare(x << 3);
             for (let z: number = minZ; z <= maxZ; z++) {
                 const mz: number = CoordGrid.mapsquare(z << 3);
-                result.add(mx << 8 | mz);
+                result.add((mx << 8) | mz);
             }
         }
         return result;
