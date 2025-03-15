@@ -6,12 +6,99 @@ import { WebSocketServer } from 'ws';
 
 
 import { db, toDbDate } from '#/db/query.js';
+import Player from '#/engine/entity/Player.js';
 import { PlayerLoading } from '#/engine/entity/PlayerLoading.js';
+import { PlayerStatEnabled } from '#/engine/entity/PlayerStat.js';
 import Packet from '#/io/Packet.js';
 import Environment from '#/util/Environment.js';
 import { printInfo } from '#/util/Logger.js';
 import { getUnreadMessageCount } from '#/util/Messages.js';
 import { startManagementWeb } from '#/web.js';
+
+async function updateHiscores(username: string, player: Player, profile: string) {
+    const account = await db.selectFrom('account').where('username', '=', username).selectAll().executeTakeFirstOrThrow();
+
+    if (account.staffmodlevel > 1) {
+        return;
+    }
+
+    const insert = [];
+    const update = [];
+
+    let totalXp = 0;
+    let totalLevel = 0;
+    for (let i = 0; i < player.stats.length; i++) {
+        if (!PlayerStatEnabled[i]) {
+            continue;
+        }
+
+        totalXp += player.stats[i];
+        totalLevel += player.baseLevels[i];
+    }
+
+    const existing = await db.selectFrom('hiscore_large').select('type').select('value').where('account_id', '=', account.id).where('type', '=', 0).where('profile', '=', profile).executeTakeFirst();
+    if (existing && existing.value !== totalXp) {
+        await db
+            .updateTable('hiscore_large')
+            .set({
+                type: 0,
+                level: totalLevel,
+                value: totalXp
+            })
+            .where('account_id', '=', account.id)
+            .where('type', '=', 0)
+            .where('profile', '=', profile)
+            .execute();
+    } else if (!existing) {
+        await db
+            .insertInto('hiscore_large')
+            .values({
+                account_id: account.id,
+                profile,
+                type: 0,
+                level: totalLevel,
+                value: totalXp
+            })
+            .execute();
+    }
+
+    for (let stat = 0; stat < player.stats.length; stat++) {
+        if (!PlayerStatEnabled[stat]) {
+            continue;
+        }
+
+        if (player.baseLevels[stat] >= 15) {
+            const hiscoreType = stat + 1;
+
+            // todo: can we upsert in kysely?
+            const existing = await db.selectFrom('hiscore').select('type').select('value').where('account_id', '=', account.id).where('type', '=', hiscoreType).where('profile', '=', profile).executeTakeFirst();
+            if (existing && existing.value !== player.stats[stat]) {
+                update.push({
+                    type: hiscoreType,
+                    level: player.baseLevels[stat],
+                    value: player.stats[stat]
+                });
+            } else if (!existing) {
+                insert.push({
+                    account_id: account.id,
+                    profile,
+                    type: hiscoreType,
+                    level: player.baseLevels[stat],
+                    value: player.stats[stat]
+                });
+            }
+        }
+    }
+
+    if (insert.length > 0) {
+        await db.insertInto('hiscore').values(insert).execute();
+    }
+
+    // todo: batch update query?
+    for (let i = 0; i < update.length; i++) {
+        await db.updateTable('hiscore').set(update[i]).where('account_id', '=', account.id).where('type', '=', update[i].type).where('profile', '=', profile).execute();
+    }
+}
 
 export default class LoginServer {
     private server: WebSocketServer;
@@ -234,7 +321,7 @@ export default class LoginServer {
                                 })
                             );
                             return;
-                        } else if (account.staffmodlevel < 1 && account.logged_out !== 0 && account.logged_out !== nodeId && account.logout_time !== null && new Date(account.logout_time) >= new Date(Date.now() - 45000)) {
+                        } else if (account.staffmodlevel < 2 && account.logged_out !== 0 && account.logged_out !== nodeId && account.logout_time !== null && new Date(account.logout_time) >= new Date(Date.now() - 45000)) {
                             // rate limited (hop timer)
                             s.send(
                                 JSON.stringify({
@@ -341,6 +428,8 @@ export default class LoginServer {
                                 response: 0
                             })
                         );
+
+                        await updateHiscores(username, PlayerLoading.load(username, new Packet(raw), null), profile);
                     } else if (type === 'player_autosave') {
                         const { username, save } = msg;
 
