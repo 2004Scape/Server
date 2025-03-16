@@ -740,7 +740,8 @@ switch_int(~p_choice3("A ladder", 1, "A crude raft", 2, "A pole vault", 3)) {
         // Temp note: dur updated
         loc_add(coord, loc_2227, 1, centrepiece_straight, 3);
         p_delay(1);
-        loc_del(1);
+        // Temp note: dur updated
+        loc_del(2);
         p_telejump(movecoord(coord, 1, 0, 0));
         // Temp note: dur updated
         loc_add(coord, loc_2227, 1, centrepiece_straight, 8);
