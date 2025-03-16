@@ -497,7 +497,7 @@ const PlayerOps: CommandHandlers = {
         const player = state.activePlayer;
         const base = player.baseLevels[stat];
         const current = player.levels[stat];
-        const healed = current + (constant + (current * percent) / 100);
+        const healed = current + ((constant + (current * percent) / 100) | 0);
         player.levels[stat] = Math.max(Math.min(healed, base), current);
 
         if (stat === 3 && player.levels[3] >= player.baseLevels[3]) {
