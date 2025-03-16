@@ -13,20 +13,3 @@
 ^prayer_protectfrommagic = 13
 ^prayer_protectfrommissiles = 14
 ^prayer_protectfrommelee = 15
-
-// https://github.com/2004Scape/Server/issues/1421
-^prayer_thickskin_start = 6
-^prayer_strengthburst_start = 6
-^prayer_clarity_start = 6
-^prayer_rockskin_start = 6
-^prayer_superhumanstrength_start = 6
-^prayer_improvedreflexes_start = 6
-^prayer_rapidrestore_start = 6
-^prayer_rapidheal_start = 6
-^prayer_protectitems_start = 6
-^prayer_steelskin_start = 6
-^prayer_ultimatestrength_start = 6
-^prayer_incrediblereflexes_start = 6
-^prayer_protectfrommagic_start = 5
-^prayer_protectfrommissiles_start = 5
-^prayer_protectfrommelee_start = 5

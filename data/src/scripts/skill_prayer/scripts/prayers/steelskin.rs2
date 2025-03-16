@@ -28,4 +28,4 @@ if (stat_base(prayer) < $levelreq){
     return;
 }
 %prayer_steelskin = ^true;
-~prayer_activate($data, ^prayer_steelskin_start);
+~prayer_activate($data);

@@ -28,4 +28,4 @@ if (stat_base(prayer) < $levelreq){
     return;
 }
 %prayer_strengthburst = ^true;
-~prayer_activate($data, ^prayer_strengthburst_start);
+~prayer_activate($data);
