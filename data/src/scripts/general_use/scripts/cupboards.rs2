@@ -43,6 +43,7 @@ p_arrivedelay;
 anim(human_openchest,0);
 sound_synth(cupboard_open, 0, 0);
 p_delay(0);
+// Temp note: dur does not need updated
 loc_change(loc_param(cupboard_other), 300);
 if ($message = true) {
     mes("You open the cupboard.");
@@ -53,6 +54,7 @@ p_arrivedelay;
 anim(human_closechest, 0);
 sound_synth(cupboard_close, 0, 0);
 p_delay(0);
+// Temp note: dur does not need updated
 loc_change(loc_param(cupboard_other), 300);
 if ($message = true) {
     mes("You close the cupboard.");
