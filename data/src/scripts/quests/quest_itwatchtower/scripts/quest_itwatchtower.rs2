@@ -432,8 +432,9 @@ if (loc_type = loc_2788) {
     ~open_double_doors_right(3, double_door_open_and_close_left, null);
 }
 
-loc_add($opposite_coord, loc_83, $angle, $shape, 2);
-loc_add($loc_coord, loc_83, $angle, $shape, 2);
+// Temp note: dur updated
+loc_add($opposite_coord, loc_83, $angle, $shape, 3);
+loc_add($loc_coord, loc_83, $angle, $shape, 3);
 
 [oploc1,loc_2823]
 mes("You enter the tunnel.");

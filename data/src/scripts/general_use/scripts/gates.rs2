@@ -49,11 +49,13 @@ def_coord $main_open = ~movecoord_loc_return(~gate_set_close($orig_angle, 1));
 def_coord $outer_open = ~movecoord_loc_return(~gate_set_close($orig_angle, 2));
 //todo: Figure out if these use door_open/close, the gate sounds werent added until ~2005?
 sound_synth(door_open, 0, 0); 
+// Temp note: dur does not need updated
 loc_del(500);
 loc_add($main_open, loc_param(next_loc_stage), modulo(add(loc_angle, 3), 4), wall_straight, 500);
 loc_findallzone(~get_pair_coord($orig_coord, $orig_angle, false));
 while (loc_findnext = true) {
     if (distance($orig_coord, loc_coord) <= 1 & loc_category = gate_outer_closed) {
+        // Temp note: dur does not need updated
         loc_del(500);
         loc_add($outer_open, loc_param(next_loc_stage), modulo(add($orig_angle, 3), 4), wall_straight, 500);
         return;
@@ -66,11 +68,13 @@ def_coord $orig_coord = loc_coord;
 def_coord $main_closed = ~movecoord_loc_return(~gate_set_open($orig_angle, false));
 def_coord $outer_closed = ~movecoord_loc_return(~gate_set_open($orig_angle, true));
 sound_synth(door_close, 0, 0); 
+// Temp note: dur does not need updated
 loc_del(500);
 loc_add($main_closed, loc_param(next_loc_stage), modulo(add(loc_angle, 1), 4), wall_straight, 500);
 loc_findallzone(~get_pair_coord($orig_coord, $orig_angle, false));
 while (loc_findnext = true) {
     if (distance($orig_coord, loc_coord) <= 1 & loc_category = gate_outer_open) {
+        // Temp note: dur does not need updated
         loc_del(500);
         loc_add($outer_closed, loc_param(next_loc_stage), modulo(add($orig_angle, 1), 4), wall_straight, 500);
         return;
