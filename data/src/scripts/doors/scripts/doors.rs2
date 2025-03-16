@@ -9,6 +9,7 @@ if (coord = $new_loc_coord & loc_shape = wall_diagonal) {
     p_delay(1);
 };
 sound_synth(door_open, 0, 0);
+// Temp note: dur does not need updated
 loc_del(500);
 loc_add($new_loc_coord, loc_param(next_loc_stage), modulo(add(loc_angle, 1), 4), loc_shape, 500);
 // mes("Loc coord: <~coord_tostring(loc_coord)>");
@@ -24,6 +25,7 @@ if (coord = $new_loc_coord & loc_shape = wall_diagonal) {
     p_delay(1);
 }
 sound_synth(door_close, 0, 0);
+// Temp note: dur does not need updated
 loc_del(500);
 loc_add($new_loc_coord, loc_param(next_loc_stage), modulo(add(loc_angle, 3), 4), loc_shape, 500);
 // mes("Loc coord: <~coord_tostring(loc_coord)>");

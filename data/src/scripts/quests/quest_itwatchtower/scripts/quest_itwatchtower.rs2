@@ -425,9 +425,11 @@ $opposite_coord = ~movecoord_loc_return(~multiply2(~door_close(loc_angle, loc_sh
 p_teleport($dest);
 sound_synth(grate_open, 0, 0);
 if (loc_type = loc_2788) {
-    ~open_double_doors_left(2, double_door_open_and_close_right, null);
+    // Temp note: dur updated
+    ~open_double_doors_left(3, double_door_open_and_close_right, null);
 } else {
-    ~open_double_doors_right(2, double_door_open_and_close_left, null);
+    // Temp note: dur updated
+    ~open_double_doors_right(3, double_door_open_and_close_left, null);
 }
 
 loc_add($opposite_coord, loc_83, $angle, $shape, 2);
