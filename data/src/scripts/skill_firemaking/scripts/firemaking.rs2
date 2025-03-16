@@ -113,6 +113,7 @@ facesquare($fire_coord);
 //mes("<tostring(map_clock)>, <tostring(%action_delay)>: The fire catches and the logs begin to burn.");
 mes("The fire catches and the logs begin to burn.");
 def_int $delay = calc(100 + random(100)); // firemaking length: https://archive.is/zF5hb
+// Temp note: dur does not need updated
 loc_add($fire_coord, loc_2732, 1, centrepiece_straight, $delay);
 
 // -2 to match osrs behavior. Potentially this is an engine problem with world_delay being too slow though

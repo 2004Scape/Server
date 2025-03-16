@@ -460,6 +460,7 @@ if(last_useitem = dwarf_brew) {
     }
     sound_synth(fire_lit, 0, 0);
     mes("It bursts into flames.");
+    // Temp note: dur does not need updated
     loc_add(0_36_153_52_8, loc_3357, 3, wall_l, 10);
     loc_add(0_36_153_53_8, loc_3357, 3, wall_straight, 10);
     loc_add(0_36_153_54_8, loc_3357, 3, wall_straight, 10);
