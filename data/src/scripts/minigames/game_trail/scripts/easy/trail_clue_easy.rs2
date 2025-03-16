@@ -42,6 +42,7 @@ p_arrivedelay;
 anim(human_openchest, 0);
 sound_synth(cupboard_open, 0, 0);
 p_delay(0);
-loc_change(loc_3369, 4);
+// Temp note: dur updated
+loc_change(loc_3369, 5);
 p_delay(0);
 ~trail_clue_easy_loc_interact(trail_clue_easy_riddle_exp008);

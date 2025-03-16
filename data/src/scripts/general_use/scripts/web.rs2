@@ -29,6 +29,7 @@ sound_synth(hacksword_slash, 0, 15);
 if (random($chance) = 1) {
     mes("You slash the web apart.");
     p_delay(1); // osrs
+    // Temp note: dur does not need updated
     loc_change(loc_734, 100);
 } else {
     mes("You fail to cut through it.");

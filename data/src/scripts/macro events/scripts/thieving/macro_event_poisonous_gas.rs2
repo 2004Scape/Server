@@ -11,6 +11,7 @@ mes("You open the chest.");
 sound_synth(chest_open, 0, 0);
 p_delay(1);
 anim(human_openchest, 0);
+// Temp note: dur does not need updated
 loc_change(chest_macro_gas, 100); // timing is guessed
 %macro_chest_gas_coord = loc_coord; // set the active loc
 p_delay(0);

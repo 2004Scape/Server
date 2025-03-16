@@ -123,7 +123,8 @@ facesquare(movecoord(coord, 1, 0, 0));
 mes("The lever opens the secret door!");
 anim(human_leverdown, 0);
 sound_synth(lever, 0, 0);
-loc_change(loc_161, 3);
+// Temp note: dur updated
+loc_change(loc_161, 4);
 p_teleport(movecoord(coord, 0, 0, 1));
 p_delay(1);
 @manor_bookcase_door(movecoord(coord, 2, 0, 0));
