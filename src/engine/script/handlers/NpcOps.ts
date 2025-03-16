@@ -436,7 +436,7 @@ const NpcOps: CommandHandlers = {
 
         const npc = state.activeNpc;
         const current = npc.levels[stat];
-        const subbed = current - Math.trunc(constant + (current * percent) / 100);
+        const subbed = current - ((constant + (current * percent) / 100) | 0);
         npc.levels[stat] = Math.max(subbed, 0);
     }),
 
