@@ -1201,7 +1201,7 @@ export default class Player extends PathingEntity {
     }
 
     processInputTracking(): void {
-        this.input.process();
+        this.input.onCycle();
     }
 
     // ----

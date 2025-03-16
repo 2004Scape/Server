@@ -94,7 +94,7 @@ import { printDebug, printError, printInfo } from '#/util/Logger.js';
 import WalkTriggerSetting from '#/util/WalkTriggerSetting.js';
 import { createWorker } from '#/util/WorkerFactory.js';
 
-import InputTrackingEvent from './entity/tracking/InputEvent.js';
+import InputTrackingBlob from './entity/tracking/InputEvent.js';
 
 const priv = forge.pki.privateKeyFromPem(Environment.STANDALONE_BUNDLE ? await (await fetch('data/config/private.pem')).text() : fs.readFileSync('data/config/private.pem', 'ascii'));
 
@@ -2188,13 +2188,13 @@ class World {
         });
     }
 
-    submitInputTracking(username: string, session_uuid: string, events: InputTrackingEvent[]) {
+    submitInputTracking(username: string, session_uuid: string, blobs: InputTrackingBlob[]) {
         this.loggerThread.postMessage({
             type: 'input_track',
             username,
             session_uuid,
             timestamp: Date.now(),
-            events
+            blobs
         });
     }
 

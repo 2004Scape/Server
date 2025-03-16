@@ -1,6 +1,6 @@
 import { NetworkPlayer } from '#/engine/entity/NetworkPlayer.js';
 import Player from '#/engine/entity/Player.js';
-import InputTrackingEvent from '#/engine/entity/tracking/InputEvent.js';
+import InputTrackingBlob from '#/engine/entity/tracking/InputEvent.js';
 import World from '#/engine/World.js';
 import EnableTracking from '#/network/server/model/EnableTracking.js';
 import FinishTracking from '#/network/server/model/FinishTracking.js';
@@ -8,49 +8,89 @@ import LoggerEventType from '#/server/logger/LoggerEventType.js';
 import Environment from '#/util/Environment.js';
 
 export default class InputTracking {
-    // How many ticks between tracking sessions:
+    // How many ticks between tracking sessions
     private static readonly TRACKING_RATE: number = 200; // 120 seconds
-    // How many ticks the tracking is enabled for:
+    // How many ticks the tracking is enabled for
     private static readonly TRACKING_TIME: number = 150; // 90 seconds
-    // How many ticks to allow for the last client report:
-    private static readonly FINAL_REPORT_TIME_LEEWAY: number = 16; // ~10 seconds
+    // How many ticks to allow for any remaining data from client
+    private static readonly REMAINING_DATA_UPLOAD_LEEWAY: number = 16; // ~10 seconds
 
     private readonly player: Player;
 
-    enabled: boolean = false;
+    // Whether we have seen at least one input tracking report
     hasSeenReport: boolean = false;
-    waitingForLastReport: boolean = false;
-    endTrackingAt: number = this.calculateTrackingEnd();
-    recordedEvents: InputTrackingEvent[] = [];
-    recordedEventCount: number = 0;
-    recordedEventsSizeTotal: number = 0;
+    // Whether we are waiting for any remaining data to be sent from client
+    waitingForRemainingData: boolean = false;
+
+    // Whether we have enabled tracking
+    enabled: boolean = false;
+
+    // The World tick-count for when tracking should start
+    startTrackingAt: number = this.nextScheduledTrackingStart();
+
+    // The World tick-count for when tracking should end
+    endTrackingAt: number = this.nextScheduledTrackingEnd();
+
+    // List of recorded input 'blobs'
+    recordedBlobs: InputTrackingBlob[] = [];
+    // Number of bytes in total for all recorded blobs
+    recordedBlobsSizeTotal: number = 0;
 
     constructor(player: Player) {
         this.player = player;
     }
 
-    private calculateTrackingEnd(): number {
-        return World.currentTick + (InputTracking.TRACKING_RATE + this.offset(15));
+    /**
+     * Returns the tick number for when input tracking should start.
+     */
+    private nextScheduledTrackingStart(): number {
+        return World.currentTick + InputTracking.TRACKING_RATE + this.offset(15);
     }
 
-    process(): void {
-        // if tracking finished and waiting for client to send back the report up to 15s.
-        if (this.waitingForLastReport) {
-            if (this.endTrackingAt + InputTracking.FINAL_REPORT_TIME_LEEWAY > World.currentTick) {
+    /**
+     * Returns the tick number for when input tracking should end.
+     */
+    private nextScheduledTrackingEnd(): number {
+        return this.startTrackingAt + InputTracking.TRACKING_TIME;
+    }
+
+    /**
+     * Whether we should start input tracking.
+     */
+    private shouldStartTracking(): boolean {
+        return World.currentTick >= this.startTrackingAt;
+    }
+
+    /**
+     * Whether we should end input tracking.
+     */
+    private shouldEndTracking(): boolean {
+        return World.currentTick >= this.endTrackingAt;
+    }
+
+    /**
+     * Called once per cycle for each player, it decides whether to enable
+     * or disable input tracking, along with submitting events to the logger.
+     */
+    onCycle(): void {
+        // if tracking has finished, then wait for client to send back the report up to 15s.
+        // console.log('InputTracking.ts->onCycle(): state={active=%s, startAt=%d, endAt=%d, waiting=%d, recv=%d, worldTick=%d}', this.isActive(), this.startTrackingAt, this.endTrackingAt, this.waitingForRemainingData, this.recordedBlobsSizeTotal, World.currentTick);
+        if (this.waitingForRemainingData) {
+            if (this.endTrackingAt + InputTracking.REMAINING_DATA_UPLOAD_LEEWAY < World.currentTick) {
                 this.submitEvents();
             }
             return;
         }
-        // if current tracking dont do anything.
-        if (this.endTrackingAt > World.currentTick) {
-            return;
-        }
-        // if need to start tracking.
-        if (this.endTrackingAt <= this.calculateTrackingEnd() && !this.enabled) {
+        // if we are currently tracking then do not do anything.
+        if (this.shouldStartTracking() && !this.enabled) {
             this.enable();
             return;
         }
-        this.disable();
+        if (this.shouldEndTracking() && this.enabled) {
+            // otherwise, we are not supposed to be tracking, so disable now:
+            this.disable();
+            return;
+        }
     }
 
     enable(): void {
@@ -58,8 +98,8 @@ export default class InputTracking {
             return;
         }
         this.enabled = true;
-        // Set the tick count at which we will end tracking:
-        this.endTrackingAt = World.currentTick + InputTracking.TRACKING_TIME;
+        this.startTrackingAt = World.currentTick;  // enabled immediately
+        this.endTrackingAt = this.nextScheduledTrackingEnd();  // at the next interval
         // Notify the client
         this.player.write(new EnableTracking());
     }
@@ -69,16 +109,16 @@ export default class InputTracking {
             return;
         }
         this.enabled = false;
-        this.endTrackingAt = World.currentTick + (InputTracking.TRACKING_RATE + this.offset(15));
+        this.startTrackingAt = this.nextScheduledTrackingStart();  // at the next interval
+        this.endTrackingAt = World.currentTick;  // disabled immediately
+        // wait up to an amount of time for the client to send us the last batch of data.
+        this.waitingForRemainingData = true;
         this.player.write(new FinishTracking());
-        if (!this.waitingForLastReport) {
-            // wait up to an amount of time for the client to send us the last batch of data.
-            this.waitingForLastReport = true;
-        }
     }
 
     isActive(): boolean {
-        return this.enabled || this.waitingForLastReport;
+        const withinTicks = World.currentTick >= this.startTrackingAt && World.currentTick <= this.endTrackingAt;
+        return withinTicks || this.waitingForRemainingData;
     }
 
     /**
@@ -90,8 +130,8 @@ export default class InputTracking {
     }
 
     record(rawData: Uint8Array): void {
-        this.recordedEventsSizeTotal += rawData.length;
-        this.recordedEvents.push(new InputTrackingEvent(rawData, this.recordedEventCount++, this.player.coord));
+        this.recordedBlobsSizeTotal += rawData.length;
+        this.recordedBlobs.push(new InputTrackingBlob(rawData, this.recordedBlobs.length + 1, this.player.coord));
     }
 
     /**
@@ -103,7 +143,7 @@ export default class InputTracking {
         if (this.hasSeenReport) {
             // Have events to be submitted
             if (this.shouldSubmitTrackingDetails()) {
-                World.submitInputTracking(this.player.username, this.player instanceof NetworkPlayer ? this.player.client.uuid : 'headless', this.recordedEvents);
+                World.submitInputTracking(this.player.username, this.player instanceof NetworkPlayer ? this.player.client.uuid : 'headless', this.recordedBlobs);
             }
         } else if (!Environment.NODE_DEBUG) {
             // this means that:
@@ -113,10 +153,9 @@ export default class InputTracking {
             this.player.requestIdleLogout = true;
         }
         // This finalizes the tracking session, so reset initial state.
-        this.waitingForLastReport = false;
-        this.recordedEvents = [];
-        this.recordedEventCount = 0;
-        this.recordedEventsSizeTotal = 0;
+        this.waitingForRemainingData = false;
+        this.recordedBlobs = [];
+        this.recordedBlobsSizeTotal = 0;
         this.hasSeenReport = false;
     }
 

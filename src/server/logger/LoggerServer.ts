@@ -1,7 +1,7 @@
 import { WebSocketServer } from 'ws';
 
 import { db, loggerDb, toDbDate } from '#/db/query.js';
-import InputTrackingEvent from '#/engine/entity/tracking/InputEvent.js';
+import InputTrackingBlob from '#/engine/entity/tracking/InputEvent.js';
 import { SessionLog } from '#/engine/entity/tracking/SessionLog.js';
 import Environment from '#/util/Environment.js';
 import { printInfo } from '#/util/Logger.js';
@@ -61,8 +61,8 @@ export default class LoggerServer {
                             break;
                         }
                         case 'input_track': {
-                            const { username, session_uuid, timestamp, events } = msg;
-                            if (!events.length) {
+                            const { username, session_uuid, timestamp, blobs } = msg;
+                            if (!blobs.length) {
                                 break;
                             }
 
@@ -78,12 +78,12 @@ export default class LoggerServer {
                                         timestamp: toDbDate(timestamp)
                                     })
                                     .executeTakeFirst();
-                                const values = events.map((e: InputTrackingEvent) => {
+                                const values = blobs.map((blob: InputTrackingBlob) => {
                                     return {
                                         input_report_id: report.insertId,
-                                        seq: e.seq,
-                                        coord: e.coord,
-                                        data: Buffer.from(e.data, 'base64')
+                                        seq: blob.seq,
+                                        coord: blob.coord,
+                                        data: Buffer.from(blob.data, 'base64')
                                     };
                                 });
                                 await loggerDb.insertInto('input_report_event_raw').values(values).execute();
