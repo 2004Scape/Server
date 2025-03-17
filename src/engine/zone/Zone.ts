@@ -229,14 +229,12 @@ export default class Zone {
     // ---- static locs/objs are added during world init ----
 
     addStaticLoc(loc: Loc): void {
-        const coord: number = CoordGrid.packZoneCoord(loc.x, loc.z);
         this.locs.addTail(loc);
         this.locsCount++;
         loc.isActive = true;
     }
 
     addStaticObj(obj: Obj): void {
-        const coord: number = CoordGrid.packZoneCoord(obj.x, obj.z);
         this.objs.addTail(obj);
         this.objsCount++;
         obj.isRevealed = true;
