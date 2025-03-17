@@ -29,6 +29,7 @@ if (finduid(%npc_macro_event_target) = true) {
     } else if (%npc_int = 3) { // failing genie: https://youtu.be/MS7ADB-hh18?t=6
         npc_say("No one ignores me!");
         npc_anim(human_castteleport, 0);
+        %macro_event = ^no_macro_event;
         if (random(2) = 0 & inv_freespace(inv) < inv_size(inv)) { // 50% chance to teleport or scatter inv. Only scatter if they actually have items
             queue(macro_event_fail_scatter_inv, 0);
         } else {
@@ -56,11 +57,12 @@ npc_delay(2);
 
 [opnpc1,macro_event_genie]
 if (uid ! %npc_macro_event_target) {
+    // https://youtu.be/qNQYgiNMBes?t=134
     if (.finduid(%npc_macro_event_target) = true) {
-        ~chatnpc("<p,sad>Sorry, I'm trying to talk to <.text_gender("Master", "Mistress")> <.displayname>, but <.text_gender("he", "she")> seems to be ignoring me."); // osrs
+        ~chatnpc("<p,sad>Sorry, but I'm trying to talk to <.displayname>. However, <.text_gender("he", "she")> appears to be ignoring me..."); 
         return;
     }
-    ~chatnpc("<p,neutral>Have a nice day, <text_gender("master", "mistress")>.");
+    ~chatnpc("<p,sad>Sorry, but I'm trying to talk to another player.|However, they appear to be ignoring me...");
     return;
 }
 if (%npc_int = ^genie_happy) {

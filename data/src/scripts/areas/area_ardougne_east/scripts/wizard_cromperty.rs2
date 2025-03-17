@@ -1,6 +1,10 @@
 [opnpc1,wizard_cromperty]
 ~chatnpc("<p,neutral>Hello there.|My name is Cromperty.|I am a Wizard, and an inventor.");
+if(%runemysteries_progress = ^runemysteries_complete) {
+@multi3("Two jobs? That's got to be tough.", cromperty_two_jobs, "So what have you invented?", cromperty_what_invented, "Can you teleport me to the Rune Essence?", cromperty_ess);
+} else {
 @multi2("Two jobs? That's got to be tough.", cromperty_two_jobs, "So what have you invented?", cromperty_what_invented);
+}
 
 [label,cromperty_two_jobs]
 ~chatplayer("<p,neutral>Two jobs? That's got to be tough.");
@@ -35,6 +39,10 @@ if($option = 1) {
     ~chatplayer("<p,neutral>Well done, that's very clever.");
     ~chatnpc("<p,happy>Yes it is isn't it? Forgive me for feeling a little smug, this is a major breakthrough in the field of teleportation!");
 }
+
+[label,cromperty_ess]
+~chatplayer("<p,quiz>Can you teleport me to the Rune Essence?");
+@teleport_to_essence_mine(^essence_mine_to_cromperty);
 
 [label,cromperty_teleport]
 ~chatplayer("<p,quiz>Can I be teleported please?");

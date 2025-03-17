@@ -1,17 +1,2 @@
 [opnpc1,captain_barnaby]
-~chatnpc("<p,neutral>Do you want to go on a trip to Brimhaven?|The trip will cost you 30 coins.");
-def_int $option = ~p_choice2("Yes please.", 1, "No. thank you.", 2);
-switch_int ($option) {
-    case 1 :
-        ~chatplayer("<p,happy>Yes please.");
-        if (inv_total(inv, coins) < 30) {
-            ~chatplayer("<p,sad>Oh dear, I don't actually seem to have enough money.");
-            return;
-        }       
-        inv_del(inv, coins, 30);
-        mes("You pay the 30 coins..."); // https://imgur.com/myiOU5N may 2004
-        ~set_sail("Brimhaven", "and board the ship.", 1_43_50_23_34, ^sail_ardougne_to_brimhaven, 7);
-        return;
-    case 2 :
-        ~chatplayer("<p,neutral>No, thank you.");
-}
+@karamja_sailor_dialogue("Brimhaven", 1_43_50_23_34, ^sail_ardougne_to_brimhaven);

@@ -62,7 +62,7 @@ category=shop_keeper
 param=owned_shop,magic_guild_store
 param=shop_sell_multiplier,1000
 param=shop_buy_multiplier,600
-param=shop_delta,20
+param=shop_delta,10
 param=shop_title,Magic Guild Store
 // https://raw.githubusercontent.com/Joshua-F/osrs-dumps/refs/heads/master/config/dump.npc npc_3247
 

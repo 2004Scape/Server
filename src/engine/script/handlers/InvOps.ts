@@ -1,29 +1,16 @@
+import CategoryType from '#/cache/config/CategoryType.js';
 import InvType from '#/cache/config/InvType.js';
 import ObjType from '#/cache/config/ObjType.js';
-import CategoryType from '#/cache/config/CategoryType.js';
-
-import World from '#/engine/World.js';
-import {Inventory} from '#/engine/Inventory.js';
-
-import ScriptOpcode from '#/engine/script/ScriptOpcode.js';
-import {CommandHandlers} from '#/engine/script/ScriptRunner.js';
-import {ActiveObj, ActivePlayer, checkedHandler, ProtectedActivePlayer} from '#/engine/script/ScriptPointer.js';
-
-import Obj from '#/engine/entity/Obj.js';
-import {CoordGrid} from '#/engine/CoordGrid.js';
+import { CoordGrid } from '#/engine/CoordGrid.js';
 import EntityLifeCycle from '#/engine/entity/EntityLifeCycle.js';
+import Obj from '#/engine/entity/Obj.js';
 import Player from '#/engine/entity/Player.js';
-
-import {
-    CategoryTypeValid,
-    check,
-    CoordValid,
-    DurationValid,
-    InvTypeValid,
-    NumberNotNull,
-    ObjStackValid,
-    ObjTypeValid
-} from '#/engine/script/ScriptValidators.js';
+import { Inventory } from '#/engine/Inventory.js';
+import ScriptOpcode from '#/engine/script/ScriptOpcode.js';
+import { ActiveObj, ActivePlayer, checkedHandler, ProtectedActivePlayer } from '#/engine/script/ScriptPointer.js';
+import { CommandHandlers } from '#/engine/script/ScriptRunner.js';
+import { CategoryTypeValid, check, CoordValid, DurationValid, InvTypeValid, NumberNotNull, ObjStackValid, ObjTypeValid } from '#/engine/script/ScriptValidators.js';
+import World from '#/engine/World.js';
 
 const InvOps: CommandHandlers = {
     // inv config
@@ -102,8 +89,8 @@ const InvOps: CommandHandlers = {
             throw new Error(`$inv requires protected access: ${invType.debugname}`);
         }
 
-        const findObj : ObjType = check(find, ObjTypeValid);
-        const replaceObj : ObjType = check(replace, ObjTypeValid);
+        const findObj: ObjType = check(find, ObjTypeValid);
+        const replaceObj: ObjType = check(replace, ObjTypeValid);
         const fromInv = state.activePlayer.getInventory(inv);
 
         if (!fromInv) {
@@ -112,10 +99,10 @@ const InvOps: CommandHandlers = {
 
         for (let slot = 0; slot < fromInv.capacity; slot++) {
             const obj = fromInv.get(slot);
-            if(!obj) {
+            if (!obj) {
                 continue;
             }
-            if(obj.id === findObj.id) {
+            if (obj.id === findObj.id) {
                 state.activePlayer.invSet(invType.id, replaceObj.id, replaceCount, slot);
                 return;
             }
@@ -229,7 +216,7 @@ const InvOps: CommandHandlers = {
             for (let i = 0; i < completed; i++) {
                 const floorObj: Obj = new Obj(position.level, position.x, position.z, EntityLifeCycle.DESPAWN, obj.id, 1);
                 World.addObj(floorObj, player.hash64, duration);
-    
+
                 state.activeObj = floorObj;
                 state.pointerAdd(ActiveObj[state.intOperand]);
             }
@@ -269,6 +256,11 @@ const InvOps: CommandHandlers = {
     [ScriptOpcode.INV_ITEMSPACE]: checkedHandler(ActivePlayer, state => {
         const [inv, obj, count, size] = state.popInts(4);
 
+        if (count === 0) {
+            state.pushInt(0);
+            return;
+        }
+
         const invType: InvType = check(inv, InvTypeValid);
         const objType: ObjType = check(obj, ObjTypeValid);
         check(count, ObjStackValid);
@@ -283,6 +275,11 @@ const InvOps: CommandHandlers = {
     // inv read
     [ScriptOpcode.INV_ITEMSPACE2]: checkedHandler(ActivePlayer, state => {
         const [inv, obj, count, size] = state.popInts(4);
+
+        if (count === 0) {
+            state.pushInt(0);
+            return;
+        }
 
         const invType: InvType = check(inv, InvTypeValid);
         const objType: ObjType = check(obj, ObjTypeValid);
@@ -379,6 +376,7 @@ const InvOps: CommandHandlers = {
         }
 
         // we're going to assume the content has made sure this will go as expected
+        const wealthLog = []; // Holds a record of the wealth for logging only
         for (let slot = 0; slot < fromInv.capacity; slot++) {
             const obj = fromInv.get(slot);
             if (!obj) {
@@ -389,9 +387,26 @@ const InvOps: CommandHandlers = {
             toInv.add(obj.id, obj.count);
 
             const type = ObjType.get(obj.id);
-
-            fromPlayer.addWealthLog(-(type.cost * obj.count), 'Gave ' + type.debugname + ' x' + obj.count + ' to ' + toPlayer.username);
-            toPlayer.addWealthLog(type.cost * obj.count, 'Received ' + type.debugname + ' x' + obj.count + ' from ' + fromPlayer.username);
+            // Check whether we have already seen this obj.id in the wealth log
+            let alreadyPresent = false;
+            for (let i = 0; i < wealthLog.length; i++) {
+                if (wealthLog[i].id === obj.id) {
+                    // If we've seen it, increase the count
+                    wealthLog[i].count += obj.count;
+                    alreadyPresent = true;
+                    break;
+                }
+            }
+            if (!alreadyPresent) {
+                // Otherwise, create a new entry
+                wealthLog.push({ id: obj.id, count: obj.count, debugname: type.debugname, baseCost: type.cost });
+            }
+        }
+        for (const toLog of wealthLog) {
+            // Log all wealth events
+            const totalValueGp = toLog.baseCost * toLog.count;
+            fromPlayer.addWealthLog(-totalValueGp, 'Gave ' + toLog.debugname + ' x' + toLog.count + ' to ' + toPlayer.username);
+            toPlayer.addWealthLog(totalValueGp, 'Received ' + toLog.debugname + ' x' + toLog.count + ' from ' + fromPlayer.username);
         }
     }),
 
@@ -464,7 +479,6 @@ const InvOps: CommandHandlers = {
             // should be a stackable cert already!
             World.addObj(new Obj(player.level, player.x, player.z, EntityLifeCycle.DESPAWN, finalObj, overflow), player.hash64, 200);
         }
-    
     }),
 
     // https://x.com/JagexAsh/status/1681616480763367424
@@ -626,7 +640,6 @@ const InvOps: CommandHandlers = {
         check(duration, DurationValid);
         const position: CoordGrid = check(coord, CoordValid);
 
-
         if (!state.pointerGet(ProtectedActivePlayer[state.intOperand]) && invType.protect && invType.scope !== InvType.SCOPE_SHARED) {
             throw new Error(`$inv requires protected access: ${invType.debugname}`);
         }
@@ -636,6 +649,7 @@ const InvOps: CommandHandlers = {
             return;
         }
 
+        const wealthLog = []; // Holds a record of the wealth for logging only
         for (let slot: number = 0; slot < inventory.capacity; slot++) {
             const obj = inventory.get(slot);
             if (!obj) {
@@ -643,8 +657,22 @@ const InvOps: CommandHandlers = {
             }
 
             const objType: ObjType = ObjType.get(obj.id);
+
             if (invType.scope === InvType.SCOPE_PERM) {
-                state.activePlayer.addWealthLog(-(obj.count * objType.cost), `Dropped ${objType.debugname} x${obj.count}`);
+                // Check whether we have already seen this obj.id in the wealth log
+                let alreadyPresent = false;
+                for (let i = 0; i < wealthLog.length; i++) {
+                    if (wealthLog[i].id === obj.id) {
+                        // If we've seen it, increase the count
+                        wealthLog[i].count += obj.count;
+                        alreadyPresent = true;
+                        break;
+                    }
+                }
+                if (!alreadyPresent) {
+                    // Otherwise, create a new entry
+                    wealthLog.push({ id: obj.id, count: obj.count, debugname: objType.debugname, baseCost: objType.cost });
+                }
             }
 
             inventory.delete(slot);
@@ -654,6 +682,11 @@ const InvOps: CommandHandlers = {
             }
 
             World.addObj(new Obj(position.level, position.x, position.z, EntityLifeCycle.DESPAWN, obj.id, obj.count), Obj.NO_RECEIVER, duration);
+        }
+        for (const toLog of wealthLog) {
+            // Log all wealth events
+            const totalValueGp = toLog.baseCost * toLog.count;
+            state.activePlayer.addWealthLog(-totalValueGp, `Dropped ${toLog.debugname} x${toLog.count}`);
         }
     }),
 

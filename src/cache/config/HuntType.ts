@@ -1,15 +1,13 @@
 import fs from 'fs';
 
-import Packet from '#/io/Packet.js';
 
 import { ConfigType } from '#/cache/config/ConfigType.js';
-
 import HuntCheckNotTooStrong from '#/engine/entity/hunt/HuntCheckNotTooStrong.js';
 import HuntModeType from '#/engine/entity/hunt/HuntModeType.js';
 import HuntNobodyNear from '#/engine/entity/hunt/HuntNobodyNear.js';
 import HuntVis from '#/engine/entity/hunt/HuntVis.js';
-
 import NpcMode from '#/engine/entity/NpcMode.js';
+import Packet from '#/io/Packet.js';
 
 export default class HuntType extends ConfigType {
     private static configNames: Map<string, number> = new Map();
@@ -74,11 +72,15 @@ export default class HuntType extends ConfigType {
 
     public checkHuntCondition(value: number, condition: string, checkValue: number): boolean {
         switch (condition) {
-            case '>': return value > checkValue;
-            case '<': return value < checkValue;
-            case '=': return value === checkValue;
-            case '!': return value !== checkValue;
-        } 
+            case '>':
+                return value > checkValue;
+            case '<':
+                return value < checkValue;
+            case '=':
+                return value === checkValue;
+            case '!':
+                return value !== checkValue;
+        }
         return false;
     }
 
@@ -146,7 +148,7 @@ export default class HuntType extends ConfigType {
             this.checkInvCondition = dat.gjstr();
             this.checkInvVal = dat.g4();
         } else if (code > 17 && code < 21) {
-            this.checkVars.push({varId: dat.g2(), condition: dat.gjstr(), val: dat.g4()});
+            this.checkVars.push({ varId: dat.g2(), condition: dat.gjstr(), val: dat.g4() });
         } else if (code === 250) {
             this.debugname = dat.gjstr();
         } else {

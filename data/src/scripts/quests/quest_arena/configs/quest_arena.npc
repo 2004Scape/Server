@@ -227,14 +227,15 @@ model7=model_546_obj_wear
 model8=model_323_obj_wear
 head1=model_149_npc_head
 wanderrange=1
-// maxrange=TODO
+// copying bouncers but guessed (OSRS and RS3 are both changed)
+maxrange=25
 hitpoints=170
 attack=75
 strength=78
 defence=80
 param=damagetype,^slash_style
 param=attack_anim,human_2h_slash
-param=defend_anim,human_2h_sword_defend
+param=defend_anim,human_sword_defend3
 // param=attack_sound,
 // param=defend_sound,
 // osrs use attack seq_406

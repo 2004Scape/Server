@@ -1,0 +1,149 @@
+[opnpc1,_rarefish]
+@attempt_fish_lobster;
+[opnpc3,_rarefish]
+@attempt_fish_swordfish;
+
+// hidden ops
+[opnpc4,_rarefish]
+@fish_lobster;
+[opnpc5,_rarefish]
+@fish_swordfish;
+
+[opnpcu,_rarefish]
+switch_obj(last_useitem) {
+    case harpoon : @attempt_fish_swordfish;
+    case lobster_pot : @attempt_fish_lobster;
+    case net_big : ~mesbox("The fish here aren't suitable for catching with a big net.");
+    case default : @fishing_wrong_spot_message(last_useitem);
+}
+
+
+[label,attempt_fish_lobster]
+// check level
+if (stat(fishing) < 40) {
+    anim(null, 0);
+    ~mesbox("You need at least 40 Fishing to catch Lobsters.");
+    return;
+}
+// check if they have fishing equipment
+if (~check_fish_equipment(lobster_pot) = false) {
+    return;
+}
+
+// check if inv is full
+if (inv_freespace(inv) < 1) {
+    anim(null, 0);
+    ~mesbox("You can't carry any more lobsters.");
+    return;
+}
+if (%action_delay < map_clock) {
+    %action_delay = calc(map_clock + 4);
+    p_opnpc(1);
+    return;
+} else if (%action_delay = calc(map_clock + 3)) {
+    anim(human_lobster, 0);
+    sound_synth(fishing_cast, 0, 20);
+    // https://youtu.be/WGq6FZpnH7Y?t=70
+    mes("You attempt to catch a Lobster.");
+    p_opnpc(4);
+} else if (%action_delay = map_clock) { 
+    ~fish_roll(raw_lobster, null, lobster_pot, null);
+    anim(human_lobster, 0);
+}
+if (afk_event = ^true & npc_param(is_whirlpool) = ^false) {
+    @macro_event_fishing(lobster_pot);
+}
+
+
+[label,fish_lobster]
+// check level
+if (stat(fishing) < 40) {
+    anim(null, 0);
+    ~mesbox("You need at least 40 Fishing to catch Lobsters.");
+    return;
+}
+// check if they have fishing equipment
+if (~check_fish_equipment(lobster_pot) = false) {
+    return;
+}
+// check if inv is full again
+if (inv_freespace(inv) < 1) {
+    anim(null, 0);
+    ~mesbox("You can't carry any more lobsters.");
+    return;
+}
+if (%action_delay < map_clock) {
+    %action_delay = calc(map_clock + 5);
+} else if (%action_delay = map_clock) {
+    ~fish_roll(raw_lobster, null, lobster_pot, null);
+    anim(human_lobster, 0);
+}
+p_opnpc(4);
+
+//--- Tuna and swordfish
+[label,attempt_fish_swordfish]
+// check level for tuna
+if (stat(fishing) < 35) {
+    anim(null, 0);
+    ~mesbox("You need at least 35 Fishing to harpoon these fish.");
+    return;
+}
+// check if they have fishing equipment
+if (~check_fish_equipment(harpoon) = false) {
+    return;
+}
+// check if inv is full
+if (inv_freespace(inv) < 1) {
+    anim(null, 0);
+    ~mesbox("You can't carry any more fish.");
+    return;
+}
+if (%action_delay < map_clock) {
+    %action_delay = calc(map_clock + 5);
+    p_opnpc(3);
+    return;
+} else if (%action_delay = calc(map_clock + 4)) {
+    mes("You start Harpooning fish.");
+    anim(human_harpoon, 0);
+    sound_synth(fishing_cast, 0, 0);
+    p_opnpc(5);
+} else if (%action_delay = map_clock) { 
+    if (stat(fishing) >= 50) {
+        ~fish_roll(raw_swordfish, raw_tuna, harpoon, null);
+    } else {
+        ~fish_roll(raw_tuna, null, harpoon, null);
+    }
+    anim(human_harpoon, 0);
+}
+if (afk_event = ^true & npc_param(is_whirlpool) = ^false) {
+    @macro_event_fishing(harpoon);
+}
+
+[label,fish_swordfish]
+// check level for tuna
+if (stat(fishing) < 35) {
+    anim(null, 0);
+    ~mesbox("You need at least 35 Fishing to harpoon these fish.");
+    return;
+}
+// check if they have fishing equipment
+if (~check_fish_equipment(harpoon) = false) {
+    return;
+}
+// check if inv is full again
+if (inv_freespace(inv) < 1) {
+    anim(null, 0);
+    ~mesbox("You can't carry any more fish.");
+    return;
+}
+if (%action_delay < map_clock) {
+    %action_delay = calc(map_clock + 5);
+} else if (%action_delay = map_clock) {
+    if (stat(fishing) >= 50) {
+        ~fish_roll(raw_swordfish, raw_tuna, harpoon, null);
+    } else {
+        ~fish_roll(raw_tuna, null, harpoon, null);
+    }
+    anim(human_harpoon, 0);
+}
+p_opnpc(5);

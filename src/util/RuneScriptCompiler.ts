@@ -4,8 +4,7 @@ import fs from 'fs';
 import axios from 'axios';
 
 import ScriptProvider from '#/engine/script/ScriptProvider.js';
-
-import { printDebug } from '#/util/Logger.js';
+import { printDebug, printWarning } from '#/util/Logger.js';
 
 export async function updateCompiler(): Promise<boolean> {
     printDebug('Checking for compiler update');
@@ -38,6 +37,8 @@ export async function updateCompiler(): Promise<boolean> {
             fs.writeFileSync('RuneScriptCompiler.jar', req.data);
         }
     } catch (err) {
+        console.warn(err);
+        printWarning('Unable to check for compiler update');
         return false;
     }
 

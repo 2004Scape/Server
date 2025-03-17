@@ -5,7 +5,7 @@ enum LoggerEventType {
     WEALTH,
     // session_log
     MODERATOR,
-    ADVENTURE, // visible to players!
+    ADVENTURE // visible to players!
 }
 
 export default LoggerEventType;

@@ -359,6 +359,7 @@ model=model_loc_154
 width=2
 length=2
 op1=Chop down
+param=next_loc_stage,loc_1348
 
 [loc_157]
 name=Bookcase
@@ -440,7 +441,7 @@ forceapproach=north
 recol1s=10570
 recol1d=15621
 
-[loc_172]
+[closed_crystal_chest]
 name=Closed chest
 desc=I wonder what's inside.
 model=wooden_chest
@@ -449,7 +450,7 @@ forceapproach=north
 recol1s=10570
 recol1d=14800
 
-[loc_173]
+[opened_crystal_chest]
 name=Open chest
 desc=Perhaps I should search it.
 model=model_loc_76

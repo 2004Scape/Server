@@ -72,9 +72,6 @@ if ($choice = 2) {
     @leave_arhein_crate;
 }
 ~mesbox("You climb out of the crate.");
-if(%arhein_crate_coord = 0_0_0_0_0) { // if varp hasn't been set yet
-    %arhein_crate_coord = ^catherby_crate_coord;
-}
 p_teleport(%arhein_crate_coord);
 
 

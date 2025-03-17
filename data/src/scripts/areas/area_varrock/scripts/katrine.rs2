@@ -132,18 +132,19 @@ switch_int (~determine_katrine_option) {
             %hero_progress = ^hero_blackarm_gangmember_spoken;
         }
     case 4 : // Showing candlestick
-        ~chatplayer("<p,neutral>I have a candlestick now!");
+        // https://youtu.be/KRhwwgo8YHM?si=L2w_eELFNMxWG88A&t=570
+        ~chatplayer("<p,happy>I have a candlestick now!");
         ~chatnpc("<p,shock>Wow.... is... it REALLY it?");
-        ~chatnpc("<p,shock>This really is a FINE bit of thievery.");
-        ~chatnpc("<p,shock>Us thieves have been trying to get ahold of this one for a while!");
-        ~chatnpc("<p,shock>You wanted to be ranked as a master thief didn't you? Well, I guess this just about ranks as good enough!");
+        ~chatnpc("<p,happy>This really is a FINE bit of thievery.");
+        ~chatnpc("<p,happy>Us thieves have been trying to get ahold of this one for a while!");
+        ~chatnpc("<p,happy>You wanted to be ranked as a master thief didn't you? Well, I guess this just about ranks as good enough!");
+        ~mesbox("Katrine gives you a master thief armband.");
         inv_del(inv, petes_candlestick, 1);
         inv_add(inv, thieves_armband, 1);
         %hero_progress = ^hero_blackarm_obtained_armband;
-        ~mesbox("Katrine gives you a master thief armband.");
     case 5 : // Showing candlestick (did not progress quest correctly)
         ~chatplayer("<p,neutral>I have a candlestick now!");
-        ~chatnpc("<p,angry>Good for you. I'll give a master thief's armband to the one who retrieved that. I know it wasn't you.");
+        ~chatnpc("<p,neutral>Good for you. I'll give a master thief's armband to the one who retrieved that. I know it wasn't you.");
     case 6 : // Lost armband
         ~chatplayer("<p,sad>I have lost my master thief's armband...");
         ~chatnpc("<p,neutral>Lucky I 'ave a spare ain't it? Don't lose it again.");

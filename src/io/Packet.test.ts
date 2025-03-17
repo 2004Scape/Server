@@ -291,7 +291,7 @@ describe('Packet', () => {
             const isValid = Packet.checkcrc(value, 0, value.length, crc);
             expect(isValid).toEqual(true);
 
-            const hex = ((crc) >>> 0).toString(16);
+            const hex = (crc >>> 0).toString(16);
             expect(hex).toEqual('cbf43926');
         });
     });

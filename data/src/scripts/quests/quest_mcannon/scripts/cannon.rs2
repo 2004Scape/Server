@@ -37,6 +37,11 @@ while ($i < 50) {
 return(null);
 
 [opheld1,cannon_base]
+if (%mcannon_progress < ^mcannon_complete) {
+    mes("You can't set up this cannon.");
+    mes("You need to complete the Dwarf Cannon quest."); // osrs
+    return;
+}
 if (%mcannon_coord ! null) {
     if (loc_find(%mcannon_coord, cannon) = true) {
         // osrs
@@ -57,6 +62,10 @@ if (~inzone_coord_pair_table(dwarf_zones, coord) = true) {
 }
 if (~inzone_coord_pair_table(bank_zones, coord) = true | ~in_duel_arena(coord) = true) { // guessing they dont let u set up at duel arena at all, esp with nomovement duels
     mes("You can't set up a cannon here."); // osrs
+    return;
+}
+if (inzone(^arena_lower_coord, ^arena_upper_coord, coord) = true) { // fight arena: https://www.youtube.com/watch?v=fQMD91nYPEk&t=420s, bounds guessed (reworked in both games)
+    mes("It is not permitted to set up a cannon inside the Fight Arena.");
     return;
 }
 if (map_locaddunsafe(movecoord(coord, -1, 0, -1)) = true) {
@@ -321,8 +330,6 @@ if ($dir = 0) {
 }
 %mcannon_clock = add(%mcannon_clock, 1);
 
-~player_combat_stat;
-
 // check close range
 npc_huntall($close_range, 1, 1);
 while (npc_huntnext = true) {
@@ -354,9 +361,6 @@ if (%mcannon_ammo < 1) {
 if (~npc_is_attackable = false) {
     return;
 }
-if (npc_stat(hitpoints) = 0) {
-    return;
-}
 if (~player_in_combat_check = false) { // https://youtu.be/TeQXQDaawO0?t=247
     return;
 }
@@ -368,13 +372,13 @@ sound_synth(mcannon_fire, 0, 0);
 def_int $damage = 0;
 if (~player_npc_hit_roll(%damagetype) = true) {
     $damage = randominc(min(30, npc_param(max_dealt)));
-    $damage = min($damage, npc_stat(hitpoints));
-    stat_advance(ranged, multiply(20, $damage));
+    def_int $damage_capped = min($damage, npc_stat(hitpoints));
+    ~give_combat_experience(^style_ranged_accurate, $damage_capped, %npc_combat_xp_multiplier);
+    npc_heropoints($damage_capped);
 }
 
-npc_heropoints($damage);
 ~npc_retaliate(divide($duration, 30));
-npc_queue(2, $damage, divide($duration, 30));
+npc_queue(2, $damage, divide($duration, 30)); // ai_queue2 takes uncapped damage (avoids npcs from tick healing)
 
 if (npc_type = king_black_dragon) {
     @kbd_destroy_cannon;
@@ -388,7 +392,7 @@ if (random(10) = 0 & %mcannon_coord ! null) { // guess
     def_int $duration = ~coord_projectile(npc_coord, %mcannon_coord, spotanim_54, 92, 31, 51, 16, -5, 64, 10);
     spotanim_map(fireblast_impact, %mcannon_coord, 124, $duration);
     npc_anim(dragon_firebreath_middle_attack, 0);
-    sound_synth(firebreath, 0, 30);
+    sound_synth(dragonbreath, 0, 30);
 
     if (loc_find(%mcannon_coord, cannon) = true) {
         mes("Your cannon has been destroyed!");

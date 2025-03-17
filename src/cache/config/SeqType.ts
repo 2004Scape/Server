@@ -1,10 +1,10 @@
 import fs from 'fs';
 
-import Packet from '#/io/Packet.js';
 
 import { ConfigType } from '#/cache/config/ConfigType.js';
 import SeqFrame from '#/cache/config/SeqFrame.js';
 import Jagfile from '#/io/Jagfile.js';
+import Packet from '#/io/Packet.js';
 
 export default class SeqType extends ConfigType {
     private static configNames = new Map<string, number>();

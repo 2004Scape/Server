@@ -1,11 +1,9 @@
 import LocType from '#/cache/config/LocType.js';
 import { ParamHelper } from '#/cache/config/ParamHelper.js';
 import ParamType from '#/cache/config/ParamType.js';
-
 import ScriptOpcode from '#/engine/script/ScriptOpcode.js';
 import { CommandHandlers } from '#/engine/script/ScriptRunner.js';
-
-import {check, LocTypeValid, ParamTypeValid} from '#/engine/script/ScriptValidators.js';
+import { check, LocTypeValid, ParamTypeValid } from '#/engine/script/ScriptValidators.js';
 
 const LocConfigOps: CommandHandlers = {
     [ScriptOpcode.LC_NAME]: state => {

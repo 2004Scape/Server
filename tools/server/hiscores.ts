@@ -1,11 +1,10 @@
 import fs from 'fs';
 
-import { db } from '#/db/query.js';
-
-import { PlayerLoading } from '#/engine/entity/PlayerLoading.js';
-import Packet from '#/io/Packet.js';
 import InvType from '#/cache/config/InvType.js';
+import { db } from '#/db/query.js';
+import { PlayerLoading } from '#/engine/entity/PlayerLoading.js';
 import { PlayerStatEnabled } from '#/engine/entity/PlayerStat.js';
+import Packet from '#/io/Packet.js';
 
 InvType.load('data/pack');
 
@@ -32,10 +31,13 @@ for (const file of players) {
 
         if (!account) {
             // testing!
-            await db.insertInto('account').values({
-                username: player.username,
-                password: ''
-            }).execute();
+            await db
+                .insertInto('account')
+                .values({
+                    username: player.username,
+                    password: ''
+                })
+                .execute();
 
             account = await db.selectFrom('account').selectAll().where('username', '=', player.username).executeTakeFirstOrThrow();
         }
@@ -63,19 +65,28 @@ for (const file of players) {
 
         const existing = await db.selectFrom('hiscore_large').select('type').select('value').where('account_id', '=', account.id).where('type', '=', 0).where('profile', '=', profile).executeTakeFirst();
         if (existing && existing.value !== totalXp) {
-            await db.updateTable('hiscore_large').set({
-                type: 0,
-                level: totalLevel,
-                value: totalXp
-            }).where('account_id', '=', account.id).where('type', '=', 0).where('profile', '=', profile).execute();
+            await db
+                .updateTable('hiscore_large')
+                .set({
+                    type: 0,
+                    level: totalLevel,
+                    value: totalXp
+                })
+                .where('account_id', '=', account.id)
+                .where('type', '=', 0)
+                .where('profile', '=', profile)
+                .execute();
         } else if (!existing) {
-            await db.insertInto('hiscore_large').values({
-                account_id: account.id,
-                profile,
-                type: 0,
-                level: totalLevel,
-                value: totalXp
-            }).execute();
+            await db
+                .insertInto('hiscore_large')
+                .values({
+                    account_id: account.id,
+                    profile,
+                    type: 0,
+                    level: totalLevel,
+                    value: totalXp
+                })
+                .execute();
         }
 
         for (let stat = 0; stat < player.stats.length; stat++) {

@@ -159,18 +159,7 @@ inv_add(inv, hazeelcult_key, 1);
 [queue,hazeelcult_fake_complete]
 inv_add(inv, coins, 5);
 %hazeelcult_progress = ^hazeelcult_given_armour_or_scroll;
-// not sure if it uses random jingle here or just a single one
-def_int $random = random(128);
-if ($random < 32) {
-    // The least common music that plays when completing a quest.
-    midi_jingle(^quest_complete_3_jingle, ^quest_complete_3_millis);
-} else if ($random < 64) {
-    // A less common music that plays when completing a quest.
-    midi_jingle(^quest_complete_2_jingle, ^quest_complete_2_millis);
-} else {
-    // The most common music that plays when completing a quest.
-    midi_jingle(^quest_complete_1_jingle, ^quest_complete_1_millis);
-}
+midi_jingle(^death_jingle, ^death_jingle_millis);
 if_settext(questscroll:com_3, "You have... kind of...\\ncompleted the Hazeel Cult Quest!");
 if_settext(questscroll:com_9, "5");
 if_settext(questscroll:com_10, "coins.");

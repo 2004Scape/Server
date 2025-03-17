@@ -1,12 +1,12 @@
-import MessageHandler from '#/network/client/handler/MessageHandler.js';
-import Player from '#/engine/entity/Player.js';
-import IfButton from '#/network/client/model/IfButton.js';
 import Component from '#/cache/config/Component.js';
+import Player from '#/engine/entity/Player.js';
 import ScriptProvider from '#/engine/script/ScriptProvider.js';
 import ScriptRunner from '#/engine/script/ScriptRunner.js';
-import Environment from '#/util/Environment.js';
-import ServerTriggerType from '#/engine/script/ServerTriggerType.js';
 import ScriptState from '#/engine/script/ScriptState.js';
+import ServerTriggerType from '#/engine/script/ServerTriggerType.js';
+import MessageHandler from '#/network/client/handler/MessageHandler.js';
+import IfButton from '#/network/client/model/IfButton.js';
+import Environment from '#/util/Environment.js';
 
 export default class IfButtonHandler extends MessageHandler<IfButton> {
     handle(message: IfButton, player: Player): boolean {

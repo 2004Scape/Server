@@ -159,8 +159,8 @@ settimer(upass_trap, 1);
 [mapzone,0_41_152] @music_playbyregion(coord);
 
 [mapzone,0_41_153]
-@music_playbyregion(coord);
 settimer(move_ikovtrigger, 1);
+@music_playbyregion(coord);
 
 [mapzone,0_41_154] @music_playbyregion(coord);
 

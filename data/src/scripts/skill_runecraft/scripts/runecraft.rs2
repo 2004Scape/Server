@@ -75,7 +75,10 @@ if ($total_ess = 0) {
 anim(human_runecraft, 0);
 spotanim_pl(runecrafting, 96, 0);
 
-def_int $rune_count_per_ess = calc($level / db_getfield($data, runecraft_table:multiplier, 0) + 1);
+def_int $rune_count_per_ess = 1;
+if (db_getfieldcount($data, runecraft_table:multiplier) > 0) {
+    $rune_count_per_ess = calc($level / db_getfield($data, runecraft_table:multiplier, 0) + 1);
+}
 def_int $craft_count = calc($total_ess * $rune_count_per_ess);
 
 if(sub(^max_32bit_int, inv_total(inv, $rune)) < $craft_count) {

@@ -1,7 +1,6 @@
 import { parentPort } from 'worker_threads';
 
 import LoggerClient from '#/server/logger/LoggerClient.js';
-
 import Environment from '#/util/Environment.js';
 
 const client = new LoggerClient(Environment.NODE_ID);
@@ -59,8 +58,8 @@ async function handleRequests(_parentPort: ParentPort, msg: any) {
         }
         case 'input_track': {
             if (Environment.LOGGER_SERVER) {
-                const { username, session_uuid, timestamp, events } = msg;
-                await client.inputTrack(username, session_uuid, timestamp, events);
+                const { username, session_uuid, timestamp, blobs } = msg;
+                await client.inputTrack(username, session_uuid, timestamp, blobs);
             }
             break;
         }

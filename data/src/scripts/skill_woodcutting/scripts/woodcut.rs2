@@ -7,9 +7,9 @@
 switch_obj(last_useitem) {
     case bronze_axe, iron_axe, steel_axe, black_axe, mithril_axe, adamant_axe, rune_axe :
         p_oploc(1); // gets delayed by a tick >:(
-    case raw_herring, herring :
-        mes("This is not the mightiest tree in the forest.");
-        return;
+    // case raw_herring, herring :
+    //     mes("This is not the mightiest tree in the forest.");
+    //     return;
     case default : ~displaymessage(^dm_default);
 };
 
@@ -102,9 +102,9 @@ if (inv_freespace(inv) < 1) {
 }
 
 if (%action_delay < map_clock) {
-    anim(struct_param(oc_param($axe, woodcutting_struct), skill_anim), 0);
     %action_delay = calc(map_clock + 3);
 } else if (%action_delay = map_clock) {
+    anim(struct_param(oc_param($axe, woodcutting_struct), skill_anim), 0);
     @get_logs($data, $axe);
 }
 

@@ -1,5 +1,5 @@
-import WordEncBadWords from '#/cache/wordenc/WordEncBadWords.js';
 import WordEnc from '#/cache/wordenc/WordEnc.js';
+import WordEncBadWords from '#/cache/wordenc/WordEncBadWords.js';
 
 export default class WordEncDomains {
     private readonly wordEncBadWords: WordEncBadWords;

@@ -6,7 +6,7 @@ if(map_members = true & inv_total(inv, trail_clue_hard_riddle_exp004) > 0) {
 }
 ~chatnpc("<p,happy>Welcome! You can buy fishing equipment at my store.|We'll also buy anything you catch off you.");
 def_int $option;
-if (~hero_in_progress = true) {
+if (map_members = true & ~hero_in_progress = true) {
     $option = ~p_choice3("Let's see what you've got then.", 1, "Sorry, I'm not interested.", 2, "I want to find out how to catch a lava eel.", 3);
 } else {
     $option = ~p_choice2("Let's see what you've got then.", 1, "Sorry, I'm not interested.", 2);
@@ -18,12 +18,19 @@ switch_int($option) {
     case 2 :
         ~chatplayer("<p,neutral>Sorry, I'm not interested.");
     case 3 :
+        // https://youtu.be/2M-W0tUicdw?si=aM4KnZe9G3Qj3UyW&t=557, mesanims are slightly diff, maybe the checks were changed?
         ~chatplayer("<p,neutral>I want to find out how to catch a lava eel.");
-        ~chatnpc("<p,neutral>Lava eels eh? That's a tricky one that is, you'll need a|lava-proof fishing line. The method for making this would|be to take an ordinary fishing rod, and then cover it|with the fire-proof Blamish Oil.");
-        if(inv_total(inv, blamish_snail_slime) = 0) {
-            ~chatnpc("<p,neutral>You know... thinking about it... I may have a jar of|Blamish Slime around here somewhere... Now where did|I put it?");
-            ~mesbox("Gerrant searches around a bit.");
-            inv_add(inv, blamish_snail_slime, 1);
-            ~chatnpc("<p,neutral>Aha! Here it is! Take this slime, mix it with some|Harralander and water and you'll have the Blamish Oil|you need for treating your fishing rod.");
+        if(~obj_gettotal(blamish_snail_slime) > 0 | ~obj_gettotal(blamish_oil) > 0 | ~obj_gettotal(oily_fishing_rod) > 0) {
+            ~chatnpc("<p,confused>You'll need a lava-proof fishing line. I'm sure I already gave you what you need for this - take an ordinary fishing rod, and then cover it with the fire-proof Blamish Oil.");
+            return;
         }
+        ~chatnpc("<p,neutral>Lava eels eh? That's a tricky one that is, you'll need a|lava-proof fishing line. The method for making this would|be to take an ordinary fishing rod, and then cover it|with the fire-proof Blamish Oil.");
+        ~chatnpc("<p,neutral>You know... thinking about it... I may have a jar of|Blamish Slime around here somewhere... Now where did|I put it?");
+        if(inv_freespace(inv) = 0) {
+            ~chatplayer("<p,sad>Don't worry about that for now. I don't have space to take anything from you.");
+            return;
+        }
+        ~mesbox("Gerrant searches around a bit.");
+        inv_add(inv, blamish_snail_slime, 1);
+        ~chatnpc("<p,happy>Aha! Here it is! Take this slime, mix it with some|Harralander and water and you'll have the Blamish Oil|you need for treating your fishing rod.");
 }

@@ -1,7 +1,7 @@
 import Packet from '#/io/Packet.js';
 import ZoneProt from '#/network/rs225/server/prot/ZoneProt.js';
-import LocMerge from '#/network/server/model/LocMerge.js';
 import ZoneMessageEncoder from '#/network/server/codec/ZoneMessageEncoder.js';
+import LocMerge from '#/network/server/model/LocMerge.js';
 
 export default class LocMergeEncoder extends ZoneMessageEncoder<LocMerge> {
     prot = ZoneProt.LOC_MERGE;

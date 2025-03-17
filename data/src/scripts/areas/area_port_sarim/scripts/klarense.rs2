@@ -75,7 +75,7 @@ if (%dragon_planks < 3) {
 
 [label,klarense_crandor_when_ready]
 ~chatplayer("<p,quiz>Would you take me to Crandor Isle when it's ready?");
-~chatnpc("<p,neutral>Well, even if I knew how to get there, I wouldnt like to|risk it. Especially after going to all the effort of fixing|the old girl up.");
+~chatnpc("<p,neutral>Well, even if I knew how to get there, I wouldn't like to|risk it. Especially after going to all the effort of fixing|the old girl up.");
 
 [label,klarense_buy]
 ~chatplayer("<p,quiz>I don't suppose I could buy it?");

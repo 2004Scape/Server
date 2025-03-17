@@ -1,9 +1,9 @@
 import fs from 'fs';
 
-import Packet from '#/io/Packet.js';
 
 import { ConfigType } from '#/cache/config/ConfigType.js';
 import ScriptVarType from '#/cache/config/ScriptVarType.js';
+import Packet from '#/io/Packet.js';
 
 export default class DbTableType extends ConfigType {
     private static configNames = new Map<string, number>();

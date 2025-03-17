@@ -1,4 +1,4 @@
-[opnpc1,npc_874]
+[opnpc1,ogre_merchant]
 ~chatnpc("<p,quiz>Does the little creature want to buy sumfin'?");
 switch_int(~p_choice2("Yes I do.", 1, "No I don't.", 2)) {
     case 1 :

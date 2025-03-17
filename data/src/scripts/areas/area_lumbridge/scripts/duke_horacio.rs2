@@ -22,7 +22,7 @@ else return (duke_rune_mysteries_in_progress);
 [label,duke_rune_mysteries_start]
 ~chatplayer("<p,quiz>Have you any quests for me?");
 ~chatnpc("<p,neutral>Well, it's not really a quest but I recently discovered this strange talisman.");
-~chatnpc("<p,neutral>It seems to be a mystical and I have never seen anything like it before. Would you take it to the head wizard at");
+~chatnpc("<p,neutral>It seems to be mystical and I have never seen anything like it before. Would you take it to the head wizard at");
 ~chatnpc("<p,neutral>the Wizards' Tower for me? It's just south-west of here and should not take you very long at all. I would be awfully grateful.");
 def_int $option = ~p_choice2("Sure, no problem.", 1, "Not right now.", 2);
 if ($option = 1) {

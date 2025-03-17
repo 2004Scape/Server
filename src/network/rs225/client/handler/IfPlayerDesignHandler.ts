@@ -1,8 +1,8 @@
-import MessageHandler from '#/network/client/handler/MessageHandler.js';
-import Player from '#/engine/entity/Player.js';
-import IfPlayerDesign from '#/network/client/model/IfPlayerDesign.js';
 import IdkType from '#/cache/config/IdkType.js';
 import InvType from '#/cache/config/InvType.js';
+import Player from '#/engine/entity/Player.js';
+import MessageHandler from '#/network/client/handler/MessageHandler.js';
+import IfPlayerDesign from '#/network/client/model/IfPlayerDesign.js';
 
 export default class IfPlayerDesignHandler extends MessageHandler<IfPlayerDesign> {
     handle(message: IfPlayerDesign, player: Player): boolean {
@@ -53,7 +53,7 @@ export default class IfPlayerDesignHandler extends MessageHandler<IfPlayerDesign
         player.gender = gender;
         player.body = idkit;
         player.colors = color;
-        player.generateAppearance(InvType.WORN);
+        player.buildAppearance(InvType.WORN);
         return true;
     }
 }

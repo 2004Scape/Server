@@ -1,13 +1,10 @@
 import Jagfile from '#/io/Jagfile.js';
 import Packet from '#/io/Packet.js';
 import { shouldBuildFileAny } from '#/util/PackFile.js';
-
 import { convertImage } from '#/util/PixPack.js';
 
 export async function packClientTitle() {
-    if (!shouldBuildFileAny('data/src/binary', 'data/pack/client/title') &&
-        !shouldBuildFileAny('data/src/fonts', 'data/pack/client/title') &&
-        !shouldBuildFileAny('data/src/title', 'data/pack/client/title')) {
+    if (!shouldBuildFileAny('data/src/binary', 'data/pack/client/title') && !shouldBuildFileAny('data/src/fonts', 'data/pack/client/title') && !shouldBuildFileAny('data/src/title', 'data/pack/client/title')) {
         return;
     }
 

@@ -112,7 +112,7 @@ trackDir('data/src/models');
 trackDir('data/src/textures');
 
 // sounds.jag
-trackDir('data/src/sounds');
+trackDir('data/src/synth');
 
 // wordenc.jag
 trackDir('data/src/wordenc');

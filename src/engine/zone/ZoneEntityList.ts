@@ -1,7 +1,7 @@
-import Loc from '#/engine/entity/Loc.js';
-import Obj from '#/engine/entity/Obj.js';
 import ObjType from '#/cache/config/ObjType.js';
 import EntityLifeCycle from '#/engine/entity/EntityLifeCycle.js';
+import Loc from '#/engine/entity/Loc.js';
+import Obj from '#/engine/entity/Obj.js';
 
 export default abstract class ZoneEntityList<T> extends Array<T[] | undefined> {
     private readonly capacity: number;

@@ -1,7 +1,7 @@
 [opnpc1,thurgo]
 switch_int (%squire_progress) {
-    case 2 : @thurgo_inquire;
-    case 3 : @thurgo_special_sword_post_pie;
-    case 4, 5, 6, ^squire_complete : @thurgo_about_sword;
-    case default : mes("Thurgo doesn't appear to be interested in talking.");
+    case ^squire_spoken_reldo : @thurgo_inquire;
+    case ^squire_given_pie : @thurgo_special_sword_post_pie;
+    case ^squire_spoken_thurgo, ^squire_looking_portrait, ^squire_looking_blurite, ^squire_complete : @thurgo_about_sword;
+    case default : ~mesbox("Thurgo doesn't appear to be interested in talking.");
 }

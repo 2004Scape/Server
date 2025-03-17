@@ -1,6 +1,6 @@
-import MessageHandler from '#/network/client/handler/MessageHandler.js';
 import Player from '#/engine/entity/Player.js';
 import ScriptState from '#/engine/script/ScriptState.js';
+import MessageHandler from '#/network/client/handler/MessageHandler.js';
 import ResumePauseButton from '#/network/client/model/ResumePauseButton.js';
 
 export default class ResumePauseButtonHandler extends MessageHandler<ResumePauseButton> {

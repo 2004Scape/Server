@@ -8,7 +8,7 @@ export default class ChatFilterSettings extends OutgoingMessage {
     constructor(
         readonly publicChat: ChatModePublic,
         readonly privateChat: ChatModePrivate,
-        readonly tradeDuel: ChatModeTradeDuel,
+        readonly tradeDuel: ChatModeTradeDuel
     ) {
         super();
     }

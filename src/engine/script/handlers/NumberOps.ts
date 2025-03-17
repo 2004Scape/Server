@@ -1,8 +1,6 @@
 import ScriptOpcode from '#/engine/script/ScriptOpcode.js';
 import { CommandHandlers } from '#/engine/script/ScriptRunner.js';
-
 import { bitcount, clearBitRange, MASK, setBitRange } from '#/util/Numbers.js';
-
 import Trig from 'src/util/Trig.js';
 
 const NumberOps: CommandHandlers = {
@@ -49,7 +47,7 @@ const NumberOps: CommandHandlers = {
 
     [ScriptOpcode.ADDPERCENT]: state => {
         const [num, percent] = state.popInts(2);
-        state.pushInt((num * percent / 100 + num) | 0);
+        state.pushInt(((num * percent) / 100 + num) | 0);
     },
 
     [ScriptOpcode.SETBIT]: state => {

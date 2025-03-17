@@ -1,6 +1,6 @@
 [opnpc1,crest_boot]
 ~chatnpc("<p,neutral>Hello tall person.");
-if (%crest_progress = ^crest_spoken_avan) {
+if (%crest_progress >= ^crest_spoken_avan & %crest_progress < ^crest_avan_piece) {
     @multi3(
         "Hello. I'm in search of very high quality gold.", crest_boot_gold,
         "Hello short person.", crest_boot_hello,
@@ -16,8 +16,8 @@ else {
 
 [label,crest_boot_gold]
 ~chatplayer("<p,neutral>Hello. I'm in search of very high quality gold.");
+if(%crest_progress = ^crest_spoken_avan) %crest_progress = ^crest_spoken_boot;
 ~chatnpc("<p,quiz>High quality gold eh? Hmmm... Well, the very best quality gold that I know of, is just East of the large city Ardougne, underground somewhere.");
-%crest_progress = ^crest_spoken_boot;
 ~chatnpc("<p,neutral>I don't believe it's exactly easy to get to though...");
 
 [label,crest_boot_hello]

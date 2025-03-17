@@ -1,8 +1,7 @@
 import ScriptVarType from '#/cache/config/ScriptVarType.js';
 import VarPlayerType from '#/cache/config/VarPlayerType.js';
-
-import { PackedData, ConfigValue, ConfigLine, isConfigBoolean, getConfigBoolean } from '#tools/pack/config/PackShared.js';
 import { VarpPack } from '#/util/PackFile.js';
+import { PackedData, ConfigValue, ConfigLine, isConfigBoolean, getConfigBoolean } from '#tools/pack/config/PackShared.js';
 
 export function parseVarpConfig(key: string, value: string): ConfigValue | null | undefined {
     const stringKeys: string[] = [];

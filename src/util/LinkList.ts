@@ -3,7 +3,6 @@ import Linkable from '#/util/Linkable.js';
 export default class LinkList<T extends Linkable> {
     // constructor
     private readonly sentinel: Linkable = new Linkable();
-
     // runtime
     public cursor: Linkable | null = null;
 
@@ -92,6 +91,22 @@ export default class LinkList<T extends Linkable> {
                 return;
             }
             node?.unlink();
+        }
+    }
+
+    *all(reverse = false): IterableIterator<T> {
+        if (reverse) {
+            for (let link = this.tail(); link !== null; link = this.prev()) {
+                const save = this.cursor;
+                yield link;
+                this.cursor = save;
+            }
+        } else {
+            for (let link = this.head(); link !== null; link = this.next()) {
+                const save = this.cursor;
+                yield link;
+                this.cursor = save;
+            }
         }
     }
 }

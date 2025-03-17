@@ -1,7 +1,7 @@
 import Packet from '#/io/Packet.js';
 import ZoneProt from '#/network/rs225/server/prot/ZoneProt.js';
-import MapProjAnim from '#/network/server/model/MapProjAnim.js';
 import ZoneMessageEncoder from '#/network/server/codec/ZoneMessageEncoder.js';
+import MapProjAnim from '#/network/server/model/MapProjAnim.js';
 
 export default class MapProjAnimEncoder extends ZoneMessageEncoder<MapProjAnim> {
     prot = ZoneProt.MAP_PROJANIM;

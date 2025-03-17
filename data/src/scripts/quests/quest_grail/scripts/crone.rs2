@@ -4,7 +4,7 @@
 
 [label,crone_the_grail]
 ~chatnpc("<p,quiz>Did you say the Grail?|You are a Grail knight, yes?|Well you'd better hurry. A Fisher King is in pain.");
-~chatplayer("<p,sad>Well I would, but I don't know where I am going!");
+~chatplayer("<p,angry>Well I would, but I don't know where I am going!");
 ~chatnpc("<p,neutral>Go to where the six heads face,|blow the whistle and away you go!");
 if(%grail_progress = ^grail_spoken_merlin) {
     %grail_progress = 4;

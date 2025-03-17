@@ -1,5 +1,13 @@
 [magic_guild_store]
-// https://storage.googleapis.com/tannerdino/images/guildstore8sb.jpg
+// https://cdn.discordapp.com/attachments/917979227926695979/1348684974290763846/magic_guild_store_2004.jpg?ex=67d05c43&is=67cf0ac3&hm=908036fee626ad0f8930c69078261489e7ff36d7d88a96a28f73cec61a6ee38a&=&format=webp // beta 2004?
+// https://i.postimg.cc/HsnzTBDR/runeshop4.jpg // launch 2004?
+// https://web.archive.org/web/20041217082458/http://www.runehq.com/cacheguides/viewguildguide00267.htm // Apr 21, 2004 - Dec 08, 2004
+// https://web.archive.org/web/20040803172352/http://www.tip.it/runescape/index.php?page=rs2gld_magic.htm // 03.august.2004 The date of the original modification of the site is unknown.
+// https://storage.googleapis.com/tannerdino/images/guildstore8sb.jpg // early 2005?
+// https://web.archive.org/web/20051130120706/http://runehq.com/RHQGuildGuidesView.php?id=00507 // May 23, 2005 - Sep 08, 2005 early 2005 slayer release or little earlier?
+// https://web.archive.org/web/20060508233149/http://www.tip.it/runescape/index.php?page=magic_guild.htm // after 13 June 2005
+// https://oldschool.runescape.wiki/w/Wizards%27_Guild
+
 scope=shared
 size=40
 restock=yes
@@ -11,14 +19,14 @@ stock3=airrune,3000,18
 stock4=earthrune,3000,18
 stock5=mindrune,3000,18
 stock6=bodyrune,3000,18
-stock7=soulrune,50,60
+stock7=soulrune,50,100
 stock8=battlestaff,5,90
 stock9=staff_of_air,2,1000
 stock10=staff_of_water,2,1000
 stock11=staff_of_earth,2,1000
 stock12=staff_of_fire,2,1000
-stock13=naturerune,150,180
-stock14=chaosrune,250,50
-stock15=bloodrune,50,180
-stock16=lawrune,50,180
-stock17=deathrune,150,90
+stock13=naturerune,500,300
+stock14=chaosrune,500,100
+stock15=bloodrune,500,300
+stock16=lawrune,500,300
+stock17=deathrune,500,150

@@ -1,5 +1,5 @@
-import { ConfigValue, ConfigLine, PackedData, isConfigBoolean, getConfigBoolean } from '#tools/pack/config/PackShared.js';
 import { FloPack, TexturePack } from '#/util/PackFile.js';
+import { ConfigValue, ConfigLine, PackedData, isConfigBoolean, getConfigBoolean } from '#tools/pack/config/PackShared.js';
 
 export function parseFloConfig(key: string, value: string): ConfigValue | null | undefined {
     const stringKeys: string[] = [];
@@ -60,7 +60,7 @@ export function parseFloConfig(key: string, value: string): ConfigValue | null |
     }
 }
 
-export function packFloConfigs(configs: Map<string, ConfigLine[]>): { client: PackedData, server: PackedData } {
+export function packFloConfigs(configs: Map<string, ConfigLine[]>): { client: PackedData; server: PackedData } {
     const client: PackedData = new PackedData(FloPack.size);
     const server: PackedData = new PackedData(FloPack.size);
 

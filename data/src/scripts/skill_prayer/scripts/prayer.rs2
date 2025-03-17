@@ -1,0 +1,181 @@
+[proc,prayer_checks](dbrow $data)(boolean)
+if (stat(prayer) < 1) {
+    // osrs
+    if (stat_base(prayer) >= db_getfield($data, prayers:level, 0)) {
+        mes("You need to recharge your prayer at an altar."); // p in prayer isnt capitalized until late 2005?
+    }
+    sound_synth(prayer_off, 0, 0);
+    return(false);
+}
+if (db_getfield($data, prayers:members, 0) = ^true & map_members = false) {
+    // in osrs it includes the prayer name in the message
+    mes(^mes_members_prayer);
+    return(false);
+}
+if (~duel_arena_prayer_check = false) {
+    return(false);
+}
+return(true);
+
+[proc,prayer_activate](dbrow $data)
+~prayer_deactivate_conflicting($data);
+sound_synth(db_getfield($data, prayers:sound, 0), 0, 0);
+// activate headicon
+def_int $headicon = enum(int, int, prayer_headicons, db_getfield($data, prayers:prayer, 0));
+if ($headicon > 0) {
+    ~headicon_add($headicon);
+}
+//https://www.youtube.com/watch?v=cVisNIAVvfk&t=169s 
+//https://twitter.com/JagexAsh/status/1646903747837059072
+if (gettimer(prayer_drain) < 1) {
+    // https://youtu.be/UAWSeOYLVHU First ones 10 tick, remaining timer loops are 5 tick
+    // https://youtu.be/cQZhL4VP84A?t=179 normal timer instead of softtimer
+    settimer(prayer_drain, 5);
+}
+%prayer_drain_effect = add(max(%prayer_drain_effect, 0), enum(int, int, prayer_drain_effects, db_getfield($data, prayers:prayer, 0)));
+
+~player_combat_stat; // THIS IS VERY IMPORTANT
+
+[proc,prayer_deactivate](int $prayer)
+sound_synth(cancel_prayer, 0, 0);
+%prayer_drain_effect = sub(%prayer_drain_effect, enum(int, int, prayer_drain_effects, $prayer));
+if (~prayers_are_active = false) {
+    cleartimer(prayer_drain);
+}
+def_int $headicon = enum(int, int, prayer_headicons, $prayer);
+if ($headicon > 0) {
+    ~headicon_del($headicon);
+}
+
+~player_combat_stat; // THIS IS VERY IMPORTANT
+
+[proc,prayer_deactivate_conflicting](dbrow $data)
+def_int $i = 0;
+while ($i <= db_getfieldcount($data, prayers:prayer_deactivate)) {
+    def_int $prayer = db_getfield($data, prayers:prayer_deactivate, $i);
+    ~prayer_deactivate_specific($prayer);
+    $i = add($i, 1);
+}
+
+[proc,prayer_deactivate_specific](int $prayer)
+def_int $drain = enum(int, int, prayer_drain_effects, $prayer);
+switch_int($prayer) {
+    case ^prayer_thickskin :
+        if (%prayer_thickskin = ^true) %prayer_drain_effect = sub(%prayer_drain_effect, $drain);
+        %prayer_thickskin = ^false;
+    case ^prayer_strengthburst :
+        if (%prayer_strengthburst = ^true) %prayer_drain_effect = sub(%prayer_drain_effect, $drain);
+        %prayer_strengthburst = ^false;
+    case ^prayer_clarity :
+        if (%prayer_clarity = ^true) %prayer_drain_effect = sub(%prayer_drain_effect, $drain);
+        %prayer_clarity = ^false;
+    case ^prayer_rockskin :
+        if (%prayer_rockskin = ^true) %prayer_drain_effect = sub(%prayer_drain_effect, $drain);
+        %prayer_rockskin = ^false;
+    case ^prayer_superhumanstrength :
+        if (%prayer_superhumanstrength = ^true) %prayer_drain_effect = sub(%prayer_drain_effect, $drain);
+        %prayer_superhumanstrength = ^false;
+    case ^prayer_improvedreflexes :
+        if (%prayer_improvedreflexes = ^true) %prayer_drain_effect = sub(%prayer_drain_effect, $drain);
+        %prayer_improvedreflexes = ^false;
+    case ^prayer_rapidrestore :
+        if (%prayer_rapidrestore = ^true) %prayer_drain_effect = sub(%prayer_drain_effect, $drain);
+        %prayer_rapidrestore = ^false;
+    case ^prayer_rapidheal :
+        if (%prayer_rapidheal = ^true) %prayer_drain_effect = sub(%prayer_drain_effect, $drain);
+        %prayer_rapidheal = ^false;
+    case ^prayer_protectitems :
+        if (%prayer_protectitems = ^true) %prayer_drain_effect = sub(%prayer_drain_effect, $drain);
+        %prayer_protectitems = ^false;
+    case ^prayer_steelskin :
+        if (%prayer_steelskin = ^true) %prayer_drain_effect = sub(%prayer_drain_effect, $drain);
+        %prayer_steelskin = ^false;
+    case ^prayer_ultimatestrength :
+        if (%prayer_ultimatestrength = ^true) %prayer_drain_effect = sub(%prayer_drain_effect, $drain);
+        %prayer_ultimatestrength = ^false;
+    case ^prayer_incrediblereflexes :
+        if (%prayer_incrediblereflexes = ^true) %prayer_drain_effect = sub(%prayer_drain_effect, $drain);
+        %prayer_incrediblereflexes = ^false;
+    case ^prayer_protectfrommagic :
+        if (%prayer_protectfrommagic = ^true) %prayer_drain_effect = sub(%prayer_drain_effect, $drain);
+        %prayer_protectfrommagic = ^false;
+    case ^prayer_protectfrommissiles :
+        if (%prayer_protectfrommissiles = ^true) %prayer_drain_effect = sub(%prayer_drain_effect, $drain);
+        %prayer_protectfrommissiles = ^false;
+    case ^prayer_protectfrommelee :
+        if (%prayer_protectfrommelee = ^true) %prayer_drain_effect = sub(%prayer_drain_effect, $drain);
+        %prayer_protectfrommelee = ^false;
+}
+def_int $headicon = enum(int, int, prayer_headicons, $prayer);
+if ($headicon > 0) {
+    ~headicon_del($headicon);
+}
+if (~prayers_are_active = false) {
+    cleartimer(prayer_drain);
+}
+
+[proc,prayers_are_active]()(boolean)
+if (%prayer_thickskin = ^true) return (true);
+if (%prayer_strengthburst = ^true) return (true);
+if (%prayer_clarity = ^true) return (true);
+if (%prayer_rockskin = ^true) return (true);
+if (%prayer_superhumanstrength = ^true) return (true);
+if (%prayer_improvedreflexes = ^true) return (true);
+if (%prayer_rapidrestore = ^true) return (true);
+if (%prayer_rapidheal = ^true) return (true);
+if (%prayer_protectitems = ^true) return (true);
+if (%prayer_steelskin = ^true) return (true);
+if (%prayer_ultimatestrength = ^true) return (true);
+if (%prayer_incrediblereflexes = ^true) return (true);
+if (%prayer_protectfrommagic = ^true) return (true);
+if (%prayer_protectfrommissiles = ^true) return (true);
+if (%prayer_protectfrommelee = ^true) return (true);
+return (false);
+
+[proc,prayer_deactivate_all]
+%prayer_thickskin = ^false;
+%prayer_strengthburst = ^false;
+%prayer_clarity = ^false;
+%prayer_rockskin = ^false;
+%prayer_superhumanstrength = ^false;
+%prayer_improvedreflexes = ^false;
+%prayer_rapidrestore = ^false;
+%prayer_rapidheal = ^false;
+%prayer_protectitems = ^false;
+%prayer_steelskin = ^false;
+%prayer_ultimatestrength = ^false;
+%prayer_incrediblereflexes = ^false;
+%prayer_protectfrommagic = ^false;
+%prayer_protectfrommissiles = ^false;
+%prayer_protectfrommelee = ^false;
+~headicon_del(^headicon_prayer_protectfrommelee);
+~headicon_del(^headicon_prayer_protectfromrange);
+~headicon_del(^headicon_prayer_protectfrommagic);
+%prayer_drain_effect = 0;
+%prayer_drain_counter = 0;
+cleartimer(prayer_drain);
+
+[proc,get_prayer_data](int $prayer)(dbrow)
+db_find(prayers:prayer, $prayer);
+def_dbrow $data = db_findnext;
+return ($data);
+
+[timer,prayer_drain]
+%prayer_drain_counter = calc(%prayer_drain_effect * 5 + max(%prayer_drain_counter, 0));
+// 60 + equipment bonus * 2
+if (~prayers_are_active = false) {
+    cleartimer(prayer_drain);
+    return;
+}
+// not sure if drain resistance drops below 60.
+if (%prayer_drain_counter >= max(%prayer_drain_resistance, 60)) {
+    def_int $reduce_points = divide(%prayer_drain_counter, %prayer_drain_resistance);
+    %prayer_drain_counter = sub(%prayer_drain_counter, multiply(%prayer_drain_resistance, $reduce_points));
+    stat_sub(prayer, $reduce_points, 0);
+    if (stat(prayer) = 0) {
+        sound_synth(prayer_drain, 0, 0);
+        mes("You have run out of prayer points, you must recharge at an altar.");
+        ~prayer_deactivate_all;
+        return;
+    }
+}

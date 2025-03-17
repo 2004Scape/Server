@@ -72,7 +72,7 @@ obj_add(npc_coord, npc_param(death_drop), 1, ^lootdrop_duration);
 def_int $random = random(128);
 
 if ($random < 6) {
-    obj_add(npc_coord, bronze_axe, 1, ^lootdrop_duration);
+    obj_add(npc_coord, iron_axe, 1, ^lootdrop_duration);
 } else if ($random < 10) {
     obj_add(npc_coord, bronze_battleaxe, 1, ^lootdrop_duration);
 } else if ($random < 11) {

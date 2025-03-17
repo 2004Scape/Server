@@ -1,14 +1,14 @@
-import MessageEncoder from '#/network/server/codec/MessageEncoder.js';
+import Component from '#/cache/config/Component.js';
 import Packet from '#/io/Packet.js';
 import ServerProt from '#/network/rs225/server/prot/ServerProt.js';
+import MessageEncoder from '#/network/server/codec/MessageEncoder.js';
 import UpdateInvFull from '#/network/server/model/UpdateInvFull.js';
-import Component from '#/cache/config/Component.js';
 
 export default class UpdateInvFullEncoder extends MessageEncoder<UpdateInvFull> {
     prot = ServerProt.UPDATE_INV_FULL;
 
     encode(buf: Packet, message: UpdateInvFull): void {
-        const {component, inv} = message;
+        const { component, inv } = message;
 
         const comType = Component.get(component);
         const size = Math.min(inv.capacity, comType.width * comType.height);
@@ -36,7 +36,7 @@ export default class UpdateInvFullEncoder extends MessageEncoder<UpdateInvFull> 
     }
 
     test(message: UpdateInvFull): number {
-        const {component, inv} = message;
+        const { component, inv } = message;
 
         const comType = Component.get(component);
         const size = Math.min(inv.capacity, comType.width * comType.height);

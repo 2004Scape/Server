@@ -1,9 +1,9 @@
 import { randomUUID } from 'crypto';
 
+import { NetworkPlayer } from '#/engine/entity/NetworkPlayer.js';
 import Isaac from '#/io/Isaac.js';
 import Packet from '#/io/Packet.js';
 
-import { NetworkPlayer } from '#/engine/entity/NetworkPlayer.js';
 
 export default abstract class ClientSocket {
     uuid = randomUUID();
