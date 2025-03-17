@@ -39,3 +39,7 @@ if (~obj_gettotalcat(armour_godcape) > 0) {
     return;
 }
 @pickup_obj;
+
+[debugproc,dgc]
+obj_add(coord, zamorakcape, 1, 100);
+obj_add(coord, zamorakcape, 1, 100);
