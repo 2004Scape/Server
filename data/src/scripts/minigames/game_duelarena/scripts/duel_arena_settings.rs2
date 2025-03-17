@@ -1,13 +1,13 @@
 [if_button,duel_select_type:no_forfeit]
 if (testbit(%duel_settings, ^no_melee) = true) {
-    mes("You can't have No Forfeit and No Melee, you could run out of ammo."); // guess based on osrs pvp arena
+    mes("You can't have No Forfeit and No Melee, - you could run out of ammo."); // RS3 message https://archive.org/details/runelibris
     return;
 }
 ~toggle_duel_setting(^no_forfeit);
 
 [if_button,duel_select_type:no_movement]
 if (testbit(%duel_settings, ^no_melee) = true) {
-    mes("You can't have No Movement and No Melee, you could run out of ammo."); // guess based on osrs pvp arena
+    mes("You can't have No Forfeit and No Melee, - you could run out of ammo."); // RS3 message https://archive.org/details/runelibris
     return;
 }
 ~toggle_duel_setting(^no_movement);
@@ -30,7 +30,7 @@ if (testbit(%duel_settings, ^flower_power) = true) {
 
 [if_button,duel_select_type:no_ranged]
 if (testbit(%duel_settings, ^no_melee) = true & testbit(%duel_settings, ^no_magic) = true) {
-    mes("You can't disable all combat styles."); // completely made up
+    mes("You can't have No Ranged, No Melee and No Magic - how would you fight?"); // RS3 message: https://archive.org/details/runelibris
     return;
 }
 ~toggle_duel_setting(^no_ranged);
@@ -49,14 +49,14 @@ if (testbit(%duel_settings, ^no_movement) = true) {
     return;
 }
 if (testbit(%duel_settings, ^no_ranged) = true & testbit(%duel_settings, ^no_magic) = true) {
-    mes("You can't disable all combat styles."); // completely made up
+    mes("You can't have No Ranged, No Melee and No Magic - how would you fight?"); // RS3 message: https://archive.org/details/runelibris
     return;
 }
 ~toggle_duel_setting(^no_melee);
 
 [if_button,duel_select_type:no_magic]
 if (testbit(%duel_settings, ^no_ranged) = true & testbit(%duel_settings, ^no_melee) = true) {
-    mes("You can't disable all combat styles."); // completely made up
+    mes("You can't have No Ranged, No Melee and No Magic - how would you fight?"); // RS3 message: https://archive.org/details/runelibris
     return;
 }
 ~toggle_duel_setting(^no_magic);
