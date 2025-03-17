@@ -42,8 +42,8 @@ export default class Zone {
     readonly level: number;
 
     // zone entities
-    private readonly players: LinkList<Player> = new LinkList(); // list of player uids
-    private readonly npcs: LinkList<Npc> = new LinkList(); // list of npc nids (not uid because type may change)
+    private readonly players: LinkList<Player> = new LinkList();
+    private readonly npcs: LinkList<Npc> = new LinkList();
     private readonly locs: LinkList<Loc> = new LinkList();
     private readonly objs: LinkList<Obj> = new LinkList();
     private playersCount: number = 0;
