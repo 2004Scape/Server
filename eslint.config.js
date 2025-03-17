@@ -40,21 +40,14 @@ export default [
              * Allows constant conditions in loops but not in if statements
              */
             'no-constant-condition': ['error', { checkLoops: false }],
-
-            /**
-             * (jkm) this rule is included in the default ruleset, we should consider
-             * resolving the issues and setting it to error
-             * https://eslint.org/docs/latest/rules/no-case-declarations
-             */
-            'no-case-declarations': 'warn',
-
+            'no-case-declarations': 'error',
+            '@typescript-eslint/no-namespace': 'error',
             /**
              * (jkm)
-             * The following rules are included in @typescript-eslint/recommended
-             * I have set them to warn instead of error, to avoid having to fix them
-             * We should consider fixing them and setting them to error
+             * The following rule is included in @typescript-eslint/recommended
+             * I have set it to warn instead of error, to avoid having to fix it
+             * We should consider fixing it and setting it to error
              */
-            '@typescript-eslint/no-namespace': 'warn',
             '@typescript-eslint/no-explicit-any': 'warn',
 
             '@typescript-eslint/no-unused-vars': [
