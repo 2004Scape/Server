@@ -6,7 +6,7 @@
 if (~wine_of_zamorak_attack(obj_type, obj_coord) = true) {
     return;
 }
-@pickup_obj(obj_coord, obj_type, obj_count);
+@pickup_obj;
 
 
 [proc,wine_of_zamorak_attack](obj $obj, coord $coord)(boolean)

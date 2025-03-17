@@ -10,4 +10,4 @@ if (inv_total(worn, ice_gloves) = 0) {
   say("Ouch!");
   return;
 } 
-@pickup_obj(obj_coord, obj_type, obj_count);
+@pickup_obj;
