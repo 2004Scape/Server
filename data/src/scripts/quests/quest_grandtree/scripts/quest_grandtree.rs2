@@ -32,22 +32,22 @@ p_arrivedelay;
 ~agility_climb_up(0, movecoord(loc_coord, -1, -1, -1));
 
 [oplocu,_grandtree_pillar]
-if (oc_tradeable(last_useitem) = false) {
-    mes("You cannot put that on a pillar.");
+if (oc_tradeable(last_useitem) = true | last_useitem = twigs_t | last_useitem = twigs_u | last_useitem = twigs_z | last_useitem = twigs_o) {
+    anim(human_pickuptable, 0);
+    sound_synth(put_down, 0, 0);
+    inv_dropslot(inv, loc_coord, last_useslot, 500); // 500t osrs
+    if(%grandtree_progress = ^grandtree_given_twigs & 
+        obj_find(2_38_54_53_11, twigs_t) = true & 
+        obj_find(2_38_54_54_11, twigs_u) = true & 
+        obj_find(2_38_54_55_11, twigs_z) = true & 
+        obj_find(2_38_54_56_11, twigs_o) = true) {
+        %grandtree_progress = ^grandtree_unlocked_trapdoor;
+        sound_synth(machinery, 0, 0); 
+        ~mesbox("You hear the grinding of an ancient pulley system.");
+    }
     return;
 }
-anim(human_pickuptable, 0);
-sound_synth(put_down, 0, 0);
-inv_dropslot(inv, loc_coord, last_useslot, 500); // 500t osrs
-if(%grandtree_progress = ^grandtree_given_twigs & 
-    obj_find(2_38_54_53_11, twigs_t) = true & 
-    obj_find(2_38_54_54_11, twigs_u) = true & 
-    obj_find(2_38_54_55_11, twigs_z) = true & 
-    obj_find(2_38_54_56_11, twigs_o) = true) {
-    %grandtree_progress = ^grandtree_unlocked_trapdoor;
-    sound_synth(machinery, 0, 0); 
-    ~mesbox("You hear the grinding of an ancient pulley system.");
-}
+mes("You cannot put that on a pillar.");
 
 [oploc1,loc_2444]
 if(%grandtree_progress >= ^grandtree_unlocked_trapdoor) {
