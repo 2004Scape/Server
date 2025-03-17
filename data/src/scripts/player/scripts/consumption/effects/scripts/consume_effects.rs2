@@ -56,7 +56,7 @@ while ($i < db_getfieldcount($effect_data, consume_table:stat_change)) {
             def_int $damage = calc(scale(abs($percent), 100, stat(hitpoints)) + abs($constant));
             ~damage_self($damage);
         } else {
-            stat_sub($stat, abs($constant), abs($percent));
+            stat_sub($stat, calc(abs($constant) + ((stat($stat) * abs($percent)) / 100)), 0);
         }
     } else {
         // increase

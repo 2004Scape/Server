@@ -47,7 +47,7 @@ if (npc_find(coord, weakened_delrith, 8, 0) = true) {
     // On restore Delrith does not keep attacking you in 2004
     // https://www.youtube.com/watch?v=rjQprrDDUfE
     npc_changetype(delrith);
-    npc_statheal(hitpoints, npc_basestat(hitpoints), 0);
+    npc_statheal(hitpoints, 0, 100);
     ~mesbox("Suddenly the vortex collapses. That was the wrong incantation");
     return;
 }
@@ -67,5 +67,5 @@ if (npc_find(coord, weakened_delrith, 8, 0) = true) {
 // Regular delrith again after a minute.
 [ai_timer,weakened_delrith]
 npc_changetype(delrith);
-npc_statheal(hitpoints, npc_basestat(hitpoints), 0);
+npc_statheal(hitpoints, 0, 100);
 npc_setmode(none);
