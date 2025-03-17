@@ -18,7 +18,7 @@ export default class EventTrackingHandler extends MessageHandler<EventTracking> 
         if (!player.input.shouldSubmitTrackingDetails()) {
             return true;
         }
-        if (player.input.recordedEventsSizeTotal > Environment.NODE_LIMIT_BYTES_PER_TRACKING_SESSION) {
+        if (player.input.recordedBlobsSizeTotal > Environment.NODE_LIMIT_BYTES_PER_TRACKING_SESSION) {
             // An upper limit for the quantity of data used for a tracking session.
             // Prevents further parsing/storing of events.
             return false;
