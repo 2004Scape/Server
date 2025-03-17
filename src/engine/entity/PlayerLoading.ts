@@ -19,7 +19,7 @@ export class PlayerLoading {
         }
 
         const version = sav.g2();
-        if (version > 5) {
+        if (version > 6) {
             return false;
         }
 
