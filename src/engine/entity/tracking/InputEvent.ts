@@ -1,4 +1,4 @@
-export default class InputTrackingEvent {
+export default class InputTrackingBlob {
     readonly seq: number;
     readonly data: string;
     readonly coord?: number;

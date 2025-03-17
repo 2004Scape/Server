@@ -28,4 +28,4 @@ if (stat_base(prayer) < $levelreq){
     return;
 }
 %prayer_incrediblereflexes = ^true;
-~prayer_activate($data, ^prayer_incrediblereflexes_start);
+~prayer_activate($data);

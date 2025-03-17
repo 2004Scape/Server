@@ -42,10 +42,12 @@ export default class Zone {
     readonly level: number;
 
     // zone entities
-    private readonly players: Set<number>; // list of player uids
-    private readonly npcs: Set<number>; // list of npc nids (not uid because type may change)
+    private readonly players: LinkList<Player> = new LinkList();
+    private readonly npcs: LinkList<Npc> = new LinkList();
     private readonly locs: LinkList<Loc> = new LinkList();
     private readonly objs: LinkList<Obj> = new LinkList();
+    private playersCount: number = 0;
+    private npcsCount: number = 0;
     private locsCount: number = 0;
     private objsCount: number = 0;
     private readonly entityEvents: Map<NonPathingEntity, ZoneEvent[]>;
@@ -61,8 +63,6 @@ export default class Zone {
         this.z = coord.z >> 3;
         this.level = coord.level;
         this.events = new Set();
-        this.players = new Set();
-        this.npcs = new Set();
         this.entityEvents = new Map();
     }
 
@@ -76,21 +76,24 @@ export default class Zone {
 
     enter(entity: PathingEntity): void {
         if (entity instanceof Player) {
-            this.players.add(entity.uid);
+            this.players.addTail(entity);
+            this.playersCount++;
             World.gameMap.getZoneGrid(this.level).flag(this.x, this.z);
         } else if (entity instanceof Npc) {
-            this.npcs.add(entity.nid);
+            this.npcs.addTail(entity);
+            this.npcsCount++;
         }
     }
 
     leave(entity: PathingEntity): void {
+        entity.unlink();
         if (entity instanceof Player) {
-            this.players.delete(entity.uid);
-            if (this.players.size === 0) {
+            this.playersCount--;
+            if (this.playersCount === 0) {
                 World.gameMap.getZoneGrid(this.level).unflag(this.x, this.z);
             }
         } else if (entity instanceof Npc) {
-            this.npcs.delete(entity.nid);
+            this.npcsCount--;
         }
     }
 
@@ -229,14 +232,12 @@ export default class Zone {
     // ---- static locs/objs are added during world init ----
 
     addStaticLoc(loc: Loc): void {
-        const coord: number = CoordGrid.packZoneCoord(loc.x, loc.z);
         this.locs.addTail(loc);
         this.locsCount++;
         loc.isActive = true;
     }
 
     addStaticObj(obj: Obj): void {
-        const coord: number = CoordGrid.packZoneCoord(obj.x, obj.z);
         this.objs.addTail(obj);
         this.objsCount++;
         obj.isRevealed = true;
@@ -403,9 +404,8 @@ export default class Zone {
      * "visible" meaning they are active on the server and available to the client.
      */
     *getAllPlayersSafe(): IterableIterator<Player> {
-        for (const uid of this.players) {
-            const player: Player | null = World.getPlayerByUid(uid);
-            if (player && player.isValid()) {
+        for (const player of this.players.all()) {
+            if (player.isValid()) {
                 yield player;
             }
         }
@@ -416,9 +416,8 @@ export default class Zone {
      * "visible" meaning they are active on the server and available to the client.
      */
     *getAllNpcsSafe(): IterableIterator<Npc> {
-        for (const nid of this.npcs) {
-            const npc: Npc | undefined = World.getNpc(nid);
-            if (npc && npc.isValid()) {
+        for (const npc of this.npcs.all()) {
+            if (npc.isValid()) {
                 yield npc;
             }
         }
@@ -429,11 +428,9 @@ export default class Zone {
      * "visible" meaning they are active on the server and available to the client.
      */
     *getAllObjsSafe(): IterableIterator<Obj> {
-        for (let obj = this.objs.head(); obj !== null; obj = this.objs.next()) {
+        for (const obj of this.objs.all()) {
             if (obj.isValid()) {
-                const save = this.locs.cursor;
                 yield obj;
-                this.locs.cursor = save;
             }
         }
     }
@@ -443,11 +440,9 @@ export default class Zone {
      * "visible" meaning they are active on the server and available to the client.
      */
     *getObjsSafe(coord: number): IterableIterator<Obj> {
-        for (let obj = this.objs.head(); obj !== null; obj = this.objs.next()) {
+        for (const obj of this.objs.all()) {
             if (obj.isValid() && CoordGrid.packZoneCoord(obj.x, obj.z) === coord) {
-                const save = this.locs.cursor;
                 yield obj;
-                this.locs.cursor = save;
             }
         }
     }
@@ -458,11 +453,9 @@ export default class Zone {
      * "visible" meaning they are active on the server and available to the client.
      */
     *getObjsUnsafe(coord: number): IterableIterator<Obj> {
-        for (let obj = this.objs.head(); obj !== null; obj = this.objs.next()) {
+        for (const obj of this.objs.all()) {
             if (CoordGrid.packZoneCoord(obj.x, obj.z) === coord) {
-                const save = this.locs.cursor;
                 yield obj;
-                this.locs.cursor = save;
             }
         }
     }
@@ -473,10 +466,8 @@ export default class Zone {
      * "visible" meaning they are active on the server and available to the client.
      */
     *getAllObjsUnsafe(reverse: boolean = false): IterableIterator<Obj> {
-        for (let obj = reverse ? this.objs.tail() : this.objs.head(); obj !== null; obj = reverse ? this.objs.prev() : this.objs.next()) {
-            const save = this.locs.cursor;
+        for (const obj of this.objs.all(reverse)) {
             yield obj;
-            this.locs.cursor = save;
         }
     }
 
@@ -485,11 +476,9 @@ export default class Zone {
      * "visible" meaning they are active on the server and available to the client.
      */
     *getAllLocsSafe(): IterableIterator<Loc> {
-        for (let loc = this.locs.head(); loc !== null; loc = this.locs.next()) {
+        for (const loc of this.locs.all()) {
             if (loc.isValid()) {
-                const save = this.locs.cursor;
                 yield loc;
-                this.locs.cursor = save;
             }
         }
     }
@@ -499,11 +488,9 @@ export default class Zone {
      * "visible" meaning they are active on the server and available to the client.
      */
     *getLocsSafe(coord: number): IterableIterator<Loc> {
-        for (let loc = this.locs.head(); loc !== null; loc = this.locs.next()) {
+        for (const loc of this.locs.all()) {
             if (loc.isValid() && CoordGrid.packZoneCoord(loc.x, loc.z) === coord) {
-                const save = this.locs.cursor;
                 yield loc;
-                this.locs.cursor = save;
             }
         }
     }
@@ -514,11 +501,9 @@ export default class Zone {
      * "visible" meaning they are active on the server and available to the client.
      */
     *getLocsUnsafe(coord: number): IterableIterator<Loc> {
-        for (let loc = this.locs.head(); loc !== null; loc = this.locs.next()) {
+        for (const loc of this.locs.all()) {
             if (CoordGrid.packZoneCoord(loc.x, loc.z) === coord) {
-                const save = this.locs.cursor;
                 yield loc;
-                this.locs.cursor = save;
             }
         }
     }
@@ -529,10 +514,8 @@ export default class Zone {
      * "visible" meaning they are active on the server and available to the client.
      */
     *getAllLocsUnsafe(reverse: boolean = false): IterableIterator<Loc> {
-        for (let loc = reverse ? this.locs.tail() : this.locs.head(); loc !== null; loc = reverse ? this.locs.prev() : this.locs.next()) {
-            const save = this.locs.cursor;
+        for (const loc of this.locs.all(reverse)) {
             yield loc;
-            this.locs.cursor = save;
         }
     }
 
@@ -542,11 +525,8 @@ export default class Zone {
      * "visible" meaning they are active on the server and available to the client.
      */
     *getAllNpcsUnsafe(): IterableIterator<Npc> {
-        for (const nid of this.npcs) {
-            const npc = World.getNpc(nid);
-            if (npc) {
-                yield npc;
-            }
+        for (const npc of this.npcs.all()) {
+            yield npc;
         }
     }
 
@@ -556,11 +536,8 @@ export default class Zone {
      * "visible" meaning they are active on the server and available to the client.
      */
     *getAllPlayersUnsafe(): IterableIterator<Player> {
-        for (const uid of this.players) {
-            const player: Player | null = World.getPlayerByUid(uid);
-            if (player) {
-                yield player;
-            }
+        for (const player of this.players.all()) {
+            yield player;
         }
     }
 

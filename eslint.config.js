@@ -23,8 +23,8 @@ export default [
     {
         settings: {
             'import/resolver': {
-                'node': true,
-                'typescript': true
+                node: true,
+                typescript: true
             }
         }
     },
@@ -40,40 +40,34 @@ export default [
              * Allows constant conditions in loops but not in if statements
              */
             'no-constant-condition': ['error', { checkLoops: false }],
-
-            /**
-             * (jkm) this rule is included in the default ruleset, we should consider
-             * resolving the issues and setting it to error
-             * https://eslint.org/docs/latest/rules/no-case-declarations
-             */
-            'no-case-declarations': 'warn',
-
+            'no-case-declarations': 'error',
+            '@typescript-eslint/no-namespace': 'error',
             /**
              * (jkm)
-             * The following rules are included in @typescript-eslint/recommended
-             * I have set them to warn instead of error, to avoid having to fix them
-             * We should consider fixing them and setting them to error
+             * The following rule is included in @typescript-eslint/recommended
+             * I have set it to warn instead of error, to avoid having to fix it
+             * We should consider fixing it and setting it to error
              */
-            '@typescript-eslint/no-namespace': 'warn',
             '@typescript-eslint/no-explicit-any': 'warn',
 
             '@typescript-eslint/no-unused-vars': [
-                // TODO: Set to error
-                'warn',
+                'error',
                 {
                     /**
                      * Allow variables prefixed with underscores to skip this rule.
                      * There aren't many good reasons to have unused variables,
                      * but the codebase has 100s of them.
                      */
-                    'vars': 'all',
-                    'varsIgnorePattern': '^_',
+                    vars: 'all',
+                    varsIgnorePattern: '^_',
                     /**
-                    * Allow parameters prefixed with underscores to skip this rule.
-                    * This is a common practice for router methods with req and res parameters.
-                    */
-                    'args': 'all',
-                    'argsIgnorePattern': '^_',
+                     * Allow parameters prefixed with underscores to skip this rule.
+                     * This is a common practice for router methods with req and res parameters.
+                     */
+                    args: 'all',
+                    argsIgnorePattern: '^_',
+                    caughtErrors: 'all',
+                    caughtErrorsIgnorePattern: '^_'
                 }
             ],
 

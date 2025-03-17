@@ -28,4 +28,4 @@ if (stat_base(prayer) < $levelreq){
     return;
 }
 %prayer_clarity = ^true;
-~prayer_activate($data, ^prayer_clarity_start);
+~prayer_activate($data);

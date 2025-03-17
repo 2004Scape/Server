@@ -456,7 +456,7 @@ const PlayerOps: CommandHandlers = {
         const current = player.levels[stat];
         const added = current + ((constant + (base * percent) / 100) | 0);
         player.levels[stat] = Math.min(added, 255);
-        if (stat === 3 && player.levels[3] >= player.baseLevels[3]) {
+        if (stat === PlayerStat.HITPOINTS && player.levels[PlayerStat.HITPOINTS] >= player.baseLevels[PlayerStat.HITPOINTS]) {
             player.heroPoints.clear();
         }
         if (added !== current) {
@@ -495,6 +495,9 @@ const PlayerOps: CommandHandlers = {
         const boost = ((constant + (base * percent) / 100) | 0);
         const boosted = Math.min(current + boost, base + boost);
         player.levels[stat] = Math.min(boosted, 255);
+        if (stat === PlayerStat.HITPOINTS && player.levels[PlayerStat.HITPOINTS] >= player.baseLevels[PlayerStat.HITPOINTS]) {
+            player.heroPoints.clear();
+        }
         if (boosted !== current) {
             player.changeStat(stat);
         }
@@ -538,7 +541,7 @@ const PlayerOps: CommandHandlers = {
         const healed = current + ((constant + (base * percent) / 100) | 0);
         player.levels[stat] = Math.max(Math.min(healed, base), current);
 
-        if (stat === 3 && player.levels[3] >= player.baseLevels[3]) {
+        if (stat === PlayerStat.HITPOINTS && player.levels[PlayerStat.HITPOINTS] >= player.baseLevels[PlayerStat.HITPOINTS]) {
             player.heroPoints.clear();
         }
 
