@@ -31,6 +31,6 @@ if (stat_base(prayer) < $levelreq){
     return;
 }
 %prayer_rapidrestore = ^true;
-~prayer_activate($data, ^prayer_rapidrestore_start);
+~prayer_activate($data);
 cleartimer(stat_regen);
 settimer(stat_regen, 50);
