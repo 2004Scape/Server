@@ -452,8 +452,8 @@ const PlayerOps: CommandHandlers = {
         check(percent, NumberNotNull);
 
         const player = state.activePlayer;
-        const current = player.levels[stat];
         const base = player.baseLevels[stat];
+        const current = player.levels[stat];
         const added = current + ((constant + (base * percent) / 100) | 0);
         player.levels[stat] = Math.min(added, 255);
         if (stat === 3 && player.levels[3] >= player.baseLevels[3]) {
@@ -472,8 +472,8 @@ const PlayerOps: CommandHandlers = {
         check(percent, NumberNotNull);
 
         const player = state.activePlayer;
-        const current = player.levels[stat];
         const base = player.baseLevels[stat];
+        const current = player.levels[stat];
         const subbed = current - ((constant + (base * percent) / 100) | 0);
         player.levels[stat] = Math.max(subbed, 0);
         if (subbed !== current) {
