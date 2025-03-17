@@ -2,6 +2,10 @@
 def_int $total = calc(inv_total(inv, $obj) + inv_total(bank, $obj) + inv_total(worn, $obj));
 return($total);
 
+[proc,obj_gettotalcat](category $obj_cat)(int)
+def_int $total = calc(inv_totalcat(inv, $obj_cat) + inv_totalcat(bank, $obj_cat) + inv_totalcat(worn, $obj_cat));
+return($total);
+
 [proc,inv_slotspace](inv $from_inv, inv $to_inv, enum $slots)(boolean)
 def_int $i = 0;
 def_int $space_needed = 0;
