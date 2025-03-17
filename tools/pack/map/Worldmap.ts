@@ -61,88 +61,55 @@ export async function packWorldmap() {
         return { x, z, level };
     }
 
+    function processCsv(contents: string[], name: string): Set<number> {
+        const result = new Set<number>();
+        for (let i = 0; i < contents.length; i++) {
+            if (contents[i].startsWith('//') || !contents[i].length) {
+                continue;
+            }
+
+            const parts = contents[i].split(',');
+            if (parts.length === 2) {
+                const [from, to] = parts;
+                const [fromLevel, fromMx, fromMz, fromLx, fromLz] = from.split('_').map(x => parseInt(x));
+                const [_toLevel, toMx, toMz, toLx, toLz] = to.split('_').map(x => parseInt(x));
+
+                if (fromLx % 8 !== 0 || fromLz % 8 !== 0 || toLx % 8 !== 7 || toLz % 8 !== 7 || fromMx > toMx || fromMz > toMz || (fromMx <= toMx && fromMz <= toMz && (fromLx > toLx || fromLz > toLz))) {
+                    printWarning(`${name} map not aligned to a zone ${contents[i]}`);
+                }
+
+                const startX = (fromMx << 6) + fromLx;
+                const startZ = (fromMz << 6) + fromLz;
+                const endX = (toMx << 6) + toLx;
+                const endZ = (toMz << 6) + toLz;
+
+                for (let x = startX; x <= endX; x++) {
+                    for (let z = startZ; z <= endZ; z++) {
+                        if (result.has(CoordGrid.packCoord(fromLevel, x, z))) {
+                            printWarning(`Overlapping ${name} map ${contents[i]}`);
+                        }
+                        result.add(CoordGrid.packCoord(fromLevel, x, z));
+                    }
+                }
+            } else {
+                const [level, mx, mz, lx, lz] = contents[i].split('_').map(x => parseInt(x));
+
+                for (let i = 0; i < 8; i++) {
+                    for (let j = 0; j < 8; j++) {
+                        result.add(CoordGrid.packCoord(level, (mx << 6) + lx + i, (mz << 6) + lz + j));
+                    }
+                }
+            }
+        }
+        return result;
+    }
+
     // easiest solution for the time being
     const multiway = fs.readFileSync('data/src/maps/multiway.csv', 'ascii').replace(/\r/g, '').split('\n');
-    const multimap = new Set<number>();
-    for (let i = 0; i < multiway.length; i++) {
-        if (multiway[i].startsWith('//') || !multiway[i].length) {
-            continue;
-        }
-
-        const parts = multiway[i].split(',');
-        if (parts.length === 2) {
-            const [from, to] = parts;
-            const [fromLevel, fromMx, fromMz, fromLx, fromLz] = from.split('_').map(x => parseInt(x));
-            const [_toLevel, toMx, toMz, toLx, toLz] = to.split('_').map(x => parseInt(x));
-
-            if (fromLx % 8 !== 0 || fromLz % 8 !== 0 || toLx % 8 !== 7 || toLz % 8 !== 7 || fromMx > toMx || fromMz > toMz || (fromMx <= toMx && fromMz <= toMz && (fromLx > toLx || fromLz > toLz))) {
-                printWarning('Multiway map not aligned to a zone ' + multiway[i]);
-            }
-
-            const startX = (fromMx << 6) + fromLx;
-            const startZ = (fromMz << 6) + fromLz;
-            const endX = (toMx << 6) + toLx;
-            const endZ = (toMz << 6) + toLz;
-
-            for (let x = startX; x <= endX; x++) {
-                for (let z = startZ; z <= endZ; z++) {
-                    if (multimap.has(CoordGrid.packCoord(fromLevel, x, z))) {
-                        printWarning('Overlapping multiway map ' + multiway[i]);
-                    }
-                    multimap.add(CoordGrid.packCoord(fromLevel, x, z));
-                }
-            }
-        } else {
-            const [level, mx, mz, lx, lz] = multiway[i].split('_').map(x => parseInt(x));
-
-            for (let i = 0; i < 8; i++) {
-                for (let j = 0; j < 8; j++) {
-                    multimap.add(CoordGrid.packCoord(level, (mx << 6) + lx + i, (mz << 6) + lz + j));
-                }
-            }
-        }
-    }
+    const multimap = processCsv(multiway, 'multiway');
 
     const free2play = fs.readFileSync('data/src/maps/free2play.csv', 'ascii').replace(/\r/g, '').split('\n');
-    const freemap = new Set<number>();
-    for (let i = 0; i < free2play.length; i++) {
-        if (free2play[i].startsWith('//') || !free2play[i].length) {
-            continue;
-        }
-
-        const parts = free2play[i].split(',');
-        if (parts.length === 2) {
-            const [from, to] = parts;
-            const [fromLevel, fromMx, fromMz, fromLx, fromLz] = from.split('_').map(x => parseInt(x));
-            const [_toLevel, toMx, toMz, toLx, toLz] = to.split('_').map(x => parseInt(x));
-
-            if (fromLx % 8 !== 0 || fromLz % 8 !== 0 || toLx % 8 !== 7 || toLz % 8 !== 7 || fromMx > toMx || fromMz > toMz || (fromMx <= toMx && fromMz <= toMz && (fromLx > toLx || fromLz > toLz))) {
-                printWarning('Free map not aligned to a zone ' + free2play[i]);
-            }
-
-            const startX = (fromMx << 6) + fromLx;
-            const startZ = (fromMz << 6) + fromLz;
-            const endX = (toMx << 6) + toLx;
-            const endZ = (toMz << 6) + toLz;
-
-            for (let x = startX; x <= endX; x++) {
-                for (let z = startZ; z <= endZ; z++) {
-                    if (freemap.has(CoordGrid.packCoord(fromLevel, x, z))) {
-                        printWarning('Overlapping free map ' + free2play[i]);
-                    }
-                    freemap.add(CoordGrid.packCoord(fromLevel, x, z));
-                }
-            }
-        } else {
-            const [level, mx, mz, lx, lz] = free2play[i].split('_').map(x => parseInt(x));
-
-            for (let i = 0; i < 8; i++) {
-                for (let j = 0; j < 8; j++) {
-                    freemap.add(CoordGrid.packCoord(level, (mx << 6) + lx + i, (mz << 6) + lz + j));
-                }
-            }
-        }
-    }
+    const freemap = processCsv(free2play, 'free');
 
     const maps: string[] = fs.readdirSync('data/pack/server/maps').filter((x: string): boolean => x[0] === 'm');
     for (let index: number = 0; index < maps.length; index++) {
