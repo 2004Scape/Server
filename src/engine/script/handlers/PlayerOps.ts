@@ -453,7 +453,7 @@ const PlayerOps: CommandHandlers = {
 
         const player = state.activePlayer;
         const current = player.levels[stat];
-        const added = current + (constant + (current * percent) / 100);
+        const added = current + ((constant + (current * percent) / 100) | 0);
         player.levels[stat] = Math.min(added, 255);
         if (stat === 3 && player.levels[3] >= player.baseLevels[3]) {
             player.heroPoints.clear();
@@ -472,7 +472,7 @@ const PlayerOps: CommandHandlers = {
 
         const player = state.activePlayer;
         const current = player.levels[stat];
-        const subbed = current - (constant + (current * percent) / 100);
+        const subbed = current - ((constant + (current * percent) / 100) | 0);
         player.levels[stat] = Math.max(subbed, 0);
         if (subbed !== current) {
             player.changeStat(stat);
@@ -497,7 +497,7 @@ const PlayerOps: CommandHandlers = {
         const player = state.activePlayer;
         const base = player.baseLevels[stat];
         const current = player.levels[stat];
-        const healed = current + (constant + (current * percent) / 100);
+        const healed = current + ((constant + (current * percent) / 100) | 0);
         player.levels[stat] = Math.max(Math.min(healed, base), current);
 
         if (stat === 3 && player.levels[3] >= player.baseLevels[3]) {
