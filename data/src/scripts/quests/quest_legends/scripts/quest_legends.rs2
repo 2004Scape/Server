@@ -1127,6 +1127,17 @@ sound_synth(smokepuff, 0, 0);
 
 [timer,legends_spawn_barrel]
 
+[oploc1,legends_leafy_palm_tree]
+mes("You give the bamboo tree a good shake.");
+anim(human_push, 0);
+p_delay(0);
+mes("A palm leaf falls to the ground.");
+loc_change(legends_leafy_palm_tree, 43); // static 43t
+obj_add(map_findsquare(coord, 1, 1, ^map_findsquare_lineofwalk), palm_leaf, 1, 100);
+
+[oploc1,legends_totem_pole_1]
+~mesbox("This totem pole looks corrupted. You don't like to look at it for too long.");
+
 [queue,legends_quest_complete]
 %legends_progress = ^legends_complete;
 // todo: older ref image?

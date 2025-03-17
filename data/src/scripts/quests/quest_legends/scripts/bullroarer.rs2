@@ -10,7 +10,7 @@ while (npc_findnext = true) {
     switch_npc(npc_type) {
         case jungle_forester_male, jungle_forester_female : 
             mes("Nothing much seems to happen, though.");
-            ~chatnpc("<p,neutral>You might like to use that when you get into the Kharazi jungle, it might attract more natives...");
+            ~chatnpc("<p,happy>You might like to use that when you get into the Kharazi jungle, it might attract more natives...");
             return;
         case oomlie_bird, jungle_savage, jungle_wolf : 
             mes("A nearby <npc_name> takes a dislike to the noise you're making.");
