@@ -244,7 +244,7 @@ const NpcOps: CommandHandlers = {
         const npc = state.activeNpc;
         const base = npc.baseLevels[stat];
         const current = npc.levels[stat];
-        const healed = current + ((constant + (current * percent) / 100) | 0);
+        const healed = current + ((constant + (base * percent) / 100) | 0);
         npc.levels[stat] = Math.min(healed, base);
 
         // reset hero points if hp current == base
@@ -418,8 +418,9 @@ const NpcOps: CommandHandlers = {
         check(percent, NumberNotNull);
 
         const npc = state.activeNpc;
+        const base = npc.baseLevels[stat];
         const current = npc.levels[stat];
-        const added = current + ((constant + (current * percent) / 100) | 0);
+        const added = current + ((constant + (base * percent) / 100) | 0);
         npc.levels[stat] = Math.min(added, 255);
 
         if (stat === 0 && npc.levels[stat] >= npc.baseLevels[stat]) {
@@ -435,8 +436,9 @@ const NpcOps: CommandHandlers = {
         check(percent, NumberNotNull);
 
         const npc = state.activeNpc;
+        const base = npc.baseLevels[stat];
         const current = npc.levels[stat];
-        const subbed = current - ((constant + (current * percent) / 100) | 0);
+        const subbed = current - ((constant + (base * percent) / 100) | 0);
         npc.levels[stat] = Math.max(subbed, 0);
     }),
 

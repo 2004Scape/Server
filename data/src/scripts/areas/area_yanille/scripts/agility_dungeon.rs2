@@ -118,7 +118,7 @@ if (stat(prayer) >= stat_base(prayer)) {
     // no seq
     mes("You recharge your prayer points.");
     sound_synth(prayer_recharge, 0, 0);
-    stat_add(prayer, calc(stat_base(prayer) - stat(prayer)), 0);
+    stat_add(prayer, 0, 100);
 }
 p_delay(3);
 mes("Suddenly a trap door opens beneath you...");
