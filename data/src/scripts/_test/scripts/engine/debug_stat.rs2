@@ -1,0 +1,10 @@
+[debugproc,stat_drain](stat $stat, int $constant, int $percent)
+mes("stat_drain ran");
+stat_drain($stat, $constant, $percent);
+
+[debugproc,stat_boost](stat $stat, int $constant, int $percent)
+mes("stat_boost ran");
+stat_boost($stat, $constant, $percent);
+
+[debugproc,minstat](stat $stat)
+stat_sub($stat, 0, 100);
