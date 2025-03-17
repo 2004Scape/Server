@@ -32,7 +32,7 @@ p_arrivedelay;
 ~agility_climb_up(0, movecoord(loc_coord, -1, -1, -1));
 
 [oplocu,_grandtree_pillar]
-if (oc_tradeable(last_useitem) = false) {
+if (oc_tradeable(last_useitem) = false & last_useitem ! twigs_t & last_useitem ! twigs_u & last_useitem ! twigs_z & last_useitem ! twigs_o) {
     mes("You cannot put that on a pillar.");
     return;
 }
