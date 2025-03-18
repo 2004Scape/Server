@@ -1,3 +1,5 @@
+import * as rsbuf from '@2004scape/rsbuf';
+
 import Component from '#/cache/config/Component.js';
 import ObjType from '#/cache/config/ObjType.js';
 import Interaction from '#/engine/entity/Interaction.js';
@@ -46,7 +48,7 @@ export default class OpNpcUHandler extends MessageHandler<OpNpcU> {
             return false;
         }
 
-        if (!player.buildArea.npcs.has(npc)) {
+        if (!rsbuf.hasNpc(player.pid, npc.nid)) {
             player.write(new UnsetMapFlag());
             player.clearPendingAction();
             return false;
