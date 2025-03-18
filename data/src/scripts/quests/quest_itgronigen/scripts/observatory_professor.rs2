@@ -197,7 +197,7 @@ if(~has_sextant_clue = true) {
     $ops = ~p_choice2("Do you need any more help with the telescope?", 1, "Nothing, thanks.", 2);
 }
 // using OSRS dialogue here, seems like it's probably unchanged
-switch_int (~p_choice2("Do you need any more help with the telescope?", 1, "Nothing, thanks.", 2)) {
+switch_int ($ops) {
     case 1 :
         ~chatplayer("<p,happy>Do you need any more help with the telescope?");
         ~chatnpc("<p,happy>Not right now,");

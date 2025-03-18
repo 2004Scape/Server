@@ -74,7 +74,7 @@ def_int $level = stat($stat);
 def_int $max_level = calc($base_level + ($constant + scale($base_level, 100, $percent)));
 
 // calculate the boost and lower it to max - level if it goes over
-def_int $boost = calc($constant + scale($level, 100, $percent));
+def_int $boost = calc($constant + scale($base_level, 100, $percent));
 if (calc($level + $boost) > $max_level) {
     $boost = calc($max_level - $level);
 }

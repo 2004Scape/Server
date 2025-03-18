@@ -28,4 +28,4 @@ if (stat_base(prayer) < $levelreq){
     return;
 }
 %prayer_protectfrommissiles = ^true;
-~prayer_activate($data, ^prayer_protectfrommissiles_start);
+~prayer_activate($data);

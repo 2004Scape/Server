@@ -28,4 +28,4 @@ if (stat_base(prayer) < $levelreq){
     return;
 }
 %prayer_protectitems = ^true;
-~prayer_activate($data, ^prayer_protectitems_start);
+~prayer_activate($data);

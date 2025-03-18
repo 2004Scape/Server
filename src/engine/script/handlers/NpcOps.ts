@@ -11,6 +11,7 @@ import Loc from '#/engine/entity/Loc.js';
 import Npc from '#/engine/entity/Npc.js';
 import NpcIteratorType from '#/engine/entity/NpcIteratorType.js';
 import NpcMode from '#/engine/entity/NpcMode.js';
+import NpcStat from '#/engine/entity/NpcStat.js';
 import Obj from '#/engine/entity/Obj.js';
 import { NpcIterator } from '#/engine/script/ScriptIterators.js';
 import ScriptOpcode from '#/engine/script/ScriptOpcode.js';
@@ -244,11 +245,11 @@ const NpcOps: CommandHandlers = {
         const npc = state.activeNpc;
         const base = npc.baseLevels[stat];
         const current = npc.levels[stat];
-        const healed = current + (constant + (current * percent) / 100);
+        const healed = current + ((constant + (base * percent) / 100) | 0);
         npc.levels[stat] = Math.min(healed, base);
 
         // reset hero points if hp current == base
-        if (stat === 0 && npc.levels[stat] === npc.baseLevels[stat]) {
+        if (stat === NpcStat.HITPOINTS && npc.levels[NpcStat.HITPOINTS] >= npc.baseLevels[NpcStat.HITPOINTS]) {
             npc.heroPoints.clear();
         }
     }),
@@ -418,11 +419,12 @@ const NpcOps: CommandHandlers = {
         check(percent, NumberNotNull);
 
         const npc = state.activeNpc;
+        const base = npc.baseLevels[stat];
         const current = npc.levels[stat];
-        const added = current + (constant + (current * percent) / 100);
+        const added = current + ((constant + (base * percent) / 100) | 0);
         npc.levels[stat] = Math.min(added, 255);
 
-        if (stat === 0 && npc.levels[stat] >= npc.baseLevels[stat]) {
+        if (stat === NpcStat.HITPOINTS && npc.levels[NpcStat.HITPOINTS] >= npc.baseLevels[NpcStat.HITPOINTS]) {
             npc.heroPoints.clear();
         }
     }),
@@ -435,8 +437,9 @@ const NpcOps: CommandHandlers = {
         check(percent, NumberNotNull);
 
         const npc = state.activeNpc;
+        const base = npc.baseLevels[stat];
         const current = npc.levels[stat];
-        const subbed = current - (constant + (current * percent) / 100);
+        const subbed = current - ((constant + (base * percent) / 100) | 0);
         npc.levels[stat] = Math.max(subbed, 0);
     }),
 

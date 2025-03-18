@@ -63,7 +63,6 @@ import UpdateUid192 from '#/network/server/model/UpdatePid.js';
 import UpdateRebootTimer from '#/network/server/model/UpdateRebootTimer.js';
 import UpdateRunEnergy from '#/network/server/model/UpdateRunEnergy.js';
 import UpdateStat from '#/network/server/model/UpdateStat.js';
-import UpdateZoneFullFollows from '#/network/server/model/UpdateZoneFullFollows.js';
 import VarpLarge from '#/network/server/model/VarpLarge.js';
 import VarpSmall from '#/network/server/model/VarpSmall.js';
 import OutgoingMessage from '#/network/server/OutgoingMessage.js';
@@ -1201,7 +1200,7 @@ export default class Player extends PathingEntity {
     }
 
     processInputTracking(): void {
-        this.input.process();
+        this.input.onCycle();
     }
 
     // ----
@@ -1993,14 +1992,6 @@ export default class Player extends PathingEntity {
 
         // if the build area should be regenerated, do so now
         if (this.x < reloadLeftX || this.z < reloadBottomZ || this.x > reloadRightX - 1 || this.z > reloadTopZ - 1 || reconnect) {
-            // temp fix: invisible door issue (need a deeper dive)
-            for (const zone of this.buildArea.activeZones) {
-                const { x, z } = ZoneMap.unpackIndex(zone);
-                if (x < reloadLeftX || z < reloadBottomZ || x > reloadRightX - 1 || z > reloadTopZ - 1) {
-                    this.write(new UpdateZoneFullFollows(CoordGrid.zone(x), CoordGrid.zone(z), this.originX, this.originZ));
-                }
-            }
-
             this.write(new RebuildNormal(CoordGrid.zone(this.x), CoordGrid.zone(this.z)));
 
             this.originX = this.x;

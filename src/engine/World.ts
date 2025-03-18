@@ -94,7 +94,7 @@ import { printDebug, printError, printInfo } from '#/util/Logger.js';
 import WalkTriggerSetting from '#/util/WalkTriggerSetting.js';
 import { createWorker } from '#/util/WorkerFactory.js';
 
-import InputTrackingEvent from './entity/tracking/InputEvent.js';
+import InputTrackingBlob from './entity/tracking/InputEvent.js';
 
 const priv = forge.pki.privateKeyFromPem(Environment.STANDALONE_BUNDLE ? await (await fetch('data/config/private.pem')).text() : fs.readFileSync('data/config/private.pem', 'ascii'));
 
@@ -319,13 +319,15 @@ class World {
             }
         }
 
-        this.loginThread.postMessage({
-            type: 'world_startup'
-        });
+        setTimeout(() => {
+            this.loginThread.postMessage({
+                type: 'world_startup'
+            });
 
-        this.friendThread.postMessage({
-            type: 'connect'
-        });
+            this.friendThread.postMessage({
+                type: 'connect'
+            });
+        }, 2000);
 
         if (!Environment.STANDALONE_BUNDLE) {
             if (!Environment.NODE_PRODUCTION) {
@@ -1331,6 +1333,10 @@ class World {
     }
 
     changeLoc(loc: Loc, typeID: number, shape: number, angle: number, duration: number) {
+        // If a dynamic loc is inactive, it should never return to the game world
+        if (loc.lifecycle === EntityLifeCycle.DESPAWN && !loc.isValid()) {
+            return;
+        }
         // Remove previous collision from game world
         const fromType: LocType = LocType.get(loc.type);
         if (fromType.blockwalk) {
@@ -2182,13 +2188,13 @@ class World {
         });
     }
 
-    submitInputTracking(username: string, session_uuid: string, events: InputTrackingEvent[]) {
+    submitInputTracking(username: string, session_uuid: string, blobs: InputTrackingBlob[]) {
         this.loggerThread.postMessage({
             type: 'input_track',
             username,
             session_uuid,
             timestamp: Date.now(),
-            events
+            blobs
         });
     }
 
