@@ -182,6 +182,8 @@ enum ScriptOpcode {
     STAT_BASE, // official
     STAT_HEAL, // official
     STAT_SUB,
+    STAT_BOOST, // official
+    STAT_DRAIN,
     STRONGQUEUE,
     UID, // official
     WEAKQUEUE, // official

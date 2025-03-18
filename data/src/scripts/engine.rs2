@@ -216,18 +216,26 @@
 [command,stat_base](stat $stat)(int)
 // info: Get the base level of $stat for the secondary player
 [command,.stat_base](stat $stat)(int)
-// info: Boost $stat
+// info: Add to $stat
 [command,stat_add](stat $stat, int $constant, int $percent)
-// info: Boost $stat for the secondary player
+// info: Add to $stat for the secondary player
 [command,.stat_add](stat $stat, int $constant, int $percent)
-// info: Drain $stat
+// info: Drain base level of $stat
 [command,stat_sub](stat $stat, int $constant, int $percent)
-// info: Drain $stat for the secondary player
+// info: Drain base level of $stat for the secondary player
 [command,.stat_sub](stat $stat, int $constant, int $percent)
 // info: Heal $stat back to base
 [command,stat_heal](stat $stat, int $constant, int $percent)
 // info: Heal $stat back to base for the secondary player
 [command,.stat_heal](stat $stat, int $constant, int $percent)
+// info: Clamped boost to $stat
+[command,stat_boost](stat $stat, int $constant, int $percent)
+// info: Clamped boost to $stat for the secondary player
+[command,.stat_boost](stat $stat, int $constant, int $percent)
+// info: Drain current level of $stat
+[command,stat_drain](stat $stat, int $constant, int $percent)
+// info: Drain current level of $stat for the secondary player
+[command,.stat_drain](stat $stat, int $constant, int $percent)
 // info: Get the player's UID to use in finduid/p_finduid later
 [command,uid]()(player_uid)
 // info: Get the secondary player's UID to use in finduid/p_finduid later

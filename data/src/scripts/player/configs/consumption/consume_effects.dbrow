@@ -158,11 +158,11 @@ data=consumable,1dose1restore
 data=consumable,2dose1restore
 data=consumable,3dose1restore
 data=consumable,4dose1restore
-data=stat_restore,attack,10,30
-data=stat_restore,defence,10,30
-data=stat_restore,strength,10,30
-data=stat_restore,ranged,10,30
-data=stat_restore,magic,10,30
+data=stat_heal,attack,10,30
+data=stat_heal,defence,10,30
+data=stat_heal,strength,10,30
+data=stat_heal,ranged,10,30
+data=stat_heal,magic,10,30
 
 [prayer_potion_effect]
 table=consume_table
@@ -170,7 +170,7 @@ data=consumable,4doseprayerrestore
 data=consumable,3doseprayerrestore
 data=consumable,2doseprayerrestore
 data=consumable,1doseprayerrestore
-data=stat_restore,prayer,7,25
+data=stat_heal,prayer,7,25
 
 [zamorak_brew_effect]
 table=consume_table
@@ -182,7 +182,7 @@ data=stat_change,attack,2,20
 data=stat_change,strength,2,12
 data=stat_change,defence,-2,-10
 data=stat_change,hitpoints,0,-12
-data=stat_restore,prayer,0,10
+data=stat_heal,prayer,0,10
 
 [bottle_alcohol_effect]
 table=consume_table
