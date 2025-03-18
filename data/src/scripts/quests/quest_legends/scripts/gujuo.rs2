@@ -78,8 +78,8 @@ switch_int(%legends_progress) {
         }
         else if (testbit(%legends_map_runes, ^legends_asked_ungadulu_where) = true) {
             @multi5("Ungadulu looks a little strange.", gujuo_ungadulu_strange,
-                    "I'm not sure what to do.", gujuo_idk,
                     "Sorry for bothering you.", gujuo_sorry_bothering,
+                    "I'm not sure what to do.", gujuo_idk,
                     "I need some pure water to douse some magic flames.", gujuo_pure_water,
                     "Ok thanks for your help.", gujuo_thanks);
         }

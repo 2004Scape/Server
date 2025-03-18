@@ -14,20 +14,20 @@
 
 [opheld1,a_scribbled_note]
 ~mesbox("You try your best to decode the writing.|This is what you make out...");
-~objbox(a_scribbled_note, "I fear that the spirit of an ancient one resides within me and uses me... I am too weak to cast the curse myself and fight the beast within.", 180, 0, 0);
-~objbox(a_scribbled_note, "Day 3 ...my last hope is that someone will read this and aid me... I am undone and I fear....", 180, 0, 0);
+~objbox(a_scribbled_note, "I fear that the spirit of an ancient one resides within me and uses me... I am too weak to cast the curse myself and fight the beast within.", 250, 0, 0);
+~objbox(a_scribbled_note, "Day 3 ...my last hope is that someone will read this and aid me... I am undone and I fear....", 250, 0, 0);
 ~mesbox("The writing trails off at this point.");
 
 [opheld1,scrawled_note]
 ~mesbox("You try your best to decode the writing.|This is what you make out...");
-~objbox(scrawled_note, "Daily notes of Ungadulu...|Day 1... I have prepared the incantations and will invoke the spirits of my ancestors and pay them homage.", 180, 0, 0);
-~objbox(scrawled_note, "Though I feel a strange presence in these caves, it is with the heart of the lion that I fight my fears and mark the magical octagram.", 180, 0, 0);
-~objbox(scrawled_note, "Day 2... What have I done? My spirit is overthrown by feelings of fear and evil, I am not myself these days and feel helpless and weak. From my teachings...", 180, 0, 0);
+~objbox(scrawled_note, "Daily notes of Ungadulu...|Day 1... I have prepared the incantations and will invoke the spirits of my ancestors and pay them homage.", 250, 0, 0);
+~objbox(scrawled_note, "Though I feel a strange presence in these caves, it is with the heart of the lion that I fight my fears and mark the magical octagram.", 250, 0, 0);
+~objbox(scrawled_note, "Day 2... What have I done? My spirit is overthrown by feelings of fear and evil, I am not myself these days and feel helpless and weak. From my teachings...", 250, 0, 0);
 ~mesbox("The writing trails off at this point.");
 
 [opheld1,scrumpled_note]
 ~mesbox("You try your best to decode the writing.|This is what you make out...");
-~objbox(scrumpled_note, "Day 4 ... These days come so fleetingly, I have no idea how long I have been here now...|Day 5... A wizened charm will release me, but never magic that would harm...", 180, 0, 0);
+~objbox(scrumpled_note, "Day 4 ... These days come so fleetingly, I have no idea how long I have been here now...|Day 5... A wizened charm will release me, but never magic that would harm...", 250, 0, 0);
 
 [opheld1,shamans_tome]
 ~mesbox("You read the ancient shaman's tome. It is written in a strange sort of language but you manage a rough translation.");
@@ -37,10 +37,10 @@
 ~mesbox("A crudely constructed makeshift table made from various pieces of wood. You see a piece of screwed up paper on the table top.");
 
 [oploc2,legends_table]
+mes("You start searching the table...");
 if (inv_total(inv, a_scribbled_note) < 0) {
     // no delay
-    mes("You start searching the table...");
-    ~mesbox("You find a scrap of paper with what looks like nonsense written on it.");
+    ~objbox(a_scribbled_note, "You find a scrap of paper with what looks like nonsense written on it.", 250, 0, 0);
     inv_add(inv, a_scribbled_note, 1);
 }
 else {
@@ -53,8 +53,8 @@ else {
 [oploc2,legends_crate]
 mes("You search the crate.");
 if (inv_total(inv, scrawled_note) < 0) {
-    p_delay(1);
-    ~objbox(scrawled_note, "After some time you find a scrumpled up piece of paper. It looks like rubbish.", 180, 0, 0);
+    p_delay(0);
+    ~objbox(scrawled_note, "After some time you find a scrumpled up piece of paper. It looks like rubbish.", 250, 0, 0);
     inv_add(inv, scrawled_note, 1);
 }
 else {
@@ -143,7 +143,7 @@ if (inv_total(inv, machete) > 0 | inv_total(worn, machete) > 0) {
 else {
     // No inv space check
     inv_add(inv, machete, 1);
-    ~objbox(machete, "You find a machete in the cupboard.", 180, 0, 0);
+    ~objbox(machete, "You find a machete in the cupboard.", 250, 0, 0);
     mes("You find a machete.");
 }
 
@@ -272,8 +272,8 @@ if (%legends_progress >= ^legends_found_entrance) {
     if_close;
     if ($choice = 1) {
         if (stat(agility) < 50) {
-            // rsc
-            ~mesbox("You need an agility of 50 to even attempt this.");
+            // OSRS
+            ~mesbox("You need an Agility level of at least 50 to even attempt this feat.");
             return;
         }
         mes("You try to crawl through...");
@@ -283,15 +283,15 @@ if (%legends_progress >= ^legends_found_entrance) {
         // guess
         if (stat_random(stat(agility), 125, 250) = false) {
             mes("You get cramped in the tiny space and start to suffocate.");
-            p_delay(2);
+            p_delay(1);
             mes("You wriggle and wriggle but you cannot get out...");
-            p_delay(2);
+            p_delay(1);
             mes("Eventually you manage to break free.");
-            p_delay(2);
+            p_delay(1);
             mes("But you scrape yourself very badly as you force your way out.");
-            p_delay(2);
+            p_delay(1);
             mes("And you're totally exhausted from the ordeal.");
-            p_delay(2);
+            p_delay(1);
             ~damage_self(5);
         }
         else {
@@ -359,8 +359,7 @@ if (inv_total(inv, lockpick) = 0) {
     return;
 }
 if (stat(thieving) < 50) {
-    // guess
-    ~mesbox("You need a Thieving level of 50 to pick this lock.");
+    ~mesbox("You need a Thieving skill of at least 50 to attempt this.");
     return;
 }
 ~mesbox("You attempt to pick the lock...");
@@ -401,6 +400,10 @@ if ($last_item = lockpick) {
 [label,open_inner_ancient_gate](int $side)
 def_boolean $entering = ~check_axis(coord, loc_coord, loc_angle);
 ~mesbox("Two huge metal doors bar the way further... There is an intense|and unpleasant feeling from this place and as you peer through the|cracks in the door you can see why. You see dark, shadowy shapes|flapping around in the still dark air.");
+if(stat(strength) < 50) {
+    ~mesbox("You'll need at least 50 Strength to attempt to move these huge metal doors.");
+    return;
+}
 ~mesbox("You push the doors... They're quite stiff... They won't budge with a|normal push. Do you want to try to force them open with brute|strength?");
 def_int $choice = ~p_choice2_header("Yes, I'm very strong, I'll force them open.", 1, "No, I'm having second thoughts.", 2, "Use brute strength on the gates?");
 if ($choice = 1) {
@@ -689,11 +692,15 @@ if ($data = null) {
 }
 def_namedobj $gem = db_getfield($data, legends_gem_data:gem_named, 0);
 def_int $gem_bit = db_getfield($data, legends_gem_data:gem_bit, 0);
-if (last_useitem = $gem & testbit(%legends_map_runes, $gem_bit) = false) {
+if (last_useitem = $gem) {
+    mes("You carefully move the gem closer to the rock.");
+    if(testbit(%legends_map_runes, $gem_bit) = true) {
+        mes("But nothing happens.");
+        return;
+    }
     anim(human_pickuptable, 0);
     // confirm behaviour - slot or item?
     inv_dropslot(inv, loc_coord, last_useslot, 5);
-    mes("You carefully move the gem closer to the rock.");
     mes("The <lowercase(oc_name($gem))> glows and starts spinning as it hovers above the rock.");
     mes("The gem soon begins to fade.");
     //if (getbit_range(%legends_map_runes, ^legends_opal_used, ^legends_emerald_used) = ^legends_all_gems_used) {
@@ -905,7 +912,7 @@ if (last_useitem = hollow_reed) {
         mes("But you have nothing to put the water in.");
         return;
     }
-    ~objbox(hollow_reed, "The hollow reed is soaked through with water and is now all soggy.", 180, 0, 0);
+    ~objbox(hollow_reed, "The hollow reed is soaked through with water and is now all soggy.", 250, 0, 0);
 }
 else if (last_useitem = bucket_empty | last_useitem = vial_empty | last_useitem = gold_bowl | last_useitem = blessed_gold_bowl) {
     ~mesbox("This item doesn't fit in the gap between the rocks. You'll need to find another way to reach the water.");
@@ -946,7 +953,7 @@ else {
 }
 
 [opheld1,sketch]
-~objbox(sketch, "This is a crudely drawn picture of some kind of vessel, it looks vaguely bowl shaped - this is what Gujuo was referring to when he said that you needed to make a vessel made from the metal of the sun.", 180, 0, 0);
+~objbox(sketch, "This is a crudely drawn picture of some kind of vessel, it looks vaguely bowl shaped - this is what Gujuo was referring to when he said that you needed to make a vessel made from the metal of the sun.", 250, 0, 0);
 
 // none of these empty ops operate on the used slot, will empty the first instance of the item they find
 [opheld1,golden_bowl_pure_water]
@@ -1014,7 +1021,7 @@ if (last_useitem = snake_weed) {
     inv_del(inv, ardrigal_mixture, 1);
     inv_del(inv, snake_weed, 1);
     inv_add(inv, bravery_potion, 1);
-    ~objbox(bravery_potion, "It makes a heady brew. This must be what Gujuo was|talking about. You certainly would need to be brave to|drink this!", 180, 0, divide(^objbox_height, 2));
+    ~objbox(bravery_potion, "It makes a heady brew. This must be what Gujuo was|talking about. You certainly would need to be brave to|drink this!", 250, 0, divide(^objbox_height, 2));
 }
 else {
     ~displaymessage(^dm_default);
@@ -1028,7 +1035,7 @@ if (last_useitem = ardrigal) {
     inv_del(inv, snakeweed_mixture, 1);
     inv_del(inv, ardrigal, 1);
     inv_add(inv, bravery_potion, 1);
-    ~objbox(bravery_potion, "It makes a heady brew. This must be what Gujuo was|talking about. You certainly would need to be brave to|drink this!", 180, 0, divide(^objbox_height, 2));
+    ~objbox(bravery_potion, "It makes a heady brew. This must be what Gujuo was|talking about. You certainly would need to be brave to|drink this!", 250, 0, divide(^objbox_height, 2));
 }
 else {
     ~displaymessage(^dm_default);
@@ -1141,7 +1148,7 @@ obj_add(map_findsquare(coord, 1, 1, ^map_findsquare_lineofwalk), palm_leaf, 1, 1
 %legends_progress = ^legends_complete;
 // todo: older ref image?
 // https://storage.googleapis.com/tannerdino/images/legendscomplt.png
-~send_quest_complete(questlist:legends, gilded_totem, 180, ^legends_questpoints, "You have completed the\\nLegends Guild Quest!");
+~send_quest_complete(questlist:legends, gilded_totem, 250, ^legends_questpoints, "You have completed the\\nLegends Guild Quest!");
 
 // Debug
 [debugproc,lf]
