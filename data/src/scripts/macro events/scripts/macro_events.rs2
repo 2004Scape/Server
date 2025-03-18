@@ -106,7 +106,6 @@ return(enum_getoutputcount(general_macro_events_free));
 
 // teleports the player to a random location, using the coords in configs/macro_events_teleports.enum
 [queue,macro_event_fail_teleport]
-if (staffmodlevel > 1 & map_production = true) { return; }
 session_log(^log_adventure, "Failed random event and got teleported");
 def_coord $teleport_coord;
 if (map_members = true) {
@@ -126,7 +125,6 @@ sound_synth(smokepuff2, 0, 0);
 
 
 [queue,macro_event_fail_scatter_inv]
-if (staffmodlevel > 1 & map_production = true) { return; }
 session_log(^log_adventure, "Failed random event and had their items scattered");
 %macro_event = ^no_macro_event;
 p_delay(1);
@@ -142,7 +140,6 @@ while ($i < inv_size(inv)) {
 
 // not sure if this is a thing but people seem to remember it being a thing
 [queue,macro_event_fail_note_inv]
-if (staffmodlevel > 1 & map_production = true) { return; }
 session_log(^log_adventure, "Failed random event and had their items noted");
 def_int $i = 0;
 while ($i < inv_size(inv)) {
