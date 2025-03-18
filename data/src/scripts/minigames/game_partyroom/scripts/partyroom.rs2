@@ -128,13 +128,14 @@ if($balloons_dropped < 200) {
 }
 
 [oploc1,_party_balloon]
+def_loc $broken_balloon = loc_param(next_loc_stage);
 p_arrivedelay;
 p_walk(loc_coord);
 p_delay(0);
 anim(seq_794, 0);
 p_delay(0);
 // Temp note: dur updated, does it need ? @indio
-loc_change(loc_param(next_loc_stage), 6);
+loc_change($broken_balloon, 6);
 // todo: chance was fixed before Jul 2004, was changed to scale off of chest freespace afterwards (this chance is just a guess unfortunately)
 if (~inzone_coord_pair_table(party_room_zones, loc_coord) = true & random(4) = 0) {
     def_int $rand_slot = random(calc(inv_size(partyroominv) - inv_freespace(partyroominv)));
