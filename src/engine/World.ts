@@ -1015,7 +1015,7 @@ class World {
         // TODO: benchmark this?
         for (const player of this.players) {
             player.reorient();
-            player.rebuildNormal(); // set origin before compute player is why this is above.
+            player.buildArea.rebuildNormal(); // set origin before compute player is why this is above.
 
             const appearance = player.masks & InfoProt.PLAYER_APPEARANCE.id
                 ? player.generateAppearance()

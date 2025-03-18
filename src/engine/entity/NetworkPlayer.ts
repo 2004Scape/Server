@@ -277,7 +277,7 @@ export class NetworkPlayer extends Player {
         // zone changed
         const zone = CoordGrid.packCoord(this.level, (this.x >> 3) << 3, (this.z >> 3) << 3);
         if (this.lastZone !== zone) {
-            this.rebuildZones();
+            this.buildArea.rebuildZones();
 
             // zone triggers
             const lastWasMulti = World.gameMap.isMulti(this.lastZone);

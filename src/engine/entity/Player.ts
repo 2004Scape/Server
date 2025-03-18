@@ -42,7 +42,6 @@ import ScriptRunner from '#/engine/script/ScriptRunner.js';
 import ScriptState from '#/engine/script/ScriptState.js';
 import ServerTriggerType from '#/engine/script/ServerTriggerType.js';
 import World from '#/engine/World.js';
-import ZoneMap from '#/engine/zone/ZoneMap.js';
 import Packet from '#/io/Packet.js';
 import InfoProt from '#/network/rs225/server/prot/InfoProt.js';
 import ChatFilterSettings from '#/network/server/model/ChatFilterSettings.js';
@@ -53,7 +52,6 @@ import LastLoginInfo from '#/network/server/model/LastLoginInfo.js';
 import MessageGame from '#/network/server/model/MessageGame.js';
 import MidiJingle from '#/network/server/model/MidiJingle.js';
 import MidiSong from '#/network/server/model/MidiSong.js';
-import RebuildNormal from '#/network/server/model/RebuildNormal.js';
 import ResetAnims from '#/network/server/model/ResetAnims.js';
 import ResetClientVarCache from '#/network/server/model/ResetClientVarCache.js';
 import TutOpen from '#/network/server/model/TutOpen.js';
@@ -318,7 +316,7 @@ export default class Player extends PathingEntity {
     lastLevels: Uint8Array = new Uint8Array(21); // we track this so we know to flush stats only once a tick on changes
     originX: number = -1;
     originZ: number = -1;
-    buildArea: BuildArea = new BuildArea();
+    buildArea: BuildArea = new BuildArea(this);
     basReadyAnim: number = -1;
     basTurnOnSpot: number = -1;
     basWalkForward: number = -1;
@@ -474,7 +472,7 @@ export default class Player extends PathingEntity {
         // - runenergy
         // - reset anims
         // - social
-        this.rebuildNormal();
+        this.buildArea.rebuildNormal();
         this.write(new ChatFilterSettings(this.publicChat, this.privateChat, this.tradeDuel));
         this.write(new IfClose());
         this.write(new UpdateUid192(this.pid));
@@ -519,7 +517,7 @@ export default class Player extends PathingEntity {
         // reload entity info (overkill? does the client have some logic around this?)
         this.buildArea.clear(true);
         // rebuild scene later this tick (note: rebuild won't run on the client if you're in the same zone!)
-        this.rebuildNormal(true);
+        this.buildArea.rebuildNormal(true);
         // in case of pending update
         if (World.isPendingShutdown) {
             const ticksBeforeShutdown = World.shutdownTicksRemaining;
@@ -1957,51 +1955,6 @@ export default class Player extends PathingEntity {
             return true;
         } else {
             return false;
-        }
-    }
-
-    rebuildZones(): void {
-        // update any newly tracked zones
-        this.buildArea.activeZones.clear();
-
-        const centerX = CoordGrid.zone(this.x);
-        const centerZ = CoordGrid.zone(this.z);
-
-        const originX: number = CoordGrid.zone(this.originX);
-        const originZ: number = CoordGrid.zone(this.originZ);
-
-        const leftX = originX - 6;
-        const rightX = originX + 6;
-        const topZ = originZ + 6;
-        const bottomZ = originZ - 6;
-
-        for (let x = centerX - 3; x <= centerX + 3; x++) {
-            for (let z = centerZ - 3; z <= centerZ + 3; z++) {
-                // check if the zone is within the build area
-                if (x < leftX || x > rightX || z > topZ || z < bottomZ) {
-                    continue;
-                }
-                this.buildArea.activeZones.add(ZoneMap.zoneIndex(x << 3, z << 3, this.level));
-            }
-        }
-    }
-
-    rebuildNormal(reconnect: boolean = false): void {
-        const originX: number = CoordGrid.zone(this.originX);
-        const originZ: number = CoordGrid.zone(this.originZ);
-
-        const reloadLeftX = (originX - 4) << 3;
-        const reloadRightX = (originX + 5) << 3;
-        const reloadTopZ = (originZ + 5) << 3;
-        const reloadBottomZ = (originZ - 4) << 3;
-
-        // if the build area should be regenerated, do so now
-        if (this.x < reloadLeftX || this.z < reloadBottomZ || this.x > reloadRightX - 1 || this.z > reloadTopZ - 1 || reconnect) {
-            this.write(new RebuildNormal(CoordGrid.zone(this.x), CoordGrid.zone(this.z)));
-
-            this.originX = this.x;
-            this.originZ = this.z;
-            this.buildArea.loadedZones.clear();
         }
     }
 
