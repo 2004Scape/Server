@@ -214,7 +214,8 @@ if(last_useitem = spade) {
     mes("You dig into the pile of mud...");
     mes("...and find it's a filled in tunnel!");
     p_delay(1);
-    loc_change(loc_3218, 2); // todo: check this timing
+    // Temp note: dur updated
+    loc_change(loc_3218, 3); // todo: check this timing
     mes("You push your way through the tunnel.");
     p_delay(0);
     p_teleport(0_37_150_24_46);
@@ -460,6 +461,7 @@ if(last_useitem = dwarf_brew) {
     }
     sound_synth(fire_lit, 0, 0);
     mes("It bursts into flames.");
+    // Temp note: dur does not need updated
     loc_add(0_36_153_52_8, loc_3357, 3, wall_l, 10);
     loc_add(0_36_153_53_8, loc_3357, 3, wall_straight, 10);
     loc_add(0_36_153_54_8, loc_3357, 3, wall_straight, 10);
@@ -526,6 +528,7 @@ if(inv_total(inv, amulet_of_doomion) > 0 & inv_total(inv, amulet_of_othanian) > 
     p_delay(1);
     mes("...You place them on the chest and it opens.");
     sound_synth(chest_open, 0, 0);
+    // Temp note: dur does not need updated
     loc_change(loc_378, 10); // osrs uses 378, you can kind of break this chest for a few minutes but idk if that was original behaviour
     p_delay(1);
     if(inv_total(inv, ibans_shadow) > 0) { // no doll check
@@ -580,7 +583,8 @@ if(coordx(loc_coord) < coordx(coord)) {
         return;
     }
     mes("You pull open the large doors...");
-    loc_change(loc_param(next_loc_stage), 4);
+    // Temp note: dur updated
+    loc_change(loc_param(next_loc_stage), 5);
     sound_synth(door_open, 0, 0);
     ~forcemove(movecoord(loc_coord, -1, 0, 0));
     if(getbit_range(%upass_map_mechanisms, ^upass_blood_on_doll, ^upass_shadow_on_doll) = calc(pow(2,4) - 1) & inv_total(inv, doll_of_iban) > 0 
@@ -602,7 +606,8 @@ if(coordx(loc_coord) < coordx(coord)) {
     }
 } else {
     mes("You pull open the large doors.");
-    loc_change(loc_param(next_loc_stage), 4);
+    // Temp note: dur updated
+    loc_change(loc_param(next_loc_stage), 5);
     p_teleport(loc_coord);
     p_delay(0);
     mes("...And walk out of the temple.");

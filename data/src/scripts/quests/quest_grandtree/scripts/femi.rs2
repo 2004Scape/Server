@@ -56,7 +56,8 @@ p_delay(0);
 p_telejump(0_38_53_27_17);
 ~update_bas;
 if(loc_find(movecoord(coord, -1, 0, 1), loc_308) = false) {
-    loc_add(movecoord(coord, -1, 0, 1), loc_308, 0, centrepiece_straight, 199);
+    // Temp note: dur updated
+    loc_add(movecoord(coord, -1, 0, 1), loc_308, 0, centrepiece_straight, 200);
 }
 if(npc_find(coord, femi, 5, 0) = false) {
     npc_add(movecoord(coord, -1, 0, 0), femi, 200);
@@ -67,6 +68,7 @@ if(npc_find(coord, femi, 5, 0) = false) {
 
 [label,femi_boxes]
 if(loc_find(0_38_52_28_52, loc_83) = true) {
+    // Temp note: dur does not need updated
     loc_change(loc_361, 200);
 }
 ~chatnpc("<p,happy>Hello there.");
@@ -88,6 +90,7 @@ switch_int(~p_choice2("Sorry, I'm a bit busy.", 1, "OK then.", 2)) {
         anim(human_pickupfloor, 0);
         p_delay(0);
         if(loc_find(movecoord(coord, -1, 0, 0), loc_361) = true) {
+            // Temp note: dur does not need updated
             loc_change(loc_83, 200); // rs3 removes loc here instead, this can get you stuck, not sure which is correct cause the cart doesn't change on RS3 as well
         }
         facesquare(0_38_52_26_50);
@@ -95,6 +98,7 @@ switch_int(~p_choice2("Sorry, I'm a bit busy.", 1, "OK then.", 2)) {
         anim(human_pickupfloor, 0);
         p_delay(0);
         if(loc_find(0_38_52_26_50, loc_307) = true) {
+            // Temp note: dur does not need updated
             loc_change(loc_308, 200);
         }
         p_delay(0);

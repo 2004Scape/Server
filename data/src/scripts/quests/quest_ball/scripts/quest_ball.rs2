@@ -53,11 +53,13 @@ if($next_loc = loc_1563) {
     $next_angle = calc(loc_angle + 1);
 }
 p_teleport($dest);
-loc_change(loc_83, 2);
-loc_add(movecoord($loc_coord, 1, 0, 0), $next_loc, $next_angle, $shape, 2);
+// Temp note: dur updated
+loc_change(loc_83, 3);
+loc_add(movecoord($loc_coord, 1, 0, 0), $next_loc, $next_angle, $shape, 3);
 
 // this cupboard just opens/closes with loc_add/del
 [oploc1,loc_2868]
+// Temp note: dur does not need updated
 loc_change(loc_2869, 500);
 
 [oploc1,loc_2869]

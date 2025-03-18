@@ -15,12 +15,15 @@ while(loc_findnext = true) {
      if(loc_category = manor_entrance) {
             def_coord $central_coord = loc_coord;
             def_int $orig_angle = loc_angle;
-            loc_del(3);
+            // Temp note: dur updated
+            loc_del(4);
             if(loc_type = loc_134) {
-                loc_add(movecoord($central_coord, 0, 0, 1), loc_1522, 0, loc_shape, 3);
-                loc_add(movecoord($central_coord, 1, 0, 1), loc_1523, 2, loc_shape, 3); 
+                // Temp note: dur updated
+                loc_add(movecoord($central_coord, 0, 0, 1), loc_1522, 0, loc_shape, 4);
+                loc_add(movecoord($central_coord, 1, 0, 1), loc_1523, 2, loc_shape, 4); 
             }
-            loc_add($central_coord, loc_83, $orig_angle, loc_shape, 3);
+            // Temp note: dur updated
+            loc_add($central_coord, loc_83, $orig_angle, loc_shape, 4);
      }
 }
 sound_synth(door_open, 0, 0);
@@ -120,7 +123,8 @@ facesquare(movecoord(coord, 1, 0, 0));
 mes("The lever opens the secret door!");
 anim(human_leverdown, 0);
 sound_synth(lever, 0, 0);
-loc_change(loc_161, 3);
+// Temp note: dur updated
+loc_change(loc_161, 4);
 p_teleport(movecoord(coord, 0, 0, 1));
 p_delay(1);
 @manor_bookcase_door(movecoord(coord, 2, 0, 0));
@@ -135,11 +139,13 @@ p_delay(0);
 loc_findallzone(movecoord(coord, 0, 0, -1));
 while (loc_findnext = true) {
     if(loc_type = loc_155) {
-        loc_change(loc_83, 2);
-        loc_add(movecoord(loc_coord, 0, 0, -1), loc_157, loc_angle, loc_shape, 2);
+        // Temp note: dur updated
+        loc_change(loc_83, 3);
+        loc_add(movecoord(loc_coord, 0, 0, -1), loc_157, loc_angle, loc_shape, 3);
     } else if(loc_type = loc_156) {
-        loc_change(loc_83, 2);
-        loc_add(movecoord(loc_coord, 0, 0, 1), loc_157, loc_angle, loc_shape, 2);
+        // Temp note: dur updated
+        loc_change(loc_83, 3);
+        loc_add(movecoord(loc_coord, 0, 0, 1), loc_157, loc_angle, loc_shape, 3);
         sound_synth(coffin_open, 0, 0);
     }
 }

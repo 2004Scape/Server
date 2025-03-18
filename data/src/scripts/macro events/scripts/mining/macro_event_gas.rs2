@@ -13,6 +13,7 @@
 // - https://youtu.be/hoIaiSdQZGk?t=25
 // - https://youtu.be/Giyx_JsAWxg?t=114
 def_int $duration = 60;
+// Temp note: dur does not need updated
 loc_change(loc_param(macro_gas), $duration);
 sound_synth(gas_hiss, 0, 0);
 p_oploc(1);

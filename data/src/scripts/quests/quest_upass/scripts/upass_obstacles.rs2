@@ -58,7 +58,8 @@ mes("You cannot open the grill from this side.");
 [oploc1,loc_3235]
 p_arrivedelay;
 mes("You open the grating.");
-loc_change(loc_3236, 9);
+// Temp note: dur updated!!! nice even number :)
+loc_change(loc_3236, 10);
 ~agility_exactmove(human_pipesqueeze, 30, 3, coord, movecoord(coord, 0, 0, 3), 30, 126, ^exact_north, true);
 sound_synth(squeeze_in, 0, 0);
 mes("You crawl through the pipe.");
@@ -97,7 +98,8 @@ mes("You tie the rope to the rock...");
 anim(seq_775, 0);
 p_delay(0);
 inv_del(inv, rope, 1);
-loc_change(loc_2273, 4);
+// Temp note: dur updated
+loc_change(loc_2273, 5);
 p_delay(0);
 // https://youtu.be/zGVrFETj96E?si=-LiJOUm_2GMCx7VU&t=144, might need more data
 if(stat_random(stat(agility), 100, 410) = false) {
@@ -187,18 +189,23 @@ if(last_useitem = plank) {
     sound_synth(put_down, 0, 0);
     p_delay(1);
     mes("...and quickly walk over.");
-    loc_del(4);
+    // Temp note: dur updated
+    loc_del(5);
     if(coordz(coord) > coordz(loc_coord)) {
-        loc_add(loc_coord, loc_3231, 0, grounddecor, 4);
+        // Temp note: dur updated
+        loc_add(loc_coord, loc_3231, 0, grounddecor, 5);
         ~forcemove(movecoord(loc_coord, 0, 0, -1));
     } else if(coordz(coord) < coordz(loc_coord)) {
-        loc_add(loc_coord, loc_3231, 0, grounddecor, 4);
+        // Temp note: dur updated
+        loc_add(loc_coord, loc_3231, 0, grounddecor, 5);
         ~forcemove(movecoord(loc_coord, 0, 0, 1));
     } else if(coordx(coord) > coordx(loc_coord)) {
-        loc_add(loc_coord, loc_3231, 1, grounddecor, 4);
+        // Temp note: dur updated
+        loc_add(loc_coord, loc_3231, 1, grounddecor, 5);
         ~forcemove(movecoord(loc_coord, -1, 0, 0));
     } else {
-        loc_add(loc_coord, loc_3231, 1, grounddecor, 4);
+        // Temp note: dur updated
+        loc_add(loc_coord, loc_3231, 1, grounddecor, 5);
         ~forcemove(movecoord(loc_coord, 1, 0, 0));
     }
 }

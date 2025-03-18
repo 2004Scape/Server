@@ -9,8 +9,8 @@ if (last_useitem ! hunt_chest_key) {
 }
 
 p_delay(1);
-
-loc_change(hunt_chest_open, 8);
+// Temp note: dur updated ? Rounded up from 9 to 10 lol
+loc_change(hunt_chest_open, 10);
 sound_synth(chest_open, 0, 0);
 
 mes("All that's in the chest is a message...");

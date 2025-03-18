@@ -81,6 +81,7 @@ if (%tutorial_progress = ^survival_guide_build_fire) {
     ~set_tutorial_progress;
 }
 def_int $delay = 150;
+// Temp note: dur does not need updated
 loc_add($fire_coord, loc_2732, 1, centrepiece_straight, $delay);
 world_delay($delay);
 obj_add($fire_coord, ashes, 1, 100);

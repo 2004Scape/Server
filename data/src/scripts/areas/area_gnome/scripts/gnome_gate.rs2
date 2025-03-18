@@ -34,10 +34,11 @@ if(coordz(coord) > coordz($loc_coord) & coord ! $north_entrance) {
 }
 p_delay(0);
 // replace gate
-loc_change(loc_191, 4);
-loc_add(movecoord($loc_coord, 3, 0, 0), loc_192, 0, loc_shape, 4); // opened right side
-loc_add(movecoord($loc_coord, 2, 0, 0), loc_83, 3, loc_shape, 4); // blocks whole path
-loc_add(movecoord($loc_coord, 2, 0, 1), loc_83, 1, loc_shape, 4);
+// Temp note: dur updated
+loc_change(loc_191, 5);
+loc_add(movecoord($loc_coord, 3, 0, 0), loc_192, 0, loc_shape, 5); // opened right side
+loc_add(movecoord($loc_coord, 2, 0, 0), loc_83, 3, loc_shape, 5); // blocks whole path
+loc_add(movecoord($loc_coord, 2, 0, 1), loc_83, 1, loc_shape, 5);
 p_delay(0);
 // walk to dest
 if(coordz(coord) > coordz($loc_coord)) {
@@ -53,7 +54,8 @@ if(coordz(coord) > coordz($loc_coord)) {
 // pass start x because these door locs are also on the sides (maybe to increase the hitbox)
 [label,open_tree_door](loc $open_door, int $start_x)
 sound_synth(door_open, 0, 0);
-loc_change($open_door, 4);
+// Temp note: dur updated
+loc_change($open_door, 5);
 p_teleport(movecoord(coord, calc($start_x - coordx(coord)), 0, 0));
 p_delay(0);
 def_coord $end_pos = movecoord(coord, 0, 0, -2);

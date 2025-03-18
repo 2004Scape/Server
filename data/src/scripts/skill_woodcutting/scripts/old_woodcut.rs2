@@ -29,7 +29,8 @@ if (%action_delay = map_clock) {
         mes("You get some logs.");
         stat_advance(woodcutting, 250);
         inv_add(inv, logs, 1);
-        loc_change(loc_param(next_loc_stage), ~scale_by_playercount(~random_range(120, 198)));
+        // Temp note: dur does not need updated
+        loc_change(loc_param(next_loc_stage), ~scale_by_playercount(add(120, random(80))));
         anim(null, 0);
         return;
     }

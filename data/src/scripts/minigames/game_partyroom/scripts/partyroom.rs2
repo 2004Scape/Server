@@ -117,6 +117,7 @@ if($balloons_dropped < 200) {
     while($i < ^balloons_per_drop) {
         def_coord $balloon_coord = ~random_partyroom_balloon_coord;
         if(map_blocked($balloon_coord) = false & map_indoors($balloon_coord) = true & map_locaddunsafe($balloon_coord) = false) {
+            // Temp note: dur does not need updated
             loc_add($balloon_coord, ~random_balloon, random(4), centrepiece_straight, 200);
             $balloons_dropped = calc($balloons_dropped + 1);
         }
@@ -132,7 +133,8 @@ p_walk(loc_coord);
 p_delay(0);
 anim(seq_794, 0);
 p_delay(0);
-loc_change(loc_param(next_loc_stage), 5);
+// Temp note: dur updated, does it need ? @indio
+loc_change(loc_param(next_loc_stage), 6);
 // todo: chance was fixed before Jul 2004, was changed to scale off of chest freespace afterwards (this chance is just a guess unfortunately)
 if (~inzone_coord_pair_table(party_room_zones, loc_coord) = true & random(4) = 0) {
     def_int $rand_slot = random(calc(inv_size(partyroominv) - inv_freespace(partyroominv)));

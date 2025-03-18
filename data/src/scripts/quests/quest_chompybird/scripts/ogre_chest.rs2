@@ -27,7 +27,8 @@ if (%chompybird_progress = ^chompybird_kids_play_with_toad) {
     %chompybird_progress = ^chompybird_removed_rock_from_chest;
 }
 // duration from OSRS
-loc_change(chompybird_ogre_chest_open, 48);
+// Temp note: dur updated ? Assuming this is an even number so I added 2 instead of 1
+loc_change(chompybird_ogre_chest_open, 50);
 
 [oploc1,chompybird_ogre_chest_open]
 anim(human_pickuptable, 0);

@@ -34,7 +34,8 @@ if(inv_freespace(inv) = 0) {
 }
 mes("You cautiously grab a cake from the stall.");
 inv_add(inv, rock_cake, 1);
-loc_change(loc_2792, 11); // 11t osrs
+// Temp note: dur updated
+loc_change(loc_2792, 12); // 11t osrs
 stat_advance(thieving, 65);
 
 [opnpc1,ogre_trader_3]

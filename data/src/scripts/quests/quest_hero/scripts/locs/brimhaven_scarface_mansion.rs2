@@ -7,6 +7,7 @@ if (%hero_progress >= ^hero_blackarm_mansion_unlocked & %blackarmgang_progress >
 @attempt_open_brimhaven_mansion_door;
 
 [oploc1,grips_cupboard_closed]
+// Temp note: dur does not need updated
 loc_change(grips_cupboard_opened, 500); // todo - how long to keep open?
 @summon_grip;
 
@@ -72,6 +73,7 @@ if (last_useitem = grips_keyring) {
 
 [oploc1,scarface_pete_candlestick_chest]
 mes("You open the chest.");
+// Temp note: dur does not need updated
 loc_change(scarface_pete_candlestick_chest_open, 500); // todo - how long to keep open?
 
 [oploc1,scarface_pete_candlestick_chest_open]
@@ -87,4 +89,5 @@ if (~obj_gettotal(petes_candlestick) > 0) {
     %hero_progress = ^hero_blackarm_looted_chest;
   }
 }
+// Temp note: dur does not need updated
 loc_change(scarface_pete_candlestick_chest, 500);
