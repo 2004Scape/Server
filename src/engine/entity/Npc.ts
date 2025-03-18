@@ -62,6 +62,7 @@ export default class Npc extends PathingEntity {
     huntMode: number = -1;
     huntTarget: Entity | null = null;
     huntrange: number = 0;
+    observerCount: number = 0;
     spawnTriggerPending: boolean = true;
 
     nextPatrolTick: number = -1;

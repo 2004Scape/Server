@@ -1,5 +1,3 @@
-import * as rsbuf from '@2004scape/rsbuf';
-
 import Component from '#/cache/config/Component.js';
 import ObjType from '#/cache/config/ObjType.js';
 import Interaction from '#/engine/entity/Interaction.js';
@@ -48,7 +46,7 @@ export default class OpPlayerUHandler extends MessageHandler<OpPlayerU> {
             return false;
         }
 
-        if (!rsbuf.hasPlayer(player.pid, other.pid)) {
+        if (!player.buildArea.players.has(other)) {
             player.write(new UnsetMapFlag());
             player.clearPendingAction();
             return false;

@@ -1,5 +1,3 @@
-import * as rsbuf from '@2004scape/rsbuf';
-
 import Interaction from '#/engine/entity/Interaction.js';
 import { NetworkPlayer } from '#/engine/entity/NetworkPlayer.js';
 import ServerTriggerType from '#/engine/script/ServerTriggerType.js';
@@ -24,7 +22,7 @@ export default class OpPlayerHandler extends MessageHandler<OpPlayer> {
             return false;
         }
 
-        if (!rsbuf.hasPlayer(player.pid, other.pid)) {
+        if (!player.buildArea.players.has(other)) {
             player.write(new UnsetMapFlag());
             player.clearPendingAction();
             return false;

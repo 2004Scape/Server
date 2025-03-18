@@ -39,13 +39,29 @@ import MessageGameEncoder from '#/network/rs225/server/codec/MessageGameEncoder.
 import MessagePrivateEncoder from '#/network/rs225/server/codec/MessagePrivateEncoder.js';
 import MidiJingleEncoder from '#/network/rs225/server/codec/MidiJingleEncoder.js';
 import MidiSongEncoder from '#/network/rs225/server/codec/MidiSongEncoder.js';
+import NpcInfoAnimEncoder from '#/network/rs225/server/codec/NpcInfoAnimEncoder.js';
+import NpcInfoChangeTypeEncoder from '#/network/rs225/server/codec/NpcInfoChangeTypeEncoder.js';
+import NpcInfoDamageEncoder from '#/network/rs225/server/codec/NpcInfoDamageEncoder.js';
 import NpcInfoEncoder from '#/network/rs225/server/codec/NpcInfoEncoder.js';
+import NpcInfoFaceCoordEncoder from '#/network/rs225/server/codec/NpcInfoFaceCoordEncoder.js';
+import NpcInfoFaceEntityEncoder from '#/network/rs225/server/codec/NpcInfoFaceEntityEncoder.js';
+import NpcInfoSayEncoder from '#/network/rs225/server/codec/NpcInfoSayEncoder.js';
+import NpcInfoSpotanimEncoder from '#/network/rs225/server/codec/NpcInfoSpotanimEncoder.js';
 import ObjAddEncoder from '#/network/rs225/server/codec/ObjAddEncoder.js';
 import ObjCountEncoder from '#/network/rs225/server/codec/ObjCountEncoder.js';
 import ObjDelEncoder from '#/network/rs225/server/codec/ObjDelEncoder.js';
 import ObjRevealEncoder from '#/network/rs225/server/codec/ObjRevealEncoder.js';
 import PCountDialogEncoder from '#/network/rs225/server/codec/PCountDialogEncoder.js';
+import PlayerInfoAnimEncoder from '#/network/rs225/server/codec/PlayerInfoAnimEncoder.js';
+import PlayerInfoAppearanceEncoder from '#/network/rs225/server/codec/PlayerInfoAppearanceEncoder.js';
+import PlayerInfoChatEncoder from '#/network/rs225/server/codec/PlayerInfoChatEncoder.js';
+import PlayerInfoDamageEncoder from '#/network/rs225/server/codec/PlayerInfoDamageEncoder.js';
 import PlayerInfoEncoder from '#/network/rs225/server/codec/PlayerInfoEncoder.js';
+import PlayerInfoExactMoveEncoder from '#/network/rs225/server/codec/PlayerInfoExactMoveEncoder.js';
+import PlayerInfoFaceCoordEncoder from '#/network/rs225/server/codec/PlayerInfoFaceCoordEncoder.js';
+import PlayerInfoFaceEntityEncoder from '#/network/rs225/server/codec/PlayerInfoFaceEntityEncoder.js';
+import PlayerInfoSayEncoder from '#/network/rs225/server/codec/PlayerInfoSayEncoder.js';
+import PlayerInfoSpotanimEncoder from '#/network/rs225/server/codec/PlayerInfoSpotanimEncoder.js';
 import RebuildNormalEncoder from '#/network/rs225/server/codec/RebuildNormalEncoder.js';
 import ResetAnimsEncoder from '#/network/rs225/server/codec/ResetAnimsEncoder.js';
 import ResetClientVarCacheEncoder from '#/network/rs225/server/codec/ResetClientVarCacheEncoder.js';
@@ -69,8 +85,10 @@ import UpdateZonePartialEnclosedEncoder from '#/network/rs225/server/codec/Updat
 import UpdateZonePartialFollowsEncoder from '#/network/rs225/server/codec/UpdateZonePartialFollowsEncoder.js';
 import VarpLargeEncoder from '#/network/rs225/server/codec/VarpLargeEncoder.js';
 import VarpSmallEncoder from '#/network/rs225/server/codec/VarpSmallEncoder.js';
+import InfoMessageEncoder from '#/network/server/codec/InfoMessageEncoder.js';
 import MessageEncoder from '#/network/server/codec/MessageEncoder.js';
 import ZoneMessageEncoder from '#/network/server/codec/ZoneMessageEncoder.js';
+import InfoMessage from '#/network/server/InfoMessage.js';
 import CamLookAt from '#/network/server/model/CamLookAt.js';
 import CamMoveTo from '#/network/server/model/CamMoveTo.js';
 import CamReset from '#/network/server/model/CamReset.js';
@@ -113,12 +131,28 @@ import MessagePrivate from '#/network/server/model/MessagePrivate.js';
 import MidiJingle from '#/network/server/model/MidiJingle.js';
 import MidiSong from '#/network/server/model/MidiSong.js';
 import NpcInfo from '#/network/server/model/NpcInfo.js';
+import NpcInfoAnim from '#/network/server/model/NpcInfoAnim.js';
+import NpcInfoChangeType from '#/network/server/model/NpcInfoChangeType.js';
+import NpcInfoDamage from '#/network/server/model/NpcInfoDamage.js';
+import NpcInfoFaceCoord from '#/network/server/model/NpcInfoFaceCoord.js';
+import NpcInfoFaceEntity from '#/network/server/model/NpcInfoFaceEntity.js';
+import NpcInfoSay from '#/network/server/model/NpcInfoSay.js';
+import NpcInfoSpotanim from '#/network/server/model/NpcInfoSpotanim.js';
 import ObjAdd from '#/network/server/model/ObjAdd.js';
 import ObjCount from '#/network/server/model/ObjCount.js';
 import ObjDel from '#/network/server/model/ObjDel.js';
 import ObjReveal from '#/network/server/model/ObjReveal.js';
 import PCountDialog from '#/network/server/model/PCountDialog.js';
 import PlayerInfo from '#/network/server/model/PlayerInfo.js';
+import PlayerInfoAnim from '#/network/server/model/PlayerInfoAnim.js';
+import PlayerInfoAppearance from '#/network/server/model/PlayerInfoAppearance.js';
+import PlayerInfoChat from '#/network/server/model/PlayerInfoChat.js';
+import PlayerInfoDamage from '#/network/server/model/PlayerInfoDamage.js';
+import PlayerInfoExactMove from '#/network/server/model/PlayerInfoExactMove.js';
+import PlayerInfoFaceCoord from '#/network/server/model/PlayerInfoFaceCoord.js';
+import PlayerInfoFaceEntity from '#/network/server/model/PlayerInfoFaceEntity.js';
+import PlayerInfoSay from '#/network/server/model/PlayerInfoSay.js';
+import PlayerInfoSpotanim from '#/network/server/model/PlayerInfoSpotanim.js';
 import RebuildNormal from '#/network/server/model/RebuildNormal.js';
 import ResetAnims from '#/network/server/model/ResetAnims.js';
 import ResetClientVarCache from '#/network/server/model/ResetClientVarCache.js';
@@ -230,6 +264,24 @@ class ServerProtRepository {
         this.bind(UpdateZonePartialFollows, new UpdateZonePartialFollowsEncoder());
         this.bind(VarpLarge, new VarpLargeEncoder());
         this.bind(VarpSmall, new VarpSmallEncoder());
+        // ---- player_info
+        this.bind(PlayerInfoAnim, new PlayerInfoAnimEncoder());
+        this.bind(PlayerInfoAppearance, new PlayerInfoAppearanceEncoder());
+        this.bind(PlayerInfoChat, new PlayerInfoChatEncoder());
+        this.bind(PlayerInfoDamage, new PlayerInfoDamageEncoder());
+        this.bind(PlayerInfoFaceCoord, new PlayerInfoFaceCoordEncoder());
+        this.bind(PlayerInfoFaceEntity, new PlayerInfoFaceEntityEncoder());
+        this.bind(PlayerInfoSay, new PlayerInfoSayEncoder());
+        this.bind(PlayerInfoSpotanim, new PlayerInfoSpotanimEncoder());
+        this.bind(PlayerInfoExactMove, new PlayerInfoExactMoveEncoder());
+        // ---- npc_info
+        this.bind(NpcInfoAnim, new NpcInfoAnimEncoder());
+        this.bind(NpcInfoChangeType, new NpcInfoChangeTypeEncoder());
+        this.bind(NpcInfoDamage, new NpcInfoDamageEncoder());
+        this.bind(NpcInfoFaceCoord, new NpcInfoFaceCoordEncoder());
+        this.bind(NpcInfoFaceEntity, new NpcInfoFaceEntityEncoder());
+        this.bind(NpcInfoSay, new NpcInfoSayEncoder());
+        this.bind(NpcInfoSpotanim, new NpcInfoSpotanimEncoder());
     }
 
     getEncoder<T extends OutgoingMessage>(message: T): MessageEncoder<T> | undefined {
@@ -238,6 +290,10 @@ class ServerProtRepository {
 
     getZoneEncoder<T extends ZoneMessage>(message: T): ZoneMessageEncoder<T> | undefined {
         return this.encoders.get(message.constructor as GenericOutgoingMessage<T>) as ZoneMessageEncoder<T> | undefined;
+    }
+
+    getInfoEncoder<T extends InfoMessage>(message: T): InfoMessageEncoder<T> | undefined {
+        return this.encoders.get(message.constructor as GenericOutgoingMessage<T>) as InfoMessageEncoder<T> | undefined;
     }
 }
 
