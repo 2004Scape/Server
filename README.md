@@ -35,10 +35,16 @@ Engine developers should run `npm run dev`. This does what `npm start` does abov
 ## Common Issues
 
 * `bad option: --import`  
+
 You are using an older version of Node. Reinstall and re-run.
 
 * `'"java"' is not recognized as an internal or external command`  
+
 You do not have Java installed.
 
-* `has been compiled by a more recent version of the Java Runtime (class file version 61.0), this version of the Java Runtime only recognizes class file versions up to 52.0`  
-You are using Java 8 or Java 11. If you have multiple Java versions, you are now an "advanced user," go ahead and set `JAVA_PATH=path-to-java.exe` in your .env file.
+* `XXXXX has been compiled by a more recent version of the Java Runtime (class file version 61.0), this version of the Java Runtime only recognizes class file versions up to 52.0`  
+
+You are using Java 8 or Java 11. If you have multiple Java versions, you will need to set `JAVA_PATH=path-to-java.exe` in your .env file.
+
+## License
+This project is licensed under the [MIT License](https://opensource.org/licenses/MIT). See the [LICENSE](LICENSE) file for details.
