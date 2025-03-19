@@ -137,16 +137,27 @@ p_delay(0);
 loc_change(loc_param(next_loc_stage), 6);
 // todo: chance was fixed before Jul 2004, was changed to scale off of chest freespace afterwards (this chance is just a guess unfortunately)
 if (~inzone_coord_pair_table(party_room_zones, loc_coord) = true & random(4) = 0) {
-    def_int $rand_slot = random(calc(inv_size(partyroominv) - inv_freespace(partyroominv)));
+    def_int $partyroom_size = inv_size(partyroominv);
+    def_int $rand_slot = random(calc($partyroom_size - inv_freespace(partyroominv)));
     def_obj $obj = inv_getobj(partyroominv, $rand_slot);
     def_int $count = 1;
+    def_int $obj_total = inv_getnum(partyroominv, $rand_slot);
     if($obj = null) {
         return;
     }
     if(oc_stackable($obj) = true | oc_uncert($obj) ! $obj) {
-        $count = ~random_range(1, inv_getnum(partyroominv, $rand_slot));
+        $count = ~random_range(1, $obj_total);
     }
     inv_dropitem(partyroominv, loc_coord, $obj, $count, 100);
+    if($count = $obj_total) {
+        while($rand_slot < $partyroom_size) {
+            $rand_slot = add($rand_slot, 1);
+            if(inv_getobj(partyroominv, $rand_slot) = null) { // break loop is cur slot is empty
+                return;
+            }
+            inv_movetoslot(partyroominv, partyroominv, $rand_slot, calc($rand_slot - 1));
+        }
+    }
     return;
 }
 p_delay(0);
