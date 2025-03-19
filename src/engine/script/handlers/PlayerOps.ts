@@ -54,6 +54,7 @@ import PCountDialog from '#/network/server/model/PCountDialog.js';
 import SynthSound from '#/network/server/model/SynthSound.js';
 import TutFlash from '#/network/server/model/TutFlash.js';
 import ColorConversion from '#/util/ColorConversion.js';
+import Environment from '#/util/Environment.js';
 
 const PlayerOps: CommandHandlers = {
     [ScriptOpcode.FINDUID]: state => {
@@ -985,7 +986,9 @@ const PlayerOps: CommandHandlers = {
     },
 
     [ScriptOpcode.AFK_EVENT]: state => {
-        state.pushInt(state.activePlayer.afkEventReady ? 1 : 0);
+        state.pushInt((
+            state.activePlayer.staffModLevel < 2 && Environment.NODE_PRODUCTION
+        ) && state.activePlayer.afkEventReady ? 1 : 0);
         state.activePlayer.afkEventReady = false;
     },
 
