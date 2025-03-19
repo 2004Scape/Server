@@ -1,6 +1,7 @@
 [timer,blanket_ladder]
 if(distance(^blanket_ladder_coord, coord) <= 2 & ~drunkmonk_ladder_active = false) {
     mes("A ladder mysteriously appears.");
+    // Temp note: dur does not need updated
     loc_add(^blanket_ladder_coord, loc_1765, 1, centrepiece_straight, 200);
 }
 
@@ -69,6 +70,7 @@ def_int $count = 0;
 while($count < ^balloons_per_drop) {
     def_coord $balloon_coord = ~drunkmonk_balloon_coord;
     if(map_blocked($balloon_coord) = false & map_indoors($balloon_coord) = true & map_locaddunsafe($balloon_coord) = false) {
+        // Temp note: dur does not need updated
         loc_add($balloon_coord, ~random_balloon, random(4), centrepiece_straight, 200);
     }
     $count = calc($count + 1);

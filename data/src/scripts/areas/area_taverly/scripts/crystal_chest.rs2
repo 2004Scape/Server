@@ -14,7 +14,8 @@ if (inv_total(inv, crystal_key) > 0) {
     mes("You unlock the chest with your key.");
     anim(human_openchest, 0);
     sound_synth(chest_open, 0, 0);
-    loc_change(opened_crystal_chest, 2);
+    // Temp note: dur updated
+    loc_change(opened_crystal_chest, 3);
     p_delay(0);
     inv_del(inv, crystal_key, 1);
     mes("You find some treasure in the chest!");

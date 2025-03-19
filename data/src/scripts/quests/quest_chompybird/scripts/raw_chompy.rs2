@@ -59,7 +59,8 @@ if(%chompybird_progress = ^chompybird_complete) {
 [label,cook_chompy_offquest]
 mes("You carefully place the chompy bird on the spit-roast.");
 inv_del(inv, raw_chompy, 1);
-loc_change(ogre_spitroast_raw_chompy, 4);
+// Temp note: dur updated
+loc_change(ogre_spitroast_raw_chompy, 5);
 loc_anim(spit_anim);
 anim(human_cooking, 0);
 sound_synth(spit_roast, 0, 0);
@@ -68,7 +69,8 @@ p_delay(2);
 def_boolean $passes_roll = stat_random(stat(cooking), 200, 255);
 if ($passes_roll = true) {
     mes("You start to cook the chompy... it takes some time.");
-    loc_change(ogre_spitroast_cooked_chompy, 4);
+    // Temp note: dur updated
+    loc_change(ogre_spitroast_cooked_chompy, 5);
     loc_anim(spit_anim);
     anim(human_cooking, 0);
     p_delay(2);
@@ -78,7 +80,8 @@ if ($passes_roll = true) {
     stat_advance(cooking, 140);
 } else {
     mes("You accidentally burn the chompy.");
-    loc_change(ogre_spitroast_burnt_chompy, 4);
+    // Temp note: dur updated
+    loc_change(ogre_spitroast_burnt_chompy, 5);
     loc_anim(spit_anim);
     anim(human_cooking, 0);
     p_delay(2);
@@ -179,7 +182,8 @@ if ($has_rantz_ingredient = false | $has_bugs_ingredient = false | $has_fycie_in
 
 mes("You carefully place the chompy bird on the spit-roast.");
 inv_del(inv, raw_chompy, 1);
-loc_change(ogre_spitroast_raw_chompy, 4);
+// Temp note: dur updated
+loc_change(ogre_spitroast_raw_chompy, 5);
 loc_anim(spit_anim);
 anim(human_cooking, 0);
 sound_synth(spit_roast, 0, 0);
@@ -190,7 +194,8 @@ if ($passes_roll = true) {
     mes("You add the other ingredients and cook the food.");
     %chompybird_progress = ^chompybird_chompy_cooked;
     ~delete_chompy_ingredients($rantz_ingredient, $bugs_ingredient, $fycie_ingredient);
-    loc_change(ogre_spitroast_cooked_chompy, 4);
+    // Temp note: dur updated
+    loc_change(ogre_spitroast_cooked_chompy, 5);
     loc_anim(spit_anim);
     anim(human_cooking, 0);
     p_delay(2);
@@ -203,7 +208,8 @@ if ($passes_roll = true) {
 } else {
     mes("You accidentally burn the chompy.");
     ~delete_chompy_ingredients($rantz_ingredient, $bugs_ingredient, $fycie_ingredient);
-    loc_change(ogre_spitroast_burnt_chompy, 4);
+    // Temp note: dur updated
+    loc_change(ogre_spitroast_burnt_chompy, 5);
     loc_anim(spit_anim);
     anim(human_cooking, 0);
     p_delay(2);

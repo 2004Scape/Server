@@ -88,6 +88,7 @@ p_teleport(0_41_153_30_17); // OSRS area here is a bit different, changed in lat
 if(last_useitem = ikov_lever) {
     ~mesbox("You fit the lever into the bracket.");
     inv_del(inv, ikov_lever, 1);
+    // Temp note: dur does not need updated
     loc_change(loc_87, 200); // 200t OSRS
 }
 ~displaymessage(^dm_default);
@@ -96,6 +97,7 @@ if(last_useitem = ikov_lever) {
 p_arrivedelay;
 anim(human_leverdown, 0); 
 sound_synth(lever, 0, 0);
+// Temp note: dur does not need updated ? @indio
 loc_change(loc_88, 20);
 p_delay(0);
 sound_synth(locked, 0, 0);
@@ -133,7 +135,8 @@ if(%ikov_progress = ^ikov_disabled_trap) %ikov_progress = ^ikov_pulled_lever;
 p_arrivedelay;
 anim(human_leverdown, 0);
 p_delay(0);
-loc_change(loc_88, 5);
+// Temp note: dur updated ? does it need ??
+loc_change(loc_88, 6);
 sound_synth(lever, 0, 0);
 if(%ikov_progress >= ^ikov_disabled_trap) {
     return;

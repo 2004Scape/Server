@@ -23,11 +23,13 @@ while (huntnext = true) {
 }
 
 [proc,trawler_leak] // requires active loc
+// Temp note: dur does not need updated
 loc_change(game_trawler_leak, 1000);
 ~sound_area(leak, 0, loc_coord, 5);
 
 def_coord $flood_coord = movecoord(loc_coord, 128, 0, 0);
 if (loc_find($flood_coord, game_trawler_hull) = true | loc_find($flood_coord, game_trawler_repaired_leak) = true) {
+    // Temp note: dur does not need updated
     loc_change(game_trawler_leak, 1000);
     ~sound_area(leak, 0, $flood_coord, 5);
 }
@@ -74,6 +76,7 @@ if (loc_type = game_trawler_leak) {
     sound_synth(pick, 0, 0);
     p_delay(0);
     if (loc_type = game_trawler_leak) {
+        // Temp note: dur does not need updated
         loc_change(game_trawler_repaired_leak, 1000);
         if (~inzone_coord_pair_table(trawler_flood_zones, loc_coord) = true) {
             if (random(5) = 0) {
@@ -82,6 +85,7 @@ if (loc_type = game_trawler_leak) {
                 }
             }
             if (loc_find(movecoord(loc_coord, -128, 0, 0), game_trawler_leak) = true) {
+                // Temp note: dur does not need updated
                 loc_change(game_trawler_repaired_leak, 1000);
             }
         } else {
@@ -91,6 +95,7 @@ if (loc_type = game_trawler_leak) {
                 }
             }
             if (loc_find(movecoord(loc_coord, 128, 0, 0), game_trawler_leak) = true) {
+                // Temp note: dur does not need updated
                 loc_change(game_trawler_repaired_leak, 1000);
             }
         } 

@@ -83,8 +83,9 @@ def_coord $loc_coord = loc_coord;
 def_int $angle = loc_angle;
 def_locshape $shape = loc_shape;
 $x, $z = ~door_open($angle, loc_shape);
-loc_change(loc_83, 2);
-loc_add(movecoord($loc_coord, $x, 0, $z), loc_37, modulo(add($angle, 1), 4), $shape, 2);
+// Temp note: dur updated
+loc_change(loc_83, 3);
+loc_add(movecoord($loc_coord, $x, 0, $z), loc_37, modulo(add($angle, 1), 4), $shape, 3);
 sound_synth(grate_open, 0, 0);
 p_delay(6);
 npc_del;
@@ -118,10 +119,11 @@ npc_setmode(none);
 npc_walk(movecoord($ogre_to, 1, 0, 0));
 p_delay($delay);
 if(loc_find(0_40_49_46_29, loc_78) = true & .loc_find(0_40_49_46_30, loc_77) = true) {
-    loc_del(5);
-    loc_add(movecoord(loc_coord, 1, 0, 0), loc_type, 3, loc_shape, 5);
-    .loc_del(5);
-    .loc_add(movecoord(.loc_coord, 1, 0, 0), .loc_type, 1, .loc_shape, 5);
+    // Temp note: dur updated
+    loc_del(6);
+    loc_add(movecoord(loc_coord, 1, 0, 0), loc_type, 3, loc_shape, 6);
+    .loc_del(6);
+    .loc_add(movecoord(.loc_coord, 1, 0, 0), .loc_type, 1, .loc_shape, 6);
 }
 npc_tele($ogre_to);
 npc_queue(10, 0, 1);

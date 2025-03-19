@@ -7,6 +7,7 @@
 ~send_quest_progress(questlist:vampire, %vampire_progress, ^vampire_complete);
 
 [label,quest_vampire_coffin_open]
+// Temp note: dur does not need updated ?? nice even number
 loc_change(loc_2615, 10);
 if (%vampire_progress = ^vampire_complete | %vampire_progress = ^quest_vampire_not_started) {
     return;
@@ -30,6 +31,7 @@ npc_sethuntmode(aggressive_melee_extra);
 npc_sethunt(5);
 
 [label,quest_vampire_coffin_close]
+// Temp note: dur does not need updated ??? bc it's a good number
 loc_change(loc_2614, 10);
 
 [label,quest_vampire_coffin_search]

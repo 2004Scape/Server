@@ -19,10 +19,8 @@ while (huntnext = true) {
     }
 }
 
-if (~playercount_coord_pair_table(trawler_lobby_zones) < 1) {
-    npc_settimer(0);
-}
-
+npc_settimer(0);
+%npc_trawler_start = null;
 ~trawler_reset;
 
 if (npc_find(^trawler_start_center_under, murphy_nonflood, 5, 0) = true) {

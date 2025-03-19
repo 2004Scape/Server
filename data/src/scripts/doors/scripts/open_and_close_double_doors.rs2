@@ -38,13 +38,16 @@ if ($entering = true) {
 p_teleport($dest);
 
 if ($side = ^left) {
-    ~open_double_doors_left(2, double_door_open_and_close_right, loc_param(open_sound));
+    // Temp note: dur updated
+    ~open_double_doors_left(3, double_door_open_and_close_right, loc_param(open_sound));
 } else if ($side = ^right) {
-    ~open_double_doors_right(2, double_door_open_and_close_left, loc_param(open_sound));
+    // Temp note: dur updated
+    ~open_double_doors_right(3, double_door_open_and_close_left, loc_param(open_sound));
 }
 
-loc_add($opposite_coord, loc_83, $angle, $shape, 2);
-loc_add($loc_coord, loc_83, $angle, $shape, 2);
+// Temp note: dur updated
+loc_add($opposite_coord, loc_83, $angle, $shape, 3);
+loc_add($loc_coord, loc_83, $angle, $shape, 3);
 // mes(~coord_tostring($opposite_coord));
 
 // variation that plays sound instantly
@@ -83,10 +86,13 @@ if ($entering = true) {
 p_teleport($dest);
 
 if ($side = ^left) {
-    ~open_double_doors_left(2, double_door_open_and_close_right, null);
+    // Temp note: dur updated
+    ~open_double_doors_left(3, double_door_open_and_close_right, null);
 } else if ($side = ^right) {
-    ~open_double_doors_right(2, double_door_open_and_close_left, null);
+    // Temp note: dur updated
+    ~open_double_doors_right(3, double_door_open_and_close_left, null);
 }
 
-loc_add($opposite_coord, loc_83, $angle, $shape, 2);
-loc_add($loc_coord, loc_83, $angle, $shape, 2);
+// Temp note: dur updated
+loc_add($opposite_coord, loc_83, $angle, $shape, 3);
+loc_add($loc_coord, loc_83, $angle, $shape, 3);

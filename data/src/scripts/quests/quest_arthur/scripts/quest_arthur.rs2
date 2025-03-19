@@ -91,12 +91,15 @@ while(loc_findnext = true) {
      if(loc_category = keep_lefaye_door) {
             def_coord $central_coord = loc_coord;
             def_int $orig_angle = loc_angle;
-            loc_del(2);
+            // Temp note: dur updated
+            loc_del(3);
             if(loc_type = loc_71) {
-                loc_add(movecoord($central_coord, 1, 0, 0), blackknight_double_door_left, 1, loc_shape, 2);
-                loc_add(movecoord($central_coord, 1, 0, -1), blackknight_double_door_right, 3, loc_shape, 2); 
+                // Temp note: dur updated
+                loc_add(movecoord($central_coord, 1, 0, 0), blackknight_double_door_left, 1, loc_shape, 3);
+                loc_add(movecoord($central_coord, 1, 0, -1), blackknight_double_door_right, 3, loc_shape, 3); 
             }
-            loc_add($central_coord, loc_83, $orig_angle, loc_shape, 2);
+            // Temp note: dur updated
+            loc_add($central_coord, loc_83, $orig_angle, loc_shape, 3);
      }
 }
 p_teleport(movecoord(coord, -1, 0, 0));

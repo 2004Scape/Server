@@ -4,6 +4,7 @@ if (inv_freespace(inv) = 0) {
     return;
 }
 
+// Temp note: dur does not need updated
 loc_change(loc_param(next_loc_stage), 500);
 inv_add(inv, pineapple, 1);
 
