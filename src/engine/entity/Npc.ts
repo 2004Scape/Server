@@ -1,3 +1,4 @@
+import { NpcInfoProt, Visibility } from '@2004scape/rsbuf';
 import { CollisionFlag, CollisionType } from '@2004scape/rsmod-pathfinder';
 
 import HuntType from '#/cache/config/HuntType.js';
@@ -23,7 +24,6 @@ import NpcStat from '#/engine/entity/NpcStat.js';
 import Obj from '#/engine/entity/Obj.js';
 import PathingEntity from '#/engine/entity/PathingEntity.js';
 import Player from '#/engine/entity/Player.js';
-import Visibility from '#/engine/entity/Visibility.js';
 import { isFlagged , findNaivePath } from '#/engine/GameMap.js';
 import ScriptFile from '#/engine/script/ScriptFile.js';
 import { HuntIterator } from '#/engine/script/ScriptIterators.js';
@@ -33,7 +33,6 @@ import ScriptRunner from '#/engine/script/ScriptRunner.js';
 import ScriptState from '#/engine/script/ScriptState.js';
 import ServerTriggerType from '#/engine/script/ServerTriggerType.js';
 import World from '#/engine/World.js';
-import InfoProt from '#/network/rs225/server/prot/InfoProt.js';
 import LinkList from '#/util/LinkList.js';
 
 export default class Npc extends PathingEntity {
@@ -73,7 +72,7 @@ export default class Npc extends PathingEntity {
     heroPoints: HeroPoints = new HeroPoints(16); // be sure to reset when stats are recovered/reset
 
     constructor(level: number, x: number, z: number, width: number, length: number, lifecycle: EntityLifeCycle, nid: number, type: number, moveRestrict: MoveRestrict, blockWalk: BlockWalk) {
-        super(level, x, z, width, length, lifecycle, moveRestrict, blockWalk, MoveStrategy.NAIVE, InfoProt.NPC_FACE_COORD.id, InfoProt.NPC_FACE_ENTITY.id);
+        super(level, x, z, width, length, lifecycle, moveRestrict, blockWalk, MoveStrategy.NAIVE, NpcInfoProt.FACE_COORD, NpcInfoProt.FACE_ENTITY);
         this.nid = nid;
         this.type = type;
         this.uid = (type << 16) | nid;
@@ -452,7 +451,7 @@ export default class Npc extends PathingEntity {
         this.targetOp = type.defaultmode;
         this.lastWanderTick = World.currentTick; // osrs
         this.faceEntity = -1;
-        this.masks |= InfoProt.NPC_FACE_ENTITY.id;
+        this.masks |= this.entitymask;
 
         const npcType: NpcType = NpcType.get(this.type);
         this.huntMode = npcType.huntmode;
@@ -967,7 +966,7 @@ export default class Npc extends PathingEntity {
         if (anim == -1 || this.animId == -1 || SeqType.get(anim).priority > SeqType.get(this.animId).priority || SeqType.get(this.animId).priority === 0) {
             this.animId = anim;
             this.animDelay = delay;
-            this.masks |= InfoProt.NPC_ANIM.id;
+            this.masks |= NpcInfoProt.ANIM;
         }
     }
 
@@ -975,7 +974,7 @@ export default class Npc extends PathingEntity {
         this.graphicId = spotanim;
         this.graphicHeight = height;
         this.graphicDelay = delay;
-        this.masks |= InfoProt.NPC_SPOTANIM.id;
+        this.masks |= NpcInfoProt.SPOT_ANIM;
     }
 
     applyDamage(damage: number, type: number) {
@@ -990,7 +989,7 @@ export default class Npc extends PathingEntity {
             this.levels[NpcStat.HITPOINTS] = current - damage;
         }
 
-        this.masks |= InfoProt.NPC_DAMAGE.id;
+        this.masks |= NpcInfoProt.DAMAGE;
     }
 
     say(text: string) {
@@ -999,7 +998,7 @@ export default class Npc extends PathingEntity {
         }
 
         this.chat = text;
-        this.masks |= InfoProt.NPC_SAY.id;
+        this.masks |= NpcInfoProt.SAY;
     }
 
     faceSquare(x: number, z: number) {
@@ -1008,7 +1007,7 @@ export default class Npc extends PathingEntity {
 
     changeType(type: number) {
         this.type = type;
-        this.masks |= InfoProt.NPC_CHANGE_TYPE.id;
+        this.masks |= NpcInfoProt.CHANGE_TYPE;
         this.uid = (type << 16) | this.nid;
 
         const npcType: NpcType = NpcType.get(type);

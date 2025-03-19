@@ -1,5 +1,6 @@
 import 'dotenv/config';
 
+import { PlayerInfoProt, Visibility } from '@2004scape/rsbuf';
 import { CollisionType, CollisionFlag } from '@2004scape/rsmod-pathfinder';
 
 import Component from '#/cache/config/Component.js';
@@ -43,7 +44,6 @@ import ScriptState from '#/engine/script/ScriptState.js';
 import ServerTriggerType from '#/engine/script/ServerTriggerType.js';
 import World from '#/engine/World.js';
 import Packet from '#/io/Packet.js';
-import InfoProt from '#/network/rs225/server/prot/InfoProt.js';
 import ChatFilterSettings from '#/network/server/model/ChatFilterSettings.js';
 import HintArrow from '#/network/server/model/HintArrow.js';
 import IfClose from '#/network/server/model/IfClose.js';
@@ -70,8 +70,6 @@ import { ChatModePrivate, ChatModePublic, ChatModeTradeDuel } from '#/util/ChatM
 import Environment from '#/util/Environment.js';
 import { toDisplayName } from '#/util/JString.js';
 import LinkList from '#/util/LinkList.js';
-
-import Visibility from './Visibility.js';
 
 const levelExperience = new Int32Array(99);
 
@@ -399,7 +397,7 @@ export default class Player extends PathingEntity {
     reportAbuseProtect: boolean = false; // social packet spam protection
 
     constructor(username: string, username37: bigint, hash64: bigint) {
-        super(0, 3094, 3106, 1, 1, EntityLifeCycle.FOREVER, MoveRestrict.NORMAL, BlockWalk.NPC, MoveStrategy.SMART, InfoProt.PLAYER_FACE_COORD.id, InfoProt.PLAYER_FACE_ENTITY.id); // tutorial island.
+        super(0, 3094, 3106, 1, 1, EntityLifeCycle.FOREVER, MoveRestrict.NORMAL, BlockWalk.NPC, MoveStrategy.SMART, PlayerInfoProt.FACE_COORD, PlayerInfoProt.FACE_ENTITY); // tutorial island.
         this.username = username;
         this.username37 = username37;
         this.hash64 = hash64;
@@ -1755,7 +1753,7 @@ export default class Player extends PathingEntity {
 
     buildAppearance(inv: number): void {
         this.appearance = inv;
-        this.masks |= InfoProt.PLAYER_APPEARANCE.id;
+        this.masks |= PlayerInfoProt.APPEARANCE;
     }
 
     playAnimation(anim: number, delay: number) {
@@ -1766,7 +1764,7 @@ export default class Player extends PathingEntity {
         if (anim == -1 || this.animId == -1 || SeqType.get(anim).priority > SeqType.get(this.animId).priority || SeqType.get(this.animId).priority === 0) {
             this.animId = anim;
             this.animDelay = delay;
-            this.masks |= InfoProt.PLAYER_ANIM.id;
+            this.masks |= PlayerInfoProt.ANIM;
         }
     }
 
@@ -1774,7 +1772,7 @@ export default class Player extends PathingEntity {
         this.graphicId = spotanim;
         this.graphicHeight = height;
         this.graphicDelay = delay;
-        this.masks |= InfoProt.PLAYER_SPOTANIM.id;
+        this.masks |= PlayerInfoProt.SPOT_ANIM;
     }
 
     applyDamage(damage: number, type: number) {
@@ -1789,7 +1787,7 @@ export default class Player extends PathingEntity {
             this.levels[PlayerStat.HITPOINTS] = current - damage;
         }
 
-        this.masks |= InfoProt.PLAYER_DAMAGE.id;
+        this.masks |= PlayerInfoProt.DAMAGE;
     }
 
     setVisibility(visibility: Visibility) {
@@ -1812,7 +1810,7 @@ export default class Player extends PathingEntity {
 
     say(message: string) {
         this.chat = message;
-        this.masks |= InfoProt.PLAYER_SAY.id;
+        this.masks |= PlayerInfoProt.SAY;
     }
 
     faceSquare(x: number, z: number) {
@@ -1898,7 +1896,7 @@ export default class Player extends PathingEntity {
         this.exactMoveStart = startCycle;
         this.exactMoveEnd = endCycle;
         this.exactMoveDirection = direction;
-        this.masks |= InfoProt.PLAYER_EXACT_MOVE.id;
+        this.masks |= PlayerInfoProt.EXACT_MOVE;
 
         // todo: interpolate over time? instant teleport? verify with true tile on osrs
         this.x = endX;
