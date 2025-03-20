@@ -36,7 +36,7 @@ switch_int (~p_choice2("Yes certainly.", 1, "No I don't have any bread with me."
 ~mesbox("You give bread to the beggar.");
 inv_del(inv, bread, 1);
 ~chatnpc("<p,happy>Thank you very much!");
-npc_changetype(lady_of_the_lake); // re add if beggar doesn't exist
+npc_changetype(lady_of_the_lake, ^max_32bit_int); // re add if beggar doesn't exist
 ~mesbox("The beggar has turned into the Lady of the Lake!");
 ~chatnpc("<p,neutral>Well done. You have passed my test.");
 ~chatnpc("<p,neutral>Here is Excalibur, guard it well.");

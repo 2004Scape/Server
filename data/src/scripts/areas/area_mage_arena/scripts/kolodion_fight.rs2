@@ -127,7 +127,7 @@ npc_setmode(none);
 npc_anim(delrith_banish, 30);
 spotanim_map(smokepuff_large, npc_coord, 124, 90);
 npc_delay(2);
-npc_changetype(kolodion_defeated);
+npc_changetype(kolodion_defeated, ^max_32bit_int);
 npc_anim(null, 0);
 npc_setmode(playerface);
 npc_delay(0);

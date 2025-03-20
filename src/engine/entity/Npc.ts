@@ -1012,7 +1012,7 @@ export default class Npc extends PathingEntity {
     }
 
     changeType(type: number, duration: number) {
-        if (!this.isActive) {
+        if (!this.isActive || duration < 1) {
             return;
         }
         this.currentType = type;

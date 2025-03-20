@@ -1,7 +1,7 @@
 [proc,macro_event_whirlpool_spawn]
 %macro_event = ^no_macro_event;
 
-npc_changetype(npc_param(whirlpool));
+npc_changetype(npc_param(whirlpool), ^max_32bit_int);
 sound_synth(whirlpool, 0, 0);
 
 [proc,macro_whirlpool_attempt_take_equipment](namedobj $fishing_equipment)

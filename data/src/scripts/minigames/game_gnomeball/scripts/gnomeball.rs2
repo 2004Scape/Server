@@ -81,12 +81,12 @@ while (npc_findnext = true) {
     if (.finduid(%npc_attacking_uid) = false) {
         %npc_attacking_uid = null;
         if (npc_param(gnome_original) ! null & nc_param(npc_param(gnome_original), gnome_hasball) = npc_type) {
-            npc_changetype(npc_param(gnome_original));
+            npc_changetype(npc_param(gnome_original), ^max_32bit_int);
         }
     } else if (~.inzone_coord_pair_table(gnomeball_zones, .coord) = false) {
         %npc_attacking_uid = null;
         if (npc_param(gnome_original) ! null & nc_param(npc_param(gnome_original), gnome_hasball) = npc_type) {
-            npc_changetype(npc_param(gnome_original));
+            npc_changetype(npc_param(gnome_original), ^max_32bit_int);
         }  
     }
 }

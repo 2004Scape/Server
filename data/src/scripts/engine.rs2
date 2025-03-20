@@ -600,7 +600,7 @@
 // info: Teleport the secondary npc to $coord, short distances (1-2 tiles) will visually walk/run
 [command,.npc_tele](coord $coord)
 // info: Change the npc's current type - new npc properties will be inherited
-[command,npc_changetype](npc $type)
+[command,npc_changetype](npc $type, int $duration)
 // info: Return the current npc's ai mode
 [command,npc_getmode]()(npc_mode)
 // info: Return the secondary npc's ai mode
