@@ -149,7 +149,7 @@ if (~cannon_belongs_to_player = false) {
 if (last_useitem = cannon_stand) {
     anim(human_pickupfloor, 0);
     inv_del(inv, cannon_stand, 1);
-    loc_add(%mcannon_coord, cannon_stand, 0, centrepiece_straight, ^cannon_decay_length);
+    loc_change(cannon_stand, ^cannon_decay_length);
     mes("You add the stand.");
     return;
 }
@@ -190,7 +190,7 @@ if (~cannon_belongs_to_player = false) {
 if (last_useitem = cannon_barrels) {
     anim(human_pickupfloor, 0);
     inv_del(inv, cannon_barrels, 1);
-    loc_add(%mcannon_coord, cannon_barrels, 0, centrepiece_straight, ^cannon_decay_length);
+    loc_change(cannon_barrels, ^cannon_decay_length);
     mes("You add the barrels.");
     return;
 }
@@ -229,7 +229,7 @@ if (last_useitem = cannon_furnace) {
     anim(human_pickupfloor, 0);
     inv_del(inv, cannon_furnace, 1);
     mes("You add the furnace.");
-    loc_add(%mcannon_coord, cannon, 0, centrepiece_straight, ^cannon_decay_length);
+    loc_change(cannon, ^cannon_decay_length);
     @cannon_ready_start;
 }
 if (oc_category(last_useitem) = cannon_parts & last_useitem ! cannon_barrels) { 
