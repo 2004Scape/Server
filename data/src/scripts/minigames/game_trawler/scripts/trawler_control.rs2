@@ -66,7 +66,7 @@ npc_settimer(5); // this is important
 
 [proc,trawler_murphy_say]
 if (modulo(%npc_int, 20) = 0 & %npc_int >= 20) {
-    npc_say("<~pluralise(divide(%npc_int, 20), "minute")> left!");
+    npc_say("<~pluralise(sub(10, divide(%npc_int, 20)), "minute")> left!");
     return;
 }
 if (random(5) = 0) { // handle murphy's sayings
