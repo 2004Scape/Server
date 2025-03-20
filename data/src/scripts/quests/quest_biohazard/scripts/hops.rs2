@@ -74,8 +74,8 @@ if(testbit(%bioerrand, ^hops_correct) = true) {
     ~chatplayer("<p,happy>Hello, how was your journey?");
     ~chatnpc("<p,neutral>Pretty thirst-inducing actually...");
     ~chatplayer("<p,confused>Please tell me that you haven't drunk the contents...");
-    %bioerrand = setbit(%bioerrand, ^hops_given);
-    %bioerrand = setbit(%bioerrand, ^hops_wrong);
+    %bioerrand = clearbit(%bioerrand, ^hops_given);
+    %bioerrand = clearbit(%bioerrand, ^hops_wrong);
     ~chatnpc("<p,shifty>Of course I can tell you that I haven't drunk the contents...");
     ~chatnpc("<p,shifty>But I'd be lying. Sorry about that me old mucker, can I get you a drink?");
     ~chatplayer("<p,angry>No, I think you've done enough for now.");
