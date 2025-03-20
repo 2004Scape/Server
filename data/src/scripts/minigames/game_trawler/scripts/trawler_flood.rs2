@@ -51,19 +51,7 @@ if (last_useitem = swamp_paste) {
     ~displaymessage(^dm_default);
 }
 
-[oplocu,game_trawler_repaired_leak]
-if (last_useitem = swamp_paste) {
-    @trawler_fix_leak; // in osrs theres no message if using swamp paste on hull/repaired leak
-} else {
-    ~displaymessage(^dm_default);
-}
-
-[oplocu,game_trawler_hull]
-if (last_useitem = swamp_paste) {
-    @trawler_fix_leak;
-} else {
-    ~displaymessage(^dm_default);
-}
+// using paste on repaired leak has NIH message: https://youtu.be/XtcZ1VTN9ik?list=PLn23LiLYLb1b7Lj_u-lnuUOa40FGWslbp&t=25
 
 [label,trawler_fix_leak]
 if (loc_type = game_trawler_leak) {
