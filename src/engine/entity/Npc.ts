@@ -1011,10 +1011,23 @@ export default class Npc extends PathingEntity {
         return this.currentType;
     }
 
-    changeType(type: number) {
+    changeType(type: number, duration: number) {
+        if (!this.isActive) {
+            return;
+        }
         this.currentType = type;
         this.masks |= InfoProt.NPC_CHANGE_TYPE.id;
         this.uid = (type << 16) | this.nid;
+
+        this.setLifeCycle(World.currentTick + duration);
+    }
+
+    revert(): void {
+        this.currentType = this.baseType;
+        this.masks |= InfoProt.NPC_CHANGE_TYPE.id;
+        this.uid = (this.type << 16) | this.nid;
+
+        this.setLifeCycle(-1);
     }
 
     isValid(_hash64?: bigint): boolean {

@@ -682,14 +682,22 @@ class World {
                     }
                 }
 
-                // - respawn
-                if (npc.updateLifeCycle(this.currentTick)) {
+                // - Npc Events (Respawn, Revert, Despawn)
+                if (npc.lifecycleTick > -1 && npc.lifecycleTick < this.currentTick) {
                     try {
-                        if (npc.lifecycle === EntityLifeCycle.RESPAWN) {
+                        // Respawn NPC
+                        if (npc.lifecycle === EntityLifeCycle.RESPAWN && !npc.isActive) {
                             this.addNpc(npc, -1, false);
-                        } else if (npc.lifecycle === EntityLifeCycle.DESPAWN) {
+                        }
+                        // Revert NPC
+                        if (npc.lifecycle === EntityLifeCycle.RESPAWN) {
+                            npc.revert();
+                        }
+                        // Despawn NPC
+                        else if (npc.lifecycle === EntityLifeCycle.DESPAWN) {
                             this.removeNpc(npc, -1);
                         }
+                        npc.setLifeCycle(-1);
                     } catch (err) {
                         // there was an error adding or removing them, try again next tick...
                         // ex: server is full on npc IDs (did we have a leak somewhere?) and we don't want to re-use the last ID (syncing related)
