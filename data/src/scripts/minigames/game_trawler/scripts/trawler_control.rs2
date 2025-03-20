@@ -39,7 +39,6 @@ if ($player_count < 1) {
 }
 if (%npc_int = 200) { // 1000 ticks
     ~trawler_win(divide(%npc_trawler_fish_caught, $player_count));
-    ~trawler_reset;
     return;
 }
 
@@ -49,7 +48,6 @@ if (%npc_int = 200) { // 1000 ticks
 
 if (%npc_trawler_flood_status >= 100) {
     ~trawler_sink;
-    ~trawler_reset;
     return;
 }
 if (%npc_trawler_flood_status < 1) {
