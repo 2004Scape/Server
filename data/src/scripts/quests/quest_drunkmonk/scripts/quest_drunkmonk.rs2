@@ -55,7 +55,6 @@ if($delay >= 0) {
     p_delay($delay);
 }
 
-
 [proc,player_monkdance](string $text, int $delay)
 anim(emote_dance, 0);
 say($text);
