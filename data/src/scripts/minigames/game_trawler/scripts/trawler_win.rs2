@@ -49,6 +49,7 @@ if_openmain(ship_journey);
 p_delay(20);
 if_close;
 ~update_all(null);
+cam_reset;
 p_teleport(map_findsquare(^trawler_lobby_murphy_spawn, 0, 4, ^map_findsquare_lineofwalk));
 
 [oploc1,game_trawler_reward_net]
