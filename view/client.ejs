@@ -143,6 +143,28 @@
             return size;
         }
  
+        function toggleAutoSizing() {
+            let canvas = document.getElementById('canvas');
+            let autoSizing = localStorage.getItem('autoSizing') !== 'true';
+
+            canvasAutoSizing(canvas, autoSizing);
+            
+            localStorage.setItem('autoSizing', autoSizing);
+        }
+
+        function canvasAutoSizing(canvas, autoSizing) {
+            if (autoSizing) {
+                canvas.style.width = '100%';
+                canvas.style.height = 'auto';
+                
+                let maxWidth = ((window.innerHeight - 120) / 532) * 789; 
+                canvas.style.maxWidth = maxWidth + 'px';
+            } else {
+                let canvasSize = localStorage.getItem('canvasSize');
+                setCanvasSize(canvas, canvasSize || 1);
+            }
+        }
+
         function saveScreenshot() {
             document.getElementById('screenshot').download = 'screenshot-' + Math.floor(Date.now() / 1000) + '.png';
             document.getElementById('screenshot').href = document.getElementById('canvas').toDataURL('image/png').replace(/^data:image\/[^;]/, 'data:application/octet-stream');
@@ -212,6 +234,11 @@
                     hideControls();
                 }
             }
+
+            let autoSizing = localStorage.getItem('autoSizing') === 'true';
+            if (autoSizing) {
+                canvasAutoSizing(canvas, autoSizing);
+            }
         }
     </script>
 </head>
@@ -228,6 +255,7 @@
             <a class="green" href="#" id="fullscreen" onclick="toggleFullscreen();">Go fullscreen</a> |
             <a class="green" href="#" id="filtering" onclick="toggleFiltering();">Auto scaling</a> |
             <a class="green" href="#" id="canvasSize" onclick="changeCanvasSize();">1x size</a> |
+            <a class="green" href="#" id="canvasAutoSizing" onclick="toggleAutoSizing();">Toggle auto sizing</a> |
             <a class="green" href="#" id="screenshot" onclick="saveScreenshot();">Take screenshot</a> |
             <a class="green" href="#" id="hide" onclick="hideControls();">Hide controls</a>
         </div>

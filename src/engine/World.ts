@@ -673,7 +673,7 @@ class World {
         const start: number = Date.now();
         for (const npc of this.npcs) {
             try {
-                if (npc.checkLifeCycle(this.currentTick)) {
+                if (npc.isActive) {
                     if (npc.delayed && this.currentTick >= npc.delayedUntil) npc.delayed = false;
 
                     // - resume suspended script
@@ -1113,7 +1113,7 @@ class World {
         // - reset npcs
         this.npcRenderer.removeTemporary();
         for (const npc of this.npcs) {
-            if (!npc.checkLifeCycle(tick)) {
+            if (!npc.isActive) {
                 continue;
             }
 

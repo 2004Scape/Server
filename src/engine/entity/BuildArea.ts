@@ -105,7 +105,6 @@ export default class BuildArea {
         const min = -radius >> 1;
         const max = radius >> 1;
         const length = radius ** 2;
-        const tick: number = World.currentTick;
 
         let dx = 0;
         let dz = 0;
@@ -120,7 +119,7 @@ export default class BuildArea {
                         if (this.players.size >= BuildArea.PREFERRED_PLAYERS) {
                             return;
                         }
-                        if (this.filterPlayer(player, pid, level, x, z, tick)) {
+                        if (this.filterPlayer(player, pid, level, x, z)) {
                             yield player;
                         }
                     }
@@ -144,7 +143,6 @@ export default class BuildArea {
         const startZ: number = CoordGrid.zone(z - distance);
         const endX: number = CoordGrid.zone(x + distance);
         const endZ: number = CoordGrid.zone(z + distance);
-        const tick: number = World.currentTick;
 
         for (let zx = startX; zx <= endX; zx++) {
             const zoneX: number = zx << 3;
@@ -154,7 +152,7 @@ export default class BuildArea {
                     if (this.players.size >= BuildArea.PREFERRED_PLAYERS) {
                         return;
                     }
-                    if (!this.filterPlayer(player, pid, level, x, z, tick)) {
+                    if (!this.filterPlayer(player, pid, level, x, z)) {
                         continue;
                     }
                     yield player;
@@ -169,7 +167,6 @@ export default class BuildArea {
         const startZ: number = CoordGrid.zone(z - distance);
         const endX: number = CoordGrid.zone(x + distance);
         const endZ: number = CoordGrid.zone(z + distance);
-        const tick: number = World.currentTick;
 
         for (let zx = startX; zx <= endX; zx++) {
             const zoneX: number = zx << 3;
@@ -179,7 +176,7 @@ export default class BuildArea {
                     if (this.npcs.size >= BuildArea.PREFERRED_NPCS) {
                         return;
                     }
-                    if (!this.filterNpc(npc, level, x, z, tick)) {
+                    if (!this.filterNpc(npc, level, x, z)) {
                         continue;
                     }
                     yield npc;
@@ -188,11 +185,11 @@ export default class BuildArea {
         }
     }
 
-    private filterPlayer(player: Player, pid: number, level: number, x: number, z: number, tick: number): boolean {
-        return !(this.players.has(player) || !CoordGrid.isWithinDistanceSW({ x, z }, player, this.viewDistance) || player.pid === -1 || player.pid === pid || player.level !== level || !player.checkLifeCycle(tick));
+    private filterPlayer(player: Player, pid: number, level: number, x: number, z: number): boolean {
+        return !(this.players.has(player) || !CoordGrid.isWithinDistanceSW({ x, z }, player, this.viewDistance) || player.pid === -1 || player.pid === pid || player.level !== level || !player.isActive);
     }
 
-    private filterNpc(npc: Npc, level: number, x: number, z: number, tick: number): boolean {
-        return !(this.npcs.has(npc) || !CoordGrid.isWithinDistanceSW({ x, z }, npc, BuildArea.PREFERRED_VIEW_DISTANCE) || npc.nid === -1 || npc.level !== level || !npc.checkLifeCycle(tick));
+    private filterNpc(npc: Npc, level: number, x: number, z: number): boolean {
+        return !(this.npcs.has(npc) || !CoordGrid.isWithinDistanceSW({ x, z }, npc, BuildArea.PREFERRED_VIEW_DISTANCE) || npc.nid === -1 || npc.level !== level || !npc.isActive);
     }
 }

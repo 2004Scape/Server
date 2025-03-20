@@ -29,11 +29,13 @@ if(distance(coord, npc_coord) > 17) { // not 100% sure on this, think it's the s
 }
 
 [ai_queue3,zamorak_wizard]
+if (npc_findhero = true) {
+    queue(queue_defeat_zamorak_wizard, 0);
+}
 gosub(npc_death);
 if (npc_findhero = false) {
     return;
 }
-queue(queue_defeat_zamorak_wizard, 0);
 
 obj_add(npc_coord, npc_param(death_drop), 1, ^lootdrop_duration);
 

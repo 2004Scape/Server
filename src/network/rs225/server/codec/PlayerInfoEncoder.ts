@@ -70,13 +70,13 @@ export default class PlayerInfoEncoder extends MessageEncoder<PlayerInfo> {
     }
 
     private writePlayers(buf: Packet, updates: Packet, message: PlayerInfo, bytes: number): number {
-        const { currentTick, renderer, player } = message;
+        const { renderer, player } = message;
         const buildArea: BuildArea = player.buildArea;
         // update other players (255 max - 8 bits)
         buf.pBit(8, buildArea.players.size);
         for (const other of buildArea.players) {
             const pid: number = other.pid;
-            if (pid === -1 || other.tele || other.level !== player.level || !CoordGrid.isWithinDistanceSW(player, other, buildArea.viewDistance) || !other.checkLifeCycle(currentTick) || other.visibility === Visibility.HARD) {
+            if (pid === -1 || other.tele || other.level !== player.level || !CoordGrid.isWithinDistanceSW(player, other, buildArea.viewDistance) || !other.isActive || other.visibility === Visibility.HARD) {
                 // if the player was teleported, they need to be removed and re-added
                 this.remove(buf, player, other);
                 continue;

@@ -37,19 +37,6 @@ export default abstract class Entity extends Linkable {
         return this.lifecycleTick === tick && this.lifecycle !== EntityLifeCycle.FOREVER;
     }
 
-    checkLifeCycle(tick: number): boolean {
-        if (this.lifecycle === EntityLifeCycle.FOREVER) {
-            return true;
-        }
-        if (this.lifecycle === EntityLifeCycle.RESPAWN) {
-            return this.lifecycleTick < tick;
-        }
-        if (this.lifecycle === EntityLifeCycle.DESPAWN) {
-            return this.lifecycleTick > tick;
-        }
-        return false;
-    }
-
     setLifeCycle(tick: number): void {
         this.lifecycleTick = tick;
         this.lastLifecycleTick = World.currentTick;
