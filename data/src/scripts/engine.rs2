@@ -663,8 +663,6 @@
 [command,.loc_findnext]()(boolean)
 // info: Get a param on the current loc
 [command,loc_param]/*(param $param)(dynamic)*/
-// info: Get a param on the secondary loc
-[command,.loc_param]/*(param $param)(dynamic)*/
 // info: Get the current loc's type
 [command,loc_type]()(loc)
 // info: Get the secondary loc's type
