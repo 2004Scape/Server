@@ -98,7 +98,11 @@ if (map_blocked($center) = true | // center
     map_blocked(movecoord($center, 1, 0, -1)) = true | // south-east
     map_blocked(movecoord($center, 0, 0, -1)) = true | // south
     map_blocked(movecoord($center, -1, 0, -1)) = true | // south-west
-    map_blocked(movecoord($center, -1, 0, 0)) = true) // west
+    map_blocked(movecoord($center, -1, 0, 0)) = true | // west
+    lineofwalk(movecoord($center, 0, 0, 1), movecoord($center, 0, 0, -1)) = false |
+    lineofwalk(movecoord($center, 1, 0, 0), movecoord($center, -1, 0, 0)) = false |
+    lineofwalk(movecoord($center, 1, 0, 1), movecoord($center, -1, 0, -1)) = false |
+    lineofwalk(movecoord($center, -1, 0, 1), movecoord($center, 1, 0, -1)) = false)
 {
     mes("There isn't enough space to set up here."); // osrs
     return;
