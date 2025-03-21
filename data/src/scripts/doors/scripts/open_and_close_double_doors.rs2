@@ -13,12 +13,26 @@ def_int $z;
 def_coord $loc_coord = loc_coord;
 def_int $angle = loc_angle;
 def_locshape $shape = loc_shape;
+def_loc $next_loc = lc_param(loc_type, next_loc_stage);
+def_loc $opposite_loc = $next_loc;
+
+def_synth $loc_sound = loc_param(open_sound);
+def_category $category = double_door_open_and_close_right;
 
 def_coord $opposite_coord = loc_coord;
 if ($side = ^left) {
     $opposite_coord = ~movecoord_loc_return(~door_close(loc_angle, loc_shape));
+    $category = double_door_open_and_close_right;
 } else if ($side = ^right) {
     $opposite_coord = ~movecoord_loc_return(~multiply2(~door_close(loc_angle, loc_shape), -1));
+    $category = double_door_open_and_close_left;
+}
+
+loc_findallzone($opposite_coord);
+while (.loc_findnext = true) {
+    if (.loc_coord = $opposite_coord & .loc_category = $category) {
+        $opposite_loc = lc_param(.loc_type, next_loc_stage);
+    }
 }
 
 // walk through door, but if entering, walk next to door and then through
@@ -39,16 +53,11 @@ p_teleport($dest);
 
 if ($side = ^left) {
     // Temp note: dur updated
-    ~open_double_doors_left(3, double_door_open_and_close_right, loc_param(open_sound));
+    ~open_double_doors_left2(3, double_door_open_and_close_right, $next_loc, $opposite_loc, $loc_sound);
 } else if ($side = ^right) {
     // Temp note: dur updated
-    ~open_double_doors_right(3, double_door_open_and_close_left, loc_param(open_sound));
+    ~open_double_doors_right2(3, double_door_open_and_close_left, $next_loc, $opposite_loc, $loc_sound);
 }
-
-// Temp note: dur updated
-loc_add($opposite_coord, loc_83, $angle, $shape, 3);
-loc_add($loc_coord, loc_83, $angle, $shape, 3);
-// mes(~coord_tostring($opposite_coord));
 
 // variation that plays sound instantly
 [proc,open_and_close_double_door2](boolean $entering, int $side, synth $sound)
@@ -58,12 +67,25 @@ def_int $z;
 def_coord $loc_coord = loc_coord;
 def_int $angle = loc_angle;
 def_locshape $shape = loc_shape;
+def_loc $next_loc = lc_param(loc_type, next_loc_stage);
+def_loc $opposite_loc = $next_loc;
+
+def_category $category = double_door_open_and_close_right;
 
 def_coord $opposite_coord = loc_coord;
 if ($side = ^left) {
     $opposite_coord = ~movecoord_loc_return(~door_close(loc_angle, loc_shape));
+    $category = double_door_open_and_close_right;
 } else if ($side = ^right) {
     $opposite_coord = ~movecoord_loc_return(~multiply2(~door_close(loc_angle, loc_shape), -1));
+    $category = double_door_open_and_close_left;
+}
+
+loc_findallzone($opposite_coord);
+while (.loc_findnext = true) {
+    if (.loc_coord = $opposite_coord & .loc_category = $category) {
+        $opposite_loc = lc_param(.loc_type, next_loc_stage);
+    }
 }
 
 // walk through door, but if entering, walk next to door and then through
@@ -87,12 +109,8 @@ p_teleport($dest);
 
 if ($side = ^left) {
     // Temp note: dur updated
-    ~open_double_doors_left(3, double_door_open_and_close_right, null);
+    ~open_double_doors_left2(3, double_door_open_and_close_right, $next_loc, $opposite_loc, null);
 } else if ($side = ^right) {
     // Temp note: dur updated
-    ~open_double_doors_right(3, double_door_open_and_close_left, null);
+    ~open_double_doors_right2(3, double_door_open_and_close_left, $next_loc, $opposite_loc, null);
 }
-
-// Temp note: dur updated
-loc_add($opposite_coord, loc_83, $angle, $shape, 3);
-loc_add($loc_coord, loc_83, $angle, $shape, 3);

@@ -637,6 +637,8 @@
 [command,loc_anim](seq $anim)
 // info: Get the current loc's category
 [command,loc_category]()(category)
+// info: Get the secondary loc's category
+[command,.loc_category]()(category)
 // info: Change the loc into a new loc for $duration cycles
 [command,loc_change](loc $new_loc, int $duration)
 // info: Change the secondary loc into a new loc for $duration cycles
@@ -657,6 +659,8 @@
 [command,loc_findallzone](coord $coord)
 // info: Use the next result from loc_findallzone
 [command,loc_findnext]()(boolean)
+// info: Use the next result from loc_findallzone
+[command,.loc_findnext]()(boolean)
 // info: Get a param on the current loc
 [command,loc_param]/*(param $param)(dynamic)*/
 // info: Get the current loc's type
