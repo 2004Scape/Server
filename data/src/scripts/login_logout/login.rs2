@@ -61,6 +61,7 @@ if (%tutorial_progress < ^tutorial_complete) {
 }
 ~initalltabs;
 ~update_all(inv_getobj(worn, ^wearpos_rhand));
+cam_reset;
 queue(follower_login, 0);
 if (map_production = true) {
     last_login_info;

@@ -68,6 +68,7 @@ wanderrange=7
 defaultmode=patrol
 patrol1=^trawler_start_patrol1
 patrol2=^trawler_start_patrol2
+timer=5
 
 [murphy_flood]
 vislevel=hide
@@ -105,6 +106,7 @@ wanderrange=7
 defaultmode=patrol
 patrol1=^trawler_flood_patrol1
 patrol2=^trawler_flood_patrol2
+timer=5
 
 [murphy_sunk]
 name=Murphy
@@ -139,6 +141,7 @@ head1=model_55_idk_head
 head2=model_81_idk_head
 head3=model_37_npc_head
 wanderrange=1
+timer=1
 
 [game_trawler_shark1]
 name=Shark

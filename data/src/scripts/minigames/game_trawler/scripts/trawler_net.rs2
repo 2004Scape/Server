@@ -1,4 +1,16 @@
+[proc,trawler_net_ripped]()(boolean)
+if (loc_find(^trawler_start_net1, game_trawler_fish_net_broken1) = true) {
+    return(true);
+}
+if (loc_find(^trawler_start_net2, game_trawler_fish_net_broken2) = true) {
+    return(true);
+}
+return(false);
+
 [proc,trawler_rip_net]
+if (~trawler_net_ripped = true) {
+    return;
+}
 if (loc_find(^trawler_start_net1, game_trawler_fish_net1) = true) {
     loc_change(game_trawler_fish_net_broken1, 1000);
 }
