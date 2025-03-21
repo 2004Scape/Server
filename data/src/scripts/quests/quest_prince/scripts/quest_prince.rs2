@@ -52,7 +52,7 @@ if(coordz(coord) > coordz(loc_coord)) {
 ~open_and_close_metal_gate2(loc_1541, true, false);
 
 [ai_timer,prince_ali_disguised]
-npc_changetype(prince_ali);
+npc_changetype(prince_ali, ^max_32bit_int);
 
 [queue,prince_complete]
 %prince_progress = ^prince_complete;

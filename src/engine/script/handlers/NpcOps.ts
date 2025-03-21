@@ -389,7 +389,11 @@ const NpcOps: CommandHandlers = {
     }),
 
     [ScriptOpcode.NPC_CHANGETYPE]: checkedHandler(ActiveNpc, state => {
-        state.activeNpc.changeType(check(state.popInt(), NpcTypeValid).id);
+        const [id, duration] = state.popInts(2);
+        const npcType: number = check(id, NpcTypeValid).id;
+        check(duration, DurationValid);
+
+        state.activeNpc.changeType(npcType, duration);
     }),
 
     [ScriptOpcode.NPC_GETMODE]: checkedHandler(ActiveNpc, state => {

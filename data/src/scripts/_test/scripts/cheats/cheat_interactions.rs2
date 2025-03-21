@@ -314,7 +314,7 @@ inv_clear(worn);
 p_opnpc(2);
 
 world_delay(4);
-npc_changetype(cow_1);
+npc_changetype(cow_1, 400);
 
 
 [proc,repathing_to_an_npc_on_your_last_waypoint]
