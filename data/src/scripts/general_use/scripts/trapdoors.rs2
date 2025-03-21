@@ -1,7 +1,8 @@
 [oploc1,loc_1568]
 mes("The trapdoor opens...");
 sound_synth(door_open, 0, 0);
-loc_change(loc_1570, 485);
+// Temp note: dur does not need updated ? @indio
+loc_change(loc_1570, 500);
 
 [oploc1,loc_1570]
 mes("You climb down through the trapdoor...");
@@ -12,4 +13,5 @@ p_telejump(movecoord(coord(), 0, 0, 6400));
 [oploc2,loc_1570]
 mes("You close the trapdoor.");
 sound_synth(door_close, 0,0 );
-loc_change(loc_1568, 485);
+// Temp note: dur does not need updated ? @indio
+loc_change(loc_1568, 500);

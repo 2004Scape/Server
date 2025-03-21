@@ -10,6 +10,7 @@ anim(human_openchest, 0);
 sound_synth(coffin_open, 0, 0);
 ~check_restlessghost_spawn; // probably before delay like closing
 p_delay(0);
+// Temp note: dur does not need updated
 loc_change(loc_2146, 300);
 
 [oploc2,loc_2145]
@@ -21,6 +22,7 @@ anim(human_closechest, 0);
 sound_synth(coffin_close, 0, 0);
 ~check_restlessghost_spawn; // https://youtu.be/QX-ieoyDXh4?si=mJjuZG052xLGiVWq&t=950
 p_delay(0);
+// Temp note: dur does not need updated
 loc_change(loc_2145, 300);
 
 [proc,check_restlessghost_spawn]

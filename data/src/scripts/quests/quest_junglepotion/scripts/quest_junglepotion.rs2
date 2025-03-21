@@ -64,6 +64,7 @@ switch_namedobj($unid) {
 }
 inv_add(inv, $unid, 1);
 if ($loc ! null) {
+	// Temp note: dur does not need updated
 	loc_change($loc, 100);
 }
 ~objbox($unid, "You find a herb.", 250, 0, divide(^objbox_height, 2));

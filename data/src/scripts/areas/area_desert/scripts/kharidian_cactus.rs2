@@ -70,4 +70,5 @@ if (stat_random(stat(woodcutting), 30, 252) = true) {
     stat_advance(woodcutting, 4);
 }
 
+// Temp note: dur does not need updated
 loc_change(loc_param(next_loc_stage), 100);

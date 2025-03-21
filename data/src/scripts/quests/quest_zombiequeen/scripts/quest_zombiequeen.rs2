@@ -85,12 +85,15 @@ while(loc_findnext = true) {
     if(loc_category = shilo_metalgate) {
             def_coord $central_coord = loc_coord;
             def_int $orig_angle = loc_angle;
-            loc_del(2);
+            // Temp note: dur updated
+            loc_del(3);
             if(loc_type = loc_2259) {
-                loc_add(movecoord($central_coord, -1, 0, 0), loc_1562, 3, loc_shape, 2);
-                loc_add(movecoord($central_coord, -1, 0, 1), loc_1563, 1, loc_shape, 2);
+                // Temp note: dur updated
+                loc_add(movecoord($central_coord, -1, 0, 0), loc_1562, 3, loc_shape, 3);
+                loc_add(movecoord($central_coord, -1, 0, 1), loc_1563, 1, loc_shape, 3);
             }
-            loc_add($central_coord, loc_83, $orig_angle, loc_shape, 2);
+            // Temp note: dur updated
+            loc_add($central_coord, loc_83, $orig_angle, loc_shape, 3);
             sound_synth(grate_open, 0, 0);
     }
 }
@@ -104,10 +107,12 @@ if(%zombiequeen_progress >= ^zombiequeen_complete) {
             def_coord $central_coord = loc_coord;
             def_int $orig_angle = loc_angle;
             def_loc $type = loc_type;
-            loc_change(loc_83, 2);
+            // Temp note: dur updated
+            loc_change(loc_83, 3);
             if($type = loc_2261) {
-                loc_add(movecoord($central_coord, 1, 0, 0), loc_2263, 1, loc_shape, 2);
-                loc_add(movecoord($central_coord, 2, 0, 0), loc_2264, 1, loc_shape, 2); 
+                // Temp note: dur updated
+                loc_add(movecoord($central_coord, 1, 0, 0), loc_2263, 1, loc_shape, 3);
+                loc_add(movecoord($central_coord, 2, 0, 0), loc_2264, 1, loc_shape, 3); 
             }
         }
     }
@@ -268,12 +273,15 @@ while(loc_findnext = true) {
      if(loc_type = loc_2255 | loc_type = loc_2256) {
             def_coord $central_coord = loc_coord;
             def_int $orig_angle = loc_angle;
-            loc_del(2);
+            // Temp note: dur updated
+            loc_del(3);
             if(loc_type = loc_2255) {
-                loc_add(movecoord($central_coord, 0, 0, 1), loc_1562, 0, loc_shape, 2);
-                loc_add(movecoord($central_coord, 1, 0, 1), loc_1563, 2, loc_shape, 2); 
+                // Temp note: dur updated
+                loc_add(movecoord($central_coord, 0, 0, 1), loc_1562, 0, loc_shape, 3);
+                loc_add(movecoord($central_coord, 1, 0, 1), loc_1563, 2, loc_shape, 3); 
             }
-            loc_add($central_coord, loc_83, $orig_angle, loc_shape, 2);
+            // Temp note: dur updated
+            loc_add($central_coord, loc_83, $orig_angle, loc_shape, 3);
      }
 }
 sound_synth(grate_open, 0, 0);
@@ -675,7 +683,8 @@ switch_int(~p_choice3("A ladder", 1, "A crude raft", 2, "A pole vault", 3)) {
         ~mesbox("You see that this table already looks very sea worthy it takes virtually no time at all to help fix it into a crude raft.");
         if_close;
         mes("You place it carefully on the water!");
-        loc_add(0_45_146_17_29, loc_2227, 0, centrepiece_straight, 6);
+        // Temp note: dur updated
+        loc_add(0_45_146_17_29, loc_2227, 0, centrepiece_straight, 7);
         cam_shake(4, 0, 20, 5);
         cam_shake(1, 0, 20, 4);
         stat_advance(crafting, 30);
@@ -687,34 +696,40 @@ switch_int(~p_choice3("A ladder", 1, "A crude raft", 2, "A pole vault", 3)) {
         mes("You push off!");
         p_delay(1);
         say("Weeeeeeee!");
-        loc_del(1);
-        loc_add(0_45_146_12_17, loc_2227, 0, centrepiece_straight, 2);
+        // Temp note: dur updated
+        loc_del(2);
+        loc_add(0_45_146_12_17, loc_2227, 0, centrepiece_straight, 3);
         p_telejump(0_45_146_12_17);
         p_delay(1);
-        loc_del(1);
-        loc_add(0_45_146_22_7, loc_2227, 1, centrepiece_straight, 2);
+        // Temp note: dur updated
+        loc_del(2);
+        loc_add(0_45_146_22_7, loc_2227, 1, centrepiece_straight, 3);
         p_telejump(0_45_146_22_7);
         p_delay(1);
         say("Weeeeeeee!");
-        loc_del(1);
-        loc_add(0_45_146_38_6, loc_2227, 1, centrepiece_straight, 2);
+        // Temp note: dur updated
+        loc_del(2);
+        loc_add(0_45_146_38_6, loc_2227, 1, centrepiece_straight, 3);
         p_telejump(0_45_146_38_6);
         p_delay(1);
-        loc_del(1);
-        loc_add(0_45_146_47_7, loc_2227, 1, centrepiece_straight, 2);
+        // Temp note: dur updated
+        loc_del(2);
+        loc_add(0_45_146_47_7, loc_2227, 1, centrepiece_straight, 3);
         p_telejump(0_45_146_47_7);
         p_delay(1);
         mes("You come to a huge waterfall...");
         say("* Uh oh! *");
-        loc_del(1);
-        loc_add(0_45_146_55_7, loc_2227, 1, centrepiece_straight, 2);
+        // Temp note: dur updated
+        loc_del(2);
+        loc_add(0_45_146_55_7, loc_2227, 1, centrepiece_straight, 3);
         p_telejump(0_45_146_55_7);
         cam_moveto(0_45_146_48_7, 550, 100, 100);
         cam_lookat(0_46_146_7_7, 20, 100, 100);
         p_delay(1);
         mes("...And plough through it!");
-        loc_del(1);
-        loc_add(0_45_146_61_7, loc_2227, 1, centrepiece_straight, 2);
+        // Temp note: dur updated
+        loc_del(2);
+        loc_add(0_45_146_61_7, loc_2227, 1, centrepiece_straight, 3);
         p_teleport(0_45_146_61_7);
         p_delay(1);
         cam_reset;
@@ -722,24 +737,32 @@ switch_int(~p_choice3("A ladder", 1, "A crude raft", 2, "A pole vault", 3)) {
         facesquare(movecoord(coord, 8, 0, 0));
         p_delay(0);
         p_telejump(movecoord(coord, 1, 0, 0));
-        loc_add(coord, loc_2227, 1, centrepiece_straight, 2);
+        // Temp note: dur updated
+        loc_add(coord, loc_2227, 1, centrepiece_straight, 3);
         p_delay(1);
-        loc_del(1);
+        // Temp note: dur updated
+        loc_del(2);
         p_telejump(movecoord(coord, 1, 0, 0));
-        loc_add(coord, loc_2227, 1, centrepiece_straight, 7);
+        // Temp note: dur updated
+        loc_add(coord, loc_2227, 1, centrepiece_straight, 8);
         p_delay(0);
         mes("The raft soons breaks up.");
-        loc_change(loc_1988, 5);
+        // Temp note: dur updated
+        loc_change(loc_1988, 6);
         ~agility_exactmove(human_sidestep_fall, 5, 0, coord, movecoord(coord, 0, 0, 1), 6, 30, ^exact_east, false);
-        loc_del(1);
+        // Temp note: dur updated
+        loc_del(2);
         sound_synth(pool_plop, 0, 0);
         spotanim_map(watersplash, coord, 0, 0);
-        loc_add(movecoord(coord, 1, 0, 0), loc_1988, 1, centrepiece_straight, 5);
+        // Temp note: dur updated
+        loc_add(movecoord(coord, 1, 0, 0), loc_1988, 1, centrepiece_straight, 6);
         ~set_readyandwalk_bas(seq_773, seq_773, human_swim);
         p_delay(0);
         ~forcemove(movecoord(coord, 0, 0, 1));
         ~update_bas;
-        loc_del(1);
+        // Temp note: dur updated
+        loc_del(2);
+        // Temp note: dur does not need updated ? @indio
         loc_add(0_45_46_53_7, loc_1988, 1, centrepiece_straight, 10);
         ~forcemove(movecoord(coord, 0, 0, 1));
     case 3 :
@@ -1208,7 +1231,7 @@ if ($op = 2) {
 
 [label,zqcrystal_activate]
 def_coord $central_coord = 0_45_48_36_20;
-stat_sub(prayer, 0, ~random_range(2,4));
+stat_drain(prayer, 0, add(2, random(3))); // 2-4%
 if(distance(coord, $central_coord) < 10) {
     ~objbox(zqcrystal_white, "The crystal blazes brilliantly.", 250, 0, 0);
 } else if(distance(coord, $central_coord) < 50) {
@@ -1337,12 +1360,13 @@ if(coordz(coord) <= coordz(loc_coord)) {
     p_teleport(loc_coord);
 }
 if((loc_find(0_45_148_12_8, loc_2246) = true | loc_find(0_45_148_12_8, loc_2248) = true | loc_find(0_45_148_12_8, loc_2249) = true) & (.loc_find(0_45_148_13_8, loc_2247) = true | .loc_find(0_45_148_13_8, loc_2250) = true)) {
-    loc_change(loc_2249, 2);
-    .loc_change(loc_2250, 2);
-    loc_change(loc_83, 2);
-    .loc_change(loc_83, 2);
-    loc_add(movecoord(loc_coord, 0, 0, 1), loc_2251, 0, loc_shape, 2);
-    .loc_add(movecoord(.loc_coord, 0, 0, 1), loc_2252, 2, .loc_shape, 2);
+    // Temp note: dur updated
+    loc_change(loc_2249, 3);
+    .loc_change(loc_2250, 3);
+    loc_change(loc_83, 3);
+    .loc_change(loc_83, 3);
+    loc_add(movecoord(loc_coord, 0, 0, 1), loc_2251, 0, loc_shape, 3);
+    .loc_add(movecoord(.loc_coord, 0, 0, 1), loc_2252, 2, .loc_shape, 3);
     sound_synth(coffin_open, 0, 0);
 }
 

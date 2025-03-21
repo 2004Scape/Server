@@ -480,6 +480,45 @@ const PlayerOps: CommandHandlers = {
             player.changeStat(stat);
         }
     }),
+    
+    [ScriptOpcode.STAT_BOOST]: checkedHandler(ActivePlayer, state => {
+        const [stat, constant, percent] = state.popInts(3);
+    
+        check(stat, PlayerStatValid);
+        check(constant, NumberNotNull);
+        check(percent, NumberNotNull);
+    
+        const player = state.activePlayer;
+        const base = player.baseLevels[stat];
+        const current = player.levels[stat];
+    
+        const boost = ((constant + (base * percent) / 100) | 0);
+        const boosted = Math.min(current + boost, base + boost);
+        player.levels[stat] = Math.min(boosted, 255);
+        if (stat === PlayerStat.HITPOINTS && player.levels[PlayerStat.HITPOINTS] >= player.baseLevels[PlayerStat.HITPOINTS]) {
+            player.heroPoints.clear();
+        }
+        if (boosted !== current) {
+            player.changeStat(stat);
+        }
+    }),
+
+    // same as stat_sub except it drains the current level instead of base level
+    [ScriptOpcode.STAT_DRAIN]: checkedHandler(ActivePlayer, state => {
+        const [stat, constant, percent] = state.popInts(3);
+
+        check(stat, PlayerStatValid);
+        check(constant, NumberNotNull);
+        check(percent, NumberNotNull);
+
+        const player = state.activePlayer;
+        const current = player.levels[stat];
+        const subbed = current - ((constant + (current * percent) / 100) | 0);
+        player.levels[stat] = Math.max(subbed, 0);
+        if (subbed !== current) {
+            player.changeStat(stat);
+        }
+    }),
 
     [ScriptOpcode.SPOTANIM_PL]: checkedHandler(ActivePlayer, state => {
         const delay = check(state.popInt(), NumberNotNull);

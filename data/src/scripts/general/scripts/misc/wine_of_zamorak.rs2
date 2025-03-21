@@ -15,11 +15,11 @@ if ($obj = wine_of_zamorak & $coord = 0_45_54_50_59) {
     spotanim_pl(zamorak_flame, 0, 0);
     sound_synth(flames_of_zamorak, 0, 0);
     ~damage_self(calc((stat(hitpoints) / 20) + 1));
-    stat_sub(attack, calc(1 + (stat(attack) * 5) / 100), 0);
-    stat_sub(strength, calc(1 + (stat(strength) * 5) / 100), 0);
-    stat_sub(defence, calc(1 + (stat(defence) * 5) / 100), 0);
-    stat_sub(ranged, calc(1 + (stat(ranged) * 5) / 100), 0);
-    stat_sub(magic, calc(1 + (stat(magic) * 5) / 100), 0);
+    stat_drain(attack, 1, 5);
+    stat_drain(strength, 1, 5);
+    stat_drain(defence, 1, 5);
+    stat_drain(ranged, 1, 5);
+    stat_drain(magic, 1, 5);
 
     def_boolean $has_spoken = false;
 

@@ -36,8 +36,9 @@ if(%arena_progress = ^arena_sent_jail) {
         def_int $angle = loc_angle;
         def_locshape $shape = loc_shape;
         $x, $z = ~door_open($angle, loc_shape);
-        loc_change(loc_83, 2);
-        loc_add(movecoord($loc_coord, $x, 0, $z), loc_37, modulo(add($angle, 1), 4), $shape, 2);
+        // Temp note: dur updated
+        loc_change(loc_83, 3);
+        loc_add(movecoord($loc_coord, $x, 0, $z), loc_37, modulo(add($angle, 1), 4), $shape, 3);
         sound_synth(grate_open, 0, 0);
     }
     p_teleport(movecoord(coord, 0, 0, -1));
@@ -57,8 +58,9 @@ if(%arena_progress = ^arena_sent_jail) {
         def_int $angle = loc_angle;
         def_locshape $shape = loc_shape;
         $x, $z = ~door_open($angle, loc_shape);
-        loc_change(loc_83, 2);
-        loc_add(movecoord($loc_coord, $x, 0, $z), loc_1532, modulo(add($angle, 1), 4), $shape, 2);
+        // Temp note: dur updated
+        loc_change(loc_83, 3);
+        loc_add(movecoord($loc_coord, $x, 0, $z), loc_1532, modulo(add($angle, 1), 4), $shape, 3);
         sound_synth(door_open, 0, 0);
     }
     ~forcemove(movecoord(coord, -4, 0, 4));

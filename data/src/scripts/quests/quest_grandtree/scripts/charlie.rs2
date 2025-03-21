@@ -74,8 +74,8 @@ p_delay(2); // 3t
 if_close;
 // can't use door proc here since it opens incorrectly (notice the lock side)
 if(loc_find(movecoord(coord, 1, 0, 0), loc_3367) = true) {
-    loc_del(6);
-    loc_add(loc_coord, loc_1546, 1, loc_shape, 6);
+    // Temp note: dur updated
+    loc_add(loc_coord, loc_1546, 1, loc_shape, 7);
     sound_synth(locked, 0, 0);
 } 
 p_teleport(movecoord(coord, 1, 0, 0));

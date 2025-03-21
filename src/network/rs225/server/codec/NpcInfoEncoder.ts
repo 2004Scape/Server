@@ -46,13 +46,13 @@ export default class NpcInfoEncoder extends MessageEncoder<NpcInfo> {
     }
 
     private writeNpcs(buf: Packet, updates: Packet, message: NpcInfo, bytes: number): number {
-        const { currentTick, renderer, player } = message;
+        const { renderer, player } = message;
         const buildArea: BuildArea = player.buildArea;
         // update existing npcs (255 max - 8 bits)
         buf.pBit(8, buildArea.npcs.size);
         for (const npc of buildArea.npcs) {
             const nid: number = npc.nid;
-            if (nid === -1 || npc.tele || npc.level !== player.level || !CoordGrid.isWithinDistanceSW(player, npc, 15) || !npc.checkLifeCycle(currentTick)) {
+            if (nid === -1 || npc.tele || npc.level !== player.level || !CoordGrid.isWithinDistanceSW(player, npc, 15) || !npc.isActive) {
                 // if the npc was teleported, it needs to be removed and re-added
                 this.remove(buf, buildArea, npc);
                 continue;

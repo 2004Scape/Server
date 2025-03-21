@@ -138,12 +138,15 @@ while(loc_findnext = true) {
      if(loc_category = wilderness_course_main_gate) {
             def_coord $central_coord = loc_coord;
             def_int $orig_angle = loc_angle;
-            loc_del(3);
+            // Temp note: dur updated
+            loc_del(4);
             if(loc_type = loc_2308) {
-                loc_add(movecoord($central_coord, 0, 0, -1), loc_1563, 0, loc_shape, 3);
-                loc_add(movecoord($central_coord, 1, 0, -1), loc_1562, 2, loc_shape, 3); 
+                // Temp note: dur updated
+                loc_add(movecoord($central_coord, 0, 0, -1), loc_1563, 0, loc_shape, 4);
+                loc_add(movecoord($central_coord, 1, 0, -1), loc_1562, 2, loc_shape, 4); 
             }
-            loc_add($central_coord, loc_83, $orig_angle, loc_shape, 3);
+            // Temp note: dur updated
+            loc_add($central_coord, loc_83, $orig_angle, loc_shape, 4);
      }
 }
 sound_synth(door_open, 0, 0);
@@ -152,8 +155,9 @@ sound_synth(door_open, 0, 0);
 loc_findallzone(coord);
 while(loc_findnext = true) {
     if(loc_type = loc_2309) {
-        loc_change(loc_83, 2);
-        loc_add(movecoord(loc_coord, 0, 0, -1), loc_1541, 0, loc_shape, 2);
+        // Temp note: dur updated
+        loc_change(loc_83, 3);
+        loc_add(movecoord(loc_coord, 0, 0, -1), loc_1541, 0, loc_shape, 3);
         sound_synth(door_open, 0, 0);
     }
 }

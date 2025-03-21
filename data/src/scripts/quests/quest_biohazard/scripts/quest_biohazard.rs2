@@ -80,10 +80,12 @@ mes("The pigeons don't want to leave");
 if_close;
 mes("You climb up the rope ladder...");
 if (loc_find(0_39_51_61_3, loc_2066) = true) {
-    loc_change(loc_2065, 4);
+    // Temp note: dur updated
+    loc_change(loc_2065, 5);
 }
 if (loc_find(0_39_51_62_3, loc_2066) = true) {
-    loc_change(loc_2065, 4);
+    // Temp note: dur updated
+    loc_change(loc_2065, 5);
 }
 if(%biohazard_progress = ^biohazard_released_pigeons) %biohazard_progress = ^biohazard_climbed_ladder;
 p_delay(3); // 4t

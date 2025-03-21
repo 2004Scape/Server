@@ -11,8 +11,8 @@ anim(human_openchest, 0);
 sound_synth(chest_open, 0, 0);
 mes("You unlock the chest with your key.");
 p_delay(0);
-loc_del(1);
-loc_add(loc_coord, muddy_chest_opened, loc_angle, loc_shape, 1);
+// Temp note: dur updated
+loc_add(loc_coord, muddy_chest_opened, loc_angle, loc_shape, 2);
 inv_del(inv, muddy_key, 1);
 inv_add(inv, mithril_bar, 1);
 inv_add(inv, lawrune, 2);
