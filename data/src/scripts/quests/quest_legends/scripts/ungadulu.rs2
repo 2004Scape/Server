@@ -179,7 +179,7 @@ if (~inzone_coord_pair_table(legends_fire_wall, coord) = false) {
 }
 else {
     p_delay(1);
-    npc_facesquare(playerface);
+    npc_setmode(playerface);
     mes("The shaman casts a spell!");
     if(%legends_progress < ^legends_defeated_nezikchened_fire) {
         npc_changetype(ungadulu_possessed);
@@ -199,7 +199,7 @@ else {
     // assuming they've merged the anims at some point. we do this instead to play them in succession.
     // not sure if the outcome is period authentic - no references
     anim(human_knockback_long, 0);
-    p_exactmove($start_coord, $middle, 31, calc(31 + (14 * distance($start_coord, $middle))), ~coord_direction($throw_coord, $start_coord));
+    p_exactmove($start_coord, $middle, 31, calc(31 + (14 * distance($start_coord, $throw_coord))), ~coord_direction($throw_coord, $start_coord));
     p_delay(divide(distance($start_coord, $throw_coord), 2));
     ~set_walkbas(human_knockback_long_end);
     anim(null, 0);
