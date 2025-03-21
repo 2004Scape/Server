@@ -21,8 +21,3 @@ if (last_item = golden_bowl_pure_water | last_item = blessed_golden_bowl_pure_wa
 inv_dropslot(inv, coord, $last, 200);
 anim(null, 0); // https://youtu.be/QvDYolBZNjY?t=164, https://youtu.be/DVHCP2JhQE0?t=142
 sound_synth(put_down, 0, 0);
-
-if (~inzone_coord_pair_table(legends_gem_room, coord) = true) {
-    ~legends_drop_gem;
-    return;
-}

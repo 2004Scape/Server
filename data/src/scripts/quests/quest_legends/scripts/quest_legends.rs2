@@ -232,18 +232,10 @@ if ($entering = false) {
 }
 ~mesbox("You see a white clad figure in the midst of the flames...");
 ~mesbox("You see the white robed figure inside the flaming octagram gesturing to you.");
-// range guess
-// todo: test if this works to handle someone else talking to him, 
-// making him possessed
-npc_findallany(coord, 12, 0);
-while (npc_findnext = true) {
-    if (npc_type = ungadulu) {
-        @ungadulu_no_closer;
-    }
-    else if (npc_type = ungadulu_possessed) {
-        npc_changetype(ungadulu);
-        @ungadulu_no_closer;
-    }
+if (npc_find(coord, ungadulu, 10, 0) = true) {
+    @ungadulu_no_closer;
+} else { // killed or possessed
+    mes("The shaman isn't interested in you at the moment.");
 }
 
 [label,legends_use_on_fire_wall]
@@ -332,7 +324,7 @@ if ($entering = false) {
     ~mesbox("You see a lever which you pull on to open the door.");
     if_close;
     anim(human_push, 0);
-    p_delay(1);
+    p_delay(0);
     mes("The doors make a satisfying click sound as they close.");
     ~open_and_close_double_door2($entering, $side, door_open);
     return;
@@ -399,9 +391,14 @@ if ($last_item = lockpick) {
 
 [label,open_inner_ancient_gate](int $side)
 def_boolean $entering = ~check_axis(coord, loc_coord, loc_angle);
-~mesbox("Two huge metal doors bar the way further... There is an intense|and unpleasant feeling from this place and as you peer through the|cracks in the door you can see why. You see dark, shadowy shapes|flapping around in the still dark air.");
+if(coordz(coord) >= coordz(loc_coord)) {
+    ~mesbox("Two huge metal doors bar the way further... There is an intense|and unpleasant feeling from this place and as you peer through the|cracks in the door you can see why. You see dark, shadowy shapes|flapping around in the still dark air.");
+}
 if(stat(strength) < 50) {
     ~mesbox("You'll need at least 50 Strength to attempt to move these huge metal doors.");
+    if(coordz(coord) < coordz(loc_coord)) {
+        @inner_ancient_gate_stuck;
+    }
     return;
 }
 ~mesbox("You push the doors... They're quite stiff... They won't budge with a|normal push. Do you want to try to force them open with brute|strength?");
@@ -435,6 +432,20 @@ if ($choice = 1) {
 else {
     mes("You decide against forcing the doors.");
 }
+
+[label,inner_ancient_gate_stuck]
+~mesbox("You seem to be stuck! You may be able to push your way through a gap in the doors, but the edges are razor-sharp. Would you like to try?");
+def_int $choice = ~p_choice2_header("Yes, I'll try to push through.", 1, "No thanks, I think there's something else I can try.", 2, "Push through doors?");
+if ($choice = 2) {
+    mes("You decide not to try and push through.");
+    return;
+} 
+if_close;
+p_delay(2);
+mes("You eventually manage to force your way through the door, but you are quite badly cut up as a result.");
+p_teleport(0_43_145_58_34);
+p_delay(2);
+~damage_self(8);
 
 [oploc1,_legends_boulder]
 def_obj $pickaxe = ~pickaxe_checker;
@@ -548,7 +559,7 @@ if (testbit(%legends_map_runes, ^legends_law_rune_2_used) = true) {
 else {
     // 4 periods authentic
     mes("You see no way to use that....");
-    p_delay(1);
+    p_delay(0);
     mes("Perhaps you should search it?");
 }
 
@@ -592,7 +603,7 @@ if (last_useitem = soulrune) {
         %legends_map_runes = setbit(%legends_map_runes, ^legends_soul_rune_used);
     }
     else {
-        ~displaymessage(^dm_default);
+        @legends_wall_wrong_rune(last_useitem);
     }
 }
 else if (last_useitem = mindrune) {
@@ -603,7 +614,7 @@ else if (last_useitem = mindrune) {
         %legends_map_runes = setbit(%legends_map_runes, ^legends_mind_rune_used);
     }
     else {
-        ~displaymessage(^dm_default);
+        @legends_wall_wrong_rune(last_useitem);
     }
 }
 else if (last_useitem = earthrune) {
@@ -614,7 +625,7 @@ else if (last_useitem = earthrune) {
         %legends_map_runes = setbit(%legends_map_runes, ^legends_earth_rune_used);
     }
     else {
-        ~displaymessage(^dm_default);
+        @legends_wall_wrong_rune(last_useitem);
     }
 }
 else if (last_useitem = lawrune) {
@@ -639,12 +650,23 @@ else if (last_useitem = lawrune) {
         }
     }
     else {
-        ~displaymessage(^dm_default);
+        @legends_wall_wrong_rune(last_useitem);
     }
 }
 else {
     ~displaymessage(^dm_default);
 }
+
+[label,legends_wall_wrong_rune](obj $rune)
+if (testbit(%legends_map_runes, ^legends_law_rune_2_used) = true) {
+    @enter_marked_wall(loc_coord);
+}
+mes("The rune burns red hot in your hand!");
+anim(emote_wave, 0);
+p_delay(1);
+~damage_self(5);
+mes("You drop the <lowercase(oc_name($rune))> to the floor.");
+inv_dropitem(inv, coord, $rune, 1, 300);
 
 [label,enter_marked_wall](coord $wall_coord)
 ~mesbox("You walk into the darkness of the magical doorway. You walk for a|short distance before pushing open another door.");
@@ -664,6 +686,14 @@ else {
 ~mesbox("It's meant to look like a stalagmite, but there is something that looks slightly artificial about it. Looking at it more carefully, it seems to look carved.");
 
 [oploc2,legends_carved_rock]
+if (getbit_range(%legends_map_runes, ^legends_opal_used, ^legends_emerald_used) = ^legends_all_gems_used) {
+    if(obj_find(0_43_145_13_17, book_of_binding) = true) {
+        mes("You see that a book has appeared in the centre of the room.");
+        return;
+    }
+    ~check_gem_puzzle_complete;
+    return;
+}
 mes("You see a delicate inscription.");
 ~mesbox("You see a delicate inscription on the rock, it says. 'Once there were crystals to make the pool shine. Ordered in stature to retrieve what's mine.'");
 
@@ -675,93 +705,129 @@ if ($data = null) {
 def_namedobj $gem = db_getfield($data, legends_gem_data:gem_named, 0);
 def_int $gem_bit = db_getfield($data, legends_gem_data:gem_bit, 0);
 if (testbit(%legends_map_runes, $gem_bit) = true) {
-    // todo: can you take the gem here? if you can and do i assume it unsets the bit
-    obj_add(loc_coord, $gem, 1, 5);
+    if(obj_find(loc_coord, $gem) = false) obj_add(loc_coord, $gem, 1, 8);
     mes("A barely visible <oc_name($gem)> becomes visible again, spinning above the rock.");
     mes("The gem soon begins to fade.");
-    p_delay(7);
-    obj_del;
 }
 
 [oplocu,legends_carved_rock]
-db_find(legends_gem_data:rock_coord, loc_coord);
+db_find(legends_gem_data:gem, last_useitem);
 def_dbrow $data = db_findnext;
 if ($data = null) {
     ~displaymessage(^dm_default);
     return;
 }
 def_namedobj $gem = db_getfield($data, legends_gem_data:gem_named, 0);
+def_coord $rock_coord = db_getfield($data, legends_gem_data:rock_coord, 0);
 def_int $gem_bit = db_getfield($data, legends_gem_data:gem_bit, 0);
 if (last_useitem = $gem) {
     mes("You carefully move the gem closer to the rock.");
-    if(testbit(%legends_map_runes, $gem_bit) = true) {
+    if(inv_total(inv, book_of_binding) > 0 | %legends_progress >= ^legends_complete) {
+        mes("Nothing seems to happen...");
+        mes("You have already found the Book of Binding.");
+        return;
+    }
+    if($rock_coord ! loc_coord) {
         mes("But nothing happens.");
+        return;
+    }
+    if (testbit(%legends_map_runes, $gem_bit) = true) {
+        mes("You have already placed a <oc_name($gem)> above this rock.");
+        if(obj_find(loc_coord, $gem) = false) obj_add(loc_coord, $gem, 1, 8);
+        mes("A barely visible <oc_name($gem)> becomes visible again, spinning above the rock.");
+        mes("The gem soon begins to fade.");
         return;
     }
     anim(human_pickuptable, 0);
     // confirm behaviour - slot or item?
-    inv_dropslot(inv, loc_coord, last_useslot, 5);
+    inv_dropslot(inv, loc_coord, last_useslot, 8);
     mes("The <lowercase(oc_name($gem))> glows and starts spinning as it hovers above the rock.");
     mes("The gem soon begins to fade.");
-    //if (getbit_range(%legends_map_runes, ^legends_opal_used, ^legends_emerald_used) = ^legends_all_gems_used) {
-    if (1 = 1) {
+    %legends_map_runes = setbit(%legends_map_runes, $gem_bit);
+    if (getbit_range(%legends_map_runes, ^legends_opal_used, ^legends_emerald_used) = ^legends_all_gems_used) {
         ~check_gem_puzzle_complete;
     }
-    else {
-        // todo: confirm delay
-        world_delay(7);
-        obj_del;
-    }
-    //%legends_map_runes = setbit(%legends_map_runes, $gem_bit);
-
-}
-else {
-    ~displaymessage(^dm_default);
 }
 
-[proc,legends_drop_gem]
-db_find(legends_gem_data:gem, obj_type);
+[proc,legends_drop_gem](int $last_slot)
+db_find(legends_gem_data:gem, inv_getobj(inv, $last_slot));
 def_dbrow $data = db_findnext;
 if ($data = null) {
     return;
 }
 def_namedobj $gem = db_getfield($data, legends_gem_data:gem_named, 0);
 def_coord $rock_coord = db_getfield($data, legends_gem_data:rock_coord, 0);
+def_int $gem_bit = db_getfield($data, legends_gem_data:gem_bit, 0);
 // todo: confirm distance req and that the gem does spawn on the rock
-if (distance(coord, $rock_coord) = 1) {
-    obj_del;
-    obj_add($rock_coord, $gem, 1, 5);
+if (loc_find($rock_coord, legends_carved_rock) = true & distance(coord, $rock_coord) <= 1) {
+    if (testbit(%legends_map_runes, $gem_bit) = true & (inv_total(inv, book_of_binding) = 0 | %legends_progress < ^legends_complete)) {
+        mes("The gem soon begins to fade.");
+        obj_add(loc_coord, $gem, 1, 8);
+        return;
+    }
     mes("As you drop the gem, it slowly glides over to the sharp rock.");
+    p_delay(1);
+    mes("And gently floats above it, rotating slowly.");
+    p_delay(1);
+    if(inv_total(inv, book_of_binding) > 0 | %legends_progress >= ^legends_complete) {
+        mes("Nothing seems to happen...");
+        mes("You have already found the Book of Binding.");
+        return;
+    }
+    inv_dropslot(inv, $rock_coord, $last_slot, 8);
+    anim(human_pickuptable, 0);
     mes("The <lowercase(obj_name)> glows and starts spinning as it hovers above the rock.");
     mes("The gem soon begins to fade.");
+    %legends_map_runes = setbit(%legends_map_runes, $gem_bit);
     if (getbit_range(%legends_map_runes, ^legends_opal_used, ^legends_emerald_used) = ^legends_all_gems_used) {
         ~check_gem_puzzle_complete;
     }
-    else {
-        world_delay(7);
-        obj_del;
-    }
-    //%legends_map_runes = setbit(%legends_map_runes, $gem_bit);
 }
+
+[opobj3,_legends_gem]
+db_find(legends_gem_data:gem, obj_type);
+def_dbrow $data = db_findnext;
+if ($data = null) {
+    return;
+}
+def_coord $rock_coord = db_getfield($data, legends_gem_data:rock_coord, 0);
+def_int $gem_bit = db_getfield($data, legends_gem_data:gem_bit, 0);
+if(obj_coord = $rock_coord) {
+    if (getbit_range(%legends_map_runes, ^legends_opal_used, ^legends_emerald_used) = ^legends_all_gems_used | testbit(%legends_map_runes, $gem_bit) =  false) {
+        mes("The gem seems untouchable, as if it wasn't even there.");
+        return;
+    }
+     %legends_map_runes = clearbit(%legends_map_runes, $gem_bit);
+    mes("You take the <obj_name>.");
+    // if your inv is full it will unset the bit and lose the gem!
+    @pickup_obj_table(obj_type, obj_count);
+}
+
+[opheld5,_legends_gem]
+if(~inzone_coord_pair_table(legends_gem_room, coord) = true) {
+    ~legends_drop_gem(last_slot);
+    return;
+}
+~dropslot(last_slot);
 
 [proc,check_gem_puzzle_complete]
 if (p_finduid(uid) = false) {
     return;
 }
 mes("You feel a powerful force picking you up....");
+facesquare(movecoord(coord, 0, 0, 1));
 p_delay(1);
 def_coord $start_coord = coord;
 def_coord $middle = 0_43_145_12_16;
-anim(human_knockback_long, 0);
-// todo: exact values here
-p_exactmove($start_coord, $middle, 31, 115, ^exact_north);
-p_delay(add(divide(distance($start_coord, $middle), 2), 1));
+anim(human_knockback_long, 30);
+// https://youtu.be/uF1a9xsV7zo?si=T6uQtmCzRTq_KGfD&t=1481 exactmove jank for longer dist is authentic
+p_exactmove($start_coord, $middle, 31, calc(31 + (14 * distance($start_coord, $middle))), ^exact_north);
+p_delay(divide(distance($start_coord, $middle), 2));
 anim(null, 0);
-p_delay(0);
-anim(human_knockback_long_end, 15);
-obj_del;
+~set_walkbas(human_knockback_long_end);
 p_delay(1);
-p_delay(2);
+~update_bas;
+p_delay(1);
 mes("All the gems suddenly appear again...");
 mes("Suddenly the room is lit up with a brilliant light...");
 def_int $gem_count = db_listall_with_count(legends_gem_data);
@@ -774,39 +840,37 @@ while ($i < $gem_count) {
     }
     def_namedobj $gem = db_getfield($data, legends_gem_data:gem_named, 0);
     def_coord $rock_coord = db_getfield($data, legends_gem_data:rock_coord, 0);
-    obj_add($rock_coord, $gem, 1, 5);
-    // todo: exact values here
-    ~coord_projectile($rock_coord, 0_43_145_13_17, windblast_travel, 16, 130, 50, 20, 21, 10, 20);
-    ~coord_projectile($rock_coord, 0_43_145_13_17, windblast_travel, 16, 130, 200, 20, 21, 10, 20);
-    ~coord_projectile($rock_coord, 0_43_145_13_17, windblast_travel, 16, 130, 350, 20, 21, 10, 20);
-    ~coord_projectile($rock_coord, 0_43_145_13_17, windblast_travel, 16, 130, 500, 20, 21, 10, 20);
+    obj_add($rock_coord, $gem, 1, 30);
     $i = calc($i + 1);
 }
-// todo: exact values here
-spotanim_map(windwave_impact, 0_43_145_13_17, 92, 200);
-spotanim_map(windwave_impact, 0_43_145_13_17, 92, 350);
-spotanim_map(windwave_impact, 0_43_145_13_17, 92, 500);
-spotanim_map(windwave_impact, 0_43_145_13_17, 92, 650);
-p_delay(15);
-db_listall(legends_gem_data);
+world_delay(1);
 $i = 0;
-while ($i < $gem_count) {
-    $data = db_findnext;
-    if ($data = null) {
-        return;
+while($i < 13) {
+    switch_int($i) {
+        case 4 : spotanim_map(spotanim_198, 0_43_145_13_17, 114, 10);
+        case 9 : spotanim_map(spotanim_198, 0_43_145_13_17, 108, 5);
+        case 13 : spotanim_map(spotanim_198, 0_43_145_13_17, 66, 1);
     }
-    def_namedobj $gem = db_getfield($data, legends_gem_data:gem_named, 0);
-    def_coord $rock_coord = db_getfield($data, legends_gem_data:rock_coord, 0);
-    obj_find($rock_coord, $gem);
-    obj_del;
+    ~coord_projectile(0_43_145_12_29, 0_43_145_13_17, spotanim_185, 48, 0, 46, 45, 10, 45, 10);
+    ~coord_projectile(0_43_145_19_23, 0_43_145_13_17, spotanim_185, 48, 0, 46, 45, 10, 45, 10);
+    ~coord_projectile(0_43_145_20_15, 0_43_145_13_17, spotanim_185, 48, 0, 46, 45, 10, 45, 10);
+    ~coord_projectile(0_43_145_29_11, 0_43_145_13_17, spotanim_185, 48, 0, 46, 45, 10, 45, 10);
+    ~coord_projectile(0_43_145_22_7, 0_43_145_13_17, spotanim_185, 48, 0, 46, 45, 10, 45, 10);
+    ~coord_projectile(0_43_145_15_9, 0_43_145_13_17, spotanim_185, 48, 0, 46, 45, 10, 45, 10);
+    ~coord_projectile(0_43_145_5_17, 0_43_145_13_17, spotanim_185, 48, 0, 46, 45, 10, 45, 10);
     $i = calc($i + 1);
+    if($i = 13 & finduid(uid) = true) {
+        mes("...Strangely a book appears near the middle of the room.");
+        obj_add(0_43_145_13_17, book_of_binding, 1, 500);
+    }
+    world_delay(1);
 }
-p_delay(1);
-mes("...Strangely a book appears near the middle of the room.");
-// todo: confirm duration
-obj_add(0_43_145_13_17, book_of_binding, 1, 200);
-// bit range cleared so puzzle can be completed again if book is lost
-%legends_map_runes = clearbit_range(%legends_map_runes, ^legends_opal_used, ^legends_emerald_used);
+
+[opobj3,book_of_binding]
+if (getbit_range(%legends_map_runes, ^legends_opal_used, ^legends_emerald_used) = ^legends_all_gems_used) {
+    %legends_map_runes = clearbit_range(%legends_map_runes, ^legends_opal_used, ^legends_emerald_used);
+}
+@pickup_obj(obj_coord, obj_type, obj_count);
 
 [opheld1,book_of_binding]
 %book_page = 0;

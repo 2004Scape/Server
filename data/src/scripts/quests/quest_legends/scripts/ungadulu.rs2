@@ -47,6 +47,11 @@ cleartimer(ungadulu_curse);
 
 [proc,legends_check_spell_usage](int $spell, dbrow $spell_data, int $duration)(boolean)
 if (npc_type = ungadulu & ($spell = ^confuse | $spell = ^curse | $spell = ^weaken)) {
+    p_delay(1);
+    if (~inzone_coord_pair_table(legends_fire_wall, coord) = false & random(3) = 0) { // seems to be random??
+        ~mesbox("The spell fizzles and has no effect as it passes through the flames.");
+        return (true);
+    }
     if (gettimer(ungadulu_curse) > 0) {
         spotanim_npc(db_getfield($spell_data, magic_spell_table:spotanim_target, 0), $duration);
         ~chatnpc("<p,shock>Thank you, Bwana! You have released me from the|demon's grasp, but only for a short while! You must|seek out the Book of Binding - it's hidden in these caves somewhere!.");
@@ -57,9 +62,8 @@ if (npc_type = ungadulu & ($spell = ^confuse | $spell = ^curse | $spell = ^weake
     }
     ~pvm_spell_fail($spell_data, $duration);
     npc_say("What...what's happening...");
-    // dizzy anim
-    //npc_anim()
-    p_delay(2);
+    npc_anim(seq_848, 0);
+    p_delay(1);
     npc_setmode(opplayer2);
     mes("The shaman somehow resists the power of the spell.");
     mes("Perhaps you should try again?");
@@ -91,11 +95,11 @@ npc_changetype(ungadulu);
 
 [label,ungadulu_where]
 ~chatplayer("<p,neutral>Where do I get pure water from?");
-~chatnpc("<p,neutral>Please, leave now...");
+~chatnpc("<p,shock>Please, leave now...");
 npc_changetype(ungadulu_possessed);
-~chatnpc("<p,neutral>...from the above lands... hurry and release me...");
+~chatnpc("<p,angry>...from the above lands... hurry and release me...");
 npc_changetype(ungadulu);
-~chatnpc("<p,neutral>Leave here, please, go... now...");
+~chatnpc("<p,shock>Leave here, please, go... now...");
 npc_changetype(ungadulu_possessed);
 ~chatnpc("<p,madlaugh>Hurry, Vacu, the heat kills me... ha ha ha");
 %legends_map_runes = setbit(%legends_map_runes, ^legends_ungadulu_called_vacu);
@@ -175,10 +179,14 @@ if (~inzone_coord_pair_table(legends_fire_wall, coord) = false) {
 }
 else {
     p_delay(1);
-    npc_facesquare(coord);
+    npc_facesquare(playerface);
     mes("The shaman casts a spell!");
-    npc_changetype(ungadulu_possessed);
-    npc_say("Ha ha ha ha! Die, Vacu!");
+    if(%legends_progress < ^legends_defeated_nezikchened_fire) {
+        npc_changetype(ungadulu_possessed);
+        npc_say("Ha ha ha ha! Die, Vacu!");
+    } else {
+        npc_say("Hey! That's no way to treat a shaman.");
+    }
     spotanim_npc(zap, 100, 0);
     npc_anim(zap, 0);
     p_delay(1);
@@ -191,16 +199,19 @@ else {
     // assuming they've merged the anims at some point. we do this instead to play them in succession.
     // not sure if the outcome is period authentic - no references
     anim(human_knockback_long, 0);
-    p_exactmove($start_coord, $throw_coord, 31, 115, ~coord_direction($throw_coord, $start_coord));
-    p_delay(add(divide(distance($start_coord, $throw_coord), 2), 1));
+    p_exactmove($start_coord, $middle, 31, calc(31 + (14 * distance($start_coord, $middle))), ~coord_direction($throw_coord, $start_coord));
+    p_delay(divide(distance($start_coord, $throw_coord), 2));
+    ~set_walkbas(human_knockback_long_end);
     anim(null, 0);
-    p_delay(0);
-    anim(human_knockback_long_end, 15);
     p_delay(1);
     ~damage_self(calc(random(7) + 4));
     npc_setmode(wander);
     npc_settimer(10);
     ~mesbox("Ungadulu unleashes a savage bolt of energy at you. You're knocked out of the octagram by the power of the spell.");
+    if(%legends_progress >= ^legends_defeated_nezikchened_fire) {
+        ~chatnpc("<p,angry>I hope that teaches you to respect your elders!");
+        return;
+    }
     ~chatnpc("<p,madlaugh>Ha, ha ha Vacu... Come for me again and you'll taste more of my power!");
 }
 

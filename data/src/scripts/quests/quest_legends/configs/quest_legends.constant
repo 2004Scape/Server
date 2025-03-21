@@ -63,7 +63,7 @@
 ^legends_golden_bowl_uses_start = 19
 ^legends_golden_bowl_uses_end = 23
 
-^legends_all_gems_used = 128
+^legends_all_gems_used = 127
 ^legends_required_questpoints = 107
 
 ^jungle_type_tree = 0
