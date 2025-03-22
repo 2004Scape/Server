@@ -24,6 +24,7 @@ import { EntityQueueRequest, PlayerQueueType, QueueType, ScriptArgument } from '
 import { EntityTimer, PlayerTimerType } from '#/engine/entity/EntityTimer.js';
 import HeroPoints from '#/engine/entity/HeroPoints.js';
 import Loc from '#/engine/entity/Loc.js';
+import ModalState from '#/engine/entity/ModalState.js';
 import MoveRestrict from '#/engine/entity/MoveRestrict.js';
 import MoveSpeed from '#/engine/entity/MoveSpeed.js';
 import MoveStrategy from '#/engine/entity/MoveStrategy.js';
@@ -357,7 +358,7 @@ export default class Player extends PathingEntity {
     cameraPackets: LinkList<CameraInfo> = new LinkList();
     timers: Map<number, EntityTimer> = new Map();
     tabs: number[] = new Array(14).fill(-1);
-    modalState = 0; // 1 - main, 2 - chat, 4 - side, 8 - tutorial
+    modalState = ModalState.NONE;
     modalMain = -1;
     lastModalMain = -1;
     modalChat = -1;
@@ -703,11 +704,11 @@ export default class Player extends PathingEntity {
             this.protect = false;
         }
 
-        if (this.modalState === 0) {
+        if (this.modalState === ModalState.NONE) {
             return;
         }
 
-        this.modalState = 0;
+        this.modalState = ModalState.NONE;
 
         // close any input dialogue suspended scripts.
         if (this.activeScript?.execution === ScriptState.COUNTDIALOG || this.activeScript?.execution === ScriptState.PAUSEBUTTON) {
@@ -749,7 +750,7 @@ export default class Player extends PathingEntity {
 
     containsModalInterface() {
         // main or chat is open
-        return (this.modalState & 1) !== 0 || (this.modalState & 2) !== 0;
+        return (this.modalState & (ModalState.MAIN | ModalState.CHAT)) !== 0;
     }
 
     busy() {
@@ -1842,47 +1843,47 @@ export default class Player extends PathingEntity {
     }
 
     openMainModal(com: number) {
-        if ((this.modalState & 2) !== 0) {
+        if ((this.modalState & ModalState.CHAT) !== 0) {
             // close chat modal if we're opening a new main modal
             this.write(new IfClose());
-            this.modalState &= ~2;
+            this.modalState &= ~ModalState.CHAT;
             this.modalChat = -1;
         }
 
-        if ((this.modalState & 4) !== 0) {
+        if ((this.modalState & ModalState.SIDE) !== 0) {
             // close side modal if we're opening a new main modal
             this.write(new IfClose());
-            this.modalState &= ~4;
+            this.modalState &= ~ModalState.SIDE;
             this.modalSide = -1;
         }
 
-        this.modalState |= 1;
+        this.modalState |= ModalState.MAIN;
         this.modalMain = com;
         this.refreshModal = true;
     }
 
     openChat(com: number) {
-        this.modalState |= 2;
+        this.modalState |= ModalState.CHAT;
         this.modalChat = com;
         this.refreshModal = true;
     }
 
     openSideModal(com: number) {
-        this.modalState |= 4;
+        this.modalState |= ModalState.SIDE;
         this.modalSide = com;
         this.refreshModal = true;
     }
 
     openTutorial(com: number) {
         this.write(new TutOpen(com));
-        this.modalState |= 8;
+        this.modalState |= ModalState.TUT;
         this.modalTutorial = com;
     }
 
     openMainModalSide(top: number, side: number) {
-        this.modalState |= 1;
+        this.modalState |= ModalState.MAIN;
         this.modalMain = top;
-        this.modalState |= 4;
+        this.modalState |= ModalState.SIDE;
         this.modalSide = side;
         this.refreshModal = true;
     }
@@ -2054,7 +2055,7 @@ export default class Player extends PathingEntity {
         } else if (script === this.activeScript) {
             this.activeScript = null;
 
-            if ((this.modalState & 1) === 0) {
+            if ((this.modalState & ModalState.MAIN) === 0) {
                 // close chat dialogues automatically and leave main modals alone
                 this.closeModal();
             }
