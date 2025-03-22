@@ -362,6 +362,30 @@ export default class ClientCheatHandler extends MessageHandler<ClientCheat> {
             } else if (cmd === 'serverdrop') {
                 // testing reconnection behavior
                 player.terminate();
+            } else if (cmd === 'teleother' && Environment.NODE_PRODUCTION) {
+                // custom
+                if (args.length < 1) {
+                    // ::teleother <username>
+                    return false;
+                }
+
+                const other = World.getPlayerByUsername(args[0]);
+                if (!other) {
+                    player.messageGame(`${args[0]} is not logged in.`);
+                    return false;
+                }
+
+                other.closeModal();
+
+                if (!other.canAccess()) {
+                    player.messageGame(`${args[0]} is busy right now.`);
+                    return false;
+                }
+
+                other.clearInteraction();
+                other.unsetMapFlag();
+
+                other.teleJump(player.x, player.z, player.level);
             }
         }
 
@@ -431,30 +455,6 @@ export default class ClientCheatHandler extends MessageHandler<ClientCheat> {
                 player.unsetMapFlag();
 
                 player.teleJump(other.x, other.z, other.level);
-            } else if (cmd === 'teleother' && Environment.NODE_PRODUCTION) {
-                // custom
-                if (args.length < 1) {
-                    // ::teleother <username>
-                    return false;
-                }
-
-                const other = World.getPlayerByUsername(args[0]);
-                if (!other) {
-                    player.messageGame(`${args[0]} is not logged in.`);
-                    return false;
-                }
-
-                other.closeModal();
-
-                if (!other.canAccess()) {
-                    player.messageGame(`${args[0]} is busy right now.`);
-                    return false;
-                }
-
-                other.clearInteraction();
-                other.unsetMapFlag();
-
-                other.teleJump(player.x, player.z, player.level);
             } else if (cmd === 'setstat') {
                 // authentic
                 if (args.length < 2) {
