@@ -21,6 +21,10 @@ export type account = {
     notes: string | null;
     notes_updated: string | null;
     members: Generated<number>;
+    tfa_enabled: Generated<number>;
+    tfa_last_code: Generated<number>;
+    tfa_secret_base32: string | null;
+    tfa_incorrect_attempts: Generated<number>;
 };
 export type account_session = {
     id: Generated<number>;
