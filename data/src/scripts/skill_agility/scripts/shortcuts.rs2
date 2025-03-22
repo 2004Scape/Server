@@ -101,7 +101,7 @@ switch_coord (loc_param(start_coord)) {
 }
 
 [oploc1,_island_rope_swing]
-def_int $dist = distance(coord, loc_param(start_coord));
+def_int $dist = ~total_distance(coord, loc_param(start_coord));
 if($dist > 3) {
     mes("You cannot do that from here.");
     return;
@@ -111,8 +111,8 @@ if(loc_type ! loc_2323 & stat(agility) < 10) {
     mes("You need an agility level of 10 to attempt to swing on this vine.");
     return;
 }
+p_delay(0);
 if(coord ! loc_param(start_coord)) {
-    p_delay(0);
     p_walk(loc_param(start_coord));
 }
 if(~get_island_rope_var >= map_clock) {
@@ -120,7 +120,17 @@ if(~get_island_rope_var >= map_clock) {
     return;
 }
 ~set_island_rope_var(calc(map_clock + 4));
-p_delay($dist);
+if($dist > 0) {
+    if(loc_type = loc_2323) {
+        if (%run = ^player_run_off) {
+            p_delay(sub($dist, 1));
+        } else {
+            p_delay(sub(divide($dist, 2), 1));
+        } 
+    } else {
+        p_delay(0);
+    }
+}
 loc_anim(rope_swing);
 ~agility_exactmove(human_ropeswing, 20, 1, coord, loc_param(end_coord), 45, 70, loc_param(dir), false);
 mes("You skillfully swing across.");

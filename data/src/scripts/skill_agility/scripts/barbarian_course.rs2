@@ -22,7 +22,7 @@ if(%barb_ropeswing_used >= map_clock) {
     return;
 }
 %barb_ropeswing_used = calc(map_clock + 3);
-p_delay($delay);
+if($delay > 0) p_delay($delay);
 loc_anim(rope_swing);
 ~agility_exactmove(human_ropeswing, 20, 1, $start_pos, movecoord($start_pos, 0, 0, -5), 45, 70, ^exact_south, false);
 mes("You skillfully swing across.");
