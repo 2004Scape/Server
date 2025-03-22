@@ -61,16 +61,7 @@ function safeExit() {
     }
 
     exiting = true;
-
-    try {
-        if (!Environment.EASY_STARTUP && !Environment.NODE_DEBUG) {
-            World.rebootTimer(Environment.NODE_KILLTIMER as number);
-        } else {
-            World.rebootTimer(0);
-        }
-    } catch (err) {
-        console.error(err);
-    }
+    World.rebootTimer(0);
 }
 
 process.on('SIGINT', safeExit);
