@@ -40,6 +40,15 @@ model account {
     notes_updated DateTime?
 
     members Boolean @default(true)
+
+    // Whether 2FA is enabled
+    tfa_enabled Boolean @default(false)
+    // To prevent replay attacks
+    tfa_last_code Int @default(0)
+    // Secret key for code generation
+    tfa_secret_base32 String?
+    // How many incorrect attempts have been made in a row
+    tfa_incorrect_attempts Int @default(0)
 }
 
 model session {
