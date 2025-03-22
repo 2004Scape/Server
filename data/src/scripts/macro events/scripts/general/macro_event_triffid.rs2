@@ -31,7 +31,7 @@ if (%npc_int = ^triffid_ready_to_attack) { // turn hostile
     npc_anim(seq_351, 60);
     npc_delay(4);
 
-    npc_changetype(macro_event_triffid_hostile);
+    npc_changetype(macro_event_triffid_hostile, ^max_32bit_int);
     npc_delay(1);
     npc_settimer(1);
     if (finduid(%npc_macro_event_target) = true) {

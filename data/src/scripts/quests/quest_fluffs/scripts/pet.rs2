@@ -41,7 +41,7 @@ if (npc_finduid(%follower_uid) = true) {
 
 [label,cat_growth]
 if (getbit_range(%cat_growth, 11, 19) = 320) {
-    npc_changetype(nc_param(npc_type, cat_next_id));
+    npc_changetype(nc_param(npc_type, cat_next_id), ^max_32bit_int);
     %follower_obj = nc_param(npc_type, pet_item_id);
     %cat_growth = 0; //according to ash, this gets wiped when the cat becomes overgrown
     npc_say("Meeeooowww!");
@@ -55,7 +55,7 @@ if ($attent = 0) {
     $attent = 28; //default attent for a new kitten is supposed to be 28
 }
 if (getbit_range(%cat_growth, 11, 19) = 120) {
-    npc_changetype(nc_param(npc_type, cat_next_id));
+    npc_changetype(nc_param(npc_type, cat_next_id), ^max_32bit_int);
     %follower_obj = nc_param(npc_type, pet_item_id);
     npc_say("Meeeooowww!");
     ~mesbox("Your kitten has grown into a healthy cat,|that can hunt for itself."); //imgur.com/ni0BBTb

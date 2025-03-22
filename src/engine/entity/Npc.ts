@@ -24,7 +24,7 @@ import NpcStat from '#/engine/entity/NpcStat.js';
 import Obj from '#/engine/entity/Obj.js';
 import PathingEntity from '#/engine/entity/PathingEntity.js';
 import Player from '#/engine/entity/Player.js';
-import { isFlagged , findNaivePath } from '#/engine/GameMap.js';
+import { isFlagged, findNaivePath } from '#/engine/GameMap.js';
 import ScriptFile from '#/engine/script/ScriptFile.js';
 import { HuntIterator } from '#/engine/script/ScriptIterators.js';
 import ScriptPointer from '#/engine/script/ScriptPointer.js';
@@ -38,9 +38,9 @@ import LinkList from '#/util/LinkList.js';
 export default class Npc extends PathingEntity {
     // constructor properties
     nid: number;
-    type: number;
     uid: number;
-    origType: number;
+    baseType: number;
+    currentType: number;
     startX: number;
     startZ: number;
     startLevel: number;
@@ -74,12 +74,12 @@ export default class Npc extends PathingEntity {
     constructor(level: number, x: number, z: number, width: number, length: number, lifecycle: EntityLifeCycle, nid: number, type: number, moveRestrict: MoveRestrict, blockWalk: BlockWalk) {
         super(level, x, z, width, length, lifecycle, moveRestrict, blockWalk, MoveStrategy.NAIVE, NpcInfoProt.FACE_COORD, NpcInfoProt.FACE_ENTITY);
         this.nid = nid;
-        this.type = type;
+        this.baseType = type;
+        this.currentType = type;
         this.uid = (type << 16) | nid;
         this.startX = this.x;
         this.startZ = this.z;
         this.startLevel = this.level;
-        this.origType = type;
 
         const npcType = NpcType.get(type);
 
@@ -124,7 +124,7 @@ export default class Npc extends PathingEntity {
 
     resetEntity(respawn: boolean) {
         if (respawn) {
-            this.type = this.origType;
+            this.currentType = this.baseType;
             this.uid = (this.type << 16) | this.nid;
             this.unfocus();
             this.playAnimation(-1, 0); // reset animation or last anim has a chance to appear on respawn
@@ -1005,13 +1005,27 @@ export default class Npc extends PathingEntity {
         this.focus(CoordGrid.fine(x, 1), CoordGrid.fine(z, 1), true);
     }
 
-    changeType(type: number) {
-        this.type = type;
+    get type(): number {
+        return this.currentType;
+    }
+
+    changeType(type: number, duration: number) {
+        if (!this.isActive || duration < 1) {
+            return;
+        }
+        this.currentType = type;
         this.masks |= NpcInfoProt.CHANGE_TYPE;
         this.uid = (type << 16) | this.nid;
 
-        const npcType: NpcType = NpcType.get(type);
-        this.setTimer(npcType.timer);
+        this.setLifeCycle(World.currentTick + duration);
+    }
+
+    revert(): void {
+        this.currentType = this.baseType;
+        this.masks |= NpcInfoProt.CHANGE_TYPE;
+        this.uid = (this.type << 16) | this.nid;
+
+        this.setLifeCycle(-1);
     }
 
     isValid(_hash64?: bigint): boolean {

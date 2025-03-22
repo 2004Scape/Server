@@ -16,7 +16,7 @@ if(inv_total(inv, bronze_key) >= 1 & inv_total(inv, wig_blonde) >= 1 & inv_total
     inv_del(inv, pink_skirt, 1);
     inv_del(inv, paste, 1);
     %prince_progress = ^prince_saved;
-    npc_changetype(prince_ali_disguised);
+    npc_changetype(prince_ali_disguised, ^max_32bit_int);
     ~chatnpc_specific("Prince Ali", lady_keli, "<p,happy>Thank you my friend, I must leave you now.|My father will pay you well for this.");
     ~chatplayer("<p,happy>Go to Leela, she is close to here.");
     npc_del;

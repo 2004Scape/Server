@@ -25,3 +25,7 @@
 
 ^trawler_flood_patrol1 = 0_31_75_29_25
 ^trawler_flood_patrol2 = 0_31_75_36_25
+
+
+^trawler_control_flooded = 1
+^trawler_control_nonflooded = 0

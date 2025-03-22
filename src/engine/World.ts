@@ -4,7 +4,7 @@ import { Worker as NodeWorker } from 'worker_threads';
 
 // deps
 import * as rsbuf from '@2004scape/rsbuf';
-import { PlayerInfoProt, Visibility } from '@2004scape/rsbuf';
+import { PlayerInfoProt } from '@2004scape/rsbuf';
 import kleur from 'kleur';
 import forge from 'node-forge';
 
@@ -500,6 +500,7 @@ class World {
         } catch (err) {
             if (err instanceof Error) {
                 printError('eep eep cabbage! An unhandled error occurred during the cycle: ' + err.message);
+                console.error(err.stack);
             }
 
             printError('Removing all players...');
@@ -600,7 +601,7 @@ class World {
                 if (this.currentTick % World.AFK_EVENTRATE === 0) {
                     // (normal) 1/12 chance every 5 minutes of setting an afk event state (even distrubution 60/5)
                     // (afk) double the chance?
-                    player.afkEventReady = player.visibility === Visibility.DEFAULT && Math.random() < (player.zonesAfk() ? 0.1666 : 0.0833);
+                    player.afkEventReady = Math.random() < (player.zonesAfk() ? 0.1666 : 0.0833);
                 }
 
                 if (isClientConnected(player) && player.decodeIn()) {
@@ -674,14 +675,22 @@ class World {
                     }
                 }
 
-                // - respawn
-                if (npc.updateLifeCycle(this.currentTick)) {
+                // - Npc Events (Respawn, Revert, Despawn)
+                if (npc.lifecycleTick > -1 && npc.lifecycleTick < this.currentTick) {
                     try {
-                        if (npc.lifecycle === EntityLifeCycle.RESPAWN) {
+                        // Respawn NPC
+                        if (npc.lifecycle === EntityLifeCycle.RESPAWN && !npc.isActive) {
                             this.addNpc(npc, -1, false);
-                        } else if (npc.lifecycle === EntityLifeCycle.DESPAWN) {
+                        }
+                        // Revert NPC
+                        if (npc.lifecycle === EntityLifeCycle.RESPAWN) {
+                            npc.revert();
+                        }
+                        // Despawn NPC
+                        else if (npc.lifecycle === EntityLifeCycle.DESPAWN) {
                             this.removeNpc(npc, -1);
                         }
+                        npc.setLifeCycle(-1);
                     } catch (err) {
                         // there was an error adding or removing them, try again next tick...
                         // ex: server is full on npc IDs (did we have a leak somewhere?) and we don't want to re-use the last ID (syncing related)
@@ -999,9 +1008,16 @@ class World {
     private processZones(): void {
         const start: number = Date.now();
         const tick: number = this.currentTick;
-        // - loc/obj despawn/respawn
-        // - compute shared buffer
-        this.zonesTracking.get(tick)?.forEach(zone => zone.tick(tick));
+        try {
+            // - loc/obj despawn/respawn
+            // - compute shared buffer
+            this.zonesTracking.get(tick)?.forEach(zone => zone.tick(tick));
+        } catch (err) {
+            if (err instanceof Error) {
+                printError(`Error during processZones: ${err.message}`);
+                console.error(err.stack);
+            }
+        }
         this.cycleStats[WorldStat.ZONE] = Date.now() - start;
     }
 

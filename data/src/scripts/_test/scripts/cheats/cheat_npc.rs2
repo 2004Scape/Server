@@ -1,0 +1,39 @@
+[debugproc,npc_change_dynamic]
+if (p_finduid(uid) = true) {
+    p_telejump(0_37_55_32_9);
+    p_delay(0);
+    npc_add(0_37_55_33_9, man_brown, 7);
+    p_delay(5);
+    npc_changetype(cow_1, 10);
+}
+
+
+[debugproc,npc_change_static]
+if (p_finduid(uid) = true) {
+    p_telejump(0_50_50_2_62);
+    npc_findallany(coord, 10, ^vis_off);
+    while (npc_findnext = true) {
+        npc_changetype(cow_1, 10);
+    }
+}
+
+[debugproc,npc_del_change]
+if (p_finduid(uid) = true) {
+    p_telejump(0_37_55_32_9);
+    p_delay(0);
+    npc_add(0_37_55_33_9, man_brown, 7);
+    p_delay(1);
+    npc_del;
+    p_delay(1);
+    npc_changetype(cow_1, 10);
+}
+
+[debugproc,npc_del_change_static]
+if (p_finduid(uid) = true) {
+    p_telejump(0_50_50_2_62);
+    npc_findallany(coord, 10, ^vis_off);
+    while (npc_findnext = true) {
+        npc_del;
+        npc_changetype(cow_1, 10);
+    }
+}

@@ -330,6 +330,8 @@ type=obj
 [thread_used]
 scope=perm
 
+[varp_259]
+
 [temp]
 scope=temp
 

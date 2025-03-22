@@ -15,7 +15,7 @@ if (npc_stat(hitpoints) = 0) {
 [queue,delrith_death]
 if_close;
 if (npc_find(coord, delrith, 8, 0) = true) {
-    npc_changetype(weakened_delrith);
+    npc_changetype(weakened_delrith, ^max_32bit_int);
     npc_setmode(none); // stop fighting
 }
 
@@ -46,7 +46,7 @@ if_close;
 if (npc_find(coord, weakened_delrith, 8, 0) = true) {
     // On restore Delrith does not keep attacking you in 2004
     // https://www.youtube.com/watch?v=rjQprrDDUfE
-    npc_changetype(delrith);
+    npc_changetype(delrith, ^max_32bit_int);
     npc_statheal(hitpoints, 0, 100);
     ~mesbox("Suddenly the vortex collapses. That was the wrong incantation");
     return;
@@ -66,6 +66,6 @@ if (npc_find(coord, weakened_delrith, 8, 0) = true) {
 // Everything below here is a guess. This is set up so if a player doesn't kill weakened delrith he becomes
 // Regular delrith again after a minute.
 [ai_timer,weakened_delrith]
-npc_changetype(delrith);
+npc_changetype(delrith, ^max_32bit_int);
 npc_statheal(hitpoints, 0, 100);
 npc_setmode(none);

@@ -200,12 +200,12 @@ sound_synth(locked, 0, 0);
 
 [proc,change_ernest]
 if(npc_find(coord, ernest_chicken, 8, 0) = true) {
-    npc_changetype(ernest_human);
+    npc_changetype(ernest_human, ^max_32bit_int);
     npc_settimer(100);
 }
 
 [ai_timer,ernest_human]
-npc_changetype(ernest_chicken);
+npc_changetype(ernest_chicken, ^max_32bit_int);
 
 [queue,haunted_quest_complete]
 %haunted_progress = ^haunted_complete;
