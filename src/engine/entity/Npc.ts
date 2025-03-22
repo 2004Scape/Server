@@ -913,6 +913,10 @@ export default class Npc extends PathingEntity {
             if (hunt.checkNotTooStrong === HuntCheckNotTooStrong.OUTSIDE_WILDERNESS && !player.isInWilderness() && player.combatLevel > type.vislevel * 2) {
                 continue;
             }
+            //special case to handle the rogues in the wilderness as you need to beable to pickpocket them
+            if(type.id === 187 && player.combatLevel > type.vislevel * 2){
+                continue;
+            }
             if (this.target !== player && !World.gameMap.isMulti(CoordGrid.packCoord(player.level, player.x, player.z))) {
                 if (hunt.checkNotCombat !== -1 && (player.getVar(hunt.checkNotCombat) as number) + 8 > World.currentTick) {
                     continue;
