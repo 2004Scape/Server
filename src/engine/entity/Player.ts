@@ -191,7 +191,7 @@ export default class Player extends PathingEntity {
     save() {
         const sav = Packet.alloc(1);
         sav.p2(0x2004); // magic
-        sav.p2(5); // version
+        sav.p2(6); // version
 
         sav.p2(this.x);
         sav.p2(this.z);
@@ -253,12 +253,18 @@ export default class Player extends PathingEntity {
         // set the total saved inv count as the placeholder
         sav.data[invStartPos] = invCount;
 
+        // afk zones
         sav.p1(this.afkZones.length);
         for (let index: number = 0; index < this.afkZones.length; index++) {
             sav.p4(this.afkZones[index]);
         }
         sav.p2(this.lastAfkZone);
+
+        // chat modes
         sav.p1((this.publicChat << 4) | (this.privateChat << 2) | this.tradeDuel);
+
+        // last login info
+        sav.p8(this.lastDate);
 
         sav.p4(Packet.getcrc(sav.data, 0, sav.pos));
         return sav.data.subarray(0, sav.pos);
@@ -398,6 +404,8 @@ export default class Player extends PathingEntity {
 
     socialProtect: boolean = false; // social packet spam protection
     reportAbuseProtect: boolean = false; // social packet spam protection
+
+    lastDate: bigint = 0n;
 
     constructor(username: string, username37: bigint, hash64: bigint) {
         super(0, 3094, 3106, 1, 1, EntityLifeCycle.FOREVER, MoveRestrict.NORMAL, BlockWalk.NPC, MoveStrategy.SMART, InfoProt.PLAYER_FACE_COORD.id, InfoProt.PLAYER_FACE_ENTITY.id); // tutorial island.
@@ -2102,11 +2110,17 @@ export default class Player extends PathingEntity {
         this.write(new HintArrow(-1, 0, 0, 0, 0, 0));
     }
 
-    lastLoginInfo(lastLoginIp: number, daysSinceLogin: number, daysSinceRecoveryChange: number) {
+    lastLoginInfo() {
         // daysSinceRecoveryChange
         // - 201 shows welcome_screen.if
         // - any other value shows welcome_screen_warning
-        this.write(new LastLoginInfo(lastLoginIp, daysSinceLogin, daysSinceRecoveryChange, this.messageCount));
+        const lastDate: bigint = this.lastDate === 0n ? BigInt(Date.now()) : this.lastDate;
+        const nextDate: bigint = BigInt(Date.now());
+        const daysSinceLogin: number = Number(nextDate - lastDate) / (1000 * 60 * 60 * 24);
+        // proxying websockets through cf may show IPv6 and breaks anyways
+        // so we just hardcode 127.0.0.1 (2130706433)
+        this.write(new LastLoginInfo(2130706433, daysSinceLogin, 201, this.messageCount));
+        this.lastDate = nextDate;
     }
 
     logout(): void {

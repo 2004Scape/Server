@@ -19,7 +19,7 @@ export class PlayerLoading {
         }
 
         const version = sav.g2();
-        if (version > 5) {
+        if (version > 6) {
             return false;
         }
 
@@ -61,7 +61,7 @@ export class PlayerLoading {
         }
 
         const version = sav.g2();
-        if (version > 5) {
+        if (version > 6) {
             throw new Error('Unsupported save version');
         }
 
@@ -147,6 +147,11 @@ export class PlayerLoading {
             player.publicChat = (packedChatModes >> 4) & 0b11;
             player.privateChat = (packedChatModes >> 2) & 0b11;
             player.tradeDuel = packedChatModes & 0b11;
+        }
+
+        // last login info
+        if (version >= 6) {
+            player.lastDate = sav.g8();
         }
 
         player.combatLevel = player.getCombatLevel();
