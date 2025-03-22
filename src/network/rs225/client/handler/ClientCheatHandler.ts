@@ -386,6 +386,46 @@ export default class ClientCheatHandler extends MessageHandler<ClientCheat> {
                 other.unsetMapFlag();
 
                 other.teleJump(player.x, player.z, player.level);
+            } else if (cmd === 'setstat') {
+                // authentic
+                if (args.length < 2) {
+                    // ::setstat <skill> <level>
+                    // Sets the skill to specified level
+                    return false;
+                }
+
+                const stat = PlayerStat[args[0].toUpperCase() as PlayerStatKey];
+                if (typeof stat === 'undefined') {
+                    return false;
+                }
+
+                player.setLevel(stat, parseInt(args[1]));
+            } else if (cmd === 'advancestat') {
+                // authentic
+                if (args.length < 1) {
+                    // ::advancestat <skill> <level>
+                    // Advances skill to specified level, generates level up message etc.
+                    return false;
+                }
+
+                const stat = PlayerStat[args[0].toUpperCase() as PlayerStatKey];
+                if (typeof stat === 'undefined') {
+                    return false;
+                }
+
+                player.stats[stat] = 0;
+                player.baseLevels[stat] = 1;
+                player.levels[stat] = 1;
+                player.addXp(stat, getExpByLevel(parseInt(args[1])), false);
+            } else if (cmd === 'minme') {
+                // like maxme debugproc, but in engine because xp goes down
+                for (let i = 0; i < PlayerStatEnabled.length; i++) {
+                    if (i === PlayerStat.HITPOINTS) {
+                        player.setLevel(i, 10);
+                    } else {
+                        player.setLevel(i, 1);
+                    }
+                }
             }
         }
 
@@ -455,46 +495,6 @@ export default class ClientCheatHandler extends MessageHandler<ClientCheat> {
                 player.unsetMapFlag();
 
                 player.teleJump(other.x, other.z, other.level);
-            } else if (cmd === 'setstat') {
-                // authentic
-                if (args.length < 2) {
-                    // ::setstat <skill> <level>
-                    // Sets the skill to specified level
-                    return false;
-                }
-
-                const stat = PlayerStat[args[0].toUpperCase() as PlayerStatKey];
-                if (typeof stat === 'undefined') {
-                    return false;
-                }
-
-                player.setLevel(stat, parseInt(args[1]));
-            } else if (cmd === 'advancestat') {
-                // authentic
-                if (args.length < 1) {
-                    // ::advancestat <skill> <level>
-                    // Advances skill to specified level, generates level up message etc.
-                    return false;
-                }
-
-                const stat = PlayerStat[args[0].toUpperCase() as PlayerStatKey];
-                if (typeof stat === 'undefined') {
-                    return false;
-                }
-
-                player.stats[stat] = 0;
-                player.baseLevels[stat] = 1;
-                player.levels[stat] = 1;
-                player.addXp(stat, getExpByLevel(parseInt(args[1])), false);
-            } else if (cmd === 'minme') {
-                // like maxme debugproc, but in engine because xp goes down
-                for (let i = 0; i < PlayerStatEnabled.length; i++) {
-                    if (i === PlayerStat.HITPOINTS) {
-                        player.setLevel(i, 10);
-                    } else {
-                        player.setLevel(i, 1);
-                    }
-                }
             } else if (cmd === 'setvis' && Environment.NODE_PRODUCTION) {
                 // authentic
                 if (args.length < 1) {
