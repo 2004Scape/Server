@@ -61,6 +61,7 @@ const LocOps: CommandHandlers = {
         const [id, duration] = state.popInts(2);
 
         check(duration, DurationValid);
+        check(id, LocTypeValid);
 
         World.changeLoc(state.activeLoc, id, state.activeLoc.shape, state.activeLoc.angle, duration);
     }),
