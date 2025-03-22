@@ -507,6 +507,7 @@ class World {
         } catch (err) {
             if (err instanceof Error) {
                 printError('eep eep cabbage! An unhandled error occurred during the cycle: ' + err.message);
+                console.error(err.stack);
             }
 
             printError('Removing all players...');
@@ -1011,9 +1012,16 @@ class World {
     private processZones(): void {
         const start: number = Date.now();
         const tick: number = this.currentTick;
-        // - loc/obj despawn/respawn
-        // - compute shared buffer
-        this.zonesTracking.get(tick)?.forEach(zone => zone.tick(tick));
+        try {
+            // - loc/obj despawn/respawn
+            // - compute shared buffer
+            this.zonesTracking.get(tick)?.forEach(zone => zone.tick(tick));
+        } catch (err) {
+            if (err instanceof Error) {
+                printError(`Error during processZones: ${err.message}`);
+                console.error(err.stack);
+            }
+        }
         this.cycleStats[WorldStat.ZONE] = Date.now() - start;
     }
 
