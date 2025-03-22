@@ -750,7 +750,7 @@ export default class Player extends PathingEntity {
 
     containsModalInterface() {
         // main or chat is open
-        return (this.modalState & (ModalState.MAIN | ModalState.CHAT)) !== 0;
+        return (this.modalState & (ModalState.MAIN | ModalState.CHAT)) !== ModalState.NONE;
     }
 
     busy() {
@@ -1843,14 +1843,14 @@ export default class Player extends PathingEntity {
     }
 
     openMainModal(com: number) {
-        if ((this.modalState & ModalState.CHAT) !== 0) {
+        if ((this.modalState & ModalState.CHAT) !== ModalState.NONE) {
             // close chat modal if we're opening a new main modal
             this.write(new IfClose());
             this.modalState &= ~ModalState.CHAT;
             this.modalChat = -1;
         }
 
-        if ((this.modalState & ModalState.SIDE) !== 0) {
+        if ((this.modalState & ModalState.SIDE) !== ModalState.NONE) {
             // close side modal if we're opening a new main modal
             this.write(new IfClose());
             this.modalState &= ~ModalState.SIDE;
@@ -2055,7 +2055,7 @@ export default class Player extends PathingEntity {
         } else if (script === this.activeScript) {
             this.activeScript = null;
 
-            if ((this.modalState & ModalState.MAIN) === 0) {
+            if ((this.modalState & ModalState.MAIN) === ModalState.NONE) {
                 // close chat dialogues automatically and leave main modals alone
                 this.closeModal();
             }
