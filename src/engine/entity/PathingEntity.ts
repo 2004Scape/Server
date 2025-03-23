@@ -15,20 +15,7 @@ import Npc from '#/engine/entity/Npc.js';
 import NpcMode from '#/engine/entity/NpcMode.js';
 import Obj from '#/engine/entity/Obj.js';
 import Player from '#/engine/entity/Player.js';
-import {
-    canTravel,
-    changeNpcCollision,
-    changePlayerCollision,
-    findNaivePath,
-    findPath,
-    findPathToEntity,
-    findPathToLoc,
-    isApproached,
-    isZoneAllocated,
-    reachedEntity,
-    reachedLoc,
-    reachedObj
-} from '#/engine/GameMap.js';
+import { canTravel, changeNpcCollision, changePlayerCollision, findNaivePath, findPath, findPathToEntity, findPathToLoc, isApproached, isZoneAllocated, reachedEntity, reachedLoc, reachedObj } from '#/engine/GameMap.js';
 import ServerTriggerType from '#/engine/script/ServerTriggerType.js';
 import World from '#/engine/World.js';
 import Environment from '#/util/Environment.js';
