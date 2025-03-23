@@ -1,5 +1,5 @@
 [timer,cannon_rotate]
-if (loc_find(%mcannon_coord, cannon) = false) {
+if (%mcannon_coord = null | loc_find(%mcannon_coord, cannon) = false) {
     cleartimer(cannon_rotate);
     return;
 }
@@ -129,6 +129,7 @@ if (random(4) = 0 & %mcannon_coord ! null) { // guess
         loc_del(1);
         %mcannon_coord = null;
         %mcannon_ammo = 0;
+        cleartimer(cannon_rotate);
     }
     
 }
