@@ -4,11 +4,15 @@ if (%npc_int2 = ^trawler_control_flooded) {
 }
 def_int $player_count = ~playercount_coord_pair_table(trawler_game_zones);
 if ($player_count < 1) {
-    ~trawler_reset;
+    npc_settimer(0);
     return;
 }
+
+%npc_int = add(%npc_int, 1);
+
 if (%npc_int = 200) { // 1000 ticks
     ~trawler_win(divide(%npc_trawler_fish_caught, $player_count));
+    npc_settimer(0);
     return;
 }
 
@@ -25,7 +29,6 @@ if (random(16) = 0) {
 }
 
 ~trawler_catch_fish($player_count);
-%npc_int = add(%npc_int, 1);
 npc_settimer(5); // this is important
 
 [ai_timer,murphy_flood]
@@ -34,11 +37,15 @@ if (%npc_int2 = ^trawler_control_nonflooded) {
 }
 def_int $player_count = ~playercount_coord_pair_table(trawler_game_zones);
 if ($player_count < 1) {
-    ~trawler_reset;
+    npc_settimer(0);
     return;
 }
+
+%npc_int = add(%npc_int, 1);
+
 if (%npc_int = 200) { // 1000 ticks
     ~trawler_win(divide(%npc_trawler_fish_caught, $player_count));
+    npc_settimer(0);
     return;
 }
 
@@ -58,7 +65,6 @@ if (random(16) = 0) {
 }
 
 ~trawler_catch_fish($player_count);
-%npc_int = add(%npc_int, 1);
 npc_settimer(5); // this is important
 
 
@@ -147,4 +153,22 @@ while ($i < $player_count) {
         %npc_trawler_fish_caught = add(%npc_trawler_fish_caught, 1);
     }
     $i = add($i, 1);
+}
+
+[proc,trawler_mes](string $string) // for debug
+huntall(^trawler_start_center_under, 8, 0);
+while (huntnext = true) {
+    mes($string);
+}
+huntall(^trawler_start_center, 8, 0);
+while (huntnext = true) {
+    mes($string);
+}
+huntall(^trawler_flood_center_under, 8, 0);
+while (huntnext = true) {
+    mes($string);
+}
+huntall(^trawler_flood_center, 8, 0);
+while (huntnext = true) {
+    mes($string);
 }
