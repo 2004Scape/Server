@@ -154,7 +154,7 @@ def_int $i = 0;
 while ($i < $size_inv) {
     if (inv_getnum(inv, $i) > 0) {
         $currentitem = inv_getobj(inv, $i);
-        if (oc_param($currentitem, destroy_death) ! ^true) { // TODO: param or property for items that can not be kept on death?
+        if (oc_param($currentitem, destroy_death) ! ^true) {
             if (oc_cost($currentitem) > $biggest_price) {
                 $biggest_price = oc_cost($currentitem);
                 $priciest_item = $currentitem;
