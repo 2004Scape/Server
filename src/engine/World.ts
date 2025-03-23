@@ -43,7 +43,7 @@ import HuntNobodyNear from '#/engine/entity/hunt/HuntNobodyNear.js';
 import Loc from '#/engine/entity/Loc.js';
 import { isClientConnected, NetworkPlayer } from '#/engine/entity/NetworkPlayer.js';
 import Npc from '#/engine/entity/Npc.js';
-import { NpcEventRequest } from '#/engine/entity/NpcEventRequest.js';
+import { NpcEventRequest, NpcEventType } from '#/engine/entity/NpcEventRequest.js';
 import Obj from '#/engine/entity/Obj.js';
 import Player from '#/engine/entity/Player.js';
 import { PlayerLoading } from '#/engine/entity/PlayerLoading.js';
@@ -578,20 +578,6 @@ class World {
                     }
                 }
             }
-
-            // This is slightly redundant with isActive, but also checks if npc is delayed
-            // Spawn triggers shouldn't run if delayed
-            // if (npc.isValid()) {
-            //     // Check if spawn trigger is pending
-            //     if (npc.spawnTriggerPending) {
-            //         const type = NpcType.get(npc.type);
-            //         const script = ScriptProvider.getByTrigger(ServerTriggerType.AI_SPAWN, type.id, type.category);
-            //         if (script) {
-            //             npc.executeScript(ScriptRunner.init(script, npc));
-            //         }
-            //         npc.spawnTriggerPending = false;
-            //     }
-            // }
         }
 
         this.cycleStats[WorldStat.WORLD] = Date.now() - start;
@@ -1293,6 +1279,13 @@ class World {
 
         npc.resetEntity(true);
         npc.playAnimation(-1, 0);
+
+        // Queue spawn trigger
+        const type = NpcType.get(npc.type);
+        const script = ScriptProvider.getByTrigger(ServerTriggerType.AI_SPAWN, type.id, type.category);
+        if (script) {
+            this.npcEventQueue.addTail(new NpcEventRequest(NpcEventType.SPAWN, script, npc));
+        }
 
         npc.setLifeCycle(this.currentTick + duration);
     }
