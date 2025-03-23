@@ -1,3 +1,5 @@
+import { LocAngle, LocShape } from '@2004scape/rsmod-pathfinder';
+
 import Component from '#/cache/config/Component.js';
 import IdkType from '#/cache/config/IdkType.js';
 import InvType from '#/cache/config/InvType.js';
@@ -9,8 +11,11 @@ import SeqType from '#/cache/config/SeqType.js';
 import SpotanimType from '#/cache/config/SpotanimType.js';
 import VarPlayerType from '#/cache/config/VarPlayerType.js';
 import { CoordGrid } from '#/engine/CoordGrid.js';
+import EntityLifeCycle from '#/engine/entity/EntityLifeCycle.js';
+import Loc from '#/engine/entity/Loc.js';
 import MoveStrategy from '#/engine/entity/MoveStrategy.js';
 import { isClientConnected } from '#/engine/entity/NetworkPlayer.js';
+import Npc from '#/engine/entity/Npc.js';
 import Player, { getExpByLevel } from '#/engine/entity/Player.js';
 import { PlayerStat, PlayerStatEnabled, PlayerStatKey } from '#/engine/entity/PlayerStat.js';
 import Visibility from '#/engine/entity/Visibility.js';
@@ -426,6 +431,29 @@ export default class ClientCheatHandler extends MessageHandler<ClientCheat> {
                         player.setLevel(i, 1);
                     }
                 }
+            } else if (cmd === 'locadd') {
+                // authentic - https://youtu.be/E6tQ3b3vzro?t=3194
+                if (args.length < 1) {
+                    return false;
+                }
+                const name: string = args[0];
+                const type: LocType | null = LocType.getByName(name);
+                if (!type) {
+                    return false;
+                }
+                World.addLoc(new Loc(player.level, player.x, player.z, type.width, type.length, EntityLifeCycle.DESPAWN, type.id, LocShape.CENTREPIECE_STRAIGHT, LocAngle.WEST), 500);
+                player.messageGame(`Loc Added: ${name} (ID: ${type.id})`);
+            } else if (cmd === 'npcadd') {
+                // authentic - https://youtu.be/E6tQ3b3vzro?t=3412
+                if (args.length < 1) {
+                    return false;
+                }
+                const name: string = args[0];
+                const type: NpcType | null = NpcType.getByName(name);
+                if (!type) {
+                    return false;
+                }
+                World.addNpc(new Npc(player.level, player.x, player.z, type.size, type.size, EntityLifeCycle.DESPAWN, World.getNextNid(), type.id, type.moverestrict, type.blockwalk), 500);
             }
         }
 
