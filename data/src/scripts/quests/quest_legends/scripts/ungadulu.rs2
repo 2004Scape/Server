@@ -194,12 +194,12 @@ else {
     // then a random 0-1 range around that tile
     def_coord $start_coord = coord;
     def_coord $closest_coord = ~closest_enum_coord(coord, legends_ungadulu_throw_coords);
-    def_coord $throw_coord = movecoord($closest_coord, ~random_range(-1, 1), 0, ~random_range(-1, 1));
+    def_coord $throw_coord = map_findsquare($closest_coord, 0, 1, ^vis_lineofwalk);
     // only one anim is sent on osrs to cover human_knockback_long and human_knockback_long_end.
     // assuming they've merged the anims at some point. we do this instead to play them in succession.
     // not sure if the outcome is period authentic - no references
     anim(human_knockback_long, 0);
-    p_exactmove($start_coord, $middle, 31, calc(31 + (14 * distance($start_coord, $throw_coord))), ~coord_direction($throw_coord, $start_coord));
+    p_exactmove($start_coord, $throw_coord, 31, calc(31 + (14 * distance($start_coord, $throw_coord))), ~coord_direction($throw_coord, $start_coord));
     p_delay(divide(distance($start_coord, $throw_coord), 2));
     ~set_walkbas(human_knockback_long_end);
     anim(null, 0);

@@ -866,29 +866,6 @@ while($i < 13) {
     world_delay(1);
 }
 
-[opobj3,book_of_binding]
-if (getbit_range(%legends_map_runes, ^legends_opal_used, ^legends_emerald_used) = ^legends_all_gems_used) {
-    %legends_map_runes = clearbit_range(%legends_map_runes, ^legends_opal_used, ^legends_emerald_used);
-}
-@pickup_obj(obj_coord, obj_type, obj_count);
-
-[opheld1,book_of_binding]
-%book_page = 0;
-%open_book = book_of_binding;
-@open_book_of_binding;
-
-[label,open_book_of_binding]
-@book_flip_page(0, 0, 4, book_of_binding_page);
-
-[proc,book_of_binding_page]
-switch_int (%book_page) {
-    case 0 : ~book("Book of Binding", "|--------------------------------|   Book of Binding|--------------------------------||- A treatise on Demons -|||||||    -- Indexo --||     Arcana : I||   Instructo : II||    Defeati : III||   Enchanto : IIII");
-    case 1 : ~book("Book of Binding", "Arcana I: Use holy water to determine possession.| Slight appearance changes may be perceived|when doused.|| Legendary Silverlight will help to defeat any demon by weakening it.||| Arcana II : Be wary of any demon, it may have special forms of attack.|| Use an Octagram of Fire to confine unearthly creatures of the underworld - the perfect geometry confuses them.|                 Eximus");
-    case 2 : ~book("Book of Binding", "Instructo : Creation of holy water must be undertaken with determination and|urgency.|| Take to yourself empty vials free of all liquids.|| Read warily the enchantment contained herewithin in order to magick the vial for the holding of holy or sacred|water.| Take utmost care as you enchant them.| With great care and precision place the sacred water into a magicked vial and stopper it.|                 Eximus");
-    case 3 : ~book("Book of Binding", "Defeati... the dreaded demon will be of unholy power and abilities.| Present thyself before the possessed with good intent and ready|manner.| With least obstruction and utmost solemnity hold open the pages of this great tome in order that the goodlight falls upon the victim completely.| Be thee prepared in every capacity, for the demon's tricks and wiles will swiftly outwit the unready adventurer.| Attack with vigour and zest if thee hopes to see another day.|                 Eximus");
-    case 4 : ~book("Book of Binding", "Enchanto...|| Possessus valius emptious, projectus spellicus avoir valius|magicus.|| Castus enchanto avoir createur valius magicus holious avour defeati Demonicus Absolutus.||| Extralias projectus Magicus Holarius|| Attackanie Demonicus Absolutus distancie airus throwus armiues.|||                 Eximus");
-}
-
 [oploc1,legends_buried_skeleton]
 ~mesbox("It looks as if some poor unfortunate soul died here.");
 mes("There's nothing interesting about these remains.");
@@ -934,6 +911,7 @@ if (last_useitem = hollow_reed) {
         // todo: check this duration
         loc_change(legends_polluted_water, 20);
         ~mesbox("It looks as if this pool has dried up. A thick black sludge has replaced|the sparkling pure water. There is a disgusting stench of death that|emanates from this area. Maybe Gujuo knows what's happened.");
+        return;
     }
     if (inv_total(inv, blessed_gold_bowl) > 0) {
         inv_del(inv, blessed_gold_bowl, 1);
