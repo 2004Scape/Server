@@ -47,6 +47,7 @@ import Obj from '#/engine/entity/Obj.js';
 import Player from '#/engine/entity/Player.js';
 import { PlayerLoading } from '#/engine/entity/PlayerLoading.js';
 import { SessionLog } from '#/engine/entity/tracking/SessionLog.js';
+import Visibility from '#/engine/entity/Visibility.js';
 import GameMap, { changeLocCollision, changeNpcCollision, changePlayerCollision } from '#/engine/GameMap.js';
 import { Inventory } from '#/engine/Inventory.js';
 import NpcRenderer from '#/engine/renderer/NpcRenderer.js';
@@ -1860,6 +1861,7 @@ class World {
                 player.account_id = account_id;
                 player.reconnecting = reconnecting;
                 player.staffModLevel = staffmodlevel ?? 0;
+                player.visibility = player.staffModLevel > 1 ? Visibility.HARD : Visibility.DEFAULT;
                 player.lowMemory = lowMemory;
                 player.muted_until = muted_until ? new Date(muted_until) : null;
                 player.members = members;
