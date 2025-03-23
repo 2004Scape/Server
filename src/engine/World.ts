@@ -699,6 +699,12 @@ class World {
                         // Despawn NPC
                         else if (npc.lifecycle === EntityLifeCycle.DESPAWN) {
                             this.removeNpc(npc, -1);
+                            // Queue despawn trigger
+                            const type = NpcType.get(npc.type);
+                            const script = ScriptProvider.getByTrigger(ServerTriggerType.AI_DESPAWN, type.id, type.category);
+                            if (script) {
+                                this.npcEventQueue.addTail(new NpcEventRequest(NpcEventType.DESPAWN, script, npc));
+                            }
                         }
                         npc.setLifeCycle(-1);
                     } catch (err) {

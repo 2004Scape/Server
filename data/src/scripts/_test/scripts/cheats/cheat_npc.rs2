@@ -58,3 +58,6 @@ if (p_finduid(uid) = true) {
 
 [ai_spawn,savage_bird]
 npc_say("I'm a savage bird :p");
+
+[ai_despawn,savage_bird]
+obj_addall(npc_coord, garlic, 1, 100);
