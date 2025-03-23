@@ -3,11 +3,11 @@ if(~check_axis(coord, loc_coord, loc_angle) = false & inv_total(worn, doctors_go
     mes("The mourner is refusing to open the door.");
     return;
 }
-~open_and_close_door2(loc_param(next_loc_stage), ~check_axis(coord, loc_coord, loc_angle), door_open);
+~open_and_close_door2(loc_2035, ~check_axis(coord, loc_coord, loc_angle), door_open);
 
 [oploc1,loc_2036] 
 if(~check_axis(coord, loc_coord, loc_angle) = false) {
-    ~open_and_close_door2(loc_param(next_loc_stage), ~check_axis(coord, loc_coord, loc_angle), door_open);
+    ~open_and_close_door2(loc_2037, ~check_axis(coord, loc_coord, loc_angle), door_open);
 } else {
     @west_ardougne_mourner_headquarters_doors;
 }
@@ -59,7 +59,7 @@ switch_int(%biohazard_progress) {
         if(inv_total(worn, doctors_gown) > 0) {
             ~chatnpc_specific(nc_name(npc_357), npc_357, "<p,neutral>In you go doc.");
             if_close;
-            ~open_and_close_door2(loc_param(next_loc_stage), ~check_axis(coord, loc_coord, loc_angle), door_open);
+            ~open_and_close_door2(loc_2037, ~check_axis(coord, loc_coord, loc_angle), door_open);
             return;
         }
         ~chatnpc_specific(nc_name(npc_357), npc_357, "<p,neutral>Stay away from there.");
