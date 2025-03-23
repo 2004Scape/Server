@@ -54,8 +54,8 @@ switch_obj (last_useitem)
 def_obj $used_on = inv_getobj(inv, $last_slot);
 def_obj $used_with = inv_getobj(inv, $use_slot);
 
-inv_setslot(inv, $last_slot, oc_param($used_on, changesto), 1); //new water source
-inv_setslot(inv, $use_slot, oc_param($used_with, changesto), 1); //new empty source
+inv_setslot(inv, $last_slot, oc_param($used_on, next_obj_stage), 1); //new water source
+inv_setslot(inv, $use_slot, oc_param($used_with, next_obj_stage), 1); //new empty source
 
 [oplocu,_watersource]
 switch_obj (last_useitem) {
@@ -75,7 +75,7 @@ if(compare($source_name, "well") = 0 & $container = bucket_empty) {
     return;
 }
 inv_del(inv, $container, 1);
-inv_add(inv, oc_param($container, changesto), 1);
+inv_add(inv, oc_param($container, next_obj_stage), 1);
 anim(human_pickuptable, 0);
 sound_synth(tap_fill, 0, 0);
 mes("You fill the <$container_name> from the <$source_name>.");

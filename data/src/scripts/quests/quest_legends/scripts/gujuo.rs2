@@ -45,7 +45,7 @@ else if (%legends_progress >= ^legends_accepted_rescue_ungadulu) {
         ~chatnpc("<p,neutral>Greetings Bwana. Ah I see you have the golden bowl! Would you like me to show you how to bless it?");
         def_int $choice = ~p_choice2("Yes, I'd like you to bless my gold bowl.", 1, "No thanks, I need help with something else.", 2);
         if ($choice = 1) {
-            ~chatplayer("<p,neutral>Yes, I'd like you to bless my gold bowl.");
+            ~chatplayer("<p,happy>Yes, I'd like you to bless my gold bowl.");
             @gujuo_bless_bowl;
         }
         // selecting the no option skips straight to ungadulu question
@@ -108,26 +108,26 @@ if (inv_total(inv, blessed_gold_bowl) > 0) {
 if_close;
 mes("Gujuo places the bowl on the floor in front of you, and leads you into a deep");
 mes("meditation...");
-p_delay(3);
+p_delay(2);
 npc_say("Ohhhhhmmmmmm");
-p_delay(3);
+p_delay(2);
 say("Oooooommmmmmmmmm");
-p_delay(3);
+p_delay(2);
 npc_say("Ohhhhhmmmmmm");
-p_delay(3);
+p_delay(2);
 say("Oooooohhhhmmmmmmmmmm");
-p_delay(3);
+p_delay(2);
 npc_say("Ohhhhhmmmmmm");
-p_delay(3);
+p_delay(2);
 // guess but it seems pretty common
 if(random(2) = 0) {
-    ~mesbox("You were not able to go into a deep enough trance. You lose some prayer...");
     stat_sub(prayer, 5, 0);
+    ~mesbox("You were not able to go into a deep enough trance. You lose some prayer...");
     ~chatnpc("<p,neutral>Would you like to try again?");
     // this choice has slightly different wording ("like to" vs "like you to") - intentional
     def_int $choice = ~p_choice2("Yes, I'd like to bless my gold bowl.", 1, "No thanks, I'll wait.", 2);
     if ($choice = 1) {
-        ~chatplayer("<p,neutral>Yes, I'd like to bless my gold bowl.");
+        ~chatplayer("<p,happy>Yes, I'd like to bless my gold bowl.");
         @gujuo_bless_bowl;
     }
     else {
@@ -137,9 +137,9 @@ if(random(2) = 0) {
     }
 }
 else {
+    ~objbox(blessed_gold_bowl, "You're surrounded by a totally peaceful aura as you bring the blessings of your god down on the bowl.", 250, 0, divide(^objbox_height, 2));
     inv_del(inv, gold_bowl, 1);
     inv_add(inv, blessed_gold_bowl, 1);
-    ~objbox(blessed_gold_bowl, "You're surrounded by a totally peaceful aura as you bring the blessings of your god down on the bowl.", 250, 0, divide(^objbox_height, 2));
     ~objbox(blessed_gold_bowl, "The bowl is blessed!", 250, 0, divide(^objbox_height, 2));
     @gujuo_how_goes_ungadulu;
 }
@@ -275,6 +275,9 @@ mes("Gujuo disappears into the Kharazi Jungle as swiftly as he appeared...");
 ~chatplayer("<p,neutral>Where is the pool of sacred water?");
 ~chatnpc("<p,neutral>The pool of sacred water is very precious to us, it is located in the middle of the Kharazi Jungle.");
 ~chatnpc("<p,neutral>The water contains special properties which can only be retained if the water is contained in a blessed vessel made from metal of the sun.");
+if (%legends_progress < ^legends_asked_gujuo_holy_water) {
+    %legends_progress = ^legends_asked_gujuo_holy_water;
+}
 @multi5("Sorry for bothering you.", gujuo_sorry_bothering,
         "I'm not sure what to do.", gujuo_idk,
         "Ok, thanks... Goodbye.", gujuo_water_thanks,
@@ -292,11 +295,8 @@ mes("Gujuo disappears into the Kharazi Jungle as swiftly as he appeared...");
 ~chatplayer("<p,neutral>What kind of a vessel?");
 ~chatnpc("<p,neutral>A vessel made of sun metal, but it can be of any shape. However, it must be blessed.");
 if (inv_total(inv, sketch) = 0) {
-    ~objbox(sketch, "Gujuo takes out a small scroll and some charcoal and draws a rough sketch. When he has finished, he gives the sketch to you.", 180, 0, 0);
+    ~objbox(sketch, "Gujuo takes out a small scroll and some charcoal and draws a rough sketch. When he has finished, he gives the sketch to you.", 250, 0, 0);
     ~chatnpc("<p,neutral>Here, have this as an example... I pray that it will help you.");
-    if (%legends_progress < ^legends_asked_gujuo_holy_water) {
-        %legends_progress = ^legends_asked_gujuo_holy_water;
-    }
     inv_add(inv, sketch, 1);
 }
 else {

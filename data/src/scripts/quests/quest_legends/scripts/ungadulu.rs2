@@ -1,7 +1,7 @@
 [opnpc1,ungadulu] @ungadulu_start;
 [opnpc2,ungadulu] @attack_ungadulu;
 [apnpc2,ungadulu] @attack_ungadulu;
-[opnpc1,ungadulu_possessed] @ungadulu_possessed_start;
+// opnpc1 here is NIH
 [opnpc2,ungadulu_possessed] @attack_ungadulu;
 [apnpc2,ungadulu_possessed] @attack_ungadulu;
 
@@ -9,9 +9,6 @@
 if (%legends_progress < ^legends_defeated_nezikchened_fire) @ungadulu_run;
 else if (%legends_progress >= ^legends_defeated_nezikchened_fire) @ungadulu_after_demon;
 else mes("Unhandled dialogue stage"); // todo
-
-[label,ungadulu_possessed_start]
-mes("Unhandled dialogue stage");
 
 [label,ungadulu_run]
 ~chatnpc("<p,neutral>Please run for your life...");
@@ -195,8 +192,6 @@ else {
     def_coord $start_coord = coord;
     def_coord $closest_coord = ~closest_enum_coord(coord, legends_ungadulu_throw_coords);
     def_coord $throw_coord = map_findsquare($closest_coord, 0, 1, ^vis_lineofwalk);
-    // only one anim is sent on osrs to cover human_knockback_long and human_knockback_long_end.
-    // assuming they've merged the anims at some point. we do this instead to play them in succession.
     // not sure if the outcome is period authentic - no references
     anim(human_knockback_long, 0);
     p_exactmove($start_coord, $throw_coord, 31, calc(31 + (14 * distance($start_coord, $throw_coord))), ~coord_direction($throw_coord, $start_coord));

@@ -11,7 +11,7 @@ recol1d=15855
 2dxan=260
 cost=1
 weight=1lb
-param=changesto,jug_of_water
+param=next_obj_stage,jug_of_water
 
 [jug_of_water]
 name=Jug of water
@@ -27,7 +27,7 @@ recol1d=15871
 cost=1
 weight=1kg
 param=is_water_source,^true
-param=changesto,jug_empty
+param=next_obj_stage,jug_empty
 
 [bucket_empty]
 name=Bucket
@@ -41,7 +41,7 @@ womanwear=model_543_obj_wear,6
 2dyan=1688
 2dxan=204
 weight=1kg
-param=changesto,bucket_water
+param=next_obj_stage,bucket_water
 
 [bucket_water]
 name=Bucket of water
@@ -54,7 +54,7 @@ model=model_2504_obj
 2dxan=204
 weight=3kg
 param=is_water_source,^true
-param=changesto,bucket_empty
+param=next_obj_stage,bucket_empty
 
 [bowl_water]
 name=Bowl of water
@@ -66,7 +66,7 @@ model=model_2367_obj
 2dxan=204
 weight=2lb
 param=is_water_source,^true
-param=changesto,bowl_empty
+param=next_obj_stage,bowl_empty
 
 [bowl_empty]
 name=Bowl
@@ -77,4 +77,4 @@ model=model_2807_obj
 2dyan=1856
 2dxan=204
 weight=1lb
-param=changesto,bowl_water
+param=next_obj_stage,bowl_water

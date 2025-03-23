@@ -244,6 +244,10 @@ if (last_useitem = blessed_golden_bowl_pure_water) {
     loc_del(1);
     ~legends_fire_wall_walk;
     mes("You splash some pure water on the flames.");
+} else if(last_useitem = golden_bowl_water | last_useitem = bucket_water | last_useitem = vial_water) {
+    inv_del(inv, last_useitem, 1);
+    inv_add(inv, oc_param(last_useitem, next_obj_stage), 1);
+    mes("The water evaporates in a cloud of steam before it gets anywhere near the flames.");
 }
 
 [label,legends_search_rocks]
@@ -956,7 +960,7 @@ if (last_useitem = hollow_reed) {
     }
     ~objbox(hollow_reed, "The hollow reed is soaked through with water and is now all soggy.", 250, 0, 0);
 }
-else if (last_useitem = bucket_empty | last_useitem = vial_empty | last_useitem = gold_bowl | last_useitem = blessed_gold_bowl) {
+else if (last_useitem = bucket_empty | last_useitem = vial_empty | last_useitem = gold_bowl | last_useitem = blessed_gold_bowl | last_useitem = enchanted_vial) {
     ~mesbox("This item doesn't fit in the gap between the rocks. You'll need to find another way to reach the water.");
 }
 else {
@@ -980,13 +984,13 @@ else {
 [oplocu,legends_tall_reeds]
 if (last_useitem = knife) {
     anim(human_knife_slash, 0);
-    p_delay(1);
+    p_delay(0);
     mes("You use your knife to cut down a reed.");
     inv_add(inv, hollow_reed, 1);
 }
 else if (last_useitem = machete) {
     anim(human_machette_chop, 0);
-    p_delay(1);
+    p_delay(0);
     mes("You use your machete to cut down a reed.");
     inv_add(inv, hollow_reed, 1);
 }
@@ -1109,11 +1113,10 @@ if (inv_total(inv, gold_bar) < 2) {
 anim(human_smithing, 0);
 sound_synth(anvil_4, 0, 0);
 p_delay(4);
-// guessing 50% chance of failure. not sure if impacted by smithing level?
 // https://youtu.be/uF1a9xsV7zo?t=931
-// fail rate doesn't appear to be impacted by having vs not having the sketch,
-// despite OSRS wiki saying otherwise
-if (random(2) = 0) {
+// fail rate doesn't appear to be impacted by having vs not having the sketch, despite OSRS wiki saying otherwise
+// likely does use stat_random though: https://x.com/JagexAsh/status/1346079741821022209
+if (stat_random(stat(smithing), 31, 256) = false) {
     mes("You make a mistake forging the bowl.");
     // 135/256 chance of removing a second gold bar
     // https://x.com/JagexAsh/status/1346079741821022209

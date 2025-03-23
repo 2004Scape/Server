@@ -159,7 +159,7 @@ recol2d=31528
 2dxan=204
 weight=800g
 tradeable=no
-param=changesto,golden_bowl_water
+param=next_obj_stage,golden_bowl_water
 
 [blessed_gold_bowl]
 name=Blessed gold bowl
@@ -176,7 +176,7 @@ recol2d=31528
 2dxan=204
 weight=800g
 tradeable=no
-param=changesto,blessed_golden_bowl_water
+param=next_obj_stage,blessed_golden_bowl_water
 
 [golden_bowl_water]
 name=Golden bowl
