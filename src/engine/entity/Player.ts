@@ -33,7 +33,7 @@ import Obj from '#/engine/entity/Obj.js';
 import PathingEntity from '#/engine/entity/PathingEntity.js';
 import { PlayerStat, PlayerStatEnabled, PlayerStatFree } from '#/engine/entity/PlayerStat.js';
 import InputTracking from '#/engine/entity/tracking/InputTracking.js';
-import { changeNpcCollision, changePlayerCollision, findNaivePath, reachedEntity, reachedLoc, reachedObj } from '#/engine/GameMap.js';
+import { changeNpcCollision, changePlayerCollision, findNaivePath, isZoneAllocated, reachedEntity, reachedLoc, reachedObj } from '#/engine/GameMap.js';
 import { Inventory, InventoryListener } from '#/engine/Inventory.js';
 import ScriptFile from '#/engine/script/ScriptFile.js';
 import ScriptPointer from '#/engine/script/ScriptPointer.js';
@@ -680,6 +680,19 @@ export default class Player extends PathingEntity {
 
     defaultMoveSpeed(): MoveSpeed {
         return this.run ? MoveSpeed.RUN : MoveSpeed.WALK;
+    }
+
+    teleport(x: number, z: number, level: number) {
+        if (isNaN(level)) {
+            level = 0;
+        }
+        level = Math.max(0, Math.min(level, 3));
+
+        if (!isZoneAllocated(x, z, level)) {
+            this.messageGame('Invalid teleport!');
+            return;
+        }
+        super.teleport(x, z, level);
     }
 
     // ----
