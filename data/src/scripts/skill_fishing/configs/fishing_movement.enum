@@ -79,6 +79,18 @@ val=20,0_40_53_42_34
 val=21,0_40_53_41_30
 val=22,0_40_53_47_18
 
+// 1 fishing spot spawns at this coordinate.
+//2606,3416,0   0_40_53_46_24   (osrs/rs3) any fishing spot npc can never move to this coordinate on the osrs/rs3 side.
+
+// Compared to OSRS, the total number of fishing spots in RS3 is different and then the number of their types also differs somewhat.
+// osrs fishing spots spawns total 17.
+// osrs Cage/Harpoon spots 11.
+// osrs Big Net/Harpoon spots 6.
+//-----
+// rs3 fishing spots spawns total 16.
+// rs3 Cage/Harpoon spots 8.
+// rs3 Big Net/Harpoon spots 8.
+
 [fishing_movement_fisher_realm_enum]
 inputtype=int
 outputtype=coord
@@ -104,7 +116,6 @@ val=6,0_42_55_26_13
 [fishing_movement_fishing_platform_enum]
 inputtype=int
 outputtype=coord
-// osrs
 val=0,0_43_51_42_19
 val=1,0_43_51_43_15
 val=2,0_43_51_39_16
@@ -114,8 +125,19 @@ val=5,0_43_51_38_9
 // guesses
 val=6,0_43_51_37_12
 val=7,0_43_51_37_9
-val=8,0_43_51_43_16
+val=8,0_43_51_43_14
 val=9,0_43_51_41_19
+
+// 2789,3273,0  0_43_51_37_9    (fishing spot spawn coordinate. unreachable)
+// 2790,3273,0  0_43_51_38_9    osrs/rs3
+// 2789,3276,0  0_43_51_37_12   removed with graphical update?
+// 2790,3276,0  0_43_51_38_12   osrs/rs3
+// 2791,3280,0  0_43_51_39_16   osrs/rs3
+// 2791,3279,0  0_43_51_39_15   osrs/rs3
+// 2793,3283,0  0_43_51_41_19   removed with graphical update?
+// 2794,3283,0  0_43_51_42_19   osrs/rs3
+// 2795,3279,0  0_43_51_43_15   osrs/rs3
+// 2759,3278,0  0_43_51_43_14   removed with graphical update?
 
 [fishing_movement_shilo_village_enum]
 inputtype=int
@@ -130,6 +152,15 @@ val=6,0_44_46_44_32
 val=7,0_44_46_44_28
 val=8,0_44_46_49_28
 val=9,0_44_46_53_33
+
+//These 3 coordinates are the NPC spawn points.
+//The water boundary has been changed a few times between 2005 and 2008, with some of these fishing spots was being accessible and others not.
+//npc can never move to these 3 coordinates on the osrs/rs3 side..
+//2855,2974,0   0_44_46_39_30  
+//2856,2974,0   0_44_46_40_30  // video here https://www.youtube.com/watch?v=IPnjFPAdyTM
+//2855,2977,0   0_44_46_39_33
+//--
+//2869,2977,0   0_44_46_53_33 (not exist rs3 after karamja graphical update..)
 
 // lure/bait fishing
 [fishing_movement_entrana1_enum]
@@ -175,14 +206,24 @@ inputtype=int
 outputtype=coord
 val=0,0_46_49_42_41
 val=1,0_46_49_42_40
-val=2,0_46_49_52_23
-val=3,0_46_49_52_22
-val=4,0_46_49_52_21
-val=5,0_46_49_52_20
-// unreachable
-// val=5,0_46_49_51_18 osrs
-// val=6,0_46_49_48_10 osrs
-// val=7,0,0_46_49_41_43 osrs
+val=2,0_46_49_46_33
+val=3,0_46_49_52_23
+val=4,0_46_49_52_22
+val=5,0_46_49_52_21
+// guesses
+val=6,0_46_49_52_20
+val=7,0_46_49_52_19
+
+//osrs 2025/rs3 fishing spot coordinates rimmington
+//2985,3179,0   0_46_49_41_43   (osrs only) // after update xx,xx,20xx?
+//2986,3177,0   0_46_49_42_41   (osrs/rs3) original
+//2986,3176,0   0_46_49_42_40   (osrs/rs3) original
+//2990,3169,0   0_46_49_46_33   (osrs/rs3) original
+//2996,3159,0   0_46_49_52_23   (osrs/rs3) original
+//2996,3158,0   0_46_49_52_22   (osrs/rs3) original
+//2996,3157,0   0_46_49_52_21   (rs3 only) original?
+//2995,3154,0   0_46_49_51_18   (osrs/rs3) // after 26,September,2005
+//2992,3146,0   0_46_49_48_10   (osrs/rs3) // after 26,September,2005
 
 [fishing_movement_wilderness_camp_enum]
 inputtype=int
@@ -190,6 +231,13 @@ outputtype=coord
 val=0,0_47_57_46_58
 val=1,0_47_57_42_56
 val=2,0_47_57_37_54
+
+// The locations of the rs3 fishing spots were updated with the wilderness graphics update.
+//3045,3702,0   0_47_57_37_54   (osrs)
+//3047,3703,0   0_47_57_39_55   (rs3 only)
+//3050,3704,0   0_47_57_42_56   (osrs/rs3)
+//3054,3706,0   0_47_57_46_58   (osrs)
+//3062,3710,0   0_47_57_54_62   (rs3 only)
 
 [fishing_movement_draynor_village_enum]
 inputtype=int
@@ -217,21 +265,26 @@ val=2,0_50_50_39_43
 val=3,0_50_50_39_44
 val=4,0_50_50_38_51
 val=5,0_50_50_38_52
-val=6,0_50_50_38_53
-val=7,0_50_50_38_54
+val=6,0_50_50_38_54
+val=7,0_50_50_38_55
 
 [fishing_movement_al_kharid_enum]
 inputtype=int
 outputtype=coord
-// val=0,0_51_49_2_12 osrs
-// val=1,0_51_49_3_12 osrs
-// val=2,0_51_49_4_11 osrs
-// val=3,0_51_49_12_4 osrs
-// val=4,0_51_49_13_3 osrs
 val=0,0_51_49_3_12
 val=1,0_51_49_4_11
-val=2,0_51_49_12_4
-val=3,0_51_49_11_4
+val=2,0_51_49_11_4
+val=3,0_51_49_12_4
+val=4,0_51_49_14_2
+
+// osrs locations and some data from 2007 - 2012.
+//3266,3148,0   0_51_49_2_12 (osrs 24 March 2021-2025)
+//3267,3148,0   0_51_49_3_12 original/2021
+//3268,3147,0   0_51_49_4_11 original/2021
+//3275,3140,0   0_51_49_11_4 original/2021
+//3276,3140,0   0_51_49_12_4 original/2021
+//3277,3139,0   0_51_49_13_3 (osrs 24 March 2021-2025)
+//3278,3138,0   0_51_49_14_2 original  (removed 2021)
 
 [fishing_movement_taverley_dungeon_enum]
 inputtype=int
