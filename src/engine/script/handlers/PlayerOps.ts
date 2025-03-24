@@ -854,10 +854,7 @@ const PlayerOps: CommandHandlers = {
     }),
 
     [ScriptOpcode.LAST_LOGIN_INFO]: state => {
-        // proxying websockets through cf may show IPv6 and breaks anyways
-        // so we just hardcode 127.0.0.1 (2130706433)
-
-        state.activePlayer.lastLoginInfo(2130706433, 0, 201);
+        state.activePlayer.lastLoginInfo();
     },
 
     [ScriptOpcode.BAS_READYANIM]: state => {
