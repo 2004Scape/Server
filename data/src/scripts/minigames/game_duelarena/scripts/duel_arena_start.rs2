@@ -167,4 +167,4 @@ queue(duel_arena_time_limit, 0);
 [queue,duel_arena_time_limit]
 ~duel_give_stake_back;
 ~duel_reset_all;
-~mesbox("Time is up, there was no winner!"); // complete guess
+~mesbox("Your duel ended in an honourable draw."); // RS3 message: https://archive.org/details/runelibris

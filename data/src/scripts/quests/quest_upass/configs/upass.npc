@@ -118,6 +118,7 @@ param=defend_sound,insect_hit
 param=death_sound,insect_death
 param=death_drop,null
 huntmode=cowardly
+huntrange=1
 // Stats match osrs version but our version Vislvl is different.
 // wander and maxrange data taken rs3.
 // https://raw.githubusercontent.com/Joshua-F/osrs-dumps/refs/heads/master/config/dump.npc npc_4533

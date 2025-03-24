@@ -24,6 +24,7 @@ import ScriptFile from '#/engine/script/ScriptFile.js';
 import ScriptOpcode from '#/engine/script/ScriptOpcode.js';
 import ScriptPointer from '#/engine/script/ScriptPointer.js';
 import ScriptState from '#/engine/script/ScriptState.js';
+import World from '#/engine/World.js';
 import Environment from '#/util/Environment.js';
 import { printWarning } from '#/util/Logger.js';
 
@@ -194,6 +195,15 @@ export default class ScriptRunner {
                         trace++;
                         state.self.wrappedMessageGame(`    ${trace}: ${frame.script.name} - ${frame.script.fileName}:${frame.script.lineNumber(frame.pc)}`);
                     }
+                }
+
+                if (Environment.NODE_PRODUCTION) {
+                    state.self.logout();
+                    state.self.loggingOut = true;
+                }
+            } else if (state.self instanceof Npc) {
+                if (Environment.NODE_PRODUCTION) {
+                    World.removeNpc(state.self, 0);
                 }
             }
 

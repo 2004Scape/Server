@@ -780,6 +780,7 @@ if (last_useitem = digsite_chest_key) {
     anim(human_openchest, 0);
     inv_del(inv, digsite_chest_key, 1);
     p_delay(0);
+    // Temp note: dur does not need updated
     loc_change(digsite_chest_open, 300);
 } else {
     ~displaymessage(^dm_default);

@@ -354,7 +354,8 @@ return($maxhit);
 p_delay(0); // delay in osrs? isntead of arrivedelay
 anim(human_leverdown, 0); // OSRS uses seq's not in 225, going to assume here
 sound_synth(lever, 0, 0);
-loc_change(loc_161, 6);
+// Temp note: dur updated
+loc_change(loc_161, 7);
 if_close;
 p_delay(0);
 mes("You pull the lever...");
@@ -368,7 +369,8 @@ mes("...And teleport into the Dragon's lair."); // changed to "Lair" (uppercase)
 p_arrivedelay;
 anim(human_leverdown, 0); // OSRS uses seq's not in 225, going to assume here
 sound_synth(lever, 0, 0);
-loc_change(loc_161, 6);
+// Temp note: dur updated
+loc_change(loc_161, 7);
 if_close;
 p_delay(0);
 mes("You pull the lever...");

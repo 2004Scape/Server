@@ -62,7 +62,7 @@ data=guard,guard_ardougne
 data=guard,knight_of_ardougne_1
 data=guard,knight_of_ardougne_2
 data=guard,paladin
-data=guard,npc_365
+data=guard,ardougne_paladin2
 data=level,50
 data=experience,540
 data=respawn_ticks,100
@@ -79,7 +79,7 @@ data=guard,guard_ardougne
 data=guard,knight_of_ardougne_1
 data=guard,knight_of_ardougne_2
 data=guard,paladin
-data=guard,npc_365
+data=guard,ardougne_paladin2
 data=level,65
 data=experience,810
 data=respawn_ticks,166
@@ -96,7 +96,7 @@ data=guard,guard_ardougne
 data=guard,knight_of_ardougne_1
 data=guard,knight_of_ardougne_2
 data=guard,paladin
-data=guard,npc_365
+data=guard,ardougne_paladin2
 data=level,75
 // https://oldschool.runescape.wiki/w/Update:Salamanders_and_Special_Attack
 // gives 16 xp instead of 160 xp

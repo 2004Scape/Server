@@ -64,8 +64,9 @@ if(loc_find(0_40_49_40_6, loc_79) = true) {
     def_int $angle = loc_angle;
     def_locshape $shape = loc_shape;
     $x, $z = ~door_open($angle, loc_shape);
-    loc_change(loc_83, 2);
-    loc_add(movecoord($loc_coord, $x, 0, $z), loc_37, modulo(add($angle, 1), 4), $shape, 2);
+    // Temp note: dur updated
+    loc_change(loc_83, 3);
+    loc_add(movecoord($loc_coord, $x, 0, $z), loc_37, modulo(add($angle, 1), 4), $shape, 3);
     sound_synth(grate_open, 0, 0);
 }
 ~forcemove(movecoord(coord, 0, 0, 1));

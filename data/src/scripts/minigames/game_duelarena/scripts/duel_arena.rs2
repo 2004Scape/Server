@@ -352,12 +352,12 @@ if ($amount <= 0) {
 def_obj $obj = inv_getobj(inv, $slot);
 
 if (oc_tradeable($obj) = false) {
-    mes("You can't stake this item."); // guess for now
+    mes("You can't stake that item."); // RS3 message: https://archive.org/details/runelibris
     return;
 }
 
 if (oc_members($obj) = true & map_members = false) { // cant duel on f2p worlds anyway but just incase
-    mes("You can't stake this item.");
+    mes("You can't stake that item."); // RS3 message: https://archive.org/details/runelibris
     return;
 }
 

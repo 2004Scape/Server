@@ -260,6 +260,11 @@ export async function packConfigs() {
             }
 
             const parts = src[i].split('=');
+
+            if (parts.length !== 2) {
+                throw new Error(`Bad constant declaration on line: ${src[i]}`);
+            }
+
             let name = parts[0].trim();
             const value = parts[1].trim();
 

@@ -215,6 +215,7 @@ switch_int(%grandtree_progress) {
                 }
                 npc_facesquare(movecoord(^narnode_trapdoor_coord, -1, 0, -1));
                 if(loc_find(movecoord(^narnode_trapdoor_coord, -1, 0, -1), loc_2446) = true) {
+                    // Temp note: dur does not need updated ? @indio
                     loc_change(loc_2445, 10);
                 }
                 npc_say("Down here.");

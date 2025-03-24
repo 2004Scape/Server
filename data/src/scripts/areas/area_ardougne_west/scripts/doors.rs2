@@ -3,11 +3,11 @@ if(~check_axis(coord, loc_coord, loc_angle) = false & inv_total(worn, doctors_go
     mes("The mourner is refusing to open the door.");
     return;
 }
-~open_and_close_door2(loc_param(next_loc_stage), ~check_axis(coord, loc_coord, loc_angle), door_open);
+~open_and_close_door2(loc_2035, ~check_axis(coord, loc_coord, loc_angle), door_open);
 
 [oploc1,loc_2036] 
 if(~check_axis(coord, loc_coord, loc_angle) = false) {
-    ~open_and_close_door2(loc_param(next_loc_stage), ~check_axis(coord, loc_coord, loc_angle), door_open);
+    ~open_and_close_door2(loc_2037, ~check_axis(coord, loc_coord, loc_angle), door_open);
 } else {
     @west_ardougne_mourner_headquarters_doors;
 }
@@ -27,20 +27,20 @@ if(%biohazard_progress = ^biohazard_complete) {
     def_coord $loc_coord = loc_coord;
     mes("...You open them and walk through.");
     if(loc_find(0_39_51_62_36, loc_2049) = true) {
-        loc_del(4);
-        loc_add(loc_coord, loc_2048, 2, loc_shape, 4);
+        // Temp note: dur updated
+        loc_add(loc_coord, loc_2048, 2, loc_shape, 5);
     }
     if(loc_find(0_39_51_61_36, loc_2048) = true) {
-        loc_del(4);
-        loc_add(loc_coord, loc_2049, 0, loc_shape, 4);
+        // Temp note: dur updated
+        loc_add(loc_coord, loc_2049, 0, loc_shape, 5);
     }
     if(loc_find(0_39_51_62_35, loc_2048) = true) {
-        loc_del(4);
-        loc_add(loc_coord, loc_2049, 2, loc_shape, 4);
+        // Temp note: dur updated
+        loc_add(loc_coord, loc_2049, 2, loc_shape, 5);
     }
     if(loc_find(0_39_51_61_35, loc_2049) = true) {
-        loc_del(4);
-        loc_add(loc_coord, loc_2048, 0, loc_shape, 4);
+        // Temp note: dur updated
+        loc_add(loc_coord, loc_2048, 0, loc_shape, 5);
     }
     sound_synth(coffin_open, 0, 0);
     if(coordx(coord) < coordx(loc_coord)) {
@@ -59,7 +59,7 @@ switch_int(%biohazard_progress) {
         if(inv_total(worn, doctors_gown) > 0) {
             ~chatnpc_specific(nc_name(npc_357), npc_357, "<p,neutral>In you go doc.");
             if_close;
-            ~open_and_close_door2(loc_param(next_loc_stage), ~check_axis(coord, loc_coord, loc_angle), door_open);
+            ~open_and_close_door2(loc_2037, ~check_axis(coord, loc_coord, loc_angle), door_open);
             return;
         }
         ~chatnpc_specific(nc_name(npc_357), npc_357, "<p,neutral>Stay away from there.");

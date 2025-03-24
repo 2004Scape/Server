@@ -30,6 +30,6 @@ if (stat_base(prayer) < $levelreq){
     return;
 }
 %prayer_rapidheal = ^true;
-~prayer_activate($data, ^prayer_rapidheal_start);
+~prayer_activate($data);
 cleartimer(health_regen);
 settimer(health_regen, 50);

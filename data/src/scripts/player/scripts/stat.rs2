@@ -57,53 +57,7 @@ while ($i <= enum_getoutputcount(stats)) {
 
 //hp is on a seperate timer, because of rapid heal and rapid restore
 [timer,health_regen]
-// hitpoints doesnt deplete when too high
-if (stat(hitpoints) < stat_base(hitpoints)) {
-    stat_add(hitpoints, 1, 0);
-}
-
-/***
- * A version of stat_add that caps the boost to prevent the stat boosting over base + boost.
- * This intended for potions so that drinking from the same potion wont just keep adding up to 255.
- */
-[proc,stat_addclamp](stat $stat, int $constant, int $percent)
-def_int $base_level = stat_base($stat);
-def_int $level = stat($stat);
-
-// calculate the maximum level based on the base level
-def_int $max_level = calc($base_level + ($constant + scale($base_level, 100, $percent)));
-
-// calculate the boost and lower it to max - level if it goes over
-def_int $boost = calc($constant + scale($level, 100, $percent));
-if (calc($level + $boost) > $max_level) {
-    $boost = calc($max_level - $level);
-}
-
-// add the boost, with no percent
-stat_add($stat, max($boost, 0), 0);
-
-// not sure if this is used anywhere
-// thought it was for kebabs but its not the case
-[proc,stat_subclamp](stat $stat, int $constant, int $percent)
-def_int $base_level = stat_base($stat);
-def_int $level = stat($stat);
-
-// calculate the minimum level based on the base level
-def_int $min_level = calc($base_level - ($constant + scale($base_level, 100, $percent)));
-
-// calculate the debuff
-def_int $debuff = calc($constant - scale($level, 100, $percent));
-if (calc($level - $debuff) < $min_level) {
-    $debuff = calc($level - $min_level);
-}
-
-// subtract the debuff, with no percent
-stat_sub($stat, $debuff, 0);
-
-// stat_heal but instead of scaling based off stat, it scales off of stat_base
-[proc,stat_healbase](stat $stat, int $constant, int $percent)
-def_int $heal = add(scale($percent, 100, stat_base($stat)), $constant);
-stat_heal($stat, $heal, 0);
+stat_heal(hitpoints, 1, 0);
 
 [proc,stat_reset](stat $stat)
 def_int $d = sub(stat($stat), stat_base($stat));

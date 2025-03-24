@@ -54,6 +54,7 @@ import PCountDialog from '#/network/server/model/PCountDialog.js';
 import SynthSound from '#/network/server/model/SynthSound.js';
 import TutFlash from '#/network/server/model/TutFlash.js';
 import ColorConversion from '#/util/ColorConversion.js';
+import Environment from '#/util/Environment.js';
 
 const PlayerOps: CommandHandlers = {
     [ScriptOpcode.FINDUID]: state => {
@@ -452,10 +453,11 @@ const PlayerOps: CommandHandlers = {
         check(percent, NumberNotNull);
 
         const player = state.activePlayer;
+        const base = player.baseLevels[stat];
         const current = player.levels[stat];
-        const added = current + ((constant + (current * percent) / 100) | 0);
+        const added = current + ((constant + (base * percent) / 100) | 0);
         player.levels[stat] = Math.min(added, 255);
-        if (stat === 3 && player.levels[3] >= player.baseLevels[3]) {
+        if (stat === PlayerStat.HITPOINTS && player.levels[PlayerStat.HITPOINTS] >= player.baseLevels[PlayerStat.HITPOINTS]) {
             player.heroPoints.clear();
         }
         if (added !== current) {
@@ -464,6 +466,46 @@ const PlayerOps: CommandHandlers = {
     }),
 
     [ScriptOpcode.STAT_SUB]: checkedHandler(ActivePlayer, state => {
+        const [stat, constant, percent] = state.popInts(3);
+
+        check(stat, PlayerStatValid);
+        check(constant, NumberNotNull);
+        check(percent, NumberNotNull);
+
+        const player = state.activePlayer;
+        const base = player.baseLevels[stat];
+        const current = player.levels[stat];
+        const subbed = current - ((constant + (base * percent) / 100) | 0);
+        player.levels[stat] = Math.max(subbed, 0);
+        if (subbed !== current) {
+            player.changeStat(stat);
+        }
+    }),
+
+    [ScriptOpcode.STAT_BOOST]: checkedHandler(ActivePlayer, state => {
+        const [stat, constant, percent] = state.popInts(3);
+
+        check(stat, PlayerStatValid);
+        check(constant, NumberNotNull);
+        check(percent, NumberNotNull);
+
+        const player = state.activePlayer;
+        const base = player.baseLevels[stat];
+        const current = player.levels[stat];
+
+        const boost = ((constant + (base * percent) / 100) | 0);
+        const boosted = Math.min(current + boost, base + boost);
+        player.levels[stat] = Math.min(boosted, 255);
+        if (stat === PlayerStat.HITPOINTS && player.levels[PlayerStat.HITPOINTS] >= player.baseLevels[PlayerStat.HITPOINTS]) {
+            player.heroPoints.clear();
+        }
+        if (boosted !== current) {
+            player.changeStat(stat);
+        }
+    }),
+
+    // same as stat_sub except it drains the current level instead of base level
+    [ScriptOpcode.STAT_DRAIN]: checkedHandler(ActivePlayer, state => {
         const [stat, constant, percent] = state.popInts(3);
 
         check(stat, PlayerStatValid);
@@ -497,10 +539,10 @@ const PlayerOps: CommandHandlers = {
         const player = state.activePlayer;
         const base = player.baseLevels[stat];
         const current = player.levels[stat];
-        const healed = current + ((constant + (current * percent) / 100) | 0);
+        const healed = current + ((constant + (base * percent) / 100) | 0);
         player.levels[stat] = Math.max(Math.min(healed, base), current);
 
-        if (stat === 3 && player.levels[3] >= player.baseLevels[3]) {
+        if (stat === PlayerStat.HITPOINTS && player.levels[PlayerStat.HITPOINTS] >= player.baseLevels[PlayerStat.HITPOINTS]) {
             player.heroPoints.clear();
         }
 
@@ -812,10 +854,7 @@ const PlayerOps: CommandHandlers = {
     }),
 
     [ScriptOpcode.LAST_LOGIN_INFO]: state => {
-        // proxying websockets through cf may show IPv6 and breaks anyways
-        // so we just hardcode 127.0.0.1 (2130706433)
-
-        state.activePlayer.lastLoginInfo(2130706433, 0, 201);
+        state.activePlayer.lastLoginInfo();
     },
 
     [ScriptOpcode.BAS_READYANIM]: state => {
@@ -944,7 +983,7 @@ const PlayerOps: CommandHandlers = {
     },
 
     [ScriptOpcode.AFK_EVENT]: state => {
-        state.pushInt(state.activePlayer.afkEventReady ? 1 : 0);
+        state.pushInt((Environment.NODE_DEBUG || state.activePlayer.staffModLevel < 2) && state.activePlayer.afkEventReady ? 1 : 0);
         state.activePlayer.afkEventReady = false;
     },
 

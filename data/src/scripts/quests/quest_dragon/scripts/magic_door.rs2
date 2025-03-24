@@ -34,6 +34,7 @@ mes("You open the chest.");
 anim(human_openchest, 0);
 sound_synth(chest_open, 0, 0);
 p_delay(0);
+// Temp note: dur does not need updated
 loc_change(dragon_slayer_magic_chest_opened, 300);
 
 [oploc2,dragon_slayer_magic_chest_opened]
@@ -42,6 +43,7 @@ mes("You close the chest.");
 anim(human_closechest, 0);
 sound_synth(chest_close, 0, 0);
 p_delay(0);
+// Temp note: dur does not need updated
 loc_change(dragon_slayer_magic_chest_closed, 300);
 
 [oploc1,dragon_slayer_magic_chest_opened]
@@ -55,4 +57,5 @@ if (~quest_dragon_getting_map_parts = false | ~obj_gettotal(crandor_map_part3) >
     inv_add(inv, crandor_map_part3, 1);
 }
 // auto closes, yes. https://youtu.be/tmPf68hogzw?t=471
+// Temp note: dur does not need updated
 loc_change(dragon_slayer_magic_chest_closed, 300);

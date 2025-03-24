@@ -92,6 +92,7 @@ switch_loc (loc_type) {
 }
 ~stealing_check_for_reward($data);
 stat_advance(thieving, $experience);
+// Temp note: dur does not need updated
 loc_change(market_stall, $respawn_ticks);
 
 [label,activate_trapped_chest]
@@ -129,7 +130,7 @@ anim(human_openchest, 0);
 def_int $experience = db_getfield($data, trapped_chest:experience, 0);
 stat_advance(thieving, $experience);
 def_int $respawn_ticks = db_getfield($data, trapped_chest:respawn_ticks, 0);
-
+// Temp note: dur does not need updated
 loc_change(loc_2574, $respawn_ticks);
 
 if (db_getfieldcount($data, trapped_chest:tele_coord) > 0) {

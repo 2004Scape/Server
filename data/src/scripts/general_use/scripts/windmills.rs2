@@ -69,6 +69,7 @@ if (inv_total(inv, pot_empty) < 1) {
         // todo: do we revert visual state? let the loc_change run its course?
         %mill_flour = 0;
         mes("You fill a pot with the last of the flour in the bin.");
+        // Temp note: dur does not need updated
         loc_change(millbase, 500);
     }
 }
@@ -86,6 +87,7 @@ if (last_useitem = grain) {
     // sound?
     mes("You put the grain in the hopper.");
     inv_delslot(inv, last_useslot);
+    // Temp note: dur does not need updated
     loc_change(hopper_full, 500);
 } else {
     ~displaymessage(^dm_default);
@@ -96,7 +98,8 @@ def_coord $hopper_coord = loc_param(hopper_coord);
 def_coord $millbase_coord = loc_param(millbase_coord);
 def_loc $hopper = loc_param(next_loc_stage);
 sound_synth(hopperlever, 0, 0);
-loc_change(hoppercontrol_inuse, 2);
+// Temp note: dur updated
+loc_change(hoppercontrol_inuse, 3);
 anim(human_pickuptable, 0);
 
 if (loc_find($hopper_coord, hopper_full) = true) {
@@ -115,6 +118,8 @@ if (loc_find($hopper_coord, hopper_full) = true) {
 
     // reverting the state means multiple people trying at the same time will have issues
     // but it's necessary to prevent infinite flour!
+    // Temp note: dur does not need updated
+    // Temp note: dur does not need updated
     loc_change($hopper, 500);
 
     if (loc_find($millbase_coord, millbase) = true) {

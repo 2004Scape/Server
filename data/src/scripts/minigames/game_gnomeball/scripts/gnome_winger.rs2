@@ -38,7 +38,7 @@ npc_facesquare(coord);
 %npc_lastcombat = map_clock;
 
 npc_delay($delay);
-npc_changetype(gnome_winger2);
+npc_changetype(gnome_winger2, ^max_32bit_int);
 
 // no idea if this is how they do it but if you pass before 10 ticks after u first 
 // passed to them, they will always pass 10 ticks later
@@ -57,7 +57,7 @@ inv_setslot(worn, ^wearpos_rhand, gnomeball, 1);
 if (finduid(%npc_attacking_uid) = false | ~inzone_coord_pair_table(gnomeball_zones, coord) = false) {
     if (add(%npc_lastcombat, 60) < map_clock & npc_type = gnome_winger2) {
         %npc_attacking_uid = null;
-        npc_changetype(gnome_winger1);
+        npc_changetype(gnome_winger1, ^max_32bit_int);
         npc_del;
         return;
     }
@@ -87,7 +87,7 @@ if (p_finduid(%npc_attacking_uid) = true) {
     p_delay(0);
     npc_facesquare(coord);
     p_delay(0);
-    npc_changetype(gnome_winger1);
+    npc_changetype(gnome_winger1, ^max_32bit_int);
     p_delay(0);
     inv_setslot(worn, ^wearpos_rhand, gnomeball, 1);
     ~update_all(gnomeball);

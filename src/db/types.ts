@@ -21,6 +21,10 @@ export type account = {
     notes: string | null;
     notes_updated: string | null;
     members: Generated<number>;
+    tfa_enabled: Generated<number>;
+    tfa_last_code: Generated<number>;
+    tfa_secret_base32: string | null;
+    tfa_incorrect_attempts: Generated<number>;
 };
 export type account_session = {
     id: Generated<number>;
@@ -32,6 +36,10 @@ export type account_session = {
     coord: number;
     event: string;
     event_type: Generated<number>;
+};
+export type account_tag = {
+    tag_id: number;
+    account_id: number;
 };
 export type friendlist = {
     account_id: number;
@@ -159,9 +167,15 @@ export type session = {
     uid: number;
     ip: string | null;
 };
+export type tag = {
+    id: Generated<number>;
+    name: string;
+    color: string | null;
+};
 export type DB = {
     account: account;
     account_session: account_session;
+    account_tag: account_tag;
     friendlist: friendlist;
     hiscore: hiscore;
     hiscore_large: hiscore_large;
@@ -178,4 +192,5 @@ export type DB = {
     public_chat: public_chat;
     report: report;
     session: session;
+    tag: tag;
 };

@@ -28,4 +28,4 @@ if (stat_base(prayer) < $levelreq){
     return;
 }
 %prayer_thickskin = ^true;
-~prayer_activate($data, ^prayer_thickskin_start);
+~prayer_activate($data);

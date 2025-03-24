@@ -46,7 +46,8 @@ if(inv_total(inv, trail_clue_medium_riddle_exp001) > 0) {
         anim(human_openchest, 0);
         sound_synth(chest_open, 0, 0);
         p_delay(0);
-        loc_change(loc_3368, 4);
+        // Temp note: dur updated
+        loc_change(loc_3368, 5);
         p_delay(0);
         inv_del(inv, trail_clue_medium_key_exp001, 1);
         ~progress_clue_medium(trail_clue_medium_riddle_exp001, "You've found another clue scroll!");
@@ -64,7 +65,8 @@ if(inv_total(inv, trail_clue_medium_riddle_exp002) > 0) {
         anim(human_openchest, 0);
         sound_synth(cupboard_open, 0, 0);
         p_delay(0);
-        loc_change(loc_3369, 4);
+        // Temp note: dur updated
+        loc_change(loc_3369, 5);
         p_delay(0);
         inv_del(inv, trail_clue_medium_key_exp002, 1);
         ~progress_clue_medium(trail_clue_medium_riddle_exp002, "You've found another clue scroll!");
@@ -82,7 +84,8 @@ if(inv_total(inv, trail_clue_medium_riddle_exp003) > 0) {
         anim(human_openchest, 0);
         sound_synth(cupboard_open, 0, 0);
         p_delay(0);
-        loc_change(loc_3369, 4);
+        // Temp note: dur updated
+        loc_change(loc_3369, 5);
         p_delay(0);
         inv_del(inv, trail_clue_medium_key_exp003, 1);
         ~progress_clue_medium(trail_clue_medium_riddle_exp003, "You've found another clue scroll!");
@@ -100,7 +103,8 @@ if(inv_total(inv, trail_clue_medium_riddle_exp004) > 0) {
         anim(human_openchest, 0);
         sound_synth(cupboard_open, 0, 0);
         p_delay(0);
-        loc_change(loc_3370, 4);
+        // Temp note: dur updated
+        loc_change(loc_3370, 5);
         p_delay(0);
         inv_del(inv, trail_clue_medium_key_exp004, 1);
         ~progress_clue_medium(trail_clue_medium_riddle_exp004, "You've found another clue scroll!");
@@ -118,7 +122,8 @@ if(inv_total(inv, trail_clue_medium_riddle_exp005) > 0) {
         anim(human_openchest, 0);
         sound_synth(chest_open, 0, 0);
         p_delay(0);
-        loc_change(loc_3368, 4);
+        // Temp note: dur updated
+        loc_change(loc_3368, 5);
         p_delay(0);
         inv_del(inv, trail_clue_medium_key_exp005, 1);
         ~progress_clue_medium(trail_clue_medium_riddle_exp005, "You've found another clue scroll!");

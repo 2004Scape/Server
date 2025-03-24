@@ -1,4 +1,4 @@
-import InputTrackingEvent from '#/engine/entity/tracking/InputEvent.js';
+import InputTrackingBlob from '#/engine/entity/tracking/InputEvent.js';
 import InternalClient from '#/server/InternalClient.js';
 import Environment from '#/util/Environment.js';
 
@@ -49,7 +49,7 @@ export default class LoggerClient extends InternalClient {
         );
     }
 
-    public async inputTrack(username: string, session_uuid: string, timestamp: number, events: InputTrackingEvent[]) {
+    public async inputTrack(username: string, session_uuid: string, timestamp: number, blobs: InputTrackingBlob[]) {
         await this.connect();
 
         if (!this.ws || !this.wsr || !this.wsr.checkIfWsLive()) {
@@ -64,7 +64,7 @@ export default class LoggerClient extends InternalClient {
                 username,
                 session_uuid,
                 timestamp,
-                events
+                blobs
             })
         );
     }

@@ -102,8 +102,10 @@ mes("You find treasure inside!");
 anim(human_openchest, 0);
 stat_advance(thieving, $experience);
 ~trapped_chest_check_for_reward($data);
-loc_change(loc_2574, 3); //opened chest
+// Temp note: dur updated
+loc_change(loc_2574, 4); //opened chest
 p_delay(3);
+// Temp note: dur does not need updated ???
 loc_change(loc_2572, $respawn_ticks); //looted chest
 
 [oploc1,loc_2572]

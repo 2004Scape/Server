@@ -1,7 +1,8 @@
 [oploc1,loc_3337]
 mes("You pull the lever...");
 sound_synth(lever, 0, 0);
-loc_change(loc_3242, 14);
+// Temp note: dur updated !! nice even number :)
+loc_change(loc_3242, 15);
 p_delay(1);
 mes("The portcullis opens.");
 if(loc_find(0_38_151_33_10, loc_3303) = true) {

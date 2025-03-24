@@ -83,39 +83,30 @@ switch_int (random(5)) {
 npc_settimer(~random_range(9, 21)); // osrs
 
 [ai_timer,game_trawler_shark1]
-npc_settimer(0);
-npc_tele(movecoord(npc_coord, 0, 0, 2));
-npc_delay(29);
-npc_tele(movecoord(npc_coord, 1, 0, 1));
-npc_delay(29);
-npc_tele(movecoord(npc_coord, 2, 0, 0));
-npc_delay(29);
-npc_tele(movecoord(npc_coord, 1, 0, -1));
-npc_delay(29);
-npc_tele(movecoord(npc_coord, 0, 0, -2));
-npc_delay(29);
-npc_tele(movecoord(npc_coord, -1, 0, -1));
-npc_delay(29);
-npc_tele(movecoord(npc_coord, -2, 0, 0));
-npc_delay(29);
-npc_tele(movecoord(npc_coord, -1, 0, 1));
-npc_settimer(30);
+%npc_int = modulo(add(%npc_int, 1), 8);
+switch_int(%npc_int) {
+    case 0 : npc_tele(movecoord(npc_coord, 0, 0, 2));
+    case 1 : npc_tele(movecoord(npc_coord, 1, 0, 1));
+    case 2 : npc_tele(movecoord(npc_coord, 2, 0, 0));
+    case 3 : npc_tele(movecoord(npc_coord, 1, 0, -1));
+    case 4 : npc_tele(movecoord(npc_coord, 0, 0, -2));
+    case 5 : npc_tele(movecoord(npc_coord, -1, 0, -1));
+    case 6 : npc_tele(movecoord(npc_coord, -2, 0, 0));
+    case 7 : npc_tele(movecoord(npc_coord, -1, 0, 1));
+    case default : %npc_int = 0;
+}
+
 
 [ai_timer,game_trawler_shark2]
-npc_settimer(0);
-npc_tele(movecoord(npc_coord, 2, 0, 2));
-npc_delay(29);
-npc_tele(movecoord(npc_coord, 2, 0, 0));
-npc_delay(29);
-npc_tele(movecoord(npc_coord, 2, 0, -2));
-npc_delay(29);
-npc_tele(movecoord(npc_coord, 0, 0, -2));
-npc_delay(29);
-npc_tele(movecoord(npc_coord, -2, 0, -2));
-npc_delay(29);
-npc_tele(movecoord(npc_coord, -2, 0, 0));
-npc_delay(29);
-npc_tele(movecoord(npc_coord, -2, 0, 2));
-npc_delay(29);
-npc_tele(movecoord(npc_coord, 0, 0, 2));
-npc_settimer(30);
+%npc_int = modulo(add(%npc_int, 1), 8);
+switch_int(%npc_int) {
+    case 0 : npc_tele(movecoord(npc_coord, 2, 0, 2));
+    case 1 : npc_tele(movecoord(npc_coord, 2, 0, 0));
+    case 2 : npc_tele(movecoord(npc_coord, 2, 0, -2));
+    case 3 : npc_tele(movecoord(npc_coord, 0, 0, -2));
+    case 4 : npc_tele(movecoord(npc_coord, -2, 0, -2));
+    case 5 : npc_tele(movecoord(npc_coord, -2, 0, 0));
+    case 6 : npc_tele(movecoord(npc_coord, -2, 0, 2));
+    case 7 : npc_tele(movecoord(npc_coord, 0, 0, 2));
+    case default : %npc_int = 0;
+}

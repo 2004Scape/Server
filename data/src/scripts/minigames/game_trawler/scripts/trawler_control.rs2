@@ -1,0 +1,174 @@
+[ai_timer,murphy_nonflood] // 5 tick timer
+if (%npc_int2 = ^trawler_control_flooded) {
+    return;
+}
+def_int $player_count = ~playercount_coord_pair_table(trawler_game_zones);
+if ($player_count < 1) {
+    npc_settimer(0);
+    return;
+}
+
+%npc_int = add(%npc_int, 1);
+
+if (%npc_int = 200) { // 1000 ticks
+    ~trawler_win(divide(%npc_trawler_fish_caught, $player_count));
+    npc_settimer(0);
+    return;
+}
+
+~trawler_murphy_say;
+
+~trawler_increase_flooding($player_count);
+
+if (%npc_trawler_flood_status >= 30) {
+    ~trawler_flood;
+}
+
+if (random(16) = 0) {
+    ~trawler_rip_net;
+}
+
+~trawler_catch_fish($player_count);
+npc_settimer(5); // this is important
+
+[ai_timer,murphy_flood]
+if (%npc_int2 = ^trawler_control_nonflooded) {
+    return;
+}
+def_int $player_count = ~playercount_coord_pair_table(trawler_game_zones);
+if ($player_count < 1) {
+    npc_settimer(0);
+    return;
+}
+
+%npc_int = add(%npc_int, 1);
+
+if (%npc_int = 200) { // 1000 ticks
+    ~trawler_win(divide(%npc_trawler_fish_caught, $player_count));
+    npc_settimer(0);
+    return;
+}
+
+~trawler_murphy_say;
+
+~trawler_increase_flooding($player_count);
+
+if (%npc_trawler_flood_status >= 100) {
+    ~trawler_sink;
+    return;
+}
+if (%npc_trawler_flood_status < 1) {
+    ~trawler_unflood;
+}
+if (random(16) = 0) {
+    ~trawler_rip_net;
+}
+
+~trawler_catch_fish($player_count);
+npc_settimer(5); // this is important
+
+
+[proc,trawler_murphy_say]
+if (modulo(%npc_int, 20) = 0 & %npc_int >= 20) {
+    npc_say("<~pluralise(sub(10, divide(%npc_int, 20)), "minute")> left!");
+    return;
+}
+if (random(5) = 0) { // handle murphy's sayings
+    if (loc_find(^trawler_start_net1, game_trawler_fish_net_broken1) = true | loc_find(^trawler_start_net2, game_trawler_fish_net_broken2) = true) {
+        npc_say("Arrh! Check that net!");
+        return;
+    }
+    if (%npc_trawler_flood_status = 0) {
+        npc_say("Let's get this net full with fishies!"); //https://youtu.be/scKmu6QETRw?t=298
+        return;
+    }
+    if (%npc_trawler_flood_status < 20) {
+        switch_int (random(3)) {
+            case 0 : npc_say("Let's get this net full with fishies!");
+            case 1 : npc_say("Blistering barnacles!");
+            case 2 : npc_say("That's the stuff, fill those holes!");
+        }
+    } else if (%npc_trawler_flood_status < 30) {
+        switch_int (random(2)) {
+            case 0 : npc_say("The water is coming in matey!");
+            case 1 : npc_say("You'll need to start bailing soon!");
+        }
+    } else if (%npc_trawler_flood_status < 80) {
+        switch_int (random(4)) {
+            case 0 : npc_say("It's a fierce sea today traveller.");
+            case 1 : npc_say("Land lubbers!");
+            case 2 : npc_say("My mother could bail better than that!");
+            case 3 : npc_say("We'll all end up in a watery grave!");
+        }
+    } else if (%npc_trawler_flood_status < 100) {
+        switch_int (random(4)) {
+            case 0 : npc_say("Noooooo!");
+            case 1 : npc_say("We're all doomed!");
+            case 2 : npc_say("We're going under!");
+            case 3 : npc_say("Mummy!");
+        }
+    }
+}
+
+
+[proc,trawler_increase_flooding](int $player_count)
+def_int $leak_count = 0;
+def_int $i = 0;
+while ($i < enum_getoutputcount(trawler_hulls)) {
+    if (loc_find(enum(int, coord, trawler_hulls, $i), game_trawler_leak) = true) {
+        $leak_count = add($leak_count, 1);
+        %npc_trawler_flood_status = add(%npc_trawler_flood_status, 1);
+    }
+    $i = add($i, 1);
+}
+// max leaks:
+// 1p = 4
+// 2p = 7
+def_int $max_leaks = min(add(multiply($player_count, 3), 1), 9);
+def_int $leak_chance = max(divide(32, $player_count), 2);
+$i = 0;
+while ($i < enum_getoutputcount(trawler_hulls) & $leak_count < $max_leaks) {
+    if (loc_find(enum(int, coord, trawler_hulls, $i), game_trawler_hull) = true | loc_find(enum(int, coord, trawler_hulls, $i), game_trawler_repaired_leak) = true) {
+        if (random($leak_chance) = 0) { // complete guess
+            ~trawler_leak;
+            if (random(5) = 0) {
+                npc_queue(6, 0, 0);
+            }
+            $leak_count = add($leak_count, 1);
+        }
+    }
+    $i = add($i, 1);
+}
+
+// from 1697 caught, a player got an equal cut of 20 fish. theres 200 rolls in a trawler game on each player
+// https://youtu.be/Yzu2wp2hJOw?list=PLn23LiLYLb1b7Lj_u-lnuUOa40FGWslbp This game, each player got 20 fish
+// with a final caught of 1697. Means a 1/10 chance per roll for each player
+[proc,trawler_catch_fish](int $player_count)
+if (~trawler_net_ripped = true) {
+    return;
+}
+def_int $i = 0;
+while ($i < $player_count) {
+    if (random(10) = 0) {
+        %npc_trawler_fish_caught = add(%npc_trawler_fish_caught, 1);
+    }
+    $i = add($i, 1);
+}
+
+[proc,trawler_mes](string $string) // for debug
+huntall(^trawler_start_center_under, 8, 0);
+while (huntnext = true) {
+    mes($string);
+}
+huntall(^trawler_start_center, 8, 0);
+while (huntnext = true) {
+    mes($string);
+}
+huntall(^trawler_flood_center_under, 8, 0);
+while (huntnext = true) {
+    mes($string);
+}
+huntall(^trawler_flood_center, 8, 0);
+while (huntnext = true) {
+    mes($string);
+}

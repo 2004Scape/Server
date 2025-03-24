@@ -28,6 +28,8 @@ sound_synth(teleport_all, 0, 0);
 p_delay(1);
 if (%exit_essence_mine_coord = null) {
     %exit_essence_mine_coord = ^essence_mine_to_sedridor;
+} else if (%exit_essence_mine_coord ! ^essence_mine_to_aubury & %exit_essence_mine_coord ! ^essence_mine_to_sedridor & map_members = false) {
+    %exit_essence_mine_coord = ^essence_mine_to_sedridor; // in osrs, if you hop to a f2p world from f2p when inside the ess mine, if your exit coord is in a p2p area it reset to sedridor!
 }
 def_coord $coord = map_findsquare(%exit_essence_mine_coord, 0, 2, ^map_findsquare_lineofwalk);
 p_telejump($coord);

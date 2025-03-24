@@ -89,7 +89,8 @@ if (~inzone_coord_pair_table(trawler_game_zones, $coord) = true) {
     return(false);
 }
 if (~in_duel_arena($coord) = true) {
-    mes("You can't teleport during a duel."); // guess based on: https://youtu.be/xLE8au7T50Q?t=227
+    mes("Coward! You can't teleport from a duel."); //RS3 message: https://archive.org/details/runelibris
+    //Colored in #AB0908 in RS3, but was likely not colored in 2004
     return(false);
 }
 return(true);

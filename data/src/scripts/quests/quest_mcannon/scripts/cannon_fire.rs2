@@ -1,0 +1,193 @@
+[timer,cannon_rotate]
+if (%mcannon_coord = null | loc_find(%mcannon_coord, cannon) = false) {
+    cleartimer(cannon_rotate);
+    return;
+}
+def_coord $center = movecoord(loc_coord, 1, 0, 1);
+def_coord $close_range = movecoord($center, 0, 0, 3);
+def_coord $medium_range = movecoord($center, 0, 0, 7);
+def_coord $long_range = movecoord($center, 0, 0, 14);
+def_int $dir = modulo(%mcannon_clock, 8);
+// start north, going clockwise
+if ($dir = 0) {
+    // automatically starts spinning: https://youtu.be/TeQXQDaawO0?t=234
+    // at https://youtu.be/WWyNTsMXjTE?t=26 the cannon doesnt auto rotate immediately 
+    // but at https://youtu.be/WWyNTsMXjTE?t=219 the cannon does
+    if (%mcannon_ammo < 1) {
+        mes("Your cannon is out of ammo!"); // https://youtu.be/TeQXQDaawO0?t=239
+        cleartimer(cannon_rotate);
+        return;
+    }
+    $close_range = movecoord($center, 0, 0, 3);
+    $medium_range = movecoord($center, 0, 0, 7);
+    $long_range = movecoord($center, 0, 0, 14);
+    loc_anim(cannon_north_west);
+} else if ($dir = 1) {
+    $close_range = movecoord($center, 2, 0, 2);
+    $medium_range = movecoord($center, 5, 0, 5);
+    $long_range = movecoord($center, 12, 0, 12);
+    loc_anim(cannon_north);
+} else if ($dir = 2) {
+    $close_range = movecoord($center, 3, 0, 0);
+    $medium_range = movecoord($center, 7, 0, 0);
+    $long_range = movecoord($center, 14, 0, 0);
+    loc_anim(cannon_north_east);
+} else if ($dir = 3) {
+    $close_range = movecoord($center, 2, 0, -2);
+    $medium_range = movecoord($center, 5, 0, -5);
+    $long_range = movecoord($center, 12, 0, -12);
+    loc_anim(cannon_east);
+} else if ($dir = 4) {
+    $close_range = movecoord($center, 0, 0, -3);
+    $medium_range = movecoord($center, 0, 0, -7);
+    $long_range = movecoord($center, 0, 0, -14);
+    loc_anim(cannon_south_east);
+} else if ($dir = 5) {
+    $close_range = movecoord($center, -2, 0, -2);
+    $medium_range = movecoord($center, -5, 0, -5);
+    $long_range = movecoord($center, -12, 0, -12);
+    loc_anim(cannon_south);
+} else if ($dir = 6) {
+    $close_range = movecoord($center, -3, 0, 0);
+    $medium_range = movecoord($center, -7, 0, 0);
+    $long_range = movecoord($center, -14, 0, 0);
+    loc_anim(cannon_south_west);
+} else if ($dir = 7) {
+    $close_range = movecoord($center, -2, 0, 2);
+    $medium_range = movecoord($center, -5, 0, 5);
+    $long_range = movecoord($center, -12, 0, 12);
+    loc_anim(cannon_west);
+}
+%mcannon_clock = add(%mcannon_clock, 1);
+
+// check close range
+npc_huntall($close_range, 1, 1);
+while (npc_huntnext = true) {
+    if (lineofsight($center, npc_coord) = true) {
+        jump(cannon_fire);
+    }
+}
+
+// check med range
+npc_huntall($medium_range, 2, 1);
+while (npc_huntnext = true) {
+    if (lineofsight($center, npc_coord) = true) {
+        jump(cannon_fire);
+    }
+}
+// check long range
+npc_huntall($long_range, 5, 1);
+while (npc_huntnext = true) {
+    if (lineofsight($center, npc_coord) = true) {
+        jump(cannon_fire);
+    }
+}
+
+
+[label,cannon_fire]
+if (%mcannon_ammo < 1) {
+    return;
+}
+if (~npc_is_attackable = false) {
+    return;
+}
+if (~player_in_combat_check = false) { // https://youtu.be/TeQXQDaawO0?t=247
+    return;
+}
+// map_projanim	id=53, starttime=0, endtime=40, angle=2, progress=11, startheight=36, endheight=35
+// (coord $coord, npc_uid $uid, spotanim $spotanim, int $startheight, int $endheight, int $delay, int $angle, int $length, int $offset, int $step)(int)
+def_int $duration = ~npc_projectile(movecoord(%mcannon_coord, 1, 0, 1), npc_uid, spotanim_53, 36, 35, 0, 2, 35, 0, 5);
+%mcannon_ammo = sub(%mcannon_ammo, 1);
+sound_synth(mcannon_fire, 0, 0);
+def_int $damage = 0;
+if (~player_npc_hit_roll(%damagetype) = true) {
+    $damage = randominc(min(30, npc_param(max_dealt)));
+    def_int $damage_capped = min($damage, npc_stat(hitpoints));
+    stat_advance(ranged, scale(%npc_combat_xp_multiplier, 1000, scale(200, 100, $damage_capped)));
+    npc_heropoints($damage_capped);
+}
+
+~npc_retaliate(divide($duration, 30));
+npc_queue(2, $damage, divide($duration, 30)); // ai_queue2 takes uncapped damage (avoids npcs from tick healing)
+
+if (npc_type = king_black_dragon) {
+    @kbd_destroy_cannon;
+}
+// https://web.archive.org/web/20040821134749/http://www.runescapecommunity.com/index.php?showtopic=159464&amp
+// "I would add in that if you take it to the King Black Dragon it explodes and cannot be used."
+// https://youtu.be/-wgfwyeRSmA?t=117
+[label,kbd_destroy_cannon]
+if (random(4) = 0 & %mcannon_coord ! null) { // guess
+// (coord $coord, coord $coord2, spotanim $spotanim, int $startheight, int $endheight, int $delay, int $angle, int $length, int $offset, int $step)(int)
+    def_int $duration = ~coord_projectile(npc_coord, %mcannon_coord, spotanim_54, 92, 31, 51, 16, -5, 64, 10);
+    spotanim_map(fireblast_impact, %mcannon_coord, 124, $duration);
+    npc_anim(dragon_firebreath_middle_attack, 0);
+    sound_synth(dragonbreath, 0, 30);
+
+    if (loc_find(%mcannon_coord, cannon) = true) {
+        mes("Your cannon has been destroyed!");
+        loc_del(1);
+        %mcannon_coord = null;
+        %mcannon_ammo = 0;
+        cleartimer(cannon_rotate);
+    }
+    
+}
+
+[debugproc,mc]
+if (%mcannon_coord ! null) {
+    mes(tostring(coordx(%mcannon_coord)));
+}
+mes(tostring(map_clock));
+
+[debugproc,givemc]
+inv_add(inv, cannon_base, 1);
+inv_add(inv, cannon_stand, 1);
+inv_add(inv, cannon_barrels, 1);
+inv_add(inv, cannon_furnace, 1);
+
+[debugproc,completemc]
+queue(mcannon_complete, 0);
+
+[debugproc,mctele]
+if (p_finduid(uid) = true) {
+    p_teleport(0_47_53_8_61);
+}
+
+[debugproc,hasmc]
+if (p_finduid(uid) = false) {
+    return;
+}
+if (%mcannon_coord = null | loc_find(%mcannon_coord, cannon) = true) {
+    ~chatnpc_specific("Nulodion", nulodion, "<p,sad>Oh dear, I'm only allowed to replace cannons|that were stolen in action.|I'm sorry but you'll have to buy a new set.");
+    return;
+}
+if (%mcannon_coord ! null) {
+    if (loc_find(%mcannon_coord, cannon_base) = true) {
+        ~chatnpc_specific("Nulodion", nulodion, "<p,confused>Hmmm. I think you'll find the base still happily parked on the spot where you put it."); // osrs
+        ~chatplayer("<p,confused>Oh, is it still there? I thought I'd lost it.");
+        ~chatnpc_specific("Nulodion", nulodion, "<p,laugh>Ha ha ha, what a muddle-headed numpty you are!");
+        ~chatplayer("<p,angry>...");
+        return;
+    } else if (loc_find(%mcannon_coord, cannon_stand) = true) {
+        ~chatnpc_specific("Nulodion", nulodion, "<p,confused>Hmmm. I think you'll find the base and stand still happily parked on the spot where you put them."); // osrs
+        ~chatplayer("<p,confused>Oh, is it still there? I thought I'd lost it.");
+        ~chatnpc_specific("Nulodion", nulodion, "<p,laugh>Ha ha ha, what a muddle-headed numpty you are!");
+        ~chatplayer("<p,angry>...");
+        return;
+    } else if (loc_find(%mcannon_coord, cannon_barrels) = true) {
+        ~chatnpc_specific("Nulodion", nulodion, "<p,confused>Hmmm. I think you'll find most of the cannon still happily parked on the spot where you put it."); // osrs
+        ~chatplayer("<p,confused>Oh, is it still there? I thought I'd lost it.");
+        ~chatnpc_specific("Nulodion", nulodion, "<p,laugh>Ha ha ha, what a muddle-headed numpty you are!");
+        ~chatplayer("<p,angry>...");
+        return;
+    }
+}
+
+[debugproc,atele]
+if (p_finduid(uid) = true) {
+    p_teleport(0_41_51_31_33);
+}
+
+[debugproc,cannon_hit](int $multiplier, int $damage)
+mes(tostring(scale($multiplier, 1000, scale(200, 100, $damage))));

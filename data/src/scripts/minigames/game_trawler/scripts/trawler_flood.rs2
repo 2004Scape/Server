@@ -1,4 +1,14 @@
 [proc,trawler_flood]
+if (.npc_find(^trawler_flood_center_under, murphy_flood, 8, 0) = false) {
+    return;
+}
+.%npc_int2 = ^trawler_control_flooded;
+%npc_int2 = ^trawler_control_flooded;
+
+.%npc_int = %npc_int;
+.%npc_trawler_flood_status = %npc_trawler_flood_status;
+.%npc_trawler_fish_caught = %npc_trawler_fish_caught;
+
 huntall(^trawler_start_center_under, 8, 0);
 while (huntnext = true) {
     if_close;
@@ -11,6 +21,16 @@ while (huntnext = true) {
 }
 
 [proc,trawler_unflood]
+if (.npc_find(^trawler_start_center_under, murphy_nonflood, 8, 0) = false) {
+    return;
+}
+.%npc_int2 = ^trawler_control_nonflooded;
+%npc_int2 = ^trawler_control_nonflooded;
+
+.%npc_int = %npc_int;
+.%npc_trawler_flood_status = %npc_trawler_flood_status;
+.%npc_trawler_fish_caught = %npc_trawler_fish_caught;
+
 huntall(^trawler_flood_center_under, 8, 0);
 while (huntnext = true) {
     if_close;
@@ -23,11 +43,13 @@ while (huntnext = true) {
 }
 
 [proc,trawler_leak] // requires active loc
+// Temp note: dur does not need updated
 loc_change(game_trawler_leak, 1000);
 ~sound_area(leak, 0, loc_coord, 5);
 
 def_coord $flood_coord = movecoord(loc_coord, 128, 0, 0);
 if (loc_find($flood_coord, game_trawler_hull) = true | loc_find($flood_coord, game_trawler_repaired_leak) = true) {
+    // Temp note: dur does not need updated
     loc_change(game_trawler_leak, 1000);
     ~sound_area(leak, 0, $flood_coord, 5);
 }
@@ -49,19 +71,7 @@ if (last_useitem = swamp_paste) {
     ~displaymessage(^dm_default);
 }
 
-[oplocu,game_trawler_repaired_leak]
-if (last_useitem = swamp_paste) {
-    @trawler_fix_leak; // in osrs theres no message if using swamp paste on hull/repaired leak
-} else {
-    ~displaymessage(^dm_default);
-}
-
-[oplocu,game_trawler_hull]
-if (last_useitem = swamp_paste) {
-    @trawler_fix_leak;
-} else {
-    ~displaymessage(^dm_default);
-}
+// using paste on repaired leak has NIH message: https://youtu.be/XtcZ1VTN9ik?list=PLn23LiLYLb1b7Lj_u-lnuUOa40FGWslbp&t=25
 
 [label,trawler_fix_leak]
 if (loc_type = game_trawler_leak) {
@@ -74,6 +84,7 @@ if (loc_type = game_trawler_leak) {
     sound_synth(pick, 0, 0);
     p_delay(0);
     if (loc_type = game_trawler_leak) {
+        // Temp note: dur does not need updated
         loc_change(game_trawler_repaired_leak, 1000);
         if (~inzone_coord_pair_table(trawler_flood_zones, loc_coord) = true) {
             if (random(5) = 0) {
@@ -82,6 +93,7 @@ if (loc_type = game_trawler_leak) {
                 }
             }
             if (loc_find(movecoord(loc_coord, -128, 0, 0), game_trawler_leak) = true) {
+                // Temp note: dur does not need updated
                 loc_change(game_trawler_repaired_leak, 1000);
             }
         } else {
@@ -91,6 +103,7 @@ if (loc_type = game_trawler_leak) {
                 }
             }
             if (loc_find(movecoord(loc_coord, 128, 0, 0), game_trawler_leak) = true) {
+                // Temp note: dur does not need updated
                 loc_change(game_trawler_repaired_leak, 1000);
             }
         } 

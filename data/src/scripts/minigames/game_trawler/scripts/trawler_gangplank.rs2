@@ -17,10 +17,10 @@ switch_int (loc_angle) {
 p_delay(0);
 if (~playercount_coord_pair_table(trawler_game_zones) > 0) {
     mes("There is already someone on a fishing trip!"); //https://youtu.be/Yzu2wp2hJOw?list=PLn23LiLYLb1b7Lj_u-lnuUOa40FGWslbp&t=14
-}
-if (~playercount_coord_pair_table(trawler_lobby_zones) < 1 & ~playercount_coord_pair_table(trawler_game_zones) < 1) {
-    if (npc_find(^trawler_lobby_murphy_spawn, murphy, 5, 0) = true) {
-        npc_settimer(100);
+} else if (npc_find(^trawler_lobby_murphy_spawn, murphy, 5, 0) = true) {
+    if (%npc_int < map_clock) { // this could be a sorta npc_getqueue?
+        %npc_int = add(map_clock, 100);
+        npc_queue(5, 0, 100);
     }
 }
 p_telejump($jump_coord);
@@ -37,4 +37,9 @@ switch_int (loc_angle) {
         p_teleport(loc_coord);
         p_delay(0);
         p_telejump(movecoord(coord, 0, -1, calc(2 * $dir_mod)));
+}
+
+[debugproc,debug_murph]
+if (npc_find(^trawler_lobby_murphy_spawn, murphy, 5, 0) = true) {
+    mes("<tostring(map_clock)>: Murphy - %npc_trawler_start: <tostring(%npc_int)>");
 }

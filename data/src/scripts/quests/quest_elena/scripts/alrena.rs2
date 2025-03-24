@@ -27,7 +27,7 @@ switch_int(%elena_progress) {
             ~objbox(gasmask, "<nc_name(alrena)> has given you a gas mask.", 250, 0, divide(^objbox_height, 2));
             ~chatnpc("<p,neutral>While you two are digging, I'll make a spare mask.|I'll hide it in the cupboard incase the mourners come in.");
         }
-    case ^quest_elena_started_mud_patch, ^quest_elena_mud_patch1, ^quest_elena_mud_patch2, ^quest_elena_mud_patch3 :
+    case ^quest_elena_gasmask, ^quest_elena_started_mud_patch, ^quest_elena_mud_patch1, ^quest_elena_mud_patch2, ^quest_elena_mud_patch3 :
         ~chatplayer("<p,happy>Hello <nc_name(alrena)>.");
         ~chatnpc("<p,happy>Hello darling,|how's that tunnel coming along?");
         ~chatplayer("<p,neutral>We're getting there...");

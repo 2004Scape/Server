@@ -17,7 +17,7 @@ if (~duel_arena_prayer_check = false) {
 }
 return(true);
 
-[proc,prayer_activate](dbrow $data, int $start)
+[proc,prayer_activate](dbrow $data)
 ~prayer_deactivate_conflicting($data);
 sound_synth(db_getfield($data, prayers:sound, 0), 0, 0);
 // activate headicon
@@ -30,7 +30,7 @@ if ($headicon > 0) {
 if (gettimer(prayer_drain) < 1) {
     // https://youtu.be/UAWSeOYLVHU First ones 10 tick, remaining timer loops are 5 tick
     // https://youtu.be/cQZhL4VP84A?t=179 normal timer instead of softtimer
-    settimer(prayer_drain, $start);
+    settimer(prayer_drain, 5);
 }
 %prayer_drain_effect = add(max(%prayer_drain_effect, 0), enum(int, int, prayer_drain_effects, db_getfield($data, prayers:prayer, 0)));
 
@@ -179,4 +179,3 @@ if (%prayer_drain_counter >= max(%prayer_drain_resistance, 60)) {
         return;
     }
 }
-settimer(prayer_drain, 5);

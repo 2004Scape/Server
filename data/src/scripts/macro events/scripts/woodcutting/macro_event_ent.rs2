@@ -5,11 +5,13 @@ def_loc $loc = nc_param($ent, (next_loc_stage));
 def_coord $coord = loc_coord;
 // for 3x3 trees
 if ($loc = null) {
+    // Temp note: dur does not need updated
     loc_change(loc_2639, 60);
     loc_add(movecoord($coord, 1, 0, 1), loc_2639, 0, centrepiece_straight, 60);
     loc_add(movecoord($coord, 2, 0, 0), loc_83, 0, centrepiece_straight, 60);
     loc_add(movecoord($coord, 0, 0, 2), loc_84, 0, centrepiece_straight, 60);
 } else {
+    // Temp note: dur does not need updated
     loc_change($loc, 60);
 }
 npc_add($coord, $ent, 60);

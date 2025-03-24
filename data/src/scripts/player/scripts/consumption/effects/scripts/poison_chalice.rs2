@@ -14,7 +14,7 @@ if ($random < 40 & $hitpoints >= stat_base(hitpoints)) { // 40/128 chance, doesn
     stat_sub(attack, 1, 0);
     stat_sub(strength, 1, 0);
     stat_sub(defence, 1, 0);
-    ~stat_addclamp(crafting, 1, 0);
+    stat_boost(crafting, 1, 0);
 } else if ($random < 80) { // 8/128 chance
     mes("That tasted a bit dodgy.  You feel a bit ill."); // extra space, not a typo
     if ($hitpoints < 5 & $hitpoints > 2) {
@@ -45,15 +45,15 @@ if ($random < 40 & $hitpoints >= stat_base(hitpoints)) { // 40/128 chance, doesn
 } else if ($random < 120) {
     mes("You feel a lot better."); // 36/128 chance
     // heal by 14% + 6
-    stat_heal(hitpoints, calc(scale(14, 100, stat_base(hitpoints)) + 6), 0);
-    ~stat_addclamp(thieving, 1, 0);
+    stat_heal(hitpoints, 6, 14);
+    stat_boost(thieving, 1, 0);
 } else if ($random < 124) { // 4/128 chance
     mes("Wow! That was amazing! You feel really invigorated.");
     // heal by 24% + 7
-    stat_heal(hitpoints, calc(scale(24, 100, stat_base(hitpoints)) + 7), 0);
-    ~stat_addclamp(attack, 4, 0);
-    ~stat_addclamp(strength, 4, 0);
-    ~stat_addclamp(defence, 4, 0);
+    stat_heal(hitpoints, 7, 24);
+    stat_boost(attack, 4, 0);
+    stat_boost(strength, 4, 0);
+    stat_boost(defence, 4, 0);
 } else { // 4/128 chance of doing nothing, unless full health, then its 44/128
     mes("It has a slight taste of apricot.");
 }
