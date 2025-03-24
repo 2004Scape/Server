@@ -1861,7 +1861,7 @@ class World {
                 player.account_id = account_id;
                 player.reconnecting = reconnecting;
                 player.staffModLevel = staffmodlevel ?? 0;
-                player.visibility = player.staffModLevel > 1 ? Visibility.HARD : Visibility.DEFAULT;
+                player.visibility = (player.staffModLevel > 1 && Environment.NODE_PRODUCTION) ? Visibility.HARD : Visibility.DEFAULT;
                 player.lowMemory = lowMemory;
                 player.muted_until = muted_until ? new Date(muted_until) : null;
                 player.members = members;
