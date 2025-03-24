@@ -8,7 +8,6 @@ retex1s=wall
 retex1d=door
 recol2s=6342
 recol2d=11458
-param=next_loc_stage,loc_2035
 
 [loc_2035]
 name=Door
@@ -30,7 +29,6 @@ retex1s=wall
 retex1d=door
 recol2s=6342
 recol2d=11458
-param=next_loc_stage,loc_2037
 
 [loc_2037]
 name=Door

@@ -1,4 +1,4 @@
-[oploc1,bank_booth]
+[oploc1,bankbooth]
 npc_findallzone(movecoord(loc_coord, 1, 0, 0));
 while (npc_findnext = true) {
     // find a banker on 4 different axis from the booth.
@@ -29,4 +29,4 @@ while (npc_findnext = true) {
 }
 @openbank; // default to just open bank if a bank teller was not found to start dialogue.
 
-[oploc2,bank_booth] @openbank;
+[oploc2,bankbooth] @openbank;
