@@ -93,7 +93,7 @@ if(last_useitem = sinister_key) {
     p_delay(3);
     mes("A foul gas seeps from the chest");
     sound_synth(gas_hiss, 0, 0);
-    if(%antipoison >= map_clock) {
+    if(%poison < 0) {
         mes("Luckily your poison antidote saves you from harm.");
     } else {
         queue(poison_player, 0, 27);
@@ -106,7 +106,8 @@ if(last_useitem = sinister_key) {
     inv_add(inv, unidentified_avantoe, 1);
     inv_add(inv, unidentified_kwuarm, 1);
     inv_add(inv, unidentified_torstol, 1);
-    loc_change(loc_3368, 4);
+    // Temp note: dur updated
+    loc_change(loc_3368, 5);
     return;
 }
 ~displaymessage(^dm_default);

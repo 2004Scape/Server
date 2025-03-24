@@ -1,6 +1,6 @@
-import Linkable from '#/util/Linkable.js';
 import ScriptFile from '#/engine/script/ScriptFile.js';
 import ScriptState from '#/engine/script/ScriptState.js';
+import Linkable from '#/util/Linkable.js';
 
 export enum NpcQueueType {
     NORMAL

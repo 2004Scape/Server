@@ -1,4 +1,4 @@
-[npc_972]
+[koftik_ardougne]
 vislevel=hide
 name=Koftik
 desc=The cave guide.
@@ -16,7 +16,7 @@ model8=model_326_idk
 head1=model_48_npc_head
 head2=model_81_idk_head
 
-[npc_973]
+[koftik_2]
 vislevel=hide
 name=Koftik
 desc=The cave guide.
@@ -34,7 +34,7 @@ model8=model_326_idk
 head1=model_48_npc_head
 head2=model_81_idk_head
 
-[npc_974]
+[koftik_3]
 vislevel=hide
 name=Koftik
 desc=The cave guide.
@@ -53,7 +53,7 @@ head1=model_48_npc_head
 head2=model_81_idk_head
 wanderrange=2
 
-[npc_975]
+[koftik_4]
 vislevel=hide
 name=Koftik
 desc=The cave guide.
@@ -71,7 +71,7 @@ model8=model_326_idk
 head1=model_48_npc_head
 head2=model_81_idk_head
 
-[npc_976]
+[koftik_5]
 vislevel=hide
 name=Koftik
 desc=The cave guide.
@@ -118,6 +118,7 @@ param=defend_sound,insect_hit
 param=death_sound,insect_death
 param=death_drop,null
 huntmode=cowardly
+huntrange=1
 // Stats match osrs version but our version Vislvl is different.
 // wander and maxrange data taken rs3.
 // https://raw.githubusercontent.com/Joshua-F/osrs-dumps/refs/heads/master/config/dump.npc npc_4533

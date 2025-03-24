@@ -2,37 +2,30 @@
 if_close;
 if (p_finduid(uid) = true) {
     @activate_prayer_improvedreflexes;
-} else {
-    queue(prayer_activate, 0, 8);
 }
+%prayer_improvedreflexes = %prayer_improvedreflexes; // resync varp
 
 [label,activate_prayer_improvedreflexes]
+p_clearpendingaction;
 def_dbrow $data = ~get_prayer_data(^prayer_improvedreflexes);
 if ($data = null) {
-    ~displaymessage(^dm_default);
     return;
 }
 if (%prayer_improvedreflexes = ^true) {
-    %prayer_drain_effect = sub(%prayer_drain_effect, enum(int, int, prayer_drain_effects, ^prayer_improvedreflexes));
     %prayer_improvedreflexes = ^false;
-    sound_synth(cancel_prayer, 0, 0);
-    def_int $headicon = enum(int, int, prayer_headicons, ^prayer_improvedreflexes);
-    if ($headicon > 0) {
-        ~headicon_del($headicon);
-    }
-    if (~prayers_are_active = false) {
-        cleartimer(drain_prayer);
-        //clearqueue(start_draining);
-    }
-} else {
-    if (~prayer_checks($data) = false) {
-        %prayer_improvedreflexes = ^false;
-    } else if (stat_base(prayer) < db_getfield($data, prayers:level, 0)){
-        %prayer_improvedreflexes = ^false;
-        sound_synth(prayer_off, 0, 0);
-        ~mesbox("You need a @dbl@Prayer level of <tostring(db_getfield($data, prayers:level, 0))> to use <db_getfield($data, prayers:name, 0)>.");
-    } else {
-        %prayer_improvedreflexes = ^true;
-        ~prayer_activate($data);
-    }
+    ~prayer_deactivate(^prayer_improvedreflexes);
+    return;
 }
+if (~prayer_checks($data) = false) {
+    %prayer_improvedreflexes = ^false;
+    return;
+}
+def_int $levelreq = db_getfield($data, prayers:level, 0);
+if (stat_base(prayer) < $levelreq){
+    %prayer_improvedreflexes = ^false;
+    sound_synth(prayer_off, 0, 0);
+    ~mesbox("You need a @dbl@Prayer level of <tostring($levelreq)> to use <db_getfield($data, prayers:name, 0)>.");
+    return;
+}
+%prayer_improvedreflexes = ^true;
+~prayer_activate($data);

@@ -1,6 +1,6 @@
-import MessageEncoder from '#/network/server/codec/MessageEncoder.js';
 import Packet from '#/io/Packet.js';
 import ServerProt from '#/network/rs225/server/prot/ServerProt.js';
+import MessageEncoder from '#/network/server/codec/MessageEncoder.js';
 import IfOpenMainSide from '#/network/server/model/IfOpenMainSide.js';
 
 export default class IfOpenMainSideEncoder extends MessageEncoder<IfOpenMainSide> {

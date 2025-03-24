@@ -64,11 +64,13 @@ npc_add(map_findsquare(coord, 0, 1, ^map_findsquare_lineofwalk), poison_spider_o
 npc_setmode(opplayer2);
 ~npc_retaliate(0);
 queue(poison_player, 0, 15);
+// Temp note: dur does not need updated
 loc_change(loc_2191, 300);
 
 [oploc2,loc_2195]
 mes("You search the chest.");
 mes("The chest contains some antipoison.");
+// Temp note: dur does not need updated
 loc_change(loc_2192, 300);
 if(inv_freespace(inv) = 0) {
     mes("But you don't have space to carry it.");
@@ -91,6 +93,7 @@ if(inv_freespace(inv) = 0) {
     return;
 }
 ~objbox(keep_key, "You find a keep key.", 250, 0, 0);
+// Temp note: dur does not need updated
 loc_change(loc_2197, 300);
 inv_add(inv, keep_key, 1);
 
@@ -116,17 +119,23 @@ if(coordz(coord) > coordz(loc_coord)) {
 } else {
     p_teleport(movecoord(coord, 0, 0, 1));
 }
+
+def_coord $initial_coord = loc_coord;
+
 loc_findallzone(coord);
 while(loc_findnext = true) {
      if(loc_category = observatory_dungeon_gate) {
             def_coord $central_coord = loc_coord;
             def_int $orig_angle = loc_angle;
-            loc_del(2);
+            // Temp note: dur updated
+            loc_del(3);
             if(loc_type = loc_2199) {
-                loc_add(movecoord($central_coord, -1, 0, 1), loc_1562, 0, loc_shape, 2);
-                loc_add(movecoord($central_coord, 0, 0, 1), loc_1563, 2, loc_shape, 2);
+                // Temp note: dur updated
+                loc_add(movecoord($central_coord, -1, 0, 1), loc_1562, 0, loc_shape, 3);
+                loc_add(movecoord($central_coord, 0, 0, 1), loc_1563, 2, loc_shape, 3);
             }
-            loc_add($central_coord, loc_83, $orig_angle, loc_shape, 2);
+            // Temp note: dur updated
+            loc_add($central_coord, loc_83, $orig_angle, loc_shape, 3);
      }
 }
 sound_synth(grate_open, 0, 0); //iron_door_open
@@ -136,7 +145,7 @@ if(%keepdoor_unlocked = 0) {
     mes("The key is useless now. You discard it.");
     inv_del(inv, keep_key, 1);
 }
-if(coordz(coord) < coordz(loc_coord)) { 
+if(coordz(coord) <= coordz($initial_coord)) { 
     ~chatplayer("<p,neutral>I'd better be quick,|there may be more guards about.");
 }   
 
@@ -250,6 +259,7 @@ switch_int($constellation_numb) {
         inv_add(inv, amulet_of_defence, 1);
 }
 stat_advance(crafting, 22500);
+inv_add(inv, uncut_sapphire, 1);
 %itgronigen_progress = ^itgronigen_complete;
 %questpoints = calc(%questpoints + ^itgronigen_questpoints);
 queue(itgronigen_quest_complete, 0);

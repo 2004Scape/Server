@@ -1,0 +1,14 @@
+[debugproc,com_vars]
+if (p_finduid(uid) = false) {
+    return;
+}
+// mes("%com_stabattack: <tostring(%com_stabattack)>");
+// mes("%com_stabdef: <tostring(%com_stabdef)>");
+mes("%com_slashattack: <tostring(%com_slashattack)>");
+// mes("%com_slashdef: <tostring(%com_slashdef)>");
+// mes("%com_crushattack: <tostring(%com_crushattack)>");
+// mes("%com_crushdef: <tostring(%com_crushdef)>");
+// mes("%com_magicattack: <tostring(%com_magicattack)>");
+// mes("%com_magicdef: <tostring(%com_magicdef)>");
+// mes("%com_rangeattack: <tostring(%com_rangeattack)>");
+// mes("%com_rangedef: <tostring(%com_rangedef)>");

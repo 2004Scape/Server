@@ -13,7 +13,7 @@ if(random(4) = 0) {
     return;
 }
 inv_add(inv, wool, 1);
-npc_changetype(sheep_sheared);
+npc_changetype(sheep_sheared, ^max_32bit_int);
 mes("You get some wool.");
 npc_say("Baa!");
 ~objbox(wool, "You get some wool.", 250, 0, divide(^objbox_height, 2));

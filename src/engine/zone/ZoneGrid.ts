@@ -16,7 +16,7 @@ export default class ZoneGrid {
     }
 
     flag(zoneX: number, zoneY: number): void {
-        this.grid[this.index(zoneX, zoneY)] |= (1 << (zoneY & ZoneGrid.INT_BITS_FLAG));
+        this.grid[this.index(zoneX, zoneY)] |= 1 << (zoneY & ZoneGrid.INT_BITS_FLAG);
     }
 
     unflag(zoneX: number, zoneY: number): void {
@@ -30,7 +30,7 @@ export default class ZoneGrid {
         const maxY: number = Math.min(ZoneGrid.GRID_SIZE - 1, zoneY + radius);
         const bits: number = ZoneGrid.INT_BITS_FLAG;
         const startY: number = minY & ~bits;
-        const endY: number = maxY >>> ZoneGrid.INT_BITS << ZoneGrid.INT_BITS;
+        const endY: number = (maxY >>> ZoneGrid.INT_BITS) << ZoneGrid.INT_BITS;
         for (let x: number = minX; x <= maxX; x++) {
             for (let y: number = startY; y <= endY; y += 32) {
                 const index: number = this.index(x, y);

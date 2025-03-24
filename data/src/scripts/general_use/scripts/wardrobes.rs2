@@ -6,8 +6,10 @@ p_delay(0);
 
 // 1/21 of spooky wardrobe, https://archive.is/FPJBA
 if (random(21) = 0) {
+    // Temp note: dur does not need updated
     loc_change(loc_390, 500);
 } else {
+    // Temp note: dur does not need updated
     loc_change(loc_389, 500);
 }
 
@@ -26,6 +28,7 @@ p_arrivedelay;
 anim(human_closechest, 0);
 p_delay(0);
 // todo - Sound
+// Temp note: dur does not need updated
 loc_change(loc_388, 500);
 
 [oploc2,loc_390]
@@ -37,4 +40,5 @@ p_arrivedelay;
 anim(human_closechest, 0);
 p_delay(0);
 // todo - Sound
+// Temp note: dur does not need updated
 loc_change(loc_388, 500);

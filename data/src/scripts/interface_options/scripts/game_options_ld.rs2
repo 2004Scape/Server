@@ -1,43 +1,57 @@
 // low-detail game options interface, no music/sound controls
 
 [if_button,options_ld:com_0]
+if_close;
 %game_brightness = 1;
 
 [if_button,options_ld:com_1]
+if_close;
 %game_brightness = 1;
 
 [if_button,options_ld:com_2]
+if_close;
 %game_brightness = 2;
 
 [if_button,options_ld:com_3]
+if_close;
 %game_brightness = 2;
 
 [if_button,options_ld:com_4]
+if_close;
 %game_brightness = 3;
 
 [if_button,options_ld:com_5]
+if_close;
 %game_brightness = 3;
 
 [if_button,options_ld:com_6]
+if_close;
 %game_brightness = 4;
 
 [if_button,options_ld:com_7]
+if_close;
 %game_brightness = 4;
 
 [if_button,options_ld:com_8]
+if_close;
 %mouse_buttons = 0;
 
 [if_button,options_ld:com_9]
+if_close;
 %mouse_buttons = 1;
 
 [if_button,options_ld:com_10]
+if_close;
 %chat_effects = 0;
 
 [if_button,options_ld:com_11]
+if_close;
 %chat_effects = 1;
 
 [if_button,options_ld:com_28]
+if_close;
 %split_privatechat = 1;
 
 [if_button,options_ld:com_29]
+if_close;
 %split_privatechat = 0;

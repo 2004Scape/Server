@@ -28,11 +28,6 @@ function setNodeXpRate(rate: number) {
 function setNodeProduction(state: boolean) {
     fs.appendFileSync('.env', `NODE_PRODUCTION=${state}\n`);
     fs.appendFileSync('.env', `NODE_DEBUG=${!state}\n`);
-    fs.appendFileSync('.env', `NODE_ALLOW_CHEATS=${!state}\n`);
-}
-
-function setNodeKillTimer(timer: number) {
-    fs.appendFileSync('.env', `NODE_KILLTIMER=${timer}\n`);
 }
 
 function setLoginServer(state: boolean, host?: string, port?: number) {
@@ -65,7 +60,7 @@ function setLocalSupportServers() {
     setLoggerServer(true, 'localhost', 43501);
 }
 
-function setDbBackend(backend: 'sqlite' | 'mysql') {    
+function setDbBackend(backend: 'sqlite' | 'mysql') {
     fs.appendFileSync('.env', `DB_BACKEND=${backend}\n`);
 }
 
@@ -136,16 +131,6 @@ async function promptNodeProduction() {
     });
 
     setNodeProduction(choice);
-}
-
-async function promptNodeKillTimer() {
-    const rate = await number({
-        message: 'Set default reboot timer',
-        default: 50,
-        required: true
-    });
-
-    setNodeKillTimer(rate!);
 }
 
 async function promptLogin() {
@@ -368,8 +353,8 @@ async function configureDevStack() {
     } else {
         console.error('Invalid database backend');
         process.exit(1);
-    }    
-    
+    }
+
     setLocalSupportServers();
 
     fs.appendFileSync('.env', 'EASY_STARTUP=true\n');
@@ -383,7 +368,7 @@ async function configureDevStack() {
             stdio: 'inherit'
         });
     }
-    
+
     process.exit(0);
 }
 
@@ -465,10 +450,6 @@ async function advancedOptions() {
                 value: 'node_production'
             },
             {
-                name: 'Set default reboot timer',
-                value: 'node_killtimer'
-            },
-            {
                 name: 'Configure login server',
                 value: 'login'
             },
@@ -512,10 +493,6 @@ async function advancedOptions() {
             await promptNodeProduction();
             break;
         }
-        case 'node_killtimer': {
-            await promptNodeKillTimer();
-            break;
-        }
         case 'login': {
             await promptLogin();
             break;
@@ -537,6 +514,6 @@ async function advancedOptions() {
 
 try {
     await startup();
-} catch (_) {  // eslint-disable-line @typescript-eslint/no-unused-vars
+} catch (_) {
     // no-op
 }

@@ -1,12 +1,11 @@
 import net from 'net';
 
+import World from '#/engine/World.js';
 import Packet from '#/io/Packet.js';
-
-import Environment from '#/util/Environment.js';
+import LoggerEventType from '#/server/logger/LoggerEventType.js';
 import NullClientSocket from '#/server/NullClientSocket.js';
 import TcpClientSocket from '#/server/tcp/TcpClientSocket.js';
-import World from '#/engine/World.js';
-import LoggerEventType from '#/server/logger/LoggerEventType.js';
+import Environment from '#/util/Environment.js';
 
 export default class TcpServer {
     tcp: net.Server;
@@ -38,7 +37,7 @@ export default class TcpServer {
 
                     client.buffer(data);
                     World.onClientData(client);
-                } catch (_) {  // eslint-disable-line @typescript-eslint/no-unused-vars
+                } catch (_) {
                     client.terminate();
                 }
             });
@@ -52,7 +51,7 @@ export default class TcpServer {
                 }
             });
 
-            s.on('error', (err) => {
+            s.on('error', err => {
                 if (client.player) {
                     client.player.addSessionLog(LoggerEventType.ENGINE, 'TCP socket error', err.message);
                 }
@@ -69,7 +68,6 @@ export default class TcpServer {
             });
         });
 
-        this.tcp.listen(Environment.NODE_PORT, '0.0.0.0', () => {
-        });
+        this.tcp.listen(Environment.NODE_PORT, '0.0.0.0', () => {});
     }
 }

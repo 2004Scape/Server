@@ -51,9 +51,6 @@ if(coordz(coord) > coordz(loc_coord)) {
 }
 ~open_and_close_metal_gate2(loc_1541, true, false);
 
-[ai_timer,npc_921]
-npc_changetype(prince_ali);
-
 [queue,prince_complete]
 %prince_progress = ^prince_complete;
 session_log(^log_adventure, "Quest complete: Prince Ali Rescue");

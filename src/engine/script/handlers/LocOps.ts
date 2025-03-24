@@ -1,31 +1,18 @@
-import ParamType from '#/cache/config/ParamType.js';
+import { LocAngle, LocShape, locShapeLayer } from '@2004scape/rsmod-pathfinder';
+
 import LocType from '#/cache/config/LocType.js';
+import { ParamHelper } from '#/cache/config/ParamHelper.js';
+import ParamType from '#/cache/config/ParamType.js';
 import SeqType from '#/cache/config/SeqType.js';
-import {ParamHelper} from '#/cache/config/ParamHelper.js';
-
-import World from '#/engine/World.js';
-
-import ScriptOpcode from '#/engine/script/ScriptOpcode.js';
-import ScriptPointer, {ActiveLoc, checkedHandler} from '#/engine/script/ScriptPointer.js';
-import {CommandHandlers} from '#/engine/script/ScriptRunner.js';
-import {LocIterator} from '#/engine/script/ScriptIterators.js';
-
-import Loc from '#/engine/entity/Loc.js';
-import {CoordGrid} from '#/engine/CoordGrid.js';
+import { CoordGrid } from '#/engine/CoordGrid.js';
 import EntityLifeCycle from '#/engine/entity/EntityLifeCycle.js';
-
-import {
-    check,
-    CoordValid,
-    DurationValid,
-    LocAngleValid,
-    LocShapeValid,
-    LocTypeValid,
-    ParamTypeValid,
-    SeqTypeValid
-} from '#/engine/script/ScriptValidators.js';
-
-import {LocAngle, LocShape} from '@2004scape/rsmod-pathfinder';
+import Loc from '#/engine/entity/Loc.js';
+import { LocIterator } from '#/engine/script/ScriptIterators.js';
+import ScriptOpcode from '#/engine/script/ScriptOpcode.js';
+import ScriptPointer, { ActiveLoc, checkedHandler } from '#/engine/script/ScriptPointer.js';
+import { CommandHandlers } from '#/engine/script/ScriptRunner.js';
+import { check, CoordValid, DurationValid, LocAngleValid, LocShapeValid, LocTypeValid, ParamTypeValid, SeqTypeValid } from '#/engine/script/ScriptValidators.js';
+import World from '#/engine/World.js';
 
 const LocOps: CommandHandlers = {
     [ScriptOpcode.LOC_ADD]: state => {
@@ -35,16 +22,21 @@ const LocOps: CommandHandlers = {
         const locType: LocType = check(type, LocTypeValid);
         const locAngle: LocAngle = check(angle, LocAngleValid);
         const locShape: LocShape = check(shape, LocShapeValid);
+        const locLayer = locShapeLayer(locShape);
         check(duration, DurationValid);
 
-        const created: Loc = new Loc(position.level, position.x, position.z, locType.width, locType.length, EntityLifeCycle.DESPAWN, locType.id, locShape, locAngle);
+        // Search through zone and change a loc if it's on the same layer
         const locs: IterableIterator<Loc> = World.gameMap.getZone(position.x, position.z, position.level).getLocsUnsafe(CoordGrid.packZoneCoord(position.x, position.z));
         for (const loc of locs) {
-            if (loc !== created && loc.angle === locAngle && loc.shape === locShape) {
-                World.removeLoc(loc, duration);
-                break;
+            if (loc.layer === locLayer) {
+                World.changeLoc(loc, type, locShape, locAngle, duration);
+                state.activeLoc = loc;
+                state.pointerAdd(ActiveLoc[state.intOperand]);
+                return;
             }
         }
+
+        const created: Loc = new Loc(position.level, position.x, position.z, locType.width, locType.length, EntityLifeCycle.DESPAWN, locType.id, locShape, locAngle);
         World.addLoc(created, duration);
         state.activeLoc = created;
         state.pointerAdd(ActiveLoc[state.intOperand]);
@@ -68,26 +60,10 @@ const LocOps: CommandHandlers = {
     [ScriptOpcode.LOC_CHANGE]: checkedHandler(ActiveLoc, state => {
         const [id, duration] = state.popInts(2);
 
-        const locType: LocType = check(id, LocTypeValid);
         check(duration, DurationValid);
+        check(id, LocTypeValid);
 
-        World.removeLoc(state.activeLoc, duration);
-
-        // const loc = new Loc(state.activeLoc.level, state.activeLoc.x, state.activeLoc.z, locType.width, locType.length, EntityLifeCycle.DESPAWN, id, state.activeLoc.shape, state.activeLoc.angle);
-        // World.addLoc(loc, duration);
-
-        const {level, x, z, angle, shape} = state.activeLoc;
-        const created: Loc = new Loc(level, x, z, locType.width, locType.length, EntityLifeCycle.DESPAWN, locType.id, shape, angle);
-        const locs: IterableIterator<Loc> = World.gameMap.getZone(x, z, level).getLocsUnsafe(CoordGrid.packZoneCoord(x, z));
-        for (const loc of locs) {
-            if (loc !== created && loc.angle === angle && loc.shape === shape) {
-                World.removeLoc(loc, duration);
-                break;
-            }
-        }
-        World.addLoc(created, duration);
-        state.activeLoc = created;
-        state.pointerAdd(ActiveLoc[state.intOperand]);
+        World.changeLoc(state.activeLoc, id, state.activeLoc.shape, state.activeLoc.angle, duration);
     }),
 
     [ScriptOpcode.LOC_COORD]: checkedHandler(ActiveLoc, state => {
@@ -97,15 +73,6 @@ const LocOps: CommandHandlers = {
 
     [ScriptOpcode.LOC_DEL]: checkedHandler(ActiveLoc, state => {
         const duration: number = check(state.popInt(), DurationValid);
-
-        const {level, x, z, angle, shape} = state.activeLoc;
-        const locs: IterableIterator<Loc> = World.gameMap.getZone(x, z, level).getLocsUnsafe(CoordGrid.packZoneCoord(x, z));
-        for (const loc of locs) {
-            if (loc !== state.activeLoc && loc.angle === angle && loc.shape === shape) {
-                World.removeLoc(loc, duration);
-                break;
-            }
-        }
         World.removeLoc(state.activeLoc, duration);
     }),
 

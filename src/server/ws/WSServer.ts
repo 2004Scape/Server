@@ -1,12 +1,13 @@
 import http, { IncomingMessage } from 'http';
+
 import { WebSocketServer, WebSocket } from 'ws';
 
+import World from '#/engine/World.js';
 import Packet from '#/io/Packet.js';
-
+import { getPublicPerDeploymentToken } from '#/io/PemUtil.js';
+import LoggerEventType from '#/server/logger/LoggerEventType.js';
 import NullClientSocket from '#/server/NullClientSocket.js';
 import WSClientSocket from '#/server/ws/WSClientSocket.js';
-import World from '#/engine/World.js';
-import LoggerEventType from '#/server/logger/LoggerEventType.js';
 import Environment from '#/util/Environment.js';
 
 function getIp(req: IncomingMessage) {
@@ -33,6 +34,25 @@ export default class WSServer {
             server,
             perMessageDeflate: false,
             verifyClient: (info, cb) => {
+                if (Environment.WEB_SOCKET_TOKEN_PROTECTION) {
+                    // if WEB_CONNECTION_TOKEN_PROTECTION is enabled, we must
+                    // have a matching per-deployment token sent via cookie.
+                    const headers = info.req.headers;
+                    if (!headers.cookie) {
+                        // no cookie
+                        cb(false);
+                        return;
+                    }
+                    // cookie string is present at least
+                    // find exact match. NOTE: the double quotes are deliberate
+                    const search = `per_deployment_token="${getPublicPerDeploymentToken()}"`;
+                    // could do something more fancy with cookie parsing, but
+                    // this seems fine.
+                    if (headers.cookie.indexOf(search) === -1) {
+                        cb(false);
+                        return;
+                    }
+                }
                 const { origin } = info;
 
                 // todo: check more than just the origin header (important!)
@@ -43,7 +63,7 @@ export default class WSServer {
 
                 cb(true);
             },
-            maxPayload: 2000,
+            maxPayload: 2000
         });
 
         this.wss.on('connection', (ws: WebSocket, req) => {
@@ -64,7 +84,7 @@ export default class WSServer {
 
                     client.buffer(data);
                     World.onClientData(client);
-                } catch (_) {  // eslint-disable-line @typescript-eslint/no-unused-vars
+                } catch (_) {
                     client.terminate();
                 }
             });
@@ -78,7 +98,7 @@ export default class WSServer {
                 }
             });
 
-            ws.on('error', (err) => {
+            ws.on('error', err => {
                 if (client.player) {
                     client.player.addSessionLog(LoggerEventType.ENGINE, 'WS socket error', err.message);
                 }

@@ -1,19 +1,17 @@
 import fs from 'fs';
 
-import { startManagementWeb, startWeb, web } from '#/web.js';
 
-import World from '#/engine/World.js';
+import { collectDefaultMetrics, register } from 'prom-client';
 
 import { packClient, packServer } from '#/cache/PackAll.js';
-
+import World from '#/engine/World.js';
 import TcpServer from '#/server/tcp/TcpServer.js';
 import WSServer from '#/server/ws/WSServer.js';
-
 import Environment from '#/util/Environment.js';
 import { printError, printInfo } from '#/util/Logger.js';
 import { updateCompiler } from '#/util/RuneScriptCompiler.js';
-import { collectDefaultMetrics, register } from 'prom-client';
 import { createWorker } from '#/util/WorkerFactory.js';
+import { startManagementWeb, startWeb, web } from '#/web.js';
 
 if (Environment.BUILD_STARTUP_UPDATE) {
     await updateCompiler();
@@ -29,7 +27,7 @@ if (!fs.existsSync('data/pack/client/config') || !fs.existsSync('data/pack/serve
         if (err instanceof Error) {
             printError(err.message);
         }
-    
+
         process.exit(1);
     }
 }
@@ -51,8 +49,8 @@ wsServer.start(web);
 startWeb();
 startManagementWeb();
 
-register.setDefaultLabels({nodeId: Environment.NODE_ID});
-collectDefaultMetrics({register});
+register.setDefaultLabels({ nodeId: Environment.NODE_ID });
+collectDefaultMetrics({ register });
 
 // unfortunately, tsx watch is not giving us a way to gracefully shut down in our dev mode:
 // https://github.com/privatenumber/tsx/issues/494
@@ -63,16 +61,7 @@ function safeExit() {
     }
 
     exiting = true;
-
-    try {
-        if (!Environment.EASY_STARTUP && !Environment.NODE_DEBUG) {
-            World.rebootTimer(Environment.NODE_KILLTIMER as number);
-        } else {
-            World.rebootTimer(0);
-        }
-    } catch (err) {
-        console.error(err);
-    }
+    World.rebootTimer(0);
 }
 
 process.on('SIGINT', safeExit);

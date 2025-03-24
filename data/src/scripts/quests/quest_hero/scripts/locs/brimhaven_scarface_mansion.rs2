@@ -7,6 +7,7 @@ if (%hero_progress >= ^hero_blackarm_mansion_unlocked & %blackarmgang_progress >
 @attempt_open_brimhaven_mansion_door;
 
 [oploc1,grips_cupboard_closed]
+// Temp note: dur does not need updated
 loc_change(grips_cupboard_opened, 500); // todo - how long to keep open?
 @summon_grip;
 
@@ -16,7 +17,7 @@ loc_change(grips_cupboard_opened, 500); // todo - how long to keep open?
 [label,summon_grip]
 if (npc_find(coord, pirate_guard, 4, 0) = true) {
   facesquare(npc_coord);
-  ~chatnpc("<p,neutral>I don't think Mr Grip will like you opening that. That's his private drinking cabinet.");
+  ~chatnpc("<p,confused>I don't think Mr Grip will like you opening that. That's his private drinking cabinet.");
   switch_int(~p_choice2("He won't notice me having a quick look.", 1, "Ok, I'll leave it.", 2)) {
     case 1 :
       ~chatplayer("<p,neutral>He won't notice me having a quick look.");
@@ -24,8 +25,9 @@ if (npc_find(coord, pirate_guard, 4, 0) = true) {
         npc_setmode(none);
         npc_walk(0_43_49_25_62);
         npc_say("Stay out of my drinks cabinet!");
+        if_close;
         p_delay(6);
-        npc_queue(10, 0, 1);
+        npc_setmode(null);
       }
     case 2 :
       ~chatplayer("<p,neutral>Ok, I'll leave it.");
@@ -71,11 +73,15 @@ if (last_useitem = grips_keyring) {
 
 [oploc1,scarface_pete_candlestick_chest]
 mes("You open the chest.");
+// Temp note: dur does not need updated
 loc_change(scarface_pete_candlestick_chest_open, 500); // todo - how long to keep open?
 
 [oploc1,scarface_pete_candlestick_chest_open]
 if (~obj_gettotal(petes_candlestick) > 0) {
-  mes("The chest is empty.");
+  ~mesbox("The chest is empty.");
+  if(inv_total(bank, petes_candlestick) > 0) {
+    ~chatplayer("<p,happy>I'm sure I've got a candlestick from this chest somewhere in my bank.");
+  }
 } else {
   ~mesbox("You find two candlesticks in the chest. So that will be one for you, and one for the person who killed Grip for you.");
   inv_add(inv, petes_candlestick, 2);
@@ -83,4 +89,5 @@ if (~obj_gettotal(petes_candlestick) > 0) {
     %hero_progress = ^hero_blackarm_looted_chest;
   }
 }
+// Temp note: dur does not need updated
 loc_change(scarface_pete_candlestick_chest, 500);

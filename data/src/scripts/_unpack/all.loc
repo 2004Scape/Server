@@ -359,6 +359,7 @@ model=model_loc_154
 width=2
 length=2
 op1=Chop down
+param=next_loc_stage,loc_1348
 
 [loc_157]
 name=Bookcase

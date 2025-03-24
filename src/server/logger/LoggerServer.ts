@@ -1,10 +1,10 @@
-import { WebSocketServer } from 'ws';
+import { WebSocket, WebSocketServer } from 'ws';
 
+import { db, loggerDb, toDbDate } from '#/db/query.js';
+import InputTrackingBlob from '#/engine/entity/tracking/InputEvent.js';
+import { SessionLog } from '#/engine/entity/tracking/SessionLog.js';
 import Environment from '#/util/Environment.js';
 import { printInfo } from '#/util/Logger.js';
-import { db, loggerDb, toDbDate } from '#/db/query.js';
-import InputTrackingEvent from '#/engine/entity/tracking/InputEvent.js';
-import { SessionLog } from '#/engine/entity/tracking/SessionLog.js';
 
 export default class LoggerServer {
     private server: WebSocketServer;
@@ -44,44 +44,49 @@ export default class LoggerServer {
 
                             const account = await db.selectFrom('account').where('username', '=', username).selectAll().executeTakeFirstOrThrow();
 
-                            await db.insertInto('report').values({
-                                account_id: account.id,
-                                world,
-                                profile,
+                            await db
+                                .insertInto('report')
+                                .values({
+                                    account_id: account.id,
+                                    world,
+                                    profile,
 
-                                timestamp: toDbDate(timestamp),
-                                coord,
-                                offender,
-                                reason
-                            }).execute();
+                                    timestamp: toDbDate(timestamp),
+                                    coord,
+                                    offender,
+                                    reason
+                                })
+                                .execute();
 
                             break;
                         }
                         case 'input_track': {
-                            const { username, session_uuid, timestamp, events } = msg;
+                            const { username, session_uuid, timestamp, blobs } = msg;
+                            if (!blobs.length) {
+                                break;
+                            }
 
                             const account = await db.selectFrom('account').where('username', '=', username).selectAll().executeTakeFirst();
                             if (!account) {
                                 console.log(msg);
                             } else {
-                                const report = await loggerDb.insertInto('input_report').values({
-                                    account_id: account.id,
-                                    session_uuid,
-                                    timestamp: toDbDate(timestamp),
-                                }).executeTakeFirst();
-                                const values = events.map((e: InputTrackingEvent) => {
+                                const report = await loggerDb
+                                    .insertInto('input_report')
+                                    .values({
+                                        account_id: account.id,
+                                        session_uuid,
+                                        timestamp: toDbDate(timestamp)
+                                    })
+                                    .executeTakeFirst();
+                                const values = blobs.map((blob: InputTrackingBlob) => {
                                     return {
                                         input_report_id: report.insertId,
-                                        input_type: e.type,
-                                        seq: e.seq,
-                                        delta: e.delta,
-                                        coord: e.coord,
-                                        mouse_x: e.mouseX,
-                                        mouse_y: e.mouseY,
-                                        key_code: e.keyPress
+                                        seq: blob.seq,
+                                        coord: blob.coord,
+                                        data: Buffer.from(blob.data, 'base64')
                                     };
                                 });
-                                await loggerDb.insertInto('input_report_event').values(values).execute();
+                                await loggerDb.insertInto('input_report_event_raw').values(values).execute();
                             }
                             break;
                         }

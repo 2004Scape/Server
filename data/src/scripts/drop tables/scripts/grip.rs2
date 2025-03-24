@@ -1,13 +1,13 @@
 [ai_queue3,grip]
 gosub(npc_death);
-if (npc_findhero = false) {
-    return;
-} 
-
-if (p_finduid(uid) = true & %hero_progress = ^hero_phoenix_talked_charlie) {
-    // todo  Wiki - is this true? - "Grip's Keyring is unique to the player you are doing the quest with" 
-    %hero_progress = ^hero_phoenix_killed_grip;
+// no heropoints check
+if (finduid(%npc_aggressive_player) = true & %hero_progress = ^hero_phoenix_talked_charlie) {
+    if(p_finduid(uid) = true) %hero_progress = ^hero_phoenix_killed_grip;
+    else queue(grip_queue_progress, 0);
 }
 
 // Key appears for anyone
 obj_addall(npc_coord, npc_param(death_drop), 1, ^lootdrop_duration);
+
+[queue,grip_queue_progress]
+%hero_progress = ^hero_phoenix_killed_grip;

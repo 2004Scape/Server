@@ -66,7 +66,7 @@ if(testbit(%bioerrand, ^chancy_correct) = true) {
     mes("He gives you the vial of liquid honey.");
     inv_add(inv, liquid_honey, 1);
     %bioerrand = clearbit(%bioerrand, ^chancy_given);
-    %bioerrand = clearbit(%bioerrand, 2);
+    %bioerrand = clearbit(%bioerrand, ^chancy_correct);
     p_delay(2);
     ~chatnpc("<p,sad>Next time give me something more valuable... I couldn't get anything for this on the blackmarket.");
     ~chatplayer("<p,neutral>That was the idea.");
@@ -76,8 +76,8 @@ if(testbit(%bioerrand, ^chancy_correct) = true) {
     ~chatplayer("<p,confused>What do you mean?");
     ~chatnpc("<p,shifty>Well, it turns out that potion you gave me, was quite valuable...");
     ~chatplayer("<p,shock>What?");
-    %bioerrand = setbit(%bioerrand, ^chancy_given);
-    %bioerrand = setbit(%bioerrand, ^chancy_wrong);
+    %bioerrand = clearbit(%bioerrand, ^chancy_given);
+    %bioerrand = clearbit(%bioerrand, ^chancy_wrong);
     ~chatnpc("<p,shifty>I know that I probably shouldn't have sold it... but some friends and I were having a little wager, the odds were just too good!");
     ~chatplayer("<p,angry>You sold my vial and gambled with the money?!");
     ~chatnpc("<p,shifty>Actually yes... but praise be to Saradoming because I won! So all's well that ends well right?");

@@ -1,3 +1,17 @@
+[opnpc2,zamorak_wizard]
+if (%npc_aggressive_player ! uid) {
+    mes("It's not after you...");
+    return;
+}
+@player_combat_start;
+
+[apnpc2,zamorak_wizard] 
+if (%npc_aggressive_player ! uid) {
+    mes("It's not after you...");
+    return;
+}
+@player_combat_start_ap;
+
 [ai_applayer2,zamorak_wizard]
 npc_setmode(opplayer2);
 ~npc_cast_spell(^flames_of_zamorak, 4);
@@ -6,7 +20,7 @@ npc_setmode(opplayer2);
 ~npc_cast_spell(^flames_of_zamorak, 4);
 
 [ai_timer,zamorak_wizard]
-if(finduid(%npc_attacking_uid) = false) {
+if(finduid(%npc_aggressive_player) = false) {
     npc_del;
     return;
 }
@@ -15,11 +29,13 @@ if(distance(coord, npc_coord) > 17) { // not 100% sure on this, think it's the s
 }
 
 [ai_queue3,zamorak_wizard]
+if (npc_findhero = true) {
+    queue(queue_defeat_zamorak_wizard, 0);
+}
 gosub(npc_death);
 if (npc_findhero = false) {
     return;
 }
-queue(queue_defeat_zamorak_wizard, 0);
 
 obj_add(npc_coord, npc_param(death_drop), 1, ^lootdrop_duration);
 

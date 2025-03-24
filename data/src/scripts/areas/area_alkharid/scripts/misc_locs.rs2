@@ -1,6 +1,8 @@
 // Curtains
 [oploc1,loc_1529]
+// Temp note: dur does not need updated
 loc_change(loc_1528, 200);
 
 [oploc1,loc_1528]
+// Temp note: dur does not need updated
 loc_change(loc_1529, 200);

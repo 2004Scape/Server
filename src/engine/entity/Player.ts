@@ -1,83 +1,76 @@
 import 'dotenv/config';
 
-import Packet from '#/io/Packet.js';
-import { toDisplayName } from '#/util/JString.js';
+import { PlayerInfoProt, Visibility } from '@2004scape/rsbuf';
+import { CollisionType, CollisionFlag } from '@2004scape/rsmod-pathfinder';
 
-import FontType from '#/cache/config/FontType.js';
 import Component from '#/cache/config/Component.js';
+import FontType from '#/cache/config/FontType.js';
 import InvType from '#/cache/config/InvType.js';
 import LocType from '#/cache/config/LocType.js';
 import NpcType from '#/cache/config/NpcType.js';
 import ObjType from '#/cache/config/ObjType.js';
+import { ParamHelper } from '#/cache/config/ParamHelper.js';
+import ParamType from '#/cache/config/ParamType.js';
 import ScriptVarType from '#/cache/config/ScriptVarType.js';
 import SeqType from '#/cache/config/SeqType.js';
 import VarPlayerType from '#/cache/config/VarPlayerType.js';
-import ParamType from '#/cache/config/ParamType.js';
-import { ParamHelper } from '#/cache/config/ParamHelper.js';
-
+import { PRELOADED, PRELOADED_CRC } from '#/cache/PreloadedPacks.js';
+import { CoordGrid } from '#/engine/CoordGrid.js';
 import BlockWalk from '#/engine/entity/BlockWalk.js';
-import { EntityTimer, PlayerTimerType } from '#/engine/entity/EntityTimer.js';
+import BuildArea from '#/engine/entity/BuildArea.js';
+import CameraInfo from '#/engine/entity/CameraInfo.js';
+import Entity from '#/engine/entity/Entity.js';
+import EntityLifeCycle from '#/engine/entity/EntityLifeCycle.js';
 import { EntityQueueRequest, PlayerQueueType, QueueType, ScriptArgument } from '#/engine/entity/EntityQueueRequest.js';
+import { EntityTimer, PlayerTimerType } from '#/engine/entity/EntityTimer.js';
+import HeroPoints from '#/engine/entity/HeroPoints.js';
 import Loc from '#/engine/entity/Loc.js';
-import Npc from '#/engine/entity/Npc.js';
 import MoveRestrict from '#/engine/entity/MoveRestrict.js';
+import MoveSpeed from '#/engine/entity/MoveSpeed.js';
+import MoveStrategy from '#/engine/entity/MoveStrategy.js';
+import { isClientConnected } from '#/engine/entity/NetworkPlayer.js';
+import Npc from '#/engine/entity/Npc.js';
 import Obj from '#/engine/entity/Obj.js';
 import PathingEntity from '#/engine/entity/PathingEntity.js';
-import { CoordGrid } from '#/engine/CoordGrid.js';
-import CameraInfo from '#/engine/entity/CameraInfo.js';
-import MoveSpeed from '#/engine/entity/MoveSpeed.js';
-import EntityLifeCycle from '#/engine/entity/EntityLifeCycle.js';
 import { PlayerStat, PlayerStatEnabled, PlayerStatFree } from '#/engine/entity/PlayerStat.js';
-import MoveStrategy from '#/engine/entity/MoveStrategy.js';
-import BuildArea from '#/engine/entity/BuildArea.js';
-import HeroPoints from '#/engine/entity/HeroPoints.js';
-import { isClientConnected } from '#/engine/entity/NetworkPlayer.js';
-import Entity from '#/engine/entity/Entity.js';
-
+import InputTracking from '#/engine/entity/tracking/InputTracking.js';
+import { changeNpcCollision, changePlayerCollision, findNaivePath, reachedEntity, reachedLoc, reachedObj } from '#/engine/GameMap.js';
 import { Inventory, InventoryListener } from '#/engine/Inventory.js';
-import World from '#/engine/World.js';
-
 import ScriptFile from '#/engine/script/ScriptFile.js';
+import ScriptPointer from '#/engine/script/ScriptPointer.js';
 import ScriptProvider from '#/engine/script/ScriptProvider.js';
 import ScriptRunner from '#/engine/script/ScriptRunner.js';
 import ScriptState from '#/engine/script/ScriptState.js';
 import ServerTriggerType from '#/engine/script/ServerTriggerType.js';
-import ScriptPointer from '#/engine/script/ScriptPointer.js';
-
-import LinkList from '#/util/LinkList.js';
-
-import { CollisionFlag } from '@2004scape/rsmod-pathfinder';
-
-import { PRELOADED, PRELOADED_CRC } from '#/cache/PreloadedPacks.js';
-
-import OutgoingMessage from '#/network/server/OutgoingMessage.js';
+import World from '#/engine/World.js';
+import Packet from '#/io/Packet.js';
+import ChatFilterSettings from '#/network/server/model/ChatFilterSettings.js';
+import HintArrow from '#/network/server/model/HintArrow.js';
 import IfClose from '#/network/server/model/IfClose.js';
-import UpdateUid192 from '#/network/server/model/UpdatePid.js';
+import IfSetTab from '#/network/server/model/IfSetTab.js';
+import LastLoginInfo from '#/network/server/model/LastLoginInfo.js';
+import MessageGame from '#/network/server/model/MessageGame.js';
+import MidiJingle from '#/network/server/model/MidiJingle.js';
+import MidiSong from '#/network/server/model/MidiSong.js';
 import ResetAnims from '#/network/server/model/ResetAnims.js';
 import ResetClientVarCache from '#/network/server/model/ResetClientVarCache.js';
 import TutOpen from '#/network/server/model/TutOpen.js';
-import UpdateInvStopTransmit from '#/network/server/model/UpdateInvStopTransmit.js';
-import VarpSmall from '#/network/server/model/VarpSmall.js';
-import VarpLarge from '#/network/server/model/VarpLarge.js';
-import MidiSong from '#/network/server/model/MidiSong.js';
-import MidiJingle from '#/network/server/model/MidiJingle.js';
-import IfSetTab from '#/network/server/model/IfSetTab.js';
 import UnsetMapFlag from '#/network/server/model/UnsetMapFlag.js';
-import HintArrow from '#/network/server/model/HintArrow.js';
-import LastLoginInfo from '#/network/server/model/LastLoginInfo.js';
-import MessageGame from '#/network/server/model/MessageGame.js';
-import ServerProtPriority from '#/network/server/prot/ServerProtPriority.js';
-import ChatFilterSettings from '#/network/server/model/ChatFilterSettings.js';
-import InfoProt from '#/network/rs225/server/prot/InfoProt.js';
-
-import Environment from '#/util/Environment.js';
-import { ChatModePrivate, ChatModePublic, ChatModeTradeDuel } from '#/util/ChatModes.js';
-import LoggerEventType from '#/server/logger/LoggerEventType.js';
-import InputTracking from '#/engine/entity/tracking/InputTracking.js';
-import { findNaivePath, reachedEntity, reachedLoc, reachedObj } from '#/engine/GameMap.js';
-import Visibility from './Visibility.js';
+import UpdateInvStopTransmit from '#/network/server/model/UpdateInvStopTransmit.js';
+import UpdateUid192 from '#/network/server/model/UpdatePid.js';
 import UpdateRebootTimer from '#/network/server/model/UpdateRebootTimer.js';
-import { CollisionType } from '@2004scape/rsmod-pathfinder';
+import UpdateRunEnergy from '#/network/server/model/UpdateRunEnergy.js';
+import UpdateStat from '#/network/server/model/UpdateStat.js';
+import VarpLarge from '#/network/server/model/VarpLarge.js';
+import VarpSmall from '#/network/server/model/VarpSmall.js';
+import OutgoingMessage from '#/network/server/OutgoingMessage.js';
+import ServerProtPriority from '#/network/server/prot/ServerProtPriority.js';
+import LoggerEventType from '#/server/logger/LoggerEventType.js';
+import { ChatModePrivate, ChatModePublic, ChatModeTradeDuel } from '#/util/ChatModes.js';
+import Environment from '#/util/Environment.js';
+import { toDisplayName } from '#/util/JString.js';
+import LinkList from '#/util/LinkList.js';
+
 const levelExperience = new Int32Array(99);
 
 let acc = 0;
@@ -111,10 +104,90 @@ export default class Player extends PathingEntity {
         [4550, 4537, 5681, 5673, 5790, 6806, 8076, 4574]
     ];
 
+    static readonly MALE_FEMALE_MAP = new Map<number, number>([
+        [0, 45],
+        [1, 47],
+        [2, 48],
+        [3, 49],
+        [4, 50],
+        [5, 51],
+        [6, 52],
+        [7, 53],
+        [8, 54],
+        [9, 55],
+        [18, 56],
+        [19, 56],
+        [20, 56],
+        [21, 56],
+        [22, 56],
+        [23, 56],
+        [24, 56],
+        [25, 56],
+        [26, 61],
+        [27, 63],
+        [28, 62],
+        [29, 65],
+        [30, 64],
+        [31, 63],
+        [32, 66],
+        [33, 67],
+        [34, 68],
+        [35, 69],
+        [36, 70],
+        [37, 71],
+        [38, 72],
+        [39, 76],
+        [40, 75],
+        [41, 78],
+        [42, 79],
+        [43, 80],
+        [44, 81]
+    ]);
+
+    static readonly FEMALE_MALE_MAP = new Map<number, number>([
+        [45, 0],
+        [46, 0],
+        [47, 1],
+        [48, 2],
+        [49, 3],
+        [50, 4],
+        [51, 5],
+        [52, 6],
+        [53, 7],
+        [54, 8],
+        [55, 9],
+        [56, 18],
+        [57, 18],
+        [58, 18],
+        [59, 18],
+        [60, 18],
+        [61, 26],
+        [62, 27],
+        [63, 28],
+        [64, 29],
+        [65, 29],
+        [66, 32],
+        [67, 33],
+        [68, 34],
+        [69, 35],
+        [70, 36],
+        [71, 37],
+        [72, 38],
+        [73, 36],
+        [74, 36],
+        [75, 40],
+        [76, 39],
+        [77, 36],
+        [78, 41],
+        [79, 42],
+        [80, 43],
+        [81, 44]
+    ]);
+
     save() {
         const sav = Packet.alloc(1);
         sav.p2(0x2004); // magic
-        sav.p2(5); // version
+        sav.p2(6); // version
 
         sav.p2(this.x);
         sav.p2(this.z);
@@ -176,12 +249,18 @@ export default class Player extends PathingEntity {
         // set the total saved inv count as the placeholder
         sav.data[invStartPos] = invCount;
 
+        // afk zones
         sav.p1(this.afkZones.length);
         for (let index: number = 0; index < this.afkZones.length; index++) {
             sav.p4(this.afkZones[index]);
         }
         sav.p2(this.lastAfkZone);
+
+        // chat modes
         sav.p1((this.publicChat << 4) | (this.privateChat << 2) | this.tradeDuel);
+
+        // last login info
+        sav.p8(this.lastDate);
 
         sav.p4(Packet.getcrc(sav.data, 0, sav.pos));
         return sav.data.subarray(0, sav.pos);
@@ -235,12 +314,13 @@ export default class Player extends PathingEntity {
     headicons: number = 0;
     appearance: number = -1;
     lastAppearance: number = 0;
+    lastAppearanceBytes: Uint8Array | null = null;
     baseLevels = new Uint8Array(21);
     lastStats: Int32Array = new Int32Array(21); // we track this so we know to flush stats only once a tick on changes
     lastLevels: Uint8Array = new Uint8Array(21); // we track this so we know to flush stats only once a tick on changes
     originX: number = -1;
     originZ: number = -1;
-    buildArea: BuildArea = new BuildArea();
+    buildArea: BuildArea = new BuildArea(this);
     basReadyAnim: number = -1;
     basTurnOnSpot: number = -1;
     basWalkForward: number = -1;
@@ -261,7 +341,7 @@ export default class Player extends PathingEntity {
     preventLogoutUntil: number = -1;
 
     // not stored as a byte buffer so we can write and encrypt opcodes later
-    buffer: LinkList<OutgoingMessage> = new LinkList();
+    buffer: OutgoingMessage[] = [];
     lastResponse: number = -1;
     lastConnected: number = -1;
 
@@ -316,9 +396,16 @@ export default class Player extends PathingEntity {
     lastZone: number = -1;
 
     muted_until: Date | null = null;
+    members: boolean = true;
+    messageCount: number = 0;
+
+    socialProtect: boolean = false; // social packet spam protection
+    reportAbuseProtect: boolean = false; // social packet spam protection
+
+    lastDate: bigint = 0n;
 
     constructor(username: string, username37: bigint, hash64: bigint) {
-        super(0, 3094, 3106, 1, 1, EntityLifeCycle.FOREVER, MoveRestrict.NORMAL, BlockWalk.NPC, MoveStrategy.SMART, InfoProt.PLAYER_FACE_COORD.id, InfoProt.PLAYER_FACE_ENTITY.id); // tutorial island.
+        super(0, 3094, 3106, 1, 1, EntityLifeCycle.FOREVER, MoveRestrict.NORMAL, BlockWalk.NPC, MoveStrategy.SMART, PlayerInfoProt.FACE_COORD, PlayerInfoProt.FACE_ENTITY); // tutorial island.
         this.username = username;
         this.username37 = username37;
         this.hash64 = hash64;
@@ -346,7 +433,7 @@ export default class Player extends PathingEntity {
         this.activeScript = null;
         this.invListeners.length = 0;
         this.resumeButtons.length = 0;
-        this.buffer.clear();
+        this.buffer = [];
         this.queue.clear();
         this.weakQueue.clear();
         this.engineQueue.clear();
@@ -354,6 +441,9 @@ export default class Player extends PathingEntity {
         this.timers.clear();
         this.heroPoints.clear();
         this.buildArea.clear(false);
+        this.appearance = -1;
+        this.lastAppearance = 0;
+        this.lastAppearanceBytes = null;
         this.isActive = false;
     }
 
@@ -370,16 +460,28 @@ export default class Player extends PathingEntity {
         this.message = null;
         this.logMessage = null;
         this.appearance = -1;
+        this.socialProtect = false;
+        this.reportAbuseProtect = false;
     }
 
     // ----
 
     onLogin() {
-        // normalize client between logins
+        // - rebuild_normal
+        // - chat_filter_settings
+        // - varp_reset
+        // - varps
+        // - invs
+        // - interfaces
+        // - stats
+        // - runweight
+        // - runenergy
+        // - reset anims
+        // - social
+        this.buildArea.rebuildNormal();
+        this.write(new ChatFilterSettings(this.publicChat, this.privateChat, this.tradeDuel));
         this.write(new IfClose());
         this.write(new UpdateUid192(this.pid));
-        this.unsetMapFlag();
-        this.write(new ResetAnims());
         this.write(new ResetClientVarCache());
         for (let varp = 0; varp < this.vars.length; varp++) {
             const type = VarPlayerType.get(varp);
@@ -388,7 +490,7 @@ export default class Player extends PathingEntity {
                 this.writeVarp(varp, value);
             }
         }
-        this.write(new ChatFilterSettings(this.publicChat, this.privateChat, this.tradeDuel));
+        this.write(new ResetAnims());
 
         const loginTrigger = ScriptProvider.getByTriggerSpecific(ServerTriggerType.LOGIN, -1, -1);
         if (loginTrigger) {
@@ -401,20 +503,39 @@ export default class Player extends PathingEntity {
     }
 
     onReconnect() {
-        // force resyncing
+        // - varp_reset
+        // - varps
+        // - rebuild_normal
+        // - invs
+        // - stats
+        // - runweight
+        // - runenergy
+        // - reset_anims
+        // - socials
+        this.write(new ResetClientVarCache());
+        for (let varp = 0; varp < this.vars.length; varp++) {
+            const type = VarPlayerType.get(varp);
+            const value = this.vars[varp];
+            if (type.transmit) {
+                this.writeVarp(varp, value);
+            }
+        }
         // reload entity info (overkill? does the client have some logic around this?)
         this.buildArea.clear(true);
+        // rebuild scene later this tick (note: rebuild won't run on the client if you're in the same zone!)
+        this.buildArea.rebuildNormal(true);
         // in case of pending update
         if (World.isPendingShutdown) {
             const ticksBeforeShutdown = World.shutdownTicksRemaining;
             this.write(new UpdateRebootTimer(ticksBeforeShutdown));
         }
-        this.write(new ResetAnims());
-        // rebuild scene (rebuildnormal won't run if you're in the same zone!)
-        this.originX = -1;
-        this.originZ = -1;
-        // resync invs
+        this.closeModal();
         this.refreshInvs();
+        for (let i = 0; i < this.stats.length; i++) {
+            this.write(new UpdateStat(i, this.stats[i], this.levels[i]));
+        }
+        this.write(new UpdateRunEnergy(this.runenergy));
+        this.write(new ResetAnims());
         this.moveSpeed = MoveSpeed.INSTANT;
         this.tele = true;
         this.jump = true;
@@ -545,7 +666,7 @@ export default class Player extends PathingEntity {
             const recovered = ((this.baseLevels[PlayerStat.AGILITY] / 9) | 0) + 8;
             this.runenergy = Math.min(this.runenergy + recovered, 10000);
         } else {
-            const weightKg = Math.floor(this.runweight / 1000);
+            const weightKg = this.runweight / 1000;
             const clampWeight = Math.min(Math.max(weightKg, 0), 64);
             const loss = (67 + (67 * clampWeight) / 64) | 0;
             this.runenergy = Math.max(this.runenergy - loss, 0);
@@ -761,7 +882,7 @@ export default class Player extends PathingEntity {
             script,
             args,
             interval,
-            clock: interval
+            clock: World.currentTick
         };
 
         this.timers.set(timerId, timer);
@@ -779,9 +900,9 @@ export default class Player extends PathingEntity {
 
             // only execute if it's time and able
             // soft timers can execute while busy, normal cannot
-            if (--timer.clock <= 0 && (timer.type === PlayerTimerType.SOFT || this.canAccess())) {
+            if (World.currentTick >= timer.clock + timer.interval && (timer.type === PlayerTimerType.SOFT || this.canAccess())) {
                 // set clock back to interval
-                timer.clock = timer.interval;
+                timer.clock = World.currentTick;
 
                 const script = ScriptRunner.init(timer.script, this, null, timer.args);
                 this.executeScript(script, timer.type === PlayerTimerType.NORMAL);
@@ -819,9 +940,6 @@ export default class Player extends PathingEntity {
             typeId = type.id;
             categoryId = type.category;
         }
-        if (this.targetSubject.type !== -1) {
-            typeId = this.targetSubject.type;
-        }
         if (this.targetSubject.com !== -1) {
             typeId = this.targetSubject.com;
         }
@@ -842,9 +960,6 @@ export default class Player extends PathingEntity {
             const type = this.target instanceof Npc ? NpcType.get(this.target.type) : this.target instanceof Loc ? LocType.get(this.target.type) : ObjType.get(this.target.type);
             typeId = type.id;
             categoryId = type.category;
-        }
-        if (this.targetSubject.type !== -1) {
-            typeId = this.targetSubject.type;
         }
         if (this.targetSubject.com !== -1) {
             typeId = this.targetSubject.com;
@@ -916,7 +1031,7 @@ export default class Player extends PathingEntity {
         this.clearWaypoints();
     }
 
-    protected inOperableDistance(target: Entity): boolean {
+    inOperableDistance(target: Entity): boolean {
         if (target.level !== this.level) {
             return false;
         }
@@ -1013,8 +1128,8 @@ export default class Player extends PathingEntity {
             return false;
         }
 
-        // This is effectively checking if the npc did a changetype
-        if (this.target instanceof Npc && this.targetSubject.type !== -1 && World.getNpcByUid((this.targetSubject.type << 16) | this.target.nid) === null) {
+        // This is effectively checking if the Npc or Loc did a changetype
+        if ((this.target instanceof Npc || this.target instanceof Loc) && this.targetSubject.type !== this.target.type) {
             return false;
         }
 
@@ -1093,7 +1208,7 @@ export default class Player extends PathingEntity {
     }
 
     processInputTracking(): void {
-        this.input.process();
+        this.input.onCycle();
     }
 
     // ----
@@ -1205,6 +1320,7 @@ export default class Player extends PathingEntity {
         stream.release();
 
         this.lastAppearance = World.currentTick;
+        this.lastAppearanceBytes = appearance;
         return appearance;
     }
 
@@ -1431,13 +1547,13 @@ export default class Player extends PathingEntity {
         }
 
         const fromObj = this.invGetSlot(fromInv, fromSlot);
-        if (!fromObj) {
-            throw new Error(`invMoveToSlot: Invalid from obj was null. This means the obj does not exist at this slot: ${fromSlot}`);
-        }
-
         const toObj = this.invGetSlot(toInv, toSlot);
-        this.invSet(toInv, fromObj.id, fromObj.count, toSlot);
 
+        if (fromObj) {
+            this.invSet(toInv, fromObj.id, fromObj.count, toSlot);
+        } else {
+            this.invDelSlot(toInv, toSlot);
+        }
         if (toObj) {
             this.invSet(fromInv, toObj.id, toObj.count, fromSlot);
         } else {
@@ -1597,10 +1713,15 @@ export default class Player extends PathingEntity {
                     freeTotal += this.baseLevels[stat];
                 }
             }
+
+            const milestone = 250; // Level milestones = multiple of this number (should be >= 100)
+            const prevMilestone = ((total - (this.baseLevels[stat] - before)) / milestone) | 0;
+            const currMilestone = (total / milestone) | 0;
+            if (currMilestone > prevMilestone) {
+                this.addSessionLog(LoggerEventType.ADVENTURE, `Reached total level ${currMilestone * milestone}`);
+            }
             if (total === 1881) {
                 this.addSessionLog(LoggerEventType.ADVENTURE, 'Reached total level 1881 - you beat p2p!');
-            } else if (total === 250 || total === 500 || total === 750 || total === 1000 || total === 1250 || total === 1500 || total === 1750) {
-                this.addSessionLog(LoggerEventType.ADVENTURE, `Reached total level ${total}`);
             }
             if (freeTotal === 1485) {
                 this.addSessionLog(LoggerEventType.ADVENTURE, 'Reached total level 1485 - you beat f2p!');
@@ -1640,7 +1761,7 @@ export default class Player extends PathingEntity {
 
     buildAppearance(inv: number): void {
         this.appearance = inv;
-        this.masks |= InfoProt.PLAYER_APPEARANCE.id;
+        this.masks |= PlayerInfoProt.APPEARANCE;
     }
 
     playAnimation(anim: number, delay: number) {
@@ -1651,7 +1772,7 @@ export default class Player extends PathingEntity {
         if (anim == -1 || this.animId == -1 || SeqType.get(anim).priority > SeqType.get(this.animId).priority || SeqType.get(this.animId).priority === 0) {
             this.animId = anim;
             this.animDelay = delay;
-            this.masks |= InfoProt.PLAYER_ANIM.id;
+            this.masks |= PlayerInfoProt.ANIM;
         }
     }
 
@@ -1659,7 +1780,7 @@ export default class Player extends PathingEntity {
         this.graphicId = spotanim;
         this.graphicHeight = height;
         this.graphicDelay = delay;
-        this.masks |= InfoProt.PLAYER_SPOTANIM.id;
+        this.masks |= PlayerInfoProt.SPOT_ANIM;
     }
 
     applyDamage(damage: number, type: number) {
@@ -1674,7 +1795,7 @@ export default class Player extends PathingEntity {
             this.levels[PlayerStat.HITPOINTS] = current - damage;
         }
 
-        this.masks |= InfoProt.PLAYER_DAMAGE.id;
+        this.masks |= PlayerInfoProt.DAMAGE;
     }
 
     setVisibility(visibility: Visibility) {
@@ -1684,12 +1805,20 @@ export default class Player extends PathingEntity {
         }
         // This doesn't actually cancel interactions, source: https://youtu.be/ARS7eO3_Z8U?si=OkYfjW0sVhkQmQ8y&t=293
         this.visibility = visibility;
+        if (visibility === Visibility.DEFAULT) {
+            this.blockWalk = BlockWalk.NPC;
+            changeNpcCollision(this.width, this.x, this.z, this.level, true);
+        } else {
+            this.blockWalk = BlockWalk.NONE;
+            changeNpcCollision(this.width, this.x, this.z, this.level, false);
+            changePlayerCollision(this.width, this.x, this.z, this.level, false);
+        }
         this.messageGame(`vis: ${visibility}`);
     }
 
     say(message: string) {
         this.chat = message;
-        this.masks |= InfoProt.PLAYER_SAY.id;
+        this.masks |= PlayerInfoProt.SAY;
     }
 
     faceSquare(x: number, z: number) {
@@ -1775,7 +1904,7 @@ export default class Player extends PathingEntity {
         this.exactMoveStart = startCycle;
         this.exactMoveEnd = endCycle;
         this.exactMoveDirection = direction;
-        this.masks |= InfoProt.PLAYER_EXACT_MOVE.id;
+        this.masks |= PlayerInfoProt.EXACT_MOVE;
 
         // todo: interpolate over time? instant teleport? verify with true tile on osrs
         this.x = endX;
@@ -1912,7 +2041,7 @@ export default class Player extends PathingEntity {
         if (message.priority === ServerProtPriority.IMMEDIATE) {
             this.writeInner(message);
         } else {
-            this.buffer.addTail(message);
+            this.buffer.push(message);
         }
     }
 
@@ -1937,11 +2066,17 @@ export default class Player extends PathingEntity {
         this.write(new HintArrow(-1, 0, 0, 0, 0, 0));
     }
 
-    lastLoginInfo(lastLoginIp: number, daysSinceLogin: number, daysSinceRecoveryChange: number, unreadMessageCount: number) {
+    lastLoginInfo() {
         // daysSinceRecoveryChange
         // - 201 shows welcome_screen.if
         // - any other value shows welcome_screen_warning
-        this.write(new LastLoginInfo(lastLoginIp, daysSinceLogin, daysSinceRecoveryChange, unreadMessageCount));
+        const lastDate: bigint = this.lastDate === 0n ? BigInt(Date.now()) : this.lastDate;
+        const nextDate: bigint = BigInt(Date.now());
+        const daysSinceLogin: number = Number(nextDate - lastDate) / (1000 * 60 * 60 * 24);
+        // proxying websockets through cf may show IPv6 and breaks anyways
+        // so we just hardcode 127.0.0.1 (2130706433)
+        this.write(new LastLoginInfo(2130706433, daysSinceLogin, 201, this.messageCount));
+        this.lastDate = nextDate;
     }
 
     logout(): void {
@@ -1956,7 +2091,7 @@ export default class Player extends PathingEntity {
         this.write(new MessageGame(msg));
     }
 
-    isValid(hash64?: bigint): boolean {
+    isValid(_hash64?: bigint): boolean {
         if (this.loggingOut) {
             return false;
         }

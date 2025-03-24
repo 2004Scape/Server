@@ -1,9 +1,9 @@
-import MessageHandler from '#/network/client/handler/MessageHandler.js';
 import Player from '#/engine/entity/Player.js';
-import TutorialClickSide from '#/network/client/model/TutorialClickSide.js';
 import ScriptProvider from '#/engine/script/ScriptProvider.js';
-import ServerTriggerType from '#/engine/script/ServerTriggerType.js';
 import ScriptRunner from '#/engine/script/ScriptRunner.js';
+import ServerTriggerType from '#/engine/script/ServerTriggerType.js';
+import MessageHandler from '#/network/client/handler/MessageHandler.js';
+import TutorialClickSide from '#/network/client/model/TutorialClickSide.js';
 
 export default class TutorialClickSideHandler extends MessageHandler<TutorialClickSide> {
     handle(message: TutorialClickSide, player: Player): boolean {

@@ -1,25 +1,24 @@
-import fs from 'fs';
 import child_process from 'child_process';
+import fs from 'fs';
 import { parentPort } from 'worker_threads';
 
-import { packServerInterface } from '#tools/pack/interface/PackServer.js';
-import { packServerMap } from '#tools/pack/map/PackServer.js';
-import { generateServerSymbols } from '#tools/pack/symbols.js';
-import { packConfigs } from '#tools/pack/config/PackShared.js';
-import { packWorldmap } from '#tools/pack/map/Worldmap.js';
+import { CrcBuffer } from '#/cache/CrcTable.js';
 import Environment from '#/util/Environment.js';
 import { revalidatePack } from '#/util/PackFile.js';
-
-import { packClientInterface } from '#tools/pack/interface/PackClient.js';
-import { packClientMap } from '#tools/pack/map/PackClient.js';
+import { packClientWordenc } from '#tools/pack/chat/pack.js';
+import { packConfigs } from '#tools/pack/config/PackShared.js';
 import { packClientModel } from '#tools/pack/graphics/pack.js';
+import { packClientInterface } from '#tools/pack/interface/PackClient.js';
+import { packServerInterface } from '#tools/pack/interface/PackServer.js';
+import { packClientMap } from '#tools/pack/map/PackClient.js';
+import { packServerMap } from '#tools/pack/map/PackServer.js';
+import { packWorldmap } from '#tools/pack/map/Worldmap.js';
 import { packClientMusic } from '#tools/pack/midi/pack.js';
 import { packClientSound } from '#tools/pack/sound/pack.js';
-import { packClientWordenc } from '#tools/pack/chat/pack.js';
-import { packClientTitle } from '#tools/pack/sprite/title.js';
-import { packClientTexture } from '#tools/pack/sprite/textures.js';
 import { packClientMedia } from '#tools/pack/sprite/media.js';
-import { CrcBuffer } from '#/cache/CrcTable.js';
+import { packClientTexture } from '#tools/pack/sprite/textures.js';
+import { packClientTitle } from '#tools/pack/sprite/title.js';
+import { generateServerSymbols } from '#tools/pack/symbols.js';
 
 export async function packServer() {
     if (!fs.existsSync('RuneScriptCompiler.jar')) {
@@ -51,8 +50,8 @@ export async function packServer() {
 
     try {
         child_process.execSync(`"${Environment.BUILD_JAVA_PATH}" -jar RuneScriptCompiler.jar`, { stdio: 'inherit' });
-    } catch (err) {
-        console.error(err);
+    } catch (_err) {
+        // console.error(err);
         throw new Error('Failed to compile scripts.');
     }
 
@@ -81,7 +80,7 @@ export async function packClient() {
     await packClientTexture();
     packClientWordenc();
     packClientSound();
-    
+
     packClientMap();
     packClientMusic();
 

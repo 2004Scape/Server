@@ -1,13 +1,15 @@
-import MessageHandler from '#/network/client/handler/MessageHandler.js';
-import OpNpcU from '#/network/client/model/OpNpcU.js';
+import * as rsbuf from '@2004scape/rsbuf';
+
 import Component from '#/cache/config/Component.js';
-import World from '#/engine/World.js';
 import ObjType from '#/cache/config/ObjType.js';
 import Interaction from '#/engine/entity/Interaction.js';
-import ServerTriggerType from '#/engine/script/ServerTriggerType.js';
 import { NetworkPlayer } from '#/engine/entity/NetworkPlayer.js';
-import Environment from '#/util/Environment.js';
+import ServerTriggerType from '#/engine/script/ServerTriggerType.js';
+import World from '#/engine/World.js';
+import MessageHandler from '#/network/client/handler/MessageHandler.js';
+import OpNpcU from '#/network/client/model/OpNpcU.js';
 import UnsetMapFlag from '#/network/server/model/UnsetMapFlag.js';
+import Environment from '#/util/Environment.js';
 
 export default class OpNpcUHandler extends MessageHandler<OpNpcU> {
     handle(message: OpNpcU, player: NetworkPlayer): boolean {
@@ -46,7 +48,7 @@ export default class OpNpcUHandler extends MessageHandler<OpNpcU> {
             return false;
         }
 
-        if (!player.buildArea.npcs.has(npc)) {
+        if (!rsbuf.hasNpc(player.pid, npc.nid)) {
             player.write(new UnsetMapFlag());
             player.clearPendingAction();
             return false;
@@ -62,7 +64,7 @@ export default class OpNpcUHandler extends MessageHandler<OpNpcU> {
         player.lastUseItem = item;
         player.lastUseSlot = slot;
 
-        player.setInteraction(Interaction.ENGINE, npc, ServerTriggerType.APNPCU, { type: npc.type, com: -1 });
+        player.setInteraction(Interaction.ENGINE, npc, ServerTriggerType.APNPCU);
         player.opcalled = true;
         return true;
     }

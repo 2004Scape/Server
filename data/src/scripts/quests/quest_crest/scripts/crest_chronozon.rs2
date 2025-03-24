@@ -1,11 +1,11 @@
 [ai_queue3,crest_chronozon]
 if (finduid(%npc_aggressive_player) = true) {
     if (getbit_range(%crest_spells_levers_gauntlets, ^crest_wind_blast_used, ^crest_fire_blast_used) = ^crest_all_spells_cast) {
+        if (%crest_progress = ^crest_cured_johnathon) { // before npc death, no heropoints check
+            obj_add(npc_coord, crest_part_3, 1, ^lootdrop_duration);
+        }
         gosub(npc_death);
         if (npc_findhero = true){
-            if (%crest_progress = ^crest_cured_johnathon) {
-                obj_add(npc_coord, crest_part_3, 1, ^lootdrop_duration);
-            }
             obj_add(npc_coord, npc_param(death_drop), 1, ^lootdrop_duration);
         }
     }
@@ -14,7 +14,7 @@ if (finduid(%npc_aggressive_player) = true) {
     }
 }
 else {
-    npc_statheal(hitpoints, npc_basestat(hitpoints), 0);
+    npc_statheal(hitpoints, 0, 100);
 }
 
 
@@ -37,6 +37,6 @@ switch_int ($spell) {
 mes("Chronozon weakens...");
 
 [label,crest_chronozon_regenerate]
-npc_statheal(hitpoints, npc_basestat(hitpoints), 0);
+npc_statheal(hitpoints, 0, 100);
 npc_setmode(opplayer2);
 mes("Chronozon regenerates...");

@@ -1,13 +1,13 @@
 import { parentPort } from 'worker_threads';
 
-import Environment from '#/util/Environment.js';
 import { FriendClient, FriendsServerOpcodes } from '#/server/friend/FriendServer.js';
+import Environment from '#/util/Environment.js';
 
 const client = new FriendClient(Environment.NODE_ID);
 
 export interface FriendThreadMessage {
     opcode: FriendsServerOpcodes;
-    data: any
+    data: any;
 }
 
 if (Environment.STANDALONE_BUNDLE) {
@@ -18,7 +18,7 @@ if (Environment.STANDALONE_BUNDLE) {
             console.error(err);
         }
     };
-    
+
     client.onMessage((opcode, data) => {
         self.postMessage({ opcode, data });
     });

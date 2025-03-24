@@ -3,6 +3,9 @@ size=40
 stackall=yes
 protect=no
 
+[inv_44]
+size=1
+
 [inv_55]
 size=1
 

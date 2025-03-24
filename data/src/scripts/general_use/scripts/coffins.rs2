@@ -1,9 +1,11 @@
 [oploc1,loc_398]
 mes("The coffin creaks open...");
 sound_synth(coffin_open, 0, 0);
-loc_change(loc_399, 485);
+// Temp note: dur does not need updated ? @indio
+loc_change(loc_399, 500);
 
 [oploc1,loc_399]
 mes("You close the coffin.");
 sound_synth(coffin_close, 0, 0);
-loc_change(loc_398, 485);
+// Temp note: dur does not need updated ? @indio
+loc_change(loc_398, 500);

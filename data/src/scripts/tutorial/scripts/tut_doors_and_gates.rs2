@@ -5,10 +5,12 @@ while(loc_findnext = true) {
         def_coord $central_coord = loc_coord;
         def_int $orig_angle = loc_angle;
         def_loc $type = loc_type;
-        loc_change(loc_83, 2);
+        // Temp note: dur updated
+        loc_change(loc_83, 3);
         if($type = loc_3015) {
-             loc_add(movecoord($central_coord, 1, 0, 0), loc_49, 1, loc_shape, 2);
-             loc_add(movecoord($central_coord, 2, 0, 0), loc_50, 1, loc_shape, 2);
+            // Temp note: dur updated
+             loc_add(movecoord($central_coord, 1, 0, 0), loc_49, 1, loc_shape, 3);
+             loc_add(movecoord($central_coord, 2, 0, 0), loc_50, 1, loc_shape, 3);
         }
     }
 }
@@ -132,13 +134,15 @@ while(loc_findnext = true) {
      if(loc_category = tut_mining_exit) {
             def_coord $central_coord = loc_coord;
             def_int $orig_angle = loc_angle;
-
-            loc_del(2);
+            // Temp note: dur updated
+            loc_del(3);
             if(loc_type = loc_3020) {
-                loc_add(movecoord($central_coord, 1, 0, 0), loc_1562, 1, loc_shape, 2);
-                loc_add(movecoord($central_coord, 1, 0, -1), loc_1563, 3, loc_shape, 2);
+                // Temp note: dur updated
+                loc_add(movecoord($central_coord, 1, 0, 0), loc_1562, 1, loc_shape, 3);
+                loc_add(movecoord($central_coord, 1, 0, -1), loc_1563, 3, loc_shape, 3);
             }
-            loc_add($central_coord, loc_83, $orig_angle, loc_shape, 2);
+            // Temp note: dur updated
+            loc_add($central_coord, loc_83, $orig_angle, loc_shape, 3);
      }
 }
 sound_synth(door_open, 0, 0);
@@ -162,28 +166,34 @@ if (%tutorial_progress = ^combat_instructor_opened_combat_interface) {
     %tutorial_progress = ^combat_instructor_before_attacking_melee;
     ~set_tutorial_progress;
 }
-~tut_open_rat_pit;
 
 if (coordx(coord) < coordx(loc_coord)) {
     p_teleport(movecoord(coord, 1, 0, 0));
 } else {
     p_teleport(movecoord(coord, -1, 0, 0));
 }
+
+~tut_open_rat_pit;
+
+
 p_delay(1);
 
 [proc,tut_open_rat_pit]
 loc_findallzone(coord);
 while(loc_findnext = true) {
-     if(loc_category = rat_pit_cage) {
-            def_coord $central_coord = loc_coord;
-            def_int $orig_angle = loc_angle;
-            loc_del(2);
-            if(loc_type = loc_3022) {
-                loc_add(movecoord($central_coord, -1, 0, 0), loc_1562, 3, loc_shape, 2);
-                loc_add(movecoord($central_coord, -1, 0, 1), loc_1563, 1, loc_shape, 2);
-            }
-            loc_add($central_coord, loc_83, $orig_angle, loc_shape, 2);
-     }
+    if(loc_category = rat_pit_cage) {
+        def_coord $central_coord = loc_coord;
+        def_int $orig_angle = loc_angle;
+        // Temp note: dur updated
+        loc_del(3);
+        if(loc_type = loc_3022) {
+            // Temp note: dur updated
+            loc_add(movecoord($central_coord, -1, 0, 0), loc_1562, 3, loc_shape, 3);
+            loc_add(movecoord($central_coord, -1, 0, 1), loc_1563, 1, loc_shape, 3);
+        }
+        // Temp note: dur updated
+        loc_add($central_coord, loc_83, $orig_angle, loc_shape, 3);
+    }
 }
 sound_synth(door_open, 0, 0);
 

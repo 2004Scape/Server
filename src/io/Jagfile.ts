@@ -471,7 +471,7 @@ export const KNOWN_NAMES: string[] = [
     'floorcol.dat',
     'underlay.dat',
     'overlay.dat',
-    'size.dat', // added later
+    'size.dat' // added later
 ];
 
 export const KNOWN_HASHES: number[] = [];

@@ -81,13 +81,14 @@ if ($is_inside = false) {
 }
 
 [label,blackknight_banquet_hall_fortress_guard](boolean $is_inside)
+def_loc $next_loc = loc_param(next_loc_stage);
 ~chatnpc("<p,neutral>I wouldn't go in there if I woz you.|Those Black Knights are in an important meeting;|They said they'd kill anyone who went in there!");
 def_int $option = ~p_choice2("Ok I won't.", 1, "I don't care. I'm going in anyway.", 2);
 if ($option = 1) {
     ~chatplayer("<p,neutral>Ok I won't.");
 } else {
    ~chatplayer("<p,neutral>I don't care. I'm going in anyway.");
-   ~open_and_close_door(loc_param(next_loc_stage), $is_inside, false);
+   ~open_and_close_door($next_loc, $is_inside, false);
    // black knights in the banquet hall will aggress the player
    ~set_black_knight_aggro(0_47_54_13_59);
    ~set_black_knight_aggro(0_47_54_21_59);
@@ -98,8 +99,8 @@ mes("It's locked.");
 
 // Secret wall push
 [oploc1,blackknight_pushable_wall]
-~open_and_close_door2(loc_param(next_loc_stage), ~check_axis_locactive(coord), coffin_open);
 mes("You push against the wall. You find a secret passage.");
+~open_and_close_door2(loc_param(next_loc_stage), ~check_axis_locactive(coord), coffin_open);
 
 // Using Cabbage on hole
 [oplocu,blackknight_hole]

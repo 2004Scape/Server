@@ -2,7 +2,6 @@ import fs from 'fs';
 import path from 'path';
 
 import Packet from '#/io/Packet.js';
-
 import { fromBase37 } from '#/util/JString.js';
 
 const args = process.argv.splice(2);
@@ -14,11 +13,11 @@ if (!args.length) {
 const searchDir = args[0];
 
 type MapEntry = {
-    filePath: string,
-    name: string,
-    ctime: number,
-    size: number,
-    checksum: number
+    filePath: string;
+    name: string;
+    ctime: number;
+    size: number;
+    checksum: number;
 };
 
 const dirs = fs.readdirSync(searchDir);
@@ -54,7 +53,7 @@ for (const dir of dirs) {
                 // "bad_ntfs_decompr" - 6261645F6E7466735F6465636F6D7072
                 const sig = data.g4();
                 data.pos -= 3;
-                if (sig === 0x5F6E7466) {
+                if (sig === 0x5f6e7466) {
                     // "_ntf" spotted in the first 12 bytes
                     bad = true;
                 } else if (sig === 0x08080808) {
@@ -110,11 +109,7 @@ function sortFiles(files: MapEntry[], outPath: string) {
         revisions.sort((a, b) => a.ctime - b.ctime);
 
         // remove duplicates
-        revisions = revisions.filter((value, index, self) =>
-            index === self.findIndex((t) => (
-                t.name === value.name && t.checksum === value.checksum
-            ))
-        );
+        revisions = revisions.filter((value, index, self) => index === self.findIndex(t => t.name === value.name && t.checksum === value.checksum));
 
         // copy to dump folder
         if (revisions.length <= 1) {

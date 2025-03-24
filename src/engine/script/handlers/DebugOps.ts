@@ -1,9 +1,8 @@
 import ScriptOpcode from '#/engine/script/ScriptOpcode.js';
 import { CommandHandlers } from '#/engine/script/ScriptRunner.js';
-
-import Environment from '#/util/Environment.js';
 import World from '#/engine/World.js';
 import WorldStat from '#/engine/WorldStat.js';
+import Environment from '#/util/Environment.js';
 
 const DebugOps: CommandHandlers = {
     [ScriptOpcode.ERROR]: state => {
@@ -80,7 +79,7 @@ const DebugOps: CommandHandlers = {
             // milliseconds
             state.pushInt(elapsed);
         }
-    },
+    }
 };
 
 export default DebugOps;

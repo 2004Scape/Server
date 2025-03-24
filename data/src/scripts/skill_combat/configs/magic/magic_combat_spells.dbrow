@@ -121,7 +121,7 @@ data=spotanim_origin,earthbolt_casting
 data=spotanim_proj,earthbolt_travel,43,31,51,16,-5,64,10
 data=spotanim_target,earthbolt_impact,124
 data=sound_success,earth_bolt_all
-data=sound_fail,sound_110
+data=sound_fail,earth_bolt_fail
 data=continue_by_autocast,true
 
 [magic_spell_fire_bolt]

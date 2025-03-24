@@ -16,7 +16,7 @@ switch_int(~p_choice2("Okay then.", 1, "No thanks.", 2)) {
         mes("It tastes horrific and burns your throat.");
         say("Aaarrgghh!");
         stat_sub(agility, 3, 0);
-        ~stat_addclamp(strength, 1, 0);
+        stat_boost(strength, 1, 0);
         p_delay(1);
         mes("The dwarf kindly gives you some food to help you recover from the ghastly drink.");
         inv_add(inv, meat_pie, 1);

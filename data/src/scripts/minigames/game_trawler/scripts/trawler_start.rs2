@@ -1,6 +1,5 @@
-[ai_timer,murphy]
+[ai_queue5,murphy]
 if (~playercount_coord_pair_table(trawler_game_zones) > 0 | ~playercount_coord_pair_table(trawler_lobby_zones) < 1) {
-    npc_settimer(0);
     return;
 }
 
@@ -19,17 +18,13 @@ while (huntnext = true) {
     }
 }
 
-if (~playercount_coord_pair_table(trawler_lobby_zones) < 1) {
-    npc_settimer(0);
-}
-
 ~trawler_reset;
 
 if (npc_find(^trawler_start_center_under, murphy_nonflood, 5, 0) = true) {
-    //~trawler_reset;
-    %npc_trawler_start = map_clock;
-    npc_settimer(30);
-
+    npc_queue(5, 0, 33); // 21 ticks from ship journey... After journey is over, trawler starts after 17 ticks (10s)
+}
+if (npc_find(^trawler_flood_center_under, murphy_flood, 5, 0) = true) {
+    npc_queue(5, 0, 33); // 21 ticks from ship journey... After journey is over, trawler starts after 17 ticks (10s)
 }
 
 [queue,trawler_start]
@@ -50,3 +45,9 @@ if_openmain(trawler_help);
 // CamShake(type = 1, shakeIntensity = 0, movementIntensity = 20, speed = 5)
 cam_shake(4, 0, 20, 4);
 cam_shake(1, 0, 20, 5);
+
+[ai_queue5,murphy_nonflood]
+npc_settimer(5);
+
+[ai_queue5,murphy_flood]
+npc_settimer(5);

@@ -61,7 +61,7 @@ defence=3
 param=damagetype,^crush_style
 // https://raw.githubusercontent.com/Joshua-F/osrs-dumps/refs/heads/master/config/dump.npc npc_2578
 
-[monk]
+[monk_edgeville]
 name=Monk
 desc=A holy man.
 walkanim=human_walk_f,human_walk_b,human_walk_l,human_walk_r

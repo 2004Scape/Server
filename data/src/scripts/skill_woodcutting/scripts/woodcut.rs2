@@ -102,9 +102,9 @@ if (inv_freespace(inv) < 1) {
 }
 
 if (%action_delay < map_clock) {
-    anim(struct_param(oc_param($axe, woodcutting_struct), skill_anim), 0);
     %action_delay = calc(map_clock + 3);
 } else if (%action_delay = map_clock) {
+    anim(struct_param(oc_param($axe, woodcutting_struct), skill_anim), 0);
     @get_logs($data, $axe);
 }
 
@@ -120,7 +120,7 @@ def_int $deplete_chance = 8; // 1/8 chance to deplete
 // if normal tree, add some variance
 // scuffed way of doing it but it works
 if ($respawnrate = 0) {
-    $respawnrate = ~random_range(120, 198);
+    $respawnrate = add(120, random(80));
     $deplete_chance = 0;
 }
 if (stat_random(stat(woodcutting), $tree_chance_low, $tree_chance_high) = true) {

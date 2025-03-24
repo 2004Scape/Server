@@ -1,15 +1,14 @@
 import fs from 'fs';
 
-import Packet from '#/io/Packet.js';
 
 import { ConfigType } from '#/cache/config/ConfigType.js';
 import ScriptVarType from '#/cache/config/ScriptVarType.js';
+import Packet from '#/io/Packet.js';
 import { printError } from '#/util/Logger.js';
 
 export default class VarNpcType extends ConfigType {
     private static configNames = new Map<string, number>();
     private static configs: VarNpcType[] = [];
-
 
     static load(dir: string) {
         if (!fs.existsSync(`${dir}/server/varn.dat`)) {

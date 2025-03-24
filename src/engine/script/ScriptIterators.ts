@@ -1,18 +1,15 @@
-import ObjType from '#/cache/config/ObjType.js';
 import LocType from '#/cache/config/LocType.js';
 import NpcType from '#/cache/config/NpcType.js';
-
-import World from '#/engine/World.js';
+import ObjType from '#/cache/config/ObjType.js';
 import { CoordGrid } from '#/engine/CoordGrid.js';
-
-import Loc from '#/engine/entity/Loc.js';
-import HuntVis from '#/engine/entity/hunt/HuntVis.js';
-import Npc from '#/engine/entity/Npc.js';
-import HuntModeType from '#/engine/entity/hunt/HuntModeType.js';
-import NpcIteratorType from '#/engine/entity/NpcIteratorType.js';
 import Entity from '#/engine/entity/Entity.js';
-
+import HuntModeType from '#/engine/entity/hunt/HuntModeType.js';
+import HuntVis from '#/engine/entity/hunt/HuntVis.js';
+import Loc from '#/engine/entity/Loc.js';
+import Npc from '#/engine/entity/Npc.js';
+import NpcIteratorType from '#/engine/entity/NpcIteratorType.js';
 import { isLineOfSight, isLineOfWalk } from '#/engine/GameMap.js';
+import World from '#/engine/World.js';
 
 abstract class ScriptIterator<T extends Entity> implements IterableIterator<T> {
     private readonly iterator: IterableIterator<T>;

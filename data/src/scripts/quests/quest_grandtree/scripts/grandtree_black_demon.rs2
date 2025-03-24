@@ -1,5 +1,19 @@
+[opnpc2,grandtree_black_demon]
+if (%npc_aggressive_player ! uid) {
+    mes("It's not after you...");
+    return;
+}
+@player_combat_start;
+
+[apnpc2,grandtree_black_demon] 
+if (%npc_aggressive_player ! uid) {
+    mes("It's not after you...");
+    return;
+}
+@player_combat_start_ap;
+
 [ai_timer,grandtree_black_demon]
-if(finduid(%npc_attacking_uid) = false) {
+if(finduid(%npc_aggressive_player) = false) {
     npc_del;
     return;
 }
@@ -8,13 +22,13 @@ if(distance(coord, npc_coord) > 17) {
 }
 
 [ai_queue3,grandtree_black_demon]
-gosub(npc_death);
 if(npc_findhero = true) {
     // queued, no if_close
     if(%grandtree_progress = ^grandtree_unlocked_trapdoor) {
         queue(queue_defeat_blackdemon, 0);
     }
 }
+gosub(npc_death);
 // https://youtu.be/BLxnHE5hU7U?si=mnH0oxq2DbwyAy5y&t=116 
 // https://www.youtube.com/watch?v=mYBva3EhdvM&t=368s, https://youtu.be/iIf98JWB9JI?si=jLbFDg_ZrpzTHGB5&t=78
 if(.npc_find(npc_coord, glough, 7, 0) = true) {

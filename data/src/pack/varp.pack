@@ -33,7 +33,7 @@
 32=haunted_progress
 33=haunted_lever
 34=haunted_manor_fountain_poisoned
-35=varp_35
+35=cog_cooled
 36=damagetype
 37=damagestyle
 38=lastcombat
@@ -257,7 +257,7 @@
 256=thread_used
 257=tradepartner
 258=tradestatus
-259=mcannon_decay_clock
+259=varp_259
 260=temp
 261=option1
 262=option2
@@ -276,7 +276,7 @@
 275=follower_obj
 276=follower_uid
 277=antifire
-278=antipoison
+278=varp_278
 279=varp_279
 280=varp_280
 281=tutorial_progress

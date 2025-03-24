@@ -1,6 +1,7 @@
 import fs from 'fs';
-import { loadPack } from '#/util/NameMap.js';
+
 import { printError } from '#/util/Logger.js';
+import { loadPack } from '#/util/NameMap.js';
 
 const models = loadPack('data/src/pack/model.pack');
 

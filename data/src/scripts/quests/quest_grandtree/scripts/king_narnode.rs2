@@ -88,6 +88,12 @@ switch_int(%grandtree_progress) {
             inv_del(bank, twigs_o, ^max_32bit_int);
             @narnode_add_twigs;
         }
+        if(~obj_gettotal(translation_book) = 0) { // this one checks bank
+            ~chatplayer("<p,neutral>I've lost the translation book.");
+            ~chatnpc("<p,neutral>Don't worry, I have more.");
+            ~objbox(translation_book, "The king gives you another translation book.", 250, 0, divide(^objbox_height, 2));
+            inv_add(inv, translation_book, 1);
+        }
     case ^grandtree_found_invasion_plans :
         ~chatplayer("<p,neutral>Hi, your highness, did you think about what I said?");
         ~chatnpc("<p,neutral>Look, if you're right about Glough I would have him arrested but there's no reason for me to think he's lying.");
@@ -209,6 +215,7 @@ switch_int(%grandtree_progress) {
                 }
                 npc_facesquare(movecoord(^narnode_trapdoor_coord, -1, 0, -1));
                 if(loc_find(movecoord(^narnode_trapdoor_coord, -1, 0, -1), loc_2446) = true) {
+                    // Temp note: dur does not need updated ? @indio
                     loc_change(loc_2445, 10);
                 }
                 npc_say("Down here.");

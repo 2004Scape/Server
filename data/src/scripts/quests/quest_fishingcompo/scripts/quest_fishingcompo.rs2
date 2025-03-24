@@ -57,10 +57,12 @@ while(loc_findnext = true) {
             def_coord $central_coord = loc_coord;
             def_int $orig_angle = loc_angle;
             def_loc $type = loc_type;
-            loc_change(loc_83, 2);
+            // Temp note: dur updated
+            loc_change(loc_83, 3);
             if($type = loc_47) {
-                loc_add(movecoord($central_coord, 1, 0, 0), loc_49, 1, loc_shape, 2);
-                loc_add(movecoord($central_coord, 2, 0, 0), loc_50, 1, loc_shape, 2); 
+                // Temp note: dur updated
+                loc_add(movecoord($central_coord, 1, 0, 0), loc_49, 1, loc_shape, 3);
+                loc_add(movecoord($central_coord, 2, 0, 0), loc_50, 1, loc_shape, 3); 
             }
      }
 }

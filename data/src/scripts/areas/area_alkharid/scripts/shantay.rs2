@@ -102,7 +102,7 @@ mes("Shantay unlocks the door to the cell.");
 
 
 [label,shantay_send_player_to_port_sarim]
-mes("You find youself in a prison.");
+mes("You find yourself in a prison.");
 p_telejump(0_47_49_9_46);
 facesquare(movecoord(coord, -1, 0, 0));
 

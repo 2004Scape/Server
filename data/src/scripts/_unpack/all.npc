@@ -1,4 +1,4 @@
-[man_white]
+[man]
 walkanim=human_walk_f,human_walk_b,human_walk_l,human_walk_r
 readyanim=human_ready
 op2=Attack
@@ -507,6 +507,7 @@ attack=8
 strength=8
 defence=5
 magic=10
+param=damagetype,^crush_style
 param=magicdefence,3
 // osrs stats and Vislvl match 1:1
 // https://raw.githubusercontent.com/Joshua-F/osrs-dumps/refs/heads/master/config/dump.npc npc_3257
@@ -2558,7 +2559,7 @@ param=undead,^true
 // Stats match osrs version but our version Vislvl is different.
 // https://raw.githubusercontent.com/Joshua-F/osrs-dumps/refs/heads/master/config/dump.npc npc_84
 
-[npc_95]
+[wolf_64]
 name=Wolf
 desc=Not mans' best friend.
 size=2
@@ -2587,7 +2588,7 @@ huntrange=2
 // osrs stats and Vislvl match 1:1
 // https://raw.githubusercontent.com/Joshua-F/osrs-dumps/refs/heads/master/config/dump.npc npc_106
 
-[npc_96]
+[white_wolf_25]
 size=2
 walkanim=dog_walk
 readyanim=dog_ready
@@ -2620,7 +2621,7 @@ huntrange=2
 // osrs stats and Vislvl match 1:1
 // https://raw.githubusercontent.com/Joshua-F/osrs-dumps/refs/heads/master/config/dump.npc npc_107
 
-[npc_97]
+[white_wolf_38]
 size=2
 walkanim=dog_walk
 readyanim=dog_ready
@@ -2653,7 +2654,7 @@ huntrange=2
 // osrs stats and Vislvl match 1:1
 // https://raw.githubusercontent.com/Joshua-F/osrs-dumps/refs/heads/master/config/dump.npc npc_108
 
-[npc_98]
+[dog]
 name=Dog
 desc=Bow wow.
 walkanim=dog_walk
@@ -3228,7 +3229,7 @@ huntrange=2
 // osrs stats and Vislvl match 1:1
 // https://raw.githubusercontent.com/Joshua-F/osrs-dumps/refs/heads/master/config/dump.npc npc_2098
 
-[npc_118]
+[dwarf_1]
 walkanim=dwarf_walk
 readyanim=dwarf_ready
 name=Dwarf
@@ -3309,7 +3310,7 @@ huntrange=1
 // TODO SOUNDS
 // https://raw.githubusercontent.com/Joshua-F/osrs-dumps/refs/heads/master/config/dump.npc npc_291
 
-[npc_120]
+[dwarf_2]
 walkanim=dwarf_walk
 readyanim=dwarf_ready
 name=Dwarf
@@ -3343,7 +3344,7 @@ param=attack_sound,baxe_crush
 // TODO SOUNDS
 // https://raw.githubusercontent.com/Joshua-F/osrs-dumps/refs/heads/master/config/dump.npc npc_292
 
-[npc_121]
+[dwarf_3]
 walkanim=dwarf_walk
 readyanim=dwarf_ready
 name=Dwarf
@@ -3480,7 +3481,8 @@ param=death_anim,earthwarrior_death
 param=attack_sound,mace_crush
 // param=defend_sound,blade5
 huntmode=cowardly
-huntrange=1
+huntrange=5
+// hunt - https://www.youtube.com/watch?v=T2ztjZEch5Y&t=153s
 // osrs sound attack warhammer_crush
 // Stats match osrs version but our version Vislvl is different.
 // https://raw.githubusercontent.com/Joshua-F/osrs-dumps/refs/heads/master/config/dump.npc npc_2840
@@ -3831,7 +3833,7 @@ huntmode=cowardly
 huntrange=1
 // https://raw.githubusercontent.com/Joshua-F/osrs-dumps/refs/heads/master/config/dump.npc npc_508
 
-[npc_141]
+[big_wolf]
 size=2
 walkanim=dog_walk
 readyanim=dog_ready
@@ -3866,7 +3868,7 @@ huntrange=2
 // osrs stats and Vislvl match 1:1
 // https://raw.githubusercontent.com/Joshua-F/osrs-dumps/refs/heads/master/config/dump.npc npc_109
 
-[npc_142]
+[wolf_pack]
 size=2
 walkanim=dog_walk
 readyanim=dog_ready
@@ -3899,7 +3901,40 @@ huntrange=2
 // osrs stats and Vislvl match 1:1
 // https://raw.githubusercontent.com/Joshua-F/osrs-dumps/refs/heads/master/config/dump.npc npc_110
 
-[npc_144]
+[jungle_wolf]
+name=Jungle Wolf
+desc=A rare jungle wolf - specific to the Kharazi jungle.
+size=2
+walkanim=dog_walk
+readyanim=dog_ready
+op2=Attack
+vislevel=64
+recol1s=15855
+recol1d=15777
+recol2s=23254
+recol2d=18917
+model1=model_2937_npc
+wanderrange=6
+maxrange=8
+respawnrate=180
+hitpoints=69
+attack=50
+strength=55
+defence=52
+param=damagetype,^stab_style
+param=attack_anim,dog_attack
+param=defend_anim,dog_block
+param=death_anim,dog_death
+param=attack_sound,wolf_attack2
+param=defend_sound,wolf_hit
+param=death_sound,wolf_death
+param=death_drop,wolf_bones
+huntmode=cowardly
+huntrange=2
+// osrs stats and Vislvl match 1:1
+// https://raw.githubusercontent.com/Joshua-F/osrs-dumps/refs/heads/master/config/dump.npc npc_232
+
+[king_scorpion]
 size=2
 walkanim=scorpion_walk
 readyanim=scorpion_ready
@@ -4172,7 +4207,7 @@ huntrange=1
 // "They have level 20 Attack & Strength" - ash
 // https://raw.githubusercontent.com/Joshua-F/osrs-dumps/refs/heads/master/config/dump.npc npc_4416
 
-[npc_153]
+[butterfly_white]
 name=Butterfly
 desc=These look much better in the wild.
 walkanim=butterfly_hover
@@ -4182,7 +4217,7 @@ vislevel=hide
 model1=model_3022_npc
 wanderrange=10
 
-[npc_154]
+[butterfly_cyan]
 name=Butterfly
 desc=I love butterflies.
 walkanim=butterfly_hover
@@ -4192,7 +4227,7 @@ vislevel=hide
 model1=model_3023_npc
 wanderrange=10
 
-[npc_155]
+[butterfly_blue]
 name=Butterfly
 desc=It's a Blue Morpho Butterfly.
 walkanim=butterfly_hover
@@ -4208,7 +4243,7 @@ recol3d=6274
 model1=model_3023_npc
 wanderrange=10
 
-[npc_156]
+[butterfly_yellow]
 name=Butterfly
 desc=It's a Tiger Swallowtail Butterfly.
 walkanim=butterfly_hover
@@ -4224,7 +4259,7 @@ recol3d=6342
 model1=model_3023_npc
 wanderrange=10
 
-[npc_157]
+[butterfly_orange]
 name=Butterfly
 desc=It's a Viceroy Butterfly.
 walkanim=butterfly_hover
@@ -4270,6 +4305,7 @@ attack=17
 strength=17
 defence=14
 magic=22
+param=damagetype,^crush_style
 param=magicdefence,3
 huntmode=ranged
 // osrs stats and Vislvl match 1:1
@@ -4335,6 +4371,7 @@ attack=5
 strength=2
 defence=5
 magic=6
+param=damagetype,^crush_style
 param=magicdefence,3
 huntmode=ranged
 huntrange=3
@@ -4401,7 +4438,12 @@ model4=model_353_idk
 model5=model_428_idk
 model6=model_361_obj_wear
 model7=model_377_obj_wear
-// TODO respawnrate
+// wanderrange, maxrange, attackrange, and respawnrate are taken from dark_wizard_earth
+wanderrange=3
+maxrange=5
+attackrange=5
+huntrange=5
+respawnrate=100
 hitpoints=10
 attack=25
 strength=25
@@ -4878,8 +4920,6 @@ param=damagetype,^stab_style
 param=attack_anim,human_sword_stab
 param=defend_anim,human_sword_defend2
 param=attack_sound,hacksword_stab
-huntmode=cowardly
-huntrange=1
 // Stats match osrs version but our version Vislvl is different.
 // https://raw.githubusercontent.com/Joshua-F/osrs-dumps/refs/heads/master/config/dump.npc npc_526
 
@@ -5225,7 +5265,7 @@ param=undead,^true
 // TODO monster examine spell
 // https://raw.githubusercontent.com/Joshua-F/osrs-dumps/refs/heads/master/config/dump.npc npc_3518
 
-[npc_282]
+[thief_ardougne]
 name=Thief
 desc=A dastardly blanket thief.
 walkanim=human_walk_f,human_walk_b,human_walk_l,human_walk_r
@@ -5261,6 +5301,8 @@ param=attack_anim,human_sword_stab
 param=defend_anim,human_sword_defend2
 param=attack_sound,stabsword_stab
 param=retreat,8
+huntmode=cowardly
+huntrange=1
 // osrs stats and Vislvl match 1:1
 // https://raw.githubusercontent.com/Joshua-F/osrs-dumps/refs/heads/master/config/dump.npc npc_4247
 
@@ -5299,6 +5341,8 @@ param=damagetype,^slash_style
 param=attack_anim,human_sword_slash
 param=defend_anim,human_sword_defend2
 param=attack_sound,stabsword_slash
+huntmode=cowardly
+huntrange=1
 // osrs stats and Vislvl match 1:1
 // https://raw.githubusercontent.com/Joshua-F/osrs-dumps/refs/heads/master/config/dump.npc npc_4248
 
@@ -5392,7 +5436,7 @@ model1=model_loc_42_8
 wanderrange=0
 moverestrict=nomove
 
-[npc_365]
+[ardougne_paladin2]
 name=Paladin
 desc=A military man.
 op2=Attack
@@ -5442,7 +5486,7 @@ param=attack_sound,hacksword_slash
 // seqs and sounds param is guess
 // https://raw.githubusercontent.com/Joshua-F/osrs-dumps/refs/heads/master/config/dump.npc npc_1144
 
-[npc_382]
+[dwarf_mining_guild]
 vislevel=hide
 walkanim=dwarf_walk
 readyanim=dwarf_ready
@@ -5960,6 +6004,7 @@ hitpoints=80
 attack=24
 strength=24
 defence=24
+param=damagetype,^crush_style
 magic=80
 timer=20
 param=magicdefence,3

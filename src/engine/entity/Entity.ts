@@ -1,6 +1,8 @@
 import EntityLifeCycle from '#/engine/entity/EntityLifeCycle.js';
 import World from '#/engine/World.js';
-export default abstract class Entity {
+import Linkable from '#/util/Linkable.js';
+
+export default abstract class Entity extends Linkable {
     // constructor
     level: number;
     x: number;
@@ -15,6 +17,7 @@ export default abstract class Entity {
     lastLifecycleTick: number = -1;
 
     protected constructor(level: number, x: number, z: number, width: number, length: number, lifecycle: EntityLifeCycle) {
+        super();
         this.level = level;
         this.x = x;
         this.z = z;
@@ -26,25 +29,12 @@ export default abstract class Entity {
 
     abstract resetEntity(respawn: boolean): void;
 
-    isValid(hash64?: bigint): boolean {
+    isValid(_hash64?: bigint): boolean {
         return this.isActive;
     }
 
     updateLifeCycle(tick: number): boolean {
         return this.lifecycleTick === tick && this.lifecycle !== EntityLifeCycle.FOREVER;
-    }
-
-    checkLifeCycle(tick: number): boolean {
-        if (this.lifecycle === EntityLifeCycle.FOREVER) {
-            return true;
-        }
-        if (this.lifecycle === EntityLifeCycle.RESPAWN) {
-            return this.lifecycleTick < tick;
-        }
-        if (this.lifecycle === EntityLifeCycle.DESPAWN) {
-            return this.lifecycleTick > tick;
-        }
-        return false;
     }
 
     setLifeCycle(tick: number): void {

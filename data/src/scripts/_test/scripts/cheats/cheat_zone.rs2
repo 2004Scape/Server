@@ -1,0 +1,92 @@
+[debugproc,drop_items]
+if (p_finduid(uid) = true) {
+    p_telejump(0_37_55_32_30);
+    obj_addall(0_37_55_32_30, logs, 40, 30);
+    p_delay(3);
+    obj_addall(0_37_55_32_29, logs, 40, 30);
+    p_delay(3);
+    obj_addall(0_37_55_32_28, logs, 40, 30);
+    p_delay(3);
+    obj_addall(0_37_55_32_27, logs, 40, 30);
+}
+
+
+[debugproc,add_locs]
+if (p_finduid(uid) = true) {
+    p_telejump(0_37_55_32_30);
+    loc_add(0_37_55_32_30, loc_1276, 0, centrepiece_straight, 10);
+    loc_add(0_37_55_32_29, loc_1276, 0, centrepiece_straight, 10);
+    loc_add(0_37_55_32_28, loc_1276, 0, centrepiece_straight, 10);
+    loc_add(0_37_55_32_27, loc_1276, 0, centrepiece_straight, 10);
+}
+
+
+[debugproc,loc_add_del]
+if (p_finduid(uid) = true) {
+    p_telejump(0_37_55_32_30);
+    p_delay(0);
+    loc_add(0_37_55_32_30, loc_1276, 0, centrepiece_straight, 10);
+    loc_del(100);
+}
+
+[debugproc,loc_del_change]
+if (p_finduid(uid) = true) {
+    p_telejump(0_37_55_32_30);
+    p_delay(0);
+    loc_add(0_37_55_32_30, loc_1276, 0, centrepiece_straight, 10);
+    p_delay(0);
+    loc_del(100);
+    p_delay(0);
+    loc_change(loc_2732, 10);
+}
+
+
+[debugproc,loc_add_static]
+if (p_finduid(uid) = true) {
+    p_telejump(0_37_55_32_9);
+    p_delay(0);
+    loc_add(0_37_55_30_9, loc_2732, 1, centrepiece_straight, 10);
+}
+
+[debugproc,loc_add_dynamic]
+if (p_finduid(uid) = true) {
+    p_telejump(0_37_55_32_9);
+    p_delay(0);
+    loc_add(0_37_55_32_9, loc_1276, 0, centrepiece_straight, 10);
+    p_delay(1);
+    loc_add(0_37_55_32_9, loc_2732, 1, centrepiece_straight, 10);
+}
+
+[debugproc,loc_change_dynamic]
+if (p_finduid(uid) = true) {
+    p_telejump(0_37_55_32_9);
+    p_delay(0);
+    loc_add(0_37_55_32_9, loc_1276, 0, centrepiece_straight, 10);
+    p_delay(1);
+    loc_change(loc_2732, 10);
+}
+
+
+[debugproc,loc_change_inactive]
+if (p_finduid(uid) = true) {
+    p_telejump(0_37_55_32_9);
+    p_delay(0);
+    // Change static loc and delete it
+    loc_add(0_37_55_30_9, loc_2732, 1, centrepiece_straight, 10);
+    loc_del(100);
+    p_delay(5);
+
+    // Change it again. This should set it active, and then after 10 ticks it will reappear
+    loc_add(0_37_55_30_9, loc_2732, 1, centrepiece_straight, 10);
+}
+
+
+[debugproc,loc_change_error]
+if (p_finduid(uid) = true) {
+    p_telejump(0_37_55_32_9);
+    p_delay(0);
+    // Change static loc and delete it
+    loc_add(0_37_55_30_9, loc_2732, 1, centrepiece_straight, 10);
+    p_delay(3);
+    loc_change(loc_param(next_loc_stage), 10);
+}

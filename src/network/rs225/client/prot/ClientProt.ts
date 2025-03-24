@@ -97,7 +97,11 @@ export default class ClientProt {
     static readonly MOVE_GAMECLICK = new ClientProt(255, 181, -1); // NXT naming
 
     // in these old revisions we can actually get the packet index from a leftover array in the client source
-    constructor(readonly index: number, readonly id: number, readonly length: number) {
+    constructor(
+        readonly index: number,
+        readonly id: number,
+        readonly length: number
+    ) {
         ClientProt.all[index] = this;
         ClientProt.byId[id] = this;
     }

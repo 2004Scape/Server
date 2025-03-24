@@ -207,6 +207,7 @@ mes("The chest is locked.");
 [oplocu,loc_2790]
 if(last_useitem = toban_key) {
     if(inv_freespace(inv) = 0) {
+        // Temp note: dur does not need updated ??
         loc_change(loc_3273, 20);
         sound_synth(chest_open, 0, 0);
         ~mesbox("There is something in there.|But you don't have the free space to hold it.");
@@ -217,6 +218,7 @@ if(last_useitem = toban_key) {
 ~displaymessage(^dm_default);
 
 [label,open_toban_chest]
+// Temp note: dur does not need updated ?? @indio
 loc_change(loc_3273, 20);
 sound_synth(chest_open, 0, 0);
 if(inv_total(inv, tobans_gold) > 0) {
@@ -294,7 +296,8 @@ if(last_useitem = rope) {
     anim(seq_775, 0);
     p_delay(0);
     inv_del(inv, rope, 1);
-    loc_change(loc_2324, 4);
+    // Temp note: dur updated
+    loc_change(loc_2324, 5);
     p_delay(0);
     loc_anim(rope_swing);
     ~agility_exactmove(human_ropeswing, 20, 0, coord, movecoord(loc_coord, 6, 0, 0), 45, 70, ^exact_east, false);
@@ -336,6 +339,7 @@ p_arrivedelay;
 anim(human_openchest, 0);
 sound_synth(chest_open, 0, 0);
 p_delay(0);
+// Temp note: dur does not need updated
 loc_change(loc_3273, 300);
 mes("Ahh! There is a spider inside.");
 mes("Someone's idea of a joke...");
@@ -347,6 +351,7 @@ p_arrivedelay;
 anim(human_openchest, 0);
 sound_synth(chest_open, 0, 0);
 p_delay(0);
+// Temp note: dur does not need updated
 loc_change(loc_3273, 300);
 switch_int(random(8)) {
     case 0 :
@@ -384,7 +389,7 @@ if(stat(agility) < 25) {
     mes("You need an Agility level of 25 to attempt this jump."); // OSRS
     return;
 }
-if(npc_find(coord, npc_861, 8, 0) = true) {
+if(npc_find(coord, ogre_guard_broken_bridge, 8, 0) = true) {
     ~chatnpc("<p,neutral>Oi! Little thing, if you want to cross here,|you can pay me first - 20 gold pieces!");
     ~chatplayer("<p,quiz>20 gold pieces to jump off a bridge!!?");
     ~chatnpc("<p,happy>That's what I said, like it or lump it.");
@@ -425,13 +430,16 @@ $opposite_coord = ~movecoord_loc_return(~multiply2(~door_close(loc_angle, loc_sh
 p_teleport($dest);
 sound_synth(grate_open, 0, 0);
 if (loc_type = loc_2788) {
-    ~open_double_doors_left(2, double_door_open_and_close_right, null);
+    // Temp note: dur updated
+    ~open_double_doors_left(3, double_door_open_and_close_right, null);
 } else {
-    ~open_double_doors_right(2, double_door_open_and_close_left, null);
+    // Temp note: dur updated
+    ~open_double_doors_right(3, double_door_open_and_close_left, null);
 }
 
-loc_add($opposite_coord, loc_83, $angle, $shape, 2);
-loc_add($loc_coord, loc_83, $angle, $shape, 2);
+// Temp note: dur updated
+loc_add($opposite_coord, loc_83, $angle, $shape, 3);
+loc_add($loc_coord, loc_83, $angle, $shape, 3);
 
 [oploc1,loc_2823]
 mes("You enter the tunnel.");

@@ -1,5 +1,5 @@
 // Shop Keeper
-[opnpc1,npc_561]
+[opnpc1,shop_keeper_combat_training_camp]
 ~chatplayer("<p,happy>Hello.");
 ~chatnpc("<p,neutral>So, are you looking to buy weapons?|King Lathas keeps us very well stocked.");
 def_int $option = ~p_choice2("What do you have?", 0, "No thanks.", 1);
@@ -13,12 +13,12 @@ switch_int ($option) {
 }
 
 // Mace Guard
-[opnpc1,npc_344]
+[opnpc1,combat_training_camp_guard_1]
 ~chatplayer("<p,happy>Hello there.");
 ~chatnpc("<p,angry>What do you want - leave us be!");
 
 // crossbow guard by ogre cage
-[opnpc1,npc_345]
+[opnpc1,combat_training_camp_guard_2]
 ~chatplayer("<p,happy>Hello.");
 ~chatnpc("<p,neutral>Well hello brave warrior.|These ogres have been terrorising the area,|they've eaten four of our children this week alone.");
 ~chatplayer("<p,angry>Brutes!");
@@ -26,7 +26,7 @@ switch_int ($option) {
 ~chatplayer("<p,neutral>Indeed.");
 
 // regular crossbow guard
-[opnpc1,npc_346]
+[opnpc1,combat_training_camp_guard_3]
 ~chatplayer("<p,happy>Hello.");
 ~chatnpc("<p,neutral>Hello soldier.");
 ~chatplayer("<p,confused>I'm more of an adventurer really.");
@@ -37,13 +37,12 @@ switch_int ($option) {
 
 [label,open_combat_training_gate](int $side)
 if(%biohazard_progress < ^biohazard_complete) {
-    ~chatnpc_specific(nc_name(npc_344), npc_344, "<p,neutral>This is a restricted area.|You can only enter under the authority of King Lathas.");
+    ~chatnpc_specific(nc_name(combat_training_camp_guard_1), combat_training_camp_guard_1, "<p,neutral>This is a restricted area.|You can only enter under the authority of King Lathas.");
     return;
 }
 ~open_and_close_double_door2(~check_axis(coord, loc_coord, loc_angle), $side, grate_open);
 
 [oploc1,combat_training_dummy] // Combat training camp dummy
-~player_combat_stat;
 if (%damagestyle = ^style_ranged_accurate | %damagestyle = ^style_ranged_longrange | %damagestyle = ^style_ranged_rapid) {
     mes("You can't use ranged attacks on the dummy.");
     return;

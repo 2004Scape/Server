@@ -1,6 +1,7 @@
 [oploc1,loc_881]
 mes("You pull back the cover from over the manhole.");
 sound_synth(coffin_open, 0, 0);
+// Temp note: dur does not need updated
 loc_change(loc_882, 400);
 loc_add(movecoord(loc_coord, 0, 0, -1), loc_883, loc_angle, loc_shape, 400);
 
@@ -10,7 +11,9 @@ p_telejump(movecoord(coord(), 0, 0, 6400));
 
 [oploc1,loc_883]
 mes("You place the cover back over the manhole.");
+// Temp note: dur does not need updated
 loc_del(400);
 if (.loc_find(movecoord(loc_coord, 0, 0, 1), loc_882) = true) {
+    // Temp note: dur does not need updated
     .loc_change(loc_881, 400);
 }

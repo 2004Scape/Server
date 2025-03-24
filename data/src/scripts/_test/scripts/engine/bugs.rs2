@@ -1,0 +1,48 @@
+// exposes a flaw in the original client scene building code - the door in front of the player disappears
+[debugproc,door_test]
+if (p_finduid(uid) = true) {
+    if (loc_find(0_49_53_24_48, loc_1533) = true) {
+        def_coord $new_loc_coord = ~movecoord_loc_return(~door_close(0, loc_shape));
+        loc_del(1);
+        loc_add($new_loc_coord, loc_param(next_loc_stage), 0, loc_shape, 1);
+    }
+
+    p_teleport(0_50_53_13_31);
+    p_delay(0);
+
+    p_teleport(0_49_53_40_37);
+    p_delay(0);
+
+    p_teleport(0_49_53_39_37);
+    p_delay(0);
+
+    p_teleport(0_49_53_25_48);
+    p_delay(0);
+}
+
+// verify locs are re-added appropriately on the client
+[debugproc,gold_test]
+if (p_finduid(uid) = true) {
+    p_telejump(0_50_50_22_22);
+    p_delay(0);
+
+    p_telejump(0_50_50_60_28);
+    p_delay(0);
+
+    p_telejump(0_51_51_25_1);
+    p_delay(0);
+
+    p_telejump(0_51_51_31_23);
+    loc_findallzone(coord);
+    while (loc_findnext = true) {
+        if (loc_coord = 0_51_51_30_23){
+            loc_change(loc_param(next_loc_stage_mining), 4);
+        }
+    }
+    p_delay(0);
+
+    p_telejump(0_51_51_35_53);
+    p_delay(5);
+
+    p_telejump(0_51_51_31_23);
+}

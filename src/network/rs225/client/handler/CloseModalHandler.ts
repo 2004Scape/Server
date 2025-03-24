@@ -1,5 +1,5 @@
-import MessageHandler from '#/network/client/handler/MessageHandler.js';
 import Player from '#/engine/entity/Player.js';
+import MessageHandler from '#/network/client/handler/MessageHandler.js';
 import CloseModal from '#/network/client/model/CloseModal.js';
 
 export default class CloseModalHandler extends MessageHandler<CloseModal> {

@@ -2,7 +2,8 @@
 if(%grandtree_progress = ^grandtree_complete) {
     anim(human_pickupfloor, 0);
     sound_synth(door_open, 0, 0);
-    loc_change(loc_2445, 5); 
+    // Temp note: dur updated
+    loc_change(loc_2445, 6); 
     p_delay(1);
     p_teleport(movecoord(coord, 0, 0, 6400));
     return;
@@ -32,7 +33,7 @@ p_arrivedelay;
 ~agility_climb_up(0, movecoord(loc_coord, -1, -1, -1));
 
 [oplocu,_grandtree_pillar]
-if(last_useitem = twigs_t | last_useitem = twigs_u | last_useitem = twigs_z | last_useitem = twigs_o) {
+if (oc_tradeable(last_useitem) = true | last_useitem = twigs_t | last_useitem = twigs_u | last_useitem = twigs_z | last_useitem = twigs_o) {
     anim(human_pickuptable, 0);
     sound_synth(put_down, 0, 0);
     inv_dropslot(inv, loc_coord, last_useslot, 500); // 500t osrs
@@ -45,14 +46,15 @@ if(last_useitem = twigs_t | last_useitem = twigs_u | last_useitem = twigs_z | la
         sound_synth(machinery, 0, 0); 
         ~mesbox("You hear the grinding of an ancient pulley system.");
     }
-} else {
-    mes("You cannot put that on the pillar.");
+    return;
 }
+mes("You cannot put that on a pillar.");
 
 [oploc1,loc_2444]
 if(%grandtree_progress >= ^grandtree_unlocked_trapdoor) {
     anim(human_pickupfloor, 0);
     sound_synth(door_open, 0, 0);
+    // Temp note: dur updated
     loc_change(loc_2445, 5); // idk cause this is varbit now, will assume same as the other trapdoor
     p_delay(1);
     p_teleport(0_38_154_59_8);
@@ -72,8 +74,9 @@ if(last_useitem = gloughs_key) {
     anim(human_openchest, 0);
     sound_synth(chest_open, 0, 0);
     p_delay(0);
-    loc_change(loc_3368, 4);
-    if((%grandtree_progress = ^grandtree_found_invasion_plans | %grandtree_progress = ^grandtree_clue_charlie) & inv_total(inv, invasion_plans) = 0) {
+    // Temp note: dur updated
+    loc_change(loc_3368, 5);
+    if((%grandtree_progress = ^grandtree_found_invasion_plans | %grandtree_progress = ^grandtree_clue_charlie) & ~obj_gettotal(invasion_plans) = 0) {
         ~objbox(invasion_plans, "You have found a scroll!", 250, 0, 0);
         if(inv_freespace(inv) = 0) { 
             // https://youtu.be/ZNgxsI_jH_E?si=wuOkSTdEAuYDoeTc&t=697
@@ -128,10 +131,12 @@ while(loc_findnext = true) {
             def_coord $central_coord = loc_coord;
             def_int $orig_angle = loc_angle;
             def_loc $type = loc_type;
-            loc_change(loc_83, 2);
+            // Temp note: dur updated
+            loc_change(loc_83, 3);
             if($type = loc_2438) {
-                loc_add(movecoord($central_coord, -1, 0, 0), loc_49, 3, loc_shape, 2);
-                loc_add(movecoord($central_coord, -2, 0, 0), loc_50, 3, loc_shape, 2); 
+                // Temp note: dur updated
+                loc_add(movecoord($central_coord, -1, 0, 0), loc_49, 3, loc_shape, 3);
+                loc_add(movecoord($central_coord, -2, 0, 0), loc_50, 3, loc_shape, 3); 
             }
      }
 }

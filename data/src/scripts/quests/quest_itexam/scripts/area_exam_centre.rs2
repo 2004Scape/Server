@@ -2,6 +2,7 @@
 anim(human_openchest, 0);
 mes("You open the cupboard.");
 p_delay(0);
+// Temp note: dur does not need updated
 loc_change(exam_centre_cupboard_rock_pick_open, 300);
 
 [oploc1,exam_centre_cupboard_rock_pick_open]
@@ -15,6 +16,7 @@ if (inv_total(inv, rock_pick) = 0) {
 [oploc2,exam_centre_cupboard_rock_pick_open]
 anim(human_openchest, 0);
 p_delay(0);
+// Temp note: dur does not need updated
 loc_change(exam_centre_cupboard_rock_pick, 300);
 
 [label,exam_centre_cupboard_jar]

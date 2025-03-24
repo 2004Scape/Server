@@ -1,10 +1,12 @@
-import MessageHandler from '#/network/client/handler/MessageHandler.js';
+import * as rsbuf from '@2004scape/rsbuf';
+
 import Component from '#/cache/config/Component.js';
-import OpNpcT from '#/network/client/model/OpNpcT.js';
-import World from '#/engine/World.js';
 import Interaction from '#/engine/entity/Interaction.js';
-import ServerTriggerType from '#/engine/script/ServerTriggerType.js';
 import { NetworkPlayer } from '#/engine/entity/NetworkPlayer.js';
+import ServerTriggerType from '#/engine/script/ServerTriggerType.js';
+import World from '#/engine/World.js';
+import MessageHandler from '#/network/client/handler/MessageHandler.js';
+import OpNpcT from '#/network/client/model/OpNpcT.js';
 import UnsetMapFlag from '#/network/server/model/UnsetMapFlag.js';
 
 export default class OpNpcTHandler extends MessageHandler<OpNpcT> {
@@ -30,14 +32,14 @@ export default class OpNpcTHandler extends MessageHandler<OpNpcT> {
             return false;
         }
 
-        if (!player.buildArea.npcs.has(npc)) {
+        if (!rsbuf.hasNpc(player.pid, npc.nid)) {
             player.write(new UnsetMapFlag());
             player.clearPendingAction();
             return false;
         }
 
         player.clearPendingAction();
-        player.setInteraction(Interaction.ENGINE, npc, ServerTriggerType.APNPCT, { type: npc.type, com: spellComId });
+        player.setInteraction(Interaction.ENGINE, npc, ServerTriggerType.APNPCT, spellComId);
         player.opcalled = true;
         return true;
     }

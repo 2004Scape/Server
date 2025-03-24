@@ -1,10 +1,12 @@
 [oploc1,chompybird_cave_entrance]
+mes("You walk through the cave entrance into a dimly lit cave.");
 p_teleport(0_41_146_23_35);
 
 [oploc1,chompybird_cave_exit_a]
 p_teleport(0_41_46_6_53);
 
 [oploc1,chompybird_cave_exit_b]
+mes("You walk back out of the darkness of the cave into daylight.");
 p_teleport(0_41_46_6_53);
 
 [oplocu,swamp_bubbles_a]
@@ -21,19 +23,19 @@ switch_obj(last_useitem) {
         ~ogre_bellows_suck(ogre_bellows_1);
     case ogre_bellows_2 :
         ~ogre_bellows_suck(ogre_bellows_2);
+    case ogre_bellows_3 : 
+        mes("These bellows are already full of swamp gas!");
     case default :
-        // todo can you fill bellows (2) and (1)?
         mes("Nothing interesting happens.");
 }
 
 [proc,ogre_bellows_suck](obj $bellows)
-// todo TBC anim and sound
-anim(human_firecooking, 0);
+anim(human_ogre_bellows_use, 0);
 sound_synth(ogre_bellows_suck, 0, 0);
 p_delay(1);
 
 mes("You collect some gas from the swamp.");
-inv_del(inv, ogre_bellows_0, 1);
+inv_del(inv, $bellows, 1);
 inv_add(inv, ogre_bellows_3, 1);
 
 
@@ -41,9 +43,9 @@ inv_add(inv, ogre_bellows_3, 1);
 // https://x.com/JagexAsh/status/1820722879937343844, 294 is probably cleared entirely after quest
 %chompybird_progress = ^chompybird_complete;
 %chompybird_kills = 0;
-stat_advance(fletching, 262);
-stat_advance(cooking, 1470);
-stat_advance(ranged, 735);
+stat_advance(fletching, 2620);
+stat_advance(cooking, 14700);
+stat_advance(ranged, 7350);
 // todo is ogre bow given separately here?
 session_log(^log_adventure, "Quest complete: Big Chompy Bird Hunting");
 ~send_quest_complete(questlist:chompybird, ogre_bow, 250, ^chompybird_questpoints, "You have completed the 'Chompy Bird' Quest!");

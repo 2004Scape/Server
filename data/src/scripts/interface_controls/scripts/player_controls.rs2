@@ -9,7 +9,7 @@ if (p_finduid(uid) = true) {
     %auto_retaliate = ^player_auto_retaliate_on;
     return;
 }
-queue(set_auto_retaliate, 0, 0);
+%auto_retaliate = %auto_retaliate; // resync varp
 
 [if_button,controls:com_3]
 if_close; // might be strongqueued in osrs
@@ -18,25 +18,23 @@ if (p_finduid(uid) = true) {
     %auto_retaliate = ^player_auto_retaliate_off;
     return;
 }
-queue(set_auto_retaliate, 0, 1);
-
-[queue,set_auto_retaliate](int $value)
-%auto_retaliate = $value;
+%auto_retaliate = %auto_retaliate; // resync varp
 
 
 // Player run
 [if_button,controls:com_4] 
 if_close;
 if (p_finduid(uid) = true) {
+    p_clearpendingaction; // https://youtu.be/XhJ0tjJ9J60?t=62
     p_run(^player_run_off);
     return;
 }
-queue(set_run, 0, 0);
+%run = %run; // resync varp
 
 [if_button,controls:com_5]
-
 if_close;
 if (p_finduid(uid) = true) {
+    p_clearpendingaction;
     if (runenergy < 100) {
         p_run(^player_run_off);
         return;
@@ -48,20 +46,8 @@ if (p_finduid(uid) = true) {
     p_run(^player_run_on);
     return;
 }
-queue(set_run, 0, 1);
+%run = %run; // resync varp
 
-[queue,set_run](int $value)
-if (%tutorial_progress = ^tutorial_open_player_controls) {
-    %tutorial_progress = ^tutorial_has_toggled_on_run;
-    ~set_tutorial_progress;
-}
-if ($value = ^player_run_on) {
-    if (runenergy < 100) {
-        p_run(^player_run_off);
-        return;
-    }
-}
-p_run($value);
 
 // emotes
 [if_button,controls:com_13] @controls_emote(emote_cry);

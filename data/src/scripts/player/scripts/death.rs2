@@ -31,9 +31,9 @@ if (findhero = true) {
     // todo: what npc killed the player
     session_log(^log_moderator, "Player died");
 }
-p_telejump(map_findsquare(0_50_50_21_18, 0, 2, ^map_findsquare_lineofwalk));
+p_teleport(map_findsquare(0_50_50_21_18, 0, 2, ^map_findsquare_lineofwalk));
 buildappearance(worn);
-~deactivate_prayers;
+~prayer_deactivate_all;
 ~follower_death;
 anim(null, 0);
 p_stopaction;
@@ -47,7 +47,7 @@ healenergy(10000);
 // todo: end poison timer ~player_end_poison
 
 [proc,player_death_lose_items]
-if (staffmodlevel > 1) { return; }
+if (staffmodlevel > 1 & map_production = true) { return; }
 
 def_boolean $skulled = false;
 if (%pk_skull > 0) { $skulled = true; }
@@ -94,7 +94,7 @@ inv_clear(death);
 
 [proc,pvp_death_lose_items]
 ~pvp_death_message(.uid);
-if (staffmodlevel > 1) { return; }
+if (staffmodlevel > 1 & map_production = true) { return; }
 
 def_boolean $skulled = false;
 if (%pk_skull > 0) { $skulled = true; }
@@ -154,7 +154,7 @@ def_int $i = 0;
 while ($i < $size_inv) {
     if (inv_getnum(inv, $i) > 0) {
         $currentitem = inv_getobj(inv, $i);
-        if (oc_category($currentitem) ! armour_godcape & $currentitem ! anainabarrel) { // TODO: param or property for items that can not be kept on death?
+        if (oc_param($currentitem, destroy_death) ! ^true) {
             if (oc_cost($currentitem) > $biggest_price) {
                 $biggest_price = oc_cost($currentitem);
                 $priciest_item = $currentitem;
@@ -167,7 +167,7 @@ $i = 0;
 while ($i < $size_worn) {
     if (inv_getnum(worn, $i) > 0) {
         $currentitem = inv_getobj(worn, $i);
-        if (oc_category($currentitem) ! armour_godcape & $currentitem ! anainabarrel) {
+        if (oc_param($currentitem, destroy_death) ! ^true) {
             if (oc_cost($currentitem) > $biggest_price) {
                 $is_worn = true;
                 $biggest_price = oc_cost($currentitem);

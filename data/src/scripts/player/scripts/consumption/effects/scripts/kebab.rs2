@@ -8,7 +8,7 @@ def_int $hitpoints = stat(hitpoints);
 def_int $random = random(128);
 if ($random < 80) { // 80/128 chance
     // heal 7% + 3
-    stat_heal(hitpoints, calc(scale(7, 100, stat_base(hitpoints)) + 3), 0);
+    stat_heal(hitpoints, 3, 7);
     if ($hitpoints < stat(hitpoints)) {
         mes("It heals some health.");
     }
@@ -17,17 +17,17 @@ if ($random < 80) { // 80/128 chance
 if ($random < 112) { // 32/128 chance
     mes("That was a good kebab. You feel a lot better.");
     // heal 14% + 6
-    stat_heal(hitpoints, calc(scale(14, 100, stat_base(hitpoints)) + 6), 0);
+    stat_heal(hitpoints, 6, 14);
     return;
 }
 if ($random < 116) { // 4/128 chance
     // increases melee stats by 2, regardless of level
     mes("Wow, that was an amazing kebab! You feel really invigorated.");
-    ~stat_addclamp(attack, 2, 0);
-    ~stat_addclamp(strength, 2, 0);
-    ~stat_addclamp(defence, 2, 0);
+    stat_boost(attack, 2, 0);
+    stat_boost(strength, 2, 0);
+    stat_boost(defence, 2, 0);
     // heal 24% + 7
-    stat_heal(hitpoints, calc(scale(24, 100, stat_base(hitpoints)) + 7), 0);
+    stat_heal(hitpoints, 7, 24);
     return;
 }
 if ($random < 120) { // 4/128 chance

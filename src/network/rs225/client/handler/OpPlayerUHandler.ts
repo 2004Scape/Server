@@ -1,13 +1,15 @@
-import MessageHandler from '#/network/client/handler/MessageHandler.js';
-import World from '#/engine/World.js';
+import * as rsbuf from '@2004scape/rsbuf';
+
+import Component from '#/cache/config/Component.js';
 import ObjType from '#/cache/config/ObjType.js';
 import Interaction from '#/engine/entity/Interaction.js';
-import ServerTriggerType from '#/engine/script/ServerTriggerType.js';
 import { NetworkPlayer } from '#/engine/entity/NetworkPlayer.js';
+import ServerTriggerType from '#/engine/script/ServerTriggerType.js';
+import World from '#/engine/World.js';
+import MessageHandler from '#/network/client/handler/MessageHandler.js';
 import OpPlayerU from '#/network/client/model/OpPlayerU.js';
-import Component from '#/cache/config/Component.js';
-import Environment from '#/util/Environment.js';
 import UnsetMapFlag from '#/network/server/model/UnsetMapFlag.js';
+import Environment from '#/util/Environment.js';
 
 export default class OpPlayerUHandler extends MessageHandler<OpPlayerU> {
     handle(message: OpPlayerU, player: NetworkPlayer): boolean {
@@ -46,7 +48,7 @@ export default class OpPlayerUHandler extends MessageHandler<OpPlayerU> {
             return false;
         }
 
-        if (!player.buildArea.players.has(other)) {
+        if (!rsbuf.hasPlayer(player.pid, other.pid)) {
             player.write(new UnsetMapFlag());
             player.clearPendingAction();
             return false;
@@ -61,7 +63,7 @@ export default class OpPlayerUHandler extends MessageHandler<OpPlayerU> {
 
         player.lastUseSlot = slot;
 
-        player.setInteraction(Interaction.ENGINE, other, ServerTriggerType.APPLAYERU, { type: item, com: -1 });
+        player.setInteraction(Interaction.ENGINE, other, ServerTriggerType.APPLAYERU, item);
         player.opcalled = true;
         return true;
     }

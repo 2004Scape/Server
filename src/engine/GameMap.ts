@@ -1,26 +1,22 @@
 import fs from 'fs';
 
-import {CollisionFlag, CollisionType, LocAngle, LocLayer} from '@2004scape/rsmod-pathfinder';
+import { CollisionFlag, CollisionType, LocAngle, LocLayer } from '@2004scape/rsmod-pathfinder';
 import * as rsmod from '@2004scape/rsmod-pathfinder';
 
-import Packet from '#/io/Packet.js';
 
+import LocType from '#/cache/config/LocType.js';
 import NpcType from '#/cache/config/NpcType.js';
 import ObjType from '#/cache/config/ObjType.js';
-import LocType from '#/cache/config/LocType.js';
-
 import { CoordGrid } from '#/engine/CoordGrid.js';
+import EntityLifeCycle from '#/engine/entity/EntityLifeCycle.js';
+import Loc from '#/engine/entity/Loc.js';
+import Npc from '#/engine/entity/Npc.js';
+import Obj from '#/engine/entity/Obj.js';
 import World from '#/engine/World.js';
-
 import Zone from '#/engine/zone/Zone.js';
 import ZoneGrid from '#/engine/zone/ZoneGrid.js';
 import ZoneMap from '#/engine/zone/ZoneMap.js';
-
-import Npc from '#/engine/entity/Npc.js';
-import Obj from '#/engine/entity/Obj.js';
-import EntityLifeCycle from '#/engine/entity/EntityLifeCycle.js';
-import Loc from '#/engine/entity/Loc.js';
-
+import Packet from '#/io/Packet.js';
 import { printDebug, printWarning } from '#/util/Logger.js';
 
 export default class GameMap {
@@ -71,38 +67,13 @@ export default class GameMap {
         }
     }
 
-    async initAsync(): Promise<void> {
-        const path: string = 'data/pack/server/maps/';
-        // eslint-disable-next-line @typescript-eslint/ban-ts-comment
-        // @ts-ignore
-        const { serverMaps } = await import('#/server/PreloadedDirs.js');
-        const maps = serverMaps.map(async (map: string) => {
-            const [mx, mz] = map.substring(1).split('_').map(Number);
-            const mapsquareX: number = mx << 6;
-            const mapsquareZ: number = mz << 6;
-
-            const [npcData, objData, landData, locData] = await Promise.all([
-                await Packet.loadAsync(`${path}n${mx}_${mz}`),
-                await Packet.loadAsync(`${path}o${mx}_${mz}`),
-                await Packet.loadAsync(`${path}m${mx}_${mz}`),
-                await Packet.loadAsync(`${path}l${mx}_${mz}`)]);
-
-            this.loadNpcs(npcData, mapsquareX, mapsquareZ);
-            this.loadObjs(objData, mapsquareX, mapsquareZ);
-            // collision
-            const lands: Int8Array = new Int8Array(GameMap.MAPSQUARE); // 4 * 64 * 64 size is guaranteed for lands
-            this.loadGround(lands, landData, mapsquareX, mapsquareZ);
-            this.loadLocations(lands, locData, mapsquareX, mapsquareZ);
-        });
-        await Promise.all(maps);
-    }
-
     isMulti(coord: number): boolean {
-        return this.multimap.has(coord);
+        const pos: CoordGrid = CoordGrid.unpackCoord(coord);
+        return this.multimap.has(ZoneMap.zoneIndex(pos.x, pos.z, pos.level));
     }
 
     isFreeToPlay(x: number, z: number): boolean {
-        return this.freemap.has(CoordGrid.packCoord(0, x, z));
+        return this.freemap.has(ZoneMap.zoneIndex(x, z, 0)); // level does not matter here.
     }
 
     getZone(x: number, z: number, level: number): Zone {
@@ -143,7 +114,7 @@ export default class GameMap {
                 const npcType: NpcType = NpcType.get(id);
                 const size: number = npcType.size;
                 const npc: Npc = new Npc(level, absoluteX, absoluteZ, size, size, EntityLifeCycle.RESPAWN, World.getNextNid(), npcType.id, npcType.moverestrict, npcType.blockwalk);
-                if (npcType.members && this.members || !npcType.members) {
+                if ((npcType.members && this.members) || !npcType.members) {
                     World.addNpc(npc, -1);
                 }
             }
@@ -164,7 +135,7 @@ export default class GameMap {
                 }
                 const objType: ObjType = ObjType.get(id);
                 const obj: Obj = new Obj(level, absoluteX, absoluteZ, EntityLifeCycle.RESPAWN, objType.id, count);
-                if (objType.members && this.members || !objType.members) {
+                if ((objType.members && this.members) || !objType.members) {
                     this.getZone(obj.x, obj.z, obj.level).addStaticObj(obj);
                 }
             }
@@ -204,7 +175,8 @@ export default class GameMap {
                         continue;
                     }
 
-                    if (x % 7 === 0 && z % 7 === 0) { // allocate per zone
+                    if (x % 7 === 0 && z % 7 === 0) {
+                        // allocate per zone
                         rsmod.allocateIfAbsent(absoluteX, absoluteZ, level);
                     }
 
@@ -240,7 +212,7 @@ export default class GameMap {
             let coordOffset: number = packet.gsmart();
 
             while (coordOffset !== 0) {
-                const { x, z, level } = this.unpackCoord(coord += coordOffset - 1);
+                const { x, z, level } = this.unpackCoord((coord += coordOffset - 1));
 
                 const info: number = packet.g1();
                 coordOffset = packet.gsmart();
@@ -278,40 +250,16 @@ export default class GameMap {
 
     private loadCsvMap(map: Set<number>, csv: string[]): void {
         // easiest solution for the time being
-        for (let i: number = 0; i < csv.length; i++) {
-            if (csv[i].startsWith('//') || !csv[i].length) {
+        for (let index: number = 0; index < csv.length; index++) {
+            const line: string = csv[index];
+            if (line.startsWith('//') || !line.length) {
                 continue;
             }
-
-            const parts: string[] = csv[i].split(',');
-            if (parts.length === 2) {
-                const [from, to] = parts;
-                const [fromLevel, fromMx, fromMz, fromLx, fromLz] = from.split('_').map(Number);
-                const [_toLevel, toMx, toMz, toLx, toLz] = to.split('_').map(Number);
-
-                if (fromLx % 8 !== 0 || fromLz % 8 !== 0 || toLx % 8 !== 7 || toLz % 8 !== 7 || fromMx > toMx || fromMz > toMz || (fromMx <= toMx && fromMz <= toMz && (fromLx > toLx || fromLz > toLz))) {
-                    printWarning('Free to play map not aligned to a zone ' + csv[i]);
-                }
-
-                const startX: number  = (fromMx << 6) + fromLx;
-                const startZ: number  = (fromMz << 6) + fromLz;
-                const endX: number  = (toMx << 6) + toLx;
-                const endZ: number  = (toMz << 6) + toLz;
-
-                for (let x: number  = startX; x <= endX; x++) {
-                    for (let z: number  = startZ; z <= endZ; z++) {
-                        map.add(CoordGrid.packCoord(fromLevel, x, z));
-                    }
-                }
-            } else {
-                const [level, mx, mz, lx, lz] = csv[i].split('_').map(Number);
-
-                for (let x: number  = 0; x < 8; x++) {
-                    for (let z: number  = 0; z < 8; z++) {
-                        map.add(CoordGrid.packCoord(level, (mx << 6) + lx + x, (mz << 6) + lz + z));
-                    }
-                }
+            const [y, mx, mz, lx, lz] = line.split('_').map(Number);
+            if (lx % 8 !== 0 || lz % 8 !== 0) {
+                printWarning('CSV map line is not aligned to a zone: ' + line);
             }
+            map.add(ZoneMap.zoneIndex((mx << 6) + lx, (mz << 6) + lz, y));
         }
     }
 
@@ -467,4 +415,8 @@ export function isApproached(level: number, srcX: number, srcZ: number, destX: n
 
 export function layerForLocShape(shape: number): LocLayer {
     return rsmod.locShapeLayer(shape);
+}
+
+export function isZoneAllocated(level: number, x: number, z: number): boolean {
+    return rsmod.isZoneAllocated(x, z, level);
 }

@@ -1,6 +1,6 @@
+import { CoordGrid } from '#/engine/CoordGrid.js';
 import Zone from '#/engine/zone/Zone.js';
 import ZoneGrid from '#/engine/zone/ZoneGrid.js';
-import {CoordGrid} from '#/engine/CoordGrid.js';
 
 export default class ZoneMap {
     static zoneIndex(x: number, z: number, level: number): number {

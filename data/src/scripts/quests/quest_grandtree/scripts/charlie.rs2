@@ -3,7 +3,7 @@
 switch_int(%grandtree_progress) {
     case ^grandtree_found_invasion_plans :
         ~chatplayer("<p,angry>You were right! I searched Glough's chest and found some invasion plans!");
-        ~chatnpc("<p,angry>Go to the King and tell him! Finally you have proof. Surely King Narnode will belive you now and set me free!");
+        ~chatnpc("<p,angry>Go to the King and tell him! Finally you have proof. Surely King Narnode will belive you now and set me free!"); // typo is authentic // https://chisel.weirdgloop.org/dialogue/content/95838
         ~chatplayer("<p,happy>Hold tight Charlie!");
         ~chatnpc("<p,neutral>I'm not going anywhere!");
     case ^grandtree_obtained_lumber_order :
@@ -15,9 +15,9 @@ switch_int(%grandtree_progress) {
         // https://youtu.be/LFvLBRCxFwk?si=jZsV07Dsc1uTR1WH&t=997
         ~chatnpc("<p,neutral>Hmm...you could be in luck! Before Glough had me|locked up I heard him mention that he'd left his|chest keys at his girlfriend's.");
         ~chatplayer("<p,quiz>Where does she live?");
-        %grandtree_progress = ^grandtree_clue_charlie;
         ~chatnpc("<p,neutral>Just west of the toad swamp.");
         ~chatplayer("<p,neutral>OK, I'll see what I can find.");
+        %grandtree_progress = ^grandtree_clue_charlie; // OSRS increments this earlier
     case ^grandtree_released_prison :
         ~chatplayer("<p,sad>I can't figure this out Charlie!");
         ~chatnpc("<p,neutral>Go and see the foreman in the Karamja jungle, there's a shipyard there, you might find some clues. Don't forget the password is Ka-Lu-Min; if they realise that you're not working for Glough there'll be trouble!");
@@ -74,8 +74,8 @@ p_delay(2); // 3t
 if_close;
 // can't use door proc here since it opens incorrectly (notice the lock side)
 if(loc_find(movecoord(coord, 1, 0, 0), loc_3367) = true) {
-    loc_del(6);
-    loc_add(loc_coord, loc_1546, 1, loc_shape, 6);
+    // Temp note: dur updated
+    loc_add(loc_coord, loc_1546, 1, loc_shape, 7);
     sound_synth(locked, 0, 0);
 } 
 p_teleport(movecoord(coord, 1, 0, 0));

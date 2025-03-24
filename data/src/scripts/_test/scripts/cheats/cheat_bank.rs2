@@ -199,6 +199,80 @@ if (p_finduid(uid) = true) {
     @please_finish;
 }
 
+[debugproc,bank_f2p]
+if_close;
+if (p_finduid(uid) = true) {
+    inv_clear(bank);
+
+    inv_add(bank, rune_scimitar, 255);
+    inv_add(bank, rune_2h_sword, 255);
+    inv_add(bank, rune_sword, 255);
+    inv_add(bank, rune_kiteshield, 255);
+    inv_add(bank, rune_full_helm, 255);
+    inv_add(bank, rune_platebody, 255);
+    inv_add(bank, rune_platelegs, 255);
+    inv_add(bank, rune_plateskirt, 255);
+    inv_add(bank, rune_chainbody, 255);
+    inv_add(bank, rune_med_helm, 255);
+    inv_add(bank, adamant_kiteshield, 255);
+    inv_add(bank, adamant_full_helm, 255);
+    inv_add(bank, adamant_platebody, 255);
+    inv_add(bank, adamant_platelegs, 255);
+    inv_add(bank, adamant_plateskirt, 255);
+    inv_add(bank, adamant_chainbody, 255);
+    inv_add(bank, adamant_med_helm, 255);
+    inv_add(bank, adamant_sq_shield, 255);
+    inv_add(bank, amulet_of_strength, 255);
+    inv_add(bank, amulet_of_power, 255);
+    inv_add(bank, amulet_accuracy, 255);
+    inv_add(bank, coif, 255);
+    inv_add(bank, dragonhide_body, 255);
+    inv_add(bank, dragonhide_chaps, 255);
+    inv_add(bank, dragonhide_vamb, 255);
+    inv_add(bank, leather_boots, 255);
+    inv_add(bank, oak_shortbow, 255);
+    inv_add(bank, crossbow, 255);
+    inv_add(bank, steel_arrow, ^max_32bit_int);
+    inv_add(bank, bolt, ^max_32bit_int);
+    inv_add(bank, staff_of_fire, 255);
+    inv_add(bank, staff_of_earth, 255);
+    inv_add(bank, staff_of_water, 255);
+    inv_add(bank, staff_of_air, 255);
+    inv_add(bank, amulet_of_magic, 255);
+    inv_add(bank, wizards_hat_blue, 255);
+    inv_add(bank, wizards_robe, 255);
+    inv_add(bank, blue_skirt, 255);
+    inv_add(bank, wizards_hat_black, 255);
+    inv_add(bank, wizards_robe_black, 255);
+    inv_add(bank, black_skirt, 255);
+    inv_add(bank, dragonfire_shield, 255);
+    inv_add(bank, lobster, ^max_32bit_int);
+    inv_add(bank, swordfish, ^max_32bit_int);
+    inv_add(bank, anchovy_pizza, ^max_32bit_int);
+    inv_add(bank, 4dose1strength, ^max_32bit_int);
+    inv_add(bank, airrune, ^max_32bit_int);
+    inv_add(bank, firerune, ^max_32bit_int);
+    inv_add(bank, deathrune, ^max_32bit_int);
+    inv_add(bank, waterrune, ^max_32bit_int);
+    inv_add(bank, earthrune, ^max_32bit_int);
+    inv_add(bank, naturerune, ^max_32bit_int);
+    inv_add(bank, mindrune, ^max_32bit_int);
+    inv_add(bank, bodyrune, ^max_32bit_int);
+    inv_add(bank, chaosrune, ^max_32bit_int);
+    inv_add(bank, lawrune, ^max_32bit_int);
+    inv_add(bank, orange_cape, 255);
+    inv_add(bank, yellow_cape, 255);
+    inv_add(bank, leather_gloves, 255);
+    inv_add(bank, monk_robe_top, 255);
+    inv_add(bank, monk_robe_bottom, 255);
+    inv_add(bank, blessedstar, 255);
+    inv_add(bank, studded_body, 255);
+    inv_add(bank, studded_chaps, 255);
+    inv_add(bank, coins, ^max_32bit_int);
+} else {
+    @please_finish;
+}
+
 [debugproc,clearbank]
 if_close;
 if (p_finduid(uid) = true) {

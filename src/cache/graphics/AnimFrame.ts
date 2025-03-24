@@ -1,7 +1,6 @@
+import AnimBase from '#/cache/graphics/AnimBase.js';
 import Jagfile from '#/io/Jagfile.js';
 import Packet from '#/io/Packet.js';
-
-import AnimBase from '#/cache/graphics/AnimBase.js';
 import { printError } from '#/util/Logger.js';
 
 export default class AnimFrame {

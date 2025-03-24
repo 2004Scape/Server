@@ -12,57 +12,96 @@ switch_obj (last_useitem)
 ~mesbox("You can only add ingredients when you're cooking a chompy bird. Ensure you have the seasonings you want to use in your inventory when cooking the chompy bird and you will use them automatically when cooking.");
 
 [oplocu,ogre_spitroast]
-// todo what else can be cooked here?
-if (last_useitem ! raw_chompy)
-{
-    ~displaymessage(^dm_default);
-    return;
-}
-if (stat(cooking) < 30) {
-    // Guess
-    ~mesbox("You need a Cooking level of 30 to cook chompy birds.");
+if (stat(cooking) < 30) { // before obj check
+    mes("You need a cooking level of 30 to use the spit roast.");
     return;
 }
 
-// todo allow cooking after quest
-if (%chompybird_progress < ^chompybird_told_to_cook_chompy)
-{
-    // todo this has a few different messages in different quest states on OSRS
+if (last_useitem ! raw_chompy) {
     ~displaymessage(^dm_default);
     return;
 }
 
-if (%chompybird_progress = ^chompybird_told_to_cook_chompy)
-{
-    @cook_chompy_quest(loc_coord);
+if (%chompybird_progress < ^chompybird_told_to_cook_chompy) {
+    if(npc_find(coord, chompybird_rantz, 10, 0) = true) { // range from osrs
+        if(%chompybird_progress = ^chompybird_player_killed_chompy) {
+            ~chatnpc("<p,quiz>Hey, what' you's doin?");
+            @rantz_show_chompy;
+        }
+        ~chatnpc("<p,angry>Hey, you..leave dat alone! You need to get da chompy before use dat.");
+    } else {
+        mes("Perhaps you'd better get permission before you use this?");
+    }
     return;
 }
-if (%chompybird_progress = ^chompybird_chompy_cooked)
-{
+if (%chompybird_progress = ^chompybird_told_to_cook_chompy) {
+    @cook_chompy_quest;
+}
+
+if (%chompybird_progress = ^chompybird_chompy_cooked) {
     // todo what if the player no longer has the original chompy? Does it still auto-hand in?
-    if (npc_find(loc_coord, chompybird_rantz, 16, 0) = true)
-    {
+    if(inv_total(inv, seasoned_chompy) = 0) {
+        @cook_chompy_quest;
+    }
+    if (npc_find(loc_coord, chompybird_rantz, 10, 0) = true) {
         @hand_chompy_to_rantz;
     }
-    else
-    {
-        mes("eep cabbage , could not find Rantz - please tell a dev");
-    }
-
     return;
 }
 
-// todo handle non-quest cooking
+if(%chompybird_progress = ^chompybird_complete) {
+    @cook_chompy_offquest;
+}
+
 ~displaymessage(^dm_default);
 
-[label,cook_chompy_quest](coord $loc_coord)
+
+[label,cook_chompy_offquest]
+mes("You carefully place the chompy bird on the spit-roast.");
+inv_del(inv, raw_chompy, 1);
+// Temp note: dur updated
+loc_change(ogre_spitroast_raw_chompy, 5);
+loc_anim(spit_anim);
+anim(human_cooking, 0);
+sound_synth(spit_roast, 0, 0);
+p_delay(2);
+    
+def_boolean $passes_roll = stat_random(stat(cooking), 200, 255);
+if ($passes_roll = true) {
+    mes("You start to cook the chompy... it takes some time.");
+    // Temp note: dur updated
+    loc_change(ogre_spitroast_cooked_chompy, 5);
+    loc_anim(spit_anim);
+    anim(human_cooking, 0);
+    p_delay(2);
+    anim(human_pickuptable, 0);
+    mes("Eventually the chompy is cooked.");
+    inv_add(inv, cooked_chompy, 1);
+    stat_advance(cooking, 140);
+} else {
+    mes("You accidentally burn the chompy.");
+    // Temp note: dur updated
+    loc_change(ogre_spitroast_burnt_chompy, 5);
+    loc_anim(spit_anim);
+    anim(human_cooking, 0);
+    p_delay(2);
+    anim(human_pickuptable, 0);
+    inv_add(inv, ruined_chompy, 1);
+    p_delay(1);
+}
+
+
+[label,cook_chompy_quest]
 def_int $bugs_ingredient = getbit_range(%chompybird_kills, ^chompybird_varbit_bugs_flavour_start, ^chompybird_varbit_bugs_flavour_end);
 def_int $fycie_ingredient = getbit_range(%chompybird_kills, ^chompybird_varbit_fycie_flavour_start, ^chompybird_varbit_fycie_flavour_end);
 
-if ($bugs_ingredient = 0 | $fycie_ingredient = 0)
-{
-    // todo confirm behaviour
-    mes("You should ask Bugs and Fycie for their favourite ingredients first!");
+if ($bugs_ingredient = 0) {
+    ~mesbox("You need to find what Bugs wants on the chompy bird before you can cook it.");
+    return;
+}
+
+if($fycie_ingredient = 0) {
+    ~mesbox("You need to find what Fycie wants with her chompy bird before you can cook it.");
     return;
 }
 
@@ -136,46 +175,47 @@ else if ($fycie_ingredient = 2)
 }
 
 if ($has_rantz_ingredient = false | $has_bugs_ingredient = false | $has_fycie_ingredient = false) {
-    ~mesbox("You don't have all the ingredients yet to cook the chompy bird for the ogre family.|Remember what the Ogre family wanted? Rantz wanted <$rantz_ingredient_name>. Fycie wanted <$fycie_ingredient_name>. Bugs wanted <$bugs_ingredient_name>.");
+    ~mesbox("You don't have all the ingredients yet to cook the chompy bird for the ogre family.");
+    ~mesbox("Remember what the Ogre family wanted? Rantz wanted <$rantz_ingredient_name>. Fycie wanted <$fycie_ingredient_name>. Bugs wanted <$bugs_ingredient_name>.");
     return;
 }
 
-if (loc_find($loc_coord, ogre_spitroast) = true) {   
-    mes("You carefully place the chompy bird on the spit-roast.");
-    inv_del(inv, raw_chompy, 1);
-    loc_change(ogre_spitroast_raw_chompy, 4);
+mes("You carefully place the chompy bird on the spit-roast.");
+inv_del(inv, raw_chompy, 1);
+// Temp note: dur updated
+loc_change(ogre_spitroast_raw_chompy, 5);
+loc_anim(spit_anim);
+anim(human_cooking, 0);
+sound_synth(spit_roast, 0, 0);
+p_delay(2);
+    
+def_boolean $passes_roll = stat_random(stat(cooking), 200, 255);
+if ($passes_roll = true) {
+    mes("You add the other ingredients and cook the food.");
+    %chompybird_progress = ^chompybird_chompy_cooked;
+    ~delete_chompy_ingredients($rantz_ingredient, $bugs_ingredient, $fycie_ingredient);
+    // Temp note: dur updated
+    loc_change(ogre_spitroast_cooked_chompy, 5);
     loc_anim(spit_anim);
     anim(human_cooking, 0);
-    sound_synth(spit_roast, 0, 0);
     p_delay(2);
-    
-    def_boolean $passes_roll = stat_random(stat(cooking), 200, 255);
-    if ($passes_roll = true) {
-        mes("You add the other ingredients and cook the food.");
-        %chompybird_progress = ^chompybird_chompy_cooked;
-        ~delete_chompy_ingredients($rantz_ingredient, $bugs_ingredient, $fycie_ingredient);
-        loc_change(ogre_spitroast_cooked_chompy, 4);
-        loc_anim(spit_anim);
-        anim(human_cooking, 0);
-        p_delay(2);
-        anim(human_pickuptable, 0);
-        mes("Eventually the chompy is cooked.");
-        inv_add(inv, seasoned_chompy, 1);
-        stat_advance(cooking, 142);
-        p_delay(1);
-        ~objbox(seasoned_chompy, "You use the <$rantz_ingredient_name>, <$bugs_ingredient_name> and the <$fycie_ingredient_name>|with the chompy bird to make a seasoned chompy.", 250, 0, divide(^objbox_height, 2));
-    }
-    else {
-        mes("You accidentally burn the chompy.");
-        ~delete_chompy_ingredients($rantz_ingredient, $bugs_ingredient, $fycie_ingredient);
-        loc_change(ogre_spitroast_burnt_chompy, 4);
-        loc_anim(spit_anim);
-        anim(human_cooking, 0);
-        p_delay(2);
-        anim(human_pickuptable, 0);
-        inv_add(inv, ruined_chompy, 1);
-        p_delay(1);
-    }
+    anim(human_pickuptable, 0);
+    mes("Eventually the chompy is cooked.");
+    inv_add(inv, seasoned_chompy, 1);
+    stat_advance(cooking, 142);
+    p_delay(1);
+    ~objbox(seasoned_chompy, "You use the <$rantz_ingredient_name>, <$bugs_ingredient_name> and the <$fycie_ingredient_name>|with the chompy bird to make a seasoned chompy.", 250, 0, divide(^objbox_height, 2));
+} else {
+    mes("You accidentally burn the chompy.");
+    ~delete_chompy_ingredients($rantz_ingredient, $bugs_ingredient, $fycie_ingredient);
+    // Temp note: dur updated
+    loc_change(ogre_spitroast_burnt_chompy, 5);
+    loc_anim(spit_anim);
+    anim(human_cooking, 0);
+    p_delay(2);
+    anim(human_pickuptable, 0);
+    inv_add(inv, ruined_chompy, 1);
+    p_delay(1);
 }
 
 [proc,delete_chompy_ingredients](int $rantz_ingredient, int $bugs_ingredient, int $fycie_ingredient)

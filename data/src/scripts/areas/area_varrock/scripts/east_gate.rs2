@@ -1,4 +1,4 @@
-[opnpc1,npc_368]
+[opnpc1,biohazard_varrockgate_guard]
 ~chatnpc("<p,neutral>Please don't disturb me, I've got to keep any eye out for suspicious individuals.");
 
 [oploc1,_varrock_gate]
@@ -11,7 +11,7 @@ if(~check_axis(coord, loc_coord, loc_angle) = false) {
         mes(^mes_members_gate);
         return;
     }
-    if(%biohazard_progress >= ^biohazard_given_distillator & %biohazard_progress < ^biohazard_found_secret & npc_find(coord, npc_368, 2, 0) = true) { // shouldn't ever fail...
+    if(%biohazard_progress >= ^biohazard_given_distillator & %biohazard_progress < ^biohazard_found_secret & npc_find(coord, biohazard_varrockgate_guard, 2, 0) = true) { // shouldn't ever fail...
         ~chatnpc("<p,neutral>Halt. I need to conduct a search on you. There have been reports of someone bringing a virus into Varrock.");
         if_close;
         mes("The guard searches you.");
@@ -53,10 +53,11 @@ while(loc_findnext = true) {
             def_coord $central_coord = loc_coord;
             def_int $orig_angle = loc_angle;
             def_loc $type = loc_type;
-            loc_change(loc_83, 2);
+            // Temp note: dur updated
+            loc_change(loc_83, 3);
             if($type = loc_2050) {
-                loc_add(movecoord($central_coord, -1, 0, 0), loc_2052, 3, loc_shape, 2);
-                loc_add(movecoord($central_coord, -2, 0, 0), loc_2053, 3, loc_shape, 2); 
+                loc_add(movecoord($central_coord, -1, 0, 0), loc_2052, 3, loc_shape, 3);
+                loc_add(movecoord($central_coord, -2, 0, 0), loc_2053, 3, loc_shape, 3); 
             }
      }
 }

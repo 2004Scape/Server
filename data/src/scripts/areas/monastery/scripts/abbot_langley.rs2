@@ -20,6 +20,6 @@ if (%prayer_guild < 1) {
 [label,can_you_heal_me_im_injured]
 ~chatplayer("<p,happy>Can you heal me? I'm injured.");
 ~chatnpc("<p,quiz>Ok.");
-stat_heal(hitpoints, calc(4 + scale(12, 100, stat_base(hitpoints))), 0);
+stat_heal(hitpoints, 4, 12);
 // https://imgur.com/j17Xqu1
 ~mesbox("<npc_name> places his hands on your head.|You feel a little better.");

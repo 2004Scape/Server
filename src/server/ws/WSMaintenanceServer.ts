@@ -1,4 +1,5 @@
 import http from 'http';
+
 import { WebSocketServer, WebSocket } from 'ws';
 
 import Packet from '#/io/Packet.js';
@@ -21,11 +22,10 @@ export default class WSMaintenanceServer {
             ws.send(seed.data);
 
             ws.on('message', () => {
-                ws.send(Uint8Array.from([ 14 ]));
+                ws.send(Uint8Array.from([14]));
             });
 
-            ws.on('close', () => {
-            });
+            ws.on('close', () => {});
 
             ws.on('error', () => {
                 ws.terminate();

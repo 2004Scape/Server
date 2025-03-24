@@ -1,10 +1,12 @@
+import * as rsbuf from '@2004scape/rsbuf';
+
+import Component from '#/cache/config/Component.js';
+import Interaction from '#/engine/entity/Interaction.js';
+import { NetworkPlayer } from '#/engine/entity/NetworkPlayer.js';
+import ServerTriggerType from '#/engine/script/ServerTriggerType.js';
+import World from '#/engine/World.js';
 import MessageHandler from '#/network/client/handler/MessageHandler.js';
 import OpPlayerT from '#/network/client/model/OpPlayerT.js';
-import Component from '#/cache/config/Component.js';
-import World from '#/engine/World.js';
-import Interaction from '#/engine/entity/Interaction.js';
-import ServerTriggerType from '#/engine/script/ServerTriggerType.js';
-import { NetworkPlayer } from '#/engine/entity/NetworkPlayer.js';
 import UnsetMapFlag from '#/network/server/model/UnsetMapFlag.js';
 
 export default class OpPlayerTHandler extends MessageHandler<OpPlayerT> {
@@ -30,14 +32,14 @@ export default class OpPlayerTHandler extends MessageHandler<OpPlayerT> {
             return false;
         }
 
-        if (!player.buildArea.players.has(other)) {
+        if (!rsbuf.hasPlayer(player.pid, other.pid)) {
             player.write(new UnsetMapFlag());
             player.clearPendingAction();
             return false;
         }
 
         player.clearPendingAction();
-        player.setInteraction(Interaction.ENGINE, other, ServerTriggerType.APPLAYERT, { type: -1, com: spellComId });
+        player.setInteraction(Interaction.ENGINE, other, ServerTriggerType.APPLAYERT, spellComId);
         player.opcalled = true;
         return true;
     }

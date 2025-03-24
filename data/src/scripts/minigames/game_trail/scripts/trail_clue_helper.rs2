@@ -29,8 +29,7 @@ while ($slot < inv_size(inv)) {
 return (null);
 
 [proc,trail_clue_coord](obj $clue)(boolean)
-def_coord $default_coord = 0_0_0_0_0;
-if($clue ! null & oc_param($clue, trail_coord) ! $default_coord) {
+if($clue ! null & oc_param($clue, trail_coord) ! null) {
     return(true);
 }
 return(false);

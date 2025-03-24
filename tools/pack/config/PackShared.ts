@@ -1,40 +1,32 @@
 import fs from 'fs';
 import readline from 'readline';
 
-import Packet from '#/io/Packet.js';
-
-import { VarnPack, VarpPack, VarsPack, shouldBuild } from '#/util/PackFile.js';
-
-import ParamType from '#/cache/config/ParamType.js';
-
-import { packParamConfigs, parseParamConfig } from '#tools/pack/config/ParamConfig.js';
-import { loadDir } from '#/util/NameMap.js';
-
-import { packFloConfigs, parseFloConfig } from '#tools/pack/config/FloConfig.js';
-import { packIdkConfigs, parseIdkConfig } from '#tools/pack/config/IdkConfig.js';
-import { packLocConfigs, parseLocConfig } from '#tools/pack/config/LocConfig.js';
-import { packNpcConfigs, parseNpcConfig } from '#tools/pack/config/NpcConfig.js';
-import { packObjConfigs, parseObjConfig } from '#tools/pack/config/ObjConfig.js';
-import { packSeqConfigs, parseSeqConfig } from '#tools/pack/config/SeqConfig.js';
-import { packSpotAnimConfigs, parseSpotAnimConfig } from '#tools/pack/config/SpotAnimConfig.js';
-import { packVarpConfigs, parseVarpConfig } from '#tools/pack/config/VarpConfig.js';
-
-import { AnimPack, CategoryPack, shouldBuildFile } from '#/util/PackFile.js';
-import { listFilesExt } from '#/util/Parse.js';
-
 import DbTableType from '#/cache/config/DbTableType.js';
-
+import ParamType from '#/cache/config/ParamType.js';
+import Jagfile from '#/io/Jagfile.js';
+import Packet from '#/io/Packet.js';
+import Environment from '#/util/Environment.js';
+import { loadDir } from '#/util/NameMap.js';
+import { VarnPack, VarpPack, VarsPack, shouldBuild, AnimPack, CategoryPack, shouldBuildFile } from '#/util/PackFile.js';
+import { listFilesExt } from '#/util/Parse.js';
 import { packDbRowConfigs, parseDbRowConfig } from '#tools/pack/config/DbRowConfig.js';
 import { packDbTableConfigs, parseDbTableConfig } from '#tools/pack/config/DbTableConfig.js';
 import { packEnumConfigs, parseEnumConfig } from '#tools/pack/config/EnumConfig.js';
-import { packInvConfigs, parseInvConfig } from '#tools/pack/config/InvConfig.js';
-import { packMesAnimConfigs, parseMesAnimConfig } from '#tools/pack/config/MesAnimConfig.js';
-import { packStructConfigs, parseStructConfig } from '#tools/pack/config/StructConfig.js';
+import { packFloConfigs, parseFloConfig } from '#tools/pack/config/FloConfig.js';
 import { packHuntConfigs, parseHuntConfig } from '#tools/pack/config/HuntConfig.js';
+import { packIdkConfigs, parseIdkConfig } from '#tools/pack/config/IdkConfig.js';
+import { packInvConfigs, parseInvConfig } from '#tools/pack/config/InvConfig.js';
+import { packLocConfigs, parseLocConfig } from '#tools/pack/config/LocConfig.js';
+import { packMesAnimConfigs, parseMesAnimConfig } from '#tools/pack/config/MesAnimConfig.js';
+import { packNpcConfigs, parseNpcConfig } from '#tools/pack/config/NpcConfig.js';
+import { packObjConfigs, parseObjConfig } from '#tools/pack/config/ObjConfig.js';
+import { packParamConfigs, parseParamConfig } from '#tools/pack/config/ParamConfig.js';
+import { packSeqConfigs, parseSeqConfig } from '#tools/pack/config/SeqConfig.js';
+import { packSpotAnimConfigs, parseSpotAnimConfig } from '#tools/pack/config/SpotAnimConfig.js';
+import { packStructConfigs, parseStructConfig } from '#tools/pack/config/StructConfig.js';
 import { packVarnConfigs, parseVarnConfig } from '#tools/pack/config/VarnConfig.js';
+import { packVarpConfigs, parseVarpConfig } from '#tools/pack/config/VarpConfig.js';
 import { packVarsConfigs, parseVarsConfig } from '#tools/pack/config/VarsConfig.js';
-import Jagfile from '#/io/Jagfile.js';
-import Environment from '#/util/Environment.js';
 
 export function isConfigBoolean(input: string): boolean {
     return input === 'yes' || input === 'no' || input === 'true' || input === 'false' || input === '1' || input === '0';
@@ -131,15 +123,15 @@ export type ParamValue = {
     value: string | number | boolean;
 };
 export type LocModelShape = { model: number; shape: number };
-export type HuntCheckInv = { inv: number; obj: number; condition: string; val: number; };
-export type HuntCheckInvParam = { inv: number; param: number; condition: string; val: number; };
-export type HuntCheckVar = { varp: number; condition: string; val: number; }
+export type HuntCheckInv = { inv: number; obj: number; condition: string; val: number };
+export type HuntCheckInvParam = { inv: number; param: number; condition: string; val: number };
+export type HuntCheckVar = { varp: number; condition: string; val: number };
 export type ConfigValue = string | number | boolean | number[] | LocModelShape[] | ParamValue | HuntCheckInv | HuntCheckInvParam | HuntCheckVar;
 export type ConfigLine = { key: string; value: ConfigValue };
 
 // we're using null for invalid values, undefined for invalid keys
 export type ConfigParseCallback = (key: string, value: string) => ConfigValue | null | undefined;
-export type ConfigDatIdx = { client: PackedData, server: PackedData };
+export type ConfigDatIdx = { client: PackedData; server: PackedData };
 export type ConfigPackCallback = (configs: Map<string, ConfigLine[]>) => ConfigDatIdx;
 export type ConfigSaveCallback = (dat: Packet, idx: Packet) => void;
 
@@ -256,7 +248,7 @@ export async function readConfigs(dirTree: Set<string>, extension: string, requi
     saveServer(server.dat, server.idx);
 }
 
-function noOp() { }
+function noOp() {}
 
 export async function packConfigs() {
     CONSTANTS.clear();
@@ -268,6 +260,11 @@ export async function packConfigs() {
             }
 
             const parts = src[i].split('=');
+
+            if (parts.length !== 2) {
+                throw new Error(`Bad constant declaration on line: ${src[i]}`);
+            }
+
             let name = parts[0].trim();
             const value = parts[1].trim();
 
@@ -310,12 +307,20 @@ export async function packConfigs() {
 
     // We have to pack params for other configs to parse correctly
     if (shouldBuild('data/src/scripts', '.param', 'data/pack/server/param.dat')) {
-        await readConfigs(dirTree, '.param', ['type'], parseParamConfig, packParamConfigs, () => { }, (dat: Packet, idx: Packet) => {
-            dat.save('data/pack/server/param.dat');
-            idx.save('data/pack/server/param.idx');
-            dat.release();
-            idx.release();
-        });
+        await readConfigs(
+            dirTree,
+            '.param',
+            ['type'],
+            parseParamConfig,
+            packParamConfigs,
+            () => {},
+            (dat: Packet, idx: Packet) => {
+                dat.save('data/pack/server/param.dat');
+                idx.save('data/pack/server/param.idx');
+                dat.release();
+                idx.release();
+            }
+        );
     }
 
     // Now that they're up to date, load them for us to use elsewhere during this process
@@ -346,10 +351,7 @@ export async function packConfigs() {
         shouldBuild('src/cache/packconfig', '.ts', 'data/pack/client/config');
 
     // not a config but we want the server to know all the possible categories
-    if (
-        shouldBuildFile('data/src/pack/category.pack', 'data/pack/server/category.dat') ||
-        shouldBuild('src/cache/packconfig', '.ts', 'data/pack/server/category.dat')
-    ) {
+    if (shouldBuildFile('data/src/pack/category.pack', 'data/pack/server/category.dat') || shouldBuild('src/cache/packconfig', '.ts', 'data/pack/server/category.dat')) {
         const dat = Packet.alloc(1);
         dat.p2(CategoryPack.size);
         for (let i = 0; i < CategoryPack.size; i++) {
@@ -363,10 +365,7 @@ export async function packConfigs() {
     }
 
     // want the server to access frame lengths without loading data from models
-    if (
-        shouldBuild('data/src/models', '.frame', 'data/pack/server/frame_del.dat') ||
-        shouldBuild('src/cache/packconfig', '.ts', 'data/pack/server/frame_del.dat')
-    ) {
+    if (shouldBuild('data/src/models', '.frame', 'data/pack/server/frame_del.dat') || shouldBuild('src/cache/packconfig', '.ts', 'data/pack/server/frame_del.dat')) {
         const files = listFilesExt('data/src/models', '.frame');
         const frame_del = Packet.alloc(3);
         for (let i = 0; i < AnimPack.max; i++) {
@@ -403,10 +402,7 @@ export async function packConfigs() {
 
     // ----
 
-    if (
-        shouldBuild('data/src/scripts', '.dbtable', 'data/pack/server/dbtable.dat') ||
-        shouldBuild('src/cache/packconfig', '.ts', 'data/pack/server/dbtable.dat')
-    ) {
+    if (shouldBuild('data/src/scripts', '.dbtable', 'data/pack/server/dbtable.dat') || shouldBuild('src/cache/packconfig', '.ts', 'data/pack/server/dbtable.dat')) {
         await readConfigs(dirTree, '.dbtable', [], parseDbTableConfig, packDbTableConfigs, noOp, (dat: Packet, idx: Packet) => {
             dat.save('data/pack/server/dbtable.dat');
             idx.save('data/pack/server/dbtable.idx');
@@ -432,10 +428,7 @@ export async function packConfigs() {
         });
     }
 
-    if (
-        shouldBuild('data/src/scripts', '.enum', 'data/pack/server/enum.dat') ||
-        shouldBuild('src/cache/packconfig', '.ts', 'data/pack/server/enum.dat')
-    ) {
+    if (shouldBuild('data/src/scripts', '.enum', 'data/pack/server/enum.dat') || shouldBuild('src/cache/packconfig', '.ts', 'data/pack/server/enum.dat')) {
         await readConfigs(dirTree, '.enum', [], parseEnumConfig, packEnumConfigs, noOp, (dat: Packet, idx: Packet) => {
             dat.save('data/pack/server/enum.dat');
             idx.save('data/pack/server/enum.idx');
@@ -444,10 +437,7 @@ export async function packConfigs() {
         });
     }
 
-    if (
-        shouldBuild('data/src/scripts', '.inv', 'data/pack/server/inv.dat') ||
-        shouldBuild('src/cache/packconfig', '.ts', 'data/pack/server/inv.dat')
-    ) {
+    if (shouldBuild('data/src/scripts', '.inv', 'data/pack/server/inv.dat') || shouldBuild('src/cache/packconfig', '.ts', 'data/pack/server/inv.dat')) {
         await readConfigs(dirTree, '.inv', [], parseInvConfig, packInvConfigs, noOp, (dat: Packet, idx: Packet) => {
             dat.save('data/pack/server/inv.dat');
             idx.save('data/pack/server/inv.idx');
@@ -456,10 +446,7 @@ export async function packConfigs() {
         });
     }
 
-    if (
-        shouldBuild('data/src/scripts', '.mesanim', 'data/pack/server/mesanim.dat') ||
-        shouldBuild('src/cache/packconfig', '.ts', 'data/pack/server/mesanim.dat')
-    ) {
+    if (shouldBuild('data/src/scripts', '.mesanim', 'data/pack/server/mesanim.dat') || shouldBuild('src/cache/packconfig', '.ts', 'data/pack/server/mesanim.dat')) {
         await readConfigs(dirTree, '.mesanim', [], parseMesAnimConfig, packMesAnimConfigs, noOp, (dat: Packet, idx: Packet) => {
             dat.save('data/pack/server/mesanim.dat');
             idx.save('data/pack/server/mesanim.idx');
@@ -468,10 +455,7 @@ export async function packConfigs() {
         });
     }
 
-    if (
-        shouldBuild('data/src/scripts', '.struct', 'data/pack/server/struct.dat') ||
-        shouldBuild('src/cache/packconfig', '.ts', 'data/pack/server/struct.dat')
-    ) {
+    if (shouldBuild('data/src/scripts', '.struct', 'data/pack/server/struct.dat') || shouldBuild('src/cache/packconfig', '.ts', 'data/pack/server/struct.dat')) {
         await readConfigs(dirTree, '.struct', [], parseStructConfig, packStructConfigs, noOp, (dat: Packet, idx: Packet) => {
             dat.save('data/pack/server/struct.dat');
             idx.save('data/pack/server/struct.idx');
@@ -482,162 +466,199 @@ export async function packConfigs() {
 
     // ----
 
-    if (rebuildClient ||
-        shouldBuild('data/src/scripts', '.seq', 'data/pack/server/seq.dat') ||
-        shouldBuild('src/cache/packconfig', '.ts', 'data/pack/server/seq.dat')
-    ) {
-        await readConfigs(dirTree, '.seq', [], parseSeqConfig, packSeqConfigs, (dat: Packet, idx: Packet) => {
-            if (Environment.BUILD_VERIFY && (!Packet.checkcrc(dat.data, 0, dat.pos, 1638136604) || !Packet.checkcrc(idx.data, 0, idx.pos, 969051566))) {
-                throw new Error('.seq CRC check failed! Custom data detected.');
-            }
+    if (rebuildClient || shouldBuild('data/src/scripts', '.seq', 'data/pack/server/seq.dat') || shouldBuild('src/cache/packconfig', '.ts', 'data/pack/server/seq.dat')) {
+        await readConfigs(
+            dirTree,
+            '.seq',
+            [],
+            parseSeqConfig,
+            packSeqConfigs,
+            (dat: Packet, idx: Packet) => {
+                if (Environment.BUILD_VERIFY && (!Packet.checkcrc(dat.data, 0, dat.pos, 1638136604) || !Packet.checkcrc(idx.data, 0, idx.pos, 969051566))) {
+                    throw new Error('.seq CRC check failed! Custom data detected.');
+                }
 
-            jag.write('seq.dat', dat);
-            jag.write('seq.idx', idx);
-        }, (dat: Packet, idx: Packet) => {
-            dat.save('data/pack/server/seq.dat');
-            idx.save('data/pack/server/seq.idx');
-            dat.release();
-            idx.release();
-        });
+                jag.write('seq.dat', dat);
+                jag.write('seq.idx', idx);
+            },
+            (dat: Packet, idx: Packet) => {
+                dat.save('data/pack/server/seq.dat');
+                idx.save('data/pack/server/seq.idx');
+                dat.release();
+                idx.release();
+            }
+        );
     }
 
-    if (rebuildClient ||
-        shouldBuild('data/src/scripts', '.loc', 'data/pack/server/loc.dat') ||
-        shouldBuild('src/cache/packconfig', '.ts', 'data/pack/server/loc.dat')
-    ) {
-        await readConfigs(dirTree, '.loc', [], parseLocConfig, packLocConfigs, (dat: Packet, idx: Packet) => {
-            if (Environment.BUILD_VERIFY && (!Packet.checkcrc(dat.data, 0, dat.pos, 891497087) || !Packet.checkcrc(idx.data, 0, idx.pos, -941401128))) {
-                throw new Error('.loc CRC check failed! Custom data detected.');
-            }
+    if (rebuildClient || shouldBuild('data/src/scripts', '.loc', 'data/pack/server/loc.dat') || shouldBuild('src/cache/packconfig', '.ts', 'data/pack/server/loc.dat')) {
+        await readConfigs(
+            dirTree,
+            '.loc',
+            [],
+            parseLocConfig,
+            packLocConfigs,
+            (dat: Packet, idx: Packet) => {
+                if (Environment.BUILD_VERIFY && (!Packet.checkcrc(dat.data, 0, dat.pos, 891497087) || !Packet.checkcrc(idx.data, 0, idx.pos, -941401128))) {
+                    throw new Error('.loc CRC check failed! Custom data detected.');
+                }
 
-            jag.write('loc.dat', dat);
-            jag.write('loc.idx', idx);
-        }, (dat: Packet, idx: Packet) => {
-            dat.save('data/pack/server/loc.dat');
-            idx.save('data/pack/server/loc.idx');
-            dat.release();
-            idx.release();
-        });
+                jag.write('loc.dat', dat);
+                jag.write('loc.idx', idx);
+            },
+            (dat: Packet, idx: Packet) => {
+                dat.save('data/pack/server/loc.dat');
+                idx.save('data/pack/server/loc.idx');
+                dat.release();
+                idx.release();
+            }
+        );
     }
 
-    if (rebuildClient ||
-        shouldBuild('data/src/scripts', '.flo', 'data/pack/server/flo.dat') ||
-        shouldBuild('src/cache/packconfig', '.ts', 'data/pack/server/flo.dat')
-    ) {
-        await readConfigs(dirTree, '.flo', [], parseFloConfig, packFloConfigs, (dat: Packet, idx: Packet) => {
-            if (Environment.BUILD_VERIFY && (!Packet.checkcrc(dat.data, 0, dat.pos, 1976597026) || !Packet.checkcrc(idx.data, 0, idx.pos, 561308705))) {
-                throw new Error('.flo CRC check failed! Custom data detected.');
-            }
+    if (rebuildClient || shouldBuild('data/src/scripts', '.flo', 'data/pack/server/flo.dat') || shouldBuild('src/cache/packconfig', '.ts', 'data/pack/server/flo.dat')) {
+        await readConfigs(
+            dirTree,
+            '.flo',
+            [],
+            parseFloConfig,
+            packFloConfigs,
+            (dat: Packet, idx: Packet) => {
+                if (Environment.BUILD_VERIFY && (!Packet.checkcrc(dat.data, 0, dat.pos, 1976597026) || !Packet.checkcrc(idx.data, 0, idx.pos, 561308705))) {
+                    throw new Error('.flo CRC check failed! Custom data detected.');
+                }
 
-            jag.write('flo.dat', dat);
-            jag.write('flo.idx', idx);
-        }, (dat: Packet, idx: Packet) => {
-            dat.save('data/pack/server/flo.dat');
-            idx.save('data/pack/server/flo.idx');
-            dat.release();
-            idx.release();
-        });
+                jag.write('flo.dat', dat);
+                jag.write('flo.idx', idx);
+            },
+            (dat: Packet, idx: Packet) => {
+                dat.save('data/pack/server/flo.dat');
+                idx.save('data/pack/server/flo.idx');
+                dat.release();
+                idx.release();
+            }
+        );
     }
 
-    if (rebuildClient ||
-        shouldBuild('data/src/scripts', '.spotanim', 'data/pack/server/spotanim.dat') ||
-        shouldBuild('src/cache/packconfig', '.ts', 'data/pack/server/spotanim.dat')
-    ) {
-        await readConfigs(dirTree, '.spotanim', [], parseSpotAnimConfig, packSpotAnimConfigs, (dat: Packet, idx: Packet) => {
-            if (Environment.BUILD_VERIFY && (!Packet.checkcrc(dat.data, 0, dat.pos, -1279835623) || !Packet.checkcrc(idx.data, 0, idx.pos, -1696140322))) {
-                throw new Error('.spotanim CRC check failed! Custom data detected.');
-            }
+    if (rebuildClient || shouldBuild('data/src/scripts', '.spotanim', 'data/pack/server/spotanim.dat') || shouldBuild('src/cache/packconfig', '.ts', 'data/pack/server/spotanim.dat')) {
+        await readConfigs(
+            dirTree,
+            '.spotanim',
+            [],
+            parseSpotAnimConfig,
+            packSpotAnimConfigs,
+            (dat: Packet, idx: Packet) => {
+                if (Environment.BUILD_VERIFY && (!Packet.checkcrc(dat.data, 0, dat.pos, -1279835623) || !Packet.checkcrc(idx.data, 0, idx.pos, -1696140322))) {
+                    throw new Error('.spotanim CRC check failed! Custom data detected.');
+                }
 
-            jag.write('spotanim.dat', dat);
-            jag.write('spotanim.idx', idx);
-        }, (dat: Packet, idx: Packet) => {
-            dat.save('data/pack/server/spotanim.dat');
-            idx.save('data/pack/server/spotanim.idx');
-            dat.release();
-            idx.release();
-        });
+                jag.write('spotanim.dat', dat);
+                jag.write('spotanim.idx', idx);
+            },
+            (dat: Packet, idx: Packet) => {
+                dat.save('data/pack/server/spotanim.dat');
+                idx.save('data/pack/server/spotanim.idx');
+                dat.release();
+                idx.release();
+            }
+        );
     }
 
-    if (rebuildClient ||
-        shouldBuild('data/src/scripts', '.npc', 'data/pack/server/npc.dat') ||
-        shouldBuild('src/cache/packconfig', '.ts', 'data/pack/server/npc.dat')
-    ) {
-        await readConfigs(dirTree, '.npc', [], parseNpcConfig, packNpcConfigs, (dat: Packet, idx: Packet) => {
-            if (Environment.BUILD_VERIFY && (!Packet.checkcrc(dat.data, 0, dat.pos, -2140681882) || !Packet.checkcrc(idx.data, 0, idx.pos, -1986014643))) {
-                throw new Error('.npc CRC check failed! Custom data detected.');
-            }
+    if (rebuildClient || shouldBuild('data/src/scripts', '.npc', 'data/pack/server/npc.dat') || shouldBuild('src/cache/packconfig', '.ts', 'data/pack/server/npc.dat')) {
+        await readConfigs(
+            dirTree,
+            '.npc',
+            [],
+            parseNpcConfig,
+            packNpcConfigs,
+            (dat: Packet, idx: Packet) => {
+                if (Environment.BUILD_VERIFY && (!Packet.checkcrc(dat.data, 0, dat.pos, -2140681882) || !Packet.checkcrc(idx.data, 0, idx.pos, -1986014643))) {
+                    throw new Error('.npc CRC check failed! Custom data detected.');
+                }
 
-            jag.write('npc.dat', dat);
-            jag.write('npc.idx', idx);
-        }, (dat: Packet, idx: Packet) => {
-            dat.save('data/pack/server/npc.dat');
-            idx.save('data/pack/server/npc.idx');
-            dat.release();
-            idx.release();
-        });
+                jag.write('npc.dat', dat);
+                jag.write('npc.idx', idx);
+            },
+            (dat: Packet, idx: Packet) => {
+                dat.save('data/pack/server/npc.dat');
+                idx.save('data/pack/server/npc.idx');
+                dat.release();
+                idx.release();
+            }
+        );
     }
 
-    if (rebuildClient ||
-        shouldBuild('data/src/scripts', '.obj', 'data/pack/server/obj.dat') ||
-        shouldBuild('src/cache/packconfig', '.ts', 'data/pack/server/obj.dat')
-    ) {
-        await readConfigs(dirTree, '.obj', [], parseObjConfig, packObjConfigs, (dat: Packet, idx: Packet) => {
-            if (Environment.BUILD_VERIFY && (!Packet.checkcrc(dat.data, 0, dat.pos, -840233510) || !Packet.checkcrc(idx.data, 0, idx.pos, 669212954))) {
-                throw new Error('.obj CRC check failed! Custom data detected.');
-            }
+    if (rebuildClient || shouldBuild('data/src/scripts', '.obj', 'data/pack/server/obj.dat') || shouldBuild('src/cache/packconfig', '.ts', 'data/pack/server/obj.dat')) {
+        await readConfigs(
+            dirTree,
+            '.obj',
+            [],
+            parseObjConfig,
+            packObjConfigs,
+            (dat: Packet, idx: Packet) => {
+                if (Environment.BUILD_VERIFY && (!Packet.checkcrc(dat.data, 0, dat.pos, -840233510) || !Packet.checkcrc(idx.data, 0, idx.pos, 669212954))) {
+                    throw new Error('.obj CRC check failed! Custom data detected.');
+                }
 
-            jag.write('obj.dat', dat);
-            jag.write('obj.idx', idx);
-        }, (dat: Packet, idx: Packet) => {
-            dat.save('data/pack/server/obj.dat');
-            idx.save('data/pack/server/obj.idx');
-            dat.release();
-            idx.release();
-        });
+                jag.write('obj.dat', dat);
+                jag.write('obj.idx', idx);
+            },
+            (dat: Packet, idx: Packet) => {
+                dat.save('data/pack/server/obj.dat');
+                idx.save('data/pack/server/obj.idx');
+                dat.release();
+                idx.release();
+            }
+        );
     }
 
-    if (rebuildClient ||
-        shouldBuild('data/src/scripts', '.idk', 'data/pack/server/idk.dat') ||
-        shouldBuild('src/cache/packconfig', '.ts', 'data/pack/server/idk.dat')
-    ) {
-        await readConfigs(dirTree, '.idk', [], parseIdkConfig, packIdkConfigs, (dat: Packet, idx: Packet) => {
-            if (Environment.BUILD_VERIFY && (!Packet.checkcrc(dat.data, 0, dat.pos, -359342366) || !Packet.checkcrc(idx.data, 0, idx.pos, 667216411))) {
-                throw new Error('.idk CRC check failed! Custom data detected.');
-            }
+    if (rebuildClient || shouldBuild('data/src/scripts', '.idk', 'data/pack/server/idk.dat') || shouldBuild('src/cache/packconfig', '.ts', 'data/pack/server/idk.dat')) {
+        await readConfigs(
+            dirTree,
+            '.idk',
+            [],
+            parseIdkConfig,
+            packIdkConfigs,
+            (dat: Packet, idx: Packet) => {
+                if (Environment.BUILD_VERIFY && (!Packet.checkcrc(dat.data, 0, dat.pos, -359342366) || !Packet.checkcrc(idx.data, 0, idx.pos, 667216411))) {
+                    throw new Error('.idk CRC check failed! Custom data detected.');
+                }
 
-            jag.write('idk.dat', dat);
-            jag.write('idk.idx', idx);
-        }, (dat: Packet, idx: Packet) => {
-            dat.save('data/pack/server/idk.dat');
-            idx.save('data/pack/server/idk.idx');
-            dat.release();
-            idx.release();
-        });
+                jag.write('idk.dat', dat);
+                jag.write('idk.idx', idx);
+            },
+            (dat: Packet, idx: Packet) => {
+                dat.save('data/pack/server/idk.dat');
+                idx.save('data/pack/server/idk.idx');
+                dat.release();
+                idx.release();
+            }
+        );
     }
 
-    if (rebuildClient ||
-        shouldBuild('data/src/scripts', '.varp', 'data/pack/server/varp.dat') ||
-        shouldBuild('src/cache/packconfig', '.ts', 'data/pack/server/varp.dat')
-    ) {
-        await readConfigs(dirTree, '.varp', [], parseVarpConfig, packVarpConfigs, (dat: Packet, idx: Packet) => {
-            if (Environment.BUILD_VERIFY && (!Packet.checkcrc(dat.data, 0, dat.pos, 705633567) || !Packet.checkcrc(idx.data, 0, idx.pos, -1843167599))) {
-                throw new Error('.varp CRC check failed! Custom data detected.');
-            }
+    if (rebuildClient || shouldBuild('data/src/scripts', '.varp', 'data/pack/server/varp.dat') || shouldBuild('src/cache/packconfig', '.ts', 'data/pack/server/varp.dat')) {
+        await readConfigs(
+            dirTree,
+            '.varp',
+            [],
+            parseVarpConfig,
+            packVarpConfigs,
+            (dat: Packet, idx: Packet) => {
+                if (Environment.BUILD_VERIFY && (!Packet.checkcrc(dat.data, 0, dat.pos, 705633567) || !Packet.checkcrc(idx.data, 0, idx.pos, -1843167599))) {
+                    throw new Error('.varp CRC check failed! Custom data detected.');
+                }
 
-            jag.write('varp.dat', dat);
-            jag.write('varp.idx', idx);
-        }, (dat: Packet, idx: Packet) => {
-            dat.save('data/pack/server/varp.dat');
-            idx.save('data/pack/server/varp.idx');
-            dat.release();
-            idx.release();
-        });
+                jag.write('varp.dat', dat);
+                jag.write('varp.idx', idx);
+            },
+            (dat: Packet, idx: Packet) => {
+                dat.save('data/pack/server/varp.dat');
+                idx.save('data/pack/server/varp.idx');
+                dat.release();
+                idx.release();
+            }
+        );
     }
 
-    if (
-        shouldBuild('data/src/scripts', '.hunt', 'data/pack/server/hunt.dat') ||
-        shouldBuild('src/cache/packconfig', '.ts', 'data/pack/server/hunt.dat')
-    ) {
+    if (shouldBuild('data/src/scripts', '.hunt', 'data/pack/server/hunt.dat') || shouldBuild('src/cache/packconfig', '.ts', 'data/pack/server/hunt.dat')) {
         await readConfigs(dirTree, '.hunt', [], parseHuntConfig, packHuntConfigs, noOp, (dat: Packet, idx: Packet) => {
             dat.save('data/pack/server/hunt.dat');
             idx.save('data/pack/server/hunt.idx');
@@ -646,10 +667,7 @@ export async function packConfigs() {
         });
     }
 
-    if (
-        shouldBuild('data/src/scripts', '.varn', 'data/pack/server/varn.dat') ||
-        shouldBuild('src/cache/packconfig', '.ts', 'data/pack/server/varn.dat')
-    ) {
+    if (shouldBuild('data/src/scripts', '.varn', 'data/pack/server/varn.dat') || shouldBuild('src/cache/packconfig', '.ts', 'data/pack/server/varn.dat')) {
         await readConfigs(dirTree, '.varn', [], parseVarnConfig, packVarnConfigs, noOp, (dat: Packet, idx: Packet) => {
             dat.save('data/pack/server/varn.dat');
             idx.save('data/pack/server/varn.idx');
@@ -658,10 +676,7 @@ export async function packConfigs() {
         });
     }
 
-    if (
-        shouldBuild('data/src/scripts', '.vars', 'data/pack/server/vars.dat') ||
-        shouldBuild('src/cache/packconfig', '.ts', 'data/pack/server/vars.dat')
-    ) {
+    if (shouldBuild('data/src/scripts', '.vars', 'data/pack/server/vars.dat') || shouldBuild('src/cache/packconfig', '.ts', 'data/pack/server/vars.dat')) {
         await readConfigs(dirTree, '.vars', [], parseVarsConfig, packVarsConfigs, noOp, (dat: Packet, idx: Packet) => {
             dat.save('data/pack/server/vars.dat');
             idx.save('data/pack/server/vars.idx');

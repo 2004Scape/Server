@@ -1,71 +1,98 @@
+// volume setting if_closes here (interupts the cooking weakqueue)
+// https://youtu.be/neAoU0yiGFY?t=98
+
 [if_button,options:com_0]
+if_close;
 %game_brightness = 1;
 
 [if_button,options:com_1]
+if_close;
 %game_brightness = 1;
 
 [if_button,options:com_2]
+if_close;
 %game_brightness = 2;
 
 [if_button,options:com_3]
+if_close;
 %game_brightness = 2;
 
 [if_button,options:com_4]
+if_close;
 %game_brightness = 3;
 
 [if_button,options:com_5]
+if_close;
 %game_brightness = 3;
 
 [if_button,options:com_6]
+if_close;
 %game_brightness = 4;
 
 [if_button,options:com_7]
+if_close;
 %game_brightness = 4;
 
 [if_button,options:com_8]
+if_close;
 %mouse_buttons = 0;
 
 [if_button,options:com_9]
+if_close;
 %mouse_buttons = 1;
 
 [if_button,options:com_10]
+if_close;
 %chat_effects = 0;
 
 [if_button,options:com_11]
+if_close;
 %chat_effects = 1;
 
 [if_button,options:com_25]
+if_close;
 %music_volume = 4;
 
 [if_button,options:com_26]
+if_close;
 %music_volume = 3;
 
 [if_button,options:com_27]
+if_close;
 %music_volume = 2;
 
 [if_button,options:com_28]
+if_close;
 %music_volume = 1;
 
 [if_button,options:com_29]
+if_close;
 %music_volume = 0;
 
 [if_button,options:com_36]
+if_close;
 %sound_volume = 4;
 
 [if_button,options:com_37]
+if_close;
 %sound_volume = 3;
 
 [if_button,options:com_38]
+if_close;
 %sound_volume = 2;
 
 [if_button,options:com_39]
+if_close;
 %sound_volume = 1;
 
 [if_button,options:com_40]
+if_close;
 %sound_volume = 0;
 
 [if_button,options:com_47]
+if_close;
 %split_privatechat = 1;
 
 [if_button,options:com_48]
+if_close;
 %split_privatechat = 0;

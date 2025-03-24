@@ -1,30 +1,5 @@
 [label,player_ranged_attack]
-p_stopaction;
-// npc_setmode(opplayer2);
-// facesquare(npc_coord);
-
-// todo this is for flinching players (pvp etc)
-//if (autoretaliateenabled && action_clock < gameClock()) action_clock = gameClock() + (weaponSpeed / 2)
-if(%action_delay <= map_clock & npc_stat(hitpoints) = 0 & (npc_type = sir_mordred | npc_type = black_knight_titan)) {
-    npc_statheal(hitpoints, npc_basestat(hitpoints), 0);
-}
-
-if (npc_stat(hitpoints) = 0) {
-    p_stopaction;
-    return; // this means the npc is not avail to fight i.e dead
-}
-
-def_obj $rhand = inv_getobj(worn, ^wearpos_rhand);
-if ($rhand = null) {
-    mes("That was your last one!");
-    p_stopaction;
-    ~update_all($rhand);
-    return;
-}
-
-// check if npc is attackable
-if (~npc_is_attackable() = false) {
-    p_stopaction;
+if (~npc_is_attackable = false) {
     return;
 }
 
@@ -33,14 +8,16 @@ if (%action_delay > map_clock) {
     return;
 }
 
-~player_combat_stat; // update combat varps before calculating action_delay and shooting
+if (npc_stat(hitpoints) = 0) {
+    return;
+}
 
 // set the skill clock depending on the weapon attack rate
-def_obj $weapon = inv_getobj(worn, ^wearpos_rhand);
-if ($weapon = null) {
+def_obj $rhand = inv_getobj(worn, ^wearpos_rhand);
+if ($rhand = null) {
     %action_delay = add(map_clock, 4);
 } else {
-    %action_delay = add(map_clock, oc_param($weapon, attackrate));
+    %action_delay = add(map_clock, oc_param($rhand, attackrate));
 }
 if (%damagestyle = ^style_ranged_rapid) {
     %action_delay = sub(%action_delay, 1);
@@ -56,8 +33,9 @@ if ($ammo = null) {
 // check hit, give combat xp
 def_int $damage = 0;
 if (~player_npc_hit_roll(%damagetype) = true) {
+    def_int $maxhit = %com_maxhit;
     if (npc_type = count_draynor & inv_total(inv, garlic) > 0) {
-        %com_maxhit = add(%com_maxhit, 1);
+        $maxhit = add($maxhit, 1);
     }
     if (inv_total(worn, holy_water) > 0) {
         if(npc_param(demonbane_vulnerable) = true) {
@@ -69,9 +47,10 @@ if (~player_npc_hit_roll(%damagetype) = true) {
              %com_maxhit = 0;
         }
     }
-    $damage = randominc(min(%com_maxhit, npc_param(max_dealt)));
-    $damage = min($damage, npc_stat(hitpoints));
-    ~give_combat_experience(%damagestyle, $damage, %npc_combat_xp_multiplier);
+    $damage = randominc(min($maxhit, npc_param(max_dealt)));
+    def_int $damage_capped = min($damage, npc_stat(hitpoints));
+    ~give_combat_experience(%damagestyle, $damage_capped, %npc_combat_xp_multiplier);
+    npc_heropoints($damage_capped);
 }
 
 def_int $poison_severity = oc_param($ammo, poison_severity);
@@ -91,29 +70,13 @@ if (npc_param(defend_sound) ! null) {
     sound_synth(npc_param(defend_sound), 0, sub($delay, 30)); // delay 1 client tick for the hit queue
 }
 
-npc_heropoints($damage);
-
-if (npc_type = shadow_spider & %npc_attacking_uid ! uid & ~npc_out_of_combat = true) {
-    ~shadow_spider_drain;
-}
 p_opnpc(2);
+
 if ($ammo = holy_water) {
-    world_delay(calc($delay / 30 - 2));
-    if (map_blocked(npc_coord) = true) {
-        return;
-    }
-    obj_add(npc_coord, smashed_glass, 1, 200);
+    ~ranged_dropammo_npc($ammo, ^true, sub(divide($delay, 30), 2)); // 100% chance to drop ammo
     return;
 }
-if (random(5) ! 0) {
-    world_delay(calc($delay / 30 - 2));
-    if (map_blocked(npc_coord) = false) {
-        if (p_finduid(uid) = true) {
-            inv_dropslot(ranged_quiver_inv, npc_coord, 0, 200);
-        }
-    }
-}
-inv_clear(ranged_quiver_inv);
+~ranged_dropammo_npc($ammo, 5, sub(divide($delay, 30), 2));
 
 [proc,player_ranged_check_ammo](obj $rhand)(obj)
 def_category $weapon_cat = oc_category($rhand);
@@ -150,10 +113,22 @@ switch_category(oc_category($rhand)) {
 
 [proc,ranged_shoot_npc](obj $ammo)(int)
 spotanim_pl(oc_param($ammo, proj_launch), 96, 0);
-inv_moveitem(worn, ranged_quiver_inv, $ammo, 1);
+inv_del(worn, $ammo, 1);
 return(~npc_projectile(coord, npc_uid, oc_param($ammo, proj_travel), 40, 36, 41, 15, 5, 11, 5));
 
 [proc,ranged_throw_npc](obj $ammo)(int)
 spotanim_pl(oc_param($ammo, proj_launch), 96, 0);
-inv_moveitem(worn, ranged_quiver_inv, $ammo, 1);
+inv_del(worn, $ammo, 1);
+if (inv_total(worn, $ammo) = 0) {
+    mes("That was your last one!");
+    ~update_all(inv_getobj(worn, ^wearpos_rhand));
+}
 return(~npc_projectile(coord, npc_uid, oc_param($ammo, proj_travel), 40, 36, 32, 15, 0, 11, 5));
+
+[proc,ranged_dropammo_npc](obj $ammo, int $chance, int $delay)
+if (random($chance) ! 0 | $chance = ^true) {
+    world_delay($delay);
+    if (map_blocked(npc_coord) = false) {
+        obj_add(npc_coord, enum(obj, namedobj, ranged_ammo, $ammo), 1, 100);
+    }
+}

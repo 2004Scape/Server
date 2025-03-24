@@ -99,21 +99,23 @@ export function packServerMap() {
 
     let queue = [];
 
-    fs.readdirSync('data/src/maps').filter(f => f.endsWith('.jm2')).forEach(file => {
-        let [x, z] = file.slice(1).split('.').shift().split('_');
-        if (
-            !shouldBuildFile(`data/src/maps/${file}`, `data/pack/server/maps/m${x}_${z}`) &&
-            !shouldBuildFile(`data/src/maps/${file}`, `data/pack/server/maps/l${x}_${z}`) &&
-            !shouldBuildFile(`data/src/maps/${file}`, `data/pack/server/maps/n${x}_${z}`) &&
-            !shouldBuildFile(`data/src/maps/${file}`, `data/pack/server/maps/o${x}_${z}`) &&
-            !shouldBuild('data/src/maps', '.csv', `data/pack/server/maps/m${x}_${z}`) &&
-            !shouldBuild('src/cache/packmap', '.js', `data/pack/server/maps/m${x}_${z}`)
-        ) {
-            return;
-        }
+    fs.readdirSync('data/src/maps')
+        .filter(f => f.endsWith('.jm2'))
+        .forEach(file => {
+            let [x, z] = file.slice(1).split('.').shift().split('_');
+            if (
+                !shouldBuildFile(`data/src/maps/${file}`, `data/pack/server/maps/m${x}_${z}`) &&
+                !shouldBuildFile(`data/src/maps/${file}`, `data/pack/server/maps/l${x}_${z}`) &&
+                !shouldBuildFile(`data/src/maps/${file}`, `data/pack/server/maps/n${x}_${z}`) &&
+                !shouldBuildFile(`data/src/maps/${file}`, `data/pack/server/maps/o${x}_${z}`) &&
+                !shouldBuild('data/src/maps', '.csv', `data/pack/server/maps/m${x}_${z}`) &&
+                !shouldBuild('src/cache/packmap', '.js', `data/pack/server/maps/m${x}_${z}`)
+            ) {
+                return;
+            }
 
-        queue.push({ file, x, z });
-    });
+            queue.push({ file, x, z });
+        });
 
     if (!queue.length) {
         return;

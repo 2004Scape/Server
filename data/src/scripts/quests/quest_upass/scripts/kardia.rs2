@@ -86,6 +86,7 @@ p_arrivedelay;
 anim(human_openchest, 0);
 sound_synth(chest_open, 0, 0);
 p_delay(0);
+// Temp note: dur does not need updated ?? @indio I assume
 loc_change(loc_3273, 20);
 @search_kardia_chest;
 

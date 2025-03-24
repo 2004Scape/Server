@@ -142,6 +142,7 @@ mes("You open the chest.");
 anim(human_openchest, 0);
 sound_synth(chest_open, 0, 0);
 p_delay(0);
+// Temp note: dur does not need updated
 loc_change(melzar_maze_chest_opened, 300);
 
 
@@ -151,6 +152,7 @@ mes("You close the chest.");
 anim(human_closechest, 0);
 sound_synth(chest_close, 0, 0);
 p_delay(0);
+// Temp note: dur does not need updated
 loc_change(melzar_maze_chest_closed, 300);
 
 [oploc1,melzar_maze_chest_opened]
@@ -163,4 +165,5 @@ if (~quest_dragon_getting_map_parts = false | ~obj_gettotal(crandor_map_part1) >
     ~mesbox("You find a map piece in the chest.");
     inv_add(inv, crandor_map_part1, 1);
 }
+// Temp note: dur does not need updated
 loc_change(melzar_maze_chest_closed, 300);

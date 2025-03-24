@@ -85,3 +85,11 @@ if (p_finduid(uid) = true) {
 } else {
     @please_finish;    
 }
+
+[debugproc,ardy]
+if_close;
+if (p_finduid(uid) = true) {
+    ~player_teleport_normal(0_41_51_39_38);
+} else {
+    @please_finish;
+}

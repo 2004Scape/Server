@@ -9,41 +9,37 @@ anim(human_pickuptable, 0);
 
 p_delay(0);
 
-if (p_finduid(uid) = true) {
-    // todo confirm chance
-    if (random(3) = 0) {
-        mes("You strain to lift the huge rock off the chest...");
-
-        p_delay(1);
-        
-        if (p_finduid(uid) = true) {
-            // todo confirm message/reduction in 2004
-            mes("... but it's just too heavy for you.");
-            mes("The experience has left you feeling temporarily weakened.");
-            say("Arrgghhhhh!");
-            stat_sub(strength, 1, 0);
-            return;
-        }
-
-        return;
-    }
-
-    mes("You manage to lift the huge rock off the chest.");
-    say("I guess this is what an ogre would call a locked chest.");
-
-    if (%chompybird_progress = ^chompybird_kids_play_with_toad) {
-        %chompybird_progress = ^chompybird_removed_rock_from_chest;
-    }
-
-    // duration from OSRS
-    loc_change(chompybird_ogre_chest_open, 48);
-}
-
-[oploc1,chompybird_ogre_chest_open]
-if (inv_freespace(inv) = 0) {
-    ~objbox(ogre_bellows_0,"Rantz stores ogre bellows in here, but you don't have space to hold any.", 250, 0, divide(^objbox_height, 2));
+// todo confirm chance
+if (random(3) = 0) {
+    mes("You strain to lift the huge rock off the chest...");
+    p_delay(1);
+    mes("... but it's just too heavy for you.");
+    mes("The experience has left you feeling temporarily weakened.");
+    say("Arrgghhhhh!");
+    stat_sub(strength, 1, 0);
     return;
 }
 
+mes("You manage to lift the huge rock off the chest.");
+say("I guess this is what an ogre would call a locked chest.");
+
+if (%chompybird_progress = ^chompybird_kids_play_with_toad) {
+    %chompybird_progress = ^chompybird_removed_rock_from_chest;
+}
+// duration from OSRS
+// Temp note: dur updated ? Assuming this is an even number so I added 2 instead of 1
+loc_change(chompybird_ogre_chest_open, 50);
+
+[oploc1,chompybird_ogre_chest_open]
+anim(human_pickuptable, 0);
+if(inv_totalcat(inv, ogre_bellows) > 0 | inv_totalcat(bank, ogre_bellows) > 0) {
+    // https://youtu.be/2EcFiLeajks?si=b5kEBFebuuzpoar-&t=88
+    mes("You search but find nothing in the ogre chest.");
+    return;
+}
+if (inv_freespace(inv) = 0) {
+    mes("You find some ogre bellows in the chest but do not have the space to take them."); // RS3
+    return;
+}
 inv_add(inv, ogre_bellows_0, 1);
-~objbox(ogre_bellows_0,"You take a pair of bellows.", 250, 0, divide(^objbox_height, 2));
+~objbox(ogre_bellows_0, "You search the chest and find a pair of ogre bellows.", 250, 0, divide(^objbox_height, 2));

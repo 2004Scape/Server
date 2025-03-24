@@ -125,44 +125,42 @@ p_delay(0);
 [proc,open_border_gate_toll_left_closed]()
 def_coord $other = movecoord(loc_coord, 0, 0, 1);
 
-loc_del(2);
-.loc_add(loc_coord, loc_83, loc_angle, loc_shape, 2);
-
 def_coord $coord = ~movecoord_loc_return(~door_open(loc_angle, loc_shape));
-.loc_add($coord, loc_83, loc_angle, wall_straight, 2);
-loc_add($coord, loc_param(next_loc_stage), calc(loc_angle + 3), loc_shape, 2);
+// Temp note: dur updated
+.loc_add($coord, loc_83, loc_angle, wall_straight, 3);
+.loc_add($coord, loc_param(next_loc_stage), calc(loc_angle + 3), loc_shape, 3);
+loc_add(loc_coord, loc_83, loc_angle, loc_shape, 3);
 
 loc_findallzone($coord);
 while (loc_findnext = true) {
     if (loc_coord = $other & loc_category = border_gate_toll_right) {
-        loc_del(2);
-        .loc_add(loc_coord, loc_83, loc_angle, wall_straight, 2);
-
         def_coord $coord2 = ~movecoord_loc_return(~door_open(loc_angle, loc_shape));
-        .loc_add($coord2, loc_83, loc_angle, wall_straight, 2);
-        loc_add($coord2, loc_param(next_loc_stage), calc(loc_angle + 1), loc_shape, 2);
+        // Temp note: dur updated
+        .loc_add($coord2, loc_83, loc_angle, wall_straight, 3);
+        .loc_add($coord2, loc_param(next_loc_stage), calc(loc_angle + 1), loc_shape, 3);
+        loc_add(loc_coord, loc_83, loc_angle, wall_straight, 3);
     }
 }
 
 [proc,open_border_gate_toll_right_closed]()
 def_coord $other = movecoord(loc_coord, 0, 0, -1);
 
-loc_del(2);
-.loc_add(loc_coord, loc_83, loc_angle, loc_shape, 2);
+
 
 def_coord $coord = ~movecoord_loc_return(~door_open(loc_angle, loc_shape));
-.loc_add($coord, loc_83, loc_angle, wall_straight, 2);
-loc_add($coord, loc_param(next_loc_stage), modulo(add(loc_angle, 1), 4), loc_shape, 2);
+// Temp note: dur updated
+.loc_add($coord, loc_83, loc_angle, wall_straight, 3);
+.loc_add($coord, loc_param(next_loc_stage), modulo(add(loc_angle, 1), 4), loc_shape, 3);
+loc_add(loc_coord, loc_83, loc_angle, loc_shape, 3);
 
 loc_findallzone($coord);
 while (loc_findnext = true) {
     if (loc_coord = $other & loc_category = border_gate_toll_left) {
-        loc_del(2);
-        .loc_add(loc_coord, loc_83, loc_angle, wall_straight, 2);
-
         $coord = ~movecoord_loc_return(~door_open(loc_angle, loc_shape));
-        .loc_add($coord, loc_83, loc_angle, wall_straight, 2);
-        loc_add($coord, loc_param(next_loc_stage), modulo(add(loc_angle, 3), 4), loc_shape, 2);
+        // Temp note: dur updated
+        .loc_add($coord, loc_83, loc_angle, wall_straight, 3);
+        .loc_add($coord, loc_param(next_loc_stage), modulo(add(loc_angle, 3), 4), loc_shape, 3);
+        loc_add(loc_coord, loc_83, loc_angle, wall_straight, 3);
     }
 }
 

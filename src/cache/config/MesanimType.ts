@@ -1,8 +1,8 @@
 import fs from 'fs';
 
+import { ConfigType } from '#/cache/config/ConfigType.js';
 import Packet from '#/io/Packet.js';
 
-import { ConfigType } from '#/cache/config/ConfigType.js';
 
 export default class MesanimType extends ConfigType {
     private static configNames = new Map<string, number>();

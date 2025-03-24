@@ -4,6 +4,8 @@
 
 [queue,crest_complete]
 %crest_progress = ^crest_complete;
+// resets this var after completion (choronozon needs to be hit with all 4 blasts to kill again, gold door is always unlocked but lever puzzle resets)
+%crest_spells_levers_gauntlets = 0;
 inv_add(inv, steel_gauntlets, 1);
 session_log(^log_adventure, "Quest complete: Family Crest");
 ~send_quest_complete(questlist:crest, steel_gauntlets, 250, ^squire_questpoints, "You have completed the\\nFamily Crest Quest!");
@@ -31,7 +33,8 @@ session_log(^log_adventure, "Quest complete: Family Crest");
     anim(human_leverdown, 0);
     sound_synth(lever, 0, 0);
     // Tested on OSRS, levers revert to original state after 5 mins
-    loc_change($new_loc, 300);
+    // Temp note: dur does not need updated
+    loc_change($new_loc, 500);
     if ($up = true) {
         %crest_spells_levers_gauntlets = setbit(%crest_spells_levers_gauntlets, $lever);
         mes("The lever is now up.");
@@ -46,7 +49,7 @@ session_log(^log_adventure, "Quest complete: Family Crest");
 [oploc1,witchaven_north_door]
 if (testbit(%crest_spells_levers_gauntlets, ^crest_north_lever) = false &
     testbit(%crest_spells_levers_gauntlets, ^crest_south_lever) = true) {
-    ~open_and_close_door(witchaven_door_open, ~check_axis(coord, loc_coord, loc_angle), false);
+    ~open_and_close_door2(witchaven_door_open, ~check_axis(coord, loc_coord, loc_angle), door_open);
 } 
 else {
     mes("This door is locked.");
@@ -56,7 +59,7 @@ else {
 [oploc1,witchaven_south_west_door]
 if (testbit(%crest_spells_levers_gauntlets, ^crest_north_lever) = true &
     testbit(%crest_spells_levers_gauntlets, ^crest_south_lever) = true) {
-    ~open_and_close_door(witchaven_door_open, ~check_axis(coord, loc_coord, loc_angle), false);
+    ~open_and_close_door2(witchaven_door_open, ~check_axis(coord, loc_coord, loc_angle), door_open);
 }
 else {
     mes("This door is locked.");
@@ -66,7 +69,7 @@ else {
 [oploc1,witchaven_south_east_door]
 if (testbit(%crest_spells_levers_gauntlets, ^crest_north_lever) = true &
     testbit(%crest_spells_levers_gauntlets, ^crest_south_lever) = false) {
-    ~open_and_close_door(witchaven_door_open, ~check_axis(coord, loc_coord, loc_angle), false);
+    ~open_and_close_door2(witchaven_door_open, ~check_axis(coord, loc_coord, loc_angle), door_open);
 }
 else {
     mes("This door is locked.");
@@ -74,10 +77,10 @@ else {
 
 // Opens if north lever is up, south lever is down, and the north room lever is up
 [oploc1,witchaven_goldmine_door]
-if (testbit(%crest_spells_levers_gauntlets, ^crest_north_lever) = true &
+if (%crest_progress = ^crest_complete | (testbit(%crest_spells_levers_gauntlets, ^crest_north_lever) = true &
     testbit(%crest_spells_levers_gauntlets, ^crest_south_lever) = false &
-    testbit(%crest_spells_levers_gauntlets, ^crest_north_room_lever) = true) {
-    ~open_and_close_door(witchaven_door_open, ~check_axis(coord, loc_coord, loc_angle), false);
+    testbit(%crest_spells_levers_gauntlets, ^crest_north_room_lever) = true)) {
+    ~open_and_close_door2(witchaven_door_open, ~check_axis(coord, loc_coord, loc_angle), door_open);
 }
 else {
     mes("This door is locked.");
@@ -86,23 +89,30 @@ else {
 [opheldu,crest_part_1]
 if (last_useitem = crest_part_2 | last_useitem = crest_part_3) {
     @combine_crest_parts;
-} else {
+} else if (last_useitem ! crest_part_1) { // no NIH when using a piece on itself
     ~displaymessage(^dm_default);
 }
 
 [opheldu,crest_part_2]
 if (last_useitem = crest_part_1 | last_useitem = crest_part_3) {
     @combine_crest_parts;
-} else {
+} else if (last_useitem ! crest_part_2) {
     ~displaymessage(^dm_default);
 }
 
 [opheldu,crest_part_3]
 if (last_useitem = crest_part_1 | last_useitem = crest_part_2) {
     @combine_crest_parts;
-} else {
+} else if (last_useitem ! crest_part_3) {
     ~displaymessage(^dm_default);
 }
+
+[opheldu,family_crest]
+// OSRS behaviour
+if (last_useitem = crest_part_1 | last_useitem = crest_part_2 | last_useitem = crest_part_3) {
+    return;
+}
+~displaymessage(^dm_default);
 
 [label,combine_crest_parts]
 if (inv_total(inv, crest_part_1) > 0 & inv_total(inv, crest_part_2) > 0 & inv_total(inv, crest_part_3) > 0) {

@@ -19,6 +19,7 @@ p_arrivedelay;
 anim(human_openchest,0);
 p_delay(0);
 // todo - Sound
+// Temp note: dur does not need updated
 loc_change(loc_param(drawer_other), 300);
 
 [oplocu,_drawer]
@@ -70,4 +71,5 @@ p_arrivedelay;
 anim(human_closechest,0);
 p_delay(0);
 // todo - Sound
+// Temp note: dur does not need updated
 loc_change(loc_param(drawer_other), 300);

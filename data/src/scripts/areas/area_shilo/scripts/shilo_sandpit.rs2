@@ -8,6 +8,7 @@ if (last_useitem = bucket_empty) {
         return;
     }
     ~shilo_sandscoop;
+    // Temp note: dur does not need updated
     loc_change(loc_2978, 100);
     return;
 }
@@ -23,6 +24,7 @@ if (last_useitem = bucket_empty) {
         return;
     }
     ~shilo_sandscoop;
+    // Temp note: dur does not need updated
     loc_change(loc_2979, 100);
     return;
 }

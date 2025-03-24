@@ -2,8 +2,8 @@
 sound_synth(liquid, 0, 0);
 anim(human_eat, 0);
 def_obj $consumable = last_item;
-%antipoison = calc(map_clock + 150);
-%poison = 0;
+%poison = min(%poison,-5);
+~set_poison_timer;
 // change item to its next stage. default is null
 inv_setslot(inv, last_slot, oc_param($consumable, next_obj_stage), 1);
 ~consume_effect_messages($consumable, stat(hitpoints), false);
@@ -12,22 +12,9 @@ inv_setslot(inv, last_slot, oc_param($consumable, next_obj_stage), 1);
 sound_synth(liquid, 0, 0);
 anim(human_eat, 0);
 def_obj $consumable = last_item;
-%antipoison = calc(map_clock + 600);
-%poison = 0;
+%poison = min(%poison,-20);
+~set_poison_timer;
 // change item to its next stage. default is null
 inv_setslot(inv, last_slot, oc_param($consumable, next_obj_stage), 1);
 ~consume_effect_messages($consumable, stat(hitpoints), false);
 
-
-[proc,set_antipoison_login]
-if (%antipoison < 1) {
-    return;
-}
-%antipoison = add(map_clock, %antipoison);
-
-[proc,set_antipoison_logout]
-if (%antipoison < map_clock) {
-    %antipoison = null;
-    return;
-}
-%antipoison = sub(%antipoison, map_clock);

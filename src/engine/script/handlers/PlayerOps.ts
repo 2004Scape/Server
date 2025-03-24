@@ -1,49 +1,23 @@
 import IdkType from '#/cache/config/IdkType.js';
-import SpotanimType from '#/cache/config/SpotanimType.js';
-import NpcType from '#/cache/config/NpcType.js';
 import LocType from '#/cache/config/LocType.js';
+import NpcType from '#/cache/config/NpcType.js';
 import ObjType from '#/cache/config/ObjType.js';
-
-import World from '#/engine/World.js';
-
+import SpotanimType from '#/cache/config/SpotanimType.js';
+import VarPlayerType from '#/cache/config/VarPlayerType.js';
+import { CoordGrid } from '#/engine/CoordGrid.js';
+import CameraInfo from '#/engine/entity/CameraInfo.js';
+import { PlayerQueueType, ScriptArgument } from '#/engine/entity/EntityQueueRequest.js';
+import { PlayerTimerType } from '#/engine/entity/EntityTimer.js';
+import Interaction from '#/engine/entity/Interaction.js';
+import { isBufferFull } from '#/engine/entity/NetworkPlayer.js';
+import Player from '#/engine/entity/Player.js';
+import { PlayerStat } from '#/engine/entity/PlayerStat.js';
+import { findPath } from '#/engine/GameMap.js';
 import ScriptOpcode from '#/engine/script/ScriptOpcode.js';
-import ScriptPointer, {ActivePlayer, checkedHandler, ProtectedActivePlayer} from '#/engine/script/ScriptPointer.js';
+import ScriptPointer, { ActivePlayer, checkedHandler, ProtectedActivePlayer } from '#/engine/script/ScriptPointer.js';
 import ScriptProvider from '#/engine/script/ScriptProvider.js';
 import { CommandHandlers } from '#/engine/script/ScriptRunner.js';
 import ScriptState from '#/engine/script/ScriptState.js';
-import ServerTriggerType from '#/engine/script/ServerTriggerType.js';
-
-import { PlayerQueueType, ScriptArgument } from '#/engine/entity/EntityQueueRequest.js';
-import { PlayerTimerType } from '#/engine/entity/EntityTimer.js';
-import { isBufferFull } from '#/engine/entity/NetworkPlayer.js';
-import { CoordGrid } from '#/engine/CoordGrid.js';
-import CameraInfo from '#/engine/entity/CameraInfo.js';
-import Interaction from '#/engine/entity/Interaction.js';
-import {PlayerStat} from '#/engine/entity/PlayerStat.js';
-import Player from '#/engine/entity/Player.js';
-
-import ServerProt from '#/network/rs225/server/prot/ServerProt.js';
-import CamShake from '#/network/server/model/CamShake.js';
-import CamReset from '#/network/server/model/CamReset.js';
-import PCountDialog from '#/network/server/model/PCountDialog.js';
-import SynthSound from '#/network/server/model/SynthSound.js';
-import IfSetColour from '#/network/server/model/IfSetColour.js';
-import IfSetHide from '#/network/server/model/IfSetHide.js';
-import IfSetObject from '#/network/server/model/IfSetObject.js';
-import IfSetTabActive from '#/network/server/model/IfSetTabActive.js';
-import IfSetModel from '#/network/server/model/IfSetModel.js';
-import IfSetRecol from '#/network/server/model/IfSetRecol.js';
-import TutFlash from '#/network/server/model/TutFlash.js';
-import IfSetAnim from '#/network/server/model/IfSetAnim.js';
-import IfSetPlayerHead from '#/network/server/model/IfSetPlayerHead.js';
-import IfSetText from '#/network/server/model/IfSetText.js';
-import IfSetNpcHead from '#/network/server/model/IfSetNpcHead.js';
-import IfSetPosition from '#/network/server/model/IfSetPosition.js';
-
-import ColorConversion from '#/util/ColorConversion.js';
-
-import {findPath} from '#/engine/GameMap.js';
-
 import {
     check,
     CoordValid,
@@ -60,7 +34,27 @@ import {
     GenderValid,
     SkinColourValid
 } from '#/engine/script/ScriptValidators.js';
-import VarPlayerType from '#/cache/config/VarPlayerType.js';
+import ServerTriggerType from '#/engine/script/ServerTriggerType.js';
+import World from '#/engine/World.js';
+import ServerProt from '#/network/rs225/server/prot/ServerProt.js';
+import CamReset from '#/network/server/model/CamReset.js';
+import CamShake from '#/network/server/model/CamShake.js';
+import IfSetAnim from '#/network/server/model/IfSetAnim.js';
+import IfSetColour from '#/network/server/model/IfSetColour.js';
+import IfSetHide from '#/network/server/model/IfSetHide.js';
+import IfSetModel from '#/network/server/model/IfSetModel.js';
+import IfSetNpcHead from '#/network/server/model/IfSetNpcHead.js';
+import IfSetObject from '#/network/server/model/IfSetObject.js';
+import IfSetPlayerHead from '#/network/server/model/IfSetPlayerHead.js';
+import IfSetPosition from '#/network/server/model/IfSetPosition.js';
+import IfSetRecol from '#/network/server/model/IfSetRecol.js';
+import IfSetTabActive from '#/network/server/model/IfSetTabActive.js';
+import IfSetText from '#/network/server/model/IfSetText.js';
+import PCountDialog from '#/network/server/model/PCountDialog.js';
+import SynthSound from '#/network/server/model/SynthSound.js';
+import TutFlash from '#/network/server/model/TutFlash.js';
+import ColorConversion from '#/util/ColorConversion.js';
+import Environment from '#/util/Environment.js';
 
 const PlayerOps: CommandHandlers = {
     [ScriptOpcode.FINDUID]: state => {
@@ -359,6 +353,9 @@ const PlayerOps: CommandHandlers = {
             return;
         }
         state.activePlayer.stopAction();
+        if (!state.activePlayer.inOperableDistance(state.activeLoc)) {
+            state.activePlayer.queueWaypoint(state.activeLoc.x, state.activeLoc.z);
+        }
         state.activePlayer.setInteraction(Interaction.SCRIPT, state.activeLoc, ServerTriggerType.APLOC1 + type);
     }),
 
@@ -373,14 +370,14 @@ const PlayerOps: CommandHandlers = {
             return;
         }
         state.activePlayer.stopAction();
-        state.activePlayer.setInteraction(Interaction.SCRIPT, state.activeNpc, ServerTriggerType.APNPC1 + type, {type: state.activeNpc.type, com: -1});
+        state.activePlayer.setInteraction(Interaction.SCRIPT, state.activeNpc, ServerTriggerType.APNPC1 + type);
     }),
 
     // https://x.com/JagexAsh/status/1791472651623370843
     [ScriptOpcode.P_OPNPCT]: checkedHandler(ProtectedActivePlayer, state => {
         const spellId: number = check(state.popInt(), NumberNotNull);
         state.activePlayer.stopAction();
-        state.activePlayer.setInteraction(Interaction.SCRIPT, state.activeNpc, ServerTriggerType.APNPCT, {type: state.activeNpc.type, com: spellId});
+        state.activePlayer.setInteraction(Interaction.SCRIPT, state.activeNpc, ServerTriggerType.APNPCT, spellId);
     }),
 
     // https://x.com/JagexAsh/status/1389465615631519744
@@ -456,10 +453,11 @@ const PlayerOps: CommandHandlers = {
         check(percent, NumberNotNull);
 
         const player = state.activePlayer;
+        const base = player.baseLevels[stat];
         const current = player.levels[stat];
-        const added = current + (constant + (current * percent) / 100);
+        const added = current + ((constant + (base * percent) / 100) | 0);
         player.levels[stat] = Math.min(added, 255);
-        if (stat === 3 && player.levels[3] >= player.baseLevels[3]) {
+        if (stat === PlayerStat.HITPOINTS && player.levels[PlayerStat.HITPOINTS] >= player.baseLevels[PlayerStat.HITPOINTS]) {
             player.heroPoints.clear();
         }
         if (added !== current) {
@@ -475,8 +473,48 @@ const PlayerOps: CommandHandlers = {
         check(percent, NumberNotNull);
 
         const player = state.activePlayer;
+        const base = player.baseLevels[stat];
         const current = player.levels[stat];
-        const subbed = current - (constant + (current * percent) / 100);
+        const subbed = current - ((constant + (base * percent) / 100) | 0);
+        player.levels[stat] = Math.max(subbed, 0);
+        if (subbed !== current) {
+            player.changeStat(stat);
+        }
+    }),
+
+    [ScriptOpcode.STAT_BOOST]: checkedHandler(ActivePlayer, state => {
+        const [stat, constant, percent] = state.popInts(3);
+
+        check(stat, PlayerStatValid);
+        check(constant, NumberNotNull);
+        check(percent, NumberNotNull);
+
+        const player = state.activePlayer;
+        const base = player.baseLevels[stat];
+        const current = player.levels[stat];
+
+        const boost = ((constant + (base * percent) / 100) | 0);
+        const boosted = Math.min(current + boost, base + boost);
+        player.levels[stat] = Math.min(boosted, 255);
+        if (stat === PlayerStat.HITPOINTS && player.levels[PlayerStat.HITPOINTS] >= player.baseLevels[PlayerStat.HITPOINTS]) {
+            player.heroPoints.clear();
+        }
+        if (boosted !== current) {
+            player.changeStat(stat);
+        }
+    }),
+
+    // same as stat_sub except it drains the current level instead of base level
+    [ScriptOpcode.STAT_DRAIN]: checkedHandler(ActivePlayer, state => {
+        const [stat, constant, percent] = state.popInts(3);
+
+        check(stat, PlayerStatValid);
+        check(constant, NumberNotNull);
+        check(percent, NumberNotNull);
+
+        const player = state.activePlayer;
+        const current = player.levels[stat];
+        const subbed = current - ((constant + (current * percent) / 100) | 0);
         player.levels[stat] = Math.max(subbed, 0);
         if (subbed !== current) {
             player.changeStat(stat);
@@ -501,10 +539,10 @@ const PlayerOps: CommandHandlers = {
         const player = state.activePlayer;
         const base = player.baseLevels[stat];
         const current = player.levels[stat];
-        const healed = current + (constant + (current * percent) / 100);
+        const healed = current + ((constant + (base * percent) / 100) | 0);
         player.levels[stat] = Math.max(Math.min(healed, base), current);
 
-        if (stat === 3 && player.levels[3] >= player.baseLevels[3]) {
+        if (stat === PlayerStat.HITPOINTS && player.levels[PlayerStat.HITPOINTS] >= player.baseLevels[PlayerStat.HITPOINTS]) {
             player.heroPoints.clear();
         }
 
@@ -796,7 +834,7 @@ const PlayerOps: CommandHandlers = {
                 count++;
             }
         }
-        for (let request= state.activePlayer.weakQueue.head(); request !== null; request = state.activePlayer.weakQueue.next()) {
+        for (let request = state.activePlayer.weakQueue.head(); request !== null; request = state.activePlayer.weakQueue.next()) {
             if (request.script.id === scriptId) {
                 count++;
             }
@@ -816,10 +854,7 @@ const PlayerOps: CommandHandlers = {
     }),
 
     [ScriptOpcode.LAST_LOGIN_INFO]: state => {
-        // proxying websockets through cf may show IPv6 and breaks anyways
-        // so we just hardcode 127.0.0.1 (2130706433)
-
-        state.activePlayer.lastLoginInfo(2130706433, 0, 201, 0);
+        state.activePlayer.lastLoginInfo();
     },
 
     [ScriptOpcode.BAS_READYANIM]: state => {
@@ -892,6 +927,9 @@ const PlayerOps: CommandHandlers = {
             return;
         }
         state.activePlayer.stopAction();
+
+        // Sets player destination naively to the Obj's coordinate
+        state.activePlayer.queueWaypoint(state.activeObj.x, state.activeObj.z);
         state.activePlayer.setInteraction(Interaction.SCRIPT, state.activeObj, ServerTriggerType.APOBJ1 + type);
     }),
 
@@ -945,7 +983,7 @@ const PlayerOps: CommandHandlers = {
     },
 
     [ScriptOpcode.AFK_EVENT]: state => {
-        state.pushInt(state.activePlayer.afkEventReady ? 1 : 0);
+        state.pushInt((Environment.NODE_DEBUG || state.activePlayer.staffModLevel < 2) && state.activePlayer.afkEventReady ? 1 : 0);
         state.activePlayer.afkEventReady = false;
     },
 
@@ -953,7 +991,7 @@ const PlayerOps: CommandHandlers = {
         state.pushInt(state.activePlayer.lowMemory ? 1 : 0);
     },
 
-    [ScriptOpcode.SETIDKIT]: (state) => {
+    [ScriptOpcode.SETIDKIT]: state => {
         const [idkit, color] = state.popInts(2);
 
         const idkType: IdkType = check(idkit, IDKTypeValid);
@@ -970,7 +1008,7 @@ const PlayerOps: CommandHandlers = {
         // 3 - boots
         // 4 - skin
         let type = idkType.type;
-        if(state.activePlayer.gender === 1) {
+        if (state.activePlayer.gender === 1) {
             type -= 7;
         }
         let colorSlot = -1;
@@ -991,22 +1029,24 @@ const PlayerOps: CommandHandlers = {
         }
     },
 
-    [ScriptOpcode.SETGENDER]: (state) => {
+    [ScriptOpcode.SETGENDER]: state => {
         const gender = check(state.popInt(), GenderValid);
-        // convert idkit
+        // convert idkit, have to use a mapping cause order + there's not always an equivalence
         for (let i = 0; i < 7; i++) {
-            state.activePlayer.body[i] = -1;
-            for (let j = 0; j < IdkType.count; j++) {
-                if (!IdkType.get(j).disable && IdkType.get(j).type == i + (gender === 0 ? 0 : 7)) {
-                    state.activePlayer.body[i] = j;
-                    break;
+            if (gender === 1) {
+                state.activePlayer.body[i] = Player.MALE_FEMALE_MAP.get(state.activePlayer.body[i]) ?? -1;
+            } else {
+                if (i == 1) {
+                    state.activePlayer.body[i] = 14;
+                    continue;
                 }
+                state.activePlayer.body[i] = Player.FEMALE_MALE_MAP.get(state.activePlayer.body[i]) ?? -1;
             }
         }
         state.activePlayer.gender = gender;
     },
 
-    [ScriptOpcode.SETSKINCOLOUR]: (state) => {
+    [ScriptOpcode.SETSKINCOLOUR]: state => {
         const skin = check(state.popInt(), SkinColourValid);
         state.activePlayer.colors[4] = skin;
     },
@@ -1019,18 +1059,18 @@ const PlayerOps: CommandHandlers = {
             return;
         }
         state.activePlayer.stopAction();
-        state.activePlayer.setInteraction(Interaction.SCRIPT, target, ServerTriggerType.APPLAYERT, {type: -1, com: spellId});
+        state.activePlayer.setInteraction(Interaction.SCRIPT, target, ServerTriggerType.APPLAYERT, spellId);
     }),
 
     // https://x.com/JagexAsh/status/1799020087086903511
     [ScriptOpcode.FINDHERO]: checkedHandler(ActivePlayer, state => {
-        const uid = state.activePlayer.heroPoints.findHero();
-        if (uid === -1) {
+        const hash64 = state.activePlayer.heroPoints.findHero();
+        if (hash64 === -1n) {
             state.pushInt(0);
             return;
         }
 
-        const player = World.getPlayerByUid(uid);
+        const player = World.getPlayerByHash64(hash64);
         if (!player) {
             state.pushInt(0);
             return;
@@ -1052,7 +1092,7 @@ const PlayerOps: CommandHandlers = {
             throw new Error('player is null');
         }
 
-        toPlayer.heroPoints.addHero(fromPlayer.uid, damage);
+        toPlayer.heroPoints.addHero(fromPlayer.hash64, damage);
     }),
 
     // https://x.com/JagexAsh/status/1806246992797921391
@@ -1083,12 +1123,12 @@ const PlayerOps: CommandHandlers = {
         state.activePlayer.addWealthLog(isGained ? amount : -amount, event);
     }),
 
-    [ScriptOpcode.P_RUN]: checkedHandler(ActivePlayer, state => {
+    [ScriptOpcode.P_RUN]: checkedHandler(ProtectedActivePlayer, state => {
         state.activePlayer.run = state.popInt();
 
         // todo: better way to sync engine varp
         state.activePlayer.setVar(VarPlayerType.RUN, state.activePlayer.run);
-    }),
+    })
 };
 
 /**

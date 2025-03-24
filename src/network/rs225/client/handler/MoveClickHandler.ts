@@ -1,9 +1,9 @@
+import { CoordGrid } from '#/engine/CoordGrid.js';
+import { NetworkPlayer } from '#/engine/entity/NetworkPlayer.js';
 import MessageHandler from '#/network/client/handler/MessageHandler.js';
 import MoveClick from '#/network/client/model/MoveClick.js';
-import { NetworkPlayer } from '#/engine/entity/NetworkPlayer.js';
-import { CoordGrid } from '#/engine/CoordGrid.js';
-import Environment from '#/util/Environment.js';
 import UnsetMapFlag from '#/network/server/model/UnsetMapFlag.js';
+import Environment from '#/util/Environment.js';
 import WalkTriggerSetting from '#/util/WalkTriggerSetting.js';
 
 export default class MoveClickHandler extends MessageHandler<MoveClick> {

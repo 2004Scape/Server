@@ -1,7 +1,7 @@
-import MessageHandler from '#/network/client/handler/MessageHandler.js';
 import Player from '#/engine/entity/Player.js';
-import ChatSetMode from '#/network/client/model/ChatSetMode.js';
 import World from '#/engine/World.js';
+import MessageHandler from '#/network/client/handler/MessageHandler.js';
+import ChatSetMode from '#/network/client/model/ChatSetMode.js';
 
 export default class ChatSetModeHandler extends MessageHandler<ChatSetMode> {
     handle(_message: ChatSetMode, player: Player): boolean {

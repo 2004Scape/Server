@@ -1,48 +1,28 @@
-[opplayer2,_] @pvp_combat_start;
-
-[applayer2,_]
+[opplayer2,_]
 if (~pvp_is_attackable = false) {
     return;
 }
+@pvp_combat_start;
 
+[applayer2,_]
+if (~pvp_is_attackable = false) { // this is always here: https://youtu.be/JoyUOTsAiBY?t=644
+    return;
+}
 def_int $distance = distance(coord, .coord);
-def_int $attackrange = 0;
-if (inv_getobj(worn, ^wearpos_rhand) ! null) {
-    $attackrange = min(oc_param(inv_getobj(worn, ^wearpos_rhand), attackrange), 10);
-    if (%damagestyle = ^style_ranged_longrange) {
-        $attackrange = min(add($attackrange, 2), 10);
-    }
-}
-
-if (~player_autocast_enabled = true){
-    $attackrange = 10;
-}
-if ($attackrange <= 1) {
+def_int $attackrange = ~player_attackrange(inv_getobj(worn, ^wearpos_rhand));
+if ($attackrange <= 1 | $distance > $attackrange) {
     p_aprange($attackrange); // walk then op again
     return;
 }
-p_aprange($attackrange);
 @pvp_combat_start;
 
 [label,pvp_combat_start]
-if (~pvp_is_attackable = false) {
-    return;
-}
 if (%damagetype = ^ranged_style) {
     @pvp_ranged_attack;
 }
 
 if (~player_autocast_enabled = true) {
-    // look for spell in db
-    def_dbrow $spell_data = ~get_spell_data(%autocast_spell);
-    if (~check_spell_requirements($spell_data) = false) {
-        %attackstyle_magic = 0;
-        return;
-    }
-
-    // in osrs you cant tick manip with autocast delay, so its prob its on varp?
-    p_opplayert(db_getfield($spell_data, magic_spell_table:spellcom, 0));
-    return;
+    @pvp_magic_attack;
 }
 @pvp_melee_attack;
 
@@ -144,7 +124,8 @@ return(false);
 [proc,pvp_xp_multiplier](int $combat_level)(int)
 return(min(1125, add(1000, divide(multiply(divide($combat_level, 20), 1000), 40))));
 
-[proc,give_combat_experience_pvp](int $damagestyle, int $base, int $multiplier)
+[proc,give_combat_experience_pvp](int $damagestyle, int $damage, int $multiplier)
+def_int $base = multiply($damage, 10);
 switch_int($damagestyle) {
     case ^style_melee_accurate :
         stat_advance(attack, scale($multiplier, 1000, scale(400, 100, $base)));
@@ -175,6 +156,9 @@ stat_advance(hitpoints, scale($multiplier, 1000, scale(133, 100, $base)));
 if (.p_finduid(.uid) = true) {
     .p_preventlogout("You can't log out until 10 seconds after the end of combat.", 16);
 }
+if ($damage < 0) {
+    return;
+}
 .queue(pvp_damage, $delay, $damage);
 
 // needs to be a queue
@@ -184,6 +168,7 @@ if (inv_getobj(worn, ^wearpos_ring) = ring_of_recoil & .finduid(%pk_predator1) =
     // - "Recoil damage will now always target the entity that caused the initial damage, rather than the most recent entity to deal damage."
     // Having it here instead of the opplayer2 trigger will allow this bug to occur
     def_int $recoil_damage = add(scale(10, 100, $damage), 1);
+    $recoil_damage = min($recoil_damage, .stat(hitpoints));
     .queue(recoil_damage, 0, $recoil_damage);
     ~ring_of_recoil_lose_charge($recoil_damage);
 }

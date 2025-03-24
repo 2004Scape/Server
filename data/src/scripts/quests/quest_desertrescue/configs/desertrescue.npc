@@ -153,7 +153,7 @@ huntrange=1
 // Unknown reason osrs side this npc use unarmed attacks --attack seq_422 defend seq_424--
 // Stats match osrs version but our version Vislvl is different.
 
-[npc_828]
+[mercenary_1]
 name=Mercenary
 desc=He looks a bit aggressive.
 walkanim=human_walk_f,human_walk_b,human_walk_l,human_walk_r
@@ -203,7 +203,7 @@ param=defend_anim,human_sword_defend2
 param=attack_sound,hacksword_slash
 // Stats match osrs version but our version Vislvl is different.
 
-[npc_829]
+[mercenary_2]
 name=Mercenary
 desc=He looks a bit aggressive.
 walkanim=human_walk_f,human_walk_b,human_walk_l,human_walk_r
@@ -253,7 +253,7 @@ param=defend_anim,human_sword_defend2
 param=attack_sound,hacksword_slash
 // Stats match osrs version but our version Vislvl is different.
 
-[npc_830]
+[mercenary_captain]
 name=Mercenary Captain
 desc=He looks a bit aggressive.
 walkanim=human_walk_f,human_walk_b,human_walk_l,human_walk_r
@@ -339,7 +339,7 @@ head2=model_43_obj_wear
 head3=model_80_idk_head
 wanderrange=3
 
-[npc_841]
+[mine_cart_driver]
 vislevel=hide
 name=Mine cart driver
 desc=He looks busy attending to his cart.

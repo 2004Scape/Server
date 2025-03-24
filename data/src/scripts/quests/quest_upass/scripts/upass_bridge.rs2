@@ -79,7 +79,8 @@ p_delay(0);
 mes("The bridge falls.");
 mes("You rush across the bridge.");
 if(loc_find(0_38_151_11_52, loc_3239) = true) {
-    loc_change(loc_3240, 7);
+    // Temp note: dur updated
+    loc_change(loc_3240, 8);
 }
 p_delay(3);
 p_teleport(0_38_151_10_52);
@@ -89,13 +90,15 @@ if(%upass_progress = ^upass_spoken_koftik) %upass_progress = ^upass_passed_bridg
 mes("You pull the old lever...");
 anim(seq_798, 0);
 sound_synth(lever, 0, 0);
-loc_change(loc_3242, 3);
+// Temp note: dur updated
+loc_change(loc_3242, 4);
 ~forcemove(0_38_151_7_51);
 p_delay(2);
 ~forcemove(movecoord(coord, 1, 0, 1));
 p_delay(1);
 if(loc_find(0_38_151_11_52, loc_3239) = true) {
-    loc_change(loc_3240, 4);
+    // Temp note: dur updated
+    loc_change(loc_3240, 5);
 }
 ~forcemove(movecoord(coord, 2, 0, 0));
 p_delay(1);

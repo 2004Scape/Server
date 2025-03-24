@@ -5,16 +5,19 @@ def_loc $loc = nc_param($ent, (next_loc_stage));
 def_coord $coord = loc_coord;
 // for 3x3 trees
 if ($loc = null) {
+    // Temp note: dur does not need updated
     loc_change(loc_2639, 60);
     loc_add(movecoord($coord, 1, 0, 1), loc_2639, 0, centrepiece_straight, 60);
     loc_add(movecoord($coord, 2, 0, 0), loc_83, 0, centrepiece_straight, 60);
     loc_add(movecoord($coord, 0, 0, 2), loc_84, 0, centrepiece_straight, 60);
 } else {
+    // Temp note: dur does not need updated
     loc_change($loc, 60);
 }
 npc_add($coord, $ent, 60);
 sound_synth(anothercry, 0, 0); // complete guess, this is near the toher wc sounds so it might be this one?
 p_opnpc(1); // not sure if p_opnpc is used (delays an extra tick)
+%macro_event = ^no_macro_event;
 
 [opnpc1,_macro_event_ent] @attempt_cut_ent;
 [opnpc3,_macro_event_ent] @cut_ent;
@@ -110,9 +113,9 @@ if (inv_freespace(inv) < 1) {
 }
 
 if (%action_delay < map_clock) {
-    anim(struct_param(oc_param($axe, woodcutting_struct), skill_anim), 0);
     %action_delay = calc(map_clock + 3);
 } else if (%action_delay = map_clock) {
+    anim(struct_param(oc_param($axe, woodcutting_struct), skill_anim), 0);
     @macro_event_damage_axe($axe);
 }
 p_opnpc(3);

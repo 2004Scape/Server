@@ -56,18 +56,12 @@ while ($i < db_getfieldcount($effect_data, consume_table:stat_change)) {
             def_int $damage = calc(scale(abs($percent), 100, stat(hitpoints)) + abs($constant));
             ~damage_self($damage);
         } else {
-            stat_sub($stat, abs($constant), abs($percent));
+            stat_drain($stat, abs($constant), abs($percent));
         }
     } else {
         // increase
-        ~stat_addclamp($stat, $constant, $percent);
+        stat_boost($stat, $constant, $percent);
     }
-    $i = calc($i + 1);
-}
-// stat restore
-$i = 0;
-while ($i < db_getfieldcount($effect_data, consume_table:stat_restore)) {
-    ~stat_healbase(db_getfield($effect_data, consume_table:stat_restore, $i));
     $i = calc($i + 1);
 }
 // stat heal

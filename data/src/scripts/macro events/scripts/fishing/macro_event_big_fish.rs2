@@ -1,13 +1,11 @@
 // requires active npc
 [proc,macro_event_big_fish_spawn](namedobj $fishing_equipment)
 %macro_event = ^no_macro_event;
-if (p_finduid(uid) = false) {
-    return;
-}
 // todo: figure out sounds
 sound_synth(watersplash, 0, 0); // complete guess
 def_npc $old = npc_type;
-npc_changetype(macro_event_big_fish);
+npc_changetype(macro_event_big_fish, 5);
+// intentional: does not face the player coord. see vid
 npc_anim(fish_seq_3, 20);
 
 p_delay(0);
@@ -21,7 +19,7 @@ npc_anim(fish_seq_5, 0);
 
 p_delay(3);
 // seems to teleport twice, + does splash spot anim: https://youtu.be/ypNPoqhh5aw?list=PLn23LiLYLb1am4weMQzkWn5m9b3m9fXv9&t=386
-npc_changetype($old);
+npc_changetype($old, ^max_32bit_int);
 npc_tele(~fishing_spot_random_coord($old)); // move fishing spot. 
 // Might have a chance to move to the same spot: 
 // https://youtu.be/9z5XLWq4lZU?list=PLn23LiLYLb1am4weMQzkWn5m9b3m9fXv9&t=88
@@ -39,3 +37,4 @@ if (p_finduid(uid) = true) {
 npc_tele(~fishing_spot_random_coord($old)); // move fishing spot.
 spotanim_map(failedspell_impact, npc_coord, 94, 30);
 p_delay(0);
+// intentional: does not clear the action, player followsw to next spot. see vid

@@ -9,7 +9,7 @@ if(coordx(coord) <= coordx(loc_coord)) {
     return;
 }
 ~mesbox("You approach the cart and see undead creatures gathering by the village gates. There is a note attached to the cart. The note says,|@red@:: Danger :: Deadly green mist DO NOT ENTER IF YOU @red@VALUE YOUR LIFE!");
-if(npc_find(coord, npc_500, 8, 0) = true) {
+if(npc_find(coord, mosol_rei, 8, 0) = true) {
     if(random(2) = 0) ~chatnpc("<p,shock>Hey, move away from the cart please!|It's unsafe to go in there."); // chatnpc_specific in OSRS but chatnpc on RS3
     else ~chatnpc("<p,shock>You must be a maniac to go in there!|The whole place is swarming with zombies!");
 }
@@ -85,12 +85,15 @@ while(loc_findnext = true) {
     if(loc_category = shilo_metalgate) {
             def_coord $central_coord = loc_coord;
             def_int $orig_angle = loc_angle;
-            loc_del(2);
+            // Temp note: dur updated
+            loc_del(3);
             if(loc_type = loc_2259) {
-                loc_add(movecoord($central_coord, -1, 0, 0), loc_1562, 3, loc_shape, 2);
-                loc_add(movecoord($central_coord, -1, 0, 1), loc_1563, 1, loc_shape, 2);
+                // Temp note: dur updated
+                loc_add(movecoord($central_coord, -1, 0, 0), loc_1562, 3, loc_shape, 3);
+                loc_add(movecoord($central_coord, -1, 0, 1), loc_1563, 1, loc_shape, 3);
             }
-            loc_add($central_coord, loc_83, $orig_angle, loc_shape, 2);
+            // Temp note: dur updated
+            loc_add($central_coord, loc_83, $orig_angle, loc_shape, 3);
             sound_synth(grate_open, 0, 0);
     }
 }
@@ -104,10 +107,12 @@ if(%zombiequeen_progress >= ^zombiequeen_complete) {
             def_coord $central_coord = loc_coord;
             def_int $orig_angle = loc_angle;
             def_loc $type = loc_type;
-            loc_change(loc_83, 2);
+            // Temp note: dur updated
+            loc_change(loc_83, 3);
             if($type = loc_2261) {
-                loc_add(movecoord($central_coord, 1, 0, 0), loc_2263, 1, loc_shape, 2);
-                loc_add(movecoord($central_coord, 2, 0, 0), loc_2264, 1, loc_shape, 2); 
+                // Temp note: dur updated
+                loc_add(movecoord($central_coord, 1, 0, 0), loc_2263, 1, loc_shape, 3);
+                loc_add(movecoord($central_coord, 2, 0, 0), loc_2264, 1, loc_shape, 3); 
             }
         }
     }
@@ -268,16 +273,18 @@ while(loc_findnext = true) {
      if(loc_type = loc_2255 | loc_type = loc_2256) {
             def_coord $central_coord = loc_coord;
             def_int $orig_angle = loc_angle;
-            loc_del(2);
+            // Temp note: dur updated
+            loc_del(3);
             if(loc_type = loc_2255) {
-                loc_add(movecoord($central_coord, 0, 0, 1), loc_1562, 0, loc_shape, 2);
-                loc_add(movecoord($central_coord, 1, 0, 1), loc_1563, 2, loc_shape, 2); 
+                // Temp note: dur updated
+                loc_add(movecoord($central_coord, 0, 0, 1), loc_1562, 0, loc_shape, 3);
+                loc_add(movecoord($central_coord, 1, 0, 1), loc_1563, 2, loc_shape, 3); 
             }
-            loc_add($central_coord, loc_83, $orig_angle, loc_shape, 2);
+            // Temp note: dur updated
+            loc_add($central_coord, loc_83, $orig_angle, loc_shape, 3);
      }
 }
 sound_synth(grate_open, 0, 0);
-// this moves 2 tiles in 1t on osrs w/walking speed so we can't really recreate
 if(coordz(coord) > coordz($loc_coord)) {
     p_teleport(0_45_148_49_43);
 } else {
@@ -295,14 +302,17 @@ if(inv_total(worn, zqbeadsofthedead) > 0) {
 [queue,rash_queue] ~rash_summon;
 
 [proc,rash_summon]
-if(%zombiequeen_progress >= ^zombiequeen_complete | %zq_rash_timer > map_clock | inv_total(worn, zqbeadsofthedead) > 0) {
+if(%zombiequeen_progress >= ^zombiequeen_complete 
+    | %zq_rash_timer > map_clock 
+    | inv_total(worn, zqbeadsofthedead) > 0
+    | inzone(0_45_148_0_0, 0_45_148_63_63, coord) = false) {
     return;
 }
 mes("Rashiliyia appears!");
 def_coord $spawn_coord = map_findsquare(coord, 1, 1, ^map_findsquare_lineofwalk);
 spotanim_map(spotanim_184, $spawn_coord, 5, 0);
 facesquare($spawn_coord);
-npc_add($spawn_coord, npc_506, 100);
+npc_add($spawn_coord, Rashiliyia, 100);
 //sound_synth(swamp_gas, 0, 0);
 npc_setmode(playerface);
 %zq_rash_timer = calc(map_clock + 200);
@@ -673,7 +683,8 @@ switch_int(~p_choice3("A ladder", 1, "A crude raft", 2, "A pole vault", 3)) {
         ~mesbox("You see that this table already looks very sea worthy it takes virtually no time at all to help fix it into a crude raft.");
         if_close;
         mes("You place it carefully on the water!");
-        loc_add(0_45_146_17_29, loc_2227, 0, centrepiece_straight, 6);
+        // Temp note: dur updated
+        loc_add(0_45_146_17_29, loc_2227, 0, centrepiece_straight, 7);
         cam_shake(4, 0, 20, 5);
         cam_shake(1, 0, 20, 4);
         stat_advance(crafting, 30);
@@ -685,34 +696,40 @@ switch_int(~p_choice3("A ladder", 1, "A crude raft", 2, "A pole vault", 3)) {
         mes("You push off!");
         p_delay(1);
         say("Weeeeeeee!");
-        loc_del(1);
-        loc_add(0_45_146_12_17, loc_2227, 0, centrepiece_straight, 2);
+        // Temp note: dur updated
+        loc_del(2);
+        loc_add(0_45_146_12_17, loc_2227, 0, centrepiece_straight, 3);
         p_telejump(0_45_146_12_17);
         p_delay(1);
-        loc_del(1);
-        loc_add(0_45_146_22_7, loc_2227, 1, centrepiece_straight, 2);
+        // Temp note: dur updated
+        loc_del(2);
+        loc_add(0_45_146_22_7, loc_2227, 1, centrepiece_straight, 3);
         p_telejump(0_45_146_22_7);
         p_delay(1);
         say("Weeeeeeee!");
-        loc_del(1);
-        loc_add(0_45_146_38_6, loc_2227, 1, centrepiece_straight, 2);
+        // Temp note: dur updated
+        loc_del(2);
+        loc_add(0_45_146_38_6, loc_2227, 1, centrepiece_straight, 3);
         p_telejump(0_45_146_38_6);
         p_delay(1);
-        loc_del(1);
-        loc_add(0_45_146_47_7, loc_2227, 1, centrepiece_straight, 2);
+        // Temp note: dur updated
+        loc_del(2);
+        loc_add(0_45_146_47_7, loc_2227, 1, centrepiece_straight, 3);
         p_telejump(0_45_146_47_7);
         p_delay(1);
         mes("You come to a huge waterfall...");
         say("* Uh oh! *");
-        loc_del(1);
-        loc_add(0_45_146_55_7, loc_2227, 1, centrepiece_straight, 2);
+        // Temp note: dur updated
+        loc_del(2);
+        loc_add(0_45_146_55_7, loc_2227, 1, centrepiece_straight, 3);
         p_telejump(0_45_146_55_7);
         cam_moveto(0_45_146_48_7, 550, 100, 100);
         cam_lookat(0_46_146_7_7, 20, 100, 100);
         p_delay(1);
         mes("...And plough through it!");
-        loc_del(1);
-        loc_add(0_45_146_61_7, loc_2227, 1, centrepiece_straight, 2);
+        // Temp note: dur updated
+        loc_del(2);
+        loc_add(0_45_146_61_7, loc_2227, 1, centrepiece_straight, 3);
         p_teleport(0_45_146_61_7);
         p_delay(1);
         cam_reset;
@@ -720,24 +737,32 @@ switch_int(~p_choice3("A ladder", 1, "A crude raft", 2, "A pole vault", 3)) {
         facesquare(movecoord(coord, 8, 0, 0));
         p_delay(0);
         p_telejump(movecoord(coord, 1, 0, 0));
-        loc_add(coord, loc_2227, 1, centrepiece_straight, 2);
+        // Temp note: dur updated
+        loc_add(coord, loc_2227, 1, centrepiece_straight, 3);
         p_delay(1);
-        loc_del(1);
+        // Temp note: dur updated
+        loc_del(2);
         p_telejump(movecoord(coord, 1, 0, 0));
-        loc_add(coord, loc_2227, 1, centrepiece_straight, 7);
+        // Temp note: dur updated
+        loc_add(coord, loc_2227, 1, centrepiece_straight, 8);
         p_delay(0);
         mes("The raft soons breaks up.");
-        loc_change(loc_1988, 5);
+        // Temp note: dur updated
+        loc_change(loc_1988, 6);
         ~agility_exactmove(human_sidestep_fall, 5, 0, coord, movecoord(coord, 0, 0, 1), 6, 30, ^exact_east, false);
-        loc_del(1);
+        // Temp note: dur updated
+        loc_del(2);
         sound_synth(pool_plop, 0, 0);
         spotanim_map(watersplash, coord, 0, 0);
-        loc_add(movecoord(coord, 1, 0, 0), loc_1988, 1, centrepiece_straight, 5);
+        // Temp note: dur updated
+        loc_add(movecoord(coord, 1, 0, 0), loc_1988, 1, centrepiece_straight, 6);
         ~set_readyandwalk_bas(seq_773, seq_773, human_swim);
         p_delay(0);
         ~forcemove(movecoord(coord, 0, 0, 1));
         ~update_bas;
-        loc_del(1);
+        // Temp note: dur updated
+        loc_del(2);
+        // Temp note: dur does not need updated ? @indio
         loc_add(0_45_46_53_7, loc_1988, 1, centrepiece_straight, 10);
         ~forcemove(movecoord(coord, 0, 0, 1));
     case 3 :
@@ -937,7 +962,7 @@ if(inzone(0_43_48_42_15, 0_43_48_46_18, coord) = true) {
     if_close;
     spotanim_map(small_smokepuff, $spawn_coord, 5, 0);
     p_delay(0); // 1t
-    npc_add($spawn_coord, npc_501, 30);
+    npc_add($spawn_coord, zadimus_spirit, 30);
     ~chatnpc("<p,neutral>You have released me from my torture, and now I shall aid you. You seek to dispell the one who tortured and killed me. Remember this... 'I am the key, but only kin may approach her.'");
     inv_del(inv, zadimus_corpse, 1);
     inv_add(inv, bone_shard, 1);
@@ -1099,12 +1124,12 @@ if(last_useitem = rashiliya_corpse) {
     if(%zombiequeen_progress = ^zombiequeen_retrieved_corpse) {
         ~objbox(rashiliya_corpse, "You carefully place Rashiliyia's remains on the dolmen.|You feel a strange vibration in the air.", 250, 0, 0);
         if_close;
-        if(npc_find(coord, npc_506, 7, 0) = false) {
+        if(npc_find(coord, Rashiliyia, 7, 0) = false) {
             def_coord $spawn_coord = map_findsquare(coord, 1, 1, ^map_findsquare_lineofwalk);
             spotanim_map(spotanim_184, $spawn_coord, 5, 0);
             // swamp_gas
             p_delay(0); // 1t
-            npc_add($spawn_coord, npc_506, 100); // 100t osrs
+            npc_add($spawn_coord, Rashiliyia, 100); // 100t osrs
         }
         ~chatnpc("<p,happy>You have my gratitude for releasing my spirit.|I have suffered a vengeful and evil existence.|I was tricked by Zamorak.|He returned my son to me as an undead creature."); // imgur.com/GoUvoVV
         ~chatnpc("<p,happy>My hatred and bitterness corrupted me. I tried to destroy all life... now I am released. And am grateful to contemplate eternal rest...");
@@ -1181,6 +1206,10 @@ switch_int(~p_choice2_header("Yes, I'm sure.", 1, "Nope, I've had second thought
 }
 
 [opheld1,zqcrystal]
+if(%zombiequeen_progress >= ^zombiequeen_complete) {
+    mes("The crystal does not respond anymore.");
+    return;
+}
 if(stat(prayer) < 10) {
     ~objbox(zqcrystal, "You feel the crystal trying to draw upon your spiritual energy, but you have no spiritual energy at the moment. You need a Prayer level of at least 10 for it to work.", 250, 0, 0);
     return;
@@ -1202,7 +1231,7 @@ if ($op = 2) {
 
 [label,zqcrystal_activate]
 def_coord $central_coord = 0_45_48_36_20;
-stat_sub(prayer, 0, ~random_range(2,4));
+stat_drain(prayer, 0, add(2, random(3))); // 2-4%
 if(distance(coord, $central_coord) < 10) {
     ~objbox(zqcrystal_white, "The crystal blazes brilliantly.", 250, 0, 0);
 } else if(distance(coord, $central_coord) < 50) {
@@ -1331,12 +1360,13 @@ if(coordz(coord) <= coordz(loc_coord)) {
     p_teleport(loc_coord);
 }
 if((loc_find(0_45_148_12_8, loc_2246) = true | loc_find(0_45_148_12_8, loc_2248) = true | loc_find(0_45_148_12_8, loc_2249) = true) & (.loc_find(0_45_148_13_8, loc_2247) = true | .loc_find(0_45_148_13_8, loc_2250) = true)) {
-    loc_change(loc_2249, 2);
-    .loc_change(loc_2250, 2);
-    loc_change(loc_83, 2);
-    .loc_change(loc_83, 2);
-    loc_add(movecoord(loc_coord, 0, 0, 1), loc_2251, 0, loc_shape, 2);
-    .loc_add(movecoord(.loc_coord, 0, 0, 1), loc_2252, 2, .loc_shape, 2);
+    // Temp note: dur updated
+    loc_change(loc_2249, 3);
+    .loc_change(loc_2250, 3);
+    loc_change(loc_83, 3);
+    .loc_change(loc_83, 3);
+    loc_add(movecoord(loc_coord, 0, 0, 1), loc_2251, 0, loc_shape, 3);
+    .loc_add(movecoord(.loc_coord, 0, 0, 1), loc_2252, 2, .loc_shape, 3);
     sound_synth(coffin_open, 0, 0);
 }
 
@@ -1494,7 +1524,7 @@ if(%zombiequeen_progress >= ^zombiequeen_complete) {
 npc_huntall(coord, 5, 0);
 while (npc_huntnext = true) {
     // attacking_uid check (not aggrewssive check)
-    if((npc_type = npc_507 | npc_type = npc_508 | npc_type = npc_509) & %npc_attacking_uid = uid) {
+    if((npc_type = nazastarool_zombie | npc_type = nazastarool_skeleton | npc_type = nazastarool_ghost) & %npc_attacking_uid = uid) {
         mes("The dolmen remains silent.");
         return;
     }
@@ -1510,13 +1540,13 @@ p_delay(~random_range(4,7)); // 5-8t, seems completely random?
 @summon_nazastarool;
 
 [label,summon_nazastarool]
-if(~obj_gettotal(rashiliya_corpse) > 0) { // don't spawn next form if player has the corpse, no stage check
+if(~obj_gettotal(rashiliya_corpse) > 0 | inzone(0_45_148_0_0, 0_45_148_63_63, coord) = false) { // don't spawn next form if player has the corpse, or if out of mapsquare, no stage check
     return;
 }
 // this is reset after you kill it, if you kill the 2nd or 3rd phase after this it will summon the 1st + 3rd, or 1st + 2nd
 if(testbit(%zq_map_mechanisms, ^zq_defeated_nazastarool1) = false) {
     def_coord $spawn_coord = map_findsquare(coord, 1, 1, ^map_findsquare_lineofwalk);
-    npc_add($spawn_coord, npc_507, 500); // 500t osrs
+    npc_add($spawn_coord, nazastarool_zombie, 500); // 500t osrs
     npc_say("Who dares disturb Rashiliyia's rest?");
     npc_setmode(playerface);
     %npc_aggressive_player = uid;
@@ -1525,7 +1555,7 @@ if(testbit(%zq_map_mechanisms, ^zq_defeated_nazastarool1) = false) {
     if(p_finduid(%npc_aggressive_player) = true) ~npc_retaliate(0);
 } else if(testbit(%zq_map_mechanisms, ^zq_defeated_nazastarool2) = false) {
     def_coord $spawn_coord = map_findsquare(coord, 1, 2, ^map_findsquare_lineofwalk);
-    npc_add($spawn_coord, npc_508, 500); // 500t osrs
+    npc_add($spawn_coord, nazastarool_skeleton, 500); // 500t osrs
     npc_say("Quake in fear, for I am reborn!");
     npc_setmode(playerface);
     %npc_aggressive_player = uid;
@@ -1534,7 +1564,7 @@ if(testbit(%zq_map_mechanisms, ^zq_defeated_nazastarool1) = false) {
     if(p_finduid(%npc_aggressive_player) = true) ~npc_retaliate(0);
 } else if(testbit(%zq_map_mechanisms, ^zq_defeated_nazastarool3) = false) {
     def_coord $spawn_coord = map_findsquare(coord, 1, 2, ^map_findsquare_lineofwalk);
-    npc_add($spawn_coord, npc_509, 500); // 500t osrs
+    npc_add($spawn_coord, nazastarool_ghost, 500); // 500t osrs
     npc_say("Nazastarool returns with vengeance!");
     npc_setmode(playerface);
     npc_delay(1); 
@@ -1577,7 +1607,7 @@ switch_int(~p_choice2("Yes, I am sure.", 1, "No, I'll keep hold of the remains."
         sound_synth(smokepuff, 0, 0);
         p_delay(1); // 2t
         obj_del;
-        npc_add($coord, npc_506, 30);
+        npc_add($coord, Rashiliyia, 30);
         %npc_attacking_uid = null;
         ~chatnpc("<p,angry>You have my gratitude for releasing me, there is still much that needs to be done before Shilo Village is utterly destroyed. Please excuse me, I have plans and people to execute!");
         spotanim_map(small_smokepuff, $coord, 5, 0);
@@ -1592,10 +1622,10 @@ cam_reset;
 
 [proc,random_undead_one]()(npc)
 switch_int(random(4)) {
-    case 0 : return (npc_502);
-    case 1 : return (npc_503);
-    case 2 : return (npc_504);
-    case 3 : return (npc_505);
+    case 0 : return (undead1_skeleton);
+    case 1 : return (undead1_skeleton_armed);
+    case 2 : return (undead1_zombie);
+    case 3 : return (undead1_zombie_armed);
 }
 
 [queue,zombiequeen_quest_complete]

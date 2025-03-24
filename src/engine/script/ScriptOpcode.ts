@@ -182,6 +182,8 @@ enum ScriptOpcode {
     STAT_BASE, // official
     STAT_HEAL, // official
     STAT_SUB,
+    STAT_BOOST, // official
+    STAT_DRAIN,
     STRONGQUEUE,
     UID, // official
     WEAKQUEUE, // official
@@ -442,7 +444,7 @@ enum ScriptOpcode {
     MAP_LASTBANDWIDTHOUT,
     TIMESPENT, // custom: used to profile script execution (record start time)
     GETTIMESPENT, // custom: used to profile script execution (current duration)
-    CONSOLE,
+    CONSOLE
 }
 
 export default ScriptOpcode;

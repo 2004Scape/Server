@@ -9,7 +9,8 @@ if(%desertrescue_progress >= ^desertrescue_given_pineapple) {
         ~forcewalk(0_49_47_33_37);
         p_delay(max(0, calc(3 - $dist)));
     }
-    if(loc_find(0_49_47_33_38, loc_2700) = true) loc_change(loc_2701, 2);
+    // Temp note: dur updated
+    if(loc_find(0_49_47_33_38, loc_2700) = true) loc_change(loc_2701, 3);
     p_teleport(0_49_47_33_38);
     p_delay(3);
     return;
@@ -31,7 +32,8 @@ if(%desertrescue_progress >= ^desertrescue_given_pineapple) {
             ~forcewalk(0_49_47_33_37);
             p_delay(max(0, calc(3 - $dist)));
         }
-        if(loc_find(0_49_47_33_38, loc_2700) = true) loc_change(loc_2701, 2);
+        // Temp note: dur updated
+        if(loc_find(0_49_47_33_38, loc_2700) = true) loc_change(loc_2701, 3);
         p_teleport(0_49_47_33_38);
         p_delay(3);
     }
@@ -39,7 +41,8 @@ if(%desertrescue_progress >= ^desertrescue_given_pineapple) {
 
 [oploc1,loc_2700]
 if(testbit(%desertrescue_map_mechanisms, ^desertrescue_gained_tent_access) = true & %desertrescue_progress < ^desertrescue_learned_darts) {
-    loc_change(loc_2701, 2);
+    // Temp note: dur updated
+    loc_change(loc_2701, 3);
     if(coordz(coord) >= coordz(loc_coord)) {
         mes("You walk out of the tent.");
         p_teleport(0_49_47_33_37);
@@ -59,7 +62,8 @@ if(testbit(%desertrescue_map_mechanisms, ^desertrescue_gained_tent_access) = tru
             if_close;
             %desertrescue_map_mechanisms = setbit(%desertrescue_map_mechanisms, ^desertrescue_gained_tent_access);
             p_teleport(movecoord(coord, 0, 0, 1));
-            loc_change(loc_2701, 2); // curtain_open
+            // Temp note: dur updated
+            loc_change(loc_2701, 3); // curtain_open
             p_delay(3);
         } else { // todo - confirm mesanims
             ~chatnpc("<p,neutral>Sorry, no one is allowed to enter.");
@@ -83,7 +87,8 @@ if(last_useitem = technical_plans) {
             if_close;
             %desertrescue_map_mechanisms = setbit(%desertrescue_map_mechanisms, ^desertrescue_gained_tent_access);
             p_teleport(movecoord(coord, 0, 0, 1));
-            if(loc_find(0_49_47_33_38, loc_2700) = true) loc_change(loc_2701, 2);
+            // Temp note: dur updated
+            if(loc_find(0_49_47_33_38, loc_2700) = true) loc_change(loc_2701, 3);
         case ^desertrescue_retrieved_plans :
             ~chatnpc("<p,neutral>Hmm, those plans look interesting. Go and show them to Al Shabim... I'm sure he'll be pleased to see them.");
     }

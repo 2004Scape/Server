@@ -1,4 +1,4 @@
-import Jagfile, {genHash} from '#/io/Jagfile.js';
+import Jagfile, { genHash } from '#/io/Jagfile.js';
 import Packet from '#/io/Packet.js';
 
 describe('Jagfile', (): void => {

@@ -57,8 +57,14 @@ mes("You cannot open the grill from this side.");
 
 [oploc1,loc_3235]
 p_arrivedelay;
+if(%upass_area1_pipe_used >= map_clock) {
+    mes("The pipe is being used"); // todo: confirm, using the same as gnome course
+    return;
+}
+%upass_area1_pipe_used = calc(map_clock + 6);
 mes("You open the grating.");
-loc_change(loc_3236, 9);
+// Temp note: dur updated!!! nice even number :)
+loc_change(loc_3236, 10);
 ~agility_exactmove(human_pipesqueeze, 30, 3, coord, movecoord(coord, 0, 0, 3), 30, 126, ^exact_north, true);
 sound_synth(squeeze_in, 0, 0);
 mes("You crawl through the pipe.");
@@ -97,7 +103,8 @@ mes("You tie the rope to the rock...");
 anim(seq_775, 0);
 p_delay(0);
 inv_del(inv, rope, 1);
-loc_change(loc_2273, 4);
+// Temp note: dur updated
+loc_change(loc_2273, 5);
 p_delay(0);
 // https://youtu.be/zGVrFETj96E?si=-LiJOUm_2GMCx7VU&t=144, might need more data
 if(stat_random(stat(agility), 100, 410) = false) {
@@ -119,18 +126,18 @@ mes("You've lost your rope.");
 [oploc1,loc_2274]
 def_coord $start_pos = movecoord(loc_coord, 4, 0, 0);
 def_int $delay = distance(coord, $start_pos);
-if(coordz(coord) < coordz($start_pos)) {
+if(coordx(coord) < coordx(movecoord($start_pos, -1, 0, 0))) {
     mes("You cannot do that from here.");
     return;
 }
 p_delay(0);
 p_teleport($start_pos);
-if(%barb_ropeswing_used >= map_clock) {
+if(%upass_swampswing_used >= map_clock) {
     ~mesbox("The rope swing is being used");
     return;
 }
-%barb_ropeswing_used = calc(map_clock + 3);
-p_delay($delay);
+%upass_swampswing_used = calc(map_clock + 3);
+if($delay > 0) p_delay($delay);
 loc_anim(rope_swing);
 ~agility_exactmove(human_ropeswing, 20, 1, $start_pos, movecoord($start_pos, -5, 0, 0), 45, 70, ^exact_west, false);
 mes("You skillfully swing across.");
@@ -187,18 +194,23 @@ if(last_useitem = plank) {
     sound_synth(put_down, 0, 0);
     p_delay(1);
     mes("...and quickly walk over.");
-    loc_del(4);
+    // Temp note: dur updated
+    loc_del(5);
     if(coordz(coord) > coordz(loc_coord)) {
-        loc_add(loc_coord, loc_3231, 0, grounddecor, 4);
+        // Temp note: dur updated
+        loc_add(loc_coord, loc_3231, 0, grounddecor, 5);
         ~forcemove(movecoord(loc_coord, 0, 0, -1));
     } else if(coordz(coord) < coordz(loc_coord)) {
-        loc_add(loc_coord, loc_3231, 0, grounddecor, 4);
+        // Temp note: dur updated
+        loc_add(loc_coord, loc_3231, 0, grounddecor, 5);
         ~forcemove(movecoord(loc_coord, 0, 0, 1));
     } else if(coordx(coord) > coordx(loc_coord)) {
-        loc_add(loc_coord, loc_3231, 1, grounddecor, 4);
+        // Temp note: dur updated
+        loc_add(loc_coord, loc_3231, 1, grounddecor, 5);
         ~forcemove(movecoord(loc_coord, -1, 0, 0));
     } else {
-        loc_add(loc_coord, loc_3231, 1, grounddecor, 4);
+        // Temp note: dur updated
+        loc_add(loc_coord, loc_3231, 1, grounddecor, 5);
         ~forcemove(movecoord(loc_coord, 1, 0, 0));
     }
 }
@@ -340,7 +352,7 @@ if(stat_random(stat(agility), 90, 300) = false) {
     if(testbit(%upass_map_mechanisms, ^upass_koftik_gone_insane) = false) {
         p_delay(0);
         // todo: figure out how long this should be, only works this way on RS3
-        npc_add(map_findsquare(coord, 1, 2, ^map_findsquare_lineofwalk), npc_975, 200);
+        npc_add(map_findsquare(coord, 1, 2, ^map_findsquare_lineofwalk), koftik_4, 200);
         @koftik_isthatyou;
     }
     return;

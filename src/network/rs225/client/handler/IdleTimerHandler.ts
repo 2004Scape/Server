@@ -1,5 +1,5 @@
-import MessageHandler from '#/network/client/handler/MessageHandler.js';
 import Player from '#/engine/entity/Player.js';
+import MessageHandler from '#/network/client/handler/MessageHandler.js';
 import IdleTimer from '#/network/client/model/IdleTimer.js';
 import Environment from '#/util/Environment.js';
 

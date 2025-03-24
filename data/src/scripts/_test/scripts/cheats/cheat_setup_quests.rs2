@@ -1,0 +1,72 @@
+[debugproc,setup_sheep_herder]
+if_close;
+if (p_finduid(uid) = true) {
+    inv_add(inv, coins, 5000);
+    ~player_teleport_normal(0_40_51_55_37);
+} else {
+    @please_finish;
+}
+
+[debugproc,setup_waterfall_quest]
+if_close;
+if (p_finduid(uid) = true) {
+    inv_add(inv, airrune, 6);
+    inv_add(inv, firerune, 6);
+    inv_add(inv, earthrune, 6);
+    inv_add(inv, rope, 1);
+    stat_advance(hitpoints, calc(50000 * 10));
+    ~player_teleport_normal(0_39_54_30_40);
+} else {
+    @please_finish;
+}
+
+[debugproc,setup_druidic_ritual]
+if_close;
+if (p_finduid(uid) = true) {
+    ~player_teleport_normal(0_45_54_44_27);
+    inv_add(inv, raw_chicken, 1);
+    inv_add(inv, raw_beef, 1);
+    inv_add(inv, raw_rat_meat, 1);
+    inv_add(inv, raw_bear_meat, 1);
+} else {
+    @please_finish;
+}
+
+[debugproc,setup_witches_house]
+if_close;
+if (p_finduid(uid) = true) {
+    ~player_teleport_normal(0_45_53_50_60);
+    inv_add(inv, cheese, 2);
+    inv_add(inv, leather_gloves, 1);
+} else {
+    @please_finish;
+}
+
+[debugproc,setup_dwarf_cannon]
+if_close;
+if (p_finduid(uid) = true) {
+    ~player_teleport_normal(0_40_54_12_7);
+    stat_advance(agility, calc(10000 * 10));
+    stat_advance(magic, calc(100000 * 10));
+    inv_add(inv, airrune, 50);
+    inv_add(inv, lawrune, 20);
+    inv_add(inv, waterrune, 20);
+} else {
+    @please_finish;
+}
+
+[debugproc,setup_temple_of_ikov]
+if_close;
+if (p_finduid(uid) = true) {
+    ~player_teleport_normal(0_40_51_18_56);
+    stat_advance(ranged, calc(100000 * 10));
+    stat_advance(thieving, calc(100000 * 10));
+    inv_add(bank, knife, 5);
+    inv_add(bank, limpwurt_root, 50);
+    inv_add(bank, candle,5);
+    inv_add(bank, tinderbox, 5);
+    inv_add(bank, rune_arrow, 500);
+    mes("Please check your ::~bank");
+} else {
+    @please_finish;
+}

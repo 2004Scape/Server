@@ -1,6 +1,6 @@
-import MessageEncoder from '#/network/server/codec/MessageEncoder.js';
 import Packet from '#/io/Packet.js';
 import ServerProt from '#/network/rs225/server/prot/ServerProt.js';
+import MessageEncoder from '#/network/server/codec/MessageEncoder.js';
 import IfSetText from '#/network/server/model/IfSetText.js';
 
 export default class IfSetTextEncoder extends MessageEncoder<IfSetText> {
