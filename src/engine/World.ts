@@ -45,6 +45,7 @@ import Loc from '#/engine/entity/Loc.js';
 import { isClientConnected, NetworkPlayer } from '#/engine/entity/NetworkPlayer.js';
 import Npc from '#/engine/entity/Npc.js';
 import NpcStat from '#/engine/entity/NpcStat.js';
+import { NpcEventRequest, NpcEventType } from '#/engine/entity/NpcEventRequest.js';
 import Obj from '#/engine/entity/Obj.js';
 import Player from '#/engine/entity/Player.js';
 import { PlayerLoading } from '#/engine/entity/PlayerLoading.js';
@@ -137,6 +138,7 @@ class World {
     // zones
     readonly zonesTracking: Map<number, Set<Zone>>;
     readonly queue: LinkList<EntityQueueState>;
+    readonly npcEventQueue: LinkList<NpcEventRequest>;
 
     // debug data
     readonly lastCycleStats: number[];
@@ -161,6 +163,7 @@ class World {
         this.npcs = new NpcList(World.NPCS);
         this.zonesTracking = new Map();
         this.queue = new LinkList();
+        this.npcEventQueue = new LinkList();
         this.lastCycleStats = new Array(12).fill(0);
         this.cycleStats = new Array(12).fill(0);
 
@@ -352,7 +355,6 @@ class World {
 
             // world processing
             // - world queue
-            // - npc spawn scripts
             // - npc hunt
             this.processWorld();
 
@@ -362,6 +364,9 @@ class World {
             // - process pathfinding/following request
             // - client input tracking
             this.processClientsIn();
+
+            // Spawn triggers, despawn triggers
+            this.processNpcEventQueue();
 
             // npc processing (if npc is not busy)
             // - resume suspended script
@@ -566,20 +571,6 @@ class World {
                     }
                 }
             }
-
-            // This is slightly redundant with isActive, but also checks if npc is delayed
-            // Spawn triggers shouldn't run if delayed
-            if (npc.isValid()) {
-                // Check if spawn trigger is pending
-                if (npc.spawnTriggerPending) {
-                    const type = NpcType.get(npc.type);
-                    const script = ScriptProvider.getByTrigger(ServerTriggerType.AI_SPAWN, type.id, type.category);
-                    if (script) {
-                        npc.executeScript(ScriptRunner.init(script, npc));
-                    }
-                    npc.spawnTriggerPending = false;
-                }
-            }
         }
 
         this.cycleStats[WorldStat.WORLD] = Date.now() - start;
@@ -656,6 +647,18 @@ class World {
         this.cycleStats[WorldStat.CLIENT_IN] = Date.now() - start;
     }
 
+    // Despawn and respawn
+    private processNpcEventQueue(): void {
+        for (const request of this.npcEventQueue.all()) {
+            const npc = request.npc;
+            if (!npc.delayed) {
+                request.unlink();
+                const state = ScriptRunner.init(request.script, npc);
+                npc.executeScript(state);
+            }
+        }
+    }
+
     // - resume suspended script
     // - stat regen
     // - timer
@@ -689,6 +692,12 @@ class World {
                         // Despawn NPC
                         else if (npc.lifecycle === EntityLifeCycle.DESPAWN) {
                             this.removeNpc(npc, -1);
+                            // Queue despawn trigger
+                            const type = NpcType.get(npc.type);
+                            const script = ScriptProvider.getByTrigger(ServerTriggerType.AI_DESPAWN, type.id, type.category);
+                            if (script) {
+                                this.npcEventQueue.addTail(new NpcEventRequest(NpcEventType.DESPAWN, script, npc));
+                            }
                         }
                         npc.setLifeCycle(-1);
                     } catch (err) {
@@ -1336,6 +1345,13 @@ class World {
 
         npc.resetEntity(true);
         npc.playAnimation(-1, 0);
+
+        // Queue spawn trigger
+        const type = NpcType.get(npc.type);
+        const script = ScriptProvider.getByTrigger(ServerTriggerType.AI_SPAWN, type.id, type.category);
+        if (script) {
+            this.npcEventQueue.addTail(new NpcEventRequest(NpcEventType.SPAWN, script, npc));
+        }
 
         npc.setLifeCycle(this.currentTick + duration);
     }

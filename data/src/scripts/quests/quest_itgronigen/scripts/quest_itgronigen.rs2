@@ -259,6 +259,7 @@ switch_int($constellation_numb) {
         inv_add(inv, amulet_of_defence, 1);
 }
 stat_advance(crafting, 22500);
+inv_add(inv, uncut_sapphire, 1);
 %itgronigen_progress = ^itgronigen_complete;
 %questpoints = calc(%questpoints + ^itgronigen_questpoints);
 queue(itgronigen_quest_complete, 0);
