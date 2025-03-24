@@ -15,7 +15,7 @@ else mes("Unhandled dialogue stage"); // todo
 ~mesbox("The Shaman seems to be fighting an inner battle.");
 ~chatnpc("<p,neutral>Go... go now...!");
 ~mesbox("The Shaman seems to change in front of your eyes...");
-npc_changetype(ungadulu_possessed); // 100t
+npc_changetype(ungadulu_possessed, 100); // 100t
 ~chatnpc("<p,neutral>Welcome Vacu, to eternal...");
 if_close;
 mes("The Shaman starts an incantation...");
@@ -26,16 +26,11 @@ mes("You feel very weak...");
 p_delay(1);
 mes("The Shaman seems to get stronger!");
 p_delay(1);
-npc_changetype(ungadulu);
+npc_changetype(ungadulu, 100);
 mes("The Shaman seems to return to normal...");
 ~chatnpc("<p,neutral>Run, run away... Run like the leopard Bwana!");
 // seems to be set after the dialogue is complete?
 settimer(ungadulu_curse, 40);
-
-[ai_timer,ungadulu_possessed]
-npc_changetype(ungadulu);
-npc_tele(0_43_145_40_47);
-npc_settimer(0);
 
 [timer,ungadulu_curse]
 cleartimer(ungadulu_curse);
@@ -75,7 +70,7 @@ if (%legends_progress < ^legends_spoke_ungadulu) {
 [label,ungadulu_extinguish]
 ~chatplayer("<p,neutral>How can I extinguish the flames?");
 ~chatnpc("<p,shock>Please don't try to extinguish...");
-npc_changetype(ungadulu_possessed);
+npc_changetype(ungadulu_possessed, 1);
 // https://media.discordapp.net/attachments/936714977685958678/1195794230690447400/419624878_10161030270160560_5504501485089454437_n.jpg?ex=67d321a9&is=67d1d029&hm=d5f81563fa219807006db3cbfd21c1c7e2fc5f3fcfcf1144482e22ddbc928114&=&format=webp&width=1126&height=845
 ~chatnpc("<p,angry>Yes, douse the flames with water,|pure water...|foo...");
 // double space intentional
@@ -88,10 +83,10 @@ npc_changetype(ungadulu_possessed);
 [label,ungadulu_where]
 ~chatplayer("<p,neutral>Where do I get pure water from?");
 ~chatnpc("<p,shock>Please, leave now...");
-npc_changetype(ungadulu_possessed);
+npc_changetype(ungadulu_possessed, 1);
 ~chatnpc("<p,angry>...from the above lands... hurry and release me...");
 ~chatnpc("<p,shock>Leave here, please, go... now...");
-npc_changetype(ungadulu_possessed);
+npc_changetype(ungadulu_possessed, 1);
 ~chatnpc("<p,madlaugh>Hurry, Vacu, the heat kills me... ha ha ha");
 %legends_map_runes = setbit(%legends_map_runes, ^legends_ungadulu_called_vacu);
 ~mesbox("The Shaman throws himself down on the floor and starts convulsing.");
@@ -99,7 +94,7 @@ npc_changetype(ungadulu_possessed);
 [label,ungadulu_who]
 ~chatplayer("<p,neutral>Who are you?");
 ~chatnpc("<p,sad>I am Ungadulu, trapped here many years now... Leave these caves and save yourself...");
-npc_changetype(ungadulu_possessed);
+npc_changetype(ungadulu_possessed, 1);
 ~chatnpc("<p,angry>Wait... get pure water from the pool... above lands...");
 %legends_map_runes = setbit(%legends_map_runes, ^legends_asked_ungadulu_where);
 %legends_map_runes = setbit(%legends_map_runes, ^legends_asked_ungadulu_who);
@@ -172,7 +167,7 @@ else {
     npc_setmode(playerface);
     mes("The shaman casts a spell!");
     if(%legends_progress < ^legends_defeated_nezikchened_fire) {
-        npc_changetype(ungadulu_possessed);
+        npc_changetype(ungadulu_possessed, 1);
         npc_say("Ha ha ha ha! Die, Vacu!");
     } else {
         npc_say("Hey! That's no way to treat a shaman.");
