@@ -24,8 +24,7 @@ export class PlayerLoading {
         }
 
         sav.pos = sav.data.length - 4;
-        const crc = sav.g4();
-        return crc == Packet.getcrc(sav.data, 0, sav.data.length - 4);
+        return sav.g4() === Packet.getcrc(sav.data, 0, sav.data.length - 4);
     }
 
     static load(name: string, sav: Packet, client: ClientSocket | null) {
