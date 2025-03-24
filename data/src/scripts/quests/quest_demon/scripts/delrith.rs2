@@ -2,27 +2,21 @@
 // https://runescape.salmoneus.net/forums/topic/366965-cant-get-past-demon-slayer/
 
 [ai_queue3,delrith]
-[ai_queue4,delrith] gosub(npc_death);
-
-[ai_queue2,delrith]
-~npc_default_damage(last_int);
-if (npc_stat(hitpoints) = 0) {
-    if (finduid(%npc_aggressive_player) = true) {
-        queue(delrith_death, 1);
-    }
+if (finduid(%npc_aggressive_player) = false) {
+    npc_statheal(hitpoints, 0, 100);
+    return;
 }
+// 100t is guessed
+npc_changetype(weakened_delrith, 100); // needs to be npc_changetype command
+npc_setmode(none);
+npc_walk(npc_coord);
 
-[queue,delrith_death]
 if_close;
-if (npc_find(coord, delrith, 8, 0) = true) {
-    npc_changetype(weakened_delrith, ^max_32bit_int);
-    npc_setmode(none); // stop fighting
-}
+queue(demon_slayer_start_incantation, 0);
+
 
 // https://www.youtube.com/watch?v=rjQprrDDUfE
-
-p_stopaction;
-p_delay(1);
+[queue,demon_slayer_start_incantation]
 ~chatplayer("<p,angry>Now what was that incantation again?");
 def_int $option = ~p_choice4("Carlem Gabindo Purchai Zaree Camerinthum", 1, "Purchai Zaree Gabindo Carlem Camerinthum", 2, "Purchai Camerinthum Aber Gabindo Carlem", 3, "Carlem Aber Camerinthum Purchai Gabindo", 4);
 
@@ -62,10 +56,3 @@ if (npc_find(coord, weakened_delrith, 8, 0) = true) {
     queue(demon_slayer_complete, 1);
     return;
 }
-
-// Everything below here is a guess. This is set up so if a player doesn't kill weakened delrith he becomes
-// Regular delrith again after a minute.
-[ai_timer,weakened_delrith]
-npc_changetype(delrith, ^max_32bit_int);
-npc_statheal(hitpoints, 0, 100);
-npc_setmode(none);
