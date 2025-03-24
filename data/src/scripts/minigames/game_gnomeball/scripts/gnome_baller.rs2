@@ -15,11 +15,9 @@ if (p_finduid(uid) = true) {
 }
 
 [proc,npc_gnomeball_tackle_fail]
-def_npc $old = npc_type;
 npc_anim(midget_seq_207, 0);
-npc_changetype(npc_param(gnome_fallen), ^max_32bit_int);
+npc_changetype(npc_param(gnome_fallen), 5);
 npc_delay(5);
-npc_changetype($old, ^max_32bit_int);
 npc_anim(midget_seq_209, 0);
 npc_delay(0);
 %npc_attacking_uid = null;
@@ -87,10 +85,9 @@ npc_anim(midget_seq_203, 30);
 npc_setmode(none);
 p_delay(0);
 ~update_all(gnomeball);
-npc_changetype(nc_param($original, gnome_tackled), ^max_32bit_int);
+npc_changetype(nc_param($original, gnome_tackled), 9);
 npc_delay(9);
 npc_setmode(null);
-npc_changetype($original, ^max_32bit_int);
 npc_anim(midget_seq_206, 0);
 npc_delay(0);
 

@@ -4,7 +4,8 @@
 // todo: figure out sounds
 sound_synth(watersplash, 0, 0); // complete guess
 def_npc $old = npc_type;
-npc_changetype(macro_event_big_fish, ^max_32bit_int);
+npc_changetype(macro_event_big_fish, 5);
+// intentional: does not face the player coord. see vid
 npc_anim(fish_seq_3, 20);
 
 p_delay(0);
@@ -36,3 +37,4 @@ if (p_finduid(uid) = true) {
 npc_tele(~fishing_spot_random_coord($old)); // move fishing spot.
 spotanim_map(failedspell_impact, npc_coord, 94, 30);
 p_delay(0);
+// intentional: does not clear the action, player followsw to next spot. see vid
