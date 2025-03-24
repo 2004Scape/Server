@@ -4,7 +4,7 @@ import { Worker as NodeWorker } from 'worker_threads';
 
 // deps
 import * as rsbuf from '@2004scape/rsbuf';
-import { PlayerInfoProt } from '@2004scape/rsbuf';
+import { PlayerInfoProt, Visibility } from '@2004scape/rsbuf';
 import kleur from 'kleur';
 import forge from 'node-forge';
 
@@ -51,7 +51,6 @@ import Player from '#/engine/entity/Player.js';
 import { PlayerLoading } from '#/engine/entity/PlayerLoading.js';
 import { PlayerStat } from '#/engine/entity/PlayerStat.js';
 import { SessionLog } from '#/engine/entity/tracking/SessionLog.js';
-import Visibility from '#/engine/entity/Visibility.js';
 import GameMap, { changeLocCollision, changeNpcCollision, changePlayerCollision } from '#/engine/GameMap.js';
 import { Inventory } from '#/engine/Inventory.js';
 import ScriptPointer from '#/engine/script/ScriptPointer.js';
