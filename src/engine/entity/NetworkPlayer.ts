@@ -4,7 +4,7 @@ import 'dotenv/config';
 
 import InvType from '#/cache/config/InvType.js';
 import { CoordGrid } from '#/engine/CoordGrid.js';
-import ModalState from '#/engine/entity/ModalState.js';
+import { ModalState } from '#/engine/entity/ModalState.js';
 import Player from '#/engine/entity/Player.js';
 import NpcRenderer from '#/engine/renderer/NpcRenderer.js';
 import PlayerRenderer from '#/engine/renderer/PlayerRenderer.js';

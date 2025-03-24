@@ -24,7 +24,7 @@ import { EntityQueueRequest, PlayerQueueType, QueueType, ScriptArgument } from '
 import { EntityTimer, PlayerTimerType } from '#/engine/entity/EntityTimer.js';
 import HeroPoints from '#/engine/entity/HeroPoints.js';
 import Loc from '#/engine/entity/Loc.js';
-import ModalState from '#/engine/entity/ModalState.js';
+import { ModalState } from '#/engine/entity/ModalState.js';
 import MoveRestrict from '#/engine/entity/MoveRestrict.js';
 import MoveSpeed from '#/engine/entity/MoveSpeed.js';
 import MoveStrategy from '#/engine/entity/MoveStrategy.js';
