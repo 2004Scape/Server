@@ -242,6 +242,10 @@ param=attack_sound,black_demon_attack
 param=defend_sound,black_demon_hit
 param=death_sound,black_demon_death
 param=death_drop,null
+huntmode=nezikchened
+huntrange=5
+maxrange=30
+attackrange=10
 // osrs stats and Vislvl match 1:1
 
 [viyeldi]

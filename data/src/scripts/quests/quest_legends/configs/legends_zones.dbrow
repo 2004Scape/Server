@@ -24,6 +24,13 @@ data=coord_pair,0_43_145_37_45,0_43_145_44_52
 // inside the octagram even though they are not
 data=coord_pair,0_43_145_36_37,0_43_145_36_46
 
+// some checks don't include the wrong row
+[legends_fire_wall_correct]
+table=coord_pair_table
+data=coord_pair,0_43_145_36_48,0_43_145_45_49
+data=coord_pair,0_43_145_40_44,0_43_145_41_53
+data=coord_pair,0_43_145_37_45,0_43_145_44_52
+
 [legends_gem_room]
 table=coord_pair_table
 data=coord_pair,0_43_145_3_0,0_43_145_30_31

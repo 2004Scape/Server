@@ -1,3 +1,47 @@
+[ai_queue1,nezikchened] ~npc_default_retaliate_ap;
+
+[ai_opplayer2,nezikchened] 
+if (%npc_aggressive_player ! uid) {
+    npc_setmode(null);
+    return;
+}
+if (stat(hitpoints) = 0) {
+    npc_setmode(null);
+    return;
+}
+if (%npc_action_delay > map_clock) return;
+anim(%com_defendanim, 0);
+npc_anim(npc_param(attack_anim), 0);
+if (npc_param(attack_sound) ! null) {
+    sound_synth(npc_param(attack_sound), 0, 0);
+}
+~npc_meleeattack;
+
+[ai_applayer2,nezikchened]
+if (%npc_action_delay > map_clock) {
+    return;
+}
+if (npc_range(coord) > 1) { // if more than 1 tile away after being attacked, nezikchened will use magic
+    ~npc_cast_spell(^nezikchened_mage_attack, 5);
+} else {
+    npc_sethuntmode(aggressive_melee);
+    npc_setmode(opplayer2);
+}
+
+[opnpc2,nezikchened]
+if (%npc_aggressive_player ! uid) {
+    mes("It's not after you...");
+    return;
+}
+@player_combat_start;
+
+[apnpc2,nezikchened] 
+if (%npc_aggressive_player ! uid) {
+    mes("It's not after you...");
+    return;
+}
+@player_combat_start_ap;
+
 [ai_queue3,nezikchened]
 if (npc_findhero = false) {
     npc_del;
@@ -5,7 +49,7 @@ if (npc_findhero = false) {
 }
 if (finduid(%npc_aggressive_player) = true & p_finduid(uid) = true) {
     // todo: timings here
-    if (%legends_progress = ^legends_filled_bowl) {
+    if (%legends_progress = ^legends_summoned_nezikchened_fire) {
         npc_setmode(none);
         p_stopaction;
         mes("Nezikchened: Ha ha ha... I shall return for you when the time is right.");
@@ -19,11 +63,11 @@ if (finduid(%npc_aggressive_player) = true & p_finduid(uid) = true) {
         p_delay(2);
         mes("Nezikchened: Haha hah ha ha ha ha....");
         npc_say("Nezikchened: Haha hah ha ha ha ha....");
-        spotanim_npc(firebolt_casting, 92, 0);
-        sound_synth(fire_bolt_all, 0, 0);
-        ~player_projectile(npc_coord, coord, uid, firebolt_travel, 43, 31, 51, 16, -5, 64, 10);
+        spotanim_npc(fireblast_casting, 92, 0);
+        sound_synth(fire_blast_all, 0, 0);
+        ~player_projectile(npc_coord, coord, uid, fireblast_travel, 43, 31, 51, 16, -5, 64, 10);
         p_delay(2);
-        ~damage_self(12);
+        ~damage_self(random(17));
         sound_synth(npc_param(death_sound), 0, 0);
         %aggressive_npc = null;
         npc_anim(npc_param(death_anim), 0);

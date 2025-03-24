@@ -9,3 +9,12 @@ rate=100
 check_notbusy=on
 find_keephunting=off
 find_newmode=opplayer2
+
+[nezikchened]
+type=player
+check_vis=lineofsight
+check_nottoostrong=off
+check_notcombat=%lastcombat
+check_notbusy=off
+find_keephunting=on
+find_newmode=opplayer2

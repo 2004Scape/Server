@@ -541,3 +541,16 @@ data=stat_change,attack,0,5
 data=stat_change,strength,0,5
 data=stat_change,defence,0,5
 data=continue_by_autocast,false
+
+[magic_spell_nezikchened]
+table=magic_spell_table
+data=spell,^nezikchened_mage_attack
+data=levelrequired,0
+data=anim,demon_casting
+data=maxhit,18
+data=spotanim_proj,spotanim_195,43,31,51,16,-5,64,10
+// 124 height in osrs? looks very off here though
+data=spotanim_target,spotanim_197,0
+data=sound_success,earth_strike_all
+data=sound_fail,earth_strike_fail
+data=continue_by_autocast,false

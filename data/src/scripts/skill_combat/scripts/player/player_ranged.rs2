@@ -59,10 +59,14 @@ if (~player_npc_hit_roll(%damagetype) = true) {
     if (npc_type = count_draynor & inv_total(inv, garlic) > 0) {
         %com_maxhit = add(%com_maxhit, 1);
     }
-    if (npc_param(demonbane_vulnerable) = true & inv_total(worn, holy_water) > 0) {
-        %com_maxhit = divide(multiply(%com_maxhit, 160), 100);
-        if(npc_type = nezikchened) {
-            %com_maxhit = add(%com_maxhit, 5);
+    if (inv_total(worn, holy_water) > 0) {
+        if(npc_param(demonbane_vulnerable) = true) {
+            %com_maxhit = divide(multiply(%com_maxhit, 160), 100);
+            if(npc_type = nezikchened) {
+                %com_maxhit = add(%com_maxhit, 5);
+            }
+        } else {
+             %com_maxhit = 0;
         }
     }
     $damage = randominc(min(%com_maxhit, npc_param(max_dealt)));

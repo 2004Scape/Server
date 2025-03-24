@@ -9,8 +9,8 @@
 ^legends_spoke_ungadulu = 7
 ^legends_asked_gujuo_holy_water = 8
 ^legends_filled_bowl = 10
-^legends_defeated_nezikchened_fire = 11
-^legends_talk_ungadulu = 12
+^legends_summoned_nezikchened_fire = 11
+^legends_defeated_nezikchened_fire = 12
 // looks like it is possible to skip this step?
 ^legends_talk_gujuo_3 = 13 
 // water dried up?

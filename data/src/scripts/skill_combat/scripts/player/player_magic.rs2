@@ -25,9 +25,24 @@ if (%tutorial_progress < ^tutorial_complete) {
 [apnpct,magic:water_wave] ~pvm_default_spell(^water_wave);
 [apnpct,magic:earth_wave] ~pvm_default_spell(^earth_wave);
 [apnpct,magic:fire_wave] ~pvm_default_spell(^fire_wave);
-[apnpct,magic:curse] ~pvm_default_spell(^curse);
-[apnpct,magic:weaken] ~pvm_default_spell(^weaken);
-[apnpct,magic:confuse] ~pvm_default_spell(^confuse);
+[apnpct,magic:curse] 
+if (npc_type = ungadulu) {
+   ~legends_spell_usage(^curse);
+} else {
+   ~pvm_default_spell(^curse);
+}
+[apnpct,magic:weaken]
+if (npc_type = ungadulu) {
+   ~legends_spell_usage(^weaken);
+} else {
+   ~pvm_default_spell(^weaken);
+}
+[apnpct,magic:confuse]
+if (npc_type = ungadulu) {
+   ~legends_spell_usage(^confuse);
+} else {
+   ~pvm_default_spell(^confuse);
+}
 [apnpct,magic:bind] ~pvm_default_spell(^bind);
 [apnpct,magic:snare] ~pvm_default_spell(^snare);
 [apnpct,magic:entangle] ~pvm_default_spell(^entangle);
@@ -47,10 +62,6 @@ if (~pvm_debuff_allowed($spell_data) = false) {
     return;
 }
 def_int $duration = ~pvm_spell_cast($spell_data);
-if (~legends_check_spell_usage($spell, $spell_data, $duration) = true) {
-    // if this is true, the whole interaction has been handled in the proc so return
-    return;
-}
 // if player DOESNT splash:
 if (~player_npc_hit_roll(^magic_style) = true) {
     def_int $maxhit = ~magic_spell_maxhit($spell_data);

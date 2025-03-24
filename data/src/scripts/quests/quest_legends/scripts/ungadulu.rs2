@@ -15,7 +15,7 @@ else mes("Unhandled dialogue stage"); // todo
 ~mesbox("The Shaman seems to be fighting an inner battle.");
 ~chatnpc("<p,neutral>Go... go now...!");
 ~mesbox("The Shaman seems to change in front of your eyes...");
-npc_changetype(ungadulu_possessed);
+npc_changetype(ungadulu_possessed); // 100t
 ~chatnpc("<p,neutral>Welcome Vacu, to eternal...");
 if_close;
 mes("The Shaman starts an incantation...");
@@ -28,11 +28,9 @@ mes("The Shaman seems to get stronger!");
 p_delay(1);
 npc_changetype(ungadulu);
 mes("The Shaman seems to return to normal...");
-// if the player casts confuse/curse/weaken shortly after this dialogue, 
-// there's special dialogue about getting the book of binding.
-// todo: confirm length and if it is set before or after final chat message
-settimer(ungadulu_curse, 20);
 ~chatnpc("<p,neutral>Run, run away... Run like the leopard Bwana!");
+// seems to be set after the dialogue is complete?
+settimer(ungadulu_curse, 40);
 
 [ai_timer,ungadulu_possessed]
 npc_changetype(ungadulu);
@@ -42,31 +40,29 @@ npc_settimer(0);
 [timer,ungadulu_curse]
 cleartimer(ungadulu_curse);
 
-[proc,legends_check_spell_usage](int $spell, dbrow $spell_data, int $duration)(boolean)
-if (npc_type = ungadulu & ($spell = ^confuse | $spell = ^curse | $spell = ^weaken)) {
-    p_delay(1);
-    if (~inzone_coord_pair_table(legends_fire_wall, coord) = false & random(3) = 0) { // seems to be random??
-        ~mesbox("The spell fizzles and has no effect as it passes through the flames.");
-        return (true);
-    }
-    if (gettimer(ungadulu_curse) > 0) {
-        spotanim_npc(db_getfield($spell_data, magic_spell_table:spotanim_target, 0), $duration);
-        ~chatnpc("<p,shock>Thank you, Bwana! You have released me from the|demon's grasp, but only for a short while! You must|seek out the Book of Binding - it's hidden in these caves somewhere!.");
-        ~chatnpc("<p,shock>There are many trials you must pass... but please,|you're my only hope of escape!");
-        ~mesbox("The shaman's eyes roll back and he returns to his quiet, unassuming|self.");
-        cleartimer(ungadulu_curse);
-        return (true);
-    }
-    ~pvm_spell_fail($spell_data, $duration);
-    npc_say("What...what's happening...");
-    npc_anim(seq_848, 0);
-    p_delay(1);
-    npc_setmode(opplayer2);
-    mes("The shaman somehow resists the power of the spell.");
-    mes("Perhaps you should try again?");
+[proc,legends_spell_usage](int $spell)(boolean)
+def_dbrow $spell_data = ~get_spell_data($spell);
+def_int $duration = ~pvm_spell_cast($spell_data);
+p_delay(1);
+if (~inzone_coord_pair_table(legends_fire_wall_correct, coord) = false & random(3) = 0) { // seems to be random??
+    ~mesbox("The spell fizzles and has no effect as it passes through the flames.");
     return (true);
 }
-return (false);
+if (gettimer(ungadulu_curse) > 0 & ~player_npc_hit_roll(^magic_style) = true) {
+    spotanim_npc(db_getfield($spell_data, magic_spell_table:spotanim_target, 0), $duration);
+    ~chatnpc("<p,shock>Thank you, Bwana! You have released me from the|demon's grasp, but only for a short while! You must|seek out the Book of Binding - it's hidden in these caves somewhere!.");
+    ~chatnpc("<p,shock>There are many trials you must pass... but please,|you're my only hope of escape!");
+    ~mesbox("The shaman's eyes roll back and he returns to his quiet, unassuming self.");
+    cleartimer(ungadulu_curse);
+    return (true);
+}
+~pvm_spell_fail($spell_data, $duration);
+npc_say("What...what's happening...");
+npc_anim(seq_848, 0);
+p_delay(1);
+~npc_retaliate(0);
+mes("The shaman somehow resists the power of the spell.");
+mes("Perhaps you should try again?");
 
 [label,ungadulu_no_closer]
 ~chatnpc("<p,sad>Please come no closer... the flames will incinerate you.");
@@ -82,7 +78,6 @@ if (%legends_progress < ^legends_spoke_ungadulu) {
 npc_changetype(ungadulu_possessed);
 // https://media.discordapp.net/attachments/936714977685958678/1195794230690447400/419624878_10161030270160560_5504501485089454437_n.jpg?ex=67d321a9&is=67d1d029&hm=d5f81563fa219807006db3cbfd21c1c7e2fc5f3fcfcf1144482e22ddbc928114&=&format=webp&width=1126&height=845
 ~chatnpc("<p,angry>Yes, douse the flames with water,|pure water...|foo...");
-npc_changetype(ungadulu);
 // double space intentional
 // https://youtu.be/atp7nZUwC8E?t=33
 ~chatnpc("<p,shock>Please, leave now... don't listen to me... I beg you, leave now,  don't touch the flames...");
@@ -95,7 +90,6 @@ npc_changetype(ungadulu);
 ~chatnpc("<p,shock>Please, leave now...");
 npc_changetype(ungadulu_possessed);
 ~chatnpc("<p,angry>...from the above lands... hurry and release me...");
-npc_changetype(ungadulu);
 ~chatnpc("<p,shock>Leave here, please, go... now...");
 npc_changetype(ungadulu_possessed);
 ~chatnpc("<p,madlaugh>Hurry, Vacu, the heat kills me... ha ha ha");
@@ -109,7 +103,6 @@ npc_changetype(ungadulu_possessed);
 ~chatnpc("<p,angry>Wait... get pure water from the pool... above lands...");
 %legends_map_runes = setbit(%legends_map_runes, ^legends_asked_ungadulu_where);
 %legends_map_runes = setbit(%legends_map_runes, ^legends_asked_ungadulu_who);
-npc_changetype(ungadulu);
 ~chatnpc("<p,shock>Please Bwana, don't listen to me... run, save yourself...");
 @multi2("How can I extinguish the flames?", ungadulu_extinguish,
         "Where do I get pure water from?", ungadulu_where);
@@ -196,9 +189,10 @@ else {
     anim(human_knockback_long, 0);
     p_exactmove($start_coord, $throw_coord, 31, calc(31 + (14 * distance($start_coord, $throw_coord))), ~coord_direction($throw_coord, $start_coord));
     p_delay(divide(distance($start_coord, $throw_coord), 2));
-    ~set_walkbas(human_knockback_long_end);
     anim(null, 0);
+    ~set_walkbas(human_knockback_long_end);
     p_delay(1);
+    ~update_bas;
     ~damage_self(calc(random(7) + 4));
     npc_setmode(wander);
     npc_settimer(10);
@@ -211,30 +205,38 @@ else {
 }
 
 [opnpcu,ungadulu]
-if(%legends_progress > ^legends_filled_bowl) { // might just be on completion instead
+if(%legends_progress >= ^legends_complete) { // might just be on completion instead
     mes("You have no further business with Ungadulu.");
     return;
 }
 if (last_useitem = book_of_binding) {
-    if (%legends_progress = ^legends_filled_bowl) {
+    if (%legends_progress < ^legends_defeated_nezikchened_fire & %legends_progress >= ^legends_filled_bowl) {
+        if(%legends_progress = ^legends_filled_bowl) %legends_progress = ^legends_summoned_nezikchened_fire;
+        npc_setmode(null);
+        npc_queue(10, 0, 6); // queued to run 6t from here
         ~mesbox("You open the Book of Binding in front of Ungadulu and a|supernatural light starts emanating from the pages, illuminating|Ungadulu whose face twists and contorts in spasms.");
-        ~chatnpc("<p,neutral>Curse you foul intruder... 'Ere near to death ye come|now that ye has meddled in my dealings..");
+        ~chatnpcnoturn("<p,angry>Curse you foul intruder... 'Ere near to death ye come|now that ye has meddled in my dealings..");
         ~mesbox("Without warning, the outline of a huge demon starts to emerge in|front of you as Ungadulu falls to the floor unconscious.");
-        // todo: ungadulu plank anim (before spawning nezikchened)
-        npc_add(coord, nezikchened, 1000);
+        npc_add(map_findsquare(coord, 1, 2, ^map_findsquare_lineofwalk), nezikchened, 500);
+        %npc_lastcombat = sub(^max_32bit_int, 8);
+        %npc_aggressive_player = uid;
         mes("Nezikchened: Your faith will help you little here.");
         npc_say("Your faith will help you little here.");
         mes("A sense of hopelessness fills your body...");
-        // todo: confirm flat 40
-        stat_sub(prayer, 40, 0);
-        npc_setmode(opplayer2);
-        // todo: shouldn't be able to hit nezikchened from outside fire
-        // todo: maybe shouldn't be able to be kicked out of octagram if you click ungadulu mid fight
+        // 90% of current, use stat_drain
+        stat_sub(prayer, 0, 90);
     }
 }
 else {
     ~displaymessage(^dm_default);
 }
+
+[ai_queue10,ungadulu]
+npc_anim(seq_837, 0); // seems like the last frame of this seq is broken...
+npc_setmode(none);
+npc_delay(10); // delay 11t
+npc_setmode(null);
+npc_anim(null, 0);
 
 // curse to start: 
 //https://youtu.be/uYxkN3aJ-44?t=4317

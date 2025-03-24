@@ -150,9 +150,19 @@ else {
 [oploc3,legends_radimus_cupboard_open]
 @close_cupboard(true);
 
+[proc,player_in_fire_octagram]()(boolean)
+huntall(0_43_145_40_48, 9, 0);
+while(.huntnext = true) {
+    if (~inzone_coord_pair_table(legends_fire_wall_correct, .coord) = true) {
+        mes("The shaman looks busy.");
+        mes("Perhaps you should wait here until he's not busy anymore.");
+        return (true);
+    }
+}
+return (false);
+
 [proc,legends_fire_wall_walk]
 if(loc_type = legends_fire_wall_1) {
-    mes("<tostring(loc_angle)>");
     switch_int(loc_angle) {
         case ^loc_north :
             if(coordz(coord) > coordz(loc_coord)) p_teleport(movecoord(loc_coord, 0, 0, -1));
@@ -182,6 +192,9 @@ p_delay(1);
 [label,legends_touch_fire_wall]
 // todo: jump out option
 if (%legends_progress >= ^legends_defeated_nezikchened_fire) {
+    if(~player_in_fire_octagram = true) {
+        return;
+    }
     mes("You feel completely fine to walk through these flames.");
     mes("The magic of Ungadulu's spell protects you from the flames.");
     ~legends_fire_wall_walk;
@@ -205,28 +218,48 @@ else {
 
 [label,legends_investigate_fire_wall]
 if (%legends_progress >= ^legends_defeated_nezikchened_fire) {
+    if(~player_in_fire_octagram = true) {
+        return;
+    }
     mes("You feel completely fine to walk through these flames.");
     mes("The magic of Ungadulu's spell protects you from the flames.");
     ~legends_fire_wall_walk;
-
     return;
 }
 ~mesbox("You look closely at the flames. They seem to form a straight wall.|Something about them looks very strange: they look completely|supernatural. For example, they seem to come from|straight out of the ground.");
 say("Mmmm, pretty!");
-def_boolean $entering = ~check_axis(coord, loc_coord, loc_angle);
-if ($entering = false) {
+if (~player_in_fire_octagram = true) {
     def_int $choice = ~p_choice2_header("Leap out of the flaming octagram.", 1, 
                                         "Attract the shaman's attention.", 2, 
                                         "What would you like to do?");
     if ($choice = 1) {
+        if_close;
         mes("This is quite dangerous, but you find a suitable location to jump.");
         // delay and walk to defined spot
+        ~forcewalk2(0_43_145_39_52); // it walks you to this spot every time
+        p_delay(0);
         mes("You take a run up...");
-        // walk out of flames
-        // damage player 6
-        // -6 att str def
-        mes("You sail over the top of the flame wall...");
-        mes("Getting only slightly singed as you go.");
+        p_delay(2);
+        if(stat_random(stat(agility), 50, 250) = true) { // guessing, not sure how this is randomized
+            mes("You sail over the top of the flame wall...");
+            p_delay(1);
+            p_teleport(movecoord(coord, 0, 0, 2));
+            // TODO: merge main and change these to use stat_drain
+            ~damage_self(calc(stat(hitpoints) / 10));
+            stat_sub(attack, 0, 10);
+            stat_sub(strength, 0, 10);
+            stat_sub(defence, 0, 10);
+            mes("Getting only slightly singed as you go.");
+        } else {
+            mes("But get severely burned as you jump across the flames...");
+            p_delay(1);
+            p_teleport(movecoord(coord, 0, 0, 2));
+            ~damage_self(calc(stat(hitpoints) / 2));
+            stat_sub(attack, 0, 50);
+            stat_sub(strength, 0, 50);
+            stat_sub(defence, 0, 50);
+            mes("You feel unwell...");
+        }
         return;
     }
 }
@@ -241,13 +274,36 @@ if (npc_find(coord, ungadulu, 10, 0) = true) {
 [label,legends_use_on_fire_wall]
 if (last_useitem = blessed_golden_bowl_pure_water) {
     // https://youtu.be/uF1a9xsV7zo?si=XkkWfOB4Hj2Bewwl&t=1764
+    if(~player_in_fire_octagram = true) {
+        return;
+    }
     loc_del(1);
-    ~legends_fire_wall_walk;
+    anim(human_pickuptable, 0);
+    spotanim_map(small_smokepuff, loc_coord, 124, 0);
     mes("You splash some pure water on the flames.");
-} else if(last_useitem = golden_bowl_water | last_useitem = bucket_water | last_useitem = vial_water) {
+    def_int $bowl_uses = getbit_range(%legends_map_runes, ^legends_golden_bowl_uses_start, ^legends_golden_bowl_uses_end);
+    %legends_map_runes = setbit_range_toint(%legends_map_runes, add($bowl_uses,1), ^legends_golden_bowl_uses_start, ^legends_golden_bowl_uses_end);
+    if($bowl_uses >= 9) {
+        inv_del(inv, blessed_golden_bowl_pure_water, 1);
+        inv_add(inv, blessed_gold_bowl, 1);
+        mes("The pure water in the golden bowl has run out...");
+    }
+    ~legends_fire_wall_walk;
+} else if(last_useitem = golden_bowl_water) {
     inv_del(inv, last_useitem, 1);
     inv_add(inv, oc_param(last_useitem, next_obj_stage), 1);
+    anim(human_pickuptable, 0);
+    spotanim_map(small_smokepuff, loc_coord, 124, 0);
     mes("The water evaporates in a cloud of steam before it gets anywhere near the flames.");
+} else if(last_useitem = bucket_water | last_useitem = vial_water | last_useitem = jug_of_water | last_useitem = bowl_water) {
+    def_obj $last_useitem = last_useitem;
+    mes("The water evaporates in a cloud of steam...");
+    anim(human_pickuptable, 0);
+    spotanim_map(small_smokepuff, loc_coord, 124, 0);
+    p_delay(0);
+    inv_del(inv, $last_useitem, 1);
+    inv_add(inv, oc_param($last_useitem, next_obj_stage), 1);
+    mes("...before it gets anywhere near the flames.");
 }
 
 [label,legends_search_rocks]
@@ -908,7 +964,7 @@ else {
 
 [oplocu,legends_water_pool]
 if (last_useitem = hollow_reed) {
-    if (%legends_progress > ^legends_talk_ungadulu & %legends_progress < ^legends_defeated_nezikchened_water) {
+    if (%legends_progress > ^legends_defeated_nezikchened_fire & %legends_progress < ^legends_defeated_nezikchened_water) {
         if (%legends_progress < ^legends_water_pool_dried_up) {
             %legends_progress = ^legends_water_pool_dried_up;
         }
@@ -921,6 +977,7 @@ if (last_useitem = hollow_reed) {
         inv_del(inv, blessed_gold_bowl, 1);
         inv_del(inv, hollow_reed, 1);
         inv_add(inv, blessed_golden_bowl_pure_water, 1);
+        %legends_map_runes = setbit_range_toint(%legends_map_runes, 0, ^legends_golden_bowl_uses_start, ^legends_golden_bowl_uses_end);
         // inconsistent use of "syphon" here is accurate
         // https://youtu.be/Lid8enDEF_U?t=1463
         ~objbox(blessed_golden_bowl_pure_water, "You use the cut reed plant to syphon some water from the pool into your blessed golden bowl. The water seems to bubble and sparkle as if alive.", 250, 0, divide(^objbox_height, 2));
@@ -937,12 +994,27 @@ if (last_useitem = hollow_reed) {
         inv_add(inv, golden_bowl_pure_water, 1);
         ~objbox(golden_bowl_pure_water, "You use the cut reed plant to siphon some water from the pool into your golden bowl. The water doesn't seem as sparkly as it looked in the pool...", 250, 0, divide(^objbox_height, 2));
     }
+    // this order is correct (to OSRS)
+    else if (inv_total(inv, bowl_empty) > 0) {
+        inv_del(inv, bowl_empty, 1);
+        inv_add(inv, bowl_water, 1);
+        // lack of full stop is intentional
+        // https://youtu.be/1A8nP50qIX8?t=1166
+        ~objbox(bowl_water, "You use the hollow reed to siphon some water from the pool into your bowl The water doesn't seem as sparkly as it looked in the pool.", 250, 0, divide(^objbox_height, 2));
+    }
     else if (inv_total(inv, bucket_empty) > 0) {
         inv_del(inv, bucket_empty, 1);
         inv_add(inv, bucket_water, 1);
         // lack of full stop is intentional
         // https://youtu.be/1A8nP50qIX8?t=1166
         ~objbox(bucket_water, "You use the hollow reed to siphon some water from the pool into your bucket The water doesn't seem as sparkly as it looked in the pool.", 250, 0, divide(^objbox_height, 2));
+    }
+    else if (inv_total(inv, jug_empty) > 0) {
+        inv_del(inv, jug_empty, 1);
+        inv_add(inv, jug_of_water, 1);
+        // lack of full stop is intentional
+        // https://youtu.be/1A8nP50qIX8?t=1166
+        ~objbox(jug_of_water, "You use the hollow reed to siphon some water from the pool into your jug The water doesn't seem as sparkly as it looked in the pool.", 250, 0, divide(^objbox_height, 2));
     }
     else if (inv_total(inv, vial_empty) > 0) {
         inv_del(inv, vial_empty, 1);
@@ -1061,6 +1133,11 @@ else {
 
 [opheldu,ardrigal_mixture]
 if (last_useitem = snake_weed) {
+    // I don't think this is possible since you cant make the ardrigal mixture? But matches the snakeweed one
+    if(%legends_progress < ^legends_talk_gujuo_4) {
+        ~doubleobjbox(snake_weed, ardrigal_mixture, "You're not sure what mixing these two things together would do. You decide against experimenting. ", 150); // authentic space at end
+        return;
+    }
     // no full stop authentic
     ~doubleobjbox(snake_weed, ardrigal_mixture, "You mix the two ingredients together", 150);
     anim(human_herbing_vial, 0);
@@ -1076,7 +1153,11 @@ else {
 [opheldu,snakeweed_mixture]
 if (last_useitem = ardrigal) {
     // no full stop authentic
-    ~doubleobjbox(snake_weed, snakeweed_mixture, "You mix the two ingredients together", 150);
+    if(%legends_progress < ^legends_talk_gujuo_4) {
+        ~doubleobjbox(ardrigal, snakeweed_mixture, "You're not sure what mixing these two things together would do. You decide against experimenting. ", 150); // authentic space at end
+        return;
+    }
+    ~doubleobjbox(ardrigal, snakeweed_mixture, "You mix the two ingredients together", 150);
     anim(human_herbing_vial, 0);
     inv_del(inv, snakeweed_mixture, 1);
     inv_del(inv, ardrigal, 1);
@@ -1134,6 +1215,14 @@ else {
     inv_add(inv, gold_bowl, 1);
     stat_advance(smithing, 300);
 }
+
+[opheld5,_gold_bowl]
+def_namedobj $drop_item = oc_param(last_item, next_obj_stage);
+mes("You drop the bowl on the floor and the water spills out everywhere."); // rsc
+inv_delslot(inv, last_slot);
+anim(null, 0);
+obj_add(coord, $drop_item, 1, 200);
+sound_synth(put_down, 0, 0);
 
 [label,legends_cast_orb_door](dbrow $spell_data)
 def_namedobj $final_obj;

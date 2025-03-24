@@ -9,14 +9,6 @@ if (~inzone_coord_pair_table(trawler_wreck_zones, coord) = true) {
     mes("It would be seriously unwise for you to drop your items in the sea."); // osrs
     return;
 }
-if (last_item = golden_bowl_pure_water | last_item = blessed_golden_bowl_pure_water | last_item = golden_bowl_water | last_item = blessed_golden_bowl_water) {
-    mes("You drop the bowl on the floor and the water spills out everywhere."); // rsc
-    inv_delslot(inv, $last);
-    anim(null, 0);
-    obj_add(coord, oc_param(last_item, next_obj_stage), 1, 200);
-    sound_synth(put_down, 0, 0);
-    return;
-}
 
 inv_dropslot(inv, coord, $last, 200);
 anim(null, 0); // https://youtu.be/QvDYolBZNjY?t=164, https://youtu.be/DVHCP2JhQE0?t=142
