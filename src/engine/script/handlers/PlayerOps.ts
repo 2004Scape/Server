@@ -481,18 +481,18 @@ const PlayerOps: CommandHandlers = {
             player.changeStat(stat);
         }
     }),
-    
+
     [ScriptOpcode.STAT_BOOST]: checkedHandler(ActivePlayer, state => {
         const [stat, constant, percent] = state.popInts(3);
-    
+
         check(stat, PlayerStatValid);
         check(constant, NumberNotNull);
         check(percent, NumberNotNull);
-    
+
         const player = state.activePlayer;
         const base = player.baseLevels[stat];
         const current = player.levels[stat];
-    
+
         const boost = ((constant + (base * percent) / 100) | 0);
         const boosted = Math.min(current + boost, base + boost);
         player.levels[stat] = Math.min(boosted, 255);
@@ -983,9 +983,7 @@ const PlayerOps: CommandHandlers = {
     },
 
     [ScriptOpcode.AFK_EVENT]: state => {
-        state.pushInt((
-            state.activePlayer.staffModLevel < 2 && Environment.NODE_PRODUCTION
-        ) && state.activePlayer.afkEventReady ? 1 : 0);
+        state.pushInt((Environment.NODE_DEBUG || state.activePlayer.staffModLevel < 2) && state.activePlayer.afkEventReady ? 1 : 0);
         state.activePlayer.afkEventReady = false;
     },
 
