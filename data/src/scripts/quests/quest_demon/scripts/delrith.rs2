@@ -17,6 +17,7 @@ queue(demon_slayer_start_incantation, 0);
 
 // https://www.youtube.com/watch?v=rjQprrDDUfE
 [queue,demon_slayer_start_incantation]
+p_stopaction; // doesnt continue to attack at https://youtu.be/rjQprrDDUfE?t=346
 ~chatplayer("<p,angry>Now what was that incantation again?");
 def_int $option = ~p_choice4("Carlem Gabindo Purchai Zaree Camerinthum", 1, "Purchai Zaree Gabindo Carlem Camerinthum", 2, "Purchai Camerinthum Aber Gabindo Carlem", 3, "Carlem Aber Camerinthum Purchai Gabindo", 4);
 
