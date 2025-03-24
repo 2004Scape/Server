@@ -92,6 +92,20 @@ model account_session {
     event_type Int      @default(-1)
 }
 
+model tag {
+    id Int @id @default(autoincrement())
+
+    name String
+    color String?
+}
+
+model account_tag {
+    id Int @id @default(autoincrement())
+
+    tag_id Int
+    account_id Int
+}
+
 // website
 
 model newspost {
