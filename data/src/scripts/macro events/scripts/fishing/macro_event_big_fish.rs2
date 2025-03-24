@@ -4,7 +4,7 @@
 // todo: figure out sounds
 sound_synth(watersplash, 0, 0); // complete guess
 def_coord $tele_coord = ~fishing_spot_random_coord(npc_type);
-npc_changetype(macro_event_big_fish, 5);
+npc_changetype_keepall(macro_event_big_fish, 5);
 p_delay(0);
 npc_anim(fish_seq_3, 0);
 anim(human_unarmedblock, 0);

@@ -17,7 +17,7 @@ npc_setmode(playerfaceclose);
 p_delay(0);
 npc_setmode(null);
 p_delay(0);
-npc_changetype(sheep_sheared, 100);
+npc_changetype_keepall(sheep_sheared, 100);
 inv_add(inv, wool, 1);
 mes("You get some wool.");
 ~objbox(wool, "You get some wool.", 250, 0, divide(^objbox_height, 2));
