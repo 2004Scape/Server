@@ -1,6 +1,6 @@
 [pickpocket_man]
 table=pickpocket
-data=npc,man_white
+data=npc,man
 data=npc,man_blue
 data=npc,man_brown
 data=npc,man_black

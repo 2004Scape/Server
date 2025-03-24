@@ -15,7 +15,7 @@ import Npc from '#/engine/entity/Npc.js';
 import NpcMode from '#/engine/entity/NpcMode.js';
 import Obj from '#/engine/entity/Obj.js';
 import Player from '#/engine/entity/Player.js';
-import { canTravel, changeNpcCollision, changePlayerCollision, findNaivePath, findPath, findPathToEntity, findPathToLoc, isApproached, reachedEntity, reachedLoc, reachedObj } from '#/engine/GameMap.js';
+import { canTravel, changeNpcCollision, changePlayerCollision, findNaivePath, findPath, findPathToEntity, findPathToLoc, isApproached, isZoneAllocated, reachedEntity, reachedLoc, reachedObj } from '#/engine/GameMap.js';
 import ServerTriggerType from '#/engine/script/ServerTriggerType.js';
 import World from '#/engine/World.js';
 import Environment from '#/util/Environment.js';
@@ -267,6 +267,13 @@ export default abstract class PathingEntity extends Entity {
             level = 0;
         }
         level = Math.max(0, Math.min(level, 3));
+
+        if (!isZoneAllocated(level, x, z)) {
+            if (this instanceof Player) {
+                this.messageGame('Invalid teleport!');
+            }
+            return;
+        }
 
         const previousX: number = this.x;
         const previousZ: number = this.z;

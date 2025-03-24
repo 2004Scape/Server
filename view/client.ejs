@@ -74,10 +74,16 @@
             animation: blink 1.5s linear infinite;
         }
 
+        select {
+            text-decoration: none;
+            background-color: black;
+            color: #04A800;
+            border: none;
+        }
+
     </style>
  
     <script>
-
         const isMobile = /Mobi|Android|iPhone|iPad|Windows Phone|Mobile/i.test(navigator.userAgent);
         
         function toggleFullscreen() {
@@ -105,66 +111,6 @@
                 }
             }
         }
- 
-        function toggleFiltering() {
-            let canvas = document.getElementById('canvas');
-            let filtering = canvas.style.imageRendering == 'pixelated';
-            
-            setFiltering(canvas, filtering);
-            localStorage.setItem('filtering', filtering);
-        }
-
-        function setFiltering(canvas, filtering) {
-            canvas.style.imageRendering = filtering ? 'auto' : 'pixelated';
- 
-            let element = document.getElementById('filtering');
-            element.textContent = filtering ? "Auto scaling" : "Pixel scaling";
-        }
-        
-        let canvasSize = 1;
-        let maxCanvasSize = 3;
-        function changeCanvasSize() {
-            canvasSize += 1;
-            let canvas = document.getElementById('canvas');
-            canvasSize = setCanvasSize(canvas, canvasSize);
-            localStorage.setItem('canvasSize', canvasSize);
-        }
-
-        function setCanvasSize(canvas, size) {
-            if (size > maxCanvasSize) {
-                size = 1;
-            }
-            canvas.style.width = (789 * size) + 'px';
-            canvas.style.height = (532 * size) + 'px';
-            canvas.style.maxWidth = 'none';
-            
-            let element = document.getElementById('canvasSize');
-            element.textContent = size + "x size";
-
-            return size;
-        }
- 
-        function toggleAutoSizing() {
-            let canvas = document.getElementById('canvas');
-            let autoSizing = localStorage.getItem('autoSizing') !== 'true';
-
-            canvasAutoSizing(canvas, autoSizing);
-            
-            localStorage.setItem('autoSizing', autoSizing);
-        }
-
-        function canvasAutoSizing(canvas, autoSizing) {
-            if (autoSizing) {
-                canvas.style.width = '100%';
-                canvas.style.height = 'auto';
-                
-                let maxWidth = ((window.innerHeight - 120) / 532) * 789; 
-                canvas.style.maxWidth = maxWidth + 'px';
-            } else {
-                let canvasSize = localStorage.getItem('canvasSize');
-                setCanvasSize(canvas, canvasSize || 1);
-            }
-        }
 
         function saveScreenshot() {
             document.getElementById('screenshot').download = 'screenshot-' + Math.floor(Date.now() / 1000) + '.png';
@@ -190,7 +136,7 @@
                 return;
             }
 
-            document.getElementById('count-down').textContent = (countDownMax - countDown) + 's'
+            document.getElementById('count-down').textContent = (countDownMax - countDown) + 's';
 
             countDown++;
             timer = setTimeout(hideMessage, 1000);
@@ -212,34 +158,59 @@
                     showControls();
                 }
             }
-        })
+        });
 
         function loadSettings() {
-            let canvas = document.getElementById('canvas');
+            setFilter((localStorage.getItem('filtering') == 'true') ? 'pixelated' : 'auto');
 
-            let filtering = localStorage.getItem('filtering');
-            if (filtering) {
-                setFiltering(canvas, filtering === 'true');
-            }
-
-            if (!isMobile)
-            {
-                let size = parseInt(localStorage.getItem('canvasSize'));
-                if (size) {
-                    canvasSize = setCanvasSize(canvas, size);
-                    localStorage.setItem('canvasSize', canvasSize);
-                }
+            if (!isMobile)  {
+                let size = localStorage.getItem('canvasSize');
+                if (size) { setSize(size); }
             
                 let controls = localStorage.getItem('hideControls');
-                if (controls === 'true') {
-                    hideControls();
-                }
+                if (controls === 'true') { hideControls(); }
             }
+        }
 
-            let autoSizing = localStorage.getItem('autoSizing') === 'true';
-            if (autoSizing) {
-                canvasAutoSizing(canvas, autoSizing);
+        function setSize(size) {
+            let canvas = document.getElementById('canvas');
+            if (size == null) { size = document.getElementById('size').value; }
+            switch (size) {
+                default:
+                case '1':
+                case '2':
+                case '3':
+                    canvas.style.width = (789 * parseInt(size)) + 'px';
+                    canvas.style.height = (532 * parseInt(size)) + 'px';
+                    canvas.style.maxWidth = 'none';
+                    break;
+                case 'auto':
+                    canvas.style.width = '100%';
+                    canvas.style.height = 'auto';
+                    let maxWidth = ((window.innerHeight - 120) / 532) * 789; 
+                    canvas.style.maxWidth = maxWidth + 'px';
+                    break;
             }
+            document.getElementById('size').value = size;
+            localStorage.setItem('canvasSize', size);
+        }
+
+        function setFilter(type) {
+            let canvas = document.getElementById('canvas');
+            let filterSelect = 'auto';
+            switch (type) {
+                default:
+                case 'dropdown':
+                    filterSelect = document.getElementById('filtering').value;
+                    localStorage.setItem('filtering', filterSelect == 'auto' ? false : true);
+                    break;
+                case 'pixelated':
+                case 'auto':
+                    filterSelect = type;
+                    document.getElementById('filtering').value = type;
+                    break;
+            }         
+            canvas.style.imageRendering = filterSelect;            
         }
     </script>
 </head>
@@ -253,10 +224,17 @@
         </div>
 
         <div class="centered" id="controls">
-            <a class="green" href="#" id="fullscreen" onclick="toggleFullscreen();">Go fullscreen</a> |
-            <a class="green" href="#" id="filtering" onclick="toggleFiltering();">Auto scaling</a> |
-            <a class="green" href="#" id="canvasSize" onclick="changeCanvasSize();">1x size</a> |
-            <a class="green" href="#" id="canvasAutoSizing" onclick="toggleAutoSizing();">Toggle auto sizing</a> |
+            <select id="size" name="size" onchange="setSize();">
+                <option value="1" id="1">1x Size</option>
+                <option value="2" id="2">2x Size</option>
+                <option value="3" id="3">3x Size</option>
+                <option value="auto" id="auto">Auto Sizing</option>
+            </select> |
+            <select id="filtering" name="filtering" onchange="setFilter('dropdown');">
+                <option value="auto" id="auto">Auto Scaling</option>
+                <option value="pixelated" id="pixelated">Pixel Scaling</option>
+            </select> |
+            <a class="green" href="#" id="fullscreen" onclick="toggleFullscreen();">Go Fullscreen</a> |
             <a class="green" href="#" id="screenshot" onclick="saveScreenshot();">Take screenshot</a> |
             <a class="green" href="#" id="hide" onclick="hideControls();">Hide controls</a>
         </div>

@@ -1,9 +1,10 @@
+import { PlayerInfoProt } from '@2004scape/rsbuf';
+
 import WordEnc from '#/cache/wordenc/WordEnc.js';
 import Player from '#/engine/entity/Player.js';
 import Packet from '#/io/Packet.js';
 import MessageHandler from '#/network/client/handler/MessageHandler.js';
 import MessagePublic from '#/network/client/model/MessagePublic.js';
-import InfoProt from '#/network/rs225/server/prot/InfoProt.js';
 import WordPack from '#/wordenc/WordPack.js';
 
 export default class MessagePublicHandler extends MessageHandler<MessagePublic> {
@@ -36,7 +37,7 @@ export default class MessagePublicHandler extends MessageHandler<MessagePublic> 
         out.pos = 0;
         out.gdata(player.message, 0, player.message.length);
         out.release();
-        player.masks |= InfoProt.PLAYER_CHAT.id;
+        player.masks |= PlayerInfoProt.CHAT;
 
         player.socialProtect = true;
         return true;

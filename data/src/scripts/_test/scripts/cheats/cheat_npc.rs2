@@ -37,3 +37,27 @@ if (p_finduid(uid) = true) {
         npc_changetype(cow_1, 10);
     }
 }
+
+
+[debugproc,npc_spawn_ci]
+if (p_finduid(uid) = true) {
+    p_telejump(0_37_55_32_9);
+
+    // Spawn trigger should run immediately
+    npc_add(0_37_55_33_9, savage_bird, 7);
+}
+
+[debugproc,npc_spawn_player]
+if (p_finduid(uid) = true) {
+    p_telejump(0_37_55_32_9);
+    p_delay(2);
+
+    // Spawn trigger should be 1 tick delayed
+    npc_add(0_37_55_33_9, savage_bird, 7);
+}
+
+[ai_spawn,savage_bird]
+npc_say("I'm a savage bird :p");
+
+[ai_despawn,savage_bird]
+obj_addall(npc_coord, garlic, 1, 100);
