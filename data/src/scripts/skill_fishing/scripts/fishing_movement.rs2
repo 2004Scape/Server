@@ -5,11 +5,6 @@
 [ai_timer,0_45_152_lava_eel] @move_fishing_spot; // lava eel
 
 [label,move_fishing_spot]
-if (npc_param(is_whirlpool) = ^true) {
-    npc_delay(2);
-    npc_del;
-    return;
-}
 def_coord $rand_coord = ~fishing_spot_random_coord(npc_type);
 npc_delay(2);
 npc_tele($rand_coord);
