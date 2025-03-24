@@ -3481,7 +3481,8 @@ param=death_anim,earthwarrior_death
 param=attack_sound,mace_crush
 // param=defend_sound,blade5
 huntmode=cowardly
-huntrange=1
+huntrange=5
+// hunt - https://www.youtube.com/watch?v=T2ztjZEch5Y&t=153s
 // osrs sound attack warhammer_crush
 // Stats match osrs version but our version Vislvl is different.
 // https://raw.githubusercontent.com/Joshua-F/osrs-dumps/refs/heads/master/config/dump.npc npc_2840
@@ -5437,7 +5438,7 @@ model1=model_loc_42_8
 wanderrange=0
 moverestrict=nomove
 
-[npc_365]
+[ardougne_paladin2]
 name=Paladin
 desc=A military man.
 op2=Attack
