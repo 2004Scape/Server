@@ -1,7 +1,7 @@
 import { CoordGrid } from '#/engine/CoordGrid.js';
 import BuildArea from '#/engine/entity/BuildArea.js';
 import Player from '#/engine/entity/Player.js';
-import Visibility from '#/engine/entity/Visibility.js';
+import { Visibility } from '#/engine/entity/Visibility.js';
 import PlayerRenderer from '#/engine/renderer/PlayerRenderer.js';
 import Packet from '#/io/Packet.js';
 import InfoProt from '#/network/rs225/server/prot/InfoProt.js';

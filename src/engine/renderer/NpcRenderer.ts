@@ -1,5 +1,5 @@
 import Npc from '#/engine/entity/Npc.js';
-import NpcStat from '#/engine/entity/NpcStat.js';
+import { NpcStat } from '#/engine/entity/NpcStat.js';
 import Renderer from '#/engine/renderer/Renderer.js';
 import InfoProt from '#/network/rs225/server/prot/InfoProt.js';
 import NpcInfoAnim from '#/network/server/model/NpcInfoAnim.js';

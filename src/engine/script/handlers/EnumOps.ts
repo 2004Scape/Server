@@ -1,5 +1,5 @@
 import EnumType from '#/cache/config/EnumType.js';
-import ScriptOpcode from '#/engine/script/ScriptOpcode.js';
+import { ScriptOpcode } from '#/engine/script/ScriptOpcode.js';
 import { CommandHandlers } from '#/engine/script/ScriptRunner.js';
 import { check, EnumTypeValid } from '#/engine/script/ScriptValidators.js';
 

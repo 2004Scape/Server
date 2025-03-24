@@ -6,7 +6,7 @@ import Npc from '#/engine/entity/Npc.js';
 import Obj from '#/engine/entity/Obj.js';
 import Player from '#/engine/entity/Player.js';
 import ScriptFile from '#/engine/script/ScriptFile.js';
-import ScriptPointer from '#/engine/script/ScriptPointer.js';
+import ScriptPointer, { ScriptPointerNameMap } from '#/engine/script/ScriptPointer.js';
 import ServerTriggerType from '#/engine/script/ServerTriggerType.js';
 import { toInt32 } from '#/util/Numbers.js';
 
@@ -202,7 +202,7 @@ export default class ScriptState {
         let text = '';
         for (let i = 0; i < ScriptPointer._LAST; i++) {
             if ((flags & (1 << i)) != 0) {
-                text += `${ScriptPointer[i]}, `;
+                text += `${ScriptPointerNameMap.get(i)}, `;
             }
         }
         return text.substring(0, text.lastIndexOf(','));

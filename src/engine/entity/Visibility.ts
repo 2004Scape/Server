@@ -1,7 +1,5 @@
-enum Visibility {
+export const enum Visibility {
     DEFAULT,
     SOFT,
     HARD
 }
-
-export default Visibility;

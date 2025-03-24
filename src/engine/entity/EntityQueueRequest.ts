@@ -2,11 +2,11 @@ import ScriptFile from '#/engine/script/ScriptFile.js';
 import ScriptState from '#/engine/script/ScriptState.js';
 import Linkable from '#/util/Linkable.js';
 
-export enum NpcQueueType {
+export const enum NpcQueueType {
     NORMAL
 }
 
-export enum PlayerQueueType {
+export const enum PlayerQueueType {
     NORMAL,
     LONG, // like normal with dev-controlled logout behavior
     ENGINE,

@@ -1,28 +1,28 @@
 export default class ScriptVarType {
-    static INT = 105; // i
-    static AUTOINT = 255; // ÿ - virtual type used for enum keys
-    static STRING = 115; // s
-    static ENUM = 103; // g
-    static OBJ = 111; // o
-    static LOC = 108; // l
-    static COMPONENT = 73; // I
-    static NAMEDOBJ = 79; // O
-    static STRUCT = 74; // J
-    static BOOLEAN = 49; // 1
-    static COORD = 99; // c
-    static CATEGORY = 121; // y
-    static SPOTANIM = 116; // t
-    static NPC = 110; // n
-    static INV = 118; // v
-    static SYNTH = 80; // P
-    static SEQ = 65; // A
-    static STAT = 83; // S
-    static VARP = 86; // V
-    static PLAYER_UID = 112; // p
-    static NPC_UID = 78; // N
-    static INTERFACE = 97; // a
-    static NPC_STAT = 254; // þ
-    static IDKIT = 75; // K
+    static readonly INT = 105; // i
+    static readonly AUTOINT = 255; // ÿ - virtual type used for enum keys
+    static readonly STRING = 115; // s
+    static readonly ENUM = 103; // g
+    static readonly OBJ = 111; // o
+    static readonly LOC = 108; // l
+    static readonly COMPONENT = 73; // I
+    static readonly NAMEDOBJ = 79; // O
+    static readonly STRUCT = 74; // J
+    static readonly BOOLEAN = 49; // 1
+    static readonly COORD = 99; // c
+    static readonly CATEGORY = 121; // y
+    static readonly SPOTANIM = 116; // t
+    static readonly NPC = 110; // n
+    static readonly INV = 118; // v
+    static readonly SYNTH = 80; // P
+    static readonly SEQ = 65; // A
+    static readonly STAT = 83; // S
+    static readonly VARP = 86; // V
+    static readonly PLAYER_UID = 112; // p
+    static readonly NPC_UID = 78; // N
+    static readonly INTERFACE = 97; // a
+    static readonly NPC_STAT = 254; // þ
+    static readonly IDKIT = 75; // K
 
     static getType(type: number) {
         switch (type) {

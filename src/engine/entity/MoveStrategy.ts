@@ -1,7 +1,5 @@
-enum MoveStrategy {
+export const enum MoveStrategy {
     SMART,
     NAIVE,
     FLY
 }
-
-export default MoveStrategy;
