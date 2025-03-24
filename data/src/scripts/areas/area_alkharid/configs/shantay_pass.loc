@@ -10,4 +10,3 @@ name=Prison door
 desc=It looks fairly sturdy.
 model=model_loc_37
 op1=Open
-param=next_loc_stage,loc_1541

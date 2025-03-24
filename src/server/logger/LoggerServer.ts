@@ -1,4 +1,4 @@
-import { WebSocketServer } from 'ws';
+import { WebSocket, WebSocketServer } from 'ws';
 
 import { db, loggerDb, toDbDate } from '#/db/query.js';
 import InputTrackingBlob from '#/engine/entity/tracking/InputEvent.js';

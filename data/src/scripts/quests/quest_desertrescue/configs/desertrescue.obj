@@ -58,6 +58,7 @@ members=yes
 iop1=Look
 weight=32kg
 tradeable=no
+param=destroy_death,^true
 
 [desertrescue_ironkey]
 name=Wrought iron key

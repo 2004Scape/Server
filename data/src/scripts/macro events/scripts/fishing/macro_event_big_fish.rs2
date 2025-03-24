@@ -31,3 +31,4 @@ inv_del(inv, $fishing_equipment, 1);
 npc_tele($tele_coord); // move fishing spot.
 spotanim_map(failedspell_impact, npc_coord, 94, 30);
 p_delay(0);
+// intentional: does not clear the action, player followsw to next spot. see vid
