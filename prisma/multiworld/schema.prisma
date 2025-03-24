@@ -254,3 +254,15 @@ model message_status {
   read       DateTime?
   deleted    DateTime?
 }
+
+model mod_action {
+    id Int @id @default(autoincrement())
+
+    account_id Int
+    target_id  Int?
+
+    action_id Int
+    data      String?
+    ip        String?
+    timestamp DateTime @default(now())
+}
