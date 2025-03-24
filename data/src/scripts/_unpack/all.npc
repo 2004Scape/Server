@@ -1106,7 +1106,7 @@ desc=Freshly sheared.
 walkanim=sheep_walk
 readyanim=sheep_ready
 model1=model_2928_npc
-timer=25
+timer=1
 param=death_anim,sheep_death
 
 [sheep_fluffy]
@@ -1116,7 +1116,7 @@ desc=White and fluffy.
 walkanim=sheep_walk
 readyanim=sheep_ready
 model1=model_2929_npc
-timer=25
+timer=1
 param=death_anim,sheep_death
 
 [drake]
