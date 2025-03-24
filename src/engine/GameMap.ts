@@ -416,3 +416,7 @@ export function isApproached(level: number, srcX: number, srcZ: number, destX: n
 export function layerForLocShape(shape: number): LocLayer {
     return rsmod.locShapeLayer(shape);
 }
+
+export function isZoneAllocated(level: number, x: number, z: number): boolean {
+    return rsmod.isZoneAllocated(x, z, level);
+}
