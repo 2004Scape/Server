@@ -100,10 +100,10 @@ model tag {
 }
 
 model account_tag {
-    id Int @id @default(autoincrement())
-
     tag_id Int
     account_id Int
+
+    @@id([account_id, tag_id])
 }
 
 // website

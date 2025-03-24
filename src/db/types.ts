@@ -38,7 +38,6 @@ export type account_session = {
     event_type: Generated<number>;
 };
 export type account_tag = {
-    id: Generated<number>;
     tag_id: number;
     account_id: number;
 };

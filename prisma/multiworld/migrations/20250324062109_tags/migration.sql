@@ -9,9 +9,8 @@ CREATE TABLE `tag` (
 
 -- CreateTable
 CREATE TABLE `account_tag` (
-    `id` INTEGER NOT NULL AUTO_INCREMENT,
     `tag_id` INTEGER NOT NULL,
     `account_id` INTEGER NOT NULL,
 
-    PRIMARY KEY (`id`)
+    PRIMARY KEY (`account_id`, `tag_id`)
 ) DEFAULT CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci;
