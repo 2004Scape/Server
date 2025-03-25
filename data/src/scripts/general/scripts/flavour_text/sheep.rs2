@@ -1,19 +1,10 @@
+// https://youtu.be/597gMc5j14E?si=oXUOSwc7dvzmwOMl&t=237
+// Seems to be 20-40 ticks
+
 [ai_timer,sheep_sheared]
-def_int $rand = random(4);
-npc_settimer(calc(15 + random(20)));
-if ($rand = 0) {
-    @sheep_baa;
-} else if ($rand = 1) {
-    // todo: figure out the original timing, based off the 2005 video
-    // it seems like it might be around 1 minute average
-    npc_changetype(sheep_fluffy, ^max_32bit_int);
-}
+npc_settimer(add(20, random(20)));
+npc_say("Baa!");
 
 [ai_timer,sheep_fluffy]
-npc_settimer(calc(15 + random(20)));
-if (random(4) = 0) {
-    @sheep_baa;
-} 
-
-[label,sheep_baa]
+npc_settimer(add(20, random(20)));
 npc_say("Baa!");

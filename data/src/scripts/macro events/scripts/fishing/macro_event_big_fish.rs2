@@ -3,38 +3,32 @@
 %macro_event = ^no_macro_event;
 // todo: figure out sounds
 sound_synth(watersplash, 0, 0); // complete guess
-def_npc $old = npc_type;
-npc_changetype(macro_event_big_fish, 5);
-// intentional: does not face the player coord. see vid
-npc_anim(fish_seq_3, 20);
-
+def_coord $tele_coord = ~fishing_spot_random_coord(npc_type);
+npc_changetype_keepall(macro_event_big_fish, 5);
 p_delay(0);
+npc_anim(fish_seq_3, 0);
 anim(human_unarmedblock, 0);
 ~human_hit_sound;
+p_delay(2);
+npc_anim(fish_seq_5, 0);
 
 // todo: big fish is supposed to disappear after this anim. I cant seem to replicate it
 // perhaps the anim was different? or they spawn some secondary npc or something.
 // video: https://youtu.be/9z5XLWq4lZU?list=PLn23LiLYLb1am4weMQzkWn5m9b3m9fXv9&t=129
-npc_anim(fish_seq_5, 0);
 
-p_delay(3);
+p_delay(1);
 // seems to teleport twice, + does splash spot anim: https://youtu.be/ypNPoqhh5aw?list=PLn23LiLYLb1am4weMQzkWn5m9b3m9fXv9&t=386
-npc_changetype($old, ^max_32bit_int);
-npc_tele(~fishing_spot_random_coord($old)); // move fishing spot. 
-// Might have a chance to move to the same spot: 
+// Moves once?:
 // https://youtu.be/9z5XLWq4lZU?list=PLn23LiLYLb1am4weMQzkWn5m9b3m9fXv9&t=88
 // https://www.youtube.com/watch?v=c_LXJDSTKPA
 
 def_coord $random_coord = map_findsquare(coord, 1, 7, ^map_findsquare_lineofwalk);
-// todo: confirm the delay on this
 sound_synth(water_strike_all, 0, 0); // complete guess
 def_int $duration = ~coord_projectile(coord, $random_coord, waterstrike_travel, 0, 0, 20, 16, -5, 64, 10);
-if (p_finduid(uid) = true) {
-    p_delay(calc($duration/30));
-    obj_add($random_coord, $fishing_equipment, 1, 100);
-    inv_del(inv, $fishing_equipment, 1);
-}
-npc_tele(~fishing_spot_random_coord($old)); // move fishing spot.
+p_delay(calc($duration/30));
+obj_add($random_coord, $fishing_equipment, 1, 100);
+inv_del(inv, $fishing_equipment, 1);
+npc_tele($tele_coord); // move fishing spot.
 spotanim_map(failedspell_impact, npc_coord, 94, 30);
 p_delay(0);
 // intentional: does not clear the action, player followsw to next spot. see vid
