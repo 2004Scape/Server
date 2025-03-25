@@ -50,7 +50,7 @@ if(map_members = true & ~trail_hasclue_inv = true) {
                     npc_say("Die, human!");
                     %aggressive_npc = npc_uid;
                     // this prevents other players from attacking w/manual cast, this might've been a later change
-                    %npc_lastcombat = ^max_32bit_int;
+                    %npc_lastcombat = sub(^max_32bit_int, 8);
                     %npc_aggressive_player = uid;
                     npc_setmode(applayer2);
                     return;
