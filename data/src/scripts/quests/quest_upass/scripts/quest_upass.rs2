@@ -160,28 +160,28 @@ if (inv_total(inv, orb_of_light1) > 0) {
     mes("You are already carrying this orb.");
     return;
 }
-@pickup_obj(obj_coord, obj_type, obj_count);
+@pickup_obj;
 
 [opobj3,orb_of_light2]
 if (inv_total(inv, orb_of_light2) > 0) {
     mes("You are already carrying this orb.");
     return;
 }
-@pickup_obj(obj_coord, obj_type, obj_count);
+@pickup_obj;
 
 [opobj3,orb_of_light3]
 if (inv_total(inv, orb_of_light3) > 0) {
     mes("You are already carrying this orb.");
     return;
 }
-@pickup_obj(obj_coord, obj_type, obj_count);
+@pickup_obj;
 
 [opobj3,orb_of_light4]
 if (inv_total(inv, orb_of_light4) > 0) {
     mes("You are already carrying this orb.");
     return;
 }
-@pickup_obj(obj_coord, obj_type, obj_count);
+@pickup_obj;
 
 [label,upass_orboflight_trap]
 ~forcewalk(movecoord(loc_coord, 1, 0, 0));

@@ -62,4 +62,4 @@ if(%tree_progress = ^tree_complete) {
     obj_del;
     return;
 }
-@pickup_obj(obj_coord, obj_type, obj_count);
+@pickup_obj;

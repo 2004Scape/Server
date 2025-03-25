@@ -534,6 +534,10 @@ const ScriptOpcodePointers: {
         require: ['active_npc'],
         require2: ['active_npc2']
     },
+    [ScriptOpcode.NPC_CHANGETYPE_KEEPALL]: {
+        require: ['active_npc'],
+        require2: ['active_npc2']
+    },
     [ScriptOpcode.NPC_COORD]: {
         require: ['active_npc'],
         require2: ['active_npc2']

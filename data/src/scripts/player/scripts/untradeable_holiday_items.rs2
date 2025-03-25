@@ -7,7 +7,7 @@ if (inv_total(inv, scythe) >= 1 | inv_total(bank, scythe) >= 1 | inv_total(worn,
     return;
 } else {
     %scythe_unlocked = 1; //currently the only place this is set. if they are introduced to the game in another way, this needs setting elsewhere
-    @pickup_obj(obj_coord, obj_type, obj_count);
+    @pickup_obj;
 }
 
 // RSC message: https://classic.runescape.wiki/w/Bunny_ears#/media/File:Collecting_Bunny_Ears_(only_have_one_head).jpg
@@ -18,5 +18,5 @@ if (inv_total(inv, bunny_ears) >= 1 | inv_total(bank, bunny_ears) >= 1 | inv_tot
     return;
 } else {
     %bunny_ears_unlocked = 1; //currently the only place this is set. if they are introduced to the game in another way, this needs setting elsewhere
-    @pickup_obj(obj_coord, obj_type, obj_count);
+    @pickup_obj;
 }
