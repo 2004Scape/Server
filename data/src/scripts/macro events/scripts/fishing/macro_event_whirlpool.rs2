@@ -1,8 +1,10 @@
 [proc,macro_event_whirlpool_spawn]
 %macro_event = ^no_macro_event;
 
-npc_changetype_keepall(npc_param(whirlpool), 60);
+// https://youtu.be/ji4qvtcLKpI?list=PLn23LiLYLb1am4weMQzkWn5m9b3m9fXv9&t=223
+// moves instantly back to respawn, then moves back again
 sound_synth(whirlpool, 0, 0);
+npc_changetype(npc_param(whirlpool), 60);
 
 [proc,macro_whirlpool_attempt_take_equipment](namedobj $fishing_equipment)
 if (p_finduid(uid) = true) {
