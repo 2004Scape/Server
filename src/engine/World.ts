@@ -85,7 +85,8 @@ import {
     trackCycleWorldTime,
     trackCycleZoneTime,
     trackNpcCount,
-    trackPlayerCount
+    trackPlayerCount,
+    trackSessionEventsPublished
 } from '#/server/Metrics.js';
 import Environment from '#/util/Environment.js';
 import { fromBase37, toBase37, toSafeName } from '#/util/JString.js';
@@ -2222,6 +2223,7 @@ class World {
             event: args.length ? message + ' ' + args.join(' ') : message,
             event_type
         });
+        trackSessionEventsPublished.inc();
     }
 
     notifyPlayerBan(staff: string, username: string, until: number) {

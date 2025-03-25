@@ -66,3 +66,8 @@ export const trackCycleBandwidthOutBytes = new Counter({
     name: 'lostcity_cycle_bandwidth_out_bytes',
     help: 'Total outgoing bandwidth in bytes.'
 });
+
+export const trackSessionEventsPublished = new Counter({
+    name: 'lostcity_session_events_published',
+    help: 'Total number of session events published.'
+});
