@@ -74,14 +74,14 @@ if(inv_totalcat(inv, trail_challenge) > 0 | inv_totalcat(bank, trail_challenge) 
     mes("You already have a challenge scroll."); // OSRS
     return;
 }
-@pickup_obj(obj_coord, obj_type, obj_count);
+@pickup_obj;
 
 [opobj3,_trail_puzzle]
 if(inv_totalcat(inv, trail_puzzle) > 0 | inv_totalcat(bank, trail_puzzle) > 0) {
     mes("You already have a puzzle box."); // OSRS
     return;
 }
-@pickup_obj(obj_coord, obj_type, obj_count);
+@pickup_obj;
 
 [opobj3,_trail_clue_easy] @pickup_cluescroll;
 [opobj3,_trail_clue_medium] @pickup_cluescroll;
@@ -95,4 +95,4 @@ if(~trail_hasclue_all = true) {
     mes("You already have a clue scroll."); // OSRS
     return;
 }
-@pickup_obj(obj_coord, obj_type, obj_count);
+@pickup_obj;
