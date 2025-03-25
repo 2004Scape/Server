@@ -437,11 +437,14 @@ export default class Npc extends PathingEntity {
     }
 
     noMode(): void {
-        // this.clearInteraction();
         this.updateMovement(false);
-        // this.targetOp = NpcMode.NONE;
-        // this.faceEntity = -1;
-        // this.masks |= InfoProt.NPC_FACE_ENTITY.id;
+    }
+
+    clearInteraction(): void {
+        super.clearInteraction();
+        this.targetOp = NpcMode.NONE;
+        this.faceEntity = -1;
+        this.masks |= NpcInfoProt.FACE_ENTITY;
     }
 
     defaultMode(): void {
