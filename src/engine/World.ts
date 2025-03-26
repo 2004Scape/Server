@@ -4,7 +4,7 @@ import { Worker as NodeWorker } from 'worker_threads';
 
 // deps
 import * as rsbuf from '@2004scape/rsbuf';
-import { PlayerInfoProt } from '@2004scape/rsbuf';
+import { PlayerInfoProt, Visibility } from '@2004scape/rsbuf';
 import kleur from 'kleur';
 import forge from 'node-forge';
 
@@ -1927,6 +1927,7 @@ class World {
                 player.account_id = account_id;
                 player.reconnecting = reconnecting;
                 player.staffModLevel = staffmodlevel ?? 0;
+                player.visibility = (player.staffModLevel > 1 && Environment.NODE_PRODUCTION) ? Visibility.HARD : Visibility.DEFAULT;
                 player.lowMemory = lowMemory;
                 player.muted_until = muted_until ? new Date(muted_until) : null;
                 player.members = members;
