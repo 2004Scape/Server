@@ -343,7 +343,7 @@ export default class Npc extends PathingEntity {
     }
 
     processQueue() {
-        for (let request = this.queue.head(); request !== null; request = this.queue.next()) {
+        for (const request of this.queue.all()) {
             // purposely only decrements the delay when the npc is not delayed
             if (!this.delayed) {
                 request.delay--;
@@ -351,7 +351,6 @@ export default class Npc extends PathingEntity {
 
             if (!this.delayed && request.delay <= 0) {
                 request.unlink();
-                const save = this.queue.cursor; // LinkList-specific behavior so we can getqueue/clearqueue inside of this
                 const type: NpcType = NpcType.get(this.type);
                 const script = ScriptProvider.getByTrigger(request.queueId, type.id, type.category);
                 if (script) {
@@ -359,8 +358,6 @@ export default class Npc extends PathingEntity {
                     state.lastInt = request.lastInt;
                     this.executeScript(state);
                 }
-
-                this.queue.cursor = save;
             }
         }
     }
