@@ -9,7 +9,7 @@ model=model_2399_obj
 2dxan=516
 weight=2g
 category=category_149
-respawnrate=200
+respawnrate=100
 
 [waterrune]
 name=Water rune
