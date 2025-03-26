@@ -1,12 +1,12 @@
 <!DOCTYPE html>
 <html>
- 
+
 <head>
     <title>2004Scape Game</title>
- 
+
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=0.7">
- 
+
     <style>
         body,
         td,
@@ -15,7 +15,7 @@
             font-size: 12px;
             color: white;
         }
- 
+
         body {
             margin: 0px 0px;
             overflow: auto;
@@ -29,7 +29,7 @@
             margin-right: auto;
             display: block;
         }
- 
+
         canvas {
             width: 789px;
             height: 532px;
@@ -45,15 +45,15 @@
             -webkit-tap-highlight-color: rgba(255, 255, 255, 0);
             z-index: -1;
         }
- 
+
         html:-webkit-full-screen {
             background-color: black !important;
         }
- 
+
         .centered {
             text-align: center;
         }
- 
+
         .green {
             text-decoration: none;
             color: #04A800;
@@ -91,10 +91,10 @@
         }
 
     </style>
- 
+
     <script>
         const isMobile = /Mobi|Android|iPhone|iPad|Windows Phone|Mobile/i.test(navigator.userAgent);
-        
+
         function toggleFullscreen() {
             if (document.fullscreenElement || document.webkitFullscreenElement || document.mozFullScreenElement || document.msFullscreenElement) {
                 if (document.exitFullscreen) {
@@ -108,7 +108,7 @@
                 }
             } else {
                 let element = document.getElementById('canvas');
- 
+
                 if (element.requestFullscreen) {
                     element.requestFullscreen();
                 } else if (element.webkitRequestFullscreen) {
@@ -125,7 +125,7 @@
             document.getElementById('screenshot').download = 'screenshot-' + Math.floor(Date.now() / 1000) + '.png';
             document.getElementById('screenshot').href = document.getElementById('canvas').toDataURL('image/png').replace(/^data:image\/[^;]/, 'data:application/octet-stream');
         }
- 
+
         function hideControls() {
             document.getElementById('controls').style.display = 'none';
             document.getElementById('hide-message').style.display = '';
@@ -135,7 +135,7 @@
 
             localStorage.setItem('hideControls', true);
         }
-        
+
         let timer;
         let countDown = 0;
         let countDownMax = 10;
@@ -150,7 +150,7 @@
             countDown++;
             timer = setTimeout(hideMessage, 1000);
         }
-        
+
         function showControls() {
             clearTimeout(timer);
 
@@ -160,7 +160,7 @@
             localStorage.removeItem('hideControls');
         }
 
-        document.addEventListener('keydown', function(e) {
+        document.addEventListener('keydown', function (e) {
             if ((e.ctrlKey || e.metaKey) && e.altKey) {
                 if (e.code === 'KeyI') {
                     e.preventDefault();
@@ -187,7 +187,7 @@
             } else {
                 let size = localStorage.getItem('canvasSize');
                 if (size) { setSize(size); }
-            
+
                 let controls = localStorage.getItem('hideControls');
                 if (controls === 'true') { hideControls(); }
             }
@@ -214,7 +214,7 @@
                 case 'auto':
                     canvas.style.width = '100%';
                     canvas.style.height = 'auto';
-                    let maxWidth = ((window.innerHeight - 120) / 532) * 789; 
+                    let maxWidth = ((window.innerHeight - 120) / 532) * 789;
                     canvas.style.maxWidth = maxWidth + 'px';
                     break;
             }
@@ -236,12 +236,12 @@
                     filterSelect = type;
                     document.getElementById('filtering').value = type;
                     break;
-            }         
-            canvas.style.imageRendering = filterSelect;            
+            }
+            canvas.style.imageRendering = filterSelect;
         }
     </script>
 </head>
- 
+
 <body>
     <center>
         <div id="game">
@@ -299,18 +299,20 @@
             ctx.fillText('Loading...', canvas.width / 2, canvas.height / 2);
         }
     </script>
- 
+
     <script type="module">
         import { Client } from './client/client.js';
-        <% if(per_deployment_token) { %>
+
+        <% if (per_deployment_token) { %>
             document.cookie = 'per_deployment_token="<%= per_deployment_token %>"; Domain=' + window.location.hostname;
         <% } %>
+
         (() => {
             new Client(<%= nodeid %>, <%= lowmem %>, <%= members %>);
         })();
-        
+
         loadSettings();
     </script>
 </body>
- 
+
 </html>
