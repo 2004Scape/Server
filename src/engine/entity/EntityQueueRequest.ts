@@ -2,9 +2,9 @@ import ScriptFile from '#/engine/script/ScriptFile.js';
 import ScriptState from '#/engine/script/ScriptState.js';
 import Linkable from '#/util/Linkable.js';
 
-export enum NpcQueueType {
-    NORMAL
-}
+// export enum NpcQueueType {
+//     NORMAL
+// }
 
 export enum PlayerQueueType {
     NORMAL,
@@ -15,7 +15,7 @@ export enum PlayerQueueType {
     SOFT // OSRS
 }
 
-export type QueueType = NpcQueueType | PlayerQueueType;
+export type QueueType = PlayerQueueType;
 export type ScriptArgument = number | string;
 
 export class EntityQueueRequest extends Linkable {
