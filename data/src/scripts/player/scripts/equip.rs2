@@ -409,8 +409,8 @@ if ($primary_count > 0 & oc_stackable($primary_obj) = false) {
             // since we are equipping a stackable obj that we are already wearing
             // then just calc out the differences
             inv_moveitem(inv, worn, $primary_obj, sub($count, $overflow));
-            $swapped = true;
         }
+        $swapped = true;
     } else {
         // according to kris:
         // imagine u got 2b chins equipped and 1b in inventory
@@ -428,8 +428,8 @@ if ($primary_count > 0 & oc_stackable($primary_obj) = false) {
             }
             // then move the clicked inv obj to the worn slot.
             inv_movetoslot(inv, worn, $slot, $primary_slot);
-            $swapped = true;
         }
+        $swapped = true;
     }
 } else if ($primary_count = 0 & $move_item = true) {
     inv_movetoslot(inv, worn, $slot, $primary_slot);
