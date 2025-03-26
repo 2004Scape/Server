@@ -328,150 +328,83 @@ if ($bonus < 0) {
 
 [proc,.update_weight]
 
-[proc,equip_validate_and_move](obj $obj, int $count, int $slot, int $slot1, int $slot2, int $slot3, boolean $move_item, boolean $colliders, boolean $swapped)(boolean)
-if ($slot1 ! null) {
-    def_boolean $primary;
-    $primary, $swapped = ~equip_validate_and_move_primary($obj, $count, $slot, $slot1, $move_item, $swapped);
-    if ($primary = false) {
-        return(false);
-    }
+[proc,try_equip](int $inv_slot)(boolean)
+def_obj $equip_obj = inv_getobj(inv, $inv_slot);
+def_int $equip_obj_num = inv_getnum(inv, $inv_slot);
+if ($equip_obj = null) {
+    return(false);
 }
-if ($slot2 ! null) {
-    def_boolean $secondary;
-    $secondary, $swapped = ~equip_validate_and_move_secondary($count, $slot, $slot1, $slot2, $move_item, $swapped, 0);
-    if ($secondary = false) {
-        return(false);
-    }
+if (inv_itemspace2(worn, $equip_obj, $equip_obj_num, inv_size(worn)) > 0) { // overflowing only applies to stackable items, so we need no stackable checks
+    return(false);
 }
-if ($slot3 ! null) {
-    def_boolean $secondary2;
-    $secondary2, $swapped = ~equip_validate_and_move_secondary($count, $slot, $slot2, $slot3, $move_item, $swapped, 1);
-    if ($secondary2 = false) {
-        return(false);
-    }
+if (oc_wearpos($equip_obj) = null) {
+    return(false);
 }
+inv_moveitem(inv, inv_96, $equip_obj, $equip_obj_num); // move equip item to dummy inv
+if (~unequip_conflicts_space($equip_obj) = false) { // check if enough space
+    inv_movetoslot(inv_96, inv, 0, $inv_slot); // move equip item back to original spot
+    return(false);
+}
+~unequip_conflicts($equip_obj);
+inv_movetoslot(inv_96, worn, 0, oc_wearpos($equip_obj)); // equip item :D
+return(true);
 
-def_boolean $success = true;
-if ($colliders = true) {
-    // third: we have to check the other slots to see if they conflict with this item, and if so, remove them
-    // e.g. kiteshield defines only wearpos=lefthand but 2h defines wearpos=righthand wearpos2=lefthand.
-    //      if you equip 2h then kiteshield, the 2h should be removed
-    def_int $size = inv_size(worn);
-    def_int $i = 0;
-    while ($i < $size & $success = true) {
-        def_obj $other_obj = inv_getobj(worn, $i);
-        if ($other_obj ! null) {
-            def_int $other_count = inv_getnum(worn, $i);
-            def_int $other_slot2 = oc_wearpos2($other_obj);
-            def_int $other_slot3 = oc_wearpos3($other_obj);
-
-            if ($other_count > 0 & $other_slot2 = $slot1 | $other_slot3 = $slot1) {
-                if ($move_item = true) {
-                    inv_moveitem(worn, inv, $other_obj, $other_count);
-                } else if (~equip_validate_and_move($other_obj, $other_count, null, null, $other_slot2, $other_slot3, $move_item, false, $swapped) = false) {
-                    $success = false;
+[proc,unequip_conflicts_space](obj $equip_obj)(boolean)
+def_int $wearpos1 = oc_wearpos($equip_obj);
+def_int $wearpos2 = oc_wearpos2($equip_obj);
+def_int $wearpos3 = oc_wearpos3($equip_obj);
+def_int $conflicts = 0;
+def_int $i = 0;
+while ($i < inv_size(worn)) {
+    def_obj $worn_obj = inv_getobj(worn, $i);
+    def_int $worn_num = inv_getnum(worn, $i);
+    if ($worn_obj ! null) {
+        def_int $worn_wearpos1 = oc_wearpos($worn_obj);
+        def_int $worn_wearpos2 = oc_wearpos2($worn_obj);
+        def_int $worn_wearpos3 = oc_wearpos3($worn_obj);
+        if (($wearpos1 ! null & ($wearpos1 = $worn_wearpos1 | $wearpos1 = $worn_wearpos2 | $wearpos1 = $worn_wearpos3))
+        | ($wearpos2 ! null & ($wearpos2 = $worn_wearpos1 | $wearpos2 = $worn_wearpos2 | $wearpos2 = $worn_wearpos3))
+        | ($wearpos3 ! null & ($wearpos3 = $worn_wearpos1 | $wearpos3 = $worn_wearpos2 | $wearpos3 = $worn_wearpos3))) {
+            if (oc_stackable($worn_obj) = true) {
+                if (inv_itemspace2(inv, $worn_obj, $worn_num, inv_size(inv)) > 0) {
+                    return(false);
                 }
+                if (inv_total(inv, $worn_obj) < 0) { // if stackable item isnt in inv, then takes up a space
+                    $conflicts = add($conflicts, 1);
+                }
+            } else {
+                $conflicts = add($conflicts, 1);
             }
         }
-        $i = calc($i + 1);
     }
-    if ($success = false) {
-        return(false);
-    }
+    $i = add($i, 1);
 }
-
-if ($move_item = true | $colliders = false) {
-    return(true);
+if ($conflicts > inv_freespace(inv)) {
+    return(false);
 }
-return(~equip_validate_and_move($obj, $count, $slot, $slot1, $slot2, $slot3, true, true, false));
+return(true);
 
-[proc,equip_validate_and_move_primary](obj $obj, int $count, int $slot, int $primary_slot, boolean $move_item, boolean $swapped)(boolean, boolean)
-def_obj $primary_obj = inv_getobj(worn, $primary_slot);
-def_int $primary_count = inv_getnum(worn, $primary_slot);
-
-if ($primary_count > 0 & oc_stackable($primary_obj) = false) {
-    // osrs directly swaps the worn obj to the slot you clicked
-    // there is a guaranteed free slot when equipping basically
-    if ($move_item = true) {
-        inv_movetoslot(inv, worn, $slot, $primary_slot);
+[proc,unequip_conflicts](obj $equip_obj)
+def_int $wearpos1 = oc_wearpos($equip_obj);
+def_int $wearpos2 = oc_wearpos2($equip_obj);
+def_int $wearpos3 = oc_wearpos3($equip_obj);
+def_int $conflicts = 0;
+def_int $i = 0;
+while ($i < inv_size(worn)) {
+    def_obj $worn_obj = inv_getobj(worn, $i);
+    def_int $worn_num = inv_getnum(worn, $i);
+    if ($worn_obj ! null) {
+        def_int $worn_wearpos1 = oc_wearpos($worn_obj);
+        def_int $worn_wearpos2 = oc_wearpos2($worn_obj);
+        def_int $worn_wearpos3 = oc_wearpos3($worn_obj);
+        if (($wearpos1 ! null & ($wearpos1 = $worn_wearpos1 | $wearpos1 = $worn_wearpos2 | $wearpos1 = $worn_wearpos3))
+        | ($wearpos2 ! null & ($wearpos2 = $worn_wearpos1 | $wearpos2 = $worn_wearpos2 | $wearpos2 = $worn_wearpos3))
+        | ($wearpos3 ! null & ($wearpos3 = $worn_wearpos1 | $wearpos3 = $worn_wearpos2 | $wearpos3 = $worn_wearpos3))) {
+            inv_moveitem(worn, inv, $worn_obj, $worn_num);
+        }
     }
-    $swapped = true;
-} else if ($primary_count > 0 & oc_stackable($primary_obj) = true) {
-    // it is guaranteed here the player is wearing the stackable obj
-    // check for stackable overflow
-    // source - trust me
-    if ($obj = $primary_obj) {
-        def_int $overflow = inv_itemspace2(worn, $primary_obj, $count, inv_size(worn));
-        if ($overflow >= $count) {
-            return(false, $swapped);
-        }
-        if ($move_item = true) {
-            // since we are equipping a stackable obj that we are already wearing
-            // then just calc out the differences
-            inv_moveitem(inv, worn, $primary_obj, sub($count, $overflow));
-        }
-        $swapped = true;
-    } else {
-        // according to kris:
-        // imagine u got 2b chins equipped and 1b in inventory
-        // u cant now equip another weapon
-        // a free inv slot is guarantee as long as the player does not already have the obj.
-        if (inv_total(inv, $primary_obj) > 0 & inv_itemspace(inv, $primary_obj, $primary_count, inv_size(inv)) = false) {
-            return(false, $swapped);
-        }
-        if ($move_item = true) {
-            // if this executes we already assert we have space to do stuff.
-            // a free space is guarantee from doing the swap.
-            // if the player already has the item then we need to move the worn slot to inv slot first.
-            if (inv_total(inv, $primary_obj) > 0) {
-                inv_moveitem(worn, inv, $primary_obj, $primary_count);
-            }
-            // then move the clicked inv obj to the worn slot.
-            inv_movetoslot(inv, worn, $slot, $primary_slot);
-        }
-        $swapped = true;
-    }
-} else if ($primary_count = 0 & $move_item = true) {
-    inv_movetoslot(inv, worn, $slot, $primary_slot);
+    $i = add($i, 1);
 }
-return(true, $swapped);
-
-[proc,equip_validate_and_move_secondary](int $count, int $slot, int $previous_secondary_slot, int $secondary_slot, boolean $move_item, boolean $swapped, int $index)(boolean, boolean)
-def_obj $secondary_obj = inv_getobj(worn, $secondary_slot);
-def_int $secondary_count = inv_getnum(worn, $secondary_slot);
-
-if ($secondary_count > 0 & oc_stackable($secondary_obj) = false) {
-    def_int $required_space = add(1, $index);
-    if ($swapped = false) {
-        $required_space = max(0, sub($required_space, 1));
-    }
-    if ($previous_secondary_slot ! -1 & inv_getnum(worn, $previous_secondary_slot) = 0) {
-        $required_space = max(0, sub($required_space, 1));
-    }
-    if (inv_freespace(inv) < $required_space) {
-        return(false, $swapped);
-    }
-    if ($move_item = true) {
-        // move obj from worn to inv
-        // the obj must not be stackable here
-        // the inv must have atleast 1 extra free space in the inventory to move it
-        inv_moveitem(worn, inv, $secondary_obj, $secondary_count);
-        // for each of these extra wearpos slot checks
-        // we check for swapped on all 3 bcos gotta make sure the first item
-        // that is unequipped goes to the inv slot that was clicked to initiate the equipping
-        $swapped = true;
-    }
-} else if ($secondary_count > 0 & oc_stackable($secondary_obj) = true) {
-    // check for stackable overflow
-    // pretty sure this scenario is impossible to happen
-    // for example if equipping an obj that removes a wearpos that you have
-    // equipped that is stackable
-    if (inv_itemspace(inv, $secondary_obj, $count, inv_size(inv)) = false) {
-        return(false, $swapped);
-    }
-}
-return(true, $swapped);
-
 
 [proc,update_weight_equipment] // can change to use categories and param when more weight reduction equipment exists
 if(inv_total(worn, boots_of_lightness_inv) > 0 & map_members = true) { // convert inv boots to worn boots if in p2p
@@ -487,3 +420,15 @@ if(inv_total(inv, boots_of_lightness_worn) > 0) {
     inv_del(inv, boots_of_lightness_worn, $count); // should use inv_changeslot probably
     inv_add(inv, boots_of_lightness_inv, $count);
 }
+
+[debugproc,equiptest]
+if (p_finduid(uid) = false) {
+    return;
+}
+inv_clear(inv);
+inv_clear(worn);
+inv_add(inv, bronze_2h_sword, 1);
+inv_add(inv, wooden_shield, 1);
+inv_add(inv, bronze_arrow, 100);
+inv_setslot(worn, ^wearpos_quiver, bronze_arrow, ^max_32bit_int);
+inv_add(inv, logs, 25);
