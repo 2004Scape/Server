@@ -146,12 +146,7 @@ const NpcOps: CommandHandlers = {
         const arg = state.popInt();
         const queueId = check(state.popInt(), QueueValid);
 
-        // const npcType: NpcType = check(state.activeNpc.type, NpcTypeValid);
-        // const script = ScriptProvider.getByTrigger(ServerTriggerType.AI_QUEUE1 + queueId - 1, npcType.id, npcType.category);
-
-        // if (script) {
         state.activeNpc.enqueueScript(ServerTriggerType.AI_QUEUE1 + queueId - 1, delay, arg);
-        // }
     }),
 
     [ScriptOpcode.NPC_RANGE]: checkedHandler(ActiveNpc, state => {
