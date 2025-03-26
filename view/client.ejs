@@ -64,6 +64,11 @@
             margin-bottom: 10px;
         }
 
+        #controls > a, #controls select, #controls optgroup, #controls optgroup > option {
+            font-family: Arial, Helvetica, sans-serif;
+            font-size: 12px;
+        }
+
         @keyframes blink {
             50% {
                 opacity: 0.5;
@@ -79,6 +84,10 @@
             background-color: black;
             color: #04A800;
             border: none;
+        }
+
+        #mobilekeyboard-container {
+            display: none;
         }
 
     </style>
@@ -162,14 +171,32 @@
 
         function loadSettings() {
             setFilter((localStorage.getItem('filtering') == 'true') ? 'pixelated' : 'auto');
-
-            if (!isMobile)  {
+            if (isMobile) {
+                const keyboardChoiceContainerElement = document.getElementById('mobilekeyboard-container');
+                const keyboardChoiceElement = document.getElementById('mobilekeyboard');
+                keyboardChoiceContainerElement.style.display = 'inline-block';
+                let mobilekeyboard = localStorage.getItem('mobileKeyboardMode');
+                if (mobilekeyboard === 'canvas') {
+                    keyboardChoiceElement.value = 'canvas';
+                } else if (mobilekeyboard === 'native') {
+                    keyboardChoiceElement.value = 'native';
+                } else {
+                    // Unset choice = hybrid
+                    keyboardChoiceElement.value = 'hybrid';
+                }
+            } else {
                 let size = localStorage.getItem('canvasSize');
                 if (size) { setSize(size); }
             
                 let controls = localStorage.getItem('hideControls');
                 if (controls === 'true') { hideControls(); }
             }
+        }
+
+        function setKeyboardChoice(ev) {
+            const target = document.getElementById('mobilekeyboard').value;
+            localStorage.setItem('mobileKeyboardMode', target);
+            alert('Please reload the page to apply the changes.');
         }
 
         function setSize(size) {
@@ -225,15 +252,28 @@
 
         <div class="centered" id="controls">
             <select id="size" name="size" onchange="setSize();">
+                <optgroup>
                 <option value="1" id="1">1x Size</option>
                 <option value="2" id="2">2x Size</option>
                 <option value="3" id="3">3x Size</option>
                 <option value="auto" id="auto">Auto Sizing</option>
+                </optgroup>
             </select> |
             <select id="filtering" name="filtering" onchange="setFilter('dropdown');">
+                <optgroup>
                 <option value="auto" id="auto">Auto Scaling</option>
                 <option value="pixelated" id="pixelated">Pixel Scaling</option>
+                </optgroup>
             </select> |
+            <span id="mobilekeyboard-container">
+                <select id="mobilekeyboard" name="mobilekeyboard" onchange="setKeyboardChoice();">
+                    <optgroup>
+                    <option value="hybrid" id="hybrid">Hybrid keyboard</option>
+                    <option value="canvas" id="canvas">Canvas keyboard</option>
+                    <option value="native" id="native">Native keyboard</option>
+                    </optgroup>
+                </select> |
+            </span>
             <a class="green" href="#" id="fullscreen" onclick="toggleFullscreen();">Go Fullscreen</a> |
             <a class="green" href="#" id="screenshot" onclick="saveScreenshot();">Take screenshot</a> |
             <a class="green" href="#" id="hide" onclick="hideControls();">Hide controls</a>
