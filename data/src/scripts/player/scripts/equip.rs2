@@ -340,13 +340,13 @@ if (inv_itemspace2(worn, $equip_obj, $equip_obj_num, inv_size(worn)) > 0) { // o
 if (oc_wearpos($equip_obj) = null) {
     return(false);
 }
-inv_moveitem(inv, inv_96, $equip_obj, $equip_obj_num); // move equip item to dummy inv
+inv_moveitem(inv, equipitem, $equip_obj, $equip_obj_num); // move equip item to dummy inv
 if (~unequip_conflicts_space($equip_obj) = false) { // check if enough space
-    inv_movetoslot(inv_96, inv, 0, $inv_slot); // move equip item back to original spot
+    inv_movetoslot(equipitem, inv, 0, $inv_slot); // move equip item back to original spot
     return(false);
 }
 ~unequip_conflicts($equip_obj);
-inv_movetoslot(inv_96, worn, 0, oc_wearpos($equip_obj)); // equip item :D
+inv_movetoslot(equipitem, worn, 0, oc_wearpos($equip_obj)); // equip item :D
 return(true);
 
 [proc,unequip_conflicts_space](obj $equip_obj)(boolean)
@@ -388,7 +388,6 @@ return(true);
 def_int $wearpos1 = oc_wearpos($equip_obj);
 def_int $wearpos2 = oc_wearpos2($equip_obj);
 def_int $wearpos3 = oc_wearpos3($equip_obj);
-def_int $conflicts = 0;
 def_int $i = 0;
 while ($i < inv_size(worn)) {
     def_obj $worn_obj = inv_getobj(worn, $i);
