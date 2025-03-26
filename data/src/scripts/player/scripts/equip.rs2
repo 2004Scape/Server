@@ -34,7 +34,7 @@ if (p_finduid(uid) = true) {
     def_int $slot3 = oc_wearpos3($obj); // override slot 2
 
     // second: we need to check any wearpos overrides that this item describes
-    if (~equip_validate_and_move($obj, $count, $slot, $slot1, $slot2, $slot3, false, true, false) = false) {
+    if (~try_equip($slot) = false) {
         mes("You don't have enough free space to do that.");
         return;
     }

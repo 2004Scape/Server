@@ -1,0 +1,61 @@
+[proc,try_equip](int $inv_slot)(boolean)
+def_obj $equip_obj = inv_getobj(inv, $inv_slot);
+def_int $equip_obj_num = inv_getnum(inv, $inv_slot);
+def_obj $unequip_obj1 = null;
+def_int $unequip_obj_num1 = 0;
+def_obj $unequip_obj2 = null;
+def_int $unequip_obj_num2 = 0;
+
+def_obj $lhand = inv_getobj(worn, ^wearpos_lhand);
+def_obj $rhand = inv_getobj(worn, ^wearpos_rhand);  
+
+if ($equip_obj = null) {
+    return(false);
+}
+
+if (inv_itemspace2(inv, $equip_obj, $equip_obj_num, inv_size(inv)) > 0) { // overflowing only applies to stackable items, so we need no stackable checks
+    return(false);
+}
+
+def_int $wearpos1 = oc_wearpos($equip_obj);
+if ($wearpos1 = null) {
+    return(false);
+}
+$unequip_obj1 = inv_getobj(worn, $wearpos1);
+$unequip_obj_num1 = inv_getnum(worn, $wearpos1);
+
+inv_moveitem(inv, inv_96, $equip_obj, $equip_obj_num);
+if ($unequip_obj1 ! null & inv_itemspace(inv, $unequip_obj1, $unequip_obj_num1, inv_size(inv)) = false) {
+    inv_movetoslot(inv_96, inv, 0, $inv_slot); // reset primary
+    return(false);
+}
+def_int $wearpos2 = oc_wearpos2($equip_obj);
+if ($wearpos2 ! null) {
+    $unequip_obj2 = inv_getobj(worn, $wearpos2);
+    $unequip_obj_num2 = inv_getnum(worn, $wearpos2);
+    if ($unequip_obj2 ! null & inv_itemspace(inv, $unequip_obj2, $unequip_obj_num2, inv_size(inv)) = false) {
+        inv_movetoslot(inv_96, inv, 0, $inv_slot); // reset primary
+        return(false);
+    }
+}
+if ($unequip_obj1 ! null) {
+    inv_moveitem(worn, inv, $unequip_obj1, $unequip_obj_num1); // unequip primary
+}
+if ($unequip_obj2 ! null) {
+    inv_moveitem(worn, inv, $unequip_obj2, $unequip_obj_num2); // unequip secondary
+}
+inv_movetoslot(inv_96, worn, 0, $wearpos1);
+return(true);
+
+
+[debugproc,equiptest]
+if (p_finduid(uid) = false) {
+    return;
+}
+inv_clear(inv);
+inv_clear(worn);
+inv_add(inv, bronze_2h_sword, 1);
+inv_add(inv, wooden_shield, 1);
+inv_add(inv, bronze_arrow, 100);
+inv_setslot(worn, ^wearpos_quiver, bronze_arrow, ^max_32bit_int);
+inv_add(inv, logs, 25);
