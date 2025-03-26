@@ -1,0 +1,5 @@
+^tradestatus_reset = 0
+^tradestatus_received = 1
+^tradestatus_pending_accept = 2
+^tradestatus_accept = 3
+^tradestatus_pending_confirm = 4
