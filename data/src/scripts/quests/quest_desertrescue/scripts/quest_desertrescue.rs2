@@ -481,8 +481,8 @@ if(coordx(coord) < coordx(loc_coord)) {
             p_delay(3);
             mes("A guard comes over and takes the barrel off you.");
             p_delay(3);
-            inv_del(inv, desertrescue_barrel, 1);
-            inv_add(inv, anainabarrel, 1);
+            inv_del(inv, anainabarrel, 1);
+            inv_add(inv, desertrescue_barrel, 1);
             npc_say("Cor! This barrel is really heavy! Have you been mining lead?");
             p_delay(3);
             npc_say("Har, har har!");
