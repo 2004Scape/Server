@@ -97,7 +97,16 @@
     </style>
 
     <script>
-        const isMobile = /Mobi|Android|iPhone|iPad|Windows Phone|Mobile/i.test(navigator.userAgent);
+        function isMobile() {
+            if (/Mobi|Android|iPhone|iPad|Windows Phone|Mobile/i.test(navigator.userAgent)) {
+                return true;
+            }
+            const isiOSSafari = navigator.maxTouchPoints !== undefined && navigator.maxTouchPoints > 2 && navigator.standalone !== undefined;
+            if (isiOSSafari) {
+                return true;
+            }
+            return false;
+        }
 
         function toggleFullscreen() {
             if (document.fullscreenElement || document.webkitFullscreenElement || document.mozFullScreenElement || document.msFullscreenElement) {
@@ -175,7 +184,7 @@
 
         function loadSettings() {
             setFilter((localStorage.getItem('filtering') == 'true') ? 'pixelated' : 'auto');
-            if (isMobile) {
+            if (isMobile()) {
                 const keyboardChoiceContainerElement = document.getElementById('mobilekeyboard-container');
                 const keyboardChoiceElement = document.getElementById('mobilekeyboard');
                 keyboardChoiceContainerElement.style.display = 'inline-block';

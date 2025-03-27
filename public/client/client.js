@@ -1077,8 +1077,7 @@ class Pix3D extends Pix2D {
           this.textures[i]?.crop();
         }
         this.textureCount++;
-      } catch (err) {
-      }
+      } catch (err) {}
     }
   }
   static getAverageTextureRGB(id) {
@@ -3836,14 +3835,10 @@ class GameShell {
   my = 0;
   nx = 0;
   ny = 0;
-  async load() {
-  }
-  async update() {
-  }
-  async draw() {
-  }
-  async refresh() {
-  }
+  async load() {}
+  async update() {}
+  async draw() {}
+  async refresh() {}
   constructor(resizetoFit = false) {
     canvas.tabIndex = -1;
     canvas2d.fillStyle = "black";
@@ -4257,7 +4252,7 @@ class GameShell {
     this.onmousemove(new MouseEvent("mousemove", { clientX, clientY }));
     this.nx = touch.screenX | 0;
     this.ny = touch.screenY | 0;
-    if (!MobileKeyboard.isDisplayed()) {
+    if (!MobileKeyboard.isWithinCanvasKeyboard(this.mouseX, this.mouseY)) {
       if (this.startedInViewport && this.getViewportInterfaceId() === -1) {
         if (this.mx - this.nx > 0) {
           this.rotate(2);
@@ -4278,7 +4273,16 @@ class GameShell {
   }
   get isMobile() {
     const keywords = ["Android", "webOS", "iPhone", "iPad", "iPod", "BlackBerry", "Windows Phone"];
-    return keywords.some((keyword) => navigator.userAgent.includes(keyword));
+    if (keywords.some((keyword) => navigator.userAgent.includes(keyword))) {
+      return true;
+    }
+    if (navigator) {
+      const isiOSSafari = navigator.maxTouchPoints !== undefined && navigator.maxTouchPoints > 2 && navigator.standalone !== undefined;
+      if (isiOSSafari) {
+        return true;
+      }
+    }
+    return false;
   }
   get isAndroid() {
     const keywords = ["Android"];
@@ -6369,8 +6373,7 @@ class Model extends DoublyLinkable {
     }
     try {
       this.draw2(false, false, 0);
-    } catch (err) {
-    }
+    } catch (err) {}
   }
   draw(yaw, sinEyePitch, cosEyePitch, sinEyeYaw, cosEyeYaw, relativeX, relativeY, relativeZ, typecode) {
     const zPrime = relativeZ * cosEyeYaw - relativeX * sinEyeYaw >> 16;
@@ -6477,8 +6480,7 @@ class Model extends DoublyLinkable {
     }
     try {
       this.draw2(clipped, picking, typecode);
-    } catch (err) {
-    }
+    } catch (err) {}
   }
   draw2(clipped, picking, typecode, wireframe = false) {
     if (Model.checkHoverFace) {
@@ -6555,8 +6557,7 @@ class Model extends DoublyLinkable {
           for (let f = 0;f < count; f++) {
             try {
               this.drawFace(faces[f], wireframe);
-            } catch (e) {
-            }
+            } catch (e) {}
           }
         }
       }
@@ -6635,8 +6636,7 @@ class Model extends DoublyLinkable {
             } else {
               priorityDepth = -1000;
             }
-          } catch (e) {
-          }
+          } catch (e) {}
         }
         while (priority === 3 && priorityDepth > averagePriorityDepthSum3_4) {
           try {
@@ -6652,8 +6652,7 @@ class Model extends DoublyLinkable {
             } else {
               priorityDepth = -1000;
             }
-          } catch (e) {
-          }
+          } catch (e) {}
         }
         while (priority === 5 && priorityDepth > averagePriorityDepthSum6_8) {
           try {
@@ -6669,16 +6668,14 @@ class Model extends DoublyLinkable {
             } else {
               priorityDepth = -1000;
             }
-          } catch (e) {
-          }
+          } catch (e) {}
         }
         const count = Model.tmpPriorityFaceCount[priority];
         const faces = Model.tmpPriorityFaces[priority];
         for (let i = 0;i < count; i++) {
           try {
             this.drawFace(faces[i], wireframe);
-          } catch (e) {
-          }
+          } catch (e) {}
         }
       }
       while (priorityDepth !== -1000) {
@@ -6695,8 +6692,7 @@ class Model extends DoublyLinkable {
           } else {
             priorityDepth = -1000;
           }
-        } catch (e) {
-        }
+        } catch (e) {}
       }
     }
   }
@@ -7778,8 +7774,7 @@ class Pix24 extends DoublyLinkable {
         leftY += cosZoom;
         leftOff += Pix2D.width2d;
       }
-    } catch (e) {
-    }
+    } catch (e) {}
   }
   drawMasked(x, y, mask) {
     x |= 0;
@@ -14482,10 +14477,8 @@ class Database {
       };
     });
   }
-  onclose = (event) => {
-  };
-  onerror = (event) => {
-  };
+  onclose = (event) => {};
+  onerror = (event) => {};
 }
 
 // src/io/Isaac.ts
@@ -16758,8 +16751,7 @@ class Client extends GameShell {
     } else {
       Client.setHighMemory();
     }
-    if (false) {
-    }
+    if (false) {}
     this.run();
   }
   getTitleScreenState() {
@@ -16840,8 +16832,7 @@ class Client extends GameShell {
           if (length !== data.length) {
             data = data.slice(0, length);
           }
-        } catch (e) {
-        }
+        } catch (e) {}
       }
       if (!data) {
         return;
@@ -16850,10 +16841,8 @@ class Client extends GameShell {
         await this.db?.cachesave(name + ".mid", data);
         const uncompressed = BZip22.decompress(data, -1, false, true);
         playMidi(uncompressed, this.midiVolume, fade);
-      } catch (e) {
-      }
-    } catch (e) {
-    }
+      } catch (e) {}
+    } catch (e) {}
   }
   drawError() {
     canvas2d.fillStyle = "black";
@@ -17562,26 +17551,22 @@ class Client extends GameShell {
           }
           this.imageMapscene[i] = Pix8.fromArchive(media, "mapscene", i);
         }
-      } catch (e) {
-      }
+      } catch (e) {}
       try {
         for (let i = 0;i < 50; i++) {
           this.imageMapfunction[i] = Pix24.fromArchive(media, "mapfunction", i);
         }
-      } catch (e) {
-      }
+      } catch (e) {}
       try {
         for (let i = 0;i < 20; i++) {
           this.imageHitmarks[i] = Pix24.fromArchive(media, "hitmarks", i);
         }
-      } catch (e) {
-      }
+      } catch (e) {}
       try {
         for (let i = 0;i < 20; i++) {
           this.imageHeadicons[i] = Pix24.fromArchive(media, "headicons", i);
         }
-      } catch (e) {
-      }
+      } catch (e) {}
       this.imageMapflag = Pix24.fromArchive(media, "mapflag", 0);
       for (let i = 0;i < 8; i++) {
         this.imageCrosses[i] = Pix24.fromArchive(media, "cross", i);
@@ -18366,8 +18351,7 @@ class Client extends GameShell {
     if (this.idleTimeout > 0) {
       this.idleTimeout--;
     }
-    for (let i = 0;i < 5 && await this.read(); i++) {
-    }
+    for (let i = 0;i < 5 && await this.read(); i++) {}
     if (this.ingame) {
       for (let wave = 0;wave < this.waveCount; wave++) {
         if (this.waveDelay[wave] <= 0) {
@@ -20879,8 +20863,7 @@ class Client extends GameShell {
                 let value = 0;
                 try {
                   value = parseInt(this.chatbackInput, 10);
-                } catch (e) {
-                }
+                } catch (e) {}
                 this.out.p1isaac(237 /* RESUME_P_COUNTDIALOG */);
                 this.out.p4(value);
               }
@@ -20906,8 +20889,7 @@ class Client extends GameShell {
                   try {
                     const desiredFps = parseInt(this.chatTyped.substring(6)) || 50;
                     this.setTargetedFramerate(desiredFps);
-                  } catch (e) {
-                  }
+                  } catch (e) {}
                 } else {
                   this.out.p1isaac(4 /* CLIENT_CHEAT */);
                   this.out.p1(this.chatTyped.length - 1);
@@ -22115,8 +22097,7 @@ class Client extends GameShell {
             } else {
               this.addMessage(3, filtered, JString.formatName(JString.fromBase37(from)));
             }
-          } catch (e) {
-          }
+          } catch (e) {}
         }
         this.inPacketType = -1;
         return true;
@@ -23886,8 +23867,7 @@ class Client extends GameShell {
             } else {
               this.addMessage(2, filtered, player.name);
             }
-          } catch (e) {
-          }
+          } catch (e) {}
         }
       }
       buf.pos = start + length;
@@ -25341,4 +25321,4 @@ export {
   Client
 };
 
-//# debugId=C42259C48550385564756E2164756E21
+//# debugId=67B91C3DF59B66BF64756E2164756E21
