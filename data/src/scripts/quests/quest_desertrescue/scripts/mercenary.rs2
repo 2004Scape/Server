@@ -75,6 +75,10 @@ inv_del(inv, coins, 20);
 %desertrescue_map_mechanisms = setbit_range_toint(%desertrescue_map_mechanisms, 5, 2, 4); // if you cancel early you do just lose the money
 
 [proc,mercenary_attack]
+if(%desertrescue_progress = ^desertrescue_complete) {
+    return;
+}
+p_stopaction;
 npc_say("Guards!! Guards!"); // non-click here to continue dialogue in osrs
 if_close;
 npc_setmode(opplayer2);

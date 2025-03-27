@@ -144,7 +144,7 @@ if(%desertrescue_progress = ^desertrescue_complete) {
     return;
 }
 if((inv_getobj(worn, ^wearpos_rhand) ! null & oc_category(inv_getobj(worn, ^wearpos_rhand)) ! weapon_pickaxe) & ~player_wearing_armour() = true) {
-    mes("Guard: Hey - you with the weapon and armour!");
+    mes("Guard: Oi You with the weapon and armour, what are you doing?");
     npc_say("Oi You with the weapon and armour, what are you doing?");
     $caught = true;
 } else if((inv_getobj(worn, ^wearpos_rhand) ! null & oc_category(inv_getobj(worn, ^wearpos_rhand)) ! weapon_pickaxe)) {
@@ -176,7 +176,7 @@ p_teleport(^desertrescue_prison_coord);
 def_int $choice = ~p_choice2("Yes, I'll bend the bar.", 1, "No, I'd better stay here.", 2);
 if($choice = 2) {
     if(coordx(coord) > 3031) ~mesbox("You decide to stay outside of the cell."); // complete guess
-    ~mesbox("You decide to stay in the cell.|Maybe they'll let you out soon?");
+    else ~mesbox("You decide to stay in the cell.|Maybe they'll let you out soon?");
     return;
 }
 @desertrescue_bend_bar;
@@ -189,7 +189,7 @@ if(inv_total(inv, anainabarrel) > 0) {
     ~mesbox("You'll never get Ana (in a barrel) through the window.|The barrel is just too big.");
     return;
 }
-if(random(2) = 0) {
+if(stat_random(stat(strength), 100, 250) = false) {
     ~mesbox("You find it hard to bend the bar, perhaps you should try again?");
     def_int $choice = ~p_choice2("Yes, I'll bend the bar again.", 1, "No, I'm going to give up.", 2);
     if($choice = 2) {
@@ -481,8 +481,8 @@ if(coordx(coord) < coordx(loc_coord)) {
             p_delay(3);
             mes("A guard comes over and takes the barrel off you.");
             p_delay(3);
-            inv_del(inv, desertrescue_barrel, 1);
-            inv_add(inv, anainabarrel, 1);
+            inv_del(inv, anainabarrel, 1);
+            inv_add(inv, desertrescue_barrel, 1);
             npc_say("Cor! This barrel is really heavy! Have you been mining lead?");
             p_delay(3);
             npc_say("Har, har har!");
@@ -513,9 +513,10 @@ if(coordx(coord) < coordx(loc_coord)) {
 ~doubleobjbox(technical_plans, hammer, "The plans look very technical!|But you can see that this item will require|a bronze bar and at least 10 feathers.", 150);
 
 [proc,desertcamp_guard_search]
-if(%desertrescue_progress < ^desertrescue_complete) {
+if(%desertrescue_progress = ^desertrescue_complete) {
     return;
 }
+p_stopaction;
 if(inv_total(inv, anainabarrel) > 0) {
     npc_say("Hey, what's in this barrel?");
     p_delay(1);
