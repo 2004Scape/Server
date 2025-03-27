@@ -39,7 +39,7 @@ model account {
     notes         String?   @db.Text
     notes_updated DateTime?
 
-    members Boolean @default(true)
+    members Boolean @default(false)
 
     // Whether 2FA is enabled
     tfa_enabled Boolean @default(false)
