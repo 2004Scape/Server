@@ -2,6 +2,8 @@
 import { playWave, setWaveVolume, BZip2 as BZip22, playMidi, stopMidi, setMidiVolume, MobileKeyboard as MobileKeyboard2 } from "./deps.js";
 
 // src/graphics/Canvas.ts
+var canvasContainer = document.getElementById("game");
+var canvasOverlay = document.getElementById("canvas-overlay");
 var canvas = document.getElementById("canvas");
 var canvas2d = canvas.getContext("2d", { willReadFrequently: true });
 var jpegCanvas = document.createElement("canvas");
@@ -88,10 +90,10 @@ class Pix2D extends DoublyLinkable {
     this.centerX2d = this.right / 2 | 0;
     this.centerY2d = this.bottom / 2 | 0;
   }
-  static clear() {
+  static clear(v = 0) {
     const len = this.width2d * this.height2d;
     for (let i = 0;i < len; i++) {
-      this.pixels[i] = 0;
+      this.pixels[i] = v;
     }
   }
   static drawRect(x, y, w, h, color) {
@@ -921,6 +923,77 @@ class Pix8 extends DoublyLinkable {
   }
 }
 
+// src/graphics/renderer/Renderer.ts
+class Renderer {
+  canvas;
+  static renderer;
+  constructor(canvas2) {
+    this.canvas = canvas2;
+  }
+  static resetRenderer() {
+    if (Renderer.renderer) {
+      Renderer.renderer.destroy();
+      Renderer.renderer.canvas.remove();
+      Renderer.renderer = undefined;
+    }
+  }
+  static resize(width, height) {
+    Renderer.renderer?.resize(width, height);
+  }
+  static startFrame() {
+    Renderer.renderer?.startFrame();
+  }
+  static endFrame() {
+    Renderer.renderer?.endFrame();
+  }
+  static updateTexture(id) {
+    Renderer.renderer?.updateTexture(id);
+  }
+  static setBrightness(brightness) {
+    Renderer.renderer?.setBrightness(brightness);
+  }
+  static renderPixMap(pixmap, x, y) {
+    if (Renderer.renderer) {
+      return Renderer.renderer.renderPixMap(pixmap, x, y);
+    }
+    return false;
+  }
+  static getSceneClearColor() {
+    if (Renderer.renderer) {
+      return -1;
+    }
+    return 0;
+  }
+  static startRenderScene() {
+    Renderer.renderer?.startRenderScene();
+  }
+  static endRenderScene() {
+    Renderer.renderer?.endRenderScene();
+  }
+  static fillTriangle = (x0, x1, x2, y0, y1, y2, color) => {
+    if (Renderer.renderer) {
+      return Renderer.renderer.fillTriangle(x0, x1, x2, y0, y1, y2, color);
+    }
+    return false;
+  };
+  static fillGouraudTriangle = (xA, xB, xC, yA, yB, yC, colorA, colorB, colorC) => {
+    if (Renderer.renderer) {
+      return Renderer.renderer.fillGouraudTriangle(xA, xB, xC, yA, yB, yC, colorA, colorB, colorC);
+    }
+    return false;
+  };
+  static fillTexturedTriangle = (xA, xB, xC, yA, yB, yC, shadeA, shadeB, shadeC, originX, originY, originZ, txB, txC, tyB, tyC, tzB, tzC, texture) => {
+    if (Renderer.renderer) {
+      return Renderer.renderer.fillTexturedTriangle(xA, xB, xC, yA, yB, yC, shadeA, shadeB, shadeC, originX, originY, originZ, txB, txC, tyB, tyC, tzB, tzC, texture);
+    }
+    return false;
+  };
+  resize(width, height) {
+    this.canvas.width = width;
+    this.canvas.height = height;
+  }
+}
+
 // src/util/Arrays.ts
 class TypedArray1d extends Array {
   constructor(length, defaultValue) {
@@ -1077,7 +1150,8 @@ class Pix3D extends Pix2D {
           this.textures[i]?.crop();
         }
         this.textureCount++;
-      } catch (err) {}
+      } catch (err) {
+      }
     }
   }
   static getAverageTextureRGB(id) {
@@ -1185,6 +1259,7 @@ class Pix3D extends Pix2D {
     for (let id = 0;id < 50; id++) {
       this.pushTexture(id);
     }
+    Renderer.setBrightness(randomBrightness);
   }
   static setGamma(rgb, gamma) {
     const r = (rgb >> 16) / 256;
@@ -1211,6 +1286,9 @@ class Pix3D extends Pix2D {
     this.activeTexels.fill(null);
   }
   static fillGouraudTriangle(xA, xB, xC, yA, yB, yC, colorA, colorB, colorC) {
+    if (Renderer.fillGouraudTriangle(xA, xB, xC, yA, yB, yC, colorA, colorB, colorC)) {
+      return;
+    }
     let xStepAB = 0;
     let colorStepAB = 0;
     if (yB !== yA) {
@@ -1800,6 +1878,9 @@ class Pix3D extends Pix2D {
     }
   }
   static fillTriangle(x0, x1, x2, y0, y1, y2, color) {
+    if (Renderer.fillTriangle(x0, x1, x2, y0, y1, y2, color)) {
+      return;
+    }
     let xStepAB = 0;
     if (y1 !== y0) {
       xStepAB = (x1 - x0 << 16) / (y1 - y0) | 0;
@@ -2197,6 +2278,9 @@ class Pix3D extends Pix2D {
     }
   }
   static fillTexturedTriangle(xA, xB, xC, yA, yB, yC, shadeA, shadeB, shadeC, originX, originY, originZ, txB, txC, tyB, tyC, tzB, tzC, texture) {
+    if (Renderer.fillTexturedTriangle(xA, xB, xC, yA, yB, yC, shadeA, shadeB, shadeC, originX, originY, originZ, txB, txC, tyB, tyC, tzB, tzC, texture)) {
+      return;
+    }
     const texels = this.getTexels(texture);
     this.opaque = !this.textureTranslucent[texture];
     const verticalX = originX - txB;
@@ -3323,6 +3407,7 @@ class Pix3D extends Pix2D {
       this.texelPool[this.poolSize++] = this.activeTexels[id];
       this.activeTexels[id] = null;
     }
+    Renderer.updateTexture(id);
   }
   static getTexels(id) {
     this.textureCycle[id] = this.cycle++;
@@ -3414,6 +3499,9 @@ class PixMap {
     Pix2D.bind(this.pixels, this.width2d, this.height2d);
   }
   draw(x, y) {
+    if (Renderer.renderPixMap(this, x, y)) {
+      return;
+    }
     this.#setPixels();
     this.ctx.putImageData(this.image, x, y);
   }
@@ -3796,7 +3884,6 @@ class InputTracking {
 
 // src/client/GameShell.ts
 import { MobileKeyboard } from "./deps.js";
-
 class GameShell {
   slowestMS = 0;
   averageMS = [];
@@ -3835,12 +3922,16 @@ class GameShell {
   my = 0;
   nx = 0;
   ny = 0;
-  async load() {}
-  async update() {}
-  async draw() {}
-  async refresh() {}
+  async load() {
+  }
+  async update() {
+  }
+  async draw() {
+  }
+  async refresh() {
+  }
   constructor(resizetoFit = false) {
-    canvas.tabIndex = -1;
+    canvasOverlay.tabIndex = -1;
     canvas2d.fillStyle = "black";
     canvas2d.fillRect(0, 0, canvas.width, canvas.height);
     this.resizeToFit = resizetoFit;
@@ -3861,6 +3952,7 @@ class GameShell {
     canvas.height = height;
     this.drawArea = new PixMap(width, height);
     Pix3D.init2D();
+    Renderer.resize(width, height);
   }
   async run() {
     canvas.addEventListener("resize", () => {
@@ -3868,21 +3960,22 @@ class GameShell {
         this.resize(window.innerWidth, window.innerHeight);
       }
     }, false);
-    canvas.onfocus = this.onfocus.bind(this);
-    canvas.onblur = this.onblur.bind(this);
-    canvas.onmousedown = this.onmousedown.bind(this);
-    canvas.onmouseup = this.onmouseup.bind(this);
-    canvas.onmouseenter = this.onmouseenter.bind(this);
-    canvas.onmouseleave = this.onmouseleave.bind(this);
-    canvas.onmousemove = this.onmousemove.bind(this);
-    canvas.onkeydown = this.onkeydown.bind(this);
-    canvas.onkeyup = this.onkeyup.bind(this);
+    canvasOverlay.focus();
+    canvasOverlay.onfocus = this.onfocus.bind(this);
+    canvasOverlay.onblur = this.onblur.bind(this);
+    canvasOverlay.onmousedown = this.onmousedown.bind(this);
+    canvasOverlay.onmouseup = this.onmouseup.bind(this);
+    canvasOverlay.onmouseenter = this.onmouseenter.bind(this);
+    canvasOverlay.onmouseleave = this.onmouseleave.bind(this);
+    canvasOverlay.onmousemove = this.onmousemove.bind(this);
+    canvasOverlay.onkeydown = this.onkeydown.bind(this);
+    canvasOverlay.onkeyup = this.onkeyup.bind(this);
     if (this.isMobile) {
-      canvas.ontouchstart = this.ontouchstart.bind(this);
-      canvas.ontouchend = this.ontouchend.bind(this);
-      canvas.ontouchmove = this.ontouchmove.bind(this);
+      canvasOverlay.ontouchstart = this.ontouchstart.bind(this);
+      canvasOverlay.ontouchend = this.ontouchend.bind(this);
+      canvasOverlay.ontouchmove = this.ontouchmove.bind(this);
     }
-    canvas.oncontextmenu = (e) => {
+    canvasOverlay.oncontextmenu = (e) => {
       e.preventDefault();
     };
     window.oncontextmenu = (e) => {
@@ -5939,7 +6032,7 @@ class Model extends DoublyLinkable {
   vertexNormal;
   vertexNormalOriginal;
   objRaise = 0;
-  pickable = false;
+  pickAabb = false;
   pickedFace = -1;
   pickedFaceDepth = -1;
   constructor(type) {
@@ -6373,7 +6466,8 @@ class Model extends DoublyLinkable {
     }
     try {
       this.draw2(false, false, 0);
-    } catch (err) {}
+    } catch (err) {
+    }
   }
   draw(yaw, sinEyePitch, cosEyePitch, sinEyeYaw, cosEyeYaw, relativeX, relativeY, relativeZ, typecode) {
     const zPrime = relativeZ * cosEyeYaw - relativeX * sinEyeYaw >> 16;
@@ -6428,7 +6522,7 @@ class Model extends DoublyLinkable {
       const mouseX = Model.mouseX - Pix3D.centerX;
       const mouseY = Model.mouseY - Pix3D.centerY;
       if (mouseX > leftX && mouseX < rightX && mouseY > topY && mouseY < bottomY) {
-        if (this.pickable) {
+        if (this.pickAabb) {
           Model.picked[Model.pickedCount++] = typecode;
         } else {
           picking = true;
@@ -6480,7 +6574,8 @@ class Model extends DoublyLinkable {
     }
     try {
       this.draw2(clipped, picking, typecode);
-    } catch (err) {}
+    } catch (err) {
+    }
   }
   draw2(clipped, picking, typecode, wireframe = false) {
     if (Model.checkHoverFace) {
@@ -6557,7 +6652,8 @@ class Model extends DoublyLinkable {
           for (let f = 0;f < count; f++) {
             try {
               this.drawFace(faces[f], wireframe);
-            } catch (e) {}
+            } catch (e) {
+            }
           }
         }
       }
@@ -6636,7 +6732,8 @@ class Model extends DoublyLinkable {
             } else {
               priorityDepth = -1000;
             }
-          } catch (e) {}
+          } catch (e) {
+          }
         }
         while (priority === 3 && priorityDepth > averagePriorityDepthSum3_4) {
           try {
@@ -6652,7 +6749,8 @@ class Model extends DoublyLinkable {
             } else {
               priorityDepth = -1000;
             }
-          } catch (e) {}
+          } catch (e) {
+          }
         }
         while (priority === 5 && priorityDepth > averagePriorityDepthSum6_8) {
           try {
@@ -6668,14 +6766,16 @@ class Model extends DoublyLinkable {
             } else {
               priorityDepth = -1000;
             }
-          } catch (e) {}
+          } catch (e) {
+          }
         }
         const count = Model.tmpPriorityFaceCount[priority];
         const faces = Model.tmpPriorityFaces[priority];
         for (let i = 0;i < count; i++) {
           try {
             this.drawFace(faces[i], wireframe);
-          } catch (e) {}
+          } catch (e) {
+          }
         }
       }
       while (priorityDepth !== -1000) {
@@ -6692,7 +6792,8 @@ class Model extends DoublyLinkable {
           } else {
             priorityDepth = -1000;
           }
-        } catch (e) {}
+        } catch (e) {
+        }
       }
     }
   }
@@ -7774,7 +7875,8 @@ class Pix24 extends DoublyLinkable {
         leftY += cosZoom;
         leftOff += Pix2D.width2d;
       }
-    } catch (e) {}
+    } catch (e) {
+    }
   }
   drawMasked(x, y, mask) {
     x |= 0;
@@ -8320,7 +8422,7 @@ class ObjType extends ConfigType {
       }
     }
     model.calculateNormals(64, 768, -50, -10, -50, true);
-    model.pickable = true;
+    model.pickAabb = true;
     ObjType.modelCache?.put(BigInt(this.id), model);
     return model;
   }
@@ -8551,7 +8653,7 @@ class NpcType extends ConfigType {
       tmp.labelFaces = null;
       tmp.labelVertices = null;
       if (this.size === 1) {
-        tmp.pickable = true;
+        tmp.pickAabb = true;
       }
       return tmp;
     }
@@ -13210,7 +13312,7 @@ class NpcEntity extends PathingEntity {
     const models = [model, model1];
     const tmp = Model.modelFromModelsBounds(models, 2);
     if (this.npcType.size === 1) {
-      tmp.pickable = true;
+      tmp.pickAabb = true;
     }
     return tmp;
   }
@@ -13368,7 +13470,7 @@ class PlayerEntity extends PathingEntity {
     }
     let model = this.getSequencedModel();
     this.maxY = model.maxY;
-    model.pickable = true;
+    model.pickAabb = true;
     if (this.lowMemory) {
       return model;
     }
@@ -13423,7 +13525,7 @@ class PlayerEntity extends PathingEntity {
         }
       }
     }
-    model.pickable = true;
+    model.pickAabb = true;
     return model;
   }
   isVisibleNow() {
@@ -14223,6 +14325,4320 @@ class PixFont extends DoublyLinkable {
   }
 }
 
+// src/graphics/renderer/webgpu/shaders/compute-rasterizer.wgsl.ts
+var SHADER_CODE = `
+struct PixelBuffer {
+  data: array<u32>,
+};
+
+const textureCount = 50;
+
+// Look-up tables
+struct LUTs {
+  palette: array<u32, 65536>,
+  texturesTranslucent: array<i32, textureCount>,
+  textures: array<array<u32, 65536>, textureCount>,
+};
+
+@group(0) @binding(0) var<storage, read_write> pixelBuffer: PixelBuffer;
+@group(0) @binding(1) var<storage, read_write> depthBuffer: array<atomic<u32>>;
+@group(0) @binding(2) var<storage, read> luts: LUTs;
+@group(1) @binding(0) var<storage, read> triangleData: array<i32>;
+
+@compute @workgroup_size(256, 1)
+fn clear(@builtin(global_invocation_id) global_id: vec3u) {
+  let index = global_id.x;
+  pixelBuffer.data[index] = 0u;
+  atomicStore(&depthBuffer[index], 0u);
+}
+
+const width = 512;
+const height = 334;
+
+const centerX = width / 2;
+const centerY = height / 2;
+// const centerX = 256;
+// const centerY = 167;
+
+const boundRight = width;
+const boundBottom = height;
+// const boundBottom = 334;
+const boundX = width - 1;
+// const boundX = 512 - 1;
+
+var<private> jagged = true;
+var<private> clipX = false;
+var<private> alpha = 0u;
+
+var<private> opaqueTexture = true;
+
+var<private> depth = 0u;
+var<private> writeDepth = false;
+
+@compute @workgroup_size(1, 1)
+fn renderFlat(@builtin(global_invocation_id) global_id: vec3u) {
+  let offset = global_id.x * 8;
+  depth = u32(triangleData[offset]);
+  rasterTriangle(
+    triangleData[offset + 1], triangleData[offset + 2], triangleData[offset + 3],
+    triangleData[offset + 4], triangleData[offset + 5], triangleData[offset + 6],
+    u32(triangleData[offset + 7]),
+  );
+}
+
+@compute @workgroup_size(1, 1)
+fn renderFlatDepth(@builtin(global_invocation_id) global_id: vec3u) {
+  let offset = global_id.x * 8;
+  depth = u32(triangleData[offset]);
+  writeDepth = true;
+  rasterTriangle(
+    triangleData[offset + 1], triangleData[offset + 2], triangleData[offset + 3],
+    triangleData[offset + 4], triangleData[offset + 5], triangleData[offset + 6],
+    0,
+  );
+}
+
+@compute @workgroup_size(1, 1)
+fn renderGouraud(@builtin(global_invocation_id) global_id: vec3u) {
+  let offset = global_id.x * 10;
+  depth = u32(triangleData[offset]);
+  rasterGouraudTriangle(
+    triangleData[offset + 1], triangleData[offset + 2], triangleData[offset + 3],
+    triangleData[offset + 4], triangleData[offset + 5], triangleData[offset + 6],
+    triangleData[offset + 7], triangleData[offset + 8], triangleData[offset + 9],
+  );
+}
+
+@compute @workgroup_size(1, 1)
+fn renderGouraudDepth(@builtin(global_invocation_id) global_id: vec3u) {
+  let offset = global_id.x * 10;
+  depth = u32(triangleData[offset]);
+  writeDepth = true;
+  rasterTriangle(
+    triangleData[offset + 1], triangleData[offset + 2], triangleData[offset + 3],
+    triangleData[offset + 4], triangleData[offset + 5], triangleData[offset + 6],
+    0,
+  );
+}
+
+@compute @workgroup_size(1, 1)
+fn renderTextured(@builtin(global_invocation_id) global_id: vec3u) {
+  let offset = global_id.x * 20;
+  depth = u32(triangleData[offset]);
+  rasterTexturedTriangle(
+    triangleData[offset + 1], triangleData[offset + 2], triangleData[offset + 3],
+    triangleData[offset + 4], triangleData[offset + 5], triangleData[offset + 6],
+    triangleData[offset + 7], triangleData[offset + 8], triangleData[offset + 9],
+    triangleData[offset + 10], triangleData[offset + 11], triangleData[offset + 12],
+    triangleData[offset + 13], triangleData[offset + 14], triangleData[offset + 15],
+    triangleData[offset + 16], triangleData[offset + 17], triangleData[offset + 18],
+    triangleData[offset + 19],
+  );
+}
+
+@compute @workgroup_size(1, 1)
+fn renderTexturedDepth(@builtin(global_invocation_id) global_id: vec3u) {
+  let offset = global_id.x * 20;
+  depth = u32(triangleData[offset]);
+  writeDepth = true;
+  opaqueTexture = luts.texturesTranslucent[triangleData[offset + 19]] == 0;
+  if (opaqueTexture) {
+    rasterTriangle(
+      triangleData[offset + 1], triangleData[offset + 2], triangleData[offset + 3],
+      triangleData[offset + 4], triangleData[offset + 5], triangleData[offset + 6],
+      0,
+    );
+  } else {
+    rasterTexturedTriangle(
+      triangleData[offset + 1], triangleData[offset + 2], triangleData[offset + 3],
+      triangleData[offset + 4], triangleData[offset + 5], triangleData[offset + 6],
+      triangleData[offset + 7], triangleData[offset + 8], triangleData[offset + 9],
+      triangleData[offset + 10], triangleData[offset + 11], triangleData[offset + 12],
+      triangleData[offset + 13], triangleData[offset + 14], triangleData[offset + 15],
+      triangleData[offset + 16], triangleData[offset + 17], triangleData[offset + 18],
+      triangleData[offset + 19],
+    );
+  }
+}
+
+@compute @workgroup_size(1, 1)
+fn renderAlpha(@builtin(global_invocation_id) global_id: vec3u) {
+  let triangleCount = i32(arrayLength(&triangleData)) / 10;
+  for (var i = 0; i < triangleCount; i++) {
+    let offset = i * 10;
+    depth = u32(triangleData[offset] & 0x7fffff);
+    alpha = u32((triangleData[offset] >> 23) & 0xff);
+    var isFlat = (u32(triangleData[offset]) >> 31) == 1;
+    if (isFlat) {
+      rasterTriangle(
+        triangleData[offset + 1], triangleData[offset + 2], triangleData[offset + 3],
+        triangleData[offset + 4], triangleData[offset + 5], triangleData[offset + 6],
+        u32(triangleData[offset + 7]),
+      );
+    } else {
+      rasterGouraudTriangle(
+        triangleData[offset + 1], triangleData[offset + 2], triangleData[offset + 3],
+        triangleData[offset + 4], triangleData[offset + 5], triangleData[offset + 6],
+        triangleData[offset + 7], triangleData[offset + 8], triangleData[offset + 9],
+      );
+    }
+  }
+}
+
+fn setPixel(index: i32, value: u32) {
+  if (atomicLoad(&depthBuffer[index]) <= depth) {
+    pixelBuffer.data[index] = value;
+  }
+}
+
+fn rasterTriangle(x0In: i32, x1In: i32, x2In: i32, y0In: i32, y1In: i32, y2In: i32, color: u32) {
+  var x0 = x0In;
+  var x1 = x1In;
+  var x2 = x2In;
+  var y0 = y0In;
+  var y1 = y1In;
+  var y2 = y2In;
+  clipX = x0 < 0 || x1 < 0 || x2 < 0 || x0 > boundX || x1 > boundX || x2 > boundX;
+  var xStepAB = 0;
+  if (y1 != y0) {
+    xStepAB = ((x1 - x0) << 16) / (y1 - y0);
+  }
+  var xStepBC = 0;
+  if (y2 != y1) {
+    xStepBC = ((x2 - x1) << 16) / (y2 - y1);
+  }
+  var xStepAC = 0;
+  if (y2 != y0) {
+    xStepAC = ((x0 - x2) << 16) / (y0 - y2);
+  }
+  if (y0 <= y1 && y0 <= y2) {
+    if (y0 < boundBottom) {
+      if (y1 > boundBottom) {
+        y1 = boundBottom;
+      }
+      if (y2 > boundBottom) {
+        y2 = boundBottom;
+      }
+      if (y1 < y2) {
+        x0 <<= 0x10;
+        x2 = x0;
+        if (y0 < 0) {
+          x2 -= xStepAC * y0;
+          x0 -= xStepAB * y0;
+          y0 = 0;
+        }
+        x1 <<= 0x10;
+        if (y1 < 0) {
+          x1 -= xStepBC * y1;
+          y1 = 0;
+        }
+        if ((y0 != y1 && xStepAC < xStepAB) || (y0 == y1 && xStepAC > xStepBC)) {
+          y2 -= y1;
+          y1 -= y0;
+          y0 = y0 * width;
+          while (true) {
+            y1--;
+            if (y1 < 0) {
+              while (true) {
+                y2--;
+                if (y2 < 0) {
+                  return;
+                }
+                rasterScanline(x2 >> 16, x1 >> 16, y0, color);
+                x2 += xStepAC;
+                x1 += xStepBC;
+                y0 += width;
+              }
+            }
+            rasterScanline(x2 >> 16, x0 >> 16, y0, color);
+            x2 += xStepAC;
+            x0 += xStepAB;
+            y0 += width;
+          }
+        } else {
+          y2 -= y1;
+          y1 -= y0;
+          y0 = y0 * width;
+          while (true) {
+            y1--;
+            if (y1 < 0) {
+              while (true) {
+                y2--;
+                if (y2 < 0) {
+                  return;
+                }
+                rasterScanline(x1 >> 16, x2 >> 16, y0, color);
+                x2 += xStepAC;
+                x1 += xStepBC;
+                y0 += width;
+              }
+            }
+            rasterScanline(x0 >> 16, x2 >> 16, y0, color);
+            x2 += xStepAC;
+            x0 += xStepAB;
+            y0 += width;
+          }
+        }
+      } else {
+        x0 <<= 0x10;
+        x1 = x0;
+        if (y0 < 0) {
+          x1 -= xStepAC * y0;
+          x0 -= xStepAB * y0;
+          y0 = 0;
+        }
+        x2 <<= 0x10;
+        if (y2 < 0) {
+          x2 -= xStepBC * y2;
+          y2 = 0;
+        }
+        if ((y0 != y2 && xStepAC < xStepAB) || (y0 == y2 && xStepBC > xStepAB)) {
+          y1 -= y2;
+          y2 -= y0;
+          y0 = y0 * width;
+          while (true) {
+            y2--;
+            if (y2 < 0) {
+              while (true) {
+                y1--;
+                if (y1 < 0) {
+                  return;
+                }
+                rasterScanline(x2 >> 16, x0 >> 16, y0, color);
+                x2 += xStepBC;
+                x0 += xStepAB;
+                y0 += width;
+              }
+            }
+            rasterScanline(x1 >> 16, x0 >> 16, y0, color);
+            x1 += xStepAC;
+            x0 += xStepAB;
+            y0 += width;
+          }
+        } else {
+          y1 -= y2;
+          y2 -= y0;
+          y0 = y0 * width;
+          while (true) {
+            y2--;
+            if (y2 < 0) {
+              while (true) {
+                y1--;
+                if (y1 < 0) {
+                  return;
+                }
+                rasterScanline(x0 >> 16, x2 >> 16, y0, color);
+                x2 += xStepBC;
+                x0 += xStepAB;
+                y0 += width;
+              }
+            }
+            rasterScanline(x0 >> 16, x1 >> 16, y0, color);
+            x1 += xStepAC;
+            x0 += xStepAB;
+            y0 += width;
+          }
+        }
+      }
+    }
+  } else if (y1 <= y2) {
+    if (y1 < boundBottom) {
+      if (y2 > boundBottom) {
+        y2 = boundBottom;
+      }
+      if (y0 > boundBottom) {
+        y0 = boundBottom;
+      }
+      if (y2 < y0) {
+        x1 <<= 0x10;
+        x0 = x1;
+        if (y1 < 0) {
+          x0 -= xStepAB * y1;
+          x1 -= xStepBC * y1;
+          y1 = 0;
+        }
+        x2 <<= 0x10;
+        if (y2 < 0) {
+          x2 -= xStepAC * y2;
+          y2 = 0;
+        }
+        if ((y1 != y2 && xStepAB < xStepBC) || (y1 == y2 && xStepAB > xStepAC)) {
+          y0 -= y2;
+          y2 -= y1;
+          y1 = y1 * width;
+          while (true) {
+            y2--;
+            if (y2 < 0) {
+              while (true) {
+                y0--;
+                if (y0 < 0) {
+                  return;
+                }
+                rasterScanline(x0 >> 16, x2 >> 16, y1, color);
+                x0 += xStepAB;
+                x2 += xStepAC;
+                y1 += width;
+              }
+            }
+            rasterScanline(x0 >> 16, x1 >> 16, y1, color);
+            x0 += xStepAB;
+            x1 += xStepBC;
+            y1 += width;
+          }
+        } else {
+          y0 -= y2;
+          y2 -= y1;
+          y1 = y1 * width;
+          while (true) {
+            y2--;
+            if (y2 < 0) {
+              while (true) {
+                y0--;
+                if (y0 < 0) {
+                  return;
+                }
+                rasterScanline(x2 >> 16, x0 >> 16, y1, color);
+                x0 += xStepAB;
+                x2 += xStepAC;
+                y1 += width;
+              }
+            }
+            rasterScanline(x1 >> 16, x0 >> 16, y1, color);
+            x0 += xStepAB;
+            x1 += xStepBC;
+            y1 += width;
+          }
+        }
+      } else {
+        x1 <<= 0x10;
+        x2 = x1;
+        if (y1 < 0) {
+          x2 -= xStepAB * y1;
+          x1 -= xStepBC * y1;
+          y1 = 0;
+        }
+        x0 <<= 0x10;
+        if (y0 < 0) {
+          x0 -= xStepAC * y0;
+          y0 = 0;
+        }
+        if (xStepAB < xStepBC) {
+          y2 -= y0;
+          y0 -= y1;
+          y1 = y1 * width;
+          while (true) {
+            y0--;
+            if (y0 < 0) {
+              while (true) {
+                y2--;
+                if (y2 < 0) {
+                  return;
+                }
+                rasterScanline(x0 >> 16, x1 >> 16, y1, color);
+                x0 += xStepAC;
+                x1 += xStepBC;
+                y1 += width;
+              }
+            }
+            rasterScanline(x2 >> 16, x1 >> 16, y1, color);
+            x2 += xStepAB;
+            x1 += xStepBC;
+            y1 += width;
+          }
+        } else {
+          y2 -= y0;
+          y0 -= y1;
+          y1 = y1 * width;
+          while (true) {
+            y0--;
+            if (y0 < 0) {
+              while (true) {
+                y2--;
+                if (y2 < 0) {
+                  return;
+                }
+                rasterScanline(x1 >> 16, x0 >> 16, y1, color);
+                x0 += xStepAC;
+                x1 += xStepBC;
+                y1 += width;
+              }
+            }
+            rasterScanline(x1 >> 16, x2 >> 16, y1, color);
+            x2 += xStepAB;
+            x1 += xStepBC;
+            y1 += width;
+          }
+        }
+      }
+    }
+  } else if (y2 < boundBottom) {
+    if (y0 > boundBottom) {
+      y0 = boundBottom;
+    }
+    if (y1 > boundBottom) {
+      y1 = boundBottom;
+    }
+    if (y0 < y1) {
+      x2 <<= 0x10;
+      x1 = x2;
+      if (y2 < 0) {
+        x1 -= xStepBC * y2;
+        x2 -= xStepAC * y2;
+        y2 = 0;
+      }
+      x0 <<= 0x10;
+      if (y0 < 0) {
+        x0 -= xStepAB * y0;
+        y0 = 0;
+      }
+      if (xStepBC < xStepAC) {
+        y1 -= y0;
+        y0 -= y2;
+        y2 = y2 * width;
+        while (true) {
+          y0--;
+          if (y0 < 0) {
+            while (true) {
+              y1--;
+              if (y1 < 0) {
+                return;
+              }
+              rasterScanline(x1 >> 16, x0 >> 16, y2, color);
+              x1 += xStepBC;
+              x0 += xStepAB;
+              y2 += width;
+            }
+          }
+          rasterScanline(x1 >> 16, x2 >> 16, y2, color);
+          x1 += xStepBC;
+          x2 += xStepAC;
+          y2 += width;
+        }
+      } else {
+        y1 -= y0;
+        y0 -= y2;
+        y2 = y2 * width;
+        while (true) {
+          y0--;
+          if (y0 < 0) {
+            while (true) {
+              y1--;
+              if (y1 < 0) {
+                return;
+              }
+              rasterScanline(x0 >> 16, x1 >> 16, y2, color);
+              x1 += xStepBC;
+              x0 += xStepAB;
+              y2 += width;
+            }
+          }
+          rasterScanline(x2 >> 16, x1 >> 16, y2, color);
+          x1 += xStepBC;
+          x2 += xStepAC;
+          y2 += width;
+        }
+      }
+    } else {
+      x2 <<= 0x10;
+      x0 = x2;
+      if (y2 < 0) {
+        x0 -= xStepBC * y2;
+        x2 -= xStepAC * y2;
+        y2 = 0;
+      }
+      x1 <<= 0x10;
+      if (y1 < 0) {
+        x1 -= xStepAB * y1;
+        y1 = 0;
+      }
+      if (xStepBC < xStepAC) {
+        y0 -= y1;
+        y1 -= y2;
+        y2 = y2 * width;
+        while (true) {
+          y1--;
+          if (y1 < 0) {
+            while (true) {
+              y0--;
+              if (y0 < 0) {
+                return;
+              }
+              rasterScanline(x1 >> 16, x2 >> 16, y2, color);
+              x1 += xStepAB;
+              x2 += xStepAC;
+              y2 += width;
+            }
+          }
+          rasterScanline(x0 >> 16, x2 >> 16, y2, color);
+          x0 += xStepBC;
+          x2 += xStepAC;
+          y2 += width;
+        }
+      } else {
+        y0 -= y1;
+        y1 -= y2;
+        y2 = y2 * width;
+        while (true) {
+          y1--;
+          if (y1 < 0) {
+            while (true) {
+              y0--;
+              if (y0 < 0) {
+                return;
+              }
+              rasterScanline(x2 >> 16, x1 >> 16, y2, color);
+              x1 += xStepAB;
+              x2 += xStepAC;
+              y2 += width;
+            }
+          }
+          rasterScanline(x2 >> 16, x0 >> 16, y2, color);
+          x0 += xStepBC;
+          x2 += xStepAC;
+          y2 += width;
+        }
+      }
+    }
+  }
+}
+
+fn rasterScanline(x0In: i32, x1In: i32, offsetIn: i32, rgbIn: u32) {
+  var x0 = x0In;
+  var x1 = x1In;
+  var offset = offsetIn;
+  var rgb = rgbIn;
+  if (clipX) {
+    if (x1 > boundX) {
+      x1 = boundX;
+    }
+    if (x0 < 0) {
+      x0 = 0;
+    }
+  }  
+  if (x0 >= x1) {
+    return;
+  }  
+  offset += x0;  
+  var length = x1 - x0;
+  if (writeDepth) {
+    for (var x = 0; x < length; x++) {
+      atomicMax(&depthBuffer[offset + x], depth);
+    }
+  } else if (alpha == 0) {
+    for (var x = 0; x < length; x++) {
+      setPixel(offset + x, rgb);
+    }
+  } else {
+    length >>= 2;
+    let alpha = alpha;
+    let invAlpha = 256 - alpha;
+    rgb = ((((rgb & 0xff00ff) * invAlpha) >> 8) & 0xff00ff) + ((((rgb & 0xff00) * invAlpha) >> 8) & 0xff00);
+    var blendRgb: u32;
+    while (true) {
+      length--;
+      if (length < 0) {
+        length = (x1 - x0) & 0x3;
+        if (length > 0) {
+          while (true) {
+            blendRgb = pixelBuffer.data[offset + i32(atomicLoad(&depthBuffer[offset + 1]) < depth)];
+            setPixel(offset, rgb + ((((blendRgb & 0xff00ff) * alpha) >> 8) & 0xff00ff) + ((((blendRgb & 0xff00) * alpha) >> 8) & 0xff00));
+            offset++;
+            length--;
+            if (length <= 0) {
+              break;
+            }
+          }
+        }
+        break;
+      }
+      blendRgb = pixelBuffer.data[offset + i32(atomicLoad(&depthBuffer[offset + 1]) < depth)];
+      setPixel(offset, rgb + ((((blendRgb & 0xff00ff) * alpha) >> 8) & 0xff00ff) + ((((blendRgb & 0xff00) * alpha) >> 8) & 0xff00));
+      offset++;
+      blendRgb = pixelBuffer.data[offset + i32(atomicLoad(&depthBuffer[offset + 1]) < depth)];
+      setPixel(offset, rgb + ((((blendRgb & 0xff00ff) * alpha) >> 8) & 0xff00ff) + ((((blendRgb & 0xff00) * alpha) >> 8) & 0xff00));
+      offset++;
+      blendRgb = pixelBuffer.data[offset + i32(atomicLoad(&depthBuffer[offset + 1]) < depth)];
+      setPixel(offset, rgb + ((((blendRgb & 0xff00ff) * alpha) >> 8) & 0xff00ff) + ((((blendRgb & 0xff00) * alpha) >> 8) & 0xff00));
+      offset++;
+      blendRgb = pixelBuffer.data[offset + i32(atomicLoad(&depthBuffer[offset + 1]) < depth)];
+      setPixel(offset, rgb + ((((blendRgb & 0xff00ff) * alpha) >> 8) & 0xff00ff) + ((((blendRgb & 0xff00) * alpha) >> 8) & 0xff00));
+      offset++;
+    }
+  }
+}
+
+fn rasterGouraudTriangle(xAIn: i32, xBIn: i32, xCIn: i32, yAIn: i32, yBIn: i32, yCIn: i32, colorAIn: i32, colorBIn: i32, colorCIn: i32) {
+  var xA = xAIn;
+  var xB = xBIn;
+  var xC = xCIn;
+  var yA = yAIn;
+  var yB = yBIn;
+  var yC = yCIn;
+  var colorA = colorAIn;
+  var colorB = colorBIn;
+  var colorC = colorCIn;
+  clipX = xA < 0 || xB < 0 || xC < 0 || xA > boundX || xB > boundX || xC > boundX;
+  var xStepAB: i32;
+  var colorStepAB: i32;
+  if (yB != yA) {
+    xStepAB = ((xB - xA) << 16) / (yB - yA);
+    colorStepAB = ((colorB - colorA) << 15) / (yB - yA);
+  }
+  var xStepBC: i32;
+  var colorStepBC: i32;
+  if (yC != yB) {
+    xStepBC = ((xC - xB) << 16) / (yC - yB);
+    colorStepBC = ((colorC - colorB) << 15) / (yC - yB);
+  }
+  var xStepAC: i32;
+  var colorStepAC: i32;
+  if (yC != yA) {
+    xStepAC = ((xA - xC) << 16) / (yA - yC);
+    colorStepAC = ((colorA - colorC) << 15) / (yA - yC);
+  }
+
+  if (yA <= yB && yA <= yC) {
+    if (yA < boundBottom) {
+      if (yB > boundBottom) {
+        yB = boundBottom;
+      }
+      if (yC > boundBottom) {
+        yC = boundBottom;
+      }
+      if (yB < yC) {
+        xA <<= 0x10;
+        xC = xA;
+        colorA <<= 0xf;
+        colorC = colorA;
+        if (yA < 0) {
+          xC -= xStepAC * yA;
+          xA -= xStepAB * yA;
+          colorC -= colorStepAC * yA;
+          colorA -= colorStepAB * yA;
+          yA = 0;
+        }
+        xB <<= 0x10;
+        colorB <<= 0xf;
+        if (yB < 0) {
+          xB -= xStepBC * yB;
+          colorB -= colorStepBC * yB;
+          yB = 0;
+        }
+        if ((yA != yB && xStepAC < xStepAB) || (yA == yB && xStepAC > xStepBC)) {
+          yC -= yB;
+          yB -= yA;
+          yA = yA * width;
+          while (true) {
+            yB--;
+            if (yB < 0) {
+              while (true) {
+                yC--;
+                if (yC < 0) {
+                  return;
+                }
+                rasterGouraudScanline(xC >> 16, xB >> 16, colorC >> 7, colorB >> 7, yA);
+                xC += xStepAC;
+                xB += xStepBC;
+                colorC += colorStepAC;
+                colorB += colorStepBC;
+                yA += width;
+              }
+            }
+            rasterGouraudScanline(xC >> 16, xA >> 16, colorC >> 7, colorA >> 7, yA);
+            xC += xStepAC;
+            xA += xStepAB;
+            colorC += colorStepAC;
+            colorA += colorStepAB;
+            yA += width;
+          }
+        } else {
+          yC -= yB;
+          yB -= yA;
+          yA = yA * width;
+          while (true) {
+            yB--;
+            if (yB < 0) {
+              while (true) {
+                yC--;
+                if (yC < 0) {
+                  return;
+                }
+                rasterGouraudScanline(xB >> 16, xC >> 16, colorB >> 7, colorC >> 7, yA);
+                xC += xStepAC;
+                xB += xStepBC;
+                colorC += colorStepAC;
+                colorB += colorStepBC;
+                yA += width;
+              }
+            }
+            rasterGouraudScanline(xA >> 16, xC >> 16, colorA >> 7, colorC >> 7, yA);
+            xC += xStepAC;
+            xA += xStepAB;
+            colorC += colorStepAC;
+            colorA += colorStepAB;
+            yA += width;
+          }
+        }
+      } else {
+        xA <<= 0x10;
+        xB = xA;
+        colorA <<= 0xf;
+        colorB = colorA;
+        if (yA < 0) {
+          xB -= xStepAC * yA;
+          xA -= xStepAB * yA;
+          colorB -= colorStepAC * yA;
+          colorA -= colorStepAB * yA;
+          yA = 0;
+        }
+        xC <<= 0x10;
+        colorC <<= 0xf;
+        if (yC < 0) {
+          xC -= xStepBC * yC;
+          colorC -= colorStepBC * yC;
+          yC = 0;
+        }
+        if ((yA != yC && xStepAC < xStepAB) || (yA == yC && xStepBC > xStepAB)) {
+          yB -= yC;
+          yC -= yA;
+          yA = yA * width;
+          while (true) {
+            yC--;
+            if (yC < 0) {
+              while (true) {
+                yB--;
+                if (yB < 0) {
+                  return;
+                }
+                rasterGouraudScanline(xC >> 16, xA >> 16, colorC >> 7, colorA >> 7, yA);
+                xC += xStepBC;
+                xA += xStepAB;
+                colorC += colorStepBC;
+                colorA += colorStepAB;
+                yA += width;
+              }
+            }
+            rasterGouraudScanline(xB >> 16, xA >> 16, colorB >> 7, colorA >> 7, yA);
+            xB += xStepAC;
+            xA += xStepAB;
+            colorB += colorStepAC;
+            colorA += colorStepAB;
+            yA += width;
+          }
+        } else {
+          yB -= yC;
+          yC -= yA;
+          yA = yA * width;
+          while (true) {
+            yC--;
+            if (yC < 0) {
+              while (true) {
+                yB--;
+                if (yB < 0) {
+                  return;
+                }
+                rasterGouraudScanline(xA >> 16, xC >> 16, colorA >> 7, colorC >> 7, yA);
+                xC += xStepBC;
+                xA += xStepAB;
+                colorC += colorStepBC;
+                colorA += colorStepAB;
+                yA += width;
+              }
+            }
+            rasterGouraudScanline(xA >> 16, xB >> 16, colorA >> 7, colorB >> 7, yA);
+            xB += xStepAC;
+            xA += xStepAB;
+            colorB += colorStepAC;
+            colorA += colorStepAB;
+            yA += width;
+          }
+        }
+      }
+    }
+  } else if (yB <= yC) {
+    if (yB < boundBottom) {
+      if (yC > boundBottom) {
+        yC = boundBottom;
+      }
+      if (yA > boundBottom) {
+        yA = boundBottom;
+      }
+      if (yC < yA) {
+        xB <<= 0x10;
+        xA = xB;
+        colorB <<= 0xf;
+        colorA = colorB;
+        if (yB < 0) {
+          xA -= xStepAB * yB;
+          xB -= xStepBC * yB;
+          colorA -= colorStepAB * yB;
+          colorB -= colorStepBC * yB;
+          yB = 0;
+        }
+        xC <<= 0x10;
+        colorC <<= 0xf;
+        if (yC < 0) {
+          xC -= xStepAC * yC;
+          colorC -= colorStepAC * yC;
+          yC = 0;
+        }
+        if ((yB != yC && xStepAB < xStepBC) || (yB == yC && xStepAB > xStepAC)) {
+          yA -= yC;
+          yC -= yB;
+          yB = yB * width;
+          while (true) {
+            yC--;
+            if (yC < 0) {
+              while (true) {
+                yA--;
+                if (yA < 0) {
+                  return;
+                }
+                rasterGouraudScanline(xA >> 16, xC >> 16, colorA >> 7, colorC >> 7, yB);
+                xA += xStepAB;
+                xC += xStepAC;
+                colorA += colorStepAB;
+                colorC += colorStepAC;
+                yB += width;
+              }
+            }
+            rasterGouraudScanline(xA >> 16, xB >> 16, colorA >> 7, colorB >> 7, yB);
+            xA += xStepAB;
+            xB += xStepBC;
+            colorA += colorStepAB;
+            colorB += colorStepBC;
+            yB += width;
+          }
+        } else {
+          yA -= yC;
+          yC -= yB;
+          yB = yB * width;
+          while (true) {
+            yC--;
+            if (yC < 0) {
+              while (true) {
+                yA--;
+                if (yA < 0) {
+                  return;
+                }
+                rasterGouraudScanline(xC >> 16, xA >> 16, colorC >> 7, colorA >> 7, yB);
+                xA += xStepAB;
+                xC += xStepAC;
+                colorA += colorStepAB;
+                colorC += colorStepAC;
+                yB += width;
+              }
+            }
+            rasterGouraudScanline(xB >> 16, xA >> 16, colorB >> 7, colorA >> 7, yB);
+            xA += xStepAB;
+            xB += xStepBC;
+            colorA += colorStepAB;
+            colorB += colorStepBC;
+            yB += width;
+          }
+        }
+      } else {
+        xB <<= 0x10;
+        xC = xB;
+        colorB <<= 0xf;
+        colorC = colorB;
+        if (yB < 0) {
+          xC -= xStepAB * yB;
+          xB -= xStepBC * yB;
+          colorC -= colorStepAB * yB;
+          colorB -= colorStepBC * yB;
+          yB = 0;
+        }
+        xA <<= 0x10;
+        colorA <<= 0xf;
+        if (yA < 0) {
+          xA -= xStepAC * yA;
+          colorA -= colorStepAC * yA;
+          yA = 0;
+        }
+        yC -= yA;
+        yA -= yB;
+        yB = yB * width;
+        if (xStepAB < xStepBC) {
+          while (true) {
+            yA--;
+            if (yA < 0) {
+              while (true) {
+                yC--;
+                if (yC < 0) {
+                  return;
+                }
+                rasterGouraudScanline(xA >> 16, xB >> 16, colorA >> 7, colorB >> 7, yB);
+                xA += xStepAC;
+                xB += xStepBC;
+                colorA += colorStepAC;
+                colorB += colorStepBC;
+                yB += width;
+              }
+            }
+            rasterGouraudScanline(xC >> 16, xB >> 16, colorC >> 7, colorB >> 7, yB);
+            xC += xStepAB;
+            xB += xStepBC;
+            colorC += colorStepAB;
+            colorB += colorStepBC;
+            yB += width;
+          }
+        } else {
+          while (true) {
+            yA--;
+            if (yA < 0) {
+              while (true) {
+                yC--;
+                if (yC < 0) {
+                  return;
+                }
+                rasterGouraudScanline(xB >> 16, xA >> 16, colorB >> 7, colorA >> 7, yB);
+                xA += xStepAC;
+                xB += xStepBC;
+                colorA += colorStepAC;
+                colorB += colorStepBC;
+                yB += width;
+              }
+            }
+            rasterGouraudScanline(xB >> 16, xC >> 16, colorB >> 7, colorC >> 7, yB);
+            xC += xStepAB;
+            xB += xStepBC;
+            colorC += colorStepAB;
+            colorB += colorStepBC;
+            yB += width;
+          }
+        }
+      }
+    }
+  } else if (yC < boundBottom) {
+    if (yA > boundBottom) {
+      yA = boundBottom;
+    }
+    if (yB > boundBottom) {
+      yB = boundBottom;
+    }
+    if (yA < yB) {
+      xC <<= 0x10;
+      xB = xC;
+      colorC <<= 0xf;
+      colorB = colorC;
+      if (yC < 0) {
+        xB -= xStepBC * yC;
+        xC -= xStepAC * yC;
+        colorB -= colorStepBC * yC;
+        colorC -= colorStepAC * yC;
+        yC = 0;
+      }
+      xA <<= 0x10;
+      colorA <<= 0xf;
+      if (yA < 0) {
+        xA -= xStepAB * yA;
+        colorA -= colorStepAB * yA;
+        yA = 0;
+      }
+      yB -= yA;
+      yA -= yC;
+      yC = yC * width;
+      if (xStepBC < xStepAC) {
+        while (true) {
+          yA--;
+          if (yA < 0) {
+            while (true) {
+              yB--;
+              if (yB < 0) {
+                return;
+              }
+              rasterGouraudScanline(xB >> 16, xA >> 16, colorB >> 7, colorA >> 7, yC);
+              xB += xStepBC;
+              xA += xStepAB;
+              colorB += colorStepBC;
+              colorA += colorStepAB;
+              yC += width;
+            }
+          }
+          rasterGouraudScanline(xB >> 16, xC >> 16, colorB >> 7, colorC >> 7, yC);
+          xB += xStepBC;
+          xC += xStepAC;
+          colorB += colorStepBC;
+          colorC += colorStepAC;
+          yC += width;
+        }
+      } else {
+        while (true) {
+          yA--;
+          if (yA < 0) {
+            while (true) {
+              yB--;
+              if (yB < 0) {
+                return;
+              }
+              rasterGouraudScanline(xA >> 16, xB >> 16, colorA >> 7, colorB >> 7, yC);
+              xB += xStepBC;
+              xA += xStepAB;
+              colorB += colorStepBC;
+              colorA += colorStepAB;
+              yC += width;
+            }
+          }
+          rasterGouraudScanline(xC >> 16, xB >> 16, colorC >> 7, colorB >> 7, yC);
+          xB += xStepBC;
+          xC += xStepAC;
+          colorB += colorStepBC;
+          colorC += colorStepAC;
+          yC += width;
+        }
+      }
+    } else {
+      xC <<= 0x10;
+      xA = xC;
+      colorC <<= 0xf;
+      colorA = colorC;
+      if (yC < 0) {
+        xA -= xStepBC * yC;
+        xC -= xStepAC * yC;
+        colorA -= colorStepBC * yC;
+        colorC -= colorStepAC * yC;
+        yC = 0;
+      }
+      xB <<= 0x10;
+      colorB <<= 0xf;
+      if (yB < 0) {
+        xB -= xStepAB * yB;
+        colorB -= colorStepAB * yB;
+        yB = 0;
+      }
+      yA -= yB;
+      yB -= yC;
+      yC = yC * width;
+      if (xStepBC < xStepAC) {
+        while (true) {
+          yB--;
+          if (yB < 0) {
+            while (true) {
+              yA--;
+              if (yA < 0) {
+                return;
+              }
+              rasterGouraudScanline(xB >> 16, xC >> 16, colorB >> 7, colorC >> 7, yC);
+              xB += xStepAB;
+              xC += xStepAC;
+              colorB += colorStepAB;
+              colorC += colorStepAC;
+              yC += width;
+            }
+          }
+          rasterGouraudScanline(xA >> 16, xC >> 16, colorA >> 7, colorC >> 7, yC);
+          xA += xStepBC;
+          xC += xStepAC;
+          colorA += colorStepBC;
+          colorC += colorStepAC;
+          yC += width;
+        }
+      } else {
+        while (true) {
+          yB--;
+          if (yB < 0) {
+            while (true) {
+              yA--;
+              if (yA < 0) {
+                return;
+              }
+              rasterGouraudScanline(xC >> 16, xB >> 16, colorC >> 7, colorB >> 7, yC);
+              xB += xStepAB;
+              xC += xStepAC;
+              colorB += colorStepAB;
+              colorC += colorStepAC;
+              yC += width;
+            }
+          }
+          rasterGouraudScanline(xC >> 16, xA >> 16, colorC >> 7, colorA >> 7, yC);
+          xA += xStepBC;
+          xC += xStepAC;
+          colorA += colorStepBC;
+          colorC += colorStepAC;
+          yC += width;
+        }
+      }
+    }
+  }
+}
+
+fn rasterGouraudScanline(x0In: i32, x1In: i32, color0In: i32, color1: i32, offsetIn: i32) {
+  var x0 = x0In;
+  var x1 = x1In;
+  var color0 = color0In;
+  var offset = offsetIn;
+
+  var rgb: u32;
+  if (jagged) {
+    var colorStep: i32;
+    var length: i32;
+
+    if (clipX) {
+      if (x1 - x0 > 3) {
+        colorStep = ((color1 - color0) / (x1 - x0));
+      } else {
+        colorStep = 0;
+      }
+      if (x1 > boundX) {
+        x1 = boundX;
+      }
+      if (x0 < 0) {
+        color0 -= x0 * colorStep;
+        x0 = 0;
+      }
+      if (x0 >= x1) {
+        return;
+      }
+      offset += x0;
+      length = (x1 - x0) >> 2;
+      colorStep <<= 0x2;
+    } else if (x0 < x1) {
+      offset += x0;
+      length = (x1 - x0) >> 2;
+      if (length > 0) {
+        colorStep = ((color1 - color0) * reciprocal15(length)) >> 15;
+      } else {
+        colorStep = 0;
+      }
+    } else {
+      return;
+    }
+    
+    if (alpha == 0) {
+      while (true) {
+        length--;
+        if (length < 0) {
+          length = (x1 - x0) & 0x3;
+          if (length > 0) {
+            rgb = luts.palette[color0 >> 8];
+            while (true) {
+              setPixel(offset, rgb);
+              offset++;
+              length--;
+              if (length <= 0) {
+                break;
+              }
+            }
+            return;
+          }
+          break;
+        }
+        rgb = luts.palette[color0 >> 8];
+        color0 += colorStep;
+        setPixel(offset, rgb);
+        offset++;
+        setPixel(offset, rgb);
+        offset++;
+        setPixel(offset, rgb);
+        offset++;
+        setPixel(offset, rgb);
+        offset++;
+      }
+    } else {
+      let alpha = alpha;
+      let invAlpha = 256 - alpha;
+      var blendRgb: u32;
+      while (true) {
+        length--;
+        if (length < 0) {
+          length = (x1 - x0) & 0x3;
+          if (length > 0) {
+            rgb = luts.palette[color0 >> 8];
+            rgb = ((((rgb & 0xff00ff) * invAlpha) >> 8) & 0xff00ff) + ((((rgb & 0xff00) * invAlpha) >> 8) & 0xff00);
+            while (true) {
+              blendRgb = pixelBuffer.data[offset + i32(atomicLoad(&depthBuffer[offset + 1]) < depth)];
+              setPixel(offset, rgb + ((((blendRgb & 0xff00ff) * alpha) >> 8) & 0xff00ff) + ((((blendRgb & 0xff00) * alpha) >> 8) & 0xff00));
+              offset++;
+              length--;
+              if (length <= 0) {
+                break;
+              }
+            }
+          }
+          break;
+        }
+        rgb = luts.palette[color0 >> 8];
+        color0 += colorStep;
+        rgb = ((((rgb & 0xff00ff) * invAlpha) >> 8) & 0xff00ff) + ((((rgb & 0xff00) * invAlpha) >> 8) & 0xff00);
+        blendRgb = pixelBuffer.data[offset + i32(atomicLoad(&depthBuffer[offset + 1]) < depth)];
+        setPixel(offset, rgb + ((((blendRgb & 0xff00ff) * alpha) >> 8) & 0xff00ff) + ((((blendRgb & 0xff00) * alpha) >> 8) & 0xff00));
+        offset++;
+        blendRgb = pixelBuffer.data[offset + i32(atomicLoad(&depthBuffer[offset + 1]) < depth)];
+        setPixel(offset, rgb + ((((blendRgb & 0xff00ff) * alpha) >> 8) & 0xff00ff) + ((((blendRgb & 0xff00) * alpha) >> 8) & 0xff00));
+        offset++;
+        blendRgb = pixelBuffer.data[offset + i32(atomicLoad(&depthBuffer[offset + 1]) < depth)];
+        setPixel(offset, rgb + ((((blendRgb & 0xff00ff) * alpha) >> 8) & 0xff00ff) + ((((blendRgb & 0xff00) * alpha) >> 8) & 0xff00));
+        offset++;
+        blendRgb = pixelBuffer.data[offset + i32(atomicLoad(&depthBuffer[offset + 1]) < depth)];
+        setPixel(offset, rgb + ((((blendRgb & 0xff00ff) * alpha) >> 8) & 0xff00ff) + ((((blendRgb & 0xff00) * alpha) >> 8) & 0xff00));
+        offset++;
+      }
+    }
+  }
+}
+
+fn rasterTexturedTriangle(
+  xAIn: i32,
+  xBIn: i32,
+  xCIn: i32,
+  yAIn: i32,
+  yBIn: i32,
+  yCIn: i32,
+  shadeAIn: i32,
+  shadeBIn: i32,
+  shadeCIn: i32,
+  originXIn: i32,
+  originYIn: i32,
+  originZIn: i32,
+  txBIn: i32,
+  txCIn: i32,
+  tyBIn: i32,
+  tyCIn: i32,
+  tzBIn: i32,
+  tzCIn: i32,
+  textureId: i32
+) {
+  var xA = xAIn;
+  var xB = xBIn;
+  var xC = xCIn;
+  var yA = yAIn;
+  var yB = yBIn;
+  var yC = yCIn;
+  var shadeA = shadeAIn;
+  var shadeB = shadeBIn;
+  var shadeC = shadeCIn;
+  var originX = originXIn;
+  var originY = originYIn;
+  var originZ = originZIn;
+  var txB = txBIn;
+  var txC = txCIn;
+  var tyB = tyBIn;
+  var tyC = tyCIn;
+  var tzB = tzBIn;
+  var tzC = tzCIn;
+  let texels = &luts.textures[textureId];
+  opaqueTexture = luts.texturesTranslucent[textureId] == 0;
+  clipX = xA < 0 || xB < 0 || xC < 0 || xA > boundX || xB > boundX || xC > boundX;
+
+  let verticalX = originX - txB;
+  let verticalY = originY - tyB;
+  let verticalZ = originZ - tzB;
+
+  let horizontalX = txC - originX;
+  let horizontalY = tyC - originY;
+  let horizontalZ = tzC - originZ;
+
+  var u = (horizontalX * originY - horizontalY * originX) << 14;
+  let uStride = (horizontalY * originZ - horizontalZ * originY) << 8;
+  let uStepVertical = (horizontalZ * originX - horizontalX * originZ) << 5;
+
+  var v = (verticalX * originY - verticalY * originX) << 14;
+  let vStride = (verticalY * originZ - verticalZ * originY) << 8;
+  let vStepVertical = (verticalZ * originX - verticalX * originZ) << 5;
+
+  var w = (verticalY * horizontalX - verticalX * horizontalY) << 14;
+  let wStride = (verticalZ * horizontalY - verticalY * horizontalZ) << 8;
+  let wStepVertical = (verticalX * horizontalZ - verticalZ * horizontalX) << 5;
+
+  var xStepAB = 0;
+  var shadeStepAB = 0;
+  if (yB != yA) {
+    xStepAB = (((xB - xA) << 16) / (yB - yA));
+    shadeStepAB = (((shadeB - shadeA) << 16) / (yB - yA));
+  }
+
+  var xStepBC = 0;
+  var shadeStepBC = 0;
+  if (yC != yB) {
+    xStepBC = (((xC - xB) << 16) / (yC - yB));
+    shadeStepBC = (((shadeC - shadeB) << 16) / (yC - yB));
+  }
+
+  var xStepAC = 0;
+  var shadeStepAC = 0;
+  if (yC != yA) {
+    xStepAC = (((xA - xC) << 16) / (yA - yC));
+    shadeStepAC = (((shadeA - shadeC) << 16) / (yA - yC));
+  }
+
+  if (yA <= yB && yA <= yC) {
+    if (yA < boundBottom) {
+      if (yB > boundBottom) {
+        yB = boundBottom;
+      }
+  
+      if (yC > boundBottom) {
+        yC = boundBottom;
+      }
+  
+      if (yB < yC) {
+        xA <<= 0x10;
+        xC = xA;
+        shadeA <<= 0x10;
+        shadeC = shadeA;
+        if (yA < 0) {
+          xC -= xStepAC * yA;
+          xA -= xStepAB * yA;
+          shadeC -= shadeStepAC * yA;
+          shadeA -= shadeStepAB * yA;
+          yA = 0;
+        }
+        xB <<= 0x10;
+        shadeB <<= 0x10;
+        if (yB < 0) {
+          xB -= xStepBC * yB;
+          shadeB -= shadeStepBC * yB;
+          yB = 0;
+        }
+        let dy = yA - centerY;
+        u += uStepVertical * dy;
+        v += vStepVertical * dy;
+        w += wStepVertical * dy;
+        if ((yA != yB && xStepAC < xStepAB) || (yA == yB && xStepAC > xStepBC)) {
+          yC -= yB;
+          yB -= yA;
+          yA = yA * width;
+          while (true) {
+            yB--;
+            if (yB < 0) {
+              while (true) {
+                yC--;
+                if (yC < 0) {
+                  return;
+                }
+                rasterTexturedScanline(xC >> 16, xB >> 16, yA, texels, 0, 0, u, v, w, uStride, vStride, wStride, shadeC >> 8, shadeB >> 8);
+                xC += xStepAC;
+                xB += xStepBC;
+                shadeC += shadeStepAC;
+                shadeB += shadeStepBC;
+                yA += width;
+                u += uStepVertical;
+                v += vStepVertical;
+                w += wStepVertical;
+              }
+            }
+            rasterTexturedScanline(xC >> 16, xA >> 16, yA, texels, 0, 0, u, v, w, uStride, vStride, wStride, shadeC >> 8, shadeA >> 8);
+            xC += xStepAC;
+            xA += xStepAB;
+            shadeC += shadeStepAC;
+            shadeA += shadeStepAB;
+            yA += width;
+            u += uStepVertical;
+            v += vStepVertical;
+            w += wStepVertical;
+          }
+        } else {
+          yC -= yB;
+          yB -= yA;
+          yA = yA * width;
+          while (true) {
+            yB--;
+            if (yB < 0) {
+              while (true) {
+                yC--;
+                if (yC < 0) {
+                  return;
+                }
+                rasterTexturedScanline(xB >> 16, xC >> 16, yA, texels, 0, 0, u, v, w, uStride, vStride, wStride, shadeB >> 8, shadeC >> 8);
+                xC += xStepAC;
+                xB += xStepBC;
+                shadeC += shadeStepAC;
+                shadeB += shadeStepBC;
+                yA += width;
+                u += uStepVertical;
+                v += vStepVertical;
+                w += wStepVertical;
+              }
+            }
+            rasterTexturedScanline(xA >> 16, xC >> 16, yA, texels, 0, 0, u, v, w, uStride, vStride, wStride, shadeA >> 8, shadeC >> 8);
+            xC += xStepAC;
+            xA += xStepAB;
+            shadeC += shadeStepAC;
+            shadeA += shadeStepAB;
+            yA += width;
+            u += uStepVertical;
+            v += vStepVertical;
+            w += wStepVertical;
+          }
+        }
+      } else {
+        xA <<= 0x10;
+        xB = xA;
+        shadeA <<= 0x10;
+        shadeB = shadeA;
+        if (yA < 0) {
+          xB -= xStepAC * yA;
+          xA -= xStepAB * yA;
+          shadeB -= shadeStepAC * yA;
+          shadeA -= shadeStepAB * yA;
+          yA = 0;
+        }
+        xC <<= 0x10;
+        shadeC <<= 0x10;
+        if (yC < 0) {
+          xC -= xStepBC * yC;
+          shadeC -= shadeStepBC * yC;
+          yC = 0;
+        }
+        let dy = yA - centerY;
+        u += uStepVertical * dy;
+        v += vStepVertical * dy;
+        w += wStepVertical * dy;
+        if ((yA == yC || xStepAC >= xStepAB) && (yA != yC || xStepBC <= xStepAB)) {
+          yB -= yC;
+          yC -= yA;
+          yA = yA * width;
+          while (true) {
+            yC--;
+            if (yC < 0) {
+              while (true) {
+                yB--;
+                if (yB < 0) {
+                  return;
+                }
+                rasterTexturedScanline(xA >> 16, xC >> 16, yA, texels, 0, 0, u, v, w, uStride, vStride, wStride, shadeA >> 8, shadeC >> 8);
+                xC += xStepBC;
+                xA += xStepAB;
+                shadeC += shadeStepBC;
+                shadeA += shadeStepAB;
+                yA += width;
+                u += uStepVertical;
+                v += vStepVertical;
+                w += wStepVertical;
+              }
+            }
+            rasterTexturedScanline(xA >> 16, xB >> 16, yA, texels, 0, 0, u, v, w, uStride, vStride, wStride, shadeA >> 8, shadeB >> 8);
+            xB += xStepAC;
+            xA += xStepAB;
+            shadeB += shadeStepAC;
+            shadeA += shadeStepAB;
+            yA += width;
+            u += uStepVertical;
+            v += vStepVertical;
+            w += wStepVertical;
+          }
+        } else {
+          yB -= yC;
+          yC -= yA;
+          yA = yA * width;
+          while (true) {
+            yC--;
+            if (yC < 0) {
+              while (true) {
+                yB--;
+                if (yB < 0) {
+                  return;
+                }
+                rasterTexturedScanline(xC >> 16, xA >> 16, yA, texels, 0, 0, u, v, w, uStride, vStride, wStride, shadeC >> 8, shadeA >> 8);
+                xC += xStepBC;
+                xA += xStepAB;
+                shadeC += shadeStepBC;
+                shadeA += shadeStepAB;
+                yA += width;
+                u += uStepVertical;
+                v += vStepVertical;
+                w += wStepVertical;
+              }
+            }
+            rasterTexturedScanline(xB >> 16, xA >> 16, yA, texels, 0, 0, u, v, w, uStride, vStride, wStride, shadeB >> 8, shadeA >> 8);
+            xB += xStepAC;
+            xA += xStepAB;
+            shadeB += shadeStepAC;
+            shadeA += shadeStepAB;
+            yA += width;
+            u += uStepVertical;
+            v += vStepVertical;
+            w += wStepVertical;
+          }
+        }
+      }
+    }
+  } else if (yB <= yC) {
+    if (yB < boundBottom) {
+      if (yC > boundBottom) {
+        yC = boundBottom;
+      }
+      if (yA > boundBottom) {
+        yA = boundBottom;
+      }
+      if (yC < yA) {
+        xB <<= 0x10;
+        xA = xB;
+        shadeB <<= 0x10;
+        shadeA = shadeB;
+        if (yB < 0) {
+          xA -= xStepAB * yB;
+          xB -= xStepBC * yB;
+          shadeA -= shadeStepAB * yB;
+          shadeB -= shadeStepBC * yB;
+          yB = 0;
+        }
+        xC <<= 0x10;
+        shadeC <<= 0x10;
+        if (yC < 0) {
+          xC -= xStepAC * yC;
+          shadeC -= shadeStepAC * yC;
+          yC = 0;
+        }
+        let dy = yB - centerY;
+        u += uStepVertical * dy;
+        v += vStepVertical * dy;
+        w += wStepVertical * dy;
+        if ((yB != yC && xStepAB < xStepBC) || (yB == yC && xStepAB > xStepAC)) {
+          yA -= yC;
+          yC -= yB;
+          yB = yB * width;
+          while (true) {
+            yC--;
+            if (yC < 0) {
+              while (true) {
+                yA--;
+                if (yA < 0) {
+                  return;
+                }
+                rasterTexturedScanline(xA >> 16, xC >> 16, yB, texels, 0, 0, u, v, w, uStride, vStride, wStride, shadeA >> 8, shadeC >> 8);
+                xA += xStepAB;
+                xC += xStepAC;
+                shadeA += shadeStepAB;
+                shadeC += shadeStepAC;
+                yB += width;
+                u += uStepVertical;
+                v += vStepVertical;
+                w += wStepVertical;
+              }
+            }
+            rasterTexturedScanline(xA >> 16, xB >> 16, yB, texels, 0, 0, u, v, w, uStride, vStride, wStride, shadeA >> 8, shadeB >> 8);
+            xA += xStepAB;
+            xB += xStepBC;
+            shadeA += shadeStepAB;
+            shadeB += shadeStepBC;
+            yB += width;
+            u += uStepVertical;
+            v += vStepVertical;
+            w += wStepVertical;
+          }
+        } else {
+          yA -= yC;
+          yC -= yB;
+          yB = yB * width;
+          while (true) {
+            yC--;
+            if (yC < 0) {
+              while (true) {
+                yA--;
+                if (yA < 0) {
+                  return;
+                }
+                rasterTexturedScanline(xC >> 16, xA >> 16, yB, texels, 0, 0, u, v, w, uStride, vStride, wStride, shadeC >> 8, shadeA >> 8);
+                xA += xStepAB;
+                xC += xStepAC;
+                shadeA += shadeStepAB;
+                shadeC += shadeStepAC;
+                yB += width;
+                u += uStepVertical;
+                v += vStepVertical;
+                w += wStepVertical;
+              }
+            }
+            rasterTexturedScanline(xB >> 16, xA >> 16, yB, texels, 0, 0, u, v, w, uStride, vStride, wStride, shadeB >> 8, shadeA >> 8);
+            xA += xStepAB;
+            xB += xStepBC;
+            shadeA += shadeStepAB;
+            shadeB += shadeStepBC;
+            yB += width;
+            u += uStepVertical;
+            v += vStepVertical;
+            w += wStepVertical;
+          }
+        }
+      } else {
+        xB <<= 0x10;
+        xC = xB;
+        shadeB <<= 0x10;
+        shadeC = shadeB;
+        if (yB < 0) {
+          xC -= xStepAB * yB;
+          xB -= xStepBC * yB;
+          shadeC -= shadeStepAB * yB;
+          shadeB -= shadeStepBC * yB;
+          yB = 0;
+        }
+        xA <<= 0x10;
+        shadeA <<= 0x10;
+        if (yA < 0) {
+          xA -= xStepAC * yA;
+          shadeA -= shadeStepAC * yA;
+          yA = 0;
+        }
+        let dy = yB - centerY;
+        u += uStepVertical * dy;
+        v += vStepVertical * dy;
+        w += wStepVertical * dy;
+        yC -= yA;
+        yA -= yB;
+        yB = yB * width;
+        if (xStepAB < xStepBC) {
+          while (true) {
+            yA--;
+            if (yA < 0) {
+              while (true) {
+                yC--;
+                if (yC < 0) {
+                  return;
+                }
+                rasterTexturedScanline(xA >> 16, xB >> 16, yB, texels, 0, 0, u, v, w, uStride, vStride, wStride, shadeA >> 8, shadeB >> 8);
+                xA += xStepAC;
+                xB += xStepBC;
+                shadeA += shadeStepAC;
+                shadeB += shadeStepBC;
+                yB += width;
+                u += uStepVertical;
+                v += vStepVertical;
+                w += wStepVertical;
+              }
+            }
+            rasterTexturedScanline(xC >> 16, xB >> 16, yB, texels, 0, 0, u, v, w, uStride, vStride, wStride, shadeC >> 8, shadeB >> 8);
+            xC += xStepAB;
+            xB += xStepBC;
+            shadeC += shadeStepAB;
+            shadeB += shadeStepBC;
+            yB += width;
+            u += uStepVertical;
+            v += vStepVertical;
+            w += wStepVertical;
+          }
+        } else {
+          while (true) {
+            yA--;
+            if (yA < 0) {
+              while (true) {
+                yC--;
+                if (yC < 0) {
+                  return;
+                }
+                rasterTexturedScanline(xB >> 16, xA >> 16, yB, texels, 0, 0, u, v, w, uStride, vStride, wStride, shadeB >> 8, shadeA >> 8);
+                xA += xStepAC;
+                xB += xStepBC;
+                shadeA += shadeStepAC;
+                shadeB += shadeStepBC;
+                yB += width;
+                u += uStepVertical;
+                v += vStepVertical;
+                w += wStepVertical;
+              }
+            }
+            rasterTexturedScanline(xB >> 16, xC >> 16, yB, texels, 0, 0, u, v, w, uStride, vStride, wStride, shadeB >> 8, shadeC >> 8);
+            xC += xStepAB;
+            xB += xStepBC;
+            shadeC += shadeStepAB;
+            shadeB += shadeStepBC;
+            yB += width;
+            u += uStepVertical;
+            v += vStepVertical;
+            w += wStepVertical;
+          }
+        }
+      }
+    }
+  } else if (yC < boundBottom) {
+    if (yA > boundBottom) {
+      yA = boundBottom;
+    }
+    if (yB > boundBottom) {
+      yB = boundBottom;
+    }
+    if (yA < yB) {
+      xC <<= 0x10;
+      xB = xC;
+      shadeC <<= 0x10;
+      shadeB = shadeC;
+      if (yC < 0) {
+        xB -= xStepBC * yC;
+        xC -= xStepAC * yC;
+        shadeB -= shadeStepBC * yC;
+        shadeC -= shadeStepAC * yC;
+        yC = 0;
+      }
+      xA <<= 0x10;
+      shadeA <<= 0x10;
+      if (yA < 0) {
+        xA -= xStepAB * yA;
+        shadeA -= shadeStepAB * yA;
+        yA = 0;
+      }
+      let dy = yC - centerY;
+      u += uStepVertical * dy;
+      v += vStepVertical * dy;
+      w += wStepVertical * dy;
+      yB -= yA;
+      yA -= yC;
+      yC = yC * width;
+      if (xStepBC < xStepAC) {
+        while (true) {
+          yA--;
+          if (yA < 0) {
+            while (true) {
+              yB--;
+              if (yB < 0) {
+                return;
+              }
+              rasterTexturedScanline(xB >> 16, xA >> 16, yC, texels, 0, 0, u, v, w, uStride, vStride, wStride, shadeB >> 8, shadeA >> 8);
+              xB += xStepBC;
+              xA += xStepAB;
+              shadeB += shadeStepBC;
+              shadeA += shadeStepAB;
+              yC += width;
+              u += uStepVertical;
+              v += vStepVertical;
+              w += wStepVertical;
+            }
+          }
+          rasterTexturedScanline(xB >> 16, xC >> 16, yC, texels, 0, 0, u, v, w, uStride, vStride, wStride, shadeB >> 8, shadeC >> 8);
+          xB += xStepBC;
+          xC += xStepAC;
+          shadeB += shadeStepBC;
+          shadeC += shadeStepAC;
+          yC += width;
+          u += uStepVertical;
+          v += vStepVertical;
+          w += wStepVertical;
+        }
+      } else {
+        while (true) {
+          yA--;
+          if (yA < 0) {
+            while (true) {
+              yB--;
+              if (yB < 0) {
+                return;
+              }
+              rasterTexturedScanline(xA >> 16, xB >> 16, yC, texels, 0, 0, u, v, w, uStride, vStride, wStride, shadeA >> 8, shadeB >> 8);
+              xB += xStepBC;
+              xA += xStepAB;
+              shadeB += shadeStepBC;
+              shadeA += shadeStepAB;
+              yC += width;
+              u += uStepVertical;
+              v += vStepVertical;
+              w += wStepVertical;
+            }
+          }
+          rasterTexturedScanline(xC >> 16, xB >> 16, yC, texels, 0, 0, u, v, w, uStride, vStride, wStride, shadeC >> 8, shadeB >> 8);
+          xB += xStepBC;
+          xC += xStepAC;
+          shadeB += shadeStepBC;
+          shadeC += shadeStepAC;
+          yC += width;
+          u += uStepVertical;
+          v += vStepVertical;
+          w += wStepVertical;
+        }
+      }
+    } else {
+      xC <<= 0x10;
+      xA = xC;
+      shadeC <<= 0x10;
+      shadeA = shadeC;
+      if (yC < 0) {
+        xA -= xStepBC * yC;
+        xC -= xStepAC * yC;
+        shadeA -= shadeStepBC * yC;
+        shadeC -= shadeStepAC * yC;
+        yC = 0;
+      }
+      xB <<= 0x10;
+      shadeB <<= 0x10;
+      if (yB < 0) {
+        xB -= xStepAB * yB;
+        shadeB -= shadeStepAB * yB;
+        yB = 0;
+      }
+      let dy = yC - centerY;
+      u += uStepVertical * dy;
+      v += vStepVertical * dy;
+      w += wStepVertical * dy;
+      yA -= yB;
+      yB -= yC;
+      yC = yC * width;
+      if (xStepBC < xStepAC) {
+        while (true) {
+          yB--;
+          if (yB < 0) {
+            while (true) {
+              yA--;
+              if (yA < 0) {
+                return;
+              }
+              rasterTexturedScanline(xB >> 16, xC >> 16, yC, texels, 0, 0, u, v, w, uStride, vStride, wStride, shadeB >> 8, shadeC >> 8);
+              xB += xStepAB;
+              xC += xStepAC;
+              shadeB += shadeStepAB;
+              shadeC += shadeStepAC;
+              yC += width;
+              u += uStepVertical;
+              v += vStepVertical;
+              w += wStepVertical;
+            }
+          }
+          rasterTexturedScanline(xA >> 16, xC >> 16, yC, texels, 0, 0, u, v, w, uStride, vStride, wStride, shadeA >> 8, shadeC >> 8);
+          xA += xStepBC;
+          xC += xStepAC;
+          shadeA += shadeStepBC;
+          shadeC += shadeStepAC;
+          yC += width;
+          u += uStepVertical;
+          v += vStepVertical;
+          w += wStepVertical;
+        }
+      } else {
+        while (true) {
+          yB--;
+          if (yB < 0) {
+            while (true) {
+              yA--;
+              if (yA < 0) {
+                return;
+              }
+              rasterTexturedScanline(xC >> 16, xB >> 16, yC, texels, 0, 0, u, v, w, uStride, vStride, wStride, shadeC >> 8, shadeB >> 8);
+              xB += xStepAB;
+              xC += xStepAC;
+              shadeB += shadeStepAB;
+              shadeC += shadeStepAC;
+              yC += width;
+              u += uStepVertical;
+              v += vStepVertical;
+              w += wStepVertical;
+            }
+          }
+          rasterTexturedScanline(xC >> 16, xA >> 16, yC, texels, 0, 0, u, v, w, uStride, vStride, wStride, shadeC >> 8, shadeA >> 8);
+          xA += xStepBC;
+          xC += xStepAC;
+          shadeA += shadeStepBC;
+          shadeC += shadeStepAC;
+          yC += width;
+          u += uStepVertical;
+          v += vStepVertical;
+          w += wStepVertical;
+        }
+      }
+    }
+  }
+}
+
+fn rasterTexturedScanline(
+  xAIn: i32, 
+  xBIn: i32, 
+  offsetIn: i32, 
+  texels: ptr<storage, array<u32, 65536>>, 
+  curUIn: i32, 
+  curVIn: i32, 
+  uIn: i32, 
+  vIn: i32, 
+  wIn: i32, 
+  uStride: i32, 
+  vStride: i32, 
+  wStride: i32, 
+  shadeAIn: i32, 
+  shadeBIn: i32
+) {
+  var xA = xAIn;
+  var xB = xBIn;
+  var offset = offsetIn;
+  var curU = curUIn;
+  var curV = curVIn;
+  var u = uIn;
+  var v = vIn;
+  var w = wIn;
+  var shadeA = shadeAIn;
+  var shadeB = shadeBIn;
+  if (xA >= xB) {
+      return;
+  } 
+  var shadeStrides: i32;
+  var strides: i32;
+  if (clipX) {
+    shadeStrides = ((shadeB - shadeA) / (xB - xA));   
+    if (xB > boundX) {
+      xB = boundX;
+    }   
+    if (xA < 0) {
+      shadeA -= xA * shadeStrides;
+      xA = 0;
+    }   
+    if (xA >= xB) {
+      return;
+    }   
+    strides = (xB - xA) >> 3;
+    shadeStrides <<= 0xc;
+  } else {
+    if (xB - xA > 7) {
+      strides = (xB - xA) >> 3;
+      shadeStrides = ((shadeB - shadeA) * reciprocal15(strides)) >> 6;
+    } else {
+      strides = 0;
+      shadeStrides = 0;
+    }
+  }
+
+  shadeA <<= 0x9;
+  offset += xA;
+
+  var nextU = 0;
+  var nextV = 0;
+  var dx = xA - centerX;
+  u = u + (uStride >> 3) * dx;
+  v = v + (vStride >> 3) * dx;
+  w = w + (wStride >> 3) * dx;
+  var curW = w >> 14;
+  if (curW != 0) {
+    curU = (u / curW);
+    curV = (v / curW);
+    if (curU < 0) {
+      curU = 0;
+    } else if (curU > 16256) {
+      curU = 16256;
+    }
+  }
+  u = u + uStride;
+  v = v + vStride;
+  w = w + wStride;
+  curW = w >> 14;
+  if (curW != 0) {
+    nextU = (u / curW);
+    nextV = (v / curW);
+    if (nextU < 7) {
+      nextU = 7;
+    } else if (nextU > 16256) {
+      nextU = 16256;
+    }
+  }
+  var stepU = (nextU - curU) >> 3;
+  var stepV = (nextV - curV) >> 3;
+  curU += shadeA & 0x600000;
+  var shadeShift = u32(shadeA >> 23);
+  if (writeDepth) {
+    while (strides > 0) {
+      strides--;
+      var rgb = texels[(curV & 0x3f80) + (curU >> 7)] >> shadeShift;
+      if (rgb != 0) {
+        atomicMax(&depthBuffer[offset], depth);
+      }
+      offset = offset + 1;
+      curU += stepU;
+      curV += stepV;
+      rgb = texels[(curV & 0x3f80) + (curU >> 7)] >> shadeShift;
+      if (rgb != 0) {
+        atomicMax(&depthBuffer[offset], depth);
+      }
+      offset++;
+      curU += stepU;
+      curV += stepV;
+      rgb = texels[(curV & 0x3f80) + (curU >> 7)] >> shadeShift;
+      if (rgb != 0) {
+        atomicMax(&depthBuffer[offset], depth);
+      }
+      offset++;
+      curU += stepU;
+      curV += stepV;
+      rgb = texels[(curV & 0x3f80) + (curU >> 7)] >> shadeShift;
+      if (rgb != 0) {
+        atomicMax(&depthBuffer[offset], depth);
+      }
+      offset++;
+      curU += stepU;
+      curV += stepV;
+      rgb = texels[(curV & 0x3f80) + (curU >> 7)] >> shadeShift;
+      if (rgb != 0) {
+        atomicMax(&depthBuffer[offset], depth);
+      }
+      offset++;
+      curU += stepU;
+      curV += stepV;
+      rgb = texels[(curV & 0x3f80) + (curU >> 7)] >> shadeShift;
+      if (rgb != 0) {
+        atomicMax(&depthBuffer[offset], depth);
+      }
+      offset++;
+      curU += stepU;
+      curV += stepV;
+      rgb = texels[(curV & 0x3f80) + (curU >> 7)] >> shadeShift;
+      if (rgb != 0) {
+        atomicMax(&depthBuffer[offset], depth);
+      }
+      offset++;
+      curU += stepU;
+      curV += stepV;
+      rgb = texels[(curV & 0x3f80) + (curU >> 7)] >> shadeShift;
+      if (rgb != 0) {
+        atomicMax(&depthBuffer[offset], depth);
+      }
+      offset++;
+      curU = nextU;
+      curV = nextV;
+      u += uStride;
+      v += vStride;
+      w += wStride;
+      curW = w >> 14;
+      if (curW != 0) {
+        nextU = (u / curW);
+        nextV = (v / curW);
+        if (nextU < 7) {
+          nextU = 7;
+        } else if (nextU > 16256) {
+          nextU = 16256;
+        }
+      }
+      stepU = (nextU - curU) >> 3;
+      stepV = (nextV - curV) >> 3;
+      shadeA += shadeStrides;
+      curU += shadeA & 0x600000;
+      shadeShift = u32(shadeA >> 23);
+    }
+    strides = (xB - xA) & 0x7;
+    while (strides > 0) {
+      strides--;
+      var rgb = texels[(curV & 0x3f80) + (curU >> 7)] >> shadeShift;
+      if (rgb != 0) {
+        atomicMax(&depthBuffer[offset], depth);
+      }
+      offset++;
+      curU += stepU;
+      curV += stepV;
+    }
+  } else if (opaqueTexture) {
+    while (strides > 0) {
+      strides--;
+      setPixel(offset, texels[(curV & 0x3f80) + (curU >> 7)] >> shadeShift);
+      offset++;
+      curU += stepU;
+      curV += stepV;
+      setPixel(offset, texels[(curV & 0x3f80) + (curU >> 7)] >> shadeShift);
+      offset++;
+      curU += stepU;
+      curV += stepV;
+      setPixel(offset, texels[(curV & 0x3f80) + (curU >> 7)] >> shadeShift);
+      offset++;
+      curU += stepU;
+      curV += stepV;
+      setPixel(offset, texels[(curV & 0x3f80) + (curU >> 7)] >> shadeShift);
+      offset++;
+      curU += stepU;
+      curV += stepV;
+      setPixel(offset, texels[(curV & 0x3f80) + (curU >> 7)] >> shadeShift);
+      offset++;
+      curU += stepU;
+      curV += stepV;
+      setPixel(offset, texels[(curV & 0x3f80) + (curU >> 7)] >> shadeShift);
+      offset++;
+      curU += stepU;
+      curV += stepV;
+      setPixel(offset, texels[(curV & 0x3f80) + (curU >> 7)] >> shadeShift);
+      offset++;
+      curU += stepU;
+      curV += stepV;
+      setPixel(offset, texels[(curV & 0x3f80) + (curU >> 7)] >> shadeShift);
+      offset++;
+      curU = nextU;
+      curV = nextV;
+      u += uStride;
+      v += vStride;
+      w += wStride;
+      curW = w >> 14;
+      if (curW != 0) {
+        nextU = (u / curW);
+        nextV = (v / curW);
+        if (nextU < 7) {
+          nextU = 7;
+        } else if (nextU > 16256) {
+          nextU = 16256;
+        }
+      }
+      stepU = (nextU - curU) >> 3;
+      stepV = (nextV - curV) >> 3;
+      shadeA += shadeStrides;
+      curU += shadeA & 0x600000;
+      shadeShift = u32(shadeA >> 23);
+    }
+    strides = (xB - xA) & 0x7;
+    while (strides > 0) {
+      strides--;
+      setPixel(offset, texels[(curV & 0x3f80) + (curU >> 7)] >> shadeShift);
+      offset++;
+      curU += stepU;
+      curV += stepV;
+    }
+  } else {
+    while (strides > 0) {
+      strides--;
+      var rgb = texels[(curV & 0x3f80) + (curU >> 7)] >> shadeShift;
+      if (rgb != 0) {
+        setPixel(offset, rgb);
+      }
+      offset = offset + 1;
+      curU += stepU;
+      curV += stepV;
+      rgb = texels[(curV & 0x3f80) + (curU >> 7)] >> shadeShift;
+      if (rgb != 0) {
+        setPixel(offset, rgb);
+      }
+      offset++;
+      curU += stepU;
+      curV += stepV;
+      rgb = texels[(curV & 0x3f80) + (curU >> 7)] >> shadeShift;
+      if (rgb != 0) {
+        setPixel(offset, rgb);
+      }
+      offset++;
+      curU += stepU;
+      curV += stepV;
+      rgb = texels[(curV & 0x3f80) + (curU >> 7)] >> shadeShift;
+      if (rgb != 0) {
+        setPixel(offset, rgb);
+      }
+      offset++;
+      curU += stepU;
+      curV += stepV;
+      rgb = texels[(curV & 0x3f80) + (curU >> 7)] >> shadeShift;
+      if (rgb != 0) {
+        setPixel(offset, rgb);
+      }
+      offset++;
+      curU += stepU;
+      curV += stepV;
+      rgb = texels[(curV & 0x3f80) + (curU >> 7)] >> shadeShift;
+      if (rgb != 0) {
+        setPixel(offset, rgb);
+      }
+      offset++;
+      curU += stepU;
+      curV += stepV;
+      rgb = texels[(curV & 0x3f80) + (curU >> 7)] >> shadeShift;
+      if (rgb != 0) {
+        setPixel(offset, rgb);
+      }
+      offset++;
+      curU += stepU;
+      curV += stepV;
+      rgb = texels[(curV & 0x3f80) + (curU >> 7)] >> shadeShift;
+      if (rgb != 0) {
+        setPixel(offset, rgb);
+      }
+      offset++;
+      curU = nextU;
+      curV = nextV;
+      u += uStride;
+      v += vStride;
+      w += wStride;
+      curW = w >> 14;
+      if (curW != 0) {
+        nextU = (u / curW);
+        nextV = (v / curW);
+        if (nextU < 7) {
+          nextU = 7;
+        } else if (nextU > 16256) {
+          nextU = 16256;
+        }
+      }
+      stepU = (nextU - curU) >> 3;
+      stepV = (nextV - curV) >> 3;
+      shadeA += shadeStrides;
+      curU += shadeA & 0x600000;
+      shadeShift = u32(shadeA >> 23);
+    }
+    strides = (xB - xA) & 0x7;
+    while (strides > 0) {
+      strides--;
+      var rgb = texels[(curV & 0x3f80) + (curU >> 7)] >> shadeShift;
+      if (rgb != 0) {
+        setPixel(offset, rgb);
+      }
+      offset++;
+      curU += stepU;
+      curV += stepV;
+    }
+  }
+}
+
+fn reciprocal15(value: i32) -> i32 {
+  return 32768 / value;
+}
+
+fn reciprocal16(value: i32) -> i32 {
+  return 65536 / value;
+}
+`;
+
+// src/graphics/renderer/webgpu/shaders/commons.wgsl.ts
+var UNPACK_COLOR888 = `
+fn unpackColor888(rgb: u32) -> vec3f {
+  let r = f32((rgb >> 16) & 0xff) / 255.0;
+  let g = f32((rgb >> 8) & 0xff) / 255.0;
+  let b = f32(rgb & 0xff) / 255.0;
+  return vec3f(r, g, b);
+}
+`;
+
+// src/graphics/renderer/webgpu/shaders/fullscreen-pixels.wgsl.ts
+var SHADER_CODE2 = `
+struct PixelBuffer {
+  data: array<u32>,
+};
+
+struct Uniforms {
+  screenWidth: f32,
+  screenHeight: f32,
+};
+
+@group(0) @binding(0) var<uniform> uniforms: Uniforms;
+@group(0) @binding(1) var<storage, read> pixelBuffer: PixelBuffer;
+
+${UNPACK_COLOR888}
+
+@fragment
+fn frag_main(@location(0) TexCoord: vec2f) -> @location(0) vec4f {
+  let coord = floor(vec2f(TexCoord.x * uniforms.screenWidth, TexCoord.y * uniforms.screenHeight));
+  let index = u32(coord.y * uniforms.screenWidth + coord.x);
+
+  let finalColor = vec4f(unpackColor888(pixelBuffer.data[index]), 1.0);
+  return finalColor;
+}
+
+`;
+
+// src/graphics/renderer/webgpu/shaders/fullscreen-pixmap.wgsl.ts
+var SHADER_CODE3 = `
+@group(0) @binding(0) var textureSampler: sampler;
+@group(0) @binding(1) var texture: texture_2d<f32>;
+
+@fragment
+fn frag_main(@location(0) TexCoord: vec2f) -> @location(0) vec4f {
+  var color = textureSample(texture, textureSampler, TexCoord).bgra;
+  if (all(color == vec4f(1.0))) {
+    discard;
+  }
+  return color;
+}
+`;
+
+// src/graphics/renderer/webgpu/shaders/fullscreen-texture.wgsl.ts
+var SHADER_CODE4 = `
+@group(0) @binding(0) var textureSampler: sampler;
+@group(0) @binding(1) var texture: texture_2d<f32>;
+
+@fragment
+fn frag_main(@location(0) TexCoord: vec2f) -> @location(0) vec4f {
+  var color = textureSample(texture, textureSampler, TexCoord);
+  return color;
+}
+`;
+
+// src/graphics/renderer/webgpu/shaders/fullscreen-vertex.wgsl.ts
+var SHADER_CODE5 = `
+struct VertexOutput {
+  @builtin(position) Position: vec4f,
+  @location(0) TexCoord: vec2f,
+};
+
+@vertex
+fn vert_main(@builtin(vertex_index) VertexIndex: u32) -> VertexOutput {
+  var pos = array(
+    vec2f(-1,  3),
+    vec2f( 3, -1),
+    vec2f(-1, -1),
+  );
+
+  var output: VertexOutput;
+  output.Position = vec4f(pos[VertexIndex], 0.0, 1.0);
+  output.TexCoord = pos[VertexIndex] * 0.5 + 0.5;
+  output.TexCoord.y = 1.0 - output.TexCoord.y;
+  return output;
+}
+`;
+
+// src/graphics/renderer/webgpu/RendererWebGPU.ts
+var INITIAL_TRIANGLES = 65536;
+var TEXTURE_COUNT = 50;
+var TEXTURE_SIZE = 128;
+var TEXTURE_PIXEL_COUNT = TEXTURE_SIZE * TEXTURE_SIZE;
+var PALETTE_BYTES = 65536 * 4;
+var TEXTURES_TRANSLUCENT_BYTES = TEXTURE_COUNT * 4;
+var TEXTURES_BYTES = TEXTURE_COUNT * TEXTURE_PIXEL_COUNT * 4 * 4;
+
+class RendererWebGPU extends Renderer {
+  device;
+  context;
+  defaultSampler;
+  samplerTextureGroupLayout;
+  frameTexture;
+  frameBindGroup;
+  uniformBuffer;
+  pixelBuffer;
+  depthBuffer;
+  lutsBuffer;
+  rasterizerShaderModule;
+  rasterizerBindGroupLayout;
+  triangleDataBindGroupLayout;
+  rasterizerBindGroup;
+  clearPipeline;
+  renderFlatDepthPipeline;
+  renderGouraudDepthPipeline;
+  renderTexturedDepthPipeline;
+  renderFlatPipeline;
+  renderGouraudPipeline;
+  renderTexturedPipeline;
+  renderAlphaPipeline;
+  fullscreenVertexShaderModule;
+  pixMapShaderModule;
+  pixMapPipeline;
+  textureShaderModule;
+  frameTexturePipeline;
+  pixelBufferShaderModule;
+  pixelBufferPipeline;
+  pixelBufferBindGroup;
+  frameRenderPassDescriptor;
+  renderPassDescriptor;
+  flatTriangleDataBuffer;
+  gouraudTriangleDataBuffer;
+  texturedTriangleDataBuffer;
+  alphaTriangleDataBuffer;
+  encoder;
+  mainPass;
+  isRenderingFrame = false;
+  isRenderingScene = false;
+  queuedRenderPixMapCommands = [];
+  triangleCount = 0;
+  flatTriangleData = new Uint32Array(INITIAL_TRIANGLES * 8);
+  flatTriangleCount = 0;
+  gouraudTriangleData = new Uint32Array(INITIAL_TRIANGLES * 10);
+  gouraudTriangleCount = 0;
+  texturedTriangleData = new Uint32Array(INITIAL_TRIANGLES * 20);
+  texturedTriangleCount = 0;
+  alphaTriangleData = new Uint32Array(INITIAL_TRIANGLES * 10);
+  alphaTriangleCount = 0;
+  texturesToDelete = [];
+  texturesUsed = new Array(TEXTURE_COUNT).fill(false);
+  textureStagingBuffers = [];
+  frameCount = 0;
+  static hasWebGPUSupport() {
+    return "gpu" in navigator;
+  }
+  static async init(container, width, height) {
+    const adapter = await navigator.gpu?.requestAdapter();
+    const device = await adapter?.requestDevice();
+    if (!device) {
+      throw new Error("Could not request WebGPU device");
+    }
+    const canvas2 = document.createElement("canvas");
+    canvas2.width = width;
+    canvas2.height = height;
+    canvas2.style.display = "block";
+    canvas2.style.position = "absolute";
+    canvas2.style.width = "789px";
+    canvas2.style.height = "532px";
+    container.appendChild(canvas2);
+    const context = canvas2.getContext("webgpu");
+    if (!context) {
+      canvas2.remove();
+      throw new Error("WebGPU is not supported");
+    }
+    const presentationFormat = navigator.gpu.getPreferredCanvasFormat();
+    context.configure({
+      device,
+      format: presentationFormat
+    });
+    return new RendererWebGPU(canvas2, device, context);
+  }
+  constructor(canvas2, device, context) {
+    super(canvas2);
+    this.device = device;
+    this.context = context;
+    this.init();
+  }
+  init() {
+    const viewportWidth = World3D.viewportRight;
+    const viewportHeight = World3D.viewportBottom;
+    this.defaultSampler = this.device.createSampler();
+    this.samplerTextureGroupLayout = this.device.createBindGroupLayout({
+      entries: [
+        {
+          binding: 0,
+          visibility: GPUShaderStage.FRAGMENT,
+          sampler: { type: "filtering" }
+        },
+        {
+          binding: 1,
+          visibility: GPUShaderStage.FRAGMENT,
+          texture: { sampleType: "float" }
+        }
+      ]
+    });
+    this.frameTexture = this.device.createTexture({
+      size: { width: this.canvas.width, height: this.canvas.height },
+      format: "rgba8unorm",
+      usage: GPUTextureUsage.COPY_DST | GPUTextureUsage.RENDER_ATTACHMENT | GPUTextureUsage.TEXTURE_BINDING
+    });
+    this.frameBindGroup = this.device.createBindGroup({
+      layout: this.samplerTextureGroupLayout,
+      entries: [
+        {
+          binding: 0,
+          resource: this.defaultSampler
+        },
+        {
+          binding: 1,
+          resource: this.frameTexture.createView()
+        }
+      ]
+    });
+    this.device.queue.copyExternalImageToTexture({ source: canvas }, { texture: this.frameTexture }, { width: this.canvas.width, height: this.canvas.height });
+    this.uniformBuffer = this.device.createBuffer({
+      size: 2 * 4,
+      usage: GPUBufferUsage.UNIFORM | GPUBufferUsage.COPY_DST
+    });
+    this.device.queue.writeBuffer(this.uniformBuffer, 0, new Float32Array([viewportWidth, viewportHeight]));
+    this.pixelBuffer = this.device.createBuffer({
+      size: viewportWidth * viewportHeight * 4,
+      usage: GPUBufferUsage.STORAGE | GPUBufferUsage.COPY_DST
+    });
+    this.depthBuffer = this.device.createBuffer({
+      size: viewportWidth * viewportHeight * 4,
+      usage: GPUBufferUsage.STORAGE | GPUBufferUsage.COPY_DST
+    });
+    this.lutsBuffer = this.device.createBuffer({
+      size: PALETTE_BYTES + TEXTURES_TRANSLUCENT_BYTES + TEXTURES_BYTES,
+      usage: GPUBufferUsage.STORAGE | GPUBufferUsage.COPY_DST
+    });
+    this.updatePalette();
+    this.updateTextures();
+    this.rasterizerShaderModule = this.device.createShaderModule({
+      label: "rasterizer shaders",
+      code: SHADER_CODE
+    });
+    this.rasterizerBindGroupLayout = this.device.createBindGroupLayout({
+      entries: [
+        {
+          binding: 0,
+          visibility: GPUShaderStage.COMPUTE,
+          buffer: { type: "storage" }
+        },
+        {
+          binding: 1,
+          visibility: GPUShaderStage.COMPUTE,
+          buffer: { type: "storage" }
+        },
+        {
+          binding: 2,
+          visibility: GPUShaderStage.COMPUTE,
+          buffer: { type: "read-only-storage" }
+        }
+      ]
+    });
+    this.triangleDataBindGroupLayout = this.device.createBindGroupLayout({
+      entries: [
+        {
+          binding: 0,
+          visibility: GPUShaderStage.COMPUTE,
+          buffer: { type: "read-only-storage" }
+        }
+      ]
+    });
+    this.rasterizerBindGroup = this.device.createBindGroup({
+      layout: this.rasterizerBindGroupLayout,
+      entries: [
+        {
+          binding: 0,
+          resource: {
+            buffer: this.pixelBuffer
+          }
+        },
+        {
+          binding: 1,
+          resource: {
+            buffer: this.depthBuffer
+          }
+        },
+        {
+          binding: 2,
+          resource: {
+            buffer: this.lutsBuffer
+          }
+        }
+      ]
+    });
+    this.clearPipeline = this.device.createComputePipeline({
+      label: "clear pixels pipeline",
+      layout: this.device.createPipelineLayout({ bindGroupLayouts: [this.rasterizerBindGroupLayout] }),
+      compute: {
+        module: this.rasterizerShaderModule,
+        entryPoint: "clear"
+      }
+    });
+    this.renderFlatDepthPipeline = this.device.createComputePipeline({
+      label: "render flat depth pipeline",
+      layout: this.device.createPipelineLayout({ bindGroupLayouts: [this.rasterizerBindGroupLayout, this.triangleDataBindGroupLayout] }),
+      compute: {
+        module: this.rasterizerShaderModule,
+        entryPoint: "renderFlatDepth"
+      }
+    });
+    this.renderGouraudDepthPipeline = this.device.createComputePipeline({
+      label: "render gouraud depth pipeline",
+      layout: this.device.createPipelineLayout({ bindGroupLayouts: [this.rasterizerBindGroupLayout, this.triangleDataBindGroupLayout] }),
+      compute: {
+        module: this.rasterizerShaderModule,
+        entryPoint: "renderGouraudDepth"
+      }
+    });
+    this.renderTexturedDepthPipeline = this.device.createComputePipeline({
+      label: "render textured depth pipeline",
+      layout: this.device.createPipelineLayout({ bindGroupLayouts: [this.rasterizerBindGroupLayout, this.triangleDataBindGroupLayout] }),
+      compute: {
+        module: this.rasterizerShaderModule,
+        entryPoint: "renderTexturedDepth"
+      }
+    });
+    this.renderFlatPipeline = this.device.createComputePipeline({
+      label: "render flat pipeline",
+      layout: this.device.createPipelineLayout({ bindGroupLayouts: [this.rasterizerBindGroupLayout, this.triangleDataBindGroupLayout] }),
+      compute: {
+        module: this.rasterizerShaderModule,
+        entryPoint: "renderFlat"
+      }
+    });
+    this.renderGouraudPipeline = this.device.createComputePipeline({
+      label: "render gouraud pipeline",
+      layout: this.device.createPipelineLayout({ bindGroupLayouts: [this.rasterizerBindGroupLayout, this.triangleDataBindGroupLayout] }),
+      compute: {
+        module: this.rasterizerShaderModule,
+        entryPoint: "renderGouraud"
+      }
+    });
+    this.renderTexturedPipeline = this.device.createComputePipeline({
+      label: "render textured pipeline",
+      layout: this.device.createPipelineLayout({ bindGroupLayouts: [this.rasterizerBindGroupLayout, this.triangleDataBindGroupLayout] }),
+      compute: {
+        module: this.rasterizerShaderModule,
+        entryPoint: "renderTextured"
+      }
+    });
+    this.renderAlphaPipeline = this.device.createComputePipeline({
+      label: "render alpha pipeline",
+      layout: this.device.createPipelineLayout({ bindGroupLayouts: [this.rasterizerBindGroupLayout, this.triangleDataBindGroupLayout] }),
+      compute: {
+        module: this.rasterizerShaderModule,
+        entryPoint: "renderAlpha"
+      }
+    });
+    this.fullscreenVertexShaderModule = this.device.createShaderModule({
+      label: "fullscreen vertex shader",
+      code: SHADER_CODE5
+    });
+    this.pixMapShaderModule = this.device.createShaderModule({
+      label: "pixmap shader",
+      code: SHADER_CODE3
+    });
+    this.pixMapPipeline = this.device.createRenderPipeline({
+      label: "pixmap pipeline",
+      layout: this.device.createPipelineLayout({ bindGroupLayouts: [this.samplerTextureGroupLayout] }),
+      vertex: {
+        module: this.fullscreenVertexShaderModule
+      },
+      fragment: {
+        module: this.pixMapShaderModule,
+        targets: [{ format: "rgba8unorm" }]
+      }
+    });
+    this.textureShaderModule = this.device.createShaderModule({
+      label: "texture shader",
+      code: SHADER_CODE4
+    });
+    this.frameTexturePipeline = this.device.createRenderPipeline({
+      label: "frame texture pipeline",
+      layout: this.device.createPipelineLayout({ bindGroupLayouts: [this.samplerTextureGroupLayout] }),
+      vertex: {
+        module: this.fullscreenVertexShaderModule
+      },
+      fragment: {
+        module: this.textureShaderModule,
+        targets: [{ format: navigator.gpu.getPreferredCanvasFormat() }]
+      }
+    });
+    this.pixelBufferShaderModule = this.device.createShaderModule({
+      label: "pixel buffer shader",
+      code: SHADER_CODE2
+    });
+    this.pixelBufferPipeline = this.device.createRenderPipeline({
+      label: "pixel buffer pipeline",
+      layout: "auto",
+      vertex: {
+        module: this.fullscreenVertexShaderModule
+      },
+      fragment: {
+        module: this.pixelBufferShaderModule,
+        targets: [{ format: "rgba8unorm" }]
+      }
+    });
+    this.pixelBufferBindGroup = this.device.createBindGroup({
+      layout: this.pixelBufferPipeline.getBindGroupLayout(0),
+      entries: [
+        {
+          binding: 0,
+          resource: {
+            buffer: this.uniformBuffer
+          }
+        },
+        {
+          binding: 1,
+          resource: {
+            buffer: this.pixelBuffer
+          }
+        }
+      ]
+    });
+    this.frameRenderPassDescriptor = {
+      label: "frame render pass",
+      colorAttachments: [
+        {
+          view: this.context.getCurrentTexture().createView(),
+          clearValue: {
+            r: 0,
+            g: 0,
+            b: 0,
+            a: 1
+          },
+          loadOp: "load",
+          storeOp: "store"
+        }
+      ]
+    };
+    this.renderPassDescriptor = {
+      label: "main render pass",
+      colorAttachments: [
+        {
+          view: this.frameTexture.createView(),
+          clearValue: {
+            r: 0,
+            g: 0,
+            b: 0,
+            a: 1
+          },
+          loadOp: "load",
+          storeOp: "store"
+        }
+      ]
+    };
+  }
+  resize(width, height) {
+    super.resize(width, height);
+  }
+  startFrame() {
+    this.isRenderingFrame = true;
+    this.texturesUsed.fill(false);
+    this.encoder = this.device.createCommandEncoder({
+      label: "render command encoder"
+    });
+    this.mainPass = this.encoder.beginRenderPass(this.renderPassDescriptor);
+    for (const command of this.queuedRenderPixMapCommands) {
+      this.renderPixMap(command.pixMap, command.x, command.y);
+    }
+    this.queuedRenderPixMapCommands.length = 0;
+  }
+  endFrame() {
+    if (!this.isRenderingFrame) {
+      return;
+    }
+    this.isRenderingFrame = false;
+    this.mainPass.end();
+    for (const colorAttachment of this.frameRenderPassDescriptor.colorAttachments) {
+      colorAttachment.view = this.context.getCurrentTexture().createView();
+    }
+    const framePass = this.encoder.beginRenderPass(this.frameRenderPassDescriptor);
+    framePass.setViewport(0, 0, this.canvas.width, this.canvas.height, 0, 1);
+    framePass.setPipeline(this.frameTexturePipeline);
+    framePass.setBindGroup(0, this.frameBindGroup);
+    framePass.draw(3);
+    framePass.end();
+    const commandBuffer = this.encoder.finish();
+    this.device.queue.submit([commandBuffer]);
+    for (const texture of this.texturesToDelete) {
+      texture.destroy();
+    }
+    this.texturesToDelete.length = 0;
+  }
+  updatePalette() {
+    this.device.queue.writeBuffer(this.lutsBuffer, 0, Pix3D.hslPal);
+  }
+  updateTextures() {
+    for (let i = 0;i < TEXTURE_COUNT; i++) {
+      this.updateTexture(i, false);
+    }
+    const texturesTranslucentData = new Uint32Array(TEXTURES_TRANSLUCENT_BYTES);
+    for (let i = 0;i < TEXTURE_COUNT; i++) {
+      texturesTranslucentData[i] = Pix3D.textureTranslucent[i] ? 1 : 0;
+    }
+    this.device.queue.writeBuffer(this.lutsBuffer, PALETTE_BYTES, texturesTranslucentData);
+  }
+  updateTexture(id, stage = true) {
+    const texels = Pix3D.getTexels(id);
+    if (!texels) {
+      return;
+    }
+    const textureBytes = TEXTURE_PIXEL_COUNT * 4 * 4;
+    const lutsOffset = PALETTE_BYTES + TEXTURES_TRANSLUCENT_BYTES + id * textureBytes;
+    if (stage) {
+      let stagingBuffer;
+      if (this.textureStagingBuffers.length > 0) {
+        stagingBuffer = this.textureStagingBuffers.pop();
+      } else {
+        stagingBuffer = this.device.createBuffer({
+          size: textureBytes,
+          usage: GPUBufferUsage.COPY_SRC | GPUBufferUsage.MAP_WRITE,
+          mappedAtCreation: true
+        });
+      }
+      new Uint32Array(stagingBuffer.getMappedRange()).set(texels);
+      stagingBuffer.unmap();
+      const encoder = this.device.createCommandEncoder();
+      encoder.copyBufferToBuffer(stagingBuffer, 0, this.lutsBuffer, lutsOffset, textureBytes);
+      this.device.queue.submit([encoder.finish()]);
+      stagingBuffer.mapAsync(GPUMapMode.WRITE).then(() => {
+        this.textureStagingBuffers.push(stagingBuffer);
+      });
+    } else {
+      this.device.queue.writeBuffer(this.lutsBuffer, lutsOffset, texels);
+    }
+  }
+  setBrightness(brightness) {
+    this.updatePalette();
+  }
+  renderPixMap(pixMap, x, y) {
+    if (!this.isRenderingFrame) {
+      this.queuedRenderPixMapCommands.push({ pixMap, x, y });
+      return true;
+    }
+    const viewportWidth = World3D.viewportRight;
+    const viewportHeight = World3D.viewportBottom;
+    if (pixMap.width2d === viewportWidth && pixMap.height2d === viewportHeight) {
+      this.mainPass.setViewport(x, y, viewportWidth, viewportHeight, 0, 1);
+      this.mainPass.setPipeline(this.pixelBufferPipeline);
+      this.mainPass.setBindGroup(0, this.pixelBufferBindGroup);
+      this.mainPass.draw(3);
+    }
+    const texture = this.device.createTexture({
+      size: { width: pixMap.width2d, height: pixMap.height2d },
+      format: "rgba8unorm",
+      usage: GPUTextureUsage.COPY_DST | GPUTextureUsage.TEXTURE_BINDING
+    });
+    this.device.queue.writeTexture({ texture }, pixMap.pixels, { bytesPerRow: pixMap.width2d * 4 }, { width: pixMap.width2d, height: pixMap.height2d });
+    const bindGroup = this.device.createBindGroup({
+      layout: this.samplerTextureGroupLayout,
+      entries: [
+        {
+          binding: 0,
+          resource: this.defaultSampler
+        },
+        {
+          binding: 1,
+          resource: texture.createView()
+        }
+      ]
+    });
+    this.mainPass.setViewport(x, y, pixMap.width2d, pixMap.height2d, 0, 1);
+    this.mainPass.setPipeline(this.pixMapPipeline);
+    this.mainPass.setBindGroup(0, bindGroup);
+    this.mainPass.draw(3);
+    this.texturesToDelete.push(texture);
+    return true;
+  }
+  startRenderScene() {
+    this.isRenderingScene = true;
+    this.triangleCount = 0;
+    this.flatTriangleCount = 0;
+    this.texturedTriangleCount = 0;
+    this.gouraudTriangleCount = 0;
+    this.alphaTriangleCount = 0;
+  }
+  endRenderScene() {
+    this.isRenderingScene = false;
+    this.renderScene();
+  }
+  renderScene() {
+    const viewportWidth = World3D.viewportRight;
+    const viewportHeight = World3D.viewportBottom;
+    let flatTriangleDataBuffer = this.flatTriangleDataBuffer;
+    if (flatTriangleDataBuffer) {
+      flatTriangleDataBuffer.destroy();
+      this.flatTriangleDataBuffer = undefined;
+    }
+    let gouraudTriangleDataBuffer = this.gouraudTriangleDataBuffer;
+    if (gouraudTriangleDataBuffer) {
+      gouraudTriangleDataBuffer.destroy();
+      this.gouraudTriangleDataBuffer = undefined;
+    }
+    let texturedTriangleDataBuffer = this.texturedTriangleDataBuffer;
+    if (texturedTriangleDataBuffer) {
+      texturedTriangleDataBuffer.destroy();
+      this.texturedTriangleDataBuffer = undefined;
+    }
+    let alphaTriangleDataBuffer = this.alphaTriangleDataBuffer;
+    if (alphaTriangleDataBuffer) {
+      alphaTriangleDataBuffer.destroy();
+      this.alphaTriangleDataBuffer = undefined;
+    }
+    let flatTriangleDataBindGroup;
+    if (this.flatTriangleCount > 0) {
+      flatTriangleDataBuffer = this.device.createBuffer({
+        size: this.flatTriangleCount * 8 * 4,
+        usage: GPUBufferUsage.STORAGE | GPUBufferUsage.COPY_DST
+      });
+      this.flatTriangleDataBuffer = flatTriangleDataBuffer;
+      this.device.queue.writeBuffer(flatTriangleDataBuffer, 0, this.flatTriangleData.subarray(0, this.flatTriangleCount * 8));
+      flatTriangleDataBindGroup = this.device.createBindGroup({
+        layout: this.triangleDataBindGroupLayout,
+        entries: [
+          {
+            binding: 0,
+            resource: {
+              buffer: flatTriangleDataBuffer
+            }
+          }
+        ]
+      });
+    }
+    let gouraudTriangleDataBindGroup;
+    if (this.gouraudTriangleCount > 0) {
+      gouraudTriangleDataBuffer = this.device.createBuffer({
+        size: this.gouraudTriangleCount * 10 * 4,
+        usage: GPUBufferUsage.STORAGE | GPUBufferUsage.COPY_DST
+      });
+      this.gouraudTriangleDataBuffer = gouraudTriangleDataBuffer;
+      this.device.queue.writeBuffer(gouraudTriangleDataBuffer, 0, this.gouraudTriangleData.subarray(0, this.gouraudTriangleCount * 10));
+      gouraudTriangleDataBindGroup = this.device.createBindGroup({
+        layout: this.triangleDataBindGroupLayout,
+        entries: [
+          {
+            binding: 0,
+            resource: {
+              buffer: gouraudTriangleDataBuffer
+            }
+          }
+        ]
+      });
+    }
+    let texturedTriangleDataBindGroup;
+    if (this.texturedTriangleCount > 0) {
+      texturedTriangleDataBuffer = this.device.createBuffer({
+        size: this.texturedTriangleCount * 20 * 4,
+        usage: GPUBufferUsage.STORAGE | GPUBufferUsage.COPY_DST
+      });
+      this.texturedTriangleDataBuffer = texturedTriangleDataBuffer;
+      this.device.queue.writeBuffer(this.texturedTriangleDataBuffer, 0, this.texturedTriangleData.subarray(0, this.texturedTriangleCount * 20));
+      texturedTriangleDataBindGroup = this.device.createBindGroup({
+        layout: this.triangleDataBindGroupLayout,
+        entries: [
+          {
+            binding: 0,
+            resource: {
+              buffer: texturedTriangleDataBuffer
+            }
+          }
+        ]
+      });
+    }
+    let alphaTriangleDataBindGroup;
+    if (this.alphaTriangleCount > 0) {
+      alphaTriangleDataBuffer = this.device.createBuffer({
+        size: this.alphaTriangleCount * 10 * 4,
+        usage: GPUBufferUsage.STORAGE | GPUBufferUsage.COPY_DST
+      });
+      this.alphaTriangleDataBuffer = alphaTriangleDataBuffer;
+      this.device.queue.writeBuffer(alphaTriangleDataBuffer, 0, this.alphaTriangleData.subarray(0, this.alphaTriangleCount * 10));
+      alphaTriangleDataBindGroup = this.device.createBindGroup({
+        layout: this.triangleDataBindGroupLayout,
+        entries: [
+          {
+            binding: 0,
+            resource: {
+              buffer: alphaTriangleDataBuffer
+            }
+          }
+        ]
+      });
+    }
+    const encoder = this.device.createCommandEncoder({
+      label: "render scene command encoder"
+    });
+    const computePass = encoder.beginComputePass();
+    computePass.setPipeline(this.clearPipeline);
+    computePass.setBindGroup(0, this.rasterizerBindGroup);
+    computePass.dispatchWorkgroups(Math.ceil(viewportWidth * viewportHeight / 256));
+    if (this.flatTriangleCount > 0 && flatTriangleDataBindGroup) {
+      computePass.setPipeline(this.renderFlatDepthPipeline);
+      computePass.setBindGroup(0, this.rasterizerBindGroup);
+      computePass.setBindGroup(1, flatTriangleDataBindGroup);
+      computePass.dispatchWorkgroups(this.flatTriangleCount);
+    }
+    if (this.gouraudTriangleCount > 0 && gouraudTriangleDataBindGroup) {
+      computePass.setPipeline(this.renderGouraudDepthPipeline);
+      computePass.setBindGroup(0, this.rasterizerBindGroup);
+      computePass.setBindGroup(1, gouraudTriangleDataBindGroup);
+      computePass.dispatchWorkgroups(this.gouraudTriangleCount);
+    }
+    if (this.texturedTriangleCount > 0 && texturedTriangleDataBindGroup) {
+      computePass.setPipeline(this.renderTexturedDepthPipeline);
+      computePass.setBindGroup(0, this.rasterizerBindGroup);
+      computePass.setBindGroup(1, texturedTriangleDataBindGroup);
+      computePass.dispatchWorkgroups(this.texturedTriangleCount);
+    }
+    if (this.flatTriangleCount > 0 && flatTriangleDataBindGroup) {
+      computePass.setPipeline(this.renderFlatPipeline);
+      computePass.setBindGroup(0, this.rasterizerBindGroup);
+      computePass.setBindGroup(1, flatTriangleDataBindGroup);
+      computePass.dispatchWorkgroups(this.flatTriangleCount);
+    }
+    if (this.gouraudTriangleCount > 0 && gouraudTriangleDataBindGroup) {
+      computePass.setPipeline(this.renderGouraudPipeline);
+      computePass.setBindGroup(0, this.rasterizerBindGroup);
+      computePass.setBindGroup(1, gouraudTriangleDataBindGroup);
+      computePass.dispatchWorkgroups(this.gouraudTriangleCount);
+    }
+    if (this.texturedTriangleCount > 0 && texturedTriangleDataBindGroup) {
+      computePass.setPipeline(this.renderTexturedPipeline);
+      computePass.setBindGroup(0, this.rasterizerBindGroup);
+      computePass.setBindGroup(1, texturedTriangleDataBindGroup);
+      computePass.dispatchWorkgroups(this.texturedTriangleCount);
+    }
+    if (this.alphaTriangleCount > 0 && alphaTriangleDataBindGroup) {
+      computePass.setPipeline(this.renderAlphaPipeline);
+      computePass.setBindGroup(0, this.rasterizerBindGroup);
+      computePass.setBindGroup(1, alphaTriangleDataBindGroup);
+      computePass.dispatchWorkgroups(1);
+    }
+    computePass.end();
+    const commandBuffer = encoder.finish();
+    this.device.queue.submit([commandBuffer]);
+  }
+  fillTriangle(x0, x1, x2, y0, y1, y2, color) {
+    if (!this.isRenderingScene) {
+      return false;
+    }
+    const triangleIndex = this.triangleCount++;
+    if (Pix3D.alpha !== 0) {
+      let offset = this.alphaTriangleCount * 10;
+      if (offset >= this.alphaTriangleData.length) {
+        const newData = new Uint32Array(this.alphaTriangleData.length * 2);
+        newData.set(this.alphaTriangleData);
+        this.alphaTriangleData = newData;
+      }
+      this.alphaTriangleData[offset++] = 1 << 31 | Pix3D.alpha << 23 | triangleIndex;
+      this.alphaTriangleData[offset++] = x0;
+      this.alphaTriangleData[offset++] = x1;
+      this.alphaTriangleData[offset++] = x2;
+      this.alphaTriangleData[offset++] = y0;
+      this.alphaTriangleData[offset++] = y1;
+      this.alphaTriangleData[offset++] = y2;
+      this.alphaTriangleData[offset++] = color;
+      this.alphaTriangleCount++;
+    } else {
+      let offset = this.flatTriangleCount * 8;
+      if (offset >= this.flatTriangleData.length) {
+        const newData = new Uint32Array(this.flatTriangleData.length * 2);
+        newData.set(this.flatTriangleData);
+        this.flatTriangleData = newData;
+      }
+      this.flatTriangleData[offset++] = triangleIndex;
+      this.flatTriangleData[offset++] = x0;
+      this.flatTriangleData[offset++] = x1;
+      this.flatTriangleData[offset++] = x2;
+      this.flatTriangleData[offset++] = y0;
+      this.flatTriangleData[offset++] = y1;
+      this.flatTriangleData[offset++] = y2;
+      this.flatTriangleData[offset++] = color;
+      this.flatTriangleCount++;
+    }
+    return true;
+  }
+  fillGouraudTriangle(xA, xB, xC, yA, yB, yC, colorA, colorB, colorC) {
+    if (!this.isRenderingScene) {
+      return false;
+    }
+    const triangleIndex = this.triangleCount++;
+    if (Pix3D.alpha !== 0) {
+      let offset = this.alphaTriangleCount * 10;
+      if (offset >= this.alphaTriangleData.length) {
+        const newData = new Uint32Array(this.alphaTriangleData.length * 2);
+        newData.set(this.alphaTriangleData);
+        this.alphaTriangleData = newData;
+      }
+      this.alphaTriangleData[offset++] = Pix3D.alpha << 23 | triangleIndex;
+      this.alphaTriangleData[offset++] = xA;
+      this.alphaTriangleData[offset++] = xB;
+      this.alphaTriangleData[offset++] = xC;
+      this.alphaTriangleData[offset++] = yA;
+      this.alphaTriangleData[offset++] = yB;
+      this.alphaTriangleData[offset++] = yC;
+      this.alphaTriangleData[offset++] = colorA;
+      this.alphaTriangleData[offset++] = colorB;
+      this.alphaTriangleData[offset++] = colorC;
+      this.alphaTriangleCount++;
+    } else {
+      let offset = this.gouraudTriangleCount * 10;
+      if (offset >= this.gouraudTriangleData.length) {
+        const newData = new Uint32Array(this.gouraudTriangleData.length * 2);
+        newData.set(this.gouraudTriangleData);
+        this.gouraudTriangleData = newData;
+      }
+      this.gouraudTriangleData[offset++] = triangleIndex;
+      this.gouraudTriangleData[offset++] = xA;
+      this.gouraudTriangleData[offset++] = xB;
+      this.gouraudTriangleData[offset++] = xC;
+      this.gouraudTriangleData[offset++] = yA;
+      this.gouraudTriangleData[offset++] = yB;
+      this.gouraudTriangleData[offset++] = yC;
+      this.gouraudTriangleData[offset++] = colorA;
+      this.gouraudTriangleData[offset++] = colorB;
+      this.gouraudTriangleData[offset++] = colorC;
+      this.gouraudTriangleCount++;
+    }
+    return true;
+  }
+  fillTexturedTriangle(xA, xB, xC, yA, yB, yC, shadeA, shadeB, shadeC, originX, originY, originZ, txB, txC, tyB, tyC, tzB, tzC, texture) {
+    if (!this.isRenderingScene) {
+      return false;
+    }
+    if (!this.texturesUsed[texture]) {
+      Pix3D.textureCycle[texture] = Pix3D.cycle++;
+      this.texturesUsed[texture] = true;
+    }
+    const triangleIndex = this.triangleCount++;
+    let offset = this.texturedTriangleCount * 20;
+    if (offset >= this.texturedTriangleData.length) {
+      const newData = new Uint32Array(this.texturedTriangleData.length * 2);
+      newData.set(this.texturedTriangleData);
+      this.texturedTriangleData = newData;
+    }
+    this.texturedTriangleData[offset++] = triangleIndex;
+    this.texturedTriangleData[offset++] = xA;
+    this.texturedTriangleData[offset++] = xB;
+    this.texturedTriangleData[offset++] = xC;
+    this.texturedTriangleData[offset++] = yA;
+    this.texturedTriangleData[offset++] = yB;
+    this.texturedTriangleData[offset++] = yC;
+    this.texturedTriangleData[offset++] = shadeA;
+    this.texturedTriangleData[offset++] = shadeB;
+    this.texturedTriangleData[offset++] = shadeC;
+    this.texturedTriangleData[offset++] = originX;
+    this.texturedTriangleData[offset++] = originY;
+    this.texturedTriangleData[offset++] = originZ;
+    this.texturedTriangleData[offset++] = txB;
+    this.texturedTriangleData[offset++] = txC;
+    this.texturedTriangleData[offset++] = tyB;
+    this.texturedTriangleData[offset++] = tyC;
+    this.texturedTriangleData[offset++] = tzB;
+    this.texturedTriangleData[offset++] = tzC;
+    this.texturedTriangleData[offset++] = texture;
+    this.texturedTriangleCount++;
+    return true;
+  }
+  destroy() {
+    this.device.destroy();
+  }
+}
+
+// src/graphics/renderer/webgl/WebGLResource.ts
+class WebGLResource {
+  ctx;
+  constructor(ctx) {
+    this.ctx = ctx;
+  }
+}
+
+// src/graphics/renderer/webgl/Shader.ts
+class Shader extends WebGLResource {
+  shader;
+  constructor(ctx, type, source) {
+    super(ctx);
+    const shader = ctx.createShader(type);
+    ctx.shaderSource(shader, source);
+    ctx.compileShader(shader);
+    const success = ctx.getShaderParameter(shader, ctx.COMPILE_STATUS);
+    if (!success) {
+      const log = ctx.getShaderInfoLog(shader);
+      ctx.deleteShader(shader);
+      throw Error(`Failed to compile WebGL shader:
+${log}`);
+    }
+    this.shader = shader;
+  }
+  delete() {
+    this.ctx.deleteShader(this.shader);
+  }
+}
+
+// src/graphics/renderer/webgl/ShaderProgram.ts
+function createProgram(ctx, shaders) {
+  const program = new ShaderProgram(ctx);
+  for (const shader of shaders) {
+    program.attach(shader);
+  }
+  program.link();
+  for (const shader of shaders) {
+    shader.delete();
+  }
+  return program;
+}
+
+class ShaderProgram extends WebGLResource {
+  program;
+  constructor(ctx) {
+    super(ctx);
+    this.program = ctx.createProgram();
+  }
+  attach(shader) {
+    this.ctx.attachShader(this.program, shader.shader);
+  }
+  link() {
+    const ctx = this.ctx;
+    ctx.linkProgram(this.program);
+    const success = ctx.getProgramParameter(this.program, ctx.LINK_STATUS);
+    if (!success) {
+      const log = ctx.getProgramInfoLog(this.program);
+      this.delete();
+      throw new Error(`Failed to link shader program: ${log}`);
+    }
+  }
+  use() {
+    this.ctx.useProgram(this.program);
+  }
+  delete() {
+    this.ctx.deleteProgram(this.program);
+  }
+}
+
+// src/graphics/renderer/webgl/shaders/fullscreen-pixmap.frag.glsl.ts
+var SHADER_CODE6 = `
+#version 300 es
+
+precision highp float;
+
+uniform highp sampler2D u_frame;
+
+in vec2 v_texCoord;
+
+out vec4 fragColor;
+
+void main() {
+    fragColor = texture(u_frame, v_texCoord).bgra;
+    if (fragColor == vec4(1.0)) {
+        discard;
+    }
+    fragColor.a = 1.0;
+}
+`.trim();
+
+// src/graphics/renderer/webgl/shaders/fullscreen-pixmap.vert.glsl.ts
+var SHADER_CODE7 = `
+#version 300 es
+
+out vec2 v_texCoord;
+
+const vec2 vertices[3] = vec2[3](
+    vec2(-1, -1), 
+    vec2( 3, -1), 
+    vec2(-1,  3)
+);
+
+void main() {
+    gl_Position = vec4(vertices[gl_VertexID], 0.0, 1.0);
+    v_texCoord = gl_Position.xy * 0.5 + 0.5;
+    // flip y
+    v_texCoord.y = 1.0 - v_texCoord.y;
+}
+`.trim();
+
+// src/graphics/renderer/webgl/shaders/fullscreen-texture.frag.glsl.ts
+var SHADER_CODE8 = `
+#version 300 es
+
+precision highp float;
+
+uniform highp sampler2D u_frame;
+
+in vec2 v_texCoord;
+
+out vec4 fragColor;
+
+void main() {
+    fragColor = texture(u_frame, v_texCoord);
+}
+`.trim();
+
+// src/graphics/renderer/webgl/shaders/fullscreen-texture.vert.glsl.ts
+var SHADER_CODE9 = `
+#version 300 es
+
+out vec2 v_texCoord;
+
+const vec2 vertices[3] = vec2[3](
+    vec2(-1, -1), 
+    vec2( 3, -1), 
+    vec2(-1,  3)
+);
+
+void main() {
+    gl_Position = vec4(vertices[gl_VertexID], 0.0, 1.0);
+    v_texCoord = gl_Position.xy * 0.5 + 0.5;
+}
+`.trim();
+
+// src/graphics/renderer/webgl/shaders/commons.glsl.ts
+var hslToRgbFunction = `
+vec3 hslToRgb(int hsl, float brightness) {
+    const float onethird = 1.0 / 3.0;
+    const float twothird = 2.0 / 3.0;
+    const float rcpsixth = 6.0;
+
+    float hue = float(hsl >> 10) / 64.0 + 0.0078125;
+    float sat = float((hsl >> 7) & 0x7) / 8.0 + 0.0625;
+    float lum = (float(hsl & 0x7f) / 128.0);
+
+    vec3 xt = vec3(
+        rcpsixth * (hue - twothird),
+        0.0,
+        rcpsixth * (1.0 - hue)
+    );
+
+    if (hue < twothird) {
+        xt.r = 0.0;
+        xt.g = rcpsixth * (twothird - hue);
+        xt.b = rcpsixth * (hue      - onethird);
+    }
+
+    if (hue < onethird) {
+        xt.r = rcpsixth * (onethird - hue);
+        xt.g = rcpsixth * hue;
+        xt.b = 0.0;
+    }
+
+    xt = min( xt, 1.0 );
+
+    float sat2   =  2.0 * sat;
+    float satinv =  1.0 - sat;
+    float luminv =  1.0 - lum;
+    float lum2m1 = (2.0 * lum) - 1.0;
+    vec3  ct     = (sat2 * xt) + satinv;
+
+    vec3 rgb;
+    if (lum >= 0.5)
+         rgb = (luminv * ct) + lum2m1;
+    else rgb =  lum    * ct;
+
+    return pow(rgb, vec3(brightness));
+}
+`;
+
+// src/graphics/renderer/webgl/shaders/main.frag.glsl.ts
+var SHADER_CODE10 = `
+#version 300 es
+
+precision highp float;
+precision highp int;
+
+flat in ivec3 xs;
+flat in ivec3 ys;
+flat in ivec3 colors;
+
+out vec4 fragColor;
+
+const vec2 vertices[3] = vec2[3](
+    vec2(20, 200),
+    vec2(400, 190),
+    vec2(200, 20)
+);
+
+// const int colors[3] = int[3](
+//     56255,
+//     959,
+//     22463
+// );
+
+const float brightness = 0.9;
+
+
+const int width = 512;
+const int height = 334;
+
+const int boundBottom = height;
+
+${hslToRgbFunction}
+
+int reciprocal15(int value) {
+    return 32768 / value;
+}
+
+bool isOutsideScanline(int xA, int xB) {
+    return false;
+    // int fragX = int(gl_FragCoord.x);
+    // return fragX < xA || fragX >= xB || xA >= xB;
+}
+
+vec3 getScanlineColor(int xA, int xB, int colorA, int colorB) {
+    int fragX = int(gl_FragCoord.x);
+    if (fragX < xA || fragX >= xB) {
+        // discard;
+    }
+    int colorStep;
+    int length;
+    if (xA < xB) {
+        length = (xB - xA) >> 2;
+        if (length > 0) {
+            colorStep = (colorB - colorA) * reciprocal15(length) >> 15;
+        }
+    } else {
+        // discard;
+    }
+    int scanlineX = fragX - xA;
+    colorA += colorStep * (scanlineX >> 2);
+    return hslToRgb(colorA >> 8, brightness);
+}
+
+void main() {
+    // float x = v_barycentric.x * vertices[0].x + v_barycentric.y * vertices[1].x + v_barycentric.z * vertices[2].x;
+    // float y = float(gl_FragCoord.y);
+    fragColor = vec4(1.0, 0.0, 0.0, 1.0);
+    // fragColor.r = x / 512.0;
+    // fragColor.r = y / 255.0;
+    int xA = xs.x;
+    int xB = xs.y;
+    int xC = xs.z;
+    int yA = ys.x;
+    int yB = ys.y;
+    int yC = ys.z;
+    int colorA = colors.x;
+    int colorB = colors.y;
+    int colorC = colors.z;
+
+    // fragColor.rgb = hslToRgb(colorA, brightness);
+
+    int minScanlineY = min(yA, min(yB, yC));
+    int maxScanlineY = max(yA, max(yB, yC));
+    int scanlineY = height - int(gl_FragCoord.y) - 1 - minScanlineY + 1;
+    if (scanlineY < 0 || scanlineY > maxScanlineY - minScanlineY) {
+        // discard;
+    }
+    // scanlineY++;
+    // fragColor.r = float(scanlineY) / 255.0;
+
+    int dxAB = xB - xA;
+\tint dyAB = yB - yA;
+\tint dxAC = xC - xA;
+\tint dyAC = yC - yA;
+
+\tint xStepAB = 0;
+\tint colorStepAB = 0;
+\tif (yB != yA) {
+\t\txStepAB = (dxAB << 16) / dyAB;
+        colorStepAB = ((colorB - colorA) << 15) / dyAB;
+\t}
+
+\tint xStepBC = 0;
+\tint colorStepBC = 0;
+\tif (yC != yB) {
+        xStepBC = ((xC - xB) << 16) / (yC - yB);
+        colorStepBC = ((colorC - colorB) << 15) / (yC - yB);
+\t}
+
+\tint xStepAC = 0;
+\tint colorStepAC = 0;
+\tif (yC != yA) {
+        xStepAC = ((xA - xC) << 16) / (yA - yC);
+        colorStepAC = ((colorA - colorC) << 15) / (yA - yC);
+\t}
+
+    int currentScanline = 0;
+
+\tif (yA <= yB && yA <= yC) {
+        if (yA < boundBottom) {
+            if (yB > boundBottom) {
+                yB = boundBottom;
+            }
+
+            if (yC > boundBottom) {
+                yC = boundBottom;
+            }
+
+            if (yB < yC) {
+                xC = xA <<= 16;
+                colorC = colorA <<= 15;
+                if (yA < 0) {
+                    xC -= xStepAC * yA;
+                    xA -= xStepAB * yA;
+                    colorC -= colorStepAC * yA;
+                    colorA -= colorStepAB * yA;
+                    yA = 0;
+                }
+
+                xB <<= 16;
+                colorB <<= 15;
+                if (yB < 0) {
+                    xB -= xStepBC * yB;
+                    colorB -= colorStepBC * yB;
+                    yB = 0;
+                }
+
+                if (yA != yB && xStepAC < xStepAB || yA == yB && xStepAC > xStepBC) {
+                    yC -= yB;
+                    yB -= yA;
+                    // yA = lineOffset[yA];
+
+                    while (--yB >= 0) {
+                        if (currentScanline == scanlineY) {
+                            int scanlineXA = xA >> 16;
+                            int scanlineXB = xC >> 16;
+                            if (isOutsideScanline(scanlineXA, scanlineXB)) {
+                                discard;
+                            }
+                            fragColor.rgb = getScanlineColor(scanlineXA, scanlineXB, colorC >> 7, colorA >> 7);
+                            return;
+                        }
+                        // gouraudRaster(xC >> 16, xA >> 16, colorC >> 7, colorA >> 7, data, yA, 0);
+                        xC += xStepAC;
+                        xA += xStepAB;
+                        colorC += colorStepAC;
+                        colorA += colorStepAB;
+                        // yA += width2d;
+                        currentScanline++;
+                    }
+                    while (--yC >= 0) {
+                        if (currentScanline == scanlineY) {
+                            int scanlineXA = xC >> 16;
+                            int scanlineXB = xB >> 16;
+                            if (isOutsideScanline(scanlineXA, scanlineXB)) {
+                                discard;
+                            }
+                            fragColor.rgb = getScanlineColor(scanlineXA, scanlineXB, colorC >> 7, colorB >> 7);
+                            return;
+                        }
+                        // gouraudRaster(xC >> 16, xB >> 16, colorC >> 7, colorB >> 7, data, yA, 0);
+                        xC += xStepAC;
+                        xB += xStepBC;
+                        colorC += colorStepAC;
+                        colorB += colorStepBC;
+                        // yA += width2d;
+                        currentScanline++;
+                    }
+                } else {
+                    yC -= yB;
+                    yB -= yA;
+                    // yA = lineOffset[yA];
+
+                    while (--yB >= 0) {
+                        if (currentScanline == scanlineY) {
+                            int scanlineXA = xA >> 16;
+                            int scanlineXB = xC >> 16;
+                            if (isOutsideScanline(scanlineXA, scanlineXB)) {
+                                discard;
+                            }
+                            fragColor.rgb = getScanlineColor(scanlineXA, scanlineXB, colorA >> 7, colorC >> 7);
+                            return;
+                        }
+                        // gouraudRaster(xA >> 16, xC >> 16, colorA >> 7, colorC >> 7, data, yA, 0);
+                        xC += xStepAC;
+                        xA += xStepAB;
+                        colorC += colorStepAC;
+                        colorA += colorStepAB;
+                        // yA += width2d;
+                        currentScanline++;
+                    }
+                    while (--yC >= 0) {
+                        if (currentScanline == scanlineY) {
+                            int scanlineXA = xB >> 16;
+                            int scanlineXB = xC >> 16;
+                            if (isOutsideScanline(scanlineXA, scanlineXB)) {
+                                discard;
+                            }
+                            fragColor.rgb = getScanlineColor(scanlineXA, scanlineXB, colorB >> 7, colorC >> 7);
+                            return;
+                        }
+                        // gouraudRaster(xB >> 16, xC >> 16, colorB >> 7, colorC >> 7, data, yA, 0);
+                        xC += xStepAC;
+                        xB += xStepBC;
+                        colorC += colorStepAC;
+                        colorB += colorStepBC;
+                        // yA += width2d;
+                        currentScanline++;
+                    }
+                }
+            } else {
+                xB = xA <<= 16;
+                colorB = colorA <<= 15;
+                if (yA < 0) {
+                    xB -= xStepAC * yA;
+                    xA -= xStepAB * yA;
+                    colorB -= colorStepAC * yA;
+                    colorA -= colorStepAB * yA;
+                    yA = 0;
+                }
+
+                xC <<= 16;
+                colorC <<= 15;
+                if (yC < 0) {
+                    xC -= xStepBC * yC;
+                    colorC -= colorStepBC * yC;
+                    yC = 0;
+                }
+
+                if (yA != yC && xStepAC < xStepAB || yA == yC && xStepBC > xStepAB) {
+                    yB -= yC;
+                    yC -= yA;
+                    // yA = lineOffset[yA];
+
+                    while (--yC >= 0) {
+                        if (currentScanline == scanlineY) {
+                            int scanlineXA = xB >> 16;
+                            int scanlineXB = xA >> 16;
+                            if (isOutsideScanline(scanlineXA, scanlineXB)) {
+                                discard;
+                            }
+                            fragColor.rgb = getScanlineColor(scanlineXA, scanlineXB, colorB >> 7, colorA >> 7);
+                            return;
+                        }
+                        // gouraudRaster(xB >> 16, xA >> 16, colorB >> 7, colorA >> 7, data, yA, 0);
+                        xB += xStepAC;
+                        xA += xStepAB;
+                        colorB += colorStepAC;
+                        colorA += colorStepAB;
+                        // yA += width2d;
+                        currentScanline++;
+                    }
+                    while (--yB >= 0) {
+                        if (currentScanline == scanlineY) {
+                            int scanlineXA = xC >> 16;
+                            int scanlineXB = xA >> 16;
+                            if (isOutsideScanline(scanlineXA, scanlineXB)) {
+                                discard;
+                            }
+                            fragColor.rgb = getScanlineColor(scanlineXA, scanlineXB, colorC >> 7, colorA >> 7);
+                            return;
+                        }
+                        // gouraudRaster(xC >> 16, xA >> 16, colorC >> 7, colorA >> 7, data, yA, 0);
+                        xC += xStepBC;
+                        xA += xStepAB;
+                        colorC += colorStepBC;
+                        colorA += colorStepAB;
+                        // yA += width2d;
+                        currentScanline++;
+                    }
+                } else {
+                    yB -= yC;
+                    yC -= yA;
+                    // yA = lineOffset[yA];
+
+                    while (--yC >= 0) {
+                        if (currentScanline == scanlineY) {
+                            int scanlineXA = xA >> 16;
+                            int scanlineXB = xB >> 16;
+                            if (isOutsideScanline(scanlineXA, scanlineXB)) {
+                                discard;
+                            }
+                            fragColor.rgb = getScanlineColor(scanlineXA, scanlineXB, colorA >> 7, colorB >> 7);
+                            return;
+                        }
+                        // gouraudRaster(xA >> 16, xB >> 16, colorA >> 7, colorB >> 7, data, yA, 0);
+                        xB += xStepAC;
+                        xA += xStepAB;
+                        colorB += colorStepAC;
+                        colorA += colorStepAB;
+                        // yA += width2d;
+                        currentScanline++;
+                    }
+                    while (--yB >= 0) {
+                        if (currentScanline == scanlineY) {
+                            int scanlineXA = xA >> 16;
+                            int scanlineXB = xC >> 16;
+                            if (isOutsideScanline(scanlineXA, scanlineXB)) {
+                                discard;
+                            }
+                            fragColor.rgb = getScanlineColor(scanlineXA, scanlineXB, colorA >> 7, colorC >> 7);
+                            return;
+                        }
+                        // gouraudRaster(xA >> 16, xC >> 16, colorA >> 7, colorC >> 7, data, yA, 0);
+                        xC += xStepBC;
+                        xA += xStepAB;
+                        colorC += colorStepBC;
+                        colorA += colorStepAB;
+                        // yA += width2d;
+                        currentScanline++;
+                    }
+                }
+            }
+        }
+\t} else if (yB <= yC) {
+\t\tif (yB < boundBottom) {
+\t\t\tif (yC > boundBottom) {
+\t\t\t\tyC = boundBottom;
+\t\t\t}
+
+\t\t\tif (yA > boundBottom) {
+\t\t\t\tyA = boundBottom;
+\t\t\t}
+
+\t\t\tif (yC < yA) {
+\t\t\t\txA = xB <<= 16;
+\t\t\t\tcolorA = colorB <<= 15;
+\t\t\t\tif (yB < 0) {
+\t\t\t\t\txA -= xStepAB * yB;
+\t\t\t\t\txB -= xStepBC * yB;
+\t\t\t\t\tcolorA -= colorStepAB * yB;
+\t\t\t\t\tcolorB -= colorStepBC * yB;
+\t\t\t\t\tyB = 0;
+\t\t\t\t}
+
+\t\t\t\txC <<= 16;
+\t\t\t\tcolorC <<= 15;
+\t\t\t\tif (yC < 0) {
+\t\t\t\t\txC -= xStepAC * yC;
+\t\t\t\t\tcolorC -= colorStepAC * yC;
+\t\t\t\t\tyC = 0;
+\t\t\t\t}
+
+\t\t\t\tif (yB != yC && xStepAB < xStepBC || yB == yC && xStepAB > xStepAC) {
+\t\t\t\t\tyA -= yC;
+\t\t\t\t\tyC -= yB;
+\t\t\t\t\t// yB = lineOffset[yB];
+
+\t\t\t\t\twhile (--yC >= 0) {
+                        if (currentScanline == scanlineY) {
+                            int scanlineXA = xA >> 16;
+                            int scanlineXB = xB >> 16;
+                            if (isOutsideScanline(scanlineXA, scanlineXB)) {
+                                discard;
+                            }
+                            fragColor.rgb = getScanlineColor(scanlineXA, scanlineXB, colorA >> 7, colorB >> 7);
+                            return;
+                        }
+\t\t\t\t\t\t// gouraudRaster(xA >> 16, xB >> 16, colorA >> 7, colorB >> 7, data, yB, 0);
+\t\t\t\t\t\txA += xStepAB;
+\t\t\t\t\t\txB += xStepBC;
+\t\t\t\t\t\tcolorA += colorStepAB;
+\t\t\t\t\t\tcolorB += colorStepBC;
+\t\t\t\t\t\t// yB += width2d;
+                        currentScanline++;
+\t\t\t\t\t}
+\t\t\t\t\twhile (--yA >= 0) {
+                        if (currentScanline == scanlineY) {
+                            int scanlineXA = xA >> 16;
+                            int scanlineXB = xC >> 16;
+                            if (isOutsideScanline(scanlineXA, scanlineXB)) {
+                                discard;
+                            }
+                            fragColor.rgb = getScanlineColor(scanlineXA, scanlineXB, colorA >> 7, colorC >> 7);
+                            return;
+                        }
+\t\t\t\t\t\t// gouraudRaster(xA >> 16, xC >> 16, colorA >> 7, colorC >> 7, data, yB, 0);
+\t\t\t\t\t\txA += xStepAB;
+\t\t\t\t\t\txC += xStepAC;
+\t\t\t\t\t\tcolorA += colorStepAB;
+\t\t\t\t\t\tcolorC += colorStepAC;
+\t\t\t\t\t\t// yB += width2d;
+                        currentScanline++;
+\t\t\t\t\t}
+\t\t\t\t} else {
+\t\t\t\t\tyA -= yC;
+\t\t\t\t\tyC -= yB;
+\t\t\t\t\t// yB = lineOffset[yB];
+
+\t\t\t\t\twhile (--yC >= 0) {
+                        if (currentScanline == scanlineY) {
+                            int scanlineXA = xB >> 16;
+                            int scanlineXB = xA >> 16;
+                            if (isOutsideScanline(scanlineXA, scanlineXB)) {
+                                discard;
+                            }
+                            fragColor.rgb = getScanlineColor(scanlineXA, scanlineXB, colorB >> 7, colorA >> 7);
+                            return;
+                        }
+\t\t\t\t\t\t// gouraudRaster(xB >> 16, xA >> 16, colorB >> 7, colorA >> 7, data, yB, 0);
+\t\t\t\t\t\txA += xStepAB;
+\t\t\t\t\t\txB += xStepBC;
+\t\t\t\t\t\tcolorA += colorStepAB;
+\t\t\t\t\t\tcolorB += colorStepBC;
+\t\t\t\t\t\t// yB += width2d;
+                        currentScanline++;
+\t\t\t\t\t}
+\t\t\t\t\twhile (--yA >= 0) {
+                        if (currentScanline == scanlineY) {
+                            int scanlineXA = xC >> 16;
+                            int scanlineXB = xA >> 16;
+                            if (isOutsideScanline(scanlineXA, scanlineXB)) {
+                                discard;
+                            }
+                            fragColor.rgb = getScanlineColor(scanlineXA, scanlineXB, colorC >> 7, colorA >> 7);
+                            return;
+                        }
+\t\t\t\t\t\t// gouraudRaster(xC >> 16, xA >> 16, colorC >> 7, colorA >> 7, data, yB, 0);
+\t\t\t\t\t\txA += xStepAB;
+\t\t\t\t\t\txC += xStepAC;
+\t\t\t\t\t\tcolorA += colorStepAB;
+\t\t\t\t\t\tcolorC += colorStepAC;
+\t\t\t\t\t\t// yB += width2d;
+                        currentScanline++;
+\t\t\t\t\t}
+\t\t\t\t}
+\t\t\t} else {
+\t\t\t\txC = xB <<= 16;
+\t\t\t\tcolorC = colorB <<= 15;
+\t\t\t\tif (yB < 0) {
+\t\t\t\t\txC -= xStepAB * yB;
+\t\t\t\t\txB -= xStepBC * yB;
+\t\t\t\t\tcolorC -= colorStepAB * yB;
+\t\t\t\t\tcolorB -= colorStepBC * yB;
+\t\t\t\t\tyB = 0;
+\t\t\t\t}
+
+\t\t\t\txA <<= 16;
+\t\t\t\tcolorA <<= 15;
+\t\t\t\tif (yA < 0) {
+\t\t\t\t\txA -= xStepAC * yA;
+\t\t\t\t\tcolorA -= colorStepAC * yA;
+\t\t\t\t\tyA = 0;
+\t\t\t\t}
+
+\t\t\t\tif (xStepAB < xStepBC) {
+\t\t\t\t\tyC -= yA;
+\t\t\t\t\tyA -= yB;
+\t\t\t\t\t// yB = lineOffset[yB];
+
+\t\t\t\t\twhile (--yA >= 0) {
+                        if (currentScanline == scanlineY) {
+                            int scanlineXA = xC >> 16;
+                            int scanlineXB = xB >> 16;
+                            if (isOutsideScanline(scanlineXA, scanlineXB)) {
+                                discard;
+                            }
+                            fragColor.rgb = getScanlineColor(scanlineXA, scanlineXB, colorC >> 7, colorB >> 7);
+                            return;
+                        }
+\t\t\t\t\t\t// gouraudRaster(xC >> 16, xB >> 16, colorC >> 7, colorB >> 7, data, yB, 0);
+\t\t\t\t\t\txC += xStepAB;
+\t\t\t\t\t\txB += xStepBC;
+\t\t\t\t\t\tcolorC += colorStepAB;
+\t\t\t\t\t\tcolorB += colorStepBC;
+\t\t\t\t\t\t// yB += width2d;
+                        currentScanline++;
+\t\t\t\t\t}
+\t\t\t\t\twhile (--yC >= 0) {
+                        if (currentScanline == scanlineY) {
+                            int scanlineXA = xA >> 16;
+                            int scanlineXB = xB >> 16;
+                            if (isOutsideScanline(scanlineXA, scanlineXB)) {
+                                discard;
+                            }
+                            fragColor.rgb = getScanlineColor(scanlineXA, scanlineXB, colorA >> 7, colorB >> 7);
+                            return;
+                        }
+\t\t\t\t\t\t// gouraudRaster(xA >> 16, xB >> 16, colorA >> 7, colorB >> 7, data, yB, 0);
+\t\t\t\t\t\txA += xStepAC;
+\t\t\t\t\t\txB += xStepBC;
+\t\t\t\t\t\tcolorA += colorStepAC;
+\t\t\t\t\t\tcolorB += colorStepBC;
+\t\t\t\t\t\t// yB += width2d;
+                        currentScanline++;
+\t\t\t\t\t}
+\t\t\t\t} else {
+\t\t\t\t\tyC -= yA;
+\t\t\t\t\tyA -= yB;
+\t\t\t\t\t// yB = lineOffset[yB];
+
+\t\t\t\t\twhile (--yA >= 0) {
+                        if (currentScanline == scanlineY) {
+                            int scanlineXA = xB >> 16;
+                            int scanlineXB = xC >> 16;
+                            if (isOutsideScanline(scanlineXA, scanlineXB)) {
+                                discard;
+                            }
+                            fragColor.rgb = getScanlineColor(scanlineXA, scanlineXB, colorB >> 7, colorC >> 7);
+                            return;
+                        }
+\t\t\t\t\t\t// gouraudRaster(xB >> 16, xC >> 16, colorB >> 7, colorC >> 7, data, yB, 0);
+\t\t\t\t\t\txC += xStepAB;
+\t\t\t\t\t\txB += xStepBC;
+\t\t\t\t\t\tcolorC += colorStepAB;
+\t\t\t\t\t\tcolorB += colorStepBC;
+\t\t\t\t\t\t// yB += width2d;
+                        currentScanline++;
+\t\t\t\t\t}
+\t\t\t\t\twhile (--yC >= 0) {
+                        if (currentScanline == scanlineY) {
+                            int scanlineXA = xB >> 16;
+                            int scanlineXB = xA >> 16;
+                            if (isOutsideScanline(scanlineXA, scanlineXB)) {
+                                discard;
+                            }
+                            fragColor.rgb = getScanlineColor(scanlineXA, scanlineXB, colorB >> 7, colorA >> 7);
+                            return;
+                        }
+\t\t\t\t\t\t// gouraudRaster(xB >> 16, xA >> 16, colorB >> 7, colorA >> 7, data, yB, 0);
+\t\t\t\t\t\txA += xStepAC;
+\t\t\t\t\t\txB += xStepBC;
+\t\t\t\t\t\tcolorA += colorStepAC;
+\t\t\t\t\t\tcolorB += colorStepBC;
+\t\t\t\t\t\t// yB += width2d;
+                        currentScanline++;
+\t\t\t\t\t}
+\t\t\t\t}
+\t\t\t}
+\t\t}
+    } else if (yC < boundBottom) {
+     \tif (yA > boundBottom) {
+\t\t\tyA = boundBottom;
+\t\t}
+
+\t\tif (yB > boundBottom) {
+\t\t\tyB = boundBottom;
+\t\t}
+
+\t\tif (yA < yB) {
+\t\t\txB = xC <<= 16;
+\t\t\tcolorB = colorC <<= 15;
+\t\t\tif (yC < 0) {
+\t\t\t\txB -= xStepBC * yC;
+\t\t\t\txC -= xStepAC * yC;
+\t\t\t\tcolorB -= colorStepBC * yC;
+\t\t\t\tcolorC -= colorStepAC * yC;
+\t\t\t\tyC = 0;
+\t\t\t}
+
+\t\t\txA <<= 16;
+\t\t\tcolorA <<= 15;
+\t\t\tif (yA < 0) {
+\t\t\t\txA -= xStepAB * yA;
+\t\t\t\tcolorA -= colorStepAB * yA;
+\t\t\t\tyA = 0;
+\t\t\t}
+
+            if (xStepBC < xStepAC) {
+\t\t\t\tyB -= yA;
+\t\t\t\tyA -= yC;
+\t\t\t\t// yC = lineOffset[yC];
+
+\t\t\t\twhile (--yA >= 0) {
+                    if (currentScanline == scanlineY) {
+                        int scanlineXA = xB >> 16;
+                        int scanlineXB = xC >> 16;
+                        if (isOutsideScanline(scanlineXA, scanlineXB)) {
+                            discard;
+                        }
+                        fragColor.rgb = getScanlineColor(scanlineXA, scanlineXB, colorB >> 7, colorC >> 7);
+                        return;
+                    }
+\t\t\t\t\t// gouraudRaster(xB >> 16, xC >> 16, colorB >> 7, colorC >> 7, data, yC, 0);
+\t\t\t\t\txB += xStepBC;
+\t\t\t\t\txC += xStepAC;
+\t\t\t\t\tcolorB += colorStepBC;
+\t\t\t\t\tcolorC += colorStepAC;
+\t\t\t\t\t// yC += width2d;
+                    currentScanline++;
+\t\t\t\t}
+\t\t\t\twhile (--yB >= 0) {
+                    if (currentScanline == scanlineY) {
+                        int scanlineXA = xB >> 16;
+                        int scanlineXB = xA >> 16;
+                        if (isOutsideScanline(scanlineXA, scanlineXB)) {
+                            discard;
+                        }
+                        fragColor.rgb = getScanlineColor(scanlineXA, scanlineXB, colorB >> 7, colorA >> 7);
+                        return;
+                    }
+\t\t\t\t\t// gouraudRaster(xB >> 16, xA >> 16, colorB >> 7, colorA >> 7, data, yC, 0);
+\t\t\t\t\txB += xStepBC;
+\t\t\t\t\txA += xStepAB;
+\t\t\t\t\tcolorB += colorStepBC;
+\t\t\t\t\tcolorA += colorStepAB;
+\t\t\t\t\t// yC += width2d;
+                    currentScanline++;
+\t\t\t\t}
+\t\t\t} else {
+\t\t\t\tyB -= yA;
+\t\t\t\tyA -= yC;
+\t\t\t\t// yC = lineOffset[yC];
+
+\t\t\t\twhile (--yA >= 0) {
+                    if (currentScanline == scanlineY) {
+                        int scanlineXA = xC >> 16;
+                        int scanlineXB = xB >> 16;
+                        if (isOutsideScanline(scanlineXA, scanlineXB)) {
+                            discard;
+                        }
+                        fragColor.rgb = getScanlineColor(scanlineXA, scanlineXB, colorC >> 7, colorB >> 7);
+                        return;
+                    }
+\t\t\t\t\t// gouraudRaster(xC >> 16, xB >> 16, colorC >> 7, colorB >> 7, data, yC, 0);
+\t\t\t\t\txB += xStepBC;
+\t\t\t\t\txC += xStepAC;
+\t\t\t\t\tcolorB += colorStepBC;
+\t\t\t\t\tcolorC += colorStepAC;
+\t\t\t\t\t// yC += width2d;
+                    currentScanline++;
+\t\t\t\t}
+\t\t\t\twhile (--yB >= 0) {
+                    if (currentScanline == scanlineY) {
+                        int scanlineXA = xA >> 16;
+                        int scanlineXB = xB >> 16;
+                        if (isOutsideScanline(scanlineXA, scanlineXB)) {
+                            discard;
+                        }
+                        fragColor.rgb = getScanlineColor(scanlineXA, scanlineXB, colorA >> 7, colorB >> 7);
+                        return;
+                    }
+\t\t\t\t\t// gouraudRaster(xA >> 16, xB >> 16, colorA >> 7, colorB >> 7, data, yC, 0);
+\t\t\t\t\txB += xStepBC;
+\t\t\t\t\txA += xStepAB;
+\t\t\t\t\tcolorB += colorStepBC;
+\t\t\t\t\tcolorA += colorStepAB;
+\t\t\t\t\t// yC += width2d;
+                    currentScanline++;
+\t\t\t\t}
+\t\t\t}
+        } else {
+\t\t\txA = xC <<= 16;
+\t\t\tcolorA = colorC <<= 15;
+\t\t\tif (yC < 0) {
+\t\t\t\txA -= xStepBC * yC;
+\t\t\t\txC -= xStepAC * yC;
+\t\t\t\tcolorA -= colorStepBC * yC;
+\t\t\t\tcolorC -= colorStepAC * yC;
+\t\t\t\tyC = 0;
+\t\t\t}
+
+\t\t\txB <<= 16;
+\t\t\tcolorB <<= 15;
+\t\t\tif (yB < 0) {
+\t\t\t\txB -= xStepAB * yB;
+\t\t\t\tcolorB -= colorStepAB * yB;
+\t\t\t\tyB = 0;
+\t\t\t}
+
+\t\t\tif (xStepBC < xStepAC) {
+                yA -= yB;
+                yB -= yC;
+
+                while (--yB >= 0) {
+                    if (currentScanline == scanlineY) {
+                        int scanlineXA = xA >> 16;
+                        int scanlineXB = xC >> 16;
+                        if (isOutsideScanline(scanlineXA, scanlineXB)) {
+                            discard;
+                        }
+                        fragColor.rgb = getScanlineColor(scanlineXA, scanlineXB, colorA >> 7, colorC >> 7);
+                        return;
+                    }
+                    // gouraudRaster(xA >> 16, xC >> 16, colorA >> 7, colorC >> 7, data, yC, 0);
+                    xA += xStepBC;
+                    xC += xStepAC;
+                    colorA += colorStepBC;
+                    colorC += colorStepAC;
+                    // yC += width2d;
+                    currentScanline++;
+                }
+                while (--yA >= 0) {
+                    if (currentScanline == scanlineY) {
+                        int scanlineXA = xB >> 16;
+                        int scanlineXB = xC >> 16;
+                        if (isOutsideScanline(scanlineXA, scanlineXB)) {
+                            discard;
+                        }
+                        fragColor.rgb = getScanlineColor(scanlineXA, scanlineXB, colorB >> 7, colorC >> 7);
+                        return;
+                    }
+                    // gouraudRaster(xB >> 16, xC >> 16, colorB >> 7, colorC >> 7, data, yC, 0);
+                    xB += xStepAB;
+                    xC += xStepAC;
+                    colorB += colorStepAB;
+                    colorC += colorStepAC;
+                    // yC += width2d;
+                    currentScanline++;
+                }
+            } else {
+\t\t\t\tyA -= yB;
+\t\t\t\tyB -= yC;
+\t\t\t\t\t
+                while (--yB >= 0) {
+                    if (currentScanline == scanlineY) {
+                        int scanlineXA = xC >> 16;
+                        int scanlineXB = xA >> 16;
+                        if (isOutsideScanline(scanlineXA, scanlineXB)) {
+                            discard;
+                        }
+                        fragColor.rgb = getScanlineColor(scanlineXA, scanlineXB, colorC >> 7, colorA >> 7);
+                        return;
+                    }
+\t\t\t\t\t// gouraudRaster(xC >> 16, xA >> 16, colorC >> 7, colorA >> 7, data, yC, 0);
+\t\t\t\t\txA += xStepBC;
+\t\t\t\t\txC += xStepAC;
+\t\t\t\t\tcolorA += colorStepBC;
+\t\t\t\t\tcolorC += colorStepAC;
+\t\t\t\t\t// yC += width2d;
+                    currentScanline++;
+\t\t\t\t}
+\t\t\t\twhile (--yA >= 0) {
+                    if (currentScanline == scanlineY) {
+                        int scanlineXA = xC >> 16;
+                        int scanlineXB = xB >> 16;
+                        if (isOutsideScanline(scanlineXA, scanlineXB)) {
+                            discard;
+                        }
+                        fragColor.rgb = getScanlineColor(scanlineXA, scanlineXB, colorC >> 7, colorB >> 7);
+                        return;
+                    }
+\t\t\t\t\t// gouraudRaster(xC >> 16, xB >> 16, colorC >> 7, colorB >> 7, data, yC, 0);
+\t\t\t\t\txB += xStepAB;
+\t\t\t\t\txC += xStepAC;
+\t\t\t\t\tcolorB += colorStepAB;
+\t\t\t\t\tcolorC += colorStepAC;
+\t\t\t\t\t// yC += width2d;
+                    currentScanline++;
+\t\t\t\t}
+            }
+        }
+    }
+    
+    // discard;
+    // fragColor = vec4(1.0, 1.0, 1.0, 1.0);
+}
+
+`.trim();
+
+// src/graphics/renderer/webgl/shaders/main.vert.glsl.ts
+var SHADER_CODE11 = `
+#version 300 es
+
+uniform highp usampler2D u_triangleData;
+
+flat out ivec3 xs;
+flat out ivec3 ys;
+flat out ivec3 colors;
+
+const float width = 512.0;
+const float height = 334.0;
+const vec2 dimensions = vec2(width, height);
+
+// const vec2 vertices[3] = vec2[3](
+//     vec2(20, 200),
+//     vec2(400, 190),
+//     vec2(200, 20)
+// );
+
+// const vec3 barycentric[3] = vec3[3](
+//     vec3(1, 0, 0),
+//     vec3(0, 1, 0),
+//     vec3(0, 0, 1)
+// );
+
+const vec2 vertices[3] = vec2[3](
+    vec2(-1, -1), 
+    vec2( 3, -1), 
+    vec2(-1,  3)
+);
+
+void main() {
+    int triangleIndex = gl_VertexID / 3;
+
+    uvec4 triangleData = texelFetch(u_triangleData, ivec2(triangleIndex, 0), 0);
+    xs = ivec3(
+        int(triangleData.x >> 20u),
+        int((triangleData.x >> 8u) & 0xFFFu),
+        (int(triangleData.x & 0xFFu) << 4) | int(triangleData.y & 0xFFu)
+    ) - 2048;
+    ys = ivec3(
+        int(triangleData.y >> 20u),
+        int((triangleData.y >> 8u) & 0xFFFu),
+        int(triangleData.z >> 16u)
+    ) - 2048;
+    colors = ivec3(
+        int(triangleData.z & 0xFFFFu),
+        int(triangleData.w >> 16u),
+        int(triangleData.w & 0xFFFFu)
+    );
+
+    int vertexIndex = gl_VertexID % 0x3;
+
+    // vec2 screenPos = vertices[gl_VertexID];
+    vec2 screenPos = vec2(xs[vertexIndex], ys[vertexIndex]);
+    // screenPos.y = height - screenPos.y - 1.0;
+    screenPos += 0.5;
+    // screenPos *= 1.1;
+    gl_Position = vec4(screenPos * 2.0 / dimensions - 1.0, 0.0, 1.0);
+    // flip y
+    gl_Position.y *= -1.0;
+    // v_texCoord = gl_Position.xy * 0.5 + 0.5;
+    // v_barycentric = barycentric[gl_VertexID];
+    
+    // gl_Position = vec4(vertices[gl_VertexID], 0.0, 1.0);
+}
+`.trim();
+
+// src/graphics/renderer/webgl/RendererWebGL.ts
+var INITIAL_TRIANGLES2 = 1e5;
+
+class RendererWebGL extends Renderer {
+  gl;
+  pixMapProgram;
+  textureProgram;
+  mainProgram;
+  viewportFramebuffer;
+  viewportColorTarget;
+  texturesToDelete = [];
+  isRenderingScene = false;
+  gouraudTriangleData = new Uint32Array(INITIAL_TRIANGLES2 * 4);
+  gouraudTriangleDataView = new DataView(this.gouraudTriangleData.buffer);
+  gouraudTriangleCount = 0;
+  static init(container, width, height) {
+    const canvas2 = document.createElement("canvas");
+    canvas2.width = width;
+    canvas2.height = height;
+    canvas2.style.display = "block";
+    canvas2.style.position = "absolute";
+    canvas2.style.width = "789px";
+    canvas2.style.height = "532px";
+    container.appendChild(canvas2);
+    const gl = canvas2.getContext("webgl2", {
+      preserveDrawingBuffer: true
+    });
+    if (!gl) {
+      canvas2.remove();
+      throw new Error("WebGL2 is not supported");
+    }
+    return new RendererWebGL(canvas2, gl);
+  }
+  constructor(canvas2, gl) {
+    super(canvas2);
+    this.gl = gl;
+    this.init();
+  }
+  init() {
+    this.gl.enable(this.gl.CULL_FACE);
+    const pixMapVertShader = new Shader(this.gl, this.gl.VERTEX_SHADER, SHADER_CODE7);
+    const pixMapFragShader = new Shader(this.gl, this.gl.FRAGMENT_SHADER, SHADER_CODE6);
+    this.pixMapProgram = createProgram(this.gl, [pixMapVertShader, pixMapFragShader]);
+    const textureVertShader = new Shader(this.gl, this.gl.VERTEX_SHADER, SHADER_CODE9);
+    const textureFragShader = new Shader(this.gl, this.gl.FRAGMENT_SHADER, SHADER_CODE8);
+    this.textureProgram = createProgram(this.gl, [textureVertShader, textureFragShader]);
+    const mainVertShader = new Shader(this.gl, this.gl.VERTEX_SHADER, SHADER_CODE11);
+    const mainFragShader = new Shader(this.gl, this.gl.FRAGMENT_SHADER, SHADER_CODE10);
+    this.mainProgram = createProgram(this.gl, [mainVertShader, mainFragShader]);
+    const viewportWidth = World3D.viewportRight;
+    const viewportHeight = World3D.viewportBottom;
+    this.viewportFramebuffer = this.gl.createFramebuffer();
+    this.gl.bindFramebuffer(this.gl.FRAMEBUFFER, this.viewportFramebuffer);
+    this.viewportColorTarget = this.gl.createTexture();
+    this.gl.bindTexture(this.gl.TEXTURE_2D, this.viewportColorTarget);
+    this.gl.texImage2D(this.gl.TEXTURE_2D, 0, this.gl.RGBA, viewportWidth, viewportHeight, 0, this.gl.RGBA, this.gl.UNSIGNED_BYTE, null);
+    this.gl.texParameteri(this.gl.TEXTURE_2D, this.gl.TEXTURE_MIN_FILTER, this.gl.LINEAR);
+    this.gl.texParameteri(this.gl.TEXTURE_2D, this.gl.TEXTURE_WRAP_S, this.gl.CLAMP_TO_EDGE);
+    this.gl.texParameteri(this.gl.TEXTURE_2D, this.gl.TEXTURE_WRAP_T, this.gl.CLAMP_TO_EDGE);
+    this.gl.framebufferTexture2D(this.gl.FRAMEBUFFER, this.gl.COLOR_ATTACHMENT0, this.gl.TEXTURE_2D, this.viewportColorTarget, 0);
+    this.gl.bindFramebuffer(this.gl.FRAMEBUFFER, null);
+  }
+  startFrame() {
+  }
+  endFrame() {
+    for (const texture of this.texturesToDelete) {
+      this.gl.deleteTexture(texture);
+    }
+    this.texturesToDelete.length = 0;
+  }
+  updateTexture(id) {
+  }
+  setBrightness(brightness) {
+  }
+  renderPixMap(pixMap, x, y) {
+    this.gl.viewport(x, this.canvas.height - y - pixMap.height2d, pixMap.width2d, pixMap.height2d);
+    const viewportWidth = World3D.viewportRight;
+    const viewportHeight = World3D.viewportBottom;
+    if (pixMap.width2d === viewportWidth && pixMap.height2d === viewportHeight) {
+      this.gl.bindTexture(this.gl.TEXTURE_2D, this.viewportColorTarget);
+      this.textureProgram.use();
+      this.gl.drawArrays(this.gl.TRIANGLES, 0, 3);
+    }
+    const pixels = new Uint8Array(pixMap.pixels.buffer);
+    const texture = this.gl.createTexture();
+    this.gl.bindTexture(this.gl.TEXTURE_2D, texture);
+    this.gl.texStorage2D(this.gl.TEXTURE_2D, 1, this.gl.RGBA8, pixMap.width2d, pixMap.height2d);
+    this.gl.texSubImage2D(this.gl.TEXTURE_2D, 0, 0, 0, pixMap.width2d, pixMap.height2d, this.gl.RGBA, this.gl.UNSIGNED_BYTE, pixels);
+    this.pixMapProgram.use();
+    this.gl.drawArrays(this.gl.TRIANGLES, 0, 3);
+    this.texturesToDelete.push(texture);
+    return true;
+  }
+  startRenderScene() {
+    this.isRenderingScene = true;
+    this.gouraudTriangleCount = 0;
+  }
+  endRenderScene() {
+    this.isRenderingScene = false;
+    const viewportWidth = World3D.viewportRight;
+    const viewportHeight = World3D.viewportBottom;
+    this.gl.bindFramebuffer(this.gl.FRAMEBUFFER, this.viewportFramebuffer);
+    this.gl.viewport(0, 0, viewportWidth, viewportHeight);
+    this.gl.clearColor(0, 0, 0, 1);
+    this.gl.clear(this.gl.COLOR_BUFFER_BIT);
+    if (this.gouraudTriangleCount > 0) {
+      const texture = this.gl.createTexture();
+      this.gl.bindTexture(this.gl.TEXTURE_2D, texture);
+      this.gl.texStorage2D(this.gl.TEXTURE_2D, 1, this.gl.RGBA32UI, this.gouraudTriangleCount, 1);
+      this.gl.texSubImage2D(this.gl.TEXTURE_2D, 0, 0, 0, this.gouraudTriangleCount, 1, this.gl.RGBA_INTEGER, this.gl.UNSIGNED_INT, this.gouraudTriangleData);
+      this.gl.texParameteri(this.gl.TEXTURE_2D, this.gl.TEXTURE_MIN_FILTER, this.gl.NEAREST);
+      this.gl.texParameteri(this.gl.TEXTURE_2D, this.gl.TEXTURE_MAG_FILTER, this.gl.NEAREST);
+      this.gl.texParameteri(this.gl.TEXTURE_2D, this.gl.TEXTURE_WRAP_S, this.gl.CLAMP_TO_EDGE);
+      this.gl.texParameteri(this.gl.TEXTURE_2D, this.gl.TEXTURE_WRAP_T, this.gl.CLAMP_TO_EDGE);
+      this.mainProgram.use();
+      this.gl.drawArrays(this.gl.TRIANGLES, 0, this.gouraudTriangleCount * 3);
+      this.texturesToDelete.push(texture);
+    }
+    this.gl.bindFramebuffer(this.gl.FRAMEBUFFER, null);
+  }
+  fillTriangle(x0, x1, x2, y0, y1, y2, color) {
+    if (!this.isRenderingScene) {
+      return false;
+    }
+    return true;
+  }
+  fillGouraudTriangle(xA, xB, xC, yA, yB, yC, colorA, colorB, colorC) {
+    if (!this.isRenderingScene) {
+      return false;
+    }
+    let offset = this.gouraudTriangleCount * 4;
+    if (offset >= this.gouraudTriangleData.length) {
+      const newData = new Uint32Array(this.gouraudTriangleData.length * 2);
+      newData.set(this.gouraudTriangleData);
+      this.gouraudTriangleData = newData;
+      this.gouraudTriangleDataView = new DataView(this.gouraudTriangleData.buffer);
+    }
+    xA += 2048;
+    xB += 2048;
+    xC += 2048;
+    yA += 2048;
+    yB += 2048;
+    yC += 2048;
+    this.gouraudTriangleDataView.setUint32(offset++ * 4, xA << 20 | xB << 8 | xC >> 4, true);
+    this.gouraudTriangleDataView.setUint32(offset++ * 4, yA << 20 | yB << 8 | xC & 15, true);
+    this.gouraudTriangleDataView.setUint32(offset++ * 4, yC << 16 | colorA, true);
+    this.gouraudTriangleDataView.setUint32(offset++ * 4, colorB << 16 | colorC, true);
+    this.gouraudTriangleCount++;
+    return true;
+  }
+  fillTexturedTriangle(xA, xB, xC, yA, yB, yC, shadeA, shadeB, shadeC, originX, originY, originZ, txB, txC, tyB, tyC, tzB, tzC, texture) {
+    if (!this.isRenderingScene) {
+      return false;
+    }
+    return true;
+  }
+  destroy() {
+  }
+}
+
 // src/io/ClientStream.ts
 class ClientStream {
   socket;
@@ -14477,8 +18893,10 @@ class Database {
       };
     });
   }
-  onclose = (event) => {};
-  onerror = (event) => {};
+  onclose = (event) => {
+  };
+  onerror = (event) => {
+  };
 }
 
 // src/io/Isaac.ts
@@ -16751,7 +21169,8 @@ class Client extends GameShell {
     } else {
       Client.setHighMemory();
     }
-    if (false) {}
+    if (false) {
+    }
     this.run();
   }
   getTitleScreenState() {
@@ -16832,7 +21251,8 @@ class Client extends GameShell {
           if (length !== data.length) {
             data = data.slice(0, length);
           }
-        } catch (e) {}
+        } catch (e) {
+        }
       }
       if (!data) {
         return;
@@ -16841,10 +21261,13 @@ class Client extends GameShell {
         await this.db?.cachesave(name + ".mid", data);
         const uncompressed = BZip22.decompress(data, -1, false, true);
         playMidi(uncompressed, this.midiVolume, fade);
-      } catch (e) {}
-    } catch (e) {}
+      } catch (e) {
+      }
+    } catch (e) {
+    }
   }
   drawError() {
+    Renderer.resetRenderer();
     canvas2d.fillStyle = "black";
     canvas2d.fillRect(0, 0, this.width, this.height);
     this.setFramerate(1);
@@ -17551,22 +21974,26 @@ class Client extends GameShell {
           }
           this.imageMapscene[i] = Pix8.fromArchive(media, "mapscene", i);
         }
-      } catch (e) {}
+      } catch (e) {
+      }
       try {
         for (let i = 0;i < 50; i++) {
           this.imageMapfunction[i] = Pix24.fromArchive(media, "mapfunction", i);
         }
-      } catch (e) {}
+      } catch (e) {
+      }
       try {
         for (let i = 0;i < 20; i++) {
           this.imageHitmarks[i] = Pix24.fromArchive(media, "hitmarks", i);
         }
-      } catch (e) {}
+      } catch (e) {
+      }
       try {
         for (let i = 0;i < 20; i++) {
           this.imageHeadicons[i] = Pix24.fromArchive(media, "headicons", i);
         }
-      } catch (e) {}
+      } catch (e) {
+      }
       this.imageMapflag = Pix24.fromArchive(media, "mapflag", 0);
       for (let i = 0;i < 8; i++) {
         this.imageCrosses[i] = Pix24.fromArchive(media, "cross", i);
@@ -17734,11 +22161,13 @@ class Client extends GameShell {
       this.drawError();
       return;
     }
+    Renderer.startFrame();
     if (this.ingame) {
       this.drawGame();
     } else {
       await this.drawTitleScreen();
     }
+    Renderer.endFrame();
     this.dragCycles = 0;
   }
   async refresh() {
@@ -18351,7 +22780,8 @@ class Client extends GameShell {
     if (this.idleTimeout > 0) {
       this.idleTimeout--;
     }
-    for (let i = 0;i < 5 && await this.read(); i++) {}
+    for (let i = 0;i < 5 && await this.read(); i++) {
+    }
     if (this.ingame) {
       for (let wave = 0;wave < this.waveCount; wave++) {
         if (this.waveDelay[wave] <= 0) {
@@ -19041,8 +23471,10 @@ class Client extends GameShell {
     Model.pickedCount = 0;
     Model.mouseX = this.mouseX - 8;
     Model.mouseY = this.mouseY - 11;
-    Pix2D.clear();
+    Pix2D.clear(Renderer.getSceneClearColor());
+    Renderer.startRenderScene();
     this.scene?.draw(this.cameraX, this.cameraY, this.cameraZ, level, this.cameraYaw, this.cameraPitch, this.loopCycle);
+    Renderer.endRenderScene();
     this.scene?.clearTemporaryLocs();
     this.draw2DEntityElements();
     this.drawTileHint();
@@ -20863,7 +25295,8 @@ class Client extends GameShell {
                 let value = 0;
                 try {
                   value = parseInt(this.chatbackInput, 10);
-                } catch (e) {}
+                } catch (e) {
+                }
                 this.out.p1isaac(237 /* RESUME_P_COUNTDIALOG */);
                 this.out.p4(value);
               }
@@ -20889,7 +25322,41 @@ class Client extends GameShell {
                   try {
                     const desiredFps = parseInt(this.chatTyped.substring(6)) || 50;
                     this.setTargetedFramerate(desiredFps);
-                  } catch (e) {}
+                  } catch (e) {
+                  }
+                } else if (this.chatTyped === "::tk0") {
+                  if (Renderer.renderer) {
+                    Renderer.resetRenderer();
+                    this.redrawChatback = true;
+                    this.redrawPrivacySettings = true;
+                    this.redrawSidebar = true;
+                    this.redrawSideicons = true;
+                    this.redrawTitleBackground = true;
+                  }
+                } else if (this.chatTyped === "::tk1") {
+                  try {
+                    Renderer.renderer = await RendererWebGPU.init(canvasContainer, this.width, this.height);
+                    if (!Renderer.renderer) {
+                      this.addMessage(0, "Failed to change renderer", "");
+                    }
+                  } catch (e) {
+                    if (e instanceof Error) {
+                      this.addMessage(0, "Error enabling renderer: " + e.message, "");
+                    }
+                    console.error("Failed enabling renderer", e);
+                  }
+                } else if (this.chatTyped === "::tk2") {
+                  try {
+                    Renderer.renderer = RendererWebGL.init(canvasContainer, this.width, this.height);
+                    if (!Renderer.renderer) {
+                      this.addMessage(0, "Failed to change renderer", "");
+                    }
+                  } catch (e) {
+                    if (e instanceof Error) {
+                      this.addMessage(0, "Error enabling renderer: " + e.message, "");
+                    }
+                    console.error("Failed enabling renderer", e);
+                  }
                 } else {
                   this.out.p1isaac(4 /* CLIENT_CHEAT */);
                   this.out.p1(this.chatTyped.length - 1);
@@ -22097,7 +26564,8 @@ class Client extends GameShell {
             } else {
               this.addMessage(3, filtered, JString.formatName(JString.fromBase37(from)));
             }
-          } catch (e) {}
+          } catch (e) {
+          }
         }
         this.inPacketType = -1;
         return true;
@@ -23867,7 +28335,8 @@ class Client extends GameShell {
             } else {
               this.addMessage(2, filtered, player.name);
             }
-          } catch (e) {}
+          } catch (e) {
+          }
         }
       }
       buf.pos = start + length;
@@ -25321,4 +29790,4 @@ export {
   Client
 };
 
-//# debugId=67B91C3DF59B66BF64756E2164756E21
+//# debugId=4EE02739B496357064756E2164756E21
