@@ -25,27 +25,17 @@ if (p_finduid(uid) = true) {
         mes("gnomeball pitch");
         return;
     }
-    //// first: we remove the inventory item, so the slot can be filled with inv_add
-    def_obj $previous = inv_getobj(worn, ^wearpos_rhand);
-
-    def_int $count = inv_getnum(inv, $slot);
-    def_int $slot1 = oc_wearpos($obj); // primary slot
-    def_int $slot2 = oc_wearpos2($obj); // override slot 1
-    def_int $slot3 = oc_wearpos3($obj); // override slot 2
-
-    // second: we need to check any wearpos overrides that this item describes
     if (~try_equip($slot) = false) {
         mes("You don't have enough free space to do that.");
         return;
     }
-
+    def_obj $previous = inv_getobj(worn, ^wearpos_rhand);
     // todo: this needs a better home...
     if (%tutorial_progress < ^tutorial_complete) {
      if (%tutorial_progress = ^combat_instructor_unequipping_items) {
-            def_obj $weapon = inv_getobj(worn, ^wearpos_rhand);
             def_obj $shield = inv_getobj(worn, ^wearpos_lhand);
 
-            if ($weapon = bronze_sword & $shield = wooden_shield) {
+            if ($previous = bronze_sword & $shield = wooden_shield) {
                 %tutorial_progress = ^combat_instructor_open_combat_interface;
                 ~set_tutorial_progress;
             }
