@@ -312,21 +312,23 @@ if ($bonus < 0) {
 
 [proc,try_equip](int $inv_slot)(boolean)
 def_obj $equip_obj = inv_getobj(inv, $inv_slot);
-def_int $equip_obj_num = inv_getnum(inv, $inv_slot);
 if ($equip_obj = null) {
-    return(false);
-}
-if (inv_itemspace2(worn, $equip_obj, $equip_obj_num, inv_size(worn)) > 0) { // overflowing only applies to stackable items, so we need no stackable checks
     return(false);
 }
 if (oc_wearpos($equip_obj) = null) {
     return(false);
 }
+
+def_int $equip_obj_num = inv_getnum(inv, $inv_slot);
+$equip_obj_num = min($equip_obj_num, sub(^max_32bit_int, inv_itemspace2(worn, $equip_obj, $equip_obj_num, inv_size(worn)))); // equip as many as we possibly can without overflowing the worn inv
+
 inv_moveitem(inv, equipitem, $equip_obj, $equip_obj_num); // move equip item to dummy inv
+
 if (~unequip_conflicts_space($equip_obj) = false) { // check if enough space
     inv_movetoslot(equipitem, inv, 0, $inv_slot); // move equip item back to original spot
     return(false);
 }
+
 ~unequip_conflicts($equip_obj);
 inv_movetoslot(equipitem, worn, 0, oc_wearpos($equip_obj)); // equip item :D
 return(true);
