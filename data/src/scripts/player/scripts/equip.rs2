@@ -320,7 +320,12 @@ if (oc_wearpos($equip_obj) = null) {
 }
 
 def_int $equip_obj_num = inv_getnum(inv, $inv_slot);
-$equip_obj_num = min($equip_obj_num, sub(^max_32bit_int, inv_itemspace2(worn, $equip_obj, $equip_obj_num, inv_size(worn)))); // equip as many as we possibly can without overflowing the worn inv
+// equip as many as we possibly can without overflowing the worn inv
+def_int $overflow = inv_itemspace2(worn, $equip_obj, $equip_obj_num, inv_size(worn));
+if ($overflow >= $equip_obj_num) {
+    return(false);
+}
+$equip_obj_num = sub($equip_obj_num, $overflow);
 
 inv_moveitem(inv, equipitem, $equip_obj, $equip_obj_num); // move equip item to dummy inv
 
