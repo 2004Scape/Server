@@ -1,0 +1,40 @@
+[opobj3,blue_hat]
+if(%legends_progress >= ^legends_defeated_nezikchened_water) { // confirm this
+    ~mesbox("Your hand passes straight through the hat as though it wasn't there at all. Nothing else seems to happen though.");
+    return;
+}
+if(npc_find(obj_coord, viyeldi, 5, 0) = true) {
+    ~mesbox("Your hand passes through the hat as though it wasn't there at all.");
+    return;
+}
+npc_add(obj_coord, viyeldi, 100);
+p_teleport(movecoord(obj_coord, 0, 0, 1));
+p_delay(1);
+~mesbox("Your hand passes through the hat as though it wasn't there at all. Instantly, the other clothes begin to animate and walk towards you!");
+@viyeldi_dialogue;
+
+[opnpc1,viyeldi]
+if(%legends_progress >= ^legends_defeated_nezikchened_water) { // confirm this
+    mes("Your eyes must be playing tricks on you. There is nothing interesting there!");
+    return;
+}
+@viyeldi_dialogue;
+
+// not checked in ap script, not checked on manual cast
+[opnpc2,viyeldi]
+if(%legends_progress >= ^legends_defeated_nezikchened_water) { // confirm this
+    mes("You have no further business with him.");
+    return;
+}
+~chatnpc("<p,neutral>Adventurer, I am already deceased, and therefore impervious to your attacks. Still, I can tell when I'm not wanted...");
+npc_del;
+mes("The spirit of Viyeldi crumples back into a pile of clothes. You may have hurt his");
+mes("feelings.");
+
+[label,viyeldi_dialogue]
+~chatnpc("<p,neutral>Beware adventurer lest thee lose thy head in|search of source. Thee hast been tested for bravery|and have not been found wanting.");
+~mesbox("The spirit wavers slightly and then stands proud.");
+~chatnpc("<p,neutral>Perilous dangers await for thee, Tojalon, Senay and Devere make three, None hold malice but will test your might, pray you do not lose these fights.");
+~chatnpc("<p,neutral>If, however, you win this day, Take heart that see the source you may, Through Dragon's eye will you gain new heart, To see the source and then depart.");
+mes("The clothes slump to the floor again after he has finished.");
+npc_del;

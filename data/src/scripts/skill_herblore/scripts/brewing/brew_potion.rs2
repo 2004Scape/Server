@@ -91,7 +91,7 @@ if (map_members = false) {
     return(false);
 }
 
-if($struct = ardrigal_mixture & %legends_progress < ^legends_talk_gujuo_4) {
+if($struct = ardrigal_mixture & %legends_progress < ^legends_talk_gujuo_pool) {
     mes("You're not really sure what you would make out of this.");
     return(false);
 }

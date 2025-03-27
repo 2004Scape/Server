@@ -92,7 +92,7 @@ model8=model_534_obj_wear
 head1=model_52_idk_head
 head2=model_82_idk_head
 wanderrange=1
-maxrange=30
+maxrange=41
 // respawnrate=50
 hitpoints=65
 attack=57
@@ -143,8 +143,6 @@ model8=model_534_obj_wear
 head1=model_52_idk_head
 head2=model_82_idk_head
 // TODO respawnrate?
-wanderrange=3
-maxrange=4
 hitpoints=150
 attack=147
 strength=147
@@ -243,7 +241,7 @@ param=death_sound,black_demon_death
 param=death_drop,null
 huntmode=nezikchened
 huntrange=5
-maxrange=30
+maxrange=41
 attackrange=10
 // osrs stats and Vislvl match 1:1
 
@@ -308,6 +306,7 @@ model2=model_2945_npc
 head1=model_54_npc_head
 head2=model_38_npc_head
 wanderrange=10
+attackrange=10
 maxrange=15
 respawnrate=52
 hitpoints=120
@@ -331,6 +330,8 @@ param=attack_sound,skeleton_attack
 param=defend_sound,skelly_hit
 param=death_sound,skeleton_death
 param=death_drop,null
+huntmode=san_tojalon
+huntrange=1
 // Stats match osrs version but our version Vislvl is different.
 
 [irvig_senay]
@@ -376,6 +377,8 @@ param=attack_sound,skeleton_attack
 param=defend_sound,skelly_hit
 param=death_sound,skeleton_death
 param=death_drop,null
+huntmode=irvig_senay
+huntrange=1
 // osrs stats and Vislvl match 1:1
 
 [ranalph_devere]
@@ -422,6 +425,8 @@ param=attack_sound,skeleton_attack
 param=defend_sound,skelly_hit
 param=death_sound,skeleton_death
 param=death_drop,null
+huntmode=ranalph_devere
+huntrange=1
 // Stats match osrs version but our version Vislvl is different.
 
 [legends_boulder]

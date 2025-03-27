@@ -11,12 +11,9 @@
 ^legends_filled_bowl = 10
 ^legends_summoned_nezikchened_fire = 11
 ^legends_defeated_nezikchened_fire = 12
-// looks like it is possible to skip this step?
-^legends_talk_gujuo_3 = 13 
-// water dried up?
+^legends_germinated_seeds = 13 
 ^legends_water_pool_dried_up = 14
-// complain about water dried up
-^legends_talk_gujuo_4 = 15
+^legends_talk_gujuo_pool = 15
 // todo: need to store bravery potion somewhere
 // check if this is set when entering dungeon or taking hat
 ^legends_enter_lower_dungeon = 16
@@ -62,6 +59,11 @@
 // 10 doses of holy water, decremented when using vial or extinguishing flames
 ^legends_golden_bowl_uses_start = 19
 ^legends_golden_bowl_uses_end = 23
+^legends_tied_rope_winch = 24
+^legends_drank_bravery_potion = 25
+^legends_smelting_chunk = 26
+^legends_smelting_hunk = 27
+^legends_smelting_lump = 28
 
 ^legends_all_gems_used = 127
 ^legends_required_questpoints = 107

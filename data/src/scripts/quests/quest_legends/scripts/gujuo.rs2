@@ -40,7 +40,7 @@ if (%legends_progress = ^legends_got_bullroarer | %legends_progress = ^legends_s
     @multi2("I was hoping to attract the attention of a native.", gujuo_attract,
             "Sorry, it was a mistake?", gujuo_sorry);
 }
-else if (%legends_progress >= ^legends_accepted_rescue_ungadulu) {
+else if (%legends_progress >= ^legends_accepted_rescue_ungadulu & %legends_progress < ^legends_defeated_nezikchened_fire) {
     if (inv_total(inv, gold_bowl) > 0) {
         ~chatnpc("<p,neutral>Greetings Bwana. Ah I see you have the golden bowl! Would you like me to show you how to bless it?");
         def_int $choice = ~p_choice2("Yes, I'd like you to bless my gold bowl.", 1, "No thanks, I need help with something else.", 2);
@@ -51,6 +51,30 @@ else if (%legends_progress >= ^legends_accepted_rescue_ungadulu) {
         // selecting the no option skips straight to ungadulu question
     }
     @gujuo_how_goes_ungadulu;
+} else if (%legends_progress = ^legends_defeated_nezikchened_fire) {
+    ~chatnpc("<p,neutral>How goes your quest to release Ungadulu?");
+    @multi3("Ungadulu is free, he was possessed by a demon and I killed it.", gujuo_ungadulu_free, "I have the Yommi tree seeds.", gujuo_have_seeds, "What do I do now?", gujuo_what_now);
+} else if (%legends_progress = ^legends_germinated_seeds) {
+    ~chatnpc("<p,neutral>Congratulations on releasing Ungadulu! My people are very pleased... How goes the growing of the Yommi tree?");
+    @multi3("I have germinated the Yommi tree seeds.", gujuo_germinated, "Where is the fertile soil?", gujuo_wheresoil, "Ok thanks for your help.", gujuo_thanks);
+} else if (%legends_progress = ^legends_water_pool_dried_up) {
+    ~chatnpc("<p,neutral>I have visited Ungadulu in the caves, he is hard at work studying. He looks well! Have you grown the Yommi tree yet?");
+    @multi2("The water pool has dried up and I need more water.", gujuo_pool_dried, "The Yommi tree died.", gujuo_tree_died);
+} else if (%legends_progress >= ^legends_talk_gujuo_pool) {
+    ~chatnpc("<p,neutral>I have visited Ungadulu in the caves, he is hard at work studying. He looks well! How is your quest going Bwana?");
+    if(%legends_progress = ^legends_talk_gujuo_pool) {
+        @multi5("Where can I get more water for the Yommi tree?", gujuo_morewater, 
+                "Where is the source of the spring of pure water?", gujuo_source, 
+                "I searched the catacombs thoroughly but found nothing else.", gujuo_searched,
+                "If I went in search of the source, could you help me?", gujuo_searchsource,
+                "Ok thanks for your help.", gujuo_thanks);
+    } else if(%legends_progress = ^legends_enter_lower_dungeon) {
+        @multi5("I have found a way into the caves!", gujuo_foundcaves, 
+                "Where is the source of the spring of pure water?", gujuo_source, 
+                "I searched the catacombs thoroughly but found nothing else.", gujuo_searched,
+                "If I went in search of the source, could you help me?", gujuo_searchsource,
+                "Ok thanks for your help.", gujuo_thanks);
+    }
 }
 
 [label,gujuo_how_goes_ungadulu]
@@ -68,7 +92,7 @@ switch_int(%legends_progress) {
             @multi2("I've found the caves, but I don't know what to do.", gujuo_found_but_idk,
                     "Ok thanks for your help.", gujuo_thanks);
         }
-    case ^legends_spoke_ungadulu, ^legends_asked_gujuo_holy_water, ^legends_filled_bowl :
+    case ^legends_spoke_ungadulu, ^legends_asked_gujuo_holy_water, ^legends_filled_bowl, ^legends_summoned_nezikchened_fire :
         if (testbit(%legends_map_runes, ^legends_ungadulu_called_vacu) = true) {
             @multi5("Ungadulu looks a little strange.", gujuo_ungadulu_strange,
                     "I'm not sure what to do.", gujuo_idk,
@@ -91,6 +115,143 @@ switch_int(%legends_progress) {
                     "Ok thanks for your help.", gujuo_thanks);
         }
 }
+
+[label,gujuo_foundcaves]
+~chatplayer("<p,neutral>I have found a way into the caves!");
+~chatnpc("<p,neutral>That's great Bwana, good luck with your quest and take care!");
+@multi4("Do you know anything more about the caves?", gujuo_knowcaves, "Who is Viyeldi?", gujuo_whoviyeldi, "Where is the source of the spring of pure water?", gujuo_source, "Ok thanks for your help.", gujuo_thanks);
+
+[label,gujuo_whoviyeldi]
+~chatplayer("<p,neutral>Who is Viyeldi?");
+~mesbox("Gujuo scratches his head for a moment.");
+~chatnpc("<p,neutral>Well, I have heard that name before, perhaps from the eldars."); // intentional typo
+~chatnpc("<p,neutral>Ah, yes, I think that is the name of the wizard who first went in search of the source. Be wary of him Bwana, he may try to trick you.");
+@multi4("I have found a way into the caves!", gujuo_foundcaves, "Do you know anything more about the caves?", gujuo_knowcaves, "Where is the source of the spring of pure water?", gujuo_source, "Ok thanks for your help.", gujuo_thanks);
+
+[label,gujuo_knowcaves]
+~chatplayer("<p,neutral>Do you know anything more about the caves?");
+~chatnpc("<p,neutral>I am sorry to say that I don't Bwana. You will need to explore that area, but use your wits, and you may be lucky.");
+@multi4("I have found a way into the caves!", gujuo_foundcaves, "Who is Viyeldi?", gujuo_whoviyeldi, "Where is the source of the spring of pure water?", gujuo_source, "Ok thanks for your help.", gujuo_thanks);
+
+[label,gujuo_morewater]
+~chatplayer("<p,neutral>Where can I get more water for the Yommi tree?");
+~chatnpc("<p,neutral>If the pool of sacred water has dried up, there may be a way to get to the source of the spring. But it is said to be very, very dangerous.");
+@multi3("Where is the source of the spring of pure water?", gujuo_source, "If I went in search of the source, could you help me?", gujuo_searchsource, "Ok thanks for your help.", gujuo_thanks);
+
+[label,gujuo_pool_dried]
+~chatplayer("<p,neutral>The water pool has dried up and I need more pure water.");
+~chatnpc("<p,neutral>This is indeed a bad omen Bwana, that pool is sacred to us. I have seen it and it is full of filth, it is not natural. I suspect that some evil is at work here.");
+@multi2("Does the Yommi tree have to have pure water?", gujuo_have_pure, "Where is the source of the spring of pure water?", gujuo_source);
+
+[label,gujuo_tree_died]
+~chatplayer("<p,neutral>The Yommi tree died.");
+~chatnpc("<p,neutral>Well, it requires pure sacred water for it to grow. It is a very special tree...");
+@multi2("The sacred water pool has dried up and I need more water.", gujuo_pool_dried, "Does the Yommi tree have to have pure water?", gujuo_have_pure);
+
+[label,gujuo_have_pure]
+~chatplayer("<p,neutral>Does the Yommi tree have to have pure water?");
+~chatnpc("<p,neutral>Yes, it is a magical tree and can only survive on the water from the sacred pool. This is indeed a tragedy.");
+@multi2("Where is the source of the spring of pure water?", gujuo_source, "Ok thanks for your help.", gujuo_thanks);
+
+[label,gujuo_source]
+~chatplayer("<p,neutral>Where is the source of the spring of pure water?");
+~mesbox("Gujuo looks very uncomfortable...");
+~chatnpc("<p,neutral> I am not sure but I have heard that deeper in the catacombs where you found Ungadulu, deep underground there is a terrible place guarded by the spirits of the undead.");
+~chatnpc("<p,neutral>Since they died trying to find the source of the stream, they are cursed to guard it for all eternity. The first to seek the source was said to be a high level sorcerer");
+~chatnpc("<p,neutral>He created a powerful spell in the caves. Now, all those who venture near are overcome by a supernatural fear. With all my heart Bwana, I would never go near such a place.");
+@multi3("Ok, I won't go...", gujuo_wontgo, "If I went, could you help me?", gujuo_helpme, "I searched the catacombs thoroughly but found nothing else.", gujuo_searched);
+
+[label,gujuo_searched]
+~chatplayer("<p,neutral>I searched the catacombs thoroughly but found nothing else.");
+~chatnpc("<p,neutral>Perhaps the location has been hidden or buried under rubble? These stories were told to me as a child by the village elders. They were probably meant to frighten us away from the caves.");
+~chatnpc("<p,neutral>It could all just be a myth! Perhaps there is another way to get to the source of the stream? But I am not sure where it is.");
+@multi3("Ok, I won't go...", gujuo_wontgo, "Where is the source of the spring of pure water?", gujuo_source, "If I went, could you help me?", gujuo_helpme);
+
+[label,gujuo_wontgo]
+~chatplayer("<p,neutral>Ok, I won't go...");
+~chatnpc("<p,neutral>I understand Bwana, it would be a waste of a perfectly good life. We will try to defeat the evil spirits in other ways. But I am not sure how we will do that.");
+@multi2("If I went, could you help me?", gujuo_helpme, "Ok thanks for your help.", gujuo_thanks);
+
+[label,gujuo_helpme]
+~chatplayer("<p,neutral>If I went, could you help me?");
+~chatnpc("<p,neutral>Well, if you are sure you want to go, I will assist as much as I can. You will need the bravery of the jungle lion, if you are to go into that forbidden place. I can give you the recipe for a potion to help with that.");
+~chatnpc("<p,neutral>You will need to find two herbs, Snake weed and Ardrigal. Add them both to a vial of water, and you will walk with the bravery of the Kharazi lion.");
+if(%legends_progress = ^legends_water_pool_dried_up) %legends_progress = ^legends_talk_gujuo_pool;
+@multi5("Where can I find Snake weed?", gujuo_snakeweed, 
+        "Where is the source of the spring of pure water?", gujuo_source, 
+        "Where can I find ardrigal?", gujuo_ardrigal, // no caps
+        "Will I need this potion? I feel brave enough as I am.", gujuo_potion, 
+        "Ok thanks for your help.", gujuo_thanks);
+
+[label,gujuo_snakeweed]
+~chatplayer("<p,neutral>Where can I find Snake weed?");
+~chatnpc("<p,neutral>nake weed is usually found by swampy marshy areas. It is not very common and it may be quite difficult to find.");
+~chatnpc("<p,neutral>There is some marsh to the south of Tai Bwo Wannai village. The herb grows near jungle vines, so check all around very carefully.");
+@multi5("Where can I find Ardrigal?", gujuo_ardrigal,
+        "Where is the source of the spring of pure water?", gujuo_source,
+        "If I went, could you help me?", gujuo_helpme,
+        "Will I need this potion? I feel brave enough as I am.", gujuo_potion, 
+        "Ok thanks for your help.", gujuo_thanks);
+
+[label,gujuo_ardrigal]
+~chatplayer("<p,neutral>Where can I find Ardrigal?");
+~chatnpc("<p,neutral>Ardrigal is often found growing near to large groups of palms. Such a collection exists in the north.");
+~chatnpc("<p,neutral>If you head east out of Tai Bwo Wannai village you should come across them. The herb grows in the shade of the palm so check carefully.");
+@multi4("Where is the source of the spring of pure water?", gujuo_source,
+        "Where can I find Snake weed?", gujuo_snakeweed, 
+        "If I went in search of the source, could you help me?", gujuo_searchsource, 
+        "Ok thanks for your help.", gujuo_thanks);
+
+[label,gujuo_potion]
+~chatplayer("<p,neutral>Will I need this potion? I feel brave enough as I am.");
+~chatnpc("<p,neutral>I would urge you to take it, Bwana, I have heard that the caves are protected by a supernatural fear that renders even the bravest man to a trembling wreck.");
+~chatnpc("<p,neutral>You will need all your wits about you when dealing with the terrors that exist down there.");
+@multi4("Where can I find Snake weed?", gujuo_snakeweed, 
+        "Where is the source of the spring of pure water?", gujuo_source,
+        "Where can I find Ardrigal?", gujuo_ardrigal, 
+        "Ok thanks for your help.", gujuo_thanks);
+
+[label,gujuo_searchsource]
+~chatplayer("<p,neutral>If I went in search of the source, could you help me?");
+~chatnpc("<p,neutral>Well, if you are sure you want to go, I will assist as much as I can. You will need the bravery of the jungle lion, if you are to go into that forbidden place.");
+~chatnpc("<p,neutral>I can give you the recipe for a potion to help with that. You will need to find two herbs, Snake weed and Ardrigal. Add them both to a vial of water, and you will walk with the bravery of the lion.");
+@multi5("Where is the source of the spring of pure water?", gujuo_source, 
+        "Where can I find Snake weed?", gujuo_snakeweed, 
+        "Where can I find Ardrigal?", gujuo_ardrigal, 
+        "Will I need this potion? I feel brave enough as I am.", gujuo_potion, 
+        "Ok thanks for your help.", gujuo_thanks);
+
+[label,gujuo_germinated]
+~chatplayer("<p,neutral>I have germinated the Yommi tree seeds.");
+~chatnpc("<p,neutral>Well done Bwana. With the blessings of the gods we will soon have our Totem Pole. Bwana, you now need to plant the seed in the fertile earth.");
+@multi2("Where is the fertile soil?", gujuo_wheresoil, "Ok thanks for your help.", gujuo_thanks);
+
+[label,gujuo_wheresoil]
+~chatplayer("<p,neutral>Where is the fertile soil?");
+~chatnpc("<p,neutral>You should be able to find many places where the ground is fertile in the Kharazi Jungle. Planting the Yommi tree seeds in fertile soil gives it a good chance to grow.");
+~chatnpc("<p,neutral>My people are trying to grow the Yommi tree as well. But so far we have not met with any success. If you find a rotten tree or what looks like a rotten totem pole,");
+~chatnpc("<p,neutral>You'll need to remove it yourself to get to the fertile soil. It will take a very sharp, robust axe to do it.");
+@multi2("I have germinated the Yommi tree seeds.", gujuo_germinated, "Ok thanks for your help.", gujuo_thanks);
+
+[label,gujuo_have_seeds]
+~chatplayer("<p,neutral>I have the Yommi tree seeds.");
+if(inv_total(inv, yommi_tree_seeds) <= 0) {
+    ~chatnpc("<p,neutral>Hmmm, well I don't see them. You'd better go and ask Ungadulu for some more.");
+    return;
+}
+~chatnpc("<p,neutral>That's great, Bwana. Now you just need to germinate the seeds and then plant them in some fertile soil. I'm sure that Ungadulu has explained all this to you already.");
+@multi3("Ungadulu is free, he was possesed by a demon and I killed it.", gujuo_ungadulu_free, "What do I do now?", gujuo_what_now, "Ok thanks for your help.", gujuo_thanks);
+
+[label,gujuo_ungadulu_free]
+~chatplayer("<p,neutral>Ungadulu is free! He was possessed by a demon and I killed it.");
+~chatnpc("<p,neutral>You are indeed brave Bwana, a truly fearsome warrior to take on such an enemy! Well Done!");
+@multi3("I have the Yommi tree seeds.", gujuo_have_seeds, "What do I do now?", gujuo_what_now, "Ok thanks for your help.", gujuo_thanks);
+
+[label,gujuo_what_now]
+~chatplayer("<p,neutral>What do I do now?");
+~chatnpc("<p,neutral>If you have the Yommi tree seeds, you will need to germinate them.");
+~chatnpc("<p,neutral>Place the seeds into pure water, and they will begin to sprout tiny shoots. You can then plant them in fertile soil.");
+@multi3("Ungadulu is free, he was possesed by a demon and I killed it.", gujuo_ungadulu_free, "What do I do now?", gujuo_what_now, "Ok thanks for your help.", gujuo_thanks);
 
 [label,gujuo_bless_bowl]
 if (stat(prayer) < 42) {

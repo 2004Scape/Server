@@ -608,8 +608,8 @@ else {
     p_delay(2);
     mes("The fall knocks the wind out of you.");
     anim(human_crawling, 0);
-    // static 6 damage
-    ~damage_self(6);
+    // static 5 damage
+    ~damage_self(5);
 }
 
 [oploc1,legends_marked_wall]
@@ -964,12 +964,11 @@ else {
 
 [oplocu,legends_water_pool]
 if (last_useitem = hollow_reed) {
-    if (%legends_progress > ^legends_defeated_nezikchened_fire & %legends_progress < ^legends_defeated_nezikchened_water) {
-        if (%legends_progress < ^legends_water_pool_dried_up) {
+    if (%legends_progress >= ^legends_germinated_seeds & %legends_progress < ^legends_defeated_nezikchened_water) {
+        if (%legends_progress = ^legends_germinated_seeds) {
             %legends_progress = ^legends_water_pool_dried_up;
         }
-        // todo: check this duration
-        loc_change(legends_polluted_water, 20);
+        loc_change(legends_polluted_water, 30);
         ~mesbox("It looks as if this pool has dried up. A thick black sludge has replaced|the sparkling pure water. There is a disgusting stench of death that|emanates from this area. Maybe Gujuo knows what's happened.");
         return;
     }
@@ -1033,7 +1032,7 @@ if (last_useitem = hollow_reed) {
     ~objbox(hollow_reed, "The hollow reed is soaked through with water and is now all soggy.", 250, 0, 0);
 }
 else if (last_useitem = bucket_empty | last_useitem = vial_empty | last_useitem = gold_bowl | last_useitem = blessed_gold_bowl | last_useitem = enchanted_vial) {
-    ~mesbox("This item doesn't fit in the gap between the rocks. You'll need to find another way to reach the water.");
+    ~mesbox("The water is too akward to get to, the gap to the water|is too narrow to reach with this item.");
 }
 else {
     ~displaymessage(^dm_default);
@@ -1047,6 +1046,7 @@ if (last_useitem = hollow_reed) {
 else {
     ~displaymessage(^dm_default);
 }
+
 [oploc1,legends_tall_reeds]
 ~mesbox("These look like interesting plants, right next to the water's edge. They make the pool look really picturesque.");
 
@@ -1068,6 +1068,26 @@ else if (last_useitem = machete) {
 }
 else {
     ~displaymessage(^dm_default);
+}
+
+[oplocu,legends_fertile_soil]
+if(last_useitem = yommi_tree_seeds) {
+    ~mesbox("These seeds need to be germinated before you can plant them.");
+    return;
+} 
+if(last_useitem = yommi_tree_seeds_germinated) {
+    if(stat(herblore) < 45) {
+        ~mesbox("You need a Herblore skill of at least 45 to attempt to grow the Yommi tree.");
+        return;
+    }
+    if(stat(woodcutting) < 50) {
+        ~mesbox("You need a Woodcutting skill of at least 50 to attempt to fell a Yommi tree.");
+        return;
+    }
+    if(inv_total(inv, blessed_golden_bowl_pure_water) = 0) {
+        ~mesbox("You'll need some pure sacred water to feed the tree when it starts growing.");
+        return;
+    }
 }
 
 [opheld1,sketch]
@@ -1118,13 +1138,17 @@ if (last_useitem = vial_empty) {
 }
 else if (last_useitem = yommi_tree_seeds) {
     ~doubleobjbox(yommi_tree_seeds, blessed_golden_bowl_pure_water, "You place the seeds into the golden bowl of pure sacred|water.", 150);
-    // todo: max amount done at once or whole stack?
     def_int $seed_qty = inv_total(inv, yommi_tree_seeds);
     inv_del(inv, yommi_tree_seeds, $seed_qty);
     inv_add(inv, yommi_tree_seeds_germinated, $seed_qty);
     // todo: confirm this always uses all the water
-    inv_del(inv, blessed_golden_bowl_pure_water, 1);
-    inv_add(inv, blessed_gold_bowl, 1);
+    def_int $bowl_count_inv = inv_total(inv, blessed_golden_bowl_pure_water);
+    inv_del(inv, blessed_golden_bowl_pure_water, $bowl_count_inv);
+    inv_add(inv, blessed_gold_bowl, $bowl_count_inv);
+    def_int $bowl_count_bank = inv_total(bank, blessed_golden_bowl_pure_water);
+    inv_del(bank, blessed_golden_bowl_pure_water, $bowl_count_bank);
+    inv_add(bank, blessed_gold_bowl, $bowl_count_bank);
+    if(%legends_progress = ^legends_defeated_nezikchened_fire) %legends_progress = ^legends_germinated_seeds;
     ~mesbox("You start to see little shoots growing on the seeds. These seeds look|as if they're germinated now.");
 }
 else {
@@ -1134,7 +1158,7 @@ else {
 [opheldu,ardrigal_mixture]
 if (last_useitem = snake_weed) {
     // I don't think this is possible since you cant make the ardrigal mixture? But matches the snakeweed one
-    if(%legends_progress < ^legends_talk_gujuo_4) {
+    if(%legends_progress < ^legends_talk_gujuo_pool) {
         ~doubleobjbox(snake_weed, ardrigal_mixture, "You're not sure what mixing these two things together would do. You decide against experimenting. ", 150); // authentic space at end
         return;
     }
@@ -1153,7 +1177,7 @@ else {
 [opheldu,snakeweed_mixture]
 if (last_useitem = ardrigal) {
     // no full stop authentic
-    if(%legends_progress < ^legends_talk_gujuo_4) {
+    if(%legends_progress < ^legends_talk_gujuo_pool) {
         ~doubleobjbox(ardrigal, snakeweed_mixture, "You're not sure what mixing these two things together would do. You decide against experimenting. ", 150); // authentic space at end
         return;
     }
@@ -1167,6 +1191,18 @@ if (last_useitem = ardrigal) {
 else {
     ~displaymessage(^dm_default);
 }
+
+[opheld1,bravery_potion]
+~objbox(bravery_potion, "This bravery potion bubbles with a strange effervescence, but it smells very strange, like oily burnt oranges. Are you sure you want to drink it?", 250, 0, divide(^objbox_height, 2));
+def_int $op = ~p_choice2_header("Yes, I'll bravely drink the bravery potion.", 1, "Actually, let me consider this a bit longer first; it smells a bit odd.", 2, "Drink the so-called 'Bravery Potion'?");
+if($op = 2) {
+    ~objbox(bravery_potion,"You sensibly stopper the vial and place it back in your inventory. You consider that things aren't so desperate yet that you need to rely on strange jungle potions to make you brave.", 250, 0, divide(^objbox_height, 2));
+    return;
+}
+~objbox(bravery_potion, "You bravely swig down the entire contents of the vial and then wait for some sort of internal explosion. After a few seconds, you realise that you actually feel quite okay.", 250, 0, divide(^objbox_height, 2));
+inv_del(inv, bravery_potion, 1);
+inv_add(inv, vial_empty, 1);
+%legends_map_runes = setbit(%legends_map_runes, ^legends_drank_bravery_potion);
 
 [label,make_golden_bowl]
 if (map_members = false) {
@@ -1267,6 +1303,376 @@ sound_synth(smokepuff, 0, 0);
 
 [timer,legends_spawn_barrel]
 
+[oploc1,legends_winch]
+if(testbit(%legends_map_runes, ^legends_tied_rope_winch) = true) {
+    mes("You search the wooden beams and find the rope you attached.");
+    loc_change(legends_winch_rope, 30);
+    return;
+}
+mes("You see nothing special about this...");
+p_delay(2);
+mes("Perhaps with a rope, it might be a bit more functional.");
+
+[oplocu,legends_winch]
+if(last_useitem = rope) {
+    if(testbit(%legends_map_runes, ^legends_tied_rope_winch) = true) {
+        mes("You have already thrown a rope around this wooden beam.");
+        loc_change(legends_winch_rope, 30);
+        return;
+    }
+    mes("You throw a rope around the winch.");
+    loc_change(legends_winch_rope, 30);
+    %legends_map_runes = setbit(%legends_map_runes, ^legends_tied_rope_winch);
+    return;
+}
+~displaymessage(^dm_default);
+
+[oploc1,legends_winch_rope]
+if(testbit(%legends_map_runes, ^legends_tied_rope_winch) = false) {
+    mes("The rope snaps as you're about to climb down it."); // TODO: rsc, need to confirm 
+    loc_change(legends_winch, 30);
+    return;
+}
+~mesbox("The climb down looks pretty dangerous, |it leads into a very dark hole.| It's actually quite frightening.| Are you sure you want to go down?");
+def_int $op = ~p_choice2_header("Yes, I'll shimmy down the rope into possible doom.", 1, "'Err, no actually, I've had second thoughts about this.", 2, "Climb down terrifying hole?");
+if($op = 2) {
+    ~mesbox("You decide not to shimmy down the rope into most likely oblivion.");
+    return;
+}
+if_close;
+mes("You prepare to climb down the rope.");
+p_delay(2);
+if(testbit(%legends_map_runes, ^legends_drank_bravery_potion) = true) {
+    if(stat_random(stat(agility), 120, 250) = false) {
+        mes("Fear stabs at your heart....");
+        say("Gulp!");
+        p_delay(1);
+        mes("...and you lose concentration but for a split second.");
+        p_delay(1);
+        mes("You slip off the rope and fall...");
+        p_delay(1);
+        say("Ahhhhhhhhhhhh!");
+        queue(damage_player, 0, calc(stat_base(hitpoints) / 3));
+    } else {
+        mes("And although fear stabs at your heart.");
+        say("Gulp!");
+        p_delay(1);
+        mes("You shimmy down the rope and into the darkness.");
+    }
+    p_delay(1);
+    mes("You find yourself on the top of a tall ledge...");
+    p_delay(1);
+    mes("It's a long way down!");
+    if(%legends_progress = ^legends_talk_gujuo_pool) %legends_progress = ^legends_enter_lower_dungeon;
+    p_teleport(0_37_73_9_40);
+    return;
+}
+say("Gulp!");
+mes("But a terrible fear grips you...");
+p_delay(2);
+mes("And you can go no further.");
+~chatplayer("<p,worried>No! It's too scary!");
+
+[oploc1,legends_climbing_rope]
+mes("You climb back up the rope to the Shaman Caves..");
+anim(human_reachforladdertop, 0);
+p_delay(1);
+p_teleport(0_43_145_8_48);
+
+// these all have different messages and delays are off, can't really generalize it
+[oploc1,legends_rocky_ledge_1]
+if(coordx(coord) < coordx(loc_coord)) {
+    p_teleport(loc_coord);
+    p_delay(1);
+    mes("You climb confidently over the rocks and hold your balance well.");
+    p_teleport(movecoord(loc_coord, 1, 0, 0));
+    return;
+}
+~mesbox("This looks like quite a dangerous walk way, are you sure you want to take this path?");
+def_int $choice = ~p_choice2_header("Yes, I can think of nothing more exciting!", 1, "No, I'm having second thoughts.", 2, " Walk along dangerous path?");
+if($choice = 2) {
+    mes("You decide to stay where you are.");
+    return;
+}
+if_close;
+mes("You step forward carefully onto the pathway.");
+p_teleport(loc_coord);
+p_delay(1);
+if(stat_random(stat(agility), 110, 250) = false) {
+    mes("You slip and fall!");
+    say("Arrgggghhhhhhhhhhhhhhh...........!!!");
+    ~agility_exactmove(seq_795, 30, 1, coord, movecoord(loc_coord, 0, 0, 1), 37, 70, ^exact_east, false);
+    ~bas_set_all(seq_796);
+    p_delay(5);
+    ~update_bas;
+    mes("You feel a little nervous from your near fall...");
+    ~agility_exactmove(seq_797, 30, 1, coord, movecoord(loc_coord, -1, 0, 0), 37, 70, ^exact_east, false);
+    // synth_sound(2493 loops 10)
+    mes("You lose some Agility!");
+    mes("You wrench your arm as you grab for a handhold.");
+    ~damage_self(~random_range(1, 10));
+    stat_sub(agility, 1, 0);
+    return;
+}
+p_teleport(movecoord(loc_coord, -1, 0, 0));
+mes("You climb confidently over the rocks and hold your balance well.");
+
+[oploc1,legends_rocky_ledge_2]
+if(coordx(coord) > coordx(loc_coord)) {
+    mes("You step confidently onto the rocky ledge.");
+    p_teleport(movecoord(loc_coord, 0, 0, -1));
+    return;
+}
+~mesbox("This looks like quite a dangerous walk way, are you sure you want to take this path?");
+def_int $choice = ~p_choice2_header("Yes, I can think of nothing more exciting!", 1, "No, I'm having second thoughts.", 2, "Walk along dangerous path?");
+if($choice = 2) {
+    mes("You decide to stay where you are.");
+    return;
+}
+if_close;
+mes("You start to climb the precarious rocks.");
+p_teleport(loc_coord);
+p_delay(1);
+if(stat_random(stat(agility), 110, 250) = false) {
+    mes("You slip and fall!");
+    say("Arrgggghhhhhhhhhhhhhhh...........!!!");
+    ~agility_exactmove(seq_795, 30, 1, coord, movecoord(loc_coord, 1, 0, -1), 37, 50, ^exact_west, false);
+    ~bas_set_all(seq_796);
+    p_delay(5);
+    ~update_bas;
+    mes("You feel a little nervous from your near fall...");
+    ~agility_exactmove(seq_797, 30, 1, coord, movecoord(loc_coord, 1, 0, 0), 37, 70, ^exact_west, false);
+    // synth_sound(2493 loops 10)
+    mes("You lose some Agility!");
+    mes("You wrench your arm as you grab for a handhold.");
+    ~damage_self(~random_range(1, 10));
+    stat_sub(agility, 1, 0);
+    return;
+}
+mes("You climb confidently over the rocks and hold your balance well.");
+p_delay(1);
+p_teleport(movecoord(loc_coord, 1, 0, 0));
+
+[oploc1,legends_rocky_ledge_3]
+if(coordx(coord) > coordx(loc_coord)) {
+    mes("You step confidently onto the rocky ledge.");
+    p_teleport(movecoord(loc_coord, 0, 0, 1));
+    return;
+}
+~mesbox("This looks like quite a dangerous walk way, are you sure you want to take this path?");
+def_int $choice = ~p_choice2_header("Yes, I can think of nothing more exciting!", 1, "No, I'm having second thoughts.", 2, "Walk along dangerous path?");
+if($choice = 2) {
+    mes("You decide to stay where you are.");
+    return;
+}
+if_close;
+mes("You step forward carefully onto the pathway.");
+p_teleport(loc_coord);
+p_delay(1);
+if(stat_random(stat(agility), 110, 250) = false) {
+    mes("You slip and fall!");
+    say("Arrgggghhhhhhhhhhhhhhh...........!!!");
+    ~agility_exactmove(seq_795, 30, 1, coord, movecoord(loc_coord, -1, 0, 0), 37, 70, ^exact_north, false);
+    ~bas_set_all(seq_796);
+    p_delay(5);
+    ~update_bas;
+    mes("You feel a little nervous from your near fall...");
+    ~agility_exactmove(seq_797, 30, 1, coord, movecoord(loc_coord, 0, 0, -1), 37, 70, ^exact_north, false);
+    // synth_sound(2493 loops 10)
+    mes("You lose some Agility!");
+    mes("You wrench your arm as you grab for a handhold.");
+    ~damage_self(~random_range(1, 10));
+    stat_sub(agility, ~random_range(1, 10), 0);
+    return;
+}
+mes("You climb confidently over the rocks and hold your balance well.");
+p_delay(1);
+p_teleport(movecoord(loc_coord, 0, 0, -1));
+
+[oploc1,legends_rocks_2]
+if(coordx(coord) > coordx(loc_coord)) {
+    mes("You easily climb over the rocks.");
+    p_teleport(loc_coord);
+    p_delay(1);
+    p_teleport(movecoord(loc_coord, 0, 0, -1));
+    return;
+}
+~mesbox("This rock looks pretty risky to climb over, especially with such a drop on each side of the path. Are you sure you want to risk climbing this rock?");
+def_int $choice = ~p_choice2_header("Yes, I want to climb over the rocks.", 1, "No thanks, I've changed my mind.", 2, "Climb over rocks?");
+if($choice = 2) {
+    mes("You decide not to climb the rocks.");
+    return;
+}
+if_close;
+mes("You start to prepare to climb over the rocks.");
+p_teleport(loc_coord);
+p_delay(1);
+if(stat_random(stat(agility), 110, 250) = false) {
+    mes("You slip and fall!");
+    ~agility_exactmove(seq_770, 30, 0, coord, movecoord(loc_coord, -2, 0, 2), 52, 100, ^exact_east, false);
+    ~set_walkbas(seq_767);
+    p_delay(1);
+    ~update_bas;
+    mes("You take a nasty fall down the side of the cliff...");
+    switch_int(random(6)) {
+        case 0 :
+            mes("...and take major damage.");
+            ~damage_self(add(random(30), 1));
+        case 1 :
+            mes("...and take severe damage.");
+            ~damage_self(add(random(25), 1));
+        case 2 :
+            mes("...and take hard damage.");
+            ~damage_self(add(random(20), 1));
+        case 3 :
+            mes("...and take medium damage.");
+            ~damage_self(add(random(15), 1));
+        case 4 :
+            mes("...and take light damage.");
+            ~damage_self(add(random(10), 1));
+        case 5 :
+            mes("...but you use your Agility to avoid any damage.");
+    }
+    return;
+}
+mes("You climb over the rocks quite easily.");
+p_teleport(movecoord(loc_coord, 1, 0, 0));
+
+[oploc1,legends_rocks_3]
+if(coordz(coord) < coordz(loc_coord)) {
+    mes("You easily climb over the rocks.");
+    p_teleport(loc_coord);
+    p_delay(1);
+    p_teleport(movecoord(loc_coord, 0, 0, 1));
+    return;
+}
+~mesbox("This rock looks pretty risky to climb over, especially with such a drop on each side of the path. Are you sure you want to risk climbing this rock?");
+def_int $choice = ~p_choice2_header("Yes, I want to climb over the rocks.", 1, "No thanks, I've changed my mind.", 2, "Climb over rocks?");
+if($choice = 2) {
+    mes("You decide not to climb the rocks.");
+    return;
+}
+if_close;
+mes("You start to prepare to climb over the rocks.");
+p_teleport(loc_coord);
+p_delay(1);
+if(stat_random(stat(agility), 110, 250) = false) {
+    mes("You slip and fall!");
+    ~agility_exactmove(seq_770, 30, 0, coord, movecoord(loc_coord, 3, 0, 0), 52, 100, ^exact_south, false);
+    ~set_walkbas(seq_767);
+    p_delay(1);
+    ~update_bas;
+    mes("You take a nasty fall down the side of the cliff...");
+    switch_int(random(6)) {
+        case 0 :
+            mes("...and take major damage.");
+            ~damage_self(add(random(30), 1));
+        case 1 :
+            mes("...and take severe damage.");
+            ~damage_self(add(random(25), 1));
+        case 2 :
+            mes("...and take hard damage.");
+            ~damage_self(add(random(20), 1));
+        case 3 :
+            mes("...and take medium damage.");
+            ~damage_self(add(random(15), 1));
+        case 4 :
+            mes("...and take light damage.");
+            ~damage_self(add(random(10), 1));
+        case 5 :
+            mes("...but you use your Agility to avoid any damage.");
+    }
+    return;
+}
+mes("You climb over the rocks quite easily.");
+p_teleport(movecoord(loc_coord, 0, 0, -1));
+
+[oploc1,legends_rocks_4]
+if(coordz(coord) < coordz(loc_coord)) {
+    mes("You easily climb over the rocks.");
+    p_teleport(loc_coord);
+    p_delay(1);
+    p_teleport(movecoord(loc_coord, 0, 0, 1));
+    return;
+}
+~mesbox("This rock looks pretty risky to climb over, especially with such a drop on each side of the path. Are you sure you want to risk climbing this rock?");
+def_int $choice = ~p_choice2_header("Yes, I want to climb over the rocks.", 1, "No thanks, I've changed my mind.", 2, "Climb over rocks?");
+if($choice = 2) {
+    mes("You decide not to climb the rocks.");
+    return;
+}
+if_close;
+mes("You start to prepare to climb over the rocks.");
+p_teleport(movecoord(loc_coord, 1, 0, 1));
+p_delay(1);
+if(stat_random(stat(agility), 110, 250) = false) {
+    mes("You slip and fall!");
+    ~agility_exactmove(seq_770, 30, 0, coord, movecoord(coord, 2, 0, -2), 52, 100, ^exact_south, false);
+    ~set_walkbas(seq_767);
+    p_delay(1);
+    ~update_bas;
+    mes("You take a nasty fall down the side of the cliff...");
+    switch_int(random(6)) {
+        case 0 :
+            mes("...and take major damage.");
+            ~damage_self(add(random(30), 1));
+        case 1 :
+            mes("...and take severe damage.");
+            ~damage_self(add(random(25), 1));
+        case 2 :
+            mes("...and take hard damage.");
+            ~damage_self(add(random(20), 1));
+        case 3 :
+            mes("...and take medium damage.");
+            ~damage_self(add(random(15), 1));
+        case 4 :
+            mes("...and take light damage.");
+            ~damage_self(add(random(10), 1));
+        case 5 :
+            mes("...but you use your Agility to avoid any damage.");
+    }
+    return;
+}
+mes("You climb over the rocks quite easily.");
+p_teleport(movecoord(loc_coord, 0, 0, -1));
+
+[oploc1,furnace_underground]
+~mesbox("This is an ancient looking furnace, it is partially molten and buried by years of rock debris. Inside the furnace there is a compartment with strangely shaped sections.");
+
+[oploc2,furnace_underground]
+~mesbox("You search the lava furnace. You find a small compartment that you may be able to use. Strangely, it looks as if It looks designed it is designed for a specific purpose... to fuse things together at very high temperatures...");
+@legends_furnace_pieces;
+
+[label,legends_furnace_pieces]
+def_int $total = calc(getbit_range(%legends_map_runes, ^legends_smelting_chunk, ^legends_smelting_chunk) 
+                        + getbit_range(%legends_map_runes, ^legends_smelting_hunk, ^legends_smelting_hunk) 
+                        + getbit_range(%legends_map_runes, ^legends_smelting_lump, ^legends_smelting_lump));
+if($total = 0) {
+    ~mesbox("The compartment in the furnace looks like it should hold something.|It's divided into three seperate sections.");
+} else if($total = 1) {
+    ~mesbox("The compartment in the furnace looks like it should hold something.|It looks like it needs two more pieces.");
+} else if($total = 2) {
+    ~mesbox("The compartment in the furnace looks like it should hold something.|It looks like it needs one more piece.");
+}
+
+[oplocu,furnace_underground]
+if(stat(crafting) < 50) {
+    mes("You need a Crafting level of 50 to use this furnace.");
+    return;
+}
+
+[oploc1,legends_recess]
+~mesbox("You see a heart-shaped depression in the wall.|A messagne reads...|@blu@All ye who stand 'ere the dragons teeth,|@blu@Place your full true heart within, and proceed...");
+
+[oploc1,legends_shimmering_field]
+anim(seq_846, 0);
+p_delay(1);
+// recheck on rs3!
+~mesbox("You walk into an invisible barrier. Some kind of magical force will not allow you to pass into the cavern. You notice something interesting on the wall to the left.");
+
+[oploc2,legends_shimmering_field]
+~mesbox("You see a shimmering field right in front of your eyes. It seems to float in the air. You touch it with your hand and it seems to resist your movements. It will definitely bar you from getting into the next cave.");
+
 [oploc1,legends_leafy_palm_tree]
 mes("You give the bamboo tree a good shake.");
 anim(human_push, 0);
@@ -1319,4 +1725,10 @@ if (p_finduid(uid) = true) {
 // jungle forester
 if (p_finduid(uid) = true) {
     p_telejump(^legends_gujuo_guide_coord);
+}
+
+[debugproc,lv]
+// viyeldi
+if (p_finduid(uid) = true) {
+    p_telejump(0_37_73_9_40);
 }

@@ -1,6 +1,6 @@
 [ai_queue1,nezikchened] ~npc_default_retaliate_ap;
 
-[ai_opplayer2,nezikchened] 
+[ai_opplayer2,nezikchened]
 if (%npc_aggressive_player ! uid) {
     npc_setmode(null);
     return;
@@ -29,6 +29,11 @@ if (npc_range(coord) > 1) { // if more than 1 tile away after being attacked, ne
 }
 
 [opnpc2,nezikchened]
+if(%legends_progress ! ^legends_summoned_nezikchened_fire) {
+    mes("Your attack glides straight through the demon, as if he isn't even there.");
+    %npc_aggressive_player = null;
+    return;
+}
 if (%npc_aggressive_player ! uid) {
     mes("It's not after you...");
     return;
@@ -36,6 +41,11 @@ if (%npc_aggressive_player ! uid) {
 @player_combat_start;
 
 [apnpc2,nezikchened] 
+if(%legends_progress ! ^legends_summoned_nezikchened_fire) {
+    mes("Your attack glides straight through the demon, as if he isn't even there.");
+    %npc_aggressive_player = null;
+    return;
+}
 if (%npc_aggressive_player ! uid) {
     mes("It's not after you...");
     return;
@@ -47,11 +57,22 @@ if (npc_findhero = false) {
     npc_del;
     return;
 }
-if (finduid(%npc_aggressive_player) = true & p_finduid(uid) = true) {
-    // todo: timings here
-    if (%legends_progress = ^legends_summoned_nezikchened_fire) {
-        npc_setmode(none);
+npc_sethuntmode(null);
+npc_setmode(none);
+if (finduid(%npc_aggressive_player) = true) {
+    if_close;
+    queue(nezikchened_defeat, 0, npc_uid);
+    return;
+}
+// shouldn't ever be possible
+gosub(npc_death);
+
+[queue,nezikchened_defeat](npc_uid $npc)
+// todo: timings here
+if(npc_finduid($npc) = true) {
+    if (inzone(coord, 0_43_145_0_0, 0_43_145_63_63) = true & %legends_progress = ^legends_summoned_nezikchened_fire) {
         p_stopaction;
+        %legends_progress = ^legends_defeated_nezikchened_fire;
         mes("Nezikchened: Ha ha ha... I shall return for you when the time is right.");
         npc_say("Ha ha ha... I shall return for you when the time is right.");
         mes("The demon starts an incantation...");
@@ -60,12 +81,12 @@ if (finduid(%npc_aggressive_player) = true & p_finduid(uid) = true) {
         npc_say("But I will leave you with a taste of my power...");
         p_delay(2);
         mes("As he finishes the incantation a powerful bolt of energy strikes you.");
+        spotanim_npc(firebolt_casting, 92, 0);
+        sound_synth(fire_bolt_all, 0, 0);
+        ~player_projectile(npc_coord, coord, uid, firebolt_travel, 43, 31, 51, 16, -5, 64, 10);
         p_delay(2);
         mes("Nezikchened: Haha hah ha ha ha ha....");
         npc_say("Nezikchened: Haha hah ha ha ha ha....");
-        spotanim_npc(fireblast_casting, 92, 0);
-        sound_synth(fire_blast_all, 0, 0);
-        ~player_projectile(npc_coord, coord, uid, fireblast_travel, 43, 31, 51, 16, -5, 64, 10);
         p_delay(2);
         ~damage_self(random(17));
         sound_synth(npc_param(death_sound), 0, 0);
@@ -74,13 +95,7 @@ if (finduid(%npc_aggressive_player) = true & p_finduid(uid) = true) {
         p_delay(4);
         npc_del;
         mes("The demon's body falls to the floor in a pile of ashes...");
-        %legends_progress = ^legends_defeated_nezikchened_fire;
+    } else {
+        gosub(npc_death);
     }
-    // todo: other appearances later in the quest
-    else {
-        // shouldn't be here
-        npc_del;
-    }
-    return;
 }
-gosub(npc_death);
