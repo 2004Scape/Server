@@ -650,6 +650,7 @@ export const ScriptOpcodeMap: Map<string, number> = new Map([
     ['NPC_BASESTAT', ScriptOpcode.NPC_BASESTAT],
     ['NPC_CATEGORY', ScriptOpcode.NPC_CATEGORY],
     ['NPC_CHANGETYPE', ScriptOpcode.NPC_CHANGETYPE],
+    ['NPC_CHANGETYPE_KEEPALL', ScriptOpcode.NPC_CHANGETYPE_KEEPALL],
     ['NPC_COORD', ScriptOpcode.NPC_COORD],
     ['NPC_DAMAGE', ScriptOpcode.NPC_DAMAGE],
     ['NPC_DEL', ScriptOpcode.NPC_DEL],
