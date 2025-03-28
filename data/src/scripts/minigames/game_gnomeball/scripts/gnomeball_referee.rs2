@@ -55,7 +55,7 @@ npc_anim(midget_seq_201, 0);
 anim(seq_782, 27);
 p_delay(0);
 mes("You jump up and catch it.");
-sound_synth(sound_152, 0, 0);
+sound_synth(catch, 0, 0);
 p_delay(0);
 inv_setslot(worn, ^wearpos_rhand, gnomeball, 1);
 facesquare(npc_coord);
