@@ -99,30 +99,28 @@ export default class Zone {
 
     tick(tick: number): void {
         for (const obj of this.getAllObjsUnsafe()) {
-            if (!obj.updateLifeCycle(tick) || obj.lastLifecycleTick === tick) {
-                continue;
-            }
-            if (obj.lifecycle === EntityLifeCycle.DESPAWN) {
-                if (obj.reveal !== -1) {
-                    World.revealObj(obj);
-                } else {
-                    World.removeObj(obj, 0);
+            if (obj.lifecycleTick > -1 && obj.lifecycleTick <= tick) {
+                if (obj.lifecycle === EntityLifeCycle.DESPAWN) {
+                    if (obj.reveal !== -1) {
+                        World.revealObj(obj);
+                    } else {
+                        World.removeObj(obj, 0);
+                    }
+                } else if (obj.lifecycle === EntityLifeCycle.RESPAWN) {
+                    World.addObj(obj, Obj.NO_RECEIVER, 0);
                 }
-            } else if (obj.lifecycle === EntityLifeCycle.RESPAWN) {
-                World.addObj(obj, Obj.NO_RECEIVER, 0);
             }
         }
 
         for (const loc of this.getAllLocsUnsafe()) {
-            if (!loc.updateLifeCycle(tick) || loc.lastLifecycleTick === tick) {
-                continue;
-            }
-            if (loc.lifecycle === EntityLifeCycle.DESPAWN) {
-                World.removeLoc(loc, 0);
-            } else if (loc.lifecycle === EntityLifeCycle.RESPAWN && loc.isChanged()) {
-                World.revertLoc(loc);
-            } else if (loc.lifecycle === EntityLifeCycle.RESPAWN && !loc.isActive) {
-                World.addLoc(loc, 0);
+            if (loc.lifecycleTick > -1 && loc.lifecycleTick <= tick) {
+                if (loc.lifecycle === EntityLifeCycle.DESPAWN) {
+                    World.removeLoc(loc, 0);
+                } else if (loc.lifecycle === EntityLifeCycle.RESPAWN && loc.isChanged()) {
+                    World.revertLoc(loc);
+                } else if (loc.lifecycle === EntityLifeCycle.RESPAWN && !loc.isActive) {
+                    World.addLoc(loc, 0);
+                }
             }
         }
 
