@@ -1,29 +1,20 @@
 [opnpc1,chamber_guardian]
 if (%magearena <= ^mage_arena_complete) {
-    ~chatplayer("<p,happy>Hello my friend, Kolodion sent me down.");
-    ~chatnpc("<p,angry>Sssshhh... the gods are talking. I can hear their|whispers.");
-    ~chatnpc("<p,quiz>Can you hear them adventurer, they're calling you.");
-    ~chatplayer("<p,confused>Erm... ok!");
-    ~chatnpc("<p,shifty>Go chant at the statue of the god you most wish to|represent in this world, you will be rewarded.");
-    ~chatnpc("<p,shifty>Once you are done, come back to me. I shall supply|you with a mage staff ready for battle.");
-    return;
-} else if (%magearena > ^mage_arena_prayed_at_statue & %magearena < ^mage_arena_staff_given) {
+    @chamber_guardian_pray_at_statues;
+} else if (%magearena = ^mage_arena_prayed_at_statue) {
+    def_namedobj $staff = ~god_staff_checker;
+    if ($staff = null) {
+        @chamber_guardian_pray_at_statues;
+    }
     // after praying at the statue:
     ~chatplayer("<p,neutral>Hi.");
     ~chatnpc("<p,quiz>Hello adventurer, have you made your choice?");
     ~chatplayer("<p,neutral>I have.");
     ~chatnpc("<p,neutral>Good, good, I hope you have chosen well. I will now|present you with a magic staff. This, along with the|cape awarded to you by your chosen god, are all the|weapons and armour you will need here.");
-    // check staff type
-    def_namedobj $staff = saradominstaff;
-    switch_int(%magearena) {
-        case ^mage_arena_saradomin : $staff = saradominstaff;
-        case ^mage_arena_zamorak : $staff = zamorakstaff;
-        case ^mage_arena_guthix : $staff = guthixstaff;
-    }
     inv_add(inv, $staff, 1); // drops on ground on full inv
     ~objbox($staff, "The guardian hands you an ornate magic staff.", 250, 0, 0);
     %magearena = ^mage_arena_staff_given;
-    return;
+    return;   
 }
 
 // default
@@ -42,9 +33,29 @@ if ($choice = 1) {
     ~chatplayer("<p,happy>Good stuff.");
 }
 
+[label,chamber_guardian_pray_at_statues]
+~chatplayer("<p,happy>Hello my friend, Kolodion sent me down.");
+~chatnpc("<p,angry>Sssshhh... the gods are talking. I can hear their|whispers.");
+~chatnpc("<p,quiz>Can you hear them adventurer, they're calling you.");
+~chatplayer("<p,confused>Erm... ok!");
+~chatnpc("<p,shifty>Go chant at the statue of the god you most wish to|represent in this world, you will be rewarded.");
+~chatnpc("<p,shifty>Once you are done, come back to me. I shall supply|you with a mage staff ready for battle.");
+
 [opnpc3,chamber_guardian]
 if (%magearena < ^mage_arena_staff_given) {
     mes("The guardian is deep in concentration.");
     return;
 }
 ~openshop_activenpc;
+
+[proc,god_staff_checker]()(namedobj)
+if (~obj_gettotal(saradomincape) > 0) {
+    return(saradominstaff);
+}
+if (~obj_gettotal(zamorakcape) > 0) {
+    return(zamorakstaff);
+}
+if (~obj_gettotal(guthixcape) > 0) {
+    return(guthixstaff);
+}
+return(null);

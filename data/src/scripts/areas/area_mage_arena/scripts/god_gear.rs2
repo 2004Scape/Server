@@ -31,3 +31,15 @@ return(true);
 inv_delslot(inv, last_slot);
 sound_synth(put_down, 0, 0);
 mes(oc_param(last_item, lose_cape_message)); // https://youtu.be/tOUAeowTkCM?list=PLn23LiLYLb1Y4vxMPWXM-CVEvOUfuAP_o&t=140
+
+[opobj3,_armour_godcape]
+if (~obj_gettotalcat(armour_godcape) > 0) {
+    mes("You may only possess one sacred cape at a time."); // https://youtu.be/fJVqiCdunZw?list=PLn23LiLYLb1Y4vxMPWXM-CVEvOUfuAP_o&t=2
+    mes("The conflicting powers of the capes drive them apart.");
+    return;
+}
+@pickup_obj;
+
+[debugproc,dgc]
+obj_add(coord, zamorakcape, 1, 100);
+obj_add(coord, zamorakcape, 1, 100);

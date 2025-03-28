@@ -29,6 +29,8 @@ export default {
     NODE_PORT: tryParseInt(process.env.NODE_PORT, 43594),
     // members content
     NODE_MEMBERS: tryParseBoolean(process.env.NODE_MEMBERS, true),
+    // automatically upgrade accounts to members on successful login to a members world
+    NODE_AUTO_SUBSCRIBE_MEMBERS: tryParseBoolean(process.env.NODE_AUTO_SUBSCRIBE_MEMBERS, true),
     // addxp multiplier
     NODE_XPRATE: tryParseInt(process.env.NODE_XPRATE, 1),
     // production mode!

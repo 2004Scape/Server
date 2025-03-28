@@ -43,7 +43,7 @@ if(inv_total(inv, scorpion_cage_empty) > 0) {
 [label,thormac_for_me]
 ~chatplayer("<p,quiz>What's in it for me?");
 ~chatnpc("<p,neutral>Well I suppose I can aid you with my skills as a staff sorcerer. Most battlestaffs around here are pretty puny. I can beef them up for you a bit.");
-@multi2("What's in it for me?", thormac_for_me, "Ok, I will do it then", thormac_startquest);
+@multi2("So how would I go about catching them then?", thormac_how_catch, "Ok, I will do it then.", thormac_startquest);
 
 [label,thormac_not_interest]
 ~chatplayer("<p,neutral>I'm not interested.");

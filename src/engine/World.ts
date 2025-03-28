@@ -85,7 +85,8 @@ import {
     trackCycleWorldTime,
     trackCycleZoneTime,
     trackNpcCount,
-    trackPlayerCount
+    trackPlayerCount,
+    trackSessionEventsPublished
 } from '#/server/Metrics.js';
 import Environment from '#/util/Environment.js';
 import { fromBase37, toBase37, toSafeName } from '#/util/JString.js';
@@ -679,7 +680,7 @@ class World {
                 }
 
                 // - Npc Events (Respawn, Revert, Despawn)
-                if (npc.lifecycleTick > -1 && npc.lifecycleTick < this.currentTick) {
+                if (npc.lifecycleTick > -1 && npc.lifecycleTick <= this.currentTick) {
                     try {
                         // Respawn NPC
                         if (npc.lifecycle === EntityLifeCycle.RESPAWN && !npc.isActive) {
@@ -1040,9 +1041,7 @@ class World {
             player.reorient();
             player.buildArea.rebuildNormal(); // set origin before compute player is why this is above.
 
-            const appearance = player.masks & PlayerInfoProt.APPEARANCE
-                ? player.generateAppearance()
-                : player.lastAppearanceBytes ?? player.generateAppearance();
+            const appearance = player.masks & PlayerInfoProt.APPEARANCE ? player.generateAppearance() : (player.lastAppearanceBytes ?? player.generateAppearance());
 
             rsbuf.computePlayer(
                 player.x,
@@ -1085,7 +1084,7 @@ class World {
                 player.exactEndZ,
                 player.exactMoveStart,
                 player.exactMoveEnd,
-                player.exactMoveDirection,
+                player.exactMoveDirection
             );
         }
 
@@ -1116,7 +1115,7 @@ class World {
                 npc.chat,
                 npc.graphicId,
                 npc.graphicHeight,
-                npc.graphicDelay,
+                npc.graphicDelay
             );
         }
     }
@@ -1196,10 +1195,6 @@ class World {
 
         // - reset npcs
         for (const npc of this.npcs) {
-            if (!npc.isActive) {
-                continue;
-            }
-
             npc.resetEntity(false);
         }
 
@@ -1353,7 +1348,9 @@ class World {
             this.npcEventQueue.addTail(new NpcEventRequest(NpcEventType.SPAWN, script, npc));
         }
 
-        npc.setLifeCycle(this.currentTick + duration);
+        if (duration > -1) {
+            npc.setLifeCycle(this.currentTick + duration);
+        }
     }
 
     removeNpc(npc: Npc, duration: number): void {
@@ -1376,7 +1373,7 @@ class World {
             rsbuf.removeNpc(npc.nid);
             this.npcs.remove(npc.nid);
             npc.cleanup();
-        } else if (npc.lifecycle === EntityLifeCycle.RESPAWN) {
+        } else if (npc.lifecycle === EntityLifeCycle.RESPAWN && duration > -1) {
             npc.setLifeCycle(this.currentTick + adjustedDuration);
         }
     }
@@ -2222,6 +2219,7 @@ class World {
             event: args.length ? message + ' ' + args.join(' ') : message,
             event_type
         });
+        trackSessionEventsPublished.inc();
     }
 
     notifyPlayerBan(staff: string, username: string, until: number) {

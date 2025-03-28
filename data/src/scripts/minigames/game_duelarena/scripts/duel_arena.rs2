@@ -47,7 +47,7 @@ mes("Sending duel offer...");
 %duel_settings = 0;
 %duelpartner = .uid;
 
-if (.%duelpartner = uid) {
+if (.%duelpartner = uid & %duelstatus = ^duelstatus_received) {
     if (.p_finduid(.uid) = true) {
         .p_stopaction;
     }
@@ -69,9 +69,10 @@ if (.%duelpartner = uid) {
     if_openmain_side(duel_select_type, duel_side);
     .if_openmain_side(duel_select_type, duel_side);
     
-    %duelstatus = 0;
-    .%duelstatus = 0;
+    %duelstatus = ^duelstatus_reset;
+    .%duelstatus = ^duelstatus_reset;
 } else {
+    .%duelstatus = ^duelstatus_received;
     .mes("<displayname>:duelreq:");
 }
 
@@ -107,9 +108,9 @@ if (.finduid(%duelpartner) = true) {
 %duelpartner = null;
 
 [if_button,duel_select_type:accept]
-%duelstatus = 1;
+%duelstatus = ^duelstatus_pending_accept;
 if (.finduid(%duelpartner) = true & ~enough_duel_space = true) { // https://youtu.be/WHpZQ5fbr5w
-    if (.%duelstatus = 1 & ~.enough_duel_space = true) {
+    if (.%duelstatus = ^duelstatus_pending_accept & ~.enough_duel_space = true) {
         // Accept stake and move onto second screen!
         inv_stoptransmit(duel_select_type:inv);
         inv_stoptransmit(duel_select_type:otherinv);
@@ -160,8 +161,8 @@ if (.finduid(%duelpartner) = true & ~enough_duel_space = true) { // https://yout
         if_settext(duel_confirm:com_97, "Are you sure you want to fight this duel?");
         .if_settext(duel_confirm:com_97, "Are you sure you want to fight this duel?");
 
-        %duelstatus = 2;
-        .%duelstatus = 2;
+        %duelstatus = ^duelstatus_accept;
+        .%duelstatus = ^duelstatus_accept;
     } else {
         .if_settext(duel_select_type:status, "Other player has accepted...");
         if_settext(duel_select_type:status, "Waiting for other player...");
@@ -287,18 +288,18 @@ return(true);
 
 
 [if_button,duel_confirm:accept]
-%duelstatus = 3;
+%duelstatus = ^duelstatus_pending_confirm;
 
 if (.finduid(%duelpartner) = true) {
-    if (.%duelstatus = 3) {
+    if (.%duelstatus = ^duelstatus_pending_confirm) {
         mes("Accepted stake and duel options.");
         .mes("Accepted stake and duel options.");
 
         // both_moveinv(inv, inv);
         // .both_moveinv(tempinv, inv);
 
-        %duelstatus = 4;
-        .%duelstatus = 4;
+        %duelstatus = ^duelstatus_confirm;
+        .%duelstatus = ^duelstatus_confirm;
 
         if_close;
         .if_close;
@@ -328,10 +329,10 @@ def_int $total = inv_total(tempinv, $obj);
 if ($amount < $total) $total = $amount;
 inv_moveitem(tempinv, inv, $obj, $total);
 
-%duelstatus = 0;
+%duelstatus = ^duelstatus_reset;
 if_settext(duel_select_type:status, "");
 if (.finduid(%duelpartner) = true) {
-    .%duelstatus = 0;
+    .%duelstatus = ^duelstatus_reset;
     .if_settext(duel_select_type:status, "");
 }
 
@@ -365,10 +366,10 @@ def_int $total = inv_total(inv, $obj);
 if ($amount < $total) $total = $amount;
 inv_moveitem(inv, tempinv, $obj, $total);
 
-%duelstatus = 0;
+%duelstatus = ^duelstatus_reset;
 if_settext(duel_select_type:status, "");
 if (.finduid(%duelpartner) = true) {
-    .%duelstatus = 0;
+    .%duelstatus = ^duelstatus_reset;
     .if_settext(duel_select_type:status, "");
 }
 
@@ -383,7 +384,7 @@ if (.uid ! %duelpartner) {
     mes("You can only attack your opponent!"); // https://storage.googleapis.com/tannerdino/images/batwifahat-purpl.jpg
     return(false);
 }
-if (%duelstatus < 5 & .%duelstatus < 5) {
+if (%duelstatus < ^duelstatus_start & .%duelstatus < ^duelstatus_start) {
     mes("The duel has not started yet!"); // https://youtu.be/64GEUr-lgS8?t=106
     return(false);
 }
@@ -412,12 +413,12 @@ if (~in_duel_arena(coord) = false) {
     return;
 }
 if (.finduid(%duelpartner) = true) {
-    .%duelstatus = 0;
+    .%duelstatus = ^duelstatus_reset;
     .%duelpartner = null;
     .if_close;
     .queue(duel_arena_disconnect, 0);
 }
-%duelstatus = 0;
+%duelstatus = ^duelstatus_reset;
 %duelpartner = null;
 ~duel_give_stake_back;
 

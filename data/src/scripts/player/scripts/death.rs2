@@ -47,7 +47,7 @@ healenergy(10000);
 // todo: end poison timer ~player_end_poison
 
 [proc,player_death_lose_items]
-if (staffmodlevel > 1) { return; }
+if (staffmodlevel > 1 & map_production = true) { return; }
 
 def_boolean $skulled = false;
 if (%pk_skull > 0) { $skulled = true; }
@@ -94,7 +94,7 @@ inv_clear(death);
 
 [proc,pvp_death_lose_items]
 ~pvp_death_message(.uid);
-if (staffmodlevel > 1) { return; }
+if (staffmodlevel > 1 & map_production = true) { return; }
 
 def_boolean $skulled = false;
 if (%pk_skull > 0) { $skulled = true; }

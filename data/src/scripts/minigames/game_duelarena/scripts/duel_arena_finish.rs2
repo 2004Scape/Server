@@ -77,7 +77,7 @@ clearqueue(player_death_default);
 ~clear_poison;
 ~update_all(inv_getobj(worn, ^wearpos_rhand));
 hint_stop;
-%duelstatus = 0;
+%duelstatus = ^duelstatus_reset;
 %duelpartner = null;
 
 [proc,duel_give_stake_back]

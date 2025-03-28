@@ -55,8 +55,8 @@ importers:
         version: 8.18.0
     devDependencies:
       '@2004scape/rsbuf':
-        specifier: ^225.1.5
-        version: 225.1.5
+        specifier: ^225.1.7
+        version: 225.1.7
       '@2004scape/rsmod-pathfinder':
         specifier: ^5.0.4
         version: 5.0.4
@@ -147,8 +147,8 @@ importers:
 
 packages:
 
-  '@2004scape/rsbuf@225.1.5':
-    resolution: {integrity: sha512-d7dbB/zHZj5dqvqpBN5RIo0DwK+KmT9hq2vMKyk6qbdm3dc/wsjwFOLGfh3xIUfPAITitQScQEjRQZxxIj5baA==}
+  '@2004scape/rsbuf@225.1.7':
+    resolution: {integrity: sha512-0Q0oCzyEGiweoMEx0lHdrv7Nmy/DoYWbuIc+linL81qOhbo6hATDZqxDdb/7IjZWCGS9Rj2s8soRY/1oRQK+Zg==}
 
   '@2004scape/rsmod-pathfinder@5.0.4':
     resolution: {integrity: sha512-0QFYbUwasw4x9ZAl+KbyGUW/UFn7fyXJUsjze55PesBT7CAg7yCDr/bcRR8J+dsrUN/09xRwq7FqZDKMjrvKHA==}
@@ -3635,7 +3635,7 @@ packages:
 
 snapshots:
 
-  '@2004scape/rsbuf@225.1.5': {}
+  '@2004scape/rsbuf@225.1.7': {}
 
   '@2004scape/rsmod-pathfinder@5.0.4': {}
 

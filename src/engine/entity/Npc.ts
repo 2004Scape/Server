@@ -62,11 +62,11 @@ export default class Npc extends PathingEntity {
     huntTarget: Entity | null = null;
     huntrange: number = 0;
     spawnTriggerPending: boolean = true;
-    observerCount: number = 0;
 
     nextPatrolTick: number = -1;
     nextPatrolPoint: number = 0;
     delayedPatrol: boolean = false;
+    resetOnRevert: boolean = true;
 
     lastWanderTick: number = 0;
 
@@ -153,8 +153,10 @@ export default class Npc extends PathingEntity {
             this.huntMode = npcType.huntmode;
             this.huntClock = 0;
             this.huntTarget = null;
+            this.tele = true;
+        } else {
+            super.resetPathingEntity();
         }
-        super.resetPathingEntity();
     }
 
     pathToPathingTarget(): void {
@@ -438,11 +440,14 @@ export default class Npc extends PathingEntity {
     }
 
     noMode(): void {
-        // this.clearInteraction();
         this.updateMovement(false);
-        // this.targetOp = NpcMode.NONE;
-        // this.faceEntity = -1;
-        // this.masks |= InfoProt.NPC_FACE_ENTITY.id;
+    }
+
+    clearInteraction(): void {
+        super.clearInteraction();
+        this.targetOp = NpcMode.NONE;
+        this.faceEntity = -1;
+        this.masks |= NpcInfoProt.FACE_ENTITY;
     }
 
     defaultMode(): void {
@@ -1009,23 +1014,31 @@ export default class Npc extends PathingEntity {
         return this.currentType;
     }
 
-    changeType(type: number, duration: number) {
+    changeType(type: number, duration: number, reset: boolean = true) {
         if (!this.isActive || duration < 1) {
             return;
         }
         this.currentType = type;
         this.masks |= NpcInfoProt.CHANGE_TYPE;
         this.uid = (type << 16) | this.nid;
+        this.resetOnRevert = reset;
 
-        this.setLifeCycle(World.currentTick + duration);
+        if (type === this.baseType) {
+            this.setLifeCycle(-1);
+        } else {
+            this.setLifeCycle(World.currentTick + duration);
+        }
     }
 
     revert(): void {
-        this.currentType = this.baseType;
-        this.masks |= NpcInfoProt.CHANGE_TYPE;
-        this.uid = (this.type << 16) | this.nid;
-
-        this.setLifeCycle(-1);
+        if (this.resetOnRevert) {
+            World.removeNpc(this, -1);
+            World.addNpc(this, -1, false);
+        } else {
+            this.currentType = this.baseType;
+            this.masks |= NpcInfoProt.CHANGE_TYPE;
+            this.uid = (this.type << 16) | this.nid;
+        }
     }
 
     isValid(_hash64?: bigint): boolean {

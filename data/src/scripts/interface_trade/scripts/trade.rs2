@@ -37,7 +37,7 @@ if (.busy = true) {
 mes("Sending trade offer...");
 %tradepartner = .uid;
 
-if (.%tradepartner = uid) {
+if (.%tradepartner = uid & %tradestatus = ^tradestatus_received) {
     if (.p_finduid(.uid) = true) {
         .p_stopaction;
     }
@@ -58,17 +58,18 @@ if (.%tradepartner = uid) {
     if_openmain_side(trademain, tradeside);
     .if_openmain_side(trademain, tradeside);
 
-    %tradestatus = 0;
-    .%tradestatus = 0;
+    %tradestatus = ^tradestatus_reset;
+    .%tradestatus = ^tradestatus_reset;
 } else {
+    .%tradestatus = ^tradestatus_received;
     .mes("<displayname>:tradereq:");
 }
 
 [if_button,trademain:accept]
-%tradestatus = 1;
+%tradestatus = ^tradestatus_pending_accept;
 
 if (.finduid(%tradepartner) = true) {
-    if (.%tradestatus = 1) {
+    if (.%tradestatus = ^tradestatus_pending_accept) {
         inv_stoptransmit(trademain:inv);
         inv_stoptransmit(trademain:otherinv);
         inv_stoptransmit(tradeside:inv);
@@ -138,8 +139,8 @@ if (.finduid(%tradepartner) = true) {
         if_settext(tradeconfirm:com_91, "Are you sure you want to make this trade?");
         .if_settext(tradeconfirm:com_91, "Are you sure you want to make this trade?");
 
-        %tradestatus = 2;
-        .%tradestatus = 2;
+        %tradestatus = ^tradestatus_accept;
+        .%tradestatus = ^tradestatus_accept;
     } else {
         if_settext(trademain:status, "Waiting for other player..."); // https://youtu.be/uSO-ilQk5XY?list=PLn23LiLYLb1bQ7Hwp77KoNBjKvpZQTfJT&t=817
         .if_settext(trademain:status,"Other player has accepted."); // https://storage.googleapis.com/tannerdino/images/06Dec14-16.jpg
@@ -243,10 +244,10 @@ if (.finduid(%tradepartner) = true) {
 %tradepartner = null;
 
 [if_button,tradeconfirm:accept]
-%tradestatus = 3;
+%tradestatus = ^tradestatus_pending_confirm;
 
 if (.finduid(%tradepartner) = true) {
-    if (.%tradestatus = 3) {
+    if (.%tradestatus = ^tradestatus_pending_confirm) {
         mes("Accepted trade.");
         .mes("Accepted trade.");
 
@@ -298,11 +299,11 @@ def_int $total = inv_total(tempinv, $obj);
 if ($amount < $total) $total = $amount;
 inv_moveitem(tempinv, inv, $obj, $total);
 
-%tradestatus = 0;
+%tradestatus = ^tradestatus_reset;
 if_settext(trademain:status, "");
 if (.finduid(%tradepartner) = true) {
     session_log(^log_moderator, "Removed offer <oc_debugname($obj)> x<tostring($total)> to <.name>");
-    .%tradestatus = 0;
+    .%tradestatus = ^tradestatus_reset;
     .if_settext(trademain:status, "");
 }
 
@@ -337,10 +338,10 @@ def_int $total = inv_total(inv, $obj);
 if ($amount < $total) $total = $amount;
 inv_moveitem(inv, tempinv, $obj, $total);
 
-%tradestatus = 0;
+%tradestatus = ^tradestatus_reset;
 if_settext(trademain:status, "");
 if (.finduid(%tradepartner) = true) {
     session_log(^log_moderator, "Added offer <oc_debugname($obj)> x<tostring($total)> to <.name>");
-    .%tradestatus = 0;
+    .%tradestatus = ^tradestatus_reset;
     .if_settext(trademain:status, "");
 }

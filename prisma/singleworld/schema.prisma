@@ -39,7 +39,7 @@ model account {
     notes         String?
     notes_updated DateTime?
 
-    members       Boolean  @default(true)
+    members       Boolean  @default(false)
 
     // Whether 2FA is enabled
     tfa_enabled Boolean @default(false)
@@ -90,6 +90,20 @@ model account_session {
     coord      Int
     event      String
     event_type Int      @default(-1)
+}
+
+model tag {
+    id Int @id @default(autoincrement())
+
+    name String
+    color String?
+}
+
+model account_tag {
+    tag_id Int
+    account_id Int
+
+    @@id([account_id, tag_id])
 }
 
 // website

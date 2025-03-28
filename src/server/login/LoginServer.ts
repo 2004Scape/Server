@@ -2,7 +2,7 @@ import fs from 'fs';
 import fsp from 'fs/promises';
 
 import bcrypt from 'bcrypt';
-import { WebSocketServer } from 'ws';
+import { WebSocket, WebSocketServer } from 'ws';
 
 
 import { db, toDbDate } from '#/db/query.js';
@@ -269,13 +269,19 @@ export default class LoginServer {
                             }
 
                             if (Environment.NODE_MEMBERS && !account.members) {
-                                s.send(
-                                    JSON.stringify({
-                                        replyTo,
-                                        response: 9
-                                    })
-                                );
-                                return;
+                                if (Environment.NODE_AUTO_SUBSCRIBE_MEMBERS) {
+                                    // Set members=1 for the account and proceed with login
+                                    await db.updateTable('account').where('id', '=', account.id).set('members', 1).executeTakeFirstOrThrow();
+                                    account.members = 1;
+                                } else {
+                                    s.send(
+                                        JSON.stringify({
+                                            replyTo,
+                                            response: 9
+                                        })
+                                    );
+                                    return;
+                                }
                             }
 
                             if (reconnecting && account.logged_in === nodeId) {
