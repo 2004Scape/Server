@@ -16,7 +16,7 @@ check_vis=lineofsight
 check_nottoostrong=off
 check_notcombat=%lastcombat
 check_notbusy=off
-find_keephunting=off
+find_keephunting=on
 find_newmode=opplayer2
 
 // these 3 will still hunt after the quest, but will not attack you first
@@ -25,6 +25,7 @@ type=player
 check_vis=lineofsight
 check_nottoostrong=off
 check_inv=inv,chunk_of_crystal,=0
+check_inv=bank,chunk_of_crystal,=0
 check_notcombat=%lastcombat
 check_notcombat_self=%npc_lastcombat
 check_notbusy=off
@@ -36,6 +37,7 @@ type=player
 check_vis=lineofsight
 check_nottoostrong=off
 check_inv=inv,hunk_of_crystal,=0
+check_inv=bank,hunk_of_crystal,=0
 check_notcombat=%lastcombat
 check_notcombat_self=%npc_lastcombat
 check_notbusy=off
@@ -47,6 +49,7 @@ type=player
 check_vis=lineofsight
 check_nottoostrong=off
 check_inv=inv,lump_of_crystal,=0
+check_inv=bank,lump_of_crystal,=0
 check_notcombat=%lastcombat
 check_notcombat_self=%npc_lastcombat
 check_notbusy=off

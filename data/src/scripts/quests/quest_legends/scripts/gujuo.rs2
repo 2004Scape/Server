@@ -68,7 +68,7 @@ else if (%legends_progress >= ^legends_accepted_rescue_ungadulu & %legends_progr
                 "I searched the catacombs thoroughly but found nothing else.", gujuo_searched,
                 "If I went in search of the source, could you help me?", gujuo_searchsource,
                 "Ok thanks for your help.", gujuo_thanks);
-    } else if(%legends_progress = ^legends_enter_lower_dungeon) {
+    } else if(%legends_progress <= ^legends_heart_in_recess & %legends_progress >= ^legends_enter_lower_dungeon) {
         @multi5("I have found a way into the caves!", gujuo_foundcaves, 
                 "Where is the source of the spring of pure water?", gujuo_source, 
                 "I searched the catacombs thoroughly but found nothing else.", gujuo_searched,

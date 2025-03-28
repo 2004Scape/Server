@@ -29,25 +29,25 @@ if (npc_range(coord) > 1) { // if more than 1 tile away after being attacked, ne
 }
 
 [opnpc2,nezikchened]
-if(%legends_progress ! ^legends_summoned_nezikchened_fire) {
-    mes("Your attack glides straight through the demon, as if he isn't even there.");
-    %npc_aggressive_player = null;
-    return;
-}
 if (%npc_aggressive_player ! uid) {
     mes("It's not after you...");
+    return;
+}
+if(%legends_progress ! ^legends_summoned_nezikchened_fire & %legends_progress ! ^legends_received_dagger) {
+    mes("Your attack glides straight through the demon, as if he isn't even there.");
+    %npc_aggressive_player = null;
     return;
 }
 @player_combat_start;
 
 [apnpc2,nezikchened] 
-if(%legends_progress ! ^legends_summoned_nezikchened_fire) {
-    mes("Your attack glides straight through the demon, as if he isn't even there.");
-    %npc_aggressive_player = null;
-    return;
-}
 if (%npc_aggressive_player ! uid) {
     mes("It's not after you...");
+    return;
+}
+if(%legends_progress ! ^legends_summoned_nezikchened_fire & %legends_progress ! ^legends_received_dagger) {
+    mes("Your attack glides straight through the demon, as if he isn't even there.");
+    %npc_aggressive_player = null;
     return;
 }
 @player_combat_start_ap;

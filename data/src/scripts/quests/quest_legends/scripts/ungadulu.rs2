@@ -115,7 +115,7 @@ switch_int(%legends_progress) {
         @multi3("I need to collect some Yommi tree seeds for Gujuo.", ungadulu_yommi,
             "How do I get out of here?", ungadulu_out,
             "Ok, thanks...", ungadulu_thanks);
-    case ^legends_germinated_seeds :
+    case ^legends_germinated_seeds, ^legends_water_pool_dried_up, ^legends_talk_gujuo_pool, ^legends_enter_lower_dungeon, ^legends_crystal_pieces_smelted, ^legends_heart_in_recess, ^legends_pushed_boulder :
         ~chatnpc("<p,happy>Hello Bwana, how goes your quest with the Yommi tree?");
         if(%legends_progress = ^legends_germinated_seeds) {
             @multi3("I have germinated the seeds.", ungadulu_germinated, "Where do I plant the seeds?", ungadulu_where_plant, "I need more Yommi tree seeds.", ungadulu_need_seeds);
@@ -124,7 +124,48 @@ switch_int(%legends_progress) {
         } else if(%legends_progress >= ^legends_water_pool_dried_up) {
             @multi3("I am on a quest to get more pure water.", ungadulu_quest, "What do you know about the source of the sacred water?", ungadulu_sacred_water, "I need more Yommi tree seeds.", ungadulu_need_seeds);
         }
+    case ^legends_received_dagger :
+        ~chatnpc("<p,quiz>Hello Bwana, how goes your quest to find the water?");
+        if(testbit(%legends_map_runes, ^legends_killed_viyeldi) = true) {
+            @multi5("I have killed Viyeldi!", ungadulu_killed_viyeldi, "I met a spirit in the Viyeldi Caves.", ungadulu_spirit, "The spirit told me to kill Viyeldi.", ungadulu_kill, "Do you know anything about daggers?", ungadulu_dagger, "I need more Yommi tree seeds.", ungadulu_need_seeds);
+        }
+        @multi5("I met a spirit in the Viyeldi Caves.", ungadulu_spirit, "The spirit told me to kill Viyeldi.", ungadulu_kill, "Do you know anything about daggers?", ungadulu_dagger, "I need more Yommi tree seeds.", ungadulu_need_seeds, "Ok, thanks...", ungadulu_thanks);
 }
+
+[label,ungadulu_killed_viyeldi]
+~chatplayer("<p,happy>I have killed Viyeldi!");
+~chatnpc("<p,shock>Why on earth did you do that?|@blu@---The Shaman screams at you---");
+~chatplayer("<p,confused>A spirit called Echned Zekin said I had to avenge his spirit by killing Viyeldi if I wanted to get the pure water.");
+~mesbox("The Shaman puts his head in his hands.");
+~chatnpc("<p,sad>Bwana, you have been tricked by a spirit! And you have done the worst thing imaginable. Viyeldi was the sorcerer who controlled the Heroes who protect the source.");
+~chatnpc("<p,shock>The spirits of these heroes are now free to be controlled by other, more powerful evil forces. Most likely the spirit that tricked you.");
+@multi3("Do you know anything about daggers?", ungadulu_dagger, "What can we do?", ungadulu_whatdo, "Ok, thanks...", ungadulu_thanks);
+
+[label,ungadulu_whatdo]
+~chatplayer("<p,quiz>What can we do?");
+~chatnpc("<p,confused>I am not sure at this time Bwana. Give me a few moments to think.");
+~chatnpc("<p,neutral>Hmmm....");
+~chatnpc("<p,neutral>Take this spell and pray that you can defeat this evil spirit before it's too late. I'll take that dagger from you now!");
+inv_add(inv, holy_force, 1);
+inv_del(inv, glowing_dagger, 1); // confirm this removal (does it do both, order...)
+inv_del(worn, glowing_dagger, 1);
+~objbox(holy_force, "The wizened old Shaman hands over a piece of paper.", 250, 0, 0);
+
+[label,ungadulu_spirit]
+~chatplayer("<p,neutral>I met a spirit in the Viyeldi Caves.");
+~chatnpc("<p,confused>You did well to come to me Bwana. As I said before, I am an expert in spirits of the underworld. In most circumstances you should just ignore them. However, beware as many spirits will try to trick you.");
+@multi2("The spirit told me to kill Viyeldi.", ungadulu_kill, "Ok, thanks...", ungadulu_thanks);
+
+[label,ungadulu_kill]
+~chatplayer("<p,neutral>The spirit told me to kill Viyeldi.");
+~chatnpc("<p,neutral>That sounds very strange Bwana, I'm glad to see you didn't commit such a foul act. I can make a spell that would help you to defeat the spirit. But I need an item that belongs to the spirit to make it work.");
+~chatnpc("<p,neutral>If you have something like that, please show it to me and I'll give you the spell. Beware of everything in these caves, I was tricked very easily and was enslaved, as you well know. Learn from my example.");
+@multi2("I met a spirit in the Viyeldi Caves.", ungadulu_spirit, "Ok, thanks...", ungadulu_thanks);
+
+[label,ungadulu_dagger]
+~chatplayer("<p,quiz>Do you know anything about daggers?");
+~chatnpc("<p,neutral>I know something about them, especially magical daggers. If you have a specific one, show it to me and I'll help as much as I can.");
+@multi3("I met a spirit in the Viyeldi Caves.", ungadulu_spirit, "The spirit told me to kill Viyeldi.", ungadulu_kill, "Ok, thanks...", ungadulu_thanks);
 
 [label,ungadulu_quest]
 ~chatplayer("<p,happy>I am on a quest to get more pure water.");
@@ -268,7 +309,7 @@ else {
 }
 
 [opnpcu,ungadulu]
-if(%legends_progress >= ^legends_complete) { // might just be on completion instead
+if(%legends_progress >= ^legends_complete) { 
     mes("You have no further business with Ungadulu.");
     return;
 }
@@ -291,8 +332,36 @@ if (last_useitem = book_of_binding) {
     } else {
         ~chatnpc("<p,happy>Ha ha ha! There's no need to use that on me anymore... I'm cured now, remember?");
     }
-}
-else {
+} else if (last_useitem = dark_dagger) {
+    ~objbox(dark_dagger, "You hand the dagger over to the shaman and his face turns pale.", 250, 0, 0);
+    ~chatnpc("<p,shock>This dagger has been made for one purpose only... Praise the gods that you brought it to me.");
+    ~chatnpc("<p,neutral>I can make you a spell with this item which will force the spirit to reveal its true self. Once activated, you will be able to attack it like any normal creature.");
+    if(~obj_gettotal(holy_force) > 0) {
+        inv_del(inv, dark_dagger, 1);
+        ~chatnpc("<p,neutral>Use the Holy Force spell that I gave you earlier to defeat this spirit. Good luck. I'll take that dagger for safe keeping...");
+        return;
+    }
+    ~objbox(holy_force, "The Shaman takes the dagger and gives you a folded piece of paper.", 250, 0, 0);
+    inv_add(inv, holy_force, 1); // this order is correct 
+    inv_del(inv, dark_dagger, 1);
+    ~chatnpc("<p,neutral>Use this spell on the Spirit. It will force the spirit to show its true self. And it will also be vulnerable to normal attacks.");
+} else if(last_useitem = glowing_dagger) {
+    // confirm mesanims and stuff here, can only get 1 dagger per account (afaik) so this is from chisel
+    ~objbox(glowing_dagger, "You hand the dagger over to the shaman and his face turns pale.", 250, 0, 0);
+    ~chatnpc("<p,shock>Oh dear Bwana, I sense something terrible has happened. This dagger is a portent of some evil action. Please, reveal to me anything that you have done so that I might understand this better.");
+    switch_int(~p_choice2("I've killed Viyeldi.", 1, "Er, I can't think of anything.", 2)) {
+        case 1 :
+            ~chatplayer("<p,neutral>I've killed Viyeldi.");
+            ~chatnpc("<p,sad>Poor Viyeldi, he was the guardian of the dead heroes that protected the source. Their tormented spirits will now be at the beck and call of the one who gave you the dagger.");
+            ~chatnpc("<p,neutral>Take this spell and pray that you can defeat this evil spirit before it's too late. The spell will force the spirit to reveal its true self. And it will also be vulnerable to normal attacks.");
+            inv_add(inv, holy_force, 1);
+            inv_del(inv, glowing_dagger, 1);
+            ~objbox(holy_force, "The wizened old Shaman hands over a piece of paper.", 250, 0, 0);
+        case 2 :
+            ~chatplayer("<p,neutral>Er, I can't think of anything.");
+            ~chatnpc("<p,neutral>ell, that is strange. I sense a growing evil power since you visited the caves.");
+    }
+} else {
     ~displaymessage(^dm_default);
 }
 

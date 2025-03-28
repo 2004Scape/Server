@@ -465,6 +465,7 @@ members=yes
 2dzoom=660
 weight=50g
 tradeable=no
+param=crystal_bit,^legends_smelting_chunk
 
 [hunk_of_crystal]
 name=Hunk of crystal
@@ -476,6 +477,7 @@ members=yes
 2dzoom=660
 weight=50g
 tradeable=no
+param=crystal_bit,^legends_smelting_hunk
 
 [lump_of_crystal]
 name=Lump of crystal
@@ -488,6 +490,7 @@ members=yes
 2dyan=60
 weight=50g
 tradeable=no
+param=crystal_bit,^legends_smelting_lump
 
 [heart_crystal]
 name=Heart crystal

@@ -1641,9 +1641,9 @@ p_teleport(movecoord(loc_coord, 0, 0, -1));
 
 [oploc2,furnace_underground]
 ~mesbox("You search the lava furnace. You find a small compartment that you may be able to use. Strangely, it looks as if It looks designed it is designed for a specific purpose... to fuse things together at very high temperatures...");
-@legends_furnace_pieces;
+@legends_furnace_pieces(true);
 
-[label,legends_furnace_pieces]
+[label,legends_furnace_pieces](boolean $searching)
 def_int $total = calc(getbit_range(%legends_map_runes, ^legends_smelting_chunk, ^legends_smelting_chunk) 
                         + getbit_range(%legends_map_runes, ^legends_smelting_hunk, ^legends_smelting_hunk) 
                         + getbit_range(%legends_map_runes, ^legends_smelting_lump, ^legends_smelting_lump));
@@ -1653,25 +1653,132 @@ if($total = 0) {
     ~mesbox("The compartment in the furnace looks like it should hold something.|It looks like it needs two more pieces.");
 } else if($total = 2) {
     ~mesbox("The compartment in the furnace looks like it should hold something.|It looks like it needs one more piece.");
+} else {
+    anim(human_furnace, 0);
+    if($searching = true) {
+        ~mesbox("You find the pieces of crystal fit perfectly into the strangely-shaped compartments. You use your Crafting skill to control the furnace.");
+    } else {
+
+    }
+    anim(human_furnace, 0);
+    ~mesbox("The heat in the furnace slowly rises and soon fuses the parts together. As soon as the item cools, you pick it up.");
+    if(%legends_progress = ^legends_enter_lower_dungeon) %legends_progress = ^legends_crystal_pieces_smelted;
+    ~objbox(heart_crystal, "As the crystal touches your hands a voice inside|of your head says.. |@red@Bring life to the dragons eye.", 250, 0, ^objbox_height);
 }
+
+[opheld1,heart_crystal] ~objbox(heart_crystal, "As the crystal touches your hands a voice inside|of your head says.. |@red@'Bring life to the dragons eye.'", 250, 0, ^objbox_height);
+
+[opheld1,glowing_heart_crystal] ~objbox(glowing_heart_crystal, "This crystal seems to glow and has a very mystical aura about it. It seems to be vaguely heart shaped.", 250, 0, ^objbox_height);
 
 [oplocu,furnace_underground]
 if(stat(crafting) < 50) {
     mes("You need a Crafting level of 50 to use this furnace.");
     return;
 }
+if(last_useitem = lump_of_crystal | last_useitem = hunk_of_crystal | last_useitem = chunk_of_crystal) {
+    def_obj $crystal = last_useitem;
+    anim(human_pickuptable, 0);
+    if(testbit(%legends_map_runes, oc_param($crystal, crystal_bit)) = true) {
+        ~mesbox("You have already placed that chunk of crystal into the furnace.");
+        return;
+    }
+    ~objbox($crystal, "You place the piece of crystal into a specially shaped compartment of the furnace.", 250, 0, 0);
+    @legends_furnace_pieces(false);
+}
+mes("The furnace doesn't seem to be working.");
+
+[oploc1,legends_mossy_rock_3]
+mes("These rocks look somehow manufactured.");
+
+[oplocu,legends_mossy_rock_3]
+if(last_useitem = heart_crystal) {
+    @heart_crystal_mossy_rock;
+}
+~displaymessage(^dm_default);
+
+[opheld5,heart_crystal]
+if(distance(coord, 0_37_73_42_43) <= 2) {
+    @heart_crystal_mossy_rock;
+}
+~dropslot(last_slot);
+
+[label,heart_crystal_mossy_rock]
+anim(human_pickuptable, 0);
+inv_del(inv, heart_crystal, 1);
+inv_add(inv, glowing_heart_crystal, 1);
+~objbox(glowing_heart_crystal, "You carefully place the dragon crystal on the rock. The rocks seem to vibrate and hum and the crystal starts to glow. The vibration in the area diminishes, but the crystal continues to glow.", 250, 0, ^objbox_height);
 
 [oploc1,legends_recess]
 ~mesbox("You see a heart-shaped depression in the wall.|A messagne reads...|@blu@All ye who stand 'ere the dragons teeth,|@blu@Place your full true heart within, and proceed...");
 
+[oplocu,legends_recess]
+if(last_useitem = heart_crystal) {
+    ~mesbox("The crystal seems to fit into the recess perfectly, but nothing interesting happens.");
+} else if(last_useitem = glowing_heart_crystal) {
+    if(%legends_progress >= ^legends_heart_in_recess) {
+        mes("The cave is already open to you.");
+        return;
+    }
+    ~mesbox("You carefully place the glowing heart shaped crystal into the depression, it slots in perfectly and glows even brighter. You hear a snapping sound coming from in front of the cave.");
+    %legends_progress = ^legends_heart_in_recess;
+    anim(human_pickuptable, 0);
+    spotanim_map(watersplash, coord, 128, 0);
+    spotanim_map(watersplash, coord, 128, 0);
+    inv_del(inv, glowing_heart_crystal, 1);
+    loc_change(legends_filled_recess, 15);
+}
+
+[oploc1,legends_filled_recess]
+~mesbox("You see a magical, glowing crystal shape in the wall. It grants access to the cavern.");
+
 [oploc1,legends_shimmering_field]
+if(%legends_progress >= ^legends_heart_in_recess) {
+    if(coordz(coord) > coordz(loc_coord)) {
+        mes("You walk carefully through the magical barrier and");
+        p_teleport(0_37_73_53_18);
+        p_delay(1);
+        mes("into the darkness of the cavern.");
+    } else {
+        p_teleport(0_37_73_53_19);
+    }
+    return;
+}
 anim(seq_846, 0);
 p_delay(1);
-// recheck on rs3!
-~mesbox("You walk into an invisible barrier. Some kind of magical force will not allow you to pass into the cavern. You notice something interesting on the wall to the left.");
+// https://youtu.be/uF1a9xsV7zo?si=0-xYBOVVD_6oYi0h&t=2610
+~mesbox("You walk into an invisible barrier... Some kind of magical force will not allow you to pass into the cavern. You notice something interesting on the wall to the left.");
 
 [oploc2,legends_shimmering_field]
 ~mesbox("You see a shimmering field right in front of your eyes. It seems to float in the air. You touch it with your hand and it seems to resist your movements. It will definitely bar you from getting into the next cave.");
+
+[opheld1,holy_force]
+if(npc_find(coord, echned_zekin, 5, 0) = true) {
+    @use_holy_force;
+} else {
+    mes("There is no suitable candidate to cast this spell on.");
+}
+
+[label,use_holy_force]
+npc_say("What's this we have here?");
+p_delay(0);
+mes("You thrust the Holy Force spell in front of the spirit.");
+p_delay(0);
+mes("A bright, holy light streams out from the page.");
+p_delay(0);
+mes("Thou have returned, but I am ready for thee...");
+mes("Look upon my true face, Vacu, and know thy doom!");
+mes("A terrible fear comes over you... "); // intentional
+mes("You feel a terrible sense of loss...");
+mes("Nezikchened: Thou hast returned... but I am prepared for thee.");
+mes("The Holy Force spell seems to weaken the demon.");
+mes("Nezikchened: Perish, Vacu!");
+mes("A sense of loss and dread comes over you.");
+stat_sub(prayer, 18, 0); // static 18 points from what I can tell (OSRS), doesn't seem to matter if you've killed viyeldi or not
+npc_del;
+npc_add(map_findsquare(coord, 1, 3, ^map_findsquare_lineofwalk), nezikchened, 500);
+npc_say("Perish, Vacu!");
+~npc_retaliate(0);
+%npc_lastcombat = sub(^max_32bit_int, 8);
 
 [oploc1,legends_leafy_palm_tree]
 mes("You give the bamboo tree a good shake.");
