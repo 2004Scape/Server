@@ -13,6 +13,8 @@ switch_obj (last_useitem) {
         return;
 }
 
+// https://www.youtube.com/watch?v=Tix1wbx3YCc
+// https://youtu.be/n79WMvBkFTc
 [label,dough_interface](obj $water_source)
 if (inv_freespace(inv) < 1) {
     mes("You dont have enough inventory space to make any dough.");
@@ -20,15 +22,22 @@ if (inv_freespace(inv) < 1) {
 }
 def_namedobj $choice; 
 def_string $end_string = "some";
-switch_int (~p_choice3_header("Bread dough.", 1, "Pastry dough.", 2, "Pizza dough.", 3, "What sort of dough do you wish to make?")) {
+switch_int (~p_choice4_header("Bread dough.", 1, "Pastry dough.", 2, "Pizza dough.", 3, "Pitta dough.", 4,  "What sort of dough do you wish to make?")) {
     case 1 : $choice = bread_dough;
     case 2 : $choice = pastry_dough;
     case 3 :
         $choice = pizza_base;
         $end_string = "a"; // only pizza adds an article
+    case 4 : 
+        $choice = uncooked_pitta_bread;
     case default :
         ~displaymessage(^dm_default);
         return;
+}
+
+if (map_members = false & oc_members($choice) = true) {
+    mes(^mes_members_do_that); // guess... osrs has no option on f2p worlds for pitta :(
+    return;
 }
 
 inv_del(inv, pot_of_flour, 1);
