@@ -1,5 +1,6 @@
 import { PRELOADED } from '#/cache/PreloadedPacks.js';
 import Player from '#/engine/entity/Player.js';
+import World from '#/engine/World.js';
 import MessageHandler from '#/network/client/handler/MessageHandler.js';
 import RebuildGetMaps from '#/network/client/model/RebuildGetMaps.js';
 import DataLand from '#/network/server/model/DataLand.js';
@@ -9,9 +10,22 @@ import DataLocDone from '#/network/server/model/DataLocDone.js';
 
 export default class RebuildGetMapsHandler extends MessageHandler<RebuildGetMaps> {
     private static readonly CHUNK_SIZE: number = 1000 - 1 - 2 - 1 - 1 - 2 - 2;
+    private static readonly LAST_BUILD_TICKS: number = 10;
+    private static readonly MAPS_LIMIT: number = 18; // 9 mapsquares * 2 (m & l)
 
     handle(message: RebuildGetMaps, player: Player): boolean {
-        const { maps: requested } = message;
+        if (player.buildArea.lastBuild + RebuildGetMapsHandler.LAST_BUILD_TICKS < World.currentTick) {
+            // allows up to 10 ticks to download maps.
+            return false;
+        }
+
+        const requested = message.maps;
+
+        if (requested.length > RebuildGetMapsHandler.MAPS_LIMIT) {
+            // allows up to 9 mapsquares to be downloaded.
+            return false;
+        }
+
         const chunk: number = RebuildGetMapsHandler.CHUNK_SIZE;
 
         for (let i = 0; i < requested.length; i++) {
