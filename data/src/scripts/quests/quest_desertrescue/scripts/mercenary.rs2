@@ -146,6 +146,7 @@ if(inv_total(inv, coins) < 5) {
     return;
 }
 ~chatnpc("<p,happy>Well, it certainly will help... @dbl@ -- The guard takes the five|@dbl@gold coins. -- @bla@Now then, what did you want to know?");
+inv_del(inv, coins, 5);
 @multi2("What is this place?", mercenary_place2, "What are you guarding?", mercenary_guarding2);
 
 [label,mercenary_5coin3]
