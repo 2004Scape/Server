@@ -111,11 +111,12 @@ param=attack_anim,ogre_attack
 param=defend_anim,ogre_block
 param=death_anim,ogre_death
 param=attack_sound,mace_crush
-// param=defend_sound,blade3_mail
+// param=defend_sound,
 param=death_sound,giant_death
 param=death_drop,big_bones
 huntmode=cowardly
 huntrange=2
+// osrs defend_sound blade3_mail
 // Stats match osrs version but our version Vislvl is different.
 // https://raw.githubusercontent.com/Joshua-F/osrs-dumps/refs/heads/master/config/dump.npc npc_4363
 
@@ -190,9 +191,10 @@ param=attack_anim,ogre_attack
 param=defend_anim,ogre_block
 param=death_anim,ogre_death
 param=attack_sound,mace_crush
-// param=defend_sound,blade3_mail
+// param=defend_sound,
 param=death_sound,giant_death
 param=death_drop,big_bones
+// osrs defend_sound blade3_mail
 // Stats match osrs version but our version Vislvl is different.
 // https://raw.githubusercontent.com/Joshua-F/osrs-dumps/refs/heads/master/config/dump.npc npc_4367
 
@@ -222,9 +224,10 @@ param=attack_anim,ogre_attack
 param=defend_anim,ogre_block
 param=death_anim,ogre_death
 param=attack_sound,giant_attack
-// param=defend_sound,blade3_mail
+// param=defend_sound,
 param=death_sound,giant_death
 param=death_drop,big_bones
+// osrs defend_sound blade3_mail
 // https://raw.githubusercontent.com/Joshua-F/osrs-dumps/refs/heads/master/config/dump.npc npc_4368
 
 [ogre_guard_east]
@@ -253,9 +256,10 @@ param=attack_anim,ogre_attack
 param=defend_anim,ogre_block
 param=death_anim,ogre_death
 param=attack_sound,giant_attack
-// param=defend_sound,blade3_mail
+// param=defend_sound,
 param=death_sound,giant_death
 param=death_drop,big_bones
+// osrs defend_sound blade3_mail
 // https://raw.githubusercontent.com/Joshua-F/osrs-dumps/refs/heads/master/config/dump.npc npc_4369
 
 [ogre_guard_west]
@@ -284,9 +288,10 @@ param=attack_anim,ogre_attack
 param=defend_anim,ogre_block
 param=death_anim,ogre_death
 param=attack_sound,giant_attack
-// param=defend_sound,blade3_mail
+// param=defend_sound,
 param=death_sound,giant_death
 param=death_drop,big_bones
+// osrs defend_sound blade3_mail
 // https://raw.githubusercontent.com/Joshua-F/osrs-dumps/refs/heads/master/config/dump.npc npc_4370
 
 [ogre_guard_battlements]
@@ -315,9 +320,10 @@ param=attack_anim,ogre_attack
 param=defend_anim,ogre_block
 param=death_anim,ogre_death
 param=attack_sound,giant_attack
-// param=defend_sound,blade3_mail
+// param=defend_sound,
 param=death_sound,giant_death
 param=death_drop,big_bones
+// osrs defend_sound blade3_mail
 // https://raw.githubusercontent.com/Joshua-F/osrs-dumps/refs/heads/master/config/dump.npc npc_4371
 
 [ogre_guard_broken_bridge]
@@ -346,9 +352,10 @@ param=attack_anim,ogre_attack
 param=defend_anim,ogre_block
 param=death_anim,ogre_death
 param=attack_sound,giant_attack
-// param=defend_sound,blade3_mail
+// param=defend_sound,
 param=death_sound,giant_death
 param=death_drop,big_bones
+// osrs defend_sound blade3_mail
 // https://raw.githubusercontent.com/Joshua-F/osrs-dumps/refs/heads/master/config/dump.npc npc_4372
 
 [city_guard]
@@ -506,9 +513,10 @@ param=attack_anim,ogre_attack
 param=defend_anim,ogre_block
 param=death_anim,ogre_death
 param=attack_sound,mace_stab
-// param=defend_sound,blade3_mail
+// param=defend_sound,
 param=death_sound,giant_death
 param=death_drop,big_bones
+// osrs defend_sound blade3_mail
 // Stats match osrs version but our version Vislvl is different.
 // https://raw.githubusercontent.com/Joshua-F/osrs-dumps/refs/heads/master/config/dump.npc npc_4381
 
