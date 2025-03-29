@@ -4,7 +4,7 @@ import ClientProtCategory from '#/network/client/prot/ClientProtCategory.js';
 export default class RebuildGetMaps extends IncomingMessage {
     category = ClientProtCategory.RESTRICTED_EVENT;
 
-    constructor(readonly maps: { type: number; x: number; z: number }[]) {
+    constructor(readonly maps: Int32Array) {
         super();
     }
 }
