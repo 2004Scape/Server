@@ -1,5 +1,5 @@
 import LocType from '#/cache/config/LocType.js';
-import Interaction from '#/engine/entity/Interaction.js';
+import { Interaction } from '#/engine/entity/Interaction.js';
 import { NetworkPlayer } from '#/engine/entity/NetworkPlayer.js';
 import ServerTriggerType from '#/engine/script/ServerTriggerType.js';
 import World from '#/engine/World.js';

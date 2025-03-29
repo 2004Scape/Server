@@ -1,12 +1,11 @@
 import fs from 'fs';
 
-
 import { ConfigType } from '#/cache/config/ConfigType.js';
 import { ParamHelper, ParamMap } from '#/cache/config/ParamHelper.js';
-import BlockWalk from '#/engine/entity/BlockWalk.js';
-import MoveRestrict from '#/engine/entity/MoveRestrict.js';
-import NpcMode from '#/engine/entity/NpcMode.js';
-import NpcStat from '#/engine/entity/NpcStat.js';
+import { BlockWalk } from '#/engine/entity/BlockWalk.js';
+import { MoveRestrict } from '#/engine/entity/MoveRestrict.js';
+import { NpcMode } from '#/engine/entity/NpcMode.js';
+import { NpcStat } from '#/engine/entity/NpcStat.js';
 import Jagfile from '#/io/Jagfile.js';
 import Packet from '#/io/Packet.js';
 

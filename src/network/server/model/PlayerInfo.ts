@@ -1,5 +1,5 @@
 import OutgoingMessage from '#/network/server/OutgoingMessage.js';
-import ServerProtPriority from '#/network/server/prot/ServerProtPriority.js';
+import { ServerProtPriority } from '#/network/server/prot/ServerProtPriority.js';
 
 export default class PlayerInfo extends OutgoingMessage {
     priority = ServerProtPriority.IMMEDIATE;
