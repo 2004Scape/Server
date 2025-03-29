@@ -67,6 +67,10 @@ return (false);
 
 [label,open_desertcamp_gate](int $side)
 def_boolean $entering = ~check_axis(coord, loc_coord, loc_angle);
+def_loc $loc_type = loc_type;
+def_locshape $loc_shape = loc_shape;
+def_int $loc_angle = loc_angle;
+def_coord $loc_coord = loc_coord;
 // any piece, don't need whole outfit on
 if(inv_total(inv, anainabarrel) > 0) {
     if(npc_find(coord, mercenary_2, 4, 2) = true) {
@@ -117,7 +121,11 @@ if(inv_total(inv, desertrescue_metalkey) > 0) {
     p_delay(2);
     mes("You manage to sneak past the guards!");
     if(%desertrescue_progress = ^desertrescue_killed_capt) %desertrescue_progress = ^desertrescue_entered_camp;
-    ~open_and_close_double_door2(~check_axis(coord, loc_coord, loc_angle), $side, grate_open);
+    if(loc_find($loc_coord, $loc_type) = true) {
+        ~open_and_close_double_door2(~check_axis(coord, loc_coord, loc_angle), $side, grate_open);
+    } else {
+        ~open_and_close_double_door3(~check_axis(coord, loc_coord, loc_angle), $loc_type, $loc_shape, $loc_angle, $loc_coord, $side, grate_open);
+    }
     if($entering = false) return;
     if(npc_find(coord, mercenary_2, 4, 0) = true | npc_find(coord, mercenary_1, 4, 0) = true) { // check dist on this
         ~mercenary_search_equip;
@@ -199,7 +207,7 @@ if(stat_random(stat(strength), 100, 250) = false) {
     }
     @desertrescue_bend_bar;
 } 
-if(coordx(coord) > 3284) {
+if(coordx(coord) < 3284) {
     mes("You manage to bend the bar!");
     p_delay(2);
     stat_advance(strength, 40);
@@ -398,6 +406,10 @@ if(last_useitem = anainabarrel) {
 mes("Nothing much seems to happen.");
 
 [label,open_camp_door](int $side)
+def_loc $loc_type = loc_type;
+def_locshape $loc_shape = loc_shape;
+def_int $loc_angle = loc_angle;
+def_coord $loc_coord = loc_coord;
 mes("You push the door.");
 p_delay(2);
 say("Ugh!");
@@ -405,7 +417,8 @@ if(~wearing_slave_robes = true) {
     // no weapon check in rsc or mention of any pre-rework
     mes("The doors open with some effort!");
     if(coordz(loc_coord) > 6400) {
-        ~open_and_close_double_door2(~check_axis(coord, loc_coord, loc_angle), $side, door_open);
+        if(loc_find($loc_coord, $loc_type) = true) ~open_and_close_double_door2(~check_axis(coord, loc_coord, loc_angle), $side, door_open);
+        else ~open_and_close_double_door3(~check_axis(coord, loc_coord, loc_angle), $loc_type, $loc_shape, $loc_angle, $loc_coord, $side, door_open);
         p_delay(0);
         p_teleport(0_51_47_37_28);
         return;
@@ -657,6 +670,10 @@ inv_add(inv, prototype_dart, 1);
 [oploc2,loc_2686] @search_desertrescue_camp_jail_gate;
 
 [label,open_desertrescue_camp_jail_gate](int $side)
+def_loc $loc_type = loc_type;
+def_locshape $loc_shape = loc_shape;
+def_int $loc_angle = loc_angle;
+def_coord $loc_coord = loc_coord;
 def_boolean $entering = ~check_axis(coord, loc_coord, loc_angle);
 if($entering = false) {
     mes("This gate seems to be locked.");
@@ -668,7 +685,8 @@ if(inv_total(inv, desertrescuerock) >= 15) {
     ~chatplayer("<p,neutral>Okay, I have all your rocks here, let me out now.|@dbl@-- The guard unlocks the gate. --");
     ~chatnpc_specific(nc_name(mercenary_1), mercenary_1, "<p,neutral>Okay, okay, come on out.");
     inv_del(inv, desertrescuerock, 15);
-    ~open_and_close_double_door2($entering, $side, grate_open); // iron_door_open
+    if(loc_find($loc_coord, $loc_type) = true) ~open_and_close_double_door2($entering, $side, grate_open); // iron_door_open
+    else ~open_and_close_double_door3($entering, $loc_type, $loc_shape, $loc_angle, $loc_coord, $side, grate_open);
     ~chatnpc_specific(nc_name(mercenary_1), mercenary_1, "<p,neutral>Okay, you've got all the rocks, you can go now, but keep your nose clean in future.");
     return;
 }
@@ -691,7 +709,7 @@ if(loc_coord = ^desertrescue_upper_barrel_coord) {
 if(loc_coord = ^desertrescue_upper_barrel_coord) {
     if(testbit(%desertrescue_map_mechanisms, ^desertrescue_ana_lift_barrel) = true) {
         // https://web.archive.org/web/20060215230522/http://img.photobucket.com/albums/v72/me9alomaniac/tt4.png
-        ~chatnpc_specific("Ana (in a Barrel)", anabarrel, "<p,angry>@dbl@-- You search the barrels and find Ana. --|Let me out of here, I feel sick!");
+        ~chatnpc_specific("Ana (in a Barrel)", anabarrel, "<p,angry>@blu@-- You search the barrels and find Ana. --|Let me out of here, I feel sick!");
         if(inv_freespace(inv) = 0) {
             ~mesbox("You're carrying so many items that you cannot manage Ana as well.");
             return;
