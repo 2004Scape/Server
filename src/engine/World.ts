@@ -117,7 +117,7 @@ class World {
 
     private static readonly INV_STOCKRATE: number = 100; // 1m
     private static readonly AFK_EVENTRATE: number = 500; // 5m
-    private static readonly PLAYER_SAVERATE: number = 500; // 5m
+    private static readonly PLAYER_SAVERATE: number = 1500; // 15m
     private static readonly PLAYER_COORDLOGRATE: number = 50; // 30s
 
     private static readonly TIMEOUT_NO_CONNECTION: number = Environment.NODE_DEBUG_SOCKET ? 60000 : 50; // 30s with no connection (16 ticks in osrs)
@@ -2071,6 +2071,21 @@ class World {
                 }
             } else if (opcode === FriendsServerOpcodes.RELAY_RELOAD) {
                 this.reload(false);
+            } else if (opcode === FriendsServerOpcodes.RELAY_CLEARLOGINS) {
+                this.loginRequests.clear();
+            } else if (opcode === FriendsServerOpcodes.RELAY_CLEARLOGOUTS) {
+                this.logoutRequests.clear();
+            } else if (opcode === FriendsServerOpcodes.RELAY_QUEUESCRIPT) {
+                const { scriptName, username } = data;
+
+                const player = this.getPlayerByUsername(username);
+                if (player) {
+                    const script = ScriptProvider.getByName(`[queue,${scriptName}]`);
+
+                    if (script) {
+                        player.enqueueScript(script);
+                    }
+                }
             } else {
                 printError('Unknown friend message: ' + opcode);
             }
@@ -2176,7 +2191,7 @@ class World {
                 return;
             }
 
-            if (this.getTotalPlayers() > 750) {
+            if (this.getTotalPlayers() > Environment.NODE_MAX_CONNECTED) {
                 client.send(Uint8Array.from([7]));
                 client.close();
                 return;
