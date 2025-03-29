@@ -97,10 +97,13 @@ def_coord $ogre_to = 0_40_49_46_29;
 if (npc_find(movecoord(coord, 0, 0, 8), khazard_ogre, 14, 0) = true) {
     if(npc_getmode = none) { // npc in cutscene already, do nothing
         return;
-    } else if(~npc_out_of_combat = true & inzone(0_40_49_47_29, 0_40_49_49_30, npc_coord) = false) {
-        // out of combat and out of cage so attack player, otherwise we'll just set ptr and start cutscene
-        ~npc_retaliate(0);
-        return;
+    } else if(inzone(0_40_49_47_29, 0_40_49_49_30, npc_coord) = false) {
+        if(~npc_out_of_combat = true & npc_getmode ! opplayer2) {
+            // out of combat and out of cage so attack player, otherwise we'll just set ptr and start cutscene
+            ~npc_retaliate(0);
+            return;
+        }
+        npc_add($ogre_to, khazard_ogre, 500);
     }
 } else {
     npc_add($ogre_to, khazard_ogre, 500);
