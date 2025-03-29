@@ -114,3 +114,55 @@ if ($side = ^left) {
     // Temp note: dur updated
     ~open_double_doors_right2(3, double_door_open_and_close_left, $next_loc, $opposite_loc, null);
 }
+
+[proc,open_and_close_double_door3](boolean $entering, loc $loc_type, locshape $shape, int $angle, coord $loc_coord, int $side, synth $sound)
+def_int $x;
+def_int $z;
+
+def_loc $next_loc = lc_param($loc_type, next_loc_stage);
+def_loc $opposite_loc = $next_loc;
+
+def_category $category = double_door_open_and_close_right;
+
+def_coord $opposite_coord = $loc_coord;
+if ($side = ^left) {
+    $opposite_coord = ~movecoord_loc_return(~door_close($angle, $shape));
+    $category = double_door_open_and_close_right;
+} else if ($side = ^right) {
+    $opposite_coord = ~movecoord_loc_return(~multiply2(~door_close($angle, $shape), -1));
+    $category = double_door_open_and_close_left;
+}
+
+loc_findallzone($opposite_coord);
+while (.loc_findnext = true) {
+    if (.loc_coord = $opposite_coord & .loc_category = $category) {
+        $opposite_loc = lc_param(.loc_type, next_loc_stage);
+    }
+}
+
+// walk through door, but if entering, walk next to door and then through
+$x, $z = ~door_open($angle, $shape);
+if ($sound ! null) {
+    sound_synth($sound, 0, 0);
+}
+def_coord $dest = $loc_coord;
+if ($entering = true) {
+    // mes(~coord_tostring($loc_coord));
+    // mes(~coord_tostring(coord));
+    if (coord ! $loc_coord & coord ! $opposite_coord) {
+        p_teleport($loc_coord);
+        // initially thought p_delay(0); was the right speed.
+        // but it seems to have buggy clipping; you move through too early
+        p_delay(1);
+    }
+    $dest = movecoord($loc_coord, $x, 0, $z);
+}
+p_teleport($dest);
+
+if ($side = ^left) {
+    // Temp note: dur updated
+    ~open_double_doors_left2(3, double_door_open_and_close_right, $next_loc, $opposite_loc, null);
+} else if ($side = ^right) {
+    // Temp note: dur updated
+    ~open_double_doors_right2(3, double_door_open_and_close_left, $next_loc, $opposite_loc, null);
+}
