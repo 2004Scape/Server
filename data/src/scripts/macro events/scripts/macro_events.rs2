@@ -16,6 +16,7 @@ if (afk_event = ^true) {
 // - teleporting. Confirmed: https://youtu.be/ZtnrEwb0n48?list=PLn23LiLYLb1Y3P9S9qZbijcJihiD416jT&t=51
 // (probably every spell)
 // - cooking. Confirmed: https://youtu.be/Brq99Bdl0aI?list=PLn23LiLYLb1Y3P9S9qZbijcJihiD416jT&t=198
+// - cooking on a range: https://youtu.be/Tix1wbx3YCc?t=343
 // - using flax wheel. Confirmed: https://youtu.be/sW48OR1I86M (early osrs)
 // - using anvil? Cant find a video, not implemented.
 // - fletching? Cant find a video, not implemented.
