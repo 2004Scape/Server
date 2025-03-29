@@ -64,6 +64,7 @@
 ^legends_smelting_hunk = 27
 ^legends_smelting_lump = 28
 ^legends_killed_viyeldi = 29
+^legends_given_dagger = 30
 
 
 ^legends_all_gems_used = 127

@@ -153,7 +153,8 @@ if (%action_delay = map_clock) {
                 }
                 // Same message even when leaving the jungle
                 mes("You move deeper into the jungle.");
-                ~forcemove($dest);
+                p_teleport($dest);
+                p_delay(0);
             }
             return;
         } 

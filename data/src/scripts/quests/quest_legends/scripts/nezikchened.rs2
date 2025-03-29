@@ -95,6 +95,24 @@ if(npc_finduid($npc) = true) {
         p_delay(4);
         npc_del;
         mes("The demon's body falls to the floor in a pile of ashes...");
+    } else if (inzone(coord, 0_37_73_0_0, 0_37_73_63_63) = true & %legends_progress = ^legends_received_dagger) {
+        p_stopaction;
+        %legends_progress = ^legends_defeated_nezikchened_water;
+        mes("The demon seems very angry now...");
+        npc_say("Arrrgghhhhh, foul Vacu!");
+        p_delay(2);
+        mes("Nezikchened: You would bite the hand that feeds you?");
+        npc_say("You would bite the hand that feeds you?");
+        mes("You deliver a final devastating blow to the demon.");
+        p_delay(2);
+        npc_say("Nezikchened: Very well, I will ready myself for our next encounter...");
+        mes("Very well, I will ready myself for our next encounter...");
+        mes("And its unearthly frame crumbles into dust.");
+        %aggressive_npc = null;
+        npc_anim(npc_param(death_anim), 0);
+        p_delay(4);
+        npc_del;
+        mes("The demon's body falls to the floor in a pile of ashes...");
     } else {
         gosub(npc_death);
     }

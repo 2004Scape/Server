@@ -1,5 +1,5 @@
 [opnpc1,irvig_senay]
-if (~player_in_combat_check = true) {
+if (~player_in_combat_check = false) {
     return;
 }
 if(%legends_progress < ^legends_heart_in_recess & ~obj_gettotal(hunk_of_crystal) = 0 & ~obj_gettotal(heart_crystal) = 0 
@@ -22,7 +22,7 @@ if(add(%lastcombat, 8) < map_clock & %aggressive_npc ! npc_uid) {
 @player_combat_start;
 
 [ai_opplayer2,irvig_senay]
-if(%legends_progress >= ^legends_heart_in_recess | testbit(%legends_map_runes, ^legends_smelting_hunk) = true) {
+if(%npc_aggressive_player ! uid & (%legends_progress >= ^legends_heart_in_recess | testbit(%legends_map_runes, ^legends_smelting_hunk) = true)) {
     npc_setmode(null);
     return;
 }

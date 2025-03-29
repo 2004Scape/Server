@@ -14,7 +14,7 @@ p_delay(1);
 @viyeldi_dialogue;
 
 [opnpc1,viyeldi]
-if(%legends_progress >= ^legends_defeated_nezikchened_water | testbit(%legends_map_runes, ^legends_killed_viyeldi) = true) { // confirm this
+if(%legends_progress >= ^legends_defeated_nezikchened_water) { // confirm this
     mes("Your eyes must be playing tricks on you. There is nothing interesting there!");
     return;
 }
@@ -24,7 +24,7 @@ if(inv_total(worn, dark_dagger) > 0) {
 @viyeldi_dialogue;
 
 [opnpcu,viyeldi]
-if(%legends_progress >= ^legends_defeated_nezikchened_water | testbit(%legends_map_runes, ^legends_killed_viyeldi) = true) { // confirm this
+if(%legends_progress >= ^legends_defeated_nezikchened_water) { // confirm this
     mes("Your eyes must be playing tricks on you. There is nothing interesting there!");
     return;
 }

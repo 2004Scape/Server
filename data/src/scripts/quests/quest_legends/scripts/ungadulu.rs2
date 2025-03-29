@@ -322,6 +322,7 @@ if (last_useitem = book_of_binding) {
         ~chatnpcnoturn("<p,angry>Curse you foul intruder... 'Ere near to death ye come|now that ye has meddled in my dealings..");
         ~mesbox("Without warning, the outline of a huge demon starts to emerge in|front of you as Ungadulu falls to the floor unconscious.");
         npc_add(map_findsquare(coord, 1, 2, ^map_findsquare_lineofwalk), nezikchened, 500);
+        %aggressive_npc = npc_uid;
         %npc_lastcombat = sub(^max_32bit_int, 8);
         %npc_aggressive_player = uid;
         mes("Nezikchened: Your faith will help you little here.");
