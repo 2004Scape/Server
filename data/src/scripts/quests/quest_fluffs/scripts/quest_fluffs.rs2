@@ -114,6 +114,10 @@ switch_int ($option) {
 }
 
 [oploc1,loc_2618]
+if(coordz(coord) < coordz(loc_coord) & map_members = false) {
+    mes(^mes_members_do_that); // guess
+    return; 
+}
 def_coord $start_coord = loc_coord;
 def_int $dir = ^exact_south;
 def_coord $end_coord = movecoord(loc_coord, 0, 0, -1);
