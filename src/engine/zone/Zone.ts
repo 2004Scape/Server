@@ -137,13 +137,7 @@ export default class Zone {
             if (typeof encoder === 'undefined') {
                 continue;
             }
-            try {
-                encoder.enclose(buf, event.message);
-            } catch (e) {
-                // e;
-                console.error(e, this.x, this.z);
-                // console.log(event.message);
-            }
+            encoder.enclose(buf, event.message);
         }
 
         if (buf.pos === 0) {

@@ -1035,8 +1035,6 @@ class World {
             for (const zone of this.zonesTracking) {
                 zone.computeShared();
             }
-
-            this.zonesTracking.clear();
         } catch (err) {
             if (err instanceof Error) {
                 printError(`Error during processZones: ${err.message}`);
@@ -1191,8 +1189,8 @@ class World {
         const tick: number = this.currentTick;
 
         // - reset zones
-        // this.zonesTracking.get(tick)?.forEach(zone => zone.reset());
-        // this.zonesTracking.delete(tick);
+        this.zonesTracking.forEach(zone => zone.reset());
+        this.zonesTracking.clear();
 
         // - reset players
         for (const player of this.players) {
