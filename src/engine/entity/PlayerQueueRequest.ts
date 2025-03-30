@@ -14,7 +14,7 @@ export enum PlayerQueueType {
 export type QueueType = PlayerQueueType;
 export type ScriptArgument = number | string;
 
-export class EntityQueueRequest extends Linkable {
+export class PlayerQueueRequest extends Linkable {
     /**
      * The type of queue request.
      */

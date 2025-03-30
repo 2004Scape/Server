@@ -37,7 +37,6 @@ import WordEnc from '#/cache/wordenc/WordEnc.js';
 import BlockWalk from '#/engine/entity/BlockWalk.js';
 import EntityLifeCycle from '#/engine/entity/EntityLifeCycle.js';
 import { NpcList, PlayerList } from '#/engine/entity/EntityList.js';
-import { EntityQueueState, PlayerQueueType } from '#/engine/entity/EntityQueueRequest.js';
 import { PlayerTimerType } from '#/engine/entity/EntityTimer.js';
 import HuntModeType from '#/engine/entity/hunt/HuntModeType.js';
 import HuntNobodyNear from '#/engine/entity/hunt/HuntNobodyNear.js';
@@ -49,6 +48,7 @@ import NpcStat from '#/engine/entity/NpcStat.js';
 import Obj from '#/engine/entity/Obj.js';
 import Player from '#/engine/entity/Player.js';
 import { PlayerLoading } from '#/engine/entity/PlayerLoading.js';
+import { EntityQueueState, PlayerQueueType } from '#/engine/entity/PlayerQueueRequest.js';
 import { PlayerStat } from '#/engine/entity/PlayerStat.js';
 import { SessionLog } from '#/engine/entity/tracking/SessionLog.js';
 import GameMap, { changeLocCollision, changeNpcCollision, changePlayerCollision } from '#/engine/GameMap.js';
@@ -1040,9 +1040,7 @@ class World {
             player.reorient();
             player.buildArea.rebuildNormal(); // set origin before compute player is why this is above.
 
-            const appearance = player.masks & PlayerInfoProt.APPEARANCE
-                ? player.generateAppearance()
-                : player.lastAppearanceBytes ?? player.generateAppearance();
+            const appearance = player.masks & PlayerInfoProt.APPEARANCE ? player.generateAppearance() : (player.lastAppearanceBytes ?? player.generateAppearance());
 
             rsbuf.computePlayer(
                 player.x,
@@ -1085,7 +1083,7 @@ class World {
                 player.exactEndZ,
                 player.exactMoveStart,
                 player.exactMoveEnd,
-                player.exactMoveDirection,
+                player.exactMoveDirection
             );
         }
 
@@ -1116,7 +1114,7 @@ class World {
                 npc.chat,
                 npc.graphicId,
                 npc.graphicHeight,
-                npc.graphicDelay,
+                npc.graphicDelay
             );
         }
     }

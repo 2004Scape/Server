@@ -1,4 +1,4 @@
-import { ScriptArgument } from '#/engine/entity/EntityQueueRequest.js';
+import { ScriptArgument } from '#/engine/entity/PlayerQueueRequest.js';
 import Linkable from '#/util/Linkable.js';
 
 export class NpcQueueRequest extends Linkable {
