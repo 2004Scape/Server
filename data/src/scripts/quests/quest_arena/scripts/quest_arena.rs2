@@ -198,7 +198,7 @@ if (npc_find(movecoord(coord, 0, 0, 8), khazard_scorpion, 14, 0) = true) {
     if(npc_getmode = none) { // npc in cutscene already, do nothing
         return;
     } else if(inzone(0_40_49_47_23, 0_40_49_49_24, npc_coord) = false) {
-        if(~npc_out_of_combat = true) {
+        if(add(%npc_lastcombat, 8) > map_clock) {
             // out of combat and out of cage so attack player, otherwise we'll just set ptr and start cutscene
             ~npc_retaliate(0);
             return;
@@ -234,7 +234,7 @@ if (npc_find(movecoord(coord, 0, 0, 8), bouncer, 14, 0) = true) {
     if(npc_getmode = none) { // npc in cutscene already, do nothing
         return;
     } else if(inzone(0_40_49_47_26, 0_40_49_49_27, npc_coord) = false) {
-        if(~npc_out_of_combat = true) {
+        if(add(%npc_lastcombat, 8) > map_clock) {
             // out of combat and out of cage so attack player, otherwise we'll just set ptr and start cutscene
             ~npc_retaliate(0);
             return;
