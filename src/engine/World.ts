@@ -680,7 +680,7 @@ class World {
                 }
 
                 // - Npc Events (Respawn, Revert, Despawn)
-                if (npc.lifecycleTick > -1 && npc.lifecycleTick <= this.currentTick) {
+                if (--npc.lifecycleTick === 0) {
                     try {
                         // Respawn NPC
                         if (npc.lifecycle === EntityLifeCycle.RESPAWN && !npc.isActive) {
@@ -712,8 +712,6 @@ class World {
 
                         printError(`[World] NPC type:${npc.type} lifecycle:${npc.lifecycle} ID:${npc.nid}`);
                         console.error(err);
-
-                        npc.setLifeCycle(this.currentTick + 1); // retry next tick
                     }
                 }
 
@@ -1349,7 +1347,7 @@ class World {
         }
 
         if (duration > -1) {
-            npc.setLifeCycle(this.currentTick + duration);
+            npc.setLifeCycle(duration);
         }
     }
 
@@ -1374,7 +1372,7 @@ class World {
             this.npcs.remove(npc.nid);
             npc.cleanup();
         } else if (npc.lifecycle === EntityLifeCycle.RESPAWN && duration > -1) {
-            npc.setLifeCycle(this.currentTick + adjustedDuration);
+            npc.setLifeCycle(adjustedDuration);
         }
     }
 
