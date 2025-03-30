@@ -700,7 +700,6 @@ class World {
                                 this.npcEventQueue.addTail(new NpcEventRequest(NpcEventType.DESPAWN, script, npc));
                             }
                         }
-                        npc.setLifeCycle(-1);
                     } catch (err) {
                         // there was an error adding or removing them, try again next tick...
                         // ex: server is full on npc IDs (did we have a leak somewhere?) and we don't want to re-use the last ID (syncing related)
@@ -712,6 +711,7 @@ class World {
 
                         printError(`[World] NPC type:${npc.type} lifecycle:${npc.lifecycle} ID:${npc.nid}`);
                         console.error(err);
+                        npc.setLifeCycle(1);
                     }
                 }
 
