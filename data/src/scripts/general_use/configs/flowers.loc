@@ -1,11 +1,11 @@
-[loc_2980]
+[assorted_flowers]
 name=Flowers
 desc=Some beautiful flowers.
 model=model_loc_2980
 blockwalk=no
 anim=seq_912
 
-[loc_2981]
+[red_flowers]
 name=Flowers
 desc=Some beautiful flowers.
 model=model_loc_2980
@@ -18,7 +18,7 @@ recol2d=24609
 recol3s=18455
 recol3d=24609
 
-[loc_2982]
+[blue_flowers]
 name=Flowers
 desc=Some beautiful flowers.
 model=model_loc_2980
@@ -31,7 +31,7 @@ recol2d=25
 recol3s=18455
 recol3d=25
 
-[loc_2983]
+[yellow_flowers]
 name=Flowers
 desc=Some beautiful flowers.
 model=model_loc_2980
@@ -44,7 +44,7 @@ recol2d=31649
 recol3s=18455
 recol3d=31649
 
-[loc_2984]
+[purple_flowers]
 name=Flowers
 desc=Some beautiful flowers.
 model=model_loc_2980
@@ -57,7 +57,7 @@ recol2d=19487
 recol3s=18455
 recol3d=19487
 
-[loc_2985]
+[orange_flowers]
 name=Flowers
 desc=Some beautiful flowers.
 model=model_loc_2980
@@ -70,7 +70,7 @@ recol2d=28161
 recol3s=18455
 recol3d=28161
 
-[loc_2986]
+[mixed_flowers]
 name=Flowers
 desc=Some beautiful flowers.
 model=model_loc_2980
@@ -83,7 +83,7 @@ recol2d=25
 recol3s=18455
 recol3d=31649
 
-[loc_2987]
+[white_flowers]
 name=Flowers
 desc=Some beautiful flowers.
 model=model_loc_2980
@@ -96,7 +96,7 @@ recol2d=32767
 recol3s=18455
 recol3d=32767
 
-[loc_2988]
+[black_flowers]
 name=Flowers
 desc=Some beautiful flowers.
 model=model_loc_2980
