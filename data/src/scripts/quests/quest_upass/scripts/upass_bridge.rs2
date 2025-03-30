@@ -11,7 +11,7 @@ switch_obj(last_useitem) {
 
 [label,make_clotharrow](namedobj $arrow_type)
 def_namedobj $product = oc_param($arrow_type, next_obj_stage);
-if (inv_itemspace(inv, $product, 1, inv_size(inv)) = false) {
+if (inv_itemspace(inv, $product, 1, inv_size(inv)) = false & inv_total(inv, $arrow_type) > 1) {
     mes("You don't have space to do that."); // rs3
     return;
 }
