@@ -2,6 +2,7 @@ import { locShapeLayer } from '@2004scape/rsmod-pathfinder';
 
 import EntityLifeCycle from '#/engine/entity/EntityLifeCycle.js';
 import NonPathingEntity from '#/engine/entity/NonPathingEntity.js';
+import World from '#/engine/World.js';
 
 export default class Loc extends NonPathingEntity {
     // constructor properties
@@ -46,5 +47,17 @@ export default class Loc extends NonPathingEntity {
 
     revert() {
         this.currentInfo = this.baseInfo;
+    }
+
+    turn() {
+        if (--this.lifecycleTick === 0) {
+            if (this.lifecycle === EntityLifeCycle.DESPAWN) {
+                World.removeLoc(this, 0);
+            } else if (this.lifecycle === EntityLifeCycle.RESPAWN && this.isChanged()) {
+                World.revertLoc(this);
+            } else if (this.lifecycle === EntityLifeCycle.RESPAWN && !this.isActive) {
+                World.addLoc(this, 0);
+            }
+        }
     }
 }

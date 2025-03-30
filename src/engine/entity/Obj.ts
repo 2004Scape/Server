@@ -1,5 +1,6 @@
 import EntityLifeCycle from '#/engine/entity/EntityLifeCycle.js';
 import NonPathingEntity from '#/engine/entity/NonPathingEntity.js';
+import World from '#/engine/World.js';
 
 export default class Obj extends NonPathingEntity {
     /**
@@ -14,7 +15,6 @@ export default class Obj extends NonPathingEntity {
 
     // runtime
     receiver64: bigint = Obj.NO_RECEIVER;
-    isRevealed: boolean = false;
     reveal: number = -1;
     lastChange: number = -1;
 
@@ -24,8 +24,21 @@ export default class Obj extends NonPathingEntity {
         this.count = count;
     }
 
+    turn() {
+        if (this.reveal > -1 && --this.reveal === 0) {
+            World.revealObj(this);
+        }
+        if (--this.lifecycleTick === 0) {
+            if (this.lifecycle === EntityLifeCycle.DESPAWN) {
+                World.removeObj(this, 0);
+            } else if (this.lifecycle === EntityLifeCycle.RESPAWN) {
+                World.addObj(this, Obj.NO_RECEIVER, 0);
+            }
+        }
+    }
+
     isValid(hash64?: bigint): boolean {
-        if (!this.isRevealed && hash64 && hash64 !== this.receiver64) {
+        if (this.reveal > -1 && hash64 && hash64 !== this.receiver64) {
             return false;
         }
 
