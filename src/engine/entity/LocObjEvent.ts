@@ -8,7 +8,7 @@ export default class LocObjEvent extends Linkable {
     constructor(entity: NonPathingEntity) {
         super();
         this.entity = entity;
-        entity.eventTracker = this;
+        entity.track(this);
     }
 
     check(): boolean {

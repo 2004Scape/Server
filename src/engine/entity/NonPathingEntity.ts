@@ -13,6 +13,11 @@ export default abstract class NonPathingEntity extends Entity {
         }
     }
 
+    track(event: LocObjEvent) {
+        this.untrack();
+        this.eventTracker = event;
+    }
+
     resetEntity(_respawn: boolean) {
         // nothing happens here
     }

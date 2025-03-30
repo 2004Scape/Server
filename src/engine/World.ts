@@ -1021,17 +1021,18 @@ class World {
     private processZones(): void {
         const start: number = Date.now();
         try {
-            // - loc/obj despawn/respawn
-            // - compute shared buffer
             for (const event of this.locObjTracker.all()) {
                 // Check if the event is still valid
                 if (event.check()) {
                     event.entity.turn();
-                } else {
-                    event.unlink();
+                }
+                // If this is false, we have not constructed our LinkedList properly somewhere
+                else {
+                    console.error('Loc Obj event is invalid');
                 }
             }
 
+            // Compute shared for tracked zones
             for (const zone of this.zonesTracking) {
                 zone.computeShared();
             }
