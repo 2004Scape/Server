@@ -1,4 +1,4 @@
-import { Visibility } from '@2004scape/rsbuf';
+import { ClientCheat, ClientProtCategory, Visibility } from '@2004scape/rsbuf';
 import { LocAngle, LocShape } from '@2004scape/rsmod-pathfinder';
 
 import Component from '#/cache/config/Component.js';
@@ -12,8 +12,10 @@ import SeqType from '#/cache/config/SeqType.js';
 import SpotanimType from '#/cache/config/SpotanimType.js';
 import VarPlayerType from '#/cache/config/VarPlayerType.js';
 import { CoordGrid } from '#/engine/CoordGrid.js';
+import BlockWalk from '#/engine/entity/BlockWalk.js';
 import EntityLifeCycle from '#/engine/entity/EntityLifeCycle.js';
 import Loc from '#/engine/entity/Loc.js';
+import MoveRestrict from '#/engine/entity/MoveRestrict.js';
 import MoveStrategy from '#/engine/entity/MoveStrategy.js';
 import { isClientConnected } from '#/engine/entity/NetworkPlayer.js';
 import Npc from '#/engine/entity/Npc.js';
@@ -22,19 +24,16 @@ import { PlayerStat, PlayerStatEnabled, PlayerStatKey } from '#/engine/entity/Pl
 import ScriptProvider from '#/engine/script/ScriptProvider.js';
 import ScriptRunner from '#/engine/script/ScriptRunner.js';
 import World from '#/engine/World.js';
-import MessageHandler from '#/network/client/handler/MessageHandler.js';
-import ClientCheat from '#/network/client/model/ClientCheat.js';
+import MessageHandler from '#/network/MessageHandler.js';
 import LoggerEventType from '#/server/logger/LoggerEventType.js';
 import Environment from '#/util/Environment.js';
 import { tryParseInt } from '#/util/TryParse.js';
 
 export default class ClientCheatHandler extends MessageHandler<ClientCheat> {
+    category: ClientProtCategory = ClientProtCategory.USER_EVENT;
+    
     handle(message: ClientCheat, player: Player): boolean {
-        if (message.input.length > 80) {
-            return false;
-        }
-
-        const { input: cheat } = message;
+        const cheat = message.input;
 
         const args: string[] = cheat.toLowerCase().split(' ');
         const cmd: string | undefined = args.shift();
@@ -132,7 +131,7 @@ export default class ClientCheatHandler extends MessageHandler<ClientCheat> {
                             }
                         }
                     } catch (_) {
-                         
+
                         // invalid arguments
                         return false;
                     }
@@ -176,6 +175,12 @@ export default class ClientCheatHandler extends MessageHandler<ClientCheat> {
                 player.messageGame(`Naive move strategy: ${player.moveStrategy === MoveStrategy.NAIVE ? 'naive' : 'smart'}`);
             } else if (cmd === 'random') {
                 player.afkEventReady = true;
+            } else if (cmd === 'test') {
+                for (let x = player.x - 32; x < player.x + 32; x++) {
+                    for (let z = player.z - 32; z < player.z + 32; z++) {
+                        World.addNpc(new Npc(player.level, x, z, 1, 1, EntityLifeCycle.DESPAWN, World.getNextNid(), 0, MoveRestrict.NORMAL, BlockWalk.NPC), 5);
+                    }
+                }
             }
         }
 

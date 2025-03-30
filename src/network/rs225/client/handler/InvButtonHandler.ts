@@ -1,16 +1,23 @@
+import { ClientProtCategory, InvButton } from '@2004scape/rsbuf';
+
 import Component from '#/cache/config/Component.js';
 import Player from '#/engine/entity/Player.js';
 import ScriptProvider from '#/engine/script/ScriptProvider.js';
 import ScriptRunner from '#/engine/script/ScriptRunner.js';
 import ServerTriggerType from '#/engine/script/ServerTriggerType.js';
-import MessageHandler from '#/network/client/handler/MessageHandler.js';
-import InvButton from '#/network/client/model/InvButton.js';
+import MessageHandler from '#/network/MessageHandler.js';
 import Environment from '#/util/Environment.js';
 
 export default class InvButtonHandler extends MessageHandler<InvButton> {
+    category: ClientProtCategory = ClientProtCategory.USER_EVENT;
+    
     handle(message: InvButton, player: Player): boolean {
         // jagex has if_button1-5
         const { op, obj: item, slot, component: comId } = message;
+        
+        if (op < 1 || op > 5) {
+            return false;
+        }
 
         const com = Component.get(comId);
         if (typeof com === 'undefined' || !com.inventoryOptions || !com.inventoryOptions.length || !player.isComponentVisible(com)) {
@@ -55,7 +62,7 @@ export default class InvButtonHandler extends MessageHandler<InvButton> {
         if (script) {
             const root = Component.get(com.rootLayer);
 
-            player.executeScript(ScriptRunner.init(script, player), root.overlay == false);
+            player.executeScript(ScriptRunner.init(script, player), !root.overlay);
         } else if (Environment.NODE_DEBUG) {
             player.messageGame(`No trigger for [${ServerTriggerType.toString(trigger)},${com.comName}]`);
         }

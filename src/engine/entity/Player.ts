@@ -1,6 +1,7 @@
 import 'dotenv/config';
 
-import { PlayerInfoProt, Visibility } from '@2004scape/rsbuf';
+import { OutgoingPacket, PlayerInfoProt, Visibility } from '@2004scape/rsbuf';
+import * as rsbuf from '@2004scape/rsbuf';
 import { CollisionType, CollisionFlag } from '@2004scape/rsmod-pathfinder';
 
 import Component from '#/cache/config/Component.js';
@@ -49,7 +50,6 @@ import HintArrow from '#/network/server/model/HintArrow.js';
 import IfClose from '#/network/server/model/IfClose.js';
 import IfSetTab from '#/network/server/model/IfSetTab.js';
 import LastLoginInfo from '#/network/server/model/LastLoginInfo.js';
-import MessageGame from '#/network/server/model/MessageGame.js';
 import MidiJingle from '#/network/server/model/MidiJingle.js';
 import MidiSong from '#/network/server/model/MidiSong.js';
 import ResetAnims from '#/network/server/model/ResetAnims.js';
@@ -271,7 +271,7 @@ export default class Player extends PathingEntity {
     username37: bigint;
     hash64: bigint;
     displayName: string;
-    body: number[] = [
+    body: Int32Array = Int32Array.from([
         0, // hair
         10, // beard
         18, // body
@@ -279,8 +279,8 @@ export default class Player extends PathingEntity {
         33, // gloves
         36, // legs
         42 // boots
-    ];
-    colors: number[] = [0, 0, 0, 0, 0];
+    ]);
+    colors: Int32Array = Int32Array.from([0, 0, 0, 0, 0]);
     gender: number = 0;
     run: number = 0;
     tempRun: number = 0;
@@ -2045,6 +2045,17 @@ export default class Player extends PathingEntity {
         }
     }
 
+    write2(message: OutgoingPacket | undefined) {
+        if (!message || !isClientConnected(this)) {
+            return;
+        }
+
+        const bytes: Uint8Array | undefined = message.bytes;
+        if (bytes) {
+            this.writeInner2(bytes, message.id, message.length);
+        }
+    }
+
     unsetMapFlag() {
         this.clearWaypoints();
         this.write(new UnsetMapFlag());
@@ -2088,7 +2099,8 @@ export default class Player extends PathingEntity {
     }
 
     messageGame(msg: string) {
-        this.write(new MessageGame(msg));
+        this.write2(rsbuf.messageGame(this.pid, msg));
+        // this.write(new MessageGame(msg));
     }
 
     isValid(_hash64?: bigint): boolean {

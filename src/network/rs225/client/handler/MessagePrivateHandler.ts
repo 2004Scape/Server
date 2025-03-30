@@ -1,12 +1,15 @@
+import { ClientProtCategory, MessagePrivate } from '@2004scape/rsbuf';
+
 import Player from '#/engine/entity/Player.js';
 import World from '#/engine/World.js';
 import Packet from '#/io/Packet.js';
-import MessageHandler from '#/network/client/handler/MessageHandler.js';
-import MessagePrivate from '#/network/client/model/MessagePrivate.js';
+import MessageHandler from '#/network/MessageHandler.js';
 import { fromBase37 } from '#/util/JString.js';
 import WordPack from '#/wordenc/WordPack.js';
 
 export default class MessagePrivateHandler extends MessageHandler<MessagePrivate> {
+    category: ClientProtCategory = ClientProtCategory.USER_EVENT;
+    
     handle(message: MessagePrivate, player: Player): boolean {
         const { username, input } = message;
 

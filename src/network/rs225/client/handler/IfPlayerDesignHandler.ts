@@ -1,10 +1,13 @@
+import { ClientProtCategory, IfPlayerDesign } from '@2004scape/rsbuf';
+
 import IdkType from '#/cache/config/IdkType.js';
 import InvType from '#/cache/config/InvType.js';
 import Player from '#/engine/entity/Player.js';
-import MessageHandler from '#/network/client/handler/MessageHandler.js';
-import IfPlayerDesign from '#/network/client/model/IfPlayerDesign.js';
+import MessageHandler from '#/network/MessageHandler.js';
 
 export default class IfPlayerDesignHandler extends MessageHandler<IfPlayerDesign> {
+    category: ClientProtCategory = ClientProtCategory.USER_EVENT;
+    
     handle(message: IfPlayerDesign, player: Player): boolean {
         const { gender, idkit, color } = message;
 

@@ -1,8 +1,11 @@
+import { ClientProtCategory, CloseModal } from '@2004scape/rsbuf';
+
 import Player from '#/engine/entity/Player.js';
-import MessageHandler from '#/network/client/handler/MessageHandler.js';
-import CloseModal from '#/network/client/model/CloseModal.js';
+import MessageHandler from '#/network/MessageHandler.js';
 
 export default class CloseModalHandler extends MessageHandler<CloseModal> {
+    category: ClientProtCategory = ClientProtCategory.USER_EVENT;
+
     handle(_message: CloseModal, player: Player): boolean {
         // For whatever reason the modal is not closed directly here.
         // This was tested in osrs by sending close modal and being traded

@@ -1,15 +1,18 @@
+import { ClientProtCategory, OpLocU } from '@2004scape/rsbuf';
+
 import Component from '#/cache/config/Component.js';
 import ObjType from '#/cache/config/ObjType.js';
 import Interaction from '#/engine/entity/Interaction.js';
 import { NetworkPlayer } from '#/engine/entity/NetworkPlayer.js';
 import ServerTriggerType from '#/engine/script/ServerTriggerType.js';
 import World from '#/engine/World.js';
-import MessageHandler from '#/network/client/handler/MessageHandler.js';
-import OpLocU from '#/network/client/model/OpLocU.js';
+import MessageHandler from '#/network/MessageHandler.js';
 import UnsetMapFlag from '#/network/server/model/UnsetMapFlag.js';
 import Environment from '#/util/Environment.js';
 
 export default class OpLocUHandler extends MessageHandler<OpLocU> {
+    category: ClientProtCategory = ClientProtCategory.USER_EVENT;
+    
     handle(message: OpLocU, player: NetworkPlayer): boolean {
         const { x, z, loc: locId, useObj: item, useSlot: slot, useComponent: comId } = message;
 

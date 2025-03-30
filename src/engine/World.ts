@@ -62,7 +62,6 @@ import WorldStat from '#/engine/WorldStat.js';
 import Zone from '#/engine/zone/Zone.js';
 import Isaac from '#/io/Isaac.js';
 import Packet from '#/io/Packet.js';
-import { ReportAbuseReason } from '#/network/client/model/ReportAbuse.js';
 import MessagePrivate from '#/network/server/model/MessagePrivate.js';
 import UpdateFriendList from '#/network/server/model/UpdateFriendList.js';
 import UpdateIgnoreList from '#/network/server/model/UpdateIgnoreList.js';
@@ -92,6 +91,7 @@ import Environment from '#/util/Environment.js';
 import { fromBase37, toBase37, toSafeName } from '#/util/JString.js';
 import LinkList from '#/util/LinkList.js';
 import { printDebug, printError, printInfo } from '#/util/Logger.js';
+import { ReportAbuseReason } from '#/util/ReportAbuse.js';
 import WalkTriggerSetting from '#/util/WalkTriggerSetting.js';
 import { createWorker } from '#/util/WorkerFactory.js';
 
@@ -630,6 +630,14 @@ class World {
                     }
                 }
 
+                // if (player.username.startsWith('bot')) {
+                //     if (this.currentTick % 2 === 0) {
+                //         player.queueWaypoint(player.x + 1, player.z);
+                //     } else {
+                //         player.queueWaypoint(player.x - 1, player.z);
+                //     }
+                // }
+
                 // - client input tracking
                 player.processInputTracking();
 
@@ -994,7 +1002,12 @@ class World {
             player.uid = ((Number(player.username37 & 0x1fffffn) << 11) | player.pid) >>> 0;
             player.tele = true;
             player.moveClickRequest = false;
-
+            if (player.username.startsWith('bot')) {
+                const x = Math.floor(Math.random() * 32) + 3200;
+                const z = Math.floor(Math.random() * 32) + 3200;
+                player.x = x;
+                player.z = z;
+            }
             this.gameMap.getZone(player.x, player.z, player.level).enter(player);
             player.onLogin();
 
@@ -2191,11 +2204,11 @@ class World {
                 return;
             }
 
-            if (this.getTotalPlayers() > Environment.NODE_MAX_CONNECTED) {
-                client.send(Uint8Array.from([7]));
-                client.close();
-                return;
-            }
+            // if (this.getTotalPlayers() > Environment.NODE_MAX_CONNECTED) {
+            //     client.send(Uint8Array.from([7]));
+            //     client.close();
+            //     return;
+            // }
 
             if (this.logoutRequests.has(username)) {
                 // still trying to log out from the last session on this world!

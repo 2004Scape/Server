@@ -1,16 +1,18 @@
 import * as rsbuf from '@2004scape/rsbuf';
+import { ClientProtCategory, OpPlayer } from '@2004scape/rsbuf';
 
 import Interaction from '#/engine/entity/Interaction.js';
 import { NetworkPlayer } from '#/engine/entity/NetworkPlayer.js';
 import ServerTriggerType from '#/engine/script/ServerTriggerType.js';
 import World from '#/engine/World.js';
-import MessageHandler from '#/network/client/handler/MessageHandler.js';
-import OpPlayer from '#/network/client/model/OpPlayer.js';
+import MessageHandler from '#/network/MessageHandler.js';
 import UnsetMapFlag from '#/network/server/model/UnsetMapFlag.js';
 
 export default class OpPlayerHandler extends MessageHandler<OpPlayer> {
+    category = ClientProtCategory.USER_EVENT;
+    
     handle(message: OpPlayer, player: NetworkPlayer): boolean {
-        const { pid } = message;
+        const { op, pid } = message;
 
         if (player.delayed) {
             player.write(new UnsetMapFlag());
@@ -31,11 +33,11 @@ export default class OpPlayerHandler extends MessageHandler<OpPlayer> {
         }
 
         let mode: ServerTriggerType;
-        if (message.op === 1) {
+        if (op === 1) {
             mode = ServerTriggerType.APPLAYER1;
-        } else if (message.op === 2) {
+        } else if (op === 2) {
             mode = ServerTriggerType.APPLAYER2;
-        } else if (message.op === 3) {
+        } else if (op === 3) {
             mode = ServerTriggerType.APPLAYER3;
         } else {
             mode = ServerTriggerType.APPLAYER4;

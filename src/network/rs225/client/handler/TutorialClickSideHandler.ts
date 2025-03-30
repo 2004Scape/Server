@@ -1,11 +1,14 @@
+import { ClientProtCategory, TutorialClickSide } from '@2004scape/rsbuf';
+
 import Player from '#/engine/entity/Player.js';
 import ScriptProvider from '#/engine/script/ScriptProvider.js';
 import ScriptRunner from '#/engine/script/ScriptRunner.js';
 import ServerTriggerType from '#/engine/script/ServerTriggerType.js';
-import MessageHandler from '#/network/client/handler/MessageHandler.js';
-import TutorialClickSide from '#/network/client/model/TutorialClickSide.js';
+import MessageHandler from '#/network/MessageHandler.js';
 
 export default class TutorialClickSideHandler extends MessageHandler<TutorialClickSide> {
+    category: ClientProtCategory = ClientProtCategory.USER_EVENT;
+    
     handle(message: TutorialClickSide, player: Player): boolean {
         const { tab } = message;
 

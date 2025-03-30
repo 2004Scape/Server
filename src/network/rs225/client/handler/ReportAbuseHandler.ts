@@ -1,27 +1,33 @@
+import { ClientProtCategory, ReportAbuse } from '@2004scape/rsbuf';
+
 import Player from '#/engine/entity/Player.js';
 import World from '#/engine/World.js';
-import MessageHandler from '#/network/client/handler/MessageHandler.js';
-import ReportAbuse, { ReportAbuseReason } from '#/network/client/model/ReportAbuse.js';
+import MessageHandler from '#/network/MessageHandler.js';
 import Environment from '#/util/Environment.js';
 import { fromBase37 } from '#/util/JString.js';
+import { ReportAbuseReason } from '#/util/ReportAbuse.js';
 
 export default class ReportAbuseHandler extends MessageHandler<ReportAbuse> {
+    category: ClientProtCategory = ClientProtCategory.USER_EVENT;
+
     handle(message: ReportAbuse, player: Player): boolean {
         if (player.reportAbuseProtect) {
             return false;
         }
 
-        if (message.reason < ReportAbuseReason.OFFENSIVE_LANGUAGE || message.reason > ReportAbuseReason.REAL_WORLD_TRADING) {
+        const { offender, reason, mute } = message;
+
+        if (reason < ReportAbuseReason.OFFENSIVE_LANGUAGE || reason > ReportAbuseReason.REAL_WORLD_TRADING) {
             World.notifyPlayerBan('automated', player.username, Date.now() + 172800000);
             return false;
         }
 
-        if (message.moderatorMute && player.staffModLevel > 0 && Environment.NODE_PRODUCTION) {
+        if (mute && player.staffModLevel > 0 && Environment.NODE_PRODUCTION) {
             // 2 day mute
-            World.notifyPlayerMute(player.username, fromBase37(message.offender), Date.now() + 172800000);
+            World.notifyPlayerMute(player.username, fromBase37(offender), Date.now() + 172800000);
         }
 
-        World.notifyPlayerReport(player, fromBase37(message.offender), message.reason);
+        World.notifyPlayerReport(player, fromBase37(offender), reason);
         player.messageGame('Thank-you, your abuse report has been received');
         player.reportAbuseProtect = true;
         return true;

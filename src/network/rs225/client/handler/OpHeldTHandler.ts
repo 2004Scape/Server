@@ -1,17 +1,20 @@
+import { ClientProtCategory, OpHeldT } from '@2004scape/rsbuf';
+
 import Component from '#/cache/config/Component.js';
 import ObjType from '#/cache/config/ObjType.js';
 import Player from '#/engine/entity/Player.js';
 import ScriptProvider from '#/engine/script/ScriptProvider.js';
 import ScriptRunner from '#/engine/script/ScriptRunner.js';
 import ServerTriggerType from '#/engine/script/ServerTriggerType.js';
-import MessageHandler from '#/network/client/handler/MessageHandler.js';
-import OpHeldT from '#/network/client/model/OpHeldT.js';
+import MessageHandler from '#/network/MessageHandler.js';
 import LoggerEventType from '#/server/logger/LoggerEventType.js';
 import Environment from '#/util/Environment.js';
 
 export default class OpHeldTHandler extends MessageHandler<OpHeldT> {
+    category: ClientProtCategory = ClientProtCategory.USER_EVENT;
+    
     handle(message: OpHeldT, player: Player): boolean {
-        const { obj: item, slot, component: comId, spellComponent: spellComId } = message;
+        const { obj: item, slot, component: comId, spell: spellComId } = message;
 
         const com = Component.get(comId);
         if (typeof com === 'undefined' || !player.isComponentVisible(com)) {

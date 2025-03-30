@@ -1,6 +1,7 @@
 import 'dotenv/config';
 
 import * as rsbuf from '@2004scape/rsbuf';
+import { ClientProtCategory, ClientProtCategoryLimit, IncomingPacket, OutgoingPacket } from '@2004scape/rsbuf';
 
 import InvType from '#/cache/config/InvType.js';
 import { CoordGrid } from '#/engine/CoordGrid.js';
@@ -9,8 +10,6 @@ import World from '#/engine/World.js';
 import WorldStat from '#/engine/WorldStat.js';
 import Zone from '#/engine/zone/Zone.js';
 import Packet from '#/io/Packet.js';
-import ClientProtCategory from '#/network/client/prot/ClientProtCategory.js';
-import ClientProt from '#/network/rs225/client/prot/ClientProt.js';
 import ClientProtRepository from '#/network/rs225/client/prot/ClientProtRepository.js';
 import ServerProt from '#/network/rs225/server/prot/ServerProt.js';
 import ServerProtRepository from '#/network/rs225/server/prot/ServerProtRepository.js';
@@ -19,9 +18,7 @@ import CamLookAt from '#/network/server/model/CamLookAt.js';
 import CamMoveTo from '#/network/server/model/CamMoveTo.js';
 import IfClose from '#/network/server/model/IfClose.js';
 import IfOpenChat from '#/network/server/model/IfOpenChat.js';
-import IfOpenMain from '#/network/server/model/IfOpenMain.js';
 import IfOpenMainSide from '#/network/server/model/IfOpenMainSide.js';
-import IfOpenSide from '#/network/server/model/IfOpenSide.js';
 import Logout from '#/network/server/model/Logout.js';
 import NpcInfo from '#/network/server/model/NpcInfo.js';
 import PlayerInfo from '#/network/server/model/PlayerInfo.js';
@@ -66,7 +63,7 @@ export class NetworkPlayer extends Player {
         this.restrictedLimit = 0;
 
         const bytesStart = this.client.in.pos;
-        while (this.userLimit < ClientProtCategory.USER_EVENT.limit && this.clientLimit < ClientProtCategory.CLIENT_EVENT.limit && this.restrictedLimit < ClientProtCategory.RESTRICTED_EVENT.limit && this.read()) {
+        while (this.userLimit < ClientProtCategoryLimit.USER_EVENT && this.clientLimit < ClientProtCategoryLimit.CLIENT_EVENT && this.restrictedLimit < ClientProtCategoryLimit.RESTRICTED_EVENT && this.read()) {
             // empty
         }
         const bytesRead = bytesStart - this.client.in.pos;
@@ -86,6 +83,8 @@ export class NetworkPlayer extends Player {
             return false;
         }
 
+        let packet: IncomingPacket | undefined;
+
         if (this.client.opcode === -1) {
             NetworkPlayer.inBuf.pos = 0;
             this.client.read(NetworkPlayer.inBuf.data, 0, 1);
@@ -96,14 +95,14 @@ export class NetworkPlayer extends Player {
                 this.client.opcode = NetworkPlayer.inBuf.g1();
             }
 
-            const packetType = ClientProt.byId[this.client.opcode];
-            if (!packetType) {
+            packet = rsbuf.nextBufferedRead(this.client.opcode);
+            if (!packet) {
                 this.client.opcode = -1;
                 this.client.close();
                 return false;
+            } else {
+                this.client.waiting = packet.length;
             }
-
-            this.client.waiting = packetType.length;
         }
 
         if (this.client.waiting === -1) {
@@ -129,17 +128,19 @@ export class NetworkPlayer extends Player {
         NetworkPlayer.inBuf.pos = 0;
         this.client.read(NetworkPlayer.inBuf.data, 0, this.client.waiting);
 
-        const packetType = ClientProt.byId[this.client.opcode];
-        const decoder = ClientProtRepository.getDecoder(packetType);
-
-        if (decoder) {
-            const message = decoder.decode(NetworkPlayer.inBuf, this.client.waiting);
-            const success: boolean = ClientProtRepository.getHandler(packetType)?.handle(message, this) ?? false;
-            // todo: move out of model
-            if (success && message.category === ClientProtCategory.USER_EVENT) {
-                this.userLimit++;
-            } else if (message.category === ClientProtCategory.RESTRICTED_EVENT) {
-                this.restrictedLimit++;
+        if (packet) {
+            const message = ClientProtRepository.getMessage(packet.id, NetworkPlayer.inBuf.data.subarray(0, this.client.waiting));
+            if (message) {
+                const handler = ClientProtRepository.getHandler(packet.id);
+                const success: boolean = handler?.handle(message, this) ?? false;
+                // todo: move out of model
+                if (success && handler && handler.category === ClientProtCategory.USER_EVENT) {
+                    this.userLimit++;
+                } else if (handler && handler.category === ClientProtCategory.RESTRICTED_EVENT) {
+                    this.restrictedLimit++;
+                } else {
+                    this.clientLimit++;
+                }
             } else {
                 this.clientLimit++;
             }
@@ -169,11 +170,13 @@ export class NetworkPlayer extends Player {
             if ((this.modalState & 1) !== 0 && (this.modalState & 4) !== 0) {
                 this.write(new IfOpenMainSide(this.modalMain, this.modalSide));
             } else if ((this.modalState & 1) !== 0) {
-                this.write(new IfOpenMain(this.modalMain));
+                this.write2(rsbuf.ifOpenMain(this.pid, this.modalMain));
+                // this.write(new IfOpenMain(this.modalMain));
             } else if ((this.modalState & 2) !== 0) {
                 this.write(new IfOpenChat(this.modalChat));
             } else if ((this.modalState & 4) !== 0) {
-                this.write(new IfOpenSide(this.modalSide));
+                this.write2(rsbuf.ifOpenSide(this.pid, this.modalSide));
+                // this.write(new IfOpenSide(this.modalSide));
             }
 
             this.refreshModal = false;
@@ -181,6 +184,15 @@ export class NetworkPlayer extends Player {
 
         for (const message of this.buffer) {
             this.writeInner(message);
+        }
+
+        while (true) {
+            const out: OutgoingPacket | undefined = rsbuf.nextBufferedWrite(this.pid);
+            if (!out) {
+                break;
+            } else if (out.bytes) {
+                this.writeInner2(out.bytes, out.id, out.length);
+            }
         }
 
         this.buffer = [];
@@ -225,6 +237,53 @@ export class NetworkPlayer extends Player {
         if (prot.length === -1) {
             buf.psize1(buf.pos - start);
         } else if (prot.length === -2) {
+            buf.psize2(buf.pos - start);
+        }
+
+        this.client.send(buf.data.slice(0, buf.pos));
+        World.cycleStats[WorldStat.BANDWIDTH_OUT] += buf.pos;
+    }
+
+    writeInner2(bytes: Uint8Array, id: number, length: number): void {
+        const client = this.client;
+        if (!client) {
+            return;
+        }
+
+        // const encoder: MessageEncoder<OutgoingMessage> | undefined = ServerProtRepository.getEncoder(message);
+        // if (!encoder) {
+        //     printError(`No encoder for message ${message.constructor.name}`);
+        //     return;
+        // }
+
+        // const prot: ServerProt = encoder.prot;
+        const buf = client.out;
+        // const test = (1 + (prot.length === -1 ? 1 : prot.length === -2 ? 2 : 0)) + encoder.test(message);
+        // if (buf.pos + test >= buf.length) {
+        //     client.flush();
+        // }
+
+        buf.pos = 0;
+
+        if (client.encryptor) {
+            buf.p1(id + client.encryptor.nextInt());
+        } else {
+            buf.p1(id);
+        }
+
+        if (length === -1) {
+            buf.p1(0);
+        } else if (length === -2) {
+            buf.p2(0);
+        }
+
+        const start: number = buf.pos;
+        // encoder.encode(buf, message);
+        buf.pdata(bytes, 0, bytes.length);
+
+        if (length === -1) {
+            buf.psize1(buf.pos - start);
+        } else if (length === -2) {
             buf.psize2(buf.pos - start);
         }
 
@@ -297,11 +356,17 @@ export class NetworkPlayer extends Player {
     }
 
     updatePlayers() {
-        this.write(new PlayerInfo(rsbuf.playerInfo(this.client.out.pos, this.pid, Math.abs(this.lastTickX - this.x), Math.abs(this.lastTickZ - this.z), this.lastLevel !== this.level)));
+        const bytes: Uint8Array | undefined = rsbuf.playerInfo(this.client.out.pos, this.pid, Math.abs(this.lastTickX - this.x), Math.abs(this.lastTickZ - this.z), this.lastLevel !== this.level);
+        if (bytes) {
+            this.write(new PlayerInfo(bytes));
+        }
     }
 
     updateNpcs() {
-        this.write(new NpcInfo(rsbuf.npcInfo(this.client.out.pos, this.pid, Math.abs(this.lastTickX - this.x), Math.abs(this.lastTickZ - this.z), this.lastLevel !== this.level)));
+        const bytes: Uint8Array | undefined = rsbuf.npcInfo(this.client.out.pos, this.pid, Math.abs(this.lastTickX - this.x), Math.abs(this.lastTickZ - this.z), this.lastLevel !== this.level);
+        if (bytes) {
+            this.write(new NpcInfo(bytes));
+        }
     }
 
     updateZones() {

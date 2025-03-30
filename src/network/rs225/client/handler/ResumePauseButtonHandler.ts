@@ -1,10 +1,19 @@
+import { ClientProtCategory, ResumePauseButton } from '@2004scape/rsbuf';
+
+import Component from '#/cache/config/Component.js';
 import Player from '#/engine/entity/Player.js';
 import ScriptState from '#/engine/script/ScriptState.js';
-import MessageHandler from '#/network/client/handler/MessageHandler.js';
-import ResumePauseButton from '#/network/client/model/ResumePauseButton.js';
+import MessageHandler from '#/network/MessageHandler.js';
 
 export default class ResumePauseButtonHandler extends MessageHandler<ResumePauseButton> {
-    handle(_message: ResumePauseButton, player: Player): boolean {
+    category: ClientProtCategory = ClientProtCategory.USER_EVENT;
+
+    handle(message: ResumePauseButton, player: Player): boolean {
+        const com = Component.get(message.component);
+        if (typeof com === 'undefined' || !player.isComponentVisible(com)) {
+            return false;
+        }
+        
         if (!player.activeScript || player.activeScript.execution !== ScriptState.PAUSEBUTTON) {
             return false;
         }

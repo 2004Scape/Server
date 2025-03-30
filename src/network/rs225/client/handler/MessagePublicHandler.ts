@@ -1,13 +1,14 @@
-import { PlayerInfoProt } from '@2004scape/rsbuf';
+import { ClientProtCategory, MessagePublic, PlayerInfoProt } from '@2004scape/rsbuf';
 
 import WordEnc from '#/cache/wordenc/WordEnc.js';
 import Player from '#/engine/entity/Player.js';
 import Packet from '#/io/Packet.js';
-import MessageHandler from '#/network/client/handler/MessageHandler.js';
-import MessagePublic from '#/network/client/model/MessagePublic.js';
+import MessageHandler from '#/network/MessageHandler.js';
 import WordPack from '#/wordenc/WordPack.js';
 
 export default class MessagePublicHandler extends MessageHandler<MessagePublic> {
+    category: ClientProtCategory = ClientProtCategory.USER_EVENT;
+    
     handle(message: MessagePublic, player: Player): boolean {
         const { color, effect, input } = message;
 

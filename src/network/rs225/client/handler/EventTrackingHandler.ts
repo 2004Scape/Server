@@ -1,9 +1,12 @@
+import { ClientProtCategory, EventTracking } from '@2004scape/rsbuf';
+
 import Player from '#/engine/entity/Player.js';
-import MessageHandler from '#/network/client/handler/MessageHandler.js';
-import EventTracking from '#/network/client/model/EventTracking.js';
+import MessageHandler from '#/network/MessageHandler.js';
 import Environment from '#/util/Environment.js';
 
 export default class EventTrackingHandler extends MessageHandler<EventTracking> {
+    category: ClientProtCategory = ClientProtCategory.RESTRICTED_EVENT;
+    
     handle(message: EventTracking, player: Player): boolean {
         const bytes: Uint8Array = message.bytes;
         if (bytes.length === 0 || bytes.length > 500) {

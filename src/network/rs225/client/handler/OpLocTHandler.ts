@@ -1,15 +1,18 @@
+import { ClientProtCategory, OpLocT } from '@2004scape/rsbuf';
+
 import Component from '#/cache/config/Component.js';
 import Interaction from '#/engine/entity/Interaction.js';
 import { NetworkPlayer } from '#/engine/entity/NetworkPlayer.js';
 import ServerTriggerType from '#/engine/script/ServerTriggerType.js';
 import World from '#/engine/World.js';
-import MessageHandler from '#/network/client/handler/MessageHandler.js';
-import OpLocT from '#/network/client/model/OpLocT.js';
+import MessageHandler from '#/network/MessageHandler.js';
 import UnsetMapFlag from '#/network/server/model/UnsetMapFlag.js';
 
 export default class OpLocTHandler extends MessageHandler<OpLocT> {
+    category: ClientProtCategory = ClientProtCategory.USER_EVENT;
+    
     handle(message: OpLocT, player: NetworkPlayer): boolean {
-        const { x, z, loc: locId, spellComponent: spellComId } = message;
+        const { x, z, loc: locId, spell: spellComId } = message;
 
         if (player.delayed) {
             player.write(new UnsetMapFlag());

@@ -1,15 +1,22 @@
+import { ClientProtCategory, OpObj } from '@2004scape/rsbuf';
+
 import ObjType from '#/cache/config/ObjType.js';
 import Interaction from '#/engine/entity/Interaction.js';
 import { NetworkPlayer } from '#/engine/entity/NetworkPlayer.js';
 import ServerTriggerType from '#/engine/script/ServerTriggerType.js';
 import World from '#/engine/World.js';
-import MessageHandler from '#/network/client/handler/MessageHandler.js';
-import OpObj from '#/network/client/model/OpObj.js';
+import MessageHandler from '#/network/MessageHandler.js';
 import UnsetMapFlag from '#/network/server/model/UnsetMapFlag.js';
 
 export default class OpObjHandler extends MessageHandler<OpObj> {
+    category: ClientProtCategory = ClientProtCategory.USER_EVENT;
+    
     handle(message: OpObj, player: NetworkPlayer): boolean {
-        const { x, z, obj: objId } = message;
+        const { op, x, z, obj: objId } = message;
+
+        if (op < 1 || op > 5) {
+            return false;
+        }
 
         if (player.delayed) {
             player.write(new UnsetMapFlag());
@@ -35,20 +42,20 @@ export default class OpObjHandler extends MessageHandler<OpObj> {
 
         const objType = ObjType.get(obj.type);
         // todo: validate all options
-        if ((message.op === 1 && ((objType.op && !objType.op[0]) || !objType.op)) || (message.op === 4 && ((objType.op && !objType.op[3]) || !objType.op))) {
+        if ((op === 1 && ((objType.op && !objType.op[0]) || !objType.op)) || (op === 4 && ((objType.op && !objType.op[3]) || !objType.op))) {
             player.write(new UnsetMapFlag());
             player.clearPendingAction();
             return false;
         }
 
         let mode: ServerTriggerType;
-        if (message.op === 1) {
+        if (op === 1) {
             mode = ServerTriggerType.APOBJ1;
-        } else if (message.op === 2) {
+        } else if (op === 2) {
             mode = ServerTriggerType.APOBJ2;
-        } else if (message.op === 3) {
+        } else if (op === 3) {
             mode = ServerTriggerType.APOBJ3;
-        } else if (message.op === 4) {
+        } else if (op === 4) {
             mode = ServerTriggerType.APOBJ4;
         } else {
             mode = ServerTriggerType.APOBJ5;

@@ -1,17 +1,24 @@
+import { ClientProtCategory, OpHeld } from '@2004scape/rsbuf';
+
 import Component from '#/cache/config/Component.js';
 import ObjType from '#/cache/config/ObjType.js';
 import Player from '#/engine/entity/Player.js';
 import ScriptProvider from '#/engine/script/ScriptProvider.js';
 import ScriptRunner from '#/engine/script/ScriptRunner.js';
 import ServerTriggerType from '#/engine/script/ServerTriggerType.js';
-import MessageHandler from '#/network/client/handler/MessageHandler.js';
-import OpHeld from '#/network/client/model/OpHeld.js';
+import MessageHandler from '#/network/MessageHandler.js';
 import LoggerEventType from '#/server/logger/LoggerEventType.js';
 import Environment from '#/util/Environment.js';
 
 export default class OpHeldHandler extends MessageHandler<OpHeld> {
+    category: ClientProtCategory = ClientProtCategory.USER_EVENT;
+    
     handle(message: OpHeld, player: Player): boolean {
-        const { obj: item, slot, component: comId } = message;
+        const { op, obj: item, slot, component: comId } = message;
+
+        if (op < 1 || op > 5) {
+            return false;
+        }
 
         const com = Component.get(comId);
         if (typeof com === 'undefined' || !player.isComponentVisible(com)) {
@@ -20,7 +27,7 @@ export default class OpHeldHandler extends MessageHandler<OpHeld> {
         }
 
         const type = ObjType.get(item);
-        if (message.op !== 5 && ((type.iop && !type.iop[message.op - 1]) || !type.iop)) {
+        if (op !== 5 && ((type.iop && !type.iop[op - 1]) || !type.iop)) {
             player.clearPendingAction();
             return false;
         }
@@ -50,17 +57,17 @@ export default class OpHeldHandler extends MessageHandler<OpHeld> {
         player.masks |= player.entitymask;
 
         let trigger: ServerTriggerType;
-        if (message.op === 1) {
-            player.addSessionLog(LoggerEventType.MODERATOR, `${type.iop![message.op - 1]} ${type.debugname}`);
+        if (op === 1) {
+            player.addSessionLog(LoggerEventType.MODERATOR, `${type.iop![op - 1]} ${type.debugname}`);
             trigger = ServerTriggerType.OPHELD1;
-        } else if (message.op === 2) {
-            player.addSessionLog(LoggerEventType.MODERATOR, `${type.iop![message.op - 1]} ${type.debugname}`);
+        } else if (op === 2) {
+            player.addSessionLog(LoggerEventType.MODERATOR, `${type.iop![op - 1]} ${type.debugname}`);
             trigger = ServerTriggerType.OPHELD2;
-        } else if (message.op === 3) {
-            player.addSessionLog(LoggerEventType.MODERATOR, `${type.iop![message.op - 1]} ${type.debugname}`);
+        } else if (op === 3) {
+            player.addSessionLog(LoggerEventType.MODERATOR, `${type.iop![op - 1]} ${type.debugname}`);
             trigger = ServerTriggerType.OPHELD3;
-        } else if (message.op === 4) {
-            player.addSessionLog(LoggerEventType.MODERATOR, `${type.iop![message.op - 1]} ${type.debugname}`);
+        } else if (op === 4) {
+            player.addSessionLog(LoggerEventType.MODERATOR, `${type.iop![op - 1]} ${type.debugname}`);
             trigger = ServerTriggerType.OPHELD4;
         } else {
             // wealth logged in content (it may not execute!)
