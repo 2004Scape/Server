@@ -29,8 +29,12 @@ if ($data = null) {
     return;
 }
 if (inv_freespace(inv) < 1) {
+    def_string $ore_name = db_getfield($data, mining_table:ore_name, 0);
+    if (compare($ore_name, "gem") = 0) {
+        $ore_name = "gems";
+    }
     anim(null, 0);
-    ~mesbox("Your inventory is too full to hold any more <db_getfield($data, mining_table:ore_name, 0)>.");
+    ~mesbox("Your inventory is too full to hold any more <$ore_name>.");
     return;
 }
 def_int $levelreq = db_getfield($data, mining_table:rock_level, 0);
@@ -71,8 +75,12 @@ if ($data = null) {
     return;
 }
 if (inv_freespace(inv) < 1) {
+    def_string $ore_name = db_getfield($data, mining_table:ore_name, 0);
+    if (compare($ore_name, "gem") = 0) {
+        $ore_name = "gems";
+    }
     anim(null, 0);
-    ~mesbox("Your inventory is too full to hold any more <db_getfield($data, mining_table:ore_name, 0)>.");
+    ~mesbox("Your inventory is too full to hold any more <$ore_name>.");
     return;
 }
 def_int $levelreq = db_getfield($data, mining_table:rock_level, 0);
