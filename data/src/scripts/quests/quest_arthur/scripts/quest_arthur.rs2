@@ -9,6 +9,7 @@ if(%arthur_progress >= ^arthur_spoken_lancelot) {
     // https://youtu.be/rCASNmyFdGE?si=6b-G5XHgfCKT-mCn&t=162
     anim(human_pickupfloor, 0);
     ~mesbox("You climb inside the crate and wait.");
+    if(%arhein_crate_coord = null) %arhein_crate_coord = ^catherby_crate_coord;
     p_teleport(0_43_153_26_47);
     ~mesbox("You wait.");
     ~mesbox("And wait...");
@@ -42,6 +43,7 @@ if ($choice = 2) {
 }
 anim(human_pickupfloor, 0);
 ~mesbox("You climb inside the crate and wait.");
+if(%arhein_crate_coord = null) %arhein_crate_coord = ^keep_crate_coord;
 p_teleport(0_43_153_26_47);
 ~mesbox("You wait.");
 ~mesbox("And wait...");
