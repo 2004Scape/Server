@@ -180,7 +180,7 @@ mes("The door is already unlocked.");
 p_delay(0);
 mes("You go through the door.");
 if ($gate = true) {
-    ~open_and_close_metal_gate($replacement, $entering, $mirror);
+    ~open_and_close_metal_gate2($replacement, $entering, $mirror);
 } else {
     ~open_and_close_door($replacement, $entering, true);
 }

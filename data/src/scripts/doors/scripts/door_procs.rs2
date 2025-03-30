@@ -56,6 +56,15 @@ switch_int($angle) {
     case default : error("angle not found for door_close_mirrored: <tostring($angle)>");
 }
 
+[proc,door_open_inversed](int $angle)(int, int)
+switch_int($angle) {
+    case ^loc_west : return(0, -1);
+    case ^loc_north : return(1, 0);
+    case ^loc_east : return(0, 1);
+    case ^loc_south : return(-1, 0);
+    case default : error("angle not found for door_open_mirrored: <tostring($angle)>");
+}
+
 [proc,door_close_move_player_out_of_way](int $angle)(int, int, int)
 switch_int ($angle) {
     case ^loc_west : return(1, 0, 1);
