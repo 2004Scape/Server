@@ -188,7 +188,7 @@ inv_add(inv, lens, 1);
 mes("You look through the telescope.");
 if_openmain(telescope);
 // appearntly RSC doesn't save this and just sends scorpio
-if(%itgronigen_progress = ^itgronigen_complete) {
+if(%itgronigen_progress >= ^itgronigen_complete) {
     if_setmodel(telescope:com_92, 3053);
     return;
 }

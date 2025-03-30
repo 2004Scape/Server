@@ -1033,7 +1033,7 @@ export default class Npc extends PathingEntity {
     revert(): void {
         if (this.resetOnRevert) {
             World.removeNpc(this, -1);
-            World.addNpc(this, -1);
+            World.addNpc(this, -1, false);
         } else {
             this.currentType = this.baseType;
             this.masks |= NpcInfoProt.CHANGE_TYPE;

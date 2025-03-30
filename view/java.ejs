@@ -1,0 +1,75 @@
+<HTML>
+<STYLE>
+    BODY {
+        margin: 0px;
+        overflow: auto;
+    }
+</STYLE>
+
+<BODY topmargin=0 leftmargin=0 bgcolor=black onload=startloop();>
+    <center>
+        <applet name=app width=789 height=532 archive=loader.jar code=loader.class MAYSCRIPT>
+            <param name=portoff value=<%= portoff %>>
+            <param name=nodeid value=<%= nodeid %>>
+            <param name=free value=<%= members %>>
+            <param name=lowmem value=<%= lowmem %>>
+            <%= lowmem %>
+        </applet><br>
+
+        <br>
+        <bgsound id=midibox loop=0 volume=0 autostart=yes>
+        <bgsound id=wavebox loop=0 volume=0 autostart=yes>
+
+        <script language="javascript">
+            var fadestop = null;
+            var fade = 50;
+            var fademidi;
+            var fadevol = 0;
+
+            function dofade() {
+                fade = fade + 1;
+                midibox.volume = -(fade * 100);
+                if (fade >= 36) {
+                    clearInterval(fadestop);
+                    clearInterval(fadestop);
+                    midibox.src = fademidi; midibox.volume = fadevol; fade = -(fadevol / 100);
+                    clearInterval(fadestop);
+                    clearInterval(fadestop);
+                }
+            }
+
+            function givetrue() { return true; }
+
+            function musicloop() {
+                var midi = document.app.getmidi();
+                if (midi != "none") {
+                    if (fadestop != null) clearInterval(fadestop);
+                    var midivol = document.app.getmidivol();
+                    var midifade = document.app.getmidifade();
+                    if (midi == "stop") { midibox.src = "c:\silence.mid"; fade = 50; return; }
+                    if (midi == "voladjust") { midibox.volume = midivol; if (midifade == 1) fade = -(midivol / 100); else fade = 50; return; }
+                    if (midifade == 1) {
+                        fademidi = midi; fadevol = midivol;
+                        if (fadestop != null) clearInterval(fadestop);
+                        fadestop = setInterval("dofade()", 200);
+                    } else {
+                        midibox.src = midi; midibox.volume = midivol; fade = 50;
+                    }
+                }
+
+                var wave = document.app.getwave();
+                if (wave != "none") {
+                    var wavevol = document.app.getwavevol();
+                    wavebox.src = wave; wavebox.volume = wavevol;
+                }
+            }
+
+            function startloop() {
+                onerror = givetrue;
+                setInterval("musicloop()", 50);
+            }
+        </script>
+    </center>
+</body>
+
+</html>

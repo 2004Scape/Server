@@ -207,8 +207,7 @@ if(npc_type = lucien_edge) {
     return (~lucien_attack);
 }
 if(npc_type = gorad & (~obj_gettotal(ogre_tooth) > 0 | getbit_range(%itwatchtower_bits, ^itwatchtower_spoken_grew, ^itwatchtower_helped_grew) ! 1)) {
-    if(%itwatchtower_progress = ^itwatchtower_complete) return (true);
-    if(getbit_range(%itwatchtower_bits, ^itwatchtower_spoken_grew, ^itwatchtower_helped_grew) < 1) {
+    if(getbit_range(%itwatchtower_bits, ^itwatchtower_spoken_grew, ^itwatchtower_helped_grew) ! 1 | %itwatchtower_progress >= ^itwatchtower_complete) {
         mes("You don't need to fight him now.");
     } else {
         mes("You have already got his tooth.");

@@ -240,7 +240,7 @@ if (%desertrescue_progress = ^desertrescue_complete) {
     $questpoints = add($questpoints, ^desertrescue_questpoints);
 }
 
-if (%itwatchtower_progress = ^itwatchtower_complete) {
+if (%itwatchtower_progress >= ^itwatchtower_complete) {
     $questpoints = add($questpoints, ^itwatchtower_questpoints);
 }
 

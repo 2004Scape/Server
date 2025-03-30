@@ -15,7 +15,7 @@ data=experience,150
 [locked_door_east_ardy_sewer_gate_north]
 table=locked_door
 data=loc,east_ardy_sewer_gate_north
-data=replacement,east_ardy_sewer_gate_south
+data=replacement,loc_1562
 data=level,31
 data=experience,250
 data=mirror,true
@@ -24,7 +24,7 @@ data=gate,true
 [locked_door_east_ardy_sewer_gate_south]
 table=locked_door
 data=loc,east_ardy_sewer_gate_south
-data=replacement,east_ardy_sewer_gate_south
+data=replacement,loc_1563
 data=level,31
 data=experience,250
 data=gate,true
