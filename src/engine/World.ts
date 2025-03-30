@@ -1550,16 +1550,8 @@ class World {
     }
 
     revealObj(obj: Obj): void {
-        // printDebug(`[World] revealObj => name: ${ObjType.get(obj.type).name}`);
-        // const duration: number = obj.reveal;
-        // const change: number = obj.lastChange;
         const zone: Zone = this.gameMap.getZone(obj.x, obj.z, obj.level);
         zone.revealObj(obj);
-        // objs next life cycle always starts from the last time they changed + the inputted duration.
-        // accounting for reveal time here.
-        // const nextLifecycle: number = (change !== -1 ? Obj.REVEAL - (this.currentTick - change) : 0) + this.currentTick + duration;
-        // obj.setLifeCycle(nextLifecycle);
-        // this.trackZone(nextLifecycle, zone);
         this.trackZone(zone);
     }
 
