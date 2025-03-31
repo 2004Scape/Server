@@ -156,17 +156,7 @@ if (inv_total(inv, steel_gauntlets) >= 1) {
         ~chatplayer("<p,neutral>I'll see what your brothers have to offer first.");
         ~chatnpc("<p,neutral>As you wish. Let me know if you change your mind.");
     }
-}
-else if (testbit(%crest_spells_levers_gauntlets, ^crest_cooking_gauntlets_chosen) = true)  {
-    if (inv_total(inv, gauntlets_of_cooking) >= 1) {
-        ~chatplayer("<p,neutral>I believe your father mentioned you would be able to improve these gauntlets for me...");
-    }
-    else {
-        ~chatplayer("<p,neutral>I believe your father mentioned you would be able to improve some gauntlets for me...");
-    }
-    ~chatnpc("<p,neutral>Your gauntlets have already been treated with my potions.");
-}
-else {
+} else {
     ~chatplayer("<p,neutral>I believe your father mentioned you would be able to improve some gauntlets for me...");
     ~chatnpc("<p,happy>Bring them to me, and I'll see what I can do.");
 }
