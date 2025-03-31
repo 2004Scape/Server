@@ -98,6 +98,9 @@ else {
 
 [label,crest_johnathon_gauntlets]
 ~chatnpc("<p,neutral>Hello again. My family now considers you a hero.");
+if(getbit_range(%crest_spells_levers_gauntlets, ^crest_cooking_gauntlets_chosen, ^crest_chaos_gauntlets_chosen) > 0) {
+    return;
+}
 if (inv_total(inv, steel_gauntlets) >= 1) {
     ~chatplayer("<p,quiz>Your father tells me you can improve these gauntlets for me...");
     ~chatnpc("<p,neutral>And right he is at that. Although my skill with Death Rune magiks was not great enough to defeat Chronozon, I am adequately skilled at Chaos Rune magiks.");
