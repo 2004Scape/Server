@@ -137,6 +137,9 @@ inv_add(inv, crest_part_1, 1);
 // Ability to change gauntlets for 25k was added 30/08/05, so this decision is permanent
 // https://oldschool.runescape.wiki/w/Update:Garden_Of_Tranquillity
 ~chatnpc("<p,happy>I hear you brought the completed crest to my father. I must say, that was awfully impressive work.");
+if(getbit_range(%crest_spells_levers_gauntlets, ^crest_cooking_gauntlets_chosen, ^crest_chaos_gauntlets_chosen) > 0) {
+    return;
+}
 if (inv_total(inv, steel_gauntlets) >= 1) {
     ~chatplayer("<p,neutral>I believe your father mentioned you would be able to improve these gauntlets for me...");
     ~chatnpc("<p,neutral>Yes, that is correct. I can slightly alter these gauntlets to allow you some of my skill at preparing seafood by making them cooking gauntlets.");
@@ -153,17 +156,7 @@ if (inv_total(inv, steel_gauntlets) >= 1) {
         ~chatplayer("<p,neutral>I'll see what your brothers have to offer first.");
         ~chatnpc("<p,neutral>As you wish. Let me know if you change your mind.");
     }
-}
-else if (testbit(%crest_spells_levers_gauntlets, ^crest_cooking_gauntlets_chosen) = true)  {
-    if (inv_total(inv, gauntlets_of_cooking) >= 1) {
-        ~chatplayer("<p,neutral>I believe your father mentioned you would be able to improve these gauntlets for me...");
-    }
-    else {
-        ~chatplayer("<p,neutral>I believe your father mentioned you would be able to improve some gauntlets for me...");
-    }
-    ~chatnpc("<p,neutral>Your gauntlets have already been treated with my potions.");
-}
-else {
+} else {
     ~chatplayer("<p,neutral>I believe your father mentioned you would be able to improve some gauntlets for me...");
     ~chatnpc("<p,happy>Bring them to me, and I'll see what I can do.");
 }
