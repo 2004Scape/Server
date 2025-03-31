@@ -1516,7 +1516,6 @@ class World {
 
     addObj(obj: Obj, receiver64: bigint, duration: number): void {
         // Check if we need to changeobj first
-        const zone: Zone = this.gameMap.getZone(obj.x, obj.z, obj.level);
         if (ObjType.get(obj.type).stackable && obj.lifecycle === EntityLifeCycle.DESPAWN) {
             const existing = this.getObjOfReceiver(obj.x, obj.z, obj.level, obj.type, receiver64);
             if (existing && existing.lifecycle === EntityLifeCycle.DESPAWN) {
@@ -1524,12 +1523,13 @@ class World {
                 if (nextCount <= Inventory.STACK_LIMIT) {
                     // If an obj of the same type exists and is stackable and have the same receiver, then we merge them.
                     this.changeObj(existing, nextCount);
-                    this.trackZone(zone);
                     this.trackLocObj(existing, duration + Obj.REVEAL);
                     return;
                 }
             }
         }
+
+        const zone: Zone = this.gameMap.getZone(obj.x, obj.z, obj.level);
         zone.addObj(obj, receiver64);
         this.trackZone(zone);
         // If the obj is dropped to a specific person
