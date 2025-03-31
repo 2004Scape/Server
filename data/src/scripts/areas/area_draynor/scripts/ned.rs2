@@ -218,6 +218,9 @@ if ($choice = 2) {
 if ($choice = 3) {
     @ned_decline_rope;
 }
+if($choice = 4) {
+    @ned_other_things;
+}
 
 [label,give_map_to_ned]
 if (%dragon_ned_hired = 0 | %dragon_progress ! ^quest_dragon_repaired_ship) {
