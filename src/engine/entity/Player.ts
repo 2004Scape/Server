@@ -1632,7 +1632,11 @@ export default class Player extends PathingEntity {
     }
 
     private writeVarp(id: number, value: number): void {
-        this.write(rsbuf.varp(id, value));
+        if (value >= -128 && value <= 127) {
+            this.write(rsbuf.varpSmall(id, value));
+        } else {
+            this.write(rsbuf.varpLarge(id, value));
+        }
     }
 
     addXp(stat: number, xp: number, allowMulti: boolean = true) {

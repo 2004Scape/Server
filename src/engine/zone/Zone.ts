@@ -118,11 +118,6 @@ export default class Zone {
     computeShared(): void {
         const buf: Packet = Packet.alloc(1);
         for (const event of this.enclosed()) {
-            // const encoder: ZoneMessageEncoder<ZoneMessage> | undefined = ServerProtRepository.getZoneEncoder(event.message);
-            // if (typeof encoder === 'undefined') {
-            //     continue;
-            // }
-            // encoder.enclose(buf, event.message);
             const message = event.message;
             if (!message) {
                 continue;

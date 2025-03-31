@@ -174,53 +174,22 @@ export class NetworkPlayer extends Player {
             this.refreshModal = false;
         }
 
-        while (true) {
-            const out: Uint8Array | undefined = rsbuf.nextBufferedWrite(this.pid);
-            if (!out) {
-                break;
+        let buffered: Uint8Array | undefined;
+        do {
+            buffered = rsbuf.nextBufferedWrite(this.pid);
+            if (buffered) {
+                this.writeInner(buffered);
             }
-            this.writeInner(out);
-        }
+        } while (buffered);
     }
 
     writeInner(bytes: Uint8Array): void {
-        const client = this.client;
-        if (!client) {
-            return;
+        if (this.client.encryptor) {
+            bytes[0] += this.client.encryptor.nextInt();
         }
 
-        const buf = client.out;
-        // const test = (1 + (prot.length === -1 ? 1 : prot.length === -2 ? 2 : 0)) + encoder.test(message);
-        // if (buf.pos + test >= buf.length) {
-        //     client.flush();
-        // }
-
-        buf.pos = 0;
-
-        if (client.encryptor) {
-            bytes[0] += client.encryptor.nextInt();
-            // buf.p1(id + client.encryptor.nextInt());
-        }/* else {
-            buf.p1(id);
-        }*/
-
-        // if (length === -1) {
-        //     buf.p1(0);
-        // } else if (length === -2) {
-        //     buf.p2(0);
-        // }
-        //
-        // const start: number = buf.pos;
-        buf.pdata(bytes, 0, bytes.length);
-        //
-        // if (length === -1) {
-        //     buf.psize1(buf.pos - start);
-        // } else if (length === -2) {
-        //     buf.psize2(buf.pos - start);
-        // }
-
-        this.client.send(buf.data.slice(0, buf.pos));
-        World.cycleStats[WorldStat.BANDWIDTH_OUT] += buf.pos;
+        this.client.send(bytes);
+        World.cycleStats[WorldStat.BANDWIDTH_OUT] += bytes.length;
     }
 
     override logout() {
@@ -288,11 +257,11 @@ export class NetworkPlayer extends Player {
     }
 
     updatePlayers() {
-        this.write(rsbuf.playerInfo(this.client.out.pos, this.pid, Math.abs(this.lastTickX - this.x), Math.abs(this.lastTickZ - this.z), this.lastLevel !== this.level));
+        this.write(rsbuf.playerInfo(this.pid, Math.abs(this.lastTickX - this.x), Math.abs(this.lastTickZ - this.z), this.lastLevel !== this.level));
     }
 
     updateNpcs() {
-        this.write(rsbuf.npcInfo(this.client.out.pos, this.pid, Math.abs(this.lastTickX - this.x), Math.abs(this.lastTickZ - this.z), this.lastLevel !== this.level));
+        this.write(rsbuf.npcInfo(this.pid, Math.abs(this.lastTickX - this.x), Math.abs(this.lastTickZ - this.z), this.lastLevel !== this.level));
     }
 
     updateZones() {
