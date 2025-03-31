@@ -1,3 +1,4 @@
+import * as rsbuf from '@2004scape/rsbuf';
 import { ClientProtCategory, MessagePrivate } from '@2004scape/rsbuf';
 
 import Player from '#/engine/entity/Player.js';
@@ -5,7 +6,6 @@ import World from '#/engine/World.js';
 import Packet from '#/io/Packet.js';
 import MessageHandler from '#/network/MessageHandler.js';
 import { fromBase37 } from '#/util/JString.js';
-import WordPack from '#/wordenc/WordPack.js';
 
 export default class MessagePrivateHandler extends MessageHandler<MessagePrivate> {
     category: ClientProtCategory = ClientProtCategory.USER_EVENT;
@@ -30,7 +30,7 @@ export default class MessagePrivateHandler extends MessageHandler<MessagePrivate
         const buf: Packet = Packet.alloc(0);
         buf.pdata(input, 0, input.length);
         buf.pos = 0;
-        World.sendPrivateMessage(player, username, WordPack.unpack(buf, input.length));
+        World.sendPrivateMessage(player, username, rsbuf.unpackWords(buf.data, input.length));
         buf.release();
 
         player.socialProtect = true;

@@ -12,7 +12,7 @@ export default class BuildArea {
     readonly loadedZones: Set<number>;
     readonly activeZones: Set<number>;
     readonly mapsquares: Set<number>;
-    
+
     lastBuild: number = -1;
 
     constructor(player: Player) {
@@ -102,7 +102,7 @@ export default class BuildArea {
                 return PRELOADED_CRC.get(`l${x}_${z}`) ?? 0;
             }));
 
-            this.player.write(rsbuf.rebuildNormal(this.player.pid, CoordGrid.zone(this.player.x), CoordGrid.zone(this.player.z), Uint16Array.from(mapsquares), maps, locs));
+            this.player.write(rsbuf.rebuildNormal(zoneX, zoneZ, Uint16Array.from(mapsquares), maps, locs));
 
             this.player.originX = this.player.x;
             this.player.originZ = this.player.z;

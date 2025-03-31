@@ -15,13 +15,13 @@ export default class OpObjTHandler extends MessageHandler<OpObjT> {
         const { x, z, obj: objId, spell: spellComId } = message;
 
         if (player.delayed) {
-            player.write(rsbuf.unsetMapFlag(player.pid));
+            player.write(rsbuf.unsetMapFlag());
             return false;
         }
 
         const spellCom = Component.get(spellComId);
         if (typeof spellCom === 'undefined' || !player.isComponentVisible(spellCom)) {
-            player.write(rsbuf.unsetMapFlag(player.pid));
+            player.write(rsbuf.unsetMapFlag());
             player.clearPendingAction();
             return false;
         }
@@ -31,14 +31,14 @@ export default class OpObjTHandler extends MessageHandler<OpObjT> {
         const absTopZ = player.originZ + 52;
         const absBottomZ = player.originZ - 52;
         if (x < absLeftX || x > absRightX || z < absBottomZ || z > absTopZ) {
-            player.write(rsbuf.unsetMapFlag(player.pid));
+            player.write(rsbuf.unsetMapFlag());
             player.clearPendingAction();
             return false;
         }
 
         const obj = World.getObj(x, z, player.level, objId, player.hash64);
         if (!obj) {
-            player.write(rsbuf.unsetMapFlag(player.pid));
+            player.write(rsbuf.unsetMapFlag());
             player.clearPendingAction();
             return false;
         }

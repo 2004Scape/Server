@@ -15,26 +15,26 @@ export default class OpPlayerTHandler extends MessageHandler<OpPlayerT> {
         const { pid, spell: spellComId } = message;
 
         if (player.delayed) {
-            player.write(rsbuf.unsetMapFlag(player.pid));
+            player.write(rsbuf.unsetMapFlag());
             return false;
         }
 
         const spellCom = Component.get(spellComId);
         if (typeof spellCom === 'undefined' || !player.isComponentVisible(spellCom)) {
-            player.write(rsbuf.unsetMapFlag(player.pid));
+            player.write(rsbuf.unsetMapFlag());
             player.clearPendingAction();
             return false;
         }
 
         const other = World.getPlayer(pid);
         if (!other) {
-            player.write(rsbuf.unsetMapFlag(player.pid));
+            player.write(rsbuf.unsetMapFlag());
             player.clearPendingAction();
             return false;
         }
 
         if (!rsbuf.hasPlayer(player.pid, other.pid)) {
-            player.write(rsbuf.unsetMapFlag(player.pid));
+            player.write(rsbuf.unsetMapFlag());
             player.clearPendingAction();
             return false;
         }

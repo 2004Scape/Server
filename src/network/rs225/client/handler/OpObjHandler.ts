@@ -19,7 +19,7 @@ export default class OpObjHandler extends MessageHandler<OpObj> {
         }
 
         if (player.delayed) {
-            player.write(rsbuf.unsetMapFlag(player.pid));
+            player.write(rsbuf.unsetMapFlag());
             return false;
         }
 
@@ -28,7 +28,7 @@ export default class OpObjHandler extends MessageHandler<OpObj> {
         const absTopZ = player.originZ + 52;
         const absBottomZ = player.originZ - 52;
         if (x < absLeftX || x > absRightX || z < absBottomZ || z > absTopZ) {
-            player.write(rsbuf.unsetMapFlag(player.pid));
+            player.write(rsbuf.unsetMapFlag());
             player.clearPendingAction();
             return false;
         }
@@ -43,7 +43,7 @@ export default class OpObjHandler extends MessageHandler<OpObj> {
         const objType = ObjType.get(obj.type);
         // todo: validate all options
         if ((op === 1 && ((objType.op && !objType.op[0]) || !objType.op)) || (op === 4 && ((objType.op && !objType.op[3]) || !objType.op))) {
-            player.write(rsbuf.unsetMapFlag(player.pid));
+            player.write(rsbuf.unsetMapFlag());
             player.clearPendingAction();
             return false;
         }

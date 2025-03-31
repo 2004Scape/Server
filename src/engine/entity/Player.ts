@@ -1,6 +1,6 @@
 import 'dotenv/config';
 
-import { OutgoingPacket, PlayerInfoProt, Visibility } from '@2004scape/rsbuf';
+import { PlayerInfoProt, Visibility } from '@2004scape/rsbuf';
 import * as rsbuf from '@2004scape/rsbuf';
 import { CollisionType, CollisionFlag } from '@2004scape/rsmod-pathfinder';
 
@@ -459,7 +459,7 @@ export default class Player extends PathingEntity {
         this.write(rsbuf.chatFilterSettings(this.pid, this.publicChat, this.privateChat, this.tradeDuel));
         this.write(rsbuf.ifClose(this.pid));
         this.write(rsbuf.updatePid(this.pid));
-        this.write(rsbuf.resetClientVarCache(this.pid));
+        this.write(rsbuf.resetClientVarCache());
         for (let varp = 0; varp < this.vars.length; varp++) {
             const type = VarPlayerType.get(varp);
             const value = this.vars[varp];
@@ -467,7 +467,7 @@ export default class Player extends PathingEntity {
                 this.writeVarp(varp, value);
             }
         }
-        this.write(rsbuf.resetAnims(this.pid));
+        this.write(rsbuf.resetAnims());
 
         const loginTrigger = ScriptProvider.getByTriggerSpecific(ServerTriggerType.LOGIN, -1, -1);
         if (loginTrigger) {
@@ -489,7 +489,7 @@ export default class Player extends PathingEntity {
         // - runenergy
         // - reset_anims
         // - socials
-        this.write(rsbuf.resetClientVarCache(this.pid));
+        this.write(rsbuf.resetClientVarCache());
         for (let varp = 0; varp < this.vars.length; varp++) {
             const type = VarPlayerType.get(varp);
             const value = this.vars[varp];
@@ -511,7 +511,7 @@ export default class Player extends PathingEntity {
             this.write(rsbuf.updateStat(this.pid, i, this.stats[i], this.levels[i]));
         }
         this.write(rsbuf.updateRunEnergy(this.pid, this.runenergy));
-        this.write(rsbuf.resetAnims(this.pid));
+        this.write(rsbuf.resetAnims());
         this.moveSpeed = MoveSpeed.INSTANT;
         this.tele = true;
         this.jump = true;
@@ -1377,7 +1377,7 @@ export default class Player extends PathingEntity {
         }
 
         this.invListeners.splice(index, 1);
-        this.write(rsbuf.updateInvStopTransmit(this.pid, com));
+        this.write(rsbuf.updateInvStopTransmit(com));
     }
 
     invGetSlot(inv: number, slot: number) {
@@ -1632,7 +1632,7 @@ export default class Player extends PathingEntity {
     }
 
     private writeVarp(id: number, value: number): void {
-        this.write(rsbuf.varp(this.pid, id, value));
+        this.write(rsbuf.varp(id, value));
     }
 
     addXp(stat: number, xp: number, allowMulti: boolean = true) {
@@ -2001,20 +2001,17 @@ export default class Player extends PathingEntity {
         }
     }
 
-    write(message: OutgoingPacket | undefined) {
+    write(message: Uint8Array | undefined) {
         if (!message || !isClientConnected(this)) {
             return;
         }
 
-        const bytes: Uint8Array | undefined = message.bytes;
-        if (bytes) {
-            this.writeInner(bytes, message.id, message.length);
-        }
+        this.writeInner(message);
     }
 
     unsetMapFlag() {
         this.clearWaypoints();
-        this.write(rsbuf.unsetMapFlag(this.pid));
+        this.write(rsbuf.unsetMapFlag());
     }
 
     hintNpc(nid: number) {
@@ -2055,7 +2052,7 @@ export default class Player extends PathingEntity {
     }
 
     messageGame(msg: string) {
-        this.write(rsbuf.messageGame(this.pid, msg));
+        this.write(rsbuf.messageGame(msg));
     }
 
     isValid(_hash64?: bigint): boolean {

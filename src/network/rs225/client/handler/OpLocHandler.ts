@@ -19,7 +19,7 @@ export default class OpLocHandler extends MessageHandler<OpLoc> {
         }
 
         if (player.delayed) {
-            player.write(rsbuf.unsetMapFlag(player.pid));
+            player.write(rsbuf.unsetMapFlag());
             return false;
         }
 
@@ -28,21 +28,21 @@ export default class OpLocHandler extends MessageHandler<OpLoc> {
         const absTopZ = player.originZ + 52;
         const absBottomZ = player.originZ - 52;
         if (x < absLeftX || x > absRightX || z < absBottomZ || z > absTopZ) {
-            player.write(rsbuf.unsetMapFlag(player.pid));
+            player.write(rsbuf.unsetMapFlag());
             player.clearPendingAction();
             return false;
         }
 
         const loc = World.getLoc(x, z, player.level, locId);
         if (!loc) {
-            player.write(rsbuf.unsetMapFlag(player.pid));
+            player.write(rsbuf.unsetMapFlag());
             player.clearPendingAction();
             return false;
         }
 
         const locType = LocType.get(loc.type);
         if (!locType.op || !locType.op[op - 1]) {
-            player.write(rsbuf.unsetMapFlag(player.pid));
+            player.write(rsbuf.unsetMapFlag());
             player.clearPendingAction();
             return false;
         }

@@ -1,7 +1,7 @@
 import 'dotenv/config';
 
 import * as rsbuf from '@2004scape/rsbuf';
-import { ClientProtCategory, ClientProtCategoryLimit, IncomingPacket, OutgoingPacket } from '@2004scape/rsbuf';
+import { ClientProtCategory, ClientProtCategoryLimit } from '@2004scape/rsbuf';
 
 import Component from '#/cache/config/Component.js';
 import InvType from '#/cache/config/InvType.js';
@@ -66,7 +66,8 @@ export class NetworkPlayer extends Player {
             return false;
         }
 
-        let packet: IncomingPacket | undefined;
+        let packed: number = -1;
+        let id: number = -1;
 
         if (this.client.opcode === -1) {
             NetworkPlayer.inBuf.pos = 0;
@@ -78,13 +79,23 @@ export class NetworkPlayer extends Player {
                 this.client.opcode = NetworkPlayer.inBuf.g1();
             }
 
-            packet = rsbuf.nextBufferedRead(this.client.opcode);
-            if (!packet) {
+            packed = rsbuf.nextBufferedRead(this.client.opcode);
+            if (packed === -1) {
                 this.client.opcode = -1;
                 this.client.close();
                 return false;
             } else {
-                this.client.waiting = packet.length;
+                id = (packed >> 8) & 0xff;
+                let length = (packed & 0xff);
+                if (length > 127) {
+                    length -= 256;
+                }
+                if (length < -2 || length > 127) {
+                    this.client.opcode = -1;
+                    this.client.close();
+                    return false;
+                }
+                this.client.waiting = length;
             }
         }
 
@@ -111,11 +122,10 @@ export class NetworkPlayer extends Player {
         NetworkPlayer.inBuf.pos = 0;
         this.client.read(NetworkPlayer.inBuf.data, 0, this.client.waiting);
 
-        if (packet) {
-            const internal: number = packet.id; // this one is diff
-            const message = ClientProtRepository.getMessage(internal, NetworkPlayer.inBuf.data.subarray(0, this.client.waiting));
+        if (packed && id !== -1) {
+            const message = ClientProtRepository.getMessage(id, NetworkPlayer.inBuf.data.subarray(0, this.client.waiting));
             if (message) {
-                const handler = ClientProtRepository.getHandler(internal);
+                const handler = ClientProtRepository.getHandler(id);
                 const success: boolean = handler?.handle(message, this) ?? false;
                 // todo: move out of model
                 if (success && handler && handler.category === ClientProtCategory.USER_EVENT) {
@@ -165,18 +175,15 @@ export class NetworkPlayer extends Player {
         }
 
         while (true) {
-            const out: OutgoingPacket | undefined = rsbuf.nextBufferedWrite(this.pid);
+            const out: Uint8Array | undefined = rsbuf.nextBufferedWrite(this.pid);
             if (!out) {
                 break;
             }
-            const bytes: Uint8Array | undefined = out.bytes;
-            if (bytes) {
-                this.writeInner(bytes, out.id, out.length);
-            }
+            this.writeInner(out);
         }
     }
 
-    writeInner(bytes: Uint8Array, id: number, length: number): void {
+    writeInner(bytes: Uint8Array): void {
         const client = this.client;
         if (!client) {
             return;
@@ -191,32 +198,33 @@ export class NetworkPlayer extends Player {
         buf.pos = 0;
 
         if (client.encryptor) {
-            buf.p1(id + client.encryptor.nextInt());
-        } else {
+            bytes[0] += client.encryptor.nextInt();
+            // buf.p1(id + client.encryptor.nextInt());
+        }/* else {
             buf.p1(id);
-        }
+        }*/
 
-        if (length === -1) {
-            buf.p1(0);
-        } else if (length === -2) {
-            buf.p2(0);
-        }
-
-        const start: number = buf.pos;
+        // if (length === -1) {
+        //     buf.p1(0);
+        // } else if (length === -2) {
+        //     buf.p2(0);
+        // }
+        //
+        // const start: number = buf.pos;
         buf.pdata(bytes, 0, bytes.length);
-
-        if (length === -1) {
-            buf.psize1(buf.pos - start);
-        } else if (length === -2) {
-            buf.psize2(buf.pos - start);
-        }
+        //
+        // if (length === -1) {
+        //     buf.psize1(buf.pos - start);
+        // } else if (length === -2) {
+        //     buf.psize2(buf.pos - start);
+        // }
 
         this.client.send(buf.data.slice(0, buf.pos));
         World.cycleStats[WorldStat.BANDWIDTH_OUT] += buf.pos;
     }
 
     override logout() {
-        this.write(rsbuf.logout(this.pid));
+        this.write(rsbuf.logout());
     }
 
     override terminate() {
@@ -345,7 +353,7 @@ export class NetworkPlayer extends Player {
 
                 if (inv.update || listener.firstSeen) {
                     const comType = Component.get(listener.com);
-                    this.write(rsbuf.updateInvFull(this.pid, Math.min(inv.capacity, comType.width * comType.height), listener.com, inv.packed()));
+                    this.write(rsbuf.updateInvFull(Math.min(inv.capacity, comType.width * comType.height), listener.com, inv.packed()));
                     listener.firstSeen = false;
                 }
             } else {
@@ -362,7 +370,7 @@ export class NetworkPlayer extends Player {
 
                 if (inv.update || listener.firstSeen) {
                     const comType = Component.get(listener.com);
-                    this.write(rsbuf.updateInvFull(this.pid, Math.min(inv.capacity, comType.width * comType.height), listener.com, inv.packed()));
+                    this.write(rsbuf.updateInvFull(Math.min(inv.capacity, comType.width * comType.height), listener.com, inv.packed()));
                     if (listener.firstSeen) {
                         firstSeen = true;
                     }

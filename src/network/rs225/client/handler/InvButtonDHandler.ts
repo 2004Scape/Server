@@ -33,7 +33,7 @@ export default class InvButtonDHandler extends MessageHandler<InvButtonD> {
 
         if (player.delayed) {
             // do nothing; revert the client visual
-            player.write(rsbuf.updateInvPartial(player.pid, comId, Int32Array.of(slot, target), inv.packed()));
+            player.write(rsbuf.updateInvPartial(comId, Int32Array.of(slot, target), inv.packed()));
             return false;
         }
 

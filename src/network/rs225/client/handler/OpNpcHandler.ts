@@ -19,26 +19,26 @@ export default class OpNpcHandler extends MessageHandler<OpNpc> {
         }
 
         if (player.delayed) {
-            player.write(rsbuf.unsetMapFlag(player.pid));
+            player.write(rsbuf.unsetMapFlag());
             return false;
         }
 
         const npc = World.getNpc(nid);
         if (!npc || npc.delayed) {
-            player.write(rsbuf.unsetMapFlag(player.pid));
+            player.write(rsbuf.unsetMapFlag());
             player.clearPendingAction();
             return false;
         }
 
         if (!rsbuf.hasNpc(player.pid, npc.nid)) {
-            player.write(rsbuf.unsetMapFlag(player.pid));
+            player.write(rsbuf.unsetMapFlag());
             player.clearPendingAction();
             return false;
         }
 
         const npcType = NpcType.get(npc.type);
         if (!npcType.op || !npcType.op[op - 1]) {
-            player.write(rsbuf.unsetMapFlag(player.pid));
+            player.write(rsbuf.unsetMapFlag());
             player.clearPendingAction();
             return false;
         }

@@ -14,19 +14,19 @@ export default class OpPlayerHandler extends MessageHandler<OpPlayer> {
         const { op, pid } = message;
 
         if (player.delayed) {
-            player.write(rsbuf.unsetMapFlag(player.pid));
+            player.write(rsbuf.unsetMapFlag());
             return false;
         }
 
         const other = World.getPlayer(pid);
         if (!other) {
-            player.write(rsbuf.unsetMapFlag(player.pid));
+            player.write(rsbuf.unsetMapFlag());
             player.clearPendingAction();
             return false;
         }
 
         if (!rsbuf.hasPlayer(player.pid, other.pid)) {
-            player.write(rsbuf.unsetMapFlag(player.pid));
+            player.write(rsbuf.unsetMapFlag());
             player.clearPendingAction();
             return false;
         }

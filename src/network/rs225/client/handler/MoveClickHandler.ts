@@ -12,7 +12,7 @@ export default class MoveClickHandler extends MessageHandler<MoveClick> {
     
     handle(message: MoveClick, player: NetworkPlayer): boolean {
         if (player.delayed) {
-            player.write(rsbuf.unsetMapFlag(player.pid));
+            player.write(rsbuf.unsetMapFlag());
             return false;
         }
 

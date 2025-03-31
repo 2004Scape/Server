@@ -17,13 +17,13 @@ export default class OpLocUHandler extends MessageHandler<OpLocU> {
         const { x, z, loc: locId, useObj: item, useSlot: slot, useComponent: comId } = message;
 
         if (player.delayed) {
-            player.write(rsbuf.unsetMapFlag(player.pid));
+            player.write(rsbuf.unsetMapFlag());
             return false;
         }
 
         const com = Component.get(comId);
         if (typeof com === 'undefined' || !player.isComponentVisible(com)) {
-            player.write(rsbuf.unsetMapFlag(player.pid));
+            player.write(rsbuf.unsetMapFlag());
             player.clearPendingAction();
             return false;
         }
@@ -33,28 +33,28 @@ export default class OpLocUHandler extends MessageHandler<OpLocU> {
         const absTopZ = player.originZ + 52;
         const absBottomZ = player.originZ - 52;
         if (x < absLeftX || x > absRightX || z < absBottomZ || z > absTopZ) {
-            player.write(rsbuf.unsetMapFlag(player.pid));
+            player.write(rsbuf.unsetMapFlag());
             player.clearPendingAction();
             return false;
         }
 
         const listener = player.invListeners.find(l => l.com === comId);
         if (!listener) {
-            player.write(rsbuf.unsetMapFlag(player.pid));
+            player.write(rsbuf.unsetMapFlag());
             player.clearPendingAction();
             return false;
         }
 
         const inv = player.getInventoryFromListener(listener);
         if (!inv || !inv.validSlot(slot) || !inv.hasAt(slot, item)) {
-            player.write(rsbuf.unsetMapFlag(player.pid));
+            player.write(rsbuf.unsetMapFlag());
             player.clearPendingAction();
             return false;
         }
 
         const loc = World.getLoc(x, z, player.level, locId);
         if (!loc) {
-            player.write(rsbuf.unsetMapFlag(player.pid));
+            player.write(rsbuf.unsetMapFlag());
             player.clearPendingAction();
             return false;
         }
@@ -62,7 +62,7 @@ export default class OpLocUHandler extends MessageHandler<OpLocU> {
         player.clearPendingAction();
         if (ObjType.get(item).members && !Environment.NODE_MEMBERS) {
             player.messageGame("To use this item please login to a members' server.");
-            player.write(rsbuf.unsetMapFlag(player.pid));
+            player.write(rsbuf.unsetMapFlag());
             return false;
         }
 

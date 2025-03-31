@@ -1,10 +1,10 @@
+import * as rsbuf from '@2004scape/rsbuf';
 import { ClientProtCategory, MessagePublic, PlayerInfoProt } from '@2004scape/rsbuf';
 
 import WordEnc from '#/cache/wordenc/WordEnc.js';
 import Player from '#/engine/entity/Player.js';
 import Packet from '#/io/Packet.js';
 import MessageHandler from '#/network/MessageHandler.js';
-import WordPack from '#/wordenc/WordPack.js';
 
 export default class MessagePublicHandler extends MessageHandler<MessagePublic> {
     category: ClientProtCategory = ClientProtCategory.USER_EVENT;
@@ -24,20 +24,14 @@ export default class MessagePublicHandler extends MessageHandler<MessagePublic> 
         const buf: Packet = Packet.alloc(0);
         buf.pdata(input, 0, input.length);
         buf.pos = 0;
-        const unpack: string = WordPack.unpack(buf, input.length);
+        const unpack: string = rsbuf.unpackWords(buf.data, input.length);
         buf.release();
 
         player.messageColor = color;
         player.messageEffect = effect;
         player.messageType = 0;
         player.logMessage = unpack;
-
-        const out: Packet = Packet.alloc(0);
-        WordPack.pack(out, WordEnc.filter(unpack));
-        player.message = new Uint8Array(out.pos);
-        out.pos = 0;
-        out.gdata(player.message, 0, player.message.length);
-        out.release();
+        player.message = rsbuf.packWords(WordEnc.filter(unpack));
         player.masks |= PlayerInfoProt.CHAT;
 
         player.socialProtect = true;

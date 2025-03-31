@@ -29,9 +29,9 @@ export default class RebuildGetMapsHandler extends MessageHandler<RebuildGetMaps
                 }
 
                 for (let off = 0; off < land.length; off += chunk) {
-                    player.write(rsbuf.dataLand(player.pid, x, z, off, land.length, land.subarray(off, off + chunk)));
+                    player.write(rsbuf.dataLand(x, z, off, land.length, land.subarray(off, off + chunk)));
                 }
-                player.write(rsbuf.dataLandDone(player.pid, x, z));
+                player.write(rsbuf.dataLandDone(x, z));
             } else if (type === 1) {
                 const loc = PRELOADED.get(`l${x}_${z}`);
                 if (!loc) {
@@ -39,9 +39,9 @@ export default class RebuildGetMapsHandler extends MessageHandler<RebuildGetMaps
                 }
 
                 for (let off = 0; off < loc.length; off += chunk) {
-                    player.write(rsbuf.dataLoc(player.pid, x, z, off, loc.length, loc.subarray(off, off + chunk)));
+                    player.write(rsbuf.dataLoc(x, z, off, loc.length, loc.subarray(off, off + chunk)));
                 }
-                player.write(rsbuf.dataLocDone(player.pid, x, z));
+                player.write(rsbuf.dataLocDone(x, z));
             }
         }
 

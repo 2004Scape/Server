@@ -127,11 +127,7 @@ export default class Zone {
             if (!message) {
                 continue;
             }
-            const bytes = message.bytes;
-            if (!bytes) {
-                continue;
-            }
-            buf.pdata(bytes, 0, bytes.length);
+            buf.pdata(message, 0, message.length);
         }
 
         if (buf.pos === 0) {
@@ -157,16 +153,16 @@ export default class Zone {
     writeFullFollows(player: Player): void {
         const currentTick: number = World.currentTick;
         // full update necessary to clear client zone memory
-        player.write(rsbuf.updateZoneFullFollows(player.pid, this.x, this.z, player.originX, player.originZ));
+        player.write(rsbuf.updateZoneFullFollows(this.x, this.z, player.originX, player.originZ));
         for (const obj of this.getAllObjsUnsafe(true)) {
             if (obj.lastLifecycleTick === currentTick || (obj.receiver64 !== Obj.NO_RECEIVER && obj.receiver64 !== player.hash64)) {
                 continue;
             }
-            player.write(rsbuf.updateZonePartialFollows(player.pid, this.x, this.z, player.originX, player.originZ));
+            player.write(rsbuf.updateZonePartialFollows(this.x, this.z, player.originX, player.originZ));
             if (obj.lifecycle === EntityLifeCycle.DESPAWN && obj.isActive) {
-                player.write(rsbuf.objAdd(CoordGrid.packZoneCoord(obj.x, obj.z), obj.type, obj.count, false));
+                player.write(rsbuf.objAdd(CoordGrid.packZoneCoord(obj.x, obj.z), obj.type, obj.count));
             } else if (obj.lifecycle === EntityLifeCycle.RESPAWN && obj.isActive) {
-                player.write(rsbuf.objAdd(CoordGrid.packZoneCoord(obj.x, obj.z), obj.type, obj.count, false));
+                player.write(rsbuf.objAdd(CoordGrid.packZoneCoord(obj.x, obj.z), obj.type, obj.count));
             }
         }
         for (const loc of this.getAllLocsUnsafe(true)) {
@@ -175,15 +171,15 @@ export default class Zone {
             }
             // Send dynamic locs to the client
             if (loc.lifecycle === EntityLifeCycle.DESPAWN && loc.isActive) {
-                player.write(rsbuf.locAddChange(CoordGrid.packZoneCoord(loc.x, loc.z), loc.type, loc.shape, loc.angle, false));
+                player.write(rsbuf.locAddChange(CoordGrid.packZoneCoord(loc.x, loc.z), loc.type, loc.shape, loc.angle));
             }
             // Inform the client that a static loc is not currently active
             else if (loc.lifecycle === EntityLifeCycle.RESPAWN && !loc.isActive) {
-                player.write(rsbuf.locDel(CoordGrid.packZoneCoord(loc.x, loc.z), loc.shape, loc.angle, false));
+                player.write(rsbuf.locDel(CoordGrid.packZoneCoord(loc.x, loc.z), loc.shape, loc.angle));
             }
             // Send 'changed' static locs to the client
             else if (loc.lifecycle === EntityLifeCycle.RESPAWN && loc.isChanged()) {
-                player.write(rsbuf.locAddChange(CoordGrid.packZoneCoord(loc.x, loc.z), loc.type, loc.shape, loc.angle, false));
+                player.write(rsbuf.locAddChange(CoordGrid.packZoneCoord(loc.x, loc.z), loc.type, loc.shape, loc.angle));
             }
         }
     }
@@ -199,7 +195,7 @@ export default class Zone {
         if (!this.shared) {
             return;
         }
-        player.write(rsbuf.updateZonePartialEnclosed(player.pid, this.x, this.z, player.originX, player.originZ, this.shared));
+        player.write(rsbuf.updateZonePartialEnclosed(this.x, this.z, player.originX, player.originZ, this.shared));
     }
 
     /**
@@ -209,7 +205,7 @@ export default class Zone {
         if (this.events.size === 0) {
             return;
         }
-        player.write(rsbuf.updateZonePartialFollows(player.pid, this.x, this.z, player.originX, player.originZ));
+        player.write(rsbuf.updateZonePartialFollows(this.x, this.z, player.originX, player.originZ));
         for (const event of this.follows()) {
             if (event.receiver64 !== Obj.NO_RECEIVER && event.receiver64 !== player.hash64) {
                 continue;
@@ -249,14 +245,14 @@ export default class Zone {
         }
         loc.revert();
         loc.isActive = true;
-        this.queueEvent(loc, new ZoneEvent(ZoneEventType.ENCLOSED, -1n, rsbuf.locAddChange(coord, loc.type, loc.shape, loc.angle, true)));
+        this.queueEvent(loc, new ZoneEvent(ZoneEventType.ENCLOSED, -1n, rsbuf.locAddChange(coord, loc.type, loc.shape, loc.angle)));
     }
 
     changeLoc(loc: Loc) {
         // If a loc is inactive, it should be set to active when we call a change
         loc.isActive = true;
         const coord: number = CoordGrid.packZoneCoord(loc.x, loc.z);
-        this.queueEvent(loc, new ZoneEvent(ZoneEventType.ENCLOSED, -1n, rsbuf.locAddChange(coord, loc.type, loc.shape, loc.angle, true)));
+        this.queueEvent(loc, new ZoneEvent(ZoneEventType.ENCLOSED, -1n, rsbuf.locAddChange(coord, loc.type, loc.shape, loc.angle)));
     }
 
     removeLoc(loc: Loc): void {
@@ -269,7 +265,7 @@ export default class Zone {
         this.clearQueuedEvents(loc);
         loc.isActive = false;
 
-        this.queueEvent(loc, new ZoneEvent(ZoneEventType.ENCLOSED, -1n, rsbuf.locDel(coord, loc.shape, loc.angle, true)));
+        this.queueEvent(loc, new ZoneEvent(ZoneEventType.ENCLOSED, -1n, rsbuf.locDel(coord, loc.shape, loc.angle)));
     }
 
     getLoc(x: number, z: number, type: number): Loc | null {
@@ -282,11 +278,11 @@ export default class Zone {
     }
 
     mergeLoc(loc: Loc, player: Player, startCycle: number, endCycle: number, south: number, east: number, north: number, west: number): void {
-        this.queueEvent(loc, new ZoneEvent(ZoneEventType.ENCLOSED, -1n, rsbuf.locMerge(loc.x, loc.z, loc.shape, loc.angle, loc.type, startCycle, endCycle, player.pid, east, south, west, north, true)));
+        this.queueEvent(loc, new ZoneEvent(ZoneEventType.ENCLOSED, -1n, rsbuf.locMerge(loc.x, loc.z, loc.shape, loc.angle, loc.type, startCycle, endCycle, player.pid, east, south, west, north)));
     }
 
     animLoc(loc: Loc, seq: number): void {
-        this.queueEvent(loc, new ZoneEvent(ZoneEventType.ENCLOSED, -1n, rsbuf.locAnim(CoordGrid.packZoneCoord(loc.x, loc.z), loc.shape, loc.angle, seq, true)));
+        this.queueEvent(loc, new ZoneEvent(ZoneEventType.ENCLOSED, -1n, rsbuf.locAnim(CoordGrid.packZoneCoord(loc.x, loc.z), loc.shape, loc.angle, seq)));
     }
 
     // ---- objs ----
@@ -312,10 +308,10 @@ export default class Zone {
 
         if (obj.lifecycle === EntityLifeCycle.RESPAWN || receiver64 === Obj.NO_RECEIVER) {
             obj.isRevealed = true;
-            this.queueEvent(obj, new ZoneEvent(ZoneEventType.ENCLOSED, receiver64, rsbuf.objAdd(coord, obj.type, obj.count, true)));
+            this.queueEvent(obj, new ZoneEvent(ZoneEventType.ENCLOSED, receiver64, rsbuf.objAdd(coord, obj.type, obj.count)));
         } else if (obj.lifecycle === EntityLifeCycle.DESPAWN) {
             obj.isRevealed = false;
-            this.queueEvent(obj, new ZoneEvent(ZoneEventType.FOLLOWS, receiver64, rsbuf.objAdd(coord, obj.type, obj.count, false)));
+            this.queueEvent(obj, new ZoneEvent(ZoneEventType.FOLLOWS, receiver64, rsbuf.objAdd(coord, obj.type, obj.count)));
         }
     }
 
@@ -333,7 +329,7 @@ export default class Zone {
 
         const coord: number = CoordGrid.packZoneCoord(obj.x, obj.z);
 
-        this.queueEvent(obj, new ZoneEvent(ZoneEventType.ENCLOSED, receiver64, rsbuf.objReveal(coord, obj.type, obj.count, World.getPlayerByHash64(receiver64)?.pid ?? 0, true)));
+        this.queueEvent(obj, new ZoneEvent(ZoneEventType.ENCLOSED, receiver64, rsbuf.objReveal(coord, obj.type, obj.count, World.getPlayerByHash64(receiver64)?.pid ?? 0)));
     }
 
     changeObj(obj: Obj, receiver64: bigint, oldCount: number, newCount: number): void {
@@ -342,7 +338,7 @@ export default class Zone {
 
         const coord: number = CoordGrid.packZoneCoord(obj.x, obj.z);
 
-        this.queueEvent(obj, new ZoneEvent(ZoneEventType.FOLLOWS, receiver64, rsbuf.objCount(coord, obj.type, oldCount, newCount, false)));
+        this.queueEvent(obj, new ZoneEvent(ZoneEventType.FOLLOWS, receiver64, rsbuf.objCount(coord, obj.type, oldCount, newCount)));
     }
 
     removeObj(obj: Obj): void {
@@ -357,9 +353,9 @@ export default class Zone {
 
         if (obj.lastLifecycleTick !== World.currentTick) {
             if (obj.lifecycle === EntityLifeCycle.RESPAWN || obj.receiver64 === Obj.NO_RECEIVER) {
-                this.queueEvent(obj, new ZoneEvent(ZoneEventType.ENCLOSED, Obj.NO_RECEIVER, rsbuf.objDel(coord, obj.type, true)));
+                this.queueEvent(obj, new ZoneEvent(ZoneEventType.ENCLOSED, Obj.NO_RECEIVER, rsbuf.objDel(coord, obj.type)));
             } else if (obj.lifecycle === EntityLifeCycle.DESPAWN) {
-                this.queueEvent(obj, new ZoneEvent(ZoneEventType.FOLLOWS, obj.receiver64, rsbuf.objDel(coord, obj.type, false)));
+                this.queueEvent(obj, new ZoneEvent(ZoneEventType.FOLLOWS, obj.receiver64, rsbuf.objDel(coord, obj.type)));
             }
         }
     }
@@ -385,11 +381,11 @@ export default class Zone {
     // ---- not tied to any entities ----
 
     animMap(x: number, z: number, spotanim: number, height: number, delay: number): void {
-        this.events.add(new ZoneEvent(ZoneEventType.ENCLOSED, -1n, rsbuf.mapAnim(CoordGrid.packZoneCoord(x, z), spotanim, height, delay, true)));
+        this.events.add(new ZoneEvent(ZoneEventType.ENCLOSED, -1n, rsbuf.mapAnim(CoordGrid.packZoneCoord(x, z), spotanim, height, delay)));
     }
 
     mapProjAnim(x: number, z: number, dstX: number, dstZ: number, target: number, spotanim: number, srcHeight: number, dstHeight: number, startDelay: number, endDelay: number, peak: number, arc: number): void {
-        this.events.add(new ZoneEvent(ZoneEventType.ENCLOSED, -1n, rsbuf.mapProjAnim(x, z, dstX, dstZ, target, spotanim, srcHeight, dstHeight, startDelay, endDelay, peak, arc, true)));
+        this.events.add(new ZoneEvent(ZoneEventType.ENCLOSED, -1n, rsbuf.mapProjAnim(x, z, dstX, dstZ, target, spotanim, srcHeight, dstHeight, startDelay, endDelay, peak, arc)));
     }
 
     // ---- core functions ----
