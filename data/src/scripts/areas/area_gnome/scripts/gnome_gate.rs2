@@ -35,11 +35,11 @@ if(coordz(coord) > coordz($loc_coord) & coord ! $north_entrance) {
 p_delay(0);
 // replace gate
 // Temp note: dur updated
-loc_change(loc_191, 5);
+loc_del(5);
 loc_add(movecoord($loc_coord, 3, 0, 0), loc_192, 0, loc_shape, 5); // opened right side
 loc_add(movecoord($loc_coord, 2, 0, 0), loc_83, 3, loc_shape, 5); // blocks whole path
 loc_add(movecoord($loc_coord, 2, 0, 1), loc_83, 1, loc_shape, 5);
-p_delay(0);
+loc_add($loc_coord, loc_191, 2, loc_shape, 5); 
 // walk to dest
 if(coordz(coord) > coordz($loc_coord)) {
     ~forcemove(movecoord(coord, 0, 0, -3));
