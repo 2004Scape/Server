@@ -351,7 +351,7 @@ if (.npc_find(npc_coord, chompy_bird, 17, ^vis_lineofsight) = true) {
             npc_facesquare(.npc_coord);
             npc_setmode(none);
             npc_queue(11, 0, 2);
-            npc_settimer(calc(20 + (random(5) * 2)));
+            npc_settimer(calc(10 + (random(6) * 2)));
             return;
         }
     }
