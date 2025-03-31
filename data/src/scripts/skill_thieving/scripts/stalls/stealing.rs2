@@ -135,22 +135,22 @@ if (testbit(%thieving_stall_timer, ^gem_stall_index) = true) {
 // these are longqueues in osrs - they affect movement when p_delay'd
 
 [queue,stolen_from_stall_baker]
-%thieving_stall_timer = setbit(^false, ^baker_stall_index);
+%thieving_stall_timer = clearbit(%thieving_stall_timer, ^baker_stall_index);
 
 [queue,stolen_from_stall_tea]
-%thieving_stall_timer = setbit(^false, ^tea_stall_index);
+%thieving_stall_timer = clearbit(%thieving_stall_timer, ^tea_stall_index);
 
 [queue,stolen_from_stall_silk]
-%thieving_stall_timer = setbit(^false, ^silk_stall_index);
+%thieving_stall_timer = clearbit(%thieving_stall_timer, ^silk_stall_index);
 
 [queue,stolen_from_stall_fur]
-%thieving_stall_timer = setbit(^false, ^fur_stall_index);
+%thieving_stall_timer = clearbit(%thieving_stall_timer, ^fur_stall_index);
 
 [queue,stolen_from_stall_silver]
-%thieving_stall_timer = setbit(^false, ^silver_stall_index);
+%thieving_stall_timer = clearbit(%thieving_stall_timer, ^silver_stall_index);
 
 [queue,stolen_from_stall_spice]
-%thieving_stall_timer = setbit(^false, ^spice_stall_index);
+%thieving_stall_timer = clearbit(%thieving_stall_timer, ^spice_stall_index);
 
 [queue,stolen_from_stall_gem]
-%thieving_stall_timer = setbit(^false, ^gem_stall_index);
+%thieving_stall_timer = clearbit(%thieving_stall_timer, ^gem_stall_index);
