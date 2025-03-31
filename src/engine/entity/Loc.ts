@@ -50,7 +50,9 @@ export default class Loc extends NonPathingEntity {
     }
 
     turn() {
-        if (--this.lifecycleTick === 0) {
+        // Decrement lifecycle tick
+        --this.lifecycleTick;
+        if (this.lifecycleTick === 0) {
             if (this.lifecycle === EntityLifeCycle.DESPAWN) {
                 World.removeLoc(this, 0);
             } else if (this.lifecycle === EntityLifeCycle.RESPAWN && this.isChanged()) {
@@ -61,6 +63,10 @@ export default class Loc extends NonPathingEntity {
                 // Fail safe in case no conditions are met (should never happen)
                 this.untrack();
             }
+        } else if (this.lifecycleTick < 0) {
+            // Fail safe in case this is tracked but isn't supposed to be
+            this.untrack();
+            console.error('Loc is tracked but has a negative lifecycle tick');
         }
     }
 }

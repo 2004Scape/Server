@@ -28,7 +28,11 @@ export default class Obj extends NonPathingEntity {
         if (this.reveal > -1 && --this.reveal === 0) {
             World.revealObj(this);
         }
-        if (--this.lifecycleTick === 0) {
+
+        // Decrement lifecycle tick
+        --this.lifecycleTick;
+
+        if (this.lifecycleTick === 0) {
             if (this.lifecycle === EntityLifeCycle.DESPAWN) {
                 World.removeObj(this, 0);
             } else if (this.lifecycle === EntityLifeCycle.RESPAWN) {
@@ -37,6 +41,10 @@ export default class Obj extends NonPathingEntity {
                 // Fail safe in case no conditions are met (should never happen)
                 this.untrack();
             }
+        } else if (this.lifecycleTick < 0) {
+            // Fail safe in case this is tracked but isn't supposed to be
+            this.untrack();
+            console.error('Obj is tracked but has a negative lifecycle tick');
         }
     }
 
