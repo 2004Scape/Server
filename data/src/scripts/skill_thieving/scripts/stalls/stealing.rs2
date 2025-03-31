@@ -111,7 +111,7 @@ while (npc_huntnext = true) {
 
 [proc,thieving_stall_timers_login]
 if (testbit(%thieving_stall_timer, ^baker_stall_index) = true) {
-    longqueue(stolen_from_stall_baker, ^bakery_stall_timer, ^discard);
+    longqueue(stolen_from_stall_baker, ^baker_stall_timer, ^discard);
 }
 if (testbit(%thieving_stall_timer, ^tea_stall_index) = true) {
     longqueue(stolen_from_stall_tea, ^tea_stall_timer, ^discard);

@@ -69,14 +69,14 @@ sound_synth(pick, 0, 0);
 p_delay(0);
 switch_loc (loc_type) {
     case bakers_stall_stealing : 
-        longqueue(stolen_from_stall_baker, ^bakery_stall_timer, ^discard);
+        longqueue(stolen_from_stall_baker, ^baker_stall_timer, ^discard);
         %thieving_stall_timer = setbit(%thieving_stall_timer, ^baker_stall_index);
     case tea_stall_stealing : 
         longqueue(stolen_from_stall_tea, ^tea_stall_timer, ^discard);
         %thieving_stall_timer = setbit(%thieving_stall_timer, ^tea_stall_index);
     case silk_stall_stealing : 
         longqueue(stolen_from_stall_silk, ^silk_stall_timer, ^discard);
-        %thieving_stall_timer = setbit(%thieving_stall_timer, ^baker_stall_index);
+        %thieving_stall_timer = setbit(%thieving_stall_timer, ^silk_stall_index);
     case fur_stall_stealing : 
         longqueue(stolen_from_stall_fur, ^fur_stall_timer, ^discard); 
         %thieving_stall_timer = setbit(%thieving_stall_timer, ^fur_stall_index);
