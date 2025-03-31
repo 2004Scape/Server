@@ -118,19 +118,22 @@ if (%mcannon_coord ! null) {
         return;
     }
 }
-mes("The dwarf gives you a new cannon.");
 ~chatnpc("<p,neutral>Keep that quiet or I'll be in real trouble!");
 ~chatplayer("<p,neutral>Of course.");
 if (%mcannon_stage = ^cannon_stage_base) {
+    mes("The dwarf gives you a new cannon part."); // osrs
     inv_add(inv, cannon_base, 1);
 } else if (%mcannon_stage = ^cannon_stage_stand) {
+    mes("The dwarf gives you new cannon parts."); // osrs
     inv_add(inv, cannon_base, 1);
     inv_add(inv, cannon_stand, 1);
 } else if (%mcannon_stage = ^cannon_stage_barrels) {
+    mes("The dwarf gives you new cannon parts."); // osrs
     inv_add(inv, cannon_base, 1);
     inv_add(inv, cannon_stand, 1);
     inv_add(inv, cannon_barrels, 1);
 } else if (%mcannon_stage = ^cannon_stage_full) {
+    mes("The dwarf gives you a new cannon."); // osrs
     inv_add(inv, cannon_base, 1);
     inv_add(inv, cannon_stand, 1);
     inv_add(inv, cannon_barrels, 1);
