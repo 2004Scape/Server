@@ -121,11 +121,23 @@ if (%mcannon_coord ! null) {
 mes("The dwarf gives you a new cannon.");
 ~chatnpc("<p,neutral>Keep that quiet or I'll be in real trouble!");
 ~chatplayer("<p,neutral>Of course.");
+if (%mcannon_stage = ^cannon_stage_base) {
+    inv_add(inv, cannon_base, 1);
+} else if (%mcannon_stage = ^cannon_stage_stand) {
+    inv_add(inv, cannon_base, 1);
+    inv_add(inv, cannon_stand, 1);
+} else if (%mcannon_stage = ^cannon_stage_barrels) {
+    inv_add(inv, cannon_base, 1);
+    inv_add(inv, cannon_stand, 1);
+    inv_add(inv, cannon_barrels, 1);
+} else if (%mcannon_stage = ^cannon_stage_full) {
+    inv_add(inv, cannon_base, 1);
+    inv_add(inv, cannon_stand, 1);
+    inv_add(inv, cannon_barrels, 1);
+    inv_add(inv, cannon_furnace, 1);
+}
 %mcannon_coord = null;
-inv_add(inv, cannon_base, 1);
-inv_add(inv, cannon_stand, 1);
-inv_add(inv, cannon_barrels, 1);
-inv_add(inv, cannon_furnace, 1);
+%mcannon_stage = ^cannon_stage_none;
 
 [label,ill_take_a_cannon]
 ~chatplayer("<p,neutral>Ok, I'll take a cannon please.");

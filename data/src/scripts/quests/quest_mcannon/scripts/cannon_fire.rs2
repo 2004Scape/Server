@@ -1,13 +1,17 @@
-[timer,cannon_rotate]
+[timer,cannon_rotate](int $dir)
+// automatically starts spinning: https://youtu.be/TeQXQDaawO0?t=234, https://youtu.be/Vsnkdq8OOMg
+// at https://youtu.be/WWyNTsMXjTE?t=26 the cannon doesnt auto rotate immediately 
+// but at https://youtu.be/WWyNTsMXjTE?t=219 the cannon does
+
+// i think this is because picking up the cannon doesnt reset the timer.
+settimer(cannon_rotate, 1, modulo(add($dir, 1), 8));
 if (%mcannon_coord = null | loc_find(%mcannon_coord, cannon) = false) {
-    cleartimer(cannon_rotate);
     return;
 }
 def_coord $center = movecoord(loc_coord, 1, 0, 1);
 def_coord $close_range = movecoord($center, 0, 0, 3);
 def_coord $medium_range = movecoord($center, 0, 0, 7);
 def_coord $long_range = movecoord($center, 0, 0, 14);
-def_int $dir = modulo(%mcannon_clock, 8);
 // start north, going clockwise
 if ($dir = 0) {
     // automatically starts spinning: https://youtu.be/TeQXQDaawO0?t=234
@@ -58,7 +62,6 @@ if ($dir = 0) {
     $long_range = movecoord($center, -12, 0, 12);
     loc_anim(cannon_west);
 }
-%mcannon_clock = add(%mcannon_clock, 1);
 
 // check close range
 npc_huntall($close_range, 1, 1);
@@ -128,6 +131,7 @@ if (random(4) = 0 & %mcannon_coord ! null) { // guess
         mes("Your cannon has been destroyed!");
         loc_del(1);
         %mcannon_coord = null;
+        %mcannon_stage = ^cannon_stage_none;
         %mcannon_ammo = 0;
         cleartimer(cannon_rotate);
     }
@@ -138,13 +142,14 @@ if (random(4) = 0 & %mcannon_coord ! null) { // guess
 if (%mcannon_coord ! null) {
     mes(tostring(coordx(%mcannon_coord)));
 }
-mes(tostring(map_clock));
+mes(tostring(%mcannon_stage));
 
 [debugproc,givemc]
 inv_add(inv, cannon_base, 1);
 inv_add(inv, cannon_stand, 1);
 inv_add(inv, cannon_barrels, 1);
 inv_add(inv, cannon_furnace, 1);
+inv_add(inv, mcannonball, 1000);
 
 [debugproc,completemc]
 queue(mcannon_complete, 0);

@@ -6,17 +6,10 @@ if (%mcannon_coord = null) {
 if (loc_find(%mcannon_coord, cannon) = false) {
     mes("Your cannon has decayed."); // https://runescape.wiki/w/Update:Patch_Notes_(6_May_2009)
     cleartimer(cannon_decay);
-    cleartimer(cannon_rotate);
 }
 
 [label,cannon_ready_start]
 settimer(cannon_decay, 5); // OSRS: Checks every 5 ticks if the cannon still exists. THIS DOESNT SET AGAIN ON LOGIN!
-// automatically starts spinning: https://youtu.be/TeQXQDaawO0?t=234
-// at https://youtu.be/WWyNTsMXjTE?t=26 the cannon doesnt auto rotate immediately 
-// but at https://youtu.be/WWyNTsMXjTE?t=219 the cannon does
-if (modulo(%mcannon_clock, 8) ! 0) {  // if rotation isnt north, rotate back to north
-    settimer(cannon_rotate, 1);
-}
 
 [proc,cannon_belongs_to_player]()(boolean)
 if (loc_coord = %mcannon_coord) {
@@ -120,7 +113,7 @@ p_delay(0);
 
 def_coord $origin = movecoord($center, -1, 0, -1); // south-west tile
 %mcannon_coord = $origin;
-// %mcannon_world = map_world;
+%mcannon_stage = ^cannon_stage_base;
 %mcannon_ammo = 0;
 
 anim(human_pickupfloor, 0);
@@ -139,6 +132,7 @@ if (inv_freespace(inv) < 1) {
     return;
 }
 %mcannon_coord = null;
+%mcannon_stage = ^cannon_stage_none;
 mes("You pick up the cannon,");
 mes("It's really heavy.");
 sound_synth(pick, 0, 0);
@@ -155,6 +149,7 @@ if (last_useitem = cannon_stand) {
     inv_del(inv, cannon_stand, 1);
     loc_change(cannon_stand, ^cannon_decay_length);
     mes("You add the stand.");
+    %mcannon_stage = ^cannon_stage_stand;
     return;
 }
 // in osrs, if you use a cannon base on a cannon base, itll have this message...
@@ -179,6 +174,7 @@ if (inv_freespace(inv) < 2) {
     return;
 }
 %mcannon_coord = null;
+%mcannon_stage = ^cannon_stage_none;
 mes("You pick up the cannon,");
 mes("It's really heavy.");
 sound_synth(pick, 0, 0);
@@ -196,6 +192,7 @@ if (last_useitem = cannon_barrels) {
     inv_del(inv, cannon_barrels, 1);
     loc_change(cannon_barrels, ^cannon_decay_length);
     mes("You add the barrels.");
+    %mcannon_stage = ^cannon_stage_barrels;
     return;
 }
 if (oc_category(last_useitem) = cannon_parts & last_useitem ! cannon_stand) { 
@@ -216,6 +213,7 @@ if (inv_freespace(inv) < 3) {
     return;
 }
 %mcannon_coord = null;
+%mcannon_stage = ^cannon_stage_none;
 mes("You pick up the cannon,");
 mes("It's really heavy.");
 sound_synth(pick, 0, 0);
@@ -234,6 +232,7 @@ if (last_useitem = cannon_furnace) {
     inv_del(inv, cannon_furnace, 1);
     mes("You add the furnace.");
     loc_change(cannon, ^cannon_decay_length);
+    %mcannon_stage = ^cannon_stage_full;
     @cannon_ready_start;
 }
 if (oc_category(last_useitem) = cannon_parts & last_useitem ! cannon_barrels) { 
@@ -258,7 +257,7 @@ mes("You pick up the cannon,"); // https://youtu.be/TeQXQDaawO0?t=518
 mes("It's really heavy.");
 sound_synth(pick, 0, 0);
 %mcannon_coord = null;
-cleartimer(cannon_rotate);
+%mcannon_stage = ^cannon_stage_none;
 inv_add(inv, cannon_base, 1);
 inv_add(inv, cannon_stand, 1);
 inv_add(inv, cannon_barrels, 1);
@@ -286,7 +285,7 @@ if (%mcannon_ammo < 1) {
     mes("Your cannon is out of ammo!"); // https://youtu.be/TeQXQDaawO0?t=239
     return;
 }
-settimer(cannon_rotate, 1);
+settimer(cannon_rotate, 1, 0);
 
 [oplocu,cannon]
 if (last_useitem = mcannonball) {
