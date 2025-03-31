@@ -33,6 +33,7 @@ return(stat_random($current_level, $low, $high));
 [proc,fail_pick_pocket](int $damage, int $stun_ticks, string $pocket)
 npc_say("What do you think you're doing?");
 mes("You fail to pick the <$pocket>.");
+// Todo: Should this be playerfaceclose?
 npc_setmode(playerface);
 p_delay(0);
 // Birds above head.
