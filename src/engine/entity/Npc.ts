@@ -480,7 +480,7 @@ export default class Npc extends PathingEntity {
 
         this.updateMovement(false);
 
-        if (World.currentTick >= this.lastWanderTick + 500) {
+        if (World.currentTick > this.lastWanderTick + 500) {
             this.teleport(this.startX, this.startZ, this.startLevel);
         }
     }
