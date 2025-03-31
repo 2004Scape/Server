@@ -20,13 +20,10 @@ if (%elena_progress < ^quest_elena_mud_patch4) {
     ~objbox(spade, "You dig the soil...|The ground is rather hard.", 250, 0, 0);
     return;
 }
-~quest_elena_set_progress(^quest_elena_opened_tunnel);
-p_delay(1);
+~objbox(spade, "You dig deep into the soft soil...|Suddenly it crumbles away!", 250, 0, 0);
+if (%elena_progress < ^quest_elena_opened_tunnel) ~quest_elena_set_progress(^quest_elena_opened_tunnel);
 p_telejump(^quest_elena_sewer_mud_pile_coord);
-mes("You climb down into the hole.");
-if (%elena_progress < ^quest_elena_opened_tunnel) {
-    ~mesbox("You dig deep into the soft soil... Suddenly it crumbles away! You fall through into the sewer. <nc_name(edmond)> follows you down the hole.");
-}
+~mesbox("You fall through...|...you land in the sewer.|Edmond follows you down the hole.");
 
 [label,elena_bucket_mud_patch](int $slot)
 switch_int(%elena_progress) {

@@ -98,7 +98,7 @@ if (npc_find(movecoord(coord, 0, 0, 8), khazard_ogre, 14, 0) = true) {
     if(npc_getmode = none) { // npc in cutscene already, do nothing
         return;
     } else if(inzone(0_40_49_47_29, 0_40_49_49_30, npc_coord) = false) {
-        if(~npc_out_of_combat = true & npc_getmode ! opplayer2) {
+        if(add(%npc_lastcombat, 8) > map_clock) {
             // out of combat and out of cage so attack player, otherwise we'll just set ptr and start cutscene
             ~npc_retaliate(0);
             return;

@@ -110,7 +110,7 @@ def_boolean $gate = db_getfield($data, locked_door:gate, 0);
 def_boolean $mirror = db_getfield($data, locked_door:mirror, 0);
 mes("You go through the door.");
 if ($gate = true) {
-    ~open_and_close_metal_gate($replacement, $entering, $mirror);
+    ~open_and_close_metal_gate2($replacement, $entering, $mirror);
 } else {
     ~open_and_close_door($replacement, $entering, true);
 }
@@ -168,7 +168,7 @@ if ($locked = true) {
     stat_advance(thieving, $experience);
 
     if ($gate = true) {
-        ~open_and_close_metal_gate($replacement, $entering, $mirror);
+        ~open_and_close_metal_gate2($replacement, $entering, $mirror);
     } else {
         ~open_and_close_door($replacement, $entering, true);
     }
@@ -180,7 +180,7 @@ mes("The door is already unlocked.");
 p_delay(0);
 mes("You go through the door.");
 if ($gate = true) {
-    ~open_and_close_metal_gate($replacement, $entering, $mirror);
+    ~open_and_close_metal_gate2($replacement, $entering, $mirror);
 } else {
     ~open_and_close_door($replacement, $entering, true);
 }

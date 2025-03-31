@@ -68,6 +68,7 @@ if($option = 1) {
     ~chatplayer("<p,quiz>So... is there anything in this for me?");
     ~chatnpc("<p,neutral>We druids value wisdom over wealth, so if you expect material gain, you will be disappointed. We are, however, very skilled in the art of Herblore, which we will share with you");
     ~chatnpc("<p,neutral>if you can assist us with this task. You may find such wisdom a greater reward than mere money.");
+    @multi2("Ok, I will try and help.", druid_agree_to_help, "No, that doesn't sound very interesting.", druid_not_interested);
 }
 
 [label,druid_agree_to_help]

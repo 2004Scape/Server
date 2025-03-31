@@ -132,11 +132,7 @@ def_int $telez;
 
 def_coord $loc_coord = loc_coord;
 def_int $angle = loc_angle;
-if ($mirrored = true) {
-    $x, $z = ~door_open_mirrored($angle);
-} else {
-    $x, $z = ~door_open($angle, loc_shape);
-}
+$x, $z = ~door_open($angle, loc_shape);
 def_locshape $shape = loc_shape;
 
 $telex, $telez = ~door_open($angle, loc_shape);
@@ -158,4 +154,6 @@ p_teleport($dest);
 
 // Temp note: dur updated
 loc_change(loc_83, 3);
-loc_add(movecoord($loc_coord, $x, 0, $z), $replacement, modulo(add($angle, 1), 4), $shape, 3);
+def_int $rotation = modulo(add($angle, 1), 4);
+if($mirrored = true) $rotation = modulo(add($angle, 3), 4);
+loc_add(movecoord($loc_coord, $x, 0, $z), $replacement, $rotation, $shape, 3);
