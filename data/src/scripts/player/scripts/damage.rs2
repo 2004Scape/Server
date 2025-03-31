@@ -21,6 +21,9 @@ if (stat(hitpoints) = 0){
 
 ~ring_of_life_check;
 
+[queue,damage_queue](int $damage)
+~damage_self($damage);
+
 [proc,human_hit_sound]
 def_int $rand;
 def_synth $sound;

@@ -37,7 +37,8 @@
 ^legends_jungle_west_mapped = 0
 ^legends_jungle_middle_mapped = 1
 ^legends_jungle_east_mapped = 2
-// Below are used to enable dialogue options with Gujuo, but are not tracked as part of quest progress
+// Below are used to enable dialogue options with Gujuo, but are not tracked as part of quest progress until later,
+// they are reused to track progress in the final fight with nezikchened
 ^legends_entered_cavern = 3
 ^legends_asked_ungadulu_where = 4
 ^legends_asked_ungadulu_who = 5

@@ -18,9 +18,6 @@ if(%legends_progress >= ^legends_defeated_nezikchened_water) { // confirm this
     mes("Your eyes must be playing tricks on you. There is nothing interesting there!");
     return;
 }
-if(inv_total(worn, dark_dagger) > 0) {
-    @stab_viyeldi(worn);
-}
 @viyeldi_dialogue;
 
 [opnpcu,viyeldi]
@@ -28,14 +25,14 @@ if(%legends_progress >= ^legends_defeated_nezikchened_water) { // confirm this
     mes("Your eyes must be playing tricks on you. There is nothing interesting there!");
     return;
 }
-if(inv_total(worn, dark_dagger) > 0) {
-    @stab_viyeldi(inv);
+if(inv_total(inv, dark_dagger) > 0) {
+    inv_del(inv, dark_dagger, 1);
+    inv_add(inv, glowing_dagger, 1);
+    @stab_viyeldi;
 }
 
-[label,stab_viyeldi](inv $inv)
+[label,stab_viyeldi]
 %legends_map_runes = setbit(%legends_map_runes, ^legends_killed_viyeldi);
-inv_del($inv, dark_dagger, 1);
-inv_add($inv, glowing_dagger, 1);
 mes("You thrust the Dark Dagger at Viyeldi...");
 p_delay(1);
 mes("You hit Viyeldi squarely with the dagger.");
@@ -47,12 +44,18 @@ p_delay(2);
 mes("You see a flash as something travels from Viyeldi into the dagger.");
 p_delay(2);
 mes("The dagger glows brightly as Viyeldi crumples to the floor.");
+npc_del;
 
 // not checked in ap script, not checked on manual cast
 [opnpc2,viyeldi]
 if(%legends_progress >= ^legends_defeated_nezikchened_water) { // confirm this
     mes("You have no further business with him.");
     return;
+}
+if(inv_total(worn, dark_dagger) > 0) {
+    inv_setslot(worn, ^wearpos_rhand, glowing_dagger, 1);
+    ~update_bas;
+    @stab_viyeldi;
 }
 ~chatnpc("<p,neutral>Adventurer, I am already deceased, and therefore impervious to your attacks. Still, I can tell when I'm not wanted...");
 npc_del;
