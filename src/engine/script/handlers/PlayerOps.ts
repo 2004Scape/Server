@@ -1,3 +1,5 @@
+import * as rsbuf from '@2004scape/rsbuf';
+
 import IdkType from '#/cache/config/IdkType.js';
 import LocType from '#/cache/config/LocType.js';
 import NpcType from '#/cache/config/NpcType.js';
@@ -18,41 +20,9 @@ import ScriptPointer, { ActivePlayer, checkedHandler, ProtectedActivePlayer } fr
 import ScriptProvider from '#/engine/script/ScriptProvider.js';
 import { CommandHandlers } from '#/engine/script/ScriptRunner.js';
 import ScriptState from '#/engine/script/ScriptState.js';
-import {
-    check,
-    CoordValid,
-    HitTypeValid,
-    IDKTypeValid,
-    InvTypeValid,
-    NpcTypeValid,
-    NumberNotNull,
-    ObjTypeValid,
-    PlayerStatValid,
-    SeqTypeValid,
-    SpotAnimTypeValid,
-    StringNotNull,
-    GenderValid,
-    SkinColourValid
-} from '#/engine/script/ScriptValidators.js';
+import { check, CoordValid, HitTypeValid, IDKTypeValid, InvTypeValid, NpcTypeValid, NumberNotNull, ObjTypeValid, PlayerStatValid, SeqTypeValid, SpotAnimTypeValid, StringNotNull, GenderValid, SkinColourValid } from '#/engine/script/ScriptValidators.js';
 import ServerTriggerType from '#/engine/script/ServerTriggerType.js';
 import World from '#/engine/World.js';
-import ServerProt from '#/network/rs225/server/prot/ServerProt.js';
-import CamReset from '#/network/server/model/CamReset.js';
-import CamShake from '#/network/server/model/CamShake.js';
-import IfSetAnim from '#/network/server/model/IfSetAnim.js';
-import IfSetColour from '#/network/server/model/IfSetColour.js';
-import IfSetHide from '#/network/server/model/IfSetHide.js';
-import IfSetModel from '#/network/server/model/IfSetModel.js';
-import IfSetNpcHead from '#/network/server/model/IfSetNpcHead.js';
-import IfSetObject from '#/network/server/model/IfSetObject.js';
-import IfSetPlayerHead from '#/network/server/model/IfSetPlayerHead.js';
-import IfSetPosition from '#/network/server/model/IfSetPosition.js';
-import IfSetRecol from '#/network/server/model/IfSetRecol.js';
-import IfSetTabActive from '#/network/server/model/IfSetTabActive.js';
-import IfSetText from '#/network/server/model/IfSetText.js';
-import PCountDialog from '#/network/server/model/PCountDialog.js';
-import SynthSound from '#/network/server/model/SynthSound.js';
-import TutFlash from '#/network/server/model/TutFlash.js';
 import ColorConversion from '#/util/ColorConversion.js';
 import Environment from '#/util/Environment.js';
 
@@ -167,24 +137,24 @@ const PlayerOps: CommandHandlers = {
         const [coord, height, rotationSpeed, rotationMultiplier] = state.popInts(4);
 
         const pos: CoordGrid = check(coord, CoordValid);
-        state.activePlayer.cameraPackets.addTail(new CameraInfo(ServerProt.CAM_LOOKAT, pos.x, pos.z, height, rotationSpeed, rotationMultiplier));
+        state.activePlayer.cameraPackets.addTail(new CameraInfo(0, pos.x, pos.z, height, rotationSpeed, rotationMultiplier));
     }),
 
     [ScriptOpcode.CAM_MOVETO]: checkedHandler(ActivePlayer, state => {
         const [coord, height, rotationSpeed, rotationMultiplier] = state.popInts(4);
 
         const pos: CoordGrid = check(coord, CoordValid);
-        state.activePlayer.cameraPackets.addTail(new CameraInfo(ServerProt.CAM_MOVETO, pos.x, pos.z, height, rotationSpeed, rotationMultiplier));
+        state.activePlayer.cameraPackets.addTail(new CameraInfo(1, pos.x, pos.z, height, rotationSpeed, rotationMultiplier));
     }),
 
     [ScriptOpcode.CAM_SHAKE]: checkedHandler(ActivePlayer, state => {
         const [type, jitter, amplitude, frequency] = state.popInts(4);
 
-        state.activePlayer.write(new CamShake(type, jitter, amplitude, frequency));
+        state.activePlayer.write(rsbuf.camShake(state.activePlayer.pid, type, jitter, amplitude, frequency));
     }),
 
     [ScriptOpcode.CAM_RESET]: checkedHandler(ActivePlayer, state => {
-        state.activePlayer.write(new CamReset());
+        state.activePlayer.write(rsbuf.camReset(state.activePlayer.pid));
     }),
 
     [ScriptOpcode.COORD]: checkedHandler(ActivePlayer, state => {
@@ -326,7 +296,7 @@ const PlayerOps: CommandHandlers = {
     }),
 
     [ScriptOpcode.P_COUNTDIALOG]: checkedHandler(ProtectedActivePlayer, state => {
-        state.activePlayer.write(new PCountDialog());
+        state.activePlayer.write(rsbuf.countDialog(state.activePlayer.pid));
         state.execution = ScriptState.COUNTDIALOG;
     }),
 
@@ -426,7 +396,7 @@ const PlayerOps: CommandHandlers = {
     [ScriptOpcode.SOUND_SYNTH]: checkedHandler(ActivePlayer, state => {
         const [synth, loops, delay] = state.popInts(3);
 
-        state.activePlayer.write(new SynthSound(synth, loops, delay));
+        state.activePlayer.write(rsbuf.synthSound(state.activePlayer.pid, synth, loops, delay));
     }),
 
     [ScriptOpcode.STAFFMODLEVEL]: checkedHandler(ActivePlayer, state => {
@@ -571,7 +541,7 @@ const PlayerOps: CommandHandlers = {
         check(com, NumberNotNull);
         check(colour, NumberNotNull);
 
-        state.activePlayer.write(new IfSetColour(com, ColorConversion.rgb24to15(colour)));
+        state.activePlayer.write(rsbuf.ifSetColour(state.activePlayer.pid, com, ColorConversion.rgb24to15(colour)));
     }),
 
     [ScriptOpcode.IF_OPENCHAT]: checkedHandler(ActivePlayer, state => {
@@ -593,7 +563,7 @@ const PlayerOps: CommandHandlers = {
         check(com, NumberNotNull);
         check(hide, NumberNotNull);
 
-        state.activePlayer.write(new IfSetHide(com, hide === 1));
+        state.activePlayer.write(rsbuf.ifSetHide(state.activePlayer.pid, com, hide === 1));
     }),
 
     [ScriptOpcode.IF_SETOBJECT]: checkedHandler(ActivePlayer, state => {
@@ -603,11 +573,11 @@ const PlayerOps: CommandHandlers = {
         check(obj, ObjTypeValid);
         check(scale, NumberNotNull);
 
-        state.activePlayer.write(new IfSetObject(com, obj, scale));
+        state.activePlayer.write(rsbuf.ifSetObject(state.activePlayer.pid, com, obj, scale));
     }),
 
     [ScriptOpcode.IF_SETTABACTIVE]: checkedHandler(ActivePlayer, state => {
-        state.activePlayer.write(new IfSetTabActive(check(state.popInt(), NumberNotNull)));
+        state.activePlayer.write(rsbuf.ifSetTabActive(state.activePlayer.pid, check(state.popInt(), NumberNotNull)));
     }),
 
     [ScriptOpcode.IF_SETMODEL]: checkedHandler(ActivePlayer, state => {
@@ -616,7 +586,7 @@ const PlayerOps: CommandHandlers = {
         check(com, NumberNotNull);
         check(model, NumberNotNull);
 
-        state.activePlayer.write(new IfSetModel(com, model));
+        state.activePlayer.write(rsbuf.ifSetModel(state.activePlayer.pid, com, model));
     }),
 
     [ScriptOpcode.IF_SETRECOL]: checkedHandler(ActivePlayer, state => {
@@ -624,11 +594,11 @@ const PlayerOps: CommandHandlers = {
 
         check(com, NumberNotNull);
 
-        state.activePlayer.write(new IfSetRecol(com, src, dest));
+        state.activePlayer.write(rsbuf.ifSetRecol(state.activePlayer.pid, com, src, dest));
     }),
 
     [ScriptOpcode.TUT_FLASH]: checkedHandler(ActivePlayer, state => {
-        state.activePlayer.write(new TutFlash(check(state.popInt(), NumberNotNull)));
+        state.activePlayer.write(rsbuf.tutFlash(state.activePlayer.pid, check(state.popInt(), NumberNotNull)));
     }),
 
     [ScriptOpcode.IF_SETANIM]: checkedHandler(ActivePlayer, state => {
@@ -641,7 +611,7 @@ const PlayerOps: CommandHandlers = {
             return;
         }
 
-        state.activePlayer.write(new IfSetAnim(com, seq));
+        state.activePlayer.write(rsbuf.ifSetAnim(state.activePlayer.pid, com, seq));
     }),
 
     [ScriptOpcode.IF_SETTAB]: checkedHandler(ActivePlayer, state => {
@@ -665,14 +635,14 @@ const PlayerOps: CommandHandlers = {
     }),
 
     [ScriptOpcode.IF_SETPLAYERHEAD]: checkedHandler(ActivePlayer, state => {
-        state.activePlayer.write(new IfSetPlayerHead(check(state.popInt(), NumberNotNull)));
+        state.activePlayer.write(rsbuf.ifSetPlayerHead(state.activePlayer.pid, check(state.popInt(), NumberNotNull)));
     }),
 
     [ScriptOpcode.IF_SETTEXT]: checkedHandler(ActivePlayer, state => {
         const text = state.popString();
         const com = check(state.popInt(), NumberNotNull);
 
-        state.activePlayer.write(new IfSetText(com, text));
+        state.activePlayer.write(rsbuf.ifSetText(state.activePlayer.pid, com, text));
     }),
 
     [ScriptOpcode.IF_SETNPCHEAD]: checkedHandler(ActivePlayer, state => {
@@ -681,7 +651,7 @@ const PlayerOps: CommandHandlers = {
         check(com, NumberNotNull);
         check(npc, NpcTypeValid);
 
-        state.activePlayer.write(new IfSetNpcHead(com, npc));
+        state.activePlayer.write(rsbuf.ifSetNpcHead(state.activePlayer.pid, com, npc));
     }),
 
     [ScriptOpcode.IF_SETPOSITION]: checkedHandler(ActivePlayer, state => {
@@ -689,7 +659,7 @@ const PlayerOps: CommandHandlers = {
 
         check(com, NumberNotNull);
 
-        state.activePlayer.write(new IfSetPosition(com, x, y));
+        state.activePlayer.write(rsbuf.ifSetPosition(state.activePlayer.pid, com, x, y));
     }),
 
     [ScriptOpcode.STAT_ADVANCE]: checkedHandler(ActivePlayer, state => {

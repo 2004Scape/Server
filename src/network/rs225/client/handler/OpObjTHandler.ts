@@ -1,3 +1,4 @@
+import * as rsbuf from '@2004scape/rsbuf';
 import { ClientProtCategory, OpObjT } from '@2004scape/rsbuf';
 
 import Component from '#/cache/config/Component.js';
@@ -6,7 +7,6 @@ import { NetworkPlayer } from '#/engine/entity/NetworkPlayer.js';
 import ServerTriggerType from '#/engine/script/ServerTriggerType.js';
 import World from '#/engine/World.js';
 import MessageHandler from '#/network/MessageHandler.js';
-import UnsetMapFlag from '#/network/server/model/UnsetMapFlag.js';
 
 export default class OpObjTHandler extends MessageHandler<OpObjT> {
     category: ClientProtCategory = ClientProtCategory.USER_EVENT;
@@ -15,13 +15,13 @@ export default class OpObjTHandler extends MessageHandler<OpObjT> {
         const { x, z, obj: objId, spell: spellComId } = message;
 
         if (player.delayed) {
-            player.write(new UnsetMapFlag());
+            player.write(rsbuf.unsetMapFlag(player.pid));
             return false;
         }
 
         const spellCom = Component.get(spellComId);
         if (typeof spellCom === 'undefined' || !player.isComponentVisible(spellCom)) {
-            player.write(new UnsetMapFlag());
+            player.write(rsbuf.unsetMapFlag(player.pid));
             player.clearPendingAction();
             return false;
         }
@@ -31,14 +31,14 @@ export default class OpObjTHandler extends MessageHandler<OpObjT> {
         const absTopZ = player.originZ + 52;
         const absBottomZ = player.originZ - 52;
         if (x < absLeftX || x > absRightX || z < absBottomZ || z > absTopZ) {
-            player.write(new UnsetMapFlag());
+            player.write(rsbuf.unsetMapFlag(player.pid));
             player.clearPendingAction();
             return false;
         }
 
         const obj = World.getObj(x, z, player.level, objId, player.hash64);
         if (!obj) {
-            player.write(new UnsetMapFlag());
+            player.write(rsbuf.unsetMapFlag(player.pid));
             player.clearPendingAction();
             return false;
         }

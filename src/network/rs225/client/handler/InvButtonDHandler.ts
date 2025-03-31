@@ -1,3 +1,4 @@
+import * as rsbuf from '@2004scape/rsbuf';
 import { ClientProtCategory, InvButtonD } from '@2004scape/rsbuf';
 
 import Component from '#/cache/config/Component.js';
@@ -6,7 +7,6 @@ import ScriptProvider from '#/engine/script/ScriptProvider.js';
 import ScriptRunner from '#/engine/script/ScriptRunner.js';
 import ServerTriggerType from '#/engine/script/ServerTriggerType.js';
 import MessageHandler from '#/network/MessageHandler.js';
-import UpdateInvPartial from '#/network/server/model/UpdateInvPartial.js';
 import Environment from '#/util/Environment.js';
 
 export default class InvButtonDHandler extends MessageHandler<InvButtonD> {
@@ -33,7 +33,7 @@ export default class InvButtonDHandler extends MessageHandler<InvButtonD> {
 
         if (player.delayed) {
             // do nothing; revert the client visual
-            player.write(new UpdateInvPartial(comId, inv, slot, target));
+            player.write(rsbuf.updateInvPartial(player.pid, comId, Int32Array.of(slot, target), inv.packed()));
             return false;
         }
 

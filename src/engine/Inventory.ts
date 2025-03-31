@@ -387,4 +387,15 @@ export class Inventory {
 
         return remove;
     }
+
+    packed(): BigInt64Array {
+        return new BigInt64Array(this.capacity).fill(-1n).map((_, index) => {
+            const obj = this.get(index);
+            if (obj) {
+                return ((BigInt(obj.id) & 0x7fffffffn) << 31n) | (BigInt(obj.count) & 0x7fffffffn);
+            } else {
+                return -1n;
+            }
+        });
+    }
 }

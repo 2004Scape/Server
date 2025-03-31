@@ -7,7 +7,6 @@ import { NetworkPlayer } from '#/engine/entity/NetworkPlayer.js';
 import ServerTriggerType from '#/engine/script/ServerTriggerType.js';
 import World from '#/engine/World.js';
 import MessageHandler from '#/network/MessageHandler.js';
-import UnsetMapFlag from '#/network/server/model/UnsetMapFlag.js';
 
 export default class OpNpcHandler extends MessageHandler<OpNpc> {
     category: ClientProtCategory = ClientProtCategory.USER_EVENT;
@@ -20,26 +19,26 @@ export default class OpNpcHandler extends MessageHandler<OpNpc> {
         }
 
         if (player.delayed) {
-            player.write(new UnsetMapFlag());
+            player.write(rsbuf.unsetMapFlag(player.pid));
             return false;
         }
 
         const npc = World.getNpc(nid);
         if (!npc || npc.delayed) {
-            player.write(new UnsetMapFlag());
+            player.write(rsbuf.unsetMapFlag(player.pid));
             player.clearPendingAction();
             return false;
         }
 
         if (!rsbuf.hasNpc(player.pid, npc.nid)) {
-            player.write(new UnsetMapFlag());
+            player.write(rsbuf.unsetMapFlag(player.pid));
             player.clearPendingAction();
             return false;
         }
 
         const npcType = NpcType.get(npc.type);
         if (!npcType.op || !npcType.op[op - 1]) {
-            player.write(new UnsetMapFlag());
+            player.write(rsbuf.unsetMapFlag(player.pid));
             player.clearPendingAction();
             return false;
         }

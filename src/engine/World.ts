@@ -62,10 +62,6 @@ import WorldStat from '#/engine/WorldStat.js';
 import Zone from '#/engine/zone/Zone.js';
 import Isaac from '#/io/Isaac.js';
 import Packet from '#/io/Packet.js';
-import MessagePrivate from '#/network/server/model/MessagePrivate.js';
-import UpdateFriendList from '#/network/server/model/UpdateFriendList.js';
-import UpdateIgnoreList from '#/network/server/model/UpdateIgnoreList.js';
-import UpdateRebootTimer from '#/network/server/model/UpdateRebootTimer.js';
 import ClientSocket from '#/server/ClientSocket.js';
 import { FriendsServerOpcodes } from '#/server/friend/FriendServer.js';
 import { FriendThreadMessage } from '#/server/friend/FriendThread.js';
@@ -609,11 +605,7 @@ class World {
                             player.masks |= player.entitymask;
                         }
 
-                        if (!player.busy() && player.opcalled) {
-                            player.moveClickRequest = false;
-                        } else {
-                            player.moveClickRequest = true;
-                        }
+                        player.moveClickRequest = !(!player.busy() && player.opcalled);
 
                         if (!followingPlayer && player.opcalled && (player.userPath.length === 0 || !Environment.NODE_CLIENT_ROUTEFINDER)) {
                             player.pathToTarget();
@@ -1012,7 +1004,7 @@ class World {
             player.onLogin();
 
             if (this.shutdownTick != -1) {
-                player.write(new UpdateRebootTimer(this.shutdownTick - this.currentTick));
+                player.write(rsbuf.updateRebootTimer(player.pid, this.shutdownTicksRemaining));
             }
 
             this.friendThread.postMessage({
@@ -1612,11 +1604,6 @@ class World {
         });
     }
 
-    addPlayer(player: Player): void {
-        this.newPlayers.add(player);
-        player.isActive = true;
-    }
-
     sendPrivateChatModeToFriendsServer(player: Player): void {
         this.friendThread.postMessage({
             type: 'player_chat_setmode',
@@ -1835,7 +1822,7 @@ class World {
         this.shutdownTick = this.currentTick + duration;
 
         for (const player of this.players) {
-            player.write(new UpdateRebootTimer(this.shutdownTick - this.currentTick));
+            player.write(rsbuf.updateRebootTimer(player.pid, this.shutdownTicksRemaining));
         }
     }
 
@@ -2010,7 +1997,7 @@ class World {
 
                 for (let i = 0; i < data.friends.length; i++) {
                     const [world, friendUsername37] = data.friends[i];
-                    player.write(new UpdateFriendList(BigInt(friendUsername37), world));
+                    player.write(rsbuf.updateFriendList(player.pid, BigInt(friendUsername37), world));
                 }
             } else if (opcode === FriendsServerOpcodes.UPDATE_IGNORELIST) {
                 const username37 = BigInt(data.username37);
@@ -2025,7 +2012,7 @@ class World {
                 const ignored: bigint[] = data.ignored.map((i: string) => BigInt(i));
 
                 if (ignored.length > 0) {
-                    player.write(new UpdateIgnoreList(ignored));
+                    player.write(rsbuf.updateIgnoreList(player.pid, BigInt64Array.from(ignored)));
                 }
             } else if (opcode == FriendsServerOpcodes.PRIVATE_MESSAGE) {
                 // username37: username.toString(),
@@ -2047,7 +2034,7 @@ class World {
 
                 const chat = data.chat;
 
-                player.write(new MessagePrivate(fromPlayer, pmId, fromPlayerStaffLvl, chat));
+                player.write(rsbuf.messagePrivateOut(player.pid, fromPlayer, pmId, fromPlayerStaffLvl, WordEnc.filter(chat)));
             } else if (opcode === FriendsServerOpcodes.RELAY_MUTE) {
                 const { username, muted_until } = data;
 

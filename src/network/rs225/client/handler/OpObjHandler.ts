@@ -1,3 +1,4 @@
+import * as rsbuf from '@2004scape/rsbuf';
 import { ClientProtCategory, OpObj } from '@2004scape/rsbuf';
 
 import ObjType from '#/cache/config/ObjType.js';
@@ -6,7 +7,6 @@ import { NetworkPlayer } from '#/engine/entity/NetworkPlayer.js';
 import ServerTriggerType from '#/engine/script/ServerTriggerType.js';
 import World from '#/engine/World.js';
 import MessageHandler from '#/network/MessageHandler.js';
-import UnsetMapFlag from '#/network/server/model/UnsetMapFlag.js';
 
 export default class OpObjHandler extends MessageHandler<OpObj> {
     category: ClientProtCategory = ClientProtCategory.USER_EVENT;
@@ -19,7 +19,7 @@ export default class OpObjHandler extends MessageHandler<OpObj> {
         }
 
         if (player.delayed) {
-            player.write(new UnsetMapFlag());
+            player.write(rsbuf.unsetMapFlag(player.pid));
             return false;
         }
 
@@ -28,7 +28,7 @@ export default class OpObjHandler extends MessageHandler<OpObj> {
         const absTopZ = player.originZ + 52;
         const absBottomZ = player.originZ - 52;
         if (x < absLeftX || x > absRightX || z < absBottomZ || z > absTopZ) {
-            player.write(new UnsetMapFlag());
+            player.write(rsbuf.unsetMapFlag(player.pid));
             player.clearPendingAction();
             return false;
         }
@@ -43,7 +43,7 @@ export default class OpObjHandler extends MessageHandler<OpObj> {
         const objType = ObjType.get(obj.type);
         // todo: validate all options
         if ((op === 1 && ((objType.op && !objType.op[0]) || !objType.op)) || (op === 4 && ((objType.op && !objType.op[3]) || !objType.op))) {
-            player.write(new UnsetMapFlag());
+            player.write(rsbuf.unsetMapFlag(player.pid));
             player.clearPendingAction();
             return false;
         }

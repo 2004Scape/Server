@@ -1,12 +1,9 @@
+import * as rsbuf from '@2004scape/rsbuf';
 import { ClientProtCategory, RebuildGetMaps } from '@2004scape/rsbuf';
 
 import { PRELOADED } from '#/cache/PreloadedPacks.js';
 import Player from '#/engine/entity/Player.js';
 import MessageHandler from '#/network/MessageHandler.js';
-import DataLand from '#/network/server/model/DataLand.js';
-import DataLandDone from '#/network/server/model/DataLandDone.js';
-import DataLoc from '#/network/server/model/DataLoc.js';
-import DataLocDone from '#/network/server/model/DataLocDone.js';
 
 export default class RebuildGetMapsHandler extends MessageHandler<RebuildGetMaps> {
     private static readonly CHUNK_SIZE: number = 1000 - 1 - 2 - 1 - 1 - 2 - 2;
@@ -32,9 +29,9 @@ export default class RebuildGetMapsHandler extends MessageHandler<RebuildGetMaps
                 }
 
                 for (let off = 0; off < land.length; off += chunk) {
-                    player.write(new DataLand(x, z, off, land.length, land.subarray(off, off + chunk)));
+                    player.write(rsbuf.dataLand(player.pid, x, z, off, land.length, land.subarray(off, off + chunk)));
                 }
-                player.write(new DataLandDone(x, z));
+                player.write(rsbuf.dataLandDone(player.pid, x, z));
             } else if (type === 1) {
                 const loc = PRELOADED.get(`l${x}_${z}`);
                 if (!loc) {
@@ -42,9 +39,9 @@ export default class RebuildGetMapsHandler extends MessageHandler<RebuildGetMaps
                 }
 
                 for (let off = 0; off < loc.length; off += chunk) {
-                    player.write(new DataLoc(x, z, off, loc.length, loc.subarray(off, off + chunk)));
+                    player.write(rsbuf.dataLoc(player.pid, x, z, off, loc.length, loc.subarray(off, off + chunk)));
                 }
-                player.write(new DataLocDone(x, z));
+                player.write(rsbuf.dataLocDone(player.pid, x, z));
             }
         }
 
