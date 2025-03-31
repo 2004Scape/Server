@@ -1515,6 +1515,7 @@ class World {
     }
 
     addObj(obj: Obj, receiver64: bigint, duration: number): void {
+        // Dev note: This function is slightly messy. Perhaps this can be organized better
         // Check if we need to changeobj first
         if (ObjType.get(obj.type).stackable && obj.lifecycle === EntityLifeCycle.DESPAWN) {
             const existing = this.getObjOfReceiver(obj.x, obj.z, obj.level, obj.type, receiver64);
@@ -1545,7 +1546,11 @@ class World {
         // If the obj is dropped to all
         else {
             obj.reveal = -1;
-            this.trackLocObj(obj, duration);
+            if (duration > 0) {
+                this.trackLocObj(obj, duration);
+            } else {
+                obj.untrack();
+            }
         }
     }
 
@@ -1568,7 +1573,11 @@ class World {
         const adjustedDuration = this.scaleByPlayerCount(duration);
         zone.removeObj(obj);
         this.trackZone(zone);
-        this.trackLocObj(obj, adjustedDuration);
+        if (duration > 0) {
+            this.trackLocObj(obj, adjustedDuration);
+        } else {
+            obj.untrack();
+        }
     }
 
     animMap(level: number, x: number, z: number, spotanim: number, height: number, delay: number): void {

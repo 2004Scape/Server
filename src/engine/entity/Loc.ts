@@ -57,6 +57,9 @@ export default class Loc extends NonPathingEntity {
                 World.revertLoc(this);
             } else if (this.lifecycle === EntityLifeCycle.RESPAWN && !this.isActive) {
                 World.addLoc(this, 0);
+            } else {
+                // Fail safe in case no conditions are met (should never happen)
+                this.untrack();
             }
         }
     }

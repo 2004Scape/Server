@@ -33,8 +33,10 @@ export default class Obj extends NonPathingEntity {
                 World.removeObj(this, 0);
             } else if (this.lifecycle === EntityLifeCycle.RESPAWN) {
                 World.addObj(this, Obj.NO_RECEIVER, 0);
+            } else {
+                // Fail safe in case no conditions are met (should never happen)
+                this.untrack();
             }
-            this.untrack();
         }
     }
 
