@@ -309,7 +309,7 @@ switch_int ($style) {
 error("style of <tostring($style)> not defined in switch for npc_combat_defencebonus");
 
 //  this should be strong queued. Some damage is queued, some isnt
-[queue,damage_player](int $damage)
+[queue,combat_damage_player](int $damage)
 if (inv_getobj(worn, ^wearpos_ring) = ring_of_recoil & npc_finduid(%aggressive_npc) = true & %npc_attacking_uid = uid & $damage > 0 & stat(hitpoints) > 0) {
     // https://oldschool.runescape.wiki/w/Update:Clue_Scroll_Step_Counter
     // - "Recoil damage will now always target the entity that caused the initial damage, rather than the most recent entity to deal damage."
