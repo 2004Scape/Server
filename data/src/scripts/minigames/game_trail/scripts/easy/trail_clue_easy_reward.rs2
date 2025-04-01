@@ -56,7 +56,6 @@ switch_int ($random) {
     case 24 : inv_add(reward, amulet_of_magic, 1);
     case 25 : inv_add(reward, willow_longbow, 1);
 }
-session_log(^log_adventure, "Completed an Easy Clue Scroll!");
 
 [proc,trail_clue_easy_rare]
 def_int $random = random(12);
