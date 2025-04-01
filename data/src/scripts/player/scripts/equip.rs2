@@ -335,7 +335,11 @@ if (~unequip_conflicts_space($equip_obj) = false) { // check if enough space
 }
 
 ~unequip_conflicts($equip_obj);
-inv_movetoslot(equipitem, worn, 0, oc_wearpos($equip_obj)); // equip item :D
+if (inv_total(worn, $equip_obj) > 0 & oc_stackable($equip_obj) = true) {
+    inv_moveitem(equipitem, worn, $equip_obj, $equip_obj_num);
+} else {
+    inv_movetoslot(equipitem, worn, 0, oc_wearpos($equip_obj)); // equip item :D
+}
 return(true);
 
 // proc to check if you have enough space to unequip conflicting items with $equip_obj
@@ -356,11 +360,13 @@ while ($i < inv_size(worn)) {
         | ($wearpos2 ! null & ($wearpos2 = $worn_wearpos1 | $wearpos2 = $worn_wearpos2 | $wearpos2 = $worn_wearpos3))
         | ($wearpos3 ! null & ($wearpos3 = $worn_wearpos1 | $wearpos3 = $worn_wearpos2 | $wearpos3 = $worn_wearpos3))) {
             if (oc_stackable($worn_obj) = true) {
-                if (inv_itemspace2(inv, $worn_obj, $worn_num, inv_size(inv)) > 0) {
-                    return(false);
-                }
-                if (inv_total(inv, $worn_obj) < 0) { // if stackable item isnt in inv, then takes up a space
-                    $conflicts = add($conflicts, 1);
+                if ($equip_obj ! $worn_obj) { // this makes sure if worn obj is the same as the stackable item we're equipping, they combine
+                    if (inv_itemspace2(inv, $worn_obj, $worn_num, inv_size(inv)) > 0) {
+                        return(false);
+                    }
+                    if (inv_total(inv, $worn_obj) < 0) { // if stackable item isnt in inv, then takes up a space
+                        $conflicts = add($conflicts, 1);
+                    }
                 }
             } else {
                 $conflicts = add($conflicts, 1);
@@ -390,7 +396,13 @@ while ($i < inv_size(worn)) {
         if (($wearpos1 ! null & ($wearpos1 = $worn_wearpos1 | $wearpos1 = $worn_wearpos2 | $wearpos1 = $worn_wearpos3))
         | ($wearpos2 ! null & ($wearpos2 = $worn_wearpos1 | $wearpos2 = $worn_wearpos2 | $wearpos2 = $worn_wearpos3))
         | ($wearpos3 ! null & ($wearpos3 = $worn_wearpos1 | $wearpos3 = $worn_wearpos2 | $wearpos3 = $worn_wearpos3))) {
-            inv_moveitem(worn, inv, $worn_obj, $worn_num);
+            if (oc_stackable($worn_obj) = true) {
+                if ($equip_obj ! $worn_obj) { // this makes sure if worn obj is the same as the stackable item we're equipping, they combine
+                    inv_moveitem(worn, inv, $worn_obj, $worn_num);
+                }
+            } else {
+                inv_moveitem(worn, inv, $worn_obj, $worn_num);
+            }
         }
     }
     $i = add($i, 1);
