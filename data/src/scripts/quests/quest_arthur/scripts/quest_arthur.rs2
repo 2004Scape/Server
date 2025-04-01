@@ -76,6 +76,14 @@ if ($choice = 2) {
 ~mesbox("You climb out of the crate.");
 p_teleport(%arhein_crate_coord);
 
+[oploc2,loc_67]
+~mesbox("There are buckets in the crate.|Would you like a bucket?");
+def_int $op = ~p_choice2("Yes.", 1, "No.", 2);
+if($op = 2) {
+    return;
+}
+~mesbox("You take a bucket.");
+inv_add(inv, bucket_empty, 1);
 
 [oploc1,loc_69]
 if (npc_find(coord, arhein, 12, 0) = true) {
