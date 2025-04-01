@@ -22,7 +22,6 @@ import BuildArea from '#/engine/entity/BuildArea.js';
 import CameraInfo from '#/engine/entity/CameraInfo.js';
 import Entity from '#/engine/entity/Entity.js';
 import EntityLifeCycle from '#/engine/entity/EntityLifeCycle.js';
-import { EntityQueueRequest, PlayerQueueType, QueueType, ScriptArgument } from '#/engine/entity/EntityQueueRequest.js';
 import { EntityTimer, PlayerTimerType } from '#/engine/entity/EntityTimer.js';
 import HeroPoints from '#/engine/entity/HeroPoints.js';
 import Loc from '#/engine/entity/Loc.js';
@@ -33,6 +32,7 @@ import { isClientConnected } from '#/engine/entity/NetworkPlayer.js';
 import Npc from '#/engine/entity/Npc.js';
 import Obj from '#/engine/entity/Obj.js';
 import PathingEntity from '#/engine/entity/PathingEntity.js';
+import { PlayerQueueRequest, PlayerQueueType, QueueType, ScriptArgument } from '#/engine/entity/PlayerQueueRequest.js';
 import { PlayerStat, PlayerStatEnabled, PlayerStatFree } from '#/engine/entity/PlayerStat.js';
 import InputTracking from '#/engine/entity/tracking/InputTracking.js';
 import { changeNpcCollision, changePlayerCollision, findNaivePath, reachedEntity, reachedLoc, reachedObj } from '#/engine/GameMap.js';
@@ -332,9 +332,9 @@ export default class Player extends PathingEntity {
     // ---
 
     // script variables
-    queue: LinkList<EntityQueueRequest> = new LinkList();
-    weakQueue: LinkList<EntityQueueRequest> = new LinkList();
-    engineQueue: LinkList<EntityQueueRequest> = new LinkList();
+    queue: LinkList<PlayerQueueRequest> = new LinkList();
+    weakQueue: LinkList<PlayerQueueRequest> = new LinkList();
+    engineQueue: LinkList<PlayerQueueRequest> = new LinkList();
     cameraPackets: LinkList<CameraInfo> = new LinkList();
     timers: Map<number, EntityTimer> = new Map();
     tabs: number[] = new Array(14).fill(-1);
@@ -757,7 +757,7 @@ export default class Player extends PathingEntity {
      * @param args
      */
     enqueueScript(script: ScriptFile, type: QueueType = PlayerQueueType.NORMAL, delay = 0, args: ScriptArgument[] = []) {
-        const request = new EntityQueueRequest(type, script, args, delay);
+        const request = new PlayerQueueRequest(type, script, args, delay);
         if (type === PlayerQueueType.ENGINE) {
             request.delay = 0;
             this.engineQueue.addTail(request);

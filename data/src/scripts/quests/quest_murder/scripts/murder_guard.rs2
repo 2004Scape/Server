@@ -142,7 +142,7 @@ switch_int(%murder_murderer_id) {
 ~mesbox("You prove to the guard <~murder_get_murderer_name> did not use poison on the <~murder_get_poisoned_loc_name>.");
 ~chatnpc("<p,neutral>Excellent work - have you considered a career as a detective? But I'm afraid it's still not quite enough...");
 ~mesbox("You match <~murder_get_murderer_name>'s finger prints with those on the dagger found in the body of Lord Sinclair.");
-~chatnpc("<p,happy>Yes. There's no doubt about it. It must have been <~murder_get_murderer_name> who killed <~murder_get_murderer_pronoun> father. All of the guards must congratulate you on your excellent work in helping us to solve this case.");
+~chatnpc("<p,happy>Yes. There's no doubt about it. It must have been <~murder_get_murderer_name> who killed <~murder_get_murderer_pronoun2> father. All of the guards must congratulate you on your excellent work in helping us to solve this case.");
 ~chatnpc("<p,neutral>We don't have many murders here in RuneScape and I'm afraid we wouldn't have been able to solve it by ourselves. We will hold <~murder_get_murderer_pronoun> here under house arrest until such time as we bring <~murder_get_murderer_pronoun> to trial.");
 ~chatnpc("<p,neutral>You have our gratitude, and I'm sure the rest of the family's as well, in helping to apprehend the murderer. I'll just take the evidence from you now.");
 ~mesbox("You hand over all the evidence.");
@@ -164,5 +164,11 @@ switch_int(%murder_murderer_id) {
 [proc,murder_get_murderer_pronoun]()(string)
 switch_int(%murder_murderer_id) {
     case 2,4,6 : return ("him");
+    case default : return ("her");
+}
+
+[proc,murder_get_murderer_pronoun2]()(string)
+switch_int(%murder_murderer_id) {
+    case 2,4,6 : return ("his");
     case default : return ("her");
 }

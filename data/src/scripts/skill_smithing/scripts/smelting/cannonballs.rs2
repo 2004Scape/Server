@@ -3,6 +3,10 @@
 // https://web.archive.org/web/20040821133710/http://www.runescapecommunity.com:80/index.php?showtopic=159464
 // https://web.archive.org/web/20040727050826/http://img48.exs.cx/img48/9964/cannonballs1.png
 [label,smelt_cannonballs]
+if(map_members = false) {
+    mes("You need to be on a members' world to make cannonballs."); // OSRS
+    return;
+}
 if (stat(smithing) < 35) {
     mes("You need a Smithing level of 35 to make cannonballs."); // osrs
     return;

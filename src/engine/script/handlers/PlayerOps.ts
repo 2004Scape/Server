@@ -8,11 +8,11 @@ import SpotanimType from '#/cache/config/SpotanimType.js';
 import VarPlayerType from '#/cache/config/VarPlayerType.js';
 import { CoordGrid } from '#/engine/CoordGrid.js';
 import CameraInfo from '#/engine/entity/CameraInfo.js';
-import { PlayerQueueType, ScriptArgument } from '#/engine/entity/EntityQueueRequest.js';
 import { PlayerTimerType } from '#/engine/entity/EntityTimer.js';
 import Interaction from '#/engine/entity/Interaction.js';
 import { isBufferFull } from '#/engine/entity/NetworkPlayer.js';
 import Player from '#/engine/entity/Player.js';
+import { PlayerQueueType, ScriptArgument } from '#/engine/entity/PlayerQueueRequest.js';
 import { PlayerStat } from '#/engine/entity/PlayerStat.js';
 import { findPath } from '#/engine/GameMap.js';
 import ScriptOpcode from '#/engine/script/ScriptOpcode.js';
@@ -463,7 +463,7 @@ const PlayerOps: CommandHandlers = {
         const base = player.baseLevels[stat];
         const current = player.levels[stat];
 
-        const boost = ((constant + (base * percent) / 100) | 0);
+        const boost = (constant + (base * percent) / 100) | 0;
         const boosted = Math.min(current + boost, base + boost);
         player.levels[stat] = Math.min(boosted, 255);
         if (stat === PlayerStat.HITPOINTS && player.levels[PlayerStat.HITPOINTS] >= player.baseLevels[PlayerStat.HITPOINTS]) {

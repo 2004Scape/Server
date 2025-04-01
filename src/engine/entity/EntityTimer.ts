@@ -1,4 +1,4 @@
-import { ScriptArgument } from '#/engine/entity/EntityQueueRequest.js';
+import { ScriptArgument } from '#/engine/entity/PlayerQueueRequest.js';
 import ScriptFile from '#/engine/script/ScriptFile.js';
 
 export enum NpcTimerType {

@@ -5,7 +5,7 @@ queue(damage_player, 0, 20); // this is strongqueued on osrs for some reason
 ~chatnpc("<p,angry>Grr! How dare you talk to us.|We will destroy you!");
 
 [ai_queue2,ogre_shaman]
-if(finduid(%npc_attacking_uid) = true) {
+if(finduid(%npc_attacking_uid) = true & inzone(0_40_147_0_0, 0_40_147_63_63, coord) = true) {
     mes("A magic blast comes from the shaman.");
     mes("You are badly injured by the blast.");
     ~damage_self(30);

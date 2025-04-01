@@ -1,4 +1,4 @@
-^bakery_stall_timer = 1500
+^baker_stall_timer = 1500
 ^tea_stall_timer = 1000
 ^silk_stall_timer = 1000
 ^fur_stall_timer = 1000

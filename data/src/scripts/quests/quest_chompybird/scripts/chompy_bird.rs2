@@ -61,39 +61,19 @@ npc_del;
 [label,player_combat_chompybird_start]
 def_obj $rhand = inv_getobj(worn, ^wearpos_rhand);
 
-if ($rhand = null)
-{
+if ($rhand = null) {
     // todo confirm for 2004
     mes("You'll need a weapon to try and attack this beast.");
     return;
 }
 
-def_category $rhand_cat = oc_category($rhand);
-
-if ($rhand_cat = weapon_slash
-    | $rhand_cat = weapon_stab
-    | $rhand_cat = weapon_axe
-    | $rhand_cat = weapon_pickaxe
-    | $rhand_cat = weapon_blunt
-    | $rhand_cat = weapon_spear
-    | $rhand_cat = weapon_spiked
-    | $rhand_cat = weapon_2h_sword
-    | $rhand_cat = weapon_staff
-    | $rhand_cat = weapon_scythe)
-{
+if (%damagetype ! ^ranged_style) {
     // todo confirm for 2004
     mes("The Chompy Bird is too quick for your melee weapon.");
     return;
 }
 
-if (
-    $rhand ! ogre_bow
-    & (
-        $rhand_cat = weapon_bow
-        | $rhand_cat = weapon_crossbow
-        | $rhand_cat = weapon_thrown
-        | $rhand_cat = weapon_javelin))
-{
+if ($rhand ! ogre_bow) {
     // todo confirm for 2004
     mes("Your ranged weapon isn't powerful enough to hurt the Chompy bird.");
     return;
@@ -113,6 +93,11 @@ if ($ammo ! ogre_arrow) {
     return;
 }
 
+def_int $attackrange = ~player_attackrange($rhand);
+if (npc_range(coord) > $attackrange) {
+    p_aprange($attackrange);
+    return;
+}
 ~player_combat_chompybird($rhand, $ammo);
 
 // is this right?  it's basically a replica of the existing combat logic,

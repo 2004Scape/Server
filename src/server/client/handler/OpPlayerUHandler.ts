@@ -12,7 +12,7 @@ import Environment from '#/util/Environment.js';
 
 export default class OpPlayerUHandler extends MessageHandler<OpPlayerU> {
     category: ClientProtCategory = ClientProtCategory.USER_EVENT;
-    
+
     handle(message: OpPlayerU, player: NetworkPlayer): boolean {
         const { pid, useObj: item, useSlot: slot, useComponent: comId } = message;
 
@@ -22,7 +22,7 @@ export default class OpPlayerUHandler extends MessageHandler<OpPlayerU> {
         }
 
         const com = Component.get(comId);
-        if (typeof com === 'undefined' || !player.isComponentVisible(com)) {
+        if (typeof com === 'undefined' || !player.isComponentVisible(com) || !com.interactable) {
             player.write(rsbuf.unsetMapFlag());
             player.clearPendingAction();
             return false;

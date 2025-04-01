@@ -98,6 +98,9 @@ else {
 
 [label,crest_johnathon_gauntlets]
 ~chatnpc("<p,neutral>Hello again. My family now considers you a hero.");
+if(getbit_range(%crest_spells_levers_gauntlets, ^crest_cooking_gauntlets_chosen, ^crest_chaos_gauntlets_chosen) > 0) {
+    return;
+}
 if (inv_total(inv, steel_gauntlets) >= 1) {
     ~chatplayer("<p,quiz>Your father tells me you can improve these gauntlets for me...");
     ~chatnpc("<p,neutral>And right he is at that. Although my skill with Death Rune magiks was not great enough to defeat Chronozon, I am adequately skilled at Chaos Rune magiks.");
@@ -114,17 +117,7 @@ if (inv_total(inv, steel_gauntlets) >= 1) {
         ~chatplayer("<p,confused>I think I'll check my other options with your brothers before committing myself.");
         ~chatnpc("<p,neutral>I doubt they will offer anything as useful as my magical boost, but as you wish.");
     }
-}
-else if (testbit(%crest_spells_levers_gauntlets, ^crest_chaos_gauntlets_chosen) = true)  {
-    if (inv_total(inv, gauntlets_of_chaos) >= 1) {
-        ~chatplayer("<p,quiz>Your father tells me you can improve these gauntlets for me...");
-    }
-    else {
-        ~chatplayer("<p,quiz>Your father told me you could improve some gauntlets for me.");
-    }
-    ~chatnpc("<p,neutral>Your gauntlets are already imbued with my powers.");
-}
-else {
+} else {
     ~chatplayer("<p,neutral>Your father told me you could improve some gauntlets for me.");
     ~chatnpc("<p,happy>Bring them to me, and I'll see what I can do.");
 }

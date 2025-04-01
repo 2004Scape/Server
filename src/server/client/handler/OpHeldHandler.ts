@@ -21,7 +21,7 @@ export default class OpHeldHandler extends MessageHandler<OpHeld> {
         }
 
         const com = Component.get(comId);
-        if (typeof com === 'undefined' || !player.isComponentVisible(com)) {
+        if (typeof com === 'undefined' || !player.isComponentVisible(com) || !com.interactable) {
             player.clearPendingAction();
             return false;
         }
