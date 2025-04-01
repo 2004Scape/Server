@@ -130,9 +130,6 @@ if (random(4) = 0 & %mcannon_coord ! null) { // guess
     if (loc_find(%mcannon_coord, cannon) = true) {
         mes("Your cannon has been destroyed!");
         loc_del(1);
-        %mcannon_coord = null;
-        %mcannon_stage = ^cannon_stage_none;
-        %mcannon_ammo = 0;
         cleartimer(cannon_rotate);
     }
     
