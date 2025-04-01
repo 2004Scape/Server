@@ -207,7 +207,7 @@ if(inv_total(worn, desert_boots) > 0 & $traded_boots = false) {
     inv_setslot(worn, ^wearpos_feet, slave_boots, 1);
 }
 ~update_bas;
-npc_changetype(escaping_slave, 200); // 200t osrs
+npc_changetype_keepall(escaping_slave, 200); // 200t in osrs
 //npc_delay(9); // can't interact for 10t?
 ~chatnpc_specific(nc_name(escaping_slave), escaping_slave, "<p,neutral>Right, I'm off! Good luck!");
 ~chatplayer("<p,neutral>Yeah, good luck to you too!");
@@ -233,7 +233,7 @@ npc_changetype(escaping_slave, 200); // 200t osrs
 if(%desertrescue_progress >= ^desertrescue_traded_clothes) {
     // this only checks worn
     if(inv_total(worn, slave_shirt) = 0 | inv_total(worn, slave_robe) = 0 | inv_total(worn, slave_boots) = 0) {
-        npc_changetype(male_slave, ^max_32bit_int);
+        npc_changetype_keepall(male_slave, ^max_32bit_int);
         ~chatnpc("<p,neutral>Oh bother, I was caught by the guards again... Listen, if you can get me some Desert Clothes, I'll trade you for my slaves clothes again.. Do you want to trade?");
         @multi2("Yes, I'll trade.", male_slave_trade, "No thanks...", male_slave_notrade);
     } else {

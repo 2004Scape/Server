@@ -182,7 +182,7 @@ if(%ball_progress = ^ball_defeated_experiment) {
         mes("You already have the boys ball...");
         return;
     }
-    @pickup_obj(obj_coord, obj_type, obj_count);
+    @pickup_obj;
 }
 npc_huntall(coord, 7, 0);
 while (npc_huntnext = true) {

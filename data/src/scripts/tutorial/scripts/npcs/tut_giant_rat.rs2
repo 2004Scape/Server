@@ -43,7 +43,7 @@ if (stat(hitpoints) = 1) {
 } else if (randominc($attack_roll) > randominc($defence_roll)) {
     $damage = randominc($maxhit);
 }
-queue(damage_player, 1, $damage);
+queue(combat_damage_player, 1, $damage);
 queue(playerhit_n_retaliate, 1, npc_uid); // this should be a queue* command
 ~npc_set_attack_vars;
 

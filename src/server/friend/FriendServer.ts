@@ -28,7 +28,10 @@ export enum FriendsClientOpcodes {
     RELAY_SHUTDOWN,
     RELAY_BROADCAST,
     RELAY_TRACK,
-    RELAY_RELOAD
+    RELAY_RELOAD,
+    RELAY_CLEARLOGINS,
+    RELAY_CLEARLOGOUTS,
+    RELAY_QUEUESCRIPT,
 }
 
 /**
@@ -44,7 +47,10 @@ export enum FriendsServerOpcodes {
     RELAY_SHUTDOWN,
     RELAY_BROADCAST,
     RELAY_TRACK,
-    RELAY_RELOAD
+    RELAY_RELOAD,
+    RELAY_CLEARLOGINS,
+    RELAY_CLEARLOGOUTS,
+    RELAY_QUEUESCRIPT,
 }
 
 // TODO make this configurable (or at least source it from somewhere common)
@@ -404,6 +410,38 @@ export class FriendServer {
                             this.socketByWorld[nodeId].send(
                                 JSON.stringify({
                                     type: FriendsServerOpcodes.RELAY_RELOAD
+                                })
+                            );
+                        }
+                    } else if (type === FriendsClientOpcodes.RELAY_CLEARLOGINS) {
+                        const { nodeId } = message;
+
+                        if (typeof this.socketByWorld[nodeId] !== 'undefined') {
+                            this.socketByWorld[nodeId].send(
+                                JSON.stringify({
+                                    type: FriendsServerOpcodes.RELAY_CLEARLOGINS
+                                })
+                            );
+                        }
+                    } else if (type === FriendsClientOpcodes.RELAY_CLEARLOGOUTS) {
+                        const { nodeId } = message;
+
+                        if (typeof this.socketByWorld[nodeId] !== 'undefined') {
+                            this.socketByWorld[nodeId].send(
+                                JSON.stringify({
+                                    type: FriendsServerOpcodes.RELAY_CLEARLOGOUTS
+                                })
+                            );
+                        }
+                    } else if (type === FriendsClientOpcodes.RELAY_QUEUESCRIPT) {
+                        const { nodeId, scriptName, username } = message;
+
+                        if (typeof this.socketByWorld[nodeId] !== 'undefined') {
+                            this.socketByWorld[nodeId].send(
+                                JSON.stringify({
+                                    type: FriendsServerOpcodes.RELAY_QUEUESCRIPT,
+                                    scriptName,
+                                    username
                                 })
                             );
                         }

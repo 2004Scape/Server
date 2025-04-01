@@ -92,17 +92,24 @@ export const web = http.createServer(async (req, res) => {
 
             res.setHeader('Content-Type', 'text/html');
             res.writeHead(200);
+
             const context = {
                 plugin,
                 nodeid: Environment.NODE_ID,
                 lowmem,
                 members: Environment.NODE_MEMBERS,
+                portoff: Environment.NODE_PORT - 43594,
                 per_deployment_token: ''
             };
             if (Environment.WEB_SOCKET_TOKEN_PROTECTION) {
                 context.per_deployment_token = getPublicPerDeploymentToken();
             }
-            res.end(await ejs.renderFile('view/client.ejs', context));
+
+            if (plugin === 1 && Environment.NODE_DEBUG) {
+                res.end(await ejs.renderFile('view/java.ejs', context));
+            } else {
+                res.end(await ejs.renderFile('view/client.ejs', context));
+            }
         } else if (fs.existsSync('public' + url.pathname)) {
             res.setHeader('Content-Type', MIME_TYPES.get(extname(url.pathname ?? '')) ?? 'text/plain');
             res.writeHead(200);

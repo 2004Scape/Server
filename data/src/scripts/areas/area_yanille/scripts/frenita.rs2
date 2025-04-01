@@ -1,0 +1,6 @@
+[opnpc1,frenita]
+~chatnpc("<p,happy>Would you like to buy some cooking equipment?");
+switch_int(~p_choice2("Yes please.", 1, "No thank you.", 2)) {
+    case 1 : ~openshop_activenpc;
+    case 2 : ~chatplayer("<p,neutral>No thank you."); 
+}

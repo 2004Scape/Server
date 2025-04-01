@@ -1,27 +1,27 @@
 [opobj3,white_cog]
 if (~can_pickup_cog = true) {
-    @pickup_obj(obj_coord, obj_type, obj_count);
+    @pickup_obj;
 }
 
 [opobj3,blue_cog]
 if (~can_pickup_cog = true) {
-    @pickup_obj(obj_coord, obj_type, obj_count);
+    @pickup_obj;
 }
 
 [opobj3,red_cog]
 if (~can_pickup_cog = true) {
-    @pickup_obj(obj_coord, obj_type, obj_count);
+    @pickup_obj;
 }
 
 [opobj3,black_cog]
 if (~can_pickup_cog = true) {
     if(%cog_cooled = ^true) {
-        @pickup_obj(obj_coord, obj_type, obj_count);
+        @pickup_obj;
     }
     if(inv_total(worn, ice_gloves) > 0) {
         %cog_cooled = ^true;
         ~mesbox("The ice gloves cool down the cog.|You can carry it now.");
-        @pickup_obj(obj_coord, obj_type, obj_count);
+        @pickup_obj;
     } else {
         ~mesbox("The cog is red hot from flames.|You cannot pick it up.");
     }

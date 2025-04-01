@@ -45,7 +45,7 @@ if(%zanaris_progress = ^zanaris_spoken_shamus) {
         npc_add($spawn, tree_spirit_zanaris, 1000);
     }
     npc_say("You must defeat me before touching the tree!");
-    if (calc(%npc_lastcombat + 10) > map_clock) { // Do nothing if the spirit is already fighting
+    if (calc(%npc_lastcombat + 8) > map_clock) { // Do nothing if the spirit is already fighting
         return;
     }
     // Set in combat and queue to attack, as soon as the spirit spawns it is in combat with the summoning player

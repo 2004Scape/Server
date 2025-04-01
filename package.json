@@ -59,7 +59,7 @@
     "ws": "^8.18.0"
   },
   "devDependencies": {
-    "@2004scape/rsbuf": "^225.1.5",
+    "@2004scape/rsbuf": "^225.1.7",
     "@2004scape/rsmod-pathfinder": "^5.0.4",
     "@commitlint/cli": "^19.6.1",
     "@commitlint/config-conventional": "^19.6.0",

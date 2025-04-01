@@ -1,4 +1,4 @@
-import Component from '#/cache/config/Component.js';
+import Component, { ComActionTarget } from '#/cache/config/Component.js';
 import ObjType from '#/cache/config/ObjType.js';
 import Player from '#/engine/entity/Player.js';
 import ScriptProvider from '#/engine/script/ScriptProvider.js';
@@ -14,13 +14,13 @@ export default class OpHeldTHandler extends MessageHandler<OpHeldT> {
         const { obj: item, slot, component: comId, spellComponent: spellComId } = message;
 
         const com = Component.get(comId);
-        if (typeof com === 'undefined' || !player.isComponentVisible(com)) {
+        if (typeof com === 'undefined' || !player.isComponentVisible(com) || !com.interactable) {
             player.clearPendingAction();
             return false;
         }
 
         const spellCom = Component.get(spellComId);
-        if (typeof spellCom === 'undefined' || !player.isComponentVisible(spellCom)) {
+        if (typeof spellCom === 'undefined' || !player.isComponentVisible(spellCom) || (spellCom.actionTarget & ComActionTarget.HELD) === 0) {
             player.clearPendingAction();
             return false;
         }

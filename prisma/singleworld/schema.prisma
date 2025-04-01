@@ -39,7 +39,7 @@ model account {
     notes         String?
     notes_updated DateTime?
 
-    members       Boolean  @default(true)
+    members       Boolean  @default(false)
 
     // Whether 2FA is enabled
     tfa_enabled Boolean @default(false)
@@ -253,4 +253,16 @@ model message_status {
   account_id Int
   read       DateTime?
   deleted    DateTime?
+}
+
+model mod_action {
+    id Int @id @default(autoincrement())
+
+    account_id Int
+    target_id  Int?
+
+    action_id Int
+    data      String?
+    ip        String?
+    timestamp DateTime @default(now())
 }
