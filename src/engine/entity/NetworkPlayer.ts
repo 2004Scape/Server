@@ -10,8 +10,9 @@ import Player from '#/engine/entity/Player.js';
 import World from '#/engine/World.js';
 import WorldStat from '#/engine/WorldStat.js';
 import Zone from '#/engine/zone/Zone.js';
+import Isaac from '#/io/Isaac.js';
 import Packet from '#/io/Packet.js';
-import ClientProtRepository from '#/network/rs225/client/prot/ClientProtRepository.js';
+import ProtRepository from '#/server/client/ProtRepository.js';
 import ClientSocket from '#/server/ClientSocket.js';
 import LoggerEventType from '#/server/logger/LoggerEventType.js';
 import NullClientSocket from '#/server/NullClientSocket.js';
@@ -123,9 +124,9 @@ export class NetworkPlayer extends Player {
         this.client.read(NetworkPlayer.inBuf.data, 0, this.client.waiting);
 
         if (packed && id !== -1) {
-            const message = ClientProtRepository.getMessage(id, NetworkPlayer.inBuf.data.subarray(0, this.client.waiting));
+            const message = ProtRepository.getMessage(id, NetworkPlayer.inBuf.data.subarray(0, this.client.waiting));
             if (message) {
-                const handler = ClientProtRepository.getHandler(id);
+                const handler = ProtRepository.getHandler(id);
                 const success: boolean = handler?.handle(message, this) ?? false;
                 // todo: move out of model
                 if (success && handler && handler.category === ClientProtCategory.USER_EVENT) {
@@ -184,12 +185,13 @@ export class NetworkPlayer extends Player {
     }
 
     writeInner(bytes: Uint8Array): void {
-        if (this.client.encryptor) {
-            bytes[0] += this.client.encryptor.nextInt();
+        const encryptor: Isaac | null = this.client.encryptor;
+        if (encryptor) {
+            bytes[0] += encryptor.nextInt();
         }
-
+        const length: number = bytes.length;
         this.client.send(bytes);
-        World.cycleStats[WorldStat.BANDWIDTH_OUT] += bytes.length;
+        World.cycleStats[WorldStat.BANDWIDTH_OUT] += length;
     }
 
     override logout() {
@@ -322,7 +324,7 @@ export class NetworkPlayer extends Player {
 
                 if (inv.update || listener.firstSeen) {
                     const comType = Component.get(listener.com);
-                    this.write(rsbuf.updateInvFull(Math.min(inv.capacity, comType.width * comType.height), listener.com, inv.packed()));
+                    this.write(rsbuf.updateInvFull(Math.min(inv.capacity, comType.width * comType.height), listener.com, inv.pack()));
                     listener.firstSeen = false;
                 }
             } else {
@@ -339,7 +341,7 @@ export class NetworkPlayer extends Player {
 
                 if (inv.update || listener.firstSeen) {
                     const comType = Component.get(listener.com);
-                    this.write(rsbuf.updateInvFull(Math.min(inv.capacity, comType.width * comType.height), listener.com, inv.packed()));
+                    this.write(rsbuf.updateInvFull(Math.min(inv.capacity, comType.width * comType.height), listener.com, inv.pack()));
                     if (listener.firstSeen) {
                         firstSeen = true;
                     }
@@ -373,19 +375,5 @@ export function isBufferFull(player: Player): boolean {
     if (!isClientConnected(player)) {
         return false;
     }
-
-    let total = 0;
-    total += 1; // TODO
-
-    // for (const message of player.buffer) {
-    //     const encoder: MessageEncoder<OutgoingMessage> | undefined = ServerProtRepository.getEncoder(message);
-    //     if (!encoder) {
-    //         return true;
-    //     }
-    //
-    //     const prot: ServerProt = encoder.prot;
-    //     total += 1 + (prot.length === -1 ? 1 : prot.length === -2 ? 2 : 0) + encoder.test(message);
-    // }
-
-    return total >= 5000;
+    return rsbuf.isBufferFull(player.pid);
 }

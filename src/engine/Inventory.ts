@@ -388,14 +388,18 @@ export class Inventory {
         return remove;
     }
 
-    packed(): BigInt64Array {
-        return new BigInt64Array(this.capacity).fill(-1n).map((_, index) => {
+    pack(): BigInt64Array {
+        const result = new BigInt64Array(this.capacity);
+        for (let index = 0; index < this.capacity; index++) {
             const obj = this.get(index);
             if (obj) {
-                return ((BigInt(obj.id) & 0x7fffffffn) << 31n) | (BigInt(obj.count) & 0x7fffffffn);
+                const id: bigint = BigInt(obj.id) & 0xffffn;
+                const count: bigint = BigInt(obj.count) & 0x7fffffffn;
+                result[index] = (id << 31n) | count;
             } else {
-                return -1n;
+                result[index] = -1n;
             }
-        });
+        }
+        return result;
     }
 }

@@ -2032,9 +2032,7 @@ class World {
                     return;
                 }
 
-                const chat = data.chat;
-
-                player.write(rsbuf.messagePrivateOut(fromPlayer, pmId, fromPlayerStaffLvl, WordEnc.filter(chat)));
+                player.write(rsbuf.messagePrivateOut(fromPlayer, pmId, fromPlayerStaffLvl, rsbuf.packWords(data.chat)));
             } else if (opcode === FriendsServerOpcodes.RELAY_MUTE) {
                 const { username, muted_until } = data;
 
