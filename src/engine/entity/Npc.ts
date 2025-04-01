@@ -1026,10 +1026,10 @@ export default class Npc extends PathingEntity {
         this.uid = (type << 16) | this.nid;
         this.resetOnRevert = reset;
 
-        if (type === this.baseType) {
+        if (type === this.baseType && this.lifecycle === EntityLifeCycle.RESPAWN) {
             this.setLifeCycle(-1);
         } else {
-            this.setLifeCycle(World.currentTick + duration);
+            this.setLifeCycle(duration);
         }
     }
 
