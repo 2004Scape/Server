@@ -21,7 +21,7 @@ export default class OpNpcUHandler extends MessageHandler<OpNpcU> {
         }
 
         const com = Component.get(comId);
-        if (typeof com === 'undefined' || !player.isComponentVisible(com)) {
+        if (typeof com === 'undefined' || !player.isComponentVisible(com) || !com.interactable) {
             player.write(new UnsetMapFlag());
             player.clearPendingAction();
             return false;

@@ -102,6 +102,9 @@ inv_add(inv, crest_part_2, 1);
 
 [label,crest_man_gauntlets]
 ~chatnpc("<p,happy>I have received word from my father of your assistance to our family in this matter. You have my thanks for restoring our honour.");
+if(getbit_range(%crest_spells_levers_gauntlets, ^crest_cooking_gauntlets_chosen, ^crest_chaos_gauntlets_chosen) > 0) {
+    return;
+}
 if (inv_total(inv, steel_gauntlets) >= 1) {
     ~chatplayer("<p,quiz>Your father mentioned that you could improve these gauntlets in some way for me...");
     ~chatnpc("<p,neutral>Indeed I can. In my long time searching for the 'perfect' gold I learned a lot about gold items. I can improve these gauntlets so that they provide more than normal.");
@@ -118,18 +121,7 @@ if (inv_total(inv, steel_gauntlets) >= 1) {
         ~chatplayer("<p,confused>I think I'll check my other options with your brothers before committing myself.");
         ~chatnpc("<p,neutral>If you feel you really must consort with the likes of them. I await your decision.");
     }
-}
-else if (testbit(%crest_spells_levers_gauntlets, ^crest_goldsmithing_gauntlets_chosen) = true)  {
-    // Guess - unsure on dialogue structure before ability to change gauntlets
-    if (inv_total(inv, gauntlets_of_goldsmithing) >= 1) {
-        ~chatplayer("<p,quiz>Your father mentioned that you could improve these gauntlets in some way for me...");
-    }
-    else {
-        ~chatplayer("<p,neutral>Your father mentioned that you could improve some gauntlets for me.");
-    }
-    ~chatnpc("<p,neutral>Your gauntlets have already been forged by me.");
-}
-else {
+} else {
     // https://chisel.weirdgloop.org/dialogue/content/39108
     ~chatplayer("<p,neutral>Your father mentioned that you could improve some gauntlets for me.");
     ~chatnpc("<p,happy>Bring them to me, and I'll see what I can do.");

@@ -37,7 +37,6 @@ import WordEnc from '#/cache/wordenc/WordEnc.js';
 import { BlockWalk } from '#/engine/entity/BlockWalk.js';
 import { EntityLifeCycle } from '#/engine/entity/EntityLifeCycle.js';
 import { NpcList, PlayerList } from '#/engine/entity/EntityList.js';
-import { EntityQueueState, PlayerQueueType } from '#/engine/entity/EntityQueueRequest.js';
 import { PlayerTimerType } from '#/engine/entity/EntityTimer.js';
 import { HuntModeType } from '#/engine/entity/hunt/HuntModeType.js';
 import { HuntNobodyNear } from '#/engine/entity/hunt/HuntNobodyNear.js';
@@ -49,6 +48,7 @@ import { NpcStat } from '#/engine/entity/NpcStat.js';
 import Obj from '#/engine/entity/Obj.js';
 import Player from '#/engine/entity/Player.js';
 import { PlayerLoading } from '#/engine/entity/PlayerLoading.js';
+import { EntityQueueState, PlayerQueueType } from '#/engine/entity/PlayerQueueRequest.js';
 import { PlayerStat } from '#/engine/entity/PlayerStat.js';
 import { SessionLog } from '#/engine/entity/tracking/SessionLog.js';
 import GameMap, { changeLocCollision, changeNpcCollision, changePlayerCollision } from '#/engine/GameMap.js';
@@ -117,7 +117,7 @@ class World {
 
     private static readonly INV_STOCKRATE: number = 100; // 1m
     private static readonly AFK_EVENTRATE: number = 500; // 5m
-    private static readonly PLAYER_SAVERATE: number = 500; // 5m
+    private static readonly PLAYER_SAVERATE: number = 1500; // 15m
     private static readonly PLAYER_COORDLOGRATE: number = 50; // 30s
 
     private static readonly TIMEOUT_NO_CONNECTION: number = Environment.NODE_DEBUG_SOCKET ? 60000 : 50; // 30s with no connection (16 ticks in osrs)
@@ -680,7 +680,7 @@ class World {
                 }
 
                 // - Npc Events (Respawn, Revert, Despawn)
-                if (npc.lifecycleTick > -1 && npc.lifecycleTick <= this.currentTick) {
+                if (--npc.lifecycleTick === 0) {
                     try {
                         // Respawn NPC
                         if (npc.lifecycle === EntityLifeCycle.RESPAWN && !npc.isActive) {
@@ -700,7 +700,6 @@ class World {
                                 this.npcEventQueue.addTail(new NpcEventRequest(NpcEventType.DESPAWN, script, npc));
                             }
                         }
-                        npc.setLifeCycle(-1);
                     } catch (err) {
                         // there was an error adding or removing them, try again next tick...
                         // ex: server is full on npc IDs (did we have a leak somewhere?) and we don't want to re-use the last ID (syncing related)
@@ -712,8 +711,7 @@ class World {
 
                         printError(`[World] NPC type:${npc.type} lifecycle:${npc.lifecycle} ID:${npc.nid}`);
                         console.error(err);
-
-                        npc.setLifeCycle(this.currentTick + 1); // retry next tick
+                        npc.setLifeCycle(1);
                     }
                 }
 
@@ -1349,7 +1347,7 @@ class World {
         }
 
         if (duration > -1) {
-            npc.setLifeCycle(this.currentTick + duration);
+            npc.setLifeCycle(duration);
         }
     }
 
@@ -1374,7 +1372,7 @@ class World {
             this.npcs.remove(npc.nid);
             npc.cleanup();
         } else if (npc.lifecycle === EntityLifeCycle.RESPAWN && duration > -1) {
-            npc.setLifeCycle(this.currentTick + adjustedDuration);
+            npc.setLifeCycle(adjustedDuration);
         }
     }
 
@@ -2071,6 +2069,21 @@ class World {
                 }
             } else if (opcode === FriendsServerOpcodes.RELAY_RELOAD) {
                 this.reload(false);
+            } else if (opcode === FriendsServerOpcodes.RELAY_CLEARLOGINS) {
+                this.loginRequests.clear();
+            } else if (opcode === FriendsServerOpcodes.RELAY_CLEARLOGOUTS) {
+                this.logoutRequests.clear();
+            } else if (opcode === FriendsServerOpcodes.RELAY_QUEUESCRIPT) {
+                const { scriptName, username } = data;
+
+                const player = this.getPlayerByUsername(username);
+                if (player) {
+                    const script = ScriptProvider.getByName(`[queue,${scriptName}]`);
+
+                    if (script) {
+                        player.enqueueScript(script);
+                    }
+                }
             } else {
                 printError('Unknown friend message: ' + opcode);
             }
@@ -2176,7 +2189,7 @@ class World {
                 return;
             }
 
-            if (this.getTotalPlayers() > 750) {
+            if (this.getTotalPlayers() > Environment.NODE_MAX_CONNECTED) {
                 client.send(Uint8Array.from([7]));
                 client.close();
                 return;

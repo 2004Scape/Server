@@ -2,11 +2,7 @@ import ScriptFile from '#/engine/script/ScriptFile.js';
 import ScriptState from '#/engine/script/ScriptState.js';
 import Linkable from '#/util/Linkable.js';
 
-export const enum NpcQueueType {
-    NORMAL
-}
-
-export const enum PlayerQueueType {
+export enum PlayerQueueType {
     NORMAL,
     LONG, // like normal with dev-controlled logout behavior
     ENGINE,
@@ -15,10 +11,10 @@ export const enum PlayerQueueType {
     SOFT // OSRS
 }
 
-export type QueueType = NpcQueueType | PlayerQueueType;
+export type QueueType = PlayerQueueType;
 export type ScriptArgument = number | string;
 
-export class EntityQueueRequest extends Linkable {
+export class PlayerQueueRequest extends Linkable {
     /**
      * The type of queue request.
      */

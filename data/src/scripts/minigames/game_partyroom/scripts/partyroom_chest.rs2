@@ -73,6 +73,7 @@ while($i < inv_size(partyroomoffer)) {
     if ($obj ! null) {
         if(inv_itemspace(partyroominv, $obj, $count, inv_size(partyroominv)) = true) {
             inv_moveitem(partyroomoffer, partyroominv, $obj, $count);
+            wealth_log(false, $count, "Deposited <oc_debugname($obj)> x<tostring($count)> in the party room chest");
             $moveditem = true;
         }
     }
