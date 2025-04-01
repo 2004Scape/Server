@@ -114,7 +114,6 @@ p_delay(0);
 def_coord $origin = movecoord($center, -1, 0, -1); // south-west tile
 %mcannon_coord = $origin;
 %mcannon_stage = ^cannon_stage_base;
-%mcannon_ammo = 0;
 
 anim(human_pickupfloor, 0);
 inv_del(inv, cannon_base, 1);
