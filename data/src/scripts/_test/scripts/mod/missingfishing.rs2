@@ -1,0 +1,62 @@
+[proc,countfishingspots](coord $square, npc $type)(int)
+def_int $count = 0;
+npc_findallany(movecoord($square, 32, 0, 32), 32, ^vis_off);
+while (npc_findnext = true) {
+    // big fish shouldn't count for all spots in a square, but we don't want to overpopulate. we can just run this again later
+    if (npc_type = $type | npc_category = nc_category($type) | npc_type = macro_event_big_fish) {
+        // exact npc | npc category (whirlpool random) | big fish random
+        $count = add($count, 1);
+    }
+}
+return ($count);
+
+[proc,respawnfishingspots](coord $square, npc $type, int $spawns)
+if (nc_param($type, fishing_movement_enum) = null) {
+    return;
+}
+
+def_int $count = ~countfishingspots($square, $type);
+if ($count < $spawns) {
+    console("Respawning fishing spots <nc_debugname($type)> <tostring($count)>/<tostring($spawns)>");
+
+    def_int $i = 0;
+    while ($i < $count) {
+        // we could place the npc anywhere (even inaccessible) and let the timer run, but just in case...
+        def_coord $tile = enum(int, coord, nc_param($type, fishing_movement_enum), 0);
+        npc_add($tile, $type, ^max_32bit_int); // welcome back mr/mrs fish
+        npc_settimer(1); // force a tele next tick
+
+        $i = add($i, 1);
+    }
+}
+
+[queue,fixfishingspots]
+~respawnfishingspots(0_40_53_0_0, 0_40_53_rarefish, 11);
+~respawnfishingspots(0_44_53_0_0, 0_44_53_rarefish, 2);
+~respawnfishingspots(0_45_49_0_0, 0_45_49_rarefish, 3);
+
+~respawnfishingspots(0_37_53_0_0, 0_37_53_freshfish, 7);
+~respawnfishingspots(0_39_53_0_0, 0_39_53_freshfish, 6);
+~respawnfishingspots(0_40_52_0_0, 0_40_52_freshfish, 2);
+~respawnfishingspots(0_41_73_0_0, 0_41_73_freshfish, 3);
+~respawnfishingspots(0_42_55_0_0, 0_42_55_freshfish, 4);
+~respawnfishingspots(0_44_46_0_0, 0_44_46_freshfish, 3);
+~respawnfishingspots(0_44_52_0_0, 0_44_52_freshfish, 4);
+~respawnfishingspots(0_48_53_0_0, 0_48_53_freshfish, 2);
+~respawnfishingspots(0_50_50_0_0, 0_50_50_freshfish, 2);
+~respawnfishingspots(0_38_49_0_0, 0_38_49_freshfish, 5);
+
+~respawnfishingspots(0_43_51_0_0, 0_43_51_saltfish, 4);
+~respawnfishingspots(0_44_52_0_0, 0_44_52_saltfish, 4);
+~respawnfishingspots(0_44_53_0_0, 0_44_53_saltfish, 2);
+~respawnfishingspots(0_45_49_0_0, 0_45_49_saltfish, 3);
+~respawnfishingspots(0_46_49_0_0, 0_46_49_saltfish, 2);
+~respawnfishingspots(0_47_57_0_0, 0_47_57_saltfish, 1);
+~respawnfishingspots(0_48_50_0_0, 0_48_50_saltfish, 2);
+~respawnfishingspots(0_51_49_0_0, 0_51_49_saltfish, 2);
+
+~respawnfishingspots(0_40_53_0_0, 0_40_53_memberfish, 6);
+~respawnfishingspots(0_44_53_0_0, 0_44_53_memberfish, 3);
+
+[debugproc,fixfishingspots]
+queue(fixfishingspots, 0);
