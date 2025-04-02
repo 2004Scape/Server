@@ -68,7 +68,7 @@ export default class Npc extends PathingEntity {
     delayedPatrol: boolean = false;
     resetOnRevert: boolean = true;
 
-    lastWanderTick: number = 0;
+    wanderCounter: number = 0;
 
     heroPoints: HeroPoints = new HeroPoints(16); // be sure to reset when stats are recovered/reset
 
@@ -97,7 +97,7 @@ export default class Npc extends PathingEntity {
         this.targetOp = npcType.defaultmode;
         this.huntMode = npcType.huntmode;
         this.huntrange = npcType.huntrange;
-        this.lastWanderTick = World.currentTick;
+        this.wanderCounter = 0;
     }
 
     cleanup(): void {
@@ -202,7 +202,7 @@ export default class Npc extends PathingEntity {
         const moved = this.lastTickX !== this.x || this.lastTickZ !== this.z;
         if (moved) {
             this.lastMovement = World.currentTick + 1;
-            this.lastWanderTick = World.currentTick;
+            this.wanderCounter = 0;
         }
         return moved;
     }
@@ -482,8 +482,11 @@ export default class Npc extends PathingEntity {
 
         const onSpawn = this.x === this.startX && this.z === this.startZ && this.level === this.startLevel;
 
-        if (World.currentTick > this.lastWanderTick + 500 && !onSpawn) {
-            this.teleport(this.startX, this.startZ, this.startLevel);
+        if (this.wanderCounter++ >= 500) {
+            if (!onSpawn) {
+                this.teleport(this.startX, this.startZ, this.startLevel);
+            }
+            this.wanderCounter = 0;
         }
     }
 
@@ -645,9 +648,6 @@ export default class Npc extends PathingEntity {
             this.defaultMode();
             return;
         }
-
-        // Reset 500 tick wander reset clock
-        this.lastWanderTick = World.currentTick;
 
         // Try to interact before moving, include op Obj and Loc
         if (this.tryInteract(true)) {
