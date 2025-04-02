@@ -109,28 +109,27 @@ npc_changetype(ungadulu_possessed, 1);
         "Where do I get pure water from?", ungadulu_where);
 
 [label,ungadulu_after_demon]
-switch_int(%legends_progress) { 
-    case ^legends_defeated_nezikchened_fire :
+if(%legends_progress = ^legends_defeated_nezikchened_fire) {
         ~chatnpc("<p,happy>Greetings bwana... Many thanks for defeating the|demon... and releasing me from this dreadful|possession... Pray tell me, what can I do to repay this|great favour?");
         @multi3("I need to collect some Yommi tree seeds for Gujuo.", ungadulu_yommi,
             "How do I get out of here?", ungadulu_out,
             "Ok, thanks...", ungadulu_thanks);
-    case ^legends_germinated_seeds, ^legends_water_pool_dried_up, ^legends_talk_gujuo_pool, ^legends_enter_lower_dungeon, ^legends_crystal_pieces_smelted, ^legends_heart_in_recess, ^legends_pushed_boulder :
-        ~chatnpc("<p,happy>Hello Bwana, how goes your quest with the Yommi tree?");
-        if(%legends_progress = ^legends_germinated_seeds) {
-            @multi3("I have germinated the seeds.", ungadulu_germinated, "Where do I plant the seeds?", ungadulu_where_plant, "I need more Yommi tree seeds.", ungadulu_need_seeds);
-        } else if(%legends_progress = ^legends_water_pool_dried_up) {
-            @multi3("The magic pool has dried up and I need some more pure water.", ungadulu_magicpool, "Where can I get more pure water?", ungadulu_more_water, "I need more Yommi tree seeds.", ungadulu_need_seeds);
-        } else if(%legends_progress >= ^legends_water_pool_dried_up) {
-            @multi3("I am on a quest to get more pure water.", ungadulu_quest, "What do you know about the source of the sacred water?", ungadulu_sacred_water, "I need more Yommi tree seeds.", ungadulu_need_seeds);
-        }
-    case ^legends_received_dagger :
-        ~chatnpc("<p,quiz>Hello Bwana, how goes your quest to find the water?");
-        if(testbit(%legends_map_runes, ^legends_killed_viyeldi) = true) {
-            @multi5("I have killed Viyeldi!", ungadulu_killed_viyeldi, "I met a spirit in the Viyeldi Caves.", ungadulu_spirit, "The spirit told me to kill Viyeldi.", ungadulu_kill, "Do you know anything about daggers?", ungadulu_dagger, "I need more Yommi tree seeds.", ungadulu_need_seeds);
-        }
-        @multi5("I met a spirit in the Viyeldi Caves.", ungadulu_spirit, "The spirit told me to kill Viyeldi.", ungadulu_kill, "Do you know anything about daggers?", ungadulu_dagger, "I need more Yommi tree seeds.", ungadulu_need_seeds, "Ok, thanks...", ungadulu_thanks);
-}
+} else if(%legends_progress >= ^legends_germinated_seeds & %legends_progress <= ^legends_pushed_boulder) {
+    ~chatnpc("<p,happy>Hello Bwana, how goes your quest with the Yommi tree?");
+    if(%legends_progress = ^legends_germinated_seeds) {
+        @multi3("I have germinated the seeds.", ungadulu_germinated, "Where do I plant the seeds?", ungadulu_where_plant, "I need more Yommi tree seeds.", ungadulu_need_seeds);
+    } else if(%legends_progress = ^legends_water_pool_dried_up) {
+        @multi3("The magic pool has dried up and I need some more pure water.", ungadulu_magicpool, "Where can I get more pure water?", ungadulu_more_water, "I need more Yommi tree seeds.", ungadulu_need_seeds);
+    } else if(%legends_progress >= ^legends_water_pool_dried_up) {
+        @multi3("I am on a quest to get more pure water.", ungadulu_quest, "What do you know about the source of the sacred water?", ungadulu_sacred_water, "I need more Yommi tree seeds.", ungadulu_need_seeds);
+    }
+} else if(%legends_progress = ^legends_received_dagger | inv_total(inv, dark_dagger) > 0 | inv_total(inv, glowing_dagger) > 0) { // this is only an inv check, will override the later stage options
+    ~chatnpc("<p,quiz>Hello Bwana, how goes your quest to find the water?");
+    if(testbit(%legends_map_runes, ^legends_killed_viyeldi) = true) {
+        @multi5("I have killed Viyeldi!", ungadulu_killed_viyeldi, "I met a spirit in the Viyeldi Caves.", ungadulu_spirit, "The spirit told me to kill Viyeldi.", ungadulu_kill, "Do you know anything about daggers?", ungadulu_dagger, "I need more Yommi tree seeds.", ungadulu_need_seeds);
+    }
+    @multi5("I met a spirit in the Viyeldi Caves.", ungadulu_spirit, "The spirit told me to kill Viyeldi.", ungadulu_kill, "Do you know anything about daggers?", ungadulu_dagger, "I need more Yommi tree seeds.", ungadulu_need_seeds, "Ok, thanks...", ungadulu_thanks);
+} 
 
 [label,ungadulu_killed_viyeldi]
 ~chatplayer("<p,happy>I have killed Viyeldi!");
@@ -142,13 +141,23 @@ switch_int(%legends_progress) {
 @multi3("Do you know anything about daggers?", ungadulu_dagger, "What can we do?", ungadulu_whatdo, "Ok, thanks...", ungadulu_thanks);
 
 [label,ungadulu_whatdo]
-~chatplayer("<p,quiz>What can we do?");
+~chatplayer("<p,quiz>What can we do?");    
+if(~obj_gettotal(holy_force) > 0) {
+    ~chatnpc("<p,neutral>You can use that Holy Force spell to try and defeat the spirit. Come back and let me know if I can help in any other way.");
+    return;
+}
 ~chatnpc("<p,confused>I am not sure at this time Bwana. Give me a few moments to think.");
 ~chatnpc("<p,neutral>Hmmm....");
+if(inv_total(inv, glowing_dagger) = 0 & inv_total(worn, glowing_dagger) = 0 & inv_total(inv, dark_dagger) = 0 & inv_total(worn, dark_dagger) = 0) {
+    ~chatnpc("<p,neutral>I could make a spell that would help you to defeat the spirit. But I need you to bring me a possession that it once owned. If you have something like that, please show it to me. And I'll give you the spell.");
+    return;
+}
 ~chatnpc("<p,neutral>Take this spell and pray that you can defeat this evil spirit before it's too late. I'll take that dagger from you now!");
 inv_add(inv, holy_force, 1);
-inv_del(inv, glowing_dagger, 1); // confirm this removal (does it do both, order...)
+inv_del(inv, glowing_dagger, 1); // confirm this removal (does it do both, types, order...)
 inv_del(worn, glowing_dagger, 1);
+inv_del(inv, dark_dagger, 1); 
+inv_del(worn, dark_dagger, 1);
 ~objbox(holy_force, "The wizened old Shaman hands over a piece of paper.", 250, 0, 0);
 
 [label,ungadulu_spirit]
@@ -354,7 +363,8 @@ if (last_useitem = book_of_binding) {
         case 1 :
             ~chatplayer("<p,neutral>I've killed Viyeldi.");
             ~chatnpc("<p,sad>Poor Viyeldi, he was the guardian of the dead heroes that protected the source. Their tormented spirits will now be at the beck and call of the one who gave you the dagger.");
-            ~chatnpc("<p,neutral>Take this spell and pray that you can defeat this evil spirit before it's too late. The spell will force the spirit to reveal its true self. And it will also be vulnerable to normal attacks.");
+            ~chatnpc("<p,neutral>Take this spell and pray that you can defeat this evil spirit before it's too late. The spell will force the spirit to reveal its true self. And it will also be vulnerable to normal attacks."); 
+            // no holy force check here
             inv_add(inv, holy_force, 1);
             inv_del(inv, glowing_dagger, 1);
             ~objbox(holy_force, "The wizened old Shaman hands over a piece of paper.", 250, 0, 0);

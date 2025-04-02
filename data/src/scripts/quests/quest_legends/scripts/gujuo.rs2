@@ -35,12 +35,7 @@ switch_obj(last_useitem) {
 if (p_finduid(uid) = false) {
     return;
 }
-if (%legends_progress = ^legends_got_bullroarer | %legends_progress = ^legends_swung_bullroarer) {
-    ~chatnpc("<p,neutral>Greetings Bwana... Why do you make such strange sounds and disturb the peace of the jungle?");
-    @multi2("I was hoping to attract the attention of a native.", gujuo_attract,
-            "Sorry, it was a mistake?", gujuo_sorry);
-}
-else if (%legends_progress >= ^legends_accepted_rescue_ungadulu & %legends_progress < ^legends_defeated_nezikchened_fire) {
+if(%legends_progress = ^legends_got_bullroarer) {
     if (inv_total(inv, gold_bowl) > 0) {
         ~chatnpc("<p,neutral>Greetings Bwana. Ah I see you have the golden bowl! Would you like me to show you how to bless it?");
         def_int $choice = ~p_choice2("Yes, I'd like you to bless my gold bowl.", 1, "No thanks, I need help with something else.", 2);
@@ -50,6 +45,13 @@ else if (%legends_progress >= ^legends_accepted_rescue_ungadulu & %legends_progr
         }
         // selecting the no option skips straight to ungadulu question
     }
+}
+if (%legends_progress = ^legends_got_bullroarer | %legends_progress = ^legends_swung_bullroarer) {
+    ~chatnpc("<p,neutral>Greetings Bwana... Why do you make such strange sounds and disturb the peace of the jungle?");
+    @multi2("I was hoping to attract the attention of a native.", gujuo_attract,
+            "Sorry, it was a mistake?", gujuo_sorry);
+}
+else if (%legends_progress >= ^legends_accepted_rescue_ungadulu & %legends_progress < ^legends_defeated_nezikchened_fire) {
     @gujuo_how_goes_ungadulu;
 } else if (%legends_progress = ^legends_defeated_nezikchened_fire) {
     ~chatnpc("<p,neutral>How goes your quest to release Ungadulu?");
@@ -75,6 +77,9 @@ else if (%legends_progress >= ^legends_accepted_rescue_ungadulu & %legends_progr
                 "If I went in search of the source, could you help me?", gujuo_searchsource,
                 "Ok thanks for your help.", gujuo_thanks);
     }
+} else if (%legends_progress >= ^legends_defeated_nezikchened_water) {
+    ~chatnpc("<p,happy>Hello Bwana, I'm very pleased to see you again. Things seem much happier now in the Kharazi Jungle. I suspect that it is down to your good doings!");
+    @multi4("I found the source of the spring and I got the water.", gujuo_foundsource, "I killed the demon again.", gujuo_demon, "How do I make the totem pole?", gujuo_totem, "Ok thanks for your help.", gujuo_thanks);
 }
 
 [label,gujuo_how_goes_ungadulu]
@@ -115,6 +120,23 @@ switch_int(%legends_progress) {
                     "Ok thanks for your help.", gujuo_thanks);
         }
 }
+
+[label,gujuo_foundsource]
+~chatplayer("<p,neutral>I found the source of the spring and I got the water.");
+~chatnpc("<p,neutral>Great Bwana, you are truly a brave warrior. Now you can try to grow the Yommi tree in earnest and make the totem pole.");
+@multi4("I found the source of the spring and I got the water.", gujuo_foundsource, "I killed the demon again.", gujuo_demon, "How do I make the totem pole?", gujuo_totem, "Ok thanks for your help.", gujuo_thanks);
+
+[label,gujuo_demon]
+~chatplayer("<p,neutral>I killed the demon again.");
+~chatnpc("<p,neutral>You are indeed very brave Bwana, we have noticed a difference in the Kharazi Jungle, the trees seem to sing again. And we have you to thank for it.");
+@multi4("I found the source of the spring and I got the water.", gujuo_foundsource, "I killed the demon again.", gujuo_demon, "How do I make the totem pole?", gujuo_totem, "Ok thanks for your help.", gujuo_thanks);
+
+[label,gujuo_totem]
+~chatplayer("<p,neutral>How do I make the totem pole?");
+~chatnpc("<p,neutral>You will need to grow the Yommi tree to full height. And then, before it rots, you must chop it down. Once you have felled the tree, you need to trim the branches.");
+~chatnpc("<p,neutral>And finally, you need to craft the totem pole out of the trunk. You'll need a very sharp, very tough axe to do all this. But once you have completed the totem pole,");
+~chatnpc("<p,neutral>You will need to use it to replace a totem pole that already exists, as they're all placed on sacred areas to my people.");
+@multi4("I found the source of the spring and I got the water.", gujuo_foundsource, "I killed the demon again.", gujuo_demon, "How do I make the totem pole?", gujuo_totem, "Ok thanks for your help.", gujuo_thanks);
 
 [label,gujuo_foundcaves]
 ~chatplayer("<p,neutral>I have found a way into the caves!");
