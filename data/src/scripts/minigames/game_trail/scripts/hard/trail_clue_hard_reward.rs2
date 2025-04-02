@@ -1,20 +1,24 @@
 [proc,trail_clue_hard_reward]
 def_int $rolls = calc(4 + random(3));
-
 def_int $roll = 0;
+def_int $rare = 0;
 
 while ($roll < $rolls) {
     // Rare drop chance was 1/13 in OSRS in 2019. @https://twitter.com/JagexTide/status/1131933683714330624
     // the chances have been scaled down over time to accomodate for more uniques being in the list, there are 25 uniques in May 2004
     // 133 by 2019, which is 5.32x more, 13 * 5.32 ~= 69
     if(random(69) = 0) {
-        session_log(^log_adventure, "Completed a Hard Clue Scroll and received a Rare Reward!");
+        $rare = calc($rare + 1);
         gosub(trail_clue_hard_rare);
     } else {
-        session_log(^log_adventure, "Completed a Hard Clue Scroll!");
         gosub(trail_clue_hard_normal);
     }
     $roll = calc($roll + 1);
+}
+if ($rare > 0) {
+    session_log(^log_adventure, "Completed a Hard Clue Scroll and received <tostring($rare)> Rare Reward(s)!");
+} else {
+    session_log(^log_adventure, "Completed a Hard Clue Scroll.");
 }
 ~trail_complete;
 

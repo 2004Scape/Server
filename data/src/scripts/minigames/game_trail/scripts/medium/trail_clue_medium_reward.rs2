@@ -1,19 +1,24 @@
 [proc,trail_clue_medium_reward]
 def_int $rolls = calc(3 + random(3));
 def_int $roll = 0;
+def_int $rare = 0;
 
 while ($roll < $rolls) {
     // Rare drop chance was 1/11 in OSRS in 2019. @https://twitter.com/JagexTide/status/1131933683714330624, 112 items in 2019, there are 13 in May 04
     // so the chance is 1/95 ((112/13) * 11)
     if(random(95) = 0) {
-        session_log(^log_adventure, "Completed a Medium Clue Scroll and received a Rare Reward!");
+        $rare = calc($rare + 1);
         gosub(trail_clue_medium_rare);
     } else {
-        session_log(^log_adventure, "Completed a Medium Clue Scroll!");
         gosub(trail_clue_medium_normal);
     }
 
     $roll = calc($roll + 1);
+}
+if ($rare > 0) {
+    session_log(^log_adventure, "Completed a Medium Clue Scroll and received <tostring($rare)> Rare Reward(s)!");
+} else {
+    session_log(^log_adventure, "Completed a Medium Clue Scroll.");
 }
 ~trail_complete;
 
