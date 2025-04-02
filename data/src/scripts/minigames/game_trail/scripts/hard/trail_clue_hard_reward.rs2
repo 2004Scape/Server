@@ -8,13 +8,14 @@ while ($roll < $rolls) {
     // the chances have been scaled down over time to accomodate for more uniques being in the list, there are 25 uniques in May 2004
     // 133 by 2019, which is 5.32x more, 13 * 5.32 ~= 69
     if(random(69) = 0) {
+        session_log(^log_adventure, "Completed a Hard Clue Scroll and received a Rare Reward!");
         gosub(trail_clue_hard_rare);
     } else {
+        session_log(^log_adventure, "Completed a Hard Clue Scroll!");
         gosub(trail_clue_hard_normal);
     }
     $roll = calc($roll + 1);
 }
-
 ~trail_complete;
 
 [proc,trail_clue_hard_normal]
@@ -60,7 +61,6 @@ switch_int ($random) {
     case 10 : inv_add(reward, trail_cavalier_tan, 1);
     case 11 : inv_add(reward, trail_cavalier_brown, 1);
     case 12 : inv_add(reward, trail_cavalier_black, 1);
-
     case 13 : inv_add(reward, rune_full_helm_zamorak, 1);
     case 14 : inv_add(reward, rune_platebody_zamorak, 1);
     case 15 : inv_add(reward, rune_platelegs_zamorak, 1);

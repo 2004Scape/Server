@@ -14,13 +14,14 @@ while ($roll < $rolls) {
     // Assuming the rarity of any given object from the rare drop tables, have stayed consistent throughout
     // the years, this lands our chance to land on the rare drop table at 1/117.
     if(random(117) = 0) {
+        session_log(^log_adventure, "Completed an Easy Clue Scroll and received a Rare Reward!");
         gosub(trail_clue_easy_rare);
     } else {
+        session_log(^log_adventure, "Completed an Easy Clue Scroll!");
         gosub(trail_clue_easy_normal);
     }
     $roll = calc($roll + 1);
 }
-
 ~trail_complete;
 
 [proc,trail_clue_easy_normal]

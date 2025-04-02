@@ -44,7 +44,7 @@ def_int $z_dist = -4;
 if(coordx(coord) < 2602) {
     $z_dist = 4;
 }
-~agility_force_move(80, human_walk_logbalance, movecoord(coord, $z_dist, 0, 0));
+~agility_force_move(85, human_walk_logbalance, movecoord(coord, $z_dist, 0, 0));
 mes("...You make it safely to the other side.");
 
 [oploc1,loc_2332]
