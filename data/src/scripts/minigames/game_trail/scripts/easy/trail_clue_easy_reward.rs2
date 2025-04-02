@@ -2,6 +2,7 @@
 // Rolls math verification: https://www.youtube.com/watch?v=Er4RAFnmTvs
 def_int $rolls = calc(2 + random(3));
 def_int $roll = 0;
+def_int $rare = 0;
 
 while ($roll < $rolls) {
     // Rare drop chance was 1/12 in OSRS in 2019. @https://twitter.com/JagexTide/status/1131933683714330624
@@ -14,13 +15,17 @@ while ($roll < $rolls) {
     // Assuming the rarity of any given object from the rare drop tables, have stayed consistent throughout
     // the years, this lands our chance to land on the rare drop table at 1/117.
     if(random(117) = 0) {
-        session_log(^log_adventure, "Completed an Easy Clue Scroll and received a Rare Reward!");
+        $rare = calc($rare + 1);
         gosub(trail_clue_easy_rare);
     } else {
-        session_log(^log_adventure, "Completed an Easy Clue Scroll!");
         gosub(trail_clue_easy_normal);
     }
     $roll = calc($roll + 1);
+}
+if ($rare > 0) {
+    session_log(^log_adventure, "Completed an Easy Clue Scroll and received <tostring($rare)> Rare Reward(s)!");
+} else {
+    session_log(^log_adventure, "Completed an Easy Clue Scroll.");
 }
 ~trail_complete;
 
