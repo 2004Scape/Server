@@ -1,6 +1,7 @@
 import 'dotenv/config';
 
 import { PlayerInfoProt, Visibility } from '@2004scape/rsbuf';
+import * as rsbuf from '@2004scape/rsbuf';
 import { CollisionType, CollisionFlag } from '@2004scape/rsmod-pathfinder';
 
 import Component from '#/cache/config/Component.js';
@@ -44,27 +45,6 @@ import ScriptState from '#/engine/script/ScriptState.js';
 import ServerTriggerType from '#/engine/script/ServerTriggerType.js';
 import World from '#/engine/World.js';
 import Packet from '#/io/Packet.js';
-import ChatFilterSettings from '#/network/server/model/ChatFilterSettings.js';
-import HintArrow from '#/network/server/model/HintArrow.js';
-import IfClose from '#/network/server/model/IfClose.js';
-import IfSetTab from '#/network/server/model/IfSetTab.js';
-import LastLoginInfo from '#/network/server/model/LastLoginInfo.js';
-import MessageGame from '#/network/server/model/MessageGame.js';
-import MidiJingle from '#/network/server/model/MidiJingle.js';
-import MidiSong from '#/network/server/model/MidiSong.js';
-import ResetAnims from '#/network/server/model/ResetAnims.js';
-import ResetClientVarCache from '#/network/server/model/ResetClientVarCache.js';
-import TutOpen from '#/network/server/model/TutOpen.js';
-import UnsetMapFlag from '#/network/server/model/UnsetMapFlag.js';
-import UpdateInvStopTransmit from '#/network/server/model/UpdateInvStopTransmit.js';
-import UpdateUid192 from '#/network/server/model/UpdatePid.js';
-import UpdateRebootTimer from '#/network/server/model/UpdateRebootTimer.js';
-import UpdateRunEnergy from '#/network/server/model/UpdateRunEnergy.js';
-import UpdateStat from '#/network/server/model/UpdateStat.js';
-import VarpLarge from '#/network/server/model/VarpLarge.js';
-import VarpSmall from '#/network/server/model/VarpSmall.js';
-import OutgoingMessage from '#/network/server/OutgoingMessage.js';
-import ServerProtPriority from '#/network/server/prot/ServerProtPriority.js';
 import LoggerEventType from '#/server/logger/LoggerEventType.js';
 import { ChatModePrivate, ChatModePublic, ChatModeTradeDuel } from '#/util/ChatModes.js';
 import Environment from '#/util/Environment.js';
@@ -271,7 +251,7 @@ export default class Player extends PathingEntity {
     username37: bigint;
     hash64: bigint;
     displayName: string;
-    body: number[] = [
+    body: Int32Array = Int32Array.from([
         0, // hair
         10, // beard
         18, // body
@@ -279,8 +259,8 @@ export default class Player extends PathingEntity {
         33, // gloves
         36, // legs
         42 // boots
-    ];
-    colors: number[] = [0, 0, 0, 0, 0];
+    ]);
+    colors: Int32Array = Int32Array.from([0, 0, 0, 0, 0]);
     gender: number = 0;
     run: number = 0;
     tempRun: number = 0;
@@ -340,8 +320,6 @@ export default class Player extends PathingEntity {
     preventLogoutMessage: string | null = null;
     preventLogoutUntil: number = -1;
 
-    // not stored as a byte buffer so we can write and encrypt opcodes later
-    buffer: OutgoingMessage[] = [];
     lastResponse: number = -1;
     lastConnected: number = -1;
 
@@ -433,7 +411,6 @@ export default class Player extends PathingEntity {
         this.activeScript = null;
         this.invListeners.length = 0;
         this.resumeButtons.length = 0;
-        this.buffer = [];
         this.queue.clear();
         this.weakQueue.clear();
         this.engineQueue.clear();
@@ -479,10 +456,10 @@ export default class Player extends PathingEntity {
         // - reset anims
         // - social
         this.buildArea.rebuildNormal();
-        this.write(new ChatFilterSettings(this.publicChat, this.privateChat, this.tradeDuel));
-        this.write(new IfClose());
-        this.write(new UpdateUid192(this.pid));
-        this.write(new ResetClientVarCache());
+        this.write(rsbuf.chatFilterSettings(this.pid, this.publicChat, this.privateChat, this.tradeDuel));
+        this.write(rsbuf.ifClose(this.pid));
+        this.write(rsbuf.updatePid(this.pid));
+        this.write(rsbuf.resetClientVarCache());
         for (let varp = 0; varp < this.vars.length; varp++) {
             const type = VarPlayerType.get(varp);
             const value = this.vars[varp];
@@ -490,7 +467,7 @@ export default class Player extends PathingEntity {
                 this.writeVarp(varp, value);
             }
         }
-        this.write(new ResetAnims());
+        this.write(rsbuf.resetAnims());
 
         const loginTrigger = ScriptProvider.getByTriggerSpecific(ServerTriggerType.LOGIN, -1, -1);
         if (loginTrigger) {
@@ -512,7 +489,7 @@ export default class Player extends PathingEntity {
         // - runenergy
         // - reset_anims
         // - socials
-        this.write(new ResetClientVarCache());
+        this.write(rsbuf.resetClientVarCache());
         for (let varp = 0; varp < this.vars.length; varp++) {
             const type = VarPlayerType.get(varp);
             const value = this.vars[varp];
@@ -526,16 +503,15 @@ export default class Player extends PathingEntity {
         this.buildArea.rebuildNormal(true);
         // in case of pending update
         if (World.isPendingShutdown) {
-            const ticksBeforeShutdown = World.shutdownTicksRemaining;
-            this.write(new UpdateRebootTimer(ticksBeforeShutdown));
+            this.write(rsbuf.updateRebootTimer(this.pid, World.shutdownTicksRemaining));
         }
         this.closeModal();
         this.refreshInvs();
         for (let i = 0; i < this.stats.length; i++) {
-            this.write(new UpdateStat(i, this.stats[i], this.levels[i]));
+            this.write(rsbuf.updateStat(this.pid, i, this.stats[i], this.levels[i]));
         }
-        this.write(new UpdateRunEnergy(this.runenergy));
-        this.write(new ResetAnims());
+        this.write(rsbuf.updateRunEnergy(this.pid, this.runenergy));
+        this.write(rsbuf.resetAnims());
         this.moveSpeed = MoveSpeed.INSTANT;
         this.tele = true;
         this.jump = true;
@@ -700,7 +676,7 @@ export default class Player extends PathingEntity {
             }
 
             this.modalTutorial = -1;
-            this.write(new TutOpen(-1));
+            this.write(rsbuf.tutOpen(this.pid, -1));
         }
     }
 
@@ -1401,7 +1377,7 @@ export default class Player extends PathingEntity {
         }
 
         this.invListeners.splice(index, 1);
-        this.write(new UpdateInvStopTransmit(com));
+        this.write(rsbuf.updateInvStopTransmit(com));
     }
 
     invGetSlot(inv: number, slot: number) {
@@ -1657,9 +1633,9 @@ export default class Player extends PathingEntity {
 
     private writeVarp(id: number, value: number): void {
         if (value >= -128 && value <= 127) {
-            this.write(new VarpSmall(id, value));
+            this.write(rsbuf.varpSmall(id, value));
         } else {
-            this.write(new VarpLarge(id, value));
+            this.write(rsbuf.varpLarge(id, value));
         }
     }
 
@@ -1835,7 +1811,7 @@ export default class Player extends PathingEntity {
         const crc = PRELOADED_CRC.get(name + '.mid');
         if (song && crc) {
             const length = song.length;
-            this.write(new MidiSong(name, crc, length));
+            this.write(rsbuf.midiSong(this.pid, name, crc, length));
         }
     }
 
@@ -1846,21 +1822,21 @@ export default class Player extends PathingEntity {
         }
         const jingle = PRELOADED.get(name + '.mid');
         if (jingle) {
-            this.write(new MidiJingle(delay, jingle));
+            this.write(rsbuf.midiJingle(this.pid, delay, jingle));
         }
     }
 
     openMainModal(com: number) {
         if ((this.modalState & 2) !== 0) {
             // close chat modal if we're opening a new main modal
-            this.write(new IfClose());
+            this.write(rsbuf.ifClose(this.pid));
             this.modalState &= ~2;
             this.modalChat = -1;
         }
 
         if ((this.modalState & 4) !== 0) {
             // close side modal if we're opening a new main modal
-            this.write(new IfClose());
+            this.write(rsbuf.ifClose(this.pid));
             this.modalState &= ~4;
             this.modalSide = -1;
         }
@@ -1883,7 +1859,7 @@ export default class Player extends PathingEntity {
     }
 
     openTutorial(com: number) {
-        this.write(new TutOpen(com));
+        this.write(rsbuf.tutOpen(this.pid, com));
         this.modalState |= 8;
         this.modalTutorial = com;
     }
@@ -1916,7 +1892,7 @@ export default class Player extends PathingEntity {
 
     setTab(com: number, tab: number) {
         this.tabs[tab] = com;
-        this.write(new IfSetTab(com, tab));
+        this.write(rsbuf.ifSetTab(this.pid, com, tab));
     }
 
     isComponentVisible(com: Component) {
@@ -1957,11 +1933,7 @@ export default class Player extends PathingEntity {
     isInWilderness(): boolean {
         if (this.x >= 2944 && this.x < 3392 && this.z >= 3520 && this.z < 6400) {
             return true;
-        } else if (this.x >= 2944 && this.x < 3392 && this.z >= 9920 && this.z < 12800) {
-            return true;
-        } else {
-            return false;
-        }
+        } else return this.x >= 2944 && this.x < 3392 && this.z >= 9920 && this.z < 12800;
     }
 
     // ----
@@ -2033,37 +2005,33 @@ export default class Player extends PathingEntity {
         }
     }
 
-    write(message: OutgoingMessage) {
-        if (!isClientConnected(this)) {
+    write(message: Uint8Array | undefined) {
+        if (!message || !isClientConnected(this)) {
             return;
         }
 
-        if (message.priority === ServerProtPriority.IMMEDIATE) {
-            this.writeInner(message);
-        } else {
-            this.buffer.push(message);
-        }
+        this.writeInner(message);
     }
 
     unsetMapFlag() {
         this.clearWaypoints();
-        this.write(new UnsetMapFlag());
+        this.write(rsbuf.unsetMapFlag());
     }
 
     hintNpc(nid: number) {
-        this.write(new HintArrow(1, nid, 0, 0, 0, 0));
+        this.write(rsbuf.hintArrow(this.pid, 1, nid, 0, 0, 0, 0));
     }
 
     hintTile(offset: number, x: number, z: number, height: number) {
-        this.write(new HintArrow(offset, 0, 0, x, z, height));
+        this.write(rsbuf.hintArrow(this.pid, offset, 0, 0, x, z, height));
     }
 
     hintPlayer(pid: number) {
-        this.write(new HintArrow(10, 0, pid, 0, 0, 0));
+        this.write(rsbuf.hintArrow(this.pid, 10, 0, pid, 0, 0, 0));
     }
 
     stopHint() {
-        this.write(new HintArrow(-1, 0, 0, 0, 0, 0));
+        this.write(rsbuf.hintArrow(this.pid, -1, 0, 0, 0, 0, 0));
     }
 
     lastLoginInfo() {
@@ -2075,7 +2043,7 @@ export default class Player extends PathingEntity {
         const daysSinceLogin: number = Number(nextDate - lastDate) / (1000 * 60 * 60 * 24);
         // proxying websockets through cf may show IPv6 and breaks anyways
         // so we just hardcode 127.0.0.1 (2130706433)
-        this.write(new LastLoginInfo(2130706433, daysSinceLogin, 201, this.messageCount));
+        this.write(rsbuf.lastLoginInfo(this.pid, 2130706433, daysSinceLogin, 201, this.messageCount));
         this.lastDate = nextDate;
     }
 
@@ -2088,7 +2056,7 @@ export default class Player extends PathingEntity {
     }
 
     messageGame(msg: string) {
-        this.write(new MessageGame(msg));
+        this.write(rsbuf.messageGame(msg));
     }
 
     isValid(_hash64?: bigint): boolean {

@@ -1,27 +1,32 @@
+import * as rsbuf from '@2004scape/rsbuf';
+
+import { PRELOADED_CRC } from '#/cache/PreloadedPacks.js';
 import { CoordGrid } from '#/engine/CoordGrid.js';
 import Player from '#/engine/entity/Player.js';
 import World from '#/engine/World.js';
 import ZoneMap from '#/engine/zone/ZoneMap.js';
-import RebuildNormal from '#/network/server/model/RebuildNormal.js';
 
 export default class BuildArea {
     // constructor
     readonly player: Player;
     readonly loadedZones: Set<number>;
     readonly activeZones: Set<number>;
-    
+    readonly mapsquares: Set<number>;
+
     lastBuild: number = -1;
 
     constructor(player: Player) {
         this.player = player;
         this.loadedZones = new Set();
         this.activeZones = new Set();
+        this.mapsquares = new Set();
     }
 
     clear(reconnecting: boolean): void {
         if (!reconnecting) {
             this.activeZones.clear();
             this.loadedZones.clear();
+            this.mapsquares.clear();
         }
     }
 
@@ -62,7 +67,42 @@ export default class BuildArea {
 
         // if the build area should be regenerated, do so now
         if (this.player.x < reloadLeftX || this.player.z < reloadBottomZ || this.player.x > reloadRightX - 1 || this.player.z > reloadTopZ - 1 || reconnect) {
-            this.player.write(new RebuildNormal(CoordGrid.zone(this.player.x), CoordGrid.zone(this.player.z)));
+            const zoneX: number = CoordGrid.zone(this.player.x);
+            const zoneZ: number = CoordGrid.zone(this.player.z);
+
+            const mapsquares = [];
+            this.mapsquares.clear();
+            const minX: number = zoneX - 6;
+            const maxX: number = zoneX + 6;
+            const minZ: number = zoneZ - 6;
+            const maxZ: number = zoneZ + 6;
+
+            // build area is 13x13 zones (8*13 = 104 tiles), so we need to load 6 zones in each direction
+            for (let x: number = minX; x <= maxX; x++) {
+                const mx: number = CoordGrid.mapsquare(x << 3);
+                for (let z: number = minZ; z <= maxZ; z++) {
+                    const mz: number = CoordGrid.mapsquare(z << 3);
+                    const mapsquare: number = (mx << 8) | mz;
+                    if (!this.mapsquares.has(mapsquare)) {
+                        mapsquares.push(mapsquare);
+                    }
+                    this.mapsquares.add(mapsquare);
+                }
+            }
+
+            const maps: Int32Array = Int32Array.from(mapsquares.map(packed => {
+                const x: number = (packed >> 8) & 0xff;
+                const z: number = packed & 0xff;
+                return PRELOADED_CRC.get(`m${x}_${z}`) ?? 0;
+            }));
+
+            const locs: Int32Array = Int32Array.from(mapsquares.map(packed => {
+                const x: number = (packed >> 8) & 0xff;
+                const z: number = packed & 0xff;
+                return PRELOADED_CRC.get(`l${x}_${z}`) ?? 0;
+            }));
+
+            this.player.write(rsbuf.rebuildNormal(zoneX, zoneZ, Uint16Array.from(mapsquares), maps, locs));
 
             this.player.originX = this.player.x;
             this.player.originZ = this.player.z;

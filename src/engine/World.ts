@@ -62,11 +62,6 @@ import WorldStat from '#/engine/WorldStat.js';
 import Zone from '#/engine/zone/Zone.js';
 import Isaac from '#/io/Isaac.js';
 import Packet from '#/io/Packet.js';
-import { ReportAbuseReason } from '#/network/client/model/ReportAbuse.js';
-import MessagePrivate from '#/network/server/model/MessagePrivate.js';
-import UpdateFriendList from '#/network/server/model/UpdateFriendList.js';
-import UpdateIgnoreList from '#/network/server/model/UpdateIgnoreList.js';
-import UpdateRebootTimer from '#/network/server/model/UpdateRebootTimer.js';
 import ClientSocket from '#/server/ClientSocket.js';
 import { FriendsServerOpcodes } from '#/server/friend/FriendServer.js';
 import { FriendThreadMessage } from '#/server/friend/FriendThread.js';
@@ -92,6 +87,7 @@ import Environment from '#/util/Environment.js';
 import { fromBase37, toBase37, toSafeName } from '#/util/JString.js';
 import LinkList from '#/util/LinkList.js';
 import { printDebug, printError, printInfo } from '#/util/Logger.js';
+import { ReportAbuseReason } from '#/util/ReportAbuse.js';
 import WalkTriggerSetting from '#/util/WalkTriggerSetting.js';
 import { createWorker } from '#/util/WorkerFactory.js';
 
@@ -609,11 +605,7 @@ class World {
                             player.masks |= player.entitymask;
                         }
 
-                        if (!player.busy() && player.opcalled) {
-                            player.moveClickRequest = false;
-                        } else {
-                            player.moveClickRequest = true;
-                        }
+                        player.moveClickRequest = !(!player.busy() && player.opcalled);
 
                         if (!followingPlayer && player.opcalled && (player.userPath.length === 0 || !Environment.NODE_CLIENT_ROUTEFINDER)) {
                             player.pathToTarget();
@@ -629,6 +621,14 @@ class World {
                         }
                     }
                 }
+
+                // if (player.username.startsWith('bot')) {
+                //     if (this.currentTick % 2 === 0) {
+                //         player.queueWaypoint(player.x + 1, player.z);
+                //     } else {
+                //         player.queueWaypoint(player.x - 1, player.z);
+                //     }
+                // }
 
                 // - client input tracking
                 player.processInputTracking();
@@ -992,12 +992,17 @@ class World {
             player.uid = ((Number(player.username37 & 0x1fffffn) << 11) | player.pid) >>> 0;
             player.tele = true;
             player.moveClickRequest = false;
-
+            if (player.username.startsWith('bot')) {
+                const x = Math.floor(Math.random() * 32) + 3200;
+                const z = Math.floor(Math.random() * 32) + 3200;
+                player.x = x;
+                player.z = z;
+            }
             this.gameMap.getZone(player.x, player.z, player.level).enter(player);
             player.onLogin();
 
             if (this.shutdownTick != -1) {
-                player.write(new UpdateRebootTimer(this.shutdownTick - this.currentTick));
+                player.write(rsbuf.updateRebootTimer(player.pid, this.shutdownTicksRemaining));
             }
 
             this.friendThread.postMessage({
@@ -1597,11 +1602,6 @@ class World {
         });
     }
 
-    addPlayer(player: Player): void {
-        this.newPlayers.add(player);
-        player.isActive = true;
-    }
-
     sendPrivateChatModeToFriendsServer(player: Player): void {
         this.friendThread.postMessage({
             type: 'player_chat_setmode',
@@ -1820,7 +1820,7 @@ class World {
         this.shutdownTick = this.currentTick + duration;
 
         for (const player of this.players) {
-            player.write(new UpdateRebootTimer(this.shutdownTick - this.currentTick));
+            player.write(rsbuf.updateRebootTimer(player.pid, this.shutdownTicksRemaining));
         }
     }
 
@@ -1995,7 +1995,7 @@ class World {
 
                 for (let i = 0; i < data.friends.length; i++) {
                     const [world, friendUsername37] = data.friends[i];
-                    player.write(new UpdateFriendList(BigInt(friendUsername37), world));
+                    player.write(rsbuf.updateFriendList(player.pid, BigInt(friendUsername37), world));
                 }
             } else if (opcode === FriendsServerOpcodes.UPDATE_IGNORELIST) {
                 const username37 = BigInt(data.username37);
@@ -2010,7 +2010,7 @@ class World {
                 const ignored: bigint[] = data.ignored.map((i: string) => BigInt(i));
 
                 if (ignored.length > 0) {
-                    player.write(new UpdateIgnoreList(ignored));
+                    player.write(rsbuf.updateIgnoreList(player.pid, BigInt64Array.from(ignored)));
                 }
             } else if (opcode == FriendsServerOpcodes.PRIVATE_MESSAGE) {
                 // username37: username.toString(),
@@ -2030,9 +2030,7 @@ class World {
                     return;
                 }
 
-                const chat = data.chat;
-
-                player.write(new MessagePrivate(fromPlayer, pmId, fromPlayerStaffLvl, chat));
+                player.write(rsbuf.messagePrivateOut(fromPlayer, pmId, fromPlayerStaffLvl, rsbuf.packWords(data.chat)));
             } else if (opcode === FriendsServerOpcodes.RELAY_MUTE) {
                 const { username, muted_until } = data;
 
@@ -2189,11 +2187,11 @@ class World {
                 return;
             }
 
-            if (this.getTotalPlayers() > Environment.NODE_MAX_CONNECTED) {
-                client.send(Uint8Array.from([7]));
-                client.close();
-                return;
-            }
+            // if (this.getTotalPlayers() > Environment.NODE_MAX_CONNECTED) {
+            //     client.send(Uint8Array.from([7]));
+            //     client.close();
+            //     return;
+            // }
 
             if (this.logoutRequests.has(username)) {
                 // still trying to log out from the last session on this world!

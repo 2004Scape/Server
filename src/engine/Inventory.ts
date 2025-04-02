@@ -387,4 +387,19 @@ export class Inventory {
 
         return remove;
     }
+
+    pack(): BigInt64Array {
+        const result = new BigInt64Array(this.capacity);
+        for (let index = 0; index < this.capacity; index++) {
+            const obj = this.get(index);
+            if (obj) {
+                const id: bigint = BigInt(obj.id) & 0xffffn;
+                const count: bigint = BigInt(obj.count) & 0x7fffffffn;
+                result[index] = (id << 31n) | count;
+            } else {
+                result[index] = -1n;
+            }
+        }
+        return result;
+    }
 }

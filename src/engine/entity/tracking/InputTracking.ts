@@ -1,9 +1,9 @@
+import * as rsbuf from '@2004scape/rsbuf';
+
 import { NetworkPlayer } from '#/engine/entity/NetworkPlayer.js';
 import Player from '#/engine/entity/Player.js';
 import InputTrackingBlob from '#/engine/entity/tracking/InputEvent.js';
 import World from '#/engine/World.js';
-import EnableTracking from '#/network/server/model/EnableTracking.js';
-import FinishTracking from '#/network/server/model/FinishTracking.js';
 import LoggerEventType from '#/server/logger/LoggerEventType.js';
 import Environment from '#/util/Environment.js';
 
@@ -101,7 +101,7 @@ export default class InputTracking {
         this.startTrackingAt = World.currentTick;  // enabled immediately
         this.endTrackingAt = this.nextScheduledTrackingEnd();  // at the next interval
         // Notify the client
-        this.player.write(new EnableTracking());
+        this.player.write(rsbuf.enableTracking(this.player.pid));
     }
 
     disable(): void {
@@ -113,7 +113,7 @@ export default class InputTracking {
         this.endTrackingAt = World.currentTick;  // disabled immediately
         // wait up to an amount of time for the client to send us the last batch of data.
         this.waitingForRemainingData = true;
-        this.player.write(new FinishTracking());
+        this.player.write(rsbuf.finishTracking(this.player.pid));
     }
 
     isActive(): boolean {
