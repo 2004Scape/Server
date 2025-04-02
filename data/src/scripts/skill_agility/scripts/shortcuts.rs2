@@ -125,7 +125,7 @@ if($dist > 0) {
         if (%run = ^player_run_off) {
             p_delay(sub($dist, 1));
         } else {
-            p_delay(sub(divide($dist, 2), 1));
+            p_delay(max(0, sub(divide($dist, 2), 1)));
         } 
     } else {
         p_delay(0);

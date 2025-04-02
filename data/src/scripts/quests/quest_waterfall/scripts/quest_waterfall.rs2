@@ -177,6 +177,10 @@ if(coordz(coord) <= coordz(loc_coord)) {
     mes("You don't see that being any help.");
     return;
 }
+if(inzone(0_39_54_14_20, 0_39_54_18_25, coord) = false) {
+    mes("It's a little far with that strong current.");
+    return;
+}
 mes("It looks like a long distance, but you swim out into the water.");
 ~set_walkbas(human_swim);
 p_walk(movecoord(loc_coord, 0, 0, 8));
@@ -202,9 +206,12 @@ if(coordz(coord) <= coordz(loc_coord)) {
     mes("You don't see that being any help.");
     return;
 }
+if(inzone(0_39_54_14_20, 0_39_54_18_25, coord) = false) {
+    mes("You can't get a good shot from here.");
+    return;
+}
 def_coord $rock_coord = loc_coord;
-~forcewalk2(movecoord($rock_coord, 0, 0, 8)); 
-p_arrivedelay;
+~forcewalk2(movecoord($rock_coord, 0, 0, 8));
 anim(seq_774, 0);
 spotanim_map(spotanim_67, movecoord($rock_coord, 0, 0, 6), 0, 20);
 p_delay(1);
@@ -216,8 +223,8 @@ while($i < 8) {
     loc_add(movecoord($rock_coord, 0, 0, $i), loc_1998, loc_angle, loc_shape, calc(9 - $i));
     $i = calc($i + 1);
 }
-~agility_force_move(0, seq_776, movecoord(coord, 0, 0, -7));
-~agility_force_move(0, seq_776, movecoord(coord, 1, 0, -1));
+~agility_force_move(0, seq_776, movecoord($rock_coord, 0, 0, 1));
+~agility_force_move(0, seq_776, movecoord($rock_coord, 1, 0, 0));
 p_delay(1);
 
 // tree
