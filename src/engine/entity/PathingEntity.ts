@@ -290,11 +290,6 @@ export default abstract class PathingEntity extends Entity {
         this.lastStepZ = this.z;
         this.tele = true;
 
-        // Update wander tick for Npcs
-        if (this instanceof Npc) {
-            this.lastWanderTick = World.currentTick;
-        }
-
         if (previousLevel != level) {
             this.moveSpeed = MoveSpeed.INSTANT;
             this.jump = true;
