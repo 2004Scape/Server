@@ -16,18 +16,23 @@ if (nc_param($type, fishing_movement_enum) = null) {
 }
 
 def_int $count = ~countfishingspots($square, $type);
-if ($count < $spawns) {
+def_int $missing = sub($spawns, $count);
+if ($missing > 0) {
     console("Respawning fishing spots <nc_debugname($type)> <tostring($count)>/<tostring($spawns)>");
 
+    // we could place the npc anywhere (even inaccessible) and rely on the timer, but just in case...
+    def_coord $tile = enum(int, coord, nc_param($type, fishing_movement_enum), 0);
     def_int $i = 0;
-    while ($i < $count) {
-        // we could place the npc anywhere (even inaccessible) and let the timer run, but just in case...
-        def_coord $tile = enum(int, coord, nc_param($type, fishing_movement_enum), 0);
+    while ($i < $missing) {
         npc_add($tile, $type, ^max_32bit_int); // welcome back mr/mrs fish
         npc_settimer(1); // force a tele next tick
 
+        console("<tostring($i)> <~coord_tostring(npc_coord)>");
+
         $i = add($i, 1);
     }
+} else {
+    console("All fishing spots available <nc_debugname($type)> <tostring($count)>/<tostring($spawns)>");
 }
 
 [queue,fixfishingspots]
