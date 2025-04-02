@@ -590,7 +590,7 @@ if(inzone(0_43_46_24_35, 0_43_46_29_35, coord) = true) {
         say("Choke!");
         spotanim_map(watersplash, coord, 0, 3);
         sound_synth(pool_plop, 0, 0);
-        ~set_readyandwalk_bas(seq_773, seq_773, human_swim);
+        ~set_readywalkturn_bas(seq_773, seq_773, human_swim);
         p_delay(0);
 
         ~forcemove(0_43_46_26_33);
@@ -756,7 +756,7 @@ switch_int(~p_choice3("A ladder", 1, "A crude raft", 2, "A pole vault", 3)) {
         spotanim_map(watersplash, coord, 0, 0);
         // Temp note: dur updated
         loc_add(movecoord(coord, 1, 0, 0), loc_1988, 1, centrepiece_straight, 6);
-        ~set_readyandwalk_bas(seq_773, seq_773, human_swim);
+        ~set_readywalkturn_bas(seq_773, seq_773, human_swim);
         p_delay(0);
         ~forcemove(movecoord(coord, 0, 0, 1));
         ~update_bas;
@@ -985,10 +985,10 @@ switch_int(~p_choice2_header("Yes, I'll follow the path.", 1, "No, I'll look for
         mes("You start carefully edging along the slippery path...");
         if(coordz(coord) < 9351) {
             anim(human_ledge_on_left, 0);
-            ~set_readyandwalk_bas(seq_757, seq_757, human_ledge_walk_left);
+            ~set_readywalkturn_bas(seq_757, seq_757, human_ledge_walk_left);
         } else {
             anim(human_ledge_on_right, 0);
-            ~set_readyandwalk_bas(seq_755, seq_755, human_ledge_walk_right);
+            ~set_readywalkturn_bas(seq_755, seq_755, human_ledge_walk_right);
         }
         ~forcemove(movecoord(coord, 2, 0, 0));
         p_delay(0);
@@ -1314,7 +1314,7 @@ switch_int(~p_choice2_header("Yes, I'll drop it.", 1, "No, I'll keep the Bone Ke
 [oploc1,loc_2236]
 p_arrivedelay;
 mes("You attempt to climb the granite rock.");
-~set_readyandwalk_bas(seq_738, seq_737, seq_737);
+~set_readywalkturn_bas(seq_738, seq_737, seq_737);
 ~forcemove(movecoord(loc_coord, 1, 0, 0));
 if(stat_random(stat(agility), 125, 250) = false) {
     mes("You fall!");

@@ -61,6 +61,7 @@ export default class OpPlayerUHandler extends MessageHandler<OpPlayerU> {
             return false;
         }
 
+        player.lastUseItem = item;
         player.lastUseSlot = slot;
 
         player.setInteraction(Interaction.ENGINE, other, ServerTriggerType.APPLAYERU, item);
