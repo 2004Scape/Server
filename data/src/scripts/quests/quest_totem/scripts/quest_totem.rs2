@@ -151,7 +151,7 @@ mes("You close the chest.");
 
 [oploc2,loc_2708]
 ~mesbox("There is a label on this crate. It says;");
-if(%totem_progress = ^totem_crate_marked) {
+if(%totem_progress >= ^totem_crate_marked) {
     ~mesbox("To Lord Handelmort, Handelmort Mansion, Ardougne.");
 }
 ~mesbox("Senior Patents Clerk, Chamber of Invention, The Wizards' Tower, Misthalin. The crate is securely fastened shut and ready for delivery.");
