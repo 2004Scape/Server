@@ -35,6 +35,17 @@ if (.busy = true) {
 
 // this message always sends, even if this player is responding to a trade request
 mes("Sending trade offer...");
+
+// https://youtu.be/BOtsghQGQEk?t=417
+def_int $wilderness_level = min(~wilderness_level(coord), ~wilderness_level(.coord));
+if ($wilderness_level >= 1) {
+    // i am going to assume it's "wilderness" and not "Wilderness" until late 05/06.
+    // some messages get changed and wilderness becomes title'd. (see: "Your level difference is too great!" message)
+    // and the video linked above is after this update.
+    mes("Trading in the wilderness is dangerous - you might get killed!");
+    return;
+}
+
 %tradepartner = .uid;
 
 if (.%tradepartner = uid & %tradestatus = ^tradestatus_received) {
@@ -83,7 +94,9 @@ if (.finduid(%tradepartner) = true) {
 
         if (~enough_trade_space = false) {
             mes("Other player doesn't have enough inventory space for this trade.");
-            .mes("You don't have enough inventory space for this trade.");
+            // osrs: Other player doesn't have enough inventory space for this trade.
+            // 2007: https://youtu.be/W_NrcAybPzE?t=8
+            .mes("You don't have enough inventory space for this trade");
             if_close;
             .if_close;
             return;
@@ -91,7 +104,9 @@ if (.finduid(%tradepartner) = true) {
 
         if (~.enough_trade_space = false) {
             mes("You don't have enough inventory space for this trade.");
-            .mes("Other player doesn't have enough inventory space for this trade.");
+            // osrs: Other player doesn't have enough inventory space for this trade.
+            // 2007: https://youtu.be/W_NrcAybPzE?t=8
+            .mes("Other player doesn't have enough inventory space for this trade");
             if_close;
             .if_close;
             return;
