@@ -37,14 +37,10 @@ if (.busy = true) {
 mes("Sending trade offer...");
 
 // https://youtu.be/BOtsghQGQEk?t=417
-def_int $wilderness_level = min(~wilderness_level(coord), ~wilderness_level(.coord));
-if ($wilderness_level >= 1) {
-    // i am going to assume it's "wilderness" and not "Wilderness" until late 05/06.
-    // some messages get changed and wilderness becomes title'd. (see: "Your level difference is too great!" message)
-    // and the video linked above is after this update.
-    mes("Trading in the wilderness is dangerous - you might get killed!");
-    return;
-}
+// 2006: "Trading in the wilderness is dangerous - you might get killed!"
+
+// https://youtu.be/uSO-ilQk5XY?list=PLn23LiLYLb1bQ7Hwp77KoNBjKvpZQTfJT&t=810
+// This nov 2004 vid shows no wildy warning... I think it was added in mid to late 2006? Ive seen some early 2006 vids of trading with no warning
 
 %tradepartner = .uid;
 
