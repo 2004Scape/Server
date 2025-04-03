@@ -90,7 +90,7 @@ if (.finduid(%tradepartner) = true) {
 
         if (~enough_trade_space = false) {
             mes("Other player doesn't have enough inventory space for this trade.");
-            // osrs: Other player doesn't have enough inventory space for this trade.
+            // osrs: You don't have enough inventory space for this trade.
             // 2007: https://youtu.be/W_NrcAybPzE?t=8
             .mes("You don't have enough inventory space for this trade");
             if_close;
