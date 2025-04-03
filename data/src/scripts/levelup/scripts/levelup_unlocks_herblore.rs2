@@ -1,28 +1,28 @@
 [label,levelup_herblore]
 //Herblore level up unlock messages
 switch_int(stat_base(herblore)) {
-    case 3 : ~objbox(3dose1attack, "You can now make @dbl@Attack Potions@bla@. You can now identify @dbl@Guam Leaf@bla@, @dbl@Snake Weed @bla@and @dbl@Rogues Purse@bla@.", 250, 0, ^objbox_height);
-    case 5 : ~objbox(3doseantipoison,"You can now make @dbl@Antipoison Potions@bla@. You can now identify @dbl@Marrentill@bla@.", 250, 0, ^objbox_height);
-    case 11 : ~objbox(tarromin,"You can now identify @dbl@Tarromin@bla@.", 250, 0, 0);
-    case 12 : ~objbox(3dose1strength,"You can now make @dbl@Strength Potions@bla@.", 250, 0, ^objbox_height);
-    case 20 : ~objbox(harralander,"You can now identify @dbl@Harralander@bla@.", 250, 0, 0);
-    case 22 : ~objbox(3dose1restore,"You can now make @dbl@Stat Restore Potions@bla@.", 250, 0, ^objbox_height);
-    case 25 : ~objbox(ranarr_weed,"You can now identify @dbl@Rannar Weed@bla@.", 250, 0, 0);
-    case 30 : ~objbox(3dose1defense,"You can now make @dbl@Defence Potions@bla@.", 250, 0, ^objbox_height);
-    case 38 : ~objbox(3doseprayerrestore,"You can now make @dbl@Prayer Restore Potions@bla@.", 250, 0, ^objbox_height);
-    case 40 : ~objbox(irit_leaf,"You can now identify @dbl@Irit Leaf@bla@.", 250, 0, 0);
-    case 45 : ~objbox(3dose2attack,"You can now make @dbl@Super Attack Potions@bla@.", 250, 0, ^objbox_height);
-    case 48 : ~objbox(3dose2antipoison,"You can now make @dbl@Super Antipoison Potions@bla@. You can now identify @dbl@Avantoe@bla@.", 250, 0, ^objbox_height);
-    case 50 : ~objbox(3dosefisherspotion,"You can now make @dbl@Fishing Potions@bla@.", 250, 0, ^objbox_height);
-    case 54 : ~objbox(kwuarm,"You can now identify @dbl@Kwuarm@bla@.", 250, 0, 0);
-    case 55 : ~objbox(3dose2strength,"You can now make @dbl@Super Strength Potions@bla@.", 250, 0, ^objbox_height);
+    case 3 : ~objbox(3dose1attack, "You can now make @dbl@Attack Potions@bla@. You can now identify @dbl@Guam Leaf@bla@, @dbl@Snake Weed @bla@and @dbl@Rogues Purse.", 250, 0, ^objbox_height);
+    case 5 : ~objbox(3doseantipoison,"You can now make @dbl@Antipoison Potions@bla@. You can now identify @dbl@Marrentill.", 250, 0, ^objbox_height);
+    case 11 : ~objbox(tarromin,"You can now identify @dbl@Tarromin.", 250, 0, 0);
+    case 12 : ~objbox(3dose1strength,"You can now make @dbl@Strength Potions.", 250, 0, ^objbox_height);
+    case 20 : ~objbox(harralander,"You can now identify @dbl@Harralander.", 250, 0, 0);
+    case 22 : ~objbox(3dose1restore,"You can now make @dbl@Stat Restore Potions.", 250, 0, ^objbox_height);
+    case 25 : ~objbox(ranarr_weed,"You can now identify @dbl@Rannar Weed.", 250, 0, 0);
+    case 30 : ~objbox(3dose1defense,"You can now make @dbl@Defence Potions.", 250, 0, ^objbox_height);
+    case 38 : ~objbox(3doseprayerrestore,"You can now make @dbl@Prayer Restore Potions.", 250, 0, ^objbox_height);
+    case 40 : ~objbox(irit_leaf,"You can now identify @dbl@Irit Leaf.", 250, 0, 0);
+    case 45 : ~objbox(3dose2attack,"You can now make @dbl@Super Attack Potions.", 250, 0, ^objbox_height);
+    case 48 : ~objbox(3dose2antipoison,"You can now make @dbl@Super Antipoison Potions@bla@. You can now identify @dbl@Avantoe.", 250, 0, ^objbox_height);
+    case 50 : ~objbox(3dosefisherspotion,"You can now make @dbl@Fishing Potions.", 250, 0, ^objbox_height);
+    case 54 : ~objbox(kwuarm,"You can now identify @dbl@Kwuarm.", 250, 0, 0);
+    case 55 : ~objbox(3dose2strength,"You can now make @dbl@Super Strength Potions.", 250, 0, ^objbox_height);
     case 60 : ~objbox(weapon_poison,"You can now make @dbl@Weapon Poisons.", 250, 0, ^objbox_height); //imgur.com/dLoBair
-    case 65 : ~objbox(cadantine,"You can now identify @dbl@Cadantine@bla@.", 250, 0, 0);
-    case 66 : ~objbox(3dose2defense,"You can now make @dbl@Super Defence Potions@bla@.", 250, 0, ^objbox_height);
-    case 67 : ~objbox(lantadyme,"You can now identify @dbl@Lantadyme@bla@.", 250, 0, 0);
-    case 69 : ~objbox(3dose1antidragon,"You can now make @dbl@Anti-FireBreath Potions@bla@.", 250, 0, ^objbox_height);
-    case 70 : ~objbox(dwarf_weed,"You can now identify @dbl@Dwarf Weed@bla@.", 250, 0, 0);
-    case 72 : ~objbox(3doserangerspotion,"You can now make @dbl@Ranging Potions@bla@.", 250, 0, ^objbox_height);
-    case 75 : ~objbox(torstol,"You can now identify @dbl@Torstol@bla@.", 250, 0, 0);
-    case 78 : ~objbox(3dosepotionofzamorak,"You can now make @dbl@Zamorak Brews@bla@.", 250, 0, ^objbox_height);
+    case 65 : ~objbox(cadantine,"You can now identify @dbl@Cadantine.", 250, 0, 0);
+    case 66 : ~objbox(3dose2defense,"You can now make @dbl@Super Defence Potions.", 250, 0, ^objbox_height);
+    case 67 : ~objbox(lantadyme,"You can now identify @dbl@Lantadyme.", 250, 0, 0);
+    case 69 : ~objbox(3dose1antidragon,"You can now make @dbl@Anti-FireBreath Potions.", 250, 0, ^objbox_height);
+    case 70 : ~objbox(dwarf_weed,"You can now identify @dbl@Dwarf Weed.", 250, 0, 0);
+    case 72 : ~objbox(3doserangerspotion,"You can now make @dbl@Ranging Potions.", 250, 0, ^objbox_height);
+    case 75 : ~objbox(torstol,"You can now identify @dbl@Torstol.", 250, 0, 0);
+    case 78 : ~objbox(3dosepotionofzamorak,"You can now make @dbl@Zamorak Brews.", 250, 0, ^objbox_height);
 }
