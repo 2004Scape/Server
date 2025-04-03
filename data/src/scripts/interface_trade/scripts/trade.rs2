@@ -37,7 +37,7 @@ if (.busy = true) {
 mes("Sending trade offer...");
 
 // https://youtu.be/BOtsghQGQEk?t=417
-// 2006: "Trading in the wilderness is dangerous - you might get killed!"
+// 2006: "Trading in the Wilderness is dangerous - you might get killed!"
 
 // https://youtu.be/uSO-ilQk5XY?list=PLn23LiLYLb1bQ7Hwp77KoNBjKvpZQTfJT&t=810
 // This nov 2004 vid shows no wildy warning... I think it was added in mid to late 2006? Ive seen some early 2006 vids of trading with no warning
