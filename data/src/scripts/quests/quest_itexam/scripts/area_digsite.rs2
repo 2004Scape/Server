@@ -729,6 +729,8 @@ if ($item = tinderbox) {
     mes("Fizz...");
     ~chatplayer("<p,shock>Whoa! This is going to blow! I'd better run!");
     @digsite_blockage_run_sequence;
+} else {
+    ~displaymessage(^dm_default);
 }
 
 [label,digsite_blockage_run_sequence]
