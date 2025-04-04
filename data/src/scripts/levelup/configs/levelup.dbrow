@@ -230,6 +230,7 @@ data=title,levelup_firemaking:line1
 data=body,levelup_firemaking:line2
 // fire making instead of firemaking. Late 2004: https://imgur.com/z8cEXOt
 // aug 2004: https://web.archive.org/web/20040922002222/http://img42.exs.cx/img42/7479/50firemaking.jpg
+// https://youtu.be/IC2n8t76DDY?t=50
 data=message,"Congratulations, you just advanced a fire making level."
 data=level_prefix,Your fire making level is now
 data=levelup_jingle,^advance_firemaking_jingle

@@ -15,7 +15,9 @@ if (.finduid(%duelpartner) = true) {
 }
 // ur able to get double mes if opponent kills u with knives: https://youtu.be/KRDZJKa1whI?list=PLn23LiLYLb1bQ7Hwp77KoNBjKvpZQTfJT&t=12
 midi_jingle(^death_jingle_2, ^death_jingle_2_millis);
-mes("Oh dear you are dead.");
+// https://storage.googleapis.com/tannerdino/images/6543.jpg
+// https://youtu.be/gWmwSYxzUfo
+mes("Oh dear you are dead!");
 
 
 [queue,duel_finish]

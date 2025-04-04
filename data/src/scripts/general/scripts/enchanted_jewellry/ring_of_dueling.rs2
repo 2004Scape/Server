@@ -14,10 +14,12 @@ if (~pre_tele_checks(coord) = false) {
 }
 ~player_teleport_normal(map_findsquare(0_51_50_51_35, 0, 2, ^map_findsquare_lineofwalk));
 def_namedobj $new_ring = oc_param($item, next_obj_stage);
+// osrs uses lowercase in the name.
+// 2006: https://www.youtube.com/watch?v=dTLr_7HhgXw
 if ($new_ring = null) {
     inv_delslot(inv, $slot);
-    mes("Your ring of dueling crumbles to dust.");
+    mes("Your Ring of Dueling crumbles to dust.");
 } else {
     inv_setslot(inv, $slot, $new_ring, 1);
-    mes("Your ring of dueling has <~pluralise(oc_param($new_ring, charges), "use")> left.");
+    mes("Your Ring of Dueling has <~pluralise(oc_param($new_ring, charges), "use")> left.");
 }
