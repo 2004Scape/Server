@@ -479,17 +479,25 @@ export default class LoginServer {
                             .where('username', '=', username)
                             .executeTakeFirst();
                     } else if (type === 'player_ban') {
-                        const { _staff, username, until } = msg;
+                        const { _staff, username, until, banwave } = msg;
 
                         // todo: audit log
 
-                        await db
-                            .updateTable('account')
-                            .set({
-                                banned_until: toDbDate(until)
-                            })
-                            .where('username', '=', username)
-                            .executeTakeFirst();
+                        if (!banwave) {
+                            await db
+                                .updateTable('account')
+                                .set({
+                                    banned_until: toDbDate(until)
+                                })
+                                .where('username', '=', username)
+                                .executeTakeFirst();
+                            return;
+                        }
+
+                        await db.updateTable('account').set({
+                            banwave_start: toDbDate(new Date()),
+                            banwave_until: toDbDate(until)
+                        }).where('username', '=', username).execute();
                     } else if (type === 'player_mute') {
                         const { _staff, username, until } = msg;
 
