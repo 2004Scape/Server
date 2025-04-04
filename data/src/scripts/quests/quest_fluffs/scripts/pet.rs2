@@ -232,7 +232,10 @@ if (npc_finduid(%follower_uid) = true) {
 }
 inv_delslot(inv, last_slot);
 sound_synth(put_down, 0, 0);
-npc_add(coord, oc_param(last_item, follower_id), ^max_32bit_int);
+~cat_spawn(oc_param(last_item, follower_id));
+
+[proc,cat_spawn](npc $type)
+npc_add(coord, $type, ^max_32bit_int);
 %follower_obj = nc_param(npc_type, pet_item_id);
 %follower_uid = npc_uid;
 %npc_attacking_uid = uid;
