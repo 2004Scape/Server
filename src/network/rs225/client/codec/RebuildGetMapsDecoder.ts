@@ -7,16 +7,10 @@ export default class RebuildGetMapsDecoder extends MessageDecoder<RebuildGetMaps
     prot = ClientProt.REBUILD_GETMAPS;
 
     decode(buf: Packet, length: number) {
-        const maps = [];
-
-        const count = length / 3;
-        for (let i = 0; i < count; i++) {
-            const type = buf.g1();
-            const x = buf.g1();
-            const z = buf.g1();
-            maps.push({ type, x, z });
+        const maps = new Int32Array(length / 3);
+        for (let i = 0; i < maps.length; i++) {
+            maps[i] = buf.g3();
         }
-
         return new RebuildGetMaps(maps);
     }
 }
