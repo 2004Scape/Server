@@ -7,7 +7,7 @@ import ScriptRunner from '#/engine/script/ScriptRunner.js';
 import ServerTriggerType from '#/engine/script/ServerTriggerType.js';
 import MessageHandler from '#/network/client/handler/MessageHandler.js';
 import OpHeldU from '#/network/client/model/OpHeldU.js';
-import LoggerEventType from '#/server/logger/LoggerEventType.js';
+import { LoggerEventType } from '#/server/logger/LoggerEventType.js';
 import Environment from '#/util/Environment.js';
 
 export default class OpHeldUHandler extends MessageHandler<OpHeldU> {

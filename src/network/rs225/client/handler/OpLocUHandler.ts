@@ -1,6 +1,6 @@
 import Component from '#/cache/config/Component.js';
 import ObjType from '#/cache/config/ObjType.js';
-import Interaction from '#/engine/entity/Interaction.js';
+import { Interaction } from '#/engine/entity/Interaction.js';
 import { NetworkPlayer } from '#/engine/entity/NetworkPlayer.js';
 import ServerTriggerType from '#/engine/script/ServerTriggerType.js';
 import World from '#/engine/World.js';

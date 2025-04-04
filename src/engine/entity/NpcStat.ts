@@ -1,4 +1,4 @@
-enum NpcStat {
+export const enum NpcStat {
     ATTACK,
     DEFENCE,
     STRENGTH,
@@ -7,4 +7,11 @@ enum NpcStat {
     MAGIC
 }
 
-export default NpcStat;
+export const NpcStatMap: Map<string, number> = new Map([
+    ['ATTACK', NpcStat.ATTACK],
+    ['DEFENCE', NpcStat.DEFENCE],
+    ['STRENGTH', NpcStat.STRENGTH],
+    ['HITPOINTS', NpcStat.HITPOINTS],
+    ['RANGED', NpcStat.RANGED],
+    ['MAGIC', NpcStat.MAGIC],
+]);

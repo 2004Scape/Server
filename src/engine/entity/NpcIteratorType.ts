@@ -1,6 +1,4 @@
-enum NpcIteratorType {
+export const enum NpcIteratorType {
     ZONE,
     DISTANCE
 }
-
-export default NpcIteratorType;

@@ -6,7 +6,7 @@ import ScriptRunner from '#/engine/script/ScriptRunner.js';
 import ServerTriggerType from '#/engine/script/ServerTriggerType.js';
 import MessageHandler from '#/network/client/handler/MessageHandler.js';
 import OpHeld from '#/network/client/model/OpHeld.js';
-import LoggerEventType from '#/server/logger/LoggerEventType.js';
+import { LoggerEventType } from '#/server/logger/LoggerEventType.js';
 import Environment from '#/util/Environment.js';
 
 export default class OpHeldHandler extends MessageHandler<OpHeld> {

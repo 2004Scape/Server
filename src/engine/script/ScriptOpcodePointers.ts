@@ -1,9 +1,9 @@
-import ScriptOpcode from '#/engine/script/ScriptOpcode.js';
+import { ScriptOpcode } from '#/engine/script/ScriptOpcode.js';
 
 const POINTER_GROUP_FIND = ['find_player', 'find_npc', 'find_loc', 'find_obj', 'find_db'];
 
 const ScriptOpcodePointers: {
-    [key: string]: {
+    [key: number]: {
         require?: string[];
         set?: string[];
         corrupt?: string[];

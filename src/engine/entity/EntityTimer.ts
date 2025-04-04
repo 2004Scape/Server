@@ -1,11 +1,11 @@
 import { ScriptArgument } from '#/engine/entity/PlayerQueueRequest.js';
 import ScriptFile from '#/engine/script/ScriptFile.js';
 
-export enum NpcTimerType {
+export const enum NpcTimerType {
     NPC
 }
 
-export enum PlayerTimerType {
+export const enum PlayerTimerType {
     NORMAL,
     SOFT
 }

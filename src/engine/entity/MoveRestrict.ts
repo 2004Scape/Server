@@ -1,5 +1,5 @@
 // https://x.com/JagexAsh/status/1678810351091974159
-enum MoveRestrict {
+export const enum MoveRestrict {
     NORMAL,
     BLOCKED,
     BLOCKED_NORMAL,
@@ -8,5 +8,3 @@ enum MoveRestrict {
     NOMOVE,
     PASSTHRU
 }
-
-export default MoveRestrict;

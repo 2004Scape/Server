@@ -1,9 +1,7 @@
-enum HuntModeType {
+export const enum HuntModeType {
     OFF,
     PLAYER,
     NPC,
     OBJ,
     SCENERY
 }
-
-export default HuntModeType;

@@ -1,4 +1,4 @@
-enum WorldStat {
+export const enum WorldStat {
     CYCLE,
     WORLD,
     CLIENT_IN,
@@ -12,5 +12,3 @@ enum WorldStat {
     BANDWIDTH_IN,
     BANDWIDTH_OUT
 }
-
-export default WorldStat;

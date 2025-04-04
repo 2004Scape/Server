@@ -1,6 +1,4 @@
-enum ZoneEventType {
+export const enum ZoneEventType {
     ENCLOSED,
     FOLLOWS
 }
-
-export default ZoneEventType;

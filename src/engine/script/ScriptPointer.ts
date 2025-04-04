@@ -4,7 +4,7 @@ import ScriptState from '#/engine/script/ScriptState.js';
 /**
  * Enumeration of possible pointer states used for runtime safety checks.
  */
-enum ScriptPointer {
+const enum ScriptPointer {
     ActivePlayer,
     ActivePlayer2,
     ProtectedActivePlayer,
@@ -17,6 +17,20 @@ enum ScriptPointer {
     ActiveObj2,
     _LAST
 }
+
+export const ScriptPointerNameMap: Map<number, string> = new Map([
+    [ScriptPointer.ActivePlayer, 'ActivePlayer'],
+    [ScriptPointer.ActivePlayer2, 'ActivePlayer2'],
+    [ScriptPointer.ProtectedActivePlayer, 'ProtectedActivePlayer'],
+    [ScriptPointer.ProtectedActivePlayer2, 'ProtectedActivePlayer2'],
+    [ScriptPointer.ActiveNpc, 'ActiveNpc'],
+    [ScriptPointer.ActiveNpc2, 'ActiveNpc2'],
+    [ScriptPointer.ActiveLoc, 'ActiveLoc'],
+    [ScriptPointer.ActiveLoc2, 'ActiveLoc2'],
+    [ScriptPointer.ActiveObj, 'ActiveObj'],
+    [ScriptPointer.ActiveObj2, 'ActiveObj2'],
+    [ScriptPointer._LAST, '_LAST'],
+]);
 
 export const ActiveNpc: ScriptPointer[] = [ScriptPointer.ActiveNpc, ScriptPointer.ActiveNpc2];
 export const ActiveLoc: ScriptPointer[] = [ScriptPointer.ActiveLoc, ScriptPointer.ActiveLoc2];
