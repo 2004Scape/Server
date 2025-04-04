@@ -131,8 +131,9 @@ session_log(^log_adventure, "Failed random event and had their items scattered")
 p_delay(1);
 def_int $i = 0;
 while ($i < inv_size(inv)) {
-    def_coord $coord = map_findsquare(coord, 0, 5, ^map_findsquare_lineofwalk); // 11x11 for now. todo: confirm how scattering works
-    if (inv_getobj(inv, $i) ! null) {
+    def_obj $obj = inv_getobj(inv, $i);
+    if ($obj ! null & oc_tradeable($obj) = true) {
+        def_coord $coord = map_findsquare(coord, 0, 5, ^map_findsquare_lineofwalk); // 11x11 for now. todo: confirm how scattering works
         inv_dropslot(inv, $coord, $i, 200);
         spotanim_map(small_smokepuff, $coord, 124, 0);
     }
