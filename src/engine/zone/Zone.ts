@@ -97,41 +97,10 @@ export default class Zone {
         }
     }
 
-    tick(tick: number): void {
-        for (const obj of this.getAllObjsUnsafe()) {
-            if (!obj.updateLifeCycle(tick) || obj.lastLifecycleTick === tick) {
-                continue;
-            }
-            if (obj.lifecycle === EntityLifeCycle.DESPAWN) {
-                if (obj.reveal !== -1) {
-                    World.revealObj(obj);
-                } else {
-                    World.removeObj(obj, 0);
-                }
-            } else if (obj.lifecycle === EntityLifeCycle.RESPAWN) {
-                World.addObj(obj, Obj.NO_RECEIVER, 0);
-            }
-        }
-
-        for (const loc of this.getAllLocsUnsafe()) {
-            if (!loc.updateLifeCycle(tick) || loc.lastLifecycleTick === tick) {
-                continue;
-            }
-            if (loc.lifecycle === EntityLifeCycle.DESPAWN) {
-                World.removeLoc(loc, 0);
-            } else if (loc.lifecycle === EntityLifeCycle.RESPAWN && loc.isChanged()) {
-                World.revertLoc(loc);
-            } else if (loc.lifecycle === EntityLifeCycle.RESPAWN && !loc.isActive) {
-                World.addLoc(loc, 0);
-            }
-        }
-
-        this.computeShared();
-    }
-
     computeShared(): void {
         const buf: Packet = Packet.alloc(1);
         for (const event of this.enclosed()) {
+            // console.log(event.message);
             const encoder: ZoneMessageEncoder<ZoneMessage> | undefined = ServerProtRepository.getZoneEncoder(event.message);
             if (typeof encoder === 'undefined') {
                 continue;
@@ -240,7 +209,6 @@ export default class Zone {
     addStaticObj(obj: Obj): void {
         this.objs.addTail(obj);
         this.objsCount++;
-        obj.isRevealed = true;
         obj.isActive = true;
     }
 
@@ -316,38 +284,40 @@ export default class Zone {
         obj.isActive = true;
 
         if (obj.lifecycle === EntityLifeCycle.RESPAWN || receiver64 === Obj.NO_RECEIVER) {
-            obj.isRevealed = true;
             this.queueEvent(obj, new ZoneEvent(ZoneEventType.ENCLOSED, receiver64, new ObjAdd(coord, obj.type, obj.count)));
         } else if (obj.lifecycle === EntityLifeCycle.DESPAWN) {
-            obj.isRevealed = false;
             this.queueEvent(obj, new ZoneEvent(ZoneEventType.FOLLOWS, receiver64, new ObjAdd(coord, obj.type, obj.count)));
         }
     }
 
-    revealObj(obj: Obj, receiver64: bigint): void {
+    revealObj(obj: Obj): void {
         const objType: ObjType = ObjType.get(obj.type);
-        if (!(objType.tradeable && ((objType.members && Environment.NODE_MEMBERS) || !objType.members))) {
+
+        obj.lastChange = -1;
+
+        // If the obj is not tradeable, or it's members in an f2p world, or it's already revealed, then skip
+        if (!objType.tradeable || (objType.members && !Environment.NODE_MEMBERS) || obj.reveal === -1) {
             obj.reveal = -1;
             return;
         }
 
+        const initialReceiver = obj.receiver64;
         obj.receiver64 = Obj.NO_RECEIVER;
         obj.reveal = -1;
         obj.lastChange = -1;
-        obj.isRevealed = true;
 
         const coord: number = CoordGrid.packZoneCoord(obj.x, obj.z);
 
-        this.queueEvent(obj, new ZoneEvent(ZoneEventType.ENCLOSED, receiver64, new ObjReveal(coord, obj.type, obj.count, World.getPlayerByHash64(receiver64)?.pid ?? 0)));
+        this.queueEvent(obj, new ZoneEvent(ZoneEventType.ENCLOSED, initialReceiver, new ObjReveal(coord, obj.type, obj.count, World.getPlayerByHash64(initialReceiver)?.pid ?? 0)));
     }
 
-    changeObj(obj: Obj, receiver64: bigint, oldCount: number, newCount: number): void {
+    changeObj(obj: Obj, oldCount: number, newCount: number): void {
         obj.count = newCount;
         obj.lastChange = World.currentTick;
 
         const coord: number = CoordGrid.packZoneCoord(obj.x, obj.z);
 
-        this.queueEvent(obj, new ZoneEvent(ZoneEventType.FOLLOWS, receiver64, new ObjCount(coord, obj.type, oldCount, newCount)));
+        this.queueEvent(obj, new ZoneEvent(ZoneEventType.FOLLOWS, obj.receiver64, new ObjCount(coord, obj.type, oldCount, newCount)));
     }
 
     removeObj(obj: Obj): void {
