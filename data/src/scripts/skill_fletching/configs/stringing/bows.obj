@@ -77,6 +77,7 @@ recol1d=20004
 2dxan=460
 weight=47oz
 category=unstrung_bow
+
 [unstrung_willow_shortbow]
 cost=100
 members=yes
