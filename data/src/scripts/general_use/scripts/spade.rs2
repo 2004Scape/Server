@@ -40,7 +40,7 @@ if(map_members = true & ~trail_hasclue_inv = true) {
             if(oc_param($clue, trail_guardian) ! null) {
                 def_npc $guard = oc_param($clue, trail_guardian);
                 if($guard = zamorak_wizard & testbit(%trail_clue, 4) = false) {
-                    npc_huntall(coord, 7, 0);
+                    npc_huntall(coord, 10, 0); // zamorak/saradomin wizards range
                     while (npc_huntnext = true) {
                         if(npc_type = zamorak_wizard & %npc_aggressive_player = uid) {
                             return;
