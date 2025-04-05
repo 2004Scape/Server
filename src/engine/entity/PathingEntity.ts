@@ -396,7 +396,7 @@ export default abstract class PathingEntity extends Entity {
             // you are not within ap distance of pathing entity if you are underneath it.
             return false;
         }
-        // Los is always calculated Player -> Npc, so that pvm interactions are symmetrical
+        // Los for Npcs is always calculated backwards for all Entity types (tested Player and Npc)
         if (this instanceof Npc) {
             return CoordGrid.distanceTo(this, target) <= range && isApproached(this.level, target.x, target.z, this.x, this.z, target.width, target.length, this.width, this.length);
         }
