@@ -634,7 +634,7 @@ mes("The doll is made from old wood and cloth.");
 if(last_useitem = doll_of_iban) {
     // check if doll is complete, todo: how does this work if iban is currently dead
     if(getbit_range(%upass_map_mechanisms, ^upass_blood_on_doll, ^upass_shadow_on_doll) = calc(pow(2,4) - 1)
-        & %upass_progress = ^upass_confronted_iban
+        & %upass_progress <= ^upass_confronted_iban
         & npc_findexact(1_33_72_21_39, lord_iban) = true) {
         mes("You throw the doll of Iban into the pit...");
         p_delay(1);
