@@ -26,7 +26,7 @@ switch_int(~p_choice2("Yes please, I'd like to go to Brimhaven.", 1, "No thanks.
         ~chatnpc("<p,neutral>Great! Just hop into the cart then and we'll go!");
         ~mesbox("You hop into the cart and the driver urges the horses on.|You take a taxing journey through the jungle to Brimhaven.");
         inv_del(inv, coins, $amount);
-        ~mesbox("You pay the fare and hand <tostring($amount)> gold coins to Hajedy.");
+        ~mesbox("You pay the fare and hand <tostring($amount)> gold coins to Vigroy.");
         p_teleport(0_43_50_24_14);
         ~mesbox("You feel tired from the journey, but at least|you didn't have to walk all that distance.");
     case 2 :

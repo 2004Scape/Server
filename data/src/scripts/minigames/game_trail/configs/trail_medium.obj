@@ -412,7 +412,7 @@ model=model_3374_obj
 2dxan=360
 iop1=Read
 category=trail_clue_medium
-param=trail_desc,Speak to Hadejy.
+param=trail_desc,Speak to Hajedy.
 tradeable=no
 
 [trail_clue_medium_anagram_exp006]
