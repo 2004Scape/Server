@@ -45,10 +45,11 @@ switch_obj(last_useitem) {
 // todo: mesanim check
 ~chatnpc("<p,neutral><text_gender("Sir", "Madam")>, this is truly amazing...");
 ~chatnpc("<p,neutral>That totem pole will take pride of place in the Legends Guild as a reminder of your quest to gain entry. And so that many other great adventurers can admire your bravery.");
+~objbox(gilded_totem, "Sir Radimus Erkle orders some guards to take the totem pole into the main Legends hall.", 250, 0, 0);
+~chatnpc("<p,neutral>Well, you've completed the tasks I set you. That map of the Kharazi jungle will be very helpful for future expeditions.|@blu@-- Sir Radimus takes the map and the totem pole --");
 inv_del(inv, gilded_totem, 1);
 inv_del(inv, radimus_notes_complete, 1);
 %legends_progress = ^legends_returned_to_radimus;
-~chatnpc("<p,neutral>Well, you've completed the tasks I set you. That map of the Kharazi jungle will be very helpful for future expeditions.|@blu@-- Sir Radimus takes the map and the totem pole --");
 ~chatnpc("<p,neutral>Congratulations, welcome to the Legends Guild. Please, go through to the main Legends Guild building and I will join you shortly.");
 
 [label,radimus_erkle_midquest]

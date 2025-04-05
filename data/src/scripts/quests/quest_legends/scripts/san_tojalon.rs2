@@ -1,8 +1,8 @@
 [opnpc1,san_tojalon]
 if (~player_in_combat_check = false) {
-    mes("Test");
     return;
 }
+// no area check or anything (same w/opnpc2)
 if(%legends_progress < ^legends_heart_in_recess & ~obj_gettotal(chunk_of_crystal) = 0 & ~obj_gettotal(heart_crystal) = 0 
         & ~obj_gettotal(glowing_heart_crystal) = 0 & testbit(%legends_map_runes, ^legends_smelting_chunk) = false) {
     npc_say("Are you ready to have your mettle tested?");
@@ -24,7 +24,7 @@ if(add(%lastcombat, 8) < map_clock & %aggressive_npc ! npc_uid) {
 @player_combat_start;
 
 [ai_opplayer2,san_tojalon]
-if(%npc_aggressive_player ! uid & (%legends_progress >= ^legends_heart_in_recess | testbit(%legends_map_runes, ^legends_smelting_chunk) = true)) {
+if(inzone(0_43_45_0_0, 0_46_45_63_63, coord) = false & (%npc_aggressive_player ! uid & (%legends_progress >= ^legends_heart_in_recess | testbit(%legends_map_runes, ^legends_smelting_chunk) = true))) {
     npc_setmode(null);
     return;
 }
@@ -44,6 +44,20 @@ if(add(%lastcombat, 8) < map_clock & %aggressive_npc ! npc_uid) {
 if(finduid(%npc_aggressive_player) = true) {
     if_close;
     if(p_finduid(uid) = true) {
+        if(inzone(0_43_45_0_0, 0_46_45_63_63, coord) = true) {
+            %legends_map_runes = setbit(%legends_map_runes, ^legends_defeated_san_final);
+            mes("A nerve tingling scream echoes around you");
+            mes("as you slay San Tojalon.");
+            p_delay(1);
+            npc_say("Arrghhhhh");
+            mes("San Tojalon: Arrghhhhh");
+            p_delay(1);
+            npc_say("Forever must I live in this torment till this beast is slain.");
+            mes("Irvig Senay: Forever must I live in this torment till this beast is slain.");
+            npc_del;
+            p_delay(2);
+            @summon_nezi_part3;
+        }
         // doesn't queue, the npc will sit at 0 hp if no prot access
         npc_del;
         if(%legends_progress < ^legends_heart_in_recess & ~obj_gettotal(chunk_of_crystal) = 0 & ~obj_gettotal(heart_crystal) = 0 

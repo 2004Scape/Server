@@ -977,6 +977,7 @@ if (last_useitem = hollow_reed) {
         inv_del(inv, hollow_reed, 1);
         inv_add(inv, blessed_golden_bowl_pure_water, 1);
         %legends_map_runes = setbit_range_toint(%legends_map_runes, 0, ^legends_golden_bowl_uses_start, ^legends_golden_bowl_uses_end);
+        if(%legends_progress = ^legends_defeated_nezikchened_water) %legends_progress = ^legends_sacred_water_collected;
         // inconsistent use of "syphon" here is accurate
         // https://youtu.be/Lid8enDEF_U?t=1463
         ~objbox(blessed_golden_bowl_pure_water, "You use the cut reed plant to syphon some water from the pool into your blessed golden bowl. The water seems to bubble and sparkle as if alive.", 250, 0, divide(^objbox_height, 2));
@@ -1070,12 +1071,36 @@ else {
     ~displaymessage(^dm_default);
 }
 
+[proc,get_yommi_planter]()(player_uid)
+switch_coord(loc_coord) {
+    case 0_43_45_26_36 : return(%yommi_spot1);
+    case 0_43_45_56_24 : return(%yommi_spot2);
+    case 0_44_45_15_41 : return(%yommi_spot3);
+    case 0_44_45_51_43 : return(%yommi_spot4);
+    case 0_45_45_14_41 : return(%yommi_spot5);
+    case 0_45_45_31_25 : return(%yommi_spot6);
+}
+
+[proc,set_player_yommi_planter]
+switch_coord(loc_coord) {
+    case 0_43_45_26_36 : %yommi_spot1 = uid;
+    case 0_43_45_56_24 : %yommi_spot2 = uid;
+    case 0_44_45_15_41 : %yommi_spot3 = uid;
+    case 0_44_45_51_43 : %yommi_spot4 = uid;
+    case 0_45_45_14_41 : %yommi_spot5 = uid;
+    case 0_45_45_31_25 : %yommi_spot6 = uid;
+}
+
 [oplocu,legends_fertile_soil]
 if(last_useitem = yommi_tree_seeds) {
     ~mesbox("These seeds need to be germinated before you can plant them.");
     return;
 } 
 if(last_useitem = yommi_tree_seeds_germinated) {
+    if(inv_total(inv, yommi_totem) > 0) {
+        ~mesbox("You have already made the Yommi tree Totem Pole. You don't need to grow another tree.");
+        return;
+    }
     if(stat(herblore) < 45) {
         ~mesbox("You need a Herblore skill of at least 45 to attempt to grow the Yommi tree.");
         return;
@@ -1088,7 +1113,188 @@ if(last_useitem = yommi_tree_seeds_germinated) {
         ~mesbox("You'll need some pure sacred water to feed the tree when it starts growing.");
         return;
     }
+    if(stat_random(stat(herblore), 93, 252) = false | %legends_progress < ^legends_sacred_water_collected) {
+        inv_del(inv, yommi_tree_seeds_germinated, 1);
+        ~mesbox("You planted the seed incorrectly in the fertile soil. The plant withers and dies.");
+        return;
+    }
+    mes("You plant the Yommi tree seed in the soil.");
+    ~set_player_yommi_planter;
+    loc_change(legends_yommi_tree_baby, 5);
+    p_delay(1);
+    inv_del(inv, yommi_tree_seeds_germinated, 1);
+    mes("It starts to grow at a remarkable rate.");
+    p_delay(1);
+    mes("It looks as if this Yommi tree needs to be watered.");
+    loc_change(legends_yommi_tree_sapling, 100);
+    p_delay(1);
+    world_delay(49); // 53t (something is wrong with world delay lol)
+    if(loc_find(loc_coord, legends_yommi_tree_sapling) = true) {
+        loc_change(legends_dead_yommi_sapling, 50);
+    }
 }
+
+[oplocu,legends_yommi_tree_sapling]
+if(last_useitem = blessed_golden_bowl_pure_water) {
+    if(~get_yommi_planter ! uid) {
+        mes("This is not your Yommi tree.");
+        return;
+    }
+    mes("You water the Yommi tree from the Golden Bowl...");
+    inv_del(inv, blessed_golden_bowl_pure_water, 1);
+    inv_add(inv, blessed_gold_bowl, 1);
+    p_delay(1);
+    mes("It grows at a remarkable rate...");
+    p_delay(1);
+    mes("Soon the tree stops growing.");
+    loc_change(legends_adult_yommi_tree, 100);
+    p_delay(1);
+    mes("It looks tall enough now to make a good-sized totem pole.");
+    world_delay(49); // 53t
+    if(loc_find(loc_coord, legends_adult_yommi_tree) = true) {
+        loc_change(legends_dead_yommi, 50);
+    }
+}
+
+[oplocu,legends_adult_yommi_tree]
+if(oc_category(last_useitem) = weapon_axe) {
+    if(~get_yommi_planter ! uid) {
+        mes("This is not your Yommi tree.");
+        return;
+    }
+    if(last_useitem ! rune_axe) {
+        ~mesbox("You need a better axe than that.");
+        return;
+    }
+    anim(human_woodcutting_rune_axe, 0);
+    mes("You prepare to chop the Yommi tree.");
+    p_delay(1);
+    mes("You chop the Yommi tree down.");
+    loc_change(legends_felled_yommi_tree, 100);
+    p_delay(1);
+    anim(null, 0);
+    world_delay(49); // 53t (something is wrong with world delay lol)
+    if(loc_find(loc_coord, legends_felled_yommi_tree) = true) {
+        loc_change(legends_rotten_yommi, 50);
+    }
+}
+
+[oplocu,legends_felled_yommi_tree]
+if(oc_category(last_useitem) = weapon_axe) {
+    if(~get_yommi_planter ! uid) {
+        mes("This is not your Yommi tree.");
+        return;
+    }
+    if(last_useitem ! rune_axe) {
+        ~mesbox("You need a better axe than that.");
+        return;
+    }
+    anim(human_woodcutting_rune_axe, 0);
+    mes("You professionally wield your axe...");
+    p_delay(1);
+    mes("and trim the branches from the Yommi Tree.");
+    loc_change(legends_trimmed_yommi, 100);
+    anim(null, 0);
+    world_delay(49); // 51t (something is wrong with world delay lol)
+    if(loc_find(loc_coord, legends_trimmed_yommi) = true) {
+        loc_change(legends_rotten_yommi_tree, 50);
+    }
+}
+
+[oplocu,legends_trimmed_yommi]
+if(oc_category(last_useitem) = weapon_axe) {
+    if(~get_yommi_planter ! uid) {
+        mes("This is not your Yommi tree.");
+        return;
+    }
+    if(last_useitem ! rune_axe) {
+        ~mesbox("You need a better axe than that.");
+        return;
+    }
+    anim(human_woodcutting_rune_axe, 0);
+    mes("You professionally wield your axe...");
+    p_delay(1);
+    mes("as you carve a wonderful totem pole from the Yommi tree trunk.");
+    loc_change(legends_totem_pole_5, 100);
+    anim(null, 0);
+    world_delay(49); // 51t (something is wrong with world delay lol)
+    if(loc_find(loc_coord, legends_totem_pole_5) = true) {
+        loc_change(legends_rotten_totem_pole, 50);
+    }
+}
+
+[oploc1,legends_totem_pole_5]
+if(~get_yommi_planter ! uid) {
+    mes("This is not your Yommi tree.");
+    return;
+}
+if(inv_freespace(inv) = 0) {
+    mes("You don't have enough space for this in your inventory.");
+    return;
+}
+mes("This totem pole looks very heavy...");
+anim(human_pickupfloor, 0);
+p_delay(0);
+if(%legends_progress < ^legends_collected_totem) %legends_progress = ^legends_collected_totem;
+loc_change(legends_damaged_earth, 50);
+inv_add(inv, yommi_totem, 1);
+mes("But you manage to lift it.");
+
+[oplocu,legends_dead_yommi_sapling]
+if(oc_category(last_useitem) = weapon_axe) {
+    @yommi_chop_logs("You use your axe on the dead sapling Yommi tree.");
+}
+~displaymessage(^dm_default);
+
+[oplocu,legends_dead_yommi]
+if(oc_category(last_useitem) = weapon_axe) {
+    @yommi_chop_logs("You use your axe on the rotten adult Yommi tree.");
+}
+~displaymessage(^dm_default);
+
+[oplocu,legends_rotten_yommi]
+if(oc_category(last_useitem) = weapon_axe) {
+    @yommi_chop_logs("You use your axe on the rotten felled Yommi tree.");
+}
+~displaymessage(^dm_default);
+
+[oplocu,legends_rotten_yommi_tree]
+if(oc_category(last_useitem) = weapon_axe) {
+    @yommi_chop_logs("You use your axe on the rotten trimmed Yommi tree.");
+}
+~displaymessage(^dm_default);
+
+[oplocu,legends_rotten_totem_pole]
+if(oc_category(last_useitem) = weapon_axe) {
+    @yommi_chop_logs("You use your axe on the rotten Yommi totem pole.");
+}
+~displaymessage(^dm_default);
+
+
+[label,yommi_chop_logs](string $chop_mes)
+if(last_useitem ! rune_axe) {
+    ~mesbox("You need a better axe than that.");
+    return;
+}
+mes($chop_mes);
+def_int $rolls = 0;
+anim(human_woodcutting_rune_axe, 0);
+loc_change(legends_fertile_soil, 50);
+while($rolls < 3) {
+    def_int $rand = random(10);
+    if($rand < 1) {
+        inv_add(inv, magic_logs, 1);
+        mes("You get some magic logs.");
+    } else if($rand < 5) {
+        inv_add(inv, logs, 1);
+        mes("You get some logs.");
+    } else {
+        return;
+    }
+    $rolls = add($rolls, 1);
+}
+p_delay(4);
+anim(null, 0);
 
 [opheld1,sketch]
 ~objbox(sketch, "This is a crudely drawn picture of some kind of vessel, it looks vaguely bowl shaped - this is what Gujuo was referring to when he said that you needed to make a vessel made from the metal of the sun.", 250, 0, 0);
@@ -1789,8 +1995,43 @@ mes("A palm leaf falls to the ground.");
 loc_change(legends_leafy_palm_tree, 44); // static 43t
 obj_add(map_findsquare(coord, 1, 1, ^map_findsquare_lineofwalk), palm_leaf, 1, 100);
 
+[oplocu,legends_totem_pole_1]
+if(last_useitem = yommi_totem) {
+    if(%legends_progress < ^legends_defeated_nezikchened_final) {
+        ~mesbox("You attempt to replace the evil totem pole. A black cloud emanates from the evil totem pole and it slowly forms into the dread demon Nezikchened.");
+        @summon_nezi_part3;
+    } else if(%legends_progress = ^legends_defeated_nezikchened_final) {
+        inv_del(inv, yommi_totem, 1);
+        %legends_progress = ^legends_replaced_totem;
+        ~mesbox("You remove the evil totem pole and replace it with the one you carved yourself. As you do so, you feel a lightness in the air, almost as if the Kharazi Jungle were sighing.");
+        def_coord $coord = map_findsquare(coord, 1, 7, ^map_findsquare_lineofwalk);
+        npc_add($coord, gujuo, 500);
+        npc_walk(movecoord(coord, 1, 0, 0));
+        npc_setmode(opplayer2);
+    }
+    return;
+}
+~displaymessage(^dm_default);
+
 [oploc1,legends_totem_pole_1]
-~mesbox("This totem pole looks corrupted. You don't like to look at it for too long.");
+if(%legends_progress < ^legends_defeated_nezikchened_final) {
+    loc_change(legends_totem_pole_3, 20);
+    ~mesbox("This totem pole looks corrupted. You don't like to look at it for too long.");
+} else if(%legends_progress >= ^legends_replaced_totem) {
+    loc_change(legends_totem_pole_2, 20);
+    ~mesbox("This totem pole is truly awe inspiring. It depicts powerful Karamjan animals. It is very well carved and brings a sense of power and spiritual fulfillment to anyone who looks at it.");
+}
+
+[oploc1,legends_totem_pole_2]
+if(%legends_progress < ^legends_defeated_nezikchened_final) {
+    loc_change(legends_totem_pole_3, 20);
+    ~mesbox("This totem pole corrupted. You don't like to look at it for too long.");
+} else if(%legends_progress >= ^legends_replaced_totem) {
+    ~mesbox("This totem pole is truly awe inspiring. It depicts powerful Karamjan animals. It is very well carved and brings a sense of power and spiritual fulfillment to anyone who looks at it.");
+}
+
+// no script for pole_3
+
 
 [queue,legends_quest_complete]
 %legends_progress = ^legends_complete;

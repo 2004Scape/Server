@@ -3,7 +3,7 @@
 @gujuo_start;
 
 [ai_opplayer2,gujuo]
-mes("Gujuo approaches...");
+mes("Gujuo approaches.");
 npc_setmode(none);
 @gujuo_start;
 
@@ -62,7 +62,7 @@ else if (%legends_progress >= ^legends_accepted_rescue_ungadulu & %legends_progr
 } else if (%legends_progress = ^legends_water_pool_dried_up) {
     ~chatnpc("<p,neutral>I have visited Ungadulu in the caves, he is hard at work studying. He looks well! Have you grown the Yommi tree yet?");
     @multi2("The water pool has dried up and I need more water.", gujuo_pool_dried, "The Yommi tree died.", gujuo_tree_died);
-} else if (%legends_progress >= ^legends_talk_gujuo_pool) {
+} else if (%legends_progress >= ^legends_talk_gujuo_pool & %legends_progress < ^legends_defeated_nezikchened_water) {
     ~chatnpc("<p,neutral>I have visited Ungadulu in the caves, he is hard at work studying. He looks well! How is your quest going Bwana?");
     if(%legends_progress = ^legends_talk_gujuo_pool) {
         @multi5("Where can I get more water for the Yommi tree?", gujuo_morewater, 
@@ -77,10 +77,18 @@ else if (%legends_progress >= ^legends_accepted_rescue_ungadulu & %legends_progr
                 "If I went in search of the source, could you help me?", gujuo_searchsource,
                 "Ok thanks for your help.", gujuo_thanks);
     }
-} else if (%legends_progress >= ^legends_defeated_nezikchened_water) {
+} else if (%legends_progress >= ^legends_defeated_nezikchened_water & %legends_progress < ^legends_defeated_nezikchened_final) {
     ~chatnpc("<p,happy>Hello Bwana, I'm very pleased to see you again. Things seem much happier now in the Kharazi Jungle. I suspect that it is down to your good doings!");
+    if(inv_total(inv, yommi_totem) > 0) {
+        @multi4("I made the Totem pole, now what do I do with it?", gujuo_madetotem, "I found the source of the spring and I got the water.", gujuo_foundsource, "I killed the demon again.", gujuo_demon, "Ok thanks for your help.", gujuo_thanks);
+    }
     @multi4("I found the source of the spring and I got the water.", gujuo_foundsource, "I killed the demon again.", gujuo_demon, "How do I make the totem pole?", gujuo_totem, "Ok thanks for your help.", gujuo_thanks);
 }
+
+[label,gujuo_madetotem]
+~chatplayer("<p,neutral>I made the Totem pole, now what do I do with it?");
+~chatnpc("<p,neutral>Well Bwana, it's a very interesting piece of work, not bad at all. Now we need to replace an existing corrupted totem pole with your newly constructed one. You should find those totems within the Kharazi Jungle.");
+@multi4("I made the Totem pole, now what do I do with it?", gujuo_madetotem, "I found the source of the spring and I got the water.", gujuo_foundsource, "I killed the demon again.", gujuo_demon, "Ok thanks for your help.", gujuo_thanks);
 
 [label,gujuo_how_goes_ungadulu]
 ~chatnpc("<p,neutral>How goes your quest to release Ungadulu Bwana?");

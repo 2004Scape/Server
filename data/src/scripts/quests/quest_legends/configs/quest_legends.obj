@@ -159,7 +159,6 @@ recol2d=31528
 2dxan=204
 weight=800g
 tradeable=no
-category=gold_bowl
 param=next_obj_stage,golden_bowl_water
 
 [blessed_gold_bowl]
@@ -177,7 +176,6 @@ recol2d=31528
 2dxan=204
 weight=800g
 tradeable=no
-category=gold_bowl
 param=next_obj_stage,blessed_golden_bowl_water
 
 [golden_bowl_water]
@@ -228,6 +226,7 @@ recol1d=31528
 iop1=Empty
 weight=1kg
 tradeable=no
+category=gold_bowl
 param=next_obj_stage,blessed_gold_bowl
 
 [blessed_golden_bowl_pure_water]
@@ -244,6 +243,7 @@ recol1d=31528
 iop1=Empty
 weight=1kg
 tradeable=no
+category=gold_bowl
 param=next_obj_stage,blessed_gold_bowl
 
 [hollow_reed]

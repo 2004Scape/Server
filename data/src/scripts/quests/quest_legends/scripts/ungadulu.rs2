@@ -129,7 +129,57 @@ if(%legends_progress = ^legends_defeated_nezikchened_fire) {
         @multi5("I have killed Viyeldi!", ungadulu_killed_viyeldi, "I met a spirit in the Viyeldi Caves.", ungadulu_spirit, "The spirit told me to kill Viyeldi.", ungadulu_kill, "Do you know anything about daggers?", ungadulu_dagger, "I need more Yommi tree seeds.", ungadulu_need_seeds);
     }
     @multi5("I met a spirit in the Viyeldi Caves.", ungadulu_spirit, "The spirit told me to kill Viyeldi.", ungadulu_kill, "Do you know anything about daggers?", ungadulu_dagger, "I need more Yommi tree seeds.", ungadulu_need_seeds, "Ok, thanks...", ungadulu_thanks);
-} 
+}  else if(%legends_progress = ^legends_defeated_nezikchened_water) { // this is only an inv check, will override the later stage options
+    ~mesbox("You approach Ungadulu...");
+    if(testbit(%legends_map_runes, ^legends_given_dagger) = true) {
+        ~chatnpc("<p,quiz>Blessings on you Bwana. Have you managed to deal with the spirit? Do you have the water?");
+    } else {
+        ~chatnpc("<p,quiz>Blessings on you Bwana. Did you use the spell and kill the spirit? Do you have the sacred water yet?");
+    }
+    @multi3("Yes, I've killed the Spirit.", ungadulu_killed_spirit, "Yes, I've got the water.", ungadulu_got_water, "I need more Yommi tree seeds.", ungadulu_need_seeds);
+} else if(%legends_progress >= ^legends_collected_totem) {
+    if(%legends_progress >= ^legends_collected_totem & %legends_progress < ^legends_replaced_totem & ~obj_gettotal(yommi_tree_seeds) = 0 & ~obj_gettotal(yommi_tree_seeds_germinated) = 0 & ~obj_gettotal(yommi_totem) = 0) {
+        ~chatnpc("<p,neutral>I see you have no totem pole, or Yommi tree seeds, is everything ok?");
+        def_int $op = ~p_choice2("Yes, everything's fine.", 1, "I need more Yommi tree seeds.", 2);
+        if($op = 2) @ungadulu_need_seeds;
+        ~chatplayer("<p,neutral>Yes, everything's fine.");
+    }
+    ~chatnpc("<p,happy>Your Legendary exploits are travelling the whole jungle.");
+    if(%legends_progress = ^legends_collected_totem) {
+        ~chatnpc("<p,neutral>How goes your quest to grow the sacred Yommi tree?");
+        @multi3("I've already made the totem pole.", ungadulu_made_totem, "I'm not sure what to do with the Totem pole.", ungadulu_totem_notsure, "Ok, thanks...", ungadulu_thanks);
+    }
+}
+
+[label,ungadulu_made_totem]
+~chatplayer("<p,neutral>I've already made the totem pole.");
+~chatnpc("<p,happy>This is great news Bwana, you've done really well. Perhaps we can start to rally our people together now. And live once again without fear in the jungle.");
+@multi2("I'm not sure what to do with the Totem pole.", ungadulu_totem_notsure, "Ok, thanks...", ungadulu_thanks);
+
+[label,ungadulu_totem_notsure]
+~chatplayer("<p,quiz>I'm not sure what to do with the Totem pole.");
+~chatnpc("<p,happy>Well, Bwana, you can simply replace the corrupted totem pole with the good one you have created. This will make my people very happy.");
+@multi3("I've already made the totem pole.", ungadulu_made_totem, "I'm not sure what to do with the Totem pole.", ungadulu_totem_notsure, "Ok, thanks...", ungadulu_thanks);
+
+[label,ungadulu_killed_spirit]
+if(testbit(%legends_map_runes, ^legends_given_dagger) = true) {
+    ~chatnpc("<p,happy>Yes, I've killed the Spirit. Actually the spirit turned out to be the Demon - Nezikchened.");
+} else {
+    ~chatnpc("<p,quiz>Yes, I've killed the Spirit. I used the spell you gave me, it was very effective in fact. Actually the spirit turned out to be the Demon - Nezikchened.");
+}
+~chatnpc("<p,happy>That's truly a miracle Bwana, very few come out of Viyeldi's caves alive. And you managed to defeat Nezikchened a second time? You are truly a legend bwana. Do you have the sacred water as well?");
+@multi3("Yes, I've got the water.", ungadulu_got_water, "What do I do now?", ungadulu_whatnow, "Ok, thanks...", ungadulu_thanks);
+
+[label,ungadulu_got_water]
+~chatplayer("<p,happy>Yes, I've got the water.");
+~chatnpc("<p,neutral>That is truly great Bwana... Well done! You have the spirit of the jungle lion.");
+@multi2("What do I do now?", ungadulu_whatnow, "Ok, thanks...", ungadulu_thanks);
+
+[label,ungadulu_whatnow]
+~chatplayer("<p,neutral>What do I do now?");
+~chatnpc("<p,neutral>Well, you should be able to plant the Yommi tree. And then water it with the sacred water. You should then be able to start making the Totem pole.");
+~chatnpc("<p,worried>So long as you have banished the spirit and managed to get some of the sacred water. Let us pray that we have seen the last of that evil!");
+@multi3("Yes, I've got the water.", ungadulu_got_water, "Yes, I've killed the Spirit.", ungadulu_killed_spirit, "Ok, thanks...", ungadulu_thanks);
 
 [label,ungadulu_killed_viyeldi]
 ~chatplayer("<p,happy>I have killed Viyeldi!");

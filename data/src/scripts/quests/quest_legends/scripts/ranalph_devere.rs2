@@ -22,7 +22,7 @@ if(add(%lastcombat, 8) < map_clock & %aggressive_npc ! npc_uid) {
 @player_combat_start;
 
 [ai_opplayer2,ranalph_devere]
-if(%npc_aggressive_player ! uid & (%legends_progress >= ^legends_heart_in_recess | testbit(%legends_map_runes, ^legends_smelting_lump) = true)) {
+if(inzone(0_43_45_0_0, 0_46_45_63_63, coord) = false & (%npc_aggressive_player ! uid & (%legends_progress >= ^legends_heart_in_recess | testbit(%legends_map_runes, ^legends_smelting_lump) = true))) {
     npc_setmode(null);
     return;
 }
@@ -42,6 +42,23 @@ if(add(%lastcombat, 8) < map_clock & %aggressive_npc ! npc_uid) {
 if(finduid(%npc_aggressive_player) = true) {
     if_close;
     if(p_finduid(uid) = true) {
+        if(inzone(0_43_45_0_0, 0_46_45_63_63, coord) = true) {
+            %legends_map_runes = setbit(%legends_map_runes, ^legends_defeated_ranalph_final);
+            mes("A nerve tingling scream echoes around you");
+            mes("as you slay Ranalph Devere.");
+            p_delay(1);
+            npc_say("Arrghhhhh");
+            mes("Ranalph Devere: Arrghhhhh");
+            p_delay(1);
+            npc_say("Forever must I live in this torment");
+            mes("Ranalph Devere: Forever must I live in this torment");
+            p_delay(1);
+            npc_say("till this beast is slain.");
+            mes("Ranalph Devere: till this beast is slain.");
+            npc_del;
+            p_delay(2);
+            @summon_nezi_part3;
+        }
         // doesn't queue, the npc will sit at 0 hp if no prot access
         npc_del;
         if(%legends_progress < ^legends_heart_in_recess & ~obj_gettotal(lump_of_crystal) = 0 & ~obj_gettotal(heart_crystal) = 0 
