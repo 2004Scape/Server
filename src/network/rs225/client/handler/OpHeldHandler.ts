@@ -12,7 +12,7 @@ import Environment from '#/util/Environment.js';
 export default class OpHeldHandler extends MessageHandler<OpHeld> {
     handle(message: OpHeld, player: Player): boolean {
         const { obj: item, slot, component: comId } = message;
-
+        
         const com = Component.get(comId);
         if (typeof com === 'undefined' || !player.isComponentVisible(com) || !com.interactable) {
             player.clearPendingAction();
@@ -44,7 +44,10 @@ export default class OpHeldHandler extends MessageHandler<OpHeld> {
         player.lastItem = item;
         player.lastSlot = slot;
 
-        player.clearPendingAction();
+        if(com.rootLayer != player.modalMain) {
+            player.clearPendingAction();
+        }
+
         player.moveClickRequest = false; // uses the dueling ring op to move whilst busy & queue pending: https://youtu.be/GPfN3Isl2rM
         player.faceEntity = -1;
         player.masks |= player.entitymask;
