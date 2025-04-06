@@ -12,7 +12,7 @@ import Environment from '#/util/Environment.js';
 export default class OpHeldHandler extends MessageHandler<OpHeld> {
     handle(message: OpHeld, player: Player): boolean {
         const { obj: item, slot, component: comId } = message;
-        
+
         const com = Component.get(comId);
         if (typeof com === 'undefined' || !player.isComponentVisible(com) || !com.interactable) {
             player.clearPendingAction();
