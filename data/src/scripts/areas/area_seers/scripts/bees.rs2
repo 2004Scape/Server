@@ -23,7 +23,7 @@ if(%beehive_free = true) {
 
 [label,take_beehive]
 // https://youtu.be/yC68rzkRvCQ?si=VSPc8U4LsvI0GqgS&t=30
-if(%beehive_free = false) {
+if(%beehive_free ! true) {
     mes("Suddenly bees fly out of the hive and sting you.");
     ~damage_self(2); // queue
     return;

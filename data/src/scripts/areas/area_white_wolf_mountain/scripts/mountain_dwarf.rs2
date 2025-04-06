@@ -67,6 +67,7 @@ if($option = 1) {
         ~chatplayer("<p,happy>Fortunately I'm alright at fishing!");
         ~chatnpc("<p,happy>Okay, I entrust you with our competition pass.|Go to Hemenster and do us proud!");
         %fishingcompo_progress = ^fishingcompo_started;
+        %hemenster_pipe_stashed = false;
         ~send_quest_progress(questlist:fishingcompo, %fishingcompo_progress, ^fishingcompo_complete);
         inv_add(inv, fishing_pass, 1);
     } else if($start = 2) {
