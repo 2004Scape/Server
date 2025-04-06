@@ -149,7 +149,7 @@ if (inv_getobj(trail_puzzle_inv, 0) = obj_2749 &
 }
 return (false);
 
-[opheld5,_trail_puzzle_piece]
+[inv_button5,trail_puzzle:com_4]
 def_int $slot = last_slot;
 def_int $open_slot = -1;
     
@@ -173,5 +173,3 @@ if($open_slot ! -1) {
     sound_synth(slide_puzzle, 0, 0);
     inv_movetoslot(trail_puzzle_inv, trail_puzzle_inv, $slot, $open_slot);
 }
-
-if_openmain(trail_puzzle); // opheld5 closes modal so this is temp workaround

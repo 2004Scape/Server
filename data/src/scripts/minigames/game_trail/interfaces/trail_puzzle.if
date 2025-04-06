@@ -48,6 +48,7 @@ width=5
 height=5
 interactable=yes
 margin=5,5
+option5=Move
 
 [com_5]
 type=layer
