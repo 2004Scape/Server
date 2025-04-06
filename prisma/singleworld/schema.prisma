@@ -18,6 +18,7 @@ model account {
 
     username String  @unique
     password String
+    password_updated DateTime?
     email    String?
 
     registration_ip   String?
