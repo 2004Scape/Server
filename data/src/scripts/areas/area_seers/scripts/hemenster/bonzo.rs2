@@ -37,7 +37,7 @@ if($option = 1) {
 
 [proc,bonzo_set_places]
 ~chatnpc("<p,neutral>Ok, nearly everyone is in their place already.|You fish in the spot by the willow tree,|and the Sinister Stranger, you fish by the pipes.");
-if(%hemenster_pipe_stashed = true) {
+if(%hemenster_pipe_stashed ! null & %hemenster_pipe_stashed = true) {
     ~move_hemenster_pipe;
     return;
 }
