@@ -173,5 +173,3 @@ if($open_slot ! -1) {
     sound_synth(slide_puzzle, 0, 0);
     inv_movetoslot(trail_puzzle_inv, trail_puzzle_inv, $slot, $open_slot);
 }
-
-if_openmain(trail_puzzle); // opheld5 closes modal so this is temp workaround
