@@ -68,7 +68,7 @@ export default class Npc extends PathingEntity {
     delayedPatrol: boolean = false;
     resetOnRevert: boolean = true;
 
-    lastWanderTick: number = 0;
+    wanderCounter: number = 0;
 
     heroPoints: HeroPoints = new HeroPoints(16); // be sure to reset when stats are recovered/reset
 
@@ -97,7 +97,7 @@ export default class Npc extends PathingEntity {
         this.targetOp = npcType.defaultmode;
         this.huntMode = npcType.huntmode;
         this.huntrange = npcType.huntrange;
-        this.lastWanderTick = World.currentTick;
+        this.wanderCounter = 0;
     }
 
     cleanup(): void {
@@ -202,6 +202,7 @@ export default class Npc extends PathingEntity {
         const moved = this.lastTickX !== this.x || this.lastTickZ !== this.z;
         if (moved) {
             this.lastMovement = World.currentTick + 1;
+            this.wanderCounter = 0;
         }
         return moved;
     }
@@ -419,9 +420,13 @@ export default class Npc extends PathingEntity {
         if (this.delayed) {
             return;
         }
+
         if (this.targetOp === NpcMode.NULL) {
-            this.defaultMode();
-        } else if (this.targetOp === NpcMode.NONE) {
+            const type: NpcType = NpcType.get(this.type);
+            this.targetOp = type.defaultmode;
+        }
+
+        if (this.targetOp === NpcMode.NONE) {
             this.noMode();
         } else if (this.targetOp === NpcMode.WANDER) {
             this.wanderMode();
@@ -455,7 +460,6 @@ export default class Npc extends PathingEntity {
         this.clearInteraction();
         const type: NpcType = NpcType.get(this.type);
         this.targetOp = type.defaultmode;
-        this.lastWanderTick = World.currentTick; // osrs
         this.faceEntity = -1;
         this.masks |= this.entitymask;
 
@@ -469,19 +473,22 @@ export default class Npc extends PathingEntity {
 
     wanderMode(): void {
         const type = NpcType.get(this.type);
+
+        // 1/8 chance to move every tick (even if they already have a destination)
         if (type.moverestrict !== MoveRestrict.NOMOVE && Math.random() < 0.125) {
-            // 1/8 chance to move every tick (even if they already have a destination)
             this.randomWalk(type.wanderrange);
-            const moved = this.updateMovement(false);
-            if (moved) {
-                this.lastWanderTick = World.currentTick;
-            } else if (World.currentTick > this.lastWanderTick + 500) {
-                this.teleport(this.startX, this.startZ, this.startLevel);
-                this.lastWanderTick = World.currentTick;
-            }
-            return;
         }
+
         this.updateMovement(false);
+
+        const onSpawn = this.x === this.startX && this.z === this.startZ && this.level === this.startLevel;
+
+        if (this.wanderCounter++ >= 500) {
+            if (!onSpawn) {
+                this.teleport(this.startX, this.startZ, this.startLevel);
+            }
+            this.wanderCounter = 0;
+        }
     }
 
     patrolMode(): void {
@@ -603,7 +610,6 @@ export default class Npc extends PathingEntity {
         }
 
         if (this.level !== this.target.level) {
-            this.clearWaypoints();
             this.defaultMode();
             return;
         }
@@ -627,7 +633,6 @@ export default class Npc extends PathingEntity {
         }
 
         if (this.level !== this.target.level) {
-            this.clearWaypoints();
             this.defaultMode();
             return;
         }
