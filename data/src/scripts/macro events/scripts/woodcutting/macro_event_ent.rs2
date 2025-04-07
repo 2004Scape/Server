@@ -1,18 +1,19 @@
 // ents last for exactly 60 ticks: https://youtu.be/eGLAXnneCsg?list=PLn23LiLYLb1aYjPgadhUQGX61AeHWaT4y&t=222
 [proc,macro_event_ent_spawn]
-def_npc $ent = loc_param(ent);
-def_loc $loc = nc_param($ent, (next_loc_stage));
 def_coord $coord = loc_coord;
-// for 3x3 trees
-if ($loc = null) {
-    // Temp note: dur does not need updated
-    loc_change(loc_2639, 60);
-    loc_add(movecoord($coord, 1, 0, 1), loc_2639, 0, centrepiece_straight, 60);
+def_npc $ent = loc_param(ent);
+def_int $size = lc_width(loc_type);
+
+loc_del(60);
+if ($size = 1) {
+    loc_add($coord, loc_83, 0, centrepiece_straight, 60);
+} else if ($size = 2) {
+    loc_add($coord, loc_2639, 0, centrepiece_straight, 60);
+} else if ($size = 3) {
     loc_add(movecoord($coord, 2, 0, 0), loc_83, 0, centrepiece_straight, 60);
-    loc_add(movecoord($coord, 0, 0, 2), loc_84, 0, centrepiece_straight, 60);
-} else {
-    // Temp note: dur does not need updated
-    loc_change($loc, 60);
+    loc_add(movecoord($coord, 0, 0, 2), loc_83, 0, centrepiece_straight, 60);
+    loc_add(movecoord($coord, 1, 0, 1), loc_2639, 0, centrepiece_straight, 60);
+    loc_add($coord, loc_2639, 0, centrepiece_straight, 60);
 }
 npc_add($coord, $ent, 60);
 sound_synth(anothercry, 0, 0); // complete guess, this is near the toher wc sounds so it might be this one?

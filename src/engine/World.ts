@@ -41,6 +41,7 @@ import { PlayerTimerType } from '#/engine/entity/EntityTimer.js';
 import HuntModeType from '#/engine/entity/hunt/HuntModeType.js';
 import HuntNobodyNear from '#/engine/entity/hunt/HuntNobodyNear.js';
 import Loc from '#/engine/entity/Loc.js';
+import LocObjEvent from '#/engine/entity/LocObjEvent.js';
 import { isClientConnected, NetworkPlayer } from '#/engine/entity/NetworkPlayer.js';
 import Npc from '#/engine/entity/Npc.js';
 import { NpcEventRequest, NpcEventType } from '#/engine/entity/NpcEventRequest.js';
@@ -137,7 +138,8 @@ class World {
     readonly npcs: NpcList;
 
     // zones
-    readonly zonesTracking: Map<number, Set<Zone>>;
+    readonly zonesTracking: Set<Zone>;
+    readonly locObjTracker: LinkList<LocObjEvent>;
     readonly queue: LinkList<EntityQueueState>;
     readonly npcEventQueue: LinkList<NpcEventRequest>;
 
@@ -162,7 +164,8 @@ class World {
         this.newPlayers = new Set();
         this.players = new PlayerList(World.PLAYERS);
         this.npcs = new NpcList(World.NPCS);
-        this.zonesTracking = new Map();
+        this.zonesTracking = new Set();
+        this.locObjTracker = new LinkList();
         this.queue = new LinkList();
         this.npcEventQueue = new LinkList();
         this.lastCycleStats = new Array(12).fill(0);
@@ -1015,11 +1018,22 @@ class World {
     // - compute shared buffer
     private processZones(): void {
         const start: number = Date.now();
-        const tick: number = this.currentTick;
         try {
-            // - loc/obj despawn/respawn
-            // - compute shared buffer
-            this.zonesTracking.get(tick)?.forEach(zone => zone.tick(tick));
+            for (const event of this.locObjTracker.all()) {
+                // Check if the event is still valid
+                if (event.check()) {
+                    event.entity.turn();
+                }
+                // If this is false, we have not constructed our LinkedList properly somewhere
+                else {
+                    console.error('Loc Obj event is invalid');
+                }
+            }
+
+            // Compute shared for tracked zones
+            for (const zone of this.zonesTracking) {
+                zone.computeShared();
+            }
         } catch (err) {
             if (err instanceof Error) {
                 printError(`Error during processZones: ${err.message}`);
@@ -1174,8 +1188,8 @@ class World {
         const tick: number = this.currentTick;
 
         // - reset zones
-        this.zonesTracking.get(tick)?.forEach(zone => zone.reset());
-        this.zonesTracking.delete(tick);
+        this.zonesTracking.forEach(zone => zone.reset());
+        this.zonesTracking.clear();
 
         // - reset players
         for (const player of this.players) {
@@ -1388,21 +1402,13 @@ class World {
         return this.gameMap.getZone(x, z, level).getObjOfReceiver(x, z, objId, receiver64);
     }
 
-    trackZone(tick: number, zone: Zone): void {
-        const tracking: Map<number, Set<Zone>> = this.zonesTracking;
-        const zones: Set<Zone> = (tracking.get(tick) ?? new Set()).add(zone);
-        if (!tracking.has(tick)) {
-            tracking.set(tick, zones);
-        }
+    trackZone(zone: Zone): void {
+        this.zonesTracking.add(zone);
     }
 
-    trackLocObj(entity: Loc | Obj, zone: Zone, duration: number): void {
-        // In OSRS I suspect they use a counter per Loc/Obj to keep track of events rather than scheduling for a tick
-        // In 2004scape, we schedule for a tick. Scheduling for a tick ends up naturally 1 tick slower, so we do a -1 to compensate to match OSRS behavior
-        // - Bea5
-        entity.setLifeCycle(this.currentTick + duration - 1);
-        this.trackZone(this.currentTick + duration - 1, zone);
-        this.trackZone(this.currentTick, zone);
+    trackLocObj(entity: Loc | Obj, duration: number): void {
+        entity.setLifeCycle(duration);
+        this.locObjTracker.addTail(new LocObjEvent(entity));
     }
 
     addLoc(loc: Loc, duration: number): void {
@@ -1414,7 +1420,12 @@ class World {
 
         const zone: Zone = this.gameMap.getZone(loc.x, loc.z, loc.level);
         zone.addLoc(loc);
-        this.trackLocObj(loc, zone, duration);
+        this.trackZone(zone);
+        if (duration > 0) {
+            this.trackLocObj(loc, duration);
+        } else {
+            loc.untrack();
+        }
     }
 
     changeLoc(loc: Loc, typeID: number, shape: number, angle: number, duration: number) {
@@ -1422,10 +1433,13 @@ class World {
         if (loc.lifecycle === EntityLifeCycle.DESPAWN && !loc.isValid()) {
             return;
         }
-        // Remove previous collision from game world
-        const fromType: LocType = LocType.get(loc.type);
-        if (fromType.blockwalk) {
-            changeLocCollision(loc.shape, loc.angle, fromType.blockrange, fromType.length, fromType.width, fromType.active, loc.x, loc.z, loc.level, false);
+
+        // Remove previous collision from game world if loc is active
+        if (loc.isActive) {
+            const fromType: LocType = LocType.get(loc.type);
+            if (fromType.blockwalk) {
+                changeLocCollision(loc.shape, loc.angle, fromType.blockrange, fromType.length, fromType.width, fromType.active, loc.x, loc.z, loc.level, false);
+            }
         }
 
         // Update loc to new type
@@ -1440,21 +1454,22 @@ class World {
         // Notify zone that loc has been changed
         const zone: Zone = this.gameMap.getZone(loc.x, loc.z, loc.level);
         zone.changeLoc(loc);
-        this.trackLocObj(loc, zone, duration);
+        this.trackZone(zone);
+        this.trackLocObj(loc, duration);
     }
 
     mergeLoc(loc: Loc, player: Player, startCycle: number, endCycle: number, south: number, east: number, north: number, west: number): void {
         // printDebug(`[World] mergeLoc => name: ${LocType.get(loc.type).name}`);
         const zone: Zone = this.gameMap.getZone(loc.x, loc.z, loc.level);
         zone.mergeLoc(loc, player, startCycle, endCycle, south, east, north, west);
-        this.trackZone(this.currentTick, zone);
+        this.trackZone(zone);
     }
 
     animLoc(loc: Loc, seq: number): void {
         // printDebug(`[World] animLoc => name: ${LocType.get(loc.type).name}, seq: ${seq}`);
         const zone: Zone = this.gameMap.getZone(loc.x, loc.z, loc.level);
         zone.animLoc(loc, seq);
-        this.trackZone(this.currentTick, zone);
+        this.trackZone(zone);
     }
 
     removeLoc(loc: Loc, duration: number): void {
@@ -1466,7 +1481,12 @@ class World {
 
         const zone: Zone = this.gameMap.getZone(loc.x, loc.z, loc.level);
         zone.removeLoc(loc);
-        this.trackLocObj(loc, zone, duration);
+        this.trackZone(zone);
+        if (duration > 0) {
+            this.trackLocObj(loc, duration);
+        } else {
+            loc.untrack();
+        }
     }
 
     revertLoc(loc: Loc) {
@@ -1488,55 +1508,61 @@ class World {
         // Notify zone that loc has been changed
         const zone: Zone = this.gameMap.getZone(loc.x, loc.z, loc.level);
         zone.changeLoc(loc);
-        this.trackZone(this.currentTick, zone);
+        loc.untrack();
+        this.trackZone(zone);
     }
 
     addObj(obj: Obj, receiver64: bigint, duration: number): void {
-        // printDebug(`[World] addObj => name: ${ObjType.get(obj.type).name}, receiverId: ${receiverId}, duration: ${duration}`);
-        // check if we need to changeobj first.
+        // Dev note: This function is slightly messy. Perhaps this can be organized better
+        // Check if we need to changeobj first
         if (ObjType.get(obj.type).stackable && obj.lifecycle === EntityLifeCycle.DESPAWN) {
             const existing = this.getObjOfReceiver(obj.x, obj.z, obj.level, obj.type, receiver64);
             if (existing && existing.lifecycle === EntityLifeCycle.DESPAWN) {
                 const nextCount = obj.count + existing.count;
                 if (nextCount <= Inventory.STACK_LIMIT) {
-                    // if an obj of the same type exists and is stackable and have the same receiver, then we merge them.
-                    this.changeObj(existing, receiver64, nextCount);
+                    // If an obj of the same type exists and is stackable and have the same receiver, then we merge them.
+                    this.changeObj(existing, nextCount);
+                    this.trackLocObj(existing, duration + Obj.REVEAL);
                     return;
                 }
             }
         }
+
         const zone: Zone = this.gameMap.getZone(obj.x, obj.z, obj.level);
         zone.addObj(obj, receiver64);
+        this.trackZone(zone);
+        // If the obj is dropped to a specific person
         if (receiver64 !== Obj.NO_RECEIVER) {
             // objs with a receiver always attempt to reveal 100 ticks after being dropped.
             // items that can't be revealed (untradable, members obj in f2p) will be skipped in revealObj
-            this.trackLocObj(obj, zone, Obj.REVEAL);
+            this.trackLocObj(obj, duration + Obj.REVEAL);
             obj.receiver64 = receiver64;
-            obj.reveal = duration;
-        } else {
-            this.trackLocObj(obj, zone, duration);
+
+            // Reveal Obj in 100 ticks
+            obj.reveal = Obj.REVEAL;
+        }
+        // If the obj is dropped to all
+        else {
+            obj.reveal = -1;
+            if (duration > 0) {
+                this.trackLocObj(obj, duration);
+            } else {
+                obj.untrack();
+            }
         }
     }
 
     revealObj(obj: Obj): void {
-        // printDebug(`[World] revealObj => name: ${ObjType.get(obj.type).name}`);
-        const duration: number = obj.reveal;
-        const change: number = obj.lastChange;
         const zone: Zone = this.gameMap.getZone(obj.x, obj.z, obj.level);
-        zone.revealObj(obj, obj.receiver64);
-        // objs next life cycle always starts from the last time they changed + the inputted duration.
-        // accounting for reveal time here.
-        const nextLifecycle: number = (change !== -1 ? Obj.REVEAL - (this.currentTick - change) : 0) + this.currentTick + duration;
-        obj.setLifeCycle(nextLifecycle);
-        this.trackZone(nextLifecycle, zone);
-        this.trackZone(this.currentTick, zone);
+        zone.revealObj(obj);
+        this.trackZone(zone);
     }
 
-    changeObj(obj: Obj, receiver64: bigint, newCount: number): void {
+    changeObj(obj: Obj, newCount: number): void {
         // printDebug(`[World] changeObj => name: ${ObjType.get(obj.type).name}, receiverId: ${receiverId}, newCount: ${newCount}`);
         const zone: Zone = this.gameMap.getZone(obj.x, obj.z, obj.level);
-        zone.changeObj(obj, receiver64, obj.count, newCount);
-        this.trackZone(this.currentTick, zone);
+        zone.changeObj(obj, obj.count, newCount);
+        this.trackZone(zone);
     }
 
     removeObj(obj: Obj, duration: number): void {
@@ -1544,19 +1570,24 @@ class World {
         const zone: Zone = this.gameMap.getZone(obj.x, obj.z, obj.level);
         const adjustedDuration = this.scaleByPlayerCount(duration);
         zone.removeObj(obj);
-        this.trackLocObj(obj, zone, adjustedDuration);
+        this.trackZone(zone);
+        if (duration > 0) {
+            this.trackLocObj(obj, adjustedDuration);
+        } else {
+            obj.untrack();
+        }
     }
 
     animMap(level: number, x: number, z: number, spotanim: number, height: number, delay: number): void {
         const zone: Zone = this.gameMap.getZone(x, z, level);
         zone.animMap(x, z, spotanim, height, delay);
-        this.trackZone(this.currentTick, zone);
+        this.trackZone(zone);
     }
 
     mapProjAnim(level: number, x: number, z: number, dstX: number, dstZ: number, target: number, spotanim: number, srcHeight: number, dstHeight: number, startDelay: number, endDelay: number, peak: number, arc: number): void {
         const zone: Zone = this.gameMap.getZone(x, z, level);
         zone.mapProjAnim(x, z, dstX, dstZ, target, spotanim, srcHeight, dstHeight, startDelay, endDelay, peak, arc);
-        this.trackZone(this.currentTick, zone);
+        this.trackZone(zone);
     }
 
     // ----
