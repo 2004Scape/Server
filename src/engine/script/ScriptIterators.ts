@@ -8,6 +8,7 @@ import HuntVis from '#/engine/entity/hunt/HuntVis.js';
 import Loc from '#/engine/entity/Loc.js';
 import Npc from '#/engine/entity/Npc.js';
 import NpcIteratorType from '#/engine/entity/NpcIteratorType.js';
+import Obj from '#/engine/entity/Obj.js';
 import { isLineOfSight, isLineOfWalk } from '#/engine/GameMap.js';
 import World from '#/engine/World.js';
 
@@ -208,7 +209,7 @@ export class NpcHuntAllCommandIterator extends ScriptIterator<Entity> {
             for (let z: number = this.maxZ; z >= this.minZ; z--) {
                 const zoneZ: number = z << 3;
 
-                for (const npc of World.gameMap.getZone(zoneX, zoneZ, this.level).getAllNpcsSafe()) {
+                for (const npc of World.gameMap.getZone(zoneX, zoneZ, this.level).getAllNpcsSafe(true)) {
                     if (World.currentTick > this.tick) {
                         throw new Error('[HuntIterator] tried to use an old iterator. Create a new iterator instead.');
                     }
@@ -268,7 +269,7 @@ export class NpcIterator extends ScriptIterator<Npc> {
 
     protected *generator(): IterableIterator<Npc> {
         if (this.type === NpcIteratorType.ZONE) {
-            for (const npc of World.gameMap.getZone(this.x, this.z, this.level).getAllNpcsSafe()) {
+            for (const npc of World.gameMap.getZone(this.x, this.z, this.level).getAllNpcsSafe(true)) {
                 if (World.currentTick > this.tick) {
                     throw new Error('[NpcIterator] tried to use an old iterator. Create a new iterator instead.');
                 }
@@ -279,7 +280,7 @@ export class NpcIterator extends ScriptIterator<Npc> {
                 const zoneX: number = x << 3;
                 for (let z: number = this.maxZ; z >= this.minZ; z--) {
                     const zoneZ: number = z << 3;
-                    for (const npc of World.gameMap.getZone(zoneX, zoneZ, this.level).getAllNpcsSafe()) {
+                    for (const npc of World.gameMap.getZone(zoneX, zoneZ, this.level).getAllNpcsSafe(true)) {
                         if (World.currentTick > this.tick) {
                             throw new Error('[NpcIterator] tried to use an old iterator. Create a new iterator instead.');
                         }
@@ -316,11 +317,33 @@ export class LocIterator extends ScriptIterator<Loc> {
     }
 
     protected *generator(): IterableIterator<Loc> {
-        for (const loc of World.gameMap.getZone(this.x, this.z, this.level).getAllLocsSafe()) {
+        for (const loc of World.gameMap.getZone(this.x, this.z, this.level).getAllLocsSafe(true)) {
             if (World.currentTick > this.tick) {
                 throw new Error('[LocIterator] tried to use an old iterator. Create a new iterator instead.');
             }
             yield loc;
+        }
+    }
+}
+
+export class ObjIterator extends ScriptIterator<Obj> {
+    private readonly level: number;
+    private readonly x: number;
+    private readonly z: number;
+
+    constructor(tick: number, level: number, x: number, z: number) {
+        super(tick);
+        this.level = level;
+        this.x = x;
+        this.z = z;
+    }
+
+    protected *generator(): IterableIterator<Obj> {
+        for (const Obj of World.gameMap.getZone(this.x, this.z, this.level).getAllObjsSafe(true)) {
+            if (World.currentTick > this.tick) {
+                throw new Error('[ObjIterator] tried to use an old iterator. Create a new iterator instead.');
+            }
+            yield Obj;
         }
     }
 }

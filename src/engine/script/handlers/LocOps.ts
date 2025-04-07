@@ -9,7 +9,7 @@ import EntityLifeCycle from '#/engine/entity/EntityLifeCycle.js';
 import Loc from '#/engine/entity/Loc.js';
 import { LocIterator } from '#/engine/script/ScriptIterators.js';
 import ScriptOpcode from '#/engine/script/ScriptOpcode.js';
-import ScriptPointer, { ActiveLoc, checkedHandler } from '#/engine/script/ScriptPointer.js';
+import { ActiveLoc, checkedHandler } from '#/engine/script/ScriptPointer.js';
 import { CommandHandlers } from '#/engine/script/ScriptRunner.js';
 import { check, CoordValid, DurationValid, LocAngleValid, LocShapeValid, LocTypeValid, ParamTypeValid, SeqTypeValid } from '#/engine/script/ScriptValidators.js';
 import World from '#/engine/World.js';
@@ -97,11 +97,6 @@ const LocOps: CommandHandlers = {
         const coord: CoordGrid = check(state.popInt(), CoordValid);
 
         state.locIterator = new LocIterator(World.currentTick, coord.level, coord.x, coord.z);
-        // not necessary but if we want to refer to the original loc again, we can
-        if (state._activeLoc) {
-            state._activeLoc2 = state._activeLoc;
-            state.pointerAdd(ScriptPointer.ActiveLoc2);
-        }
     },
 
     [ScriptOpcode.LOC_FINDNEXT]: state => {

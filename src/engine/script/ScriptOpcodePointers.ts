@@ -797,6 +797,17 @@ const ScriptOpcodePointers: {
         set: ['active_obj'],
         set2: ['active_obj2']
     },
+    [ScriptOpcode.OBJ_FINDALLZONE]: {
+        set: ['find_obj'],
+        set2: ['find_obj']
+    },
+    [ScriptOpcode.OBJ_FINDNEXT]: {
+        require: ['find_obj'],
+        set: ['active_obj'],
+        require2: ['find_obj'],
+        set2: ['active_obj2'],
+        conditional: true
+    },
 
     // Inventory ops
     [ScriptOpcode.INV_ADD]: {

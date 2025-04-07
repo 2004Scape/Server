@@ -280,6 +280,8 @@ enum ScriptOpcode {
     OBJ_TAKEITEM,
     OBJ_TYPE,
     OBJ_FIND,
+    OBJ_FINDALLZONE,
+    OBJ_FINDNEXT,
 
     // Npc config ops (4000-4099)
     NC_CATEGORY = 4000,
