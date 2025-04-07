@@ -179,7 +179,7 @@ if(testbit(%legends_bits, ^legends_defeated_san_final) = false) {
 [queue,nezikchened_defeat]
 // This leads to some interesting behaviour, we can kill 1 nezi while the player is delayed, the other will attack and switch aggressive_npc, when the 
 // queue executes, that one will die instead (this is how it works on OSRS)
-if(npc_finduid(%aggressive_npc) = true) {
+if(npc_finduid(%aggressive_npc) = true & npc_type = nezikchened) {
     npc_sethuntmode(null);
     npc_setmode(none);
     p_stopaction;
