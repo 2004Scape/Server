@@ -17,4 +17,4 @@ check_nottoostrong=off
 check_notcombat=%lastcombat
 check_notbusy=off
 find_keephunting=on
-find_newmode=applayer2
+find_newmode=opplayer2
