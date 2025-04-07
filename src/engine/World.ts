@@ -1522,7 +1522,7 @@ class World {
                 if (nextCount <= Inventory.STACK_LIMIT) {
                     // If an obj of the same type exists and is stackable and have the same receiver, then we merge them.
                     this.changeObj(existing, nextCount);
-                    this.trackLocObj(existing, duration + Obj.REVEAL);
+                    this.trackLocObj(existing, duration);
                     return;
                 }
             }
@@ -1535,7 +1535,7 @@ class World {
         if (receiver64 !== Obj.NO_RECEIVER) {
             // objs with a receiver always attempt to reveal 100 ticks after being dropped.
             // items that can't be revealed (untradable, members obj in f2p) will be skipped in revealObj
-            this.trackLocObj(obj, duration + Obj.REVEAL);
+            this.trackLocObj(obj, duration);
             obj.receiver64 = receiver64;
 
             // Reveal Obj in 100 ticks
