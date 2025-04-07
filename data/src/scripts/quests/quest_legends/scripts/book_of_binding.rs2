@@ -2,7 +2,7 @@
 if (getbit_range(%legends_bits, ^legends_opal_used, ^legends_emerald_used) = ^legends_all_gems_used) {
     %legends_bits = clearbit_range(%legends_bits, ^legends_opal_used, ^legends_emerald_used);
 }
-@pickup_obj(obj_coord, obj_type, obj_count);
+@pickup_obj;
 
 [opheld1,book_of_binding]
 %book_page = 0;

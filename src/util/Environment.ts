@@ -29,6 +29,8 @@ export default {
     NODE_PORT: tryParseInt(process.env.NODE_PORT, 43594),
     // members content
     NODE_MEMBERS: tryParseBoolean(process.env.NODE_MEMBERS, true),
+    // automatically upgrade accounts to members on successful login to a members world
+    NODE_AUTO_SUBSCRIBE_MEMBERS: tryParseBoolean(process.env.NODE_AUTO_SUBSCRIBE_MEMBERS, true),
     // addxp multiplier
     NODE_XPRATE: tryParseInt(process.env.NODE_XPRATE, 1),
     // production mode!
@@ -52,6 +54,7 @@ export default {
     NODE_PROFILE: tryParseString(process.env.NODE_PROFILE, 'main'),
     // entities cap
     NODE_MAX_PLAYERS: tryParseInt(process.env.NODE_MAX_PLAYERS, 2047),
+    NODE_MAX_CONNECTED: tryParseInt(process.env.NODE_MAX_CONNECTED, 1000),
     NODE_MAX_NPCS: tryParseInt(process.env.NODE_MAX_NPCS, 8191),
     NODE_DEBUGPROC_CHAR: tryParseString(process.env.NODE_DEBUGPROC_CHAR, '~'),
 

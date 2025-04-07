@@ -10,7 +10,6 @@ import { Direction, CoordGrid } from '#/engine/CoordGrid.js';
 import BlockWalk from '#/engine/entity/BlockWalk.js';
 import Entity from '#/engine/entity/Entity.js';
 import EntityLifeCycle from '#/engine/entity/EntityLifeCycle.js';
-import { EntityQueueRequest, NpcQueueType } from '#/engine/entity/EntityQueueRequest.js';
 import HeroPoints from '#/engine/entity/HeroPoints.js';
 import HuntCheckNotTooStrong from '#/engine/entity/hunt/HuntCheckNotTooStrong.js';
 import HuntModeType from '#/engine/entity/hunt/HuntModeType.js';
@@ -20,6 +19,7 @@ import MoveRestrict from '#/engine/entity/MoveRestrict.js';
 import MoveSpeed from '#/engine/entity/MoveSpeed.js';
 import MoveStrategy from '#/engine/entity/MoveStrategy.js';
 import NpcMode from '#/engine/entity/NpcMode.js';
+import { NpcQueueRequest } from '#/engine/entity/NpcQueueRequest.js';
 import NpcStat from '#/engine/entity/NpcStat.js';
 import Obj from '#/engine/entity/Obj.js';
 import PathingEntity from '#/engine/entity/PathingEntity.js';
@@ -53,7 +53,7 @@ export default class Npc extends PathingEntity {
 
     // script variables
     activeScript: ScriptState | null = null;
-    queue: LinkList<EntityQueueRequest> = new LinkList();
+    queue: LinkList<NpcQueueRequest> = new LinkList();
     timerInterval: number = 0;
     timerClock: number = 0;
     regenClock: number = 0;
@@ -66,6 +66,7 @@ export default class Npc extends PathingEntity {
     nextPatrolTick: number = -1;
     nextPatrolPoint: number = 0;
     delayedPatrol: boolean = false;
+    resetOnRevert: boolean = true;
 
     lastWanderTick: number = 0;
 
@@ -152,8 +153,10 @@ export default class Npc extends PathingEntity {
             this.huntMode = npcType.huntmode;
             this.huntClock = 0;
             this.huntTarget = null;
+            this.tele = true;
+        } else {
+            super.resetPathingEntity();
         }
-        super.resetPathingEntity();
     }
 
     pathToPathingTarget(): void {
@@ -355,7 +358,7 @@ export default class Npc extends PathingEntity {
     }
 
     processQueue() {
-        for (let request = this.queue.head(); request !== null; request = this.queue.next()) {
+        for (const request of this.queue.all()) {
             // purposely only decrements the delay when the npc is not delayed
             if (!this.delayed) {
                 request.delay--;
@@ -363,18 +366,19 @@ export default class Npc extends PathingEntity {
 
             if (!this.delayed && request.delay <= 0) {
                 request.unlink();
-
-                const state = ScriptRunner.init(request.script, this, null, request.args);
-                state.lastInt = request.lastInt;
-                const save = this.queue.cursor; // LinkList-specific behavior so we can getqueue/clearqueue inside of this
-                this.executeScript(state);
-                this.queue.cursor = save;
+                const type: NpcType = NpcType.get(this.type);
+                const script = ScriptProvider.getByTrigger(request.queueId, type.id, type.category);
+                if (script) {
+                    const state = ScriptRunner.init(script, this, null, request.args);
+                    state.lastInt = request.lastInt;
+                    this.executeScript(state);
+                }
             }
         }
     }
 
-    enqueueScript(script: ScriptFile, delay = 0, arg: number = 0) {
-        const request = new EntityQueueRequest(NpcQueueType.NORMAL, script, [], delay);
+    enqueueScript(queueId: number, delay = 0, arg: number = 0) {
+        const request = new NpcQueueRequest(queueId, [], delay);
         request.lastInt = arg;
         this.queue.addTail(request);
     }
@@ -1023,23 +1027,31 @@ export default class Npc extends PathingEntity {
         return this.currentType;
     }
 
-    changeType(type: number, duration: number) {
+    changeType(type: number, duration: number, reset: boolean = true) {
         if (!this.isActive || duration < 1) {
             return;
         }
         this.currentType = type;
         this.masks |= NpcInfoProt.CHANGE_TYPE;
         this.uid = (type << 16) | this.nid;
+        this.resetOnRevert = reset;
 
-        this.setLifeCycle(World.currentTick + duration);
+        if (type === this.baseType && this.lifecycle === EntityLifeCycle.RESPAWN) {
+            this.setLifeCycle(-1);
+        } else {
+            this.setLifeCycle(duration);
+        }
     }
 
     revert(): void {
-        this.currentType = this.baseType;
-        this.masks |= NpcInfoProt.CHANGE_TYPE;
-        this.uid = (this.type << 16) | this.nid;
-
-        this.setLifeCycle(-1);
+        if (this.resetOnRevert) {
+            World.removeNpc(this, -1);
+            World.addNpc(this, -1, false);
+        } else {
+            this.currentType = this.baseType;
+            this.masks |= NpcInfoProt.CHANGE_TYPE;
+            this.uid = (this.type << 16) | this.nid;
+        }
     }
 
     isValid(_hash64?: bigint): boolean {

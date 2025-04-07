@@ -207,8 +207,7 @@ if(npc_type = lucien_edge) {
     return (~lucien_attack);
 }
 if(npc_type = gorad & (~obj_gettotal(ogre_tooth) > 0 | getbit_range(%itwatchtower_bits, ^itwatchtower_spoken_grew, ^itwatchtower_helped_grew) ! 1)) {
-    if(%itwatchtower_progress = ^itwatchtower_complete) return (true);
-    if(getbit_range(%itwatchtower_bits, ^itwatchtower_spoken_grew, ^itwatchtower_helped_grew) < 1) {
+    if(getbit_range(%itwatchtower_bits, ^itwatchtower_spoken_grew, ^itwatchtower_helped_grew) ! 1 | %itwatchtower_progress >= ^itwatchtower_complete) {
         mes("You don't need to fight him now.");
     } else {
         mes("You have already got his tooth.");
@@ -310,7 +309,7 @@ switch_int ($style) {
 error("style of <tostring($style)> not defined in switch for npc_combat_defencebonus");
 
 //  this should be strong queued. Some damage is queued, some isnt
-[queue,damage_player](int $damage)
+[queue,combat_damage_player](int $damage)
 if (inv_getobj(worn, ^wearpos_ring) = ring_of_recoil & npc_finduid(%aggressive_npc) = true & %npc_attacking_uid = uid & $damage > 0 & stat(hitpoints) > 0) {
     // https://oldschool.runescape.wiki/w/Update:Clue_Scroll_Step_Counter
     // - "Recoil damage will now always target the entity that caused the initial damage, rather than the most recent entity to deal damage."
@@ -329,9 +328,7 @@ if (map_multiway(npc_coord) = false & %npc_attacking_uid ! uid & %npc_attacking_
     %npc_action_delay = add(map_clock, 8);
 }
 %npc_aggressive_player = uid;
-if(%npc_lastcombat = null | %npc_lastcombat < map_clock) {
-    %npc_lastcombat = map_clock;
-}
+if(%npc_lastcombat < map_clock) %npc_lastcombat = map_clock;
 
 [proc,.npc_retaliate](int $queue_delay)
 .npc_queue(1, 0, $queue_delay);
@@ -340,7 +337,7 @@ if (map_multiway(.npc_coord) = false & .%npc_attacking_uid ! uid & .%npc_attacki
     .%npc_action_delay = add(map_clock, 8);
 }
 .%npc_aggressive_player = uid;
-.%npc_lastcombat = map_clock;
+if(.%npc_lastcombat < map_clock) .%npc_lastcombat = map_clock;
 
 [proc,npc_set_attack_vars]
 %lastcombat = map_clock;

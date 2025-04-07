@@ -6,7 +6,7 @@ if(%itwatchtower_progress < ^itwatchtower_skavid_crystal) {
 ~chatnpc("<p,quiz>What do you want?");
  switch_int(~p_choice2("I want to go in there.", 1, "I want to rid the world of ogres.", 2)) {
     case 1 :
-        if(%itwatchtower_progress = ^itwatchtower_complete) {
+        if(%itwatchtower_progress >= ^itwatchtower_complete) {
             @enter_skavid_cave;
         }
         ~chatplayer("<p,neutral>I want to go in there.");

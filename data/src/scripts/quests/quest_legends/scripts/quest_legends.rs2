@@ -864,9 +864,9 @@ if(obj_coord = $rock_coord) {
     %legends_bits = clearbit(%legends_bits, $gem_bit);
     mes("You take the <obj_name>.");
     // if your inv is full it will unset the bit and lose the gem!
-    @pickup_obj_table(obj_type, obj_count);
+    @pickup_obj_table;
 }
-@pickup_obj(obj_coord, obj_type, obj_count);
+@pickup_obj;
 
 [opheld5,_legends_gem]
 if(~inzone_coord_pair_table(legends_gem_room, coord) = true) {
@@ -1243,7 +1243,7 @@ anim(human_pickupfloor, 0);
 p_delay(0);
 if(%legends_progress < ^legends_collected_totem) {
     %legends_progress = ^legends_collected_totem;
-    %legends_bits = clearbit_range(%legends_bits, ^legends_defeated_san_final, ^legends_defeated_irvig_final);
+    %legends_bits = clearbit_range(%legends_bits, ^legends_defeated_san_final, ^legends_defeated_ranalph_final);
 }
 loc_change(legends_damaged_earth, 50);
 inv_add(inv, yommi_totem, 1);

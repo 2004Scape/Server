@@ -131,14 +131,8 @@ if (inv_totalcat(inv, kitten) = 0 | inv_totalcat(bank, kitten) = 0 | inv_totalca
         case 4 : $cat = follower_kitten_greybrown;
         case 5 : $cat = follower_kitten_greyblue;
     }
-    npc_add(coord, $cat, ^max_32bit_int);
-    %follower_obj = nc_param($cat, pet_item_id);
-    %follower_uid = npc_uid;
     %cat_growth = 0;
-    %npc_attacking_uid = uid;
-    npc_setmode(playerfollow);
-    npc_settimer(150);
-    npc_say("Miaow!");
+    ~cat_spawn($cat);
     p_delay(1);
     npc_say("Meeow!");
 }

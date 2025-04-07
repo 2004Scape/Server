@@ -21,7 +21,7 @@ export default class OpPlayerUHandler extends MessageHandler<OpPlayerU> {
         }
 
         const com = Component.get(comId);
-        if (typeof com === 'undefined' || !player.isComponentVisible(com)) {
+        if (typeof com === 'undefined' || !player.isComponentVisible(com) || !com.interactable) {
             player.write(new UnsetMapFlag());
             player.clearPendingAction();
             return false;
@@ -61,6 +61,7 @@ export default class OpPlayerUHandler extends MessageHandler<OpPlayerU> {
             return false;
         }
 
+        player.lastUseItem = item;
         player.lastUseSlot = slot;
 
         player.setInteraction(Interaction.ENGINE, other, ServerTriggerType.APPLAYERU, item);
