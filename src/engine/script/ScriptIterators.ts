@@ -83,11 +83,11 @@ export class HuntIterator extends ScriptIterator<Entity> {
                             continue;
                         }
 
-                        if (this.checkVis === HuntVis.LINEOFSIGHT && !isLineOfSight(this.level, this.x, this.z, player.x, player.z)) {
+                        if (this.checkVis === HuntVis.LINEOFSIGHT && !isLineOfSight(this.level, player.x, player.z, this.x, this.z)) {
                             continue;
                         }
 
-                        if (this.checkVis === HuntVis.LINEOFWALK && !isLineOfWalk(this.level, this.x, this.z, player.x, player.z)) {
+                        if (this.checkVis === HuntVis.LINEOFWALK && !isLineOfWalk(this.level, player.x, player.z, this.x, this.z)) {
                             continue;
                         }
 
