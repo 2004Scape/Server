@@ -1,11 +1,11 @@
 [opheld1,radimus_notes_complete]
-~objbox(radimus_notes_complete, "The map of the Kharazi Jungle is complete, Sir Radimus Erkle will be pleased.", 180, 0, 0);
+~objbox(radimus_notes_complete, "The map of the Kharazi Jungle is complete, Sir Radimus Erkle will be pleased.", 250, 0, 0);
 // Capitalisation and full stops at the end of options are authentic
 @multi2("Read Mission Briefing.", radimus_notes_read,
         "Close.", radimus_notes_close);
 
 [opheld1,radimus_notes]
-~objbox(radimus_notes, "You open and start to read the scrolls that Radimus|gave you.", 180, 0, 0);
+~objbox(radimus_notes, "You open and start to read the scrolls that Radimus|gave you.", 250, 0, 0);
 @multi2("Read Mission Briefing.", radimus_notes_read,
         "Start Mapping Kharazi Jungle.", radimus_notes_begin);
 
@@ -21,9 +21,14 @@ mes("You put the scrolls away.");
 @radimus_notes_begin;
 
 [label,radimus_notes_begin]
+if(getbit_range(%legends_bits, ^legends_jungle_west_mapped, ^legends_jungle_east_mapped) = sub(pow(2,3),1)) { // probably not possible?
+    inv_del(inv, radimus_notes, 1);
+    inv_add(inv, radimus_notes_complete, 1);
+    return;
+}
 if (~inzone_coord_pair_table(kharazi_jungle_west, coord) = true) {
-    if (testbit(%legends_map_runes, ^legends_jungle_west_mapped) = true) {
-        ~objbox(radimus_notes, "You have already completed this part of the map.", 180, 0, 0);
+    if (testbit(%legends_bits, ^legends_jungle_west_mapped) = true) {
+        ~objbox(radimus_notes, "You have already completed this part of the map.", 250, 0, 0);
         @kharazi_jungle_mapping;
     }
     else {
@@ -31,8 +36,8 @@ if (~inzone_coord_pair_table(kharazi_jungle_west, coord) = true) {
     }
 }
 else if (~inzone_coord_pair_table(kharazi_jungle_middle, coord) = true) {
-    if (testbit(%legends_map_runes, ^legends_jungle_middle_mapped) = true) {
-        ~objbox(radimus_notes, "You have already completed this part of the map.", 180, 0, 0);
+    if (testbit(%legends_bits, ^legends_jungle_middle_mapped) = true) {
+        ~objbox(radimus_notes, "You have already completed this part of the map.", 250, 0, 0);
         @kharazi_jungle_mapping;
     }
     else {
@@ -40,8 +45,8 @@ else if (~inzone_coord_pair_table(kharazi_jungle_middle, coord) = true) {
     }
 }
 else if (~inzone_coord_pair_table(kharazi_jungle_east, coord) = true) {
-    if (testbit(%legends_map_runes, ^legends_jungle_east_mapped) = true) {
-        ~objbox(radimus_notes, "You have already completed this part of the map.", 180, 0, 0);
+    if (testbit(%legends_bits, ^legends_jungle_east_mapped) = true) {
+        ~objbox(radimus_notes, "You have already completed this part of the map.", 250, 0, 0);
         @kharazi_jungle_mapping;
     }
     else {
@@ -58,11 +63,11 @@ if (inv_total(inv, papyrus) = 0 & inv_total(inv, charcoal) = 0) {
     return;
 }
 if (inv_total(inv, papyrus) = 0) {
-    ~objbox(papyrus, "You'll need some additional papyrus to complete this map.", 180, 0, 0);
+    ~objbox(papyrus, "You'll need some additional papyrus to complete this map.", 250, 0, 0);
     return;
 }
 if (inv_total(inv, charcoal) = 0) {
-    ~objbox(charcoal, "You'll need some additional charcoal to complete this map.", 180, 0, 0);
+    ~objbox(charcoal, "You'll need some additional charcoal to complete this map.", 250, 0, 0);
     return;
 }
 if (stat(crafting) < 50) {
@@ -70,70 +75,66 @@ if (stat(crafting) < 50) {
     return;
 }
 ~mesbox("You prepare to start mapping this area...");
-def_int $rand = random(100);
-if ($rand < 10) {
-    ~objbox(radimus_notes, "You make a mess but are able to rescue the paper.", 180, 0, 0);
+if (stat_random(stat(crafting), 100, 250) = false) {
+    def_int $rand = random(128);
+    if($rand < 40) {
+        ~objbox(radimus_notes, "You make a mess but are able to rescue the paper.", 250, 0, 0);
+    } else if ($rand < 65) {
+        inv_del(inv, charcoal, 1);
+        ~objbox(charcoal, "You snap your stick of charcoal.", 250, 0, 0);
+    } else if ($rand < 90) {
+        inv_del(inv, papyrus, 1);
+        ~objbox(papyrus, "You make a mess of the map, the paper is totally ruined.", 250, 0, 0);
+    } else {
+        // From RSC, not sure if this happens in RS2?
+        inv_del(inv, papyrus, 1);
+        inv_del(inv, charcoal, 1);
+        ~doubleobjbox(papyrus, charcoal, "You fall over, landing on your charcoal and papyrus, destroying them both.", 150);
+    }
+    return;
 }
-else if ($rand < 30) {
-    inv_del(inv, charcoal, 1);
-    ~objbox(charcoal, "You snap your stick of charcoal.", 180, 0, 0);
-}
-else if ($rand < 50) {
-    inv_del(inv, papyrus, 1);
-    ~objbox(papyrus, "You make a mess of the map, the paper is totally ruined.", 180, 0, 0);
-}
-else if ($rand < 70) {
-    // From RSC, not sure if this happens in RS2?
-    inv_del(inv, papyrus, 1);
-    inv_del(inv, charcoal, 1);
-    ~doubleobjbox(papyrus, charcoal, "You fall over, landing on your charcoal and papyrus, destroying them both.", 150);
-}
-else {
-    if_close;
-    inv_del(inv, papyrus, 1);
-    // This mapping animation doesn't display properly - the papyrus stays at the player's side instead of lifting up
-    // to meet the charcoal.
-    anim(human_mapping, 0);
-    p_delay(1);
-    %legends_map_runes = setbit(%legends_map_runes, $jungle_section);
-    // Crafting is capitalised in OSRS now, but lowercase is authentic
-    ~objbox(radimus_notes, "You use your crafting skill to neatly add a new section to your map.", 180, 0, 0);
-    if_close;
-    // Plays again
-    anim(human_mapping, 0);
-    p_delay(1);
+if_close;
+inv_del(inv, papyrus, 1);
+// This mapping animation doesn't display properly - the papyrus stays at the player's side instead of lifting up
+// to meet the charcoal.
+anim(human_mapping, 0);
+p_delay(1);
+%legends_bits = setbit(%legends_bits, $jungle_section);
+// Crafting is capitalised in OSRS now, but lowercase is authentic
+~objbox(radimus_notes, "You use your crafting skill to neatly add a new section to your map.", 250, 0, 0);
+if_close;
+// Plays again
+anim(human_mapping, 0);
+p_delay(1);
 
-    def_boolean $west_mapped = testbit(%legends_map_runes, ^legends_jungle_west_mapped);
-    def_boolean $middle_mapped = testbit(%legends_map_runes, ^legends_jungle_middle_mapped);
-    def_boolean $east_mapped = testbit(%legends_map_runes, ^legends_jungle_east_mapped);
+def_boolean $west_mapped = testbit(%legends_bits, ^legends_jungle_west_mapped);
+def_boolean $middle_mapped = testbit(%legends_bits, ^legends_jungle_middle_mapped);
+def_boolean $east_mapped = testbit(%legends_bits, ^legends_jungle_east_mapped);
     
-    if ($west_mapped = true & $middle_mapped = true & $east_mapped = true) {
-        ~objbox(radimus_notes_complete, "Well done! You have completed mapping the Kharazi Jungle.  Grand Vizier Erkle will be pleased.", 180, 0, 0);
-        // OSRS replaces the first instance of notes if you have multiple
-        inv_del(inv, radimus_notes, 1);
-        inv_add(inv, radimus_notes_complete, 1);
-        // Need to check because it's possible to do this multiple times, and we don't want to reset
-        // quest progress if it happens again later
-        if (%legends_progress < ^legends_mapped_jungle) {
-            %legends_progress = ^legends_mapped_jungle;
-        }
-        // OSRS behaviour suggests these bits are reset here (if you have other incomplete notes,
-        // mapping starts again from scratch)
-        clearbit(%legends_map_runes, ^legends_jungle_west_mapped);
-        clearbit(%legends_map_runes, ^legends_jungle_middle_mapped);
-        clearbit(%legends_map_runes, ^legends_jungle_east_mapped);
+if ($west_mapped = true & $middle_mapped = true & $east_mapped = true) {
+    ~objbox(radimus_notes_complete, "Well done! You have completed mapping the Kharazi Jungle.  Grand Vizier Erkle will be pleased.", 250, 0, 0);
+    // OSRS replaces the first instance of notes if you have multiple
+    inv_del(inv, radimus_notes, 1);
+    inv_add(inv, radimus_notes_complete, 1);
+    // Need to check because it's possible to do this multiple times, and we don't want to reset
+    // quest progress if it happens again later
+    if (%legends_progress < ^legends_mapped_jungle) {
+        %legends_progress = ^legends_mapped_jungle;
     }
-    else {
-        mes("You still have some sections of the map to complete.");
-    }
-
-    @kharazi_jungle_mapping;
+    // OSRS behaviour suggests these bits are reset here (if you have other incomplete notes,
+    // mapping starts again from scratch)
+    %legends_bits = clearbit(%legends_bits, ^legends_jungle_west_mapped);
+    %legends_bits = clearbit(%legends_bits, ^legends_jungle_middle_mapped);
+    %legends_bits = clearbit(%legends_bits, ^legends_jungle_east_mapped);
+} else {
+    mes("You still have some sections of the map to complete.");
 }
+@kharazi_jungle_mapping;
 
 [label,kharazi_jungle_mapping]
-def_boolean $west_mapped = testbit(%legends_map_runes, ^legends_jungle_west_mapped);
-def_boolean $middle_mapped = testbit(%legends_map_runes, ^legends_jungle_middle_mapped);
-def_boolean $east_mapped = testbit(%legends_map_runes, ^legends_jungle_east_mapped);
+def_boolean $west_mapped = testbit(%legends_bits, ^legends_jungle_west_mapped);
+def_boolean $middle_mapped = testbit(%legends_bits, ^legends_jungle_middle_mapped);
+def_boolean $east_mapped = testbit(%legends_bits, ^legends_jungle_east_mapped);
 def_string $map_result = "*** Mapping the Kharazi Jungle ***|";
 // Dash spacing on eastern vs middle and western is authentic
 if ($east_mapped = true)
@@ -149,4 +150,4 @@ if ($west_mapped = true)
 else 
     $map_result = append($map_result, "@red@Western Kharazi Jungle- *** Incomplete ***");
 
-~objbox(radimus_notes, $map_result, 180, 0, 0);
+~objbox(radimus_notes, $map_result, 250, 0, 0);

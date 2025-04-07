@@ -33,11 +33,13 @@ if (npc_type = jungle_forester_female) {
 ~mesbox("The Jungle Forester takes out some parchment and some charcoal. <$gender> studiously renders another copy of your map.");
 // "Many thanks friend" twice is correct, ref. https://youtu.be/Lid8enDEF_U?t=749
 ~chatnpc("<p,neutral>Many thanks friend.");
-~objbox(bullroarer, "<$gender> takes out a strange looking object and hands it to you.", 180, 0, 0);
+~objbox(bullroarer, "<$gender> takes out a strange looking object and hands it to you.", 250, 0, 0);
 // Can't find any evidence of an inv space check
 inv_add(inv, bullroarer, 1);
+if(%legends_progress < ^legends_got_bullroarer) %legends_progress = ^legends_got_bullroarer;
 ~chatnpc("<p,neutral>Here, I won't be needing this any longer, and it may|help you. Whenever I've used it before, it attracted the|attention of jungle natives.");
 // No inv space check, drops to floor if full
+
 [label,jungle_forester_return]
 ~chatplayer("<p,neutral>What will you give me in return?");
 ~chatnpc("<p,neutral>Well, I can offer you this?");

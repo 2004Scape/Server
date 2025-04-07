@@ -133,8 +133,6 @@ else {
     mes("You decide not to try and squeeze your way through the crevice.");
 }
 
-
-
 [oploc2,legends_radimus_cupboard_open]
 // No quest progress check here
 if (inv_total(inv, machete) > 0 | inv_total(worn, machete) > 0) {
@@ -151,6 +149,9 @@ else {
 @close_cupboard(true);
 
 [proc,player_in_fire_octagram]()(boolean)
+if(~inzone_coord_pair_table(legends_fire_wall_correct, coord) = true) {
+    return (false);
+}
 huntall(0_43_145_40_48, 9, 0);
 while(.huntnext = true) {
     if (~inzone_coord_pair_table(legends_fire_wall_correct, .coord) = true) {
@@ -277,12 +278,12 @@ if (last_useitem = blessed_golden_bowl_pure_water) {
     if(~player_in_fire_octagram = true) {
         return;
     }
-    loc_del(1);
+    loc_del(2);
     anim(human_pickuptable, 0);
     spotanim_map(small_smokepuff, loc_coord, 124, 0);
     mes("You splash some pure water on the flames.");
-    def_int $bowl_uses = getbit_range(%legends_map_runes, ^legends_golden_bowl_uses_start, ^legends_golden_bowl_uses_end);
-    %legends_map_runes = setbit_range_toint(%legends_map_runes, add($bowl_uses,1), ^legends_golden_bowl_uses_start, ^legends_golden_bowl_uses_end);
+    def_int $bowl_uses = getbit_range(%legends_bits, ^legends_golden_bowl_uses_start, ^legends_golden_bowl_uses_end);
+    %legends_bits = setbit_range_toint(%legends_bits, add($bowl_uses,1), ^legends_golden_bowl_uses_start, ^legends_golden_bowl_uses_end);
     if($bowl_uses >= 9) {
         inv_del(inv, blessed_golden_bowl_pure_water, 1);
         inv_add(inv, blessed_gold_bowl, 1);
@@ -443,7 +444,6 @@ stat_advance(thieving, 100);
 
 [label,use_on_outer_ancient_gate](int $side)
 def_obj $last_item = last_useitem;
-p_delay(0);
 if ($last_item = lockpick) {
     @search_outer_ancient_gate($side);
 }
@@ -589,21 +589,23 @@ if (stat(agility) < 50) {
 }
 mes("You prepare to jump over the crumbly wall.");
 def_int $dir = ^exact_north;
-def_coord $end = movecoord(coord, -1, 0, 1);
+def_coord $start = 0_43_145_38_15;
+def_coord $end = movecoord($start, -1, 0, 1);
 if(coordz(coord) > 9295) {
     $dir = ^exact_south;
-    $end = movecoord(coord, 1, 0, -1);
+    $start = coord;
+    $end = movecoord($start, 1, 0, -1);
 }
 // todo: real rate?
 // this one feels more punishing than the doors/boulders
 if (stat_random(stat(agility), 50, 200) = true) {
     mes("You take a good run up and sail majestically over the wall.");
-    ~agility_exactmove(human_jump_stones, 0, 2, coord, $end, 37, 50, $dir, true);
+    ~agility_exactmove(human_jump_stones, 30, 2, $start, $end, 37, 50, $dir, false);
     mes("You land perfectly and stand ready for action.");
 }
 else {
     mes("You fail to jump the wall properly and clip the wall with your leg.");
-    ~agility_exactmove(human_jump_stones, 0, 2, coord, $end, 37, 50, $dir, true);
+    ~agility_exactmove(human_jump_stones, 30, 2, $start, $end, 37, 50, $dir, false);
     mes("You're spun around mid air and hit the floor heavily.");
     p_delay(2);
     mes("The fall knocks the wind out of you.");
@@ -613,7 +615,7 @@ else {
 }
 
 [oploc1,legends_marked_wall]
-if (testbit(%legends_map_runes, ^legends_law_rune_2_used) = true) {
+if (testbit(%legends_bits, ^legends_law_rune_2_used) = true) {
     @enter_marked_wall(loc_coord);
 }
 else {
@@ -625,7 +627,7 @@ else {
 
 [oploc2,legends_marked_wall]
 mes("You search the wall.");
-if (testbit(%legends_map_runes, ^legends_law_rune_2_used) = true) {
+if (testbit(%legends_bits, ^legends_law_rune_2_used) = true) {
     ~mesbox("You find the word 'SMELL' marked on the wall. The outline of a door appears on the wall. What would you like to do?");
     def_int $choice = ~p_choice2("Read the message on the wall?", 1, "Investigate the outline of the door.", 2);
     if ($choice = 1) {
@@ -656,50 +658,50 @@ else {
 
 [oplocu,legends_marked_wall]
 if (last_useitem = soulrune) {
-    if (testbit(%legends_map_runes, ^legends_soul_rune_used) = false) {
+    if (testbit(%legends_bits, ^legends_soul_rune_used) = false) {
         inv_del(inv, soulrune, 1);
         anim(human_pickuptable, 0);
+        %legends_bits = setbit(%legends_bits, ^legends_soul_rune_used);
         ~mesbox("You slide the Soul Rune into the first depression... It glows slightly|and then merges with the wall. The letter 'S' appears where the Soul|Rune merged with the wall.");
-        %legends_map_runes = setbit(%legends_map_runes, ^legends_soul_rune_used);
     }
     else {
         @legends_wall_wrong_rune(last_useitem);
     }
 }
 else if (last_useitem = mindrune) {
-    if (testbit(%legends_map_runes, ^legends_soul_rune_used) = true & testbit(%legends_map_runes, ^legends_mind_rune_used) = false) {
+    if (testbit(%legends_bits, ^legends_soul_rune_used) = true & testbit(%legends_bits, ^legends_mind_rune_used) = false) {
         inv_del(inv, mindrune, 1);
         anim(human_pickuptable, 0);
+        %legends_bits = setbit(%legends_bits, ^legends_mind_rune_used);
         ~mesbox("You slide the Mind Rune into the second depression... It glows slightly|and then merges with the wall. The letter 'M' appears where the Mind|Rune merged with the wall.");
-        %legends_map_runes = setbit(%legends_map_runes, ^legends_mind_rune_used);
     }
     else {
         @legends_wall_wrong_rune(last_useitem);
     }
 }
 else if (last_useitem = earthrune) {
-    if (testbit(%legends_map_runes, ^legends_mind_rune_used) = true & testbit(%legends_map_runes, ^legends_earth_rune_used) = false) {
+    if (testbit(%legends_bits, ^legends_mind_rune_used) = true & testbit(%legends_bits, ^legends_earth_rune_used) = false) {
         inv_del(inv, earthrune, 1);
         anim(human_pickuptable, 0);
+        %legends_bits = setbit(%legends_bits, ^legends_earth_rune_used);
         ~mesbox("You slide the Earth Rune into the third depression... It glows slightly|and then merges with the wall. The letter 'E' appears where the Earth|Rune merged with the wall.");
-        %legends_map_runes = setbit(%legends_map_runes, ^legends_earth_rune_used);
     }
     else {
         @legends_wall_wrong_rune(last_useitem);
     }
 }
 else if (last_useitem = lawrune) {
-    if (testbit(%legends_map_runes, ^legends_earth_rune_used) = true & testbit(%legends_map_runes, ^legends_law_rune_1_used) = false) {
+    if (testbit(%legends_bits, ^legends_earth_rune_used) = true & testbit(%legends_bits, ^legends_law_rune_1_used) = false) {
         inv_del(inv, lawrune, 1);
         anim(human_pickuptable, 0);
+        %legends_bits = setbit(%legends_bits, ^legends_law_rune_1_used);
         ~mesbox("You slide the Law Rune into the fourth depression... It glows slightly|and then merges with the wall. The letter 'L' appears where the Law|Rune merged with the wall.");
-        %legends_map_runes = setbit(%legends_map_runes, ^legends_law_rune_1_used);
     }
-    else if (testbit(%legends_map_runes, ^legends_law_rune_1_used) = true & testbit(%legends_map_runes, ^legends_law_rune_2_used) = false) {
+    else if (testbit(%legends_bits, ^legends_law_rune_1_used) = true & testbit(%legends_bits, ^legends_law_rune_2_used) = false) {
         inv_del(inv, lawrune, 1);
         anim(human_pickuptable, 0);
+        %legends_bits = setbit(%legends_bits, ^legends_law_rune_2_used);
         ~mesbox("You slide the Law Rune into the fifth depression... It glows slightly|and then merges with the wall. The letter 'L' appears where the Law|Rune merged with the wall.");
-        %legends_map_runes = setbit(%legends_map_runes, ^legends_law_rune_2_used);
         ~mesbox("You see a small door outline starting to form in the wall. Slowly a|well formed door handle starts to emerge, suddenly, the door cracks|open. Would you like to go through?");
         def_int $choice = ~p_choice2("Yes, I'll go through!", 1, "No, I'll stay here.", 2);
         if ($choice = 1) {
@@ -718,7 +720,7 @@ else {
 }
 
 [label,legends_wall_wrong_rune](obj $rune)
-if (testbit(%legends_map_runes, ^legends_law_rune_2_used) = true) {
+if (testbit(%legends_bits, ^legends_law_rune_2_used) = true) {
     @enter_marked_wall(loc_coord);
 }
 mes("The rune burns red hot in your hand!");
@@ -746,7 +748,7 @@ else {
 ~mesbox("It's meant to look like a stalagmite, but there is something that looks slightly artificial about it. Looking at it more carefully, it seems to look carved.");
 
 [oploc2,legends_carved_rock]
-if (getbit_range(%legends_map_runes, ^legends_opal_used, ^legends_emerald_used) = ^legends_all_gems_used) {
+if (getbit_range(%legends_bits, ^legends_opal_used, ^legends_emerald_used) = ^legends_all_gems_used) {
     if(obj_find(0_43_145_13_17, book_of_binding) = true) {
         mes("You see that a book has appeared in the centre of the room.");
         return;
@@ -764,7 +766,7 @@ if ($data = null) {
 }
 def_namedobj $gem = db_getfield($data, legends_gem_data:gem_named, 0);
 def_int $gem_bit = db_getfield($data, legends_gem_data:gem_bit, 0);
-if (testbit(%legends_map_runes, $gem_bit) = true) {
+if (testbit(%legends_bits, $gem_bit) = true) {
     if(obj_find(loc_coord, $gem) = false) obj_add(loc_coord, $gem, 1, 8);
     mes("A barely visible <oc_name($gem)> becomes visible again, spinning above the rock.");
     mes("The gem soon begins to fade.");
@@ -791,7 +793,7 @@ if (last_useitem = $gem) {
         mes("But nothing happens.");
         return;
     }
-    if (testbit(%legends_map_runes, $gem_bit) = true) {
+    if (testbit(%legends_bits, $gem_bit) = true) {
         mes("You have already placed a <oc_name($gem)> above this rock.");
         if(obj_find(loc_coord, $gem) = false) obj_add(loc_coord, $gem, 1, 8);
         mes("A barely visible <oc_name($gem)> becomes visible again, spinning above the rock.");
@@ -803,10 +805,10 @@ if (last_useitem = $gem) {
     inv_dropslot(inv, loc_coord, last_useslot, 8);
     mes("The <lowercase(oc_name($gem))> glows and starts spinning as it hovers above the rock.");
     mes("The gem soon begins to fade.");
-    %legends_map_runes = setbit(%legends_map_runes, $gem_bit);
-    if (getbit_range(%legends_map_runes, ^legends_opal_used, ^legends_emerald_used) = ^legends_all_gems_used) {
+    %legends_bits = setbit(%legends_bits, $gem_bit);
+    if (getbit_range(%legends_bits, ^legends_opal_used, ^legends_emerald_used) = ^legends_all_gems_used) {
         ~check_gem_puzzle_complete;
-    }
+    } 
 }
 
 [proc,legends_drop_gem](int $last_slot)
@@ -820,9 +822,9 @@ def_coord $rock_coord = db_getfield($data, legends_gem_data:rock_coord, 0);
 def_int $gem_bit = db_getfield($data, legends_gem_data:gem_bit, 0);
 // todo: confirm distance req and that the gem does spawn on the rock
 if (loc_find($rock_coord, legends_carved_rock) = true & distance(coord, $rock_coord) <= 1) {
-    if (testbit(%legends_map_runes, $gem_bit) = true & (inv_total(inv, book_of_binding) = 0 | %legends_progress < ^legends_complete)) {
+    if (testbit(%legends_bits, $gem_bit) = true & (inv_total(inv, book_of_binding) = 0 | %legends_progress < ^legends_complete)) {
         mes("The gem soon begins to fade.");
-        obj_add(loc_coord, $gem, 1, 8);
+        if(obj_find($rock_coord, $gem) = false) obj_add(loc_coord, $gem, 1, 8);
         return;
     }
     mes("As you drop the gem, it slowly glides over to the sharp rock.");
@@ -838,10 +840,12 @@ if (loc_find($rock_coord, legends_carved_rock) = true & distance(coord, $rock_co
     anim(human_pickuptable, 0);
     mes("The <lowercase(obj_name)> glows and starts spinning as it hovers above the rock.");
     mes("The gem soon begins to fade.");
-    %legends_map_runes = setbit(%legends_map_runes, $gem_bit);
-    if (getbit_range(%legends_map_runes, ^legends_opal_used, ^legends_emerald_used) = ^legends_all_gems_used) {
+    %legends_bits = setbit(%legends_bits, $gem_bit);
+    if (getbit_range(%legends_bits, ^legends_opal_used, ^legends_emerald_used) = ^legends_all_gems_used) {
         ~check_gem_puzzle_complete;
     }
+} else {
+    ~dropslot($last_slot);
 }
 
 [opobj3,_legends_gem]
@@ -853,15 +857,16 @@ if ($data = null) {
 def_coord $rock_coord = db_getfield($data, legends_gem_data:rock_coord, 0);
 def_int $gem_bit = db_getfield($data, legends_gem_data:gem_bit, 0);
 if(obj_coord = $rock_coord) {
-    if (getbit_range(%legends_map_runes, ^legends_opal_used, ^legends_emerald_used) = ^legends_all_gems_used | testbit(%legends_map_runes, $gem_bit) =  false) {
+    if (getbit_range(%legends_bits, ^legends_opal_used, ^legends_emerald_used) = ^legends_all_gems_used | testbit(%legends_bits, $gem_bit) =  false) {
         mes("The gem seems untouchable, as if it wasn't even there.");
         return;
     }
-     %legends_map_runes = clearbit(%legends_map_runes, $gem_bit);
+    %legends_bits = clearbit(%legends_bits, $gem_bit);
     mes("You take the <obj_name>.");
     // if your inv is full it will unset the bit and lose the gem!
     @pickup_obj_table(obj_type, obj_count);
 }
+@pickup_obj(obj_coord, obj_type, obj_count);
 
 [opheld5,_legends_gem]
 if(~inzone_coord_pair_table(legends_gem_room, coord) = true) {
@@ -900,7 +905,7 @@ while ($i < $gem_count) {
     }
     def_namedobj $gem = db_getfield($data, legends_gem_data:gem_named, 0);
     def_coord $rock_coord = db_getfield($data, legends_gem_data:rock_coord, 0);
-    obj_add($rock_coord, $gem, 1, 30);
+    if(obj_find($rock_coord, $gem) = false) obj_add($rock_coord, $gem, 1, 30);
     $i = calc($i + 1);
 }
 world_delay(1);
@@ -921,7 +926,7 @@ while($i < 13) {
     $i = calc($i + 1);
     if($i = 13 & finduid(uid) = true) {
         mes("...Strangely a book appears near the middle of the room.");
-        obj_add(0_43_145_13_17, book_of_binding, 1, 500);
+        obj_add(0_43_145_13_17, book_of_binding, 1, 400); // lasts 500t
     }
     world_delay(1);
 }
@@ -976,8 +981,9 @@ if (last_useitem = hollow_reed) {
         inv_del(inv, blessed_gold_bowl, 1);
         inv_del(inv, hollow_reed, 1);
         inv_add(inv, blessed_golden_bowl_pure_water, 1);
-        %legends_map_runes = setbit_range_toint(%legends_map_runes, 0, ^legends_golden_bowl_uses_start, ^legends_golden_bowl_uses_end);
+        %legends_bits = setbit_range_toint(%legends_bits, 0, ^legends_golden_bowl_uses_start, ^legends_golden_bowl_uses_end);
         if(%legends_progress = ^legends_defeated_nezikchened_water) %legends_progress = ^legends_sacred_water_collected;
+        if(%legends_progress = ^legends_asked_gujuo_holy_water) %legends_progress = ^legends_filled_bowl;
         // inconsistent use of "syphon" here is accurate
         // https://youtu.be/Lid8enDEF_U?t=1463
         ~objbox(blessed_golden_bowl_pure_water, "You use the cut reed plant to syphon some water from the pool into your blessed golden bowl. The water seems to bubble and sparkle as if alive.", 250, 0, divide(^objbox_height, 2));
@@ -1000,21 +1006,21 @@ if (last_useitem = hollow_reed) {
         inv_add(inv, bowl_water, 1);
         // lack of full stop is intentional
         // https://youtu.be/1A8nP50qIX8?t=1166
-        ~objbox(bowl_water, "You use the hollow reed to siphon some water from the pool into your bowl The water doesn't seem as sparkly as it looked in the pool.", 250, 0, divide(^objbox_height, 2));
+        ~objbox(bowl_water, "You use the cut reed plant to siphon some water from the pool into your bowl The water doesn't seem as sparkly as it looked in the pool.", 250, 0, divide(^objbox_height, 2));
     }
     else if (inv_total(inv, bucket_empty) > 0) {
         inv_del(inv, bucket_empty, 1);
         inv_add(inv, bucket_water, 1);
         // lack of full stop is intentional
         // https://youtu.be/1A8nP50qIX8?t=1166
-        ~objbox(bucket_water, "You use the hollow reed to siphon some water from the pool into your bucket The water doesn't seem as sparkly as it looked in the pool.", 250, 0, divide(^objbox_height, 2));
+        ~objbox(bucket_water, "You use the cut reed plant to siphon some water from the pool into your bucket The water doesn't seem as sparkly as it looked in the pool.", 250, 0, divide(^objbox_height, 2));
     }
     else if (inv_total(inv, jug_empty) > 0) {
         inv_del(inv, jug_empty, 1);
         inv_add(inv, jug_of_water, 1);
         // lack of full stop is intentional
         // https://youtu.be/1A8nP50qIX8?t=1166
-        ~objbox(jug_of_water, "You use the hollow reed to siphon some water from the pool into your jug The water doesn't seem as sparkly as it looked in the pool.", 250, 0, divide(^objbox_height, 2));
+        ~objbox(jug_of_water, "You use the cut reed plant to siphon some water from the pool into your jug The water doesn't seem as sparkly as it looked in the pool.", 250, 0, divide(^objbox_height, 2));
     }
     else if (inv_total(inv, vial_empty) > 0) {
         inv_del(inv, vial_empty, 1);
@@ -1022,7 +1028,7 @@ if (last_useitem = hollow_reed) {
         inv_add(inv, vial_water, 1);
         // lack of full stop is intentional
         // https://runescape.wiki/w/Transcript:Legends%27_Quest#With_an_empty_vial_and_without_a_blessed_gold_bowl
-        ~objbox(vial_water, "You use the hollow reed to siphon some water from the pool into your vial The water doesn't seem as sparkly as it looked in the pool.", 250, 0, divide(^objbox_height, 2));
+        ~objbox(vial_water, "You use the cut reed plant to siphon some water from the pool into your vial The water doesn't seem as sparkly as it looked in the pool.", 250, 0, divide(^objbox_height, 2));
     }
     else {
         mes("You start to siphon some of the water up the tube...");
@@ -1235,7 +1241,10 @@ if(inv_freespace(inv) = 0) {
 mes("This totem pole looks very heavy...");
 anim(human_pickupfloor, 0);
 p_delay(0);
-if(%legends_progress < ^legends_collected_totem) %legends_progress = ^legends_collected_totem;
+if(%legends_progress < ^legends_collected_totem) {
+    %legends_progress = ^legends_collected_totem;
+    %legends_bits = clearbit_range(%legends_bits, ^legends_defeated_san_final, ^legends_defeated_irvig_final);
+}
 loc_change(legends_damaged_earth, 50);
 inv_add(inv, yommi_totem, 1);
 mes("But you manage to lift it.");
@@ -1324,7 +1333,7 @@ mes("You empty the pure water out of the blessed golden bowl.");
 // this doesn't work in reverse (bowl -> vial = nothing interesting happens)
 if (last_useitem = vial_empty) {
     mes("You decant some water from the golden bowl into the vial.");
-    def_int $bowl_uses = getbit_range(%legends_map_runes, ^legends_golden_bowl_uses_start, ^legends_golden_bowl_uses_end);
+    def_int $bowl_uses = getbit_range(%legends_bits, ^legends_golden_bowl_uses_start, ^legends_golden_bowl_uses_end);
     inv_del(inv, vial_empty, 1);
     inv_add(inv, vial_water, 1);
     if ($bowl_uses = 1) {
@@ -1339,22 +1348,26 @@ if (last_useitem = vial_empty) {
     else {
         $bowl_uses = sub($bowl_uses, 1);
     }
-    %legends_map_runes = setbit_range_toint(%legends_map_runes, $bowl_uses, ^legends_golden_bowl_uses_start, ^legends_golden_bowl_uses_end);
+    %legends_bits = setbit_range_toint(%legends_bits, $bowl_uses, ^legends_golden_bowl_uses_start, ^legends_golden_bowl_uses_end);
     mes("The water doesn't seem as effervescent as it was in the bowl.");
 }
 else if (last_useitem = yommi_tree_seeds) {
     ~doubleobjbox(yommi_tree_seeds, blessed_golden_bowl_pure_water, "You place the seeds into the golden bowl of pure sacred|water.", 150);
+    if(%legends_progress = ^legends_defeated_nezikchened_fire) %legends_progress = ^legends_germinated_seeds;
     def_int $seed_qty = inv_total(inv, yommi_tree_seeds);
     inv_del(inv, yommi_tree_seeds, $seed_qty);
     inv_add(inv, yommi_tree_seeds_germinated, $seed_qty);
     // todo: confirm this always uses all the water
     def_int $bowl_count_inv = inv_total(inv, blessed_golden_bowl_pure_water);
-    inv_del(inv, blessed_golden_bowl_pure_water, $bowl_count_inv);
-    inv_add(inv, blessed_gold_bowl, $bowl_count_inv);
+    if($bowl_count_inv > 0) {
+        inv_del(inv, blessed_golden_bowl_pure_water, $bowl_count_inv);
+        inv_add(inv, blessed_gold_bowl, $bowl_count_inv);
+    }
     def_int $bowl_count_bank = inv_total(bank, blessed_golden_bowl_pure_water);
-    inv_del(bank, blessed_golden_bowl_pure_water, $bowl_count_bank);
-    inv_add(bank, blessed_gold_bowl, $bowl_count_bank);
-    if(%legends_progress = ^legends_defeated_nezikchened_fire) %legends_progress = ^legends_germinated_seeds;
+    if($bowl_count_bank > 0) {
+        inv_del(bank, blessed_golden_bowl_pure_water, $bowl_count_bank);
+        inv_add(bank, blessed_gold_bowl, $bowl_count_bank);
+    }
     ~mesbox("You start to see little shoots growing on the seeds. These seeds look|as if they're germinated now.");
 }
 else {
@@ -1374,7 +1387,7 @@ if (last_useitem = snake_weed) {
     inv_del(inv, ardrigal_mixture, 1);
     inv_del(inv, snake_weed, 1);
     inv_add(inv, bravery_potion, 1);
-    ~objbox(bravery_potion, "It makes a heady brew. This must be what Gujuo was|talking about. You certainly would need to be brave to|drink this!", 250, 0, divide(^objbox_height, 2));
+    ~objbox(bravery_potion, "It makes a heady brew. This must be what Gujuo was|talking about. You certainly would need to be brave to|drink this!", 250, 0, ^objbox_height);
 }
 else {
     ~displaymessage(^dm_default);
@@ -1392,23 +1405,23 @@ if (last_useitem = ardrigal) {
     inv_del(inv, snakeweed_mixture, 1);
     inv_del(inv, ardrigal, 1);
     inv_add(inv, bravery_potion, 1);
-    ~objbox(bravery_potion, "It makes a heady brew. This must be what Gujuo was|talking about. You certainly would need to be brave to|drink this!", 250, 0, divide(^objbox_height, 2));
+    ~objbox(bravery_potion, "It makes a heady brew. This must be what Gujuo was|talking about. You certainly would need to be brave to|drink this!", 250, 0, ^objbox_height);
 }
 else {
     ~displaymessage(^dm_default);
 }
 
 [opheld1,bravery_potion]
-~objbox(bravery_potion, "This bravery potion bubbles with a strange effervescence, but it smells very strange, like oily burnt oranges. Are you sure you want to drink it?", 250, 0, divide(^objbox_height, 2));
+~objbox(bravery_potion, "This bravery potion bubbles with a strange effervescence, but it smells very strange, like oily burnt oranges. Are you sure you want to drink it?", 250, 0, ^objbox_height);
 def_int $op = ~p_choice2_header("Yes, I'll bravely drink the bravery potion.", 1, "Actually, let me consider this a bit longer first; it smells a bit odd.", 2, "Drink the so-called 'Bravery Potion'?");
 if($op = 2) {
-    ~objbox(bravery_potion,"You sensibly stopper the vial and place it back in your inventory. You consider that things aren't so desperate yet that you need to rely on strange jungle potions to make you brave.", 250, 0, divide(^objbox_height, 2));
+    ~objbox(bravery_potion,"You sensibly stopper the vial and place it back in your inventory. You consider that things aren't so desperate yet that you need to rely on strange jungle potions to make you brave.", 250, 0, ^objbox_height);
     return;
 }
-~objbox(bravery_potion, "You bravely swig down the entire contents of the vial and then wait for some sort of internal explosion. After a few seconds, you realise that you actually feel quite okay.", 250, 0, divide(^objbox_height, 2));
+~objbox(bravery_potion, "You bravely swig down the entire contents of the vial and then wait for some sort of internal explosion. After a few seconds, you realise that you actually feel quite okay.", 250, 0, ^objbox_height);
 inv_del(inv, bravery_potion, 1);
 inv_add(inv, vial_empty, 1);
-%legends_map_runes = setbit(%legends_map_runes, ^legends_drank_bravery_potion);
+%legends_bits = setbit(%legends_bits, ^legends_drank_bravery_potion);
 
 [label,make_golden_bowl]
 if (map_members = false) {
@@ -1489,28 +1502,8 @@ p_delay(0);
 ~objbox(stafforb, "The orb shatters with the power of the magic. The spell works and you magically appear in a different part of the cave system. It seems that the gate was a test of magical ability.", 250, 0, 0);
 ~mesbox("As soon as you enter the room, you are filled with dread. In the centre of the room is a large gaping hole. It goes down a long way...");
 
-[oploc1,legends_barrel]
-mes("You smash the barrel open.");
-loc_del(500);
-spotanim_map(Barrel_Smash, loc_coord, 0, 0);
-anim(%com_attackanim, 0);
-//settimer(legends_spawn_barrel, 20);
-def_int $rand = random(128);
-if($rand < 8) {
-    mes("There's nothing in the barrel.");
-    ~legends_barrel_spawn_npc;
-} else if($rand < 24) {
-    
-}
-
-[proc,legends_barrel_spawn_npc]
-spotanim_map(small_smokepuff, 0_41_154_22_10, 0, 0);
-sound_synth(smokepuff, 0, 0);
-
-[timer,legends_spawn_barrel]
-
 [oploc1,legends_winch]
-if(testbit(%legends_map_runes, ^legends_tied_rope_winch) = true) {
+if(testbit(%legends_bits, ^legends_tied_rope_winch) = true) {
     mes("You search the wooden beams and find the rope you attached.");
     loc_change(legends_winch_rope, 30);
     return;
@@ -1521,20 +1514,20 @@ mes("Perhaps with a rope, it might be a bit more functional.");
 
 [oplocu,legends_winch]
 if(last_useitem = rope) {
-    if(testbit(%legends_map_runes, ^legends_tied_rope_winch) = true) {
+    if(testbit(%legends_bits, ^legends_tied_rope_winch) = true) {
         mes("You have already thrown a rope around this wooden beam.");
         loc_change(legends_winch_rope, 30);
         return;
     }
     mes("You throw a rope around the winch.");
     loc_change(legends_winch_rope, 30);
-    %legends_map_runes = setbit(%legends_map_runes, ^legends_tied_rope_winch);
+    %legends_bits = setbit(%legends_bits, ^legends_tied_rope_winch);
     return;
 }
 ~displaymessage(^dm_default);
 
 [oploc1,legends_winch_rope]
-if(testbit(%legends_map_runes, ^legends_tied_rope_winch) = false) {
+if(testbit(%legends_bits, ^legends_tied_rope_winch) = false) {
     mes("The rope snaps as you're about to climb down it."); // TODO: rsc, need to confirm 
     loc_change(legends_winch, 30);
     return;
@@ -1548,7 +1541,7 @@ if($op = 2) {
 if_close;
 mes("You prepare to climb down the rope.");
 p_delay(2);
-if(testbit(%legends_map_runes, ^legends_drank_bravery_potion) = true) {
+if(testbit(%legends_bits, ^legends_drank_bravery_potion) = true) {
     if(stat_random(stat(agility), 120, 250) = false) {
         mes("Fear stabs at your heart....");
         say("Gulp!");
@@ -1660,7 +1653,7 @@ p_delay(1);
 p_teleport(movecoord(loc_coord, 1, 0, 0));
 
 [oploc1,legends_rocky_ledge_3]
-if(coordx(coord) > coordx(loc_coord)) {
+if(coordz(coord) < coordz(loc_coord)) {
     mes("You step confidently onto the rocky ledge.");
     p_teleport(movecoord(loc_coord, 0, 0, 1));
     return;
@@ -1850,9 +1843,9 @@ p_teleport(movecoord(loc_coord, 0, 0, -1));
 @legends_furnace_pieces(true);
 
 [label,legends_furnace_pieces](boolean $searching)
-def_int $total = calc(getbit_range(%legends_map_runes, ^legends_smelting_chunk, ^legends_smelting_chunk) 
-                        + getbit_range(%legends_map_runes, ^legends_smelting_hunk, ^legends_smelting_hunk) 
-                        + getbit_range(%legends_map_runes, ^legends_smelting_lump, ^legends_smelting_lump));
+def_int $total = calc(getbit_range(%legends_bits, ^legends_smelting_chunk, ^legends_smelting_chunk) 
+                        + getbit_range(%legends_bits, ^legends_smelting_hunk, ^legends_smelting_hunk) 
+                        + getbit_range(%legends_bits, ^legends_smelting_lump, ^legends_smelting_lump));
 if($total = 0) {
     ~mesbox("The compartment in the furnace looks like it should hold something.|It's divided into three seperate sections.");
 } else if($total = 1) {
@@ -1869,6 +1862,7 @@ if($total = 0) {
     anim(human_furnace, 0);
     ~mesbox("The heat in the furnace slowly rises and soon fuses the parts together. As soon as the item cools, you pick it up.");
     if(%legends_progress = ^legends_enter_lower_dungeon) %legends_progress = ^legends_crystal_pieces_smelted;
+    inv_add(inv, heart_crystal, 1);
     ~objbox(heart_crystal, "As the crystal touches your hands a voice inside|of your head says.. |@red@Bring life to the dragons eye.", 250, 0, ^objbox_height);
 }
 
@@ -1884,11 +1878,13 @@ if(stat(crafting) < 50) {
 if(last_useitem = lump_of_crystal | last_useitem = hunk_of_crystal | last_useitem = chunk_of_crystal) {
     def_obj $crystal = last_useitem;
     anim(human_pickuptable, 0);
-    if(testbit(%legends_map_runes, oc_param($crystal, crystal_bit)) = true) {
+    if(testbit(%legends_bits, oc_param($crystal, crystal_bit)) = true) {
         ~mesbox("You have already placed that chunk of crystal into the furnace.");
         return;
     }
-    ~objbox($crystal, "You place the piece of crystal into a specially shaped compartment of the furnace.", 250, 0, 0);
+    ~objbox($crystal, "You place the piece of crystal into a specially shaped compartment of the furnace.", 250, 0, ^objbox_height);
+    inv_del(inv, $crystal, 1);
+    %legends_bits = setbit(%legends_bits, oc_param($crystal, crystal_bit));
     @legends_furnace_pieces(false);
 }
 mes("The furnace doesn't seem to be working.");
@@ -1915,7 +1911,7 @@ inv_add(inv, glowing_heart_crystal, 1);
 ~objbox(glowing_heart_crystal, "You carefully place the dragon crystal on the rock. The rocks seem to vibrate and hum and the crystal starts to glow. The vibration in the area diminishes, but the crystal continues to glow.", 250, 0, ^objbox_height);
 
 [oploc1,legends_recess]
-~mesbox("You see a heart-shaped depression in the wall.|A messagne reads...|@blu@All ye who stand 'ere the dragons teeth,|@blu@Place your full true heart within, and proceed...");
+~mesbox("You see a heart-shaped depression in the wall.|A message reads...|@blu@All ye who stand 'ere the dragons teeth,|@blu@Place your full true heart within, and proceed...");
 
 [oplocu,legends_recess]
 if(last_useitem = heart_crystal) {
@@ -1998,23 +1994,26 @@ obj_add(map_findsquare(coord, 1, 1, ^map_findsquare_lineofwalk), palm_leaf, 1, 1
 [oplocu,legends_totem_pole_1]
 if(last_useitem = yommi_totem) {
     if(%legends_progress < ^legends_defeated_nezikchened_final) {
-        ~mesbox("You attempt to replace the evil totem pole. A black cloud emanates from the evil totem pole and it slowly forms into the dread demon Nezikchened.");
+        ~mesbox("You attempt to replace the evil totem pole.|A black cloud emanates from the evil totem pole and|it slowly forms into the dread demon Nezikchened.");
         @summon_nezi_part3;
     } else if(%legends_progress = ^legends_defeated_nezikchened_final) {
-        inv_del(inv, yommi_totem, 1);
+        ~mesbox("You remove the evil totem pole and replace it with|the one you carved yourself.|As you do so, you feel a lightness in the air,|almost as if the Kharazi Jungle were sighing.");
         %legends_progress = ^legends_replaced_totem;
-        ~mesbox("You remove the evil totem pole and replace it with the one you carved yourself. As you do so, you feel a lightness in the air, almost as if the Kharazi Jungle were sighing.");
+        inv_del(inv, yommi_totem, 1);
         def_coord $coord = map_findsquare(coord, 1, 7, ^map_findsquare_lineofwalk);
         npc_add($coord, gujuo, 500);
         npc_walk(movecoord(coord, 1, 0, 0));
         npc_setmode(opplayer2);
+    } else {
+        loc_change(legends_totem_pole_2, 20);
+        ~mesbox("You have already replaced the evil totem pole with your own. You feel a great sense of accomplishment.");
     }
     return;
 }
 ~displaymessage(^dm_default);
 
 [oploc1,legends_totem_pole_1]
-if(%legends_progress < ^legends_defeated_nezikchened_final) {
+if(%legends_progress < ^legends_replaced_totem) {
     loc_change(legends_totem_pole_3, 20);
     ~mesbox("This totem pole looks corrupted. You don't like to look at it for too long.");
 } else if(%legends_progress >= ^legends_replaced_totem) {
@@ -2023,7 +2022,7 @@ if(%legends_progress < ^legends_defeated_nezikchened_final) {
 }
 
 [oploc1,legends_totem_pole_2]
-if(%legends_progress < ^legends_defeated_nezikchened_final) {
+if(%legends_progress < ^legends_replaced_totem) {
     loc_change(legends_totem_pole_3, 20);
     ~mesbox("This totem pole corrupted. You don't like to look at it for too long.");
 } else if(%legends_progress >= ^legends_replaced_totem) {
@@ -2032,6 +2031,8 @@ if(%legends_progress < ^legends_defeated_nezikchened_final) {
 
 // no script for pole_3
 
+[oploc1,legends_totem_pole_4]
+~mesbox("This totem pole is truly awe inspiring. It depicts powerful Karamjan animals. It is very well carved and brings a sense of power and spiritual fulfillment to anyone who looks at it.");
 
 [queue,legends_quest_complete]
 %legends_progress = ^legends_complete;

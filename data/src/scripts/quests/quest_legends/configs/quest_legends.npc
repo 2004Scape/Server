@@ -330,7 +330,7 @@ param=attack_sound,skeleton_attack
 param=defend_sound,skelly_hit
 param=death_sound,skeleton_death
 param=death_drop,null
-huntmode=san_tojalon
+huntmode=aggressive_melee
 huntrange=1
 // Stats match osrs version but our version Vislvl is different.
 
@@ -377,7 +377,7 @@ param=attack_sound,skeleton_attack
 param=defend_sound,skelly_hit
 param=death_sound,skeleton_death
 param=death_drop,null
-huntmode=irvig_senay
+huntmode=aggressive_melee
 huntrange=1
 // osrs stats and Vislvl match 1:1
 
@@ -425,7 +425,7 @@ param=attack_sound,skeleton_attack
 param=defend_sound,skelly_hit
 param=death_sound,skeleton_death
 param=death_drop,null
-huntmode=ranalph_devere
+huntmode=aggressive_melee
 huntrange=1
 // Stats match osrs version but our version Vislvl is different.
 

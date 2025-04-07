@@ -76,34 +76,34 @@ if (%legends_progress < ^legends_spoke_ungadulu) {
 [label,ungadulu_extinguish]
 ~chatplayer("<p,neutral>How can I extinguish the flames?");
 ~chatnpc("<p,shock>Please don't try to extinguish...");
-npc_changetype(ungadulu_possessed, 1);
+npc_changetype(ungadulu_possessed, 2);
 // https://media.discordapp.net/attachments/936714977685958678/1195794230690447400/419624878_10161030270160560_5504501485089454437_n.jpg?ex=67d321a9&is=67d1d029&hm=d5f81563fa219807006db3cbfd21c1c7e2fc5f3fcfcf1144482e22ddbc928114&=&format=webp&width=1126&height=845
 ~chatnpc("<p,angry>Yes, douse the flames with water,|pure water...|foo...");
 // double space intentional
 // https://youtu.be/atp7nZUwC8E?t=33
 ~chatnpc("<p,shock>Please, leave now... don't listen to me... I beg you, leave now,  don't touch the flames...");
-%legends_map_runes = setbit(%legends_map_runes, ^legends_asked_ungadulu_where);
+%legends_bits = setbit(%legends_bits, ^legends_asked_ungadulu_where);
 @multi2("Where do I get pure water from?", ungadulu_where,
         "Who are you?", ungadulu_who);
 
 [label,ungadulu_where]
 ~chatplayer("<p,neutral>Where do I get pure water from?");
 ~chatnpc("<p,shock>Please, leave now...");
-npc_changetype(ungadulu_possessed, 1);
+npc_changetype(ungadulu_possessed, 2);
 ~chatnpc("<p,angry>...from the above lands... hurry and release me...");
 ~chatnpc("<p,shock>Leave here, please, go... now...");
-npc_changetype(ungadulu_possessed, 1);
+npc_changetype(ungadulu_possessed, 2);
 ~chatnpc("<p,madlaugh>Hurry, Vacu, the heat kills me... ha ha ha");
-%legends_map_runes = setbit(%legends_map_runes, ^legends_ungadulu_called_vacu);
+%legends_bits = setbit(%legends_bits, ^legends_ungadulu_called_vacu);
 ~mesbox("The Shaman throws himself down on the floor and starts convulsing.");
 
 [label,ungadulu_who]
 ~chatplayer("<p,neutral>Who are you?");
 ~chatnpc("<p,sad>I am Ungadulu, trapped here many years now... Leave these caves and save yourself...");
-npc_changetype(ungadulu_possessed, 1);
+npc_changetype(ungadulu_possessed, 2);
 ~chatnpc("<p,angry>Wait... get pure water from the pool... above lands...");
-%legends_map_runes = setbit(%legends_map_runes, ^legends_asked_ungadulu_where);
-%legends_map_runes = setbit(%legends_map_runes, ^legends_asked_ungadulu_who);
+%legends_bits = setbit(%legends_bits, ^legends_asked_ungadulu_where);
+%legends_bits = setbit(%legends_bits, ^legends_asked_ungadulu_who);
 ~chatnpc("<p,shock>Please Bwana, don't listen to me... run, save yourself...");
 @multi2("How can I extinguish the flames?", ungadulu_extinguish,
         "Where do I get pure water from?", ungadulu_where);
@@ -125,13 +125,13 @@ if(%legends_progress = ^legends_defeated_nezikchened_fire) {
     }
 } else if(%legends_progress = ^legends_received_dagger | inv_total(inv, dark_dagger) > 0 | inv_total(inv, glowing_dagger) > 0) { // this is only an inv check, will override the later stage options
     ~chatnpc("<p,quiz>Hello Bwana, how goes your quest to find the water?");
-    if(testbit(%legends_map_runes, ^legends_killed_viyeldi) = true) {
+    if(testbit(%legends_bits, ^legends_killed_viyeldi) = true) {
         @multi5("I have killed Viyeldi!", ungadulu_killed_viyeldi, "I met a spirit in the Viyeldi Caves.", ungadulu_spirit, "The spirit told me to kill Viyeldi.", ungadulu_kill, "Do you know anything about daggers?", ungadulu_dagger, "I need more Yommi tree seeds.", ungadulu_need_seeds);
     }
     @multi5("I met a spirit in the Viyeldi Caves.", ungadulu_spirit, "The spirit told me to kill Viyeldi.", ungadulu_kill, "Do you know anything about daggers?", ungadulu_dagger, "I need more Yommi tree seeds.", ungadulu_need_seeds, "Ok, thanks...", ungadulu_thanks);
 }  else if(%legends_progress = ^legends_defeated_nezikchened_water) { // this is only an inv check, will override the later stage options
     ~mesbox("You approach Ungadulu...");
-    if(testbit(%legends_map_runes, ^legends_given_dagger) = true) {
+    if(testbit(%legends_bits, ^legends_given_dagger) = true) {
         ~chatnpc("<p,quiz>Blessings on you Bwana. Have you managed to deal with the spirit? Do you have the water?");
     } else {
         ~chatnpc("<p,quiz>Blessings on you Bwana. Did you use the spell and kill the spirit? Do you have the sacred water yet?");
@@ -145,11 +145,29 @@ if(%legends_progress = ^legends_defeated_nezikchened_fire) {
         ~chatplayer("<p,neutral>Yes, everything's fine.");
     }
     ~chatnpc("<p,happy>Your Legendary exploits are travelling the whole jungle.");
+    // stops here if ur on stage 32
     if(%legends_progress = ^legends_collected_totem) {
         ~chatnpc("<p,neutral>How goes your quest to grow the sacred Yommi tree?");
         @multi3("I've already made the totem pole.", ungadulu_made_totem, "I'm not sure what to do with the Totem pole.", ungadulu_totem_notsure, "Ok, thanks...", ungadulu_thanks);
+    } else if(%legends_progress = ^legends_defeated_nezikchened_final | %legends_progress = ^legends_replaced_totem) {
+        ~chatnpc("<p,neutral>How goes your quest to grow the sacred Yommi tree?");
+        @multi3("I've killed Nezikchened the Demon again.", ungadulu_killed_nezi, "I've replaced the evil Totem pole.", ungadulu_replaced_totem, "Ok, thanks...", ungadulu_thanks);
+    } else if(%legends_progress >= ^legends_got_gilded_totem & %legends_progress < ^legends_complete) {
+        ~chatnpc("<p,neutral>You have done well, Bwana, to have succeeded where so many others have failed. You are a true Legend Bwana.");
+    } else if(%legends_progress >= ^legends_complete) {
+        ~chatnpc("<p,neutral>Gujuo has been to see me. He told me that you have been given a sacred totem pole. It was constructed by one of my ancestors many moons ago. It is a noble prize Bwana, you have earned it. Look after it well.");
     }
 }
+
+[label,ungadulu_killed_nezi]
+~chatplayer("<p,happy>I've killed Nezikchened the Demon again.");
+~chatnpc("<p,happy>If you have killed him for the third time, then you have banished him from our world completely. This is indeed a legendary accomplishment Bwana, you should feel proud.");
+@multi2("I've replaced the evil Totem pole.", ungadulu_replaced_totem, "Ok, thanks...", ungadulu_thanks);
+
+[label,ungadulu_replaced_totem]
+~chatplayer("<p,happy>I've replaced the evil Totem pole.");
+~chatnpc("<p,happy>Many thanks Bwana, my people are truly grateful. Have you seen Gujuo? I am sure that he may have something for you as a token of our appreciation.");
+@multi2("I've killed Nezikchened the Demon again.", ungadulu_killed_nezi, "Ok, thanks...", ungadulu_thanks);
 
 [label,ungadulu_made_totem]
 ~chatplayer("<p,neutral>I've already made the totem pole.");
@@ -162,7 +180,7 @@ if(%legends_progress = ^legends_defeated_nezikchened_fire) {
 @multi3("I've already made the totem pole.", ungadulu_made_totem, "I'm not sure what to do with the Totem pole.", ungadulu_totem_notsure, "Ok, thanks...", ungadulu_thanks);
 
 [label,ungadulu_killed_spirit]
-if(testbit(%legends_map_runes, ^legends_given_dagger) = true) {
+if(testbit(%legends_bits, ^legends_given_dagger) = true) {
     ~chatnpc("<p,happy>Yes, I've killed the Spirit. Actually the spirit turned out to be the Demon - Nezikchened.");
 } else {
     ~chatnpc("<p,quiz>Yes, I've killed the Spirit. I used the spell you gave me, it was very effective in fact. Actually the spirit turned out to be the Demon - Nezikchened.");
@@ -338,7 +356,7 @@ else {
         npc_changetype(ungadulu_possessed, 20); // osrs
         npc_say("Ha ha ha ha! Die, Vacu!");
     } else {
-        npc_say("Hey! That's no way to treat a shaman.");
+        npc_say("Huh, that's no way to treat a shaman.");
     }
     spotanim_npc(zap, 100, 0);
     npc_anim(zap, 0);
@@ -361,14 +379,14 @@ else {
     npc_settimer(10);
     ~mesbox("Ungadulu unleashes a savage bolt of energy at you. You're knocked out of the octagram by the power of the spell.");
     if(%legends_progress >= ^legends_defeated_nezikchened_fire) {
-        ~chatnpc("<p,angry>I hope that teaches you to respect your elders!");
+        ~chatnpc("<p,sad>I hope that teaches you a lesson!");
         return;
     }
     ~chatnpc("<p,madlaugh>Ha, ha ha Vacu... Come for me again and you'll taste more of my power!");
 }
 
 [opnpcu,ungadulu]
-if(%legends_progress >= ^legends_complete) { 
+if(%legends_progress >= ^legends_returned_to_radimus) {  // confirmed this stage on OSRS
     mes("You have no further business with Ungadulu.");
     return;
 }

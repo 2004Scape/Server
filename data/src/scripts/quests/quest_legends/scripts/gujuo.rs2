@@ -35,7 +35,7 @@ switch_obj(last_useitem) {
 if (p_finduid(uid) = false) {
     return;
 }
-if(%legends_progress = ^legends_got_bullroarer) {
+if(%legends_progress >= ^legends_asked_gujuo_holy_water) {
     if (inv_total(inv, gold_bowl) > 0) {
         ~chatnpc("<p,neutral>Greetings Bwana. Ah I see you have the golden bowl! Would you like me to show you how to bless it?");
         def_int $choice = ~p_choice2("Yes, I'd like you to bless my gold bowl.", 1, "No thanks, I need help with something else.", 2);
@@ -83,7 +83,55 @@ else if (%legends_progress >= ^legends_accepted_rescue_ungadulu & %legends_progr
         @multi4("I made the Totem pole, now what do I do with it?", gujuo_madetotem, "I found the source of the spring and I got the water.", gujuo_foundsource, "I killed the demon again.", gujuo_demon, "Ok thanks for your help.", gujuo_thanks);
     }
     @multi4("I found the source of the spring and I got the water.", gujuo_foundsource, "I killed the demon again.", gujuo_demon, "How do I make the totem pole?", gujuo_totem, "Ok thanks for your help.", gujuo_thanks);
+} else if(%legends_progress = ^legends_replaced_totem) {
+    ~chatnpc("<p,neutral>Greetings Bwana, we saw your fight with the Demon from some distance away. My people are so pleased with your heroic efforts. Your strength and ability as a warrior are Legendary.");
+    ~objbox(gilded_totem, "Gujuo offers you an awe inspiring totem pole.", 250, 0, ^objbox_height);
+    ~chatnpc("<p,neutral>Please accept this as a token of our appreciation.");
+    inv_add(inv, gilded_totem, 1); // no invspace check
+    %legends_progress = ^legends_got_gilded_totem;
+    ~chatnpc("<p,neutral>Please, now consider yourself a friend of my people. And visit us anytime.");
+    if(inv_total(inv, yommi_tree_seeds_germinated) > 0 | inv_total(bank, yommi_tree_seeds_germinated) > 0) { // removes from both
+        inv_del(bank, yommi_tree_seeds_germinated, ^max_32bit_int);
+        inv_del(inv, yommi_tree_seeds_germinated, ^max_32bit_int);
+        ~chatnpc("<p,neutral>I'll take those germinated Yommi tree seeds to Ungadulu, I'm sure he'll appreciate them.");
+    }
+    if(inv_total(inv, yommi_tree_seeds) > 0 | inv_total(bank, yommi_tree_seeds_germinated) > 0) {
+        inv_del(bank, yommi_tree_seeds, ^max_32bit_int);
+        inv_del(inv, yommi_tree_seeds, ^max_32bit_int);
+        ~chatnpc("<p,neutral>I'll take those Yommi tree seeds to Ungadulu, I'm sure he'll appreciate them.");
+    }
+    @gujuo_leave;
+} else if(%legends_progress = ^legends_got_gilded_totem) { // no dialogue for stages between this and quest completion, confirm this on rs3
+    if(~obj_gettotal(gilded_totem) = 0) {
+        ~chatnpc("<p,neutral>Good day Bwana, it's always good to see you.");
+        @multi4("Do you have any news?", gujuo_news, "Where are all your people?", gujuo_people, "I've lost the tribal gift you gave me.", gujuo_lost_gift, "Ok thanks for your help.", gujuo_thanks);
+    } else {
+        ~chatnpc("<p,neutral>Good day Bwana. The Kharazi Jungle is especially beautiful today isn't it? My village people pass on their thanks to you.");
+        @multi3("Do you have any news?", gujuo_news, "Where are all your people?", gujuo_people, "Ok thanks for your help.", gujuo_thanks);
+    }
+} else if (%legends_progress >= ^legends_radimus_training_1) {
+    ~chatnpc("<p,neutral>Good day Bwana. The jungle is especially beautiful today isn't it? My village people pass on their thanks to you.");
+    @multi3("Do you have any news?", gujuo_news, "Where are all your people?", gujuo_people, "Ok thanks for your help.", gujuo_thanks);
 }
+
+[label,gujuo_lost_gift]
+~chatplayer("<p,neutral>I've lost the tribal gift you gave me.");
+~chatnpc("<p,neutral>Well, that wasn't very nice of you. It took us a long time to make that Totem pole. Luckily, I made another one at the same time.");
+if(~obj_gettotal(gilded_totem) = 0) {
+    inv_add(inv, gilded_totem, 1);
+    ~objbox(gilded_totem, "Gujuo hands over another totem pole.", 250, 0, ^objbox_height);
+}
+
+[label,gujuo_news]
+~chatplayer("<p,neutral>Do you have any news?");
+~chatnpc("<p,neutral>Just that everything is fine in the jungle with us. And that we are grateful to you for your help.");
+@multi3("Do you have any news?", gujuo_news, "Where are all your people?", gujuo_people, "Ok thanks for your help.", gujuo_thanks);
+
+[label,gujuo_people]
+~chatplayer("<p,neutral>Where are all your people?");
+~chatnpc("<p,neutral>My people are all happy living in the jungle. They are still afraid of strangers and will not approach but they are around, none the less.");
+~chatnpc("<p,neutral>Your story has been woven into the fabric of our society. And we all sing your many praises Bwana.");
+@multi3("Do you have any news?", gujuo_news, "Where are all your people?", gujuo_people, "Ok thanks for your help.", gujuo_thanks);
 
 [label,gujuo_madetotem]
 ~chatplayer("<p,neutral>I made the Totem pole, now what do I do with it?");
@@ -97,7 +145,7 @@ switch_int(%legends_progress) {
         @multi2("I can't find the caves...", gujuo_cant_find,
                 "Ok thanks for your help.", gujuo_thanks);
     case ^legends_found_entrance :
-        if (testbit(%legends_map_runes, ^legends_entered_cavern) = true) {
+        if (testbit(%legends_bits, ^legends_entered_cavern) = true) {
             @multi2("Ungadulu is trapped in some magical flames!", gujuo_ungadulu_trapped,
                     "I'm not sure what to do.", gujuo_idk);
         }
@@ -106,14 +154,14 @@ switch_int(%legends_progress) {
                     "Ok thanks for your help.", gujuo_thanks);
         }
     case ^legends_spoke_ungadulu, ^legends_asked_gujuo_holy_water, ^legends_filled_bowl, ^legends_summoned_nezikchened_fire :
-        if (testbit(%legends_map_runes, ^legends_ungadulu_called_vacu) = true) {
+        if (testbit(%legends_bits, ^legends_ungadulu_called_vacu) = true) {
             @multi5("Ungadulu looks a little strange.", gujuo_ungadulu_strange,
                     "I'm not sure what to do.", gujuo_idk,
                     "I need some pure water to douse some magic flames.", gujuo_pure_water,
                     "Ungadulu called me a 'Vacu'", gujuo_vacu,
                     "Ok thanks for your help.", gujuo_thanks);
         }
-        else if (testbit(%legends_map_runes, ^legends_asked_ungadulu_where) = true) {
+        else if (testbit(%legends_bits, ^legends_asked_ungadulu_where) = true) {
             @multi5("Ungadulu looks a little strange.", gujuo_ungadulu_strange,
                     "Sorry for bothering you.", gujuo_sorry_bothering,
                     "I'm not sure what to do.", gujuo_idk,
@@ -370,14 +418,14 @@ else {
 [label,gujuo_ungadulu_strange]
 ~chatplayer("<p,neutral>Ungadulu looks a little strange.");
 ~chatnpc("<p,neutral>Be wary Bwana. There are many unknown spirits that reside in these dark areas. You may be tricked by an unknown force...");
-if (testbit(%legends_map_runes, ^legends_asked_ungadulu_where) = true) {
+if (testbit(%legends_bits, ^legends_asked_ungadulu_where) = true) {
     @multi5("Ok, thanks... Goodbye.", gujuo_water_thanks,
             "What kind of unknown force?", gujuo_force,
             "Sorry for bothering you.", gujuo_sorry_bothering,
             "I'm not sure what to do.", gujuo_idk,
             "I need some pure water to douse some magic flames.", gujuo_pure_water);
 }
-else if (testbit(%legends_map_runes, ^legends_ungadulu_called_vacu) = true) {
+else if (testbit(%legends_bits, ^legends_ungadulu_called_vacu) = true) {
     @multi5("Ok, thanks... Goodbye.", gujuo_water_thanks,
             "What kind of unknown force?", gujuo_force,
             "Sorry for bothering you.", gujuo_sorry_bothering,
@@ -421,9 +469,12 @@ else {
 
 [label,gujuo_pure_water]
 ~chatplayer("<p,neutral>I need some pure water to douse some magic flames.");
-if (testbit(%legends_map_runes, ^legends_asked_ungadulu_who) = true) {
+if (testbit(%legends_bits, ^legends_asked_ungadulu_who) = true) {
     ~chatnpc("<p,neutral>This sounds very strange Bwana... but maybe I can help. There is a pool of water that is sacred to us. It is located in the middle of the Kharazi Jungle.");
     ~chatnpc("<p,neutral>The water contains special properties but it can only be contained in a blessed vessel made from metal of the sun. The water is difficult to get to, but I am sure you will manage to claim some.");
+    if (%legends_progress < ^legends_asked_gujuo_holy_water) {
+        %legends_progress = ^legends_asked_gujuo_holy_water;
+    }
     @multi5("Sorry for bothering you.", gujuo_sorry_bothering,
             "I'm not sure what to do.", gujuo_idk,
             "Ok, thanks... Goodbye.", gujuo_water_thanks,

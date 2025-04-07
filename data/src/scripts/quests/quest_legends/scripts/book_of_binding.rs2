@@ -1,6 +1,6 @@
 [opobj3,book_of_binding]
-if (getbit_range(%legends_map_runes, ^legends_opal_used, ^legends_emerald_used) = ^legends_all_gems_used) {
-    %legends_map_runes = clearbit_range(%legends_map_runes, ^legends_opal_used, ^legends_emerald_used);
+if (getbit_range(%legends_bits, ^legends_opal_used, ^legends_emerald_used) = ^legends_all_gems_used) {
+    %legends_bits = clearbit_range(%legends_bits, ^legends_opal_used, ^legends_emerald_used);
 }
 @pickup_obj(obj_coord, obj_type, obj_count);
 

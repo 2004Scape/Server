@@ -29,7 +29,7 @@ if(last_useitem = dark_dagger) {
 
 [label,echned_dialogue]
 // checks in this order: holy force -> dark dagger -> glowing dagger
-if(testbit(%legends_map_runes, ^legends_given_dagger) = true) {
+if(testbit(%legends_bits, ^legends_given_dagger) = true) {
     @summon_nezi_dagger;
 }
 if(inv_total(inv, holy_force) > 0) {
@@ -54,7 +54,7 @@ if(%legends_progress = ^legends_heart_in_recess) %legends_progress = ^legends_pu
 ~chatnpc("<p,neutral>Aahhhhhhhhh! As I take the spirit of one departed, I will now reveal myself and spell out your doom.");
 inv_del(inv, glowing_dagger, 1);
 inv_del(worn, glowing_dagger, 1);
-%legends_map_runes = setbit(%legends_map_runes, ^legends_given_dagger);
+%legends_bits = setbit(%legends_bits, ^legends_given_dagger);
 @summon_nezi_dagger;
 
 [label,summon_nezi_dagger]
