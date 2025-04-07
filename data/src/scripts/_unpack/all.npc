@@ -1298,8 +1298,6 @@ param=death_anim,chicken_death
 param=attack_sound,chicken_attack
 param=defend_sound,chicken_hit
 param=death_sound,chicken_death
-huntmode=cowardly
-huntrange=1
 // Stats match osrs version but our version Vislvl is different.
 // https://raw.githubusercontent.com/Joshua-F/osrs-dumps/refs/heads/master/config/dump.npc npc_2062
 

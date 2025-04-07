@@ -204,8 +204,6 @@ param=damagetype,^stab_style
 param=attack_anim,human_spear_stab
 param=defend_anim,human_spear_block
 param=attack_sound,staff_stab
-huntmode=cowardly
-huntrange=1
 // Stats match osrs version but our version Vislvl is different.
 
 [nezikchened]

@@ -926,7 +926,7 @@ while($i < 13) {
     $i = calc($i + 1);
     if($i = 13 & finduid(uid) = true) {
         mes("...Strangely a book appears near the middle of the room.");
-        obj_add(0_43_145_13_17, book_of_binding, 1, 400); // lasts 500t
+        obj_add(0_43_145_13_17, book_of_binding, 1, 500); // lasts 500t
     }
     world_delay(1);
 }
@@ -984,21 +984,21 @@ if (last_useitem = hollow_reed) {
         %legends_bits = setbit_range_toint(%legends_bits, 0, ^legends_golden_bowl_uses_start, ^legends_golden_bowl_uses_end);
         if(%legends_progress = ^legends_defeated_nezikchened_water) %legends_progress = ^legends_sacred_water_collected;
         if(%legends_progress = ^legends_asked_gujuo_holy_water) %legends_progress = ^legends_filled_bowl;
-        // inconsistent use of "syphon" here is accurate
+        // inconsistent use of "syphon" here is accurate, based off classic it seems like all uses have this
         // https://youtu.be/Lid8enDEF_U?t=1463
-        ~objbox(blessed_golden_bowl_pure_water, "You use the cut reed plant to syphon some water from the pool into your blessed golden bowl. The water seems to bubble and sparkle as if alive.", 250, 0, divide(^objbox_height, 2));
+        ~objbox(blessed_golden_bowl_pure_water, "You use the cut reed plant to syphon some water|from the pool into your blessed golden bowl.|The water seems to bubble and sparkle as if alive.", 250, 0, divide(^objbox_height, 2));
     }
     else if (inv_total(inv, enchanted_vial) > 0) {
         inv_del(inv, enchanted_vial, 1);
         inv_del(inv, hollow_reed, 1);
         inv_add(inv, holy_water, 1);
-        ~objbox(holy_water, "You use the cut reed plant to siphon some water from the pool into your enchanted vial. The water seems to bubble and sparkle as if alive.", 250, 0, divide(^objbox_height, 2));
+        ~objbox(holy_water, "You use the cut reed plant to syphon some water|from the pool into your enchanted vial.|The water seems to bubble and sparkle as if alive.", 250, 0, divide(^objbox_height, 2));
     }
     else if (inv_total(inv, gold_bowl) > 0) {
         inv_del(inv, gold_bowl, 1);
         inv_del(inv, hollow_reed, 1);
         inv_add(inv, golden_bowl_pure_water, 1);
-        ~objbox(golden_bowl_pure_water, "You use the cut reed plant to siphon some water from the pool into your golden bowl. The water doesn't seem as sparkly as it looked in the pool...", 250, 0, divide(^objbox_height, 2));
+        ~objbox(golden_bowl_pure_water, "You use the cut reed plant to syphon some water from the pool into your golden bowl. The water doesn't seem as sparkly as it looked in the pool...", 250, 0, divide(^objbox_height, 2));
     }
     // this order is correct (to OSRS)
     else if (inv_total(inv, bowl_empty) > 0) {
@@ -1006,33 +1006,27 @@ if (last_useitem = hollow_reed) {
         inv_add(inv, bowl_water, 1);
         // lack of full stop is intentional
         // https://youtu.be/1A8nP50qIX8?t=1166
-        ~objbox(bowl_water, "You use the cut reed plant to siphon some water from the pool into your bowl The water doesn't seem as sparkly as it looked in the pool.", 250, 0, divide(^objbox_height, 2));
+        ~objbox(bowl_water, "You use the cut reed plant to syphon some water from the pool into your bowl The water doesn't seem as sparkly as it looked in the pool.", 250, 0, divide(^objbox_height, 2));
     }
     else if (inv_total(inv, bucket_empty) > 0) {
         inv_del(inv, bucket_empty, 1);
         inv_add(inv, bucket_water, 1);
-        // lack of full stop is intentional
-        // https://youtu.be/1A8nP50qIX8?t=1166
-        ~objbox(bucket_water, "You use the cut reed plant to siphon some water from the pool into your bucket The water doesn't seem as sparkly as it looked in the pool.", 250, 0, divide(^objbox_height, 2));
+        ~objbox(bucket_water, "You use the cut reed plant to syphon some water from the pool into your bucket The water doesn't seem as sparkly as it looked in the pool.", 250, 0, divide(^objbox_height, 2));
     }
     else if (inv_total(inv, jug_empty) > 0) {
         inv_del(inv, jug_empty, 1);
         inv_add(inv, jug_of_water, 1);
-        // lack of full stop is intentional
-        // https://youtu.be/1A8nP50qIX8?t=1166
-        ~objbox(jug_of_water, "You use the cut reed plant to siphon some water from the pool into your jug The water doesn't seem as sparkly as it looked in the pool.", 250, 0, divide(^objbox_height, 2));
+        ~objbox(jug_of_water, "You use the cut reed plant to syphon some water from the pool into your jug The water doesn't seem as sparkly as it looked in the pool.", 250, 0, divide(^objbox_height, 2));
     }
     else if (inv_total(inv, vial_empty) > 0) {
         inv_del(inv, vial_empty, 1);
         inv_del(inv, hollow_reed, 1);
         inv_add(inv, vial_water, 1);
-        // lack of full stop is intentional
-        // https://runescape.wiki/w/Transcript:Legends%27_Quest#With_an_empty_vial_and_without_a_blessed_gold_bowl
-        ~objbox(vial_water, "You use the cut reed plant to siphon some water from the pool into your vial The water doesn't seem as sparkly as it looked in the pool.", 250, 0, divide(^objbox_height, 2));
+        ~objbox(vial_water, "You use the cut reed plant to syphon some water from the pool into your vial The water doesn't seem as sparkly as it looked in the pool.", 250, 0, divide(^objbox_height, 2));
     }
     else {
-        mes("You start to siphon some of the water up the tube...");
-        p_delay(3);
+        mes("You start to syphon some of the water up the tube...");
+        p_delay(2);
         mes("But you have nothing to put the water in.");
         return;
     }
@@ -1134,7 +1128,7 @@ if(last_useitem = yommi_tree_seeds_germinated) {
     mes("It looks as if this Yommi tree needs to be watered.");
     loc_change(legends_yommi_tree_sapling, 100);
     p_delay(1);
-    world_delay(49); // 53t (something is wrong with world delay lol)
+    world_delay(49); // 51t (something is wrong with world delay lol)
     if(loc_find(loc_coord, legends_yommi_tree_sapling) = true) {
         loc_change(legends_dead_yommi_sapling, 50);
     }
@@ -1156,7 +1150,7 @@ if(last_useitem = blessed_golden_bowl_pure_water) {
     loc_change(legends_adult_yommi_tree, 100);
     p_delay(1);
     mes("It looks tall enough now to make a good-sized totem pole.");
-    world_delay(49); // 53t
+    world_delay(49); // 51t
     if(loc_find(loc_coord, legends_adult_yommi_tree) = true) {
         loc_change(legends_dead_yommi, 50);
     }
@@ -1179,7 +1173,7 @@ if(oc_category(last_useitem) = weapon_axe) {
     loc_change(legends_felled_yommi_tree, 100);
     p_delay(1);
     anim(null, 0);
-    world_delay(49); // 53t (something is wrong with world delay lol)
+    world_delay(49); // 51t (something is wrong with world delay lol)
     if(loc_find(loc_coord, legends_felled_yommi_tree) = true) {
         loc_change(legends_rotten_yommi, 50);
     }

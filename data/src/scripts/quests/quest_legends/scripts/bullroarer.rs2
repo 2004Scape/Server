@@ -17,19 +17,21 @@ while (npc_findnext = true) {
             mes("Nothing much seems to happen, though.");
             ~chatnpc("<p,happy>You might like to use that when you get into the Kharazi jungle, it might attract more natives...");
             return;
-        case oomlie_bird, jungle_savage, jungle_wolf : 
-            mes("A nearby <npc_name> takes a dislike to the noise you're making.");
-            npc_setmode(opplayer2);
-            return;
+        case oomlie_bird, jungle_savage, jungle_wolf :
+            if(random(3) = 0) { // seems to be a random chance, they won't always attack you
+                mes("A nearby <npc_name> takes a dislike to the noise you're making.");
+                ~npc_retaliate(0);
+                return;
+            }
     }
 }
 if (~inzone_coord_pair_table(kharazi_jungle, coord) = true) {
+    mes("You see some movement in the trees...");
+    p_delay(1);
+    def_coord $coord = map_findsquare(coord, 1, 7, ^map_findsquare_lineofwalk);
+    mes("...and a tall, dark, charismatic looking native approaches you.");
     // You can spawn multiple Gujuos by running far away enough
     if(npc_find(coord, gujuo, 14, 0) = false) {
-        mes("You see some movement in the trees...");
-        p_delay(1);
-        def_coord $coord = map_findsquare(coord, 1, 7, ^map_findsquare_lineofwalk);
-        mes("...and a tall, dark, charismatic looking native approaches you.");
         npc_add($coord, gujuo, 500);
     }
     if (lineofsight(npc_coord, coord) = false) {
