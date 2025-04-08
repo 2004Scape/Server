@@ -3,7 +3,8 @@ if (inv_freespace(gnome_cooking) = inv_size(gnome_cooking)) {
     mes("The half baked bowl is empty."); // guess
     return;
 }
-mes("The half baked bowl contains a mixture of ingredients."); // guess
+~mesbox("You look into the bowl..."); // guess
+~mesbox("@blu@The bowl contains:@bla@|<~inv_string(gnome_cooking)>."); // guess
 
 [opheldu,half_baked_gnomebowl]
 switch_obj(last_useitem) {

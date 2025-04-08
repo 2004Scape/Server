@@ -3,7 +3,8 @@ if (inv_freespace(gnome_cooking) = inv_size(gnome_cooking)) {
     mes("The half baked crunchies are completely plain."); // guess
     return;
 }
-mes("The half baked crunchies contain a mixture of ingredients."); // guess
+~mesbox("You inspect the crunchies..."); // guess
+~mesbox("@blu@The crunchies contain:@bla@|<~inv_string(gnome_cooking)>."); // guess
 
 
 [opheldu,half_baked_crunchies]

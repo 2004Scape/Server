@@ -15,7 +15,8 @@ if (inv_freespace(gnome_cocktail) = inv_size(gnome_cocktail)) {
     mes("The cocktail shaker is empty."); // guess
     return;
 }
-mes("The cocktail shaker contains a mixture of ingredients."); // guess
+~mesbox("You look into the cocktail shaker..."); // guess
+~mesbox("@blu@The cocktail shaker contains:@bla@|<~inv_string(gnome_cocktail)>."); // guess
 
 [label,add_cocktail_ingredient](obj $ingredient)
 if (inv_freespace(gnome_cocktail) = 0) {
