@@ -1,0 +1,89 @@
+[opheldu,_gnome_unf_odd_crunchies] @finish_gnome_food(last_item, last_useitem);
+[opheldu,_gnome_unf_odd_bowl] @finish_gnome_food(last_item, last_useitem);
+[opheldu,_gnome_unf_odd_batta] @finish_gnome_food(last_item, last_useitem);
+
+[label,gnome_topping_add](obj $gnome_dish, obj $ingredient, namedobj $req_ingredient, namedobj $product, namedobj $fail)
+if (oc_param($ingredient, gnome_ingredient) = ^false) {
+    ~displaymessage(^dm_default);
+    return;
+}
+def_string $name = "gnome dish";
+switch_int(oc_param($gnome_dish, gnome_cooking_type)) {
+    case ^gnome_batta : $name = "gnome batta";
+    case ^gnome_crunchies : $name = "gnome crunchies";
+    case ^gnome_bowl : $name = "gnome bowl";
+}
+if ($ingredient = pot_of_cream) {
+    mes("You pour thick cream over the <$name>.");
+} else {
+    mes("You sprinkle the <lowercase(oc_name($ingredient))> over the <$name>.");
+}
+
+inv_del(inv, $gnome_dish, 1);
+
+if ($ingredient ! gnome_spice) { // gnome spice is infinite
+    inv_del(inv, $ingredient, 1);
+}
+if ($ingredient ! $req_ingredient) {
+    inv_add(inv, $fail, 1);
+    return;
+}
+inv_add(inv, $product, 1);
+
+if (oc_param($product, gnome_cooking_type) = null) { // finished
+    stat_advance(cooking, 300);
+}
+
+
+[label,finish_gnome_food](obj $food, obj $ingredient)
+switch_obj ($food) {
+    case unfinished_spicy_crunchies1 : @gnome_topping_add($food, $ingredient, gnome_spice, spicy_crunchies, odd_crunchies);
+    case unfinished_toad_crunchies1 : @gnome_topping_add($food, $ingredient, equa_leaves, toad_crunchies, odd_crunchies);
+    case unfinished_worm_crunchies1 : @gnome_topping_add($food, $ingredient, gnome_spice, worm_crunchies, odd_crunchies);
+    case unfinished_choc_chip_crunchies1 : @gnome_topping_add($food, $ingredient, chocolate_dust, choc_chip_crunchies, odd_crunchies);
+
+    case unfinished_chocolate_bomb1 : @gnome_topping_add($food, $ingredient, pot_of_cream, unfinished_chocolate_bomb2, odd_gnomebowl);
+    case unfinished_chocolate_bomb2 : @gnome_topping_add($food, $ingredient, pot_of_cream, unfinished_chocolate_bomb3, odd_gnomebowl);
+    case unfinished_chocolate_bomb3 : @gnome_topping_add($food, $ingredient, chocolate_dust, chocolate_bomb, odd_gnomebowl);
+
+    case unfinished_worm_hole1 : @gnome_topping_add($food, $ingredient, equa_leaves, worm_hole, odd_gnomebowl);
+    case unfinished_veg_ball1 : @gnome_topping_add($food, $ingredient, equa_leaves, veg_ball, odd_gnomebowl);
+
+    case unfinished_worm_batta1 : @gnome_topping_add($food, $ingredient, equa_leaves, worm_batta, odd_batta);
+    case unfinished_cheese_tom_batta1 : @gnome_topping_add($food, $ingredient, equa_leaves, cheese_tom_batta, odd_batta);
+    case unfinished_vegetable_batta1 : @gnome_topping_add($food, $ingredient, equa_leaves, vegetable_batta, odd_batta);
+
+    case unfinished_fruit_batta1 :
+        switch_obj($ingredient) {
+            case lime_chunks : @gnome_topping_add($food, $ingredient, lime_chunks, unfinished_fruit_batta2, odd_batta);
+            case orange_chunks : @gnome_topping_add($food, $ingredient, orange_chunks, unfinished_fruit_batta3, odd_batta);
+            case pineapple_chunks : @gnome_topping_add($food, $ingredient, pineapple_chunks, unfinished_fruit_batta4, odd_batta);
+        }
+    case unfinished_fruit_batta2 :
+        switch_obj($ingredient) {
+            case orange_chunks : @gnome_topping_add($food, $ingredient, orange_chunks, unfinished_fruit_batta5, odd_batta);
+            case pineapple_chunks : @gnome_topping_add($food, $ingredient, pineapple_chunks, unfinished_fruit_batta6, odd_batta);
+        }
+    case unfinished_fruit_batta3 :
+        switch_obj($ingredient) {
+            case pineapple_chunks : @gnome_topping_add($food, $ingredient, pineapple_chunks, unfinished_fruit_batta7, odd_batta);
+            case lime_chunks : @gnome_topping_add($food, $ingredient, lime_chunks, unfinished_fruit_batta5, odd_batta);
+        }
+    case unfinished_fruit_batta4 :
+        switch_obj($ingredient) {
+            case lime_chunks : @gnome_topping_add($food, $ingredient, lime_chunks, unfinished_fruit_batta6, odd_batta);
+            case orange_chunks : @gnome_topping_add($food, $ingredient, orange_chunks, unfinished_fruit_batta7, odd_batta);
+        }
+    case unfinished_fruit_batta5 : @gnome_topping_add($food, $ingredient, pineapple_chunks, unfinished_fruit_batta8, odd_batta);
+    case unfinished_fruit_batta6 : @gnome_topping_add($food, $ingredient, orange_chunks, unfinished_fruit_batta8, odd_batta);
+    case unfinished_fruit_batta7 : @gnome_topping_add($food, $ingredient, lime_chunks, unfinished_fruit_batta8, odd_batta);
+    case unfinished_fruit_batta8 : @gnome_topping_add($food, $ingredient, gnome_spice, fruit_batta, odd_batta);
+}
+
+switch_int (oc_param($food, gnome_cooking_type)) {
+    case ^gnome_crunchies : @gnome_topping_add($food, $ingredient, null, odd_crunchies, odd_crunchies);
+    case ^gnome_batta : @gnome_topping_add($food, $ingredient, null, odd_batta, odd_batta);
+    case ^gnome_bowl : @gnome_topping_add($food, $ingredient, null, odd_gnomebowl, odd_gnomebowl);
+}
+
+~displaymessage(^dm_default);

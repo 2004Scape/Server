@@ -29,3 +29,7 @@ default=null
 [gnome_cooking_type]
 type=int
 default=null
+
+[gnome_ingredient]
+type=int
+default=0

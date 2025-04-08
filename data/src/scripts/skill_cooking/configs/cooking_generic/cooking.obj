@@ -400,6 +400,7 @@ weight=150g
 category=category_59
 name=Chocolate dust
 desc=It's ground up chocolate.
+param=gnome_ingredient,^true
 param=cocktail_message,You sprinkle the chocolate dust over the drink.
 
 [pot_empty]

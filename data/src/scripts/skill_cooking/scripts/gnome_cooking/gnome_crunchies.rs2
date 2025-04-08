@@ -1,0 +1,64 @@
+[opheld1,half_baked_crunchies]
+if (inv_freespace(gnome_cooking) = inv_size(gnome_cooking)) {
+    mes("The half baked crunchies are completely plain."); // guess
+    return;
+}
+mes("The half baked crunchies contain a mixture of ingredients."); // guess
+
+
+[opheldu,half_baked_crunchies]
+switch_obj(last_useitem) {
+    case king_worm, equa_leaves, gnome_spice, toad_legs, chocolate_bar : @add_crunchies_ingredient(last_useitem);
+    case default : ~displaymessage(^dm_default);
+}
+
+[proc,gnome_crunchies]()(namedobj)
+// spicy crunchies
+def_int $equa_leaves_count = inv_total(gnome_cooking, equa_leaves);
+def_int $gnome_spice_count = inv_total(gnome_cooking, gnome_spice);
+def_int $toad_legs_count = inv_total(gnome_cooking, toad_legs);
+def_int $king_worm_count = inv_total(gnome_cooking, king_worm);
+def_int $chocolate_bar_count = inv_total(gnome_cooking, chocolate_bar);
+def_int $freespace = inv_freespace(gnome_cooking);
+
+inv_clear(gnome_cooking);
+
+if ($gnome_spice_count = 3 & $equa_leaves_count = 2) {
+    return(unfinished_spicy_crunchies1);
+}
+// toad legs crunchies
+if ($toad_legs_count = 2 & $gnome_spice_count = 1 & $freespace = sub(inv_size(gnome_cooking), 3)) {
+    return(unfinished_toad_crunchies1);
+}
+// worm crunchies
+if ($king_worm_count = 2 & $equa_leaves_count = 1 & $gnome_spice_count = 1 & $freespace = sub(inv_size(gnome_cooking), 4)) {
+    return(unfinished_worm_crunchies1);
+}
+// choc chip crunchies
+if ($chocolate_bar_count = 2 & $gnome_spice_count = 1 & $freespace = sub(inv_size(gnome_cooking), 3)) {
+    return(unfinished_choc_chip_crunchies1);
+}
+
+return(odd_crunchies);
+
+
+[label,add_crunchies_ingredient](obj $ingredient)
+if (inv_freespace(gnome_cooking) = 0) {
+    mes("The crunchies already have enough ingredients."); // guess
+    return;
+}
+
+if (string_length(oc_param($ingredient, crunchies_message)) < 1) {
+    mes("You mix the <lowercase(oc_name($ingredient))> into the dough."); // guess
+} else {
+    mes(oc_param($ingredient, crunchies_message));
+}
+
+if ($ingredient = gnome_spice) {
+    inv_add(gnome_cooking, gnome_spice, 1);
+} else {
+    inv_moveitem(inv, gnome_cooking, $ingredient, 1);
+    if (oc_param($ingredient, next_obj_stage) ! null) {
+        inv_add(inv, oc_param($ingredient, next_obj_stage), 1);
+    }
+}

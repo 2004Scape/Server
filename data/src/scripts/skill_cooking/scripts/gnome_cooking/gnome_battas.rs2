@@ -1,0 +1,68 @@
+// no idea but i think half baked gnome food should all share an inv
+[opheld1,half_baked_batta]
+if (inv_freespace(gnome_cooking) = inv_size(gnome_cooking)) {
+    mes("The half baked batta is completely plain."); // guess
+    return;
+}
+mes("The half baked batta contains a mixture of ingredients."); // guess
+
+[opheldu,half_baked_batta]
+switch_obj(last_useitem) {
+    case cheese, tomato, onion, cabbage, dwellberry, seasoned_toad_legs, spicy_worm, equa_leaves : @add_batta_ingredient(last_useitem);
+    case default : ~displaymessage(^dm_default);
+}
+
+[label,add_batta_ingredient](obj $ingredient)
+if (inv_freespace(gnome_cooking) = 0) {
+    mes("The gnome batta already has enough ingredients."); // guess
+    return;
+}
+
+if (string_length(oc_param($ingredient, batta_message)) < 1) {
+    mes("You add the <lowercase(oc_name($ingredient))> to the gnome batta.");
+} else {
+    mes(oc_param($ingredient, batta_message));
+}
+
+if ($ingredient = gnome_spice) {
+    inv_add(gnome_cooking, gnome_spice, 1);
+} else {
+    inv_moveitem(inv, gnome_cooking, $ingredient, 1);
+    if (oc_param($ingredient, next_obj_stage) ! null) {
+        inv_add(inv, oc_param($ingredient, next_obj_stage), 1);
+    }
+}
+
+[proc,gnome_batta]()(namedobj)
+def_int $spicy_worm_count = inv_total(gnome_cooking, spicy_worm);
+def_int $cheese_count = inv_total(gnome_cooking, cheese);
+def_int $seasoned_toad_legs_count = inv_total(gnome_cooking, seasoned_toad_legs);
+def_int $tomato_count = inv_total(gnome_cooking, tomato);
+def_int $equa_leaves_count = inv_total(gnome_cooking, equa_leaves);
+def_int $onion_count = inv_total(gnome_cooking, onion);
+def_int $cabbage_count = inv_total(gnome_cooking, cabbage);
+def_int $dwellberry_count = inv_total(gnome_cooking, dwellberry);
+def_int $freespace = inv_freespace(gnome_cooking);
+
+inv_clear(gnome_cooking);
+
+if ($spicy_worm_count = 1 & $cheese_count = 1 & $freespace = sub(inv_size(gnome_cooking), 2)) {
+    return(unfinished_worm_batta1);
+}
+// toad legs batta
+if ($seasoned_toad_legs_count = 1 & $cheese_count = 1 & $freespace = sub(inv_size(gnome_cooking), 2)) {
+    return(toad_batta);
+}
+// cheese & tomato batta
+if ($cheese_count = 1 & $tomato_count = 1 & $freespace = sub(inv_size(gnome_cooking), 2)) {
+    return(unfinished_cheese_tom_batta1);
+}
+// fruit batta
+if ($equa_leaves_count = 4 & $freespace = sub(inv_size(gnome_cooking), 4)) {
+    return(unfinished_fruit_batta1);
+}
+// vegetable batta
+if ($tomato_count = 2 & $onion_count = 1 & $cabbage_count = 1 & $dwellberry_count = 1 & $cheese_count = 1 & $freespace = sub(inv_size(gnome_cooking), 6)) {
+    return(unfinished_vegetable_batta1);
+}
+return(odd_batta);

@@ -1,0 +1,66 @@
+[opheld1,half_baked_gnomebowl]
+if (inv_freespace(gnome_cooking) = inv_size(gnome_cooking)) {
+    mes("The half baked bowl is empty."); // guess
+    return;
+}
+mes("The half baked bowl contains a mixture of ingredients."); // guess
+
+[opheldu,half_baked_gnomebowl]
+switch_obj(last_useitem) {
+    case king_worm, onion, cheese, dwellberry, potato, equa_leaves, gnome_spice, toad_legs, chocolate_bar : @add_bowl_ingredient(last_useitem);
+    case default : ~displaymessage(^dm_default);
+}
+
+[proc,gnome_bowl]()(namedobj)
+// chocolate bomb
+def_int $chocolate_bar_count = inv_total(gnome_cooking, chocolate_bar);
+def_int $equa_leaves_count = inv_total(gnome_cooking, equa_leaves);
+def_int $onion_count = inv_total(gnome_cooking, onion);
+def_int $potato_count = inv_total(gnome_cooking, potato);
+def_int $gnome_spice_count = inv_total(gnome_cooking, gnome_spice);
+def_int $king_worm_count = inv_total(gnome_cooking, king_worm);
+def_int $cheese_count = inv_total(gnome_cooking, cheese);
+def_int $dwellberry_count = inv_total(gnome_cooking, dwellberry);
+def_int $toad_legs_count = inv_total(gnome_cooking, toad_legs);
+def_int $freespace = inv_freespace(gnome_cooking);
+
+inv_clear(gnome_cooking);
+
+if ($chocolate_bar_count = 4 & $equa_leaves_count = 1 & $freespace = sub(inv_size(gnome_cooking), 5)) {
+    return(unfinished_chocolate_bomb1);
+}
+// veg ball
+if ($onion_count = 2 & $potato_count = 2 & $gnome_spice_count = 1 & $freespace = sub(inv_size(gnome_cooking), 5)) {
+    return(unfinished_veg_ball1);
+}
+// worm hole
+if ($king_worm_count = 4 & $onion_count = 2 & $gnome_spice_count = 1 & $freespace = sub(inv_size(gnome_cooking), 7)) {
+    return(unfinished_worm_hole1);
+}
+// tangled toad legs
+if ($toad_legs_count = 4 & $cheese_count = 2 & $equa_leaves_count = 2 & $gnome_spice_count = 2 & $dwellberry_count = 1 & $freespace = sub(inv_size(gnome_cooking), 11)) {
+    return(tangled_toads_legs);
+}
+return(odd_gnomebowl);
+
+
+[label,add_bowl_ingredient](obj $ingredient)
+if (inv_freespace(gnome_cooking) = 0) {
+    mes("The bowl already has enough ingredients.");
+    return;
+}
+
+if (string_length(oc_param($ingredient, bowl_message)) < 1) {
+    mes("You add the <lowercase(oc_name($ingredient))> to the dough bowl.");
+} else {
+    mes(oc_param($ingredient, bowl_message));
+}
+
+if ($ingredient = gnome_spice) {
+    inv_add(gnome_cooking, gnome_spice, 1);
+} else {
+    inv_moveitem(inv, gnome_cooking, $ingredient, 1);
+    if (oc_param($ingredient, next_obj_stage) ! null) {
+        inv_add(inv, oc_param($ingredient, next_obj_stage), 1);
+    }
+}

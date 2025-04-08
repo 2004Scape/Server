@@ -1,0 +1,94 @@
+[opheldu,cocktail_shaker] 
+switch_obj(last_useitem) {
+    case cocktail_glass : @pour_cocktail_shaker;
+    case default : @add_cocktail_ingredient(last_useitem);
+}
+
+[opheldu,cocktail_glass]
+switch_obj(last_useitem) {
+    case cocktail_shaker : @pour_cocktail_shaker;
+    case default : ~displaymessage(^dm_default);
+}
+
+[opheld1,cocktail_shaker] // no idea what this is supposed to do
+if (inv_freespace(gnome_cocktail) = inv_size(gnome_cocktail)) {
+    mes("The cocktail shaker is empty."); // guess
+    return;
+}
+mes("The cocktail shaker contains a mixture of ingredients."); // guess
+
+[label,add_cocktail_ingredient](obj $ingredient)
+if (inv_freespace(gnome_cocktail) = 0) {
+    mes("The cocktail shaker is too full to fit anymore ingredients."); // guess
+    return;
+}
+switch_obj($ingredient) {
+    case lemon, orange, pineapple, lime, dwellberry :
+        mes("You squeeze the juice from the <lowercase(oc_name($ingredient))> into your cocktail shaker..."); // guess
+    case vodka, gin, brandy, whisky, bucket_milk :
+        mes("You pour the <lowercase(oc_name($ingredient))> into your cocktail shaker..."); // guess
+    case equa_leaves :
+        mes("You sprinkle the equa leaves into your cocktail shaker..."); // guess
+    case default :
+        ~displaymessage(^dm_default);
+        return;
+}
+if ($ingredient = gnome_spice) {
+    inv_add(gnome_cocktail, gnome_spice, 1);
+} else {
+    inv_moveitem(inv, gnome_cocktail, $ingredient, 1);
+    if (oc_param($ingredient, next_obj_stage) ! null) {
+        inv_add(inv, oc_param($ingredient, next_obj_stage), 1);
+    }
+}
+
+[label,pour_cocktail_shaker]
+if (inv_freespace(gnome_cocktail) = inv_size(gnome_cocktail)) {
+    mes("There's nothing to pour from the cocktail shaker."); // guess
+    return;
+}
+inv_del(inv, cocktail_glass, 1);
+inv_add(inv, ~gnome_cocktail, 1);
+inv_clear(gnome_cocktail);
+
+[proc,gnome_cocktail]()(namedobj)
+def_int $lemon_count = inv_total(gnome_cocktail, lemon);
+def_int $orange_count = inv_total(gnome_cocktail, orange);
+def_int $pineapple_count = inv_total(gnome_cocktail, pineapple);
+def_int $lime_count = inv_total(gnome_cocktail, lime);
+def_int $dwellberry_count = inv_total(gnome_cocktail, dwellberry);
+def_int $vodka_count = inv_total(gnome_cocktail, vodka);
+def_int $gin_count = inv_total(gnome_cocktail, gin);
+def_int $brandy_count = inv_total(gnome_cocktail, brandy);
+def_int $whisky_count = inv_total(gnome_cocktail, whisky);
+def_int $equa_leaves_count = inv_total(gnome_cocktail, equa_leaves);
+def_int $bucket_milk_count = inv_total(gnome_cocktail, bucket_milk);
+def_int $freespace = inv_freespace(gnome_cocktail);
+if ($pineapple_count = 2 & $orange_count = 1 & $lemon_count = 1 & $freespace = 3) {
+    return(unfinished_pineapple_punch1);
+}
+// fruit blast
+if ($pineapple_count = 1 & $orange_count = 1 & $lemon_count = 1 & $freespace = 4) {
+    return(unfinished_fruit_blast1);
+}
+// blurberry special
+if ($vodka_count = 1 & $gin_count = 1 & $brandy_count = 1 & $lemon_count = 2 & $orange_count = 1 & $freespace = 1) {
+    return(unfinished_blurberry_special1);
+}
+// chocolate saturday
+if ($whisky_count = 1 & $equa_leaves_count = 1 & $bucket_milk_count = 1 & $freespace = 4) {
+    return(unfinished_chocolate_saturday1);
+}
+// drunk dragon
+if ($vodka_count = 1 & $gin_count = 1 & $dwellberry_count = 1 & $freespace = 4) {
+    return(unfinished_drunk_dragon1);
+}
+// short green guy
+if ($vodka_count = 1 & $lime_count = 3 & $freespace = 3) {
+    return(unfinished_short_green_guy1);
+}
+// wizard blizzard
+if ($vodka_count = 2 & $gin_count = 1 & $pineapple_count = 1 & $orange_count = 1 & $lime_count = 1 & $lemon_count = 1) {
+    return(unfinished_wizard_blizzard1);
+}
+return(odd_cocktail1);
