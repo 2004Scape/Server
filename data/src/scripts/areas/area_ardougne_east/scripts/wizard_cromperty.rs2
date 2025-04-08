@@ -52,7 +52,7 @@ if($option = 1) {
     ~chatplayer("<p,neutral>Yes, that sounds good. Teleport me!");
     ~chatnpc("<p,happy>Okey dokey! Ready?");
     if(%totem_progress < ^totem_complete) {
-        @rdpt_teleport;
+        @rpdt_teleport;
     }
     ~chatnpc("<p,confused>Hmm.... that's odd... I can't seem to get a signal...");
 } else if($option = 2) {
@@ -60,7 +60,7 @@ if($option = 1) {
     ~chatnpc("<p,neutral>As you wish.");
 }
 
-[label,rdpt_teleport]
+[label,rpdt_teleport]
 if_close;
 npc_say("Dipsolum sententa sententi!");
 spotanim_pl(curse_impact, 124, 70);
