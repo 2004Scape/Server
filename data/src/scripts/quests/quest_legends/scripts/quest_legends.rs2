@@ -1849,9 +1849,9 @@ if($total = 0) {
 } else {
     anim(human_furnace, 0);
     if($searching = true) {
-        ~mesbox("You find the pieces of crystal fit perfectly into the strangely-shaped compartments. You use your Crafting skill to control the furnace.");
+        ~mesbox("You find the pieces of crystal fit perfectly into the strangely shaped compartments. You use your crafting skill to control the furnace.");
     } else {
-
+        ~mesbox("You place the final segment of the crystal into the strangely shaped compartment, all the pieces seem to fit. You use your crafting skill to control the furnace.");
     }
     anim(human_furnace, 0);
     ~mesbox("The heat in the furnace slowly rises and soon fuses the parts together. As soon as the item cools, you pick it up.");
