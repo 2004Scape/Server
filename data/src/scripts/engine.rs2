@@ -19,6 +19,8 @@
 [command,.huntnext]()(boolean)
 // info: Search (hunt) for one npc in a given area, prioritized by distance
 [command,npc_hunt](coord $source, int $distance, int $checkvis)(boolean)
+// info: Search (hunt) for one npc in a given area, prioritized by distance, secondary pointer
+[command,.npc_hunt](coord $source, int $distance, int $checkvis)(boolean)
 // info: Search (hunt) for npcs in a given area
 [command,npc_huntall](coord $source, int $distance, int $checkvis)
 // info: Use the next result from npc_huntall
