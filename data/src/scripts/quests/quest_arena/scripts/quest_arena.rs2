@@ -195,7 +195,7 @@ if (%arena_progress = ^arena_defeated_ogre & npc_find(coord, general_khazard, 8,
 if_close;
 def_coord $cam_coord = 0_40_49_39_23;
 def_coord $scorp_spawn = 0_40_49_47_23;
-if (npc_find(movecoord(coord, 0, 0, 8), khazard_scorpion, 14, 0) = true) {
+if (npc_find($scorp_spawn, khazard_scorpion, 14, 0) = true) {
     if(npc_getmode = none) { // npc in cutscene already, do nothing
         return;
     } else if(inzone($scorp_spawn, 0_40_49_49_24, npc_coord) = false) {
