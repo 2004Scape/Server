@@ -24,7 +24,6 @@ model=model_2808_obj
 2dxan=180
 category=category_120
 weight=14g
-param=singular_name,dwellberry
 param=batta_message,You add the dwell berries to the gnome batta.
 
 [equa_leaves]
@@ -41,7 +40,6 @@ model=model_2743_obj
 category=category_120
 weight=14g
 param=gnome_ingredient,^true
-param=singular_name,equa leaf
 param=cocktail_message,You sprinkle the leaves over the drink.
 param=batta_message,You sprinkle the equa leaves over the gnome batta.
 param=crunchies_message,You mix the equa leaves into the dough.
@@ -137,7 +135,6 @@ model=model_2668_obj
 2dxan=340
 weight=150g
 category=gnome_premade_and_toadlegs_kingworm
-param=singular_name,toad's legs
 param=batta_message,You add the seasoned toad's legs to the gnome batta.
 
 [spicy_worm]
@@ -236,7 +233,6 @@ cost=2
 weight=150g
 members=yes
 param=gnome_ingredient,^true
-param=singular_name,spice dash
 param=crunchies_message,You sprinkle the spice into the dough.
 param=bowl_message,You sprinkle some gnome spice over the dough bowl.
 
