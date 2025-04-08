@@ -150,6 +150,10 @@ const ScriptOpcodePointers: {
         set2: ['active_player2'],
         conditional: true
     },
+    [ScriptOpcode.NPC_HUNT]: {
+        set: ['active_npc'],
+        set2: ['active_npc2']
+    },
     [ScriptOpcode.NPC_HUNTALL]: {
         set: ['find_npc']
     },

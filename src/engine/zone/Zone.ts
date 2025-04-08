@@ -373,8 +373,8 @@ export default class Zone {
      * Generates players that are currently "visible" in this zone.
      * "visible" meaning they are active on the server and available to the client.
      */
-    *getAllPlayersSafe(): IterableIterator<Player> {
-        for (const player of this.players.all()) {
+    *getAllPlayersSafe(reverse: boolean = false): IterableIterator<Player> {
+        for (const player of this.players.all(reverse)) {
             if (player.isValid()) {
                 yield player;
             }

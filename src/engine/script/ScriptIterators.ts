@@ -75,7 +75,7 @@ export class HuntIterator extends ScriptIterator<Entity> {
                 const zoneZ: number = z << 3;
 
                 if (this.type === HuntModeType.PLAYER) {
-                    for (const player of World.gameMap.getZone(zoneX, zoneZ, this.level).getAllPlayersSafe()) {
+                    for (const player of World.gameMap.getZone(zoneX, zoneZ, this.level).getAllPlayersSafe(true)) {
                         if (World.currentTick > this.tick) {
                             throw new Error('[HuntIterator] tried to use an old iterator. Create a new iterator instead.');
                         }
@@ -95,7 +95,7 @@ export class HuntIterator extends ScriptIterator<Entity> {
                         yield player;
                     }
                 } else if (this.type === HuntModeType.NPC) {
-                    for (const npc of World.gameMap.getZone(zoneX, zoneZ, this.level).getAllNpcsSafe()) {
+                    for (const npc of World.gameMap.getZone(zoneX, zoneZ, this.level).getAllNpcsSafe(true)) {
                         if (World.currentTick > this.tick) {
                             throw new Error('[HuntIterator] tried to use an old iterator. Create a new iterator instead.');
                         }
@@ -119,7 +119,7 @@ export class HuntIterator extends ScriptIterator<Entity> {
                     }
                 } else if (this.type === HuntModeType.OBJ) {
                     // scripting only cares about dynamic objs??
-                    for (const obj of World.gameMap.getZone(zoneX, zoneZ, this.level).getAllObjsSafe()) {
+                    for (const obj of World.gameMap.getZone(zoneX, zoneZ, this.level).getAllObjsSafe(true)) {
                         if (World.currentTick > this.tick) {
                             throw new Error('[HuntIterator] tried to use an old iterator. Create a new iterator instead.');
                         }
@@ -142,7 +142,7 @@ export class HuntIterator extends ScriptIterator<Entity> {
                         yield obj;
                     }
                 } else if (this.type === HuntModeType.SCENERY) {
-                    for (const loc of World.gameMap.getZone(zoneX, zoneZ, this.level).getAllLocsSafe()) {
+                    for (const loc of World.gameMap.getZone(zoneX, zoneZ, this.level).getAllLocsSafe(true)) {
                         if (World.currentTick > this.tick) {
                             throw new Error('[HuntIterator] tried to use an old iterator. Create a new iterator instead.');
                         }
@@ -173,7 +173,7 @@ export class HuntIterator extends ScriptIterator<Entity> {
 /**
  * This iterator powers the `npc_huntall` RuneScript command.
  */
-export class NpcHuntAllCommandIterator extends ScriptIterator<Entity> {
+export class NpcHuntAllCommandIterator extends ScriptIterator<Npc> {
     // a radius of 1 will loop 9 zones
     // a radius of 2 will loop 25 zones
     // a radius of 3 will loop 49 zones
@@ -203,7 +203,7 @@ export class NpcHuntAllCommandIterator extends ScriptIterator<Entity> {
         this.checkVis = checkVis;
     }
 
-    protected *generator(): IterableIterator<Entity> {
+    protected *generator(): IterableIterator<Npc> {
         for (let x: number = this.maxX; x >= this.minX; x--) {
             const zoneX: number = x << 3;
             for (let z: number = this.maxZ; z >= this.minZ; z--) {
