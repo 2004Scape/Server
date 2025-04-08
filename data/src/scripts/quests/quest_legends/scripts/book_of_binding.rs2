@@ -18,7 +18,7 @@ switch_int (%book_page) {
     case 1 : ~book("Book of Binding", "Arcana I: Use holy water to determine possession.| Slight appearance changes may be perceived|when doused.|| Legendary Silverlight will help to defeat any demon by weakening it.||| Arcana II : Be wary of any demon, it may have special forms of attack.|| Use an Octagram of Fire to confine unearthly creatures of the underworld - the perfect geometry confuses them.|                 Eximus");
     case 2 : ~book("Book of Binding", "Instructo : Creation of holy water must be undertaken with determination and|urgency.|| Take to yourself empty vials free of all liquids.|| Read warily the enchantment contained herewithin in order to magick the vial for the holding of holy or sacred|water.| Take utmost care as you enchant them.| With great care and precision place the sacred water into a magicked vial and stopper it.|                 Eximus");
     case 3 : ~book("Book of Binding", "Defeati... the dreaded demon will be of unholy power and abilities.| Present thyself before the possessed with good intent and ready|manner.| With least obstruction and utmost solemnity hold open the pages of this great tome in order that the goodlight falls upon the victim completely.| Be thee prepared in every capacity, for the demon's tricks and wiles will swiftly outwit the unready adventurer.| Attack with vigour and zest if thee hopes to see another day.|                 Eximus");
-    case 4 : ~book_activus("Book of Binding", "Enchanto...|| Possessus valius emptious, projectus spellicus avoir valius|magicus.|| Castus enchanto avoir createur valius magicus holious avour defeati Demonicus Absolutus.||| Extralias projectus Magicus Holarius|| Attackanie Demonicus Absolutus distancie airus throwus armiues.|                 Eximus");
+    case 4 : ~book_activus("Book of Binding", "  Enchanto...|| Possessus valius emptious,| projectus spellicus avoir| valius magicus.|| Castus enchanto avoir| createur valius magicus| holious avour defeati| Demonicus Absolutus.|||Extralias projectus| Magicus Holarius|| Attackanie Demonicus| Absolutus distancie airus| throwus armiues.||                 Eximus");
 }
 
 [if_button,book4:com_1]
@@ -47,6 +47,9 @@ if($vial_count > 0) {
     return;
 }
 ~mesbox("However, you don't have the right components to cast this spell.");
+
+[if_button,book4:com_3]
+@book_flip_page(^book_direction_backward, 0, 4, book_of_binding_page);
 
 [label,enchant_vials](int $count)
 if_close;

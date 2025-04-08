@@ -437,8 +437,8 @@ vislevel=hide
 minimap=no
 model1=model_2846_npc
 wanderrange=0
-moverestrict=nomove
 blockwalk=all
+defaultmode=none
 
 [echned_zekin]
 name=Echned Zekin

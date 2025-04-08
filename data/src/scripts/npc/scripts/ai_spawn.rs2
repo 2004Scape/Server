@@ -1,2 +1,3 @@
 [ai_spawn,_]
 %npc_combat_xp_multiplier = npc_param(combat_xp_multiplier);
+%npc_start_coord = npc_coord;
