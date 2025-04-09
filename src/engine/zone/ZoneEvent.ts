@@ -1,4 +1,4 @@
-import ZoneEventType from '#/engine/zone/ZoneEventType.js';
+import { ZoneEventType } from '#/engine/zone/ZoneEventType.js';
 import ZoneMessage from '#/network/server/ZoneMessage.js';
 
 export default class ZoneEvent {

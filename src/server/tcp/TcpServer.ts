@@ -2,7 +2,7 @@ import net from 'net';
 
 import World from '#/engine/World.js';
 import Packet from '#/io/Packet.js';
-import LoggerEventType from '#/server/logger/LoggerEventType.js';
+import { LoggerEventType } from '#/server/logger/LoggerEventType.js';
 import NullClientSocket from '#/server/NullClientSocket.js';
 import TcpClientSocket from '#/server/tcp/TcpClientSocket.js';
 import Environment from '#/util/Environment.js';

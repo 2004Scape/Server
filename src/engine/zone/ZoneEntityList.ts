@@ -1,5 +1,5 @@
 import ObjType from '#/cache/config/ObjType.js';
-import EntityLifeCycle from '#/engine/entity/EntityLifeCycle.js';
+import { EntityLifeCycle } from '#/engine/entity/EntityLifeCycle.js';
 import Loc from '#/engine/entity/Loc.js';
 import Obj from '#/engine/entity/Obj.js';
 

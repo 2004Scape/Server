@@ -1,4 +1,4 @@
-import EntityLifeCycle from '#/engine/entity/EntityLifeCycle.js';
+import { EntityLifeCycle } from '#/engine/entity/EntityLifeCycle.js';
 import NonPathingEntity from '#/engine/entity/NonPathingEntity.js';
 import World from '#/engine/World.js';
 

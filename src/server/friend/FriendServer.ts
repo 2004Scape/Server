@@ -11,7 +11,7 @@ import { printInfo } from '#/util/Logger.js';
 /**
  * client -> server opcodes for friends server
  */
-export enum FriendsClientOpcodes {
+export const enum FriendsClientOpcodes {
     WORLD_CONNECT,
     FRIENDLIST_ADD,
     FRIENDLIST_DEL,
@@ -37,7 +37,7 @@ export enum FriendsClientOpcodes {
 /**
  * server -> client opcodes for friends server
  */
-export enum FriendsServerOpcodes {
+export const enum FriendsServerOpcodes {
     UPDATE_FRIENDLIST,
     UPDATE_IGNORELIST,
     PRIVATE_MESSAGE,

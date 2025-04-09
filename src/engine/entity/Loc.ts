@@ -1,12 +1,14 @@
 import { locShapeLayer } from '@2004scape/rsmod-pathfinder';
 
-import EntityLifeCycle from '#/engine/entity/EntityLifeCycle.js';
+import { EntityLifeCycle } from '#/engine/entity/EntityLifeCycle.js';
 import NonPathingEntity from '#/engine/entity/NonPathingEntity.js';
 import World from '#/engine/World.js';
 
 export default class Loc extends NonPathingEntity {
     // constructor properties
-    private baseInfo: number;
+    private readonly baseInfo: number;
+
+    // runtime properties
     private currentInfo: number;
 
     constructor(level: number, x: number, z: number, width: number, length: number, lifecycle: EntityLifeCycle, type: number, shape: number, angle: number) {

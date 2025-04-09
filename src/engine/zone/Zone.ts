@@ -1,6 +1,6 @@
 import ObjType from '#/cache/config/ObjType.js';
 import { CoordGrid } from '#/engine/CoordGrid.js';
-import EntityLifeCycle from '#/engine/entity/EntityLifeCycle.js';
+import { EntityLifeCycle } from '#/engine/entity/EntityLifeCycle.js';
 import Loc from '#/engine/entity/Loc.js';
 import NonPathingEntity from '#/engine/entity/NonPathingEntity.js';
 import Npc from '#/engine/entity/Npc.js';
@@ -9,7 +9,7 @@ import PathingEntity from '#/engine/entity/PathingEntity.js';
 import Player from '#/engine/entity/Player.js';
 import World from '#/engine/World.js';
 import ZoneEvent from '#/engine/zone/ZoneEvent.js';
-import ZoneEventType from '#/engine/zone/ZoneEventType.js';
+import { ZoneEventType } from '#/engine/zone/ZoneEventType.js';
 import ZoneMap from '#/engine/zone/ZoneMap.js';
 import Packet from '#/io/Packet.js';
 import ServerProtRepository from '#/network/rs225/server/prot/ServerProtRepository.js';

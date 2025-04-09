@@ -7,7 +7,7 @@ import { CoordGrid } from '#/engine/CoordGrid.js';
 import { ModalState } from '#/engine/entity/ModalState.js';
 import Player from '#/engine/entity/Player.js';
 import World from '#/engine/World.js';
-import WorldStat from '#/engine/WorldStat.js';
+import { WorldStat } from '#/engine/WorldStat.js';
 import Zone from '#/engine/zone/Zone.js';
 import Packet from '#/io/Packet.js';
 import ClientProtCategory from '#/network/client/prot/ClientProtCategory.js';
@@ -33,7 +33,7 @@ import UpdateRunWeight from '#/network/server/model/UpdateRunWeight.js';
 import UpdateStat from '#/network/server/model/UpdateStat.js';
 import OutgoingMessage from '#/network/server/OutgoingMessage.js';
 import ClientSocket from '#/server/ClientSocket.js';
-import LoggerEventType from '#/server/logger/LoggerEventType.js';
+import { LoggerEventType } from '#/server/logger/LoggerEventType.js';
 import NullClientSocket from '#/server/NullClientSocket.js';
 import { printError } from '#/util/Logger.js';
 
