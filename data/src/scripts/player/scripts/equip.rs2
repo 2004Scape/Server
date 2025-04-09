@@ -322,7 +322,7 @@ if ($worn_slot = null) {
 }
 
 // if the item is stackable and we have the item already in our worn inv, add to the stack!
-if (oc_stackable($equip_obj) = true & inv_getobj(worn, $worn_slot) = $equip_obj) {
+if (oc_stackable($equip_obj) = true & inv_total(worn, $equip_obj) > 0) {
     def_int $equip_obj_num = inv_getnum(inv, $inv_slot);
     def_int $overflow = inv_itemspace2(worn, $equip_obj, $equip_obj_num, inv_size(worn));
     if ($overflow >= $equip_obj_num) {
