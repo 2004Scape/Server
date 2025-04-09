@@ -99,22 +99,22 @@ if(%fishingcompo_progress = ^fishingcompo_won_comp) {
         inv_del(inv, fishing_trophy, 1);
         queue(fishingcompo_quest_complete, 0);
         ~chatnpc("<p,happy>Okay, we will let you in now.");
-    } else {
-        ~chatplayer("<p,confused>I don't have it with me.");
-        ~chatnpc("<p,confused>You'd better go get it then hadn't you?");
+        return;
+    } 
+    if(inv_total(inv, fishing_pass) = 0 & inv_total(bank, fishing_pass) = 0) {
+        def_int $op = ~p_choice2("I need another competition pass.", 1, "I don't have it with me.", 2);
+        if($op = 1) @mountain_dwarf_spare_pass;
     }
+    ~chatplayer("<p,confused>I don't have it with me.");
+    ~chatnpc("<p,confused>You'd better go get it then hadn't you?");
     return;
 }
 if(inv_total(inv, fishing_pass) = 0 & inv_total(bank, fishing_pass) = 0) {
     def_int $option = ~p_choice2("I need another competition pass.", 1, "No, it takes preparation to win fishing competitions.", 2);
     if($option = 1) {
-        ~chatplayer("<p,sad>I need another competition pass.");
-        ~chatnpc("<p,confused>Hmmm. It's a good job they sent us spares.");
-        inv_add(inv, fishing_pass, 1);
-        ~chatnpc("<p,confused>There you go.");
-    } else if($option = 2) {
-        ~chatplayer("<p,neutral>No, it takes preparation to win fishing competitions.");
-        ~chatnpc("<p,confused>Maybe that's where we are going wrong when we try fishing?");
+        @mountain_dwarf_spare_pass;
     }
+    ~chatplayer("<p,neutral>No, it takes preparation to win fishing competitions.");
+    ~chatnpc("<p,confused>Maybe that's where we are going wrong when we try fishing?");
 }
 ~chatplayer("<p,sad>No, not yet.");
