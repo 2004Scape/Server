@@ -1,69 +1,80 @@
-// no idea but i think half baked gnome food should all share an inv
 [opheld1,half_baked_batta]
-if (inv_freespace(gnome_cooking) = inv_size(gnome_cooking)) {
-    mes("The half baked batta is completely plain."); // guess
+if (~gnome_batta ! odd_batta) {
+    mes("The gnome batta is ready to bake.");
     return;
 }
-~mesbox("You inspect the batta..."); // guess
-~mesbox("@blu@The batta contains:@bla@|<~inv_string(gnome_cooking)>."); // guess
+@batta_prep_choose;
 
-[opheldu,half_baked_batta]
-switch_obj(last_useitem) {
-    case cheese, tomato, onion, cabbage, dwellberry, seasoned_toad_legs, spicy_worm, equa_leaves : @add_batta_ingredient(last_useitem);
-    case default : ~displaymessage(^dm_default);
-}
+[label,batta_prep_choose]
+@multi5_header(
+    "Worm Batta", batta_prep_worm,
+    "Toad's Legs Batta", batta_prep_toad,
+    "Cheese & Tomato Batta", batta_prep_cheese,
+    "Fruit Batta", batta_prep_fruit,
+    "Vegetable Batta", batta_prep_veg,
+    "What would you like to prepare?"
+);
 
-[label,add_batta_ingredient](obj $ingredient)
-if (inv_freespace(gnome_cooking) = 0) {
-    mes("The gnome batta already has enough ingredients."); // guess
+[label,batta_prep_worm]
+if (inv_total(inv, spicy_worm) < 1 | inv_total(inv, cheese) < 1) {
+    mes("You don't have the ingredients to prepare this cuisine."); // guess
     return;
 }
+mes("You put the ingredients into the batta."); // guess
+inv_del(inv, spicy_worm, 1);
+inv_del(inv, cheese, 1);
+%gnome_cuisine_var = setbit_range_toint(%gnome_cuisine_var, ^gnome_batta_worm, ^gnome_batta_start_bit, ^gnome_batta_end_bit);
 
-if (string_length(oc_param($ingredient, batta_message)) < 1) {
-    mes("You add the <lowercase(oc_name($ingredient))> to the gnome batta.");
-} else {
-    mes(oc_param($ingredient, batta_message));
-}
 
-if ($ingredient = gnome_spice) {
-    inv_add(gnome_cooking, gnome_spice, 1);
-} else {
-    inv_moveitem(inv, gnome_cooking, $ingredient, 1);
-    if (oc_param($ingredient, next_obj_stage) ! null) {
-        inv_add(inv, oc_param($ingredient, next_obj_stage), 1);
-    }
+[label,batta_prep_toad]
+if (inv_total(inv, seasoned_toad_legs) < 1 | inv_total(inv, cheese) < 1) {
+    mes("You don't have the ingredients to prepare this cuisine."); // guess
+    return;
 }
+mes("You put the ingredients into the batta."); // guess
+inv_del(inv, seasoned_toad_legs, 1);
+inv_del(inv, cheese, 1);
+%gnome_cuisine_var = setbit_range_toint(%gnome_cuisine_var, ^gnome_batta_toad_legs, ^gnome_batta_start_bit, ^gnome_batta_end_bit);
+
+
+[label,batta_prep_cheese]
+if (inv_total(inv, cheese) < 1 | inv_total(inv, tomato) < 1) {
+    mes("You don't have the ingredients to prepare this cuisine."); // guess
+    return;
+}
+mes("You put the ingredients into the batta."); // guess
+inv_del(inv, cheese, 1);
+inv_del(inv, tomato, 1);
+%gnome_cuisine_var = setbit_range_toint(%gnome_cuisine_var, ^gnome_batta_cheese_tomato, ^gnome_batta_start_bit, ^gnome_batta_end_bit);
+
+
+[label,batta_prep_fruit]
+if (inv_total(inv, equa_leaves) < 4) {
+    mes("You don't have the ingredients to prepare this cuisine."); // guess
+    return;
+}
+mes("You put the ingredients into the batta."); // guess
+inv_del(inv, equa_leaves, 4);
+%gnome_cuisine_var = setbit_range_toint(%gnome_cuisine_var, ^gnome_batta_fruit, ^gnome_batta_start_bit, ^gnome_batta_end_bit);
+
+
+[label,batta_prep_veg]
+if (inv_total(inv, tomato) < 2 | inv_total(inv, onion) < 1 | inv_total(inv, cabbage) < 1 | inv_total(inv, dwellberry) < 1 | inv_total(inv, cheese) < 1) {
+    mes("You don't have the ingredients to prepare this cuisine."); // guess
+    return;
+}
+mes("You put the ingredients into the batta."); // guess
+inv_del(inv, tomato, 2);
+inv_del(inv, onion, 1);
+inv_del(inv, cabbage, 1);
+inv_del(inv, dwellberry, 1);
+inv_del(inv, cheese, 1);
+%gnome_cuisine_var = setbit_range_toint(%gnome_cuisine_var, ^gnome_batta_vegetable, ^gnome_batta_start_bit, ^gnome_batta_end_bit);
 
 [proc,gnome_batta]()(namedobj)
-def_int $spicy_worm_count = inv_total(gnome_cooking, spicy_worm);
-def_int $cheese_count = inv_total(gnome_cooking, cheese);
-def_int $seasoned_toad_legs_count = inv_total(gnome_cooking, seasoned_toad_legs);
-def_int $tomato_count = inv_total(gnome_cooking, tomato);
-def_int $equa_leaves_count = inv_total(gnome_cooking, equa_leaves);
-def_int $onion_count = inv_total(gnome_cooking, onion);
-def_int $cabbage_count = inv_total(gnome_cooking, cabbage);
-def_int $dwellberry_count = inv_total(gnome_cooking, dwellberry);
-def_int $freespace = inv_freespace(gnome_cooking);
+return(enum(int, namedobj, gnome_battas, getbit_range(%gnome_cuisine_var, ^gnome_batta_start_bit, ^gnome_batta_end_bit)));
 
-inv_clear(gnome_cooking);
-
-if ($spicy_worm_count = 1 & $cheese_count = 1 & $freespace = sub(inv_size(gnome_cooking), 2)) {
-    return(unfinished_worm_batta1);
-}
-// toad legs batta
-if ($seasoned_toad_legs_count = 1 & $cheese_count = 1 & $freespace = sub(inv_size(gnome_cooking), 2)) {
-    return(toad_batta);
-}
-// cheese & tomato batta
-if ($cheese_count = 1 & $tomato_count = 1 & $freespace = sub(inv_size(gnome_cooking), 2)) {
-    return(unfinished_cheese_tom_batta1);
-}
-// fruit batta
-if ($equa_leaves_count = 4 & $freespace = sub(inv_size(gnome_cooking), 4)) {
-    return(unfinished_fruit_batta1);
-}
-// vegetable batta
-if ($tomato_count = 2 & $onion_count = 1 & $cabbage_count = 1 & $dwellberry_count = 1 & $cheese_count = 1 & $freespace = sub(inv_size(gnome_cooking), 6)) {
-    return(unfinished_vegetable_batta1);
-}
-return(odd_batta);
+[proc,gnome_batta_cook]()(namedobj)
+def_namedobj $gnome_batta = ~gnome_batta;
+%gnome_cuisine_var = setbit_range_toint(%gnome_cuisine_var, ^gnome_cuisine_empty, ^gnome_batta_start_bit, ^gnome_batta_end_bit);
+return($gnome_batta);

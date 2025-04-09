@@ -1,65 +1,72 @@
+// val=5,Worm Crunchies
+// val=6,Choc Chip Crunchies
+// val=7,Spicy Crunchies
+// val=8,Toad Crunchies
 [opheld1,half_baked_crunchies]
-if (inv_freespace(gnome_cooking) = inv_size(gnome_cooking)) {
-    mes("The half baked crunchies are completely plain."); // guess
+if (~gnome_crunchies ! odd_crunchies) {
+    mes("The gnome crunchies are ready to be baked.");
     return;
 }
-~mesbox("You inspect the crunchies..."); // guess
-~mesbox("@blu@The crunchies contain:@bla@|<~inv_string(gnome_cooking)>."); // guess
+@crunchies_prep_choose;
+
+[label,crunchies_prep_choose]
+@multi4_header(
+    "Worm Crunchies", crunchies_prep_worm,
+    "Choc Chip Crunchies", crunchies_prep_choc_chip,
+    "Spicy Crunchies", crunchies_prep_spicy,
+    "Toad Crunchies", crunchies_prep_toad,
+    "What would you like to prepare?"
+);
 
 
-[opheldu,half_baked_crunchies]
-switch_obj(last_useitem) {
-    case king_worm, equa_leaves, gnome_spice, toad_legs, chocolate_bar : @add_crunchies_ingredient(last_useitem);
-    case default : ~displaymessage(^dm_default);
+[label,crunchies_prep_spicy]
+if (inv_total(inv, gnome_spice) < 1 | inv_total(inv, equa_leaves) < 2) {
+    mes("You don't have the ingredients to prepare this cuisine."); // guess
+    return;
 }
+mes("You put the ingredients into the crunchies."); // guess
+inv_del(inv, equa_leaves, 2);
+%gnome_cuisine_var = setbit_range_toint(%gnome_cuisine_var, ^gnome_crunchies_spicy, ^gnome_crunchies_start_bit, ^gnome_crunchies_end_bit);
+
+
+[label,crunchies_prep_toad]
+if (inv_total(inv, toad_legs) < 2 | inv_total(inv, gnome_spice) < 1) {
+    mes("You don't have the ingredients to prepare this cuisine."); // guess
+    return;
+}
+mes("You put the ingredients into the crunchies."); // guess
+inv_del(inv, toad_legs, 2);
+// dont delete gnome spice!
+%gnome_cuisine_var = setbit_range_toint(%gnome_cuisine_var, ^gnome_crunchies_toad_legs, ^gnome_crunchies_start_bit, ^gnome_crunchies_end_bit);
+
+
+[label,crunchies_prep_worm]
+if (inv_total(inv, king_worm) < 2 | inv_total(inv, equa_leaves) < 1 | inv_total(inv, gnome_spice) < 1) {
+    mes("You don't have the ingredients to prepare this cuisine."); // guess
+    return;
+}
+mes("You put the ingredients into the crunchies."); // guess
+inv_del(inv, king_worm, 2);
+inv_del(inv, equa_leaves, 1);
+// dont delete gnome spice!
+%gnome_cuisine_var = setbit_range_toint(%gnome_cuisine_var, ^gnome_crunchies_worm, ^gnome_crunchies_start_bit, ^gnome_crunchies_end_bit);
+
+
+[label,crunchies_prep_choc_chip]
+if (inv_total(inv, chocolate_bar) < 2 | inv_total(inv, gnome_spice) < 1) {
+    mes("You don't have the ingredients to prepare this cuisine."); // guess
+    return;
+}
+mes("You put the ingredients into the crunchies."); // guess
+inv_del(inv, chocolate_bar, 2);
+// dont delete gnome spice!
+%gnome_cuisine_var = setbit_range_toint(%gnome_cuisine_var, ^gnome_crunchies_choc_chip, ^gnome_crunchies_start_bit, ^gnome_crunchies_end_bit);
+
 
 [proc,gnome_crunchies]()(namedobj)
-// spicy crunchies
-def_int $equa_leaves_count = inv_total(gnome_cooking, equa_leaves);
-def_int $gnome_spice_count = inv_total(gnome_cooking, gnome_spice);
-def_int $toad_legs_count = inv_total(gnome_cooking, toad_legs);
-def_int $king_worm_count = inv_total(gnome_cooking, king_worm);
-def_int $chocolate_bar_count = inv_total(gnome_cooking, chocolate_bar);
-def_int $freespace = inv_freespace(gnome_cooking);
+return(enum(int, namedobj, gnome_crunchies, getbit_range(%gnome_cuisine_var, ^gnome_crunchies_start_bit, ^gnome_crunchies_end_bit)));
 
-inv_clear(gnome_cooking);
-
-if ($gnome_spice_count = 3 & $equa_leaves_count = 2) {
-    return(unfinished_spicy_crunchies1);
-}
-// toad legs crunchies
-if ($toad_legs_count = 2 & $gnome_spice_count = 1 & $freespace = sub(inv_size(gnome_cooking), 3)) {
-    return(unfinished_toad_crunchies1);
-}
-// worm crunchies
-if ($king_worm_count = 2 & $equa_leaves_count = 1 & $gnome_spice_count = 1 & $freespace = sub(inv_size(gnome_cooking), 4)) {
-    return(unfinished_worm_crunchies1);
-}
-// choc chip crunchies
-if ($chocolate_bar_count = 2 & $gnome_spice_count = 1 & $freespace = sub(inv_size(gnome_cooking), 3)) {
-    return(unfinished_choc_chip_crunchies1);
-}
-
-return(odd_crunchies);
-
-
-[label,add_crunchies_ingredient](obj $ingredient)
-if (inv_freespace(gnome_cooking) = 0) {
-    mes("The crunchies already have enough ingredients."); // guess
-    return;
-}
-
-if (string_length(oc_param($ingredient, crunchies_message)) < 1) {
-    mes("You mix the <lowercase(oc_name($ingredient))> into the dough."); // guess
-} else {
-    mes(oc_param($ingredient, crunchies_message));
-}
-
-if ($ingredient = gnome_spice) {
-    inv_add(gnome_cooking, gnome_spice, 1);
-} else {
-    inv_moveitem(inv, gnome_cooking, $ingredient, 1);
-    if (oc_param($ingredient, next_obj_stage) ! null) {
-        inv_add(inv, oc_param($ingredient, next_obj_stage), 1);
-    }
-}
+[proc,gnome_crunchies_cook]()(namedobj)
+def_namedobj $gnome_crunchies = ~gnome_crunchies;
+%gnome_cuisine_var = setbit_range_toint(%gnome_cuisine_var, ^gnome_cuisine_empty, ^gnome_crunchies_start_bit, ^gnome_crunchies_end_bit);
+return($gnome_crunchies);

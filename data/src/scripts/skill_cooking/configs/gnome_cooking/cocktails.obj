@@ -856,6 +856,7 @@ recol1d=31435
 2dxan=284
 category=category_120
 weight=90g
+param=gnome_ingredient,^true
 param=cocktail_message,You add an orange slice to the dirnk.
 
 [pineapple]

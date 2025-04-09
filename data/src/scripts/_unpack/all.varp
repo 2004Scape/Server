@@ -163,7 +163,8 @@ type=player_uid
 
 [varp_136]
 
-[varp_137]
+[gnome_cuisine_var]
+scope=perm
 
 [thieving_stall_timer]
 scope=perm

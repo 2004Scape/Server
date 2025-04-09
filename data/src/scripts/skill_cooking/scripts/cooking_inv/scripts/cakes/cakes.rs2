@@ -11,7 +11,6 @@ switch_obj (last_useitem) {
 
 [opheldu,bucket_milk]
 switch_obj (last_useitem) {
-    case cocktail_shaker : @add_cocktail_ingredient(last_item);
     case cake_tin : @make_uncooked_cake;
     case chocolate_dust : @make_chocolate_milk(last_useslot);
     case default : ~displaymessage(^dm_default);
@@ -31,8 +30,6 @@ switch_int(oc_param(last_useitem, gnome_cooking_type)) {
 switch_obj (last_useitem) {
     case cake : @make_chocolate_cake(last_slot);
     case pestle_and_mortar : ~attempt_grind_ingredient(last_useslot, last_slot);
-    case half_baked_gnomebowl : @add_bowl_ingredient(last_item);
-    case half_baked_crunchies : @add_crunchies_ingredient(last_item);
     case default : ~displaymessage(^dm_default);
 }
 

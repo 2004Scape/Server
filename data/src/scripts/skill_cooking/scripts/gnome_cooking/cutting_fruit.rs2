@@ -14,28 +14,24 @@ switch_obj(last_useitem) {
 
 [opheldu,lemon]
 switch_obj(last_useitem) {
-    case cocktail_shaker : @add_cocktail_ingredient(last_item);
     case knife : @slice_or_dice_interface(last_item);
     case default : ~displaymessage(^dm_default);
 }
 
 [opheldu,orange]
 switch_obj(last_useitem) {
-    case cocktail_shaker : @add_cocktail_ingredient(last_item);
     case knife : @slice_or_dice_interface(last_item);
     case default : ~displaymessage(^dm_default);
 }
 
 [opheldu,lime]
 switch_obj(last_useitem) {
-    case cocktail_shaker : @add_cocktail_ingredient(last_item);
     case knife : @slice_or_dice_interface(last_item);
     case default : ~displaymessage(^dm_default);
 }
 
 [opheldu,pineapple]
 switch_obj(last_useitem) {
-    case cocktail_shaker : @add_cocktail_ingredient(last_item);
     case knife : @slice_or_dice_interface(last_item);
     case default : ~displaymessage(^dm_default);
 }

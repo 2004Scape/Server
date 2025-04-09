@@ -2,3 +2,37 @@
 ^gnome_bowl = 1
 ^gnome_crunchies = 2
 ^gnome_batta = 3
+
+^gnome_cuisine_empty = 0
+
+^gnome_cocktail_start_bit = 0
+^gnome_cocktail_end_bit = 3
+^gnome_bowl_start_bit = 4
+^gnome_bowl_end_bit = 7
+^gnome_crunchies_start_bit = 8
+^gnome_crunchies_end_bit = 11
+^gnome_batta_start_bit = 12
+^gnome_batta_end_bit = 15
+
+^gnome_cocktail_fruit_blast = 1
+^gnome_cocktail_blurberry_special = 2
+^gnome_cocktail_chocolate_saturday = 3
+^gnome_cocktail_drunk_dragon = 4
+^gnome_cocktail_ssg = 5
+^gnome_cocktail_wizzard_blizzard = 6
+^gnome_cocktail_pineapple_punch = 7
+^gnome_batta_worm = 1
+^gnome_batta_toad_legs = 2
+^gnome_batta_cheese_tomato = 3
+^gnome_batta_fruit = 4
+^gnome_batta_vegetable = 5
+
+^gnome_bowl_chocolate_bomb = 1
+^gnome_bowl_veg_ball = 2
+^gnome_bowl_worm_hole = 3
+^gnome_bowl_tangled_toad_legs = 4
+
+^gnome_crunchies_spicy = 1
+^gnome_crunchies_toad_legs = 2
+^gnome_crunchies_worm = 3
+^gnome_crunchies_choc_chip = 4

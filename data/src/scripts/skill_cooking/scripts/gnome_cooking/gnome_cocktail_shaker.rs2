@@ -1,7 +1,7 @@
 [opheldu,cocktail_shaker] 
 switch_obj(last_useitem) {
     case cocktail_glass : @pour_cocktail_shaker;
-    case default : @add_cocktail_ingredient(last_useitem);
+    case default : ~displaymessage(^dm_default);
 }
 
 [opheldu,cocktail_glass]
@@ -11,85 +11,129 @@ switch_obj(last_useitem) {
 }
 
 [opheld1,cocktail_shaker] // no idea what this is supposed to do
-if (inv_freespace(gnome_cocktail) = inv_size(gnome_cocktail)) {
-    mes("The cocktail shaker is empty."); // guess
+if (~gnome_cocktail ! null) {
+    mes("The cocktail shaker is ready to pour.");
     return;
 }
-~mesbox("You look into the cocktail shaker..."); // guess
-~mesbox("@blu@The cocktail shaker contains:@bla@|<~inv_string(gnome_cocktail)>."); // guess
+@cocktail_mix_choose;
 
-[label,add_cocktail_ingredient](obj $ingredient)
-if (inv_freespace(gnome_cocktail) = 0) {
-    mes("The cocktail shaker is too full to fit anymore ingredients."); // guess
+[label,cocktail_mix_choose]
+@multi5_header(
+    "Blurberry Special", cocktail_mix_blurberry_special,
+    "Chocolate Saturday", cocktail_mix_chocolate_saturday,
+    "Drunk Dragon", cocktail_mix_drunk_dragon,
+    "Fruit Blast", cocktail_mix_fruit_blast,
+    "More...", cocktail_mix_more,
+    "What would you like to mix?"
+);
+
+[label,cocktail_mix_more]
+@multi4_header(
+    "Pineapple Punch", cocktail_mix_pineapple_punch,
+    "Short Green Guy (SGG)", cocktail_mix_short_green_guy,
+    "Wizard Blizzard", cocktail_mix_wizard_blizzard,
+    "Previous...", cocktail_mix_choose,
+    "What would you like to mix?"
+);
+
+[label,cocktail_mix_blurberry_special]
+if (inv_total(inv, vodka) < 1 | inv_total(inv, gin) < 1 | inv_total(inv, brandy) < 1 | inv_total(inv, lemon) < 2 | inv_total(inv, orange) < 1) {
+    mes("You don't have the ingredients to mix this drink."); // guess
     return;
 }
-switch_obj($ingredient) {
-    case lemon, orange, pineapple, lime, dwellberry :
-        mes("You squeeze the juice from the <lowercase(oc_name($ingredient))> into your cocktail shaker..."); // guess
-    case vodka, gin, brandy, whisky, bucket_milk :
-        mes("You pour the <lowercase(oc_name($ingredient))> into your cocktail shaker..."); // guess
-    case equa_leaves :
-        mes("You sprinkle the equa leaves into your cocktail shaker..."); // guess
-    case default :
-        ~displaymessage(^dm_default);
-        return;
+mes("You mix the ingredients into the shaker."); // guess
+inv_del(inv, vodka, 1);
+inv_del(inv, gin, 1);
+inv_del(inv, brandy, 1);
+inv_del(inv, lemon, 2);
+inv_del(inv, orange, 1);
+%gnome_cuisine_var = setbit_range_toint(%gnome_cuisine_var, ^gnome_cocktail_blurberry_special, ^gnome_cocktail_start_bit, ^gnome_cocktail_end_bit);
+
+
+[label,cocktail_mix_chocolate_saturday]
+if (inv_total(inv, whisky) < 1 | inv_total(inv, equa_leaves) < 1 | inv_total(inv, bucket_milk) < 1) {
+    mes("You don't have the ingredients to mix this drink."); // guess
+    return;
 }
-if ($ingredient = gnome_spice) {
-    inv_add(gnome_cocktail, gnome_spice, 1);
-} else {
-    inv_moveitem(inv, gnome_cocktail, $ingredient, 1);
-    if (oc_param($ingredient, next_obj_stage) ! null) {
-        inv_add(inv, oc_param($ingredient, next_obj_stage), 1);
-    }
+mes("You mix the ingredients into the shaker."); // guess
+inv_del(inv, whisky, 1);
+inv_del(inv, equa_leaves, 1);
+inv_del(inv, bucket_milk, 1);
+inv_add(inv, bucket_empty, 1);
+%gnome_cuisine_var = setbit_range_toint(%gnome_cuisine_var, ^gnome_cocktail_chocolate_saturday, ^gnome_cocktail_start_bit, ^gnome_cocktail_end_bit);
+
+
+[label,cocktail_mix_drunk_dragon]
+if (inv_total(inv, vodka) < 1 | inv_total(inv, gin) < 1 | inv_total(inv, dwellberry) < 1) {
+    mes("You don't have the ingredients to mix this drink."); // guess
+    return;
 }
+mes("You mix the ingredients into the shaker."); // guess
+inv_del(inv, vodka, 1);
+inv_del(inv, gin, 1);
+inv_del(inv, dwellberry, 1);
+%gnome_cuisine_var = setbit_range_toint(%gnome_cuisine_var, ^gnome_cocktail_drunk_dragon, ^gnome_cocktail_start_bit, ^gnome_cocktail_end_bit);
+
+
+[label,cocktail_mix_fruit_blast]
+if (inv_total(inv, pineapple) < 1 | inv_total(inv, orange) < 1 | inv_total(inv, lemon) < 1) {
+    mes("You don't have the ingredients to mix this drink."); // guess
+    return;
+}
+mes("You mix the ingredients into the shaker."); // guess
+inv_del(inv, pineapple, 1);
+inv_del(inv, orange, 1);
+inv_del(inv, lemon, 1);
+%gnome_cuisine_var = setbit_range_toint(%gnome_cuisine_var, ^gnome_cocktail_fruit_blast, ^gnome_cocktail_start_bit, ^gnome_cocktail_end_bit);
+
+
+[label,cocktail_mix_pineapple_punch]
+if (inv_total(inv, pineapple) < 2 | inv_total(inv, orange) < 1 | inv_total(inv, lemon) < 1) {
+    mes("You don't have the ingredients to mix this drink."); // guess
+    return;
+}
+mes("You mix the ingredients into the shaker."); // guess
+inv_del(inv, pineapple, 2);
+inv_del(inv, orange, 1);
+inv_del(inv, lemon, 1);
+%gnome_cuisine_var = setbit_range_toint(%gnome_cuisine_var, ^gnome_cocktail_pineapple_punch, ^gnome_cocktail_start_bit, ^gnome_cocktail_end_bit);
+
+
+[label,cocktail_mix_short_green_guy]
+if (inv_total(inv, vodka) < 1 | inv_total(inv, lime) < 3) {
+    mes("You don't have the ingredients to mix this drink."); // guess
+    return;
+}
+mes("You mix the ingredients into the shaker."); // guess
+inv_del(inv, vodka, 1);
+inv_del(inv, lime, 3);
+%gnome_cuisine_var = setbit_range_toint(%gnome_cuisine_var, ^gnome_cocktail_ssg, ^gnome_cocktail_start_bit, ^gnome_cocktail_end_bit);
+
+
+[label,cocktail_mix_wizard_blizzard]
+if (inv_total(inv, vodka) < 2 | inv_total(inv, gin) < 1 | inv_total(inv, pineapple) < 1 | inv_total(inv, orange) < 1 | inv_total(inv, lime) < 1 | inv_total(inv, lemon) < 1) {
+    mes("You don't have the ingredients to mix this drink."); // guess
+    return;
+}
+mes("You mix the ingredients into the shaker."); // guess
+inv_del(inv, vodka, 2);
+inv_del(inv, gin, 1);
+inv_del(inv, pineapple, 1);
+inv_del(inv, orange, 1);
+inv_del(inv, lime, 1);
+inv_del(inv, lemon, 1);
+%gnome_cuisine_var = setbit_range_toint(%gnome_cuisine_var, ^gnome_cocktail_wizzard_blizzard, ^gnome_cocktail_start_bit, ^gnome_cocktail_end_bit);
 
 [label,pour_cocktail_shaker]
-if (inv_freespace(gnome_cocktail) = inv_size(gnome_cocktail)) {
-    mes("There's nothing to pour from the cocktail shaker."); // guess
+def_namedobj $cocktail = ~gnome_cocktail;
+if ($cocktail = null) {
+    mes("You need to put some contents into the shaker."); // rsc
     return;
 }
+mes("You pour the contents into a glass."); // rsc
 inv_del(inv, cocktail_glass, 1);
-inv_add(inv, ~gnome_cocktail, 1);
-inv_clear(gnome_cocktail);
+inv_add(inv, $cocktail, 1);
+%gnome_cuisine_var = setbit_range_toint(%gnome_cuisine_var, ^gnome_cuisine_empty, ^gnome_cocktail_start_bit, ^gnome_cocktail_end_bit);
 
 [proc,gnome_cocktail]()(namedobj)
-def_int $lemon_count = inv_total(gnome_cocktail, lemon);
-def_int $orange_count = inv_total(gnome_cocktail, orange);
-def_int $pineapple_count = inv_total(gnome_cocktail, pineapple);
-def_int $lime_count = inv_total(gnome_cocktail, lime);
-def_int $dwellberry_count = inv_total(gnome_cocktail, dwellberry);
-def_int $vodka_count = inv_total(gnome_cocktail, vodka);
-def_int $gin_count = inv_total(gnome_cocktail, gin);
-def_int $brandy_count = inv_total(gnome_cocktail, brandy);
-def_int $whisky_count = inv_total(gnome_cocktail, whisky);
-def_int $equa_leaves_count = inv_total(gnome_cocktail, equa_leaves);
-def_int $bucket_milk_count = inv_total(gnome_cocktail, bucket_milk);
-def_int $freespace = inv_freespace(gnome_cocktail);
-if ($pineapple_count = 2 & $orange_count = 1 & $lemon_count = 1 & $freespace = 3) {
-    return(unfinished_pineapple_punch1);
-}
-// fruit blast
-if ($pineapple_count = 1 & $orange_count = 1 & $lemon_count = 1 & $freespace = 4) {
-    return(unfinished_fruit_blast1);
-}
-// blurberry special
-if ($vodka_count = 1 & $gin_count = 1 & $brandy_count = 1 & $lemon_count = 2 & $orange_count = 1 & $freespace = 1) {
-    return(unfinished_blurberry_special1);
-}
-// chocolate saturday
-if ($whisky_count = 1 & $equa_leaves_count = 1 & $bucket_milk_count = 1 & $freespace = 4) {
-    return(unfinished_chocolate_saturday1);
-}
-// drunk dragon
-if ($vodka_count = 1 & $gin_count = 1 & $dwellberry_count = 1 & $freespace = 4) {
-    return(unfinished_drunk_dragon1);
-}
-// short green guy
-if ($vodka_count = 1 & $lime_count = 3 & $freespace = 3) {
-    return(unfinished_short_green_guy1);
-}
-// wizard blizzard
-if ($vodka_count = 2 & $gin_count = 1 & $pineapple_count = 1 & $orange_count = 1 & $lime_count = 1 & $lemon_count = 1) {
-    return(unfinished_wizard_blizzard1);
-}
-return(odd_cocktail1);
+return(enum(int, namedobj, gnome_cocktails, getbit_range(%gnome_cuisine_var, ^gnome_cocktail_start_bit, ^gnome_cocktail_end_bit)));

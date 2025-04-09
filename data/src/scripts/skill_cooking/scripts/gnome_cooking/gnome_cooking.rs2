@@ -1,17 +1,3 @@
-[opheldu,dwellberry]
-switch_obj(last_useitem) {
-    case cocktail_shaker : @add_cocktail_ingredient(last_item);
-    case half_baked_gnomebowl : @add_bowl_ingredient(last_item);
-    case half_baked_batta : @add_cocktail_ingredient(last_item);
-    case default : ~displaymessage(^dm_default);
-}
-
-[opheldu,_alcoholic_drinks]
-switch_obj(last_useitem) {
-    case cocktail_shaker : @add_cocktail_ingredient(last_item);
-    case default : ~displaymessage(^dm_default);
-}
-
 [opheldu,equa_leaves]
 switch_int(oc_param(last_useitem, gnome_cooking_type)) {
     case ^gnome_cocktail : @finish_cocktail(last_useitem, last_item);
@@ -20,38 +6,19 @@ switch_int(oc_param(last_useitem, gnome_cooking_type)) {
 switch_obj(last_useitem) {
     case toad_legs : @opheldu_make_gnome_food(equa_toad_legs, "You add the equa leaves to the toad legs.");
     case spicy_toad_legs : @opheldu_make_gnome_food(seasoned_toad_legs, "You add the equa leaves to the spicy toad legs.");
-    case cocktail_shaker : @add_batta_ingredient(last_item);
-    case half_baked_gnomebowl : @add_bowl_ingredient(last_item);
-    case half_baked_batta : @add_batta_ingredient(last_item);
-    case half_baked_crunchies : @add_crunchies_ingredient(last_item);
     case raw_chompy : @quest_chompybird_add_ingredients_to_chompy_message;
     case default : ~displaymessage(^dm_default);
 }
 
 [opheldu,cabbage]
 switch_obj(last_useitem) {
-    case half_baked_batta : @add_batta_ingredient(last_item);
     case raw_chompy : @quest_chompybird_add_ingredients_to_chompy_message;
-    case default : ~displaymessage(^dm_default);
-}
-
-[opheldu,seasoned_toad_legs]
-switch_obj(last_useitem) {
-    case half_baked_batta : @add_batta_ingredient(last_item);
-    case default : ~displaymessage(^dm_default);
-}
-
-[opheldu,spicy_worm]
-switch_obj(last_useitem) {
-    case half_baked_batta : @add_batta_ingredient(last_item);
     case default : ~displaymessage(^dm_default);
 }
 
 [opheldu,king_worm]
 switch_obj(last_useitem) {
     case gnome_spice : @opheldu_make_gnome_food(spicy_worm, "You add the gnome spice to the king worm.");
-    case half_baked_gnomebowl : @add_bowl_ingredient(last_item);
-    case half_baked_crunchies : @add_crunchies_ingredient(last_item);
     case default : ~displaymessage(^dm_default);
 }
 
@@ -59,8 +26,6 @@ switch_obj(last_useitem) {
 switch_obj(last_useitem) {
     case gnome_spice : @opheldu_make_gnome_food(spicy_toad_legs, "You add the gnome spice to the toad legs.");
     case equa_leaves : @opheldu_make_gnome_food(equa_toad_legs, "You add the equa leaves to the toad legs.");
-    case half_baked_gnomebowl : @add_bowl_ingredient(last_item);
-    case half_baked_crunchies : @add_crunchies_ingredient(last_item);
     case default : ~displaymessage(^dm_default);
 }
 
@@ -101,8 +66,6 @@ switch_obj(last_useitem) {
     case king_worm : @opheldu_make_gnome_food(spicy_worm, "You add the gnome spice to the king worm.");
     case toad_legs : @opheldu_make_gnome_food(spicy_toad_legs, "You add the gnome spice to the toad legs.");
     case equa_toad_legs : @opheldu_make_gnome_food(seasoned_toad_legs, "You add the gnome spice to the equa toad legs.");
-    case half_baked_gnomebowl : @add_bowl_ingredient(last_item);
-    case half_baked_crunchies : @add_crunchies_ingredient(last_item);
     case default : ~displaymessage(^dm_default);
 }
 
@@ -264,8 +227,3 @@ switch_int ($cocktail) {
         inv_add(inv, pineapple_chunks, 1);
         inv_add(inv, lime_slices, 1);
 }
-
-
-[debugproc,inspect_gf]
-inv_transmit(gnome_cooking, bank_main:inv);
-if_openmain_side(bank_main, bank_side);

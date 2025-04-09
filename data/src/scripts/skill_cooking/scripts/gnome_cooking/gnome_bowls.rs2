@@ -1,67 +1,72 @@
 [opheld1,half_baked_gnomebowl]
-if (inv_freespace(gnome_cooking) = inv_size(gnome_cooking)) {
-    mes("The half baked bowl is empty."); // guess
+if (~gnome_bowl ! odd_gnomebowl) {
+    mes("The gnome bowl is ready to bake.");
     return;
 }
-~mesbox("You look into the bowl..."); // guess
-~mesbox("@blu@The bowl contains:@bla@|<~inv_string(gnome_cooking)>."); // guess
+@bowl_prep_choose;
 
-[opheldu,half_baked_gnomebowl]
-switch_obj(last_useitem) {
-    case king_worm, onion, cheese, dwellberry, potato, equa_leaves, gnome_spice, toad_legs, chocolate_bar : @add_bowl_ingredient(last_useitem);
-    case default : ~displaymessage(^dm_default);
+[label,bowl_prep_choose]
+@multi4_header(
+    "Chocolate Bomb", bowl_prep_chocolate_bomb,
+    "Tangled Toad's Legs", bowl_prep_tangled_toad,
+    "Worm Hole", bowl_prep_worm_hole,
+    "Veg Ball", bowl_prep_veg_ball,
+    "What would you like to prepare?"
+);
+
+
+[label,bowl_prep_chocolate_bomb]
+if (inv_total(inv, chocolate_bar) < 4 | inv_total(inv, equa_leaves) < 1) {
+    mes("You don't have the ingredients to prepare this cuisine."); // guess
+    return;
 }
+mes("You put the ingredients into the bowl.");
+inv_del(inv, chocolate_bar, 4);
+inv_del(inv, equa_leaves, 1);
+%gnome_cuisine_var = setbit_range_toint(%gnome_cuisine_var, ^gnome_bowl_chocolate_bomb, ^gnome_bowl_start_bit, ^gnome_bowl_end_bit);
+
+
+[label,bowl_prep_veg_ball]
+if (inv_total(inv, onion) < 2 | inv_total(inv, potato) < 2 | inv_total(inv, gnome_spice) < 1) {
+    mes("You don't have the ingredients to prepare this cuisine."); // guess
+    return;
+}
+mes("You put the ingredients into the bowl.");
+inv_del(inv, onion, 2);
+inv_del(inv, potato, 2);
+// dont delete spice!
+%gnome_cuisine_var = setbit_range_toint(%gnome_cuisine_var, ^gnome_bowl_veg_ball, ^gnome_bowl_start_bit, ^gnome_bowl_end_bit);
+
+
+[label,bowl_prep_worm_hole]
+if (inv_total(inv, king_worm) < 4 | inv_total(inv, onion) < 2 | inv_total(inv, gnome_spice) < 1) {
+    mes("You don't have the ingredients to prepare this cuisine."); // guess
+    return;
+}
+mes("You put the ingredients into the bowl.");
+inv_del(inv, king_worm, 4);
+inv_del(inv, onion, 2);
+// dont delete spice!
+%gnome_cuisine_var = setbit_range_toint(%gnome_cuisine_var, ^gnome_bowl_worm_hole, ^gnome_bowl_start_bit, ^gnome_bowl_end_bit);
+
+
+[label,bowl_prep_tangled_toad]
+if (inv_total(inv, toad_legs) < 4 | inv_total(inv, cheese) < 2 | inv_total(inv, equa_leaves) < 2 | inv_total(inv, gnome_spice) < 1 | inv_total(inv, dwellberry) < 1) {
+    mes("You don't have the ingredients to prepare this cuisine."); // guess
+    return;
+}
+mes("You put the ingredients into the bowl.");
+inv_del(inv, toad_legs, 4);
+inv_del(inv, cheese, 2);
+inv_del(inv, equa_leaves, 2);
+// dont delete spice!
+inv_del(inv, dwellberry, 1);
+%gnome_cuisine_var = setbit_range_toint(%gnome_cuisine_var, ^gnome_bowl_tangled_toad_legs, ^gnome_bowl_start_bit, ^gnome_bowl_end_bit);
 
 [proc,gnome_bowl]()(namedobj)
-// chocolate bomb
-def_int $chocolate_bar_count = inv_total(gnome_cooking, chocolate_bar);
-def_int $equa_leaves_count = inv_total(gnome_cooking, equa_leaves);
-def_int $onion_count = inv_total(gnome_cooking, onion);
-def_int $potato_count = inv_total(gnome_cooking, potato);
-def_int $gnome_spice_count = inv_total(gnome_cooking, gnome_spice);
-def_int $king_worm_count = inv_total(gnome_cooking, king_worm);
-def_int $cheese_count = inv_total(gnome_cooking, cheese);
-def_int $dwellberry_count = inv_total(gnome_cooking, dwellberry);
-def_int $toad_legs_count = inv_total(gnome_cooking, toad_legs);
-def_int $freespace = inv_freespace(gnome_cooking);
+return(enum(int, namedobj, gnome_bowls, getbit_range(%gnome_cuisine_var, ^gnome_bowl_start_bit, ^gnome_bowl_end_bit)));
 
-inv_clear(gnome_cooking);
-
-if ($chocolate_bar_count = 4 & $equa_leaves_count = 1 & $freespace = sub(inv_size(gnome_cooking), 5)) {
-    return(unfinished_chocolate_bomb1);
-}
-// veg ball
-if ($onion_count = 2 & $potato_count = 2 & $gnome_spice_count = 1 & $freespace = sub(inv_size(gnome_cooking), 5)) {
-    return(unfinished_veg_ball1);
-}
-// worm hole
-if ($king_worm_count = 4 & $onion_count = 2 & $gnome_spice_count = 1 & $freespace = sub(inv_size(gnome_cooking), 7)) {
-    return(unfinished_worm_hole1);
-}
-// tangled toad legs
-if ($toad_legs_count = 4 & $cheese_count = 2 & $equa_leaves_count = 2 & $gnome_spice_count = 2 & $dwellberry_count = 1 & $freespace = sub(inv_size(gnome_cooking), 11)) {
-    return(tangled_toads_legs);
-}
-return(odd_gnomebowl);
-
-
-[label,add_bowl_ingredient](obj $ingredient)
-if (inv_freespace(gnome_cooking) = 0) {
-    mes("The bowl already has enough ingredients.");
-    return;
-}
-
-if (string_length(oc_param($ingredient, bowl_message)) < 1) {
-    mes("You add the <lowercase(oc_name($ingredient))> to the dough bowl.");
-} else {
-    mes(oc_param($ingredient, bowl_message));
-}
-
-if ($ingredient = gnome_spice) {
-    inv_add(gnome_cooking, gnome_spice, 1);
-} else {
-    inv_moveitem(inv, gnome_cooking, $ingredient, 1);
-    if (oc_param($ingredient, next_obj_stage) ! null) {
-        inv_add(inv, oc_param($ingredient, next_obj_stage), 1);
-    }
-}
+[proc,gnome_bowl_cook]()(namedobj)
+def_namedobj $gnome_bowl = ~gnome_bowl;
+%gnome_cuisine_var = setbit_range_toint(%gnome_cuisine_var, ^gnome_cuisine_empty, ^gnome_bowl_start_bit, ^gnome_bowl_end_bit);
+return($gnome_bowl);
