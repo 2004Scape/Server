@@ -32,6 +32,7 @@ import { isClientConnected } from '#/engine/entity/NetworkPlayer.js';
 import Npc from '#/engine/entity/Npc.js';
 import Obj from '#/engine/entity/Obj.js';
 import PathingEntity from '#/engine/entity/PathingEntity.js';
+import { PlayerLoading } from '#/engine/entity/PlayerLoading.js';
 import { PlayerQueueRequest, PlayerQueueType, QueueType, ScriptArgument } from '#/engine/entity/PlayerQueueRequest.js';
 import { PlayerStat, PlayerStatEnabled, PlayerStatFree, PlayerStatNameMap } from '#/engine/entity/PlayerStat.js';
 import InputTracking from '#/engine/entity/tracking/InputTracking.js';
@@ -187,8 +188,8 @@ export default class Player extends PathingEntity {
 
     save() {
         const sav = Packet.alloc(1);
-        sav.p2(0x2004); // magic
-        sav.p2(6); // version
+        sav.p2(PlayerLoading.SAV_MAGIC); // magic
+        sav.p2(PlayerLoading.SAV_VERSION); // version
 
         sav.p2(this.x);
         sav.p2(this.z);
