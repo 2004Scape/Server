@@ -4,6 +4,7 @@ import * as rsbuf from '@2004scape/rsbuf';
 
 import InvType from '#/cache/config/InvType.js';
 import { CoordGrid } from '#/engine/CoordGrid.js';
+import { ModalState } from '#/engine/entity/ModalState.js';
 import Player from '#/engine/entity/Player.js';
 import World from '#/engine/World.js';
 import WorldStat from '#/engine/WorldStat.js';
@@ -166,13 +167,13 @@ export class NetworkPlayer extends Player {
         }
 
         if (this.refreshModal) {
-            if ((this.modalState & 1) !== 0 && (this.modalState & 4) !== 0) {
+            if ((this.modalState & (ModalState.MAIN | ModalState.SIDE)) !== ModalState.NONE) {
                 this.write(new IfOpenMainSide(this.modalMain, this.modalSide));
-            } else if ((this.modalState & 1) !== 0) {
+            } else if ((this.modalState & ModalState.MAIN) !== ModalState.NONE) {
                 this.write(new IfOpenMain(this.modalMain));
-            } else if ((this.modalState & 2) !== 0) {
+            } else if ((this.modalState & ModalState.CHAT) !== ModalState.NONE) {
                 this.write(new IfOpenChat(this.modalChat));
-            } else if ((this.modalState & 4) !== 0) {
+            } else if ((this.modalState & ModalState.SIDE) !== ModalState.NONE) {
                 this.write(new IfOpenSide(this.modalSide));
             }
 
