@@ -90,7 +90,7 @@ inv_stoptransmit(duel_side:inv);
 if (.finduid(%duelpartner) = true) {
     .%duelpartner = null;
     .if_close;
-    if (%duelstatus ! 1 & .%duelstatus ! 1) {
+    if (%duelstatus ! ^duelstatus_pending_accept & .%duelstatus ! ^duelstatus_pending_accept) {
         .mes("Other player declined stake and duel options."); // 2006 https://youtu.be/HFp6hOkiCns?t=304
     }
 }
@@ -101,7 +101,7 @@ if (.finduid(%duelpartner) = true) {
 [if_close,duel_confirm]
 inv_stoptransmit(duel_confirm:inv);
 inv_stoptransmit(duel_confirm:otherinv);
-if (%duelstatus >= 4) { 
+if (%duelstatus >= ^duelstatus_confirm) { 
     return; // duel accepted
 }
 if (.finduid(%duelpartner) = true) {
