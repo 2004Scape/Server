@@ -35,6 +35,15 @@ if (.busy = true) {
 
 // this message always sends, even if this player is responding to a trade request
 mes("Sending trade offer...");
+
+// https://youtu.be/BOtsghQGQEk?t=417
+// https://youtu.be/8G92ZQxRamY?t=145
+// https://youtu.be/vS_kBeGudFY?t=10
+// 2006: "Trading in the Wilderness is dangerous - you might get killed!"
+
+// https://youtu.be/uSO-ilQk5XY?list=PLn23LiLYLb1bQ7Hwp77KoNBjKvpZQTfJT&t=810
+// This nov 2004 vid shows no wildy warning... I think it was added in mid to late 2006? Ive seen some early 2006 vids of trading with no warning
+
 %tradepartner = .uid;
 
 if (.%tradepartner = uid & %tradestatus = ^tradestatus_received) {
@@ -83,7 +92,9 @@ if (.finduid(%tradepartner) = true) {
 
         if (~enough_trade_space = false) {
             mes("Other player doesn't have enough inventory space for this trade.");
-            .mes("You don't have enough inventory space for this trade.");
+            // osrs: You don't have enough inventory space for this trade.
+            // 2007: https://youtu.be/W_NrcAybPzE?t=8
+            .mes("You don't have enough inventory space for this trade");
             if_close;
             .if_close;
             return;
@@ -91,7 +102,9 @@ if (.finduid(%tradepartner) = true) {
 
         if (~.enough_trade_space = false) {
             mes("You don't have enough inventory space for this trade.");
-            .mes("Other player doesn't have enough inventory space for this trade.");
+            // osrs: Other player doesn't have enough inventory space for this trade.
+            // 2007: https://youtu.be/W_NrcAybPzE?t=8
+            .mes("Other player doesn't have enough inventory space for this trade");
             if_close;
             .if_close;
             return;
