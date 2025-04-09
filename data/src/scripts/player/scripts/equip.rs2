@@ -287,6 +287,7 @@ if ($bonus < 0) {
 .if_settext($com, "<$name>: <$sign><tostring($bonus)>");
 
 [proc,update_weight]
+
 // requirements before i forget
 // =================================================================================
 // WHEN I equip an item
@@ -338,7 +339,9 @@ if (~unequip_conflicts_space($equip_obj) = false) { // check if enough space
 
 inv_movetoslot(inv, worn, $inv_slot, $worn_slot); // equip item! this performs a swap
 if (inv_getobj(inv, $inv_slot) ! null) {
-    inv_movefromslot(inv, inv, $inv_slot); // moves item to the first available slot in the inv... This matches old videos, not sure if this is what they did
+    // presumably, they added this as an easy way for stackable objs to stack in the inv (instead of directly swapping)
+    // seems like in late 2006 they removed this line of code and it produced this bug: https://youtu.be/EYXp7GMFWEw, https://youtu.be/DwzDt3yw6k4
+    inv_movefromslot(inv, inv, $inv_slot); // moves item to the first available slot in the inv...
 }
 ~unequip_conflicts($equip_obj);
 
