@@ -1,4 +1,4 @@
-[dals_generalstore]
+[generalshopogre]
 // https://oldschool.runescape.wiki/w/Dal%27s_General_Ogre_Supplies
 // https://classic.runescape.wiki/w/Ogre_trader_General_Store
 // https://web.archive.org/web/20120521193813im_/http://www.runehq.com/images/cityguides/OrgerArea/dalsstore1.png (full stocks)
@@ -15,7 +15,7 @@ stock5=tinderbox,2,100
 stock6=chisel,2,100
 stock7=hammer,5,100
 
-[gruds_herblore_stall]
+[herbloreshopogre]
 // https://oldschool.runescape.wiki/w/Grud%27s_Herblore_Stall. (Trivia)
 // https://classic.runescape.wiki/w/Grud%27s_herblaw_stall
 // https://web.archive.org/web/20120521193813im_/http://www.runehq.com/images/cityguides/OrgerArea/grudsstore.png (full stocks)

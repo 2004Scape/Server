@@ -1,0 +1,7 @@
+[grave_of_scorpius]
+name=Grave of Scorpius
+desc=A weathered old gravestone.
+model=model_loc_406
+width=2
+length=2
+op1=Read

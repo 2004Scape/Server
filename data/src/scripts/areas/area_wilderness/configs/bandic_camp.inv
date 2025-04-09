@@ -1,4 +1,4 @@
-[tony_pizza]
+[pizzabaseshop]
 // https://classic.runescape.wiki/w/Pizza_Base_Shop
 // https://storage.googleapis.com/tannerdino/images/rsbandit5.gif
 scope=shared
@@ -8,7 +8,7 @@ stackall=yes
 allstock=no
 stock1=pizza_base,30,100
 
-[generalshop10]
+[taxfree]
 // https://classic.runescape.wiki/w/Bandit_Camp_General_Store
 // https://storage.googleapis.com/tannerdino/images/rsbandit4.gif
 scope=shared

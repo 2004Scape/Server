@@ -76,7 +76,6 @@ if (oc_param(last_item, next_obj_stage) = null) {
 [opheld1,poison_chalice]@player_consume_item(consume_effect_poison_chalice, null, null);
 [opheld1,cup_of_tea]@player_consume_item(consume_effect_stat_say, 2, 3);
 [opheld1,_category_69]
-p_stopaction; // https://oldschool.runescape.wiki/w/Update:Patch_Notes_(19_September_2013)
 switch_obj(last_item) {
     // anti dragon
     case 1dose1antidragon, 2dose1antidragon, 3dose1antidragon, 4dose1antidragon :

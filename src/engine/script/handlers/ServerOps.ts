@@ -76,6 +76,39 @@ const ServerOps: CommandHandlers = {
         state.pushInt(1);
     },
 
+    [ScriptOpcode.NPC_HUNT]: state => {
+        const [coord, distance, checkVis] = state.popInts(3);
+
+        const position: CoordGrid = check(coord, CoordValid);
+        // const npcType: NpcType = check(npc, NpcTypeValid);
+        check(distance, NumberNotNull);
+        const huntvis: HuntVis = check(checkVis, HuntVisValid);
+
+        let closestNpc: Npc | null = null;
+        let closestDistance = Number.MAX_SAFE_INTEGER;
+
+        const npcs = new NpcHuntAllCommandIterator(World.currentTick, position.level, position.x, position.z, distance, huntvis);
+
+        for (const npc of npcs) {
+            if (npc) {
+                // Picks the smallest euclidean distance
+                const npcDistance = CoordGrid.euclideanSquaredDistance(position, npc);
+                if (npcDistance <= closestDistance) {
+                    closestNpc = npc;
+                    closestDistance = npcDistance;
+                }
+            }
+        }
+        if (!closestNpc) {
+            state.pushInt(0);
+            return;
+        }
+
+        state.activeNpc = closestNpc;
+        state.pointerAdd(ActiveNpc[state.intOperand]);
+        state.pushInt(1);
+    },
+
     // https://x.com/JagexAsh/status/1796460129430433930
     // https://x.com/JagexAsh/status/1821236327150710829
     [ScriptOpcode.NPC_HUNTALL]: state => {

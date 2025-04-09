@@ -13,7 +13,7 @@ if ($data = null) {
 }
 if (%prayer_steelskin = ^true) {
     %prayer_steelskin = ^false;
-    ~prayer_deactivate(^prayer_clarity);
+    ~prayer_deactivate(^prayer_steelskin);
     return;
 }
 if (~prayer_checks($data) = false) {

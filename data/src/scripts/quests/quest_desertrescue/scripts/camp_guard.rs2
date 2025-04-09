@@ -104,7 +104,7 @@ if_close;
 
 [label,camp_merc_minearea]
 ~chatplayer("<p,neutral>I'd like to mine in a different area.");
-~chatnpc("<p,happy>Oh, you want to work in another area of the mine eh? @dbl@--The guard seems pleased with his rhetorical @dbl@question.-- @bla@Well, I can understand that! A change is as good as a@bla@rest they say.");
+~chatnpc("<p,happy>Oh, you want to work in another area of the mine eh? @dbl@--The guard seems pleased with his rhetorical @dbl@question.-- @bla@Well, I can understand that! A change is as good as a @bla@rest they say.");
 switch_int(~p_choice2("Huh, fat chance of a rest for me.", 1, "Yes sir, you're quite right sir.", 2)) {
     case 1 :
         ~chatplayer("<p,neutral>Huh, fat chance of a rest for me.");

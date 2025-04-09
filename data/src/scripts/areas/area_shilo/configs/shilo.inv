@@ -1,4 +1,4 @@
-[fernaheis_fishing]
+[shilofishingshop]
 // https://web.archive.org/web/20051215235633im_/http://runevillage.com/images/rsshilovillagetown5.gif
 // https://oldschool.runescape.wiki/w/Fernahei%27s_Fishing_Hut.
 scope=shared
@@ -14,7 +14,7 @@ stock5=raw_trout,0,1500
 stock6=raw_pike,0,1800
 stock7=raw_salmon,0,2100
 
-[oblis_general_store]
+[shilojunglestore]
 // https://oldschool.runescape.wiki/w/Obli%27s_General_Store.
 // https://web.archive.org/web/20051215235727im_/http://runevillage.com/images/rsshilovillagetown8.gif
 scope=shared

@@ -125,6 +125,7 @@ export default class ScriptState {
     huntIterator: IterableIterator<Entity> | null = null;
     npcIterator: IterableIterator<Npc> | null = null;
     locIterator: IterableIterator<Loc> | null = null;
+    objIterator: IterableIterator<Obj> | null = null;
 
     lastInt: number = 0;
 

@@ -23,8 +23,8 @@ export default class OpHeldUHandler extends MessageHandler<OpHeldU> {
             return false;
         }
 
-        const useCom = Component.get(comId);
-        if (typeof useCom === 'undefined' || !player.isComponentVisible(useCom) || !com.interactable) {
+        const useCom = Component.get(useComId);
+        if (typeof useCom === 'undefined' || !player.isComponentVisible(useCom) || !useCom.interactable) {
             player.clearPendingAction();
             return false;
         }

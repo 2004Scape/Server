@@ -26,13 +26,13 @@ switch_int(%arena_progress) {
     case ^arena_obtained_armour, ^arena_spoken_drunkguard, ^arena_given_khali_brew, ^arena_entered_ogre_fight :
         if(~wearing_khazard_armour = true) {
             if (.npc_find(coord, $partner, 3, 0) = true) { // uses other set if greater than 2 away in RS3
-                ~chatplayer("<p,quiz>Do either of you know a Justin or Sammy Servil?");
+                ~chatplayer("<p,quiz>Do either of you know a Justin or Jeremy Servil?");
                 ~chatnpc("<p,angry>If we did, why would we tell you guard?");
                 ~.chatnpc("<p,angry>Until our last breath, our every action will be against Khazard. Never will we help you.");
                 ~chatnpc("<p,angry>I spit on Khazard's grave, and all who do his bidding.");
                 return;
             }
-            ~chatplayer("<p,quiz>Do you know a Justin or Sammy Servil?");
+            ~chatplayer("<p,quiz>Do you know a Justin or Jeremy Servil?");
             ~chatnpc("<p,angry>If I did, why would I tell you guard?");
         } else {
             if (.npc_find(coord, $partner, 3, 0) = true) { // uses other set if greater than 2 away in RS3
@@ -42,7 +42,7 @@ switch_int(%arena_progress) {
                 ~chatnpc("<p,bored>You're a brave <text_gender("man", "woman")>. If the guards get you, you'll be in here next.");
                 return;
             }
-            ~chatplayer("<p,quiz>Do you know a Justin or Sammy Servil?");
+            ~chatplayer("<p,quiz>Do you know a Justin or Jeremy Servil?");
             ~chatnpc("<p,bored>I have heard of those of whom you speak. But I fear it may be too late.");
         }
 }

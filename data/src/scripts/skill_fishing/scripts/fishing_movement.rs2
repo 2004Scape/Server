@@ -11,6 +11,9 @@ npc_tele($rand_coord);
 npc_settimer(calc(280 + random(250)));
 
 [proc,fishing_spot_random_coord](npc $npc)(coord)
+if (nc_param($npc, fishing_movement_enum) = null) {
+    return (npc_coord);
+}
 def_int $output_count = enum_getoutputcount(nc_param($npc, fishing_movement_enum));
 def_npc_uid $original_fishing_spot = npc_uid;
 def_coord $rand_coord;

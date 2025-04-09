@@ -66,7 +66,7 @@ switch_int(~p_choice3("What is the Armadyl?", 1, "Who are the Mahjarrat?", 2, "W
     case 1 :
         ~chatplayer("<p,confused>What is the Armadyl?");
         ~chatnpc("<p,happy>Armadyl is the god we serve. We have been charged with guarding his sacred arctifacts until he requires them.");
-        switch_int(~p_choice2("Ah ok, thanks.", 2, "Someone told me there were only three gods.", 2)) {
+        switch_int(~p_choice2("Ah ok, thanks.", 1, "Someone told me there were only three gods.", 2)) {
             case 1 :
                 ~chatplayer("<p,confused>Ah ok, thanks.");
                 ~chatnpc("<p,happy>Go in peace.");
