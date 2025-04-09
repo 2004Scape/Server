@@ -8,7 +8,9 @@ export type account = {
     id: Generated<number>;
     username: string;
     password: string;
+    password_updated: string | null;
     email: string | null;
+    oauth_provider: string | null;
     registration_ip: string | null;
     registration_date: Generated<string>;
     logged_in: Generated<number>;
