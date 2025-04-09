@@ -407,7 +407,7 @@ data=experience,30
 data=successchance,118,492
 data=cookmessage_range,You put the gnome bowl in the oven...
 data=cantcookmessage_fire,You need a proper oven to cook that.
-data=successmessage,You half-cook the gnome bowl.
+data=successmessage,You remove the gnome bowl from the oven.
 data=burnmessage,You accidentally burn the gnome bowl.
 
 [cooking_generic_half_baked_crunchies]
@@ -421,7 +421,7 @@ data=experience,30
 data=successchance,118,492
 data=cookmessage_range,You put the crunchies in the oven...
 data=cantcookmessage_fire,You need a proper oven to cook that.
-data=successmessage,You half-cook the crunchies.
+data=successmessage,You remove the crunchies from the oven.
 data=burnmessage,You accidentally burn the crunchies.
 
 [cooking_generic_half_baked_batta]
@@ -435,7 +435,7 @@ data=experience,30
 data=successchance,118,492
 data=cookmessage_range,You put the batta in the oven...
 data=cantcookmessage_fire,You need a proper oven to cook that.
-data=successmessage,You half-cook the batta.
+data=successmessage,You remove the batta from the oven.
 data=burnmessage,You accidentally burn the batta.
 
 [cooking_generic_chocolate_saturday]
