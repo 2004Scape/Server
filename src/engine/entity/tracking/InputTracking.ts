@@ -4,7 +4,7 @@ import InputTrackingBlob from '#/engine/entity/tracking/InputEvent.js';
 import World from '#/engine/World.js';
 import EnableTracking from '#/network/server/model/EnableTracking.js';
 import FinishTracking from '#/network/server/model/FinishTracking.js';
-import LoggerEventType from '#/server/logger/LoggerEventType.js';
+import { LoggerEventType } from '#/server/logger/LoggerEventType.js';
 import Environment from '#/util/Environment.js';
 
 export default class InputTracking {

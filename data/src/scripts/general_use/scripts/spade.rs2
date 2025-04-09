@@ -40,8 +40,11 @@ if(map_members = true & ~trail_hasclue_inv = true) {
             if(oc_param($clue, trail_guardian) ! null) {
                 def_npc $guard = oc_param($clue, trail_guardian);
                 if($guard = zamorak_wizard & testbit(%trail_clue, 4) = false) {
-                    if(npc_find(coord, zamorak_wizard, 8, 0) = true & %npc_aggressive_player = uid) {
-                        return;
+                    npc_huntall(coord, 10, 0); // zamorak/saradomin wizards range
+                    while (npc_huntnext = true) {
+                        if(npc_type = zamorak_wizard & %npc_aggressive_player = uid) {
+                            return;
+                        }
                     }
                     // los not low: https://www.youtube.com/watch?v=AoozFVuxWx8&t=88s, https://youtu.be/K8IepVULXYM?si=-phA8d-3sJ1ohS9H&t=26
                     // https://youtu.be/uAv5a6y-3OQ?si=QxAUtMVq6KCZebat&t=36 notice smokepuff on adj tile to where he appears, confirms it should be map_findsquare

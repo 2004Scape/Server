@@ -732,9 +732,9 @@
 731=seq_731
 732=seq_732
 733=human_createfire
-734=seq_734
-735=seq_735
-736=seq_736
+734=human_knockback
+735=human_knockback_long
+736=human_knockback_long_end
 737=seq_737
 738=seq_738
 739=seq_739
@@ -842,7 +842,7 @@
 841=earthwarrior_walk
 842=earthwarrior_ready
 843=earthwarrior_death
-844=seq_844
+844=human_crawling
 845=seq_845
 846=seq_846
 847=human_ready_scythe

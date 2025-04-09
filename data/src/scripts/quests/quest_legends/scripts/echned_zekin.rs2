@@ -1,0 +1,181 @@
+[opnpc1,echned_zekin]
+if(%legends_progress >= ^legends_defeated_nezikchened_water) {
+    mes("You have no further business with the spirit.");
+    return;
+}
+@echned_dialogue;
+
+[opnpcu,echned_zekin]
+if(%legends_progress >= ^legends_defeated_nezikchened_water) {
+    mes("You have no further business with the spirit.");
+    return;
+}
+if(last_useitem = dark_dagger) {
+    ~mesbox("You hand the dark dagger to the spirit.");
+    ~chatnpc("<p,neutral>Should I take from this that you do not wish to help me gain vengeance on Viyeldi?");
+    switch_int(~p_choice2("Yes, take the dagger back.", 1, "No, I'll complete the task.", 2)) {
+        case 1 :
+            ~chatplayer("<p,neutral>Yes, take the dagger back.");
+            inv_del(inv, dark_dagger, 1);
+            ~mesbox("You feel a chill touch as the spirit removes the dagger from your hand.");
+            ~chatnpc("<p,neutral>Very well, if that is your decision... However, you will not get access to the water...");
+        case 2 :
+            ~chatplayer("<p,neutral>No, I'll complete the task.");
+            ~chatnpc("<p,neutral>Very well, return to me when it is done.");
+    }
+} else if(last_useitem = glowing_dagger) {
+    @echned_glowing_dagger;
+}
+
+[label,echned_dialogue]
+// checks in this order: holy force -> dark dagger -> glowing dagger
+if(testbit(%legends_bits, ^legends_given_dagger) = true) {
+    @summon_nezi_dagger;
+}
+if(inv_total(inv, holy_force) > 0) {
+    ~chatnpc("<p,neutral>Something seems different about you... Your sense of purpose seems not bent to my will... Give me the dagger that you used to slay Viyeldi or taste my wrath!");
+    @multi4("I don't have the dagger.", echned_nodagger, "I haven't slayed Viyeldi yet.", echned_havnt, "I have something else in mind!", echned_inmind, "I have to be going...", echned_havetogo);
+} else if(inv_total(inv, dark_dagger) > 0 | inv_total(worn, dark_dagger) > 0) {
+    ~mesbox("The shapeless entity of Echned Zekin appears in front of you.");
+    ~chatnpc("<p,angry>Why do you return when your task is still incomplete?");
+    @multi3("Who am I supposed to kill again?", echned_whokill, "Er I've had second thoughts.", echned_second, "I have to be going...", echned_havetogo);
+} else if(inv_total(inv, glowing_dagger) > 0 | inv_total(worn, glowing_dagger) > 0) {
+    @echned_glowing_dagger;
+}
+if(%legends_progress = ^legends_heart_in_recess) %legends_progress = ^legends_pushed_boulder;
+~mesbox("In a rasping, barely audible voice you hear the entity speak.");
+~chatnpc("<p,angry>Who disturbs the rocks of Zekin?");
+~mesbox("There seems to be something slightly familiar about this presence.");
+@multi2("Er... me?", echned_erme, "Who's asking?", echned_who);
+
+[label,echned_glowing_dagger]
+~chatnpc("<p,neutral>Aha, I see you have completed your task. I'll take that dagger from you now.");
+~mesbox("The formless shape of Echned Zekin takes the dagger from you. As a ghostly hand envelopes the dagger, something seems to move from the black weapon into the floating figure of the spirit.");
+~chatnpc("<p,neutral>Aahhhhhhhhh! As I take the spirit of one departed, I will now reveal myself and spell out your doom.");
+inv_del(inv, glowing_dagger, 1);
+inv_del(worn, glowing_dagger, 1);
+%legends_bits = setbit(%legends_bits, ^legends_given_dagger);
+@summon_nezi_dagger;
+
+[label,summon_nezi_dagger]
+mes("A terrible fear comes over you.");
+mes("You feel a terrible sense of loss...");
+mes("Nezikchened: Now I am revealed to you, Vacu, so shall ye perish.");
+mes("A sense of loss and dread comes over you.");
+stat_sub(prayer, 18, 0); // static 18 points from what I can tell (OSRS), doesn't seem to matter if you've killed viyeldi or not
+npc_del;
+npc_add(map_findsquare(coord, 1, 3, ^map_findsquare_lineofwalk), nezikchened, 500);
+npc_say("Now I am revealed to you, Vacu, so shall ye perish.");
+%aggressive_npc = npc_uid;
+%npc_aggressive_player = uid;
+%npc_lastcombat = sub(^max_32bit_int, 8);
+
+[label,echned_nodagger]
+~chatplayer("<p,neutral>I don't have the dagger.");
+~mesbox("The spirit seems to shake with anger...");
+~chatnpc("<p,neutral>Bring it to me with all haste. Or torment and pain will I bring to you...");
+~mesbox("The spirit extends a wraithlike finger towards you. You feel a searing pain jolt through your body...");
+~damage_self(5);
+
+[label,echned_havnt]
+~chatplayer("<p,neutral>I haven't slayed Viyeldi yet.");
+~chatnpc("<p,neutral>Go now and slay him, as you agreed. If you are forfeit on this I will take you as a replacement for Viyeldi!");
+@multi3("I don't have the dagger.", echned_nodagger, "I have something else in mind!", echned_inmind, "I have to be going...", echned_havetogo);
+
+[label,echned_inmind]
+~chatplayer("<p,neutral>I have something else in mind!");
+~chatnpc("<p,neutral>You worthless Vacu, how dare you seek to trick me. Go and slay Viyeldi as you promised or I will layer upon you all the pain and torment I have endured all these long years!");
+@multi3("I don't have the dagger.", echned_nodagger, "I haven't slayed Viyeldi yet.", echned_havnt, "I have to be going...", echned_havetogo);
+
+[label,echned_whokill]
+~chatplayer("<p,neutral>Who am I supposed to kill again?");
+~chatnpc("<p,neutral>Avenge upon me the death of Viyeldi, the cruel. And I will give you access to source...");
+@multi2("Er I've had second thoughts.", echned_second, "I have to be going...", echned_havetogo);
+
+[label,echned_second]
+~chatplayer("<p,neutral>Er I've had second thoughts.");
+~chatnpc("<p,neutral>It is too late for second thoughts... Do as you have agreed and return to me in all haste... His presence tortures me so...");
+@multi2("Who am I supposed to kill again?", echned_whokill, "I have to be going...", echned_havetogo);
+
+[label,echned_havetogo]
+~chatplayer("<p,neutral>I have to be going...");
+~chatnpc("<p,neutral>Return swiftly with the weapon as soon as your task is complete.");
+mes("The spirit slowly fades and then disappears.");
+npc_del;
+
+[label,echned_erme]
+~chatplayer("<p,neutral>Er... me?");
+~chatnpc("<p,neutral>So, you desire the water that flows here?");
+@multi2("Yes, I need it for my quest.", echned_yesquest, "Not really, I just wondered if I could push that big rock.", echned_rock);
+
+[label,echned_yesquest]
+~chatplayer("<p,neutral>Yes, I need it for my quest.");
+~chatnpc("<p,neutral>The water babbles so loudly and I am already so tortured. I cannot abide the sound so I have stoppered the streams. Care you not for my torment and pain?");
+@multi2("Why are you tortured?", echned_why, "What can I do about that?", echned_whatdo);
+
+[label,echned_rock]
+~chatplayer("<p,neutral>Not really, I just wondered if I could push that big rock.");
+~chatnpc("<p,neutral>The rock must remain, it stoppers the waters that babble. The noise troubles my soul and I seek some rest... rest from this terrible torture...");
+@multi2("Why are you tortured?", echned_why, "What can I do about that?", echned_whatdo);
+
+[label,echned_whatdo]
+~chatplayer("<p,neutral>What can I do about that?");
+~chatnpc("<p,neutral>I was brutally murdered by a vicious man called Viyeldi. I sense his presence near by, but I know that he is no longer living.");
+~chatnpc("<p,neutral>My spirit burns with the need for revenge, I shall not rest while I sense his spirit still. If you seek the pure water, you must ensure he meets his end.");
+~chatnpc("<p,neutral>If not, you will never see the source and your journey back must ye start. What is your answer? Will ye put an end to Viyeldi for me?");
+@multi2("I'll do what I must to get the water.", echned_mustwater, "No, I won't take someone's life for you.", echned_wonttake);
+
+[label,echned_mustwater]
+~chatplayer("<p,neutral>I'll do what I must to get the water.");
+~mesbox("The shapeless spirit seems to crackle with energy.");
+if(~obj_gettotal(dark_dagger) > 0) {
+    ~chatnpc("<p,neutral>Use the dagger I have provided for you to complete this task and then bring it to me when Viyeldi is dead.");
+} else {
+    ~chatnpc("<p,neutral>You would release me from my torment and the source would be available to you. However, you must realise that this will be no easy task.");
+    ~chatnpc("<p,neutral>I will furnish you with a weapon which will help you to achieve your aims... Here, take this...");
+    ~objbox(dark_dagger, "The spirit waves an arm and in front of you appears a dark black dagger made of pure obsidian.", 250, 0, 0);
+    ~chatnpc("<p,neutral>To complete your task you must use this weapon on Viyeldi.");
+    mes("You take the dagger and place it in your backpack.");
+    inv_add(inv, dark_dagger, 1);
+    if(%legends_progress < ^legends_received_dagger) %legends_progress = ^legends_received_dagger;
+}
+@multi2("Ok, I'll do it.", echned_ok, "I've changed my mind, I can't do it.", echned_changedmind);
+
+[label,echned_changedmind]
+~chatplayer("<p,neutral>I've changed my mind, I can't do it.");
+~chatnpc("<p,neutral>The decision is yours but you will have no other way to get the source. The pure water you seek will forever be out of your reach.");
+@multi2("I'll do what I must to get the water.", echned_mustwater, "No, I won't take someone's life for you.", echned_wonttake);
+
+[label,echned_ok]
+~chatplayer("<p,neutral>Ok, I'll do it.");
+~mesbox("The formless shape shimmers brightly...");
+~chatnpc("<p,neutral>You will benefit from this decision, the source will be opened to you. Bring the dagger back to me when you have completed this task.");
+npc_del;
+
+[label,echned_who]
+~chatplayer("<p,neutral>Who's asking?");
+~mesbox("The hooded, headless figure turns to face you... It's quite unnerving.");
+~chatnpc("<p,neutral>I am Echned Zekin, and I seek peace from my eternal torture...");
+@multi3("What can I do about that?", echned_whatdo, "Do I know you?", echned_know, "Why are you tortured?", echned_why);
+
+[label,echned_know]
+~chatplayer("<p,neutral>Do I know you?");
+~chatnpc("<p,neutral>I am long since dead and buried, lost in the passages of time. Long since have my kin departed and I been forgotten... It is unlikely that you know me... I am a poor tortured soul looking for rest and eternal peace...");
+@multi2("Why are you tortured?", echned_why, "What can I do about that?", echned_whatdo);
+
+[label,echned_why]
+~chatplayer("<p,neutral>Why are you tortured?");
+~chatnpc("<p,neutral>I was robbed of my life by a cruel man called Viyeldi and I hunger for revenge upon him. It is long since I have walked this world looking for him to haunt him and raise terror in his life.");
+~chatnpc("<p,neutral>But tragedy of tragedies, his spirit is neither living or dead. He serves the needs of the source. He died trying to collect the water from this stream, and now I hang in torment for eternity.");
+@multi2("What can I do about that?", echned_whatdo, "Can't I just get some water?", echned_water);
+
+[label,echned_water]
+~chatplayer("<p,neutral>Can't I just get some water?");
+~chatnpc("<p,neutral>Yes, you may get some water, but first you must help me. Revenge is the only thing that keeps my spirit in this place.");
+~chatnpc("<p,neutral>Help me take vengeance on Viyeldi and I will gladly remove the rocks and allow you access to the water. What say you?");
+@multi2("I'll do what I must to get the water.", echned_mustwater, "No, I won't take someone's life for you.", echned_wonttake);
+
+[label,echned_wonttake]
+~chatplayer("<p,neutral>No, I won't take someone's life for you.");
+~chatnpc("<p,neutral>Such noble thoughts, but Viyeldi is not alive. He is merely a vessel by which the power of the source protects itself.");
+~chatnpc("<p,neutral>If that is your decision, so be it, but expect not to gain the water from this stream.");

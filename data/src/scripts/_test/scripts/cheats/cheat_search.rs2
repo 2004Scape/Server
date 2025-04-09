@@ -1,0 +1,64 @@
+// This file is for testing various type of iterators and searches
+
+[debugproc,obj_findallzone1]
+if (p_finduid(uid) = true) {
+    p_telejump(0_37_55_32_30);
+    p_delay(0);
+    obj_addall(0_37_55_33_33, logs, 1, 30);
+    obj_addall(0_37_55_34_34, logs, 1, 30);
+    p_delay(1);
+    obj_findallzone(0_37_55_34_34);
+    if(obj_findnext = true){
+        obj_del;
+        return;
+    }
+}
+
+
+[debugproc,loc_findallzone1]
+if (p_finduid(uid) = true) {
+    p_telejump(0_37_55_32_30);
+    p_delay(0);
+    loc_add(0_37_55_33_33, loc_1276, 0, centrepiece_straight, 30);
+    loc_add(0_37_55_34_34, loc_1276, 0, centrepiece_straight, 30);
+    p_delay(1);
+    loc_findallzone(0_37_55_34_34);
+    if(loc_findnext = true){
+        loc_del(100);
+        return;
+    }
+}
+
+[debugproc,npc_find1]
+if (p_finduid(uid) = true) {
+    p_telejump(0_37_55_35_35);
+    p_delay(0);
+    npc_add(0_37_55_33_33, banker_man,30);
+    npc_add(0_37_55_34_33, banker_man,30);
+    npc_add(0_37_55_35_33, banker_man,30);
+    npc_add(0_37_55_36_33, banker_man,30);
+    npc_add(0_37_55_37_33, banker_man,30);
+    p_delay(1);
+
+    if(npc_find(0_37_55_35_35, banker_man, 10, 0) = true){
+        npc_say("Meeee");
+    }
+}
+
+[debugproc,npc_hunt1]
+if (p_finduid(uid) = true) {
+    p_telejump(0_37_55_35_35);
+    p_delay(0);
+    npc_add(0_37_55_33_33, goblin_unarmed1,30);
+    npc_add(0_37_55_34_33, goblin_unarmed1,30);
+    npc_add(0_37_55_35_33, goblin_unarmed1,30);
+    npc_add(0_37_55_36_33, goblin_unarmed1,30);
+    npc_add(0_37_55_37_33, goblin_unarmed1,30);
+    p_delay(1);
+
+    if(npc_hunt(0_37_55_35_35, 10, 0) = true){
+        npc_say("Meeee");
+    }
+}
+
+

@@ -24,11 +24,11 @@ switch_obj (last_useitem)
 [label,make_softclay](obj $water_source)
 // https://youtu.be/48JsDRNXWAc?list=PLn23LiLYLb1bQ7Hwp77KoNBjKvpZQTfJT&t=240
 /// clay works the same as rsc
-def_namedobj $empty_source = oc_param($water_source, changesto);
+def_namedobj $empty_source = oc_param($water_source, next_obj_stage);
 mes("You mix the clay and water.");
 inv_del(inv, clay, 1);
 //delete water source
-inv_del(inv, oc_param($empty_source, changesto), 1);
+inv_del(inv, oc_param($empty_source, next_obj_stage), 1);
 //add empty water source BEFORE soft clay
 inv_add(inv, $empty_source, 1);
 //add soft clay

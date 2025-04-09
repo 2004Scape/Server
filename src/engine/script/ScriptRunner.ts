@@ -20,7 +20,7 @@ import PlayerOps from '#/engine/script/handlers/PlayerOps.js';
 import ServerOps from '#/engine/script/handlers/ServerOps.js';
 import StringOps from '#/engine/script/handlers/StringOps.js';
 import ScriptFile from '#/engine/script/ScriptFile.js';
-import ScriptOpcode from '#/engine/script/ScriptOpcode.js';
+import { ScriptOpcode, ScriptOpcodeNameMap } from '#/engine/script/ScriptOpcode.js';
 import ScriptPointer from '#/engine/script/ScriptPointer.js';
 import ScriptState from '#/engine/script/ScriptState.js';
 import World from '#/engine/World.js';
@@ -166,7 +166,7 @@ export default class ScriptRunner {
                     secondary = 0;
                 }
 
-                err.message = ScriptOpcode[opcode].toLowerCase() + ' ' + err.message;
+                err.message = ScriptOpcodeNameMap.get(opcode)?.toLowerCase() + ' ' + err.message;
                 if (secondary) {
                     err.message = '.' + err.message;
                 }

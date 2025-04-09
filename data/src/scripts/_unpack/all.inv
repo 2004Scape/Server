@@ -1,39 +1,30 @@
-[trawler_catch]
+[trawler_rewardinv]
 size=40
 stackall=yes
 protect=no
 
-[inv_44]
+[fishrestaurant]
 size=1
 
-[inv_55]
+[silvershop]
 size=1
 
-[inv_56]
+[gemshop3]
 size=1
 
-[inv_58]
+[spiceshop]
 size=1
 
-[inv_75]
+[furstall]
 size=1
 
-[inv_96]
-size=1
-
-[inv_97]
-size=1
-
-[inv_98]
-size=1
-
-[inv_134]
+[dueloffer]
 size=9
 
-[inv_136]
+[duelwinnings]
 size=9
 
-[trail_puzzle_inv]
+[trail_puzzleinv]
 scope=temp
 size=25
 dummyinv=yes

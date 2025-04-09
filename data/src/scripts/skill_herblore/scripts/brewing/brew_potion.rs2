@@ -91,6 +91,10 @@ if (map_members = false) {
     return(false);
 }
 
+if($struct = ardrigal_mixture & %legends_progress < ^legends_talk_gujuo_pool) {
+    mes("You're not really sure what you would make out of this.");
+    return(false);
+}
 // If the player current level is below the required level.
 def_int $current_level = stat(herblore);
 def_int $herb_level = struct_param($struct, brew_potion_level);

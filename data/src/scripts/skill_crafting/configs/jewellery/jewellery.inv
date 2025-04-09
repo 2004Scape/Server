@@ -1,16 +1,16 @@
-[crafting_rings]
+[crafting_make_rings]
 scope=temp
 size=6
 dummyinv=yes
 stock1=gold_ring,1,0
 
-[crafting_necklaces]
+[crafting_make_necklaces]
 scope=temp
 size=6
 dummyinv=yes
 stock1=gold_necklace,1,0
 
-[crafting_amulets]
+[crafting_make_amulets]
 scope=temp
 size=6
 dummyinv=yes

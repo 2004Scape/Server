@@ -317,7 +317,7 @@ mes(oc_param($proof_obj, game_message2));
 
 [label,create_flourprints](obj $flour_obj)
 inv_del(inv, $flour_obj, 1);
-inv_add(inv, oc_param($flour_obj, changesto), 1);
+inv_add(inv, oc_param($flour_obj, next_obj_stage), 1);
 inv_del(inv, flypaper, 1);
 inv_add(inv, oc_param($flour_obj, product), 1);
 mes(oc_param($flour_obj, game_message));

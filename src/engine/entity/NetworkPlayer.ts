@@ -4,9 +4,10 @@ import * as rsbuf from '@2004scape/rsbuf';
 
 import InvType from '#/cache/config/InvType.js';
 import { CoordGrid } from '#/engine/CoordGrid.js';
+import { ModalState } from '#/engine/entity/ModalState.js';
 import Player from '#/engine/entity/Player.js';
 import World from '#/engine/World.js';
-import WorldStat from '#/engine/WorldStat.js';
+import { WorldStat } from '#/engine/WorldStat.js';
 import Zone from '#/engine/zone/Zone.js';
 import Packet from '#/io/Packet.js';
 import ClientProtCategory from '#/network/client/prot/ClientProtCategory.js';
@@ -32,7 +33,7 @@ import UpdateRunWeight from '#/network/server/model/UpdateRunWeight.js';
 import UpdateStat from '#/network/server/model/UpdateStat.js';
 import OutgoingMessage from '#/network/server/OutgoingMessage.js';
 import ClientSocket from '#/server/ClientSocket.js';
-import LoggerEventType from '#/server/logger/LoggerEventType.js';
+import { LoggerEventType } from '#/server/logger/LoggerEventType.js';
 import NullClientSocket from '#/server/NullClientSocket.js';
 import { printError } from '#/util/Logger.js';
 
@@ -166,13 +167,13 @@ export class NetworkPlayer extends Player {
         }
 
         if (this.refreshModal) {
-            if ((this.modalState & 1) !== 0 && (this.modalState & 4) !== 0) {
+            if ((this.modalState & (ModalState.MAIN | ModalState.SIDE)) !== ModalState.NONE) {
                 this.write(new IfOpenMainSide(this.modalMain, this.modalSide));
-            } else if ((this.modalState & 1) !== 0) {
+            } else if ((this.modalState & ModalState.MAIN) !== ModalState.NONE) {
                 this.write(new IfOpenMain(this.modalMain));
-            } else if ((this.modalState & 2) !== 0) {
+            } else if ((this.modalState & ModalState.CHAT) !== ModalState.NONE) {
                 this.write(new IfOpenChat(this.modalChat));
-            } else if ((this.modalState & 4) !== 0) {
+            } else if ((this.modalState & ModalState.SIDE) !== ModalState.NONE) {
                 this.write(new IfOpenSide(this.modalSide));
             }
 

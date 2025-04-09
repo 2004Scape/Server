@@ -1,4 +1,4 @@
-[generalshop7]
+[generalshop6]
 // https://classic.runescape.wiki/w/Rimmington_General_Store
 // https://web.archive.org/web/20070824001708im_/http://runehq.com/images/cityguides/Rimmington/r6.jpg (full stocks)
 scope=shared
@@ -14,7 +14,7 @@ stock5=tinderbox,2,100
 stock6=chisel,2,100
 stock7=hammer,5,100
 
-[rommiks_crafty_supplies]
+[craftingshop]
 // https://classic.runescape.wiki/w/Rommik%27s_Crafting_Equipment_Shop
 // https://web.archive.org/web/20070824001708im_/http://runehq.com/images/cityguides/Rimmington/rommik.png (full stocks)
 scope=shared

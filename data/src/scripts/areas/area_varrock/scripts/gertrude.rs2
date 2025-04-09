@@ -74,7 +74,7 @@ switch_int (%fluffs_progress) {
             ~chatplayer("<p,neutral>Hey thanks Gertrude.");
             return;
         } //this is guessed off RSC. assuming her post-quest dialogue was changed later on.
-        if(inv_totalcat(inv, kitten) > 0 | inv_totalcat(bank, kitten) > 0 | inv_totalcat(inv, cat) > 0 | inv_totalcat(bank, cat) > 0 | %follower_obj ! null & oc_category(%follower_obj) = kitten | %follower_obj ! null & oc_category(%follower_obj) = cat) {
+        if(inv_totalcat(inv, kitten) > 0 | inv_totalcat(bank, kitten) > 0 | inv_totalcat(inv, cat) > 0 | inv_totalcat(bank, cat) > 0 | %follower_obj ! null & oc_category(%follower_obj) = kitten | %follower_obj ! null & oc_category(%follower_obj) = cat | %follower_obj ! null & oc_category(%follower_obj) = overgrown) {
             ~chatplayer("<p,neutral>Hello again Gertrude.");
             ~chatnpc("<p,neutral>Well hello adventurer, how are you?");
             ~chatplayer("<p,neutral>Pretty good, thanks. Yourself?");

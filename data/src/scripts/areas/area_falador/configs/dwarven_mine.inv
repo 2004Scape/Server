@@ -1,4 +1,4 @@
-[drogo_mining]
+[miningstore]
 // https://classic.runescape.wiki/w/Drogo%27s_Mining_Emporium
 // recheck
 scope=shared
@@ -16,7 +16,7 @@ stock7=bronze_bar,0,4000
 stock8=iron_bar,0,4000
 stock9=gold_bar,0,3000
 
-[nurmof_pickaxe]
+[pickaxeshop]
 // https://classic.runescape.wiki/w/Nurmof%27s_Pickaxe_Shop
 // https://storage.googleapis.com/tannerdino/images/nurmof1.jpg (full stocks)
 scope=shared
@@ -31,7 +31,7 @@ stock4=mithril_pickaxe,3,300
 stock5=adamant_pickaxe,2,500
 stock6=rune_pickaxe,1,700
 
-[generalshop5]
+[generaldwarf]
 // https://oldschool.runescape.wiki/w/Dwarven_shopping_store
 // https://storage.googleapis.com/tannerdino/images/ShopsgeneralDwarf.png (date 2006-11-06)
 scope=shared

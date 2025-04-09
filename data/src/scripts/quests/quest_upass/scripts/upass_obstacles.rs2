@@ -241,6 +241,10 @@ if(loc_find(loc_coord, loc_3361) = true) loc_del(50); // rs3
 mes("...and succeed long enough to take the Orb.");
 
 [oploc1,upass_ledge]
+if(coordx(coord) < coordx(loc_coord)) {
+    mes("You can't do that from here.");
+    return;
+}
 mes("You put your foot on the ledge and try to edge across...");
 def_coord $dest = 0_37_150_6_38;
 def_seq $seq = human_ledge_walk_right;

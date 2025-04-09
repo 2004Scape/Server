@@ -1,4 +1,4 @@
-import EntityLifeCycle from '#/engine/entity/EntityLifeCycle.js';
+import { EntityLifeCycle } from '#/engine/entity/EntityLifeCycle.js';
 import World from '#/engine/World.js';
 import Linkable from '#/util/Linkable.js';
 

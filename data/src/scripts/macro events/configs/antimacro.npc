@@ -850,9 +850,10 @@ category=macro_event_watchman
 param=attack_anim,human_blunt_crush
 param=defend_anim,human_blunt_defend2
 param=attack_sound,mace_crush
-// param=defend_sound,blade3_mail
+// param=defend_sound,
 param=damagetype,^crush_style
 param=combat_xp_multiplier,25
+// defend_sound blade3_mail
 // https://storage.googleapis.com/tannerdino/images/watchman.PNG here we can see defend animation.
 
 [macro_event_watchman2]
@@ -885,9 +886,10 @@ category=macro_event_watchman
 param=attack_anim,human_blunt_crush
 param=defend_anim,human_blunt_defend2
 param=attack_sound,mace_crush
-// param=defend_sound,blade3_mail
+// param=defend_sound,
 param=damagetype,^crush_style
 param=combat_xp_multiplier,25
+// defend_sound blade3_mail
 
 [macro_event_watchman3]
 name=Watchman
@@ -919,9 +921,10 @@ category=macro_event_watchman
 param=attack_anim,human_blunt_crush
 param=defend_anim,human_blunt_defend2
 param=attack_sound,mace_crush
-// param=defend_sound,blade3_mail
+// param=defend_sound,
 param=damagetype,^crush_style
 param=combat_xp_multiplier,25
+// defend_sound blade3_mail
 
 [macro_event_watchman4]
 name=Watchman
@@ -953,9 +956,10 @@ category=macro_event_watchman
 param=attack_anim,human_blunt_crush
 param=defend_anim,human_blunt_defend2
 param=attack_sound,mace_crush
-// param=defend_sound,blade3_mail
+// param=defend_sound,
 param=damagetype,^crush_style
 param=combat_xp_multiplier,25
+// defend_sound blade3_mail
 
 [macro_event_watchman5]
 name=Watchman
@@ -987,9 +991,10 @@ category=macro_event_watchman
 param=attack_anim,human_blunt_crush
 param=defend_anim,human_blunt_defend2
 param=attack_sound,mace_crush
-// param=defend_sound,blade3_mail
+// param=defend_sound,
 param=damagetype,^crush_style
 param=combat_xp_multiplier,25
+// defend_sound blade3_mail
 
 [macro_event_watchman6]
 name=Watchman
@@ -1021,9 +1026,10 @@ category=macro_event_watchman
 param=attack_anim,human_blunt_crush
 param=defend_anim,human_blunt_defend2
 param=attack_sound,mace_crush
-// param=defend_sound,blade3_mail
+// param=defend_sound,
 param=damagetype,^crush_style
 param=combat_xp_multiplier,25
+// defend_sound blade3_mail
 
 [brownimp]
 name=Brownie
@@ -1278,7 +1284,6 @@ wanderrange=0
 moverestrict=nomove
 category=macro_event_ent
 param=ent_tree_loc,loc_1276
-param=next_loc_stage,loc_2639
 
 [macro_event_ent_tree2]
 vislevel=hide
@@ -1298,7 +1303,6 @@ wanderrange=0
 moverestrict=nomove
 category=macro_event_ent
 param=ent_tree_loc,loc_1276
-param=next_loc_stage,loc_2639
 
 [macro_event_ent_dead_tree1]
 vislevel=hide
@@ -1318,7 +1322,6 @@ wanderrange=0
 moverestrict=nomove
 category=macro_event_ent
 param=ent_tree_loc,loc_1276
-param=next_loc_stage,loc_2639
 
 [macro_event_ent_dead_tree2]
 vislevel=hide
@@ -1337,7 +1340,6 @@ wanderrange=0
 moverestrict=nomove
 category=macro_event_ent
 param=ent_tree_loc,loc_1276
-param=next_loc_stage,loc_83
 
 [macro_event_ent_oak]
 vislevel=hide
@@ -1376,7 +1378,6 @@ wanderrange=0
 moverestrict=nomove
 category=macro_event_ent
 param=ent_tree_loc,willow_tree
-param=next_loc_stage,loc_2639
 
 [macro_event_ent_yew]
 vislevel=hide
@@ -1414,7 +1415,6 @@ model1=model_loc_1293_8
 moverestrict=nomove
 category=macro_event_ent
 param=ent_tree_loc,maple_tree
-param=next_loc_stage,loc_2639
 
 [macro_event_ent_magic]
 vislevel=hide
@@ -1434,7 +1434,6 @@ wanderrange=0
 moverestrict=nomove
 category=macro_event_ent
 param=ent_tree_loc,magic_tree
-param=next_loc_stage,loc_2639
 
 [macro_event_drunken_dwarf]
 vislevel=hide

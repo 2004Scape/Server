@@ -16,23 +16,25 @@ import SeqType from '#/cache/config/SeqType.js';
 import VarPlayerType from '#/cache/config/VarPlayerType.js';
 import { PRELOADED, PRELOADED_CRC } from '#/cache/PreloadedPacks.js';
 import { CoordGrid } from '#/engine/CoordGrid.js';
-import BlockWalk from '#/engine/entity/BlockWalk.js';
+import { BlockWalk } from '#/engine/entity/BlockWalk.js';
 import BuildArea from '#/engine/entity/BuildArea.js';
 import CameraInfo from '#/engine/entity/CameraInfo.js';
 import Entity from '#/engine/entity/Entity.js';
-import EntityLifeCycle from '#/engine/entity/EntityLifeCycle.js';
+import { EntityLifeCycle } from '#/engine/entity/EntityLifeCycle.js';
 import { EntityTimer, PlayerTimerType } from '#/engine/entity/EntityTimer.js';
 import HeroPoints from '#/engine/entity/HeroPoints.js';
 import Loc from '#/engine/entity/Loc.js';
-import MoveRestrict from '#/engine/entity/MoveRestrict.js';
-import MoveSpeed from '#/engine/entity/MoveSpeed.js';
-import MoveStrategy from '#/engine/entity/MoveStrategy.js';
+import { ModalState } from '#/engine/entity/ModalState.js';
+import { MoveRestrict } from '#/engine/entity/MoveRestrict.js';
+import { MoveSpeed } from '#/engine/entity/MoveSpeed.js';
+import { MoveStrategy } from '#/engine/entity/MoveStrategy.js';
 import { isClientConnected } from '#/engine/entity/NetworkPlayer.js';
 import Npc from '#/engine/entity/Npc.js';
 import Obj from '#/engine/entity/Obj.js';
 import PathingEntity from '#/engine/entity/PathingEntity.js';
+import { PlayerLoading } from '#/engine/entity/PlayerLoading.js';
 import { PlayerQueueRequest, PlayerQueueType, QueueType, ScriptArgument } from '#/engine/entity/PlayerQueueRequest.js';
-import { PlayerStat, PlayerStatEnabled, PlayerStatFree } from '#/engine/entity/PlayerStat.js';
+import { PlayerStat, PlayerStatEnabled, PlayerStatFree, PlayerStatNameMap } from '#/engine/entity/PlayerStat.js';
 import InputTracking from '#/engine/entity/tracking/InputTracking.js';
 import { changeNpcCollision, changePlayerCollision, findNaivePath, reachedEntity, reachedLoc, reachedObj } from '#/engine/GameMap.js';
 import { Inventory, InventoryListener } from '#/engine/Inventory.js';
@@ -64,8 +66,8 @@ import UpdateStat from '#/network/server/model/UpdateStat.js';
 import VarpLarge from '#/network/server/model/VarpLarge.js';
 import VarpSmall from '#/network/server/model/VarpSmall.js';
 import OutgoingMessage from '#/network/server/OutgoingMessage.js';
-import ServerProtPriority from '#/network/server/prot/ServerProtPriority.js';
-import LoggerEventType from '#/server/logger/LoggerEventType.js';
+import { ServerProtPriority } from '#/network/server/prot/ServerProtPriority.js';
+import { LoggerEventType } from '#/server/logger/LoggerEventType.js';
 import { ChatModePrivate, ChatModePublic, ChatModeTradeDuel } from '#/util/ChatModes.js';
 import Environment from '#/util/Environment.js';
 import { toDisplayName } from '#/util/JString.js';
@@ -186,8 +188,8 @@ export default class Player extends PathingEntity {
 
     save() {
         const sav = Packet.alloc(1);
-        sav.p2(0x2004); // magic
-        sav.p2(6); // version
+        sav.p2(PlayerLoading.SAV_MAGIC); // magic
+        sav.p2(PlayerLoading.SAV_VERSION); // version
 
         sav.p2(this.x);
         sav.p2(this.z);
@@ -360,7 +362,7 @@ export default class Player extends PathingEntity {
     cameraPackets: LinkList<CameraInfo> = new LinkList();
     timers: Map<number, EntityTimer> = new Map();
     tabs: number[] = new Array(14).fill(-1);
-    modalState = 0; // 1 - main, 2 - chat, 4 - side, 8 - tutorial
+    modalState = ModalState.NONE;
     modalMain = -1;
     lastModalMain = -1;
     modalChat = -1;
@@ -530,6 +532,10 @@ export default class Player extends PathingEntity {
             this.write(new UpdateRebootTimer(ticksBeforeShutdown));
         }
         this.closeModal();
+        // tabs could have been updated while reconnecting, make sure we sync them now
+        for (let i = 0; i < this.tabs.length; i++) {
+            this.write(new IfSetTab(i, this.tabs[i]));
+        }
         this.refreshInvs();
         for (let i = 0; i < this.stats.length; i++) {
             this.write(new UpdateStat(i, this.stats[i], this.levels[i]));
@@ -711,11 +717,11 @@ export default class Player extends PathingEntity {
             this.protect = false;
         }
 
-        if (this.modalState === 0) {
+        if (this.modalState === ModalState.NONE) {
             return;
         }
 
-        this.modalState = 0;
+        this.modalState = ModalState.NONE;
 
         // close any input dialogue suspended scripts.
         if (this.activeScript?.execution === ScriptState.COUNTDIALOG || this.activeScript?.execution === ScriptState.PAUSEBUTTON) {
@@ -757,7 +763,7 @@ export default class Player extends PathingEntity {
 
     containsModalInterface() {
         // main or chat is open
-        return (this.modalState & 1) !== 0 || (this.modalState & 2) !== 0;
+        return (this.modalState & (ModalState.MAIN | ModalState.CHAT)) !== ModalState.NONE;
     }
 
     busy() {
@@ -1698,7 +1704,7 @@ export default class Player extends PathingEntity {
             this.changeStat(stat);
 
             // fun logging for players :)
-            this.addSessionLog(LoggerEventType.ADVENTURE, 'Levelled up ' + PlayerStat[stat].toLowerCase() + ' from ' + before + ' to ' + this.baseLevels[stat]);
+            this.addSessionLog(LoggerEventType.ADVENTURE, 'Levelled up ' + PlayerStatNameMap.get(stat)?.toLowerCase() + ' from ' + before + ' to ' + this.baseLevels[stat]);
 
             let total = 0;
             let freeTotal = 0;
@@ -1851,47 +1857,47 @@ export default class Player extends PathingEntity {
     }
 
     openMainModal(com: number) {
-        if ((this.modalState & 2) !== 0) {
+        if ((this.modalState & ModalState.CHAT) !== ModalState.NONE) {
             // close chat modal if we're opening a new main modal
             this.write(new IfClose());
-            this.modalState &= ~2;
+            this.modalState &= ~ModalState.CHAT;
             this.modalChat = -1;
         }
 
-        if ((this.modalState & 4) !== 0) {
+        if ((this.modalState & ModalState.SIDE) !== ModalState.NONE) {
             // close side modal if we're opening a new main modal
             this.write(new IfClose());
-            this.modalState &= ~4;
+            this.modalState &= ~ModalState.SIDE;
             this.modalSide = -1;
         }
 
-        this.modalState |= 1;
+        this.modalState |= ModalState.MAIN;
         this.modalMain = com;
         this.refreshModal = true;
     }
 
     openChat(com: number) {
-        this.modalState |= 2;
+        this.modalState |= ModalState.CHAT;
         this.modalChat = com;
         this.refreshModal = true;
     }
 
     openSideModal(com: number) {
-        this.modalState |= 4;
+        this.modalState |= ModalState.SIDE;
         this.modalSide = com;
         this.refreshModal = true;
     }
 
     openTutorial(com: number) {
         this.write(new TutOpen(com));
-        this.modalState |= 8;
+        this.modalState |= ModalState.TUT;
         this.modalTutorial = com;
     }
 
     openMainModalSide(top: number, side: number) {
-        this.modalState |= 1;
+        this.modalState |= ModalState.MAIN;
         this.modalMain = top;
-        this.modalState |= 4;
+        this.modalState |= ModalState.SIDE;
         this.modalSide = side;
         this.refreshModal = true;
     }
@@ -2018,7 +2024,7 @@ export default class Player extends PathingEntity {
         } else if (script === this.activeScript) {
             this.activeScript = null;
 
-            if ((this.modalState & 1) === 0) {
+            if ((this.modalState & ModalState.MAIN) === ModalState.NONE) {
                 // close chat dialogues automatically and leave main modals alone
                 this.closeModal();
             }

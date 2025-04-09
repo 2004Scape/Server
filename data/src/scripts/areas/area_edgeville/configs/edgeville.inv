@@ -1,4 +1,4 @@
-[generalshop6]
+[generalshop5]
 // https://classic.runescape.wiki/w/Edgeville_General_Store
 // https://web.archive.org/web/20110920235334im_/http://runehq.com/images/cityguides/edgevillegeneral.jpg (full stocks)
 scope=shared
@@ -14,7 +14,7 @@ stock5=tinderbox,2,100
 stock6=chisel,2,100
 stock7=hammer,5,100
 
-[oziach_shop]
+[runeplateshop]
 // https://oldschool.runescape.wiki/w/Oziach_(shop)
 // https://storage.googleapis.com/tannerdino/images/oziach.gif (full stocks)
 scope=shared
