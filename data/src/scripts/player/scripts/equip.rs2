@@ -357,7 +357,7 @@ def_int $i = 0;
 while ($i < inv_size(worn)) {
     def_obj $worn_obj = inv_getobj(worn, $i);
     def_int $worn_num = inv_getnum(worn, $i);
-    if ($worn_obj ! null & $equip_obj ! $worn_obj) {
+    if ($worn_obj ! null & $i ! $wearpos1) { // skip the slot we're swapping with
         def_int $worn_wearpos1 = oc_wearpos($worn_obj);
         def_int $worn_wearpos2 = oc_wearpos2($worn_obj);
         def_int $worn_wearpos3 = oc_wearpos3($worn_obj);
@@ -392,7 +392,7 @@ def_int $i = 0;
 while ($i < inv_size(worn)) {
     def_obj $worn_obj = inv_getobj(worn, $i);
     def_int $worn_num = inv_getnum(worn, $i);
-    if ($worn_obj ! null & $equip_obj ! $worn_obj) {
+    if ($worn_obj ! null & $i ! $wearpos1) { // skip the slot we're swapping with
         def_int $worn_wearpos1 = oc_wearpos($worn_obj);
         def_int $worn_wearpos2 = oc_wearpos2($worn_obj);
         def_int $worn_wearpos3 = oc_wearpos3($worn_obj);
