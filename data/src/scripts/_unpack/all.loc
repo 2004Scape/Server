@@ -11528,14 +11528,6 @@ sharelight=yes
 hillskew=yes
 op1=Squeeze-through
 
-[loc_2211]
-name=Grave of Scorpius
-desc=A weathered old gravestone.
-model=model_loc_406
-width=2
-length=2
-op1=Read
-
 [loc_2212]
 name=Sack
 desc=It's a sack!
