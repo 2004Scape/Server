@@ -44,7 +44,7 @@ if ($errand_state = 0) {
         @itexam_student3_deliver_sample;
     } else {
         ~chatplayer("<p,happy>How's the study going?");
-        ~chatnpc("<p,neutral>Very well thanks. Have you found my lucky mascot yet?");
+        ~chatnpc("<p,neutral>Very well thanks. Have you found my rock sample yet?");
         ~chatplayer("<p,sad>No sorry, not yet.");
         ~chatnpc("<p,confused>I'm sure it's just outside the digsite somewhere...");
     }
