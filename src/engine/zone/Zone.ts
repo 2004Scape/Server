@@ -373,8 +373,8 @@ export default class Zone {
      * Generates players that are currently "visible" in this zone.
      * "visible" meaning they are active on the server and available to the client.
      */
-    *getAllPlayersSafe(): IterableIterator<Player> {
-        for (const player of this.players.all()) {
+    *getAllPlayersSafe(reverse: boolean = false): IterableIterator<Player> {
+        for (const player of this.players.all(reverse)) {
             if (player.isValid()) {
                 yield player;
             }
@@ -385,8 +385,8 @@ export default class Zone {
      * Generates npcs that are currently "visible" in this zone.
      * "visible" meaning they are active on the server and available to the client.
      */
-    *getAllNpcsSafe(): IterableIterator<Npc> {
-        for (const npc of this.npcs.all()) {
+    *getAllNpcsSafe(reverse: boolean = false): IterableIterator<Npc> {
+        for (const npc of this.npcs.all(reverse)) {
             if (npc.isValid()) {
                 yield npc;
             }
@@ -397,8 +397,8 @@ export default class Zone {
      * Generates all objs that are currently "visible" in this zone.
      * "visible" meaning they are active on the server and available to the client.
      */
-    *getAllObjsSafe(): IterableIterator<Obj> {
-        for (const obj of this.objs.all()) {
+    *getAllObjsSafe(reverse: boolean = false): IterableIterator<Obj> {
+        for (const obj of this.objs.all(reverse)) {
             if (obj.isValid()) {
                 yield obj;
             }
@@ -445,8 +445,8 @@ export default class Zone {
      * Generates all locs that are currently "visible" in this zone.
      * "visible" meaning they are active on the server and available to the client.
      */
-    *getAllLocsSafe(): IterableIterator<Loc> {
-        for (const loc of this.locs.all()) {
+    *getAllLocsSafe(reverse: boolean = false): IterableIterator<Loc> {
+        for (const loc of this.locs.all(reverse)) {
             if (loc.isValid()) {
                 yield loc;
             }
@@ -494,8 +494,8 @@ export default class Zone {
      * Does not guarantee that the npcs are currently "visible".
      * "visible" meaning they are active on the server and available to the client.
      */
-    *getAllNpcsUnsafe(): IterableIterator<Npc> {
-        for (const npc of this.npcs.all()) {
+    *getAllNpcsUnsafe(reverse: boolean = false): IterableIterator<Npc> {
+        for (const npc of this.npcs.all(reverse)) {
             yield npc;
         }
     }
@@ -505,8 +505,8 @@ export default class Zone {
      * Does not guarantee that the players are currently "visible".
      * "visible" meaning they are active on the server and available to the client.
      */
-    *getAllPlayersUnsafe(): IterableIterator<Player> {
-        for (const player of this.players.all()) {
+    *getAllPlayersUnsafe(reverse: boolean = false): IterableIterator<Player> {
+        for (const player of this.players.all(reverse)) {
             yield player;
         }
     }

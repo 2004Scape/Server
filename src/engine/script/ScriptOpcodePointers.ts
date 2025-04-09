@@ -150,6 +150,10 @@ const ScriptOpcodePointers: {
         set2: ['active_player2'],
         conditional: true
     },
+    [ScriptOpcode.NPC_HUNT]: {
+        set: ['active_npc'],
+        set2: ['active_npc2']
+    },
     [ScriptOpcode.NPC_HUNTALL]: {
         set: ['find_npc']
     },
@@ -796,6 +800,17 @@ const ScriptOpcodePointers: {
     [ScriptOpcode.OBJ_FIND]: {
         set: ['active_obj'],
         set2: ['active_obj2']
+    },
+    [ScriptOpcode.OBJ_FINDALLZONE]: {
+        set: ['find_obj'],
+        set2: ['find_obj']
+    },
+    [ScriptOpcode.OBJ_FINDNEXT]: {
+        require: ['find_obj'],
+        set: ['active_obj'],
+        require2: ['find_obj'],
+        set2: ['active_obj2'],
+        conditional: true
     },
 
     // Inventory ops

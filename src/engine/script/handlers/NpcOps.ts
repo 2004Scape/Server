@@ -289,13 +289,14 @@ const NpcOps: CommandHandlers = {
         const huntvis: HuntVis = check(checkVis, HuntVisValid);
 
         let closestNpc;
-        let closestDistance = distance;
+        let closestDistance = Number.MAX_SAFE_INTEGER;
 
         const npcs = new NpcIterator(World.currentTick, position.level, position.x, position.z, distance, huntvis, NpcIteratorType.DISTANCE);
 
         for (const npc of npcs) {
             if (npc && npc.type === npcType.id) {
-                const npcDistance = CoordGrid.distanceToSW(position, npc);
+                // Picks the smallest euclidean distance
+                const npcDistance = CoordGrid.euclideanSquaredDistance(position, npc);
                 if (npcDistance <= closestDistance) {
                     closestNpc = npc;
                     closestDistance = npcDistance;
@@ -306,7 +307,7 @@ const NpcOps: CommandHandlers = {
             state.pushInt(0);
             return;
         }
-        // not necessary but if we want to refer to the original npc again, we can
+
         state.activeNpc = closestNpc;
         state.pointerAdd(ActiveNpc[state.intOperand]);
         state.pushInt(1);
@@ -321,11 +322,6 @@ const NpcOps: CommandHandlers = {
         const huntvis: HuntVis = check(checkVis, HuntVisValid);
 
         state.npcIterator = new NpcIterator(World.currentTick, position.level, position.x, position.z, distance, huntvis, NpcIteratorType.DISTANCE);
-        // not necessary but if we want to refer to the original npc again, we can
-        if (state._activeNpc) {
-            state._activeNpc2 = state._activeNpc;
-            state.pointerAdd(ScriptPointer.ActiveNpc2);
-        }
     },
 
     [ScriptOpcode.NPC_FINDALL]: state => {
@@ -337,22 +333,12 @@ const NpcOps: CommandHandlers = {
         const huntvis: HuntVis = check(checkVis, HuntVisValid);
 
         state.npcIterator = new NpcIterator(World.currentTick, position.level, position.x, position.z, distance, huntvis, NpcIteratorType.DISTANCE, npcType);
-        // not necessary but if we want to refer to the original npc again, we can
-        if (state._activeNpc) {
-            state._activeNpc2 = state._activeNpc;
-            state.pointerAdd(ScriptPointer.ActiveNpc2);
-        }
     },
 
     [ScriptOpcode.NPC_FINDALLZONE]: state => {
         const coord: CoordGrid = check(state.popInt(), CoordValid);
 
         state.npcIterator = new NpcIterator(World.currentTick, coord.level, coord.x, coord.z, 0, 0, NpcIteratorType.ZONE);
-        // not necessary but if we want to refer to the original npc again, we can
-        if (state._activeNpc) {
-            state._activeNpc2 = state._activeNpc;
-            state.pointerAdd(ScriptPointer.ActiveNpc2);
-        }
     },
 
     [ScriptOpcode.NPC_FINDNEXT]: state => {

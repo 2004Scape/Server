@@ -79,6 +79,14 @@ export const CoordGrid = {
         return Math.max(deltaX, deltaZ);
     },
 
+    // Returns the squared euclidean distance between two points (dx^2 + dz^2)
+    euclideanSquaredDistance(pos: { x: number; z: number }, other: { x: number; z: number }) {
+        const deltaX = Math.abs(pos.x - other.x);
+        const deltaZ = Math.abs(pos.z - other.z);
+
+        return deltaX * deltaX + deltaZ * deltaZ;
+    },
+
     isWithinDistanceSW(pos: { x: number; z: number }, other: { x: number; z: number }, distance: number) {
         if (Math.abs(pos.x - other.x) > distance || Math.abs(pos.z - other.z) > distance) {
             return false;

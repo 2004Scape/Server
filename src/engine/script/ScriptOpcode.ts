@@ -233,6 +233,7 @@ enum ScriptOpcode {
     NPC_QUEUE, // official
     NPC_RANGE, // official
     NPC_SAY, // official
+    NPC_HUNT,
     NPC_HUNTALL, // official
     NPC_HUNTNEXT,
     NPC_SETHUNT, // official
@@ -280,6 +281,8 @@ enum ScriptOpcode {
     OBJ_TAKEITEM,
     OBJ_TYPE,
     OBJ_FIND,
+    OBJ_FINDALLZONE,
+    OBJ_FINDNEXT,
 
     // Npc config ops (4000-4099)
     NC_CATEGORY = 4000,
