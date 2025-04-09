@@ -487,13 +487,13 @@ data=restore_message2,0
 
 [half_meat_pie_consume_messages]
 table=consume_messages_table
-data=consumable,obj_2331
+data=consumable,half_meat_pie
 data=consume_message1,You eat the remaining meat pie.
 data=restore_message2,0
 
 [half_redberry_pie_consume_messages]
 table=consume_messages_table
-data=consumable,obj_2333
+data=consumable,half_redberry_pie
 data=consume_message1,You eat the remaining redberry pie.
 data=restore_message2,0
 

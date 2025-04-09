@@ -1,0 +1,148 @@
+[oploc1,legends_barrel]
+def_coord $loc_coord = loc_coord;
+anim(%com_attackanim, 0);
+p_delay(0);
+if(stat_random(stat(attack), 65, 255) = false) {
+    mes("You were unable to smash this barrel open.");
+    anim(seq_848, 0);
+    if(random(3) = 0) {
+        def_int $rand_dec = ~random_range(1,3);
+        mes("You hit the barrel at the wrong angle.");
+        p_delay(0);
+        mes("You're heavily jarred from the vibrations of the blow.");
+        p_delay(0);
+        mes("Your attack is reduced by <tostring($rand_dec)>");
+        stat_sub(attack, $rand_dec, 0);
+    }
+    return;
+}
+loc_del(10000); // 1 hour
+spotanim_map(Barrel_Smash, loc_coord, 0, 0);
+// rates here are all guessed! need more data
+def_int $rand = random(128);
+if($rand < 32) {
+    p_delay(0);
+    mes("There's nothing in the barrel.");
+    ~legends_barrel_spawn_npc;
+} else if($rand < 64) {
+    mes("You smash the barrel open.");
+    ~legends_barrel_spawn_items;
+    ~legends_barrel_spawn_npc;
+} else if($rand < 80) {
+    mes("You smash the barrel open.");
+    ~legends_barrel_spawn_items;
+} else if($rand < 112) {
+    ~legends_barrel_spawn_items;
+    ~legends_barrel_explode;
+} else {
+    ~legends_barrel_explode;
+}
+world_delay(~random_range(30, 35));
+loc_add(map_findsquare($loc_coord, 0, 7, ^map_findsquare_lineofwalk), legends_barrel, 0, centrepiece_straight, 10000);
+
+[proc,legends_barrel_explode]
+mes("You're hit by splintering pieces of wood as a nearby barrel explodes.");
+spotanim_map(zamorak_flame, loc_coord, 0, 5);
+~damage_self(~random_range(6, 12));
+
+[proc,legends_barrel_spawn_items]
+def_int $i = 0;
+
+// junk roll
+def_int $junk = random(64);
+if($junk < 12) obj_add(loc_coord, rock, ~random_range(1, 3), ^lootdrop_duration);
+else if($junk < 24) obj_add(loc_coord, rope, ~random_range(1, 5), ^lootdrop_duration);
+
+// other junk roll
+def_int $rand = random(100);
+if($rand < 6) obj_add(loc_coord, earthrune, ~random_range(1, 12), ^lootdrop_duration);
+else if($rand < 12) obj_add(loc_coord, firerune, ~random_range(1, 12), ^lootdrop_duration);
+else if($rand < 18) obj_add(loc_coord, waterrune, ~random_range(1, 11), ^lootdrop_duration);
+else if($rand < 20) obj_add(loc_coord, airrune, ~random_range(1, 11), ^lootdrop_duration);
+else if($rand < 22) obj_add(loc_coord, bronze_dart, 1, ^lootdrop_duration);
+else if($rand < 24) obj_add(loc_coord, bronze_knife, 1, ^lootdrop_duration);
+else if($rand < 26) obj_add(loc_coord, iron_knife, 1, ^lootdrop_duration);
+else if($rand < 28) obj_add(loc_coord, steel_knife, 1, ^lootdrop_duration);
+else if($rand < 30) obj_add(loc_coord, mithril_knife, 1, ^lootdrop_duration);
+else if($rand < 32) obj_add(loc_coord, adamant_knife, 1, ^lootdrop_duration);
+else if($rand < 34) obj_add(loc_coord, rune_knife, 1, ^lootdrop_duration);
+else if($rand < 36) obj_add(loc_coord, bread, 1, ^lootdrop_duration);
+else if($rand < 38) obj_add(loc_coord, cheese, 1, ^lootdrop_duration);
+else if($rand < 40) obj_add(loc_coord, spinach_roll, 1, ^lootdrop_duration);
+else if($rand < 42) obj_add(loc_coord, half_redberry_pie, 1, ^lootdrop_duration);
+else if($rand < 44) obj_add(loc_coord, half_meat_pie, 1, ^lootdrop_duration);
+else if($rand < 46) obj_add(loc_coord, half_an_apple_pie, 1, ^lootdrop_duration);
+else if($rand < 48) obj_add(loc_coord, slice_of_cake, 1, ^lootdrop_duration);
+else if($rand < 50) obj_add(loc_coord, gold_bar, 1, ^lootdrop_duration);
+else if($rand < 52) obj_add(loc_coord, stafforb, 1, ^lootdrop_duration);
+else if($rand < 54) obj_add(loc_coord, bow_string, 1, ^lootdrop_duration);
+else if($rand < 56) obj_add(loc_coord, casket, 1, ^lootdrop_duration);
+else if($rand < 58) obj_add(loc_coord, coins, ~random_range(5, 90), ^lootdrop_duration);
+else if($rand < 60) obj_add(loc_coord, 1dose1strength, 1, ^lootdrop_duration);
+else if($rand < 62) obj_add(loc_coord, 1dose1defense, 1, ^lootdrop_duration);
+else if($rand < 63) obj_add(loc_coord, bronze_pickaxe, 1, ^lootdrop_duration);
+else if($rand < 64) obj_add(loc_coord, steel_pickaxe, 1, ^lootdrop_duration);
+else if($rand < 65) obj_add(loc_coord, iron_dart, 1, ^lootdrop_duration);
+else if($rand < 66) obj_add(loc_coord, steel_dart, 1, ^lootdrop_duration);
+else if($rand < 67) obj_add(loc_coord, mithril_dart, 1, ^lootdrop_duration);
+else if($rand < 68) obj_add(loc_coord, unidentified_snake_weed, 1, ^lootdrop_duration);
+else if($rand < 69) obj_add(loc_coord, 1doseprayerrestore, 1, ^lootdrop_duration);
+else if($rand < 70) obj_add(loc_coord, pineapple, 1, ^lootdrop_duration);
+else if($rand < 71) ~legends_barrel_noted_drop;
+else if($rand < 72) obj_add(loc_coord, ship_ticket, 1, ^lootdrop_duration);
+else if($rand < 73) obj_add(loc_coord, tinderbox, 1, ^lootdrop_duration);
+else if($rand < 74) obj_add(loc_coord, unlit_torch, 1, ^lootdrop_duration);
+else if($rand < 75) obj_add(loc_coord, paramaya_ticket, 1, ^lootdrop_duration);
+else if($rand < 76) obj_add(loc_coord, logs, 1, ^lootdrop_duration);
+
+[proc,legends_barrel_noted_drop]
+def_int $rolls = ~random_range(4, 10);
+def_int $i = 0;
+while($i < $rolls) {
+    $i = add($i,1);
+    def_int $rand = random(80);
+    if($rand < 4) obj_add(loc_coord, cert_raw_lobster, ~random_range(1,2), ^lootdrop_duration);
+    else if($rand < 8) obj_add(loc_coord, cert_lobster, ~random_range(1,3), ^lootdrop_duration);
+    else if($rand < 12) obj_add(loc_coord, cert_raw_bass, ~random_range(1,2), ^lootdrop_duration);
+    else if($rand < 16) obj_add(loc_coord, cert_bass, ~random_range(1,2), ^lootdrop_duration);
+    else if($rand < 20) obj_add(loc_coord, cert_raw_swordfish, ~random_range(1,2), ^lootdrop_duration);
+    else if($rand < 24) obj_add(loc_coord, cert_swordfish, ~random_range(1,2), ^lootdrop_duration);
+    else if($rand < 28) obj_add(loc_coord, cert_raw_shark, ~random_range(1,2), ^lootdrop_duration);
+    else if($rand < 32) obj_add(loc_coord, cert_shark, ~random_range(1,2), ^lootdrop_duration);
+    else if($rand < 36) obj_add(loc_coord, cert_iron_ore, 1, ^lootdrop_duration);
+    else if($rand < 40) obj_add(loc_coord, cert_silver_ore, ~random_range(1,2), ^lootdrop_duration);
+    else if($rand < 44) obj_add(loc_coord, cert_coal, ~random_range(1,4), ^lootdrop_duration);
+    else if($rand < 48) obj_add(loc_coord, cert_gold_ore, 1, ^lootdrop_duration);
+    else if($rand < 52) obj_add(loc_coord, cert_mithril_ore, 1, ^lootdrop_duration);
+    else if($rand < 56) obj_add(loc_coord, cert_silver_bar, 1, ^lootdrop_duration);
+    else if($rand < 60) obj_add(loc_coord, cert_steel_bar, 1, ^lootdrop_duration);
+    else if($rand < 64) obj_add(loc_coord, cert_gold_bar, 1, ^lootdrop_duration);
+    else if($rand < 68) obj_add(loc_coord, cert_willow_logs, ~random_range(1,3), ^lootdrop_duration);
+    else if($rand < 72) obj_add(loc_coord, cert_maple_logs, 1, ^lootdrop_duration);
+    else if($rand < 76) obj_add(loc_coord, cert_yew_logs, ~random_range(1,4), ^lootdrop_duration);
+    else if($rand < 78) obj_add(loc_coord, cert_iron_bar, ~random_range(1,2), ^lootdrop_duration);
+    else if($rand < 80) obj_add(loc_coord, cert_mithril_bar, 1, ^lootdrop_duration);
+}
+
+[proc,legends_barrel_spawn_npc]
+spotanim_map(small_smokepuff, loc_coord, 0, 0);
+p_delay(0);
+switch_int(random(16)) {
+    case 0 : npc_add(loc_coord, chaos_dwarf, 500);
+    case 1 : npc_add(loc_coord, black_knight, 500);
+    case 2 : npc_add(loc_coord, dark_warrior, 500);
+    case 3 : npc_add(loc_coord, dark_wizard_earth, 500);
+    case 4 : npc_add(loc_coord, deadly_red_spider, 500);
+    case 5 : npc_add(loc_coord, death_wing, 500);
+    case 6 : npc_add(loc_coord, giant_bat, 500);
+    case 7 : npc_add(loc_coord, giant_rat2, 500);
+    case 8 : npc_add(loc_coord, giant_spider1, 500);
+    case 9 : npc_add(loc_coord, giant, 500);
+    case 10 : npc_add(loc_coord, hobgoblin, 500);
+    case 11 : npc_add(loc_coord, moss_giant, 500);
+    case 12 : npc_add(loc_coord, mugger, 500);
+    case 13 : npc_add(loc_coord, scorpion, 500);
+    case 14 : npc_add(loc_coord, skeleton2, 500);
+    case default : npc_add(loc_coord, zombie1, 500);
+}
+~npc_retaliate(0);

@@ -261,6 +261,7 @@ weight=7g
 param=identified_herb_level,3
 param=identified_herb_exp,25
 param=identified_herb_message,You identify the herb. It is Snake Weed.
+param=brew_potion_struct,snakeweed_mixture
 // https://youtu.be/maeY2TnTNVY?t=530
 tradeable=no
 // guessed name
@@ -284,6 +285,7 @@ weight=7g
 param=identified_herb_level,3
 param=identified_herb_exp,25
 param=identified_herb_message,You identify the herb. It is Ardrigal.
+param=brew_potion_struct,ardrigal_mixture
 // https://youtu.be/maeY2TnTNVY?t=898
 tradeable=no
 // guessed name

@@ -182,7 +182,6 @@ while ($i < enum_getoutputcount($enum)) {
     }
     $i = calc($i + 1);
 }
-mes("Closest distance: <tostring($closest_distance)>");
 return($closest_coord);
 
 [proc,closest_enum_coord_and_index](coord $coord, enum $enum)(coord, int)

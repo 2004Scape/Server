@@ -12,7 +12,7 @@ recol1d=16956
 2dxan=84
 weight=20g
 cost=2
-param=changesto,vial_empty
+param=next_obj_stage,vial_empty
 // jagex name
 
 [vial_empty]
@@ -28,4 +28,4 @@ womanwear=model_561_obj_wear,6
 weight=15g
 cost=2
 param=crafting_glass_struct,vial_empty
-param=changesto,vial_water
+param=next_obj_stage,vial_water

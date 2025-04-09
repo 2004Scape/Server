@@ -194,6 +194,9 @@ const NpcOps: CommandHandlers = {
         if (mode === NpcMode.NULL || mode === NpcMode.NONE || mode === NpcMode.WANDER || mode === NpcMode.PATROL) {
             state.activeNpc.clearInteraction();
             state.activeNpc.targetOp = mode;
+            if (mode === NpcMode.PATROL) {
+                state.activeNpc.clearPatrol();
+            }
             return;
         }
         state.activeNpc.targetOp = mode;

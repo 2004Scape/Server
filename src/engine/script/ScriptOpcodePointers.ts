@@ -946,7 +946,13 @@ const ScriptOpcodePointers: {
     },
     [ScriptOpcode.DB_FIND_REFINE]: {
         require: ['find_db']
-    }
+    },
+    [ScriptOpcode.DB_LISTALL]: {
+        set: ['find_db']
+    },
+    [ScriptOpcode.DB_LISTALL_WITH_COUNT]: {
+        set: ['find_db']
+    },
 };
 
 export default ScriptOpcodePointers;

@@ -65,14 +65,14 @@ if (inv_freespace(inv) < 1) {
     return;
 }
 if (%action_delay < map_clock) {
-    if ($level > 0 & ~woodcutting_axe_checker = null) {
+    if ($level > 0 & ~woodcutting_axe_checker(true) = null) {
         return;
     }
     %action_delay = calc(map_clock + 3);
     p_opnpc(1);
     return;
 }
-def_obj $axe = ~woodcutting_axe_checker;
+def_obj $axe = ~woodcutting_axe_checker(true);
 if ($axe = null) {
     return;
 }
@@ -88,7 +88,7 @@ p_opnpc(3);
 
 [label,cut_ent]
 // check if player has axe and level, ifso return best axe
-def_namedobj $axe = ~woodcutting_axe_checker();
+def_namedobj $axe = ~woodcutting_axe_checker(true);
 if ($axe = null) {
     return;
 }
