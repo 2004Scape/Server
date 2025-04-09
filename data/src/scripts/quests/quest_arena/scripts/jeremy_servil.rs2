@@ -94,19 +94,19 @@ npc_del;
 [label,ogre_attack_justin]
 if_close;
 def_coord $ogre_to = 0_40_49_46_29;
-if (npc_find(movecoord(coord, 0, 0, 8), khazard_ogre, 14, 0) = true) {
+if (npc_find($ogre_to, khazard_ogre, 14, 0) = true) {
     if(npc_getmode = none) { // npc in cutscene already, do nothing
         return;
     } else if(inzone(0_40_49_47_29, 0_40_49_49_30, npc_coord) = false) {
-        if(add(%npc_lastcombat, 8) > map_clock) {
+        if(add(%npc_lastcombat, 8) <= map_clock) {
             // out of combat and out of cage so attack player, otherwise we'll just set ptr and start cutscene
             ~npc_retaliate(0);
             return;
         }
-        npc_add($ogre_to, khazard_ogre, 500);
+        npc_add(movecoord($ogre_to, 1, 0, 0), khazard_ogre, 500);
     }
 } else {
-    npc_add($ogre_to, khazard_ogre, 500);
+    npc_add(movecoord($ogre_to, 1, 0, 0), khazard_ogre, 500);
 }
 def_int $delay = distance(npc_coord, movecoord($ogre_to, 2, 0, 0));
 if (.npc_find(movecoord(coord, 0, 0, 8), justin_servil, 14, 0) = true) {
@@ -128,29 +128,21 @@ if(loc_find(0_40_49_46_29, loc_78) = true & .loc_find(0_40_49_46_30, loc_77) = t
     .loc_del(6);
     .loc_add(movecoord(.loc_coord, 1, 0, 0), .loc_type, 1, .loc_shape, 6);
 }
-npc_tele($ogre_to);
-npc_queue(10, 0, 1);
+npc_walk(0_40_49_44_32);
 p_delay(2);
 cam_reset;
 cam_lookat(0_40_49_40_32, 270, 2, 1);
-p_delay(6);
-cam_reset;
-
-[ai_queue10,khazard_ogre]
-npc_walk(0_40_49_44_32);
-npc_queue(11, 0, 4);
-
-[ai_queue11,khazard_ogre]
+p_delay(1);
 npc_walk(0_40_49_41_32);
-npc_queue(12, 0, 3);
-
-[ai_queue12,khazard_ogre]
+p_delay(3);
 npc_anim(npc_param(attack_anim), 0);
 npc_setmode(null);
-if (.npc_find(npc_coord, justin_servil, 1, 0) = true) {
+if (.npc_findexact(0_40_49_40_32, justin_servil) = true) {
     .npc_anim(human_defend_cowardly, 0);
     .npc_setmode(null);
 }
+p_delay(0);
+cam_reset;
 
 [ai_queue10,jeremy_servil]
 npc_walk(0_40_49_56_31);

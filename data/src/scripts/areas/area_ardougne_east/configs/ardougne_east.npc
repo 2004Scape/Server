@@ -521,7 +521,7 @@ head3=model_80_idk_head
 wanderrange=0
 moverestrict=nomove
 
-[rdpt_employee]
+[rpdt_employee]
 vislevel=hide
 name=RPDT employee
 desc=Inefficient looking.
