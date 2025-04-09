@@ -6,18 +6,6 @@ default=null
 type=string
 default=null
 
-[batta_message]
-type=string
-default=null
-
-[crunchies_message]
-type=string
-default=null
-
-[bowl_message]
-type=string
-default=null
-
 [gnome_cooking_type]
 type=int
 default=null
