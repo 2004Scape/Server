@@ -3,9 +3,10 @@ import ObjType from '#/cache/config/ObjType.js';
 import { ParamHelper } from '#/cache/config/ParamHelper.js';
 import ParamType from '#/cache/config/ParamType.js';
 import { CoordGrid } from '#/engine/CoordGrid.js';
-import EntityLifeCycle from '#/engine/entity/EntityLifeCycle.js';
+import { EntityLifeCycle } from '#/engine/entity/EntityLifeCycle.js';
 import Obj from '#/engine/entity/Obj.js';
-import ScriptOpcode from '#/engine/script/ScriptOpcode.js';
+import { ObjIterator } from '#/engine/script/ScriptIterators.js';
+import { ScriptOpcode } from '#/engine/script/ScriptOpcode.js';
 import { ActiveObj, ActivePlayer } from '#/engine/script/ScriptPointer.js';
 import { CommandHandlers } from '#/engine/script/ScriptRunner.js';
 import { check, CoordValid, DurationValid, InvTypeValid, ObjStackValid, ObjTypeValid, ParamTypeValid } from '#/engine/script/ScriptValidators.js';
@@ -171,6 +172,24 @@ const ObjOps: CommandHandlers = {
         }
 
         state.activeObj = obj;
+        state.pointerAdd(ActiveObj[state.intOperand]);
+        state.pushInt(1);
+    },
+
+    [ScriptOpcode.OBJ_FINDALLZONE]: state => {
+        const coord: CoordGrid = check(state.popInt(), CoordValid);
+
+        state.objIterator = new ObjIterator(World.currentTick, coord.level, coord.x, coord.z);
+    },
+
+    [ScriptOpcode.OBJ_FINDNEXT]: state => {
+        const result = state.objIterator?.next();
+        if (!result || result.done) {
+            state.pushInt(0);
+            return;
+        }
+
+        state.activeObj = result.value;
         state.pointerAdd(ActiveObj[state.intOperand]);
         state.pushInt(1);
     }

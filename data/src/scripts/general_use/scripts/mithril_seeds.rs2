@@ -31,35 +31,35 @@ loc_del(1);
 [proc,random_flowers]()(loc)
 def_int $rand = random(1001);
 if($rand < 150) {
-    return (loc_2986);
+    return (mixed_flowers);
 } else if($rand < 300) {
-    return (loc_2981);
+    return (red_flowers);
 } else if($rand < 450) {
-    return (loc_2982);
+    return (blue_flowers);
 } else if($rand < 600) {
-    return (loc_2983);
+    return (yellow_flowers);
 } else if($rand < 750) {
-    return (loc_2984);
+    return (purple_flowers);
 } else if($rand < 900) {
-    return (loc_2985);
+    return (orange_flowers);
 } else if($rand < 998) {
-    return (loc_2980);
+    return (assorted_flowers);
 } else if($rand < 999) {
-    return (loc_2987);
+    return (white_flowers);
 } else if($rand < 1001) {
-    return (loc_2988);
+    return (black_flowers);
 }
 
 [proc,flowers_obj](loc $flowers_loc)(namedobj)
 switch_loc($flowers_loc) {
-    case loc_2980 : return (assorted_flowers);
-    case loc_2981 : return (red_flowers);
-    case loc_2982 : return (blue_flowers);
-    case loc_2983 : return (yellow_flowers);
-    case loc_2984 : return (purple_flowers);
-    case loc_2985 : return (orange_flowers);
-    case loc_2986 : return (mixed_flowers);
-    case loc_2987 : return (white_flowers);
-    case loc_2988 : return (black_flowers);
+    case assorted_flowers : return (assorted_flowers);
+    case red_flowers : return (red_flowers);
+    case blue_flowers : return (blue_flowers);
+    case yellow_flowers : return (yellow_flowers);
+    case purple_flowers : return (purple_flowers);
+    case orange_flowers : return (orange_flowers);
+    case mixed_flowers : return (mixed_flowers);
+    case white_flowers : return (white_flowers);
+    case black_flowers : return (black_flowers);
     case default : return (mixed_flowers);
 }

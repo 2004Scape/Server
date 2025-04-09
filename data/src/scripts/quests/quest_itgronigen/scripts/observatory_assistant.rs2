@@ -16,7 +16,7 @@ switch_int(%itgronigen_progress) {
         ~chatnpc("<p,happy>Ah, it's the telescope repairman! The professor is waiting for you in the Observatory.");
     case ^itgronigen_given_mould :
         ~chatnpc("<p,quiz>How can I help you?");
-        switch_int(~p_choice2("I can't make the lens!", 1, "I dont need any help, thanks.", 2)) {
+        switch_int(~p_choice2("I can't make the lens!", 1, "I don't need any help, thanks.", 2)) {
             case 1 :
                 ~chatplayer("<p,sad>I can't make the lens!");
                 ~chatnpc("<p,neutral>Crafting objects like this requires skill.|You may need to practice more first...");
@@ -24,7 +24,7 @@ switch_int(%itgronigen_progress) {
         }          
     case ^itgronigen_given_glass :
         ~chatnpc("<p,quiz>How can I help you?");
-        switch_int(~p_choice2("I can't find the lens mould.", 1, "I dont need any help, thanks.", 2)) {
+        switch_int(~p_choice2("I can't find the lens mould.", 1, "I don't need any help, thanks.", 2)) {
             case 1 :
                 ~chatplayer("<p,quiz>I can't find the lens mould.");
                 ~chatnpc("<p,quiz>Can't you find the mould?");
@@ -34,7 +34,7 @@ switch_int(%itgronigen_progress) {
         }  
     case ^itgronigen_given_bronze :
         ~chatnpc("<p,quiz>How can I help you?");
-        switch_int(~p_choice2("I'm having problems getting glass.", 1, "I dont need any help, thanks.", 2)) {
+        switch_int(~p_choice2("I'm having problems getting glass.", 1, "I don't need any help, thanks.", 2)) {
             case 1 :
                 ~chatplayer("<p,quiz>I'm having problems getting glass.");
                 ~chatnpc("<p,quiz>Don't you know how to make glass?");
@@ -43,7 +43,7 @@ switch_int(%itgronigen_progress) {
         }         
     case ^itgronigen_given_planks :
         ~chatnpc("<p,quiz>How can I help you?");
-        switch_int(~p_choice2("I can't see any bronze around.", 1, "I dont need any help, thanks.", 2)) {
+        switch_int(~p_choice2("I can't see any bronze around.", 1, "I don't need any help, thanks.", 2)) {
             case 1 :
                 ~chatplayer("<p,quiz>I can't see any bronze around.");
                 ~chatnpc("<p,neutral>You'll need to use tin and copper ore on a furnace|to produce this metal.");
@@ -51,7 +51,7 @@ switch_int(%itgronigen_progress) {
         }       
     case ^itgronigen_started :
         ~chatnpc("<p,quiz>How can I help you?");
-        switch_int(~p_choice2("I can't find any planks!", 1, "I dont need any help, thanks.", 2)) {
+        switch_int(~p_choice2("I can't find any planks!", 1, "I don't need any help, thanks.", 2)) {
             case 1 :
                 ~chatplayer("<p,quiz>I can't find any planks!");
                 ~chatnpc("<p,neutral>I understand planks can be found at the barbarian outpost, to the north east of Ardougne. You will probably have to trek over there to find some...");
@@ -78,6 +78,6 @@ switch_int(%itgronigen_progress) {
 }
 
 [label,assistant_dontneedhelp]
-~chatplayer("<p,happy>I dont need any help, thanks.");
+~chatplayer("<p,happy>I don't need any help, thanks.");
 ~chatnpc("<p,happy>Oh, okay then if you are sure.");
 ~mesbox("The assistant continues with his work.");

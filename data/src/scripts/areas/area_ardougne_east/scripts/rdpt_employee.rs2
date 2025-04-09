@@ -1,5 +1,5 @@
-[opnpc1,rdpt_employee]
-~chatnpc("<p,neutral>Welcome to RDPT!");
+[opnpc1,rpdt_employee]
+~chatnpc("<p,neutral>Welcome to RPDT!");
 if(%totem_progress = ^totem_crate_marked) {
     def_int $option = ~p_choice2("So, when are you going to deliver this crate?", 1, "Thank you, it's interesting in here.", 2);
     if($option = 1) {

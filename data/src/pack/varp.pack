@@ -1,6 +1,6 @@
 0=mcannon_progress
 1=mcannon_railings
-2=mcannon_clock
+2=mcannon_stage
 3=mcannon_ammo
 4=mcannon_coord
 5=grail_progress
@@ -138,7 +138,7 @@
 137=varp_137
 138=thieving_stall_timer
 139=legends_progress
-140=book_page
+140=legends_bits
 141=gnome_bar_progress
 142=gnome_restaurant_progress
 143=gnomeball
@@ -162,7 +162,7 @@
 161=upass_progress
 162=upass_map_mechanisms
 163=open_book
-164=varp_164
+164=book_page
 165=elena_progress
 166=game_brightness
 167=varp_167

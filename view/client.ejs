@@ -1,13 +1,17 @@
 <!DOCTYPE html>
 <html>
- 
+
 <head>
     <title>2004Scape Game</title>
- 
+
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=0.7">
- 
+
     <style>
+        html {
+            touch-action: manipulation;
+        }
+
         body,
         td,
         p {
@@ -15,7 +19,7 @@
             font-size: 12px;
             color: white;
         }
- 
+
         body {
             margin: 0px 0px;
             overflow: auto;
@@ -23,18 +27,21 @@
         }
 
         #game {
-            padding-left: 0;
-            padding-right: 0;
-            margin-left: auto;
-            margin-right: auto;
-            display: block;
-        }
- 
-        canvas {
+            position: relative;
+            margin: 0 auto;
             width: 789px;
             height: 532px;
+        }
+
+        #canvas-overlay {
             display: block;
-            /* touch-action: none; */
+            position: absolute;
+            z-index: 10;
+
+            width: 100%;
+            height: 100%;
+
+            /* touch-action: none; */ /* if we keep touch actions we can pan & zoom */
             -webkit-touch-callout: none;
             -webkit-user-select: none;
             -khtml-user-select: none;
@@ -43,17 +50,25 @@
             user-select: none;
             outline: none;
             -webkit-tap-highlight-color: rgba(255, 255, 255, 0);
-            z-index: -1;
         }
- 
+
+        #canvas {
+            display: block;
+            position: absolute;
+            z-index: -1;
+
+            width: 100%;
+            height: 100%;
+        }
+
         html:-webkit-full-screen {
             background-color: black !important;
         }
- 
+
         .centered {
             text-align: center;
         }
- 
+
         .green {
             text-decoration: none;
             color: #04A800;
@@ -62,6 +77,11 @@
         #controls {
             margin-top: 3px;
             margin-bottom: 10px;
+        }
+
+        #controls > a, #controls select, #controls optgroup, #controls optgroup > option {
+            font-family: Arial, Helvetica, sans-serif;
+            font-size: 12px;
         }
 
         @keyframes blink {
@@ -81,11 +101,23 @@
             border: none;
         }
 
+        #mobilekeyboard-container {
+            display: none;
+        }
     </style>
- 
+
     <script>
-        const isMobile = /Mobi|Android|iPhone|iPad|Windows Phone|Mobile/i.test(navigator.userAgent);
-        
+        function isMobile() {
+            if (/Mobi|Android|iPhone|iPad|Windows Phone|Mobile/i.test(navigator.userAgent)) {
+                return true;
+            }
+            const isiOSSafari = navigator.maxTouchPoints !== undefined && navigator.maxTouchPoints > 2 && navigator.standalone !== undefined;
+            if (isiOSSafari) {
+                return true;
+            }
+            return false;
+        }
+
         function toggleFullscreen() {
             if (document.fullscreenElement || document.webkitFullscreenElement || document.mozFullScreenElement || document.msFullscreenElement) {
                 if (document.exitFullscreen) {
@@ -98,16 +130,16 @@
                     document.msExitFullscreen();
                 }
             } else {
-                let element = document.getElementById('canvas');
- 
-                if (element.requestFullscreen) {
-                    element.requestFullscreen();
-                } else if (element.webkitRequestFullscreen) {
-                    element.webkitRequestFullscreen();
-                } else if (element.mozRequestFullScreen) {
-                    element.mozRequestFullScreen();
-                } else if (element.msRequestFullscreen) {
-                    element.msRequestFullscreen();
+                let container = document.getElementById('game');
+
+                if (container.requestFullscreen) {
+                    container.requestFullscreen();
+                } else if (container.webkitRequestFullscreen) {
+                    container.webkitRequestFullscreen();
+                } else if (container.mozRequestFullScreen) {
+                    container.mozRequestFullScreen();
+                } else if (container.msRequestFullscreen) {
+                    container.msRequestFullscreen();
                 }
             }
         }
@@ -116,7 +148,7 @@
             document.getElementById('screenshot').download = 'screenshot-' + Math.floor(Date.now() / 1000) + '.png';
             document.getElementById('screenshot').href = document.getElementById('canvas').toDataURL('image/png').replace(/^data:image\/[^;]/, 'data:application/octet-stream');
         }
- 
+
         function hideControls() {
             document.getElementById('controls').style.display = 'none';
             document.getElementById('hide-message').style.display = '';
@@ -126,7 +158,7 @@
 
             localStorage.setItem('hideControls', true);
         }
-        
+
         let timer;
         let countDown = 0;
         let countDownMax = 10;
@@ -141,7 +173,7 @@
             countDown++;
             timer = setTimeout(hideMessage, 1000);
         }
-        
+
         function showControls() {
             clearTimeout(timer);
 
@@ -151,7 +183,7 @@
             localStorage.removeItem('hideControls');
         }
 
-        document.addEventListener('keydown', function(e) {
+        document.addEventListener('keydown', function (e) {
             if ((e.ctrlKey || e.metaKey) && e.altKey) {
                 if (e.code === 'KeyI') {
                     e.preventDefault();
@@ -162,33 +194,52 @@
 
         function loadSettings() {
             setFilter((localStorage.getItem('filtering') == 'true') ? 'pixelated' : 'auto');
-
-            if (!isMobile)  {
+            if (isMobile()) {
+                const keyboardChoiceContainerElement = document.getElementById('mobilekeyboard-container');
+                const keyboardChoiceElement = document.getElementById('mobilekeyboard');
+                keyboardChoiceContainerElement.style.display = 'inline-block';
+                let mobilekeyboard = localStorage.getItem('mobileKeyboardMode');
+                if (mobilekeyboard === 'canvas') {
+                    keyboardChoiceElement.value = 'canvas';
+                } else if (mobilekeyboard === 'native') {
+                    keyboardChoiceElement.value = 'native';
+                } else {
+                    // Unset choice = hybrid
+                    keyboardChoiceElement.value = 'hybrid';
+                }
+            } else {
                 let size = localStorage.getItem('canvasSize');
                 if (size) { setSize(size); }
-            
+
                 let controls = localStorage.getItem('hideControls');
                 if (controls === 'true') { hideControls(); }
             }
         }
 
+        function setKeyboardChoice(ev) {
+            const target = document.getElementById('mobilekeyboard').value;
+            localStorage.setItem('mobileKeyboardMode', target);
+            alert('Please reload the page to apply the changes.');
+        }
+
         function setSize(size) {
-            let canvas = document.getElementById('canvas');
+            let container = document.getElementById('game');
+
             if (size == null) { size = document.getElementById('size').value; }
             switch (size) {
                 default:
                 case '1':
                 case '2':
                 case '3':
-                    canvas.style.width = (789 * parseInt(size)) + 'px';
-                    canvas.style.height = (532 * parseInt(size)) + 'px';
-                    canvas.style.maxWidth = 'none';
+                    container.style.width = (789 * parseInt(size)) + 'px';
+                    container.style.height = (532 * parseInt(size)) + 'px';
+                    container.style.maxWidth = 'none';
                     break;
                 case 'auto':
-                    canvas.style.width = '100%';
-                    canvas.style.height = 'auto';
-                    let maxWidth = ((window.innerHeight - 120) / 532) * 789; 
-                    canvas.style.maxWidth = maxWidth + 'px';
+                    container.style.width = '100%';
+                    container.style.height = 'auto';
+                    let maxWidth = ((window.innerHeight - 120) / 532) * 789;
+                    container.style.maxWidth = maxWidth + 'px';
                     break;
             }
             document.getElementById('size').value = size;
@@ -209,15 +260,17 @@
                     filterSelect = type;
                     document.getElementById('filtering').value = type;
                     break;
-            }         
-            canvas.style.imageRendering = filterSelect;            
+            }
+            canvas.style.imageRendering = filterSelect;
         }
     </script>
 </head>
- 
+
 <body>
     <center>
         <div id="game">
+            <div id="canvas-overlay" style="width: 100%; height: 100%"></div>
+
             <canvas id="canvas" width="789" height="532">
                 Your browser is not capable of running our web client.
             </canvas>
@@ -225,19 +278,33 @@
 
         <div class="centered" id="controls">
             <select id="size" name="size" onchange="setSize();">
+                <optgroup>
                 <option value="1" id="1">1x Size</option>
                 <option value="2" id="2">2x Size</option>
                 <option value="3" id="3">3x Size</option>
                 <option value="auto" id="auto">Auto Sizing</option>
+                </optgroup>
             </select> |
             <select id="filtering" name="filtering" onchange="setFilter('dropdown');">
+                <optgroup>
                 <option value="auto" id="auto">Auto Scaling</option>
                 <option value="pixelated" id="pixelated">Pixel Scaling</option>
+                </optgroup>
             </select> |
+            <span id="mobilekeyboard-container">
+                <select id="mobilekeyboard" name="mobilekeyboard" onchange="setKeyboardChoice();">
+                    <optgroup>
+                    <option value="hybrid" id="hybrid">Hybrid keyboard</option>
+                    <option value="canvas" id="canvas">Canvas keyboard</option>
+                    <option value="native" id="native">Native keyboard</option>
+                    </optgroup>
+                </select> |
+            </span>
             <a class="green" href="#" id="fullscreen" onclick="toggleFullscreen();">Go Fullscreen</a> |
             <a class="green" href="#" id="screenshot" onclick="saveScreenshot();">Take screenshot</a> |
             <a class="green" href="#" id="hide" onclick="hideControls();">Hide controls</a>
         </div>
+
         <div id="hide-message" style="display: none;">
             <p class="green blink">Controls have been hidden press ctrl+alt+i to unhide.</p>
             <p class="green" id="count-down"></p>
@@ -259,18 +326,20 @@
             ctx.fillText('Loading...', canvas.width / 2, canvas.height / 2);
         }
     </script>
- 
+
     <script type="module">
         import { Client } from './client/client.js';
-        <% if(per_deployment_token) { %>
+
+        <% if (per_deployment_token) { %>
             document.cookie = 'per_deployment_token="<%= per_deployment_token %>"; Domain=' + window.location.hostname;
         <% } %>
+
         (() => {
             new Client(<%= nodeid %>, <%= lowmem %>, <%= members %>);
         })();
-        
+
         loadSettings();
     </script>
 </body>
- 
+
 </html>

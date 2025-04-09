@@ -1,10 +1,9 @@
-
 import Entity from '#/engine/entity/Entity.js';
-import { ScriptArgument } from '#/engine/entity/EntityQueueRequest.js';
 import Loc from '#/engine/entity/Loc.js';
 import Npc from '#/engine/entity/Npc.js';
 import Obj from '#/engine/entity/Obj.js';
 import Player from '#/engine/entity/Player.js';
+import { ScriptArgument } from '#/engine/entity/PlayerQueueRequest.js';
 import CoreOps from '#/engine/script/handlers/CoreOps.js';
 import DbOps from '#/engine/script/handlers/DbOps.js';
 import DebugOps from '#/engine/script/handlers/DebugOps.js';
@@ -21,7 +20,7 @@ import PlayerOps from '#/engine/script/handlers/PlayerOps.js';
 import ServerOps from '#/engine/script/handlers/ServerOps.js';
 import StringOps from '#/engine/script/handlers/StringOps.js';
 import ScriptFile from '#/engine/script/ScriptFile.js';
-import ScriptOpcode from '#/engine/script/ScriptOpcode.js';
+import { ScriptOpcode, ScriptOpcodeNameMap } from '#/engine/script/ScriptOpcode.js';
 import ScriptPointer from '#/engine/script/ScriptPointer.js';
 import ScriptState from '#/engine/script/ScriptState.js';
 import World from '#/engine/World.js';
@@ -167,7 +166,7 @@ export default class ScriptRunner {
                     secondary = 0;
                 }
 
-                err.message = ScriptOpcode[opcode].toLowerCase() + ' ' + err.message;
+                err.message = ScriptOpcodeNameMap.get(opcode)?.toLowerCase() + ' ' + err.message;
                 if (secondary) {
                     err.message = '.' + err.message;
                 }

@@ -1,11 +1,13 @@
 [proc,trail_clue_medium_reward]
 def_int $rolls = calc(3 + random(3));
 def_int $roll = 0;
+def_int $rare = 0;
 
 while ($roll < $rolls) {
     // Rare drop chance was 1/11 in OSRS in 2019. @https://twitter.com/JagexTide/status/1131933683714330624, 112 items in 2019, there are 13 in May 04
     // so the chance is 1/95 ((112/13) * 11)
     if(random(95) = 0) {
+        $rare = calc($rare + 1);
         gosub(trail_clue_medium_rare);
     } else {
         gosub(trail_clue_medium_normal);
@@ -13,56 +15,60 @@ while ($roll < $rolls) {
 
     $roll = calc($roll + 1);
 }
-
+if ($rare > 0) {
+    session_log(^log_adventure, "Completed a Medium Clue Scroll and received <tostring($rare)> Rare Reward(s)!");
+} else {
+    session_log(^log_adventure, "Completed a Medium Clue Scroll.");
+}
 ~trail_complete;
 
 [proc,trail_clue_medium_normal]
 def_int $random = random(26);
 
 switch_int ($random) {
-    case 0 : inv_add(reward, coins, calc(200 + random(801)));
-    case 1 : inv_add(reward, cert_lobster, calc(8 + random(5)));
-    case 2 : inv_add(reward, cert_swordfish, calc(8 + random(5)));
-    case 3 : inv_add(reward, deathrune, calc(10 + random(11)));
-    case 4 : inv_add(reward, lawrune, calc(10 + random(11)));
-    case 5 : inv_add(reward, naturerune, calc(10 + random(11)));
-    case 6 : inv_add(reward, chaosrune, calc(10 + random(11)));
-    case 7 : inv_add(reward, firerune, calc(50 + random(51)));
-    case 8 : inv_add(reward, earthrune, calc(50 + random(51)));
-    case 9 : inv_add(reward, waterrune, calc(50 + random(51)));
-    case 10 : inv_add(reward, mindrune, calc(50 + random(51)));
-    case 11 : inv_add(reward, airrune, calc(50 + random(51)));
-    case 12 : inv_add(reward, adamant_full_helm, 1);
-    case 13 : inv_add(reward, adamant_platebody, 1);
-    case 14 : inv_add(reward, adamant_platelegs, 1);
-    case 15 : inv_add(reward, adamant_longsword, 1);
-    case 16 : inv_add(reward, adamant_battleaxe, 1);
-    case 17 : inv_add(reward, adamant_axe, 1);
-    case 18 : inv_add(reward, adamant_dagger, 1);
-    case 19 : inv_add(reward, adamant_pickaxe, 1);
-    case 20 : inv_add(reward, dragonhide_body, 1);
-    case 21 : inv_add(reward, dragonhide_chaps, 1);
-    case 22 : inv_add(reward, yew_shortbow, 1);
-    case 23 : inv_add(reward, fire_battlestaff, 1);
-    case 24 : inv_add(reward, yew_longbow, 1); // these 2 are both slightly rarer than the other stuff on the table, maybe added later?
-    case 25 : inv_add(reward, amulet_of_power, 1);
+    case 0 : inv_add(trail_rewardinv, coins, calc(200 + random(801)));
+    case 1 : inv_add(trail_rewardinv, cert_lobster, calc(8 + random(5)));
+    case 2 : inv_add(trail_rewardinv, cert_swordfish, calc(8 + random(5)));
+    case 3 : inv_add(trail_rewardinv, deathrune, calc(10 + random(11)));
+    case 4 : inv_add(trail_rewardinv, lawrune, calc(10 + random(11)));
+    case 5 : inv_add(trail_rewardinv, naturerune, calc(10 + random(11)));
+    case 6 : inv_add(trail_rewardinv, chaosrune, calc(10 + random(11)));
+    case 7 : inv_add(trail_rewardinv, firerune, calc(50 + random(51)));
+    case 8 : inv_add(trail_rewardinv, earthrune, calc(50 + random(51)));
+    case 9 : inv_add(trail_rewardinv, waterrune, calc(50 + random(51)));
+    case 10 : inv_add(trail_rewardinv, mindrune, calc(50 + random(51)));
+    case 11 : inv_add(trail_rewardinv, airrune, calc(50 + random(51)));
+    case 12 : inv_add(trail_rewardinv, adamant_full_helm, 1);
+    case 13 : inv_add(trail_rewardinv, adamant_platebody, 1);
+    case 14 : inv_add(trail_rewardinv, adamant_platelegs, 1);
+    case 15 : inv_add(trail_rewardinv, adamant_longsword, 1);
+    case 16 : inv_add(trail_rewardinv, adamant_battleaxe, 1);
+    case 17 : inv_add(trail_rewardinv, adamant_axe, 1);
+    case 18 : inv_add(trail_rewardinv, adamant_dagger, 1);
+    case 19 : inv_add(trail_rewardinv, adamant_pickaxe, 1);
+    case 20 : inv_add(trail_rewardinv, dragonhide_body, 1);
+    case 21 : inv_add(trail_rewardinv, dragonhide_chaps, 1);
+    case 22 : inv_add(trail_rewardinv, yew_shortbow, 1);
+    case 23 : inv_add(trail_rewardinv, fire_battlestaff, 1);
+    case 24 : inv_add(trail_rewardinv, yew_longbow, 1); // these 2 are both slightly rarer than the other stuff on the table, maybe added later?
+    case 25 : inv_add(trail_rewardinv, amulet_of_power, 1);
 }
 
 [proc,trail_clue_medium_rare]
 def_int $random = random(13);
 
 switch_int ($random){
-    case 0 : inv_add(reward, wizards_boots, 1);
-    case 1 : inv_add(reward, trail_ranger_boots, 1);
-    case 2 : inv_add(reward, adamant_full_helm_trim, 1);
-    case 3 : inv_add(reward, adamant_platebody_trim, 1);
-    case 4 : inv_add(reward, adamant_platelegs_trim, 1);
-    case 5 : inv_add(reward, adamant_kiteshield_trim, 1);
-    case 6 : inv_add(reward, adamant_platebody_gold, 1);
-    case 7 : inv_add(reward, adamant_platelegs_gold, 1);
-    case 8 : inv_add(reward, adamant_full_helm_gold, 1);
-    case 9 : inv_add(reward, adamant_kiteshield_gold, 1);
-    case 10 : inv_add(reward, trail_headband_red, 1);
-    case 11 : inv_add(reward, trail_headband_black, 1);
-    case 12 : inv_add(reward, trail_headband_brown, 1);
+    case 0 : inv_add(trail_rewardinv, wizards_boots, 1);
+    case 1 : inv_add(trail_rewardinv, trail_ranger_boots, 1);
+    case 2 : inv_add(trail_rewardinv, adamant_full_helm_trim, 1);
+    case 3 : inv_add(trail_rewardinv, adamant_platebody_trim, 1);
+    case 4 : inv_add(trail_rewardinv, adamant_platelegs_trim, 1);
+    case 5 : inv_add(trail_rewardinv, adamant_kiteshield_trim, 1);
+    case 6 : inv_add(trail_rewardinv, adamant_platebody_gold, 1);
+    case 7 : inv_add(trail_rewardinv, adamant_platelegs_gold, 1);
+    case 8 : inv_add(trail_rewardinv, adamant_full_helm_gold, 1);
+    case 9 : inv_add(trail_rewardinv, adamant_kiteshield_gold, 1);
+    case 10 : inv_add(trail_rewardinv, trail_headband_red, 1);
+    case 11 : inv_add(trail_rewardinv, trail_headband_black, 1);
+    case 12 : inv_add(trail_rewardinv, trail_headband_brown, 1);
 }

@@ -1,1 +1,7 @@
 ^cannon_decay_length = 2500
+
+^cannon_stage_none = 0
+^cannon_stage_base = 1
+^cannon_stage_stand = 2
+^cannon_stage_barrels = 3
+^cannon_stage_full = 4

@@ -104,7 +104,7 @@ if_close;
 
 [label,camp_merc_minearea]
 ~chatplayer("<p,neutral>I'd like to mine in a different area.");
-~chatnpc("<p,happy>Oh, you want to work in another area of the mine eh? @dbl@--The guard seems pleased with his rhetorical @dbl@question.-- @bla@Well, I can understand that! A change is as good as a@bla@rest they say.");
+~chatnpc("<p,happy>Oh, you want to work in another area of the mine eh? @dbl@--The guard seems pleased with his rhetorical @dbl@question.-- @bla@Well, I can understand that! A change is as good as a @bla@rest they say.");
 switch_int(~p_choice2("Huh, fat chance of a rest for me.", 1, "Yes sir, you're quite right sir.", 2)) {
     case 1 :
         ~chatplayer("<p,neutral>Huh, fat chance of a rest for me.");
@@ -183,7 +183,8 @@ switch_int(~p_choice2("Yes please.", 1, "No thanks, I can manage.", 2)) {
         ~mesbox("The guard comes over and helps you. He takes one end of the barrel.");
         ~chatnpc("<p,neutral>Blimey! This is heavy!");
         ~chatnpc_specific("Ana (in a Barrel)", anabarrel, "<p,angry>Why you cheeky....!");
-        ~chatnpc("<p,shock>@blu@~ The guard looks around, surprised at Ana's outburst. @blu@~ @bla@What was that?");
+        // https://youtu.be/Ig4JzmwPhlY?si=KOarBhZavkwPZUWa&t=1913
+        ~chatnpc("<p,shock>@blu@~ The guard looks around suprised at Ana's outburst. ~|@bla@What was that?");
         ~chatplayer("<p,shifty>Oh, it was nothing.");
         ~chatnpc("<p,confused>I could have sworn I heard something!");
         ~chatnpc_specific("Ana (in a Barrel)", anabarrel, "<p,angry>Yes you did you ignoramus.");

@@ -148,7 +148,17 @@ bas_walk_r($walk_seq);
 bas_running(null);
 buildappearance(worn);
 
-[proc,set_readyandwalk_bas](seq $ready_seq, seq $turn_seq, seq $walk_seq)
+[proc,set_readywalk_bas](seq $ready_seq, seq $walk_seq)
+bas_readyanim($ready_seq);
+bas_turnonspot($walk_seq);
+bas_walk_f($walk_seq);
+bas_walk_b($walk_seq);
+bas_walk_l($walk_seq);
+bas_walk_r($walk_seq);
+bas_running(null);
+buildappearance(worn);
+
+[proc,set_readywalkturn_bas](seq $ready_seq, seq $turn_seq, seq $walk_seq)
 bas_readyanim($ready_seq);
 bas_turnonspot($turn_seq);
 bas_walk_f($walk_seq);

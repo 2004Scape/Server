@@ -326,7 +326,7 @@ param=fishing_movement_enum,fishing_movement_catherby_enum
 //--- (Cage/Harpoon) Catherby
 
 //--- (Net/Harpoon) Catherby
-[0_44_43_memberfish]
+[0_44_53_memberfish]
 vislevel=hide
 readyanim=fishingspot_ready
 walkanim=fishingspot_walk

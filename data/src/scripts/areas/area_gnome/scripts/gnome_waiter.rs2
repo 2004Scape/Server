@@ -1,6 +1,6 @@
-[opnpc1,gnome_waiter]
+[opnpc1,gnome_waiter] // osrs
 ~chatplayer("<p,neutral>Hello.");
-~chatnpc("<p,sad>Hello sir, can I tempt you with any of the dishes on|our new menu?");
+~chatnpc("<p,sad>Hello <text_gender("sir", "madam")>, can I tempt you with any of the dishes on|our new menu?");
 def_int $choice;
 if (inv_totalcat(inv, gnome_crunchies) > 0 | inv_totalcat(inv, gnome_batta) > 0 | inv_totalcat(inv, gnome_bowl) > 0) {
     $choice = ~p_choice3("I'll take a look.", 1, "Not really.", 2, "Actually I'd like to sell some dishes.", 3);
@@ -9,7 +9,7 @@ if (inv_totalcat(inv, gnome_crunchies) > 0 | inv_totalcat(inv, gnome_batta) > 0 
 }
 if ($choice = 2) {
     ~chatplayer("<p,neutral>Not really.");
-    ~chatnpc("<p,sad>That's your choice sir, enjoy your stay.");
+    ~chatnpc("<p,sad>That's your choice <text_gender("sir", "madam")>, enjoy your stay.");
 } else if ($choice = 3) {
     ~chatplayer("<p,neutral>Actually I'd like to sell some dishes.");
     ~chatnpc("<p,sad>Mr Gianne is the one to talk to if you want to sell any dishes you've made yourself.  He is the owner and head chef of this establishment.");

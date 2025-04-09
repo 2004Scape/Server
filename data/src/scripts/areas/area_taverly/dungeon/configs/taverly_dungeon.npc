@@ -91,8 +91,8 @@ model6=model_156_npc
 model7=model_179_obj_wear
 model8=model_323_obj_wear
 // does not move on osrs (After Wanted quest Release)
-wanderrange=0
-moverestrict=nomove
+// wanderrange=0
+// moverestrict=nomove
 hitpoints=38
 attack=65
 strength=65

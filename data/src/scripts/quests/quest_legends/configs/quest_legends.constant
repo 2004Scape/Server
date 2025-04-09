@@ -1,0 +1,85 @@
+// todo: confirm these
+^legends_not_started = 0
+^legends_started = 1
+^legends_mapped_jungle = 2
+^legends_got_bullroarer = 3
+^legends_swung_bullroarer = 4
+^legends_accepted_rescue_ungadulu = 5
+^legends_found_entrance = 6
+^legends_spoke_ungadulu = 7
+^legends_asked_gujuo_holy_water = 8
+^legends_filled_bowl = 10
+^legends_summoned_nezikchened_fire = 11
+^legends_defeated_nezikchened_fire = 12
+^legends_germinated_seeds = 13 
+^legends_water_pool_dried_up = 14
+^legends_talk_gujuo_pool = 15
+// todo: need to store bravery potion somewhere
+// check if this is set when entering dungeon or taking hat
+^legends_enter_lower_dungeon = 16
+^legends_crystal_pieces_smelted = 17
+^legends_heart_in_recess = 18
+^legends_pushed_boulder = 19
+^legends_received_dagger = 20
+^legends_defeated_nezikchened_water = 22
+^legends_sacred_water_collected = 25
+^legends_collected_totem = 30
+^legends_spawned_nezikchened_final = 32
+^legends_defeated_nezikchened_final = 35
+^legends_replaced_totem = 40
+^legends_got_gilded_totem = 45
+^legends_returned_to_radimus = 50
+^legends_radimus_training_1 = 55
+^legends_radimus_training_2 = 60
+^legends_radimus_training_3 = 65
+^legends_radimus_training_4 = 70
+
+^legends_jungle_west_mapped = 0
+^legends_jungle_middle_mapped = 1
+^legends_jungle_east_mapped = 2
+// Below are used to enable dialogue options with Gujuo, but are not tracked as part of quest progress until later,
+// they are reused to track progress in the final fight with nezikchened
+^legends_entered_cavern = 3
+^legends_asked_ungadulu_where = 4
+^legends_asked_ungadulu_who = 5
+^legends_ungadulu_called_vacu = 6
+^legends_soul_rune_used = 7
+^legends_mind_rune_used = 8
+^legends_earth_rune_used = 9
+^legends_law_rune_1_used = 10
+^legends_law_rune_2_used = 11
+// Below are reset once the book has spawned
+^legends_opal_used = 12
+^legends_jade_used = 13
+^legends_topaz_used = 14
+^legends_sapphire_used = 15
+^legends_diamond_used = 16
+^legends_ruby_used = 17
+^legends_emerald_used = 18
+// 10 doses of holy water, decremented when using vial or extinguishing flames
+^legends_golden_bowl_uses_start = 19
+^legends_golden_bowl_uses_end = 23
+^legends_tied_rope_winch = 24
+^legends_drank_bravery_potion = 25
+^legends_smelting_chunk = 26
+^legends_smelting_hunk = 27
+^legends_smelting_lump = 28
+^legends_killed_viyeldi = 29
+^legends_given_dagger = 30
+
+// reusing bits that were set earlier (and no longer useful) so we don't need a new varp
+^legends_defeated_san_final = 4
+^legends_defeated_irvig_final = 5
+^legends_defeated_ranalph_final = 6
+
+^legends_all_gems_used = 127
+^legends_required_questpoints = 107
+
+^jungle_type_tree = 0
+^jungle_type_bush = 1
+
+^legends_guild_gate_west_coord = 0_42_52_40_21
+^legends_guild_gate_east_coord = 0_42_52_41_21
+^legends_guild_gate_dest_in_coord = 0_42_52_40_22
+^legends_guild_gate_dest_out_coord = 0_42_52_41_20
+^legends_gujuo_guide_coord = 0_44_45_49_61

@@ -150,7 +150,7 @@
 149=fuse
 150=whistle
 151=throw
-152=sound_152
+152=catch
 153=iban lightning
 154=mcannon_fire
 155=machine2
@@ -210,14 +210,14 @@
 209=stabsword_slash
 210=stabsword_crush
 211=stabsword_stab
-212=sound_212
-213=sound_213
+212=sword_hit
+213=steel2
 214=sword_hit2
-215=sound_215
-216=sound_216
-217=sound_217
-218=sound_218
-219=sound_219
+215=blade2
+216=steel
+217=big_bar
+218=blade3
+219=brassclash2
 220=sound_220
 221=unarmed_punch
 222=unarmed_kick
@@ -272,7 +272,7 @@
 271=black_demon_attack
 272=ice_warrior_death
 273=ice_warrior_hit
-274=sound_274
+274=sea_curse
 275=whirlpool
 276=swarm_attack
 277=swarm_appear
@@ -290,7 +290,7 @@
 289=squeeze_in
 290=squeeze_out
 291=watersplash
-292=sound_292
+292=net
 293=liquid
 294=eat
 295=smash_gem
@@ -358,7 +358,7 @@
 357=enchant_sapphire_ring
 358=enchant_dragon_ring
 359=enchant_diamond_ring
-360=sound_360
+360=swordclash2
 361=nasty_tree_attack
 362=attach_handle
 363=sound_363

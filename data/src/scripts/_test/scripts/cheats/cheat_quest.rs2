@@ -101,7 +101,9 @@ if (p_finduid(uid) = true) {
                     %crest_spells_levers_gauntlets = calc(pow(2, ^crest_south_lever) - 1);
                 case 25 : queue(arena_quest_complete, 0);
                 case 26 : queue(fishingcompo_quest_complete, 0);
-                case 27 : queue(fluffs_complete, 0);
+                case 27 : 
+                    %fluffs_progress = ^fluffs_complete;
+                    queue(fluffs_complete, 0);
                 case 28 : queue(grandtree_quest_complete, 0);
                 case 29 : queue(hazeelcult_quest_complete, 0);
                 case 30 : queue(hero_quest_complete, 0);

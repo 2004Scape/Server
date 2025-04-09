@@ -2,7 +2,7 @@
 // this has the same layout as osrs, and this page was before the tourist trap rewrite.
 // so the shop probably isnt identical to rsc? Unless they remade the shop for spirit of elid (rope)
 // which i find unlikely. Ill make it the same as osrs for now, without the rope.
-[shantay_pass_shop]
+[shantayshop]
 scope=shared
 size=40
 restock=yes

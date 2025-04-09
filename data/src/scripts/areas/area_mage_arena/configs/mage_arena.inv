@@ -1,4 +1,4 @@
-[lundails_arena_side_rune_shop]
+[magearena_runeshop]
 // https://oldschool.runescape.wiki/w/Lundail%27s_Arena-side_Rune_Shop.
 // https://storage.googleapis.com/tannerdino/images/runestore.jpg
 // This shop has a weird and inconsistent history of changes. Hard to say if this is 100% accurate, but this is from the oldest screenshot we have. Before: Nov 12, 2004
@@ -19,7 +19,7 @@ stock9=lawrune,250,300
 stock10=cosmicrune,20,100
 stock11=deathrune,250,150
 
-[mage_arena_staffs]
+[magearena_staffshop]
 // https://storage.googleapis.com/tannerdino/images/magearena6.jpg
 // https://classic.runescape.wiki/w/Mage_Arena_Staves
 // https://storage.googleapis.com/tannerdino/images/staffshop.png

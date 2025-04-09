@@ -7,20 +7,20 @@ import ScriptVarType from '#/cache/config/ScriptVarType.js';
 import SeqType from '#/cache/config/SeqType.js';
 import VarNpcType from '#/cache/config/VarNpcType.js';
 import { Direction, CoordGrid } from '#/engine/CoordGrid.js';
-import BlockWalk from '#/engine/entity/BlockWalk.js';
+import { BlockWalk } from '#/engine/entity/BlockWalk.js';
 import Entity from '#/engine/entity/Entity.js';
-import EntityLifeCycle from '#/engine/entity/EntityLifeCycle.js';
-import { EntityQueueRequest, NpcQueueType } from '#/engine/entity/EntityQueueRequest.js';
+import { EntityLifeCycle } from '#/engine/entity/EntityLifeCycle.js';
 import HeroPoints from '#/engine/entity/HeroPoints.js';
-import HuntCheckNotTooStrong from '#/engine/entity/hunt/HuntCheckNotTooStrong.js';
-import HuntModeType from '#/engine/entity/hunt/HuntModeType.js';
-import Interaction from '#/engine/entity/Interaction.js';
+import { HuntCheckNotTooStrong } from '#/engine/entity/hunt/HuntCheckNotTooStrong.js';
+import { HuntModeType } from '#/engine/entity/hunt/HuntModeType.js';
+import { Interaction } from '#/engine/entity/Interaction.js';
 import Loc from '#/engine/entity/Loc.js';
-import MoveRestrict from '#/engine/entity/MoveRestrict.js';
-import MoveSpeed from '#/engine/entity/MoveSpeed.js';
-import MoveStrategy from '#/engine/entity/MoveStrategy.js';
-import NpcMode from '#/engine/entity/NpcMode.js';
-import NpcStat from '#/engine/entity/NpcStat.js';
+import { MoveRestrict } from '#/engine/entity/MoveRestrict.js';
+import { MoveSpeed } from '#/engine/entity/MoveSpeed.js';
+import { MoveStrategy } from '#/engine/entity/MoveStrategy.js';
+import { NpcMode } from '#/engine/entity/NpcMode.js';
+import { NpcQueueRequest } from '#/engine/entity/NpcQueueRequest.js';
+import { NpcStat } from '#/engine/entity/NpcStat.js';
 import Obj from '#/engine/entity/Obj.js';
 import PathingEntity from '#/engine/entity/PathingEntity.js';
 import Player from '#/engine/entity/Player.js';
@@ -53,7 +53,7 @@ export default class Npc extends PathingEntity {
 
     // script variables
     activeScript: ScriptState | null = null;
-    queue: LinkList<EntityQueueRequest> = new LinkList();
+    queue: LinkList<NpcQueueRequest> = new LinkList();
     timerInterval: number = 0;
     timerClock: number = 0;
     regenClock: number = 0;
@@ -68,7 +68,7 @@ export default class Npc extends PathingEntity {
     delayedPatrol: boolean = false;
     resetOnRevert: boolean = true;
 
-    lastWanderTick: number = 0;
+    wanderCounter: number = 0;
 
     heroPoints: HeroPoints = new HeroPoints(16); // be sure to reset when stats are recovered/reset
 
@@ -97,7 +97,7 @@ export default class Npc extends PathingEntity {
         this.targetOp = npcType.defaultmode;
         this.huntMode = npcType.huntmode;
         this.huntrange = npcType.huntrange;
-        this.lastWanderTick = World.currentTick;
+        this.wanderCounter = 0;
     }
 
     cleanup(): void {
@@ -202,8 +202,21 @@ export default class Npc extends PathingEntity {
         const moved = this.lastTickX !== this.x || this.lastTickZ !== this.z;
         if (moved) {
             this.lastMovement = World.currentTick + 1;
+            this.wanderCounter = 0;
         }
         return moved;
+    }
+
+    clearPatrol() {
+        this.nextPatrolTick = -1;
+    }
+
+    pathToTarget(): void {
+        if (!this.targetWithinMaxRange()) {
+            this.defaultMode();
+            return;
+        }
+        super.pathToTarget();
     }
 
     targetWithinMaxRange(): boolean {
@@ -346,7 +359,7 @@ export default class Npc extends PathingEntity {
     }
 
     processQueue() {
-        for (let request = this.queue.head(); request !== null; request = this.queue.next()) {
+        for (const request of this.queue.all()) {
             // purposely only decrements the delay when the npc is not delayed
             if (!this.delayed) {
                 request.delay--;
@@ -354,18 +367,19 @@ export default class Npc extends PathingEntity {
 
             if (!this.delayed && request.delay <= 0) {
                 request.unlink();
-
-                const state = ScriptRunner.init(request.script, this, null, request.args);
-                state.lastInt = request.lastInt;
-                const save = this.queue.cursor; // LinkList-specific behavior so we can getqueue/clearqueue inside of this
-                this.executeScript(state);
-                this.queue.cursor = save;
+                const type: NpcType = NpcType.get(this.type);
+                const script = ScriptProvider.getByTrigger(request.queueId, type.id, type.category);
+                if (script) {
+                    const state = ScriptRunner.init(script, this, null, request.args);
+                    state.lastInt = request.lastInt;
+                    this.executeScript(state);
+                }
             }
         }
     }
 
-    enqueueScript(script: ScriptFile, delay = 0, arg: number = 0) {
-        const request = new EntityQueueRequest(NpcQueueType.NORMAL, script, [], delay);
+    enqueueScript(queueId: number, delay = 0, arg: number = 0) {
+        const request = new NpcQueueRequest(queueId, [], delay);
         request.lastInt = arg;
         this.queue.addTail(request);
     }
@@ -418,9 +432,13 @@ export default class Npc extends PathingEntity {
         if (this.delayed) {
             return;
         }
+
         if (this.targetOp === NpcMode.NULL) {
-            this.defaultMode();
-        } else if (this.targetOp === NpcMode.NONE) {
+            const type: NpcType = NpcType.get(this.type);
+            this.targetOp = type.defaultmode;
+        }
+
+        if (this.targetOp === NpcMode.NONE) {
             this.noMode();
         } else if (this.targetOp === NpcMode.WANDER) {
             this.wanderMode();
@@ -454,7 +472,6 @@ export default class Npc extends PathingEntity {
         this.clearInteraction();
         const type: NpcType = NpcType.get(this.type);
         this.targetOp = type.defaultmode;
-        this.lastWanderTick = World.currentTick; // osrs
         this.faceEntity = -1;
         this.masks |= this.entitymask;
 
@@ -468,19 +485,22 @@ export default class Npc extends PathingEntity {
 
     wanderMode(): void {
         const type = NpcType.get(this.type);
+
+        // 1/8 chance to move every tick (even if they already have a destination)
         if (type.moverestrict !== MoveRestrict.NOMOVE && Math.random() < 0.125) {
-            // 1/8 chance to move every tick (even if they already have a destination)
             this.randomWalk(type.wanderrange);
-            const moved = this.updateMovement(false);
-            if (moved) {
-                this.lastWanderTick = World.currentTick;
-            } else if (World.currentTick > this.lastWanderTick + 500) {
-                this.teleport(this.startX, this.startZ, this.startLevel);
-                this.lastWanderTick = World.currentTick;
-            }
-            return;
         }
+
         this.updateMovement(false);
+
+        const onSpawn = this.x === this.startX && this.z === this.startZ && this.level === this.startLevel;
+
+        if (this.wanderCounter++ >= 500) {
+            if (!onSpawn) {
+                this.teleport(this.startX, this.startZ, this.startLevel);
+            }
+            this.wanderCounter = 0;
+        }
     }
 
     patrolMode(): void {
@@ -494,7 +514,7 @@ export default class Npc extends PathingEntity {
             // requeue waypoints in cases where an npc was interacting and the interaction has been cleared
             this.queueWaypoint(dest.x, dest.z);
         }
-        if (!(this.x === dest.x && this.z === dest.z) && World.currentTick >= this.nextPatrolTick) {
+        if (!(this.x === dest.x && this.z === dest.z) && this.nextPatrolTick > -1 && World.currentTick >= this.nextPatrolTick) {
             this.teleport(dest.x, dest.z, dest.level);
         }
         if (this.x === dest.x && this.z === dest.z && !this.delayedPatrol) {
@@ -602,7 +622,6 @@ export default class Npc extends PathingEntity {
         }
 
         if (this.level !== this.target.level) {
-            this.clearWaypoints();
             this.defaultMode();
             return;
         }
@@ -626,7 +645,6 @@ export default class Npc extends PathingEntity {
         }
 
         if (this.level !== this.target.level) {
-            this.clearWaypoints();
             this.defaultMode();
             return;
         }
@@ -1023,10 +1041,10 @@ export default class Npc extends PathingEntity {
         this.uid = (type << 16) | this.nid;
         this.resetOnRevert = reset;
 
-        if (type === this.baseType) {
+        if (type === this.baseType && this.lifecycle === EntityLifeCycle.RESPAWN) {
             this.setLifeCycle(-1);
         } else {
-            this.setLifeCycle(World.currentTick + duration);
+            this.setLifeCycle(duration);
         }
     }
 
