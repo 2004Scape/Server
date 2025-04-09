@@ -19,7 +19,7 @@ return(false);
 return(enum(int, namedobj, trail_hard_enum, random(enum_getoutputcount(trail_hard_enum))));
 
 [proc,give_trail_puzzle](namedobj $puzzle, string $text)
-inv_clear(trail_puzzle_inv);
+inv_clear(trail_puzzleinv);
 inv_add(inv, $puzzle, 1);
 ~objbox($puzzle, $text, 250, 0, 0);
 

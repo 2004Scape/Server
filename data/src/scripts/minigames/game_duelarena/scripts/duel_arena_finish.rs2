@@ -49,8 +49,8 @@ if_settext(duel_win:combat_level, tostring(~.player_combat_level));
 ~duel_give_stake_back;
 
 // take stuff from other player's stakeinv
-.both_moveinv(stakeinv, stakeinv);
-inv_transmit(stakeinv, duel_win:spoils);
+.both_moveinv(duelarrows, duelarrows);
+inv_transmit(duelarrows, duel_win:spoils);
 
 [proc,duel_reset_all]
 if (~in_duel_arena(coord) = false) {
@@ -58,9 +58,9 @@ if (~in_duel_arena(coord) = false) {
 }
 // get arrows back
 def_int $i = 0;
-while ($i < inv_size(tempinv)) {
-    if (inv_getobj(tempinv, $i) ! null) {
-        inv_movefromslot(tempinv, inv, $i);
+while ($i < inv_size(tradeoffer)) {
+    if (inv_getobj(tradeoffer, $i) ! null) {
+        inv_movefromslot(tradeoffer, inv, $i);
     }
     $i = calc($i + 1);
 }
@@ -84,10 +84,10 @@ hint_stop;
 
 [proc,duel_give_stake_back]
 def_int $i = 0;
-while ($i < inv_size(stakeinv)) {
-    if (inv_getobj(stakeinv, $i) ! null) {
+while ($i < inv_size(duelarrows)) {
+    if (inv_getobj(duelarrows, $i) ! null) {
         //mes("<oc_debugname(inv_getobj(stakeinv, $i))>: <tostring(inv_getnum(tempinv, $i))>");
-        inv_movefromslot(stakeinv, inv, $i);
+        inv_movefromslot(duelarrows, inv, $i);
     }
     $i = calc($i + 1);
 }
