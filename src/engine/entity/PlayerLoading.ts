@@ -9,27 +9,23 @@ import Packet from '#/io/Packet.js';
 import ClientSocket from '#/server/ClientSocket.js';
 import { fromBase37, toBase37 } from '#/util/JString.js';
 
-
-
-
 export class PlayerLoading {
+    public static readonly SAV_MAGIC: number = 0x2004;
+    public static readonly SAV_VERSION: number = 6;
+
     static verify(sav: Packet) {
-        if (sav.g2() !== 0x2004) {
+        if (sav.g2() !== PlayerLoading.SAV_MAGIC) {
             return false;
         }
 
         const version = sav.g2();
-        if (version > 6) {
+        if (version > PlayerLoading.SAV_VERSION) {
             return false;
         }
 
         sav.pos = sav.data.length - 4;
         const crc = sav.g4();
-        if (crc != Packet.getcrc(sav.data, 0, sav.data.length - 4)) {
-            return false;
-        }
-
-        return true;
+        return crc === Packet.getcrc(sav.data, 0, sav.data.length - 4);
     }
 
     static load(name: string, sav: Packet, client: ClientSocket | null) {
@@ -56,12 +52,12 @@ export class PlayerLoading {
             return player;
         }
 
-        if (sav.g2() !== 0x2004) {
+        if (sav.g2() !== PlayerLoading.SAV_MAGIC) {
             throw new Error('Invalid save file');
         }
 
         const version = sav.g2();
-        if (version > 6) {
+        if (version > PlayerLoading.SAV_VERSION) {
             throw new Error('Unsupported save version');
         }
 

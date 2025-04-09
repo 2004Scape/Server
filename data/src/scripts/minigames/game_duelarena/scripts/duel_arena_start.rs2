@@ -4,7 +4,7 @@ if (.finduid(%duelpartner) = true) {
     def_coord $random_coord2 = $random_coord1;
 
     if ($random_coord1 = null) {
-        %duelstatus = 0;
+        %duelstatus = ^duelstatus_reset;
         %duelpartner = null;
         ~mesbox("All arenas of this type are full! Select another type of arena, try|again in a few minutes or try a different server."); // https://youtu.be/TcrIr9O92sw?t=89
         return;
@@ -25,7 +25,7 @@ if (.finduid(%duelpartner) = true) {
     }
 
     // move tempinv to stakeinv
-    ~moveallinv(tempinv, stakeinv);
+    ~moveallinv(tradeoffer, duelarrows);
     p_stopaction;
     // only deactive prayers if no prayers is selected. based off: https://imgur.com/ETH1z4L
     if (testbit(%duel_settings, ^no_prayer) = true) {
@@ -144,7 +144,7 @@ if (~in_duel_arena(coord) = false) {
     return;
 }
 say("FIGHT!");
-%duelstatus = 5;
+%duelstatus = ^duelstatus_start;
 clearsofttimer(duel_arena_start_fight);
 
 [walktrigger,duel_arena_no_move]
@@ -158,7 +158,7 @@ if (~in_duel_arena(coord) = false) {
     clearsofttimer(duel_arena_time_limit);
     return;
 }
-%duelstatus = 0;
+%duelstatus = ^duelstatus_reset;
 %duelpartner = null;
 if_close;
 queue(duel_arena_time_limit, 0);

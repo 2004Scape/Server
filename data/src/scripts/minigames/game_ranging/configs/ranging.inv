@@ -1,4 +1,4 @@
-[authentic_throwing_weapons]
+[ranging_guild_tribalshop]
 // https://oldschool.runescape.wiki/w/Authentic_Throwing_Weapons.
 // https://storage.googleapis.com/tannerdino/images/Throwing_weapons.jpg (full stocks)
 // https://www.spookspring.com/noobsquad/imagegif/spookart/jungle.GIF
@@ -20,7 +20,7 @@ stock10=mithril_thrownaxe,600,60
 stock11=adamant_thrownaxe,500,80
 stock12=rune_thrownaxe,400,100
 
-[aarons_archery_appendages]
+[ranging_guild_armourshop]
 // https://oldschool.runescape.wiki/w/Aaron%27s_Archery_Appendages.
 // https://storage.googleapis.com/tannerdino/images/rangearmourshop.gif (full stocks)
 // https://www.spookspring.com/noobsquad/imagegif/spookart/aarons.GIF
@@ -38,7 +38,7 @@ stock6=coif,10,50
 stock7=leather_cowl,10,70
 stock8=leather_vambraces,10,150
 
-[dargauds_bow_and_arrows]
+[ranging_guild_bowshop]
 // https://oldschool.runescape.wiki/w/Dargaud%27s_Bow_and_Arrows.
 // https://storage.googleapis.com/tannerdino/images/dargaudsbowandarrows.png (2006)
 // https://www.spookspring.com/noobsquad/imagegif/spookart/arch.GIF

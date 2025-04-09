@@ -34,21 +34,22 @@ import VarSharedType from '#/cache/config/VarSharedType.js';
 import { CrcBuffer32, makeCrcs } from '#/cache/CrcTable.js';
 import { preloadClient } from '#/cache/PreloadedPacks.js';
 import WordEnc from '#/cache/wordenc/WordEnc.js';
-import BlockWalk from '#/engine/entity/BlockWalk.js';
-import EntityLifeCycle from '#/engine/entity/EntityLifeCycle.js';
+import { BlockWalk } from '#/engine/entity/BlockWalk.js';
+import { EntityLifeCycle } from '#/engine/entity/EntityLifeCycle.js';
 import { NpcList, PlayerList } from '#/engine/entity/EntityList.js';
-import { EntityQueueState, PlayerQueueType } from '#/engine/entity/EntityQueueRequest.js';
 import { PlayerTimerType } from '#/engine/entity/EntityTimer.js';
-import HuntModeType from '#/engine/entity/hunt/HuntModeType.js';
-import HuntNobodyNear from '#/engine/entity/hunt/HuntNobodyNear.js';
+import { HuntModeType } from '#/engine/entity/hunt/HuntModeType.js';
+import { HuntNobodyNear } from '#/engine/entity/hunt/HuntNobodyNear.js';
 import Loc from '#/engine/entity/Loc.js';
+import LocObjEvent from '#/engine/entity/LocObjEvent.js';
 import { isClientConnected, NetworkPlayer } from '#/engine/entity/NetworkPlayer.js';
 import Npc from '#/engine/entity/Npc.js';
 import { NpcEventRequest, NpcEventType } from '#/engine/entity/NpcEventRequest.js';
-import NpcStat from '#/engine/entity/NpcStat.js';
+import { NpcStat } from '#/engine/entity/NpcStat.js';
 import Obj from '#/engine/entity/Obj.js';
 import Player from '#/engine/entity/Player.js';
 import { PlayerLoading } from '#/engine/entity/PlayerLoading.js';
+import { EntityQueueState, PlayerQueueType } from '#/engine/entity/PlayerQueueRequest.js';
 import { PlayerStat } from '#/engine/entity/PlayerStat.js';
 import { SessionLog } from '#/engine/entity/tracking/SessionLog.js';
 import GameMap, { changeLocCollision, changeNpcCollision, changePlayerCollision } from '#/engine/GameMap.js';
@@ -58,7 +59,7 @@ import ScriptProvider from '#/engine/script/ScriptProvider.js';
 import ScriptRunner from '#/engine/script/ScriptRunner.js';
 import ScriptState from '#/engine/script/ScriptState.js';
 import ServerTriggerType from '#/engine/script/ServerTriggerType.js';
-import WorldStat from '#/engine/WorldStat.js';
+import { WorldStat } from '#/engine/WorldStat.js';
 import Zone from '#/engine/zone/Zone.js';
 import Isaac from '#/io/Isaac.js';
 import Packet from '#/io/Packet.js';
@@ -70,7 +71,7 @@ import UpdateRebootTimer from '#/network/server/model/UpdateRebootTimer.js';
 import ClientSocket from '#/server/ClientSocket.js';
 import { FriendsServerOpcodes } from '#/server/friend/FriendServer.js';
 import { FriendThreadMessage } from '#/server/friend/FriendThread.js';
-import LoggerEventType from '#/server/logger/LoggerEventType.js';
+import { LoggerEventType } from '#/server/logger/LoggerEventType.js';
 import { type GenericLoginThreadResponse, isPlayerLoginResponse, isPlayerLogoutResponse } from '#/server/login/index.d.js';
 import {
     trackCycleBandwidthInBytes,
@@ -85,13 +86,14 @@ import {
     trackCycleWorldTime,
     trackCycleZoneTime,
     trackNpcCount,
-    trackPlayerCount
+    trackPlayerCount,
+    trackSessionEventsPublished
 } from '#/server/Metrics.js';
 import Environment from '#/util/Environment.js';
 import { fromBase37, toBase37, toSafeName } from '#/util/JString.js';
 import LinkList from '#/util/LinkList.js';
 import { printDebug, printError, printInfo } from '#/util/Logger.js';
-import WalkTriggerSetting from '#/util/WalkTriggerSetting.js';
+import { WalkTriggerSetting } from '#/util/WalkTriggerSetting.js';
 import { createWorker } from '#/util/WorkerFactory.js';
 
 import InputTrackingBlob from './entity/tracking/InputEvent.js';
@@ -116,7 +118,7 @@ class World {
 
     private static readonly INV_STOCKRATE: number = 100; // 1m
     private static readonly AFK_EVENTRATE: number = 500; // 5m
-    private static readonly PLAYER_SAVERATE: number = 500; // 5m
+    private static readonly PLAYER_SAVERATE: number = 1500; // 15m
     private static readonly PLAYER_COORDLOGRATE: number = 50; // 30s
 
     private static readonly TIMEOUT_NO_CONNECTION: number = Environment.NODE_DEBUG_SOCKET ? 60000 : 50; // 30s with no connection (16 ticks in osrs)
@@ -136,7 +138,8 @@ class World {
     readonly npcs: NpcList;
 
     // zones
-    readonly zonesTracking: Map<number, Set<Zone>>;
+    readonly zonesTracking: Set<Zone>;
+    readonly locObjTracker: LinkList<LocObjEvent>;
     readonly queue: LinkList<EntityQueueState>;
     readonly npcEventQueue: LinkList<NpcEventRequest>;
 
@@ -161,7 +164,8 @@ class World {
         this.newPlayers = new Set();
         this.players = new PlayerList(World.PLAYERS);
         this.npcs = new NpcList(World.NPCS);
-        this.zonesTracking = new Map();
+        this.zonesTracking = new Set();
+        this.locObjTracker = new LinkList();
         this.queue = new LinkList();
         this.npcEventQueue = new LinkList();
         this.lastCycleStats = new Array(12).fill(0);
@@ -679,7 +683,7 @@ class World {
                 }
 
                 // - Npc Events (Respawn, Revert, Despawn)
-                if (npc.lifecycleTick > -1 && npc.lifecycleTick < this.currentTick) {
+                if (--npc.lifecycleTick === 0) {
                     try {
                         // Respawn NPC
                         if (npc.lifecycle === EntityLifeCycle.RESPAWN && !npc.isActive) {
@@ -699,7 +703,6 @@ class World {
                                 this.npcEventQueue.addTail(new NpcEventRequest(NpcEventType.DESPAWN, script, npc));
                             }
                         }
-                        npc.setLifeCycle(-1);
                     } catch (err) {
                         // there was an error adding or removing them, try again next tick...
                         // ex: server is full on npc IDs (did we have a leak somewhere?) and we don't want to re-use the last ID (syncing related)
@@ -711,8 +714,7 @@ class World {
 
                         printError(`[World] NPC type:${npc.type} lifecycle:${npc.lifecycle} ID:${npc.nid}`);
                         console.error(err);
-
-                        npc.setLifeCycle(this.currentTick + 1); // retry next tick
+                        npc.setLifeCycle(1);
                     }
                 }
 
@@ -1016,11 +1018,22 @@ class World {
     // - compute shared buffer
     private processZones(): void {
         const start: number = Date.now();
-        const tick: number = this.currentTick;
         try {
-            // - loc/obj despawn/respawn
-            // - compute shared buffer
-            this.zonesTracking.get(tick)?.forEach(zone => zone.tick(tick));
+            for (const event of this.locObjTracker.all()) {
+                // Check if the event is still valid
+                if (event.check()) {
+                    event.entity.turn();
+                }
+                // If this is false, we have not constructed our LinkedList properly somewhere
+                else {
+                    console.error('Loc Obj event is invalid');
+                }
+            }
+
+            // Compute shared for tracked zones
+            for (const zone of this.zonesTracking) {
+                zone.computeShared();
+            }
         } catch (err) {
             if (err instanceof Error) {
                 printError(`Error during processZones: ${err.message}`);
@@ -1040,9 +1053,7 @@ class World {
             player.reorient();
             player.buildArea.rebuildNormal(); // set origin before compute player is why this is above.
 
-            const appearance = player.masks & PlayerInfoProt.APPEARANCE
-                ? player.generateAppearance()
-                : player.lastAppearanceBytes ?? player.generateAppearance();
+            const appearance = player.masks & PlayerInfoProt.APPEARANCE ? player.generateAppearance() : (player.lastAppearanceBytes ?? player.generateAppearance());
 
             rsbuf.computePlayer(
                 player.x,
@@ -1085,7 +1096,7 @@ class World {
                 player.exactEndZ,
                 player.exactMoveStart,
                 player.exactMoveEnd,
-                player.exactMoveDirection,
+                player.exactMoveDirection
             );
         }
 
@@ -1116,7 +1127,7 @@ class World {
                 npc.chat,
                 npc.graphicId,
                 npc.graphicHeight,
-                npc.graphicDelay,
+                npc.graphicDelay
             );
         }
     }
@@ -1177,8 +1188,8 @@ class World {
         const tick: number = this.currentTick;
 
         // - reset zones
-        this.zonesTracking.get(tick)?.forEach(zone => zone.reset());
-        this.zonesTracking.delete(tick);
+        this.zonesTracking.forEach(zone => zone.reset());
+        this.zonesTracking.clear();
 
         // - reset players
         for (const player of this.players) {
@@ -1196,10 +1207,6 @@ class World {
 
         // - reset npcs
         for (const npc of this.npcs) {
-            if (!npc.isActive) {
-                continue;
-            }
-
             npc.resetEntity(false);
         }
 
@@ -1353,7 +1360,9 @@ class World {
             this.npcEventQueue.addTail(new NpcEventRequest(NpcEventType.SPAWN, script, npc));
         }
 
-        npc.setLifeCycle(this.currentTick + duration);
+        if (duration > -1) {
+            npc.setLifeCycle(duration);
+        }
     }
 
     removeNpc(npc: Npc, duration: number): void {
@@ -1376,8 +1385,8 @@ class World {
             rsbuf.removeNpc(npc.nid);
             this.npcs.remove(npc.nid);
             npc.cleanup();
-        } else if (npc.lifecycle === EntityLifeCycle.RESPAWN) {
-            npc.setLifeCycle(this.currentTick + adjustedDuration);
+        } else if (npc.lifecycle === EntityLifeCycle.RESPAWN && duration > -1) {
+            npc.setLifeCycle(adjustedDuration);
         }
     }
 
@@ -1393,21 +1402,13 @@ class World {
         return this.gameMap.getZone(x, z, level).getObjOfReceiver(x, z, objId, receiver64);
     }
 
-    trackZone(tick: number, zone: Zone): void {
-        const tracking: Map<number, Set<Zone>> = this.zonesTracking;
-        const zones: Set<Zone> = (tracking.get(tick) ?? new Set()).add(zone);
-        if (!tracking.has(tick)) {
-            tracking.set(tick, zones);
-        }
+    trackZone(zone: Zone): void {
+        this.zonesTracking.add(zone);
     }
 
-    trackLocObj(entity: Loc | Obj, zone: Zone, duration: number): void {
-        // In OSRS I suspect they use a counter per Loc/Obj to keep track of events rather than scheduling for a tick
-        // In 2004scape, we schedule for a tick. Scheduling for a tick ends up naturally 1 tick slower, so we do a -1 to compensate to match OSRS behavior
-        // - Bea5
-        entity.setLifeCycle(this.currentTick + duration - 1);
-        this.trackZone(this.currentTick + duration - 1, zone);
-        this.trackZone(this.currentTick, zone);
+    trackLocObj(entity: Loc | Obj, duration: number): void {
+        entity.setLifeCycle(duration);
+        this.locObjTracker.addTail(new LocObjEvent(entity));
     }
 
     addLoc(loc: Loc, duration: number): void {
@@ -1419,7 +1420,12 @@ class World {
 
         const zone: Zone = this.gameMap.getZone(loc.x, loc.z, loc.level);
         zone.addLoc(loc);
-        this.trackLocObj(loc, zone, duration);
+        this.trackZone(zone);
+        if (duration > 0) {
+            this.trackLocObj(loc, duration);
+        } else {
+            loc.untrack();
+        }
     }
 
     changeLoc(loc: Loc, typeID: number, shape: number, angle: number, duration: number) {
@@ -1427,10 +1433,13 @@ class World {
         if (loc.lifecycle === EntityLifeCycle.DESPAWN && !loc.isValid()) {
             return;
         }
-        // Remove previous collision from game world
-        const fromType: LocType = LocType.get(loc.type);
-        if (fromType.blockwalk) {
-            changeLocCollision(loc.shape, loc.angle, fromType.blockrange, fromType.length, fromType.width, fromType.active, loc.x, loc.z, loc.level, false);
+
+        // Remove previous collision from game world if loc is active
+        if (loc.isActive) {
+            const fromType: LocType = LocType.get(loc.type);
+            if (fromType.blockwalk) {
+                changeLocCollision(loc.shape, loc.angle, fromType.blockrange, fromType.length, fromType.width, fromType.active, loc.x, loc.z, loc.level, false);
+            }
         }
 
         // Update loc to new type
@@ -1445,21 +1454,22 @@ class World {
         // Notify zone that loc has been changed
         const zone: Zone = this.gameMap.getZone(loc.x, loc.z, loc.level);
         zone.changeLoc(loc);
-        this.trackLocObj(loc, zone, duration);
+        this.trackZone(zone);
+        this.trackLocObj(loc, duration);
     }
 
     mergeLoc(loc: Loc, player: Player, startCycle: number, endCycle: number, south: number, east: number, north: number, west: number): void {
         // printDebug(`[World] mergeLoc => name: ${LocType.get(loc.type).name}`);
         const zone: Zone = this.gameMap.getZone(loc.x, loc.z, loc.level);
         zone.mergeLoc(loc, player, startCycle, endCycle, south, east, north, west);
-        this.trackZone(this.currentTick, zone);
+        this.trackZone(zone);
     }
 
     animLoc(loc: Loc, seq: number): void {
         // printDebug(`[World] animLoc => name: ${LocType.get(loc.type).name}, seq: ${seq}`);
         const zone: Zone = this.gameMap.getZone(loc.x, loc.z, loc.level);
         zone.animLoc(loc, seq);
-        this.trackZone(this.currentTick, zone);
+        this.trackZone(zone);
     }
 
     removeLoc(loc: Loc, duration: number): void {
@@ -1471,7 +1481,12 @@ class World {
 
         const zone: Zone = this.gameMap.getZone(loc.x, loc.z, loc.level);
         zone.removeLoc(loc);
-        this.trackLocObj(loc, zone, duration);
+        this.trackZone(zone);
+        if (duration > 0) {
+            this.trackLocObj(loc, duration);
+        } else {
+            loc.untrack();
+        }
     }
 
     revertLoc(loc: Loc) {
@@ -1493,55 +1508,61 @@ class World {
         // Notify zone that loc has been changed
         const zone: Zone = this.gameMap.getZone(loc.x, loc.z, loc.level);
         zone.changeLoc(loc);
-        this.trackZone(this.currentTick, zone);
+        loc.untrack();
+        this.trackZone(zone);
     }
 
     addObj(obj: Obj, receiver64: bigint, duration: number): void {
-        // printDebug(`[World] addObj => name: ${ObjType.get(obj.type).name}, receiverId: ${receiverId}, duration: ${duration}`);
-        // check if we need to changeobj first.
+        // Dev note: This function is slightly messy. Perhaps this can be organized better
+        // Check if we need to changeobj first
         if (ObjType.get(obj.type).stackable && obj.lifecycle === EntityLifeCycle.DESPAWN) {
             const existing = this.getObjOfReceiver(obj.x, obj.z, obj.level, obj.type, receiver64);
             if (existing && existing.lifecycle === EntityLifeCycle.DESPAWN) {
                 const nextCount = obj.count + existing.count;
                 if (nextCount <= Inventory.STACK_LIMIT) {
-                    // if an obj of the same type exists and is stackable and have the same receiver, then we merge them.
-                    this.changeObj(existing, receiver64, nextCount);
+                    // If an obj of the same type exists and is stackable and have the same receiver, then we merge them.
+                    this.changeObj(existing, nextCount);
+                    this.trackLocObj(existing, duration);
                     return;
                 }
             }
         }
+
         const zone: Zone = this.gameMap.getZone(obj.x, obj.z, obj.level);
         zone.addObj(obj, receiver64);
+        this.trackZone(zone);
+        // If the obj is dropped to a specific person
         if (receiver64 !== Obj.NO_RECEIVER) {
             // objs with a receiver always attempt to reveal 100 ticks after being dropped.
             // items that can't be revealed (untradable, members obj in f2p) will be skipped in revealObj
-            this.trackLocObj(obj, zone, Obj.REVEAL);
+            this.trackLocObj(obj, duration);
             obj.receiver64 = receiver64;
-            obj.reveal = duration;
-        } else {
-            this.trackLocObj(obj, zone, duration);
+
+            // Reveal Obj in 100 ticks
+            obj.reveal = Obj.REVEAL;
+        }
+        // If the obj is dropped to all
+        else {
+            obj.reveal = -1;
+            if (duration > 0) {
+                this.trackLocObj(obj, duration);
+            } else {
+                obj.untrack();
+            }
         }
     }
 
     revealObj(obj: Obj): void {
-        // printDebug(`[World] revealObj => name: ${ObjType.get(obj.type).name}`);
-        const duration: number = obj.reveal;
-        const change: number = obj.lastChange;
         const zone: Zone = this.gameMap.getZone(obj.x, obj.z, obj.level);
-        zone.revealObj(obj, obj.receiver64);
-        // objs next life cycle always starts from the last time they changed + the inputted duration.
-        // accounting for reveal time here.
-        const nextLifecycle: number = (change !== -1 ? Obj.REVEAL - (this.currentTick - change) : 0) + this.currentTick + duration;
-        obj.setLifeCycle(nextLifecycle);
-        this.trackZone(nextLifecycle, zone);
-        this.trackZone(this.currentTick, zone);
+        zone.revealObj(obj);
+        this.trackZone(zone);
     }
 
-    changeObj(obj: Obj, receiver64: bigint, newCount: number): void {
+    changeObj(obj: Obj, newCount: number): void {
         // printDebug(`[World] changeObj => name: ${ObjType.get(obj.type).name}, receiverId: ${receiverId}, newCount: ${newCount}`);
         const zone: Zone = this.gameMap.getZone(obj.x, obj.z, obj.level);
-        zone.changeObj(obj, receiver64, obj.count, newCount);
-        this.trackZone(this.currentTick, zone);
+        zone.changeObj(obj, obj.count, newCount);
+        this.trackZone(zone);
     }
 
     removeObj(obj: Obj, duration: number): void {
@@ -1549,19 +1570,24 @@ class World {
         const zone: Zone = this.gameMap.getZone(obj.x, obj.z, obj.level);
         const adjustedDuration = this.scaleByPlayerCount(duration);
         zone.removeObj(obj);
-        this.trackLocObj(obj, zone, adjustedDuration);
+        this.trackZone(zone);
+        if (duration > 0) {
+            this.trackLocObj(obj, adjustedDuration);
+        } else {
+            obj.untrack();
+        }
     }
 
     animMap(level: number, x: number, z: number, spotanim: number, height: number, delay: number): void {
         const zone: Zone = this.gameMap.getZone(x, z, level);
         zone.animMap(x, z, spotanim, height, delay);
-        this.trackZone(this.currentTick, zone);
+        this.trackZone(zone);
     }
 
     mapProjAnim(level: number, x: number, z: number, dstX: number, dstZ: number, target: number, spotanim: number, srcHeight: number, dstHeight: number, startDelay: number, endDelay: number, peak: number, arc: number): void {
         const zone: Zone = this.gameMap.getZone(x, z, level);
         zone.mapProjAnim(x, z, dstX, dstZ, target, spotanim, srcHeight, dstHeight, startDelay, endDelay, peak, arc);
-        this.trackZone(this.currentTick, zone);
+        this.trackZone(zone);
     }
 
     // ----
@@ -2074,6 +2100,21 @@ class World {
                 }
             } else if (opcode === FriendsServerOpcodes.RELAY_RELOAD) {
                 this.reload(false);
+            } else if (opcode === FriendsServerOpcodes.RELAY_CLEARLOGINS) {
+                this.loginRequests.clear();
+            } else if (opcode === FriendsServerOpcodes.RELAY_CLEARLOGOUTS) {
+                this.logoutRequests.clear();
+            } else if (opcode === FriendsServerOpcodes.RELAY_QUEUESCRIPT) {
+                const { scriptName, username } = data;
+
+                const player = this.getPlayerByUsername(username);
+                if (player) {
+                    const script = ScriptProvider.getByName(`[queue,${scriptName}]`);
+
+                    if (script) {
+                        player.enqueueScript(script);
+                    }
+                }
             } else {
                 printError('Unknown friend message: ' + opcode);
             }
@@ -2179,7 +2220,7 @@ class World {
                 return;
             }
 
-            if (this.getTotalPlayers() > 750) {
+            if (this.getTotalPlayers() > Environment.NODE_MAX_CONNECTED) {
                 client.send(Uint8Array.from([7]));
                 client.close();
                 return;
@@ -2222,6 +2263,7 @@ class World {
             event: args.length ? message + ' ' + args.join(' ') : message,
             event_type
         });
+        trackSessionEventsPublished.inc();
     }
 
     notifyPlayerBan(staff: string, username: string, until: number) {

@@ -16,7 +16,7 @@ switch_int(%elena_progress) {
             ~chatplayer("<p,happy>Yes, I have some here.");
             ~chatnpc("<p,neutral>Take them to my wife <nc_name(alrena)>.");
         }
-    case ^quest_elena_gasmask, ^quest_elena_mud_patch1, ^quest_elena_mud_patch2, ^quest_elena_mud_patch3, ^quest_elena_mud_patch4 :
+    case ^quest_elena_gasmask, ^quest_elena_started_mud_patch, ^quest_elena_mud_patch1, ^quest_elena_mud_patch2, ^quest_elena_mud_patch3, ^quest_elena_mud_patch4 :
         ~chatplayer("<p,happy>Hi <nc_name(edmond)>, I've got the gas mask now.");
         ~chatnpc("<p,neutral>Good stuff, now for the digging. Beneath are the Ardougne sewers. There you'll find access to West Ardougne.");
         if(%elena_progress = ^quest_elena_gasmask) ~quest_elena_set_progress(^quest_elena_started_mud_patch);

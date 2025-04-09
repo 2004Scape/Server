@@ -13,7 +13,9 @@ if (finduid(%npc_attacking_uid) = true) {
     if (coordy(coord) ! coordy(npc_coord) | npc_range(coord) > 15) {
         npc_tele(map_findsquare(coord, 1, 1, ^map_findsquare_lineofwalk));
     }
+    return;
 }
+npc_del;
 
 [timer,petcat_growth]
 if (%follower_uid = null) {
@@ -41,7 +43,8 @@ if (npc_finduid(%follower_uid) = true) {
 
 [label,cat_growth]
 if (getbit_range(%cat_growth, 11, 19) = 320) {
-    npc_changetype(nc_param(npc_type, cat_next_id), ^max_32bit_int);
+    npc_changetype_keepall(nc_param(npc_type, cat_next_id), ^max_32bit_int);
+    %follower_uid = npc_uid;
     %follower_obj = nc_param(npc_type, pet_item_id);
     %cat_growth = 0; //according to ash, this gets wiped when the cat becomes overgrown
     npc_say("Meeeooowww!");
@@ -55,7 +58,8 @@ if ($attent = 0) {
     $attent = 28; //default attent for a new kitten is supposed to be 28
 }
 if (getbit_range(%cat_growth, 11, 19) = 120) {
-    npc_changetype(nc_param(npc_type, cat_next_id), ^max_32bit_int);
+    npc_changetype_keepall(nc_param(npc_type, cat_next_id), ^max_32bit_int);
+    %follower_uid = npc_uid;
     %follower_obj = nc_param(npc_type, pet_item_id);
     npc_say("Meeeooowww!");
     ~mesbox("Your kitten has grown into a healthy cat,|that can hunt for itself."); //imgur.com/ni0BBTb
@@ -228,7 +232,10 @@ if (npc_finduid(%follower_uid) = true) {
 }
 inv_delslot(inv, last_slot);
 sound_synth(put_down, 0, 0);
-npc_add(coord, oc_param(last_item, follower_id), ^max_32bit_int);
+~cat_spawn(oc_param(last_item, follower_id));
+
+[proc,cat_spawn](npc $type)
+npc_add(coord, $type, ^max_32bit_int);
 %follower_obj = nc_param(npc_type, pet_item_id);
 %follower_uid = npc_uid;
 %npc_attacking_uid = uid;

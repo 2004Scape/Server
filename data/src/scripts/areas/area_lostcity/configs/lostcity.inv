@@ -1,4 +1,4 @@
-[irksolshop]
+[cheapringshop]
 // https://classic.runescape.wiki/w/Ruby_Ring_Shop
 // http://web.archive.org/web/20060523095208im_/http://www.runehq.com/images/cityguides/irksolrubyrings.png (full stocks)
 scope=shared
@@ -8,7 +8,7 @@ stackall=yes
 allstock=no
 stock1=ruby_ring,5,500
 
-[jakutshop]
+[dragonswordshop]
 // https://oldschool.runescape.wiki/w/Jukat_(shop)
 // http://web.archive.org/web/20060523095020im_/http://www.runehq.com/images/cityguides/jakutsdragsale.png (full stocks)
 scope=shared
@@ -19,7 +19,7 @@ allstock=no
 stock1=dragon_longsword,2,500
 stock2=dragon_dagger,2,500
 
-[generalshop9]
+[generalshop8]
 // https://classic.runescape.wiki/w/Zanaris_General_Store
 // http://web.archive.org/web/20060523095122im_/http://www.runehq.com/images/cityguides/generalstore.png (full stocks)
 // https://web.archive.org/web/20071108025714im_/http://runehq.com/image/cityguides/Zanaris/generalstore.png 28,june,2006

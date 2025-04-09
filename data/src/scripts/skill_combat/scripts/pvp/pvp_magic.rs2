@@ -241,8 +241,8 @@ if (inv_total(worn, gauntlets_of_chaos) > 0 & $spell >= ^wind_bolt & $spell <= ^
 }
 return($maxhit);
 
+// https://youtu.be/1A_AITzasxE?t=431
 [queue,pvp_freeze_player](int $duration)
-mes("You've been frozen!");
 %frozen = calc(map_clock + $duration);
 walktrigger(pvp_frozen);
 

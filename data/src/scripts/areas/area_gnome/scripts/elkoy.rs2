@@ -33,7 +33,11 @@ if(%tree_progress = ^tree_started) {
     ~chatplayer("<p,happy>Hello Elkoy.");
     ~chatnpc("<p,sad>Oh my! Oh my!");
     ~chatplayer("<p,quiz>What's wrong?");
-    ~chatnpc("<p,sad>The orb, they have the orb. We're doomed.|Do you need me to show you back to the village?");
+    if(npc_type = elkoy_outmaze) {
+        ~chatnpc("<p,sad>The orb, they have the orb. We're doomed.|Do you need me to show you back to the village?");
+    } else {
+        ~chatnpc("<p,sad>The orb, they have the orb. We're doomed.|Do you need me to show you through the maze?");
+    }
 } else {
     ~chatplayer("<p,neutral>Hello.");
     ~chatnpc("<p,sad>You must retrieve the orb, or the gnome village is doomed. Do you need me to show you through the maze?");

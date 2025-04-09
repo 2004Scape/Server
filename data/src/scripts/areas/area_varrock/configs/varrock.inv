@@ -1,4 +1,4 @@
-[fancy_clothes_store]
+[fancyclothesstore]
 // https://classic.runescape.wiki/w/Tailor%27s_fancy_dress
 // https://storage.googleapis.com/tannerdino/images/varrock14.png
 scope=shared
@@ -24,7 +24,7 @@ stock15=blue_skirt,2,100
 stock16=red_cape,4,100
 stock17=eyepatch,3,2000
 
-[zaffs_superior_staffs_nonmem]
+[staffshop]
 // https://classic.runescape.wiki/w/Zaff%27s_staff_shop (differences no battlestaves.)
 scope=shared
 size=40
@@ -38,7 +38,7 @@ stock4=staff_of_water,2,1000
 stock5=staff_of_earth,2,1000
 stock6=staff_of_fire,2,1000
 
-[zaffs_superior_staffs_mem]
+[memberstaffshop]
 // https://classic.runescape.wiki/w/Zaff%27s_staff_shop
 // https://storage.googleapis.com/tannerdino/images/varrock6.png
 // https://storage.googleapis.com/tannerdino/images/rsMagicVARROCKstaffs.gif (full stocks)
@@ -55,7 +55,7 @@ stock5=staff_of_water,2,1000
 stock6=staff_of_earth,2,1000
 stock7=staff_of_fire,2,1000
 
-[thessalia_fine_clothes]
+[clotheshop]
 // https://classic.runescape.wiki/w/The_Clothes_Shop
 // https://web.archive.org/web/20060912044934im_/http://img34.imageshack.us/img34/5558/WhiteApron.jpg (full stocks)
 scope=shared
@@ -76,7 +76,7 @@ stock10=silk,5,500
 stock11=priest_gown_bottom,3,100
 stock12=priest_gown_top,3,100
 
-[auburys_rune_shop]
+[runeshop]
 // https://storage.googleapis.com/tannerdino/images/varrock12.png
 // change per 1.25%. Unsure on deathrunes
 scope=shared
@@ -93,7 +93,7 @@ stock6=bodyrune,1000,10
 stock7=chaosrune,500,100
 stock8=deathrune,500,150
 
-[varrock_swordshop]
+[swordshop]
 // https://classic.runescape.wiki/w/Varrock_Swords
 // https://storage.googleapis.com/tannerdino/images/varrock2.png
 scope=shared
@@ -120,7 +120,7 @@ stock16=black_dagger,4,1000
 stock17=mithril_dagger,3,3000
 stock18=adamant_dagger,2,12000
 
-[lowes_archery_emporium]
+[archeryshop]
 // https://oldschool.runescape.wiki/w/Lowe%27s_Archery_Emporium
 // https://storage.googleapis.com/tannerdino/images/varrock8.png
 // https://www.spookspring.com/noobsquad/imagegif/spookart/lowes.GIF
@@ -176,7 +176,7 @@ stock5=tinderbox,2,100
 stock6=chisel,2,100
 stock7=hammer,5,100
 
-[ye_old_tea_shoppe]
+[teashop]
 // https://oldschool.runescape.wiki/w/Tea_Seller
 scope=shared
 size=40

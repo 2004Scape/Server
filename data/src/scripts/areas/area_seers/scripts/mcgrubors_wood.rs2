@@ -41,7 +41,7 @@ mes("You use your spade with the vine.");
 p_delay(0);
 mes("You dig in amoungst the vines.");
 mes("You find a red vine worm.");
-if(inv_freespace(inv) = 0) {
+if(inv_freespace(inv) = 0 & inv_total(inv, red_vine_worm) = 0) {
     mes("You do not have enough space to carry this.");
     return;
 }

@@ -4,19 +4,18 @@ import ParamType from '#/cache/config/ParamType.js';
 import SpotanimType from '#/cache/config/SpotanimType.js';
 import { CoordGrid } from '#/engine/CoordGrid.js';
 import Entity from '#/engine/entity/Entity.js';
-import EntityLifeCycle from '#/engine/entity/EntityLifeCycle.js';
-import HuntVis from '#/engine/entity/hunt/HuntVis.js';
-import Interaction from '#/engine/entity/Interaction.js';
+import { EntityLifeCycle } from '#/engine/entity/EntityLifeCycle.js';
+import { HuntVis } from '#/engine/entity/hunt/HuntVis.js';
+import { Interaction } from '#/engine/entity/Interaction.js';
 import Loc from '#/engine/entity/Loc.js';
 import Npc from '#/engine/entity/Npc.js';
-import NpcIteratorType from '#/engine/entity/NpcIteratorType.js';
-import NpcMode from '#/engine/entity/NpcMode.js';
-import NpcStat from '#/engine/entity/NpcStat.js';
+import { NpcIteratorType } from '#/engine/entity/NpcIteratorType.js';
+import { NpcMode } from '#/engine/entity/NpcMode.js';
+import { NpcStat } from '#/engine/entity/NpcStat.js';
 import Obj from '#/engine/entity/Obj.js';
 import { NpcIterator } from '#/engine/script/ScriptIterators.js';
-import ScriptOpcode from '#/engine/script/ScriptOpcode.js';
+import { ScriptOpcode } from '#/engine/script/ScriptOpcode.js';
 import ScriptPointer, { ActiveNpc, checkedHandler } from '#/engine/script/ScriptPointer.js';
-import ScriptProvider from '#/engine/script/ScriptProvider.js';
 import { CommandHandlers } from '#/engine/script/ScriptRunner.js';
 import ScriptState from '#/engine/script/ScriptState.js';
 import { check, CoordValid, DurationValid, HitTypeValid, HuntTypeValid, HuntVisValid, NpcModeValid, NpcStatValid, NpcTypeValid, NumberNotNull, ParamTypeValid, QueueValid, SpotAnimTypeValid } from '#/engine/script/ScriptValidators.js';
@@ -147,12 +146,7 @@ const NpcOps: CommandHandlers = {
         const arg = state.popInt();
         const queueId = check(state.popInt(), QueueValid);
 
-        const npcType: NpcType = check(state.activeNpc.type, NpcTypeValid);
-        const script = ScriptProvider.getByTrigger(ServerTriggerType.AI_QUEUE1 + queueId - 1, npcType.id, npcType.category);
-
-        if (script) {
-            state.activeNpc.enqueueScript(script, delay, arg);
-        }
+        state.activeNpc.enqueueScript(ServerTriggerType.AI_QUEUE1 + queueId - 1, delay, arg);
     }),
 
     [ScriptOpcode.NPC_RANGE]: checkedHandler(ActiveNpc, state => {
@@ -200,6 +194,9 @@ const NpcOps: CommandHandlers = {
         if (mode === NpcMode.NULL || mode === NpcMode.NONE || mode === NpcMode.WANDER || mode === NpcMode.PATROL) {
             state.activeNpc.clearInteraction();
             state.activeNpc.targetOp = mode;
+            if (mode === NpcMode.PATROL) {
+                state.activeNpc.clearPatrol();
+            }
             return;
         }
         state.activeNpc.targetOp = mode;
@@ -295,13 +292,14 @@ const NpcOps: CommandHandlers = {
         const huntvis: HuntVis = check(checkVis, HuntVisValid);
 
         let closestNpc;
-        let closestDistance = distance;
+        let closestDistance = Number.MAX_SAFE_INTEGER;
 
         const npcs = new NpcIterator(World.currentTick, position.level, position.x, position.z, distance, huntvis, NpcIteratorType.DISTANCE);
 
         for (const npc of npcs) {
             if (npc && npc.type === npcType.id) {
-                const npcDistance = CoordGrid.distanceToSW(position, npc);
+                // Picks the smallest euclidean distance
+                const npcDistance = CoordGrid.euclideanSquaredDistance(position, npc);
                 if (npcDistance <= closestDistance) {
                     closestNpc = npc;
                     closestDistance = npcDistance;
@@ -312,7 +310,7 @@ const NpcOps: CommandHandlers = {
             state.pushInt(0);
             return;
         }
-        // not necessary but if we want to refer to the original npc again, we can
+
         state.activeNpc = closestNpc;
         state.pointerAdd(ActiveNpc[state.intOperand]);
         state.pushInt(1);
@@ -327,11 +325,6 @@ const NpcOps: CommandHandlers = {
         const huntvis: HuntVis = check(checkVis, HuntVisValid);
 
         state.npcIterator = new NpcIterator(World.currentTick, position.level, position.x, position.z, distance, huntvis, NpcIteratorType.DISTANCE);
-        // not necessary but if we want to refer to the original npc again, we can
-        if (state._activeNpc) {
-            state._activeNpc2 = state._activeNpc;
-            state.pointerAdd(ScriptPointer.ActiveNpc2);
-        }
     },
 
     [ScriptOpcode.NPC_FINDALL]: state => {
@@ -343,22 +336,12 @@ const NpcOps: CommandHandlers = {
         const huntvis: HuntVis = check(checkVis, HuntVisValid);
 
         state.npcIterator = new NpcIterator(World.currentTick, position.level, position.x, position.z, distance, huntvis, NpcIteratorType.DISTANCE, npcType);
-        // not necessary but if we want to refer to the original npc again, we can
-        if (state._activeNpc) {
-            state._activeNpc2 = state._activeNpc;
-            state.pointerAdd(ScriptPointer.ActiveNpc2);
-        }
     },
 
     [ScriptOpcode.NPC_FINDALLZONE]: state => {
         const coord: CoordGrid = check(state.popInt(), CoordValid);
 
         state.npcIterator = new NpcIterator(World.currentTick, coord.level, coord.x, coord.z, 0, 0, NpcIteratorType.ZONE);
-        // not necessary but if we want to refer to the original npc again, we can
-        if (state._activeNpc) {
-            state._activeNpc2 = state._activeNpc;
-            state.pointerAdd(ScriptPointer.ActiveNpc2);
-        }
     },
 
     [ScriptOpcode.NPC_FINDNEXT]: state => {
@@ -394,6 +377,14 @@ const NpcOps: CommandHandlers = {
         check(duration, DurationValid);
 
         state.activeNpc.changeType(npcType, duration);
+    }),
+
+    [ScriptOpcode.NPC_CHANGETYPE_KEEPALL]: checkedHandler(ActiveNpc, state => {
+        const [id, duration] = state.popInts(2);
+        const npcType: number = check(id, NpcTypeValid).id;
+        check(duration, DurationValid);
+
+        state.activeNpc.changeType(npcType, duration, false);
     }),
 
     [ScriptOpcode.NPC_GETMODE]: checkedHandler(ActiveNpc, state => {

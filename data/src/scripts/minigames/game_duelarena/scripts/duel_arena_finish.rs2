@@ -7,6 +7,7 @@ clearqueue(duel_finish);
 queue(duel_finish, 0);
 
 if (.finduid(%duelpartner) = true) {
+    session_log(^log_moderator, "Lost a duel against <.name>");
     .if_close;
     .%duelstatus = ^duelstatus_victory;
     .clearqueue(duel_finish);
@@ -14,7 +15,9 @@ if (.finduid(%duelpartner) = true) {
 }
 // ur able to get double mes if opponent kills u with knives: https://youtu.be/KRDZJKa1whI?list=PLn23LiLYLb1bQ7Hwp77KoNBjKvpZQTfJT&t=12
 midi_jingle(^death_jingle_2, ^death_jingle_2_millis);
-mes("Oh dear you are dead.");
+// https://storage.googleapis.com/tannerdino/images/6543.jpg
+// https://youtu.be/gWmwSYxzUfo
+mes("Oh dear you are dead!");
 
 
 [queue,duel_finish]
@@ -22,6 +25,7 @@ if (.finduid(%duelpartner) = true) {
     if (%duelstatus = ^duelstatus_victory) {
         if_settext(duel_win:com_99, "You are victorious!");
         mes("Well done! You have defeated <.displayname>!");
+        session_log(^log_moderator, "Won a duel against <.name>");
         midi_jingle(^duel_win_2_jingle, ^duel_win_2_jingle_millis);
         ~duel_reset_all;
         ~duel_spoils;
@@ -29,6 +33,7 @@ if (.finduid(%duelpartner) = true) {
     } else if (%duelstatus = ^duelstatus_opponent_resigned) {
         if_settext(duel_win:com_99, "You are victorious! Your opponent resigned!"); // 2006
         mes("Well done! <.displayname> resigned!"); // 2006
+        session_log(^log_moderator, "Won a duel by forfeit against <.name>");
         midi_jingle(^duel_win_2_jingle, ^duel_win_2_jingle_millis);
         ~duel_reset_all;
         ~duel_spoils;
@@ -46,8 +51,8 @@ if_settext(duel_win:combat_level, tostring(~.player_combat_level));
 ~duel_give_stake_back;
 
 // take stuff from other player's stakeinv
-.both_moveinv(stakeinv, stakeinv);
-inv_transmit(stakeinv, duel_win:spoils);
+.both_moveinv(duelarrows, duelarrows);
+inv_transmit(duelarrows, duel_win:spoils);
 
 [proc,duel_reset_all]
 if (~in_duel_arena(coord) = false) {
@@ -55,16 +60,15 @@ if (~in_duel_arena(coord) = false) {
 }
 // get arrows back
 def_int $i = 0;
-while ($i < inv_size(tempinv)) {
-    if (inv_getobj(tempinv, $i) ! null) {
-        inv_movefromslot(tempinv, inv, $i);
+while ($i < inv_size(tradeoffer)) {
+    if (inv_getobj(tradeoffer, $i) ! null) {
+        inv_movefromslot(tradeoffer, inv, $i);
     }
     $i = calc($i + 1);
 }
 
 buildappearance(worn);
 ~prayer_deactivate_all;
-~follower_death;
 p_telejump(~duel_arena_finish_coord(coord));
 anim(null, 0);
 p_stopaction;
@@ -77,15 +81,15 @@ clearqueue(player_death_default);
 ~clear_poison;
 ~update_all(inv_getobj(worn, ^wearpos_rhand));
 hint_stop;
-%duelstatus = 0;
+%duelstatus = ^duelstatus_reset;
 %duelpartner = null;
 
 [proc,duel_give_stake_back]
 def_int $i = 0;
-while ($i < inv_size(stakeinv)) {
-    if (inv_getobj(stakeinv, $i) ! null) {
+while ($i < inv_size(duelarrows)) {
+    if (inv_getobj(duelarrows, $i) ! null) {
         //mes("<oc_debugname(inv_getobj(stakeinv, $i))>: <tostring(inv_getnum(tempinv, $i))>");
-        inv_movefromslot(stakeinv, inv, $i);
+        inv_movefromslot(duelarrows, inv, $i);
     }
     $i = calc($i + 1);
 }

@@ -9,6 +9,7 @@ export default class BuildArea {
     readonly player: Player;
     readonly loadedZones: Set<number>;
     readonly activeZones: Set<number>;
+    readonly mapsquares: Set<number>;
     
     lastBuild: number = -1;
 
@@ -16,12 +17,14 @@ export default class BuildArea {
         this.player = player;
         this.loadedZones = new Set();
         this.activeZones = new Set();
+        this.mapsquares = new Set();
     }
 
     clear(reconnecting: boolean): void {
         if (!reconnecting) {
             this.activeZones.clear();
             this.loadedZones.clear();
+            this.mapsquares.clear();
         }
     }
 
@@ -62,7 +65,25 @@ export default class BuildArea {
 
         // if the build area should be regenerated, do so now
         if (this.player.x < reloadLeftX || this.player.z < reloadBottomZ || this.player.x > reloadRightX - 1 || this.player.z > reloadTopZ - 1 || reconnect) {
-            this.player.write(new RebuildNormal(CoordGrid.zone(this.player.x), CoordGrid.zone(this.player.z)));
+            const zoneX: number = CoordGrid.zone(this.player.x);
+            const zoneZ: number = CoordGrid.zone(this.player.z);
+
+            this.mapsquares.clear();
+            const minX: number = zoneX - 6;
+            const maxX: number = zoneX + 6;
+            const minZ: number = zoneZ - 6;
+            const maxZ: number = zoneZ + 6;
+
+            // build area is 13x13 zones (8*13 = 104 tiles), so we need to load 6 zones in each direction
+            for (let x: number = minX; x <= maxX; x++) {
+                const mx: number = CoordGrid.mapsquare(x << 3);
+                for (let z: number = minZ; z <= maxZ; z++) {
+                    const mz: number = CoordGrid.mapsquare(z << 3);
+                    this.mapsquares.add((mx << 8) | mz);
+                }
+            }
+
+            this.player.write(new RebuildNormal(zoneX, zoneZ, this.mapsquares));
 
             this.player.originX = this.player.x;
             this.player.originZ = this.player.z;

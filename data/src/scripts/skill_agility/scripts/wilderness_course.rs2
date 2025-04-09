@@ -122,7 +122,10 @@ mes("You skillfully edge across the gap.");
 ~update_wilderness_varp(4);
 
 [oploc1,wilderness_rocks]
-~agility_force_move(0, human_rock_climb, movecoord(coord, 0, 0, -4));
+~set_readywalk_bas(seq_738, seq_737);
+~forcemove(loc_coord);
+~forcemove(movecoord(coord, 0, 0, -3));
+~update_bas;
 ~update_wilderness_varp(5);
 
 [label,fail_ridge]

@@ -1,7 +1,7 @@
 import DbRowType from '#/cache/config/DbRowType.js';
 import DbTableType from '#/cache/config/DbTableType.js';
 import ScriptVarType from '#/cache/config/ScriptVarType.js';
-import ScriptOpcode from '#/engine/script/ScriptOpcode.js';
+import { ScriptOpcode } from '#/engine/script/ScriptOpcode.js';
 import { CommandHandlers } from '#/engine/script/ScriptRunner.js';
 import { check, DbRowTypeValid, DbTableTypeValid } from '#/engine/script/ScriptValidators.js';
 
@@ -70,8 +70,18 @@ const DebugOps: CommandHandlers = {
         state.pushInt(rowType.columnValues[column].length / tableType.types[column].length);
     },
 
-    [ScriptOpcode.DB_LISTALL_WITH_COUNT]: () => {
-        throw new Error('unimplemented');
+    [ScriptOpcode.DB_LISTALL_WITH_COUNT]: state => {
+        const table = state.popInt();
+        state.dbTable = check(table, DbTableTypeValid);
+        state.dbRow = -1;
+        state.dbRowQuery = [];
+
+        const rows = DbRowType.getInTable(table);
+        for (let i = 0; i < rows.length; i++) {
+            const row = rows[i];
+            state.dbRowQuery.push(row.id);
+        }
+        state.pushInt(state.dbRowQuery.length);
     },
 
     [ScriptOpcode.DB_GETROWTABLE]: state => {
@@ -146,8 +156,17 @@ const DebugOps: CommandHandlers = {
         state.pushInt(state.dbRowQuery.length);
     },
 
-    [ScriptOpcode.DB_LISTALL]: () => {
-        throw new Error('unimplemented');
+    [ScriptOpcode.DB_LISTALL]: state => {
+        const table = state.popInt();
+        state.dbTable = check(table, DbTableTypeValid);
+        state.dbRow = -1;
+        state.dbRowQuery = [];
+
+        const rows = DbRowType.getInTable(table);
+        for (let i = 0; i < rows.length; i++) {
+            const row = rows[i];
+            state.dbRowQuery.push(row.id);
+        }
     }
 };
 

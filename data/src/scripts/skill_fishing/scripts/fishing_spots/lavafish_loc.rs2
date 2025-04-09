@@ -67,3 +67,4 @@ if (%action_delay < map_clock) {
 } else if (%action_delay = map_clock) {
     ~fish_roll_loc(raw_lava_eel, null, fishing_bait);
 }
+p_oploc(3);
