@@ -2,8 +2,8 @@
 ~open_chest(loc_2418);
 
 [oploc2,loc_2418]
-inv_transmit(partyroominv, party_drop_chest:inv);
-inv_transmit(partyroomoffer, party_drop_chest:playerinv);
+inv_transmit(partyroom_dropinv, party_drop_chest:inv);
+inv_transmit(partyroom_tempinv, party_drop_chest:playerinv);
 inv_transmit(inv, party_drop_chest_side:inv);
 if_openmain_side(party_drop_chest, party_drop_chest_side);
 
@@ -11,7 +11,7 @@ if_openmain_side(party_drop_chest, party_drop_chest_side);
 inv_stoptransmit(party_drop_chest_side:inv);
 inv_stoptransmit(party_drop_chest:inv);
 inv_stoptransmit(party_drop_chest:playerinv);
-~moveallinv(partyroomoffer, inv);
+~moveallinv(partyroom_tempinv, inv);
 
 [oploc3,loc_2418]
 ~close_chest(loc_2417);
@@ -28,10 +28,10 @@ if ($amount <= 0) {
     if (last_int <= 0) return;
     $amount = last_int;
 }
-def_obj $obj = inv_getobj(partyroomoffer, $slot);
-def_int $total = inv_total(partyroomoffer, $obj);
+def_obj $obj = inv_getobj(partyroom_tempinv, $slot);
+def_int $total = inv_total(partyroom_tempinv, $obj);
 if ($amount < $total) $total = $amount;
-inv_moveitem(partyroomoffer, inv, $obj, $total);
+inv_moveitem(partyroom_tempinv, inv, $obj, $total);
 
 [inv_button1,party_drop_chest_side:inv] @deposit_partychest(last_slot, 1);
 [inv_button2,party_drop_chest_side:inv] @deposit_partychest(last_slot, 5);
@@ -54,25 +54,25 @@ if (oc_tradeable($obj) = false) { // also map_members check (after room is moved
 }
 def_int $total = inv_total(inv, $obj);
 if ($amount < $total) $total = $amount;
-if(oc_stackable($obj) = false & $total > inv_freespace(partyroomoffer)) $total = inv_freespace(partyroomoffer);
-if($total = 0 | inv_itemspace(partyroomoffer, $obj, $total, inv_size(partyroomoffer)) = false) {
+if(oc_stackable($obj) = false & $total > inv_freespace(partyroom_tempinv)) $total = inv_freespace(partyroom_tempinv);
+if($total = 0 | inv_itemspace(partyroom_tempinv, $obj, $total, inv_size(partyroom_tempinv)) = false) {
     mes("You must accept the current items before adding any more."); // 2006 https://www.youtube.com/watch?v=Ve5UF8B3BMw&t=194s
     return;
 }
-inv_moveitem(inv, partyroomoffer, $obj, $total);
+inv_moveitem(inv, partyroom_tempinv, $obj, $total);
 
 [if_button,party_drop_chest:com_94]
 def_int $i = 0;
 def_boolean $moveditem = false;
-if(inv_freespace(partyroomoffer) = inv_size(partyroomoffer)) {
+if(inv_freespace(partyroom_tempinv) = inv_size(partyroom_tempinv)) {
     return;
 }
-while($i < inv_size(partyroomoffer)) {
-    def_obj $obj = inv_getobj(partyroomoffer, $i);
-    def_int $count = inv_getnum(partyroomoffer, $i);
+while($i < inv_size(partyroom_tempinv)) {
+    def_obj $obj = inv_getobj(partyroom_tempinv, $i);
+    def_int $count = inv_getnum(partyroom_tempinv, $i);
     if ($obj ! null) {
-        if(inv_itemspace(partyroominv, $obj, $count, inv_size(partyroominv)) = true) {
-            inv_moveitem(partyroomoffer, partyroominv, $obj, $count);
+        if(inv_itemspace(partyroom_dropinv, $obj, $count, inv_size(partyroom_dropinv)) = true) {
+            inv_moveitem(partyroom_tempinv, partyroom_dropinv, $obj, $count);
             wealth_log(false, $count, "Deposited <oc_debugname($obj)> x<tostring($count)> in the party room chest");
             $moveditem = true;
         }

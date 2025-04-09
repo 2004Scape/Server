@@ -53,7 +53,7 @@ def_boolean $skulled = false;
 if (%pk_skull > 0) { $skulled = true; }
 def_boolean $protecting_item = false;
 if (%prayer_protectitems = ^true) { $protecting_item = true; }
-inv_clear(death);
+inv_clear(deathkeep);
 
 if($skulled = false) {
     ~move_priciest_item_on_hero_to_death;
@@ -89,8 +89,8 @@ while ($i < $size) {
 inv_dropall(inv, coord, 200);
 inv_dropall(worn, coord, 200);
 obj_addall(coord, bones, 1, 200);
-~moveallinv(death, inv);
-inv_clear(death);
+~moveallinv(deathkeep, inv);
+inv_clear(deathkeep);
 
 [proc,pvp_death_lose_items]
 ~pvp_death_message(.uid);
@@ -100,7 +100,7 @@ def_boolean $skulled = false;
 if (%pk_skull > 0) { $skulled = true; }
 def_boolean $protecting_item = false;
 if (%prayer_protectitems = ^true) { $protecting_item = true; }
-inv_clear(death);
+inv_clear(deathkeep);
 
 if($skulled = false) {
     ~move_priciest_item_on_hero_to_death;
@@ -139,8 +139,8 @@ while ($i < $size) {
     $i = calc($i + 1);
 }
 .obj_add(coord, bones, 1, 200);
-~moveallinv(death, inv);
-inv_clear(death);
+~moveallinv(deathkeep, inv);
+inv_clear(deathkeep);
 
 
 [proc,move_priciest_item_on_hero_to_death]
@@ -182,9 +182,9 @@ if($priciest_item = null ) {
     return;
 }
 if($is_worn = true) {
-    inv_moveitem(worn,death,$priciest_item,1);
+    inv_moveitem(worn,deathkeep,$priciest_item,1);
 } else {
-    inv_moveitem(inv,death,$priciest_item,1);
+    inv_moveitem(inv,deathkeep,$priciest_item,1);
 }
 
 [debugproc,death]

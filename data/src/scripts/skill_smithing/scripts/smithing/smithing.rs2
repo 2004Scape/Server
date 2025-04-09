@@ -110,39 +110,39 @@ switch_obj ($last_item)
         } else {
             %smithing_level = calc($player_level + 1);
         }
-        inv_transmit(bronze1, smithing:column1);
-        inv_transmit(bronze2, smithing:column2);
-        inv_transmit(bronze3, smithing:column3);
-        inv_transmit(bronze4, smithing:column4);
-        inv_transmit(bronze5, smithing:column5);
+        inv_transmit(smithing_bronze1, smithing:column1);
+        inv_transmit(smithing_bronze2, smithing:column2);
+        inv_transmit(smithing_bronze3, smithing:column3);
+        inv_transmit(smithing_bronze4, smithing:column4);
+        inv_transmit(smithing_bronze5, smithing:column5);
     case iron_bar :
         %smithing_level = calc($player_level - 14);
-        inv_transmit(iron1, smithing:column1);
-        inv_transmit(iron2, smithing:column2);
-        inv_transmit(iron3, smithing:column3);
-        inv_transmit(iron4, smithing:column4);
-        inv_transmit(iron5, smithing:column5);
+        inv_transmit(smithing_iron1, smithing:column1);
+        inv_transmit(smithing_iron2, smithing:column2);
+        inv_transmit(smithing_iron3, smithing:column3);
+        inv_transmit(smithing_iron4, smithing:column4);
+        inv_transmit(smithing_iron5, smithing:column5);
     case steel_bar :
         %smithing_level = calc($player_level - 29);
-        inv_transmit(steel1, smithing:column1);
-        inv_transmit(steel2, smithing:column2);
-        inv_transmit(steel3, smithing:column3);
-        inv_transmit(steel4, smithing:column4);
-        inv_transmit(steel5, smithing:column5);
+        inv_transmit(smithing_steel1, smithing:column1);
+        inv_transmit(smithing_steel2, smithing:column2);
+        inv_transmit(smithing_steel3, smithing:column3);
+        inv_transmit(smithing_steel4, smithing:column4);
+        inv_transmit(smithing_steel5, smithing:column5);
     case mithril_bar :
         %smithing_level = calc($player_level - 49);
-        inv_transmit(mithril1, smithing:column1);
-        inv_transmit(mithril2, smithing:column2);
-        inv_transmit(mithril3, smithing:column3);
-        inv_transmit(mithril4, smithing:column4);
-        inv_transmit(mithril5, smithing:column5);
+        inv_transmit(smithing_mithril1, smithing:column1);
+        inv_transmit(smithing_mithril2, smithing:column2);
+        inv_transmit(smithing_mithril3, smithing:column3);
+        inv_transmit(smithing_mithril4, smithing:column4);
+        inv_transmit(smithing_mithril5, smithing:column5);
     case adamantite_bar :
         %smithing_level = calc($player_level - 69);
-        inv_transmit(adamantite1, smithing:column1);
-        inv_transmit(adamantite2, smithing:column2);
-        inv_transmit(adamantite3, smithing:column3);
-        inv_transmit(adamantite4, smithing:column4);
-        inv_transmit(adamantite5, smithing:column5);
+        inv_transmit(smithing_adamant1, smithing:column1);
+        inv_transmit(smithing_adamant2, smithing:column2);
+        inv_transmit(smithing_adamant3, smithing:column3);
+        inv_transmit(smithing_adamant4, smithing:column4);
+        inv_transmit(smithing_adamant5, smithing:column5);
     case runite_bar :
         // rune platebody, legs, and skirt go past 99 smithing
         if ($player_level > 98) {
@@ -150,11 +150,11 @@ switch_obj ($last_item)
         } else {
             %smithing_level = calc($player_level - 84);
         }
-        inv_transmit(runite1, smithing:column1);
-        inv_transmit(runite2, smithing:column2);
-        inv_transmit(runite3, smithing:column3);
-        inv_transmit(runite4, smithing:column4);
-        inv_transmit(runite5, smithing:column5);
+        inv_transmit(smithing_rune1, smithing:column1);
+        inv_transmit(smithing_rune2, smithing:column2);
+        inv_transmit(smithing_rune3, smithing:column3);
+        inv_transmit(smithing_rune4, smithing:column4);
+        inv_transmit(smithing_rune5, smithing:column5);
     case default :
         ~displaymessage(^dm_default);
         return;
