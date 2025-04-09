@@ -850,9 +850,10 @@ category=macro_event_watchman
 param=attack_anim,human_blunt_crush
 param=defend_anim,human_blunt_defend2
 param=attack_sound,mace_crush
-// param=defend_sound,blade3_mail
+// param=defend_sound,
 param=damagetype,^crush_style
 param=combat_xp_multiplier,25
+// defend_sound blade3_mail
 // https://storage.googleapis.com/tannerdino/images/watchman.PNG here we can see defend animation.
 
 [macro_event_watchman2]
@@ -885,9 +886,10 @@ category=macro_event_watchman
 param=attack_anim,human_blunt_crush
 param=defend_anim,human_blunt_defend2
 param=attack_sound,mace_crush
-// param=defend_sound,blade3_mail
+// param=defend_sound,
 param=damagetype,^crush_style
 param=combat_xp_multiplier,25
+// defend_sound blade3_mail
 
 [macro_event_watchman3]
 name=Watchman
@@ -919,9 +921,10 @@ category=macro_event_watchman
 param=attack_anim,human_blunt_crush
 param=defend_anim,human_blunt_defend2
 param=attack_sound,mace_crush
-// param=defend_sound,blade3_mail
+// param=defend_sound,
 param=damagetype,^crush_style
 param=combat_xp_multiplier,25
+// defend_sound blade3_mail
 
 [macro_event_watchman4]
 name=Watchman
@@ -953,9 +956,10 @@ category=macro_event_watchman
 param=attack_anim,human_blunt_crush
 param=defend_anim,human_blunt_defend2
 param=attack_sound,mace_crush
-// param=defend_sound,blade3_mail
+// param=defend_sound,
 param=damagetype,^crush_style
 param=combat_xp_multiplier,25
+// defend_sound blade3_mail
 
 [macro_event_watchman5]
 name=Watchman
@@ -987,9 +991,10 @@ category=macro_event_watchman
 param=attack_anim,human_blunt_crush
 param=defend_anim,human_blunt_defend2
 param=attack_sound,mace_crush
-// param=defend_sound,blade3_mail
+// param=defend_sound,
 param=damagetype,^crush_style
 param=combat_xp_multiplier,25
+// defend_sound blade3_mail
 
 [macro_event_watchman6]
 name=Watchman
@@ -1021,9 +1026,10 @@ category=macro_event_watchman
 param=attack_anim,human_blunt_crush
 param=defend_anim,human_blunt_defend2
 param=attack_sound,mace_crush
-// param=defend_sound,blade3_mail
+// param=defend_sound,
 param=damagetype,^crush_style
 param=combat_xp_multiplier,25
+// defend_sound blade3_mail
 
 [brownimp]
 name=Brownie

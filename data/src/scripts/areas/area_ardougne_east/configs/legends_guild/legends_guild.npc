@@ -47,7 +47,7 @@ param=attack_anim,human_trans_axe_chop
 param=defend_anim,human_trans_axe_def
 param=death_anim,earthwarrior_death
 param=attack_sound,baxe_slash
-// param=defend_sound,steel
+param=defend_sound,steel
 huntmode=cowardly
 huntrange=1
 // osrs stats and Vislvl match 1:1

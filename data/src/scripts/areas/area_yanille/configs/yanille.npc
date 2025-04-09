@@ -36,7 +36,8 @@ param=damagetype,^stab_style
 param=attack_anim,human_sword_stab
 param=defend_anim,human_sword_defend2
 param=attack_sound,stabsword_stab
-// param=defend_sound,big_bar_mail
+// param=defend_sound,
+// osrs defend_sound blade3_mail
 // Stats match osrs version but our version Vislvl is different.
 // https://raw.githubusercontent.com/Joshua-F/osrs-dumps/refs/heads/master/config/dump.npc npc_4405
 
@@ -83,7 +84,7 @@ param=damagetype,^slash_style
 param=attack_anim,human_baxe_slash
 param=defend_anim,human_baxe_defend1
 param=attack_sound,baxe_slash
-// param=defend_sound,blade2
+param=defend_sound,blade2
 // Stats match osrs version but our version Vislvl is different.
 // https://raw.githubusercontent.com/Joshua-F/osrs-dumps/refs/heads/master/config/dump.npc npc_4406
 
@@ -209,8 +210,9 @@ param=damagetype,^crush_style
 param=attack_anim,human_blunt_crush
 param=defend_anim,human_blunt_defend1
 param=attack_sound,mace_crush
-// param=defend_sound,steel_mail
-// osrs attack sound warhammer_crush
+// param=defend_sound,
+// osrs defend_sound steel_mail
+// osrs attack_sound warhammer_crush
 huntmode=cowardly
 huntrange=1
 // osrs stats and Vislvl match 1:1
