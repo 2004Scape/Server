@@ -38,7 +38,7 @@ if (~gnome_cocktail ! null) {
 
 [label,cocktail_mix_blurberry_special]
 if (inv_total(inv, vodka) < 1 | inv_total(inv, gin) < 1 | inv_total(inv, brandy) < 1 | inv_total(inv, lemon) < 2 | inv_total(inv, orange) < 1) {
-    mes("You don't have the ingredients to mix this drink."); // guess
+    ~mesbox("You don't have all the ingredients."); // guess based on osrs
     return;
 }
 mes("You mix the ingredients into the shaker."); // guess
@@ -52,7 +52,7 @@ inv_del(inv, orange, 1);
 
 [label,cocktail_mix_chocolate_saturday]
 if (inv_total(inv, whisky) < 1 | inv_total(inv, equa_leaves) < 1 | inv_total(inv, bucket_milk) < 1) {
-    mes("You don't have the ingredients to mix this drink."); // guess
+    ~mesbox("You don't have all the ingredients."); // guess based on osrs
     return;
 }
 mes("You mix the ingredients into the shaker."); // guess
@@ -65,7 +65,7 @@ inv_add(inv, bucket_empty, 1);
 
 [label,cocktail_mix_drunk_dragon]
 if (inv_total(inv, vodka) < 1 | inv_total(inv, gin) < 1 | inv_total(inv, dwellberry) < 1) {
-    mes("You don't have the ingredients to mix this drink."); // guess
+    ~mesbox("You don't have all the ingredients."); // guess based on osrs
     return;
 }
 mes("You mix the ingredients into the shaker."); // guess
@@ -77,7 +77,7 @@ inv_del(inv, dwellberry, 1);
 
 [label,cocktail_mix_fruit_blast]
 if (inv_total(inv, pineapple) < 1 | inv_total(inv, orange) < 1 | inv_total(inv, lemon) < 1) {
-    mes("You don't have the ingredients to mix this drink."); // guess
+    ~mesbox("You don't have all the ingredients."); // guess based on osrs
     return;
 }
 mes("You mix the ingredients into the shaker."); // guess
@@ -89,7 +89,7 @@ inv_del(inv, lemon, 1);
 
 [label,cocktail_mix_pineapple_punch]
 if (inv_total(inv, pineapple) < 2 | inv_total(inv, orange) < 1 | inv_total(inv, lemon) < 1) {
-    mes("You don't have the ingredients to mix this drink."); // guess
+    ~mesbox("You don't have all the ingredients."); // guess based on osrs
     return;
 }
 mes("You mix the ingredients into the shaker."); // guess
@@ -101,7 +101,7 @@ inv_del(inv, lemon, 1);
 
 [label,cocktail_mix_short_green_guy]
 if (inv_total(inv, vodka) < 1 | inv_total(inv, lime) < 3) {
-    mes("You don't have the ingredients to mix this drink."); // guess
+    ~mesbox("You don't have all the ingredients."); // guess based on osrs
     return;
 }
 mes("You mix the ingredients into the shaker."); // guess
@@ -112,7 +112,7 @@ inv_del(inv, lime, 3);
 
 [label,cocktail_mix_wizard_blizzard]
 if (inv_total(inv, vodka) < 2 | inv_total(inv, gin) < 1 | inv_total(inv, pineapple) < 1 | inv_total(inv, orange) < 1 | inv_total(inv, lime) < 1 | inv_total(inv, lemon) < 1) {
-    mes("You don't have the ingredients to mix this drink."); // guess
+    ~mesbox("You don't have all the ingredients."); // guess based on osrs
     return;
 }
 mes("You mix the ingredients into the shaker."); // guess
@@ -130,7 +130,7 @@ if ($cocktail = null) {
     mes("You need to put some contents into the shaker."); // rsc
     return;
 }
-mes("You pour the contents into a glass."); // rsc
+mes("You pour the mixture into a Cocktail Glass."); // similar to rsc sorta, and based on thie wording in https://web.archive.org/web/20060518202311/http://runevillage.com/rs2SpecialReports/rs2specialCocktail.php
 inv_del(inv, cocktail_glass, 1);
 inv_add(inv, $cocktail, 1);
 %gnome_cuisine_var = setbit_range_toint(%gnome_cuisine_var, ^gnome_cuisine_empty, ^gnome_cocktail_start_bit, ^gnome_cocktail_end_bit);

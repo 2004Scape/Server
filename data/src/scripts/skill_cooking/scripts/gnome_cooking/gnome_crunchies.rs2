@@ -21,7 +21,7 @@ if (~gnome_crunchies ! odd_crunchies) {
 
 [label,crunchies_prep_spicy]
 if (inv_total(inv, gnome_spice) < 1 | inv_total(inv, equa_leaves) < 2) {
-    mes("You don't have the ingredients to prepare this cuisine."); // guess
+    ~mesbox("You don't have all the ingredients."); // guess based on osrs
     return;
 }
 mes("You put the ingredients into the crunchies."); // guess
@@ -31,7 +31,7 @@ inv_del(inv, equa_leaves, 2);
 
 [label,crunchies_prep_toad]
 if (inv_total(inv, toad_legs) < 2 | inv_total(inv, gnome_spice) < 1) {
-    mes("You don't have the ingredients to prepare this cuisine."); // guess
+    ~mesbox("You don't have all the ingredients."); // guess based on osrs
     return;
 }
 mes("You put the ingredients into the crunchies."); // guess
@@ -42,7 +42,7 @@ inv_del(inv, toad_legs, 2);
 
 [label,crunchies_prep_worm]
 if (inv_total(inv, king_worm) < 2 | inv_total(inv, equa_leaves) < 1 | inv_total(inv, gnome_spice) < 1) {
-    mes("You don't have the ingredients to prepare this cuisine."); // guess
+    ~mesbox("You don't have all the ingredients."); // guess based on osrs
     return;
 }
 mes("You put the ingredients into the crunchies."); // guess
@@ -54,7 +54,7 @@ inv_del(inv, equa_leaves, 1);
 
 [label,crunchies_prep_choc_chip]
 if (inv_total(inv, chocolate_bar) < 2 | inv_total(inv, gnome_spice) < 1) {
-    mes("You don't have the ingredients to prepare this cuisine."); // guess
+    ~mesbox("You don't have all the ingredients."); // guess based on osrs
     return;
 }
 mes("You put the ingredients into the crunchies."); // guess

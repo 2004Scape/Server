@@ -17,7 +17,7 @@ if (~gnome_bowl ! odd_gnomebowl) {
 
 [label,bowl_prep_chocolate_bomb]
 if (inv_total(inv, chocolate_bar) < 4 | inv_total(inv, equa_leaves) < 1) {
-    mes("You don't have the ingredients to prepare this cuisine."); // guess
+    ~mesbox("You don't have all the ingredients."); // guess based on osrs
     return;
 }
 mes("You put the ingredients into the bowl.");
@@ -28,7 +28,7 @@ inv_del(inv, equa_leaves, 1);
 
 [label,bowl_prep_veg_ball]
 if (inv_total(inv, onion) < 2 | inv_total(inv, potato) < 2 | inv_total(inv, gnome_spice) < 1) {
-    mes("You don't have the ingredients to prepare this cuisine."); // guess
+    ~mesbox("You don't have all the ingredients."); // guess based on osrs
     return;
 }
 mes("You put the ingredients into the bowl.");
@@ -40,7 +40,7 @@ inv_del(inv, potato, 2);
 
 [label,bowl_prep_worm_hole]
 if (inv_total(inv, king_worm) < 4 | inv_total(inv, onion) < 2 | inv_total(inv, gnome_spice) < 1) {
-    mes("You don't have the ingredients to prepare this cuisine."); // guess
+    ~mesbox("You don't have all the ingredients."); // guess based on osrs
     return;
 }
 mes("You put the ingredients into the bowl.");
@@ -52,7 +52,7 @@ inv_del(inv, onion, 2);
 
 [label,bowl_prep_tangled_toad]
 if (inv_total(inv, toad_legs) < 4 | inv_total(inv, cheese) < 2 | inv_total(inv, equa_leaves) < 2 | inv_total(inv, gnome_spice) < 1 | inv_total(inv, dwellberry) < 1) {
-    mes("You don't have the ingredients to prepare this cuisine."); // guess
+    ~mesbox("You don't have all the ingredients."); // guess based on osrs
     return;
 }
 mes("You put the ingredients into the bowl.");
