@@ -1,4 +1,4 @@
-enum WealthEventType {
+export const enum WealthEventType {
     TRADE,
     PVP,
     STAKE,
@@ -10,9 +10,7 @@ enum WealthEventType {
     LOW_ALCHEMY,
     HIGH_ALCHEMY,
     PARTY_ROOM,
-}
-
-export default WealthEventType;
+};
 
 export const filteredEventTypes = [
     WealthEventType.DROP,

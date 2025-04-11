@@ -11,7 +11,7 @@ import { ActiveObj, ActivePlayer } from '#/engine/script/ScriptPointer.js';
 import { CommandHandlers } from '#/engine/script/ScriptRunner.js';
 import { check, CoordValid, DurationValid, InvTypeValid, ObjStackValid, ObjTypeValid, ParamTypeValid } from '#/engine/script/ScriptValidators.js';
 import World from '#/engine/World.js';
-import WealthEventType from '#/server/logger/WealthEventType.js';
+import { WealthEventType } from '#/server/logger/WealthEventType.js';
 import Environment from '#/util/Environment.js';
 
 const ObjOps: CommandHandlers = {

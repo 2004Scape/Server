@@ -13,7 +13,7 @@ import { ActiveObj, ActivePlayer, checkedHandler, ProtectedActivePlayer } from '
 import { CommandHandlers } from '#/engine/script/ScriptRunner.js';
 import { CategoryTypeValid, check, CoordValid, DurationValid, InvTypeValid, NumberNotNull, ObjStackValid, ObjTypeValid } from '#/engine/script/ScriptValidators.js';
 import World from '#/engine/World.js';
-import WealthEventType from '#/server/logger/WealthEventType.js';
+import { WealthEventType } from '#/server/logger/WealthEventType.js';
 
 const InvOps: CommandHandlers = {
     // inv config
