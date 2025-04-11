@@ -132,10 +132,10 @@ if ($spicy_worm_count > 0) {
     $string = append($string, "<~pluralise($spicy_worm_count, "Spicy worm")>, ");
 }
 if ($toad_legs_count > 0) {
-    $string = append($string, "<~pluralise($toad_legs_count, "pair")> of Toad legs, ");
+    $string = append($string, "<~pluralise($toad_legs_count, "pair")> of Toad's legs, ");
 }
 if ($seasoned_toad_legs_count > 0) {
-    $string = append($string, "<~pluralise($seasoned_toad_legs_count, "pair")> of Seasoned toad legs, ");
+    $string = append($string, "<~pluralise($seasoned_toad_legs_count, "pair")> of Seasoned toad's legs, ");
 }
 if ($cheese_count > 0) {
     $string = append($string, "<~pluralise($cheese_count, "piece")> of Cheese, ");

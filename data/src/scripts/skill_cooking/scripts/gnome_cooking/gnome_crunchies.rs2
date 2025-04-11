@@ -119,7 +119,7 @@ def_int $king_worm_count = getbit_range(%gnome_crunchies_bits2, 16, 19);
 def_int $total = calc($spicy_worm_count + $cheese_count + $seasoned_toad_legs_count + $tomato_count + $equa_leaves_count + $onion_count + $cabbage_count + $dwellberry_count + $chocolate_bar_count + $potato_count + $gnome_spice_count + $toad_legs_count + $king_worm_count);
 
 if ($total = 0) {
-    ~mesbox("The gnome crunchies are completely plain.");
+    ~mesbox("The half baked crunchies are completely plain.");
     return;
 }
 
@@ -132,10 +132,10 @@ if ($spicy_worm_count > 0) {
     $string = append($string, "<~pluralise($spicy_worm_count, "Spicy worm")>, ");
 }
 if ($toad_legs_count > 0) {
-    $string = append($string, "<~pluralise($toad_legs_count, "pair")> of Toad legs, ");
+    $string = append($string, "<~pluralise($toad_legs_count, "pair")> of Toad's legs, ");
 }
 if ($seasoned_toad_legs_count > 0) {
-    $string = append($string, "<~pluralise($seasoned_toad_legs_count, "pair")> of Seasoned toad legs, ");
+    $string = append($string, "<~pluralise($seasoned_toad_legs_count, "pair")> of Seasoned toad's legs, ");
 }
 if ($cheese_count > 0) {
     $string = append($string, "<~pluralise($cheese_count, "piece")> of Cheese, ");
