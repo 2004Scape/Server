@@ -14,7 +14,7 @@ if (%action_delay < map_clock) {
     p_oploc(1);
     return;
 }
-def_obj $axe = ~woodcutting_axe_checker;
+def_obj $axe = ~woodcutting_axe_checker(true);
 if ($axe = null) {
     return;
 }

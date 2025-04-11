@@ -62,8 +62,5 @@ if(inv_freespace(inv) = 0) {
     sound_synth(pick, 0, 0);
     mes("You pick some flax.");
     inv_add(inv, flax, 1);
-
-    def_int $respawnrate = 20;
-    $respawnrate = ~scale_by_playercount($respawnrate);
-    loc_del($respawnrate);
+    loc_del(25); // 10t after update
 }

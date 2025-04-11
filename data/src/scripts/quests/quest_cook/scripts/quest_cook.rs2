@@ -42,11 +42,11 @@ if($option = 1) {
 [label,cooks_assistant_inprogress]
 ~chatnpc("<p,sad>How are you getting on with finding the ingredients?");
 
-if(inv_total(inv, pot_of_flour) > 0 & inv_total(inv, egg) > 0 & inv_total(inv, bucket_milk) > 0) {
+if(inv_total(inv, pot_flour) > 0 & inv_total(inv, egg) > 0 & inv_total(inv, bucket_milk) > 0) {
     @cooks_assistant_completion;
 }
 
-if(inv_total(inv, pot_of_flour) = 0 & inv_total(inv, egg) = 0 & inv_total(inv, bucket_milk) = 0) {
+if(inv_total(inv, pot_flour) = 0 & inv_total(inv, egg) = 0 & inv_total(inv, bucket_milk) = 0) {
     ~chatplayer("<p,neutral>I'm afraid I don't have any yet!");
     ~chatnpc("<p,sad>Oh dear, oh dear!|I need flour, eggs and milk.|Without them I am doomed!");
     return;
@@ -55,7 +55,7 @@ if(inv_total(inv, pot_of_flour) = 0 & inv_total(inv, egg) = 0 & inv_total(inv, b
     if(inv_total(inv, bucket_milk) > 0) {
         ~chatplayer("<p,happy>I have some milk.");
     }
-    if(inv_total(inv, pot_of_flour) > 0) {
+    if(inv_total(inv, pot_flour) > 0) {
         ~chatplayer("<p,happy>I have some flour.");
     }
     if(inv_total(inv, egg) > 0) {
@@ -66,7 +66,7 @@ if(inv_total(inv, pot_of_flour) = 0 & inv_total(inv, egg) = 0 & inv_total(inv, b
 if(inv_total(inv, bucket_milk) = 0) {
     ~chatnpc("<p,happy>Some milk.");
 }
-if(inv_total(inv, pot_of_flour) = 0) {
+if(inv_total(inv, pot_flour) = 0) {
     ~chatnpc("<p,happy>Some flour.");
 }
 if(inv_total(inv, egg) = 0) {
@@ -81,7 +81,7 @@ if(inv_total(inv, egg) = 0) {
 ~mesbox("You give some milk, an egg and some flour to the cook.");
 inv_del(inv, egg, 1);
 inv_del(inv, bucket_milk, 1);
-inv_del(inv, pot_of_flour, 1);
+inv_del(inv, pot_flour, 1);
 queue(cooks_quest_complete, 0);
 
 [queue,cooks_quest_complete]
@@ -90,7 +90,7 @@ stat_advance(cooking, 3000);
 session_log(^log_adventure, "Quest complete: Cook's Assistant");
 ~send_quest_complete(questlist:cook, cake, 250, ^cook_questpoints, "You have completed the Cooks' Quest!");
 
-[oplocu,cook_range]
+[oplocu,cooksquestrange]
 if (%cook_progress < ^cook_complete) {
     if(npc_find(coord, cook, 5, 0) = true) {
         ~chatnpc("<p,angry>Hey! Who said you could use that?");

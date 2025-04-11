@@ -1,4 +1,4 @@
-[jatix_herb]
+[herbloreshop]
 // https://classic.runescape.wiki/w/Jatix%27s_Olde_Herbalist
 // https://web.archive.org/web/20111226165417im_/http://www.runehq.com/images/cityguides/Taverley/taverley_herb.png 
 // Should this store have 800 empty vial and 800 eye of newt in its selection?
@@ -12,7 +12,7 @@ stock1=vial_empty,800,100
 stock3=pestle_and_mortar,3,100
 stock4=eye_of_newt,800,20
 
-[gaius_two_handed]
+[2handedshop]
 // https://classic.runescape.wiki/w/Gaius%27_Two_Handed_Sword_Shop
 // https://web.archive.org/web/20111226165420im_/http://www.runehq.com/images/cityguides/Taverley/taverley_sword.png
 scope=shared

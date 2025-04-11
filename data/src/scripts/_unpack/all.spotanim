@@ -329,7 +329,7 @@ anim=seq_455
 
 [whirlpool]
 model=model_loc_2019_8
-anim=seq_456
+anim=whirlpool
 hasalpha=yes
 
 [spotanim_60]

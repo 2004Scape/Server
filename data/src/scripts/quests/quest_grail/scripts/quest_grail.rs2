@@ -1,4 +1,4 @@
-[oploc1,loc_24] 
+[oploc1,merlinworkshop] 
 // merlin door
 if(%grail_progress > ^grail_not_started) {
     def_boolean $entering = ~check_axis(coord, loc_coord, loc_angle);
@@ -13,11 +13,11 @@ if(%grail_progress > ^grail_not_started) {
 }
 mes("The door won't open.");
 
-[oploc1,loc_23]
+[oploc1,percy_sacks]
 // no map_members check
 ~mesbox("You hear a muffled groan. The sack wriggles slightly.");
 
-[oploc2,loc_23]
+[oploc2,percy_sacks]
 if(%grail_progress = ^grail_finding_percival) {
     ~mesbox("You hear muffled noises from the sack.|You open the sack.");
     if(npc_find(coord, sir_percival, 4, 0) = false) {
@@ -27,7 +27,7 @@ if(%grail_progress = ^grail_finding_percival) {
 }
 mes("I have no reason to do that.");
 
-[oploc1,loc_22]
+[oploc1,whistledoor]
 if(map_members = true & inv_total(inv, holy_table_napkin) > 0 & inv_total(inv, magic_whistle) < 2) { // doesn't check bank for either
     obj_add(2_48_52_35_31, magic_whistle, 1, 100); // this is intended to keep spawning 2 more each time you enter/leave
     obj_add(2_48_52_35_31, magic_whistle, 1, 100); 

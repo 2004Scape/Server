@@ -116,7 +116,7 @@ switch_obj(last_useitem) {
         p_delay(0);
         mes("The kitten laps up the milk.");
         npc_say("Purpurr");
-    case raw_shrimps, raw_anchovies, raw_sardine, raw_trout, trout, raw_salmon, salmon, raw_tuna, tuna :
+    case raw_shrimp, raw_anchovies, raw_sardine, raw_trout, trout, raw_salmon, salmon, raw_tuna, tuna :
         %cat_growth = setbit_range_toint(%cat_growth, 0, 0, 4);
         def_string $fishname = lowercase(oc_name(last_useitem));
         inv_del(inv, last_useitem, 1);
@@ -232,7 +232,10 @@ if (npc_finduid(%follower_uid) = true) {
 }
 inv_delslot(inv, last_slot);
 sound_synth(put_down, 0, 0);
-npc_add(coord, oc_param(last_item, follower_id), ^max_32bit_int);
+~cat_spawn(oc_param(last_item, follower_id));
+
+[proc,cat_spawn](npc $type)
+npc_add(coord, $type, ^max_32bit_int);
 %follower_obj = nc_param(npc_type, pet_item_id);
 %follower_uid = npc_uid;
 %npc_attacking_uid = uid;

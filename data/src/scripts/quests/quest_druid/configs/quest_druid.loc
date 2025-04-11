@@ -2,7 +2,7 @@
 name=Cauldron of Thunder
 desc=An eerie glow permeates the cauldron.
 model=model_loc_692
-anim=seq_479
+anim=cauldron
 recol1s=9513
 recol1d=25313
 recol2s=544

@@ -29,7 +29,7 @@ if(%arena_progress = ^arena_sent_jail) {
     p_delay(calc(4 - $delay_diff));
     npc_anim(seq_553, 0);
     p_delay(0);
-    if(loc_find(0_40_49_40_6, loc_79) = true) {
+    if(loc_find(0_40_49_40_6, arena_prisondoor) = true) {
         def_int $x;
         def_int $z;
         def_coord $loc_coord = loc_coord;
@@ -37,8 +37,8 @@ if(%arena_progress = ^arena_sent_jail) {
         def_locshape $shape = loc_shape;
         $x, $z = ~door_open($angle, loc_shape);
         // Temp note: dur updated
-        loc_change(loc_83, 3);
-        loc_add(movecoord($loc_coord, $x, 0, $z), loc_37, modulo(add($angle, 1), 4), $shape, 3);
+        loc_change(inviswall, 3);
+        loc_add(movecoord($loc_coord, $x, 0, $z), ctratgatea, modulo(add($angle, 1), 4), $shape, 3);
         sound_synth(grate_open, 0, 0);
     }
     p_teleport(movecoord(coord, 0, 0, -1));
@@ -51,7 +51,7 @@ if(%arena_progress = ^arena_sent_jail) {
     p_delay(1);
     npc_say("Get out there!");
     npc_setmode(null);
-    if(loc_find(0_40_49_46_16, loc_82) = true) {
+    if(loc_find(0_40_49_46_16, fightarena_door2) = true) {
         def_int $x;
         def_int $z;
         def_coord $loc_coord = loc_coord;
@@ -59,7 +59,7 @@ if(%arena_progress = ^arena_sent_jail) {
         def_locshape $shape = loc_shape;
         $x, $z = ~door_open($angle, loc_shape);
         // Temp note: dur updated
-        loc_change(loc_83, 3);
+        loc_change(inviswall, 3);
         loc_add(movecoord($loc_coord, $x, 0, $z), loc_1532, modulo(add($angle, 1), 4), $shape, 3);
         sound_synth(door_open, 0, 0);
     }

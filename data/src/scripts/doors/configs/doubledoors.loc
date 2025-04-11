@@ -181,14 +181,14 @@ category=door_right_closed
 param=next_loc_stage,loc_1561
 param=open_sound,grate_open
 
-[blackknight_double_door_left]
+[inaclefayeunopenabledoorl]
 name=Large door
 desc=Securely fastened shut.
 model=model_loc_71
 active=yes
 op1=Open
 
-[blackknight_double_door_right]
+[inaclefayeunopenabledoorr]
 name=Large door
 desc=Securely fastened shut.
 model=model_loc_71

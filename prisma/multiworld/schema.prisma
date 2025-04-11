@@ -18,7 +18,9 @@ model account {
 
     username String  @unique
     password String
+    password_updated DateTime?
     email    String?
+    oauth_provider  String?
 
     registration_ip   String?
     registration_date DateTime @default(now())

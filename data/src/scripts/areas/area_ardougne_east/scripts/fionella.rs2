@@ -1,0 +1,10 @@
+[opnpc1,fionella]
+~chatnpc("<p,neutral>Can I help you at all?");
+switch_int(~p_choice2("Yes please. What are you selling?", 1, "No thanks.", 2)) {
+    case 1 :
+        ~chatplayer("<p,neutral>Yes please. What are you selling?");
+        ~chatnpc("<p,neutral>Take a look.");
+        ~openshop_activenpc;
+    case 2 :
+        ~chatplayer("<p,neutral>No thanks"); // intentional
+}

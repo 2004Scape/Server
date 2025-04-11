@@ -55,7 +55,6 @@ if (~npc_player_hit_roll(^magic_style) = true) {
 
 // todo: dunno if this should be queued but protected access lol
 [queue,npc_freeze_player](int $duration)
-mes("You've been frozen!");
 %frozen = calc(map_clock + $duration + 1);
 walktrigger(frozen);
 

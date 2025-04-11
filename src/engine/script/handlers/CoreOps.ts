@@ -5,7 +5,7 @@ import VarSharedType from '#/cache/config/VarSharedType.js';
 import Npc from '#/engine/entity/Npc.js';
 import Player from '#/engine/entity/Player.js';
 import ScriptFile from '#/engine/script/ScriptFile.js';
-import ScriptOpcode from '#/engine/script/ScriptOpcode.js';
+import { ScriptOpcode } from '#/engine/script/ScriptOpcode.js';
 import { ProtectedActivePlayer } from '#/engine/script/ScriptPointer.js';
 import ScriptProvider from '#/engine/script/ScriptProvider.js';
 import { CommandHandlers } from '#/engine/script/ScriptRunner.js';

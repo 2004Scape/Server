@@ -6,14 +6,14 @@ import ParamType from '#/cache/config/ParamType.js';
 import SpotanimType from '#/cache/config/SpotanimType.js';
 import StructType from '#/cache/config/StructType.js';
 import { CoordGrid } from '#/engine/CoordGrid.js';
-import HuntModeType from '#/engine/entity/hunt/HuntModeType.js';
-import HuntVis from '#/engine/entity/hunt/HuntVis.js';
-import MapFindSqaureType from '#/engine/entity/MapFindSquareType.js';
+import { HuntModeType } from '#/engine/entity/hunt/HuntModeType.js';
+import { HuntVis } from '#/engine/entity/hunt/HuntVis.js';
+import { MapFindSquareType } from '#/engine/entity/MapFindSquareType.js';
 import Npc from '#/engine/entity/Npc.js';
 import Player from '#/engine/entity/Player.js';
 import { isIndoors, isLineOfSight, isLineOfWalk, isMapBlocked, layerForLocShape } from '#/engine/GameMap.js';
 import { HuntIterator, NpcHuntAllCommandIterator } from '#/engine/script/ScriptIterators.js';
-import ScriptOpcode from '#/engine/script/ScriptOpcode.js';
+import { ScriptOpcode } from '#/engine/script/ScriptOpcode.js';
 import { ActiveNpc, ActivePlayer } from '#/engine/script/ScriptPointer.js';
 import { CommandHandlers } from '#/engine/script/ScriptRunner.js';
 import ScriptState from '#/engine/script/ScriptState.js';
@@ -73,6 +73,39 @@ const ServerOps: CommandHandlers = {
 
         state.activePlayer = result.value;
         state.pointerAdd(ActivePlayer[state.intOperand]);
+        state.pushInt(1);
+    },
+
+    [ScriptOpcode.NPC_HUNT]: state => {
+        const [coord, distance, checkVis] = state.popInts(3);
+
+        const position: CoordGrid = check(coord, CoordValid);
+        // const npcType: NpcType = check(npc, NpcTypeValid);
+        check(distance, NumberNotNull);
+        const huntvis: HuntVis = check(checkVis, HuntVisValid);
+
+        let closestNpc: Npc | null = null;
+        let closestDistance = Number.MAX_SAFE_INTEGER;
+
+        const npcs = new NpcHuntAllCommandIterator(World.currentTick, position.level, position.x, position.z, distance, huntvis);
+
+        for (const npc of npcs) {
+            if (npc) {
+                // Picks the smallest euclidean distance
+                const npcDistance = CoordGrid.euclideanSquaredDistance(position, npc);
+                if (npcDistance <= closestDistance) {
+                    closestNpc = npc;
+                    closestDistance = npcDistance;
+                }
+            }
+        }
+        if (!closestNpc) {
+            state.pushInt(0);
+            return;
+        }
+
+        state.activeNpc = closestNpc;
+        state.pointerAdd(ActiveNpc[state.intOperand]);
         state.pushInt(1);
     },
 
@@ -401,7 +434,7 @@ const ServerOps: CommandHandlers = {
         const origin: CoordGrid = check(coord, CoordValid);
         const freeWorld = !Environment.NODE_MEMBERS;
         if (maxRadius < 10) {
-            if (type === MapFindSqaureType.NONE) {
+            if (type === MapFindSquareType.NONE) {
                 for (let i = 0; i < 50; i++) {
                     const distX = Math.floor(Math.random() * (2 * maxRadius + 1)) - maxRadius;
                     const distZ = Math.floor(Math.random() * (2 * maxRadius + 1)) - maxRadius;
@@ -419,7 +452,7 @@ const ServerOps: CommandHandlers = {
                         return;
                     }
                 }
-            } else if (type === MapFindSqaureType.LINEOFWALK) {
+            } else if (type === MapFindSquareType.LINEOFWALK) {
                 for (let i = 0; i < 50; i++) {
                     const distX = Math.floor(Math.random() * (2 * maxRadius + 1)) - maxRadius;
                     const distZ = Math.floor(Math.random() * (2 * maxRadius + 1)) - maxRadius;
@@ -437,7 +470,7 @@ const ServerOps: CommandHandlers = {
                         return;
                     }
                 }
-            } else if (type === MapFindSqaureType.LINEOFSIGHT) {
+            } else if (type === MapFindSquareType.LINEOFSIGHT) {
                 for (let i = 0; i < 50; i++) {
                     const distX = Math.floor(Math.random() * (2 * maxRadius + 1)) - maxRadius;
                     const distZ = Math.floor(Math.random() * (2 * maxRadius + 1)) - maxRadius;
@@ -458,7 +491,7 @@ const ServerOps: CommandHandlers = {
             }
         } else {
             // west bias (imps)
-            if (type === MapFindSqaureType.NONE) {
+            if (type === MapFindSquareType.NONE) {
                 for (let x = origin.x - maxRadius; x <= origin.x + maxRadius; x++) {
                     const distX = x - origin.x;
                     const distZ = Math.floor(Math.random() * (2 * maxRadius + 1)) - maxRadius;
@@ -475,7 +508,7 @@ const ServerOps: CommandHandlers = {
                         return;
                     }
                 }
-            } else if (type === MapFindSqaureType.LINEOFWALK) {
+            } else if (type === MapFindSquareType.LINEOFWALK) {
                 for (let x = origin.x - maxRadius; x <= origin.x + maxRadius; x++) {
                     const distX = x - origin.x;
                     const distZ = Math.floor(Math.random() * (2 * maxRadius + 1)) - maxRadius;
@@ -492,7 +525,7 @@ const ServerOps: CommandHandlers = {
                         return;
                     }
                 }
-            } else if (type === MapFindSqaureType.LINEOFSIGHT) {
+            } else if (type === MapFindSquareType.LINEOFSIGHT) {
                 for (let x = origin.x - maxRadius; x <= origin.x + maxRadius; x++) {
                     const distX = x - origin.x;
                     const distZ = Math.floor(Math.random() * (2 * maxRadius + 1)) - maxRadius;

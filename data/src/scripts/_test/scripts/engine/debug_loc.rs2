@@ -8,7 +8,7 @@ loc_add(coord, $loc, 0, centrepiece_straight, 500);
 
 [debugproc,loc_anim](loc $loc, seq $seq)
 if ($loc = null | $seq = null) {
-    @debugusage("::loc_anim (name) (seq)", "::loc_anim ogre_spitroast spit_anim", "");
+    @debugusage("::loc_anim (name) (seq)", "::loc_anim chompybird_spitroast_empty roast", "");
     return;
 }
 

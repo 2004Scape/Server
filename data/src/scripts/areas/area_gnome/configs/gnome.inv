@@ -1,4 +1,4 @@
-[fine_fashions]
+[gnomeshop_rometti]
 // https://classic.runescape.wiki/w/Rometti%27s_fashion_outlet
 // https://storage.googleapis.com/tannerdino/images/rsgnome13.gif (full stocks)
 scope=shared
@@ -6,28 +6,28 @@ size=40
 restock=yes
 stackall=yes
 allstock=no
-stock1=gnome_robe_bottoms_pink,5,200
-stock2=gnome_robe_bottoms_green,5,200
-stock3=robe_bottoms_blue,5,200
-stock4=gnome_robe_bottoms_cream,5,200
-stock5=gnome_robe_bottoms_turqoise,5,200
+stock1=gnome_robebottoms_pink,5,200
+stock2=gnome_robebottoms_green,5,200
+stock3=gnome_robebottoms_blue,5,200
+stock4=gnome_robebottoms_craem,5,200
+stock5=gnome_robebottoms_turquoise,5,200
 stock6=gnome_hat_pink,5,200
 stock7=gnome_hat_green,5,200
 stock8=gnome_hat_blue,5,200
 stock9=gnome_hat_cream,5,200
 stock10=gnome_hat_turqoise,5,200
-stock11=gnome_robe_top_pink,5,200
-stock12=gnome_robe_top_green,5,200
-stock13=gnome_robe_top_blue,5,200
-stock14=gnome_robe_top_cream,5,200
-stock15=gnome_robe_top_turqoise,5,200
+stock11=gnome_robetop_pink,5,200
+stock12=gnome_robetop_green,5,200
+stock13=gnome_robetop_blue,5,200
+stock14=gnome_robetop_cream,5,200
+stock15=gnome_robetop_turquoise,5,200
 stock16=gnome_boots_pink,5,200
 stock17=gnome_boots_green,5,200
 stock18=gnome_boots_blue,5,200
 stock19=gnome_boots_cream,5,200
 stock20=gnome_boots_turqoise,5,200
 
-[funchs_fine_groceries]
+[gnomeshop_heck]
 // https://classic.runescape.wiki/w/Heckel_funch%27s_grocery_store
 // https://storage.googleapis.com/tannerdino/images/rsgnome16.gif (full stocks)
 scope=shared
@@ -53,7 +53,7 @@ stock15=bucket_milk,5,100
 stock16=knife,5,200
 stock17=cocktail_guide,5,100
 
-[grand_tree_groceries]
+[gnomeshop_hudo]
 // https://classic.runescape.wiki/w/Hudo_glenfad%27s_grocery_store
 // https://storage.googleapis.com/tannerdino/images/rsgnome12.gif (full stocks)
 scope=shared
@@ -63,7 +63,7 @@ stackall=yes
 allstock=no
 stock1=gianne_dough,8,100
 stock2=equa_leaves,5,100
-stock3=pot_of_flour,5,200
+stock3=pot_flour,5,200
 stock4=gnome_spice,5,100
 stock5=onion,5,100
 stock6=potato,3,100
@@ -81,9 +81,9 @@ stock17=chocolate_dust,5,100
 stock18=pot_of_cream,5,100
 stock19=bucket_milk,5,100
 stock20=knife,5,200
-stock21=gianne_cook_book,5,100
+stock21=giannes_cook_book,5,100
 
-[blurberry_bar]
+[blurberrybar]
 // https://oldschool.runescape.wiki/w/Blurberry_Bar
 // https://storage.googleapis.com/tannerdino/images/rsgnome14.gif (full stocks)
 scope=shared
@@ -96,10 +96,10 @@ stock2=premade_chocolate_saturday,10,100
 stock3=premade_drunk_dragon,10,100
 stock4=premade_fruit_blast,10,100
 stock5=premade_pineapple_punch,10,100
-stock6=premade_short_green_guy,10,100
+stock6=premade_sgg,10,100
 stock7=premade_wizard_blizzard,10,100
 
-[gulluck_and_sons]
+[gnomeshop_gulluck]
 // https://classic.runescape.wiki/w/Gulluck_and_Sons
 // https://web.archive.org/web/20110722115315im_/http://www.runevillage.com/images/rs2Cities/rsgnome17.gif (full stocks)
 // https://web.archive.org/web/20111216182054im_/http://www.runehq.com/images/cityguides/Sggulluck.jpg
@@ -131,7 +131,7 @@ stock19=black_2h_sword,1,700
 stock20=mithril_2h_sword,1,1000
 stock21=adamant_2h_sword,1,15000
 
-[bolkoys_village_shop]
+[gnomeshop]
 // dated July 05, 2005
 // https://classic.runescape.wiki/w/Tree_Gnome_Village_General_Store
 // http://web.archive.org/web/20120213031926im_/http://runehq.com/images/cityguides/treegnomevillage/shop.png (full stocks)
@@ -151,7 +151,7 @@ stock8=hammer,5,100
 stock9=bronze_arrow,30,100
 stock10=cooked_meat,2,100
 
-[giannes_restaurant]
+[giannerestaurant]
 // https://oldschool.runescape.wiki/w/Gianne%27s_Restaurant
 // https://storage.googleapis.com/tannerdino/images/rsgnome10.gif (full stocks)
 scope=shared
@@ -170,5 +170,5 @@ stock8=premade_veg_ball,3,100
 stock9=premade_chocolate_bomb,3,100
 stock10=premade_worm_crunchies,3,100
 stock11=premade_toad_crunchies,3,100
-stock12=premade_choc_chip_crunchies,3,100
+stock12=premade_chocchip_crunchies,3,100
 stock13=premade_spicy_crunchies,3,100

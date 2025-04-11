@@ -38,7 +38,7 @@ if ($x > 0) {
     $obj_coord = movecoord(coord, -1, 0, 0); // player is east of table
 }
 
-inv_dropslot(inv, $obj_coord, last_useslot, 900); // 1 min to be visible, 9 min to disappear
+inv_dropslot(inv, $obj_coord, last_useslot, 1000); // 1 min to be visible, 9 min to disappear
 
 [oplocu,_unusable_table]
 mes("The table appears to be in use.");

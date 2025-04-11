@@ -27,21 +27,18 @@
         }
 
         #game {
-            position: relative;
-            margin: 0 auto;
-            width: 789px;
-            height: 532px;
+            padding-left: 0;
+            padding-right: 0;
+            margin-left: auto;
+            margin-right: auto;
+            display: block;
         }
 
-        #canvas-overlay {
+        canvas {
+            width: 789px;
+            height: 532px;
             display: block;
-            position: absolute;
-            z-index: 10;
-
-            width: 100%;
-            height: 100%;
-
-            /* touch-action: none; */ /* if we keep touch actions we can pan & zoom */
+            /* touch-action: none; */
             -webkit-touch-callout: none;
             -webkit-user-select: none;
             -khtml-user-select: none;
@@ -50,15 +47,7 @@
             user-select: none;
             outline: none;
             -webkit-tap-highlight-color: rgba(255, 255, 255, 0);
-        }
-
-        #canvas {
-            display: block;
-            position: absolute;
             z-index: -1;
-
-            width: 100%;
-            height: 100%;
         }
 
         html:-webkit-full-screen {
@@ -104,6 +93,7 @@
         #mobilekeyboard-container {
             display: none;
         }
+
     </style>
 
     <script>
@@ -130,16 +120,16 @@
                     document.msExitFullscreen();
                 }
             } else {
-                let container = document.getElementById('game');
+                let element = document.getElementById('canvas');
 
-                if (container.requestFullscreen) {
-                    container.requestFullscreen();
-                } else if (container.webkitRequestFullscreen) {
-                    container.webkitRequestFullscreen();
-                } else if (container.mozRequestFullScreen) {
-                    container.mozRequestFullScreen();
-                } else if (container.msRequestFullscreen) {
-                    container.msRequestFullscreen();
+                if (element.requestFullscreen) {
+                    element.requestFullscreen();
+                } else if (element.webkitRequestFullscreen) {
+                    element.webkitRequestFullscreen();
+                } else if (element.mozRequestFullScreen) {
+                    element.mozRequestFullScreen();
+                } else if (element.msRequestFullscreen) {
+                    element.msRequestFullscreen();
                 }
             }
         }
@@ -223,23 +213,22 @@
         }
 
         function setSize(size) {
-            let container = document.getElementById('game');
-
+            let canvas = document.getElementById('canvas');
             if (size == null) { size = document.getElementById('size').value; }
             switch (size) {
                 default:
                 case '1':
                 case '2':
                 case '3':
-                    container.style.width = (789 * parseInt(size)) + 'px';
-                    container.style.height = (532 * parseInt(size)) + 'px';
-                    container.style.maxWidth = 'none';
+                    canvas.style.width = (789 * parseInt(size)) + 'px';
+                    canvas.style.height = (532 * parseInt(size)) + 'px';
+                    canvas.style.maxWidth = 'none';
                     break;
                 case 'auto':
-                    container.style.width = '100%';
-                    container.style.height = 'auto';
+                    canvas.style.width = '100%';
+                    canvas.style.height = 'auto';
                     let maxWidth = ((window.innerHeight - 120) / 532) * 789;
-                    container.style.maxWidth = maxWidth + 'px';
+                    canvas.style.maxWidth = maxWidth + 'px';
                     break;
             }
             document.getElementById('size').value = size;
@@ -269,8 +258,6 @@
 <body>
     <center>
         <div id="game">
-            <div id="canvas-overlay" style="width: 100%; height: 100%"></div>
-
             <canvas id="canvas" width="789" height="532">
                 Your browser is not capable of running our web client.
             </canvas>
@@ -304,7 +291,6 @@
             <a class="green" href="#" id="screenshot" onclick="saveScreenshot();">Take screenshot</a> |
             <a class="green" href="#" id="hide" onclick="hideControls();">Hide controls</a>
         </div>
-
         <div id="hide-message" style="display: none;">
             <p class="green blink">Controls have been hidden press ctrl+alt+i to unhide.</p>
             <p class="green" id="count-down"></p>

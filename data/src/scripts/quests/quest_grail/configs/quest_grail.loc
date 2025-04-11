@@ -1,4 +1,4 @@
-[loc_22]
+[whistledoor]
 name=Door
 desc=The door is shut.
 model=model_loc_3
@@ -9,14 +9,14 @@ retex1d=door2
 recol2s=6342
 recol2d=11458
 
-[loc_23]
+[percy_sacks]
 name=Sacks
 desc=Unusually lumpy looking.
 model=model_loc_23
 op1=Prod
 op2=Open
 
-[loc_24]
+[merlinworkshop]
 name=Door
 model=model_loc_3
 active=yes
