@@ -16,6 +16,11 @@ if ($ingredient ! gnome_spice) { // gnome spice is infinite
     inv_del(inv, $ingredient, 1);
 }
 if ($ingredient ! $req_ingredient) {
+    switch_obj($ingredient) {
+        case lemon_slices, orange_slices, lime_slices : $fail = spoilt_cocktail_slice;
+        case pot_of_cream : $fail = spoilt_cocktail_creamy;
+        // default to $fail
+    }
     inv_add(inv, $fail, 1);
     return;
 }
@@ -30,23 +35,23 @@ if (oc_category($product) = gnome_cocktail) { // finished
 [label,finish_cocktail](obj $cocktail, obj $ingredient)
 switch_obj ($cocktail) {
     case unfinished_pineapple_punch1 : @gnome_drink_add($cocktail, $ingredient, pineapple_chunks, unfinished_pineapple_punch2, spoilt_cocktail_fruity);
-    case unfinished_pineapple_punch2 : @gnome_drink_add($cocktail, $ingredient, lime_chunks, unfinished_pineapple_punch3, spoilt_cocktail_creamy);
-    case unfinished_pineapple_punch3 : @gnome_drink_add($cocktail, $ingredient, orange_slices, pineapple_punch, spoilt_cocktail_slice);
+    case unfinished_pineapple_punch2 : @gnome_drink_add($cocktail, $ingredient, lime_chunks, unfinished_pineapple_punch3, spoilt_cocktail_fruity);
+    case unfinished_pineapple_punch3 : @gnome_drink_add($cocktail, $ingredient, orange_slices, pineapple_punch, spoilt_cocktail_fruity);
     case unfinished_blurberry_special1 : @gnome_drink_add($cocktail, $ingredient, orange_chunks, unfinished_blurberry_special2, spoilt_cocktail_fruity);
-    case unfinished_blurberry_special2 : @gnome_drink_add($cocktail, $ingredient, lemon_chunks, unfinished_blurberry_special3, spoilt_cocktail_creamy);
-    case unfinished_blurberry_special3 : @gnome_drink_add($cocktail, $ingredient, lime_slices, unfinished_blurberry_special4, spoilt_cocktail_creamy);
+    case unfinished_blurberry_special2 : @gnome_drink_add($cocktail, $ingredient, lemon_chunks, unfinished_blurberry_special3, spoilt_cocktail_fruity);
+    case unfinished_blurberry_special3 : @gnome_drink_add($cocktail, $ingredient, lime_slices, unfinished_blurberry_special4, spoilt_cocktail_fruity);
     case unfinished_blurberry_special4 : @gnome_drink_add($cocktail, $ingredient, equa_leaves, blurberry_special, spoilt_cocktail_slice);
-    case unfinished_chocolate_saturday1 : @gnome_drink_add($cocktail, $ingredient, chocolate_bar, unfinished_chocolate_saturday2, spoilt_cocktail_fruity);
-    case unfinished_chocolate_saturday2 : @gnome_drink_add($cocktail, $ingredient, null, unfinished_chocolate_saturday2, spoilt_cocktail_fruity);
+    case unfinished_chocolate_saturday1 : @gnome_drink_add($cocktail, $ingredient, chocolate_bar, unfinished_chocolate_saturday2, spoilt_cocktail_creamy);
+    case unfinished_chocolate_saturday2 : @gnome_drink_add($cocktail, $ingredient, null, unfinished_chocolate_saturday2, spoilt_cocktail_creamy);
     case unfinished_chocolate_saturday3 : @gnome_drink_add($cocktail, $ingredient, pot_of_cream, unfinished_chocolate_saturday4, spoilt_cocktail_creamy);
-    case unfinished_chocolate_saturday4 : @gnome_drink_add($cocktail, $ingredient, chocolate_dust, chocolate_saturday, spoilt_cocktail_slice);
+    case unfinished_chocolate_saturday4 : @gnome_drink_add($cocktail, $ingredient, chocolate_dust, chocolate_saturday, spoilt_cocktail_creamy);
     case unfinished_drunk_dragon1 : @gnome_drink_add($cocktail, $ingredient, pineapple_chunks, unfinished_drunk_dragon2, spoilt_cocktail_fruity);
-    case unfinished_drunk_dragon2 : @gnome_drink_add($cocktail, $ingredient, pot_of_cream, unfinished_drunk_dragon3, spoilt_cocktail_creamy);
+    case unfinished_drunk_dragon2 : @gnome_drink_add($cocktail, $ingredient, pot_of_cream, unfinished_drunk_dragon3, spoilt_cocktail_fruity);
     case unfinished_drunk_dragon3 : @gnome_drink_add($cocktail, $ingredient, null, unfinished_drunk_dragon3, spoilt_cocktail_creamy);
     case unfinished_fruit_blast1 : @gnome_drink_add($cocktail, $ingredient, lemon_slices, fruit_blast, spoilt_cocktail_fruity);
     case unfinished_sgg1 : @gnome_drink_add($cocktail, $ingredient, equa_leaves, unfinished_sgg2, spoilt_cocktail_fruity);
     case unfinished_sgg2 : @gnome_drink_add($cocktail, $ingredient, lime_slices, sgg, spoilt_cocktail_fruity);
     case unfinished_wizard_blizzard1 : @gnome_drink_add($cocktail, $ingredient, pineapple_chunks, unfinished_wizard_blizzard2, spoilt_cocktail_fruity);
-    case unfinished_wizard_blizzard2 : @gnome_drink_add($cocktail, $ingredient, lime_slices, wizard_blizzard, spoilt_cocktail_creamy);
+    case unfinished_wizard_blizzard2 : @gnome_drink_add($cocktail, $ingredient, lime_slices, wizard_blizzard, spoilt_cocktail_fruity);
     case default : ~displaymessage(^dm_default);
 }
