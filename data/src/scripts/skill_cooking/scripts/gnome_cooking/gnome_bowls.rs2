@@ -1,5 +1,5 @@
 [opheld1,half_baked_bowl]
-~mesbox("You look into the gnome bowl..."); // guess
+~mesbox("You look into the half baked bowl..."); // guess
 ~gnome_bowl_ingredient_display;
 
 [opheldu,half_baked_bowl]
@@ -11,7 +11,7 @@ if (oc_param(last_useitem, gnome_cooking_ingredient) = ^false) {
 
 [label,add_bowl_ingredient](obj $ingredient)
 if (~gnome_bowl_ingredient_space = 0) {
-    mes("The gnome bowl already has enough ingredients.");
+    mes("The half baked bowl already has enough ingredients.");
     return;
 }
 
@@ -118,7 +118,7 @@ def_int $king_worm_count = getbit_range(%gnome_bowl_bits2, 16, 19);
 def_int $total = calc($spicy_worm_count + $cheese_count + $seasoned_toad_legs_count + $tomato_count + $equa_leaves_count + $onion_count + $cabbage_count + $dwellberry_count + $chocolate_bar_count + $potato_count + $gnome_spice_count + $toad_legs_count + $king_worm_count);
 
 if ($total = 0) {
-    ~mesbox("The gnome bowl is empty.");
+    ~mesbox("The half baked bowl is empty.");
     return;
 }
 
@@ -160,6 +160,9 @@ if ($potato_count > 0) {
 if ($gnome_spice_count > 0) {
     $string = append($string, "<~text_plural($gnome_spice_count, "dash", "dashes")> of Gnome Spice, ");
 }
+if ($chocolate_bar_count > 0) {
+    $string = append($string, "<~pluralise($chocolate_bar_count, "Chocolate bar")>, ");
+}
 $string = ~string_removeright($string, 2);
 
-~mesbox("@blu@The gnome bowl contains:@bla@|<$string>."); // guess
+~mesbox("@blu@The half baked bowl contains:@bla@|<$string>."); // guess

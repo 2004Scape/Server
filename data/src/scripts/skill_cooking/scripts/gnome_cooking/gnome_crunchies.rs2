@@ -1,5 +1,5 @@
 [opheld1,half_baked_crunchies]
-~mesbox("You inspect the gnome crunchies..."); // guess
+~mesbox("You inspect the half baked crunchies..."); // guess
 ~gnome_crunchies_ingredient_display;
 
 
@@ -13,7 +13,7 @@ if (oc_param(last_useitem, gnome_cooking_ingredient) = ^false) {
 
 [label,add_crunchies_ingredient](obj $ingredient)
 if (~gnome_crunchies_ingredient_space = 0) {
-    mes("The gnome crunchies already have enough ingredients."); // guess
+    mes("The half baked crunchies already have enough ingredients."); // guess
     return;
 }
 
@@ -161,6 +161,9 @@ if ($potato_count > 0) {
 if ($gnome_spice_count > 0) {
     $string = append($string, "<~text_plural($gnome_spice_count, "dash", "dashes")> of Gnome Spice, ");
 }
+if ($chocolate_bar_count > 0) {
+    $string = append($string, "<~pluralise($chocolate_bar_count, "Chocolate bar")>, ");
+}
 $string = ~string_removeright($string, 2);
 
-~mesbox("@blu@The gnome crunchies contain:@bla@|<$string>."); // guess
+~mesbox("@blu@The half baked crunchies contain:@bla@|<$string>."); // guess
