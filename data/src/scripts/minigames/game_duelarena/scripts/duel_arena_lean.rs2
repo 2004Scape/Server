@@ -1,8 +1,8 @@
-[oploc5,loc_3077] @lean_on_wall;
-[oploc5,loc_3078] @lean_on_wall;
-[oploc5,loc_3079] @lean_on_wall;
-[oploc5,loc_3082] @lean_on_wall;
-[oploc5,loc_3083] @lean_on_wall;
+[oploc5,duel_arena_top] @lean_on_wall;
+[oploc5,duel_arena_topwithflag] @lean_on_wall;
+[oploc5,duel_arena_top_aged] @lean_on_wall;
+[oploc5,duel_arena_top_aged_3] @lean_on_wall;
+[oploc5,duel_arena_top_aged_4] @lean_on_wall;
 
 
 [label,lean_on_wall]

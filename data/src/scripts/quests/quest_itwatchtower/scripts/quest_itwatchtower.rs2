@@ -208,7 +208,7 @@ mes("The chest is locked.");
 if(last_useitem = toban_key) {
     if(inv_freespace(inv) = 0) {
         // Temp note: dur does not need updated ??
-        loc_change(loc_3273, 20);
+        loc_change(cavewitchchestopen, 20);
         sound_synth(chest_open, 0, 0);
         ~mesbox("There is something in there.|But you don't have the free space to hold it.");
         return;
@@ -219,7 +219,7 @@ if(last_useitem = toban_key) {
 
 [label,open_toban_chest]
 // Temp note: dur does not need updated ?? @indio
-loc_change(loc_3273, 20);
+loc_change(cavewitchchestopen, 20);
 sound_synth(chest_open, 0, 0);
 if(inv_total(inv, stolen_gold) > 0) {
     mes("You have already got the stolen gold.");
@@ -340,7 +340,7 @@ anim(human_openchest, 0);
 sound_synth(chest_open, 0, 0);
 p_delay(0);
 // Temp note: dur does not need updated
-loc_change(loc_3273, 300);
+loc_change(cavewitchchestopen, 300);
 mes("Ahh! There is a spider inside.");
 mes("Someone's idea of a joke...");
 npc_add(coord, poison_spider, 1000);
@@ -352,7 +352,7 @@ anim(human_openchest, 0);
 sound_synth(chest_open, 0, 0);
 p_delay(0);
 // Temp note: dur does not need updated
-loc_change(loc_3273, 300);
+loc_change(cavewitchchestopen, 300);
 switch_int(random(8)) {
     case 0 :
         inv_add(inv, emerald, 1);
@@ -438,8 +438,8 @@ if (loc_type = loc_2788) {
 }
 
 // Temp note: dur updated
-loc_add($opposite_coord, loc_83, $angle, $shape, 3);
-loc_add($loc_coord, loc_83, $angle, $shape, 3);
+loc_add($opposite_coord, inviswall, $angle, $shape, 3);
+loc_add($loc_coord, inviswall, $angle, $shape, 3);
 
 [oploc1,loc_2823]
 mes("You enter the tunnel.");

@@ -1,4 +1,4 @@
-[oploc1,loc_102]
+[oploc1,ikov_luciendoor]
 if(%ikov_progress >= ^ikov_started) {
     ~open_and_close_door2(loc_1532, ~check_axis_locactive(coord), door_open);
     return;

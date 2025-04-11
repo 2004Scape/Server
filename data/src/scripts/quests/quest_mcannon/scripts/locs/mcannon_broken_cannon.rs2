@@ -1,4 +1,4 @@
-[oploc1,broken_cannon]
+[oploc1,broken_multicannon]
 if (%mcannon_progress = ^mcannon_tasked_with_fixing_cannon) {
     ~chatplayer("<p,neutral>I guess I'd better fix it with the toolkit I was given.");
     %mcannon_progress = ^mcannon_inspected_cannon_first_time;

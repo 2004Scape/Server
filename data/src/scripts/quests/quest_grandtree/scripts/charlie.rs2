@@ -73,7 +73,7 @@ p_delay(2); // 3t
 ~chatnpc("<p,sad>Traveller please accept my apologies!|Glough had no right to arrest you!|I just think he's scared of humans.|Let me get you out of there.");
 if_close;
 // can't use door proc here since it opens incorrectly (notice the lock side)
-if(loc_find(movecoord(coord, 1, 0, 0), loc_3367) = true) {
+if(loc_find(movecoord(coord, 1, 0, 0), grandtree_prisondoor) = true) {
     // Temp note: dur updated
     loc_add(loc_coord, loc_1546, 1, loc_shape, 7);
     sound_synth(locked, 0, 0);

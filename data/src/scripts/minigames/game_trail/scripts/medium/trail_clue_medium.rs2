@@ -47,7 +47,7 @@ if(inv_total(inv, trail_clue_medium_riddle001) > 0) {
         sound_synth(chest_open, 0, 0);
         p_delay(0);
         // Temp note: dur updated
-        loc_change(loc_3368, 5);
+        loc_change(chestopen_inactive, 5);
         p_delay(0);
         inv_del(inv, trail_clue_medium_riddle001_key, 1);
         ~progress_clue_medium(trail_clue_medium_riddle001, "You've found another clue scroll!");
@@ -66,7 +66,7 @@ if(inv_total(inv, trail_clue_medium_riddle002) > 0) {
         sound_synth(cupboard_open, 0, 0);
         p_delay(0);
         // Temp note: dur updated
-        loc_change(loc_3369, 5);
+        loc_change(drawers1open_inactive, 5);
         p_delay(0);
         inv_del(inv, trail_clue_medium_riddle002_key, 1);
         ~progress_clue_medium(trail_clue_medium_riddle002, "You've found another clue scroll!");
@@ -85,7 +85,7 @@ if(inv_total(inv, trail_clue_medium_riddle003) > 0) {
         sound_synth(cupboard_open, 0, 0);
         p_delay(0);
         // Temp note: dur updated
-        loc_change(loc_3369, 5);
+        loc_change(drawers1open_inactive, 5);
         p_delay(0);
         inv_del(inv, trail_clue_medium_riddle003_key, 1);
         ~progress_clue_medium(trail_clue_medium_riddle003, "You've found another clue scroll!");
@@ -104,7 +104,7 @@ if(inv_total(inv, trail_clue_medium_riddle004) > 0) {
         sound_synth(cupboard_open, 0, 0);
         p_delay(0);
         // Temp note: dur updated
-        loc_change(loc_3370, 5);
+        loc_change(drawers2open_inactive, 5);
         p_delay(0);
         inv_del(inv, trail_clue_medium_riddle004_key, 1);
         ~progress_clue_medium(trail_clue_medium_riddle004, "You've found another clue scroll!");
@@ -123,7 +123,7 @@ if(inv_total(inv, trail_clue_medium_riddle005) > 0) {
         sound_synth(chest_open, 0, 0);
         p_delay(0);
         // Temp note: dur updated
-        loc_change(loc_3368, 5);
+        loc_change(chestopen_inactive, 5);
         p_delay(0);
         inv_del(inv, trail_clue_medium_riddle005_key, 1);
         ~progress_clue_medium(trail_clue_medium_riddle005, "You've found another clue scroll!");

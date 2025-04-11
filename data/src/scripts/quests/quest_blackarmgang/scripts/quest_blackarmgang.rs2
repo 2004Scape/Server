@@ -85,7 +85,7 @@ if ($leaving = true) {
 }
 p_teleport($dest);
 // Temp note: dur updated
-loc_change(loc_83, 3);
+loc_change(inviswall, 3);
 loc_add(movecoord($loc_coord, $x, 0, $z), loc_1535, modulo(add($angle, 1), 4), $shape, 3);
 
 [opobj3,phoenix_crossbow]

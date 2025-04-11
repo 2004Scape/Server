@@ -10,7 +10,7 @@
 // RS Sep 16, 2009 - https://youtu.be/wExtrdFXPQg?t=39
 
 // Undamaged Railing
-[oploc1,railing_sturdy]
+[oploc1,mcannonplain]
 if (%mcannon_progress = ^mcannon_not_started) {
     mes("Nothing interesting happens.");
 } else if (%mcannon_progress = ^mcannon_tasked_with_fixing_railings) {
@@ -21,22 +21,22 @@ if (%mcannon_progress = ^mcannon_not_started) {
 
 // Used bits 5-10 since it matches weird gloop
 // https://chisel.weirdgloop.org/varbs/display?varplayer=1
-[oploc1,railing_broken_1]
+[oploc1,mcannonrailing1]
 @damaged_railings(5);
 
-[oploc1,railing_broken_2]
+[oploc1,mcannonrailing2]
 @damaged_railings(6);
 
-[oploc1,railing_broken_3]
+[oploc1,mcannonrailing3]
 @damaged_railings(7);
 
-[oploc1,railing_broken_4]
+[oploc1,mcannonrailing4]
 @damaged_railings(8);
 
-[oploc1,railing_broken_5]
+[oploc1,mcannonrailing5]
 @damaged_railings(9);
 
-[oploc1,railing_broken_6]
+[oploc1,mcannonrailing6]
 @damaged_railings(10);
 
 [label,damaged_railings](int $railing_num)

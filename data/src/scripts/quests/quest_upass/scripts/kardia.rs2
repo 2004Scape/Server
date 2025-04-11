@@ -1,4 +1,4 @@
-[oploc1,loc_3270]
+[oploc1,cavewitch_door]
 if(testbit(%upass_map_mechanisms, ^upass_dropped_cat) = true) {
     mes("You open the door...");
     ~open_and_close_door3(loc_1532, ~check_axis(coord, loc_coord, loc_angle), door_open);
@@ -17,7 +17,7 @@ if(npc_find(coord, kardia, 8, 0) = true) {
     ~damage_self(calc(((stat(hitpoints) * 25) / 100) + 1));
 }
 
-[oploc2,loc_3270]
+[oploc2,cavewitch_door]
 mes("You knock on the door...");
 p_delay(2);
 if(inv_total(inv, cavewitchcat) > 0 & testbit(%upass_map_mechanisms, ^upass_dropped_cat) = false) {
@@ -29,7 +29,7 @@ if(testbit(%upass_map_mechanisms, ^upass_dropped_cat) = true) {
     mes("Inside you can hear the witch talking to her cat.");
 }
 
-[oplocu,loc_3270]
+[oplocu,cavewitch_door]
 if(last_useitem = cavewitchcat) {
     if(testbit(%upass_map_mechanisms, ^upass_dropped_cat) = true) {
         ~mesbox("The witch is busy playing with her other cat...");
@@ -39,7 +39,7 @@ if(last_useitem = cavewitchcat) {
 }
 ~displaymessage(^dm_default);
 
-[oploc1,loc_3362]
+[oploc1,upass_witchwindow]
 mes("Inside you see a witch, she appears to be looking for something.");
 if(npc_find(coord, kardia, 8, 0) = true) npc_say("Here kitty, kitty!");
 
@@ -81,16 +81,16 @@ p_delay(5);
 %upass_map_mechanisms = setbit(%upass_map_mechanisms, ^upass_dropped_cat);
 mes("The witch takes the cat inside.");
 
-[oploc1,loc_3272]
+[oploc1,cavewitchchest]
 p_arrivedelay;
 anim(human_openchest, 0);
 sound_synth(chest_open, 0, 0);
 p_delay(0);
 // Temp note: dur does not need updated ?? @indio I assume
-loc_change(loc_3273, 20);
+loc_change(cavewitchchestopen, 20);
 @search_kardia_chest;
 
-[oploc1,loc_3273] @search_kardia_chest;
+[oploc1,cavewitchchestopen] @search_kardia_chest;
 
 [label,search_kardia_chest]
 ~mesbox("You search the chest...");

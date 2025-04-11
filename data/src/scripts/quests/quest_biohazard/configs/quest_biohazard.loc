@@ -2,7 +2,7 @@
 name=Cauldron
 desc=Something's bubbling away in it.
 model=model_loc_692
-anim=seq_479
+anim=cauldron
 recol1s=544
 recol1d=23181
 recol2s=320

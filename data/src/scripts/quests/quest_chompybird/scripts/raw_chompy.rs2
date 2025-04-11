@@ -11,7 +11,7 @@ switch_obj (last_useitem)
 // message taken from OSRS
 ~mesbox("You can only add ingredients when you're cooking a chompy bird. Ensure you have the seasonings you want to use in your inventory when cooking the chompy bird and you will use them automatically when cooking.");
 
-[oplocu,ogre_spitroast]
+[oplocu,chompybird_spitroast_empty]
 if (stat(cooking) < 30) { // before obj check
     mes("You need a cooking level of 30 to use the spit roast.");
     return;
@@ -60,8 +60,8 @@ if(%chompybird_progress = ^chompybird_complete) {
 mes("You carefully place the chompy bird on the spit-roast.");
 inv_del(inv, raw_chompy, 1);
 // Temp note: dur updated
-loc_change(ogre_spitroast_raw_chompy, 5);
-loc_anim(spit_anim);
+loc_change(chompybird_spitroast, 5);
+loc_anim(roast);
 anim(human_cooking, 0);
 sound_synth(spit_roast, 0, 0);
 p_delay(2);
@@ -70,8 +70,8 @@ def_boolean $passes_roll = stat_random(stat(cooking), 200, 255);
 if ($passes_roll = true) {
     mes("You start to cook the chompy... it takes some time.");
     // Temp note: dur updated
-    loc_change(ogre_spitroast_cooked_chompy, 5);
-    loc_anim(spit_anim);
+    loc_change(chompybird_spitroast_cooked, 5);
+    loc_anim(roast);
     anim(human_cooking, 0);
     p_delay(2);
     anim(human_pickuptable, 0);
@@ -81,8 +81,8 @@ if ($passes_roll = true) {
 } else {
     mes("You accidentally burn the chompy.");
     // Temp note: dur updated
-    loc_change(ogre_spitroast_burnt_chompy, 5);
-    loc_anim(spit_anim);
+    loc_change(chompybird_spitroast_ruined, 5);
+    loc_anim(roast);
     anim(human_cooking, 0);
     p_delay(2);
     anim(human_pickuptable, 0);
@@ -183,8 +183,8 @@ if ($has_rantz_ingredient = false | $has_bugs_ingredient = false | $has_fycie_in
 mes("You carefully place the chompy bird on the spit-roast.");
 inv_del(inv, raw_chompy, 1);
 // Temp note: dur updated
-loc_change(ogre_spitroast_raw_chompy, 5);
-loc_anim(spit_anim);
+loc_change(chompybird_spitroast, 5);
+loc_anim(roast);
 anim(human_cooking, 0);
 sound_synth(spit_roast, 0, 0);
 p_delay(2);
@@ -195,8 +195,8 @@ if ($passes_roll = true) {
     %chompybird_progress = ^chompybird_chompy_cooked;
     ~delete_chompy_ingredients($rantz_ingredient, $bugs_ingredient, $fycie_ingredient);
     // Temp note: dur updated
-    loc_change(ogre_spitroast_cooked_chompy, 5);
-    loc_anim(spit_anim);
+    loc_change(chompybird_spitroast_cooked, 5);
+    loc_anim(roast);
     anim(human_cooking, 0);
     p_delay(2);
     anim(human_pickuptable, 0);
@@ -209,8 +209,8 @@ if ($passes_roll = true) {
     mes("You accidentally burn the chompy.");
     ~delete_chompy_ingredients($rantz_ingredient, $bugs_ingredient, $fycie_ingredient);
     // Temp note: dur updated
-    loc_change(ogre_spitroast_burnt_chompy, 5);
-    loc_anim(spit_anim);
+    loc_change(chompybird_spitroast_ruined, 5);
+    loc_anim(roast);
     anim(human_cooking, 0);
     p_delay(2);
     anim(human_pickuptable, 0);

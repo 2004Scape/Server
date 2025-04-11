@@ -1,6 +1,6 @@
 [oploc1,loc_1586] ~open_and_close_door2(loc_1588, ~check_axis_locactive(coord), coffin_open);
 
-[oploc1,loc_98]
+[oploc1,ikov_darkstairsdown]
 if(inv_totalcat(inv, light_source_lit) > 0) {
     p_teleport(0_41_152_17_36);
     return;    
@@ -9,8 +9,8 @@ p_teleport(0_41_152_17_13);
 p_delay(0);
 ~mesbox("It's a bit dark down here!|You decide not to venture far.");
 
-[oploc1,loc_94] @open_ikov_northgate(^left);
-[oploc1,loc_95] @open_ikov_northgate(^right);
+[oploc1,ikov_dooroffearl] @open_ikov_northgate(^left);
+[oploc1,ikov_dooroffearr] @open_ikov_northgate(^right);
 
 [label,open_ikov_northgate](int $side)
 def_boolean $entering = ~check_axis_locactive(coord);
@@ -22,8 +22,8 @@ mes("As you reach to open the door a great terror overcomes you!");
 anim(seq_846, 30);
 p_exactmove(coord, movecoord(coord, 0, 0, -1), 30, 56, ^exact_north);
 
-[oploc1,loc_89] @open_ikov_southgate(^left);
-[oploc1,loc_90] @open_ikov_southgate(^right);
+[oploc1,ikov_mendedleverdoorl] @open_ikov_southgate(^left);
+[oploc1,ikov_mendedleverdoorr] @open_ikov_southgate(^right);
 
 [label,open_ikov_southgate](int $side)
 def_boolean $entering = ~check_axis_locactive(coord);
@@ -81,24 +81,24 @@ p_teleport(movecoord(coord, -1, 0, -1));
 p_delay(0);
 mes("Good thing that lava was shallow!");
 
-[oploc1,loc_96]
+[oploc1,ikov_darkstairs]
 p_teleport(0_41_153_30_17); // OSRS area here is a bit different, changed in late 2004 I believe
 
-[oplocu,loc_86]
+[oplocu,ikov_leverbracket]
 if(last_useitem = ikov_lever) {
     ~mesbox("You fit the lever into the bracket.");
     inv_del(inv, ikov_lever, 1);
     // Temp note: dur does not need updated
-    loc_change(loc_87, 200); // 200t OSRS
+    loc_change(ikov_mendedlever, 200); // 200t OSRS
 }
 ~displaymessage(^dm_default);
 
-[oploc1,loc_87]
+[oploc1,ikov_mendedlever]
 p_arrivedelay;
 anim(human_leverdown, 0); 
 sound_synth(lever, 0, 0);
 // Temp note: dur does not need updated ? @indio
-loc_change(loc_88, 20);
+loc_change(ikov_leverdown, 20);
 p_delay(0);
 sound_synth(locked, 0, 0);
 p_delay(0);
@@ -109,10 +109,10 @@ p_delay(0);
 %ikov_dungeon = setbit(%ikov_dungeon, ^ikov_lever);
 ~mesbox("You hear the clunking of some hidden machinery.");
 
-[oploc1,loc_103] ~open_chest(loc_104);
-[oploc2,loc_104] ~close_chest(loc_103);
+[oploc1,ikov_chestclosed] ~open_chest(ikov_chestopen);
+[oploc2,ikov_chestopen] ~close_chest(ikov_chestclosed);
 
-[oploc1,loc_104]
+[oploc1,ikov_chestopen]
 if(%ikov_icearrowchest_coord = null) {
     ~randomize_ice_arrow_chest;
 }
@@ -130,13 +130,13 @@ if(%ikov_icearrowchest_coord = loc_coord) {
 }
 mes("You search the chest, but find nothing.");
 
-[oploc1,loc_91]
+[oploc1,ikov_traplever]
 if(%ikov_progress = ^ikov_disabled_trap) %ikov_progress = ^ikov_pulled_lever;
 p_arrivedelay;
 anim(human_leverdown, 0);
 p_delay(0);
 // Temp note: dur updated ? does it need ??
-loc_change(loc_88, 6);
+loc_change(ikov_leverdown, 6);
 sound_synth(lever, 0, 0);
 if(%ikov_progress >= ^ikov_disabled_trap) {
     return;
@@ -152,7 +152,7 @@ p_teleport(movecoord(coord, 0, 0, -1));
 p_delay(2);
 ~damage_self(20);
 
-[oploc2,loc_91]
+[oploc2,ikov_traplever]
 p_arrivedelay;
 anim(human_leverdown, 0);
 if(stat(thieving) >= 42 & %ikov_progress < ^ikov_defeated_fire_warrior) {
@@ -164,17 +164,17 @@ if(stat(thieving) >= 42 & %ikov_progress < ^ikov_defeated_fire_warrior) {
 }
 ~mesbox("You find nothing.");
 
-[oploc1,loc_101]
+[oploc1,ikov_trapladder]
 p_teleport(0_41_153_41_57);
 
-[oploc1,loc_92]
+[oploc1,ikov_trapleverdoor]
 if(%ikov_progress >= ^ikov_pulled_lever) {
     ~open_and_close_door2(loc_1532, ~check_axis_locactive(coord), door_open);
     return;
 }
 mes("The door won't open.");
 
-[oploc1,loc_93]
+[oploc1,ikov_firewarriordoor]
 if(%ikov_progress >= ^ikov_defeated_fire_warrior) {
     ~open_and_close_door2(loc_1532, ~check_axis_locactive(coord), door_open);
     return;
@@ -215,7 +215,7 @@ p_delay(2);
 cam_reset;
 npc_setmode(null);
 
-[oploc1,loc_99]
+[oploc1,ikov_shinykeydoor]
 if(inv_total(inv, ikov_shinykey) = 0) {
     mes("The door is locked.");
     sound_synth(locked, 0, 0);
@@ -223,7 +223,7 @@ if(inv_total(inv, ikov_shinykey) = 0) {
 }
 ~open_and_close_door2(loc_1532, ~check_axis_locactive(coord), door_open);
 
-[oplocu,loc_99]
+[oplocu,ikov_shinykeydoor]
 if(last_useitem = ikov_shinykey) {
     ~open_and_close_door2(loc_1532, ~check_axis_locactive(coord), door_open);
     return;

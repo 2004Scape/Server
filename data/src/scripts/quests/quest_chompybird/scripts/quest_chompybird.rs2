@@ -1,11 +1,11 @@
-[oploc1,chompybird_cave_entrance]
+[oploc1,rantzogrecaveentrance]
 mes("You walk through the cave entrance into a dimly lit cave.");
 p_teleport(0_41_146_23_35);
 
-[oploc1,chompybird_cave_exit_a]
+[oploc1,rantzogrecaveexitr]
 p_teleport(0_41_46_6_53);
 
-[oploc1,chompybird_cave_exit_b]
+[oploc1,rantzogrecaveexitl]
 mes("You walk back out of the darkness of the cave into daylight.");
 p_teleport(0_41_46_6_53);
 

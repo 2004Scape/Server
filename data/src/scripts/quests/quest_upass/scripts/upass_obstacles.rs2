@@ -1,4 +1,4 @@
-[oploc1,loc_3309]
+[oploc1,rockslide2_obstacle_upass]
 def_int $dir; 
 def_coord $end;
 if(coordz(coord) > coordz(loc_coord)) {
@@ -27,7 +27,7 @@ if(stat_random(stat(agility), 95, 305) = false) {
 mes("...and step down the other side.");
 ~agility_exactmove(human_walk_fence_north, 0, 1, coord, $end, 0, 60, $dir, true); // probably same seq for all directions
 
-[oploc1,loc_3263]
+[oploc1,upass_swampbubbles1]
 mes("You try to cross the swamp...");
 p_delay(0);
 mes("The swamp seems to cling to your legs.");
@@ -44,18 +44,18 @@ say("Aargh!");
 ~damage_self(calc((stat(hitpoints) * 15) / 100));
 p_delay(0);
 
-[oploc1,loc_3265]
+[oploc1,caverockpile]
 mes("You climb up the pile of mud...");
 p_delay(3);
 p_teleport(0_38_151_50_51);
 mes("It leads into darkness, the stench is unbearable.");
 mes("You surface by the swamp, covered in muck.");
 
-[oploc1,loc_3236]
+[oploc1,upass_pipe5]
 mes("The other end of the pipe is blocked by a grill.");
 mes("You cannot open the grill from this side.");
 
-[oploc1,loc_3235]
+[oploc1,upass_pipe4]
 p_arrivedelay;
 if(%upass_area1_pipe_used >= map_clock) {
     mes("The pipe is being used"); // todo: confirm, using the same as gnome course
@@ -64,7 +64,7 @@ if(%upass_area1_pipe_used >= map_clock) {
 %upass_area1_pipe_used = calc(map_clock + 6);
 mes("You open the grating.");
 // Temp note: dur updated!!! nice even number :)
-loc_change(loc_3236, 10);
+loc_change(upass_pipe5, 10);
 ~agility_exactmove(human_pipesqueeze, 30, 3, coord, movecoord(coord, 0, 0, 3), 30, 126, ^exact_north, true);
 sound_synth(squeeze_in, 0, 0);
 mes("You crawl through the pipe.");
@@ -142,7 +142,7 @@ loc_anim(rope_swing);
 ~agility_exactmove(human_ropeswing, 20, 1, $start_pos, movecoord($start_pos, -5, 0, 0), 45, 70, ^exact_west, false);
 mes("You skillfully swing across.");
 
-[oploc1,loc_3234]
+[oploc1,upass_speartrap]
 // https://youtu.be/PZvZhKg-T9A?si=mupz2AP54KUFKJzw&t=733
 ~mesbox("The markings appear to be holes in the wall... It's a trap!");
 def_int $choice = ~p_choice2_header("Yes, I'll give it a go.", 1, "No thanks, I'll leave it alone.", 2, "Do you want to try and disarm it?");
@@ -172,22 +172,22 @@ if(coordx(coord) > coordx(loc_coord)) {
 // these traps both appear to run on a softtimer (and the damage is strongqueued which will if_close) on OSRS
 // since neither function existed on RS2 launch we will assume regular timer
 [timer,upass_trap]
-if (loc_find(coord, loc_3234) = true | loc_find(movecoord(coord, 0, 0, -1), loc_3234) = true) {
+if (loc_find(coord, upass_speartrap) = true | loc_find(movecoord(coord, 0, 0, -1), upass_speartrap) = true) {
     loc_anim(seq_459);
     say("Ouch!");
     queue(damage_player, 0, calc(((stat(hitpoints) * 10) / 100) + 1));
-} else if (loc_find(coord, loc_3230) = true) {
-    if(loc_find(movecoord(loc_coord, -1, 0, 0), loc_3232) = true | loc_find(movecoord(loc_coord, 0, 0, -1), loc_3232) = true) loc_anim(seq_462);
+} else if (loc_find(coord, upass_double_springtrap_trigger) = true) {
+    if(loc_find(movecoord(loc_coord, -1, 0, 0), upass_double_springtrap) = true | loc_find(movecoord(loc_coord, 0, 0, -1), upass_double_springtrap) = true) loc_anim(seq_462);
     say("Ouch!");
     queue(damage_player, 0, calc(((stat_base(hitpoints) * 8) / 100) + 1));
     world_delay(1);
     loc_anim(seq_463);
 }
 
-[oploc1,loc_3230]
+[oploc1,upass_double_springtrap_trigger]
 ~mesbox("The rock appears to move slightly as you touch it...|It's a trap!|You don't see any way to disarm it,|maybe you can find a way to cross over it...");
 
-[oplocu,loc_3230]
+[oplocu,upass_double_springtrap_trigger]
 if(last_useitem = woodplank) {
     mes("You place the plank across the flat rock...");
     anim(human_pickupfloor, 0);
@@ -198,24 +198,24 @@ if(last_useitem = woodplank) {
     loc_del(5);
     if(coordz(coord) > coordz(loc_coord)) {
         // Temp note: dur updated
-        loc_add(loc_coord, loc_3231, 0, grounddecor, 5);
+        loc_add(loc_coord, upass_crossing_plank, 0, grounddecor, 5);
         ~forcemove(movecoord(loc_coord, 0, 0, -1));
     } else if(coordz(coord) < coordz(loc_coord)) {
         // Temp note: dur updated
-        loc_add(loc_coord, loc_3231, 0, grounddecor, 5);
+        loc_add(loc_coord, upass_crossing_plank, 0, grounddecor, 5);
         ~forcemove(movecoord(loc_coord, 0, 0, 1));
     } else if(coordx(coord) > coordx(loc_coord)) {
         // Temp note: dur updated
-        loc_add(loc_coord, loc_3231, 1, grounddecor, 5);
+        loc_add(loc_coord, upass_crossing_plank, 1, grounddecor, 5);
         ~forcemove(movecoord(loc_coord, -1, 0, 0));
     } else {
         // Temp note: dur updated
-        loc_add(loc_coord, loc_3231, 1, grounddecor, 5);
+        loc_add(loc_coord, upass_crossing_plank, 1, grounddecor, 5);
         ~forcemove(movecoord(loc_coord, 1, 0, 0));
     }
 }
 
-[oploc1,loc_3339]
+[oploc1,upass_logtrap_trigger]
 ~mesbox("The rock appears to move slightly as you touch it... It's a trap!");
 def_int $choice = ~p_choice2_header("Yes, I'll give it a go.", 1, "No thanks, I'll leave it alone.", 2, "Do you want to try and disarm it?");
 if($choice = 2) {
@@ -237,7 +237,7 @@ if(inv_freespace(inv) = 0 | inv_total(inv, caveorb1) > 0 | testbit(%upass_map_me
 }
 inv_add(inv, caveorb1, 1);
 if(obj_find(loc_coord, caveorb4dot) = true) obj_del;
-if(loc_find(loc_coord, loc_3361) = true) loc_del(50); // rs3
+if(loc_find(loc_coord, caveorb_vis) = true) loc_del(50); // rs3
 mes("...and succeed long enough to take the Orb.");
 
 [oploc1,upass_ledge]
@@ -272,7 +272,7 @@ if(coordz(coord) > coordz(loc_coord)) {
     ~agility_force_move(0, $seq, movecoord(coord, 1, 0, 1));
 }
 
-[oploc1,loc_3276]
+[oploc1,walkway_upass_narrow_mid_top]
 p_arrivedelay;
 mes("You start to cross the rock bridge...");
 def_coord $end;
@@ -306,7 +306,7 @@ if(stat_random(stat(agility), 90, 300) = false) {
 mes("...and make it.");
 ~agility_force_move(0, human_walk_logbalance, $end);
 
-[oploc1,loc_3237]
+[oploc1,upass_pipe6]
 def_int $mod = -1;
 def_coord $start = movecoord(loc_coord, 2, 0, 0);
 def_int $dir = ^exact_west;
@@ -340,8 +340,8 @@ if($dir = ^exact_west) {
 p_delay(0);
 stat_advance(agility, 30);
 
-[oploc1,loc_3254] @upass_cross_bridge;
-[oploc1,loc_3255] @upass_cross_bridge;
+[oploc1,bridgecollapsed1] @upass_cross_bridge;
+[oploc1,bridgecollapsed2] @upass_cross_bridge;
 
 [label,upass_cross_bridge]
 mes("You attempt to walk over the remaining bridge...");

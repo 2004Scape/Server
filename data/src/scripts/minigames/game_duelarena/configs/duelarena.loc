@@ -1,4 +1,4 @@
-[duel_entrance_1]
+[flag_entrance_angled]
 name=Entrance
 desc=Flags marking the entrance to the arena.
 model=model_loc_3111
@@ -7,12 +7,12 @@ ambient=60
 contrast=60
 op1=Forfeit
 active=yes
-anim=seq_917
+anim=flagblowing
 blockrange=no
 recol1s=9409
 recol1d=12580
 
-[duel_entrance_2]
+[flag_entrance2_angled]
 name=Entrance
 desc=Flags marking the entrance to the arena.
 model=model_loc_3112
@@ -21,12 +21,12 @@ ambient=60
 contrast=60
 op1=Forfeit
 active=yes
-anim=seq_917
+anim=flagblowing
 blockrange=no
 recol1s=9409
 recol1d=12580
 
-[duel_entrance_3]
+[flag_entrancel_angled]
 name=Entrance
 desc=Flags marking the entrance to the arena.
 model=model_loc_3111
@@ -36,12 +36,12 @@ contrast=60
 mirror=yes
 op1=Forfeit
 active=yes
-anim=seq_917
+anim=flagblowing
 blockrange=no
 recol1s=9409
 recol1d=12580
 
-[duel_entrance_4]
+[flag_entrance2l_angled]
 name=Entrance
 desc=Flags marking the entrance to the arena.
 model=model_loc_3112
@@ -51,7 +51,7 @@ contrast=60
 mirror=yes
 op1=Forfeit
 active=yes
-anim=seq_917
+anim=flagblowing
 blockrange=no
 recol1s=9409
 recol1d=12580
@@ -74,7 +74,7 @@ model=wooden_chest
 op1=Open
 forceapproach=north
 
-[loc_3194]
+[duel_chestopen]
 name=Open chest
 desc=Use for quick access to your bank.
 model=model_loc_76
@@ -82,13 +82,13 @@ op2=Bank
 op3=Shut
 forceapproach=north
 
-[loc_3195]
+[rotten_tomato_crate]
 name=Crate
 desc=Smells pretty bad!
 model=model_loc_3195
 op1=Buy
 
-[duel_trapdoor]
+[arena_trapdoor]
 name=Trapdoor
 desc=Access to the duel arena.
 model=model_loc_3203
@@ -96,7 +96,7 @@ op1=Forfeit
 forcedecor=yes
 sharelight=yes
 
-[loc_3077]
+[duel_arena_top]
 name=Wall
 desc=Lean against the wall to get a better view!
 model=model_loc_3077
@@ -106,7 +106,7 @@ contrast=30
 op5=Lean against
 blockrange=no
 
-[loc_3078]
+[duel_arena_topwithflag]
 name=Wall
 desc=Lean against the wall to get a better view!
 model=model_loc_3078
@@ -118,7 +118,7 @@ blockrange=no
 recol1s=9409
 recol1d=12580
 
-[loc_3079]
+[duel_arena_top_aged]
 name=Wall
 desc=Lean against the wall to get a better view!
 model=model_loc_3079
@@ -129,7 +129,7 @@ sharelight=yes
 op5=Lean against
 blockrange=no
 
-[loc_3080]
+[duel_arena_top_aged_2]
 model=model_loc_3080
 forcedecor=yes
 ambient=30
@@ -137,7 +137,7 @@ contrast=30
 sharelight=yes
 active=no
 
-[loc_3081]
+[duel_arena_top_aged_2_mirror]
 model=model_loc_3080
 forcedecor=yes
 ambient=30
@@ -146,7 +146,7 @@ mirror=yes
 active=no
 blockrange=no
 
-[loc_3082]
+[duel_arena_top_aged_3]
 name=Wall
 desc=Lean against the wall to get a better view!
 model=model_loc_3082
@@ -157,7 +157,7 @@ sharelight=yes
 op5=Lean against
 blockrange=no
 
-[loc_3083]
+[duel_arena_top_aged_4]
 name=Wall
 desc=Lean against the wall to get a better view!
 model=model_loc_3083

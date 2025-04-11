@@ -75,7 +75,7 @@ if(last_useitem = grandtree_gloughskey) {
     sound_synth(chest_open, 0, 0);
     p_delay(0);
     // Temp note: dur updated
-    loc_change(loc_3368, 5);
+    loc_change(chestopen_inactive, 5);
     if((%grandtree_progress = ^grandtree_found_invasion_plans | %grandtree_progress = ^grandtree_clue_charlie) & ~obj_gettotal(grandtree_invasionplans) = 0) {
         ~objbox(grandtree_invasionplans, "You have found a scroll!", 250, 0, 0);
         if(inv_freespace(inv) = 0) { 
@@ -132,11 +132,11 @@ while(loc_findnext = true) {
             def_int $orig_angle = loc_angle;
             def_loc $type = loc_type;
             // Temp note: dur updated
-            loc_change(loc_83, 3);
+            loc_change(inviswall, 3);
             if($type = loc_2438) {
                 // Temp note: dur updated
-                loc_add(movecoord($central_coord, -1, 0, 0), loc_49, 3, loc_shape, 3);
-                loc_add(movecoord($central_coord, -2, 0, 0), loc_50, 3, loc_shape, 3); 
+                loc_add(movecoord($central_coord, -1, 0, 0), inacfishinggateclosedl, 3, loc_shape, 3);
+                loc_add(movecoord($central_coord, -2, 0, 0), inacfishinggateclosedr, 3, loc_shape, 3); 
             }
      }
 }

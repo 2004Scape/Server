@@ -1,4 +1,4 @@
-[oplocu,black_clock_spindle]
+[oplocu,brokeclockpole_black]
 if(last_useitem = blackcog) {
     mes("The cog fits perfectly.");
     if (~get_cog_progress < ^quest_cog_complete) {
@@ -11,7 +11,7 @@ if(last_useitem = blackcog) {
     ~displaymessage(^dm_default);
 }
 
-[oplocu,red_clock_spindle]
+[oplocu,brokeclockpole_red]
 if(last_useitem = redcog) {
     mes("The cog fits perfectly.");
     if (~get_cog_progress < ^quest_cog_complete) {
@@ -24,7 +24,7 @@ if(last_useitem = redcog) {
     ~displaymessage(^dm_default);
 }
 
-[oplocu,white_clock_spindle]
+[oplocu,brokeclockpole_white]
 if(last_useitem = whitecog) {
     mes("The cog fits perfectly.");
     if (~get_cog_progress < ^quest_cog_complete) {
@@ -37,7 +37,7 @@ if(last_useitem = whitecog) {
     ~displaymessage(^dm_default);
 }
 
-[oplocu,blue_clock_spindle]
+[oplocu,brokeclockpole_blue]
 if(last_useitem = bluecog) {
     mes("The cog fits perfectly.");
     if (~get_cog_progress < ^quest_cog_complete) {

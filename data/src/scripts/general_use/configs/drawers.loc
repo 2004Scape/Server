@@ -55,7 +55,7 @@ forceapproach=east
 category=empty_drawer
 param=drawer_other,loc_352
 
-[loc_3190]
+[arena_hospital_drawers2]
 name=Drawers
 desc=These open and close!
 model=model_loc_350
@@ -74,9 +74,9 @@ recol2d=22197
 recol3s=7299
 recol3d=17969
 category=drawer
-param=drawer_other,loc_3191
+param=drawer_other,arena_hospital_drawers2open
 
-[loc_3191]
+[arena_hospital_drawers2open]
 name=Drawers
 desc=This may be worth searching.
 model=model_loc_351
@@ -96,4 +96,4 @@ recol2d=22197
 recol3s=7299
 recol3d=17969
 category=empty_drawer
-param=drawer_other,loc_3190
+param=drawer_other,arena_hospital_drawers2

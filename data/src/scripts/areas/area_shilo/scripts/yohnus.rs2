@@ -25,7 +25,7 @@ switch_int(~p_choice2("Use Furnace - 20 Gold", 1, "No thanks!", 2)) {
             def_locshape $shape = loc_shape;
             $x, $z = ~door_open($angle, loc_shape);
             // Temp note: dur updated
-            loc_change(loc_83, 3);
+            loc_change(inviswall, 3);
             loc_add(movecoord($loc_coord, $x, 0, $z), loc_1532, modulo(add($angle, 1), 4), $shape, 3);
             sound_synth(door_open, 0, 0);
         }

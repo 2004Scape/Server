@@ -30,7 +30,7 @@ inv_del(inv, $arrow_type, 1);
 inv_add(inv, oc_param($arrow_type, next_obj_stage), 1);
 mes("You light the cloth wrapped arrow head.");
 
-[aploc1,loc_3340]
+[aploc1,oldbridge_guiderope]
 if(coordx(coord) < coordx(loc_coord)) {
     mes("You don't need to shoot the bridge from this side.");
     return;
@@ -78,27 +78,27 @@ mes("The arrow impales the rope support.");
 p_delay(0);
 mes("The bridge falls.");
 mes("You rush across the bridge.");
-if(loc_find(0_38_151_11_52, loc_3239) = true) {
+if(loc_find(0_38_151_11_52, old_bridge_up) = true) {
     // Temp note: dur updated
-    loc_change(loc_3240, 8);
+    loc_change(old_bridge_animated, 8);
 }
 p_delay(3);
 p_teleport(0_38_151_10_52);
 if(%upass_progress = ^upass_spoken_koftik) %upass_progress = ^upass_passed_bridge;
 
-[oploc1,loc_3241]
+[oploc1,upass_lever_up]
 mes("You pull the old lever...");
 anim(seq_798, 0);
 sound_synth(lever, 0, 0);
 // Temp note: dur updated
-loc_change(loc_3242, 4);
+loc_change(upass_lever_down, 4);
 ~forcemove(0_38_151_7_51);
 p_delay(2);
 ~forcemove(movecoord(coord, 1, 0, 1));
 p_delay(1);
-if(loc_find(0_38_151_11_52, loc_3239) = true) {
+if(loc_find(0_38_151_11_52, old_bridge_up) = true) {
     // Temp note: dur updated
-    loc_change(loc_3240, 5);
+    loc_change(old_bridge_animated, 5);
 }
 ~forcemove(movecoord(coord, 2, 0, 0));
 p_delay(1);

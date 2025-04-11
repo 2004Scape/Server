@@ -149,7 +149,7 @@ while(loc_findnext = true) {
                 loc_add(movecoord($central_coord, 1, 0, -1), loc_1562, 2, loc_shape, 4); 
             }
             // Temp note: dur updated
-            loc_add($central_coord, loc_83, $orig_angle, loc_shape, 4);
+            loc_add($central_coord, inviswall, $orig_angle, loc_shape, 4);
      }
 }
 sound_synth(door_open, 0, 0);
@@ -159,7 +159,7 @@ loc_findallzone(coord);
 while(loc_findnext = true) {
     if(loc_type = loc_2309) {
         // Temp note: dur updated
-        loc_change(loc_83, 3);
+        loc_change(inviswall, 3);
         loc_add(movecoord(loc_coord, 0, 0, -1), loc_1541, 0, loc_shape, 3);
         sound_synth(door_open, 0, 0);
     }

@@ -1,20 +1,20 @@
-[loc_115]
+[balloon_yellow]
 name=Party Balloon
 desc=A party balloon.
 model=model_loc_115
-anim=seq_498
+anim=balloon_drop
 blockwalk=no
 blockrange=no
 ambient=60
 op1=Burst
 category=party_balloon
-param=next_loc_stage,loc_123
+param=next_loc_stage,balloon_yellow_pop
 
-[loc_116]
+[balloon_red]
 name=Party Balloon
 desc=A party balloon.
 model=model_loc_115
-anim=seq_498
+anim=balloon_drop
 blockwalk=no
 blockrange=no
 ambient=60
@@ -22,13 +22,13 @@ op1=Burst
 recol1s=31649
 recol1d=30753
 category=party_balloon
-param=next_loc_stage,loc_124
+param=next_loc_stage,balloon_red_pop
 
-[loc_117]
+[balloon_blue]
 name=Party Balloon
 desc=A party balloon.
 model=model_loc_115
-anim=seq_498
+anim=balloon_drop
 blockwalk=no
 blockrange=no
 ambient=60
@@ -36,13 +36,13 @@ op1=Burst
 recol1s=31649
 recol1d=31
 category=party_balloon
-param=next_loc_stage,loc_125
+param=next_loc_stage,balloon_blue_pop
 
-[loc_118]
+[balloon_green]
 name=Party Balloon
 desc=A party balloon.
 model=model_loc_115
-anim=seq_498
+anim=balloon_drop
 blockwalk=no
 blockrange=no
 ambient=60
@@ -50,13 +50,13 @@ op1=Burst
 recol1s=31649
 recol1d=992
 category=party_balloon
-param=next_loc_stage,loc_126
+param=next_loc_stage,balloon_green_pop
 
-[loc_119]
+[balloon_purple]
 name=Party Balloon
 desc=A party balloon.
 model=model_loc_115
-anim=seq_498
+anim=balloon_drop
 blockwalk=no
 blockrange=no
 ambient=60
@@ -64,13 +64,13 @@ op1=Burst
 recol1s=31649
 recol1d=24638
 category=party_balloon
-param=next_loc_stage,loc_127
+param=next_loc_stage,balloon_purple_pop
 
-[loc_120]
+[balloon_white]
 name=Party Balloon
 desc=A party balloon.
 model=model_loc_115
-anim=seq_498
+anim=balloon_drop
 blockwalk=no
 blockrange=no
 ambient=60
@@ -78,47 +78,47 @@ op1=Burst
 recol1s=31649
 recol1d=32767
 category=party_balloon
-param=next_loc_stage,loc_128
+param=next_loc_stage,balloon_white_pop
 
-[loc_121]
+[balloon2]
 name=Party Balloon
 desc=Aren't they pretty?
 model=model_loc_115_2
-anim=seq_498
+anim=balloon_drop
 blockwalk=no
 blockrange=no
 ambient=60
 op1=Burst
 category=party_balloon
-param=next_loc_stage,loc_129
+param=next_loc_stage,balloon2_pop
 
-[loc_122]
+[balloon3]
 name=Party Balloon
 desc=Paaaarty!
 model=model_loc_115_3
-anim=seq_498
+anim=balloon_drop
 blockwalk=no
 blockrange=no
 ambient=60
 op1=Burst
 category=party_balloon
-param=next_loc_stage,loc_130
+param=next_loc_stage,balloon3_pop
 
-[loc_123]
+[balloon_yellow_pop]
 name=Party Balloon
 desc=A party balloon.
 model=model_loc_123
-anim=seq_499
+anim=balloon_burst
 blockwalk=no
 blockrange=no
 hasalpha=yes
 ambient=60
 
-[loc_124]
+[balloon_red_pop]
 name=Party Balloon
 desc=A party balloon.
 model=model_loc_123
-anim=seq_499
+anim=balloon_burst
 blockwalk=no
 blockrange=no
 hasalpha=yes
@@ -126,11 +126,11 @@ ambient=60
 recol1s=31649
 recol1d=30753
 
-[loc_125]
+[balloon_blue_pop]
 name=Party Balloon
 desc=A party balloon.
 model=model_loc_123
-anim=seq_499
+anim=balloon_burst
 blockwalk=no
 blockrange=no
 hasalpha=yes
@@ -138,11 +138,11 @@ ambient=60
 recol1s=31649
 recol1d=31
 
-[loc_126]
+[balloon_green_pop]
 name=Party Balloon
 desc=A party balloon.
 model=model_loc_123
-anim=seq_499
+anim=balloon_burst
 blockwalk=no
 blockrange=no
 hasalpha=yes
@@ -150,11 +150,11 @@ ambient=60
 recol1s=31649
 recol1d=992
 
-[loc_127]
+[balloon_purple_pop]
 name=Party Balloon
 desc=A party balloon.
 model=model_loc_123
-anim=seq_499
+anim=balloon_burst
 blockwalk=no
 blockrange=no
 hasalpha=yes
@@ -162,11 +162,11 @@ ambient=60
 recol1s=31649
 recol1d=24638
 
-[loc_128]
+[balloon_white_pop]
 name=Party Balloon
 desc=A party balloon.
 model=model_loc_123
-anim=seq_499
+anim=balloon_burst
 blockwalk=no
 blockrange=no
 hasalpha=yes
@@ -174,21 +174,21 @@ ambient=60
 recol1s=31649
 recol1d=32767
 
-[loc_129]
+[balloon2_pop]
 name=Party Balloon
 desc=A party balloon.
 model=model_loc_129
-anim=seq_500
+anim=balloon_burst_2
 blockwalk=no
 blockrange=no
 hasalpha=yes
 ambient=60
 
-[loc_130]
+[balloon3_pop]
 name=Party Balloon
 desc=A party balloon.
 model=model_loc_130
-anim=seq_501
+anim=balloon_burst_3
 blockwalk=no
 blockrange=no
 hasalpha=yes

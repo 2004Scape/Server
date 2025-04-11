@@ -1,11 +1,11 @@
-[loc_134]
+[haunteddoorl]
 name=Large door
 desc=A large double door.
 model=model_loc_71
 op1=Open
 category=manor_entrance
 
-[loc_135]
+[haunteddoorr]
 name=Large door
 desc=A large double door.
 model=model_loc_71
@@ -53,7 +53,7 @@ recol2d=5248
 category=manor_bookcase
 param=end_coord,0_48_52_24_31
 
-[loc_137]
+[1to2]
 name=Door
 desc=It's closed.
 model=model_loc_3

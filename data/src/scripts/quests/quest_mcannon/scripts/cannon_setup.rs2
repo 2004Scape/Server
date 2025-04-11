@@ -117,11 +117,11 @@ def_coord $origin = movecoord($center, -1, 0, -1); // south-west tile
 
 anim(human_pickupfloor, 0);
 inv_del(inv, twpart1, 1);
-loc_add($origin, cannon_base, 0, centrepiece_straight, ^cannon_decay_length);
+loc_add($origin, multicannon_base, 0, centrepiece_straight, ^cannon_decay_length);
 mes("You place the cannon base on the ground."); // https://youtu.be/TeQXQDaawO0?t=227
 
 // ------- cannon base -------
-[oploc1,cannon_base]
+[oploc1,multicannon_base]
 if (~cannon_belongs_to_player = false) {
     mes("That isn't your cannon!");
     return;
@@ -138,7 +138,7 @@ sound_synth(pick, 0, 0);
 inv_add(inv, twpart1, 1);
 loc_del(1);
 
-[oplocu,cannon_base]
+[oplocu,multicannon_base]
 if (~cannon_belongs_to_player = false) {
     mes("That isn't your cannon!");
     return;
@@ -146,7 +146,7 @@ if (~cannon_belongs_to_player = false) {
 if (last_useitem = twpart2) {
     anim(human_pickupfloor, 0);
     inv_del(inv, twpart2, 1);
-    loc_change(cannon_stand, ^cannon_decay_length);
+    loc_change(multicannon_stand, ^cannon_decay_length);
     mes("You add the stand.");
     %mcannon_stage = ^cannon_stage_stand;
     return;
@@ -163,7 +163,7 @@ if (oc_category(last_useitem) = cannon_parts & last_useitem ! twpart1) {
 // --------------
 
 // ------- cannon stand -------
-[oploc1,cannon_stand]
+[oploc1,multicannon_stand]
 if (~cannon_belongs_to_player = false) {
     mes("That isn't your cannon!");
     return;
@@ -181,7 +181,7 @@ inv_add(inv, twpart1, 1);
 inv_add(inv, twpart2, 1);
 loc_del(1);
 
-[oplocu,cannon_stand]
+[oplocu,multicannon_stand]
 if (~cannon_belongs_to_player = false) {
     mes("That isn't your cannon!");
     return;
@@ -189,7 +189,7 @@ if (~cannon_belongs_to_player = false) {
 if (last_useitem = twpart3) {
     anim(human_pickupfloor, 0);
     inv_del(inv, twpart3, 1);
-    loc_change(cannon_barrels, ^cannon_decay_length);
+    loc_change(multicannon_barrels, ^cannon_decay_length);
     mes("You add the barrels.");
     %mcannon_stage = ^cannon_stage_barrels;
     return;
@@ -202,7 +202,7 @@ if (oc_category(last_useitem) = cannon_parts & last_useitem ! twpart2) {
 // --------------
 
 // ------- cannon barrels -------
-[oploc1,cannon_barrels]
+[oploc1,multicannon_barrels]
 if (~cannon_belongs_to_player = false) {
     mes("That isn't your cannon!");
     return;
@@ -221,7 +221,7 @@ inv_add(inv, twpart2, 1);
 inv_add(inv, twpart3, 1);
 loc_del(1);
 
-[oplocu,cannon_barrels]
+[oplocu,multicannon_barrels]
 if (~cannon_belongs_to_player = false) {
     mes("That isn't your cannon!");
     return;

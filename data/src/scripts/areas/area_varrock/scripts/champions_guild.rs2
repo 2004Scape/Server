@@ -34,7 +34,7 @@ if ($entering = true) {
 p_teleport($dest);
 
 // Temp note: dur updated
-loc_add($loc_coord, loc_83, $angle, $shape, 3);
+loc_add($loc_coord, inviswall, $angle, $shape, 3);
 loc_add(movecoord($loc_coord, $x, 0, $z), $replacement, modulo(add($angle, 1), 4), $shape, 3);
 
 if ($entering = true) {

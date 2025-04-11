@@ -9,7 +9,7 @@ if(coordz(coord) > coordz(loc_coord)) {
 
 [opnpc1,forester_mcgrubor] mes("He doesn't seem interested in talking to you.");
 
-[oploc1,loc_51]
+[oploc1,mcgruborlooserailing]
 p_delay(0);
 def_coord $start = movecoord(coord, 0, 0, calc(coordz(loc_coord) - coordz(coord))); 
 def_int $mod = 1;
