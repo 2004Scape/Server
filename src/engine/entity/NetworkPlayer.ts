@@ -167,7 +167,7 @@ export class NetworkPlayer extends Player {
         }
 
         if (this.refreshModal) {
-            if ((this.modalState & (ModalState.MAIN | ModalState.SIDE)) !== ModalState.NONE) {
+            if ((this.modalState & ModalState.MAIN) !== ModalState.NONE && (this.modalState & ModalState.SIDE) !== ModalState.NONE) {
                 this.write(new IfOpenMainSide(this.modalMain, this.modalSide));
             } else if ((this.modalState & ModalState.MAIN) !== ModalState.NONE) {
                 this.write(new IfOpenMain(this.modalMain));
