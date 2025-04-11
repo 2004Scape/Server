@@ -22,6 +22,14 @@ default=null
 type=int
 default=null
 
-[gnome_ingredient]
+[gnome_cooking_ingredient]
+type=int
+default=0
+
+[gnome_cocktail_ingredient]
+type=int
+default=0
+
+[gnome_topping]
 type=int
 default=0

@@ -264,8 +264,3 @@ switch_int ($cocktail) {
         inv_add(inv, pineapple_chunks, 1);
         inv_add(inv, lime_slices, 1);
 }
-
-
-[debugproc,inspect_gf]
-inv_transmit(gnome_cooking, bank_main:inv);
-if_openmain_side(bank_main, bank_side);

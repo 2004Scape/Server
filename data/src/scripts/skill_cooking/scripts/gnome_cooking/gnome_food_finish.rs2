@@ -3,7 +3,7 @@
 [opheldu,_gnome_unf_odd_batta] @finish_gnome_food(last_item, last_useitem);
 
 [label,gnome_topping_add](obj $gnome_dish, obj $ingredient, namedobj $req_ingredient, namedobj $product, namedobj $fail)
-if (oc_param($ingredient, gnome_ingredient) = ^false) {
+if (oc_param($ingredient, gnome_topping) = ^false) {
     ~displaymessage(^dm_default);
     return;
 }

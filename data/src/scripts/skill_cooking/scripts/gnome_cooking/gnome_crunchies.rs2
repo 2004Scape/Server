@@ -1,51 +1,19 @@
 [opheld1,half_baked_crunchies]
-if (inv_freespace(gnome_cooking) = inv_size(gnome_cooking)) {
-    mes("The half baked crunchies are completely plain."); // guess
-    return;
-}
-~mesbox("You inspect the crunchies..."); // guess
-~mesbox("@blu@The crunchies contain:@bla@|<~inv_string(gnome_cooking)>."); // guess
+~mesbox("You inspect the gnome crunchies..."); // guess
+~gnome_crunchies_ingredient_display;
 
 
 [opheldu,half_baked_crunchies]
-switch_obj(last_useitem) {
-    case king_worm, equa_leaves, gnome_spice, toad_legs, chocolate_bar : @add_crunchies_ingredient(last_useitem);
-    case default : ~displaymessage(^dm_default);
+if (oc_param(last_useitem, gnome_cooking_ingredient) = ^false) {
+    ~displaymessage(^dm_default);
+    return;
 }
-
-[proc,gnome_crunchies]()(namedobj)
-// spicy crunchies
-def_int $equa_leaves_count = inv_total(gnome_cooking, equa_leaves);
-def_int $gnome_spice_count = inv_total(gnome_cooking, gnome_spice);
-def_int $toad_legs_count = inv_total(gnome_cooking, toad_legs);
-def_int $king_worm_count = inv_total(gnome_cooking, king_worm);
-def_int $chocolate_bar_count = inv_total(gnome_cooking, chocolate_bar);
-def_int $freespace = inv_freespace(gnome_cooking);
-
-inv_clear(gnome_cooking);
-
-if ($gnome_spice_count = 3 & $equa_leaves_count = 2) {
-    return(unfinished_spicy_crunchies1);
-}
-// toad legs crunchies
-if ($toad_legs_count = 2 & $gnome_spice_count = 1 & $freespace = sub(inv_size(gnome_cooking), 3)) {
-    return(unfinished_toad_crunchies1);
-}
-// worm crunchies
-if ($king_worm_count = 2 & $equa_leaves_count = 1 & $gnome_spice_count = 1 & $freespace = sub(inv_size(gnome_cooking), 4)) {
-    return(unfinished_worm_crunchies1);
-}
-// choc chip crunchies
-if ($chocolate_bar_count = 2 & $gnome_spice_count = 1 & $freespace = sub(inv_size(gnome_cooking), 3)) {
-    return(unfinished_choc_chip_crunchies1);
-}
-
-return(odd_crunchies);
+@add_crunchies_ingredient(last_useitem);
 
 
 [label,add_crunchies_ingredient](obj $ingredient)
-if (inv_freespace(gnome_cooking) = 0) {
-    mes("The crunchies already have enough ingredients."); // guess
+if (~gnome_crunchies_ingredient_space = 0) {
+    mes("The gnome crunchies already have enough ingredients."); // guess
     return;
 }
 
@@ -55,11 +23,144 @@ if (string_length(oc_param($ingredient, crunchies_message)) < 1) {
     mes(oc_param($ingredient, crunchies_message));
 }
 
-if ($ingredient = gnome_spice) {
-    inv_add(gnome_cooking, gnome_spice, 1);
-} else {
-    inv_moveitem(inv, gnome_cooking, $ingredient, 1);
+if ($ingredient ! gnome_spice) {
+    inv_del(inv, $ingredient, 1);
     if (oc_param($ingredient, next_obj_stage) ! null) {
         inv_add(inv, oc_param($ingredient, next_obj_stage), 1);
     }
 }
+switch_obj($ingredient) {
+    case spicy_worm : %gnome_crunchies_bits1 = setbit_range_toint(%gnome_crunchies_bits1, add(getbit_range(%gnome_crunchies_bits1, 0, 3), 1), 0, 3);
+    case cheese : %gnome_crunchies_bits1 = setbit_range_toint(%gnome_crunchies_bits1, add(getbit_range(%gnome_crunchies_bits1, 4, 7), 1), 4, 7);
+    case seasoned_toad_legs : %gnome_crunchies_bits1 = setbit_range_toint(%gnome_crunchies_bits1, add(getbit_range(%gnome_crunchies_bits1, 8, 11), 1), 8, 11);
+    case tomato : %gnome_crunchies_bits1 = setbit_range_toint(%gnome_crunchies_bits1, add(getbit_range(%gnome_crunchies_bits1, 12, 15), 1), 12, 15);
+    case equa_leaves : %gnome_crunchies_bits1 = setbit_range_toint(%gnome_crunchies_bits1, add(getbit_range(%gnome_crunchies_bits1, 16, 19), 1), 16, 19);
+    case onion : %gnome_crunchies_bits1 = setbit_range_toint(%gnome_crunchies_bits1, add(getbit_range(%gnome_crunchies_bits1, 20, 23), 1), 20, 23);
+    case cabbage : %gnome_crunchies_bits1 = setbit_range_toint(%gnome_crunchies_bits1, add(getbit_range(%gnome_crunchies_bits1, 24, 27), 1), 24, 27);
+    case dwellberry : %gnome_crunchies_bits1 = setbit_range_toint(%gnome_crunchies_bits1, add(getbit_range(%gnome_crunchies_bits1, 28, 31), 1), 28, 31);
+    case chocolate_bar : %gnome_crunchies_bits2 = setbit_range_toint(%gnome_crunchies_bits2, add(getbit_range(%gnome_crunchies_bits2, 0, 3), 1), 0, 3);
+    case potato : %gnome_crunchies_bits2 = setbit_range_toint(%gnome_crunchies_bits2, add(getbit_range(%gnome_crunchies_bits2, 4, 7), 1), 4, 7);
+    case gnome_spice : %gnome_crunchies_bits2 = setbit_range_toint(%gnome_crunchies_bits2, add(getbit_range(%gnome_crunchies_bits2, 8, 11), 1), 8, 11);
+    case toad_legs : %gnome_crunchies_bits2 = setbit_range_toint(%gnome_crunchies_bits2, add(getbit_range(%gnome_crunchies_bits2, 12, 15), 1), 12, 15);
+    case king_worm : %gnome_crunchies_bits2 = setbit_range_toint(%gnome_crunchies_bits2, add(getbit_range(%gnome_crunchies_bits2, 16, 19), 1), 16, 19);
+}
+
+[proc,gnome_crunchies]()(namedobj)
+def_int $spicy_worm_count = getbit_range(%gnome_crunchies_bits1, 0, 3);
+def_int $cheese_count = getbit_range(%gnome_crunchies_bits1, 4, 7);
+def_int $seasoned_toad_legs_count = getbit_range(%gnome_crunchies_bits1, 8, 11);
+def_int $tomato_count = getbit_range(%gnome_crunchies_bits1, 12, 15);
+def_int $equa_leaves_count = getbit_range(%gnome_crunchies_bits1, 16, 19);
+def_int $onion_count = getbit_range(%gnome_crunchies_bits1, 20, 23);
+def_int $cabbage_count = getbit_range(%gnome_crunchies_bits1, 24, 27);
+def_int $dwellberry_count = getbit_range(%gnome_crunchies_bits1, 28, 31);
+def_int $chocolate_bar_count = getbit_range(%gnome_crunchies_bits2, 0, 3);
+def_int $potato_count = getbit_range(%gnome_crunchies_bits2, 4, 7);
+def_int $gnome_spice_count = getbit_range(%gnome_crunchies_bits2, 8, 11);
+def_int $toad_legs_count = getbit_range(%gnome_crunchies_bits2, 12, 15);
+def_int $king_worm_count = getbit_range(%gnome_crunchies_bits2, 16, 19);
+
+def_int $total = calc($spicy_worm_count + $cheese_count + $seasoned_toad_legs_count + $tomato_count + $equa_leaves_count + $onion_count + $cabbage_count + $dwellberry_count + $chocolate_bar_count + $potato_count + $gnome_spice_count + $toad_legs_count + $king_worm_count);
+
+
+// spicy crunchies
+if ($gnome_spice_count = 3 & $equa_leaves_count = 2 & $total = 5) {
+    return(unfinished_spicy_crunchies1);
+}
+// toad legs crunchies
+if ($toad_legs_count = 2 & $gnome_spice_count = 1 & $total = 3) {
+    return(unfinished_toad_crunchies1);
+}
+// worm crunchies
+if ($king_worm_count = 2 & $equa_leaves_count = 1 & $gnome_spice_count = 1 & $total = 4) {
+    return(unfinished_worm_crunchies1);
+}
+// choc chip crunchies
+if ($chocolate_bar_count = 2 & $gnome_spice_count = 1 & $total = 3) {
+    return(unfinished_choc_chip_crunchies1);
+}
+
+return(odd_crunchies);
+
+[proc,gnome_crunchies_ingredient_space]()(int)
+def_int $spicy_worm_count = getbit_range(%gnome_crunchies_bits1, 0, 3);
+def_int $cheese_count = getbit_range(%gnome_crunchies_bits1, 4, 7);
+def_int $seasoned_toad_legs_count = getbit_range(%gnome_crunchies_bits1, 8, 11);
+def_int $tomato_count = getbit_range(%gnome_crunchies_bits1, 12, 15);
+def_int $equa_leaves_count = getbit_range(%gnome_crunchies_bits1, 16, 19);
+def_int $onion_count = getbit_range(%gnome_crunchies_bits1, 20, 23);
+def_int $cabbage_count = getbit_range(%gnome_crunchies_bits1, 24, 27);
+def_int $dwellberry_count = getbit_range(%gnome_crunchies_bits1, 28, 31);
+def_int $chocolate_bar_count = getbit_range(%gnome_crunchies_bits2, 0, 3);
+def_int $potato_count = getbit_range(%gnome_crunchies_bits2, 4, 7);
+def_int $gnome_spice_count = getbit_range(%gnome_crunchies_bits2, 8, 11);
+def_int $toad_legs_count = getbit_range(%gnome_crunchies_bits2, 12, 15);
+def_int $king_worm_count = getbit_range(%gnome_crunchies_bits2, 16, 19);
+
+def_int $total = calc($spicy_worm_count + $cheese_count + $seasoned_toad_legs_count + $tomato_count + $equa_leaves_count + $onion_count + $cabbage_count + $dwellberry_count + $chocolate_bar_count + $potato_count + $gnome_spice_count + $toad_legs_count + $king_worm_count);
+
+return(sub(15, $total));
+
+[proc,gnome_crunchies_ingredient_display]
+def_int $spicy_worm_count = getbit_range(%gnome_crunchies_bits1, 0, 3);
+def_int $cheese_count = getbit_range(%gnome_crunchies_bits1, 4, 7);
+def_int $seasoned_toad_legs_count = getbit_range(%gnome_crunchies_bits1, 8, 11);
+def_int $tomato_count = getbit_range(%gnome_crunchies_bits1, 12, 15);
+def_int $equa_leaves_count = getbit_range(%gnome_crunchies_bits1, 16, 19);
+def_int $onion_count = getbit_range(%gnome_crunchies_bits1, 20, 23);
+def_int $cabbage_count = getbit_range(%gnome_crunchies_bits1, 24, 27);
+def_int $dwellberry_count = getbit_range(%gnome_crunchies_bits1, 28, 31);
+def_int $chocolate_bar_count = getbit_range(%gnome_crunchies_bits2, 0, 3);
+def_int $potato_count = getbit_range(%gnome_crunchies_bits2, 4, 7);
+def_int $gnome_spice_count = getbit_range(%gnome_crunchies_bits2, 8, 11);
+def_int $toad_legs_count = getbit_range(%gnome_crunchies_bits2, 12, 15);
+def_int $king_worm_count = getbit_range(%gnome_crunchies_bits2, 16, 19);
+
+def_int $total = calc($spicy_worm_count + $cheese_count + $seasoned_toad_legs_count + $tomato_count + $equa_leaves_count + $onion_count + $cabbage_count + $dwellberry_count + $chocolate_bar_count + $potato_count + $gnome_spice_count + $toad_legs_count + $king_worm_count);
+
+if ($total = 0) {
+    ~mesbox("The gnome crunchies are completely plain.");
+    return;
+}
+
+def_string $string = "";
+
+if ($king_worm_count > 0) {
+    $string = append($string, "<~pluralise($king_worm_count, "King worm")>, ");
+}
+if ($spicy_worm_count > 0) {
+    $string = append($string, "<~pluralise($spicy_worm_count, "Spicy worm")>, ");
+}
+if ($toad_legs_count > 0) {
+    $string = append($string, "<~pluralise($toad_legs_count, "pair")> of Toad legs, ");
+}
+if ($seasoned_toad_legs_count > 0) {
+    $string = append($string, "<~pluralise($seasoned_toad_legs_count, "pair")> of Seasoned toad legs, ");
+}
+if ($cheese_count > 0) {
+    $string = append($string, "<~pluralise($cheese_count, "piece")> of Cheese, ");
+}
+if ($tomato_count > 0) {
+    $string = append($string, "<~pluralise($tomato_count, "Tomato")>, ");
+}
+if ($equa_leaves_count > 0) {
+    $string = append($string, "<~pluralise($equa_leaves_count, "sprig")> of Equa Leaves, ");
+}
+if ($onion_count > 0) {
+    $string = append($string, "<~pluralise($onion_count, "Onion")>, ");
+}
+if ($cabbage_count > 0) {
+    $string = append($string, "<~pluralise($cabbage_count, "Cabbage")>, ");
+}
+if ($dwellberry_count > 0) {
+    $string = append($string, "<~text_plural($dwellberry_count, "Dwellberry", "Dwellberries")>, ");
+}
+if ($potato_count > 0) {
+    $string = append($string, "<~pluralise($potato_count, "Potato")>, ");
+}
+if ($gnome_spice_count > 0) {
+    $string = append($string, "<~text_plural($gnome_spice_count, "dash", "dashes")> of Gnome Spice, ");
+}
+$string = ~string_removeright($string, 2);
+
+~mesbox("@blu@The gnome crunchies contain:@bla@|<$string>."); // guess

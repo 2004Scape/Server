@@ -1,5 +1,5 @@
 [label,gnome_drink_add](obj $gnome_drink, obj $ingredient, namedobj $req_ingredient, namedobj $product, namedobj $fail)
-if (oc_param($ingredient, gnome_ingredient) = ^false) {
+if (oc_param($ingredient, gnome_topping) = ^false) {
     ~displaymessage(^dm_default);
     return;
 }
