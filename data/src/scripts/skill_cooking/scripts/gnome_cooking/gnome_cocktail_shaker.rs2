@@ -1,10 +1,10 @@
 [opheldu,cocktail_shaker] 
 switch_obj(last_useitem) {
-    case cocktail_glass : @pour_cocktail_shaker;
+    case cocktail_glass_empty : @pour_cocktail_shaker;
     case default : @add_cocktail_ingredient(last_useitem);
 }
 
-[opheldu,cocktail_glass]
+[opheldu,cocktail_glass_empty]
 switch_obj(last_useitem) {
     case cocktail_shaker : @pour_cocktail_shaker;
     case default : ~displaymessage(^dm_default);
@@ -55,7 +55,7 @@ if (~gnome_cocktail_ingredient_space = 15) {
     mes("There's nothing to pour from the cocktail shaker."); // guess
     return;
 }
-inv_del(inv, cocktail_glass, 1);
+inv_del(inv, cocktail_glass_empty, 1);
 inv_add(inv, ~gnome_cocktail, 1);
 
 [proc,gnome_cocktail]()(namedobj)
@@ -97,13 +97,13 @@ if ($vodka_count = 1 & $gin_count = 1 & $dwellberry_count = 1 & $total = 3) {
 }
 // short green guy
 if ($vodka_count = 1 & $lime_count = 3 & $total = 4) {
-    return(unfinished_short_green_guy1);
+    return(unfinished_sgg1);
 }
 // wizard blizzard
 if ($vodka_count = 2 & $gin_count = 1 & $pineapple_count = 1 & $orange_count = 1 & $lime_count = 1 & $lemon_count = 1 & $total = 7) {
     return(unfinished_wizard_blizzard1);
 }
-return(odd_cocktail1);
+return(spoilt_cocktail);
 
 [proc,gnome_cocktail_ingredient_space]()(int)
 def_int $vodka_count = getbit_range(%gnome_cocktail_bits1, 0, 3);

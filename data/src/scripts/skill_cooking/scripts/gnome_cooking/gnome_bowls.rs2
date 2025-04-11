@@ -1,8 +1,8 @@
-[opheld1,half_baked_gnomebowl]
+[opheld1,half_baked_bowl]
 ~mesbox("You look into the gnome bowl..."); // guess
 ~gnome_bowl_ingredient_display;
 
-[opheldu,half_baked_gnomebowl]
+[opheldu,half_baked_bowl]
 if (oc_param(last_useitem, gnome_cooking_ingredient) = ^false) {
     ~displaymessage(^dm_default);
     return;
@@ -30,7 +30,7 @@ if ($ingredient ! gnome_spice) {
 switch_obj($ingredient) {
     case spicy_worm : %gnome_bowl_bits1 = setbit_range_toint(%gnome_bowl_bits1, add(getbit_range(%gnome_bowl_bits1, 0, 3), 1), 0, 3);
     case cheese : %gnome_bowl_bits1 = setbit_range_toint(%gnome_bowl_bits1, add(getbit_range(%gnome_bowl_bits1, 4, 7), 1), 4, 7);
-    case seasoned_toad_legs : %gnome_bowl_bits1 = setbit_range_toint(%gnome_bowl_bits1, add(getbit_range(%gnome_bowl_bits1, 8, 11), 1), 8, 11);
+    case seasoned_toads_legs : %gnome_bowl_bits1 = setbit_range_toint(%gnome_bowl_bits1, add(getbit_range(%gnome_bowl_bits1, 8, 11), 1), 8, 11);
     case tomato : %gnome_bowl_bits1 = setbit_range_toint(%gnome_bowl_bits1, add(getbit_range(%gnome_bowl_bits1, 12, 15), 1), 12, 15);
     case equa_leaves : %gnome_bowl_bits1 = setbit_range_toint(%gnome_bowl_bits1, add(getbit_range(%gnome_bowl_bits1, 16, 19), 1), 16, 19);
     case onion : %gnome_bowl_bits1 = setbit_range_toint(%gnome_bowl_bits1, add(getbit_range(%gnome_bowl_bits1, 20, 23), 1), 20, 23);
@@ -39,7 +39,7 @@ switch_obj($ingredient) {
     case chocolate_bar : %gnome_bowl_bits2 = setbit_range_toint(%gnome_bowl_bits2, add(getbit_range(%gnome_bowl_bits2, 0, 3), 1), 0, 3);
     case potato : %gnome_bowl_bits2 = setbit_range_toint(%gnome_bowl_bits2, add(getbit_range(%gnome_bowl_bits2, 4, 7), 1), 4, 7);
     case gnome_spice : %gnome_bowl_bits2 = setbit_range_toint(%gnome_bowl_bits2, add(getbit_range(%gnome_bowl_bits2, 8, 11), 1), 8, 11);
-    case toad_legs : %gnome_bowl_bits2 = setbit_range_toint(%gnome_bowl_bits2, add(getbit_range(%gnome_bowl_bits2, 12, 15), 1), 12, 15);
+    case toads_legs : %gnome_bowl_bits2 = setbit_range_toint(%gnome_bowl_bits2, add(getbit_range(%gnome_bowl_bits2, 12, 15), 1), 12, 15);
     case king_worm : %gnome_bowl_bits2 = setbit_range_toint(%gnome_bowl_bits2, add(getbit_range(%gnome_bowl_bits2, 16, 19), 1), 16, 19);
 }
 
@@ -69,17 +69,17 @@ if ($chocolate_bar_count = 4 & $equa_leaves_count = 1 & $total = 5) {
 }
 // veg ball
 if ($onion_count = 2 & $potato_count = 2 & $gnome_spice_count = 1 & $total = 5) {
-    return(unfinished_veg_ball1);
+    return(unfinished_veg_ball);
 }
 // worm hole
 if ($king_worm_count = 4 & $onion_count = 2 & $gnome_spice_count = 1 & $total = 7) {
-    return(unfinished_worm_hole1);
+    return(unfinished_worm_hole);
 }
 // tangled toad legs
 if ($toad_legs_count = 4 & $cheese_count = 2 & $equa_leaves_count = 2 & $gnome_spice_count = 2 & $dwellberry_count = 1 & $total = 11) {
     return(tangled_toads_legs);
 }
-return(odd_gnomebowl);
+return(spoilt_gnomebowl);
 
 [proc,gnome_bowl_ingredient_space]()(int)
 def_int $spicy_worm_count = getbit_range(%gnome_bowl_bits1, 0, 3);

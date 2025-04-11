@@ -121,7 +121,7 @@ anim($anim, 0);
 sound_synth(fry, 0, 0);
 switch_obj($uncooked_item) {
     case half_baked_batta : $cooked_item = ~gnome_batta;
-    case half_baked_gnomebowl : $cooked_item = ~gnome_bowl;
+    case half_baked_bowl : $cooked_item = ~gnome_bowl;
     case half_baked_crunchies : $cooked_item = ~gnome_crunchies;
 }
 // rsc delays for about 3 ticks.

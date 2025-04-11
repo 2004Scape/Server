@@ -1,7 +1,7 @@
 [opheldu,dwellberry]
 switch_obj(last_useitem) {
     case cocktail_shaker : @add_cocktail_ingredient(last_item);
-    case half_baked_gnomebowl : @add_bowl_ingredient(last_item);
+    case half_baked_bowl : @add_bowl_ingredient(last_item);
     case half_baked_batta : @add_cocktail_ingredient(last_item);
     case default : ~displaymessage(^dm_default);
 }
@@ -18,10 +18,10 @@ switch_int(oc_param(last_useitem, gnome_cooking_type)) {
     case ^gnome_bowl, ^gnome_batta, ^gnome_crunchies : @finish_gnome_food(last_useitem, last_item);
 }
 switch_obj(last_useitem) {
-    case toad_legs : @opheldu_make_gnome_food(equa_toad_legs, "You add the equa leaves to the toad legs.");
-    case spicy_toad_legs : @opheldu_make_gnome_food(seasoned_toad_legs, "You add the equa leaves to the spicy toad legs.");
+    case toads_legs : @opheldu_make_gnome_food(equa_toads_legs, "You add the equa leaves to the toad legs.");
+    case spicy_toads_legs : @opheldu_make_gnome_food(seasoned_toads_legs, "You add the equa leaves to the spicy toad legs.");
     case cocktail_shaker : @add_batta_ingredient(last_item);
-    case half_baked_gnomebowl : @add_bowl_ingredient(last_item);
+    case half_baked_bowl : @add_bowl_ingredient(last_item);
     case half_baked_batta : @add_batta_ingredient(last_item);
     case half_baked_crunchies : @add_crunchies_ingredient(last_item);
     case raw_chompy : @quest_chompybird_add_ingredients_to_chompy_message;
@@ -35,7 +35,7 @@ switch_obj(last_useitem) {
     case default : ~displaymessage(^dm_default);
 }
 
-[opheldu,seasoned_toad_legs]
+[opheldu,seasoned_toads_legs]
 switch_obj(last_useitem) {
     case half_baked_batta : @add_batta_ingredient(last_item);
     case default : ~displaymessage(^dm_default);
@@ -50,16 +50,16 @@ switch_obj(last_useitem) {
 [opheldu,king_worm]
 switch_obj(last_useitem) {
     case gnome_spice : @opheldu_make_gnome_food(spicy_worm, "You add the gnome spice to the king worm.");
-    case half_baked_gnomebowl : @add_bowl_ingredient(last_item);
+    case half_baked_bowl : @add_bowl_ingredient(last_item);
     case half_baked_crunchies : @add_crunchies_ingredient(last_item);
     case default : ~displaymessage(^dm_default);
 }
 
-[opheldu,toad_legs]
+[opheldu,toads_legs]
 switch_obj(last_useitem) {
-    case gnome_spice : @opheldu_make_gnome_food(spicy_toad_legs, "You add the gnome spice to the toad legs.");
-    case equa_leaves : @opheldu_make_gnome_food(equa_toad_legs, "You add the equa leaves to the toad legs.");
-    case half_baked_gnomebowl : @add_bowl_ingredient(last_item);
+    case gnome_spice : @opheldu_make_gnome_food(spicy_toads_legs, "You add the gnome spice to the toad legs.");
+    case equa_leaves : @opheldu_make_gnome_food(equa_toads_legs, "You add the equa leaves to the toad legs.");
+    case half_baked_bowl : @add_bowl_ingredient(last_item);
     case half_baked_crunchies : @add_crunchies_ingredient(last_item);
     case default : ~displaymessage(^dm_default);
 }
@@ -99,9 +99,9 @@ switch_int(oc_param(last_useitem, gnome_cooking_type)) {
 }
 switch_obj(last_useitem) {
     case king_worm : @opheldu_make_gnome_food(spicy_worm, "You add the gnome spice to the king worm.");
-    case toad_legs : @opheldu_make_gnome_food(spicy_toad_legs, "You add the gnome spice to the toad legs.");
-    case equa_toad_legs : @opheldu_make_gnome_food(seasoned_toad_legs, "You add the gnome spice to the equa toad legs.");
-    case half_baked_gnomebowl : @add_bowl_ingredient(last_item);
+    case toads_legs : @opheldu_make_gnome_food(spicy_toads_legs, "You add the gnome spice to the toad legs.");
+    case equa_toads_legs : @opheldu_make_gnome_food(seasoned_toads_legs, "You add the gnome spice to the equa toad legs.");
+    case half_baked_bowl : @add_bowl_ingredient(last_item);
     case half_baked_crunchies : @add_crunchies_ingredient(last_item);
     case default : ~displaymessage(^dm_default);
 }
@@ -118,7 +118,7 @@ mes($message);
 
 [debugproc,gf_test](int $food)
 inv_clear(inv);
-inv_add(inv, gianne_cook_book, 1);
+inv_add(inv, giannes_cook_book, 1);
 switch_int($food) {
     case 1 : 
         inv_add(inv, gnomebowl_mould, 1);
@@ -130,7 +130,7 @@ switch_int($food) {
     case 2 :
         inv_add(inv, gnomebowl_mould, 1);
         inv_add(inv, gianne_dough, 1);
-        inv_add(inv, toad_legs, 4);
+        inv_add(inv, toads_legs, 4);
         inv_add(inv, cheese, 2);
         inv_add(inv, equa_leaves, 2);
         inv_add(inv, gnome_spice, 1);
@@ -169,7 +169,7 @@ switch_int($food) {
     case 8 :
         inv_add(inv, crunchy_tray, 1);
         inv_add(inv, gianne_dough, 1);
-        inv_add(inv, toad_legs, 2);
+        inv_add(inv, toads_legs, 2);
         inv_add(inv, gnome_spice, 1);
         inv_add(inv, equa_leaves, 1);
     case 9 :
@@ -181,7 +181,7 @@ switch_int($food) {
     case 10 :
         inv_add(inv, batta_tin, 1);
         inv_add(inv, gianne_dough, 1);
-        inv_add(inv, seasoned_toad_legs, 1);
+        inv_add(inv, seasoned_toads_legs, 1);
         inv_add(inv, cheese, 1);
     case 11 :
         inv_add(inv, batta_tin, 1);
@@ -212,7 +212,7 @@ switch_int($food) {
 inv_clear(inv);
 inv_add(inv, cocktail_guide, 1);
 inv_add(inv, cocktail_shaker, 1);
-inv_add(inv, cocktail_glass, 1);
+inv_add(inv, cocktail_glass_empty, 1);
 switch_int ($cocktail) {
     case 1 :
         inv_add(inv, vodka, 1);
