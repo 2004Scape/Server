@@ -69,6 +69,7 @@ while($i < $amount) {
     if(calc($total_cost + $added_amt) > $current_gp) {
         if ($i > 0) {
             wealth_log(^wealth_lost, $total_cost, "Bought <oc_debugname($obj)> x<tostring($i)> from <inv_debugname(%shop)> for <tostring($total_cost)> coins");
+            wealth_event(^wealth_shop_buy, oc_debugname($obj), $i, $total_cost);
         }
         mes("You don't have enough coins.");
         return;
@@ -76,6 +77,7 @@ while($i < $amount) {
     if($current_stock <= 0) {
         if ($i > 0) {
             wealth_log(^wealth_lost, $total_cost, "Bought <oc_debugname($obj)> x<tostring($i)> from <inv_debugname(%shop)> for <tostring($total_cost)> coins");
+            wealth_event(^wealth_shop_buy, oc_debugname($obj), $i, $total_cost);
         }
         mes("The shop has run out of stock.");
         return;
@@ -85,6 +87,7 @@ while($i < $amount) {
     if($space_overflow >= calc($amount - $i) & calc($total_cost + $added_amt) ! $current_gp) {
         if ($i > 0) {
             wealth_log(^wealth_lost, $total_cost, "Bought <oc_debugname($obj)> x<tostring($i)> from <inv_debugname(%shop)> for <tostring($total_cost)> coins");
+            wealth_event(^wealth_shop_buy, oc_debugname($obj), $i, $total_cost);
         }
         mes("You don't have enough inventory space.");
         return;
@@ -95,6 +98,7 @@ while($i < $amount) {
     $i = calc($i + 1);
 }
 wealth_log(^wealth_lost, $total_cost, "Bought <oc_debugname($obj)> x<tostring($i)> from <inv_debugname(%shop)> for <tostring($total_cost)> coins");
+wealth_event(^wealth_shop_buy, oc_debugname($obj), $i, $total_cost);
 
 // Sell an item to the shop
 [label,sell_item](obj $obj, int $amount)
@@ -124,6 +128,7 @@ while($i < $sell_amount) {
 // now perform the transaction 
 inv_moveitem_uncert(inv, %shop, $obj, $sell_amount);
 wealth_log(^wealth_gained, $total_value, "Sold <oc_debugname($obj)> x<tostring($sell_amount)> to <inv_debugname(%shop)> for <tostring($total_value)> coins");
+wealth_event(^wealth_shop_sell, oc_debugname($obj), $sell_amount, $total_value);
 if($total_value > 0) {
     inv_add(inv, coins, $total_value);
 }

@@ -39,6 +39,7 @@ export default {
     // Maximum approximate number of storage bytes allowed per single input tracking session.
     // It does not seem remotely possible to get near this amount under normal inputs.
     NODE_LIMIT_BYTES_PER_TRACKING_SESSION: tryParseInt(process.env.NODE_MAX_BYTES_PER_TRACKING_SESSION, 50_000),
+    NODE_MINIMUM_WEALTH_VALUE_EVENT: tryParseInt(process.env.NODE_MINIMUM_WEALTH_VALUE_EVENT, 10),
     // extra debug info e.g. missing triggers
     NODE_DEBUG: tryParseBoolean(process.env.NODE_DEBUG, true),
     // measuring script execution

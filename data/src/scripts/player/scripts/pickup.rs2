@@ -38,6 +38,7 @@ if ($worldpop_dependant = true) {
 loc_del($respawn_ticks);
 inv_add(inv, $replacement, 1);
 wealth_log(^wealth_gained, oc_cost($replacement), "Picked up <oc_debugname($replacement)> x1");
+wealth_event(^wealth_pickup, oc_debugname($replacement), 1, oc_cost($replacement));
 
 [proc,pickup_obj_check_for_space](obj $obj, int $amount)(boolean)
 if (inv_itemspace(inv, $obj, $amount, inv_size(inv)) = false) {

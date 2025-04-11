@@ -204,6 +204,7 @@ enum ScriptOpcode {
     LAST_COORD,
     SESSION_LOG, // custom
     WEALTH_LOG, // custom
+    WEALTH_EVENT, // custom
     P_RUN, // todo: real command name?
 
     // Npc ops (2500-2999)

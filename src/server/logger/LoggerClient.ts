@@ -28,6 +28,23 @@ export default class LoggerClient extends InternalClient {
         );
     }
 
+    public async wealthEvent(events: string[]) {
+        await this.connect();
+
+        if (!this.ws || !this.wsr || !this.wsr.checkIfWsLive()) {
+            return;
+        }
+
+        this.ws.send(
+            JSON.stringify({
+                type: 'wealth_event',
+                world: Environment.NODE_ID,
+                profile: Environment.NODE_PROFILE,
+                events
+            })
+        );
+    }
+
     public async report(username: string, coord: number, offender: string, reason: number) {
         await this.connect();
 

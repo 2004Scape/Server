@@ -5,6 +5,7 @@ import * as rsbuf from '@2004scape/rsbuf';
 import InvType from '#/cache/config/InvType.js';
 import { CoordGrid } from '#/engine/CoordGrid.js';
 import Player from '#/engine/entity/Player.js';
+import { WealthEventParams } from '#/engine/entity/tracking/WealthEvent.js';
 import World from '#/engine/World.js';
 import WorldStat from '#/engine/WorldStat.js';
 import Zone from '#/engine/zone/Zone.js';
@@ -246,6 +247,15 @@ export class NetworkPlayer extends Player {
 
     override addWealthLog(change: number, message: string, ...args: string[]) {
         World.addSessionLog(LoggerEventType.WEALTH, this.account_id, isClientConnected(this) ? this.client.uuid : 'disconnected', CoordGrid.packCoord(this.level, this.x, this.z), change + ';' + message, ...args);
+    }
+
+    override addWealthEvent(event: WealthEventParams) {
+        World.addWealthEvent({
+            coord: CoordGrid.packCoord(this.level, this.x, this.z),
+            account_id: this.account_id,
+            account_session: isClientConnected(this) ? this.client.uuid : 'disconnected',
+            ...event
+        });
     }
 
     updateMap() {
