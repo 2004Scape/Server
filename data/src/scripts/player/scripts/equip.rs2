@@ -2,8 +2,10 @@
 
 [inv_button1,wornitems:wear]
 if_close;
-p_clearpendingaction;
-~unequip(last_slot);
+if (p_finduid(uid) = true) {
+    p_clearpendingaction;
+    ~unequip(last_slot);
+}
 
 [proc,equip](int $slot)
 if (p_finduid(uid) = true) {
