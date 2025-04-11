@@ -88,7 +88,7 @@ if ($vodka_count = 1 & $gin_count = 1 & $brandy_count = 1 & $lemon_count = 2 & $
     return(unfinished_blurberry_special1);
 }
 // chocolate saturday
-if ($whisky_count = 1 & $equa_leaves_count = 1 & $bucket_milk_count = 1 & $total = 4) {
+if ($whisky_count = 1 & $equa_leaves_count = 1 & $bucket_milk_count = 1 & $total = 3) {
     return(unfinished_chocolate_saturday1);
 }
 // drunk dragon

@@ -62,6 +62,8 @@ def_int $king_worm_count = getbit_range(%gnome_crunchies_bits2, 16, 19);
 
 def_int $total = calc($spicy_worm_count + $cheese_count + $seasoned_toad_legs_count + $tomato_count + $equa_leaves_count + $onion_count + $cabbage_count + $dwellberry_count + $chocolate_bar_count + $potato_count + $gnome_spice_count + $toad_legs_count + $king_worm_count);
 
+%gnome_crunchies_bits1 = clearbit_range(%gnome_crunchies_bits1, 0, 31);
+%gnome_crunchies_bits2 = clearbit_range(%gnome_crunchies_bits2, 0, 31);
 
 // spicy crunchies
 if ($gnome_spice_count = 3 & $equa_leaves_count = 2 & $total = 5) {

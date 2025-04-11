@@ -405,9 +405,9 @@ data=additional,gnomebowl_mould
 data=levelrequired,1
 data=experience,30
 data=successchance,118,492
-data=cookmessage_range,You put the gnome bowl in the oven...
+data=cookmessage_range,You briefly warm the gnome bowl in the oven...
 data=cantcookmessage_fire,You need a proper oven to cook that.
-data=successmessage,You remove the half baked gnome bowl from the oven.
+data=successmessage,You remove the half baked gnome bowl.
 data=burnmessage,You accidentally burn the gnome bowl.
 
 [cooking_generic_half_baked_crunchies]
@@ -419,9 +419,9 @@ data=additional,crunchy_tray
 data=levelrequired,1
 data=experience,30
 data=successchance,118,492
-data=cookmessage_range,You put the crunchies in the oven...
+data=cookmessage_range,You briefly warm the crunchies in the oven...
 data=cantcookmessage_fire,You need a proper oven to cook that.
-data=successmessage,You remove the half baked crunchies from the oven.
+data=successmessage,You remove the half baked crunchies.
 data=burnmessage,You accidentally burn the crunchies.
 
 [cooking_generic_half_baked_batta]
@@ -433,9 +433,9 @@ data=additional,batta_tin
 data=levelrequired,1
 data=experience,30
 data=successchance,118,492
-data=cookmessage_range,You put the batta in the oven...
+data=cookmessage_range,You briefly warm the batta in the oven...
 data=cantcookmessage_fire,You need a proper oven to cook that.
-data=successmessage,You remove the half baked gnome batta from the oven.
+data=successmessage,You remove the half baked batta.
 data=burnmessage,You accidentally burn the batta.
 
 [cooking_generic_chocolate_saturday]
