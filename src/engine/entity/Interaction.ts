@@ -1,6 +1,4 @@
-enum Interaction {
+export const enum Interaction {
     SCRIPT,
     ENGINE
 }
-
-export default Interaction;

@@ -1,0 +1,78 @@
+[opnpc1,san_tojalon]
+if (~player_in_combat_check = false) {
+    return;
+}
+// no area check or anything (same w/opnpc2)
+if(%legends_progress < ^legends_heart_in_recess & ~obj_gettotal(heartcrystal_sectiona) = 0 & ~obj_gettotal(heartcrystal) = 0 
+        & ~obj_gettotal(heartcrystal_glow) = 0 & testbit(%legends_bits, ^legends_smelting_chunk) = false) {
+    npc_say("Are you ready to have your mettle tested?");
+} else {
+    npc_say("You have defeated me in battle, and still you search for the source?");
+}
+npc_setmode(opplayer2);
+
+[opnpc2,san_tojalon]
+if(add(%lastcombat, 8) < map_clock & %aggressive_npc ! npc_uid) {
+    %aggressive_npc = npc_uid;
+    if(%legends_progress < ^legends_heart_in_recess & ~obj_gettotal(heartcrystal_sectiona) = 0 & ~obj_gettotal(heartcrystal) = 0 
+        & ~obj_gettotal(heartcrystal_glow) = 0 & testbit(%legends_bits, ^legends_smelting_chunk) = false) {
+        npc_say("Are you ready to have your mettle tested?");
+    } else {
+        npc_say("You have defeated me in battle, and still you search for the source?");
+    }
+}
+@player_combat_start;
+
+[ai_opplayer2,san_tojalon]
+if(inzone(0_43_45_0_0, 0_46_45_63_63, coord) = false & (%npc_aggressive_player ! uid & (~obj_gettotal(heartcrystal_sectiona) > 0 | ~obj_gettotal(heartcrystal) > 0 | ~obj_gettotal(heartcrystal_glow) > 0 |
+        %legends_progress >= ^legends_heart_in_recess | testbit(%legends_bits, ^legends_smelting_chunk) = true))) {
+    npc_setmode(null);
+    return;
+}
+if(add(%lastcombat, 8) < map_clock & %aggressive_npc ! npc_uid) {
+    if(%legends_progress < ^legends_heart_in_recess & ~obj_gettotal(heartcrystal_sectiona) = 0 & ~obj_gettotal(heartcrystal) = 0 
+        & ~obj_gettotal(heartcrystal_glow) = 0 & testbit(%legends_bits, ^legends_smelting_chunk) = false) {
+        mes("San Tojalon: Prepare yourself...");
+        mes("San Tojalon will test your mettle.");
+        npc_say("Prepare yourself...");
+    } else {
+        npc_say("You have defeated me in battle, and still you search for the source?");
+    }
+}
+~npc_default_attack;
+
+[ai_queue3,san_tojalon]
+if(finduid(%npc_aggressive_player) = true) {
+    if_close;
+    if(p_finduid(uid) = true) {
+        if(inzone(0_43_45_0_0, 0_46_45_63_63, coord) = true) {
+            %legends_bits = setbit(%legends_bits, ^legends_defeated_san_final);
+            mes("A nerve tingling scream echoes around you");
+            mes("as you slay San Tojalon.");
+            p_delay(1);
+            npc_say("Arrghhhhh");
+            mes("San Tojalon: Arrghhhhh");
+            p_delay(1);
+            // these aren't combined in 2004, (OSRS does)
+            npc_say("Forever must I live in this torment");
+            mes("San Tojalan: Forever must I live in this torment");
+            p_delay(1);
+            npc_say("till this beast is slain.");
+            mes("San Tojalan: till this beast is slain.");
+            npc_del;
+            p_delay(2);
+            @summon_nezi_part3;
+        }
+        // doesn't queue, the npc will sit at 0 hp if no prot access
+        npc_del;
+        if(%legends_progress < ^legends_heart_in_recess & ~obj_gettotal(heartcrystal_sectiona) = 0 & ~obj_gettotal(heartcrystal) = 0 
+        & ~obj_gettotal(heartcrystal_glow) = 0 & testbit(%legends_bits, ^legends_smelting_chunk) = false) {
+            inv_add(inv, heartcrystal_sectiona, 1); // no space check
+            mes("San Tojalon: You have proved yourself of the honour.");
+            ~chatnpc("<p,neutral>You have proved yourself of the honour.");
+            ~objbox(heartcrystal_sectiona, "A chunk of crystal forms mid-air and falls to the floor. You place the crystal chunk into your Inventory.", 250, 0, ^objbox_height);
+        } else {
+            ~chatnpc("<p,neutral>You have fought the good fight this day.");
+        }
+    }
+}

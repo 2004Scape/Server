@@ -13,7 +13,7 @@ if($option = 1) {
 
 [proc,openshop_zaff]
 if(map_members = true) {
-    ~openshop(zaffs_superior_staffs_mem, 550, 1000, 20, "Zaff's Superior Staffs!");
+    ~openshop(memberstaffshop, 550, 1000, 20, "Zaff's Superior Staffs!");
 } else {
-    ~openshop(zaffs_superior_staffs_nonmem, 550, 1000, 20, "Zaff's Superior Staffs!");
+    ~openshop(staffshop, 550, 1000, 20, "Zaff's Superior Staffs!");
 }

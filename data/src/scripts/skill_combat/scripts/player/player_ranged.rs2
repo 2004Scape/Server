@@ -37,6 +37,16 @@ if (~player_npc_hit_roll(%damagetype) = true) {
     if (npc_type = count_draynor & inv_total(inv, garlic) > 0) {
         $maxhit = add($maxhit, 1);
     }
+    if (inv_total(worn, holy_water) > 0) {
+        if(npc_param(demonbane_vulnerable) = true) {
+            %com_maxhit = divide(multiply(%com_maxhit, 160), 100);
+            if(npc_type = nezikchened) {
+                %com_maxhit = add(%com_maxhit, 5);
+            }
+        } else {
+             %com_maxhit = 0;
+        }
+    }
     $damage = randominc(min($maxhit, npc_param(max_dealt)));
     def_int $damage_capped = min($damage, npc_stat(hitpoints));
     ~give_combat_experience(%damagestyle, $damage_capped, %npc_combat_xp_multiplier);

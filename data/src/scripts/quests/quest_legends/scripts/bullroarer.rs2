@@ -1,0 +1,47 @@
+[opheld1,bullroarer]
+if(%action_delay > map_clock) {
+    mes("You're a bit too busy to do that at the moment.");
+    return;
+}
+%action_delay = add(map_clock, 8);
+mes("You start to swing the bullroarer above your head.");
+mes("You feel a bit silly at first, but soon it makes an interesting sound.");
+anim(human_bullroarer, 0);
+sound_synth(bullroarer, 0, 0);
+spotanim_pl(bullroarer, 92, 0);
+p_delay(3);
+npc_findallany(coord, 5, 0);
+while (npc_findnext = true) {
+    switch_npc(npc_type) {
+        case jungle_forester_male, jungle_forester_female : 
+            mes("Nothing much seems to happen, though.");
+            ~chatnpc("<p,happy>You might like to use that when you get into the Kharazi jungle, it might attract more natives...");
+            return;
+        case oomlie_bird, jungle_savage, jungle_wolf :
+            if(random(3) = 0) { // seems to be a random chance, they won't always attack you
+                mes("A nearby <npc_name> takes a dislike to the noise you're making.");
+                ~npc_retaliate(0);
+                return;
+            }
+    }
+}
+if (~inzone_coord_pair_table(kharazi_jungle, coord) = true) {
+    mes("You see some movement in the trees...");
+    p_delay(1);
+    def_coord $coord = map_findsquare(coord, 1, 7, ^map_findsquare_lineofwalk);
+    mes("...and a tall, dark, charismatic looking native approaches you.");
+    // You can spawn multiple Gujuos by running far away enough
+    if(npc_find(coord, gujuo, 14, 0) = false) {
+        npc_add($coord, gujuo, 500);
+    }
+    if (lineofsight(npc_coord, coord) = false) {
+        // OSRS
+        mes("It looks like Gujuo cannot get to you from here.");
+        return;
+    }
+    npc_walk(movecoord(coord, 1, 0, 0));
+    npc_setmode(opplayer2);
+}
+else {
+    mes("Nothing much seems to happen though.");
+}

@@ -2,17 +2,17 @@ import { CollisionFlag, CollisionType } from '@2004scape/rsmod-pathfinder';
 
 import LocType from '#/cache/config/LocType.js';
 import { CoordGrid } from '#/engine/CoordGrid.js';
-import BlockWalk from '#/engine/entity/BlockWalk.js';
+import { BlockWalk } from '#/engine/entity/BlockWalk.js';
 import Entity from '#/engine/entity/Entity.js';
-import EntityLifeCycle from '#/engine/entity/EntityLifeCycle.js';
-import Interaction from '#/engine/entity/Interaction.js';
+import { EntityLifeCycle } from '#/engine/entity/EntityLifeCycle.js';
+import { Interaction } from '#/engine/entity/Interaction.js';
 import Loc from '#/engine/entity/Loc.js';
-import MoveRestrict from '#/engine/entity/MoveRestrict.js';
-import MoveSpeed from '#/engine/entity/MoveSpeed.js';
-import MoveStrategy from '#/engine/entity/MoveStrategy.js';
+import { MoveRestrict } from '#/engine/entity/MoveRestrict.js';
+import { MoveSpeed } from '#/engine/entity/MoveSpeed.js';
+import { MoveStrategy } from '#/engine/entity/MoveStrategy.js';
 import NonPathingEntity from '#/engine/entity/NonPathingEntity.js';
 import Npc from '#/engine/entity/Npc.js';
-import NpcMode from '#/engine/entity/NpcMode.js';
+import { NpcMode } from '#/engine/entity/NpcMode.js';
 import Obj from '#/engine/entity/Obj.js';
 import Player from '#/engine/entity/Player.js';
 import { canTravel, changeNpcCollision, changePlayerCollision, findNaivePath, findPath, findPathToEntity, findPathToLoc, isApproached, isZoneAllocated, reachedEntity, reachedLoc, reachedObj } from '#/engine/GameMap.js';
@@ -395,6 +395,10 @@ export default abstract class PathingEntity extends Entity {
             // pathing entity has a -2 shape basically (not allow on same tile) for ap.
             // you are not within ap distance of pathing entity if you are underneath it.
             return false;
+        }
+        // Los for Npcs is always calculated backwards for all Entity types (tested Player and Npc)
+        if (this instanceof Npc) {
+            return CoordGrid.distanceTo(this, target) <= range && isApproached(this.level, target.x, target.z, this.x, this.z, target.width, target.length, this.width, this.length);
         }
         return CoordGrid.distanceTo(this, target) <= range && isApproached(this.level, this.x, this.z, target.x, target.z, this.width, this.length, target.width, target.length);
     }

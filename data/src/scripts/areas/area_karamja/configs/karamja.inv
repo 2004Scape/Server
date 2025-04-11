@@ -1,4 +1,4 @@
-[jiminuas_jungle_store]
+[junglestore]
 // https://oldschool.runescape.wiki/w/Jiminua%27s_Jungle_Store.
 // https://web.archive.org/web/20060525181155im_/http://www.runehq.com/images/cityguides/Tai_Bwo_Wannai/taibwowannaigeneralstore.png
 scope=shared
@@ -7,8 +7,8 @@ restock=yes
 stackall=yes
 allstock=yes
 stock1=tinderbox,2,500
-stock2=candle,10,500
-stock3=unlit_torch,10,500
+stock2=unlit_candle,10,500
+stock3=torch_unlit,10,500
 stock4=pot_empty,3,500
 stock5=rope,10,200
 stock6=leather_body,12,500
@@ -24,7 +24,7 @@ stock15=papyrus,50,200
 stock16=charcoal,50,200
 stock17=knife,2,100
 stock18=hammer,10,500
-stock19=machete,50,200
+stock19=machette,50,200
 stock20=chisel,10,500
 stock21=spade,10,500
 stock22=bronze_axe,2,500
@@ -32,7 +32,7 @@ stock23=bronze_pickaxe,2,500
 stock24=iron_axe,5,700
 stock25=bronze_bar,10,500
 
-[zambos_alcohols]
+[boozeshop]
 // https://oldschool.runescape.wiki/w/Karamja_Wines,_Spirits,_and_Beers.
 // https://storage.googleapis.com/tannerdino/images/KaramjaRum.jpg (full stocks)
 scope=shared
@@ -44,7 +44,7 @@ stock1=beer,3,100
 stock2=karamja_rum,3,100
 stock3=jug_wine,1,15000
 
-[generalshop8]
+[generalshop7]
 // https://web.archive.org/web/20120411154205im_/http://www.runehq.com/images/cityguides/karamjacity/karamjageneralstock.gif
 // https://storage.googleapis.com/tannerdino/images/karamja7.jpg (full stocks)
 scope=shared

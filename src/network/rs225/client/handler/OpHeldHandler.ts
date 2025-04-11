@@ -6,7 +6,7 @@ import ScriptRunner from '#/engine/script/ScriptRunner.js';
 import ServerTriggerType from '#/engine/script/ServerTriggerType.js';
 import MessageHandler from '#/network/client/handler/MessageHandler.js';
 import OpHeld from '#/network/client/model/OpHeld.js';
-import LoggerEventType from '#/server/logger/LoggerEventType.js';
+import { LoggerEventType } from '#/server/logger/LoggerEventType.js';
 import Environment from '#/util/Environment.js';
 
 export default class OpHeldHandler extends MessageHandler<OpHeld> {
@@ -44,7 +44,10 @@ export default class OpHeldHandler extends MessageHandler<OpHeld> {
         player.lastItem = item;
         player.lastSlot = slot;
 
-        player.clearPendingAction();
+        if(com.rootLayer != player.modalMain) {
+            player.clearPendingAction();
+        }
+
         player.moveClickRequest = false; // uses the dueling ring op to move whilst busy & queue pending: https://youtu.be/GPfN3Isl2rM
         player.faceEntity = -1;
         player.masks |= player.entitymask;

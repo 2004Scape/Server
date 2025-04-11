@@ -137,7 +137,7 @@ if ($passes_roll = true) {
     }
     stat_advance(cooking, $experience);
     // these dont give additional items
-    if ($cooked_item = half_baked_batta | $cooked_item = half_baked_gnomebowl | $cooked_item = half_baked_crunchies) {
+    if ($cooked_item = half_baked_batta | $cooked_item = half_baked_bowl | $cooked_item = half_baked_crunchies) {
         return;
     }
     if ($additional_item ! null) {

@@ -1,0 +1,251 @@
+// A lot of this dialogue has changed recently in OSRS.
+// RSC, older OSRS videos, and RS3 dialogue has been referenced instead.
+
+[opnpc1,radimus_erkle]
+if(inzone(0_42_52_34_45, 0_42_52_45_56, npc_coord) = true) {
+    if(%legends_progress = ^legends_returned_to_radimus) {
+        ~chatnpc("<p,neutral>Welcome to the Legends Guild Main Hall. We've placed your Totem Pole as pride of place. All members of the Legends Guild will see it as they walk in. They will know that it was you who brought it back.");
+        ~chatnpc("<p,neutral>Congratulations, you're now a fully fledged member. I would like to offer you some training which will increase your experience and abilities in four areas. Would you like to train now?");
+        @multi2("Yes, I'll train now.", radimus_training, "No, I've got something else to do at the moment.", radimus_somethingelse);
+    } else if (%legends_progress > ^legends_returned_to_radimus & %legends_progress < ^legends_radimus_training_4) {
+        ~chatnpc("<p,neutral>Hello again... Would you like to continue with your training?");
+        @multi2("Yes, I'll train now.", radimus_training, "No, I've got something else to do at the moment.", radimus_somethingelse);
+    } else if(%legends_progress = ^legends_radimus_training_4) {
+        queue(legends_quest_complete, 0);
+    } else  {
+        ~chatnpc("<p,neutral>Hello there! How are you enjoying the Legends Guild?");
+        ~mesbox("Radimus looks busy...");
+        ~chatnpc("<p,neutral>Excuse me a moment, won't you?|Do feel free to explore the rest of the building.");
+    }
+    return;
+}
+if (%legends_progress = ^legends_not_started) {
+    ~chatnpc("<p,happy>Good day to you <text_gender("Sir", "m'Lady")>! No doubt you are keen to become a member of the Legends Guild?");
+    @multi3("Yes actually, what's involved?", radimus_erkle_yes,
+        "Maybe some other time.", radimus_erkle_decline,
+        "Who are you?", radimus_erkle_who);
+} else if (inv_total(inv, thtotempolegift) > 0 & inv_total(inv, thkaramjamapcomp) > 0 
+        & %legends_progress = ^legends_got_gilded_totem) {
+        @radimus_erkle_hand_in_totem;
+} else if (%legends_progress >= ^legends_returned_to_radimus & %legends_progress < ^legends_complete) {
+    ~chatnpc("<p,neutral>Hello again! Do go through to the main Legends Guild Hall I'll meet you in there and we can discuss your reward!");
+} else {
+    ~chatnpc("<p,neutral>Hello there, how is the quest going?");
+    @radimus_erkle_midquest;
+}
+
+[opnpcu,radimus_erkle]
+switch_obj(last_useitem) {
+    case thkaramjamapcomp : 
+        ~chatnpc("<p,neutral>Well done, <text_gender("Sir", "Madam")>, very well done. However, you'll probably need it while you search for natives of the Kharazi tribe in the Kharazi Jungle.");
+        ~chatnpc("<p,neutral>Remember, we would like a special token of friendship from them to place in the Legends Guild. I'll take the map off your hands once we get the proof that you have met the natives.");
+    case thtotempole :
+        ~chatnpc("<p,neutral>Hmmm, well, it is very impressive. Especially since it looks very heavy... However, it lacks a certain authenticity, my guess is that you made it, though I'm not sure why.");
+        ~chatnpc("<p,neutral>We would like to have a really nice item to put on display in the Legends Guild main hall. Do you think you could get something more authentic?");
+    case thtotempolegift : 
+        if (inv_total(inv, thkaramjamapcomp) = 0) {
+            ~chatnpc("<p,neutral>It's very nice, <text_gender("Sir", "Madam")>, but we also need something special to display in the Legends Guild.");
+        }
+        else {
+            @radimus_erkle_hand_in_totem;
+        }
+    case default : 
+        ~chatnpc("<p,neutral>Sorry old bean, but I don't really need that!");
+}
+
+[label,radimus_training]
+if(%legends_progress >= ^legends_radimus_training_4) {
+    ~chatnpc("<p,neutral>Right, that's all the training I can offer you. I hope you're happy with your new skills. Do feel free to explore the rest of the building.");
+    queue(legends_quest_complete, 0);
+    return;
+}
+def_int $remaining = calc((^legends_radimus_training_4 - %legends_progress) / 5);
+if($remaining > 1) {
+    ~chatnpc("<p,neutral>You can choose <tostring($remaining)> areas to increase your abilities in.");
+} else {
+    ~chatnpc("<p,neutral>You can choose 1 area to increase your abilities in.");
+}
+@radimus_menu1;
+
+[label,radimus_menu1]
+switch_int(~p_choice4("* Attack *", 1, "* Defence *", 2, "* Strength *", 3, "--- Go to Skill Menu 2 ----", 4)) {
+    case 1 : @radimus_train(attack, "Attack");
+    case 2 : @radimus_train(defence, "Defence");
+    case 3 : @radimus_train(strength, "Strength");
+    case 4 : @radimus_menu2;
+}
+
+[label,radimus_menu2]
+switch_int(~p_choice4("* Hitpoints *", 1, "* Prayer *", 2, "* Magic *", 3, "--- Go to Skill Menu 3 ----", 4)) {
+    case 1 : @radimus_train(hitpoints, "Hitpoints");
+    case 2 : @radimus_train(prayer, "Prayer");
+    case 3 : @radimus_train(magic, "Magic");
+    case 4 : @radimus_menu3;
+}
+
+[label,radimus_menu3]
+switch_int(~p_choice4("* Woodcutting *", 1, "* Crafting *", 2, "* Smithing *", 3, "--- Go to Skill Menu 4 ----", 4)) {
+    case 1 : @radimus_train(woodcutting, "Woodcutting");
+    case 2 : @radimus_train(crafting, "Crafting");
+    case 3 : @radimus_train(smithing, "Smithing");
+    case 4 : @radimus_menu4;
+}
+
+[label,radimus_menu4]
+switch_int(~p_choice4("* Herblore *", 1, "* Agility *", 2, "* Thieving *", 3, "--- Go to Skill Menu 1 ----", 4)) {
+    case 1 : @radimus_train(herblore, "Herblore");
+    case 2 : @radimus_train(agility, "Agility");
+    case 3 : @radimus_train(thieving, "Thieving");
+    case 4 : @radimus_menu1;
+}
+
+[label,radimus_train](stat $skill, string $skill_name)
+// https://youtu.be/5MwrA2Ci39Q?si=kqnNaYMoqEA4Rgfy&t=184
+%legends_progress = add(%legends_progress, 5);
+stat_advance($skill, 76500);
+// this is stupid but video shows double space for herblore, meaning theres prob a seperate label for each skill in 2004 (and it's prob a linebreak)
+if(string_length($skill_name) > 7) { 
+    ~mesbox("You receive some training and increase|experience to your <$skill_name>.");
+} else {
+    ~mesbox("You receive some training and increase experience to your <$skill_name>.");
+}
+@radimus_training;
+
+[label,radimus_somethingelse]
+~chatplayer("<p,neutral>No, I've got something else to do at the moment.");
+~chatnpc("<p,neutral>Very well young <text_gender("man", "lady")>, return when you are able, but don't leave it too long. You'll benefit considerably from this training.");
+~chatnpc("<p,neutral>Now, please excuse me for a while. I have other matters to attend to. Do feel free to explore the rest of the building.");
+
+[label,radimus_erkle_hand_in_totem]
+~chatnpc("<p,happy>Well, it looks as if you have some interesting items there. Let's have a look at them!|@blu@--Sir Radimus sees the gilded totem pole.--");
+// todo: mesanim check
+~chatnpc("<p,neutral><text_gender("Sir", "Madam")>, this is truly amazing...");
+~chatnpc("<p,neutral>That totem pole will take pride of place in the Legends Guild as a reminder of your quest to gain entry. And so that many other great adventurers can admire your bravery.");
+~objbox(thtotempolegift, "Sir Radimus Erkle orders some guards to take the totem pole into the main Legends hall.", 250, 0, ^objbox_height);
+~chatnpc("<p,neutral>Well, you've completed the tasks I set you. That map of the Kharazi jungle will be very helpful for future|expeditions.|@blu@-- Sir Radimus takes the map and the totem pole --");
+inv_del(inv, thtotempolegift, 1);
+inv_del(inv, thkaramjamapcomp, 1);
+%legends_progress = ^legends_returned_to_radimus;
+~chatnpc("<p,neutral>Congratulations, welcome to the Legends Guild. Please, go through to the main Legends Guild building and I will join you shortly.");
+
+[label,radimus_erkle_midquest]
+if (~obj_gettotal(thkaramjamap) = 0 & ~obj_gettotal(thkaramjamapcomp) = 0) {
+    @multi5("Terrible, I lost my map of the Kharazi Jungle.", radimus_erkle_lost_map,
+            "It's ok, but I have forgotten what to do.", radimus_erkle_forgot,
+            "I need another machete.", radimus_erkle_machete,
+            "I've run out of charcoal.", radimus_erkle_charcoal,
+            "I've run out of papyrus.", radimus_erkle_papyrus);
+}
+else {
+    @multi5("It's ok, but I have forgotten what to do.", radimus_erkle_forgot,
+            "I need another machete.", radimus_erkle_machete,
+            "I've run out of charcoal.", radimus_erkle_charcoal,
+            "I've run out of papyrus.", radimus_erkle_papyrus,
+            "I've completed the quest.", radimus_erkle_lie);
+}       
+
+[label,radimus_erkle_lost_map]
+~chatplayer("<p,neutral>Terrible, I lost my map of the Kharazi Jungle.");
+~chatnpc("<p,neutral>That's awful, well, luckily I have a copy here. But I need to charge you a copy fee of 30 gold pieces.");
+if (inv_total(inv, coins) < 30) {
+    ~chatnpc("<p,neutral>It looks as if you don't have the funds for it at the moment. How irritating...");
+    return;
+}
+else {
+    ~chatnpc("<p,neutral>Do you agree to pay?");
+    def_int $choice = ~p_choice2("Yes, I'll pay for it.", 1, "No, I won't pay for it.", 2);
+    if ($choice = 1) {
+        ~chatplayer("<p,neutral>Yes, I'll pay for it.");
+        inv_del(inv, coins, 30);
+        // Capitalisation on Gold Pieces is accurate
+        mes("You hand over 30 Gold Pieces.");
+        // Tested on OSRS: he always gives you incomplete notes, even if you have finished mapping the jungle
+        // Additionally, he resets your mapping progress.
+        // There's no free space check, notes will go on the ground if no space.
+        inv_add(inv, thkaramjamap, 1);
+        ~chatnpc("<p,neutral>Ok, please don't lose this one.");
+    }
+    else {
+        ~chatplayer("<p,neutral>No, I won't pay for it.");
+        // "Excuse, me now" is authentic
+        ~chatnpc("<p,neutral>Well, that's your decision, of course.. but you won't be able to complete the quest without it. Excuse, me now won't you, I have other business to attend to.");
+    }
+}
+@radimus_erkle_midquest;
+
+[label,radimus_erkle_forgot]
+~chatplayer("<p,neutral>It's ok, but I have forgotten what to do.");
+~chatnpc("<p,neutral>Tut! How forgetful! You need to find a way into the Kharazi Jungle. Then you need to explore and map that entire area.");
+~chatnpc("<p,neutral>While you're there you need to make contact with any jungle natives. Bring back a tribal gift from the natives so that we can display it in the Legends Guild. I hope that answers your question!");
+@radimus_erkle_midquest;
+
+[label,radimus_erkle_machete]
+~chatplayer("<p,neutral>I need another machete.");
+~chatnpc("<p,neutral>Well, just get another one from the cupboard.");
+@radimus_erkle_midquest;
+
+[label,radimus_erkle_charcoal]
+~chatplayer("<p,neutral>I've run out of charcoal.");
+~chatnpc("<p,neutral>Well, get some more! Be proactive and get some more from somewhere.");
+~chatnpc("<p,neutral>It's hardly legendary if you fail a quest because you can't find some charcoal!");
+@radimus_erkle_midquest;
+
+[label,radimus_erkle_papyrus]
+~chatplayer("<p,neutral>I've run out of papyrus.");
+~chatnpc("<p,neutral>Well, get some more! Be proactive and try to find some!");
+~chatnpc("<p,neutral>It's hardly legendary if you fail a quest because you can't find some papyrus!");
+@radimus_erkle_midquest;
+
+[label,radimus_erkle_lie]
+~chatplayer("<p,neutral>I've completed the quest.");
+~chatnpc("<p,neutral>Well, if you have, show me the gift the Kharazi people gave you! Becoming a legend is more than just fighting you know. It also requires some careful diplomacy and problem solving.");
+~chatnpc("<p,neutral>Also complete the map of Kharazi Jungle and we will admit you to the Guild.");
+@radimus_erkle_midquest;
+
+[label,radimus_erkle_yes]
+~chatplayer("<p,neutral>Yes actually, what's involved?");
+~chatnpc("<p,neutral>Well, you need to complete a quest for us. You need|to map an area called the Kharazi Jungle. It is the|unexplored southern part of Karamja Island.");
+~chatnpc("<p,neutral>We'd also like you to befriend a native from the Kharazi|tribe in order to get a gift or token of friendship. We|want to display it in the Legends Guild Main hall. Are|you interested in this quest?");
+@multi2("Yes, it sounds great!", radimus_erkle_accept_quest,
+    "Not just at the moment.", radimus_erkle_decline_quest);
+
+[label,radimus_erkle_accept_quest]
+~chatplayer("<p,neutral>Yes, it sounds great!");
+~chatnpc("<p,neutral>Excellent!");
+if (inv_freespace(inv) = 0) {
+    ~chatnpc("<p,neutral>Please make yourself some space, I have something for you.");
+    return;
+}
+~chatnpc("<p,neutral>Ok, you'll need this starting map of the Kharazi Jungle.");
+~objbox(thkaramjamap, "Grand Vizier Erkle gives you some notes and a map.", 250, 0, 0);
+%legends_progress = ^legends_started;
+~send_quest_progress(questlist:legends, %legends_progress, ^legends_complete);
+inv_add(inv, thkaramjamap, 1);
+~chatnpc("<p,neutral>Complete this map when you get to the Kharazi Jungle.|It's towards the southern most part of Karamja.");
+~mesbox("Radimus shuffles around the back of his desk and gives you a stern|look.");
+~chatnpc("<p,confused>It is likely to be very tough going. You'll need an axe|and machete to cut through the dense Kharazi Jungle,|collect a machete from the cupboard before you leave.|You'll need to find your own axe, preferably a good");
+~chatnpc("<p,confused>one.");
+~chatnpc("<p,confused>Finally, we really do need some sort of display item for|the Guild hall. Bring back some sort of token which we|can display in the Guild. And very good luck to you!");
+
+[label,radimus_erkle_who]
+~chatplayer("<p,neutral>Who are you?");
+~chatnpc("<p,neutral>My name is Radimus Erkle. I am the Grand Vizier of|the Legends' Guild. Are you interested in becoming a|member?");
+@multi2("Yes actually, what's involved?", radimus_erkle_yes,
+    "Maybe some other time.", radimus_erkle_decline);
+
+[label,radimus_erkle_decline]
+~chatplayer("<p,neutral>Maybe some other time.");
+~chatnpc("<p,neutral>As you wish...");
+
+[label,radimus_erkle_decline_quest]
+~chatplayer("<p,neutral>Not just at the moment.");
+~chatnpc("<p,neutral>Very well, if you change your mind, please come back|and see me.");
+
+// Welcome to the Legends Guild Main Hall. We've placed your Totem Pole as pride of place. All members of the Legends Guild will see it as they walk in. They will know that it was you who brought it back.
+
+// **TRAINING**
+// Very well young man, return when you are able, but don't leave it too long. You'll benefit considerably from this training.
+// Hello again... Would you like to continue with your training?
+
+// **POST-QUEST**
+//  Hello there! How are you enjoying the Legends Guild?

@@ -125,7 +125,7 @@ param=damagetype,^slash_style
 param=attack_anim,human_sword_slash
 param=defend_anim,human_sword_defend2
 param=attack_sound,stabsword_slash
-// TODO param=defend_sound,steel2
+param=defend_sound,steel2
 category=guardian_of_armadyl
 // Stats match osrs version but our version Vislvl is different.
 // https://raw.githubusercontent.com/Joshua-F/osrs-dumps/refs/heads/master/config/dump.npc npc_3445
@@ -178,7 +178,7 @@ param=damagetype,^slash_style
 param=attack_anim,human_sword_slash
 param=defend_anim,human_sword_defend2
 param=attack_sound,stabsword_slash
-// param=defend_sound,steel2
+param=defend_sound,steel2
 param=death_sound,female_death
 category=guardian_of_armadyl
 // Stats match osrs version but our version Vislvl is different.

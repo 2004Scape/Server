@@ -5,7 +5,7 @@ import { WebSocketServer, WebSocket } from 'ws';
 import World from '#/engine/World.js';
 import Packet from '#/io/Packet.js';
 import { getPublicPerDeploymentToken } from '#/io/PemUtil.js';
-import LoggerEventType from '#/server/logger/LoggerEventType.js';
+import { LoggerEventType } from '#/server/logger/LoggerEventType.js';
 import NullClientSocket from '#/server/NullClientSocket.js';
 import WSClientSocket from '#/server/ws/WSClientSocket.js';
 import Environment from '#/util/Environment.js';

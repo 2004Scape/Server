@@ -66,7 +66,8 @@ def_int $experience = db_getfield($data, stealing:experience, 0);
 def_int $respawn_ticks = ~scale_by_playercount(db_getfield($data, stealing:respawn_ticks, 0));
 anim(human_pickuptable, 0);
 sound_synth(pick, 0, 0);
-p_delay(0);
+// p_delay here was added with this update: https://oldschool.runescape.wiki/w/Update:Special_Attacks
+// p_delay(0); 
 switch_loc (loc_type) {
     case bakers_stall_stealing : 
         longqueue(stolen_from_stall_baker, ^baker_stall_timer, ^discard);

@@ -36,7 +36,7 @@ param=attack_anim,dwarf_attack
 param=defend_anim,dwarf_block
 param=death_anim,dwarf_death
 param=attack_sound,gnome_hit
-// param=defend_sound,brassclash2
+param=defend_sound,brassclash2
 param=death_sound,gnome_death
 // osrs side this npc use somereason gnome sound datas (notice but npc is graphical updated)
 // https://raw.githubusercontent.com/Joshua-F/osrs-dumps/refs/heads/master/config/dump.npc npc_5185
@@ -99,7 +99,7 @@ model5=model_2985_npc
 head1=model_0_npc_head
 moverestrict=indoors
 param=death_anim,dwarf_death
-param=owned_shop,multicannon_parts_for_sale
+param=owned_shop,mcannonshop
 param=shop_sell_multiplier,1070
 param=shop_buy_multiplier,400
 param=shop_delta,10
