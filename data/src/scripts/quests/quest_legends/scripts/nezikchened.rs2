@@ -73,19 +73,11 @@ if(%legends_progress ! ^legends_summoned_nezikchened_fire & %legends_progress ! 
 @player_combat_start_ap;
 
 [ai_queue3,nezikchened]
-if (npc_findhero = false) {
-    npc_del;
-    return;
-}
-npc_sethuntmode(null);
-npc_setmode(none);
 if (finduid(%npc_aggressive_player) = true) {
     if_close;
     queue(nezikchened_defeat, 0);
     return;
 }
-// shouldn't ever be possible
-gosub(npc_death);
 
 [ai_queue4,nezikchened] gosub(npc_death);
 
@@ -236,7 +228,5 @@ if(npc_finduid(%aggressive_npc) = true & npc_type = nezikchened) {
         npc_queue(4, 0, 0);
         p_delay(5);
         say("Heard it all before!");
-    } else {
-        gosub(npc_death); // should be impossible
-    }
-}
+    } 
+} // if conditions fail the npc will sit at 0 hp

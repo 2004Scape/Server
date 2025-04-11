@@ -263,7 +263,7 @@ if(%legends_progress = ^legends_water_pool_dried_up) %legends_progress = ^legend
 
 [label,gujuo_snakeweed]
 ~chatplayer("<p,neutral>Where can I find Snake weed?");
-~chatnpc("<p,neutral>nake weed is usually found by swampy marshy areas. It is not very common and it may be quite difficult to find.");
+~chatnpc("<p,neutral>Snake weed is usually found by swampy marshy areas. It is not very common and it may be quite difficult to find.");
 ~chatnpc("<p,neutral>There is some marsh to the south of Tai Bwo Wannai village. The herb grows near jungle vines, so check all around very carefully.");
 @multi5("Where can I find Ardrigal?", gujuo_ardrigal,
         "Where is the source of the spring of pure water?", gujuo_source,
