@@ -4706,7 +4706,7 @@ frame1=anim_2496
 [seq_445]
 frame1=anim_2493
 
-[seq_446]
+[magicwall]
 replayoff=4
 frame1=anim_2556
 frame2=anim_2557
@@ -4838,7 +4838,7 @@ frame16=anim_2839
 frame17=anim_2843
 delay17=400
 
-[seq_456]
+[whirlpool]
 replayoff=8
 frame1=anim_2995
 frame2=anim_2997
@@ -4948,7 +4948,7 @@ frame3=anim_3066
 frame4=anim_3063
 frame5=anim_3060
 
-[seq_464]
+[shiphull_leaking]
 replayoff=5
 frame1=anim_2490
 frame2=anim_2491
@@ -4968,7 +4968,7 @@ frame8=anim_2564
 frame9=anim_2566
 frame10=anim_2569
 
-[seq_467]
+[glamp]
 replayoff=12
 frame1=anim_2797
 frame2=anim_2800
@@ -4983,7 +4983,7 @@ frame10=anim_2799
 frame11=anim_2802
 frame12=anim_2792
 
-[seq_468]
+[witchcharms]
 replayoff=6
 frame1=anim_2725
 frame2=anim_2726
@@ -5001,7 +5001,7 @@ frame4=anim_2706
 frame5=anim_2707
 frame6=anim_2708
 
-[seq_470]
+[spookypic]
 replayoff=8
 frame1=anim_2817
 delay1=400
@@ -5013,7 +5013,7 @@ frame6=anim_2823
 frame7=anim_2824
 frame8=anim_2818
 
-[seq_471]
+[flagpole]
 replayoff=7
 frame1=anim_2765
 frame2=anim_2766
@@ -5023,7 +5023,7 @@ frame5=anim_7068
 frame6=anim_7069
 frame7=anim_7070
 
-[seq_472]
+[millsail]
 replayoff=8
 frame1=anim_2806
 frame2=anim_2808
@@ -5034,12 +5034,12 @@ frame6=anim_2804
 frame7=anim_2805
 frame8=anim_2807
 
-[seq_473]
+[wiztorch]
 replayoff=2
 frame1=anim_2813
 frame2=anim_2815
 
-[seq_474]
+[oldbridge]
 frame1=anim_2829
 frame2=anim_2832
 frame3=anim_2835
@@ -5054,7 +5054,7 @@ frame11=anim_2831
 frame12=anim_2834
 delay12=500
 
-[seq_475]
+[fire]
 replayoff=5
 frame1=anim_2736
 frame2=anim_2737
@@ -5062,7 +5062,7 @@ frame3=anim_2738
 frame4=anim_2739
 frame5=anim_2740
 
-[seq_476]
+[firewall]
 replayoff=7
 frame1=anim_2745
 frame2=anim_2746
@@ -5087,7 +5087,7 @@ frame2=anim_2701
 frame3=anim_2702
 frame4=anim_2703
 
-[seq_479]
+[cauldron]
 replayoff=7
 frame1=anim_2666
 frame2=anim_2667
@@ -5097,7 +5097,7 @@ frame5=anim_2670
 frame6=anim_2671
 frame7=anim_2672
 
-[seq_480]
+[swampbubs]
 replayoff=7
 frame1=anim_2731
 frame2=anim_2732
@@ -5107,7 +5107,7 @@ frame5=anim_2735
 frame6=anim_2729
 frame7=anim_2730
 
-[seq_481]
+[torch]
 replayoff=5
 frame1=anim_2722
 frame2=anim_2723
@@ -5207,7 +5207,7 @@ frame11=anim_2677
 frame12=anim_2677
 frame13=anim_2677
 
-[seq_488]
+[weathervane]
 frame1=anim_2774
 frame2=anim_2777
 frame3=anim_2781
@@ -5278,7 +5278,7 @@ frame7=anim_2713
 frame8=anim_2715
 frame9=anim_2717
 
-[seq_492]
+[flytrap]
 replayoff=10
 frame1=anim_2855
 delay1=1000
@@ -5374,7 +5374,7 @@ frame18=anim_2749
 frame19=anim_2753
 frame20=anim_2750
 
-[seq_498]
+[balloon_drop]
 frame1=anim_2596
 frame2=anim_2593
 frame3=anim_2591
@@ -5393,7 +5393,7 @@ frame15=anim_2588
 frame16=anim_2602
 frame17=anim_2599
 
-[seq_499]
+[balloon_burst]
 frame1=anim_2608
 frame2=anim_2609
 frame3=anim_2610
@@ -5403,7 +5403,7 @@ frame6=anim_2606
 frame7=anim_2607
 delay7=20000
 
-[seq_500]
+[balloon_burst_2]
 frame1=anim_2615
 frame2=anim_2616
 frame3=anim_2617
@@ -5413,7 +5413,7 @@ frame6=anim_2613
 frame7=anim_2614
 delay7=20000
 
-[seq_501]
+[balloon_burst_3]
 frame1=anim_2623
 frame2=anim_2624
 frame3=anim_2625
@@ -5423,7 +5423,7 @@ frame6=anim_2621
 frame7=anim_2622
 delay7=20000
 
-[seq_502]
+[stoneglow]
 replayoff=12
 frame1=anim_2928
 frame2=anim_2918
@@ -5438,7 +5438,7 @@ frame10=anim_2922
 frame11=anim_2924
 frame12=anim_2926
 
-[seq_503]
+[rune_altar]
 replayoff=16
 frame1=anim_2915
 delay1=1000
@@ -5458,7 +5458,7 @@ frame14=anim_2908
 frame15=anim_2910
 frame16=anim_2912
 
-[seq_504]
+[glowingcircle]
 replayoff=39
 frame1=anim_2948
 frame2=anim_2954
@@ -5500,7 +5500,7 @@ frame37=anim_2960
 frame38=anim_2966
 frame39=anim_2932
 
-[seq_505]
+[greatrunestone]
 replayoff=26
 frame1=anim_2986
 frame2=anim_2990
@@ -5609,7 +5609,7 @@ frame6=anim_3096
 frame7=anim_3120
 frame8=anim_3144
 
-[seq_522]
+[water_foam]
 replayoff=9
 frame1=anim_3238
 frame2=anim_3231
@@ -12210,7 +12210,7 @@ frame6=anim_1474
 frame7=anim_1774
 frame8=anim_2072
 
-[seq_912]
+[flower_growing]
 frame1=anim_6985
 frame2=anim_6988
 frame3=anim_6991
@@ -12346,7 +12346,7 @@ lefthand=hide
 frame1=anim_7029
 frame2=anim_7031
 
-[seq_917]
+[flagblowing]
 replayoff=22
 frame1=anim_7052
 frame2=anim_7055
@@ -13029,7 +13029,7 @@ frame7=anim_4103
 frame8=anim_4106
 frame9=anim_4110
 
-[spit_anim]
+[roast]
 replayoff=9
 frame1=anim_4111
 frame2=anim_4246

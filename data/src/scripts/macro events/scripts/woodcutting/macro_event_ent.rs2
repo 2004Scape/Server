@@ -6,12 +6,12 @@ def_int $size = lc_width(loc_type);
 
 loc_del(60);
 if ($size = 1) {
-    loc_add($coord, loc_83, 0, centrepiece_straight, 60);
+    loc_add($coord, inviswall, 0, centrepiece_straight, 60);
 } else if ($size = 2) {
     loc_add($coord, loc_2639, 0, centrepiece_straight, 60);
 } else if ($size = 3) {
-    loc_add(movecoord($coord, 2, 0, 0), loc_83, 0, centrepiece_straight, 60);
-    loc_add(movecoord($coord, 0, 0, 2), loc_83, 0, centrepiece_straight, 60);
+    loc_add(movecoord($coord, 2, 0, 0), inviswall, 0, centrepiece_straight, 60);
+    loc_add(movecoord($coord, 0, 0, 2), inviswall, 0, centrepiece_straight, 60);
     loc_add(movecoord($coord, 1, 0, 1), loc_2639, 0, centrepiece_straight, 60);
     loc_add($coord, loc_2639, 0, centrepiece_straight, 60);
 }

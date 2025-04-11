@@ -54,7 +54,7 @@ if($next_loc = loc_1563) {
 }
 p_teleport($dest);
 // Temp note: dur updated
-loc_change(loc_83, 3);
+loc_change(inviswall, 3);
 loc_add(movecoord($loc_coord, 1, 0, 0), $next_loc, $next_angle, $shape, 3);
 
 // this cupboard just opens/closes with loc_add/del

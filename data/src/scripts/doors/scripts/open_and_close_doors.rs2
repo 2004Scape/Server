@@ -34,7 +34,7 @@ if ($entering = true) {
 }
 p_teleport($dest);
 // Temp note: dur updated
-loc_change(loc_83, 3);
+loc_change(inviswall, 3);
 loc_add(movecoord($loc_coord, $x, 0, $z), $replacement, modulo(add($angle, 1), 4), $shape, 3);
 
 sound_synth(door_open, 0, 0);
@@ -58,7 +58,7 @@ if ($entering = true) {
 }
 p_teleport($dest);
 // Temp note: dur updated
-loc_change(loc_83, 3);
+loc_change(inviswall, 3);
 loc_add(movecoord($loc_coord, $x, 0, $z), $replacement, modulo(add($angle, 1), 4), $shape, 3);
 
 // Same as other proc but uses delay of 0 for outside doors, example: https://youtu.be/n_ip_vEDbCA?si=6WmhtFdrgVyPhvNQ&t=1219
@@ -80,7 +80,7 @@ if ($entering = true) {
 }
 p_teleport($dest);
 // Temp note: dur updated
-loc_change(loc_83, 3);
+loc_change(inviswall, 3);
 loc_add(movecoord($loc_coord, $x, 0, $z), $replacement, modulo(add($angle, 1), 4), $shape, 3);
 
 [proc,open_and_close_metal_gate](loc $replacement, boolean $entering, boolean $mirrored)
@@ -117,7 +117,7 @@ if ($entering = true) {
 p_teleport($dest);
 
 // Temp note: dur updated
-loc_change(loc_83, 3);
+loc_change(inviswall, 3);
 loc_add(movecoord($loc_coord, $x, 0, $z), $replacement, modulo(add($angle, 1), 4), $shape, 3);
 
 sound_synth(grate_open, 0, 0);
@@ -153,7 +153,7 @@ if ($entering = true) {
 p_teleport($dest);
 
 // Temp note: dur updated
-loc_change(loc_83, 3);
+loc_change(inviswall, 3);
 def_int $rotation = modulo(add($angle, 1), 4);
 if($mirrored = true) $rotation = modulo(add($angle, 3), 4);
 loc_add(movecoord($loc_coord, $x, 0, $z), $replacement, $rotation, $shape, 3);

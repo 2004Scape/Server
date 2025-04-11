@@ -1,18 +1,18 @@
-[oploc1,loc_3195]
+[oploc1,rotten_tomato_crate]
 p_arrivedelay;
 // could buy rotten tomatoes on f2p worlds? https://oldschool.runescape.wiki/w/Update:Christmas_2014
 ~openshop(duel_rottenfruitshop, 550, 1000, 1, "Shop of Distaste");
 
 // Closed bank chest
 [oploc1,loc_3193]
-~open_chest(loc_3194);
+~open_chest(duel_chestopen);
 
 // Open bank chest - bank op
-[oploc2,loc_3194]
+[oploc2,duel_chestopen]
 p_arrivedelay;
 @openbank;
 
-[oploc3,loc_3194]
+[oploc3,duel_chestopen]
 ~open_chest(loc_3193);
 
 // gates https://web.archive.org/web/20060428031722/http://www.runecrypt.com:80/index.php?pid=202

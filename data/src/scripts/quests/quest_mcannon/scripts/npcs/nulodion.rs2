@@ -96,21 +96,21 @@ if (%mcannon_coord = null | loc_find(%mcannon_coord, cannon) = true) {
     return;
 }
 if (%mcannon_coord ! null) {
-    if (loc_find(%mcannon_coord, cannon_base) = true) {
+    if (loc_find(%mcannon_coord, multicannon_base) = true) {
         ~chatnpc("<p,confused>Hmmm. I think you'll find the base still happily parked on the spot where you put it."); // osrs
         ~chatplayer("<p,confused>Oh, is it still there? I thought I'd lost it.");
         ~chatnpc("<p,laugh>Ha ha ha, what a muddle-headed numpty you are!");
         ~chatplayer("<p,angry>...");
         return;
     }
-    if (loc_find(%mcannon_coord, cannon_stand) = true) {
+    if (loc_find(%mcannon_coord, multicannon_stand) = true) {
         ~chatnpc("<p,confused>Hmmm. I think you'll find the base and stand still happily parked on the spot where you put them."); // osrs
         ~chatplayer("<p,confused>Oh, is it still there? I thought I'd lost it.");
         ~chatnpc("<p,laugh>Ha ha ha, what a muddle-headed numpty you are!");
         ~chatplayer("<p,angry>...");
         return;
     }
-    if (loc_find(%mcannon_coord, cannon_barrels) = true) {
+    if (loc_find(%mcannon_coord, multicannon_barrels) = true) {
         ~chatnpc("<p,confused>Hmmm. I think you'll find most of the cannon still happily parked on the spot where you put it."); // osrs
         ~chatplayer("<p,confused>Oh, is it still there? I thought I'd lost it.");
         ~chatnpc("<p,laugh>Ha ha ha, what a muddle-headed numpty you are!");

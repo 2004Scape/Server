@@ -90,7 +90,7 @@ stat_advance(cooking, 3000);
 session_log(^log_adventure, "Quest complete: Cook's Assistant");
 ~send_quest_complete(questlist:cook, cake, 250, ^cook_questpoints, "You have completed the Cooks' Quest!");
 
-[oplocu,cook_range]
+[oplocu,cooksquestrange]
 if (%cook_progress < ^cook_complete) {
     if(npc_find(coord, cook, 5, 0) = true) {
         ~chatnpc("<p,angry>Hey! Who said you could use that?");

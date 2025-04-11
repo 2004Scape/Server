@@ -54,7 +54,7 @@ if(.loc_find(loc_coord, loc_1572) = true) {
     .loc_del(3);
     .loc_add(movecoord($loc_coord, $x, 0, $z), loc_1572, modulo(add($angle, 1), 4), .loc_shape, 3);
 }
-loc_change(loc_83, 3);
+loc_change(inviswall, 3);
 loc_add(movecoord($loc_coord, $x, 0, $z), loc_2536, modulo(add($angle, 1), 4), $shape, 3);
 
 [label,plague_house_but_i_think_a_kidnap_victim_is_in_here]

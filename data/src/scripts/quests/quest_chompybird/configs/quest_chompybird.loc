@@ -2,19 +2,19 @@
 name=Swamp bubbles
 desc=The noxious liquid bubbles horribly.
 model=model_swamp_bubbles
-anim=seq_480
+anim=swampbubs
 hasalpha=yes
 
 [swamp_bubbles_b]
 name=Swamp bubbles
 desc=The noxious liquid bubbles horribly.
 model=model_swamp_bubbles
-anim=seq_480
+anim=swampbubs
 hasalpha=yes
 recol1s=3297
 recol1d=1418
 
-[chompybird_cave_entrance]
+[rantzogrecaveentrance]
 name=Cave entrance
 desc=The entrance to Rantz's cave.4
 model=model_loc_2
@@ -22,7 +22,7 @@ width=3
 length=2
 op1=Enter
 
-[chompybird_cave_exit_a]
+[rantzogrecaveexitr]
 name=Cave exit
 desc=Exit this way for fresh air and daylight.
 model=model_loc_1423
@@ -30,7 +30,7 @@ sharelight=yes
 hillskew=yes
 op1=Walk through
 
-[chompybird_cave_exit_b]
+[rantzogrecaveexitl]
 name=Cave exit
 desc=Exit this way for fresh air and daylight.
 model=model_loc_1423

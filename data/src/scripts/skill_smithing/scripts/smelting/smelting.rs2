@@ -6,7 +6,7 @@ switch_obj (last_useitem)
     case steel_bar : @smelt_cannonballs;
     case bucket_sand, soda_ash : @smelt_glass;
     case caveorb1, caveorb2, caveorb3, caveorb4 :
-        if(loc_type = furnace_legends) @destroy_orboflight(last_useitem);
+        if(loc_type = furnace_upass) @destroy_orboflight(last_useitem);
         ~displaymessage(^dm_default);
     case default :
         if (oc_category(last_useitem) = category_91) {

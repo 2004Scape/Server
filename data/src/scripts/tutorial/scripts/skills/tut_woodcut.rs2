@@ -1,11 +1,11 @@
 // Tutorial Island Tree
-[oploc1,loc_3033] @tut_woodcutting;
-[oploc1,loc_3034] @tut_woodcutting;
-[oploc1,loc_3036] @tut_woodcutting;
+[oploc1,newbietree] @tut_woodcutting;
+[oploc1,newbietree2] @tut_woodcutting;
+[oploc1,newbiedeadtree2] @tut_woodcutting;
 
-[oplocu,loc_3033] @tut_woodcutting_useitem;
-[oplocu,loc_3034] @tut_woodcutting_useitem;
-[oplocu,loc_3036] @tut_woodcutting_useitem;
+[oplocu,newbietree] @tut_woodcutting_useitem;
+[oplocu,newbietree2] @tut_woodcutting_useitem;
+[oplocu,newbiedeadtree2] @tut_woodcutting_useitem;
 
 [label,tut_woodcutting_useitem]
 if (last_useitem = bronze_axe) {
@@ -99,7 +99,7 @@ inv_add(inv, newbielogs, 1);
 ~set_tutorial_progress;
 ~objbox(newbielogs, "You get some logs.", 250, 0, 0);
 
-[oploc1,loc_3037]
+[oploc1,newbieoaktree]
 if (%tutorial_progress < ^survival_guide_cut_tree) {
     ~mesbox("You cannot cut down this tree yet.|You must progress further in the tutorial.");
     return;

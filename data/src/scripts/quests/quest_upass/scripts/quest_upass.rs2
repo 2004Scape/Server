@@ -77,7 +77,7 @@ settimer(iban_say, ~random_range(1, 15));
 [zoneexit,0_38_151_32_16] cleartimer(upass_grid_traps);
 [zoneexit,0_38_151_32_8] cleartimer(upass_grid_traps);
 
-[oploc1,loc_3213]
+[oploc1,upass_caveentrance2]
 if(%biohazard_progress < ^biohazard_complete) {
     ~mesbox("You must complete the Biohazard quest before you can enter."); // rs3
     return;
@@ -96,7 +96,7 @@ mes("You cautiously enter the cave...");
 p_delay(3);
 p_teleport(0_38_151_62_52);
 
-[oploc1,loc_3214]
+[oploc1,cave_exit_upass]
 // https://youtu.be/nWnu0s4z_jE?si=oyWMT5f6h29uiyB8&t=909, fade and seq probably added in late 2005/early 2006
 mes("You leave the underground pass.");
 p_delay(3);
@@ -116,7 +116,7 @@ mes("Its light quickly dims and then dies.");
 p_delay(2);
 mes("You feel a cold shudder run down your spine.");
 
-[oploc1,loc_3264]
+[oploc1,cave_well]
 anim(human_reachforladdertop, 0);
 mes("You climb into the well...");
 if(getbit_range(%upass_map_mechanisms, ^upass_orb1_bit, ^upass_orb4_bit) = calc(pow(2,4) - 1)) {
@@ -136,7 +136,7 @@ mes("... There must be some positive force nearby.");
 p_delay(1);
 ~damage_self(min(sub(stat(hitpoints), 1), 10));
 
-[oplocu,loc_3264]
+[oplocu,cave_well]
 switch_obj(last_useitem) {
     case caveorb1, caveorb2, caveorb3, caveorb4 :
         mes("You place the orb in the well...");
@@ -146,14 +146,14 @@ switch_obj(last_useitem) {
     case default : ~displaymessage(^dm_default);
 }
 
-[oploc1,loc_3307]
+[oploc1,mudpile_upass]
 anim(human_reachforladdertop, 0);
 mes("You climb up in to the pipe...");
 p_delay(0);
 p_teleport(0_37_151_50_10);
 mes("...and out of the well.");
 
-[oploc3,loc_3361] @upass_orboflight_trap;
+[oploc3,caveorb_vis] @upass_orboflight_trap;
 
 [opobj3,caveorb1]
 if (inv_total(inv, caveorb1) > 0) {
@@ -186,7 +186,7 @@ if (inv_total(inv, caveorb4) > 0) {
 [label,upass_orboflight_trap]
 ~forcewalk(movecoord(loc_coord, 1, 0, 0));
 p_delay(0);
-if(loc_find(0_37_151_12_3, loc_3338) = true) loc_anim(seq_458);
+if(loc_find(0_37_151_12_3, upass_logtrap) = true) loc_anim(seq_458);
 ~agility_exactmove(human_knockback, 20, 2, coord, movecoord(coord, 5, 0, 0), 20, 80, ^exact_west, false);
 anim(seq_848, 0);
 spotanim_pl(stunned_thieving, 124, 0);
@@ -195,7 +195,7 @@ p_delay(0);
 ~damage_self(min(5, calc(((stat(hitpoints) * 20) / 100))));
 p_delay(0);
 
-[oploc1,loc_3360]
+[oploc1,cavefood1]
 mes("You search the crate...");
 p_delay(2);
 if(testbit(%upass_map_mechanisms, ^upass_searched_area2_crate) = false) {
@@ -207,7 +207,7 @@ if(testbit(%upass_map_mechanisms, ^upass_searched_area2_crate) = false) {
 }
 mes("...but you find nothing.");
 
-[oplocu,mudpile_upass]
+[oplocu,upass_mud]
 if(last_useitem = spade) {
     p_arrivedelay;
     anim(human_dig, 0);
@@ -215,7 +215,7 @@ if(last_useitem = spade) {
     mes("...and find it's a filled in tunnel!");
     p_delay(1);
     // Temp note: dur updated
-    loc_change(loc_3218, 3); // todo: check this timing
+    loc_change(upass_unicorn_doorr, 3); // todo: check this timing
     mes("You push your way through the tunnel.");
     p_delay(0);
     p_teleport(0_37_150_24_46);
@@ -223,7 +223,7 @@ if(last_useitem = spade) {
 }
 ~displaymessage(^dm_default);
 
-[oploc1,loc_3266]
+[oploc1,cave_railings2]
 mes("You attempt to pick the lock...");
 def_int $roll = random(100);
 if ($roll < 50) { // Some arbitrary rng.
@@ -235,16 +235,16 @@ mes("You manage to pick the lock.");
 p_delay(2);
 stat_advance(thieving, 30);
 mes("You walk through.");
-~open_and_close_door2(loc_3269, ~check_axis_locactive(coord), door_open);
+~open_and_close_door2(inact_cave_railings, ~check_axis_locactive(coord), door_open);
 mes("The cage slams shut behind you.");
 sound_synth(grate_close, 0, 50);
 
-[oploc2,loc_3266]
+[oploc2,cave_railings2]
 mes("You search the bars...");
 p_delay(0);
 mes("...The cage has been locked.");
 
-[oploc1,loc_3268]
+[oploc1,cave_railings5]
 if(stat(thieving) < 50) {
     mes("You need a Thieving level of 50 to pick this lock."); // RS3, osrs has a mesbox
     return;
@@ -258,14 +258,14 @@ if ($roll < 50) { // Some arbitrary rng.
 // for some reason they made this work slightly different than the jail cell doors: https://youtu.be/n_ip_vEDbCA?si=c51xpPJ36Nx8ABoL&t=633
 sound_synth(lockeddoor, 0, 0);
 mes("You manage to pick the lock.");
-~open_and_close_door2(loc_3269, ~check_axis_locactive(coord), door_open);
+~open_and_close_door2(inact_cave_railings, ~check_axis_locactive(coord), door_open);
 p_delay(1);
 stat_advance(thieving, 30);
 mes("You walk through...");
 mes("The cage slams shut behind you.");
 sound_synth(grate_close, 0, 50);
 
-[oploc2,loc_3268]
+[oploc2,cave_railings5]
 mes("You search the bars...");
 p_delay(0);
 mes("...The cage has been locked.");
@@ -287,7 +287,7 @@ if(last_useitem = caverailing & %upass_progress = ^upass_entered_second_area) {
     ~chatplayer("<p,neutral>I heard something breaking.");
 }
 
-[oploc2,loc_3267]
+[oploc2,cave_railings3]
 mes("You search the cage...");
 p_delay(2);
 if(inv_total(inv, caverailing) > 0) { // checks bank in OSRS, not in RS3
@@ -297,7 +297,7 @@ if(inv_total(inv, caverailing) > 0) { // checks bank in OSRS, not in RS3
 mes("You find a loose railing lying on the floor.");
 inv_add(inv, caverailing, 1);
 
-[oploc1,loc_3308]
+[oploc1,unicorncage_destroyed_upass]
 if(%upass_progress >= ^upass_entered_main_area) { 
     mes("You search the cage remains...");
     p_delay(2);
@@ -312,8 +312,8 @@ if(inv_total(inv, cave_unicorn_horn) = 0) {
 }
 mes("Nothing remains.");
 
-[oploc1,loc_3218] @upass_area_2_3_entrance;
-[oploc1,loc_3219] @upass_area_2_3_entrance;
+[oploc1,upass_unicorn_doorr] @upass_area_2_3_entrance;
+[oploc1,upass_unicorn_doorl] @upass_area_2_3_entrance;
 
 [label,upass_area_2_3_entrance]
 if(loc_angle = ^loc_south) {
@@ -326,7 +326,7 @@ if(loc_angle = ^loc_south) {
     }
 }
 
-[oploc1,loc_3305]
+[oploc1,bloodwell_upass]
 mes("You search the stone structure...");
 p_delay(0);
 mes("On the side you find an old inscription,");
@@ -342,7 +342,7 @@ if(testbit(%upass_map_mechanisms, ^upass_thrown_jerro_badge) = true & testbit(%u
 }
 return (false);
 
-[oplocu,loc_3305]
+[oplocu,bloodwell_upass]
 // no howl sound: https://youtu.be/n_ip_vEDbCA?si=lCRUSgavmsiM68TL&t=824
 switch_obj(last_useitem) {
     case cave_unicorn_horn :
@@ -384,8 +384,8 @@ if(~upass_unicorn_door_unlocked = true) {
     mes("It sounded like it came from the skull above the door"); // no period
 }
 
-[oploc1,loc_3220] @upass_unicorn_door;
-[oploc1,loc_3221] @upass_unicorn_door;
+[oploc1,cavetempledoor2l] @upass_unicorn_door;
+[oploc1,cavetempledoor2r] @upass_unicorn_door;
 
 // https://github.com/RuneStar/leaks/blob/0e0c801b4a9fae9f7c8bad0176652035c5fe306a/295.txt#L12
 [label,upass_unicorn_door]
@@ -401,7 +401,7 @@ if(coordz(loc_coord) < 6400) {
     if(%upass_progress = ^upass_killed_unicorn) %upass_progress = ^upass_entered_main_area;
 }
 
-[oploc1,loc_3222]
+[oploc1,cavewalltunnel_upass_down]
 if(loc_coord = 1_33_71_38_1) p_teleport(0_36_153_32_2);
 else p_teleport(0_36_154_1_59);
 if(testbit(%upass_map_mechanisms, ^upass_koftik_gone_insane) = false) {
@@ -411,11 +411,11 @@ if(testbit(%upass_map_mechanisms, ^upass_koftik_gone_insane) = false) {
     @koftik_isthatyou;
 }
 
-[oploc1,loc_3223] 
+[oploc1,cavewalltunnel_upass_up] 
 if(loc_coord = 0_36_153_32_1) p_teleport(1_33_71_38_2);
 else p_teleport(1_33_73_1_57);
 
-[oplocu,loc_3344]
+[oplocu,upassdwarfbrewbarrel]
 if(last_useitem = bucket_empty) {
     // no sound https://youtu.be/n_ip_vEDbCA?si=JO56KfFzMy86y8_Y&t=1620
     mes("You fill the bucket with dwarf brew.");
@@ -462,18 +462,18 @@ if(last_useitem = upassdwarfbrew) {
     sound_synth(fire_lit, 0, 0);
     mes("It bursts into flames.");
     // Temp note: dur does not need updated
-    loc_add(0_36_153_52_8, loc_3357, 3, wall_l, 10);
-    loc_add(0_36_153_53_8, loc_3357, 3, wall_straight, 10);
-    loc_add(0_36_153_54_8, loc_3357, 3, wall_straight, 10);
-    loc_add(0_36_153_55_8, loc_3357, 2, wall_l, 10);
-    loc_add(0_36_153_52_9, loc_3357, 0, wall_straight, 10);
-    loc_add(0_36_153_55_9, loc_3357, 2, wall_straight, 10);
-    loc_add(0_36_153_52_10, loc_3357, 0, wall_straight, 10);
-    loc_add(0_36_153_55_10, loc_3357, 2, wall_straight, 10);
-    loc_add(0_36_153_52_11, loc_3357, 0, wall_l, 10);
-    loc_add(0_36_153_53_11, loc_3357, 1, wall_straight, 10);
-    loc_add(0_36_153_54_11, loc_3357, 1, wall_straight, 10);
-    loc_add(0_36_153_55_11, loc_3357, 1, wall_l, 10);
+    loc_add(0_36_153_52_8, iban_firewall_straight, 3, wall_l, 10);
+    loc_add(0_36_153_53_8, iban_firewall_straight, 3, wall_straight, 10);
+    loc_add(0_36_153_54_8, iban_firewall_straight, 3, wall_straight, 10);
+    loc_add(0_36_153_55_8, iban_firewall_straight, 2, wall_l, 10);
+    loc_add(0_36_153_52_9, iban_firewall_straight, 0, wall_straight, 10);
+    loc_add(0_36_153_55_9, iban_firewall_straight, 2, wall_straight, 10);
+    loc_add(0_36_153_52_10, iban_firewall_straight, 0, wall_straight, 10);
+    loc_add(0_36_153_55_10, iban_firewall_straight, 2, wall_straight, 10);
+    loc_add(0_36_153_52_11, iban_firewall_straight, 0, wall_l, 10);
+    loc_add(0_36_153_53_11, iban_firewall_straight, 1, wall_straight, 10);
+    loc_add(0_36_153_54_11, iban_firewall_straight, 1, wall_straight, 10);
+    loc_add(0_36_153_55_11, iban_firewall_straight, 1, wall_l, 10);
     p_delay(2);
     mes("You search through the remains.");
     // todo: should there even be a doll check? OSRS and rs3 both have this thing completely changed
@@ -486,8 +486,8 @@ if(last_useitem = upassdwarfbrew) {
 }
 
 // for some reason this uses aploc and does some p_teleport pathing w/weird delay
-[aploc1,loc_3351] @upass_soulless_cage;
-[aploc1,loc_3352] @upass_soulless_cage;
+[aploc1,upass_cage_dummy] @upass_soulless_cage;
+[aploc1,upass_cage_dummy_dummy] @upass_soulless_cage;
 
 [label,upass_soulless_cage]
 p_delay(0);
@@ -502,7 +502,7 @@ mes("The man seems to be entranced.");
 p_delay(1);
 mes("You search through the bottom of the cage...");
 p_delay(1);
-if(inv_total(inv, ibansdove) = 0 & loc_type = loc_3351 & testbit(%upass_map_mechanisms, ^upass_dove_on_doll) = false) {
+if(inv_total(inv, ibansdove) = 0 & loc_type = upass_cage_dummy & testbit(%upass_map_mechanisms, ^upass_dove_on_doll) = false) {
     mes("...and find Iban's dove.");
     inv_add(inv, ibansdove, 1);
 } else {
@@ -518,7 +518,7 @@ if(inv_total(worn, klanks_gauntlets) > 0) {
 say("Aaarrgghh!");
 ~damage_self(10);
 
-[oploc1,loc_3274]
+[oploc1,upassshutchest1]
 mes("You attempt to open the chest...");
 if(inv_total(inv, doomion_amulet) > 0 & inv_total(inv, othainian_amulet) > 0 & inv_total(inv, holthion_amulet) > 0) {
     mes("The three amulets glow red in your backpack...");
@@ -565,8 +565,8 @@ switch_obj (last_useitem) {
         mes("You rub the ashes into the doll.");
 }
 
-[oploc1,loc_3333] @open_iban_door;
-[oploc1,loc_3334] @open_iban_door;
+[oploc1,upass_templedoor_closed_right] @open_iban_door;
+[oploc1,upass_templedoor_closed_left] @open_iban_door;
 
 [label,open_iban_door]
 if(coordx(loc_coord) < coordx(coord)) {
@@ -629,7 +629,7 @@ if(testbit(%upass_map_mechanisms, ^upass_shadow_on_doll) = true) mes("Dark liqui
 p_delay(0);
 mes("The doll is made from old wood and cloth.");
 
-[oplocu,loc_3359]
+[oplocu,cave_temple_altar]
 // no nothing interesting happens
 if(last_useitem = ibandoll) {
     // check if doll is complete, todo: how does this work if iban is currently dead
@@ -681,12 +681,12 @@ if(last_useitem = ibandoll) {
     }
 }
 
-[oploc1,loc_3224]
+[oploc1,upass_last_out]
 if(npc_find(coord, koftik_5, 9, 0) = true) {
     @koftik_whereami;
 }
 
-[oploc1,loc_3295]
+[oploc1,stone_tablet1_upass]
 mes("The writing seems to have been scratched");
 mes("into the rock with bare hands, it reads...");
 p_delay(1);
@@ -704,7 +704,7 @@ if_settext(stone:com_12, ^string_empty);
 if_settext(stone:com_13, ^string_empty);
 if_openmain(stone);
 
-[oploc1,loc_3296]
+[oploc1,stone_tablet2_upass]
 mes("The writing seems to have been scratched");
 mes("into the rock with bare hands, it reads...");
 p_delay(1);
@@ -722,7 +722,7 @@ if_settext(stone:com_12, ^string_empty);
 if_settext(stone:com_13, ^string_empty);
 if_openmain(stone);
 
-[oploc1,loc_3297]
+[oploc1,stone_tablet3_upass]
 // https://web.archive.org/web/20060908030821im_/http://www.runeweb.net/fireball/Underground%20Pass%20Images/Underground7.PNG
 mes("The writing seems to have been scratched");
 mes("into the rock with bare hands, it reads...");
@@ -741,7 +741,7 @@ if_settext(stone:com_12, ^string_empty);
 if_settext(stone:com_13, ^string_empty);
 if_openmain(stone);
 
-[oploc1,loc_3298]
+[oploc1,stone_tablet4_upass]
 // https://youtu.be/f_g1T2GYWfo?si=Z2RTl2pgxZfO-rXv&t=43
 mes("The writing seems to have been scratched");
 mes("into the rock with bare hands, it reads...");
@@ -760,7 +760,7 @@ if_settext(stone:com_12, ^string_empty);
 if_settext(stone:com_13, ^string_empty);
 if_openmain(stone);
 
-[oploc1,loc_3299]
+[oploc1,stone_tablet5_upass]
 mes("The writing seems to have been scratched");
 mes("into the rock with bare hands, it reads...");
 p_delay(1);

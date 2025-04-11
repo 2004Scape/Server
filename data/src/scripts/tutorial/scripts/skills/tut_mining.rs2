@@ -1,5 +1,5 @@
 // Copper Rock
-[oploc1,tut_copperrock]
+[oploc1,newbiecopperrock]
 if (~tut_mining("copper") = false) {
     return;
 }
@@ -17,7 +17,7 @@ inv_add(inv, copper_ore, 1);
 ~mesbox("You manage to mine some copper.");
 
 // Tin Ore
-[oploc1,tut_tinrock]
+[oploc1,newbietinrock]
 if (~tut_mining("tin") = false) {
     return;
 }
@@ -76,7 +76,7 @@ loc_change(plainrock1, 10);
 anim(null, 0);
 return(true);
 
-[oploc2,tut_copperrock]
+[oploc2,newbiecopperrock]
 ~tut_prospect;
 sound_synth(prospect, 1, 0);
 if (%tutorial_progress = ^mining_instructor_begin_prospecting) {
@@ -89,7 +89,7 @@ if (%tutorial_progress = ^mining_instructor_prospected_tin_first) {
 ~set_tutorial_progress;
 ~mesbox("This rock contains copper.");
 
-[oploc2,tut_tinrock]
+[oploc2,newbietinrock]
 ~tut_prospect;
 sound_synth(prospect, 1, 0);
 if (%tutorial_progress = ^mining_instructor_begin_prospecting) {

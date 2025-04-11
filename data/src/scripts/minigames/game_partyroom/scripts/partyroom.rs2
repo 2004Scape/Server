@@ -93,14 +93,14 @@ while (npc_findnext = true) {
 
 [proc,random_balloon]()(loc)
 switch_int (random(7)) {
-    case 0 : return (loc_115);
-    case 1 : return (loc_116);
-    case 2 : return (loc_117);
-    case 3 : return (loc_118);
-    case 4 : return (loc_119);
-    case 5 : return (loc_120);
-    case 6 : return (loc_121);
-    case default : return (loc_115);
+    case 0 : return (balloon_yellow);
+    case 1 : return (balloon_red);
+    case 2 : return (balloon_blue);
+    case 3 : return (balloon_green);
+    case 4 : return (balloon_purple);
+    case 5 : return (balloon_white);
+    case 6 : return (balloon2);
+    case default : return (balloon_yellow);
 }
 
 [proc,random_partyroom_balloon_coord]()(coord)

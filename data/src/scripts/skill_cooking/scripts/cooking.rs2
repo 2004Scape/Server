@@ -95,7 +95,7 @@ if ($cooking_source = cooking_oven) {
 if (inv_total(worn, gauntlets_of_cooking) > 0 & ($low_gauntlets > null | $high_gauntlets > null)) {
     $low = $low_gauntlets;
     $high = $high_gauntlets;
-} else if (loc_type = cook_range & ($low_cookomatic > null | $high_cookomatic > null)) { // lumbridge cook-o-matic 100
+} else if (loc_type = cooksquestrange & ($low_cookomatic > null | $high_cookomatic > null)) { // lumbridge cook-o-matic 100
     $low = $low_cookomatic;
     $high = $high_cookomatic;
 }

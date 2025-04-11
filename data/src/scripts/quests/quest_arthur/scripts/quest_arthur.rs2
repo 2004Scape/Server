@@ -1,5 +1,5 @@
-[oploc1,loc_65] @leave_arhein_crate;
-[oploc2,loc_63]
+[oploc1,merlincrate_wall] @leave_arhein_crate;
+[oploc2,merlincrate_empty]
 if(%arthur_progress >= ^arthur_spoken_lancelot) {
     ~mesbox("The crate is empty. It's just about big enough to hide inside.");
     def_int $choice = ~p_choice2_header("Yes.", 1, "No.", 2, "Would you like to hide inside the crate?");
@@ -35,7 +35,7 @@ if(%arthur_progress >= ^arthur_spoken_lancelot) {
 }
 mes("You have no reason to do that...");
 
-[oploc2,loc_64]
+[oploc2,merlincrate_empty2]
 ~mesbox("The crate is empty. It's just about big enough to hide inside.");
 def_int $choice = ~p_choice2_header("Yes.", 1, "No.", 2, "Would you like to hide inside the crate?");
 if ($choice = 2) {
@@ -76,7 +76,7 @@ if ($choice = 2) {
 ~mesbox("You climb out of the crate.");
 p_teleport(%arhein_crate_coord);
 
-[oploc2,loc_67]
+[oploc2,merlincrate_bucket]
 ~mesbox("There are buckets in the crate.|Would you like a bucket?");
 def_int $op = ~p_choice2("Yes.", 1, "No.", 2);
 if($op = 2) {
@@ -85,7 +85,7 @@ if($op = 2) {
 ~mesbox("You take a bucket.");
 inv_add(inv, bucket_empty, 1);
 
-[oploc1,loc_69]
+[oploc1,arhein_ship_on]
 if (npc_find(coord, arhein, 12, 0) = true) {
     ~chatnpc("<p,angry>Hey buddy! Get away from my ship alright?");
     ~chatplayer("<p,sad>Yeah... uh... sorry...");
@@ -103,13 +103,13 @@ while(loc_findnext = true) {
             def_int $orig_angle = loc_angle;
             // Temp note: dur updated
             loc_del(3);
-            if(loc_type = loc_71) {
+            if(loc_type = lefayeunopenabledoorl) {
                 // Temp note: dur updated
-                loc_add(movecoord($central_coord, 1, 0, 0), blackknight_double_door_left, 1, loc_shape, 3);
-                loc_add(movecoord($central_coord, 1, 0, -1), blackknight_double_door_right, 3, loc_shape, 3); 
+                loc_add(movecoord($central_coord, 1, 0, 0), inaclefayeunopenabledoorl, 1, loc_shape, 3);
+                loc_add(movecoord($central_coord, 1, 0, -1), inaclefayeunopenabledoorr, 3, loc_shape, 3); 
             }
             // Temp note: dur updated
-            loc_add($central_coord, loc_83, $orig_angle, loc_shape, 3);
+            loc_add($central_coord, inviswall, $orig_angle, loc_shape, 3);
      }
 }
 p_teleport(movecoord(coord, -1, 0, 0));
@@ -139,7 +139,7 @@ switch_int(~p_choice4("Pizza Delivery!", 1, "Have you ever thought about letting
 }
 ~mesbox("It looks like you'll have to find another way in...");
 
-[oploc2,loc_61]
+[oploc2,thrantaxaltar]
 if(%arthur_progress ! ^arthur_spoken_morgan_lefaye) {
     mes("An altar to the evil god Zamorak.");
     return;
@@ -216,7 +216,7 @@ if(inzone(movecoord(^camelot_magic_symbol, -1, 0, -1), movecoord(^camelot_magic_
 inv_dropslot(inv, coord, last_slot, 200);
 sound_synth(put_down, 0, 0);
 
-[oploc1,loc_59]
+[oploc1,jewellersdoor]
 if(testbit(%excalibur_components_progress, ^excalibur_rewarded) = false) {
     if(testbit(%excalibur_components_progress, ^excalibur_spoken_beggar) = true) {
         if(npc_find(coord, beggar, 1, 0) = false) {
@@ -231,7 +231,7 @@ if(testbit(%excalibur_components_progress, ^excalibur_rewarded) = false) {
 }
 ~open_and_close_door2(loc_1535, ~check_axis(coord, loc_coord, loc_angle), door_open);
 
-[oploc1,loc_60]
+[oploc1,jewellersladder]
 p_arrivedelay;
 anim(human_reachforladdertop, 0);
 p_delay(0);
@@ -245,7 +245,7 @@ if(testbit(%excalibur_components_progress, ^excalibur_rewarded) = false & testbi
     ~chatnpc("<p,neutral>Come back when you are a better person.");
 }
 
-[oplocu,loc_62]
+[oplocu,merlins_crystal]
 if(%arthur_progress = ^arthur_complete) {
     mes("You have already freed Merlin from the giant crystal.");
     return;

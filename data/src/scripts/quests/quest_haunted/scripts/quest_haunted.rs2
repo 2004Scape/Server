@@ -17,13 +17,13 @@ while(loc_findnext = true) {
             def_int $orig_angle = loc_angle;
             // Temp note: dur updated
             loc_del(4);
-            if(loc_type = loc_134) {
+            if(loc_type = haunteddoorl) {
                 // Temp note: dur updated
                 loc_add(movecoord($central_coord, 0, 0, 1), loc_1522, 0, loc_shape, 4);
                 loc_add(movecoord($central_coord, 1, 0, 1), loc_1523, 2, loc_shape, 4); 
             }
             // Temp note: dur updated
-            loc_add($central_coord, loc_83, $orig_angle, loc_shape, 4);
+            loc_add($central_coord, inviswall, $orig_angle, loc_shape, 4);
      }
 }
 sound_synth(door_open, 0, 0);
@@ -46,11 +46,11 @@ if(inv_total(inv, closet_key) = 0 & %haunted_progress < ^haunted_complete) {
 }
 mes("You find nothing of interest.");
 
-[oploc1,loc_131]
+[oploc1,closet_door]
 mes("The door is locked.");
 sound_synth(locked, 0, 0);
 
-[oplocu,loc_131]
+[oplocu,closet_door]
 if(last_useitem ! closet_key) {
     ~displaymessage(^dm_default);
     return;
@@ -140,22 +140,22 @@ loc_findallzone(movecoord(coord, 0, 0, -1));
 while (loc_findnext = true) {
     if(loc_type = loc_155) {
         // Temp note: dur updated
-        loc_change(loc_83, 3);
+        loc_change(inviswall, 3);
         loc_add(movecoord(loc_coord, 0, 0, -1), loc_157, loc_angle, loc_shape, 3);
     } else if(loc_type = loc_156) {
         // Temp note: dur updated
-        loc_change(loc_83, 3);
+        loc_change(inviswall, 3);
         loc_add(movecoord(loc_coord, 0, 0, 1), loc_157, loc_angle, loc_shape, 3);
         sound_synth(coffin_open, 0, 0);
     }
 }
 p_teleport($dest);
 
-[oploc1,loc_133]
+[oploc1,puzzle_ladder_top]
 ~reset_haunted_levers;
 @climb_ladder(0_48_152_44_26, false);
 
-[oploc1,loc_132]
+[oploc1,puzzle_ladder]
 ~reset_haunted_levers;
 @climb_ladder(0_48_52_20_33, true);
 
@@ -183,7 +183,7 @@ if(testbit(%haunted_lever, loc_param(lever_index)) = true) {
 mes("The lever is <$dir>.");
 
 [oploc1,_haunted_door]
-if((loc_type = loc_137 & (testbit(%haunted_lever, 0) = false & testbit(%haunted_lever, 1) = false & testbit(%haunted_lever, 3) = true & testbit(%haunted_lever, 4) = true & testbit(%haunted_lever, 5) = true))
+if((loc_type = 1to2 & (testbit(%haunted_lever, 0) = false & testbit(%haunted_lever, 1) = false & testbit(%haunted_lever, 3) = true & testbit(%haunted_lever, 4) = true & testbit(%haunted_lever, 5) = true))
     | (loc_type = loc_138 & (testbit(%haunted_lever, 1) = false & testbit(%haunted_lever, 3) = true & testbit(%haunted_lever, 5) = true))
     | (loc_type = loc_139 & (testbit(%haunted_lever, 0) = true & testbit(%haunted_lever, 1) = true & testbit(%haunted_lever, 3) = true))
     | (loc_type = loc_140 & testbit(%haunted_lever, 3) = true)

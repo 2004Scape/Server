@@ -1,14 +1,14 @@
-[oploc1,loc_55] @dwarven_tunnel;
-[oploc1,loc_57] @dwarven_tunnel;
+[oploc1,tunnelstairstop] @dwarven_tunnel;
+[oploc1,tunnelstairstop2] @dwarven_tunnel;
 
-[oploc1,loc_54] p_telejump(0_44_54_4_30);
-[oploc1,loc_56] p_telejump(0_44_54_61_26);
+[oploc1,tunnelstairs] p_telejump(0_44_54_4_30);
+[oploc1,tunnelstairs2] p_telejump(0_44_54_61_26);
 
 [label,dwarven_tunnel]
 if(%fishingcompo_progress = ^fishingcompo_complete) {
-    if(loc_type = loc_55) {
+    if(loc_type = tunnelstairstop) {
         p_telejump(0_44_154_4_26);
-    } else if(loc_type = loc_57) {
+    } else if(loc_type = tunnelstairstop2) {
         p_telejump(0_44_154_60_22);
     }
     return;
@@ -21,7 +21,7 @@ if(%fishingcompo_progress = ^fishingcompo_complete) {
 
 [oploc1,_hemenster_gate]
 if(coordx(coord) <= coordx(loc_coord)) {
-    if(%fishingcompo_progress >= ^fishingcompo_in_comp & %fishingcompo_progress < ^fishingcompo_won_comp | loc_type = loc_48 & %fishingcompo_progress < ^fishingcompo_won_comp) {
+    if(%fishingcompo_progress >= ^fishingcompo_in_comp & %fishingcompo_progress < ^fishingcompo_won_comp | loc_type = fishinggateclosedr & %fishingcompo_progress < ^fishingcompo_won_comp) {
         // On OSRS this dialogue always happens (during the quest) when leaving from the south side of the gate, and 
         // on both sides during an active comp. Not sure if this is a rework thing since Bonzo is sitting on a table by the south side
         // post-rework, but we'll use this behaviour for now
@@ -58,11 +58,11 @@ while(loc_findnext = true) {
             def_int $orig_angle = loc_angle;
             def_loc $type = loc_type;
             // Temp note: dur updated
-            loc_change(loc_83, 3);
-            if($type = loc_47) {
+            loc_change(inviswall, 3);
+            if($type = fishinggateclosedl) {
                 // Temp note: dur updated
-                loc_add(movecoord($central_coord, 1, 0, 0), loc_49, 1, loc_shape, 3);
-                loc_add(movecoord($central_coord, 2, 0, 0), loc_50, 1, loc_shape, 3); 
+                loc_add(movecoord($central_coord, 1, 0, 0), inacfishinggateclosedl, 1, loc_shape, 3);
+                loc_add(movecoord($central_coord, 2, 0, 0), inacfishinggateclosedr, 1, loc_shape, 3); 
             }
      }
 }
@@ -72,7 +72,7 @@ p_delay(0);
 // The pipe has some odd interactions in OSRS, but I think this probably related
 // to the rework (https://oldschool.runescape.wiki/w/Wall_Pipe), based off this image
 // I think it probably works very similarly to RSC: https://web.archive.org/web/20130324085821im_/http://www.runeweb.net/fireball/Fishing%20Contest%20Images/FishingContest4.JPG
-[oplocu,loc_41]
+[oplocu,garlicpipe]
 switch_obj (last_useitem) {
     case garlic : @stash_garlic;
     case default : ~displaymessage(^dm_default);
@@ -80,7 +80,7 @@ switch_obj (last_useitem) {
 
 // option doesn't exist in RSC, but based off the 2005 image, I think it probably always sends nothing interesting happens
 // when searching it (this matches the behaviour of OSRS when searching it from 3-8 tiles away)
-[oploc1,loc_41] ~displaymessage(^dm_default);
+[oploc1,garlicpipe] ~displaymessage(^dm_default);
 
 [label,stash_garlic]
 mes("You stash the garlic in the pipe.");

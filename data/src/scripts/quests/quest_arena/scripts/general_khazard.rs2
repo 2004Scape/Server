@@ -57,7 +57,7 @@ npc_add(0_40_49_47_5, khazard_guard_cutscene, 30); // 30t in old videos
 npc_setmode(none);
 npc_walk(0_40_49_41_5);
 ~forcemove(0_40_49_40_5);
-if(loc_find(0_40_49_40_6, loc_79) = true) {
+if(loc_find(0_40_49_40_6, arena_prisondoor) = true) {
     def_int $x;
     def_int $z;
     def_coord $loc_coord = loc_coord;
@@ -65,8 +65,8 @@ if(loc_find(0_40_49_40_6, loc_79) = true) {
     def_locshape $shape = loc_shape;
     $x, $z = ~door_open($angle, loc_shape);
     // Temp note: dur updated
-    loc_change(loc_83, 3);
-    loc_add(movecoord($loc_coord, $x, 0, $z), loc_37, modulo(add($angle, 1), 4), $shape, 3);
+    loc_change(inviswall, 3);
+    loc_add(movecoord($loc_coord, $x, 0, $z), ctratgatea, modulo(add($angle, 1), 4), $shape, 3);
     sound_synth(grate_open, 0, 0);
 }
 ~forcemove(movecoord(coord, 0, 0, 1));

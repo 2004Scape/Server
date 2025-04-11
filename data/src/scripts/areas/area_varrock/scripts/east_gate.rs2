@@ -54,7 +54,7 @@ while(loc_findnext = true) {
             def_int $orig_angle = loc_angle;
             def_loc $type = loc_type;
             // Temp note: dur updated
-            loc_change(loc_83, 3);
+            loc_change(inviswall, 3);
             if($type = loc_2050) {
                 loc_add(movecoord($central_coord, -1, 0, 0), loc_2052, 3, loc_shape, 3);
                 loc_add(movecoord($central_coord, -2, 0, 0), loc_2053, 3, loc_shape, 3); 

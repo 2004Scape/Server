@@ -139,7 +139,7 @@ p_arrivedelay;
 p_arrivedelay;
 @climb_ladder(movecoord(coord(), 0, -1, 0), true);
 
-[oploc1,loc_3205]
+[oploc1,laddertop_norim]
 p_arrivedelay;
 @climb_ladder(movecoord(coord(), 0, -1, 0), false);
 

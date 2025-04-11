@@ -1,36 +1,36 @@
-[oploc1,loc_3337]
+[oploc1,portcullis_lever_up]
 mes("You pull the lever...");
 sound_synth(lever, 0, 0);
 // Temp note: dur updated !! nice even number :)
-loc_change(loc_3242, 15);
+loc_change(upass_lever_down, 15);
 p_delay(1);
 mes("The portcullis opens.");
-if(loc_find(0_38_151_33_10, loc_3303) = true) {
+if(loc_find(0_38_151_33_10, portcullis_upass) = true) {
     loc_anim(seq_455); // sound portcullis_open
 }
-if(loc_find(0_38_151_33_12, loc_3303) = true) {
+if(loc_find(0_38_151_33_12, portcullis_upass) = true) {
     loc_anim(seq_455); // sound portcullis_open
 }
-if(loc_find(0_38_151_33_14, loc_3303) = true) {
+if(loc_find(0_38_151_33_14, portcullis_upass) = true) {
     loc_anim(seq_455); // sound portcullis_open
 }
-if(loc_find(0_38_151_33_16, loc_3303) = true) {
+if(loc_find(0_38_151_33_16, portcullis_upass) = true) {
     loc_anim(seq_455); // sound portcullis_open
 }
 ~forcemove(movecoord(coord, 0, 0, 2));
 ~forcemove(movecoord(coord, -2, 0, 1));
 ~forcemove(movecoord(coord, 0, 0, 1));
 mes("The portcullis closes.");
-if(loc_find(0_38_151_33_10, loc_3303) = true) {
+if(loc_find(0_38_151_33_10, portcullis_upass) = true) {
     loc_anim(seq_454); // sound portcullis_open
 }
-if(loc_find(0_38_151_33_12, loc_3303) = true) {
+if(loc_find(0_38_151_33_12, portcullis_upass) = true) {
     loc_anim(seq_454); // sound portcullis_open
 }
-if(loc_find(0_38_151_33_14, loc_3303) = true) {
+if(loc_find(0_38_151_33_14, portcullis_upass) = true) {
     loc_anim(seq_454); // sound portcullis_open
 }
-if(loc_find(0_38_151_33_16, loc_3303) = true) {
+if(loc_find(0_38_151_33_16, portcullis_upass) = true) {
     loc_anim(seq_454); // sound portcullis_open
 }
 
@@ -90,7 +90,7 @@ anim(null, 0);
 say("Ouch!");
 ~damage_self(15); // always 15
 
-[oploc1,loc_3365]
+[oploc1,upass_grilltrap_hand_holds]
 p_delay(0);
 anim(human_reachforladdertop, 0);
 p_delay(0);

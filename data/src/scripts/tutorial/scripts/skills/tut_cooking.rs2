@@ -4,7 +4,7 @@ if (oc_param(last_useitem, is_water_source) = ^true) {
 }
 ~displaymessage(^dm_default);
 
-[oplocu,loc_3039]
+[oplocu,newbierange]
 if (last_useitem = bread_dough) {
     anim(human_cooking, 0);
     sound_synth(fry, 0, 0);

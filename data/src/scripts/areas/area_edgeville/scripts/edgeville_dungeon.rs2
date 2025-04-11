@@ -42,11 +42,11 @@ if (inv_total(inv, edgevilledungeonkey) > 0) {
     p_teleport($dest);
 
     // Temp note: dur updated
-    loc_add($loc_coord, loc_83, $angle, $shape, 3);
+    loc_add($loc_coord, inviswall, $angle, $shape, 3);
     loc_add(movecoord($loc_coord, $x, 0, $z), $replacement, modulo(add($angle, 1), 4), $shape, 3);
 } else {
     mes("The door is locked.");
 }
 
-[oploc1,loc_3209] ~open_and_close_double_door2(~check_axis_locactive(coord), ^right, coffin_open);
-[oploc1,loc_3211] ~open_and_close_double_door2(~check_axis_locactive(coord), ^left, coffin_open);
+[oploc1,oddwall_r] ~open_and_close_double_door2(~check_axis_locactive(coord), ^right, coffin_open);
+[oploc1,oddwall_l] ~open_and_close_double_door2(~check_axis_locactive(coord), ^left, coffin_open);

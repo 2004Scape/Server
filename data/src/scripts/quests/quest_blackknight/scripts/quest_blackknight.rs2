@@ -4,10 +4,10 @@
 // 3031 3508 1 - Hole
 // 3025 3508 0 - Grate
 
-[oploc1,blackknight_double_door_right]
+[oploc1,inaclefayeunopenabledoorr]
 mes("The doors are locked.");
 
-[oploc1,blackknight_double_door_left]
+[oploc1,inaclefayeunopenabledoorl]
 mes("The doors are locked.");
 
 [oploc1,blackknight_front_door]

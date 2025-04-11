@@ -93,7 +93,7 @@ while(loc_findnext = true) {
                 loc_add(movecoord($central_coord, -1, 0, 1), loc_1563, 1, loc_shape, 3);
             }
             // Temp note: dur updated
-            loc_add($central_coord, loc_83, $orig_angle, loc_shape, 3);
+            loc_add($central_coord, inviswall, $orig_angle, loc_shape, 3);
             sound_synth(grate_open, 0, 0);
     }
 }
@@ -108,7 +108,7 @@ if(%zombiequeen_progress >= ^zombiequeen_complete) {
             def_int $orig_angle = loc_angle;
             def_loc $type = loc_type;
             // Temp note: dur updated
-            loc_change(loc_83, 3);
+            loc_change(inviswall, 3);
             if($type = loc_2261) {
                 // Temp note: dur updated
                 loc_add(movecoord($central_coord, 1, 0, 0), loc_2263, 1, loc_shape, 3);
@@ -281,7 +281,7 @@ while(loc_findnext = true) {
                 loc_add(movecoord($central_coord, 1, 0, 1), loc_1563, 2, loc_shape, 3); 
             }
             // Temp note: dur updated
-            loc_add($central_coord, loc_83, $orig_angle, loc_shape, 3);
+            loc_add($central_coord, inviswall, $orig_angle, loc_shape, 3);
      }
 }
 sound_synth(grate_open, 0, 0);
@@ -1363,8 +1363,8 @@ if((loc_find(0_45_148_12_8, loc_2246) = true | loc_find(0_45_148_12_8, loc_2248)
     // Temp note: dur updated
     loc_change(loc_2249, 3);
     .loc_change(loc_2250, 3);
-    loc_change(loc_83, 3);
-    .loc_change(loc_83, 3);
+    loc_change(inviswall, 3);
+    .loc_change(inviswall, 3);
     loc_add(movecoord(loc_coord, 0, 0, 1), loc_2251, 0, loc_shape, 3);
     .loc_add(movecoord(.loc_coord, 0, 0, 1), loc_2252, 2, .loc_shape, 3);
     sound_synth(coffin_open, 0, 0);
