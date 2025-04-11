@@ -187,12 +187,21 @@ function validateConfigPack(pack: PackFile, ext: string, regen: boolean = false,
         pack.load(`${Environment.BUILD_SRC_DIR}/pack/${pack.type}.pack`);
     }
 
+    const missing = [];
     for (let i = 0; i < names.length; i++) {
         const name = names[i];
 
         if (!pack.names.has(name) && !name.startsWith('cert_')) {
-            throw new Error(`${pack.type}: ${name} is missing an ID line, you may need to edit ${Environment.BUILD_SRC_DIR}/pack/${pack.type}.pack`);
+            missing.push(name);
         }
+    }
+
+    if (missing.length > 0) {
+        for (const name of missing) {
+            console.log(name);
+        }
+
+        throw new Error(`Missing pack IDs, you may need to edit ${Environment.BUILD_SRC_DIR}/pack/${pack.type}.pack`);
     }
 
     for (const name of pack.names) {
