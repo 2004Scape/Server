@@ -60,6 +60,7 @@ if(finduid(%npc_aggressive_player) = true) {
             @summon_nezi_part3;
         }
         // doesn't queue, the npc will sit at 0 hp if no prot access
+        npc_setmode(none);
         npc_del;
         if(%legends_progress < ^legends_heart_in_recess & ~obj_gettotal(heartcrystal_sectionc) = 0 & ~obj_gettotal(heartcrystal) = 0 
         & ~obj_gettotal(heartcrystal_glow) = 0 & testbit(%legends_bits, ^legends_smelting_lump) = false) {

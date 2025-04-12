@@ -73,19 +73,11 @@ if(%legends_progress ! ^legends_summoned_nezikchened_fire & %legends_progress ! 
 @player_combat_start_ap;
 
 [ai_queue3,nezikchened]
-if (npc_findhero = false) {
-    npc_del;
-    return;
-}
-npc_sethuntmode(null);
-npc_setmode(none);
 if (finduid(%npc_aggressive_player) = true) {
     if_close;
     queue(nezikchened_defeat, 0);
     return;
 }
-// shouldn't ever be possible
-gosub(npc_death);
 
 [ai_queue4,nezikchened] gosub(npc_death);
 
@@ -110,7 +102,6 @@ if(inzone(0_37_73_0_0, 0_37_73_63_63, coord) = true & %legends_progress = ^legen
 if_close;
 if(%legends_progress = ^legends_collected_totem) %legends_progress = ^legends_spawned_nezikchened_final;
 npc_add(map_findsquare(coord, 1, 2, ^map_findsquare_lineofwalk), nezikchened, 500);
-npc_setmode(opplayer2);
 %aggressive_npc = npc_uid;
 %npc_lastcombat = sub(^max_32bit_int, 8);
 %npc_aggressive_player = uid;
@@ -142,6 +133,7 @@ p_delay(1);
 mes("Nezikchened: I'll kill you myself!");
 npc_say("I'll kill you myself!");
 p_delay(1);
+~npc_retaliate(0);
 mes("You feel a great sense of loss...");
 stat_sub(prayer, 0, 75); // 75% of current
 p_delay(1);
@@ -236,7 +228,5 @@ if(npc_finduid(%aggressive_npc) = true & npc_type = nezikchened) {
         npc_queue(4, 0, 0);
         p_delay(5);
         say("Heard it all before!");
-    } else {
-        gosub(npc_death); // should be impossible
-    }
-}
+    } 
+} // if conditions fail the npc will sit at 0 hp

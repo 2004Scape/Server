@@ -64,7 +64,7 @@ else {
 [oploc2,legends_bed]
 // no delay
 mes("You search the flea infested rags...");
-    if (inv_total(inv, scrawled_note3) < 0) {
+if (inv_total(inv, scrawled_note3) = 0) {
     // mes instead of mesbox here
     mes("You find a scrap of paper with spidery writing on it.");;
     inv_add(inv, scrawled_note3, 1);
@@ -92,7 +92,7 @@ else {
 ~mesbox("This bamboo book shelf doesn't house many books, it doesn't look as if the Shaman has much opportunity to read at the moment in any case.");
 
 [oploc2,legends_bookcase]
-~mesbox("You search the bookcase, it looks fairy old...|After a while you notice that there is a small crevice|in the back. You might just be able to force your way|through if you were in any way athletic.");
+~mesbox("You search the bookcase, it looks fairly old...|After a while you notice that there is a small crevice|in the back. You might just be able to force your way|through if you were in any way athletic.");
 if (~p_choice2_header("Yes please!", 1, "No thanks!", 2, "Would you like to squeeze into this crevice?") = 1) {
     if_close;
     ~forcewalk(0_43_145_42_59);
@@ -290,13 +290,8 @@ if (last_useitem = goldbowlbless_pure) {
         mes("The pure water in the golden bowl has run out...");
     }
     ~legends_fire_wall_walk;
-} else if(last_useitem = goldbowl_water) {
-    inv_del(inv, last_useitem, 1);
-    inv_add(inv, oc_param(last_useitem, next_obj_stage), 1);
-    anim(human_pickuptable, 0);
-    spotanim_map(small_smokepuff, loc_coord, 124, 0);
-    mes("The water evaporates in a cloud of steam before it gets anywhere near the flames.");
-} else if(last_useitem = bucket_water | last_useitem = vial_water | last_useitem = jug_water | last_useitem = bowl_water) {
+} else if(last_useitem = goldbowlbless_water | last_useitem = goldbowl_pure | last_useitem = bucket_water | last_useitem = vial_water | last_useitem = jug_water | last_useitem = bowl_water) {
+    // some objects have these messages combined in osrs, but it doesnt even fit in our chatbox so likely changed later
     def_obj $last_useitem = last_useitem;
     mes("The water evaporates in a cloud of steam...");
     anim(human_pickuptable, 0);
@@ -531,7 +526,7 @@ mes("You swing your pick at the rock.");
 anim(oc_param($pickaxe, mining_animation), 0);
 sound_synth(mine_quick, 0, 10);
 // todo: real rate?
-if (stat_random(stat(mining), 0, 255) = true) {
+if (stat_random(stat(mining), 90, 255) = true) {
     // no delays on any of this
     // https://youtu.be/uF1a9xsV7zo?t=1256
     mes("You manage to smash the rock to bits.");
@@ -881,6 +876,7 @@ if (p_finduid(uid) = false) {
 }
 mes("You feel a powerful force picking you up....");
 facesquare(movecoord(coord, 0, 0, 1));
+anim(null, 0);
 p_delay(1);
 def_coord $start_coord = coord;
 def_coord $middle = 0_43_145_12_16;
@@ -1039,6 +1035,9 @@ else {
     ~displaymessage(^dm_default);
 }
 
+[oploc1,legends_polluted_water]
+~mesbox("It looks as if this pool has dried up. A thick black sludge has replaced|the sparkling pure water. There is a disgusting stench of death that|emanates from this area. Maybe Gujuo knows what's happened.");
+
 [oplocu,legends_polluted_water]
 // todo: test this assumption
 if (last_useitem = reed_hollow) {
@@ -1070,6 +1069,12 @@ else if (last_useitem = machette) {
 else {
     ~displaymessage(^dm_default);
 }
+
+[opobj1,yommiseeds]
+~objbox(yommiseeds, "These seeds look magical. They need to be germinated in pure sacred water.", 250, 0, divide(^objbox_height, 2));
+
+[opobj1,yommiseeds_germ]
+~objbox(yommiseeds_germ, "These seeds have been germinated in pure sacred water and are ready to be planted in fertile soil.", 250, 0, divide(^objbox_height, 2));
 
 [proc,get_yommi_planter]()(player_uid)
 switch_coord(loc_coord) {
@@ -1113,7 +1118,8 @@ if(last_useitem = yommiseeds_germ) {
         ~mesbox("You'll need some pure sacred water to feed the tree when it starts growing.");
         return;
     }
-    if(stat_random(stat(herblore), 93, 252) = false | %legends_progress < ^legends_sacred_water_collected) {
+    // https://x.com/JagexAsh/status/1156958470324834306
+    if(stat_random(stat(herblore), 40, 243) = false | %legends_progress < ^legends_sacred_water_collected) {
         inv_del(inv, yommiseeds_germ, 1);
         ~mesbox("You planted the seed incorrectly in the fertile soil. The plant withers and dies.");
         return;
@@ -1491,8 +1497,11 @@ sound_synth($sound, 0, 0);
 loc_change(legends_ancient_gate_5_open, 10);
 p_delay(1);
 mes("The gate changes!");
+anim(null, 0);
+spotanim_pl(null, 92, 0);
 p_delay(0);
 ~agility_exactmove(human_knockback, 0, 1, coord, 0_43_145_11_40, 0, 130, ^exact_north, false);
+anim(null, 0);
 ~objbox(stafforb, "The orb shatters with the power of the magic. The spell works and you magically appear in a different part of the cave system. It seems that the gate was a test of magical ability.", 250, 0, 0);
 ~mesbox("As soon as you enter the room, you are filled with dread. In the centre of the room is a large gaping hole. It goes down a long way...");
 
@@ -1514,6 +1523,7 @@ if(last_useitem = rope) {
         return;
     }
     mes("You throw a rope around the winch.");
+    inv_del(inv, rope, 1);
     loc_change(legends_winch_rope, 30);
     %legends_bits = setbit(%legends_bits, ^legends_tied_rope_winch);
     return;

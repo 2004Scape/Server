@@ -9,7 +9,9 @@ if(npc_find(obj_coord, viyeldi, 5, 0) = true) {
 }
 npc_add(obj_coord, viyeldi, 100);
 p_teleport(movecoord(obj_coord, 0, 0, 1));
-p_delay(1);
+p_delay(0);
+npc_setmode(playerfaceclose);
+p_delay(0);
 ~mesbox("Your hand passes through the hat as though it wasn't there at all. Instantly, the other clothes begin to animate and walk towards you!");
 @viyeldi_dialogue;
 

@@ -2,7 +2,6 @@ import IdkType from '#/cache/config/IdkType.js';
 import LocType from '#/cache/config/LocType.js';
 import NpcType from '#/cache/config/NpcType.js';
 import ObjType from '#/cache/config/ObjType.js';
-import SpotanimType from '#/cache/config/SpotanimType.js';
 import VarPlayerType from '#/cache/config/VarPlayerType.js';
 import { CoordGrid } from '#/engine/CoordGrid.js';
 import CameraInfo from '#/engine/entity/CameraInfo.js';
@@ -29,7 +28,6 @@ import {
     ObjTypeValid,
     PlayerStatValid,
     SeqTypeValid,
-    SpotAnimTypeValid,
     StringNotNull,
     GenderValid,
     SkinColourValid
@@ -524,9 +522,9 @@ const PlayerOps: CommandHandlers = {
     [ScriptOpcode.SPOTANIM_PL]: checkedHandler(ActivePlayer, state => {
         const delay = check(state.popInt(), NumberNotNull);
         const height = state.popInt();
-        const spotanimType: SpotanimType = check(state.popInt(), SpotAnimTypeValid);
+        const spotanim = state.popInt();
 
-        state.activePlayer.spotanim(spotanimType.id, height, delay);
+        state.activePlayer.spotanim(spotanim, height, delay);
     }),
 
     [ScriptOpcode.STAT_HEAL]: checkedHandler(ActivePlayer, state => {
