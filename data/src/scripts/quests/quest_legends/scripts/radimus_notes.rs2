@@ -132,7 +132,7 @@ if ($west_mapped = true & $middle_mapped = true & $east_mapped = true) {
 mes("You still have some sections of the map to complete.");
 @kharazi_jungle_mapping;
 
-[label,kharazi_jungle_mapping]()
+[label,kharazi_jungle_mapping]
 def_boolean $west_mapped = testbit(%legends_bits, ^legends_jungle_west_mapped);
 def_boolean $middle_mapped = testbit(%legends_bits, ^legends_jungle_middle_mapped);
 def_boolean $east_mapped = testbit(%legends_bits, ^legends_jungle_east_mapped);
