@@ -1523,6 +1523,7 @@ if(last_useitem = rope) {
         return;
     }
     mes("You throw a rope around the winch.");
+    inv_del(inv, rope, 1);
     loc_change(legends_winch_rope, 30);
     %legends_bits = setbit(%legends_bits, ^legends_tied_rope_winch);
     return;
