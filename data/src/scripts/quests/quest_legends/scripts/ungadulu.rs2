@@ -109,6 +109,11 @@ npc_changetype(ungadulu_possessed, 2);
         "Where do I get pure water from?", ungadulu_where);
 
 [label,ungadulu_after_demon]
+if(%legends_progress = ^legends_complete) {
+    ~chatnpc("<p,happy>Your Legendary exploits are travelling the whole jungle.");
+    ~chatnpc("<p,neutral>Gujuo has been to see me. He told me that you have been given a sacred totem pole. It was constructed by one of my ancestors many moons ago. It is a noble prize Bwana, you have earned it. Look after it well.");
+    return;
+}
 if(%legends_progress = ^legends_defeated_nezikchened_fire) {
         ~chatnpc("<p,happy>Greetings bwana... Many thanks for defeating the|demon... and releasing me from this dreadful|possession... Pray tell me, what can I do to repay this|great favour?");
         @multi3("I need to collect some Yommi tree seeds for Gujuo.", ungadulu_yommi,
@@ -154,8 +159,6 @@ if(%legends_progress = ^legends_defeated_nezikchened_fire) {
         @multi3("I've killed Nezikchened the Demon again.", ungadulu_killed_nezi, "I've replaced the evil Totem pole.", ungadulu_replaced_totem, "Ok, thanks...", ungadulu_thanks);
     } else if(%legends_progress >= ^legends_got_gilded_totem & %legends_progress < ^legends_complete) {
         ~chatnpc("<p,neutral>You have done well, Bwana, to have succeeded where so many others have failed. You are a true Legend Bwana.");
-    } else if(%legends_progress >= ^legends_complete) {
-        ~chatnpc("<p,neutral>Gujuo has been to see me. He told me that you have been given a sacred totem pole. It was constructed by one of my ancestors many moons ago. It is a noble prize Bwana, you have earned it. Look after it well.");
     }
 }
 
