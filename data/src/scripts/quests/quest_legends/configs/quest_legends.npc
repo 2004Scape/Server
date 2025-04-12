@@ -265,8 +265,6 @@ model6=model_209_npc
 head1=model_54_npc_head
 head2=model_44_obj_wear
 wanderrange=0
-moverestrict=nomove
-// TODO respawnrate?
 hitpoints=80
 attack=62
 strength=66
@@ -276,7 +274,7 @@ ranged=0
 param=attackbonus,7
 param=strengthbonus,3
 param=damagetype,^crush_style
-// param=attack_anim,human_staff_pound
+param=attack_anim,human_staff_pound
 param=defend_anim,human_staff_def
 // param=attack_sound,staff_hit
 // TODO Try to find out if this npc can be killed on the osrs side somehow....

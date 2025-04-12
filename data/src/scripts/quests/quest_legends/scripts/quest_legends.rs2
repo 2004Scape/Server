@@ -296,7 +296,7 @@ if (last_useitem = goldbowlbless_pure) {
     anim(human_pickuptable, 0);
     spotanim_map(small_smokepuff, loc_coord, 124, 0);
     mes("The water evaporates in a cloud of steam before it gets anywhere near the flames.");
-} else if(last_useitem = bucket_water | last_useitem = vial_water | last_useitem = jug_water | last_useitem = bowl_water) {
+} else if(last_useitem = goldbowl_pure | last_useitem = bucket_water | last_useitem = vial_water | last_useitem = jug_water | last_useitem = bowl_water) {
     def_obj $last_useitem = last_useitem;
     mes("The water evaporates in a cloud of steam...");
     anim(human_pickuptable, 0);
@@ -881,6 +881,7 @@ if (p_finduid(uid) = false) {
 }
 mes("You feel a powerful force picking you up....");
 facesquare(movecoord(coord, 0, 0, 1));
+anim(null, 0);
 p_delay(1);
 def_coord $start_coord = coord;
 def_coord $middle = 0_43_145_12_16;
@@ -1500,8 +1501,11 @@ sound_synth($sound, 0, 0);
 loc_change(legends_ancient_gate_5_open, 10);
 p_delay(1);
 mes("The gate changes!");
+anim(null, 0);
+//spotanim_pl(null, 0, 0); TODO: change compiler and uncomment
 p_delay(0);
 ~agility_exactmove(human_knockback, 0, 1, coord, 0_43_145_11_40, 0, 130, ^exact_north, false);
+anim(null, 0);
 ~objbox(stafforb, "The orb shatters with the power of the magic. The spell works and you magically appear in a different part of the cave system. It seems that the gate was a test of magical ability.", 250, 0, 0);
 ~mesbox("As soon as you enter the room, you are filled with dread. In the centre of the room is a large gaping hole. It goes down a long way...");
 
