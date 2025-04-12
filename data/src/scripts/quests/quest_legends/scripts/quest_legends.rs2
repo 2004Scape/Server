@@ -1502,7 +1502,7 @@ loc_change(legends_ancient_gate_5_open, 10);
 p_delay(1);
 mes("The gate changes!");
 anim(null, 0);
-spotanim_pl(null, 0, 0);
+spotanim_pl(null, 92, 0);
 p_delay(0);
 ~agility_exactmove(human_knockback, 0, 1, coord, 0_43_145_11_40, 0, 130, ^exact_north, false);
 anim(null, 0);
