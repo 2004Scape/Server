@@ -290,13 +290,8 @@ if (last_useitem = goldbowlbless_pure) {
         mes("The pure water in the golden bowl has run out...");
     }
     ~legends_fire_wall_walk;
-} else if(last_useitem = goldbowl_water) {
-    inv_del(inv, last_useitem, 1);
-    inv_add(inv, oc_param(last_useitem, next_obj_stage), 1);
-    anim(human_pickuptable, 0);
-    spotanim_map(small_smokepuff, loc_coord, 124, 0);
-    mes("The water evaporates in a cloud of steam before it gets anywhere near the flames.");
-} else if(last_useitem = goldbowl_pure | last_useitem = bucket_water | last_useitem = vial_water | last_useitem = jug_water | last_useitem = bowl_water) {
+} else if(last_useitem = goldbowlbless_water | last_useitem = goldbowl_pure | last_useitem = bucket_water | last_useitem = vial_water | last_useitem = jug_water | last_useitem = bowl_water) {
+    // some objects have these messages combined in osrs, but it doesnt even fit in our chatbox so likely changed later
     def_obj $last_useitem = last_useitem;
     mes("The water evaporates in a cloud of steam...");
     anim(human_pickuptable, 0);
@@ -1123,7 +1118,8 @@ if(last_useitem = yommiseeds_germ) {
         ~mesbox("You'll need some pure sacred water to feed the tree when it starts growing.");
         return;
     }
-    if(stat_random(stat(herblore), 93, 252) = false | %legends_progress < ^legends_sacred_water_collected) {
+    // https://x.com/JagexAsh/status/1156958470324834306
+    if(stat_random(stat(herblore), 40, 243) = false | %legends_progress < ^legends_sacred_water_collected) {
         inv_del(inv, yommiseeds_germ, 1);
         ~mesbox("You planted the seed incorrectly in the fertile soil. The plant withers and dies.");
         return;
