@@ -888,3 +888,6 @@ cam_reset;
 ~damage_self(65);
 mes("You were very badly injured by the burning liquid.");
 say("Ow! That really hurt!");
+
+[oploc1,loc_2371]
+mes("Digsite information and exam centre.");
