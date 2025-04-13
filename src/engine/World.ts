@@ -2303,7 +2303,7 @@ class World {
             const offenderPlayer = this.getPlayerByUsername(offender);
             if (offenderPlayer) {
                 // Immediately turn on tracking when a user is reported as macroing or abusing a bug.
-                offenderPlayer.input.enable();
+                offenderPlayer.submitInput = true;
             }
         }
         this.loggerThread.postMessage({
