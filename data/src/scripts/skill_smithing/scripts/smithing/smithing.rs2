@@ -103,6 +103,11 @@ if ($last_item ! steel_bar) {
 } else {
     if_sethide (smithing:stud_layer, false);
 }
+if (%desertrescue_progress >= ^desertrescue_learned_darts) {
+    if_settext (smithing:com_113, "@whi@Dart tips");
+} else {
+    if_settext (smithing:com_113, "Dart tips");
+}
 // each bar needs to be shifted down, since only bronze level req is in the interface
 switch_obj ($last_item)
 {
