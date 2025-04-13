@@ -72,3 +72,8 @@ inv_del(inv, spicespot, 1);
 
 inv_add(inv, uncooked_curry, 1);
 mes("You add the spice to the stew and make a curry.");
+
+[opheld1,burnt_curry]
+inv_del(inv, burnt_curry, 1);
+inv_add(inv, bowl_empty, 1);
+mes("You empty the burnt curry from the bowl.");
