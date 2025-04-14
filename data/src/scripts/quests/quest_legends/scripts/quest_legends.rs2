@@ -1574,7 +1574,7 @@ say("Gulp!");
 mes("But a terrible fear grips you...");
 p_delay(2);
 mes("And you can go no further.");
-~chatplayer("<p,worried>No! It's too scary!");
+~chatplayer("<p,scared>No! It's too scary!");
 
 [oploc1,legends_climbing_rope]
 mes("You climb back up the rope to the Shaman Caves..");

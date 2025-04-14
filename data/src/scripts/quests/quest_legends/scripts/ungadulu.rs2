@@ -199,7 +199,7 @@ if(testbit(%legends_bits, ^legends_given_dagger) = true) {
 [label,ungadulu_whatnow]
 ~chatplayer("<p,neutral>What do I do now?");
 ~chatnpc("<p,neutral>Well, you should be able to plant the Yommi tree. And then water it with the sacred water. You should then be able to start making the Totem pole.");
-~chatnpc("<p,worried>So long as you have banished the spirit and managed to get some of the sacred water. Let us pray that we have seen the last of that evil!");
+~chatnpc("<p,scared>So long as you have banished the spirit and managed to get some of the sacred water. Let us pray that we have seen the last of that evil!");
 @multi3("Yes, I've got the water.", ungadulu_got_water, "Yes, I've killed the Spirit.", ungadulu_killed_spirit, "Ok, thanks...", ungadulu_thanks);
 
 [label,ungadulu_killed_viyeldi]

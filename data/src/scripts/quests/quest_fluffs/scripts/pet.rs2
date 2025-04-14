@@ -69,10 +69,10 @@ if (getbit_range(%cat_growth, 11, 19) = 120) {
 switch_int (getbit_range(%cat_growth, 0, 4)) {
     case 16 :
         npc_say("Miaow!");
-        ~chatplayer("<p,worried>I think it's hungry!"); //youtu.be/1vY_uGOq6qM //mes added later
+        ~chatplayer("<p,scared>I think it's hungry!"); //youtu.be/1vY_uGOq6qM //mes added later
     case 18 :
         npc_say("Meeeooowww!");
-        ~chatplayer("<p,worried>I think it's really hungry!"); 
+        ~chatplayer("<p,scared>I think it's really hungry!");
     case 20 :
         mes("Your kitten has run away to look for food.");
         ~follower_death;
