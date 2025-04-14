@@ -1,4 +1,4 @@
-[dramenbranch]
+[dramen_branch]
 model=model_2412_obj
 name=Dramen branch
 desc=A limb of the fabled Dramen tree.
@@ -12,7 +12,7 @@ members=yes
 weight=5lb
 tradeable=no
 
-[dramenstaff]
+[dramen_staff]
 name=Dramen staff
 desc=Crafted from a Dramen tree branch.
 cost=15
@@ -26,7 +26,7 @@ iop2=Wield
 wearpos=righthand
 manwear=model_534_obj_wear,0
 womanwear=model_534_obj_wear,6
-category=weapon_blunt
+category=weapon_staff
 weight=4lb
 param=stabattack,-1
 param=slashattack,-1
@@ -39,7 +39,7 @@ param=magicdefence,10
 param=strengthbonus,10
 param=attackrate,5
 param=ready_baseanim,human_staffready
-param=crushattack_anim,human_staff_pound
-param=defend_anim,human_staff_def
+param=crushattack_anim,human_staff_pummel
+param=defend_anim,human_staff_block
 param=crush_sound,staff_hit
 tradeable=no

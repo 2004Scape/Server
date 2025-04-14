@@ -1,0 +1,232 @@
+[ai_queue1,nezikchened] ~npc_default_retaliate_ap;
+
+[ai_queue2,nezikchened]
+if(finduid(%npc_aggressive_player) = true) {
+    if(%legends_progress ! ^legends_summoned_nezikchened_fire & %legends_progress ! ^legends_received_dagger & %legends_progress ! ^legends_spawned_nezikchened_final) {
+        mes("Your attack glides straight through the demon, as if he isn't even there.");
+        %npc_aggressive_player = null;
+        return;
+    }
+}
+~npc_default_damage(last_int);
+
+[ai_opplayer2,nezikchened]
+if (%npc_aggressive_player ! uid) {
+    npc_setmode(null);
+    return;
+}
+if (stat(hitpoints) = 0) {
+    npc_setmode(null);
+    return;
+}
+if (%npc_action_delay > map_clock) return;
+anim(%com_defendanim, 0);
+npc_anim(npc_param(attack_anim), 0);
+if (npc_param(attack_sound) ! null) {
+    sound_synth(npc_param(attack_sound), 0, 0);
+}
+if(~nezikchened_dagger_attack = true) {
+    return;
+}
+~npc_meleeattack;
+
+[ai_applayer2,nezikchened]
+if (%npc_aggressive_player ! uid) {
+    npc_setmode(null);
+    return;
+}
+if (%npc_action_delay > map_clock) {
+    return;
+}
+if (npc_range(coord) > 1) { // if more than 1 tile away after being attacked, nezikchened will use magic
+    if(~nezikchened_dagger_attack = true) {
+        return;
+    }
+    ~npc_cast_spell(^nezikchened_mage_attack, 5);
+} else {
+    npc_sethuntmode(aggressive_melee);
+    npc_setmode(opplayer2);
+}
+
+[opnpc2,nezikchened]
+if (%npc_aggressive_player ! uid) {
+    mes("It's not after you...");
+    return;
+}
+if(%legends_progress ! ^legends_summoned_nezikchened_fire & %legends_progress ! ^legends_received_dagger & %legends_progress ! ^legends_spawned_nezikchened_final) {
+    mes("Your attack glides straight through the demon, as if he isn't even there.");
+    %npc_aggressive_player = null;
+    return;
+}
+@player_combat_start;
+
+[apnpc2,nezikchened] 
+if (%npc_aggressive_player ! uid) {
+    mes("It's not after you...");
+    return;
+}
+if(%legends_progress ! ^legends_summoned_nezikchened_fire & %legends_progress ! ^legends_received_dagger & %legends_progress ! ^legends_spawned_nezikchened_final) {
+    mes("Your attack glides straight through the demon, as if he isn't even there.");
+    %npc_aggressive_player = null;
+    return;
+}
+@player_combat_start_ap;
+
+[ai_queue3,nezikchened]
+if (finduid(%npc_aggressive_player) = true) {
+    if_close;
+    queue(nezikchened_defeat, 0);
+    return;
+}
+
+[ai_queue4,nezikchened] gosub(npc_death);
+
+[proc,nezikchened_dagger_attack]()(boolean)
+if(inzone(0_37_73_0_0, 0_37_73_63_63, coord) = true & %legends_progress = ^legends_received_dagger) {
+    if(random(10) = 0 & %npc_int = 0) {
+        mes("The demon takes out a dark dagger and throws it at you.");
+        if(random(3) = 0) {
+            mes("But you neatly manage to dodge the attack.");
+        } else {
+            mes("The dagger hits you with an agonising blow.");
+            queue(damage_player, 0, random(19)); // TODO: how much damage can this do? 
+            npc_say("Ha, ha, ha... feel my power!");
+        }
+        %npc_int = 1;
+        return(true);
+    }
+    return(false);
+}
+
+[label,summon_nezi_part3]
+if_close;
+if(%legends_progress = ^legends_collected_totem) %legends_progress = ^legends_spawned_nezikchened_final;
+npc_add(map_findsquare(coord, 1, 2, ^map_findsquare_lineofwalk), nezikchened, 500);
+%aggressive_npc = npc_uid;
+%npc_lastcombat = sub(^max_32bit_int, 8);
+%npc_aggressive_player = uid;
+mes("Nezikchened: And now you try to defile my sanctuary...");
+npc_say("And now you try to defile my sanctuary...");
+p_delay(2);
+mes("Nezikchened: I will teach thee!");
+npc_say("I will teach thee!");
+p_delay(2);
+if(testbit(%legends_bits, ^legends_killed_viyeldi) = true & getbit_range(%legends_bits, 4, 6) < 7) {
+    mes("The demon starts chanting...");
+    p_delay(2);
+    mes("Nezikchened: Protectors of source, alive in death,");
+    npc_say("Protectors of source, alive in death,");
+    p_delay(2);
+    mes("Nezikchened: do not rest while this Vacu draws breath!");
+    npc_say("do not rest while this Vacu draws breath!");
+    p_delay(2);
+    mes("The demon is summoning the dead heroes from the Viyeldi caves!");
+    p_delay(2);
+    npc_del;
+    @nezi_summon_ancient_hero;
+}
+mes("The demon screams in rage...");
+p_delay(1);
+mes("Nezikchened: Raarrrrghhhh!");
+npc_say("Raarrrrghhhh!");
+p_delay(1);
+mes("Nezikchened: I'll kill you myself!");
+npc_say("I'll kill you myself!");
+p_delay(1);
+~npc_retaliate(0);
+mes("You feel a great sense of loss...");
+stat_sub(prayer, 0, 75); // 75% of current
+p_delay(1);
+mes("Nezikchened: Your faith will help you little here.");
+npc_say("Your faith will help you little here.");
+p_delay(1);
+
+[label,nezi_summon_ancient_hero]
+if(testbit(%legends_bits, ^legends_defeated_san_final) = false) {
+    npc_add(map_findsquare(coord, 1, 1, ^map_findsquare_lineofwalk), san_tojalon, 500);
+    mes("San Tojalon: Corrupted are we now that Viyeldi is slain...");
+    npc_say("Corrupted are we now that Viyeldi is slain...");
+    npc_delay(1);
+    npc_setmode(opplayer2);
+    mes("San Tojalon: Bent to this demon's will and forced to bring you pain...");
+    npc_say("Bent to this demon's will and forced to bring you pain...");
+} else if(testbit(%legends_bits, ^legends_defeated_irvig_final) = false) {
+    npc_add(map_findsquare(coord, 1, 1, ^map_findsquare_lineofwalk), irvig_senay, 500);
+    mes("Irvig Senay: Corrupted are we now that Viyeldi is slain...");
+    npc_say("Corrupted are we now that Viyeldi is slain...");
+    npc_delay(1);
+    npc_setmode(opplayer2);
+    mes("Irvig Senay: Bent to this demon's will and forced to bring you pain...");
+    npc_say("Bent to this demon's will and forced to bring you pain...");
+} else if(testbit(%legends_bits, ^legends_defeated_ranalph_final) = false) {
+    npc_add(map_findsquare(coord, 1, 1, ^map_findsquare_lineofwalk), ranalph_devere, 500);
+    mes("Ranalph Devere: Corrupted are we now that Viyeldi is slain...");
+    npc_say("Corrupted are we now that Viyeldi is slain...");
+    npc_delay(1);
+    npc_setmode(opplayer2);
+    mes("Ranalph Devere: Bent to this demon's will and forced to bring you pain...");
+    npc_say("Bent to this demon's will and forced to bring you pain...");
+}
+
+[queue,nezikchened_defeat]
+// This leads to some interesting behaviour, we can kill 1 nezi while the player is delayed, the other will attack and switch aggressive_npc, when the 
+// queue executes, that one will die instead (this is how it works on OSRS)
+if(npc_finduid(%aggressive_npc) = true & npc_type = nezikchened) {
+    npc_sethuntmode(null);
+    npc_setmode(none);
+    p_stopaction;
+    if (inzone(0_43_145_0_0, 0_43_145_63_63, coord) = true & %legends_progress = ^legends_summoned_nezikchened_fire) {
+        %legends_progress = ^legends_defeated_nezikchened_fire;
+        mes("Nezikchened: Ha ha ha... I shall return for you when the time is right.");
+        npc_say("Ha ha ha... I shall return for you when the time is right.");
+        mes("The demon starts an incantation...");
+        p_delay(2);
+        mes("Nezikchened: But I will leave you with a taste of my power...");
+        npc_say("But I will leave you with a taste of my power...");
+        p_delay(2);
+        mes("As he finishes the incantation a powerful bolt of energy strikes you.");
+        spotanim_npc(firebolt_casting, 92, 0);
+        sound_synth(fire_bolt_all, 0, 0);
+        ~player_projectile(npc_coord, coord, uid, firebolt_travel, 43, 31, 51, 16, -5, 64, 10);
+        p_delay(2);
+        mes("Nezikchened: Haha hah ha ha ha ha....");
+        npc_say("Nezikchened: Haha hah ha ha ha ha....");
+        p_delay(2);
+        ~damage_self(random(17));
+        npc_queue(4, 0, 0);
+        p_delay(5);
+        mes("The demon's body falls to the floor in a pile of ashes...");
+    } else if (inzone(0_37_73_0_0, 0_37_73_63_63, coord) = true & %legends_progress = ^legends_received_dagger) {
+        %legends_progress = ^legends_defeated_nezikchened_water;
+        mes("The demon seems very angry now...");
+        npc_say("Arrrgghhhhh, foul Vacu!");
+        p_delay(2);
+        mes("Nezikchened: You would bite the hand that feeds you?");
+        npc_say("You would bite the hand that feeds you?");
+        mes("You deliver a final devastating blow to the demon.");
+        p_delay(2);
+        npc_say("Very well, I will ready myself for our next encounter...");
+        mes("Nezikchened: Very well, I will ready myself for our next encounter...");
+        mes("And its unearthly frame crumbles into dust.");
+        npc_queue(4, 0, 0);
+        p_delay(5);
+        mes("The demon's body falls to the floor in a pile of ashes...");
+    } else if (inzone(0_43_45_5_2, 0_46_45_30_55, coord) = true & %legends_progress = ^legends_spawned_nezikchened_final) {
+        %legends_progress = ^legends_defeated_nezikchened_final;
+        mes("You deliver the final killing blow to the foul demon.");
+        p_delay(2);
+        mes("Nezikchened: Arrggghhhhh....");
+        npc_say("Arrggghhhhh....");
+        p_delay(2);
+        mes("Nezikchened: I am beaten by a mere mortal...");
+        npc_say("I am beaten by a mere mortal...");
+        p_delay(2);
+        mes("Nezikchened: I will revenge myself upon you...");
+        npc_say("I will revenge myself upon you...");
+        p_delay(2);
+        say("Yeah, yeah, yeah!");
+        npc_queue(4, 0, 0);
+        p_delay(5);
+        say("Heard it all before!");
+    } 
+} // if conditions fail the npc will sit at 0 hp

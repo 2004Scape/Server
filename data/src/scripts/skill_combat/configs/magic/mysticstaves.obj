@@ -30,8 +30,8 @@ param=magicdefence,10
 param=strengthbonus,50
 param=attackrate,5
 param=ready_baseanim,human_staffready
-param=crushattack_anim,human_stafforb_pound
-param=defend_anim,human_stafforb_def
+param=crushattack_anim,human_stafforb_pummel
+param=defend_anim,human_stafforb_block
 param=crush_sound,staff_hit
 
 [mystic_water_staff]
@@ -66,8 +66,8 @@ param=magicdefence,10
 param=strengthbonus,50
 param=attackrate,5
 param=ready_baseanim,human_staffready
-param=crushattack_anim,human_stafforb_pound
-param=defend_anim,human_stafforb_def
+param=crushattack_anim,human_stafforb_pummel
+param=defend_anim,human_stafforb_block
 param=crush_sound,staff_hit
 
 [mystic_air_staff]
@@ -100,8 +100,8 @@ param=magicdefence,10
 param=strengthbonus,50
 param=attackrate,5
 param=ready_baseanim,human_staffready
-param=crushattack_anim,human_stafforb_pound
-param=defend_anim,human_stafforb_def
+param=crushattack_anim,human_stafforb_pummel
+param=defend_anim,human_stafforb_block
 param=crush_sound,staff_hit
 
 [mystic_earth_staff]
@@ -136,6 +136,6 @@ param=magicdefence,10
 param=strengthbonus,50
 param=attackrate,5
 param=ready_baseanim,human_staffready
-param=crushattack_anim,human_stafforb_pound
-param=defend_anim,human_stafforb_def
+param=crushattack_anim,human_stafforb_pummel
+param=defend_anim,human_stafforb_block
 param=crush_sound,staff_hit

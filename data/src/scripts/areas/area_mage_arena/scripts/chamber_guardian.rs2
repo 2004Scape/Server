@@ -12,8 +12,8 @@ if (%magearena <= ^mage_arena_complete) {
     ~chatplayer("<p,neutral>I have.");
     ~chatnpc("<p,neutral>Good, good, I hope you have chosen well. I will now|present you with a magic staff. This, along with the|cape awarded to you by your chosen god, are all the|weapons and armour you will need here.");
     inv_add(inv, $staff, 1); // drops on ground on full inv
-    ~objbox($staff, "The guardian hands you an ornate magic staff.", 250, 0, 0);
     %magearena = ^mage_arena_staff_given;
+    ~objbox($staff, "The guardian hands you an ornate magic staff.", 250, 0, 0);
     return;   
 }
 
@@ -49,13 +49,13 @@ if (%magearena < ^mage_arena_staff_given) {
 ~openshop_activenpc;
 
 [proc,god_staff_checker]()(namedobj)
-if (~obj_gettotal(saradomincape) > 0) {
-    return(saradominstaff);
+if (~obj_gettotal(saradomin_cape) > 0) {
+    return(saradomin_staff);
 }
-if (~obj_gettotal(zamorakcape) > 0) {
-    return(zamorakstaff);
+if (~obj_gettotal(zamorak_cape) > 0) {
+    return(zamorak_staff);
 }
-if (~obj_gettotal(guthixcape) > 0) {
-    return(guthixstaff);
+if (~obj_gettotal(guthix_cape) > 0) {
+    return(guthix_staff);
 }
 return(null);

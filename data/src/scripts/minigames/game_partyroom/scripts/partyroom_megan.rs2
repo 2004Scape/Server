@@ -16,8 +16,8 @@ switch_int(~p_choice3("One beer please Megan!", 1, "Can you dance, Megan?", 2, "
         ~chatnpc("<p,happy>Can I dance?!");
         ~chatnpc("<p,laugh>CAN I dance?!!");
         ~chatplayer("<p,happy>Dance with me Megan!");
-        anim(seq_784, 0);
-        npc_anim(seq_784, 0);
+        anim(partyroom_dance, 0);
+        npc_anim(partyroom_dance, 0);
     case 3 :
         ~chatplayer("<p,neutral>Do you have any news?");
         ~chatnpc("<p,neutral>Not at the moment. I've heard that the known world is expanding as new places are discovered.");

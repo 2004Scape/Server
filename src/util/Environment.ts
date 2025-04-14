@@ -1,6 +1,6 @@
 import 'dotenv/config';
 import { tryParseBoolean, tryParseInt, tryParseString } from '#/util/TryParse.js';
-import WalkTriggerSetting from '#/util/WalkTriggerSetting.js';
+import { WalkTriggerSetting } from '#/util/WalkTriggerSetting.js';
 
 export default {
     EASY_STARTUP: tryParseBoolean(process.env.EASY_STARTUP, false),
@@ -39,6 +39,7 @@ export default {
     // Maximum approximate number of storage bytes allowed per single input tracking session.
     // It does not seem remotely possible to get near this amount under normal inputs.
     NODE_LIMIT_BYTES_PER_TRACKING_SESSION: tryParseInt(process.env.NODE_MAX_BYTES_PER_TRACKING_SESSION, 50_000),
+    NODE_MINIMUM_WEALTH_VALUE_EVENT: tryParseInt(process.env.NODE_MINIMUM_WEALTH_VALUE_EVENT, 10),
     // extra debug info e.g. missing triggers
     NODE_DEBUG: tryParseBoolean(process.env.NODE_DEBUG, true),
     // measuring script execution
@@ -54,6 +55,7 @@ export default {
     NODE_PROFILE: tryParseString(process.env.NODE_PROFILE, 'main'),
     // entities cap
     NODE_MAX_PLAYERS: tryParseInt(process.env.NODE_MAX_PLAYERS, 2047),
+    NODE_MAX_CONNECTED: tryParseInt(process.env.NODE_MAX_CONNECTED, 1000),
     NODE_MAX_NPCS: tryParseInt(process.env.NODE_MAX_NPCS, 8191),
     NODE_DEBUGPROC_CHAR: tryParseString(process.env.NODE_DEBUGPROC_CHAR, '~'),
 

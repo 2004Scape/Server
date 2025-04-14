@@ -35,6 +35,15 @@ if (.busy = true) {
 
 // this message always sends, even if this player is responding to a trade request
 mes("Sending trade offer...");
+
+// https://youtu.be/BOtsghQGQEk?t=417
+// https://youtu.be/8G92ZQxRamY?t=145
+// https://youtu.be/vS_kBeGudFY?t=10
+// 2006: "Trading in the Wilderness is dangerous - you might get killed!"
+
+// https://youtu.be/uSO-ilQk5XY?list=PLn23LiLYLb1bQ7Hwp77KoNBjKvpZQTfJT&t=810
+// This nov 2004 vid shows no wildy warning... I think it was added in mid to late 2006? Ive seen some early 2006 vids of trading with no warning
+
 %tradepartner = .uid;
 
 if (.%tradepartner = uid & %tradestatus = ^tradestatus_received) {
@@ -43,16 +52,16 @@ if (.%tradepartner = uid & %tradestatus = ^tradestatus_received) {
     }
     if_settext(trademain:status, "");
     if_settext(trademain:otherplayer, "Trading With: <.displayname>");
-    inv_clear(tempinv);
-    inv_transmit(tempinv, trademain:inv);
-    invother_transmit(.uid, tempinv, trademain:otherinv);
+    inv_clear(tradeoffer);
+    inv_transmit(tradeoffer, trademain:inv);
+    invother_transmit(.uid, tradeoffer, trademain:otherinv);
     inv_transmit(inv, tradeside:inv);
 
     .if_settext(trademain:status, "");
     .if_settext(trademain:otherplayer, "Trading With: <displayname>");
-    .inv_clear(tempinv);
-    .inv_transmit(tempinv, trademain:inv);
-    .invother_transmit(uid, tempinv, trademain:otherinv);
+    .inv_clear(tradeoffer);
+    .inv_transmit(tradeoffer, trademain:inv);
+    .invother_transmit(uid, tradeoffer, trademain:otherinv);
     .inv_transmit(inv, tradeside:inv);
 
     if_openmain_side(trademain, tradeside);
@@ -78,12 +87,14 @@ if (.finduid(%tradepartner) = true) {
         .inv_stoptransmit(trademain:otherinv);
         .inv_stoptransmit(tradeside:inv);
 
-        ~inv_remove_leading_empty_slots(tempinv);
-        ~.inv_remove_leading_empty_slots(tempinv);
+        ~inv_remove_leading_empty_slots(tradeoffer);
+        ~.inv_remove_leading_empty_slots(tradeoffer);
 
         if (~enough_trade_space = false) {
             mes("Other player doesn't have enough inventory space for this trade.");
-            .mes("You don't have enough inventory space for this trade.");
+            // osrs: You don't have enough inventory space for this trade.
+            // 2007: https://youtu.be/W_NrcAybPzE?t=8
+            .mes("You don't have enough inventory space for this trade");
             if_close;
             .if_close;
             return;
@@ -91,13 +102,15 @@ if (.finduid(%tradepartner) = true) {
 
         if (~.enough_trade_space = false) {
             mes("You don't have enough inventory space for this trade.");
-            .mes("Other player doesn't have enough inventory space for this trade.");
+            // osrs: Other player doesn't have enough inventory space for this trade.
+            // 2007: https://youtu.be/W_NrcAybPzE?t=8
+            .mes("Other player doesn't have enough inventory space for this trade");
             if_close;
             .if_close;
             return;
         }
 
-        def_int $tempinvused = sub(inv_size(tempinv), inv_freespace(tempinv));
+        def_int $tempinvused = sub(inv_size(tradeoffer), inv_freespace(tradeoffer));
         if ($tempinvused < 1) {
             if_settext(tradeconfirm:inv_nothing, "Absolutely nothing!");
             .if_settext(tradeconfirm:otherinv_nothing, "Absolutely nothing!");
@@ -105,17 +118,17 @@ if (.finduid(%tradepartner) = true) {
             if_settext(tradeconfirm:inv_nothing, "");
             .if_settext(tradeconfirm:otherinv_nothing, "");
 
-            inv_transmit(tempinv, tradeconfirm:inv1);
-            .invother_transmit(uid, tempinv, tradeconfirm:otherinv1);
+            inv_transmit(tradeoffer, tradeconfirm:inv1);
+            .invother_transmit(uid, tradeoffer, tradeconfirm:otherinv1);
         } else {
             if_settext(tradeconfirm:inv_nothing, "");
             .if_settext(tradeconfirm:otherinv_nothing, "");
 
-            inv_transmit(tempinv, tradeconfirm:inv2);
-            .invother_transmit(uid, tempinv, tradeconfirm:otherinv2);
+            inv_transmit(tradeoffer, tradeconfirm:inv2);
+            .invother_transmit(uid, tradeoffer, tradeconfirm:otherinv2);
         }
 
-        def_int $other_tempinvused = sub(inv_size(tempinv), .inv_freespace(tempinv));
+        def_int $other_tempinvused = sub(inv_size(tradeoffer), .inv_freespace(tradeoffer));
         if ($other_tempinvused < 1) {
             if_settext(tradeconfirm:otherinv_nothing, "Absolutely nothing!");
             .if_settext(tradeconfirm:inv_nothing, "Absolutely nothing!");
@@ -123,14 +136,14 @@ if (.finduid(%tradepartner) = true) {
             if_settext(tradeconfirm:otherinv_nothing, "");
             .if_settext(tradeconfirm:inv_nothing, "");
 
-            invother_transmit(.uid, tempinv, tradeconfirm:otherinv1);
-            .inv_transmit(tempinv, tradeconfirm:inv1);
+            invother_transmit(.uid, tradeoffer, tradeconfirm:otherinv1);
+            .inv_transmit(tradeoffer, tradeconfirm:inv1);
         } else {
             if_settext(tradeconfirm:otherinv_nothing, "");
             .if_settext(tradeconfirm:inv_nothing, "");
 
-            invother_transmit(.uid, tempinv, tradeconfirm:otherinv2);
-            .inv_transmit(tempinv, tradeconfirm:inv2);
+            invother_transmit(.uid, tradeoffer, tradeconfirm:otherinv2);
+            .inv_transmit(tradeoffer, tradeconfirm:inv2);
         }
 
         if_openmain(tradeconfirm);
@@ -150,15 +163,15 @@ if (.finduid(%tradepartner) = true) {
 [proc,enough_trade_space]()(boolean)
 // check if contents of tempinv fits in other player's inv
 def_int $space = .inv_freespace(inv);
-def_int $size = inv_size(tempinv);
+def_int $size = inv_size(tradeoffer);
 def_int $slot = 0;
 while ($slot < $size) {
-    def_obj $obj = inv_getobj(tempinv, $slot);
+    def_obj $obj = inv_getobj(tradeoffer, $slot);
     if ($obj ! null) {
         if (oc_stackable($obj) = true) {
             def_int $total = .inv_total(inv, $obj);
             if ($total > 0) {
-                if (calc(^max_32bit_int - $total - inv_getnum(tempinv, $slot)) < 0) {
+                if (calc(^max_32bit_int - $total - inv_getnum(tradeoffer, $slot)) < 0) {
                     return(false);
                 }
             } else {
@@ -180,15 +193,15 @@ return(true);
 
 [proc,.enough_trade_space]()(boolean)
 def_int $space = inv_freespace(inv);
-def_int $size = .inv_size(tempinv);
+def_int $size = .inv_size(tradeoffer);
 def_int $slot = 0;
 while ($slot < $size) {
-    def_obj $obj = .inv_getobj(tempinv, $slot);
+    def_obj $obj = .inv_getobj(tradeoffer, $slot);
     if ($obj ! null) {
         if (oc_stackable($obj) = true) {
             def_int $total = inv_total(inv, $obj);
             if ($total > 0) {
-                if (calc(^max_32bit_int - $total - .inv_getnum(tempinv, $slot)) < 0) {
+                if (calc(^max_32bit_int - $total - .inv_getnum(tradeoffer, $slot)) < 0) {
                     return(false);
                 }
             } else {
@@ -231,7 +244,7 @@ inv_stoptransmit(trademain:inv);
 inv_stoptransmit(trademain:otherinv);
 inv_stoptransmit(tradeside:inv);
 
-~moveallinv(tempinv, inv);
+~moveallinv(tradeoffer, inv);
 
 if (.finduid(%tradepartner) = true) {
     .%tradepartner = null;
@@ -251,8 +264,8 @@ if (.finduid(%tradepartner) = true) {
         mes("Accepted trade.");
         .mes("Accepted trade.");
 
-        both_moveinv(tempinv, inv);
-        .both_moveinv(tempinv, inv);
+        both_moveinv(tradeoffer, inv);
+        .both_moveinv(tradeoffer, inv);
 
         %tradepartner = null;
         .%tradepartner = null;
@@ -271,7 +284,7 @@ inv_stoptransmit(tradeconfirm:inv2);
 inv_stoptransmit(tradeconfirm:otherinv1);
 inv_stoptransmit(tradeconfirm:otherinv2);
 
-~moveallinv(tempinv, inv);
+~moveallinv(tradeoffer, inv);
 if (.finduid(%tradepartner) = true) {
     .%tradepartner = null;
     .if_close;
@@ -294,10 +307,10 @@ if ($amount <= 0) {
     $amount = last_int;
 }
 
-def_obj $obj = inv_getobj(tempinv, $slot);
-def_int $total = inv_total(tempinv, $obj);
+def_obj $obj = inv_getobj(tradeoffer, $slot);
+def_int $total = inv_total(tradeoffer, $obj);
 if ($amount < $total) $total = $amount;
-inv_moveitem(tempinv, inv, $obj, $total);
+inv_moveitem(tradeoffer, inv, $obj, $total);
 
 %tradestatus = ^tradestatus_reset;
 if_settext(trademain:status, "");
@@ -336,7 +349,7 @@ if (oc_members($obj) = true & map_members = false) {
 
 def_int $total = inv_total(inv, $obj);
 if ($amount < $total) $total = $amount;
-inv_moveitem(inv, tempinv, $obj, $total);
+inv_moveitem(inv, tradeoffer, $obj, $total);
 
 %tradestatus = ^tradestatus_reset;
 if_settext(trademain:status, "");

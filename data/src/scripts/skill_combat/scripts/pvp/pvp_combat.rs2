@@ -39,6 +39,8 @@ if ($wilderness_level < $combat_level_diff) {
     mes("You need to move deeper into the wilderness."); // wilderness is title'd in late 2005/2006 ish
     return(false);
 }
+// 2007: https://youtu.be/3apk-gE1zh8?t=544
+// "You can't fight someone who's right next to the Wilderness Ditch. Wait until he's further in."
 return(true);
 
 [proc,pvp_is_attackable]()(boolean)
@@ -84,13 +86,14 @@ if (map_multiway(.coord) = false) {
     // or an npc attacked you
     // https://cdn.discordapp.com/attachments/1126857544523063367/1332910417856565249/found-old-drive-with-rsdemon-and-some-screenshots-v0-36uacu7glqzd1.png?ex=67999c0f&is=67984a8f&hm=a4c34a40791a120dba06adebb15a652a722e486fddd6d5a9e47ee9aa2c329fb3&
     // 2006 year / osrs mes I'm already under attack.
+    // here's one from 2004: https://youtu.be/IC2n8t76DDY?t=34
     if (add(%lastcombat, 8) > map_clock) {
         if (%pk_predator1 ! .uid & %pk_predator1 ! null) {
-            mes("I'm already under attack!");
+            mes("I'm already under attack");
             return(false);
         }
         if (npc_finduid(%aggressive_npc) = true) {
-            mes("I'm already under attack!");
+            mes("I'm already under attack");
             return(false);
         }
     }

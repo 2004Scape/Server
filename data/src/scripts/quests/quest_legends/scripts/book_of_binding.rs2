@@ -1,0 +1,100 @@
+[opobj3,book_of_binding]
+if (getbit_range(%legends_bits, ^legends_opal_used, ^legends_emerald_used) = ^legends_all_gems_used) {
+    %legends_bits = clearbit_range(%legends_bits, ^legends_opal_used, ^legends_emerald_used);
+}
+@pickup_obj;
+
+[opheld1,book_of_binding]
+%book_page = 0;
+%open_book = book_of_binding;
+@open_book_of_binding;
+
+[label,open_book_of_binding]
+@book_flip_page(0, 0, 4, book_of_binding_page);
+
+[proc,book_of_binding_page]
+switch_int (%book_page) {
+    case 0 : ~book("Book of Binding", "|--------------------------------|   Book of Binding|--------------------------------||- A treatise on Demons -|||||||    -- Indexo --||     Arcana : I||   Instructo : II||    Defeati : III||   Enchanto : IIII");
+    case 1 : ~book("Book of Binding", "Arcana I: Use holy water to determine possession.| Slight appearance changes may be perceived|when doused.|| Legendary Silverlight will help to defeat any demon by weakening it.||| Arcana II : Be wary of any demon, it may have special forms of attack.|| Use an Octagram of Fire to confine unearthly creatures of the underworld - the perfect geometry confuses them.|                 Eximus");
+    case 2 : ~book("Book of Binding", "Instructo : Creation of holy water must be undertaken with determination and|urgency.|| Take to yourself empty vials free of all liquids.|| Read warily the enchantment contained herewithin in order to magick the vial for the holding of holy or sacred|water.| Take utmost care as you enchant them.| With great care and precision place the sacred water into a magicked vial and stopper it.|                 Eximus");
+    case 3 : ~book("Book of Binding", "Defeati... the dreaded demon will be of unholy power and abilities.| Present thyself before the possessed with good intent and ready|manner.| With least obstruction and utmost solemnity hold open the pages of this great tome in order that the goodlight falls upon the victim completely.| Be thee prepared in every capacity, for the demon's tricks and wiles will swiftly outwit the unready adventurer.| Attack with vigour and zest if thee hopes to see another day.|                 Eximus");
+    case 4 : ~book_activus("Book of Binding", "  Enchanto...|| Possessus valius emptious,| projectus spellicus avoir| valius magicus.|| Castus enchanto avoir| createur valius magicus| holious avour defeati| Demonicus Absolutus.|||Extralias projectus| Magicus Holarius|| Attackanie Demonicus| Absolutus distancie airus| throwus armiues.||                 Eximus");
+}
+
+[if_button,book4:com_1]
+if_close;
+def_int $vial_count = min(10, inv_total(inv, vial_empty));
+~objbox(book_of_binding, "You prepare an incantation from the page...", 250, 0, 0);
+if(stat(magic) < 10) { // magic before prayer
+    ~mesbox("You need a Magic level of at least 10 to cast this enchantment.");
+    return;
+}
+if(stat(prayer) < 10) {
+    ~mesbox("You need a Prayer level of at least 10 to cast this enchantment.");
+    return;
+}
+if($vial_count > 0) {
+    def_int $op = 1;
+    if($vial_count = 2) {
+        $op = ~p_choice2("Enchant 1 Vial", 1, "Enchant 2 Vials", 2);
+    } else if($vial_count = 4) {
+        $op = ~p_choice3("Enchant 1 Vial", 1, "Enchant 2 Vials", 2, "Enchant 4 Vials", 4);
+    } else if($vial_count >= 3) {
+        def_int $count2 = calc(($vial_count / 2) + 1);
+        $op = ~p_choice3("Enchant 1 Vial", 1, "Enchant <tostring($count2)> Vials", $count2, "Enchant <tostring($vial_count)> Vials", $vial_count);
+    }
+    @enchant_vials($op);
+    return;
+}
+~mesbox("However, you don't have the right components to cast this spell.");
+
+[if_button,book4:com_3]
+@book_flip_page(^book_direction_backward, 0, 4, book_of_binding_page);
+
+[label,enchant_vials](int $count)
+if_close;
+$count = min($count, min(calc((stat(prayer) - 5) / 5), calc((stat(magic) - 5) / 5)));
+anim(human_casting, 0);
+p_delay(0);
+stat_sub(prayer, calc(5 * $count), 0);
+stat_sub(magic, calc(5 * $count), 0);
+inv_del(inv, vial_empty, $count);
+inv_add(inv, vial_enchanted, $count);
+def_string $text = "some vials";
+if($count = 1) $text = "a vial";
+~objbox(vial_enchanted, "You enchant <$text>!", 250, 0, ^objbox_height);
+
+[proc,book_activus](string $title, string $string)
+split_init($string, 175, 22, q8);
+def_int $page = 0;
+def_int $pagetotal = split_pagecount;
+while ($page < $pagetotal) {
+    ~book_activus_page($title, $page);
+    $page = calc($page + 1);
+}
+
+[proc,book_activus_page](string $title, int $page)
+if_settext(book4:com_5, split_get($page, 0));
+if_settext(book4:com_6, split_get($page, 1));
+if_settext(book4:com_7, split_get($page, 2));
+if_settext(book4:com_8, split_get($page, 3));
+if_settext(book4:com_9, split_get($page, 4));
+if_settext(book4:com_10, split_get($page, 5));
+if_settext(book4:com_11, split_get($page, 6));
+if_settext(book4:com_12, split_get($page, 7));
+if_settext(book4:com_13, split_get($page, 8));
+if_settext(book4:com_14, split_get($page, 9));
+if_settext(book4:com_15, split_get($page, 10));
+if_settext(book4:com_16, split_get($page, 11));
+if_settext(book4:com_17, split_get($page, 12));
+if_settext(book4:com_18, split_get($page, 13));
+if_settext(book4:com_19, split_get($page, 14));
+if_settext(book4:com_20, split_get($page, 15));
+if_settext(book4:com_21, split_get($page, 16));
+if_settext(book4:com_22, split_get($page, 17));
+if_settext(book4:com_23, split_get($page, 18));
+if_settext(book4:com_24, split_get($page, 19));
+if_settext(book4:com_25, split_get($page, 20));
+if_settext(book4:com_26, split_get($page, 21));
+if_settext(book4:com_63, $title);
+if_openmain(book4);

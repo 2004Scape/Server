@@ -1,4 +1,4 @@
-[oploc1,loc_3045]
+[oploc1,newbiebankbooth]
 npc_findallzone(movecoord(loc_coord, 1, 0, 0));
 while (npc_findnext = true) {
     // find a banker on 4 different axis from the booth.

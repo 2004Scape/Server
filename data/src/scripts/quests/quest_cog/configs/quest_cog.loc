@@ -1,4 +1,4 @@
-[red_clock_spindle]
+[brokeclockpole_red]
 name=Clock spindle
 desc=Seems to be some kind of clock part.
 model=model_loc_25
@@ -6,7 +6,7 @@ active=yes
 recol1s=152
 recol1d=30753
 
-[black_clock_spindle]
+[brokeclockpole_black]
 name=Clock spindle
 desc=Seems to be some kind of clock part.
 model=model_loc_25
@@ -14,7 +14,7 @@ active=yes
 recol1s=152
 recol1d=0
 
-[white_clock_spindle]
+[brokeclockpole_white]
 name=Clock spindle
 desc=Seems to be some kind of clock part.
 model=model_loc_25
@@ -22,13 +22,13 @@ active=yes
 recol1s=152
 recol1d=32767
 
-[blue_clock_spindle]
+[brokeclockpole_blue]
 name=Clock spindle
 desc=Seems to be some kind of clock part.
 model=model_loc_25
 active=yes
 
-[red_clock_spindle_incorrect]
+[clockpole_red]
 name=Clock spindle
 desc=Seems to be some kind of clock part.
 model=model_loc_25
@@ -37,7 +37,7 @@ recol1s=152
 recol1d=30753
 category=incorrect_clock_spindle
 
-[black_clock_spindle_incorrect]
+[clockpole_black]
 name=Clock spindle
 desc=Seems to be some kind of clock part.
 model=model_loc_25
@@ -46,7 +46,7 @@ recol1s=152
 recol1d=0
 category=incorrect_clock_spindle
 
-[white_clock_spindle_incorrect]
+[clockpole_white]
 name=Clock spindle
 desc=Seems to be some kind of clock part.
 model=model_loc_25
@@ -55,49 +55,49 @@ recol1s=152
 recol1d=32767
 category=incorrect_clock_spindle
 
-[blue_clock_spindle_incorrect]
+[clockpole_blue]
 name=Clock spindle
 desc=Seems to be some kind of clock part.
 model=model_loc_25
 active=yes
 category=incorrect_clock_spindle
 
-[loc_33]
+[ctlevera]
 name=Lever
 desc=Yup, definitely a lever.
 model=model_loc_33
 active=yes
 op1=Pull
 
-[loc_34]
+[ctleverb]
 name=Lever
 desc=Yup, definitely a lever.
 model=model_loc_34
 active=yes
 op1=Pull
 
-[loc_35]
+[ctlevera2]
 name=Lever
 desc=Yup, definitely a lever.
 model=model_loc_34
 active=yes
 op1=Pull
 
-[loc_36]
+[ctleverb2]
 name=Lever
 desc=Yup, definitely a lever.
 model=model_loc_33
 active=yes
 op1=Pull
 
-[quest_cog_rate_gate]
+[ctratgatec]
 name=Gate
 desc=Stops people walking past.
 model=model_loc_37
 active=yes
 op1=Go-through
 
-[quest_cog_food_trough]
+[ctfoodtrough]
 name=Food trough
 desc=Animals have no table manners.
 model=model_loc_40

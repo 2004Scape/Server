@@ -1,7 +1,7 @@
-[partyroominv]
+[partyroom_dropinv]
 scope=shared
 size=216
 
-[partyroomoffer]
+[partyroom_tempinv]
 size=8
 protect=no

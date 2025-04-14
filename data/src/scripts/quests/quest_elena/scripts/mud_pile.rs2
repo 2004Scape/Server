@@ -1,5 +1,5 @@
 [oploc1,loc_2533]
-anim(human_reachforladdertop, 0);
+anim(human_reachforladder, 0);
 p_delay(0);
 mes("You climb up the mud pile.");
 p_telejump(^quest_elena_garden_coord);

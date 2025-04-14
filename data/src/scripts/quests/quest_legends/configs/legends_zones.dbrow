@@ -1,0 +1,44 @@
+[kharazi_jungle_west]
+table=coord_pair_table
+data=coord_pair,0_43_45_5_2,0_43_45_63_55
+
+[kharazi_jungle_middle]
+table=coord_pair_table
+data=coord_pair,0_44_45_0_2,0_44_45_63_55
+
+[kharazi_jungle_east]
+table=coord_pair_table
+data=coord_pair,0_45_45_0_2,0_46_45_30_55
+
+// for convenience - covers all 3 regions above
+[kharazi_jungle]
+table=coord_pair_table
+data=coord_pair,0_43_45_5_2,0_46_45_30_55
+
+[kharazi_dense_jungle]
+table=coord_pair_table
+data=coord_pair,0_43_45_7_54,0_43_45_13_61
+data=coord_pair,0_43_45_37_55,0_43_45_50_61
+data=coord_pair,0_44_45_0_55,0_44_45_7_58
+data=coord_pair,0_44_45_42_54,0_44_45_57_59
+data=coord_pair,0_45_45_50_57,0_45_45_61_61
+
+[legends_fire_wall]
+table=coord_pair_table
+data=coord_pair,0_43_145_36_48,0_43_145_45_49
+data=coord_pair,0_43_145_40_44,0_43_145_41_53
+data=coord_pair,0_43_145_37_45,0_43_145_44_52
+// there's a bug in osrs which considers this row of tiles to be
+// inside the octagram even though they are not
+data=coord_pair,0_43_145_36_37,0_43_145_36_46
+
+// some checks don't include the wrong row
+[legends_fire_wall_correct]
+table=coord_pair_table
+data=coord_pair,0_43_145_36_48,0_43_145_45_49
+data=coord_pair,0_43_145_40_44,0_43_145_41_53
+data=coord_pair,0_43_145_37_45,0_43_145_44_52
+
+[legends_gem_room]
+table=coord_pair_table
+data=coord_pair,0_43_145_3_0,0_43_145_30_31

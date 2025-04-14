@@ -1,0 +1,455 @@
+[opnpc1,ungadulu] @ungadulu_start;
+[opnpc2,ungadulu] @attack_ungadulu;
+[apnpc2,ungadulu] @attack_ungadulu;
+// opnpc1 here is NIH
+[opnpc2,ungadulu_possessed] @attack_ungadulu;
+[apnpc2,ungadulu_possessed] @attack_ungadulu;
+
+[label,ungadulu_start]
+if (%legends_progress < ^legends_defeated_nezikchened_fire) @ungadulu_run;
+else if (%legends_progress >= ^legends_defeated_nezikchened_fire) @ungadulu_after_demon;
+
+[label,ungadulu_run]
+~chatnpc("<p,neutral>Please run for your life...");
+~mesbox("The Shaman seems to be fighting an inner battle.");
+~chatnpc("<p,neutral>Go... go now...!");
+~mesbox("The Shaman seems to change in front of your eyes...");
+npc_changetype(ungadulu_possessed, 100); // 100t
+~chatnpc("<p,neutral>Welcome Vacu, to eternal...");
+if_close;
+mes("The Shaman starts an incantation...");
+p_delay(1);
+mes("You feel a strange power coming over you...");
+p_delay(1);
+mes("You feel very weak...");
+p_delay(1);
+mes("The Shaman seems to get stronger!");
+p_delay(1);
+npc_changetype(ungadulu, 100);
+mes("The Shaman seems to return to normal...");
+~chatnpc("<p,neutral>Run, run away... Run like the leopard Bwana!");
+// seems to be set after the dialogue is complete?
+settimer(ungadulu_curse, 40);
+
+[timer,ungadulu_curse]
+cleartimer(ungadulu_curse);
+
+[proc,legends_spell_usage](int $spell)
+def_dbrow $spell_data = ~get_spell_data($spell);
+def_int $duration = ~pvm_spell_cast($spell_data);
+p_delay(1);
+if (~player_npc_hit_roll(^magic_style) = true) {
+    if (~inzone_coord_pair_table(legends_fire_wall_correct, coord) = false) { // seems to be random??
+        ~mesbox("The spell fizzles and has no effect as it passes through the flames.");
+        return;
+    }
+    spotanim_npc(db_getfield($spell_data, magic_spell_table:spotanim_target, 0), $duration);
+    sound_synth(db_getfield($spell_data, magic_spell_table:sound_success, 0), 0, 0);
+    if(%legends_progress >= ^legends_defeated_nezikchened_fire) {
+        ~chatnpc("<p,happy>Ha ha ha! There's no need to use that on me anymore... I'm cured now, remember?");
+        return;
+    }
+    if(gettimer(ungadulu_curse) > 0) {
+        ~chatnpc("<p,shock>Thank you, Bwana! You have released me from the|demon's grasp, but only for a short while! You must|seek out the Book of Binding - it's hidden in these caves somewhere!.");
+        ~chatnpc("<p,shock>There are many trials you must pass... but please,|you're my only hope of escape!");
+        ~mesbox("The shaman's eyes roll back and he returns to his quiet, unassuming self.");
+        cleartimer(ungadulu_curse);
+        return;
+    }
+}
+~pvm_spell_fail($spell_data, $duration);
+npc_say("What...what's happening...");
+npc_anim(human_stunned, 0);
+p_delay(1);
+~npc_retaliate(0);
+mes("The shaman somehow resists the power of the spell.");
+mes("Perhaps you should try again?");
+
+[label,ungadulu_no_closer]
+~chatnpc("<p,sad>Please come no closer... the flames will incinerate you.");
+if (%legends_progress < ^legends_spoke_ungadulu) {
+    %legends_progress = ^legends_spoke_ungadulu;
+}
+@multi2("How can I extinguish the flames?", ungadulu_extinguish,
+        "Who are you?", ungadulu_who);
+
+[label,ungadulu_extinguish]
+~chatplayer("<p,neutral>How can I extinguish the flames?");
+~chatnpc("<p,shock>Please don't try to extinguish...");
+npc_changetype(ungadulu_possessed, 2);
+// https://media.discordapp.net/attachments/936714977685958678/1195794230690447400/419624878_10161030270160560_5504501485089454437_n.jpg?ex=67d321a9&is=67d1d029&hm=d5f81563fa219807006db3cbfd21c1c7e2fc5f3fcfcf1144482e22ddbc928114&=&format=webp&width=1126&height=845
+~chatnpc("<p,angry>Yes, douse the flames with water,|pure water...|foo...");
+// double space intentional
+// https://youtu.be/atp7nZUwC8E?t=33
+~chatnpc("<p,shock>Please, leave now... don't listen to me... I beg you, leave now,  don't touch the flames...");
+%legends_bits = setbit(%legends_bits, ^legends_asked_ungadulu_where);
+@multi2("Where do I get pure water from?", ungadulu_where,
+        "Who are you?", ungadulu_who);
+
+[label,ungadulu_where]
+~chatplayer("<p,neutral>Where do I get pure water from?");
+~chatnpc("<p,shock>Please, leave now...");
+npc_changetype(ungadulu_possessed, 2);
+~chatnpc("<p,angry>...from the above lands... hurry and release me...");
+~chatnpc("<p,shock>Leave here, please, go... now...");
+npc_changetype(ungadulu_possessed, 2);
+~chatnpc("<p,evillaugh>Hurry, Vacu, the heat kills me... ha ha ha");
+%legends_bits = setbit(%legends_bits, ^legends_ungadulu_called_vacu);
+~mesbox("The Shaman throws himself down on the floor and starts convulsing.");
+
+[label,ungadulu_who]
+~chatplayer("<p,neutral>Who are you?");
+~chatnpc("<p,sad>I am Ungadulu, trapped here many years now... Leave these caves and save yourself...");
+npc_changetype(ungadulu_possessed, 2);
+~chatnpc("<p,angry>Wait... get pure water from the pool... above lands...");
+%legends_bits = setbit(%legends_bits, ^legends_asked_ungadulu_where);
+%legends_bits = setbit(%legends_bits, ^legends_asked_ungadulu_who);
+~chatnpc("<p,shock>Please Bwana, don't listen to me... run, save yourself...");
+@multi2("How can I extinguish the flames?", ungadulu_extinguish,
+        "Where do I get pure water from?", ungadulu_where);
+
+[label,ungadulu_after_demon]
+if(%legends_progress = ^legends_complete) {
+    ~chatnpc("<p,happy>Your Legendary exploits are travelling the whole jungle.");
+    ~chatnpc("<p,neutral>Gujuo has been to see me. He told me that you have been given a sacred totem pole. It was constructed by one of my ancestors many moons ago. It is a noble prize Bwana, you have earned it. Look after it well.");
+    return;
+}
+if(%legends_progress = ^legends_defeated_nezikchened_fire) {
+        ~chatnpc("<p,happy>Greetings bwana... Many thanks for defeating the|demon... and releasing me from this dreadful|possession... Pray tell me, what can I do to repay this|great favour?");
+        @multi3("I need to collect some Yommi tree seeds for Gujuo.", ungadulu_yommi,
+            "How do I get out of here?", ungadulu_out,
+            "Ok, thanks...", ungadulu_thanks);
+} else if(%legends_progress >= ^legends_germinated_seeds & %legends_progress <= ^legends_pushed_boulder) {
+    ~chatnpc("<p,happy>Hello Bwana, how goes your quest with the Yommi tree?");
+    if(%legends_progress = ^legends_germinated_seeds) {
+        @multi3("I have germinated the seeds.", ungadulu_germinated, "Where do I plant the seeds?", ungadulu_where_plant, "I need more Yommi tree seeds.", ungadulu_need_seeds);
+    } else if(%legends_progress = ^legends_water_pool_dried_up) {
+        @multi3("The magic pool has dried up and I need some more pure water.", ungadulu_magicpool, "Where can I get more pure water?", ungadulu_more_water, "I need more Yommi tree seeds.", ungadulu_need_seeds);
+    } else if(%legends_progress >= ^legends_water_pool_dried_up) {
+        @multi3("I am on a quest to get more pure water.", ungadulu_quest, "What do you know about the source of the sacred water?", ungadulu_sacred_water, "I need more Yommi tree seeds.", ungadulu_need_seeds);
+    }
+} else if(%legends_progress = ^legends_received_dagger | inv_total(inv, deathdagger) > 0 | inv_total(inv, deathdaggerdone) > 0) { // this is only an inv check, will override the later stage options
+    ~chatnpc("<p,quiz>Hello Bwana, how goes your quest to find the water?");
+    if(testbit(%legends_bits, ^legends_killed_viyeldi) = true) {
+        @multi5("I have killed Viyeldi!", ungadulu_killed_viyeldi, "I met a spirit in the Viyeldi Caves.", ungadulu_spirit, "The spirit told me to kill Viyeldi.", ungadulu_kill, "Do you know anything about daggers?", ungadulu_dagger, "I need more Yommi tree seeds.", ungadulu_need_seeds);
+    }
+    @multi5("I met a spirit in the Viyeldi Caves.", ungadulu_spirit, "The spirit told me to kill Viyeldi.", ungadulu_kill, "Do you know anything about daggers?", ungadulu_dagger, "I need more Yommi tree seeds.", ungadulu_need_seeds, "Ok, thanks...", ungadulu_thanks);
+}  else if(%legends_progress = ^legends_defeated_nezikchened_water) { // this is only an inv check, will override the later stage options
+    ~mesbox("You approach Ungadulu...");
+    if(testbit(%legends_bits, ^legends_given_dagger) = true) {
+        ~chatnpc("<p,quiz>Blessings on you Bwana. Have you managed to deal with the spirit? Do you have the water?");
+    } else {
+        ~chatnpc("<p,quiz>Blessings on you Bwana. Did you use the spell and kill the spirit? Do you have the sacred water yet?");
+    }
+    @multi3("Yes, I've killed the Spirit.", ungadulu_killed_spirit, "Yes, I've got the water.", ungadulu_got_water, "I need more Yommi tree seeds.", ungadulu_need_seeds);
+} else if(%legends_progress >= ^legends_collected_totem) {
+    if(%legends_progress >= ^legends_collected_totem & %legends_progress < ^legends_replaced_totem & ~obj_gettotal(yommiseeds) = 0 & ~obj_gettotal(yommiseeds_germ) = 0 & ~obj_gettotal(thtotempole) = 0) {
+        ~chatnpc("<p,neutral>I see you have no totem pole, or Yommi tree seeds, is everything ok?");
+        def_int $op = ~p_choice2("Yes, everything's fine.", 1, "I need more Yommi tree seeds.", 2);
+        if($op = 2) @ungadulu_need_seeds;
+        ~chatplayer("<p,neutral>Yes, everything's fine.");
+    }
+    ~chatnpc("<p,happy>Your Legendary exploits are travelling the whole jungle.");
+    // stops here if ur on stage 32
+    if(%legends_progress = ^legends_collected_totem) {
+        ~chatnpc("<p,neutral>How goes your quest to grow the sacred Yommi tree?");
+        @multi3("I've already made the totem pole.", ungadulu_made_totem, "I'm not sure what to do with the Totem pole.", ungadulu_totem_notsure, "Ok, thanks...", ungadulu_thanks);
+    } else if(%legends_progress = ^legends_defeated_nezikchened_final | %legends_progress = ^legends_replaced_totem) {
+        ~chatnpc("<p,neutral>How goes your quest to grow the sacred Yommi tree?");
+        @multi3("I've killed Nezikchened the Demon again.", ungadulu_killed_nezi, "I've replaced the evil Totem pole.", ungadulu_replaced_totem, "Ok, thanks...", ungadulu_thanks);
+    } else if(%legends_progress >= ^legends_got_gilded_totem & %legends_progress < ^legends_complete) {
+        ~chatnpc("<p,neutral>You have done well, Bwana, to have succeeded where so many others have failed. You are a true Legend Bwana.");
+    }
+}
+
+[label,ungadulu_killed_nezi]
+~chatplayer("<p,happy>I've killed Nezikchened the Demon again.");
+~chatnpc("<p,happy>If you have killed him for the third time, then you have banished him from our world completely. This is indeed a legendary accomplishment Bwana, you should feel proud.");
+@multi2("I've replaced the evil Totem pole.", ungadulu_replaced_totem, "Ok, thanks...", ungadulu_thanks);
+
+[label,ungadulu_replaced_totem]
+~chatplayer("<p,happy>I've replaced the evil Totem pole.");
+~chatnpc("<p,happy>Many thanks Bwana, my people are truly grateful. Have you seen Gujuo? I am sure that he may have something for you as a token of our appreciation.");
+@multi2("I've killed Nezikchened the Demon again.", ungadulu_killed_nezi, "Ok, thanks...", ungadulu_thanks);
+
+[label,ungadulu_made_totem]
+~chatplayer("<p,neutral>I've already made the totem pole.");
+~chatnpc("<p,happy>This is great news Bwana, you've done really well. Perhaps we can start to rally our people together now. And live once again without fear in the jungle.");
+@multi2("I'm not sure what to do with the Totem pole.", ungadulu_totem_notsure, "Ok, thanks...", ungadulu_thanks);
+
+[label,ungadulu_totem_notsure]
+~chatplayer("<p,quiz>I'm not sure what to do with the Totem pole.");
+~chatnpc("<p,happy>Well, Bwana, you can simply replace the corrupted totem pole with the good one you have created. This will make my people very happy.");
+@multi3("I've already made the totem pole.", ungadulu_made_totem, "I'm not sure what to do with the Totem pole.", ungadulu_totem_notsure, "Ok, thanks...", ungadulu_thanks);
+
+[label,ungadulu_killed_spirit]
+if(testbit(%legends_bits, ^legends_given_dagger) = true) {
+    ~chatnpc("<p,happy>Yes, I've killed the Spirit. Actually the spirit turned out to be the Demon - Nezikchened.");
+} else {
+    ~chatnpc("<p,quiz>Yes, I've killed the Spirit. I used the spell you gave me, it was very effective in fact. Actually the spirit turned out to be the Demon - Nezikchened.");
+}
+~chatnpc("<p,happy>That's truly a miracle Bwana, very few come out of Viyeldi's caves alive. And you managed to defeat Nezikchened a second time? You are truly a legend bwana. Do you have the sacred water as well?");
+@multi3("Yes, I've got the water.", ungadulu_got_water, "What do I do now?", ungadulu_whatnow, "Ok, thanks...", ungadulu_thanks);
+
+[label,ungadulu_got_water]
+~chatplayer("<p,happy>Yes, I've got the water.");
+~chatnpc("<p,neutral>That is truly great Bwana... Well done! You have the spirit of the jungle lion.");
+@multi2("What do I do now?", ungadulu_whatnow, "Ok, thanks...", ungadulu_thanks);
+
+[label,ungadulu_whatnow]
+~chatplayer("<p,neutral>What do I do now?");
+~chatnpc("<p,neutral>Well, you should be able to plant the Yommi tree. And then water it with the sacred water. You should then be able to start making the Totem pole.");
+~chatnpc("<p,scared>So long as you have banished the spirit and managed to get some of the sacred water. Let us pray that we have seen the last of that evil!");
+@multi3("Yes, I've got the water.", ungadulu_got_water, "Yes, I've killed the Spirit.", ungadulu_killed_spirit, "Ok, thanks...", ungadulu_thanks);
+
+[label,ungadulu_killed_viyeldi]
+~chatplayer("<p,happy>I have killed Viyeldi!");
+~chatnpc("<p,shock>Why on earth did you do that?|@blu@---The Shaman screams at you---");
+~chatplayer("<p,confused>A spirit called Echned Zekin said I had to avenge his spirit by killing Viyeldi if I wanted to get the pure water.");
+~mesbox("The Shaman puts his head in his hands.");
+~chatnpc("<p,sad>Bwana, you have been tricked by a spirit! And you have done the worst thing imaginable. Viyeldi was the sorcerer who controlled the Heroes who protect the source.");
+~chatnpc("<p,shock>The spirits of these heroes are now free to be controlled by other, more powerful evil forces. Most likely the spirit that tricked you.");
+@multi3("Do you know anything about daggers?", ungadulu_dagger, "What can we do?", ungadulu_whatdo, "Ok, thanks...", ungadulu_thanks);
+
+[label,ungadulu_whatdo]
+~chatplayer("<p,quiz>What can we do?");    
+if(~obj_gettotal(holyforce) > 0) {
+    ~chatnpc("<p,neutral>You can use that Holy Force spell to try and defeat the spirit. Come back and let me know if I can help in any other way.");
+    return;
+}
+~chatnpc("<p,confused>I am not sure at this time Bwana. Give me a few moments to think.");
+~chatnpc("<p,neutral>Hmmm....");
+if(inv_total(inv, deathdaggerdone) = 0 & inv_total(worn, deathdaggerdone) = 0 & inv_total(inv, deathdagger) = 0 & inv_total(worn, deathdagger) = 0) {
+    ~chatnpc("<p,neutral>I could make a spell that would help you to defeat the spirit. But I need you to bring me a possession that it once owned. If you have something like that, please show it to me. And I'll give you the spell.");
+    return;
+}
+~chatnpc("<p,neutral>Take this spell and pray that you can defeat this evil spirit before it's too late. I'll take that dagger from you now!");
+inv_add(inv, holyforce, 1);
+inv_del(inv, deathdaggerdone, 1); // confirm this removal (does it do both, types, order...)
+inv_del(worn, deathdaggerdone, 1);
+inv_del(inv, deathdagger, 1); 
+inv_del(worn, deathdagger, 1);
+~objbox(holyforce, "The wizened old Shaman hands over a piece of paper.", 250, 0, 0);
+
+[label,ungadulu_spirit]
+~chatplayer("<p,neutral>I met a spirit in the Viyeldi Caves.");
+~chatnpc("<p,confused>You did well to come to me Bwana. As I said before, I am an expert in spirits of the underworld. In most circumstances you should just ignore them. However, beware as many spirits will try to trick you.");
+@multi2("The spirit told me to kill Viyeldi.", ungadulu_kill, "Ok, thanks...", ungadulu_thanks);
+
+[label,ungadulu_kill]
+~chatplayer("<p,neutral>The spirit told me to kill Viyeldi.");
+~chatnpc("<p,neutral>That sounds very strange Bwana, I'm glad to see you didn't commit such a foul act. I can make a spell that would help you to defeat the spirit. But I need an item that belongs to the spirit to make it work.");
+~chatnpc("<p,neutral>If you have something like that, please show it to me and I'll give you the spell. Beware of everything in these caves, I was tricked very easily and was enslaved, as you well know. Learn from my example.");
+@multi2("I met a spirit in the Viyeldi Caves.", ungadulu_spirit, "Ok, thanks...", ungadulu_thanks);
+
+[label,ungadulu_dagger]
+~chatplayer("<p,quiz>Do you know anything about daggers?");
+~chatnpc("<p,neutral>I know something about them, especially magical daggers. If you have a specific one, show it to me and I'll help as much as I can.");
+@multi3("I met a spirit in the Viyeldi Caves.", ungadulu_spirit, "The spirit told me to kill Viyeldi.", ungadulu_kill, "Ok, thanks...", ungadulu_thanks);
+
+[label,ungadulu_quest]
+~chatplayer("<p,happy>I am on a quest to get more pure water.");
+~chatnpc("<p,neutral>Well, good luck with your quest Bwana. You may find it worthwhile exploring these catacombs. There is said to be an entrance to the Viyeldi caves, which is where the sacred source of the magic pool exists.");
+~chatnpc("<p,neutral>Beware though as it is said that the area is cursed. Anyone who is killed seeking the sacred water, will forever be sworn to protect its secret.");
+@multi2("What do you know about the source of the sacred water?", ungadulu_sacred_water, "Ok, thanks...", ungadulu_thanks);
+
+[label,ungadulu_sacred_water]
+~chatplayer("<p,quiz>What do you know about the source of the sacred water?");
+~chatnpc("<p,neutral>It is said that the caves where the stream is located, are littered with strange remains of a past civilisation. The dwarves are said to have excavated the area in search of the source of the sacred water.");
+~chatnpc("<p,neutral>Something bad must have happened because soon the area was cursed. Anyone who entered the area looking for the source of the water, and who died, would be forever cursed to protect the water......Forever...");
+@multi2("I am on a quest to get more pure water.", ungadulu_quest, "Ok, thanks...", ungadulu_thanks);
+
+[label,ungadulu_more_water]
+~chatplayer("<p,quiz>Where can I get more pure water?"); // osrs mesanims, dialogue is different though
+~chatnpc("<p,quiz>There is said to be a stream of the sacred water that exists underground. I'm sure that Gujuo will tell you quite a lot about it.");
+~chatnpc("<p,quiz>I have not explored outside of this room, but I have heard that there is a huge metallic door of strange construction within these catacombs which challenges any person with a riddle. Very few have solved the riddle.");
+~chatnpc("<p,neutral>And even fewer have been returned alive if they did solve it. You can try to explore these caverns, it may help. You may just be able to find the Viyeldi caves. That is where the source of the sacred water resides.");
+@multi2("The magic pool has dried up and I need some more pure water.", ungadulu_magicpool, "Ok, thanks...", ungadulu_thanks);
+
+[label,ungadulu_magicpool]
+~chatplayer("<p,neutral>The magic pool has dried up and I need some more pure water.");
+~chatnpc("<p,neutral>Hmmm, that sounds odd. I'm sure that Gujuo will tell you the same as me though. Searching for the source of the water pool will be difficult. However, with some help, it might be possible.");
+@multi2("Where can I get more pure water?", ungadulu_more_water, "Ok, thanks...", ungadulu_thanks);
+
+[label,ungadulu_germinated]
+~chatplayer("<p,neutral>I have germinated the seeds.");
+~chatnpc("<p,happy>Great Bwana, now go plant them in the fertile soil. You should soon have a great Yommi tree worthy of a most marvelous totem pole.");
+@multi2("Where do I plant the seeds?", ungadulu_where_plant, "Ok, thanks...", ungadulu_thanks);
+
+[label,ungadulu_where_plant]
+~chatplayer("<p,neutral>Where do I plant the seeds?");
+~chatnpc("<p,neutral>Above ground and spaced out throughout the whole jungle area are specially cultivated fertile soil areas. Seek one out and plant the Yommi tree in that. Be prepared to water it though...");
+@multi2("Where do I plant the seeds?", ungadulu_where_plant, "Ok, thanks...", ungadulu_thanks);
+
+[label,ungadulu_need_seeds]
+~chatplayer("<p,neutral> I need more Yommi tree seeds.");
+if(~obj_gettotal(yommiseeds) > 0 | ~obj_gettotal(yommiseeds_germ) > 0) {
+    ~chatnpc("<p,neutral>You already have some Yommi tree seeds. Use those first and then come back to me if you need any more.");
+    ~mesbox("Ungadulu goes back to his studies.");
+    return;
+}
+inv_add(inv, yommiseeds, 3);
+~objbox(yommiseeds, "Ungadulu gives you some more seeds.", 250, 0, divide(^objbox_height, 2));
+~chatnpc("<p,neutral>Take more care of these this time around.");
+
+[label,ungadulu_yommi]
+~chatplayer("<p,neutral>I need to collect some Yommi tree seeds for Gujuo.");
+if(inv_total(inv, yommiseeds) > 0) {
+    ~chatnpc("<p,confused>I already gave you some Yommi tree seeds. Try using those first.");
+    @multi2("How do I grow the Yommi tree?", ungadulu_grow,
+        "What do you know about the pure water?", ungadulu_water);
+}
+~chatnpc("<p,confused>Oh, yes, Bwana... you will be doing a great favour to|our people by doing this. However, you must know that|it is a difficult task, the Yommi tree is difficult to grow.");
+~chatnpc("<p,neutral>You must have a natural ability with such things to have|a chance...");
+~objbox(yommiseeds, "The Shaman holds out his gnarly old hand and reveals|three largish green seeds.", 250, 0, divide(^objbox_height, 2));
+~chatnpc("<p,neutral>Here you are, accept these with my gratitude. You'll|need to soak them in sacred water before planting them.|I notice that you must already be familiar with sacred|water to have passed into the flaming octagram.");
+inv_add(inv, yommiseeds, 3);
+@multi3("How do I grow the Yommi tree?", ungadulu_grow,
+        "What do you know about the pure water?", ungadulu_water,
+        "Ok, thanks...", ungadulu_thanks);
+
+[label,ungadulu_grow]
+~chatplayer("<p,neutral>How do I grow the Yommi tree?");
+~chatnpc("<p,neutral>A good question Bwana, but it is essentially quite simple.|First you will need to soak the seeds in some pure|water. This will help to germinate the seed and begin|the growing process.");
+~chatnpc("<p,neutral>The tree should show some remarkable growth quite|early but will slow down, you may be able to speed the|process up by watering the tree with more pure water,|although it can be difficult to find it.");
+@multi3("What will you do now?", ungadulu_what,
+        "What do you know about the pure water?", ungadulu_water,
+        "Ok, thanks...", ungadulu_thanks);
+
+[label,ungadulu_water]
+~chatplayer("<p,neutral>What do you know about the pure water?");
+~chatnpc("<p,neutral>Hmmm, the pure water is sacred to us. It is from a|sacred spring which is fed from deep underground.");
+~chatnpc("<p,neutral>Legend has it that the spring is protected by spirits of long dead adventurers who went in search of the source of the spring. It is likely a myth and the source of the spring is buried deep underground with no paths");
+~chatnpc("<p,neutral>to it.");
+
+[label,ungadulu_what]
+~chatplayer("<p,neutral>What will you do now?");
+~chatnpc("<p,neutral>I will remain here in the protection of the flaming|Octagram and continue my research into the spirit|world. I am somewhat of an authority with my recent|experience!");
+// double spacing and Demon capitalisation here are authentic
+~chatnpc("<p,neutral>But do remember me from time to time and come to|visit an old man. You never know, I may be able to|help you in the future, and repay you the favour  of|releasing me from that terrible Demon...");
+@multi3("I need to collect some Yommi tree seeds for Gujuo.", ungadulu_yommi,
+        "How do I get out of here?", ungadulu_out,
+        "Ok, thanks...", ungadulu_thanks);
+
+
+[label,ungadulu_out]
+~chatplayer("<p,neutral>How do I get out of here?");
+~chatnpc("<p,neutral>Now that you have defeated the demon you can come|and go as you please. I cast a spell on you which|means that you can pass through the flames without|harm.");
+@multi3("I need to collect some Yommi tree seeds for Gujuo.", ungadulu_yommi,
+        "What will you do now?", ungadulu_what,
+        "Ok, thanks...", ungadulu_thanks);
+
+[label,ungadulu_thanks]
+~chatplayer("<p,neutral>Ok, thanks...");
+~chatnpc("<p,happy>My sincerest pleasure Bwana...");
+
+
+// Ungadulu cannot be attacked with melee or ranged weapons; he will throw players out of the Octagram, 
+// hitting them for between 4 and 10 damage. However, players can manually cast combat spells on him both inside
+// and outside the Octagram to damage and kill him without being thrown by his spell. 
+[label,attack_ungadulu]
+if (~inzone_coord_pair_table(legends_fire_wall, coord) = false) {
+    ~mesbox("You feel certain that your weapon would melt if you tried to attack through these magical flames.");
+}
+else {
+    p_delay(1);
+    npc_setmode(playerface);
+    mes("The shaman casts a spell!");
+    if(%legends_progress < ^legends_defeated_nezikchened_fire) {
+        npc_changetype(ungadulu_possessed, 20); // osrs
+        npc_say("Ha ha ha ha! Die, Vacu!");
+    } else {
+        npc_say("Huh, that's no way to treat a shaman.");
+    }
+    spotanim_npc(zap, 100, 0);
+    npc_anim(human_castzap, 0);
+    p_delay(1);
+    // it's difficult to know the exact logic here, guessing that one of a few safe coords is picked
+    // then a random 0-1 range around that tile
+    def_coord $start_coord = coord;
+    def_coord $closest_coord = ~closest_enum_coord(coord, legends_ungadulu_throw_coords);
+    def_coord $throw_coord = map_findsquare($closest_coord, 0, 1, ^vis_lineofwalk);
+    // not sure if the outcome is period authentic - no references
+    anim(human_blown_middle, 0);
+    p_exactmove($start_coord, $throw_coord, 31, calc(31 + (14 * distance($start_coord, $throw_coord))), ~coord_direction($throw_coord, $start_coord));
+    p_delay(divide(distance($start_coord, $throw_coord), 2));
+    anim(null, 0);
+    ~set_walkbas(human_blown_end_getup);
+    p_delay(1);
+    ~update_bas;
+    ~damage_self(calc(random(7) + 4));
+    npc_setmode(wander);
+    npc_settimer(10);
+    ~mesbox("Ungadulu unleashes a savage bolt of energy at you. You're knocked out of the octagram by the power of the spell.");
+    if(%legends_progress >= ^legends_defeated_nezikchened_fire) {
+        ~chatnpc("<p,sad>I hope that teaches you a lesson!");
+        return;
+    }
+    ~chatnpc("<p,evillaugh>Ha, ha ha Vacu... Come for me again and you'll taste more of my power!");
+}
+
+[opnpcu,ungadulu]
+if(%legends_progress >= ^legends_returned_to_radimus) {  // confirmed this stage on OSRS
+    mes("You have no further business with Ungadulu.");
+    return;
+}
+if (last_useitem = book_of_binding) {
+    if (%legends_progress < ^legends_defeated_nezikchened_fire & %legends_progress >= ^legends_filled_bowl) {
+        if(%legends_progress = ^legends_filled_bowl) %legends_progress = ^legends_summoned_nezikchened_fire;
+        npc_setmode(null);
+        npc_queue(10, 0, 6); // queued to run 6t from here
+        ~mesbox("You open the Book of Binding in front of Ungadulu and a|supernatural light starts emanating from the pages, illuminating|Ungadulu whose face twists and contorts in spasms.");
+        ~chatnpcnoturn("<p,angry>Curse you foul intruder... 'Ere near to death ye come|now that ye has meddled in my dealings..");
+        ~mesbox("Without warning, the outline of a huge demon starts to emerge in|front of you as Ungadulu falls to the floor unconscious.");
+        npc_add(map_findsquare(coord, 1, 2, ^map_findsquare_lineofwalk), nezikchened, 500);
+        %aggressive_npc = npc_uid;
+        %npc_lastcombat = sub(^max_32bit_int, 8);
+        %npc_aggressive_player = uid;
+        mes("Nezikchened: Your faith will help you little here.");
+        npc_say("Your faith will help you little here.");
+        mes("A sense of hopelessness fills your body...");
+        // 90% of current, use stat_drain
+        stat_sub(prayer, 0, 90);
+    } else {
+        ~chatnpc("<p,happy>Ha ha ha! There's no need to use that on me anymore... I'm cured now, remember?");
+    }
+} else if (last_useitem = deathdagger) {
+    ~objbox(deathdagger, "You hand the dagger over to the shaman and his face turns pale.", 250, 0, 0);
+    ~chatnpc("<p,shock>This dagger has been made for one purpose only... Praise the gods that you brought it to me.");
+    ~chatnpc("<p,neutral>I can make you a spell with this item which will force the spirit to reveal its true self. Once activated, you will be able to attack it like any normal creature.");
+    if(~obj_gettotal(holyforce) > 0) {
+        inv_del(inv, deathdagger, 1);
+        ~chatnpc("<p,neutral>Use the Holy Force spell that I gave you earlier to defeat this spirit. Good luck. I'll take that dagger for safe keeping...");
+        return;
+    }
+    ~objbox(holyforce, "The Shaman takes the dagger and gives you a folded piece of paper.", 250, 0, 0);
+    inv_add(inv, holyforce, 1); // this order is correct 
+    inv_del(inv, deathdagger, 1);
+    ~chatnpc("<p,neutral>Use this spell on the Spirit. It will force the spirit to show its true self. And it will also be vulnerable to normal attacks.");
+} else if(last_useitem = deathdaggerdone) {
+    // confirm mesanims and stuff here, can only get 1 dagger per account (afaik) so this is from chisel
+    ~objbox(deathdaggerdone, "You hand the dagger over to the shaman and his face turns pale.", 250, 0, 0);
+    ~chatnpc("<p,shock>Oh dear Bwana, I sense something terrible has happened. This dagger is a portent of some evil action. Please, reveal to me anything that you have done so that I might understand this better.");
+    switch_int(~p_choice2("I've killed Viyeldi.", 1, "Er, I can't think of anything.", 2)) {
+        case 1 :
+            ~chatplayer("<p,neutral>I've killed Viyeldi.");
+            ~chatnpc("<p,sad>Poor Viyeldi, he was the guardian of the dead heroes that protected the source. Their tormented spirits will now be at the beck and call of the one who gave you the dagger.");
+            ~chatnpc("<p,neutral>Take this spell and pray that you can defeat this evil spirit before it's too late. The spell will force the spirit to reveal its true self. And it will also be vulnerable to normal attacks."); 
+            // no holy force check here
+            inv_add(inv, holyforce, 1);
+            inv_del(inv, deathdaggerdone, 1);
+            ~objbox(holyforce, "The wizened old Shaman hands over a piece of paper.", 250, 0, 0);
+        case 2 :
+            ~chatplayer("<p,neutral>Er, I can't think of anything.");
+            ~chatnpc("<p,neutral>ell, that is strange. I sense a growing evil power since you visited the caves.");
+    }
+} else {
+    ~displaymessage(^dm_default);
+}
+
+[ai_queue10,ungadulu]
+npc_anim(human_death_backwards, 0); // seems like the last frame of this seq is broken...
+npc_setmode(none);
+npc_delay(10); // delay 11t
+npc_setmode(null);
+npc_anim(null, 0);

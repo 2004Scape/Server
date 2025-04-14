@@ -1,0 +1,47 @@
+[oploc1,legends_gate_west] @open_legends_gate(^left);
+[oploc1,legends_gate_east] @open_legends_gate(^right);
+[oploc2,legends_gate_west] mes("These gates seem to be made of pure mithril!");
+[oploc2,legends_gate_east] mes("These gates seem to be made of pure mithril!");
+
+
+[label,open_legends_gate](int $side)
+def_boolean $entering = ~check_axis(coord, loc_coord, loc_angle);
+// findallzone doesn't reach far enough as the guards wander
+npc_findallany(coord, 14, 0);
+while (npc_findnext = true) {
+    if (npc_category = legends_guard) {
+        if (%legends_progress = ^legends_not_started) {
+            if ($entering = false) {
+                // Leave, then a guard speaks to you
+                ~open_and_close_double_door2(~check_axis(coord, loc_coord, loc_angle), $side, grate_open);
+            }
+            mes("A nearby guard approaches you...");
+            %temp = add($side, 1);
+            p_delay(1);
+            @legends_guard_start;
+            return;
+        }
+        else {
+            if (%legends_progress = ^legends_complete) {
+                // The "attention" message was later removed when entering via the gate, it doesn't happen in OSRS unless
+                // you talk to the guard directly. But it can be seen in old videos
+                // https://youtu.be/Na7_bVfAosM?t=27
+                npc_say("! ! ! Attention ! ! !");
+                p_delay(1);
+                // https://storage.googleapis.com/tannerdino/images/rslegendguild1.gif
+                npc_say("Legends Guild Member Approaching");
+                mes("The guards salute you as you walk past.");
+            }
+            else {
+                mes("A guard nods at you as you walk past.");
+                npc_say("I hope the quest is going well <text_gender("Sir", "Madam")>!");
+            }
+            ~open_and_close_double_door2(~check_axis(coord, loc_coord, loc_angle), $side, grate_open);
+            return;
+        }
+    }
+}
+// Fallback in case the guards can't be found
+if (%legends_progress > ^legends_not_started) {
+    ~open_and_close_double_door2(~check_axis(coord, loc_coord, loc_angle), $side, grate_open);
+}

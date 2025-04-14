@@ -16,6 +16,7 @@ if (afk_event = ^true) {
 // - teleporting. Confirmed: https://youtu.be/ZtnrEwb0n48?list=PLn23LiLYLb1Y3P9S9qZbijcJihiD416jT&t=51
 // (probably every spell)
 // - cooking. Confirmed: https://youtu.be/Brq99Bdl0aI?list=PLn23LiLYLb1Y3P9S9qZbijcJihiD416jT&t=198
+// - cooking on a range: https://youtu.be/Tix1wbx3YCc?t=343
 // - using flax wheel. Confirmed: https://youtu.be/sW48OR1I86M (early osrs)
 // - using anvil? Cant find a video, not implemented.
 // - fletching? Cant find a video, not implemented.
@@ -130,8 +131,9 @@ session_log(^log_adventure, "Failed random event and had their items scattered")
 p_delay(1);
 def_int $i = 0;
 while ($i < inv_size(inv)) {
-    def_coord $coord = map_findsquare(coord, 0, 5, ^map_findsquare_lineofwalk); // 11x11 for now. todo: confirm how scattering works
-    if (inv_getobj(inv, $i) ! null) {
+    def_obj $obj = inv_getobj(inv, $i);
+    if ($obj ! null & oc_tradeable($obj) = true) {
+        def_coord $coord = map_findsquare(coord, 0, 5, ^map_findsquare_lineofwalk); // 11x11 for now. todo: confirm how scattering works
         inv_dropslot(inv, $coord, $i, 200);
         spotanim_map(small_smokepuff, $coord, 124, 0);
     }
@@ -194,7 +196,7 @@ return(true);
 
 [proc,macro_event_lost_hostile]()(boolean)
 if (finduid(%npc_macro_event_target) = true) {
-    if (npc_getmode = wander & npc_range(coord) > 3) { // seems like distance of 3? https://www.youtube.com/watch?v=GoRX3cp58eo&list=PLn23LiLYLb1am4weMQzkWn5m9b3m9fXv9&t=38s
+    if (npc_getmode = wander & (npc_range(coord) > 3 | coordy(npc_coord) ! coordy(coord))) { // seems like distance of 3? https://www.youtube.com/watch?v=GoRX3cp58eo&list=PLn23LiLYLb1am4weMQzkWn5m9b3m9fXv9&t=38s
         return(true);
     }
     return(false);

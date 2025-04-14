@@ -63,13 +63,13 @@ if ($sound ! null) {
     sound_synth($sound, 0, 0);
 }
 loc_del($duration);
-loc_add(loc_coord, loc_83, loc_angle, loc_shape, 3);
+loc_add(loc_coord, inviswall, loc_angle, loc_shape, 3);
 loc_add(~movecoord_loc_return(~door_open(loc_angle, loc_shape)), $next_loc, calc((loc_angle + 3) % 4), wall_straight, $duration);
 loc_findallzone($opposite);
 while (loc_findnext = true) {
     if (loc_coord = $opposite & loc_category = $category) {
         loc_del($duration);
-        loc_add($opposite, loc_83, loc_angle, loc_shape, 3);
+        loc_add($opposite, inviswall, loc_angle, loc_shape, 3);
         loc_add(~movecoord_loc_return(~door_open(loc_angle, loc_shape)), $opposite_next_loc, calc((loc_angle + 1) % 4), wall_straight, $duration);
         return;
     }
@@ -81,13 +81,13 @@ if ($sound ! null) {
     sound_synth($sound, 0, 0);
 }
 loc_del($duration);
-loc_add(loc_coord, loc_83, loc_angle, loc_shape, 3);
+loc_add(loc_coord, inviswall, loc_angle, loc_shape, 3);
 loc_add(~movecoord_loc_return(~door_open(loc_angle, loc_shape)), $next_loc, calc((loc_angle + 1) % 4), wall_straight, $duration);
 loc_findallzone($opposite);
 while (loc_findnext = true) {
     if (loc_coord = $opposite & loc_category = $category) {
         loc_del($duration);
-        loc_add($opposite, loc_83, loc_angle, loc_shape, 3);
+        loc_add($opposite, inviswall, loc_angle, loc_shape, 3);
         loc_add(~movecoord_loc_return(~door_open(loc_angle, loc_shape)), $opposite_next_loc, calc((loc_angle + 3) % 4), wall_straight, $duration);
         return;
     }

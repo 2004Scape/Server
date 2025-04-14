@@ -3,13 +3,15 @@ import ObjType from '#/cache/config/ObjType.js';
 import { ParamHelper } from '#/cache/config/ParamHelper.js';
 import ParamType from '#/cache/config/ParamType.js';
 import { CoordGrid } from '#/engine/CoordGrid.js';
-import EntityLifeCycle from '#/engine/entity/EntityLifeCycle.js';
+import { EntityLifeCycle } from '#/engine/entity/EntityLifeCycle.js';
 import Obj from '#/engine/entity/Obj.js';
-import ScriptOpcode from '#/engine/script/ScriptOpcode.js';
+import { ObjIterator } from '#/engine/script/ScriptIterators.js';
+import { ScriptOpcode } from '#/engine/script/ScriptOpcode.js';
 import { ActiveObj, ActivePlayer } from '#/engine/script/ScriptPointer.js';
 import { CommandHandlers } from '#/engine/script/ScriptRunner.js';
 import { check, CoordValid, DurationValid, InvTypeValid, ObjStackValid, ObjTypeValid, ParamTypeValid } from '#/engine/script/ScriptValidators.js';
 import World from '#/engine/World.js';
+import { WealthEventType } from '#/server/logger/WealthEventType.js';
 import Environment from '#/util/Environment.js';
 
 const ObjOps: CommandHandlers = {
@@ -144,11 +146,17 @@ const ObjOps: CommandHandlers = {
 
         state.activePlayer.invAdd(invType.id, obj.type, obj.count);
 
+        const value = obj.count * objType.cost;
+        state.activePlayer.addWealthLog(value, `Picked up ${objType.debugname} x${obj.count}`);
+        state.activePlayer.addWealthEvent({
+            event_type: WealthEventType.PICKUP, 
+            account_items: [{ id: objType.id, name: objType.debugname, count: obj.count }], 
+            account_value: value
+        });
+        
         if (obj.lifecycle === EntityLifeCycle.RESPAWN) {
-            state.activePlayer.addWealthLog(obj.count * objType.cost, `Picked up ${objType.debugname} x${obj.count}`);
             World.removeObj(obj, objType.respawnrate);
         } else if (obj.lifecycle === EntityLifeCycle.DESPAWN) {
-            state.activePlayer.addWealthLog(obj.count * objType.cost, `Picked up ${objType.debugname} x${obj.count}`);
             World.removeObj(obj, 0);
         }
     },
@@ -171,6 +179,24 @@ const ObjOps: CommandHandlers = {
         }
 
         state.activeObj = obj;
+        state.pointerAdd(ActiveObj[state.intOperand]);
+        state.pushInt(1);
+    },
+
+    [ScriptOpcode.OBJ_FINDALLZONE]: state => {
+        const coord: CoordGrid = check(state.popInt(), CoordValid);
+
+        state.objIterator = new ObjIterator(World.currentTick, coord.level, coord.x, coord.z);
+    },
+
+    [ScriptOpcode.OBJ_FINDNEXT]: state => {
+        const result = state.objIterator?.next();
+        if (!result || result.done) {
+            state.pushInt(0);
+            return;
+        }
+
+        state.activeObj = result.value;
         state.pointerAdd(ActiveObj[state.intOperand]);
         state.pushInt(1);
     }

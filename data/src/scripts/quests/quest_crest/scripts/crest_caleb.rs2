@@ -67,7 +67,7 @@ if (inv_total(inv, swordfish) >= 1 &
     inv_total(inv, bass) >= 1 & 
     inv_total(inv, tuna) >= 1 &
     inv_total(inv, salmon) >= 1 &
-    inv_total(inv, shrimps) >= 1) {
+    inv_total(inv, shrimp) >= 1) {
         ~chatplayer("<p,neutral>Got them all with me.");
         ~mesbox("You exchange the fish for Caleb's piece of the crest.");
         %crest_progress = ^crest_caleb_piece;
@@ -75,8 +75,8 @@ if (inv_total(inv, swordfish) >= 1 &
         inv_del(inv, bass, 1);
         inv_del(inv, tuna, 1);
         inv_del(inv, salmon, 1);
-        inv_del(inv, shrimps, 1);
-        inv_add(inv, crest_part_1, 1);
+        inv_del(inv, shrimp, 1);
+        inv_add(inv, avan_crest, 1);
         @multi2("Uh... what happened to the rest of it?", crest_caleb_rest, "Thank you very much!", crest_caleb_thanks);
     }
 else {
@@ -107,7 +107,7 @@ if (inv_total(inv, family_crest) >= 1) {
     ~chatplayer("<p,neutral>I've got it right here!");
     ~chatnpc("<p,neutral>Excellent work! Please take it to my father immediately.");
 }
-else if (inv_total(inv, crest_part_1) = 0 & inv_total(bank, crest_part_1) = 0) {
+else if (inv_total(inv, avan_crest) = 0 & inv_total(bank, avan_crest) = 0) {
     @multi2("I am still working on it.", crest_caleb_working, "I have lost the piece you gave me.", crest_caleb_lost);
 }
 else {
@@ -122,7 +122,7 @@ else {
 ~chatplayer("<p,neutral>I have lost the fragment you gave me...");
 ~chatnpc("<p,confused>I have some good news for you then. One of my customers found this on their travels and recognised it as mine and returned it to me here.");
 ~mesbox("Caleb hands over his crest piece again.");
-inv_add(inv, crest_part_1, 1);
+inv_add(inv, avan_crest, 1);
 ~chatnpc("<p,neutral>I suggest you be less careless in the future. The crest is extremely valuable, and utterly irreplaceable.");
 
 [label,crest_caleb_nothing]
@@ -137,6 +137,9 @@ inv_add(inv, crest_part_1, 1);
 // Ability to change gauntlets for 25k was added 30/08/05, so this decision is permanent
 // https://oldschool.runescape.wiki/w/Update:Garden_Of_Tranquillity
 ~chatnpc("<p,happy>I hear you brought the completed crest to my father. I must say, that was awfully impressive work.");
+if(getbit_range(%crest_spells_levers_gauntlets, ^crest_cooking_gauntlets_chosen, ^crest_chaos_gauntlets_chosen) > 0) {
+    return;
+}
 if (inv_total(inv, steel_gauntlets) >= 1) {
     ~chatplayer("<p,neutral>I believe your father mentioned you would be able to improve these gauntlets for me...");
     ~chatnpc("<p,neutral>Yes, that is correct. I can slightly alter these gauntlets to allow you some of my skill at preparing seafood by making them cooking gauntlets.");
@@ -153,17 +156,7 @@ if (inv_total(inv, steel_gauntlets) >= 1) {
         ~chatplayer("<p,neutral>I'll see what your brothers have to offer first.");
         ~chatnpc("<p,neutral>As you wish. Let me know if you change your mind.");
     }
-}
-else if (testbit(%crest_spells_levers_gauntlets, ^crest_cooking_gauntlets_chosen) = true)  {
-    if (inv_total(inv, gauntlets_of_cooking) >= 1) {
-        ~chatplayer("<p,neutral>I believe your father mentioned you would be able to improve these gauntlets for me...");
-    }
-    else {
-        ~chatplayer("<p,neutral>I believe your father mentioned you would be able to improve some gauntlets for me...");
-    }
-    ~chatnpc("<p,neutral>Your gauntlets have already been treated with my potions.");
-}
-else {
+} else {
     ~chatplayer("<p,neutral>I believe your father mentioned you would be able to improve some gauntlets for me...");
     ~chatnpc("<p,happy>Bring them to me, and I'll see what I can do.");
 }

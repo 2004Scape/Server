@@ -49,6 +49,13 @@ async function handleRequests(_parentPort: ParentPort, msg: any) {
             }
             break;
         }
+        case 'wealth_event': {
+            if (Environment.LOGGER_SERVER) {
+                const { events } = msg;
+                await client.wealthEvent(events);
+            }
+            break;
+        }
         case 'report': {
             if (Environment.LOGGER_SERVER) {
                 const { username, coord, offender, reason } = msg;

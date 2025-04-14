@@ -135,7 +135,7 @@ while(loc_findnext = true) {
                 loc_add(movecoord($central_coord, 0, 0, 1), loc_1563, 2, loc_shape, 3);
             }
             // Temp note: dur updated
-            loc_add($central_coord, loc_83, $orig_angle, loc_shape, 3);
+            loc_add($central_coord, inviswall, $orig_angle, loc_shape, 3);
      }
 }
 sound_synth(grate_open, 0, 0); //iron_door_open
@@ -188,7 +188,7 @@ inv_add(inv, lens, 1);
 mes("You look through the telescope.");
 if_openmain(telescope);
 // appearntly RSC doesn't save this and just sends scorpio
-if(%itgronigen_progress = ^itgronigen_complete) {
+if(%itgronigen_progress >= ^itgronigen_complete) {
     if_setmodel(telescope:com_92, 3053);
     return;
 }

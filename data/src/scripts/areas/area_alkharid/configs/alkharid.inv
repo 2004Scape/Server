@@ -1,4 +1,4 @@
-[ranael_skirt]
+[skirtshop]
 // https://classic.runescape.wiki/w/Ranael%27s_Plateskirt_Shop
 // https://storage.googleapis.com/tannerdino/images/rsal5.gif (full stocks)
 scope=shared
@@ -13,7 +13,7 @@ stock4=black_plateskirt,1,1200
 stock5=mithril_plateskirt,1,2000
 stock6=adamant_plateskirt,1,13000
 
-[louie_leg]
+[legsshop]
 // https://classic.runescape.wiki/w/Louie%27s_Legs
 // https://storage.googleapis.com/tannerdino/images/AlKharid8.png (full stocks)
 scope=shared
@@ -28,7 +28,7 @@ stock4=black_platelegs,1,1200
 stock5=mithril_platelegs,1,2000
 stock6=adamant_platelegs,1,13000
 
-[alkharid_gem]
+[gemshop2]
 // https://classic.runescape.wiki/w/Al_Kharid_gem_stall
 // https://storage.googleapis.com/tannerdino/images/AlKharid2.png
 scope=shared
@@ -45,7 +45,7 @@ stock6=emerald,1,35000
 stock7=ruby,0,2000
 stock8=diamond,0,4000
 
-[zeke_scimitar]
+[scimitarshop]
 // https://classic.runescape.wiki/w/Zeke%27s_Scimitar_Shop
 // https://web.archive.org/web/20040928001706im_/http://runevillage.com/images/rsal2.gif
 scope=shared
@@ -75,7 +75,7 @@ stock6=chisel,2,100
 stock7=hammer,5,100
 // recheck
 
-[dommiks_crafting_store]
+[craftingshop2]
 // https://classic.runescape.wiki/w/Dommik%27s_Crafting_Equipment_Shop
 // https://storage.googleapis.com/tannerdino/images/AlKharid4.png (full stocks)
 scope=shared
@@ -89,4 +89,4 @@ stock3=necklace_mould,2,100
 stock4=amulet_mould,2,100
 stock5=needle,3,100
 stock6=thread,100,5
-stock7=holy_mould,3,100
+stock7=holy_symbol_mould,3,100

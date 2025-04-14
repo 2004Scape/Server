@@ -192,7 +192,7 @@ if (%arena_progress >= ^arena_complete) { // different completion states based o
     $questpoints = add($questpoints, ^arena_questpoints);
 }
 
-if (%junglepotion_progress = ^junglepotion_complete) {
+if (%junglepotion_progress >= ^junglepotion_complete) {
     $questpoints = add($questpoints, ^junglepotion_questpoints);
 }
 
@@ -240,8 +240,12 @@ if (%desertrescue_progress = ^desertrescue_complete) {
     $questpoints = add($questpoints, ^desertrescue_questpoints);
 }
 
-if (%itwatchtower_progress = ^itwatchtower_complete) {
+if (%itwatchtower_progress >= ^itwatchtower_complete) {
     $questpoints = add($questpoints, ^itwatchtower_questpoints);
+}
+
+if (%legends_progress = ^legends_complete) {
+    $questpoints = add($questpoints, ^legends_questpoints);
 }
 
 %questpoints = $questpoints;
@@ -305,6 +309,7 @@ if (testbit(%upass_map_mechanisms, ^upass_started_bit) = true & %upass_progress 
 ~send_quest_progress_colour(questlist:crest, %crest_progress, ^crest_complete);
 ~send_quest_progress_colour(questlist:desertrescue, %desertrescue_progress, ^desertrescue_complete);
 ~send_quest_progress_colour(questlist:itwatchtower, %itwatchtower_progress, ^itwatchtower_complete);
+~send_quest_progress_colour(questlist:legends, %legends_progress, ^legends_complete);
 if_settab(questlist, ^tab_quest_journal);
 
 if (%drunkmonk_progress >= ^drunkmonk_spoken_to_omad) {

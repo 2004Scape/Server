@@ -1,4 +1,4 @@
-[herquin_gems]
+[gemshop]
 // https://classic.runescape.wiki/w/Herquin%27s_Jewel_Shop
 // https://web.archive.org/web/20050702140802im_/http://www.runehq.com/images/otherguides/Falador2.png
 scope=shared
@@ -15,7 +15,7 @@ stock6=emerald,0,1000
 stock7=ruby,0,2000
 stock8=diamond,0,4000
 
-[cassie_shields]
+[shieldshop]
 // https://classic.runescape.wiki/w/Cassie%27s_Shields
 // https://web.archive.org/web/20050702140809im_/http://www.runehq.com/images/otherguides/Falador6.png
 scope=shared
@@ -32,7 +32,7 @@ stock6=steel_sq_shield,0,1500
 stock7=steel_kiteshield,0,1500
 stock8=mithril_sq_shield,0,1500
 
-[waynes_chains]
+[chainmailshop]
 // https://classic.runescape.wiki/w/Wayne%27s_Chains
 // https://web.archive.org/web/20050702140813im_/http://www.runehq.com/images/otherguides/Falador8.png
 // https://web.archive.org/web/20071108191823im_/http://runehq.com/image/cityguides/falador/chainmailshop.png (full stocks)
@@ -48,7 +48,7 @@ stock4=black_chainbody,1,2500
 stock5=mithril_chainbody,1,3500
 stock6=adamant_chainbody,1,9000
 
-[flynn_maces]
+[maceshop]
 // https://classic.runescape.wiki/w/Flynn%27s_mace_shop
 // https://storage.googleapis.com/tannerdino/images/rsfally2.gif
 // https://web.archive.org/web/20071108191237im_/http://runehq.com/image/cityguides/falador/maceshop.png (full stocks)

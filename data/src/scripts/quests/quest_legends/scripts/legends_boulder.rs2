@@ -1,0 +1,79 @@
+[opnpc1,legends_boulder]
+npc_huntall(coord, 5, 0);
+while (npc_huntnext = true) {
+    if (npc_type = nezikchened & %aggressive_npc = npc_uid) {
+        mes("The rock is motionless and impossible to budge.");
+        return;
+    }
+}
+anim(human_push, 0);
+mes("You attempt to push the boulder out of the way.");
+
+if(%legends_progress >= ^legends_defeated_nezikchened_water) {
+    if(npc_coord ! %npc_start_coord) {
+        mes("This boulder has already");
+        mes("been pushed as far as it can go.");
+        return;
+    }
+    if(coordx(coord) <= coordx(movecoord(npc_coord, 1, 0, 0))) {
+        mes("You don't seem to be able to push it from this angle.");
+        return;
+    }
+    mes("You push the boulder out of the way.");
+    loc_add(npc_coord, legends_sacred_water, 0, centrepiece_straight, 30);
+    npc_walk(movecoord(npc_coord, -2, 0, 0)); // TODO: this npc walks in osrs but it doesn't move the boulder on here
+    sound_synth(grate_open, 0, 0); // this is the correct sound
+    npc_queue(10, 0, 30);
+} else {
+    ~mesbox("A thick green mist seems to emanate from the water... It slowly congeals into the shape of a body.");
+    if_close;
+    if(npc_find(coord, echned_zekin, 7, 0) = false) {
+        npc_add(map_findsquare(coord, 1, 3, ^map_findsquare_none), echned_zekin, 500);
+    }
+    p_delay(0);
+    mes("The shapeless form slowly floats towards you.");
+    @echned_dialogue;
+}
+
+[oploc1,legends_sacred_water]
+~mesbox("You see some sparkling effervescent water, it looks somehow similar to the water above ground.");
+
+[oplocu,legends_sacred_water]
+if(%legends_progress < ^legends_defeated_nezikchened_water) {
+    mes("Some magical force keeps you away from the water."); // OSRS
+    return;
+}
+if (last_useitem = goldbowlbless_empty) {
+    inv_del(inv, goldbowlbless_empty, 1);
+    inv_add(inv, goldbowlbless_pure, 1);
+    %legends_bits = setbit_range_toint(%legends_bits, 0, ^legends_golden_bowl_uses_start, ^legends_golden_bowl_uses_end);
+    if(%legends_progress = ^legends_defeated_nezikchened_water) %legends_progress = ^legends_sacred_water_collected;
+    ~objbox(goldbowlbless_pure, "You get some sacred water in the golden blessed bowl.", 250, 0, divide(^objbox_height, 2));
+} else if (last_useitem = vial_enchanted) {
+    inv_del(inv, vial_enchanted, 1);
+    inv_add(inv, holy_water, 1);
+    ~objbox(holy_water, "You get some sacred water into the enchanted vial.", 250, 0, divide(^objbox_height, 2));
+} else if (last_useitem = goldbowl_empty) {
+    inv_del(inv, goldbowl_empty, 1);
+    inv_add(inv, goldbowl_pure, 1);
+    ~objbox(goldbowl_pure, "You get some sacred water into the enchanted golden bowl.", 250, 0, divide(^objbox_height, 2));
+} else if (last_useitem = bowl_empty) {
+    inv_del(inv, bowl_empty, 1);
+    inv_add(inv, bowl_water, 1);
+    ~objbox(bowl_water, "You get some water into your bowl. The water doesn't bubble and sparkle as much as it did in the pool.", 250, 0, divide(^objbox_height, 2));
+} else if (last_useitem = bucket_empty) {
+    inv_del(inv, bucket_empty, 1);
+    inv_add(inv, bucket_water, 1);
+    ~objbox(bucket_water, "You get some water in your bucket. The water doesn't bubble and sparkle as much as it did in the pool.", 250, 0, divide(^objbox_height, 2));
+} else if (last_useitem = jug_empty) {
+    inv_del(inv, jug_empty, 1);
+    inv_add(inv, jug_water, 1);
+    ~objbox(jug_water, "You get some water in your jug. The water doesn't bubble and sparkle as much as it did in the pool.", 250, 0, divide(^objbox_height, 2));
+} else if (last_useitem = vial_empty) {
+    inv_del(inv, vial_empty, 1);
+    inv_add(inv, vial_water, 1);
+    ~objbox(vial_water, "You put some water in your vial. The water doesn't bubble and sparkle as much as it did in the pool.", 250, 0, divide(^objbox_height, 2));
+}
+
+[ai_queue10,legends_boulder]
+npc_walk(%npc_start_coord);

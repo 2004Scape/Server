@@ -310,3 +310,11 @@ export default class Component {
     childX: Uint16Array | null = null;
     childY: Uint16Array | null = null;
 }
+
+export const enum ComActionTarget {
+    OBJ = 1,
+    NPC = 2,
+    LOC = 4,
+    PLAYER = 8,
+    HELD = 16
+}

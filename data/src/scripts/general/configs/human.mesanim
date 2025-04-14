@@ -1,95 +1,97 @@
 [happy]
-len1=chat_happy1
-len2=chat_happy2
-len3=chat_happy3
-len4=chat_happy4
+len1=chathap1
+len2=chathap2
+len3=chathap3
+len4=chathap4
 
 [bored]
-len1=chat_bored1
-len2=chat_bored2
-len3=chat_bored3
-len4=chat_bored4
+len1=chatbored1
+len2=chatbored2
+len3=chatbored3
+len4=chatbored4
 
+// TODO: find real name
 [short]
-len1=chat_short
-len2=chat_short
-len3=chat_short
-len4=chat_short
+len1=shortchatneu1
+len2=shortchatneu1
+len3=shortchatneu1
+len4=shortchatneu1
 
 [neutral]
-len1=chat_neutral1
-len2=chat_neutral2
-len3=chat_neutral3
-len4=chat_neutral4
+len1=chatneu1
+len2=chatneu2
+len3=chatneu3
+len4=chatneu4
 
 [shock]
-len1=chat_shock1
-len2=chat_shock2
-len3=chat_shock3
-len4=chat_shock4
+len1=chatshock1
+len2=chatshock2
+len3=chatshock3
+len4=chatshock4
 
 [confused]
-len1=chat_confused1
-len2=chat_confused2
-len3=chat_confused3
-len4=chat_confused4
+len1=chatcon1
+len2=chatcon2
+len3=chatcon3
+len4=chatcon4
 
-[silent]
-len1=chat_silent
-len2=chat_silent
-len3=chat_silent
-len4=chat_silent
+[idle]
+len1=chatidleneu1
+len2=chatidleneu1
+len3=chatidleneu1
+len4=chatidleneu1
 
 [quiz]
-len1=chat_quiz1
-len2=chat_quiz2
-len3=chat_quiz3
-len4=chat_quiz4
+len1=chatquiz1
+len2=chatquiz2
+len3=chatquiz3
+len4=chatquiz4
 
 [shifty]
-len1=chat_shifty1
-len2=chat_shifty2
-len3=chat_shifty3
-len4=chat_shifty4
+len1=chatshifty1
+len2=chatshifty2
+len3=chatshifty3
+len4=chatshifty4
 
-[worried]
-len1=chat_worried1
-len2=chat_worried2
-len3=chat_worried3
-len4=chat_worried4
+[scared]
+len1=chatscared1
+len2=chatscared2
+len3=chatscared3
+len4=chatscared4
 
 [drunk]
-len1=chat_drunk1
-len2=chat_drunk2
-len3=chat_drunk3
-len4=chat_drunk4
+len1=chatdrunk1
+len2=chatdrunk2
+len3=chatdrunk3
+len4=chatdrunk4
 
+// TODO: find real name
 [verymad]
-len1=chat_verymad
-len2=chat_verymad
-len3=chat_verymad
-len4=chat_verymad
+len1=evilidle1
+len2=evilidle1
+len3=evilidle1
+len4=evilidle1
 
 [laugh]
-len1=chat_laugh1
-len2=chat_laugh2
-len3=chat_laugh3
-len4=chat_laugh4
+len1=chatlaugh1
+len2=chatlaugh2
+len3=chatlaugh3
+len4=chatlaugh4
 
-[madlaugh]
-len1=chat_madlaugh
-len2=chat_madlaugh
-len3=chat_madlaugh
-len4=chat_madlaugh
+[evillaugh]
+len1=evillaugh1
+len2=evillaugh1
+len3=evillaugh1
+len4=evillaugh1
 
 [sad]
-len1=chat_sad1
-len2=chat_sad2
-len3=chat_sad3
-len4=chat_sad4
+len1=chatsad1
+len2=chatsad2
+len3=chatsad3
+len4=chatsad4
 
 [angry]
-len1=chat_angry1
-len2=chat_angry2
-len3=chat_angry3
-len4=chat_angry4
+len1=chatang1
+len2=chatang2
+len3=chatang3
+len4=chatang4

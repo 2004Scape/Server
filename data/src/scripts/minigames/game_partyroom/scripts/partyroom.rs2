@@ -20,9 +20,9 @@ if (npc_find(coord, party_pete, 16, 0) = true) {
 
 [proc,pull_partylever](int $coins)
 // based off the video i'm 99% sure these are correct (changed in 2007)
-loc_anim(partyroom_lever);
+loc_anim(balloondrop_lever);
 inv_del(inv, coins, $coins);
-anim(seq_798, 0); 
+anim(human_boxlever, 0);
 sound_synth(lever, 0, 0);
 
 [label,partyroom_knights]
@@ -93,14 +93,14 @@ while (npc_findnext = true) {
 
 [proc,random_balloon]()(loc)
 switch_int (random(7)) {
-    case 0 : return (loc_115);
-    case 1 : return (loc_116);
-    case 2 : return (loc_117);
-    case 3 : return (loc_118);
-    case 4 : return (loc_119);
-    case 5 : return (loc_120);
-    case 6 : return (loc_121);
-    case default : return (loc_115);
+    case 0 : return (balloon_yellow);
+    case 1 : return (balloon_red);
+    case 2 : return (balloon_blue);
+    case 3 : return (balloon_green);
+    case 4 : return (balloon_purple);
+    case 5 : return (balloon_white);
+    case 6 : return (balloon2);
+    case default : return (balloon_yellow);
 }
 
 [proc,random_partyroom_balloon_coord]()(coord)
@@ -132,29 +132,29 @@ def_loc $broken_balloon = loc_param(next_loc_stage);
 p_arrivedelay;
 p_walk(loc_coord);
 p_delay(0);
-anim(seq_794, 0);
+anim(human_stamp, 0);
 p_delay(0);
 // Temp note: dur updated, does it need ? @indio
 loc_change($broken_balloon, 6);
 // todo: chance was fixed before Jul 2004, was changed to scale off of chest freespace afterwards (this chance is just a guess unfortunately)
 if (~inzone_coord_pair_table(party_room_zones, loc_coord) = true & random(4) = 0) {
-    def_int $partyroom_size = inv_size(partyroominv);
-    def_int $free_slots = calc($partyroom_size - inv_freespace(partyroominv));
+    def_int $partyroom_size = inv_size(partyroom_dropinv);
+    def_int $free_slots = calc($partyroom_size - inv_freespace(partyroom_dropinv));
     def_int $rand_slot = random(calc($free_slots + ~partyroom_empty_slots($free_slots)));
-    def_obj $obj = inv_getobj(partyroominv, $rand_slot);
+    def_obj $obj = inv_getobj(partyroom_dropinv, $rand_slot);
     def_int $count = 1;
-    def_int $obj_total = inv_getnum(partyroominv, $rand_slot);
+    def_int $obj_total = inv_getnum(partyroom_dropinv, $rand_slot);
     if($obj = null) {
         return;
     }
     if(oc_stackable($obj) = true | oc_uncert($obj) ! $obj) {
         $count = ~random_range(1, $obj_total);
     }
-    inv_dropitem(partyroominv, loc_coord, $obj, $count, 100);
+    inv_dropitem(partyroom_dropinv, loc_coord, $obj, $count, 100);
     // for w/e reason, in old videos the inv doesn't reorg sometimes, there doesn't seem to be any specific condition for it
     // https://youtu.be/Ve5UF8B3BMw?si=NKO9H7bd6rJGY_LF&t=251
     if($count = $obj_total & random(3) < 2) {
-        ~reorganize_inv(partyroominv);
+        ~reorganize_inv(partyroom_dropinv);
     }
     return;
 }
@@ -165,7 +165,7 @@ loc_del(1);
 def_int $slot = 0;
 def_int $count = 0;
 while($slot < $free_slots) {
-    if(inv_getobj(partyroominv, $slot) = null) {
+    if(inv_getobj(partyroom_dropinv, $slot) = null) {
         $count = add($count,1);
     }
     $slot = add($slot,1);

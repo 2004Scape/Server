@@ -134,8 +134,9 @@ export type ConfigParseCallback = (key: string, value: string) => ConfigValue | 
 export type ConfigDatIdx = { client: PackedData; server: PackedData };
 export type ConfigPackCallback = (configs: Map<string, ConfigLine[]>) => ConfigDatIdx;
 export type ConfigSaveCallback = (dat: Packet, idx: Packet) => void;
+export type ConfigValidateCallback = (server: Packet, client: Packet) => boolean;
 
-export async function readConfigs(dirTree: Set<string>, extension: string, requiredProperties: string[], parse: ConfigParseCallback, pack: ConfigPackCallback, saveClient: ConfigSaveCallback, saveServer: ConfigSaveCallback) {
+export async function readConfigs(dirTree: Set<string>, extension: string, requiredProperties: string[], parse: ConfigParseCallback, pack: ConfigPackCallback, saveClient: ConfigSaveCallback, saveServer: ConfigSaveCallback, validate?: ConfigValidateCallback) {
     const files = findFiles(dirTree, extension);
 
     const configs = new Map<string, ConfigLine[]>();
@@ -244,6 +245,11 @@ export async function readConfigs(dirTree: Set<string>, extension: string, requi
     }
 
     const { client, server } = pack(configs);
+
+    if (Environment.BUILD_VERIFY && validate && !validate(client.dat, server.dat)) {
+        throw new Error(`${extension} verification failed! Custom data detected.\nSet BUILD_VERIFY=false in your .env file if this is intended.`);
+    }
+
     saveClient(client.dat, client.idx);
     saveServer(server.dat, server.idx);
 }
@@ -474,10 +480,6 @@ export async function packConfigs() {
             parseSeqConfig,
             packSeqConfigs,
             (dat: Packet, idx: Packet) => {
-                if (Environment.BUILD_VERIFY && (!Packet.checkcrc(dat.data, 0, dat.pos, 1638136604) || !Packet.checkcrc(idx.data, 0, idx.pos, 969051566))) {
-                    throw new Error('.seq CRC check failed! Custom data detected.');
-                }
-
                 jag.write('seq.dat', dat);
                 jag.write('seq.idx', idx);
             },
@@ -486,6 +488,9 @@ export async function packConfigs() {
                 idx.save('data/pack/server/seq.idx');
                 dat.release();
                 idx.release();
+            },
+            (client: Packet, _server: Packet): boolean => {
+                return Packet.checkcrc(client.data, 0, client.pos, 1638136604);
             }
         );
     }
@@ -498,10 +503,6 @@ export async function packConfigs() {
             parseLocConfig,
             packLocConfigs,
             (dat: Packet, idx: Packet) => {
-                if (Environment.BUILD_VERIFY && (!Packet.checkcrc(dat.data, 0, dat.pos, 891497087) || !Packet.checkcrc(idx.data, 0, idx.pos, -941401128))) {
-                    throw new Error('.loc CRC check failed! Custom data detected.');
-                }
-
                 jag.write('loc.dat', dat);
                 jag.write('loc.idx', idx);
             },
@@ -510,6 +511,9 @@ export async function packConfigs() {
                 idx.save('data/pack/server/loc.idx');
                 dat.release();
                 idx.release();
+            },
+            (client: Packet, _server: Packet): boolean => {
+                return Packet.checkcrc(client.data, 0, client.pos, 891497087);
             }
         );
     }
@@ -522,10 +526,6 @@ export async function packConfigs() {
             parseFloConfig,
             packFloConfigs,
             (dat: Packet, idx: Packet) => {
-                if (Environment.BUILD_VERIFY && (!Packet.checkcrc(dat.data, 0, dat.pos, 1976597026) || !Packet.checkcrc(idx.data, 0, idx.pos, 561308705))) {
-                    throw new Error('.flo CRC check failed! Custom data detected.');
-                }
-
                 jag.write('flo.dat', dat);
                 jag.write('flo.idx', idx);
             },
@@ -534,6 +534,9 @@ export async function packConfigs() {
                 idx.save('data/pack/server/flo.idx');
                 dat.release();
                 idx.release();
+            },
+            (client: Packet, _server: Packet): boolean => {
+                return Packet.checkcrc(client.data, 0, client.pos, 1976597026);
             }
         );
     }
@@ -546,10 +549,6 @@ export async function packConfigs() {
             parseSpotAnimConfig,
             packSpotAnimConfigs,
             (dat: Packet, idx: Packet) => {
-                if (Environment.BUILD_VERIFY && (!Packet.checkcrc(dat.data, 0, dat.pos, -1279835623) || !Packet.checkcrc(idx.data, 0, idx.pos, -1696140322))) {
-                    throw new Error('.spotanim CRC check failed! Custom data detected.');
-                }
-
                 jag.write('spotanim.dat', dat);
                 jag.write('spotanim.idx', idx);
             },
@@ -558,6 +557,9 @@ export async function packConfigs() {
                 idx.save('data/pack/server/spotanim.idx');
                 dat.release();
                 idx.release();
+            },
+            (client: Packet, _server: Packet): boolean => {
+                return Packet.checkcrc(client.data, 0, client.pos, -1279835623);
             }
         );
     }
@@ -570,10 +572,6 @@ export async function packConfigs() {
             parseNpcConfig,
             packNpcConfigs,
             (dat: Packet, idx: Packet) => {
-                if (Environment.BUILD_VERIFY && (!Packet.checkcrc(dat.data, 0, dat.pos, -2140681882) || !Packet.checkcrc(idx.data, 0, idx.pos, -1986014643))) {
-                    throw new Error('.npc CRC check failed! Custom data detected.');
-                }
-
                 jag.write('npc.dat', dat);
                 jag.write('npc.idx', idx);
             },
@@ -582,6 +580,9 @@ export async function packConfigs() {
                 idx.save('data/pack/server/npc.idx');
                 dat.release();
                 idx.release();
+            },
+            (client: Packet, _server: Packet): boolean => {
+                return Packet.checkcrc(client.data, 0, client.pos, -2140681882);
             }
         );
     }
@@ -594,10 +595,6 @@ export async function packConfigs() {
             parseObjConfig,
             packObjConfigs,
             (dat: Packet, idx: Packet) => {
-                if (Environment.BUILD_VERIFY && (!Packet.checkcrc(dat.data, 0, dat.pos, -840233510) || !Packet.checkcrc(idx.data, 0, idx.pos, 669212954))) {
-                    throw new Error('.obj CRC check failed! Custom data detected.');
-                }
-
                 jag.write('obj.dat', dat);
                 jag.write('obj.idx', idx);
             },
@@ -606,6 +603,29 @@ export async function packConfigs() {
                 idx.save('data/pack/server/obj.idx');
                 dat.release();
                 idx.release();
+            },
+            (client: Packet, _server: Packet): boolean => {
+                return Packet.checkcrc(client.data, 0, client.pos, -840233510);
+
+                // ObjType.load('data/ref');
+                // const current = ObjType.configs;
+
+                // ObjType.parse(null, client);
+                // const proposed = ObjType.configs;
+
+                // for (const obj of current) {
+                //     obj.debugname = '';
+                // }
+
+                // for (const obj of proposed) {
+                //     obj.debugname = '';
+                // }
+
+                // const diff = _.differenceWith(current, proposed, _.isEqual);
+                // console.log(current[diff[0].id]);
+                // console.log(proposed[diff[0].id]);
+
+                // return false;
             }
         );
     }
@@ -618,10 +638,6 @@ export async function packConfigs() {
             parseIdkConfig,
             packIdkConfigs,
             (dat: Packet, idx: Packet) => {
-                if (Environment.BUILD_VERIFY && (!Packet.checkcrc(dat.data, 0, dat.pos, -359342366) || !Packet.checkcrc(idx.data, 0, idx.pos, 667216411))) {
-                    throw new Error('.idk CRC check failed! Custom data detected.');
-                }
-
                 jag.write('idk.dat', dat);
                 jag.write('idk.idx', idx);
             },
@@ -630,6 +646,9 @@ export async function packConfigs() {
                 idx.save('data/pack/server/idk.idx');
                 dat.release();
                 idx.release();
+            },
+            (client: Packet, _server: Packet): boolean => {
+                return Packet.checkcrc(client.data, 0, client.pos, -359342366);
             }
         );
     }
@@ -642,10 +661,6 @@ export async function packConfigs() {
             parseVarpConfig,
             packVarpConfigs,
             (dat: Packet, idx: Packet) => {
-                if (Environment.BUILD_VERIFY && (!Packet.checkcrc(dat.data, 0, dat.pos, 705633567) || !Packet.checkcrc(idx.data, 0, idx.pos, -1843167599))) {
-                    throw new Error('.varp CRC check failed! Custom data detected.');
-                }
-
                 jag.write('varp.dat', dat);
                 jag.write('varp.idx', idx);
             },
@@ -654,6 +669,9 @@ export async function packConfigs() {
                 idx.save('data/pack/server/varp.idx');
                 dat.release();
                 idx.release();
+            },
+            (client: Packet, _server: Packet): boolean => {
+                return Packet.checkcrc(client.data, 0, client.pos, 705633567);
             }
         );
     }

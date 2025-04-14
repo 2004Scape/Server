@@ -90,7 +90,7 @@ def_int $defence_roll = ~player_defence_roll_specific(npc_param(damagetype));
 
 // damage player
 def_int $maxhit = 30;
-if (inv_total(worn, dragonfire_shield) > 0) {
+if (inv_total(worn, antidragonbreathshield) > 0) {
     $maxhit = 5;
     mes("Your shield absorbs most of the dragon fire!"); // late 2004
 } else if (%prayer_protectfrommagic = ^true) {
@@ -109,7 +109,7 @@ if (map_clock < %antifire) {
 }
 
 def_int $damage = randominc(max($maxhit, 0));
-queue(damage_player, 0, $damage);
+queue(combat_damage_player, 0, $damage);
 queue(playerhit_n_retaliate, 0, npc_uid); // this should be a queue* command
 %npc_action_delay = add(map_clock, 4);
 ~npc_set_attack_vars;

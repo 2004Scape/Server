@@ -23,6 +23,6 @@ while(loc_findnext = true) {
                 loc_add(movecoord($central_coord, 1, 0, 1), loc_1563, 1, loc_shape, 3); 
             }
             // Temp note: dur updated
-            loc_add($central_coord, loc_83, $orig_angle, loc_shape, 3);
+            loc_add($central_coord, inviswall, $orig_angle, loc_shape, 3);
      }
 }

@@ -48,6 +48,7 @@ if (npc_find(coord, weakened_delrith, 8, 0) = true) {
 // Between 20 feb and 6 march 2006 this becomes 2 separate message boxes
 // https://www.youtube.com/watch?v=w7uLKC_rYfc
 ~mesbox("As you chant, Delrith is sucked towards the vortex...|Back to the dark dimension from which he came...");
+if_close;
 if (npc_find(coord, weakened_delrith, 8, 0) = true) {
     gosub(npc_death);
 }

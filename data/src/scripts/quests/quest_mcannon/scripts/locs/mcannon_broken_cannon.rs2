@@ -1,4 +1,4 @@
-[oploc1,broken_cannon]
+[oploc1,broken_multicannon]
 if (%mcannon_progress = ^mcannon_tasked_with_fixing_cannon) {
     ~chatplayer("<p,neutral>I guess I'd better fix it with the toolkit I was given.");
     %mcannon_progress = ^mcannon_inspected_cannon_first_time;
@@ -54,7 +54,7 @@ if (testbit(%mcannon_railings, $bit) = true) {
     return;
 }
 
-if (inv_total(inv, tool_kit) < 1) {
+if (inv_total(inv, mcannontoolkit) < 1) {
     // Made up message.
     mes("You need a tool kit to repair the cannon.");
     return;

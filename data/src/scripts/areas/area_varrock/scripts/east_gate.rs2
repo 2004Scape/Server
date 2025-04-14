@@ -16,9 +16,9 @@ if(~check_axis(coord, loc_coord, loc_angle) = false) {
         if_close;
         mes("The guard searches you.");
         p_delay(3);
-        if(inv_total(inv, Ethenea) > 0) {
+        if(inv_total(inv, ethenea) > 0) {
             mes("He takes the vial of ethenea from you.");
-            inv_del(inv, Ethenea, 1);
+            inv_del(inv, ethenea, 1);
             p_delay(3);
         }
         if(inv_total(inv, liquid_honey) > 0) {
@@ -54,7 +54,7 @@ while(loc_findnext = true) {
             def_int $orig_angle = loc_angle;
             def_loc $type = loc_type;
             // Temp note: dur updated
-            loc_change(loc_83, 3);
+            loc_change(inviswall, 3);
             if($type = loc_2050) {
                 loc_add(movecoord($central_coord, -1, 0, 0), loc_2052, 3, loc_shape, 3);
                 loc_add(movecoord($central_coord, -2, 0, 0), loc_2053, 3, loc_shape, 3); 

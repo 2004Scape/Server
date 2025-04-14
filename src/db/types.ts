@@ -8,7 +8,9 @@ export type account = {
     id: Generated<number>;
     username: string;
     password: string;
+    password_updated: string | null;
     email: string | null;
+    oauth_provider: string | null;
     registration_ip: string | null;
     registration_date: Generated<string>;
     logged_in: Generated<number>;
@@ -120,6 +122,15 @@ export type message_thread = {
     from_deleted: string | null;
     messages: Generated<number>;
 };
+export type mod_action = {
+    id: Generated<number>;
+    account_id: number;
+    target_id: number | null;
+    action_id: number;
+    data: string | null;
+    ip: string | null;
+    timestamp: Generated<string>;
+};
 export type newspost = {
     id: Generated<number>;
     category: number;
@@ -172,6 +183,22 @@ export type tag = {
     name: string;
     color: string | null;
 };
+export type wealth_event = {
+    id: Generated<number>;
+    timestamp: string;
+    coord: number;
+    world: Generated<number>;
+    profile: Generated<string>;
+    event_type: Generated<number>;
+    account_id: number;
+    account_session: string;
+    account_items: string;
+    account_value: number;
+    recipient_id: number | null;
+    recipient_session: string | null;
+    recipient_items: string | null;
+    recipient_value: number | null;
+};
 export type DB = {
     account: account;
     account_session: account_session;
@@ -187,10 +214,12 @@ export type DB = {
     message: message;
     message_status: message_status;
     message_thread: message_thread;
+    mod_action: mod_action;
     newspost: newspost;
     private_chat: private_chat;
     public_chat: public_chat;
     report: report;
     session: session;
     tag: tag;
+    wealth_event: wealth_event;
 };

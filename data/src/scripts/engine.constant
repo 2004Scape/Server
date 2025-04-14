@@ -34,6 +34,14 @@
 ^wealth_gained = true
 ^wealth_lost = false
 
+// wealth events
+^wealth_pickup = 5
+^wealth_shop_buy = 6
+^wealth_shop_sell = 7
+^wealth_low_alch = 8
+^wealth_high_alch = 9
+^wealth_partyroom = 10
+
 // longqueue
 ^accelerate = 0
 ^discard = 1

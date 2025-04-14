@@ -2,18 +2,17 @@ import IdkType from '#/cache/config/IdkType.js';
 import LocType from '#/cache/config/LocType.js';
 import NpcType from '#/cache/config/NpcType.js';
 import ObjType from '#/cache/config/ObjType.js';
-import SpotanimType from '#/cache/config/SpotanimType.js';
 import VarPlayerType from '#/cache/config/VarPlayerType.js';
 import { CoordGrid } from '#/engine/CoordGrid.js';
 import CameraInfo from '#/engine/entity/CameraInfo.js';
-import { PlayerQueueType, ScriptArgument } from '#/engine/entity/EntityQueueRequest.js';
 import { PlayerTimerType } from '#/engine/entity/EntityTimer.js';
-import Interaction from '#/engine/entity/Interaction.js';
+import { Interaction } from '#/engine/entity/Interaction.js';
 import { isBufferFull } from '#/engine/entity/NetworkPlayer.js';
 import Player from '#/engine/entity/Player.js';
+import { PlayerQueueType, ScriptArgument } from '#/engine/entity/PlayerQueueRequest.js';
 import { PlayerStat } from '#/engine/entity/PlayerStat.js';
 import { findPath } from '#/engine/GameMap.js';
-import ScriptOpcode from '#/engine/script/ScriptOpcode.js';
+import { ScriptOpcode } from '#/engine/script/ScriptOpcode.js';
 import ScriptPointer, { ActivePlayer, checkedHandler, ProtectedActivePlayer } from '#/engine/script/ScriptPointer.js';
 import ScriptProvider from '#/engine/script/ScriptProvider.js';
 import { CommandHandlers } from '#/engine/script/ScriptRunner.js';
@@ -29,7 +28,6 @@ import {
     ObjTypeValid,
     PlayerStatValid,
     SeqTypeValid,
-    SpotAnimTypeValid,
     StringNotNull,
     GenderValid,
     SkinColourValid
@@ -493,7 +491,7 @@ const PlayerOps: CommandHandlers = {
         const base = player.baseLevels[stat];
         const current = player.levels[stat];
 
-        const boost = ((constant + (base * percent) / 100) | 0);
+        const boost = (constant + (base * percent) / 100) | 0;
         const boosted = Math.min(current + boost, base + boost);
         player.levels[stat] = Math.min(boosted, 255);
         if (stat === PlayerStat.HITPOINTS && player.levels[PlayerStat.HITPOINTS] >= player.baseLevels[PlayerStat.HITPOINTS]) {
@@ -524,9 +522,9 @@ const PlayerOps: CommandHandlers = {
     [ScriptOpcode.SPOTANIM_PL]: checkedHandler(ActivePlayer, state => {
         const delay = check(state.popInt(), NumberNotNull);
         const height = state.popInt();
-        const spotanimType: SpotanimType = check(state.popInt(), SpotAnimTypeValid);
+        const spotanim = state.popInt();
 
-        state.activePlayer.spotanim(spotanimType.id, height, delay);
+        state.activePlayer.spotanim(spotanim, height, delay);
     }),
 
     [ScriptOpcode.STAT_HEAL]: checkedHandler(ActivePlayer, state => {
@@ -1121,6 +1119,19 @@ const PlayerOps: CommandHandlers = {
         const event = state.popString();
 
         state.activePlayer.addWealthLog(isGained ? amount : -amount, event);
+    }),
+
+    [ScriptOpcode.WEALTH_EVENT]: checkedHandler(ActivePlayer, state => {
+        const name = state.popString();
+        const [eventType, count, value] = state.popInts(3);
+
+        const objType = ObjType.getByName(name);
+
+        state.activePlayer.addWealthEvent({
+            event_type: eventType, 
+            account_items: [{ id: objType?.id, name, count }], 
+            account_value: value
+        });
     }),
 
     [ScriptOpcode.P_RUN]: checkedHandler(ProtectedActivePlayer, state => {

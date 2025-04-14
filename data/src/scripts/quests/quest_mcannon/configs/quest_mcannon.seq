@@ -1,4 +1,4 @@
-[cannon_west]
+[mcannon_n_turn]
 frame1=anim_3210
 frame2=anim_3073
 frame3=anim_3098
@@ -11,7 +11,7 @@ frame9=anim_3079
 frame10=anim_3086
 frame11=anim_3109
 
-[cannon_north_west]
+[mcannon_ne_turn]
 frame1=anim_3177
 frame2=anim_3201
 frame3=anim_3224
@@ -25,7 +25,7 @@ frame10=anim_3215
 frame11=anim_3077
 frame12=anim_3101
 
-[cannon_north]
+[mcannon_e_turn]
 frame1=anim_3171
 frame2=anim_3195
 frame3=anim_3218
@@ -39,7 +39,7 @@ frame10=anim_3134
 frame11=anim_3155
 frame12=anim_3180
 
-[cannon_north_east]
+[mcannon_se_turn]
 frame1=anim_3103
 frame2=anim_3124
 frame3=anim_3147
@@ -53,7 +53,7 @@ frame10=anim_3141
 frame11=anim_3164
 frame12=anim_3188
 
-[cannon_east]
+[mcannon_s_turn]
 frame1=anim_3072
 frame2=anim_3097
 frame3=anim_3121
@@ -67,7 +67,7 @@ frame10=anim_3163
 frame11=anim_3187
 frame12=anim_3209
 
-[cannon_south_east]
+[mcannon_sw_turn]
 frame1=anim_3159
 frame2=anim_3184
 frame3=anim_3207
@@ -81,7 +81,7 @@ frame10=anim_3167
 frame11=anim_3191
 frame12=anim_3213
 
-[cannon_south]
+[mcannon_w_turn]
 frame1=anim_3230
 frame2=anim_3095
 frame3=anim_3119
@@ -94,7 +94,7 @@ frame9=anim_3099
 frame10=anim_3156
 frame11=anim_3181
 
-[cannon_south_west]
+[mcannon_nw_turn]
 frame1=anim_3082
 frame2=anim_3106
 frame3=anim_3127

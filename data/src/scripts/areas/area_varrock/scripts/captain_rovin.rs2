@@ -33,7 +33,7 @@ if ($option = 1) {
         ~chatplayer("<p,neutral>There's a demon who wants to invade the city.");
         ~chatnpc("<p,neutral>Is it a powerful demon?");
         ~chatplayer("<p,sad>Yes, very.");
-        ~chatnpc("<p,worried>As good as the palace guards are, I don't know if they're up to taking on a very powerful demon.");
+        ~chatnpc("<p,scared>As good as the palace guards are, I don't know if they're up to taking on a very powerful demon.");
         ~chatplayer("<p,neutral>It's not them who are going to fight the demon, it's me.");
         ~chatnpc("<p,shock>What, all by yourself? How are you going to do that?");
         ~chatplayer("<p,neutral>I'm going to use the powerful sword Silverlight, which I believe you have one of the keys for?");
@@ -42,7 +42,7 @@ if ($option = 1) {
         if_close();
         p_delay(2);
         mes("Captain Rovin hands you a key.");
-        inv_add(inv, demon_rovin_key, 1);
+        inv_add(inv, silverlight_key_2, 1);
     } else if ($important_option = 2) {
         ~chatplayer("<p,sad>Erm I forgot.");
         ~chatnpc("<p,angry>Well it can't be that important then.");

@@ -380,7 +380,7 @@ param=magicdefence,-10
 param=rangedefence,79
 param=damagetype,^slash_style
 param=attack_anim,human_sword_slash
-param=defend_anim,human_sword_defend2
+param=defend_anim,human_sword_def
 // TODO sounds
 // TODO sounds
 // TODO monster examine spell
@@ -425,7 +425,7 @@ param=magicdefence,-10
 param=rangedefence,79
 param=damagetype,^slash_style
 param=attack_anim,human_sword_slash
-param=defend_anim,human_sword_defend2
+param=defend_anim,human_sword_def
 // TODO sounds
 // TODO sounds
 // TODO monster examine spell
@@ -470,7 +470,7 @@ param=magicdefence,-10
 param=rangedefence,79
 param=damagetype,^slash_style
 param=attack_anim,human_sword_slash
-param=defend_anim,human_sword_defend2
+param=defend_anim,human_sword_def
 // TODO sounds
 // TODO sounds
 // TODO monster examine spell
@@ -480,8 +480,8 @@ param=defend_anim,human_sword_defend2
 size=2
 name=Half-Souless
 desc=A creature empty of emotion.
-walkanim=half-souless_ready
-readyanim=half-souless_ready
+walkanim=caged
+readyanim=caged
 vislevel=1
 recol1s=2340
 recol1d=18952
@@ -783,7 +783,7 @@ param=damagetype,^crush_style
 vislevel=hide
 size=2
 walkanim=human_walk_f,human_walk_b,human_walk_l,human_walk_r
-readyanim=sitting_ready
+readyanim=sitting_throne
 name=Lord Iban
 desc=The great and dreadful Lord Iban
 recol1s=15855

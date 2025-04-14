@@ -7,7 +7,7 @@
 vislevel=hide
 name=Strange plant
 desc=A very strange plant.
-readyanim=seq_349
+readyanim=triffid_ready
 op1=Pick
 model1=model_3371_npc
 wanderrange=3
@@ -24,17 +24,17 @@ hitpoints=200
 vislevel=hide
 name=Strange plant
 desc=A very strange plant.
-readyanim=seq_352
-walkanim=seq_356
+readyanim=triffid_angry_ready
+walkanim=triffid_angry_walk
 op2=Attack
 model1=model_3371_npc
 // https://youtu.be/94bDnUMTMXQ?list=PLn23LiLYLb1Y3P9S9qZbijcJihiD416jT
 wanderrange=3
 maxrange=3
 timer=20
-param=attack_anim,seq_353
-param=defend_anim,seq_354
-param=death_anim,seq_355
+param=attack_anim,triffid_angry_attack
+param=defend_anim,triffid_angry_block
+param=death_anim,triffid_angry_death
 param=death_drop,null
 param=attack_sound,triffid_attack
 param=defend_sound,null
@@ -55,8 +55,8 @@ hitpoints=200
 vislevel=hide
 name=Genie
 desc=Maybe he'll grant me a wish...
-walkanim=seq_792
-readyanim=seq_792
+walkanim=human_geni_walkandready
+readyanim=human_geni_walkandready
 hasalpha=yes
 op1=Talk-to
 recol1s=24075
@@ -144,9 +144,9 @@ maxrange=3
 // attack rate is 7 ticks https://youtu.be/5NgTccJZh1o
 param=attackrate,7
 param=attack_sound,swarm_attack
-param=attack_anim,swarm_seq_2
+param=attack_anim,swarm_block
 param=defend_sound,null
-param=defend_anim,swarm_seq_1
+param=defend_anim,swarm_attack
 param=death_drop,null
 param=combat_xp_multiplier,25
 param=max_dealt,0
@@ -594,8 +594,8 @@ defence=9
 category=macro_event_shade
 param=damagetype,^crush_style
 param=attack_anim,human_sword_transslash
-param=defend_anim,earthwarrior_def
-param=death_anim,earthwarrior_death
+param=defend_anim,human_sword_transdef
+param=death_anim,human_transdeath
 param=attack_sound,ghost_attack
 param=defend_sound,ghost_hit
 param=death_sound,ghost_death
@@ -637,8 +637,8 @@ defence=22
 category=macro_event_shade
 param=damagetype,^crush_style
 param=attack_anim,human_sword_transslash
-param=defend_anim,earthwarrior_def
-param=death_anim,earthwarrior_death
+param=defend_anim,human_sword_transdef
+param=death_anim,human_transdeath
 param=attack_sound,ghost_attack
 param=defend_sound,ghost_hit
 param=death_sound,ghost_death
@@ -680,8 +680,8 @@ defence=38
 category=macro_event_shade
 param=damagetype,^crush_style
 param=attack_anim,human_sword_transslash
-param=defend_anim,earthwarrior_def
-param=death_anim,earthwarrior_death
+param=defend_anim,human_sword_transdef
+param=death_anim,human_transdeath
 param=attack_sound,ghost_attack
 param=defend_sound,ghost_hit
 param=death_sound,ghost_death
@@ -723,8 +723,8 @@ defence=65
 category=macro_event_shade
 param=damagetype,^crush_style
 param=attack_anim,human_sword_transslash
-param=defend_anim,earthwarrior_def
-param=death_anim,earthwarrior_death
+param=defend_anim,human_sword_transdef
+param=death_anim,human_transdeath
 param=attack_sound,ghost_attack
 param=defend_sound,ghost_hit
 param=death_sound,ghost_death
@@ -766,8 +766,8 @@ defence=100
 category=macro_event_shade
 param=damagetype,^crush_style
 param=attack_anim,human_sword_transslash
-param=defend_anim,earthwarrior_def
-param=death_anim,earthwarrior_death
+param=defend_anim,human_sword_transdef
+param=death_anim,human_transdeath
 param=attack_sound,ghost_attack
 param=defend_sound,ghost_hit
 param=death_sound,ghost_death
@@ -809,8 +809,8 @@ strength=130
 defence=130
 param=damagetype,^crush_style
 param=attack_anim,human_sword_transslash
-param=defend_anim,earthwarrior_def
-param=death_anim,earthwarrior_death
+param=defend_anim,human_sword_transdef
+param=death_anim,human_transdeath
 param=attack_sound,ghost_attack
 param=defend_sound,ghost_hit
 param=death_sound,ghost_death
@@ -847,12 +847,13 @@ strength=9
 defence=9
 // i assume the stats are identical to other random events
 category=macro_event_watchman
-param=attack_anim,human_blunt_crush
-param=defend_anim,human_blunt_defend2
+param=attack_anim,human_blunt_pound
+param=defend_anim,human_blunt_def
 param=attack_sound,mace_crush
-// param=defend_sound,blade3_mail
+// param=defend_sound,
 param=damagetype,^crush_style
 param=combat_xp_multiplier,25
+// defend_sound blade3_mail
 // https://storage.googleapis.com/tannerdino/images/watchman.PNG here we can see defend animation.
 
 [macro_event_watchman2]
@@ -882,12 +883,13 @@ attack=22
 strength=22
 defence=22
 category=macro_event_watchman
-param=attack_anim,human_blunt_crush
-param=defend_anim,human_blunt_defend2
+param=attack_anim,human_blunt_pound
+param=defend_anim,human_blunt_def
 param=attack_sound,mace_crush
-// param=defend_sound,blade3_mail
+// param=defend_sound,
 param=damagetype,^crush_style
 param=combat_xp_multiplier,25
+// defend_sound blade3_mail
 
 [macro_event_watchman3]
 name=Watchman
@@ -916,12 +918,13 @@ attack=38
 strength=38
 defence=38
 category=macro_event_watchman
-param=attack_anim,human_blunt_crush
-param=defend_anim,human_blunt_defend2
+param=attack_anim,human_blunt_pound
+param=defend_anim,human_blunt_def
 param=attack_sound,mace_crush
-// param=defend_sound,blade3_mail
+// param=defend_sound,
 param=damagetype,^crush_style
 param=combat_xp_multiplier,25
+// defend_sound blade3_mail
 
 [macro_event_watchman4]
 name=Watchman
@@ -950,12 +953,13 @@ attack=65
 strength=65
 defence=65
 category=macro_event_watchman
-param=attack_anim,human_blunt_crush
-param=defend_anim,human_blunt_defend2
+param=attack_anim,human_blunt_pound
+param=defend_anim,human_blunt_def
 param=attack_sound,mace_crush
-// param=defend_sound,blade3_mail
+// param=defend_sound,
 param=damagetype,^crush_style
 param=combat_xp_multiplier,25
+// defend_sound blade3_mail
 
 [macro_event_watchman5]
 name=Watchman
@@ -984,12 +988,13 @@ attack=100
 strength=100
 defence=100
 category=macro_event_watchman
-param=attack_anim,human_blunt_crush
-param=defend_anim,human_blunt_defend2
+param=attack_anim,human_blunt_pound
+param=defend_anim,human_blunt_def
 param=attack_sound,mace_crush
-// param=defend_sound,blade3_mail
+// param=defend_sound,
 param=damagetype,^crush_style
 param=combat_xp_multiplier,25
+// defend_sound blade3_mail
 
 [macro_event_watchman6]
 name=Watchman
@@ -1018,12 +1023,13 @@ attack=130
 strength=130
 defence=130
 category=macro_event_watchman
-param=attack_anim,human_blunt_crush
-param=defend_anim,human_blunt_defend2
+param=attack_anim,human_blunt_pound
+param=defend_anim,human_blunt_def
 param=attack_sound,mace_crush
-// param=defend_sound,blade3_mail
+// param=defend_sound,
 param=damagetype,^crush_style
 param=combat_xp_multiplier,25
+// defend_sound blade3_mail
 
 [brownimp]
 name=Brownie
@@ -1278,7 +1284,6 @@ wanderrange=0
 moverestrict=nomove
 category=macro_event_ent
 param=ent_tree_loc,loc_1276
-param=next_loc_stage,loc_2639
 
 [macro_event_ent_tree2]
 vislevel=hide
@@ -1298,7 +1303,6 @@ wanderrange=0
 moverestrict=nomove
 category=macro_event_ent
 param=ent_tree_loc,loc_1276
-param=next_loc_stage,loc_2639
 
 [macro_event_ent_dead_tree1]
 vislevel=hide
@@ -1318,7 +1322,6 @@ wanderrange=0
 moverestrict=nomove
 category=macro_event_ent
 param=ent_tree_loc,loc_1276
-param=next_loc_stage,loc_2639
 
 [macro_event_ent_dead_tree2]
 vislevel=hide
@@ -1337,7 +1340,6 @@ wanderrange=0
 moverestrict=nomove
 category=macro_event_ent
 param=ent_tree_loc,loc_1276
-param=next_loc_stage,loc_83
 
 [macro_event_ent_oak]
 vislevel=hide
@@ -1376,7 +1378,6 @@ wanderrange=0
 moverestrict=nomove
 category=macro_event_ent
 param=ent_tree_loc,willow_tree
-param=next_loc_stage,loc_2639
 
 [macro_event_ent_yew]
 vislevel=hide
@@ -1414,7 +1415,6 @@ model1=model_loc_1293_8
 moverestrict=nomove
 category=macro_event_ent
 param=ent_tree_loc,maple_tree
-param=next_loc_stage,loc_2639
 
 [macro_event_ent_magic]
 vislevel=hide
@@ -1434,7 +1434,6 @@ wanderrange=0
 moverestrict=nomove
 category=macro_event_ent
 param=ent_tree_loc,magic_tree
-param=next_loc_stage,loc_2639
 
 [macro_event_drunken_dwarf]
 vislevel=hide
@@ -1458,7 +1457,7 @@ maxrange=10
 timer=10
 attack=50
 strength=1
-param=attack_anim,dwarf_seq_928
+param=attack_anim,dwarf_stone_launch
 param=defend_anim,dwarf_block
 param=death_anim,dwarf_death
 param=attackrate,4
@@ -1675,7 +1674,7 @@ category=macro_event_river_troll
 vislevel=hide
 name=Fishing spot
 desc=I can see fish swimming in the water.
-readyanim=seq_456
+readyanim=whirlpool
 hasalpha=yes
 resizeh=32
 resizev=32
@@ -1693,7 +1692,7 @@ param=is_whirlpool,^true
 vislevel=hide
 name=Fishing spot
 desc=I can see fish swimming in the water.
-readyanim=seq_456
+readyanim=whirlpool
 hasalpha=yes
 resizeh=32
 resizev=32
@@ -1711,7 +1710,7 @@ param=is_whirlpool,^true
 vislevel=hide
 name=Fishing spot
 desc=I can see fish swimming in the water.
-readyanim=seq_456
+readyanim=whirlpool
 hasalpha=yes
 resizeh=32
 resizev=32
@@ -1729,7 +1728,7 @@ param=is_whirlpool,^true
 vislevel=hide
 name=Fishing spot
 desc=I can see fish swimming in the water.
-readyanim=seq_456
+readyanim=whirlpool
 hasalpha=yes
 resizeh=32
 resizev=32

@@ -1,4 +1,4 @@
-[oploc1,chompybird_ogre_chest_closed]
+[oploc1,chompybird_chest]
 if (%chompybird_progress < ^chompybird_kids_play_with_toad) {
     mes("Perhaps you'd better ask permission before opening this.");
     return;
@@ -28,9 +28,9 @@ if (%chompybird_progress = ^chompybird_kids_play_with_toad) {
 }
 // duration from OSRS
 // Temp note: dur updated ? Assuming this is an even number so I added 2 instead of 1
-loc_change(chompybird_ogre_chest_open, 50);
+loc_change(chompybird_chest_open, 50);
 
-[oploc1,chompybird_ogre_chest_open]
+[oploc1,chompybird_chest_open]
 anim(human_pickuptable, 0);
 if(inv_totalcat(inv, ogre_bellows) > 0 | inv_totalcat(bank, ogre_bellows) > 0) {
     // https://youtu.be/2EcFiLeajks?si=b5kEBFebuuzpoar-&t=88
@@ -41,5 +41,5 @@ if (inv_freespace(inv) = 0) {
     mes("You find some ogre bellows in the chest but do not have the space to take them."); // RS3
     return;
 }
-inv_add(inv, ogre_bellows_0, 1);
-~objbox(ogre_bellows_0, "You search the chest and find a pair of ogre bellows.", 250, 0, divide(^objbox_height, 2));
+inv_add(inv, empty_ogre_bellows, 1);
+~objbox(empty_ogre_bellows, "You search the chest and find a pair of ogre bellows.", 250, 0, divide(^objbox_height, 2));

@@ -13,7 +13,9 @@ if (finduid(%npc_attacking_uid) = true) {
     if (coordy(coord) ! coordy(npc_coord) | npc_range(coord) > 15) {
         npc_tele(map_findsquare(coord, 1, 1, ^map_findsquare_lineofwalk));
     }
+    return;
 }
+npc_del;
 
 [timer,petcat_growth]
 if (%follower_uid = null) {
@@ -42,6 +44,7 @@ if (npc_finduid(%follower_uid) = true) {
 [label,cat_growth]
 if (getbit_range(%cat_growth, 11, 19) = 320) {
     npc_changetype_keepall(nc_param(npc_type, cat_next_id), ^max_32bit_int);
+    %follower_uid = npc_uid;
     %follower_obj = nc_param(npc_type, pet_item_id);
     %cat_growth = 0; //according to ash, this gets wiped when the cat becomes overgrown
     npc_say("Meeeooowww!");
@@ -56,6 +59,7 @@ if ($attent = 0) {
 }
 if (getbit_range(%cat_growth, 11, 19) = 120) {
     npc_changetype_keepall(nc_param(npc_type, cat_next_id), ^max_32bit_int);
+    %follower_uid = npc_uid;
     %follower_obj = nc_param(npc_type, pet_item_id);
     npc_say("Meeeooowww!");
     ~mesbox("Your kitten has grown into a healthy cat,|that can hunt for itself."); //imgur.com/ni0BBTb
@@ -65,10 +69,10 @@ if (getbit_range(%cat_growth, 11, 19) = 120) {
 switch_int (getbit_range(%cat_growth, 0, 4)) {
     case 16 :
         npc_say("Miaow!");
-        ~chatplayer("<p,worried>I think it's hungry!"); //youtu.be/1vY_uGOq6qM //mes added later
+        ~chatplayer("<p,scared>I think it's hungry!"); //youtu.be/1vY_uGOq6qM //mes added later
     case 18 :
         npc_say("Meeeooowww!");
-        ~chatplayer("<p,worried>I think it's really hungry!"); 
+        ~chatplayer("<p,scared>I think it's really hungry!");
     case 20 :
         mes("Your kitten has run away to look for food.");
         ~follower_death;
@@ -112,7 +116,7 @@ switch_obj(last_useitem) {
         p_delay(0);
         mes("The kitten laps up the milk.");
         npc_say("Purpurr");
-    case raw_shrimps, raw_anchovies, raw_sardine, raw_trout, trout, raw_salmon, salmon, raw_tuna, tuna :
+    case raw_shrimp, raw_anchovies, raw_sardine, raw_trout, trout, raw_salmon, salmon, raw_tuna, tuna :
         %cat_growth = setbit_range_toint(%cat_growth, 0, 0, 4);
         def_string $fishname = lowercase(oc_name(last_useitem));
         inv_del(inv, last_useitem, 1);
@@ -228,7 +232,10 @@ if (npc_finduid(%follower_uid) = true) {
 }
 inv_delslot(inv, last_slot);
 sound_synth(put_down, 0, 0);
-npc_add(coord, oc_param(last_item, follower_id), ^max_32bit_int);
+~cat_spawn(oc_param(last_item, follower_id));
+
+[proc,cat_spawn](npc $type)
+npc_add(coord, $type, ^max_32bit_int);
 %follower_obj = nc_param(npc_type, pet_item_id);
 %follower_uid = npc_uid;
 %npc_attacking_uid = uid;

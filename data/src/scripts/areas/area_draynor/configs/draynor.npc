@@ -192,8 +192,8 @@ param=crushdefence,10
 param=magicdefence,4
 param=rangedefence,9
 param=damagetype,^crush_style
-param=attack_anim,human_blunt_crush
-param=defend_anim,human_blunt_defend1
+param=attack_anim,human_blunt_pound
+param=defend_anim,human_blunt_block
 param=attack_sound,mace_crush
 // At some point (in 2005?) the huntmode was updated to be aggressive
 // when players are 2x or less than the npc combat level instead of
@@ -339,7 +339,7 @@ head2=model_55_idk_head
 head3=model_85_idk_head
 wanderrange=3
 category=shop_keeper
-param=owned_shop,diango_toy
+param=owned_shop,aprilfoolshorseshop
 param=shop_sell_multiplier,1500
 param=shop_buy_multiplier,500
 param=shop_delta,20

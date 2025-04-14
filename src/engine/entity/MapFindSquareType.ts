@@ -1,7 +1,5 @@
-enum MapFindSqaureType {
+export const enum MapFindSquareType {
     LINEOFWALK,
     LINEOFSIGHT,
     NONE
 }
-
-export default MapFindSqaureType;

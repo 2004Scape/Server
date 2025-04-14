@@ -17,6 +17,10 @@
 [command,huntnext]()(boolean)
 // info: Use the next result from huntall on the secondary pointer
 [command,.huntnext]()(boolean)
+// info: Search (hunt) for one npc in a given area, prioritized by distance
+[command,npc_hunt](coord $source, int $distance, int $checkvis)(boolean)
+// info: Search (hunt) for one npc in a given area, prioritized by distance, secondary pointer
+[command,.npc_hunt](coord $source, int $distance, int $checkvis)(boolean)
 // info: Search (hunt) for npcs in a given area
 [command,npc_huntall](coord $source, int $distance, int $checkvis)
 // info: Use the next result from npc_huntall
@@ -483,6 +487,8 @@
 [command,session_log](int $type, string $event)
 // info: Add a wealth event to the player's session logs
 [command,wealth_log](boolean $is_gained, int $amount, string $event)
+// info: Add an event to the player's wealth events
+[command,wealth_event](int $eventType, string $name, int $count, int $value)
 // info: Toggle the player's run-mode
 [command,p_run](int $state)
 
@@ -699,6 +705,12 @@
 [command,obj_coord]()(coord)
 // info: Return true if a specific object exists at $coord
 [command,obj_find](coord $coord, obj $obj)(boolean)
+// info: Find all Objs around $coord (limited to the nearest 8x8 zone area)
+[command,obj_findallzone](coord $coord)
+// info: Use the next result from obj_findallzone
+[command,obj_findnext]()(boolean)
+// info: Use the next result from obj_findallzone
+[command,.obj_findnext]()(boolean)
 
 // Npc config ops (4000-4099)
 // info: Get the name from a npc config

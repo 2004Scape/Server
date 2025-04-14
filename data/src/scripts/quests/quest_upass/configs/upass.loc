@@ -1,4 +1,4 @@
-[loc_3213]
+[upass_caveentrance2]
 name=Cave entrance
 desc=It looks like I can squeeze through here.
 model=model_loc_2
@@ -6,7 +6,7 @@ width=4
 length=2
 op1=Enter
 
-[loc_3214]
+[cave_exit_upass]
 name=Underground Pass Exit
 desc=The easy way out...
 model=model_loc_2
@@ -29,18 +29,18 @@ recol5d=27482
 recol6s=0
 recol6d=32767
 
-[loc_3215]
+[upass_hole]
 model=model_loc_3215
 active=no
 
-[mudpile_upass]
+[upass_mud]
 name=Mud
 desc=A pile of mud.
 model=model_mudpile_upass
 forcedecor=yes
 active=yes
 
-[loc_3217]
+[cavewalltunnel_upass_tocells]
 name=Cave
 desc=I can go through here.
 model=model_loc_1477
@@ -56,7 +56,7 @@ recol3d=4193
 recol4s=6240
 recol4d=3136
 
-[loc_3218]
+[upass_unicorn_doorr]
 name=Tunnel
 desc=Dark and intimidating.
 model=model_loc_1423
@@ -66,7 +66,7 @@ op1=Pass-through
 recol1s=12580
 recol1d=7329
 
-[loc_3219]
+[upass_unicorn_doorl]
 name=Tunnel
 desc=Dark and intimidating.
 model=model_loc_1423
@@ -77,7 +77,7 @@ op1=Pass-through
 recol1s=12580
 recol1d=7329
 
-[loc_3220]
+[cavetempledoor2l]
 name=Door
 desc=That skull's looking at me....
 model=model_loc_3220
@@ -87,7 +87,7 @@ op1=Open
 recol1s=12580
 recol1d=7329
 
-[loc_3221]
+[cavetempledoor2r]
 name=Door
 desc=That skull's looking at me....
 model=model_loc_3220
@@ -98,7 +98,7 @@ op1=Open
 recol1s=12580
 recol1d=7329
 
-[loc_3222]
+[cavewalltunnel_upass_down]
 name=Cave Stairs
 desc=I can climb down these.
 model=model_loc_1477
@@ -114,7 +114,7 @@ recol3d=4193
 recol4s=6240
 recol4d=3136
 
-[loc_3223]
+[cavewalltunnel_upass_up]
 name=Cave Stairs
 desc=I can climb up these.
 model=model_loc_3223
@@ -130,7 +130,7 @@ recol3d=4193
 recol4s=6240
 recol4d=3136
 
-[loc_3224]
+[upass_last_out]
 name=Cave
 desc=I can go through here.
 model=model_loc_1477
@@ -146,7 +146,7 @@ recol3d=4193
 recol4s=6240
 recol4d=3136
 
-[loc_3225]
+[gill_trapr]
 model=model_loc_3225
 blockwalk=no
 mirror=yes
@@ -154,14 +154,14 @@ forcedecor=yes
 recol1s=13537
 recol1d=6272
 
-[loc_3226]
+[gill_trapl]
 model=model_loc_3225
 blockwalk=no
 forcedecor=yes
 recol1s=13537
 recol1d=6272
 
-[loc_3227]
+[gill_trapa]
 name=Trap
 desc=Best not to get caught!
 model=model_loc_3227
@@ -171,19 +171,19 @@ blockwalk=no
 recol1s=13537
 recol1d=6272
 
-[loc_3228]
+[upass_springtrap]
 name=Trap
 desc=Best avoided.
 model=model_loc_3228
 length=3
 
-[loc_3229]
+[upass_springtrap_inactive]
 name=Trap
 desc=Best avoided.
 model=model_loc_3229
 length=2
 
-[loc_3230]
+[upass_double_springtrap_trigger]
 name=Flat rock
 desc=Looks suspicious.
 model=model_loc_3230_0
@@ -194,7 +194,7 @@ op1=Search
 recol1s=13741
 recol1d=6273
 
-[loc_3231]
+[upass_crossing_plank]
 name=Plank
 model=model_loc_755
 sharelight=yes
@@ -203,7 +203,7 @@ blockwalk=no
 blockrange=no
 active=yes
 
-[loc_3232]
+[upass_double_springtrap]
 name=Stalagmites
 desc=Formed over many years.
 model=model_loc_3232
@@ -212,12 +212,12 @@ hillskew=yes
 blockwalk=no
 blockrange=no
 
-[loc_3233]
+[upass_snaptrap_inactive]
 name=Trap
 desc=Best avoided.
 model=model_loc_3233
 
-[loc_3234]
+[upass_speartrap]
 name=Odd markings
 desc=Looks suspicious.
 model=model_loc_3234
@@ -227,7 +227,7 @@ blockwalk=no
 blockrange=no
 op1=Search
 
-[loc_3235]
+[upass_pipe4]
 name=Obstacle pipe
 desc=I can open the grill from this side.
 model=model_loc_2541
@@ -236,7 +236,7 @@ width=2
 recol1s=12580
 recol1d=7329
 
-[loc_3236]
+[upass_pipe5]
 name=Obstacle pipe
 desc=A pipe I can squeeze through.
 model=model_loc_2288
@@ -245,7 +245,7 @@ width=2
 recol1s=12580
 recol1d=7329
 
-[loc_3237]
+[upass_pipe6]
 name=Obstacle pipe
 desc=A pipe I can squeeze through.
 model=model_loc_2288
@@ -264,7 +264,7 @@ mapscene=43
 sharelight=yes
 hillskew=yes
 
-[loc_3239]
+[old_bridge_up]
 name=Bridge
 desc=It looks like only the guide ropes are holding the bridge up.
 model=model_loc_3239
@@ -273,26 +273,26 @@ width=2
 active=yes
 blockrange=no
 
-[loc_3240]
+[old_bridge_animated]
 name=Bridge
 model=model_loc_3240
 length=4
 width=2
-anim=seq_474
+anim=oldbridge
 active=yes
 
-[loc_3241]
+[upass_lever_up]
 name=Lever
 desc=This lever can be operated.
 model=model_loc_670
 op1=Pull
 
-[loc_3242]
+[upass_lever_down]
 name=Lever
 desc=This lever can be operated.
 model=model_loc_669
 
-[loc_3243]
+[platformbase3]
 name=Platform
 desc=The base of a platform.
 model=model_loc_3243
@@ -300,7 +300,7 @@ width=4
 length=4
 sharelight=yes
 
-[loc_3244]
+[platformbase_ground]
 name=Platform
 desc=The base of a platform.
 model=model_loc_3244
@@ -311,7 +311,7 @@ hillskew=yes
 recol1s=12580
 recol1d=7329
 
-[loc_3245]
+[platformbase_ground_upper]
 name=Platform
 desc=The base of a platform.
 model=model_loc_3245
@@ -322,7 +322,7 @@ hillskew=yes
 recol1s=12580
 recol1d=7329
 
-[loc_3246]
+[bridgeplatformtop]
 name=Platform
 desc=The base of a platform.
 model=model_loc_3246
@@ -332,7 +332,7 @@ sharelight=yes
 recol1s=13537
 recol1d=7329
 
-[loc_3247]
+[bridge1]
 name=Bridge
 model=model_loc_3247
 hillskew=yes
@@ -340,7 +340,7 @@ sharelight=yes
 recol1s=12580
 recol1d=7329
 
-[loc_3248]
+[bridge2]
 name=Bridge
 model=model_loc_3248
 hillskew=yes
@@ -349,7 +349,7 @@ hillskew=yes
 recol1s=12580
 recol1d=7329
 
-[loc_3249]
+[bridge3]
 name=Bridge
 model=model_loc_3249
 hillskew=yes
@@ -358,7 +358,7 @@ hillskew=yes
 recol1s=12580
 recol1d=7329
 
-[loc_3250]
+[bridge1_support]
 name=Bridge
 model=model_loc_3250
 hillskew=yes
@@ -387,7 +387,7 @@ sharelight=yes
 recol1s=12580
 recol1d=7329
 
-[loc_3254]
+[bridgecollapsed1]
 name=Bridge
 desc=I can't get past that very easily...
 model=model_loc_3254
@@ -398,7 +398,7 @@ op1=Cross
 recol1s=12580
 recol1d=7329
 
-[loc_3255]
+[bridgecollapsed2]
 name=Bridge
 desc=I can't get past that very easily...
 model=model_loc_3255
@@ -409,13 +409,13 @@ op1=Cross
 recol1s=12580
 recol1d=7329
 
-[loc_3256]
+[platform_distancetop]
 model=model_loc_3256
 width=2
 length=2
 active=no
 
-[loc_3257]
+[platform_distancebottom]
 name=Platform
 model=model_loc_3257
 width=2
@@ -433,7 +433,7 @@ recol5d=0
 recol6s=2048
 recol6d=0
 
-[loc_3258]
+[upass_bridgecorner1]
 name=Bridge
 model=model_loc_3258
 width=2
@@ -442,7 +442,7 @@ sharelight=yes
 recol1s=13537
 recol1d=7329
 
-[loc_3259]
+[upass_bridgecorner2l]
 name=Bridge
 model=model_loc_3259
 width=2
@@ -451,7 +451,7 @@ sharelight=yes
 recol1s=13537
 recol1d=7329
 
-[loc_3260]
+[upass_bridgecorner2r]
 name=Bridge
 model=model_loc_3259
 width=2
@@ -466,19 +466,19 @@ model=model_loc_3250
 sharelight=yes
 hillskew=yes
 
-[loc_3262]
+[upass_walkway_icon]
 model=model_loc_771
 mapscene=43
 forcedecor=yes
 
-[loc_3263]
+[upass_swampbubbles1]
 name=Swamp
 desc=This area may not be safe...
 model=model_swamp_bubbles
-anim=seq_480
+anim=swampbubs
 op1=Cross
 
-[loc_3264]
+[cave_well]
 name=Well
 desc=A well of nastiness.
 model=model_loc_3264
@@ -496,7 +496,7 @@ recol4d=5217
 recol5s=7332
 recol5d=4161
 
-[loc_3265]
+[caverockpile]
 name=Pile of rocks
 desc=I can climb this pile of rocks...
 model=model_loc_13
@@ -504,31 +504,31 @@ length=2
 mapscene=11
 op1=Climb
 
-[loc_3266]
+[cave_railings2]
 name=Cage
 desc=Usually used for storing living things...
 model=model_loc_14
 op1=Pick-lock
 op2=Search
 
-[loc_3267]
+[cave_railings3]
 name=Cage
 desc=Usually used for storing living things...
 model=model_loc_14
 op2=Search
 
-[loc_3268]
+[cave_railings5]
 name=Cage
 desc=Usually used for storing living things...
 model=model_loc_14
 op1=Pick-lock
 op2=Search
 
-[loc_3269]
+[inact_cave_railings]
 model=model_loc_14
 active=no
 
-[loc_3270]
+[cavewitch_door]
 name=Door
 desc=The door is closed.
 model=model_loc_3
@@ -540,7 +540,7 @@ retex1d=door
 recol2s=6342
 recol2d=11458
 
-[loc_3271]
+[witchdoor]
 name=Door
 desc=The door is open.
 model=model_loc_3
@@ -551,25 +551,25 @@ retex1d=door
 recol2s=6342
 recol2d=11458
 
-[loc_3272]
+[cavewitchchest]
 name=Chest
 desc=I wonder what's inside.
 model=wooden_chest
 op1=Open
 
-[loc_3273]
+[cavewitchchestopen]
 name=Chest
 desc=I wonder what's inside.
 model=model_loc_76
 op1=Search
 
-[loc_3274]
+[upassshutchest1]
 name=Chest
 desc=I wonder what's inside.
 model=wooden_chest
 op1=Open
 
-[loc_3275]
+[walkway_upass_narrow_mid]
 model=model_loc_3275
 sharelight=yes
 blockrange=no
@@ -578,7 +578,7 @@ mapscene=43
 recol1s=12580
 recol1d=7329
 
-[loc_3276]
+[walkway_upass_narrow_mid_top]
 name=Stone bridge
 model=model_loc_3276
 sharelight=yes
@@ -589,7 +589,7 @@ mapscene=43
 recol1s=12580
 recol1d=7329
 
-[loc_3277]
+[walkway_upass_narrow_end]
 model=model_loc_3277
 sharelight=yes
 blockrange=no
@@ -598,7 +598,7 @@ mapscene=43
 recol1s=12580
 recol1d=7329
 
-[loc_3278]
+[walkway_upass]
 model=model_loc_3278
 active=no
 sharelight=yes
@@ -607,7 +607,7 @@ mapscene=43
 recol1s=12580
 recol1d=7329
 
-[loc_3279]
+[walkway_upass2]
 model=model_loc_3278_2
 active=no
 sharelight=yes
@@ -616,7 +616,7 @@ mapscene=43
 recol1s=12580
 recol1d=7329
 
-[loc_3280]
+[walkway_upass_end]
 model=model_loc_3280
 active=no
 sharelight=yes
@@ -625,7 +625,7 @@ mapscene=43
 recol1s=12580
 recol1d=7329
 
-[loc_3281]
+[walkway_corner_upass_a]
 model=model_loc_3281
 sharelight=yes
 active=no
@@ -633,7 +633,7 @@ blockrange=no
 recol1s=12580
 recol1d=7329
 
-[loc_3282]
+[walkway_corner_upass_b]
 model=model_loc_3282
 sharelight=yes
 active=no
@@ -641,7 +641,7 @@ blockrange=no
 recol1s=12580
 recol1d=7329
 
-[loc_3283]
+[walkway_corner_upass_c]
 model=model_loc_3283
 sharelight=yes
 active=no
@@ -649,7 +649,7 @@ blockrange=no
 recol1s=12580
 recol1d=7329
 
-[loc_3284]
+[walkway_corner_upass_d]
 model=model_loc_3284
 sharelight=yes
 active=no
@@ -657,7 +657,7 @@ blockrange=no
 recol1s=12580
 recol1d=7329
 
-[loc_3285]
+[walkway_corner_upass_a_2]
 model=model_loc_3281_2
 sharelight=yes
 active=no
@@ -665,7 +665,7 @@ blockrange=no
 recol1s=12580
 recol1d=7329
 
-[loc_3286]
+[walkway_corner_upass_c_2]
 model=model_loc_3283_2
 sharelight=yes
 active=no
@@ -673,7 +673,7 @@ blockrange=no
 recol1s=12580
 recol1d=7329
 
-[loc_3287]
+[walkway_corner_upass_c_3]
 model=model_loc_3283_3
 sharelight=yes
 active=no
@@ -681,7 +681,7 @@ blockrange=no
 recol1s=12580
 recol1d=7329
 
-[loc_3288]
+[walkway_corner_upass_c_4]
 model=model_loc_3283_4
 sharelight=yes
 active=no
@@ -689,7 +689,7 @@ blockrange=no
 recol1s=12580
 recol1d=7329
 
-[loc_3289]
+[walkway_low_upass]
 model=model_loc_3289
 forcedecor=yes
 sharelight=yes
@@ -698,81 +698,81 @@ mapscene=43
 recol1s=12580
 recol1d=7329
 
-[loc_3290]
+[spikes_upass_1]
 model=model_loc_3290_1
 active=no
 
-[loc_3291]
+[spikes_upass_2]
 model=model_loc_3290_2
 active=no
 
-[loc_3292]
+[spikes_upass_3]
 model=model_loc_3290_3
 active=no
 
-[loc_3293]
+[spikes_upass_gdecor]
 model=model_loc_3290
 forcedecor=yes
 
-[loc_3295]
+[stone_tablet1_upass]
 name=Stone tablet
 desc=It's covered in strange writing.
 model=model_loc_3295
 op1=Read
 
-[loc_3296]
+[stone_tablet2_upass]
 name=Stone tablet
 desc=It's covered in strange writing.
 model=model_loc_3295
 op1=Read
 
-[loc_3297]
+[stone_tablet3_upass]
 name=Stone tablet
 desc=It's covered in strange writing.
 model=model_loc_3295
 op1=Read
 
-[loc_3298]
+[stone_tablet4_upass]
 name=Stone tablet
 desc=It's covered in strange writing.
 model=model_loc_3295
 op1=Read
 
-[loc_3299]
+[stone_tablet5_upass]
 name=Stone tablet
 desc=It's covered in strange writing.
 model=model_loc_3295
 op1=Read
 
-[loc_3300]
+[stone_tablet6_upass]
 name=Stone tablet
 desc=It's covered in strange writing.
 model=model_loc_3295
 
-[loc_3301]
-name=Stone tablet
-desc=It's covered in strange writing.
-model=model_loc_3295
-op1=Read
-
-[loc_3302]
+[stone_tablet7_upass]
 name=Stone tablet
 desc=It's covered in strange writing.
 model=model_loc_3295
 op1=Read
 
-[loc_3303]
+[stone_tablet8_upass]
+name=Stone tablet
+desc=It's covered in strange writing.
+model=model_loc_3295
+op1=Read
+
+[portcullis_upass]
 name=Portcullis
 desc=You won't be able to lift that.
 model=model_loc_3303
 width=2
 
-[loc_3304]
+[portcullis_support_upass]
 name=Portcullis
 model=model_loc_3304
 sharelight=yes
 
-[loc_3305]
+[bloodwell_upass]
 name=Well
 desc=It doesn't look like water in there...
 model=model_loc_3264
@@ -790,11 +790,11 @@ recol4d=5217
 recol5s=7332
 recol5d=4161
 
-[loc_3306]
+[chute_upass]
 model=model_loc_3306
 sharelight=yes
 
-[loc_3307]
+[mudpile_upass]
 name=Rockpile
 desc=A pile of rocks.
 model=model_loc_13
@@ -803,7 +803,7 @@ op1=Climb
 recol1s=12512
 recol1d=7329
 
-[loc_3308]
+[unicorncage_destroyed_upass]
 name=Smashed cage
 desc=The boulder has smashed through the cage.
 model=model_loc_3308
@@ -811,7 +811,7 @@ width=4
 length=3
 op1=Search
 
-[loc_3309]
+[rockslide2_obstacle_upass]
 name=Rockslide
 desc=A deposit of rocks.
 model=model_loc_439
@@ -821,95 +821,95 @@ op1=Climb-over
 recol1s=12580
 recol1d=7329
 
-[loc_3310]
+[upass_falloff_1]
 model=model_loc_3310
 active=no
 sharelight=yes
 hillskew=yes
 
-[loc_3311]
+[upass_falloff_2r]
 model=model_loc_3311
 active=no
 sharelight=yes
 hillskew=yes
 
-[loc_3312]
+[upass_falloff_2l]
 model=model_loc_3311
 active=no
 sharelight=yes
 hillskew=yes
 mirror=yes
 
-[loc_3313]
+[upass_falloff_3]
 model=model_loc_3313
 active=no
 sharelight=yes
 hillskew=yes
 
-[loc_3314]
+[upass_falloff_4]
 model=model_loc_3314
 active=no
 sharelight=yes
 hillskew=yes
 
-[loc_3315]
+[upass_falloff_5]
 model=model_loc_3315
 active=no
 sharelight=yes
 hillskew=yes
 
-[loc_3316]
+[upass_falloff_6]
 model=model_loc_3316
 active=no
 sharelight=yes
 hillskew=yes
 
-[loc_3317]
+[upass_falloff_7r]
 model=model_loc_3317
 active=no
 sharelight=yes
 hillskew=yes
 
-[loc_3318]
+[upass_falloff_7l]
 model=model_loc_3317
 active=no
 sharelight=yes
 hillskew=yes
 mirror=yes
 
-[loc_3319]
+[upass_falloff_8]
 model=model_loc_3319
 active=no
 sharelight=yes
 hillskew=yes
 
-[loc_3320]
+[upass_falloff_9]
 model=model_loc_3320
 active=no
 sharelight=yes
 hillskew=yes
 
-[loc_3321]
+[upass_falloff_10]
 model=model_loc_3321
 active=no
 sharelight=yes
 hillskew=yes
 
-[loc_3322]
+[skewsteps1_upass]
 model=model_loc_1862
 hillskew=yes
 sharelight=yes
 recol1s=15855
 recol1d=7329
 
-[loc_3323]
+[skewsteps1_corner_upass]
 model=model_loc_3323
 hillskew=yes
 sharelight=yes
 recol1s=15855
 recol1d=7329
 
-[loc_3324]
+[skewsteps1_corner2_upass]
 model=model_loc_3324
 hillskew=yes
 sharelight=yes
@@ -925,13 +925,13 @@ sharelight=yes
 recol1s=12580
 recol1d=7329
 
-[loc_3326]
+[darkmonster_statue_upass_left]
 model=model_loc_546
 length=3
 sharelight=yes
 active=no
 
-[loc_3327]
+[darkmonster_statue_upass_right]
 name=Eerie statue
 desc=Intimidating!
 model=model_loc_546
@@ -939,24 +939,24 @@ length=3
 sharelight=yes
 mirror=yes
 
-[loc_3328]
+[statue_dwarfminer_upass]
 name=Dwarf statue
 desc=A depiction of a great dwarf miner.
 model=model_loc_568
 recol1s=15855
 recol1d=7329
 
-[loc_3329]
+[upass_skulls+spikes]
 model=model_loc_3329
 width=4
 length=2
 active=no
 
-[loc_3330]
+[upass_templedoor_right]
 model=model_loc_3330
 sharelight=yes
 
-[loc_3331]
+[upass_templedoor_left]
 model=model_loc_3330
 sharelight=yes
 mirror=yes
@@ -965,43 +965,43 @@ mirror=yes
 model=model_loc_3332
 length=4
 
-[loc_3333]
+[upass_templedoor_closed_right]
 name=Door
 desc=A very big door.
 model=model_loc_3333
 length=2
 op1=Open
-param=next_loc_stage,loc_3335
+param=next_loc_stage,upass_templedoor_open_right
 
-[loc_3334]
+[upass_templedoor_closed_left]
 name=Door
 desc=A very big door.
 model=model_loc_3333
 length=2
 mirror=yes
 op1=Open
-param=next_loc_stage,loc_3336
+param=next_loc_stage,upass_templedoor_open_left
 
-[loc_3335]
+[upass_templedoor_open_right]
 name=Door
 desc=A very big door.
 model=model_loc_3335
 length=2
 
-[loc_3336]
+[upass_templedoor_open_left]
 name=Door
 desc=A very big door.
 model=model_loc_3335
 length=2
 mirror=yes
 
-[loc_3337]
+[portcullis_lever_up]
 name=Lever
 desc=This lever can be operated.
 model=model_loc_670
 op1=Pull
 
-[loc_3338]
+[upass_logtrap]
 name=Hanging log
 desc=Why would a log be hung up there?
 model=model_loc_3338
@@ -1010,7 +1010,7 @@ length=5
 blockwalk=no
 blockrange=no
 
-[loc_3339]
+[upass_logtrap_trigger]
 name=Flat rock
 desc=Looks suspicious.
 model=model_loc_3230
@@ -1020,24 +1020,24 @@ op1=Search
 recol1s=13741
 recol1d=6273
 
-[loc_3340]
+[oldbridge_guiderope]
 name=Guide rope
 desc=Looks like the rope is holding the bridge up.
 model=model_loc_3340
 op1=Fire-at
 active=yes
 
-[loc_3341]
+[oldbridge_guiderope_left]
 name=Guide rope
 desc=Looks like the other rope is holding the bridge up.
 model=model_loc_3340
 mirror=yes
 
-[loc_3342]
+[oldbridge_guiderope_cut]
 model=model_loc_3342
 active=no
 
-[loc_3343]
+[rocks_obstaclepit_upass]
 name=Rock pile
 desc=A pile of rocks.
 model=model_loc_472
@@ -1050,13 +1050,13 @@ op1=Climb-over
 recol1s=12580
 recol1d=7329
 
-[loc_3344]
+[upassdwarfbrewbarrel]
 name=Barrel
 desc=It's got dwarf brew in it.
 model=model_loc_364
 forceapproach=south
 
-[loc_3345]
+[iban_temple_claws_r]
 model=model_loc_3345
 width=2
 length=7
@@ -1066,7 +1066,7 @@ recol1d=7329
 recol2s=13537
 recol2d=6272
 
-[loc_3346]
+[iban_temple_claws_l]
 model=model_loc_3345
 width=2
 length=7
@@ -1077,7 +1077,7 @@ recol1d=7329
 recol2s=13537
 recol2d=6272
 
-[loc_3347]
+[iban_temple_skull]
 model=model_loc_3347
 width=4
 active=no
@@ -1086,7 +1086,7 @@ recol1d=7329
 recol2s=13537
 recol2d=6272
 
-[loc_3348]
+[iban_temple_throne]
 name=Iban's Throne
 desc=Lord Iban's Throne.
 model=model_loc_3348
@@ -1110,13 +1110,13 @@ recol1d=7329
 recol2s=13537
 recol2d=6272
 
-[loc_3350]
+[upass_cage]
 model=model_loc_3350
 mapscene=22
 active=no
 blockwalk=no
 
-[loc_3351]
+[upass_cage_dummy]
 name=Cage
 desc=I'm glad I'm on this side of those bars.
 model=model_loc_3351
@@ -1125,7 +1125,7 @@ length=2
 active=yes
 op1=Search
 
-[loc_3352]
+[upass_cage_dummy_dummy]
 name=Cage
 desc=I'm glad I'm on this side of those bars.
 model=model_loc_3351
@@ -1134,7 +1134,7 @@ length=2
 active=yes
 op1=Search
 
-[loc_3353]
+[ibantomb_left]
 name=Tomb
 desc=I don't much like the look of that...
 model=model_loc_3353
@@ -1148,7 +1148,7 @@ recol2s=12548
 recol2d=8385
 category=ibantomb
 
-[loc_3354]
+[ibantomb_right]
 name=Tomb
 desc=I don't much like the look of that...
 model=model_loc_3353
@@ -1200,25 +1200,25 @@ recol5d=14798
 recol6s=21131
 recol6d=14798
 
-[loc_3357]
+[iban_firewall_straight]
 model=model_loc_715
-anim=seq_476
+anim=firewall
 hasalpha=yes
 ambient=100
 contrast=100
 resizey=512
 mapscene=22
 
-[loc_3358]
+[iban_firewall_diagonal]
 model=model_loc_716
-anim=seq_476
+anim=firewall
 hasalpha=yes
 ambient=100
 contrast=100
 resizey=512
 mapscene=22
 
-[loc_3359]
+[cave_temple_altar]
 name=Well
 desc=Well of the damned.
 model=model_loc_3264
@@ -1235,37 +1235,37 @@ recol4d=5217
 recol5s=7332
 recol5d=4161
 
-[loc_3360]
+[cavefood1]
 name=Crate
 desc=A wooden crate for storage.
 model=model_loc_355
 op1=Search
 
-[loc_3361]
+[caveorb_vis]
 name=Orb of Light
 desc=A magical sphere that glimmers within.
 model=model_loc_3361
 active=yes
 op3=Take
 
-[loc_3362]
+[upass_witchwindow]
 name=Window
 desc=A window.
 model=model_loc_1821
 ambient=50
 op1=Search
 
-[loc_3363]
+[upass_walkway_spikes]
 model=model_loc_3363
 
-[loc_3364]
+[obstical_rockswing_middle_for_clipping]
 name=Rock
 desc=A odd looking rock formation.
 model=model_loc_2275
 length=6
 blockwalk=no
 
-[loc_3365]
+[upass_grilltrap_hand_holds]
 name=Protruding rocks
 desc=Looks like I can climb these.
 model=model_loc_1444

@@ -1,4 +1,4 @@
-[strange_fruit]
+[macro_triffidfruit]
 name=Strange fruit
 desc=I wonder what this tastes like?
 model=model_2432_obj
@@ -10,7 +10,7 @@ weight=3oz
 iop1=Eat
 param=cures_poison,yes
 
-[pickaxe_handle]
+[macro_pickaxehandle]
 name=Pickaxe handle
 desc=Useless without the head.
 model=model_2597_obj
@@ -26,13 +26,13 @@ manwear=model_558_obj_wear,0
 womanwear=model_558_obj_wear,6
 cost=1
 param=attackrate,5
-param=crushattack_anim,human_blunt_crush
-param=defend_anim,human_baxe_defend1
+param=crushattack_anim,human_blunt_pound
+param=defend_anim,human_axe_block
 param=crush_sound,baxe_crush
 // stats mentioned here https://web.archive.org/web/20050303033424/http://koti.mbnet.fi/~timpat/index2.htm -> esineet -> aseet -> Kirveenvarsi(Headless axe)
 // Trivia mentions that the this item can be taken to the entrana. https://runescape.wiki/w/Lost_City
 
-[bronze_pickaxe_broken]
+[macro_broken_bronze_pickaxe]
 name=Broken pickaxe
 desc=Nurmof can fix this for me.
 model=model_2662_obj
@@ -50,15 +50,15 @@ manwear=model_530_obj_wear,0
 womanwear=model_530_obj_wear,6
 cost=0
 param=attackrate,5
-param=stabattack_anim,human_blunt_crush
-param=crushattack_anim,human_blunt_stab
-param=defend_anim,human_baxe_defend1
+param=stabattack_anim,human_blunt_pound
+param=crushattack_anim,human_blunt_spike
+param=defend_anim,human_axe_block
 param=stab_sound,baxe_slash
 param=crush_sound,baxe_crush
 param=to_be_fixed_by_nurmof,^true
 param=fixed,bronze_pickaxe
 
-[iron_pickaxe_broken]
+[macro_broken_iron_pickaxe]
 name=Broken pickaxe
 desc=Nurmof can fix this for me.
 model=model_2662_obj
@@ -76,15 +76,15 @@ manwear=model_530_obj_wear,0
 womanwear=model_530_obj_wear,6
 cost=0
 param=attackrate,5
-param=stabattack_anim,human_blunt_crush
-param=crushattack_anim,human_blunt_stab
-param=defend_anim,human_baxe_defend1
+param=stabattack_anim,human_blunt_pound
+param=crushattack_anim,human_blunt_spike
+param=defend_anim,human_axe_block
 param=stab_sound,baxe_slash
 param=crush_sound,baxe_crush
 param=to_be_fixed_by_nurmof,^true
 param=fixed,iron_pickaxe
 
-[steel_pickaxe_broken]
+[macro_broken_steel_pickaxe]
 name=Broken pickaxe
 desc=Nurmof can fix this for me.
 model=model_2662_obj
@@ -100,15 +100,15 @@ manwear=model_530_obj_wear,0
 womanwear=model_530_obj_wear,6
 cost=17
 param=attackrate,5
-param=stabattack_anim,human_blunt_crush
-param=crushattack_anim,human_blunt_stab
-param=defend_anim,human_baxe_defend1
+param=stabattack_anim,human_blunt_pound
+param=crushattack_anim,human_blunt_spike
+param=defend_anim,human_axe_block
 param=stab_sound,baxe_slash
 param=crush_sound,baxe_crush
 param=to_be_fixed_by_nurmof,^true
 param=fixed,steel_pickaxe
 
-[mithril_pickaxe_broken]
+[macro_broken_mithril_pickaxe]
 name=Broken pickaxe
 desc=Nurmof can fix this for me.
 model=model_2662_obj
@@ -126,15 +126,15 @@ manwear=model_530_obj_wear,0
 womanwear=model_530_obj_wear,6
 cost=43
 param=attackrate,5
-param=stabattack_anim,human_blunt_crush
-param=crushattack_anim,human_blunt_stab
-param=defend_anim,human_baxe_defend1
+param=stabattack_anim,human_blunt_pound
+param=crushattack_anim,human_blunt_spike
+param=defend_anim,human_axe_block
 param=stab_sound,baxe_slash
 param=crush_sound,baxe_crush
 param=to_be_fixed_by_nurmof,^true
 param=fixed,mithril_pickaxe
 
-[adamant_pickaxe_broken]
+[macro_broken_adamant_pickaxe]
 name=Broken pickaxe
 desc=Nurmof can fix this for me.
 model=model_2662_obj
@@ -152,15 +152,15 @@ manwear=model_530_obj_wear,0
 womanwear=model_530_obj_wear,6
 cost=107
 param=attackrate,5
-param=stabattack_anim,human_blunt_crush
-param=crushattack_anim,human_blunt_stab
-param=defend_anim,human_baxe_defend1
+param=stabattack_anim,human_blunt_pound
+param=crushattack_anim,human_blunt_spike
+param=defend_anim,human_axe_block
 param=stab_sound,baxe_slash
 param=crush_sound,baxe_crush
 param=to_be_fixed_by_nurmof,^true
 param=fixed,adamant_pickaxe
 
-[rune_pickaxe_broken]
+[macro_broken_rune_pickaxe]
 name=Broken pickaxe
 desc=Nurmof can fix this for me.
 model=model_2662_obj
@@ -178,15 +178,15 @@ manwear=model_530_obj_wear,0
 womanwear=model_530_obj_wear,6
 cost=1100
 param=attackrate,5
-param=stabattack_anim,human_blunt_crush
-param=crushattack_anim,human_blunt_stab
-param=defend_anim,human_baxe_defend1
+param=stabattack_anim,human_blunt_pound
+param=crushattack_anim,human_blunt_spike
+param=defend_anim,human_axe_block
 param=stab_sound,baxe_slash
 param=crush_sound,baxe_crush
 param=to_be_fixed_by_nurmof,^true
 param=fixed,rune_pickaxe
 
-[bronze_pickaxe_head]
+[macro_bronze_pickaxehead]
 name=Pickaxe head
 desc=It's missing a handle.
 model=model_2732_obj
@@ -201,7 +201,7 @@ weight=4lb
 cost=1
 param=fixed,bronze_pickaxe
 
-[iron_pickaxe_head]
+[macro_iron_pickaxehead]
 name=Pickaxe head
 desc=It's missing a handle.
 model=model_2732_obj
@@ -216,7 +216,7 @@ weight=4lb
 cost=139
 param=fixed,iron_pickaxe
 
-[steel_pickaxe_head]
+[macro_steel_pickaxehead]
 name=Pickaxe head
 desc=It's missing a handle.
 model=model_2732_obj
@@ -229,7 +229,7 @@ weight=4lb
 cost=499
 param=fixed,steel_pickaxe
 
-[mithril_pickaxe_head]
+[macro_mithril_pickaxehead]
 name=Pickaxe head
 desc=It's missing a handle.
 model=model_2732_obj
@@ -244,7 +244,7 @@ weight=4lb
 cost=1299
 param=fixed,mithril_pickaxe
 
-[adamant_pickaxe_head]
+[macro_adamant_pickaxehead]
 name=Pickaxe head
 desc=It's missing a handle.
 model=model_2732_obj
@@ -259,7 +259,7 @@ weight=4lb
 cost=3199
 param=fixed,adamant_pickaxe
 
-[rune_pickaxe_head]
+[macro_rune_pickaxehead]
 name=Pickaxe head
 desc=It's missing a handle.
 model=model_2732_obj
@@ -274,7 +274,7 @@ weight=4lb
 cost=31999
 param=fixed,rune_pickaxe
 
-[axe_handle]
+[macro_hatchethandle]
 name=Axe handle
 desc=Useless without the head.
 model=model_2597_obj
@@ -292,13 +292,13 @@ manwear=model_557_obj_wear,0
 womanwear=model_557_obj_wear,6
 cost=1
 param=attackrate,5
-param=crushattack_anim,human_blunt_crush
-param=defend_anim,human_baxe_defend1
+param=crushattack_anim,human_blunt_pound
+param=defend_anim,human_axe_block
 param=crush_sound,baxe_crush
 // stats mentioned here https://web.archive.org/web/20050303033424/http://koti.mbnet.fi/~timpat/index2.htm -> esineet -> aseet -> Kirveenvarsi(Headless axe)
 // Trivia mentions that the this item can be taken to the entrana. https://runescape.wiki/w/Lost_City
 
-[bronze_axe_broken]
+[macro_broken_bronze_hatchet]
 name=Broken axe
 desc=Bob can fix this for me.
 model=model_2342_obj
@@ -315,15 +315,15 @@ manwear=model_487_obj_wear,0
 womanwear=model_487_obj_wear,6
 cost=0
 param=attackrate,5
-param=slashattack_anim,human_baxe_slash
-param=crushattack_anim,human_blunt_crush
-param=defend_anim,human_baxe_defend1
+param=slashattack_anim,human_axe_hack
+param=crushattack_anim,human_blunt_pound
+param=defend_anim,human_axe_block
 param=slash_sound,baxe_slash
 param=crush_sound,baxe_crush
 param=to_be_fixed_by_bob,^true
 param=fixed,bronze_axe
 
-[iron_axe_broken]
+[macro_broken_iron_hatchet]
 name=Broken axe
 desc=Bob can fix this for me.
 model=model_2342_obj
@@ -340,15 +340,15 @@ manwear=model_487_obj_wear,0
 womanwear=model_487_obj_wear,6
 cost=0
 param=attackrate,5
-param=slashattack_anim,human_baxe_slash
-param=crushattack_anim,human_blunt_crush
-param=defend_anim,human_baxe_defend1
+param=slashattack_anim,human_axe_hack
+param=crushattack_anim,human_blunt_pound
+param=defend_anim,human_axe_block
 param=slash_sound,baxe_slash
 param=crush_sound,baxe_crush
 param=to_be_fixed_by_bob,^true
 param=fixed,iron_axe
 
-[steel_axe_broken]
+[macro_broken_steel_hatchet]
 name=Broken axe
 desc=Bob can fix this for me.
 model=model_2342_obj
@@ -363,15 +363,15 @@ manwear=model_487_obj_wear,0
 womanwear=model_487_obj_wear,6
 cost=0
 param=attackrate,5
-param=slashattack_anim,human_baxe_slash
-param=crushattack_anim,human_blunt_crush
-param=defend_anim,human_baxe_defend1
+param=slashattack_anim,human_axe_hack
+param=crushattack_anim,human_blunt_pound
+param=defend_anim,human_axe_block
 param=slash_sound,baxe_slash
 param=crush_sound,baxe_crush
 param=to_be_fixed_by_bob,^true
 param=fixed,steel_axe
 
-[black_axe_broken]
+[macro_broken_black_hatchet]
 name=Broken axe
 desc=Bob can fix this for me.
 model=model_2342_obj
@@ -388,15 +388,15 @@ manwear=model_487_obj_wear,0
 womanwear=model_487_obj_wear,6
 cost=10
 param=attackrate,5
-param=slashattack_anim,human_baxe_slash
-param=crushattack_anim,human_blunt_crush
-param=defend_anim,human_baxe_defend1
+param=slashattack_anim,human_axe_hack
+param=crushattack_anim,human_blunt_pound
+param=defend_anim,human_axe_block
 param=slash_sound,baxe_slash
 param=crush_sound,baxe_crush
 param=to_be_fixed_by_bob,^true
 param=fixed,black_axe
 
-[mithril_axe_broken]
+[macro_broken_mithril_hatchet]
 name=Broken axe
 desc=Bob can fix this for me.
 model=model_2342_obj
@@ -413,15 +413,15 @@ manwear=model_487_obj_wear,0
 womanwear=model_487_obj_wear,6
 cost=18
 param=attackrate,5
-param=slashattack_anim,human_baxe_slash
-param=crushattack_anim,human_blunt_crush
-param=defend_anim,human_baxe_defend1
+param=slashattack_anim,human_axe_hack
+param=crushattack_anim,human_blunt_pound
+param=defend_anim,human_axe_block
 param=slash_sound,baxe_slash
 param=crush_sound,baxe_crush
 param=to_be_fixed_by_bob,^true
 param=fixed,mithril_axe
 
-[adamant_axe_broken]
+[macro_broken_adamant_hatchet]
 name=Broken axe
 desc=Bob can fix this for me.
 model=model_2342_obj
@@ -438,15 +438,15 @@ manwear=model_487_obj_wear,0
 womanwear=model_487_obj_wear,6
 cost=43
 param=attackrate,5
-param=slashattack_anim,human_baxe_slash
-param=crushattack_anim,human_blunt_crush
-param=defend_anim,human_baxe_defend1
+param=slashattack_anim,human_axe_hack
+param=crushattack_anim,human_blunt_pound
+param=defend_anim,human_axe_block
 param=slash_sound,baxe_slash
 param=crush_sound,baxe_crush
 param=to_be_fixed_by_bob,^true
 param=fixed,adamant_axe
 
-[rune_axe_broken]
+[macro_broken_rune_hatchet]
 name=Broken axe
 desc=Bob can fix this for me.
 model=model_2342_obj
@@ -463,15 +463,15 @@ manwear=model_487_obj_wear,0
 womanwear=model_487_obj_wear,6
 cost=427
 param=attackrate,5
-param=slashattack_anim,human_baxe_slash
-param=crushattack_anim,human_blunt_crush
-param=defend_anim,human_baxe_defend1
+param=slashattack_anim,human_axe_hack
+param=crushattack_anim,human_blunt_pound
+param=defend_anim,human_axe_block
 param=slash_sound,baxe_slash
 param=crush_sound,baxe_crush
 param=to_be_fixed_by_bob,^true
 param=fixed,rune_axe
 
-[bronze_axe_head]
+[macro_bronze_hatchethead]
 name=Axe head
 desc=It's missing a handle.
 model=model_2444_obj
@@ -485,7 +485,7 @@ weight=2lb
 cost=15
 param=fixed,bronze_axe
 
-[iron_axe_head]
+[macro_iron_hatchethead]
 name=Axe head
 desc=It's missing a handle.
 model=model_2444_obj
@@ -499,7 +499,7 @@ weight=2lb
 cost=55
 param=fixed,iron_axe
 
-[steel_axe_head]
+[macro_steel_hatchethead]
 name=Axe head
 desc=It's missing a handle.
 model=model_2444_obj
@@ -511,7 +511,7 @@ weight=2lb
 cost=199
 param=fixed,steel_axe
 
-[black_axe_head]
+[macro_black_hatchethead]
 name=Axe head
 desc=It's missing a handle.
 model=model_2444_obj
@@ -525,7 +525,7 @@ weight=2lb
 cost=383
 param=fixed,black_axe
 
-[mithril_axe_head]
+[macro_mithril_hatchethead]
 name=Axe head
 desc=It's missing a handle.
 model=model_2444_obj
@@ -539,7 +539,7 @@ weight=24oz
 cost=519
 param=fixed,mithril_axe
 
-[adamant_axe_head]
+[macro_adamant_hatchethead]
 name=Axe head
 desc=It's missing a handle.
 model=model_2444_obj
@@ -553,7 +553,7 @@ weight=40oz
 cost=1279
 param=fixed,adamant_axe
 
-[rune_axe_head]
+[macro_rune_hatchethead]
 name=Axe head
 desc=It's missing a handle.
 model=model_2444_obj

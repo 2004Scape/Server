@@ -18,7 +18,9 @@ model account {
 
     username String  @unique
     password String
+    password_updated DateTime?
     email    String?
+    oauth_provider  String?
 
     registration_ip   String?
     registration_date DateTime @default(now())
@@ -104,6 +106,29 @@ model account_tag {
     account_id Int
 
     @@id([account_id, tag_id])
+}
+
+model wealth_event {
+    id Int @id @default(autoincrement())
+
+    timestamp   DateTime
+    coord       Int
+    world       Int     @default(0)
+    profile     String  @default("main")
+
+    event_type          Int     @default(-1)
+
+    account_id         Int
+    account_session    String
+    account_items      String  @db.MediumText
+    account_value      Int
+
+    recipient_id         Int?
+    recipient_session     String?
+    recipient_items      String? @db.MediumText
+    recipient_value      Int?
+
+    @@index([recipient_id])
 }
 
 // website
@@ -253,4 +278,16 @@ model message_status {
   account_id Int
   read       DateTime?
   deleted    DateTime?
+}
+
+model mod_action {
+    id Int @id @default(autoincrement())
+
+    account_id Int
+    target_id  Int?
+
+    action_id Int
+    data      String?
+    ip        String?
+    timestamp DateTime @default(now())
 }

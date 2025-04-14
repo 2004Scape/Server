@@ -1,13 +1,17 @@
-[timer,cannon_rotate]
+[timer,cannon_rotate](int $dir)
+// automatically starts spinning: https://youtu.be/TeQXQDaawO0?t=234, https://youtu.be/Vsnkdq8OOMg
+// at https://youtu.be/WWyNTsMXjTE?t=26 the cannon doesnt auto rotate immediately 
+// but at https://youtu.be/WWyNTsMXjTE?t=219 the cannon does
+
+// i think this is because picking up the cannon doesnt reset the timer.
+settimer(cannon_rotate, 1, modulo(add($dir, 1), 8));
 if (%mcannon_coord = null | loc_find(%mcannon_coord, cannon) = false) {
-    cleartimer(cannon_rotate);
     return;
 }
 def_coord $center = movecoord(loc_coord, 1, 0, 1);
 def_coord $close_range = movecoord($center, 0, 0, 3);
 def_coord $medium_range = movecoord($center, 0, 0, 7);
 def_coord $long_range = movecoord($center, 0, 0, 14);
-def_int $dir = modulo(%mcannon_clock, 8);
 // start north, going clockwise
 if ($dir = 0) {
     // automatically starts spinning: https://youtu.be/TeQXQDaawO0?t=234
@@ -21,63 +25,60 @@ if ($dir = 0) {
     $close_range = movecoord($center, 0, 0, 3);
     $medium_range = movecoord($center, 0, 0, 7);
     $long_range = movecoord($center, 0, 0, 14);
-    loc_anim(cannon_north_west);
+    loc_anim(mcannon_ne_turn);
 } else if ($dir = 1) {
     $close_range = movecoord($center, 2, 0, 2);
     $medium_range = movecoord($center, 5, 0, 5);
     $long_range = movecoord($center, 12, 0, 12);
-    loc_anim(cannon_north);
+    loc_anim(mcannon_e_turn);
 } else if ($dir = 2) {
     $close_range = movecoord($center, 3, 0, 0);
     $medium_range = movecoord($center, 7, 0, 0);
     $long_range = movecoord($center, 14, 0, 0);
-    loc_anim(cannon_north_east);
+    loc_anim(mcannon_se_turn);
 } else if ($dir = 3) {
     $close_range = movecoord($center, 2, 0, -2);
     $medium_range = movecoord($center, 5, 0, -5);
     $long_range = movecoord($center, 12, 0, -12);
-    loc_anim(cannon_east);
+    loc_anim(mcannon_s_turn);
 } else if ($dir = 4) {
     $close_range = movecoord($center, 0, 0, -3);
     $medium_range = movecoord($center, 0, 0, -7);
     $long_range = movecoord($center, 0, 0, -14);
-    loc_anim(cannon_south_east);
+    loc_anim(mcannon_sw_turn);
 } else if ($dir = 5) {
     $close_range = movecoord($center, -2, 0, -2);
     $medium_range = movecoord($center, -5, 0, -5);
     $long_range = movecoord($center, -12, 0, -12);
-    loc_anim(cannon_south);
+    loc_anim(mcannon_w_turn);
 } else if ($dir = 6) {
     $close_range = movecoord($center, -3, 0, 0);
     $medium_range = movecoord($center, -7, 0, 0);
     $long_range = movecoord($center, -14, 0, 0);
-    loc_anim(cannon_south_west);
+    loc_anim(mcannon_nw_turn);
 } else if ($dir = 7) {
     $close_range = movecoord($center, -2, 0, 2);
     $medium_range = movecoord($center, -5, 0, 5);
     $long_range = movecoord($center, -12, 0, 12);
-    loc_anim(cannon_west);
+    loc_anim(mcannon_n_turn);
 }
-%mcannon_clock = add(%mcannon_clock, 1);
 
-// check close range
-npc_huntall($close_range, 1, 1);
-while (npc_huntnext = true) {
+// Check close range
+if (npc_hunt($close_range, 1, 1) = true) {
     if (lineofsight($center, npc_coord) = true) {
         jump(cannon_fire);
     }
 }
 
-// check med range
-npc_huntall($medium_range, 2, 1);
-while (npc_huntnext = true) {
+// Check med range
+if (npc_hunt($medium_range, 2, 1) = true) {
     if (lineofsight($center, npc_coord) = true) {
         jump(cannon_fire);
     }
 }
-// check long range
-npc_huntall($long_range, 5, 1);
-while (npc_huntnext = true) {
+
+// Check long range
+if (npc_hunt($long_range, 5, 1) = true) {
     if (lineofsight($center, npc_coord) = true) {
         jump(cannon_fire);
     }
@@ -127,8 +128,6 @@ if (random(4) = 0 & %mcannon_coord ! null) { // guess
     if (loc_find(%mcannon_coord, cannon) = true) {
         mes("Your cannon has been destroyed!");
         loc_del(1);
-        %mcannon_coord = null;
-        %mcannon_ammo = 0;
         cleartimer(cannon_rotate);
     }
     
@@ -138,13 +137,14 @@ if (random(4) = 0 & %mcannon_coord ! null) { // guess
 if (%mcannon_coord ! null) {
     mes(tostring(coordx(%mcannon_coord)));
 }
-mes(tostring(map_clock));
+mes(tostring(%mcannon_stage));
 
 [debugproc,givemc]
-inv_add(inv, cannon_base, 1);
-inv_add(inv, cannon_stand, 1);
-inv_add(inv, cannon_barrels, 1);
-inv_add(inv, cannon_furnace, 1);
+inv_add(inv, twpart1, 1);
+inv_add(inv, twpart2, 1);
+inv_add(inv, twpart3, 1);
+inv_add(inv, twpart4, 1);
+inv_add(inv, mcannonball, 1000);
 
 [debugproc,completemc]
 queue(mcannon_complete, 0);
@@ -163,19 +163,19 @@ if (%mcannon_coord = null | loc_find(%mcannon_coord, cannon) = true) {
     return;
 }
 if (%mcannon_coord ! null) {
-    if (loc_find(%mcannon_coord, cannon_base) = true) {
+    if (loc_find(%mcannon_coord, multicannon_base) = true) {
         ~chatnpc_specific("Nulodion", nulodion, "<p,confused>Hmmm. I think you'll find the base still happily parked on the spot where you put it."); // osrs
         ~chatplayer("<p,confused>Oh, is it still there? I thought I'd lost it.");
         ~chatnpc_specific("Nulodion", nulodion, "<p,laugh>Ha ha ha, what a muddle-headed numpty you are!");
         ~chatplayer("<p,angry>...");
         return;
-    } else if (loc_find(%mcannon_coord, cannon_stand) = true) {
+    } else if (loc_find(%mcannon_coord, multicannon_stand) = true) {
         ~chatnpc_specific("Nulodion", nulodion, "<p,confused>Hmmm. I think you'll find the base and stand still happily parked on the spot where you put them."); // osrs
         ~chatplayer("<p,confused>Oh, is it still there? I thought I'd lost it.");
         ~chatnpc_specific("Nulodion", nulodion, "<p,laugh>Ha ha ha, what a muddle-headed numpty you are!");
         ~chatplayer("<p,angry>...");
         return;
-    } else if (loc_find(%mcannon_coord, cannon_barrels) = true) {
+    } else if (loc_find(%mcannon_coord, multicannon_barrels) = true) {
         ~chatnpc_specific("Nulodion", nulodion, "<p,confused>Hmmm. I think you'll find most of the cannon still happily parked on the spot where you put it."); // osrs
         ~chatplayer("<p,confused>Oh, is it still there? I thought I'd lost it.");
         ~chatnpc_specific("Nulodion", nulodion, "<p,laugh>Ha ha ha, what a muddle-headed numpty you are!");
