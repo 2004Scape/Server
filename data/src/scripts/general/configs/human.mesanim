@@ -10,6 +10,7 @@ len2=chatbored2
 len3=chatbored3
 len4=chatbored4
 
+// TODO: find real name
 [short]
 len1=shortchatneu1
 len2=shortchatneu1
@@ -64,6 +65,7 @@ len2=chatdrunk2
 len3=chatdrunk3
 len4=chatdrunk4
 
+// TODO: find real name
 [verymad]
 len1=evilidle1
 len2=evilidle1
