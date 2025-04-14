@@ -9,7 +9,7 @@ npc_setmode(none);
 
 [opnpcu,gujuo]
 switch_obj(last_useitem) {
-    case goldbowl_empty :
+    case goldbowl_empty, goldbowl_water, goldbowl_pure :
         if (%legends_progress < ^legends_asked_gujuo_holy_water) {
             // shouldn't be possible under normal circumstances
             ~displaymessage(^dm_default);
@@ -20,7 +20,7 @@ switch_obj(last_useitem) {
         def_int $choice = ~p_choice2("Yes, I'd like to bless my gold bowl.", 1, "No thanks, I'll wait.", 2);
         if ($choice = 1) {
             ~chatplayer("<p,neutral>Yes, I'd like to bless my gold bowl.");
-            @gujuo_bless_bowl;
+            @gujuo_start;
         }
         else {
             ~chatplayer("<p,neutral>No thanks, I'll wait.");
@@ -36,14 +36,13 @@ if (p_finduid(uid) = false) {
     return;
 }
 if(%legends_progress >= ^legends_asked_gujuo_holy_water) {
-    if (inv_total(inv, goldbowl_empty) > 0) {
+    if (inv_total(inv, goldbowl_empty) > 0 | inv_total(inv, goldbowl_water) > 0 | inv_total(inv, goldbowl_pure) > 0) {
         ~chatnpc("<p,neutral>Greetings Bwana. Ah I see you have the golden bowl! Would you like me to show you how to bless it?");
         def_int $choice = ~p_choice2("Yes, I'd like you to bless my gold bowl.", 1, "No thanks, I need help with something else.", 2);
         if ($choice = 1) {
             ~chatplayer("<p,happy>Yes, I'd like you to bless my gold bowl.");
             @gujuo_bless_bowl;
         }
-        // selecting the no option skips straight to ungadulu question
     }
 }
 if (%legends_progress = ^legends_got_bullroarer | %legends_progress = ^legends_swung_bullroarer) {
@@ -263,7 +262,7 @@ if(%legends_progress = ^legends_water_pool_dried_up) %legends_progress = ^legend
 
 [label,gujuo_snakeweed]
 ~chatplayer("<p,neutral>Where can I find Snake weed?");
-~chatnpc("<p,neutral>nake weed is usually found by swampy marshy areas. It is not very common and it may be quite difficult to find.");
+~chatnpc("<p,neutral>Snake weed is usually found by swampy marshy areas. It is not very common and it may be quite difficult to find.");
 ~chatnpc("<p,neutral>There is some marsh to the south of Tai Bwo Wannai village. The herb grows near jungle vines, so check all around very carefully.");
 @multi5("Where can I find Ardrigal?", gujuo_ardrigal,
         "Where is the source of the spring of pure water?", gujuo_source,
@@ -338,9 +337,9 @@ if (stat(prayer) < 42) {
     mes("You need a Prayer level of at least 42 to complete this task.");
     return;
 }
-if (inv_total(inv, goldbowlbless_empty) > 0) {
+if (inv_total(inv, goldbowlbless_empty) > 0 | inv_total(inv, goldbowlbless_water) > 0 | inv_total(inv, goldbowlbless_pure) > 0) {
     // says hello again
-    ~chatnpc("<p,neutral>Hello Bwana, I see that you already have a blessed golden bowl. Have you fallen under the spell of the metal of the sun? Alas, I cannot allow you to bless the vessel if you're possessed by greed.");
+    ~chatnpc("<p,sad>Hello Bwana, I see that you already have a blessed golden bowl. Have you fallen under the spell of the metal of the sun? Alas, I cannot allow you to bless the vessel if you're possessed by greed.");
     return;
 }
 ~chatnpc("<p,neutral>Very well Bwana...");
@@ -359,7 +358,7 @@ p_delay(2);
 npc_say("Ohhhhhmmmmmm");
 p_delay(2);
 // guess but it seems pretty common
-if(random(2) = 0) {
+if(stat_random(stat(prayer), 80, 250) = true) {
     stat_sub(prayer, 5, 0);
     ~mesbox("You were not able to go into a deep enough trance. You lose some prayer...");
     ~chatnpc("<p,neutral>Would you like to try again?");
@@ -372,15 +371,27 @@ if(random(2) = 0) {
     else {
         ~chatplayer("<p,neutral>No thanks, I'll wait.");
         ~chatnpc("<p,neutral>Very well, let me know when you want to try.");
-        @gujuo_how_goes_ungadulu;
+        @gujuo_start;
     }
 }
 else {
-    ~objbox(goldbowlbless_empty, "You're surrounded by a totally peaceful aura as you bring the blessings of your god down on the bowl.", 250, 0, divide(^objbox_height, 2));
-    inv_del(inv, goldbowl_empty, 1);
-    inv_add(inv, goldbowlbless_empty, 1);
-    ~objbox(goldbowlbless_empty, "The bowl is blessed!", 250, 0, divide(^objbox_height, 2));
-    @gujuo_how_goes_ungadulu;
+    if(inv_total(inv, goldbowl_empty) > 0) {
+        ~objbox(goldbowlbless_empty, "You're surrounded by a totally peaceful aura as you bring the blessings of your god down on the bowl.", 250, 0, divide(^objbox_height, 2));
+        inv_del(inv, goldbowl_empty, 1);
+        inv_add(inv, goldbowlbless_empty, 1);
+        ~objbox(goldbowlbless_empty, "The bowl is blessed!", 250, 0, divide(^objbox_height, 2));
+    } else if(inv_total(inv, goldbowl_water) > 0) {
+        ~objbox(goldbowlbless_water, "You're surrounded by a totally peaceful aura as you bring the blessings of your god down on the bowl.", 250, 0, divide(^objbox_height, 2));
+        inv_del(inv, goldbowl_water, 1);
+        inv_add(inv, goldbowlbless_water, 1);
+        ~objbox(goldbowlbless_water, "The bowl is blessed!", 250, 0, divide(^objbox_height, 2));
+    } else if(inv_total(inv, goldbowl_pure) > 0) {
+        ~objbox(goldbowlbless_pure, "You're surrounded by a totally peaceful aura as you bring the blessings of your god down on the bowl.", 250, 0, divide(^objbox_height, 2));
+        inv_del(inv, goldbowl_pure, 1);
+        inv_add(inv, goldbowlbless_pure, 1);
+        ~objbox(goldbowlbless_pure, "The bowl is blessed!", 250, 0, divide(^objbox_height, 2));
+    }
+    @gujuo_start;
 }
 
 [label,gujuo_ungadulu_trapped]

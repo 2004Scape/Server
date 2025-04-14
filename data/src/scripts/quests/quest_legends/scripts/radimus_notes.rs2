@@ -126,9 +126,10 @@ if ($west_mapped = true & $middle_mapped = true & $east_mapped = true) {
     %legends_bits = clearbit(%legends_bits, ^legends_jungle_west_mapped);
     %legends_bits = clearbit(%legends_bits, ^legends_jungle_middle_mapped);
     %legends_bits = clearbit(%legends_bits, ^legends_jungle_east_mapped);
-} else {
-    mes("You still have some sections of the map to complete.");
+    ~objbox(thkaramjamap, "*** Mapping the Kharazi Jungle ***|@blu@Eastern Kharazi Jungle - *** Completed ***|@blu@Middle Kharazi Jungle- *** Completed ***|@blu@Western Kharazi Jungle- *** Completed ***", 250, 0, 0);
+    return;
 }
+mes("You still have some sections of the map to complete.");
 @kharazi_jungle_mapping;
 
 [label,kharazi_jungle_mapping]

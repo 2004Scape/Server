@@ -407,7 +407,7 @@ switch_obj($herb) {
 switch_namedobj($herb) {
     case snake_weed : ~chatnpc("<p,neutral>I really need that Snake Weed if I am to make this potion.");
     case sito_foil : ~chatnpc("<p,neutral>I really need that Sito Foil if I am to make this potion.");
-    case ardrigal : ~chatnpc("<p,neutral>I really need that Ardigal if I am to make this potion.");
+    case ardrigal : ~chatnpc("<p,neutral>I really need that Ardrigal if I am to make this potion.");
     case rogues_purse : ~chatnpc("<p,neutral>I really need that Rogues Purse if I am to make this potion.");
     case volencia_moss : ~chatnpc("<p,neutral>I really need that Volencia Moss if I am to make this potion.");
 }

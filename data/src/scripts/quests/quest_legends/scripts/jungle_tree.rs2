@@ -3,10 +3,7 @@
 [oploc3,_jungle_tree] @chop_jungle;
 [oploc3,_jungle_bush] @chop_jungle;
 
-// todo: evaporate water if move through jungle with it
-
 // the success rates in here don't feel quite right, probably need tweaking
-
 [label,start_chop_jungle]
 if (inv_total(inv, thkaramjamap) = 0 & inv_total(inv, thkaramjamapcomp) = 0 & %legends_progress < ^legends_complete) {
     ~mesbox("You'll get lost in this jungle without a map. You decide not to go any further.");
@@ -16,11 +13,17 @@ def_namedobj $axe = ~woodcutting_axe_checker(false);
 if ($axe = null) {
     // OSRS message
     ~mesbox("You'll need an axe to get through this rough jungle. You don't think it would be a good idea to continue without one you've got the level to use.");
+    if (~inzone_coord_pair_table(kharazi_dense_jungle, coord) = true) {
+        @dense_jungle_escape;
+    }
     return;
 }
 if (inv_total(inv, machette) = 0 & inv_total(worn, machette) = 0) {
     // Says bush even for tree
-    mes("You need a machete to cut your way through this dense jungle bush.");
+    ~mesbox("You need a machete to cut your way through this dense jungle bush.");
+    if (~inzone_coord_pair_table(kharazi_dense_jungle, coord) = true) {
+        @dense_jungle_escape;
+    }
     return;
 }
 def_int $bowl_water_count = inv_total(inv, goldbowl_water);
@@ -115,12 +118,10 @@ if (%action_delay < map_clock) {
 if (%action_delay = map_clock) {
     // get lows and highs
     if(loc_category = jungle_bush) sound_synth(woodchop_4, 0, 10); // double sound
-    def_int $tree_chance_low;
-    def_int $tree_chance_high;
-    $tree_chance_low, $tree_chance_high = ~woodcutting_successchance($data, $axe);
     def_int $respawnrate = db_getfield($data, woodcutting_trees:respawnrate, 0);
     def_int $deplete_chance = 4; // 3/4 chance to deplete - this is a guess
-    if (stat_random(stat(woodcutting), $tree_chance_low, $tree_chance_high) = true) {
+    // axe does not seem to have any effect, wc level does? (need more data)
+    if (stat_random(stat(woodcutting), 70, 233) = true) { 
         // Jungle trees/bushes just silently fail to give logs/xp if no space
         // There's also a chance to receive no logs. This is guessed at 75% here
         if (inv_freespace(inv) > 0 & random(4) = 0) {
@@ -165,7 +166,6 @@ if (%action_delay = map_clock) {
 }
 p_oploc(3);
 
-
 [proc,jungle_at_dest](coord $dest)(boolean)
 if (.loc_find($dest, jungle_bush_1) = true | .loc_find($dest, jungle_bush_2) = true | 
     .loc_find($dest, jungle_tree_1) = true | .loc_find($dest, jungle_tree_2) = true | 
@@ -173,3 +173,19 @@ if (.loc_find($dest, jungle_bush_1) = true | .loc_find($dest, jungle_bush_2) = t
         return (true);
 }
 return (false);
+
+[label,dense_jungle_escape]
+~mesbox("It looks like you're lost in the jungle!|Would you like to try and scrabble out?");
+def_int $op = ~p_choice2_header("Yes, I'll scrabble out of this jungle.", 1, "No, I think I can find my own way out.", 2, "Scrabble out of jungle?");
+if($op = 2) {
+    mes("You decide to stay where you are.");
+    return;
+}
+if(inzone(0_45_45_50_57,0_45_45_61_61,coord) = true) p_teleport(0_45_45_57_63);
+else if(inzone(0_44_45_42_54,0_44_45_57_59,coord) = true) p_teleport(0_44_45_50_61);
+else if(inzone(0_43_45_37_55,0_43_45_50_61,coord) = true) p_teleport(0_43_45_43_62);
+else p_teleport(0_44_45_4_61); // other 2 zones tele to same pos
+mes("You scrabble out of the jungle.");
+mes("You're scratched to pieces by the dense jungle trees,");
+mes("but at least you're alive and out of the jungle.");
+~damage_self(1);
