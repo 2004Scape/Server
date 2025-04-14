@@ -1,4 +1,10 @@
 [opnpc1,shantay]
+//guess based on osrs. Averaged about 100 talks between each drop.
+if(random(100) = 0) {
+    mes("Something drops out of Shantay's pocket onto the floor.");
+    mes("It looks like a piece of paper.");
+    obj_add(npc_coord, thkebabinstructs, 1, ^lootdrop_duration);
+}
 if (%shantay_jail_progress = ^not_talked_to_shantay) {
     ~chatnpc("<p,neutral>Hello effendi, I am Shantay.");
     ~chatnpc("<p,neutral>I see you're new. Please read the billboard poster|before going into the desert. It'll give yer details on the|dangers you can face.");
