@@ -146,7 +146,7 @@ export default class Npc extends PathingEntity {
             }
 
             this.varsString.fill(undefined);
-            this.defaultMode();
+            this.resetDefaults();
 
             const npcType: NpcType = NpcType.get(this.type);
             this.huntrange = npcType.huntrange;
@@ -421,6 +421,7 @@ export default class Npc extends PathingEntity {
             return;
         }
 
+        // Fail safe
         if (this.targetOp === NpcMode.NULL) {
             const type: NpcType = NpcType.get(this.type);
             this.targetOp = type.defaultmode;
@@ -456,7 +457,7 @@ export default class Npc extends PathingEntity {
         this.masks |= NpcInfoProt.FACE_ENTITY;
     }
 
-    defaultMode(): void {
+    resetDefaults(): void {
         this.clearInteraction();
         const type: NpcType = NpcType.get(this.type);
         this.targetOp = type.defaultmode;
@@ -522,7 +523,7 @@ export default class Npc extends PathingEntity {
 
     playerEscapeMode(): void {
         if (!this.validateTarget() || !this.targetWithinMaxRange()) {
-            this.defaultMode();
+            this.resetDefaults();
             return;
         }
 
@@ -531,7 +532,7 @@ export default class Npc extends PathingEntity {
         }
 
         if (CoordGrid.distanceToSW(this, this.target) > 25) {
-            this.defaultMode();
+            this.resetDefaults();
             return;
         }
 
@@ -555,7 +556,7 @@ export default class Npc extends PathingEntity {
         const mz: number = CoordGrid.moveZ(this.z, direction);
 
         if (isFlagged(mx, mz, this.level, flags)) {
-            this.defaultMode();
+            this.resetDefaults();
             return;
         }
 
@@ -582,7 +583,7 @@ export default class Npc extends PathingEntity {
 
     playerFollowMode(): void {
         if (!this.validateTarget() || !this.targetWithinMaxRange()) {
-            this.defaultMode();
+            this.resetDefaults();
             return;
         }
         const player = this.target;
@@ -601,7 +602,7 @@ export default class Npc extends PathingEntity {
 
     playerFaceMode(): void {
         if (!this.validateTarget()) {
-            this.defaultMode();
+            this.resetDefaults();
             return;
         }
 
@@ -610,21 +611,21 @@ export default class Npc extends PathingEntity {
         }
 
         if (this.level !== this.target.level) {
-            this.defaultMode();
+            this.resetDefaults();
             return;
         }
 
         const type = NpcType.get(this.type);
 
         if (CoordGrid.distanceTo(this, this.target) > type.maxrange) {
-            this.defaultMode();
+            this.resetDefaults();
             return;
         }
     }
 
     playerFaceCloseMode(): void {
         if (!this.validateTarget()) {
-            this.defaultMode();
+            this.resetDefaults();
             return;
         }
 
@@ -633,12 +634,12 @@ export default class Npc extends PathingEntity {
         }
 
         if (this.level !== this.target.level) {
-            this.defaultMode();
+            this.resetDefaults();
             return;
         }
 
         if (CoordGrid.distanceTo(this, this.target) > 1) {
-            this.defaultMode();
+            this.resetDefaults();
             return;
         }
     }
@@ -646,7 +647,7 @@ export default class Npc extends PathingEntity {
     aiMode(): void {
         const type: NpcType = NpcType.get(this.type);
         if (!this.target || !this.target.isValid() || this.target.level !== this.level || !this.targetWithinMaxRange()) {
-            this.defaultMode();
+            this.resetDefaults();
             return;
         }
 
@@ -659,7 +660,7 @@ export default class Npc extends PathingEntity {
 
         // Clear target if givechase=no
         if (moved && !type.givechase) {
-            this.defaultMode();
+            this.resetDefaults();
             return;
         }
 
@@ -693,7 +694,7 @@ export default class Npc extends PathingEntity {
         }
         if (this.inOperableDistance(this.target)) {
             // this.target = null;
-            this.defaultMode();
+            this.resetDefaults();
             return true;
         }
         return false;
