@@ -93,7 +93,7 @@ npc_changetype(ungadulu_possessed, 2);
 ~chatnpc("<p,angry>...from the above lands... hurry and release me...");
 ~chatnpc("<p,shock>Leave here, please, go... now...");
 npc_changetype(ungadulu_possessed, 2);
-~chatnpc("<p,madlaugh>Hurry, Vacu, the heat kills me... ha ha ha");
+~chatnpc("<p,evillaugh>Hurry, Vacu, the heat kills me... ha ha ha");
 %legends_bits = setbit(%legends_bits, ^legends_ungadulu_called_vacu);
 ~mesbox("The Shaman throws himself down on the floor and starts convulsing.");
 
@@ -385,7 +385,7 @@ else {
         ~chatnpc("<p,sad>I hope that teaches you a lesson!");
         return;
     }
-    ~chatnpc("<p,madlaugh>Ha, ha ha Vacu... Come for me again and you'll taste more of my power!");
+    ~chatnpc("<p,evillaugh>Ha, ha ha Vacu... Come for me again and you'll taste more of my power!");
 }
 
 [opnpcu,ungadulu]
