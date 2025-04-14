@@ -58,3 +58,15 @@ anim(%com_attackanim, 0);
 sound_synth(%com_attacksound, 0, 0);
 mes("You hit the dummy.");
 p_delay(3);
+
+[opnpc2,combat_training_camp_ogre]
+if (~player_in_combat_check = false) {
+    return;
+}
+if (%damagetype = ^ranged_style) {
+    @player_ranged_attack;
+}
+if (~player_autocast_enabled = true) {
+    @player_magic_attack;
+}
+mes("These ogres are for ranged combat only.");

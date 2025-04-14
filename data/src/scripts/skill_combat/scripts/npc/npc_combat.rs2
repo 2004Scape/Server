@@ -151,11 +151,6 @@ if(npc_type = fire_warrior_of_lesarkus & (inv_total(worn, ice_arrow) = 0 | %dama
     return (false);
 }
 
-if(npc_type = combat_training_camp_ogre & %damagetype <= ^crush_style & npc_range(coord) <= 1) {
-    mes("These ogres are for ranged combat only.");
-    return (false);
-}
-
 if (npc_type = delrith) {
     if (%demon_progress >= ^demon_complete) {
         mes("You've already done that quest.");
@@ -190,10 +185,6 @@ if (npc_type = wormbrain & (~quest_dragon_getting_map_parts = false | inv_total(
 }
 if (npc_type = grip) {
     return(~grip_attack);
-}
-if ((npc_type = zamorak_wizard | npc_type = grandtree_black_demon) & %npc_attacking_uid ! uid) {
-    mes("It's not after you...");
-    return(false);
 }
 if (npc_category = battle_mage & %magearena < ^mage_arena_complete) {
     mes("You are not ready to fight the battle mages.");
