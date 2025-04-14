@@ -54,7 +54,7 @@ if($option = 1) {
 
 [label,kangai_mau_house]
 ~chatplayer("<p,neutral>How can I find Handelmort's house? Ardougne IS a big place...");
-~chatnpc("<p,neutral>I dont know Ardougne. You tell me.");
+~chatnpc("<p,neutral>I don't know Ardougne. You tell me.");
 @multi2("Ok, I will get it back.", kangai_mau_start_totem, "Why does he have it?", kangai_mau_why);
 
 [label,kangai_mau_totem_back]

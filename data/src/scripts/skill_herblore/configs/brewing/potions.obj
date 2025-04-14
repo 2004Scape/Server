@@ -855,7 +855,7 @@ category=category_69
 members=yes
 param=next_obj_stage,3dosestatrestore
 param=decant_potion_enum,potion_1restore
-param=dose_count,1
+param=dose_count,4
 // jagex name
 
 [4dose1defense]

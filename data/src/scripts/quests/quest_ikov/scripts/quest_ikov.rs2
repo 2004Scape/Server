@@ -1,6 +1,6 @@
 [oploc1,ikov_luciendoor]
 if(%ikov_progress >= ^ikov_started) {
-    ~open_and_close_door2(loc_1532, ~check_axis_locactive(coord), door_open);
+    ~open_and_close_door2(loc_1538, ~check_axis_locactive(coord), door_open);
     return;
 }
 // https://www.youtube.com/watch?v=-tsHE3OEuYk&t=126s
@@ -74,15 +74,3 @@ stat_advance(ranged, 105000);
 stat_advance(fletching, 80000);
 session_log(^log_adventure, "Quest complete: Temple of Ikov (Lucien)");
 ~send_quest_complete(questlist:ikov, yew_longbow, 250, ^ikov_questpoints, "You have completed the\\nTemple of Ikov Quest for Lucien!");
-
-[debugproc,ikov_reset]
-if(p_finduid(uid) = false) {
-    return;
-}
-mes("Resetting all varps affected by ikov update");
-%ikov_dungeon = 0;
-%ikov_icearrowchest_coord = null;
-%haunted_lever = 0;
-%haunted_manor_fountain_poisoned = 0;
-%cog_cooled = 0;
-
