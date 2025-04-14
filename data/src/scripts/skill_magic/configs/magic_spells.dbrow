@@ -54,7 +54,7 @@ data=levelrequired,68
 data=runesrequired,earthrune,15,waterrune,15,cosmicrune,1
 data=experience,780
 data=convertobj,dragonstone_ring,ring_of_wealth,human_cast_enchantring,enchant_ring,enchant_dragon_ring
-data=convertobj,strung_dragonstone_amulet,amulet_of_glory_4,human_enchantamuletlvl2,enchant_amulet2_lvl5,enchant_dragon_amulet
+data=convertobj,strung_dragonstone_amulet,amulet_of_glory,human_enchantamuletlvl2,enchant_amulet2_lvl5,enchant_dragon_amulet
 data=additional_reqmessage,This spell can only be cast on dragonstone rings and amulets.
 data=specificobj_reqmessage,unstrung_dragonstone_amulet,You need to string the dragonstone amulet before enchanting it.
 
