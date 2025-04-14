@@ -1121,6 +1121,19 @@ const PlayerOps: CommandHandlers = {
         state.activePlayer.addWealthLog(isGained ? amount : -amount, event);
     }),
 
+    [ScriptOpcode.WEALTH_EVENT]: checkedHandler(ActivePlayer, state => {
+        const name = state.popString();
+        const [eventType, count, value] = state.popInts(3);
+
+        const objType = ObjType.getByName(name);
+
+        state.activePlayer.addWealthEvent({
+            event_type: eventType, 
+            account_items: [{ id: objType?.id, name, count }], 
+            account_value: value
+        });
+    }),
+
     [ScriptOpcode.P_RUN]: checkedHandler(ProtectedActivePlayer, state => {
         state.activePlayer.run = state.popInt();
 

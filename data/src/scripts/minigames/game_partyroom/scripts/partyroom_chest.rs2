@@ -73,7 +73,8 @@ while($i < inv_size(partyroom_tempinv)) {
     if ($obj ! null) {
         if(inv_itemspace(partyroom_dropinv, $obj, $count, inv_size(partyroom_dropinv)) = true) {
             inv_moveitem(partyroom_tempinv, partyroom_dropinv, $obj, $count);
-            wealth_log(false, $count, "Deposited <oc_debugname($obj)> x<tostring($count)> in the party room chest");
+            wealth_log(^wealth_lost, calc($count * oc_cost($obj)), "Deposited <oc_debugname($obj)> x<tostring($count)> in the party room chest");
+            wealth_event(^wealth_partyroom, oc_debugname($obj), $count, calc($count * oc_cost($obj)));
             $moveditem = true;
         }
     }

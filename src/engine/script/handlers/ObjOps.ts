@@ -11,6 +11,7 @@ import { ActiveObj, ActivePlayer } from '#/engine/script/ScriptPointer.js';
 import { CommandHandlers } from '#/engine/script/ScriptRunner.js';
 import { check, CoordValid, DurationValid, InvTypeValid, ObjStackValid, ObjTypeValid, ParamTypeValid } from '#/engine/script/ScriptValidators.js';
 import World from '#/engine/World.js';
+import { WealthEventType } from '#/server/logger/WealthEventType.js';
 import Environment from '#/util/Environment.js';
 
 const ObjOps: CommandHandlers = {
@@ -145,11 +146,17 @@ const ObjOps: CommandHandlers = {
 
         state.activePlayer.invAdd(invType.id, obj.type, obj.count);
 
+        const value = obj.count * objType.cost;
+        state.activePlayer.addWealthLog(value, `Picked up ${objType.debugname} x${obj.count}`);
+        state.activePlayer.addWealthEvent({
+            event_type: WealthEventType.PICKUP, 
+            account_items: [{ id: objType.id, name: objType.debugname, count: obj.count }], 
+            account_value: value
+        });
+        
         if (obj.lifecycle === EntityLifeCycle.RESPAWN) {
-            state.activePlayer.addWealthLog(obj.count * objType.cost, `Picked up ${objType.debugname} x${obj.count}`);
             World.removeObj(obj, objType.respawnrate);
         } else if (obj.lifecycle === EntityLifeCycle.DESPAWN) {
-            state.activePlayer.addWealthLog(obj.count * objType.cost, `Picked up ${objType.debugname} x${obj.count}`);
             World.removeObj(obj, 0);
         }
     },

@@ -3,14 +3,17 @@ import InvType from '#/cache/config/InvType.js';
 import ObjType from '#/cache/config/ObjType.js';
 import { CoordGrid } from '#/engine/CoordGrid.js';
 import { EntityLifeCycle } from '#/engine/entity/EntityLifeCycle.js';
+import { isClientConnected } from '#/engine/entity/NetworkPlayer.js';
 import Obj from '#/engine/entity/Obj.js';
 import Player from '#/engine/entity/Player.js';
+import { WealthEventItem } from '#/engine/entity/tracking/WealthEvent.js';
 import { Inventory } from '#/engine/Inventory.js';
 import { ScriptOpcode } from '#/engine/script/ScriptOpcode.js';
 import { ActiveObj, ActivePlayer, checkedHandler, ProtectedActivePlayer } from '#/engine/script/ScriptPointer.js';
 import { CommandHandlers } from '#/engine/script/ScriptRunner.js';
 import { CategoryTypeValid, check, CoordValid, DurationValid, InvTypeValid, NumberNotNull, ObjStackValid, ObjTypeValid } from '#/engine/script/ScriptValidators.js';
 import World from '#/engine/World.js';
+import { WealthEventType } from '#/server/logger/WealthEventType.js';
 
 const InvOps: CommandHandlers = {
     // inv config
@@ -204,6 +207,11 @@ const InvOps: CommandHandlers = {
         if (invType.scope === InvType.SCOPE_PERM) {
             // ammo drops are temp, without checking scope this spams in ranged combat
             state.activePlayer.addWealthLog(-(obj.count * objType.cost), `Dropped ${objType.debugname} x${obj.count}`);
+            state.activePlayer.addWealthEvent({
+                event_type: WealthEventType.DROP, 
+                account_items: [{ id: obj.id, name: objType.debugname, count: obj.count }], 
+                account_value: (obj.count * objType.cost)
+            });
         }
 
         const player = state.activePlayer;
@@ -375,8 +383,11 @@ const InvOps: CommandHandlers = {
             throw new Error('inv is null');
         }
 
+        let fromTotal = 0;
+        // Holds a record of the wealth for logging only
+        const fromLogs: Map<number, WealthEventItem & { cost: number }> = new Map();
+
         // we're going to assume the content has made sure this will go as expected
-        const wealthLog = []; // Holds a record of the wealth for logging only
         for (let slot = 0; slot < fromInv.capacity; slot++) {
             const obj = fromInv.get(slot);
             if (!obj) {
@@ -387,26 +398,76 @@ const InvOps: CommandHandlers = {
             toInv.add(obj.id, obj.count);
 
             const type = ObjType.get(obj.id);
-            // Check whether we have already seen this obj.id in the wealth log
-            let alreadyPresent = false;
-            for (let i = 0; i < wealthLog.length; i++) {
-                if (wealthLog[i].id === obj.id) {
-                    // If we've seen it, increase the count
-                    wealthLog[i].count += obj.count;
-                    alreadyPresent = true;
-                    break;
-                }
+            const event = fromLogs.get(type.id);
+            if (event) {
+                event.count += obj.count;
             }
-            if (!alreadyPresent) {
-                // Otherwise, create a new entry
-                wealthLog.push({ id: obj.id, count: obj.count, debugname: type.debugname, baseCost: type.cost });
+            else {
+                fromLogs.set(obj.id, { id: obj.id, name: type.debugname, count: obj.count, cost: type.cost });
+            }
+
+            fromTotal += type.cost * obj.count;
+        }
+
+        for (const toLog of fromLogs.values()) {
+            // Log all wealth events
+            const totalValueGp = toLog.cost * toLog.count;
+            fromPlayer.addWealthLog(-totalValueGp, 'Gave ' + toLog.name + ' x' + toLog.count + ' to ' + toPlayer.username);
+            toPlayer.addWealthLog(totalValueGp, 'Received ' + toLog.name + ' x' + toLog.count + ' from ' + fromPlayer.username);
+        }
+
+        const toSession = isClientConnected(toPlayer) ? toPlayer.client.uuid : 'disconnected';
+        const fromItems = Array.from(fromLogs.values().map(item => (({ cost: _cost, ...event }) => event)(item)));
+
+        // Log wealth events
+        if (fromInvType.debugname === 'stakeinv') {
+            if (fromItems.length > 0) {
+                fromPlayer.addWealthEvent({
+                    event_type: WealthEventType.STAKE, 
+                    account_items: fromItems, 
+                    account_value: fromTotal, 
+                    recipient_id: toPlayer.account_id, 
+                    recipient_session: toSession
+                });
             }
         }
-        for (const toLog of wealthLog) {
-            // Log all wealth events
-            const totalValueGp = toLog.baseCost * toLog.count;
-            fromPlayer.addWealthLog(-totalValueGp, 'Gave ' + toLog.debugname + ' x' + toLog.count + ' to ' + toPlayer.username);
-            toPlayer.addWealthLog(totalValueGp, 'Received ' + toLog.debugname + ' x' + toLog.count + ' from ' + fromPlayer.username);
+        else if (!secondary) {
+            let toTotal = 0;
+            const toLogs: Map<number, WealthEventItem> = new Map();
+
+            // log opposite side of trade
+            const tradeInv = toPlayer.getInventory(from);
+            if (tradeInv) {       
+                for (let slot = 0; slot < tradeInv.capacity; slot++) {
+                    const obj = tradeInv.get(slot);
+                    if (!obj) {
+                        continue;
+                    }   
+                    
+                    const type = ObjType.get(obj.id);
+                    const event = toLogs.get(type.id);
+                    if (event) {
+                        event.count += obj.count;
+                    }
+                    else {
+                        toLogs.set(obj.id, { id: obj.id, name: type.debugname, count: obj.count });
+                    }
+                    toTotal += type.cost * obj.count;
+                }
+            }
+            
+            if (fromItems.length > 0 || toLogs.size > 0) {
+                const toItems = Array.from(toLogs.values());
+                fromPlayer.addWealthEvent({
+                    event_type: WealthEventType.TRADE, 
+                    account_items: fromItems, 
+                    account_value: fromTotal, 
+                    recipient_id: toPlayer.account_id, 
+                    recipient_session: toSession, 
+                    recipient_items: toItems, 
+                    recipient_value: toTotal
+                });
+            }
         }
     }),
 
@@ -616,7 +677,17 @@ const InvOps: CommandHandlers = {
 
         const objType: ObjType = ObjType.get(obj.id);
         if (invType.scope === InvType.SCOPE_PERM) {
-            state.activePlayer.addWealthLog(-(obj.count * objType.cost), `Dropped ${objType.debugname} x${obj.count}`);
+            const value = obj.count * objType.cost;
+            state.activePlayer.addWealthLog(-(value), `Dropped ${objType.debugname} x${obj.count}`);
+            
+            const p2Session = isClientConnected(toPlayer) ? toPlayer.client.uuid : 'disconnected';
+            state.activePlayer.addWealthEvent({
+                event_type: WealthEventType.PVP, 
+                account_items: [{ id: obj.id, name: objType.debugname, count: obj.count }], 
+                account_value: (obj.count * objType.cost), 
+                recipient_id: toPlayer.account_id, 
+                recipient_session: p2Session
+            });
         }
 
         const completed: number = fromPlayer.invDel(invType.id, obj.id, obj.count, slot);
@@ -649,7 +720,9 @@ const InvOps: CommandHandlers = {
             return;
         }
 
-        const wealthLog = []; // Holds a record of the wealth for logging only
+        let totalValue = 0;
+        // Holds a record of the wealth for logging only
+        const wealthLog: Map<number, WealthEventItem & { cost: number }> = new Map();
         for (let slot: number = 0; slot < inventory.capacity; slot++) {
             const obj = inventory.get(slot);
             if (!obj) {
@@ -659,20 +732,16 @@ const InvOps: CommandHandlers = {
             const objType: ObjType = ObjType.get(obj.id);
 
             if (invType.scope === InvType.SCOPE_PERM) {
-                // Check whether we have already seen this obj.id in the wealth log
-                let alreadyPresent = false;
-                for (let i = 0; i < wealthLog.length; i++) {
-                    if (wealthLog[i].id === obj.id) {
-                        // If we've seen it, increase the count
-                        wealthLog[i].count += obj.count;
-                        alreadyPresent = true;
-                        break;
-                    }
+
+                const event = wealthLog.get(obj.id);
+                if (event) {
+                    event.count += obj.count;
                 }
-                if (!alreadyPresent) {
-                    // Otherwise, create a new entry
-                    wealthLog.push({ id: obj.id, count: obj.count, debugname: objType.debugname, baseCost: objType.cost });
+                else {
+                    wealthLog.set(obj.id, { id: obj.id, name: objType.debugname, count: obj.count, cost: objType.cost });
                 }
+                
+                totalValue += obj.count * objType.cost; 
             }
 
             inventory.delete(slot);
@@ -683,10 +752,19 @@ const InvOps: CommandHandlers = {
 
             World.addObj(new Obj(position.level, position.x, position.z, EntityLifeCycle.DESPAWN, obj.id, obj.count), Obj.NO_RECEIVER, duration);
         }
-        for (const toLog of wealthLog) {
+        for (const toLog of wealthLog.values()) {
             // Log all wealth events
-            const totalValueGp = toLog.baseCost * toLog.count;
-            state.activePlayer.addWealthLog(-totalValueGp, `Dropped ${toLog.debugname} x${toLog.count}`);
+            const totalValueGp = toLog.cost * toLog.count;
+            state.activePlayer.addWealthLog(-totalValueGp, `Dropped ${toLog.name} x${toLog.count}`);
+        }
+
+        if (wealthLog.size > 0) {
+            const items = Array.from(wealthLog.values().map(item => (({ cost: _cost, ...event }) => event)(item)));
+            state.activePlayer.addWealthEvent({
+                event_type: WealthEventType.DEATH,
+                account_items: items,
+                account_value: totalValue
+            });
         }
     }),
 

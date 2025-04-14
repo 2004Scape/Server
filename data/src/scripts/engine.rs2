@@ -487,6 +487,8 @@
 [command,session_log](int $type, string $event)
 // info: Add a wealth event to the player's session logs
 [command,wealth_log](boolean $is_gained, int $amount, string $event)
+// info: Add an event to the player's wealth events
+[command,wealth_event](int $eventType, string $name, int $count, int $value)
 // info: Toggle the player's run-mode
 [command,p_run](int $state)
 

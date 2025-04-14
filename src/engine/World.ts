@@ -52,6 +52,7 @@ import { PlayerLoading } from '#/engine/entity/PlayerLoading.js';
 import { EntityQueueState, PlayerQueueType } from '#/engine/entity/PlayerQueueRequest.js';
 import { PlayerStat } from '#/engine/entity/PlayerStat.js';
 import { SessionLog } from '#/engine/entity/tracking/SessionLog.js';
+import { WealthTransactionEvent, WealthEvent } from '#/engine/entity/tracking/WealthEvent.js';
 import GameMap, { changeLocCollision, changeNpcCollision, changePlayerCollision } from '#/engine/GameMap.js';
 import { Inventory } from '#/engine/Inventory.js';
 import ScriptPointer from '#/engine/script/ScriptPointer.js';
@@ -72,6 +73,7 @@ import ClientSocket from '#/server/ClientSocket.js';
 import { FriendsServerOpcodes } from '#/server/friend/FriendServer.js';
 import { FriendThreadMessage } from '#/server/friend/FriendThread.js';
 import { LoggerEventType } from '#/server/logger/LoggerEventType.js';
+import { filteredEventTypes, groupedEventTypes } from '#/server/logger/WealthEventType.js';
 import { type GenericLoginThreadResponse, isPlayerLoginResponse, isPlayerLogoutResponse } from '#/server/login/index.d.js';
 import {
     trackCycleBandwidthInBytes,
@@ -157,6 +159,8 @@ class World {
     varsString: string[] = [];
 
     sessionLogs: SessionLog[] = [];
+    wealthTransactionGroup: Map<string, WealthTransactionEvent> = new Map();
+    wealthTransactions: WealthTransactionEvent[] = [];
 
     constructor() {
         this.gameMap = new GameMap(Environment.NODE_MEMBERS);
@@ -456,6 +460,21 @@ class World {
                 });
 
                 this.sessionLogs = [];
+            }
+
+            if (this.wealthTransactionGroup.size > 0) {
+                this.wealthTransactions.push(...this.wealthTransactionGroup.values());
+
+                this.wealthTransactionGroup.clear();
+            }
+
+            if (this.wealthTransactions.length > 0) {
+                this.loggerThread.postMessage({
+                    type: 'wealth_event',
+                    events: this.wealthTransactions
+                });
+
+                this.wealthTransactions = [];
             }
 
             this.cycleStats[WorldStat.CYCLE] = Date.now() - start; // set the main logic stat here, before telemetry.
@@ -2264,6 +2283,38 @@ class World {
             event_type
         });
         trackSessionEventsPublished.inc();
+    }
+
+    addWealthEvent(event: WealthEvent) {
+        if (filteredEventTypes.includes(event.event_type) && Math.abs(event.account_value) < Environment.NODE_MINIMUM_WEALTH_VALUE_EVENT) {
+            return;
+        }
+        
+        const transaction: WealthTransactionEvent = {
+            timestamp: Date.now(),
+            ...event
+        };
+
+        if (!groupedEventTypes.includes(event.event_type)) {
+            this.wealthTransactions.push(transaction);
+            return;
+        }
+        
+        const key = JSON.stringify({
+            type: event.event_type,
+            id: event.account_id,
+            recipient: event.recipient_id,
+            coord: event.coord,
+            tick: this.currentTick
+        });
+
+        const entry = this.wealthTransactionGroup.get(key);
+        if (entry) {
+            entry.account_items.push(...event.account_items);
+            entry.account_value += event.account_value;
+        } else {
+            this.wealthTransactionGroup.set(key, transaction);
+        }
     }
 
     notifyPlayerBan(staff: string, username: string, until: number) {
