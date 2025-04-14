@@ -101,7 +101,7 @@ if(~inzone_coord_pair_table(mining_camp_zones, coord) = false) {
     }
     return;
 }
-~chatnpc_specific("Ana (in a Barrel)", anabarrel, "<p,silent>You drop the barrel on the floor, Ana gets out.");
+~chatnpc_specific("Ana (in a Barrel)", anabarrel, "<p,idle>You drop the barrel on the floor, Ana gets out.");
 if(inzone(0_51_47_20_23, 0_51_47_23_29, coord) = true) { // if in jail do nothing (OSRS behaviour)
     return;
 }

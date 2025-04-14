@@ -807,7 +807,7 @@ if($op = 2) {
     return;
 }
 if(inv_total(inv, thanainabarrel) > 0) {
-    ~chatnpc_specific("Ana (in a Barrel)", anabarrel, "<p,silent>There isn't enough space for both you and this barrel in the cart.");
+    ~chatnpc_specific("Ana (in a Barrel)", anabarrel, "<p,idle>There isn't enough space for both you and this barrel in the cart.");
     return;
 }
 if(random(3) = 0) {

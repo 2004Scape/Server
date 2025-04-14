@@ -34,7 +34,7 @@ len2=chatcon2
 len3=chatcon3
 len4=chatcon4
 
-[silent]
+[idle]
 len1=chatidleneu1
 len2=chatidleneu1
 len3=chatidleneu1

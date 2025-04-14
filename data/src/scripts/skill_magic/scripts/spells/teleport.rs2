@@ -52,7 +52,7 @@ if (p_finduid(uid) = true) {
 if_close;
 p_stopaction;
 if(inv_total(inv, thanainabarrel) > 0) {
-    ~chatnpc_specific("Ana (in a Barrel)", anabarrel, "<p,silent>@dbl@-- You can't teleport while holding the barrel, it's just @dbl@too difficult to concentrate. --");
+    ~chatnpc_specific("Ana (in a Barrel)", anabarrel, "<p,idle>@dbl@-- You can't teleport while holding the barrel, it's just @dbl@too difficult to concentrate. --");
     return;
 }
 sound_synth(teleport_all, 0, 0);
