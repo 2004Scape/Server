@@ -78,6 +78,12 @@ if (inv_total(inv, hammer) < 1) {
 //set varps
 %smithing_bars = inv_total(inv, struct_param($struct, namedobj));
 %smithing_level = $player_level;
+// Check if tourist trap is completed before sending white text option on darts
+if (%desertrescue_progress >= ^desertrescue_learned_darts) {
+    %option1 = 1;
+} else {
+    %option1 = 0;
+}
 // hide wire button if its not bronze
 // hide studs button if its not steel
 if ($last_item = bronze_bar) {
