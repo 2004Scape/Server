@@ -495,7 +495,7 @@ recol1d=15459
 
 [loc_2933]
 model=model_loc_672
-anim=seq_449
+anim=barrel
 hasalpha=yes
 blockwalk=no
 active=no

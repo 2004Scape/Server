@@ -359,7 +359,7 @@ if (.npc_find(npc_coord, chompy_bird, 17, ^vis_lineofsight) = true) {
 
 [ai_queue11,chompybird_rantz]
 if(.npc_finduid(%rantz_attacking_chompy) = true) {
-    npc_anim(ogre_attackbow, 0);
+    npc_anim(ogre_longbow, 0);
     spotanim_npc(ogre_arrow_launch, 50, 0);
     def_int $duration = ~npc_projectile(npc_coord, .npc_uid, ogre_arrow_travel, 40, 36, 41, 15, 5, 11, 5);
     def_int $delay = add(sub(divide($duration, 30), 1), 2);

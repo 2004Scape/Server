@@ -233,7 +233,7 @@ if(testbit(%excalibur_components_progress, ^excalibur_rewarded) = false) {
 
 [oploc1,jewellersladder]
 p_arrivedelay;
-anim(human_reachforladdertop, 0);
+anim(human_reachforladder, 0);
 p_delay(0);
 p_telejump(movecoord(loc_coord, 0, 1, 1));
 if(testbit(%excalibur_components_progress, ^excalibur_rewarded) = false & testbit(%excalibur_components_progress, ^excalibur_started) = true & map_members = true) {

@@ -212,7 +212,7 @@ if(inzone(0_39_54_14_20, 0_39_54_18_25, coord) = false) {
 }
 def_coord $rock_coord = loc_coord;
 ~forcewalk2(movecoord($rock_coord, 0, 0, 8));
-anim(seq_774, 0);
+anim(human_throwrope, 0);
 spotanim_map(spotanim_67, movecoord($rock_coord, 0, 0, 6), 0, 20);
 p_delay(1);
 // Temp note: dur updated
@@ -223,8 +223,8 @@ while($i < 8) {
     loc_add(movecoord($rock_coord, 0, 0, $i), loc_1998, loc_angle, loc_shape, calc(9 - $i));
     $i = calc($i + 1);
 }
-~agility_force_move(0, seq_776, movecoord($rock_coord, 0, 0, 1));
-~agility_force_move(0, seq_776, movecoord($rock_coord, 1, 0, 0));
+~agility_force_move(0, human_wading, movecoord($rock_coord, 0, 0, 1));
+~agility_force_move(0, human_wading, movecoord($rock_coord, 1, 0, 0));
 p_delay(1);
 
 // tree
@@ -417,7 +417,7 @@ if($useitem = glarials_amulet_waterfall_quest & %waterfall_progress = ^waterfall
     mes("You hear a loud rumble...");
     mes("A large boulder hits you on the head!");
     cam_shake(0, 0, 5, 100);  // guessing inputs here, this has been changed on both OSRS and RS3
-    anim(seq_529, 20);
+    anim(human_rockfall, 20);
     spotanim_pl(spotanim_74, 0, 20);
     p_delay(2);
     cam_reset;
@@ -440,7 +440,7 @@ p_teleport(0_39_154_43_58);
 p_delay(0);
 ~agility_force_move(0, human_drowning, movecoord(coord, 0, 0, -2));
 ~agility_force_move(0, human_drowning, movecoord(coord, 1, 0, -1));
-~set_walkbas(seq_528);
+~set_walkbas(human_whirlpool);
 p_delay(9);
 ~update_bas;
 mes("You are washed downstream but feel lucky to be alive.");

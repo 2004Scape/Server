@@ -64,8 +64,8 @@ mes("You attempt to walk across the slippery log.");
 if(stat_random(stat(agility), 90, 250) = false) {
     // slip and fall, exact move when falling but force walk afterwards
     mes("You lose your footing and fall into the water.");
-    ~set_walkbas(seq_766);
-    anim(human_sidestep_fall, 0);
+    ~set_walkbas(human_falling);
+    anim(human_walk_logbalance_stumble, 0);
     facesquare(movecoord(coord, 0, 0, 2));
     p_delay(0);
     sound_synth(pool_plop, 0, 0);
@@ -131,8 +131,8 @@ if($dist > 0) {
         p_delay(0);
     }
 }
-loc_anim(rope_swing);
-~agility_exactmove(human_ropeswing, 20, 1, coord, loc_param(end_coord), 45, 70, loc_param(dir), false);
+loc_anim(ropeswing_long);
+~agility_exactmove(human_ropeswing_long, 20, 1, coord, loc_param(end_coord), 45, 70, loc_param(dir), false);
 mes("You skillfully swing across.");
 stat_advance(agility, 30);
 
@@ -151,9 +151,9 @@ if(coordz(loc_coord) > coordz(loc_param(start_coord))) {
 // teleport to the end of the spikes and walk 1 tile to the end of the bars
 ~forcewalk2($start_coord);
 facesquare(movecoord(coord, 0, 0, calc($dist_mod)));
-anim(monkeybar_jump_up, 0);
+anim(human_monkeybars_on, 0);
 p_delay(0);
-~agility_force_move(0, monkeybar_move, movecoord(coord, 0, 0, calc($dist_mod * 2)));
+~agility_force_move(0, human_monkeybars_walk, movecoord(coord, 0, 0, calc($dist_mod * 2)));
 // You can only fail the monkeybars in the agility dungeon
 if(stat_random(stat(agility), loc_param(obstacle_low_fail), loc_param(obstacle_high_fail)) = false) {
     def_coord $fall_pos = 0_40_149_39_19; 
@@ -161,15 +161,15 @@ if(stat_random(stat(agility), loc_param(obstacle_low_fail), loc_param(obstacle_h
         $fall_pos = 0_40_149_38_20;
     }
     ~agility_instant_fail($fall_pos, calc(((stat(hitpoints) * 15) / 100) + 1), "You miss the hand hold and fall to the level below.");
-    anim(monkeybar_jump_down, 0);
+    anim(human_monkeybars_off, 0);
     p_delay(0);
     return;
 
 }
 p_telejump(movecoord(coord, 0, 0, calc($dist_mod * 2)));
 p_delay(0);
-~agility_force_move(200, monkeybar_move, movecoord(coord, 0, 0, calc($dist_mod * 1)));
-anim(monkeybar_jump_down, 0);
+~agility_force_move(200, human_monkeybars_walk, movecoord(coord, 0, 0, calc($dist_mod * 1)));
+anim(human_monkeybars_off, 0);
 p_delay(0);
 
 [oploc1,loc_993]
@@ -199,7 +199,7 @@ if(loc_angle = ^loc_north | loc_angle = ^loc_south) {
 } 
 p_teleport($start_coord);
 p_delay(0);
-~agility_exactmove(human_walk_fence_north, 30, 2, $start_coord, $end_coord, 30, 94, $dir, true);
+~agility_exactmove(human_walk_style, 30, 2, $start_coord, $end_coord, 30, 94, $dir, true);
 p_teleport($walk_coord);
 
 [oploc1,_karamja_stepping_stone]
@@ -209,11 +209,11 @@ if(coord = loc_coord) {
 }
 def_int $dz = -1;
 def_int $dir = ^exact_south;
-def_seq $fall_seq = seq_770;
+def_seq $fall_seq = human_wobbleandfall_l;
 if(coordz(coord) < coordz(loc_coord)) {
     $dz = 1;
     $dir = ^exact_north;
-    $fall_seq = seq_771;
+    $fall_seq = human_wobbleandfall_r;
 }
 mes("You attempt to balance on the stepping stone.");
 // 1t longer delay than osrs for now, otherwise the fall seq won't play on fails 

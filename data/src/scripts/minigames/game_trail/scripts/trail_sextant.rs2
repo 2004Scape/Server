@@ -116,8 +116,8 @@ return (calc($val + 128));
 [proc,unpack_negative_8bit](int $val)(int)
 return (calc($val - 128));
 
-// the sextant's needle value can go 2 "over" seq_1006, it will still default to seq_1006 in these cases, meaning if you move the needle twice
-// to the right after seq_1006, you will need to move it 3 times back for seq_1005, this is the behaviour in OSRS
+// the sextant's needle value can go 2 "over" trail_sextant_arm58, it will still default to trail_sextant_arm58 in these cases, meaning if you move the needle twice
+// to the right after trail_sextant_arm58, you will need to move it 3 times back for trail_sextant_arm57, this is the behaviour in OSRS
 [proc,get_sextant_needle_max]()(int)
 return (calc(~get_sextant_needle_min + 45));
 

@@ -59,7 +59,7 @@ if (~player_npc_hit_roll(^magic_style) = true) {
 }
 ~pvm_spell_fail($spell_data, $duration);
 npc_say("What...what's happening...");
-npc_anim(seq_848, 0);
+npc_anim(human_stunned, 0);
 p_delay(1);
 ~npc_retaliate(0);
 mes("The shaman somehow resists the power of the spell.");
@@ -359,7 +359,7 @@ else {
         npc_say("Huh, that's no way to treat a shaman.");
     }
     spotanim_npc(zap, 100, 0);
-    npc_anim(zap, 0);
+    npc_anim(human_castzap, 0);
     p_delay(1);
     // it's difficult to know the exact logic here, guessing that one of a few safe coords is picked
     // then a random 0-1 range around that tile
@@ -367,11 +367,11 @@ else {
     def_coord $closest_coord = ~closest_enum_coord(coord, legends_ungadulu_throw_coords);
     def_coord $throw_coord = map_findsquare($closest_coord, 0, 1, ^vis_lineofwalk);
     // not sure if the outcome is period authentic - no references
-    anim(human_knockback_long, 0);
+    anim(human_blown_middle, 0);
     p_exactmove($start_coord, $throw_coord, 31, calc(31 + (14 * distance($start_coord, $throw_coord))), ~coord_direction($throw_coord, $start_coord));
     p_delay(divide(distance($start_coord, $throw_coord), 2));
     anim(null, 0);
-    ~set_walkbas(human_knockback_long_end);
+    ~set_walkbas(human_blown_end_getup);
     p_delay(1);
     ~update_bas;
     ~damage_self(calc(random(7) + 4));
@@ -445,7 +445,7 @@ if (last_useitem = book_of_binding) {
 }
 
 [ai_queue10,ungadulu]
-npc_anim(seq_837, 0); // seems like the last frame of this seq is broken...
+npc_anim(human_death_backwards, 0); // seems like the last frame of this seq is broken...
 npc_setmode(none);
 npc_delay(10); // delay 11t
 npc_setmode(null);

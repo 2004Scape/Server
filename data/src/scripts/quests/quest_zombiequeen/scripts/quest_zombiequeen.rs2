@@ -430,7 +430,7 @@ switch_int(%zombiequeen_progress) {
         loc_change(loc_2218, 50);
         anim(human_dig, 0);
         p_delay(1);
-        anim(seq_846, 0);
+        anim(human_stumble_back, 0);
         p_delay(1);
         ~mesbox("You have already excavated this area. Your spade clangs against the granite.");
     case ^zombiequeen_started, ^zombiequeen_found_mound, ^zombiequeen_searched_mound :
@@ -538,10 +538,10 @@ if(coordx(coord) > coordx(loc_coord)) {
         return;
     }
     p_delay(0);
-    ~agility_force_move(0, seq_737, movecoord(coord, -2, 0, 0));
+    ~agility_force_move(0, human_climbing, movecoord(coord, -2, 0, 0));
     // stumble loop on both fails
     if(stat_random(stat(agility), 125, 250) = false) {
-        ~agility_exactmove(seq_739, 0, 1, coord, movecoord(coord, 2, 0, 0), 0, 50, ^exact_west, false);
+        ~agility_exactmove(human_climbing_fall, 0, 1, coord, movecoord(coord, 2, 0, 0), 0, 50, ^exact_west, false);
         anim(null, 0);
         mes("You fall and hurt yourself.");
         say("Ouch");
@@ -549,11 +549,11 @@ if(coordx(coord) > coordx(loc_coord)) {
         ~damage_self(calc(((stat(hitpoints) * 5) / 100) + 1));
         return;
     }
-    ~agility_force_move(0, seq_737, movecoord(coord, -2, 0, 0));
+    ~agility_force_move(0, human_climbing, movecoord(coord, -2, 0, 0));
 } else if (coordx(coord) < coordx(loc_coord)) {
-    ~agility_exactmove(human_rock_climb, 15, 0, coord, movecoord(coord, 4, 0, 0), 0, 120, ^exact_west, false);
+    ~agility_exactmove(human_climbing_down, 15, 0, coord, movecoord(coord, 4, 0, 0), 0, 120, ^exact_west, false);
     if(stat_random(stat(agility), 125, 250) = false) {
-        anim(seq_739, 0);
+        anim(human_climbing_fall, 0);
         p_delay(1);
         anim(null, 0);
         mes("You fall and hurt yourself.");
@@ -576,12 +576,12 @@ if(inzone(0_43_46_24_35, 0_43_46_29_35, coord) = true) {
         mes("You fall!");
         p_stopaction;
         cleartimer(cairn_island_bridge);
-        ~set_walkbas(human_sidestep_fall);
+        ~set_walkbas(human_walk_logbalance_stumble);
         // stumble_loop, 10
         facesquare(movecoord(coord, 0, 0, -2));
         p_delay(0);
 
-        ~set_walkbas(seq_766);
+        ~set_walkbas(human_falling);
         if(coord = 0_43_46_24_35) p_teleport(movecoord(coord, 1, 0, -1));
         else p_teleport(movecoord(coord, -1, 0, -1));
         say("Ahhhhhhhhhh!");
@@ -590,7 +590,7 @@ if(inzone(0_43_46_24_35, 0_43_46_29_35, coord) = true) {
         say("Choke!");
         spotanim_map(watersplash, coord, 0, 3);
         sound_synth(pool_plop, 0, 0);
-        ~set_readywalkturn_bas(seq_773, seq_773, human_swim);
+        ~set_readywalkturn_bas(human_swim_ready, human_swim_ready, human_swim);
         p_delay(0);
 
         ~forcemove(0_43_46_26_33);
@@ -749,14 +749,14 @@ switch_int(~p_choice3("A ladder", 1, "A crude raft", 2, "A pole vault", 3)) {
         mes("The raft soons breaks up.");
         // Temp note: dur updated
         loc_change(loc_1988, 6);
-        ~agility_exactmove(human_sidestep_fall, 5, 0, coord, movecoord(coord, 0, 0, 1), 6, 30, ^exact_east, false);
+        ~agility_exactmove(human_walk_logbalance_stumble, 5, 0, coord, movecoord(coord, 0, 0, 1), 6, 30, ^exact_east, false);
         // Temp note: dur updated
         loc_del(2);
         sound_synth(pool_plop, 0, 0);
         spotanim_map(watersplash, coord, 0, 0);
         // Temp note: dur updated
         loc_add(movecoord(coord, 1, 0, 0), loc_1988, 1, centrepiece_straight, 6);
-        ~set_readywalkturn_bas(seq_773, seq_773, human_swim);
+        ~set_readywalkturn_bas(human_swim_ready, human_swim_ready, human_swim);
         p_delay(0);
         ~forcemove(movecoord(coord, 0, 0, 1));
         ~update_bas;
@@ -984,11 +984,11 @@ switch_int(~p_choice2_header("Yes, I'll follow the path.", 1, "No, I'll look for
         // the messages even have multiple differences lol, just going to bascially do the same thing
         mes("You start carefully edging along the slippery path...");
         if(coordz(coord) < 9351) {
-            anim(human_ledge_on_left, 0);
-            ~set_readywalkturn_bas(seq_757, seq_757, human_ledge_walk_left);
+            anim(human_into_sidestepl, 0);
+            ~set_readywalkturn_bas(human_ready_sidestepl, human_ready_sidestepl, human_walk_sidestepl);
         } else {
-            anim(human_ledge_on_right, 0);
-            ~set_readywalkturn_bas(seq_755, seq_755, human_ledge_walk_right);
+            anim(human_into_sidestep, 0);
+            ~set_readywalkturn_bas(human_ready_sidestep, human_ready_sidestep, human_walk_sidestep);
         }
         ~forcemove(movecoord(coord, 2, 0, 0));
         p_delay(0);
@@ -998,7 +998,7 @@ switch_int(~p_choice2_header("Yes, I'll follow the path.", 1, "No, I'll look for
             sound_synth(pool_plop, 0, 0);
             if(coordz(coord) < 9351) {
                 spotanim_map(watersplash, movecoord(coord, 0, 0, -1), 0, 3);
-                ~agility_exactmove(seq_760, 30, 0, coord, movecoord(coord, 0, 0, -1), 31, 46, ^exact_east, false);
+                ~agility_exactmove(human_sidestep_fall, 30, 0, coord, movecoord(coord, 0, 0, -1), 31, 46, ^exact_east, false);
                 say("Arrgghhhh!");
                 ~forcemove(movecoord(coord, 2, 0, 0));
                 p_delay(0);
@@ -1015,7 +1015,7 @@ switch_int(~p_choice2_header("Yes, I'll follow the path.", 1, "No, I'll look for
                 ~damage_self(2);
             } else {
                 spotanim_map(watersplash, movecoord(coord, 0, 0, 1), 0, 3);
-                ~agility_exactmove(seq_760, 30, 0, coord, movecoord(coord, 0, 0, 1), 31, 46, ^exact_east, false);
+                ~agility_exactmove(human_sidestep_fall, 30, 0, coord, movecoord(coord, 0, 0, 1), 31, 46, ^exact_east, false);
                 say("Arrgghhhh!");
                 ~forcemove(movecoord(coord, 2, 0, 0));
                 p_delay(0);
@@ -1314,7 +1314,7 @@ switch_int(~p_choice2_header("Yes, I'll drop it.", 1, "No, I'll keep the Bone Ke
 [oploc1,loc_2236]
 p_arrivedelay;
 mes("You attempt to climb the granite rock.");
-~set_readywalkturn_bas(seq_738, seq_737, seq_737);
+~set_readywalkturn_bas(human_climbing_ready, human_climbing, human_climbing);
 ~forcemove(movecoord(loc_coord, 1, 0, 0));
 if(stat_random(stat(agility), 125, 250) = false) {
     mes("You fall!");

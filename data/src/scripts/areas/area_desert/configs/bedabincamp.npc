@@ -116,7 +116,7 @@ param=attackbonus,9
 param=strengthbonus,14
 param=damagetype,^slash_style
 param=attack_anim,human_sword_slash
-param=defend_anim,human_sword_defend2
+param=defend_anim,human_sword_def
 param=attack_sound,hacksword_slash
 // attackbonus is guess // seqs taken npc Bedabin nomad fighter.
 // stats taken here https://raw.githubusercontent.com/Joshua-F/osrs-dumps/refs/heads/master/config/dump.npc npc_4639

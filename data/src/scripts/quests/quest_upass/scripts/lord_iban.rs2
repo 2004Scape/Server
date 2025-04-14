@@ -1,6 +1,6 @@
 [ai_timer,lord_iban]
 npc_facesquare(movecoord(npc_coord, 8, 0, 0));
-npc_anim(ibansboltcasting, 0);
+npc_anim(sitting_throne_attack, 0);
 switch_int(random(8)) {
     case 0 : npc_say("Begone from my temple!");
     case 1 : npc_say("Fool!");
@@ -26,7 +26,7 @@ while($i < 8) {
                     ~damage_self(~random_range(5, 10));
                     if(lineofwalk(coord, movecoord(coord, 2, 0, 0)) = true) {
                         p_telejump(movecoord(coord, 1, 0, 0));
-                        anim(seq_848, 0);
+                        anim(human_stunned, 0);
                         spotanim_pl(stunned_thieving, 124, 0);
                         sound_synth(stunned, 0, 0);
                     }

@@ -20,7 +20,7 @@ if(~check_axis(coord, loc_coord, loc_angle) = true) {
 }
 mes("You squeeze through the loose railing.");
 // OSRS uses an anim not in 225, just guessing here
-~agility_exactmove(human_ledge_on_right, 30, 2, $start, movecoord($start, $mod, 0, 0), 15, 90, $dir, false);
+~agility_exactmove(human_into_sidestep, 30, 2, $start, movecoord($start, $mod, 0, 0), 15, 90, $dir, false);
 
 [oploc1,_red_vine] @dig_red_vine;
 

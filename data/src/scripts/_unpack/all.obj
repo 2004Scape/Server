@@ -209,7 +209,7 @@ param=strengthbonus,5
 param=attackrate,5
 param=slashattack_anim,human_sword_slash
 param=stabattack_anim,human_sword_stab
-param=defend_anim,human_sword_defend2
+param=defend_anim,human_sword_def
 param=slash_sound,hacksword_slash
 param=stab_sound,hacksword_stab
 
@@ -623,10 +623,10 @@ param=magicdefence,10
 param=strengthbonus,50
 param=attackrate,5
 param=ready_baseanim,human_staffready
-param=crushattack_anim,human_blunt_crush
+param=crushattack_anim,human_blunt_pound
 // param=defend_anim,human_ibanstaff_2h_defend
-// param=crushattack_anim,earthwarrior_chop
-param=defend_anim,human_blunt_defend1
+// param=crushattack_anim,human_axe_chop
+param=defend_anim,human_blunt_block
 // osrs use attack seq_401 and defend seq_403 + the weapon was already 1 handed in 2006
 tradeable=no
 
@@ -706,9 +706,9 @@ param=crushdefence,1
 param=strengthbonus,10
 param=ready_baseanim,human_ready_scythe
 param=attackrate,7
-param=slashattack_anim,human_scythe_slash
+param=slashattack_anim,human_scythe_sweep
 param=crushattack_anim,human_scythe_lunge
-param=stabattack_anim,human_scythe_sweep
+param=stabattack_anim,human_scythe_slash
 param=defend_anim,human_scythe_block
 param=stab_sound,scythe_slash
 param=slash_sound,scythe_slash

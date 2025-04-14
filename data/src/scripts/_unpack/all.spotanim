@@ -1,46 +1,46 @@
 [triple_firebreath_attack]
 model=model_3015_spotanim
-anim=seq_85
+anim=dragon_firebreath_triple_attack
 hasalpha=yes
 
 [firebreath_attack]
 model=model_3016_spotanim
-anim=seq_86
+anim=dragon_firebreath_attack
 hasalpha=yes
 
 [icebreath_attack]
 model=model_3018_spotanim
-anim=seq_88
+anim=dragon_icebreath_attack
 hasalpha=yes
 
 [acidbreath_attack]
 model=model_3017_spotanim
-anim=seq_87
+anim=dragon_acidbreath_attack
 hasalpha=yes
 
 [spotanim_4]
 model=model_3019_npc
-anim=delrith_ready
+anim=demon_portal
 hasalpha=yes
 
 [spotanim_5]
 model=model_3019_npc
-anim=delrith_banish
+anim=demon_portalend
 hasalpha=yes
 
 [spotanim_6]
 model=model_2886_spotanim
-anim=seq_150
+anim=s_teleport
 hasalpha=yes
 
 [spotanim_7]
 model=model_3351_spotanim
-anim=seq_135
+anim=g_teleport
 hasalpha=yes
 
 [spotanim_8]
 model=model_loc_1407_8
-anim=seq_496
+anim=whippingplant_attack
 hasalpha=yes
 
 [iron_arrow_travel]
@@ -94,54 +94,54 @@ model=model_3132_spotanim
 
 [iron_arrow_launch]
 model=model_3142_spotanim
-anim=seq_366
+anim=arrow_launch
 hasalpha=yes
 recol1s=15855
 recol1d=8456
 
 [bronze_arrow_launch]
 model=model_3142_spotanim
-anim=seq_366
+anim=arrow_launch
 hasalpha=yes
 recol1s=15855
 recol1d=8354
 
 [steel_arrow_launch]
 model=model_3142_spotanim
-anim=seq_366
+anim=arrow_launch
 hasalpha=yes
 
 [mithril_arrow_launch]
 model=model_3142_spotanim
-anim=seq_366
+anim=arrow_launch
 hasalpha=yes
 recol1s=15855
 recol1d=6346
 
 [adamant_arrow_launch]
 model=model_3142_spotanim
-anim=seq_366
+anim=arrow_launch
 hasalpha=yes
 recol1s=15855
 recol1d=6438
 
 [unlit_arrow_launch]
 model=model_3142_spotanim
-anim=seq_366
+anim=arrow_launch
 hasalpha=yes
 recol1s=15855
 recol1d=3171
 
 [rune_arrow_launch]
 model=model_3142_spotanim
-anim=seq_366
+anim=arrow_launch
 hasalpha=yes
 recol1s=15855
 recol1d=6476
 
 [ice_arrow_launch]
 model=model_3142_spotanim
-anim=seq_366
+anim=arrow_launch
 hasalpha=yes
 recol1s=14798
 recol1d=15135
@@ -156,7 +156,7 @@ recol5d=15135
 
 [fire_arrow_launch]
 model=model_3141_spotanim
-anim=seq_366
+anim=arrow_launch
 hasalpha=yes
 
 [crossbowbolt_travel]
@@ -164,22 +164,22 @@ model=model_3135_spotanim
 
 [crossbowbolt_launch]
 model=model_3143_spotanim
-anim=seq_367
+anim=crossbowbolt_launch
 hasalpha=yes
 
 [rotten_tomato_travel]
 model=model_3208_spotanim
-anim=seq_375
+anim=vial_travel
 hasalpha=yes
 
 [rotten_tomato_launch]
 model=model_3208_spotanim
-anim=seq_374
+anim=vial_launch
 hasalpha=yes
 
 [rotten_splash]
 model=model_2223_spotanim
-anim=seq_914
+anim=watersplash_small
 hasalpha=yes
 recol1s=19039
 recol1d=13506
@@ -189,7 +189,7 @@ model=model_3349_spotanim
 
 [dwarf_rock_launch]
 model=model_3350_spotanim
-anim=seq_922
+anim=dwarf_stone_throw_launch
 hasalpha=yes
 
 [spotanim_34]
@@ -198,109 +198,109 @@ anim=seq_925
 
 [iron_taxe_travel]
 model=model_3148_spotanim
-anim=seq_372
+anim=taxe_travel
 recol1s=15855
 recol1d=8456
 
 [bronze_taxe_travel]
 model=model_3148_spotanim
-anim=seq_372
+anim=taxe_travel
 recol1s=15855
 recol1d=8354
 
 [steel_taxe_travel]
 model=model_3148_spotanim
-anim=seq_372
+anim=taxe_travel
 
 [mithril_taxe_travel]
 model=model_3148_spotanim
-anim=seq_372
+anim=taxe_travel
 recol1s=15855
 recol1d=6346
 
 [adamant_taxe_travel]
 model=model_3148_spotanim
-anim=seq_372
+anim=taxe_travel
 recol1s=15855
 recol1d=6438
 
 [spotanim_40]
 model=model_3148_spotanim
-anim=seq_372
+anim=taxe_travel
 recol1s=15855
 recol1d=4226
 
 [rune_taxe_travel]
 model=model_3148_spotanim
-anim=seq_372
+anim=taxe_travel
 recol1s=15855
 recol1d=6476
 
 [iron_taxe_launch]
 model=model_3147_spotanim
-anim=seq_371
+anim=taxe_launch
 hasalpha=yes
 recol1s=15855
 recol1d=8456
 
 [bronze_taxe_launch]
 model=model_3147_spotanim
-anim=seq_371
+anim=taxe_launch
 hasalpha=yes
 recol1s=15855
 recol1d=8354
 
 [steel_taxe_launch]
 model=model_3147_spotanim
-anim=seq_371
+anim=taxe_launch
 hasalpha=yes
 
 [mithril_taxe_launch]
 model=model_3147_spotanim
-anim=seq_371
+anim=taxe_launch
 hasalpha=yes
 recol1s=15855
 recol1d=6346
 
 [adamant_taxe_launch]
 model=model_3147_spotanim
-anim=seq_371
+anim=taxe_launch
 hasalpha=yes
 recol1s=15855
 recol1d=6438
 
 [spotanim_47]
 model=model_3147_spotanim
-anim=seq_371
+anim=taxe_launch
 hasalpha=yes
 recol1s=15855
 recol1d=4226
 
 [rune_taxe_launch]
 model=model_3147_spotanim
-anim=seq_371
+anim=taxe_launch
 hasalpha=yes
 recol1s=15855
 recol1d=6476
 
 [vial_travel]
 model=model_3152_spotanim
-anim=seq_375
+anim=vial_travel
 hasalpha=yes
 
 [vial_launch]
 model=model_3150_spotanim
-anim=seq_374
+anim=vial_launch
 hasalpha=yes
 
 [enchanted_vial_travel]
 model=model_3151_spotanim
-anim=seq_375
+anim=vial_travel
 hasalpha=yes
 
 [enchanted_vial_launch]
 model=model_3149_spotanim
-anim=seq_374
+anim=vial_launch
 hasalpha=yes
 
 [spotanim_53]
@@ -308,12 +308,12 @@ model=model_3133_spotanim
 
 [spotanim_54]
 model=model_3154_spotanim
-anim=seq_373
+anim=firebreath_travel
 hasalpha=yes
 
 [spotanim_55]
 model=model_3153_spotanim
-anim=seq_375
+anim=vial_travel
 
 [attacksword]
 model=model_519_obj_wear
@@ -321,11 +321,11 @@ anim=seq_451
 
 [spotanim_57]
 model=model_loc_3303_8
-anim=seq_454
+anim=portcullisclose
 
 [spotanim_58]
 model=model_loc_3303_8
-anim=seq_455
+anim=portcullisopen
 
 [whirlpool]
 model=model_loc_2019_8
@@ -334,45 +334,45 @@ hasalpha=yes
 
 [spotanim_60]
 model=model_2321_spotanim
-anim=seq_457
+anim=rockfall
 hasalpha=yes
 
 [spotanim_61]
 model=model_loc_3338_8
-anim=seq_458
+anim=swinginglogtrap_release
 
 [spotanim_62]
 model=model_loc_3234_8
-anim=seq_459
+anim=speartrap_release
 
 [spotanim_63]
 model=model_loc_3228_8
-anim=seq_460
+anim=springtrap_release
 
 [spotanim_64]
 model=model_loc_3228_8
-anim=seq_461
+anim=springtrap_reset
 
 [spotanim_65]
 model=model_loc_3232_8
-anim=seq_462
+anim=double_springtrap_release
 
 [spotanim_66]
 model=model_loc_3232_8
-anim=seq_463
+anim=double_springtrap_reset
 
 [spotanim_67]
 model=model_2224_spotanim
-anim=seq_489
+anim=rope_piece
 
 [watersplash]
 model=model_2223_spotanim
-anim=seq_465
+anim=watersplash
 hasalpha=yes
 
 [lavasplash]
 model=model_2223_spotanim
-anim=seq_465
+anim=watersplash
 hasalpha=yes
 recol1s=19039
 recol1d=31138
@@ -382,7 +382,7 @@ model=model_3140_spotanim
 
 [spotanim_71]
 model=model_3116_spotanim
-anim=seq_693
+anim=wave_impact
 hasalpha=yes
 recol1s=31297
 recol1d=256
@@ -415,14 +415,14 @@ model=model_3134_spotanim
 
 [saradomin_lightning]
 model=model_3066_spotanim
-anim=seq_647
+anim=saradomin_lightning
 hasalpha=yes
 ambient=100
 contrast=100
 
 [gunthix_claw]
 model=model_3068_spotanim
-anim=seq_648
+anim=gunthix_claw
 hasalpha=yes
 resizeh=56
 ambient=50
@@ -430,35 +430,35 @@ contrast=50
 
 [zamorak_flame]
 model=model_2267_spotanim
-anim=seq_901
+anim=flamewall
 hasalpha=yes
 ambient=75
 contrast=75
 
 [gnome_globes]
 model=model_3069_spotanim
-anim=seq_650
+anim=gnome_globes
 hasalpha=yes
 orientation=270
 
 [stunned_thieving]
 model=model_3070_spotanim
-anim=seq_706
+anim=stunned
 ambient=40
 contrast=40
 
 [bullroarer]
 model=model_3071_spotanim
-anim=seq_705
+anim=bullroarer
 
 [zap]
 model=model_3073_spotanim
-anim=seq_651
+anim=zap
 hasalpha=yes
 
 [ibansbolt]
 model=model_3072_spotanim
-anim=seq_649
+anim=ibansbolt
 hasalpha=yes
 recol1s=10575
 recol1d=5120
@@ -475,45 +475,45 @@ recol6d=15360
 
 [heal_casting]
 model=model_3074_spotanim
-anim=seq_652
+anim=heal_casting
 hasalpha=yes
 
 [failedspell_impact]
 model=model_3080_spotanim
-anim=seq_653
+anim=failedspell
 hasalpha=yes
 ambient=40
 contrast=40
 
 [small_smokepuff]
 model=model_3076_spotanim
-anim=seq_654
+anim=smokepuff
 hasalpha=yes
 
 [ibanblast_casting]
 model=model_3079_spotanim
-anim=seq_655
+anim=ibanblast_casting
 hasalpha=yes
 ambient=60
 contrast=60
 
 [ibanblast_travel]
 model=model_3077_spotanim
-anim=seq_656
+anim=ibanblast_travel
 hasalpha=yes
 ambient=60
 contrast=60
 
 [ibanblast_impact]
 model=model_3078_spotanim
-anim=seq_657
+anim=ibanblast_impact
 hasalpha=yes
 ambient=60
 contrast=60
 
 [windstrike_casting]
 model=model_3083_spotanim
-anim=seq_658
+anim=strike_casting
 hasalpha=yes
 ambient=30
 contrast=30
@@ -522,7 +522,7 @@ recol1d=24319
 
 [windstrike_travel]
 model=model_3081_spotanim
-anim=seq_659
+anim=strike_travel
 hasalpha=yes
 ambient=30
 contrast=30
@@ -535,7 +535,7 @@ recol3d=31
 
 [windstrike_impact]
 model=model_3082_spotanim
-anim=seq_660
+anim=strike_impact
 hasalpha=yes
 ambient=30
 contrast=30
@@ -548,7 +548,7 @@ recol3d=31
 
 [waterstrike_casting]
 model=model_3083_spotanim
-anim=seq_658
+anim=strike_casting
 hasalpha=yes
 ambient=40
 contrast=40
@@ -557,7 +557,7 @@ recol1d=10559
 
 [waterstrike_travel]
 model=model_3081_spotanim
-anim=seq_659
+anim=strike_travel
 hasalpha=yes
 ambient=40
 contrast=40
@@ -570,7 +570,7 @@ recol3d=23295
 
 [waterstrike_impact]
 model=model_3082_spotanim
-anim=seq_660
+anim=strike_impact
 hasalpha=yes
 ambient=50
 contrast=50
@@ -583,7 +583,7 @@ recol3d=23295
 
 [earthstrike_casting]
 model=model_3083_spotanim
-anim=seq_658
+anim=strike_casting
 hasalpha=yes
 ambient=30
 contrast=30
@@ -592,7 +592,7 @@ recol1d=13664
 
 [earthstrike_travel]
 model=model_3081_spotanim
-anim=seq_659
+anim=strike_travel
 hasalpha=yes
 ambient=30
 contrast=30
@@ -605,7 +605,7 @@ recol3d=992
 
 [earthstrike_impact]
 model=model_3082_spotanim
-anim=seq_660
+anim=strike_impact
 hasalpha=yes
 ambient=30
 contrast=30
@@ -618,7 +618,7 @@ recol3d=992
 
 [firestrike_casting]
 model=model_3083_spotanim
-anim=seq_658
+anim=strike_casting
 hasalpha=yes
 ambient=60
 contrast=60
@@ -627,7 +627,7 @@ recol1d=30753
 
 [firestrike_travel]
 model=model_3081_spotanim
-anim=seq_659
+anim=strike_travel
 hasalpha=yes
 ambient=60
 contrast=60
@@ -638,7 +638,7 @@ recol2d=31201
 
 [firestrike_impact]
 model=model_3082_spotanim
-anim=seq_660
+anim=strike_impact
 hasalpha=yes
 ambient=60
 contrast=60
@@ -649,112 +649,112 @@ recol2d=31201
 
 [confuse_casting]
 model=model_3092_spotanim
-anim=seq_668
+anim=confuse_casting
 hasalpha=yes
 ambient=75
 contrast=75
 
 [confuse_travel]
 model=model_3093_spotanim
-anim=seq_669
+anim=confuse_travel
 hasalpha=yes
 ambient=75
 contrast=75
 
 [confuse_impact]
 model=model_3094_spotanim
-anim=seq_670
+anim=confuse_impact
 hasalpha=yes
 ambient=75
 contrast=75
 
 [weaken_casting]
 model=model_3095_spotanim
-anim=seq_671
+anim=weaken_casting
 hasalpha=yes
 ambient=40
 contrast=40
 
 [weaken_travel]
 model=model_3096_spotanim
-anim=seq_672
+anim=weaken_travel
 hasalpha=yes
 ambient=40
 contrast=40
 
 [weaken_impact]
 model=model_3097_spotanim
-anim=seq_673
+anim=weaken_impact
 hasalpha=yes
 ambient=40
 contrast=40
 
 [curse_casting]
 model=model_3098_spotanim
-anim=seq_674
+anim=curse_casting
 hasalpha=yes
 ambient=75
 contrast=75
 
 [curse_travel]
 model=model_3100_spotanim
-anim=seq_675
+anim=curse_travel
 hasalpha=yes
 ambient=75
 contrast=75
 
 [curse_impact]
 model=model_3102_spotanim
-anim=seq_676
+anim=curse_impact
 hasalpha=yes
 ambient=75
 contrast=75
 
 [teleport_casting]
 model=model_3091_spotanim
-anim=seq_667
+anim=teleport
 hasalpha=yes
 ambient=100
 contrast=100
 
 [lowlvlalchemy_casting]
 model=model_3090_spotanim
-anim=seq_665
+anim=lowlvlalchemy
 hasalpha=yes
 ambient=75
 contrast=75
 
 [highlvlalchemy_casting]
 model=model_3090_spotanim
-anim=seq_666
+anim=highlvlalchemy
 hasalpha=yes
 ambient=75
 contrast=75
 
 [enchant_amulet_lvl1]
 model=model_3103_spotanim
-anim=seq_677
+anim=enchant_amulet_lvl1
 hasalpha=yes
 ambient=40
 contrast=40
 
 [enchant_amulet_lvl2]
 model=model_3103_spotanim
-anim=seq_678
+anim=enchant_amulet_lvl2
 hasalpha=yes
 ambient=40
 contrast=40
 
 [enchant_amulet_lvl3]
 model=model_3103_spotanim
-anim=seq_679
+anim=enchant_amulet_lvl3
 hasalpha=yes
 ambient=40
 contrast=40
 
 [windbolt_casting]
 model=model_3083_spotanim
-anim=seq_658
+anim=strike_casting
 hasalpha=yes
 ambient=30
 contrast=30
@@ -763,7 +763,7 @@ recol1d=24319
 
 [windbolt_travel]
 model=model_3084_spotanim
-anim=seq_661
+anim=bolt_travel
 hasalpha=yes
 ambient=50
 contrast=50
@@ -776,7 +776,7 @@ recol3d=21140
 
 [windbolt_impact]
 model=model_3085_spotanim
-anim=seq_662
+anim=bolt_impact
 hasalpha=yes
 ambient=50
 contrast=50
@@ -787,7 +787,7 @@ recol2d=32767
 
 [waterbolt_casting]
 model=model_3083_spotanim
-anim=seq_658
+anim=strike_casting
 hasalpha=yes
 ambient=60
 contrast=60
@@ -796,7 +796,7 @@ recol1d=31
 
 [waterbolt_travel]
 model=model_3084_spotanim
-anim=seq_661
+anim=bolt_travel
 hasalpha=yes
 ambient=60
 contrast=60
@@ -809,7 +809,7 @@ recol3d=15871
 
 [waterbolt_impact]
 model=model_3085_spotanim
-anim=seq_662
+anim=bolt_impact
 hasalpha=yes
 ambient=60
 contrast=60
@@ -820,7 +820,7 @@ recol2d=479
 
 [earthbolt_casting]
 model=model_3083_spotanim
-anim=seq_658
+anim=strike_casting
 hasalpha=yes
 ambient=40
 contrast=40
@@ -829,7 +829,7 @@ recol1d=13664
 
 [earthbolt_travel]
 model=model_3084_spotanim
-anim=seq_661
+anim=bolt_travel
 hasalpha=yes
 ambient=40
 contrast=40
@@ -842,7 +842,7 @@ recol3d=14656
 
 [earthbolt_impact]
 model=model_3085_spotanim
-anim=seq_662
+anim=bolt_impact
 hasalpha=yes
 ambient=40
 contrast=40
@@ -853,7 +853,7 @@ recol2d=992
 
 [firebolt_casting]
 model=model_3083_spotanim
-anim=seq_658
+anim=strike_casting
 hasalpha=yes
 ambient=60
 contrast=60
@@ -862,21 +862,21 @@ recol1d=30753
 
 [firebolt_travel]
 model=model_3084_spotanim
-anim=seq_661
+anim=bolt_travel
 hasalpha=yes
 ambient=60
 contrast=60
 
 [firebolt_impact]
 model=model_3085_spotanim
-anim=seq_662
+anim=bolt_impact
 hasalpha=yes
 ambient=60
 contrast=60
 
 [fireblast_casting]
 model=model_3083_spotanim
-anim=seq_658
+anim=strike_casting
 hasalpha=yes
 ambient=60
 contrast=60
@@ -885,21 +885,21 @@ recol1d=30753
 
 [fireblast_travel]
 model=model_3087_spotanim
-anim=seq_663
+anim=blast_travel
 hasalpha=yes
 ambient=60
 contrast=60
 
 [fireblast_impact]
 model=model_3088_spotanim
-anim=seq_664
+anim=blast_impact
 hasalpha=yes
 ambient=60
 contrast=60
 
 [windblast_casting]
 model=model_3083_spotanim
-anim=seq_658
+anim=strike_casting
 hasalpha=yes
 ambient=50
 contrast=50
@@ -908,7 +908,7 @@ recol1d=24319
 
 [windblast_travel]
 model=model_3087_spotanim
-anim=seq_663
+anim=blast_travel
 hasalpha=yes
 ambient=50
 contrast=50
@@ -921,7 +921,7 @@ recol3d=21140
 
 [windblast_impact]
 model=model_3088_spotanim
-anim=seq_664
+anim=blast_impact
 hasalpha=yes
 ambient=50
 contrast=50
@@ -934,7 +934,7 @@ recol3d=15855
 
 [waterblast_casting]
 model=model_3083_spotanim
-anim=seq_658
+anim=strike_casting
 hasalpha=yes
 ambient=60
 contrast=60
@@ -943,7 +943,7 @@ recol1d=31
 
 [waterblast_travel]
 model=model_3087_spotanim
-anim=seq_663
+anim=blast_travel
 hasalpha=yes
 ambient=60
 contrast=60
@@ -956,7 +956,7 @@ recol3d=31
 
 [waterblast_impact]
 model=model_3088_spotanim
-anim=seq_664
+anim=blast_impact
 hasalpha=yes
 ambient=60
 contrast=60
@@ -969,7 +969,7 @@ recol3d=15871
 
 [earthblast_casting]
 model=model_3083_spotanim
-anim=seq_658
+anim=strike_casting
 hasalpha=yes
 ambient=40
 contrast=40
@@ -978,7 +978,7 @@ recol1d=13664
 
 [earthblast_travel]
 model=model_3087_spotanim
-anim=seq_663
+anim=blast_travel
 hasalpha=yes
 ambient=40
 contrast=40
@@ -991,7 +991,7 @@ recol3d=14656
 
 [earthblast_impact]
 model=model_3088_spotanim
-anim=seq_664
+anim=blast_impact
 hasalpha=yes
 ambient=40
 contrast=40
@@ -1004,122 +1004,122 @@ recol3d=480
 
 [bonestobananas_casting]
 model=model_3104_spotanim
-anim=seq_680
+anim=bonestobananas_casting
 hasalpha=yes
 ambient=40
 contrast=40
 
 [telegrab_casting]
 model=model_3105_spotanim
-anim=seq_681
+anim=telegrab_casting
 hasalpha=yes
 ambient=40
 contrast=40
 
 [telegrab_travel]
 model=model_3106_spotanim
-anim=seq_682
+anim=telegrab_travel
 hasalpha=yes
 ambient=75
 contrast=75
 
 [telegrab_impact]
 model=model_3107_spotanim
-anim=seq_683
+anim=telegrab_impact
 hasalpha=yes
 ambient=75
 contrast=75
 
 [crumbleundead_casting]
 model=model_3108_spotanim
-anim=seq_684
+anim=crumbleundead_casting
 hasalpha=yes
 ambient=40
 contrast=40
 
 [crumbleundead_travel]
 model=model_3109_spotanim
-anim=seq_685
+anim=crumbleundead_travel
 hasalpha=yes
 ambient=40
 contrast=40
 
 [crumbleundead_impact]
 model=model_3110_spotanim
-anim=seq_686
+anim=crumbleundead_impact
 hasalpha=yes
 ambient=40
 contrast=40
 
 [superheatitem_casting]
 model=model_3111_spotanim
-anim=seq_687
+anim=superheatitem_casting
 hasalpha=yes
 ambient=75
 contrast=75
 
 [chargewaterorb_casting]
 model=model_3112_spotanim
-anim=seq_688
+anim=chargeorb_casting
 hasalpha=yes
 recol1s=13343
 recol1d=31
 
 [chargewindorb_casting]
 model=model_3112_spotanim
-anim=seq_688
+anim=chargeorb_casting
 hasalpha=yes
 recol1s=13343
 recol1d=29596
 
 [chargeearthorb_casting]
 model=model_3112_spotanim
-anim=seq_688
+anim=chargeorb_casting
 hasalpha=yes
 recol1s=13343
 recol1d=480
 
 [chargefireorb_casting]
 model=model_3112_spotanim
-anim=seq_688
+anim=chargeorb_casting
 hasalpha=yes
 recol1s=13343
 recol1d=30753
 
 [enchant_amulet2_lvl4]
 model=model_3113_spotanim
-anim=seq_689
+anim=enchant_amulet2_lvl4
 hasalpha=yes
 
 [enchant_amulet2_lvl5]
 model=model_3113_spotanim
-anim=seq_690
+anim=enchant_amulet2_lvl5
 hasalpha=yes
 
 [firewave_casting]
 model=model_3114_spotanim
-anim=seq_691
+anim=wave_casting
 hasalpha=yes
 ambient=60
 contrast=60
 
 [firewave_travel]
 model=model_3115_spotanim
-anim=seq_692
+anim=wave_travel
 hasalpha=yes
 ambient=60
 contrast=60
 
 [firewave_impact]
 model=model_3116_spotanim
-anim=seq_693
+anim=wave_impact
 hasalpha=yes
 ambient=60
 contrast=60
 
 [windwave_casting]
 model=model_3114_spotanim
-anim=seq_691
+anim=wave_casting
 hasalpha=yes
 ambient=50
 contrast=50
@@ -1132,7 +1132,7 @@ recol3d=15855
 
 [windwave_travel]
 model=model_3115_spotanim
-anim=seq_692
+anim=wave_travel
 hasalpha=yes
 ambient=50
 contrast=50
@@ -1145,7 +1145,7 @@ recol3d=15855
 
 [windwave_impact]
 model=model_3116_spotanim
-anim=seq_693
+anim=wave_impact
 hasalpha=yes
 ambient=50
 contrast=50
@@ -1158,7 +1158,7 @@ recol3d=15855
 
 [waterwave_casting]
 model=model_3114_spotanim
-anim=seq_691
+anim=wave_casting
 hasalpha=yes
 ambient=40
 contrast=40
@@ -1171,7 +1171,7 @@ recol3d=31
 
 [waterwave_travel]
 model=model_3115_spotanim
-anim=seq_692
+anim=wave_travel
 hasalpha=yes
 ambient=60
 contrast=60
@@ -1184,7 +1184,7 @@ recol3d=31
 
 [waterwave_impact]
 model=model_3116_spotanim
-anim=seq_693
+anim=wave_impact
 hasalpha=yes
 ambient=60
 contrast=60
@@ -1197,7 +1197,7 @@ recol3d=31
 
 [earthwave_casting]
 model=model_3114_spotanim
-anim=seq_691
+anim=wave_casting
 hasalpha=yes
 ambient=40
 contrast=40
@@ -1210,7 +1210,7 @@ recol3d=480
 
 [earthwave_travel]
 model=model_3115_spotanim
-anim=seq_692
+anim=wave_travel
 hasalpha=yes
 ambient=40
 contrast=40
@@ -1223,7 +1223,7 @@ recol3d=480
 
 [earthwave_impact]
 model=model_3116_spotanim
-anim=seq_693
+anim=wave_impact
 hasalpha=yes
 ambient=40
 contrast=40
@@ -1236,125 +1236,125 @@ recol3d=480
 
 [vulnerability_casting]
 model=model_3117_spotanim
-anim=seq_694
+anim=vulnerability_casting
 hasalpha=yes
 ambient=75
 contrast=75
 
 [vulnerability_travel]
 model=model_3099_spotanim
-anim=seq_675
+anim=curse_travel
 hasalpha=yes
 ambient=75
 contrast=75
 
 [vulnerability_impact]
 model=model_3118_spotanim
-anim=seq_695
+anim=vulnerability_impact
 hasalpha=yes
 ambient=75
 contrast=75
 
 [enfeeble_casting]
 model=model_3119_spotanim
-anim=seq_696
+anim=enfeeble_casting
 hasalpha=yes
 ambient=40
 contrast=40
 
 [enfeeble_travel]
 model=model_3120_spotanim
-anim=seq_697
+anim=enfeeble_travel
 hasalpha=yes
 ambient=40
 contrast=40
 
 [enfeeble_impact]
 model=model_3122_spotanim
-anim=seq_698
+anim=enfeeble_impact
 hasalpha=yes
 ambient=40
 contrast=40
 
 [stun_casting]
 model=model_3123_spotanim
-anim=seq_699
+anim=stun_casting
 hasalpha=yes
 ambient=40
 contrast=40
 
 [stun_travel]
 model=model_3124_spotanim
-anim=seq_700
+anim=stun_travel
 hasalpha=yes
 ambient=40
 contrast=40
 
 [stun_impact]
 model=model_3121_spotanim
-anim=seq_698
+anim=enfeeble_impact
 hasalpha=yes
 ambient=40
 contrast=40
 
 [explodingvial]
 model=model_3125_spotanim
-anim=seq_701
+anim=explodingvial
 hasalpha=yes
 
 [bind_casting]
 model=model_3126_spotanim
-anim=seq_702
+anim=entangle_casting
 hasalpha=yes
 ambient=40
 contrast=40
 
 [bind_travel]
 model=model_3127_spotanim
-anim=seq_703
+anim=entangle_travel
 hasalpha=yes
 ambient=40
 contrast=40
 
 [entangle_impact]
 model=model_3128_spotanim
-anim=seq_704
+anim=entangle_impact
 hasalpha=yes
 ambient=40
 contrast=40
 
 [snare_impact]
 model=model_3130_spotanim
-anim=seq_704
+anim=entangle_impact
 hasalpha=yes
 ambient=40
 contrast=40
 
 [bind_impact]
 model=model_3129_spotanim
-anim=seq_704
+anim=entangle_impact
 hasalpha=yes
 ambient=40
 contrast=40
 
 [spotanim_182]
 model=model_2240_spotanim
-anim=seq_731
+anim=catabow_travel
 
 [spotanim_183]
 model=model_2239_spotanim
-anim=seq_732
+anim=catabow_end
 
 [spotanim_184]
 model=model_3076_spotanim
-anim=seq_654
+anim=smokepuff
 hasalpha=yes
 recol1s=15855
 recol1d=2304
 
 [spotanim_185]
 model=model_3087_spotanim
-anim=seq_663
+anim=blast_travel
 hasalpha=yes
 recol1s=30753
 recol1d=30653
@@ -1365,7 +1365,7 @@ recol3d=29596
 
 [spotanim_187]
 model=model_3068_spotanim
-anim=seq_648
+anim=gunthix_claw
 hasalpha=yes
 resizeh=56
 recol1s=18455
@@ -1373,34 +1373,34 @@ recol1d=30537
 
 [smokepuff_large]
 model=model_3076_spotanim
-anim=seq_654
+anim=smokepuff
 hasalpha=yes
 resizeh=256
 
 [smokepuff_huge]
 model=model_3076_spotanim
-anim=seq_654
+anim=smokepuff
 hasalpha=yes
 resizeh=512
 resizev=320
 
 [spotanim_190]
 model=model_2886_spotanim
-anim=seq_151
+anim=s_teleport_reverse
 hasalpha=yes
 resizeh=352
 resizev=352
 
 [spotanim_191]
 model=model_3351_spotanim
-anim=seq_136
+anim=g_teleport_reverse
 hasalpha=yes
 resizeh=224
 resizev=224
 
 [holy_water_travel]
 model=model_3151_spotanim
-anim=seq_375
+anim=vial_travel
 hasalpha=yes
 recol1s=15855
 recol1d=27
@@ -1409,7 +1409,7 @@ recol2d=15967
 
 [holy_water_launch]
 model=model_3149_spotanim
-anim=seq_374
+anim=vial_launch
 hasalpha=yes
 recol1s=15855
 recol1d=27
@@ -1418,14 +1418,14 @@ recol2d=15967
 
 [spotanim_194]
 model=model_3083_spotanim
-anim=seq_658
+anim=strike_casting
 hasalpha=yes
 recol1s=19487
 recol1d=2115
 
 [spotanim_195]
 model=model_3081_spotanim
-anim=seq_659
+anim=strike_travel
 hasalpha=yes
 recol1s=15360
 recol1d=2115
@@ -1436,7 +1436,7 @@ recol3d=32767
 
 [spotanim_196]
 model=model_3082_spotanim
-anim=seq_660
+anim=strike_impact
 hasalpha=yes
 recol1s=15360
 recol1d=2115
@@ -1447,7 +1447,7 @@ recol3d=32767
 
 [spotanim_197]
 model=model_2267_spotanim
-anim=seq_901
+anim=flamewall
 hasalpha=yes
 resizeh=128
 resizev=384
@@ -1460,7 +1460,7 @@ recol3d=32767
 
 [spotanim_198]
 model=model_3116_spotanim
-anim=seq_693
+anim=wave_impact
 hasalpha=yes
 recol1s=31297
 recol1d=32767
@@ -1471,7 +1471,7 @@ recol3d=16927
 
 [levelup_anim]
 model=model_411_spotanim
-anim=seq_913
+anim=levelup_anim
 hasalpha=yes
 
 [bronze_javelin_travel]
@@ -1504,40 +1504,40 @@ recol1d=6476
 
 [bronze_javelin_launch]
 model=model_3144_spotanim
-anim=seq_368
+anim=javelin_launch
 hasalpha=yes
 recol1s=15855
 recol1d=8354
 
 [iron_javelin_launch]
 model=model_3144_spotanim
-anim=seq_368
+anim=javelin_launch
 hasalpha=yes
 recol1s=15855
 recol1d=8456
 
 [steel_javelin_launch]
 model=model_3144_spotanim
-anim=seq_368
+anim=javelin_launch
 hasalpha=yes
 
 [mithril_javelin_launch]
 model=model_3144_spotanim
-anim=seq_368
+anim=javelin_launch
 hasalpha=yes
 recol1s=15855
 recol1d=3174
 
 [adamant_javelin_launch]
 model=model_3144_spotanim
-anim=seq_368
+anim=javelin_launch
 hasalpha=yes
 recol1s=15855
 recol1d=6438
 
 [rune_javelin_launch]
 model=model_3144_spotanim
-anim=seq_368
+anim=javelin_launch
 hasalpha=yes
 recol1s=15855
 recol1d=6476
@@ -1591,7 +1591,7 @@ recol2d=6476
 
 [bronze_tknife_launch]
 model=model_3145_spotanim
-anim=seq_369
+anim=tknife_launch
 hasalpha=yes
 recol1s=15855
 recol1d=8354
@@ -1600,7 +1600,7 @@ recol2d=8354
 
 [iron_tknife_launch]
 model=model_3145_spotanim
-anim=seq_369
+anim=tknife_launch
 hasalpha=yes
 recol1s=15855
 recol1d=8456
@@ -1609,14 +1609,14 @@ recol2d=8456
 
 [steel_tknife_launch]
 model=model_3145_spotanim
-anim=seq_369
+anim=tknife_launch
 hasalpha=yes
 recol1s=14798
 recol1d=15855
 
 [black_tknife_launch]
 model=model_3145_spotanim
-anim=seq_369
+anim=tknife_launch
 hasalpha=yes
 recol1s=15855
 recol1d=2114
@@ -1625,7 +1625,7 @@ recol2d=2114
 
 [mithril_tknife_launch]
 model=model_3145_spotanim
-anim=seq_369
+anim=tknife_launch
 hasalpha=yes
 recol1s=15855
 recol1d=3174
@@ -1634,7 +1634,7 @@ recol2d=3174
 
 [adamant_tknife_launch]
 model=model_3145_spotanim
-anim=seq_369
+anim=tknife_launch
 hasalpha=yes
 recol1s=15855
 recol1d=6438
@@ -1643,7 +1643,7 @@ recol2d=6438
 
 [rune_tknife_launch]
 model=model_3145_spotanim
-anim=seq_369
+anim=tknife_launch
 hasalpha=yes
 recol1s=15855
 recol1d=6476
@@ -1682,65 +1682,65 @@ recol1d=6476
 
 [bronze_dart_launch]
 model=model_3146_spotanim
-anim=seq_370
+anim=dart_launch
 hasalpha=yes
 recol1s=21140
 recol1d=8354
 
 [iron_dart_launch]
 model=model_3146_spotanim
-anim=seq_370
+anim=dart_launch
 hasalpha=yes
 recol1s=21140
 recol1d=8456
 
 [steel_dart_launch]
 model=model_3146_spotanim
-anim=seq_370
+anim=dart_launch
 hasalpha=yes
 recol1s=21140
 recol1d=15855
 
 [mithril_dart_launch]
 model=model_3146_spotanim
-anim=seq_370
+anim=dart_launch
 hasalpha=yes
 recol1s=21140
 recol1d=3174
 
 [adamant_dart_launch]
 model=model_3146_spotanim
-anim=seq_370
+anim=dart_launch
 hasalpha=yes
 recol1s=21140
 recol1d=6438
 
 [rune_dart_launch]
 model=model_3146_spotanim
-anim=seq_370
+anim=dart_launch
 hasalpha=yes
 recol1s=21140
 recol1d=6476
 
 [enchant_ring]
 model=model_3370_spotanim
-anim=seq_930
+anim=enchant_ring
 hasalpha=yes
 ambient=40
 contrast=40
 
 [Barrel_Smash]
 model=model_loc_672_8
-anim=seq_449
+anim=barrel
 hasalpha=yes
 
 [chompy_toad_exploding]
 model=model_3446_spotanim
-anim=seq_1023
+anim=chompy_toad_explode
 
 [ogre_bellows_use]
 model=model_3440_obj
-anim=seq_1024
+anim=ogre_bellows_use
 
 [ogre_arrow_travel]
 model=model_3136_spotanim
@@ -1759,7 +1759,7 @@ recol5d=32728
 
 [ogre_arrow_launch]
 model=model_3142_spotanim
-anim=seq_366
+anim=arrow_launch
 hasalpha=yes
 resizeh=192
 resizev=192

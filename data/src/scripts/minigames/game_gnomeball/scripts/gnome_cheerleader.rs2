@@ -1,13 +1,13 @@
 // from 300 ticks of both cheerleaders:
 // NPC ANIM | COUNT
-// midget_seq_213	72
-// midget_seq_212	84
-// midget_seq_211	67
-// midget_seq_218	59
-// midget_seq_215	91
-// midget_seq_214	77
-// midget_seq_217	81
-// midget_seq_216	72
+// midget_cl3	72
+// midget_cl2	84
+// midget_cl1	67
+// midget_cl8	59
+// midget_cl5	91
+// midget_cl4	77
+// midget_cl7	81
+// midget_cl6	72
 
 // ticks where the cheerleader didnt do an anim: 276
 // ticks where the cheerleader did do an anim: 325
@@ -15,13 +15,13 @@
 [ai_timer,gnome_cheerleader]
 if (random(2) = 0) {
     switch_int (random(8)) {
-        case 0 : npc_anim(midget_seq_211, 0);
-        case 1 : npc_anim(midget_seq_212, 0);
-        case 2 : npc_anim(midget_seq_213, 0);
-        case 3 : npc_anim(midget_seq_214, 0);
-        case 4 : npc_anim(midget_seq_215, 0);
-        case 5 : npc_anim(midget_seq_216, 0);
-        case 6 : npc_anim(midget_seq_217, 0);
-        case 7 : npc_anim(midget_seq_218, 0);
+        case 0 : npc_anim(midget_cl1, 0);
+        case 1 : npc_anim(midget_cl2, 0);
+        case 2 : npc_anim(midget_cl3, 0);
+        case 3 : npc_anim(midget_cl4, 0);
+        case 4 : npc_anim(midget_cl5, 0);
+        case 5 : npc_anim(midget_cl6, 0);
+        case 6 : npc_anim(midget_cl7, 0);
+        case 7 : npc_anim(midget_cl8, 0);
     }
 }

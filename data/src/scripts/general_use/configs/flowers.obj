@@ -18,7 +18,7 @@ param=stabattack,-100
 param=slashattack,-100
 param=crushattack,-50
 param=strengthbonus,-10
-param=crushattack_anim,human_blunt_stab
+param=crushattack_anim,human_blunt_spike
 param=crush_sound,flower_attack
 
 [flowers_waterfall_quest_red]
@@ -47,7 +47,7 @@ param=stabattack,-100
 param=slashattack,-100
 param=crushattack,-50
 param=strengthbonus,-10
-param=crushattack_anim,human_blunt_stab
+param=crushattack_anim,human_blunt_spike
 param=crush_sound,flower_attack
 
 [flowers_waterfall_quest_blue]
@@ -76,7 +76,7 @@ param=stabattack,-100
 param=slashattack,-100
 param=crushattack,-50
 param=strengthbonus,-10
-param=crushattack_anim,human_blunt_stab
+param=crushattack_anim,human_blunt_spike
 param=crush_sound,flower_attack
 
 [flowers_waterfall_quest_yellow]
@@ -105,7 +105,7 @@ param=stabattack,-100
 param=slashattack,-100
 param=crushattack,-50
 param=strengthbonus,-10
-param=crushattack_anim,human_blunt_stab
+param=crushattack_anim,human_blunt_spike
 param=crush_sound,flower_attack
 
 [flowers_waterfall_quest_purple]
@@ -134,7 +134,7 @@ param=stabattack,-100
 param=slashattack,-100
 param=crushattack,-50
 param=strengthbonus,-10
-param=crushattack_anim,human_blunt_stab
+param=crushattack_anim,human_blunt_spike
 param=crush_sound,flower_attack
 
 [flowers_waterfall_quest_orange]
@@ -163,7 +163,7 @@ param=stabattack,-100
 param=slashattack,-100
 param=crushattack,-50
 param=strengthbonus,-10
-param=crushattack_anim,human_blunt_stab
+param=crushattack_anim,human_blunt_spike
 param=crush_sound,flower_attack
 
 [flowers_waterfall_quest_mixed]
@@ -192,7 +192,7 @@ param=stabattack,-100
 param=slashattack,-100
 param=crushattack,-50
 param=strengthbonus,-10
-param=crushattack_anim,human_blunt_stab
+param=crushattack_anim,human_blunt_spike
 param=crush_sound,flower_attack
 
 [flowers_waterfall_quest_white]
@@ -221,7 +221,7 @@ param=stabattack,-100
 param=slashattack,-100
 param=crushattack,-50
 param=strengthbonus,-10
-param=crushattack_anim,human_blunt_stab
+param=crushattack_anim,human_blunt_spike
 param=crush_sound,flower_attack
 
 [flowers_waterfall_quest_black]
@@ -250,5 +250,5 @@ param=stabattack,-100
 param=slashattack,-100
 param=crushattack,-50
 param=strengthbonus,-10
-param=crushattack_anim,human_blunt_stab
+param=crushattack_anim,human_blunt_spike
 param=crush_sound,flower_attack

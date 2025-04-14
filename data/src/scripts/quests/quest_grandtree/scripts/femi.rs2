@@ -51,7 +51,7 @@ bas_running(null);
 p_walk(0_38_52_29_51); // respects clipping from my testing
 p_delay(4); // 5t
 facesquare(movecoord(coord, 1, 0, 0));
-anim(human_reachforladdertop, 0);
+anim(human_reachforladder, 0);
 p_delay(0);
 p_telejump(0_38_53_27_17);
 ~update_bas;

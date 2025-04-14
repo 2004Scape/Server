@@ -25,8 +25,8 @@ if (add(%npc_lastcombat, 8) > map_clock) {
 }
 
 mes("You throw the ball.");
-anim(seq_783, 0);
-npc_anim(midget_seq_200, 28);
+anim(human_throw_gnomeball, 0);
+npc_anim(midget_catch, 28);
 
 def_int $duration = ~npc_projectile(coord, npc_uid, spotanim_55, 40, 36, 41, 15, 5, 11, 5);
 def_int $delay = sub(divide($duration, 30), 1);
@@ -76,11 +76,11 @@ if_close;
 if (p_finduid(%npc_attacking_uid) = true) {
     %npc_lastattack = map_clock;
     mes("The gnome passes the ball back.");
-    anim(seq_782, 22);
+    anim(human_catch, 22);
     facesquare(npc_coord);
 
     npc_settimer(0);
-    npc_anim(midget_seq_201, 0);
+    npc_anim(midget_throw, 0);
     sound_synth(catch, 0, 22);
     sound_synth(throw, 0, 0);
     ~player_projectile(npc_coord, coord, uid, spotanim_55, 36, 40, 34, 15, 15, 11, 2);

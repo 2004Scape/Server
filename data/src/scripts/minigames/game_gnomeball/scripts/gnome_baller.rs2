@@ -15,18 +15,18 @@ if (p_finduid(uid) = true) {
 }
 
 [proc,npc_gnomeball_tackle_fail]
-npc_anim(midget_seq_207, 0);
+npc_anim(midget_human_tackle_fail, 0);
 npc_changetype_keepall(npc_param(gnome_fallen), 5);
 npc_delay(5);
-npc_anim(midget_seq_209, 0);
+npc_anim(midget_human_tackle_fail_getup, 0);
 npc_delay(0);
 %npc_attacking_uid = null;
 
 [proc,npc_gnomeball_tackle_success]
 queue(damage_player, 0, add(random(2), 1));
-anim(seq_779, 0);
+anim(human_tackled, 0);
 npc_changetype_keepall(npc_param(gnome_hasball), ^max_32bit_int); // perm? 
-npc_anim(midget_seq_210, 0);
+npc_anim(midget_human_tackle, 0);
 inv_delslot(worn, ^wearpos_rhand);
 ~update_all(ball_gnomeball_game);
 npc_setmode(null);
@@ -74,20 +74,20 @@ if (stat_random(stat(agility), $low, $high) = true) { // 50% guess for now
 
 
 [proc,player_gnomeball_tackle_fail]
-anim(seq_780, 33);
-npc_anim(midget_seq_204, 33);
+anim(human_gnome_tackle_fail, 33);
+npc_anim(midget_dodge_tackle, 33);
 npc_delay(0);
 // SoundEffect(name = "gnomeball_tackled_gnome_miss")
 
 [proc,player_gnomeball_tackle_success]
-anim(seq_778, 33);
-npc_anim(midget_seq_203, 30);
+anim(human_gnome_tackle, 33);
+npc_anim(midget_tackled, 30);
 p_delay(0);
 ~update_all(ball_gnomeball_game);
 npc_changetype_keepall(npc_param(gnome_tackled), 9);
 npc_delay(9);
 npc_setmode(null);
-npc_anim(midget_seq_206, 0);
+npc_anim(midget_getup, 0);
 npc_delay(0);
 
 

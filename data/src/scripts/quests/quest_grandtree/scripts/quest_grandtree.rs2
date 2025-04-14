@@ -150,14 +150,14 @@ if(%grandtree_progress ! ^grandtree_complete) {
     return;
 }
 sound_synth(tanglevine_appear, 0, 0);
-loc_anim(seq_452);
+loc_anim(rootdoor_open);
 p_delay(2);
 if(coordz(coord) < coordz(loc_coord)) {
     ~forcemove(movecoord(coord, 0, 0, 2));
 } else {
     ~forcemove(movecoord(coord, 0, 0, -2));
 }
-loc_anim(seq_453);
+loc_anim(rootdoor_close);
 
 [oploc1,_grandtree_root]
 p_arrivedelay;

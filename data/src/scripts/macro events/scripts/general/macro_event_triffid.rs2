@@ -1,6 +1,6 @@
 [proc,macro_event_triffid_spawn]
 npc_setmode(none);
-npc_anim(seq_348, 0);
+npc_anim(triffid_grow, 0);
 %npc_int = ^triffid_growing;
 %npc_macro_event_target = uid;
 sound_synth(triffid_appear, 0, 0);
@@ -20,7 +20,7 @@ sound_synth(pick, 0, 0);
 // https://youtu.be/ghfKpXe7N5s?t=24
 mes("You pick the fruit from the plant."); // osrs
 %macro_event = ^no_macro_event;
-npc_anim(seq_350, 0); // take thing away
+npc_anim(triffid_fruit_picked, 0); // take thing away
 npc_delay(22); // delayed when despawning in osrs
 npc_del;
 
@@ -28,7 +28,7 @@ npc_del;
 // 90 ticks https://youtu.be/94bDnUMTMXQ?t=374
 [ai_timer,macro_event_triffid_friendly]
 if (%npc_int = ^triffid_ready_to_attack) { // turn hostile
-    npc_anim(seq_351, 60);
+    npc_anim(triffid_angry_grow, 60);
     npc_delay(4);
 
     npc_changetype_keepall(macro_event_triffid_hostile, ^max_32bit_int);
@@ -49,7 +49,7 @@ if (%npc_int = ^triffid_ready_to_attack) { // turn hostile
 // https://youtu.be/t7iOUMQv6Ws?t=148
 [ai_timer,macro_event_triffid_hostile]
 if (~macro_event_lost_hostile = true) {
-    npc_anim(seq_355, 0);
+    npc_anim(triffid_angry_death, 0);
     npc_delay(1);
     npc_del;
 }

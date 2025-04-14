@@ -1,7 +1,7 @@
 [proc,macro_event_drunken_dwarf_spawn] // greet player
 // no smoke puff: https://youtu.be/R9eKmC7oLy0?t=122
 sound_synth(dwarf_whistle, 0, 0);
-npc_anim(dwarf_seq_105, 20);
+npc_anim(dwarf_drunkwave, 20);
 npc_say("'Ello der <displayname>! *hic*");
 %npc_macro_event_target = uid;
 npc_setmode(playerfollow);
@@ -23,18 +23,18 @@ if (~macro_event_lost = true) {
 // todo: confirm these anims
 if (finduid(%npc_macro_event_target) = true) {
     if (%npc_int = 0) {
-        npc_anim(dwarf_seq_103, 20);
+        npc_anim(dwarf_drunkangry, 20);
         sound_synth(dwarf_whistle, 0, 0);
         npc_say("Aww comeon, talk to ikle me <displayname>!");
     } else if (%npc_int = 1) {
-        npc_anim(dwarf_seq_105, 20);
+        npc_anim(dwarf_drunkwave, 20);
         sound_synth(dwarf_whistle, 0, 0);
         npc_say("Oi, are you der <displayname>!");
     } else if (%npc_int = 2) {
         sound_synth(dwarf_whistle, 0, 0);
         npc_say("Dunt ignore your mate, <displayname>!");
     } else if (%npc_int = 3) {
-        npc_anim(dwarf_seq_103, 20);
+        npc_anim(dwarf_drunkangry, 20);
         sound_synth(dwarf_whistle, 0, 0);
         npc_say("I hates yoo <displayname>!");
     } else if (%npc_int = 4) { // fail

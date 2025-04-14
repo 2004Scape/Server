@@ -27,7 +27,7 @@ if(%arena_progress = ^arena_sent_jail) {
     def_int $delay_diff = distance(coord, 0_40_49_40_6);
     ~forcemove(0_40_49_40_6);
     p_delay(calc(4 - $delay_diff));
-    npc_anim(seq_553, 0);
+    npc_anim(human_closedoorr, 0);
     p_delay(0);
     if(loc_find(0_40_49_40_6, arena_prisondoor) = true) {
         def_int $x;

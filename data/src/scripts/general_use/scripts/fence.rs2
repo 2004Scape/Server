@@ -24,5 +24,5 @@ if (coord ! $start) {
 }
 facesquare($end);
 p_delay(0);
-~agility_exactmove(human_walk_fence_north, 0, 2, $start, $end, 0, 76, $dir, true);
+~agility_exactmove(human_walk_style, 0, 2, $start, $end, 0, 76, $dir, true);
 p_teleport($end);

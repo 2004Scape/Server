@@ -62,7 +62,7 @@ if ($random_attack < 20 & stat(strength) >= stat_base(strength)) { // dont cast 
 if_close;
 // not sure if its line of sight or line of walk
 def_coord $cabbage_coord = map_findsquare(npc_coord, 1, 7, ^map_findsquare_lineofwalk);
-npc_anim(human_chaos_druid_cast_bind, 0);
+npc_anim(human_castentangle, 0);
 spotanim_npc(bind_casting, 92, 0);
 %npc_action_delay = calc(map_clock + 5);
 npc_delay(1); // in osrs, the player stops attacking him. Npc_delay is what causes this
@@ -73,7 +73,7 @@ spotanim_map(small_smokepuff, $cabbage_coord, 124, 0);
 [proc,npc_zap_attack](int $maxhit, int $attackspeed)
 if_close;
 
-npc_anim(zap, 0);
+npc_anim(human_castzap, 0);
 spotanim_npc(zap, 92, 0);
 sound_synth(zap, 0, 0);
 

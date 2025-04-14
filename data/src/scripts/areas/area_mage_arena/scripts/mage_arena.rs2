@@ -1,7 +1,7 @@
 [oploc1,loc_2871]
 p_arrivedelay;
 // https://youtu.be/uSO-ilQk5XY?si=mj3w1GIB5ZM0BnAZ&t=1089
-anim(human_reachforladdertop, 0);
+anim(human_reachforladder, 0);
 p_delay(1);
 p_telejump(movecoord(coord, -549, 0, 756));
 mes("You climb down the ladder.");
@@ -64,11 +64,11 @@ if (%magearena < ^mage_arena_complete) {
     p_delay(0);
     return;
 }
-anim(human_jump_stones, 5);
+anim(human_spot_jump, 5);
 p_locmerge(0, 120, movecoord(loc_coord, -1, 0, -1), movecoord(loc_coord, 3, 0, 3));
 p_exactmove(coord, $middle, 20, 35, $dir);
 p_delay(1);
-anim(seq_804, 0);
+anim(human_smokepuff_tele_disappear, 0);
 spotanim_pl(watersplash, 0, 20);
 sound_synth(pool_plop, 0, 0);
 p_delay(1);
@@ -158,7 +158,7 @@ if (npc_find(coord, kolodion, 5, 0) = true) {
 [proc,mage_arena_exactmove](coord $spawn_coord)
 def_int $x = calc(coordx($spawn_coord) - coordx(^mage_arena_start_coord));
 def_int $z = calc(coordz($spawn_coord) - coordz(^mage_arena_start_coord));
-anim(seq_846, 15);
+anim(human_stumble_back, 15);
 if (abs($x) > abs($z)) {
     if ($x > 0) {
         // check east, move west

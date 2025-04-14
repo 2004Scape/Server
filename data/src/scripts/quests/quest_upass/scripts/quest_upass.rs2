@@ -117,7 +117,7 @@ p_delay(2);
 mes("You feel a cold shudder run down your spine.");
 
 [oploc1,cave_well]
-anim(human_reachforladdertop, 0);
+anim(human_reachforladder, 0);
 mes("You climb into the well...");
 if(getbit_range(%upass_map_mechanisms, ^upass_orb1_bit, ^upass_orb4_bit) = calc(pow(2,4) - 1)) {
     p_delay(0);
@@ -147,7 +147,7 @@ switch_obj(last_useitem) {
 }
 
 [oploc1,mudpile_upass]
-anim(human_reachforladdertop, 0);
+anim(human_reachforladder, 0);
 mes("You climb up in to the pipe...");
 p_delay(0);
 p_teleport(0_37_151_50_10);
@@ -186,9 +186,9 @@ if (inv_total(inv, caveorb4) > 0) {
 [label,upass_orboflight_trap]
 ~forcewalk(movecoord(loc_coord, 1, 0, 0));
 p_delay(0);
-if(loc_find(0_37_151_12_3, upass_logtrap) = true) loc_anim(seq_458);
-~agility_exactmove(human_knockback, 20, 2, coord, movecoord(coord, 5, 0, 0), 20, 80, ^exact_west, false);
-anim(seq_848, 0);
+if(loc_find(0_37_151_12_3, upass_logtrap) = true) loc_anim(swinginglogtrap_release);
+~agility_exactmove(human_blown_start, 20, 2, coord, movecoord(coord, 5, 0, 0), 20, 80, ^exact_west, false);
+anim(human_stunned, 0);
 spotanim_pl(stunned_thieving, 124, 0);
 sound_synth(stunned, 0, 0);
 p_delay(0);

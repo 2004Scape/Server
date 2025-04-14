@@ -52,7 +52,7 @@ if (npc_findhero = false) {
 }
 %magearena = 3;
 npc_setmode(none);
-npc_anim(giant_teleport_reverse, 30);
+npc_anim(giant_teleport, 30);
 npc_delay(2);
 
 def_coord $coord = npc_coord;
@@ -75,7 +75,7 @@ if (npc_findhero = false) {
 }
 %magearena = 4;
 npc_setmode(none);
-npc_anim(giantspider_teleport_reverse, 30);
+npc_anim(giantspider_teleport, 30);
 npc_delay(2);
 
 def_coord $coord = npc_coord;
@@ -124,7 +124,7 @@ npc_delay(0);
 %magearena = ^mage_arena_complete;
 npc_delay(1);
 npc_setmode(none);
-npc_anim(delrith_banish, 30);
+npc_anim(demon_portalend, 30);
 spotanim_map(smokepuff_large, npc_coord, 124, 90);
 npc_delay(2);
 npc_changetype_keepall(kolodion_defeated, ^max_32bit_int);

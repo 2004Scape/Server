@@ -6,32 +6,32 @@ loc_change(upass_lever_down, 15);
 p_delay(1);
 mes("The portcullis opens.");
 if(loc_find(0_38_151_33_10, portcullis_upass) = true) {
-    loc_anim(seq_455); // sound portcullis_open
+    loc_anim(portcullisopen); // sound portcullis_open
 }
 if(loc_find(0_38_151_33_12, portcullis_upass) = true) {
-    loc_anim(seq_455); // sound portcullis_open
+    loc_anim(portcullisopen); // sound portcullis_open
 }
 if(loc_find(0_38_151_33_14, portcullis_upass) = true) {
-    loc_anim(seq_455); // sound portcullis_open
+    loc_anim(portcullisopen); // sound portcullis_open
 }
 if(loc_find(0_38_151_33_16, portcullis_upass) = true) {
-    loc_anim(seq_455); // sound portcullis_open
+    loc_anim(portcullisopen); // sound portcullis_open
 }
 ~forcemove(movecoord(coord, 0, 0, 2));
 ~forcemove(movecoord(coord, -2, 0, 1));
 ~forcemove(movecoord(coord, 0, 0, 1));
 mes("The portcullis closes.");
 if(loc_find(0_38_151_33_10, portcullis_upass) = true) {
-    loc_anim(seq_454); // sound portcullis_open
+    loc_anim(portcullisclose); // sound portcullis_open
 }
 if(loc_find(0_38_151_33_12, portcullis_upass) = true) {
-    loc_anim(seq_454); // sound portcullis_open
+    loc_anim(portcullisclose); // sound portcullis_open
 }
 if(loc_find(0_38_151_33_14, portcullis_upass) = true) {
-    loc_anim(seq_454); // sound portcullis_open
+    loc_anim(portcullisclose); // sound portcullis_open
 }
 if(loc_find(0_38_151_33_16, portcullis_upass) = true) {
-    loc_anim(seq_454); // sound portcullis_open
+    loc_anim(portcullisclose); // sound portcullis_open
 }
 
 // generates a 5-digit value from 1-5
@@ -78,7 +78,7 @@ if(inzone(^upass_grid_col5, movecoord(^upass_grid_col1, 1, 0, 9), coord) = true 
 p_stopaction;
 p_delay(0);
 mes("It's a trap!");
-anim(human_sidestep_fall, 0);
+anim(human_walk_logbalance_stumble, 0);
 // sound
 p_delay(0);
 mes("You fall onto the spikes.");
@@ -92,7 +92,7 @@ say("Ouch!");
 
 [oploc1,upass_grilltrap_hand_holds]
 p_delay(0);
-anim(human_reachforladdertop, 0);
+anim(human_reachforladder, 0);
 p_delay(0);
 mes("You crawl out of the pit.");
 p_teleport(0_38_151_45_13);

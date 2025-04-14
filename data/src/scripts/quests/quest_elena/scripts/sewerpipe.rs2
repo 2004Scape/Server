@@ -32,7 +32,7 @@ switch_int(%elena_progress) {
 [label,elena_climb_through_sewerpipe]
 sound_synth(squeeze_in, 0, 0);
 mes("You climb through the sewer pipe.");
-~agility_exactmove(human_pipesqueeze, 30, 5, coord, movecoord(coord, 0, 0, -3), 30, 126, ^exact_south, true);
+~agility_exactmove(human_doublepipesqueeze, 30, 5, coord, movecoord(coord, 0, 0, -3), 30, 126, ^exact_south, true);
 p_telejump(^quest_elena_west_ardy_manhole_tele_coord);
 loc_findallzone(^quest_elena_west_ardy_manhole_coord); // the manhole is not in the same zone as the player tele.
 while (loc_findnext = true) {

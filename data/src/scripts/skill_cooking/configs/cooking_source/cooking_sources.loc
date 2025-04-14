@@ -28,7 +28,7 @@ category=cooking_oven
 name=Fireplace
 desc=A fire burns brightly here.
 model=model_loc_2724
-anim=seq_477
+anim=fireplace
 hasalpha=yes
 category=cooking_fire
 
@@ -37,7 +37,7 @@ name=Fireplace
 desc=A grand old fireplace.
 model=model_loc_2725
 length=3
-anim=seq_478
+anim=grandfireplace
 hasalpha=yes
 category=cooking_fire
 
@@ -46,7 +46,7 @@ name=Fireplace
 desc=A grand old fireplace.
 model=model_loc_2725
 length=3
-anim=seq_478
+anim=grandfireplace
 hasalpha=yes
 retex1s=wall
 retex1d=mossybricks
@@ -56,7 +56,7 @@ category=cooking_fire
 name=Cooking pot
 desc=Something is cooking nicely here.
 model=model_loc_2727
-anim=seq_477
+anim=fireplace
 hasalpha=yes
 category=cooking_fire
 

@@ -62,7 +62,7 @@ inv_del(inv, raw_chompy, 1);
 // Temp note: dur updated
 loc_change(chompybird_spitroast, 5);
 loc_anim(roast);
-anim(human_cooking, 0);
+anim(human_potterywheel, 0);
 sound_synth(spit_roast, 0, 0);
 p_delay(2);
     
@@ -72,7 +72,7 @@ if ($passes_roll = true) {
     // Temp note: dur updated
     loc_change(chompybird_spitroast_cooked, 5);
     loc_anim(roast);
-    anim(human_cooking, 0);
+    anim(human_potterywheel, 0);
     p_delay(2);
     anim(human_pickuptable, 0);
     mes("Eventually the chompy is cooked.");
@@ -83,7 +83,7 @@ if ($passes_roll = true) {
     // Temp note: dur updated
     loc_change(chompybird_spitroast_ruined, 5);
     loc_anim(roast);
-    anim(human_cooking, 0);
+    anim(human_potterywheel, 0);
     p_delay(2);
     anim(human_pickuptable, 0);
     inv_add(inv, ruined_chompy, 1);
@@ -185,7 +185,7 @@ inv_del(inv, raw_chompy, 1);
 // Temp note: dur updated
 loc_change(chompybird_spitroast, 5);
 loc_anim(roast);
-anim(human_cooking, 0);
+anim(human_potterywheel, 0);
 sound_synth(spit_roast, 0, 0);
 p_delay(2);
     
@@ -197,7 +197,7 @@ if ($passes_roll = true) {
     // Temp note: dur updated
     loc_change(chompybird_spitroast_cooked, 5);
     loc_anim(roast);
-    anim(human_cooking, 0);
+    anim(human_potterywheel, 0);
     p_delay(2);
     anim(human_pickuptable, 0);
     mes("Eventually the chompy is cooked.");
@@ -211,7 +211,7 @@ if ($passes_roll = true) {
     // Temp note: dur updated
     loc_change(chompybird_spitroast_ruined, 5);
     loc_anim(roast);
-    anim(human_cooking, 0);
+    anim(human_potterywheel, 0);
     p_delay(2);
     anim(human_pickuptable, 0);
     inv_add(inv, ruined_chompy, 1);

@@ -24,7 +24,7 @@ if (npc_find(coord, $npc, 5, 0) = true) {
 
 [debugproc,npc_anim](npc $npc, seq $seq)
 if ($npc = null | $seq = null) {
-    @debugusage("::npc_anim (name) (op)", "::npc_anim chompy_bird chompy_walk", "");
+    @debugusage("::npc_anim (name) (op)", "::npc_anim chompy_bird pog_terror_bird_walk", "");
     return;
 }
 

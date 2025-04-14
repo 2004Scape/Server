@@ -24,12 +24,12 @@ param=magicattack,-4
 param=rangedefence,-1
 param=strengthbonus,10
 param=attackrate,7
-param=slashattack_anim,human_2h_slash
-param=crushattack_anim,human_2h_crush
-param=defend_anim,human_sword_defend2
+param=slashattack_anim,human_dhsword_slash
+param=crushattack_anim,human_dhsword_chop
+param=defend_anim,human_sword_def
 param=slash_sound,2H_slash
 param=crush_sound,2H_crush
-// osrs 2h sword defend seq_410
+// osrs 2h sword defend human_dhsword_block
 
 [iron_2h_sword]
 name=Iron 2h sword
@@ -57,12 +57,12 @@ param=magicattack,-4
 param=rangedefence,-1
 param=strengthbonus,14
 param=attackrate,7
-param=slashattack_anim,human_2h_slash
-param=crushattack_anim,human_2h_crush
-param=defend_anim,human_sword_defend2
+param=slashattack_anim,human_dhsword_slash
+param=crushattack_anim,human_dhsword_chop
+param=defend_anim,human_sword_def
 param=slash_sound,2H_slash
 param=crush_sound,2H_crush
-// osrs 2h sword defend seq_410
+// osrs 2h sword defend human_dhsword_block
 
 [steel_2h_sword]
 name=Steel 2h sword
@@ -88,12 +88,12 @@ param=magicattack,-4
 param=rangedefence,-1
 param=strengthbonus,22
 param=attackrate,7
-param=slashattack_anim,human_2h_slash
-param=crushattack_anim,human_2h_crush
-param=defend_anim,human_sword_defend2
+param=slashattack_anim,human_dhsword_slash
+param=crushattack_anim,human_dhsword_chop
+param=defend_anim,human_sword_def
 param=slash_sound,2H_slash
 param=crush_sound,2H_crush
-// osrs 2h sword defend seq_410
+// osrs 2h sword defend human_dhsword_block
 
 [black_2h_sword]
 name=Black 2h sword
@@ -121,12 +121,12 @@ param=magicattack,-4
 param=rangedefence,-1
 param=strengthbonus,26
 param=attackrate,7
-param=slashattack_anim,human_2h_slash
-param=crushattack_anim,human_2h_crush
-param=defend_anim,human_sword_defend2
+param=slashattack_anim,human_dhsword_slash
+param=crushattack_anim,human_dhsword_chop
+param=defend_anim,human_sword_def
 param=slash_sound,2H_slash
 param=crush_sound,2H_crush
-// osrs 2h sword defend seq_410
+// osrs 2h sword defend human_dhsword_block
 
 [mithril_2h_sword]
 name=Mithril 2h sword
@@ -154,12 +154,12 @@ param=magicattack,-4
 param=rangedefence,-1
 param=strengthbonus,31
 param=attackrate,7
-param=slashattack_anim,human_2h_slash
-param=crushattack_anim,human_2h_crush
-param=defend_anim,human_sword_defend2
+param=slashattack_anim,human_dhsword_slash
+param=crushattack_anim,human_dhsword_chop
+param=defend_anim,human_sword_def
 param=slash_sound,2H_slash
 param=crush_sound,2H_crush
-// osrs 2h sword defend seq_410
+// osrs 2h sword defend human_dhsword_block
 
 [adamant_2h_sword]
 name=Adamant 2h sword
@@ -187,12 +187,12 @@ param=magicattack,-4
 param=rangedefence,-1
 param=strengthbonus,44
 param=attackrate,7
-param=slashattack_anim,human_2h_slash
-param=crushattack_anim,human_2h_crush
-param=defend_anim,human_sword_defend2
+param=slashattack_anim,human_dhsword_slash
+param=crushattack_anim,human_dhsword_chop
+param=defend_anim,human_sword_def
 param=slash_sound,2H_slash
 param=crush_sound,2H_crush
-// osrs 2h sword defend seq_410
+// osrs 2h sword defend human_dhsword_block
 
 [rune_2h_sword]
 name=Rune 2h sword
@@ -220,9 +220,9 @@ param=magicattack,-4
 param=rangedefence,-1
 param=strengthbonus,70
 param=attackrate,7
-param=slashattack_anim,human_2h_slash
-param=crushattack_anim,human_2h_crush
-param=defend_anim,human_sword_defend2
+param=slashattack_anim,human_dhsword_slash
+param=crushattack_anim,human_dhsword_chop
+param=defend_anim,human_sword_def
 param=slash_sound,2H_slash
 param=crush_sound,2H_crush
-// osrs 2h sword defend seq_410
+// osrs 2h sword defend human_dhsword_block
