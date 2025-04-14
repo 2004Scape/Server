@@ -467,7 +467,7 @@ param=magicdefence,-1
 param=rangedefence,12
 param=damagetype,^slash_style
 param=attack_anim,human_sword_slash
-param=defend_anim,human_sword_defend2
+param=defend_anim,human_sword_def
 param=attack_sound,hacksword_slash
 param=defend_sound,brassclash2
 // osrs stats and Vislvl match 1:1

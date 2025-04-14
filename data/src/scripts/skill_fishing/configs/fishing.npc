@@ -517,8 +517,8 @@ param=fishing_movement_enum,fishing_movement_al_kharid_enum
 //--- lava eel Taverley Dungeon
 [0_45_152_lava_eel]
 vislevel=hide
-readyanim=seq_525
-walkanim=seq_525
+readyanim=lava_ripples
+walkanim=lava_ripples
 hasalpha=yes
 name=Fishing spot
 desc=I can see eels swimming in the water.

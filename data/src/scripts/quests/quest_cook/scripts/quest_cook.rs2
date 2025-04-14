@@ -24,7 +24,7 @@ if($option = 1) {
 
 [label,cooks_assistant_whats_wrong]
 ~chatplayer("<p,neutral>What's wrong?");
-~chatnpc("<p,worried>Ooh dear, I'm in a terrible mess!|It's the Duke's birthday today,|I'm meant to be making him a big cake for this evening.");
+~chatnpc("<p,scared>Ooh dear, I'm in a terrible mess!|It's the Duke's birthday today,|I'm meant to be making him a big cake for this evening.");
 ~chatnpc("<p,sad>Unfortunately, I've forgotten to buy some of the ingredients. I'll never get them in time now. I don't suppose you could help me?");
 def_int $option = ~p_choice2("Yes, I'll help you.", 1, "No, I don't feel like it. Maybe later.", 2);
 

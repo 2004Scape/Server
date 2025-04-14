@@ -78,7 +78,7 @@ if (getbit_range(%sheepherder_disposal, $npc_start_bit, calc($npc_start_bit + 2)
     ~mesbox("You have already disposed of this sheep;|there's no need to prod it again.");
     return;
 }
-anim(human_cattleprod, 0);
+anim(cattleprod, 0);
 npc_say("BAAAAA!");
 npc_setmode(none);
 

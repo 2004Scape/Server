@@ -112,7 +112,7 @@ switch_int(%tree_progress) {
         if(npc_find(coord, king_bolren, 4, 0) = false) { 
             return; // should never happen, just switching active npc
         }
-        npc_anim(midget_seq_199, 20);
+        npc_anim(midget_cast_globes, 20);
         spotanim_npc(gnome_globes, 20, 124);
         p_delay(6); 
         ~mesbox("The orbs of protection come to rest gently in the branches of the ancient spirit tree.");

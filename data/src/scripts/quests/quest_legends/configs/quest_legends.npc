@@ -103,8 +103,8 @@ ranged=0
 param=attackbonus,7
 param=strengthbonus,3
 param=damagetype,^crush_style
-param=attack_anim,human_staff_pound
-param=defend_anim,human_staff_def
+param=attack_anim,human_staff_pummel
+param=defend_anim,human_staff_block
 param=attack_sound,staff_hit
 // osrs attack sound staff_double
 // TODO: check respawn time.
@@ -152,8 +152,8 @@ ranged=0
 param=attackbonus,7
 param=strengthbonus,3
 param=damagetype,^crush_style
-param=attack_anim,human_staff_pound
-param=defend_anim,human_staff_def
+param=attack_anim,human_staff_pummel
+param=defend_anim,human_staff_block
 param=attack_sound,staff_hit
 // osrs attack sound staff_double
 // sound and animation data taken normal version ungadulu
@@ -201,8 +201,8 @@ ranged=0
 param=attackbonus,8
 param=strengthbonus,10
 param=damagetype,^stab_style
-param=attack_anim,human_spear_stab
-param=defend_anim,human_spear_block
+param=attack_anim,human_spear_spike
+param=defend_anim,human_spear_def
 param=attack_sound,staff_stab
 // Stats match osrs version but our version Vislvl is different.
 
@@ -274,8 +274,8 @@ ranged=0
 param=attackbonus,7
 param=strengthbonus,3
 param=damagetype,^crush_style
-param=attack_anim,human_staff_pound
-param=defend_anim,human_staff_def
+param=attack_anim,human_staff_pummel
+param=defend_anim,human_staff_block
 // param=attack_sound,staff_hit
 // TODO Try to find out if this npc can be killed on the osrs side somehow....
 // and also find out if you can make this npc attack the player....
@@ -285,8 +285,8 @@ param=defend_anim,human_staff_def
 [san_tojalon]
 name=San Tojalon
 desc=The spirit of a long dead warrior.
-walkanim=skeleton_trans_ready
-readyanim=skeleton_trans_walk
+walkanim=skeleton_trans_walk
+readyanim=skeleton_trans_ready
 hasalpha=yes
 op1=Talk-to
 op2=Attack
@@ -333,8 +333,8 @@ huntrange=1
 [irvig_senay]
 name=Irvig Senay
 desc=The spirit of a long dead warrior.
-walkanim=skeleton_trans_ready
-readyanim=skeleton_trans_walk
+walkanim=skeleton_trans_walk
+readyanim=skeleton_trans_ready
 hasalpha=yes
 op1=Talk-to
 op2=Attack
@@ -380,8 +380,8 @@ huntrange=1
 [ranalph_devere]
 name=Ranalph Devere
 desc=The spirit of a long dead warrior.
-walkanim=skeleton_trans_ready
-readyanim=skeleton_trans_walk
+walkanim=skeleton_trans_walk
+readyanim=skeleton_trans_ready
 hasalpha=yes
 op1=Talk-to
 op2=Attack

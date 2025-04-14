@@ -40,7 +40,7 @@ param=magicdefence,-1
 param=rangedefence,4
 param=damagetype,^stab_style
 param=attack_anim,human_sword_stab
-param=defend_anim,human_sword_defend2
+param=defend_anim,human_sword_def
 param=attack_sound,hacksword_stab
 // I used Thug npc sound and animation data with this npc
 // TODO monster examine spell
@@ -123,7 +123,7 @@ param=magicdefence,-12
 param=rangedefence,51
 param=damagetype,^slash_style
 param=attack_anim,human_sword_slash
-param=defend_anim,human_sword_defend2
+param=defend_anim,human_sword_def
 param=attack_sound,stabsword_slash
 param=defend_sound,steel2
 category=guardian_of_armadyl
@@ -176,7 +176,7 @@ param=magicdefence,-12
 param=rangedefence,51
 param=damagetype,^slash_style
 param=attack_anim,human_sword_slash
-param=defend_anim,human_sword_defend2
+param=defend_anim,human_sword_def
 param=attack_sound,stabsword_slash
 param=defend_sound,steel2
 param=death_sound,female_death

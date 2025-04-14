@@ -64,7 +64,7 @@ if (stat(crafting) < $level)
     return;
 }
 sound_synth(pottery, 0, 0);
-anim(human_cooking, 0);
+anim(human_potterywheel, 0);
 p_delay(2);
 inv_del(inv, softclay, 1);
 inv_add(inv, $item, 1);

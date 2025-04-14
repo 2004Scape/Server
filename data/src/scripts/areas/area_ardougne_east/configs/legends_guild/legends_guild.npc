@@ -1,8 +1,8 @@
 [shadow_warrior]
 name=Shadow warrior
 desc=A fighter from the supernatural world, he's a shadow of his former self.
-walkanim=earthwarrior_walk
-readyanim=earthwarrior_ready
+walkanim=human_transwalk_f
+readyanim=human_transready
 hasalpha=yes
 minimap=no
 op2=Attack
@@ -45,7 +45,7 @@ param=rangedefence,38
 param=damagetype,^slash_style
 param=attack_anim,human_trans_axe_chop
 param=defend_anim,human_trans_axe_def
-param=death_anim,earthwarrior_death
+param=death_anim,human_transdeath
 param=attack_sound,baxe_slash
 param=defend_sound,steel
 huntmode=cowardly

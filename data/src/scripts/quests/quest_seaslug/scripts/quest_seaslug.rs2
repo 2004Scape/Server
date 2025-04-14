@@ -96,7 +96,7 @@ if(coordz(coord) < coordz(movecoord(loc_coord, 0, 0, 3))) {
     return;
 }
 p_delay(0);
-loc_anim(seaslug_crane_left);
+loc_anim(fishingcraneright);
 mes("You rotate the crane around.");
 if(%seaslug_progress = ^seaslug_need_kennith_path) {
     say("Jump on Kennith!");

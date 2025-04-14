@@ -20,9 +20,9 @@ if (npc_find(coord, party_pete, 16, 0) = true) {
 
 [proc,pull_partylever](int $coins)
 // based off the video i'm 99% sure these are correct (changed in 2007)
-loc_anim(partyroom_lever);
+loc_anim(balloondrop_lever);
 inv_del(inv, coins, $coins);
-anim(seq_798, 0); 
+anim(human_boxlever, 0);
 sound_synth(lever, 0, 0);
 
 [label,partyroom_knights]
@@ -132,7 +132,7 @@ def_loc $broken_balloon = loc_param(next_loc_stage);
 p_arrivedelay;
 p_walk(loc_coord);
 p_delay(0);
-anim(seq_794, 0);
+anim(human_stamp, 0);
 p_delay(0);
 // Temp note: dur updated, does it need ? @indio
 loc_change($broken_balloon, 6);

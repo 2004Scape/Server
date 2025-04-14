@@ -13,7 +13,7 @@ switch_int(%tree_progress) {
         ~mesbox("You fire the ballista.|The huge spear flies through the air...");
         def_coord $projectile_start = 0_39_50_13_13;
         if_close;
-        loc_anim(seq_730);
+        loc_anim(catabow_launch);
         // play synth treevillage_catabow_launch, added in early 2007 I think?
         ~coord_projectile($projectile_start, movecoord($projectile_start, 0, 0, 41), spotanim_182, 23, 0, 110, 7, 0, 0, 0);
         p_delay(1);

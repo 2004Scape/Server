@@ -3,50 +3,50 @@ switch_int(%arena_progress) {
     case ^arena_defeated_genkhazard, ^arena_complete_defeated_genkhazard :
         ~chatplayer("<p,shock>I thought I was rid of you!");
         // todo: not sure if he attacks you here or not
-        ~chatnpc("<p,genkhazard>You might not believe it young one, but you can't kill that which is already dead.");
+        ~chatnpc("<p,skull>You might not believe it young one, but you can't kill that which is already dead.");
     case ^arena_freed_servils :
         ~chatplayer("<p,neutral>Hello.");
-        ~chatnpc("<p,genkhazard>You killed my pet, and yet still you dare to speak to me?");
+        ~chatnpc("<p,skull>You killed my pet, and yet still you dare to speak to me?");
         if_close;
         ~npc_retaliate(0);
         npc_say("You shall die for your insolence.");
     case ^arena_sent_jail, ^arena_defeated_scorpion :
         // https://youtu.be/etS0gMlcxx8?si=xx4Hvgt28HsL6JCi&t=344
         ~chatplayer("<p,neutral>Hello.");
-        ~chatnpc("<p,genkhazard>How dare you speak to me, you are a slave of this arena now.");
+        ~chatnpc("<p,skull>How dare you speak to me, you are a slave of this arena now.");
     case ^arena_defeated_ogre :
         ~chatplayer("<p,neutral>I have come to demand the release of Sir Servil and his son.");
-        ~chatnpc("<p,genkhazard>Why would I give them up, those two men are my property now.");
+        ~chatnpc("<p,skull>Why would I give them up, those two men are my property now.");
         @general_khazard_belong_nobody;
     case default :
         if(~wearing_khazard_armour = true) {
             ~chatplayer("<p,quiz>General Khazard?");
-            ~chatnpc("<p,genkhazard>What do you want guard? I'm a busy man.");
+            ~chatnpc("<p,skull>What do you want guard? I'm a busy man.");
             ~chatplayer("<p,neutral>Of course sir.");
-            ~chatnpc("<p,genkhazard>In the last two hundred years, I have survived all horrors imaginable. Now it is my turn to cover this land in darkness. One day you shall see, all will quake on hearing my name.");
-            ~chatnpc("<p,genkhazard>Now leave me.");
+            ~chatnpc("<p,skull>In the last two hundred years, I have survived all horrors imaginable. Now it is my turn to cover this land in darkness. One day you shall see, all will quake on hearing my name.");
+            ~chatnpc("<p,skull>Now leave me.");
             return;
         }
-        ~chatnpc("<p,genkhazard>Who dares enter my home? You? A feeble traveller?");
+        ~chatnpc("<p,skull>Who dares enter my home? You? A feeble traveller?");
         ~chatplayer("<p,angry>Feeble?!");
-        ~chatnpc("<p,genkhazard>Get out! Whoever let you in shall be severely punished for this.");
+        ~chatnpc("<p,skull>Get out! Whoever let you in shall be severely punished for this.");
 }
 
 [label,khazard_welldone]
 if(npc_find(coord, general_khazard, 23, 0) = false) {
     return;
 }
-~chatnpc("<p,genkhazard>Haha, well done, well done that was rather entertaining. I am the great General Khazard, and the two men you just 'saved' are my property.");
+~chatnpc("<p,skull>Haha, well done, well done that was rather entertaining. I am the great General Khazard, and the two men you just 'saved' are my property.");
 @general_khazard_belong_nobody;
 
 [label,general_khazard_belong_nobody]
 ~chatplayer("<p,angry>They belong to nobody.");
-~chatnpc("<p,genkhazard>Well, I suppose we could find some arrangement for their freedom... hmmm?");
+~chatnpc("<p,skull>Well, I suppose we could find some arrangement for their freedom... hmmm?");
 ~chatplayer("<p,quiz>What do you mean?");
 // https://web.archive.org/web/20060910042918/http://www.runeweb.net/index.php?page=rs2-quest-fightarena
-~chatnpc("<p,genkhazard>I'll let them go, but you must stay and|fight for me. You'll make me double the|gold if you manage to last a few fights.");
+~chatnpc("<p,skull>I'll let them go, but you must stay and|fight for me. You'll make me double the|gold if you manage to last a few fights.");
 // https://youtu.be/nptASzjG_Xk?si=e5G8rcOt_AvKLmkI&t=258 (not gendered, wiki mentions this as well but extra confirmation anyways)
-~chatnpc("<p,genkhazard>Guards! Take him to the cells.");
+~chatnpc("<p,skull>Guards! Take him to the cells.");
 if_close;
 %arena_progress = ^arena_sent_jail;
 p_teleport(0_40_49_45_5);
@@ -71,7 +71,7 @@ if(loc_find(0_40_49_40_6, arena_prisondoor) = true) {
 }
 ~forcemove(movecoord(coord, 0, 0, 1));
 p_delay(0);
-npc_anim(seq_552, 0); // looks right?: https://youtu.be/NHsQfeSPUb0?si=ppVvy7QV4CQOdeQv&t=159
+npc_anim(human_closedoorl, 0); // looks right?: https://youtu.be/NHsQfeSPUb0?si=ppVvy7QV4CQOdeQv&t=159
 p_delay(0);
 npc_walk(movecoord(npc_coord, -1, 0, 0));
 p_delay(1);
@@ -79,26 +79,26 @@ cam_reset;
 ~chatnpc("<p,shifty>The General seems to have taken a liking to you. He'd normally kill imposters like you without a second thought.");
 
 [label,general_khazard_summon_bouncer]
-~chatnpc("<p,genkhazard>Not bad, not bad at all. I think you need a tougher challenge. Time for my puppy. Guards! Guards! Bring on Bouncer!");
+~chatnpc("<p,skull>Not bad, not bad at all. I think you need a tougher challenge. Time for my puppy. Guards! Guards! Bring on Bouncer!");
 ~mesbox("From above you hear a voice..... 'Ladies and gentlemen! Today's second round of battle is between the outsider and Bouncer.'");
 @arena_release_bouncer;
 
 [label,general_khazard_bouncer_killed]
-~chatnpc("<p,genkhazard>Nooooo! Bouncer! How dare you? You've taken the life of my only friend. Now you'll suffer traveller, prepare to meet your maker.");
+~chatnpc("<p,skull>Nooooo! Bouncer! How dare you? You've taken the life of my only friend. Now you'll suffer traveller, prepare to meet your maker.");
 ~chatplayer("<p,angry>You agreed to let the Servils go if I stayed to fight.");
-~chatnpc("<p,genkhazard>Indeed. I obviously underestimated you, although you still pale in comparison to the might of General Khazard.");
-~chatnpc("<p,genkhazard>You shall see that I am not cowardly enough to make false promises. They may go.");
+~chatnpc("<p,skull>Indeed. I obviously underestimated you, although you still pale in comparison to the might of General Khazard.");
+~chatnpc("<p,skull>You shall see that I am not cowardly enough to make false promises. They may go.");
 @general_khazard_attack;
 
 [label,general_khazard_agreement]
 if (npc_find(movecoord(coord, 8, 0, 0), general_khazard, 15, 0) = false | ~npc_out_of_combat = false) {
     npc_add(0_40_49_46_18, general_khazard, 500); // ticks guessed
 }
-~chatnpc("<p,genkhazard>The agreement was that the Servils may leave if you won a few fights, and indeed they are now free to do so.");
+~chatnpc("<p,skull>The agreement was that the Servils may leave if you won a few fights, and indeed they are now free to do so.");
 @general_khazard_attack;
 
 [label,general_khazard_attack]
-~chatnpc("<p,genkhazard>You however have caused me much trouble today. You must remain here so that I may at least have the pleasure of killing you myself.");
+~chatnpc("<p,skull>You however have caused me much trouble today. You must remain here so that I may at least have the pleasure of killing you myself.");
 %arena_progress = ^arena_freed_servils;
 ~npc_retaliate(0);
 

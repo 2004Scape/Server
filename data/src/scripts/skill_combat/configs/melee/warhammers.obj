@@ -22,8 +22,8 @@ param=slashattack,-4
 param=crushattack,11
 param=magicattack,-4
 param=strengthbonus,9
-param=crushattack_anim,human_blunt_crush
-param=defend_anim,human_blunt_defend1
+param=crushattack_anim,human_blunt_pound
+param=defend_anim,human_blunt_block
 param=crush_sound,baxe_crush
 
 [bronze_warhammer]
@@ -50,8 +50,8 @@ param=slashattack,-4
 param=crushattack,10
 param=magicattack,-4
 param=strengthbonus,8
-param=crushattack_anim,human_blunt_crush
-param=defend_anim,human_blunt_defend1
+param=crushattack_anim,human_blunt_pound
+param=defend_anim,human_blunt_block
 param=crush_sound,baxe_crush
 
 [steel_warhammer]
@@ -77,8 +77,8 @@ param=slashattack,-4
 param=crushattack,18
 param=magicattack,-4
 param=strengthbonus,16
-param=crushattack_anim,human_blunt_crush
-param=defend_anim,human_blunt_defend1
+param=crushattack_anim,human_blunt_pound
+param=defend_anim,human_blunt_block
 param=crush_sound,baxe_crush
 
 [black_warhammer]
@@ -106,8 +106,8 @@ param=slashattack,-4
 param=crushattack,22
 param=magicattack,-4
 param=strengthbonus,19
-param=crushattack_anim,human_blunt_crush
-param=defend_anim,human_blunt_defend1
+param=crushattack_anim,human_blunt_pound
+param=defend_anim,human_blunt_block
 param=crush_sound,baxe_crush
 
 [mithril_warhammer]
@@ -135,8 +135,8 @@ param=slashattack,-4
 param=crushattack,25
 param=magicattack,-4
 param=strengthbonus,20
-param=crushattack_anim,human_blunt_crush
-param=defend_anim,human_blunt_defend1
+param=crushattack_anim,human_blunt_pound
+param=defend_anim,human_blunt_block
 param=crush_sound,baxe_crush
 
 [adamnt_warhammer]
@@ -164,8 +164,8 @@ param=slashattack,-4
 param=crushattack,35
 param=magicattack,-4
 param=strengthbonus,31
-param=crushattack_anim,human_blunt_crush
-param=defend_anim,human_blunt_defend1
+param=crushattack_anim,human_blunt_pound
+param=defend_anim,human_blunt_block
 param=crush_sound,baxe_crush
 
 [rune_warhammer]
@@ -192,6 +192,6 @@ param=slashattack,-4
 param=crushattack,53
 param=magicattack,-4
 param=strengthbonus,48
-param=crushattack_anim,human_blunt_crush
-param=defend_anim,human_blunt_defend1
+param=crushattack_anim,human_blunt_pound
+param=defend_anim,human_blunt_block
 param=crush_sound,baxe_crush

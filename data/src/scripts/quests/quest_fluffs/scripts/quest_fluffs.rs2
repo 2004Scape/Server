@@ -51,7 +51,7 @@ def_int $option = ~p_choice3("Tell me sonny, or I will hurt you.", 1, "What will
 switch_int ($option) {
     case 1 :
         ~chatplayer("<p,angry>Tell me sonny, or I will hurt you.");
-        ~chatnpc("<p,worried>W..wh..what?! Y..you wouldn't!|A young lad like me!|I'd have you behind bars before nightfall!");
+        ~chatnpc("<p,scared>W..wh..what?! Y..you wouldn't!|A young lad like me!|I'd have you behind bars before nightfall!");
         ~mesbox("You decide it's best not to hurt the boy.");
     case 2 :
         ~chatplayer("<p,quiz>What will make you tell me?");
@@ -71,7 +71,7 @@ def_int $option = ~p_choice3("Tell me sonny, or I will hurt you.", 1, "What will
 switch_int ($option) {
     case 1 :
         ~chatplayer("<p,angry>Tell me sonny, or I will hurt you.");
-        ~.chatnpc("<p,worried>W..wh..what?! Y..you wouldn't!|A young lad like me!");
+        ~.chatnpc("<p,scared>W..wh..what?! Y..you wouldn't!|A young lad like me!");
         ~chatnpc("<p,angry>If you want to hurt my brother you'll first have to get by me!");
         ~mesbox("You decide it's best not to hurt the boy.");
     case 2 :
@@ -128,7 +128,7 @@ if(coordz(coord) < coordz(loc_coord)) {
 }
 p_teleport($start_coord);
 p_delay(0);
-~agility_exactmove(human_walk_fence_north, 30, 2, $start_coord, $end_coord, 0, 60, $dir, true);
+~agility_exactmove(human_walk_style, 30, 2, $start_coord, $end_coord, 0, 60, $dir, true);
 
 [opheldu,doogle_leaves]
 if(last_useitem = raw_sardine) {

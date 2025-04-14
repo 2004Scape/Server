@@ -11,7 +11,7 @@ if(.busy = true) {
 // https://youtu.be/uQfnBk527CI?si=MqH5lJRcJLRb9dyQ&t=58
 mes("You pull a Christmas cracker...");
 .mes("You pull a Christmas cracker...");
-anim(explodingvial, 0);
+anim(human_explodingvial, 0);
 inv_del(inv, christmas_cracker, 1);
 if (random(2) = 1) {
     mes("You get the prize from the cracker");

@@ -46,7 +46,7 @@ switch_int(%grandtree_progress) {
         // https://youtu.be/LFvLBRCxFwk?si=58l2TkJcT5ifq4_W&t=616 face
         facesquare(movecoord($dest, -2, 0, 0));
         p_delay(0);
-        anim(human_reachforladdertop, 0);
+        anim(human_reachforladder, 0);
         p_delay(0);
         p_telejump(^grandtree_jail_coord);
         ~grandtree_spawn_charlie;

@@ -97,7 +97,7 @@ if(%hazeelcult_progress = ^hazeelcult_given_armour_or_scroll & %hazeelcult_side 
     ~chatnpc("<p,shock>I... I don't believe it! Poison! JONES!");
     ~.chatnpc("<p,neutral>You called m'lud?");
     ~chatnpc("<p,angry>JONES! Just WHAT is this POISON doing here???");
-    ~.chatnpc("<p,worried>P-p-poison??? yeah... uh... well, hmm... Oh, it's for Killing rats.");
+    ~.chatnpc("<p,scared>P-p-poison??? yeah... uh... well, hmm... Oh, it's for Killing rats.");
     ~.chatnpc("<p,neutral>Yes, that's right. Killing rats. I am but a loyal butler sir.");
     ~chatnpc("<p,angry>Rats eh? Yes, fair enough. Sorry to have doubted you old boy.");
     ~chatplayer("<p,angry>Then how about this?");

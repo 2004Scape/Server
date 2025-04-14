@@ -138,7 +138,7 @@ p_delay(3);
 npc_anim(npc_param(attack_anim), 0);
 npc_setmode(null);
 if (.npc_findexact(0_40_49_40_32, justin_servil) = true) {
-    .npc_anim(human_defend_cowardly, 0);
+    .npc_anim(human_unarmed_def, 0);
     .npc_setmode(null);
 }
 p_delay(0);

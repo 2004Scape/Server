@@ -25,42 +25,42 @@ if ($dir = 0) {
     $close_range = movecoord($center, 0, 0, 3);
     $medium_range = movecoord($center, 0, 0, 7);
     $long_range = movecoord($center, 0, 0, 14);
-    loc_anim(cannon_north_west);
+    loc_anim(mcannon_ne_turn);
 } else if ($dir = 1) {
     $close_range = movecoord($center, 2, 0, 2);
     $medium_range = movecoord($center, 5, 0, 5);
     $long_range = movecoord($center, 12, 0, 12);
-    loc_anim(cannon_north);
+    loc_anim(mcannon_e_turn);
 } else if ($dir = 2) {
     $close_range = movecoord($center, 3, 0, 0);
     $medium_range = movecoord($center, 7, 0, 0);
     $long_range = movecoord($center, 14, 0, 0);
-    loc_anim(cannon_north_east);
+    loc_anim(mcannon_se_turn);
 } else if ($dir = 3) {
     $close_range = movecoord($center, 2, 0, -2);
     $medium_range = movecoord($center, 5, 0, -5);
     $long_range = movecoord($center, 12, 0, -12);
-    loc_anim(cannon_east);
+    loc_anim(mcannon_s_turn);
 } else if ($dir = 4) {
     $close_range = movecoord($center, 0, 0, -3);
     $medium_range = movecoord($center, 0, 0, -7);
     $long_range = movecoord($center, 0, 0, -14);
-    loc_anim(cannon_south_east);
+    loc_anim(mcannon_sw_turn);
 } else if ($dir = 5) {
     $close_range = movecoord($center, -2, 0, -2);
     $medium_range = movecoord($center, -5, 0, -5);
     $long_range = movecoord($center, -12, 0, -12);
-    loc_anim(cannon_south);
+    loc_anim(mcannon_w_turn);
 } else if ($dir = 6) {
     $close_range = movecoord($center, -3, 0, 0);
     $medium_range = movecoord($center, -7, 0, 0);
     $long_range = movecoord($center, -14, 0, 0);
-    loc_anim(cannon_south_west);
+    loc_anim(mcannon_nw_turn);
 } else if ($dir = 7) {
     $close_range = movecoord($center, -2, 0, 2);
     $medium_range = movecoord($center, -5, 0, 5);
     $long_range = movecoord($center, -12, 0, 12);
-    loc_anim(cannon_west);
+    loc_anim(mcannon_n_turn);
 }
 
 // Check close range

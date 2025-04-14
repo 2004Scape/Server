@@ -595,12 +595,12 @@ if(coordz(coord) > 9295) {
 // this one feels more punishing than the doors/boulders
 if (stat_random(stat(agility), 50, 200) = true) {
     mes("You take a good run up and sail majestically over the wall.");
-    ~agility_exactmove(human_jump_stones, 30, 2, $start, $end, 37, 50, $dir, false);
+    ~agility_exactmove(human_spot_jump, 30, 2, $start, $end, 37, 50, $dir, false);
     mes("You land perfectly and stand ready for action.");
 }
 else {
     mes("You fail to jump the wall properly and clip the wall with your leg.");
-    ~agility_exactmove(human_jump_stones, 30, 2, $start, $end, 37, 50, $dir, false);
+    ~agility_exactmove(human_spot_jump, 30, 2, $start, $end, 37, 50, $dir, false);
     mes("You're spun around mid air and hit the floor heavily.");
     p_delay(2);
     mes("The fall knocks the wind out of you.");
@@ -880,12 +880,12 @@ anim(null, 0);
 p_delay(1);
 def_coord $start_coord = coord;
 def_coord $middle = 0_43_145_12_16;
-anim(human_knockback_long, 30);
+anim(human_blown_middle, 30);
 // https://youtu.be/uF1a9xsV7zo?si=T6uQtmCzRTq_KGfD&t=1481 exactmove jank for longer dist is authentic
 p_exactmove($start_coord, $middle, 31, calc(31 + (14 * distance($start_coord, $middle))), ^exact_north);
 p_delay(divide(distance($start_coord, $middle), 2));
 anim(null, 0);
-~set_walkbas(human_knockback_long_end);
+~set_walkbas(human_blown_end_getup);
 p_delay(1);
 ~update_bas;
 p_delay(1);
@@ -935,7 +935,7 @@ mes("There's nothing interesting about these remains.");
 if(coordz(coord) > coordz(loc_coord)) {
     mes("The gate shimmers and changes as you approach.");
     mes("You feel yourself being pulled through the portal.");
-    ~agility_exactmove(human_knockback, 0, 1, coord, 0_43_145_11_32, 0, 130, ^exact_south, false);
+    ~agility_exactmove(human_blown_start, 0, 1, coord, 0_43_145_11_32, 0, 130, ^exact_south, false);
     return;
 }
 ~mesbox("This door is fused with rock, it doesn't seem possible to open it.|But it does look slightly strange in some way.");
@@ -1500,7 +1500,7 @@ mes("The gate changes!");
 anim(null, 0);
 spotanim_pl(null, 92, 0);
 p_delay(0);
-~agility_exactmove(human_knockback, 0, 1, coord, 0_43_145_11_40, 0, 130, ^exact_north, false);
+~agility_exactmove(human_blown_start, 0, 1, coord, 0_43_145_11_40, 0, 130, ^exact_north, false);
 anim(null, 0);
 ~objbox(stafforb, "The orb shatters with the power of the magic. The spell works and you magically appear in a different part of the cave system. It seems that the gate was a test of magical ability.", 250, 0, 0);
 ~mesbox("As soon as you enter the room, you are filled with dread. In the centre of the room is a large gaping hole. It goes down a long way...");
@@ -1574,11 +1574,11 @@ say("Gulp!");
 mes("But a terrible fear grips you...");
 p_delay(2);
 mes("And you can go no further.");
-~chatplayer("<p,worried>No! It's too scary!");
+~chatplayer("<p,scared>No! It's too scary!");
 
 [oploc1,legends_climbing_rope]
 mes("You climb back up the rope to the Shaman Caves..");
-anim(human_reachforladdertop, 0);
+anim(human_reachforladder, 0);
 p_delay(1);
 p_teleport(0_43_145_8_48);
 
@@ -1604,12 +1604,12 @@ p_delay(1);
 if(stat_random(stat(agility), 110, 250) = false) {
     mes("You slip and fall!");
     say("Arrgggghhhhhhhhhhhhhhh...........!!!");
-    ~agility_exactmove(seq_795, 30, 1, coord, movecoord(loc_coord, 0, 0, 1), 37, 70, ^exact_east, false);
-    ~bas_set_all(seq_796);
+    ~agility_exactmove(human_stumble_and_hang, 30, 1, coord, movecoord(loc_coord, 0, 0, 1), 37, 70, ^exact_east, false);
+    ~bas_set_all(human_stumble_and_hang_ready);
     p_delay(5);
     ~update_bas;
     mes("You feel a little nervous from your near fall...");
-    ~agility_exactmove(seq_797, 30, 1, coord, movecoord(loc_coord, -1, 0, 0), 37, 70, ^exact_east, false);
+    ~agility_exactmove(human_stumble_and_hang_climbup, 30, 1, coord, movecoord(loc_coord, -1, 0, 0), 37, 70, ^exact_east, false);
     // synth_sound(2493 loops 10)
     mes("You lose some Agility!");
     mes("You wrench your arm as you grab for a handhold.");
@@ -1639,12 +1639,12 @@ p_delay(1);
 if(stat_random(stat(agility), 110, 250) = false) {
     mes("You slip and fall!");
     say("Arrgggghhhhhhhhhhhhhhh...........!!!");
-    ~agility_exactmove(seq_795, 30, 1, coord, movecoord(loc_coord, 1, 0, -1), 37, 50, ^exact_west, false);
-    ~bas_set_all(seq_796);
+    ~agility_exactmove(human_stumble_and_hang, 30, 1, coord, movecoord(loc_coord, 1, 0, -1), 37, 50, ^exact_west, false);
+    ~bas_set_all(human_stumble_and_hang_ready);
     p_delay(5);
     ~update_bas;
     mes("You feel a little nervous from your near fall...");
-    ~agility_exactmove(seq_797, 30, 1, coord, movecoord(loc_coord, 1, 0, 0), 37, 70, ^exact_west, false);
+    ~agility_exactmove(human_stumble_and_hang_climbup, 30, 1, coord, movecoord(loc_coord, 1, 0, 0), 37, 70, ^exact_west, false);
     // synth_sound(2493 loops 10)
     mes("You lose some Agility!");
     mes("You wrench your arm as you grab for a handhold.");
@@ -1675,12 +1675,12 @@ p_delay(1);
 if(stat_random(stat(agility), 110, 250) = false) {
     mes("You slip and fall!");
     say("Arrgggghhhhhhhhhhhhhhh...........!!!");
-    ~agility_exactmove(seq_795, 30, 1, coord, movecoord(loc_coord, -1, 0, 0), 37, 70, ^exact_north, false);
-    ~bas_set_all(seq_796);
+    ~agility_exactmove(human_stumble_and_hang, 30, 1, coord, movecoord(loc_coord, -1, 0, 0), 37, 70, ^exact_north, false);
+    ~bas_set_all(human_stumble_and_hang_ready);
     p_delay(5);
     ~update_bas;
     mes("You feel a little nervous from your near fall...");
-    ~agility_exactmove(seq_797, 30, 1, coord, movecoord(loc_coord, 0, 0, -1), 37, 70, ^exact_north, false);
+    ~agility_exactmove(human_stumble_and_hang_climbup, 30, 1, coord, movecoord(loc_coord, 0, 0, -1), 37, 70, ^exact_north, false);
     // synth_sound(2493 loops 10)
     mes("You lose some Agility!");
     mes("You wrench your arm as you grab for a handhold.");
@@ -1712,8 +1712,8 @@ p_teleport(loc_coord);
 p_delay(1);
 if(stat_random(stat(agility), 110, 250) = false) {
     mes("You slip and fall!");
-    ~agility_exactmove(seq_770, 30, 0, coord, movecoord(loc_coord, -2, 0, 2), 52, 100, ^exact_east, false);
-    ~set_walkbas(seq_767);
+    ~agility_exactmove(human_wobbleandfall_l, 30, 0, coord, movecoord(loc_coord, -2, 0, 2), 52, 100, ^exact_east, false);
+    ~set_walkbas(human_falling_end);
     p_delay(1);
     ~update_bas;
     mes("You take a nasty fall down the side of the cliff...");
@@ -1761,8 +1761,8 @@ p_teleport(loc_coord);
 p_delay(1);
 if(stat_random(stat(agility), 110, 250) = false) {
     mes("You slip and fall!");
-    ~agility_exactmove(seq_770, 30, 0, coord, movecoord(loc_coord, 3, 0, 0), 52, 100, ^exact_south, false);
-    ~set_walkbas(seq_767);
+    ~agility_exactmove(human_wobbleandfall_l, 30, 0, coord, movecoord(loc_coord, 3, 0, 0), 52, 100, ^exact_south, false);
+    ~set_walkbas(human_falling_end);
     p_delay(1);
     ~update_bas;
     mes("You take a nasty fall down the side of the cliff...");
@@ -1810,8 +1810,8 @@ p_teleport(movecoord(loc_coord, 1, 0, 1));
 p_delay(1);
 if(stat_random(stat(agility), 110, 250) = false) {
     mes("You slip and fall!");
-    ~agility_exactmove(seq_770, 30, 0, coord, movecoord(coord, 2, 0, -2), 52, 100, ^exact_south, false);
-    ~set_walkbas(seq_767);
+    ~agility_exactmove(human_wobbleandfall_l, 30, 0, coord, movecoord(coord, 2, 0, -2), 52, 100, ^exact_south, false);
+    ~set_walkbas(human_falling_end);
     p_delay(1);
     ~update_bas;
     mes("You take a nasty fall down the side of the cliff...");
@@ -1949,7 +1949,7 @@ if(%legends_progress >= ^legends_heart_in_recess) {
     }
     return;
 }
-anim(seq_846, 0);
+anim(human_stumble_back, 0);
 p_delay(1);
 // https://youtu.be/uF1a9xsV7zo?si=0-xYBOVVD_6oYi0h&t=2610
 ~mesbox("You walk into an invisible barrier... Some kind of magical force will not allow you to pass into the cavern. You notice something interesting on the wall to the left.");

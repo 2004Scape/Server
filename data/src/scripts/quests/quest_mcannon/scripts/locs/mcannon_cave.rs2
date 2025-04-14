@@ -11,6 +11,6 @@ p_telejump(0_40_153_60_5);
 
 // Mud pile to get out of cave Near fishing guild
 [oploc1,mcanmudpile]
-anim(human_reachforladdertop, 0);
+anim(human_reachforladder, 0);
 p_delay(0);
 p_telejump(0_40_52_63_63);

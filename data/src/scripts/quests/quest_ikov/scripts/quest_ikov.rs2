@@ -29,7 +29,7 @@ if(map_members = true & %ikov_progress = ^ikov_helping_armadyl & inv_total(worn,
 ~chatnpc("<p,neutral>You don't want to attack me. I am your friend.");
 if_close;
 p_delay(0);
-npc_anim(seq_805, 0);
+npc_anim(human_mindtrick, 0);
 p_delay(1);
 ~mesbox("You decide not to attack Lucien. He is your friend.");
 return (false);

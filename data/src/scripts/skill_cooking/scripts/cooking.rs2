@@ -80,7 +80,7 @@ if ($cooking_source = cooking_oven) {
         $low = $low_range;
         $high = $high_range;
     }
-    $anim = human_cooking;
+    $anim = human_potterywheel;
     if (string_length($cookmessage) < 1 & compare($cookmessage, "0") ! 0) {
         $cookmessage = "You put the <lowercase(oc_name($cooked_item))> on the stove.";
     }

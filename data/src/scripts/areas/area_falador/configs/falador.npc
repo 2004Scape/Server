@@ -36,12 +36,12 @@ param=crushdefence,70
 param=magicdefence,-11
 param=rangedefence,74
 param=damagetype,^slash_style
-param=attack_anim,human_2h_slash
-param=defend_anim,human_sword_defend2
+param=attack_anim,human_dhsword_slash
+param=defend_anim,human_sword_def
 param=attack_sound,2H_slash
 param=defend_sound,blade3
 // Despite the slash attack style they still use the crush anim today
-// osrs attack anim seq_406 and defend anim seq_410.
+// osrs attack anim seq_406 and defend anim human_dhsword_block.
 // osrs use sounds attack - 2H_crush & defend - blade3
 // osrs stats and Vislvl match 1:1
 // https://raw.githubusercontent.com/Joshua-F/osrs-dumps/refs/heads/master/config/dump.npc npc_1798
@@ -72,7 +72,7 @@ attack=2
 defence=5
 param=damagetype,^stab_style
 param=attack_anim,human_farmersfork_stab
-param=defend_anim,human_farmersfork_defend
+param=defend_anim,human_farmersfork_def
 param=attack_sound,staff_stab
 // osrs attack_sound farmersfork_stab
 // stats taken 3lv Gardener (Falador) Vislvl match.

@@ -104,7 +104,7 @@ if (map_members = false) {
 }
 
 mes("You have activated a trap on the chest.");
-anim(human_picklock_chest, 0);
+anim(human_lockedchest, 0);
 sound_synth(lever, 0, 0);
 p_delay(0);
 // https://oldschool.runescape.wiki/w/Chest_(nature_runes) - damage formula.

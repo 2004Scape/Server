@@ -69,7 +69,7 @@ if(map_members = false) {
 }
 ~mesbox("You place your hands on the dry tough bark of the spirit tree,|and feel a surge of energy run through your veins.");
 if_close;
-anim(human_reachforladdertop, 0);
+anim(human_reachforladder, 0);
 p_delay(0);
 p_telejump($dest);
 // RSC, confirm this is the same on RS3

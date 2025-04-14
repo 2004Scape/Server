@@ -54,7 +54,7 @@ switch_int(%hazeelcult_progress) {
             ~mesbox("As Alomone finishes reading from the scroll you hear a shrill scream emanate from Hazeel's coffin.");
             if_close;
             npc_add(0_40_151_47_5, hazeel, 100);
-            npc_anim(seq_801, 0);
+            npc_anim(hazeel_coffin, 0);
             p_delay(5);
             queue(hazeel_leave, 0, npc_uid); // this is probably queued here?
             ~chatnpc("<p,neutral>My loyal followers. I have pride in you all. Never did I expect to return to this land and I see I have much to attend to.");

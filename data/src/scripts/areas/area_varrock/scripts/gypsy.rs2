@@ -167,7 +167,7 @@ if (inv_total(inv, coins) = 0) {
     ~chatnpc("<p,neutral>I can see images forming. I can see you.");
     ~chatnpc("<p,confused>You are holding a very impressive looking sword. I'm sure I recognise that sword...");
     ~chatnpc("<p,confused>There is a big dark shadow appearing now.");
-    ~chatnpc("<p,worried>Aaargh!");
+    ~chatnpc("<p,scared>Aaargh!");
     def_int $option = ~p_choice3("Very interesting. What does that Aaargh bit mean?", 1, "Are you alright?", 2, "Aaargh?", 3);
 
     if ($option = 1) {
@@ -177,7 +177,7 @@ if (inv_total(inv, coins) = 0) {
     } else if ($option = 3) {
         ~chatplayer("<p,confused>Aaargh?");
     }
-    ~chatnpc("<p,worried>It's Delrith! Delrith is coming!");
+    ~chatnpc("<p,scared>It's Delrith! Delrith is coming!");
     def_int $who_is_delrith = ~p_choice2("Who's Delrith?", 1, "Get a grip!", 2);
 
     if ($who_is_delrith = 1) {
@@ -193,7 +193,7 @@ if (inv_total(inv, coins) = 0) {
 [label,demon_slayer_gypsy_who_is_delrith]
 ~chatnpc("<p,sad>Delrith...");
 ~chatnpc("<p,neutral>Delrith is a powerful demon.");
-~chatnpc("<p,worried>Oh! I really hope he didn't see me looking at him through my crystal ball!");
+~chatnpc("<p,scared>Oh! I really hope he didn't see me looking at him through my crystal ball!");
 ~chatnpc("<p,sad>He tried to destroy this city 150 years ago. He was stopped just in time by the great hero Wally.");
 ~chatnpc("<p,sad>Using his magic sword Silverlight, Wally managed to trap the demon in the stone circle just south of this city.");
 ~chatnpc("<p,shock>Ye gods! Silverlight was the sword you were holding in my vision! You are the one destined to stop the demon this time.");
@@ -221,13 +221,13 @@ if ($option = 1) {
 }
 
 [label,demon_slayer_gypsy_destroy_cities]
-~chatplayer("<p,worried>How am I meant to fight a demon who can destroy cities?!");
-~chatnpc("<p,worried>I admit it won't be easy.");
+~chatplayer("<p,scared>How am I meant to fight a demon who can destroy cities?!");
+~chatnpc("<p,scared>I admit it won't be easy.");
 @demon_slayer_gypsy_destroy_delrith;
 
 [label,demon_slayer_gypsy_kill_him_for_you]
 ~chatplayer("<p,happy>Okay, where is he? I'll kill him for you!");
-~chatnpc("<p,worried>Well you can't just go and fight, he can't be harmed by ordinary weapons.");
+~chatnpc("<p,scared>Well you can't just go and fight, he can't be harmed by ordinary weapons.");
 @demon_slayer_gypsy_destroy_delrith;
 
 [label,demon_slayer_gypsy_destroy_delrith]

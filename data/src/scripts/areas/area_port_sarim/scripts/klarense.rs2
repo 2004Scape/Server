@@ -46,7 +46,7 @@ if (%dragon_progress < ^quest_dragon_bought_ship & %dragon_progress >= ^quest_dr
 // in the video of klarense dialogue, a lot of the dialogue is shorter than osrs. so this is rsc dialogue
 [label,klarense_crandor_for_me]
 ~chatplayer("<p,quiz>So would you like to sail this ship to Crandor for me?");
-~chatnpc("<p,worried>No not me, I'm frightened of dragons.");
+~chatnpc("<p,scared>No not me, I'm frightened of dragons.");
 
 [label,klarense_fixing]
 ~chatplayer("<p,quiz>So; what needs fixing on this ship?");

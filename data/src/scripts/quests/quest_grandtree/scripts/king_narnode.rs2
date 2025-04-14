@@ -185,7 +185,7 @@ switch_int(%grandtree_progress) {
             case 2 :
                 ~chatplayer("<p,neutral>No, I need to go back.");
                 ~check_narnode_items;
-                ~chatnpc("<p,worried>Time is of the essence Traveller!");
+                ~chatnpc("<p,scared>Time is of the essence Traveller!");
         }
     case ^grandtree_started :
         ~chatnpc("<p,neutral>Traveler, any word from Hazelmere?");
@@ -199,7 +199,7 @@ switch_int(%grandtree_progress) {
         }
         ~chatnpc("<p,happy>Welcome Traveller. I am King Narnode.|It's nice to see an outsider.");
         ~chatplayer("<p,happy>Hi! It seems to be a busy settlement.");
-        ~chatnpc("<p,worried>For now.");
+        ~chatnpc("<p,scared>For now.");
         switch_int(~p_choice2("You seem worried, what's up?", 1, "I'll be off now.", 2)) {
             case 1 :
                 ~chatplayer("<p,quiz>You seem worried, what's up?");
@@ -258,7 +258,7 @@ npc_say("Up here.");
 ~forcewalk(movecoord($up_coord, 0, 0, -1));
 facesquare(movecoord($up_coord, -1, 0, -1));
 p_delay(0);
-anim(human_reachforladdertop, 0);
+anim(human_reachforladder, 0);
 p_delay(0);
 npc_setmode(null);
 p_telejump(movecoord(^narnode_trapdoor_coord, 0, 0, -1));
@@ -269,7 +269,7 @@ p_telejump(movecoord(^narnode_trapdoor_coord, 0, 0, -1));
 ~chatplayer("<p,neutral>They look like roots to me.");
 ~chatnpc("<p,neutral>Not just any roots Traveller!|These were created by gnome mages eons ago,|since then they have grown to become a mighty stronghold!");
 ~chatplayer("<p,neutral>Impressive. What exactly is the problem?");
-~chatnpc("<p,worried>In the last two months our tree guardians have|reported continuing deterioration of the Grand|Tree's health. I've never seen this before!|It could be the end for us all!");
+~chatnpc("<p,scared>In the last two months our tree guardians have|reported continuing deterioration of the Grand|Tree's health. I've never seen this before!|It could be the end for us all!");
 ~chatplayer("<p,quiz>You mean the tree is ill?");
 ~chatnpc("<p,neutral>In effect yes. Would you be willing to help us discover what is happening to the tree?");
 switch_int(~p_choice2("I'm sorry, I don't want to get involved.", 1, "I'd be happy to help!", 2)) {

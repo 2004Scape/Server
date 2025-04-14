@@ -2,7 +2,7 @@
 switch_int (%ikov_progress) {
     case ^ikov_completed_armadyl :
         ~chatplayer("<p,angry>I thought I killed you?!");
-        ~chatnpc("<p,madlaugh>Ha! Ha! Ha!");
+        ~chatnpc("<p,evillaugh>Ha! Ha! Ha!");
         ~chatnpc("<p,angry>You can not kill me human!");
         if(~obj_gettotal(ikov_pendantoflucien) = 0) {
             ~chatplayer("<p,sad>I've lost the pendant you gave me.");

@@ -29,11 +29,11 @@ if (loc_shape = wall_diagonal) {
     facesquare(movecoord(coord, ~door_open_move_player_out_of_way(loc_angle)));
 }
 p_delay(1);
-anim(seq_915, 0);
+anim(human_lean, 0);
 p_delay(0);
 ~handle_duel_camera($closest_camera, $closest_camera_index);
 walktrigger(lean_on_wall);
-~bas_set_all(seq_916);
+~bas_set_all(human_lean_ready);
 
 
 [walktrigger,lean_on_wall]

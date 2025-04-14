@@ -172,7 +172,7 @@ switch_int ($rand) {
         ~chatplayer("<p,bored>Really?");
         ~chatnpc("<p,sad>It's hard when you haven't been anywhere.");
     case 5 :
-        ~chatnpc("<p,worried>Aaaaarrggghh... humans! Run for your lives!");
+        ~chatnpc("<p,scared>Aaaaarrggghh... humans! Run for your lives!");
         ~mesbox("The gnome backs away");
     case 6 :
         ~chatnpc("<p,neutral>Hello brave adventurer. A warrior like you should go a long way.");

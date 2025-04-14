@@ -36,7 +36,7 @@ param=slashdefence,82
 param=crushdefence,62
 param=damagetype,^slash_style
 param=attack_anim,human_sword_slash
-param=defend_anim,human_sword_defend2
+param=defend_anim,human_sword_def
 param=attack_sound,stabsword_stab
 // param=defend_sound,
 // osrs defend_sound blade4
@@ -90,7 +90,7 @@ param=slashdefence,82
 param=crushdefence,45
 param=damagetype,^slash_style
 param=attack_anim,human_sword_slash
-param=defend_anim,human_sword_defend2
+param=defend_anim,human_sword_def
 param=attack_sound,2H_slash
 param=defend_sound,steel2
 // Stats match osrs version but our version Vislvl is different.

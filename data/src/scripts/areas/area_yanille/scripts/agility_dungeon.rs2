@@ -19,10 +19,10 @@ if(%yanille_obstacle_pipe_used >= map_clock) {
     return;
 }
 %yanille_obstacle_pipe_used = calc(map_clock + 4);
-~agility_exactmove(human_pipesqueeze, 30, 3, coord, movecoord(coord, calc(3 * $mod), 0, 0), 30, 126, $dir, true);
+~agility_exactmove(human_doublepipesqueeze, 30, 3, coord, movecoord(coord, calc(3 * $mod), 0, 0), 30, 126, $dir, true);
 p_delay(0);
 ~change_merged_loc($end_pipe_coord);
-~agility_exactmove(human_pipesqueeze, 30, 3, 0_40_148_15_34, movecoord(0_40_148_15_34, calc(3 * $mod), 0, 0), 30, 126, $dir, true);
+~agility_exactmove(human_doublepipesqueeze, 30, 3, 0_40_148_15_34, movecoord(0_40_148_15_34, calc(3 * $mod), 0, 0), 30, 126, $dir, true);
 p_delay(0);
 stat_advance(agility, 75);
 
@@ -34,14 +34,14 @@ if(stat(agility) < 40) {
     return;
 }
 def_int $dz = 4;
-def_seq $walk_seq = human_ledge_walk_left;
-def_seq $start_seq = human_ledge_on_left;
-def_seq $end_seq = human_ledge_off_left;
+def_seq $walk_seq = human_walk_sidestepl;
+def_seq $start_seq = human_into_sidestepl;
+def_seq $end_seq = human_outof_sidestepl;
 def_coord $start = 0_40_148_20_40;
 if(coordz(loc_coord) > 9518) {
-    $walk_seq = human_ledge_walk_right;
-    $start_seq = human_ledge_on_right;
-    $end_seq = human_ledge_off_right;
+    $walk_seq = human_walk_sidestep;
+    $start_seq = human_into_sidestep;
+    $end_seq = human_outof_sidestep;
     $start = 0_40_148_20_48;
     $dz = -4;
 }

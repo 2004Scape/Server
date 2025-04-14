@@ -240,23 +240,23 @@ if($op = 2) {
 [aploc2,loc_2697]
 mes("You start climbing the rocky elevation.");
 // completely guessing on how this works, rsc messages and damage
-~agility_force_move(0, seq_737, loc_coord);
+~agility_force_move(0, human_climbing, loc_coord);
 if(stat_random(stat(agility), 150, 250) = false) { 
-    ~agility_exactmove(seq_739, 0, 2, coord, movecoord(loc_coord, -4, 0, 0), 0, 120, ^exact_east, false);
+    ~agility_exactmove(human_climbing_fall, 0, 2, coord, movecoord(loc_coord, -4, 0, 0), 0, 120, ^exact_east, false);
     anim(null, 0);
     mes("You slip a little and tumble the rest of the way down the slope.");
     ~damage_self(7);
     return;
 }
-~agility_exactmove(human_rock_climb, 0, 2, coord, movecoord(loc_coord, -4, 0, 0), 30, 100, ^exact_east, false);
+~agility_exactmove(human_climbing_down, 0, 2, coord, movecoord(loc_coord, -4, 0, 0), 30, 100, ^exact_east, false);
 anim(null, 0);
 
 [label,desertrescue_climb_to_rocks]
 mes("You start climbing the rocky elevation.");
 // completely guessing on how this works, rsc messages and damage
-~agility_force_move(0, human_rock_climb, loc_coord);
+~agility_force_move(0, human_climbing_down, loc_coord);
 if(stat_random(stat(agility), 150, 250) = false) { 
-    ~agility_exactmove(seq_739, 0, 0, coord, movecoord(coord, 2, 0, 0), 0, 50, ^exact_west, false);
+    ~agility_exactmove(human_climbing_fall, 0, 0, coord, movecoord(coord, 2, 0, 0), 0, 50, ^exact_west, false);
     anim(null, 0);
     mes("You slip a little and tumble the rest of the way down the slope.");
     ~damage_self(7);
@@ -353,7 +353,7 @@ if(testbit(%desertrescue_map_mechanisms, ^desertrescue_ready_rescue) = true) {
         case 1 :
             ~mesbox("You decide to climb onto the cart.");
             if_close;
-            anim(human_reachforladdertop, 0);
+            anim(human_reachforladder, 0);
             p_delay(1);
             if(%desertrescue_progress = ^desertrescue_ana_on_mining_cart) %desertrescue_progress = ^desertrescue_escaped;
             %desertrescue_map_mechanisms = clearbit_range(%desertrescue_map_mechanisms, ^desertrescue_ana_mining_cart, ^desertrescue_ready_rescue);
@@ -807,7 +807,7 @@ if($op = 2) {
     return;
 }
 if(inv_total(inv, thanainabarrel) > 0) {
-    ~chatnpc_specific("Ana (in a Barrel)", anabarrel, "<p,silent>There isn't enough space for both you and this barrel in the cart.");
+    ~chatnpc_specific("Ana (in a Barrel)", anabarrel, "<p,idle>There isn't enough space for both you and this barrel in the cart.");
     return;
 }
 if(random(3) = 0) {

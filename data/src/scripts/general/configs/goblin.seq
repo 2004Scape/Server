@@ -1,4 +1,4 @@
-[chat_goblin1]
+[chatgoblin1]
 replayoff=12
 frame1=anim_371
 frame2=anim_371
@@ -65,7 +65,7 @@ iframe22=anim_364
 iframe23=anim_369
 iframe24=anim_373
 
-[chat_goblin2]
+[chatgoblin2]
 replayoff=12
 frame1=anim_356
 frame2=anim_356
@@ -180,7 +180,7 @@ iframe46=anim_364
 iframe47=anim_369
 iframe48=anim_373
 
-[chat_goblin3]
+[chatgoblin3]
 replayoff=12
 frame1=anim_361
 frame2=anim_361
@@ -329,7 +329,7 @@ iframe70=anim_364
 iframe71=anim_369
 iframe72=anim_373
 
-[chat_goblin4]
+[chatgoblin4]
 replayoff=12
 frame1=anim_356
 frame2=anim_356

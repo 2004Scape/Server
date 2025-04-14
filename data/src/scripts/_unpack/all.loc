@@ -1083,21 +1083,21 @@ op1=Climb-down
 
 [loc_288]
 model=model_loc_288
-anim=seq_526
+anim=wake
 hasalpha=yes
 length=3
 active=no
 
 [loc_289]
 model=model_loc_289
-anim=seq_527
+anim=wake2
 hasalpha=yes
 length=3
 active=no
 
 [loc_290]
 model=model_loc_290
-anim=seq_527
+anim=wake2
 hasalpha=yes
 length=3
 active=no
@@ -2197,7 +2197,7 @@ blockrange=no
 
 [loc_470]
 model=model_loc_470
-anim=seq_907
+anim=barberspole_spin
 ambient=20
 contrast=20
 
@@ -2676,7 +2676,7 @@ hillskew=yes
 shadow=no
 ambient=25
 contrast=25
-anim=seq_524
+anim=crater
 blockrange=no
 
 [loc_522]
@@ -2686,7 +2686,7 @@ hillskew=yes
 shadow=no
 ambient=25
 contrast=25
-anim=seq_524
+anim=crater
 resizex=64
 resizey=64
 resizez=64
@@ -3450,32 +3450,32 @@ hasalpha=yes
 
 [barrel_breaking]
 model=model_loc_672
-anim=seq_449
+anim=barrel
 hasalpha=yes
 
 [gas]
 model=model_loc_673
-anim=seq_523
+anim=gas
 hasalpha=yes
 
 [gas_chest]
 model=model_loc_674
-anim=seq_654
+anim=smokepuff
 hasalpha=yes
 
 [gas_rocks1]
 model=macro_plainrock1
-anim=seq_523
+anim=gas
 hasalpha=yes
 
 [gas_rocks2]
 model=macro_plainrock2
-anim=seq_523
+anim=gas
 hasalpha=yes
 
 [gas_rocks3]
 model=macro_plainrock3
-anim=seq_523
+anim=gas
 hasalpha=yes
 
 [fishingspot]
@@ -3612,7 +3612,7 @@ recol1d=8456
 
 [loc_704]
 model=model_loc_704
-anim=seq_469
+anim=tentacles
 
 [loc_705]
 model=model_loc_705
@@ -3789,7 +3789,7 @@ recol3d=25295
 
 [loc_731]
 model=model_loc_731
-anim=seq_493
+anim=lavabubbles
 hasalpha=yes
 shadow=no
 active=no
@@ -3799,7 +3799,7 @@ blockwalk=no
 
 [loc_732]
 model=model_loc_732
-anim=seq_494
+anim=lavafire
 hasalpha=yes
 shadow=no
 active=no
@@ -11394,7 +11394,7 @@ name=Chest
 desc=An open chest.
 model=model_loc_674
 forceapproach=north
-anim=seq_654
+anim=smokepuff
 hasalpha=yes
 blockrange=no
 recol1s=15855
@@ -12725,7 +12725,7 @@ op1=Open
 name=Fishing spot
 desc=I can see eels swimming in the water.
 model=model_loc_2630
-anim=seq_525
+anim=lava_ripples
 hasalpha=yes
 ambient=100
 contrast=100
@@ -15094,7 +15094,7 @@ name=Ogre spitroast
 desc=Useful for ogre dinners.
 model=model_ogre_spitroast
 width=2
-anim=seq_1016
+anim=spit_fire
 hasalpha=yes
 blockrange=no
 

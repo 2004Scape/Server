@@ -13,7 +13,7 @@ switch_int (loc_angle) {
 
 [oploc1,game_trawler_ship_ladder_up]
 p_arrivedelay;
-anim(human_reachforladdertop, 0);
+anim(human_reachforladder, 0);
 p_delay(0);
 
 switch_int (loc_angle) {

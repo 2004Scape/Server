@@ -2,7 +2,7 @@
 switch_int(%seaslug_progress) {
     case ^seaslug_boat_repaired, ^seaslug_spoken_kennith, ^seaslug_sailed_kent :
         ~chatplayer("<p,happy>Hello.");
-        ~chatnpc("<p,worried>Well hello there.|What are you doing here?");
+        ~chatnpc("<p,scared>Well hello there.|What are you doing here?");
         ~chatplayer("<p,neutral>I'm trying to find out what happened|to a boy named Kennith.");
         ~chatnpc("<p,neutral>Oh you mean Kent's son.|He's around somewhere, probably hiding|if he knows what's good for him.");
         ~chatplayer("<p,quiz>Hiding from what?");

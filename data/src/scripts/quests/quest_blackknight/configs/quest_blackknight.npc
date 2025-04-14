@@ -35,8 +35,8 @@ param=crushdefence,14
 param=magicdefence,-4
 param=crushdefence,15
 param=damagetype,^stab_style
-param=attack_anim,human_spear_stab
-param=defend_anim,human_spear_def
+param=attack_anim,human_spear_spike
+param=defend_anim,human_spear_block
 param=attack_sound,staff_stab
 // osrs stats and Vislvl match 1:1
 // https://raw.githubusercontent.com/Joshua-F/osrs-dumps/refs/heads/master/config/dump.npc npc_4772

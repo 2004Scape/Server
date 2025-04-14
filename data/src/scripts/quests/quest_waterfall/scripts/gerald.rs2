@@ -4,7 +4,7 @@ switch_int(%waterfall_progress) {
         ~chatplayer("<p,neutral>Hello there.");
         ~chatnpc("<p,happy>Good day to your traveller,|are you here to fish or just looking around?|I've caught some beauties down here.");
         ~chatplayer("<p,neutral>Really?");
-        npc_anim(seq_802, 3);
+        npc_anim(human_fishsize, 3);
         ~chatnpc("<p,neutral>The last one was this big!");
     case ^waterfall_started :
         ~chatplayer("<p,neutral>Hello.");

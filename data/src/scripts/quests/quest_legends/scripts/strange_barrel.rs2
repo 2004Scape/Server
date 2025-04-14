@@ -4,7 +4,7 @@ anim(%com_attackanim, 0);
 p_delay(0);
 if(stat_random(stat(attack), 65, 255) = false) {
     mes("You were unable to smash this barrel open.");
-    anim(seq_848, 0);
+    anim(human_stunned, 0);
     if(random(3) = 0) {
         def_int $rand_dec = ~random_range(1,3);
         mes("You hit the barrel at the wrong angle.");

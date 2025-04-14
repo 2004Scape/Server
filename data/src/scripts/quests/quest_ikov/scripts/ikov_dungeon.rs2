@@ -19,7 +19,7 @@ if($entering = true | inv_total(worn, ikov_pendantoflucien) > 0) {
     return;
 }
 mes("As you reach to open the door a great terror overcomes you!");
-anim(seq_846, 30);
+anim(human_stumble_back, 30);
 p_exactmove(coord, movecoord(coord, 0, 0, -1), 30, 56, ^exact_north);
 
 [oploc1,ikov_mendedleverdoorl] @open_ikov_southgate(^left);
@@ -73,7 +73,7 @@ if($crossed_bridge = true) {
 mes("The bridge gives way under your weight!");
 sound_synth(lava_bridge, 32, 0);
 spotanim_map(lavasplash, 0_41_153_25_35, 0, 46);
-~agility_exactmove(human_sidestep_fall, 0, 0, coord, 0_41_153_25_35, 44, 56, ^exact_west, false);
+~agility_exactmove(human_walk_logbalance_stumble, 0, 0, coord, 0_41_153_25_35, 44, 56, ^exact_west, false);
 say("Ow! Hot! Hot!");
 ~damage_self(20); // https://youtu.be/sCl0GprumNE?si=dLJV4idmreMQGHfI&t=188, moved to end in OSRS
 p_delay(0);
@@ -143,7 +143,7 @@ if(%ikov_progress >= ^ikov_disabled_trap) {
 }
 p_delay(0);
 // stumble_loop sound
-anim(seq_768, 0);
+anim(human_falling_4, 0);
 p_delay(0);
 p_teleport(0_41_153_58_63);
 p_delay(1);
@@ -190,7 +190,7 @@ if(npc_find(coord, fire_warrior_of_lesarkus, 5, 0) = false) { // will spawn anot
     sound_synth(fire_teleport, 0, 0);
     npc_add(0_41_154_22_10, fire_warrior_of_lesarkus, 500);
     npc_setmode(none);
-    npc_anim(seq_803, 0);
+    npc_anim(human_smokepuff_tele_appear, 0);
     p_delay(1);
 }
 npc_setmode(none);
@@ -207,7 +207,7 @@ spotanim_map(fireblast_impact, 0_41_154_22_14, 124, 130);
 p_delay(0);
 cam_lookat(0_41_154_22_14, 50, 3, 10);
 p_delay(1);
-anim(seq_846, 30);
+anim(human_stumble_back, 30);
 p_exactmove(coord, movecoord(coord, 0, 0, -1), 30, 56, ^exact_north);
 p_delay(2);
 //cam_lookat(0_40_153_56_0, 0, 0, 0);
