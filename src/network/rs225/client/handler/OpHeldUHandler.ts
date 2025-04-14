@@ -7,7 +7,6 @@ import ScriptRunner from '#/engine/script/ScriptRunner.js';
 import ServerTriggerType from '#/engine/script/ServerTriggerType.js';
 import MessageHandler from '#/network/client/handler/MessageHandler.js';
 import OpHeldU from '#/network/client/model/OpHeldU.js';
-import { LoggerEventType } from '#/server/logger/LoggerEventType.js';
 import Environment from '#/util/Environment.js';
 
 export default class OpHeldUHandler extends MessageHandler<OpHeldU> {
@@ -99,8 +98,6 @@ export default class OpHeldUHandler extends MessageHandler<OpHeldU> {
             [player.lastItem, player.lastUseItem] = [player.lastUseItem, player.lastItem];
             [player.lastSlot, player.lastUseSlot] = [player.lastUseSlot, player.lastSlot];
         }
-
-        player.addSessionLog(LoggerEventType.MODERATOR, `Use ${useObjType.debugname} with ${objType.debugname}`);
 
         if (script) {
             player.executeScript(ScriptRunner.init(script, player), true);
