@@ -13,9 +13,6 @@ if (getbit_range(%gnomeball_progress, ^gnomeball_progress_start_bit, ^gnomeball_
     ~gnomeball_reset;
 }
 
-[oplocu,gnome_goal]
-mes(~coord_tostring(loc_coord));
-
 [oploc1,gnomeball_gate]
 def_obj $rhand = inv_getobj(worn, ^wearpos_rhand);
 def_obj $lhand = inv_getobj(worn, ^wearpos_lhand);
@@ -105,7 +102,26 @@ if (~inzone_coord_pair_table(gnomeball_zones, coord) = true) {
 [proc,gnomeball_login]
 if (~inzone_coord_pair_table(gnomeball_zones, coord) = true) {
     p_telejump(0_37_54_14_32);
-    ~gnomeball_reset;
+    // doesnt remove ball from worn if x logged 
+    // %gnomeball_progress = setbit(%gnomeball_progress, ^gnomeball_entered_with_ball_bit);
+    if (testbit(%gnomeball_progress, ^gnomeball_entered_with_ball_bit) = false) {
+        if (inv_getobj(worn, ^wearpos_rhand) = ball_gnomeball_game) {
+            inv_delslot(worn, ^wearpos_rhand);
+        }
+    }
+    %gnomeball_progress = clearbit(%gnomeball_progress, ^gnomeball_entered_with_ball_bit);
+    if (getbit_range(%gnomeball_progress, ^gnomeball_progress_start_bit, ^gnomeball_progress_end_bit) > ^gnomeball_not_started) {
+        %gnomeball_progress = setbit_range_toint(%gnomeball_progress, ^gnomeball_talked_to_ref, ^gnomeball_progress_start_bit, ^gnomeball_progress_end_bit);
+    }
+    %gnomeball = 0;
+    npc_findallany(^gnomeball_centre_coord, 14, ^vis_off);
+    while (npc_findnext = true) {
+        if (%npc_attacking_uid = uid) {
+            if (npc_param(gnome_original) ! null & npc_type = nc_param(npc_param(gnome_original), gnome_hasball)) {
+                npc_changetype_keepall(npc_param(gnome_original), ^max_32bit_int);
+            }
+        }
+    }
 }
 
 [debugproc,gb]
