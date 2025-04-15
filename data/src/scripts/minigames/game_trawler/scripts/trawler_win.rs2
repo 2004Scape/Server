@@ -106,30 +106,30 @@ if (inv_freespace(trawler_rewardinv) = inv_size(trawler_rewardinv)) {
 // low fish wasnt ultra rare at high fish levels
 // tldr: my theory is that instead of low: 150, high: 200 for each fish (osrs), it was fishes normal lows and highs
 [proc,trawler_reward](int $level)
-if (stat_random($level, 150, 200) = false) { // junk https://web.archive.org/web/20040812231222/http://www.tip.it/runescape/index.php?page=rs2trawler.htm
+if (stat_random(fishing, 150, 200) = false) { // junk https://web.archive.org/web/20040812231222/http://www.tip.it/runescape/index.php?page=rs2trawler.htm
     inv_add(trawler_rewardinv, ~randomjunk);
     stat_advance(fishing, 12); // it says junk gives 1 xp each, except with boots giving 2. Im guessing its like 1.1 or 1.2 xp each
     return;
 }
-if ($level >= 81 & stat_random($level, 3, 40) = true) {
+if ($level >= 81 & stat_random(fishing, 3, 40) = true) {
     inv_add(trawler_rewardinv, raw_mantaray, 1);
     stat_advance(fishing, 1150);
-} else if ($level >= 80 & stat_random($level, 3, 40) = true) {
+} else if ($level >= 80 & stat_random(fishing, 3, 40) = true) {
     inv_add(trawler_rewardinv, raw_seaturtle, 1);
     stat_advance(fishing, 1050);
-} else if ($level >= 76 & stat_random($level, 3, 40) = true) {
+} else if ($level >= 76 & stat_random(fishing, 3, 40) = true) {
     inv_add(trawler_rewardinv, raw_shark, 1);
     stat_advance(fishing, 1100);
-} else if ($level >= 60 & stat_random($level, 4, 48) = true) {
+} else if ($level >= 60 & stat_random(fishing, 4, 48) = true) {
     inv_add(trawler_rewardinv, raw_swordfish, 1);
     stat_advance(fishing, 1000);
-} else if ($level >= 40 & stat_random($level, 6, 95) = true) {
+} else if ($level >= 40 & stat_random(fishing, 6, 95) = true) {
     inv_add(trawler_rewardinv, raw_lobster, 1);
     stat_advance(fishing, 900);
-} else if ($level >= 35 & stat_random($level, 8, 64) = true) {
+} else if ($level >= 35 & stat_random(fishing, 8, 64) = true) {
     inv_add(trawler_rewardinv, raw_tuna, 1);
     stat_advance(fishing, 800);
-} else if ($level >= 16 & stat_random($level, 10, 80) = true) {
+} else if ($level >= 16 & stat_random(fishing, 10, 80) = true) {
     def_int $random = random(3);
     if ($random = 0) {
         inv_add(trawler_rewardinv, oystershell, 1);
@@ -141,13 +141,13 @@ if ($level >= 81 & stat_random($level, 3, 40) = true) {
         inv_add(trawler_rewardinv, edible_seaweed, 1);
         stat_advance(fishing, 12);
     }
-} else if (stat_random($level, 24, 128) = true) {
+} else if (stat_random(fishing, 24, 128) = true) {
     inv_add(trawler_rewardinv, raw_anchovies, 1);
     stat_advance(fishing, 400);
-} else if (stat_random($level, 32, 192) = true) {
+} else if (stat_random(fishing, 32, 192) = true) {
     inv_add(trawler_rewardinv, raw_sardine, 1);
     stat_advance(fishing, 200);
-} else if (stat_random($level, 48, 200) = true) {
+} else if (stat_random(fishing, 48, 200) = true) {
     inv_add(trawler_rewardinv, raw_shrimp, 1);
     stat_advance(fishing, 100);
 } else {
