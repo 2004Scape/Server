@@ -10,3 +10,4 @@
 ^gnomeball_progress_start_bit = 0
 ^gnomeball_progress_end_bit = 3
 ^gnomeball_entered_with_ball_bit = 4
+^gnomeball_winner_bit = 5
