@@ -1336,22 +1336,30 @@ if (last_useitem = vial_empty) {
     def_int $bowl_uses = getbit_range(%legends_bits, ^legends_golden_bowl_uses_start, ^legends_golden_bowl_uses_end);
     inv_del(inv, vial_empty, 1);
     inv_add(inv, vial_water, 1);
-    if ($bowl_uses = 1) {
-        $bowl_uses = 10;
+    if ($bowl_uses >= 9) {
         inv_del(inv, goldbowlbless_pure, 1);
         inv_add(inv, goldbowlbless_empty, 1);
         // osrs
         //mes("The golden bowl is empty. There's no sacred water left.");
         // rs3
         mes("The pure water in the golden bowl has run out...");
+        return;
     }
-    else {
-        $bowl_uses = sub($bowl_uses, 1);
-    }
-    %legends_bits = setbit_range_toint(%legends_bits, $bowl_uses, ^legends_golden_bowl_uses_start, ^legends_golden_bowl_uses_end);
+    %legends_bits = setbit_range_toint(%legends_bits, add($bowl_uses, 1), ^legends_golden_bowl_uses_start, ^legends_golden_bowl_uses_end);
     mes("The water doesn't seem as effervescent as it was in the bowl.");
-}
-else if (last_useitem = yommiseeds) {
+} else if (last_useitem = vial_enchanted) {
+    mes("You decant some water from the golden bowl into the enchanted vial.");
+    def_int $bowl_uses = getbit_range(%legends_bits, ^legends_golden_bowl_uses_start, ^legends_golden_bowl_uses_end);
+    inv_del(inv, vial_enchanted, 1);
+    inv_add(inv, holy_water, 1);
+    if ($bowl_uses >= 9) {
+        inv_del(inv, goldbowlbless_pure, 1);
+        inv_add(inv, goldbowlbless_empty, 1);
+        mes("The pure water in the golden bowl has run out...");
+        return;
+    }
+    %legends_bits = setbit_range_toint(%legends_bits, add($bowl_uses, 1), ^legends_golden_bowl_uses_start, ^legends_golden_bowl_uses_end);
+} else if (last_useitem = yommiseeds) {
     ~doubleobjbox(yommiseeds, goldbowlbless_pure, "You place the seeds into the golden bowl of pure sacred|water.", 150);
     if(%legends_progress = ^legends_defeated_nezikchened_fire) %legends_progress = ^legends_germinated_seeds;
     def_int $seed_qty = inv_total(inv, yommiseeds);
