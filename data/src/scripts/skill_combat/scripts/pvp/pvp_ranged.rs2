@@ -92,6 +92,6 @@ if (~in_duel_arena(coord) = true) {
 if (random($chance) ! 0) {
     world_delay($delay);
     if (map_blocked(.coord) = false) {
-        obj_add(.coord, enum(obj, namedobj, ranged_ammo, $ammo), 1, 100);
+        obj_add(.coord, enum(obj, namedobj, ranged_ammo, $ammo), 1, 200);
     }
 }
