@@ -164,6 +164,11 @@ export default class Npc extends PathingEntity {
             return;
         }
 
+        if (!(this.target instanceof PathingEntity)) {
+            this.pathToTarget();
+            return;
+        }
+
         if (CoordGrid.intersects(this.x, this.z, this.width, this.length, this.target.x, this.target.z, this.target.width, this.target.length)) {
             this.queueWaypoints(findNaivePath(this.level, this.x, this.z, this.target.x, this.target.z, this.width, this.length, this.target.width, this.target.length, 0, CollisionType.NORMAL));
             return;
@@ -595,7 +600,7 @@ export default class Npc extends PathingEntity {
         }
 
         // Set dest to target
-        this.pathToTarget();
+        this.pathToPathingTarget();
 
         // Path
         this.updateMovement();
@@ -665,7 +670,7 @@ export default class Npc extends PathingEntity {
         }
 
         // Set dest to target
-        this.pathToTarget();
+        this.pathToPathingTarget();
 
         // Path
         const moved: boolean = this.updateMovement();
