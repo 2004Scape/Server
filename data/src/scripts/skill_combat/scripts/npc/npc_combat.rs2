@@ -345,7 +345,4 @@ if (map_multiway(npc_coord) = false) {
         return(false);
     }
 }
-if (~inzone_coord_pair_table(gnomeball_zones, coord) = true) {
-    return(false); // osrs
-}
 return(true);
