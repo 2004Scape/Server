@@ -466,6 +466,7 @@ export default class Npc extends PathingEntity {
 
         const npcType: NpcType = NpcType.get(this.type);
         this.huntMode = npcType.huntmode;
+        this.huntrange = npcType.huntrange;
         this.huntClock = 0;
         this.huntTarget = null;
         // Reset timer interval
