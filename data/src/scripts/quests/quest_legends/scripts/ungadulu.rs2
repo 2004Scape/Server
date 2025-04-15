@@ -134,7 +134,7 @@ if(%legends_progress = ^legends_defeated_nezikchened_fire) {
         @multi5("I have killed Viyeldi!", ungadulu_killed_viyeldi, "I met a spirit in the Viyeldi Caves.", ungadulu_spirit, "The spirit told me to kill Viyeldi.", ungadulu_kill, "Do you know anything about daggers?", ungadulu_dagger, "I need more Yommi tree seeds.", ungadulu_need_seeds);
     }
     @multi5("I met a spirit in the Viyeldi Caves.", ungadulu_spirit, "The spirit told me to kill Viyeldi.", ungadulu_kill, "Do you know anything about daggers?", ungadulu_dagger, "I need more Yommi tree seeds.", ungadulu_need_seeds, "Ok, thanks...", ungadulu_thanks);
-}  else if(%legends_progress = ^legends_defeated_nezikchened_water) { // this is only an inv check, will override the later stage options
+}  else if(%legends_progress >= ^legends_defeated_nezikchened_water & %legends_progress < ^legends_collected_totem) { 
     ~mesbox("You approach Ungadulu...");
     if(testbit(%legends_bits, ^legends_given_dagger) = true) {
         ~chatnpc("<p,quiz>Blessings on you Bwana. Have you managed to deal with the spirit? Do you have the water?");
