@@ -211,14 +211,6 @@ export default class Npc extends PathingEntity {
         this.nextPatrolTick = -1;
     }
 
-    pathToTarget(): void {
-        if (!this.targetWithinMaxRange()) {
-            this.defaultMode();
-            return;
-        }
-        super.pathToTarget();
-    }
-
     targetWithinMaxRange(): boolean {
         if (!this.target) {
             return true;
@@ -663,6 +655,9 @@ export default class Npc extends PathingEntity {
             this.resetDefaults();
             return;
         }
+
+        // Reset the wander timer if Npc runs its aimode
+        this.wanderCounter = 0;
 
         // Try to interact before moving, include op Obj and Loc
         if (this.tryInteract(true)) {

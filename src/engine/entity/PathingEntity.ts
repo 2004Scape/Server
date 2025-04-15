@@ -114,7 +114,7 @@ export default abstract class PathingEntity extends Entity {
     /**
      * Attempts to update movement for a PathingEntity.
      */
-    abstract updateMovement(repathAllowed: boolean): boolean;
+    abstract updateMovement(): boolean;
     abstract blockWalkFlag(): CollisionFlag;
     abstract defaultMoveSpeed(): MoveSpeed;
 

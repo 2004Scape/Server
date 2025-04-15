@@ -115,5 +115,6 @@ op4=Pluck
 resizeh=180
 resizev=180
 model1=model_3445_obj
+defaultmode=none
 wanderrange=0
 moverestrict=nomove

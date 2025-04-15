@@ -316,6 +316,7 @@ readyanim=fishingspot_ready
 walkanim=fishingspot_walk
 hasalpha=yes
 model1=model_loc_42_8
+defaultmode=none
 wanderrange=0
 moverestrict=nomove
 
