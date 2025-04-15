@@ -172,13 +172,10 @@ export default class Npc extends PathingEntity {
         this.pathToTarget();
     }
 
-    updateMovement(repathAllowed: boolean = true): boolean {
+    updateMovement(): boolean {
         const type = NpcType.get(this.type);
         if (type.moverestrict === MoveRestrict.NOMOVE) {
             return false;
-        }
-        if (repathAllowed) {
-            this.pathToPathingTarget();
         }
 
         const { x, z } = CoordGrid.unpackCoord(this.waypoints[this.waypointIndex]);
@@ -451,7 +448,7 @@ export default class Npc extends PathingEntity {
     }
 
     noMode(): void {
-        this.updateMovement(false);
+        this.updateMovement();
     }
 
     clearInteraction(): void {
@@ -485,7 +482,7 @@ export default class Npc extends PathingEntity {
             this.randomWalk(type.wanderrange);
         }
 
-        this.updateMovement(false);
+        this.updateMovement();
 
         const onSpawn = this.x === this.startX && this.z === this.startZ && this.level === this.startLevel;
 
@@ -503,7 +500,7 @@ export default class Npc extends PathingEntity {
         const patrolDelay = type.patrolDelay[this.nextPatrolPoint];
         let dest = CoordGrid.unpackCoord(patrolPoints[this.nextPatrolPoint]);
 
-        this.updateMovement(false);
+        this.updateMovement();
         if (!this.hasWaypoints() && !this.target) {
             // requeue waypoints in cases where an npc was interacting and the interaction has been cleared
             this.queueWaypoint(dest.x, dest.z);
@@ -573,7 +570,7 @@ export default class Npc extends PathingEntity {
             }) < NpcType.get(this.type).maxrange
         ) {
             this.queueWaypoint(coord.x, coord.z);
-            this.updateMovement(false);
+            this.updateMovement();
             return;
         }
 
@@ -583,7 +580,7 @@ export default class Npc extends PathingEntity {
         } else {
             this.queueWaypoint(coord.x, this.z);
         }
-        this.updateMovement(false);
+        this.updateMovement();
     }
 
     playerFollowMode(): void {
@@ -597,7 +594,10 @@ export default class Npc extends PathingEntity {
             throw new Error('[Npc] Target must be a Player for playerfollow mode.');
         }
 
+        // Set dest to target
         this.pathToTarget();
+
+        // Path
         this.updateMovement();
 
         this.startX = this.x;
@@ -664,6 +664,10 @@ export default class Npc extends PathingEntity {
             return;
         }
 
+        // Set dest to target
+        this.pathToTarget();
+
+        // Path
         const moved: boolean = this.updateMovement();
 
         // Clear target if givechase=no
