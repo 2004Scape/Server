@@ -33,7 +33,7 @@ anim(human_tackled, 0);
 inv_delslot(worn, ^wearpos_rhand);
 ~update_all(ball_gnomeball_game);
 
-npc_sethunt(0); // stop hunting
+npc_sethuntmode(null);
 %npc_attacking_uid = uid;
 
 
