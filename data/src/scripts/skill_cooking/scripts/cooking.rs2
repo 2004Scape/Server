@@ -106,7 +106,7 @@ if ($low = 0 & $high = 0) {
 } else if ($low = 1 & $high = 1) {
     $passes_roll = true;
 } else {
-    $passes_roll = stat_random(stat(cooking), $low, $high);
+    $passes_roll = stat_random(cooking, $low, $high);
 }
 def_namedobj $burnt_item = db_getfield($data,cooking_generic:burnt,0);
 def_namedobj $additional_item = db_getfield($data,cooking_generic:additional,0);

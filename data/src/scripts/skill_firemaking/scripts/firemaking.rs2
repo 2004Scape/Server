@@ -47,7 +47,7 @@ if (%action_delay < map_clock) {
     mes("You attempt to light the logs.");
     %action_delay = calc(map_clock + 3);
 } else if (%action_delay = map_clock) {
-    if(stat_random(stat(firemaking), 64, 512) = true) { // firemaking roll
+    if(stat_random(firemaking, 64, 512) = true) { // firemaking roll
         %action_delay = calc(map_clock + 4);
         // attempt to firemaking each direction: west east south north
         // if player isnt standing on the log anymore, the fire is lit
@@ -91,7 +91,7 @@ if (%action_delay < map_clock) {
     mes("You attempt to light the logs.");
     %action_delay = calc(map_clock + 3);
 } else if (%action_delay = map_clock) {
-    if(stat_random(stat(firemaking), 64, 512) = true) { // firemaking roll
+    if(stat_random(firemaking, 64, 512) = true) { // firemaking roll
         %action_delay = calc(map_clock + 4);
         ~push_player(obj_coord);
         ~firemaking_success(obj_coord, $log); // if fully blocked then just light the log and dont move
