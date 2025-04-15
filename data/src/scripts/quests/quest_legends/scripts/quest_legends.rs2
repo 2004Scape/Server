@@ -2094,10 +2094,3 @@ if (p_finduid(uid) = true) {
 if (p_finduid(uid) = true) {
     p_telejump(0_37_73_9_40);
 }
-
-[debugproc,lt]
-if(p_finduid(uid) = true) {
-    %legends_bits = setbit(%legends_bits, 4);
-    %legends_bits = setbit(%legends_bits, 31);
-    mes("test");
-}
