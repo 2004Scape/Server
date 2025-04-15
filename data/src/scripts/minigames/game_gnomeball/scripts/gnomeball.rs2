@@ -79,10 +79,11 @@ while (npc_findnext = true) {
 }
 
 [proc,gnomeball_inplay]()(boolean)
-npc_findallany(^gnomeball_centre_coord, 14, ^vis_off);
-while (npc_findnext = true) {
-    if (%npc_attacking_uid = uid) {
-        if (npc_param(gnome_original) ! null & npc_type = nc_param(npc_param(gnome_original), gnome_hasball)) {
+.npc_findallany(^gnomeball_centre_coord, 14, ^vis_off);
+while (.npc_findnext = true) {
+    if (.%npc_attacking_uid = uid) {
+        def_npc $original = nc_param(.npc_type, gnome_original);
+        if ($original ! null & .npc_type = nc_param($original, gnome_hasball)) {
             return(true);
         }
     }
