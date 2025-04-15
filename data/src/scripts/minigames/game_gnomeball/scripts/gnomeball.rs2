@@ -37,7 +37,7 @@ if ($exiting = false) {
     }
 } else {
     ~open_and_close_door(loc_param(next_loc_stage), $exiting, false);
-    if (%gnomeball >= 5 | testbit(%gnomeball_progress, ^gnomeball_entered_with_ball_bit) = true) {
+    if (testbit(%gnomeball_progress, ^gnomeball_winner_bit) = true | testbit(%gnomeball_progress, ^gnomeball_entered_with_ball_bit) = true) {
         // give free gnomeball
         if (inv_freespace(inv) = 0) {
             ~gnomeball_reset;
@@ -68,6 +68,7 @@ if (inv_getobj(worn, ^wearpos_rhand) = ball_gnomeball_game) {
     inv_delslot(worn, ^wearpos_rhand);
 }
 %gnomeball_progress = clearbit(%gnomeball_progress, ^gnomeball_entered_with_ball_bit);
+%gnomeball_progress = clearbit(%gnomeball_progress, ^gnomeball_winner_bit);
 %gnomeball = 0;
 npc_findallany(^gnomeball_centre_coord, 14, ^vis_off);
 while (npc_findnext = true) {
@@ -111,6 +112,7 @@ if (~inzone_coord_pair_table(gnomeball_zones, coord) = true) {
         }
     }
     %gnomeball_progress = clearbit(%gnomeball_progress, ^gnomeball_entered_with_ball_bit);
+    %gnomeball_progress = clearbit(%gnomeball_progress, ^gnomeball_winner_bit);
     if (getbit_range(%gnomeball_progress, ^gnomeball_progress_start_bit, ^gnomeball_progress_end_bit) > ^gnomeball_not_started) {
         %gnomeball_progress = setbit_range_toint(%gnomeball_progress, ^gnomeball_talked_to_ref, ^gnomeball_progress_start_bit, ^gnomeball_progress_end_bit);
     }
