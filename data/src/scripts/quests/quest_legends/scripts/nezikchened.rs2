@@ -111,7 +111,7 @@ p_delay(2);
 mes("Nezikchened: I will teach thee!");
 npc_say("I will teach thee!");
 p_delay(2);
-if(testbit(%legends_bits, ^legends_killed_viyeldi) = true & getbit_range(%legends_bits, 4, 6) < 7) {
+if(testbit(%legends_bits, ^legends_killed_viyeldi) = true & getbit_range(%legends_bits, ^legends_defeated_san_final, ^legends_defeated_ranalph_final) < 7) {
     mes("The demon starts chanting...");
     p_delay(2);
     mes("Nezikchened: Protectors of source, alive in death,");

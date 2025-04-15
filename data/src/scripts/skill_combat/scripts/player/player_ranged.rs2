@@ -43,6 +43,7 @@ if (~player_npc_hit_roll(%damagetype) = true) {
             if(npc_type = nezikchened) {
                 %com_maxhit = add(%com_maxhit, 5);
             }
+            if (npc_stat(defence) >= npc_basestat(defence)) npc_statsub(defence, 0, 5);
         } else {
              %com_maxhit = 0;
         }
