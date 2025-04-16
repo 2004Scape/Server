@@ -5353,6 +5353,7 @@ op3=Bait
 op4=hidden
 op5=hidden
 model1=model_loc_42_8
+defaultmode=none
 wanderrange=0
 moverestrict=nomove
 
@@ -5369,6 +5370,7 @@ op3=Bait
 op4=hidden
 op5=hidden
 model1=model_loc_42_8
+defaultmode=none
 wanderrange=0
 moverestrict=nomove
 
@@ -5385,6 +5387,7 @@ op3=Harpoon
 op4=hidden
 op5=hidden
 model1=model_loc_42_8
+defaultmode=none
 wanderrange=0
 moverestrict=nomove
 
@@ -5401,6 +5404,7 @@ op3=Harpoon
 op4=hidden
 op5=hidden
 model1=model_loc_42_8
+defaultmode=none
 wanderrange=0
 moverestrict=nomove
 

@@ -319,6 +319,7 @@ op1=Push
 vislevel=hide
 minimap=no
 model1=model_2846_npc
+defaultmode=none
 wanderrange=0
 moverestrict=nomove
 blockwalk=all

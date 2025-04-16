@@ -42,6 +42,7 @@ recol1s=11264
 recol1d=11460
 model1=model_2943_npc
 model2=model_3019_npc
+defaultmode=none
 wanderrange=0
 moverestrict=nomove
 timer=100
