@@ -1,0 +1,173 @@
+// no idea but i think half baked gnome food should all share an inv
+[opheld1,half_baked_batta]
+~mesbox("You inspect the half baked batta..."); // guess
+~gnome_batta_ingredient_display;
+
+[opheldu,half_baked_batta]
+if (oc_param(last_useitem, gnome_cooking_ingredient) = ^false) {
+    ~displaymessage(^dm_default);
+    return;
+}
+@add_batta_ingredient(last_useitem);
+
+[label,add_batta_ingredient](obj $ingredient)
+if (~gnome_batta_ingredient_space = 0) {
+    mes("The half baked batta already has enough ingredients."); // guess
+    return;
+}
+
+if (string_length(oc_param($ingredient, batta_message)) < 1) {
+    mes("You add the <lowercase(oc_name($ingredient))> to the gnome batta.");
+} else {
+    mes(oc_param($ingredient, batta_message));
+}
+
+if ($ingredient ! gnome_spice) {
+    inv_del(inv, $ingredient, 1);
+    if (oc_param($ingredient, next_obj_stage) ! null) {
+        inv_add(inv, oc_param($ingredient, next_obj_stage), 1);
+    }
+}
+switch_obj($ingredient) {
+    case spicy_worm : %gnome_batta_bits1 = setbit_range_toint(%gnome_batta_bits1, add(getbit_range(%gnome_batta_bits1, 0, 3), 1), 0, 3);
+    case cheese : %gnome_batta_bits1 = setbit_range_toint(%gnome_batta_bits1, add(getbit_range(%gnome_batta_bits1, 4, 7), 1), 4, 7);
+    case seasoned_toads_legs : %gnome_batta_bits1 = setbit_range_toint(%gnome_batta_bits1, add(getbit_range(%gnome_batta_bits1, 8, 11), 1), 8, 11);
+    case tomato : %gnome_batta_bits1 = setbit_range_toint(%gnome_batta_bits1, add(getbit_range(%gnome_batta_bits1, 12, 15), 1), 12, 15);
+    case equa_leaves : %gnome_batta_bits1 = setbit_range_toint(%gnome_batta_bits1, add(getbit_range(%gnome_batta_bits1, 16, 19), 1), 16, 19);
+    case onion : %gnome_batta_bits1 = setbit_range_toint(%gnome_batta_bits1, add(getbit_range(%gnome_batta_bits1, 20, 23), 1), 20, 23);
+    case cabbage : %gnome_batta_bits1 = setbit_range_toint(%gnome_batta_bits1, add(getbit_range(%gnome_batta_bits1, 24, 27), 1), 24, 27);
+    case dwellberry : %gnome_batta_bits1 = setbit_range_toint(%gnome_batta_bits1, add(getbit_range(%gnome_batta_bits1, 28, 31), 1), 28, 31);
+    case chocolate_bar : %gnome_batta_bits2 = setbit_range_toint(%gnome_batta_bits2, add(getbit_range(%gnome_batta_bits2, 0, 3), 1), 0, 3);
+    case potato : %gnome_batta_bits2 = setbit_range_toint(%gnome_batta_bits2, add(getbit_range(%gnome_batta_bits2, 4, 7), 1), 4, 7);
+    case gnome_spice : %gnome_batta_bits2 = setbit_range_toint(%gnome_batta_bits2, add(getbit_range(%gnome_batta_bits2, 8, 11), 1), 8, 11);
+    case toads_legs : %gnome_batta_bits2 = setbit_range_toint(%gnome_batta_bits2, add(getbit_range(%gnome_batta_bits2, 12, 15), 1), 12, 15);
+    case king_worm : %gnome_batta_bits2 = setbit_range_toint(%gnome_batta_bits2, add(getbit_range(%gnome_batta_bits2, 16, 19), 1), 16, 19);
+}
+
+[proc,gnome_batta]()(namedobj)
+def_int $spicy_worm_count = getbit_range(%gnome_batta_bits1, 0, 3);
+def_int $cheese_count = getbit_range(%gnome_batta_bits1, 4, 7);
+def_int $seasoned_toad_legs_count = getbit_range(%gnome_batta_bits1, 8, 11);
+def_int $tomato_count = getbit_range(%gnome_batta_bits1, 12, 15);
+def_int $equa_leaves_count = getbit_range(%gnome_batta_bits1, 16, 19);
+def_int $onion_count = getbit_range(%gnome_batta_bits1, 20, 23);
+def_int $cabbage_count = getbit_range(%gnome_batta_bits1, 24, 27);
+def_int $dwellberry_count = getbit_range(%gnome_batta_bits1, 28, 31);
+def_int $chocolate_bar_count = getbit_range(%gnome_batta_bits2, 0, 3);
+def_int $potato_count = getbit_range(%gnome_batta_bits2, 4, 7);
+def_int $gnome_spice_count = getbit_range(%gnome_batta_bits2, 8, 11);
+def_int $toad_legs_count = getbit_range(%gnome_batta_bits2, 12, 15);
+def_int $king_worm_count = getbit_range(%gnome_batta_bits2, 16, 19);
+
+def_int $total = calc($spicy_worm_count + $cheese_count + $seasoned_toad_legs_count + $tomato_count + $equa_leaves_count + $onion_count + $cabbage_count + $dwellberry_count + $chocolate_bar_count + $potato_count + $gnome_spice_count + $toad_legs_count + $king_worm_count);
+
+%gnome_batta_bits1 = clearbit_range(%gnome_batta_bits1, 0, 31);
+%gnome_batta_bits2 = clearbit_range(%gnome_batta_bits2, 0, 31);
+
+if ($spicy_worm_count = 1 & $cheese_count = 1 & $total = 2) {
+    return(unfinished_worm_batta);
+}
+// toad legs batta
+if ($seasoned_toad_legs_count = 1 & $cheese_count = 1 & $total = 2) {
+    stat_advance(cooking, 600); // finish
+    return(toad_batta);
+}
+// cheese & tomato batta
+if ($cheese_count = 1 & $tomato_count = 1 & $total = 2) {
+    return(unfinished_cheese_tom_batta1);
+}
+// fruit batta
+if ($equa_leaves_count = 4 & $total = 4) {
+    return(fruitless_batta);
+}
+// vegetable batta
+if ($tomato_count = 2 & $onion_count = 1 & $cabbage_count = 1 & $dwellberry_count = 1 & $cheese_count = 1 & $total = 6) {
+    return(unfinished_vegetable_batta);
+}
+return(spoilt_batta);
+
+[proc,gnome_batta_ingredient_space]()(int)
+def_int $spicy_worm_count = getbit_range(%gnome_batta_bits1, 0, 3);
+def_int $cheese_count = getbit_range(%gnome_batta_bits1, 4, 7);
+def_int $seasoned_toad_legs_count = getbit_range(%gnome_batta_bits1, 8, 11);
+def_int $tomato_count = getbit_range(%gnome_batta_bits1, 12, 15);
+def_int $equa_leaves_count = getbit_range(%gnome_batta_bits1, 16, 19);
+def_int $onion_count = getbit_range(%gnome_batta_bits1, 20, 23);
+def_int $cabbage_count = getbit_range(%gnome_batta_bits1, 24, 27);
+def_int $dwellberry_count = getbit_range(%gnome_batta_bits1, 28, 31);
+def_int $chocolate_bar_count = getbit_range(%gnome_batta_bits2, 0, 3);
+def_int $potato_count = getbit_range(%gnome_batta_bits2, 4, 7);
+def_int $gnome_spice_count = getbit_range(%gnome_batta_bits2, 8, 11);
+def_int $toad_legs_count = getbit_range(%gnome_batta_bits2, 12, 15);
+def_int $king_worm_count = getbit_range(%gnome_batta_bits2, 16, 19);
+
+def_int $total = calc($spicy_worm_count + $cheese_count + $seasoned_toad_legs_count + $tomato_count + $equa_leaves_count + $onion_count + $cabbage_count + $dwellberry_count + $chocolate_bar_count + $potato_count + $gnome_spice_count + $toad_legs_count + $king_worm_count);
+
+return(sub(15, $total));
+
+[proc,gnome_batta_ingredient_display]
+def_int $spicy_worm_count = getbit_range(%gnome_batta_bits1, 0, 3);
+def_int $cheese_count = getbit_range(%gnome_batta_bits1, 4, 7);
+def_int $seasoned_toad_legs_count = getbit_range(%gnome_batta_bits1, 8, 11);
+def_int $tomato_count = getbit_range(%gnome_batta_bits1, 12, 15);
+def_int $equa_leaves_count = getbit_range(%gnome_batta_bits1, 16, 19);
+def_int $onion_count = getbit_range(%gnome_batta_bits1, 20, 23);
+def_int $cabbage_count = getbit_range(%gnome_batta_bits1, 24, 27);
+def_int $dwellberry_count = getbit_range(%gnome_batta_bits1, 28, 31);
+def_int $chocolate_bar_count = getbit_range(%gnome_batta_bits2, 0, 3);
+def_int $potato_count = getbit_range(%gnome_batta_bits2, 4, 7);
+def_int $gnome_spice_count = getbit_range(%gnome_batta_bits2, 8, 11);
+def_int $toad_legs_count = getbit_range(%gnome_batta_bits2, 12, 15);
+def_int $king_worm_count = getbit_range(%gnome_batta_bits2, 16, 19);
+
+def_int $total = calc($spicy_worm_count + $cheese_count + $seasoned_toad_legs_count + $tomato_count + $equa_leaves_count + $onion_count + $cabbage_count + $dwellberry_count + $chocolate_bar_count + $potato_count + $gnome_spice_count + $toad_legs_count + $king_worm_count);
+
+if ($total = 0) {
+    ~mesbox("The half baked batta is completely plain.");
+    return;
+}
+
+def_string $string = "";
+
+if ($king_worm_count > 0) {
+    $string = append($string, "<~pluralise($king_worm_count, "King worm")>, ");
+}
+if ($spicy_worm_count > 0) {
+    $string = append($string, "<~pluralise($spicy_worm_count, "Spicy worm")>, ");
+}
+if ($toad_legs_count > 0) {
+    $string = append($string, "<~pluralise($toad_legs_count, "pair")> of Toad's legs, ");
+}
+if ($seasoned_toad_legs_count > 0) {
+    $string = append($string, "<~pluralise($seasoned_toad_legs_count, "pair")> of Seasoned toad's legs, ");
+}
+if ($cheese_count > 0) {
+    $string = append($string, "<~pluralise($cheese_count, "piece")> of Cheese, ");
+}
+if ($tomato_count > 0) {
+    $string = append($string, "<~pluralise($tomato_count, "Tomato")>, ");
+}
+if ($equa_leaves_count > 0) {
+    $string = append($string, "<~pluralise($equa_leaves_count, "sprig")> of Equa Leaves, ");
+}
+if ($onion_count > 0) {
+    $string = append($string, "<~pluralise($onion_count, "Onion")>, ");
+}
+if ($cabbage_count > 0) {
+    $string = append($string, "<~pluralise($cabbage_count, "Cabbage")>, ");
+}
+if ($dwellberry_count > 0) {
+    $string = append($string, "<~text_plural($dwellberry_count, "Dwellberry", "Dwellberries")>, ");
+}
+if ($potato_count > 0) {
+    $string = append($string, "<~pluralise($potato_count, "Potato")>, ");
+}
+if ($gnome_spice_count > 0) {
+    $string = append($string, "<~text_plural($gnome_spice_count, "dash", "dashes")> of Gnome Spice, ");
+}
+if ($chocolate_bar_count > 0) {
+    $string = append($string, "<~pluralise($chocolate_bar_count, "Chocolate bar")>, ");
+}
+$string = ~string_removeright($string, 2);
+
+~mesbox("@blu@The half baked batta contains:@bla@|<$string>."); // guess

@@ -24,7 +24,8 @@ model=model_2808_obj
 2dxan=180
 category=category_120
 weight=14g
-param=singular_name,dwellberry
+param=gnome_cooking_ingredient,^true
+param=gnome_cocktail_ingredient,^true
 param=batta_message,You add the dwell berries to the gnome batta.
 
 [equa_leaves]
@@ -40,8 +41,9 @@ model=model_2743_obj
 2dxan=664
 category=category_120
 weight=14g
-param=singular_name,equa leaf
-param=plural_name,equa leaves
+param=gnome_topping,^true
+param=gnome_cooking_ingredient,^true
+param=gnome_cocktail_ingredient,^true
 param=cocktail_message,You sprinkle the leaves over the drink.
 param=batta_message,You sprinkle the equa leaves over the gnome batta.
 param=crunchies_message,You mix the equa leaves into the dough.
@@ -60,6 +62,7 @@ model=model_2636_obj
 2dxan=128
 category=category_120
 weight=200g
+param=gnome_topping,^true
 param=cocktail_message,You pour the thick cream into the drink.
 
 [swamp_toad]
@@ -90,8 +93,8 @@ model=model_2668_obj
 2dyan=1960
 2dxan=340
 weight=150g
+param=gnome_cooking_ingredient,^true
 category=gnome_premade_and_toadlegs_kingworm
-param=plural_name,toad's legs
 
 [equa_toads_legs]
 iop1=Eat
@@ -137,8 +140,7 @@ model=model_2668_obj
 2dxan=340
 weight=150g
 category=gnome_premade_and_toadlegs_kingworm
-param=singular_name,toad's legs
-param=plural_name,toad's legs
+param=gnome_cooking_ingredient,^true
 param=batta_message,You add the seasoned toad's legs to the gnome batta.
 
 [spicy_worm]
@@ -155,6 +157,7 @@ model=model_2519_obj
 2dxan=404
 weight=100g
 category=gnome_premade_and_toadlegs_kingworm
+param=gnome_cooking_ingredient,^true
 param=batta_message,You add the spicy king worm to the gnome batta.
 
 [king_worm]
@@ -170,6 +173,7 @@ model=model_2519_obj
 2dyan=1748
 2dxan=404
 weight=120g
+param=gnome_cooking_ingredient,^true
 category=gnome_premade_and_toadlegs_kingworm
 
 [batta_tin]
@@ -236,8 +240,8 @@ model=model_2431_obj
 cost=2
 weight=150g
 members=yes
-param=singular_name,spice dash
-param=plural_name,spice dashes
+param=gnome_topping,^true
+param=gnome_cooking_ingredient,^true
 param=crunchies_message,You sprinkle the spice into the dough.
 param=bowl_message,You sprinkle some gnome spice over the dough bowl.
 

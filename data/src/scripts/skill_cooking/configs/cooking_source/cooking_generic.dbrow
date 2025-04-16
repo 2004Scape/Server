@@ -405,9 +405,9 @@ data=additional,gnomebowl_mould
 data=levelrequired,1
 data=experience,30
 data=successchance,118,492
-data=cookmessage_range,You put the gnome bowl in the oven...
+data=cookmessage_range,You briefly warm the gnome bowl in the oven...
 data=cantcookmessage_fire,You need a proper oven to cook that.
-data=successmessage,You half-cook the gnome bowl.
+data=successmessage,You remove the half baked gnome bowl.
 data=burnmessage,You accidentally burn the gnome bowl.
 
 [cooking_generic_half_baked_crunchies]
@@ -419,9 +419,9 @@ data=additional,crunchy_tray
 data=levelrequired,1
 data=experience,30
 data=successchance,118,492
-data=cookmessage_range,You put the crunchies in the oven...
+data=cookmessage_range,You briefly warm the crunchies in the oven...
 data=cantcookmessage_fire,You need a proper oven to cook that.
-data=successmessage,You half-cook the crunchies.
+data=successmessage,You remove the half baked crunchies.
 data=burnmessage,You accidentally burn the crunchies.
 
 [cooking_generic_half_baked_batta]
@@ -433,9 +433,9 @@ data=additional,batta_tin
 data=levelrequired,1
 data=experience,30
 data=successchance,118,492
-data=cookmessage_range,You put the batta in the oven...
+data=cookmessage_range,You briefly warm the batta in the oven...
 data=cantcookmessage_fire,You need a proper oven to cook that.
-data=successmessage,You half-cook the batta.
+data=successmessage,You remove the half baked batta.
 data=burnmessage,You accidentally burn the batta.
 
 [cooking_generic_chocolate_saturday]
@@ -446,9 +446,9 @@ data=burnt,null
 data=levelrequired,1
 data=experience,0
 data=successchance,1,1
-data=cookmessage_range,You briefly warm the drink in the oven.
+data=cookmessage_range,You briefly warm the drink in the oven...
 data=cantcookmessage_fire,You need a proper oven to cook that.
-data=successmessage,0
+data=successmessage,You remove the warm drink.
 
 [cooking_generic_drunk_dragon]
 table=cooking_generic
@@ -458,9 +458,9 @@ data=burnt,null
 data=levelrequired,1
 data=experience,600
 data=successchance,1,1
-data=cookmessage_range,You briefly warm the drink in the oven.
+data=cookmessage_range,You briefly warm the drink in the oven...
 data=cantcookmessage_fire,You need a proper oven to cook that.
-data=successmessage,0
+data=successmessage,You remove the warm drink.
 
 [cooking_generic_unfinished_gnome_batta]
 table=cooking_generic
@@ -471,9 +471,9 @@ data=burnt,null
 data=levelrequired,1
 data=experience,0
 data=successchance,1,1
-data=cookmessage_range,You bake the batta.
+data=cookmessage_range,You put the batta in the oven...
 data=cantcookmessage_fire,You need a proper oven to cook that.
-data=successmessage,0
+data=successmessage,You remove the batta from the oven.
 
 [cooking_generic_unfinished_gnome_crunchies]
 table=cooking_generic
@@ -484,9 +484,9 @@ data=burnt,null
 data=levelrequired,1
 data=experience,0
 data=successchance,1,1
-data=cookmessage_range,You bake the crunchies.
+data=cookmessage_range,You put the crunchies in the oven...
 data=cantcookmessage_fire,You need a proper oven to cook that.
-data=successmessage,0
+data=successmessage,You remove the crunchies from the oven.
 
 [cooking_generic_unfinished_gnomebowl]
 table=cooking_generic
@@ -497,9 +497,9 @@ data=burnt,null
 data=levelrequired,1
 data=experience,0
 data=successchance,1,1
-data=cookmessage_range,You bake the gnome bowl.
+data=cookmessage_range,You put the gnome bowl in the oven...
 data=cantcookmessage_fire,You need a proper oven to cook that.
-data=successmessage,0
+data=successmessage,You remove the gnome bowl from the oven.
 
 [cooking_generic_raw_swamp_paste]
 table=cooking_generic

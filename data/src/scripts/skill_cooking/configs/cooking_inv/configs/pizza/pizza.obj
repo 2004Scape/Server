@@ -186,6 +186,7 @@ model=model_2632_obj
 weight=80g
 category=category_86
 category=category_131
+param=gnome_cooking_ingredient,^true
 param=ugthanki_kebab_struct,tomato_kebab
 
 [cheese]
@@ -199,7 +200,7 @@ model=model_2365_obj
 2dxan=116
 weight=200g
 category=category_59
-param=singular_name,cheese portion
+param=gnome_cooking_ingredient,^true
 param=batta_message,You crumble cheese over the gnome batta.
 
 [pizza_base]

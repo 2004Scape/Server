@@ -11,6 +11,7 @@ model=model_2830_obj
 2dxan=104
 weight=1kg
 category=alcoholic_drinks
+param=gnome_cocktail_ingredient,^true
 
 [whisky]
 name=Whisky
@@ -25,6 +26,7 @@ model=model_2660_obj
 2dxan=104
 weight=1kg
 category=alcoholic_drinks
+param=gnome_cocktail_ingredient,^true
 
 [gin]
 name=Gin
@@ -41,6 +43,7 @@ recol1d=352
 2dxan=104
 weight=1kg
 category=alcoholic_drinks
+param=gnome_cocktail_ingredient,^true
 
 [brandy]
 name=Brandy
@@ -54,6 +57,7 @@ model=model_2836_obj
 2dxan=76
 weight=1kg
 category=alcoholic_drinks
+param=gnome_cocktail_ingredient,^true
 
 [cocktail_guide]
 name=Cocktail guide
@@ -771,6 +775,7 @@ model=model_2501_obj
 2dxan=700
 category=category_120
 weight=100g
+param=gnome_cocktail_ingredient,^true
 
 [lemon_chunks]
 name=Lemon chunks
@@ -789,6 +794,7 @@ recol1d=31660
 2dxan=244
 category=category_120
 weight=80g
+param=gnome_topping,^true
 param=cocktail_message,You add the diced lemon to the drink.
 
 [lemon_slices]
@@ -807,6 +813,7 @@ recol2d=31637
 2dxan=284
 category=category_120
 weight=80g
+param=gnome_topping,^true
 param=cocktail_message,You add a lemon slice to the drink.
 
 [orange]
@@ -821,6 +828,7 @@ model=model_2640_obj
 2dxan=308
 category=category_120
 weight=110g
+param=gnome_cocktail_ingredient,^true
 
 [orange_chunks]
 name=Orange chunks
@@ -837,6 +845,7 @@ model=model_2573_obj
 2dxan=244
 category=category_120
 weight=90g
+param=gnome_topping,^true
 param=cocktail_message,You add the diced orange to the drink.
 
 [orange_slices]
@@ -853,6 +862,7 @@ recol1d=31435
 2dxan=284
 category=category_120
 weight=90g
+param=gnome_topping,^true
 param=cocktail_message,You add an orange slice to the dirnk.
 
 [pineapple]
@@ -868,6 +878,7 @@ model=model_2736_obj
 2dxan=228
 category=category_120
 weight=150g
+param=gnome_cocktail_ingredient,^true
 
 [pineapple_chunks]
 name=Pineapple chunks
@@ -886,6 +897,7 @@ recol1d=31429
 2dxan=244
 category=category_120
 weight=120g
+param=gnome_topping,^true
 param=pizza_topping_struct,pineapple_topping
 
 [pineapple_ring]
@@ -915,6 +927,7 @@ model=model_2816_obj
 2dxan=596
 category=category_120
 weight=100g
+param=gnome_cocktail_ingredient,^true
 
 [lime_chunks]
 name=Lime chunks
@@ -933,6 +946,7 @@ recol1d=23539
 2dxan=244
 category=category_120
 weight=80g
+param=gnome_topping,^true
 
 [lime_slices]
 name=Lime slices
@@ -950,4 +964,5 @@ recol2d=544
 2dxan=284
 category=category_120
 weight=80g
+param=gnome_topping,^true
 param=cocktail_message,You add a lime slice to the drink.

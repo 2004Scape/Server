@@ -1,0 +1,180 @@
+[opheldu,cocktail_shaker] 
+switch_obj(last_useitem) {
+    case cocktail_glass_empty : @pour_cocktail_shaker;
+    case default : @add_cocktail_ingredient(last_useitem);
+}
+
+[opheldu,cocktail_glass_empty]
+switch_obj(last_useitem) {
+    case cocktail_shaker : @pour_cocktail_shaker;
+    case default : ~displaymessage(^dm_default);
+}
+
+[opheld1,cocktail_shaker] // no idea what this is supposed to do
+~mesbox("You look into the cocktail shaker..."); // guess
+~gnome_cocktail_ingredients_display;
+
+[label,add_cocktail_ingredient](obj $ingredient)
+if (~gnome_cocktail_ingredient_space = 0) { // guess
+    mes("The cocktail shaker is too full to fit anymore ingredients."); // guess
+    return;
+}
+switch_obj($ingredient) {
+    case lemon, orange, pineapple, lime, dwellberry :
+        mes("You squeeze the juice from the <lowercase(oc_name($ingredient))> into your cocktail shaker..."); // guess
+    case vodka, gin, brandy, whisky, bucket_milk :
+        mes("You pour the <lowercase(oc_name($ingredient))> into your cocktail shaker..."); // guess
+    case equa_leaves :
+        mes("You sprinkle the equa leaves into your cocktail shaker..."); // guess
+    case default :
+        ~displaymessage(^dm_default);
+        return;
+}
+if ($ingredient ! gnome_spice) {
+    inv_del(inv, $ingredient, 1);
+    if (oc_param($ingredient, next_obj_stage) ! null) {
+        inv_add(inv, oc_param($ingredient, next_obj_stage), 1);
+    }
+}
+switch_obj($ingredient) {
+    case vodka : %gnome_cocktail_bits1 = setbit_range_toint(%gnome_cocktail_bits1, add(getbit_range(%gnome_cocktail_bits1, 0, 3), 1), 0, 3);
+    case gin : %gnome_cocktail_bits1 = setbit_range_toint(%gnome_cocktail_bits1, add(getbit_range(%gnome_cocktail_bits1, 4, 7), 1), 4, 7);
+    case brandy : %gnome_cocktail_bits1 = setbit_range_toint(%gnome_cocktail_bits1, add(getbit_range(%gnome_cocktail_bits1, 8, 11), 1), 8, 11);
+    case whisky : %gnome_cocktail_bits1 = setbit_range_toint(%gnome_cocktail_bits1, add(getbit_range(%gnome_cocktail_bits1, 12, 15), 1), 12, 15);
+    case lemon : %gnome_cocktail_bits1 = setbit_range_toint(%gnome_cocktail_bits1, add(getbit_range(%gnome_cocktail_bits1, 16, 19), 1), 16, 19);
+    case orange : %gnome_cocktail_bits1 = setbit_range_toint(%gnome_cocktail_bits1, add(getbit_range(%gnome_cocktail_bits1, 20, 23), 1), 20, 23);
+    case lime : %gnome_cocktail_bits1 = setbit_range_toint(%gnome_cocktail_bits1, add(getbit_range(%gnome_cocktail_bits1, 24, 27), 1), 24, 27);
+    case pineapple : %gnome_cocktail_bits1 = setbit_range_toint(%gnome_cocktail_bits1, add(getbit_range(%gnome_cocktail_bits1, 28, 31), 1), 28, 31);
+    case equa_leaves : %gnome_cocktail_bits2 = setbit_range_toint(%gnome_cocktail_bits2, add(getbit_range(%gnome_cocktail_bits2, 0, 3), 1), 0, 3);
+    case bucket_milk : %gnome_cocktail_bits2 = setbit_range_toint(%gnome_cocktail_bits2, add(getbit_range(%gnome_cocktail_bits2, 4, 7), 1), 4, 7);
+    case dwellberry : %gnome_cocktail_bits2 = setbit_range_toint(%gnome_cocktail_bits2, add(getbit_range(%gnome_cocktail_bits2, 8, 11), 1), 8, 11);
+}
+
+[label,pour_cocktail_shaker]
+if (~gnome_cocktail_ingredient_space = 15) {
+    mes("There's nothing to pour from the cocktail shaker."); // guess
+    return;
+}
+inv_del(inv, cocktail_glass_empty, 1);
+inv_add(inv, ~gnome_cocktail, 1);
+
+[proc,gnome_cocktail]()(namedobj)
+def_int $vodka_count = getbit_range(%gnome_cocktail_bits1, 0, 3);
+def_int $gin_count = getbit_range(%gnome_cocktail_bits1, 4, 7);
+def_int $brandy_count = getbit_range(%gnome_cocktail_bits1, 8, 11);
+def_int $whisky_count = getbit_range(%gnome_cocktail_bits1, 12, 15);
+def_int $lemon_count = getbit_range(%gnome_cocktail_bits1, 16, 19);
+def_int $orange_count = getbit_range(%gnome_cocktail_bits1, 20, 23);
+def_int $lime_count = getbit_range(%gnome_cocktail_bits1, 24, 27);
+def_int $pineapple_count = getbit_range(%gnome_cocktail_bits1, 28, 31);
+def_int $equa_leaves_count = getbit_range(%gnome_cocktail_bits2, 0, 3);
+def_int $bucket_milk_count = getbit_range(%gnome_cocktail_bits2, 4, 7);
+def_int $dwellberry_count = getbit_range(%gnome_cocktail_bits2, 8, 11);
+def_int $total = calc($lemon_count + $orange_count + $pineapple_count + $lime_count + $dwellberry_count + $vodka_count + $gin_count + $brandy_count + $whisky_count + $equa_leaves_count + $bucket_milk_count);
+
+%gnome_cocktail_bits1 = clearbit_range(%gnome_cocktail_bits1, 0, 31);
+%gnome_cocktail_bits2 = clearbit_range(%gnome_cocktail_bits2, 0, 31);
+
+// pineapple punch
+if ($pineapple_count = 2 & $orange_count = 1 & $lemon_count = 1 & $total = 4) {
+    return(unfinished_pineapple_punch1);
+}
+// fruit blast
+if ($pineapple_count = 1 & $orange_count = 1 & $lemon_count = 1 & $total = 3) {
+    return(unfinished_fruit_blast1);
+}
+// blurberry special
+if ($vodka_count = 1 & $gin_count = 1 & $brandy_count = 1 & $lemon_count = 2 & $orange_count = 1 & $total = 6) {
+    return(unfinished_blurberry_special1);
+}
+// chocolate saturday
+if ($whisky_count = 1 & $equa_leaves_count = 1 & $bucket_milk_count = 1 & $total = 3) {
+    return(unfinished_chocolate_saturday1);
+}
+// drunk dragon
+if ($vodka_count = 1 & $gin_count = 1 & $dwellberry_count = 1 & $total = 3) {
+    return(unfinished_drunk_dragon1);
+}
+// short green guy
+if ($vodka_count = 1 & $lime_count = 3 & $total = 4) {
+    return(unfinished_sgg1);
+}
+// wizard blizzard
+if ($vodka_count = 2 & $gin_count = 1 & $pineapple_count = 1 & $orange_count = 1 & $lime_count = 1 & $lemon_count = 1 & $total = 7) {
+    return(unfinished_wizard_blizzard1);
+}
+return(spoilt_cocktail);
+
+[proc,gnome_cocktail_ingredient_space]()(int)
+def_int $vodka_count = getbit_range(%gnome_cocktail_bits1, 0, 3);
+def_int $gin_count = getbit_range(%gnome_cocktail_bits1, 4, 7);
+def_int $brandy_count = getbit_range(%gnome_cocktail_bits1, 8, 11);
+def_int $whisky_count = getbit_range(%gnome_cocktail_bits1, 12, 15);
+def_int $lemon_count = getbit_range(%gnome_cocktail_bits1, 16, 19);
+def_int $orange_count = getbit_range(%gnome_cocktail_bits1, 20, 23);
+def_int $lime_count = getbit_range(%gnome_cocktail_bits1, 24, 27);
+def_int $pineapple_count = getbit_range(%gnome_cocktail_bits1, 28, 31);
+def_int $equa_leaves_count = getbit_range(%gnome_cocktail_bits2, 0, 3);
+def_int $bucket_milk_count = getbit_range(%gnome_cocktail_bits2, 4, 7);
+def_int $dwellberry_count = getbit_range(%gnome_cocktail_bits2, 8, 11);
+def_int $total = calc($lemon_count + $orange_count + $pineapple_count + $lime_count + $dwellberry_count + $vodka_count + $gin_count + $brandy_count + $whisky_count + $equa_leaves_count + $bucket_milk_count);
+return(sub(15, $total));
+
+[proc,gnome_cocktail_ingredients_display]()
+def_int $vodka_count = getbit_range(%gnome_cocktail_bits1, 0, 3);
+def_int $gin_count = getbit_range(%gnome_cocktail_bits1, 4, 7);
+def_int $brandy_count = getbit_range(%gnome_cocktail_bits1, 8, 11);
+def_int $whisky_count = getbit_range(%gnome_cocktail_bits1, 12, 15);
+def_int $lemon_count = getbit_range(%gnome_cocktail_bits1, 16, 19);
+def_int $orange_count = getbit_range(%gnome_cocktail_bits1, 20, 23);
+def_int $lime_count = getbit_range(%gnome_cocktail_bits1, 24, 27);
+def_int $pineapple_count = getbit_range(%gnome_cocktail_bits1, 28, 31);
+def_int $equa_leaves_count = getbit_range(%gnome_cocktail_bits2, 0, 3);
+def_int $bucket_milk_count = getbit_range(%gnome_cocktail_bits2, 4, 7);
+def_int $dwellberry_count = getbit_range(%gnome_cocktail_bits2, 8, 11);
+
+def_int $total = calc($lemon_count + $orange_count + $pineapple_count + $lime_count + $dwellberry_count + $vodka_count + $gin_count + $brandy_count + $whisky_count + $equa_leaves_count + $bucket_milk_count);
+
+if ($total = 0) {
+    ~mesbox("The cocktail shaker is empty.");
+    return;
+}
+
+def_string $string = "";
+if ($vodka_count > 0) {
+    $string = append($string, "<~pluralise($vodka_count, "shot")> of Vodka, ");
+}
+if ($gin_count > 0) {
+    $string = append($string, "<~pluralise($gin_count, "shot")> of Gin, ");
+}
+if ($brandy_count > 0) {
+    $string = append($string, "<~pluralise($brandy_count, "shot")> of Brandy, ");
+}
+if ($whisky_count > 0) {
+    $string = append($string, "<~pluralise($whisky_count, "shot")> of Whisky, ");
+}
+if ($lemon_count > 0) {
+    $string = append($string, "<~pluralise($lemon_count, "Lemon")>, ");
+}
+if ($orange_count > 0) {
+    $string = append($string, "<~pluralise($orange_count, "Orange")>, ");
+}
+if ($lime_count > 0) {
+    $string = append($string, "<~pluralise($lime_count, "Lime")>, ");
+}
+if ($pineapple_count > 0) {
+    $string = append($string, "<~pluralise($pineapple_count, "Pineapple")>, ");
+}
+if ($equa_leaves_count > 0) {
+    $string = append($string, "<~pluralise($equa_leaves_count, "sprig")> of Equa Leaves, ");
+}
+if ($bucket_milk_count > 0) {
+    $string = append($string, "<~pluralise($bucket_milk_count, "bucket")> of Milk, ");
+}
+if ($dwellberry_count > 0) {
+    $string = append($string, "<~text_plural($dwellberry_count, "Dwellberry", "Dwellberries")>, ");
+}
+
+$string = ~string_removeright($string, 2);
+
+~mesbox("@blu@The cocktail shaker contains:@bla@|<$string>."); // guess

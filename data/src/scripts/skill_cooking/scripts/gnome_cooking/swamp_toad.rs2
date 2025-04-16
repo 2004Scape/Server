@@ -1,0 +1,5 @@
+[opheld1,swamp_toad]
+inv_del(inv, swamp_toad, 1);
+inv_add(inv, toads_legs, 1);
+mes("You pull the legs off the toad.");
+mes("Poor toad. At least they'll grow back.");

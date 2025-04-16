@@ -65,6 +65,7 @@ model=model_2766_obj
 2dxan=156
 weight=500g
 category=category_131
+param=gnome_cooking_ingredient,^true
 
 //guess
 [stew]
