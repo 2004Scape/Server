@@ -13,12 +13,6 @@
 [opheld2,rune_spear_p] @levelrequire_attack(40, last_slot);
 [opheld2,rune_2h_sword] @levelrequire_attack(40, last_slot);
 
-[opheld2,rune_dart] @levelrequire_ranged(40, last_slot);
-[opheld2,rune_dart_p] @levelrequire_ranged(40, last_slot);
-[opheld2,rune_knife] @levelrequire_ranged(40, last_slot);
-[opheld2,rune_knife_p] @levelrequire_ranged(40, last_slot);
-[opheld2,rune_thrownaxe] @levelrequire_ranged(40, last_slot);
-
 [opheld2,rune_med_helm] @levelrequire_defence(40, last_slot);
 [opheld2,rune_full_helm] @levelrequire_defence(40, last_slot);
 [opheld2,rune_sq_shield] @levelrequire_defence(40, last_slot);
@@ -58,6 +52,14 @@
 [opheld2,dragonhide_body] @levelrequire_dragon_slayer_quest_ranged_and_defence(40, 40, last_slot);
 [opheld2,dragonhide_chaps] @levelrequire_ranged(40, last_slot);
 [opheld2,dragon_vambraces] @levelrequire_ranged(40, last_slot);
+
+[opheld2,rune_dart] @levelrequire_ranged(40, last_slot);
+[opheld2,rune_dart_p] @levelrequire_ranged(40, last_slot);
+[opheld2,rune_knife] @levelrequire_ranged(40, last_slot);
+[opheld2,rune_knife_p] @levelrequire_ranged(40, last_slot);
+[opheld2,rune_thrownaxe] @levelrequire_ranged(40, last_slot);
+[opheld2,rune_javelin] @levelrequire_ranged(40, last_slot);
+[opheld2,rune_javelin_p] @levelrequire_ranged(40, last_slot);
 
 // Magic
 [opheld2,mystic_fire_staff] @levelrequire_magic_and_attack(40, 40, last_slot);
