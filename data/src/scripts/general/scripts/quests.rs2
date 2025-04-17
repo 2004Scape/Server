@@ -13,7 +13,7 @@ if ($progress = 0) {
 }
 
 [proc,send_quest_complete](component $component, namedobj $obj, int $objscale, int $questpoints, string $questmessage)
-%questpoints = add(%questpoints, $questpoints);
+~update_questpoints;
 ~quest_complete_interface($component, $obj, $objscale, $questpoints, $questmessage);
 
 [proc,quest_complete_interface](component $component, namedobj $obj, int $objscale, int $questpoints, string $questmessage)
@@ -38,7 +38,7 @@ if_setcolour($component, ^green_rgb);
 if_settab(questlist, ^tab_quest_journal);
 mes("Congratulations! Quest complete!");
 
-[proc,update_quests]
+[proc,update_questpoints]
 def_int $questpoints = 0;
 if (%runemysteries_progress = ^runemysteries_complete) {
     $questpoints = add($questpoints, ^runemysteries_questpoints);
@@ -250,6 +250,8 @@ if (%legends_progress = ^legends_complete) {
 
 %questpoints = $questpoints;
 
+[proc,update_quests]
+~update_questpoints;
 ~send_quest_progress_colour(questlist:runemysteries, %runemysteries_progress, ^runemysteries_complete);
 ~send_quest_progress_colour(questlist:doric, %doric_progress, ^doric_complete);
 ~send_quest_progress_colour(questlist:cook, %cook_progress, ^cook_complete);
