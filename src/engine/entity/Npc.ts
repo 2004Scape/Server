@@ -164,6 +164,11 @@ export default class Npc extends PathingEntity {
             return;
         }
 
+        if (!(this.target instanceof PathingEntity)) {
+            this.pathToTarget();
+            return;
+        }
+
         if (CoordGrid.intersects(this.x, this.z, this.width, this.length, this.target.x, this.target.z, this.target.width, this.target.length)) {
             this.queueWaypoints(findNaivePath(this.level, this.x, this.z, this.target.x, this.target.z, this.width, this.length, this.target.width, this.target.length, 0, CollisionType.NORMAL));
             return;
@@ -172,13 +177,10 @@ export default class Npc extends PathingEntity {
         this.pathToTarget();
     }
 
-    updateMovement(repathAllowed: boolean = true): boolean {
+    updateMovement(): boolean {
         const type = NpcType.get(this.type);
         if (type.moverestrict === MoveRestrict.NOMOVE) {
             return false;
-        }
-        if (repathAllowed) {
-            this.pathToPathingTarget();
         }
 
         const { x, z } = CoordGrid.unpackCoord(this.waypoints[this.waypointIndex]);
@@ -209,14 +211,6 @@ export default class Npc extends PathingEntity {
 
     clearPatrol() {
         this.nextPatrolTick = -1;
-    }
-
-    pathToTarget(): void {
-        if (!this.targetWithinMaxRange()) {
-            this.defaultMode();
-            return;
-        }
-        super.pathToTarget();
     }
 
     targetWithinMaxRange(): boolean {
@@ -459,7 +453,7 @@ export default class Npc extends PathingEntity {
     }
 
     noMode(): void {
-        this.updateMovement(false);
+        this.updateMovement();
     }
 
     clearInteraction(): void {
@@ -493,7 +487,7 @@ export default class Npc extends PathingEntity {
             this.randomWalk(type.wanderrange);
         }
 
-        this.updateMovement(false);
+        this.updateMovement();
 
         const onSpawn = this.x === this.startX && this.z === this.startZ && this.level === this.startLevel;
 
@@ -511,7 +505,7 @@ export default class Npc extends PathingEntity {
         const patrolDelay = type.patrolDelay[this.nextPatrolPoint];
         let dest = CoordGrid.unpackCoord(patrolPoints[this.nextPatrolPoint]);
 
-        this.updateMovement(false);
+        this.updateMovement();
         if (!this.hasWaypoints() && !this.target) {
             // requeue waypoints in cases where an npc was interacting and the interaction has been cleared
             this.queueWaypoint(dest.x, dest.z);
@@ -581,7 +575,7 @@ export default class Npc extends PathingEntity {
             }) < NpcType.get(this.type).maxrange
         ) {
             this.queueWaypoint(coord.x, coord.z);
-            this.updateMovement(false);
+            this.updateMovement();
             return;
         }
 
@@ -591,7 +585,7 @@ export default class Npc extends PathingEntity {
         } else {
             this.queueWaypoint(coord.x, this.z);
         }
-        this.updateMovement(false);
+        this.updateMovement();
     }
 
     playerFollowMode(): void {
@@ -605,7 +599,10 @@ export default class Npc extends PathingEntity {
             throw new Error('[Npc] Target must be a Player for playerfollow mode.');
         }
 
-        this.pathToTarget();
+        // Set dest to target
+        this.pathToPathingTarget();
+
+        // Path
         this.updateMovement();
 
         this.startX = this.x;
@@ -664,11 +661,18 @@ export default class Npc extends PathingEntity {
             return;
         }
 
+        // Reset the wander timer if Npc runs its aimode
+        this.wanderCounter = 0;
+
         // Try to interact before moving, include op Obj and Loc
         if (this.tryInteract(true)) {
             return;
         }
 
+        // Set dest to target
+        this.pathToPathingTarget();
+
+        // Path
         const moved: boolean = this.updateMovement();
 
         // Clear target if givechase=no
