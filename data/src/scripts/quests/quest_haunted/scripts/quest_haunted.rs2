@@ -204,7 +204,6 @@ if(npc_find(coord, ernest_chicken, 8, 0) = true) {
 }
 
 [queue,haunted_quest_complete]
-%haunted_progress = ^haunted_complete;
 session_log(^log_adventure, "Quest complete: Ernest the Chicken");
 ~send_quest_complete(questlist:haunted, feather, 250, ^haunted_questpoints, "You have completed the\\nErnest The Chicken Quest!");
 inv_add(inv, coins, 300);
