@@ -21,13 +21,13 @@ if ($progress = 0) {
 def_int $random = random(128);
 if ($random < 32) {
     // The least common music that plays when completing a quest.
-    midi_jingle(^quest_complete_3_jingle, ^quest_complete_3_millis);
+    ~midi_jingle(^quest_complete_3_jingle, ^quest_complete_3_millis);
 } else if ($random < 64) {
     // A less common music that plays when completing a quest.
-    midi_jingle(^quest_complete_2_jingle, ^quest_complete_2_millis);
+    ~midi_jingle(^quest_complete_2_jingle, ^quest_complete_2_millis);
 } else {
     // The most common music that plays when completing a quest.
-    midi_jingle(^quest_complete_1_jingle, ^quest_complete_1_millis);
+    ~midi_jingle(^quest_complete_1_jingle, ^quest_complete_1_millis);
 }
 if_settext(questscroll:com_3, $questmessage);
 if_settext(questscroll:com_9, tostring($questpoints));

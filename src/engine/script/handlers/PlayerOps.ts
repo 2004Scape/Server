@@ -424,7 +424,11 @@ const PlayerOps: CommandHandlers = {
     [ScriptOpcode.SOUND_SYNTH]: checkedHandler(ActivePlayer, state => {
         const [synth, loops, delay] = state.popInts(3);
 
-        state.activePlayer.write(new SynthSound(synth, loops, delay));
+        const player = state.activePlayer;
+        if (player.lowMemory) {
+            return;
+        }
+        player.write(new SynthSound(synth, loops, delay));
     }),
 
     [ScriptOpcode.STAFFMODLEVEL]: checkedHandler(ActivePlayer, state => {
@@ -720,7 +724,7 @@ const PlayerOps: CommandHandlers = {
 
     [ScriptOpcode.TEXT_GENDER]: checkedHandler(ActivePlayer, state => {
         const [male, female] = state.popStrings(2);
-        if (state.activePlayer.gender == 0) {
+        if (state.activePlayer.gender === 0) {
             state.pushString(male);
         } else {
             state.pushString(female);
@@ -728,13 +732,24 @@ const PlayerOps: CommandHandlers = {
     }),
 
     [ScriptOpcode.MIDI_SONG]: state => {
-        state.activePlayer.playSong(check(state.popString(), StringNotNull));
+        const name = check(state.popString(), StringNotNull);
+
+        const player = state.activePlayer;
+        if (player.lowMemory) {
+            return;
+        }
+        player.playSong(name);
     },
 
     [ScriptOpcode.MIDI_JINGLE]: state => {
         const delay = check(state.popInt(), NumberNotNull);
         const name = check(state.popString(), StringNotNull);
-        state.activePlayer.playJingle(delay, name);
+
+        const player = state.activePlayer;
+        if (player.lowMemory) {
+            return;
+        }
+        player.playJingle(delay, name);
     },
 
     [ScriptOpcode.SOFTTIMER]: checkedHandler(ActivePlayer, state => {
@@ -1034,7 +1049,7 @@ const PlayerOps: CommandHandlers = {
             if (gender === 1) {
                 state.activePlayer.body[i] = Player.MALE_FEMALE_MAP.get(state.activePlayer.body[i]) ?? -1;
             } else {
-                if (i == 1) {
+                if (i === 1) {
                     state.activePlayer.body[i] = 14;
                     continue;
                 }
