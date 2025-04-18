@@ -1425,6 +1425,11 @@ class World {
         this.zonesTracking.add(zone);
     }
 
+    trackLocObj(entity: Loc | Obj, duration: number): void {
+        entity.setLifeCycle(duration);
+        this.locObjTracker.addTail(new LocObjEvent(entity));
+    }
+
     addLoc(loc: Loc, duration: number): void {
         // printDebug(`[World] addLoc => name: ${LocType.get(loc.type).name}, duration: ${duration}`);
         const type: LocType = LocType.get(loc.type);
@@ -1435,7 +1440,11 @@ class World {
         const zone: Zone = this.gameMap.getZone(loc.x, loc.z, loc.level);
         zone.addLoc(loc);
         this.trackZone(zone);
-        loc.setLifeCycle(duration);
+        if (duration > 0) {
+            this.trackLocObj(loc, duration);
+        } else {
+            loc.untrack();
+        }
     }
 
     changeLoc(loc: Loc, typeID: number, shape: number, angle: number, duration: number) {
@@ -1465,7 +1474,7 @@ class World {
         const zone: Zone = this.gameMap.getZone(loc.x, loc.z, loc.level);
         zone.changeLoc(loc);
         this.trackZone(zone);
-        loc.setLifeCycle(duration);
+        this.trackLocObj(loc, duration);
     }
 
     mergeLoc(loc: Loc, player: Player, startCycle: number, endCycle: number, south: number, east: number, north: number, west: number): void {
@@ -1492,7 +1501,11 @@ class World {
         const zone: Zone = this.gameMap.getZone(loc.x, loc.z, loc.level);
         zone.removeLoc(loc);
         this.trackZone(zone);
-        loc.setLifeCycle(duration);
+        if (duration > 0) {
+            this.trackLocObj(loc, duration);
+        } else {
+            loc.untrack();
+        }
     }
 
     revertLoc(loc: Loc) {
@@ -1514,7 +1527,7 @@ class World {
         // Notify zone that loc has been changed
         const zone: Zone = this.gameMap.getZone(loc.x, loc.z, loc.level);
         zone.changeLoc(loc);
-        loc.setLifeCycle(-1);
+        loc.untrack();
         this.trackZone(zone);
     }
 
@@ -1528,8 +1541,7 @@ class World {
                 if (nextCount <= Inventory.STACK_LIMIT) {
                     // If an obj of the same type exists and is stackable and have the same receiver, then we merge them.
                     this.changeObj(existing, nextCount);
-                    // Set the lifecycle without all the extra logic surrounding it
-                    existing.lifecycleTick = duration;
+                    this.trackLocObj(existing, duration);
                     return;
                 }
             }
@@ -1542,7 +1554,7 @@ class World {
         if (receiver64 !== Obj.NO_RECEIVER) {
             // objs with a receiver always attempt to reveal 100 ticks after being dropped.
             // items that can't be revealed (untradable, members obj in f2p) will be skipped in revealObj
-            obj.setLifeCycle(duration);
+            this.trackLocObj(obj, duration);
             obj.receiver64 = receiver64;
 
             // Reveal Obj in 100 ticks
@@ -1551,7 +1563,11 @@ class World {
         // If the obj is dropped to all
         else {
             obj.reveal = -1;
-            obj.setLifeCycle(duration);
+            if (duration > 0) {
+                this.trackLocObj(obj, duration);
+            } else {
+                obj.untrack();
+            }
         }
     }
 
@@ -1568,7 +1584,6 @@ class World {
         this.trackZone(zone);
     }
 
-    // Dev note: this function is slightly awkward, might need reworked
     removeObj(obj: Obj, duration: number): void {
         // printDebug(`[World] removeObj => name: ${ObjType.get(obj.type).name}, duration: ${duration}`);
         const zone: Zone = this.gameMap.getZone(obj.x, obj.z, obj.level);
@@ -1576,9 +1591,9 @@ class World {
         zone.removeObj(obj);
         this.trackZone(zone);
         if (duration > 0) {
-            obj.setLifeCycle(adjustedDuration);
+            this.trackLocObj(obj, adjustedDuration);
         } else {
-            obj.setLifeCycle(-1);
+            obj.untrack();
         }
     }
 
@@ -2274,7 +2289,7 @@ class World {
         if (filteredEventTypes.includes(event.event_type) && Math.abs(event.account_value) < Environment.NODE_MINIMUM_WEALTH_VALUE_EVENT) {
             return;
         }
-
+        
         const transaction: WealthTransactionEvent = {
             timestamp: Date.now(),
             ...event
@@ -2284,7 +2299,7 @@ class World {
             this.wealthTransactions.push(transaction);
             return;
         }
-
+        
         const key = JSON.stringify({
             type: event.event_type,
             id: event.account_id,
