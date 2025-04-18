@@ -151,9 +151,12 @@ if(coordz(loc_coord) > coordz(loc_param(start_coord))) {
 // teleport to the end of the spikes and walk 1 tile to the end of the bars
 ~forcewalk2($start_coord);
 facesquare(movecoord(coord, 0, 0, calc($dist_mod)));
+~bas_set(human_monkeybars_ready, human_monkeybars_ready, human_monkeybars_walk, 
+         human_monkeybars_ready, human_monkeybars_ready, human_monkeybars_ready, null);
 anim(human_monkeybars_on, 0);
 p_delay(0);
-~agility_force_move(0, human_monkeybars_walk, movecoord(coord, 0, 0, calc($dist_mod * 2)));
+~forcemove(movecoord(coord, 0, 0, calc($dist_mod * 1)));
+p_delay(0);
 // You can only fail the monkeybars in the agility dungeon
 if(stat_random(stat(agility), loc_param(obstacle_low_fail), loc_param(obstacle_high_fail)) = false) {
     def_coord $fall_pos = 0_40_149_39_19; 
@@ -162,13 +165,16 @@ if(stat_random(stat(agility), loc_param(obstacle_low_fail), loc_param(obstacle_h
     }
     ~agility_instant_fail($fall_pos, calc(((stat(hitpoints) * 15) / 100) + 1), "You miss the hand hold and fall to the level below.");
     anim(human_monkeybars_off, 0);
+    ~update_bas;
     p_delay(0);
     return;
 
 }
-p_telejump(movecoord(coord, 0, 0, calc($dist_mod * 2)));
+p_teleport(movecoord(coord, 0, 0, calc($dist_mod * 3)));
 p_delay(0);
-~agility_force_move(200, human_monkeybars_walk, movecoord(coord, 0, 0, calc($dist_mod * 1)));
+~forcemove(movecoord(coord, 0, 0, calc($dist_mod * 1)));
+~update_bas;
+stat_advance(agility, 200);
 anim(human_monkeybars_off, 0);
 p_delay(0);
 
