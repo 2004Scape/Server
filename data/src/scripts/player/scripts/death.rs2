@@ -16,7 +16,7 @@ p_delay(3);
 
 [queue,player_death_default]
 ~player_death;
-midi_jingle(^death_jingle_2, ^death_jingle_2_millis);
+~midi_jingle(^death_jingle_2, ^death_jingle_2_millis);
 // https://storage.googleapis.com/tannerdino/images/6543.jpg
 // https://youtu.be/gWmwSYxzUfo
 mes("Oh dear you are dead!");
