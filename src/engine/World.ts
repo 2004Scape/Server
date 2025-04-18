@@ -1425,11 +1425,6 @@ class World {
         this.zonesTracking.add(zone);
     }
 
-    // trackLocObj(entity: Loc | Obj, duration: number): void {
-    //     entity.setLifeCycle(duration);
-    //     this.locObjTracker.addTail(new LocObjEvent(entity));
-    // }
-
     addLoc(loc: Loc, duration: number): void {
         // printDebug(`[World] addLoc => name: ${LocType.get(loc.type).name}, duration: ${duration}`);
         const type: LocType = LocType.get(loc.type);
