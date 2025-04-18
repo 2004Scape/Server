@@ -40,6 +40,15 @@ if (p_finduid(uid) = true) {
     loc_change(loc_2732, 10);
 }
 
+[debugproc,drop_feathers]
+if (p_finduid(uid) = true) {
+    p_telejump(0_37_55_32_31);
+    obj_addall(0_37_55_32_33, feather, 1, 30);
+    p_opobj(3);
+    world_delay(1);
+    obj_addall(0_37_55_32_33, feather, 1, 30);
+}
+
 
 [debugproc,loc_add_static]
 if (p_finduid(uid) = true) {
