@@ -63,12 +63,13 @@ export default class Loc extends NonPathingEntity {
                 World.addLoc(this, 0);
             } else {
                 // Fail safe in case no conditions are met (should never happen)
-                this.untrack();
+                console.error(`Loc is tracked but there is no event. Type: ${this.type}, Coords: ${this.x}, ${this.z}`);
+                this.setLifeCycle(-1);
             }
         } else if (this.lifecycleTick < 0) {
             // Fail safe in case this is tracked but isn't supposed to be
-            this.untrack();
-            console.error('Loc is tracked but has a negative lifecycle tick');
+            console.error(`Loc is tracked but has a negative lifecycle tick. Type: ${this.type}, Coords: ${this.x}, ${this.z}`);
+            this.setLifeCycle(-1);
         }
     }
 }

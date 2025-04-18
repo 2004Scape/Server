@@ -1465,7 +1465,15 @@ class World {
         const zone: Zone = this.gameMap.getZone(loc.x, loc.z, loc.level);
         zone.changeLoc(loc);
         this.trackZone(zone);
-        loc.setLifeCycle(duration);
+
+        // If the loc is changed or dynamic, set the lifecycle
+        if (loc.isChanged() || loc.lifecycle === EntityLifeCycle.DESPAWN) {
+            loc.setLifeCycle(duration);
+        }
+        // If the loc is static and unchanged (i.e., the change didn't do anything)
+        else {
+            loc.setLifeCycle(-1);
+        }
     }
 
     mergeLoc(loc: Loc, player: Player, startCycle: number, endCycle: number, south: number, east: number, north: number, west: number): void {
