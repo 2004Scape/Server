@@ -51,7 +51,7 @@ npc_say("Peeeeeeeeeep");
 sound_synth(whistle, 0, 0);
 mes("The ref throws the ball into the air.");
 npc_anim(midget_throw, 0);
-~player_projectile(npc_coord, coord, uid, spotanim_55, 36, 40, 34, 60, 30, 11, 0);
+~player_projectile(npc_coord, coord, uid, gnomeball_travel, 36, 40, 34, 60, 30, 11, 0);
 anim(human_catch, 27);
 p_delay(0);
 mes("You jump up and catch it.");

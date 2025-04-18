@@ -7,6 +7,6 @@ if(inzone(0_48_52_40_8, movecoord(0_48_52_40_8, 9, 0, 9), coord) = false) {
     return;
 }
 mes("A vine whips out and attacks you!");
-spotanim_map(spotanim_8, coord, 0, 0);
+spotanim_map(whippingplant_attack, coord, 0, 0);
 sound_synth(nasty_tree_attack, 0, 0);
 queue(damage_player, 0, 1);

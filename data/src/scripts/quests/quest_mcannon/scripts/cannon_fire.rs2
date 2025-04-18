@@ -97,7 +97,7 @@ if (~player_in_combat_check = false) { // https://youtu.be/TeQXQDaawO0?t=247
 }
 // map_projanim	id=53, starttime=0, endtime=40, angle=2, progress=11, startheight=36, endheight=35
 // (coord $coord, npc_uid $uid, spotanim $spotanim, int $startheight, int $endheight, int $delay, int $angle, int $length, int $offset, int $step)(int)
-def_int $duration = ~npc_projectile(movecoord(%mcannon_coord, 1, 0, 1), npc_uid, spotanim_53, 36, 35, 0, 2, 35, 0, 5);
+def_int $duration = ~npc_projectile(movecoord(%mcannon_coord, 1, 0, 1), npc_uid, cannonball_travel, 36, 35, 0, 2, 35, 0, 5);
 %mcannon_ammo = sub(%mcannon_ammo, 1);
 sound_synth(mcannon_fire, 0, 0);
 def_int $damage = 0;
@@ -120,7 +120,7 @@ if (npc_type = king_black_dragon) {
 [label,kbd_destroy_cannon]
 if (random(4) = 0 & %mcannon_coord ! null) { // guess
 // (coord $coord, coord $coord2, spotanim $spotanim, int $startheight, int $endheight, int $delay, int $angle, int $length, int $offset, int $step)(int)
-    def_int $duration = ~coord_projectile(npc_coord, %mcannon_coord, spotanim_54, 92, 31, 51, 16, -5, 64, 10);
+    def_int $duration = ~coord_projectile(npc_coord, %mcannon_coord, firebreath_travel, 92, 31, 51, 16, -5, 64, 10);
     spotanim_map(fireblast_impact, %mcannon_coord, 124, $duration);
     npc_anim(dragon_firebreath_middle_attack, 0);
     sound_synth(dragonbreath, 0, 30);
