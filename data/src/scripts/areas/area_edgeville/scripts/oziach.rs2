@@ -15,7 +15,7 @@ if (%dragon_progress < ^dragon_complete & %dragon_progress > 0) {
     ~chatnpc("<p,quiz>So how is thy quest going?");
     @multi2("So where can I find this dragon?", oziach_find_dragon, "Where can I get an antidragon shield?", oziach_dragon_shield);
 }
-if (%dragon_progress = ^dragon_complete) {
+if (%dragon_progress >= ^dragon_complete) {
     @oziach_dragon_complete;
 }
 //default
@@ -146,7 +146,6 @@ if (inv_total(inv, melzarkey) = 0 & inv_total(bank, melzarkey) = 0) {
 // rsc
 ~chatplayer("<p,happy>I have slain the dragon!");
 ~chatnpc("<p,happy>Well done!");
-%dragon_progress = calc(^dragon_complete + 1);
 def_int $choice = ~p_choice2("Can I buy a rune plate mail body now please?", 0, "Thank you.", 1);
 if ($choice = 1) {
     ~chatplayer("<p,happy>Thank you.");
