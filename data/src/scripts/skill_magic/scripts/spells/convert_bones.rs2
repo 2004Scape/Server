@@ -14,8 +14,10 @@ if (p_finduid(uid) = true) {
     def_spotanim $spotanim;
     def_synth $sound;
     $product, $anim, $spotanim, $sound = ~magic_spell_search_convertobj($spell_data, null);
-    // check bones
-    def_int $total_bones = inv_totalcat(inv, bones);
+    // only uses regular bones.
+    // - https://oldschool.runescape.wiki/w/Update:Patch_Notes_(23_May_2013)
+    // - https://runescape.wiki/w/Update:Potions,_Spells_and_Runes
+    def_int $total_bones = inv_total(inv, bones);
     if ($total_bones < 1) {
         mes("You aren't holding any bones!");
         return;
@@ -25,7 +27,7 @@ if (p_finduid(uid) = true) {
         return;
     }
     // delete all bones by category
-    ~inv_delcat(inv, bones);
+    inv_del(inv, bones, $total_bones);
     inv_add(inv, $product, $total_bones);
     // play sound and anim
     sound_synth($sound, 0, 0);
