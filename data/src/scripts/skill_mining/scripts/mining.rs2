@@ -122,7 +122,7 @@ if (random($chance) = ^true) {
         $data = db_findnext;
         mes("You just found <~add_article(oc_name(db_getfield($data, gem_cutting_table:cut_gem, 0)))>!");
     }
-} else if (stat_random(stat(mining), db_getfield($data, mining_table:rock_successchance, 0)) = true) {
+} else if (stat_random(mining, db_getfield($data, mining_table:rock_successchance, 0)) = true) {
     // They added a 1t p_delay in this update: https://oldschool.runescape.wiki/w/Update:Special_Attacks
     // p_delay(0);
     // deplete
@@ -167,7 +167,7 @@ if (random($chance) = ^true) {
         $data = db_findnext;
         mes("You just found <~add_article(oc_name(db_getfield($data, gem_cutting_table:cut_gem, 0)))>!");
     }
-} else if (stat_random(stat(mining), db_getfield($data, mining_table:rock_successchance, 0)) = true) {
+} else if (stat_random(mining, db_getfield($data, mining_table:rock_successchance, 0)) = true) {
     // deplete
     def_int $respawn = ~scale_by_playercount(db_getfield($data, mining_table:rock_respawnrate, 0));
     // Temp note: dur does not need updated
@@ -210,7 +210,7 @@ if ($neck ! null & oc_category($neck) = category_557) {
     $low = multiply($low, 3);
     $high = multiply($high, 3);
 }
-if (stat_random(stat(mining), $low, $high) = true) {
+if (stat_random(mining, $low, $high) = true) {
     // They added a 1t p_delay in this update: https://oldschool.runescape.wiki/w/Update:Special_Attacks
     // p_delay(0);
     // deplete

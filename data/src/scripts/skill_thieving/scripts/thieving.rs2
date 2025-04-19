@@ -24,11 +24,7 @@ sound_synth(pick, 0, 0);
 mes("You pick the <$pocket>.");
 
 [proc,check_if_success_pick_pocket](dbrow $data)(boolean)
-def_int $current_level = stat(thieving);
-def_int $low;
-def_int $high;
-$low, $high = db_getfield($data, pickpocket:success_chance, 0);
-return(stat_random($current_level, $low, $high));
+return(stat_random(thieving, db_getfield($data, pickpocket:success_chance, 0)));
 
 [proc,fail_pick_pocket](int $damage, int $stun_ticks, string $pocket)
 npc_say("What do you think you're doing?");

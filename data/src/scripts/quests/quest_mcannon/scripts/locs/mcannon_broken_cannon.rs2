@@ -88,8 +88,8 @@ if (~multi_cannon_fail_to_fix_or_find_problem() = true) {
 // https://web.archive.org/web/20041210172257/http://runescape.salmoneus.net/quests/DwarfCannon.html
 // https://classic.runescape.wiki/w/Dwarf_Cannon#The_Cannon
 [proc,multi_cannon_fail_to_fix_or_find_problem]()(boolean)
-def_boolean $smithing = stat_random(stat(smithing), 80, 300);
-def_boolean $crafting = stat_random(stat(crafting), 80, 350);
+def_boolean $smithing = stat_random(smithing, 80, 300);
+def_boolean $crafting = stat_random(crafting, 80, 350);
 
 if ($smithing = true | $crafting = true) {
     return(true);
