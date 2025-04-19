@@ -358,7 +358,7 @@ p_delay(2);
 npc_say("Ohhhhhmmmmmm");
 p_delay(2);
 // guess but it seems pretty common
-if(stat_random(stat(prayer), 80, 250) = true) {
+if(stat_random(prayer, 80, 250) = true) {
     stat_sub(prayer, 5, 0);
     ~mesbox("You were not able to go into a deep enough trance. You lose some prayer...");
     ~chatnpc("<p,neutral>Would you like to try again?");

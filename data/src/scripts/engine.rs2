@@ -33,8 +33,6 @@
 [command,.inzone](coord $from, coord $to, coord $pos)(boolean) // todo: replace all instances of this with inzone, should not have secondary
 // info: Returns true if $from has an unbroken line-of-walk to $to
 [command,lineofwalk](coord $from, coord $to)(boolean)
-// info: Roll a skill success check
-[command,stat_random](int $level, int $low, int $high)(boolean)
 // info: Play a spotanim on a tile
 [command,spotanim_map](spotanim $anim, coord $coord, int $height, int $delay)
 // [command,map_anim](coord $coord, spotanim $spotanim, int $height, int $delay) // this is the name for the packet
@@ -240,6 +238,10 @@
 [command,stat_drain](stat $stat, int $constant, int $percent)
 // info: Drain current level of $stat for the secondary player
 [command,.stat_drain](stat $stat, int $constant, int $percent)
+// info: Roll a skill success check
+[command,stat_random](stat $stat, int $low, int $high)(boolean)
+// info: Roll a skill success check for the secondary player
+[command,.stat_random](stat $stat, int $low, int $high)(boolean)
 // info: Get the player's UID to use in finduid/p_finduid later
 [command,uid]()(player_uid)
 // info: Get the secondary player's UID to use in finduid/p_finduid later

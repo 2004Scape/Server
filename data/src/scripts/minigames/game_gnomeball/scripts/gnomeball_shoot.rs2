@@ -78,7 +78,7 @@ cam_reset;
 // from 100 goals at 1 ranged, 10 tiles away:
 // - 9 goals, 91 misses
 // ash says distance matters, but it doesnt seem like it matters a huge amount
-if (stat_random(stat(ranged), 25, sub(300, multiply(distance(coord, $coord), 5))) = true) {
+if (stat_random(ranged, 25, sub(300, multiply(distance(coord, $coord), 5))) = true) {
     return($coord);
 }
 

@@ -197,7 +197,7 @@ if(inv_total(inv, thanainabarrel) > 0) {
     ~mesbox("You'll never get Ana (in a barrel) through the window.|The barrel is just too big.");
     return;
 }
-if(stat_random(stat(strength), 100, 250) = false) {
+if(stat_random(strength, 100, 250) = false) {
     ~mesbox("You find it hard to bend the bar, perhaps you should try again?");
     def_int $choice = ~p_choice2("Yes, I'll bend the bar again.", 1, "No, I'm going to give up.", 2);
     if($choice = 2) {
@@ -241,7 +241,7 @@ if($op = 2) {
 mes("You start climbing the rocky elevation.");
 // completely guessing on how this works, rsc messages and damage
 ~agility_force_move(0, human_climbing, loc_coord);
-if(stat_random(stat(agility), 150, 250) = false) { 
+if(stat_random(agility, 150, 250) = false) {
     ~agility_exactmove(human_climbing_fall, 0, 2, coord, movecoord(loc_coord, -4, 0, 0), 0, 120, ^exact_east, false);
     anim(null, 0);
     mes("You slip a little and tumble the rest of the way down the slope.");
@@ -255,7 +255,7 @@ anim(null, 0);
 mes("You start climbing the rocky elevation.");
 // completely guessing on how this works, rsc messages and damage
 ~agility_force_move(0, human_climbing_down, loc_coord);
-if(stat_random(stat(agility), 150, 250) = false) { 
+if(stat_random(agility, 150, 250) = false) {
     ~agility_exactmove(human_climbing_fall, 0, 0, coord, movecoord(coord, 2, 0, 0), 0, 50, ^exact_west, false);
     anim(null, 0);
     mes("You slip a little and tumble the rest of the way down the slope.");
@@ -610,7 +610,7 @@ if(last_useitem = bronze_bar | last_useitem = thcaptplans) {
             anim(human_smithing, 128);
             p_delay(2);
             // on osrs you can't lose bronze bars, originally you could (based off guide(s) info)
-            if(stat_random(stat(smithing), 61, 245) = false) {
+            if(stat_random(smithing, 61, 245) = false) {
                 mes("You waste the bronze bar through an unlucky accident.");
                 return;
             }
@@ -648,7 +648,7 @@ if(stat(fletching) < 10) {
     ~mesbox("You need a fletching level of at least 10 to complete this.");
     return;
 }
-if(stat_random(stat(fletching), 61, 254) = false) {
+if(stat_random(fletching, 61, 254) = false) {
     inv_del(inv, feather, 10);
     ~mesbox("An unlucky accident causes you to waste the feathers.|But you feel that you're close to making this item though.");
     return;

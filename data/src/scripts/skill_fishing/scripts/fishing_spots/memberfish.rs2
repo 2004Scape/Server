@@ -136,43 +136,43 @@ if (npc_param(is_whirlpool) = ^true) {
 }
 def_int $level = stat(fishing);
 // leather boots
-if (stat_random($level, 10, 10) = true) {
+if (stat_random(fishing, 10, 10) = true) {
     inv_add(inv, leather_boots, 1);
     mes("You catch some boots.");
     stat_advance(fishing, 10);
 }
 // seaweed
-if (stat_random($level, 10, 10) = true) {
+if (stat_random(fishing, 10, 10) = true) {
     inv_add(inv, seaweed, 1);
     mes("You catch some seaweed.");
     stat_advance(fishing, 1);
 }
 // leather gloves
-if (stat_random($level, 5, 5) = true) {
+if (stat_random(fishing, 5, 5) = true) {
     inv_add(inv, leather_gloves, 1);
     mes("You catch some gloves.");
     stat_advance(fishing, 10);
 }
 // mackerel
-if (stat_random($level, 5, 65) = true) {
+if (stat_random(fishing, 5, 65) = true) {
     inv_add(inv, raw_mackerel, 1);
     mes("You catch a mackerel.");
     stat_advance(fishing, 200);
 }
 // another mackerel
-if (stat_random($level, 10, 10) = true) {
+if (stat_random(fishing, 10, 10) = true) {
     inv_add(inv, raw_mackerel, 1);
     mes("You catch a mackerel.");
     stat_advance(fishing, 200);
 }
 // oyster
-if (stat_random($level, 3, 7) = true) {
+if (stat_random(fishing, 3, 7) = true) {
     inv_add(inv, oystershell, 1);
     mes("You catch an oyster shell.");
     stat_advance(fishing, 100);
 }
 // casket
-if (stat_random($level, 1, 2) = true) {
+if (stat_random(fishing, 1, 2) = true) {
     inv_add(inv, casket, 1);
     mes("You catch a casket.");
     stat_advance(fishing, 100);
@@ -181,7 +181,7 @@ if (stat_random($level, 1, 2) = true) {
 if ($level < 23) {
     return;
 }
-if (stat_random($level, 4, 55) = true) {
+if (stat_random(fishing, 4, 55) = true) {
     inv_add(inv, raw_cod, 1);
     mes("You catch a cod.");
     stat_advance(fishing, 450);
@@ -190,7 +190,7 @@ if (stat_random($level, 4, 55) = true) {
 if ($level < 46) {
     return;
 }
-if (stat_random($level, 3, 40) = true) {
+if (stat_random(fishing, 3, 40) = true) {
     inv_add(inv, raw_bass, 1);
     mes("You catch a bass.");
     stat_advance(fishing, 1000);
