@@ -29,7 +29,7 @@ recol1s=7329
 recol1d=6208
 category=smithing_furnace
 
-[furnace_tutorial]
+[newbiefurnace]
 name=Furnace
 desc=A hot place for forging things in.
 model=model_loc_165
@@ -39,7 +39,7 @@ length=3
 forceapproach=east
 category=smithing_furnace
 
-[furnace_legends]
+[furnace_upass]
 name=Furnace
 desc=A hot place for forging things in.
 model=model_loc_2966

@@ -1,4 +1,4 @@
-[loc_51]
+[mcgruborlooserailing]
 name=Loose Railing
 desc=Hmmm... I wonder if it's loose enough to get through.
 model=model_loc_14
@@ -6,14 +6,14 @@ sharelight=yes
 hillskew=yes
 op1=Squeeze-through
 
-[loc_52]
+[mcgruborgatel]
 name=Gate
 desc=It's locked.
 model=model_loc_52
 op1=Open
 category=mcgrubor_gate
 
-[loc_53]
+[mcgruborgater]
 name=Gate
 desc=It's locked.
 model=model_loc_52
@@ -21,7 +21,7 @@ op1=Open
 mirror=yes
 category=mcgrubor_gate
 
-[loc_58]
+[red_worm_vine]
 name=Vine
 desc=Known commonly as Red worm vine.
 model=model_loc_58

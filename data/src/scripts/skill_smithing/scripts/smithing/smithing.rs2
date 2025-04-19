@@ -46,7 +46,7 @@ if (%tutorial_progress < ^tutorial_complete) {
 
 if (last_useitem = gold_bar & %legends_progress >= ^legends_asked_gujuo_holy_water) @make_golden_bowl;
 else if (oc_category(last_useitem) = category_151) @smithing_anvil_interface(last_useitem);
-else if (last_useitem = shield_left_half | last_useitem = shield_right_half) @make_dragon_sq;
+else if (last_useitem = dragonshield_a | last_useitem = dragonshield_b) @make_dragon_sq;
 else ~displaymessage(^dm_default);
 
 [if_close,smithing]
@@ -78,6 +78,12 @@ if (inv_total(inv, hammer) < 1) {
 //set varps
 %smithing_bars = inv_total(inv, struct_param($struct, namedobj));
 %smithing_level = $player_level;
+// Check if tourist trap is completed before sending white text option on darts
+if (%desertrescue_progress >= ^desertrescue_learned_darts) {
+    %option1 = 1;
+} else {
+    %option1 = 0;
+}
 // hide wire button if its not bronze
 // hide studs button if its not steel
 if ($last_item = bronze_bar) {

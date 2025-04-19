@@ -205,4 +205,4 @@ switch_int (%magearena) {
 npc_setmode(playerfaceclose);
 
 [ai_queue4,kolodion]
-npc_anim(human_casting_kolodion, last_int);
+npc_anim(human_trans_casting, last_int);

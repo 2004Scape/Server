@@ -14,12 +14,6 @@
 [opheld2,mithril_2h_sword] @levelrequire_attack(20, last_slot);
 [opheld2,excalibur] @levelrequire_attack(20, last_slot);
 
-[opheld2,mithril_dart] @levelrequire_ranged(20, last_slot);
-[opheld2,mithril_dart_p] @levelrequire_ranged(20, last_slot);
-[opheld2,mithril_knife] @levelrequire_ranged(20, last_slot);
-[opheld2,mithril_knife_p] @levelrequire_ranged(20, last_slot);
-[opheld2,mithril_thrownaxe] @levelrequire_ranged(20, last_slot);
-
 [opheld2,mithril_med_helm] @levelrequire_defence(20, last_slot);
 [opheld2,mithril_full_helm] @levelrequire_defence(20, last_slot);
 [opheld2,mithril_sq_shield] @levelrequire_defence(20, last_slot);
@@ -35,5 +29,13 @@
 [opheld2,coif] @levelrequire_ranged(20, last_slot);
 [opheld2,studded_body] @levelrequire_ranged_and_defence(20, 20, last_slot);
 [opheld2,studded_chaps] @levelrequire_ranged(20, last_slot);
+
+[opheld2,mithril_dart] @levelrequire_ranged(20, last_slot);
+[opheld2,mithril_dart_p] @levelrequire_ranged(20, last_slot);
+[opheld2,mithril_knife] @levelrequire_ranged(20, last_slot);
+[opheld2,mithril_knife_p] @levelrequire_ranged(20, last_slot);
+[opheld2,mithril_thrownaxe] @levelrequire_ranged(20, last_slot);
+[opheld2,mithril_javelin] @levelrequire_ranged(20, last_slot);
+[opheld2,mithril_javelin_p] @levelrequire_ranged(20, last_slot);
 
 // Magic

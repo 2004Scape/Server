@@ -199,7 +199,7 @@ param=magicdefence,-3
 param=rangedefence,19
 param=damagetype,^crush_style
 param=attack_anim,human_sword_slash
-param=defend_anim,human_sword_defend2
+param=defend_anim,human_sword_def
 param=attack_sound,hacksword_slash
 // Stats match osrs version but our version Vislvl is different.
 
@@ -249,7 +249,7 @@ param=magicdefence,-3
 param=rangedefence,19
 param=damagetype,^crush_style
 param=attack_anim,human_sword_slash
-param=defend_anim,human_sword_defend2
+param=defend_anim,human_sword_def
 param=attack_sound,hacksword_slash
 // Stats match osrs version but our version Vislvl is different.
 
@@ -304,7 +304,7 @@ param=magicdefence,-3
 param=rangedefence,19
 param=damagetype,^slash_style
 param=attack_anim,human_sword_slash
-param=defend_anim,human_sword_defend2
+param=defend_anim,human_sword_def
 param=attack_sound,hacksword_slash
 // Stats match osrs version but our version Vislvl is different.
 
@@ -408,7 +408,7 @@ param=magicdefence,-3
 param=rangedefence,19
 param=damagetype,^crush_style
 param=attack_anim,human_sword_slash
-param=defend_anim,human_sword_defend2
+param=defend_anim,human_sword_def
 param=attack_sound,hacksword_slash
 huntmode=cowardly
 // https://oldschool.runescape.wiki/w/Guard_(Desert_Mining_Camp)#Brown_hair

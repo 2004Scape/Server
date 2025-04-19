@@ -26,7 +26,7 @@ param=strengthbonus,7
 param=attackrate,5
 param=slashattack_anim,human_sword_slash
 param=stabattack_anim,human_sword_stab
-param=defend_anim,human_sword_defend2
+param=defend_anim,human_sword_def
 param=slash_sound,hacksword_slash
 param=stab_sound,hacksword_stab
 
@@ -58,7 +58,7 @@ param=strengthbonus,10
 param=attackrate,5
 param=slashattack_anim,human_sword_slash
 param=stabattack_anim,human_sword_stab
-param=defend_anim,human_sword_defend2
+param=defend_anim,human_sword_def
 param=slash_sound,hacksword_slash
 param=stab_sound,hacksword_stab
 
@@ -88,7 +88,7 @@ param=strengthbonus,16
 param=attackrate,5
 param=slashattack_anim,human_sword_slash
 param=stabattack_anim,human_sword_stab
-param=defend_anim,human_sword_defend2
+param=defend_anim,human_sword_def
 param=slash_sound,hacksword_slash
 param=stab_sound,hacksword_stab
 
@@ -120,7 +120,7 @@ param=strengthbonus,16
 param=attackrate,5
 param=slashattack_anim,human_sword_slash
 param=stabattack_anim,human_sword_stab
-param=defend_anim,human_sword_defend2
+param=defend_anim,human_sword_def
 param=slash_sound,hacksword_slash
 param=stab_sound,hacksword_stab
 
@@ -152,7 +152,7 @@ param=strengthbonus,22
 param=attackrate,5
 param=slashattack_anim,human_sword_slash
 param=stabattack_anim,human_sword_stab
-param=defend_anim,human_sword_defend2
+param=defend_anim,human_sword_def
 param=slash_sound,hacksword_slash
 param=stab_sound,hacksword_stab
 
@@ -184,7 +184,7 @@ param=strengthbonus,31
 param=attackrate,5
 param=slashattack_anim,human_sword_slash
 param=stabattack_anim,human_sword_stab
-param=defend_anim,human_sword_defend2
+param=defend_anim,human_sword_def
 param=slash_sound,hacksword_slash
 param=stab_sound,hacksword_stab
 
@@ -216,7 +216,7 @@ param=strengthbonus,49
 param=attackrate,5
 param=slashattack_anim,human_sword_slash
 param=stabattack_anim,human_sword_stab
-param=defend_anim,human_sword_defend2
+param=defend_anim,human_sword_def
 param=slash_sound,hacksword_slash
 param=stab_sound,hacksword_stab
 
@@ -243,9 +243,9 @@ param=slashdefence,3
 param=crushdefence,2
 param=strengthbonus,71
 param=attackrate,5
-param=ready_baseanim,human_ready_sword_up
+param=ready_baseanim,human_ds_ready
 param=slashattack_anim,human_sword_slash
 param=stabattack_anim,human_sword_stab
-param=defend_anim,human_sword_defend2
+param=defend_anim,human_sword_def
 param=slash_sound,hacksword_slash
 param=stab_sound,hacksword_stab

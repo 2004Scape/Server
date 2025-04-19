@@ -80,8 +80,10 @@ else {
 
 [label,crest_dimintheis_complete]
 ~chatplayer("<p,neutral>I have retrieved your crest.");
-// https://youtu.be/e8btuenT4nE?si=1d0Zf6EvXq90iMco&t=1169, OSRS takes all crest pieces from bank/inv, rs3 + classic doesn't though so assuming that was an OSRS change
-inv_del(inv, family_crest, 1);
+// https://youtu.be/e8btuenT4nE?si=1d0Zf6EvXq90iMco&t=1169, OSRS takes all crest pieces from bank/inv
+// confirm this was the original behaviour (it's not the case on RSC)
+inv_del(inv, family_crest, ^max_32bit_int);
+inv_del(bank, family_crest, ^max_32bit_int);
 queue(crest_complete, 0);
 ~chatnpc("<p,happy>Adventurer... I can only thank you for your kindness, although the words are insufficient to express the gratitude I feel!");
 ~chatnpc("<p,happy>You are truly a hero in every sense, and perhaps your efforts can begin to patch the wounds that have torn this family apart...");

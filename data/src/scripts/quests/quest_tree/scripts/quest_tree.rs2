@@ -13,7 +13,7 @@ switch_int(%tree_progress) {
         ~mesbox("You fire the ballista.|The huge spear flies through the air...");
         def_coord $projectile_start = 0_39_50_13_13;
         if_close;
-        loc_anim(seq_730);
+        loc_anim(catabow_launch);
         // play synth treevillage_catabow_launch, added in early 2007 I think?
         ~coord_projectile($projectile_start, movecoord($projectile_start, 0, 0, 41), spotanim_182, 23, 0, 110, 7, 0, 0, 0);
         p_delay(1);
@@ -75,7 +75,7 @@ if(npc_find(coord, khazard_commander, 5, 0) = true) {
 }
 
 [oploc1,loc_2182]
-if(%tree_progress > ^tree_retrieved_orb | inv_total(inv, orb_of_protection) > 0 | inv_total(bank, orb_of_protection) > 0) {
+if(%tree_progress < ^tree_ballista_fired | %tree_progress > ^tree_retrieved_orb | inv_total(inv, orb_of_protection) > 0 | inv_total(bank, orb_of_protection) > 0) {
     mes("You search the chest, but find nothing.");
     return;
 }

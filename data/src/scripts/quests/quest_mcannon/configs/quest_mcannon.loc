@@ -1,4 +1,4 @@
-[broken_cannon]
+[broken_multicannon]
 name=Broken MultiCannon
 desc=A powerful ranging device, unfortunately not working.
 model=model_loc_5
@@ -17,7 +17,7 @@ op2=Pick-up
 blockrange=no
 blockwalk=no
 
-[cannon_base]
+[multicannon_base]
 name=Cannon base
 desc=The cannon is built on here.
 model=model_loc_7
@@ -26,7 +26,7 @@ width=3
 op1=Pick-up
 blockwalk=no
 
-[cannon_stand]
+[multicannon_stand]
 name=Cannon stand
 desc=The mounting for the muticannon.
 model=model_loc_8
@@ -35,7 +35,7 @@ width=3
 op1=Pick-up
 blockwalk=no
 
-[cannon_barrels]
+[multicannon_barrels]
 name=Cannon base
 desc=The barrels of the multicannon.
 model=model_loc_9
@@ -44,7 +44,7 @@ width=3
 op1=Pick-up
 blockwalk=no
 
-[mcannon_nulodion_door]
+[mcannondoor]
 name=Door
 desc=The door is closed.
 model=model_loc_3
@@ -56,7 +56,7 @@ recol2s=6342
 recol2d=11458
 param=next_loc_stage,loc_2527
 
-[mcannon_cannon_door]
+[mcannondoor1]
 name=Door
 desc=The door is closed.
 model=model_loc_3
@@ -68,7 +68,7 @@ recol2s=6342
 recol2d=11458
 param=next_loc_stage,loc_2527
 
-[railing_sturdy]
+[mcannonplain]
 name=Railing
 desc=Solid bars of iron.
 model=model_loc_14
@@ -77,7 +77,7 @@ hillskew=yes
 blockrange=no
 op1=Inspect
 
-[railing_broken_1]
+[mcannonrailing1]
 name=Railing
 desc=There is a hole in this section of the railing.
 model=model_loc_14
@@ -86,7 +86,7 @@ hillskew=yes
 blockrange=no
 op1=Inspect
 
-[railing_broken_2]
+[mcannonrailing2]
 name=Railing
 desc=There is a hole in this section of the railing.
 model=model_loc_14
@@ -95,7 +95,7 @@ hillskew=yes
 blockrange=no
 op1=Inspect
 
-[railing_broken_3]
+[mcannonrailing3]
 name=Railing
 desc=There is a hole in this section of the railing.
 model=model_loc_14
@@ -104,7 +104,7 @@ hillskew=yes
 blockrange=no
 op1=Inspect
 
-[railing_broken_4]
+[mcannonrailing4]
 name=Railing
 desc=There is a hole in this section of the railing.
 model=model_loc_14
@@ -113,7 +113,7 @@ hillskew=yes
 blockrange=no
 op1=Inspect
 
-[railing_broken_5]
+[mcannonrailing5]
 name=Railing
 desc=There is a hole in this section of the railing.
 model=model_loc_14
@@ -122,7 +122,7 @@ hillskew=yes
 blockrange=no
 op1=Inspect
 
-[railing_broken_6]
+[mcannonrailing6]
 name=Railing
 desc=There is a hole in this section of the railing.
 model=model_loc_14
@@ -131,7 +131,7 @@ hillskew=yes
 blockrange=no
 op1=Inspect
 
-[mcannon_goblin_cave_entrance]
+[mcannoncave]
 name=Cave Entrance
 desc=The entrance to the Dwarf's cave.
 model=model_loc_2
@@ -140,7 +140,7 @@ length=2
 op1=Enter
 
 
-[mcannon_goblin_cave_exit]
+[mcanmudpile]
 name=Mud pile
 desc=Mud caved in from above.
 model=model_loc_13

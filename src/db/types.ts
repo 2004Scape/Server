@@ -183,6 +183,22 @@ export type tag = {
     name: string;
     color: string | null;
 };
+export type wealth_event = {
+    id: Generated<number>;
+    timestamp: string;
+    coord: number;
+    world: Generated<number>;
+    profile: Generated<string>;
+    event_type: Generated<number>;
+    account_id: number;
+    account_session: string;
+    account_items: string;
+    account_value: number;
+    recipient_id: number | null;
+    recipient_session: string | null;
+    recipient_items: string | null;
+    recipient_value: number | null;
+};
 export type DB = {
     account: account;
     account_session: account_session;
@@ -205,4 +221,5 @@ export type DB = {
     report: report;
     session: session;
     tag: tag;
+    wealth_event: wealth_event;
 };

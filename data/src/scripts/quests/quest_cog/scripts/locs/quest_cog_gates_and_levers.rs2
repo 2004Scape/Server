@@ -1,4 +1,4 @@
-[oploc1,quest_cog_rate_gate]
+[oploc1,ctratgatec]
 if (testbit(%cog_progress, ^quest_cog_rat_door_bit) = true) {
     ~mesbox("The death throes of the rats seem to have shaken the door|loose of its hinges. You pick it up and go through.");
     if_close;
@@ -15,17 +15,17 @@ if ($is_inside = true) {
     loc_add(movecoord(loc_coord, 1, 0, 0), loc_1541, 3, loc_shape, 500);
     sound_synth(grate_open, 0, 0);
 
-    if(loc_find(0_40_150_31_61, loc_33) = true) {
+    if(loc_find(0_40_150_31_61, ctlevera) = true) {
         // Temp note: dur does not need updated
         loc_del(500);
-        loc_add(loc_coord, loc_35, loc_angle, loc_shape, 500);
+        loc_add(loc_coord, ctlevera2, loc_angle, loc_shape, 500);
     }
 } else {
     mes("The door doesn't seem to open from here...");
 }
 
 // Lever into Rat Cage
-[oploc1,loc_33]
+[oploc1,ctlevera]
 p_delay(0);
 facesquare(movecoord(loc_coord,0, 0, -1));
 //anim 2141 on OSRS and RS3
@@ -33,15 +33,15 @@ anim(human_leverdown, 0);
 sound_synth(lever, 0, 0);
 // Temp note: dur does not need updated
 loc_del(500);
-loc_add(loc_coord, loc_35, loc_angle, loc_shape, 500);
+loc_add(loc_coord, ctlevera2, loc_angle, loc_shape, 500);
 
-if(loc_find(0_40_150_35_57, loc_37) = true) {
+if(loc_find(0_40_150_35_57, ctratgatea) = true) {
     // Temp note: dur does not need updated
     loc_del(500);
     loc_add(movecoord(loc_coord, 1, 0, 0), loc_1541, 3, loc_shape, 500);
 }
 
-[oploc1,loc_35]
+[oploc1,ctlevera2]
 p_delay(0);
 facesquare(movecoord(loc_coord,0, 0, -1));
 //anim 2141 on OSRS and RS3
@@ -49,19 +49,19 @@ anim(human_leverdown, 0);
 sound_synth(lever, 0, 0);
 // Temp note: dur does not need updated
 loc_del(500);
-loc_add(loc_coord, loc_33, loc_angle, loc_shape, 500);
+loc_add(loc_coord, ctlevera, loc_angle, loc_shape, 500);
 
 if(loc_find(0_40_150_36_57, loc_1541) = true) {
     // Temp note: dur does not need updated
     loc_del(500);
-    loc_add(movecoord(loc_coord, -1, 0, 0), loc_37, 2, loc_shape, 2);
+    loc_add(movecoord(loc_coord, -1, 0, 0), ctratgatea, 2, loc_shape, 2);
 }
 
-[oploc1,loc_34]
-@quest_cog_pull_dummy_lever(loc_36);
+[oploc1,ctleverb]
+@quest_cog_pull_dummy_lever(ctleverb2);
 
-[oploc1,loc_36]
-@quest_cog_pull_dummy_lever(loc_34);
+[oploc1,ctleverb2]
+@quest_cog_pull_dummy_lever(ctleverb);
 
 [label,quest_cog_pull_dummy_lever](loc $replacement_loc)
 p_delay(0);

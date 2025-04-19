@@ -49,13 +49,16 @@ if ($weapon = null) {
 .buildappearance(worn);
 
 [proc,bas_set_all](seq $seq)
-bas_readyanim($seq);
-bas_turnonspot($seq);
-bas_walk_f($seq);
-bas_walk_b($seq);
-bas_walk_l($seq);
-bas_walk_r($seq);
-bas_running($seq);
+~bas_set($seq, $seq, $seq, $seq, $seq, $seq, $seq);
+
+[proc,bas_set](seq $ready, seq $turn, seq $walkf, seq $walkb, seq $walkl, seq $walkr, seq $run)
+bas_readyanim($ready);
+bas_turnonspot($turn);
+bas_walk_f($walkf);
+bas_walk_b($walkb);
+bas_walk_l($walkl);
+bas_walk_r($walkr);
+bas_running($run);
 buildappearance(worn);
 
 [proc,headicon_add](int $icon)
@@ -94,7 +97,7 @@ buildappearance(worn);
 
 [proc,update_all](obj $previous_weapon)
 // secret sauce
-if (staffmodlevel >= 3 & inv_getobj(worn, ^wearpos_rhand) = poisoned_dagger) {
+if (staffmodlevel >= 3 & inv_getobj(worn, ^wearpos_rhand) = poisoned_dagger_p) {
     stat_add(hitpoints, calc(255 - stat(hitpoints)), 0);
     stat_add(attack, calc(255 - stat(attack)), 0);
     stat_add(strength, calc(255 - stat(strength)), 0);
@@ -117,7 +120,7 @@ if (%tutorial_progress > ^combat_instructor_unequipping_items) {
 
 [proc,.update_all](obj $previous_weapon)
 // secret sauce
-if (.staffmodlevel >= 3 & .inv_getobj(worn, ^wearpos_rhand) = poisoned_dagger) {
+if (.staffmodlevel >= 3 & .inv_getobj(worn, ^wearpos_rhand) = poisoned_dagger_p) {
     .stat_add(hitpoints, calc(255 - .stat(hitpoints)), 0);
     .stat_add(attack, calc(255 - .stat(attack)), 0);
     .stat_add(strength, calc(255 - .stat(strength)), 0);

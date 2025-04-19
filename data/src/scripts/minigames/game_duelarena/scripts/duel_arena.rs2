@@ -337,6 +337,7 @@ inv_moveitem(tradeoffer, inv, $obj, $total);
 %duelstatus = ^duelstatus_reset;
 if_settext(duel_select_type:status, "");
 if (.finduid(%duelpartner) = true) {
+    session_log(^log_moderator, "Removed stake <oc_debugname($obj)> x<tostring($total)> to <.name>");
     .%duelstatus = ^duelstatus_reset;
     .if_settext(duel_select_type:status, "");
 }
@@ -374,6 +375,7 @@ inv_moveitem(inv, tradeoffer, $obj, $total);
 %duelstatus = ^duelstatus_reset;
 if_settext(duel_select_type:status, "");
 if (.finduid(%duelpartner) = true) {
+    session_log(^log_moderator, "Added stake <oc_debugname($obj)> x<tostring($total)> to <.name>");
     .%duelstatus = ^duelstatus_reset;
     .if_settext(duel_select_type:status, "");
 }

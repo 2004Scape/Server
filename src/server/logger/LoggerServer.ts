@@ -3,6 +3,7 @@ import { WebSocket, WebSocketServer } from 'ws';
 import { db, loggerDb, toDbDate } from '#/db/query.js';
 import InputTrackingBlob from '#/engine/entity/tracking/InputEvent.js';
 import { SessionLog } from '#/engine/entity/tracking/SessionLog.js';
+import { WealthTransactionEvent } from '#/engine/entity/tracking/WealthEvent.js';
 import Environment from '#/util/Environment.js';
 import { printInfo } from '#/util/Logger.js';
 
@@ -37,6 +38,31 @@ export default class LoggerServer {
                             }));
 
                             await loggerDb.insertInto('account_session').values(schemaLogs).execute();
+                            break;
+                        }
+                        case 'wealth_event': {
+                            const { world, profile, events } = msg;
+
+                            const schemaEvents = events.map((x: WealthTransactionEvent) => ({
+                                timestamp: toDbDate(x.timestamp),
+                                coord: x.coord,
+                                world,
+                                profile,
+
+                                event_type: x.event_type,
+
+                                account_id: x.account_id,
+                                account_session: x.account_session,
+                                account_items: JSON.stringify(x.account_items),
+                                account_value: x.account_value,
+
+                                recipient_id: x.recipient_id,
+                                recipient_session: x.recipient_session,
+                                recipient_items: x.recipient_items ? JSON.stringify(x.recipient_items) : null,
+                                recipient_value: x.recipient_value
+                            }));
+
+                            await loggerDb.insertInto('wealth_event').values(schemaEvents).execute();
                             break;
                         }
                         case 'report': {

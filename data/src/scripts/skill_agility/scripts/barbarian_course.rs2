@@ -23,8 +23,8 @@ if(%barb_ropeswing_used >= map_clock) {
 }
 %barb_ropeswing_used = calc(map_clock + 3);
 if($delay > 0) p_delay($delay);
-loc_anim(rope_swing);
-~agility_exactmove(human_ropeswing, 20, 1, $start_pos, movecoord($start_pos, 0, 0, -5), 45, 70, ^exact_south, false);
+loc_anim(ropeswing_long);
+~agility_exactmove(human_ropeswing_long, 20, 1, $start_pos, movecoord($start_pos, 0, 0, -5), 45, 70, ^exact_south, false);
 mes("You skillfully swing across.");
 stat_advance(agility, 200);
 ~update_barbarian_varp(1);
@@ -36,7 +36,7 @@ mes("You walk carefully across the slippery log...");
 ~agility_force_move(0, human_walk_logbalance, movecoord(coord, -6, 0, 0));
 if(stat_random(stat(agility), 185, 260) = false) {
     mes("...You lose your footing and fall into the water.");
-    anim(human_sidestep_fall, 0);
+    anim(human_walk_logbalance_stumble, 0);
     facesquare(movecoord(coord, 0, 0, -2));
     p_delay(0);
     mes("Something in the water bites you.");
@@ -66,10 +66,10 @@ mes("You climb the netting...");
 [oploc1,barbarian_ledge]
 p_delay(0);
 mes("You put your foot on the ledge and try to edge across...");
-anim(human_ledge_on_left, 0);
-~agility_force_move(0, human_ledge_walk_left, movecoord(coord, -2, 0, 0));
+anim(human_into_sidestepl, 0);
+~agility_force_move(0, human_walk_sidestepl, movecoord(coord, -2, 0, 0));
 if(stat_random(stat(agility), 210, 260) = false) {
-    anim(human_sidestep_fall, 0);
+    anim(human_walk_logbalance_stumble, 0);
     facesquare(movecoord(coord, 0, 0, -2));
     mes("You slip and fall onto the spikes below.");
     p_delay(0);
@@ -81,7 +81,7 @@ if(stat_random(stat(agility), 210, 260) = false) {
     p_delay(0);
     return;
 }
-~agility_force_move(0, human_ledge_walk_left, movecoord(coord, -2, 0, 0));
+~agility_force_move(0, human_walk_sidestepl, movecoord(coord, -2, 0, 0));
 p_teleport(movecoord(coord, 0, 0, -1));
 mes("You skillfully edge across the gap.");
 p_delay(0);
@@ -121,7 +121,7 @@ if(%barb_obstacle_pipe_used >= map_clock) {
     return;
 }
 %barb_obstacle_pipe_used = calc(map_clock + 4);
-~agility_exactmove(human_pipesqueeze, 30, 3, $start_coord, movecoord($start_coord, 0, 0, $dist), 30, 126, $dir, true);
+~agility_exactmove(human_doublepipesqueeze, 30, 3, $start_coord, movecoord($start_coord, 0, 0, $dist), 30, 126, $dir, true);
 stat_advance(agility, 100);
 p_delay(0);
 

@@ -204,6 +204,7 @@ export const enum ScriptOpcode {
     LAST_COORD,
     SESSION_LOG, // custom
     WEALTH_LOG, // custom
+    WEALTH_EVENT, // custom
     P_RUN, // todo: real command name?
 
     // Npc ops (2500-2999)
@@ -647,6 +648,7 @@ export const ScriptOpcodeMap: Map<string, number> = new Map([
     ['LAST_COORD', ScriptOpcode.LAST_COORD],
     ['SESSION_LOG', ScriptOpcode.SESSION_LOG],
     ['WEALTH_LOG', ScriptOpcode.WEALTH_LOG],
+    ['WEALTH_EVENT', ScriptOpcode.WEALTH_EVENT],
     ['P_RUN', ScriptOpcode.P_RUN],
     ['NPC_ADD', ScriptOpcode.NPC_ADD],
     ['NPC_ANIM', ScriptOpcode.NPC_ANIM],

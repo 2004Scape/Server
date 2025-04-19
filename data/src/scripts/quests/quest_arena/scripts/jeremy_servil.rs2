@@ -8,7 +8,7 @@ switch_int(%arena_progress) {
     case ^arena_entered_ogre_fight, ^arena_defeated_ogre, ^arena_sent_jail, ^arena_defeated_scorpion, ^arena_defeated_bouncer : mes("Jeremy is in the arena with his father now.");
     case ^arena_obtained_armour, ^arena_spoken_drunkguard, ^arena_given_khali_brew :
         // https://youtu.be/Oltfw1gvWjQ?si=_bu-CCXvPLSecu_N&t=120
-        if(inv_total(inv, khazard_cell_keys) > 0) {
+        if(inv_total(inv, khazard_cellkeys) > 0) {
             @free_jeremy_servil;
         }
         ~chatplayer("<p,neutral>Hello.");
@@ -61,7 +61,7 @@ switch_int(%arena_progress) {
 if_close;
 def_coord $move_to = 0_40_49_56_31;
 def_int $delay = distance(coord, $move_to);
-if(loc_find(movecoord($move_to, 1, 0, 0), loc_80) = false) {
+if(loc_find(movecoord($move_to, 1, 0, 0), arena_jeremydoor) = false) {
     return;
 }
 p_walk(movecoord($move_to, 1, 0, 1));
@@ -84,8 +84,8 @@ def_int $angle = loc_angle;
 def_locshape $shape = loc_shape;
 $x, $z = ~door_open($angle, loc_shape);
 // Temp note: dur updated
-loc_change(loc_83, 3);
-loc_add(movecoord($loc_coord, $x, 0, $z), loc_37, modulo(add($angle, 1), 4), $shape, 3);
+loc_change(inviswall, 3);
+loc_add(movecoord($loc_coord, $x, 0, $z), ctratgatea, modulo(add($angle, 1), 4), $shape, 3);
 sound_synth(grate_open, 0, 0);
 p_delay(6);
 npc_del;
@@ -121,7 +121,7 @@ cam_lookat(movecoord($ogre_to, -1, 0, 0), 200, 0, 100);
 npc_setmode(none);
 npc_walk(movecoord($ogre_to, 1, 0, 0));
 p_delay($delay);
-if(loc_find(0_40_49_46_29, loc_78) = true & .loc_find(0_40_49_46_30, loc_77) = true) {
+if(loc_find(0_40_49_46_29, arena_inactivegate_r) = true & .loc_find(0_40_49_46_30, arena_inactivegate) = true) {
     // Temp note: dur updated
     loc_del(6);
     loc_add(movecoord(loc_coord, 1, 0, 0), loc_type, 3, loc_shape, 6);
@@ -138,7 +138,7 @@ p_delay(3);
 npc_anim(npc_param(attack_anim), 0);
 npc_setmode(null);
 if (.npc_findexact(0_40_49_40_32, justin_servil) = true) {
-    .npc_anim(human_defend_cowardly, 0);
+    .npc_anim(human_unarmed_def, 0);
     .npc_setmode(null);
 }
 p_delay(0);

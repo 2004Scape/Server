@@ -84,7 +84,7 @@ if(%desertrescue_progress >= ^desertrescue_traded_clothes) {
 switch_int(~p_choice2("It's funny you should say that...", 1, "That sounds awful.", 2)) {
     case 1 :
         ~chatplayer("<p,neutral>It's funny you should say that actually.");
-        ~chatnpc("<p,silent>@dbl@-- The slave looks at you blankly. --");
+        ~chatnpc("<p,idle>@dbl@-- The slave looks at you blankly. --");
         ~chatnpc("<p,neutral>Yeah, go on!");
         ~chatplayer("<p,quiz>If I can get the chains off, you have to give me something, okay?");
         ~chatnpc("<p,quiz>Sure, what do you want?");
@@ -227,7 +227,7 @@ npc_changetype_keepall(escaping_slave, 200); // 200t in osrs
 ~chatnpc("<p,angry>...in a mining camp...");
 ~chatnpc("<p,angry>...in the middle of the desert.");
 ~chatplayer("<p,neutral>Well I suppose I'd better be getting on my way now...");
-~chatnpc("<p,silent>@dbl@-- The slave nods in agreement and goes back to@dbl@work.");
+~chatnpc("<p,idle>@dbl@-- The slave nods in agreement and goes back to@dbl@work.");
 
 [opnpc1,escaping_slave]
 if(%desertrescue_progress >= ^desertrescue_traded_clothes) {

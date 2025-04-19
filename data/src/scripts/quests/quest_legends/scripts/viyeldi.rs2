@@ -1,4 +1,4 @@
-[opobj3,blue_hat]
+[opobj3,viyeldihat]
 if(%legends_progress >= ^legends_defeated_nezikchened_water | testbit(%legends_bits, ^legends_killed_viyeldi) = true) { // confirm this
     ~mesbox("Your hand passes straight through the hat as though it wasn't there at all. Nothing else seems to happen though.");
     return;
@@ -9,7 +9,9 @@ if(npc_find(obj_coord, viyeldi, 5, 0) = true) {
 }
 npc_add(obj_coord, viyeldi, 100);
 p_teleport(movecoord(obj_coord, 0, 0, 1));
-p_delay(1);
+p_delay(0);
+npc_setmode(playerfaceclose);
+p_delay(0);
 ~mesbox("Your hand passes through the hat as though it wasn't there at all. Instantly, the other clothes begin to animate and walk towards you!");
 @viyeldi_dialogue;
 
@@ -25,9 +27,9 @@ if(%legends_progress >= ^legends_defeated_nezikchened_water) { // confirm this
     mes("Your eyes must be playing tricks on you. There is nothing interesting there!");
     return;
 }
-if(inv_total(inv, dark_dagger) > 0) {
-    inv_del(inv, dark_dagger, 1);
-    inv_add(inv, glowing_dagger, 1);
+if(inv_total(inv, deathdagger) > 0) {
+    inv_del(inv, deathdagger, 1);
+    inv_add(inv, deathdaggerdone, 1);
     @stab_viyeldi;
 }
 
@@ -52,8 +54,8 @@ if(%legends_progress >= ^legends_defeated_nezikchened_water) { // confirm this
     mes("You have no further business with him.");
     return;
 }
-if(inv_total(worn, dark_dagger) > 0) {
-    inv_setslot(worn, ^wearpos_rhand, glowing_dagger, 1);
+if(inv_total(worn, deathdagger) > 0) {
+    inv_setslot(worn, ^wearpos_rhand, deathdaggerdone, 1);
     ~update_bas;
     @stab_viyeldi;
 }

@@ -1,6 +1,7 @@
 // TODO: find the right name
-[genkhazard]
-len1=seq_558
-len2=seq_559
-len3=seq_560
-len4=seq_561
+// ^ it's probably 'skull'
+[skull]
+len1=chatskull1
+len2=chatskull2
+len3=chatskull3
+len4=chatskull4

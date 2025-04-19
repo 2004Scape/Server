@@ -36,6 +36,7 @@ import { PlayerLoading } from '#/engine/entity/PlayerLoading.js';
 import { PlayerQueueRequest, PlayerQueueType, QueueType, ScriptArgument } from '#/engine/entity/PlayerQueueRequest.js';
 import { PlayerStat, PlayerStatEnabled, PlayerStatFree, PlayerStatNameMap } from '#/engine/entity/PlayerStat.js';
 import InputTracking from '#/engine/entity/tracking/InputTracking.js';
+import { WealthEventParams } from '#/engine/entity/tracking/WealthEvent.js';
 import { changeNpcCollision, changePlayerCollision, findNaivePath, reachedEntity, reachedLoc, reachedObj } from '#/engine/GameMap.js';
 import { Inventory, InventoryListener } from '#/engine/Inventory.js';
 import ScriptFile from '#/engine/script/ScriptFile.js';
@@ -621,6 +622,15 @@ export default class Player extends PathingEntity {
 
     addWealthLog(change: number, message: string, ...args: string[]) {
         World.addSessionLog(LoggerEventType.WEALTH, this.account_id, 'headless', CoordGrid.packCoord(this.level, this.x, this.z), change + ';' + message, ...args);
+    }
+
+    addWealthEvent(event: WealthEventParams) {
+        World.addWealthEvent({
+            coord: CoordGrid.packCoord(this.level, this.x, this.z),
+            account_id: this.account_id,
+            account_session: 'headless',
+            ...event
+        });
     }
 
     processEngineQueue() {

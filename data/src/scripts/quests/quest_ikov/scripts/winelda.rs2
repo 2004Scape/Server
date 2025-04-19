@@ -45,13 +45,13 @@ spotanim_npc(teleport_casting, 92, 0);
 cam_moveto(0_41_154_35_24, 1500, 100, 232);
 cam_lookat(coord, 50, 100, 232);
 p_delay(0);
-anim(seq_804, 0);
+anim(human_smokepuff_tele_disappear, 0);
 spotanim_map(small_smokepuff, coord, 0, 0);
 sound_synth(teleport_all, 0, 0);
 p_delay(2);
 cam_lookat(0_41_154_40_20, 50, 3, 10);
 p_delay(3);
-anim(seq_803, 0);
+anim(human_smokepuff_tele_appear, 0);
 p_teleport(0_41_154_40_20);
 spotanim_map(small_smokepuff, coord, 0, 0); // doesn't seem to show up visually? something to do with the seq being played
 p_delay(2);

@@ -23,7 +23,7 @@ param=crushdefence,1
 param=strengthbonus,5
 param=stabattack_anim,human_sword_stab
 param=slashattack_anim,human_sword_slash
-param=defend_anim,human_sword_defend2
+param=defend_anim,human_sword_def
 param=stab_sound,stabsword_stab
 param=slash_sound,stabsword_slash
 
@@ -53,7 +53,7 @@ param=crushdefence,1
 param=strengthbonus,7
 param=stabattack_anim,human_sword_stab
 param=slashattack_anim,human_sword_slash
-param=defend_anim,human_sword_defend2
+param=defend_anim,human_sword_def
 param=stab_sound,stabsword_stab
 param=slash_sound,stabsword_slash
 
@@ -81,7 +81,7 @@ param=crushdefence,1
 param=strengthbonus,12
 param=stabattack_anim,human_sword_stab
 param=slashattack_anim,human_sword_slash
-param=defend_anim,human_sword_defend2
+param=defend_anim,human_sword_def
 param=stab_sound,stabsword_stab
 param=slash_sound,stabsword_slash
 
@@ -110,7 +110,7 @@ param=crushdefence,1
 param=strengthbonus,12
 param=stabattack_anim,human_sword_stab
 param=slashattack_anim,human_sword_slash
-param=defend_anim,human_sword_defend2
+param=defend_anim,human_sword_def
 param=stab_sound,stabsword_stab
 param=slash_sound,stabsword_slash
 
@@ -139,7 +139,7 @@ param=crushdefence,1
 param=strengthbonus,17
 param=stabattack_anim,human_sword_stab
 param=slashattack_anim,human_sword_slash
-param=defend_anim,human_sword_defend2
+param=defend_anim,human_sword_def
 param=stab_sound,stabsword_stab
 param=slash_sound,stabsword_slash
 
@@ -168,7 +168,7 @@ param=crushdefence,1
 param=strengthbonus,24
 param=stabattack_anim,human_sword_stab
 param=slashattack_anim,human_sword_slash
-param=defend_anim,human_sword_defend2
+param=defend_anim,human_sword_def
 param=stab_sound,stabsword_stab
 param=slash_sound,stabsword_slash
 
@@ -197,6 +197,6 @@ param=crushdefence,1
 param=strengthbonus,39
 param=stabattack_anim,human_sword_stab
 param=slashattack_anim,human_sword_slash
-param=defend_anim,human_sword_defend2
+param=defend_anim,human_sword_def
 param=stab_sound,stabsword_stab
 param=slash_sound,stabsword_slash

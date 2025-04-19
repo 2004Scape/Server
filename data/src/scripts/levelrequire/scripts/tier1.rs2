@@ -13,12 +13,6 @@
 [opheld2,bronze_spear_p] @levelrequire_attack(1, last_slot);
 [opheld2,bronze_2h_sword] @levelrequire_attack(1, last_slot);
 
-[opheld2,bronze_dart] @levelrequire_ranged(1, last_slot);
-[opheld2,bronze_dart_p] @levelrequire_ranged(1, last_slot);
-[opheld2,bronze_knife] @levelrequire_ranged(1, last_slot);
-[opheld2,bronze_knife_p] @levelrequire_ranged(1, last_slot);
-[opheld2,bronze_thrownaxe] @levelrequire_ranged(1, last_slot);
-
 [opheld2,bronze_med_helm] @levelrequire_defence(1, last_slot);
 [opheld2,bronze_full_helm] @levelrequire_defence(1, last_slot);
 [opheld2,bronze_sq_shield] @levelrequire_defence(1, last_slot);
@@ -42,12 +36,6 @@
 [opheld2,iron_spear_p] @levelrequire_attack(1, last_slot);
 [opheld2,iron_2h_sword] @levelrequire_attack(1, last_slot);
 
-[opheld2,iron_dart] @levelrequire_ranged(1, last_slot);
-[opheld2,iron_dart_p] @levelrequire_ranged(1, last_slot);
-[opheld2,iron_knife] @levelrequire_ranged(1, last_slot);
-[opheld2,iron_knife_p] @levelrequire_ranged(1, last_slot);
-[opheld2,iron_thrownaxe] @levelrequire_ranged(1, last_slot);
-
 [opheld2,iron_med_helm] @levelrequire_defence(1, last_slot);
 [opheld2,iron_full_helm] @levelrequire_defence(1, last_slot);
 [opheld2,iron_sq_shield] @levelrequire_defence(1, last_slot);
@@ -67,6 +55,22 @@
 [opheld2,leather_chaps] @levelrequire_ranged(1, last_slot);
 [opheld2,leather_body] @levelrequire_ranged(1, last_slot);
 [opheld2,leather_cowl] @levelrequire_ranged(1, last_slot);
+
+[opheld2,bronze_dart] @levelrequire_ranged(1, last_slot);
+[opheld2,bronze_dart_p] @levelrequire_ranged(1, last_slot);
+[opheld2,bronze_knife] @levelrequire_ranged(1, last_slot);
+[opheld2,bronze_knife_p] @levelrequire_ranged(1, last_slot);
+[opheld2,bronze_thrownaxe] @levelrequire_ranged(1, last_slot);
+[opheld2,bronze_javelin] @levelrequire_ranged(1, last_slot);
+[opheld2,bronze_javelin_p] @levelrequire_ranged(1, last_slot);
+
+[opheld2,iron_dart] @levelrequire_ranged(1, last_slot);
+[opheld2,iron_dart_p] @levelrequire_ranged(1, last_slot);
+[opheld2,iron_knife] @levelrequire_ranged(1, last_slot);
+[opheld2,iron_knife_p] @levelrequire_ranged(1, last_slot);
+[opheld2,iron_thrownaxe] @levelrequire_ranged(1, last_slot);
+[opheld2,iron_javelin] @levelrequire_ranged(1, last_slot);
+[opheld2,iron_javelin_p] @levelrequire_ranged(1, last_slot);
 
 // Magic
 [opheld2,plainstaff] @levelrequire_magic_and_attack(1, 1, last_slot);

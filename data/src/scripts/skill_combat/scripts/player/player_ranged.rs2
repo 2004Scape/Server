@@ -43,6 +43,7 @@ if (~player_npc_hit_roll(%damagetype) = true) {
             if(npc_type = nezikchened) {
                 %com_maxhit = add(%com_maxhit, 5);
             }
+            if (npc_stat(defence) >= npc_basestat(defence)) npc_statsub(defence, 0, 5);
         } else {
              %com_maxhit = 0;
         }
@@ -60,9 +61,9 @@ if ($damage > 0 & $poison_severity > 0 & random(8) = 0) { // 1/8 chance to poiso
 }
 
 //mes("attackstyle: <tostring(%attackstyle)>, damagestyle: <tostring(%damagestyle)>, damage: <tostring($damage)>, damagetype: <tostring(%damagetype)>");
-def_int $delay = add(~player_ranged_use_weapon($rhand, $ammo), 30); // osrs it seems to be delayed an extra tick
 anim(%com_attackanim, 0);
 sound_synth(%com_attacksound, 0, 0);
+def_int $delay = add(~player_ranged_use_weapon($rhand, $ammo), 30); // osrs it seems to be delayed an extra tick
 ~npc_retaliate(calc($delay / 30));
 npc_queue(2, $damage, calc($delay / 30));
 npc_anim(npc_param(defend_anim), sub($delay, 30)); // delay npc this tick
@@ -129,6 +130,6 @@ return(~npc_projectile(coord, npc_uid, oc_param($ammo, proj_travel), 40, 36, 32,
 if (random($chance) ! 0 | $chance = ^true) {
     world_delay($delay);
     if (map_blocked(npc_coord) = false) {
-        obj_add(npc_coord, enum(obj, namedobj, ranged_ammo, $ammo), 1, 100);
+        obj_add(npc_coord, enum(obj, namedobj, ranged_ammo, $ammo), 1, 200);
     }
 }
