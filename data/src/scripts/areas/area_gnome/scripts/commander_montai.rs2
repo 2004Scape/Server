@@ -77,9 +77,9 @@ def_coord $dest_coord = map_findsquare(movecoord($projectile_start, -3, 0, 33), 
 def_int $delay = calc(distance($projectile_start, $dest_coord) / 2);
 if(loc_find(0_39_50_30_4, loc_2180) = true) {
     loc_anim(catapult_release_reset);
-    ~coord_projectile($projectile_start, $dest_coord, spotanim_70, 50, 2, 15, 25, 21, 64, 10);
+    ~coord_projectile($projectile_start, $dest_coord, catapultload, 50, 2, 15, 25, 21, 64, 10);
     world_delay($delay);
-    spotanim_map(spotanim_71, $dest_coord, 0, 0); // yes, this does appear far after the projectile lands
+    spotanim_map(catapultimpact, $dest_coord, 0, 0); // yes, this does appear far after the projectile lands
     huntall($dest_coord, 1, 0);
     if(huntnext = true) {
         ~damage_self(random(4)); // https://x.com/JagexAsh/status/1538818765676236801

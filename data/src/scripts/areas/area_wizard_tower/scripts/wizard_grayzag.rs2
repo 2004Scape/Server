@@ -23,7 +23,7 @@ spotanim_npc(curse_casting, 92, 0);
 npc_delay(1); // this also stops the player from attacking
 // new active npc
 sound_synth(smokepuff, 0, 0);
-spotanim_map(small_smokepuff, $imp_coord, 124, 0);
+spotanim_map(smokepuff, $imp_coord, 124, 0);
 npc_add($imp_coord, imp_grayzag, 200); // complete guess!
 npc_delay(1);
 npc_setmode(opplayer2);

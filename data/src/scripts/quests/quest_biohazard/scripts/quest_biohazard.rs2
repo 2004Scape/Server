@@ -66,9 +66,9 @@ if(%biohazard_progress = ^biohazard_used_birdfeed & inzone(0_39_51_63_35, 0_40_5
     inv_del(inv, pigeons, 1);
     inv_add(inv, pigeoncage, 1);
     %biohazard_progress = ^biohazard_released_pigeons;
-    ~coord_projectile(coord, 0_39_51_63_39, spotanim_72, 16, 130, 25, 20, 21, 10, 20);
-    ~coord_projectile(coord, 0_40_51_0_40, spotanim_72, 16, 125, 15, 20, 31, 10, 20);
-    ~coord_projectile(coord, 0_40_51_1_41, spotanim_72, 16, 120, 5, 20, 41, 10, 20);
+    ~coord_projectile(coord, 0_39_51_63_39, biopigeon_launch, 16, 130, 25, 20, 21, 10, 20);
+    ~coord_projectile(coord, 0_40_51_0_40, biopigeon_launch, 16, 125, 15, 20, 31, 10, 20);
+    ~coord_projectile(coord, 0_40_51_1_41, biopigeon_launch, 16, 120, 5, 20, 41, 10, 20);
     p_delay(4); // https://youtu.be/_ZNalEQB70o?si=VpjVRgRPfQ0D0GUu&t=273, 5t (not 6t like rsc would be if you combine mes)
     mes("The mourners frantically try to scare them away");
     return;

@@ -24,7 +24,7 @@ npc_delay(1);
 if(finduid(%npc_attacking_uid) = true) { // distance check?
     sound_synth(smokepuff, 0, 0);
 }
-spotanim_map(spotanim_184, npc_coord, 5, 0);
+spotanim_map(shilomist, npc_coord, 5, 0);
 npc_del;
 @rash_summon_minions(%npc_attacking_uid);
 
@@ -38,7 +38,7 @@ if(p_finduid($uid) = true & inzone(0_45_148_0_0, 0_45_148_63_63, coord) = true) 
         def_coord $npc_coord = map_findsquare(coord, 1, 4, ^map_findsquare_lineofwalk);
         npc_add($npc_coord, ~random_undead_one(), 500);
         sound_synth(smokepuff, 0, 0);
-        spotanim_map(small_smokepuff, $npc_coord, 5, 0);
+        spotanim_map(smokepuff, $npc_coord, 5, 0);
         npc_setmode(opplayer2);
         def_int $rand = random(5);
         if($rand = 0) npc_say("You cannot escape me, prepare to die.");
@@ -53,7 +53,7 @@ if(p_finduid($uid) = true & inzone(0_45_148_0_0, 0_45_148_63_63, coord) = true) 
 [opnpc1,Rashiliyia]
 if(inzone(0_43_146_9_16, 0_43_146_19_28, npc_coord) = true) {
     mes("Rashiliyia disappears as soon as you open your mouth.");
-    spotanim_map(spotanim_184, npc_coord, 5, 0);
+    spotanim_map(shilomist, npc_coord, 5, 0);
     npc_del;
 } else {
     mes("Rashiliyia doesn't seem interested in talking to you.");

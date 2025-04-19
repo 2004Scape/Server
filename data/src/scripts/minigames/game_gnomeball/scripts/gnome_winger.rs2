@@ -28,7 +28,7 @@ mes("You throw the ball.");
 anim(human_throw_gnomeball, 0);
 npc_anim(midget_catch, 28);
 
-def_int $duration = ~npc_projectile(coord, npc_uid, spotanim_55, 40, 36, 41, 15, 5, 11, 5);
+def_int $duration = ~npc_projectile(coord, npc_uid, gnomeball_travel, 40, 36, 41, 15, 5, 11, 5);
 def_int $delay = sub(divide($duration, 30), 1);
 sound_synth(catch, 0, 28);
 inv_delslot(worn, ^wearpos_rhand);
@@ -83,7 +83,7 @@ if (p_finduid(%npc_attacking_uid) = true) {
     npc_anim(midget_throw, 0);
     sound_synth(catch, 0, 22);
     sound_synth(throw, 0, 0);
-    ~player_projectile(npc_coord, coord, uid, spotanim_55, 36, 40, 34, 15, 15, 11, 2);
+    ~player_projectile(npc_coord, coord, uid, gnomeball_travel, 36, 40, 34, 15, 15, 11, 2);
     p_delay(0);
     npc_facesquare(coord);
     p_delay(0);

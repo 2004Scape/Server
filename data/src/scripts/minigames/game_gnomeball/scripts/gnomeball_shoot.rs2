@@ -37,7 +37,7 @@ facesquare(loc_coord);
 anim(human_throw_gnomeball, 0);
 sound_synth(throw, 0, 10);
 def_coord $land_coord = ~gnomeball_shoot_random(loc_coord);
-def_int $duration = ~coord_projectile(coord, $land_coord, spotanim_55, 40, 2, 41, 15, 0, 11, 5);
+def_int $duration = ~coord_projectile(coord, $land_coord, gnomeball_travel, 40, 2, 41, 15, 0, 11, 5);
 
 inv_delslot(worn, ^wearpos_rhand);
 ~update_all(ball_gnomeball_game);

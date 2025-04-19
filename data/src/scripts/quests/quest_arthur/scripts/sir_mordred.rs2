@@ -22,7 +22,7 @@ p_stopaction;
 npc_setmode(playerfaceclose);
 if(npc_find(coord, morgan_le_faye, 6, 0) = false) { 
     npc_add(^morgan_spawn_coord, morgan_le_faye, 50);
-    spotanim_map(small_smokepuff, npc_coord, 124, 0);
+    spotanim_map(smokepuff, npc_coord, 124, 0);
 }
 ~chatnpc("<p,sad>STOP! Please... spare my son.");
 switch_int(~p_choice3("Tell me how to untrap Merlin and I might.", 1, "No. He deserves to die.", 2, "Ok then.", 3)) {
@@ -49,12 +49,12 @@ switch_int(~p_choice3("Tell me how to untrap Merlin and I might.", 1, "No. He de
             p_delay(1);
         }
         if(npc_find(coord, morgan_le_faye, 6, 0) = true) { 
-            spotanim_map(small_smokepuff, npc_coord, 124, 0);
+            spotanim_map(smokepuff, npc_coord, 124, 0);
             npc_del;
         }
     case 3 :
         ~chatplayer("<p,neutral>OK then.");
-        spotanim_map(small_smokepuff, npc_coord, 124, 0);
+        spotanim_map(smokepuff, npc_coord, 124, 0);
         npc_del;
         ~mesbox("Morgan Le Faye vanishes.");
 }
@@ -72,6 +72,6 @@ switch_int(~p_choice3("Tell me how to untrap Merlin and I might.", 1, "No. He de
 
 [label,lefaye_ok]
 ~chatplayer("<p,neutral>Ok, I will go do all that.");
-spotanim_map(small_smokepuff, npc_coord, 124, 0);
+spotanim_map(smokepuff, npc_coord, 124, 0);
 npc_del;
 ~mesbox("Morgan Le Faye vanishes.");

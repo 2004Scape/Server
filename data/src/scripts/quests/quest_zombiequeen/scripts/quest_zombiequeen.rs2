@@ -70,7 +70,7 @@ if(inzone(0_44_46_52_1, 0_44_46_58_15, coord) = false) {
 if($counter >= 4) {
     return;
 }
-spotanim_map(spotanim_184, $mist_coord, 124, 3);
+spotanim_map(shilomist, $mist_coord, 124, 3);
 huntall($mist_coord, 1, 0);
 while (huntnext = true) {
     if($counter = 0) mes("A green thick mist rises from the ground and starts choking you.");
@@ -310,7 +310,7 @@ if(%zombiequeen_progress >= ^zombiequeen_complete
 }
 mes("Rashiliyia appears!");
 def_coord $spawn_coord = map_findsquare(coord, 1, 1, ^map_findsquare_lineofwalk);
-spotanim_map(spotanim_184, $spawn_coord, 5, 0);
+spotanim_map(shilomist, $spawn_coord, 5, 0);
 facesquare($spawn_coord);
 npc_add($spawn_coord, Rashiliyia, 100);
 //sound_synth(swamp_gas, 0, 0);
@@ -960,7 +960,7 @@ if(inzone(0_43_48_42_15, 0_43_48_46_18, coord) = true) {
     p_delay(1);
     ~mesbox("You hear an unearthly moaning sound as you see an apparition materialise right in front of you.");
     if_close;
-    spotanim_map(small_smokepuff, $spawn_coord, 5, 0);
+    spotanim_map(smokepuff, $spawn_coord, 5, 0);
     p_delay(0); // 1t
     npc_add($spawn_coord, zadimus_spirit, 30);
     ~chatnpc("<p,neutral>You have released me from my torture, and now I shall aid you. You seek to dispell the one who tortured and killed me. Remember this... 'I am the key, but only kin may approach her.'");
@@ -1126,7 +1126,7 @@ if(last_useitem = zqcorpse) {
         if_close;
         if(npc_find(coord, Rashiliyia, 7, 0) = false) {
             def_coord $spawn_coord = map_findsquare(coord, 1, 1, ^map_findsquare_lineofwalk);
-            spotanim_map(spotanim_184, $spawn_coord, 5, 0);
+            spotanim_map(shilomist, $spawn_coord, 5, 0);
             // swamp_gas
             p_delay(0); // 1t
             npc_add($spawn_coord, Rashiliyia, 100); // 100t osrs
@@ -1134,7 +1134,7 @@ if(last_useitem = zqcorpse) {
         ~chatnpc("<p,happy>You have my gratitude for releasing my spirit.|I have suffered a vengeful and evil existence.|I was tricked by Zamorak.|He returned my son to me as an undead creature."); // imgur.com/GoUvoVV
         ~chatnpc("<p,happy>My hatred and bitterness corrupted me. I tried to destroy all life... now I am released. And am grateful to contemplate eternal rest...");
         mes("Without warning the spirit of Rashiliyia disappears.");
-        spotanim_map(spotanim_184, npc_coord, 5, 0);
+        spotanim_map(shilomist, npc_coord, 5, 0);
         npc_del;
         inv_del(inv, zqcorpse, 1);
         queue(zombiequeen_quest_complete, 0);
@@ -1603,14 +1603,14 @@ switch_int(~p_choice2("Yes, I am sure.", 1, "No, I'll keep hold of the remains."
         p_delay(0); // 1t
         obj_add($coord, zqcorpse, 1, 5);
         p_delay(1); // 2t
-        spotanim_map(small_smokepuff, $coord, 5, 0);
+        spotanim_map(smokepuff, $coord, 5, 0);
         sound_synth(smokepuff, 0, 0);
         p_delay(1); // 2t
         obj_del;
         npc_add($coord, Rashiliyia, 30);
         %npc_attacking_uid = null;
         ~chatnpc("<p,angry>You have my gratitude for releasing me, there is still much that needs to be done before Shilo Village is utterly destroyed. Please excuse me, I have plans and people to execute!");
-        spotanim_map(small_smokepuff, $coord, 5, 0);
+        spotanim_map(smokepuff, $coord, 5, 0);
         npc_del;
         ~mesbox("The figure turns and soars away, quickly disappearing into the distance.");
     case 2 : mes("You decide to keep hold of Rashiliyia's remains.");

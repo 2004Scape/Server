@@ -213,7 +213,7 @@ if(inzone(0_39_54_14_20, 0_39_54_18_25, coord) = false) {
 def_coord $rock_coord = loc_coord;
 ~forcewalk2(movecoord($rock_coord, 0, 0, 8));
 anim(human_throwrope, 0);
-spotanim_map(spotanim_67, movecoord($rock_coord, 0, 0, 6), 0, 20);
+spotanim_map(rope_piece, movecoord($rock_coord, 0, 0, 6), 0, 20);
 p_delay(1);
 // Temp note: dur updated
 loc_change(loc_1997, 8);

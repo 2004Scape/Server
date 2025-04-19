@@ -27,7 +27,7 @@ while($i < 8) {
                     if(lineofwalk(coord, movecoord(coord, 2, 0, 0)) = true) {
                         p_telejump(movecoord(coord, 1, 0, 0));
                         anim(human_stunned, 0);
-                        spotanim_pl(stunned_thieving, 124, 0);
+                        spotanim_pl(stunned, 124, 0);
                         sound_synth(stunned, 0, 0);
                     }
                 }

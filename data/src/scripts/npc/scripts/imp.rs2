@@ -14,10 +14,10 @@ if (random(10) = 0 & sub(npc_stat(hitpoints), last_int) > 0) {
 ~npc_default_damage(last_int);
 
 [proc,npc_imp_teleport]
-spotanim_map(small_smokepuff, npc_coord, 124, 0);
+spotanim_map(smokepuff, npc_coord, 124, 0);
 if (finduid(%npc_aggressive_player) = true & npc_getmode = opplayer2) {
     sound_synth(smokepuff, 0, 0);
 }
 npc_tele(map_findsquare(npc_coord, 0, 20, ^map_findsquare_none));
-spotanim_map(small_smokepuff, npc_coord, 124, 0);
+spotanim_map(smokepuff, npc_coord, 124, 0);
 npc_setmode(null);
