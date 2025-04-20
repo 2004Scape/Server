@@ -1,4 +1,5 @@
-import { NpcInfoProt, Visibility } from '@2004scape/rsbuf';
+import { NpcInfoProt } from '@2004scape/rsbuf';
+import * as rsbuf from '@2004scape/rsbuf';
 import { CollisionFlag, CollisionType } from '@2004scape/rsmod-pathfinder';
 
 import HuntType from '#/cache/config/HuntType.js';
@@ -13,15 +14,16 @@ import { EntityLifeCycle } from '#/engine/entity/EntityLifeCycle.js';
 import HeroPoints from '#/engine/entity/HeroPoints.js';
 import { HuntCheckNotTooStrong } from '#/engine/entity/hunt/HuntCheckNotTooStrong.js';
 import { HuntModeType } from '#/engine/entity/hunt/HuntModeType.js';
+import { HuntNobodyNear } from '#/engine/entity/hunt/HuntNobodyNear.js';
 import { Interaction } from '#/engine/entity/Interaction.js';
 import Loc from '#/engine/entity/Loc.js';
 import { MoveRestrict } from '#/engine/entity/MoveRestrict.js';
 import { MoveSpeed } from '#/engine/entity/MoveSpeed.js';
 import { MoveStrategy } from '#/engine/entity/MoveStrategy.js';
+import { NpcEventRequest, NpcEventType } from '#/engine/entity/NpcEventRequest.js';
 import { NpcMode } from '#/engine/entity/NpcMode.js';
 import { NpcQueueRequest } from '#/engine/entity/NpcQueueRequest.js';
 import { NpcStat } from '#/engine/entity/NpcStat.js';
-import Obj from '#/engine/entity/Obj.js';
 import PathingEntity from '#/engine/entity/PathingEntity.js';
 import Player from '#/engine/entity/Player.js';
 import { isFlagged, findNaivePath } from '#/engine/GameMap.js';
@@ -34,6 +36,7 @@ import ScriptState from '#/engine/script/ScriptState.js';
 import ServerTriggerType from '#/engine/script/ServerTriggerType.js';
 import World from '#/engine/World.js';
 import LinkList from '#/util/LinkList.js';
+import { printError } from '#/util/Logger.js';
 
 export default class Npc extends PathingEntity {
     // constructor properties
@@ -98,6 +101,83 @@ export default class Npc extends PathingEntity {
         this.huntMode = npcType.huntmode;
         this.huntrange = npcType.huntrange;
         this.wanderCounter = 0;
+    }
+
+    turn(): void {
+        // Continue npc_delay'd script
+        if (this.isActive) {
+            if (this.delayed && World.currentTick >= this.delayedUntil) this.delayed = false;
+
+            // Resume suspended script
+            if (!this.delayed && this.activeScript && this.activeScript.execution === ScriptState.NPC_SUSPENDED) {
+                this.executeScript(this.activeScript);
+            }
+        }
+
+        // Npc Events (Respawn, Revert, Despawn)
+        if (!this.delayed && --this.lifecycleTick === 0) {
+            try {
+                // Respawn NPC
+                if (this.lifecycle === EntityLifeCycle.RESPAWN && !this.isActive) {
+                    World.addNpc(this, -1, false);
+                }
+                // Revert NPC
+                if (this.lifecycle === EntityLifeCycle.RESPAWN) {
+                    this.revert();
+                }
+                // Despawn NPC
+                else if (this.lifecycle === EntityLifeCycle.DESPAWN) {
+                    World.removeNpc(this, -1);
+                    // Queue despawn trigger
+                    const type = NpcType.get(this.type);
+                    const script = ScriptProvider.getByTrigger(ServerTriggerType.AI_DESPAWN, type.id, type.category);
+                    if (script) {
+                        World.npcEventQueue.addTail(new NpcEventRequest(NpcEventType.DESPAWN, script, this));
+                    }
+                }
+            } catch (err) {
+                // there was an error adding or removing them, try again next tick...
+                // ex: server is full on npc IDs (did we have a leak somewhere?) and we don't want to re-use the last ID (syncing related)
+                printError(`[World] NPC type:${this.type} lifecycle:${this.lifecycle} ID:${this.nid}`);
+                console.error(err);
+                this.setLifeCycle(1);
+            }
+        }
+
+        // Checks if Npc is alive and not delayed
+        if (!this.isValid()) {
+            return;
+        }
+
+        // Process partial hunt logic
+        if (this.huntMode !== -1) {
+            const hunt = HuntType.get(this.huntMode);
+
+            if (hunt.nobodyNear !== HuntNobodyNear.PAUSEHUNT || rsbuf.getNpcObservers(this.nid) > 0 || hunt.type === HuntModeType.PLAYER) {
+                // - hunt npc/obj/loc
+                if (hunt && hunt.type !== HuntModeType.PLAYER) {
+                    this.huntAll();
+                }
+
+                // Increment huntclock
+                this.huntClock++;
+            }
+        }
+
+        // Set target from hunt
+        this.consumeHuntTarget();
+        // Regen
+        this.processRegen();
+        // Timer
+        this.processTimers();
+        // Queue
+        this.processQueue();
+        // Movement-Interactions
+        this.processNpcModes();
+        // 500 tick reset
+        this.wanderReset();
+        // Dev note: Is this necessary?
+        this.validateDistanceWalked();
     }
 
     cleanup(): void {
@@ -213,7 +293,7 @@ export default class Npc extends PathingEntity {
         this.nextPatrolTick = -1;
     }
 
-    targetWithinMaxRange(): boolean {
+    private targetWithinMaxRange(): boolean {
         if (!this.target) {
             return true;
         }
@@ -321,7 +401,7 @@ export default class Npc extends PathingEntity {
         }
     }
 
-    processRegen() {
+    private processRegen() {
         const type = NpcType.get(this.type);
 
         // Hp regen timer counts down and procs every `regenRate` ticks
@@ -341,7 +421,7 @@ export default class Npc extends PathingEntity {
         }
     }
 
-    processTimers() {
+    private processTimers() {
         if (this.timerInterval > 0 && ++this.timerClock >= this.timerInterval) {
             const type = NpcType.get(this.type);
             const script = ScriptProvider.getByTrigger(ServerTriggerType.AI_TIMER, type.id, type.category);
@@ -352,7 +432,7 @@ export default class Npc extends PathingEntity {
         }
     }
 
-    processQueue() {
+    private processQueue() {
         for (const request of this.queue.all()) {
             // purposely only decrements the delay when the npc is not delayed
             if (!this.delayed) {
@@ -378,7 +458,7 @@ export default class Npc extends PathingEntity {
         this.queue.addTail(request);
     }
 
-    randomWalk(range: number) {
+    private randomWalk(range: number) {
         const dx = Math.round(Math.random() * (range * 2) - range);
         const dz = Math.round(Math.random() * (range * 2) - range);
         const destX = this.startX + dx;
@@ -389,40 +469,58 @@ export default class Npc extends PathingEntity {
         }
     }
 
-    validateTarget(): boolean {
-        if (this.target === null) {
+    private validateTarget(): boolean {
+        // Validate that the target is on the same floor
+        if (this.target?.level !== this.level) {
             return false;
         }
 
-        // For Npc targets, validate that the Npc is found in the world and that it's not delayed
-        if (this.target instanceof Npc && (typeof World.getNpc(this.target.nid) === 'undefined' || this.target.delayed)) {
+        // This is effectively checking if the Npc or Loc did a changetype
+        if ((this.target instanceof Npc || this.target instanceof Loc) && this.targetSubject.type !== this.target.type) {
             return false;
         }
 
-        // This is effectively checking if the npc did a changetype
-        if (this.target instanceof Npc && this.targetSubject.type !== -1 && World.getNpcByUid((this.targetSubject.type << 16) | this.target.nid) === null) {
-            return false;
+        // Npcs can interact with other Npcs who are delayed, so this is a special check
+        if (this.target instanceof Npc) {
+            return this.target.isActive;
         }
-
-        // For Obj targets, validate that the Obj still exists in the World
-        if (this.target instanceof Obj && World.getObj(this.target.x, this.target.z, this.level, this.target.type, Obj.NO_RECEIVER) === null) {
-            return false;
-        }
-
-        // For Loc targets, validate that the Loc still exists in the world
-        if (this.target instanceof Loc && World.getLoc(this.target.x, this.target.z, this.level, this.target.type) === null) {
-            return false;
-        }
-
-        // For Player targets, validate that the Player still exists in the world and is not in the process of logging out or invisible
-        if (this.target instanceof Player && (World.getPlayerByUid(this.target.uid) === null || this.target.loggingOut || this.target.visibility !== Visibility.DEFAULT)) {
-            return false;
-        }
-
-        return true;
+        return this.target.isValid();
     }
 
-    processNpcModes() {
+    // validateTarget(): boolean {
+    //     if (this.target === null) {
+    //         return false;
+    //     }
+
+    //     // For Npc targets, validate that the Npc is found in the world and that it's not delayed
+    //     if (this.target instanceof Npc && (typeof World.getNpc(this.target.nid) === 'undefined' || this.target.delayed)) {
+    //         return false;
+    //     }
+
+    //     // This is effectively checking if the npc did a changetype
+    //     if (this.target instanceof Npc && this.targetSubject.type !== -1 && World.getNpcByUid((this.targetSubject.type << 16) | this.target.nid) === null) {
+    //         return false;
+    //     }
+
+    //     // For Obj targets, validate that the Obj still exists in the World
+    //     if (this.target instanceof Obj && World.getObj(this.target.x, this.target.z, this.level, this.target.type, Obj.NO_RECEIVER) === null) {
+    //         return false;
+    //     }
+
+    //     // For Loc targets, validate that the Loc still exists in the world
+    //     if (this.target instanceof Loc && World.getLoc(this.target.x, this.target.z, this.level, this.target.type) === null) {
+    //         return false;
+    //     }
+
+    //     // For Player targets, validate that the Player still exists in the world and is not in the process of logging out or invisible
+    //     if (this.target instanceof Player && (World.getPlayerByUid(this.target.uid) === null || this.target.loggingOut || this.target.visibility !== Visibility.DEFAULT)) {
+    //         return false;
+    //     }
+
+    //     return true;
+    // }
+
+    private processNpcModes() {
         if (this.delayed) {
             return;
         }
@@ -452,7 +550,7 @@ export default class Npc extends PathingEntity {
         }
     }
 
-    noMode(): void {
+    private noMode(): void {
         this.updateMovement();
     }
 
@@ -479,7 +577,7 @@ export default class Npc extends PathingEntity {
         this.timerInterval = type.timer;
     }
 
-    wanderMode(): void {
+    private wanderMode(): void {
         const type = NpcType.get(this.type);
 
         // 1/8 chance to move every tick (even if they already have a destination)
@@ -488,18 +586,24 @@ export default class Npc extends PathingEntity {
         }
 
         this.updateMovement();
+    }
 
-        const onSpawn = this.x === this.startX && this.z === this.startZ && this.level === this.startLevel;
+    // Teleport the Npc to the spawn if they have failed to wander for 500 ticks
+    // This is separate from the mode on purpose
+    private wanderReset(): void {
+        if (this.targetOp === NpcMode.WANDER) {
+            const onSpawn = this.x === this.startX && this.z === this.startZ && this.level === this.startLevel;
 
-        if (this.wanderCounter++ >= 500) {
-            if (!onSpawn) {
-                this.teleport(this.startX, this.startZ, this.startLevel);
+            if (this.wanderCounter++ >= 500) {
+                if (!onSpawn) {
+                    this.teleport(this.startX, this.startZ, this.startLevel);
+                }
+                this.wanderCounter = 0;
             }
-            this.wanderCounter = 0;
         }
     }
 
-    patrolMode(): void {
+    private patrolMode(): void {
         const type = NpcType.get(this.type);
         const patrolPoints = type.patrolCoord;
         const patrolDelay = type.patrolDelay[this.nextPatrolPoint];
@@ -528,7 +632,7 @@ export default class Npc extends PathingEntity {
         this.queueWaypoint(dest.x, dest.z);
     }
 
-    playerEscapeMode(): void {
+    private playerEscapeMode(): void {
         if (!this.validateTarget() || !this.targetWithinMaxRange()) {
             this.resetDefaults();
             return;
@@ -588,7 +692,7 @@ export default class Npc extends PathingEntity {
         this.updateMovement();
     }
 
-    playerFollowMode(): void {
+    private playerFollowMode(): void {
         if (!this.validateTarget() || !this.targetWithinMaxRange()) {
             this.resetDefaults();
             return;
@@ -610,7 +714,7 @@ export default class Npc extends PathingEntity {
         this.startLevel = this.level;
     }
 
-    playerFaceMode(): void {
+    private playerFaceMode(): void {
         if (!this.validateTarget()) {
             this.resetDefaults();
             return;
@@ -633,7 +737,7 @@ export default class Npc extends PathingEntity {
         }
     }
 
-    playerFaceCloseMode(): void {
+    private playerFaceCloseMode(): void {
         if (!this.validateTarget()) {
             this.resetDefaults();
             return;
@@ -654,9 +758,9 @@ export default class Npc extends PathingEntity {
         }
     }
 
-    aiMode(): void {
+    private aiMode(): void {
         const type: NpcType = NpcType.get(this.type);
-        if (!this.target || !this.target.isValid() || this.target.level !== this.level || !this.targetWithinMaxRange()) {
+        if (!this.target || !this.target.isValid() || !this.targetWithinMaxRange()) {
             this.resetDefaults();
             return;
         }
@@ -726,128 +830,70 @@ export default class Npc extends PathingEntity {
     }
 
     private getTriggerForMode(mode: NpcMode | ServerTriggerType): ServerTriggerType | null {
-        if (mode === NpcMode.OPPLAYER1) {
-            return ServerTriggerType.AI_OPPLAYER1;
-        } else if (mode === NpcMode.OPPLAYER2) {
-            return ServerTriggerType.AI_OPPLAYER2;
-        } else if (mode === NpcMode.OPPLAYER3) {
-            return ServerTriggerType.AI_OPPLAYER3;
-        } else if (mode === NpcMode.OPPLAYER4) {
-            return ServerTriggerType.AI_OPPLAYER4;
-        } else if (mode === NpcMode.OPPLAYER5) {
-            return ServerTriggerType.AI_OPPLAYER5;
-        } else if (mode === NpcMode.APPLAYER1) {
-            return ServerTriggerType.AI_APPLAYER1;
-        } else if (mode === NpcMode.APPLAYER2) {
-            return ServerTriggerType.AI_APPLAYER2;
-        } else if (mode === NpcMode.APPLAYER3) {
-            return ServerTriggerType.AI_APPLAYER3;
-        } else if (mode === NpcMode.APPLAYER4) {
-            return ServerTriggerType.AI_APPLAYER4;
-        } else if (mode === NpcMode.APPLAYER5) {
-            return ServerTriggerType.AI_APPLAYER5;
-        } else if (mode === NpcMode.OPLOC1) {
-            return ServerTriggerType.AI_OPLOC1;
-        } else if (mode === NpcMode.OPLOC2) {
-            return ServerTriggerType.AI_OPLOC2;
-        } else if (mode === NpcMode.OPLOC3) {
-            return ServerTriggerType.AI_OPLOC3;
-        } else if (mode === NpcMode.OPLOC4) {
-            return ServerTriggerType.AI_OPLOC4;
-        } else if (mode === NpcMode.OPLOC5) {
-            return ServerTriggerType.AI_OPLOC5;
-        } else if (mode === NpcMode.APLOC1) {
-            return ServerTriggerType.AI_APLOC1;
-        } else if (mode === NpcMode.APLOC2) {
-            return ServerTriggerType.AI_APLOC2;
-        } else if (mode === NpcMode.APLOC3) {
-            return ServerTriggerType.AI_APLOC3;
-        } else if (mode === NpcMode.APLOC4) {
-            return ServerTriggerType.AI_APLOC4;
-        } else if (mode === NpcMode.APLOC5) {
-            return ServerTriggerType.AI_APLOC5;
-        } else if (mode === NpcMode.OPOBJ1) {
-            return ServerTriggerType.AI_OPOBJ1;
-        } else if (mode === NpcMode.OPOBJ2) {
-            return ServerTriggerType.AI_OPOBJ2;
-        } else if (mode === NpcMode.OPOBJ3) {
-            return ServerTriggerType.AI_OPOBJ3;
-        } else if (mode === NpcMode.OPOBJ4) {
-            return ServerTriggerType.AI_OPOBJ4;
-        } else if (mode === NpcMode.OPOBJ5) {
-            return ServerTriggerType.AI_OPOBJ5;
-        } else if (mode === NpcMode.APOBJ1) {
-            return ServerTriggerType.AI_APOBJ1;
-        } else if (mode === NpcMode.APOBJ2) {
-            return ServerTriggerType.AI_APOBJ2;
-        } else if (mode === NpcMode.APOBJ3) {
-            return ServerTriggerType.AI_APOBJ3;
-        } else if (mode === NpcMode.APOBJ4) {
-            return ServerTriggerType.AI_APOBJ4;
-        } else if (mode === NpcMode.APOBJ5) {
-            return ServerTriggerType.AI_APOBJ5;
-        } else if (mode === NpcMode.OPNPC1) {
-            return ServerTriggerType.AI_OPNPC1;
-        } else if (mode === NpcMode.OPNPC2) {
-            return ServerTriggerType.AI_OPNPC2;
-        } else if (mode === NpcMode.OPNPC3) {
-            return ServerTriggerType.AI_OPNPC3;
-        } else if (mode === NpcMode.OPNPC4) {
-            return ServerTriggerType.AI_OPNPC4;
-        } else if (mode === NpcMode.OPNPC5) {
-            return ServerTriggerType.AI_OPNPC5;
-        } else if (mode === NpcMode.APNPC1) {
-            return ServerTriggerType.AI_APNPC1;
-        } else if (mode === NpcMode.APNPC2) {
-            return ServerTriggerType.AI_APNPC2;
-        } else if (mode === NpcMode.APNPC3) {
-            return ServerTriggerType.AI_APNPC3;
-        } else if (mode === NpcMode.APNPC4) {
-            return ServerTriggerType.AI_APNPC4;
-        } else if (mode === NpcMode.APNPC5) {
-            return ServerTriggerType.AI_APNPC5;
-        } else if (mode === NpcMode.QUEUE1) {
-            return ServerTriggerType.AI_QUEUE1;
-        } else if (mode === NpcMode.QUEUE2) {
-            return ServerTriggerType.AI_QUEUE2;
-        } else if (mode === NpcMode.QUEUE3) {
-            return ServerTriggerType.AI_QUEUE3;
-        } else if (mode === NpcMode.QUEUE4) {
-            return ServerTriggerType.AI_QUEUE4;
-        } else if (mode === NpcMode.QUEUE5) {
-            return ServerTriggerType.AI_QUEUE5;
-        } else if (mode === NpcMode.QUEUE6) {
-            return ServerTriggerType.AI_QUEUE6;
-        } else if (mode === NpcMode.QUEUE7) {
-            return ServerTriggerType.AI_QUEUE7;
-        } else if (mode === NpcMode.QUEUE8) {
-            return ServerTriggerType.AI_QUEUE8;
-        } else if (mode === NpcMode.QUEUE9) {
-            return ServerTriggerType.AI_QUEUE9;
-        } else if (mode === NpcMode.QUEUE10) {
-            return ServerTriggerType.AI_QUEUE10;
-        } else if (mode === NpcMode.QUEUE11) {
-            return ServerTriggerType.AI_QUEUE11;
-        } else if (mode === NpcMode.QUEUE12) {
-            return ServerTriggerType.AI_QUEUE12;
-        } else if (mode === NpcMode.QUEUE13) {
-            return ServerTriggerType.AI_QUEUE13;
-        } else if (mode === NpcMode.QUEUE14) {
-            return ServerTriggerType.AI_QUEUE14;
-        } else if (mode === NpcMode.QUEUE15) {
-            return ServerTriggerType.AI_QUEUE15;
-        } else if (mode === NpcMode.QUEUE16) {
-            return ServerTriggerType.AI_QUEUE16;
-        } else if (mode === NpcMode.QUEUE17) {
-            return ServerTriggerType.AI_QUEUE17;
-        } else if (mode === NpcMode.QUEUE18) {
-            return ServerTriggerType.AI_QUEUE18;
-        } else if (mode === NpcMode.QUEUE19) {
-            return ServerTriggerType.AI_QUEUE19;
-        } else if (mode === NpcMode.QUEUE20) {
-            return ServerTriggerType.AI_QUEUE20;
-        }
-        return null;
+        const map: Partial<Record<NpcMode, ServerTriggerType>> = {
+            [NpcMode.OPPLAYER1]: ServerTriggerType.AI_OPPLAYER1,
+            [NpcMode.OPPLAYER2]: ServerTriggerType.AI_OPPLAYER2,
+            [NpcMode.OPPLAYER3]: ServerTriggerType.AI_OPPLAYER3,
+            [NpcMode.OPPLAYER4]: ServerTriggerType.AI_OPPLAYER4,
+            [NpcMode.OPPLAYER5]: ServerTriggerType.AI_OPPLAYER5,
+            [NpcMode.APPLAYER1]: ServerTriggerType.AI_APPLAYER1,
+            [NpcMode.APPLAYER2]: ServerTriggerType.AI_APPLAYER2,
+            [NpcMode.APPLAYER3]: ServerTriggerType.AI_APPLAYER3,
+            [NpcMode.APPLAYER4]: ServerTriggerType.AI_APPLAYER4,
+            [NpcMode.APPLAYER5]: ServerTriggerType.AI_APPLAYER5,
+            [NpcMode.OPLOC1]: ServerTriggerType.AI_OPLOC1,
+            [NpcMode.OPLOC2]: ServerTriggerType.AI_OPLOC2,
+            [NpcMode.OPLOC3]: ServerTriggerType.AI_OPLOC3,
+            [NpcMode.OPLOC4]: ServerTriggerType.AI_OPLOC4,
+            [NpcMode.OPLOC5]: ServerTriggerType.AI_OPLOC5,
+            [NpcMode.APLOC1]: ServerTriggerType.AI_APLOC1,
+            [NpcMode.APLOC2]: ServerTriggerType.AI_APLOC2,
+            [NpcMode.APLOC3]: ServerTriggerType.AI_APLOC3,
+            [NpcMode.APLOC4]: ServerTriggerType.AI_APLOC4,
+            [NpcMode.APLOC5]: ServerTriggerType.AI_APLOC5,
+            [NpcMode.OPOBJ1]: ServerTriggerType.AI_OPOBJ1,
+            [NpcMode.OPOBJ2]: ServerTriggerType.AI_OPOBJ2,
+            [NpcMode.OPOBJ3]: ServerTriggerType.AI_OPOBJ3,
+            [NpcMode.OPOBJ4]: ServerTriggerType.AI_OPOBJ4,
+            [NpcMode.OPOBJ5]: ServerTriggerType.AI_OPOBJ5,
+            [NpcMode.APOBJ1]: ServerTriggerType.AI_APOBJ1,
+            [NpcMode.APOBJ2]: ServerTriggerType.AI_APOBJ2,
+            [NpcMode.APOBJ3]: ServerTriggerType.AI_APOBJ3,
+            [NpcMode.APOBJ4]: ServerTriggerType.AI_APOBJ4,
+            [NpcMode.APOBJ5]: ServerTriggerType.AI_APOBJ5,
+            [NpcMode.OPNPC1]: ServerTriggerType.AI_OPNPC1,
+            [NpcMode.OPNPC2]: ServerTriggerType.AI_OPNPC2,
+            [NpcMode.OPNPC3]: ServerTriggerType.AI_OPNPC3,
+            [NpcMode.OPNPC4]: ServerTriggerType.AI_OPNPC4,
+            [NpcMode.OPNPC5]: ServerTriggerType.AI_OPNPC5,
+            [NpcMode.APNPC1]: ServerTriggerType.AI_APNPC1,
+            [NpcMode.APNPC2]: ServerTriggerType.AI_APNPC2,
+            [NpcMode.APNPC3]: ServerTriggerType.AI_APNPC3,
+            [NpcMode.APNPC4]: ServerTriggerType.AI_APNPC4,
+            [NpcMode.APNPC5]: ServerTriggerType.AI_APNPC5,
+            [NpcMode.QUEUE1]: ServerTriggerType.AI_QUEUE1,
+            [NpcMode.QUEUE2]: ServerTriggerType.AI_QUEUE2,
+            [NpcMode.QUEUE3]: ServerTriggerType.AI_QUEUE3,
+            [NpcMode.QUEUE4]: ServerTriggerType.AI_QUEUE4,
+            [NpcMode.QUEUE5]: ServerTriggerType.AI_QUEUE5,
+            [NpcMode.QUEUE6]: ServerTriggerType.AI_QUEUE6,
+            [NpcMode.QUEUE7]: ServerTriggerType.AI_QUEUE7,
+            [NpcMode.QUEUE8]: ServerTriggerType.AI_QUEUE8,
+            [NpcMode.QUEUE9]: ServerTriggerType.AI_QUEUE9,
+            [NpcMode.QUEUE10]: ServerTriggerType.AI_QUEUE10,
+            [NpcMode.QUEUE11]: ServerTriggerType.AI_QUEUE11,
+            [NpcMode.QUEUE12]: ServerTriggerType.AI_QUEUE12,
+            [NpcMode.QUEUE13]: ServerTriggerType.AI_QUEUE13,
+            [NpcMode.QUEUE14]: ServerTriggerType.AI_QUEUE14,
+            [NpcMode.QUEUE15]: ServerTriggerType.AI_QUEUE15,
+            [NpcMode.QUEUE16]: ServerTriggerType.AI_QUEUE16,
+            [NpcMode.QUEUE17]: ServerTriggerType.AI_QUEUE17,
+            [NpcMode.QUEUE18]: ServerTriggerType.AI_QUEUE18,
+            [NpcMode.QUEUE19]: ServerTriggerType.AI_QUEUE19,
+            [NpcMode.QUEUE20]: ServerTriggerType.AI_QUEUE20
+        };
+
+        return map[mode as NpcMode] ?? null;
     }
 
     // https://x.com/JagexAsh/status/1821236327150710829
@@ -885,7 +931,7 @@ export default class Npc extends PathingEntity {
         }
     }
 
-    consumeHuntTarget() {
+    private consumeHuntTarget() {
         const hunt: HuntType = HuntType.get(this.huntMode);
 
         // We need a huntTarget and a huntMode
@@ -985,7 +1031,7 @@ export default class Npc extends PathingEntity {
         return Array.from(new HuntIterator(World.currentTick, this.level, this.x, this.z, this.huntrange, hunt.checkVis, hunt.checkLoc, hunt.checkCategory, HuntModeType.SCENERY));
     }
 
-    // ----
+    // ---- Client visuals
 
     playAnimation(anim: number, delay: number) {
         if (anim >= SeqType.count) {

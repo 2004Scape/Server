@@ -11,7 +11,6 @@ import Loc from '#/engine/entity/Loc.js';
 import Npc from '#/engine/entity/Npc.js';
 import { NpcIteratorType } from '#/engine/entity/NpcIteratorType.js';
 import { NpcMode } from '#/engine/entity/NpcMode.js';
-import { NpcStat } from '#/engine/entity/NpcStat.js';
 import Obj from '#/engine/entity/Obj.js';
 import { NpcIterator } from '#/engine/script/ScriptIterators.js';
 import { ScriptOpcode } from '#/engine/script/ScriptOpcode.js';
@@ -225,7 +224,8 @@ const NpcOps: CommandHandlers = {
                 state.activeNpc.setInteraction(Interaction.SCRIPT, target, mode);
             }
         } else {
-            state.activeNpc.noMode();
+            state.activeNpc.resetDefaults();
+            return;
         }
     }),
 
@@ -247,11 +247,6 @@ const NpcOps: CommandHandlers = {
         const current = npc.levels[stat];
         const healed = current + ((constant + (base * percent) / 100) | 0);
         npc.levels[stat] = Math.min(healed, base);
-
-        // reset hero points if hp current == base
-        if (stat === NpcStat.HITPOINTS && npc.levels[NpcStat.HITPOINTS] >= npc.baseLevels[NpcStat.HITPOINTS]) {
-            npc.heroPoints.clear();
-        }
     }),
 
     [ScriptOpcode.NPC_TYPE]: checkedHandler(ActiveNpc, state => {
@@ -421,10 +416,6 @@ const NpcOps: CommandHandlers = {
         const current = npc.levels[stat];
         const added = current + ((constant + (base * percent) / 100) | 0);
         npc.levels[stat] = Math.min(added, 255);
-
-        if (stat === NpcStat.HITPOINTS && npc.levels[NpcStat.HITPOINTS] >= npc.baseLevels[NpcStat.HITPOINTS]) {
-            npc.heroPoints.clear();
-        }
     }),
 
     [ScriptOpcode.NPC_STATSUB]: checkedHandler(ActiveNpc, state => {
