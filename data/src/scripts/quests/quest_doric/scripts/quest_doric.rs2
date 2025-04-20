@@ -117,5 +117,5 @@ session_log(^log_adventure, "Quest complete: Doric's Quest");
 
 [label,trail_doric]
 // https://www.youtube.com/watch?v=Smadil97tFc
-~chatnpc("<p,neutral>So you've come to the right place?");
+~chatnpc("<p,neutral>So, you've come to the right place?");
 ~progress_clue_easy(trail_clue_easy_simple022, "Doric has given you another clue scroll!");
