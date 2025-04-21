@@ -35,6 +35,8 @@ switch_coord (loc_coord) {
     case 0_46_50_21_15 : p_telejump(1_46_50_24_15); // Rimmington House
     case 1_41_73_16_10 : p_telejump(2_41_73_16_13); // Grail castle - level 1
     case 0_40_49_53_3 : p_telejump(1_40_49_52_3);
+    case 0_45_73_41_13 : p_telejump(1_45_73_41_12); // Yanille west gate - level 0
+    case 0_45_73_41_24 : p_telejump(1_45_73_41_27); // Yanille west gate - level 0
     case default : @unhandled_stairs(loc_coord);
 }
 
@@ -76,6 +78,8 @@ switch_coord (loc_coord) {
     case 1_46_50_22_15 : p_telejump(0_46_50_20_15); // Rimmington House
     case 2_41_73_16_11 : p_telejump(1_41_73_16_9); // Grail castle - level 2
     case 1_40_49_53_3 : p_telejump(0_40_49_56_3);
+    case 1_45_73_41_13 : p_telejump(0_45_73_41_16); // Yanille west gate - level 1
+    case 1_45_73_41_25 : p_telejump(0_45_73_41_23); // Yanille west gate - level 1
     case default : @unhandled_stairs(loc_coord);
 }
 
