@@ -105,11 +105,25 @@ export const web = http.createServer(async (req, res) => {
                 context.per_deployment_token = getPublicPerDeploymentToken();
             }
 
-            if (plugin === 1 && Environment.NODE_DEBUG) {
+            if (Environment.NODE_DEBUG && plugin == 1) {
                 res.end(await ejs.renderFile('view/java.ejs', context));
             } else {
                 res.end(await ejs.renderFile('view/client.ejs', context));
             }
+        } else if (url.pathname === '/dev.cgi') {
+            const lowmem = tryParseInt(url.searchParams.get('lowmem'), 0);
+
+            res.setHeader('Content-Type', 'text/html');
+            res.writeHead(200);
+
+            const context = {
+                plugin: 0,
+                nodeid: 10,
+                lowmem,
+                members: Environment.NODE_MEMBERS
+            };
+
+            res.end(await ejs.renderFile('view/dev.ejs', context));
         } else if (fs.existsSync('public' + url.pathname)) {
             res.setHeader('Content-Type', MIME_TYPES.get(extname(url.pathname ?? '')) ?? 'text/plain');
             res.writeHead(200);
