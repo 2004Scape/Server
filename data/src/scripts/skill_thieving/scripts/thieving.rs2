@@ -111,13 +111,11 @@ p_delay(0);
 def_int $hitpoints = multiply(stat(hitpoints), 12);
 def_int $damage = calc($hitpoints / 100);
 $damage = calc($damage + 3);
-// Always damage type 1.
-damage(uid, 1, $damage);
-sound_synth(human_hit4, 0, 20);
+~damage_self($damage);
 
 [proc,disarm_trapped_chest](dbrow $data, loc $loc, coord $loc_coord, int $loc_angle, locshape $loc_shape)
 // https://www.youtube.com/watch?v=5SxYEdRdiPU
-mes("You find a trap on the chest,");
+mes("You find a trap on the chest, "); // extra space matches OSRS
 p_delay(1);
 mes("You disable the trap.");
 sound_synth(locked, 0, 0);
@@ -130,16 +128,16 @@ anim(human_openchest, 0);
 ~trapped_chest_check_for_reward($data);
 def_int $experience = db_getfield($data, trapped_chest:experience, 0);
 stat_advance(thieving, $experience);
-def_int $respawn_ticks = db_getfield($data, trapped_chest:respawn_ticks, 0);
-// Temp note: dur does not need updated
-loc_change(loc_2574, $respawn_ticks);
-
+def_int $respawn_ticks = ~scale_by_playercount(db_getfield($data, trapped_chest:respawn_ticks, 0));
+loc_change(loc_2574, 4); //opened chest
+p_delay(2);
 if (db_getfieldcount($data, trapped_chest:tele_coord) > 0) {
-    p_delay(3);
     mes("Suddenly a second magical trap triggers.");
-    sound_synth(chest_open, 0, 0);
-    p_telejump(db_getfield($data, trapped_chest:tele_coord, 0));
+    sound_synth(lever, 0, 0);
+    p_teleport(db_getfield($data, trapped_chest:tele_coord, 0));
 }
+loc_change(loc_2572, $respawn_ticks); //looted chest
+
 
 [proc,pick_pocket_check_for_reward](dbrow $data)
 def_int $count = calc(db_getfieldcount($data, pickpocket:loot) - 1);
