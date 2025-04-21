@@ -752,7 +752,7 @@ if (getbit_range(%legends_bits, ^legends_opal_used, ^legends_emerald_used) = ^le
     return;
 }
 mes("You see a delicate inscription.");
-~mesbox("You see a delicate inscription on the rock, it says. 'Once there were crystals to make the pool shine. Ordered in stature to retrieve what's mine.'");
+~mesbox("You see a delicate inscription on the rock, it says. @blu@'Once there were @blu@crystals to make the pool shine. Ordered in stature to retrieve what's @blu@mine.'");
 
 db_find(legends_gem_data:rock_coord, loc_coord);
 def_dbrow $data = db_findnext;
@@ -763,25 +763,25 @@ def_namedobj $gem = db_getfield($data, legends_gem_data:gem_named, 0);
 def_int $gem_bit = db_getfield($data, legends_gem_data:gem_bit, 0);
 if (testbit(%legends_bits, $gem_bit) = true) {
     if(obj_find(loc_coord, $gem) = false) obj_add(loc_coord, $gem, 1, 8);
-    mes("A barely visible <oc_name($gem)> becomes visible again, spinning above the rock.");
+    mes("A barely visible <lowercase(oc_name($gem))> becomes visible again, spinning above the rock.");
     mes("The gem soon begins to fade.");
 }
 
 [oplocu,legends_carved_rock]
 db_find(legends_gem_data:gem, last_useitem);
 def_dbrow $data = db_findnext;
-if ($data = null) {
-    ~displaymessage(^dm_default);
+if ($data = null) { // no NIH on rs3
     return;
 }
 def_namedobj $gem = db_getfield($data, legends_gem_data:gem_named, 0);
 def_coord $rock_coord = db_getfield($data, legends_gem_data:rock_coord, 0);
 def_int $gem_bit = db_getfield($data, legends_gem_data:gem_bit, 0);
 if (last_useitem = $gem) {
+    def_string $gem_name = lowercase(oc_name($gem));
     mes("You carefully move the gem closer to the rock.");
-    if(inv_total(inv, book_of_binding) > 0 | %legends_progress >= ^legends_complete) {
+    if(inv_total(inv, book_of_binding) > 0) { // no progress check here on rs3
         mes("Nothing seems to happen...");
-        mes("You have already found the Book of Binding.");
+        mes("The 'Book of Binding' seems to vibrate in your inventory.");
         return;
     }
     if($rock_coord ! loc_coord) {
@@ -789,16 +789,16 @@ if (last_useitem = $gem) {
         return;
     }
     if (testbit(%legends_bits, $gem_bit) = true) {
-        mes("You have already placed a <oc_name($gem)> above this rock.");
+        mes("You have already placed a <$gem_name> above this rock.");
         if(obj_find(loc_coord, $gem) = false) obj_add(loc_coord, $gem, 1, 8);
-        mes("A barely visible <oc_name($gem)> becomes visible again, spinning above the rock.");
+        mes("A barely visible <$gem_name> becomes visible again, spinning above the rock.");
         mes("The gem soon begins to fade.");
         return;
     }
     anim(human_pickuptable, 0);
     // confirm behaviour - slot or item?
     inv_dropslot(inv, loc_coord, last_useslot, 8);
-    mes("The <lowercase(oc_name($gem))> glows and starts spinning as it hovers above the rock.");
+    mes("The <$gem_name> glows and starts spinning as it hovers above the rock.");
     mes("The gem soon begins to fade.");
     %legends_bits = setbit(%legends_bits, $gem_bit);
     if (getbit_range(%legends_bits, ^legends_opal_used, ^legends_emerald_used) = ^legends_all_gems_used) {
@@ -815,9 +815,10 @@ if ($data = null) {
 def_namedobj $gem = db_getfield($data, legends_gem_data:gem_named, 0);
 def_coord $rock_coord = db_getfield($data, legends_gem_data:rock_coord, 0);
 def_int $gem_bit = db_getfield($data, legends_gem_data:gem_bit, 0);
-// todo: confirm distance req and that the gem does spawn on the rock
 if (loc_find($rock_coord, legends_carved_rock) = true & distance(coord, $rock_coord) <= 1) {
+    def_string $name = lowercase(oc_name(inv_getobj(inv, $last_slot)));
     if (testbit(%legends_bits, $gem_bit) = true & (inv_total(inv, book_of_binding) = 0 | %legends_progress < ^legends_complete)) {
+        mes("You have already placed the <$name> above this rock.");
         mes("The gem soon begins to fade.");
         if(obj_find($rock_coord, $gem) = false) obj_add(loc_coord, $gem, 1, 8);
         return;
@@ -833,7 +834,7 @@ if (loc_find($rock_coord, legends_carved_rock) = true & distance(coord, $rock_co
     }
     inv_dropslot(inv, $rock_coord, $last_slot, 8);
     anim(human_pickuptable, 0);
-    mes("The <lowercase(obj_name)> glows and starts spinning as it hovers above the rock.");
+    mes("The <$name> glows and starts spinning as it hovers above the rock.");
     mes("The gem soon begins to fade.");
     %legends_bits = setbit(%legends_bits, $gem_bit);
     if (getbit_range(%legends_bits, ^legends_opal_used, ^legends_emerald_used) = ^legends_all_gems_used) {
@@ -857,7 +858,7 @@ if(obj_coord = $rock_coord) {
         return;
     }
     %legends_bits = clearbit(%legends_bits, $gem_bit);
-    mes("You take the <obj_name>.");
+    mes("You take the <lowercase(obj_name)>.");
     // if your inv is full it will unset the bit and lose the gem!
     @pickup_obj_table;
 }
@@ -912,13 +913,13 @@ while($i < 13) {
         case 9 : spotanim_map(spotanim_198, 0_43_145_13_17, 108, 5);
         case 13 : spotanim_map(spotanim_198, 0_43_145_13_17, 66, 1);
     }
-    ~coord_projectile(0_43_145_12_29, 0_43_145_13_17, spotanim_185, 48, 0, 46, 45, 10, 45, 10);
-    ~coord_projectile(0_43_145_19_23, 0_43_145_13_17, spotanim_185, 48, 0, 46, 45, 10, 45, 10);
-    ~coord_projectile(0_43_145_20_15, 0_43_145_13_17, spotanim_185, 48, 0, 46, 45, 10, 45, 10);
-    ~coord_projectile(0_43_145_29_11, 0_43_145_13_17, spotanim_185, 48, 0, 46, 45, 10, 45, 10);
-    ~coord_projectile(0_43_145_22_7, 0_43_145_13_17, spotanim_185, 48, 0, 46, 45, 10, 45, 10);
-    ~coord_projectile(0_43_145_15_9, 0_43_145_13_17, spotanim_185, 48, 0, 46, 45, 10, 45, 10);
-    ~coord_projectile(0_43_145_5_17, 0_43_145_13_17, spotanim_185, 48, 0, 46, 45, 10, 45, 10);
+    ~coord_projectile(^legends_opal_coord, 0_43_145_13_17, spotanim_185, 48, 0, 46, 45, 10, 45, 10);
+    ~coord_projectile(^legends_jade_coord, 0_43_145_13_17, spotanim_185, 48, 0, 46, 45, 10, 45, 10);
+    ~coord_projectile(^legends_topaz_coord, 0_43_145_13_17, spotanim_185, 48, 0, 46, 45, 10, 45, 10);
+    ~coord_projectile(^legends_sapphire_coord, 0_43_145_13_17, spotanim_185, 48, 0, 46, 45, 10, 45, 10);
+    ~coord_projectile(^legends_diamond_coord, 0_43_145_13_17, spotanim_185, 48, 0, 46, 45, 10, 45, 10);
+    ~coord_projectile(^legends_ruby_coord, 0_43_145_13_17, spotanim_185, 48, 0, 46, 45, 10, 45, 10);
+    ~coord_projectile(^legends_emerald_coord, 0_43_145_13_17, spotanim_185, 48, 0, 46, 45, 10, 45, 10);
     $i = calc($i + 1);
     if($i = 13 & finduid(uid) = true) {
         mes("...Strangely a book appears near the middle of the room.");
@@ -929,6 +930,19 @@ while($i < 13) {
 
 [oploc1,legends_buried_skeleton]
 ~mesbox("It looks as if some poor unfortunate soul died here.");
+if_close;
+p_delay(1);
+def_obj $pickaxe = ~pickaxe_checker;
+if ($pickaxe = null) {
+    ~objbox(bronze_pickaxe, "You see that there's a Bronze Pickaxe among the skeletal remains. Would you like to take it?", 250, 0, 0);
+    def_int $op = ~p_choice2("Yes,I'll take the pickaxe.", 1, "No, I don't need a pickaxe.", 2);
+    if($op = 2) {
+        mes("You decide not to take the pickaxe.");
+        return;
+    }
+    ~objbox(bronze_pickaxe, "You carefully prise the pickaxe from the unfortunate dwarf's cold, dead hands.", 250, 0, 0);
+    return;
+}
 mes("There's nothing interesting about these remains.");
 
 [oploc1,legends_ancient_gate_5_closed]
