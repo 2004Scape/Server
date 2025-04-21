@@ -203,6 +203,7 @@ export default class Npc extends PathingEntity {
         }
     }
 
+    // Very awkward function - needs to be reworked
     resetEntity(respawn: boolean) {
         if (respawn) {
             this.currentType = this.baseType;
@@ -239,13 +240,13 @@ export default class Npc extends PathingEntity {
         }
     }
 
-    pathToPathingTarget(): void {
+    pathToTarget(): void {
         if (!this.target) {
             return;
         }
 
         if (!(this.target instanceof PathingEntity)) {
-            this.pathToTarget();
+            super.pathToTarget();
             return;
         }
 
@@ -254,7 +255,7 @@ export default class Npc extends PathingEntity {
             return;
         }
 
-        this.pathToTarget();
+        super.pathToTarget();
     }
 
     updateMovement(): boolean {
@@ -263,23 +264,24 @@ export default class Npc extends PathingEntity {
             return false;
         }
 
-        const { x, z } = CoordGrid.unpackCoord(this.waypoints[this.waypointIndex]);
-
-        if (this.walktrigger !== -1 && (this.x !== x || this.z !== z)) {
-            const type = NpcType.get(this.type);
-            const script = ScriptProvider.getByTrigger(ServerTriggerType.AI_QUEUE1 + this.walktrigger, type.id, type.category);
-            this.walktrigger = -1;
-
-            if (script) {
-                const state = ScriptRunner.init(script, this, null, [this.walktriggerArg]);
-                ScriptRunner.execute(state);
-            }
-        }
         if (this.moveSpeed !== MoveSpeed.INSTANT) {
             this.moveSpeed = this.defaultMoveSpeed();
         }
 
-        super.processMovement();
+        if (this.waypointIndex !== -1) {
+            if (this.walktrigger !== -1) {
+                const type = NpcType.get(this.type);
+                const script = ScriptProvider.getByTrigger(ServerTriggerType.AI_QUEUE1 + this.walktrigger, type.id, type.category);
+                this.walktrigger = -1;
+
+                if (script) {
+                    const state = ScriptRunner.init(script, this, null, [this.walktriggerArg]);
+                    ScriptRunner.execute(state);
+                }
+            }
+
+            super.processMovement();
+        }
 
         const moved = this.lastTickX !== this.x || this.lastTickZ !== this.z;
         if (moved) {
@@ -704,7 +706,7 @@ export default class Npc extends PathingEntity {
         }
 
         // Set dest to target
-        this.pathToPathingTarget();
+        this.pathToTarget();
 
         // Path
         this.updateMovement();
@@ -774,7 +776,7 @@ export default class Npc extends PathingEntity {
         }
 
         // Set dest to target
-        this.pathToPathingTarget();
+        this.pathToTarget();
 
         // Path
         const moved: boolean = this.updateMovement();

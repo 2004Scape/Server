@@ -223,7 +223,9 @@ const NpcOps: CommandHandlers = {
             } else {
                 state.activeNpc.setInteraction(Interaction.SCRIPT, target, mode);
             }
-        } else {
+        }
+        // There wasn't an active entity to target
+        else {
             state.activeNpc.resetDefaults();
             return;
         }
