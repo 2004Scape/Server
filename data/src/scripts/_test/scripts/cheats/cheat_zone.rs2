@@ -113,3 +113,14 @@ if (p_finduid(uid) = true) {
     p_delay(0);
     loc_change($loc_type, 3);
 }
+
+[debugproc,loc_del_event]
+if (p_finduid(uid) = true) {
+    p_telejump(0_37_55_32_30);
+    p_delay(0);
+    loc_add(0_37_55_32_30, loc_1276, 0, centrepiece_straight, 10);
+    p_delay(0);
+    loc_del(10);
+    p_delay(0);
+    loc_add(0_37_55_32_30, loc_1276, 0, centrepiece_straight, 100);
+}
