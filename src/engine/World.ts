@@ -1590,12 +1590,18 @@ class World {
 
     // Dev note: this function is slightly awkward, might need reworked
     removeObj(obj: Obj, duration: number): void {
+        // Obj must be active to remove it from the world. An inactive Obj is already removed
+        if (!obj.isActive) {
+            return;
+        }
         // printDebug(`[World] removeObj => name: ${ObjType.get(obj.type).name}, duration: ${duration}`);
         const zone: Zone = this.gameMap.getZone(obj.x, obj.z, obj.level);
         const adjustedDuration = this.scaleByPlayerCount(duration);
         zone.removeObj(obj);
         this.trackZone(zone);
-        if (duration > 0) {
+
+        // If the duration is positive and the Obj is a static obj, queue the Obj to respawn
+        if (duration > 0 && obj.lifecycle === EntityLifeCycle.RESPAWN) {
             obj.setLifeCycle(adjustedDuration);
         } else {
             obj.setLifeCycle(-1);
