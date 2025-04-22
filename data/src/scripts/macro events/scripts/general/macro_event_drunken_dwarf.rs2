@@ -74,7 +74,7 @@ inv_add(inv, beer, 1);
 
 npc_queue(6, 0, 0); // say good bye
 npc_settimer(0);
-~chatnpc("<p,drunk>I 'new it were you matey! 'Ere, have some ob the good stuff!"); // osrs
+~chatnpc("<p,drunk>I 'new it were you matey!|'Ere, have some ob the good stuff!"); // 2004
 
 // https://youtu.be/8wJZmDwcBKs?t=108
 [ai_opplayer2,macro_event_drunken_dwarf]
