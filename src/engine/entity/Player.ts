@@ -939,7 +939,14 @@ export default class Player extends PathingEntity {
     }
 
     hasInteraction() {
-        return this.target !== null;
+        if (!this.target) {
+            return false;
+        }
+        // The follow interaction doesn't do anything
+        if (this.targetOp === ServerTriggerType.APPLAYER3 || this.targetOp === ServerTriggerType.OPPLAYER3) {
+            return false;
+        }
+        return true;
     }
 
     getOpTrigger() {
@@ -1062,17 +1069,13 @@ export default class Player extends PathingEntity {
     }
 
     tryInteract(allowOpScenery: boolean): boolean {
-        if (this.target === null || !this.canAccess()) {
+        if (!this.target || !this.hasInteraction() || !this.canAccess()) {
             return false;
         }
 
         const opTrigger = this.getOpTrigger();
         const apTrigger = this.getApTrigger();
 
-        // The follow interaction doesn't do anything, just continue
-        if (this.targetOp === ServerTriggerType.APPLAYER3 || this.targetOp === ServerTriggerType.OPPLAYER3) {
-            return false;
-        }
         // Run the opTrigger if it exists and Player is within range
         // allowOpScenery controls if Locs and Objs can be op'd
         if (opTrigger && (this.target instanceof PathingEntity || allowOpScenery) && this.inOperableDistance(this.target)) {
