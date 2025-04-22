@@ -120,7 +120,7 @@ mes("...You safely cross to the other side.");
 
 [oploc1,wilderness_log_balance]
 p_teleport(movecoord(loc_coord, 1, 0, 0));
-p_delay(0);
+p_arrivedelay;
 mes("You walk carefully across the slippery log...");
 ~agility_force_move(0, human_walk_logbalance, movecoord(coord, -4, 0, 0));
 if(stat_random(stat(agility), 170, 250) = false) {
