@@ -1491,7 +1491,11 @@ class World {
     }
 
     removeLoc(loc: Loc, duration: number): void {
-        // printDebug(`[World] removeLoc => name: ${LocType.get(loc.type).name}, duration: ${duration}`);
+        // Locs can only be removed if they are currently active
+        if (!loc.isActive) {
+            return;
+        }
+
         const type: LocType = LocType.get(loc.type);
         if (type.blockwalk) {
             changeLocCollision(loc.shape, loc.angle, type.blockrange, type.length, type.width, type.active, loc.x, loc.z, loc.level, false);
@@ -1500,7 +1504,15 @@ class World {
         const zone: Zone = this.gameMap.getZone(loc.x, loc.z, loc.level);
         zone.removeLoc(loc);
         this.trackZone(zone);
-        loc.setLifeCycle(duration);
+
+        // If the Loc is static, set a respawn duratio
+        if (loc.lifecycle === EntityLifeCycle.RESPAWN) {
+            loc.setLifeCycle(duration);
+        }
+        // Dynamic locs get removed permanently
+        else {
+            loc.setLifeCycle(-1);
+        }
     }
 
     revertLoc(loc: Loc) {

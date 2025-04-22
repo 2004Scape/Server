@@ -55,9 +55,9 @@ export default class Loc extends NonPathingEntity {
         // Decrement lifecycle tick
         --this.lifecycleTick;
         if (this.lifecycleTick === 0) {
-            if (this.lifecycle === EntityLifeCycle.DESPAWN) {
+            if (this.lifecycle === EntityLifeCycle.DESPAWN && this.isActive) {
                 World.removeLoc(this, 0);
-            } else if (this.lifecycle === EntityLifeCycle.RESPAWN && this.isChanged()) {
+            } else if (this.lifecycle === EntityLifeCycle.RESPAWN && this.isChanged() && this.isActive) {
                 World.revertLoc(this);
             } else if (this.lifecycle === EntityLifeCycle.RESPAWN && !this.isActive) {
                 World.addLoc(this, 0);
