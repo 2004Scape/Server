@@ -759,7 +759,7 @@ const InvOps: CommandHandlers = {
         }
 
         if (wealthLog.size > 0) {
-            const items = Array.from(wealthLog.values().map(item => (({ cost: _cost, ...event }) => event)(item)));
+            const items = Array.from(wealthLog.values()).map(item => (({ cost: _cost, ...event }) => event)(item));
             state.activePlayer.addWealthEvent({
                 event_type: WealthEventType.DEATH,
                 account_items: items,
