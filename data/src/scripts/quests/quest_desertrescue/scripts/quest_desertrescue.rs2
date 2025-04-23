@@ -23,7 +23,7 @@ if(last_useitem = metal_key) {
     if($entering = false) {
         ~open_and_close_double_door2(~check_axis(coord, loc_coord, loc_angle), ^right, grate_open);
     } else {
-        @open_desertcamp_gate(^left);
+        @open_desertcamp_gate(^right);
     }
 }
 ~displaymessage(^dm_default);
