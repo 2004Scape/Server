@@ -2061,6 +2061,7 @@ if(%legends_progress < ^legends_replaced_totem) {
 ~mesbox("This totem pole is truly awe inspiring. It depicts powerful Karamjan animals. It is very well carved and brings a sense of power and spiritual fulfillment to anyone who looks at it.");
 
 [queue,legends_quest_complete]
+session_log(^log_adventure, "Quest complete: Legends Quest");
 %legends_progress = ^legends_complete;
 // todo: older ref image?
 // https://storage.googleapis.com/tannerdino/images/legendscomplt.png
