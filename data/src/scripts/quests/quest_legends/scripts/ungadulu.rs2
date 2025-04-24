@@ -184,9 +184,9 @@ if(%legends_progress = ^legends_defeated_nezikchened_fire) {
 
 [label,ungadulu_killed_spirit]
 if(testbit(%legends_bits, ^legends_given_dagger) = true) {
-    ~chatnpc("<p,happy>Yes, I've killed the Spirit. Actually the spirit turned out to be the Demon - Nezikchened.");
+    ~chatplayer("<p,happy>Yes, I've killed the Spirit. Actually the spirit turned out to be the Demon - Nezikchened.");
 } else {
-    ~chatnpc("<p,quiz>Yes, I've killed the Spirit. I used the spell you gave me, it was very effective in fact. Actually the spirit turned out to be the Demon - Nezikchened.");
+    ~chatplayer("<p,quiz>Yes, I've killed the Spirit. I used the spell you gave me, it was very effective in fact. Actually the spirit turned out to be the Demon - Nezikchened.");
 }
 ~chatnpc("<p,happy>That's truly a miracle Bwana, very few come out of Viyeldi's caves alive. And you managed to defeat Nezikchened a second time? You are truly a legend bwana. Do you have the sacred water as well?");
 @multi3("Yes, I've got the water.", ungadulu_got_water, "What do I do now?", ungadulu_whatnow, "Ok, thanks...", ungadulu_thanks);
