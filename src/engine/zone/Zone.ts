@@ -132,7 +132,7 @@ export default class Zone {
         const currentTick: number = World.currentTick;
         // full update necessary to clear client zone memory
         player.write(new UpdateZoneFullFollows(this.x, this.z, player.originX, player.originZ));
-        for (const obj of this.getAllObjsUnsafe(true)) {
+        for (const obj of this.getAllObjsUnsafe()) {
             if (obj.lastLifecycleTick === currentTick || (obj.receiver64 !== Obj.NO_RECEIVER && obj.receiver64 !== player.hash64)) {
                 continue;
             }
@@ -143,7 +143,7 @@ export default class Zone {
                 player.write(new ObjAdd(CoordGrid.packZoneCoord(obj.x, obj.z), obj.type, obj.count));
             }
         }
-        for (const loc of this.getAllLocsUnsafe(true)) {
+        for (const loc of this.getAllLocsUnsafe()) {
             if (loc.lastLifecycleTick === currentTick) {
                 continue;
             }
