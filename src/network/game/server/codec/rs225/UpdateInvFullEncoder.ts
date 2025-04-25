@@ -1,11 +1,11 @@
 import Component from '#/cache/config/Component.js';
 import Packet from '#/io/Packet.js';
 import MessageEncoder from '#/network/game/server/codec/MessageEncoder.js';
-import ServerProt from '#/network/game/server/codec/rs225/ServerProt.js';
+import ServerProt225 from '#/network/game/server/codec/rs225/ServerProt225.js';
 import UpdateInvFull from '#/network/game/server/model/UpdateInvFull.js';
 
 export default class UpdateInvFullEncoder extends MessageEncoder<UpdateInvFull> {
-    prot = ServerProt.UPDATE_INV_FULL;
+    prot = ServerProt225.UPDATE_INV_FULL;
 
     encode(buf: Packet, message: UpdateInvFull): void {
         const { component, inv } = message;

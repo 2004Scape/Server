@@ -1,10 +1,10 @@
 import Packet from '#/io/Packet.js';
 import MessageEncoder from '#/network/game/server/codec/MessageEncoder.js';
-import ServerProt from '#/network/game/server/codec/rs225/ServerProt.js';
+import ServerProt225 from '#/network/game/server/codec/rs225/ServerProt225.js';
 import DataLoc from '#/network/game/server/model/DataLoc.js';
 
 export default class DataLocEncoder extends MessageEncoder<DataLoc> {
-    prot = ServerProt.DATA_LOC;
+    prot = ServerProt225.DATA_LOC;
 
     encode(buf: Packet, message: DataLoc): void {
         buf.p1(message.x);

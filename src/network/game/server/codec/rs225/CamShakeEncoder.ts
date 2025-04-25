@@ -1,10 +1,10 @@
 import Packet from '#/io/Packet.js';
 import MessageEncoder from '#/network/game/server/codec/MessageEncoder.js';
-import ServerProt from '#/network/game/server/codec/rs225/ServerProt.js';
+import ServerProt225 from '#/network/game/server/codec/rs225/ServerProt225.js';
 import CamShake from '#/network/game/server/model/CamShake.js';
 
 export default class CamShakeEncoder extends MessageEncoder<CamShake> {
-    prot = ServerProt.CAM_SHAKE;
+    prot = ServerProt225.CAM_SHAKE;
 
     encode(buf: Packet, message: CamShake): void {
         buf.p1(message.type); // direction?

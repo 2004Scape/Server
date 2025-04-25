@@ -11,10 +11,10 @@ import World from '#/engine/World.js';
 import { WorldStat } from '#/engine/WorldStat.js';
 import Zone from '#/engine/zone/Zone.js';
 import Packet from '#/io/Packet.js';
-import { ClientProt, ClientProtRepository } from '#/network/game/client/codec/ClientProt.js';
 import ClientProtCategory from '#/network/game/client/codec/ClientProtCategory.js';
+import ClientProtProvider from '#/network/game/client/codec/ClientProtProvider.js';
 import MessageEncoder from '#/network/game/server/codec/MessageEncoder.js';
-import { ServerProtRepository } from '#/network/game/server/codec/ServerProt.js';
+import ServerProtProvider from '#/network/game/server/codec/ServerProtProvider.js';
 import CamLookAt from '#/network/game/server/model/CamLookAt.js';
 import CamMoveTo from '#/network/game/server/model/CamMoveTo.js';
 import IfClose from '#/network/game/server/model/IfClose.js';
@@ -96,7 +96,7 @@ export class NetworkPlayer extends Player {
                 this.client.opcode = NetworkPlayer.inBuf.g1();
             }
 
-            const packetType = ClientProt.byId[this.client.opcode];
+            const packetType = ClientProtProvider.ClientProt.byId[this.client.opcode];
             if (!packetType) {
                 this.client.opcode = -1;
                 this.client.close();
@@ -129,12 +129,12 @@ export class NetworkPlayer extends Player {
         NetworkPlayer.inBuf.pos = 0;
         this.client.read(NetworkPlayer.inBuf.data, 0, this.client.waiting);
 
-        const packetType = ClientProt.byId[this.client.opcode];
-        const decoder = ClientProtRepository.getDecoder(packetType);
+        const packetType = ClientProtProvider.ClientProt.byId[this.client.opcode];
+        const decoder = ClientProtProvider.ClientProtRepository.getDecoder(packetType);
 
         if (decoder) {
             const message = decoder.decode(NetworkPlayer.inBuf, this.client.waiting);
-            const success: boolean = ClientProtRepository.getHandler(packetType)?.handle(message, this) ?? false;
+            const success: boolean = ClientProtProvider.ClientProtRepository.getHandler(packetType)?.handle(message, this) ?? false;
             // todo: move out of model
             if (success && message.category === ClientProtCategory.USER_EVENT) {
                 this.userLimit++;
@@ -192,7 +192,7 @@ export class NetworkPlayer extends Player {
             return;
         }
 
-        const encoder: MessageEncoder<OutgoingMessage> | undefined = ServerProtRepository.getEncoder(message);
+        const encoder: MessageEncoder<OutgoingMessage> | undefined = ServerProtProvider.ServerProtRepository.getEncoder(message);
         if (!encoder) {
             printError(`No encoder for message ${message.constructor.name}`);
             return;
@@ -424,7 +424,7 @@ export function isBufferFull(player: Player): boolean {
     let total = 0;
 
     for (const message of player.buffer) {
-        const encoder: MessageEncoder<OutgoingMessage> | undefined = ServerProtRepository.getEncoder(message);
+        const encoder: MessageEncoder<OutgoingMessage> | undefined = ServerProtProvider.ServerProtRepository.getEncoder(message);
         if (!encoder) {
             return true;
         }

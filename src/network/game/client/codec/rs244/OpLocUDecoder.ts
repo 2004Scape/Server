@@ -1,11 +1,11 @@
 import Packet from '#/io/Packet.js';
 import MessageDecoder from '#/network/game/client/codec/MessageDecoder.js';
-import ClientProt from '#/network/game/client/codec/rs244/ClientProt.js';
+import ClientProt244 from '#/network/game/client/codec/rs244/ClientProt244.js';
 import OpLocU from '#/network/game/client/model/OpLocU.js';
 
 
 export default class OpLocUDecoder extends MessageDecoder<OpLocU> {
-    prot = ClientProt.OPLOCU;
+    prot = ClientProt244.OPLOCU;
 
     decode(buf: Packet) {
         const x = buf.g2();

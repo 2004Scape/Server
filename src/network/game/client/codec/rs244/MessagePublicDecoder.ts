@@ -1,11 +1,11 @@
 import Packet from '#/io/Packet.js';
 import MessageDecoder from '#/network/game/client/codec/MessageDecoder.js';
-import ClientProt from '#/network/game/client/codec/rs244/ClientProt.js';
+import ClientProt244 from '#/network/game/client/codec/rs244/ClientProt244.js';
 import MessagePublic from '#/network/game/client/model/MessagePublic.js';
 
 
 export default class MessagePublicDecoder extends MessageDecoder<MessagePublic> {
-    prot = ClientProt.MESSAGE_PUBLIC;
+    prot = ClientProt244.MESSAGE_PUBLIC;
 
     decode(buf: Packet, length: number) {
         const color = buf.g1();

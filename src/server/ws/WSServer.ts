@@ -69,11 +69,12 @@ export default class WSServer {
         this.wss.on('connection', (ws: WebSocket, req) => {
             const client = new WSClientSocket(ws, getIp(req) ?? 'unknown');
 
-            // todo: connection negotation feature flag for future revisions
-            const seed = new Packet(new Uint8Array(8));
-            seed.p4(Math.floor(Math.random() * 0xffffffff));
-            seed.p4(Math.floor(Math.random() * 0xffffffff));
-            client.send(seed.data);
+            if (Environment.ENGINE_REVISION <= 225) {
+                const seed = new Packet(new Uint8Array(8));
+                seed.p4(Math.floor(Math.random() * 0x00ffffff));
+                seed.p4(Math.floor(Math.random() * 0xffffffff));
+                client.send(seed.data);
+            }
 
             ws.on('message', (data: Buffer) => {
                 try {

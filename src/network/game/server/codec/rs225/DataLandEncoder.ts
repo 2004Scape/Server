@@ -1,10 +1,10 @@
 import Packet from '#/io/Packet.js';
 import MessageEncoder from '#/network/game/server/codec/MessageEncoder.js';
-import ServerProt from '#/network/game/server/codec/rs225/ServerProt.js';
+import ServerProt225 from '#/network/game/server/codec/rs225/ServerProt225.js';
 import DataLand from '#/network/game/server/model/DataLand.js';
 
 export default class DataLandEncoder extends MessageEncoder<DataLand> {
-    prot = ServerProt.DATA_LAND;
+    prot = ServerProt225.DATA_LAND;
 
     encode(buf: Packet, message: DataLand): void {
         buf.p1(message.x);

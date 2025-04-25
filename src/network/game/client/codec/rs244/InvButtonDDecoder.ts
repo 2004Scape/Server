@@ -1,11 +1,11 @@
 import Packet from '#/io/Packet.js';
 import MessageDecoder from '#/network/game/client/codec/MessageDecoder.js';
-import ClientProt from '#/network/game/client/codec/rs244/ClientProt.js';
+import ClientProt244 from '#/network/game/client/codec/rs244/ClientProt244.js';
 import InvButtonD from '#/network/game/client/model/InvButtonD.js';
 
 
 export default class InvButtonDDecoder extends MessageDecoder<InvButtonD> {
-    prot = ClientProt.INV_BUTTOND;
+    prot = ClientProt244.INV_BUTTOND;
 
     decode(buf: Packet) {
         const component = buf.g2();

@@ -1,4 +1,3 @@
-import MessageEncoder from '#/network/game/server/codec/MessageEncoder.js';
 import CamLookAtEncoder from '#/network/game/server/codec/rs225/CamLookAtEncoder.js';
 import CamMoveToEncoder from '#/network/game/server/codec/rs225/CamMoveToEncoder.js';
 import CamResetEncoder from '#/network/game/server/codec/rs225/CamResetEncoder.js';
@@ -70,7 +69,7 @@ import UpdateZonePartialEnclosedEncoder from '#/network/game/server/codec/rs225/
 import UpdateZonePartialFollowsEncoder from '#/network/game/server/codec/rs225/UpdateZonePartialFollowsEncoder.js';
 import VarpLargeEncoder from '#/network/game/server/codec/rs225/VarpLargeEncoder.js';
 import VarpSmallEncoder from '#/network/game/server/codec/rs225/VarpSmallEncoder.js';
-import ZoneMessageEncoder from '#/network/game/server/codec/ZoneMessageEncoder.js';
+import ServerProtRepository from '#/network/game/server/codec/ServerProtRepository.js';
 import CamLookAt from '#/network/game/server/model/CamLookAt.js';
 import CamMoveTo from '#/network/game/server/model/CamMoveTo.js';
 import CamReset from '#/network/game/server/model/CamReset.js';
@@ -142,24 +141,11 @@ import UpdateZonePartialEnclosed from '#/network/game/server/model/UpdateZonePar
 import UpdateZonePartialFollows from '#/network/game/server/model/UpdateZonePartialFollows.js';
 import VarpLarge from '#/network/game/server/model/VarpLarge.js';
 import VarpSmall from '#/network/game/server/model/VarpSmall.js';
-import OutgoingMessage from '#/network/game/server/OutgoingMessage.js';
-import ZoneMessage from '#/network/game/server/ZoneMessage.js';
 
-
-/* eslint-disable @typescript-eslint/no-explicit-any */
-type GenericOutgoingMessage<T extends OutgoingMessage> = new (...args: any[]) => T;
-
-class ServerProtRepository {
-    private encoders: Map<GenericOutgoingMessage<OutgoingMessage>, MessageEncoder<OutgoingMessage>> = new Map();
-
-    private bind<T extends OutgoingMessage>(message: GenericOutgoingMessage<T>, encoder: MessageEncoder<T>) {
-        if (this.encoders.has(message)) {
-            throw new Error(`[ServerProtRepository] Already defines a ${message.name}.`);
-        }
-        this.encoders.set(message, encoder);
-    }
-
+export default class ServerProtRepository225 extends ServerProtRepository {
     constructor() {
+        super();
+
         this.bind(CamLookAt, new CamLookAtEncoder());
         this.bind(CamMoveTo, new CamMoveToEncoder());
         this.bind(CamReset, new CamResetEncoder());
@@ -232,14 +218,4 @@ class ServerProtRepository {
         this.bind(VarpLarge, new VarpLargeEncoder());
         this.bind(VarpSmall, new VarpSmallEncoder());
     }
-
-    getEncoder<T extends OutgoingMessage>(message: T): MessageEncoder<T> | undefined {
-        return this.encoders.get(message.constructor as GenericOutgoingMessage<T>);
-    }
-
-    getZoneEncoder<T extends ZoneMessage>(message: T): ZoneMessageEncoder<T> | undefined {
-        return this.encoders.get(message.constructor as GenericOutgoingMessage<T>) as ZoneMessageEncoder<T> | undefined;
-    }
 }
-
-export default new ServerProtRepository();

@@ -1,11 +1,11 @@
 import Packet from '#/io/Packet.js';
 import MessageDecoder from '#/network/game/client/codec/MessageDecoder.js';
-import ClientProt from '#/network/game/client/codec/rs244/ClientProt.js';
+import ClientProt244 from '#/network/game/client/codec/rs244/ClientProt244.js';
 import ReportAbuse from '#/network/game/client/model/ReportAbuse.js';
 
 
 export default class ReportAbuseDecoder extends MessageDecoder<ReportAbuse> {
-    prot = ClientProt.REPORT_ABUSE;
+    prot = ClientProt244.REPORT_ABUSE;
 
     decode(buf: Packet) {
         const offender = buf.g8();

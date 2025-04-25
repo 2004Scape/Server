@@ -1,13 +1,13 @@
 import WordEnc from '#/cache/wordenc/WordEnc.js';
 import Packet from '#/io/Packet.js';
 import MessageEncoder from '#/network/game/server/codec/MessageEncoder.js';
-import ServerProt from '#/network/game/server/codec/rs244/ServerProt.js';
+import ServerProt244 from '#/network/game/server/codec/rs244/ServerProt244.js';
 import MessagePrivate from '#/network/game/server/model/MessagePrivate.js';
 import WordPack from '#/wordenc/WordPack.js';
 
 
 export default class MessagePrivateEncoder extends MessageEncoder<MessagePrivate> {
-    prot = ServerProt.MESSAGE_PRIVATE;
+    prot = ServerProt244.MESSAGE_PRIVATE;
 
     encode(buf: Packet, message: MessagePrivate): void {
         let staffLvl: number = message.staffModLevel;

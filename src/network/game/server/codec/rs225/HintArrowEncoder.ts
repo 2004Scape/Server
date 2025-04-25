@@ -1,10 +1,10 @@
 import Packet from '#/io/Packet.js';
 import MessageEncoder from '#/network/game/server/codec/MessageEncoder.js';
-import ServerProt from '#/network/game/server/codec/rs225/ServerProt.js';
+import ServerProt225 from '#/network/game/server/codec/rs225/ServerProt225.js';
 import HintArrow from '#/network/game/server/model/HintArrow.js';
 
 export default class HintArrowEncoder extends MessageEncoder<HintArrow> {
-    prot = ServerProt.HINT_ARROW;
+    prot = ServerProt225.HINT_ARROW;
 
     encode(buf: Packet, message: HintArrow): void {
         const { type, nid, pid, x, z, y } = message;

@@ -2172,7 +2172,7 @@ class World {
             // todo: login encoders/decoders
             client.opcode = World.loginBuf.g1();
 
-            if (client.opcode === 14) {
+            if (Environment.ENGINE_REVISION > 225 && client.opcode === 14) {
                 client.waiting = 1;
             } else if (client.opcode === 16 || client.opcode === 18) {
                 client.waiting = -1;
@@ -2200,7 +2200,7 @@ class World {
         World.loginBuf.pos = 0;
         client.read(World.loginBuf.data, 0, client.waiting);
 
-        if (client.opcode === 14) {
+        if (Environment.ENGINE_REVISION > 225 && client.opcode === 14) {
             client.send(Uint8Array.from([0, 0, 0, 0, 0, 0, 0, 0]));
 
             const _loginServer = World.loginBuf.g1();
@@ -2212,7 +2212,7 @@ class World {
             client.send(seed.data);
         } else if (client.opcode === 16 || client.opcode === 18) {
             const rev = World.loginBuf.g1();
-            if (rev !== 225) {
+            if (rev !== Environment.ENGINE_REVISION) {
                 client.send(Uint8Array.from([6]));
                 client.close();
                 return;

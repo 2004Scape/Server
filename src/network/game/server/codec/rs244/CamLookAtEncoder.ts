@@ -1,10 +1,10 @@
 import Packet from '#/io/Packet.js';
 import MessageEncoder from '#/network/game/server/codec/MessageEncoder.js';
-import ServerProt from '#/network/game/server/codec/rs244/ServerProt.js';
+import ServerProt244 from '#/network/game/server/codec/rs244/ServerProt244.js';
 import CamLookAt from '#/network/game/server/model/CamLookAt.js';
 
 export default class CamLookAtEncoder extends MessageEncoder<CamLookAt> {
-    prot = ServerProt.CAM_LOOKAT;
+    prot = ServerProt244.CAM_LOOKAT;
 
     encode(buf: Packet, message: CamLookAt): void {
         buf.p1(message.x);

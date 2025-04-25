@@ -12,7 +12,7 @@ import ZoneEvent from '#/engine/zone/ZoneEvent.js';
 import { ZoneEventType } from '#/engine/zone/ZoneEventType.js';
 import ZoneMap from '#/engine/zone/ZoneMap.js';
 import Packet from '#/io/Packet.js';
-import { ServerProtRepository } from '#/network/game/server/codec/ServerProt.js';
+import ServerProtProvider from '#/network/game/server/codec/ServerProtProvider.js';
 import ZoneMessageEncoder from '#/network/game/server/codec/ZoneMessageEncoder.js';
 import LocAddChange from '#/network/game/server/model/LocAddChange.js';
 import LocAnim from '#/network/game/server/model/LocAnim.js';
@@ -102,7 +102,7 @@ export default class Zone {
         const buf: Packet = Packet.alloc(1);
         for (const event of this.enclosed()) {
             // console.log(event.message);
-            const encoder: ZoneMessageEncoder<ZoneMessage> | undefined = ServerProtRepository.getZoneEncoder(event.message);
+            const encoder: ZoneMessageEncoder<ZoneMessage> | undefined = ServerProtProvider.ServerProtRepository.getZoneEncoder(event.message);
             if (typeof encoder === 'undefined') {
                 continue;
             }

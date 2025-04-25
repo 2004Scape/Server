@@ -1,6 +1,6 @@
-import ServerProt from '#/network/game/server/codec/rs244/ServerProt.js';
+import ServerProt244 from '#/network/game/server/codec/rs244/ServerProt244.js';
 
-export default class ZoneProt extends ServerProt {
+export default class ZoneProt extends ServerProt244 {
     // zone protocol
     static readonly LOC_MERGE = new ZoneProt(29, 14); // based on runescript command p_locmerge
     static readonly LOC_ANIM = new ZoneProt(155, 4); // NXT naming

@@ -1,11 +1,11 @@
 import Packet from '#/io/Packet.js';
 import MessageDecoder from '#/network/game/client/codec/MessageDecoder.js';
-import ClientProt from '#/network/game/client/codec/rs244/ClientProt.js';
+import ClientProt244 from '#/network/game/client/codec/rs244/ClientProt244.js';
 import MoveClick from '#/network/game/client/model/MoveClick.js';
 
 
 export default class MoveClickDecoder extends MessageDecoder<MoveClick> {
-    constructor(readonly prot: ClientProt) {
+    constructor(readonly prot: ClientProt244) {
         super();
     }
 
@@ -14,7 +14,7 @@ export default class MoveClickDecoder extends MessageDecoder<MoveClick> {
         const startX: number = buf.g2();
         const startZ: number = buf.g2();
 
-        const offset: number = this.prot === ClientProt.MOVE_MINIMAPCLICK ? 14 : 0;
+        const offset: number = this.prot === ClientProt244.MOVE_MINIMAPCLICK ? 14 : 0;
         const waypoints: number = (length - buf.pos - offset) / 2;
 
         const path: { x: number; z: number }[] = [{ x: startX, z: startZ }];
@@ -26,6 +26,6 @@ export default class MoveClickDecoder extends MessageDecoder<MoveClick> {
             });
         }
 
-        return new MoveClick(path, ctrlHeld, this.prot === ClientProt.MOVE_OPCLICK);
+        return new MoveClick(path, ctrlHeld, this.prot === ClientProt244.MOVE_OPCLICK);
     }
 }

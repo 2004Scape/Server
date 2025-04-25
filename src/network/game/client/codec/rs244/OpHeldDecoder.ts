@@ -1,12 +1,12 @@
 import Packet from '#/io/Packet.js';
 import MessageDecoder from '#/network/game/client/codec/MessageDecoder.js';
-import ClientProt from '#/network/game/client/codec/rs244/ClientProt.js';
+import ClientProt244 from '#/network/game/client/codec/rs244/ClientProt244.js';
 import OpHeld from '#/network/game/client/model/OpHeld.js';
 
 
 export default class OpHeldDecoder extends MessageDecoder<OpHeld> {
     constructor(
-        readonly prot: ClientProt,
+        readonly prot: ClientProt244,
         readonly op: number
     ) {
         super();

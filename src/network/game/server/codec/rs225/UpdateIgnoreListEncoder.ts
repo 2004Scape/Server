@@ -1,10 +1,10 @@
 import Packet from '#/io/Packet.js';
 import MessageEncoder from '#/network/game/server/codec/MessageEncoder.js';
-import ServerProt from '#/network/game/server/codec/rs225/ServerProt.js';
+import ServerProt225 from '#/network/game/server/codec/rs225/ServerProt225.js';
 import UpdateIgnoreList from '#/network/game/server/model/UpdateIgnoreList.js';
 
 export default class UpdateIgnoreListEncoder extends MessageEncoder<UpdateIgnoreList> {
-    prot = ServerProt.UPDATE_IGNORELIST;
+    prot = ServerProt225.UPDATE_IGNORELIST;
 
     encode(buf: Packet, message: UpdateIgnoreList): void {
         for (const name of message.names) {

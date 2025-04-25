@@ -1,11 +1,11 @@
 import Packet from '#/io/Packet.js';
 import MessageDecoder from '#/network/game/client/codec/MessageDecoder.js';
-import ClientProt from '#/network/game/client/codec/rs244/ClientProt.js';
+import ClientProt244 from '#/network/game/client/codec/rs244/ClientProt244.js';
 import OpPlayerU from '#/network/game/client/model/OpPlayerU.js';
 
 
 export default class OpPlayerUDecoder extends MessageDecoder<OpPlayerU> {
-    prot = ClientProt.OPPLAYERU;
+    prot = ClientProt244.OPPLAYERU;
 
     decode(buf: Packet) {
         const pid = buf.g2();

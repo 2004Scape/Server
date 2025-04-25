@@ -1,10 +1,10 @@
 import Packet from '#/io/Packet.js';
 import MessageEncoder from '#/network/game/server/codec/MessageEncoder.js';
-import ServerProt from '#/network/game/server/codec/rs244/ServerProt.js';
+import ServerProt244 from '#/network/game/server/codec/rs244/ServerProt244.js';
 import UpdateInvPartial from '#/network/game/server/model/UpdateInvPartial.js';
 
 export default class UpdateInvPartialEncoder extends MessageEncoder<UpdateInvPartial> {
-    prot = ServerProt.UPDATE_INV_PARTIAL;
+    prot = ServerProt244.UPDATE_INV_PARTIAL;
 
     encode(buf: Packet, message: UpdateInvPartial): void {
         const { component, inv } = message;

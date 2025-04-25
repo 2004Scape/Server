@@ -1,11 +1,11 @@
 import { CoordGrid } from '#/engine/CoordGrid.js';
 import Packet from '#/io/Packet.js';
 import MessageEncoder from '#/network/game/server/codec/MessageEncoder.js';
-import ServerProt from '#/network/game/server/codec/rs225/ServerProt.js';
+import ServerProt225 from '#/network/game/server/codec/rs225/ServerProt225.js';
 import UpdateZonePartialEnclosed from '#/network/game/server/model/UpdateZonePartialEnclosed.js';
 
 export default class UpdateZonePartialEnclosedEncoder extends MessageEncoder<UpdateZonePartialEnclosed> {
-    prot = ServerProt.UPDATE_ZONE_PARTIAL_ENCLOSED;
+    prot = ServerProt225.UPDATE_ZONE_PARTIAL_ENCLOSED;
 
     encode(buf: Packet, message: UpdateZonePartialEnclosed): void {
         buf.p1((message.zoneX << 3) - CoordGrid.zoneOrigin(message.originX));
