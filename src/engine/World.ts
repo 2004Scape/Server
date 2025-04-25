@@ -1000,7 +1000,9 @@ class World {
 
                 player.client.state = 1;
 
-                if (player.staffModLevel >= 1) {
+                if (Environment.ENGINE_REVISION > 225 && player.staffModLevel >= 2) {
+                    player.client.send(Uint8Array.from([19]));
+                } else if (player.staffModLevel >= 1) {
                     player.client.send(Uint8Array.from([18]));
                 } else {
                     player.client.send(Uint8Array.from([2]));
