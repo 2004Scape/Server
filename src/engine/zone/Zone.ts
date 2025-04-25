@@ -132,7 +132,7 @@ export default class Zone {
         const currentTick: number = World.currentTick;
         // full update necessary to clear client zone memory
         player.write(new UpdateZoneFullFollows(this.x, this.z, player.originX, player.originZ));
-        for (const obj of this.getAllObjsUnsafe(true)) {
+        for (const obj of this.getAllObjsUnsafe()) {
             if (obj.lastLifecycleTick === currentTick || (obj.receiver64 !== Obj.NO_RECEIVER && obj.receiver64 !== player.hash64)) {
                 continue;
             }
@@ -143,7 +143,7 @@ export default class Zone {
                 player.write(new ObjAdd(CoordGrid.packZoneCoord(obj.x, obj.z), obj.type, obj.count));
             }
         }
-        for (const loc of this.getAllLocsUnsafe(true)) {
+        for (const loc of this.getAllLocsUnsafe()) {
             if (loc.lastLifecycleTick === currentTick) {
                 continue;
             }
@@ -228,14 +228,23 @@ export default class Zone {
     changeLoc(loc: Loc) {
         // If a loc is inactive, it should be set to active when we call a change
         loc.isActive = true;
+
+        // Move the Loc to the end of the list
+        loc.unlink();
+        this.locs.addTail(loc);
+
         const coord: number = CoordGrid.packZoneCoord(loc.x, loc.z);
         this.queueEvent(loc, new ZoneEvent(ZoneEventType.ENCLOSED, -1n, new LocAddChange(coord, loc.type, loc.shape, loc.angle)));
     }
 
     removeLoc(loc: Loc): void {
         const coord: number = CoordGrid.packZoneCoord(loc.x, loc.z);
-        if (loc.lifecycle === EntityLifeCycle.DESPAWN) {
-            loc.unlink();
+        loc.unlink();
+
+        // If it's a static loc, re-append it to the end of the list
+        if (loc.lifecycle === EntityLifeCycle.RESPAWN) {
+            this.locs.addTail(loc);
+        } else {
             this.locsCount--;
         }
 
