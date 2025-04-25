@@ -228,14 +228,23 @@ export default class Zone {
     changeLoc(loc: Loc) {
         // If a loc is inactive, it should be set to active when we call a change
         loc.isActive = true;
+
+        // Move the Loc to the end of the list
+        loc.unlink();
+        this.locs.addTail(loc);
+
         const coord: number = CoordGrid.packZoneCoord(loc.x, loc.z);
         this.queueEvent(loc, new ZoneEvent(ZoneEventType.ENCLOSED, -1n, new LocAddChange(coord, loc.type, loc.shape, loc.angle)));
     }
 
     removeLoc(loc: Loc): void {
         const coord: number = CoordGrid.packZoneCoord(loc.x, loc.z);
-        if (loc.lifecycle === EntityLifeCycle.DESPAWN) {
-            loc.unlink();
+        loc.unlink();
+
+        // If it's a static loc, re-append it to the end of the list
+        if (loc.lifecycle === EntityLifeCycle.RESPAWN) {
+            this.locs.addTail(loc);
+        } else {
             this.locsCount--;
         }
 
