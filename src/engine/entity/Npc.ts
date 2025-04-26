@@ -174,8 +174,6 @@ export default class Npc extends PathingEntity {
         this.processQueue();
         // Movement-Interactions
         this.processNpcModes();
-        // 500 tick reset
-        this.wanderReset();
         // Dev note: Is this necessary?
         this.validateDistanceWalked();
     }
@@ -304,13 +302,8 @@ export default class Npc extends PathingEntity {
         }
         const type = NpcType.get(this.type);
 
-        const apTrigger: boolean =
-            (this.targetOp >= NpcMode.APNPC1 && this.targetOp <= NpcMode.APNPC5) ||
-            (this.targetOp >= NpcMode.APPLAYER1 && this.targetOp <= NpcMode.APPLAYER5) ||
-            (this.targetOp >= NpcMode.APLOC1 && this.targetOp <= NpcMode.APLOC5) ||
-            (this.targetOp >= NpcMode.APOBJ1 && this.targetOp <= NpcMode.APOBJ5);
-        const opTrigger: boolean = !apTrigger;
-        if (opTrigger) {
+        // OpTrigger maxrange
+        if (this.checkOpTrigger()) {
             const distanceToX = Math.abs(this.target.x - this.startX);
             const distanceToZ = Math.abs(this.target.z - this.startZ);
             if (Math.max(distanceToX, distanceToZ) > type.maxrange + 1) {
@@ -320,11 +313,15 @@ export default class Npc extends PathingEntity {
             if (distanceToX === type.maxrange + 1 && distanceToZ === type.maxrange + 1) {
                 return false;
             }
-        } else if (apTrigger) {
+        }
+        // ApTrigger maxrange
+        else if (this.checkApTrigger()) {
             if (CoordGrid.distanceToSW(this.target, { x: this.startX, z: this.startZ }) > type.maxrange + type.attackrange) {
                 return false;
             }
-        } else if (this.targetOp === NpcMode.PLAYERESCAPE) {
+        }
+        // Retreat maxrange
+        else if (this.targetOp === NpcMode.PLAYERESCAPE) {
             const distanceToEscape = CoordGrid.distanceTo(this, {
                 x: this.startX,
                 z: this.startZ,
@@ -341,7 +338,9 @@ export default class Npc extends PathingEntity {
             if (targetDistanceFromStart > type.maxrange && distanceToEscape > type.maxrange) {
                 return false;
             }
-        } else if (CoordGrid.distanceToSW(this.target, { x: this.startX, z: this.startZ }) > type.maxrange) {
+        }
+        // Everything else
+        else if (CoordGrid.distanceToSW(this.target, { x: this.startX, z: this.startZ }) > type.maxrange + 1) {
             return false;
         }
         return true;
@@ -477,6 +476,11 @@ export default class Npc extends PathingEntity {
             return false;
         }
 
+        // Check maxrange
+        if (!this.targetWithinMaxRange()) {
+            return false;
+        }
+
         // This is effectively checking if the Npc or Loc did a changetype
         if ((this.target instanceof Npc || this.target instanceof Loc) && this.targetSubject.type !== this.target.type) {
             return false;
@@ -489,57 +493,37 @@ export default class Npc extends PathingEntity {
         return this.target.isValid();
     }
 
-    // validateTarget(): boolean {
-    //     if (this.target === null) {
-    //         return false;
-    //     }
-
-    //     // For Npc targets, validate that the Npc is found in the world and that it's not delayed
-    //     if (this.target instanceof Npc && (typeof World.getNpc(this.target.nid) === 'undefined' || this.target.delayed)) {
-    //         return false;
-    //     }
-
-    //     // This is effectively checking if the npc did a changetype
-    //     if (this.target instanceof Npc && this.targetSubject.type !== -1 && World.getNpcByUid((this.targetSubject.type << 16) | this.target.nid) === null) {
-    //         return false;
-    //     }
-
-    //     // For Obj targets, validate that the Obj still exists in the World
-    //     if (this.target instanceof Obj && World.getObj(this.target.x, this.target.z, this.level, this.target.type, Obj.NO_RECEIVER) === null) {
-    //         return false;
-    //     }
-
-    //     // For Loc targets, validate that the Loc still exists in the world
-    //     if (this.target instanceof Loc && World.getLoc(this.target.x, this.target.z, this.level, this.target.type) === null) {
-    //         return false;
-    //     }
-
-    //     // For Player targets, validate that the Player still exists in the world and is not in the process of logging out or invisible
-    //     if (this.target instanceof Player && (World.getPlayerByUid(this.target.uid) === null || this.target.loggingOut || this.target.visibility !== Visibility.DEFAULT)) {
-    //         return false;
-    //     }
-
-    //     return true;
-    // }
-
     private processNpcModes() {
         if (this.delayed) {
             return;
         }
 
-        // Fail safe
+        // Failsafe
         if (this.targetOp === NpcMode.NULL) {
             const type: NpcType = NpcType.get(this.type);
             this.targetOp = type.defaultmode;
         }
 
+        // Targetless modes
         if (this.targetOp === NpcMode.NONE) {
             this.noMode();
+            return;
         } else if (this.targetOp === NpcMode.WANDER) {
             this.wanderMode();
+            return;
         } else if (this.targetOp === NpcMode.PATROL) {
             this.patrolMode();
-        } else if (this.targetOp === NpcMode.PLAYERESCAPE) {
+            return;
+        }
+
+        // Validate target before running targeted modes
+        if (!this.target || !this.validateTarget()) {
+            this.resetDefaults();
+            return;
+        }
+
+        // Modes with targets
+        if (this.targetOp === NpcMode.PLAYERESCAPE) {
             this.playerEscapeMode();
         } else if (this.targetOp === NpcMode.PLAYERFOLLOW) {
             this.playerFollowMode();
@@ -588,20 +572,14 @@ export default class Npc extends PathingEntity {
         }
 
         this.updateMovement();
-    }
 
-    // Teleport the Npc to the spawn if they have failed to wander for 500 ticks
-    // This is separate from the mode on purpose
-    private wanderReset(): void {
-        if (this.targetOp === NpcMode.WANDER) {
-            const onSpawn = this.x === this.startX && this.z === this.startZ && this.level === this.startLevel;
+        const onSpawn = this.x === this.startX && this.z === this.startZ && this.level === this.startLevel;
 
-            if (this.wanderCounter++ >= 500) {
-                if (!onSpawn) {
-                    this.teleport(this.startX, this.startZ, this.startLevel);
-                }
-                this.wanderCounter = 0;
+        if (this.wanderCounter++ >= 500) {
+            if (!onSpawn) {
+                this.teleport(this.startX, this.startZ, this.startLevel);
             }
+            this.wanderCounter = 0;
         }
     }
 
@@ -635,11 +613,6 @@ export default class Npc extends PathingEntity {
     }
 
     private playerEscapeMode(): void {
-        if (!this.validateTarget() || !this.targetWithinMaxRange()) {
-            this.resetDefaults();
-            return;
-        }
-
         if (!(this.target instanceof Player)) {
             throw new Error('[Npc] Target must be a Player for playerescape mode.');
         }
@@ -695,10 +668,6 @@ export default class Npc extends PathingEntity {
     }
 
     private playerFollowMode(): void {
-        if (!this.validateTarget() || !this.targetWithinMaxRange()) {
-            this.resetDefaults();
-            return;
-        }
         const player = this.target;
 
         if (!(player instanceof Player)) {
@@ -717,41 +686,14 @@ export default class Npc extends PathingEntity {
     }
 
     private playerFaceMode(): void {
-        if (!this.validateTarget()) {
-            this.resetDefaults();
-            return;
-        }
-
         if (!(this.target instanceof Player)) {
             throw new Error('[Npc] Target must be a Player for playerface mode.');
-        }
-
-        if (this.level !== this.target.level) {
-            this.resetDefaults();
-            return;
-        }
-
-        const type = NpcType.get(this.type);
-
-        if (CoordGrid.distanceTo(this, this.target) > type.maxrange) {
-            this.resetDefaults();
-            return;
         }
     }
 
     private playerFaceCloseMode(): void {
-        if (!this.validateTarget()) {
-            this.resetDefaults();
-            return;
-        }
-
         if (!(this.target instanceof Player)) {
             throw new Error('[Npc] Target must be a Player for playerfaceclose mode.');
-        }
-
-        if (this.level !== this.target.level) {
-            this.resetDefaults();
-            return;
         }
 
         if (CoordGrid.distanceTo(this, this.target) > 1) {
@@ -762,10 +704,6 @@ export default class Npc extends PathingEntity {
 
     private aiMode(): void {
         const type: NpcType = NpcType.get(this.type);
-        if (!this.target || !this.target.isValid() || !this.targetWithinMaxRange()) {
-            this.resetDefaults();
-            return;
-        }
 
         // Reset the wander timer if Npc runs its aimode
         this.wanderCounter = 0;
@@ -798,26 +736,20 @@ export default class Npc extends PathingEntity {
             return false;
         }
         const type: NpcType = NpcType.get(this.type);
-        const apTrigger: boolean =
-            (this.targetOp >= NpcMode.APNPC1 && this.targetOp <= NpcMode.APNPC5) ||
-            (this.targetOp >= NpcMode.APPLAYER1 && this.targetOp <= NpcMode.APPLAYER5) ||
-            (this.targetOp >= NpcMode.APLOC1 && this.targetOp <= NpcMode.APLOC5) ||
-            (this.targetOp >= NpcMode.APOBJ1 && this.targetOp <= NpcMode.APOBJ5);
-        const opTrigger: boolean = !apTrigger;
-
         const script: ScriptFile | null = this.getTrigger();
 
-        if (script && opTrigger && this.inOperableDistance(this.target) && (this.target instanceof PathingEntity || allowOpScenery)) {
-            this.executeScript(ScriptRunner.init(script, this, this.target));
+        // Run opTrigger
+        if (this.checkOpTrigger() && this.inOperableDistance(this.target) && (this.target instanceof PathingEntity || allowOpScenery)) {
+            if (script) {
+                this.executeScript(ScriptRunner.init(script, this, this.target));
+            }
             return true;
         }
-        if (script && apTrigger && this.inApproachDistance(type.attackrange, this.target)) {
-            this.executeScript(ScriptRunner.init(script, this, this.target));
-            return true;
-        }
-        if (this.inOperableDistance(this.target)) {
-            // this.target = null;
-            this.resetDefaults();
+        // Run apTrigger
+        else if (this.checkApTrigger() && this.inApproachDistance(type.attackrange, this.target)) {
+            if (script) {
+                this.executeScript(ScriptRunner.init(script, this, this.target));
+            }
             return true;
         }
         return false;
@@ -896,6 +828,24 @@ export default class Npc extends PathingEntity {
         };
 
         return map[mode as NpcMode] ?? null;
+    }
+
+    private checkApTrigger(): boolean {
+        return (
+            (this.targetOp >= NpcMode.APNPC1 && this.targetOp <= NpcMode.APNPC5) ||
+            (this.targetOp >= NpcMode.APPLAYER1 && this.targetOp <= NpcMode.APPLAYER5) ||
+            (this.targetOp >= NpcMode.APLOC1 && this.targetOp <= NpcMode.APLOC5) ||
+            (this.targetOp >= NpcMode.APOBJ1 && this.targetOp <= NpcMode.APOBJ5)
+        );
+    }
+
+    private checkOpTrigger(): boolean {
+        return (
+            (this.targetOp >= NpcMode.OPNPC1 && this.targetOp <= NpcMode.OPNPC5) ||
+            (this.targetOp >= NpcMode.OPPLAYER1 && this.targetOp <= NpcMode.OPPLAYER5) ||
+            (this.targetOp >= NpcMode.OPLOC1 && this.targetOp <= NpcMode.OPLOC5) ||
+            (this.targetOp >= NpcMode.OPOBJ1 && this.targetOp <= NpcMode.OPOBJ5)
+        );
     }
 
     // https://x.com/JagexAsh/status/1821236327150710829
