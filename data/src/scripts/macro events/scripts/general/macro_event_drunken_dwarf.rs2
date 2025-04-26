@@ -79,8 +79,11 @@ npc_settimer(0);
 // https://youtu.be/8wJZmDwcBKs?t=108
 [ai_opplayer2,macro_event_drunken_dwarf]
 if (%npc_action_delay > map_clock) return;
-if (~npc_can_attack_player = false) {
+if (~npc_check_notcombat = false) {
     npc_setmode(null);
+    return;
+}
+if (~npc_check_notcombat_self = false) {
     return;
 }
 

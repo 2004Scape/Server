@@ -2,8 +2,11 @@
 if (%npc_action_delay > map_clock) {
     return;
 }
-if (~npc_can_attack_player = false) {
+if (~npc_check_notcombat = false) {
     npc_setmode(null);
+    return;
+}
+if (~npc_check_notcombat_self = false) {
     return;
 }
 ~chaos_druid_spell;
@@ -13,8 +16,11 @@ if(random(4) ! 0) npc_setmode(opplayer2);
 if (%npc_action_delay > map_clock) {
     return;
 }
-if (~npc_can_attack_player = false) {
+if (~npc_check_notcombat = false) {
     npc_setmode(null);
+    return;
+}
+if (~npc_check_notcombat_self = false) {
     return;
 }
 // ~1/4 based off 100 attacks in osrs

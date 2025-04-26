@@ -8,8 +8,11 @@
 if (%npc_action_delay > map_clock) {
     return;
 }
-if (~npc_can_attack_player = false) {
+if (~npc_check_notcombat = false) {
     npc_setmode(null);
+    return;
+}
+if (~npc_check_notcombat_self = false) {
     return;
 }
 // data based off of 200 or so attacks
@@ -37,8 +40,11 @@ if ($random_attack < 8 & stat(strength) >= stat_base(strength)) { // dont cast i
 if (%npc_action_delay > map_clock) {
     return;
 }
-if (~npc_can_attack_player = false) {
+if (~npc_check_notcombat = false) {
     npc_setmode(null);
+    return;
+}
+if (~npc_check_notcombat_self = false) {
     return;
 }
 // mes("Op");
