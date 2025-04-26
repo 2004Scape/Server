@@ -29,7 +29,8 @@ if (%doric_progress = 0) {
     if(npc_find(coord, doric, 5, 0) = true) @doric_materials;
 } else {
     // Do regular anvil stuff
-    if (oc_category(last_useitem) = category_151) @smithing_anvil_interface(last_useitem);
+    if (last_useitem = gold_bar & %legends_progress >= ^legends_asked_gujuo_holy_water) @make_golden_bowl;
+    else if (oc_category(last_useitem) = category_151) @smithing_anvil_interface(last_useitem);
     else if (last_useitem = dragonshield_a | last_useitem = dragonshield_b) @make_dragon_sq;
     else ~displaymessage(^dm_default);
 }
