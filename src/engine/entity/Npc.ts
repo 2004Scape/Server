@@ -794,10 +794,6 @@ export default class Npc extends PathingEntity {
 
         // Path
         this.updateMovement();
-
-        this.startX = this.x;
-        this.startZ = this.z;
-        this.startLevel = this.level;
     }
 
     private playerFaceMode(): void {
