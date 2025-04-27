@@ -163,7 +163,7 @@ if (%blackknight_progress = 1) {
 [proc,set_black_knight_aggro](coord $coord)
 npc_findallzone($coord);
 while (npc_findnext = true) {
-    if (npc_type = black_knight_aggre) {
+    if (npc_type = aggressive_black_knight) {
         npc_say("Die intruder!");
         npc_setmode(opplayer2);
     }
