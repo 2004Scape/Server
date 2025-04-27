@@ -5,36 +5,29 @@
 
 // a default melee retaliate script.
 [proc,npc_default_retaliate]
-// npc flinch
-if (~npc_retal_ready = true) {
-    %npc_action_delay = add(map_clock, divide(npc_param(attackrate), 2));
-    %npc_attacking_uid = %npc_aggressive_player;
+if (finduid(%npc_aggressive_player) = false | ~npc_retal_ready = false) {
+    return;
 }
-if (finduid(%npc_attacking_uid) = true) {
-    if (npc_stat(hitpoints) <= npc_param(retreat)) {
-        npc_setmode(playerescape);
-    } else {
-        npc_setmode(opplayer2);
-    }
+%npc_action_delay = add(map_clock, divide(npc_param(attackrate), 2)); // flinch
+%npc_attacking_uid = %npc_aggressive_player;
+if (npc_stat(hitpoints) <= npc_param(retreat)) {
+    npc_setmode(playerescape);
+} else {
+    npc_setmode(opplayer2);
 }
 
 // mostly used for ranged and magic npc's
 [proc,npc_default_retaliate_ap]
-// set npc to ap if its out of combat
-if (~npc_retal_ready = true) {
-    %npc_action_delay = add(map_clock, divide(npc_param(attackrate), 2));
-    %npc_attacking_uid = %npc_aggressive_player;
-    if (finduid(%npc_attacking_uid) = true) {
-        npc_setmode(applayer2);
-    }
+if (finduid(%npc_aggressive_player) = false | ~npc_retal_ready = false) {
     return;
 }
-if (finduid(%npc_attacking_uid) = true & npc_getmode ! applayer2) {
-    if (npc_stat(hitpoints) <= npc_param(retreat)) {
-        npc_setmode(playerescape);
-    } else {
-        npc_setmode(opplayer2); // only set mode to op if the npc is not currently ap
-    }
+%npc_action_delay = add(map_clock, divide(npc_param(attackrate), 2));
+%npc_attacking_uid = %npc_aggressive_player;
+// default to ap
+if (npc_stat(hitpoints) <= npc_param(retreat)) {
+    npc_setmode(playerescape);
+} else {
+    npc_setmode(applayer2);
 }
 
 
