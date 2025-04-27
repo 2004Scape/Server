@@ -491,7 +491,7 @@ const PlayerOps: CommandHandlers = {
         const current = player.levels[stat];
 
         const boost = (constant + (base * percent) / 100) | 0;
-        const boosted = Math.min(current + boost, base + boost);
+        const boosted = Math.max(Math.min(current + boost, base + boost), current);
         player.levels[stat] = Math.min(boosted, 255);
         if (stat === PlayerStat.HITPOINTS && player.levels[PlayerStat.HITPOINTS] >= player.baseLevels[PlayerStat.HITPOINTS]) {
             player.heroPoints.clear();
