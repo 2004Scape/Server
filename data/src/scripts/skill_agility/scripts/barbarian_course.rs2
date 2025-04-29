@@ -53,10 +53,11 @@ if(stat_random(stat(agility), 185, 260) = false) {
     ~damage_self(calc(((stat(hitpoints) * 9) / 100) + 1));
     return;
 }
-~forcemove(movecoord(coord, -4, 0, 0));
+~forcemove(movecoord(coord, -3, 0, 0));
+mes("...You make it safely to the other side.");
+~forcemove(movecoord(coord, -1, 0, 0));
 ~update_bas;
 stat_advance(agility, 125);
-mes("...You make it safely to the other side.");
 ~update_barbarian_varp(2);
 
 [oploc1,barbarian_obstacle_net]
