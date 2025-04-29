@@ -134,6 +134,7 @@ mes("You skillfully edge across the gap.");
 ~update_wilderness_varp(4);
 
 [oploc1,wilderness_rocks]
+p_arrivedelay;
 ~set_readywalk_bas(human_climbing_ready, human_climbing);
 ~forcemove(loc_coord);
 ~forcemove(movecoord(coord, 0, 0, -3));
