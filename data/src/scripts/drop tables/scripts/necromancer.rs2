@@ -6,7 +6,7 @@ if (npc_findhero = false) {
 
 // Default drop from config.
 obj_add(npc_coord, npc_param(death_drop), 1, ^lootdrop_duration);
-def_int $random = random(20);
+def_int $random = random(128);
 
 if ($random < 8) {
     obj_add(npc_coord, plainstaff, 1, ^lootdrop_duration);
