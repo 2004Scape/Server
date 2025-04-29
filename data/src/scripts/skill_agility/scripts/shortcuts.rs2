@@ -36,14 +36,14 @@ if(stat(agility) < 20) {
     ~mesbox("You need an Agility level of 20 to balance on this log.");
     return;
 }
-p_teleport(movecoord(loc_coord, 1, 0, 0));
+def_int $z_dist = -5;
+if(coordx(coord) < 2602) {
+    $z_dist = 5;
+}
+p_teleport(movecoord(loc_coord, divide($z_dist, -5), 0, 0));
 p_arrivedelay;
 mes("You walk carefully across the slippery log...");
 ~set_readywalk_bas(human_walk_logbalance_ready, human_walk_logbalance);
-def_int $z_dist = -4;
-if(coordx(coord) < 2602) {
-    $z_dist = 4;
-}
 ~forcemove(movecoord(coord, $z_dist, 0, 0));
 ~update_bas;
 stat_advance(agility, 85);
