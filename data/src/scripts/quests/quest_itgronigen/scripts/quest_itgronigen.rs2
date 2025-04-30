@@ -168,7 +168,7 @@ if(~obj_gettotal(lens_mould) > 0) {
     mes("Another one will be of no use.");
     return;
 }
-mes("Underneath you find a peculiar mould.");
+mes("Underneath the sack you find a peculiar mould.");
 inv_add(inv, lens_mould, 1);
 
 [opheldu,lens_mould]
