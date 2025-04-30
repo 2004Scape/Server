@@ -529,6 +529,10 @@
 [command,npc_find](coord $coord, npc $npc, int $distance, int $checkvis)(boolean)
 // info: Return true if a specific secondary npc exists at $coord and passes a visibility check
 [command,.npc_find](coord $coord, npc $npc, int $distance, int $checkvis)(boolean)
+// info: Return true if a specific npc_category exists at $coord and passes a visibility check
+[command,npc_findcat](coord $coord, category $category, int $distance, int $checkvis)(boolean)
+// info: Return true if a specific secondary npc_category exists at $coord and passes a visibility check
+[command,.npc_findcat](coord $coord, category $category, int $distance, int $checkvis)(boolean)
 // info: Search for npcs in a given area
 [command,npc_findall](coord $coord, npc $npc, int $distance, int $checkvis)
 // info: Search for secondary npcs in a given area

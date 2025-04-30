@@ -568,6 +568,11 @@ const ScriptOpcodePointers: {
         set2: ['active_npc2'],
         conditional: true
     },
+    [ScriptOpcode.NPC_FINDCAT]: {
+        set: ['active_npc'],
+        set2: ['active_npc2'],
+        conditional: true
+    },
     [ScriptOpcode.NPC_FINDALLANY]: {
         set: ['find_npc']
     },
