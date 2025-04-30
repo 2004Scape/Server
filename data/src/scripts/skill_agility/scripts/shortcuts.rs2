@@ -36,16 +36,18 @@ if(stat(agility) < 20) {
     ~mesbox("You need an Agility level of 20 to balance on this log.");
     return;
 }
-mes("You walk carefully across the slippery log...");
-~set_walkbas(human_walk_logbalance);
-p_teleport(loc_coord);
-p_delay(0);
-def_int $z_dist = -4;
+def_int $z_dist = -5;
 if(coordx(coord) < 2602) {
-    $z_dist = 4;
+    $z_dist = 5;
 }
-~agility_force_move(85, human_walk_logbalance, movecoord(coord, $z_dist, 0, 0));
-mes("...You make it safely to the other side.");
+p_teleport(movecoord(loc_coord, divide($z_dist, -5), 0, 0));
+p_arrivedelay;
+mes("You walk carefully across the slippery log...");
+~set_readywalk_bas(human_walk_logbalance_ready, human_walk_logbalance);
+~forcemove(movecoord(coord, $z_dist, 0, 0));
+~update_bas;
+stat_advance(agility, 85);
+mes("...and make it safely to the other side.");
 
 [oploc1,loc_2332]
 p_arrivedelay;

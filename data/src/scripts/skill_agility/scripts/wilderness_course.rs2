@@ -122,18 +122,23 @@ mes("...You safely cross to the other side.");
 p_teleport(movecoord(loc_coord, 1, 0, 0));
 p_arrivedelay;
 mes("You walk carefully across the slippery log...");
-~agility_force_move(0, human_walk_logbalance, movecoord(coord, -4, 0, 0));
+~set_readywalk_bas(human_walk_logbalance_ready, human_walk_logbalance);
+~forcemove(movecoord(coord, -4, 0, 0));
 if(stat_random(stat(agility), 170, 250) = false) {
     // todo: find actual rates, this is 82% at 52, 98% at 99
     ~agility_delay_fail(movecoord(coord, 0, 0, 2), 0_46_161_54_42, calc(((stat(hitpoints) * 15) / 100) + 1), "You slip and fall onto the spikes below.");
     p_teleport(movecoord(coord, 0, 0, -1));
     return;
 }
-~agility_force_move(200, human_walk_logbalance, movecoord(coord, -4, 0, 0));
+~forcemove(movecoord(coord, -3, 0, 0));
 mes("You skillfully edge across the gap.");
+~forcemove(movecoord(coord, -1, 0, 0));
+~update_bas;
+stat_advance(agility, 200);
 ~update_wilderness_varp(4);
 
 [oploc1,wilderness_rocks]
+p_arrivedelay;
 ~set_readywalk_bas(human_climbing_ready, human_climbing);
 ~forcemove(loc_coord);
 ~forcemove(movecoord(coord, 0, 0, -3));
@@ -152,6 +157,7 @@ if(calc(%wilderness_course_progress + 1) >= $completed) {
     %wilderness_course_progress = $completed;
 }
 if(%wilderness_course_progress = 5) {
+    mes("You reach the top.");
     stat_advance(agility, 4989);
     %wilderness_course_progress = 0;
 }
