@@ -10,58 +10,42 @@ if (npc_findhero = false) {
 }
 
 // Normal drop
-obj_add(npc_coord, npc_param(death_drop), 1, 200);
+obj_add(npc_coord, npc_param(death_drop), 1, ^lootdrop_duration);
 
 // Treasure trail
 ~trail_mediumcluedrop(129, npc_coord);
 
-def_int $dropint = randominc(128);
-if ($dropint < 30) {
-    // 30/129
-    obj_add(npc_coord, bronze_spear, 1, 200);
-} else if ($dropint < 34) {
-    // 4/129
-    obj_add(npc_coord, iron_spear, 1, 200);
-} else if ($dropint < 44) {
-    // 10/129
-    obj_add(npc_coord, naturerune, 2, 200);
-} else if ($dropint < 46) {
-    // 2/129
-    obj_add(npc_coord, naturerune, 10, 200);
-} else if ($dropint < 48) {
-    // 2/129
-    obj_add(npc_coord, naturerune, 5, 200);
-} else if ($dropint < 50) {
-    // 2/129
-    obj_add(npc_coord, steel_javelin, 5, 200);
-} else if ($dropint < 56) {
-    // 6/129
-    obj_add(npc_coord, ~randomherb, 200);
-} else if ($dropint < 64) {
-    // 8/129
-    obj_add(npc_coord, pineapple, 2, 200);
-} else if ($dropint < 69) {
-    // 5/129
-    obj_add(npc_coord, knife, 1, 200);
-} else if ($dropint < 72) {
-    // 3/129
-    obj_add(npc_coord, bones, 1, 200);
-} else if ($dropint < 75) {
-    // 3/129
-    obj_add(npc_coord, big_bones, 1, 200);
-} else if ($dropint < 77) {
-    // 2/129
-    obj_add(npc_coord, big_bones, 3, 200);
-} else if ($dropint < 79) {
-    // 2/129
-    obj_add(npc_coord, bones, 1, 200);
-} else if ($dropint < 80) {
-    // 1/129
-    obj_add(npc_coord, ~randomjewel, 200);
-} else if ($dropint < 85) {
-    // 1/129
-    obj_add(npc_coord, unidentified_snake_weed, 1, 200);
-} else if ($dropint < 90) {
-    // 1/129
-    obj_add(npc_coord, unidentified_rogues_purse, 1, 200);
+def_int $random = randominc(128);
+if ($random < 30) {
+    obj_add(npc_coord, bronze_spear, 1, ^lootdrop_duration);
+} else if ($random < 34) {
+    obj_add(npc_coord, iron_spear, 1, ^lootdrop_duration);
+} else if ($random < 44) {
+    obj_add(npc_coord, naturerune, 2, ^lootdrop_duration);
+} else if ($random < 46) {
+    obj_add(npc_coord, naturerune, 10, ^lootdrop_duration);
+} else if ($random < 48) {
+    obj_add(npc_coord, naturerune, 5, ^lootdrop_duration);
+} else if ($random < 50) {
+    obj_add(npc_coord, steel_javelin, 5, ^lootdrop_duration);
+} else if ($random < 56) {
+    obj_add(npc_coord, ~randomherb, ^lootdrop_duration);
+} else if ($random < 64) {
+    obj_add(npc_coord, pineapple, 2, ^lootdrop_duration);
+} else if ($random < 69) {
+    obj_add(npc_coord, knife, 1, ^lootdrop_duration);
+} else if ($random < 72) {
+    obj_add(npc_coord, bones, 1, ^lootdrop_duration);
+} else if ($random < 75) {
+    obj_add(npc_coord, big_bones, 1, ^lootdrop_duration);
+} else if ($random < 77) {
+    obj_add(npc_coord, big_bones, 3, ^lootdrop_duration);
+} else if ($random < 79) {
+    obj_add(npc_coord, bones, 1, ^lootdrop_duration);
+} else if ($random < 80) {
+    obj_add(npc_coord, ~randomjewel, ^lootdrop_duration);
+} else if ($random < 85) {
+    obj_add(npc_coord, unidentified_snake_weed, 1, ^lootdrop_duration);
+} else if ($random < 90) {
+    obj_add(npc_coord, unidentified_rogues_purse, 1, ^lootdrop_duration);
 }
