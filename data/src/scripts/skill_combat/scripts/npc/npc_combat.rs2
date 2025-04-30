@@ -5,38 +5,29 @@
 
 // a default melee retaliate script.
 [proc,npc_default_retaliate]
-// npc flinch
-if (~npc_out_of_combat = true) {
-    %npc_action_delay = add(map_clock, divide(npc_param(attackrate), 2));
-    %npc_attacking_uid = %npc_aggressive_player;
-    %npc_lastattack = map_clock;
+if (finduid(%npc_aggressive_player) = false | ~npc_retal_ready = false) {
+    return;
 }
-if (finduid(%npc_attacking_uid) = true) {
-    if (npc_stat(hitpoints) <= npc_param(retreat)) {
-        npc_setmode(playerescape);
-    } else {
-        npc_setmode(opplayer2);
-    }
+%npc_action_delay = add(map_clock, divide(npc_param(attackrate), 2)); // flinch
+%npc_attacking_uid = %npc_aggressive_player;
+if (npc_stat(hitpoints) <= npc_param(retreat)) {
+    npc_setmode(playerescape);
+} else {
+    npc_setmode(opplayer2);
 }
 
 // mostly used for ranged and magic npc's
 [proc,npc_default_retaliate_ap]
-// set npc to ap if its out of combat
-if (~npc_out_of_combat = true) {
-    %npc_action_delay = add(map_clock, divide(npc_param(attackrate), 2));
-    %npc_attacking_uid = %npc_aggressive_player;
-    %npc_lastattack = map_clock;
-    if (finduid(%npc_attacking_uid) = true) {
-        npc_setmode(applayer2);
-    }
+if (finduid(%npc_aggressive_player) = false | ~npc_retal_ready = false) {
     return;
 }
-if (finduid(%npc_attacking_uid) = true & npc_getmode ! applayer2) {
-    if (npc_stat(hitpoints) <= npc_param(retreat)) {
-        npc_setmode(playerescape);
-    } else {
-        npc_setmode(opplayer2); // only set mode to op if the npc is not currently ap
-    }
+%npc_action_delay = add(map_clock, divide(npc_param(attackrate), 2));
+%npc_attacking_uid = %npc_aggressive_player;
+// default to ap
+if (npc_stat(hitpoints) <= npc_param(retreat)) {
+    npc_setmode(playerescape);
+} else {
+    npc_setmode(applayer2);
 }
 
 
@@ -47,8 +38,11 @@ if (stat(hitpoints) = 0) {
     return;
 }
 if (%npc_action_delay > map_clock) return;
-if (~npc_can_attack_player = false) {
+if (~npc_check_notcombat = false) {
     npc_setmode(null);
+    return;
+}
+if (~npc_check_notcombat_self = false) { // Doesnt change mode! Keeps trying!
     return;
 }
 anim(%com_defendanim, 0);
@@ -262,8 +256,8 @@ mes("You can't attack this npc.");
 return (false);
 
 
-[proc,npc_out_of_combat]()(boolean)
-if ((add(%npc_lastattack, 8) < map_clock) | (npc_getmode ! applayer2 & npc_getmode ! opplayer2 & npc_getmode ! playerescape)) {
+[proc,npc_retal_ready]()(boolean)
+if ((add(%npc_action_delay, 8) < map_clock) | (npc_getmode ! applayer2 & npc_getmode ! opplayer2 & npc_getmode ! playerescape)) {
     return (true);
 }
 return (false);
@@ -314,38 +308,34 @@ p_preventlogout("You can't log out until 10 seconds after the end of combat.", 1
 
 [proc,npc_retaliate](int $queue_delay)
 npc_queue(1, 0, $queue_delay);
-// if in singles and attacking another player, then delay npc action by 8 ticks
-if (map_multiway(npc_coord) = false & %npc_attacking_uid ! uid & %npc_attacking_uid ! null) {
-    %npc_action_delay = add(map_clock, 8);
-}
 %npc_aggressive_player = uid;
 if(%npc_lastcombat < map_clock) %npc_lastcombat = map_clock;
 
 [proc,.npc_retaliate](int $queue_delay)
 .npc_queue(1, 0, $queue_delay);
-// if in singles and attacking another player, then delay npc action by 8 ticks
-if (map_multiway(.npc_coord) = false & .%npc_attacking_uid ! uid & .%npc_attacking_uid ! null) {
-    .%npc_action_delay = add(map_clock, 8);
-}
 .%npc_aggressive_player = uid;
 if(.%npc_lastcombat < map_clock) .%npc_lastcombat = map_clock;
 
 [proc,npc_set_attack_vars]
 %lastcombat = map_clock;
-%npc_lastattack = map_clock;
 %npc_attacking_uid = uid;
 %aggressive_npc = npc_uid;
 
-[proc,npc_can_attack_player]()(boolean)
-if (map_multiway(npc_coord) = false) {
+[proc,npc_check_notcombat]()(boolean)
+if (map_multiway(npc_coord) = false) { // checks npc coord ALWAYS!
     if (add(%lastcombat_pvp, 8) > map_clock) {
         return(false);
     }
-    if (add(%lastcombat, 8) > map_clock & %aggressive_npc ! npc_uid & %aggressive_npc ! null) {
+    if (add(%lastcombat, 8) > map_clock & %aggressive_npc ! null & %aggressive_npc ! npc_uid) {
         return(false);
     }
 }
-if (~inzone_coord_pair_table(gnomeball_zones, coord) = true) {
-    return(false); // osrs
+return(true);
+
+[proc,npc_check_notcombat_self]()(boolean)
+if (map_multiway(npc_coord) = false) {
+    if (add(%npc_lastcombat, 8) > map_clock & %npc_aggressive_player ! null & %npc_aggressive_player ! uid) {
+        return(false);
+    }
 }
 return(true);

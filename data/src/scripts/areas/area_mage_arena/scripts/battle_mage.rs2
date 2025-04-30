@@ -41,7 +41,7 @@ if (random(10) = 0 & inv_total(worn, saradomin_staff) > 0 & inv_total(worn, sara
     return;
 }
 ~npc_cast_spell(^saradomin_strike, 5);
-if (~npc_can_attack_player = true) {
+if (~npc_check_notcombat = true & ~npc_check_notcombat_self = true) {
     npc_say("Feel the wrath of Saradomin.");
 }
 
@@ -51,7 +51,7 @@ if (random(10) = 0 & inv_total(worn, guthix_staff) > 0 & inv_total(worn, guthix_
     return;
 }
 ~npc_cast_spell(^claws_of_guthix, 5);
-if (~npc_can_attack_player = true) {
+if (~npc_check_notcombat = true & ~npc_check_notcombat_self = true) {
     npc_say("Feel the wrath of Guthix.");
 }
 
@@ -61,6 +61,6 @@ if (random(10) = 0 & inv_total(worn, zamorak_staff) > 0 & inv_total(worn, zamora
     return;
 }
 ~npc_cast_spell(^flames_of_zamorak, 5);
-if (~npc_can_attack_player = true) {
+if (~npc_check_notcombat = true & ~npc_check_notcombat_self = true) {
     npc_say("Feel the wrath of Zamorak.");
 }
