@@ -2,4 +2,4 @@
 p_telejump(0_37_153_41_27);
 
 [oploc1,brimstail_ladder]
-@climb_ladder(0_37_53_42_29, true);
+~climb_ladder(0_37_53_42_29, true);

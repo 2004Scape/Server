@@ -5,7 +5,7 @@ if (stat(mining) < 60) {
     return;
 }
 p_arrivedelay;
-@climb_ladder(movecoord(coord, 0, 0, 6400), true);
+~climb_ladder(movecoord(coord, 0, 0, 6400), true);
 
 [oploc1,loc_2112]
 if (stat(mining) < 60) {
