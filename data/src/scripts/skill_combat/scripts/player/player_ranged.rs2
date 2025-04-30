@@ -60,6 +60,8 @@ if ($damage > 0 & $poison_severity > 0 & random(8) = 0) { // 1/8 chance to poiso
     ~npc_poison_start(max(sub($poison_severity, 14), 0)); // lowered by 14 if ranged attack
 }
 
+p_opnpc(2);
+
 //mes("attackstyle: <tostring(%attackstyle)>, damagestyle: <tostring(%damagestyle)>, damage: <tostring($damage)>, damagetype: <tostring(%damagetype)>");
 anim(%com_attackanim, 0);
 sound_synth(%com_attacksound, 0, 0);
@@ -70,8 +72,6 @@ npc_anim(npc_param(defend_anim), sub($delay, 30)); // delay npc this tick
 if (npc_param(defend_sound) ! null) {
     sound_synth(npc_param(defend_sound), 0, sub($delay, 30)); // delay 1 client tick for the hit queue
 }
-
-p_opnpc(2);
 
 if ($ammo = holy_water) {
     ~ranged_dropammo_npc($ammo, ^true, sub(divide($delay, 30), 2)); // 100% chance to drop ammo
@@ -122,6 +122,7 @@ spotanim_pl(oc_param($ammo, proj_launch), 96, 0);
 inv_del(worn, $ammo, 1);
 if (inv_total(worn, $ammo) = 0) {
     mes("That was your last one!");
+    p_stopaction;
     ~update_all(inv_getobj(worn, ^wearpos_rhand));
 }
 return(~npc_projectile(coord, npc_uid, oc_param($ammo, proj_travel), 40, 36, 32, 15, 0, 11, 5));
