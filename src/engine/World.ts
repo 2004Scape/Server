@@ -39,7 +39,6 @@ import { EntityLifeCycle } from '#/engine/entity/EntityLifeCycle.js';
 import { NpcList, PlayerList } from '#/engine/entity/EntityList.js';
 import { PlayerTimerType } from '#/engine/entity/EntityTimer.js';
 import { HuntModeType } from '#/engine/entity/hunt/HuntModeType.js';
-import { HuntNobodyNear } from '#/engine/entity/hunt/HuntNobodyNear.js';
 import Loc from '#/engine/entity/Loc.js';
 import LocObjEvent from '#/engine/entity/LocObjEvent.js';
 import { isClientConnected, NetworkPlayer } from '#/engine/entity/NetworkPlayer.js';
@@ -692,87 +691,7 @@ class World {
         const start: number = Date.now();
         for (const npc of this.npcs) {
             try {
-                if (npc.isActive) {
-                    if (npc.delayed && this.currentTick >= npc.delayedUntil) npc.delayed = false;
-
-                    // - resume suspended script
-                    if (!npc.delayed && npc.activeScript && npc.activeScript.execution === ScriptState.NPC_SUSPENDED) {
-                        npc.executeScript(npc.activeScript);
-                    }
-                }
-
-                // - Npc Events (Respawn, Revert, Despawn)
-                if (--npc.lifecycleTick === 0) {
-                    try {
-                        // Respawn NPC
-                        if (npc.lifecycle === EntityLifeCycle.RESPAWN && !npc.isActive) {
-                            this.addNpc(npc, -1, false);
-                        }
-                        // Revert NPC
-                        if (npc.lifecycle === EntityLifeCycle.RESPAWN) {
-                            npc.revert();
-                        }
-                        // Despawn NPC
-                        else if (npc.lifecycle === EntityLifeCycle.DESPAWN) {
-                            this.removeNpc(npc, -1);
-                            // Queue despawn trigger
-                            const type = NpcType.get(npc.type);
-                            const script = ScriptProvider.getByTrigger(ServerTriggerType.AI_DESPAWN, type.id, type.category);
-                            if (script) {
-                                this.npcEventQueue.addTail(new NpcEventRequest(NpcEventType.DESPAWN, script, npc));
-                            }
-                        }
-                    } catch (err) {
-                        // there was an error adding or removing them, try again next tick...
-                        // ex: server is full on npc IDs (did we have a leak somewhere?) and we don't want to re-use the last ID (syncing related)
-                        if (npc.lifecycle === EntityLifeCycle.RESPAWN) {
-                            printError('[World] An unhandled error occurred while respawning a NPC');
-                        } else if (npc.lifecycle === EntityLifeCycle.DESPAWN) {
-                            printError('[World] An unhandled error occurred while despawning a NPC');
-                        }
-
-                        printError(`[World] NPC type:${npc.type} lifecycle:${npc.lifecycle} ID:${npc.nid}`);
-                        console.error(err);
-                        npc.setLifeCycle(1);
-                    }
-                }
-
-                // Checks if Npc is alive and not delayed
-                if (!npc.isValid()) {
-                    continue;
-                }
-
-                // Process some hunt logic
-                if (npc.huntMode !== -1) {
-                    const hunt = HuntType.get(npc.huntMode);
-
-                    if (hunt.nobodyNear !== HuntNobodyNear.PAUSEHUNT || rsbuf.getNpcObservers(npc.nid) > 0 || hunt.type === HuntModeType.PLAYER) {
-                        // - hunt npc/obj/loc
-                        if (hunt && hunt.type !== HuntModeType.PLAYER) {
-                            npc.huntAll();
-                        }
-
-                        // Increment huntclock
-                        npc.huntClock++;
-                    }
-
-                    // Consume target
-                    if (npc.huntTarget) {
-                        npc.consumeHuntTarget();
-                    }
-                }
-
-                // - stat regen
-                npc.processRegen();
-                // - timer
-                npc.processTimers();
-                // - queue
-                npc.processQueue();
-                // - movement
-                // - modes
-                npc.processNpcModes();
-
-                npc.validateDistanceWalked();
+                npc.turn();
             } catch (err) {
                 console.error(err);
                 this.removeNpc(npc, -1);
