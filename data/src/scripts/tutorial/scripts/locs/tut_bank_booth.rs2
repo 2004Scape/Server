@@ -1,5 +1,5 @@
 [oploc1,newbiebankbooth]
-if (npc_find(loc_coord, tut_banker, 1, 0) = true) {
+if (npc_find(loc_coord, tut_banker, 2, 0) = true) {
     @tut_banker;
 }
 @openbank; // default to just open bank if a bank teller was not found to start dialogue.
