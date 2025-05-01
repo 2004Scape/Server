@@ -69,11 +69,9 @@ p_arrivedelay;
 p_arrivedelay;
 switch_coord (loc_coord) {
     case 1_47_54_14_62 : 
+        // https://youtu.be/6RNx7Sbut8A?t=423
         ~climb_ladder(movecoord(coord(), 0, -1, 0), false); // black knights
-        if (npc_find(coord, black_knight_aggre, 5, 0) = true) { // checks from player coord! - osrs
-            npc_say("Die intruder!!!");
-            npc_setmode(opplayer2);
-        }
+        ~black_knights_aggro(coord, 0_47_54_17_59); // checks from player coord! - osrs
         return;
 }
 ~climb_ladder(movecoord(coord(), 0, -1, 0), false);

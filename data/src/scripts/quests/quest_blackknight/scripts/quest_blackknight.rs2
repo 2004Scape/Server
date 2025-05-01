@@ -26,10 +26,7 @@ def_boolean $is_outside = ~check_axis(coord, loc_coord, loc_angle);
 if ($is_outside = false) {
     // black knights guarding the ladder down to the grill will aggress the player
     // - https://youtu.be/6RNx7Sbut8A?t=250
-    if (npc_find(coord, black_knight_aggre, 5, 0) = true) {
-        npc_say("Die intruder!!!");
-        npc_setmode(opplayer2);
-    }
+    ~black_knights_aggro(coord, coord);
 }
 ~open_and_close_door(loc_param(next_loc_stage), $is_outside, false);
 
@@ -80,10 +77,7 @@ if ($option = 1) {
    // - https://youtu.be/vNPISjaWfvQ?t=123
    // - https://youtu.be/6RNx7Sbut8A?t=306
    // - in osrs it gets flinched, but in https://youtu.be/6RNx7Sbut8A?t=306 it insta retals and i doubt its a hunt
-    if (npc_find(0_47_54_17_59, black_knight_aggre, 5, 0) = true) {
-        npc_say("Die intruder!!!"); // https://youtu.be/6RNx7Sbut8A?t=310
-        npc_setmode(opplayer2);
-    }
+   ~black_knights_aggro(0_47_54_17_59, 0_47_54_17_59);
 }
 [oploc1,blackknight_potion_room_door]
 mes("It's locked.");
@@ -161,3 +155,16 @@ inv_add(inv, coins, 2500);
 mes("Sir Amik hands you 2500 coins.");
 session_log(^log_adventure, "Quest complete: Black Knight's Fortress");
 ~send_quest_complete(questlist:fortress, coins, 250, ^blackknight_questpoints, "You have completed the\\nBlack Knights' Fortress Quest!");
+
+[proc,black_knights_aggro](coord $first_search_coord, coord $all_search_coord)
+if (npc_find($first_search_coord, black_knight_aggre, 5, 0) = true) {
+    npc_say("Die intruder!!!");
+}
+// def does this findall thing https://youtu.be/6RNx7Sbut8A?t=423
+// isnt the case in osrs!
+npc_findall($all_search_coord, black_knight_aggre, 5, 0);
+while (npc_findnext = true) {
+    if (npc_getmode ! opplayer2) {
+        npc_setmode(opplayer2);
+    }
+}
