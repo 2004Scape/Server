@@ -823,6 +823,11 @@ table=musicregion
 data=mapsquare,0_46_153_0_0
 data=name,Cave Background1
 
+[musicregion_46_161]
+table=musicregion
+data=mapsquare,0_46_161_0_0
+data=name,Serene
+
 [musicregion_47_47]
 table=musicregion
 data=mapsquare,0_47_47_0_0
