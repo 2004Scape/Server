@@ -4,11 +4,12 @@
 // 3031 3508 1 - Hole
 // 3025 3508 0 - Grate
 
+// https://youtu.be/cbJE-AjhON4?t=269
 [oploc1,inaclefayeunopenabledoorr]
-mes("The doors are locked.");
+mes("You can't open this door.");
 
 [oploc1,inaclefayeunopenabledoorl]
-mes("The doors are locked.");
+mes("You can't open this door.");
 
 [oploc1,blackknight_front_door]
 def_boolean $is_outside = ~check_axis(coord, loc_coord, loc_angle);
