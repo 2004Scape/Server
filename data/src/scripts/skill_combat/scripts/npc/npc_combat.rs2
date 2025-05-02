@@ -75,7 +75,7 @@ npc_queue(3, 0, 0);
 gosub(npc_death);
 def_namedobj $drop = npc_param(death_drop);
 if ($drop ! null & npc_findhero = true) {
-    obj_add(npc_coord, $drop, 1, 200);
+    obj_add(npc_coord, $drop, 1, ^lootdrop_duration);
 }
 
 [proc,npc_player_hit_roll](int $damagetype)(boolean)

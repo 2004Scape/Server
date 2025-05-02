@@ -36,7 +36,7 @@ if ((%demon_progress > ^demon_silverlight) | inv_total(inv, silverlight_key_3) >
     mes("I'd better go down and get it before someone else finds it.");
     // Tele to 3227 9898 0
     // todo: this should be instanced per player
-    obj_add(0_50_154_25_41, silverlight_key_3, 1, 300); // Guessing Duration is ticks?
+    obj_add(0_50_154_25_41, silverlight_key_3, 1, calc(calc(^lootdrop_duration * 3) / 2)); // Guessing Duration is ticks? (300t)
 } 
 
 

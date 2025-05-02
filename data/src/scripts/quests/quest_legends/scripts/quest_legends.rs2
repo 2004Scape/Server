@@ -1498,7 +1498,7 @@ def_namedobj $drop_item = oc_param(last_item, next_obj_stage);
 mes("You drop the bowl on the floor and the water spills out everywhere."); // rsc
 inv_delslot(inv, last_slot);
 anim(null, 0);
-obj_add(coord, $drop_item, 1, 200);
+obj_add(coord, $drop_item, 1, ^lootdrop_duration);
 sound_synth(put_down, 0, 0);
 
 [label,legends_cast_orb_door](dbrow $spell_data)
