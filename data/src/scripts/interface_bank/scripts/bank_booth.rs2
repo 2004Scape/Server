@@ -1,29 +1,16 @@
 [oploc1,bankbooth]
-npc_findallzone(movecoord(loc_coord, 1, 0, 0));
+npc_findallzone(loc_coord);
 while (npc_findnext = true) {
-    // find a banker on 4 different axis from the booth.
-    if (npc_category = bank_teller & (npc_coord = movecoord(loc_coord, 1, 0, 0) | npc_coord = movecoord(loc_coord, -1, 0, 0) | npc_coord = movecoord(loc_coord, 0, 0, 1) | npc_coord = movecoord(loc_coord, 0, 0, -1))) {
-        @talk_to_banker;
-    }
-}
-npc_findallzone(movecoord(loc_coord, -1, 0, 0));
-while (npc_findnext = true) {
-    // find a banker on 4 different axis from the booth.
-    if (npc_category = bank_teller & (npc_coord = movecoord(loc_coord, 1, 0, 0) | npc_coord = movecoord(loc_coord, -1, 0, 0) | npc_coord = movecoord(loc_coord, 0, 0, 1) | npc_coord = movecoord(loc_coord, 0, 0, -1))) {
-        @talk_to_banker;
-    }
-}
-npc_findallzone(movecoord(loc_coord, 0, 0, 1));
-while (npc_findnext = true) {
-    // find a banker on 4 different axis from the booth.
-    if (npc_category = bank_teller & (npc_coord = movecoord(loc_coord, 1, 0, 0) | npc_coord = movecoord(loc_coord, -1, 0, 0) | npc_coord = movecoord(loc_coord, 0, 0, 1) | npc_coord = movecoord(loc_coord, 0, 0, -1))) {
-        @talk_to_banker;
-    }
-}
-npc_findallzone(movecoord(loc_coord, 0, 0, -1));
-while (npc_findnext = true) {
-    // find a banker on 4 different axis from the booth.
-    if (npc_category = bank_teller & (npc_coord = movecoord(loc_coord, 1, 0, 0) | npc_coord = movecoord(loc_coord, -1, 0, 0) | npc_coord = movecoord(loc_coord, 0, 0, 1) | npc_coord = movecoord(loc_coord, 0, 0, -1))) {
+    if (npc_category = bank_teller & (
+            npc_coord = movecoord(loc_coord,  1, 0,  0) |// E
+            npc_coord = movecoord(loc_coord, -1, 0,  0) |// W
+            npc_coord = movecoord(loc_coord,  0, 0,  1) |// N
+            npc_coord = movecoord(loc_coord,  0, 0, -1) |// S
+            npc_coord = movecoord(loc_coord,  1, 0,  1) |// NE
+            npc_coord = movecoord(loc_coord,  1, 0, -1) |// SE
+            npc_coord = movecoord(loc_coord, -1, 0,  1) |// NW
+            npc_coord = movecoord(loc_coord, -1, 0, -1)  // SW
+        )) {
         @talk_to_banker;
     }
 }
