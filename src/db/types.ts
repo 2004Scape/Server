@@ -97,9 +97,13 @@ export type message = {
     thread_id: number;
     sender_id: number;
     sender_ip: string;
-    sender: Generated<string>;
     content: string;
     created: Generated<string>;
+    edited: string | null;
+    edited_by: number | null;
+    deleted: string | null;
+    deleted_by: number | null;
+    sender: Generated<string>;
 };
 export type message_status = {
     id: Generated<number>;
@@ -107,6 +111,10 @@ export type message_status = {
     account_id: number;
     read: string | null;
     deleted: string | null;
+};
+export type message_tag = {
+    tag_id: number;
+    thread_id: number;
 };
 export type message_thread = {
     id: Generated<number>;
@@ -116,11 +124,14 @@ export type message_thread = {
     subject: string;
     created: Generated<string>;
     updated: Generated<string>;
-    read: string | null;
+    messages: Generated<number>;
     closed: string | null;
+    closed_by: number | null;
+    marked_spam: string | null;
+    marked_spam_by: number | null;
+    read: string | null;
     to_deleted: string | null;
     from_deleted: string | null;
-    messages: Generated<number>;
 };
 export type mod_action = {
     id: Generated<number>;
