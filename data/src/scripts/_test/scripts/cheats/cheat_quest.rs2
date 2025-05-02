@@ -366,7 +366,6 @@ if ($ikov_choice = 0) {
 
 %legends_progress = ^legends_returned_to_radimus;
     if (npc_find(0_42_52_34_45, radimus_erkle, 20, 0) = true) {
-        
         @radimus_training;
     }
 
