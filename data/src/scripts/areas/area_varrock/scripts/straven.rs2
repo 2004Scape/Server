@@ -4,7 +4,7 @@ if(%phoenixgang_progress >= ^phoenixgang_complete) {
 } else if(%blackarmgang_progress >= ^blackarmgang_joined) {
     @straven_blackarmdog;
 } else if(%phoenixgang_progress = ^phoenixgang_spoken_straven) {
-    @straven_mission
+    @straven_mission;
 } else {
     ~chatplayer("<p,quiz>What's through that door?");
     @straven_cant_enter;
