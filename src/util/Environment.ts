@@ -24,6 +24,7 @@ export default {
     WEB_MANAGEMENT_PORT: tryParseInt(process.env.WEB_MANAGEMENT_PORT, 8898),
 
     /// game server
+    ENGINE_REVISION: tryParseInt(process.env.ENGINE_REVISION, 225),
     // world id - offset by 9, so 1 = 10, 2 = 11, etc
     NODE_ID: tryParseInt(process.env.NODE_ID, 10),
     NODE_PORT: tryParseInt(process.env.NODE_PORT, 43594),

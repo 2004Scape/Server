@@ -113,6 +113,11 @@ if (gender() = 0) {
 }
 mes($message);
 p_delay(0);
+if (stat(hitpoints) = 0){
+    ~player_die;
+    // no early return, ring of life still processes on death. https://youtu.be/LSpyUVXa4LE?t=202
+}
+~ring_of_life_check;
 
 // Forces the player to walk to a certain coord. Basically p_teleport but doesnt telejump from a distance.
 // doesnt respect clipping
@@ -139,34 +144,13 @@ p_telejump($fail_coord);
 mes($message);
 
 [proc,set_walkbas](seq $walk_seq)
-bas_readyanim($walk_seq);
-bas_turnonspot($walk_seq);
-bas_walk_f($walk_seq);
-bas_walk_b($walk_seq);
-bas_walk_l($walk_seq);
-bas_walk_r($walk_seq);
-bas_running(null);
-buildappearance(worn);
+~bas_set($walk_seq, $walk_seq, $walk_seq, $walk_seq, $walk_seq, $walk_seq, null);
 
 [proc,set_readywalk_bas](seq $ready_seq, seq $walk_seq)
-bas_readyanim($ready_seq);
-bas_turnonspot($walk_seq);
-bas_walk_f($walk_seq);
-bas_walk_b($walk_seq);
-bas_walk_l($walk_seq);
-bas_walk_r($walk_seq);
-bas_running(null);
-buildappearance(worn);
+~bas_set($ready_seq, $walk_seq, $walk_seq, $walk_seq, $walk_seq, $walk_seq, null);
 
 [proc,set_readywalkturn_bas](seq $ready_seq, seq $turn_seq, seq $walk_seq)
-bas_readyanim($ready_seq);
-bas_turnonspot($turn_seq);
-bas_walk_f($walk_seq);
-bas_walk_b($walk_seq);
-bas_walk_l($walk_seq);
-bas_walk_r($walk_seq);
-bas_running(null);
-buildappearance(worn);
+~bas_set($ready_seq, $turn_seq, $walk_seq, $walk_seq, $walk_seq, $walk_seq, null);
 
 // Finds an identical loc on the $merge_pos coord to switch active_loc to
 [proc,change_merged_loc](coord $merge_pos)

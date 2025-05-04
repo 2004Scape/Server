@@ -77,7 +77,7 @@ switch_int(~p_choice2("Tell me of this quest.", 1, "I am weary of questing for t
 }
 
 [label,arthur_firstmeet]
-~chatnpc("<p,neutral>Welcome to my court. I am King Arthur of the Knights of the Round Table.");
+~chatnpc("<p,neutral>Welcome to my court. I am King Arthur.");
 switch_int(~p_choice3("I want to become a Knight of the Round Table!", 1, "So what are you doing in RuneScape?", 2, "Thank you very much.", 3)) {
     case 1 :
         ~chatplayer("<p,neutral>I want to become a Knight of the Round Table!");

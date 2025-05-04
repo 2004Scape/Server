@@ -59,7 +59,7 @@ npc_delay(2);
 if (uid ! %npc_macro_event_target) {
     // https://youtu.be/qNQYgiNMBes?t=134
     if (.finduid(%npc_macro_event_target) = true) {
-        ~chatnpc("<p,sad>Sorry, but I'm trying to talk to <.displayname>. However, <.text_gender("he", "she")> appears to be ignoring me..."); 
+        ~chatnpc("<p,sad>Sorry, but I'm trying to talk to <.displayname>.|However, <.text_gender("he", "she")> appears to be ignoring me..."); 
         return;
     }
     ~chatnpc("<p,sad>Sorry, but I'm trying to talk to another player.|However, they appear to be ignoring me...");

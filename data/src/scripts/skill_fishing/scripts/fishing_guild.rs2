@@ -3,27 +3,13 @@
 def_boolean $is_inside = ~check_axis(coord, loc_coord, loc_angle);
 if ($is_inside = false) {
     if (stat(fishing) < 68) {
-        @fishing_guild_level_fail;
+        if (npc_find(coord, master_fisher, 10, 0) = true) {
+            ~chatnpc("<p,happy>Hello, only the top fishers are allowed in here, you need a fishing level of 68 to enter.");
+        }
+        return;
     }
 }
 ~open_and_close_door(loc_param(next_loc_stage), $is_inside, false);
-
-[label,fishing_guild_level_fail]
-// find master fisher
-npc_findallzone(0_40_53_51_1);
-while (npc_findnext = true) {
-    if (npc_type = master_fisher) {
-        ~chatnpc("<p,happy>Hello, only the top fishers are allowed in here, you need a fishing level of 68 to enter.");
-        return;
-    }
-}
-npc_findallzone(0_40_52_51_63);
-while (npc_findnext = true) {
-    if (npc_type = master_fisher) {
-        ~chatnpc("<p,happy>Hello, only the top fishers are allowed in here, you need a fishing level of 68 to enter.");
-        return;
-    }
-}
 
 [opnpc1,master_fisher]
 if (stat(fishing) < 68) {

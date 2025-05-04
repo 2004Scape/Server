@@ -50,7 +50,7 @@ if ($rhand = null) {
     %action_delay = add(map_clock, 4);
 } else {
     %action_delay = add(map_clock, oc_param($rhand, attackrate));
-    def_int $poison_severity = oc_param($rhand, poison_severity);
+    def_int $poison_severity = oc_param($ammo, poison_severity);
     if ($damage > 0 & $poison_severity > 0 & random(4) = 0) { // 1/4 chance to poison
         .queue(poison_player, 0, $poison_severity);
     }
@@ -92,6 +92,6 @@ if (~in_duel_arena(coord) = true) {
 if (random($chance) ! 0) {
     world_delay($delay);
     if (map_blocked(.coord) = false) {
-        obj_add(.coord, enum(obj, namedobj, ranged_ammo, $ammo), 1, 100);
+        obj_add(.coord, enum(obj, namedobj, ranged_ammo, $ammo), 1, ^lootdrop_duration);
     }
 }

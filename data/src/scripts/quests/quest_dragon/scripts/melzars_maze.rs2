@@ -32,7 +32,7 @@ mes("The ladder is broken, I can't climb it."); // osrs
 // ladder
 [oploc1,melzar_maze_ladder]
 // No arrivedelay in osrs
-@climb_ladder(movecoord(coord, 0, 0, 6400), true);
+~climb_ladder(movecoord(coord, 0, 0, 6400), true);
 
 // red door
 [oploc1,melzar_maze_red_door] mes("This door is securely locked."); // osrs

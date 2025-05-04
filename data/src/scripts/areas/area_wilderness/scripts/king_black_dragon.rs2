@@ -76,8 +76,11 @@ if ($random < 10) { // osrs
 if (%npc_action_delay > map_clock) {
     return;
 }
-if (~npc_can_attack_player = false) {
+if (~npc_check_notcombat = false) {
     npc_setmode(null);
+    return;
+}
+if (~npc_check_notcombat_self = false) {
     return;
 }
 // kbd can attack from a distance but can also be safespoted
@@ -95,8 +98,11 @@ npc_setmode(opplayer2);
 if (%npc_action_delay > map_clock) {
     return;
 }
-if (~npc_can_attack_player = false) {
+if (~npc_check_notcombat = false) {
     npc_setmode(null);
+    return;
+}
+if (~npc_check_notcombat_self = false) {
     return;
 }
 ~kbd_random_attack;

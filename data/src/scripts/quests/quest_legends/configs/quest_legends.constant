@@ -78,6 +78,14 @@
 ^jungle_type_tree = 0
 ^jungle_type_bush = 1
 
+^legends_opal_coord = 0_43_145_12_29
+^legends_jade_coord = 0_43_145_19_23
+^legends_topaz_coord = 0_43_145_20_15
+^legends_sapphire_coord = 0_43_145_29_11
+^legends_diamond_coord = 0_43_145_22_7
+^legends_ruby_coord = 0_43_145_15_9
+^legends_emerald_coord = 0_43_145_5_17
+
 ^legends_guild_gate_west_coord = 0_42_52_40_21
 ^legends_guild_gate_east_coord = 0_42_52_41_21
 ^legends_guild_gate_dest_in_coord = 0_42_52_40_22

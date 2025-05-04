@@ -36,16 +36,18 @@ if(stat(agility) < 20) {
     ~mesbox("You need an Agility level of 20 to balance on this log.");
     return;
 }
-mes("You walk carefully across the slippery log...");
-~set_walkbas(human_walk_logbalance);
-p_teleport(loc_coord);
-p_delay(0);
-def_int $z_dist = -4;
+def_int $z_dist = -5;
 if(coordx(coord) < 2602) {
-    $z_dist = 4;
+    $z_dist = 5;
 }
-~agility_force_move(85, human_walk_logbalance, movecoord(coord, $z_dist, 0, 0));
-mes("...You make it safely to the other side.");
+p_teleport(movecoord(loc_coord, divide($z_dist, -5), 0, 0));
+p_arrivedelay;
+mes("You walk carefully across the slippery log...");
+~set_readywalk_bas(human_walk_logbalance_ready, human_walk_logbalance);
+~forcemove(movecoord(coord, $z_dist, 0, 0));
+~update_bas;
+stat_advance(agility, 85);
+mes("...and make it safely to the other side.");
 
 [oploc1,loc_2332]
 p_arrivedelay;
@@ -61,7 +63,7 @@ if(coordx(coord) < 2909) {
 }
 mes("You attempt to walk across the slippery log.");
 ~agility_force_move(0, human_walk_logbalance, movecoord(coord, $z_dist, 0, 0));
-if(stat_random(stat(agility), 90, 250) = false) {
+if(stat_random(agility, 90, 250) = false) {
     // slip and fall, exact move when falling but force walk afterwards
     mes("You lose your footing and fall into the water.");
     ~set_walkbas(human_falling);
@@ -151,24 +153,30 @@ if(coordz(loc_coord) > coordz(loc_param(start_coord))) {
 // teleport to the end of the spikes and walk 1 tile to the end of the bars
 ~forcewalk2($start_coord);
 facesquare(movecoord(coord, 0, 0, calc($dist_mod)));
+~bas_set(human_monkeybars_ready, human_monkeybars_ready, human_monkeybars_walk, 
+         human_monkeybars_ready, human_monkeybars_ready, human_monkeybars_ready, null);
 anim(human_monkeybars_on, 0);
 p_delay(0);
-~agility_force_move(0, human_monkeybars_walk, movecoord(coord, 0, 0, calc($dist_mod * 2)));
+~forcemove(movecoord(coord, 0, 0, calc($dist_mod * 1)));
+p_delay(0);
 // You can only fail the monkeybars in the agility dungeon
-if(stat_random(stat(agility), loc_param(obstacle_low_fail), loc_param(obstacle_high_fail)) = false) {
+if(stat_random(agility, loc_param(obstacle_low_fail), loc_param(obstacle_high_fail)) = false) {
     def_coord $fall_pos = 0_40_149_39_19; 
     if($start_coord = loc_param(start_coord)) {
         $fall_pos = 0_40_149_38_20;
     }
     ~agility_instant_fail($fall_pos, calc(((stat(hitpoints) * 15) / 100) + 1), "You miss the hand hold and fall to the level below.");
     anim(human_monkeybars_off, 0);
+    ~update_bas;
     p_delay(0);
     return;
 
 }
-p_telejump(movecoord(coord, 0, 0, calc($dist_mod * 2)));
+p_teleport(movecoord(coord, 0, 0, calc($dist_mod * 3)));
 p_delay(0);
-~agility_force_move(200, human_monkeybars_walk, movecoord(coord, 0, 0, calc($dist_mod * 1)));
+~forcemove(movecoord(coord, 0, 0, calc($dist_mod * 1)));
+~update_bas;
+stat_advance(agility, 200);
 anim(human_monkeybars_off, 0);
 p_delay(0);
 
@@ -218,7 +226,7 @@ if(coordz(coord) < coordz(loc_coord)) {
 mes("You attempt to balance on the stepping stone.");
 // 1t longer delay than osrs for now, otherwise the fall seq won't play on fails 
 ~agility_exactmove(human_steppingstonejump, 20, 2, coord, movecoord(coord, 0, 0, $dz), 48, 60, $dir, false);
-if(stat_random(stat(agility), 140, 250) = false) {
+if(stat_random(agility, 140, 250) = false) {
     // slip and fall, exact move when falling but force walk afterwards
     def_coord $fail_coord = 0_45_46_48_5;
     def_int $damage_bound = calc(stat(hitpoints) * 10 / 100);

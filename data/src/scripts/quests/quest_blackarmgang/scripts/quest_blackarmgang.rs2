@@ -18,17 +18,14 @@ if(%phoenixgang_progress >= ^phoenixgang_joined | $leaving = true) {
     ~open_hideout_door($leaving, "The door automatically opens for you.");
     return;
 }
-npc_findallzone(coord);
-while (npc_findnext = true) {
-    if (npc_type = straven & distance(coord, npc_coord) <= 1) {
-        if(%blackarmgang_progress >= ^blackarmgang_joined) {
-            @straven_blackarmdog;
-        }
-        if(%phoenixgang_progress = ^phoenixgang_spoken_straven) {
-            @straven_mission;
-        } 
-        @straven_cant_enter;
+if (npc_find(coord, straven, 1, 0) = true) {
+    if(%blackarmgang_progress >= ^blackarmgang_joined) {
+        @straven_blackarmdog;
     }
+    if(%phoenixgang_progress = ^phoenixgang_spoken_straven) {
+        @straven_mission;
+    } 
+    @straven_cant_enter;
 }
 mes("The door is securely locked.");
 

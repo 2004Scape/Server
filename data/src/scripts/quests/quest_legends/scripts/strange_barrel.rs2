@@ -2,7 +2,7 @@
 def_coord $loc_coord = loc_coord;
 anim(%com_attackanim, 0);
 p_delay(0);
-if(stat_random(stat(attack), 65, 255) = false) {
+if(stat_random(attack, 65, 255) = false) {
     mes("You were unable to smash this barrel open.");
     anim(human_stunned, 0);
     if(random(3) = 0) {

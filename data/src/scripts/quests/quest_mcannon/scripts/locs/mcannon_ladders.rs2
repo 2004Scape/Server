@@ -4,5 +4,5 @@ if (%mcannon_progress < ^mcannon_tasked_with_checking_guard_tower) {
     p_delay(0);
     mes("but the trap door will not open.");
 } else {
-    @climb_ladder(movecoord(coord(), 0, 1, 0), true);
+    ~climb_ladder(movecoord(coord(), 0, 1, 0), true);
 }

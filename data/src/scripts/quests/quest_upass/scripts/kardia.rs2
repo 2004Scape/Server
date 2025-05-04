@@ -113,7 +113,7 @@ if(%upass_progress >= ^upass_found_doll) {
     inv_add(inv, ibandoll, 1);
     inv_add(inv, old_journal, 1);
     inv_add(inv, 3dose2attack, 1);
-    inv_add(inv, 4dosestatrestore, 1);
+    inv_add(inv, 3dosestatrestore, 1);
 }
 
 [opnpc1,kardia]

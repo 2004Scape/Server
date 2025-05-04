@@ -33,17 +33,18 @@ export default class Obj extends NonPathingEntity {
         --this.lifecycleTick;
 
         if (this.lifecycleTick === 0) {
-            if (this.lifecycle === EntityLifeCycle.DESPAWN) {
+            if (this.lifecycle === EntityLifeCycle.DESPAWN && this.isActive) {
                 World.removeObj(this, 0);
-            } else if (this.lifecycle === EntityLifeCycle.RESPAWN) {
+            } else if (this.lifecycle === EntityLifeCycle.RESPAWN && !this.isActive) {
                 World.addObj(this, Obj.NO_RECEIVER, 0);
             } else {
                 // Fail safe in case no conditions are met (should never happen)
-                this.untrack();
+                this.setLifeCycle(-1);
+                console.error('Obj is tracked but has no event');
             }
         } else if (this.lifecycleTick < 0) {
             // Fail safe in case this is tracked but isn't supposed to be
-            this.untrack();
+            this.setLifeCycle(-1);
             console.error('Obj is tracked but has a negative lifecycle tick');
         }
     }

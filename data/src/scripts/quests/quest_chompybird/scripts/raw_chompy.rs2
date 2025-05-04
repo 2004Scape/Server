@@ -66,7 +66,7 @@ anim(human_potterywheel, 0);
 sound_synth(spit_roast, 0, 0);
 p_delay(2);
     
-def_boolean $passes_roll = stat_random(stat(cooking), 200, 255);
+def_boolean $passes_roll = stat_random(cooking, 200, 255);
 if ($passes_roll = true) {
     mes("You start to cook the chompy... it takes some time.");
     // Temp note: dur updated
@@ -189,7 +189,7 @@ anim(human_potterywheel, 0);
 sound_synth(spit_roast, 0, 0);
 p_delay(2);
     
-def_boolean $passes_roll = stat_random(stat(cooking), 200, 255);
+def_boolean $passes_roll = stat_random(cooking, 200, 255);
 if ($passes_roll = true) {
     mes("You add the other ingredients and cook the food.");
     %chompybird_progress = ^chompybird_chompy_cooked;

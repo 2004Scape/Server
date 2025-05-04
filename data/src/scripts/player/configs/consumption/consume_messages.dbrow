@@ -589,7 +589,7 @@ data=message_delay,1
 [restore_potion_consume_messages]
 table=consume_messages_table
 data=consumable,4dosestatrestore
-data=consumable,4dosestatrestore
+data=consumable,3dosestatrestore
 data=consumable,2dosestatrestore
 data=consumable,1dosestatrestore
 data=consume_message1,You drink some of your stat restoration potion.

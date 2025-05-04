@@ -105,10 +105,10 @@ switch_int(%tree_progress) {
         npc_setmode(none); // no mode because we don't want bolren to start moving
         facesquare(movecoord(coord, 8, 0, 0));
         npc_facesquare(movecoord(coord, 8, 0, 0));
-        ~gnome_chant("Su tana.");
-        ~gnome_chant("En tania.");
-        ~gnome_chant("Su tana.");
-        ~gnome_chant("En tania.");
+        ~gnome_chant(0_39_49_45_32, 0_39_49_46_31, "Su tana.");
+        ~gnome_chant(0_39_49_46_36, 0_39_49_45_35, "En tania.");
+        ~gnome_chant(0_39_49_45_32, 0_39_49_46_31, "Su tana.");
+        ~gnome_chant(0_39_49_46_36, 0_39_49_45_35, "En tania.");
         if(npc_find(coord, king_bolren, 4, 0) = false) { 
             return; // should never happen, just switching active npc
         }
@@ -133,25 +133,16 @@ switch_int(%tree_progress) {
         }
 }
 
-[proc,gnome_chant](string $message)
-npc_findallzone(coord);
-while(npc_findnext = true) {
-    if(npc_type = local_gnome) {
-        npc_facesquare(movecoord(coord, 2, 0, 0));
-        if((compare($message, "Su tana.") = 0 & coordz(coord) > coordz(npc_coord)) | (compare($message, "En tania.") = 0 & coordz(coord) < coordz(npc_coord))) {
-            npc_say($message);
-            npc_anim(midget_chanting, 0);
-        }
-    }
+[proc,gnome_chant](coord $coord1, coord $coord2, string $message)
+if (npc_findexact($coord1, local_gnome) = true) {
+    npc_facesquare(movecoord(coord, 2, 0, 0));
+    npc_say($message);
+    npc_anim(midget_chanting, 0);
 }
-npc_findallzone(movecoord(coord, 0, 0, -8));
-while(npc_findnext = true) {
-    if(npc_type = local_gnome) {
-        npc_facesquare(movecoord(coord, 2, 0, 0));
-        if((compare($message, "Su tana.") = 0 & coordz(coord) > coordz(npc_coord)) | (compare($message, "En tania.") = 0 & coordz(coord) < coordz(npc_coord))) {
-            npc_say($message);
-            npc_anim(midget_chanting, 0);
-        }
-    }
+
+if (npc_findexact($coord2, local_gnome) = true) {
+    npc_facesquare(movecoord(coord, 2, 0, 0));
+    npc_say($message);
+    npc_anim(midget_chanting, 0);
 }
 p_delay(1);
