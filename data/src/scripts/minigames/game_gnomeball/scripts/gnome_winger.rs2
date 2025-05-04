@@ -26,70 +26,63 @@ if (add(%npc_lastcombat, 8) > map_clock) {
 
 mes("You throw the ball.");
 anim(human_throw_gnomeball, 0);
-npc_anim(midget_catch, 28);
-
-def_int $duration = ~npc_projectile(coord, npc_uid, gnomeball_travel, 40, 36, 41, 15, 5, 11, 5);
-def_int $delay = sub(divide($duration, 30), 1);
-sound_synth(catch, 0, 28);
+sound_synth(throw, 0, 0);
 inv_delslot(worn, ^wearpos_rhand);
 ~update_all(ball_gnomeball_game);
+
+def_int $duration = ~npc_projectile(coord, npc_uid, gnomeball_travel, 40, 36, 41, 15, 5, 11, 5);
+npc_anim(midget_catch, add(sub($duration, 41), 8));
 npc_facesquare(coord);
+
 %npc_attacking_uid = uid;
 %npc_lastcombat = map_clock;
 
-npc_delay($delay);
-npc_changetype_keepall(gnome_winger2, ^max_32bit_int);
-
-// no idea if this is how they do it but if you pass before 10 ticks after u first 
-// passed to them, they will always pass 10 ticks later
-def_int $throw = add(random(10), 2);
-def_int $last = sub(add(%npc_lastattack, 10), map_clock);
-if ($last > 1) {
-    $throw = $last;
-}
-npc_settimer(add($throw, 1));
+npc_delay(1);
+npc_changetype(gnome_winger2, 60); // 60 ticks in osrs
 
 [queue,player_catch_gnomeball]
 inv_setslot(worn, ^wearpos_rhand, ball_gnomeball_game, 1);
 ~update_all(ball_gnomeball_game);
 
-[ai_timer,gnome_winger2]
-if (finduid(%npc_attacking_uid) = false | ~inzone_coord_pair_table(gnomeball_zones, coord) = false) {
-    if (add(%npc_lastcombat, 60) < map_clock & npc_type = gnome_winger2) {
-        %npc_attacking_uid = null;
-        npc_changetype_keepall(gnome_winger1, ^max_32bit_int);
-        npc_del;
-        return;
-    }
-}
-if (finduid(%npc_attacking_uid) = true) {
-    // yes it checks inv too, i checked with smuggling extra gnomeball in osrs with telegrab
-    if (~inzone_coord_pair_table(gnomeball_zones, coord) = true & inv_getobj(worn, ^wearpos_rhand) = null & inv_total(inv, ball_gnomeball_game) < 1) {
-        ~npc_gnomeball_pass;
-        return;
-    }
-}
-npc_settimer(20);
+[ai_timer,gnome_winger2] @gnome_winger_timer;
+[ai_timer,gnome_winger1] @gnome_winger_timer;
 
-[proc,npc_gnomeball_pass]
+[label,gnome_winger_timer]
+if (finduid(%npc_attacking_uid) = true) {
+    if (npc_type = gnome_winger2) {
+        // yes it checks inv too, i checked with smuggling extra gnomeball in osrs with telegrab
+        if (~inzone_coord_pair_table(gnomeball_zones, coord) = true & inv_getobj(worn, ^wearpos_rhand) = null & inv_total(inv, ball_gnomeball_game) < 1) {
+            ~npc_gnomeball_pass(npc_coord, coord);
+            return;
+        }
+    }
+
+}
+// osrs test:
+// passing it to the winger instantly sets his timer to 10t
+// pass to winger instantly, exit gnome ball minigame, reenter on the 10th tick. he'll always pass back between 2-11 ticks - randomly
+npc_settimer(add(random(10), 2)); 
+
+// define this coords before the p_delay to match osrs behavior!
+[proc,npc_gnomeball_pass](coord $npc_coord, coord $coord)
+npc_settimer(9); // osrs
 if_close;
 if (p_finduid(%npc_attacking_uid) = true) {
-    %npc_lastattack = map_clock;
+    p_delay(0);
     mes("The gnome passes the ball back.");
-    anim(human_catch, 22);
-    facesquare(npc_coord);
-
-    npc_settimer(0);
+    def_int $duration = ~player_projectile($npc_coord, $coord, uid, gnomeball_travel, 36, 40, 34, 15, 6, 11, 5);
+    $duration = add(sub($duration, 34), 1);
     npc_anim(midget_throw, 0);
-    sound_synth(catch, 0, 22);
-    sound_synth(throw, 0, 0);
-    ~player_projectile(npc_coord, coord, uid, gnomeball_travel, 36, 40, 34, 15, 15, 11, 2);
+    sound_synth(throw, 0, $duration);
+
+    anim(human_catch, $duration);
+    sound_synth(catch, 0, $duration);
+    facesquare(npc_coord);
     p_delay(0);
     npc_facesquare(coord);
-    p_delay(0);
     npc_changetype_keepall(gnome_winger1, ^max_32bit_int);
+    %npc_attacking_uid = null;
     p_delay(0);
     inv_setslot(worn, ^wearpos_rhand, ball_gnomeball_game, 1);
     ~update_all(ball_gnomeball_game);
-    %npc_attacking_uid = null;
 }

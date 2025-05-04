@@ -17,7 +17,7 @@ if (%gnomeball_progress = ^gnomeball_not_started) {
     @gnomeball_ref_first_start;
 }
 if (%gnomeball_progress = ^gnomeball_game_started) {
-    if (~gnomeball_inplay(npc_uid) = true | inv_getobj(worn, ^wearpos_rhand) = ball_gnomeball_game) {
+    if (~gnomeball_inplay = true | inv_getobj(worn, ^wearpos_rhand) = ball_gnomeball_game) {
         ~chatnpc("<p,neutral>You have a ball in play.|Do you need to hear the rules again?");
         @multi2("Yes please.", gnomeball_hear_rules, "No thanks.", gnomeball_no_hear_rules);
     } else {
@@ -50,19 +50,21 @@ if_close;
 npc_say("Peeeeeeeeeep");
 sound_synth(whistle, 0, 0);
 mes("The ref throws the ball into the air.");
+
 npc_anim(midget_throw, 0);
-~player_projectile(npc_coord, coord, uid, gnomeball_travel, 36, 40, 34, 60, 30, 11, 0);
-anim(human_catch, 27);
+npc_facesquare(coord);
+// (coord $coord, coord $coord2, player_uid $uid, spotanim $spotanim, int $startheight, int $endheight, int $delay, int $angle, int $length, int $offset, int $step)(int)
+def_int $duration = ~player_projectile(npc_coord, coord, uid, gnomeball_travel, 36, 40, 34, 60, 26, 11, 0);
+facesquare(npc_coord);
+anim(human_catch, add(sub($duration, 34), 1)); // duration + 1 is always 27 it seems
 p_delay(0);
 mes("You jump up and catch it.");
 sound_synth(catch, 0, 0);
 p_delay(0);
 inv_setslot(worn, ^wearpos_rhand, ball_gnomeball_game, 1);
-facesquare(npc_coord);
 ~update_all(inv_getobj(worn, ^wearpos_rhand));
-
 // other npcs complain about not getting passed to?
-p_delay(0);
+
 
 
 [label,gnomeball_ref_first_start]

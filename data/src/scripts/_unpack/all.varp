@@ -217,7 +217,8 @@ transmit=yes
 [smithing_level]
 transmit=yes
 
-[varp_215]
+[gnomeball_owedball]
+scope=perm
 
 [varp_216]
 
