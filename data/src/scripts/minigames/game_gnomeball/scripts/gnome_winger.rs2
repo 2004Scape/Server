@@ -30,7 +30,7 @@ sound_synth(throw, 0, 0);
 inv_delslot(worn, ^wearpos_rhand);
 ~update_all(ball_gnomeball_game);
 
-def_int $duration = ~npc_projectile(coord, npc_uid, spotanim_55, 40, 36, 41, 15, 5, 11, 5);
+def_int $duration = ~npc_projectile(coord, npc_uid, gnomeball_travel, 40, 36, 41, 15, 5, 11, 5);
 npc_anim(midget_catch, add(sub($duration, 41), 8));
 npc_facesquare(coord);
 
@@ -70,7 +70,7 @@ if_close;
 if (p_finduid(%npc_attacking_uid) = true) {
     p_delay(0);
     mes("The gnome passes the ball back.");
-    def_int $duration = ~player_projectile($npc_coord, $coord, uid, spotanim_55, 36, 40, 34, 15, 6, 11, 5);
+    def_int $duration = ~player_projectile($npc_coord, $coord, uid, gnomeball_travel, 36, 40, 34, 15, 6, 11, 5);
     $duration = add(sub($duration, 34), 1);
     npc_anim(midget_throw, 0);
     sound_synth(throw, 0, $duration);
