@@ -67,7 +67,7 @@ if(stat_random(thieving, 100, 240) = false) {
     mes("You fail to pick the workman's pocket.");
     npc_setmode(playerface);
     p_delay(0);
-    spotanim_pl(stunned_thieving, 124, 0);
+    spotanim_pl(stunned, 124, 0);
     anim(%com_defendanim, 0);
     ~damage_self(1);
     %action_delay = calc(map_clock + 13);

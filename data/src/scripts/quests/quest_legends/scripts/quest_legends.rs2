@@ -280,7 +280,7 @@ if (last_useitem = goldbowlbless_pure) {
     }
     loc_del(2);
     anim(human_pickuptable, 0);
-    spotanim_map(small_smokepuff, loc_coord, 124, 0);
+    spotanim_map(smokepuff, loc_coord, 124, 0);
     mes("You splash some pure water on the flames.");
     def_int $bowl_uses = getbit_range(%legends_bits, ^legends_golden_bowl_uses_start, ^legends_golden_bowl_uses_end);
     %legends_bits = setbit_range_toint(%legends_bits, add($bowl_uses,1), ^legends_golden_bowl_uses_start, ^legends_golden_bowl_uses_end);
@@ -295,7 +295,7 @@ if (last_useitem = goldbowlbless_pure) {
     def_obj $last_useitem = last_useitem;
     mes("The water evaporates in a cloud of steam...");
     anim(human_pickuptable, 0);
-    spotanim_map(small_smokepuff, loc_coord, 124, 0);
+    spotanim_map(smokepuff, loc_coord, 124, 0);
     p_delay(0);
     inv_del(inv, $last_useitem, 1);
     inv_add(inv, oc_param($last_useitem, next_obj_stage), 1);
@@ -909,17 +909,17 @@ world_delay(1);
 $i = 0;
 while($i < 13) {
     switch_int($i) {
-        case 4 : spotanim_map(spotanim_198, 0_43_145_13_17, 114, 10);
-        case 9 : spotanim_map(spotanim_198, 0_43_145_13_17, 108, 5);
-        case 13 : spotanim_map(spotanim_198, 0_43_145_13_17, 66, 1);
+        case 4 : spotanim_map(bookofbinding_effect, 0_43_145_13_17, 114, 10);
+        case 9 : spotanim_map(bookofbinding_effect, 0_43_145_13_17, 108, 5);
+        case 13 : spotanim_map(bookofbinding_effect, 0_43_145_13_17, 66, 1);
     }
-    ~coord_projectile(^legends_opal_coord, 0_43_145_13_17, spotanim_185, 48, 0, 46, 45, 10, 45, 10);
-    ~coord_projectile(^legends_jade_coord, 0_43_145_13_17, spotanim_185, 48, 0, 46, 45, 10, 45, 10);
-    ~coord_projectile(^legends_topaz_coord, 0_43_145_13_17, spotanim_185, 48, 0, 46, 45, 10, 45, 10);
-    ~coord_projectile(^legends_sapphire_coord, 0_43_145_13_17, spotanim_185, 48, 0, 46, 45, 10, 45, 10);
-    ~coord_projectile(^legends_diamond_coord, 0_43_145_13_17, spotanim_185, 48, 0, 46, 45, 10, 45, 10);
-    ~coord_projectile(^legends_ruby_coord, 0_43_145_13_17, spotanim_185, 48, 0, 46, 45, 10, 45, 10);
-    ~coord_projectile(^legends_emerald_coord, 0_43_145_13_17, spotanim_185, 48, 0, 46, 45, 10, 45, 10);
+    ~coord_projectile(^legends_opal_coord, 0_43_145_13_17, shooting_star, 48, 0, 46, 45, 10, 45, 10);
+    ~coord_projectile(^legends_jade_coord, 0_43_145_13_17, shooting_star, 48, 0, 46, 45, 10, 45, 10);
+    ~coord_projectile(^legends_topaz_coord, 0_43_145_13_17, shooting_star, 48, 0, 46, 45, 10, 45, 10);
+    ~coord_projectile(^legends_sapphire_coord, 0_43_145_13_17, shooting_star, 48, 0, 46, 45, 10, 45, 10);
+    ~coord_projectile(^legends_diamond_coord, 0_43_145_13_17, shooting_star, 48, 0, 46, 45, 10, 45, 10);
+    ~coord_projectile(^legends_ruby_coord, 0_43_145_13_17, shooting_star, 48, 0, 46, 45, 10, 45, 10);
+    ~coord_projectile(^legends_emerald_coord, 0_43_145_13_17, shooting_star, 48, 0, 46, 45, 10, 45, 10);
     $i = calc($i + 1);
     if($i = 13 & finduid(uid) = true) {
         mes("...Strangely a book appears near the middle of the room.");
