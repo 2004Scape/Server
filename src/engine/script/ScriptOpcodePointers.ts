@@ -473,6 +473,10 @@ const ScriptOpcodePointers: {
         require: ['active_player'],
         require2: ['active_player2']
     },
+    [ScriptOpcode.STAT_RANDOM]: {
+        require: ['active_player'],
+        require2: ['active_player2']
+    },
     [ScriptOpcode.UID]: {
         require: ['active_player'],
         require2: ['active_player2']
@@ -564,6 +568,11 @@ const ScriptOpcodePointers: {
         require2: ['active_npc2']
     },
     [ScriptOpcode.NPC_FIND]: {
+        set: ['active_npc'],
+        set2: ['active_npc2'],
+        conditional: true
+    },
+    [ScriptOpcode.NPC_FINDCAT]: {
         set: ['active_npc'],
         set2: ['active_npc2'],
         conditional: true

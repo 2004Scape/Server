@@ -65,7 +65,6 @@ export const enum ScriptOpcode {
     SPLIT_LINECOUNT,
     SPLIT_PAGECOUNT, // official
     SPOTANIM_MAP,
-    STAT_RANDOM,
     STRUCT_PARAM,
     WORLD_DELAY, // official
     NPCCOUNT,
@@ -184,6 +183,7 @@ export const enum ScriptOpcode {
     STAT_SUB,
     STAT_BOOST, // official
     STAT_DRAIN,
+    STAT_RANDOM,
     STRONGQUEUE,
     UID, // official
     WEAKQUEUE, // official
@@ -220,6 +220,7 @@ export const enum ScriptOpcode {
     NPC_DELAY, // official
     NPC_FACESQUARE, // official
     NPC_FIND, // official
+    NPC_FINDCAT,
     NPC_FINDALLANY, // official
     NPC_FINDALL,
     NPC_FINDEXACT, // official
@@ -512,7 +513,6 @@ export const ScriptOpcodeMap: Map<string, number> = new Map([
     ['SPLIT_LINECOUNT', ScriptOpcode.SPLIT_LINECOUNT],
     ['SPLIT_PAGECOUNT', ScriptOpcode.SPLIT_PAGECOUNT],
     ['SPOTANIM_MAP', ScriptOpcode.SPOTANIM_MAP],
-    ['STAT_RANDOM', ScriptOpcode.STAT_RANDOM],
     ['STRUCT_PARAM', ScriptOpcode.STRUCT_PARAM],
     ['WORLD_DELAY', ScriptOpcode.WORLD_DELAY],
     ['NPCCOUNT', ScriptOpcode.NPCCOUNT],
@@ -628,6 +628,7 @@ export const ScriptOpcodeMap: Map<string, number> = new Map([
     ['STAT_SUB', ScriptOpcode.STAT_SUB],
     ['STAT_BOOST', ScriptOpcode.STAT_BOOST],
     ['STAT_DRAIN', ScriptOpcode.STAT_DRAIN],
+    ['STAT_RANDOM', ScriptOpcode.STAT_RANDOM],
     ['STRONGQUEUE', ScriptOpcode.STRONGQUEUE],
     ['UID', ScriptOpcode.UID],
     ['WEAKQUEUE', ScriptOpcode.WEAKQUEUE],
@@ -662,6 +663,7 @@ export const ScriptOpcodeMap: Map<string, number> = new Map([
     ['NPC_DELAY', ScriptOpcode.NPC_DELAY],
     ['NPC_FACESQUARE', ScriptOpcode.NPC_FACESQUARE],
     ['NPC_FIND', ScriptOpcode.NPC_FIND],
+    ['NPC_FINDCAT', ScriptOpcode.NPC_FINDCAT],
     ['NPC_FINDALLANY', ScriptOpcode.NPC_FINDALLANY],
     ['NPC_FINDALL', ScriptOpcode.NPC_FINDALL],
     ['NPC_FINDEXACT', ScriptOpcode.NPC_FINDEXACT],

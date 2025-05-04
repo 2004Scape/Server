@@ -2,7 +2,7 @@
 def_coord $loc_coord = loc_coord;
 anim(%com_attackanim, 0);
 p_delay(0);
-if(stat_random(stat(attack), 65, 255) = false) {
+if(stat_random(attack, 65, 255) = false) {
     mes("You were unable to smash this barrel open.");
     anim(human_stunned, 0);
     if(random(3) = 0) {
@@ -17,7 +17,7 @@ if(stat_random(stat(attack), 65, 255) = false) {
     return;
 }
 loc_del(10000); // 1 hour
-spotanim_map(Barrel_Smash, loc_coord, 0, 0);
+spotanim_map(barrel_smash, loc_coord, 0, 0);
 // rates here are all guessed! need more data
 def_int $rand = random(128);
 if($rand < 32) {
@@ -125,7 +125,7 @@ while($i < $rolls) {
 }
 
 [proc,legends_barrel_spawn_npc]
-spotanim_map(small_smokepuff, loc_coord, 0, 0);
+spotanim_map(smokepuff, loc_coord, 0, 0);
 p_delay(0);
 switch_int(random(16)) {
     case 0 : npc_add(loc_coord, dwarf_chaos, 500);

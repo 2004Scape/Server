@@ -7,5 +7,5 @@ if (.npc_find(coord, west_ardougne_man_6, 14, 0) = true) {
     ~.chatnpc("<p,angry>King Tyras is scum!");
 }
 ~chatnpc("<p,shock>Tyras will be informed of these words of treason!");
-obj_add(npc_coord, tomato, 1, 200);
+obj_add(npc_coord, tomato, 1, ^lootdrop_duration);
 ~mesbox("Someone throws a <lowercase(oc_name(tomato))> at the <lowercase(nc_name(recruiter))>.");

@@ -29,8 +29,8 @@ mes("I have no reason to do that.");
 
 [oploc1,whistledoor]
 if(map_members = true & inv_total(inv, holy_table_napkin) > 0 & inv_total(inv, magic_whistle) < 2) { // doesn't check bank for either
-    obj_add(2_48_52_35_31, magic_whistle, 1, 100); // this is intended to keep spawning 2 more each time you enter/leave
-    obj_add(2_48_52_35_31, magic_whistle, 1, 100); 
+    obj_add(2_48_52_35_31, magic_whistle, 1, calc(^lootdrop_duration / 2)); // this is intended to keep spawning 2 more each time you enter/leave
+    obj_add(2_48_52_35_31, magic_whistle, 1, calc(^lootdrop_duration / 2));
 }
 ~open_and_close_door(loc_1535, ~check_axis(coord, loc_coord, loc_angle), false);
 

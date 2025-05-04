@@ -148,8 +148,8 @@ recol1d=32767
 2dyan=1688
 2dxan=204
 weight=2200g
-param=plural_name,Buckets of milk
 param=next_obj_stage,bucket_empty
+param=gnome_cocktail_ingredient,^true
 
 [egg]
 name=Egg
@@ -176,6 +176,8 @@ weight=150g
 category=category_59
 name=Chocolate bar
 desc=Mmmmmmm chocolate.
+param=gnome_topping,^true
+param=gnome_cooking_ingredient,^true
 param=grindable_ingredient_refined,chocolate_dust
 param=grindable_ingredient_message,You grind the chocolate to dust.
 param=cocktail_message,You crumble the chocolate into the drink.

@@ -27,7 +27,7 @@ if (distance(loc_coord, coord) > 10) {
     return;
 }
 // pos: 2404 3488
-p_stopaction;
+p_stopaction; // doesnt do this in osrs but its an aploc interaction so maybe they removed this?
 // https://youtu.be/LWfcA_C2bJY?si=1xvGzgrQ53VgBsAx&t=50
 mes("You throw the ball at the goal.");
 cam_moveto(movecoord(loc_coord, 3, 0, 0), 300, 100, 100);
@@ -37,7 +37,7 @@ facesquare(loc_coord);
 anim(human_throw_gnomeball, 0);
 sound_synth(throw, 0, 10);
 def_coord $land_coord = ~gnomeball_shoot_random(loc_coord);
-def_int $duration = ~coord_projectile(coord, $land_coord, spotanim_55, 40, 2, 41, 15, 0, 11, 5);
+def_int $duration = ~coord_projectile(coord, $land_coord, gnomeball_travel, 40, 2, 41, 15, 0, 11, 5);
 
 inv_delslot(worn, ^wearpos_rhand);
 ~update_all(ball_gnomeball_game);
@@ -47,7 +47,7 @@ if ($land_coord = loc_coord) {
     %gnomeball = min(add(max(%gnomeball, 0), 1), 5);
     if (%gnomeball = 5) {
         mes("You win!");
-        inv_add(foodshop, ball_gnomeball_game, 1);
+        %gnomeball_owedball = ^true;
         %gnomeball = 0;
         stat_advance(ranged, 300);
         stat_advance(agility, 300);
@@ -78,7 +78,7 @@ cam_reset;
 // from 100 goals at 1 ranged, 10 tiles away:
 // - 9 goals, 91 misses
 // ash says distance matters, but it doesnt seem like it matters a huge amount
-if (stat_random(stat(ranged), 25, sub(300, multiply(distance(coord, $coord), 5))) = true) {
+if (stat_random(ranged, 25, sub(300, multiply(distance(coord, $coord), 5))) = true) {
     return($coord);
 }
 

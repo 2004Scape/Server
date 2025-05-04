@@ -174,16 +174,6 @@ const ServerOps: CommandHandlers = {
         state.pushInt(isLineOfWalk(from.level, from.x, from.z, to.x, to.z) ? 1 : 0);
     },
 
-    // https://x.com/JagexAsh/status/1110604592138670083
-    [ScriptOpcode.STAT_RANDOM]: state => {
-        const [level, low, high] = state.popInts(3);
-
-        const value = Math.floor((low * (99 - level)) / 98) + Math.floor((high * (level - 1)) / 98) + 1;
-        const chance = Math.floor(Math.random() * 256);
-
-        state.pushInt(value > chance ? 1 : 0);
-    },
-
     [ScriptOpcode.SPOTANIM_MAP]: state => {
         const [spotanim, coord, height, delay] = state.popInts(4);
 
@@ -348,7 +338,7 @@ const ServerOps: CommandHandlers = {
         const spotanimType: SpotanimType = check(spotanim, SpotAnimTypeValid);
 
         const slot = npcUid & 0xffff;
-        const _expectedType = (npcUid >> 16) & 0xffff;
+        // const _expectedType = (npcUid >> 16) & 0xffff;
 
         const npc = World.getNpc(slot);
         if (!npc) {

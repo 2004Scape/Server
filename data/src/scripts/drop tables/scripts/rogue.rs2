@@ -8,7 +8,7 @@ if (npc_findhero = false) {
 }
 
 // Normal drop
-obj_add(npc_coord, npc_param(death_drop), 1, 200);
+obj_add(npc_coord, npc_param(death_drop), 1, ^lootdrop_duration);
 
 // Treasure trail
 ~trail_easycluedrop(128, npc_coord);
@@ -16,55 +16,55 @@ obj_add(npc_coord, npc_param(death_drop), 1, 200);
 def_int $dropint = random(128);
 if ($dropint < 2) {
     // 2/128
-    obj_add(npc_coord, bronze_med_helm, 1, 200);
+    obj_add(npc_coord, bronze_med_helm, 1, ^lootdrop_duration);
 } else if ($dropint < 3) {
     // 1/128
-    obj_add(npc_coord, iron_dagger, 1, 200);
+    obj_add(npc_coord, iron_dagger, 1, ^lootdrop_duration);
 } else if ($dropint < 25) {
     // 22/128
-    obj_add(npc_coord, bolt, ~random_range(2, 12), 200);
+    obj_add(npc_coord, bolt, ~random_range(2, 12), ^lootdrop_duration);
 } else if ($dropint < 28) {
     // 3/128
-    obj_add(npc_coord, bronze_arrow, 7, 200);
+    obj_add(npc_coord, bronze_arrow, 7, ^lootdrop_duration);
 } else if ($dropint < 30) {
     // 2/128
-    obj_add(npc_coord, earthrune, 4, 200);
+    obj_add(npc_coord, earthrune, 4, ^lootdrop_duration);
 } else if ($dropint < 32) {
     // 2/128
-    obj_add(npc_coord, firerune, 6, 200);
+    obj_add(npc_coord, firerune, 6, ^lootdrop_duration);
 } else if ($dropint < 34) {
     // 2/128
-    obj_add(npc_coord, mindrune, 9, 200);
+    obj_add(npc_coord, mindrune, 9, ^lootdrop_duration);
 } else if ($dropint < 35) {
     // 1/128
-    obj_add(npc_coord, chaosrune, 2, 200);
+    obj_add(npc_coord, chaosrune, 2, ^lootdrop_duration);
 } else if ($dropint < 58) {
     // 23/128
-    obj_add(npc_coord, ~randomherb, 200);
+    obj_add(npc_coord, ~randomherb, ^lootdrop_duration);
 } else if ($dropint < 96) {
     // 38/128
-    obj_add(npc_coord, coins, 3, 200);
+    obj_add(npc_coord, coins, 3, ^lootdrop_duration);
 } else if ($dropint < 105) {
     // 9/128
-    obj_add(npc_coord, coins, 5, 200);
+    obj_add(npc_coord, coins, 5, ^lootdrop_duration);
 } else if ($dropint < 109) {
     // 4/128
-    obj_add(npc_coord, coins, 15, 200);
+    obj_add(npc_coord, coins, 15, ^lootdrop_duration);
 } else if ($dropint < 110) {
     // 1/128
-    obj_add(npc_coord, coins, 25, 200);
+    obj_add(npc_coord, coins, 25, ^lootdrop_duration);
 } else if ($dropint < 115) {
     // 5/128
-    obj_add(npc_coord, fishing_bait, 1, 200);
+    obj_add(npc_coord, fishing_bait, 1, ^lootdrop_duration);
 } else if ($dropint < 117) {
     // 2/128
-    obj_add(npc_coord, copper_ore, 1, 200);
+    obj_add(npc_coord, copper_ore, 1, ^lootdrop_duration);
 } else if ($dropint < 119) {
     // 2/128
-    obj_add(npc_coord, earth_talisman, 1, 200);
+    obj_add(npc_coord, earth_talisman, 1, ^lootdrop_duration);
 } else if ($dropint < 120) {
     // 1/128
-    obj_add(npc_coord, cabbage, 1, 200);
+    obj_add(npc_coord, cabbage, 1, ^lootdrop_duration);
 }
 
 // 8/128 nothing

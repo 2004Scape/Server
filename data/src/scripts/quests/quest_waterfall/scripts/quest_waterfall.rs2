@@ -151,23 +151,20 @@ switch_int (%waterfall_progress) {
         p_delay(2);
         if (%waterfall_progress = ^waterfall_started) {
             // Forced Hudon Dialogue
-            npc_findallzone(movecoord(coord, -1, 0, 0));
-            while (npc_findnext = true) {
-                if (npc_type = hudon) {
-                    ~chatplayer("<p,neutral>Hello son, are you okay? You need help?");
-                    ~chatnpc("<p,neutral>It looks like you need the help.");
-                    ~chatplayer("<p,neutral>Your mum sent me to find you.");
-                    ~chatnpc("<p,neutral>Don't play nice with me,|I know you're looking for the treasure.");
-                    ~chatplayer("<p,neutral>Where is this treasure you talk of?");
-                    ~chatnpc("<p,neutral>Just because I'm small doesn't mean I'm dumb! If I told you, you would take it all for yourself.");
-                    ~chatplayer("<p,neutral>Maybe I could help.");
-                    %waterfall_progress = ^waterfall_spoken_to_hudon;
-                    ~chatnpc("<p,neutral>I'm fine alone.");
-                    mes("Hudon is refusing to leave the waterfall");
-                    return;
-                }
+            if (npc_find(movecoord(coord, -1, 0, 0), hudon, 5, 0) = true) {
+                ~chatplayer("<p,neutral>Hello son, are you okay? You need help?");
+                ~chatnpc("<p,neutral>It looks like you need the help.");
+                ~chatplayer("<p,neutral>Your mum sent me to find you.");
+                ~chatnpc("<p,neutral>Don't play nice with me,|I know you're looking for the treasure.");
+                ~chatplayer("<p,neutral>Where is this treasure you talk of?");
+                ~chatnpc("<p,neutral>Just because I'm small doesn't mean I'm dumb! If I told you, you would take it all for yourself.");
+                ~chatplayer("<p,neutral>Maybe I could help.");
+                %waterfall_progress = ^waterfall_spoken_to_hudon;
+                ~chatnpc("<p,neutral>I'm fine alone.");
+                mes("Hudon is refusing to leave the waterfall");
+                return;
+            }
         }
-    }
 }
 
 // Swim to rock
@@ -213,7 +210,7 @@ if(inzone(0_39_54_14_20, 0_39_54_18_25, coord) = false) {
 def_coord $rock_coord = loc_coord;
 ~forcewalk2(movecoord($rock_coord, 0, 0, 8));
 anim(human_throwrope, 0);
-spotanim_map(spotanim_67, movecoord($rock_coord, 0, 0, 6), 0, 20);
+spotanim_map(rope_piece, movecoord($rock_coord, 0, 0, 6), 0, 20);
 p_delay(1);
 // Temp note: dur updated
 loc_change(loc_1997, 8);
@@ -329,9 +326,8 @@ if($is_outside = false) {
         return;
     }
     if(%waterfall_progress <= ^waterfall_opened_book_on_baxtorian & inv_total(inv, golrie_key_waterfall_quest) = 0) {
-        npc_findallzone(movecoord(coord, 0, 0, 2));
-        while (npc_findnext = true) {
-            if(npc_type = golrie) @waterfall_golrie_door_dialogue;
+        if (npc_find(movecoord(coord, 0, 0, 2), golrie, 5, 0) = true) {
+            @waterfall_golrie_door_dialogue;
         }
     }
     mes("The gate is locked.");

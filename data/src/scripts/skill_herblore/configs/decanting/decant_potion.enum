@@ -19,7 +19,7 @@ inputtype=int
 outputtype=namedobj
 val=1,1dosestatrestore
 val=2,2dosestatrestore
-val=3,4dosestatrestore
+val=3,3dosestatrestore
 val=4,4dosestatrestore
 
 [potion_1defense]
