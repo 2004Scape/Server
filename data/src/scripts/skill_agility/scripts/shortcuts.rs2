@@ -63,7 +63,7 @@ if(coordx(coord) < 2909) {
 }
 mes("You attempt to walk across the slippery log.");
 ~agility_force_move(0, human_walk_logbalance, movecoord(coord, $z_dist, 0, 0));
-if(stat_random(stat(agility), 90, 250) = false) {
+if(stat_random(agility, 90, 250) = false) {
     // slip and fall, exact move when falling but force walk afterwards
     mes("You lose your footing and fall into the water.");
     ~set_walkbas(human_falling);
@@ -160,7 +160,7 @@ p_delay(0);
 ~forcemove(movecoord(coord, 0, 0, calc($dist_mod * 1)));
 p_delay(0);
 // You can only fail the monkeybars in the agility dungeon
-if(stat_random(stat(agility), loc_param(obstacle_low_fail), loc_param(obstacle_high_fail)) = false) {
+if(stat_random(agility, loc_param(obstacle_low_fail), loc_param(obstacle_high_fail)) = false) {
     def_coord $fall_pos = 0_40_149_39_19; 
     if($start_coord = loc_param(start_coord)) {
         $fall_pos = 0_40_149_38_20;
@@ -226,7 +226,7 @@ if(coordz(coord) < coordz(loc_coord)) {
 mes("You attempt to balance on the stepping stone.");
 // 1t longer delay than osrs for now, otherwise the fall seq won't play on fails 
 ~agility_exactmove(human_steppingstonejump, 20, 2, coord, movecoord(coord, 0, 0, $dz), 48, 60, $dir, false);
-if(stat_random(stat(agility), 140, 250) = false) {
+if(stat_random(agility, 140, 250) = false) {
     // slip and fall, exact move when falling but force walk afterwards
     def_coord $fail_coord = 0_45_46_48_5;
     def_int $damage_bound = calc(stat(hitpoints) * 10 / 100);

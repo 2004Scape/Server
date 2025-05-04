@@ -10,7 +10,7 @@ if(coordz(coord) < coordz($start_pos)) {
     return;
 }
 p_delay(0);
-if(stat_random(stat(agility), 200, 260) = false) {
+if(stat_random(agility, 200, 260) = false) {
     // todo: actual rates (same for every other fail on this course)
     ~agility_instant_fail(0_39_155_54_29, calc(((stat(hitpoints) * 15) / 100) + 1), "You slip and fall to the pit below.");
     p_teleport(movecoord(coord, 1, 0, -1));
@@ -35,7 +35,7 @@ p_arrivedelay;
 mes("You walk carefully across the slippery log...");
 ~set_readywalk_bas(human_walk_logbalance_ready, human_walk_logbalance);
 ~forcemove(movecoord(coord, -6, 0, 0));
-if(stat_random(stat(agility), 185, 260) = false) {
+if(stat_random(agility, 185, 260) = false) {
     mes("...You lose your footing and fall into the water.");
     anim(human_walk_logbalance_stumble, 0);
     facesquare(movecoord(coord, 0, 0, -2));
@@ -74,7 +74,7 @@ mes("You put your foot on the ledge and try to edge across...");
 anim(human_into_sidestepl, 0);
 ~set_readywalkturn_bas(human_ready_sidestepl, human_ready_sidestepl, human_walk_sidestepl);
 ~forcemove(movecoord(coord, -2, 0, 0));
-if(stat_random(stat(agility), 210, 260) = false) {
+if(stat_random(agility, 210, 260) = false) {
     anim(human_walk_logbalance_stumble, 0);
     mes("You slip and fall onto the spikes below.");
     p_delay(0);

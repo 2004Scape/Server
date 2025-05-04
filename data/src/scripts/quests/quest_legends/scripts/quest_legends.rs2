@@ -100,7 +100,7 @@ if (~p_choice2_header("Yes please!", 1, "No thanks!", 2, "Would you like to sque
     p_delay(1);
     ~agility_exactmove(human_crawling, 0, 0, coord, 0_43_145_43_60, 6, 20, ^exact_east, false);
     // guess
-    if (stat_random(stat(agility), 125, 250) = false) {
+    if (stat_random(agility, 125, 250) = false) {
         mes("You get stuck as you try to squeeze into the crevice.");
         p_delay(5);
         mes("It takes you a while to get back out again.");
@@ -241,7 +241,7 @@ if (~player_in_fire_octagram = true) {
         p_delay(0);
         mes("You take a run up...");
         p_delay(2);
-        if(stat_random(stat(agility), 50, 250) = true) { // guessing, not sure how this is randomized
+        if(stat_random(agility, 50, 250) = true) { // guessing, not sure how this is randomized
             mes("You sail over the top of the flame wall...");
             p_delay(1);
             p_teleport(movecoord(coord, 0, 0, 2));
@@ -329,7 +329,7 @@ if (%legends_progress >= ^legends_found_entrance) {
         mes("You contort your body to fit the crevice.");
         p_delay(0);
         // guess
-        if (stat_random(stat(agility), 125, 250) = false) {
+        if (stat_random(agility, 125, 250) = false) {
             mes("You get cramped in the tiny space and start to suffocate.");
             p_delay(1);
             mes("You wriggle and wriggle but you cannot get out...");
@@ -424,7 +424,7 @@ p_delay(2);
 say("Easy does it...");
 anim(human_pickuptable, 0);
 // todo: real rate?
-if (stat_random(stat(thieving), 0, 255) = false) {
+if (stat_random(thieving, 0, 255) = false) {
     ~mesbox("But you fail to pick the lock.");
     // todo: is it actually possible to break the lockpick here?
     //inv_del(inv, lockpick, 1);
@@ -472,7 +472,7 @@ if ($choice = 1) {
     // lose 1-2 more if you continue instead of clicking out of the mesbox
     anim(human_push, 0);
     // todo: real rate?
-    if (stat_random(stat(strength), 0, 255) = true) {
+    if (stat_random(strength, 0, 255) = true) {
         say("Shhhhhhhshshehshsh"); // this keyboard mashing is no longer in osrs
         ~mesbox("...and you just manage to force the doors open slightly, just enough to force yourself through.");
         ~open_and_close_double_door2($entering, $side, door_open);
@@ -526,7 +526,7 @@ mes("You swing your pick at the rock.");
 anim(oc_param($pickaxe, mining_animation), 0);
 sound_synth(mine_quick, 0, 10);
 // todo: real rate?
-if (stat_random(stat(mining), 90, 255) = true) {
+if (stat_random(mining, 90, 255) = true) {
     // no delays on any of this
     // https://youtu.be/uF1a9xsV7zo?t=1256
     mes("You manage to smash the rock to bits.");
@@ -593,7 +593,7 @@ if(coordz(coord) > 9295) {
 }
 // todo: real rate?
 // this one feels more punishing than the doors/boulders
-if (stat_random(stat(agility), 50, 200) = true) {
+if (stat_random(agility, 50, 200) = true) {
     mes("You take a good run up and sail majestically over the wall.");
     ~agility_exactmove(human_spot_jump, 30, 2, $start, $end, 37, 50, $dir, false);
     mes("You land perfectly and stand ready for action.");
@@ -1133,7 +1133,7 @@ if(last_useitem = yommiseeds_germ) {
         return;
     }
     // https://x.com/JagexAsh/status/1156958470324834306
-    if(stat_random(stat(herblore), 40, 243) = false | %legends_progress < ^legends_sacred_water_collected) {
+    if(stat_random(herblore, 40, 243) = false | %legends_progress < ^legends_sacred_water_collected) {
         inv_del(inv, yommiseeds_germ, 1);
         ~mesbox("You planted the seed incorrectly in the fertile soil. The plant withers and dies.");
         return;
@@ -1474,7 +1474,7 @@ p_delay(4);
 // https://youtu.be/uF1a9xsV7zo?t=931
 // fail rate doesn't appear to be impacted by having vs not having the sketch, despite OSRS wiki saying otherwise
 // likely does use stat_random though: https://x.com/JagexAsh/status/1346079741821022209
-if (stat_random(stat(smithing), 31, 256) = false) {
+if (stat_random(smithing, 31, 256) = false) {
     mes("You make a mistake forging the bowl.");
     // 135/256 chance of removing a second gold bar
     // https://x.com/JagexAsh/status/1346079741821022209
@@ -1568,7 +1568,7 @@ if_close;
 mes("You prepare to climb down the rope.");
 p_delay(2);
 if(testbit(%legends_bits, ^legends_drank_bravery_potion) = true) {
-    if(stat_random(stat(agility), 120, 250) = false) {
+    if(stat_random(agility, 120, 250) = false) {
         mes("Fear stabs at your heart....");
         say("Gulp!");
         p_delay(1);
@@ -1623,7 +1623,7 @@ if_close;
 mes("You step forward carefully onto the pathway.");
 p_teleport(loc_coord);
 p_delay(1);
-if(stat_random(stat(agility), 110, 250) = false) {
+if(stat_random(agility, 110, 250) = false) {
     mes("You slip and fall!");
     say("Arrgggghhhhhhhhhhhhhhh...........!!!");
     ~agility_exactmove(human_stumble_and_hang, 30, 1, coord, movecoord(loc_coord, 0, 0, 1), 37, 70, ^exact_east, false);
@@ -1658,7 +1658,7 @@ if_close;
 mes("You start to climb the precarious rocks.");
 p_teleport(loc_coord);
 p_delay(1);
-if(stat_random(stat(agility), 110, 250) = false) {
+if(stat_random(agility, 110, 250) = false) {
     mes("You slip and fall!");
     say("Arrgggghhhhhhhhhhhhhhh...........!!!");
     ~agility_exactmove(human_stumble_and_hang, 30, 1, coord, movecoord(loc_coord, 1, 0, -1), 37, 50, ^exact_west, false);
@@ -1694,7 +1694,7 @@ if_close;
 mes("You step forward carefully onto the pathway.");
 p_teleport(loc_coord);
 p_delay(1);
-if(stat_random(stat(agility), 110, 250) = false) {
+if(stat_random(agility, 110, 250) = false) {
     mes("You slip and fall!");
     say("Arrgggghhhhhhhhhhhhhhh...........!!!");
     ~agility_exactmove(human_stumble_and_hang, 30, 1, coord, movecoord(loc_coord, -1, 0, 0), 37, 70, ^exact_north, false);
@@ -1732,7 +1732,7 @@ if_close;
 mes("You start to prepare to climb over the rocks.");
 p_teleport(loc_coord);
 p_delay(1);
-if(stat_random(stat(agility), 110, 250) = false) {
+if(stat_random(agility, 110, 250) = false) {
     mes("You slip and fall!");
     ~agility_exactmove(human_wobbleandfall_l, 30, 0, coord, movecoord(loc_coord, -2, 0, 2), 52, 100, ^exact_east, false);
     ~set_walkbas(human_falling_end);
@@ -1781,7 +1781,7 @@ if_close;
 mes("You start to prepare to climb over the rocks.");
 p_teleport(loc_coord);
 p_delay(1);
-if(stat_random(stat(agility), 110, 250) = false) {
+if(stat_random(agility, 110, 250) = false) {
     mes("You slip and fall!");
     ~agility_exactmove(human_wobbleandfall_l, 30, 0, coord, movecoord(loc_coord, 3, 0, 0), 52, 100, ^exact_south, false);
     ~set_walkbas(human_falling_end);
@@ -1830,7 +1830,7 @@ if_close;
 mes("You start to prepare to climb over the rocks.");
 p_teleport(movecoord(loc_coord, 1, 0, 1));
 p_delay(1);
-if(stat_random(stat(agility), 110, 250) = false) {
+if(stat_random(agility, 110, 250) = false) {
     mes("You slip and fall!");
     ~agility_exactmove(human_wobbleandfall_l, 30, 0, coord, movecoord(coord, 2, 0, -2), 52, 100, ^exact_south, false);
     ~set_walkbas(human_falling_end);

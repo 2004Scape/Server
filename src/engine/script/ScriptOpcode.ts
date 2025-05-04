@@ -65,7 +65,6 @@ export const enum ScriptOpcode {
     SPLIT_LINECOUNT,
     SPLIT_PAGECOUNT, // official
     SPOTANIM_MAP,
-    STAT_RANDOM,
     STRUCT_PARAM,
     WORLD_DELAY, // official
     NPCCOUNT,
@@ -184,6 +183,7 @@ export const enum ScriptOpcode {
     STAT_SUB,
     STAT_BOOST, // official
     STAT_DRAIN,
+    STAT_RANDOM,
     STRONGQUEUE,
     UID, // official
     WEAKQUEUE, // official
@@ -513,7 +513,6 @@ export const ScriptOpcodeMap: Map<string, number> = new Map([
     ['SPLIT_LINECOUNT', ScriptOpcode.SPLIT_LINECOUNT],
     ['SPLIT_PAGECOUNT', ScriptOpcode.SPLIT_PAGECOUNT],
     ['SPOTANIM_MAP', ScriptOpcode.SPOTANIM_MAP],
-    ['STAT_RANDOM', ScriptOpcode.STAT_RANDOM],
     ['STRUCT_PARAM', ScriptOpcode.STRUCT_PARAM],
     ['WORLD_DELAY', ScriptOpcode.WORLD_DELAY],
     ['NPCCOUNT', ScriptOpcode.NPCCOUNT],
@@ -629,6 +628,7 @@ export const ScriptOpcodeMap: Map<string, number> = new Map([
     ['STAT_SUB', ScriptOpcode.STAT_SUB],
     ['STAT_BOOST', ScriptOpcode.STAT_BOOST],
     ['STAT_DRAIN', ScriptOpcode.STAT_DRAIN],
+    ['STAT_RANDOM', ScriptOpcode.STAT_RANDOM],
     ['STRONGQUEUE', ScriptOpcode.STRONGQUEUE],
     ['UID', ScriptOpcode.UID],
     ['WEAKQUEUE', ScriptOpcode.WEAKQUEUE],
