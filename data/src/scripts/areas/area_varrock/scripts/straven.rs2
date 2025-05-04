@@ -1,13 +1,13 @@
 [opnpc1,straven]
-if(%blackarmgang_progress >= ^blackarmgang_joined) {
+if(%phoenixgang_progress >= ^phoenixgang_complete) {
+    @straven_gangmember;
+} else if(%blackarmgang_progress >= ^blackarmgang_joined) {
     @straven_blackarmdog;
-}
-switch_int (%phoenixgang_progress) {
-    case ^phoenixgang_spoken_straven : @straven_mission;
-    case ^phoenixgang_joined, ^phoenixgang_complete : @straven_gangmember;
-    case default :
-        ~chatplayer("<p,quiz>What's through that door?");
-        @straven_cant_enter;
+} else if(%phoenixgang_progress = ^phoenixgang_spoken_straven) {
+    @straven_mission;
+} else {
+    ~chatplayer("<p,quiz>What's through that door?");
+    @straven_cant_enter;
 }
 
 [opnpcu,straven]
