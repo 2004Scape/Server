@@ -12,24 +12,25 @@ import ZoneEvent from '#/engine/zone/ZoneEvent.js';
 import { ZoneEventType } from '#/engine/zone/ZoneEventType.js';
 import ZoneMap from '#/engine/zone/ZoneMap.js';
 import Packet from '#/io/Packet.js';
-import ServerProtRepository from '#/network/rs225/server/prot/ServerProtRepository.js';
-import ZoneMessageEncoder from '#/network/server/codec/ZoneMessageEncoder.js';
-import LocAddChange from '#/network/server/model/LocAddChange.js';
-import LocAnim from '#/network/server/model/LocAnim.js';
-import LocDel from '#/network/server/model/LocDel.js';
-import LocMerge from '#/network/server/model/LocMerge.js';
-import MapAnim from '#/network/server/model/MapAnim.js';
-import MapProjAnim from '#/network/server/model/MapProjAnim.js';
-import ObjAdd from '#/network/server/model/ObjAdd.js';
-import ObjCount from '#/network/server/model/ObjCount.js';
-import ObjDel from '#/network/server/model/ObjDel.js';
-import ObjReveal from '#/network/server/model/ObjReveal.js';
-import UpdateZoneFullFollows from '#/network/server/model/UpdateZoneFullFollows.js';
-import UpdateZonePartialEnclosed from '#/network/server/model/UpdateZonePartialEnclosed.js';
-import UpdateZonePartialFollows from '#/network/server/model/UpdateZonePartialFollows.js';
-import ZoneMessage from '#/network/server/ZoneMessage.js';
+import ServerProtProvider from '#/network/game/server/codec/ServerProtProvider.js';
+import ZoneMessageEncoder from '#/network/game/server/codec/ZoneMessageEncoder.js';
+import LocAddChange from '#/network/game/server/model/LocAddChange.js';
+import LocAnim from '#/network/game/server/model/LocAnim.js';
+import LocDel from '#/network/game/server/model/LocDel.js';
+import LocMerge from '#/network/game/server/model/LocMerge.js';
+import MapAnim from '#/network/game/server/model/MapAnim.js';
+import MapProjAnim from '#/network/game/server/model/MapProjAnim.js';
+import ObjAdd from '#/network/game/server/model/ObjAdd.js';
+import ObjCount from '#/network/game/server/model/ObjCount.js';
+import ObjDel from '#/network/game/server/model/ObjDel.js';
+import ObjReveal from '#/network/game/server/model/ObjReveal.js';
+import UpdateZoneFullFollows from '#/network/game/server/model/UpdateZoneFullFollows.js';
+import UpdateZonePartialEnclosed from '#/network/game/server/model/UpdateZonePartialEnclosed.js';
+import UpdateZonePartialFollows from '#/network/game/server/model/UpdateZonePartialFollows.js';
+import ZoneMessage from '#/network/game/server/ZoneMessage.js';
 import Environment from '#/util/Environment.js';
 import LinkList from '#/util/LinkList.js';
+
 
 export default class Zone {
     private static readonly SIZE: number = 8 * 8;
@@ -101,7 +102,7 @@ export default class Zone {
         const buf: Packet = Packet.alloc(1);
         for (const event of this.enclosed()) {
             // console.log(event.message);
-            const encoder: ZoneMessageEncoder<ZoneMessage> | undefined = ServerProtRepository.getZoneEncoder(event.message);
+            const encoder: ZoneMessageEncoder<ZoneMessage> | undefined = ServerProtProvider.ServerProtRepository.getZoneEncoder(event.message);
             if (typeof encoder === 'undefined') {
                 continue;
             }
@@ -132,7 +133,7 @@ export default class Zone {
         const currentTick: number = World.currentTick;
         // full update necessary to clear client zone memory
         player.write(new UpdateZoneFullFollows(this.x, this.z, player.originX, player.originZ));
-        for (const obj of this.getAllObjsUnsafe(true)) {
+        for (const obj of this.getAllObjsUnsafe()) {
             if (obj.lastLifecycleTick === currentTick || (obj.receiver64 !== Obj.NO_RECEIVER && obj.receiver64 !== player.hash64)) {
                 continue;
             }
@@ -143,7 +144,7 @@ export default class Zone {
                 player.write(new ObjAdd(CoordGrid.packZoneCoord(obj.x, obj.z), obj.type, obj.count));
             }
         }
-        for (const loc of this.getAllLocsUnsafe(true)) {
+        for (const loc of this.getAllLocsUnsafe()) {
             if (loc.lastLifecycleTick === currentTick) {
                 continue;
             }
@@ -228,14 +229,23 @@ export default class Zone {
     changeLoc(loc: Loc) {
         // If a loc is inactive, it should be set to active when we call a change
         loc.isActive = true;
+
+        // Move the Loc to the end of the list
+        loc.unlink();
+        this.locs.addTail(loc);
+
         const coord: number = CoordGrid.packZoneCoord(loc.x, loc.z);
         this.queueEvent(loc, new ZoneEvent(ZoneEventType.ENCLOSED, -1n, new LocAddChange(coord, loc.type, loc.shape, loc.angle)));
     }
 
     removeLoc(loc: Loc): void {
         const coord: number = CoordGrid.packZoneCoord(loc.x, loc.z);
-        if (loc.lifecycle === EntityLifeCycle.DESPAWN) {
-            loc.unlink();
+        loc.unlink();
+
+        // If it's a static loc, re-append it to the end of the list
+        if (loc.lifecycle === EntityLifeCycle.RESPAWN) {
+            this.locs.addTail(loc);
+        } else {
             this.locsCount--;
         }
 

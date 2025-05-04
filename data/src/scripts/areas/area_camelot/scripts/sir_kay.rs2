@@ -27,7 +27,7 @@ switch_int(%arthur_progress) {
         ~chatnpc("<p,sad>I think that you may be onto something there. Unfortunately his fortress is impregnable!");
         ~chatplayer("<p,neutral>...I'll figure something out.");
     case ^arthur_spoken_morgan_lefaye, ^arthur_excalibur_bound, ^arthur_freed_merlin :
-        ~chatnpc("<p,quiz>Any ideas on finding Excalibur?");
+        ~chatplayer("<p,quiz>Any ideas on finding Excalibur?");
         ~chatnpc("<p,happy>Unfortunately not, Sirrah.");
     case ^arthur_complete :
         ~chatnpc("<p,happy>Sir Knight! Many thanks for your assistance in restoring Merlin to his former freedom!");

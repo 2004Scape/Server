@@ -11,28 +11,26 @@ import World from '#/engine/World.js';
 import { WorldStat } from '#/engine/WorldStat.js';
 import Zone from '#/engine/zone/Zone.js';
 import Packet from '#/io/Packet.js';
-import ClientProtCategory from '#/network/client/prot/ClientProtCategory.js';
-import ClientProt from '#/network/rs225/client/prot/ClientProt.js';
-import ClientProtRepository from '#/network/rs225/client/prot/ClientProtRepository.js';
-import ServerProt from '#/network/rs225/server/prot/ServerProt.js';
-import ServerProtRepository from '#/network/rs225/server/prot/ServerProtRepository.js';
-import MessageEncoder from '#/network/server/codec/MessageEncoder.js';
-import CamLookAt from '#/network/server/model/CamLookAt.js';
-import CamMoveTo from '#/network/server/model/CamMoveTo.js';
-import IfClose from '#/network/server/model/IfClose.js';
-import IfOpenChat from '#/network/server/model/IfOpenChat.js';
-import IfOpenMain from '#/network/server/model/IfOpenMain.js';
-import IfOpenMainSide from '#/network/server/model/IfOpenMainSide.js';
-import IfOpenSide from '#/network/server/model/IfOpenSide.js';
-import Logout from '#/network/server/model/Logout.js';
-import NpcInfo from '#/network/server/model/NpcInfo.js';
-import PlayerInfo from '#/network/server/model/PlayerInfo.js';
-import SetMultiway from '#/network/server/model/SetMultiway.js';
-import UpdateInvFull from '#/network/server/model/UpdateInvFull.js';
-import UpdateRunEnergy from '#/network/server/model/UpdateRunEnergy.js';
-import UpdateRunWeight from '#/network/server/model/UpdateRunWeight.js';
-import UpdateStat from '#/network/server/model/UpdateStat.js';
-import OutgoingMessage from '#/network/server/OutgoingMessage.js';
+import ClientProtCategory from '#/network/game/client/codec/ClientProtCategory.js';
+import ClientProtProvider from '#/network/game/client/codec/ClientProtProvider.js';
+import MessageEncoder from '#/network/game/server/codec/MessageEncoder.js';
+import ServerProtProvider from '#/network/game/server/codec/ServerProtProvider.js';
+import CamLookAt from '#/network/game/server/model/CamLookAt.js';
+import CamMoveTo from '#/network/game/server/model/CamMoveTo.js';
+import IfClose from '#/network/game/server/model/IfClose.js';
+import IfOpenChat from '#/network/game/server/model/IfOpenChat.js';
+import IfOpenMain from '#/network/game/server/model/IfOpenMain.js';
+import IfOpenMainSide from '#/network/game/server/model/IfOpenMainSide.js';
+import IfOpenSide from '#/network/game/server/model/IfOpenSide.js';
+import Logout from '#/network/game/server/model/Logout.js';
+import NpcInfo from '#/network/game/server/model/NpcInfo.js';
+import PlayerInfo from '#/network/game/server/model/PlayerInfo.js';
+import SetMultiway from '#/network/game/server/model/SetMultiway.js';
+import UpdateInvFull from '#/network/game/server/model/UpdateInvFull.js';
+import UpdateRunEnergy from '#/network/game/server/model/UpdateRunEnergy.js';
+import UpdateRunWeight from '#/network/game/server/model/UpdateRunWeight.js';
+import UpdateStat from '#/network/game/server/model/UpdateStat.js';
+import OutgoingMessage from '#/network/game/server/OutgoingMessage.js';
 import ClientSocket from '#/server/ClientSocket.js';
 import { LoggerEventType } from '#/server/logger/LoggerEventType.js';
 import NullClientSocket from '#/server/NullClientSocket.js';
@@ -98,7 +96,7 @@ export class NetworkPlayer extends Player {
                 this.client.opcode = NetworkPlayer.inBuf.g1();
             }
 
-            const packetType = ClientProt.byId[this.client.opcode];
+            const packetType = ClientProtProvider.ClientProt.byId[this.client.opcode];
             if (!packetType) {
                 this.client.opcode = -1;
                 this.client.close();
@@ -131,12 +129,12 @@ export class NetworkPlayer extends Player {
         NetworkPlayer.inBuf.pos = 0;
         this.client.read(NetworkPlayer.inBuf.data, 0, this.client.waiting);
 
-        const packetType = ClientProt.byId[this.client.opcode];
-        const decoder = ClientProtRepository.getDecoder(packetType);
+        const packetType = ClientProtProvider.ClientProt.byId[this.client.opcode];
+        const decoder = ClientProtProvider.ClientProtRepository.getDecoder(packetType);
 
         if (decoder) {
             const message = decoder.decode(NetworkPlayer.inBuf, this.client.waiting);
-            const success: boolean = ClientProtRepository.getHandler(packetType)?.handle(message, this) ?? false;
+            const success: boolean = ClientProtProvider.ClientProtRepository.getHandler(packetType)?.handle(message, this) ?? false;
             // todo: move out of model
             if (success && message.category === ClientProtCategory.USER_EVENT) {
                 this.userLimit++;
@@ -194,13 +192,13 @@ export class NetworkPlayer extends Player {
             return;
         }
 
-        const encoder: MessageEncoder<OutgoingMessage> | undefined = ServerProtRepository.getEncoder(message);
+        const encoder: MessageEncoder<OutgoingMessage> | undefined = ServerProtProvider.ServerProtRepository.getEncoder(message);
         if (!encoder) {
             printError(`No encoder for message ${message.constructor.name}`);
             return;
         }
 
-        const prot: ServerProt = encoder.prot;
+        const prot = encoder.prot;
         const buf = client.out;
         // const test = (1 + (prot.length === -1 ? 1 : prot.length === -2 ? 2 : 0)) + encoder.test(message);
         // if (buf.pos + test >= buf.length) {
@@ -264,9 +262,9 @@ export class NetworkPlayer extends Player {
         for (let info = this.cameraPackets.head(); info !== null; info = this.cameraPackets.next()) {
             const localX = info.camX - CoordGrid.zoneOrigin(this.originX);
             const localZ = info.camZ - CoordGrid.zoneOrigin(this.originZ);
-            if (info.type === ServerProt.CAM_MOVETO) {
+            if (info.type === 0) {
                 this.write(new CamMoveTo(localX, localZ, info.height, info.rotationSpeed, info.rotationMultiplier));
-            } else if (info.type === ServerProt.CAM_LOOKAT) {
+            } else if (info.type === 1) {
                 this.write(new CamLookAt(localX, localZ, info.height, info.rotationSpeed, info.rotationMultiplier));
             }
             info.unlink();
@@ -426,12 +424,12 @@ export function isBufferFull(player: Player): boolean {
     let total = 0;
 
     for (const message of player.buffer) {
-        const encoder: MessageEncoder<OutgoingMessage> | undefined = ServerProtRepository.getEncoder(message);
+        const encoder: MessageEncoder<OutgoingMessage> | undefined = ServerProtProvider.ServerProtRepository.getEncoder(message);
         if (!encoder) {
             return true;
         }
 
-        const prot: ServerProt = encoder.prot;
+        const prot = encoder.prot;
         total += 1 + (prot.length === -1 ? 1 : prot.length === -2 ? 2 : 0) + encoder.test(message);
     }
 

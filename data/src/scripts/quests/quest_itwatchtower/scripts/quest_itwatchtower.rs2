@@ -90,7 +90,7 @@ if(%itwatchtower_progress = ^itwatchtower_not_started) {
 } else {
     ~chatnpc_specific(nc_name(tower_guard), tower_guard, "<p,neutral>It is the wizards' helping hand - let 'em up.");
     if_close;
-    @climb_ladder(movecoord(coord, 0, 1, 0), true);
+    ~climb_ladder(movecoord(coord, 0, 1, 0), true);
 }
 
 // checks if the player has a map, lightsource, and tinderbox. possible outcomes are:
@@ -258,12 +258,13 @@ mes("I am going to need someone with experience to help me with this.");
 
 [oploc1,loc_2796]
 if(%itwatchtower_progress >= ^itwatchtower_complete) {
-    @climb_ladder(2_45_73_53_40, true);
+    ~climb_ladder(2_45_73_53_40, true);
+    return;
 }
-@climb_ladder(2_39_48_53_40, true);
+~climb_ladder(2_39_48_53_40, true);
 
 [oploc1,loc_2797]
-@climb_ladder(1_39_48_53_40, true);
+~climb_ladder(1_39_48_53_40, true);
 
 [oploc1,loc_2786] @open_gutanoth_gate(^left, ogre_guard_east);
 [oploc1,loc_2787] @open_gutanoth_gate(^right, ogre_guard_east);
@@ -515,11 +516,15 @@ if(~watchtower_has_all_crystals = true & %itwatchtower_progress = ^itwatchtower_
     // QUEST REWARD
     %itwatchtower_progress = ^itwatchtower_complete;
     p_teleport(2_45_73_48_43);
-    // https://youtu.be/0hkyRGQImlg?si=huZf7suXxmjXPtxN&t=1198
-    inv_del(inv, powering_crystal1, 1);
-    inv_del(inv, powering_crystal2, 1);
-    inv_del(inv, powering_crystal3, 1);
-    inv_del(inv, powering_crystal4, 1);
+    // https://youtu.be/0hkyRGQImlg?si=huZf7suXxmjXPtxN&t=1198, deletes all from bank + inv here on RS3
+    inv_del(inv, powering_crystal1, ^max_32bit_int);
+    inv_del(bank, powering_crystal1, ^max_32bit_int);
+    inv_del(inv, powering_crystal2, ^max_32bit_int);
+    inv_del(bank, powering_crystal2, ^max_32bit_int);
+    inv_del(inv, powering_crystal3, ^max_32bit_int);
+    inv_del(bank, powering_crystal3, ^max_32bit_int);
+    inv_del(inv, powering_crystal4, ^max_32bit_int);
+    inv_del(bank, powering_crystal4, ^max_32bit_int);
     p_delay(3);
     stat_advance(magic, 153000);
     inv_add(inv, coins, 5000);

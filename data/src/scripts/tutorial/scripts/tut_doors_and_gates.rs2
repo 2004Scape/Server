@@ -100,12 +100,12 @@ if (%tutorial_progress = ^quest_guide_finished) {
     %tutorial_progress = ^mining_instructor_start;
 }
 ~set_tutorial_progress;
-@climb_ladder(movecoord(coord, 0, 0, 6400), false);
+~climb_ladder(movecoord(coord, 0, 0, 6400), false);
 
 // Ladder out of mine to quest guide
 [oploc1,newbieladder1]
 p_arrivedelay;
-@climb_ladder(movecoord(coord, 0, 0, -6400), true);
+~climb_ladder(movecoord(coord, 0, 0, -6400), true);
 
 // Gate to Combat Instructor
 [oploc1,_tut_mining_exit]
@@ -209,11 +209,11 @@ if(%tutorial_progress = ^combat_instructor_after_attacking_ranged) {
     %tutorial_progress = ^tutorial_open_banking;
     ~set_tutorial_progress;
 }
-@climb_ladder(movecoord(coord, 0, 0, -6400), true);
+~climb_ladder(movecoord(coord, 0, 0, -6400), true);
 
 [oploc1,newbieladdertop2]
 p_arrivedelay;
-@climb_ladder(movecoord(coord, 0, 0, 6400), false);
+~climb_ladder(movecoord(coord, 0, 0, 6400), false);
 
 [oploc1,newbie_door6]
 if (%tutorial_progress < ^tutorial_opened_bank) {

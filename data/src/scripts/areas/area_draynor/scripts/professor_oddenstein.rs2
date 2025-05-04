@@ -61,7 +61,6 @@ if(inv_total(inv, pressure_gauge) > 0 & inv_total(inv, oil_can) > 0 & inv_total(
     ~chatplayer("<p,happy>I have everything!");
     ~chatnpc("<p,happy>Give 'em here then.");
     if_close;
-    // osrs has this as messages with p_delay, but based of rsc and similar scenarios in non-reworked quests, this is probably what it used to be (confirm this if possible)
     mes("You give a rubber tube, a pressure gauge, ");
     mes("and a can of oil to the professor.");
     p_delay(1);
@@ -75,6 +74,7 @@ if(inv_total(inv, pressure_gauge) > 0 & inv_total(inv, oil_can) > 0 & inv_total(
     inv_del(inv, pressure_gauge, 1);
     inv_del(inv, oil_can, 1);
     inv_del(inv, rubber_tube, 1);
+    %haunted_progress = ^haunted_complete;
     queue(haunted_quest_complete, 0); // reward is queued as soon as changetype completes in OSRS
     ~chatnpc_specific("Ernest", ernest_human, "<p,happy>Thank you <text_gender("sir", "m'lady")>.|It was dreadfully irritating being a chicken.|How can I ever thank you?");
     ~chatplayer("<p,shifty>Well a cash reward is always nice...");

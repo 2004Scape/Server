@@ -80,11 +80,6 @@ if (%action_delay < map_clock) {
 p_opnpc(3);
 
 [proc,oil_rod_fishing_check_requirements]()(boolean)
-if (map_members = false) {
-    anim(null, 0);
-    ~mesbox(^mes_members_fish_here);
-    return(false);
-}
 // check level
 if (stat(fishing) < 53) {
     anim(null, 0);

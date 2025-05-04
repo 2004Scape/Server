@@ -36,7 +36,7 @@ p_arrivedelay;
 if (oc_tradeable(last_useitem) = true | last_useitem = grandtree_twigt | last_useitem = grandtree_twigu | last_useitem = grandtree_twigz | last_useitem = grandtree_twigo) {
     anim(human_pickuptable, 0);
     sound_synth(put_down, 0, 0);
-    inv_dropslot(inv, loc_coord, last_useslot, 500); // 500t osrs
+    inv_dropslot(inv, loc_coord, last_useslot, calc(calc(^lootdrop_duration * 5) / 2)); // 500t osrs
     if(%grandtree_progress = ^grandtree_given_twigs & 
         obj_find(2_38_54_53_11, grandtree_twigt) = true & 
         obj_find(2_38_54_54_11, grandtree_twigu) = true & 

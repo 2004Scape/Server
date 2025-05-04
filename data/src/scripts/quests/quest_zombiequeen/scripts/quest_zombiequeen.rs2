@@ -794,6 +794,13 @@ if(%zombiequeen_progress >= ^zombiequeen_complete) {
     return;
 }
 if(last_useitem = spade | last_useitem = chisel | oc_category(last_useitem) = weapon_pickaxe) {
+    def_int $crafting_req = 19;
+    if(last_useitem = chisel) $crafting_req = 9;
+    if(last_useitem = spade) $crafting_req = 29;
+    if (stat(crafting) < $crafting_req) {
+        ~mesbox("You need a crafting skill of at least <tostring($crafting_req)> to complete this task with this tool.");
+        return;
+    }
     if(~obj_gettotal(zqplaque) > 0) {
         ~mesbox("It looks as if something has been cut from this stone.");
         return;

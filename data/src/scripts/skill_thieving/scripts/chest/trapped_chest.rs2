@@ -36,11 +36,12 @@
 
 [oplocu,chest_steel_arrowtips]
 if (last_useitem = lockpick) {
-    ~attempt_locked_chest;
+    p_oploc(2);
+    return;
 }
+~displaymessage(^dm_default);
 
 [label,attempt_trapped_chest](loc $loc, coord $loc_coord, int $loc_angle, locshape $loc_shape)
-p_arrivedelay;
 if (map_members = false) {
     mes(^mes_members_thieving);
     return;
@@ -58,6 +59,7 @@ if (afk_event = ^true) {
 }
 
 mes("You search the chest for traps.");
+anim(human_lockedchest, 0);
 
 def_int $current_level = stat(thieving);
 def_int $thieving_level = db_getfield($data, trapped_chest:level, 0);
@@ -81,19 +83,18 @@ def_int $experience = db_getfield($data, trapped_chest:experience, 0);
 def_int $respawn_ticks = db_getfield($data, trapped_chest:respawn_ticks, 0);
 def_int $current_level = stat(thieving);
 mes("You attempt to pick the lock.");
-
 if ($current_level < $thieving_level) {
     ~mesbox("You are not a high enough level to pick this lock.");
     return;
 }
 
+sound_synth(locked, 0, 0); // after first check, but before 2nd
 if (inv_total(inv, lockpick) < 1) {
     mes("You need a lockpick for this lock.");
     return;
 }
 
 mes("You manage to pick the lock.");
-sound_synth(locked, 0, 0);
 p_delay(1);
 mes("You open the chest.");
 sound_synth(chest_open, 0, 0);
@@ -102,10 +103,8 @@ mes("You find treasure inside!");
 anim(human_openchest, 0);
 stat_advance(thieving, $experience);
 ~trapped_chest_check_for_reward($data);
-// Temp note: dur updated
 loc_change(loc_2574, 4); //opened chest
-p_delay(3);
-// Temp note: dur does not need updated ???
+p_delay(2);
 loc_change(loc_2572, $respawn_ticks); //looted chest
 
 [oploc1,loc_2572]
@@ -116,7 +115,7 @@ mes("It looks like this chest has already been looted.");
 
 [oplocu,loc_2572]
 if (last_useitem = lockpick) {
-    mes("It looks like this chest has already been looted.");
+    p_oploc(2);
 } else {
     ~displaymessage(^dm_default);
 }

@@ -1,7 +1,7 @@
 [opnpc1,duke_horacio]
 ~chatnpc("<p,neutral>Greetings. Welcome to my castle.");
 
-if (%dragon_shield = ^quest_dragon_knows_about_shield & inv_total(inv, antidragonbreathshield) < 1 & inv_total(worn, antidragonbreathshield) < 1) {
+if ((%dragon_shield = ^quest_dragon_knows_about_shield | %dragon_progress >= ^dragon_complete) & inv_total(inv, antidragonbreathshield) < 1 & inv_total(worn, antidragonbreathshield) < 1) {
     @multi3("I seek a shield that will protect me from the dragon's breath.", duke_horacio_shield, "Have you any quests for me?", ~duke_handle_rune_mysteries, "Where can I find money?", duke_horacio_money);
 } else {
     @multi2("Have you any quests for me?", ~duke_handle_rune_mysteries, "Where can I find money?", duke_horacio_money);

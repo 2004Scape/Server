@@ -42,7 +42,7 @@ data=tree,jungle_tree_3
 data=tree,jungle_bush_1
 data=tree,jungle_bush_2
 data=levelrequired,0
-data=productexp,100
+data=productexp,1000
 data=product,logs
 data=respawnrate,4
 

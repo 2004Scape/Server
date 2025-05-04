@@ -1,48 +1,48 @@
 [legends_gem_opal]
 table=legends_gem_data
-data=rock_coord,0_43_145_12_29
+data=rock_coord,^legends_opal_coord
 data=gem,opal
 data=gem_named,opal
 data=gem_bit,^legends_opal_used
 
 [legends_gem_jade]
 table=legends_gem_data
-data=rock_coord,0_43_145_19_23
+data=rock_coord,^legends_jade_coord
 data=gem,jade
 data=gem_named,jade
 data=gem_bit,^legends_jade_used
 
 [legends_gem_topaz]
 table=legends_gem_data
-data=rock_coord,0_43_145_20_15
+data=rock_coord,^legends_topaz_coord
 data=gem,red_topaz
 data=gem_named,red_topaz
 data=gem_bit,^legends_topaz_used
 
 [legends_gem_sapphire]
 table=legends_gem_data
-data=rock_coord,0_43_145_29_11
+data=rock_coord,^legends_sapphire_coord
 data=gem,sapphire
 data=gem_named,sapphire
 data=gem_bit,^legends_sapphire_used
 
 [legends_gem_diamond]
 table=legends_gem_data
-data=rock_coord,0_43_145_22_7
+data=rock_coord,^legends_diamond_coord
 data=gem,diamond
 data=gem_named,diamond
 data=gem_bit,^legends_diamond_used
 
 [legends_gem_ruby]
 table=legends_gem_data
-data=rock_coord,0_43_145_15_9
+data=rock_coord,^legends_ruby_coord
 data=gem,ruby
 data=gem_named,ruby
 data=gem_bit,^legends_ruby_used
 
 [legends_gem_emerald]
 table=legends_gem_data
-data=rock_coord,0_43_145_5_17
+data=rock_coord,^legends_emerald_coord
 data=gem,emerald
 data=gem_named,emerald
 data=gem_bit,^legends_emerald_used

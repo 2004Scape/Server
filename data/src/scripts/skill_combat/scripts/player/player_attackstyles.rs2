@@ -73,7 +73,7 @@ if (%attackstyle_magic = 0) {
     return;
 }
 if (p_finduid(uid) = true) {
-    p_clearpendingaction; // guess
+    p_clearpendingaction; // https://www.youtube.com/watch?v=P_QzMzpaA04&t=12s
     %attackstyle_magic = togglebit(%attackstyle_magic, 0);
     return;
 }

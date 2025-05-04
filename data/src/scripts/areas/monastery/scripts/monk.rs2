@@ -1,7 +1,6 @@
 [ai_opplayer2,monk_edgeville]
 if (%npc_action_delay > map_clock) return;
-def_int $heal = random(4); // thanks to joe the toe!
-if ($heal = 0) {
+if (random(4) = 0) { // osrs - thanks to joe the toe!
     @monk_heal_self;
 } else {
     ~npc_default_attack;
@@ -32,3 +31,9 @@ mes("You feel a little better.");
 [label,ask_to_join_monk]
 ~chatplayer("<p,quiz>How do I get further into the monastery?");
 ~chatnpc("<p,neutral>You'll need to talk to Abbot Langley about that. He's|usually to be found walking the halls of the monastery.");
+
+[ai_queue3,monk_edgeville]
+if (npc_stat(hitpoints) ! 0) {
+    return;
+}
+~npc_default_death;

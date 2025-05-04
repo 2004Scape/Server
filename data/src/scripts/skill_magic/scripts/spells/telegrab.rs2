@@ -40,6 +40,11 @@ if(oc_param(obj_type, telegrab_disabled) = true) {
     mes("You can't cast this spell on that object.");
     return;
 }
+if(obj_coord = ^legends_opal_coord | obj_coord = ^legends_jade_coord | obj_coord = ^legends_topaz_coord | obj_coord = ^legends_sapphire_coord |
+    obj_coord = ^legends_diamond_coord | obj_coord = ^legends_ruby_coord | obj_coord = ^legends_emerald_coord) {
+    mes("The spell fizzles and dies for some unknown reason.");
+    return;
+}
 // no idea if this goes here but in osrs it def goes after the clue scroll check - telegrabbing clue with full inv gives clue message
 if (~pickup_obj_check_for_space(obj_type, obj_count) = false) {
     return;

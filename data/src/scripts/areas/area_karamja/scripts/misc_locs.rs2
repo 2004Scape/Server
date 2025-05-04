@@ -1,7 +1,8 @@
 // Karamja - Volcano rocks
 [oploc1,loc_492]
 p_arrivedelay;
-mes("You climb down through the pot hole..");
+// https://i.imgur.com/ianqFhF.jpeg
+mes("You climb down through the pot hole.");
 p_telejump(movecoord(coord(), 0, 0, 6400));
 
 // Karamja - Volcano rope

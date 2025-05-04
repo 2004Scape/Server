@@ -10,6 +10,10 @@ if (inv_total(worn, ball_gnomeball_game) < 1 & $player1_ingame = true) {
     mes("You need a ball in your hand to throw.");
     return;
 }
+if (inv_getobj(worn, ^wearpos_rhand) ! null & $player1_ingame = false) {
+    mes("You need your right hand free to pass a ball."); // osrs
+    return;
+}
 // https://oldschool.runescape.wiki/w/Update:Patch_Notes_(3_October_2013)
 // if close early: "Players can no longer use a gnomeball to interrupt other players' Make-X actions without the gnomeball being thrown."
 .if_close;

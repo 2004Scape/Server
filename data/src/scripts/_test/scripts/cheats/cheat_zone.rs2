@@ -40,6 +40,15 @@ if (p_finduid(uid) = true) {
     loc_change(loc_2732, 10);
 }
 
+[debugproc,drop_feathers]
+if (p_finduid(uid) = true) {
+    p_telejump(0_37_55_32_31);
+    obj_addall(0_37_55_32_33, feather, 1, 30);
+    p_opobj(3);
+    world_delay(1);
+    obj_addall(0_37_55_32_33, feather, 1, 30);
+}
+
 
 [debugproc,loc_add_static]
 if (p_finduid(uid) = true) {
@@ -89,4 +98,29 @@ if (p_finduid(uid) = true) {
     loc_add(0_37_55_30_9, loc_2732, 1, centrepiece_straight, 10);
     p_delay(3);
     loc_change(loc_param(next_loc_stage), 10);
+}
+
+
+[debugproc,loc_change_back]
+if (p_finduid(uid) = true) {
+    p_telejump(0_37_55_32_9);
+    loc_add(0_37_55_30_9, loc_2732, 1, centrepiece_straight, 1);
+    p_delay(1);
+    // Get tree loc_type
+    def_loc $loc_type = loc_type;
+
+    loc_change(loc_2732, 3);
+    p_delay(0);
+    loc_change($loc_type, 3);
+}
+
+[debugproc,loc_del_event]
+if (p_finduid(uid) = true) {
+    p_telejump(0_37_55_32_30);
+    p_delay(0);
+    loc_add(0_37_55_32_30, loc_1276, 0, centrepiece_straight, 10);
+    p_delay(0);
+    loc_del(10);
+    p_delay(0);
+    loc_add(0_37_55_32_30, loc_1276, 0, centrepiece_straight, 100);
 }

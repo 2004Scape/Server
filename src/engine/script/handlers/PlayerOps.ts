@@ -34,23 +34,22 @@ import {
 } from '#/engine/script/ScriptValidators.js';
 import ServerTriggerType from '#/engine/script/ServerTriggerType.js';
 import World from '#/engine/World.js';
-import ServerProt from '#/network/rs225/server/prot/ServerProt.js';
-import CamReset from '#/network/server/model/CamReset.js';
-import CamShake from '#/network/server/model/CamShake.js';
-import IfSetAnim from '#/network/server/model/IfSetAnim.js';
-import IfSetColour from '#/network/server/model/IfSetColour.js';
-import IfSetHide from '#/network/server/model/IfSetHide.js';
-import IfSetModel from '#/network/server/model/IfSetModel.js';
-import IfSetNpcHead from '#/network/server/model/IfSetNpcHead.js';
-import IfSetObject from '#/network/server/model/IfSetObject.js';
-import IfSetPlayerHead from '#/network/server/model/IfSetPlayerHead.js';
-import IfSetPosition from '#/network/server/model/IfSetPosition.js';
-import IfSetRecol from '#/network/server/model/IfSetRecol.js';
-import IfSetTabActive from '#/network/server/model/IfSetTabActive.js';
-import IfSetText from '#/network/server/model/IfSetText.js';
-import PCountDialog from '#/network/server/model/PCountDialog.js';
-import SynthSound from '#/network/server/model/SynthSound.js';
-import TutFlash from '#/network/server/model/TutFlash.js';
+import CamReset from '#/network/game/server/model/CamReset.js';
+import CamShake from '#/network/game/server/model/CamShake.js';
+import IfSetAnim from '#/network/game/server/model/IfSetAnim.js';
+import IfSetColour from '#/network/game/server/model/IfSetColour.js';
+import IfSetHide from '#/network/game/server/model/IfSetHide.js';
+import IfSetModel from '#/network/game/server/model/IfSetModel.js';
+import IfSetNpcHead from '#/network/game/server/model/IfSetNpcHead.js';
+import IfSetObject from '#/network/game/server/model/IfSetObject.js';
+import IfSetPlayerHead from '#/network/game/server/model/IfSetPlayerHead.js';
+import IfSetPosition from '#/network/game/server/model/IfSetPosition.js';
+import IfSetRecol from '#/network/game/server/model/IfSetRecol.js';
+import IfSetTabActive from '#/network/game/server/model/IfSetTabActive.js';
+import IfSetText from '#/network/game/server/model/IfSetText.js';
+import PCountDialog from '#/network/game/server/model/PCountDialog.js';
+import SynthSound from '#/network/game/server/model/SynthSound.js';
+import TutFlash from '#/network/game/server/model/TutFlash.js';
 import ColorConversion from '#/util/ColorConversion.js';
 import Environment from '#/util/Environment.js';
 
@@ -165,14 +164,14 @@ const PlayerOps: CommandHandlers = {
         const [coord, height, rotationSpeed, rotationMultiplier] = state.popInts(4);
 
         const pos: CoordGrid = check(coord, CoordValid);
-        state.activePlayer.cameraPackets.addTail(new CameraInfo(ServerProt.CAM_LOOKAT, pos.x, pos.z, height, rotationSpeed, rotationMultiplier));
+        state.activePlayer.cameraPackets.addTail(new CameraInfo(1, pos.x, pos.z, height, rotationSpeed, rotationMultiplier));
     }),
 
     [ScriptOpcode.CAM_MOVETO]: checkedHandler(ActivePlayer, state => {
         const [coord, height, rotationSpeed, rotationMultiplier] = state.popInts(4);
 
         const pos: CoordGrid = check(coord, CoordValid);
-        state.activePlayer.cameraPackets.addTail(new CameraInfo(ServerProt.CAM_MOVETO, pos.x, pos.z, height, rotationSpeed, rotationMultiplier));
+        state.activePlayer.cameraPackets.addTail(new CameraInfo(0, pos.x, pos.z, height, rotationSpeed, rotationMultiplier));
     }),
 
     [ScriptOpcode.CAM_SHAKE]: checkedHandler(ActivePlayer, state => {
@@ -492,7 +491,7 @@ const PlayerOps: CommandHandlers = {
         const current = player.levels[stat];
 
         const boost = (constant + (base * percent) / 100) | 0;
-        const boosted = Math.min(current + boost, base + boost);
+        const boosted = Math.max(Math.min(current + boost, base + boost), current);
         player.levels[stat] = Math.min(boosted, 255);
         if (stat === PlayerStat.HITPOINTS && player.levels[PlayerStat.HITPOINTS] >= player.baseLevels[PlayerStat.HITPOINTS]) {
             player.heroPoints.clear();

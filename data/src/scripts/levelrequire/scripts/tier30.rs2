@@ -13,12 +13,6 @@
 [opheld2,adamant_spear_p] @levelrequire_attack(30, last_slot);
 [opheld2,adamant_2h_sword] @levelrequire_attack(30, last_slot);
 
-[opheld2,adamant_dart] @levelrequire_ranged(30, last_slot);
-[opheld2,adamant_dart_p] @levelrequire_ranged(30, last_slot);
-[opheld2,adamant_knife] @levelrequire_ranged(30, last_slot);
-[opheld2,adamant_knife_p] @levelrequire_ranged(30, last_slot);
-[opheld2,adamnt_thrownaxe] @levelrequire_ranged(30, last_slot);
-
 [opheld2,adamant_med_helm] @levelrequire_defence(30, last_slot);
 [opheld2,adamant_full_helm] @levelrequire_defence(30, last_slot);
 [opheld2,adamant_sq_shield] @levelrequire_defence(30, last_slot);
@@ -41,6 +35,14 @@
 [opheld2,maple_longbow] @levelrequire_ranged(30, last_slot);
 [opheld2,maple_shortbow] @levelrequire_ranged(30, last_slot);
 [opheld2,ogre_bow] @levelrequire_ranged(30, last_slot);
+
+[opheld2,adamant_dart] @levelrequire_ranged(30, last_slot);
+[opheld2,adamant_dart_p] @levelrequire_ranged(30, last_slot);
+[opheld2,adamant_knife] @levelrequire_ranged(30, last_slot);
+[opheld2,adamant_knife_p] @levelrequire_ranged(30, last_slot);
+[opheld2,adamnt_thrownaxe] @levelrequire_ranged(30, last_slot);
+[opheld2,adamant_javelin] @levelrequire_ranged(30, last_slot);
+[opheld2,adamant_javelin_p] @levelrequire_ranged(30, last_slot);
 
 // Magic
 [opheld2,battlestaff] @levelrequire_magic_and_attack(30, 30, last_slot);
