@@ -325,8 +325,6 @@
 [command,midi_song](string $song)
 // info: Play a jingle (advancing levels, completing quests, ...)
 [command,midi_jingle](string $jingle, int $length)
-// info: Play a jingle for the secondary player (advancing levels, completing quests, ...)
-[command,.midi_jingle](string $jingle, int $length)
 // info: Show the hint arrow at $coord
 [command,hint_coord](int $offset, coord $coord, int $height)
 // info: Start a softtimer on the active_player
