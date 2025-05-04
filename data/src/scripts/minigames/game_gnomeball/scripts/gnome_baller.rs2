@@ -8,7 +8,7 @@ npc_facesquare(coord);
 npc_delay(0);
 if_close;
 if (p_finduid(uid) = true) {
-    if (stat_random(stat(agility), 30, 200) = false & inv_getobj(worn, ^wearpos_rhand) = ball_gnomeball_game) { // 50% guess for now
+    if (stat_random(agility, 30, 200) = false & inv_getobj(worn, ^wearpos_rhand) = ball_gnomeball_game) { // 50% guess for now
         ~npc_gnomeball_tackle_success;
     } else {
         ~npc_gnomeball_tackle_fail;
@@ -69,7 +69,7 @@ p_delay(0);
 facesquare(npc_coord);
 npc_facesquare(coord);
 p_delay(0);
-if (stat_random(stat(agility), $low, $high) = true) { // 50% guess for now
+if (stat_random(agility, $low, $high) = true) { // 50% guess for now
     ~player_gnomeball_tackle_success;
 } else {
     ~player_gnomeball_tackle_fail;
@@ -113,7 +113,7 @@ p_delay(0);
 facesquare(npc_coord);
 npc_facesquare(coord);
 p_delay(0);
-if (stat_random(stat(agility), 30, 220) = true) { // 50% guess for now
+if (stat_random(agility, 30, 220) = true) { // 50% guess for now
     ~player_gnomeball_tackle_carrier_success;
 } else {
     ~player_gnomeball_tackle_fail;

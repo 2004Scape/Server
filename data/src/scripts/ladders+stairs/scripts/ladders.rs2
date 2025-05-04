@@ -21,12 +21,12 @@ switch_int (loc_angle) {
 // Climb Up
 [oploc1,loc_272]
 p_arrivedelay;
-@climb_ladder(movecoord(coord(), 0, 1, 0), true);
+~climb_ladder(movecoord(coord(), 0, 1, 0), true);
 
 // Climb Down
 [oploc1,loc_273]
 p_arrivedelay;
-@climb_ladder(movecoord(coord(), 0, -1, 0), false);
+~climb_ladder(movecoord(coord(), 0, -1, 0), false);
 
 // Climb-down op
 [oploc1,loc_2147]
@@ -34,7 +34,7 @@ def_coord $coord = loc_coord();
 
 // wizard tower level 0
 if ($coord = 0_48_49_32_26) {
-    @climb_ladder(0_48_149_32_40, false);
+    ~climb_ladder(0_48_149_32_40, false);
 } else {
     mes("unhandled ladder <~coord_tostring($coord)>");
 }
@@ -42,15 +42,15 @@ if ($coord = 0_48_49_32_26) {
 [oploc1,loc_1746]
 p_arrivedelay;
 switch_coord (loc_coord) {
-    case 2_47_54_17_57 : @climb_ladder(1_47_54_17_58, false); // black knights fortress ladder
-    case default : @climb_ladder(movecoord(coord(), 0, -1, 0), false);   
+    case 2_47_54_17_57 : ~climb_ladder(1_47_54_17_58, false); // black knights fortress ladder
+    case default : ~climb_ladder(movecoord(coord(), 0, -1, 0), false);   
 }
 
 [oploc1,loc_1747]
 p_arrivedelay;
 switch_coord (loc_coord) {
     case 0_40_53_10_49 : @ladder_to_dwarf_remains; // Ladder to Dwarf Guard Tower
-    case default : @climb_ladder(movecoord(coord(), 0, 1, 0), true);
+    case default : ~climb_ladder(movecoord(coord(), 0, 1, 0), true);
 }
 
 [oploc1,loc_1748]
@@ -59,45 +59,53 @@ p_arrivedelay;
 
 [oploc2,loc_1748]
 p_arrivedelay;
-@climb_ladder(movecoord(coord(), 0, 1, 0), true);
+~climb_ladder(movecoord(coord(), 0, 1, 0), true);
 
 [oploc3,loc_1748]
 p_arrivedelay;
-@climb_ladder(movecoord(coord(), 0, -1, 0), true);
+~climb_ladder(movecoord(coord(), 0, -1, 0), true);
 
 [oploc1,loc_1749]
 p_arrivedelay;
-@climb_ladder(movecoord(coord(), 0, -1, 0), false);
+switch_coord (loc_coord) {
+    case 1_47_54_14_62 : 
+        // https://youtu.be/6RNx7Sbut8A?t=423
+        ~climb_ladder(movecoord(coord(), 0, -1, 0), false); // black knights
+        ~black_knights_aggro(coord, 0_47_54_17_59); // checks from player coord! - osrs
+        return;
+}
+~climb_ladder(movecoord(coord(), 0, -1, 0), false);
 
 [oploc1,loc_1750]
 p_arrivedelay;
-@climb_ladder(movecoord(coord(), 0, 1, 0), true);
+~climb_ladder(movecoord(coord(), 0, 1, 0), true);
 
 [oploc1,loc_1754]
 p_arrivedelay;
-@climb_ladder(movecoord(coord(), 0, 0, 6400), false);
+~climb_ladder(movecoord(coord(), 0, 0, 6400), false);
 
 [oploc1,loc_1755] // mining guild ladder
 def_coord $coord = loc_coord;
 p_arrivedelay;
 if(loc_coord = 0_50_149_22_52) { // Zanaris ladder (entrance room)
-    @climb_ladder(0_50_49_1_33, true);
+    ~climb_ladder(0_50_49_1_33, true);
+    return;
 }
-@climb_ladder(movecoord(coord(), 0, 0, -6400), true);
+~climb_ladder(movecoord(coord(), 0, 0, -6400), true);
 
 [oploc1,loc_1757] 
 p_arrivedelay;
-@climb_ladder(movecoord(coord(), 0, 0, -6400), true);
+~climb_ladder(movecoord(coord(), 0, 0, -6400), true);
 
 [oploc1,loc_1759]
 p_arrivedelay;
-@climb_ladder(movecoord(coord(), 0, 0, 6400), false);
+~climb_ladder(movecoord(coord(), 0, 0, 6400), false);
 
 [oploc1,loc_1765]
 def_coord $coord = loc_coord();
 p_arrivedelay;
 switch_coord ($coord) {
-    case 0_40_50_1_22 : @climb_ladder(0_40_150_1_21, false); // Monk's Friend hidden ladder
+    case 0_40_50_1_22 : ~climb_ladder(0_40_150_1_21, false); // Monk's Friend hidden ladder
     case 0_47_60_9_9 : p_teleport(0_47_160_61_15); // kdb entrance (yes its a p_teleport)
     case default : mes("unhandled ladder <~coord_tostring($coord)>");
 }
@@ -108,14 +116,14 @@ def_coord $coord = loc_coord();
 
 // wizard tower cellar
 if ($coord = 0_48_149_31_40) {
-    @climb_ladder(0_48_49_33_26, true);
+    ~climb_ladder(0_48_49_33_26, true);
 } else {
     mes("unhandled ladder <~coord_tostring($coord)>");
 }
 
 [oploc1,loc_2405]
 p_arrivedelay;
-@climb_ladder(0_50_52_44_54, true);
+~climb_ladder(0_50_52_44_54, true);
 
 [oploc1,loc_2884]
 p_arrivedelay;
@@ -133,17 +141,17 @@ if ($option = 1) {
 [oploc2,loc_2884]
 ~grandtree_spawn_charlie; // before the arrivedelay
 p_arrivedelay;
-@climb_ladder(movecoord(coord(), 0, 1, 0), true);
+~climb_ladder(movecoord(coord(), 0, 1, 0), true);
 
 [oploc3,loc_2884]
 p_arrivedelay;
-@climb_ladder(movecoord(coord(), 0, -1, 0), true);
+~climb_ladder(movecoord(coord(), 0, -1, 0), true);
 
 [oploc1,laddertop_norim]
 p_arrivedelay;
-@climb_ladder(movecoord(coord(), 0, -1, 0), false);
+~climb_ladder(movecoord(coord(), 0, -1, 0), false);
 
-[label,climb_ladder](coord $coord, boolean $up)
+[proc,climb_ladder](coord $coord, boolean $up)
 if ($up = true) {
     anim(human_reachforladder, 0);
 } else {

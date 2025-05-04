@@ -11,14 +11,13 @@ import Loc from '#/engine/entity/Loc.js';
 import Npc from '#/engine/entity/Npc.js';
 import { NpcIteratorType } from '#/engine/entity/NpcIteratorType.js';
 import { NpcMode } from '#/engine/entity/NpcMode.js';
-import { NpcStat } from '#/engine/entity/NpcStat.js';
 import Obj from '#/engine/entity/Obj.js';
 import { NpcIterator } from '#/engine/script/ScriptIterators.js';
 import { ScriptOpcode } from '#/engine/script/ScriptOpcode.js';
 import ScriptPointer, { ActiveNpc, checkedHandler } from '#/engine/script/ScriptPointer.js';
 import { CommandHandlers } from '#/engine/script/ScriptRunner.js';
 import ScriptState from '#/engine/script/ScriptState.js';
-import { check, CoordValid, DurationValid, HitTypeValid, HuntTypeValid, HuntVisValid, NpcModeValid, NpcStatValid, NpcTypeValid, NumberNotNull, ParamTypeValid, QueueValid, SpotAnimTypeValid } from '#/engine/script/ScriptValidators.js';
+import { CategoryTypeValid, check, CoordValid, DurationValid, HitTypeValid, HuntTypeValid, HuntVisValid, NpcModeValid, NpcStatValid, NpcTypeValid, NumberNotNull, ParamTypeValid, QueueValid, SpotAnimTypeValid } from '#/engine/script/ScriptValidators.js';
 import ServerTriggerType from '#/engine/script/ServerTriggerType.js';
 import World from '#/engine/World.js';
 
@@ -224,8 +223,11 @@ const NpcOps: CommandHandlers = {
             } else {
                 state.activeNpc.setInteraction(Interaction.SCRIPT, target, mode);
             }
-        } else {
-            state.activeNpc.noMode();
+        }
+        // There wasn't an active entity to target
+        else {
+            state.activeNpc.resetDefaults();
+            return;
         }
     }),
 
@@ -247,11 +249,6 @@ const NpcOps: CommandHandlers = {
         const current = npc.levels[stat];
         const healed = current + ((constant + (base * percent) / 100) | 0);
         npc.levels[stat] = Math.min(healed, base);
-
-        // reset hero points if hp current == base
-        if (stat === NpcStat.HITPOINTS && npc.levels[NpcStat.HITPOINTS] >= npc.baseLevels[NpcStat.HITPOINTS]) {
-            npc.heroPoints.clear();
-        }
     }),
 
     [ScriptOpcode.NPC_TYPE]: checkedHandler(ActiveNpc, state => {
@@ -301,6 +298,38 @@ const NpcOps: CommandHandlers = {
 
         for (const npc of npcs) {
             if (npc && npc.type === npcType.id) {
+                // Picks the smallest euclidean distance
+                const npcDistance = CoordGrid.euclideanSquaredDistance(position, npc);
+                if (npcDistance <= closestDistance) {
+                    closestNpc = npc;
+                    closestDistance = npcDistance;
+                }
+            }
+        }
+        if (!closestNpc) {
+            state.pushInt(0);
+            return;
+        }
+
+        state.activeNpc = closestNpc;
+        state.pointerAdd(ActiveNpc[state.intOperand]);
+        state.pushInt(1);
+    },
+    [ScriptOpcode.NPC_FINDCAT]: state => {
+        const [coord, npcCategory, distance, checkVis] = state.popInts(4);
+
+        const position: CoordGrid = check(coord, CoordValid);
+        check(npcCategory, CategoryTypeValid);
+        check(distance, NumberNotNull);
+        const huntvis: HuntVis = check(checkVis, HuntVisValid);
+
+        let closestNpc;
+        let closestDistance = Number.MAX_SAFE_INTEGER;
+
+        const npcs = new NpcIterator(World.currentTick, position.level, position.x, position.z, distance, huntvis, NpcIteratorType.DISTANCE);
+
+        for (const npc of npcs) {
+            if (npc && NpcType.get(npc.type).category === npcCategory) {
                 // Picks the smallest euclidean distance
                 const npcDistance = CoordGrid.euclideanSquaredDistance(position, npc);
                 if (npcDistance <= closestDistance) {
@@ -421,10 +450,6 @@ const NpcOps: CommandHandlers = {
         const current = npc.levels[stat];
         const added = current + ((constant + (base * percent) / 100) | 0);
         npc.levels[stat] = Math.min(added, 255);
-
-        if (stat === NpcStat.HITPOINTS && npc.levels[NpcStat.HITPOINTS] >= npc.baseLevels[NpcStat.HITPOINTS]) {
-            npc.heroPoints.clear();
-        }
     }),
 
     [ScriptOpcode.NPC_STATSUB]: checkedHandler(ActiveNpc, state => {

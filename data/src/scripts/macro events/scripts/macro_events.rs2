@@ -119,7 +119,7 @@ if (map_members = true) {
 %macro_event = ^no_macro_event;
 p_delay(1);
 // https://youtu.be/g5k3XuXxyYQ?list=PLn23LiLYLb1Y3P9S9qZbijcJihiD416jT&t=37
-spotanim_map(small_smokepuff, coord, 124, 0);
+spotanim_map(smokepuff, coord, 124, 0);
 sound_synth(smokepuff2, 0, 0);
 //--
 ~p_telejump_safe($teleport_coord); // todo: Confirm this
@@ -134,8 +134,8 @@ while ($i < inv_size(inv)) {
     def_obj $obj = inv_getobj(inv, $i);
     if ($obj ! null & oc_tradeable($obj) = true) {
         def_coord $coord = map_findsquare(coord, 0, 5, ^map_findsquare_lineofwalk); // 11x11 for now. todo: confirm how scattering works
-        inv_dropslot(inv, $coord, $i, 200);
-        spotanim_map(small_smokepuff, $coord, 124, 0);
+        inv_dropslot(inv, $coord, $i, ^lootdrop_duration);
+        spotanim_map(smokepuff, $coord, 124, 0);
     }
     $i = calc($i + 1);
 }
@@ -172,7 +172,7 @@ while ($i < inv_size(worn)) {
 if (npc_findhero = true) {
     sound_synth(smokepuff2, 0, 0);
 }
-spotanim_map(small_smokepuff, npc_coord, 124, 0);
+spotanim_map(smokepuff, npc_coord, 124, 0);
 npc_del;
 
 [proc,macro_event_lost]()(boolean)
@@ -186,7 +186,7 @@ if (finduid(%npc_macro_event_target) = true) {
     // https://youtu.be/vRlOfkCCGkw?t=87
     if (coordy(coord) ! coordy(npc_coord) | npc_range(coord) > 15) {
         npc_tele(map_findsquare(coord, 1, 1, ^map_findsquare_lineofwalk));
-        spotanim_map(small_smokepuff, npc_coord, 124, 0);
+        spotanim_map(smokepuff, npc_coord, 124, 0);
         sound_synth(smokepuff, 0, 0);
     }
     npc_setmode(playerfollow);

@@ -39,7 +39,6 @@ import { EntityLifeCycle } from '#/engine/entity/EntityLifeCycle.js';
 import { NpcList, PlayerList } from '#/engine/entity/EntityList.js';
 import { PlayerTimerType } from '#/engine/entity/EntityTimer.js';
 import { HuntModeType } from '#/engine/entity/hunt/HuntModeType.js';
-import { HuntNobodyNear } from '#/engine/entity/hunt/HuntNobodyNear.js';
 import Loc from '#/engine/entity/Loc.js';
 import LocObjEvent from '#/engine/entity/LocObjEvent.js';
 import { isClientConnected, NetworkPlayer } from '#/engine/entity/NetworkPlayer.js';
@@ -64,11 +63,11 @@ import { WorldStat } from '#/engine/WorldStat.js';
 import Zone from '#/engine/zone/Zone.js';
 import Isaac from '#/io/Isaac.js';
 import Packet from '#/io/Packet.js';
-import { ReportAbuseReason } from '#/network/client/model/game/ReportAbuse.js';
-import MessagePrivate from '#/network/server/model/game/MessagePrivate.js';
-import UpdateFriendList from '#/network/server/model/game/UpdateFriendList.js';
-import UpdateIgnoreList from '#/network/server/model/game/UpdateIgnoreList.js';
-import UpdateRebootTimer from '#/network/server/model/game/UpdateRebootTimer.js';
+import { ReportAbuseReason } from '#/network/game/client/model/ReportAbuse.js';
+import MessagePrivate from '#/network/game/server/model/MessagePrivate.js';
+import UpdateFriendList from '#/network/game/server/model/UpdateFriendList.js';
+import UpdateIgnoreList from '#/network/game/server/model/UpdateIgnoreList.js';
+import UpdateRebootTimer from '#/network/game/server/model/UpdateRebootTimer.js';
 import ClientSocket from '#/server/ClientSocket.js';
 import { FriendsServerOpcodes } from '#/server/friend/FriendServer.js';
 import { FriendThreadMessage } from '#/server/friend/FriendThread.js';
@@ -692,87 +691,7 @@ class World {
         const start: number = Date.now();
         for (const npc of this.npcs) {
             try {
-                if (npc.isActive) {
-                    if (npc.delayed && this.currentTick >= npc.delayedUntil) npc.delayed = false;
-
-                    // - resume suspended script
-                    if (!npc.delayed && npc.activeScript && npc.activeScript.execution === ScriptState.NPC_SUSPENDED) {
-                        npc.executeScript(npc.activeScript);
-                    }
-                }
-
-                // - Npc Events (Respawn, Revert, Despawn)
-                if (--npc.lifecycleTick === 0) {
-                    try {
-                        // Respawn NPC
-                        if (npc.lifecycle === EntityLifeCycle.RESPAWN && !npc.isActive) {
-                            this.addNpc(npc, -1, false);
-                        }
-                        // Revert NPC
-                        if (npc.lifecycle === EntityLifeCycle.RESPAWN) {
-                            npc.revert();
-                        }
-                        // Despawn NPC
-                        else if (npc.lifecycle === EntityLifeCycle.DESPAWN) {
-                            this.removeNpc(npc, -1);
-                            // Queue despawn trigger
-                            const type = NpcType.get(npc.type);
-                            const script = ScriptProvider.getByTrigger(ServerTriggerType.AI_DESPAWN, type.id, type.category);
-                            if (script) {
-                                this.npcEventQueue.addTail(new NpcEventRequest(NpcEventType.DESPAWN, script, npc));
-                            }
-                        }
-                    } catch (err) {
-                        // there was an error adding or removing them, try again next tick...
-                        // ex: server is full on npc IDs (did we have a leak somewhere?) and we don't want to re-use the last ID (syncing related)
-                        if (npc.lifecycle === EntityLifeCycle.RESPAWN) {
-                            printError('[World] An unhandled error occurred while respawning a NPC');
-                        } else if (npc.lifecycle === EntityLifeCycle.DESPAWN) {
-                            printError('[World] An unhandled error occurred while despawning a NPC');
-                        }
-
-                        printError(`[World] NPC type:${npc.type} lifecycle:${npc.lifecycle} ID:${npc.nid}`);
-                        console.error(err);
-                        npc.setLifeCycle(1);
-                    }
-                }
-
-                // Checks if Npc is alive and not delayed
-                if (!npc.isValid()) {
-                    continue;
-                }
-
-                // Process some hunt logic
-                if (npc.huntMode !== -1) {
-                    const hunt = HuntType.get(npc.huntMode);
-
-                    if (hunt.nobodyNear !== HuntNobodyNear.PAUSEHUNT || rsbuf.getNpcObservers(npc.nid) > 0 || hunt.type === HuntModeType.PLAYER) {
-                        // - hunt npc/obj/loc
-                        if (hunt && hunt.type !== HuntModeType.PLAYER) {
-                            npc.huntAll();
-                        }
-
-                        // Increment huntclock
-                        npc.huntClock++;
-                    }
-
-                    // Consume target
-                    if (npc.huntTarget) {
-                        npc.consumeHuntTarget();
-                    }
-                }
-
-                // - stat regen
-                npc.processRegen();
-                // - timer
-                npc.processTimers();
-                // - queue
-                npc.processQueue();
-                // - movement
-                // - modes
-                npc.processNpcModes();
-
-                npc.validateDistanceWalked();
+                npc.turn();
             } catch (err) {
                 console.error(err);
                 this.removeNpc(npc, -1);
@@ -1000,7 +919,9 @@ class World {
 
                 player.client.state = 1;
 
-                if (player.staffModLevel >= 1) {
+                if (Environment.ENGINE_REVISION > 225 && player.staffModLevel >= 2) {
+                    player.client.send(Uint8Array.from([19]));
+                } else if (player.staffModLevel >= 1) {
                     player.client.send(Uint8Array.from([18]));
                 } else {
                     player.client.send(Uint8Array.from([2]));
@@ -2172,7 +2093,7 @@ class World {
             // todo: login encoders/decoders
             client.opcode = World.loginBuf.g1();
 
-            if (client.opcode === 14) {
+            if (Environment.ENGINE_REVISION > 225 && client.opcode === 14) {
                 client.waiting = 1;
             } else if (client.opcode === 16 || client.opcode === 18) {
                 client.waiting = -1;
@@ -2200,7 +2121,7 @@ class World {
         World.loginBuf.pos = 0;
         client.read(World.loginBuf.data, 0, client.waiting);
 
-        if (client.opcode === 14) {
+        if (Environment.ENGINE_REVISION > 225 && client.opcode === 14) {
             client.send(Uint8Array.from([0, 0, 0, 0, 0, 0, 0, 0]));
 
             const _loginServer = World.loginBuf.g1();
@@ -2212,7 +2133,7 @@ class World {
             client.send(seed.data);
         } else if (client.opcode === 16 || client.opcode === 18) {
             const rev = World.loginBuf.g1();
-            if (rev !== 225) {
+            if (rev !== Environment.ENGINE_REVISION) {
                 client.send(Uint8Array.from([6]));
                 client.close();
                 return;

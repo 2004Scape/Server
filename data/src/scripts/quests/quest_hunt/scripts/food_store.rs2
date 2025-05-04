@@ -1,13 +1,16 @@
 [oploc1,food_store_door]
 def_boolean $entering = ~check_axis(coord, loc_coord, loc_angle);
 if ($entering = true) {
-    if (testbit(%hunt_store_employed, ^food_store) = false) {
-        @wydin_get_pointer(wydin_employees_only);
+    if (npc_find(coord, wydin, 10, 0) = true) {
+        if (testbit(%hunt_store_employed, ^food_store) = false) {
+            @wydin_employees_only;
+        }
+
+        if (inv_getobj(worn, ^wearpos_torso) ! white_apron) {
+            @wydin_apron_required;
+        }
     }
 
-    if (inv_getobj(worn, ^wearpos_torso) ! white_apron) {
-        @wydin_get_pointer(wydin_apron_required);
-    }
 }
 
 ~open_and_close_door(loc_2070, $entering, false);
@@ -18,14 +21,6 @@ if ($entering = true) {
 
 [label,wydin_apron_required]
 ~chatnpc("<p,neutral>Can you put your apron on before going in there, please?");
-
-[label,wydin_get_pointer](label $l)
-npc_findallzone(coord);
-while (npc_findnext = true) {
-    if (npc_type = wydin) {
-        jump($l);
-    }
-}
 
 [oploc1,food_store_crate]
 mes("There are a lot of bananas in the crate.");

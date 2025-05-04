@@ -172,7 +172,7 @@ switch_int (%magearena) {
         ~mage_arena_exactmove(movecoord($spawn_coord, 1, 0, 1));
         sound_synth(teleport_reverse, 0, 0);
         ~spawn_mage_arena_boss($spawn_coord, $boss, 4);
-        spotanim_npc(spotanim_190, 16, 35);
+        spotanim_npc(hugespider_teleport_reverse, 16, 35);
         p_delay(0);
         npc_setmode(applayer2);
         p_delay(0);
@@ -192,7 +192,7 @@ switch_int (%magearena) {
         $spawn_coord = movecoord($spawn_coord, 1, 0, 1);
         ~mage_arena_exactmove($spawn_coord);
         ~spawn_mage_arena_boss($spawn_coord, $boss, 5);
-        spotanim_npc(spotanim_191, 16, 35);
+        spotanim_npc(huge_teleport_reverse, 16, 35);
         sound_synth(teleport_reverse, 0, 0);
         p_delay(0);
         npc_say("Let us continue with our battle");

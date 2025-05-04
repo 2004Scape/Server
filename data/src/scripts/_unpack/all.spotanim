@@ -18,27 +18,27 @@ model=model_3017_spotanim
 anim=dragon_acidbreath_attack
 hasalpha=yes
 
-[spotanim_4]
+[portal]
 model=model_3019_npc
 anim=demon_portal
 hasalpha=yes
 
-[spotanim_5]
+[portalend]
 model=model_3019_npc
 anim=demon_portalend
 hasalpha=yes
 
-[spotanim_6]
+[giantspider_teleport]
 model=model_2886_spotanim
 anim=s_teleport
 hasalpha=yes
 
-[spotanim_7]
+[giant_teleport]
 model=model_3351_spotanim
 anim=g_teleport
 hasalpha=yes
 
-[spotanim_8]
+[whippingplant_attack]
 model=model_loc_1407_8
 anim=whippingplant_attack
 hasalpha=yes
@@ -187,7 +187,7 @@ recol1d=13506
 [dwarf_stone_throw_travel]
 model=model_3349_spotanim
 
-[dwarf_rock_launch]
+[dwarf_stone_throw_launch]
 model=model_3350_spotanim
 anim=dwarf_stone_throw_launch
 hasalpha=yes
@@ -303,15 +303,15 @@ model=model_3149_spotanim
 anim=vial_launch
 hasalpha=yes
 
-[spotanim_53]
+[cannonball_travel]
 model=model_3133_spotanim
 
-[spotanim_54]
+[firebreath_travel]
 model=model_3154_spotanim
 anim=firebreath_travel
 hasalpha=yes
 
-[spotanim_55]
+[gnomeball_travel]
 model=model_3153_spotanim
 anim=vial_travel
 
@@ -319,11 +319,13 @@ anim=vial_travel
 model=model_519_obj_wear
 anim=seq_451
 
-[spotanim_57]
+// unconfirmed name
+[portcullisclose]
 model=model_loc_3303_8
 anim=portcullisclose
 
-[spotanim_58]
+// unconfirmed name
+[portcullisopen]
 model=model_loc_3303_8
 anim=portcullisopen
 
@@ -332,36 +334,36 @@ model=model_loc_2019_8
 anim=whirlpool
 hasalpha=yes
 
-[spotanim_60]
+[rockfall]
 model=model_2321_spotanim
 anim=rockfall
 hasalpha=yes
 
-[spotanim_61]
+[swinginglogtrap_release]
 model=model_loc_3338_8
 anim=swinginglogtrap_release
 
-[spotanim_62]
+[speartrap_release]
 model=model_loc_3234_8
 anim=speartrap_release
 
-[spotanim_63]
+[springtrap_release]
 model=model_loc_3228_8
 anim=springtrap_release
 
-[spotanim_64]
+[springtrap_reset]
 model=model_loc_3228_8
 anim=springtrap_reset
 
-[spotanim_65]
+[double_springtrap_release]
 model=model_loc_3232_8
 anim=double_springtrap_release
 
-[spotanim_66]
+[double_springtrap_reset]
 model=model_loc_3232_8
 anim=double_springtrap_reset
 
-[spotanim_67]
+[rope_piece]
 model=model_2224_spotanim
 anim=rope_piece
 
@@ -377,10 +379,10 @@ hasalpha=yes
 recol1s=19039
 recol1d=31138
 
-[spotanim_70]
+[catapultload]
 model=model_3140_spotanim
 
-[spotanim_71]
+[catapultimpact]
 model=model_3116_spotanim
 anim=wave_impact
 hasalpha=yes
@@ -391,7 +393,7 @@ recol2d=8488
 recol3s=30753
 recol3d=4292
 
-[spotanim_72]
+[biopigeon_launch]
 model=model_2850_npc
 anim=bird_walk
 hasalpha=yes
@@ -402,6 +404,7 @@ recol2d=32767
 recol3s=15648
 recol3d=32767
 
+// unconfirmed name
 [pickaxe_head_launch]
 model=model_3137_spotanim
 
@@ -410,6 +413,7 @@ model=model_2321_spotanim
 anim=seq_643
 hasalpha=yes
 
+// unconfirmed name
 [axe_head_launch]
 model=model_3134_spotanim
 
@@ -441,7 +445,7 @@ anim=gnome_globes
 hasalpha=yes
 orientation=270
 
-[stunned_thieving]
+[stunned]
 model=model_3070_spotanim
 anim=stunned
 ambient=40
@@ -485,7 +489,7 @@ hasalpha=yes
 ambient=40
 contrast=40
 
-[small_smokepuff]
+[smokepuff]
 model=model_3076_spotanim
 anim=smokepuff
 hasalpha=yes
@@ -1302,14 +1306,14 @@ model=model_3125_spotanim
 anim=explodingvial
 hasalpha=yes
 
-[bind_casting]
+[entangle_casting]
 model=model_3126_spotanim
 anim=entangle_casting
 hasalpha=yes
 ambient=40
 contrast=40
 
-[bind_travel]
+[entangle_travel]
 model=model_3127_spotanim
 anim=entangle_travel
 hasalpha=yes
@@ -1337,22 +1341,22 @@ hasalpha=yes
 ambient=40
 contrast=40
 
-[spotanim_182]
+[ballista_travel]
 model=model_2240_spotanim
 anim=catabow_travel
 
-[spotanim_183]
+[ballista_end]
 model=model_2239_spotanim
 anim=catabow_end
 
-[spotanim_184]
+[shilomist]
 model=model_3076_spotanim
 anim=smokepuff
 hasalpha=yes
 recol1s=15855
 recol1d=2304
 
-[spotanim_185]
+[shooting_star]
 model=model_3087_spotanim
 anim=blast_travel
 hasalpha=yes
@@ -1363,7 +1367,7 @@ recol2d=31710
 recol3s=31297
 recol3d=29596
 
-[spotanim_187]
+[upass_claw]
 model=model_3068_spotanim
 anim=gunthix_claw
 hasalpha=yes
@@ -1384,14 +1388,14 @@ hasalpha=yes
 resizeh=512
 resizev=320
 
-[spotanim_190]
+[hugespider_teleport_reverse]
 model=model_2886_spotanim
 anim=s_teleport_reverse
 hasalpha=yes
 resizeh=352
 resizev=352
 
-[spotanim_191]
+[huge_teleport_reverse]
 model=model_3351_spotanim
 anim=g_teleport_reverse
 hasalpha=yes
@@ -1416,14 +1420,14 @@ recol1d=27
 recol2s=32767
 recol2d=15967
 
-[spotanim_194]
+[nezik_flamestrike_casting]
 model=model_3083_spotanim
 anim=strike_casting
 hasalpha=yes
 recol1s=19487
 recol1d=2115
 
-[spotanim_195]
+[nezik_flamestrike_travel]
 model=model_3081_spotanim
 anim=strike_travel
 hasalpha=yes
@@ -1434,7 +1438,7 @@ recol2d=3092
 recol3s=31649
 recol3d=32767
 
-[spotanim_196]
+[nezik_flamestrike_impact]
 model=model_3082_spotanim
 anim=strike_impact
 hasalpha=yes
@@ -1445,7 +1449,7 @@ recol2d=3092
 recol3s=31649
 recol3d=32767
 
-[spotanim_197]
+[nezik_flamestrike]
 model=model_2267_spotanim
 anim=flamewall
 hasalpha=yes
@@ -1458,7 +1462,7 @@ recol2d=3092
 recol3s=31105
 recol3d=32767
 
-[spotanim_198]
+[bookofbinding_effect]
 model=model_3116_spotanim
 anim=wave_impact
 hasalpha=yes
@@ -1729,7 +1733,7 @@ hasalpha=yes
 ambient=40
 contrast=40
 
-[Barrel_Smash]
+[barrel_smash]
 model=model_loc_672_8
 anim=barrel
 hasalpha=yes

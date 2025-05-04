@@ -1,5 +1,5 @@
 import { ZoneEventType } from '#/engine/zone/ZoneEventType.js';
-import ZoneMessage from '#/network/server/ZoneMessage.js';
+import ZoneMessage from '#/network/game/server/ZoneMessage.js';
 
 export default class ZoneEvent {
     readonly type: ZoneEventType;

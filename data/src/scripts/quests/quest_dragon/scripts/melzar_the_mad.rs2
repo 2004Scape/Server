@@ -8,8 +8,11 @@
 if (%npc_action_delay > map_clock) {
     return;
 }
-if (~npc_can_attack_player = false) {
+if (~npc_check_notcombat = false) {
     npc_setmode(null);
+    return;
+}
+if (~npc_check_notcombat_self = false) {
     return;
 }
 // data based off of 200 or so attacks
@@ -37,8 +40,11 @@ if ($random_attack < 8 & stat(strength) >= stat_base(strength)) { // dont cast i
 if (%npc_action_delay > map_clock) {
     return;
 }
-if (~npc_can_attack_player = false) {
+if (~npc_check_notcombat = false) {
     npc_setmode(null);
+    return;
+}
+if (~npc_check_notcombat_self = false) {
     return;
 }
 // mes("Op");
@@ -63,11 +69,11 @@ if_close;
 // not sure if its line of sight or line of walk
 def_coord $cabbage_coord = map_findsquare(npc_coord, 1, 7, ^map_findsquare_lineofwalk);
 npc_anim(human_castentangle, 0);
-spotanim_npc(bind_casting, 92, 0);
+spotanim_npc(entangle_casting, 92, 0);
 %npc_action_delay = calc(map_clock + 5);
 npc_delay(1); // in osrs, the player stops attacking him. Npc_delay is what causes this
-obj_add($cabbage_coord, cabbage, 1, 100);
-spotanim_map(small_smokepuff, $cabbage_coord, 124, 0);
+obj_add($cabbage_coord, cabbage, 1, calc(^lootdrop_duration / 2));
+spotanim_map(smokepuff, $cabbage_coord, 124, 0);
 // doesnt set attack vars in osrs
 
 [proc,npc_zap_attack](int $maxhit, int $attackspeed)

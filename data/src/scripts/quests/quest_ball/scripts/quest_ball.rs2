@@ -79,11 +79,8 @@ loc_change(loc_2868, 500);
 
 [label,ball_cheese](string $pref)
 inv_del(inv, cheese, 1);
-npc_findallzone(coord);
-while(npc_findnext = true) {
-    if(npc_type = ball_mouse) {
-        npc_del;
-    }
+if (npc_find(coord, ball_mouse, 5, 0) = true) {
+    npc_del;
 }
 npc_add(^ball_mouse_coord, ball_mouse, 50);
 ~mesbox("A mouse runs out of <$pref> hole.");
@@ -99,7 +96,7 @@ if(last_useitem = cheese) {
 if(inzone(0_45_54_21_10, 0_45_54_23_11, coord) = true) {
     @ball_cheese("a");
 }
-inv_dropslot(inv, coord, last_slot, 200);
+inv_dropslot(inv, coord, last_slot, ^lootdrop_duration);
 sound_synth(put_down, 0, 0);
 
 [opnpcu,ball_mouse]

@@ -121,7 +121,7 @@ if (%action_delay = map_clock) {
     def_int $respawnrate = db_getfield($data, woodcutting_trees:respawnrate, 0);
     def_int $deplete_chance = 4; // 3/4 chance to deplete - this is a guess
     // axe does not seem to have any effect, wc level does? (need more data)
-    if (stat_random(stat(woodcutting), 70, 233) = true) { 
+    if (stat_random(woodcutting, 70, 233) = true) {
         // Jungle trees/bushes just silently fail to give logs/xp if no space
         // There's also a chance to receive no logs. This seems to be about a 50% chance (tested w/100 rolls on OSRS)
         if (inv_freespace(inv) > 0 & random(2) = 0) {

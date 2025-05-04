@@ -17,7 +17,7 @@ if(coordz(coord) > coordz(loc_coord)) {
 p_arrivedelay;
 mes("You climb onto the rock...");
 facesquare(loc_coord);
-if(stat_random(stat(agility), 95, 305) = false) {
+if(stat_random(agility, 95, 305) = false) {
     p_delay(0);
     anim(human_stumble_back, 0);
     mes("...but you slip back down.");
@@ -107,7 +107,7 @@ inv_del(inv, rope, 1);
 loc_change(loc_2273, 5);
 p_delay(0);
 // https://youtu.be/zGVrFETj96E?si=-LiJOUm_2GMCx7VU&t=144, might need more data
-if(stat_random(stat(agility), 100, 410) = false) {
+if(stat_random(agility, 100, 410) = false) {
     mes("You try to swing but fall in to the darkness.");
     p_teleport(0_38_150_53_49);
     say("Aargh!");
@@ -155,7 +155,7 @@ anim(human_pickpocket, 0);
 sound_synth(lockeddoor, 0, 0);
 p_delay(1); // 2 ticks
 // TODO: check these numbers
-if(stat_random(stat(thieving), 110, 320) = false) {
+if(stat_random(thieving, 110, 320) = false) {
     mes("...and fail, activating the trap!");
     loc_anim(speartrap_release);
     say("Ouch!");
@@ -227,7 +227,7 @@ anim(human_pickpocket, 0);
 sound_synth(lockeddoor, 0, 0);
 p_delay(1); // 2 ticks
 // TODO: check these numbers
-if(stat_random(stat(thieving), 110, 320) = false) {
+if(stat_random(thieving, 110, 320) = false) {
     mes("...and fail, activating the trap!");
     @upass_orboflight_trap;
 }
@@ -257,7 +257,7 @@ if(coordz(coord) < coordz(loc_coord)) {
 }
 ~agility_force_move(0, $seq, 0_37_150_6_42);
 // https://youtu.be/n_ip_vEDbCA?si=0_EUH-TcBp6oAAZL&t=547
-if(stat_random(stat(agility), 90, 300) = false) {
+if(stat_random(agility, 90, 300) = false) {
     anim(human_walk_logbalance_stumble, 0);
     mes("You fall in to the rat pit.");
     p_exactmove(coord, movecoord(coord, -1, 0, 0), 18, 30, ^exact_south);
@@ -282,7 +282,7 @@ if(coordx(coord) > coordx(loc_coord)) {
 }
 ~agility_force_move(0, human_walk_logbalance, movecoord(coord, calc((coordx($end) - coordx(coord)) / 2), 0, calc((coordz($end) - coordz(coord)) / 2)));
 // https://youtu.be/n_ip_vEDbCA?si=0_EUH-TcBp6oAAZL&t=547
-if(stat_random(stat(agility), 90, 300) = false) {
+if(stat_random(agility, 90, 300) = false) {
     // no actual difference in terms of angle or anything so guess these are hardcoded
     // (guessing all destinations are but w/e)
     def_int $dz = -1;
@@ -344,7 +344,7 @@ stat_advance(agility, 30);
 [label,upass_cross_bridge]
 mes("You attempt to walk over the remaining bridge...");
 p_delay(1);
-if(stat_random(stat(agility), 90, 300) = false) {
+if(stat_random(agility, 90, 300) = false) {
     if(random(2) = 0) p_teleport(0_36_153_31_29);
     else p_teleport(0_36_154_29_10);
     // sound fall_land
