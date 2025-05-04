@@ -1,0 +1,266 @@
+[opheldu,dwellberry]
+switch_obj(last_useitem) {
+    case cocktail_shaker : @add_cocktail_ingredient(last_item);
+    case half_baked_bowl : @add_bowl_ingredient(last_item);
+    case half_baked_batta : @add_cocktail_ingredient(last_item);
+    case default : ~displaymessage(^dm_default);
+}
+
+[opheldu,_alcoholic_drinks]
+switch_obj(last_useitem) {
+    case cocktail_shaker : @add_cocktail_ingredient(last_item);
+    case default : ~displaymessage(^dm_default);
+}
+
+[opheldu,equa_leaves]
+switch_int(oc_param(last_useitem, gnome_cooking_type)) {
+    case ^gnome_cocktail : @finish_cocktail(last_useitem, last_item);
+    case ^gnome_bowl, ^gnome_batta, ^gnome_crunchies : @finish_gnome_food(last_useitem, last_item);
+}
+switch_obj(last_useitem) {
+    case toads_legs : @opheldu_make_gnome_food(equa_toads_legs, "You add the equa leaves to the toad legs.");
+    case spicy_toads_legs : @opheldu_make_gnome_food(seasoned_toads_legs, "You add the equa leaves to the spicy toad legs.");
+    case cocktail_shaker : @add_batta_ingredient(last_item);
+    case half_baked_bowl : @add_bowl_ingredient(last_item);
+    case half_baked_batta : @add_batta_ingredient(last_item);
+    case half_baked_crunchies : @add_crunchies_ingredient(last_item);
+    case raw_chompy : @quest_chompybird_add_ingredients_to_chompy_message;
+    case default : ~displaymessage(^dm_default);
+}
+
+[opheldu,cabbage]
+switch_obj(last_useitem) {
+    case half_baked_batta : @add_batta_ingredient(last_item);
+    case raw_chompy : @quest_chompybird_add_ingredients_to_chompy_message;
+    case default : ~displaymessage(^dm_default);
+}
+
+[opheldu,seasoned_toads_legs]
+switch_obj(last_useitem) {
+    case half_baked_batta : @add_batta_ingredient(last_item);
+    case default : ~displaymessage(^dm_default);
+}
+
+[opheldu,spicy_worm]
+switch_obj(last_useitem) {
+    case half_baked_batta : @add_batta_ingredient(last_item);
+    case default : ~displaymessage(^dm_default);
+}
+
+[opheldu,king_worm]
+switch_obj(last_useitem) {
+    case gnome_spice : @opheldu_make_gnome_food(spicy_worm, "You add the gnome spice to the king worm.");
+    case half_baked_bowl : @add_bowl_ingredient(last_item);
+    case half_baked_crunchies : @add_crunchies_ingredient(last_item);
+    case default : ~displaymessage(^dm_default);
+}
+
+[opheldu,toads_legs]
+switch_obj(last_useitem) {
+    case gnome_spice : @opheldu_make_gnome_food(spicy_toads_legs, "You add the gnome spice to the toad legs.");
+    case equa_leaves : @opheldu_make_gnome_food(equa_toads_legs, "You add the equa leaves to the toad legs.");
+    case half_baked_bowl : @add_bowl_ingredient(last_item);
+    case half_baked_crunchies : @add_crunchies_ingredient(last_item);
+    case default : ~displaymessage(^dm_default);
+}
+
+[opheldu,lemon_slices] @finish_cocktail(last_useitem, last_item);
+[opheldu,orange_slices] @finish_cocktail(last_useitem, last_item);
+[opheldu,lime_slices] @finish_cocktail(last_useitem, last_item);
+[opheldu,lemon_chunks]
+switch_int(oc_param(last_useitem, gnome_cooking_type)) {
+    case ^gnome_cocktail : @finish_cocktail(last_useitem, last_item);
+    case ^gnome_bowl, ^gnome_batta, ^gnome_crunchies : @finish_gnome_food(last_useitem, last_item);
+    case default : ~displaymessage(^dm_default);
+}
+[opheldu,orange_chunks]
+switch_int(oc_param(last_useitem, gnome_cooking_type)) {
+    case ^gnome_cocktail : @finish_cocktail(last_useitem, last_item);
+    case ^gnome_bowl, ^gnome_batta, ^gnome_crunchies : @finish_gnome_food(last_useitem, last_item);
+    case default : ~displaymessage(^dm_default);
+}
+[opheldu,lime_chunks] 
+switch_int(oc_param(last_useitem, gnome_cooking_type)) {
+    case ^gnome_cocktail : @finish_cocktail(last_useitem, last_item);
+    case ^gnome_bowl, ^gnome_batta, ^gnome_crunchies : @finish_gnome_food(last_useitem, last_item);
+    case default : ~displaymessage(^dm_default);
+}
+[opheldu,pot_of_cream]
+switch_int(oc_param(last_useitem, gnome_cooking_type)) {
+    case ^gnome_cocktail : @finish_cocktail(last_useitem, last_item);
+    case ^gnome_bowl, ^gnome_batta, ^gnome_crunchies : @finish_gnome_food(last_useitem, last_item);
+    case default : ~displaymessage(^dm_default);
+}
+
+[opheldu,gnome_spice]
+switch_int(oc_param(last_useitem, gnome_cooking_type)) {
+    case ^gnome_cocktail : @finish_cocktail(last_useitem, last_item);
+    case ^gnome_bowl, ^gnome_batta, ^gnome_crunchies : @finish_gnome_food(last_useitem, last_item);
+}
+switch_obj(last_useitem) {
+    case king_worm : @opheldu_make_gnome_food(spicy_worm, "You add the gnome spice to the king worm.");
+    case toads_legs : @opheldu_make_gnome_food(spicy_toads_legs, "You add the gnome spice to the toad legs.");
+    case equa_toads_legs : @opheldu_make_gnome_food(seasoned_toads_legs, "You add the gnome spice to the equa toad legs.");
+    case half_baked_bowl : @add_bowl_ingredient(last_item);
+    case half_baked_crunchies : @add_crunchies_ingredient(last_item);
+    case default : ~displaymessage(^dm_default);
+}
+
+[label,opheldu_make_gnome_food](namedobj $gnome_food, string $message)
+if (last_useitem ! gnome_spice) {
+    inv_del(inv, last_useitem, 1);
+}
+if (last_item ! gnome_spice) {
+    inv_del(inv, last_item, 1);
+}
+inv_add(inv, $gnome_food, 1);
+mes($message);
+
+[debugproc,gf_test](int $food)
+inv_clear(inv);
+inv_add(inv, giannes_cook_book, 1);
+switch_int($food) {
+    case 1 : 
+        inv_add(inv, gnomebowl_mould, 1);
+        inv_add(inv, gianne_dough, 1);
+        inv_add(inv, chocolate_bar, 4);
+        inv_add(inv, equa_leaves, 1);
+        inv_add(inv, pot_of_cream, 2);
+        inv_add(inv, chocolate_dust, 1);
+    case 2 :
+        inv_add(inv, gnomebowl_mould, 1);
+        inv_add(inv, gianne_dough, 1);
+        inv_add(inv, toads_legs, 4);
+        inv_add(inv, cheese, 2);
+        inv_add(inv, equa_leaves, 2);
+        inv_add(inv, gnome_spice, 1);
+        inv_add(inv, dwellberry, 1);
+    case 3 :
+        inv_add(inv, gnomebowl_mould, 1);
+        inv_add(inv, gianne_dough, 1);
+        inv_add(inv, king_worm, 4);
+        inv_add(inv, onion, 2);
+        inv_add(inv, gnome_spice, 1);
+        inv_add(inv, equa_leaves, 1);
+    case 4 :
+        inv_add(inv, gnomebowl_mould, 1);
+        inv_add(inv, gianne_dough, 1);
+        inv_add(inv, onion, 2);
+        inv_add(inv, potato, 2);
+        inv_add(inv, gnome_spice, 1);
+        inv_add(inv, equa_leaves, 1);
+    case 5 : 
+        inv_add(inv, crunchy_tray, 1);
+        inv_add(inv, gianne_dough, 1);
+        inv_add(inv, king_worm, 2);
+        inv_add(inv, equa_leaves, 1);
+        inv_add(inv, gnome_spice, 1);
+    case 6 :
+        inv_add(inv, crunchy_tray, 1);
+        inv_add(inv, gianne_dough, 1);
+        inv_add(inv, chocolate_bar, 2);
+        inv_add(inv, gnome_spice, 1);
+        inv_add(inv, chocolate_dust, 1);
+    case 7 :
+        inv_add(inv, crunchy_tray, 1);
+        inv_add(inv, gianne_dough, 1);
+        inv_add(inv, gnome_spice, 1);
+        inv_add(inv, equa_leaves, 2);
+    case 8 :
+        inv_add(inv, crunchy_tray, 1);
+        inv_add(inv, gianne_dough, 1);
+        inv_add(inv, toads_legs, 2);
+        inv_add(inv, gnome_spice, 1);
+        inv_add(inv, equa_leaves, 1);
+    case 9 :
+        inv_add(inv, batta_tin, 1);
+        inv_add(inv, gianne_dough, 1);
+        inv_add(inv, spicy_worm, 1);
+        inv_add(inv, cheese, 1);
+        inv_add(inv, equa_leaves, 1);
+    case 10 :
+        inv_add(inv, batta_tin, 1);
+        inv_add(inv, gianne_dough, 1);
+        inv_add(inv, seasoned_toads_legs, 1);
+        inv_add(inv, cheese, 1);
+    case 11 :
+        inv_add(inv, batta_tin, 1);
+        inv_add(inv, gianne_dough, 1);
+        inv_add(inv, cheese, 1);
+        inv_add(inv, tomato, 1);
+        inv_add(inv, equa_leaves, 1);
+    case 12 :
+        inv_add(inv, batta_tin, 1);
+        inv_add(inv, gianne_dough, 1);
+        inv_add(inv, equa_leaves, 4);
+        inv_add(inv, pineapple_chunks, 1);
+        inv_add(inv, orange_chunks, 1);
+        inv_add(inv, lime_chunks, 1);
+        inv_add(inv, gnome_spice, 1);
+    case 13 :
+        inv_add(inv, batta_tin, 1);
+        inv_add(inv, gianne_dough, 1);
+        inv_add(inv, tomato, 2);
+        inv_add(inv, onion, 1); 
+        inv_add(inv, cabbage, 1);
+        inv_add(inv, dwellberry, 1);
+        inv_add(inv, cheese, 1);
+        inv_add(inv, equa_leaves, 1);
+}
+
+[debugproc,gc_test](int $cocktail)
+inv_clear(inv);
+inv_add(inv, cocktail_guide, 1);
+inv_add(inv, cocktail_shaker, 1);
+inv_add(inv, cocktail_glass_empty, 1);
+switch_int ($cocktail) {
+    case 1 :
+        inv_add(inv, vodka, 1);
+        inv_add(inv, gin, 1);
+        inv_add(inv, brandy, 1);
+        inv_add(inv, lemon, 2);
+        inv_add(inv, orange, 1);
+        inv_add(inv, orange_chunks, 1);
+        inv_add(inv, lemon_chunks, 1);
+        inv_add(inv, lime_slices, 1);
+        inv_add(inv, equa_leaves, 1);
+    case 2 :
+        inv_add(inv, whisky, 1);
+        inv_add(inv, equa_leaves, 1);
+        inv_add(inv, bucket_milk, 1);
+        inv_add(inv, chocolate_bar, 1);
+        inv_add(inv, pot_of_cream, 1);
+        inv_add(inv, chocolate_dust, 1);
+    case 3 :
+        inv_add(inv, vodka, 1);
+        inv_add(inv, gin, 1);
+        inv_add(inv, dwellberry, 1);
+        inv_add(inv, pineapple_chunks, 1);
+        inv_add(inv, pot_of_cream, 1);
+    case 4 :
+        inv_add(inv, pineapple, 1);
+        inv_add(inv, orange, 1);
+        inv_add(inv, lemon, 1);
+        inv_add(inv, lemon_slices, 1);
+    case 5 :
+        inv_add(inv, lemon, 1);
+        inv_add(inv, orange, 1);
+        inv_add(inv, pineapple, 2);
+        inv_add(inv, pineapple_chunks, 1);
+        inv_add(inv, lime_chunks, 1);
+        inv_add(inv, orange_slices, 1);
+    case 6 : 
+        inv_add(inv, vodka, 1);
+        inv_add(inv, lime, 3);
+        inv_add(inv, equa_leaves, 1);
+        inv_add(inv, lime_slices, 1);
+    case 7 :
+        inv_add(inv, vodka, 2);
+        inv_add(inv, gin, 1);
+        inv_add(inv, pineapple, 1);
+        inv_add(inv, orange, 1);
+        inv_add(inv, lime, 1);
+        inv_add(inv, lemon, 1);
+        inv_add(inv, pineapple_chunks, 1);
+        inv_add(inv, lime_slices, 1);
+}

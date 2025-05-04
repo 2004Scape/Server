@@ -120,9 +120,9 @@ mes($cookmessage);
 anim($anim, 0);
 sound_synth(fry, 0, 0);
 switch_obj($uncooked_item) {
-    case half_baked_batta : $cooked_item = ~get_gnome_batta_product();
-    case half_baked_bowl : $cooked_item = ~get_gnome_bowl_product();
-    case half_baked_crunchies : $cooked_item = ~get_gnome_crunchies_product();
+    case half_baked_batta : $cooked_item = ~gnome_batta;
+    case half_baked_bowl : $cooked_item = ~gnome_bowl;
+    case half_baked_crunchies : $cooked_item = ~gnome_crunchies;
 }
 // rsc delays for about 3 ticks.
 // This post says they removed unnecessary delays and "None of the above no longer take any more time than in Runescape 1."

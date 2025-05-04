@@ -1,0 +1,28 @@
+// checks every slot in a given inventory and deletes all items of that category
+[proc,inv_delcat](inv $inv, category $category)
+def_int $i = 0;
+while ($i < inv_size($inv)) {
+    def_obj $obj = inv_getobj($inv, $i);
+    if ($obj ! null) {
+        if (oc_category(inv_getobj($inv, $i)) = $category) {
+            inv_delslot($inv, $i);
+        }
+    }
+    $i = calc($i + 1);
+}
+
+// checks every slot in a given inventory and returns a string of all items within
+[proc,inv_string](inv $inv)(string)
+def_int $i = 0;
+def_string $str = "";
+while ($i < inv_size($inv)) {
+    def_obj $obj = inv_getobj($inv, $i);
+    if ($obj ! null) {
+        $str = append($str, oc_name($obj));
+        $str = append($str, ", ");
+    }
+    $i = add($i, 1);
+}
+$str = ~string_removeright($str, 2);
+
+return($str);

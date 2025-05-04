@@ -236,92 +236,63 @@ type=player_uid
 
 [varp_221]
 
-[gnome_drink_ingredient1]
-type=obj
+[gnome_cocktail_bits1]
 
-[gnome_drink_ingredient2]
-type=obj
+[gnome_cocktail_bits2]
 
-[gnome_drink_ingredient3]
-type=obj
+[gnome_batta_bits1]
 
-[gnome_drink_ingredient4]
-type=obj
+[gnome_batta_bits2]
 
-[gnome_drink_ingredient5]
-type=obj
+[gnome_bowl_bits1]
 
-[gnome_drink_ingredient6]
-type=obj
+[gnome_bowl_bits2]
 
-[gnome_drink_ingredient7]
-type=obj
+[gnome_crunchies_bits1]
 
-[gnome_bowl_ingredient1]
-type=obj
+[gnome_crunchies_bits2]
 
-[gnome_bowl_ingredient2]
-type=obj
+[varp_235]
 
-[gnome_bowl_ingredient3]
-type=obj
+[varp_236]
 
-[gnome_bowl_ingredient4]
-type=obj
+[varp_237]
 
-[gnome_bowl_ingredient5]
-type=obj
+[varp_238]
 
-[gnome_bowl_ingredient6]
-type=obj
+[varp_239]
 
-[gnome_bowl_ingredient7]
-type=obj
+[varp_240]
 
-[gnome_bowl_ingredient8]
-type=obj
+[varp_241]
 
-[gnome_bowl_ingredient9]
-type=obj
+[varp_242]
 
-[gnome_bowl_ingredient10]
-type=obj
+[varp_243]
 
-[gnome_bowl_ingredient11]
-type=obj
+[varp_244]
 
-[gnome_crunchies_ingredient1]
-type=obj
+[varp_245]
 
-[gnome_crunchies_ingredient2]
-type=obj
+[varp_246]
 
-[gnome_crunchies_ingredient3]
-type=obj
+[varp_247]
 
-[gnome_crunchies_ingredient4]
-type=obj
+[varp_248]
 
-[gnome_crunchies_ingredient5]
-type=obj
+[varp_249]
 
-[gnome_batta_ingredient1]
-type=obj
+[varp_250]
 
-[gnome_batta_ingredient2]
-type=obj
+[varp_251]
 
-[gnome_batta_ingredient3]
-type=obj
+[varp_252]
 
-[gnome_batta_ingredient4]
-type=obj
+[varp_253]
 
-[gnome_batta_ingredient5]
-type=obj
+[varp_254]
 
-[gnome_batta_ingredient6]
-type=obj
+[varp_255]
 
 [thread_used]
 scope=perm
