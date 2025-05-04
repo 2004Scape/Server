@@ -99,7 +99,7 @@ if(last_useitem = cheese) {
 if(inzone(0_45_54_21_10, 0_45_54_23_11, coord) = true) {
     @ball_cheese("a");
 }
-inv_dropslot(inv, coord, last_slot, 200);
+inv_dropslot(inv, coord, last_slot, ^lootdrop_duration);
 sound_synth(put_down, 0, 0);
 
 [opnpcu,ball_mouse]

@@ -81,7 +81,7 @@ while ($i < %trawler_catch) {
 def_int $i = 0;
 while ($i < inv_size(trawler_rewardinv)) {
     if (inv_getobj(trawler_rewardinv, $i) ! null) {
-        inv_dropslot(trawler_rewardinv, coord, $i, 100); // drops in osrs
+        inv_dropslot(trawler_rewardinv, coord, $i, calc(^lootdrop_duration / 2)); // drops in osrs
     }
     $i = add($i, 1);
 }
