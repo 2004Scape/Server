@@ -157,12 +157,12 @@ session_log(^log_adventure, "Quest complete: Black Knight's Fortress");
 ~send_quest_complete(questlist:fortress, coins, 250, ^blackknight_questpoints, "You have completed the\\nBlack Knights' Fortress Quest!");
 
 [proc,black_knights_aggro](coord $first_search_coord, coord $all_search_coord)
-if (npc_find($first_search_coord, black_knight_aggre, 5, 0) = true) {
+if (npc_find($first_search_coord, aggressive_black_knight, 5, 0) = true) {
     npc_say("Die intruder!!!");
 }
 // def does this findall thing https://youtu.be/6RNx7Sbut8A?t=423
 // isnt the case in osrs!
-npc_findall($all_search_coord, black_knight_aggre, 5, 0);
+npc_findall($all_search_coord, aggressive_black_knight, 5, 0);
 while (npc_findnext = true) {
     if (npc_getmode ! opplayer2) {
         npc_setmode(opplayer2);

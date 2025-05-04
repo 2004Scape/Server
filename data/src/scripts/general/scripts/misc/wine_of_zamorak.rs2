@@ -14,15 +14,15 @@ if (obj_coord = 0_45_54_50_59) {
     stat_drain(defence, 1, 5);
     stat_drain(ranged, 1, 5);
     stat_drain(magic, 1, 5);
-    if (npc_find(0_45_54_54_60, monk_of_zamorak_17, 5, 0) = true | npc_find(0_45_54_54_60, monk_of_zamorak_22, 5, 0) = true) {
+    if (npc_find(0_45_54_54_60, chaosmonk2, 5, 0) = true | npc_find(0_45_54_54_60, chaosmonk1, 5, 0) = true) {
         npc_say("Hands off Zamorak's wine!");
-        npc_findall(0_45_54_54_60, monk_of_zamorak_17, 5, 0);
+        npc_findall(0_45_54_54_60, chaosmonk2, 5, 0);
         while (npc_findnext = true) {
             if (npc_getmode ! opplayer2) {
                 npc_setmode(opplayer2);
             }
         }
-        npc_findall(0_45_54_54_60, monk_of_zamorak_22, 5, 0);
+        npc_findall(0_45_54_54_60, chaosmonk1, 5, 0);
         while (npc_findnext = true) {
             if (npc_getmode ! opplayer2) {
                 npc_setmode(opplayer2);

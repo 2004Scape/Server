@@ -30,7 +30,7 @@ if(loc_coord = 0_50_149_38_22) {
         ~open_and_close_door(loc_1535, ~check_axis(coord, loc_coord, loc_angle), false);
         return;
     }
-    if (npc_find(0_50_149_35_22, door_man, 2, 0) = true) {
+    if (npc_find(0_50_149_35_22, doorman, 2, 0) = true) {
         @door_man_chat;
     }
 } else if(loc_coord = 0_50_149_33_18) {
