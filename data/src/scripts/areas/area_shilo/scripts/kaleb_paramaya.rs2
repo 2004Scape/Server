@@ -7,11 +7,11 @@ if(inv_total(inv, paramayaticket) = 0) {
 inv_del(inv, paramayaticket, 1);
 if_close;
 p_delay(0);
-@climb_ladder(movecoord(coord, 0, 1, 0), true);
+~climb_ladder(movecoord(coord, 0, 1, 0), true);
 
 [oploc1,loc_2269]
 mes("You climb down the ladder.");
-@climb_ladder(1_44_46_45_51, false);
+~climb_ladder(1_44_46_45_51, false);
 
 [opnpc1,kaleb_paramaya]
 ~chatplayer("<p,neutral>Hello.");

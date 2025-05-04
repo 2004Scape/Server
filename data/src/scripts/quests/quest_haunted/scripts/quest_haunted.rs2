@@ -153,11 +153,11 @@ p_teleport($dest);
 
 [oploc1,puzzle_ladder_top]
 ~reset_haunted_levers;
-@climb_ladder(0_48_152_44_26, false);
+~climb_ladder(0_48_152_44_26, false);
 
 [oploc1,puzzle_ladder]
 ~reset_haunted_levers;
-@climb_ladder(0_48_52_20_33, true);
+~climb_ladder(0_48_52_20_33, true);
 
 [proc,reset_haunted_levers]
 %haunted_lever = clearbit_range(%haunted_lever, 0, 5);

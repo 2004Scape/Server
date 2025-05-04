@@ -90,7 +90,7 @@ if(%itwatchtower_progress = ^itwatchtower_not_started) {
 } else {
     ~chatnpc_specific(nc_name(tower_guard), tower_guard, "<p,neutral>It is the wizards' helping hand - let 'em up.");
     if_close;
-    @climb_ladder(movecoord(coord, 0, 1, 0), true);
+    ~climb_ladder(movecoord(coord, 0, 1, 0), true);
 }
 
 // checks if the player has a map, lightsource, and tinderbox. possible outcomes are:
@@ -258,12 +258,13 @@ mes("I am going to need someone with experience to help me with this.");
 
 [oploc1,loc_2796]
 if(%itwatchtower_progress >= ^itwatchtower_complete) {
-    @climb_ladder(2_45_73_53_40, true);
+    ~climb_ladder(2_45_73_53_40, true);
+    return;
 }
-@climb_ladder(2_39_48_53_40, true);
+~climb_ladder(2_39_48_53_40, true);
 
 [oploc1,loc_2797]
-@climb_ladder(1_39_48_53_40, true);
+~climb_ladder(1_39_48_53_40, true);
 
 [oploc1,loc_2786] @open_gutanoth_gate(^left, ogre_guard_east);
 [oploc1,loc_2787] @open_gutanoth_gate(^right, ogre_guard_east);

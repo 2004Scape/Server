@@ -73,7 +73,7 @@ if(%seaslug_progress >= ^seaslug_spoken_kent & %seaslug_progress < ^seaslug_comp
     } 
     mes("The fishermen seem afraid of your torch.");
 }
-@climb_ladder(movecoord(coord(), 0, 1, 0), true);
+~climb_ladder(movecoord(coord(), 0, 1, 0), true);
 
 [oploc1,loc_2518]
 mes("You kick the loose panel.");
@@ -114,11 +114,8 @@ if(%seaslug_progress = ^seaslug_need_kennith_path) {
 p_delay(4);
 
 [oploc1,loc_2519]
-npc_findallzone(movecoord(coord, 0, 0, 2));
-while (npc_findnext = true) {
-    if (npc_type = kennith) {
-        @kennith_chat;
-    }
+if (npc_find(movecoord(coord, 0, 0, 2), kennith, 5, 0) = true) {
+    @kennith_chat;
 }
 
 [queue,seaslug_quest_complete]

@@ -33,15 +33,15 @@ switch_int (loc_angle) {
 [oploc1,lady_lumbridge_ladder]
 p_arrivedelay; //osrs
 if (%dragon_planks < 3) {
-    @climb_ladder(1_47_150_39_40, true);
+    ~climb_ladder(1_47_150_39_40, true);
 } else if ((%dragon_progress = ^quest_dragon_ned_given_map | %dragon_progress = ^quest_dragon_sailed_to_crandor) & %dragon_ned_hired = ^true) {
-    @climb_ladder(3_47_150_39_40, true);
+    ~climb_ladder(3_47_150_39_40, true);
 }else {
-    @climb_ladder(2_47_150_39_40, true);
+    ~climb_ladder(2_47_150_39_40, true);
 }
 
 [oploc1,lady_lumbridge_ladder2]
-@climb_ladder(1_47_50_39_7, true);
+~climb_ladder(1_47_50_39_7, true);
 
 [oploc1,lady_lumbridge_hole]
 // left click didnt auto add planks
@@ -96,4 +96,4 @@ def_coord $coord = movecoord(coord, 0, -1, 0);
 if (map_blocked($coord) = true) { // just incase the player wants to hide behind the ladder
     $coord = 0_44_50_33_35;
 }
-@climb_ladder($coord, true);
+~climb_ladder($coord, true);

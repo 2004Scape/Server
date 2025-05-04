@@ -220,6 +220,7 @@ export const enum ScriptOpcode {
     NPC_DELAY, // official
     NPC_FACESQUARE, // official
     NPC_FIND, // official
+    NPC_FINDCAT,
     NPC_FINDALLANY, // official
     NPC_FINDALL,
     NPC_FINDEXACT, // official
@@ -662,6 +663,7 @@ export const ScriptOpcodeMap: Map<string, number> = new Map([
     ['NPC_DELAY', ScriptOpcode.NPC_DELAY],
     ['NPC_FACESQUARE', ScriptOpcode.NPC_FACESQUARE],
     ['NPC_FIND', ScriptOpcode.NPC_FIND],
+    ['NPC_FINDCAT', ScriptOpcode.NPC_FINDCAT],
     ['NPC_FINDALLANY', ScriptOpcode.NPC_FINDALLANY],
     ['NPC_FINDALL', ScriptOpcode.NPC_FINDALL],
     ['NPC_FINDEXACT', ScriptOpcode.NPC_FINDEXACT],
