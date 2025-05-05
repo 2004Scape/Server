@@ -53,12 +53,45 @@ if (.finduid(%duelpartner) = true) {
 
     hint_player(.uid);
 
-    softtimer(duel_arena_start_3, 3); // todo: confirm these timings
-    softtimer(duel_arena_time_limit, 6000); // 60 minute time limit https://runescape.wiki/w/Update:Assist_System
-
+    settimer(duel_arena_time_limit, 6000); // 60 minute time limit https://runescape.wiki/w/Update:Assist_System
     ~midi_jingle(^duel_start_jingle, ^duel_start_jingle_millis);
+    ~duel_arena_countdown;
 }
 
+
+[proc,duel_arena_countdown]
+world_delay(1);
+if (~in_duel_arena(coord) = false) {
+    return;
+}
+say("3");
+world_delay(1);
+if (~in_duel_arena(coord) = false) {
+    return;
+}
+say("2");
+world_delay(1);
+if (~in_duel_arena(coord) = false) {
+    return;
+}
+say("1");
+world_delay(1);
+if (~in_duel_arena(coord) = false) {
+    return;
+}
+if (.finduid(%duelpartner) = false) {
+    queue(duel_arena_disconnect, 0);
+    return;
+}
+if (~.in_duel_arena(.coord) = false) {
+    queue(duel_arena_disconnect, 0);
+    .%duelstatus = ^duelstatus_reset;
+    .%duelpartner = null;
+    .clearqueue(duel_arena_prepare_start);
+    return;
+}
+say("FIGHT!");
+%duelstatus = ^duelstatus_start;
 
 [proc,duel_arena_coord]()(coord)
 // random coord between 2 coords, checks if map blocked and not inside dueler
@@ -110,61 +143,19 @@ while (map_blocked($random_coord) = true) {
 }
 return($random_coord);
 
-
-[softtimer,duel_arena_start_3]
-if (~in_duel_arena(coord) = false) {
-    clearsofttimer(duel_arena_start_3);
-    return;
-}
-say("3");
-softtimer(duel_arena_start_2, 3);
-clearsofttimer(duel_arena_start_3);
-
-[softtimer,duel_arena_start_2]
-if (~in_duel_arena(coord) = false) {
-    clearsofttimer(duel_arena_start_2);
-    return;
-}
-say("2");
-softtimer(duel_arena_start_1, 3);
-clearsofttimer(duel_arena_start_2);
-
-[softtimer,duel_arena_start_1]
-if (~in_duel_arena(coord) = false) {
-    clearsofttimer(duel_arena_start_1);
-    return;
-}
-say("1");
-softtimer(duel_arena_start_fight, 3);
-clearsofttimer(duel_arena_start_1);
-
-[softtimer,duel_arena_start_fight]
-if (~in_duel_arena(coord) = false) {
-    clearsofttimer(duel_arena_start_fight);
-    return;
-}
-say("FIGHT!");
-%duelstatus = ^duelstatus_start;
-clearsofttimer(duel_arena_start_fight);
-
 [walktrigger,duel_arena_no_move]
 if (~duel_arena_movement_check = true & ~in_duel_arena(coord) = true) {
     p_walk(coord);
     walktrigger(duel_arena_no_move);
 }
 
-[softtimer,duel_arena_time_limit]
+[timer,duel_arena_time_limit]
 if (~in_duel_arena(coord) = false) {
-    clearsofttimer(duel_arena_time_limit);
+    cleartimer(duel_arena_time_limit);
     return;
 }
 %duelstatus = ^duelstatus_reset;
 %duelpartner = null;
-if_close;
-queue(duel_arena_time_limit, 0);
-
-
-[queue,duel_arena_time_limit]
 ~duel_give_stake_back;
 ~duel_reset_all;
 ~mesbox("Your duel ended in an honourable draw."); // RS3 message: https://archive.org/details/runelibris

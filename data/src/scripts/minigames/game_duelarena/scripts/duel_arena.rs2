@@ -391,7 +391,7 @@ if (.uid ! %duelpartner) {
     mes("You can only attack your opponent!"); // https://storage.googleapis.com/tannerdino/images/batwifahat-purpl.jpg
     return(false);
 }
-if (%duelstatus < ^duelstatus_start & .%duelstatus < ^duelstatus_start) {
+if (%duelstatus < ^duelstatus_start | .%duelstatus < ^duelstatus_start) {
     mes("The duel has not started yet!"); // https://youtu.be/64GEUr-lgS8?t=106
     return(false);
 }
@@ -432,4 +432,4 @@ if (.finduid(%duelpartner) = true) {
 [queue,duel_arena_disconnect]
 ~duel_give_stake_back;
 ~duel_reset_all;
-~mesbox("Your opponent timed out, there was no winner!"); // https://youtu.be/LZzhIWbSKpY?t=127
+mes("Your opponent timed out, there was no winner!"); // https://storage.googleapis.com/tannerdino/images/00timeout.jpg

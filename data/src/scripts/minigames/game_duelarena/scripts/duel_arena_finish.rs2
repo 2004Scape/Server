@@ -55,9 +55,6 @@ if_settext(duel_win:combat_level, tostring(~.player_combat_level));
 inv_transmit(duelarrows, duel_win:spoils);
 
 [proc,duel_reset_all]
-if (~in_duel_arena(coord) = false) {
-    return;
-}
 // get arrows back
 def_int $i = 0;
 while ($i < inv_size(tradeoffer)) {
