@@ -151,12 +151,12 @@ if (p_finduid(uid) = true) {
                 case 47 : queue(totem_quest_complete, 0);
                 case 48 : queue(upass_quest_complete, 0);
                 case 49 : 
-                    queue(itwatchtower_quest_complete, 0);
-                    %itwatchtower_progress = ^itwatchtower_complete;
                     // Rewards are given before quest completion, so give here
                     stat_advance(magic, 153000);
                     inv_add(inv, coins, 5000);
                     inv_add(inv, watchtowerspell, 1);
+                    %itwatchtower_progress = ^itwatchtower_complete;
+                    queue(itwatchtower_quest_complete, 0);
                 case 50 : queue(waterfall_quest_complete, 0);
                 case 51 : queue(ball_quest_complete, 0);
                 case default : mes("Quest not found.");
@@ -335,12 +335,12 @@ queue(zombiequeen_quest_complete, 0);
 queue(tree_quest_complete, 0);
 queue(totem_quest_complete, 0);
 queue(upass_quest_complete, 0);
-queue(itwatchtower_quest_complete, 0);
-%itwatchtower_progress = ^itwatchtower_complete;
+    %itwatchtower_progress = ^itwatchtower_complete;
     // Rewards are given before quest completion, so give here
     stat_advance(magic, 153000);
     inv_add(inv, coins, 5000);
     inv_add(inv, watchtowerspell, 1);
+queue(itwatchtower_quest_complete, 0);
 queue(waterfall_quest_complete, 0);
 queue(ball_quest_complete, 0);
 
