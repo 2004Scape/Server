@@ -321,6 +321,7 @@ queue(zanaris_quest_complete, 0);
 queue(arthur_quest_complete, 0);
 queue(drunkmonk_complete, 0);
 queue(murder_quest_complete, 0);
+    %itgronigen_progress = ^itgronigen_complete;
 queue(itgronigen_quest_complete, 0);
 queue(quest_elena_complete, 0);
 queue(scorpcatcher_quest_complete, 0);
