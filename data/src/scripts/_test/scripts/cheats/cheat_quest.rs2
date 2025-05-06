@@ -121,6 +121,8 @@ if (p_finduid(uid) = true) {
                 case 36 : queue(drunkmonk_complete, 0);
                 case 37 : queue(murder_quest_complete, 0);
                 case 38 :
+                    stat_advance(crafting, 22500);
+                    inv_add(inv, uncut_sapphire, 1);
                     %itgronigen_progress = ^itgronigen_complete;
                     queue(itgronigen_quest_complete, 0);
                 case 39 : queue(quest_elena_complete, 0);
@@ -322,6 +324,8 @@ queue(arthur_quest_complete, 0);
 queue(drunkmonk_complete, 0);
 queue(murder_quest_complete, 0);
     %itgronigen_progress = ^itgronigen_complete;
+    stat_advance(crafting, 22500);
+    inv_add(inv, uncut_sapphire, 1);
 queue(itgronigen_quest_complete, 0);
 queue(quest_elena_complete, 0);
 queue(scorpcatcher_quest_complete, 0);
