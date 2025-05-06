@@ -395,9 +395,20 @@ const InvOps: CommandHandlers = {
             }
 
             fromInv.delete(slot);
-            toInv.add(obj.id, obj.count);
 
+            const count = obj.count;
             const type = ObjType.get(obj.id);
+            const overflow = count - toPlayer.invAdd(toInv.type, type.id, count, false);
+            if (overflow > 0) {
+                if (!type.stackable || overflow === 1) {
+                    for (let i = 0; i < overflow; i++) {
+                        World.addObj(new Obj(toPlayer.level, toPlayer.x, toPlayer.z, EntityLifeCycle.DESPAWN, type.id, 1), toPlayer.hash64, 200);
+                    }
+                } else {
+                    World.addObj(new Obj(toPlayer.level, toPlayer.x, toPlayer.z, EntityLifeCycle.DESPAWN, type.id, overflow), toPlayer.hash64, 200);
+                }
+            }
+
             const event = fromLogs.get(type.id);
             if (event) {
                 event.count += obj.count;
