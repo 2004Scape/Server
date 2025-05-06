@@ -120,4 +120,4 @@ if (npc_find(movecoord(coord, 0, 0, 2), kennith, 5, 0) = true) {
 
 [queue,seaslug_quest_complete]
 session_log(^log_adventure, "Quest complete: Sea Slug");
-~send_quest_complete(questlist:seaslug, seasluginv, 250, ^itwatchtower_questpoints, "You have completed the\\nSea Slug Quest!");
+~send_quest_complete(questlist:seaslug, seasluginv, 250, ^seaslug_questpoints, "You have completed the\\nSea Slug Quest!");
