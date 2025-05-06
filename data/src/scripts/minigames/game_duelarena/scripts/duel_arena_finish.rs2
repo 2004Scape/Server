@@ -1,8 +1,8 @@
 [queue,player_death_duel]
+%duelstatus = ^duelstatus_lost;
 if (~in_duel_arena(coord) = true) {
     ~player_death;
 }
-%duelstatus = ^duelstatus_lost;
 clearqueue(duel_finish);
 queue(duel_finish, 0);
 
