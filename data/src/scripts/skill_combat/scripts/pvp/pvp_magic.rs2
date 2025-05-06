@@ -61,7 +61,8 @@ if (~pvp_hit_roll(^magic_style) = true) {
 [proc,pvp_combat_spell_checks](dbrow $spell_data)(boolean)
 if_close;
 p_stopaction;
-if (.stat(hitpoints) = 0) {
+if (.%death = ^true) {
+    p_stopaction;
     return(false);
 }
 if (map_clock < %action_delay) {

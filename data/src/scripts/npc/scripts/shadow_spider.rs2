@@ -1,5 +1,5 @@
 [ai_opplayer2,shadow_spider] 
-if (stat(hitpoints) = 0) {
+if (%death = ^true) {
     npc_setmode(null);
     return;
 }

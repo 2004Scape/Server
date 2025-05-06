@@ -12,15 +12,14 @@ if (npc_findhero = true) {
     }
 }
 
-// Highkey stole this from the drunken dwarf random.
 [ai_opplayer2,tut_giant_rat]
-if (stat(hitpoints) = 0) {
+if (%death = ^true) {
+    npc_setmode(null);
     return;
 }
 if (map_clock < %npc_action_delay) {
     return;
 }
-
 if (~npc_check_notcombat = false) {
     npc_setmode(null);
     return;

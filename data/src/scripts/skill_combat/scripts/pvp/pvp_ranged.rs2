@@ -2,7 +2,7 @@
 if (~duel_arena_ranged_check = false) {
     return;
 }
-if (.stat(hitpoints) = 0) {
+if (.%death = ^true) {
     p_stopaction;
     return;
 }

@@ -35,7 +35,7 @@ if(%upass_progress = ^upass_found_doll) {
 [ai_opplayer2,blessed_spider] ~blessedspider_attack;
 
 [proc,blessedspider_attack]
-if (stat(hitpoints) = 0) {
+if (%death = ^true) {
     npc_setmode(null);
     return;
 }
