@@ -175,119 +175,48 @@ if (.finduid(%duelpartner) = true & ~enough_duel_space = true) { // https://yout
 }
 
 [proc,enough_duel_space]()(boolean)
-def_int $no_weapons_size = 0;
-def_int $no_armour_size = 0;
-def_int $no_jewelry_size = 0;
+def_int $space_needed = 0;
 if (testbit(%duel_settings, ^no_weapons) = true) {
-    $no_weapons_size = enum_getoutputcount(duel_arena_weapon_slots);
+    $space_needed = add($space_needed, ~enum_inv_itemspace(worn, inv, duel_arena_weapon_slots));
 }
 if (testbit(%duel_settings, ^no_armour) = true) {
-    $no_armour_size = enum_getoutputcount(duel_arena_armour_slots);
+    $space_needed = add($space_needed, ~enum_inv_itemspace(worn, inv, duel_arena_armour_slots));
 }
 if (testbit(%duel_settings, ^no_jewelry) = true) {
-    $no_jewelry_size = enum_getoutputcount(duel_arena_jewelry_slots);
+    $space_needed = add($space_needed, ~enum_inv_itemspace(worn, inv, duel_arena_jewelry_slots));
 }
-def_int $size = calc(inv_size(dueloffer) + .inv_size(dueloffer) + $no_weapons_size + $no_armour_size + $no_jewelry_size);
-def_int $slot = 0;
-def_int $space_needed = 0;
-def_string $fail_message = "You do not have enough space for the items removed.";
-while ($slot < $size) {
-    def_obj $obj;
-    def_int $num;
-    if ($slot < $no_weapons_size) {
-        $obj = inv_getobj(worn, enum(int, int, duel_arena_weapon_slots, $slot));
-        $num = inv_getnum(worn, enum(int, int, duel_arena_weapon_slots, $slot));
-    } else if ($slot < calc($no_weapons_size + $no_armour_size)) {
-        $obj = inv_getobj(worn, enum(int, int, duel_arena_armour_slots, calc($slot - $no_weapons_size)));
-        $num = inv_getnum(worn, enum(int, int, duel_arena_armour_slots, calc($slot - $no_weapons_size)));
-    } else if ($slot < calc($no_weapons_size + $no_armour_size + $no_jewelry_size)) {
-        $obj = inv_getobj(worn, enum(int, int, duel_arena_jewelry_slots, calc($slot - $no_weapons_size - $no_armour_size)));
-        $num = inv_getnum(worn, enum(int, int, duel_arena_jewelry_slots, calc($slot - $no_weapons_size - $no_armour_size)));
-    } else if ($slot < calc(.inv_size(dueloffer) + $no_weapons_size + $no_armour_size + $no_jewelry_size)) {
-        $obj = inv_getobj(dueloffer, calc($slot - $no_weapons_size - $no_armour_size - $no_jewelry_size));
-        $num = inv_getnum(dueloffer, calc($slot - $no_weapons_size - $no_armour_size - $no_jewelry_size));
-        $fail_message = "You do not have enough space for the stake.";
-    } else {
-        $obj = .inv_getobj(dueloffer, calc($slot - .inv_size(dueloffer) - $no_weapons_size - $no_armour_size - $no_jewelry_size));
-        $num = .inv_getnum(dueloffer, calc($slot - .inv_size(dueloffer) - $no_weapons_size - $no_armour_size - $no_jewelry_size));
-        $fail_message = "You do not have enough space for the stake.";
-    }
-    
-    if ($obj ! null) {
-        if (oc_stackable($obj) = false) {
-            $num = 1;
-        }
-        if (inv_itemspace(inv, $obj, $num, .inv_size(inv)) = true) {
-            if (oc_stackable($obj) = false | (oc_stackable($obj) = true & inv_total(inv, $obj) < 1)) {
-                $space_needed = calc($space_needed + 1);
-            }
-        } else {
-            if_settext(duel_select_type:status, $fail_message);
-            return(false);
-        }
-        if (inv_freespace(inv) < $space_needed) {
-            if_settext(duel_select_type:status, $fail_message);
-            return(false);
-        }
-    }
-
-    $slot = add($slot, 1);
+if ($space_needed > inv_freespace(inv)) {
+    if_settext(duel_select_type:status, "You do not have enough space for the items removed.");
+    return(false);
+}
+$space_needed = add($space_needed, ~moveallinv_itemspace2(dueloffer, inv));
+$space_needed = add($space_needed, ~both_moveallinv_itemspace2(dueloffer, inv));
+if ($space_needed > inv_freespace(inv)) {
+    if_settext(duel_select_type:status, "You do not have enough space for the stake.");
+    return(false);
 }
 return(true);
 
 [proc,.enough_duel_space]()(boolean)
-def_int $no_weapons_size = 0;
-def_int $no_armour_size = 0;
-def_int $no_jewelry_size = 0;
+def_int $space_needed = 0;
 if (testbit(.%duel_settings, ^no_weapons) = true) {
-    $no_weapons_size = enum_getoutputcount(duel_arena_weapon_slots);
+    $space_needed = add($space_needed, ~.enum_inv_itemspace(worn, inv, duel_arena_weapon_slots));
 }
 if (testbit(.%duel_settings, ^no_armour) = true) {
-    $no_armour_size = enum_getoutputcount(duel_arena_armour_slots);
+    $space_needed = add($space_needed, ~.enum_inv_itemspace(worn, inv, duel_arena_armour_slots));
 }
 if (testbit(.%duel_settings, ^no_jewelry) = true) {
-    $no_jewelry_size = enum_getoutputcount(duel_arena_jewelry_slots);
+    $space_needed = add($space_needed, ~.enum_inv_itemspace(worn, inv, duel_arena_jewelry_slots));
 }
-def_int $size = calc(.inv_size(dueloffer) + inv_size(dueloffer) + $no_weapons_size + $no_armour_size + $no_jewelry_size);
-def_int $slot = 0;
-def_int $space_needed = 0;
-while ($slot < $size) {
-    def_obj $obj;
-    def_int $num;
-    if ($slot < $no_weapons_size) {
-        $obj = .inv_getobj(worn, enum(int, int, duel_arena_weapon_slots, $slot));
-        $num = .inv_getnum(worn, enum(int, int, duel_arena_weapon_slots, $slot));
-    } else if ($slot < calc($no_weapons_size + $no_armour_size)) {
-        $obj = .inv_getobj(worn, enum(int, int, duel_arena_armour_slots, calc($slot - $no_weapons_size)));
-        $num = .inv_getnum(worn, enum(int, int, duel_arena_armour_slots, calc($slot - $no_weapons_size)));
-    } else if ($slot < calc($no_weapons_size + $no_armour_size + $no_jewelry_size)) {
-        $obj = .inv_getobj(worn, enum(int, int, duel_arena_jewelry_slots, calc($slot - $no_weapons_size - $no_armour_size)));
-        $num = .inv_getnum(worn, enum(int, int, duel_arena_jewelry_slots, calc($slot - $no_weapons_size - $no_armour_size)));
-    } else if ($slot < calc(.inv_size(dueloffer) + $no_weapons_size + $no_armour_size + $no_jewelry_size)) {
-        $obj = .inv_getobj(dueloffer, calc($slot - $no_weapons_size - $no_armour_size - $no_jewelry_size));
-        $num = .inv_getnum(dueloffer, calc($slot - $no_weapons_size - $no_armour_size - $no_jewelry_size));
-    } else {
-        $obj = inv_getobj(dueloffer, calc($slot - inv_size(dueloffer) - $no_weapons_size - $no_armour_size - $no_jewelry_size));
-        $num = inv_getnum(dueloffer, calc($slot - inv_size(dueloffer) - $no_weapons_size - $no_armour_size - $no_jewelry_size));
-    }
-    
-    if ($obj ! null) {
-        if (oc_stackable($obj) = false) {
-            $num = 1;
-        }
-        if (.inv_itemspace(inv, $obj, $num, inv_size(inv)) = true) {
-            if (oc_stackable($obj) = false | (oc_stackable($obj) = true & .inv_total(inv, $obj) < 1)) {
-                $space_needed = calc($space_needed + 1);
-            }
-        } else {
-            return(false);
-        }
-        if (.inv_freespace(inv) < $space_needed) {
-            return(false);
-        }
-    }
-
-    $slot = add($slot, 1);
+if ($space_needed > .inv_freespace(inv)) {
+    .if_settext(duel_select_type:status, "You do not have enough space for the items removed.");
+    return(false);
+}
+$space_needed = add($space_needed, ~.moveallinv_itemspace2(dueloffer, inv));
+$space_needed = add($space_needed, ~.both_moveallinv_itemspace2(dueloffer, inv));
+if ($space_needed > .inv_freespace(inv)) {
+    .if_settext(duel_select_type:status, "You do not have enough space for the stake.");
+    return(false);
 }
 return(true);
 
