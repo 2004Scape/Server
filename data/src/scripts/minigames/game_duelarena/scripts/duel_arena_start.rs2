@@ -83,9 +83,7 @@ if (.finduid(%duelpartner) = false) {
 }
 if (~.in_duel_arena(.coord) = false) {
     queue(duel_arena_disconnect, 0);
-    .%duelstatus = ^duelstatus_reset;
-    .%duelpartner = null;
-    ~.moveallinv(dueloffer, inv);
+    .queue(duel_arena_disconnect, 0);
     .clearqueue(duel_arena_prepare_start);
     return;
 }
