@@ -14,29 +14,32 @@ if ($progress = 0) {
 
 [proc,send_quest_complete](component $component, namedobj $obj, int $objscale, int $questpoints, string $questmessage)
 ~update_questpoints;
-~quest_complete_interface($component, $obj, $objscale, $questpoints, $questmessage);
-
-[proc,quest_complete_interface](component $component, namedobj $obj, int $objscale, int $questpoints, string $questmessage)
-// Random quest complete jingle.
-def_int $random = random(128);
-if ($random < 32) {
-    // The least common music that plays when completing a quest.
+def_int $random = random(128);// Random quest complete jingle.
+if ($random < 32) {// The least common music that plays when completing a quest.
     ~midi_jingle(^quest_complete_3_jingle, ^quest_complete_3_millis);
-} else if ($random < 64) {
-    // A less common music that plays when completing a quest.
+} else if ($random < 64) {// A less common music that plays when completing a quest.
     ~midi_jingle(^quest_complete_2_jingle, ^quest_complete_2_millis);
-} else {
-    // The most common music that plays when completing a quest.
+} else {// The most common music that plays when completing a quest.
     ~midi_jingle(^quest_complete_1_jingle, ^quest_complete_1_millis);
 }
+if ($component = questlist:fluffs) {
+    if_openmain(questscroll_fluffs);
+} else if ($component = questlist:itgronigen) {
+    if_openmain(questscroll_itgronigen);
+} else {
+    ~quest_complete_interface($component, $obj, $objscale, $questpoints, $questmessage);
+}
+
+if_setcolour($component, ^green_rgb);
+if_settab(questlist, ^tab_quest_journal);
+mes("Congratulations! Quest complete!");
+
+[proc,quest_complete_interface](component $component, namedobj $obj, int $objscale, int $questpoints, string $questmessage)
 if_settext(questscroll:com_3, $questmessage);
 if_settext(questscroll:com_9, tostring($questpoints));
 if_settext(questscroll:com_10, "Quest points.");
 if_setobject(questscroll:com_4, $obj, $objscale);
 if_openmain(questscroll);
-if_setcolour($component, ^green_rgb);
-if_settab(questlist, ^tab_quest_journal);
-mes("Congratulations! Quest complete!");
 
 [proc,update_questpoints]
 def_int $questpoints = 0;

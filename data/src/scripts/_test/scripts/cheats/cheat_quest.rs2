@@ -99,7 +99,9 @@ if (p_finduid(uid) = true) {
                     queue(crest_complete, 0);
                     // Complete all blast spells and levers, gauntlet choice unselected
                     %crest_spells_levers_gauntlets = calc(pow(2, ^crest_south_lever) - 1);
-                case 25 : queue(arena_quest_complete, 0);
+                case 25 :
+                    %arena_progress = ^arena_defeated_genkhazard;
+                    queue(arena_quest_complete, 0);
                 case 26 : queue(fishingcompo_quest_complete, 0);
                 case 27 : 
                     %fluffs_progress = ^fluffs_complete;
@@ -118,7 +120,9 @@ if (p_finduid(uid) = true) {
                 case 35 : queue(arthur_quest_complete, 0);
                 case 36 : queue(drunkmonk_complete, 0);
                 case 37 : queue(murder_quest_complete, 0);
-                case 38 : queue(itgronigen_quest_complete, 0);
+                case 38 :
+                    %itgronigen_progress = ^itgronigen_complete;
+                    queue(itgronigen_quest_complete, 0);
                 case 39 : queue(quest_elena_complete, 0);
                 case 40 : queue(scorpcatcher_quest_complete, 0);
                 case 41 : 
@@ -305,6 +309,7 @@ queue(mcannon_complete, 0);
 queue(crest_complete, 0);
 // Complete all blast spells and levers, gauntlet choice unselected
 %crest_spells_levers_gauntlets = calc(pow(2, ^crest_south_lever) - 1);
+%arena_progress = ^arena_defeated_genkhazard;
 queue(arena_quest_complete, 0);
 queue(fishingcompo_quest_complete, 0);
 queue(fluffs_complete, 0);
