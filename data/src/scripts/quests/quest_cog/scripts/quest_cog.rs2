@@ -2,6 +2,7 @@
 // https://web.archive.org/web/20051025140435/http://www.runeweb.net/index.php?page=rs2-quest-clocktower
 [queue,cog_complete]
 ~cog_update_main_quest_step(^quest_cog_complete);
+~update_questpoints;
 inv_add(inv, coins, 500);
 session_log(^log_adventure, "Quest complete: Clock Tower");
 ~send_quest_complete(questlist:cog, coins_25, 250, ^cog_questpoints, "You have completed the\\nClock Tower Quest!");

@@ -162,6 +162,7 @@ if (p_finduid(uid) = true) {
                 case 51 : queue(ball_quest_complete, 0);
                 case default : mes("Quest not found.");
             }
+            ~update_quests;
         } else if ($choice3 = 1) {
             switch_int ($quest) {
                 case 0 : %blackknight_progress = 0;
@@ -376,7 +377,6 @@ if ($ikov_choice = 0) {
     if (npc_find(0_42_52_34_45, radimus_erkle, 20, 0) = true) {
         @radimus_training;
     }
-
 ~update_quests;
 mes("All quests have been completed.");
 return;

@@ -168,6 +168,7 @@ if_openmain(questscroll);
 
 [queue,hazeelcult_quest_complete]
 %hazeelcult_progress = ^hazeelcult_complete;
+~update_questpoints;
 inv_del(inv, hazeel_scroll, 1);
 stat_advance(thieving, 15000);
 inv_add(inv, coins, 2000);

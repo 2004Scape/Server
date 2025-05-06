@@ -2,6 +2,7 @@
 
 [queue,demon_slayer_complete]
 %demon_progress = ^demon_complete;
+~update_questpoints;
 session_log(^log_adventure, "Quest complete: Demon Slayer");
 ~send_quest_complete(questlist:demon, silverlight, 250, ^demon_questpoints, "You have completed the\\nDemon Slayer Quest!");
 

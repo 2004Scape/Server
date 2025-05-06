@@ -30,6 +30,7 @@ if (inzone(0_44_150_31_28, 0_44_150_47_46, coord) = true) { // only tele if in t
 %dragon_ned_hired = ^false;
 %dragon_planks = 0;
 %dragon_progress = ^dragon_complete;
+~update_questpoints;
 stat_advance(strength, 186500);
 stat_advance(defence, 186500);
 session_log(^log_adventure, "Quest complete: Dragon Slayer");

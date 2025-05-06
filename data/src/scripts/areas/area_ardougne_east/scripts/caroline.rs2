@@ -40,6 +40,7 @@ switch_int(~p_choice2("I suppose so, how do I get there?", 1, "I'm sorry, I'm to
 ~chatnpc("<p,neutral>Here, take these Oyster pearls as a reward.|They're worth quite a bit|and can be used to make lethal crossbow bolts.");
 // QUEST REWARD
 %seaslug_progress = ^seaslug_complete;
+~update_questpoints;
 inv_add(inv, bigoysterpearls, 1);
 stat_advance(fishing, 71750);
 queue(seaslug_quest_complete, 0);

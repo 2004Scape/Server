@@ -198,6 +198,7 @@ mes("A shapeshifter appears, and knocks you back from the ball!");
 [queue,ball_quest_complete]
 // https://web.archive.org/web/20060908030634im_/http://www.runeweb.net/fireball/Witchs%20House%20Images/Witch3.PNG
 %ball_progress = ^ball_complete;
+~update_questpoints;
 inv_del(inv, ball, 1);
 stat_advance(hitpoints, 63250);
 session_log(^log_adventure, "Quest complete: Witches House");

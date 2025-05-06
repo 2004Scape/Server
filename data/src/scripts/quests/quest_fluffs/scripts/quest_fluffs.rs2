@@ -309,6 +309,7 @@ npc_del;
 ~mesbox("The kitten has run off!");
 
 [queue,fluffs_complete] //imgur.com/6ePHvef
+~update_questpoints;
 session_log(^log_adventure, "Quest complete: Gertrude's Cat");
 stat_advance(cooking, 15250);
 ~send_quest_complete(questlist:fluffs, null, 0, ^fluffs_questpoints, null);

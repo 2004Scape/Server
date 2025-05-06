@@ -470,6 +470,7 @@ if(last_useitem = glarials_urn_full_waterfall_quest) {
 
 [queue,waterfall_quest_complete]
 %waterfall_progress = ^waterfall_complete;
+~update_questpoints;
 inv_add(inv, diamond, 2);
 inv_add(inv, gold_bar, 2);
 inv_add(inv, mithril_seed, 40);

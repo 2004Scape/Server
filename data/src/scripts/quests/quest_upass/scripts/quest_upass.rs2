@@ -780,6 +780,7 @@ if_openmain(stone);
 
 [queue,upass_quest_complete]
 %upass_progress = ^upass_complete;
+~update_questpoints;
 stat_advance(agility, 30000);
 stat_advance(attack, 30000);
 session_log(^log_adventure, "Quest complete: Underground Pass");

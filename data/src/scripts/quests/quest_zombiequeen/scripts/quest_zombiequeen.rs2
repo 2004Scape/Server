@@ -1637,6 +1637,7 @@ switch_int(random(4)) {
 
 [queue,zombiequeen_quest_complete]
 %zombiequeen_progress = ^zombiequeen_complete;
+~update_questpoints;
 stat_advance(crafting, 38750);
 session_log(^log_adventure, "Quest complete: Shilo Village");
 // todo: find image for proof on sizing

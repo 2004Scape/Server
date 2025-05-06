@@ -35,6 +35,7 @@ return (testbit(%itexam_bits, $bit));
 
 [queue,itexam_complete]
 ~itexam_set_progress(^itexam_complete);
+~update_questpoints;
 stat_advance(mining, 153000);
 stat_advance(herblore, 20000);
 inv_add(inv, gold_bar, 2);

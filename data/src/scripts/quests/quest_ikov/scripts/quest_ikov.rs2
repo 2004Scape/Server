@@ -59,6 +59,7 @@ while (npc_huntnext = true) {
 
 [queue,ikov_armadyl_quest_complete](npc_uid $npc)
 %ikov_progress = ^ikov_completed_armadyl;
+~update_questpoints;
 stat_advance(ranged, 105000);
 stat_advance(fletching, 80000);
 session_log(^log_adventure, "Quest complete: Temple of Ikov (Armadyl)");
@@ -69,6 +70,7 @@ if (npc_finduid($npc) = true) {
 
 [queue,ikov_lucien_quest_complete]
 %ikov_progress = ^ikov_completed_lucien;
+~update_questpoints;
 inv_del(inv, ikov_staffofarmardyl, 1);
 stat_advance(ranged, 105000);
 stat_advance(fletching, 80000);

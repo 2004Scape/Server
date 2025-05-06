@@ -43,6 +43,7 @@ inv_add(inv, filled_ogre_bellow3, 1);
 // https://x.com/JagexAsh/status/1820722879937343844, 294 is probably cleared entirely after quest
 %chompybird_progress = ^chompybird_complete;
 %chompybird_kills = 0;
+~update_questpoints;
 stat_advance(fletching, 2620);
 stat_advance(cooking, 14700);
 stat_advance(ranged, 7350);

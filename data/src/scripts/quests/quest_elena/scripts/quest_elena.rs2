@@ -11,5 +11,6 @@ inv_del(inv, turnip_book, ^max_32bit_int);
 inv_add(inv, ardougnescroll, 1);
 stat_advance(mining, 24250);
 ~quest_elena_set_progress(^elena_complete);
+~update_questpoints;
 session_log(^log_adventure, "Quest complete: Plague City");
 ~send_quest_complete(questlist:elena, gasmask, 250, ^elena_questpoints, "You have completed the\\nPlague City Quest!");

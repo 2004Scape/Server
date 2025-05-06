@@ -26,6 +26,7 @@ return (false);
 
 [queue,hero_quest_complete]
 %hero_progress = ^hero_complete;
+~update_questpoints;
 stat_advance(attack, 30750);
 stat_advance(defence, 30750);
 stat_advance(strength, 30750);

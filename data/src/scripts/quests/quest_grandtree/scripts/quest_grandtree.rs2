@@ -188,6 +188,7 @@ if($rand < 2) {
 inv_del(inv, grandtree_daconiarock, ^max_32bit_int);
 inv_del(bank, grandtree_daconiarock, ^max_32bit_int);
 %grandtree_progress = ^grandtree_complete;
+~update_questpoints;
 stat_advance(agility, 79000);
 stat_advance(attack, 184000);
 stat_advance(magic, 21500);

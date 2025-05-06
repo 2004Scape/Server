@@ -2063,6 +2063,7 @@ if(%legends_progress < ^legends_replaced_totem) {
 [queue,legends_quest_complete]
 session_log(^log_adventure, "Quest complete: Legends Quest");
 %legends_progress = ^legends_complete;
+~update_questpoints;
 // todo: older ref image?
 // https://storage.googleapis.com/tannerdino/images/legendscomplt.png
 ~send_quest_complete(questlist:legends, thtotempolegift, 250, ^legends_questpoints, "You have completed the\\nLegends Guild Quest!");

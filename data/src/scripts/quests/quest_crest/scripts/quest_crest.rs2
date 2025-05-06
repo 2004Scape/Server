@@ -6,6 +6,7 @@
 %crest_progress = ^crest_complete;
 // resets this var after completion (choronozon needs to be hit with all 4 blasts to kill again, gold door is always unlocked but lever puzzle resets)
 %crest_spells_levers_gauntlets = 0;
+~update_questpoints;
 inv_add(inv, steel_gauntlets, 1);
 session_log(^log_adventure, "Quest complete: Family Crest");
 ~send_quest_complete(questlist:crest, steel_gauntlets, 250, ^squire_questpoints, "You have completed the\\nFamily Crest Quest!");

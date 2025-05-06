@@ -157,8 +157,9 @@ if(%totem_progress >= ^totem_crate_marked) {
 ~mesbox("Senior Patents Clerk, Chamber of Invention, The Wizards' Tower, Misthalin. The crate is securely fastened shut and ready for delivery.");
 
 [queue,totem_quest_complete]
-%totem_progress = ^totem_complete;
 session_log(^log_adventure, "Quest complete: Tribal Totem");
+%totem_progress = ^totem_complete;
+~update_questpoints;
 ~send_quest_complete(questlist:totem, tribal_totem, 250, ^totem_questpoints, "You have completed the\\nTribal Totem Quest!");
 stat_advance(thieving, 17750);
 inv_add(inv, swordfish, 5);

@@ -1,5 +1,6 @@
 [queue,sheep_complete]
 %sheep_progress = ^sheep_complete;
+~update_questpoints;
 inv_del(inv, ball_of_wool, 1);
 inv_add(inv, coins, 60);
 stat_advance(crafting, 1500);

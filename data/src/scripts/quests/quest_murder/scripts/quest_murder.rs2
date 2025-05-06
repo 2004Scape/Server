@@ -532,6 +532,7 @@ if(inv_total(bank, murderfingerprint1) > 0) {
 %murder_poisonproof_progress = 0;
 %murder_evidence = 0;
 %murder_murderer_id = 0;
+~update_questpoints;
 stat_advance(crafting, 14060);
 inv_add(inv, coins, 2000);
 session_log(^log_adventure, "Quest complete: Murder Mystery");

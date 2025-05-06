@@ -86,6 +86,7 @@ queue(cooks_quest_complete, 0);
 
 [queue,cooks_quest_complete]
 %cook_progress = ^cook_complete;
+~update_questpoints;
 stat_advance(cooking, 3000);
 session_log(^log_adventure, "Quest complete: Cook's Assistant");
 ~send_quest_complete(questlist:cook, cake, 250, ^cook_questpoints, "You have completed the Cooks' Quest!");

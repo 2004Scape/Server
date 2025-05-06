@@ -119,5 +119,6 @@ if (npc_find(movecoord(coord, 0, 0, 2), kennith, 5, 0) = true) {
 }
 
 [queue,seaslug_quest_complete]
+//Quest point update happens immediately after speaking to Caroline, not queued
 session_log(^log_adventure, "Quest complete: Sea Slug");
 ~send_quest_complete(questlist:seaslug, seasluginv, 250, ^seaslug_questpoints, "You have completed the\\nSea Slug Quest!");

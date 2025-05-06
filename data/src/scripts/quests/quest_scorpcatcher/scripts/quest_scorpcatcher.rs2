@@ -55,6 +55,7 @@ mes("You've found a secret door");
 [queue,scorpcatcher_quest_complete]
 inv_del(inv, scorpioncagefull, 1);
 %scorpcatcher_progress = ^scorpcatcher_complete;
+~update_questpoints;
 session_log(^log_adventure, "Quest complete: Scorpion Catcher");
 ~send_quest_complete(questlist:scorpcatcher, scorpioncagefull, 250, ^scorpcatcher_questpoints, "You have completed the\\nScorpion Catcher Quest!");
 stat_advance(strength, 66250);

@@ -107,6 +107,7 @@ if(npc_find(coord, sinister_stranger, 8, 0) = true) {
 
 [queue,fishingcompo_quest_complete]
 %fishingcompo_progress = ^fishingcompo_complete;
+~update_questpoints;
 session_log(^log_adventure, "Quest complete: Fishing Contest");
 ~send_quest_complete(questlist:fishingcompo, hemenster_fishing_trophy, 180, ^fishingcompo_questpoints, "You have completed the\\nFishing Competition Quest!");
 stat_advance(fishing, 24370);

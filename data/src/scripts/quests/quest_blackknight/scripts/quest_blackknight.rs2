@@ -151,6 +151,7 @@ if (%blackknight_progress = 1) {
 
 [queue,black_knights_fortress_quest_complete]
 %blackknight_progress = ^blackknight_complete;
+~update_questpoints;
 inv_add(inv, coins, 2500);
 mes("Sir Amik hands you 2500 coins.");
 session_log(^log_adventure, "Quest complete: Black Knight's Fortress");

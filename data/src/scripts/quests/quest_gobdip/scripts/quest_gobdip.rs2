@@ -59,6 +59,7 @@ queue(goblin_diplomacy_complete_quest, 0);
 
 [queue,goblin_diplomacy_complete_quest]
 %gobdip_progress = ^gobdip_complete;
+~update_questpoints;
 stat_advance(crafting, 2000);
 inv_add(inv, gold_bar, 1);
 session_log(^log_adventure, "Quest complete: Goblin Diplomacy");
