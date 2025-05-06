@@ -27,16 +27,13 @@ if ($component = questlist:fluffs) {
 } else if ($component = questlist:itgronigen) {
     if_openmain(questscroll_itgronigen);
 } else {
-    ~quest_complete_interface($component, $obj, $objscale, $questpoints, $questmessage);
+    if_settext(questscroll:com_3, $questmessage);
+    if_settext(questscroll:com_9, tostring($questpoints));
+    if_settext(questscroll:com_10, "Quest points.");
+    if_setobject(questscroll:com_4, $obj, $objscale);
+    if_openmain(questscroll);
 }
 mes("Congratulations! Quest complete!");
-
-[proc,quest_complete_interface](component $component, namedobj $obj, int $objscale, int $questpoints, string $questmessage)
-if_settext(questscroll:com_3, $questmessage);
-if_settext(questscroll:com_9, tostring($questpoints));
-if_settext(questscroll:com_10, "Quest points.");
-if_setobject(questscroll:com_4, $obj, $objscale);
-if_openmain(questscroll);
 
 [proc,update_questpoints]
 def_int $questpoints = 0;
@@ -144,7 +141,7 @@ if (%itwatchtower_progress >= ^itwatchtower_complete) {
     $questpoints = add($questpoints, ^itwatchtower_questpoints); }
 if (%legends_progress = ^legends_complete) {
     $questpoints = add($questpoints, ^legends_questpoints); }
-%questpoints = $questpoints;
+if (%questpoints ! $questpoints) { %questpoints = $questpoints; }//only update varp if changed
 
 [proc,update_quests]
 ~update_questpoints;
