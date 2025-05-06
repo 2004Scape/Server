@@ -125,6 +125,6 @@ if (~in_duel_arena(coord) = false) {
 }
 %duelstatus = ^duelstatus_reset;
 %duelpartner = null;
-~duel_give_stake_back;
+~moveallinv(dueloffer, inv);
 ~duel_reset_all;
 ~mesbox("Your duel ended in an honourable draw."); // RS3 message: https://archive.org/details/runelibris

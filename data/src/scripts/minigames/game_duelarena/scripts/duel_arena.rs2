@@ -424,9 +424,9 @@ if (.finduid(%duelpartner) = true) {
 }
 %duelstatus = ^duelstatus_reset;
 %duelpartner = null;
-~duel_give_stake_back;
+~moveallinv(dueloffer, inv);
 
 [queue,duel_arena_disconnect]
-~duel_give_stake_back;
+~moveallinv(dueloffer, inv);
 ~duel_reset_all;
 mes("Your opponent timed out, there was no winner!"); // https://storage.googleapis.com/tannerdino/images/00timeout.jpg

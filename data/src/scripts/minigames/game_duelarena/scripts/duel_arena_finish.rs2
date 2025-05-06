@@ -51,7 +51,7 @@ if (%duelstatus = ^duelstatus_lost) {
 if_settext(duel_win:displayname, .displayname);
 if_settext(duel_win:combat_level, tostring(~.player_combat_level));
 
-~duel_give_stake_back;
+~moveallinv(dueloffer, inv);
 inv_transmit(duelwinnings, duel_win:spoils);
 
 if_openmain(duel_win);
@@ -84,21 +84,10 @@ hint_stop;
 %duelstatus = ^duelstatus_reset;
 %duelpartner = null;
 
-[proc,duel_give_stake_back]
-def_int $i = 0;
-while ($i < inv_size(dueloffer)) {
-    if (inv_getobj(dueloffer, $i) ! null) {
-        inv_movefromslot(dueloffer, inv, $i);
-    }
-    $i = calc($i + 1);
-}
-
 [if_close,duel_win]
-def_int $i = 0;
-while ($i < inv_size(duelwinnings)) {
-    if (inv_getobj(duelwinnings, $i) ! null) {
-        inv_movefromslot(duelwinnings, inv, $i);
-    }
-    $i = calc($i + 1);
+if (~moveallinv_itemspace(duelwinnings, inv) = false) {
+    inv_dropall(duelwinnings, coord, ^lootdrop_duration);
+    return;
 }
+~moveallinv(duelwinnings, inv);
 inv_stoptransmit(duel_win:spoils);

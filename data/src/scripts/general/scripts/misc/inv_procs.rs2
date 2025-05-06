@@ -26,3 +26,29 @@ while ($i < inv_size($inv)) {
 $str = ~string_removeright($str, 2);
 
 return($str);
+
+[proc,moveallinv_itemspace](inv $from_inv, inv $to_inv)(boolean)
+def_int $space_needed = 0;
+def_int $i = 0;
+def_int $size = inv_size($from_inv);
+while ($i < $size) {
+    def_obj $obj = inv_getobj($from_inv, $i);
+    def_int $obj_num = inv_getnum($from_inv, $i);
+    if ($obj ! null) {
+        if (oc_stackable($obj) = true) {
+            if (inv_itemspace($to_inv, $obj, $obj_num, $size) = false) {
+                return(false);
+            }
+            if (inv_total($to_inv, $obj) < 0) {
+                $space_needed = add($space_needed, 1);
+            }
+        } else {
+            $space_needed = add($space_needed, 1);
+        }
+    }
+    $i = add($i, 1);
+}
+if ($space_needed > inv_freespace($to_inv)) {
+    return(false);
+}
+return(true);
