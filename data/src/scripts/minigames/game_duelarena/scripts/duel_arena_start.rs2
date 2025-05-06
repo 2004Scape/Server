@@ -24,8 +24,6 @@ if (.finduid(%duelpartner) = true) {
         .p_telejump($random_coord2);
     }
 
-    // move tempinv to stakeinv
-    ~moveallinv(tradeoffer, duelarrows);
     p_stopaction;
     // only deactive prayers if no prayers is selected. based off: https://imgur.com/ETH1z4L
     if (testbit(%duel_settings, ^no_prayer) = true) {
@@ -94,54 +92,25 @@ say("FIGHT!");
 %duelstatus = ^duelstatus_start;
 
 [proc,duel_arena_coord]()(coord)
-// random coord between 2 coords, checks if map blocked and not inside dueler
-def_coord $coord1;
-def_coord $coord2;
-def_int $i = 0;
-def_int $random_arena;
 // if all arenas are full, return null
 if (~duel_arena_obstacles_check = true) {
-    def_int $obstacle_arenas = db_getfieldcount(duel_arena_obstacle_fight_zones, coord_pair_table:coord_pair);
-    while ($i < $obstacle_arenas) {
-        if (map_playercount(db_getfield(duel_arena_obstacle_fight_zones, coord_pair_table:coord_pair, $i)) >= 24) {
-            $random_arena = ~random_range($i, $obstacle_arenas);
-            if ($i = calc($obstacle_arenas - 1)) {
-                return(null); // if its the last one and it fails, return null
-            }
+    def_int $i = 0;
+    while ($i < db_getfieldcount(duel_arena_obstacle_fight_zones, coord_pair_table:coord_pair)) {
+        if (map_playercount(db_getfield(duel_arena_obstacle_fight_zones, coord_pair_table:coord_pair, $i)) < 24) {
+            return(~map_findsquare_inzone(db_getfield(duel_arena_obstacle_fight_zones, coord_pair_table:coord_pair, $i)));
         }
         $i = calc($i + 1);
     }
-    $coord1, $coord2 = db_getfield(duel_arena_obstacle_fight_zones, coord_pair_table:coord_pair, $random_arena);
 } else {
-    def_int $normal_arenas = db_getfieldcount(duel_arena_fight_zones, coord_pair_table:coord_pair);
-    $i = 0;
-    while ($i < $normal_arenas) {
-        if (map_playercount(db_getfield(duel_arena_fight_zones, coord_pair_table:coord_pair, $i)) >= 24) {
-            $random_arena = ~random_range($i, $normal_arenas);
-            if ($i = calc($normal_arenas - 1)) {
-                return(null);
-            }
+    def_int $i = 0;
+    while ($i < db_getfieldcount(duel_arena_fight_zones, coord_pair_table:coord_pair)) {
+        if (map_playercount(db_getfield(duel_arena_fight_zones, coord_pair_table:coord_pair, $i)) < 24) {
+            return(~map_findsquare_inzone(db_getfield(duel_arena_fight_zones, coord_pair_table:coord_pair, $i)));
         }
         $i = calc($i + 1);
     }
-    $coord1, $coord2 = db_getfield(duel_arena_fight_zones, coord_pair_table:coord_pair, $random_arena);
 }
-
-def_int $x1 = coordx($coord1);
-def_int $x2 = coordx($coord2);
-def_int $z1 = coordz($coord1);
-def_int $z2 = coordz($coord2);
-def_coord $random_coord = movecoord($coord1, random(sub($x2, $x1)), 0, random(sub($z2, $z1)));
-
-$i = 0;
-while (map_blocked($random_coord) = true) {
-    $random_coord = movecoord($coord1, random(sub($x2, $x1)), 0, random(sub($z2, $z1)));
-    $i = calc($i + 1);
-    if ($i = 50) {
-        return(null); // no way this is reached
-    }
-}
-return($random_coord);
+return(null);
 
 [walktrigger,duel_arena_no_move]
 if (~duel_arena_movement_check = true & ~in_duel_arena(coord) = true) {

@@ -18,12 +18,6 @@ size=1
 [furstall]
 size=1
 
-[dueloffer]
-size=9
-
-[duelwinnings]
-size=9
-
 [trail_puzzleinv]
 scope=temp
 size=25
