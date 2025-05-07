@@ -6,14 +6,14 @@ if_settab(questlist, ^tab_quest_journal);
 // if_setcolor uses 5 bits per color
 if ($progress = 0) {
     if_setcolour($component, ^red_rgb);
-} else if($progress >= $complete_progress) {
+} else if ($progress >= $complete_progress) {
     if_setcolour($component, ^green_rgb);
 } else {
     if_setcolour($component, ^yellow_rgb);
 }
 
 [proc,send_quest_complete](component $component, namedobj $obj, int $objscale, int $questpoints, string $questmessage, boolean $update_questpoints)
-if ($update_questpoints = true) { ~update_questpoints;}
+if ($update_questpoints = true) { ~update_questpoints; }
 // Random quest complete jingle.
 def_int $random = random(128);
 if ($random < 32) {
@@ -185,7 +185,7 @@ return ($questpoints);
 ~send_quest_progress_colour(questlist:scorpcatcher, %scorpcatcher_progress, ^scorpcatcher_complete);
 ~send_quest_progress_colour(questlist:zanaris, %zanaris_progress, ^zanaris_complete);
 ~send_quest_progress_colour(questlist:dragon, %dragon_progress, ^dragon_complete);
-if(%phoenixgang_progress > 0 & %blackarmgang_progress ! ^blackarmgang_complete) { // shield of arrav
+if (%phoenixgang_progress > 0 & %blackarmgang_progress ! ^blackarmgang_complete) { // shield of arrav
     ~send_quest_progress_colour(questlist:blackarmgang, %phoenixgang_progress, ^phoenixgang_complete);
 } else {
     ~send_quest_progress_colour(questlist:blackarmgang, %blackarmgang_progress, ^blackarmgang_complete);
