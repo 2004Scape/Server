@@ -10,7 +10,7 @@ return(true);
 
 [proc,set_pk_vars]
 if (~deserves_pk_skull = true) {
-    ~pk_skull(3000); // 3000 ticks, or 30 minutes
+    ~pk_skull(^pk_skull_duration);
 }
 // for preys
 %pk_prey2 = %pk_prey1;
@@ -50,7 +50,7 @@ if (%pk_skull < 1) {
 if (%pk_skull < 1) {
     return;
 }
-if (%pk_skull > 3000) {
-    %pk_skull = 3000;
+if (%pk_skull > ^pk_skull_duration) {
+    %pk_skull = ^pk_skull_duration;
 }
 ~pk_skull(%pk_skull);
