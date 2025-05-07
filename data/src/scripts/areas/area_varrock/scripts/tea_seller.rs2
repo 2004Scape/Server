@@ -1,5 +1,5 @@
 [opnpc1,tea_seller]
-if (map_members = false) {
+if (map_members = ^false) {
     mes(^mes_members_store_owner);
     return;
 }
@@ -24,7 +24,7 @@ if ($choice = 2) {
 ~openshop_activenpc;
 
 [opnpc3,tea_seller]
-if (map_members = false) {
+if (map_members = ^false) {
     mes(^mes_members_store_owner);
     return;
 }

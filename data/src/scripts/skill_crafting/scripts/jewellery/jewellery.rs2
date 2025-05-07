@@ -182,7 +182,7 @@ if_openmain(crafting_jewelry);
 def_obj $jewelry_obj = inv_getobj($crafting_inv, $last);
 // check if mems objs are selected
 if ($jewelry_obj = invis_amulet5 | $jewelry_obj = invis_necklace5 | $jewelry_obj = invis_ring5) {
-    if (map_members = false) {
+    if (map_members = ^false) {
         mes(^mes_members_feature);
         return;
     }
@@ -276,11 +276,11 @@ p_delay(2);
 // if both moulds are present, prompt user with dialogue
 def_namedobj $product = null;
 def_int $choice;
-if (inv_total(inv, unholy_symbol_mould) > 0 & inv_total(inv, holy_symbol_mould) > 0 & map_members = true) {
+if (inv_total(inv, unholy_symbol_mould) > 0 & inv_total(inv, holy_symbol_mould) > 0 & map_members = ^true) {
    $choice = ~p_choice2_header("Holy Symbol of Saradomin", 1, "Unholy Symbol of Zamorak", 2, "What would you like to make?");
 } else if (inv_total(inv, holy_symbol_mould) > 0) {
     $choice = 1;
-} else if (inv_total(inv, unholy_symbol_mould) > 0 & map_members = true) {
+} else if (inv_total(inv, unholy_symbol_mould) > 0 & map_members = ^true) {
     $choice = 2;
 } else {
     ~mesbox("You require a mould to make that.");

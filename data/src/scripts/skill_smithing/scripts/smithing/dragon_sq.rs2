@@ -13,7 +13,7 @@ if (last_useitem = dragonshield_a) {
 
 
 [label,make_dragon_sq]
-if (map_members = false) {
+if (map_members = ^false) {
     mes("You can only make that on a members' server.");
     return;
 }

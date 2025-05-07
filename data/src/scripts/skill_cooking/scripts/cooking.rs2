@@ -30,7 +30,7 @@ if (string_length(db_getfield($data, cooking_generic:cantcookmessage_fire, 0)) >
 def_namedobj $cooked_item = db_getfield($data,cooking_generic:cooked,0);
 if (oc_members($cooked_item) = true | oc_members($uncooked_item) = true) {
     // complete guess btw, i have no idea what sorta message they'd use here. Perhaps theres early osrs footage of this but ive not found any.
-    if (map_members = false) {
+    if (map_members = ^false) {
         mes("You can only make that on a members' server.");
         return;
     }

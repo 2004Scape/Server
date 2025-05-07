@@ -12,7 +12,7 @@ if($option = 1) {
 ~openshop_zaff;
 
 [proc,openshop_zaff]
-if(map_members = true) {
+if(map_members = ^true) {
     ~openshop(memberstaffshop, 550, 1000, 20, "Zaff's Superior Staffs!");
 } else {
     ~openshop(staffshop, 550, 1000, 20, "Zaff's Superior Staffs!");

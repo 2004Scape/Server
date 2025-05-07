@@ -222,7 +222,7 @@ if (.npc_find(coord, rat, 10, 1) = true) {
 }
 
 [proc,cat_drop]
-if (map_members = false) {
+if (map_members = ^false) {
     mes(^mes_members_do_that); //todo: verify if there is a specific message for trying to drop in f2p
     return;
 }

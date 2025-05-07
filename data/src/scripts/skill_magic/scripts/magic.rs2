@@ -11,7 +11,7 @@ return ($spell_data);
 // accounts for staff and returns runes and their adjusted counts.
 [proc,check_spell_requirements](dbrow $spell_data)(boolean)
 // check if members
-if (db_getfield($spell_data, magic_spell_table:members, 0) = true & map_members = false) {
+if (db_getfield($spell_data, magic_spell_table:members, 0) = true & map_members = ^false) {
     // Camelot teleport: https://youtu.be/18eDNqcur2I
     // Current osrs combat spells have "You need to be on a members' world to cast that spell."
     // But i think this is after mems messages rework
@@ -61,7 +61,7 @@ def_int $rune_count3;
 $rune1, $rune_count1, $rune2, $rune_count2, $rune3, $rune_count3 = db_getfield($spell_data, magic_spell_table:runesrequired, 0);
 // check if wielding staff and look for staff in db
 def_obj $staff = inv_getobj(worn, ^wearpos_rhand);
-if (map_members = false & $staff ! null & oc_members($staff) = true) {
+if (map_members = ^false & $staff ! null & oc_members($staff) = true) {
     return($rune1, $rune_count1, $rune2, $rune_count2, $rune3, $rune_count3);
 }
 db_find(magic_staff_table:staff, $staff);

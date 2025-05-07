@@ -342,7 +342,7 @@ if (oc_tradeable($obj) = false) {
     return;
 }
 
-if (oc_members($obj) = true & map_members = false) {
+if (oc_members($obj) = true & map_members = ^false) {
     mes("You can't trade this item.");
     return;
 }

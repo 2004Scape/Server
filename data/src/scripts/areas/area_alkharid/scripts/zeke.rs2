@@ -1,6 +1,6 @@
 [opnpc1,zeke]
 //Treasure Trail
-if(map_members = true & inv_total(inv, trail_clue_easy_simple007) = 1) {
+if(map_members = ^true & inv_total(inv, trail_clue_easy_simple007) = 1) {
     @trail_zeke;
 }
 ~chatnpc("<p,happy>A thousand greetings, sir.");

@@ -5,7 +5,7 @@ if (finduid(%npc_aggressive_player) = true) {
             obj_add(npc_coord, johnathon_crest, 1, ^lootdrop_duration);
         }
         gosub(npc_death);
-        if (npc_findhero = true){
+        if (npc_findhero = ^true){
             obj_add(npc_coord, npc_param(death_drop), 1, ^lootdrop_duration);
         }
     }

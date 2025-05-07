@@ -46,7 +46,7 @@ if ($data = null) {
 // check if f2p. Not sure if this is a thing. just to be safe i guess
 def_namedobj $product = db_getfield($data, woodcutting_trees:product, 0);
 if (oc_members($product) = true) {
-    if (map_members = false) {
+    if (map_members = ^false) {
         mes(^mes_members_do_that);
         return;
     }

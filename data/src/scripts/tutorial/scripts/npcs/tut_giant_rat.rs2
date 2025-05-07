@@ -3,7 +3,7 @@
 // death
 [ai_queue3,tut_giant_rat]
 gosub(npc_death);
-if (npc_findhero = true) {
+if (npc_findhero = ^true) {
     obj_add(npc_coord, npc_param(death_drop), 1, ^lootdrop_duration);
     obj_add(npc_coord, raw_rat_meat, 1, ^lootdrop_duration);
     if (%tutorial_progress =  ^combat_instructor_during_attacking_melee

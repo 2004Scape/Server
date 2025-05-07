@@ -21,7 +21,7 @@ switch_int (~p_choice2("A mighty hero!", 1, "A humble pilgrim.", 2)) {
 
 [ai_queue3,fire_warrior_of_lesarkus]
 gosub(npc_death);
-if(npc_findhero = true) {
+if(npc_findhero = ^true) {
     if_close;
     queue(queue_defeat_fire_warrior, 0);
 }

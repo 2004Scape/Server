@@ -1,6 +1,6 @@
 [ai_queue3,sir_harry]
 gosub(npc_death);
-if (npc_findhero = false) {
+if (npc_findhero = ^false) {
     return;
 }
 // no quest stage check, no bank check (RS3)

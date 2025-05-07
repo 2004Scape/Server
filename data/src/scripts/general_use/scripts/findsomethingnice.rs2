@@ -3,7 +3,7 @@
 [proc,findsomethingnice] // mod lenny says this was the subroutine name
 // rates are completely guessed
 def_int $random = random(4);
-if (map_members = true) {
+if (map_members = ^true) {
     $random = random(11);
 }
 switch_int ($random) {

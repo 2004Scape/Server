@@ -7,7 +7,7 @@ if (stat(prayer) < 1) {
     sound_synth(prayer_off, 0, 0);
     return(false);
 }
-if (db_getfield($data, prayers:members, 0) = ^true & map_members = false) {
+if (db_getfield($data, prayers:members, 0) = ^true & map_members = ^false) {
     // in osrs it includes the prayer name in the message
     mes(^mes_members_prayer);
     return(false);

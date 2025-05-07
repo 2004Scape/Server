@@ -18,7 +18,7 @@ switch_obj(last_useitem) {
 }
 
 [label,make_darts](obj $dart_tips)
-if (map_members = false) {
+if (map_members = ^false) {
     mes(^mes_members_fletching); // guess
     return;
 }

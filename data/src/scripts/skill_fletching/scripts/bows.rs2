@@ -16,7 +16,7 @@ switch_obj(last_useitem) {
 }
 
 [label,string_bow](obj $unstrung_bow)
-if (map_members = false) {
+if (map_members = ^false) {
     mes(^mes_members_fletching); // guess
     return;
 }

@@ -17,7 +17,7 @@ inv_add(inv, soulrune, 1000);
 [debugproc,magicbank]
 if_close;
 if (p_finduid(uid) = true) {
-    if (map_members = false) {
+    if (map_members = ^false) {
         mes(^mes_members_feature);
         return;
     }

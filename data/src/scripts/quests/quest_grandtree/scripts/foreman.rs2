@@ -118,7 +118,7 @@ npc_setmode(opplayer2);
 
 [ai_queue3,foreman]
 gosub(npc_death);
-if(npc_findhero = true) {
+if(npc_findhero = ^true) {
     // queued, no if_close
     if((%grandtree_progress = ^grandtree_released_prison | %grandtree_progress = ^grandtree_obtained_lumber_order) & ~obj_gettotal(grandtree_order) = 0) {
         queue(queue_defeat_foreman, 0, npc_uid);

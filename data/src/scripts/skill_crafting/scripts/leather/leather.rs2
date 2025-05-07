@@ -61,7 +61,7 @@ if ($product_data = null) {
     return;
 }
 if (db_getfield($product_data, craft_leather_table:members, 0) = true) {
-    if (map_members = false) {
+    if (map_members = ^false) {
         mes(^mes_members_feature);
         return;
     }
@@ -107,7 +107,7 @@ if_openmain(leather_crafting);
 
 //--- dragonhide interface
 [label,craft_dhide_interface](int $last)
-if (map_members = false) {
+if (map_members = ^false) {
     mes(^mes_members_feature);
     return;
 }

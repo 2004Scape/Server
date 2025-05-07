@@ -38,7 +38,7 @@ if (afk_event = ^true) {
     @macro_randomthieving;
 }
 
-if (map_members = false) {
+if (map_members = ^false) {
     mes(^mes_members_thieving);
     return;
 }

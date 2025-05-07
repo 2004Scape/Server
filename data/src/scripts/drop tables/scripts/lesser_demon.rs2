@@ -2,7 +2,7 @@
 
 [label,ai_queue3_lesser_demon]
 gosub(npc_death);
-if (npc_findhero = false) {
+if (npc_findhero = ^false) {
     return;
 }
 

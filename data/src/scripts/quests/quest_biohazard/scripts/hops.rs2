@@ -1,5 +1,5 @@
 [opnpc1,hops1]
-if(map_members = false) { // rs3, osrs wiki quotes this dialogue specifically as well (probably changed with sote)
+if(map_members = ^false) { // rs3, osrs wiki quotes this dialogue specifically as well (probably changed with sote)
     ~chatnpc("<p,drunk>Hops don't wanna talk now.|Try different world, HIC!");
     return;
 }
@@ -53,7 +53,7 @@ mes("You give him the vial of sulphuric broline.");
 ~chatnpc("<p,happy>Sure, I'm a regular at the Dancing Donkey Inn as it happens.");
 
 [opnpc1,hops2]
-if(map_members = false) {
+if(map_members = ^false) {
     ~chatnpc("<p,drunk>Hops don't wanna talk now.|Try different world, HIC!");
     return;
 }

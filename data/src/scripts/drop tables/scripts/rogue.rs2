@@ -3,7 +3,7 @@
 
 [ai_queue3,rogue]
 gosub(npc_death);
-if (npc_findhero = false) {
+if (npc_findhero = ^false) {
     return;
 }
 

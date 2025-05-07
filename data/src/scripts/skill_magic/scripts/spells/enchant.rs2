@@ -31,7 +31,7 @@ if ($final_obj = null) {
 // --
 // i know this isnt how jagex does it, since ring of forging is f2p in osrs but unenchantable in f2p.
 // They likely have another label for enchanting rings
-if (oc_members($final_obj) = true & map_members = false) {
+if (oc_members($final_obj) = true & map_members = ^false) {
     // not sure what the members message is
     mes("You can only make that on a members' server.");
     return;

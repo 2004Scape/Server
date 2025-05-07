@@ -1,5 +1,5 @@
 [opnpc1,fancy_dress_shop_owner]
-if(map_members = false) {
+if(map_members = ^false) {
     ~chatnpc("<p,sad>Sorry, we're closed at the moment.");
     return;
 }
@@ -16,7 +16,7 @@ if($option = 1) {
 }
 
 [opnpc3,fancy_dress_shop_owner]
-if(map_members = false) {
+if(map_members = ^false) {
     ~chatnpc("<p,sad>Sorry, we're closed at the moment.");
     return;
 }

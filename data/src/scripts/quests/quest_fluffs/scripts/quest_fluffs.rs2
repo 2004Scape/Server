@@ -114,7 +114,7 @@ switch_int ($option) {
 }
 
 [oploc1,loc_2618]
-if(coordz(coord) < coordz(loc_coord) & map_members = false) {
+if(coordz(coord) < coordz(loc_coord) & map_members = ^false) {
     mes(^mes_members_do_that); // guess
     return; 
 }

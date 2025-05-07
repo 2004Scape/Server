@@ -1,5 +1,5 @@
 [queue,poison_player](int $severity)
-if (map_members = false) {
+if (map_members = ^false) {
     // nothing poisons in f2p
     return;
 }

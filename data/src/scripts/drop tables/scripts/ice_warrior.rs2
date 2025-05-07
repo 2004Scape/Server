@@ -1,6 +1,6 @@
 [ai_queue3,_ice_warrior]
 gosub(npc_death);
-if (npc_findhero = false) {
+if (npc_findhero = ^false) {
     return;
 }
 // Default drop from config.
@@ -26,13 +26,13 @@ if ($random < 3) {
 } else if ($random < 39) {
     obj_add(npc_coord, mithril_arrow, 3, ^lootdrop_duration);
 } else if ($random < 41) {
-    if (map_members = true) {
+    if (map_members = ^true) {
         obj_add(npc_coord, adamant_arrow, 2, ^lootdrop_duration);
     }
 } else if ($random < 44) {
     obj_add(npc_coord, deathrune, 2, ^lootdrop_duration);
 } else if ($random < 45) {
-    if (map_members = true) {
+    if (map_members = ^true) {
         obj_add(npc_coord, bloodrune, 2, ^lootdrop_duration);
     }
 } else if ($random < 55) {

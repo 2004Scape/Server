@@ -1,7 +1,7 @@
 // i used some transcribed dialogue from this. https://web.archive.org/web/20051104084237/http://www.nomadgaming.com/index.php?page=rs2_dragonslayer
 
 [opnpc1,oziach]
-if(map_members = true & inv_total(inv, trail_clue_hard_riddle014) > 0) {
+if(map_members = ^true & inv_total(inv, trail_clue_hard_riddle014) > 0) {
     @trail_oziach;
 }
 

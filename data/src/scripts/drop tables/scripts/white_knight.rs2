@@ -1,6 +1,6 @@
 [ai_queue3,white_knight]
 gosub(npc_death);
-if (npc_findhero = false) {
+if (npc_findhero = ^false) {
     return;
 }
 
@@ -30,7 +30,7 @@ if ($random < 2) { // 2
 } else if ($random < 31) { // 1
     obj_add(npc_coord, adamant_arrow, 2, ^lootdrop_duration);
 } else if ($random < 32) { // 1
-    if (map_members = true) {
+    if (map_members = ^true) {
         obj_add(npc_coord, bloodrune, 2, ^lootdrop_duration);
     }
 } else if ($random < 33) { // 1

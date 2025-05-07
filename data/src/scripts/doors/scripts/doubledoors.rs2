@@ -12,14 +12,14 @@
 
 // for members
 [oploc1,loc_1596]
-if (map_members = false) {
+if (map_members = ^false) {
     mes(^mes_members_gate);
     return;
 }
 ~open_double_doors_left(500, door_right_closed, loc_param(open_sound));
 
 [oploc1,loc_1597]
-if (map_members = false) {
+if (map_members = ^false) {
     mes(^mes_members_gate);
     return;
 }

@@ -21,7 +21,7 @@
 // Older vids use npc_del and npc_add the whole way?: https://youtu.be/mQmeH32PdNk?list=PLn23LiLYLb1Y4vxMPWXM-CVEvOUfuAP_o
 
 [ai_queue3,kolodion_human_form]
-if (npc_findhero = false) {
+if (npc_findhero = ^false) {
     // in osrs, if you dont have kill credit the npc dies and you dont advance
     // with the exception of the last stage, demon
     gosub(npc_death);
@@ -46,7 +46,7 @@ npc_say("This is only the beginning; you can't beat me!");
 
 
 [ai_queue3,kolodion_ogre_form]
-if (npc_findhero = false) {
+if (npc_findhero = ^false) {
     gosub(npc_death);
     return;
 }
@@ -69,7 +69,7 @@ npc_say("Foolish mortal; I am unstoppable.");
 
 
 [ai_queue3,kolodion_arachnid_form]
-if (npc_findhero = false) {
+if (npc_findhero = ^false) {
     gosub(npc_death);
     return;
 }
@@ -92,7 +92,7 @@ npc_say("Now you feel it... The dark energy.");
 
 
 [ai_queue3,kolodion_ethereal_form]
-if (npc_findhero = false) {
+if (npc_findhero = ^false) {
     gosub(npc_death);
     return;
 }
@@ -115,7 +115,7 @@ npc_say("Aaaaaaaarrgghhhh! The power!");
 
 
 [ai_queue3,kolodion_demon_form]
-if (npc_findhero = false) {
+if (npc_findhero = ^false) {
     // no death anim
     return;
 }

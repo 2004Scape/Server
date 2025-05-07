@@ -236,7 +236,7 @@ p_arrivedelay;
 anim(human_reachforladder, 0);
 p_delay(0);
 p_telejump(movecoord(loc_coord, 0, 1, 1));
-if(testbit(%excalibur_components_progress, ^excalibur_rewarded) = false & testbit(%excalibur_components_progress, ^excalibur_started) = true & map_members = true) {
+if(testbit(%excalibur_components_progress, ^excalibur_rewarded) = false & testbit(%excalibur_components_progress, ^excalibur_started) = true & map_members = ^true) {
     if(npc_find(coord, lady_of_the_lake, 4, 0) = false) {
         npc_add(movecoord(coord, -1, 0, 3), lady_of_the_lake, 100);
     }

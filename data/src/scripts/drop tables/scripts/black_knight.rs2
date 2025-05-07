@@ -4,7 +4,7 @@
 
 [label,black_knight_drops]
 gosub(npc_death);
-if (npc_findhero = false) {
+if (npc_findhero = ^false) {
     return;
 }
 

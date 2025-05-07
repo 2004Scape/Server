@@ -86,7 +86,7 @@
 @attempt_pick_pocket(npc_type);
 
 [label,attempt_pick_pocket](npc $npc)
-if (map_members = false) {
+if (map_members = ^false) {
     mes(^mes_members_thieving);
     return;
 }

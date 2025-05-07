@@ -1,6 +1,6 @@
 [opnpc1,hans]
 // Treasure Trail
-if(map_members = true) {
+if(map_members = ^true) {
     if(inv_total(inv, trail_clue_hard_riddle012) > 0) {
         // https://www.youtube.com/watch?v=F5i3JqU6dkY
         ~chatnpc("<p,happy>Well done, here you go.");

@@ -1,5 +1,5 @@
 [opnpc1,guidor]
-if(map_members = false) {
+if(map_members = ^false) {
     ~chatnpc("<p,sad>I don't really want any visitors just now."); // rs3 and osrs
     return;
 }

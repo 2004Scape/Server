@@ -24,7 +24,7 @@ if (~macro_event_lost_hostile = true) {
 
 [ai_queue3,_macro_event_river_troll]
 gosub(npc_death);
-if (npc_findhero = false) {
+if (npc_findhero = ^false) {
     return;
 }
 // no default drop: https://youtu.be/bCBkaO6Es1M?list=PLn23LiLYLb1Y3P9S9qZbijcJihiD416jT&t=165
@@ -32,7 +32,7 @@ if (npc_findhero = false) {
 def_int $random = random(128);
 
 // p2p drop table
-if (map_members = true) {
+if (map_members = ^true) {
     if ($random < 27) { // 27/128
         obj_add(npc_coord, fishing_bait, 5, ^lootdrop_duration);
     } else if ($random < 40) { // 13/128

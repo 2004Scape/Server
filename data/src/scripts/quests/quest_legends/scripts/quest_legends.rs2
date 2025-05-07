@@ -1446,7 +1446,7 @@ inv_add(inv, vial_empty, 1);
 %legends_bits = setbit(%legends_bits, ^legends_drank_bravery_potion);
 
 [label,make_golden_bowl]
-if (map_members = false) {
+if (map_members = ^false) {
     mes("You can only make that on a members' server.");
     return;
 }

@@ -1,7 +1,7 @@
 // Name leaked
 [proc,randomherb]()(namedobj, int)
 
-if(map_members = false) {
+if(map_members = ^false) {
     return (coins, 10);
 }
 
@@ -52,23 +52,23 @@ if ($random < 32) {
 } else if ($random < 58) {
     return (uncut_diamond, 1);
 } else if ($random < 59) {
-    if (map_members = true) {
+    if (map_members = ^true) {
         return (rune_javelin, 5);
     }
 } else if ($random < 60) {
-    if (map_members = true) {
+    if (map_members = ^true) {
         return (keyhalf1, 1);
     }
 } else if ($random < 61) {
-    if (map_members = true) {
+    if (map_members = ^true) {
         return (keyhalf2, 1);
     }
 } else if ($random < 62) {
-    if (map_members = true) {
+    if (map_members = ^true) {
         return (~megararetable);
     }
 } else if($random < 65) {
-    if (map_members = true) {
+    if (map_members = ^true) {
         if (coordz(coord) > 6400) {
             return (chaos_talisman, 1);
         } else {

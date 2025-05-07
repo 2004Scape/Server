@@ -106,7 +106,7 @@ if (~inzone_coord_pair_table(gnomeball_zones, coord) = true) {
     if_settab(gnomeball, 0);
     return;
 }
-if ($obj = null | (map_members = false & oc_members($obj) = true)) {
+if ($obj = null | (map_members = ^false & oc_members($obj) = true)) {
     ~weapon_category_tab_attack_unarmed($obj);
     return;
 }
@@ -139,7 +139,7 @@ if_settab($interface, 0);
 // sends the unarmed interface tab
 [proc,weapon_category_tab_attack_unarmed](obj $obj)
 // yes this is actually "unarmed" between beta and 2005-ish.
-if ($obj = null | (map_members = false & oc_members($obj) = true)) {
+if ($obj = null | (map_members = ^false & oc_members($obj) = true)) {
     if_settext(combat_unarmed:name, "unarmed");
 } else {
     if_settext(combat_unarmed:name, "<oc_name($obj)>"); // gnomeball uses this
@@ -162,7 +162,7 @@ if (~.inzone_coord_pair_table(gnomeball_zones, .coord) = true) {
     .if_settab(gnomeball, 0);
     return;
 }
-if ($obj = null | (map_members = false & oc_members($obj) = true)) {
+if ($obj = null | (map_members = ^false & oc_members($obj) = true)) {
     ~.weapon_category_tab_attack_unarmed($obj);
     return;
 }

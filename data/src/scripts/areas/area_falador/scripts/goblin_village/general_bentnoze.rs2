@@ -1,7 +1,7 @@
 [opnpc1,general_bentnoze]
 // if dragon slayer is in progress, then add this dialogue.
 // it only exists for bentnoze, not wartface.
-if(map_members = true & inv_total(inv, trail_clue_hard_riddle017) > 0) {
+if(map_members = ^true & inv_total(inv, trail_clue_hard_riddle017) > 0) {
     if(~obj_gettotal(trail_clue_hard_riddle017_puzzlebox) > 0) {
         if(inv_total(inv, trail_clue_hard_riddle017_puzzlebox) = 0) {
             ~chatplayer("<p,neutral>I don't have the puzzle box with me.");

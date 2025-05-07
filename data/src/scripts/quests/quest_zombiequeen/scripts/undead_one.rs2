@@ -4,6 +4,6 @@ if(npc_type = undead1_zombie | npc_type = undead1_zombie_armed) {
     world_delay(3); // 4t
     @zq_greenmist(npc_coord, 0);
 }
-if(npc_findhero = true) {
+if(npc_findhero = ^true) {
     return;
 }

@@ -4,7 +4,7 @@
 
 [label,dwarf_drop_table]
 gosub(npc_death);
-if (npc_findhero = false) {
+if (npc_findhero = ^false) {
     return;
 }
 // Default drop from config.
@@ -21,7 +21,7 @@ if ($random < 13) {
 } else if ($random < 20) {
     obj_add(npc_coord, iron_battleaxe, 1, ^lootdrop_duration);
 } else if ($random < 27) {
-    if (map_members = true) {
+    if (map_members = ^true) {
         obj_add(npc_coord, bolt, ~random_range(2, 12), ^lootdrop_duration);
     }
 } else if ($random < 31) {

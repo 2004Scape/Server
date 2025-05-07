@@ -97,7 +97,7 @@ npc_settimer(0);
 // if ($random < 150) return(half_key2, 1); // 1/150 half key
 
 def_int $random = random(150);
-if (map_members = false) {
+if (map_members = ^false) {
     $random = random(36);
 }
 if ($random < 16) { // 16/150 kebab?

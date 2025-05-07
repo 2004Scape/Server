@@ -1,6 +1,6 @@
 [opnpc1,tanner]
 // Treasure Trail
-if(map_members = true & inv_total(inv, trail_clue_easy_simple008) = 1) {
+if(map_members = ^true & inv_total(inv, trail_clue_easy_simple008) = 1) {
     @trail_tanner;
 }
 ~chatnpc("<p,happy>Greetings friend. I am a manufacturer of leather.");
@@ -103,7 +103,7 @@ if (inv_total(inv, coins) < ^tanner_dragonhide_cost) {
     mes("You haven't got enough coins to pay for dragon leather."); // osrs
     return;
 }
-if (map_members = false) {
+if (map_members = ^false) {
     mes("You need to be on a members' server to do that."); // guess
     return;
 }

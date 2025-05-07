@@ -23,7 +23,7 @@ if (inzone(0_52_53_0_0, 0_52_53_63_63, coord) = true) {
 }
 
 // Treasure Trails
-if(map_members = true & ~trail_hasclue_inv = true) {
+if(map_members = ^true & ~trail_hasclue_inv = true) {
     def_obj $clue = ~trail_getclue_inv;
 
     if(~trail_clue_coord($clue) = true) {

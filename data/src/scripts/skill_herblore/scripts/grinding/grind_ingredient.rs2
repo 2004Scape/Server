@@ -26,7 +26,7 @@ if ($refined = null) {
     return;
 }
 
-if (map_members = false) {
+if (map_members = ^false) {
     mes(^mes_members_herblore);
     return;
 }

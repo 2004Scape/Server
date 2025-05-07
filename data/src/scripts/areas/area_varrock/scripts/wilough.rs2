@@ -1,6 +1,6 @@
 [opnpc1,wilough]
 // https://www.youtube.com/watch?v=fwWnxMS3d_Q
-if(map_members = true & inv_total(inv, trail_clue_hard_riddle016) > 0) {
+if(map_members = ^true & inv_total(inv, trail_clue_hard_riddle016) > 0) {
     @trail_wilough;
 }
 @fluffs_boy_dialogue;

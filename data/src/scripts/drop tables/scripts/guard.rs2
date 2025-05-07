@@ -1,10 +1,10 @@
 [ai_queue3,_guard]
 // https://www.youtube.com/watch?v=w7uD8RdQahs
-if(npc_findhero = true) {
+if(npc_findhero = ^true) {
     ~trail_checkmediumdrop;
 }
 gosub(npc_death);
-if (npc_findhero = false) {
+if (npc_findhero = ^false) {
     return;
 }
 
@@ -39,7 +39,7 @@ if ($random < 8) {
 } else if ($random < 44) {
     obj_add(npc_coord, bronze_arrow, 2, ^lootdrop_duration);
 } else if ($random < 45) {
-    if (map_members = true) {
+    if (map_members = ^true) {
         obj_add(npc_coord, bloodrune, 1, ^lootdrop_duration);
     } else {
         obj_add(npc_coord, body_talisman, 1, ^lootdrop_duration);

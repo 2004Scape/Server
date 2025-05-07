@@ -1,5 +1,5 @@
 [oploc1,_drawer]
-if(map_members = true) {
+if(map_members = ^true) {
     if(loc_coord = 1_40_51_14_62) {
         // two different clue scrolls share this location
         // - https://oldschool.runescape.wiki/w/Clue_scroll_(easy)_-_Search_the_drawers_found_upstairs_in_East_Ardougne%27s_houses
@@ -34,7 +34,7 @@ if(loc_coord = 1_40_51_14_62 & last_useitem = trail_clue_medium_riddle002_key) {
 
 [oploc2,_empty_drawer]
 // Treasure Trail
-if(map_members = true) {
+if(map_members = ^true) {
     if(loc_coord = 1_50_53_50_28 & inv_total(inv, trail_clue_easy_simple011) = 1) {
         ~trail_clue_easy_loc_interact(trail_clue_easy_simple011);
         return;

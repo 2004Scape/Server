@@ -1,6 +1,6 @@
 [ai_queue3,_pirate]
 gosub(npc_death);
-if (npc_findhero = false) {
+if (npc_findhero = ^false) {
     return;
 }
 
@@ -44,7 +44,7 @@ if ($random < 6) {
 } else if ($random < 95) {
     obj_add(npc_coord, coins, 55, ^lootdrop_duration);
 } else if ($random < 107) {
-    if (map_members = true) {
+    if (map_members = ^true) {
         obj_add(npc_coord, eye_patch, 1, ^lootdrop_duration);
     }
 } else if ($random < 108) {

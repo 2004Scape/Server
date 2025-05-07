@@ -50,7 +50,7 @@ switch_int (%xplamp) {
 error("case not found for xplamp varp: <tostring(%xplamp)>");
 
 [label,xplamp_select](stat $stat)
-if (map_members = false & ~stat_members($stat) = ^true) {
+if (map_members = ^false & ~stat_members($stat) = ^true) {
     mes("You need to be on a members' world to gain experience in <~stat_name($stat)>.");
     %xplamp = ^xplamp_none;
     return;
@@ -97,7 +97,7 @@ switch_int ($selection) {
 
 [label,xplamp_confirm](stat $stat)
 // sanity check
-if (map_members = false & ~stat_members($stat) = ^true) {
+if (map_members = ^false & ~stat_members($stat) = ^true) {
     mes("You need to be on a members' world to gain experience in <~stat_name($stat)>.");
     %xplamp = ^xplamp_none;
     return;

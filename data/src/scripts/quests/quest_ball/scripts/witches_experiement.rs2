@@ -2,7 +2,7 @@
 // (before defeating it once) or after killing the previous form, the next form will opplayer2
 [ai_queue3,witches_experiment_p1]
 npc_del;
-if(npc_findhero = false) {
+if(npc_findhero = ^false) {
     return;
 }
 npc_add(^ball_experiment_spawn_coord, witches_experiment_p2, 500);
@@ -12,7 +12,7 @@ mes("The shapeshifter turns into a spider!");
 
 [ai_queue3,witches_experiment_p2]
 npc_del;
-if(npc_findhero = false) {
+if(npc_findhero = ^false) {
     return;
 }
 npc_add(^ball_experiment_spawn_coord, witches_experiment_p3, 500);
@@ -22,7 +22,7 @@ mes("The shapeshifter turns into a bear!");
 
 [ai_queue3,witches_experiment_p3]
 npc_del;
-if(npc_findhero = false) {
+if(npc_findhero = ^false) {
     return;
 }
 npc_add(^ball_experiment_spawn_coord, witches_experiment_p4, 500);
@@ -32,7 +32,7 @@ mes("The shapeshifter turns into a wolf!");
 
 [ai_queue3,witches_experiment_p4]
 gosub(npc_death);
-if(npc_findhero = true) { // this doesn't if_close or strongqueue, just regular queue (confirmed on osrs)
+if(npc_findhero = ^true) { // this doesn't if_close or strongqueue, just regular queue (confirmed on osrs)
     if(p_finduid(uid) = true) { // get protected access, if not then queue
         @defeat_witches_experiment;
     }

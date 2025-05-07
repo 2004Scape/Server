@@ -4,7 +4,7 @@ if($entering = false) {
     ~open_and_close_door2(loc_param(next_loc_stage), ~check_axis(coord, loc_coord, loc_angle), door_open);
     return;
 }
-if(map_members = false | %biohazard_progress < ^biohazard_spoken_chemist) {
+if(map_members = ^false | %biohazard_progress < ^biohazard_spoken_chemist) {
     ~chatplayer("<p,neutral>That's someone's bedroom.|I'm not going in there without a reason.");
     return;
 }

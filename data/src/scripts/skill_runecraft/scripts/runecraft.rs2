@@ -31,7 +31,7 @@ if ($data = null | db_getfield($data, runecraft_table:talisman, 0) ! last_useite
     return;
 }
 if (db_getfield($data, runecraft_table:members, 0) = ^true) {
-    if (map_members = false) {
+    if (map_members = ^false) {
         mes(^mes_members_do_that); // guess
         return;
     }
@@ -53,7 +53,7 @@ if ($data = null) {
 def_int $levelreq = db_getfield($data, runecraft_table:level, 0);
 def_namedobj $rune = db_getfield($data, runecraft_table:rune, 0);
 if (oc_members($rune) = true) {
-    if (map_members = false) {
+    if (map_members = ^false) {
         mes(^mes_members_do_that); // guess
         return;
     }

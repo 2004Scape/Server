@@ -28,7 +28,7 @@ npc_settimer(0); // npc_cleartimer?
 if (~npc_is_attackable() = false) {
     return;
 }
-if (map_members = false) {
+if (map_members = ^false) {
     return;
 }
 

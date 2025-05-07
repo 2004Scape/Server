@@ -269,7 +269,7 @@ if (finduid(%npc_aggressive_player) = true) {
     }
 }
 gosub(npc_death);
-if (npc_findhero = false) {
+if (npc_findhero = ^false) {
     return;
 }
 obj_add(npc_coord, npc_param(death_drop), 1, ^lootdrop_duration);

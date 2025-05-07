@@ -1,5 +1,5 @@
 [opnpc1,crest_dimintheis]
-if(map_members = false) {
+if(map_members = ^false) {
     if(%crest_progress = ^crest_not_started) {
         ~chatnpc("<p,neutral>Hello. My name is Dimintheis, of the noble family Fitzharmon.");
         ~chatplayer("<p,confused>Why would a nobleman live in a place like this?");

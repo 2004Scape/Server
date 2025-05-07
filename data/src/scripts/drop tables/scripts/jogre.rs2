@@ -5,7 +5,7 @@
 
 [ai_queue3,jogre]
 gosub(npc_death);
-if (npc_findhero = false) {
+if (npc_findhero = ^false) {
     return;
 }
 

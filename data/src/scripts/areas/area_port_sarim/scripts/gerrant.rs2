@@ -1,12 +1,12 @@
 [opnpc1,gerrant]
-if(map_members = true & inv_total(inv, trail_clue_hard_riddle004) > 0) {
+if(map_members = ^true & inv_total(inv, trail_clue_hard_riddle004) > 0) {
     ~chatnpc("<p,neutral>You've done it!");
     ~progress_clue_hard(trail_clue_hard_riddle004, "Gerrant has given you another clue scroll!");
     return;
 }
 ~chatnpc("<p,happy>Welcome! You can buy fishing equipment at my store.|We'll also buy anything you catch off you.");
 def_int $option;
-if (map_members = true & ~hero_in_progress = true) {
+if (map_members = ^true & ~hero_in_progress = true) {
     $option = ~p_choice3("Let's see what you've got then.", 1, "Sorry, I'm not interested.", 2, "I want to find out how to catch a lava eel.", 3);
 } else {
     $option = ~p_choice2("Let's see what you've got then.", 1, "Sorry, I'm not interested.", 2);
