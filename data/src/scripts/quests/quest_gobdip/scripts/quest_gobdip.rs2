@@ -62,7 +62,7 @@ queue(goblin_diplomacy_complete_quest, 0);
 stat_advance(crafting, 2000);
 inv_add(inv, gold_bar, 1);
 session_log(^log_adventure, "Quest complete: Goblin Diplomacy");
-~send_quest_complete(questlist:gobdip, gold_bar, 250, ^gobdip_questpoints, "You have completed the\\nGoblin Diplomacy Quest!");
+~send_quest_complete(questlist:gobdip, gold_bar, 250, ^gobdip_questpoints, "You have completed the\\nGoblin Diplomacy Quest!", true);
 
 [label,goblin_diplomacy_completed]
 ~chatnpc_specific("General Wartface", general_wartface, "<p,goblinchat>Now you've solved our argument we|gotta think of something else to do.");

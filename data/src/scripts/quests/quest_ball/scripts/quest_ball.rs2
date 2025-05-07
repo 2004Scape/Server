@@ -201,4 +201,4 @@ mes("A shapeshifter appears, and knocks you back from the ball!");
 inv_del(inv, ball, 1);
 stat_advance(hitpoints, 63250);
 session_log(^log_adventure, "Quest complete: Witches House");
-~send_quest_complete(questlist:ball, ball, 180, ^ball_questpoints, "You have completed the\\nWitches' House Quest!");
+~send_quest_complete(questlist:ball, ball, 180, ^ball_questpoints, "You have completed the\\nWitches' House Quest!", true);

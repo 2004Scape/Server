@@ -476,4 +476,4 @@ inv_add(inv, mithril_seed, 40);
 stat_advance(attack, 137500);
 stat_advance(strength, 137500);
 session_log(^log_adventure, "Quest complete: Waterfall");
-~send_quest_complete(questlist:waterfall, diamond, 250, ^waterfall_questpoints, "You have completed the Waterfall Quest!");
+~send_quest_complete(questlist:waterfall, diamond, 250, ^waterfall_questpoints, "You have completed the Waterfall Quest!", true);

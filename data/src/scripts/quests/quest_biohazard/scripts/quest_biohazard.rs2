@@ -163,4 +163,4 @@ mes("and find Elena's distillator.");
 stat_advance(thieving, 12500);
 %biohazard_progress = ^biohazard_complete;
 session_log(^log_adventure, "Quest complete: Biohazard");
-~send_quest_complete(questlist:biohazard, distillator, 250, ^biohazard_questpoints, "You have completed the\\nBiohazard Quest!");
+~send_quest_complete(questlist:biohazard, distillator, 250, ^biohazard_questpoints, "You have completed the\\nBiohazard Quest!", true);

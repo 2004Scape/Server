@@ -62,7 +62,7 @@ while (npc_huntnext = true) {
 stat_advance(ranged, 105000);
 stat_advance(fletching, 80000);
 session_log(^log_adventure, "Quest complete: Temple of Ikov (Armadyl)");
-~send_quest_complete(questlist:ikov, yew_longbow, 250, ^ikov_questpoints, "You have completed the\\nTemple of Ikov Quest for Armadyl!");
+~send_quest_complete(questlist:ikov, yew_longbow, 250, ^ikov_questpoints, "You have completed the\\nTemple of Ikov Quest for Armadyl!", true);
 if (npc_finduid($npc) = true) {
     gosub(npc_death);
 }
@@ -73,4 +73,4 @@ inv_del(inv, ikov_staffofarmardyl, 1);
 stat_advance(ranged, 105000);
 stat_advance(fletching, 80000);
 session_log(^log_adventure, "Quest complete: Temple of Ikov (Lucien)");
-~send_quest_complete(questlist:ikov, yew_longbow, 250, ^ikov_questpoints, "You have completed the\\nTemple of Ikov Quest for Lucien!");
+~send_quest_complete(questlist:ikov, yew_longbow, 250, ^ikov_questpoints, "You have completed the\\nTemple of Ikov Quest for Lucien!", true);
