@@ -18,18 +18,17 @@ if (%flames_of_zamorak_casts < ^mage_arena_spell_finished & ~inzone_coord_pair_t
 ~pvp_spell_cast($spell_data);
 // spell hit
 if (~pvp_hit_roll(^magic_style) = true) {
-    ~pvp_spell_success($spell_data, ~god_spell_maxhit($spell_data), 64);
-    if (~has_god_cape_and_staff = true & .stat(magic) >= .stat_base(magic)) {
-        .stat_sub(magic, 1, 5);
-        .mes("You feel your magical powers weaken.");
+    def_int $maxhit = ~magic_spell_maxhit($spell_data);
+    if (inv_total(worn, zamorak_cape) > 0 & inv_total(worn, zamorak_staff) > 0) {
+        if (.stat(magic) = .stat_base(magic)) { // https://oldschool.runescape.wiki/w/Update:Contact!
+            .stat_drain(magic, 1, 5);
+            .mes("You feel your magical powers weaken.");
+        }
+        if (%charge_god_spell > 0) {
+            $maxhit = scale(3, 2, $maxhit);
+        }
     }
+    ~pvp_spell_success($spell_data, $maxhit, 64);
 } else {
     ~pvp_spell_fail($spell_data, 64);
 }
-
-[proc,god_spell_maxhit](dbrow $spell_data)(int)
-def_int $maxhit = ~magic_spell_maxhit($spell_data);
-if (%charge_god_spell > 0 & ~has_god_cape_and_staff = true) {
-    return (scale(3, 2, $maxhit));
-}
-return ($maxhit);
