@@ -123,7 +123,7 @@ if ($respawnrate = 0) {
     $respawnrate = add(120, random(80));
     $deplete_chance = 0;
 }
-if (stat_random(stat(woodcutting), $tree_chance_low, $tree_chance_high) = true) {
+if (stat_random(woodcutting, $tree_chance_low, $tree_chance_high) = true) {
     def_namedobj $product = db_getfield($data, woodcutting_trees:product, 0);
     mes("You get some <lowercase(oc_name($product))>.");
     stat_advance(woodcutting, db_getfield($data, woodcutting_trees:productexp, 0));

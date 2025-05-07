@@ -260,6 +260,7 @@ iop1=Eat
 cost=1
 weight=1lb
 category=category_131
+param=gnome_cooking_ingredient,^true
 param=batta_message,You add the Cabbage to the gnome batta.
 
 [magic_cabbage]
@@ -384,6 +385,7 @@ recol1d=24108
 2dxan=116
 weight=150g
 category=category_131
+param=gnome_cooking_ingredient,^true
 param=ugthanki_kebab_struct,onion_kebab
 
 [chocolate_dust]
@@ -400,6 +402,7 @@ weight=150g
 category=category_59
 name=Chocolate dust
 desc=It's ground up chocolate.
+param=gnome_topping,^true
 param=cocktail_message,You sprinkle the chocolate dust over the drink.
 
 [pot_empty]

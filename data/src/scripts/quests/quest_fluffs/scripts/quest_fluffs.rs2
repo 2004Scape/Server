@@ -128,7 +128,12 @@ if(coordz(coord) < coordz(loc_coord)) {
 }
 p_teleport($start_coord);
 p_delay(0);
-~agility_exactmove(human_walk_style, 30, 2, $start_coord, $end_coord, 0, 60, $dir, true);
+if(%lumberyard_fence_used > map_clock) {
+    mes("The fence is being climbed by someone else."); 
+    return;
+}
+%lumberyard_fence_used = calc(map_clock + 3);
+~agility_exactmove(human_walk_style, 0, 2, $start_coord, $end_coord, 0, 60, $dir, true);
 
 [opheldu,doogle_leaves]
 if(last_useitem = raw_sardine) {
@@ -310,13 +315,13 @@ session_log(^log_adventure, "Quest complete: Gertrude's Cat");
 def_int $random = random(128);
 if ($random < 32) {
     // The least common music that plays when completing a quest.
-    midi_jingle(^quest_complete_3_jingle, ^quest_complete_3_millis);
+    ~midi_jingle(^quest_complete_3_jingle, ^quest_complete_3_millis);
 } else if ($random < 64) {
     // A less common music that plays when completing a quest.
-    midi_jingle(^quest_complete_2_jingle, ^quest_complete_2_millis);
+    ~midi_jingle(^quest_complete_2_jingle, ^quest_complete_2_millis);
 } else {
     // The most common music that plays when completing a quest.
-    midi_jingle(^quest_complete_1_jingle, ^quest_complete_1_millis);
+    ~midi_jingle(^quest_complete_1_jingle, ^quest_complete_1_millis);
 }
 stat_advance(cooking, 15250);
 if_openmain(questscroll_fluffs);

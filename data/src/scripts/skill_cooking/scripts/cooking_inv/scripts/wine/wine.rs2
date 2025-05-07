@@ -30,7 +30,7 @@ def_int $wines_per_batch = calc($bank_total / 15);
 while ($i < 15 & $wines_per_batch > 0) {
     inv_del(bank, jug_unfermented_wine, $wines_per_batch);
     // if skiling roll is passed
-    if (stat_random(stat(cooking), 48, 352) = true) {
+    if (stat_random(cooking, 48, 352) = true) {
         inv_add(bank, jug_wine, $wines_per_batch);
         stat_advance(cooking, calc(1100 * $wines_per_batch));
     } else {
@@ -44,7 +44,7 @@ $i = 0;
 while ($i < calc($bank_total % 15)) {
     inv_del(bank, jug_unfermented_wine, 1);
     // if skiling roll is passed
-    if (stat_random(stat(cooking), 48, 352) = true) {
+    if (stat_random(cooking, 48, 352) = true) {
         inv_add(bank, jug_wine, 1);
         stat_advance(cooking, 1100);
     } else {
@@ -58,7 +58,7 @@ $i = 0;
 while ($i < $inv_total) {
     inv_del(inv, jug_unfermented_wine, 1);
     // if skiling roll is passed
-    if (stat_random(stat(cooking), 48, 352) = true) {
+    if (stat_random(cooking, 48, 352) = true) {
         inv_add(inv, jug_wine, 1);
         stat_advance(cooking, 1100);
     } else {

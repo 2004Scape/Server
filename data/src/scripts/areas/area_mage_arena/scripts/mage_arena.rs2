@@ -8,7 +8,7 @@ mes("You climb down the ladder.");
 
 [oploc1,loc_2872]
 p_arrivedelay;
-@climb_ladder(movecoord(coord, 549, 0, -756), true);
+~climb_ladder(movecoord(coord, 549, 0, -756), true);
 
 
 [oploc1,loc_2878] @jump_in_sparkling_pool(^sparkling_pool_chamber_coord);

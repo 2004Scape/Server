@@ -149,6 +149,17 @@ head1=model_55_idk_head
 wanderrange=7
 maxrange=50
 moverestrict=outdoors
+defaultmode=patrol
+patrol1=0_50_50_7_33,0
+patrol2=0_50_50_11_30,0
+patrol3=0_50_50_19_30,0
+patrol4=0_50_50_19_22,10
+patrol5=0_50_50_21_22,0
+patrol6=0_50_50_21_12,0
+patrol7=0_50_50_18_9,0
+patrol8=0_50_50_14_5,0
+patrol9=0_50_50_2_5,0
+patrol10=0_50_50_2_32,0
 
 [fred_the_farmer]
 vislevel=hide

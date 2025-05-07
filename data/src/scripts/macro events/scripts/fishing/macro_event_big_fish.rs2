@@ -25,7 +25,7 @@ def_coord $random_coord = map_findsquare(coord, 1, 7, ^map_findsquare_lineofwalk
 sound_synth(water_strike_all, 0, 0); // complete guess
 def_int $duration = ~coord_projectile(coord, $random_coord, waterstrike_travel, 0, 0, 20, 16, -5, 64, 10);
 p_delay(calc($duration/30));
-obj_add($random_coord, $fishing_equipment, 1, 100);
+obj_add($random_coord, $fishing_equipment, 1, calc(^lootdrop_duration / 2));
 inv_del(inv, $fishing_equipment, 1);
 spotanim_map(failedspell_impact, npc_coord, 94, 30);
 p_delay(0);

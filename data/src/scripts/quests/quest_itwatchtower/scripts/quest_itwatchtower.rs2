@@ -90,7 +90,7 @@ if(%itwatchtower_progress = ^itwatchtower_not_started) {
 } else {
     ~chatnpc_specific(nc_name(tower_guard), tower_guard, "<p,neutral>It is the wizards' helping hand - let 'em up.");
     if_close;
-    @climb_ladder(movecoord(coord, 0, 1, 0), true);
+    ~climb_ladder(movecoord(coord, 0, 1, 0), true);
 }
 
 // checks if the player has a map, lightsource, and tinderbox. possible outcomes are:
@@ -258,12 +258,13 @@ mes("I am going to need someone with experience to help me with this.");
 
 [oploc1,loc_2796]
 if(%itwatchtower_progress >= ^itwatchtower_complete) {
-    @climb_ladder(2_45_73_53_40, true);
+    ~climb_ladder(2_45_73_53_40, true);
+    return;
 }
-@climb_ladder(2_39_48_53_40, true);
+~climb_ladder(2_39_48_53_40, true);
 
 [oploc1,loc_2797]
-@climb_ladder(1_39_48_53_40, true);
+~climb_ladder(1_39_48_53_40, true);
 
 [oploc1,loc_2786] @open_gutanoth_gate(^left, ogre_guard_east);
 [oploc1,loc_2787] @open_gutanoth_gate(^right, ogre_guard_east);
@@ -343,7 +344,7 @@ p_delay(0);
 loc_change(cavewitchchestopen, 300);
 mes("Ahh! There is a spider inside.");
 mes("Someone's idea of a joke...");
-npc_add(coord, poison_spider, 1000);
+npc_add(coord, poisonspider, 1000);
 ~npc_retaliate(0);
 
 [oploc1,loc_2827]
@@ -367,7 +368,7 @@ switch_int(random(8)) {
         inv_add(inv, bones, 1);
         ~chatplayer("<p,bored>Oh great, some bones!");
     case 4 :
-        npc_add(map_findsquare(coord, 1, 1, ^map_findsquare_lineofwalk), chaos_dwarf, 1000);
+        npc_add(map_findsquare(coord, 1, 1, ^map_findsquare_lineofwalk), dwarf_chaos, 1000);
         ~npc_retaliate(0);
         ~chatplayer("<p,quiz>How on earth did this dwarf get in here?");
     case 5 :
@@ -379,7 +380,7 @@ switch_int(random(8)) {
         ~npc_retaliate(0);
         ~chatplayer("<p,shock>Hey! A scorpion is in here!");     
     case 7 :
-        npc_add(map_findsquare(coord, 1, 1, ^map_findsquare_lineofwalk), poison_spider, 1000);
+        npc_add(map_findsquare(coord, 1, 1, ^map_findsquare_lineofwalk), poisonspider, 1000);
         ~npc_retaliate(0);
         ~chatplayer("<p,shock>Oh no, not one of these spider things!");     
 }
@@ -558,13 +559,13 @@ session_log(^log_adventure, "Quest complete: Watch Tower");
 def_int $random = random(128);
 if ($random < 32) {
     // The least common music that plays when completing a quest.
-    midi_jingle(^quest_complete_3_jingle, ^quest_complete_3_millis);
+    ~midi_jingle(^quest_complete_3_jingle, ^quest_complete_3_millis);
 } else if ($random < 64) {
     // A less common music that plays when completing a quest.
-    midi_jingle(^quest_complete_2_jingle, ^quest_complete_2_millis);
+    ~midi_jingle(^quest_complete_2_jingle, ^quest_complete_2_millis);
 } else {
     // The most common music that plays when completing a quest.
-    midi_jingle(^quest_complete_1_jingle, ^quest_complete_1_millis);
+    ~midi_jingle(^quest_complete_1_jingle, ^quest_complete_1_millis);
 }
 if_settext(questscroll:com_3, "You have finished the Watchtower Quest.");
 if_settext(questscroll:com_9, tostring(4));

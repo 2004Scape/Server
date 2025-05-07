@@ -1,6 +1,6 @@
-[ai_queue1,king_black_dragon] ~npc_default_retaliate_ap;
+[ai_queue1,king_dragon] ~npc_default_retaliate_ap;
 
-[ai_queue3,king_black_dragon]
+[ai_queue3,king_dragon]
 gosub(npc_death);
 if (npc_findhero = ^false) {
     return;
@@ -72,12 +72,15 @@ if ($random < 10) { // osrs
 }
 
 
-[ai_applayer2,king_black_dragon]
+[ai_applayer2,king_dragon]
 if (%npc_action_delay > map_clock) {
     return;
 }
-if (~npc_can_attack_player = false) {
+if (~npc_check_notcombat = false) {
     npc_setmode(null);
+    return;
+}
+if (~npc_check_notcombat_self = false) {
     return;
 }
 // kbd can attack from a distance but can also be safespoted
@@ -90,17 +93,20 @@ npc_sethuntmode(aggressive_melee);
 npc_setmode(opplayer2);
 
 
-[ai_opplayer2,king_black_dragon]
+[ai_opplayer2,king_dragon]
 //mes("<tostring(map_clock)>: Op");
 if (%npc_action_delay > map_clock) {
     return;
 }
-if (~npc_can_attack_player = false) {
+if (~npc_check_notcombat = false) {
     npc_setmode(null);
     return;
 }
+if (~npc_check_notcombat_self = false) {
+    return;
+}
 ~kbd_random_attack;
-npc_sethuntmode(king_black_dragon);
+npc_sethuntmode(king_dragon);
 
 
 [proc,kbd_random_attack]
@@ -141,7 +147,7 @@ if (calc($z / 2) <= $x & calc($x / 2) <= $z) { // south-west
 } else { // west
     $projectile_coord = movecoord($npc_coord, -1, 0, 0);
 }
-def_int $duration = ~player_projectile($projectile_coord, coord, uid, spotanim_54, 92, 31, 51, 16, -5, 64, 10);
+def_int $duration = ~player_projectile($projectile_coord, coord, uid, firebreath_travel, 92, 31, 51, 16, -5, 64, 10);
 
 npc_anim(dragon_firebreath_middle_attack, 0);
 sound_synth(dragonbreath, 0, 30);
@@ -223,10 +229,10 @@ queue(playerhit_n_retaliate, 0, npc_uid); // this should be a queue* command
 // shocking breath
 [proc,kbd_shocking_breath]
 if_close;
-// spotanim_npc(spotanim_4, 92, 0);
+// spotanim_npc(portal, 92, 0);
 npc_anim(dragon_firebreath_middle_attack, 0);
 sound_synth(lightningbreath, 0, 30);
-spotanim_pl(spotanim_197, 0, 60);
+spotanim_pl(nezik_flamestrike, 0, 60);
 %npc_action_delay = add(map_clock, 5);
 
 def_int $damage = 0;

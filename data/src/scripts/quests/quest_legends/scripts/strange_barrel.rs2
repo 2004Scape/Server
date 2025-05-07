@@ -2,7 +2,7 @@
 def_coord $loc_coord = loc_coord;
 anim(%com_attackanim, 0);
 p_delay(0);
-if(stat_random(stat(attack), 65, 255) = false) {
+if(stat_random(attack, 65, 255) = false) {
     mes("You were unable to smash this barrel open.");
     anim(human_stunned, 0);
     if(random(3) = 0) {
@@ -17,7 +17,7 @@ if(stat_random(stat(attack), 65, 255) = false) {
     return;
 }
 loc_del(10000); // 1 hour
-spotanim_map(Barrel_Smash, loc_coord, 0, 0);
+spotanim_map(barrel_smash, loc_coord, 0, 0);
 // rates here are all guessed! need more data
 def_int $rand = random(128);
 if($rand < 32) {
@@ -125,24 +125,24 @@ while($i < $rolls) {
 }
 
 [proc,legends_barrel_spawn_npc]
-spotanim_map(small_smokepuff, loc_coord, 0, 0);
+spotanim_map(smokepuff, loc_coord, 0, 0);
 p_delay(0);
 switch_int(random(16)) {
-    case 0 : npc_add(loc_coord, chaos_dwarf, 500);
+    case 0 : npc_add(loc_coord, dwarf_chaos, 500);
     case 1 : npc_add(loc_coord, black_knight, 500);
     case 2 : npc_add(loc_coord, dark_warrior, 500);
-    case 3 : npc_add(loc_coord, dark_wizard_earth, 500);
+    case 3 : npc_add(loc_coord, bearded_dark_wizard, 500);
     case 4 : npc_add(loc_coord, deadly_red_spider, 500);
-    case 5 : npc_add(loc_coord, death_wing, 500);
-    case 6 : npc_add(loc_coord, giant_bat, 500);
-    case 7 : npc_add(loc_coord, giant_rat2, 500);
-    case 8 : npc_add(loc_coord, giant_spider1, 500);
+    case 5 : npc_add(loc_coord, deathwing, 500);
+    case 6 : npc_add(loc_coord, bat, 500);
+    case 7 : npc_add(loc_coord, giantrat1, 500);
+    case 8 : npc_add(loc_coord, giantspider1, 500);
     case 9 : npc_add(loc_coord, giant, 500);
-    case 10 : npc_add(loc_coord, hobgoblin, 500);
-    case 11 : npc_add(loc_coord, moss_giant, 500);
+    case 10 : npc_add(loc_coord, hobgoblin_unarmed, 500);
+    case 11 : npc_add(loc_coord, mossgiant, 500);
     case 12 : npc_add(loc_coord, mugger, 500);
     case 13 : npc_add(loc_coord, scorpion, 500);
-    case 14 : npc_add(loc_coord, skeleton2, 500);
-    case default : npc_add(loc_coord, zombie1, 500);
+    case 14 : npc_add(loc_coord, skeleton_unarmed, 500);
+    case default : npc_add(loc_coord, zombie_unarmed, 500);
 }
 ~npc_retaliate(0);

@@ -61,7 +61,7 @@ anim($start_seq, 0);
 p_delay(0);
 mes("You put your foot on the ledge and try to edge across...");
 ~agility_force_move(0, $walk_seq, movecoord(coord, 0, 0, $dz));
-if(stat_random(stat(agility), 65, 355) = false) {
+if(stat_random(agility, 65, 355) = false) {
     ~agility_delay_fail(movecoord(coord, -2, 0, 0), 0_40_149_18_44, calc((stat(hitpoints) * 20) / 100), "You slip and fall to the pit below.");
     return;
 }

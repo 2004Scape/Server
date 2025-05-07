@@ -1,18 +1,21 @@
-[ai_queue1,dark_wizard_earth] ~npc_default_retaliate_ap;
-[ai_queue1,dark_wizard_water] ~npc_default_retaliate_ap;
+[ai_queue1,bearded_dark_wizard] ~npc_default_retaliate_ap;
+[ai_queue1,young_dark_wizard] ~npc_default_retaliate_ap;
 
-[ai_applayer2,dark_wizard_earth] ~dark_wizard_earth_attack;
-[ai_opplayer2,dark_wizard_earth] ~dark_wizard_earth_attack;
-[ai_applayer2,dark_wizard_water] ~dark_wizard_water_attack;
-[ai_opplayer2,dark_wizard_water] ~dark_wizard_water_attack;
+[ai_applayer2,bearded_dark_wizard] ~dark_wizard_earth_attack;
+[ai_opplayer2,bearded_dark_wizard] ~dark_wizard_earth_attack;
+[ai_applayer2,young_dark_wizard] ~dark_wizard_water_attack;
+[ai_opplayer2,young_dark_wizard] ~dark_wizard_water_attack;
 
 [proc,dark_wizard_earth_attack]
 if (%npc_action_delay > map_clock) {
     npc_setmode(applayer2);
     return;
 }
-if (~npc_can_attack_player = false) {
+if (~npc_check_notcombat = false) {
     npc_setmode(null);
+    return;
+}
+if (~npc_check_notcombat_self = false) {
     return;
 }
 
@@ -35,8 +38,11 @@ if (%npc_action_delay > map_clock) {
     npc_setmode(applayer2);
     return;
 }
-if (~npc_can_attack_player = false) {
+if (~npc_check_notcombat = false) {
     npc_setmode(null);
+    return;
+}
+if (~npc_check_notcombat_self = false) {
     return;
 }
 

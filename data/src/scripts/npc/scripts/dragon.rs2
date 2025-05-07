@@ -1,14 +1,14 @@
 // - edit: elvarg was reworked after the dragon slayer rework. So no ap
 // - im guessing dragons worked the same
-// [ai_queue1,baby_dragon] ~npc_default_retaliate_ap;
-// [ai_queue1,baby_blue_dragon] ~npc_default_retaliate_ap;
+// [ai_queue1,babydragon] ~npc_default_retaliate_ap;
+// [ai_queue1,babybluedragon] ~npc_default_retaliate_ap;
 // [ai_queue1,green_dragon] ~npc_default_retaliate_ap;
 // [ai_queue1,red_dragon] ~npc_default_retaliate_ap;
 // [ai_queue1,blue_dragon] ~npc_default_retaliate_ap;
 // [ai_queue1,black_dragon] ~npc_default_retaliate_ap;
 
-// [ai_applayer2,baby_dragon] @dragon_ai_applayer2;
-// [ai_applayer2,baby_blue_dragon] @dragon_ai_applayer2;
+// [ai_applayer2,babydragon] @dragon_ai_applayer2;
+// [ai_applayer2,babybluedragon] @dragon_ai_applayer2;
 // [ai_applayer2,green_dragon] @dragon_ai_applayer2;
 // [ai_applayer2,red_dragon] @dragon_ai_applayer2;
 // [ai_applayer2,blue_dragon] @dragon_ai_applayer2;
@@ -25,8 +25,11 @@
 // if (%npc_action_delay > map_clock) {
 //     return;
 // }
-// if (~npc_can_attack_player = false) {
+// if (~npc_check_notcombat = false) {
 //     npc_setmode(null);
+//     return;
+// }
+// if (~npc_check_notcombat_self = false) {
 //     return;
 // }
 // // 1/2 chance to switch to op, with line of walk check (same as elvarg for now)
@@ -41,8 +44,11 @@
 if (%npc_action_delay > map_clock) {
     return;
 }
-if (~npc_can_attack_player = false) {
+if (~npc_check_notcombat = false) {
     npc_setmode(null);
+    return;
+}
+if (~npc_check_notcombat_self = false) {
     return;
 }
 // edit: elvarg was reworked after the dragon slayer rework.
@@ -63,8 +69,11 @@ if (stat(hitpoints) = 0) {
     return;
 }
 if (%npc_action_delay > map_clock) return;
-if (~npc_can_attack_player = false) {
+if (~npc_check_notcombat = false) {
     npc_setmode(null);
+    return;
+}
+if (~npc_check_notcombat_self = false) {
     return;
 }
 anim(%com_defendanim, 0);

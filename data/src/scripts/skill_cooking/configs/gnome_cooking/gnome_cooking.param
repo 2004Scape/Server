@@ -2,14 +2,6 @@
 type=struct
 default=null
 
-[plural_name]
-type=string
-default=null
-
-[singular_name]
-type=string
-default=null
-
 [cocktail_message]
 type=string
 default=null
@@ -29,3 +21,15 @@ default=null
 [gnome_cooking_type]
 type=int
 default=null
+
+[gnome_cooking_ingredient]
+type=int
+default=0
+
+[gnome_cocktail_ingredient]
+type=int
+default=0
+
+[gnome_topping]
+type=int
+default=0

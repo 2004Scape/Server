@@ -91,7 +91,7 @@ cam_reset;
 @general_khazard_attack;
 
 [label,general_khazard_agreement]
-if (npc_find(movecoord(coord, 8, 0, 0), general_khazard, 15, 0) = false | ~npc_out_of_combat = false) {
+if (npc_find(movecoord(coord, 8, 0, 0), general_khazard, 15, 0) = false | ~npc_retal_ready = false) {
     npc_add(0_40_49_46_18, general_khazard, 500); // ticks guessed
 }
 ~chatnpc("<p,skull>The agreement was that the Servils may leave if you won a few fights, and indeed they are now free to do so.");

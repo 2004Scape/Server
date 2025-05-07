@@ -1,11 +1,8 @@
 [opnpc1,ladder_fairy] @ladder_fairy_talk;
 
 [oploc1,loc_2410]
-npc_findallzone(coord);
-while (npc_findnext = true) {
-    if (npc_type = ladder_fairy) {
-        @ladder_fairy_talk;
-    }
+if (npc_findexact(0_50_149_54_54, ladder_fairy) = true) {
+    @ladder_fairy_talk;
 }
 
 [label,ladder_fairy_talk]

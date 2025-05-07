@@ -62,7 +62,7 @@ if (p_finduid(uid) = true) {
 }
 npc_add($coord, kolodion_arachnid_form, 1000);
 npc_anim(npc_param(spawn_anim), 0);
-spotanim_npc(spotanim_190, 16, 35);
+spotanim_npc(hugespider_teleport_reverse, 16, 35);
 npc_setmode(opplayer2);
 npc_delay(1);
 npc_say("Foolish mortal; I am unstoppable.");
@@ -108,7 +108,7 @@ if (p_finduid(uid) = true) {
 }
 npc_add($coord, kolodion_demon_form, 1000);
 npc_anim(npc_param(spawn_anim), 0);
-spotanim_npc(spotanim_191, 16, 0);
+spotanim_npc(huge_teleport_reverse, 16, 0);
 npc_setmode(opplayer2);
 npc_delay(1);
 npc_say("Aaaaaaaarrgghhhh! The power!");

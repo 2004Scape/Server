@@ -423,7 +423,11 @@ const PlayerOps: CommandHandlers = {
     [ScriptOpcode.SOUND_SYNTH]: checkedHandler(ActivePlayer, state => {
         const [synth, loops, delay] = state.popInts(3);
 
-        state.activePlayer.write(new SynthSound(synth, loops, delay));
+        const player = state.activePlayer;
+        if (player.lowMemory) {
+            return;
+        }
+        player.write(new SynthSound(synth, loops, delay));
     }),
 
     [ScriptOpcode.STAFFMODLEVEL]: checkedHandler(ActivePlayer, state => {
@@ -491,7 +495,7 @@ const PlayerOps: CommandHandlers = {
         const current = player.levels[stat];
 
         const boost = (constant + (base * percent) / 100) | 0;
-        const boosted = Math.min(current + boost, base + boost);
+        const boosted = Math.max(Math.min(current + boost, base + boost), current);
         player.levels[stat] = Math.min(boosted, 255);
         if (stat === PlayerStat.HITPOINTS && player.levels[PlayerStat.HITPOINTS] >= player.baseLevels[PlayerStat.HITPOINTS]) {
             player.heroPoints.clear();
@@ -516,6 +520,17 @@ const PlayerOps: CommandHandlers = {
         if (subbed !== current) {
             player.changeStat(stat);
         }
+    }),
+
+    // https://x.com/JagexAsh/status/1110604592138670083
+    [ScriptOpcode.STAT_RANDOM]: checkedHandler(ActivePlayer, state => {
+        const [stat, low, high] = state.popInts(3);
+
+        const level = state.activePlayer.levels[stat];
+        const value = Math.floor((low * (99 - level)) / 98) + Math.floor((high * (level - 1)) / 98) + 1;
+        const chance = Math.floor(Math.random() * 256);
+
+        state.pushInt(value > chance ? 1 : 0);
     }),
 
     [ScriptOpcode.SPOTANIM_PL]: checkedHandler(ActivePlayer, state => {
@@ -719,7 +734,7 @@ const PlayerOps: CommandHandlers = {
 
     [ScriptOpcode.TEXT_GENDER]: checkedHandler(ActivePlayer, state => {
         const [male, female] = state.popStrings(2);
-        if (state.activePlayer.gender == 0) {
+        if (state.activePlayer.gender === 0) {
             state.pushString(male);
         } else {
             state.pushString(female);
@@ -727,13 +742,24 @@ const PlayerOps: CommandHandlers = {
     }),
 
     [ScriptOpcode.MIDI_SONG]: state => {
-        state.activePlayer.playSong(check(state.popString(), StringNotNull));
+        const name = check(state.popString(), StringNotNull);
+
+        const player = state.activePlayer;
+        if (player.lowMemory) {
+            return;
+        }
+        player.playSong(name);
     },
 
     [ScriptOpcode.MIDI_JINGLE]: state => {
         const delay = check(state.popInt(), NumberNotNull);
         const name = check(state.popString(), StringNotNull);
-        state.activePlayer.playJingle(delay, name);
+
+        const player = state.activePlayer;
+        if (player.lowMemory) {
+            return;
+        }
+        player.playJingle(delay, name);
     },
 
     [ScriptOpcode.SOFTTIMER]: checkedHandler(ActivePlayer, state => {
@@ -1033,7 +1059,7 @@ const PlayerOps: CommandHandlers = {
             if (gender === 1) {
                 state.activePlayer.body[i] = Player.MALE_FEMALE_MAP.get(state.activePlayer.body[i]) ?? -1;
             } else {
-                if (i == 1) {
+                if (i === 1) {
                     state.activePlayer.body[i] = 14;
                     continue;
                 }

@@ -46,7 +46,7 @@ if (string_length($product_name) < 1) {
 def_int $low;
 def_int $high;
 $low, $high = db_getfield($data, gem_cutting_table:success_rate, 0);
-if ($low ! null & $high ! null & stat_random(stat(crafting), $low, $high) = false) {
+if ($low ! null & $high ! null & stat_random(crafting, $low, $high) = false) {
     // they prob hardcode this but this is easier
     stat_advance(crafting, calc((db_getfield($data, gem_cutting_table:experience, 0) + 2)/4));
     // osrs except uppercase product name. needs confirmation

@@ -14,7 +14,7 @@ if (.finduid(%duelpartner) = true) {
     .queue(duel_finish, 0);
 }
 // ur able to get double mes if opponent kills u with knives: https://youtu.be/KRDZJKa1whI?list=PLn23LiLYLb1bQ7Hwp77KoNBjKvpZQTfJT&t=12
-midi_jingle(^death_jingle_2, ^death_jingle_2_millis);
+~midi_jingle(^death_jingle_2, ^death_jingle_2_millis);
 // https://storage.googleapis.com/tannerdino/images/6543.jpg
 // https://youtu.be/gWmwSYxzUfo
 mes("Oh dear you are dead!");
@@ -26,7 +26,7 @@ if (.finduid(%duelpartner) = true) {
         if_settext(duel_win:com_99, "You are victorious!");
         mes("Well done! You have defeated <.displayname>!");
         session_log(^log_moderator, "Won a duel against <.name>");
-        midi_jingle(^duel_win_2_jingle, ^duel_win_2_jingle_millis);
+        ~midi_jingle(^duel_win_2_jingle, ^duel_win_2_jingle_millis);
         ~duel_reset_all;
         ~duel_spoils;
         return;
@@ -34,7 +34,7 @@ if (.finduid(%duelpartner) = true) {
         if_settext(duel_win:com_99, "You are victorious! Your opponent resigned!"); // 2006
         mes("Well done! <.displayname> resigned!"); // 2006
         session_log(^log_moderator, "Won a duel by forfeit against <.name>");
-        midi_jingle(^duel_win_2_jingle, ^duel_win_2_jingle_millis);
+        ~midi_jingle(^duel_win_2_jingle, ^duel_win_2_jingle_millis);
         ~duel_reset_all;
         ~duel_spoils;
         return;
@@ -42,7 +42,7 @@ if (.finduid(%duelpartner) = true) {
 }
 ~duel_reset_all;
 [proc,duel_spoils]
-midi_jingle(^duel_win_2_jingle, ^duel_win_2_jingle_millis);
+~midi_jingle(^duel_win_2_jingle, ^duel_win_2_jingle_millis);
 if_openmain(duel_win);
 ~duel_adjust_scoreboard(displayname, ~player_combat_level, .displayname, ~.player_combat_level);
 if_settext(duel_win:displayname, .displayname);

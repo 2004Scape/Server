@@ -15,7 +15,7 @@ if (inzone(^arena_lower_coord, ^arena_upper_coord, coord) = true) @defeat_bounce
 if(%arena_progress = ^arena_defeated_scorpion) {
     %arena_progress = ^arena_defeated_bouncer;
     // https://youtu.be/mz82tzr4fJw?si=zkEYpF66XpLEbUjK&t=321, npc_add's another if the general is already in combat
-    if (npc_find(movecoord(coord, 8, 0, 0), general_khazard, 15, 0) = false | ~npc_out_of_combat = false) {
+    if (npc_find(movecoord(coord, 8, 0, 0), general_khazard, 15, 0) = false | ~npc_retal_ready = false) {
         npc_add(0_40_49_46_18, general_khazard, 500); // ticks guessed
     }
     @general_khazard_bouncer_killed;

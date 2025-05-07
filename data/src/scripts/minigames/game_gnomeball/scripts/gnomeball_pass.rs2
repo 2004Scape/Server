@@ -47,7 +47,7 @@ if ($player1_ingame = true & $player2_ingame = true) {
 mes("You throw the ball in play."); // was always this mes https://youtu.be/0lgauPFMzQ8?t=69
 
 anim(human_throw_gnomeball, 0);
-def_int $duration = ~player_projectile(coord, .coord, .uid, spotanim_55, 40, 40, 41, 15, 5, 11, 5);
+def_int $duration = ~player_projectile(coord, .coord, .uid, gnomeball_travel, 40, 40, 41, 15, 5, 11, 5);
 sound_synth(throw, 0, 0);
 .sound_synth(throw, 0, 0);
 

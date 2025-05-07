@@ -78,17 +78,9 @@ if (last_int < 9) {
     npc_queue(10, calc(last_int + 1), $delay);
     return;
 }
-npc_findallzone(^partyroom_starting_knight_coord);
+npc_findall(movecoord(^partyroom_starting_knight_coord, 2, 0, 0), partyroom_dancingknight, 3, 0);
 while (npc_findnext = true) {
-    if (npc_type = partyroom_dancingknight) {
-        npc_del;
-    }
-}
-npc_findallzone(movecoord(^partyroom_starting_knight_coord, 6, 0, 0));
-while (npc_findnext = true) {
-    if (npc_type = partyroom_dancingknight) {
-        npc_del;
-    }
+    npc_del;
 }
 
 [proc,random_balloon]()(loc)

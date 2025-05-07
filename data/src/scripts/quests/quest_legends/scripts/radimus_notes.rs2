@@ -75,7 +75,7 @@ if (stat(crafting) < 50) {
     return;
 }
 ~mesbox("You prepare to start mapping this area...");
-if (stat_random(stat(crafting), 100, 250) = false) {
+if (stat_random(crafting, 100, 250) = false) {
     def_int $rand = random(128);
     if($rand < 40) {
         ~objbox(thkaramjamap, "You make a mess but are able to rescue the paper.", 250, 0, 0);

@@ -26,7 +26,7 @@ if (inzone(0_52_53_0_0, 0_52_53_63_63, coord) = true) {
 if(map_members = ^true & ~trail_hasclue_inv = true) {
     def_obj $clue = ~trail_getclue_inv;
 
-    if(~trail_clue_coord($clue) = true) {
+    if(~trail_clue_coord($clue) = true & oc_param($clue, trail_casket) ! null) {
         def_boolean $sextant_clue = oc_param($clue, trail_sextant);
         def_coord $trail_coord = oc_param($clue, trail_coord);
         // for coord clues, https://www.youtube.com/watch?v=rcNbwik5-Ig looking at wiki and this 2013 video you can be 1 tile off and it will still work

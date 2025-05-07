@@ -26,8 +26,11 @@ npc_setmode(opplayer2);
 if (%npc_action_delay > map_clock) {
     return;
 }
-if (~npc_can_attack_player = false) {
+if (~npc_check_notcombat = false) {
     npc_setmode(null);
+    return;
+}
+if (~npc_check_notcombat_self = false) {
     return;
 }
 if (npc_range(coord) < 2) {
@@ -42,7 +45,7 @@ if (npc_range(coord) < 2) {
 if_close;
 npc_anim(golem_attack, 0);
 // todo: find projectile id
-def_int $delay = ~player_projectile(npc_coord, coord, uid, dwarf_rock_launch, 30, 15, 120, 0, 5, 30, 0);
+def_int $delay = ~player_projectile(npc_coord, coord, uid, dwarf_stone_throw_launch, 30, 15, 120, 0, 5, 30, 0);
 sound_synth(golem_attack, 0, 120);
 
 def_int $attack_roll = ~npc_ranged_attack_roll;
