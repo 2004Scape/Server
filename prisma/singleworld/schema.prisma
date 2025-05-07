@@ -259,11 +259,6 @@ model message_thread {
     closed_by         Int?
     marked_spam       DateTime?
     marked_spam_by    Int?
-
-    //deprecated
-    read              DateTime?
-    to_deleted        DateTime?
-    from_deleted      DateTime?
 }
 
 model message {
@@ -278,9 +273,6 @@ model message {
     edited_by   Int?
     deleted     DateTime?
     deleted_by  Int?
-
-    // deprecated
-    sender      String @default("me")
 }
 
 model message_tag {

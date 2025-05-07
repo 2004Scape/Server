@@ -103,7 +103,6 @@ export type message = {
     edited_by: number | null;
     deleted: string | null;
     deleted_by: number | null;
-    sender: Generated<string>;
 };
 export type message_status = {
     id: Generated<number>;
@@ -129,9 +128,6 @@ export type message_thread = {
     closed_by: number | null;
     marked_spam: string | null;
     marked_spam_by: number | null;
-    read: string | null;
-    to_deleted: string | null;
-    from_deleted: string | null;
 };
 export type mod_action = {
     id: Generated<number>;
