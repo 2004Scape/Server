@@ -22,9 +22,9 @@
 ^south_east_camera = 6
 ^south_west_camera = 7
 
-^duelstatus_lost = 5
-^duelstatus_victory = 6
-^duelstatus_opponent_resigned = 7
+^duelstatus_lost = 7
+^duelstatus_victory = 8
+^duelstatus_opponent_resigned = 9
 
 ^duelstatus_reset = 0
 ^duelstatus_received = 1

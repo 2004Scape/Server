@@ -24,8 +24,6 @@ if (.finduid(%duelpartner) = true) {
         .p_telejump($random_coord2);
     }
 
-    // move tempinv to stakeinv
-    ~moveallinv(tradeoffer, duelarrows);
     p_stopaction;
     // only deactive prayers if no prayers is selected. based off: https://imgur.com/ETH1z4L
     if (testbit(%duel_settings, ^no_prayer) = true) {
@@ -53,99 +51,65 @@ if (.finduid(%duelpartner) = true) {
 
     hint_player(.uid);
 
-    softtimer(duel_arena_start_3, 3); // todo: confirm these timings
-    softtimer(duel_arena_time_limit, 6000); // 60 minute time limit https://runescape.wiki/w/Update:Assist_System
-
+    settimer(duel_arena_time_limit, 6000); // 60 minute time limit https://runescape.wiki/w/Update:Assist_System
     ~midi_jingle(^duel_start_jingle, ^duel_start_jingle_millis);
+    ~duel_arena_countdown;
 }
 
 
-[proc,duel_arena_coord]()(coord)
-// random coord between 2 coords, checks if map blocked and not inside dueler
-def_coord $coord1;
-def_coord $coord2;
-def_int $i = 0;
-def_int $random_arena;
-// if all arenas are full, return null
-if (~duel_arena_obstacles_check = true) {
-    def_int $obstacle_arenas = db_getfieldcount(duel_arena_obstacle_fight_zones, coord_pair_table:coord_pair);
-    while ($i < $obstacle_arenas) {
-        if (map_playercount(db_getfield(duel_arena_obstacle_fight_zones, coord_pair_table:coord_pair, $i)) >= 24) {
-            $random_arena = ~random_range($i, $obstacle_arenas);
-            if ($i = calc($obstacle_arenas - 1)) {
-                return(null); // if its the last one and it fails, return null
-            }
-        }
-        $i = calc($i + 1);
-    }
-    $coord1, $coord2 = db_getfield(duel_arena_obstacle_fight_zones, coord_pair_table:coord_pair, $random_arena);
-} else {
-    def_int $normal_arenas = db_getfieldcount(duel_arena_fight_zones, coord_pair_table:coord_pair);
-    $i = 0;
-    while ($i < $normal_arenas) {
-        if (map_playercount(db_getfield(duel_arena_fight_zones, coord_pair_table:coord_pair, $i)) >= 24) {
-            $random_arena = ~random_range($i, $normal_arenas);
-            if ($i = calc($normal_arenas - 1)) {
-                return(null);
-            }
-        }
-        $i = calc($i + 1);
-    }
-    $coord1, $coord2 = db_getfield(duel_arena_fight_zones, coord_pair_table:coord_pair, $random_arena);
-}
-
-def_int $x1 = coordx($coord1);
-def_int $x2 = coordx($coord2);
-def_int $z1 = coordz($coord1);
-def_int $z2 = coordz($coord2);
-def_coord $random_coord = movecoord($coord1, random(sub($x2, $x1)), 0, random(sub($z2, $z1)));
-
-$i = 0;
-while (map_blocked($random_coord) = true) {
-    $random_coord = movecoord($coord1, random(sub($x2, $x1)), 0, random(sub($z2, $z1)));
-    $i = calc($i + 1);
-    if ($i = 50) {
-        return(null); // no way this is reached
-    }
-}
-return($random_coord);
-
-
-[softtimer,duel_arena_start_3]
+[proc,duel_arena_countdown]
+world_delay(1);
 if (~in_duel_arena(coord) = false) {
-    clearsofttimer(duel_arena_start_3);
     return;
 }
 say("3");
-softtimer(duel_arena_start_2, 3);
-clearsofttimer(duel_arena_start_3);
-
-[softtimer,duel_arena_start_2]
+world_delay(1);
 if (~in_duel_arena(coord) = false) {
-    clearsofttimer(duel_arena_start_2);
     return;
 }
 say("2");
-softtimer(duel_arena_start_1, 3);
-clearsofttimer(duel_arena_start_2);
-
-[softtimer,duel_arena_start_1]
+world_delay(1);
 if (~in_duel_arena(coord) = false) {
-    clearsofttimer(duel_arena_start_1);
     return;
 }
 say("1");
-softtimer(duel_arena_start_fight, 3);
-clearsofttimer(duel_arena_start_1);
-
-[softtimer,duel_arena_start_fight]
+world_delay(1);
 if (~in_duel_arena(coord) = false) {
-    clearsofttimer(duel_arena_start_fight);
+    return;
+}
+if (.finduid(%duelpartner) = false) {
+    queue(duel_arena_disconnect, 0);
+    return;
+}
+if (~.in_duel_arena(.coord) = false) {
+    queue(duel_arena_disconnect, 0);
+    .queue(duel_arena_disconnect, 0);
+    .clearqueue(duel_arena_prepare_start);
     return;
 }
 say("FIGHT!");
 %duelstatus = ^duelstatus_start;
-clearsofttimer(duel_arena_start_fight);
+
+[proc,duel_arena_coord]()(coord)
+// if all arenas are full, return null
+if (~duel_arena_obstacles_check = true) {
+    def_int $i = 0;
+    while ($i < db_getfieldcount(duel_arena_obstacle_fight_zones, coord_pair_table:coord_pair)) {
+        if (map_playercount(db_getfield(duel_arena_obstacle_fight_zones, coord_pair_table:coord_pair, $i)) < 24) {
+            return(~map_findsquare_inzone(db_getfield(duel_arena_obstacle_fight_zones, coord_pair_table:coord_pair, $i)));
+        }
+        $i = calc($i + 1);
+    }
+} else {
+    def_int $i = 0;
+    while ($i < db_getfieldcount(duel_arena_fight_zones, coord_pair_table:coord_pair)) {
+        if (map_playercount(db_getfield(duel_arena_fight_zones, coord_pair_table:coord_pair, $i)) < 24) {
+            return(~map_findsquare_inzone(db_getfield(duel_arena_fight_zones, coord_pair_table:coord_pair, $i)));
+        }
+        $i = calc($i + 1);
+    }
+}
+return(null);
 
 [walktrigger,duel_arena_no_move]
 if (~duel_arena_movement_check = true & ~in_duel_arena(coord) = true) {
@@ -153,18 +117,13 @@ if (~duel_arena_movement_check = true & ~in_duel_arena(coord) = true) {
     walktrigger(duel_arena_no_move);
 }
 
-[softtimer,duel_arena_time_limit]
+[timer,duel_arena_time_limit]
 if (~in_duel_arena(coord) = false) {
-    clearsofttimer(duel_arena_time_limit);
+    cleartimer(duel_arena_time_limit);
     return;
 }
 %duelstatus = ^duelstatus_reset;
 %duelpartner = null;
-if_close;
-queue(duel_arena_time_limit, 0);
-
-
-[queue,duel_arena_time_limit]
-~duel_give_stake_back;
+~moveallinv(dueloffer, inv);
 ~duel_reset_all;
 ~mesbox("Your duel ended in an honourable draw."); // RS3 message: https://archive.org/details/runelibris

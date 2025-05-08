@@ -26,3 +26,201 @@ while ($i < inv_size($inv)) {
 $str = ~string_removeright($str, 2);
 
 return($str);
+
+[proc,moveallinv_itemspace](inv $from_inv, inv $to_inv)(boolean)
+def_int $space_needed = 0;
+def_int $i = 0;
+def_int $size = inv_size($from_inv);
+while ($i < $size) {
+    def_obj $obj = inv_getobj($from_inv, $i);
+    def_int $obj_num = inv_getnum($from_inv, $i);
+    if ($obj ! null) {
+        if (oc_stackable($obj) = true) {
+            if (inv_itemspace($to_inv, $obj, $obj_num, $size) = false) {
+                return(false);
+            }
+            if (inv_total($to_inv, $obj) < 0) {
+                $space_needed = add($space_needed, 1);
+            }
+        } else {
+            $space_needed = add($space_needed, 1);
+        }
+    }
+    $i = add($i, 1);
+}
+if ($space_needed > inv_freespace($to_inv)) {
+    return(false);
+}
+return(true);
+
+// returns space taken up
+[proc,moveallinv_itemspace2](inv $from_inv, inv $to_inv)(int)
+def_int $space_needed = 0;
+def_int $i = 0;
+def_int $size = inv_size($from_inv);
+while ($i < $size) {
+    def_obj $obj = inv_getobj($from_inv, $i);
+    def_int $obj_num = inv_getnum($from_inv, $i);
+    if ($obj ! null) {
+        if (oc_stackable($obj) = true) {
+            if (inv_itemspace($to_inv, $obj, $obj_num, $size) = false) {
+                return(add(inv_size($to_inv), 1)); // fail
+            }
+            if (inv_total($to_inv, $obj) < 0) {
+                $space_needed = add($space_needed, 1);
+            }
+        } else {
+            $space_needed = add($space_needed, 1);
+        }
+    }
+    $i = add($i, 1);
+}
+return($space_needed);
+
+// returns space taken up when moving items from a secondary inventory to a primary inventory
+[proc,both_moveallinv_itemspace2](inv $secondary_from_inv, inv $primary_to_inv)(int)
+def_int $space_needed = 0;
+def_int $i = 0;
+def_int $size = inv_size($secondary_from_inv);
+while ($i < $size) {
+    def_obj $obj = .inv_getobj($secondary_from_inv, $i);
+    def_int $obj_num = .inv_getnum($secondary_from_inv, $i);
+    if ($obj ! null) {
+        if (oc_stackable($obj) = true) {
+            if (inv_itemspace($primary_to_inv, $obj, $obj_num, $size) = false) {
+                return(add(inv_size($primary_to_inv), 1)); // fail
+            }
+            if (inv_total($primary_to_inv, $obj) < 0) {
+                $space_needed = add($space_needed, 1);
+            }
+        } else {
+            $space_needed = add($space_needed, 1);
+        }
+    }
+    $i = add($i, 1);
+}
+return($space_needed);
+
+// returns space taken up
+[proc,enum_inv_itemspace](inv $from_inv, inv $to_inv, enum $enum)(int)
+def_int $space_needed = 0;
+def_int $i = 0;
+def_int $size = inv_size($from_inv);
+while ($i < enum_getoutputcount($enum)) {
+    def_obj $obj = inv_getobj($from_inv, enum(int, int, $enum, $i));
+    def_int $obj_num = inv_getnum($from_inv, enum(int, int, $enum, $i));
+    if ($obj ! null) {
+        if (oc_stackable($obj) = true) {
+            if (inv_itemspace($to_inv, $obj, $obj_num, $size) = false) {
+                return(add(inv_size($to_inv), 1)); // fail
+            }
+            if (inv_total($to_inv, $obj) < 0) {
+                $space_needed = add($space_needed, 1);
+            }
+        } else {
+            $space_needed = add($space_needed, 1);
+        }
+    }
+    $i = add($i, 1);
+}
+return($space_needed);
+
+
+// secondary procs
+[proc,.moveallinv_itemspace](inv $from_inv, inv $to_inv)(boolean)
+def_int $space_needed = 0;
+def_int $i = 0;
+def_int $size = inv_size($from_inv);
+while ($i < $size) {
+    def_obj $obj = .inv_getobj($from_inv, $i);
+    def_int $obj_num = .inv_getnum($from_inv, $i);
+    if ($obj ! null) {
+        if (oc_stackable($obj) = true) {
+            if (.inv_itemspace($to_inv, $obj, $obj_num, $size) = false) {
+                return(false);
+            }
+            if (.inv_total($to_inv, $obj) < 0) {
+                $space_needed = add($space_needed, 1);
+            }
+        } else {
+            $space_needed = add($space_needed, 1);
+        }
+    }
+    $i = add($i, 1);
+}
+if ($space_needed > .inv_freespace($to_inv)) {
+    return(false);
+}
+return(true);
+
+// returns space taken up
+[proc,.moveallinv_itemspace2](inv $from_inv, inv $to_inv)(int)
+def_int $space_needed = 0;
+def_int $i = 0;
+def_int $size = inv_size($from_inv);
+while ($i < $size) {
+    def_obj $obj = .inv_getobj($from_inv, $i);
+    def_int $obj_num = .inv_getnum($from_inv, $i);
+    if ($obj ! null) {
+        if (oc_stackable($obj) = true) {
+            if (.inv_itemspace($to_inv, $obj, $obj_num, $size) = false) {
+                return(add(inv_size($to_inv), 1)); // fail
+            }
+            if (.inv_total($to_inv, $obj) < 0) {
+                $space_needed = add($space_needed, 1);
+            }
+        } else {
+            $space_needed = add($space_needed, 1);
+        }
+    }
+    $i = add($i, 1);
+}
+return($space_needed);
+
+// returns space taken up when moving items from a secondary inventory to a primary inventory
+[proc,.both_moveallinv_itemspace2](inv $secondary_from_inv, inv $primary_to_inv)(int)
+def_int $space_needed = 0;
+def_int $i = 0;
+def_int $size = inv_size($secondary_from_inv);
+while ($i < $size) {
+    def_obj $obj = inv_getobj($secondary_from_inv, $i);
+    def_int $obj_num = inv_getnum($secondary_from_inv, $i);
+    if ($obj ! null) {
+        if (oc_stackable($obj) = true) {
+            if (.inv_itemspace($primary_to_inv, $obj, $obj_num, $size) = false) {
+                return(add(inv_size($primary_to_inv), 1)); // fail
+            }
+            if (.inv_total($primary_to_inv, $obj) < 0) {
+                $space_needed = add($space_needed, 1);
+            }
+        } else {
+            $space_needed = add($space_needed, 1);
+        }
+    }
+    $i = add($i, 1);
+}
+return($space_needed);
+
+// returns space taken up
+[proc,.enum_inv_itemspace](inv $from_inv, inv $to_inv, enum $enum)(int)
+def_int $space_needed = 0;
+def_int $i = 0;
+def_int $size = inv_size($from_inv);
+while ($i < enum_getoutputcount($enum)) {
+    def_obj $obj = .inv_getobj($from_inv, enum(int, int, $enum, $i));
+    def_int $obj_num = .inv_getnum($from_inv, enum(int, int, $enum, $i));
+    if ($obj ! null) {
+        if (oc_stackable($obj) = true) {
+            if (.inv_itemspace($to_inv, $obj, $obj_num, $size) = false) {
+                return(add(inv_size($to_inv), 1)); // fail
+            }
+            if (.inv_total($to_inv, $obj) < 0) {
+                $space_needed = add($space_needed, 1);
+            }
+        } else {
+            $space_needed = add($space_needed, 1);
+        }
+    }
+    $i = add($i, 1);
+}
+return($space_needed);

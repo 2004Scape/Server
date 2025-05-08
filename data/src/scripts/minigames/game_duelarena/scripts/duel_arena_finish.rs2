@@ -10,6 +10,7 @@ if (.finduid(%duelpartner) = true) {
     session_log(^log_moderator, "Lost a duel against <.name>");
     .if_close;
     .%duelstatus = ^duelstatus_victory;
+    both_moveinv(dueloffer, duelwinnings);
     .clearqueue(duel_finish);
     .queue(duel_finish, 0);
 }
@@ -40,36 +41,35 @@ if (.finduid(%duelpartner) = true) {
         return;
     }
 }
-~duel_reset_all;
+if (%duelstatus = ^duelstatus_lost) {
+    ~duel_reset_all;
+}
+
 [proc,duel_spoils]
 ~midi_jingle(^duel_win_2_jingle, ^duel_win_2_jingle_millis);
-if_openmain(duel_win);
 ~duel_adjust_scoreboard(displayname, ~player_combat_level, .displayname, ~.player_combat_level);
 if_settext(duel_win:displayname, .displayname);
 if_settext(duel_win:combat_level, tostring(~.player_combat_level));
 
-~duel_give_stake_back;
+~moveallinv(dueloffer, inv);
+inv_transmit(duelwinnings, duel_win:spoils);
 
-// take stuff from other player's stakeinv
-.both_moveinv(duelarrows, duelarrows);
-inv_transmit(duelarrows, duel_win:spoils);
+if_openmain(duel_win);
 
 [proc,duel_reset_all]
-if (~in_duel_arena(coord) = false) {
-    return;
-}
 // get arrows back
 def_int $i = 0;
-while ($i < inv_size(tradeoffer)) {
-    if (inv_getobj(tradeoffer, $i) ! null) {
-        inv_movefromslot(tradeoffer, inv, $i);
+while ($i < inv_size(duelarrows)) {
+    if (inv_getobj(duelarrows, $i) ! null) {
+        inv_movefromslot(duelarrows, inv, $i);
     }
     $i = calc($i + 1);
 }
 
 buildappearance(worn);
 ~prayer_deactivate_all;
-p_telejump(~duel_arena_finish_coord(coord));
+
+p_telejump(~map_findsquare_inzone(0_52_51_27_3, 0_52_51_51_15)); // https://youtu.be/QggKGBAl_X8?t=111
 anim(null, 0);
 p_stopaction;
 
@@ -84,37 +84,10 @@ hint_stop;
 %duelstatus = ^duelstatus_reset;
 %duelpartner = null;
 
-[proc,duel_give_stake_back]
-def_int $i = 0;
-while ($i < inv_size(duelarrows)) {
-    if (inv_getobj(duelarrows, $i) ! null) {
-        //mes("<oc_debugname(inv_getobj(stakeinv, $i))>: <tostring(inv_getnum(tempinv, $i))>");
-        inv_movefromslot(duelarrows, inv, $i);
-    }
-    $i = calc($i + 1);
-}
-
 [if_close,duel_win]
-~duel_give_stake_back;
-inv_stoptransmit(duel_win:spoils);
-
-// https://youtu.be/QggKGBAl_X8?t=111
-[proc,duel_arena_finish_coord](coord $coord)(coord)
-def_coord $coord1 = 0_52_51_27_3;
-def_coord $coord2 = 0_52_51_51_15;
-
-def_int $x1 = coordx($coord1);
-def_int $x2 = coordx($coord2);
-def_int $z1 = coordz($coord1);
-def_int $z2 = coordz($coord2);
-def_int $i = 0;
-def_coord $random_coord = movecoord($coord1, random(sub($x2, $x1)), 0, random(sub($z2, $z1)));
-
-while (map_blocked($random_coord) = true) {
-    $random_coord = movecoord($coord1, random(sub($x2, $x1)), 0, random(sub($z2, $z1)));
-    $i = calc($i + 1);
-    if ($i = 50) {
-        return($coord); // no way this is reached
-    }
+if (~moveallinv_itemspace(duelwinnings, inv) = false) {
+    inv_dropall(duelwinnings, coord, ^lootdrop_duration);
+    return;
 }
-return($random_coord);
+~moveallinv(duelwinnings, inv);
+inv_stoptransmit(duel_win:spoils);

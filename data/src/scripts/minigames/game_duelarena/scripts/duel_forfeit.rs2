@@ -17,6 +17,7 @@ queue(duel_finish, 0);
 if (.finduid(%duelpartner) = true) {
     session_log(^log_moderator, "Lost a duel by forfeit against <.name>");
     .if_close;
+    both_moveinv(dueloffer, duelwinnings);
     .%duelstatus = ^duelstatus_opponent_resigned;
     .queue(duel_finish, 0);
 }

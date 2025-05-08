@@ -1,14 +1,14 @@
 [duel_arena_fight_zones]
 table=coord_pair_table
-data=coord_pair,0_52_50_36_25,0_52_50_61_39
-data=coord_pair,0_52_50_4_6,0_52_50_29_20
-data=coord_pair,0_52_50_4_44,0_52_50_29_58
+data=coord_pair,0_52_50_5_44,0_52_50_29_58
+data=coord_pair,0_52_50_36_25,0_52_50_60_39
+data=coord_pair,0_52_50_5_6,0_52_50_29_20
 
 [duel_arena_obstacle_fight_zones]
 table=coord_pair_table
-data=coord_pair,0_52_50_36_6,0_52_50_61_20
-data=coord_pair,0_52_50_4_25,0_52_50_29_39
-data=coord_pair,0_52_50_36_44,0_52_50_61_58
+data=coord_pair,0_52_50_36_44,0_52_50_60_58
+data=coord_pair,0_52_50_5_25,0_52_50_29_39
+data=coord_pair,0_52_50_36_6,0_52_50_60_20
 
 [duel_arena_zones]
 table=coord_pair_table
