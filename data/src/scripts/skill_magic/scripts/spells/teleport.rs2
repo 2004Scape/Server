@@ -13,11 +13,6 @@ if (p_finduid(uid) = true) {
     if (~check_spell_requirements($spell_data)= false) {
         return;
     }
-    // todo: 
-    // - check for additional reqs, BEFORE deleting runes
-    if (~pre_tele_checks(coord) = false) {
-        return;
-    }
     if (~wilderness_level(coord) > 20) {
         mes("A mysterious force blocks your teleport spell!");
         mes("You can't use this teleport after level 20 wilderness.");
@@ -36,6 +31,9 @@ if (p_finduid(uid) = true) {
         mes("You havn't learnt how to cast this spell yet.");
         return;
     }
+    if (~pre_tele_checks(coord) = false) {
+        return;
+    }
     if (afk_event = ^true) {
         ~macro_event_general_spawn(~macro_event_set_random);
         return;
@@ -51,10 +49,6 @@ if (p_finduid(uid) = true) {
 [proc,player_teleport_normal](coord $coord)
 if_close;
 p_stopaction;
-if(inv_total(inv, thanainabarrel) > 0) {
-    ~chatnpc_specific("Ana (in a Barrel)", anabarrel, "<p,idle>@dbl@-- You can't teleport while holding the barrel, it's just @dbl@too difficult to concentrate. --");
-    return;
-}
 sound_synth(teleport_all, 0, 0);
 anim(human_castteleport, 0);
 spotanim_pl(teleport_casting, 92, 0);
@@ -80,6 +74,10 @@ if(inv_total(inv, plaguesample) > 0) {
 }
 
 [proc,pre_tele_checks](coord $coord)(boolean)
+if(inv_total(inv, thanainabarrel) > 0) {
+    ~chatnpc_specific("Ana (in a Barrel)", anabarrel, "<p,idle>@dbl@-- You can't teleport while holding the barrel, it's just @dbl@too difficult to concentrate. --");
+    return(false);
+}
 if (~inzone_coord_pair_table(trawler_wreck_zones, $coord) = true) {
     ~mesbox("Water and magic don't mix!|You can't teleport whilst swimming."); // osrs
     return(false);

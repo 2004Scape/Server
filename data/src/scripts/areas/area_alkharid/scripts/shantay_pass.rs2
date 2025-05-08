@@ -35,18 +35,11 @@ if (inv_total(inv, thshantaydisc) < 1) {
 ~objbox(shantay_pass, "You hand over a Shantay Pass.", 250, 0, 0);
 ~chatplayer("<p,neutral>Sure, here you go!");
 inv_del(inv, shantay_pass, 1);
+queue(shantay_pass_enter, 0);
 if (inv_total(inv, thshantaydisc) < 1) {
     inv_add(inv, thshantaydisc, 1);
     ~chatnpc("<p,neutral>Here, have a disclaimer... It means that Shantay isn't|responsible if you die in the desert.");
 }
-if_close;
-p_teleport(0_51_48_40_46);
-p_delay(0);
-facesquare(movecoord(coord, 0, 0, -3));
-p_delay(0);
-mes("You go through the gate.");
-p_telejump(movecoord(coord, 0, 0, -3));
-~start_desertheat_timer;
 
 
 [oploc1,shantay_jail_door]
@@ -100,14 +93,18 @@ if (inv_total(inv, thshantaydisc) < 1) {
 ~objbox(shantay_pass, "You hand over a Shantay Pass.", 250, 0, 0);
 ~chatplayer("<p,neutral>Sure, here you go!");
 inv_del(inv, shantay_pass, 1);
+queue(shantay_pass_enter, 0);
 if (inv_total(inv, thshantaydisc) < 1) {
     inv_add(inv, thshantaydisc, 1);
     ~chatnpc("<p,neutral>Here, have a disclaimer... It means that Shantay isn't|responsible if you die in the desert.");
 }
-if_close;
+
+[queue,shantay_pass_enter]
+mes("You go through the gate.");
+p_teleport(0_51_48_40_46);
+p_delay(0);
 facesquare(movecoord(coord, 0, 0, -3));
 p_delay(0);
-mes("You go through the gate.");
 p_telejump(movecoord(coord, 0, 0, -3));
 ~start_desertheat_timer;
 
