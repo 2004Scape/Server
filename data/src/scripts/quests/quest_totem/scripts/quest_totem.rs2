@@ -35,7 +35,7 @@ switch_obj(last_useitem) {
 // bit 21 stores the stairs trap state (0/1)
 [if_button,tribal_door2:com_57]
 if_close;
-if(testbit(%handelmort_traps_disabled, 0) = false) {
+if(testbit(%handelmort_traps_disabled, 0) = ^false) {
     if(~get_tribal_door_lock(1) = 10 & ~get_tribal_door_lock(2) = 20 & ~get_tribal_door_lock(3) = 17 & ~get_tribal_door_lock(4) = 19) {
         mes("The combination seems correct!");
         %handelmort_traps_disabled = setbit(%handelmort_traps_disabled, 0);
@@ -88,7 +88,7 @@ switch_int($lock_index) {
 }
 
 [oploc1,loc_2705]
-if(testbit(%handelmort_traps_disabled, 0) = false) {
+if(testbit(%handelmort_traps_disabled, 0) = ^false) {
     ~clear_tribaldoor_inter;
     if_openmain(tribal_door2);
     return;
@@ -102,7 +102,7 @@ def_coord $start = movecoord(loc_coord, 0, 0, 3);
 p_delay(0);
 p_walk($start);
 p_delay(calc(distance(coord, $start) + 1));
-if(testbit(%handelmort_traps_disabled, 21) = true) {
+if(testbit(%handelmort_traps_disabled, 21) = ^true) {
     p_telejump(1_41_51_7_57);
     mes("You climb up the stairs.");
     return;

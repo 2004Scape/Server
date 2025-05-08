@@ -1,13 +1,13 @@
 [opnpc1,bartender_seers]
 ~chatnpc("<p,happy>Good morning, what would you like?");
-if(testbit(%barcrawl_progress, ^forestersarms_index) = false & inv_total(inv, barcrawl_card) > 0) {
+if(testbit(%barcrawl_progress, ^forestersarms_index) = ^false & inv_total(inv, barcrawl_card) > 0) {
     @multi4("What do you have?", bartender_seers_what_have, "Beer please.", bartender_seers_beer, "I'm doing Alfred Grimhand's Barcrawl.", forestersarms_barcrawl, "I don't really want anything thanks.", bartender_seers_thanks);
 } else {
     @multi3("What do you have?", bartender_seers_what_have, "Beer please.", bartender_seers_beer, "I don't really want anything thanks.", bartender_seers_thanks);
 }
 
 [opnpcu,bartender_seers]
-if(testbit(%barcrawl_progress, ^forestersarms_index) = false & last_useitem = barcrawl_card) {
+if(testbit(%barcrawl_progress, ^forestersarms_index) = ^false & last_useitem = barcrawl_card) {
     @forestersarms_barcrawl;
 }
 

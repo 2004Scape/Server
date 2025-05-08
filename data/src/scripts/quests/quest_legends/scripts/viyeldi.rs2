@@ -1,5 +1,5 @@
 [opobj3,viyeldihat]
-if(%legends_progress >= ^legends_defeated_nezikchened_water | testbit(%legends_bits, ^legends_killed_viyeldi) = true) { // confirm this
+if(%legends_progress >= ^legends_defeated_nezikchened_water | testbit(%legends_bits, ^legends_killed_viyeldi) = ^true) { // confirm this
     ~mesbox("Your hand passes straight through the hat as though it wasn't there at all. Nothing else seems to happen though.");
     return;
 }

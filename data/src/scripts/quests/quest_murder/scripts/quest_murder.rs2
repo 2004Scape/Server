@@ -238,7 +238,7 @@ if(~obj_gettotal(~get_murder_thread) > 0) {
     ~mesbox("You have already taken the thread.");
     return;
 }
-if(testbit(%murder_evidence, ^murder_found_thread) = true) {
+if(testbit(%murder_evidence, ^murder_found_thread) = ^true) {
     ~mesbox("Lucky for you there's some thread left.|You should be less careless in future.");
     inv_add(inv, ~get_murder_thread, 1);
     return;

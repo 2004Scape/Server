@@ -1,5 +1,5 @@
 [oploc1,ctratgatec]
-if (testbit(%cog_progress, ^quest_cog_rat_door_bit) = true) {
+if (testbit(%cog_progress, ^quest_cog_rat_door_bit) = ^true) {
     ~mesbox("The death throes of the rats seem to have shaken the door|loose of its hinges. You pick it up and go through.");
     if_close;
     ~open_and_close_door2(loc_1541, ~check_axis(coord, loc_coord, loc_angle), grate_open);

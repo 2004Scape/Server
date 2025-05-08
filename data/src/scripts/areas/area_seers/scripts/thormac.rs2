@@ -8,7 +8,7 @@ switch_int (%scorpcatcher_progress) {
 [label,thormac_assistance]
 // COMMENTED OUT FOR NOW: Not sure if this is an OSRS update, you can only start the quest if the barcrawl has been previously completed
 // (this doesn't include if you use a dupe card to redo the barcrawl, which is why i'm checking it like this)
-//if(testbit(%barcrawl_progress, 1) = false) {
+//if(testbit(%barcrawl_progress, 1) = ^false) {
 //    ~chatnpc("<p,neutral>Hello I am Thormac the sorcerer.");
 //    ~chatplayer("<p,quiz>Do you need anything?");
 //    ~chatnpc("<p,neutral>Not right now, but thank you for offering.");

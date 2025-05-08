@@ -1,6 +1,6 @@
 // outside underground pass
 [opnpc1,koftik_ardougne]
-if(%upass_progress = ^upass_not_started & testbit(%upass_map_mechanisms, ^upass_started_bit) = true) {
+if(%upass_progress = ^upass_not_started & testbit(%upass_map_mechanisms, ^upass_started_bit) = ^true) {
     @koftik_first_dialogue;
 }
 switch_int(%upass_progress) {
@@ -121,7 +121,7 @@ if(%upass_progress >= ^upass_defeated_iban) {
     ~chatnpc("<p,neutral>I'm good... just keeping an eye out.");
     return;
 }
-if(testbit(%upass_map_mechanisms, ^upass_koftik_gone_insane) = true) {
+if(testbit(%upass_map_mechanisms, ^upass_koftik_gone_insane) = ^true) {
     // todo: check mesanim I closed dialogue on rs3, it's happy on OSRS but dialogue is a bit different
     ~chatnpc("<p,happy>Nice job killing those Paladins. You're much closer to his side now. Perhaps you could kill those dwarfs to the south...");
     return;

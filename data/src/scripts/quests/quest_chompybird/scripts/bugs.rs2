@@ -7,7 +7,7 @@ switch_int(%chompybird_progress) {
             ~chatnpc("<p,neutral>You's better talk to Dad, him chasey sneaky da chompy.");
             return;
         }
-        if (testbit(%chompybird_kills, ^chompybird_varbit_bought_scratchers) = true) {
+        if (testbit(%chompybird_kills, ^chompybird_varbit_bought_scratchers) = ^true) {
             ~chatnpc("<p,neutral>I's sorry creature, I don't got no more scratchers! But I got lots of bright pretties! Hope you's get da stabbers for Dad soonly!");
             return;
         }

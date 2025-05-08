@@ -52,7 +52,7 @@ if(%junglepotion_progress >= ^junglepotion_complete) {
             ~chatnpc("<p,neutral>This is an ancient artefact!");
             ~mesbox("Trufitus looks at the item in awe.");
             ~chatnpc("<p,neutral>I can certainly try! Hmm, incredible, it seems very ancient and mentions something about Zadimus and Ah Za Rhoon. It says, 'Here lies the traitor Zadimus, let his spirit be forever tormented'.");
-            if(testbit(%zq_map_mechanisms, ^zq_deciphered_plaque) = false) %zq_map_mechanisms = setbit(%zq_map_mechanisms, ^zq_deciphered_plaque); // todo: is this set here or before?
+            if(testbit(%zq_map_mechanisms, ^zq_deciphered_plaque) = ^false) %zq_map_mechanisms = setbit(%zq_map_mechanisms, ^zq_deciphered_plaque); // todo: is this set here or before?
             ~mesbox("Trufitus hands the Stone Plaque back.");
         case zqcrystal :
             if(%zombiequeen_progress >= ^zombiequeen_complete) @trufitus_postquest_item;

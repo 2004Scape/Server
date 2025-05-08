@@ -1,7 +1,7 @@
 [opnpc1,bedabin_nomad_guard]
 if(%desertrescue_progress >= ^desertrescue_given_pineapple) {
     ~chatnpc("<p,happy>Sorry, but you can't use the tent without permission.|But thanks for all your help with the Bedabin people.");
-} else if(testbit(%desertrescue_map_mechanisms, ^desertrescue_gained_tent_access) = true & %desertrescue_progress < ^desertrescue_learned_darts) {
+} else if(testbit(%desertrescue_map_mechanisms, ^desertrescue_gained_tent_access) = ^true & %desertrescue_progress < ^desertrescue_learned_darts) {
     ~chatnpc("<p,happy>Oh, I remember you; yeah go on in. Hope the weapon construction is going okay.");
     if_close;
     if(coord ! 0_49_47_33_37) {
@@ -40,7 +40,7 @@ if(%desertrescue_progress >= ^desertrescue_given_pineapple) {
 }
 
 [oploc1,loc_2700]
-if(testbit(%desertrescue_map_mechanisms, ^desertrescue_gained_tent_access) = true & %desertrescue_progress < ^desertrescue_learned_darts) {
+if(testbit(%desertrescue_map_mechanisms, ^desertrescue_gained_tent_access) = ^true & %desertrescue_progress < ^desertrescue_learned_darts) {
     // Temp note: dur updated
     loc_change(loc_2701, 3);
     if(coordz(coord) >= coordz(loc_coord)) {

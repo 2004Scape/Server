@@ -302,7 +302,7 @@ if(%phoenixgang_progress > 0 & %blackarmgang_progress ! ^blackarmgang_complete) 
 ~send_quest_progress_colour(questlist:mcannon, %mcannon_progress, ^mcannon_complete);
 ~send_quest_progress_colour(questlist:cog, ~get_cog_progress, ^quest_cog_complete);
 ~send_quest_progress_colour(questlist:grandtree, %grandtree_progress, ^grandtree_complete);
-if (testbit(%upass_map_mechanisms, ^upass_started_bit) = true & %upass_progress ! ^upass_complete) { // underground pass sets a bit for the 1st stage instead of using the progress varp
+if (testbit(%upass_map_mechanisms, ^upass_started_bit) = ^true & %upass_progress ! ^upass_complete) { // underground pass sets a bit for the 1st stage instead of using the progress varp
     ~send_quest_progress_colour(questlist:upass, 1, ^upass_complete);
 } else {
     ~send_quest_progress_colour(questlist:upass, %upass_progress, ^upass_complete);

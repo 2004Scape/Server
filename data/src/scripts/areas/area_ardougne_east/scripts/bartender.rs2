@@ -3,7 +3,7 @@
 ~chatplayer("<p,quiz>What do you serve?");
 ~chatnpc("<p,happy>Beer!");
 def_int $option;
-if(testbit(%barcrawl_progress, ^flyinghorse_index) = false & inv_total(inv, barcrawl_card) > 0) {
+if(testbit(%barcrawl_progress, ^flyinghorse_index) = ^false & inv_total(inv, barcrawl_card) > 0) {
     $option = ~p_choice3("I'll have a beer then.", 1, "I'll not have anything then.", 2, "I'm doing Alfred Grimhand's Barcrawl.", 3);
 } else {
     $option = ~p_choice2("I'll have a beer then.", 1, "I'll not have anything then.", 2);
@@ -26,7 +26,7 @@ if($option = 1) {
 }
 
 [opnpcu,bartender_flyinghorse]
-if(testbit(%barcrawl_progress, ^flyinghorse_index) = false & last_useitem = barcrawl_card) {
+if(testbit(%barcrawl_progress, ^flyinghorse_index) = ^false & last_useitem = barcrawl_card) {
     @flyinghorse_barcrawl;
 }
 

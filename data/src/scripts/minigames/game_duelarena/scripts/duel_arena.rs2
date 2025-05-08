@@ -178,13 +178,13 @@ if (.finduid(%duelpartner) = true & ~enough_duel_space = true) { // https://yout
 def_int $no_weapons_size = 0;
 def_int $no_armour_size = 0;
 def_int $no_jewelry_size = 0;
-if (testbit(%duel_settings, ^no_weapons) = true) {
+if (testbit(%duel_settings, ^no_weapons) = ^true) {
     $no_weapons_size = enum_getoutputcount(duel_arena_weapon_slots);
 }
-if (testbit(%duel_settings, ^no_armour) = true) {
+if (testbit(%duel_settings, ^no_armour) = ^true) {
     $no_armour_size = enum_getoutputcount(duel_arena_armour_slots);
 }
-if (testbit(%duel_settings, ^no_jewelry) = true) {
+if (testbit(%duel_settings, ^no_jewelry) = ^true) {
     $no_jewelry_size = enum_getoutputcount(duel_arena_jewelry_slots);
 }
 def_int $size = calc(inv_size(tradeoffer) + .inv_size(tradeoffer) + $no_weapons_size + $no_armour_size + $no_jewelry_size);
@@ -239,13 +239,13 @@ return(true);
 def_int $no_weapons_size = 0;
 def_int $no_armour_size = 0;
 def_int $no_jewelry_size = 0;
-if (testbit(.%duel_settings, ^no_weapons) = true) {
+if (testbit(.%duel_settings, ^no_weapons) = ^true) {
     $no_weapons_size = enum_getoutputcount(duel_arena_weapon_slots);
 }
-if (testbit(.%duel_settings, ^no_armour) = true) {
+if (testbit(.%duel_settings, ^no_armour) = ^true) {
     $no_armour_size = enum_getoutputcount(duel_arena_armour_slots);
 }
-if (testbit(.%duel_settings, ^no_jewelry) = true) {
+if (testbit(.%duel_settings, ^no_jewelry) = ^true) {
     $no_jewelry_size = enum_getoutputcount(duel_arena_jewelry_slots);
 }
 def_int $size = calc(.inv_size(tradeoffer) + inv_size(tradeoffer) + $no_weapons_size + $no_armour_size + $no_jewelry_size);

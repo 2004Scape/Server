@@ -1,5 +1,5 @@
 [opnpc1,wydin]
-if (testbit(%hunt_store_employed, 1) = true) {
+if (testbit(%hunt_store_employed, 1) = ^true) {
     @wydin_employed_chat;
 }
 

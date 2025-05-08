@@ -297,7 +297,7 @@ if($found = false) mes("...but you find nothing of interest.");
 
 
 [oploc1,loc_2677]
-if(testbit(%desertrescue_map_mechanisms, ^desertrescue_distracted_siad) = true) {
+if(testbit(%desertrescue_map_mechanisms, ^desertrescue_distracted_siad) = ^true) {
     %desertrescue_map_mechanisms = clearbit(%desertrescue_map_mechanisms, ^desertrescue_distracted_siad);
     if(inv_total(inv, thbedobinkey) > 0) {
         @unlock_bedobin_chest;
@@ -314,9 +314,9 @@ if(npc_find(coord, captain_siad, 7, 0) = true) {
 
 [oplocu,loc_2677]
 if(last_useitem = thbedobinkey) {
-    def_boolean $can_open = testbit(%desertrescue_map_mechanisms, ^desertrescue_distracted_siad);
+    def_int $can_open = testbit(%desertrescue_map_mechanisms, ^desertrescue_distracted_siad);
     %desertrescue_map_mechanisms = clearbit(%desertrescue_map_mechanisms, ^desertrescue_distracted_siad);
-    if($can_open = true) {
+    if($can_open = ^true) {
         @unlock_bedobin_chest;
     } else {
         if(npc_find(coord, captain_siad, 7, 0) = true) @captain_siad_dialogue; // osrs behaviour
@@ -347,7 +347,7 @@ inv_add(inv, thcaptplans, 1);
 ~mesbox("The cart driver seems to be busy inspecting the cart for defects.");
 
 [oploc2,loc_2682]
-if(testbit(%desertrescue_map_mechanisms, ^desertrescue_ready_rescue) = true) {
+if(testbit(%desertrescue_map_mechanisms, ^desertrescue_ready_rescue) = ^true) {
     ~mesbox("There is space on the cart for you get on, would you like to try?");
     switch_int(~p_choice3("Yes, I'll get on.", 1, "No, I've got other plans.", 2, "Attract mine cart drivers attention.", 3)) {
         case 1 :
@@ -369,7 +369,7 @@ if(testbit(%desertrescue_map_mechanisms, ^desertrescue_ready_rescue) = true) {
     }
     return;
 }
-if(testbit(%desertrescue_map_mechanisms, ^desertrescue_ana_mining_cart) = true) {
+if(testbit(%desertrescue_map_mechanisms, ^desertrescue_ana_mining_cart) = ^true) {
     ~mesbox("You can see the barrel with Ana in it on the cart already.");
     return;
 }
@@ -707,7 +707,7 @@ if(loc_coord = ^desertrescue_upper_barrel_coord) {
 
 [oploc2,loc_2680]
 if(loc_coord = ^desertrescue_upper_barrel_coord) {
-    if(testbit(%desertrescue_map_mechanisms, ^desertrescue_ana_lift_barrel) = true) {
+    if(testbit(%desertrescue_map_mechanisms, ^desertrescue_ana_lift_barrel) = ^true) {
         // https://web.archive.org/web/20060215230522/http://img.photobucket.com/albums/v72/me9alomaniac/tt4.png
         ~chatnpc_specific("Ana (in a Barrel)", anabarrel, "<p,angry>@blu@-- You search the barrels and find Ana. --|Let me out of here, I feel sick!");
         if(inv_freespace(inv) = 0) {
@@ -743,7 +743,7 @@ if(inv_total(inv, thminebarrel_empty) > 0) { // this is first
     mes("You can only manage one of these at a time.");
     return;
 }
-if(testbit(%desertrescue_map_mechanisms, ^desertrescue_ana_minecart_barrel) = true) {
+if(testbit(%desertrescue_map_mechanisms, ^desertrescue_ana_minecart_barrel) = ^true) {
     if(distance(loc_coord, ^desertrescue_lower_minecart_coord) > 3) {
         mes("You can see plenty of barrels, but not the one with Ana in it.");
         return;
@@ -775,7 +775,7 @@ loc_del(100);
 
 [oploc2,loc_2668]
 if(npc_find(coord, mercenary_2, 5, 0) = true | npc_find(coord, mercenary_1, 5, 0) = true) {
-    if(testbit(%desertrescue_map_mechanisms, ^desertrescue_ana_on_lift) = true) {
+    if(testbit(%desertrescue_map_mechanisms, ^desertrescue_ana_on_lift) = ^true) {
         ~chatnpc("<p,neutral>Hey, you'd better go and operate that lift yourself if you want that big heavy barrel to go anywhere.");
         return;
     }
@@ -876,7 +876,7 @@ if(last_useitem = thgoodminekey) {
 [oploc2,loc_2667]
 mes("You pull on the winch.");
 p_delay(3);
-if(testbit(%desertrescue_map_mechanisms, ^desertrescue_ana_on_lift) = true) {
+if(testbit(%desertrescue_map_mechanisms, ^desertrescue_ana_on_lift) = ^true) {
     if(%desertrescue_progress = ^desertrescue_ana_lift) %desertrescue_progress = ^desertrescue_retrieved_ana_lift;
     %desertrescue_map_mechanisms = clearbit(%desertrescue_map_mechanisms, ^desertrescue_ana_on_lift);
     %desertrescue_map_mechanisms = setbit(%desertrescue_map_mechanisms, ^desertrescue_ana_lift_barrel);

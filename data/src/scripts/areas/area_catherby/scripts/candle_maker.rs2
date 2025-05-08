@@ -1,5 +1,5 @@
 [opnpc1,candle_maker]
-if(testbit(%excalibur_components_progress, ^blackcandle_index) = true) {
+if(testbit(%excalibur_components_progress, ^blackcandle_index) = ^true) {
     ~chatnpc("<p,quiz>Have you got any wax yet?");
     if(inv_total(inv, bucket_wax) = 0) {
         ~chatplayer("<p,sad>Nope, not yet.");

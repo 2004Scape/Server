@@ -4,7 +4,7 @@
 
 [oploc1,digsite_panning_point]
 // on osrs, varbit 2544 (varp 135, bit 1) indicates if you've completed the panning guide errand or not
-if (~itexam_testbit(^itexam_bit_panning_guide_tea_given) = false) {
+if (~itexam_testbit(^itexam_bit_panning_guide_tea_given) = ^false) {
     if (npc_find(coord, panning_guide, 10, 0) = true) {
         @panning_guide_intervene;
     }
@@ -443,7 +443,7 @@ if ($rand < 2) {
     mes("You find nothing.");
     return;
 } else if ($rand < 3) {
-    if (~itexam_testbit(^itexam_bit_shown_ancient_symbol) = false & inv_total(inv, digtalisman) = 0) {
+    if (~itexam_testbit(^itexam_bit_shown_ancient_symbol) = ^false & inv_total(inv, digtalisman) = 0) {
         inv_add(inv, digtalisman, 1);
         ~objbox(digtalisman, "You find a strange talisman.", 250, 0, divide(^objbox_height, 2));
     } else {
@@ -583,7 +583,7 @@ if (~itexam_progress < ^itexam_mineshaft_permit) {
     @digsite_workman_intervene_winch;
 }
 
-if (~itexam_testbit(^itexam_bit_winch_rope_attached) = false) {
+if (~itexam_testbit(^itexam_bit_winch_rope_attached) = ^false) {
     mes("You operate the winch.");
     mes("The bucket descends, but does not reach the bottom.");
     anim(human_pickuptable, 0);
@@ -594,7 +594,7 @@ if (~itexam_testbit(^itexam_bit_winch_rope_attached) = false) {
 
 [oplocu,digsite_winch]
 if (last_useitem = rope) {
-    if (~itexam_testbit(^itexam_bit_winch_rope_attached) = false) {
+    if (~itexam_testbit(^itexam_bit_winch_rope_attached) = ^false) {
         // osrs varbit 2545 0 to 1
         mes("You tie the rope to the bucket...");
         ~itexam_setbit(^itexam_bit_winch_rope_attached);
@@ -637,7 +637,7 @@ if (~itexam_progress < ^itexam_mineshaft_permit) {
     @digsite_workman_intervene_winch;
 }
 
-if (~itexam_testbit(^itexam_bit_private_winch_rope_attached) = false) {
+if (~itexam_testbit(^itexam_bit_private_winch_rope_attached) = ^false) {
     mes("You operate the winch.");
     p_delay(2);
     mes("The bucket descends, but does not reach the bottom.");
@@ -649,7 +649,7 @@ if (~itexam_testbit(^itexam_bit_private_winch_rope_attached) = false) {
 
 [oplocu,digsite_private_dig_winch]
 if (last_useitem = rope) {
-    if (~itexam_testbit(^itexam_bit_private_winch_rope_attached) = false) {
+    if (~itexam_testbit(^itexam_bit_private_winch_rope_attached) = ^false) {
         // osrs varbit 2546 0 to 1
         mes("You tie the rope to the bucket...");
         ~itexam_setbit(^itexam_bit_private_winch_rope_attached);
@@ -801,7 +801,7 @@ inv_add(inv, unidentified_powder, 1);
 ~chatplayer("<p,quiz>Mmmm... The lid is shut tight; I'll have to find something to lever it off.");
 
 [oploc2,digsite_sealed_barrel]
-if (~itexam_testbit(^itexam_bit_barrel_open) = true) {
+if (~itexam_testbit(^itexam_bit_barrel_open) = ^true) {
     mes("You search the barrel...");
     mes("The barrel has a foul-smelling liquid inside.");
     ~chatplayer("<p,quiz>I can't pick this up with my bare hands! I'll need something to put it in. It looks and smells rather dangerous though, so it'll need to be something small and capable of containing dangerous chemicals.");
@@ -817,7 +817,7 @@ if ($item = trowel) {
     ~itexam_setbit(^itexam_bit_barrel_open);
     ~chatplayer("<p,happy>Great! It's opened it.");
 } else if ($item = vial_empty) {
-    if (~itexam_testbit(^itexam_bit_barrel_open) = true) {
+    if (~itexam_testbit(^itexam_bit_barrel_open) = ^true) {
         inv_del(inv, vial_empty, 1);
         inv_add(inv, unidentified_liquid, 1);
         ~objbox(unidentified_liquid, "You fill the vial with the liquid.", 250, 0, divide(^objbox_height, 2));       

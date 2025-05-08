@@ -1,7 +1,7 @@
 [opnpc1,bartender_brimhaven]
 ~chatnpc("<p,laugh>Yohoho me hearty what would you like to drink?");
 def_int $option;
-if(testbit(%barcrawl_progress, ^deadman_index) = false & inv_total(inv, barcrawl_card) > 0) {
+if(testbit(%barcrawl_progress, ^deadman_index) = ^false & inv_total(inv, barcrawl_card) > 0) {
     $option = ~p_choice4("Nothing, thank you.", 1, "A pint of Grog please.", 2, "A bottle of rum please.", 3, "I'm doing Alfred Grimhand's barcrawl.", 4);
 } else {
     $option = ~p_choice3("Nothing, thank you.", 1, "A pint of Grog please.", 2, "A bottle of rum please.", 3);
@@ -32,7 +32,7 @@ switch_int ($option) {
 }
 
 [opnpcu,bartender_brimhaven]
-if(testbit(%barcrawl_progress, ^deadman_index) = false & last_useitem = barcrawl_card) {
+if(testbit(%barcrawl_progress, ^deadman_index) = ^false & last_useitem = barcrawl_card) {
     @deadman_barcrawl;
 }
 

@@ -56,7 +56,7 @@ p_delay(2);
 
 [label,mcannon_fix_broken_railing](int $railing_num)
 // If the railing has been replaced.
-if (testbit(%mcannon_railings, $railing_num) = true) {
+if (testbit(%mcannon_railings, $railing_num) = ^true) {
     mes("You have already fixed this railing.");
     return;
 }

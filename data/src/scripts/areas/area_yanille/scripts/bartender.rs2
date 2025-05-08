@@ -5,7 +5,7 @@
 // so i'm guessing it was changed with watchtower rework
 ~chatnpc("<p,happy>Dragon Bitter and Greenman's Ale.");
 def_int $option;
-if(testbit(%barcrawl_progress, ^dragoninn_index) = false & inv_total(inv, barcrawl_card) > 0) {
+if(testbit(%barcrawl_progress, ^dragoninn_index) = ^false & inv_total(inv, barcrawl_card) > 0) {
     $option = ~p_choice4("I'll give it a miss I think.", 1, "I'll try the Dragon Bitter.", 2, "Can I have some Greenman's Ale?", 3, "I'm doing Alfred Grimhand's Barcrawl.", 4);
 } else {
     $option = ~p_choice3("I'll give it a miss I think.", 1, "I'll try the Dragon Bitter.", 2, "Can I have some Greenman's Ale?", 3);
@@ -39,7 +39,7 @@ switch_int($option) {
 }
 
 [opnpcu,bartender_dragoninn]
-if(testbit(%barcrawl_progress, ^dragoninn_index) = false & last_useitem = barcrawl_card) {
+if(testbit(%barcrawl_progress, ^dragoninn_index) = ^false & last_useitem = barcrawl_card) {
     @dragoninn_barcrawl;
 }
 

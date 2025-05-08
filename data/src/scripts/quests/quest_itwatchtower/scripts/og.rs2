@@ -1,7 +1,7 @@
 [opnpc1,og]
 if(%itwatchtower_progress >= ^itwatchtower_made_relic | %itwatchtower_progress < ^itwatchtower_given_fingernails) {
     mes("He's busy; try him another time.");
-} else if(testbit(%itwatchtower_bits, ^itwatchtower_helped_og) = true) {
+} else if(testbit(%itwatchtower_bits, ^itwatchtower_helped_og) = ^true) {
     ~chatnpc("<p,bored>It's the little rat again.");
     switch_int(~p_choice2("Do you have any other tasks for me?", 1, "I have lost the relic part you gave me.", 2)) {
         case 1 : 
@@ -16,7 +16,7 @@ if(%itwatchtower_progress >= ^itwatchtower_made_relic | %itwatchtower_progress <
             inv_add(inv, relicpart1, 1);
             ~chatnpc("<p,angry>Grrr, why do I bother?|It's a good job I got another part.");
     }
-} else if(testbit(%itwatchtower_bits, ^itwatchtower_spoken_og) = true) {
+} else if(testbit(%itwatchtower_bits, ^itwatchtower_spoken_og) = ^true) {
     @og_spoken;
 } else if(%itwatchtower_progress >= ^itwatchtower_given_fingernails) {
     // https://web.archive.org/web/20051025143129im_/http://www.runeweb.net/fireball/Watchtower%20Images/Watchtower5.PNG
@@ -73,7 +73,7 @@ switch_int(~p_choice3("I have your gold.", 1, "I haven't got it yet.", 2, "I hav
 }
 
 [opnpcu,og]
-if(last_useitem = stolen_gold & testbit(%itwatchtower_bits, ^itwatchtower_spoken_og) = true & testbit(%itwatchtower_bits, ^itwatchtower_helped_og) = false) {
+if(last_useitem = stolen_gold & testbit(%itwatchtower_bits, ^itwatchtower_spoken_og) = ^true & testbit(%itwatchtower_bits, ^itwatchtower_helped_og) = ^false) {
     @og_spoken;
 }
 ~displaymessage(^dm_default);

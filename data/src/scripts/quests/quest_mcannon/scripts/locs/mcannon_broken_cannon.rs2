@@ -49,7 +49,7 @@ if (~multi_cannon_fail_to_fix_or_find_problem() = true) {
 [label,fix_cannon_none]
 
 [label,attempt_repair](string $part_name, int $bit)
-if (testbit(%mcannon_railings, $bit) = true) {
+if (testbit(%mcannon_railings, $bit) = ^true) {
     mes("You've already fixed this part of the cannon.");
     return;
 }

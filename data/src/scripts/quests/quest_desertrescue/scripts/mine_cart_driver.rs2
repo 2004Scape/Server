@@ -1,8 +1,8 @@
 [opnpc1,mine_cart_driver]
 if(%desertrescue_progress = ^desertrescue_ana_on_mining_cart | %desertrescue_progress = ^desertrescue_escaped) {
-    if(testbit(%desertrescue_map_mechanisms, ^desertrescue_ready_rescue) = true) {
+    if(testbit(%desertrescue_map_mechanisms, ^desertrescue_ready_rescue) = ^true) {
         ~chatnpc("<p,neutral>Hurry up, get in the cart or I'll go without you!");
-    } else if(testbit(%desertrescue_map_mechanisms, ^desertrescue_ana_mining_cart) = true) {
+    } else if(testbit(%desertrescue_map_mechanisms, ^desertrescue_ana_mining_cart) = ^true) {
         ~mesbox("The cart driver seems to be festidiously cleaning his cart. It doesn't look as if he wants to be disturbed.");
         @multi3("Hello!", cartdriver_hello, "Nice cart.", cartdriver_nice, "Pssst...", cartdriver_psst);
     } else {

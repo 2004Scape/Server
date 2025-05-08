@@ -5,7 +5,7 @@ if(map_members = ^false) {
     ~chatnpc("<p,angry>Bah! A great artist such as myself should not have to suffer the HUMILIATION of spending time on these dreadful worlds where non-members wander everywhere!");
     return;
 }
-if(testbit(%bioerrand, ^devinci_given) = true) {
+if(testbit(%bioerrand, ^devinci_given) = ^true) {
     ~chatnpc("<p,neutral>Oh, it's you again.|Please don't distract me now, I'm contemplating the sublime.");
     return;
 }
@@ -60,7 +60,7 @@ if(map_members = ^false) {
     ~chatnpc("<p,angry>Bah! A great artist such as myself should not have to suffer the HUMILIATION of spending time on these dreadful worlds where non-members wander everywhere!");
     return;
 }
-if(testbit(%bioerrand, ^devinci_correct) = true) {
+if(testbit(%bioerrand, ^devinci_correct) = ^true) {
     ~chatnpc("<p,happy>Hello again.|I hope your journey was as pleasant as mine.");
     ~chatplayer("<p,happy>Well, as they say, it's always sunny in RuneScape.");
     ~chatnpc("<p,happy>Ok, here it is.");
@@ -69,7 +69,7 @@ if(testbit(%bioerrand, ^devinci_correct) = true) {
     %bioerrand = clearbit(%bioerrand, ^devinci_given);
     %bioerrand = clearbit(%bioerrand, ^devinci_correct);
     ~chatplayer("<p,happy>Thanks, you've been a big help.");
-} else if(testbit(%bioerrand, ^devinci_wrong) = true) {
+} else if(testbit(%bioerrand, ^devinci_wrong) = ^true) {
     ~chatnpc("<p,happy>Hello again.|I hope your journey was as pleasant as mine.");
     ~chatplayer("<p,happy>Yep. Anyway, I'll take the package off you now.");
     ~chatnpc("<p,quiz>Package? That's a funny way to describe a liquid of such exquisite beauty!");

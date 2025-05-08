@@ -2,7 +2,7 @@
 def_boolean $entering = ~check_axis(coord, loc_coord, loc_angle);
 if ($entering = true) {
     if (npc_find(coord, wydin, 10, 0) = true) {
-        if (testbit(%hunt_store_employed, ^food_store) = false) {
+        if (testbit(%hunt_store_employed, ^food_store) = ^false) {
             @wydin_employees_only;
         }
 

@@ -321,7 +321,7 @@ if($is_outside = false) {
     // https://web.archive.org/web/20050421234850/http://www.trillionareguild.com/runescape/waterfall.php mentions golrie gives you a hint for the key (same as OSRS)
     // OSRS auto uses the key w/op1, on RSC theres a seperate dialogue for the key but not sure if it exists/existed in RS2
     // could be possible that the dialogue used a distance check and only sends when closer than in the video but no proof 
-    if(testbit(%waterfall_golrie_and_puzzle, 0) = true) {
+    if(testbit(%waterfall_golrie_and_puzzle, 0) = ^true) {
         mes("Golrie has locked himself in.");
         return;
     }

@@ -8,7 +8,7 @@ if($pillar_index = 0 | $rune_index = 0) {
     ~displaymessage(^dm_default);
     return;
 }
-if(testbit(%waterfall_golrie_and_puzzle, $bit) = true) {
+if(testbit(%waterfall_golrie_and_puzzle, $bit) = ^true) {
     mes("You remember putting that type of rune there."); // osrs: You've already put that type of rune on this pillar.
     return;
 }

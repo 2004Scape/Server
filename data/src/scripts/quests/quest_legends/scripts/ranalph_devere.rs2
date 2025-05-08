@@ -3,7 +3,7 @@ if (~player_in_combat_check = false) {
     return;
 }
 if(%legends_progress < ^legends_heart_in_recess & ~obj_gettotal(heartcrystal_sectionc) = 0 & ~obj_gettotal(heartcrystal) = 0 
-        & ~obj_gettotal(heartcrystal_glow) = 0 & testbit(%legends_bits, ^legends_smelting_lump) = false) {
+        & ~obj_gettotal(heartcrystal_glow) = 0 & testbit(%legends_bits, ^legends_smelting_lump) = ^false) {
     npc_say("Your destiny awaits, adventurer...");
 } else {
     npc_say("My duty is done. I hope the source brings you all that you hoped for...");
@@ -13,7 +13,7 @@ if(%legends_progress < ^legends_heart_in_recess & ~obj_gettotal(heartcrystal_sec
 if(add(%lastcombat, 8) < map_clock & %aggressive_npc ! npc_uid) {
     %aggressive_npc = npc_uid;
     if(%legends_progress < ^legends_heart_in_recess & ~obj_gettotal(heartcrystal_sectionc) = 0 & ~obj_gettotal(heartcrystal) = 0 
-        & ~obj_gettotal(heartcrystal_glow) = 0 & testbit(%legends_bits, ^legends_smelting_lump) = false) {
+        & ~obj_gettotal(heartcrystal_glow) = 0 & testbit(%legends_bits, ^legends_smelting_lump) = ^false) {
         npc_say("Your destiny awaits, adventurer...");
     } else {
         npc_say("My duty is done. I hope the source brings you all that you hoped for...");
@@ -22,13 +22,13 @@ if(add(%lastcombat, 8) < map_clock & %aggressive_npc ! npc_uid) {
 @player_combat_start;
 
 [ai_opplayer2,ranalph_devere]
-if(inzone(0_43_45_0_0, 0_46_45_63_63, coord) = false & (%npc_aggressive_player ! uid & (~obj_gettotal(heartcrystal_sectionc) > 0 | ~obj_gettotal(heartcrystal) > 0 | ~obj_gettotal(heartcrystal_glow) > 0 | %legends_progress >= ^legends_heart_in_recess | testbit(%legends_bits, ^legends_smelting_lump) = true))) {
+if(inzone(0_43_45_0_0, 0_46_45_63_63, coord) = false & (%npc_aggressive_player ! uid & (~obj_gettotal(heartcrystal_sectionc) > 0 | ~obj_gettotal(heartcrystal) > 0 | ~obj_gettotal(heartcrystal_glow) > 0 | %legends_progress >= ^legends_heart_in_recess | testbit(%legends_bits, ^legends_smelting_lump) = ^true))) {
     npc_setmode(null);
     return;
 }
 if(add(%lastcombat, 8) < map_clock & %aggressive_npc ! npc_uid) {
     if(%legends_progress < ^legends_heart_in_recess & ~obj_gettotal(heartcrystal_sectionc) = 0 & ~obj_gettotal(heartcrystal) = 0 
-        & ~obj_gettotal(heartcrystal_glow) = 0 & testbit(%legends_bits, ^legends_smelting_lump) = false) {
+        & ~obj_gettotal(heartcrystal_glow) = 0 & testbit(%legends_bits, ^legends_smelting_lump) = ^false) {
         mes("Ranalph Devere: Upon my honour, I will defend the source to the bitter end.");
         mes("Ranalph Devere: May your aim be true, challenger...");
         npc_say("May your aim be true, challenger...");
@@ -63,7 +63,7 @@ if(finduid(%npc_aggressive_player) = true) {
         npc_setmode(none);
         npc_del;
         if(%legends_progress < ^legends_heart_in_recess & ~obj_gettotal(heartcrystal_sectionc) = 0 & ~obj_gettotal(heartcrystal) = 0 
-        & ~obj_gettotal(heartcrystal_glow) = 0 & testbit(%legends_bits, ^legends_smelting_lump) = false) {
+        & ~obj_gettotal(heartcrystal_glow) = 0 & testbit(%legends_bits, ^legends_smelting_lump) = ^false) {
             inv_add(inv, heartcrystal_sectionc, 1); // no space check
             mes("Ranalph Devere: You have proved yourself of the honour.");
             ~chatnpc("<p,neutral>You have proved yourself of the honour.");

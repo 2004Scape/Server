@@ -29,7 +29,7 @@ if(last_useitem = deathdagger) {
 
 [label,echned_dialogue]
 // checks in this order: holy force -> dark dagger -> glowing dagger
-if(testbit(%legends_bits, ^legends_given_dagger) = true) {
+if(testbit(%legends_bits, ^legends_given_dagger) = ^true) {
     @summon_nezi_dagger;
 }
 if(inv_total(inv, holyforce) > 0) {

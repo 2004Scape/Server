@@ -27,7 +27,7 @@ if(%desertrescue_progress >= ^desertrescue_learned_darts) {
 ~chatnpc("<p,neutral>I am Al Shabim, greetings on behalf of the Bedabin nomads.");
 if(%desertrescue_progress = ^desertrescue_finding_pineapple) {
     @multi3("I am looking for a pineapple.", shabim_pineapple, "What is this place?", shabim_whatplace, "Who are you?", shabim_who);
-} else if(%desertrescue_progress >= ^desertrescue_started & testbit(%desertrescue_map_mechanisms, ^desertrescue_find_al_shabim) = true) {
+} else if(%desertrescue_progress >= ^desertrescue_started & testbit(%desertrescue_map_mechanisms, ^desertrescue_find_al_shabim) = ^true) {
     @multi3("Who are you?", shabim_who, "I am looking for Al Zaba Bhasim.", shabim_looking, "What is this place?", shabim_whatplace);
 }
 @multi2("Who are you?", shabim_who, "What is this place?", shabim_whatplace);
@@ -98,7 +98,7 @@ if(%desertrescue_progress >= ^desertrescue_learned_darts) {
 
 [label,shabim_looking]
 ~chatplayer("<p,neutral>I am looking for Al Zaba Bhasim.");
-if(testbit(%desertrescue_map_mechanisms, ^desertrescue_spoke_al_shabim) = true) {
+if(testbit(%desertrescue_map_mechanisms, ^desertrescue_spoke_al_shabim) = ^true) {
     ~chatnpc("<p,bored>I've already explained that he doesn't exist. Now, can we move on?");
     return;
 }

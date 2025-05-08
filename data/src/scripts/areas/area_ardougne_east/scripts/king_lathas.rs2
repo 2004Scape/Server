@@ -47,7 +47,7 @@ if(%biohazard_progress = ^biohazard_reported_elena) {
             ~chatnpc("<p,happy>Your loyalty is appreciated, traveller.");
             queue(upass_quest_complete, 0);
         case ^upass_not_started :
-            if(testbit(%upass_map_mechanisms, ^upass_started_bit) = true) {
+            if(testbit(%upass_map_mechanisms, ^upass_started_bit) = ^true) {
                 @lathas_managing;
             }
             ~chatplayer("<p,happy>Hello King Lathas.");

@@ -945,7 +945,7 @@
 // info: Set a bit of a number
 [command,setbit](int $value, int $bit)(int)
 // info: Return true if a bit is set
-[command,testbit](int $value, int $bit)(boolean)
+[command,testbit](int $value, int $bit)(int)
 // info: Get the remainder of $n1 / $n2
 [command,modulo](int $n1, int $n2)(int)
 // info: Raise $n1 to the power of $n2

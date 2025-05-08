@@ -82,11 +82,11 @@ if(%biohazard_progress < ^biohazard_complete) {
     ~mesbox("You must complete the Biohazard quest before you can enter."); // rs3
     return;
 }
-if(testbit(%upass_map_mechanisms, ^upass_started_bit) = false) {
+if(testbit(%upass_map_mechanisms, ^upass_started_bit) = ^false) {
     mes("You must talk to King Lathas before you can enter.");
     return;
 }
-if(testbit(%upass_map_mechanisms, ^upass_started_bit) = true & %upass_progress = ^upass_not_started) {
+if(testbit(%upass_map_mechanisms, ^upass_started_bit) = ^true & %upass_progress = ^upass_not_started) {
     if(npc_find(coord, koftik_ardougne, 7, 0) = true) {
         @koftik_first_dialogue;
     }
@@ -198,7 +198,7 @@ p_delay(0);
 [oploc1,cavefood1]
 mes("You search the crate...");
 p_delay(2);
-if(testbit(%upass_map_mechanisms, ^upass_searched_area2_crate) = false) {
+if(testbit(%upass_map_mechanisms, ^upass_searched_area2_crate) = ^false) {
     mes("...inside you find some food.");
     inv_add(inv, salmon, 2);
     inv_add(inv, meat_pie, 2);
@@ -335,9 +335,9 @@ p_delay(1);
 @upass_well_inscription;
 
 [proc,upass_unicorn_door_unlocked]()(boolean)
-if(testbit(%upass_map_mechanisms, ^upass_thrown_jerro_badge) = true & testbit(%upass_map_mechanisms, ^upass_thrown_carl_badge) = true 
-        & testbit(%upass_map_mechanisms, ^upass_thrown_harry_badge) = true 
-        & testbit(%upass_map_mechanisms, ^upass_thrown_unicorn_horn) = true) {
+if(testbit(%upass_map_mechanisms, ^upass_thrown_jerro_badge) = ^true & testbit(%upass_map_mechanisms, ^upass_thrown_carl_badge) = ^true 
+        & testbit(%upass_map_mechanisms, ^upass_thrown_harry_badge) = ^true 
+        & testbit(%upass_map_mechanisms, ^upass_thrown_unicorn_horn) = ^true) {
     return (true);
 }
 return (false);
@@ -404,7 +404,7 @@ if(coordz(loc_coord) < 6400) {
 [oploc1,cavewalltunnel_upass_down]
 if(loc_coord = 1_33_71_38_1) p_teleport(0_36_153_32_2);
 else p_teleport(0_36_154_1_59);
-if(testbit(%upass_map_mechanisms, ^upass_koftik_gone_insane) = false) {
+if(testbit(%upass_map_mechanisms, ^upass_koftik_gone_insane) = ^false) {
     p_delay(0);
     // todo: figure out how long this should be, only works this way on RS3
     npc_add(map_findsquare(coord, 1, 2, ^map_findsquare_lineofwalk), koftik_4, 200);
@@ -455,7 +455,7 @@ if(last_useitem = upassdwarfbrew) {
     }
 } else if(last_useitem = tinderbox) {
     mes("You try to set light to the tomb.");
-    if(testbit(%upass_map_mechanisms, ^upass_poured_brew) = false) {
+    if(testbit(%upass_map_mechanisms, ^upass_poured_brew) = ^false) {
         mes("But it will not light.");
         return;
     }
@@ -477,7 +477,7 @@ if(last_useitem = upassdwarfbrew) {
     p_delay(2);
     mes("You search through the remains.");
     // todo: should there even be a doll check? OSRS and rs3 both have this thing completely changed
-    if(inv_total(inv, ibans_ashes) = 0 & testbit(%upass_map_mechanisms, ^upass_ashes_on_doll) = false) {
+    if(inv_total(inv, ibans_ashes) = 0 & testbit(%upass_map_mechanisms, ^upass_ashes_on_doll) = ^false) {
         mes("You find the ashes of Iban's corpse.");
         inv_add(inv, ibans_ashes, 1);
         return;
@@ -502,7 +502,7 @@ mes("The man seems to be entranced.");
 p_delay(1);
 mes("You search through the bottom of the cage...");
 p_delay(1);
-if(inv_total(inv, ibansdove) = 0 & loc_type = upass_cage_dummy & testbit(%upass_map_mechanisms, ^upass_dove_on_doll) = false) {
+if(inv_total(inv, ibansdove) = 0 & loc_type = upass_cage_dummy & testbit(%upass_map_mechanisms, ^upass_dove_on_doll) = ^false) {
     mes("...and find Iban's dove.");
     inv_add(inv, ibansdove, 1);
 } else {
@@ -619,13 +619,13 @@ if(coordx(loc_coord) < coordx(coord)) {
 // https://youtu.be/nWnu0s4z_jE?si=4lQzD8XapY37z_RO&t=567
 mes("You carefully search the doll...");
 p_delay(1);
-if(testbit(%upass_map_mechanisms, ^upass_blood_on_doll) = true) mes("Blood has been smeared onto the doll.");
+if(testbit(%upass_map_mechanisms, ^upass_blood_on_doll) = ^true) mes("Blood has been smeared onto the doll.");
 p_delay(0);
-if(testbit(%upass_map_mechanisms, ^upass_dove_on_doll) = true) mes("Crushed bones have been spread onto the doll.");
+if(testbit(%upass_map_mechanisms, ^upass_dove_on_doll) = ^true) mes("Crushed bones have been spread onto the doll.");
 p_delay(0);
-if(testbit(%upass_map_mechanisms, ^upass_ashes_on_doll) = true) mes("Burnt ash has been smeared onto the doll.");
+if(testbit(%upass_map_mechanisms, ^upass_ashes_on_doll) = ^true) mes("Burnt ash has been smeared onto the doll.");
 p_delay(0);
-if(testbit(%upass_map_mechanisms, ^upass_shadow_on_doll) = true) mes("Dark liquid has been smeared onto the doll.");
+if(testbit(%upass_map_mechanisms, ^upass_shadow_on_doll) = ^true) mes("Dark liquid has been smeared onto the doll.");
 p_delay(0);
 mes("The doll is made from old wood and cloth.");
 

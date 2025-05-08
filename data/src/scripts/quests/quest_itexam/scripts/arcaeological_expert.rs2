@@ -14,7 +14,7 @@ if ($progress = ^itexam_complete) {
     ~chatnpc("<p,happy>Can I help you at all?");
 }
 
-if (~itexam_testbit(^itexam_bit_shown_ancient_symbol) = true & inv_total(inv, digexpertscroll) = 0) {
+if (~itexam_testbit(^itexam_bit_shown_ancient_symbol) = ^true & inv_total(inv, digexpertscroll) = 0) {
     // It is intentional that, even after using the invitation letter, you can get another from terry (confirmed on OSRS)
     @multi5("I have something I need checking out.", archaeological_expert_checkout, "No thanks.", archaeological_expert_no_thanks, "Can you tell me anything about the digsite?", archaeological_expert_digsite_info, "I lost the letter you gave me.", archaeological_expert_lost_letter, "Can you tell me more about the tools an archaeologist uses?", archaeological_expert_tool_help);
 } else {
@@ -66,7 +66,7 @@ def_obj $item = last_useitem;
 
 // Not all the mesanims in here are correct
 if ($item = digtalisman) {
-    if (~itexam_testbit(^itexam_bit_shown_ancient_symbol) = true) {
+    if (~itexam_testbit(^itexam_bit_shown_ancient_symbol) = ^true) {
         ~mesbox("The expert has already seen the talisman.");
         return;
     }
