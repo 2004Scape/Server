@@ -784,4 +784,4 @@ stat_advance(agility, 30000);
 stat_advance(attack, 30000);
 session_log(^log_adventure, "Quest complete: Underground Pass");
 // todo: can't find an image of this so might need to confirm obj zoom + text breaking
-~send_quest_complete(questlist:upass, ibandoll, 250, ^upass_questpoints, "You have completed the\\n'Underground Pass Quest'!", true);
+~send_quest_complete(questlist:upass, ibandoll, 250, ^upass_questpoints, "You have completed the\\n'Underground Pass Quest'!");

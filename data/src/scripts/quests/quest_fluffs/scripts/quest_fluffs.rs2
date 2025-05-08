@@ -312,4 +312,4 @@ npc_del;
 session_log(^log_adventure, "Quest complete: Gertrude's Cat");
 %questpoints = calc(%questpoints + ^fluffs_questpoints);
 stat_advance(cooking, 15250);
-~send_quest_complete(questlist:fluffs, null, 0, ^fluffs_questpoints, null, false);
+~send_quest_complete(questlist:fluffs, null, 0, ^fluffs_questpoints, null);

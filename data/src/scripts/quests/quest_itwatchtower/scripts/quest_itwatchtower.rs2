@@ -557,4 +557,4 @@ mes("The scroll crumbles to dust.");
 [queue,itwatchtower_quest_complete]
 session_log(^log_adventure, "Quest complete: Watch Tower");
 // https://web.archive.org/web/20041229124758im_/http://img7.imageshack.us/img7/9247/complete.jpg
-~send_quest_complete(questlist:itwatchtower, ogrerelic, 260, ^itwatchtower_questpoints, "You have finished the Watchtower Quest.", false);
+~send_quest_complete(questlist:itwatchtower, ogrerelic, 260, ^itwatchtower_questpoints, "You have finished the Watchtower Quest.");

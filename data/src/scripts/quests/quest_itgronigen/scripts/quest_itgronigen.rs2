@@ -267,4 +267,4 @@ queue(itgronigen_quest_complete, 0);
 
 [queue,itgronigen_quest_complete]
 session_log(^log_adventure, "Quest complete: Observatory");
-~send_quest_complete(questlist:itgronigen, null, 0, ^itgronigen_questpoints, null, false);
+~send_quest_complete(questlist:itgronigen, null, 0, ^itgronigen_questpoints, null);

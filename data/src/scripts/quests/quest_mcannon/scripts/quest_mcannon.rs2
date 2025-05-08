@@ -24,4 +24,4 @@
 %mcannon_progress = ^mcannon_complete;
 stat_advance(crafting, 7500);
 session_log(^log_adventure, "Quest complete: Dwarf Cannon");
-~send_quest_complete(questlist:mcannon, mcannonball, 200, ^mcannon_questpoints, "You have finished the Dwarf Cannon Quest.", true);
+~send_quest_complete(questlist:mcannon, mcannonball, 200, ^mcannon_questpoints, "You have finished the Dwarf Cannon Quest.");
