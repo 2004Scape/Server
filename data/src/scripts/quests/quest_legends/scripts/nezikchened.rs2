@@ -15,7 +15,7 @@ if (%npc_aggressive_player ! uid) {
     npc_setmode(null);
     return;
 }
-if (stat(hitpoints) = 0) {
+if (%death = ^true) {
     npc_setmode(null);
     return;
 }
