@@ -91,7 +91,7 @@ say("FIGHT!");
 
 [proc,duel_arena_coord]()(coord)
 // if all arenas are full, return null
-if (~duel_arena_obstacles_check = true) {
+if (~duel_arena_obstacles_check = ^true) {
     def_int $i = 0;
     while ($i < db_getfieldcount(duel_arena_obstacle_fight_zones, coord_pair_table:coord_pair)) {
         if (map_playercount(db_getfield(duel_arena_obstacle_fight_zones, coord_pair_table:coord_pair, $i)) < 24) {
