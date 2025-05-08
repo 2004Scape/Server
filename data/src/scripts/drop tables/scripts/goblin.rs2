@@ -7,7 +7,7 @@
 [label,goblin_drop_table]
 
 gosub(npc_death);
-if (npc_findhero = false) {
+if (npc_findhero = ^false) {
     return;
 }
 
@@ -44,7 +44,7 @@ if ($dropint < 1) {
 } else if ($dropint < 25) {
     obj_add(npc_coord, chefshat, 1, ^lootdrop_duration);
 } else if ($dropint < 29) {
-    if (map_members = true) {
+    if (map_members = ^true) {
         obj_add(npc_coord, bronze_spear, 1, ^lootdrop_duration);
     }
 } else if ($dropint < 34) {
@@ -63,7 +63,7 @@ if ($dropint < 1) {
 
 [label,goblin_village_drop_table]
 gosub(npc_death);
-if (npc_findhero = false) {
+if (npc_findhero = ^false) {
     return;
 }
 
@@ -79,7 +79,7 @@ if ($dropint < 3) {
 } else if ($dropint < 4) {
     obj_add(npc_coord, bronze_scimitar, 1, ^lootdrop_duration);
 } else if ($dropint < 13) {
-    if (map_members = true) {
+    if (map_members = ^true) {
         obj_add(npc_coord, bronze_spear, 1, ^lootdrop_duration);
     } else {
         // it gets replaced by coins according to OSRS
@@ -94,7 +94,7 @@ if ($dropint < 3) {
 } else if ($dropint < 25) {
     obj_add(npc_coord, bodyrune, 2, ^lootdrop_duration);
 } else if ($dropint < 27) {
-    if (map_members = true) {
+    if (map_members = ^true) {
         obj_add(npc_coord, bronze_javelin, 5, ^lootdrop_duration);
     } else {
         obj_add(npc_coord, coins, 10, ^lootdrop_duration);

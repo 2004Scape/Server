@@ -2,13 +2,13 @@
 switch_obj (last_useitem)
 {
     case leather_chaps :
-        if (map_members = false) {
+        if (map_members = ^false) {
             mes(^mes_members_feature);
             return;
         }
         @craft_studded(studded_chaps);
     case leather_body :
-        if (map_members = false) {
+        if (map_members = ^false) {
             mes(^mes_members_feature);
             return;
         }
@@ -18,7 +18,7 @@ switch_obj (last_useitem)
 
 [opheldu,leather_chaps]
 if (last_useitem = studs) {
-    if (map_members = false) {
+    if (map_members = ^false) {
         mes(^mes_members_feature);
         return;
     }
@@ -28,7 +28,7 @@ if (last_useitem = studs) {
 
 [opheldu,leather_body]
 if (last_useitem = studs) {
-    if (map_members = false) {
+    if (map_members = ^false) {
         mes(^mes_members_feature);
         return;
     }

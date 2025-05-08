@@ -11,7 +11,7 @@ if (.finduid(%duelpartner) = true) {
     }
     p_telejump($random_coord1);
     def_int $i = 0;
-    if (testbit(%duel_settings, ^no_movement) = true & .p_finduid(.uid) = true) {
+    if (testbit(%duel_settings, ^no_movement) = ^true & .p_finduid(.uid) = true) {
         while (map_blocked($random_coord2) = true | $random_coord2 = $random_coord1 | lineofwalk($random_coord1, $random_coord2) = false & $i < 50){
             switch_int (random(4)) {
                 case 0 : $random_coord2 = movecoord($random_coord1, 1, 0, 0);
@@ -26,7 +26,7 @@ if (.finduid(%duelpartner) = true) {
 
     p_stopaction;
     // only deactive prayers if no prayers is selected. based off: https://imgur.com/ETH1z4L
-    if (testbit(%duel_settings, ^no_prayer) = true) {
+    if (testbit(%duel_settings, ^no_prayer) = ^true) {
         ~prayer_deactivate_all;
     }
     // Doesnt rest stats.
@@ -35,17 +35,17 @@ if (.finduid(%duelpartner) = true) {
     // - https://web.archive.org/web/20050930213502/http://runevillage.com:80/rs2specialDuelingarena.php
     //      - "No Potions: This means you can’t use Potions, if you used a Potion before the Duel its effects will be returned to normal."
     // - In 2006, if you had the "No drinks" option selected, the 2nd menu would show  "Boosted stats will be restored." https://imgur.com/ETH1z4L
-    if (testbit(%duel_settings, ^no_potions) = true) {
+    if (testbit(%duel_settings, ^no_potions) = ^true) {
         ~stat_reset_boosts;
     }
 
-    if (testbit(%duel_settings, ^no_weapons) = true) {
+    if (testbit(%duel_settings, ^no_weapons) = ^true) {
         ~unequip_duel(duel_arena_weapon_slots);
     }
-    if (testbit(%duel_settings, ^no_armour) = true) {
+    if (testbit(%duel_settings, ^no_armour) = ^true) {
         ~unequip_duel(duel_arena_armour_slots);
     }
-    if (testbit(%duel_settings, ^no_jewelry) = true) {
+    if (testbit(%duel_settings, ^no_jewelry) = ^true) {
         ~unequip_duel(duel_arena_jewelry_slots);
     }
 
@@ -55,7 +55,6 @@ if (.finduid(%duelpartner) = true) {
     ~midi_jingle(^duel_start_jingle, ^duel_start_jingle_millis);
     ~duel_arena_countdown;
 }
-
 
 [proc,duel_arena_countdown]
 world_delay(1);
@@ -112,7 +111,7 @@ if (~duel_arena_obstacles_check = true) {
 return(null);
 
 [walktrigger,duel_arena_no_move]
-if (~duel_arena_movement_check = true & ~in_duel_arena(coord) = true) {
+if (~duel_arena_movement_check = ^true & ~in_duel_arena(coord) = true) {
     p_walk(coord);
     walktrigger(duel_arena_no_move);
 }

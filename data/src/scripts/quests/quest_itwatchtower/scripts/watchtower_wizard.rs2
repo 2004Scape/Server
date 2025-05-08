@@ -246,7 +246,7 @@ if(last_useitem = ogrerelic) {
     ~chatnpc("<p,neutral>Keep searching for the others.|If you've dropped any,|then you will need to go back to where you got it from.");
 } else if(last_useitem = relicpart1) {
     ~chatplayer("<p,neutral>I had this given to me...");
-    if(testbit(%itwatchtower_bits, ^itwatchtower_relic1) = true) {
+    if(testbit(%itwatchtower_bits, ^itwatchtower_relic1) = ^true) {
         ~chatnpc("<p,confused>I already have that part..."); // rs3, rsc matches
         return;
     }
@@ -256,7 +256,7 @@ if(last_useitem = ogrerelic) {
     @check_relic_parts;
 } else if(last_useitem = relicpart2) {
     ~chatplayer("<p,neutral>I got given this by an ogre...");
-    if(testbit(%itwatchtower_bits, ^itwatchtower_relic2) = true) {
+    if(testbit(%itwatchtower_bits, ^itwatchtower_relic2) = ^true) {
         ~chatnpc("<p,confused>I already have that part...");
         return;
     }
@@ -266,7 +266,7 @@ if(last_useitem = ogrerelic) {
     @check_relic_parts;
 } else if(last_useitem = relicpart3) {
     ~chatplayer("<p,neutral>An ogre gave me this...");
-    if(testbit(%itwatchtower_bits, ^itwatchtower_relic3) = true) {
+    if(testbit(%itwatchtower_bits, ^itwatchtower_relic3) = ^true) {
         ~chatnpc("<p,confused>I already have that part...");
         return;
     }

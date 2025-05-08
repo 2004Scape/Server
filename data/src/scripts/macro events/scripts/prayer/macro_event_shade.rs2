@@ -26,11 +26,11 @@ if (~macro_event_lost_hostile = true) {
 
 [ai_queue3,_macro_event_shade]
 gosub(npc_death);
-if (npc_findhero = false) {
+if (npc_findhero = ^false) {
     return;
 }
 // if f2p, dont drop anything
-if (map_members = false) {
+if (map_members = ^false) {
     return;
 }
 

@@ -41,7 +41,7 @@ if (~macro_event_lost_hostile = true) {
 // - https://web.archive.org/web/20050210102631/http://runehq.com/viewMonster.php?id=212
 [ai_queue3,_macro_event_watchman]
 gosub(npc_death);
-if (npc_findhero = false) {
+if (npc_findhero = ^false) {
     return;
 }
 // Default drop from config.
@@ -101,7 +101,7 @@ if ($random < 8) { // 8/128
     obj_add(npc_coord, deathrune, 3, ^lootdrop_duration);
 } else if ($random < 120) { // 2/128
     obj_add(npc_coord, naturerune, 8, ^lootdrop_duration);
-} else if ($random < 124 & map_members = true) {
+} else if ($random < 124 & map_members = ^true) {
     obj_add(npc_coord, ~randomherb, ^lootdrop_duration);
 } else {
     obj_add(npc_coord, ~randomjewel, ^lootdrop_duration);

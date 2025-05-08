@@ -150,7 +150,7 @@ if(%arthur_progress ! ^arthur_spoken_morgan_lefaye) {
 [opheld5,bat_bones]
 if(inzone(movecoord(^camelot_magic_symbol, -1, 0, -1), movecoord(^camelot_magic_symbol, 1, 0, 1), coord) = true) { 
     if(inv_total(inv, lit_black_candle) > 0 & %arthur_progress = ^arthur_spoken_morgan_lefaye) {
-        if(testbit(%excalibur_components_progress, ^chaosaltar_index) = false) {
+        if(testbit(%excalibur_components_progress, ^chaosaltar_index) = ^false) {
             ~mesbox("I think I'd better learn the words of binding before summoning a mighty spirit...");
             return;
         }
@@ -208,12 +208,12 @@ inv_dropslot(inv, coord, last_slot, ^lootdrop_duration);
 sound_synth(put_down, 0, 0);
 
 [oploc1,jewellersdoor]
-if(testbit(%excalibur_components_progress, ^excalibur_rewarded) = false) {
-    if(testbit(%excalibur_components_progress, ^excalibur_spoken_beggar) = true) {
+if(testbit(%excalibur_components_progress, ^excalibur_rewarded) = ^false) {
+    if(testbit(%excalibur_components_progress, ^excalibur_spoken_beggar) = ^true) {
         if(npc_find(coord, lake_beggar, 1, 0) = false) {
             npc_add(movecoord(loc_coord, 0, 0, 1), lake_beggar, 100);
         }
-    } else if(testbit(%excalibur_components_progress, ^excalibur_started) = true) {
+    } else if(testbit(%excalibur_components_progress, ^excalibur_started) = ^true) {
         if(npc_find(coord, lake_beggar, 1, 0) = false) {
             npc_add(movecoord(loc_coord, 0, 0, 1), lake_beggar, 100);
         }
@@ -227,7 +227,7 @@ p_arrivedelay;
 anim(human_reachforladder, 0);
 p_delay(0);
 p_telejump(movecoord(loc_coord, 0, 1, 1));
-if(testbit(%excalibur_components_progress, ^excalibur_rewarded) = false & testbit(%excalibur_components_progress, ^excalibur_started) = true & map_members = true) {
+if(testbit(%excalibur_components_progress, ^excalibur_rewarded) = ^false & testbit(%excalibur_components_progress, ^excalibur_started) = ^true & map_members = ^true) {
     if(npc_find(coord, ladyofthelake, 4, 0) = false) {
         npc_add(movecoord(coord, -1, 0, 3), ladyofthelake, 100);
     }

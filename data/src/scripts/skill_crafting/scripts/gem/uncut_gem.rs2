@@ -11,7 +11,7 @@ switch_obj (last_useitem)
 //--- Label to craft a gem
 [label,crafting_gem](obj $uncut_gem)
 if (oc_members($uncut_gem) = true) {
-    if (map_members = false) {
+    if (map_members = ^false) {
         mes(^mes_members_feature);
         return;
     }

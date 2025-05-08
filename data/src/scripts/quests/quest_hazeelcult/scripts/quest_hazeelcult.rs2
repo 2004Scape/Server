@@ -43,7 +43,7 @@ if($valves_value = 0) {
 def_int $i = 0;
 def_int $counter = 0;
 while($i < 5) {
-    if(testbit(%hazeelcult_valves, $i) = true) {
+    if(testbit(%hazeelcult_valves, $i) = ^true) {
         $counter = calc($counter + 1);
         $i = calc($i + 1);
     } else {

@@ -47,8 +47,8 @@ session_log(^log_adventure, "Quest complete: Family Crest");
 
 // Opens if north lever is down and south lever is up
 [oploc1,witchaven_north_door]
-if (testbit(%crest_spells_levers_gauntlets, ^crest_north_lever) = false &
-    testbit(%crest_spells_levers_gauntlets, ^crest_south_lever) = true) {
+if (testbit(%crest_spells_levers_gauntlets, ^crest_north_lever) = ^false &
+    testbit(%crest_spells_levers_gauntlets, ^crest_south_lever) = ^true) {
     ~open_and_close_door2(witchaven_door_open, ~check_axis(coord, loc_coord, loc_angle), door_open);
 } 
 else {
@@ -57,8 +57,8 @@ else {
 
 // Opens if north lever is up and south lever is up
 [oploc1,witchaven_south_west_door]
-if (testbit(%crest_spells_levers_gauntlets, ^crest_north_lever) = true &
-    testbit(%crest_spells_levers_gauntlets, ^crest_south_lever) = true) {
+if (testbit(%crest_spells_levers_gauntlets, ^crest_north_lever) = ^true &
+    testbit(%crest_spells_levers_gauntlets, ^crest_south_lever) = ^true) {
     ~open_and_close_door2(witchaven_door_open, ~check_axis(coord, loc_coord, loc_angle), door_open);
 }
 else {
@@ -67,8 +67,8 @@ else {
 
 // Opens if north lever is up and south lever is down
 [oploc1,witchaven_south_east_door]
-if (testbit(%crest_spells_levers_gauntlets, ^crest_north_lever) = true &
-    testbit(%crest_spells_levers_gauntlets, ^crest_south_lever) = false) {
+if (testbit(%crest_spells_levers_gauntlets, ^crest_north_lever) = ^true &
+    testbit(%crest_spells_levers_gauntlets, ^crest_south_lever) = ^false) {
     ~open_and_close_door2(witchaven_door_open, ~check_axis(coord, loc_coord, loc_angle), door_open);
 }
 else {
@@ -77,9 +77,9 @@ else {
 
 // Opens if north lever is up, south lever is down, and the north room lever is up
 [oploc1,witchaven_goldmine_door]
-if (%crest_progress = ^crest_complete | (testbit(%crest_spells_levers_gauntlets, ^crest_north_lever) = true &
-    testbit(%crest_spells_levers_gauntlets, ^crest_south_lever) = false &
-    testbit(%crest_spells_levers_gauntlets, ^crest_north_room_lever) = true)) {
+if (%crest_progress = ^crest_complete | (testbit(%crest_spells_levers_gauntlets, ^crest_north_lever) = ^true &
+    testbit(%crest_spells_levers_gauntlets, ^crest_south_lever) = ^false &
+    testbit(%crest_spells_levers_gauntlets, ^crest_north_room_lever) = ^true)) {
     ~open_and_close_door2(witchaven_door_open, ~check_axis(coord, loc_coord, loc_angle), door_open);
 }
 else {

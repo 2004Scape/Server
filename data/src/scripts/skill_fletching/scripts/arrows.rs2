@@ -23,7 +23,7 @@ switch_obj(last_useitem) {
 }
 
 [label,make_headless_arrows]
-if (map_members = false) {
+if (map_members = ^false) {
     mes(^mes_members_fletching); // guess
     return;
 }
@@ -48,7 +48,7 @@ inv_add(inv, headless_arrow, $arrow_count);
 
 
 [label,make_arrows](obj $arrow_tips)
-if (map_members = false) {
+if (map_members = ^false) {
     mes(^mes_members_fletching); // guess
     return;
 }

@@ -3,7 +3,7 @@ mes("This looks like a large pile of sand.");
 
 [oplocu,loc_2977]
 if (last_useitem = bucket_empty) {
-    if (map_members = false) {
+    if (map_members = ^false) {
         mes(^mes_members_feature);
         return;
     }
@@ -19,7 +19,7 @@ mes("This looks like a medium pile of sand.");
 
 [oplocu,loc_2978]
 if (last_useitem = bucket_empty) {
-    if (map_members = false) {
+    if (map_members = ^false) {
         mes(^mes_members_feature);
         return;
     }
@@ -35,7 +35,7 @@ mes("This looks like a small pile of sand.");
 
 [oplocu,loc_2979]
 if (last_useitem = bucket_empty) {
-    if (map_members = false) {
+    if (map_members = ^false) {
         mes(^mes_members_feature);
         return;
     }

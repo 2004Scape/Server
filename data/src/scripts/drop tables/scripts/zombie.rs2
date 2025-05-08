@@ -4,7 +4,7 @@
 
 [label,unarmed_zombie]
 gosub(npc_death);
-if (npc_findhero = false) {
+if (npc_findhero = ^false) {
     return;
 }
 obj_add(npc_coord, npc_param(death_drop), 1, ^lootdrop_duration);
@@ -52,7 +52,7 @@ if ($dropint < 4) {
 
 [label,armed_zombie]
 gosub(npc_death);
-if (npc_findhero = false) {
+if (npc_findhero = ^false) {
     return;
 }
 obj_add(npc_coord, npc_param(death_drop), 1, ^lootdrop_duration);
@@ -101,7 +101,7 @@ if ($dropint < 3) {
 
 [ai_queue3,zombie_entranan]
 gosub(npc_death);
-if (npc_findhero = false) {
+if (npc_findhero = ^false) {
     return;
 }
 obj_add(npc_coord, npc_param(death_drop), 1, ^lootdrop_duration);

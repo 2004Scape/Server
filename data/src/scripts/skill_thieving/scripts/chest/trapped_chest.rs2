@@ -42,7 +42,7 @@ if (last_useitem = lockpick) {
 ~displaymessage(^dm_default);
 
 [label,attempt_trapped_chest](loc $loc, coord $loc_coord, int $loc_angle, locshape $loc_shape)
-if (map_members = false) {
+if (map_members = ^false) {
     mes(^mes_members_thieving);
     return;
 }

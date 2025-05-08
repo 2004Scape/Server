@@ -1,5 +1,5 @@
 [opnpc1,lake_beggar]
-if(testbit(%excalibur_components_progress, ^excalibur_spoken_beggar) = true) {
+if(testbit(%excalibur_components_progress, ^excalibur_spoken_beggar) = ^true) {
     ~chatnpc("<p,quiz>Have you got any bread for me yet?");
     switch_int (~p_choice2("Yes, here you go.", 1, "No, I still have none.", 2)) {
         case 1 :

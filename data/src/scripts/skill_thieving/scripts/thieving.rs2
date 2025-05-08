@@ -94,7 +94,7 @@ loc_change(market_stall, $respawn_ticks);
 
 [label,activate_trapped_chest]
 p_arrivedelay;
-if (map_members = false) {
+if (map_members = ^false) {
     mes(^mes_members_thieving);
     return;
 }

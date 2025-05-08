@@ -9,7 +9,7 @@ switch_obj (last_useitem) {
 };
 
 [label,make_oomlie_wrap]
-if (map_members = false) {
+if (map_members = ^false) {
     mes("You can only make that on a members' server.");
     return;
 }

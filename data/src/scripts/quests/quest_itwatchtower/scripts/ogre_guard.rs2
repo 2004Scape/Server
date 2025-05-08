@@ -45,7 +45,7 @@ if(%itwatchtower_progress >= ^itwatchtower_given_relic) {
     ~chatnpc("<p,neutral>It's the small creature;|you may pass.");
     return;
 }
-if(testbit(%itwatchtower_bits, ^itwatchtower_looking_relic) = true) {
+if(testbit(%itwatchtower_bits, ^itwatchtower_looking_relic) = ^true) {
     @ogre_guard_friendship_proof;
 }
 ~chatnpc("<p,angry>Stop, creature! Only ogres and their friends allowed in this city. Show me a sign of companionship, like a lost relic or somefing, and you may pass");

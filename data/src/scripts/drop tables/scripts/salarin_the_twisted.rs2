@@ -7,7 +7,7 @@ if(random(6) = 0 & last_int = 0) {
 
 [ai_queue3,salarin_the_twisted]
 gosub(npc_death);
-if (npc_findhero = false) {
+if (npc_findhero = ^false) {
     return;
 }
 

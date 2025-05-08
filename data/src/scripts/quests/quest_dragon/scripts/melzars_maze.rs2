@@ -68,7 +68,7 @@ mes("The ladder is broken, I can't climb it."); // osrs
 // rat
 [ai_queue3,melzar_maze_giant_rat]
 gosub(npc_death);
-if (npc_findhero = false) {
+if (npc_findhero = ^false) {
     return;
 }
 // Default drop from config.
@@ -80,7 +80,7 @@ obj_add(npc_coord, redkey, 1, ^lootdrop_duration);
 // ghost
 [ai_queue3,melzar_maze_ghost]
 gosub(npc_death);
-if (npc_findhero = false) {
+if (npc_findhero = ^false) {
     return;
 }
 // Drop orange key.
@@ -90,7 +90,7 @@ obj_add(npc_coord, orangekey, 1, ^lootdrop_duration);
 // skeleton
 [ai_queue3,melzar_maze_skeleton]
 gosub(npc_death);
-if (npc_findhero = false) {
+if (npc_findhero = ^false) {
     return;
 }
 // Default drop from config.
@@ -102,7 +102,7 @@ obj_add(npc_coord, yellowkey, 1, ^lootdrop_duration);
 // zombie
 [ai_queue3,melzar_maze_zombie]
 gosub(npc_death);
-if (npc_findhero = false) {
+if (npc_findhero = ^false) {
     return;
 }
 // Default drop from config.
@@ -114,7 +114,7 @@ obj_add(npc_coord, bluekey, 1, ^lootdrop_duration);
 // melzar
 [ai_queue3,melzar]
 gosub(npc_death);
-if (npc_findhero = false) {
+if (npc_findhero = ^false) {
     return;
 }
 // Default drop from config.
@@ -126,7 +126,7 @@ obj_add(npc_coord, magentakey, 1, ^lootdrop_duration);
 // lesser demon
 [ai_queue3,melzar_maze_lesser_demon]
 gosub(npc_death);
-if (npc_findhero = false) {
+if (npc_findhero = ^false) {
     return;
 }
 // Default drop from config.

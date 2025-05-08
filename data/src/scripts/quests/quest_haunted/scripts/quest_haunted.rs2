@@ -166,7 +166,7 @@ p_teleport($dest);
 p_delay(0);
 def_string $dir = "down";
 def_int $name_idx = string_length(loc_name);
-if(testbit(%haunted_lever, loc_param(lever_index)) = true) {
+if(testbit(%haunted_lever, loc_param(lever_index)) = ^true) {
     $dir = "up";
 }
 %haunted_lever = togglebit(%haunted_lever, loc_param(lever_index));
@@ -177,21 +177,21 @@ mes("You hear a clunk.");
 
 [oploc2,_haunted_lever]
 def_string $dir = "up";
-if(testbit(%haunted_lever, loc_param(lever_index)) = true) {
+if(testbit(%haunted_lever, loc_param(lever_index)) = ^true) {
     $dir = "down";
 }
 mes("The lever is <$dir>.");
 
 [oploc1,_haunted_door]
-if((loc_type = 1to2 & (testbit(%haunted_lever, 0) = false & testbit(%haunted_lever, 1) = false & testbit(%haunted_lever, 3) = true & testbit(%haunted_lever, 4) = true & testbit(%haunted_lever, 5) = true))
-    | (loc_type = loc_138 & (testbit(%haunted_lever, 1) = false & testbit(%haunted_lever, 3) = true & testbit(%haunted_lever, 5) = true))
-    | (loc_type = loc_139 & (testbit(%haunted_lever, 0) = true & testbit(%haunted_lever, 1) = true & testbit(%haunted_lever, 3) = true))
-    | (loc_type = loc_140 & testbit(%haunted_lever, 3) = true)
-    | (loc_type = loc_141 & (testbit(%haunted_lever, 4) = false & testbit(%haunted_lever, 5) = true))
-    | (loc_type = loc_142 & (testbit(%haunted_lever, 0) = false & testbit(%haunted_lever, 1) = false & testbit(%haunted_lever, 2) = true & testbit(%haunted_lever, 3) = true & testbit(%haunted_lever, 4) = false & testbit(%haunted_lever, 5) = true))
-    | (loc_type = loc_143 & (testbit(%haunted_lever, 1) = false & testbit(%haunted_lever, 3) = true & testbit(%haunted_lever, 5) = false))
-    | (loc_type = loc_144 & (testbit(%haunted_lever, 0) = true & testbit(%haunted_lever, 1) = true & testbit(%haunted_lever, 2) = false & testbit(%haunted_lever, 3) = false & testbit(%haunted_lever, 4) = false & testbit(%haunted_lever, 5) = false))
-    | (loc_type = loc_145 & ((testbit(%haunted_lever, 2) = false & testbit(%haunted_lever, 3) = true) | (testbit(%haunted_lever, 0) = false & testbit(%haunted_lever, 1) = false & testbit(%haunted_lever, 2) = true & testbit(%haunted_lever, 3) = true & testbit(%haunted_lever, 4) = false & testbit(%haunted_lever, 5) = true)))) {
+if((loc_type = 1to2 & (testbit(%haunted_lever, 0) = ^false & testbit(%haunted_lever, 1) = ^false & testbit(%haunted_lever, 3) = ^true & testbit(%haunted_lever, 4) = ^true & testbit(%haunted_lever, 5) = ^true))
+    | (loc_type = loc_138 & (testbit(%haunted_lever, 1) = ^false & testbit(%haunted_lever, 3) = ^true & testbit(%haunted_lever, 5) = ^true))
+    | (loc_type = loc_139 & (testbit(%haunted_lever, 0) = ^true & testbit(%haunted_lever, 1) = ^true & testbit(%haunted_lever, 3) = ^true))
+    | (loc_type = loc_140 & testbit(%haunted_lever, 3) = ^true)
+    | (loc_type = loc_141 & (testbit(%haunted_lever, 4) = ^false & testbit(%haunted_lever, 5) = ^true))
+    | (loc_type = loc_142 & (testbit(%haunted_lever, 0) = ^false & testbit(%haunted_lever, 1) = ^false & testbit(%haunted_lever, 2) = ^true & testbit(%haunted_lever, 3) = ^true & testbit(%haunted_lever, 4) = ^false & testbit(%haunted_lever, 5) = ^true))
+    | (loc_type = loc_143 & (testbit(%haunted_lever, 1) = ^false & testbit(%haunted_lever, 3) = ^true & testbit(%haunted_lever, 5) = ^false))
+    | (loc_type = loc_144 & (testbit(%haunted_lever, 0) = ^true & testbit(%haunted_lever, 1) = ^true & testbit(%haunted_lever, 2) = ^false & testbit(%haunted_lever, 3) = ^false & testbit(%haunted_lever, 4) = ^false & testbit(%haunted_lever, 5) = ^false))
+    | (loc_type = loc_145 & ((testbit(%haunted_lever, 2) = ^false & testbit(%haunted_lever, 3) = ^true) | (testbit(%haunted_lever, 0) = ^false & testbit(%haunted_lever, 1) = ^false & testbit(%haunted_lever, 2) = ^true & testbit(%haunted_lever, 3) = ^true & testbit(%haunted_lever, 4) = ^false & testbit(%haunted_lever, 5) = ^true)))) {
     ~open_and_close_door2(loc_1535, ~check_axis(coord, loc_coord, loc_angle), door_open);
     return;
 }

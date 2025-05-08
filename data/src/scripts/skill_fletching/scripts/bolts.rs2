@@ -15,7 +15,7 @@ switch_obj(last_useitem) {
 }
 
 [label,make_bolt_tips](obj $item)
-if (map_members = false) {
+if (map_members = ^false) {
     mes(^mes_members_fletching); // guess
     return;
 }
@@ -47,7 +47,7 @@ mes("You use your chisel to fletch small bolt tips.");
 
 
 [label,make_bolts](obj $bolt_tips)
-if (map_members = false) {
+if (map_members = ^false) {
     mes(^mes_members_fletching); // guess
     return;
 }

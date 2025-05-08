@@ -1,6 +1,6 @@
 [oploc1,_chest_closed]
 // Treasure Trail
-if(map_members = true) {
+if(map_members = ^true) {
     if(loc_coord = 1_50_50_9_18 & inv_total(inv, trail_clue_easy_simple001) = 1) {
         ~trail_clue_easy_loc_interact(trail_clue_easy_simple001);
     } else if(loc_coord = 1_51_49_37_33 & inv_total(inv, trail_clue_easy_simple004) = 1) {
@@ -22,7 +22,7 @@ if(map_members = true) {
 
 [oploc2,_chest_open]
 // Treasure Trail
-if(map_members = true) {
+if(map_members = ^true) {
     if(loc_coord = 1_50_50_9_18 & inv_total(inv, trail_clue_easy_simple001) = 1) {
         ~trail_clue_easy_loc_interact(trail_clue_easy_simple001);
         return;

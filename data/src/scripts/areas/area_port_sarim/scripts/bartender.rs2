@@ -1,14 +1,14 @@
 [opnpc1,bartender_port_sarim]
 // Treasure Trail
-if(map_members = true & inv_total(inv, trail_clue_easy_simple020) = 1) {
+if(map_members = ^true & inv_total(inv, trail_clue_easy_simple020) = 1) {
     @trail_bartender_port_sarim;
 }
 def_int $option;
-if(%gobdip_progress = 0 & (testbit(%barcrawl_progress, ^rustyanchor_index) = false & inv_total(inv, barcrawl_card) > 0)) { // gobdip not started, doing barcrawl
+if(%gobdip_progress = 0 & (testbit(%barcrawl_progress, ^rustyanchor_index) = ^false & inv_total(inv, barcrawl_card) > 0)) { // gobdip not started, doing barcrawl
     $option = ~p_choice3("Could I buy a beer please?", 1, "Not very busy in here today, is it?", 2, "I'm doing Alfred Grimhand's barcrawl.", 3);
 } else if(%gobdip_progress = 0) { // gobdip not started, not doing barcrawl
     $option = ~p_choice2("Could I buy a beer please?", 1, "Not very busy in here today, is it?", 2);
-} else if(%gobdip_progress > 0 & (testbit(%barcrawl_progress, ^rustyanchor_index) = false & inv_total(inv, barcrawl_card) > 0)) { // gobdip started, doing barcrawl
+} else if(%gobdip_progress > 0 & (testbit(%barcrawl_progress, ^rustyanchor_index) = ^false & inv_total(inv, barcrawl_card) > 0)) { // gobdip started, doing barcrawl
     $option = ~p_choice3("Could I buy a beer please?", 1, "Have you heard any more rumours in here?", 4, "I'm doing Alfred Grimhand's barcrawl.", 3);
 } else {
     $option = ~p_choice2("Could I buy a beer please?", 1, "Have you heard any more rumours in here?", 4);
@@ -23,7 +23,7 @@ switch_int ($option) {
 }
 
 [opnpcu,bartender_port_sarim]
-if(testbit(%barcrawl_progress, ^rustyanchor_index) = false & last_useitem = barcrawl_card) {
+if(testbit(%barcrawl_progress, ^rustyanchor_index) = ^false & last_useitem = barcrawl_card) {
     @rustyanchor_barcrawl;
 }
 ~displaymessage(^dm_default);

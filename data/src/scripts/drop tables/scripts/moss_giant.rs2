@@ -1,6 +1,6 @@
 [ai_queue3,mossgiant]
 gosub(npc_death);
-if (npc_findhero = false) {
+if (npc_findhero = ^false) {
     return;
 }
 
@@ -18,7 +18,7 @@ if ($random < 5) {
 } else if ($random < 11) {
     obj_add(npc_coord, mithril_sword, 1, ^lootdrop_duration);
 } else if ($random < 13) {
-    if (map_members = true) {
+    if (map_members = ^true) {
         obj_add(npc_coord, mithril_spear, 1, ^lootdrop_duration);
     } else {
         obj_add(npc_coord, coins, 2, ^lootdrop_duration);
@@ -44,7 +44,7 @@ if ($random < 5) {
 } else if ($random < 36) {
     obj_add(npc_coord, deathrune, 3, ^lootdrop_duration);
 } else if ($random < 37) {
-    if (map_members = true) {
+    if (map_members = ^true) {
         obj_add(npc_coord, bloodrune, 1, ^lootdrop_duration);
     } else {
         obj_add(npc_coord, coins, 2, ^lootdrop_duration);

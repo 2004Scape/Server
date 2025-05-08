@@ -77,7 +77,7 @@ def_int $bit;
 $unlock, $bit = db_getfield($song, music:unlock, 0);
 
 if ($unlock ! null) {
-    if (testbit(~music_getvar($unlock), $bit) = false) {
+    if (testbit(~music_getvar($unlock), $bit) = ^false) {
         mes("You have not unlocked this piece of music yet!");
         return;
     }
@@ -112,7 +112,7 @@ def_int $bit;
 $unlock, $bit = db_getfield($song, music:unlock, 0);
 
 if ($unlock ! null) {
-    if (testbit(~music_getvar($unlock), $bit) = false) {
+    if (testbit(~music_getvar($unlock), $bit) = ^false) {
         ~music_setvar($unlock, $bit);
     }
 }

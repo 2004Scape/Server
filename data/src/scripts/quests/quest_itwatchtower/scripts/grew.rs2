@@ -4,7 +4,7 @@ if(%itwatchtower_progress >= ^itwatchtower_complete) {
 } else if(getbit_range(%itwatchtower_bits, ^itwatchtower_spoken_grew, ^itwatchtower_helped_grew) = 2) {
     ~chatnpc("<p,angry>What are you doing here, morsel?");
     def_int $op;
-    if(testbit(%itwatchtower_bits, ^itwatchtower_relic2) = true) {
+    if(testbit(%itwatchtower_bits, ^itwatchtower_relic2) = ^true) {
         $op = ~p_choice2("Can I do anything else for you?", 1, "I've lost the crystal you gave me.", 3);
     } else {
         $op = ~p_choice3("Can I do anything else for you?", 1, "I've lost the relic part you gave me.", 2, "I've lost the crystal you gave me.", 3);

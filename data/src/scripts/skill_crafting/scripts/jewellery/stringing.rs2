@@ -3,7 +3,7 @@ switch_obj (last_useitem)
 {
     case unstrung_gold_amulet, unstrung_sapphire_amulet, unstrung_emerald_amulet, unstrung_ruby_amulet, unstrung_diamond_amulet, nostringstar : @string_amulet(last_useslot);
     case nostringsnake, unstrung_dragonstone_amulet :
-        if (map_members = false) {
+        if (map_members = ^false) {
             mes(^mes_members_feature);
             return;
         }
@@ -29,7 +29,7 @@ if (last_useitem = ball_of_wool) @string_amulet(last_slot);
 
 [opheldu,unstrung_dragonstone_amulet]
 if (last_useitem = ball_of_wool) {
-    if (map_members = false) {
+    if (map_members = ^false) {
         mes(^mes_members_feature);
         return;
     }
@@ -43,7 +43,7 @@ if (last_useitem = ball_of_wool) @string_amulet(last_slot);
 
 [opheldu,nostringsnake]
 if (last_useitem = ball_of_wool) {
-    if (map_members = false) {
+    if (map_members = ^false) {
         mes(^mes_members_feature);
         return;
     }

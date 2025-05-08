@@ -196,7 +196,7 @@ if (~in_tutorial_island(coord) = true & last_item ! bronze_dagger) {
 }
 
 // check if mems obj is selected
-if (oc_members($last_item) = true & map_members = false) {
+if (oc_members($last_item) = true & map_members = ^false) {
     mes("You can only make that on a members' server.");
     return;
 }

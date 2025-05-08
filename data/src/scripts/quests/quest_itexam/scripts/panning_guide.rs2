@@ -1,7 +1,7 @@
 [opnpc1,panning_guide]
 ~chatplayer("<p,happy>Hello, who are you?");
 
-if (~itexam_testbit(^itexam_bit_panning_guide_tea_given) = false) {
+if (~itexam_testbit(^itexam_bit_panning_guide_tea_given) = ^false) {
     ~chatnpc("<p,happy>Hello, I am the panning guide. I teach students how to pan in these waters. They're not permitted to do so until after they've had training and, of course, they must be invited to pan here too.");
     @panning_guide_tea_errand;
 } else {

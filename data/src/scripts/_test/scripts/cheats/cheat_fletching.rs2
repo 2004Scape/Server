@@ -1,7 +1,7 @@
 [debugproc,fletchbank]
 if_close;
 if (p_finduid(uid) = true) {
-    if (map_members = false) {
+    if (map_members = ^false) {
         mes(^mes_members_feature);
         return;
     }

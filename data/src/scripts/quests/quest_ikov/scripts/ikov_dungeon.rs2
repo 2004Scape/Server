@@ -27,7 +27,7 @@ p_exactmove(coord, movecoord(coord, 0, 0, -1), 30, 56, ^exact_north);
 
 [label,open_ikov_southgate](int $side)
 def_boolean $entering = ~check_axis_locactive(coord);
-if($entering = false | testbit(%ikov_dungeon, ^ikov_lever) = true) {
+if($entering = false | testbit(%ikov_dungeon, ^ikov_lever) = ^true) {
     ~open_and_close_double_door2($entering, $side, grate_open);
     return;
 }
@@ -53,9 +53,9 @@ if(inzone(^ikovbridge_zone_lower, ^ikovbridge_zone_upper, coord) = true) {
 if(inzone(^ikovbridge_zone_lower, ^ikovbridge_zone_upper, coord) = false) {
     return;
 }
-def_boolean $crossed_bridge = testbit(%ikov_dungeon, ^ikov_bridge);
+def_int $crossed_bridge = testbit(%ikov_dungeon, ^ikov_bridge);
 %ikov_dungeon = togglebit(%ikov_dungeon, ^ikov_bridge);
-if($crossed_bridge = true) {
+if($crossed_bridge = ^true) {
     ~forcemove(movecoord(^ikovbridge_zone_lower, 1, 0, abs(calc(coordz(^ikovbridge_zone_lower) - coordz(coord)))));
     if(weight >= 0) {
         @ikov_bridgefail;

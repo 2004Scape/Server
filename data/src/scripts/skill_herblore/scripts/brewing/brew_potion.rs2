@@ -86,7 +86,7 @@ if ($struct = null) {
     return(false);
 }
 
-if (map_members = false) {
+if (map_members = ^false) {
     mes(^mes_members_herblore);
     return(false);
 }

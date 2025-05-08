@@ -4,13 +4,13 @@
 ~chatnpc("<p,happy>Good day to you.|What can I get you to drink?");
 def_int $choice;
 if (inv_totalcat(inv, gnome_cocktail) > 0) {
-    if(testbit(%barcrawl_progress, ^blurberry_index) = false & inv_total(inv, barcrawl_card) > 0) {
+    if(testbit(%barcrawl_progress, ^blurberry_index) = ^false & inv_total(inv, barcrawl_card) > 0) {
         $choice = ~p_choice4("I'm trying to do Alfred Grimhand's barcrawl.", 5, "What do you have?", 1, "Nothing thanks.", 2, "Actually I'd like to sell some drinks.", 3);
     } else {
         $choice = ~p_choice3("What do you have?", 1, "Nothing thanks.", 2, "Actually I'd like to sell some drinks.", 3);
     }
 } else {
-    if(testbit(%barcrawl_progress, ^blurberry_index) = false & inv_total(inv, barcrawl_card) > 0) {
+    if(testbit(%barcrawl_progress, ^blurberry_index) = ^false & inv_total(inv, barcrawl_card) > 0) {
         $choice = ~p_choice4("I'm trying to do Alfred Grimhand's barcrawl.", 5, "What do you have?", 1, "Nothing thanks.", 2, "Can I buy some ingredients?", 4);
     } else {
         $choice = ~p_choice3("What do you have?", 1, "Nothing thanks.", 2, "Can I buy some ingredients?", 4);
@@ -66,7 +66,7 @@ inv_add(inv, $item, 1);
 ~chatplayer("<p,confused>Um... thanks?!");
 
 [opnpcu,gnome_barman]
-if(testbit(%barcrawl_progress, ^blurberry_index) = false & last_useitem = barcrawl_card) {
+if(testbit(%barcrawl_progress, ^blurberry_index) = ^false & last_useitem = barcrawl_card) {
     @gnome_barman_barcrawl;
 }
 ~displaymessage(^dm_default);

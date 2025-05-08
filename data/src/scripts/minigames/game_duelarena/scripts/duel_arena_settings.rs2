@@ -1,19 +1,19 @@
 [if_button,duel_select_type:no_forfeit]
-if (testbit(%duel_settings, ^no_melee) = true) {
+if (testbit(%duel_settings, ^no_melee) = ^true) {
     mes("You can't have No Forfeit and No Melee - you could run out of ammo."); // RS3 message https://archive.org/details/runelibris
     return;
 }
 ~toggle_duel_setting(^no_forfeit);
 
 [if_button,duel_select_type:no_movement]
-if (testbit(%duel_settings, ^no_melee) = true) {
+if (testbit(%duel_settings, ^no_melee) = ^true) {
     mes("You can't have No Movement and No Melee - you could run out of ammo."); // RS3 message https://archive.org/details/runelibris
     return;
 }
 ~toggle_duel_setting(^no_movement);
 
 [if_button,duel_select_type:no_weapons]
-if (testbit(%duel_settings, ^flower_power) = true) {
+if (testbit(%duel_settings, ^flower_power) = ^true) {
     mes("You can't have No Weapons and Flower Power."); // guess based on osrs pvp arena
     return;
 }
@@ -29,33 +29,33 @@ if (testbit(%duel_settings, ^flower_power) = true) {
 ~toggle_duel_setting(^no_jewelry);
 
 [if_button,duel_select_type:no_ranged]
-if (testbit(%duel_settings, ^no_melee) = true & testbit(%duel_settings, ^no_magic) = true) {
+if (testbit(%duel_settings, ^no_melee) = ^true & testbit(%duel_settings, ^no_magic) = ^true) {
     mes("You can't have No Ranged, No Melee and No Magic - how would you fight?"); // RS3 message: https://archive.org/details/runelibris
     return;
 }
 ~toggle_duel_setting(^no_ranged);
 
 [if_button,duel_select_type:no_melee]
-if (testbit(%duel_settings, ^flower_power) = true) {
+if (testbit(%duel_settings, ^flower_power) = ^true) {
     mes("You can't have No Melee and Flower Power."); // guess based on osrs pvp arena
     return;
 }
-if (testbit(%duel_settings, ^no_forfeit) = true) {
+if (testbit(%duel_settings, ^no_forfeit) = ^true) {
     mes("You can't have No Forfeit and No Melee - you could run out of ammo."); // RS3 message: https://archive.org/details/runelibris
     return;
 }
-if (testbit(%duel_settings, ^no_movement) = true) {
+if (testbit(%duel_settings, ^no_movement) = ^true) {
     mes("You can't have No Movement and No Melee, you could run out of ammo."); // guess based on osrs pvp arena
     return;
 }
-if (testbit(%duel_settings, ^no_ranged) = true & testbit(%duel_settings, ^no_magic) = true) {
+if (testbit(%duel_settings, ^no_ranged) = ^true & testbit(%duel_settings, ^no_magic) = ^true) {
     mes("You can't have No Ranged, No Melee and No Magic - how would you fight?"); // RS3 message: https://archive.org/details/runelibris
     return;
 }
 ~toggle_duel_setting(^no_melee);
 
 [if_button,duel_select_type:no_magic]
-if (testbit(%duel_settings, ^no_ranged) = true & testbit(%duel_settings, ^no_melee) = true) {
+if (testbit(%duel_settings, ^no_ranged) = ^true & testbit(%duel_settings, ^no_melee) = ^true) {
     mes("You can't have No Ranged, No Melee and No Magic - how would you fight?"); // RS3 message: https://archive.org/details/runelibris
     return;
 }
@@ -69,7 +69,7 @@ if (testbit(%duel_settings, ^no_ranged) = true & testbit(%duel_settings, ^no_mel
 
 [if_button,duel_select_type:flower_power]
 if (~duel_arena_flower_power_check = true) {
-    if (testbit(%duel_settings, ^no_melee) = true) {
+    if (testbit(%duel_settings, ^no_melee) = ^true) {
         mes("You can't have No Melee and Flower Power."); // guess based on osrs pvp arena
         return;
     }
@@ -109,11 +109,11 @@ while ($i < enum_getoutputcount($enum)) {
 if (~in_duel_arena(coord) = false) {
     return(true);
 }
-if (testbit(%duel_settings, ^no_weapons) = true & oc_wearpos($obj) = ^wearpos_rhand) {
+if (testbit(%duel_settings, ^no_weapons) = ^true & oc_wearpos($obj) = ^wearpos_rhand) {
     mes("You can't equip that during this duel."); // https://storage.googleapis.com/tannerdino/images/Duel59.png
     return(false);
 }
-if (testbit(%duel_settings, ^no_armour) = true & (
+if (testbit(%duel_settings, ^no_armour) = ^true & (
     oc_wearpos($obj) = ^wearpos_hat | 
     oc_wearpos($obj) = ^wearpos_head |
     oc_wearpos($obj) = ^wearpos_back | 
@@ -127,7 +127,7 @@ if (testbit(%duel_settings, ^no_armour) = true & (
     mes("You can't equip that during this duel."); // https://storage.googleapis.com/tannerdino/images/Duel59.png
     return(false);
 }
-if (testbit(%duel_settings, ^no_jewelry) = true & (
+if (testbit(%duel_settings, ^no_jewelry) = ^true & (
     oc_wearpos($obj) = ^wearpos_ring |
     oc_wearpos($obj) = ^wearpos_front)) {
     mes("You can't equip that during this duel."); // https://storage.googleapis.com/tannerdino/images/Duel59.png
@@ -140,7 +140,7 @@ return(true);
 if (~in_duel_arena(coord) = false) {
     return(true);
 }
-if (testbit(%duel_settings, ^no_prayer) = true) {
+if (testbit(%duel_settings, ^no_prayer) = ^true) {
     mes("Use of prayer has been turned off for this duel."); // https://imgur.com/JDlyaUB
     return(false);
 }
@@ -151,22 +151,22 @@ return(true);
 if (~in_duel_arena(coord) = false) {
     return(true);
 }
-if (oc_category($obj) = category_69 & testbit(%duel_settings, ^no_potions) = true) {
+if (oc_category($obj) = category_69 & testbit(%duel_settings, ^no_potions) = ^true) {
     mes("Use of potions has been turned off for this duel."); // guess based on no food
     return(false);
 }
-if (testbit(%duel_settings, ^no_food) = true) {
+if (testbit(%duel_settings, ^no_food) = ^true) {
     mes("Use of food has been turned off for this duel."); // https://imgur.com/E0l52P2
     return(false);
 }
 return(true);
 
 
-[proc,duel_arena_obstacles_check]()(boolean)
+[proc,duel_arena_obstacles_check]()(int)
 return(testbit(%duel_settings, ^obstacles));
 
 
-[proc,duel_arena_movement_check]()(boolean)
+[proc,duel_arena_movement_check]()(int)
 return(testbit(%duel_settings, ^no_movement));
 
 
@@ -174,7 +174,7 @@ return(testbit(%duel_settings, ^no_movement));
 if (~in_duel_arena(coord) = false) {
     return(true);
 }
-if (testbit(%duel_settings, ^no_forfeit) = true) {
+if (testbit(%duel_settings, ^no_forfeit) = ^true) {
     ~mesbox("This duel cannot be forfeited."); //RS3 message: https://archive.org/details/runelibris
     return(false);
 }
@@ -202,7 +202,7 @@ if (oc_category($obj) = flowers) {
 if (~in_duel_arena(coord) = false) {
     return(true);
 }
-if (testbit(%duel_settings, ^flower_power) = true) {
+if (testbit(%duel_settings, ^flower_power) = ^true) {
     mes("This is a 'flower power' duel. You can only use flowers."); // guess based off of 2006 vid
     // 2006: "This is a 'fun weapon' duel. You can only use flowers or a rubber|chicken."
     return(false);
@@ -216,7 +216,7 @@ if ($slot ! ^wearpos_rhand) {
 if (~in_duel_arena(coord) = false) {
     return(true);
 }
-if (testbit(%duel_settings, ^flower_power) = true) {
+if (testbit(%duel_settings, ^flower_power) = ^true) {
     mes("This is a 'flower power' duel. You can only use flowers."); // guess based off of 2006 vid
     // 2006: "This is a 'fun weapon' duel. You can only use flowers or a rubber|chicken."
     return(false);
@@ -228,7 +228,7 @@ return(true);
 if (~in_duel_arena(coord) = false) {
     return(true);
 }
-if (testbit(%duel_settings, ^no_ranged) = true) {
+if (testbit(%duel_settings, ^no_ranged) = ^true) {
     mes("Ranging has been turned off for this duel."); // https://imgur.com/dm6F5xi
     return(false);
 }
@@ -239,7 +239,7 @@ return(true);
 if (~in_duel_arena(coord) = false) {
     return(true);
 }
-if (testbit(%duel_settings, ^no_melee) = true) {
+if (testbit(%duel_settings, ^no_melee) = ^true) {
     mes("Melee has been turned off for this duel."); // https://imgur.com/e55BeqU
     return(false);
 }
@@ -250,11 +250,11 @@ return(true);
 if (~in_duel_arena(coord) = false) {
     return(true);
 }
-if (testbit(%duel_settings, ^no_magic) = true) {
+if (testbit(%duel_settings, ^no_magic) = ^true) {
     mes("Magic has been turned off for this duel."); // RS3 message: https://archive.org/details/runelibris
     return(false);
 }
-if (testbit(%duel_settings, ^flower_power) = true) {
+if (testbit(%duel_settings, ^flower_power) = ^true) {
     mes("This is a 'flower power' duel. You can only use flowers."); // guess based off of 2006 vid
     // 2006: "This is a 'fun weapon' duel. You can only use flowers or a rubber|chicken."
     return(false);

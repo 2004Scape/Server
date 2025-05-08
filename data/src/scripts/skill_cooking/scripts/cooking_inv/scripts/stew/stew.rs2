@@ -63,7 +63,7 @@ if ($used_on = stew1 | $used_with = stew1) {
 }
 
 [label,make_curry]
-if (map_members = false) {
+if (map_members = ^false) {
     mes("You can only make that on a members' server.");
     return;
 }

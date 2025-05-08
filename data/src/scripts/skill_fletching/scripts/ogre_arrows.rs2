@@ -17,7 +17,7 @@ switch_obj(last_useitem) {
 }
 
 [label,make_ogre_shafts]
-if (map_members = false) {
+if (map_members = ^false) {
     mes(^mes_members_fletching); // guess
     return;
 }
@@ -41,7 +41,7 @@ stat_advance(fletching, multiply($shaft_count, 18));
 
 
 [label,make_wolf_bone_tips]
-if (map_members = false) {
+if (map_members = ^false) {
     mes(^mes_members_fletching); // guess
     return;
 }
@@ -68,7 +68,7 @@ stat_advance(crafting, multiply($tip_count, 25));
 
 
 [label,make_ogre_headless_arrows]
-if (map_members = false) {
+if (map_members = ^false) {
     mes(^mes_members_fletching); // guess
     return;
 }
@@ -103,7 +103,7 @@ stat_advance(fletching, multiply($arrow_count, 15));
 
 
 [label,make_ogre_arrows]
-if (map_members = false) {
+if (map_members = ^false) {
     mes(^mes_members_fletching); // guess
     return;
 }

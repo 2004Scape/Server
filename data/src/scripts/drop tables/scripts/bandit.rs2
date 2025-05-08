@@ -1,7 +1,7 @@
 [ai_queue3,brawling_bandit]
 
 gosub(npc_death);
-if (npc_findhero = false) {
+if (npc_findhero = ^false) {
     return;
 }
 
@@ -27,7 +27,7 @@ if ($random < 4) {
 } else if ($random < 19) {
     obj_add(npc_coord, lawrune, 3, ^lootdrop_duration);
 } else if ($random < 20) {
-    if (map_members = true) {
+    if (map_members = ^true) {
         obj_add(npc_coord, bloodrune, 2, ^lootdrop_duration);
     }
 } else if ($random < 21) {

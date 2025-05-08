@@ -144,7 +144,7 @@ switch_int(%legends_progress) {
         @multi2("I can't find the caves...", gujuo_cant_find,
                 "Ok thanks for your help.", gujuo_thanks);
     case ^legends_found_entrance :
-        if (testbit(%legends_bits, ^legends_entered_cavern) = true) {
+        if (testbit(%legends_bits, ^legends_entered_cavern) = ^true) {
             @multi2("Ungadulu is trapped in some magical flames!", gujuo_ungadulu_trapped,
                     "I'm not sure what to do.", gujuo_idk);
         }
@@ -153,14 +153,14 @@ switch_int(%legends_progress) {
                     "Ok thanks for your help.", gujuo_thanks);
         }
     case ^legends_spoke_ungadulu, ^legends_asked_gujuo_holy_water, ^legends_filled_bowl, ^legends_summoned_nezikchened_fire :
-        if (testbit(%legends_bits, ^legends_ungadulu_called_vacu) = true) {
+        if (testbit(%legends_bits, ^legends_ungadulu_called_vacu) = ^true) {
             @multi5("Ungadulu looks a little strange.", gujuo_ungadulu_strange,
                     "I'm not sure what to do.", gujuo_idk,
                     "I need some pure water to douse some magic flames.", gujuo_pure_water,
                     "Ungadulu called me a 'Vacu'", gujuo_vacu,
                     "Ok thanks for your help.", gujuo_thanks);
         }
-        else if (testbit(%legends_bits, ^legends_asked_ungadulu_where) = true) {
+        else if (testbit(%legends_bits, ^legends_asked_ungadulu_where) = ^true) {
             @multi5("Ungadulu looks a little strange.", gujuo_ungadulu_strange,
                     "Sorry for bothering you.", gujuo_sorry_bothering,
                     "I'm not sure what to do.", gujuo_idk,
@@ -429,14 +429,14 @@ else {
 [label,gujuo_ungadulu_strange]
 ~chatplayer("<p,neutral>Ungadulu looks a little strange.");
 ~chatnpc("<p,neutral>Be wary Bwana. There are many unknown spirits that reside in these dark areas. You may be tricked by an unknown force...");
-if (testbit(%legends_bits, ^legends_asked_ungadulu_where) = true) {
+if (testbit(%legends_bits, ^legends_asked_ungadulu_where) = ^true) {
     @multi5("Ok, thanks... Goodbye.", gujuo_water_thanks,
             "What kind of unknown force?", gujuo_force,
             "Sorry for bothering you.", gujuo_sorry_bothering,
             "I'm not sure what to do.", gujuo_idk,
             "I need some pure water to douse some magic flames.", gujuo_pure_water);
 }
-else if (testbit(%legends_bits, ^legends_ungadulu_called_vacu) = true) {
+else if (testbit(%legends_bits, ^legends_ungadulu_called_vacu) = ^true) {
     @multi5("Ok, thanks... Goodbye.", gujuo_water_thanks,
             "What kind of unknown force?", gujuo_force,
             "Sorry for bothering you.", gujuo_sorry_bothering,
@@ -480,7 +480,7 @@ else {
 
 [label,gujuo_pure_water]
 ~chatplayer("<p,neutral>I need some pure water to douse some magic flames.");
-if (testbit(%legends_bits, ^legends_asked_ungadulu_who) = true) {
+if (testbit(%legends_bits, ^legends_asked_ungadulu_who) = ^true) {
     ~chatnpc("<p,neutral>This sounds very strange Bwana... but maybe I can help. There is a pool of water that is sacred to us. It is located in the middle of the Kharazi Jungle.");
     ~chatnpc("<p,neutral>The water contains special properties but it can only be contained in a blessed vessel made from metal of the sun. The water is difficult to get to, but I am sure you will manage to claim some.");
     if (%legends_progress < ^legends_asked_gujuo_holy_water) {

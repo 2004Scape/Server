@@ -1,9 +1,9 @@
 [opnpc1,hops1]
-if(map_members = false) { // rs3, osrs wiki quotes this dialogue specifically as well (probably changed with sote)
+if(map_members = ^false) { // rs3, osrs wiki quotes this dialogue specifically as well (probably changed with sote)
     ~chatnpc("<p,drunk>Hops don't wanna talk now.|Try different world, HIC!");
     return;
 }
-if(testbit(%bioerrand, ^hops_given) = true) {
+if(testbit(%bioerrand, ^hops_given) = ^true) {
     ~chatnpc("<p,neutral>I suppose I'd better get going.|I'll meet you at the Dancing Donkey Inn.");
     return;
 }
@@ -53,11 +53,11 @@ mes("You give him the vial of sulphuric broline.");
 ~chatnpc("<p,happy>Sure, I'm a regular at the Dancing Donkey Inn as it happens.");
 
 [opnpc1,hops2]
-if(map_members = false) {
+if(map_members = ^false) {
     ~chatnpc("<p,drunk>Hops don't wanna talk now.|Try different world, HIC!");
     return;
 }
-if(testbit(%bioerrand, ^hops_correct) = true) {
+if(testbit(%bioerrand, ^hops_correct) = ^true) {
     ~chatplayer("<p,happy>Hello, how was your journey?");
     ~chatnpc("<p,neutral>Pretty thirst-inducing actually...");
     ~chatplayer("<p,confused>Please tell me that you haven't drunk the contents...");
@@ -70,7 +70,7 @@ if(testbit(%bioerrand, ^hops_correct) = true) {
     %bioerrand = clearbit(%bioerrand, ^hops_correct);
     p_delay(2);
     ~chatplayer("<p,neutral>Thanks, I'll let you get your drink now.");
-} else if(testbit(%bioerrand, ^hops_wrong) = true) {
+} else if(testbit(%bioerrand, ^hops_wrong) = ^true) {
     ~chatplayer("<p,happy>Hello, how was your journey?");
     ~chatnpc("<p,neutral>Pretty thirst-inducing actually...");
     ~chatplayer("<p,confused>Please tell me that you haven't drunk the contents...");

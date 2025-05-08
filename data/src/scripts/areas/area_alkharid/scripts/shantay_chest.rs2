@@ -1,5 +1,5 @@
 [oploc1,shantay_chest]
-if (map_members = false) {
+if (map_members = ^false) {
     mes(^mes_members_do_that); // guess
     return;
 }

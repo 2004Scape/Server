@@ -35,19 +35,19 @@ switch_int(%murder_progress) {
 
 [label,murder_guard_who]
 ~chatplayer("<p,happy>I know who did it!");
-if(%murder_poisonproof_progress = ^poisonproof_searched_loc & testbit(%murder_evidence, ^murder_found_thread) = true & testbit(%murder_evidence, ^murder_found_fingerprints) = true) {
+if(%murder_poisonproof_progress = ^poisonproof_searched_loc & testbit(%murder_evidence, ^murder_found_thread) = ^true & testbit(%murder_evidence, ^murder_found_fingerprints) = ^true) {
     @murder_guard_conclusive_proof;
-} else if(testbit(%murder_evidence, ^murder_found_thread) = true & %murder_poisonproof_progress = ^poisonproof_searched_loc) {
+} else if(testbit(%murder_evidence, ^murder_found_thread) = ^true & %murder_poisonproof_progress = ^poisonproof_searched_loc) {
     @multi2("I have proof that it wasn't any of the servants.", murder_guard_threadproof, "I have proof one of the family lied about the poison.", murder_guard_poisonproof);
-} else if(testbit(%murder_evidence, ^murder_found_fingerprints) = true & %murder_poisonproof_progress = ^poisonproof_searched_loc) {
+} else if(testbit(%murder_evidence, ^murder_found_fingerprints) = ^true & %murder_poisonproof_progress = ^poisonproof_searched_loc) {
     @multi2("I have proof one of the family lied about the poison.", murder_guard_poisonproof, "I have the finger prints of the culprit.", murder_guard_printproof);
-} else if(testbit(%murder_evidence, ^murder_found_thread) = true & testbit(%murder_evidence, ^murder_found_fingerprints) = true) {
+} else if(testbit(%murder_evidence, ^murder_found_thread) = ^true & testbit(%murder_evidence, ^murder_found_fingerprints) = ^true) {
     @multi2("I have proof that it wasn't any of the servants.", murder_guard_threadproof, "I have the finger prints of the culprit.", murder_guard_printproof);
-} else if(testbit(%murder_evidence, ^murder_found_fingerprints) = true) {
+} else if(testbit(%murder_evidence, ^murder_found_fingerprints) = ^true) {
     @murder_guard_printproof;
 } else if(%murder_poisonproof_progress = ^poisonproof_searched_loc) {
     @murder_guard_poisonproof;
-} else if(testbit(%murder_evidence, ^murder_found_thread) = true) {
+} else if(testbit(%murder_evidence, ^murder_found_thread) = ^true) {
     @murder_guard_threadproof;
 }
 @murder_guard_quick;

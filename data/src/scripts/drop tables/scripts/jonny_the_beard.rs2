@@ -2,7 +2,7 @@
 
 [ai_queue3,jonny_the_beard]
 gosub(npc_death);
-if (npc_findhero = false) {
+if (npc_findhero = ^false) {
     return;
 }
 // always dropped in RSC, wiki mentions it used to be obtainable after quest so I think it was probably always dropped

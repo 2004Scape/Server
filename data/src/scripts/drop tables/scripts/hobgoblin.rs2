@@ -1,6 +1,6 @@
 [ai_queue3,hobgoblin_unarmed] // LVL 28 Hobgoblins
 gosub(npc_death);
-if (npc_findhero = false) {
+if (npc_findhero = ^false) {
     return;
 }
 // Default drop from config.
@@ -9,7 +9,7 @@ obj_add(npc_coord, npc_param(death_drop), 1, ^lootdrop_duration);
 def_int $random = random(128);
 
 if ($random < 3) {
-    if (map_members = true) {
+    if (map_members = ^true) {
         obj_add(npc_coord, bronze_spear, 1, ^lootdrop_duration);
     } else {
         obj_add(npc_coord, goblin_armour, 1, ^lootdrop_duration);
@@ -19,13 +19,13 @@ if ($random < 3) {
 } else if ($random < 9) {
     obj_add(npc_coord, steel_dagger, 1, ^lootdrop_duration);
 } else if ($random < 11) {
-    if (map_members = true ){
+    if (map_members = ^true ){
         obj_add(npc_coord, iron_spear, 1, ^lootdrop_duration);
     } else {
         obj_add(npc_coord, coins, 28, ^lootdrop_duration);
     }
 } else if ($random < 13) {
-    if (map_members = true ){
+    if (map_members = ^true ){
         obj_add(npc_coord, steel_spear, 1, ^lootdrop_duration);
     } else {
         obj_add(npc_coord, coins, 28, ^lootdrop_duration);
@@ -70,7 +70,7 @@ if ($random < 3) {
 
 [ai_queue3,hobgoblin_armed] // LVL 42 Hobgoblins
 gosub(npc_death);
-if (npc_findhero = false) {
+if (npc_findhero = ^false) {
     return;
 }
 // Default drop from config.
@@ -99,7 +99,7 @@ if ($random < 3) {
 } else if ($random < 21) {
     obj_add(npc_coord, cosmicrune, 2, ^lootdrop_duration);
 } else if ($random < 22) {
-    if (map_members = true) {
+    if (map_members = ^true) {
         obj_add(npc_coord, iron_javelin, 5, ^lootdrop_duration);
     }
 } else if ($random < 29) {
@@ -115,7 +115,7 @@ if ($random < 3) {
 } else if ($random < 86) {
     obj_add(npc_coord, coins, 42, ^lootdrop_duration);
 } else if ($random < 89) {
-    if (map_members = true) {
+    if (map_members = ^true) {
         obj_add(npc_coord, coins, 1, ^lootdrop_duration);
     }
 } else if ($random < 90) {

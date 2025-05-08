@@ -146,7 +146,7 @@ if (random(1) = 0) {
 ~chatnpc("<p,angry>Okay's now you's needs to cook da chompy! Slurp!|You's can cook it's over der!|@blu@~ Rantz points to a nearby spit roast. ~");
 
 def_string $chompy_flavour = "Potato";
-if (testbit(%chompybird_kills, ^chompybird_varbit_rantz_flavour) = true) {
+if (testbit(%chompybird_kills, ^chompybird_varbit_rantz_flavour) = ^true) {
     // full stop (sic) in OSRS
     $chompy_flavour = "Onion.";
 }
@@ -206,7 +206,7 @@ switch_obj(last_useitem) {
 
         ~chatnpc("<p,neutral>Hey you creature..you made da stabbers|Dat's good creature!");
         
-        if (%chompybird_progress = ^chompybird_started & testbit(%chompybird_kills, ^chompybird_varbit_made_arrows) = false) { 
+        if (%chompybird_progress = ^chompybird_started & testbit(%chompybird_kills, ^chompybird_varbit_made_arrows) = ^false) { 
             ~chatnpc("<p,angry>Hey, deese stabbers no good... did you make dem you's self? You go make dem stabbers for me creature! Don't get old ones or from other creatures.");
             @no_arrows_choice;
             return;
@@ -259,7 +259,7 @@ switch_int(~p_choice2("How do I make the 'stabbers' again?", 1, "Ok, I'll make t
 ~chatplayer("<p,angry>Well, yes actually, as you asked so nicely. Here you go! Here's your 'stabbers'.");
 
 // This check runs first, then quantity
-if (testbit(%chompybird_kills, ^chompybird_varbit_made_arrows) = false) {
+if (testbit(%chompybird_kills, ^chompybird_varbit_made_arrows) = ^false) {
     ~chatnpc("<p,angry>Hey, 'dee'se stabbers no good! Did you make dem you's self? YOU go make dem arrows for ME creature!");
 }
 else if (inv_total(inv, ogre_arrow) < 6) {

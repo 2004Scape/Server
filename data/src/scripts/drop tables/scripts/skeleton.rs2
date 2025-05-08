@@ -3,7 +3,7 @@
 
 [label,skeleton_unarmed]
 gosub(npc_death);
-if (npc_findhero = false) {
+if (npc_findhero = ^false) {
     return;
 }
 // Default drop from config.
@@ -62,7 +62,7 @@ if ($random < 7) {
 
 [label,skeleton_armed]
 gosub(npc_death);
-if (npc_findhero = false) {
+if (npc_findhero = ^false) {
     return;
 }
 // Default drop from config.

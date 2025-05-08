@@ -1,6 +1,6 @@
 [opnpc1,cook]
 // https://www.youtube.com/watch?v=mtPhS3n2dAo
-if(map_members = true &inv_total(inv, trail_clue_medium_anagram002) > 0) {
+if(map_members = ^true &inv_total(inv, trail_clue_medium_anagram002) > 0) {
     @trail_cook;
 }
 

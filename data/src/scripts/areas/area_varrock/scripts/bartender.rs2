@@ -1,7 +1,7 @@
 [opnpc1,bartender_jollyboar] // Jolly Boar Inn
 ~chatnpc("<p,happy>Can I help you?");
 def_int $option;
-if(testbit(%barcrawl_progress, ^jollyboar_index) = false & inv_total(inv, barcrawl_card) > 0) {
+if(testbit(%barcrawl_progress, ^jollyboar_index) = ^false & inv_total(inv, barcrawl_card) > 0) {
     $option = ~p_choice4("I'll have a beer please.", 1, "Any hints where I can go adventuring?", 2, "Heard any good gossip?", 3, "I'm doing Alfred Grimhands Barcrawl.", 4);
 } else {
     $option = ~p_choice3("I'll have a beer please.", 1, "Any hints where I can go adventuring?", 2, "Heard any good gossip?", 3);
@@ -32,7 +32,7 @@ switch_int ($option) {
 }
 
 [opnpcu,bartender_jollyboar]
-if(testbit(%barcrawl_progress, ^jollyboar_index) = false & last_useitem = barcrawl_card) {
+if(testbit(%barcrawl_progress, ^jollyboar_index) = ^false & last_useitem = barcrawl_card) {
     @jollyboar_barcrawl;
 }
 
@@ -64,12 +64,12 @@ p_delay(2);
 
 [opnpc1,bartender_varrock]
 //Treasure Trails
-if(map_members = true & inv_total(inv, trail_clue_easy_simple010) = 1) {
+if(map_members = ^true & inv_total(inv, trail_clue_easy_simple010) = 1) {
     @trail_bartender_varrock;
 }
 ~chatnpc("<p,quiz>What can I do yer for?");
 def_int $option;
-if(testbit(%barcrawl_progress, ^bluemoon_index) = false & inv_total(inv, barcrawl_card) > 0) {
+if(testbit(%barcrawl_progress, ^bluemoon_index) = ^false & inv_total(inv, barcrawl_card) > 0) {
     $option = ~p_choice4("A glass of your finest ale please.", 1, "Can you recommend where an adventurer might make his fortune?", 2, "Do you know where I can get some good equipment?", 3, "I'm doing Alfred Grimhand's Barcrawl.", 4);
 } else {
     $option = ~p_choice3("A glass of your finest ale please.", 1, "Can you recommend where an adventurer might make his fortune?", 2, "Do you know where I can get some good equipment?", 3);
@@ -108,7 +108,7 @@ if($option = 1) {
 }
 
 [opnpcu,bartender_varrock]
-if(testbit(%barcrawl_progress, ^bluemoon_index) = false & last_useitem = barcrawl_card) {
+if(testbit(%barcrawl_progress, ^bluemoon_index) = ^false & last_useitem = barcrawl_card) {
     @bluemoon_barcrawl;
 }
 

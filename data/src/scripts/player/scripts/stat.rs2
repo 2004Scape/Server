@@ -112,14 +112,14 @@ while ($i <= enum_getoutputcount(stats)) {
 }
 
 [proc,random_stat]()(stat)
-if (map_members = true) {
+if (map_members = ^true) {
     return(enum(int, stat, stats, add(random(enum_getoutputcount(stats)), 1)));
 } else {
     return(enum(int, stat, stats_free, add(random(enum_getoutputcount(stats_free)), 1)));
 }
 
 [proc,stat_boost_login]
-if (map_members = true) {
+if (map_members = ^true) {
     return;
 }
 def_int $i = 1;

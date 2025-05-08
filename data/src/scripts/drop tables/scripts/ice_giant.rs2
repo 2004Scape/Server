@@ -1,6 +1,6 @@
 [ai_queue3,icegiant]
 gosub(npc_death);
-if (npc_findhero = false) {
+if (npc_findhero = ^false) {
     return;
 }
 // Default drop from config.
@@ -39,7 +39,7 @@ if ($random < 5) {
 } else if ($random < 35) { // 1/128
     obj_add(npc_coord, deathrune, 3, ^lootdrop_duration);
 } else if ($random < 36) {
-    if (map_members = true) {
+    if (map_members = ^true) {
         obj_add(npc_coord, bloodrune, 2, ^lootdrop_duration);
     } else {
         obj_add(npc_coord, black_kiteshield, 1, ^lootdrop_duration);

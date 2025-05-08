@@ -610,7 +610,7 @@ else {
 }
 
 [oploc1,legends_marked_wall]
-if (testbit(%legends_bits, ^legends_law_rune_2_used) = true) {
+if (testbit(%legends_bits, ^legends_law_rune_2_used) = ^true) {
     @enter_marked_wall(loc_coord);
 }
 else {
@@ -622,7 +622,7 @@ else {
 
 [oploc2,legends_marked_wall]
 mes("You search the wall.");
-if (testbit(%legends_bits, ^legends_law_rune_2_used) = true) {
+if (testbit(%legends_bits, ^legends_law_rune_2_used) = ^true) {
     ~mesbox("You find the word 'SMELL' marked on the wall. The outline of a door appears on the wall. What would you like to do?");
     def_int $choice = ~p_choice2("Read the message on the wall?", 1, "Investigate the outline of the door.", 2);
     if ($choice = 1) {
@@ -653,7 +653,7 @@ else {
 
 [oplocu,legends_marked_wall]
 if (last_useitem = soulrune) {
-    if (testbit(%legends_bits, ^legends_soul_rune_used) = false) {
+    if (testbit(%legends_bits, ^legends_soul_rune_used) = ^false) {
         inv_del(inv, soulrune, 1);
         anim(human_pickuptable, 0);
         %legends_bits = setbit(%legends_bits, ^legends_soul_rune_used);
@@ -664,7 +664,7 @@ if (last_useitem = soulrune) {
     }
 }
 else if (last_useitem = mindrune) {
-    if (testbit(%legends_bits, ^legends_soul_rune_used) = true & testbit(%legends_bits, ^legends_mind_rune_used) = false) {
+    if (testbit(%legends_bits, ^legends_soul_rune_used) = ^true & testbit(%legends_bits, ^legends_mind_rune_used) = ^false) {
         inv_del(inv, mindrune, 1);
         anim(human_pickuptable, 0);
         %legends_bits = setbit(%legends_bits, ^legends_mind_rune_used);
@@ -675,7 +675,7 @@ else if (last_useitem = mindrune) {
     }
 }
 else if (last_useitem = earthrune) {
-    if (testbit(%legends_bits, ^legends_mind_rune_used) = true & testbit(%legends_bits, ^legends_earth_rune_used) = false) {
+    if (testbit(%legends_bits, ^legends_mind_rune_used) = ^true & testbit(%legends_bits, ^legends_earth_rune_used) = ^false) {
         inv_del(inv, earthrune, 1);
         anim(human_pickuptable, 0);
         %legends_bits = setbit(%legends_bits, ^legends_earth_rune_used);
@@ -686,13 +686,13 @@ else if (last_useitem = earthrune) {
     }
 }
 else if (last_useitem = lawrune) {
-    if (testbit(%legends_bits, ^legends_earth_rune_used) = true & testbit(%legends_bits, ^legends_law_rune_1_used) = false) {
+    if (testbit(%legends_bits, ^legends_earth_rune_used) = ^true & testbit(%legends_bits, ^legends_law_rune_1_used) = ^false) {
         inv_del(inv, lawrune, 1);
         anim(human_pickuptable, 0);
         %legends_bits = setbit(%legends_bits, ^legends_law_rune_1_used);
         ~mesbox("You slide the Law Rune into the fourth depression... It glows slightly|and then merges with the wall. The letter 'L' appears where the Law|Rune merged with the wall.");
     }
-    else if (testbit(%legends_bits, ^legends_law_rune_1_used) = true & testbit(%legends_bits, ^legends_law_rune_2_used) = false) {
+    else if (testbit(%legends_bits, ^legends_law_rune_1_used) = ^true & testbit(%legends_bits, ^legends_law_rune_2_used) = ^false) {
         inv_del(inv, lawrune, 1);
         anim(human_pickuptable, 0);
         %legends_bits = setbit(%legends_bits, ^legends_law_rune_2_used);
@@ -715,7 +715,7 @@ else {
 }
 
 [label,legends_wall_wrong_rune](obj $rune)
-if (testbit(%legends_bits, ^legends_law_rune_2_used) = true) {
+if (testbit(%legends_bits, ^legends_law_rune_2_used) = ^true) {
     @enter_marked_wall(loc_coord);
 }
 mes("The rune burns red hot in your hand!");
@@ -761,7 +761,7 @@ if ($data = null) {
 }
 def_namedobj $gem = db_getfield($data, legends_gem_data:gem_named, 0);
 def_int $gem_bit = db_getfield($data, legends_gem_data:gem_bit, 0);
-if (testbit(%legends_bits, $gem_bit) = true) {
+if (testbit(%legends_bits, $gem_bit) = ^true) {
     if(obj_find(loc_coord, $gem) = false) obj_add(loc_coord, $gem, 1, 8);
     mes("A barely visible <lowercase(oc_name($gem))> becomes visible again, spinning above the rock.");
     mes("The gem soon begins to fade.");
@@ -788,7 +788,7 @@ if (last_useitem = $gem) {
         mes("But nothing happens.");
         return;
     }
-    if (testbit(%legends_bits, $gem_bit) = true) {
+    if (testbit(%legends_bits, $gem_bit) = ^true) {
         mes("You have already placed a <$gem_name> above this rock.");
         if(obj_find(loc_coord, $gem) = false) obj_add(loc_coord, $gem, 1, 8);
         mes("A barely visible <$gem_name> becomes visible again, spinning above the rock.");
@@ -817,7 +817,7 @@ def_coord $rock_coord = db_getfield($data, legends_gem_data:rock_coord, 0);
 def_int $gem_bit = db_getfield($data, legends_gem_data:gem_bit, 0);
 if (loc_find($rock_coord, legends_carved_rock) = true & distance(coord, $rock_coord) <= 1) {
     def_string $name = lowercase(oc_name(inv_getobj(inv, $last_slot)));
-    if (testbit(%legends_bits, $gem_bit) = true & (inv_total(inv, book_of_binding) = 0 | %legends_progress < ^legends_complete)) {
+    if (testbit(%legends_bits, $gem_bit) = ^true & (inv_total(inv, book_of_binding) = 0 | %legends_progress < ^legends_complete)) {
         mes("You have already placed the <$name> above this rock.");
         mes("The gem soon begins to fade.");
         if(obj_find($rock_coord, $gem) = false) obj_add(loc_coord, $gem, 1, 8);
@@ -853,7 +853,7 @@ if ($data = null) {
 def_coord $rock_coord = db_getfield($data, legends_gem_data:rock_coord, 0);
 def_int $gem_bit = db_getfield($data, legends_gem_data:gem_bit, 0);
 if(obj_coord = $rock_coord) {
-    if (getbit_range(%legends_bits, ^legends_opal_used, ^legends_emerald_used) = ^legends_all_gems_used | testbit(%legends_bits, $gem_bit) =  false) {
+    if (getbit_range(%legends_bits, ^legends_opal_used, ^legends_emerald_used) = ^legends_all_gems_used | testbit(%legends_bits, $gem_bit) = ^false) {
         mes("The gem seems untouchable, as if it wasn't even there.");
         return;
     }
@@ -1446,7 +1446,7 @@ inv_add(inv, vial_empty, 1);
 %legends_bits = setbit(%legends_bits, ^legends_drank_bravery_potion);
 
 [label,make_golden_bowl]
-if (map_members = false) {
+if (map_members = ^false) {
     mes("You can only make that on a members' server.");
     return;
 }
@@ -1528,7 +1528,7 @@ anim(null, 0);
 ~mesbox("As soon as you enter the room, you are filled with dread. In the centre of the room is a large gaping hole. It goes down a long way...");
 
 [oploc1,legends_winch]
-if(testbit(%legends_bits, ^legends_tied_rope_winch) = true) {
+if(testbit(%legends_bits, ^legends_tied_rope_winch) = ^true) {
     mes("You search the wooden beams and find the rope you attached.");
     loc_change(legends_winch_rope, 30);
     return;
@@ -1539,7 +1539,7 @@ mes("Perhaps with a rope, it might be a bit more functional.");
 
 [oplocu,legends_winch]
 if(last_useitem = rope) {
-    if(testbit(%legends_bits, ^legends_tied_rope_winch) = true) {
+    if(testbit(%legends_bits, ^legends_tied_rope_winch) = ^true) {
         mes("You have already thrown a rope around this wooden beam.");
         loc_change(legends_winch_rope, 30);
         return;
@@ -1553,7 +1553,7 @@ if(last_useitem = rope) {
 ~displaymessage(^dm_default);
 
 [oploc1,legends_winch_rope]
-if(testbit(%legends_bits, ^legends_tied_rope_winch) = false) {
+if(testbit(%legends_bits, ^legends_tied_rope_winch) = ^false) {
     mes("The rope snaps as you're about to climb down it."); // TODO: rsc, need to confirm 
     loc_change(legends_winch, 30);
     return;
@@ -1567,7 +1567,7 @@ if($op = 2) {
 if_close;
 mes("You prepare to climb down the rope.");
 p_delay(2);
-if(testbit(%legends_bits, ^legends_drank_bravery_potion) = true) {
+if(testbit(%legends_bits, ^legends_drank_bravery_potion) = ^true) {
     if(stat_random(agility, 120, 250) = false) {
         mes("Fear stabs at your heart....");
         say("Gulp!");
@@ -1904,7 +1904,7 @@ if(stat(crafting) < 50) {
 if(last_useitem = heartcrystal_sectionc | last_useitem = heartcrystal_sectionb | last_useitem = heartcrystal_sectiona) {
     def_obj $crystal = last_useitem;
     anim(human_pickuptable, 0);
-    if(testbit(%legends_bits, oc_param($crystal, crystal_bit)) = true) {
+    if(testbit(%legends_bits, oc_param($crystal, crystal_bit)) = ^true) {
         ~mesbox("You have already placed that chunk of crystal into the furnace.");
         return;
     }

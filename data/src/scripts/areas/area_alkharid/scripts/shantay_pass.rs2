@@ -17,7 +17,7 @@ if (inv_total(inv, shantay_pass) < 1) {
     ~chatnpc("<p,neutral>You need a Shantay pass to get through this gate. See|Shantay, he will sell you one for a very reasonable|price.");
     return;
 }
-if (map_members = false) {
+if (map_members = ^false) {
     mes(^mes_members_gate); // guess
     return;
 }
@@ -57,7 +57,7 @@ if (%shantay_jail_progress = ^put_in_shantay_jail & npc_find(coord, shantay, 12,
 ~open_and_close_metal_gate(loc_1541, $is_inside, false);
 
 [oploc1,shantay_pass]
-if (map_members = false) {
+if (map_members = ^false) {
     mes(^mes_members_gate); // guess
     return;
 }

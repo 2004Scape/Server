@@ -2,7 +2,7 @@
 // https://oldschool.runescape.wiki/w/Transcript:Oracle
 
 [opnpc1,oracle]
-if(map_members = true & inv_total(inv, trail_clue_medium_anagram007) > 0) {
+if(map_members = ^true & inv_total(inv, trail_clue_medium_anagram007) > 0) {
     @trail_oracle;
 }
 

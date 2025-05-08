@@ -27,7 +27,7 @@ return (getbit_range(%itexam_errands, $bit_start, calc($bit_start + 1)));
 def_int $bit_start = calc($errand * 2);
 %itexam_errands = setbit_range_toint(%itexam_errands, $progress, $bit_start, calc($bit_start + 1));
 
-[proc,itexam_testbit](int $bit)(boolean)
+[proc,itexam_testbit](int $bit)(int)
 return (testbit(%itexam_bits, $bit));
 
 [proc,itexam_setbit](int $bit)

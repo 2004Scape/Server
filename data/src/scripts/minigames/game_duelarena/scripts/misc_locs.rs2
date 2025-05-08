@@ -17,14 +17,14 @@ p_arrivedelay;
 
 // gates https://web.archive.org/web/20060428031722/http://www.runecrypt.com:80/index.php?pid=202
 [oploc1,loc_3197]
-if (map_members = false) {
+if (map_members = ^false) {
     mes(^mes_members_gate);
     return;
 }
 ~open_gate;
 
 [oploc1,loc_3198]
-if (map_members = false) {
+if (map_members = ^false) {
     mes(^mes_members_gate);
     return;
 }

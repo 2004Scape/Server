@@ -10,7 +10,7 @@ if (last_useitem = glassblowingpipe) @craft_glass_interface;
 if (last_useitem = lens_mould) @craft_telescope_disc;
 
 [label,sand_fill]
-if (map_members = false) {
+if (map_members = ^false) {
     mes(^mes_members_feature);
     return;
 }
@@ -20,7 +20,7 @@ inv_add(inv, bucket_sand, 1);
 mes("You fill the bucket with sand.");
 
 [label,smelt_glass]
-if (map_members = false) {
+if (map_members = ^false) {
     mes(^mes_members_feature);
     return;
 }
@@ -54,7 +54,7 @@ stat_advance(crafting, 200);
 
 
 [label,craft_glass_interface]
-if (map_members = false) {
+if (map_members = ^false) {
     mes(^mes_members_feature);
     return;
 }

@@ -23,7 +23,7 @@ if (inzone(0_52_53_0_0, 0_52_53_63_63, coord) = true) {
 }
 
 // Treasure Trails
-if(map_members = true & ~trail_hasclue_inv = true) {
+if(map_members = ^true & ~trail_hasclue_inv = true) {
     def_obj $clue = ~trail_getclue_inv;
 
     if(~trail_clue_coord($clue) = true & oc_param($clue, trail_casket) ! null) {
@@ -39,7 +39,7 @@ if(map_members = true & ~trail_hasclue_inv = true) {
         if(distance(coord, $trail_coord) <= 1) {
             if(oc_param($clue, trail_guardian) ! null) {
                 def_npc $guard = oc_param($clue, trail_guardian);
-                if($guard = zamorak_wizard & testbit(%trail_clue, 4) = false) {
+                if($guard = zamorak_wizard & testbit(%trail_clue, 4) = ^false) {
                     npc_huntall(coord, 10, 0); // zamorak/saradomin wizards range
                     while (npc_huntnext = true) {
                         if(npc_type = zamorak_wizard & %npc_aggressive_player = uid) {

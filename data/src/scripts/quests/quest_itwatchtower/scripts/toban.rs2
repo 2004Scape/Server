@@ -1,7 +1,7 @@
 [opnpc1,toban]
 if(%itwatchtower_progress >= ^itwatchtower_made_relic) {
     mes("The ogre is not interested in you anymore.");
-} else if(testbit(%itwatchtower_bits, ^itwatchtower_helped_toban) = true) {
+} else if(testbit(%itwatchtower_bits, ^itwatchtower_helped_toban) = ^true) {
     ~chatnpc("<p,bored>The small thing returns; what do you want now?");
     switch_int(~p_choice2("I seek another task.", 1, "I can't find the relic part you gave me.", 2)) {
         case 1 :
@@ -16,7 +16,7 @@ if(%itwatchtower_progress >= ^itwatchtower_made_relic) {
             inv_add(inv, relicpart3, 1);
             ~chatnpc("<p,bored>Small thing, how could you be so careless?|Here, take this one.");
     }
-} else if(testbit(%itwatchtower_bits, ^itwatchtower_spoken_toban) = true) {
+} else if(testbit(%itwatchtower_bits, ^itwatchtower_spoken_toban) = ^true) {
     @spoken_toban;
 } else if(%itwatchtower_progress >= ^itwatchtower_given_fingernails) {
     ~chatnpc("<p,confused>What do you want, small thing?");
@@ -27,7 +27,7 @@ if(%itwatchtower_progress >= ^itwatchtower_made_relic) {
 
 [opnpcu,toban]
 if(last_useitem = dragon_bones) {
-    if(testbit(%itwatchtower_bits, ^itwatchtower_spoken_toban) = true & testbit(%itwatchtower_bits, ^itwatchtower_helped_toban) = false) {
+    if(testbit(%itwatchtower_bits, ^itwatchtower_spoken_toban) = ^true & testbit(%itwatchtower_bits, ^itwatchtower_helped_toban) = ^false) {
         @spoken_toban;
     }
 }

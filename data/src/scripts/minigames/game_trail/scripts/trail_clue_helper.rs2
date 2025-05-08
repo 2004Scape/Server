@@ -35,7 +35,7 @@ if($clue ! null & oc_param($clue, trail_coord) ! null) {
 return(false);
 
 [proc,trail_clue_progress]
-if(testbit(%trail_clue, 4) = true) {
+if(testbit(%trail_clue, 4) = ^true) {
     %trail_clue = clearbit(%trail_clue, 4);
 }
 %trail_clue = setbit_range_toint(%trail_clue, calc(~get_trail_progress + 1), 0, 3);

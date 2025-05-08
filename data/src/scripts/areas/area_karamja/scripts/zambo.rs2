@@ -2,7 +2,7 @@
 ~chatnpc("<p,quiz>Hey, are you wanting to try some of my fine wines and spirits? All brewed locally on Karamja island.");
 
 def_int $option;
-if(testbit(%barcrawl_progress, ^karamjaspirits_index) = false & inv_total(inv, barcrawl_card) > 0) {
+if(testbit(%barcrawl_progress, ^karamjaspirits_index) = ^false & inv_total(inv, barcrawl_card) > 0) {
     $option = ~p_choice3("Yes please.", 1, "No, thank you.", 2, "I'm doing Alfred Grimhand's barcrawl.", 3);
 } else {
     $option = ~p_choice2("Yes please.", 1, "No, thank you.", 2);
@@ -14,7 +14,7 @@ switch_int ($option) {
 }
 
 [opnpcu,zambo]
-if(testbit(%barcrawl_progress, ^karamjaspirits_index) = false & last_useitem = barcrawl_card) {
+if(testbit(%barcrawl_progress, ^karamjaspirits_index) = ^false & last_useitem = barcrawl_card) {
     @karamjaspirits_barcrawl;
 }
 

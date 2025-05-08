@@ -47,7 +47,7 @@ if (finduid(%npc_aggressive_player) = true) {
 
 
 [ai_queue3,count_draynor]
-if (npc_findhero = true) {
+if (npc_findhero = ^true) {
     if (p_finduid(uid) = true) {
         @count_draynor_use_stake;
     }

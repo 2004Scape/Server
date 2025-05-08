@@ -4,7 +4,7 @@
 
 [label,yanille_soldier_tower_guard]
 gosub(npc_death);
-if (npc_findhero = false) {
+if (npc_findhero = ^false) {
     return;
 }
 // Default drop from config.

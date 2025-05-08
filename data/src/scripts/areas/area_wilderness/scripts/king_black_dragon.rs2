@@ -2,7 +2,7 @@
 
 [ai_queue3,king_dragon]
 gosub(npc_death);
-if (npc_findhero = false) {
+if (npc_findhero = ^false) {
     return;
 }
 // Default drop

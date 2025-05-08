@@ -28,7 +28,7 @@ if(~trail_hasclue_all = false) {
 [proc,trail_easycluedrop](int $rarity, coord $coord)
 if_close;
 if (p_finduid(uid) = true) {
-    if (map_members = false | ~trail_hasclue_all = true) {
+    if (map_members = ^false | ~trail_hasclue_all = true) {
         return;
     }
     def_int $rng = random($rarity);
@@ -43,7 +43,7 @@ if (p_finduid(uid) = true) {
 [proc,trail_mediumcluedrop](int $rarity, coord $coord)
 if_close;
 if (p_finduid(uid) = true) {
-    if (map_members = false | ~trail_hasclue_all = true) {
+    if (map_members = ^false | ~trail_hasclue_all = true) {
         return;
     }
     def_int $rng = random($rarity);
@@ -58,7 +58,7 @@ if (p_finduid(uid) = true) {
 [proc,trail_hardcluedrop](int $rarity, coord $coord) // Name leaked from bronze dragon droptable script.
 if_close;
 if (p_finduid(uid) = true) {
-    if (map_members = false | ~trail_hasclue_all = true) {
+    if (map_members = ^false | ~trail_hasclue_all = true) {
         return;
     }
     def_int $rng = random($rarity);

@@ -35,7 +35,7 @@ switch_int (~p_choice4_header("Bread dough.", 1, "Pastry dough.", 2, "Pizza doug
         return;
 }
 
-if (map_members = false & oc_members($choice) = true) {
+if (map_members = ^false & oc_members($choice) = true) {
     mes(^mes_members_do_that); // guess... osrs has no option on f2p worlds for pitta :(
     return;
 }

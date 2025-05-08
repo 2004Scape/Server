@@ -3,7 +3,7 @@ switch_int(%chompybird_progress) {
     case ^chompybird_not_started :
         ~chatnpc("<p,neutral>You's better talk to Dad, We not talk to wierdly|'umans.");
     case ^chompybird_started :
-        if (testbit(%chompybird_kills, ^chompybird_varbit_bought_feathers) = true) {
+        if (testbit(%chompybird_kills, ^chompybird_varbit_bought_feathers) = ^true) {
             ~chatnpc("<p,neutral>I's sorry creature, I don't got no more flufsies! But I got lots of bright pretties! Hope you's get da stabbers for Dad soonly!");
             return;
         }

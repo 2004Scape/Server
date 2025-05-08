@@ -111,7 +111,7 @@ p_delay(2);
 mes("Nezikchened: I will teach thee!");
 npc_say("I will teach thee!");
 p_delay(2);
-if(testbit(%legends_bits, ^legends_killed_viyeldi) = true & getbit_range(%legends_bits, ^legends_defeated_san_final, ^legends_defeated_ranalph_final) < 7) {
+if(testbit(%legends_bits, ^legends_killed_viyeldi) = ^true & getbit_range(%legends_bits, ^legends_defeated_san_final, ^legends_defeated_ranalph_final) < 7) {
     mes("The demon starts chanting...");
     p_delay(2);
     mes("Nezikchened: Protectors of source, alive in death,");
@@ -142,7 +142,7 @@ npc_say("Your faith will help you little here.");
 p_delay(1);
 
 [label,nezi_summon_ancient_hero]
-if(testbit(%legends_bits, ^legends_defeated_san_final) = false) {
+if(testbit(%legends_bits, ^legends_defeated_san_final) = ^false) {
     npc_add(map_findsquare(coord, 1, 1, ^map_findsquare_lineofwalk), san_tojalon, 500);
     mes("San Tojalon: Corrupted are we now that Viyeldi is slain...");
     npc_say("Corrupted are we now that Viyeldi is slain...");
@@ -150,7 +150,7 @@ if(testbit(%legends_bits, ^legends_defeated_san_final) = false) {
     npc_setmode(opplayer2);
     mes("San Tojalon: Bent to this demon's will and forced to bring you pain...");
     npc_say("Bent to this demon's will and forced to bring you pain...");
-} else if(testbit(%legends_bits, ^legends_defeated_irvig_final) = false) {
+} else if(testbit(%legends_bits, ^legends_defeated_irvig_final) = ^false) {
     npc_add(map_findsquare(coord, 1, 1, ^map_findsquare_lineofwalk), irvig_senay, 500);
     mes("Irvig Senay: Corrupted are we now that Viyeldi is slain...");
     npc_say("Corrupted are we now that Viyeldi is slain...");
@@ -158,7 +158,7 @@ if(testbit(%legends_bits, ^legends_defeated_san_final) = false) {
     npc_setmode(opplayer2);
     mes("Irvig Senay: Bent to this demon's will and forced to bring you pain...");
     npc_say("Bent to this demon's will and forced to bring you pain...");
-} else if(testbit(%legends_bits, ^legends_defeated_ranalph_final) = false) {
+} else if(testbit(%legends_bits, ^legends_defeated_ranalph_final) = ^false) {
     npc_add(map_findsquare(coord, 1, 1, ^map_findsquare_lineofwalk), ranalph_devere, 500);
     mes("Ranalph Devere: Corrupted are we now that Viyeldi is slain...");
     npc_say("Corrupted are we now that Viyeldi is slain...");

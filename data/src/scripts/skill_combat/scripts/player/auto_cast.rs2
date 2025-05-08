@@ -46,7 +46,7 @@ if (p_finduid(uid) = true) {
 }
 
 [proc,player_autocast_enabled]()(boolean)
-if (testbit(%attackstyle_magic, 0) = true & %attackstyle_magic = 3 & %autocast_spell > 0) {
+if (testbit(%attackstyle_magic, 0) = ^true & %attackstyle_magic = 3 & %autocast_spell > 0) {
     return(true);
 }
 return(false);

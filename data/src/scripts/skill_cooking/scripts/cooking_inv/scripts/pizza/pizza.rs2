@@ -111,7 +111,7 @@ mes("You add the cheese to the pizza.");
 
 [label,make_pizza_with_topping](int $last)
 def_obj $ingredient = inv_getobj(inv, $last);
-if (oc_members($ingredient) = true & map_members = false) {
+if (oc_members($ingredient) = true & map_members = ^false) {
     mes("You can only make that on a members' server.");
     return;
 }

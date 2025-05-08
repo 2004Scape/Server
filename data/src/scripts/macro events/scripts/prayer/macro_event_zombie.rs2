@@ -27,7 +27,7 @@ if (~macro_event_lost_hostile = true) {
 
 [ai_queue3,_macro_event_zombie]
 gosub(npc_death);
-if (npc_findhero = false) {
+if (npc_findhero = ^false) {
     return;
 }
 // Default drop
@@ -64,7 +64,7 @@ if ($random < 36) { // 36/256
 } else if ($random < 240) { // 8/256
     obj_add(npc_coord, big_bones, 6, ^lootdrop_duration);
     obj_add(npc_coord, bones, 3, ^lootdrop_duration);
-} else if (map_members = true) {
+} else if (map_members = ^true) {
     if ($random < 245) { // 5/256
         obj_add(npc_coord, dragon_bones, 1, ^lootdrop_duration);
         obj_add(npc_coord, big_bones, 1, ^lootdrop_duration);

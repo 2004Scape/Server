@@ -1,10 +1,10 @@
 [opnpc1,chancy1]
-if(map_members = false) { // todo: rs3, and OSRS wiki mentions this dialogue in old versions as well could be wrong since he isn't visibly playing w/cards before Sept 200^chancy_given, try to confirm for before that
+if(map_members = ^false) { // todo: rs3, and OSRS wiki mentions this dialogue in old versions as well could be wrong since he isn't visibly playing w/cards before Sept 200^chancy_given, try to confirm for before that
     ~chatplayer("<p,happy>Hello! Playing solitaire?");
     ~chatnpc("<p,angry>Hush - I'm trying to perfect the art of dealing off the bottom of the deck. Whatever you want, come back later on a members' world and I'll speak to you then.");
     return;
 }
-if(testbit(%bioerrand, ^chancy_given) = true) {
+if(testbit(%bioerrand, ^chancy_given) = ^true) {
     ~chatnpc("<p,neutral>Look, I've got your vial but I'm not taking two.|I always like to play the percentages.");
     return;
 }
@@ -54,12 +54,12 @@ mes("You give him the vial of sulphuric broline.");
 ~chatnpc("<p,happy>Be lucky!");
 
 [opnpc1,chancy2]
-if(map_members = false) {
+if(map_members = ^false) {
     ~chatplayer("<p,happy>Good morning.");
     ~chatnpc("<p,angry>Leave me alone - I'm trying to find my gambling buddies! Whenever you want, come back on a members' world and I'll speak to you then.");
     return;
 }
-if(testbit(%bioerrand, ^chancy_correct) = true) {
+if(testbit(%bioerrand, ^chancy_correct) = ^true) {
     ~chatplayer("<p,happy>Hi, thanks for doing that.");
     ~chatnpc("<p,happy>No problem.");
     if_close;
@@ -70,7 +70,7 @@ if(testbit(%bioerrand, ^chancy_correct) = true) {
     p_delay(2);
     ~chatnpc("<p,sad>Next time give me something more valuable... I couldn't get anything for this on the blackmarket.");
     ~chatplayer("<p,neutral>That was the idea.");
-} else if(testbit(%bioerrand, ^chancy_wrong) = true) {
+} else if(testbit(%bioerrand, ^chancy_wrong) = ^true) {
     ~chatplayer("<p,happy>Hi, thanks for doing that.");
     ~chatnpc("<p,happy>No problem. I've got some money for you actually.");
     ~chatplayer("<p,confused>What do you mean?");

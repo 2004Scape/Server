@@ -1,5 +1,5 @@
 [opnpc1,crest_dimintheis]
-if(map_members = false) {
+if(map_members = ^false) {
     if(%crest_progress = ^crest_not_started) {
         ~chatnpc("<p,neutral>Hello. My name is Dimintheis, of the noble family Fitzharmon.");
         ~chatplayer("<p,confused>Why would a nobleman live in a place like this?");
@@ -94,17 +94,17 @@ queue(crest_complete, 0);
 
 [label,crest_dimintheis_gauntlets]
 ~chatnpc("<p,happy>You have my eternal gratitude adventurer, for all you have done in saving my family's honour. Perhaps some day my sons will overcome their differences.");
-if (testbit(%crest_spells_levers_gauntlets, ^crest_cooking_gauntlets_chosen) = true) {
+if (testbit(%crest_spells_levers_gauntlets, ^crest_cooking_gauntlets_chosen) = ^true) {
     if (~obj_gettotal(gauntlets_of_cooking) = 0) {
         @crest_dimintheis_offer_gauntlets(gauntlets_of_cooking);
     }
 }
-else if (testbit(%crest_spells_levers_gauntlets, ^crest_goldsmithing_gauntlets_chosen) = true) {
+else if (testbit(%crest_spells_levers_gauntlets, ^crest_goldsmithing_gauntlets_chosen) = ^true) {
     if (~obj_gettotal(gauntlets_of_goldsmithing) = 0) {
         @crest_dimintheis_offer_gauntlets(gauntlets_of_goldsmithing);
     }
 }
-else if (testbit(%crest_spells_levers_gauntlets, ^crest_chaos_gauntlets_chosen) = true) {
+else if (testbit(%crest_spells_levers_gauntlets, ^crest_chaos_gauntlets_chosen) = ^true) {
     if (~obj_gettotal(gauntlets_of_chaos) = 0) {
         @crest_dimintheis_offer_gauntlets(gauntlets_of_chaos);
     }

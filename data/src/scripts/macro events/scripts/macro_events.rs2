@@ -84,7 +84,7 @@ if (npc_finduid(%macro_event_uid) = true) {
 
 [proc,macro_event_npc](int $event)(npc)
 def_npc $event_npc;
-if (map_members = true) {
+if (map_members = ^true) {
     $event_npc = enum(int, npc, general_macro_events_members, $event);
 } else {
     $event_npc = enum(int, npc, general_macro_events_free, $event);
@@ -92,7 +92,7 @@ if (map_members = true) {
 return($event_npc);
 
 [proc,macro_event_set_random]()(int)
-if (map_members = true) {
+if (map_members = ^true) {
     return(~random_range(1, enum_getoutputcount(general_macro_events_members)));
 } else {
     return(~random_range(1, enum_getoutputcount(general_macro_events_free)));
@@ -100,7 +100,7 @@ if (map_members = true) {
 
 // used for skilling random events
 [proc,macro_event_general_count]()(int)
-if (map_members = true) {
+if (map_members = ^true) {
     return(enum_getoutputcount(general_macro_events_members));
 }
 return(enum_getoutputcount(general_macro_events_free));
@@ -109,7 +109,7 @@ return(enum_getoutputcount(general_macro_events_free));
 [queue,macro_event_fail_teleport]
 session_log(^log_adventure, "Failed random event and got teleported");
 def_coord $teleport_coord;
-if (map_members = true) {
+if (map_members = ^true) {
     $teleport_coord = enum(int, coord, macro_event_fail_teleports_members, random(enum_getoutputcount(macro_event_fail_teleports_members)));
 } else {
     $teleport_coord = enum(int, coord, macro_event_fail_teleports_free, random(enum_getoutputcount(macro_event_fail_teleports_free)));
@@ -169,7 +169,7 @@ while ($i < inv_size(worn)) {
 
 // called when the npc needs to be poofed away
 [proc,macro_event_disappear]
-if (npc_findhero = true) {
+if (npc_findhero = ^true) {
     sound_synth(smokepuff2, 0, 0);
 }
 spotanim_map(smokepuff, npc_coord, 124, 0);

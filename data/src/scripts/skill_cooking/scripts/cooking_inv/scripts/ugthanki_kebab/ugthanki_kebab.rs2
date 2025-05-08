@@ -71,7 +71,7 @@ switch_obj(last_useitem) {
 }
 
 [label,make_bowl_mixture](int $last)
-if (map_members = false) {
+if (map_members = ^false) {
     mes("You can only make that on a members' server.");
     return;
 }
@@ -90,7 +90,7 @@ mes("You cut the <lowercase(oc_name($ingredient))> into the bowl.");
 
 
 [label,make_bowl_mixture2](int $ingredient_slot, int $mixture_slot)
-if (map_members = false) {
+if (map_members = ^false) {
     mes("You can only make that on a members' server.");
     return;
 }
@@ -114,7 +114,7 @@ mes("You add the <lowercase(oc_name($ingredient))> into the <struct_param($mixtu
 
 
 [label,make_ugthanki_kebab](int $last)
-if (map_members = false) {
+if (map_members = ^false) {
     mes("You can only make that on a members' server.");
     return;
 }

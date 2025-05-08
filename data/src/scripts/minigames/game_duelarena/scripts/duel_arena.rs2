@@ -43,7 +43,7 @@ if (~inzone_coord_pair_table(duel_arena_zones, .coord) = false) {
     mes("That player is not in the duel challenge area."); // https://youtu.be/YlnPnlfgMQ4?t=51
     return;
 }
-if (map_members = false) { // theres an area f2p worlds have access to that lets you duel other players
+if (map_members = ^false) { // theres an area f2p worlds have access to that lets you duel other players
     mes(^mes_members_do_that); // guess
     return;
 }
@@ -176,13 +176,13 @@ if (.finduid(%duelpartner) = true & ~enough_duel_space = true) { // https://yout
 
 [proc,enough_duel_space]()(boolean)
 def_int $space_needed = 0;
-if (testbit(%duel_settings, ^no_weapons) = true) {
+if (testbit(%duel_settings, ^no_weapons) = ^true) {
     $space_needed = add($space_needed, ~enum_inv_itemspace(worn, inv, duel_arena_weapon_slots));
 }
-if (testbit(%duel_settings, ^no_armour) = true) {
+if (testbit(%duel_settings, ^no_armour) = ^true) {
     $space_needed = add($space_needed, ~enum_inv_itemspace(worn, inv, duel_arena_armour_slots));
 }
-if (testbit(%duel_settings, ^no_jewelry) = true) {
+if (testbit(%duel_settings, ^no_jewelry) = ^true) {
     $space_needed = add($space_needed, ~enum_inv_itemspace(worn, inv, duel_arena_jewelry_slots));
 }
 if ($space_needed > inv_freespace(inv)) {
@@ -199,13 +199,13 @@ return(true);
 
 [proc,.enough_duel_space]()(boolean)
 def_int $space_needed = 0;
-if (testbit(.%duel_settings, ^no_weapons) = true) {
+if (testbit(.%duel_settings, ^no_weapons) = ^true) {
     $space_needed = add($space_needed, ~.enum_inv_itemspace(worn, inv, duel_arena_weapon_slots));
 }
-if (testbit(.%duel_settings, ^no_armour) = true) {
+if (testbit(.%duel_settings, ^no_armour) = ^true) {
     $space_needed = add($space_needed, ~.enum_inv_itemspace(worn, inv, duel_arena_armour_slots));
 }
-if (testbit(.%duel_settings, ^no_jewelry) = true) {
+if (testbit(.%duel_settings, ^no_jewelry) = ^true) {
     $space_needed = add($space_needed, ~.enum_inv_itemspace(worn, inv, duel_arena_jewelry_slots));
 }
 if ($space_needed > .inv_freespace(inv)) {
@@ -289,7 +289,7 @@ if (oc_tradeable($obj) = false) {
     return;
 }
 
-if (oc_members($obj) = true & map_members = false) { // cant duel on f2p worlds anyway but just incase
+if (oc_members($obj) = true & map_members = ^false) { // cant duel on f2p worlds anyway but just incase
     mes("You can't stake that item."); // RS3 message: https://archive.org/details/runelibris
     return;
 }

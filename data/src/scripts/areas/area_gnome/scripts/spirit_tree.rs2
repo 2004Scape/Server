@@ -62,7 +62,7 @@ switch_int(~p_choice2("Yes please.", 1, "No thank you.", 2)) {
 }
 
 [label,spirit_tree_tele](coord $dest)
-if(map_members = false) {
+if(map_members = ^false) {
     if_close;
     mes(^mes_members_feature);
     return;

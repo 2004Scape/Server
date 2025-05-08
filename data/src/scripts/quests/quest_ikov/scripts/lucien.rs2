@@ -21,7 +21,7 @@ switch_int (%ikov_progress) {
 }
 
 [opnpc1,lucien_edge]
-if(map_members = false) { // RS3
+if(map_members = ^false) { // RS3
     ~chatnpc("<p,angry>Leave me alone, I have much to ponder on!");
     return;
 }
@@ -106,7 +106,7 @@ if(%ikov_progress <= ^ikov_helping_armadyl) { // guessing...
 ~chatnpc("<p,neutral>Well if you see any be sure to point them in my direction.");
 
 [ai_queue3,lucien_edge]
-if(npc_findhero = true & %ikov_progress = ^ikov_helping_armadyl) {
+if(npc_findhero = ^true & %ikov_progress = ^ikov_helping_armadyl) {
     if_close;
     npc_setmode(none);
     queue(queue_defeat_lucien, 0, npc_uid);

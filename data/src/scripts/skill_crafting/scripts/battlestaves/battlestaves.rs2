@@ -13,7 +13,7 @@ switch_obj(last_useitem)
 };
 
 [label,craft_staff](int $last)
-if (map_members = false) {
+if (map_members = ^false) {
     mes(^mes_members_feature);
     return;
 }

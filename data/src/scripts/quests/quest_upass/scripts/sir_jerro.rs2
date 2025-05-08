@@ -1,6 +1,6 @@
 [ai_queue3,sir_jerro]
 gosub(npc_death);
-if (npc_findhero = false) {
+if (npc_findhero = ^false) {
     return;
 }
 // no quest stage check, no bank check (RS3)
@@ -14,7 +14,7 @@ if(%upass_progress >= ^upass_entered_main_area) {
     @upass_paladin_after_killed;
 }
 ~chatplayer("<p,happy>Hello Paladin.");
-if(testbit(%upass_map_mechanisms, ^upass_spoken_jerro) = true) {
+if(testbit(%upass_map_mechanisms, ^upass_spoken_jerro) = ^true) {
     ~chatnpc("<p,neutral>You should leave this place now traveller, I heard the crashing of rocks further down the cavern. Iban must be restless.");
     ~chatnpc("<p,neutral>I doubt not that Zamorak still influences these caverns. A little further on lies the great door of Iban. We've tried everything, but it will not let us enter. Leave now before Iban awakes and it's too late.");
     return;

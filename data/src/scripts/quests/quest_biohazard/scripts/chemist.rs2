@@ -1,5 +1,5 @@
 [opnpc1,chemist]
-if(map_members = false) { // rs3
+if(map_members = ^false) { // rs3
     ~chatnpc("<p,neutral>It's very nice that you've come all the way down here, but I really don't have time to talk at the moment. Maybe if you come back later on a members' world I'll be able to help.");
     return;
 }

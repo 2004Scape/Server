@@ -13,7 +13,7 @@ if(%desertrescue_progress >= ^desertrescue_killed_capt) {
 [label,approach_merc_capt]
 ~mesbox("You approach the Mercenary Captain.");
 if(%desertrescue_progress = ^desertrescue_started) %desertrescue_progress = ^desertrescue_approached_captain;
-if(testbit(%desertrescue_map_mechanisms, ^desertrescue_spoke_al_shabim) = true) {
+if(testbit(%desertrescue_map_mechanisms, ^desertrescue_spoke_al_shabim) = ^true) {
     @multi4("Wow! A real captain!", mercenary_capt_realcapt, "You there!", mercenary_capt_you, "Hey ugly!", mercenary_capt_ugly, "I've some information for you about Al Zaba Bhasim", merc_capt_alzaba);
 }
 @multi3("Wow! A real captain!", mercenary_capt_realcapt, "You there!", mercenary_capt_you, "Hey ugly!", mercenary_capt_ugly);
@@ -195,7 +195,7 @@ if (finduid(%npc_aggressive_player) = true) {
     queue(defeat_merc_capt, 0);
 }
 gosub(npc_death);
-if (npc_findhero = false) {
+if (npc_findhero = ^false) {
     return;
 }
 obj_add(npc_coord, npc_param(death_drop), 1, ^lootdrop_duration);

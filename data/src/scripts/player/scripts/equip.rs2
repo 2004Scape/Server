@@ -408,10 +408,10 @@ while ($i < inv_size(worn)) {
 }
 
 [proc,update_weight_equipment] // can change to use categories and param when more weight reduction equipment exists
-if(inv_total(worn, ikov_bootsoflightness) > 0 & map_members = true) { // convert inv boots to worn boots if in p2p
+if(inv_total(worn, ikov_bootsoflightness) > 0 & map_members = ^true) { // convert inv boots to worn boots if in p2p
     inv_del(worn, ikov_bootsoflightness, 1);
     inv_setslot(worn, ^wearpos_feet, ikov_bootsoflightnessworn, 1);
-} else if(inv_total(worn, ikov_bootsoflightnessworn) > 0 & map_members = false) { // convert worn boots to inv boots (in worn inv) if in f2p 
+} else if(inv_total(worn, ikov_bootsoflightnessworn) > 0 & map_members = ^false) { // convert worn boots to inv boots (in worn inv) if in f2p 
     inv_del(worn, ikov_bootsoflightnessworn, 1);
     inv_setslot(worn, ^wearpos_feet, ikov_bootsoflightness, 1);
 }

@@ -1,5 +1,5 @@
 [opnpc1,guidors_wife]
-if(map_members = false | %biohazard_progress >= ^biohazard_reported_elena) {
+if(map_members = ^false | %biohazard_progress >= ^biohazard_reported_elena) {
     ~chatplayer("<p,neutral>Hello.");
     ~chatnpc("<p,sad>Oh hello, I can’t chat now.|I have to keep an eye on my husband.|He’s very ill!");
     ~chatplayer("<p,sad>I’m sorry to hear that!");

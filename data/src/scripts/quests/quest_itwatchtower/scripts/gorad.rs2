@@ -21,7 +21,7 @@ if(getbit_range(%itwatchtower_bits, ^itwatchtower_spoken_grew, ^itwatchtower_hel
 
 [ai_queue3,gorad]
 gosub(npc_death);
-if (npc_findhero = false) {
+if (npc_findhero = ^false) {
     return;
 }
 if(%itwatchtower_progress < ^itwatchtower_given_relic) queue(defeat_gorad, 0);

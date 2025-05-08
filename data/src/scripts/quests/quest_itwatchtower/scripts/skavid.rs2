@@ -1,52 +1,52 @@
 // none of these chatheads move... but if they get fixed later these mesanims match osrs
 [opnpc1,skavid_ar]
-if(testbit(%itwatchtower_bits, ^itwatchtower_learned_ar) = true) {
+if(testbit(%itwatchtower_bits, ^itwatchtower_learned_ar) = ^true) {
     ~chatnpc("<p,bored>Ar cur!");
     if(%itwatchtower_progress >= ^itwatchtower_complete) mes("You have already learned the skavid language.");
     else mes("You have already talked to this skavid.");
     return;
 }
 ~chatnpc("<p,bored>Gor cur...");
-if(testbit(%itwatchtower_bits, ^itwatchtower_learning_skavid) = false) {
+if(testbit(%itwatchtower_bits, ^itwatchtower_learning_skavid) = ^false) {
     @skavid_no_skavid_speech;
 }
 @skavid_comm;
 
 [opnpc1,skavid_ig]
-if(testbit(%itwatchtower_bits, ^itwatchtower_learned_ig) = true) {
+if(testbit(%itwatchtower_bits, ^itwatchtower_learned_ig) = ^true) {
     ~chatnpc("<p,bored>Bidith ig!");
     if(%itwatchtower_progress >= ^itwatchtower_complete) mes("You have already learned the skavid language.");
     else mes("You have already talked to this skavid.");
     return;
 }
 ~chatnpc("<p,bored>Cur bidith...");
-if(testbit(%itwatchtower_bits, ^itwatchtower_learning_skavid) = false) {
+if(testbit(%itwatchtower_bits, ^itwatchtower_learning_skavid) = ^false) {
     @skavid_no_skavid_speech;
 }
 @skavid_comm;
 
 [opnpc1,skavid_cur]
-if(testbit(%itwatchtower_bits, ^itwatchtower_learned_cur) = true) {
+if(testbit(%itwatchtower_bits, ^itwatchtower_learned_cur) = ^true) {
     ~chatnpc("<p,bored>Cur tanath!");
     if(%itwatchtower_progress >= ^itwatchtower_complete) mes("You have already learned the skavid language.");
     else mes("You have already talked to this skavid.");
     return;
 }
 ~chatnpc("<p,bored>Bidith tanath...");
-if(testbit(%itwatchtower_bits, ^itwatchtower_learning_skavid) = false) {
+if(testbit(%itwatchtower_bits, ^itwatchtower_learning_skavid) = ^false) {
     @skavid_no_skavid_speech;
 }
 @skavid_comm;
 
 [opnpc1,skavid_nod]
-if(testbit(%itwatchtower_bits, ^itwatchtower_learned_nod) = true) {
+if(testbit(%itwatchtower_bits, ^itwatchtower_learned_nod) = ^true) {
     ~chatnpc("<p,bored>Gor nod!");
     if(%itwatchtower_progress >= ^itwatchtower_complete) mes("You have already learned the skavid language.");
     else mes("You have already talked to this skavid.");
     return;
 }
 ~chatnpc("<p,bored>Tanath gor...");
-if(testbit(%itwatchtower_bits, ^itwatchtower_learning_skavid) = false) {
+if(testbit(%itwatchtower_bits, ^itwatchtower_learning_skavid) = ^false) {
     @skavid_no_skavid_speech;
 }
 @skavid_comm;
@@ -112,7 +112,7 @@ if(getbit_range(%itwatchtower_bits, ^itwatchtower_learning_skavid, ^itwatchtower
     ~chatnpc("<p,happy>Master, my kinsmen tell me you have learned skavid.|You should speak to the mad ones in their cave.");
     return;
 } 
-if(testbit(%itwatchtower_bits, ^itwatchtower_learning_skavid) = true) {
+if(testbit(%itwatchtower_bits, ^itwatchtower_learning_skavid) = ^true) {
     ~chatnpc("<p,happy>Master, how are you doing learning our language?");
     ~chatplayer("<p,happy>I am studying the speech of your kind...");
     return;

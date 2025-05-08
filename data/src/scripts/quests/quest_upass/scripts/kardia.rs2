@@ -1,5 +1,5 @@
 [oploc1,cavewitch_door]
-if(testbit(%upass_map_mechanisms, ^upass_dropped_cat) = true) {
+if(testbit(%upass_map_mechanisms, ^upass_dropped_cat) = ^true) {
     mes("You open the door...");
     ~open_and_close_door3(loc_1532, ~check_axis(coord, loc_coord, loc_angle), door_open);
     p_delay(3);
@@ -20,18 +20,18 @@ if(npc_find(coord, kardia, 8, 0) = true) {
 [oploc2,cavewitch_door]
 mes("You knock on the door...");
 p_delay(2);
-if(inv_total(inv, cavewitchcat) > 0 & testbit(%upass_map_mechanisms, ^upass_dropped_cat) = false) {
+if(inv_total(inv, cavewitchcat) > 0 & testbit(%upass_map_mechanisms, ^upass_dropped_cat) = ^false) {
     @upass_drop_witches_cat;
 }
 mes("There is no reply.");
 p_delay(2);
-if(testbit(%upass_map_mechanisms, ^upass_dropped_cat) = true) {
+if(testbit(%upass_map_mechanisms, ^upass_dropped_cat) = ^true) {
     mes("Inside you can hear the witch talking to her cat.");
 }
 
 [oplocu,cavewitch_door]
 if(last_useitem = cavewitchcat) {
-    if(testbit(%upass_map_mechanisms, ^upass_dropped_cat) = true) {
+    if(testbit(%upass_map_mechanisms, ^upass_dropped_cat) = ^true) {
         ~mesbox("The witch is busy playing with her other cat...");
         return;
     }
