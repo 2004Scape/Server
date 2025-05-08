@@ -28,7 +28,7 @@ switch_component ($component) {
         if_openmain(questscroll_itgronigen);
     case questlist:fluffs ://Gertrude's Cat: Updates QP before quest scroll is queued & uses custom quest scroll
         if_openmain(questscroll_fluffs);
-    case questlist:seaslug ://Seaslug: Updates QP before quest scroll is queued
+    case questlist:seaslug, questlist:itwatchtower ://Seaslug & Watchtower: Updates QP before quest scroll is queued
         if_settext(questscroll:com_3, $questmessage);
         if_settext(questscroll:com_9, tostring($questpoints));
         if_settext(questscroll:com_10, "Quest points.");
