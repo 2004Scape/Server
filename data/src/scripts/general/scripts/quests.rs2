@@ -34,7 +34,7 @@ switch_component ($component) {
         if_settext(questscroll:com_10, "Quest points.");
         if_setobject(questscroll:com_4, $obj, $objscale);
         if_openmain(questscroll);
-    case default :
+    case default ://All other quests
         ~update_questpoints;
         if_settext(questscroll:com_3, $questmessage);
         if_settext(questscroll:com_9, tostring($questpoints));
