@@ -18,10 +18,17 @@ if (%claws_of_guthix_casts < ^mage_arena_spell_finished & ~inzone_coord_pair_tab
 ~pvp_spell_cast($spell_data);
 // spell hit
 if (~pvp_hit_roll(^magic_style) = true) {
-    ~pvp_spell_success($spell_data, ~god_spell_maxhit($spell_data), 64);
-    if (~has_god_cape_and_staff = true) {
-        ~pvp_stat_change_effect($spell_data);
+    def_int $maxhit = ~magic_spell_maxhit($spell_data);
+    if (inv_total(worn, guthix_cape) > 0 & inv_total(worn, guthix_staff) > 0) {
+        if (.stat(defence) = .stat_base(defence)) { // https://oldschool.runescape.wiki/w/Update:Contact!
+            .stat_drain(defence, 1, 5);
+            .mes("You feel weakened.");
+        }
+        if (%charge_god_spell > 0) {
+            $maxhit = scale(3, 2, $maxhit);
+        }
     }
+    ~pvp_spell_success($spell_data, $maxhit, 64);
 } else {
     ~pvp_spell_fail($spell_data, 64);
 }
