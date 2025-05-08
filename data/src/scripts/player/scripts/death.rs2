@@ -8,11 +8,13 @@ if (.finduid(%duelpartner) = true) {
 queue(player_death_default, 0);
 
 [proc,player_death]
+%death = ^true;
 p_delay(1);
 p_stopaction;
 if_close;
 anim(human_death, 0);
 p_delay(3);
+%death = ^false;
 
 [queue,player_death_default]
 ~player_death;
@@ -191,3 +193,6 @@ if($is_worn = true) {
 
 [debugproc,death]
 ~damage_self(999);
+
+[debugproc,damage]
+queue(damage_player, 0, 100);

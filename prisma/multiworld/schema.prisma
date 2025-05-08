@@ -253,22 +253,32 @@ model message_thread {
     subject           String
     created           DateTime @default(now())
     updated           DateTime @default(now())
-    read              DateTime?
-    closed            DateTime?
-    to_deleted        DateTime?
-    from_deleted      DateTime?
     messages          Int @default(1)
+    closed            DateTime?
+    closed_by         Int?
+    marked_spam       DateTime?
+    marked_spam_by    Int?
 }
 
 model message {
     id Int @id @default(autoincrement())
 
-    thread_id Int
-    sender_id Int
-    sender_ip String
-    sender    String @default("me")
-    content   String @db.Text
-    created   DateTime @default(now())
+    thread_id   Int
+    sender_id   Int
+    sender_ip   String
+    content     String @db.Text
+    created     DateTime @default(now())
+    edited      DateTime?
+    edited_by   Int?
+    deleted     DateTime?
+    deleted_by  Int?
+}
+
+model message_tag {
+    tag_id      Int
+    thread_id   Int
+
+    @@id([thread_id, tag_id])
 }
 
 model message_status {

@@ -11,3 +11,11 @@ stock1=rotten_tomato,2000,10
 [duelarrows]
 size=29
 protect=no
+
+[dueloffer]
+size=28
+protect=no
+
+[duelwinnings]
+size=28
+protect=no

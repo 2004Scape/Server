@@ -218,3 +218,20 @@ while($i < db_getfieldcount($data, coord_pair_table:coord_pair)) {
     $i = add($i, 1);
 }
 return($sum);
+
+[proc,map_findsquare_inzone](coord $coord1, coord $coord2)(coord)
+def_int $x1 = coordx($coord1);
+def_int $x2 = coordx($coord2);
+def_int $z1 = coordz($coord1);
+def_int $z2 = coordz($coord2);
+def_coord $random_coord = movecoord($coord1, random(sub($x2, $x1)), 0, random(sub($z2, $z1)));
+
+def_int $i = 0;
+while (map_blocked($random_coord) = true) {
+    $random_coord = movecoord($coord1, random(sub($x2, $x1)), 0, random(sub($z2, $z1)));
+    $i = calc($i + 1);
+    if ($i = 50) {
+        return(null); // no way this is reached
+    }
+}
+return($random_coord);

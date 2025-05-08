@@ -33,7 +33,7 @@ if (npc_stat(hitpoints) <= npc_param(retreat)) {
 
 // a default melee attack script.
 [proc,npc_default_attack]
-if (stat(hitpoints) = 0) {
+if (%death = ^true) {
     npc_setmode(null);
     return;
 }

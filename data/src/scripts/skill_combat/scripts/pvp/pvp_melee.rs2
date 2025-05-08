@@ -7,7 +7,7 @@ if (%action_delay > map_clock) {
     return;
 }
 
-if (.stat(hitpoints) = 0) {
+if (.%death = ^true) {
     p_stopaction;
     return;
 }

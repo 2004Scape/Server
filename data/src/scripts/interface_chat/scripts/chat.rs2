@@ -521,54 +521,55 @@ while ($page < $pagetotal) {
 
 // ----
 
-[proc,doubleobjbox_page](obj $obj_1, obj $obj_2, int $scale, int $page)
+[proc,doubleobjbox_page](obj $obj_1, int $scale1, int $x1, int $y1, obj $obj_2, int $scale2, int $x2, int $y2, int $page)
 def_int $lines = split_linecount($page);
 
-def_interface $interface = null;
-if ($lines = 0) {
+if ($lines = 0 | $lines > 4) {
     // sanity check
     return;
 } else if ($lines = 1) {
-    $interface = doubleobjbox;
-    if_setobject(doubleobjbox:com_0, $obj_1, $scale);
     if_settext(doubleobjbox:com_1, split_get($page, 0));
     if_settext(doubleobjbox:com_2, "");
     if_settext(doubleobjbox:com_4, "");
     if_settext(doubleobjbox:com_5, "");
-    if_setobject(doubleobjbox:com_6, $obj_2, $scale);
 } else if ($lines = 2) {
-    $interface = doubleobjbox;
-    if_setobject(doubleobjbox:com_0, $obj_1, $scale);
     if_settext(doubleobjbox:com_1, split_get($page, 0));
     if_settext(doubleobjbox:com_2, "");
     if_settext(doubleobjbox:com_4, split_get($page, 1));
     if_settext(doubleobjbox:com_5, "");
-    if_setobject(doubleobjbox:com_6, $obj_2, $scale);
 } else if ($lines = 3) {
-    $interface = doubleobjbox;
-    if_setobject(doubleobjbox:com_0, $obj_1, $scale);
     if_settext(doubleobjbox:com_1, split_get($page, 0));
     if_settext(doubleobjbox:com_2, "");
     if_settext(doubleobjbox:com_4, split_get($page, 1));
     if_settext(doubleobjbox:com_5, split_get($page, 2));
-    if_setobject(doubleobjbox:com_6, $obj_2, $scale);
 } else if ($lines = 4) {
-    $interface = doubleobjbox;
-    if_setobject(doubleobjbox:com_0, $obj_1, $scale);
     if_settext(doubleobjbox:com_1, split_get($page, 1));
     if_settext(doubleobjbox:com_2, split_get($page, 0));
     if_settext(doubleobjbox:com_4, split_get($page, 2));
     if_settext(doubleobjbox:com_5, split_get($page, 3));
-    if_setobject(doubleobjbox:com_6, $obj_2, $scale);
 }
-if_openchat($interface);
+if_setobject(doubleobjbox:com_0, $obj_1, $scale1);
+if_setobject(doubleobjbox:com_6, $obj_2, $scale2);
+if_setposition(doubleobjbox:com_0, $x1, $y1);
+if_setposition(doubleobjbox:com_6, $x2, $y2);
+if_openchat(doubleobjbox);
 
 [proc,doubleobjbox](obj $obj_1, obj $obj_2, string $string, int $scale)
 split_init($string, 350, 4, q8);
 def_int $page = 0;
 def_int $pagetotal = split_pagecount;
 while ($page < $pagetotal) {
-    ~doubleobjbox_page($obj_1, $obj_2, $scale, $page);
+    ~doubleobjbox_page($obj_1, $scale, 0, 0, $obj_2, $scale, 0, 0, $page);
+    p_pausebutton;
+    $page = calc($page + 1);
+}
+
+[proc,doubleobjbox2](obj $obj_1, int $scale1, int $x1, int $y1, obj $obj_2, int $scale2, int $x2, int $y2, string $string)
+split_init($string, 350, 4, q8);
+def_int $page = 0;
+def_int $pagetotal = split_pagecount;
+while ($page < $pagetotal) {
+    ~doubleobjbox_page($obj_1, $scale1, $x1, $y1, $obj_2, $scale2, $x2, $y2, $page);
     p_pausebutton;
     $page = calc($page + 1);
 }

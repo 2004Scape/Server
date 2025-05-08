@@ -61,7 +61,8 @@ if (~pvp_hit_roll(^magic_style) = true) {
 [proc,pvp_combat_spell_checks](dbrow $spell_data)(boolean)
 if_close;
 p_stopaction;
-if (.stat(hitpoints) = 0) {
+if (.%death = ^true) {
+    p_stopaction;
     return(false);
 }
 if (map_clock < %action_delay) {
@@ -136,12 +137,10 @@ while ($i < db_getfieldcount($spell_data, magic_spell_table:stat_change)) {
         if ($constant > 0 & $percent > 0) {
             // if both positive assume statadd
             // nothing ever uses this but i guess if someone wants to add some heal spell or something
-            .stat_add($stat, $constant, $percent);
+            .stat_boost($stat, $constant, $percent);
         } else {
-            if ($constant < 0) $constant = multiply($constant, -1);
-            if ($percent < 0) $percent = multiply($percent, -1);
             .mes("You feel weakened.");
-            .stat_sub($stat, $constant, $percent);
+            .stat_drain($stat, abs($constant), abs($percent));
         }
     }
     $i = add($i, 1);

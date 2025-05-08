@@ -17,7 +17,7 @@ if (inv_total(inv, garlic) > 0) {
 }
 
 [ai_opplayer2,count_draynor]
-if (stat(hitpoints) = 0) {
+if (%death = ^true) {
     npc_setmode(null);
     return;
 }
