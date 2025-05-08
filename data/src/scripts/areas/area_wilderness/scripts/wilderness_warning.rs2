@@ -4,6 +4,12 @@
 // https://youtu.be/jdcT9ogpMwE?t=104 underground
 // all on the same z axis
 
+// remove wildy warning if logged in at wildy border https://youtu.be/hiUfg8MsKMo
+[proc,wilderness_warning_login]
+if (inzone(0_45_54_48_56, 0_52_54_63_63, coord) = true | inzone(0_48_154_56_56, 0_48_154_63_63, coord) = true) {
+    %wilderness = ^true;
+}
+
 [queue,wilderness_warning]
 if (%wilderness = ^false) {
     %wilderness = ^true;

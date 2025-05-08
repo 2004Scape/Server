@@ -43,6 +43,7 @@ queue(macro_event_login, 0);
 ~ferment_wines_login;
 ~thieving_stall_timers_login;
 ~stat_boost_login; // f2p boost reset
+~wilderness_warning_login; // remove wildy warning if logged in at wildy border https://youtu.be/hiUfg8MsKMo
 
 if(inzone(movecoord(^grandtree_jail_coord, 0, 0, -2), movecoord(^grandtree_jail_coord, 3, 0, 2), coord) = true) {
     ~grandtree_spawn_charlie;
