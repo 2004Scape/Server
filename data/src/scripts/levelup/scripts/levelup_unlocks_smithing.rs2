@@ -47,7 +47,7 @@ switch_int(stat_base(smithing)) {
     case 51 : ~objbox(mithril_axe,"You can now make @dbl@Mithril Axes.", 250, 0, 0);
     case 52 : ~objbox(mithril_mace,"You can now make @dbl@Mithril Maces.", 250, 0, divide(^objbox_height, 2));
     case 53 : ~objbox(mithril_med_helm,"You can now make @dbl@Mithril Medium Helms.", 250, 0, divide(^objbox_height, 2));
-    case 54 : ~doubleobjbox(mithril_sword,iron_dart_tip,"You can now make @dbl@Mithril Short Swords@bla@ and members|can make @dbl@Mithril Dart Tips.", 200);
+    case 54 : ~doubleobjbox(mithril_sword,mithril_dart,"You can now make @dbl@Mithril Short Swords@bla@ and members|can make @dbl@Mithril Dart Tips.", 200);
     case 55 : ~doubleobjbox(mithril_scimitar,mithril_arrowheads,"You can now make @dbl@Mithril Scimitars@bla@ and members|can make @dbl@Mithril Arrow Heads.", 200);
     case 56 : ~objbox(mithril_longsword,"You can now make @dbl@Mithril Long Swords.", 250, 0, 0);
     case 57 : ~doubleobjbox(mithril_full_helm,mithril_knife,"You can now make @dbl@Mithril Full Helms@bla@ and members|can make @dbl@Mithril Throwing Knives.", 200);
