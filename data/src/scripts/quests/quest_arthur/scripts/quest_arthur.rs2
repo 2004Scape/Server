@@ -217,7 +217,7 @@ if(testbit(%excalibur_components_progress, ^excalibur_rewarded) = ^false) {
         if(npc_find(coord, lake_beggar, 1, 0) = false) {
             npc_add(movecoord(loc_coord, 0, 0, 1), lake_beggar, 100);
         }
-        @beggar_dialogue;
+        @lake_beggar_dialogue;
     } 
 }
 ~open_and_close_door2(loc_1535, ~check_axis(coord, loc_coord, loc_angle), door_open);

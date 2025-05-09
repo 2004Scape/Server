@@ -8,14 +8,14 @@ if(testbit(%excalibur_components_progress, ^excalibur_spoken_beggar) = ^true) {
                 ~chatplayer("<p,neutral>Actually, I'm wrong. I still don't have any bread. Sorry.");
                 return;
             }
-            @give_beggar_bread;
+            @give_lake_beggar_bread;
         case 2 : ~chatplayer("<p,neutral>Sorry, no, I still have none.");
     }
 } else {
     ~mesbox("The beggar isn't interested in talking.");
 }
 
-[label,beggar_dialogue]
+[label,lake_beggar_dialogue]
 ~chatnpc("<p,sad>Please kind <text_gender("sir", "lady")>... my family and I are starving...");
 ~chatnpc("<p,sad>Could you find it in your heart to spare me a simple loaf of bread?");
 switch_int (~p_choice2("Yes certainly.", 1, "No I don't have any bread with me.", 2)) {
@@ -23,16 +23,16 @@ switch_int (~p_choice2("Yes certainly.", 1, "No I don't have any bread with me."
         ~chatplayer("<p,neutral>Yes, certainly.");
         if(inv_total(inv, bread) = 0) {
             ~chatplayer("<p,sad>... except I don't have any bread on me at the moment...");
-            @ignore_beggar;
+            @ignore_lake_beggar;
             return;
         } 
-        @give_beggar_bread;
+        @give_lake_beggar_bread;
     case 2 :
         ~chatplayer("<p,neutral>No, I don't have any bread with me.");
-        @ignore_beggar;
+        @ignore_lake_beggar;
 }
 
-[label,give_beggar_bread]
+[label,give_lake_beggar_bread]
 ~mesbox("You give bread to the beggar.");
 inv_del(inv, bread, 1);
 ~chatnpc("<p,happy>Thank you very much!");
@@ -44,7 +44,7 @@ npc_changetype_keepall(ladyofthelake, ^max_32bit_int); // re add if beggar doesn
 inv_add(inv, excalibur, 1);
 npc_del;
 
-[label,ignore_beggar]
+[label,ignore_lake_beggar]
 ~chatnpc("<p,neutral>Well, if you get some, you know where to come.");
 if_close;
 %excalibur_components_progress = setbit(%excalibur_components_progress, ^excalibur_spoken_beggar);

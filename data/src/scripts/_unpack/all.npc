@@ -384,7 +384,7 @@ param=magicdefence,-4
 param=rangedefence,15
 param=damagetype,^ranged_style
 param=attack_anim,human_crossbow
-param=rangeattack_sound,crossbow
+//param=rangeattack_sound,crossbow
 param=proj_launch,crossbowbolt_launch
 param=proj_travel,crossbowbolt_travel
 // param=defend_sound,
@@ -632,6 +632,9 @@ model10=model_3330_obj_wear
 // osrs (ardougne castle)
 wanderrange=2
 maxrange=4
+// osrs (ardougne market)
+//wanderrange=5
+//maxrange=7
 respawnrate=100
 hitpoints=57
 attack=54
@@ -1021,7 +1024,7 @@ defence=10
 magic=0
 ranged=0
 param=damagetype,^crush_style
-category=shipyard_worker
+category=shipyardworker
 // Stats match osrs version but our version Vislvl is different.
 // https://raw.githubusercontent.com/Joshua-F/osrs-dumps/refs/heads/master/config/dump.npc npc_5457
 
@@ -1060,7 +1063,7 @@ param=damagetype,^crush_style
 param=attack_anim,human_blunt_pound
 param=defend_anim,human_blunt_block
 param=attack_sound,baxe_slash
-category=shipyard_worker
+category=shipyardworker
 // osrs attack_sound warhammer_crush
 // Stats match osrs version but our version Vislvl is different.
 // https://raw.githubusercontent.com/Joshua-F/osrs-dumps/refs/heads/master/config/dump.npc npc_5729
@@ -2077,44 +2080,6 @@ huntrange=2
 // osrs stats and Vislvl match 1:1
 // https://raw.githubusercontent.com/Joshua-F/osrs-dumps/refs/heads/master/config/dump.npc npc_2834
 
-[deathwing]
-name=Death wing
-desc=A shadowy, barely visible flying entity from some evil place.
-size=2
-hasalpha=yes
-walkanim=bat_walk
-readyanim=bat_ready
-op2=Attack
-vislevel=83
-recol1s=16417
-recol1d=0
-recol2s=18465
-recol2d=0
-recol3s=0
-recol3d=5285
-recol4s=9216
-recol4d=5285
-model1=model_2940_npc
-wanderrange=8
-maxrange=10
-respawnrate=70
-hitpoints=80
-attack=70
-strength=70
-defence=70
-param=damagetype,^stab_style
-param=attack_anim,bat_attack
-param=defend_anim,bat_parry
-param=death_anim,bat_death
-param=attack_sound,bat_attack
-param=defend_sound,bat_hit
-param=death_sound,bat_death
-huntmode=cowardly
-huntrange=2
-// osrs stats and Vislvl match 1:1
-// osrs huntmode cowardly 2024
-// https://raw.githubusercontent.com/Joshua-F/osrs-dumps/refs/heads/master/config/dump.npc npc_509
-
 [cow]
 size=2
 walkanim=cow_walk
@@ -3068,6 +3033,8 @@ recol1s=24075
 recol1d=22431
 model1=model_2870_npc
 model2=model_2868_npc
+//wanderrange=3
+//maxrange=5
 respawnrate=60
 hitpoints=70
 attack=40
@@ -3515,8 +3482,8 @@ model4=model_176_idk
 model5=model_268_obj_wear
 model6=model_184_npc
 model7=model_511_npc
-wanderrange=3
-maxrange=5
+//wanderrange=3
+//maxrange=5
 respawnrate=60
 hitpoints=59
 attack=47
@@ -3964,8 +3931,8 @@ model4=model_176_idk
 model5=model_268_obj_wear
 model6=model_184_npc
 model7=model_511_npc
-wanderrange=3
-maxrange=5
+//wanderrange=3
+//maxrange=5
 respawnrate=60
 hitpoints=59
 attack=47

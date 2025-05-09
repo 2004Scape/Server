@@ -239,13 +239,14 @@ attack=75
 strength=78
 defence=80
 param=damagetype,^slash_style
-param=attack_anim,human_dhsword_slash
+param=attack_anim,human_dhsword_chop
 param=defend_anim,human_dhsword_def
-// param=attack_sound,
-// param=defend_sound,
-// osrs attack seq_406
+param=attack_sound,2H_slash
+//attack sound -> https://youtu.be/4Nqjep2E5pw?si=uKZDy4fObgJdVLUO&t=528
+// param=defend_sound, TODO
+// defend sound before rework -> https://youtu.be/KgifYQQpOYM?si=syuNCONCW0tsKhuk&t=490
+// defend sound after rework -> https://youtube.com/shorts/GIVtSFgpV0E?si=qM6VhY_DZ5DW9XUo
 // TODO monster examine spell
-// TODO sounds
 // Stats match osrs version but our version Vislvl is different.
 // https://raw.githubusercontent.com/Joshua-F/osrs-dumps/refs/heads/master/config/dump.npc npc_12025
 

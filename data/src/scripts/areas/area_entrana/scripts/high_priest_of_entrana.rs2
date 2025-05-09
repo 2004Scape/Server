@@ -9,7 +9,7 @@ if(%grail_progress < ^grail_finding_percival & %grail_progress >= ^grail_spoken_
     } else {
         ~chatnpc("<p,neutral>Wait!");
     }
-    @crone_the_grail;
+    @grail_crone;
 }
 if (%hero_progress = ^hero_started) { // only checks starting stage (OSRS)
     // OSRS https://youtu.be/9wwjNvDXjFw?t=121 

@@ -112,7 +112,7 @@ mes("You search the cupboard but you find nothing.");
 [oploc1,_shipyard_gate]
 if(%grandtree_progress >= ^grandtree_released_prison) {
     if(coordx(coord) < coordx(loc_coord) & npc_find(coord, grandtree_shipyard_worker, 5, 0) = true) {
-        @shipyard_worker_gate;
+        @shipyardworker_gate;
     } else {
         @open_shipyard_gate;
     }

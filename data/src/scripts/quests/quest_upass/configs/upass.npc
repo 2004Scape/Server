@@ -382,9 +382,10 @@ param=rangedefence,79
 param=damagetype,^slash_style
 param=attack_anim,human_sword_slash
 param=defend_anim,human_sword_def
-// TODO sounds
-// TODO sounds
+param=attack_sound,hacksword_slash
+param=defend_sound,blade3
 // TODO monster examine spell
+// This npc's stats and animations and sounds are probably identical to a normal paladin. This still needs to be confirmed..
 // https://raw.githubusercontent.com/Joshua-F/osrs-dumps/refs/heads/master/config/dump.npc npc_8987
 
 [sir_carl]
@@ -427,9 +428,10 @@ param=rangedefence,79
 param=damagetype,^slash_style
 param=attack_anim,human_sword_slash
 param=defend_anim,human_sword_def
-// TODO sounds
-// TODO sounds
+param=attack_sound,hacksword_slash
+param=defend_sound,blade3
 // TODO monster examine spell
+// This npc's stats and animations and sounds are probably identical to a normal paladin. This still needs to be confirmed..
 // https://raw.githubusercontent.com/Joshua-F/osrs-dumps/refs/heads/master/config/dump.npc npc_8988
 
 [sir_harry]
@@ -472,9 +474,10 @@ param=rangedefence,79
 param=damagetype,^slash_style
 param=attack_anim,human_sword_slash
 param=defend_anim,human_sword_def
-// TODO sounds
-// TODO sounds
+param=attack_sound,hacksword_slash
+param=defend_sound,blade3
 // TODO monster examine spell
+// This npc's stats and animations and sounds are probably identical to a normal paladin. This still needs to be confirmed..
 // https://raw.githubusercontent.com/Joshua-F/osrs-dumps/refs/heads/master/config/dump.npc npc_8989
 
 [half_souless]

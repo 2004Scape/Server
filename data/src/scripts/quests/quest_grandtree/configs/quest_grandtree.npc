@@ -164,7 +164,7 @@ defence=10
 magic=0
 ranged=0
 param=damagetype,^crush_style
-category=shipyard_worker
+category=shipyardworker
 // https://raw.githubusercontent.com/Joshua-F/osrs-dumps/refs/heads/master/config/dump.npc npc_1430
 
 [femi]

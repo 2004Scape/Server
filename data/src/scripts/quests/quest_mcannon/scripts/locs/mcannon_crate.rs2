@@ -15,7 +15,7 @@ if (%mcannon_progress = ^mcannon_tasked_with_finding_gilobs_son) {
         npc_setmode(playerface);
 
         if (npc_find(coord, dwarfchildtw1, 14, 0) = true) {
-            @dwarf_youngster_dialogue;
+            @dwarfchildtw1_dialogue;
         }
     }
 } else {

@@ -6,7 +6,7 @@ if(~in_hemenster_comp = false) {
     return;
 }
 if(npc_find(coord, bigdave, 5, 0) = true) {
-    @big_dave_dialogue;
+    @bigdave_dialogue;
 }
 
 [opnpc1,0_41_53_joshuafishspot]

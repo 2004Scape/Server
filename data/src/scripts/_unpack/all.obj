@@ -624,10 +624,8 @@ param=strengthbonus,50
 param=attackrate,5
 param=ready_baseanim,human_staffready
 param=crushattack_anim,human_blunt_pound
-// param=defend_anim,human_ibanstaff_2h_defend
-// param=crushattack_anim,human_axe_chop
 param=defend_anim,human_blunt_block
-// osrs use attack seq_401 and defend seq_403 + the weapon was already 1 handed in 2006
+// param=crushattack_anim,human_axe_chop
 tradeable=no
 
 [brokenibanstaff]
