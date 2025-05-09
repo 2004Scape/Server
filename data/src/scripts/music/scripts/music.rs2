@@ -23,13 +23,15 @@ if (p_finduid(uid) = true) {
 }
 
 [proc,midi_jingle](string $jingle, int $length)
-if (%music_volume = 0) {
+if (%music_volume = 4) {
+    // off
     return;
 }
 midi_jingle($jingle, $length);
 
 [proc,midi_song](string $song)
-if (%music_volume = 0) {
+if (%music_volume = 4) {
+    // off
     return;
 }
 midi_song($song);
