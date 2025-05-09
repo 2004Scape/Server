@@ -1,13 +1,15 @@
 [oploc1,_sheepherder_gate]
-if (%sheepherder_progress = ^sheepherder_not_started) {
-    ~mesbox("This is a restricted area.|You cannot enter without protective clothing.");
-    return;
-}
+if(~check_axis(coord, loc_coord, loc_angle) = true) {
+    if (%sheepherder_progress = ^sheepherder_not_started) {
+        ~mesbox("This is a restricted area.|You cannot enter without protective clothing.");
+        return;
+    }
 
-if (%sheepherder_progress > ^sheepherder_not_started 
-    & (inv_total(worn, plague_jacket) < 1 | inv_total(worn, plague_trousers) < 1)) {
-    ~chatplayer("<p,neutral>It doesn't look very safe in there. I'm not going in without decent protective clothing.");
-    return;
+    if (%sheepherder_progress > ^sheepherder_not_started 
+        & (inv_total(worn, plague_jacket) < 1 | inv_total(worn, plague_trousers) < 1)) {
+        ~chatplayer("<p,neutral>It doesn't look very safe in there. I'm not going in without decent protective clothing.");
+        return;
+    }
 }
 
 if(coordx(coord) <= coordx(loc_coord)) {
