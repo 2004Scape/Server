@@ -120,21 +120,4 @@ if (npc_find(movecoord(coord, 0, 0, 2), kennith, 5, 0) = true) {
 
 [queue,seaslug_quest_complete]
 session_log(^log_adventure, "Quest complete: Sea Slug");
-def_int $random = random(128);
-if ($random < 32) {
-    // The least common music that plays when completing a quest.
-    ~midi_jingle(^quest_complete_3_jingle, ^quest_complete_3_millis);
-} else if ($random < 64) {
-    // A less common music that plays when completing a quest.
-    ~midi_jingle(^quest_complete_2_jingle, ^quest_complete_2_millis);
-} else {
-    // The most common music that plays when completing a quest.
-    ~midi_jingle(^quest_complete_1_jingle, ^quest_complete_1_millis);
-}
-if_settext(questscroll:com_3, "You have completed the\\nSea Slug Quest!");
-if_settext(questscroll:com_9, tostring(1));
-if_setobject(questscroll:com_4, seasluginv, 250);
-if_openmain(questscroll);
-if_setcolour(questlist:seaslug, ^green_rgb);
-if_settab(questlist, ^tab_quest_journal);
-mes("Congratulations! Quest complete!");
+~send_quest_complete(questlist:seaslug, seasluginv, 250, ^seaslug_questpoints, "You have completed the\\nSea Slug Quest!");

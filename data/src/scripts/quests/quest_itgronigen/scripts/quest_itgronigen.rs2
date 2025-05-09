@@ -267,19 +267,4 @@ queue(itgronigen_quest_complete, 0);
 
 [queue,itgronigen_quest_complete]
 session_log(^log_adventure, "Quest complete: Observatory");
-// Random quest complete jingle.
-def_int $random = random(128);
-if ($random < 32) {
-    // The least common music that plays when completing a quest.
-    ~midi_jingle(^quest_complete_3_jingle, ^quest_complete_3_millis);
-} else if ($random < 64) {
-    // A less common music that plays when completing a quest.
-    ~midi_jingle(^quest_complete_2_jingle, ^quest_complete_2_millis);
-} else {
-    // The most common music that plays when completing a quest.
-    ~midi_jingle(^quest_complete_1_jingle, ^quest_complete_1_millis);
-}
-if_openmain(questscroll_itgronigen);
-if_setcolour(questlist:itgronigen, ^green_rgb);
-if_settab(questlist, ^tab_quest_journal);
-mes("Congratulations! Quest complete!");
+~send_quest_complete(questlist:itgronigen, null, 0, ^itgronigen_questpoints, null);

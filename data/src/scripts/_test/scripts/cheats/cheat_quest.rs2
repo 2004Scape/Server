@@ -265,12 +265,12 @@ if (p_finduid(uid) = true) {
                 case 51 : %ball_progress = 0;
                 case default : mes("Quest not found.");
             }
-            ~update_quests;
+            ~update_questpoints;
+            ~update_questlist;
         }
     }
 }
 
-// New label to complete all quests
 [label,complete_all_quests]
 
 def_int $arrav_choice = ~p_choice2_header("Black Arm Gang.", 0, "Phoenix Gang.", 1, "Choose a gang for Shield of Arrav:");
@@ -302,9 +302,9 @@ queue(itexam_complete, 0);
         queue(druid_quest_complete, 0, npc_uid);
     }
 queue(mcannon_complete, 0);
+    // Complete all blast spells and levers, gauntlet choice unselected
+    %crest_spells_levers_gauntlets = calc(pow(2, ^crest_south_lever) - 1);
 queue(crest_complete, 0);
-// Complete all blast spells and levers, gauntlet choice unselected
-%crest_spells_levers_gauntlets = calc(pow(2, ^crest_south_lever) - 1);
 queue(arena_quest_complete, 0);
 queue(fishingcompo_quest_complete, 0);
 queue(fluffs_complete, 0);
@@ -320,7 +320,7 @@ queue(murder_quest_complete, 0);
 queue(itgronigen_quest_complete, 0);
 queue(quest_elena_complete, 0);
 queue(scorpcatcher_quest_complete, 0);
-%seaslug_progress = ^seaslug_complete;
+    %seaslug_progress = ^seaslug_complete;
     %questpoints = add(%questpoints, ^seaslug_questpoints);
     inv_add(inv, bigoysterpearls, 1);
     stat_advance(fishing, 71750);
@@ -330,12 +330,12 @@ queue(zombiequeen_quest_complete, 0);
 queue(tree_quest_complete, 0);
 queue(totem_quest_complete, 0);
 queue(upass_quest_complete, 0);
-queue(itwatchtower_quest_complete, 0);
-%itwatchtower_progress = ^itwatchtower_complete;
+    %itwatchtower_progress = ^itwatchtower_complete;
     // Rewards are given before quest completion, so give here
     stat_advance(magic, 153000);
     inv_add(inv, coins, 5000);
     inv_add(inv, watchtowerspell, 1);
+queue(itwatchtower_quest_complete, 0);
 queue(waterfall_quest_complete, 0);
 queue(ball_quest_complete, 0);
 
@@ -368,14 +368,12 @@ if ($ikov_choice = 0) {
     if (npc_find(0_42_52_34_45, radimus_erkle, 20, 0) = true) {
         @radimus_training;
     }
-
-~update_quests;
+~update_questlist;
 mes("All quests have been completed.");
 return;
 
 // New label to reset all quests
 [label,reset_all_quests]
-
 %blackknight_progress = 0;
 %cook_progress = 0;
 %demon_progress = 0;
@@ -463,7 +461,7 @@ return;
 %waterfall_golrie_and_puzzle = 0;
 %waterfall_progress = 0;
 %ball_progress = 0;
-
+~update_questpoints;
+~update_questlist;
 mes("All quests have been reset.");
-~update_quests;
 return;
