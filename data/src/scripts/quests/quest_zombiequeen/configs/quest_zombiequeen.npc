@@ -21,6 +21,9 @@ model7=model_181_idk
 model8=model_553_npc
 head1=model_46_idk_head
 head2=model_81_idk_head
+defaultmode=patrol
+patrol1=0_45_46_0_5,1
+patrol2=0_45_46_0_10,1
 
 [zadimus_spirit]
 vislevel=hide
@@ -296,11 +299,12 @@ param=damagetype,^slash_style
 param=attack_anim,skeleton_attack
 param=defend_anim,skeleton_block
 param=death_anim,skeleton_death
-param=attack_sound,skeleton_attack
-param=defend_sound,skelly_hit
-param=death_sound,skeleton_death
+param=attack_sound,zombie_attack
+param=defend_sound,zombie_hit
+param=death_sound,zombie_death
 param=undead,^true
 param=death_drop,null
+// osrs attack sound stabsword_slash after graphics update
 // Stats match osrs version but our version Vislvl is different.
 // https://raw.githubusercontent.com/Joshua-F/osrs-dumps/refs/heads/master/config/dump.npc npc_5354
 

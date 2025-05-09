@@ -1,20 +1,20 @@
 [opnpc1,lawgof2]
 switch_int(%mcannon_progress) {
-    case ^mcannon_not_started : @dwarf_commander_start_quest;
-    case ^mcannon_tasked_with_fixing_railings : @dwarf_commander_how_goes_fixing_those_fences;
-    case ^mcannon_tasked_with_checking_guard_tower : @dwarf_commander_how_goes_finding_the_guard;
-    case ^mcannon_tasked_with_finding_goblin_cave : @dwarf_commander_how_goes_finding_the_goblin_cave;
-    case ^mcannon_tasked_with_finding_gilobs_son : @dwarf_commander_how_goes_finding_gilobs_son;
-    case ^mcannon_return_to_dwarf_commander : @dwarf_commander_found_gilobs_son;
+    case ^mcannon_not_started : @lawgof2_start_quest;
+    case ^mcannon_tasked_with_fixing_railings : @lawgof2_how_goes_fixing_those_fences;
+    case ^mcannon_tasked_with_checking_guard_tower : @lawgof2_how_goes_finding_the_guard;
+    case ^mcannon_tasked_with_finding_goblin_cave : @lawgof2_how_goes_finding_the_goblin_cave;
+    case ^mcannon_tasked_with_finding_gilobs_son : @lawgof2_how_goes_finding_gilobs_son;
+    case ^mcannon_return_to_dwarf_commander : @lawgof2_found_gilobs_son;
     case ^mcannon_tasked_with_fixing_cannon,
-        ^mcannon_inspected_cannon_first_time : @dwarf_commander_still_fixing_cannon;
-    case ^mcannon_has_repaired_cannon : @dwarf_commander_repaired_cannon;
-    case ^mcannon_tasked_with_speaking_to_nulodion : @dwarf_commander_havent_spoken_to_nulodion;
-    case ^mcannon_return_to_dwarf_commander_with_notes : @dwarf_commander_spoken_to_nulodion;
-    case ^mcannon_complete : @dwarf_commander_post_quest;
+        ^mcannon_inspected_cannon_first_time : @lawgof2_still_fixing_cannon;
+    case ^mcannon_has_repaired_cannon : @lawgof2_repaired_cannon;
+    case ^mcannon_tasked_with_speaking_to_nulodion : @lawgof2_havent_spoken_to_nulodion;
+    case ^mcannon_return_to_dwarf_commander_with_notes : @lawgof2_spoken_to_nulodion;
+    case ^mcannon_complete : @lawgof2_post_quest;
 }
 
-[label,dwarf_commander_start_quest]
+[label,lawgof2_start_quest]
 ~chatplayer("<p,neutral>Hello.");
 ~chatnpc("<p,happy>Hello traveller, I'm pleased to see you.|We were hoping to find an extra pair of hands.|That's if you don't mind helping?");
 ~chatplayer("<p,quiz>Why, what's wrong?");
@@ -41,7 +41,7 @@ inv_add(inv, mcannonrailing1_obj, 6);
 ~chatnpc("<p,neutral>Let me know once you've fixed the railings.");    
 ~chatplayer("<p,neutral>Ok, commander.");
 
-[label,dwarf_commander_how_goes_fixing_those_fences]
+[label,lawgof2_how_goes_fixing_those_fences]
 ~chatplayer("<p,happy>Hello.");
 ~chatnpc("<p,happy>Hello again traveller.|How are you doing with those railings?");
 ~chatplayer("<p,neutral>I'm getting there.");
@@ -68,7 +68,7 @@ if (getbit_range(%mcannon_railings, 5, 10) = 63) {
     }
 }
 
-[label,dwarf_commander_how_goes_finding_the_guard]
+[label,lawgof2_how_goes_finding_the_guard]
 ~chatplayer("<p,neutral>Hello.");
 ~chatnpc("<p,quiz>Have you been to the watch tower yet?");
 ~chatplayer("<p,neutral>Yes, I went up but there was no one.");
@@ -91,19 +91,19 @@ if (inv_total(inv, mcannonremains) < 1) {
     ~chatplayer("<p,neutral>Ok, I'll see if I can find their hide out.");
 }
 
-[label,dwarf_commander_how_goes_finding_the_goblin_cave]
+[label,lawgof2_how_goes_finding_the_goblin_cave]
 ~chatplayer("<p,happy>Hello again.");
 ~chatnpc("<p,quiz>Traveller have you managed to find the Goblin's base?");
 ~chatplayer("<p,sad>Not yet I'm afraid, but I'll keep looking...");
 
 // This is made up lies and shenanigans
-[label,dwarf_commander_how_goes_finding_gilobs_son]
+[label,lawgof2_how_goes_finding_gilobs_son]
 ~chatplayer("<p,happy>Hello again.");
 ~chatnpc("<p,quiz>Traveller have you managed to find the Goblin's base?");
 ~chatplayer("<p,happy>I have, but I haven't managed to find Gilob's son yet.");
 ~chatnpc("<p,sad>You must keep looking!");
 
-[label,dwarf_commander_found_gilobs_son]
+[label,lawgof2_found_gilobs_son]
 ~chatplayer("<p,quiz>Hello, has Lollk returned yet?");
 ~chatnpc("<p,happy>He has, and I thank you from the bottom of my heart|- without you he'd be goblin barbecue!");
 ~chatplayer("<p,neutral>Always a pleasure to help.");
@@ -129,7 +129,7 @@ mes("The Dwarf Commander gives you a tool kit.");
 ~chatplayer("<p,neutral>Sorry, I've done enough for today.");
 ~chatnpc("<p,neutral>Fair enough, take care traveller.");
 
-[label,dwarf_commander_still_fixing_cannon]
+[label,lawgof2_still_fixing_cannon]
 ~chatnpc("<p,happy>How are you doing in there bold adventurer?|We've been trying our best with that thing,|but I just haven't got the patience.");
 ~chatplayer("<p,neutral>It's not an easy job, but I'm getting there.");
 ~chatnpc("<p,happy>Good stuff, let me know if you have any luck.|If we manage to get that thing working...|those goblins will be no trouble at all.");
@@ -139,7 +139,7 @@ if (inv_total(inv, mcannontoolkit) < 1) {
     inv_add(inv, mcannontoolkit, 1);
     mes("The Dwarf Commander gives you another toolkit.");
 }
-[label,dwarf_commander_repaired_cannon]
+[label,lawgof2_repaired_cannon]
 ~chatplayer("<p,neutral>Hello again.");
 ~chatnpc("<p,happy>Hello there traveller, how's things?");
 ~chatplayer("<p,neutral>Well, I think I've done it, take a look...");
@@ -172,14 +172,14 @@ if (%mcannon_progress = ^mcannon_has_repaired_cannon) {
     %mcannon_progress = ^mcannon_tasked_with_speaking_to_nulodion;
 }
 
-[label,dwarf_commander_havent_spoken_to_nulodion]
+[label,lawgof2_havent_spoken_to_nulodion]
 ~chatplayer("<p,neutral>Hi again.");
 ~chatnpc("<p,happy>Hello traveller,|any word from the Cannon Engineer?");
 ~chatplayer("<p,neutral>Not yet.");
 ~chatnpc("<p,neutral>The Black Guard camp is South of the Ice Mountain,|the quicker we can get some ammo for this thing|the quicker those goblins will leave us be.");
 ~chatplayer("<p,neutral>I'll get to it.");
 
-[label,dwarf_commander_spoken_to_nulodion]
+[label,lawgof2_spoken_to_nulodion]
 ~chatplayer("<p,neutral>Hi.");
 ~chatnpc("<p,happy>Hello traveller, any word from the Cannon Engineer?");
 ~chatplayer("<p,neutral>Yes, I have spoken to him.");
@@ -207,7 +207,7 @@ queue(mcannon_complete, 0);
 ~chatnpc("<p,neutral>If you could go back and get another, I'd appreciate it.");
 ~chatplayer("<p,neutral>Oh, okay then.");
 
-[label,dwarf_commander_post_quest]
+[label,lawgof2_post_quest]
 ~chatplayer("<p,neutral>Hello.");
 ~chatnpc("<p,neutral>Well, hello there, how you doing?"); // not a typo
 ~chatplayer("<p,neutral>Not bad, yourself?");
