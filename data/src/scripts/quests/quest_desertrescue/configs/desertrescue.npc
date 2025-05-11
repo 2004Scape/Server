@@ -197,11 +197,12 @@ param=slashdefence,15
 param=crushdefence,19
 param=magicdefence,-3
 param=rangedefence,19
-param=damagetype,^crush_style
+param=damagetype,^slash_style
 param=attack_anim,human_sword_slash
 param=defend_anim,human_sword_def
 param=attack_sound,hacksword_slash
 // Stats match osrs version but our version Vislvl is different.
+// desertminingcamp guards,mercenarys,mercenary captain,rowdy guards share same seqs + param stats.
 
 [mercenary_2]
 name=Mercenary
@@ -247,11 +248,12 @@ param=slashdefence,15
 param=crushdefence,19
 param=magicdefence,-3
 param=rangedefence,19
-param=damagetype,^crush_style
+param=damagetype,^slash_style
 param=attack_anim,human_sword_slash
 param=defend_anim,human_sword_def
 param=attack_sound,hacksword_slash
 // Stats match osrs version but our version Vislvl is different.
+// desertminingcamp guards,mercenarys,mercenary captain,rowdy guards share same seqs + param stats.
 
 [mercenary_captain]
 name=Mercenary Captain
@@ -307,6 +309,8 @@ param=attack_anim,human_sword_slash
 param=defend_anim,human_sword_def
 param=attack_sound,hacksword_slash
 // Stats match osrs version but our version Vislvl is different.
+// desertminingcamp guards,mercenarys,mercenary captain,rowdy guards share same seqs + param stats.
+// https://raw.githubusercontent.com/Joshua-F/osrs-dumps/refs/heads/master/config/dump.npc npc_4635
 
 [captain_siad]
 name=Captain Siad
@@ -406,11 +410,11 @@ param=slashdefence,15
 param=crushdefence,19
 param=magicdefence,-3
 param=rangedefence,19
-param=damagetype,^crush_style
+param=damagetype,^slash_style
 param=attack_anim,human_sword_slash
 param=defend_anim,human_sword_def
 param=attack_sound,hacksword_slash
 huntmode=cowardly
 // https://oldschool.runescape.wiki/w/Guard_(Desert_Mining_Camp)#Brown_hair
-// stats taken here and param taken osrs desert mining camp guards.
+// desertminingcamp guards,mercenarys,mercenary captain,rowdy guards share same seqs + param stats.
 // https://raw.githubusercontent.com/Joshua-F/osrs-dumps/refs/heads/master/config/dump.npc npc_4654

@@ -1,36 +1,36 @@
 [opnpc1,tunnel_dwarf]
 switch_int (%fishingcompo_progress) {
-    case ^fishingcompo_not_started : @mountain_dwarf_start;
+    case ^fishingcompo_not_started : @tunnel_dwarf_start;
     case ^fishingcompo_complete : ~chatnpc("<p,happy>Welcome, oh great Fishing Champion!|Feel free to pop by any time.");
-    case default : @mountain_dwarf_won;
+    case default : @tunnel_dwarf_won;
 }
 
-[label,mountain_dwarf_start]
+[label,tunnel_dwarf_start]
 ~chatnpc("<p,angry>Hmmph. What do you want?");
 def_int $option = ~p_choice2("I was just wondering what was down those stairs?", 1, "I was just stopping to say hello!", 2);
 if($option = 1) {
     ~chatplayer("<p,neutral>I was just wondering what was down those stairs?");
     ~chatnpc("<p,angry>You can't go down there!");
-    @multi3("I didn't want to anyway.", mountain_dwarf_didnt_want, "Why not?", mountain_dwarf_why, "I'm bigger than you. Let me by.", mountain_dwarf_bigger);
+    @multi3("I didn't want to anyway.", tunnel_dwarf_didnt_want, "Why not?", tunnel_dwarf_why, "I'm bigger than you. Let me by.", tunnel_dwarf_bigger);
 } else if($option = 2) {
     ~chatplayer("<p,neutral>I was just stopping to say hello!");
     ~chatnpc("<p,neutral>Hello then."); // Ends here in RSC, loops back in OSRS (probably changed w/rework)
 }
 
-[label,mountain_dwarf_stairs]
+[label,tunnel_dwarf_stairs]
 ~chatnpc("<p,angry>Hoi there! Halt!"); //imgur.com/hTWOobo
 ~chatnpc("<p,angry>You can't come in here!");
-@multi3("Why not?", mountain_dwarf_why, "Oh, sorry, I hadn't realised it was private.", mountain_dwarf_private, "I'm bigger than you. Let me by!", mountain_dwarf_bigger);
+@multi3("Why not?", tunnel_dwarf_why, "Oh, sorry, I hadn't realised it was private.", tunnel_dwarf_private, "I'm bigger than you. Let me by!", tunnel_dwarf_bigger);
 
-[label,mountain_dwarf_bigger]
+[label,tunnel_dwarf_bigger]
 ~chatplayer("<p,angry>I'm bigger than you.|Let me by!");
 ~chatnpc("<p,angry>Go away!|You're not going to bully your way in here!");
 
-[label,mountain_dwarf_didnt_want]
+[label,tunnel_dwarf_didnt_want]
 ~chatplayer("<p,neutral>I didn't want to anyway.");
 ~chatnpc("<p,neutral>Good.");
 
-[label,mountain_dwarf_why]
+[label,tunnel_dwarf_why]
 ~chatplayer("<p,neutral>Why not?");
 ~chatnpc("<p,neutral>This is the home of the Mountain Dwarves.|How would you like it if I wanted to take a shortcut through your home?");
 def_int $option = ~p_choice3("Ooh... is this a shortcut to somewhere?", 1, "Oh, sorry, I hadn't realised it was private.", 2, "If you were my friend I wouldn't mind.", 3);
@@ -39,17 +39,17 @@ if($option = 1) {
     // Took RSC version and reworded slightly (similar to OSRS), not confirmed if this is correct
     ~chatnpc("<p,neutral>Well, it is a lot easier to go|this way to get past White Wolf Mountain|than through those wolf filled passes.");
 } else if($option = 2) {
-    @mountain_dwarf_private;
+    @tunnel_dwarf_private;
 } else if($option = 3) {
     ~chatplayer("<p,happy>If you were my friend I wouldn't mind.");
     ~chatnpc("<p,neutral>Yes, but I don't even know you.");
-    @multi2("Well, let's be friends!", mountain_dwarf_friends, "You're a grumpy little man aren't you?", mountain_dwarf_grumpy);
+    @multi2("Well, let's be friends!", tunnel_dwarf_friends, "You're a grumpy little man aren't you?", tunnel_dwarf_grumpy);
 }
 
-[label,mountain_dwarf_private]
+[label,tunnel_dwarf_private]
 ~chatplayer("<p,neutral>Oh, sorry, I hadn't realised it was private.");
 
-[label,mountain_dwarf_friends]
+[label,tunnel_dwarf_friends]
 ~chatplayer("<p,happy>Well, let's be friends!");
 // If you're below 10 fishing on OSRS, he will say "I'd rather not, thank you." and a mesbox
 // is sent after noting you need 10 fishing to start the quest, this isn't the case on RSC (instead, you won't
@@ -75,20 +75,20 @@ if($option = 1) {
         ~chatnpc("<p,angry>What good are you?");
     }
 } else if($option = 2) {
-    @mountain_dwarf_grumpy;
+    @tunnel_dwarf_grumpy;
 }
 
-[label,mountain_dwarf_spare_pass]
+[label,tunnel_dwarf_spare_pass]
 ~chatplayer("<p,sad>I need another competition pass.");
 ~chatnpc("<p,confused>Hmmm. It's a good job they sent us spares.");
 inv_add(inv, fishing_competition_pass, 1);
 ~chatnpc("<p,confused>There you go.");
 
-[label,mountain_dwarf_grumpy]
+[label,tunnel_dwarf_grumpy]
 ~chatplayer("<p,angry>You're a grumpy little man aren't you?");
 ~chatnpc("<p,angry>Don't you know it.");
 
-[label,mountain_dwarf_won]
+[label,tunnel_dwarf_won]
 ~chatnpc("<p,confused>Have you won yet?");
 if(%fishingcompo_progress = ^fishingcompo_won_comp) {
     ~chatplayer("<p,happy>Yes I have!");
@@ -103,7 +103,7 @@ if(%fishingcompo_progress = ^fishingcompo_won_comp) {
     } 
     if(inv_total(inv, fishing_competition_pass) = 0 & inv_total(bank, fishing_competition_pass) = 0) {
         def_int $op = ~p_choice2("I need another competition pass.", 1, "I don't have it with me.", 2);
-        if($op = 1) @mountain_dwarf_spare_pass;
+        if($op = 1) @tunnel_dwarf_spare_pass;
     }
     ~chatplayer("<p,confused>I don't have it with me.");
     ~chatnpc("<p,confused>You'd better go get it then hadn't you?");
@@ -112,7 +112,7 @@ if(%fishingcompo_progress = ^fishingcompo_won_comp) {
 if(inv_total(inv, fishing_competition_pass) = 0 & inv_total(bank, fishing_competition_pass) = 0) {
     def_int $option = ~p_choice2("I need another competition pass.", 1, "No, it takes preparation to win fishing competitions.", 2);
     if($option = 1) {
-        @mountain_dwarf_spare_pass;
+        @tunnel_dwarf_spare_pass;
     }
     ~chatplayer("<p,neutral>No, it takes preparation to win fishing competitions.");
     ~chatnpc("<p,confused>Maybe that's where we are going wrong when we try fishing?");

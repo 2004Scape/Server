@@ -1,7 +1,7 @@
 [opnpc1,dwarfchildtw1]
-@dwarf_youngster_dialogue;
+@dwarfchildtw1_dialogue;
 
-[label,dwarf_youngster_dialogue]
+[label,dwarfchildtw1_dialogue]
 ~chatnpc("<p,happy>Thank the heavens, you saved me!|I thought I'd be goblin lunch for sure!");
 ~chatplayer("<p,quiz>Are you okay?");
 ~chatnpc("<p,neutral>I think so, I'd better run off home.");
