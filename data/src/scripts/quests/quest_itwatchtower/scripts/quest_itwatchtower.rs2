@@ -556,22 +556,5 @@ mes("The scroll crumbles to dust.");
 
 [queue,itwatchtower_quest_complete]
 session_log(^log_adventure, "Quest complete: Watch Tower");
-def_int $random = random(128);
-if ($random < 32) {
-    // The least common music that plays when completing a quest.
-    ~midi_jingle(^quest_complete_3_jingle, ^quest_complete_3_millis);
-} else if ($random < 64) {
-    // A less common music that plays when completing a quest.
-    ~midi_jingle(^quest_complete_2_jingle, ^quest_complete_2_millis);
-} else {
-    // The most common music that plays when completing a quest.
-    ~midi_jingle(^quest_complete_1_jingle, ^quest_complete_1_millis);
-}
-if_settext(questscroll:com_3, "You have finished the Watchtower Quest.");
-if_settext(questscroll:com_9, tostring(4));
 // https://web.archive.org/web/20041229124758im_/http://img7.imageshack.us/img7/9247/complete.jpg
-if_setobject(questscroll:com_4, ogrerelic, 260);
-if_openmain(questscroll);
-if_setcolour(questlist:itwatchtower, ^green_rgb);
-if_settab(questlist, ^tab_quest_journal);
-mes("Congratulations! Quest complete!");
+~send_quest_complete(questlist:itwatchtower, ogrerelic, 260, ^itwatchtower_questpoints, "You have finished the Watchtower Quest.");
