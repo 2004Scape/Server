@@ -29,7 +29,7 @@ export default class MessagePublicHandler extends MessageHandler<MessagePublic> 
 
         player.messageColor = color;
         player.messageEffect = effect;
-        player.messageType = 0;
+        player.messageType = Math.min(player.staffModLevel, 2);
         player.logMessage = unpack;
 
         const out: Packet = Packet.alloc(0);
