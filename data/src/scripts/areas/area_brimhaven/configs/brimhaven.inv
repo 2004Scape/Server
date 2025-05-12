@@ -1,3 +1,18 @@
+[fishrestaurant]
+// https://classic.runescape.wiki/w/The_Shrimp_and_Parrot
+// https://storage.googleapis.com/tannerdino/images/brimhaven7.jpg
+// https://oldschool.runescape.wiki/w/Unused_shops
+scope=shared
+size=40
+restock=yes
+stackall=yes
+allstock=no
+stock1=herring,5,900
+stock2=cod,5,1100
+stock3=tuna,5,2300
+stock4=lobster,3,2600
+stock5=swordfish,2,2900
+
 [amuletshop]
 // https://oldschool.runescape.wiki/w/Davon%27s_Amulet_Store.#Default
 // https://storage.googleapis.com/tannerdino/images/brimhaven6.jpg
@@ -12,17 +27,18 @@ stock3=amulet_of_defence,0,200
 stock4=amulet_of_strength,0,200
 stock5=amulet_of_power,0,200
 
-// todo: real inv name? surely this should exist right?
-[shrimp_and_parrot]
+//inv_157 released 14 September 2004.
+// [karamja_fishrestaurant]
 // https://classic.runescape.wiki/w/The_Shrimp_and_Parrot
 // https://storage.googleapis.com/tannerdino/images/brimhaven7.jpg
-scope=shared
-size=40
-restock=yes
-stackall=yes
-allstock=no
-stock1=herring,5,900
-stock2=cod,5,1100
-stock3=tuna,5,2300
-stock4=lobster,3,2600
-stock5=swordfish,2,2900
+//scope=shared
+//size=40
+//restock=yes
+//stackall=yes
+//allstock=no
+//stock1=herring,5,900
+//stock2=cod,5,1100
+//stock3=tuna,5,2300
+//stock4=lobster,3,2600
+//stock5=swordfish,2,2900
+//stock6=tbwt_cooked_karambwan,3,900

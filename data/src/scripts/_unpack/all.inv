@@ -3,21 +3,6 @@ size=40
 stackall=yes
 protect=no
 
-[fishrestaurant]
-size=1
-
-[silvershop]
-size=1
-
-[gemshop3]
-size=1
-
-[spiceshop]
-size=1
-
-[furstall]
-size=1
-
 [trail_puzzleinv]
 scope=temp
 size=25

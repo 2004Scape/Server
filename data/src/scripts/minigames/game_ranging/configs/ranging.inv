@@ -1,43 +1,3 @@
-[ranging_guild_tribalshop]
-// https://oldschool.runescape.wiki/w/Authentic_Throwing_Weapons.
-// https://storage.googleapis.com/tannerdino/images/Throwing_weapons.jpg (full stocks)
-// https://www.spookspring.com/noobsquad/imagegif/spookart/jungle.GIF
-scope=shared
-size=40
-restock=yes
-stackall=yes
-allstock=no
-stock1=bronze_javelin,900,20
-stock2=iron_javelin,800,20
-stock3=steel_javelin,700,40
-stock4=mithril_javelin,600,60
-stock5=adamant_javelin,500,80
-stock6=rune_javelin,400,100
-stock7=bronze_thrownaxe,900,20
-stock8=iron_thrownaxe,800,20
-stock9=steel_thrownaxe,700,40
-stock10=mithril_thrownaxe,600,60
-stock11=adamnt_thrownaxe,500,80
-stock12=rune_thrownaxe,400,100
-
-[ranging_guild_armourshop]
-// https://oldschool.runescape.wiki/w/Aaron%27s_Archery_Appendages.
-// https://storage.googleapis.com/tannerdino/images/rangearmourshop.gif (full stocks)
-// https://www.spookspring.com/noobsquad/imagegif/spookart/aarons.GIF
-scope=shared
-size=40
-restock=yes
-stackall=yes
-allstock=no
-stock1=leather_body,10,50
-stock2=hardleather_body,10,60
-stock3=studded_body,10,70
-stock4=leather_chaps,20,50
-stock5=studded_chaps,15,80
-stock6=coif,10,50
-stock7=leather_cowl,10,70
-stock8=leather_vambraces,10,150
-
 [ranging_guild_bowshop]
 // https://oldschool.runescape.wiki/w/Dargaud%27s_Bow_and_Arrows.
 // https://storage.googleapis.com/tannerdino/images/dargaudsbowandarrows.png (2006)
@@ -66,3 +26,43 @@ stock16=willow_shortbow,20,70
 stock17=longbow,20,50
 stock18=oak_longbow,20,60
 stock19=willow_longbow,20,70
+
+[ranging_guild_armourshop]
+// https://oldschool.runescape.wiki/w/Aaron%27s_Archery_Appendages.
+// https://storage.googleapis.com/tannerdino/images/rangearmourshop.gif (full stocks)
+// https://www.spookspring.com/noobsquad/imagegif/spookart/aarons.GIF
+scope=shared
+size=40
+restock=yes
+stackall=yes
+allstock=no
+stock1=leather_body,10,50
+stock2=hardleather_body,10,60
+stock3=studded_body,10,70
+stock4=leather_chaps,20,50
+stock5=studded_chaps,15,80
+stock6=coif,10,50
+stock7=leather_cowl,10,70
+stock8=leather_vambraces,10,150
+
+[ranging_guild_tribalshop]
+// https://oldschool.runescape.wiki/w/Authentic_Throwing_Weapons.
+// https://storage.googleapis.com/tannerdino/images/Throwing_weapons.jpg (full stocks)
+// https://www.spookspring.com/noobsquad/imagegif/spookart/jungle.GIF
+scope=shared
+size=40
+restock=yes
+stackall=yes
+allstock=no
+stock1=bronze_javelin,900,20
+stock2=iron_javelin,800,20
+stock3=steel_javelin,700,40
+stock4=mithril_javelin,600,60
+stock5=adamant_javelin,500,80
+stock6=rune_javelin,400,100
+stock7=bronze_thrownaxe,900,20
+stock8=iron_thrownaxe,800,20
+stock9=steel_thrownaxe,700,40
+stock10=mithril_thrownaxe,600,60
+stock11=adamnt_thrownaxe,500,80
+stock12=rune_thrownaxe,400,100
