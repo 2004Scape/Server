@@ -287,6 +287,7 @@ if (last_useitem = goldbowlbless_pure) {
     if($bowl_uses >= 9) {
         inv_del(inv, goldbowlbless_pure, 1);
         inv_add(inv, goldbowlbless_empty, 1);
+        %legends_bits = setbit_range_toint(%legends_bits, 0, ^legends_golden_bowl_uses_start, ^legends_golden_bowl_uses_end);
         mes("The pure water in the golden bowl has run out...");
     }
     ~legends_fire_wall_walk;
@@ -1353,6 +1354,7 @@ if (last_useitem = vial_empty) {
     if ($bowl_uses >= 9) {
         inv_del(inv, goldbowlbless_pure, 1);
         inv_add(inv, goldbowlbless_empty, 1);
+        %legends_bits = setbit_range_toint(%legends_bits, 0, ^legends_golden_bowl_uses_start, ^legends_golden_bowl_uses_end);
         // osrs
         //mes("The golden bowl is empty. There's no sacred water left.");
         // rs3
@@ -1369,6 +1371,7 @@ if (last_useitem = vial_empty) {
     if ($bowl_uses >= 9) {
         inv_del(inv, goldbowlbless_pure, 1);
         inv_add(inv, goldbowlbless_empty, 1);
+        %legends_bits = setbit_range_toint(%legends_bits, 0, ^legends_golden_bowl_uses_start, ^legends_golden_bowl_uses_end);
         mes("The pure water in the golden bowl has run out...");
         return;
     }

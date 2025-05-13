@@ -1,4 +1,4 @@
-[opnpc1,_shipyard_worker]
+[opnpc1,_shipyardworker]
 ~chatplayer("<p,neutral>Hello.");
 switch_int(random(15)) {
     case 0 :
@@ -62,7 +62,7 @@ switch_int(random(15)) {
         ~chatplayer("<p,neutral>Of course. Sorry to have disturbed you.");
 }
 
-[label,shipyard_worker_gate]
+[label,shipyardworker_gate]
 ~chatnpc("<p,angry>Hey you! What are you up to?");
 ~chatplayer("<p,confused>I'm trying to open the gate!");
 ~chatnpc("<p,neutral>I can see that! Why?");

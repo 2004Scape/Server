@@ -72,7 +72,7 @@ if (map_production = true) {
 ~update_weapon_category(inv_getobj(worn, ^wearpos_rhand));
 if_settab(stats, ^tab_skills);
 if_settab(questlist, ^tab_quest_journal);
-~update_quests;
+~update_questlist;
 
 inv_transmit(inv, inventory:inv);
 if_settab(inventory, ^tab_inventory);

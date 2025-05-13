@@ -86,7 +86,7 @@ if (%tutorial_progress > ^chef_opened_music_tab) {
 }
 
 if (%tutorial_progress > ^quest_guide_open_menu) {
-    ~update_quests;
+    ~update_questlist;
     if_settab(questlist, ^tab_quest_journal);
 }
 

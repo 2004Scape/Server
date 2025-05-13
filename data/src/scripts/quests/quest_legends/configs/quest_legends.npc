@@ -1,3 +1,40 @@
+[deathwing]
+name=Death wing
+desc=A shadowy, barely visible flying entity from some evil place.
+size=2
+hasalpha=yes
+walkanim=bat_walk
+readyanim=bat_ready
+op2=Attack
+vislevel=83
+recol1s=16417
+recol1d=0
+recol2s=18465
+recol2d=0
+recol3s=0
+recol3d=5285
+recol4s=9216
+recol4d=5285
+model1=model_2940_npc
+wanderrange=8
+maxrange=10
+respawnrate=70
+hitpoints=80
+attack=70
+strength=70
+defence=70
+param=damagetype,^stab_style
+param=attack_anim,bat_attack
+param=defend_anim,bat_parry
+param=death_anim,bat_death
+param=attack_sound,bat_attack
+param=defend_sound,bat_hit
+param=death_sound,bat_death
+huntmode=cowardly
+huntrange=2
+// osrs stats and Vislvl match 1:1
+// https://raw.githubusercontent.com/Joshua-F/osrs-dumps/refs/heads/master/config/dump.npc npc_509
+
 [jungle_wolf]
 name=Jungle Wolf
 desc=A rare jungle wolf - specific to the Kharazi jungle.
@@ -156,8 +193,6 @@ param=attack_anim,human_staff_pummel
 param=defend_anim,human_staff_block
 param=attack_sound,staff_hit
 // osrs attack sound staff_double
-// sound and animation data taken normal version ungadulu
-// wander distance attack distance missing.
 // stats taken here https://raw.githubusercontent.com/Joshua-F/osrs-dumps/refs/heads/master/config/dump.npc npc_3958
 // Stats match osrs version but our version Vislvl is different.
 
@@ -276,10 +311,8 @@ param=strengthbonus,3
 param=damagetype,^crush_style
 param=attack_anim,human_staff_pummel
 param=defend_anim,human_staff_block
-// param=attack_sound,staff_hit
-// TODO Try to find out if this npc can be killed on the osrs side somehow....
-// and also find out if you can make this npc attack the player....
-// try to find out if the npc is using any sounds on the osrs side if possible.
+param=attack_sound,staff_hit
+// osrs attack sound staff_double ??
 // defend animation https://discord.com/channels/953326730632904844/1126857544523063367/1300620868782788709
 
 [san_tojalon]
