@@ -9,6 +9,10 @@ if (p_finduid(uid) = true) {
 [debugproc,bank_preset]
 if_close;
 if (p_finduid(uid) = true) {
+    def_int $choice = ~p_choice2_header("Yes.", 1, "No.", 2, "This clears your bank. Continue?");
+    if ($choice = 2) {
+        return;
+    }
     inv_clear(bank);
 
     inv_add(bank, coins, ^max_32bit_int);
