@@ -19,6 +19,7 @@ if(%arena_progress = ^arena_sent_jail) {
     // https://youtu.be/NHsQfeSPUb0?si=c_S0jTnjDBF0xilE&t=189
     npc_add(0_40_49_26_4, khazard_guard_cutscene, 100);
     npc_setmode(none);
+    npc_walk(npc_coord);
     p_delay(0);
     // https://youtu.be/Y6eWjQnV4Mo?si=7aaHIhL6qoxCuntZ&t=170 the guard can get stuck at any point, doesnt interrupt anything
     npc_walk(0_40_49_39_5);

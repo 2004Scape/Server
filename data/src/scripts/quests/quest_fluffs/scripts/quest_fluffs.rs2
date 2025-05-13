@@ -230,8 +230,10 @@ if (last_useitem = bucket_milk) {
     inv_del(inv, gertrudekittens, 1);
     anim(human_pickupfloor, 0);
     npc_setmode(none);
+    npc_walk(npc_coord);
     .npc_add(coord, lost_kitten, ^max_32bit_int);
     .npc_setmode(none);
+    .npc_walk(.npc_coord);
     p_delay(1);
     npc_say("Purr...");
     p_delay(0);
@@ -298,6 +300,7 @@ mes("You can hear kittens mewing close by...");
 inv_delslot(inv, last_slot);
 npc_add(coord, lost_kitten, 10);
 npc_setmode(none);
+npc_walk(npc_coord);
 p_delay(0);
 mes("You place the kitten on the floor.");
 p_delay(0);

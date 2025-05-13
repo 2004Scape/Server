@@ -73,6 +73,7 @@ mes("You hammer the stake into the vampire's chest!");
 inv_del(inv, stake, 1);
 anim(human_stake, 0);
 npc_setmode(none);
+npc_walk(npc_coord);
 npc_queue(4, 0, 0);
 if (%vampire_progress < ^vampire_complete) {
     queue(quest_vampire_complete, 3);

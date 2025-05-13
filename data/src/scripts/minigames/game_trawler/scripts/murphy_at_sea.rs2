@@ -46,6 +46,7 @@ if (~inzone_coord_pair_table(trawler_nonflood_zones, coord) = true) {
 
 [label,murphy_cry]
 npc_setmode(none);
+npc_walk(npc_coord);
 npc_delay(0);
 npc_anim(emote_cry, 0);
 npc_delay(1);
@@ -53,6 +54,7 @@ npc_setmode(patrol);
 
 [label,murphy_cheer]
 npc_setmode(none);
+npc_walk(npc_coord);
 npc_delay(0);
 npc_anim(emote_cheer, 0);
 npc_delay(2);

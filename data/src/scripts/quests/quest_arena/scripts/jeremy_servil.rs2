@@ -70,6 +70,7 @@ facesquare(movecoord(coord, 0, 0, -16));
 // idk if this is how they checked it, maybe there's a bettter way
 if(npc_getmode ! none & inzone(0_40_49_54_30, 0_40_49_56_34, npc_coord) = true) {
     npc_setmode(none);
+    npc_walk(npc_coord);
     npc_queue(10, $delay, 0);
 }
 npc_setmode(null);

@@ -206,6 +206,7 @@ switch_int(%grandtree_progress) {
                 ~chatnpc("<p,sad>Traveller, Can I speak to you in strictest confidence?");
                 ~chatplayer("<p,neutral>Of course sire.");
                 npc_setmode(none);
+                npc_walk(npc_coord);
                 ~chatnpcnoturn("<p,shifty>Not here, follow me.");
                 if_close;
                 def_int $npc_dist = ~total_distance(npc_coord, ^narnode_trapdoor_coord);
@@ -244,6 +245,7 @@ switch_int(%grandtree_progress) {
 
 [label,king_narnode_back_up]
 npc_setmode(none);
+npc_walk(npc_coord);
 ~chatnpcnoturn("<p,neutral>I'll show you the way back up.");
 if_close;
 def_coord $up_coord = movecoord(^narnode_trapdoor_coord, 0, 0, 6400);

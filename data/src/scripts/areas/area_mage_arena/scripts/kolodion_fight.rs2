@@ -29,6 +29,7 @@ if (npc_findhero = ^false) {
 }
 %magearena = 2;
 npc_setmode(none);
+npc_walk(npc_coord);
 npc_anim(human_castteleport, 30);
 npc_delay(2);
 
@@ -52,6 +53,7 @@ if (npc_findhero = ^false) {
 }
 %magearena = 3;
 npc_setmode(none);
+npc_walk(npc_coord);
 npc_anim(giant_teleport, 30);
 npc_delay(2);
 
@@ -75,6 +77,7 @@ if (npc_findhero = ^false) {
 }
 %magearena = 4;
 npc_setmode(none);
+npc_walk(npc_coord);
 npc_anim(giantspider_teleport, 30);
 npc_delay(2);
 
@@ -98,6 +101,7 @@ if (npc_findhero = ^false) {
 }
 %magearena = 5;
 npc_setmode(none);
+npc_walk(npc_coord);
 npc_anim(human_castteleport, 30);
 npc_delay(2);
 
@@ -124,6 +128,7 @@ npc_delay(0);
 %magearena = ^mage_arena_complete;
 npc_delay(1);
 npc_setmode(none);
+npc_walk(npc_coord);
 npc_anim(demon_portalend, 30);
 spotanim_map(smokepuff_large, npc_coord, 124, 90);
 npc_delay(2);

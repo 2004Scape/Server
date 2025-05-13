@@ -109,6 +109,7 @@ if(%ikov_progress <= ^ikov_helping_armadyl) { // guessing...
 if(npc_findhero = ^true & %ikov_progress = ^ikov_helping_armadyl) {
     if_close;
     npc_setmode(none);
+    npc_walk(npc_coord);
     queue(queue_defeat_lucien, 0, npc_uid);
     return;
 }
