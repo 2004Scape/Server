@@ -16,7 +16,8 @@ if (p_finduid(uid) = true) {
 [label,debug_resetquests]
 if_close;
 if (p_finduid(uid) = true) {
-    @reset_all_quests;
+    ~reset_all_quests;
+    return;
 }
 
 [label,debug_quests]
@@ -29,7 +30,8 @@ if (p_finduid(uid) = true) {
         @complete_all_quests;
     } else if ($choice = 1) {
         // Call the reset all quests functionality
-        @reset_all_quests;
+        ~reset_all_quests;
+        return;
     } else if ($choice = 2) {
         // This is the original individual quest selection code
         def_int $int1 = 0;
@@ -372,7 +374,7 @@ mes("All quests have been completed.");
 return;
 
 // New label to reset all quests
-[label,reset_all_quests]
+[proc,reset_all_quests]
 %blackknight_progress = 0;
 %cook_progress = 0;
 %demon_progress = 0;
