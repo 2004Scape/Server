@@ -15,6 +15,7 @@ if(inzone(0_46_47_0_0, 0_46_47_32_63, npc_coord) = true) {
 ~chatnpc("<p,neutral>Follow me.");
 if_close;
 npc_setmode(none);
+npc_walk(npc_coord);
 p_delay(0);
 npc_walk(0_46_47_45_40);
 p_delay(1);

@@ -5,6 +5,7 @@
 [ai_opplayer2,gujuo]
 mes("Gujuo approaches.");
 npc_setmode(none);
+npc_walk(npc_coord);
 @gujuo_start;
 
 [opnpcu,gujuo]

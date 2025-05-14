@@ -174,6 +174,7 @@ if(testbit(%legends_bits, ^legends_defeated_san_final) = ^false) {
 if(npc_finduid(%aggressive_npc) = true & npc_type = nezikchened) {
     npc_sethuntmode(null);
     npc_setmode(none);
+    npc_walk(npc_coord);
     p_stopaction;
     if (inzone(0_43_145_0_0, 0_43_145_63_63, coord) = true & %legends_progress = ^legends_summoned_nezikchened_fire) {
         %legends_progress = ^legends_defeated_nezikchened_fire;

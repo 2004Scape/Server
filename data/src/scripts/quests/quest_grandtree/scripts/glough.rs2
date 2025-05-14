@@ -95,6 +95,7 @@ p_delay(distance($start, coord)); // walking dist + 1 tick
 ~chatnpc("<p,angry>Bah! Well, soon you'll see, the gnomes are ready to fight, in three weeks this tree will be dead wood, in ten weeks it will be 30 battleships! Finally we will rid the world of the disease called humanity!");
 ~chatplayer("<p,angry>What makes you think I'll let you get away with it?");
 npc_setmode(none);
+npc_walk(npc_coord);
 ~chatnpcnoturn("<p,laugh>Fool...meet my little friend!");
 if_close;
 def_coord $demon_spawn = 0_38_154_47_11;

@@ -450,6 +450,7 @@ if (last_useitem = book_of_binding) {
 [ai_queue10,ungadulu]
 npc_anim(human_death_backwards, 0); // seems like the last frame of this seq is broken...
 npc_setmode(none);
+npc_walk(npc_coord);
 npc_delay(10); // delay 11t
 npc_setmode(null);
 npc_anim(null, 0);

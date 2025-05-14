@@ -1,5 +1,6 @@
 [proc,macro_event_triffid_spawn]
 npc_setmode(none);
+npc_walk(npc_coord);
 npc_anim(triffid_grow, 0);
 %npc_int = ^triffid_growing;
 %npc_macro_event_target = uid;

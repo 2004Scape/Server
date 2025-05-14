@@ -190,15 +190,18 @@ if(npc_find(coord, fire_warrior_of_lesarkus, 5, 0) = false) { // will spawn anot
     sound_synth(fire_teleport, 0, 0);
     npc_add(0_41_154_22_10, fire_warrior_of_lesarkus, 500);
     npc_setmode(none);
+    npc_walk(npc_coord);
     npc_anim(human_smokepuff_tele_appear, 0);
     p_delay(1);
 }
 npc_setmode(none);
+npc_walk(npc_coord);
 npc_say("You will not pass!");
 p_delay(0);
 npc_say("Amitus! Setitii!");
-npc_setmode(playerface);
+npc_facesquare(coord);
 npc_setmode(none);
+npc_walk(npc_coord);
 npc_anim(human_caststrike, 0);
 spotanim_npc(fireblast_casting, 92, 0);
 sound_synth(fire_blast_all, 0, 0); // area sound in osrs, uses fireblast_cast_and_fire

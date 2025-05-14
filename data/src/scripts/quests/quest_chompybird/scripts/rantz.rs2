@@ -350,6 +350,7 @@ if (.npc_find(npc_coord, chompy_bird, 17, ^vis_lineofsight) = true) {
             npc_say("Hey, dere's da chompy, I's gonna shoot it.");
             npc_facesquare(.npc_coord);
             npc_setmode(none);
+            npc_walk(npc_coord);
             npc_queue(11, 0, 2);
             npc_settimer(calc(10 + (random(6) * 2)));
             return;

@@ -85,6 +85,7 @@ mes("Test 1: AP to OP Switching");
 npc_add(movecoord(coord, 0, 0, 5), cow, 10);
 %npc_lastcombat = add(map_clock, 10);
 npc_setmode(none);
+npc_walk(npc_coord);
 queue(reset_itest, 10);
 p_delay(2);
 p_opnpc(2);
@@ -93,6 +94,7 @@ p_opnpc(2);
 mes("Test 2: Blocking an Npc and then unblocking");
 npc_add(movecoord(coord, -5, 0, -1), goblin, 10);
 npc_setmode(none);
+npc_walk(npc_coord);
 npc_walk(movecoord(npc_coord, 10, 0, 0));
 p_delay(2);
 p_walk(movecoord(coord, 0, 0, -1));
@@ -119,6 +121,7 @@ queue(reset_itest, 15);
 mes("Test 6 (manual): Clicking an Npc then clicking away before reaching");
 npc_add(movecoord(coord, 0, 0, 5), goblin, 10);
 npc_setmode(none);
+npc_walk(npc_coord);
 
 [proc,clicking_an_obj_then_clicking_away_before_reaching]
 mes("Test 7 (manual): Clicking an obj then clicking away before reaching");
@@ -179,6 +182,7 @@ queue(reset_itest, 10);
 mes("Test 16 (manual): Magic Fire Bolt while underneath the Npc");
 npc_add(movecoord(coord, 0, 0, 1), goblin, 10);
 npc_setmode(none);
+npc_walk(npc_coord);
 
 inv_clear(inv);
 
@@ -194,6 +198,7 @@ p_teleport(movecoord(coord, 0, 0, 1));
 mes("Test 17 (manual): Not blocking Npcs when logged in without moving");
 npc_add(movecoord(coord, -5, 0, 0), goblin, 10);
 npc_setmode(none);
+npc_walk(npc_coord);
 npc_walk(movecoord(npc_coord, 10, 0, 0));
 
 queue(reset_itest, 12);
@@ -203,6 +208,7 @@ p_delay(12);
 mes("Test 18 (manual): Npc Modes in action.");
 npc_add(movecoord(coord, 0, 0, 1), civilian_blonde, 30);
 npc_setmode(none);
+npc_walk(npc_coord);
 p_opnpc(1);
 world_delay(0);
 npc_walk(movecoord(npc_coord, 0, 0, 1));
@@ -239,6 +245,7 @@ queue(reset_itest, 20);
 mes("Test 21 (manual): Walking and equipping an Obj continues walking while targetting");
 npc_add(movecoord(coord, 0, 0, 7), goblin, 20);
 npc_setmode(none);
+npc_walk(npc_coord);
 
 inv_clear(inv);
 inv_add(inv, bronze_axe, 1);
@@ -264,6 +271,7 @@ if_settabactive(^tab_wornitems);
 
 npc_add(movecoord(coord, 0, 0, 7), goblin, 20);
 npc_setmode(none);
+npc_walk(npc_coord);
 queue(reset_itest, 20);
 
 [proc,walking_and_unequipping_obj_continues_walk]
@@ -306,6 +314,7 @@ p_opnpc(2);
 mes("Test 28: Pathing to an Npc as it does changetype command");
 npc_add(movecoord(coord, 0, 0, 10), goblin, 10);
 npc_setmode(none);
+npc_walk(npc_coord);
 
 queue(reset_itest, 10);
 
@@ -321,6 +330,7 @@ npc_changetype_keepall(cow, 400);
 mes("Test 29: Repathing to an Npc on your last waypoint");
 npc_add(movecoord(coord, 12, 0, 3), goblin, 20);
 npc_setmode(none);
+npc_walk(npc_coord);
 
 queue(reset_itest, 20);
 
@@ -342,6 +352,7 @@ if (loc_find(0_50_50_38_10, loc_1533) = true) {
 }
 npc_add(movecoord(coord, 3, 0, 0), goblin, 20);
 npc_setmode(none);
+npc_walk(npc_coord);
 
 queue(reset_itest, 20);
 
@@ -394,6 +405,7 @@ if (p_finduid(uid) = true) {
 mes("Test 33: opnpc to p_walk");
 npc_add(movecoord(coord, -1, 0, -1), gnome_cheerleader, 10);
 npc_setmode(none);
+npc_walk(npc_coord);
 queue(reset_itest, 10);
 p_delay(1);
 p_opnpc(1);
@@ -402,6 +414,7 @@ p_opnpc(1);
 mes("Test 34: apnpc to p_walk");
 npc_add(movecoord(coord, -1, 0, -1), savage_bird, 10);
 npc_setmode(none);
+npc_walk(npc_coord);
 queue(reset_itest, 10);
 p_delay(1);
 p_opnpc(2);

@@ -15,6 +15,7 @@ if (%mcannon_progress = ^mcannon_tasked_with_finding_gilobs_son) {
     %mcannon_progress = ^mcannon_return_to_dwarf_commander;
 }
 npc_setmode(none);
+npc_walk(npc_coord);
 p_delay(0);
 npc_facesquare(0_40_153_7_56);
 npc_queue(10, 0, 0);

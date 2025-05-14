@@ -20,6 +20,7 @@
 if (.npc_find(npc_coord, bloated_toad, 2, ^vis_lineofwalk) = true) {
     npc_sethuntmode(null);
     npc_setmode(none);
+    npc_walk(npc_coord);
     npc_facesquare(.npc_coord);
     npc_queue(5, 0, 0);
     .npc_queue(5, 0, 0);
