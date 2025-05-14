@@ -52,10 +52,10 @@ if (inv_total(inv, coins) < 100) {
     inv_del(inv, coins, 100);
     inv_add(inv, plague_jacket, 1);
     inv_add(inv, plague_trousers, 1);
-    ~mesbox("You give Doctor Orbon 100 coins.|He hands over a protective suit.");
     if (%sheepherder_progress = ^sheepherder_tasked_with_talking_to_dr_orbon) {
         %sheepherder_progress = ^sheepherder_tasked_with_disposing_of_sheep;
     }
+    ~mesbox("You give Doctor Orbon 100 coins.|He hands over a protective suit.");
     ~chatnpc("<p,neutral>These should protect you from infection.");
 }
 
