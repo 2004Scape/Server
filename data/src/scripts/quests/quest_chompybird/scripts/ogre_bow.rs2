@@ -5,11 +5,6 @@ if (%chompybird_progress < ^chompybird_complete) {
     return;
 }
 def_int $kills = %chompybird_kills;
-if($kills > 4000) {
-    // https://youtu.be/LtoYNXgM5Wg?si=MeXmjKYkbEKliZ9F&t=16
-    ~objbox(chompy_bird_obj, "@blu@**** Congratulations! ****|@dre@~ You're an Expert Dragon Archer! ~|This is the highest honour that can be bestowed on any|chompy bird hunter.", 250, 0, ^objbox_height); 
-    return;
-}
 def_string $rank = ~add_article(~get_chompy_rank($kills));
 def_string $rank_mes = "~ You're <$rank>! ~";
 if($kills = 0) {
@@ -17,6 +12,11 @@ if($kills = 0) {
 }
 mes("You've scratched up a total of <tostring($kills)> chompy bird kills so far!");
 mes($rank_mes);
+if($kills >= 4000) {
+    // https://youtu.be/LtoYNXgM5Wg?si=MeXmjKYkbEKliZ9F&t=16
+    ~objbox(chompy_bird_obj, "@blu@**** Congratulations! ****|@dre@~ You're an Expert Dragon Archer! ~|This is the highest honour that can be bestowed on any|chompy bird hunter.", 250, 0, ^objbox_height); 
+    return;
+}
 ~objbox(chompy_bird_obj, "You've killed a total of @blu@<tostring($kills)> @bla@chompy birds so far!||@blu@<$rank_mes>", 250, 0, ^objbox_height); // imgur.com/N4FttpP
 
 [proc,get_chompy_rank](int $kills)(string)
@@ -83,3 +83,4 @@ if ($kills < 3000) {
 if ($kills < 4000) {
     return("Expert Ogre Dragon Archer");
 }
+return ("Expert Dragon Archer");
