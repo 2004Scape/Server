@@ -42,7 +42,10 @@ if ($choice = 1) {
 ~chatplayer("<p,neutral>Um, yes.");
 ~chatnpc("<p,happy>So glad to meet you! Well done!");
 
-[opnpc3,digsite_workman]
+[opnpc3,digsite_workman] @pickpocket_digsite_workman;
+[opnpc3,digsite_workman_cave] @pickpocket_digsite_workman;
+
+[label,pickpocket_digsite_workman]
 if(%stunned > map_clock) {
     return;
 }
@@ -68,8 +71,12 @@ if(stat_random(thieving, 100, 240) = false) {
     npc_setmode(playerface);
     p_delay(0);
     spotanim_pl(stunned, 124, 0);
+    sound_synth(stunned, 0, 0);
     anim(%com_defendanim, 0);
     ~damage_self(1);
+    npc_setmode(null);
+
+    mes("You've been stunned!");    
     %action_delay = calc(map_clock + 13);
     %stunned = calc(map_clock + 13);
     walktrigger(stunned);
