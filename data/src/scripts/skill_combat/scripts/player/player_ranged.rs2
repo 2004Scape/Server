@@ -86,11 +86,13 @@ if ($weapon_cat ! weapon_bow & $weapon_cat ! weapon_crossbow) {
 }
 def_obj $ammo = inv_getobj(worn, ^wearpos_quiver);
 if ($ammo = null) {
-    mes("There is no ammo left in your quiver.");
+    if($rhand = ogre_bow) mes("There is no ammo left in your quiver");
+    else mes("There is no ammo left in your quiver.");
     return(null);
 }
 def_category $ammo_cat = oc_category($ammo);
-if ($weapon_cat = weapon_bow & $ammo_cat ! arrows) {
+if (($rhand = ogre_bow & $ammo_cat ! ogre_arrows) | 
+    ($rhand ! ogre_bow & $weapon_cat = weapon_bow & $ammo_cat ! arrows)) {
     mes("You can't use that ammo with your bow."); // todo confirm this for 2004.
     return(null);
 }
@@ -113,7 +115,8 @@ switch_category(oc_category($rhand)) {
 }
 
 [proc,ranged_shoot_npc](obj $ammo)(int)
-spotanim_pl(oc_param($ammo, proj_launch), 96, 0);
+if($ammo = ogre_arrow) spotanim_pl(oc_param($ammo, proj_launch), 50, 0);
+else spotanim_pl(oc_param($ammo, proj_launch), 96, 0);
 inv_del(worn, $ammo, 1);
 return(~npc_projectile(coord, npc_uid, oc_param($ammo, proj_travel), 40, 36, 41, 15, 5, 11, 5));
 
