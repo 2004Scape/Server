@@ -340,9 +340,9 @@ queue(quest_chompybird_complete, 0);
 // look for any chompy birds to shoot
 [ai_timer,chompybird_rantz]
 if(random(20) ! 0 | npc_getmode = none) return;
-if (.npc_find(npc_coord, chompy_bird, 20, ^vis_lineofsight) = true) {
+if (.npc_find(0_41_46_11_22, chompy_bird, 12, ^vis_lineofsight) = true) {
     if(%rantz_attacking_chompy = .npc_uid) return;
-    if (p_finduid(.%quest_chompybird_baiter) = true) {
+    if (p_finduid(.%quest_chompybird_baiter) = true & inzone(0_41_46_0_0, 0_41_46_63_63, coord) = true) {
         // we only run this logic for players in the right quest state
         if (%chompybird_progress >= ^chompybird_chompy_ate_toad & %chompybird_progress < ^chompybird_rantz_gave_player_bow) {
             %rantz_attacking_chompy = .npc_uid;
