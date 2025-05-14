@@ -1,25 +1,16 @@
-[spicestall]
-// https://classic.runescape.wiki/w/Spices_Stall
-// https://web.archive.org/web/20120207054637im_/http://runehq.com/images/cityguides/Ardougne_East/ardougne4.jpg (full stocks)
+[topshop]
+// https://classic.runescape.wiki/w/Zenesha%27s_Plate_Mail_Top_Shop
+// https://web.archive.org/web/20120207054639im_/http://runehq.com/images/cityguides/Ardougne_East/platebodyshop.png (full stocks)
 scope=shared
 size=40
 restock=yes
 stackall=yes
 allstock=no
-stock1=spicespot,1,100
-
-[ardougnegemstall]
-// https://classic.runescape.wiki/w/Gems_Stall
-// https://web.archive.org/web/20120207054638im_/http://runehq.com/images/cityguides/Ardougne_East/ardougne7.jpg
-scope=shared
-size=40
-restock=yes
-stackall=yes
-allstock=no
-stock1=sapphire,2,15000
-stock2=emerald,1,35000
-stock3=ruby,1,60000
-stock4=diamond,0,4000
+stock1=bronze_platebody,3,100
+stock2=iron_platebody,1,200
+stock3=steel_platebody,1,400
+stock4=black_platebody,1,3000
+stock5=mithril_platebody,1,3000
 
 [bakery]
 // https://classic.runescape.wiki/w/Bakers_Stall
@@ -34,31 +25,9 @@ stock1=bread,10,100
 stock2=cake,3,800
 stock3=chocolate_slice,8,200
 // stock4=chocolate_bar,7,200
+//TODO Try to find out when the Chocolate bar was added to the store.
 
-// [ardougne_baker_east]
-// https://oldschool.runescape.wiki/w/Ardougne_Baker%27s_Stall. (Trivia)
-// scope=shared
-// size=40
-// restock=yes
-// stackall=yes
-// allstock=no
-// stock1=bread,10,150
-// stock2=cake,3,1000
-// stock3=chocolate_slice,6,400
-// stock4=chocolate_bar,9,250
-
-[furshop]
-// https://classic.runescape.wiki/w/Fur_Stall
-// https://web.archive.org/web/20120207054637im_/http://runehq.com/images/cityguides/Ardougne_East/ardougne3.jpg
-scope=shared
-size=40
-restock=yes
-stackall=yes
-allstock=no
-stock1=bear_fur,3,100
-stock2=grey_wolf_fur,3,100
-
-[silverstall]
+[silvershop]
 // https://classic.runescape.wiki/w/Silver_Stall
 // https://web.archive.org/web/20120207054638im_/http://runehq.com/images/cityguides/Ardougne_East/ardougne9.jpg (full stocks)
 scope=shared
@@ -69,20 +38,19 @@ allstock=no
 stock1=nostringstar,2,100
 stock2=silver_ore,1,2000
 stock3=silver_bar,1,1000
+//This information has been confirmed via rsproxy
+//that some accounts are using the ardougne silver merchant shop id 55 or 72
+//depending on something x that I don't know.
+//ID 72 is used at least by new characters who haven't done anything in the game yet.
 
-[topshop]
-// https://classic.runescape.wiki/w/Zenesha%27s_Plate_Mail_Top_Shop
-// https://web.archive.org/web/20120207054639im_/http://runehq.com/images/cityguides/Ardougne_East/platebodyshop.png (full stocks)
+[gemshop3]
+// https://oldschool.runescape.wiki/w/Unused_shops
 scope=shared
-size=40
+size=8
 restock=yes
 stackall=yes
 allstock=no
-stock1=bronze_platebody,3,100
-stock2=iron_platebody,1,200
-stock3=steel_platebody,1,400
-stock4=black_platebody,1,3000
-stock5=mithril_platebody,1,3000
+//unused
 
 [adventurershop]
 // empty vials could be a default stock of 300
@@ -103,3 +71,90 @@ stock7=ball_of_wool,30,100
 stock8=bronze_arrow,500,10
 stock9=rope,20,100
 stock10=papyrus,50,1000
+
+[spiceshop]
+// https://oldschool.runescape.wiki/w/Unused_shops
+scope=shared
+size=1
+restock=yes
+stackall=yes
+allstock=no
+stock1=spicespot,1,100
+//unused
+
+[furshop]
+// https://classic.runescape.wiki/w/Fur_Stall
+// https://web.archive.org/web/20120207054637im_/http://runehq.com/images/cityguides/Ardougne_East/ardougne3.jpg
+scope=shared
+size=40
+restock=yes
+stackall=yes
+allstock=no
+stock1=bear_fur,3,100
+stock2=grey_wolf_fur,3,100
+
+[silverstall]
+// https://oldschool.runescape.wiki/w/Unused_shops
+scope=shared
+size=40
+restock=yes
+stackall=yes
+allstock=no
+stock1=nostringstar,2,100
+stock2=silver_ore,1,2000
+stock3=silver_bar,1,1000
+//This information has been confirmed via rsproxy
+//that some accounts are using the ardougne silver merchant shop id 55 or 72
+//depending on something x that I don't know.
+//ID 72 is used at least by new characters who haven't done anything in the game yet.
+
+[ardougnegemstall]
+// https://classic.runescape.wiki/w/Gems_Stall
+// https://web.archive.org/web/20120207054638im_/http://runehq.com/images/cityguides/Ardougne_East/ardougne7.jpg
+scope=shared
+size=40
+restock=yes
+stackall=yes
+allstock=no
+stock1=sapphire,2,15000
+stock2=emerald,1,35000
+stock3=ruby,1,60000
+stock4=diamond,0,4000
+//This store uses 2025 in the osrs side ID 429.
+
+[spicestall]
+// https://classic.runescape.wiki/w/Spices_Stall
+// https://web.archive.org/web/20120207054637im_/http://runehq.com/images/cityguides/Ardougne_East/ardougne4.jpg (full stocks)
+scope=shared
+size=40
+restock=yes
+stackall=yes
+allstock=no
+stock1=spicespot,1,100
+//stock2=knife,1,2
+//stock3=garlic,2,5
+//TODO Try to find out when the knife and garlic was added to the store.
+
+[furstall]
+// https://oldschool.runescape.wiki/w/Unused_shops
+scope=shared
+size=2
+restock=yes
+stackall=yes
+allstock=no
+stock1=bear_fur,3,100
+stock2=grey_wolf_fur,3,100
+//unused
+
+//inv_346 Added in a hidden update on December 5, 2005??.
+//[bakery2]
+// https://oldschool.runescape.wiki/w/Ardougne_Baker%27s_Stall. (Trivia)
+//scope=shared
+//size=40
+//restock=yes
+//stackall=yes
+//allstock=no
+//stock1=bread,10,150
+//stock2=cake,3,1000
+//stock3=chocolate_slice,6,400
+//stock4=chocolate_bar,9,250
