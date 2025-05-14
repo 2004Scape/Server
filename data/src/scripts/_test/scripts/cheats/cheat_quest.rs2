@@ -16,7 +16,8 @@ if (p_finduid(uid) = true) {
 [label,debug_resetquests]
 if_close;
 if (p_finduid(uid) = true) {
-    @reset_all_quests;
+    ~reset_all_quests;
+    return;
 }
 
 [label,debug_quests]
@@ -29,7 +30,8 @@ if (p_finduid(uid) = true) {
         @complete_all_quests;
     } else if ($choice = 1) {
         // Call the reset all quests functionality
-        @reset_all_quests;
+        ~reset_all_quests;
+        return;
     } else if ($choice = 2) {
         // This is the original individual quest selection code
         def_int $int1 = 0;
@@ -68,7 +70,10 @@ if (p_finduid(uid) = true) {
                 case 2 : queue(demon_slayer_complete, 0);
                 case 3 : queue(doric_quest_complete, 0);
                 case 4 : queue(dragon_complete, 0);
-                case 5 : queue(haunted_quest_complete, 0);
+                case 5 :
+                    ~change_ernest;
+                    %haunted_progress = ^haunted_complete;
+                    queue(haunted_quest_complete, 0);
                 case 6 : queue(goblin_diplomacy_complete_quest, 0);
                 case 7 : queue(squire_complete, 0);
                 case 8 : queue(imp_quest_complete, 0);
@@ -99,7 +104,9 @@ if (p_finduid(uid) = true) {
                     queue(crest_complete, 0);
                     // Complete all blast spells and levers, gauntlet choice unselected
                     %crest_spells_levers_gauntlets = calc(pow(2, ^crest_south_lever) - 1);
-                case 25 : queue(arena_quest_complete, 0);
+                case 25 :
+                    %arena_progress = ^arena_defeated_genkhazard;
+                    queue(arena_quest_complete, 0);
                 case 26 : queue(fishingcompo_quest_complete, 0);
                 case 27 : 
                     %fluffs_progress = ^fluffs_complete;
@@ -110,15 +117,18 @@ if (p_finduid(uid) = true) {
                 case 31 : queue(grail_quest_complete, 0);
                 case 32 : queue(junglepotion_quest_complete, 0);
                 case 33 :
-                    %legends_progress = ^legends_returned_to_radimus;
-                    if (npc_find(0_42_52_34_45, radimus_erkle, 20, 0) = true) {
-                        @radimus_training;
-                    }
+                    %legends_progress = ^legends_radimus_training_4;
+                    queue(legends_quest_complete, 0);
                 case 34 : queue(zanaris_quest_complete, 0);
                 case 35 : queue(arthur_quest_complete, 0);
                 case 36 : queue(drunkmonk_complete, 0);
                 case 37 : queue(murder_quest_complete, 0);
-                case 38 : queue(itgronigen_quest_complete, 0);
+                case 38 :
+                    stat_advance(crafting, 22500);
+                    inv_add(inv, uncut_sapphire, 1);
+                    %itgronigen_progress = ^itgronigen_complete;
+                    %questpoints = calc(%questpoints + ^itgronigen_questpoints);
+                    queue(itgronigen_quest_complete, 0);
                 case 39 : queue(quest_elena_complete, 0);
                 case 40 : queue(scorpcatcher_quest_complete, 0);
                 case 41 : 
@@ -138,21 +148,14 @@ if (p_finduid(uid) = true) {
                     } else if ($choice4 = 1) {
                         queue(ikov_lucien_quest_complete, 0);
                     }
-                case 45 :
-                    %desertrescue_progress = ^desertrescue_saved_ana;
-                    if (npc_find(0_51_48_40_40, irena, 20, 0) = true) {
-                        @irena_ana_found;
-                    }
+                case 45 : queue(desertrescue_complete, 0);
                 case 46 : queue(tree_quest_complete, 0);
                 case 47 : queue(totem_quest_complete, 0);
                 case 48 : queue(upass_quest_complete, 0);
                 case 49 : 
-                    queue(itwatchtower_quest_complete, 0);
                     %itwatchtower_progress = ^itwatchtower_complete;
-                    // Rewards are given before quest completion, so give here
-                    stat_advance(magic, 153000);
-                    inv_add(inv, coins, 5000);
                     inv_add(inv, watchtowerspell, 1);
+                    queue(itwatchtower_quest_complete, 0);
                 case 50 : queue(waterfall_quest_complete, 0);
                 case 51 : queue(ball_quest_complete, 0);
                 case default : mes("Quest not found.");
@@ -265,14 +268,12 @@ if (p_finduid(uid) = true) {
                 case 51 : %ball_progress = 0;
                 case default : mes("Quest not found.");
             }
-            ~update_questpoints;
             ~update_questlist;
         }
     }
 }
 
 [label,complete_all_quests]
-
 def_int $arrav_choice = ~p_choice2_header("Black Arm Gang.", 0, "Phoenix Gang.", 1, "Choose a gang for Shield of Arrav:");
 def_int $ikov_choice = ~p_choice2_header("Armadyl.", 0, "Lucien.", 1, "Choose a side for Temple of Ikov:");
 
@@ -281,6 +282,8 @@ queue(cooks_quest_complete, 0);
 queue(demon_slayer_complete, 0);
 queue(doric_quest_complete, 0);
 queue(dragon_complete, 0);
+    ~change_ernest;
+    %haunted_progress = ^haunted_complete;
 queue(haunted_quest_complete, 0);
 queue(goblin_diplomacy_complete_quest, 0);
 queue(squire_complete, 0);
@@ -305,18 +308,26 @@ queue(mcannon_complete, 0);
     // Complete all blast spells and levers, gauntlet choice unselected
     %crest_spells_levers_gauntlets = calc(pow(2, ^crest_south_lever) - 1);
 queue(crest_complete, 0);
+    %arena_progress = ^arena_defeated_genkhazard;
 queue(arena_quest_complete, 0);
 queue(fishingcompo_quest_complete, 0);
+    %fluffs_progress = ^fluffs_complete;
 queue(fluffs_complete, 0);
 queue(grandtree_quest_complete, 0);
 queue(hazeelcult_quest_complete, 0);
 queue(hero_quest_complete, 0);
 queue(grail_quest_complete, 0);
 queue(junglepotion_quest_complete, 0);
+    %legends_progress = ^legends_radimus_training_4;
+queue(legends_quest_complete, 0);
 queue(zanaris_quest_complete, 0);
 queue(arthur_quest_complete, 0);
 queue(drunkmonk_complete, 0);
 queue(murder_quest_complete, 0);
+    stat_advance(crafting, 22500);
+    inv_add(inv, uncut_sapphire, 1);
+    %itgronigen_progress = ^itgronigen_complete;
+    %questpoints = calc(%questpoints + ^itgronigen_questpoints);
 queue(itgronigen_quest_complete, 0);
 queue(quest_elena_complete, 0);
 queue(scorpcatcher_quest_complete, 0);
@@ -327,6 +338,16 @@ queue(scorpcatcher_quest_complete, 0);
 queue(seaslug_quest_complete, 0);
 queue(sheepherder_complete, 0);
 queue(zombiequeen_quest_complete, 0);
+if ($ikov_choice = 0) {
+    // Armadyl side
+    if (npc_find(0_40_51_13_57, lucien_ardougne, 7, 0) = true) {
+        queue(ikov_armadyl_quest_complete, 0, npc_uid);
+    }
+} else {
+    // Lucien side
+    queue(ikov_lucien_quest_complete, 0);
+}
+queue(desertrescue_complete, 0);
 queue(tree_quest_complete, 0);
 queue(totem_quest_complete, 0);
 queue(upass_quest_complete, 0);
@@ -338,7 +359,6 @@ queue(upass_quest_complete, 0);
 queue(itwatchtower_quest_complete, 0);
 queue(waterfall_quest_complete, 0);
 queue(ball_quest_complete, 0);
-
 if ($arrav_choice = 0) {
     // Black Arm gang
     %blackarmgang_progress = ^blackarmgang_joined;
@@ -349,31 +369,12 @@ if ($arrav_choice = 0) {
     %blackarmgang_progress = 0;
 }
 
-if ($ikov_choice = 0) {
-    // Armadyl side
-    if (npc_find(0_40_51_13_57, lucien_ardougne, 7, 0) = true) {
-        queue(ikov_armadyl_quest_complete, 0, npc_uid);
-    }
-} else {
-    // Lucien side
-    queue(ikov_lucien_quest_complete, 0);
-}
-
-%desertrescue_progress = ^desertrescue_saved_ana;
-    if (npc_find(0_51_48_40_40, irena, 20, 0) = true) {
-        @irena_ana_found;
-    }
-
-%legends_progress = ^legends_returned_to_radimus;
-    if (npc_find(0_42_52_34_45, radimus_erkle, 20, 0) = true) {
-        @radimus_training;
-    }
 ~update_questlist;
 mes("All quests have been completed.");
 return;
 
 // New label to reset all quests
-[label,reset_all_quests]
+[proc,reset_all_quests]
 %blackknight_progress = 0;
 %cook_progress = 0;
 %demon_progress = 0;
@@ -436,7 +437,6 @@ return;
 %murder_evidence = 0;
 %itgronigen_progress = 0;
 %keepdoor_unlocked = 0;
-%scorpius_given_symbol = 0;
 %elena_progress = 0;
 %scorpcatcher_progress = 0;
 %scorpius_given_symbol = 0;
@@ -461,7 +461,6 @@ return;
 %waterfall_golrie_and_puzzle = 0;
 %waterfall_progress = 0;
 %ball_progress = 0;
-~update_questpoints;
 ~update_questlist;
 mes("All quests have been reset.");
 return;
