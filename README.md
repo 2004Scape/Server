@@ -2,6 +2,9 @@
     <h1>Lost City - May 18, 2004</h1>
 </div>
 
+> [!IMPORTANT]  
+> We are changing to [LostCityRS/Server](https://github.com/LostCityRS/Server) for future updates. This repo will remain up as an archive to look back on. We have moved away from a monorepo for the engine and content here.
+
 > [!NOTE]
 > Learn about our history and ethos on our forum: https://lostcity.rs/t/faq-what-is-lost-city/16
 
